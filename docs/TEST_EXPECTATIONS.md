@@ -131,7 +131,7 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1) |
+| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator; every family under one wall (2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md): the weight per unit on the family's own labels (the photon 110 at gamma 0 and 221 at gamma 1, the one floor; `matter` 66 and 70), a massive row walking by its triple under the one wall (39 positions by `by_drive` by hand) with its pushed pair the momentum's with the rest term ((20, 132) to (640, 2328)), the wall's square refused before it is formed (R = 2^45 at the amount 2^40), the two keys loading together and the deciding worlds' pins at b = 10 in the register ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1; extended 2026-09-22, every family under one wall) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)); every number of the series read from `expectations.json` (2026-09-21) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
@@ -2080,11 +2080,15 @@ default), the integers written before the run:
   2^63 - 1 - 14080 on x walks (the primitive (1, 0, 0)) and is refused at
   the push, the pair of **P**' beyond the bound ("pair on the
   momentum"); preset on -y it is refused at the walk, the wall on the
-  primitive **P** beyond the bound; W_x = 2^40 is taken (the push's
-  **P**' = (2^40 + 16384, -14080, 0) over its gcd 1280 is (858993472,
-  -11, 0), the residue 72 x 858993483); W_y = 2^54 + 1 is refused at the
-  walk (T(P) about 2^60.8, the wall 2 T d over the bound); the push's and
-  the turn's sums are guards below it.
+  primitive **P** beyond the bound; W_x = 2^24 is taken (the push's
+  **P**' = (2^24 + 16384, -14144, 0) over its gcd 64 is (262400, -221,
+  0), the residue 72 x 262621); W_x = 2^40 and W_y = 2^54 + 1 are refused
+  before the root, the square 3 |P|^2 Q^2 of the primitive (about 2^81.6
+  and 2^121) over the working bound (every family under one wall,
+  2026-09-22, the reviewer's MUST-FIX 2: the intermediate respects the
+  bound; on the head before, W_x = 2^40 was taken with its square formed
+  unbounded and its wall 2 T d inside); the push's and the turn's sums
+  are guards below it.
 - (i) verb 3's form, the label by Bresenham along the line of **P** (the
   model owner's GO of record 536): a bar of 230 x 16 x 1 at [1, 56],
   `optical` 1, the fan the twelve diagonals with (24, +-1, 0) and
@@ -2111,6 +2115,41 @@ default), the integers written before the run:
   integer with `by_drive`, **P** conserved at every interval, the row at
   (54, 1, 0); on the label's pace (c0e8187) the 52nd Link came one
   interval early.
+- (k) every family under one wall (2026-09-22, EVERY_FAMILY.md sections
+  1 and 3): the weight per unit of amount on the family's own labels,
+  (E'_D^2 + 3 gamma p_D . p_D) // E'_D: the photon's e_D = 110 on a heading
+  at gamma = 0 (2 e_D = 220 until this day) and (12100 + 12288) // 110 =
+  221 at gamma = 1 (the one floor, 2 e_D + 1); `matter` (quantum 1,
+  momentum 10 at width 1: E'_0 = 64, E' = 66, the triple (20, 132, 66) on
+  the heading) 66 at gamma = 0 and (4356 + 300) // 66 = 70 at gamma = 1.
+- (l) a row never pushed carries its family's pair (20, 132); pushed
+  along its momentum by **W** = (2560, 0, 0) its pair is (640, 2328):
+  **P** = (5120, 0, 0) and the rest term 16384 over their gcd 1024 are
+  (5, 0, 0) and 16, T = isqrt((16^2 + 3 x 25) x 4096) = 1164, the pace
+  640 / 2328 = 0.275 against the triple's 20 / 132 = 0.152 (a falling
+  row speeds up).
+- (m) the bar of (a) with a massive lamp in place of light's (its
+  reservoir the world's K = 4096, so that its turn is 1 and it births one
+  row of content 1 per interval): the first row's accumulator gains the
+  rate 2 p d = 80 against the wall 2 E' (d + f n A) = 528 off the crowd
+  and 3696 on it, from the start E' d = 264; its x after the ticks 2 to
+  40 by `by_drive` by hand (one Link per 6.6 intervals off the crowd, per
+  46 on it), the 39 positions integer for integer with the run.
+- (n) the working bound before the wall's square (the physics-rule
+  reviewer's MUST-FIX 2 on EVERY_FAMILY.md): the massive row of (m) with a
+  push of 2560 on x and the amount 4 (the deciding worlds' largest) has
+  **P** = (12800, 0, 0) and R = 65536 over their gcd 512, (25, 0, 0) and
+  128, T = isqrt((128^2 + 3 x 625) x 4096) = 8648, the pair (3200, 17296),
+  taken; at the amount 2^40, R = 2^45 (g = 512), whose square leaves the
+  bound 2^63 - 1 over Q^2 (R under 2^25.5): refused at the walk naming
+  the wall's square, before the root.
+- the register (`expectations.json`, test (f) extended): the deciding
+  worlds `matter_g0`, `matter_g1` and `matter2_g0` of
+  examples/events/optical/ (b = 10, M = 2^14, `massive_rows` with `action`
+  1024 and `age_bound` 1024) carry the pins of the map
+  docs/designs/one_wall/every_family_map.py (the shift -5.76 / -6.11 /
+  -5.76 +- 0.5, the arrival -8.36 / -7.42 / -8.36 +- 1) and the three
+  refuting readings (-11.03, -10.45, +43.99); the two keys load together.
 
 ## The covariant readings
 

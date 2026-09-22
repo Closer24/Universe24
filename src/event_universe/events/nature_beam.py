@@ -99,7 +99,7 @@ from __future__ import annotations
 import functools
 import itertools
 import math
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 
@@ -992,6 +992,16 @@ class FamilyFlight:
     placed: int
     quantum: int
     content: int
+    # Every family under one wall (optical-v1's composition with the massive
+    # rows, 2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md): the rest
+    # energy E'_0 = Q S M the triple was formed from (0 for a family without
+    # the flag) and the energy per unit of amount of every direction,
+    # isqrt(E'_0^2 + 3 p_D . p_D) on the family's own labels: e_D =
+    # isqrt(3 u_D . u_D) for the photon, the triple's E'_D for a massive
+    # family; the weight of the crowd's push on a row, and the rest term of
+    # the pair on a pushed row's momentum, are read from these two.
+    rest: int = 0
+    energy: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
 
     def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """The position's accumulator of a row of direction d at age tau
@@ -1079,6 +1089,8 @@ def family_flight(
             1,
             0,
             0,
+            0,
+            unit_energies(flight.labels, 0),
         )
     if action is None:
         raise ValueError(
@@ -1105,6 +1117,23 @@ def family_flight(
         0,
         definition.quantum,
         definition.quantum,
+        rest,
+        unit_energies(labels, rest),
+    )
+
+
+def unit_energies(labels: np.ndarray, rest_energy: int) -> np.ndarray:
+    """The energy per unit of amount of every direction of a family, on its
+    own labels: isqrt(E'_0^2 + 3 p_D . p_D), one integer root per direction
+    at load in the class of T_D's; e_D = isqrt(3 u_D . u_D) (110 or 111) for
+    a family without the flag `massive` (E'_0 = 0, the labels u_D), the
+    triple's E'_D for a massive one (the labels p_D). The weight of the
+    crowd's push on a row (`optical_turn`) and the rest term of a pushed
+    row's pair (`momentum_pair`) read the family through these alone."""
+    square = rest_energy * rest_energy
+    return np.array(
+        [integer_root(square + 3 * sum(int(c) * int(c) for c in label)) for label in labels.tolist()],
+        dtype=np.int64,
     )
 
 
@@ -3034,13 +3063,18 @@ class CrowdMoments:
     Node and by (Node, number), the products bounded before they are
     formed; nothing kept at a Node."""
 
-    def __init__(self, stores: list[NatureBeamStore], unit: np.ndarray) -> None:
+    def __init__(self, stores: list[NatureBeamStore], units: Sequence[np.ndarray]) -> None:
         nodes = [s.node for s in stores if s.size]
         if not nodes:
             self.empty = True
             return
         self.empty = False
         node = np.concatenate(nodes)
+        # The flow's labels on each family's own table (u_D by value for a
+        # family without the flag `massive`, p_D for a massive one).
+        unit_rows = np.concatenate(
+            [u[np.maximum(s.arrival, 0)] for s, u in zip(stores, units, strict=True) if s.size]
+        )
         number = np.concatenate([s.number for s in stores if s.size])
         amount = np.concatenate([s.amount for s in stores if s.size])
         age = np.concatenate([s.age for s in stores if s.size])
@@ -3056,7 +3090,7 @@ class CrowdMoments:
         arrived = arrival != NO_ARRIVAL
         label = np.zeros((node.shape[0], 3), dtype=np.int64)
         if arrived.any():
-            label[arrived] = amount[arrived, None] * unit[arrival[arrived]]
+            label[arrived] = amount[arrived, None] * unit_rows[arrived]
         self.keys, inverse = np.unique(node, return_inverse=True)
         fullest = int(np.bincount(inverse).max())
         if largest and fullest > MAX_WORK_INT // max(1, largest * max(oldest, Q)):
@@ -3239,7 +3273,11 @@ def interval_frame(
         entered=entered,
         trail_nodes=trail_nodes,
         trail_events=trail_events,
-        crowd=CrowdMoments(stores, unit) if world.optical is not None else None,
+        crowd=(
+            CrowdMoments(stores, [t.labels for t in tables.family_flights])
+            if world.optical is not None
+            else None
+        ),
     )
 
 
@@ -3426,23 +3464,43 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
     return GameBoardDiagnostics(shape, unit, [])
 
 
+def wall_square_overflow(rest: int, primitive: list[int], denominator: int) -> OverflowError:
+    """The refusal of the wall's square on a pushed row's momentum before
+    it is formed (`momentum_pair`): R^2 + 3 |**P**|^2 with R the rest term
+    and **P** the primitive momentum, both over their gcd, must fit the
+    working bound over Q^2, tested by division term by term."""
+    return OverflowError(
+        f"{BEAM_LAW}: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 "
+        f"with R = {rest} and P = {primitive} at d = {denominator}, times Q^2 = {Q * Q}, "
+        f"exceeds the working bound {MAX_WORK_INT} before the root is taken"
+    )
+
+
 def momentum_pair(
-    store: NatureBeamStore, unit: np.ndarray, denominator: int, rows: np.ndarray
+    store: NatureBeamStore, table: FamilyFlight, denominator: int, rows: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
     """The flight's pair (S_1, T) of a pushed row's momentum (the chief
     physicist's word of 2026-09-21 on verb 3's form, DERIVED: the flight's
-    one rule is the Euclidean pace 1 / sqrt 3 along the line walked, and
-    under Bresenham the line walked is **P**'s): **P** = Q d content
-    **u**_D + **W** in Python integers, divided by the gcd of its three
-    components (exact, the same direction, the content out), S_1 its
-    Manhattan length and T = isqrt(3 |**P**|^2 Q^2) its resolution, the
-    law's own integer root taken per pushed row when **P** changes (a
-    bounded host cost, one isqrt per pushed row per interval). The pair
-    of a row of zero momentum is (0, 0), refused by the wall."""
+    one rule is the pace along the line walked, and under Bresenham the
+    line walked is **P**'s), on the row's family's own numbers (every
+    family under one wall, 2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md):
+    **P** = Q d content **p**_D + **W** in Python integers with **p**_D the
+    family's label (**u**_D for a family without the flag `massive`), and
+    the rest term R = Q d content E'_0 (0 for the photon), both divided
+    by the gcd of **P**'s three components and R (exact, the same
+    direction and the same pace, the content out); S_1 = |**P**|_1 its
+    Manhattan length and T = isqrt((R^2 + 3 |**P**|^2) Q^2) its
+    resolution, the family's triple on the momentum's direction: at
+    E'_0 = 0 the photon's T = isqrt(3 |**P**|^2 Q^2) exactly as before, at
+    **W** = 0 the massive triple's pace |**p**_D|_1 / E'_D, and under a push
+    along **p**_D a larger pace (a falling row speeds up), the law's own
+    integer root taken per pushed row when **P** changes (a bounded host
+    cost). The pair of a row of zero momentum is (0, 0), refused by the
+    wall."""
     whole = Q * denominator * (store.amount[rows] * store.content[rows])
     s1 = np.zeros(rows.shape[0], dtype=np.int64)
     t = np.zeros(rows.shape[0], dtype=np.int64)
-    labels = unit[store.direction[rows]].tolist()
+    labels = table.labels[store.direction[rows]].tolist()
     pushes = zip(
         store.push_x[rows].tolist(),
         store.push_y[rows].tolist(),
@@ -3451,12 +3509,29 @@ def momentum_pair(
     )
     for k, (scale, label, push) in enumerate(zip(whole.tolist(), labels, pushes, strict=True)):
         momentum = [int(scale) * int(u) + int(w) for u, w in zip(label, push, strict=True)]
-        g = math.gcd(*momentum)
+        rest = int(scale) * table.rest
+        g = math.gcd(*momentum, rest)
         if g == 0:
             continue
         primitive = [c // g for c in momentum]
+        rest_primitive = rest // g
         manhattan = sum(abs(c) for c in primitive)
-        resolution = math.isqrt(3 * sum(c * c for c in primitive) * Q * Q)
+        # The wall's square R^2 + 3 |P|^2 (times Q^2 under the root) is
+        # tested against the working bound by division before each term is
+        # formed (the physics-rule reviewer's MUST-FIX 2 on EVERY_FAMILY.md:
+        # the intermediate respects the bound or is refused naming the rule
+        # before it is formed): R <= room / R, then each 3 c^2 <= the room
+        # left, the room MAX_WORK_INT / Q^2 less the terms already summed.
+        room = MAX_WORK_INT // (Q * Q)
+        if rest_primitive > room // rest_primitive if rest_primitive else False:
+            raise wall_square_overflow(rest_primitive, primitive, denominator)
+        square = rest_primitive * rest_primitive
+        for c in primitive:
+            c = abs(c)
+            if c and c > ((room - square) // 3) // c:
+                raise wall_square_overflow(rest_primitive, primitive, denominator)
+            square += 3 * c * c
+        resolution = math.isqrt(square * Q * Q)
         if 2 * resolution > MAX_WORK_INT // max(1, denominator) or 2 * manhattan * Q > (
             MAX_WORK_INT // max(1, denominator)
         ):
@@ -3470,97 +3545,130 @@ def momentum_pair(
     return s1, t
 
 
+def unit_weights(table: FamilyFlight, gamma: int, directions: np.ndarray) -> np.ndarray:
+    """The weight per unit of amount of the crowd's push on a row of each
+    direction, on the family's own labels (every family under one wall,
+    2026-09-22; EVERY_FAMILY.md section 1): (E'_D^2 + 3 gamma p_D . p_D) //
+    E'_D with E'_D the family's energy per unit (`FamilyFlight.energy`) and
+    p_D its label, the push of the parametrised post-Newtonian metric (1 +
+    gamma v^2) E' with v^2 = 3 p . p / E'^2; for the photon (E'_0 = 0) e_D at
+    gamma = 0 exactly and 2 e_D within one unit at gamma = 1 (the root's
+    floor, the one floor of the composition); for a massive row E'_D at
+    gamma = 0, Newton's push on a slow row of content M."""
+    energy = table.energy[directions]
+    return np.array(
+        [
+            (int(e) * int(e) + 3 * gamma * sum(int(c) * int(c) for c in label)) // int(e)
+            for e, label in zip(energy.tolist(), table.labels[directions].tolist(), strict=True)
+        ],
+        dtype=np.int64,
+    )
+
+
+def row_pairs(
+    store: NatureBeamStore, table: FamilyFlight, denominator: int
+) -> tuple[np.ndarray, np.ndarray]:
+    """The unstretched pair (rate, wall) of every row of a store: the
+    family's own (2 |**p**_D|_1, 2 E'_D) on a row never pushed (the photon's
+    (2 S_1 Q, 2 T_D) by value) and (2 S_1(**P**) Q, 2 T(**P**)) on a pushed
+    row (`momentum_pair`); the age wall stretches them (`optical_rate_and_wall`)."""
+    rate = table.rate[store.direction].copy()
+    wall = table.wall[store.direction].copy()
+    pushed = np.flatnonzero((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0))
+    if pushed.shape[0]:
+        s1, t = momentum_pair(store, table, denominator, pushed)
+        rate[pushed] = 2 * s1 * Q
+        wall[pushed] = 2 * t
+    return rate, wall
+
+
 def optical_rate_and_wall(
-    world: NatureBeamWorld, s1: np.ndarray, t: np.ndarray, age_moment: np.ndarray
+    world: NatureBeamWorld, rate: np.ndarray, wall: np.ndarray, age_moment: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
     """optical-v1's verb 1 (docs/designs/one_wall/NOTE.md section 2): the
     row's flight accumulator in the age wall's declared set at the
     coefficient f = 1 + gamma (`measured.age_wall_set`), the one wall
-    function `core.integer.age_wall` on the flight's pair (the rate
-    2 S_1 Q, the wall 2 T): the rate 2 S_1 Q d against the wall
-    2 T (d + f n A), [n, d] the clock's pair and A the crowd's age moment
-    at the row's Node; the pair (S_1, T) per row is the label's (S_1(D),
-    T_D) on a row never pushed and the momentum's (`momentum_pair`) on a
-    pushed row, whose line is **P**'s. The largest wall of the rows is
-    tested against the working bound before any product is formed,
-    refused naming the rule."""
+    function `core.integer.age_wall` on the row's pair: the rate times d
+    against the wall times (d + f n A), [n, d] the clock's pair and A the
+    crowd's age moment at the row's Node; the pair per row is its family's
+    on a row never pushed and the momentum's on a pushed row (`row_pairs`),
+    every family alike. The largest wall of the rows is tested against the
+    working bound before any product is formed, refused naming the rule."""
     numerator, denominator = world.suspension
     coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
-    largest_t = int(t.max()) if t.size else 1
+    largest_wall = int(wall.max()) if wall.size else 1
     largest_a = int(age_moment.max()) if age_moment.size else 0
     stretch = denominator + coefficient * largest_a * numerator
-    if 2 * largest_t > MAX_WORK_INT // max(1, stretch):
+    if largest_wall > MAX_WORK_INT // max(1, stretch):
         raise OverflowError(
-            f"{BEAM_LAW}: optical-v1's wall 2 T_D (d + f n A) = 2 x {largest_t} x {stretch} "
+            f"{BEAM_LAW}: optical-v1's wall 2 T_D (d + f n A) = {largest_wall} x {stretch} "
             f"exceeds the working bound {MAX_WORK_INT}"
         )
-    rate = np.zeros(s1.shape[0], dtype=np.int64)
-    wall = np.zeros(s1.shape[0], dtype=np.int64)
-    for k in range(s1.shape[0]):
+    stretched_rate = np.zeros(rate.shape[0], dtype=np.int64)
+    stretched_wall = np.zeros(rate.shape[0], dtype=np.int64)
+    for k in range(rate.shape[0]):
         r, w = age_wall(
-            2 * int(s1[k]), 2 * int(t[k]), coefficient, int(age_moment[k]), (numerator, denominator)
+            int(rate[k]), int(wall[k]), coefficient, int(age_moment[k]), (numerator, denominator)
         )
-        rate[k], wall[k] = r * Q, w
-    return rate, wall
+        stretched_rate[k], stretched_wall[k] = r, w
+    return stretched_rate, stretched_wall
 
 
 def optical_walk_step(
-    frame: Interval, store: NatureBeamStore
+    frame: Interval, store: NatureBeamStore, table: FamilyFlight
 ) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int]]]:
     """Step 1 under `optical`: the row's stored accumulator gains the
     stretched rate against the wall the crowd's age moment stretches
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
     primitive's own `at_most` with the surplus kept in the accumulator
     (the rate never exceeds a row's own wall, so a row on its own direction
-    counts 0 or 1 with nothing to keep), is the
-    interval's Manhattan step on the
-    row's line at the place `made mod S_1`, and the accumulator after is
-    kept on the row with the count made. A row whose accumulator is empty
-    (a row born or declared before this interval, (0, 0)) starts from the
-    flight's off-age
-    pair at its age scaled to the stretched units (`Flight.accumulator`
-    times d): the same integers as the flight without the key at A = 0.
-    The pair (S_1, T) of the row is its label's on a row never pushed and
-    its momentum's on a pushed row (`momentum_pair`, the chief physicist's
-    word on verb 3's form: the flight's Euclidean pace along the line
-    walked, which is the row's momentum **P**'s under Bresenham), and the
-    residue is rescaled to the momentum's rate at each push by
-    `optical_turn`, not at the label's turn (record 496 generalised: the
-    rate's ratio whenever the pace's direction changes). Returns the step
-    and a function giving the time of the last Link of a row as
-    (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
-    flight = frame.flight
+    counts 0 or 1 with nothing to keep), is the interval's Manhattan step
+    on the row's label's line at the place `made mod S_1`, and the
+    accumulator after is kept on the row with the count made. A row whose
+    accumulator is empty (a row born or declared before this interval,
+    (0, 0)) starts from its family's off-age pair at its age scaled to the
+    stretched units (`FamilyFlight.accumulator` times d): the same
+    integers as the walk without the key at A = 0. Every family walks by
+    its own table (every family under one wall, 2026-09-22,
+    docs/designs/one_wall/EVERY_FAMILY.md): the photon by Flight's numbers
+    by value, a massive family by its triple. The pair (S_1, T) of the row
+    is its family's table's on a row never pushed (`row_pairs`) and its
+    momentum's on a pushed row (`momentum_pair`, the primitive of **P**
+    with the family's rest energy; the chief physicist's word on verb 3's
+    form: the flight's Euclidean pace along the line walked, which is the
+    row's momentum **P**'s under Bresenham), and the residue is rescaled
+    to the momentum's rate at each push by `optical_turn`, not at the
+    label's turn (record 496 generalised: the rate's ratio whenever the
+    pace's direction changes). Returns the step and a function giving the
+    time of the last Link of a row as (age r - s, r) for the exact phase
+    (`exact_phase`, `last_link`)."""
     world = frame.world
     assert frame.crowd is not None
     numerator, denominator = world.suspension
     fresh = (store.made == 0) & (store.residue == 0)
     if fresh.any():
-        made0, residue0 = flight.accumulator(store.direction[fresh], store.age[fresh])
+        made0, residue0 = table.accumulator(store.direction[fresh], store.age[fresh])
         store.made[fresh] = made0
         store.residue[fresh] = residue0 * denominator
     age_moment = frame.crowd.age_moment(store.node, store.number)
-    # The pair per row: the label's, and the momentum's on a pushed row
+    # The pair per row: the family's, and the momentum's on a pushed row
     # (its line is P's; the chief physicist's word on verb 3's form).
-    s1 = flight.manhattan[store.direction].copy()
-    t = flight.resolution[store.direction].copy()
-    pushed = np.flatnonzero((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0))
-    if pushed.shape[0]:
-        s1[pushed], t[pushed] = momentum_pair(store, flight.labels, denominator, pushed)
-    rate, wall = optical_rate_and_wall(world, s1, t, age_moment)
+    rate0, wall0 = row_pairs(store, table, denominator)
+    rate, wall = optical_rate_and_wall(world, rate0, wall0, age_moment)
     moved, residue = by_drive_rows(store.residue, rate, wall, at_most=1)
-    s1 = flight.manhattan[store.direction]  # the label's line gives the place
+    s1 = table.manhattan[store.direction]  # the label's line gives the place
     place = np.where(s1 > 0, store.made % np.maximum(s1, 1), 0)
-    step: np.ndarray = flight.lines[store.direction, place] * moved[:, None]
+    step: np.ndarray = table.lines[store.direction, place] * moved[:, None]
     store.residue = residue
     store.made = store.made + moved
     # Verb 3's error accumulator (record 536): on the rows that hold a
-    # push, c += h x P for the Link h walked, P = Q d content u_D + W the
+    # push, c += h x P for the Link h walked, P = Q d content p_D + W the
     # row's whole momentum before this interval's push; the sum tested
     # against the register before it is formed.
     held = np.flatnonzero(moved & ((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0)))
     if held.shape[0]:
         whole = Q * denominator * (store.amount[held] * store.content[held])
-        momentum = whole[:, None] * flight.labels[store.direction[held]] + np.stack(
+        momentum = whole[:, None] * table.labels[store.direction[held]] + np.stack(
             [store.push_x[held], store.push_y[held], store.push_z[held]], axis=1
         )
         cross = np.stack([store.cross_x[held], store.cross_y[held], store.cross_z[held]], axis=1)
@@ -3586,18 +3694,19 @@ def optical_walk_step(
 
 
 def optical_last_link(
-    store: NatureBeamStore, flight: Flight, world: NatureBeamWorld, index: int, age: int
+    store: NatureBeamStore, table: FamilyFlight, world: NatureBeamWorld, index: int, age: int
 ) -> tuple[int, int]:
     """The time of a row's last Link off its stored accumulator, after the
-    walk: (age r - s, r) with r = 2 S_1 Q d the stretched rate (S_1 the
-    label's on a row never pushed, the momentum's on a pushed row) and s
-    the residue (`exact_phase`'s `last_link`)."""
+    walk: (age r - s, r) with r the row's stretched rate, its family's
+    rate times d on a row never pushed (2 S_1 Q d for the photon) and the
+    momentum's 2 S_1(P) Q d on a pushed row, and s the residue
+    (`exact_phase`'s `last_link`)."""
     rows = np.array([index], dtype=np.int64)
     if store.push_x[index] or store.push_y[index] or store.push_z[index]:
-        s1 = int(momentum_pair(store, flight.labels, world.suspension[1], rows)[0][0])
+        rate0 = 2 * int(momentum_pair(store, table, world.suspension[1], rows)[0][0]) * Q
     else:
-        s1 = int(flight.manhattan[store.direction[index]])
-    r = 2 * s1 * Q * world.suspension[1]
+        rate0 = int(table.rate[store.direction[index]])
+    r = rate0 * world.suspension[1]
     return age * r - int(store.residue[index]), r
 
 
@@ -3609,8 +3718,12 @@ def optical_turn(frame: Interval) -> None:
     flow **V** at the row's Node (less its own number's; the interval's own
     arrivals, read here after the walk and the collision, `CrowdMoments`;
     the wall's age moment is the one read before step 1) at the rate n x
-    weight, the weight
-    (1 + gamma) x content x e_D, content the row's whole content (its
+    weight, the weight content x w with w the weight per unit on the
+    family's own labels, (E'_D^2 + 3 gamma p_D . p_D) // E'_D
+    (`unit_weights`; every family under one wall, 2026-09-22: for the
+    photon e_D at gamma = 0 and 2 e_D within one unit at gamma = 1, the
+    note's (1 + gamma) e_D; for a massive family E'_D at gamma = 0, the
+    push of a slow row), content the row's whole content (its
     amount times the content per unit; 0 on a free family's row, which
     therefore never turns), gravity's sign (**W** -= n weight **V**); then
     the row's whole momentum **P** = Q d content **u**_D + **W** (the
@@ -3658,25 +3771,36 @@ def optical_turn(frame: Interval) -> None:
     assert frame.crowd is not None
     world = frame.world
     flight = frame.flight
-    unit = frame.unit
     ledger = frame.ledger
     families = frame.families
     occupied = frame.occupied
+    family_flights = frame.family_flights
     # The flow is the interval's own arrivals at the row's Node (the
     # crossing rule's set, what a body's push reads in the same interval;
     # the arrival marks are cleared at the merge), read here after the walk
-    # and the collision; the age moment of the wall was read before step 1.
-    crowd = CrowdMoments(frame.stores, unit)
+    # and the collision, each family's arrivals on its own labels; the age
+    # moment of the wall was read before step 1.
+    crowd = CrowdMoments(frame.stores, [t.labels for t in family_flights])
     numerator, denominator = world.suspension
-    coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
+    gamma = world.optical
+    assert gamma is not None
     for family, store in enumerate(frame.stores):
         if store.size == 0:
             continue
         rows = np.flatnonzero(~occupied[store.node] & (store.direction >= REST_DIRECTIONS))
         if rows.shape[0] == 0:
             continue
+        table = family_flights[family]
+        unit = table.labels
         content = store.amount[rows] * store.content[rows]
-        weight = coefficient * content * flight.energy[store.direction[rows]]
+        # The weight per unit of amount on the family's own labels (every
+        # family under one wall, 2026-09-22): (E'_D^2 + 3 gamma p_D . p_D) //
+        # E'_D, the push of the parametrised post-Newtonian metric (1 + gamma
+        # v^2) E' with v^2 = 3 p . p / E'^2; for the photon (E'_0 = 0) e_D at
+        # gamma = 0 exactly and 2 e_D within one unit at gamma = 1 (the root's
+        # floor, EVERY_FAMILY.md section 3); for a massive row E'_D at gamma =
+        # 0, Newton's push on a slow row of content M.
+        weight = content * unit_weights(table, gamma, store.direction[rows])
         flow = crowd.arrival_flow(store.node[rows], store.number[rows])
         widest = int(np.abs(flow).max(initial=0))
         heaviest = int(weight.max(initial=0))
@@ -3699,15 +3823,17 @@ def optical_turn(frame: Interval) -> None:
         before = turn
         turn = turn - numerator * weight[:, None] * flow
         store.push_x[rows], store.push_y[rows], store.push_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
-        # The residue rescaled by S_1(P') / S_1(P) at every push (record
+        # The residue rescaled by the rate's ratio at every push (record
         # 496's rule for the time of the last Link, generalised: the pace's
-        # direction changed), the label's S_1 before the first push; floor,
-        # the sub-unit remainder dropped, in Python integers.
+        # direction changed), the family's rate before the first push and
+        # the momentum's 2 S_1(P) Q after (the photon's S_1(P') / S_1(P), the
+        # Q common); floor, the sub-unit remainder dropped, in Python
+        # integers.
         pushed_now = np.flatnonzero((before != turn).any(axis=1))
         if pushed_now.shape[0]:
             index_now = rows[pushed_now]
-            s_new = momentum_pair(store, unit, denominator, index_now)[0]
-            s_old = flight.manhattan[store.direction[index_now]].copy()
+            s_new = 2 * momentum_pair(store, table, denominator, index_now)[0] * Q
+            s_old = table.rate[store.direction[index_now]].copy()
             was_pushed = before[pushed_now].any(axis=1)
             if was_pushed.any():
                 held_before = np.flatnonzero(was_pushed)
@@ -3719,7 +3845,9 @@ def optical_turn(frame: Interval) -> None:
                     before[pushed_now, 1],
                     before[pushed_now, 2],
                 )
-                s_old[held_before] = momentum_pair(store, unit, denominator, index_now[held_before])[0]
+                s_old[held_before] = (
+                    2 * momentum_pair(store, table, denominator, index_now[held_before])[0] * Q
+                )
                 store.push_x[index_now], store.push_y[index_now], store.push_z[index_now] = (
                     keep[:, 0],
                     keep[:, 1],
@@ -3747,8 +3875,8 @@ def optical_turn(frame: Interval) -> None:
         held = np.flatnonzero(turn.any(axis=1))
         if held.shape[0] == 0:
             continue
-        lines = flight.lines
-        manhattan = flight.manhattan
+        lines = table.lines
+        manhattan = table.manhattan
         chosen: list[int] = []
         turned: list[int] = []
         for k in held.tolist():
@@ -3856,7 +3984,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
             step, moved, node_after, escaped = _walk_rows(table, store, world.periodic, extents)
             last_link = None
         else:
-            step, last_link = optical_walk_step(frame, store)
+            step, last_link = optical_walk_step(frame, store, table)
             moved = step.any(axis=1)
             x, y, z = store.coordinates(store.node)
             coordinates = np.stack([x, y, z], axis=1) + step
@@ -4704,7 +4832,7 @@ def _family_plan(
             f"measured event {int(e)}",
             None
             if frame.crowd is None
-            else optical_last_link(store, flight, frame.world, int(ix), int(ag)),
+            else optical_last_link(store, table, frame.world, int(ix), int(ag)),
         )
         for ph, ag, ar, e, ix in zip(
             ph_t.tolist(),
@@ -6012,7 +6140,7 @@ def _border(frame: Interval) -> None:
                 LIFETIME_NAME,
                 None
                 if frame.crowd is None
-                else optical_last_link(store, flight, frame.world, int(index), int(store.age[index])),
+                else optical_last_link(store, table, frame.world, int(index), int(store.age[index])),
             )
             for index in gone.tolist()
         }

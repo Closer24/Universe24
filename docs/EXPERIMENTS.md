@@ -6876,6 +6876,36 @@ sequential gates on an entangled record, the full register replay.
   unchanged; the head before the physicist's word read the mass shifts
   -1.794 / -3.966 and the delays -1.02 / +3.34 on the label's pace, the
   reading that named the pace.
+- **Every family under one wall** (2026-09-22, branch
+  optical-every-family; the chief physicist with the model owner, "build
+  this with me": the composition of optical-v1 with the massive rows,
+  docs/designs/one_wall/EVERY_FAMILY.md; the three verbs read the
+  family's own table, a pushed row's pair its momentum's with the rest
+  term, the weight per unit (E'^2 + 3 gamma p . p) // E' on the family's
+  labels, the two keys loading together; the physics-rule reviewer's
+  four MUST-FIXES on the note folded). Byte identity: the controls and
+  `mass_g0` to Far 2's head's digests; the light worlds at gamma 1 under
+  the weight 221 (DETECTOR): `mass` -3.989 / +4.94 (was +5.10), `near`
+  -6.412 / +6.20 (the same), `far` -3.403 / +4.33, the far world's first
+  read, inside its pins -3.37 +- 0.5 and 4.29 +- 1. The deciding worlds,
+  slow massive rows beside the mass at b = 10 (M = 2^14, the family
+  `matter` of quantum 1 and momentum 10, E' = 66, v^2 = 0.069; the pins
+  from the map that follows the row along its momentum, verbs 1 and 2
+  together, before the world files: the shift -5.76 +- 0.5 and the
+  arrival -8.36 +- 1 at gamma 0, -6.11 / -7.42 at gamma 1, `matter2_g0`
+  (the family at quantum 2 and momentum 20) on `matter_g0`'s): DETECTOR `matter_g0` -5.000
+  pixel / -12.00 intervals, `matter_g1` -6.000 / -6.00, `matter2_g0`
+  -5.000 / -12.00. Read: Newton's fall of a slow row (the pixel's grain,
+  outside by 0.26), the speed-up of a falling row (-12.00 against +43.99
+  without it), the weight's (1 + gamma v^2) form (-6.000 against -10.45
+  blind to the speed), the equivalence on content exact; the wall's
+  factor on a massive row not read at this world (its stretch about 1
+  interval, under the grain of one y-Link, 5 to 6.6 intervals, on a world
+  of one line; test (m) reads it exactly). The first run at the note's
+  first b = 6 (-6.000 / -20.00, -7.000 / -13.00, -6.000 / -20.00) read the
+  speed-up that the first draft's pins missed (the reviewer's MUST-FIX
+  1) and is not registered. No pin moved; the register
+  examples/events/optical/README.md.
 - **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
   2.00 after the review's M1; 2.03 and 2.07 before it; 1.73 and 2.07
   under the Bresenham form, the mass ratio 0.02 outside); the turn bends

@@ -40,6 +40,10 @@ capped at one Link by the primitive's `at_most` with the surplus kept.
 | `near_g1.json` | 1 | 2 | 2^16 | 3 | no deflection pin: re-declared a capture reading (records 505 and 540), 582 +- 146 of the control's 1455 clicks taken by the mass (DETECTOR; the register's `taken_by_the_mass` and `taken_bracket`); the shift pin -4.83 superseded, kept as `shift_pin_superseded` | 4.34 +- 1 |
 | `far_g0.json` | 0 | 1 | 2^16 | 8 | -1.69 +- 0.5 | 2.15 +- 1 |
 | `far_g1.json` | 1 | 2 | 2^16 | 8 | -3.37 +- 0.5 | 4.29 +- 1 |
+| `matter_control_g0.json`, `matter_control_g1.json`, `matter2_control_g0.json` (every family under one wall, 2026-09-22: the massive family `matter` declared inline at quantum 1 and momentum 10, in the `matter2` worlds at quantum 2 and momentum 20, under both keys) | 0, 1, 0 | 1, 2, 1 | - | - | 0 | 0 |
+| `matter_g0.json` | 0 | 1 | 2^14 | 10 | -5.76 +- 0.5 | the arrival -8.36 +- 1 (earlier: a falling row speeds up) |
+| `matter_g1.json` | 1 | 2 | 2^14 | 10 | -6.11 +- 0.5 | the arrival -7.42 +- 1 |
+| `matter2_g0.json` | 0 | 1 | 2^14 | 10 | -5.76 +- 0.5 (on `matter_g0`'s pixel: the equivalence) | the arrival -8.36 +- 1 |
 
 The number the run reads: the ratio of the two shifts (f = 2 over f = 1),
 2.00 within 0.25 (`mass` and `near`, the register's `ratios`; the chief
@@ -104,14 +108,18 @@ PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g0 ex
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g1 examples/events/optical/control_g1.json examples/events/optical/mass_g1.json examples/events/optical/near_g1.json
 PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g0 --no-replay
 PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g1 --no-replay
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/matter_g0 examples/events/optical/matter_control_g0.json examples/events/optical/matter_g0.json
+PYTHONPATH=src python tools/lensing_readings.py artifacts/matter_g0 --no-replay --window-start 500   # likewise matter_g1 and matter2_g0; the verdict column is light's brackets
 ```
 
 `tests/test_optical.py` pins the rule (the wall, the push and the turn,
 the conservation of the momentum, the refusals, the byte identity without
 the key) and the shipped worlds to the generator and the register. The
-key is refused at load beside the key `massive_rows`: the composed flight
-of massive rows under the optical key is not reviewed (the physics-rule
-review of f4138855, record 510); a world declares one of the two.
+key loads beside the key `massive_rows` since 2026-09-22 (every family
+under one wall, docs/designs/one_wall/EVERY_FAMILY.md: every row walks
+by its own family's table under the one wall; the refusal of record 510
+lifted); the deciding worlds of that composition are the `matter` rows
+of the table above and the last section of this register.
 
 ## Measured (2026-09-21, the first run on branch optical-v1, after the pins above; the re-read after the review's M1 below)
 
@@ -304,3 +312,99 @@ on **P**'s line) read the mass shifts -1.794 / -3.966 (2.21) and the
 delays -1.02 / +3.34 on the label's pace, the reading that named the
 pace (the delays outside their pins, rows outrunning the control, until
 the momentum's pace corrected them above).
+
+## Every family under one wall (2026-09-22, branch optical-every-family): the light worlds under the weight 221, the deciding worlds of the composition
+
+The composition of optical-v1 with the massive rows
+(docs/designs/one_wall/EVERY_FAMILY.md, the chief physicist with the
+model owner, "build this with me"): the three verbs read the family's
+own table in place of light's, a pushed row's pair is its momentum's
+with the family's rest term, the push's weight per unit is (E'_D^2 +
+3 gamma **p**_D . **p**_D) // E'_D on the family's labels, and the two keys
+`optical` and `massive_rows` load together. For the photon the weight
+at gamma = 1 is 221 where the head before had 2 e_D = 220 (the root's
+floor, the one floor); at gamma = 0 nothing moves.
+
+Byte identity (GAMEBOARD, the run digests): the two controls and
+`mass_g0` run to Far 2's head's digests (`control` 96d9aa366dce,
+`mass_g0` 043e1aa29432). The three mass worlds at gamma 1 re-read under
+the weight 221 (DETECTOR, `tools/run_series.py --jobs 2`, 400 intervals,
+the same tools; the Bresenham re-read's value as "was"):
+
+| World | f | clicks in the window (control 1455) | centroid y, shift | mean age, delay | count ratio | light the mass took | pinned shift / delay | inside |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `mass_g1` | 2 | 1395 (was 1394) | 22.011, -3.989 (was -3.989) | 94.34, +4.94 (was +5.10) | 0.9588 | 0 | -3.86 / 5.36 | yes / yes |
+| `near_g1` | 2 | 1452 (was 1452) | 16.588, -6.412 (was -6.412) | 95.60, +6.20 (was +6.20) | 0.9979 | 0 taken | capture 582 +- 146 (superseded shift -4.83) / 4.34 +- 1 | capture OUTSIDE (by 582) / delay OUTSIDE (by 0.86) |
+| `far_g1` | 2 | 1344 | 24.597, -3.403 | 93.73, +4.33 | 0.9237 | 0 | -3.37 / 4.29 | yes / yes |
+
+The one floor moves the mass delay by 0.16 interval and the shifts by
+nothing at three decimals; `far_g1` is the far world's first read on
+this head (the pins of the table above, inside both by 0.03 and 0.04;
+`far_g0` not run here). No pin changed.
+
+The deciding worlds of the composition: slow massive rows beside the
+mass (the note's section 2; the pins from the map
+`docs/designs/one_wall/every_family_map.py`, the row followed along its
+momentum, verbs 1 and 2 together, before any world file; the generator
+`make_worlds.py` restates them in `expectations.json`): series K's box,
+the pair [1, 16384], the mass 2^14, `massive_rows` with `action` 1024
+and `age_bound` 1024, a lamp of the family `matter` (quantum 1, momentum
+10 at width 1: E'_0 = 64, E' = 66, v^2 = 0.069, the dwell 6.6 intervals
+per Link) at x = 2, y = 30 (b = 10) on the heading alone, its reservoir
+the world's K so that it births one row per interval; `matter2_g0` the
+same family at quantum 2 and momentum 20 (the equivalence on content); 1000
+intervals, the window 500 to 1000. The pins (GAMEBOARD arithmetic of
+the lattice's lines): the shift -5.76 +- 0.5 pixel and the arrival
+-8.36 +- 1 interval at gamma 0 (negative: earlier than the control, a
+falling row speeds up), -6.11 / -7.42 at gamma 1, `matter2_g0` on
+`matter_g0`'s; the readings that would refute, the same map with one
+verb changed: the wall unstretched on the massive rows puts the gamma 1
+arrival at -11.03, the weight blind to the speed ((1 + gamma) E') puts
+the gamma 1 shift at -10.45, the pace unpushed (the family's own p / E'
+on the Manhattan length walked) puts the gamma 0 arrival at +43.99 (the
+note's first draft had +2.57 from the map's first form, the y-Links
+unpaid; superseded by the map as kept before the comparison).
+
+The first run, at the first draft's b = 6 (DETECTOR, the controls 501
+clicks at the mean age 340.00): `matter_g0` -6.000 pixel / -20.00
+intervals, `matter_g1` -7.000 / -13.00, `matter2_g0` -6.000 / -20.00.
+The row reaches the mass's own line before the screen and arrives 20
+intervals EARLIER than the control for the first draft's delay of
++2.65: the speed-up of a falling row, missed by the first draft's pins
+(light's map with the dwell 6.6 substituted; the physics-rule
+reviewer's MUST-FIX 1 on the note, read in the engine). The map was
+rewritten and b moved to 10; the b = 6 worlds are not registered.
+
+The run at b = 10 (DETECTOR, `tools/lensing_readings.py --no-replay
+--window-start 500` against each folder's control, 1000 intervals, 55 s
+per control and 110 s per mass world; the tool's verdict column is
+light's brackets and does not apply, the pins compared here):
+
+| World | clicks (control 501) | centroid y, shift (pin, bracket 0.5) | mean age, arrival (pin, bracket 1) | first click (control 341) | width rms y | inside |
+| --- | --- | --- | --- | --- | --- | --- |
+| `matter_g0` | 501 | 25.000, -5.000 (-5.76) | 328.00, -12.00 (-8.36) | 333 | 0.000 | no (by 0.26) / no (by 2.64) |
+| `matter_g1` | 501 | 24.000, -6.000 (-6.11) | 334.00, -6.00 (-7.42) | 338 | 0.000 | yes / no (by 0.42) |
+| `matter2_g0` | 501 | 25.000, -5.000 (-5.76) | 328.00, -12.00 (-8.36) | 333 | 0.000 | no (by 0.26) / no (by 2.64) |
+
+GAMEBOARD: the crowd at b = 10, the presence 1.59 rays per Node and the
+age moment 27.3; the centroid in z 20.000 and the count ratio 1.0000 in
+every world. The causes, named: a world of one line reads in whole
+pixels (the width 0.000), and each pixel of fall is one y-Link paid at
+the row's pace there (5 to 6.6 intervals), so the arrival's grain is
+that Link: the gamma 1 row falls one pixel more and arrives 6 intervals
+later, the grain and not the wall's stretch (the map's +0.94). With the
+grain counted (the map's 5.76 and 6.11 y-Links against the engine's 5
+and 6) the engine arrives one to two intervals later than the map at
+both gamma, the same sign: the map's continuous approximation of the
+walk, to be closed by a map that walks the engine's Bresenham exactly.
+What the run decides, in the note's order: (1) Newton's fall of a slow
+row read, -5.000 for -5.76, outside by 0.26, the pixel's grain; (2) the
+speed-up read, -12.00 against +43.99 without it; (3) the weight's form
+read, -6.000 against -10.45 blind to the speed; (4) the wall's factor on
+a massive row not read at this world, the stretch (about 1 interval at
+this M and b) under the grain; test (m) of `tests/test_optical.py`
+reads it exactly, a deciding world of the beam's width would read it;
+(5) the equivalence exact, `matter2_g0` on `matter_g0`'s pixel and
+interval (the same centroid, width, mean age, first click and count).
+No pin moved; a pin the run does not meet is reported with the engine's
+number and its cause.

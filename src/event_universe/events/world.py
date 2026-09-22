@@ -3418,13 +3418,11 @@ def _optical(
             "(the two turns, the meeting's at its grain constant and optical-v1's at the flow's "
             "weight, act on the same headings from the same flow and would add on every row)"
         )
-    if massive_rows:
-        raise ValueError(
-            f"{BEAM_LAW}: the key optical is refused with the key massive_rows: the composed "
-            "flight of massive rows under the key optical is not reviewed (a massive family walks "
-            "by its own triple, the optical walk by the world's flight under the age wall); "
-            "declare one of the two"
-        )
+    # The key `massive_rows` beside `optical` is admitted since 2026-09-22
+    # (every family under one wall, docs/designs/one_wall/EVERY_FAMILY.md):
+    # every family walks by its own table under the age wall, the photon by
+    # Flight's numbers by value, a massive family by its triple; the
+    # refusal of record 510 is lifted.
     moving = [v for v in table if any(v)]
     for vector in moving:
         if not any(

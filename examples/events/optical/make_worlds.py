@@ -78,6 +78,78 @@ PINS: dict[str, dict[str, object]] = {
 }
 SHIFT_BRACKET = 0.5
 DELAY_BRACKET = 1.0
+# The deciding worlds of every family under one wall (the chief physicist's
+# design docs/designs/one_wall/EVERY_FAMILY.md section 2, the model owner's
+# "build this with me" of 2026-09-22): series K's geometry at the pair, the
+# mass a quarter of the light pin worlds' (M = 2^14, so that a slow row's
+# turn stays below 0.3 radian), and in place of the light lamp a lamp of a
+# massive family `matter` (quantum 1, massive, momentum_magnitude p = 10 at
+# width 1: E'_0 = Q S M = 64, E' = isqrt(64^2 + 3 x 100) = 66, v^2 = 0.069,
+# the dwell per Node 6.6 intervals) on the heading alone at b = 10, one row
+# per interval from a reservoir of K units (the turn 1); the `matter2` worlds the equivalence
+# (quantum 2, p = 20: E' = 132 exactly twice, the same pace and the same
+# v^2, the content doubled); gamma 0 and 1 for `matter`, gamma 0 for
+# `matter2`, each with its control (the lamp alone, the same family); 1000
+# intervals, the window 500 to 1000 (a row takes about 343 intervals to the
+# screen). The pins by the map docs/designs/one_wall/every_family_map.py
+# (the row followed along its momentum on the light-bending map's lines,
+# the weight (E'^2 + 3 gamma p . p) // E', the pace of the pair on P),
+# before any run: the shift in pixels toward the mass and the arrival in
+# intervals against the control.
+MATTER_MASS_FACTOR = 4
+MATTER_TICKS = 1000
+MATTER_WINDOW_START = 500
+MATTER_ACTION = 1024
+# The largest age a massive row may carry (required with `massive_rows`: a
+# row takes about 343 intervals to the screen at the pace 10 / 66).
+MATTER_AGE_BOUND = 1024
+# The lamp's reservoir: series K's K times the turn 1 (a massive birth
+# needs the turn 1, the row's content quantum x 1; a reservoir below K
+# turns 0 and births nothing), one unit of it per birth.
+MATTER_RESERVOIR_TURN = 1
+MATTER_FAMILIES: dict[str, dict[str, int]] = {
+    "matter": {"quantum": 1, "momentum_magnitude": 10},
+    "matter2": {"quantum": 2, "momentum_magnitude": 20},
+}
+MATTER_WORLDS: tuple[tuple[str, int], ...] = (("matter", 0), ("matter", 1), ("matter2", 0))
+# The family's name in every deciding world is `matter` (the catalog's
+# massive quantum, declared inline with its own quantum and momentum as
+# series W declares it); `matter2` names the world, not a second family.
+MATTER_FAMILY_NAME = "matter"
+# The impact distance of the deciding worlds: b = 10 (the lamp at y = 30).
+# The first run at b = 6 (2026-09-22, recorded in README.md) reached the
+# mass's own line before the screen (a turn of 0.25 radian reaches the
+# axis 21 Links past the mass; the shift -6.000 exactly, the width 0), the
+# naive pin of the first map (the deflection times 26 Links, the unpushed
+# dwell) refuted by the geometry; at b = 10 the row stays 4 Links off the
+# axis at the screen.
+MATTER_IMPACT = 10
+# The pins by the map every_family_map.py, the row followed along its
+# momentum on the crowd's lines: the shift in pixels toward the mass and
+# the ARRIVAL against the control's in intervals, negative when earlier
+# (a falling row speeds up, its pace |P| / E'(P) growing under the push,
+# the speed-up of about -8 intervals larger than the wall's stretch).
+MATTER_PINS: dict[tuple[str, int], dict[str, float]] = {
+    ("matter", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+    ("matter", 1): {"angle": 0.252, "shift": -6.11, "arrival": -7.42},
+    ("matter2", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+}
+# The readings that refute (the map at gamma = 1 with one verb changed):
+# the massive wall unstretched (f = 0 on the massive rows, verb 1 not on
+# every family) puts the gamma 1 arrival at -11.03 intervals (the rule's
+# -7.42, 3.6 intervals apart); the weight blind to the speed ((1 + gamma) E'
+# in place of (E'^2 + 3 gamma p . p) // E', verb 2 light's alone) puts
+# the gamma 1 shift at -10.45 pixels (the rule's -6.11, 4.3 pixels apart);
+# the pace unpushed (no speed-up: the family's own p / E' on the Manhattan
+# length walked, the y-Links paid at that pace) would put the gamma 0
+# arrival at +43.99 (the rule's -8.36; the map's first form of this
+# reading, +2.57 in the note before the run, left the y-Links unpaid and is
+# superseded by the map as kept, `pace="unpushed"`).
+MATTER_REFUTING: dict[str, float] = {
+    "gamma_1_arrival_wall_unstretched": -11.03,
+    "gamma_1_shift_weight_blind_to_speed": -10.45,
+    "gamma_0_arrival_without_the_speed_up": 43.99,
+}
 # The ratios' bracket: 0.25 on mass and near as registered (by fiat; a
 # registered pin moves on the model owner's word); on far the brackets
 # propagated in quadrature from +-0.5 pixel and +-1 interval (the chief
@@ -129,7 +201,50 @@ def world(name: str, gamma: int) -> Json:
 
 
 def worlds() -> dict[str, Json]:
-    return {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
+    found = {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
+    for family, gamma in MATTER_WORLDS:
+        found[f"{family}_control_g{gamma}"] = matter_world("control", family, gamma)
+        found[f"{family}_g{gamma}"] = matter_world("mass", family, gamma)
+    return found
+
+
+def matter_world(name: str, family: str, gamma: int) -> Json:
+    """Series K's `mass` or `control` at the pin world's pair with the mass
+    a quarter of the light worlds' (M = 2^14), the light lamp replaced by a
+    lamp of the massive family (quantum, momentum_magnitude as
+    `MATTER_FAMILIES`; the reservoir K in `amount`, the turn 1, one row per
+    interval on the heading), the screen's entry reading the family's
+    age, the two keys `optical` and `massive_rows` together; the model id
+    series K's, so that the readings tool reads each against the control
+    of its folder."""
+    keys = MATTER_FAMILIES[family]
+    document = K.world(name)
+    document["suspension"] = list(SUSPENSION)
+    document["optical"] = gamma
+    document["ticks"] = MATTER_TICKS
+    document["massive_rows"] = True
+    document["action"] = MATTER_ACTION
+    document["age_bound"] = MATTER_AGE_BOUND
+    families = [{"name": MATTER_FAMILY_NAME, "quantum": keys["quantum"], "massive": True}]
+    families.extend(document["families"])  # type: ignore[arg-type]
+    document["families"] = families
+    centre = K.CENTRE
+    for entry in document["measured"]:
+        if entry["family"] == "m":
+            entry["amount"] = entry["amount"] * MATTER_MASS_FACTOR
+        elif "lamp" in entry:
+            entry["family"] = MATTER_FAMILY_NAME
+            entry["position"] = [K.LAMP_X, centre[1] + MATTER_IMPACT, centre[2]]
+            entry["amount"] = K.K * MATTER_RESERVOIR_TURN  # the reservoir K x 1: the turn 1
+            entry["lamp"] = {
+                "rate": [1, 1],
+                "wheel": [1, K.N],
+                "directions": [[1, 0, 0]],
+                "momentum_magnitude": keys["momentum_magnitude"],
+            }
+        elif entry["family"] == "wall":
+            entry["table"] = {MATTER_FAMILY_NAME: {"rule": "measure", "reads": "age"}, "m": "pass"}
+    return families_by_definition(document, K.FAMILY_DEFINITIONS, K.DEFINITIONS_SOURCE)
 
 
 def expectations() -> Json:
@@ -232,6 +347,52 @@ def expectations() -> Json:
             ratios["bracket"] = RATIO_BRACKETS[name]["shift"]
             ratios["delay_bracket"] = RATIO_BRACKETS[name]["delay"]
         out["ratios"][name] = ratios
+    out["matter"] = {
+        "derivation": (
+            "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py "
+            "(the light-bending map's crowd lines, the row followed along its own momentum, "
+            "verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push "
+            "at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): "
+            "the deciding world of every family under one wall, the mass 2^14, the pair "
+            "[1, 16384], one massive row per interval on the heading at b = 10; the arrival "
+            "carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) "
+            "grows under the push), so the pin is the map's arrival per world and the readings "
+            "that refute are the map's with one verb changed"
+        ),
+        "mass": (1 << 12) * MATTER_MASS_FACTOR,
+        "impact": MATTER_IMPACT,
+        "ticks": MATTER_TICKS,
+        "window_start": MATTER_WINDOW_START,
+        "families": MATTER_FAMILIES,
+        "worlds": {
+            f"{family}_g{gamma}": {
+                "gamma": gamma,
+                "flight_coefficient": 1 + gamma,
+                "family": MATTER_FAMILY_NAME,
+                "quantum": MATTER_FAMILIES[family]["quantum"],
+                "momentum_magnitude": MATTER_FAMILIES[family]["momentum_magnitude"],
+                "angle_radians": pin["angle"],
+                "shift": pin["shift"],
+                "shift_bracket": SHIFT_BRACKET,
+                "arrival": pin["arrival"],
+                "arrival_bracket": DELAY_BRACKET,
+                "control": f"{family}_control_g{gamma}",
+            }
+            for (family, gamma), pin in MATTER_PINS.items()
+        },
+        "refuting_readings": MATTER_REFUTING,
+        "equivalence": (
+            "matter2_g0 (quantum 2, p = 20, E' = 132) on matter_g0's shift within 0.5 pixel and "
+            "its arrival within 1 interval, each against its own control: the same fall at twice "
+            "the content (the pace and v^2 equal to the integer, the push twice on twice the "
+            "momentum; GAMEBOARD arithmetic of the declaration)"
+        ),
+        "readings": (
+            "DETECTOR: the screen's click lines of the massive family (each click's Node and its "
+            "age moment, `reads: age`), the centroid's shift and the mean age's arrival against "
+            "the control in the late window; no store, no replay"
+        ),
+    }
     return out
 
 

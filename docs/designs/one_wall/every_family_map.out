@@ -1,0 +1,28 @@
+Every family under one wall, the deciding world: a slow massive row beside series K's
+mass at the pair [1, 16384], followed along its momentum on the crowd's lines
+(the light-bending map, section E); the shift in pixels toward the mass, the arrival
+time against the control's, DETECTOR if run; GAMEBOARD arithmetic before any run.
+
+  the family: quantum 1, p = 10, E'_0 = 64, E' = 66, v^2 = 0.0689, the dwell per Link 6.60 intervals (light 1.72)
+    M = 2^14, b =  6: gamma 0 the shift -6.64 px, the arrival -21.60 intervals, the angle 0.251 rad; gamma 1 -6.95 px, -21.50 intervals, 0.260 rad; the shifts' ratio 1.047, the arrivals' difference +0.11
+    M = 2^14, b =  8: gamma 0 the shift -7.01 px, the arrival -16.63 intervals, the angle 0.262 rad; gamma 1 -7.00 px, -15.59 intervals, 0.262 rad; the shifts' ratio 0.997, the arrivals' difference +1.04
+    M = 2^14, b = 10: gamma 0 the shift -5.76 px, the arrival -8.36 intervals, the angle 0.242 rad; gamma 1 -6.11 px, -7.42 intervals, 0.252 rad; the shifts' ratio 1.061, the arrivals' difference +0.94
+    M = 2^14, b = 12: gamma 0 the shift -5.50 px, the arrival -13.59 intervals, the angle 0.203 rad; gamma 1 -6.41 px, -9.53 intervals, 0.267 rad; the shifts' ratio 1.165, the arrivals' difference +4.07
+    M = 2^13, b =  6: gamma 0 the shift -3.43 px, the arrival -10.64 intervals, the angle 0.131 rad; gamma 1 -3.58 px, -10.80 intervals, 0.135 rad; the shifts' ratio 1.044, the arrivals' difference -0.16
+    M = 2^13, b =  8: gamma 0 the shift -3.39 px, the arrival -7.39 intervals, the angle 0.136 rad; gamma 1 -3.59 px, -6.87 intervals, 0.144 rad; the shifts' ratio 1.060, the arrivals' difference +0.51
+    M = 2^13, b = 10: gamma 0 the shift -3.08 px, the arrival -5.04 intervals, the angle 0.118 rad; gamma 1 -3.30 px, -4.26 intervals, 0.131 rad; the shifts' ratio 1.070, the arrivals' difference +0.78
+    M = 2^13, b = 12: gamma 0 the shift -2.93 px, the arrival -5.03 intervals, the angle 0.114 rad; gamma 1 -3.05 px, -4.95 intervals, 0.117 rad; the shifts' ratio 1.042, the arrivals' difference +0.08
+
+  the family: quantum 2, p = 20, E'_0 = 128, E' = 132, v^2 = 0.0689, the dwell per Link 6.60 intervals (light 1.72)
+    M = 2^14, b =  6: gamma 0 the shift -6.64 px, the arrival -21.60 intervals, the angle 0.251 rad; gamma 1 -6.99 px, -21.66 intervals, 0.261 rad; the shifts' ratio 1.053, the arrivals' difference -0.06
+    M = 2^14, b =  8: gamma 0 the shift -7.01 px, the arrival -16.63 intervals, the angle 0.262 rad; gamma 1 -7.04 px, -15.72 intervals, 0.264 rad; the shifts' ratio 1.004, the arrivals' difference +0.91
+    M = 2^14, b = 10: gamma 0 the shift -5.76 px, the arrival -8.36 intervals, the angle 0.242 rad; gamma 1 -6.20 px, -7.31 intervals, 0.255 rad; the shifts' ratio 1.076, the arrivals' difference +1.06
+    M = 2^14, b = 12: gamma 0 the shift -5.50 px, the arrival -13.59 intervals, the angle 0.203 rad; gamma 1 -6.35 px, -10.37 intervals, 0.260 rad; the shifts' ratio 1.153, the arrivals' difference +3.22
+    M = 2^13, b =  6: gamma 0 the shift -3.43 px, the arrival -10.64 intervals, the angle 0.131 rad; gamma 1 -3.59 px, -11.29 intervals, 0.134 rad; the shifts' ratio 1.046, the arrivals' difference -0.65
+    M = 2^13, b =  8: gamma 0 the shift -3.39 px, the arrival -7.39 intervals, the angle 0.136 rad; gamma 1 -3.62 px, -6.94 intervals, 0.145 rad; the shifts' ratio 1.066, the arrivals' difference +0.45
+    M = 2^13, b = 10: gamma 0 the shift -3.08 px, the arrival -5.04 intervals, the angle 0.118 rad; gamma 1 -3.32 px, -4.31 intervals, 0.132 rad; the shifts' ratio 1.078, the arrivals' difference +0.73
+    M = 2^13, b = 12: gamma 0 the shift -2.93 px, the arrival -5.03 intervals, the angle 0.114 rad; gamma 1 -3.07 px, -5.01 intervals, 0.118 rad; the shifts' ratio 1.049, the arrivals' difference +0.02
+
+  the readings that refute, at the chosen world (quantum 1, p = 10, M = 2^14):
+    b = 10: the rule: gamma 1 less gamma 0 arrival +0.94 intervals, the shifts' ratio 1.061; the massive wall unstretched: the gamma 1 arrival -11.03 (the rule's -7.42); the weight blind to the speed, (1 + gamma) E': the gamma 1 shift -10.45 px (the rule's -6.11); the pace unpushed (no speed-up): the gamma 0 arrival +43.99 (the rule's -8.36)
+    b = 12: the rule: gamma 1 less gamma 0 arrival +4.07 intervals, the shifts' ratio 1.165; the massive wall unstretched: the gamma 1 arrival -15.67 (the rule's -9.53); the weight blind to the speed, (1 + gamma) E': the gamma 1 shift -12.16 px (the rule's -6.41); the pace unpushed (no speed-up): the gamma 0 arrival +45.68 (the rule's -13.59)
