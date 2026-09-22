@@ -6741,6 +6741,102 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### X, Poisson after a detector (2026-09-22)
+
+- **Confronts.** Poisson's equation as the law states it
+  ([DERIVATIONS_BEAM 5.1](DERIVATIONS_BEAM.md#51-the-two-fields-of-one-stream-and-the-equation-they-obey)):
+  the age moment of a stream, `A = q dwell / (4 pi c r)` per source, is the
+  retarded potential and obeys `Laplacian(A) = -(dwell / c) q delta(x)`,
+  while the presence is the retarded flux and obeys Gauss's law. Series T
+  read a clock's rate after a detector at two distances from a point crowd
+  ([NATURE row 12](NATURE.md), REPLICATED): that is Laplace's part, the
+  field outside its source. THE SOURCE TERM, the other half of the
+  equation, had no detector reading: series E's `1 / r` is a GameBoard
+  reading of probes in a world with no detector, struck from the paper by
+  the owner's word (records 562, 564 and 575), and the paper says in six
+  places that Poisson's measurement after a detector is a run not made.
+  This series makes it, after a detector, at both sides of the source. The
+  chief physicist's design of 2026-09-22 ([record 574](LOG_2026-09-20.md),
+  part 2, POISSON AFTER A DETECTOR) under the model owner's word of that
+  day ("build them", records 574 and 581); the folder
+  [examples/events/shell_clock/](../examples/events/shell_clock/README.md).
+  What a shell asks that no point source can: inside it the potential is
+  flat (the shell theorem) and the flux is not, so the interior tells the
+  clock's two words apart at a source term, where outside a source they
+  differ only in how fast they fall.
+- **Model prediction, pinned before the run** (the folder's
+  [README](../examples/events/shell_clock/README.md),
+  `examples/events/shell_clock/expectations.json` with its `derivations`
+  map, written by `make_worlds.py`; every number of it from section E of
+  [docs/designs/clock_age/clock_age_map.py](designs/clock_age/clock_age_map.py),
+  whose output is [clock_age_map.out](designs/clock_age/clock_age_map.out)
+  beside it; committed before the first interval ran). Series T's geometry
+  with the crowd's point source replaced by a shell: the lamp `s_px1` at
+  rest at x = 103 (2^20 units, one unit per self-creation on -x, the wheel
+  [1, 64]), the detector fixed at x = 3 measuring `s_px1` with
+  `reads: "age"` (series T's flight of 100 Links and series T's windows,
+  200 to 350 and 350 to 500 of 500 intervals), and 450 fixed `mass` sources
+  at the Nodes with `|distance - 6| < 1/2` (series E's selection of a
+  shell) about a centre 2, 4 or 12 Links from the lamp on +x, each
+  releasing on series E's full fan of 290 at `amount` 1431597 and `release`
+  [1, 2^16], which is 21.8444 units per source per direction per interval:
+  series T's crowd's total release pair, 2 F with F = 4915, spread over the
+  shell's Nodes, the design's scaling. `suspension` [1, 2^16]; the bar
+  110 + r x 15 x 15. Nine worlds: the lamp's `mass` entry
+  `{"rule": "pass", "reads": "age"}` (the age word, the law's default since
+  clock-age-v1) or `{"rule": "pass", "reads": "presence"}` (the presence
+  word, run beside it as series T ran the two words), at r = 2 and 4
+  (inside) and 12 (outside), each with its control, the lamp alone on the
+  same GameBoard.
+  **With uniform sources the lattice gives the shell theorem exactly:** the
+  age moment at the lamp's Node is ONE INTEGER, 5086, at r = 2 and at
+  r = 4, and 3144 at r = 12, against the presence 499, 596 and 163, which
+  rises toward the shell as a flux does. **The one thing the design did not
+  foresee, which the map states and solves:** the shell's sources stand in
+  one another's rows, so each source's own clock counts the age moment of
+  its neighbours by the law's default word and a source releases only at
+  its self-creations, at its declared rate over 1 + its own count; the map
+  iterates that fixed point (the sources' own k 0.787 to 0.932, mean 0.866,
+  so each keeps 11.31 to 12.22 of its declared 21.84 units, 0.536 of the
+  rate). It is the law's own nonlinearity, not a rule added here: a dense
+  shell slows its own clocks and so releases less. With uniform sources the
+  interior is flat to the last digit, and the SPREAD of the sources' own
+  clocks over the lattice shell is the whole of the ripple the inside pin
+  carries.
+  DETECTOR, the lamp's light at x = 3, `1 + z` the inverse slope of the
+  birth ordinal against the click's tick in each window and `k = 1 + z - 1`:
+  the pinned k 0.914351 (r = 2), 0.910783 (r = 4) and 0.563110 (r = 12)
+  under the age word, 0.089647, 0.106724 and 0.029271 under the presence
+  word, the controls 1.0000 exactly, each k within a tenth of itself (the
+  bracket is what the fixed point does not model, the bursts of a slowed
+  source's release). **The three ratios that decide, pinned within 0.02**
+  (a common factor on the shell's release cancels in a ratio of k exactly,
+  so these are robust where the absolute k is not): inside under the age
+  word `k(2) / k(4)` = 1.003917 against the continuum's 1, the departure
+  being the map's ripple 0.0039; inside under the presence word
+  `k(2) / k(4)` = 0.839989, forty-one ripples from 1, the FAIL the design
+  expects, since `1 / r^2` obeys the flux and not the potential; outside
+  under the age word `k(12) / k(4)` = 0.618270, the continuum's `R / 12` =
+  0.5 and the lattice above it by the grain of the map's section C, where
+  the age moment times r rises with r (series E's shell means read the same
+  grain). Refuted: the inside ratio departing from 1 by more than 0.02 (no
+  Poisson's source term), the outside ratio missing its pin by more than
+  0.02 (series T's `1 / r` with it), any control departing from 1.0000.
+- **Features.** The clock's count per table entry (`count_component`,
+  `counts_age` in `nature_beam`) under both words; a free family's release
+  whole on every direction of a 290-direction fan from 450 sources at once;
+  a source's directions named by the indices of the world's direction
+  table; the lamp's births as the clock's record and the record form's
+  click line with `age`; `examples/events/shell_clock/read_runs.py`, which
+  reads the detector's `click` lines and nothing else, no store, no
+  `state.json`, no replay (the owner's word of 2026-09-22, records 562 and
+  564); `tests/test_shell_clock.py` (the shipped worlds the generator's,
+  the algebra of the pin, the tool on a hand-made click list, and the rule
+  the reading rests on: a detector whose own clock is slowed by a crowd at
+  its Node clicks on the same lattice ticks as one with no crowd, so the
+  shell's rows reaching the detector cannot move `1 + z`; only the lamp's
+  clock does).
+
 ### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
 
 - **Confronts.** The bending and the delay of light beside a mass, the
