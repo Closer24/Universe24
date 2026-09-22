@@ -3710,3 +3710,37 @@ Inside; "inside the GameBoard" and "above it" are the two worlds in
 plain words without the capitalized terms, which the abstract defines;
 "what the clicks recover of nature" is the frame's verb and the
 paper's claim, the match shown result by result. One line to the Boss.
+
+### 10. The framing list compiled (2026-09-22): 30 pages held, ready for PR #769's merge SHA
+
+The framing list of sections 7 and 9 (the title, the abstract's first
+sentences, P11 with the owner's half sentence, the reading rule's two
+additions, the sweep's five changes, the two ordering sentences, the
+frame's paragraph with the three sentences and the click frame's
+bibitem, the limits paragraph's first two sentences and Table 4's
+Lorentz row replaced, the boost sentence, the c-postulate row, row 4b)
+is written as corrections (the writer's scratch scripts, seven rounds)
+and compiled on a trial: 30 pages, the split 25 / 2 / 3, the references
+on 26 to 27, the appendices on 28 to 30. The trims that paid it, all
+duplicated or narrative text carrying no claim and no table number:
+the introduction's narrative to its rule; the mixture sentence's
+formula; Section 8's inverse-interval clause; the optical-v1 sentence;
+Theorem 5's proof's last sentence and its list of grains; the
+positioning paragraph's Bohm and psi-ontic clauses and the testbed's
+clause; the claim paragraph's middle; the code paragraph's last
+sentence; the host paragraph's last clause; Kennard's sentence and the
+uncertainty's last sentence; Planck's paragraph; the Bell scope
+sentences and the strict-crossing sentence; Theorem 6's proof's middle
+value; the uniform birth phase's run clause; Table 3's caption and
+rows 2c, 4b and 12; the prediction's three assumptions in fewer words
+and its proximity sentence; the proved list's three clauses and its
+opening; the runs paragraph in two lines; Table 4's Newton, Lorentz,
+masses and harmonic cells; the limits paragraph's E' clause; the frame
+paragraph's velocity, rest-rate, open-face and closing clauses. No
+number moved, no claim; the S(N) figure and the covariant square in its
+frame stay. The tree is untouched until the merge SHA of PR #769
+reaches the writer: then the scripts run with the SHA in the click
+frame's bibitem, the three sentences are checked against the merged
+section 0 (with "Outside, the game above the board" for "our real
+world", record 768), main.tex is regenerated, the pinning test and
+check.py run, one commit, one push, the report.
