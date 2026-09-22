@@ -903,18 +903,17 @@ def main(argv: list[str] | None = None) -> int:
                 burst_max = expected.get("step_burst_max")
                 bursts = [p.burst for p in fit.points if p.burst is not None]
                 if isinstance(burst_max, int) and bursts:
-                    # The step drive (2026-09-20): one Link per interval at most.
+                    # The step drive (2026-09-20): one Link per interval at
+                    # most. The burst is counted on the `step` lines' ticks,
+                    # the record's ordering: a GameBoard diagnostic, printed
+                    # and out of the counted criteria (the clock audit of
+                    # 2026-09-22); the detector reading behind it, the stars'
+                    # arrivals at the centre, is read above.
                     ok = max(bursts) <= burst_max
-                    criteria.append(
-                        (
-                            f"{run.name}: the step rule's longest burst at most {burst_max} Link per "
-                            f"interval {KIND_BOARD}",
-                            ok,
-                        )
-                    )
                     print(
-                        f"{KIND_BOARD} `{run.name}`: the longest burst {max(bursts)} (expected at most "
-                        f"{burst_max}): {verdict(ok)}"
+                        f"{KIND_BOARD} (a diagnostic, not counted) `{run.name}`: the step rule's longest "
+                        f"burst {max(bursts)} Link per interval (expected at most {burst_max}): "
+                        f"{'agrees' if ok else 'differs'}"
                     )
                 k_bracket = crowd.get("k_bracket") if isinstance(crowd, dict) else None
                 if isinstance(k_bracket, list):

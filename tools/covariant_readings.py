@@ -11,10 +11,15 @@ kinds ([the register](../docs/EXPERIMENTS.md), "Two kinds of readings"):
 DETECTOR, a detector's record or a measured event's own record (the
 products' clicks on the +x face of the J4 bar; the centre's pointer of the
 coasting world, whose z is read by `tools/hubble_stars_readings.py`'s own
-rule; the body's `become` line, its tick and Node; the `energy` lines'
-ticks), or GAMEBOARD, the host's view (E' at load and E'_0, the pace over
-the late window from the step lines, the invariant E'^2 <= W < (E' + 1)^2
-at every interval, the intervals owed to proper time, the comparisons).
+rule; the body's `become` line, its Node and its `counted`, the body's own
+record), or GAMEBOARD, the host's view (E' at load and E'_0, the `energy`
+lines and their ticks, the pace over the late window from the step lines,
+the invariant E'^2 <= W < (E' + 1)^2 at every interval, the intervals owed
+to proper time, the comparisons). The tick of a line is the record's
+ordering, a GameBoard number (the clock audit of 2026-09-22, record 678):
+the `become` line is the detector record and its `counted` the clock's
+reading; a click's tick orders the record, the product's age being the
+reading of its flight.
 Since the audit of record 567 (the model owner's rule, records 562 and
 564) a GAMEBOARD number is a diagnostic: printed with its expectation,
 never a verdict, never counted inside or outside; each names the detector
@@ -264,11 +269,20 @@ def muon_lines(
     )
     creations = reading.self_creations.get(1, [])
     sixty_fourth = creations[63] if len(creations) >= 64 else None
-    ok = sixty_fourth == become_tick
-    verdicts.append(ok)
-    lines.append(
-        f"  [{DETECTOR}] the 64th `creating` energy line at tick {sixty_fourth}, the `become` line's tick: "
-        f"{'inside' if ok else 'OUTSIDE'}"
+    # The `energy` line is ENGINE.md's GameBoard row and its tick the
+    # record's ordering: the identity with the `become` line's tick is a
+    # diagnostic, out of the verdicts (the clock audit of 2026-09-22); the
+    # `become` line above is the detector record.
+    diagnostic(
+        lines,
+        diagnostics,
+        "sixty_fourth_energy_line_tick",
+        sixty_fourth == become_tick,
+        f"the 64th `creating` energy line at tick {sixty_fourth} against the `become` line's tick "
+        f"{become_tick} (the record's ordering)",
+        "the `become` line's `counted`, the body's own clock (above, DETECTOR)",
+        sixty_fourth,
+        become_tick,
     )
     beta = [c for c in reading.clicks if c["family"] == "beta" and c["detector"] == "face:+x"]
     click_tick = None if not beta else int(beta[0]["tick"])
@@ -281,7 +295,9 @@ def muon_lines(
     verdicts += [design_ok, derived_ok]
     lines.append(
         f"  [{DETECTOR}] the product `beta`'s click on face:+x at tick {click_tick} (content "
-        f"{registered['beta_click_content']}): the design's {click['design']} +- {click['tolerance']}: "
+        f"{registered['beta_click_content']}; the tick is the record's ordering, the product's age the "
+        "reading of its flight, the clock audit of 2026-09-22): "
+        f"the design's {click['design']} +- {click['tolerance']}: "
         f"{'inside' if design_ok else 'OUTSIDE'}; the derived {click['derived_tick']}: "
         f"{'inside' if derived_ok else 'OUTSIDE'}"
     )

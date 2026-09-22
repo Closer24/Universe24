@@ -205,7 +205,8 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
         inside = gap <= 1
         out.append(
             (
-                f"[{DETECTOR}] body {number} ({body.family}): the push per interval at tick {push_tick}",
+                f"[{DETECTOR}] body {number} ({body.family}): the push per interval at tick {push_tick} "
+                "(per self-creation of the body, its own clock; the tick the record's ordering)",
                 inside,
                 f"expected {vector(expected)}, measured {vector(measured)}"
                 + ("" if gap == 0 else f" (the accumulator's unit: {gap})"),
@@ -214,7 +215,9 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     rows = int(pinned["border_rows_per_interval"])  # type: ignore[arg-type]
     out.append(
         (
-            f"[{DETECTOR}] the border `{LIFETIME_BORDER}` at tick {BORDER_TICK}",
+            f"[{DETECTOR}] the border `{LIFETIME_BORDER}` at tick {BORDER_TICK} (rows per self-creation of "
+            "the bodies, read at the border, a fixed detector at k = 0 whose tick is its own clock, record "
+            "569; the tick the record's ordering)",
             reading.border_rows_at_border_tick == rows and reading.border_families <= {GLUE},
             f"expected {rows} glue rows and no other family, measured {reading.border_rows_at_border_tick} "
             f"of {sorted(reading.border_families)}",

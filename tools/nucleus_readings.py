@@ -306,8 +306,8 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         print(f"[{DETECTOR}]   body {body.number}: {handed}")
         if any(body.kick):
             print(
-                f"[{DETECTOR}]   body {body.number}: the kick {vector(body.kick)} outweighed by the pushes read "
-                f"by tick {body.kicked_back_at}"
+                f"[{DETECTOR}]   body {body.number}: the kick {vector(body.kick)} outweighed by the pushes read; "
+                f"[{GAMEBOARD}] by tick {body.kicked_back_at} (the record's ordering)"
             )
         steps = (
             f"{body.steps} steps, the first at tick {body.first_step[0]} to {body.first_step[1]}, "
@@ -322,8 +322,9 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         at = min(clicks)
         steady = clicks.get(REFERENCE_TICK, 0)
         print(
-            f"[{DETECTOR}]   the border `lifetime`: the first clicks at tick {at}, {steady} per interval at tick "
-            f"{REFERENCE_TICK} ({steady // max(1, len(reading.bodies))} per body)"
+            f"[{DETECTOR}]   the border `lifetime`: {steady} per interval at tick {REFERENCE_TICK} "
+            f"({steady // max(1, len(reading.bodies))} per body; a fixed detector at k = 0, its tick its own "
+            f"clock); [{GAMEBOARD}] the first clicks at tick {at} (the onset, the record's ordering)"
         )
     if len(reading.bodies) == 2:
         start, largest, final, returned = separation_summary(reading, 1, 2)
@@ -352,7 +353,7 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
             print(f"[{DETECTOR}]   {label}: {'inside' if ok else 'outside'}")
         else:
             print(
-                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records)   {label}: "
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records or an onset tick)   {label}: "
                 f"{'agrees' if ok else 'differs'}; the detector reading behind it, the faces' and the "
                 "border's clicks of the bodies, not yet read"
             )
@@ -360,11 +361,21 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
     return [c for c in criteria if deciding(c[0])]
 
 
+# The onset of a reading in host ticks (the border's first click, the tick
+# by which the pushes outweigh the kick): the record's ordering, a GameBoard
+# number (the clock audit of 2026-09-22, record 678), a diagnostic beside
+# the rate or the push it belongs to.
+ONSET = "the onset tick (the record's ordering)"
+
+
 def deciding(label: str) -> bool:
     """A criterion counts inside or outside when it reads a body's own
     records (its pushes and their row sums, the shear; its reads, hand-overs,
     kicks and clicks; the border's clicks); a step, a position or a
-    separation is a diagnostic (record 567, F12)."""
+    separation is a diagnostic (record 567, F12), and so is an onset in host
+    ticks (the clock audit of 2026-09-22)."""
+    if ONSET in label:
+        return False
     return any(word in label for word in ("push", "shear", "read", "hand", "kick", "click", "leave"))
 
 
@@ -410,11 +421,21 @@ def expectations(reading: Reading) -> list[tuple[str, bool]]:
                 all(10**12 <= b.largest_handed <= 10**13 for b in bodies if b.contacts),
             )
         )
+        # The rate is read at the border, a fixed detector at k = 0 whose
+        # tick is its own clock (record 569): counted. The onset "from tick
+        # 4" is the record's ordering: a diagnostic (the clock audit of
+        # 2026-09-22).
         found.append(
             (
-                "290 lifetime clicks per body per interval from tick 4",
-                min(reading.lifetime_clicks, default=0) == 4
-                and reading.lifetime_clicks.get(REFERENCE_TICK) == 290 * len(bodies),
+                f"290 lifetime clicks per body per interval at tick {REFERENCE_TICK} (the border, a fixed "
+                "detector at k = 0: its tick its own clock)",
+                reading.lifetime_clicks.get(REFERENCE_TICK) == 290 * len(bodies),
+            )
+        )
+        found.append(
+            (
+                f"the border's first clicks at tick 4, {ONSET}",
+                min(reading.lifetime_clicks, default=0) == 4,
             )
         )
     elif name == "deuteron_3":
@@ -431,9 +452,17 @@ def expectations(reading: Reading) -> list[tuple[str, bool]]:
         )
         found.append(("both bodies leave through the faces", all(b.escaped is not None for b in bodies)))
     elif name == "deuteron_1_kick":
+        # The pushes read are the bodies' own records: counted. "By tick 5"
+        # is the record's ordering: a diagnostic (the clock audit of 2026-09-22).
         found.append(
             (
-                "the kick outweighed by the pushes read by tick 5",
+                "the kick outweighed by the pushes read",
+                all(b.kicked_back_at is not None for b in bodies),
+            )
+        )
+        found.append(
+            (
+                f"the kick outweighed by tick 5, {ONSET}",
                 all(b.kicked_back_at is not None and b.kicked_back_at <= 5 for b in bodies),
             )
         )

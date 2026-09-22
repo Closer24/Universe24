@@ -394,9 +394,14 @@ def print_world(
             f"(0 or 1 at a closing radius)"
         )
     if r.reads:
+        # The reads and their pushes are the electron's own record; the mean
+        # per interval divides by the host's tick count, a GameBoard rate (the
+        # clock audit of 2026-09-22), the electron's own clock being its time.
         print(
-            f"[{DETECTOR}] the electron's own reads: {r.reads} `read` records, the mean inward push per "
-            f"interval {r.inward_push / r.ticks / 64:.2f} (in units of Q = 64 per unit of content)"
+            f"[{DETECTOR}] the electron's own reads: {r.reads} `read` records, the inward push summed "
+            f"{r.inward_push / 64:.0f} (in units of Q = 64 per unit of content); "
+            f"[{GAMEBOARD}] per interval over the run's {r.ticks} ticks {r.inward_push / r.ticks / 64:.2f} "
+            "(the host's tick count as the denominator; the electron's own clock is the detector's time)"
         )
     turns = max(1, completed)
     pooled: list[tuple[int, int]] = [(0, 0)] * turns

@@ -49,7 +49,12 @@ the audit of record 567): a DETECTOR reading is a probe's own record
 and is the only kind compared with an expectation; a GAMEBOARD reading (a
 replay of the world through the API: the ring means of `shell_readings`,
 the cube flux, the age moment at a Node) is a diagnostic, printed with its
-expectation and never counted as PASS, FAIL, inside or outside; each
+expectation and never counted as PASS, FAIL, inside or outside; the tick
+of a line is the record's ordering, a GameBoard number (the clock audit of
+2026-09-22, record 678), so a check on a tick (the front's tick of item 4,
+1b's one step per interval) or a rate over the host's tick count (item 6's
+share lost, the per-interval columns) is a diagnostic too, the probe's own
+clock (its age) being the detector's time; each
 diagnostic names the detector reading behind it, not yet read.
 """
 
@@ -488,12 +493,15 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
             walked,
             by_rule[: len(walked)],
         )
-        checks.equal(
+        # The step ticks are the record's ordering, a GameBoard number (the
+        # clock audit of 2026-09-22): a diagnostic, not a counted criterion.
+        checks.diagnostic_equal(
             f"1b_m{m}: one x-step per interval from the first step to the source, x {PROBE_X[0]} down to {CENTRE[0] + 1}",
             [(int(e["tick"]), vector(e["node"])[0], vector(e["to"])[0]) for e in steps],
             [(ticks[0] + k, PROBE_X[0] - k, PROBE_X[0] - k - 1) for k in range(PROBE_RADIUS - 1)]
             if ticks
             else [],
+            "the probe's own clock (its age at each read, DETECTOR)",
         )
         checks.equal(
             f"1b_m{m}: the momentum at every step m times 1b_m1's",
@@ -668,9 +676,18 @@ def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
             label_push(heading, found[1], int(probe["content"])),
         )
         checks.equal(
-            f"{name}: the first read of the probe at r = {r} on {axis} is the flight rule's front, whole",
-            found[:2],
-            expected,
+            f"{name}: the first read of the probe at r = {r} on {axis} brings the front whole, 2^17 units",
+            found[1],
+            expected[1],
+        )
+        # The front's tick is the record's ordering, a GameBoard number (the
+        # clock audit of 2026-09-22): a diagnostic; the probe's age at the
+        # read is its own clock, the detector's time.
+        checks.diagnostic_equal(
+            f"{name}: the first read of the probe at r = {r} on {axis} at the flight rule's front tick",
+            found[0],
+            expected[0],
+            "the probe's own clock (its age at the read, DETECTOR)",
         )
         lines.append(f"{name} | {axis} | {r} | {at(axis, r)} | {found} | {expected}")
     lines.append("")
@@ -896,7 +913,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
     last = run.ticks
     first = last - FAR_WINDOW + 1
     lines = [
-        f"DETECTOR (the probes' own records: the reads, the amount read, the push; the column `presence (replay)` alone is GAMEBOARD, a diagnostic) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
+        f"DETECTOR (the probes' own records: the reads, the amount read, the push; the column `presence (replay)` alone is GAMEBOARD, a diagnostic; the per-interval columns divide by the host's tick count over the window, GAMEBOARD as a rate, the probe's own clock being its age: the clock audit of 2026-09-22) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
         "",
     ]
     lines.append(
@@ -991,11 +1008,17 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
             (front(r)[0], True),
         )
         expected_k = Q / (6 * r)
-        checks.reading(
-            f"6: the count's share lost at r = {r} against k / (k + 1) with k = q / (6 r) ~ 1 / r",
+        # The denominator `run.ticks` is the host's interval count, so the
+        # share lost is a GameBoard rate (the clock audit of 2026-09-22): a
+        # diagnostic, out of the inside / outside count; the probe's age is
+        # the detector reading.
+        checks.diagnostic(
+            f"6: the count's share lost at r = {r} against k / (k + 1) with k = q / (6 r) ~ 1 / r "
+            "(the age over the host's tick count)",
             1 - found[0] / run.ticks,
             0.0,
             expected_k / (expected_k + 1),
+            "the probe's age against a clock of the reader's own (a lamp, series S's reader_clock form)",
         )
         first, last = run.ticks - FAR_WINDOW + 1, run.ticks
         k_mean = sum(replay.age_moment_at[r][first - 1 : last]) / FAR_WINDOW * numerator / denominator
