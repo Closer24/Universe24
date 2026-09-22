@@ -73,3 +73,19 @@ repeats the sequence exactly (the wheel is a counter): more births add no
 information. Whether a wheel that is not a counter (a draw, which P4
 forbids) would close the channel is the physicist's and the owner's
 question of record 938 (2), not this run's.
+
+## 3. The NATURE row candidate, for the writer on the merge SHA
+
+In the paper's manner (the confrontation register's rows read after a
+detector: the observable and nature's value; the law's detector reading;
+the verdict), one row beside 1a and 1b (the number the writer's):
+
+| Row | Observable and nature's value | The law's detector reading | Verdict |
+| --- | --- | --- | --- |
+| 1c (the writer's number) | No signalling in the ORDER: nature 0 on Bob's serial correlation at lag 1 under Alice's settings (the outcome order of a pair is random and carries no setting of the other party; the marginals independent of the other party's setting hold in nature and in the law alike) | 15 / 16 under Alice's constant a = 0 and -1 / 16 under her period-3 cycle a = 0, 21, 42 (DETECTOR, this run: the two order worlds at N = 64, the wheel [1, 64], 192 births each, b = 0, exact; the referee's a = 32, 0, 0 gives -5 / 16 by computation, not declarable by the register's keys); Bob's counts 96 / 96 under both (Theorem 5, PASS in the counts) | FAIL: the law's determinism (the wheel a counter, P4) shows in the order of the outcomes, not in the counts; the no-signalling claim holds for the counts over a cycle and not for the sequence |
+
+The row's source SHA is this branch's merge commit (the runs are on
+`d537d443...`'s `src`, the tree of `main` at `02147ed5`); the paper's
+no-signalling sentence and the abstract's "no-signalling in counts and
+times" are the writer's to narrow to the counts on the owner's word
+(record 938 (2)), with this row as the reading.
