@@ -282,10 +282,12 @@ def main() -> None:
     )
     push_12 = CHARGE_PRODUCT * M * Q * E_12 / 10.0
     print(
-        f"[GAMEBOARD by formula] the lag's pump: the Node lags the accumulated motion by half a Link in the mean, "
-        f"so the push read at the Node has a part along the motion of 1 / (2 r) of its size (4.2 percent at r = 12), "
-        f"and the work per turn is pi x F(r): {math.pi * push_12:.2e} at r = 12 against the bound value "
-        f"{293783192**2 / (2 * QSM) - push_12 * 144 / 12:.2e}"
+        f"[GAMEBOARD by formula] the lag's pump, per axis: the Node lags the accumulated motion by half a Link "
+        f"in the mean on each axis toward the motion's sign, (1 / 2) S_1(v) / |v| Links along the motion, so the push "
+        f"read at the Node has a part along the motion of (S_1(v) / |v|) / (2 r) of its size (4.2 percent on an axis "
+        f"heading, 5.9 on the diagonal, 5.3 averaged round the circle at r = 12), and the work per turn is "
+        f"pi x F(r) x S_1 / |v|: {math.pi * push_12:.2e} on an axis heading, {4 * push_12:.2e} averaged on the plane, "
+        f"at r = 12 against the bound value {293783192**2 / (2 * QSM) - push_12 * 144 / 12:.2e}"
     )
     for case in CASES:
         print(run(case))

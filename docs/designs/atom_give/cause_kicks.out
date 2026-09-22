@@ -1,6 +1,6 @@
 The kick map of the atom's loop at r = 12, by algebra: the Atom
 [GAMEBOARD] Q S M = 5301780480, E_12 = 6.588 entries per shell, the kick per shell 1.239e+07 label units (2.42 degrees of the declared momentum)
-[GAMEBOARD by formula] the lag's pump: the Node lags the accumulated motion by half a Link in the mean, so the push read at the Node has a part along the motion of 1 / (2 r) of its size (4.2 percent at r = 12), and the work per turn is pi x F(r): 3.89e+06 at r = 12 against the bound value -6.72e+06
+[GAMEBOARD by formula] the lag's pump, per axis: the Node lags the accumulated motion by half a Link in the mean on each axis toward the motion's sign, (1 / 2) S_1(v) / |v| Links along the motion, so the push read at the Node has a part along the motion of (S_1(v) / |v|) / (2 r) of its size (4.2 percent on an axis heading, 5.9 on the diagonal, 5.3 averaged round the circle at r = 12), and the work per turn is pi x F(r) x S_1 / |v|: 3.89e+06 on an axis heading, 4.95e+06 averaged on the plane, at r = 12 against the bound value -6.72e+06
 [GAMEBOARD by formula] A. as the algebra: steady, no fire lost: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0
     quarter at   367: r =  13.00 Links, abs(p) =  287.4 million, E =   -5.93 x 10^6
     quarter at   867: r =  17.00 Links, abs(p) =  239.7 million, E =   -5.07 x 10^6

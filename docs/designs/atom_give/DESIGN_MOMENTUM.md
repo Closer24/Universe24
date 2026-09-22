@@ -488,10 +488,11 @@ factor fits the crossings) but a torque, the loop's angular momentum up
 of a turn; candidates (i) the fan's L1 factor, (ii) the drive's wall, (iii) the
 proton's reads and (v) the pulsed crowd each tested and NOT ACCOUNTING
 for it; the source the drive's step (iv 2), with a closed form: the
-body's Node lags its accumulated motion by half a Link in the mean, so
-the push read at the Node has a part along the motion of `1 / (2 r)`
-and pumps `pi F(r)` per turn; the kick map of CAUSE.md section 2 (v)
-reproduces the escape with the steady shell-mean push alone and holds
+body's Node lags its accumulated motion by half a Link in the mean on
+each axis, so the push read at the Node has a part along the motion of
+`(S_1(v) / abs(v)) / (2 r)` (4.2 to 5.9 percent at r = 12) and pumps
+`pi F(r) S_1 / abs(v)` per turn; the kick map of CAUSE.md section 2 (v)
+reproduces the escape's kind with the steady shell-mean push alone and holds
 the loop at r = 12 under a step fired at half the wall (the centred
 step), a hypothesis under its own identity for the owner's word; under
 flow-link-v1 the push's size in the plane falls by 1.287 and the pump is

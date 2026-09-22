@@ -23,14 +23,22 @@ pulse (section 2 (v)): the loop's angular momentum and its energy both
 RISE over the first three quarters of a turn (L by 30 percent, E by 45
 percent of its bound value, from the crossings' momenta), a tangential
 push along the motion of about 5 percent of the radial. ITS SOURCE IS
-THE DRIVE'S STEP, with a closed form: the count primitive fires a step
-when the accumulated motion reaches a whole wall, so the body's Node
-lags its accumulated motion by half a Link in the mean, and the push
+THE DRIVE'S STEP, with a closed form, per axis (the reviewer's line,
+record 953's read): the count primitive fires a step when the
+accumulated motion reaches a whole wall, and the per-axis accumulator
+holds its remainder in `[0, wall)`, so the body's Node lags its
+accumulated motion by `(1 / 2) sign(p_a)` of a Link on EACH axis, toward
+the motion's sign, half a Link in the mean per axis; along the motion
+the lag is `(1 / 2) S_1(v) / abs(v)` Links (`S_1(v) = abs(v_x) +
+abs(v_y) + abs(v_z)`: 1 / 2 on an axis heading, `sqrt 2 / 2` on the
+diagonal, `2 / pi` averaged round a circle on the plane), and the push
 read at the Node (the rows' labels there, along the lines from the
-proton to the NODE) has a part along the motion of `1 / (2 r)` of its
-size, 4.2 percent at r = 12 against 4.7 read, pumping `pi x F(r)` of the
-loop's constant per turn, `3.9 x 10^6` at r = 12 against 3.5 read over
-three quarters. The kick map of section 2 (v) (the Atom Algebraist's
+proton to the NODE, nothing of the accumulator entering it) has a part
+along the motion of `(S_1(v) / abs(v)) / (2 r)` of its size, 4.2 to 5.9
+percent at r = 12 (5.3 averaged) against 4.7 read, pumping `pi F(r) S_1
+/ abs(v)` of the loop's constant per turn (`4 F(r)` averaged on the
+plane: `5.0 x 10^6` per turn at r = 12, about 3.7 over three quarters
+against 3.5 read; `1 / (2 r)` and `pi F(r)` are the axis-heading case). The kick map of section 2 (v) (the Atom Algebraist's
 body step under the shell mean, the fan's grain absent) reproduces the
 escape with the steady push alone and, with the push read at the
 accumulated position, or with the step fired at HALF the wall (the Node
@@ -287,17 +295,24 @@ constant, as the algebra of a kick map says; the physicist's candidate
 does not stay: the drive itself is the question; (4) the push read at
 the accumulated position (L, N) holds the loop at r = 12 for five
 turns, which names the cause: the LAG of the Node behind the body's
-accumulated motion. The closed form: the accumulator of an axis runs
-from 0 to the wall between steps, so the Node lags the accumulated
-motion by half a Link in the mean along the motion; the push read at the
+accumulated motion. The closed form, PER AXIS: the accumulator of an
+axis runs from 0 to the wall between steps and holds its remainder in
+`[0, wall)`, so the Node lags the accumulated motion by `(1 / 2)
+sign(p_a)` of a Link on each axis, toward the motion's sign, half a Link
+in the mean per axis; along the motion the lag is `(1 / 2) S_1(v) /
+abs(v)` Links, 1 / 2 on an axis heading, `sqrt 2 / 2` on the diagonal,
+`2 / pi` averaged round a circle on the plane. The push read at the
 Node is along the lines from the proton to the Node, which the true
-position leads by that half Link, so the push has a part along the
-motion of `sin(1 / (2 r))`, 4.2 percent at r = 12, 3.8 at 13, 2.9 at 17,
-1.9 at 26, against the 4.7 percent read (section 1 (c)); the work per
-turn is `(1 / (2 r)) x F(r) x 2 pi r = pi F(r)`, independent of the
-radius for a given push, `3.9 x 10^6` at r = 12 against the reading's
-3.5 over three quarters, and falling as `F(r)` with the widening,
-which is the reading's flattening from r = 17 out. (5) The cure of one
+position leads by that lag, so the push has a part along the motion of
+`(S_1(v) / abs(v)) / (2 r)`: at r = 12, 4.2 percent on an axis heading,
+5.9 on the diagonal, 5.3 averaged round the circle (3.8 to 5.4 at 13,
+2.9 to 4.2 at 17, 1.9 to 2.7 at 26), against the 4.7 percent read
+(section 1 (c)); the work per turn is `((S_1 / abs(v)) / (2 r)) x F(r) x
+2 pi r = pi F(r) S_1 / abs(v)`, independent of the radius for a given
+push, `4 F(r) = 5.0 x 10^6` per turn averaged on the plane at r = 12,
+about `3.7 x 10^6` over three quarters against the reading's 3.5, and
+falling as `F(r)` with the widening, which is the reading's flattening
+from r = 17 out; `1 / (2 r)` and `pi F(r)` are the axis-heading case. (5) The cure of one
 declaration (O, P, R): the step fired when the accumulated motion
 passes HALF a Link beyond the Node and the whole wall subtracted, so the
 accumulator runs in `[-wall / 2, wall / 2)` and the Node is the nearest
@@ -326,9 +341,10 @@ drive rows).
 
 Verdict on the cause: NOT ACCOUNTED by (i), (ii), (iii) or (v);
 ACCOUNTED by (iv) 2, the drive's step: the half-Link lag of the Node
-behind the accumulated motion turns the push by `1 / (2 r)` along the
-motion and pumps `pi F(r)` per turn; the kick map reproduces the escape
-with the steady push alone and holds the loop with the centred step or
+behind the accumulated motion on each axis turns the push by `(S_1(v) /
+abs(v)) / (2 r)` along the motion (4.2 to 5.9 percent at r = 12) and
+pumps `pi F(r) S_1 / abs(v)` per turn; the kick map reproduces the
+escape's kind with the steady push alone and holds the loop with the centred step or
 the push at the accumulated position. The algebra orders no run; the
 run that confirms it on the lattice with the fan's grain is the owner's
 word on the centred step's identity.
@@ -377,8 +393,10 @@ it, the steady push corrected by the L1 factor widens by the lag and the
 pulse adds nothing to it. What remains is the owner's word on the
 centred step; after it, the registered `hydrogen_r12` under that
 identity (with the fan's grain, which the map cannot give), then under
-`drive_b` (the atoms series' own form; the lag is the same on the line
-drive, since the position is counted in whole Links there too) and, if
+`drive_b` (the atoms series' own form; on the line drive, `by_line`,
+the lag along the motion is half of `abs(p) / S_1(p)` of a Link, smaller
+than the per-axis drive's, and the map decides nothing about form B's
+loop) and, if
 the owner admits the key, under `flow_link` with the re-pinned
 momentum, each read against the register's as the law stands.
 
@@ -396,8 +414,9 @@ the pins of [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) section 6 stand as
 declared against the baseline as the law stands (`hydrogen_r12_give`
 against the runner's clicks, `hydrogen_r8_give` against the register's
 `r8`), the two worlds under `drive_b` conditional on form B's loop
-returning, which the map says it does not (the lag is the line drive's
-too). What the map adds: under the centred step the loop at r = 12
+returning (the map's stepping is the per-axis drive's; under `drive_b`
+the lag along the motion is half of `abs(p) / S_1(p)`, smaller, and the
+map decides nothing about form B's loop). What the map adds: under the centred step the loop at r = 12
 stays by algebra (section 2 (v), cases O, P, R), so form (a) would have
 something to close there, a loop whose closure fraction the give reads
 at every return; the atoms series' first world under the centred step,

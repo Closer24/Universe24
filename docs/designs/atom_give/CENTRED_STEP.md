@@ -6,9 +6,11 @@ speed; step 1 docs only, in parallel with the reviewer's read of PR
 #867). The cause it answers is [CAUSE.md](CAUSE.md) section 2 (v) and
 (iv): the count primitive fires a body's step when its accumulated
 motion reaches a whole wall, so the body's Node lags its accumulated
-motion by half a Link in the mean, the push read at the Node turns by
-`1 / (2 r)` along the motion and pumps `pi F(r)` of the loop's constant
-per turn; the kick map [cause_kicks.py](cause_kicks.py) holds the loop
+motion by half a Link in the mean on each axis (the reviewer's line: per
+axis, toward the motion's sign), the push read at the Node turns by
+`(S_1(v) / abs(v)) / (2 r)` along the motion (`1 / (2 r)` on an axis
+heading, 4.2 to 5.9 percent at r = 12) and pumps `pi F(r) S_1 / abs(v)`
+of the loop's constant per turn; the kick map [cause_kicks.py](cause_kicks.py) holds the loop
 at r = 12 under the step of this file. A design only: no engine line,
 no world file, no run, no pin moved after this file. Every number below
 is GAMEBOARD by formula from the map and the declared integers, or an
@@ -42,8 +44,14 @@ per-axis drive, `step_divisor`; under `drive_b` the one wall of the line
 drive, `by_line`), that much is subtracted, the remainder stays below
 the wall, the count capped at one Link per self-creation (`at_most`).
 So the accumulator runs in `[0, wall)` on an axis of one sign and the
-Node is BEHIND the accumulated motion by the accumulator's fraction,
-half a Link in the mean, at every reading of the push.
+Node is BEHIND the accumulated motion by the accumulator's fraction on
+EACH axis, `(1 / 2) sign(p_a)` of a Link in the mean per axis, `(1 / 2)
+S_1(v) / abs(v)` Links along the motion, at every reading of the push;
+under `drive_b` (`by_line`, the accumulators started at the whole wall
+today) the lag along the motion is half of `abs(p) / S_1(p)`, smaller,
+and the key's start at half the wall applies to it alike (the flight's
+own start, BEAM_LAW note 41 (viii): the row's accumulator started at
+`T_d`, the half, applied to the body's drive; record 183).
 
 **Under `centred_step`** the count of the body's step is the NEAREST
 whole number of the accumulator in units of the wall:
@@ -100,9 +108,11 @@ byte for byte (the gate set, `examples/events/gate_set.json`).
 
 ## 3. Why it works, and what refutes it (CAUSE.md section 2 (v), the map)
 
-The lag's pump is `1 / (2 r)` of the push along the motion, `pi F(r)`
-per turn (4.2 percent and `3.9 x 10^6` at r = 12, against 4.7 percent
-and `3.5 x 10^6` read on the baseline over three quarters); the centred
+The lag's pump is `(S_1(v) / abs(v)) / (2 r)` of the push along the
+motion, `pi F(r) S_1 / abs(v)` per turn (4.2 to 5.9 percent and `4 F(r)
+= 5.0 x 10^6` per turn averaged on the plane at r = 12, about `3.7 x
+10^6` over three quarters against 4.7 percent and `3.5 x 10^6` read on
+the baseline; `1 / (2 r)` and `pi F(r)` the axis-heading case); the centred
 step makes the mean lag zero, and the map (the Atom Algebraist's body
 step under the shell mean of the push, the fan's grain absent) holds
 the loop at r = 12: with the steady push alone for five turns at 12 to
