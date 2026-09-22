@@ -71,6 +71,30 @@ The run is the model owner's word (step 4, the capability check on
 the build). `tests/test_moving_detector.py` pins the shipped worlds to the
 generator, the pins to the closed forms, and the key's field.
 
+## The capability run (step 4, 2026-09-22)
+
+The model owner's word of record 824 ("make sure we know how to run in the
+code Outside with a moving detector, consecutive clicks"), as the Boss gave
+it: one run of `capability_k5` through `tools/run_series.py` (300
+intervals, completed, the books balanced at every interval, the source
+9a189f6b8f53, the record's digests under `runs` of
+`expectations.json`), read by `tools/moving_detector_readings.py
+--capability`: the cart's consecutive clicks of the source's rows printed
+as DETECTOR (its own count `clock`, its Node, the ordinal the packet
+brought; the differences, the Outside step of record 803: the first
+clicks at the counts 44, 47, 48, 49, 52, 53, 54, 57 at the Nodes 28, 29,
+29, 29, 30, 30, 30, 31, the ordinals 1 to 8), 168
+clicks in all. Nothing is pinned as nature's; the design's pins for that
+world are said read or not read only: `k_AB` read, 1.5159 over
+238 counts (the closed form 32 / 21 = 1.5238 stands beside it, not
+compared); the least step read, the Node's change between consecutive
+clicks {'0': 116, '1': 51} and at most one per count; the pace over the
+window read, 0.1975 Nodes per count (the closed form 1 / 5).
+GAMEBOARD, labelled: 60 step lines, the intervals between hops
+{'5': 59}; the cart's final age 300 against 300 intervals;
+every line's tick, read by nothing above. The transponder worlds wait on
+the physics-rule reviewer's read of the build and on the owner's word.
+
 ## The register entry, drafted (not registered until the model owner says so)
 
 - **Confronts.** The missing direction of the click frame, `k_AB`, a lamp at

@@ -77,7 +77,8 @@ def test_the_shipped_worlds_are_the_generators_and_the_pins_are_the_closed_forms
     }
     expectations = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expectations["format"] == generator.EXPECTATIONS_FORMAT
-    assert expectations == generator.expectations()
+    # the run blocks the reading tool writes under `runs` stand beside the pins
+    assert {k: v for k, v in expectations.items() if k != "runs"} == generator.expectations()
     for name, document in generated.items():
         path = WORLDS / f"{name}.json"
         assert json.loads(path.read_text(encoding="utf-8")) == document, name
