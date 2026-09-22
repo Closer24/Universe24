@@ -324,7 +324,13 @@ a test, and reports that it solved it; the Boss opens no Architect for it
 record 622). Two rules beside them (record 629): the Boss works only for the
 paper, coordinating the tasks that set it in order; and no new development
 project (a new rule, series, tool or build) starts without the owner's
-approval, while bugs, labels and small corrections need none. The law's
+approval, while bugs, labels and small corrections need none. Two more
+(the owner, 2026-09-22, record 639): every open item has one session that
+closes it and reports done, none is left open, the Boss archives the
+session at its merge and re-asks any report overdue by its own stated time;
+and every session the Boss opens is named in two words (Paper Writer,
+Physics Reviewer, Newton Runner), never a sentence, while a Routine carries
+a short name with the order in its prompt. The law's
 rules do not move under this word:
 LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
 the pins declared before the run, `python tools/check.py` before the push.
