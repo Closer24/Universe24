@@ -4419,3 +4419,34 @@ folded:
 Figure 1's legend was moved clear of the inset at 21b4ac0a. Numbers by
 kind in NUMBERS.md. 37 pages (the ring mean sentence of 0c6a4f2d had
 reached 37; the page is with the Boss).
+
+## Applied (2026-09-22, the owner's "cut", record 922, relayed by the Boss at 10:42Z): the last page's candidates A, B and C together
+
+A: the discussion's "The road to each, and the check that nothing was
+derived from them" condensed to the three roads in one sentence each,
+pointing at the one chain above and at Table 8; the no-input sentence,
+the words ("follows", "recovered", "shown to second order",
+"declared"; "derived" nowhere) and the Table 8 pointer kept. B: the
+frame paragraph's close to the measurable once (the two one-way Doppler
+factors apart by 1 - v^2); the interference paragraph's what-passes,
+one-slit and Mach-Zehnder sentences to one clause (the one-slit claim
+"no dark pixel" and the Mach-Zehnder reading 64/0 kept, row 2b and
+Appendix C carry the rest); Section 3's pace paragraph to its two
+rules, the causal front and the Proposition. C: the families table's
+"when it entered" and "the verbs" columns merged into "when it entered;
+the verbs" (widths 0.7, 1.3, 1.3, 1.1, 1.45 in), three object cells
+shortened (light, the apparatus materials, mu/matter); the abstract's
+list of results shortened to one sentence, its "every result is an
+identity" narrowed to the results the paper calls exact under the
+declared tables, as the intro was (the second referee read, point 1).
+No claim, number, verdict or citation removed.
+
+The count: 37 pages, not 36. Before the cuts page 37 carried 33 lines
+of the roads table; after them 25 (five rows). The body's savings
+(about 25 lines in Sections 3, 6 and 9 and the abstract) moved the
+page breaks before the references and Table 3 and were absorbed: the
+body ends on page 30 at 600 of 650 points before and after (the log's
+pagetotal at the bibliography's start), the references still begin on
+page 31. The appendix side gained the families table's 8 lines only.
+What would give the remaining 25 lines without loss is not on the
+owner's list; the Boss decides.
