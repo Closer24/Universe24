@@ -2552,6 +2552,47 @@ CORRECTIONS = [
         "\\bibitem{clickframe} Lorentz from the clicks: the click frame, its section 0 the click theorem,",
         "\\bibitem{ringmean} The ring mean and the orbit's mean over one turn: the proof and the bound, \\texttt{docs/designs/ring\\_mean/PROOF.md} of the archived code \\cite{zenodo}, on \\texttt{main} at ab96e7e8 (PR \\#840, merged). \\bibitem{clickframe} Lorentz from the clicks: the click frame, its section 0 the click theorem,",
     ),
+    # The second referee read (2026-09-22), the owner's word 'fix or sharpen': points 1 to 6 in the paper's words, what was verified.
+    (
+        "referee 2, point 1: the intro's 'every result' to the results the paper calls exact, under the declared inputs",
+        "and every result of the paper is therefore an identity of that algebra, checked against the register's readings by kind",
+        "and every result the paper calls exact is an identity of that algebra under its declared tables, matrices and family table, which are inputs (Table~\\ref{tab:ledger}), checked against the register's readings by kind",
+    ),
+    (
+        "referee 2, point 4: Section 3's Lorentz sentence under (A2)",
+        "Lorentz's symmetry is not a symmetry of the GameBoard but of its clicks Outside, to second order in the velocity, the lattice's corrections from the fourth (Section~\\ref{sec:discussion}).",
+        "Lorentz's symmetry is not a symmetry of the GameBoard but of its clicks Outside, under the amplitude split (A2) that the law as built lacks, to second order in the velocity, the lattice's corrections from the fourth (Section~\\ref{sec:discussion}).",
+    ),
+    (
+        "referee 2, point 2: the outcome sequence in time and the settings' independence of the wheel, stated",
+        "and the one non-local step of the law (P6) is the assignment of the second party's outcome from the joint weights at the completion, on the labels and not on the times.",
+        "and the one non-local step of the law (P6) is the assignment of the second party's outcome from the joint weights at the completion, on the labels and not on the times. Two things the theorem does not cover, stated here. The wheel of the registered pair worlds runs at the rate $1$ against $\\Nphi$, one birth per $u$ in order, so the first party's outcomes over the births are $\\Nphi/2$ of $+$ followed by $\\Nphi/2$ of $-$, a square wave whose serial correlation over a cycle is $1 - 4/\\Nphi$ ($0.9990$ at $4096$), a prediction of the sequence in time that no run reads and no row compares with nature's record of outcomes, which shows no such order; and the marginal of Theorem~\\ref{th:marginals} is for settings fixed or chosen independently of the wheel: a setting chosen from $u$ ($a = 0$ for $u < \\Nphi/2$ and $a = \\Nphi/2$ after, $b = 0$) gives the second party $+$ at every one of the $64$ births at $\\Nphi = 64$ (a computation from the theorem's cells, not a run), so the independence of the settings from the birth phase is an assumption of the frame, physics' measurement independence, and what keeps a party from the wheel the law does not say.",
+    ),
+    (
+        "referee 2, point 2: the prediction's assumptions, the settings independent of the wheel added",
+        "under three assumptions the paper states and does not defend (nature's pairs this model's pairs at some $\\Nphi$, fair sampling, the four settings the model's labels)",
+        "under four assumptions the paper states and does not defend (nature's pairs this model's pairs at some $\\Nphi$, fair sampling, the four settings the model's labels, the settings independent of the wheel)",
+    ),
+    (
+        "referee 2, point 3: 'exclude every mixture' to the mixtures the readings resolve",
+        "admit the harmonic $j = \\pm 1 \\bmod 8$ and exclude every mixture: the register pins the fundamental, and the least-rank click (P10) stores it.",
+        "admit the harmonic $j = \\pm 1 \\bmod 8$ and exclude every mixture the readings resolve; a mixture of a weight below the readings' rounding cell is not excluded, and the bound on that weight is not computed: the register pins the fundamental to that resolution, and the least-rank click (P10) stores it.",
+    ),
+    (
+        "referee 2, point 3: the norm range bounds one phasor, not a sum that nearly cancels; the example",
+        "the norm range of Appendix~\\ref{app:technical} is the error bound between the ideal reading and the tables.",
+        "the norm range of Appendix~\\ref{app:technical} bounds one phasor's error between the ideal reading and the tables and not the relative error of a sum that nearly cancels, for which no theorem is given: $256x^8 - 181(1 + x^{16})$ at $\\Nphi = 64$ reads $(0, 0)$ under the tables and $(0, 14)$ after a common turn of eight steps, its exact evaluation $0.0007$ (a computation from the tables, not a run).",
+    ),
+    (
+        "referee 2, point 5: N_t = 256 beside the grain",
+        "why nature's grain would lie there the paper does not say;",
+        "why nature's grain would lie there, or its table scale at $N_t = 256$, the paper does not say;",
+    ),
+    (
+        "referee 2, point 6: row 2a's source a Mach-Zehnder reading, the two-slit source not yet registered",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$ \\cite{grangier1986}, the ideal $1$;",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$, the register's source \\cite{grangier1986} a Mach-Zehnder reading and not a two-slit one, a two-slit source not yet registered; the ideal $1$;",
+    ),
 ]
 
 

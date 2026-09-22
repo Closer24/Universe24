@@ -4375,3 +4375,47 @@ the sentence whole; the choice is the Boss's or the owner's: (i) 37
 pages; (ii) the grain terms' numbers moved to the citation (about two
 lines, not enough alone); (iii) the owner's "cut" on the last page's
 candidates A, B, C (record 895). No cut made.
+
+## Applied (2026-09-22, the owner's word "fix or sharpen them"): the second referee read, points 1 to 6, in the paper's words
+
+The owner brought a second referee read of the 36-page paper (seven
+points); each was checked against the text, the world files and a
+computation, reported to him, and on his word the verified ones were
+folded:
+
+1. The intro's "every result of the paper is therefore an identity of
+   that algebra" narrowed to the results the paper calls exact, under
+   the declared tables, matrices and family table, named as inputs
+   (Table 1).
+2. The Bell section states what Theorem 5 does not cover: the
+   registered wheel [1, 64] runs one birth per u in order, so the first
+   party's outcome sequence is a square wave with serial correlation
+   1 - 4/N_phi (0.9990 at 4096), a prediction in time no run reads and no
+   row compares; and the marginal holds for settings independent of the
+   wheel (a = 0 for u < N_phi/2, a = N_phi/2 after gives the second party
+   + at all 64 births at 64), the settings' independence an assumption
+   of the frame, added as the fourth assumption of the prediction
+   paragraph. A run of the outcome sequence is the Criteria Runner's if
+   the owner wants it.
+3. "Exclude every mixture" narrowed to the mixtures the readings
+   resolve, the weight bound not computed; the norm range of Appendix B
+   said to bound one phasor and not a near-cancelling sum, with the
+   example 256 x^8 - 181 (1 + x^16) at 64: (0, 0) under the tables,
+   (0, 14) after a common turn of eight steps, the exact 0.0007. The
+   error theorem for the tables is the Ring Mean Mathematician's if the
+   Boss assigns it.
+4. Section 3's Lorentz sentence carries the (A2) caveat the abstract
+   and Section 9 carry.
+5. "Why nature's grain would lie there" adds the table scale N_t = 256.
+6. Table 3 row 2a: the register's source (Grangier, Roger and Aspect
+   1986) named as a Mach-Zehnder reading, a two-slit source not yet
+   registered (the register's own note "to verify against the source");
+   the verdict and the number unchanged, the criteria the Criteria
+   Runner's. The clock row's count (a fourth PASS under the caveat, or
+   historical only) is with the Criteria Runner's re-read of series T.
+7. The development history in the body: not changed, the owner's own
+   items (the 24 transitions, the families table's "when it entered").
+
+Figure 1's legend was moved clear of the inset at 21b4ac0a. Numbers by
+kind in NUMBERS.md. 37 pages (the ring mean sentence of 0c6a4f2d had
+reached 37; the page is with the Boss).
