@@ -141,3 +141,18 @@ from the base tree before the build (the design's head b1248102, main
 gate set's lamp-free digests, and shows every world without the key byte
 identical (the pair (f_F, q_F) = (1, 0) on every family, `acc_turn`
 omitted from the rows' record, no `waiting` line).
+
+## Re-read in the row's own clock (2026-09-22)
+
+The model owner's word of records 678 and 707 of docs/LOG_2026-09-20.md:
+the GameBoard holds the clock of every experiment read through a
+detector. The group pace is pinned as the row's `age` on its first
+`click` line at `screen_60`, `screen_37` and `screen_83` (the row's own
+clock since its re-release at the opening: 815 and 876 within 5,
+`first_click_age` of `expectations.json`; DETECTOR), the line's tick the
+record's ordering (the re-release tick 140 plus the age; GAMEBOARD, the
+lattice's clock); `read_run.py` reads both so. The 1024-birth run's
+record replayed on main's engine reads 815 and 876 exactly; the reading
+and the verdict are in
+[the register's entry](../../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21),
+"Re-read in the row's own clock (2026-09-22)".

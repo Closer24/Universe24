@@ -4564,6 +4564,33 @@ sequential gates on an entangled record, the full register replay.
   and under `slits_matter_1024.run` in its register, the same digests on
   the three heads that ran it. The 4096-birth pin when the host allows.
 
+- **Re-read in the row's own clock (2026-09-22; the model owner's word of
+  records 678 and 707 of docs/LOG_2026-09-20.md: the GameBoard holds the
+  clock of every experiment read through a detector; the clock audit's
+  finding 7, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of `slits_matter_1024` on main's engine
+  through the runner, its first `click` lines read off the record).** The
+  pin restated BEFORE the number was read: the group pace is the row's
+  `age` on its first `click` line at the pixel, the row's own clock since
+  its re-release at the opening (a re-released row is born again at the
+  age 0: the small world's click at tick 18 after its re-release at tick
+  7 carries the age 11), 815 at `screen_60` and 876 at `screen_37` and
+  `screen_83` within 5 (the first fan row's flight by the accumulator
+  rule on the engine's lines, the round-2 map's B; DETECTOR;
+  `first_click_age` of `expectations.json`, beside the tick pin); the
+  line's tick is the record's ordering, the re-release tick 140 plus the
+  age (955 and 1016; GAMEBOARD, the lattice's clock, so labelled in the
+  pin's line and in `read_run.py`, which reads the age under DETECTOR
+  and the tick under GAMEBOARD since this day). The reading: the `age`
+  815 on the first click at `screen_60` (its tick 955), 876 on the first
+  clicks at `screen_37` and `screen_83` (their ticks 1016): inside, every
+  one at its pin exactly. The verdict PASS of 2026-09-21 stands, now on
+  the row's own clock: the tick difference 955 - 140 = 815 the register
+  read as the pace was the same integer taken off the host's ordering,
+  and the row's age carries it on the record. The 4096-birth pin is
+  restated likewise (`first_click_age` beside `first_click_tick`), to be
+  read when the host allows that run.
+
 ### N, the binding that costs content (2026-09-20)
 
 - **Confronts.** Whether one condition on one verb, the give at the
