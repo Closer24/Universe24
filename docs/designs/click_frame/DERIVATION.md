@@ -49,7 +49,23 @@ information from Node to Node, at most one Node per interval: c is the
 unit, the same in every family, and nothing passes faster. (A2) A
 click's content is an amplitude with a phase that splits each interval
 between staying and hopping, the mass the staying share: the packet
-that passes is converted by its amplitudes.
+that passes is converted by its amplitudes. LOCALITY OUTSIDE (the
+owner's word, 2026-09-22, as the Boss relayed it: "velocity in the real
+world is passing a click with information to the neighbouring Node and
+receiving that packet there, having in effect moved there; the packet
+passes from place to place, it cannot jump: a kind of locality also
+Outside"): every Outside passage is a chain of clicks between
+neighbouring places, so the Outside inherits the Inside's locality
+through the conversion. It forbids a reading that would need a jump, a
+velocity above one Node per interval, and a detector reading at a place
+no chain of clicks reaches. It is A1 read from above, and it FOLLOWS
+FROM A1 ALONE together with the definition of Outside (nothing leaves
+the board but clicks, P6): every Outside event is a click, every click
+moves information one Node at most, so every Outside passage is a chain
+of neighbour steps; a theorem, not an added assumption, with the one
+exception the title names, the pair's click, one gather of one record
+from both settings, which is not a chain of neighbour steps and is the
+law's one non-local operation.
 
 **Theorem (the click theorem).** The conversion defined by (A1) and
 (A2), from the lattice's momentum to motion read by clicks, is Lorentz
@@ -1209,7 +1225,10 @@ free abelian monoid of counts whose ratios lie in Q, and the velocity,
 the Doppler factors and the rates are elements of Q (M3). On the click
 families the group G of section 0 acts: the cone-preserving Q-linear
 maps of the count pairs, the boosts with rational k, dense in SO(1, 1),
-the Lorentz group up to scale their closure.
+the Lorentz group up to scale their closure. Locality Outside (section
+0): every passage in O is a chain of clicks between neighbouring places,
+so O inherits I's locality through the map, a theorem of A1 and the
+definition of O, with the pair's gather (P6) the one exception.
 
 **(2) The map, step by step, with its name at each step.** The
 conversion `Phi: I -> O` is a composite of four maps, and the algebra
@@ -1223,8 +1242,17 @@ antiphase pair cancels on the GameBoard exactly when its pointer is 0.
 So the first isomorphism theorem holds here EXACTLY and says: the rows
 modulo the cancel ARE the cyclotomic integers, `Z[Z_N] / ker(ev) =
 Z[zeta_N]` (the paper's "the GameBoard's cancel and the click's zero are
-one relation"). This is the one place the word "kernel" is earned in
-the algebraic sense; ev is also a *-homomorphism for the involution
+one relation"), FOR ev AT THE EXACT ROOT; on the tables within their
+rounding: the engine's evaluation is the rounded tables C, S at the
+scale 256 (`core/phase.py`, built by reduce-and-flip so that `C[p + N /
+2] = -C[p]` and `S[p + N / 2] = -S[p]` exactly), a Z-linear map into
+`Z^2` that is NOT a ring homomorphism (6.7; at N = 64 `E(e_1)^2 = (64400,
+12750)` against `256 E(e_2) = (64256, 12800)`), whose kernel contains the
+cancel (by that symmetry) and is larger than it (rank `N - 2` against
+the ideal's `N / 2`): an element that cancels nowhere can read a zero
+pointer within the rounding, so "one relation, exactly" is the paper's
+ev, and on the engine it holds within the tables' rounding. This is the
+one place the word "kernel" is earned in the algebraic sense; ev is also a *-homomorphism for the involution
 `f*(x) = f(x^(-1))` (the reflection of the phase), carrying `f* f`, the
 record's autocorrelation in the group ring, to `abs(ev f)^2`.
 
@@ -1245,9 +1273,19 @@ f)^2`, and Born's `c_1 = 1` is the choice of ONE pure state, the one
 imported constant (P10). The GNS construction of a character on a
 commutative algebra is one-dimensional: `H_omega = C[Z_N] / ker(chi_1) =
 C`, and the GNS vector of f is `chi_1(f) = ev(f)`, so the pointer IS the
-GNS vector and the click's square its norm: the name fits exactly, with
-the honest remark that the algebra is abelian, so nothing
-noncommutative is measured at one arm. Noncommutativity enters at a
+GNS vector and the click's square its norm: the name fits exactly for
+the paper's object, `chi_1` at the exact root, with two honest remarks.
+First, the engine realizes it within the tables' rounding: its `f^T G
+f` with `G = E^T E` over the rounded entries (`core/phase.py`, "of rank
+2, not circulant (the tables' rounding)"; `amplitude.gram_form`) has
+`E_rounded = 256 ev + delta` with `abs(delta_p) <= 1 / 2` per entry, so
+the relative error of R is at most `sum abs(f_p) / (256 abs(ev f))`, one
+part in 256 on a single row and larger where the element nearly
+cancels (unbounded at the false zeros); the rotation invariance `R(x f)
+= R(f)` likewise holds up to the tables' rounding (6.5's hypothesis
+(a)); and Born's frequency is within `1 / N` by the rung on top. Second,
+the algebra is abelian, so nothing noncommutative is measured at one
+arm. Noncommutativity enters at a
 pair with settings, where the label rotations `U_a` and `U_b` generate
 `M_2(Z) (x) M_2(Z)` and the CHSH operator lives (part (9)). What R does
 not read: the phase's origin (`R(x f) = R(f)`, hypothesis (a)) and its
@@ -1262,7 +1300,10 @@ C_K) / (2 C_K))`, and the birth's u (the wheel, uniform over N births)
 selects the cell: over the N births the cell k is clicked exactly
 `rung_k - rung_(k - 1)` times, which is `N R_k / C_K` within one, so the
 click's law is `P(k) = R_k / C_K` within `1 / N`, Born's rule as a
-frequency, exact in the integers of the rung. This step deletes the
+frequency, exact in the integers of the rung (6.2: within `1 / (2 N)` on
+the cumulative). The wheel `u = ordinal mod N` is a deterministic sweep
+(6.2), so "stochastic map" names the frequency law over one wheel, not
+a random draw. This step deletes the
 record (P6): it is not a morphism of Inside, and it is the reason the
 composite is not a homomorphism.
 
@@ -1282,10 +1323,10 @@ limit, not on the lattice.
 
 | The name | Fits | Where, and what it says |
 | --- | --- | --- |
-| a ring homomorphism with a kernel; the first isomorphism theorem | EXACTLY, for `ev` | `Z[Z_N] / (cancel) = Z[zeta_N]`; the cancel is the kernel; the pointer the quotient |
-| a positive quadratic form on a lattice | EXACTLY, for the click's weight | `th:gleason`: forced in form, free in its Galois constants; `c_1 = 1` Born |
-| a state on a *-algebra, the GNS construction | EXACTLY, for Born at one arm; the algebra abelian | `R(f) = chi_1(f* f)`, `chi_1` a pure state of `C[Z_N]`; the GNS space C, the pointer the GNS vector; Gleason = the admissible states are the positive combinations of the odd characters |
-| a stochastic map (a Markov kernel), a measurement | EXACTLY within `1 / N` | the rung with the uniform wheel: `P(k) = R_k / C_K` within the grain; the one deletion |
+| a ring homomorphism with a kernel; the first isomorphism theorem | EXACTLY, for `ev` at the exact root; on the tables within their rounding (the engine's E is Z-linear, not a homomorphism, its kernel larger than the cancel) | `Z[Z_N] / (cancel) = Z[zeta_N]`; the cancel is the kernel; the pointer the quotient |
+| a positive quadratic form on a lattice | EXACTLY, for the click's weight at the exact root; on the tables within their rounding (`G = E^T E` of rank 2, not circulant) | `th:gleason`: forced in form, free in its Galois constants; `c_1 = 1` Born |
+| a state on a *-algebra, the GNS construction | EXACTLY, for Born at one arm at the exact root, the engine within one part in 256 per row (larger near a cancel); the algebra abelian | `R(f) = chi_1(f* f)`, `chi_1` a pure state of `C[Z_N]`; the GNS space C, the pointer the GNS vector; Gleason = the admissible states are the positive combinations of the odd characters |
+| a stochastic map (a Markov kernel), a measurement | EXACTLY within `1 / N` (`1 / (2 N)` on the cumulative, 6.2), as a frequency law over one deterministic wheel, not a random draw | the rung with the sweeping wheel: `P(k) = R_k / C_K` within the grain; the one deletion |
 | a group action, a representation of the Lorentz group up to scale | EXACTLY over Q on the click families; IN THE LIMIT on the amplitudes | section 0 (i) and (ii); the 48 of the lattice contain no boost, so the action is on Outside and not on Inside |
 | "Outside is Inside modulo a kernel" for the WHOLE conversion | DOES NOT FIT | the composite is quadratic then thresholded, not a homomorphism; what no click reads (the tick, the ordering, the remainders, the integers beyond their ratios, the scale r of the dilation, the phase's origin) is a set of invariances and unread coordinates, not an ideal |
 | a functor between two categories | DOES NOT FIT | Inside's morphisms are the verbs (bijective but the click) and Outside's are the boosts; the click is not a morphism of Inside and no boost is a morphism of Inside (the 48); one honest category exists on the Outside side alone (finite sets and stochastic maps, where the rung lives) |
@@ -1295,8 +1336,12 @@ limit, not on the lattice.
 exactly. Under R: the total at every declared split (`th:isometry`, `A =
 sum a_i^2`) and at every rotation up to the tables' rounding
 (`n_s / 65536`), the phase rotation and the reflection; the marginals of
-a pair exactly `1 / 2` (`th:marginals`, no-signalling), which is the
-theorem the composite satisfies at a pair. Under the rung: the
+a pair exactly `1 / 2` unless a tie of the rung (`2 N R(+, +) / C_K` an
+odd integer), then `N / 2 + 1`, with no tie at N = 8 to 1024 nor at the
+CHSH labels up to 4096 (`th:marginals`, no-signalling; the register's
+`32 / 64` in all 4096 setting pairs, record 105, a computation, and
+`2048 / 4096` on the run world), which is the theorem the composite
+satisfies at a pair. Under the rung: the
 frequencies within `1 / N`. Under the count map: the ratios in Q, the
 round trip `(1 + v) / (1 - v)` under every r, the one-way factors up to
 the dilation r that Outside does not fix (section 0 (b)): the scale is
@@ -1352,8 +1397,8 @@ the paper's formulas (not a run), or a registered reading named by kind.
 - (B1) *The pair's record.* One record, born at the lamp (rule B) with
   two arms and two joint labels of weight 1 each: as an element of
   Inside it is `psi = 1 . (00) + 1 . (11)` in `Z^2 (x) Z^2`, tensored
-  with its phase in `Z[Z_N]`; the amplitude and the phase are carried by
-  verb 1 (the flight's translation of the phase) on each arm's rows and
+  with its phase in `Z[Z_N]`; the weights are carried unchanged and the
+  phase by verb 1 (the flight's translation of the phase) on each arm's rows and
   by verb 3 (the merge) where rows meet; nothing of one arm is written
   on the other in flight.
 - (B2) *The settings.* A detector's setting is the integer s of its
@@ -1384,7 +1429,7 @@ theta_b)`; the weights `R` are their squares, `C_K = 2 n_a n_b`, and
     E(a, b) = (R_++ + R_-- - R_+- - R_-+) / C_K = cos^2 - sin^2 = cos(2 (theta_a - theta_b)) = cos(2 pi (a - b) / N),
 
 an identity of the rotation's algebra, exact on the tables' cosine;
-with the tables' rounding within `4 delta = 0.0111` and with the rung
+with the tables' rounding within `4 delta = 0.01108 < 0.0111` and with the rung
 within `2 / N` (`th:bell`, `eq:ebound`). In the algebra's words: the
 observable of the setting a is the involution `A_a = U_a^T diag(1, -1)
 U_a / n_a` in `M_2(Q)` (`A_a^2 = I` by `th:isometry`), the pair's state
@@ -1460,10 +1505,10 @@ meet the textbook's `2 sqrt 2`.
 | The formula Outside | Verdict | The one line that decides | The register (kind) |
 | --- | --- | --- | --- |
 | `E(a, b) = cos(2 pi (a - b) / N)` within `2 / N + 0.0111` | SHOWN (rung 1 within the two grains) | `J = U_a U_b^T` and `R = J^2`: `cos^2 - sin^2` | L6: `E x 1024 = 724, -724, 724, 724` at N = 1024 (DETECTOR, the run of 2026-09-20, "every count the reading's") |
-| the marginals exactly `1 / 2`, no-signalling | SHOWN, rung 1 exact | the rows of `U_b` orthogonal on the integers, `C_K = 2 n_a n_b` (`th:marginals`) | `32 / 64` in every pair at N = 64 (the reviewer's recount of one registered world's rows, DETECTOR) |
+| the marginals exactly `1 / 2`, no-signalling | SHOWN, rung 1 exact | the rows of `U_b` orthogonal on the integers, `C_K = 2 n_a n_b` (`th:marginals`) | the rule over all 4096 setting pairs at N = 64, `32 / 64` in every pair (record 105, a computation over the 64 x 64 pairs: GAMEBOARD by kind); the registered worlds' rows `32 / 64` at N = 64 and `N / 2` on every plateau world, `256 / 512`, `1024 / 2048`, `2048 / 4096`, `4096 / 8192` (DETECTOR) |
 | `S = 2 sqrt 2` at the optimal settings | SHOWN as an identity of the cosine; on the lattice the exact rational `S(N)` | four cosines of `pi / 4` | NATURE 1a: `S = 176 / 64 = 2.75` at N = 64 (DETECTOR; Hensen 2015's `2.42 +- 0.20`, PASS, 0.33 above it, 1.65 of its standard error; 0.078 below the bound); L6: `2896 / 1024` and `11584 / 4096 = 2.828125` (DETECTOR), `3.02 x 10^-4` below `2 sqrt 2`, the paper's one prediction (24.4) |
 | Tsirelson's `abs(S) <= 2 sqrt 2` | SHOWN as mathematics for the pre-rounding correlations; NOT a bound on `S(N)` | Landau's identity `X^2 = 4 - [A, A'] (x) [B, B']` | `S(16) = S(32) = 3` above the bound by the rung's grain (`th:bell`, a computation, GAMEBOARD by kind: no run at 16) |
-| the rise `S(N)` to the plateau `181 / 64` | SHOWN by the closed form at every N (a computation from the definitions, not a run); MEASURED at 64, 1024, 4096 | the rung on the fixed correlations, `S(N) = 8 (c_1 + c_1') / N - 4` | the three engine values equal to the closed form's (DETECTOR); the plateau's other N (512, 2048, 8192) computed, not run |
+| the rise `S(N)` to the plateau `181 / 64` | SHOWN by the closed form at every N (a computation from the definitions, not a run); MEASURED at 64, 512, 1024, 2048, 4096, 8192 and 16384 | the rung on the fixed correlations, `S(N) = 8 (c_1 + c_1') / N - 4` | the seven engine values equal to the closed form's (DETECTOR: `176 / 64`; `1448 / 512` of 2026-09-21; `2896 / 1024` and `11584 / 4096` of 2026-09-20; `S x N = 5792, 23168, 46344` at 2048, 8192 and 16384, the Bell plateau runs of 2026-09-22, record 736, every count its pinned count); computed and not run only at 256 and the N that are not powers of two |
 | the loophole-free geometry (space-like separated settings) | NEITHER | the pair's click is one gather at completion; "the near party's outcome is written at the far party's tick"; the arms' order a declaration | none; `bell_16_24_far` reads the same counts with Bob 116 Links farther (no maintenance), not a spacetime test |
 | unequal weights, more than two labels | NEITHER (open) | `th:marginals`' scope | none |
 
@@ -1475,7 +1520,8 @@ joint limit of `S(N)` in N and `N_t` is `2 sqrt 2`; with the tables fixed
 the six verbs' integers reach it (that the engine's rows, merges,
 rotations, squares and rungs compose, interval by interval on a
 GameBoard of 21 Nodes, to the closed form: the bijection theorem plus
-the run, and the three engine values equal to the formula's), the
+the run, and the seven engine values equal to the formula's, at 64, 512,
+1024, 2048, 4096, 8192 and 16384), the
 finite-N rise `S(N)` at the N actually built, and the marginals read from
 rows rather than proved.
 
