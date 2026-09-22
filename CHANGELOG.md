@@ -188,6 +188,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   twenty-one runs registered beside the rows of 2026-09-19 to 2026-09-21
   (371 criteria passed, 0 failed; the free probes' 11 steps at 24 to 43
   for 22 to 32, the same records for the three contents).
+- Series O re-pinned under the law (`examples/events/two_stars/`): the
+  generator's momenta by the line rule and its derivation with the line
+  drive's push factor (the per-axis drive of history reproducible), the
+  three worlds rewritten, `expectations.json` with the drive named, and
+  the three runs read beside the first run of 2026-09-21 (19 readings
+  inside, 8 outside; the control byte for byte as before; the contacts
+  outside as before); the series stays unregistered.
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

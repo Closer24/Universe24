@@ -11,6 +11,27 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series O under the law's line drive: three runs on drive-default a5de093 - 2026-09-22
+
+The branch `drive-default` at `a5de093` (the generator's momenta by the
+line rule and the pins with its push factor committed before the run,
+DEFAULT.md section (c); `expectations.json` with the drive named): the
+three worlds of `examples/events/two_stars/` run through
+`tools/run_series.py --jobs 3` (Python 3.14.0rc2, numpy 2.5.3, headless;
+source fingerprint `c71927e33dea0e12`), every run completed at 500
+intervals with the books balanced at every tick, `run.json` carrying
+`"drive": "line"`; the digests (state, audit, events) `373f7a41c6ef`,
+`94477a45e5d8`, `6c9afc2bdfa0` (`symmetric_pass`), `a7749a2f8e1c`,
+`92b85b75ee58`, `288fa98e038a` (`symmetric`), `f1e814903c6e`,
+`78650c0597fa`, `1385b2c51177` (`rest_frame`); run times 5.0 to 5.2 s
+(host measurements). No gate world is in this series; the series is not
+registered (its entry drafted in the README). The readings by kind (19
+inside, 8 outside; the contacts outside by the derivation's two omissions
+as on the first run) are in
+[the series' README](../examples/events/two_stars/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-a5de093-before-the-run).
+The first run of 2026-09-21 (docs/designs/two_stars/DESIGN.md section 7)
+stands as read under the per-axis drive of history.
+
 ## Series C under the law's line drive: twenty-one runs on drive-default 057e57c - 2026-09-22
 
 The branch `drive-default` at `057e57c` (the tool's step replay under

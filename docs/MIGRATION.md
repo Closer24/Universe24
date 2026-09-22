@@ -80,7 +80,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   unchanged; `j3_deuteron` refused before its cap by the generic entry,
   its trigger read before the refusal) and series C (`coupling/`, the
   tool's step replay under the law's drive and ordered by the crossing
-  rule, the worlds unchanged, no register file).
+  rule, the worlds unchanged, no register file) and series O
+  (`two_stars/`, the three worlds' momenta by the line rule, the pins
+  with its push factor).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by
