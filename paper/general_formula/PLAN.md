@@ -3290,28 +3290,36 @@ force, and the theorem is about the frame's two assumptions on the
 world's clicks, not about the law; it is stated as the frame, with the
 one sentence of fact about the law.
 
-### 2. The three sentences (the mathematician's, section 0, "The paper's frame, three sentences, marked as such")
+### 2. The three sentences (the mathematician's, section 0 at 149c4dc6, "The paper's frame, three sentences, marked as such (the owner's shape, record 753)")
 
-"We assume Lorentz is real in the world, and we explain only how a click
-brings it: a click is the passage of information from Node to Node at
-most one Node per interval (A1), and a click's content is an amplitude
-with a phase that splits each interval between staying and hopping, the
-mass the staying share (A2). The transformations between click families
-that preserve this structure form the Lorentz group up to scale (A1),
-acting on the amplitudes as the Dirac walk's covariance (A2), so that a
-detector's own rate is sqrt(1 - v^2) to second order in v and the
-lattice's corrections begin at the fourth. The amplitudes of (A2) are
-therefore exactly what is needed to convert the clicks back to Lorentz;
-the law as built satisfies (A1) and not (A2), a fact stated for the
-owner's word."
+"To convert the lattice and the momentum inside it into motion in our
+real world, one uses clicks that pass information, a click being the
+passage of information from Node to Node at most one Node per interval
+(A1) and its content an amplitude with a phase that splits each interval
+between staying and hopping, the mass the staying share (A2); Lorentz of
+the real world is assumed, and what is shown is that this conversion
+brings it. The symmetry of the conversion, the transformations between
+click families that preserve (A1) and (A2), is the Lorentz group up to
+scale, acting on the amplitudes of the passing packet as the Dirac
+walk's covariance, so that the passage of clicks is Lorentz to second
+order in the velocity, a detector's own rate sqrt(1 - v^2), and the
+lattice's corrections begin at the fourth order. The conversion is made
+exactly with the amplitudes, converting the packet that passes, and it
+comes out from there; the law as built satisfies (A1) and not (A2), a
+fact stated for the owner's word."
+
+The words are section 0's at the merge; if the head moves again before
+the merge SHA comes, the merge's words replace these.
 
 ### 3. The writer's paragraph (ten lines at the page's width; the draft)
 
-The GameBoard (Nodes, integer rows and the interval's count, which no
-detector reads) and our reality (detectors and their clicks only: a
-detector's count advances once per packet received, a click is that
-count with its Node and content, and a velocity is Nodes apart over
-counts apart between neighbouring detectors, never a reading of the
+To convert the lattice and the momentum inside it into motion in our
+real world, one uses clicks that pass information: the GameBoard (Nodes,
+integer rows and the interval's count, which no detector reads) and our
+reality (detectors and their clicks only: a detector's own count is its
+count of intervals stretched by what arrives at it, a click the event of
+receiving a packet stamped with that count, and a velocity Nodes apart
+over counts apart between neighbouring detectors, never a reading of the
 interval) are two worlds, and the read-out of Definition 3 is the second
 world's click. Lorentz is assumed of the world and required of the
 board: [the three sentences]. The law as built meets (A1), one Node per
@@ -3386,6 +3394,22 @@ sentence (the optical-v1 hypothesis, two lines, Table 4's bending row
 says it); Theorem 5's proof's last sentence on the declared first party
 (two lines, Definition 3 says it); the positioning paragraph's Bohm and
 psi-ontic clauses (one line). Fourteen. 30 pages held, the split 25 / 2 / 3.
+
+### 5a. The Boss's two notes of 05:50Z, folded into the draft above
+
+(1) The detector's count: not "advancing once per packet received" but
+its count of intervals stretched by what arrives at it (the Highlights
+line of record 709, the age wall's member at coefficient 1), a click the
+event of receiving a packet stamped with that count; the k-calculus
+needs the count to advance between arrivals. The paragraph's definition
+says so now; the final wording is section 0's head at the merge (record
+758, the correction in progress). (2) Records 753 and 756 (PR #778 at
+6edff005, PR #779): the paragraph's first sentence and the three
+sentences are aligned to the owner's shape, the conversion from the
+lattice and its momentum to motion in the real world by clicks that pass
+information with the amplitudes, Lorentz to second order exactly, the
+lattice's corrections beyond (section 0 at 149c4dc6). The cost in lines
+is unchanged within one line.
 
 ### 6. What is not in the draft
 
