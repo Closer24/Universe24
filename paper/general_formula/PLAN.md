@@ -5023,3 +5023,44 @@ checked on the institution's or a public research page on 2026-09-22
 Perimeter Institute; Kurtsiefer, CQT Singapore; Elze, Università di
 Pisa); the letter's own AI statement matched to the declaration. No
 physics, no number. 51 pages.
+
+## Applied (2026-09-22, the Boss's order of 19:03Z): the swap's first commit on a fresh branch from main
+
+On `paper-swap-2026-09-22` off main at ee3d34f6, one commit through the
+generator's sources, nothing else in the paper. (1) The ring's run cited
+at PR #854's merge on main, 23b0e630, the files unchanged from the branch
+head b094c53b; the atom's levels left at the branch head 83b1bf2e with
+"merge pending" in the generator's source, a one-line commit to swap it
+when PR #891 merges. (2) Row 14 per issue #927 and the diagnosis merged at
+5ce4eb06: the noun corrected (the periods of two closed loops in the
+nature cell; the run's readings the means of the recurrences of x before
+the escape), the escapes at 1208 (r12_flow, the face +y) and 2452
+(r24_flow, the face -x) as face clicks, DETECTOR, no loop closed, the
+ratio 1.677 a computation from two such means and not a reading of the
+force's exponent, the loops not similar figures (mean radii 24.3 and
+37.6); the verdict FAIL as read stays, the law's, the row among the FAIL
+rows, the ratio not compared with nature; a bibitem for the diagnosis.
+(3) The third law at rest per the reviewer's read T on issue #920 (record
+1042, option 1): the ledger's row, one sentence after the paid messages'
+sentence (the free family's third law a symmetry of two readers, not a
+balance per message; the momentum lines a report of the GameBoard), the
+Section 4 sentence (to the apportioning's grain, six parts in 10^6, a
+GameBoard reading, a diagnostic) and the ground paragraph (Gauss's law
+and the equivalence principle exact; the third law the two readers'
+symmetry to the grain); the paid sentence stays; DERIVATIONS_BEAM
+untouched. (4) Row 5a's bound with the clause proposed on issue #555,
+verbatim. (5) Theorem 3 with the joint-table condition B^H B = A I and
+Appendix A's sentence with the zero-turn table as the witness (issue
+#557); the proof's line names the condition; no claim about the paper's
+worlds changes. No physics changed, no pin moved. 51 pages.
+
+## Applied (2026-09-22, the Boss's order of 19:20Z): the reviewer's look X of PR #930, one line and two words
+
+Row 14's verdict cell: the FAIL's ground named as the reviewer gave it,
+the law's at the launch pace 0.34 c, the probes left a confining push
+and no loop closed, the face clicks the reading; the ratio not compared
+with nature. The mean radii 24.3 and 37.6 labelled CONVERSION (a length
+made from the clicks' places, the diagnosis's 3.3), not DETECTOR; the
+ledger's page-count rows HOST from here on. Nothing else; the #891 merge
+SHA and the orbitread bibitem rename wait for the later one-line commit.
+No physics, no pin moved. 51 pages.
