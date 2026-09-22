@@ -3946,6 +3946,11 @@ CORRECTIONS = [
         "(Definition~\\ref{def:click}, the flight blind);",
         "(Definition~\\ref{def:click}, the flight blind) (that interval the host's tick at the arm's set, GAMEBOARD \\cite[record 768]{log}; the arm's own count is read only under the later key \\texttt{clock\\_stamp}, outside this paper's law);",
     ),
+    (
+        "the Positioning paragraph: the click's assignment a non-local step on the labels, its interval the last arm's, as after Theorem 6 (the Boss's order of 21:22Z; the last occurrence of 'not on the times')",
+        "a non-local step on the labels, not on the times, forced by Bell's theorem",
+        "a non-local step on the labels, its interval the last arm's (as after Theorem~\\ref{th:marginals}), forced by Bell's theorem",
+    ),
 ]
 
 

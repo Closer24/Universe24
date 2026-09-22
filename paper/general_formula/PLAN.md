@@ -5119,3 +5119,12 @@ the last arm's. (iii) The arrival interval the host's tick at the arm's
 set, GAMEBOARD (record 768); the arm's own count read only under the
 later key clock_stamp, outside this paper's law. No number moved. The PDF
 compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 21:22Z): the Positioning paragraph's phrase, paper-941's third commit
+
+The one remaining "not on the times" (the Positioning paragraph: the
+click's assignment of the second outcome a non-local step on the labels)
+brought to the clause after the marginals theorem (Theorem 5 in the
+PDF's numbering, label th:marginals; the sentence follows its proof):
+"its interval the last arm's (as after Theorem 5)". Nothing else; words only; the PDF compiled from the
+true source and read back. 52 pages.
