@@ -45,7 +45,8 @@ moment (the wall, the clock), the flight, the collision, the phase and the
 momentum a click moves (a paid family's push, Q per unit) are untouched.
 With the key absent the flow labels ARE the labels and every world reads
 as it did, byte for byte (`tests/test_flow_link.py` (a): the gate world
-`coupling/1b_m16` to its digests, the optical bar to main ab96e7e8's).
+`coupling/1b_m16` to its digests, the optical bar to the base tree's, main
+ab96e7e8 before the generic entry and origin/generic-bending 3760754c after it).
 
 ## The worlds
 
@@ -250,3 +251,95 @@ move from the register's to the algebra's; the clock's word does not move.
 It establishes no physical law: `c_f = 2` is an input, and the ring's
 `2 c_f` at gamma 1 on the one constant stays unread until the refusal is
 resolved.
+
+## The re-run on the merged engine (2026-09-22, head 5f3f18bf: the root replaced, the generic entry, the centred step)
+
+The Boss's order (records 956 and 961, the owner's word: half an hour, not
+hours): origin/generic-bending at 3760754c (the physicist's fold, a ladder
+of comparisons of squares in place of the root in `momentum_pair`; the
+generic entry; the centred step; main merged in) merged into this branch,
+and every ring and its control run again with the SAME worlds and pins
+(`tools/run_series.py --jobs 4`, 400 intervals; the run blocks under
+`runs_on_the_merged_engine_5f3f18bf` of `expectations.json`; no pin,
+world or rule moved).
+
+**Still refused (HOST), at the same intervals with the same primitive
+momenta.** The ladder replaces the root, but the wall's square 3 |**P** /
+g|^2 Q^2 is still formed and still tested against 2^63 - 1 before the
+ladder takes it, so the register refuses the same rows: `ring_b6_g1` at
+interval 79 (**P** / g = (32901461, 1149200, -1147979)), `ring_b3_g0` at 79
+((33507403, 409525, -1064800)), `ring_b3_g1` at 77 ((33523131, 804995,
+2102152)), `ring_b8_g0` at 135 ((33568237, 390720, -390115)), `ring_b8_g1`
+at 89 ((66131823, 1205776, -1203345)); the bound's numbers: |**P** / g|
+<= 27 397 079 for 3 |**P** / g|^2 x 4096 to stay under 2^63 - 1, against
+3.3 x 10^7 to 6.6 x 10^7 read. The six controls completed (the ages 89.00,
+every start at its own Node) and `ring_b6_g0` completed with the books
+(the audit) and the events byte for byte the first run's (the audit
+`1457c184eb09...`, the events `9ea8f4070ba9...`): the same readings, 0.128
+against 0.128 +- 0.025, the arrival Nodes the map's, `C_ring` 1.806.
+
+**The verdict stands: NOT DECIDED.** The deciding pin `0.731 +- 0.025` at
+b = 6, gamma 1 is still unread; by the order, this run stops here. What
+remains is the register's rule on a pushed row's momentum at d = 16384 (the
+wall's square over the working bound, whichever way its root is taken),
+which is the architect's and the owner's, not this branch's.
+
+## The run on the split ladder (2026-09-22, head 89f43572): every ring read; the verdict DOES NOT CLOSE by the README's rule, the deciding pin inside
+
+The physics-rule reviewer's route (b), the model owner's last attempt on
+the light bending (the Boss, about 15:50Z): `nature_beam.split_ladder`
+reaches the pushed row's wall T = isqrt(X Q^2) from the wall's square X =
+R^2 + 3 |**P** / g|^2 alone (a = the ladder on X, b below Q from the ladder
+on the remainder, T = Q a + b; the same floor as the root, no root, X Q^2
+never formed), and `momentum_pair` tests the bound on X and on the pair it
+returns. Every registered world reads byte for byte (the gate set's
+digests through their tests; `ring_b6_g0` on the ladder: the audit
+`1457c184eb09...` and the events `9ea8f4070ba9...` the first run's). The
+five refused rings ran through `tools/run_series.py --jobs 4`, 400
+intervals, against the controls of the run before (unchanged), with the
+SAME pins; the run blocks under `runs_on_the_split_ladder_89f43572` of
+`expectations.json`, read by `tools/flow_link_readings.py`.
+
+| World | the mean radial shift, Links (DETECTOR) | the pin | arrival Nodes the map's | starts moved by 0 / 1 / 2 / 3 (the map's) | the delay, intervals (DETECTOR, within 1) | `C_nodes` (COMPUTATION) | `C_ring` through the factor (COMPUTATION) against the expected, the grain; the residual in grains (the algebra's) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `ring_b6_g1` (the deciding pin) | **0.731** | 0.731 +- 0.025, inside | 40 of 40 | 15 / 20 / 2 / 3 (15 / 20 / 2 / 3) | 0.78 | 2.496, inside | 3.655 against 3.859 +- 0.085: -2.40 grains (-2.44), outside the one-grain pin by 0.119 |
+| `ring_b6_g0` | 0.128 | 0.128 +- 0.025, inside | 40 of 40 | 34 / 6 / 0 / 0 | 0.40 | 0.437, inside | 1.806 against 1.929: -1.45 (-1.46), outside by 0.038 |
+| `ring_b3_g1` | 1.625 | 1.625 +- 0.0625, inside | 16 of 16 | 1 / 4 / 8 / 1 (1 / 4 / 8 / 1) | 1.31 | 2.773, inside | 3.819 against 3.934 +- 0.107: -1.07 (-1.06), outside by 0.008 |
+| `ring_b3_g0` | 0.845 | 0.845 +- 0.0625, inside | 16 of 16 | 3 / 11 / 2 / 0 (3 / 11 / 2 / 0) | 0.75 | 1.442, inside | 1.900 against 1.967: -0.63 (-0.62), inside |
+| `ring_b8_g1` | 0.628 | 0.628 +- 0.0208, inside | 48 of 48 | 22 / 21 / 2 / 3 (22 / 21 / 2 / 3) | 0.91 | 2.856, inside | 3.918 against 3.785 +- 0.095: +1.40 (+1.40), outside by 0.038 |
+| `ring_b8_g0` | 0.107 | 0.107 +- 0.0208, inside | 48 of 48 | 42 / 6 / 0 / 0 (42 / 6 / 0 / 0) | 0.29 | 0.486, inside | 1.927 against 1.892: +0.37 (+0.42), inside |
+
+The tangential mean is 0.000 to 0.018 Links at every ring (inside one Node
+over the count); the key is in every run (the law as built would read
+0.974 / 0.451 / 2.091 / 0.996 / 0.854 / 0.409). Every arrival Node of
+every start is where the algebra's walk under **f**_D puts it, 168 of
+168; the clicks of a start land on one pixel.
+
+**The verdict, by the README's rule and the pins as written before the
+first run: DOES NOT CLOSE.** The rule has three words and no fourth:
+`C_ring` through the stated lever-arm factor reads OUTSIDE the one-grain
+pin as written at four rings of six (2.40 / 1.07 / 1.40 grains at gamma 1,
+1.45 at b = 6 gamma 0), so the second clause's condition fails and the
+rule's own word is DOES NOT CLOSE; not CLOSES bare either (3.655 / 3.819 /
+3.918 against 4). Beside the word, the run's finding by kind: the deciding
+pin is inside (0.731 against 0.731 +- 0.025, DETECTOR); every arrival
+Node is the map's (168 of 168, DETECTOR); every ring's mean radial shift,
+tangential mean, delay and `C_nodes` are inside; and `C_ring` is the
+algebra's own walk to 0.01 at every ring (COMPUTATION: 3.655 / 3.819 /
+3.918 against ALGEBRA.md's 3.652 / 3.821 / 3.918, the pins file's own
+`c_ring` entry, the algebra's value "against" the continuum with no
+tolerance), so what failed the grain is the continuum formula's pin
+`2 c_f x 0.990 x L / sqrt(L^2 + b^2)`, not the engine's walk of the rule.
+The reading establishes that the engine walks the rule as the algebra
+walks it, integer for integer, at every start of the three rings; it
+establishes no physical law: `c_f = 2` is an input, `n S = d` a
+declaration, and 4 stays on the comparison side.
+
+**The state digest between the engines (the record, not a reading).**
+`ring_b6_g0`'s `state.json` digest moved from `11f1797bb2a5...` on the
+head before the merge to `53dc643f6a66...` on the merged engine and the
+ladder, while its audit and events did not move: under the generic entry
+a row no crowd moved carries no stored `flight` accumulator in the
+snapshot (it reads the table's own count at its age by identity), so the
+rays' `flight` fields left the state; the controls' state digests moved
+the same way. The books and the clicks are byte for byte.

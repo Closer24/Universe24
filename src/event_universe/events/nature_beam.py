@@ -3620,15 +3620,55 @@ def square_ladder(square: int) -> int:
     return found
 
 
+def split_ladder(square: int, scale: int) -> int:
+    """The largest T with T^2 <= `square` x `scale`^2, by two ladders of
+    comparisons with every intermediate within the working bound whenever
+    `square` itself is (the physics-rule reviewer's route (b) on the ring
+    worlds of flow-link-v1, 2026-09-22: the wall's square X = R^2 + 3
+    |P|^2 of a pushed row at d = 16384 is in bound, about 2^52 to 2^54,
+    while X Q^2 is not, so `square_ladder(X Q^2)` cannot be formed).
+    The candidate is split as T = scale x a + b: first a = the largest
+    whole with a^2 <= X (`square_ladder` on X), then b, below `scale`,
+    the largest whole with (scale a + b)^2 <= X scale^2, that is
+    2 scale a b + b^2 <= (X - a^2) scale^2, by the ladder from the high
+    bit of `scale` down. Both sides of that comparison are below
+    2 a scale^2 + scale^2 (X - a^2 <= 2 a), so for X within the working
+    bound the ladder's numbers are within it too (refused here, naming
+    the number, if they were not). The same floor as `square_ladder(X
+    scale^2)` and the integer root, reached by comparisons alone: no root
+    primitive, not a seventh verb."""
+    if square < 0:
+        raise ValueError("a square is not negative")
+    if scale < 1:
+        raise ValueError("a scale is at least 1")
+    a = square_ladder(square)
+    remainder = square - a * a
+    if remainder > MAX_WORK_INT // (scale * scale):
+        raise OverflowError(
+            f"{BEAM_LAW}: the split ladder's remainder {remainder} x {scale}^2 exceeds the working "
+            f"bound {MAX_WORK_INT}"
+        )
+    room = remainder * scale * scale
+    found = 0
+    bit = 1 << (scale.bit_length() - 1)
+    while bit:
+        candidate = found + bit
+        if candidate < scale and 2 * scale * a * candidate + candidate * candidate <= room:
+            found = candidate
+        bit >>= 1
+    return scale * a + found
+
+
 def wall_square_overflow(rest: int, primitive: list[int], denominator: int) -> OverflowError:
     """The refusal of the wall's square on a pushed row's momentum before
-    it is formed (`momentum_pair`): R^2 + 3 |**P**|^2 with R the rest term
-    and **P** the primitive momentum, both over their gcd, must fit the
-    working bound over Q^2, tested by division term by term."""
+    it is formed (`momentum_pair`): X = R^2 + 3 |**P**|^2 with R the rest
+    term and **P** the primitive momentum, both over their gcd, must fit
+    the working bound, tested by division term by term; the split ladder
+    then takes X Q^2 without forming it (`split_ladder`)."""
     return OverflowError(
         f"{BEAM_LAW}: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 "
-        f"with R = {rest} and P = {primitive} at d = {denominator}, times Q^2 = {Q * Q}, "
-        f"exceeds the working bound {MAX_WORK_INT} before the root is taken"
+        f"with R = {rest} and P = {primitive} at d = {denominator} exceeds the working bound "
+        f"{MAX_WORK_INT} before the ladder takes it"
     )
 
 
@@ -3649,10 +3689,11 @@ def momentum_pair(
     resolution, the family's triple on the momentum's direction: at
     E'_0 = 0 the photon's T = isqrt(3 |**P**|^2 Q^2) exactly as before, at
     **W** = 0 the massive triple's pace |**p**_D|_1 / E'_D, and under a push
-    along **p**_D a larger pace (a falling row speeds up), the law's own
-    integer root taken per pushed row when **P** changes (a bounded host
-    cost). The pair of a row of zero momentum is (0, 0), refused by the
-    wall."""
+    along **p**_D a larger pace (a falling row speeds up), the floor
+    reached per pushed row when **P** changes by the split ladder of
+    comparisons (`split_ladder`: X = R^2 + 3 |**P**|^2 within the working
+    bound, X Q^2 never formed; a bounded host cost). The pair of a row of
+    zero momentum is (0, 0), refused by the wall."""
     whole = Q * denominator * (store.amount[rows] * store.content[rows])
     s1 = np.zeros(rows.shape[0], dtype=np.int64)
     t = np.zeros(rows.shape[0], dtype=np.int64)
@@ -3672,13 +3713,16 @@ def momentum_pair(
         primitive = [c // g for c in momentum]
         rest_primitive = rest // g
         manhattan = sum(abs(c) for c in primitive)
-        # The wall's square R^2 + 3 |P|^2 (times Q^2 under the root) is
-        # tested against the working bound by division before each term is
-        # formed (the physics-rule reviewer's MUST-FIX 2 on EVERY_FAMILY.md:
-        # the intermediate respects the bound or is refused naming the rule
-        # before it is formed): R <= room / R, then each 3 c^2 <= the room
-        # left, the room MAX_WORK_INT / Q^2 less the terms already summed.
-        room = MAX_WORK_INT // (Q * Q)
+        # The wall's square X = R^2 + 3 |P|^2 is tested against the working
+        # bound by division before each term is formed (the physics-rule
+        # reviewer's MUST-FIX 2 on EVERY_FAMILY.md: the intermediate respects
+        # the bound or is refused naming the rule before it is formed): R <=
+        # bound / R, then each 3 c^2 <= the room left. The wall T = isqrt(X
+        # Q^2) is then taken by the split ladder, which never forms X Q^2
+        # (the reviewer's route (b) on the ring worlds of flow-link-v1,
+        # 2026-09-22: at d = 16384 a pushed row's X is in bound while X Q^2
+        # is not); the pair it returns is tested against the bound below.
+        room = MAX_WORK_INT
         if rest_primitive > room // rest_primitive if rest_primitive else False:
             raise wall_square_overflow(rest_primitive, primitive, denominator)
         square = rest_primitive * rest_primitive
@@ -3687,7 +3731,7 @@ def momentum_pair(
             if c and c > ((room - square) // 3) // c:
                 raise wall_square_overflow(rest_primitive, primitive, denominator)
             square += 3 * c * c
-        resolution = square_ladder(square * Q * Q)
+        resolution = split_ladder(square, Q)
         if 2 * resolution > MAX_WORK_INT // max(1, denominator) or 2 * manhattan * Q > (
             MAX_WORK_INT // max(1, denominator)
         ):

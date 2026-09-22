@@ -30,8 +30,6 @@ import json
 import sys
 from pathlib import Path
 
-import pytest
-
 from event_universe.events import NatureBeamSimulation
 from event_universe.world_loading import load_world
 
@@ -48,7 +46,26 @@ FLUX = {"m0": 0, "m01": 1638, "m03": 4915, "m06": 9830, "m1": 16384}
 # owner's word of record 871: not needed; the Register Architect's to
 # remove after the entry merges): the test records what the law does with
 # them as declared, the readings before the entry kept in the comments.
-REFUSED_AT = 6  # both worlds
+REFUSED_BEFORE_THE_LADDER_AT = 6  # both worlds
+# Under the split ladder of the pushed row's wall (flow-link-build, 2026-09-22,
+# 89f43572: T = Q a + b from the wall's square X alone, X Q^2 never formed)
+# the refusal above is lifted: these worlds run balanced past the interval
+# where they refused. Their readings under the ladder are a RECORD by kind
+# (GAMEBOARD: the host's view of the lamp's presence and counted clock, the
+# measured events' counters after 12 intervals), NOT pinned and NOT compared
+# with the registered pins of the worlds that never refused; the refusal
+# stays as history ("refused before the ladder at interval N").
+READ_UNDER_THE_SPLIT_LADDER = {
+    "kind": "GAMEBOARD",
+    "after_intervals": 12,
+    "both_worlds": {
+        "m0": {"presence": 0, "counted": 0},
+        "m01": {"presence": 4 * 1638, "counted": 22 * 1638},
+        "m03": {"presence": 14 * 4915, "counted": 112 * 4915},
+        "m06": {"presence": 14 * 9830, "counted": 112 * 9830},
+        "m1": {"presence": 14 * 16384, "counted": 112 * 16384},
+    },
+}
 
 
 def load_generator():
@@ -94,11 +111,11 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             else:
                 assert lamp["fixed"] and all(s["fixed"] for s in sources)
         sim = simulation(name)
-        # Before the entry: ten intervals balanced in both worlds.
-        with pytest.raises(OverflowError, match="exceeds the working bound"):
-            for _ in range(10):
-                sim.step()
-        assert sim.tick == REFUSED_AT, name
+        # Ten intervals balanced in both worlds (before the ladder both
+        # refused at interval 6, REFUSED_BEFORE_THE_LADDER_AT).
+        for _ in range(10):
+            sim.step()
+        assert sim.books()["balanced"], name
     expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expected["format"] == generator.EXPECTATIONS_FORMAT
     assert expected["window"] == [250, 500]
@@ -114,12 +131,14 @@ def test_the_presence_at_every_lamp_is_four_times_its_crowds_flux():
     """(b)."""
     # Before the entry, after 12 intervals of `cluster_rest`: the presence
     # at every lamp 4 x FLUX[name] (at most 8 at the lamp of no crowd).
-    # Under the law as declared the world refuses at interval 6.
+    # Under the law as declared, before the ladder, the world refused at
+    # interval 6; under the split ladder it runs the 12 intervals
+    # balanced, the presences the record READ_UNDER_THE_SPLIT_LADDER
+    # (GAMEBOARD, not a pin).
     sim = simulation("cluster_rest")
-    with pytest.raises(OverflowError, match="exceeds the working bound"):
-        for _ in range(12):
-            sim.step()
-    assert sim.tick == REFUSED_AT
+    for _ in range(12):
+        sim.step()
+    assert sim.tick == 12 and sim.books()["balanced"]
     assert all(sim.measured[number].presence >= 0 for number in LAMPS.values())
 
 

@@ -561,7 +561,11 @@ walk's `last_link`; the physics-rule reviewer's line on PR #855: a row no
 crowd moved reads the count's own floor, made T_d / (S_1 Q), by identity,
 and no row reads two forms; the amplitude worlds' clicks byte for byte);
 the pushed row's wall T(P) is a comparison ladder of squares, no root in
-the interval (`nature_beam.square_ladder`); a row
+the interval (`nature_beam.square_ladder`; since the ring worlds of
+flow-link-v1, 2026-09-22, the split ladder `nature_beam.split_ladder`:
+the wall's square X = R^2 + 3 |P|^2 is bounded, X Q^2 never formed, T = Q a
++ b reached by a ladder on X and a ladder on the remainder, the same
+floor; the physics-rule reviewer's route (b)); a row
 whose direction a collision or the meeting changed reads its age on its
 present line, its accumulator the table's own count there
 (`nature_beam.reseed_flight`, the crowd's carry on the old line dropped

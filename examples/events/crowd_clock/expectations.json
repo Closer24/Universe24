@@ -337,5 +337,38 @@
  "replicated": {
   "worlds": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd",
   "clock_age_v1": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd"
+ },
+ "read_under_the_split_ladder_89f43572": {
+  "kind": "GAMEBOARD",
+  "line": "the host's view of the lamps' counters (presence, counted) after 12 intervals on flow-link-build at 89f43572 (the split ladder of the pushed row's wall, X Q^2 never formed): the worlds that refused at the working bound before the ladder run balanced past their refusal; a RECORD, not a pin, not compared with the registered pins of the worlds that never refused",
+  "refused_before_the_ladder_at": {
+   "still_005": 6,
+   "still_08": 6,
+   "still_3": 6,
+   "moving_08": 6,
+   "moving_3": 6
+  },
+  "worlds": {
+   "still_005": {
+    "presence": 328,
+    "counted": 1804
+   },
+   "still_08": {
+    "presence": 5244,
+    "counted": 28842
+   },
+   "still_3": {
+    "presence": 68810,
+    "counted": 550480
+   },
+   "moving_08": {
+    "presence": 5244,
+    "counted": 28842
+   },
+   "moving_3": {
+    "presence": 68810,
+    "counted": 550480
+   }
+  }
  }
 }
