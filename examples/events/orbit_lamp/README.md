@@ -66,15 +66,20 @@ the z axis periodic, the centre c = (60, 60, 0), `suspension` 0, `width` S
 fan of the 120 primitive in-plane directions with a^2 + b^2 <= 64 (q = 12
 units per interval, L = 1.0000 the fan's mean |u_d| / Q), the probe at (60
 + r, 60, 0) with the tangential momentum p = n Q M_total of the circular
-orbit. The shipped worlds (the re-run of 2026-09-22 on the owner's word of
-01:42Z) declare n = 9, the circle under the per-axis drive the engine runs
-(BEAM_LAW note 17: the pace n / (S + n) per axis, n^2 / (S + n) = q L C /
-(2 pi), the real root 8.83 at S = 32, the whole 9, series D's own p = 576
-per unit of content). The first run declared n = 10, the circle under the
-directional drive (form B, note 49, which the engine does not run: the
-real root 9.63, the whole 10, the orbit register's lamp worlds); its rows
-stay below as history with their cause. What changes from series D, and
-nothing else:
+orbit. The shipped worlds (the re-pin of 2026-09-22 under the law's line
+drive, the model owner's record 972, [the design](../../../docs/designs/drive_b/DEFAULT.md))
+declare n = 10, the circle under the line drive (BEAM_LAW note 17 as
+amended, note 49: the pace n Q / (Q S + n T_D) = 640 / 3148 = 0.2033 on a
+heading, n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, the
+whole 10, the orbit register's lamp worlds). History, below with its
+readings: the first run declared this n = 10 while the engine ran the
+per-axis drive of note 17 (its cause read off the controls); the re-run
+on the owner's word of 01:42Z declared n = 9, the circle under that
+per-axis drive (the pace n / (S + n) = 9 / 41 = 0.2195 per axis, n^2 /
+(S + n) = q L C / (2 pi), the real root 8.83, series D's own p = 576 per
+unit of content), the reading the paper's D3 row rests on, read under
+the per-axis drive (the world key `per_axis_drive` since the flip). What
+changes from series D, and nothing else:
 
 - **The probe** is a body of a paid family of its own, `probe` (`quantum`
   1, the default phase circle), of `amount` R = 2^12, the lamp's
@@ -105,44 +110,44 @@ nothing else:
 
 | World | The source | r | `held` m | K | p (label units) | Intervals |
 | --- | --- | --- | --- | --- | --- | --- |
-| `r12` | M, the fan | 12 | 2^20 | 2^20 | 576 x (2^12 + 2^20) = 606 348 288 (the first run 640 x, n = 10) | 4000 |
+| `r12` | M, the fan | 12 | 2^20 | 2^20 | 640 x (2^12 + 2^20) = 673 710 080 (the per-axis re-run 576 x, n = 9) | 4000 |
 | `r24` | the same | 24 | 2^20 | 2^20 | the same | 4000 |
-| `r24_4m` | the same | 24 | 2^22 | 2^22 | 576 x (2^12 + 2^22) = 2 418 458 624 | 4000 |
+| `r24_4m` | the same | 24 | 2^22 | 2^22 | 640 x (2^12 + 2^22) = 2 686 976 000 | 4000 |
 | `r12_control` | none | 12 | 2^20 | 2^20 | as `r12` | 4000 |
 | `r24_control` | none | 24 | 2^20 | 2^20 | as `r24` | 4000 |
 
 ## The pins, written before the runs (`expectations.json`)
 
 From DERIVATIONS_BEAM 3.3 on the plane (the 1 / r force, a flat rotation
-curve: v the same at every r, T proportional to r) at the declared n = 9
-under the per-axis drive's pace n / (S + n) = 9 / 41 = 0.2195 Links per
-interval (the shipped register; the first run's pins at n = 10 under the
-directional drive's 0.2033, T = 371 and 742 with the same brackets, the
-escape at 60 steps, are reproduced by `expectations(10, "directional")`
-and stand in the history block below):
+curve: v the same at every r, T proportional to r) at the declared n = 10
+under the line drive's pace n Q / (Q S + n T_D) = 640 / 3148 = 0.2033
+Links per interval on a heading (the shipped register since 2026-09-22;
+the per-axis re-run's pins at n = 9 under the drive of history's 0.2195,
+T = 343 and 687, the escape 278, are reproduced by `expectations(9,
+"axis")` and stand in the history blocks below):
 
-- **The period** T = 2 pi r / v: 343 at r = 12 and 687 at r = 24 (series
-  D's own table), each within the continuum map's own margin of 9 percent
-  (313 to 374; 625 to 749). DETECTOR: the recurrence of the clicks' x, the
+- **The period** T = 2 pi r / v: 371 at r = 12 and 742 at r = 24, each
+  within the continuum map's own margin of 9 percent (337 to 404; 675 to
+  808). DETECTOR: the recurrence of the clicks' x, the
   mean spacing of successive crossings of the centre column in one
   direction, each crossing interpolated between the two births that
   bracket it.
 - **The ratio** T(24) / T(12) = 2.00 +- 0.18; k = 2 on the plane (space's
   k = 3 would give 2.83).
 - **The second difference** of the clicks' x against t at the lag h of a
-  quarter period (88 and 168 intervals): x(t + h) - 2 x(t) + x(t - h) =
-  -4 sin^2(omega h / 2) (x(t) - c_x), so omega^2 = (2 pi / T)^2 = 3.35e-4
-  and 8.37e-5 per interval^2 (the brackets from T's), the acceleration a =
-  omega^2 r = v^2 / r = 4.02e-3 and 2.01e-3 Links per interval^2, the
+  quarter period (96 and 184 intervals): x(t + h) - 2 x(t) + x(t - h) =
+  -4 sin^2(omega h / 2) (x(t) - c_x), so omega^2 = (2 pi / T)^2 = 2.87e-4
+  and 7.18e-5 per interval^2 (the brackets from T's), the acceleration a =
+  omega^2 r = v^2 / r = 3.44e-3 and 1.72e-3 Links per interval^2, the
   ratio 2.00 (3.3's small-n limit q L C / (2 pi r S), with v = n / S, is
-  4.97e-3 and 2.49e-3, the ratio 2.00 again; at n = 9 the pace 9 / 41 is
-  0.78 of the limit's 9 / 32).
+  4.97e-3 and 2.49e-3, the ratio 2.00 again; at n = 10 the pace 640 /
+  3148 is 0.65 of the limit's 10 / 32).
 - **The amplitude** of the clicks' x, (max - min) / 2: r - 1 to r + 2 (the
-  near-circular loop of the whole 9 above 8.83).
+  near-circular loop of the whole 10 above 9.63).
 - **The equivalence**: `r24_4m` reads T within one birth interval (8) of
   `r24`'s and the same x on every common birth tick within one Node.
 - **The controls**: every click at x = 60 + r; the probe leaves through the
-  face +y at its 61st step (from y = 60 to 121), 61 / v = 278 (+- 6).
+  face +y at its 61st step (from y = 60 to 121), 61 / v = 300 (+- 6).
 - **Read beside the pins, not pinned**: the radius at every birth from the
   clicks alone, x the column and y the line's y plus the Links the row
   walked by its age off the flight table (the tool's `links_of`): its
@@ -162,9 +167,11 @@ PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp
 
 ## The first run at n = 10 (2026-09-22, history: measured against its pins, the cause named, none moved)
 
-The rows of the first run, at the declared n = 10 under the directional
-drive's pins (T = 371 and 742, the escape 295), kept as registered; the
-re-run at n = 9 on the owner's word of 01:42Z follows in the next section.
+The rows of the first run, at the declared n = 10 under the line drive's
+pins (then "the directional drive", form B, not yet the engine's: T = 371
+and 742, the escape 295) while the engine ran the per-axis drive, kept as
+registered; the re-run at n = 9 on the owner's word of 01:42Z follows in
+the next section, and the re-run under the law's line drive after it.
 
 Source fingerprint `5a5b79ef438c1c6c` (the checkout of
 `newton-after-detector` off `origin/main` at `fa2cb6d`, package 0.3.1),
@@ -227,12 +234,15 @@ nothing else).
 The register entry marks every reading inside or outside as above; the
 brackets are the design's and are not moved.
 
-## The re-run at n = 9 (2026-09-22, measured against the pins of `expectations.json`)
+## The re-run at n = 9 under the per-axis drive (2026-09-22, history since the flip; measured against its pins, none moved)
 
 The owner's word of 01:42Z on the first run's cause: the same five worlds
 at n = 9, series D's own p = 576 per unit of content, the circle of the
-per-axis drive the engine runs; the one integer changed in the generator,
-the pins above committed at `fccedae` before the run.
+per-axis drive the engine then ran (since the flip of 2026-09-22 the drive
+of history, the world key `per_axis_drive`; `expectations(9, "axis")`
+gives these pins); the one integer changed in the generator, the pins
+committed at `fccedae` before the run. This is the reading the paper's D3
+row rests on, read under the per-axis drive.
 
 Source fingerprint `5a5b79ef438c1c6c` (the same tree, package 0.3.1),
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores, `tools/run_series.py

@@ -98,19 +98,25 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_are_pinned()
         "flight",
     ):
         assert key in pinned["derivations"], key
-    assert pinned["orbit_n"] == 9 and pinned["drive"] == GENERATOR.AXIS_DRIVE
+    assert pinned["orbit_n"] == 10 and pinned["drive"] == GENERATOR.LINE_DRIVE
     assert pinned["birth_interval"] == BIRTH_INTERVAL
-    # The shipped pins at n = 9 under the per-axis drive (T = 343 and 687,
-    # series D's table) and the first run's at n = 10 under the directional
-    # drive (T = 371 and 742), both reproducible from the generator.
-    assert abs(pinned["worlds"]["r12"]["period"]["pin"] - 2 * math.pi * 12 * 41 / 9) < 1e-9
-    assert abs(pinned["worlds"]["r24"]["period"]["pin"] - 2 * math.pi * 24 * 41 / 9) < 1e-9
-    assert pinned["worlds"]["r12"]["momentum"] == 9 * 64 * ((1 << 12) + (1 << 20))
-    assert abs(pinned["worlds"]["r12_control"]["escape_tick"]["pin"] - 61 * 41 / 9) < 1e-9
-    history = GENERATOR.expectations(GENERATOR.HISTORY_N, GENERATOR.DIRECTIONAL_DRIVE)
-    assert history["orbit_n"] == 10 and history["drive"] == GENERATOR.DIRECTIONAL_DRIVE
-    assert abs(history["worlds"]["r12"]["period"]["pin"] - 370.9) < 0.1
-    assert abs(history["worlds"]["r24"]["period"]["pin"] - 741.7) < 0.1
+    # The shipped pins at n = 10 under the law's line drive (2026-09-22: the
+    # pace 640 / 3148 = 0.2033 on a heading, T = 370.9 and 741.7) and the
+    # registered re-run's at n = 9 under the per-axis drive of history (T =
+    # 343 and 687, series D's table), both reproducible from the generator.
+    pace = 10 * 64 / (64 * 32 + 10 * 110)
+    assert abs(pinned["pace"] - pace) < 1e-12 and abs(pace - 0.2033) < 5e-5
+    assert abs(pinned["worlds"]["r12"]["period"]["pin"] - 2 * math.pi * 12 / pace) < 1e-9
+    assert abs(pinned["worlds"]["r24"]["period"]["pin"] - 2 * math.pi * 24 / pace) < 1e-9
+    assert abs(pinned["worlds"]["r12"]["period"]["pin"] - 370.9) < 0.1
+    assert pinned["worlds"]["r12"]["momentum"] == 10 * 64 * ((1 << 12) + (1 << 20))
+    assert abs(pinned["worlds"]["r12_control"]["escape_tick"]["pin"] - 61 / pace) < 1e-9
+    assert abs(pinned["worlds"]["r12_control"]["escape_tick"]["pin"] - 300.0) < 0.1
+    history = GENERATOR.expectations(GENERATOR.HISTORY_N, GENERATOR.AXIS_DRIVE)
+    assert history["orbit_n"] == 9 and history["drive"] == GENERATOR.AXIS_DRIVE
+    assert abs(history["worlds"]["r12"]["period"]["pin"] - 2 * math.pi * 12 * 41 / 9) < 1e-9
+    assert abs(history["worlds"]["r24"]["period"]["pin"] - 2 * math.pi * 24 * 41 / 9) < 1e-9
+    assert history["worlds"]["r12"]["momentum"] == 9 * 64 * ((1 << 12) + (1 << 20))
     assert GENERATOR.worlds(GENERATOR.HISTORY_N)["r12"] != generated["r12"]
     assert (
         abs(pinned["worlds"]["r24"]["period"]["pin"] / pinned["worlds"]["r12"]["period"]["pin"] - 2.0)

@@ -17,15 +17,20 @@ per direction every 10 intervals on the uniform fan of every primitive
 in-plane direction (a, b, 0) with 0 < a^2 + b^2 <= P^2 (P = 8, 120
 directions, q = 12 units per interval, L = 1.0000 the fan's mean |u_d| /
 Q), and the probe at (c_x + r, c_y, 0) with the tangential momentum of the
-circular orbit under the per-axis drive the engine runs (BEAM_LAW note 17,
-`step_axis`): the pace n / (S + n) per axis with n = p / (Q M_total), the
-circular condition n^2 / (S + n) = q L C / (2 pi) giving n = 8.83 at S =
-32, the nearest whole 9 (series D's own p = 576 per unit of content). The
-first run of 2026-09-22 declared n = 10, the whole of the circle under the
-directional drive (form B, note 49: "has not landed", engine.py), the pace
-64 n / (64 S + 110 n); its rows stay in README.md as history with their
-cause, and the shipped worlds since the owner's word of 01:42Z (the
-re-run at n = 9, the one integer changed) are these.
+circular orbit under the law's drive. Since 2026-09-22 (the model owner's
+word, record 972; docs/designs/drive_b/DEFAULT.md) the law's drive of a
+body is the line drive (BEAM_LAW note 17 as amended, note 49): the pace
+64 n / (64 S + 110 n) on a heading with n = p / (Q M_total), the circular
+condition n x pace(n) = q L C / (2 pi) giving n = 9.63 at S = 32, the
+nearest whole 10, and the shipped worlds and pins are at n = 10 (the
+third registration of the series). History, kept in README.md with its
+readings: the first run of 2026-09-22 declared n = 10 under that pace
+while the engine ran the per-axis drive of note 17 (the cause read off
+the controls); the re-run on the owner's word of 01:42Z at n = 9, the
+per-axis drive's circle (the pace n / (S + n), the condition n^2 / (S +
+n) = q L C / (2 pi), the root 8.83, series D's p = 576 per unit of
+content), is the reading the paper's D3 row rests on, read under the
+per-axis drive; `expectations(HISTORY_N, AXIS_DRIVE)` reproduces its pins.
 
 What changes from series D, and nothing else (the deviation of 00:56Z and
 the chief physicist's word on it):
@@ -79,9 +84,9 @@ the chief physicist's word on it):
 
 | World | The source | r | `held` m | K | p (label units) | What it asks |
 | --- | --- | --- | --- | --- | --- | --- |
-| `r12` | M, the fan | 12 | 2^20 | 2^20 | 576 x (2^12 + 2^20) | the orbit's period at r = 12 |
+| `r12` | M, the fan | 12 | 2^20 | 2^20 | 640 x (2^12 + 2^20) | the orbit's period at r = 12 |
 | `r24` | the same | 24 | 2^20 | 2^20 | the same | at r = 24: the ratio 2.00 |
-| `r24_4m` | the same | 24 | 2^22 | 2^22 | 576 x (2^12 + 2^22) | the equivalence: four times the mass on the same clicks |
+| `r24_4m` | the same | 24 | 2^22 | 2^22 | 640 x (2^12 + 2^22) | the equivalence: four times the mass on the same clicks |
 | `r12_control` | none | 12 | 2^20 | 2^20 | as `r12` | the probe alone: x constant, no turn |
 | `r24_control` | none | 24 | 2^20 | 2^20 | as `r24` | the same at r = 24 |
 
@@ -92,10 +97,11 @@ q L C / (2 pi r), a 1 / r force; the orbit sweeps every line of the fan
 once per turn, so its mean push per turn is the ring mean exactly, which a
 resting Node never reads, DERIVATIONS 3.2):
 
-- The period T = 2 pi r / v with v the pace at n = 9 (9 / 41 = 0.2195
-  Links per interval per axis, the same at every radius: the flat
-  rotation curve of a 1 / r force): 343 intervals at r = 12 and 687 at
-  r = 24 (series D's table), each within the continuum map's own margin
+- The period T = 2 pi r / v with v the pace at n = 10 under the line
+  drive (640 / 3148 = 0.2033 Links per interval on a heading, the same
+  at every radius: the flat rotation curve of a 1 / r force): 371
+  intervals at r = 12 and 742 at r = 24 (the per-axis drive's n = 9 read
+  343 and 687, series D's table), each within the continuum map's own margin
   of 9 percent (the burst field and the fan's grain; the orbit register's
   lamp worlds). DETECTOR: the recurrence of the clicks' x, the mean
   spacing of successive crossings of the centre column by x(t) in one
@@ -108,20 +114,21 @@ resting Node never reads, DERIVATIONS 3.2):
   angular rate omega = 2 pi / T, read at the lag h of about a quarter
   period (the grain 1 Node on x against a signal of 2 r Links); omega^2 =
   (2 pi / T)^2 per interval^2 at both radii (the bracket from T's), the
-  acceleration a = omega^2 r = v^2 / r: 4.02e-3 Links per interval^2 at
-  r = 12 and 2.01e-3 at r = 24, the ratio 2.00; in the small-n limit
+  acceleration a = omega^2 r = v^2 / r: 3.44e-3 Links per interval^2 at
+  r = 12 and 1.72e-3 at r = 24, the ratio 2.00; in the small-n limit
   (v = n / S) this is 3.3's q L C / (2 pi r S) = 4.97e-3 and 2.49e-3
-  (the ratio 2.00 again); at n = 9 the pace 9 / 41 is 0.78 of the
-  limit's 9 / 32, so the pinned a is v^2 / r at the declared pace.
+  (the ratio 2.00 again); at n = 10 the pace 640 / 3148 is 0.65 of the
+  limit's 10 / 32, so the pinned a is v^2 / r at the declared pace.
 - The amplitude of the clicks' x, (max - min) / 2, the orbit's radius:
-  r - 1 to r + 2 (the near-circular loop of the whole n above 8.83).
+  r - 1 to r + 2 (the near-circular loop of the whole n above 9.63).
 - The equivalence: `r24_4m` reads the same period as `r24` within one
   birth interval (8), and the same x on every common birth tick within
   one Node.
 - The controls: every click at x = c_x + r (no push, no turn); the probe
   leaves through the face +y at the tick (SIDE - c_y) / v, the 61st step
-  (from y = 60 to 121) at the pace, about 278 (the first run pinned 60
-  steps, 295 at n = 10, and read 257, the 61st step at 0.238).
+  (from y = 60 to 121) at the pace, about 300 (the per-axis re-run at
+  n = 9 pinned 278 and read 278; the first run pinned 60 steps, 295, and
+  read 257, the 61st step at the per-axis 0.238 the engine then ran).
 - Refuted if the ratio leaves 2.00 +- 0.18, a period leaves its bracket,
   the second difference's omega^2 leaves its bracket, or the two held
   masses' periods differ beyond one birth interval. A record check
@@ -130,9 +137,9 @@ resting Node never reads, DERIVATIONS 3.2):
   age) or a GAMEBOARD diagnostic, labelled; only the first is pinned.
 
 `expectations(n, drive)` gives the pins for either drive, so that the
-first run's pins (n = 10, the directional drive: T = 371 and 742) stay
-reproducible beside the shipped ones (the test pins both); the shipped
-`expectations.json` is the per-axis drive's at n = 9.
+per-axis re-run's pins (n = 9, the drive of history: T = 343 and 687)
+stay reproducible beside the shipped ones (the test pins both); the
+shipped `expectations.json` is the line drive's at n = 10.
 
     python examples/events/orbit_lamp/make_worlds.py
 """
@@ -188,17 +195,19 @@ PROBE_FAMILY = "probe"
 WALL_FAMILY = "wall"
 MASS_FAMILY = "m"
 DETECTOR_PREFIX = "line_"
-# The two drives a circle can be declared under: the per-axis drive the
-# engine runs (BEAM_LAW note 17: the pace n / (S + n) per axis; the circle
-# at n^2 / (S + n) = q L C / (2 pi), the real root 8.83 at S = 32, the
-# whole 9, series D's p = 576 per unit of content) and the directional
-# drive (form B, note 49, not landed: the pace n Q / (Q S + n T_D), the
-# circle's real root 9.63, the whole 10, the first run's declaration).
+# The two drives a circle can be declared under: the line drive, the law's
+# drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49:
+# the pace n Q / (Q S + n T_D) on a heading; the circle's real root 9.63
+# at S = 32, the whole 10) and the per-axis drive of history (note 17 as
+# it ran until that day, the world key `per_axis_drive`: the pace n / (S +
+# n) per axis; the circle at n^2 / (S + n) = q L C / (2 pi), the real root
+# 8.83, the whole 9, series D's p = 576 per unit of content), the drive
+# the registered re-run of 2026-09-22 was read under.
 AXIS_DRIVE = "axis"
-DIRECTIONAL_DRIVE = "directional"
-DRIVE = AXIS_DRIVE
-ORBIT_N = 9
-HISTORY_N = 10
+LINE_DRIVE = "line"
+DRIVE = LINE_DRIVE
+ORBIT_N = 10
+HISTORY_N = 9
 T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
 # The tool's constant of the flow on the plane, flow x 2 pi r / q (series C).
 FLOW_CONSTANT = 1.0
@@ -243,24 +252,24 @@ CIRCLE_CONSTANT = EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi)
 
 def pace(n: float, width: int, drive: str = DRIVE) -> float:
     """The pace of a body at n = p / (Q M) per unit of content, in Links per
-    interval: the per-axis drive's n / (S + n) (BEAM_LAW note 17, the
-    engine's) or the directional drive's n Q / (Q S + n T_D) on a heading
-    (note 49, form B)."""
+    interval: the line drive's n Q / (Q S + n T_D) on a heading (the law's,
+    BEAM_LAW note 17 as amended, note 49) or the per-axis drive of history's
+    n / (S + n) (the world key `per_axis_drive`)."""
     if drive == AXIS_DRIVE:
         return n / (width + n)
-    if drive == DIRECTIONAL_DRIVE:
+    if drive == LINE_DRIVE:
         return n * LABEL_SCALE / (LABEL_SCALE * width + n * T_D_AXIS)
     raise ValueError(f"unknown drive {drive!r}")
 
 
 def orbit_momentum(width: int, drive: str = DRIVE) -> tuple[float, int]:
     """The circular-orbit n per unit of content, n x pace(n) = A: the real
-    root and the nearest whole (series D's derivation under the per-axis
-    drive, the orbit register's lamp worlds' under the directional one)."""
+    root and the nearest whole (the orbit register's lamp worlds'
+    derivation under the line drive; series D's under the per-axis one)."""
     a = CIRCLE_CONSTANT
     if drive == AXIS_DRIVE:
         n = (a + math.sqrt(a * a + 4 * width * a)) / 2
-    elif drive == DIRECTIONAL_DRIVE:
+    elif drive == LINE_DRIVE:
         n = (
             T_D_AXIS * a + math.sqrt((T_D_AXIS * a) ** 2 + 4 * LABEL_SCALE * LABEL_SCALE * width * a)
         ) / (2 * LABEL_SCALE)
@@ -390,7 +399,9 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
     under the named drive, every entry with its source in `derivations`
     (the owner's principle, record 205: a formula gives, a run proves).
     The shipped register is `expectations()`; `expectations(HISTORY_N,
-    DIRECTIONAL_DRIVE)` reproduces the first run's pins."""
+    AXIS_DRIVE)` reproduces the registered re-run's pins under the per-axis
+    drive of history (n = 9), and `expectations(10, LINE_DRIVE)` the first
+    run's, which declared the line drive's circle before the engine ran it."""
     real_n, whole_n = orbit_momentum(WIDTH, drive)
     assert whole_n == n, (whole_n, n)
     v = pace(n, WIDTH, drive)
@@ -399,15 +410,17 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
     }
     if drive == AXIS_DRIVE:
         drive_note = (
-            "the per-axis drive the engine runs (BEAM_LAW note 17, `step_axis`): the pace n / (S + n) "
-            "per axis; the circle n^2 / (S + n) = q L C / (2 pi), the real root 8.83 at S = 32, "
-            "declared the nearest whole 9 (series D's p = 576 per unit of content)"
+            "the per-axis drive of history (BEAM_LAW note 17 as it ran until 2026-09-22, `step_axis`, "
+            "the world key `per_axis_drive`): the pace n / (S + n) per axis; the circle n^2 / (S + n) "
+            "= q L C / (2 pi), the real root 8.83 at S = 32, declared the nearest whole 9 (series D's "
+            "p = 576 per unit of content)"
         )
     else:
         drive_note = (
-            "the directional drive (BEAM_LAW note 49, form B, not landed in the engine): the pace "
-            "n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root "
-            "9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds)"
+            "the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, "
+            "note 49; the model owner's record 972): the pace n Q / (Q S + n T_D) on a heading; the "
+            "circle n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest "
+            "whole 10 (the orbit register's lamp worlds)"
         )
     found: Json = {
         "format": EXPECTATIONS_FORMAT,

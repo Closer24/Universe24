@@ -4,8 +4,8 @@
   "fan": "declared: series D's uniform fan, every primitive (a, b, 0) with 0 < a^2 + b^2 <= 64",
   "emission": "the fan's directions x the release rate, q = 120 / 10 = 12 units per interval (DERIVATIONS_BEAM 3, the flux q)",
   "label_magnitude": "the fan's mean |u_d| / Q off unit_label (BEAM_LAW section 2, note 23)",
-  "drive": "declared: the per-axis drive the engine runs (BEAM_LAW note 17, `step_axis`): the pace n / (S + n) per axis; the circle n^2 / (S + n) = q L C / (2 pi), the real root 8.83 at S = 32, declared the nearest whole 9 (series D's p = 576 per unit of content)",
-  "orbit_n": "DERIVATIONS_BEAM 3.3 with the per-axis drive the engine runs (BEAM_LAW note 17, `step_axis`): the pace n / (S + n) per axis; the circle n^2 / (S + n) = q L C / (2 pi), the real root 8.83 at S = 32, declared the nearest whole 9 (series D's p = 576 per unit of content)",
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds)",
+  "orbit_n": "DERIVATIONS_BEAM 3.3 with the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds)",
   "pace": "the drive's pace at the declared n (the `drive` entry)",
   "period": "the analytic circle's T = 2 pi r / v at the pace (DERIVATIONS_BEAM 3.3 on the plane: v the same at every r, T proportional to r); the bracket the continuum map's 9 percent margin (the orbit register's lamp worlds, DERIVATIONS_BEAM 12b.2)",
   "ratio": "T(24) / T(12) = 2.00 on the plane (the 1 / r force's flat rotation curve; k = 2), the margin 0.18 the periods' 9 percent propagated (record 594)",
@@ -29,10 +29,10 @@
  "label_magnitude": 0.9999840840444985,
  "flow_constant": 1.0,
  "width": 32,
- "drive": "axis",
- "orbit_n_real": 8.83059773578503,
- "orbit_n": 9,
- "pace": 0.21951219512195122,
+ "drive": "line",
+ "orbit_n_real": 9.629266319223532,
+ "orbit_n": 10,
+ "pace": 0.20330368487928843,
  "ratio": {
   "pin": 2.0,
   "bracket": [
@@ -46,24 +46,24 @@
    "source": true,
    "held_mass": 1048576,
    "reservoir": 4096,
-   "momentum": 606339072,
+   "momentum": 673710080,
    "period": {
-    "pin": 343.48079679248406,
+    "pin": 370.86501275627506,
     "bracket": [
-     312.5675250811605,
-     374.39406850380766
+     337.48716160821033,
+     404.24286390433986
     ]
    },
-   "second_difference_lag": 11,
+   "second_difference_lag": 12,
    "omega_squared": {
-    "pin": 0.00033462224866151095,
+    "pin": 0.00028703047420484046,
     "bracket": [
-     0.0002816448520002617,
-     0.00040408434809988033
+     0.00024158780759602757,
+     0.00034661330057340943
     ]
    },
    "acceleration": {
-    "pin": 0.004015466983938131,
+    "pin": 0.0034443656904580853,
     "small_n_limit": 0.004973512812153226
    },
    "amplitude": {
@@ -79,24 +79,24 @@
    "source": true,
    "held_mass": 1048576,
    "reservoir": 4096,
-   "momentum": 606339072,
+   "momentum": 673710080,
    "period": {
-    "pin": 686.9615935849681,
+    "pin": 741.7300255125501,
     "bracket": [
-     625.135050162321,
-     748.7881370076153
+     674.9743232164207,
+     808.4857278086797
     ]
    },
-   "second_difference_lag": 21,
+   "second_difference_lag": 23,
    "omega_squared": {
-    "pin": 8.365556216537774e-05,
+    "pin": 7.175761855121011e-05,
     "bracket": [
-     7.041121300006542e-05,
-     0.00010102108702497008
+     6.039695189900689e-05,
+     8.665332514335236e-05
     ]
    },
    "acceleration": {
-    "pin": 0.0020077334919690656,
+    "pin": 0.0017221828452290426,
     "small_n_limit": 0.002486756406076613
    },
    "amplitude": {
@@ -112,24 +112,24 @@
    "source": true,
    "held_mass": 4194304,
    "reservoir": 4096,
-   "momentum": 2418278400,
+   "momentum": 2686976000,
    "period": {
-    "pin": 686.9615935849681,
+    "pin": 741.7300255125501,
     "bracket": [
-     625.135050162321,
-     748.7881370076153
+     674.9743232164207,
+     808.4857278086797
     ]
    },
-   "second_difference_lag": 21,
+   "second_difference_lag": 23,
    "omega_squared": {
-    "pin": 8.365556216537774e-05,
+    "pin": 7.175761855121011e-05,
     "bracket": [
-     7.041121300006542e-05,
-     0.00010102108702497008
+     6.039695189900689e-05,
+     8.665332514335236e-05
     ]
    },
    "acceleration": {
-    "pin": 0.0020077334919690656,
+    "pin": 0.0017221828452290426,
     "small_n_limit": 0.002486756406076613
    },
    "amplitude": {
@@ -145,13 +145,13 @@
    "source": false,
    "held_mass": 1048576,
    "reservoir": 4096,
-   "momentum": 606339072,
+   "momentum": 673710080,
    "x": 72,
    "escape_tick": {
-    "pin": 277.8888888888889,
+    "pin": 300.04375,
     "bracket": [
-     271.8888888888889,
-     283.8888888888889
+     294.04375,
+     306.04375
     ]
    }
   },
@@ -160,13 +160,13 @@
    "source": false,
    "held_mass": 1048576,
    "reservoir": 4096,
-   "momentum": 606339072,
+   "momentum": 673710080,
    "x": 84,
    "escape_tick": {
-    "pin": 277.8888888888889,
+    "pin": 300.04375,
     "bracket": [
-     271.8888888888889,
-     283.8888888888889
+     294.04375,
+     306.04375
     ]
    }
   }
