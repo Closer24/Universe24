@@ -106,6 +106,16 @@ HISTORY = {
     # line drive; series R's registered readings stand under the drive they
     # were read under until the series is re-pinned (DEFAULT.md (c)).
     "catalog/neutron_star.json",
+    # The moving detector's six worlds (main's series, PR #834; merged on
+    # 2026-09-22): the cart's momentum derived for the per-axis drive's
+    # exact pace 1 / k, under its declared key until the series is
+    # re-pinned under the law (the generator's docstring).
+    "moving_detector/capability_k5.json",
+    "moving_detector/cart_k3.json",
+    "moving_detector/cart_k5.json",
+    "moving_detector/cart_k9.json",
+    "moving_detector/cart_k17.json",
+    "moving_detector/cart_quantum.json",
     "quarks/q1_proton_line.json",
     "quarks/q2_neutron_line.json",
     "quarks/q3_proton_triangle.json",
