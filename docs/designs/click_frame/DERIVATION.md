@@ -755,7 +755,16 @@ M3, `E / c^2 = 3 E`) `E'_0 = 3 h n / d = Q S M` by the load-time identity
 (13.2 (a), record 186), rounded by the grain to the heading's `c_h = Q /
 T_h`, `T_h = isqrt(3 Q^2) = 110` at Q = 64 (input 10; FORM.md 3.1). Lorentz
 enters through (A1) and (A2) only, never as an input; Eq. 14 appears
-below only as the thing the result is compared with. No reading of a
+below only as the thing the result is compared with. In so many words
+(the owner's requirement, "part 6 must close W from the assumptions"):
+NO SQUARE IS DECLARED ANYWHERE IN THE CHAIN; W's form comes out of the
+walk's invariant (`omega^2 - kappa^2 = m^2`, the second order of the
+cosine identity, itself the composition of the coin's rotations) and
+the Planck map, not from record 270's declaration; and the one input
+beyond the six verbs is (A2), the split with phase, which the rows as
+built lack (part (5)), so that on the law as built W is still the
+declared identity of record 270 for the rows' dynamics and the
+conversion's identity for the readings. No reading of a
 run is pinned; every number is a formula's value or a registered
 reading named by its kind.
 
@@ -1270,7 +1279,13 @@ not its update. Nothing else is assumed of the board.
 (I) under the conversion, Einstein's as the most general.* Under the
 conversion of (A1) and (A2) (the map named in (2) below), the Inside
 step's invariant and schedule come out Outside as Einstein's rows, and
-they FOLLOW; nothing of them was put into (I): `E^2 = E_0^2 + p^2 c^2`
+they FOLLOW; nothing of them was put into (I). One sentence for the
+paper's writer to mirror: `W = E'_0^2 + 3` **p** `.` **p** is the
+conversion's identity, shown to second order from the six verbs with
+(A1) and (A2) (section 7); on the law as built the rows hop whole and
+lack (A2) (part (5)), so for the rows' dynamics W remains a declared
+identity (record 270), and the paper says which of the two it means at
+each use. The rows that follow: `E^2 = E_0^2 + p^2 c^2`
 (W times `c^4` in the whole unit, exact on the identity's integers, the
 3 entering as `1 / c^2` when p is counted per Link; part (6)); `v = p
 c^2 / E` (the drive's fraction as the click's velocity, within `m^2 /
