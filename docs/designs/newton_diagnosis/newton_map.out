@@ -3,45 +3,55 @@ S = 32, c = 64 / 110, 4000 intervals, the launch tangential at r = 12 and 24
 
 == the ring-mean push A / r alone, n = 8 under the key (the pins' algebra with the drive's anisotropy and the whole 8)
   r = 12: the tool's T over 4000 = 402.8; r from 11.6 to 13.5, the mean 12.6; turns 9.93; crossings (10, 10)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [400, 812, 1206] (the spacings [400, 412, 394])
      the pericentres (tick, r): [(25, 12.0), (268, 11.8), (322, 12.0), (568, 11.8), (868, 11.8), (1168, 11.7), (1468, 11.7), (1768, 11.7), (2068, 11.7), (2368, 11.6)]
      the apocentres  (tick, r): [(3, 12.0), (117, 13.3), (310, 12.0), (417, 13.4), (716, 13.4), (1016, 13.4), (1316, 13.5), (1617, 13.5), (1917, 13.5), (2217, 13.5)]
   r = 24: the tool's T over 4000 = 807.6; r from 23.4 to 27.0, the mean 25.3; turns 4.95; crossings (5, 5)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [798, 1623, 2412] (the spacings [798, 825, 789])
      the pericentres (tick, r): [(54, 23.9), (325, 26.5), (539, 23.7), (650, 24.0), (1138, 23.6), (1738, 23.5), (2337, 23.5), (2937, 23.4), (3538, 23.4)]
      the apocentres  (tick, r): [(3, 24.0), (238, 26.6), (345, 26.5), (615, 24.0), (836, 26.7), (1435, 26.8), (2035, 26.9), (2635, 26.9), (3235, 27.0), (3836, 27.0)]
   the ratio T(24) / T(12) = 2.005
 
 == the same with the arrival rate's factor (1 + u / c)
   r = 12: the tool's T over 4000 = 556.1; r from 2.7 to 968.8, the mean 297.7; turns 3.14; crossings (3, 3)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [399, 919, 1667] (the spacings [399, 520, 748])
      the pericentres (tick, r): [(25, 12.0), (284, 11.2), (600, 9.7), (956, 7.4), (1661, 2.7)]
      the apocentres  (tick, r): [(3, 12.0), (136, 13.8), (455, 15.6), (795, 21.3), (1343, 51.4)]
   r = 24: the tool's T over 4000 = 1099.9; r from 5.8 to 307.8, the mean 64.8; turns 3.14; crossings (3, 3)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [794, 1830, 3288] (the spacings [794, 1036, 1458])
      the pericentres (tick, r): [(54, 23.9), (573, 22.4), (1205, 19.6), (1913, 15.0), (3277, 5.8)]
      the apocentres  (tick, r): [(3, 24.0), (281, 27.5), (917, 31.2), (1592, 42.2), (2662, 99.3)]
   the ratio T(24) / T(12) = 1.978
 
 == the factor at the exact balance n = 7.672 (a circle launched exactly)
   r = 12: the tool's T over 4000 = 425.2; r from 4.8 to 387.6, the mean 151.9; turns 3.95; crossings (4, 4)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [386, 797, 1185] (the spacings [386, 411, 388])
      the pericentres (tick, r): [(39, 11.8), (150, 12.3), (254, 11.6), (317, 11.7), (553, 11.1), (853, 10.0), (1170, 8.1), (1615, 4.8)]
      the apocentres  (tick, r): [(2, 12.0), (106, 12.5), (183, 12.4), (295, 11.8), (405, 13.0), (711, 14.1), (1025, 17.4), (1414, 30.0)]
   r = 24: the tool's T over 4000 = 836.2; r from 10.6 to 201.8, the mean 45.3; turns 3.96; crossings (4, 4)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [768, 1588, 2369] (the spacings [768, 820, 781])
      the pericentres (tick, r): [(82, 23.6), (294, 24.6), (511, 23.2), (643, 23.3), (895, 25.6), (1113, 22.3), (1718, 20.3), (2347, 16.7), (3195, 10.6)]
      the apocentres  (tick, r): [(2, 24.0), (212, 24.9), (371, 24.9), (583, 23.5), (816, 25.7), (912, 25.6), (1439, 27.9), (2059, 34.1), (2813, 56.6)]
   the ratio T(24) / T(12) = 1.967
 
 == as built, A = 1.9098, n = 9, with the factor (the registered per-axis run)
   r = 12: the tool's T over 4000 = 464.3; r from 3.3 to 1136.2, the mean 385.0; turns 3.16; crossings (3, 3)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [349, 782, 1387] (the spacings [349, 433, 605])
      the pericentres (tick, r): [(30, 11.9), (142, 13.1), (242, 11.3), (522, 10.0), (824, 7.8), (1382, 3.3)]
      the apocentres  (tick, r): [(2, 12.0), (106, 13.1), (155, 13.1), (396, 14.6), (689, 19.3), (1133, 45.2)]
   r = 24: the tool's T over 4000 = 917.5; r from 7.7 to 529.8, the mean 113.0; turns 3.18; crossings (3, 3)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [694, 1555, 2737] (the spacings [694, 861, 1182])
      the pericentres (tick, r): [(63, 23.7), (269, 26.1), (489, 22.7), (561, 22.7), (1057, 20.2), (1653, 15.9), (2726, 7.7)]
      the apocentres  (tick, r): [(2, 24.0), (215, 26.2), (320, 26.1), (530, 22.8), (807, 29.0), (1383, 38.2), (2248, 87.0)]
   the ratio T(24) / T(12) = 1.976
 
 == the line drive, A = 1.9098, n = 10, with the factor (the branch drive-default)
   r = 12: the tool's T over 4000 = 497.8; r from 3.7 to 367.1, the mean 93.2; turns 4.64; crossings (5, 4)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [401, 797, 1183] (the spacings [401, 396, 386])
      the pericentres (tick, r): [(190, 11.4), (494, 11.0), (806, 10.1), (1135, 8.7), (1520, 6.3), (2345, 3.7)]
      the apocentres  (tick, r): [(38, 12.1), (342, 12.4), (654, 13.2), (980, 15.1), (1342, 21.4), (1964, 58.8)]
   r = 24: the tool's T over 4000 = 834.7; r from 12.9 to 100.0, the mean 37.0; turns 3.99; crossings (4, 4)
+     the turns through 2 pi, 4 pi, 6 pi at the counts [800, 1587, 2361] (the spacings [800, 787, 774])
      the pericentres (tick, r): [(372, 22.9), (977, 22.0), (1596, 20.3), (2247, 17.3), (3005, 12.9)]
      the apocentres  (tick, r): [(67, 24.1), (671, 24.8), (1293, 26.3), (1939, 30.2), (2655, 41.9), (3781, 100.0)]
   the ratio T(24) / T(12) = 1.677

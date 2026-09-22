@@ -127,6 +127,14 @@ def analyse(folder: Path) -> None:
         return ((pos[t][0] - cx) * mom[t][1] - (pos[t][1] - cy) * mom[t][0]) / n_unit
 
     print(f"  turns about the source to the escape: {(turn[-1] - turn[0]) / (2 * math.pi):.2f}")
+    whole_turns = []
+    for t in range(1, last + 1):
+        if (turn[t] - turn[0]) >= 2 * math.pi * (len(whole_turns) + 1):
+            whole_turns.append(t)
+    print(
+        f"  the turns through 2 pi, 4 pi, 6 pi at the ticks {whole_turns[:3]} "
+        f"(the spacings {[b - a for a, b in zip([0] + whole_turns[:3], whole_turns[:3], strict=False)]})"
+    )
     smooth = [
         sum(r_t[max(0, t - WINDOW) : t + WINDOW + 1]) / len(r_t[max(0, t - WINDOW) : t + WINDOW + 1])
         for t in range(last + 1)

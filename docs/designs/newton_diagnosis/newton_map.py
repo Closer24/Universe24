@@ -68,6 +68,21 @@ def readings(path: list[tuple[int, float, float, float, float]]) -> dict[str, ob
         while d < -math.pi:
             d += 2 * math.pi
         turns += d / (2 * math.pi)
+    # The recurrence of the angle about the centre through 2 pi, 4 pi, 6 pi:
+    # the count at which the unwrapped angle first passes each whole turn
+    # (the first three turns; the cart's reading of section 6 of the
+    # diagnosis).
+    turn_counts = []
+    swept = 0.0
+    for (t0, x0, y0, *_), (_, x1, y1, *_) in zip(path, path[1:], strict=False):
+        d = math.atan2(y1, x1) - math.atan2(y0, x0)
+        while d > math.pi:
+            d -= 2 * math.pi
+        while d < -math.pi:
+            d += 2 * math.pi
+        swept += d
+        if swept >= 2 * math.pi * (len(turn_counts) + 1) and len(turn_counts) < 3:
+            turn_counts.append(t0 + 1)
     peri, apo = [], []
     for i in range(1, len(radii) - 1):
         if radii[i] < radii[i - 1] and radii[i] <= radii[i + 1]:
@@ -81,6 +96,8 @@ def readings(path: list[tuple[int, float, float, float, float]]) -> dict[str, ob
         "r_mean": sum(radii) / len(radii),
         "turns": turns,
         "crossings": (len(downs), len(ups)),
+        "turn_counts": turn_counts,
+        "turn_spacings": [b - a for a, b in zip([0] + turn_counts, turn_counts, strict=False)],
         "peri": peri[:10],
         "apo": apo[:10],
     }
@@ -133,6 +150,10 @@ def main() -> None:
                 f"  r = {r0}: the tool's T over {TICKS} = {t if t is None else round(t, 1)}; "
                 f"r from {found['r_min']:.1f} to {found['r_max']:.1f}, the mean {found['r_mean']:.1f}; "
                 f"turns {found['turns']:.2f}; crossings {found['crossings']}"
+            )
+            print(
+                f"     the turns through 2 pi, 4 pi, 6 pi at the counts {found['turn_counts']} "
+                f"(the spacings {found['turn_spacings']})"
             )
             print(f"     the pericentres (tick, r): {found['peri']}")
             print(f"     the apocentres  (tick, r): {found['apo']}")

@@ -579,26 +579,32 @@ replaces nothing in the law: no rule, no verb, no key of a hypothesis
 below are written for both).
 
 **The world (the design's words, PR #834 sections 1, 3, 4, 7, turned to
-the orbit).** Series D3's plane (121 x 121, the source `m` at (60, 60)
-releasing its fan of 120 every 10 intervals, the width 32, `suspension`
-0), with three changes and no other: (i) the probe becomes the cart D: a
-body of a paid family with the held mass 2^20 and a reservoir R = 2^16
-(one row per self-creation, so its birth ordinals are its own count as
-the cart's are; 4000 rows over the run, 6 per cent of M_total, stated
-beside the pins), its lamp on the whole in-plane fan of 120 (one row per
-direction per birth would cost 120 units per interval: too dear; the
-lamp on the fan at the rate [1, 40], one shell of 120 rows every 40
-intervals, 12000 units over the run, the reservoir 2^14 then), its table
-measuring the family `lamp` (`measure`, `reads: "age"`); (ii) a lamp A
-at rest, one measured event of the paid family `lamp` at the Node (60,
-61) beside the source (two events cannot share a Node), releasing one
-row per direction of the same fan of 120 every 10 intervals (the
-register's q); (iii) the world key `clock_stamp` true, so every click
-the cart writes carries `clock`, the cart's own count of
-self-creations. The line at y = 20 is removed (no wall on the plane;
+the orbit; the reviewer's read P folded, lines (iv) and (v)).** Series
+D3's plane (121 x 121, the source `m` at (60, 60) releasing its fan of
+120 every 10 intervals, the width 32, `suspension` 0), with three
+changes and no other: (i) the probe becomes the cart D: the registered
+probe's body as it is (the paid family `probe`, the reservoir R = 2^12
+and the held mass M_held = 2^20, M_total = 2^12 + 2^20 = 1052672, so the
+generator's launch at the whole n = 8 under the key is the registered
+538968064 label units and the pins' n is the cart's), its lamp REMOVED
+(it read nothing without a post and would have cost content, moving the
+drive's divisor; a body has its own count without a lamp, the `clock`
+field), its table measuring the family `lamp` (`measure`, `reads:
+"age"`); (ii) a lamp A at rest, one measured event of the paid family
+`lamp` at the Node (60, 61) beside the source (two events cannot share a
+Node), releasing one row per direction of the same fan of 120 every 10
+intervals (the register's q; its content by the generator so that the
+lamp never falls silent, 2^17 units for 48000 rows over the run); (iii)
+the world key `clock_stamp` true, so every click the cart writes carries
+`clock`, the cart's own count of self-creations (PR #834 section 7 (c);
+the click line already carries the reader's number, the Node, the row's
+label as its push, the ordinal in `record`, the age and the tick, the
+reviewer's read P). The line at y = 20 is removed (no wall on the plane;
 the faces stay open, the escape a face click). The post R of PR #834
-(the radar) is not carried: the cart's own rows would need the fan to
-find the post from every place, and one reading at a time.
+(the radar) is not carried. A's rows push the cart at their click (a
+paid family's push is the label itself, `push_form`), about 10^-6
+n-units per click against the source's kicks of about one: GAMEBOARD,
+stated, negligible.
 
 **What the cart reads, DETECTOR, on its own record.** At every click of
 A's rows: its own count `clock`, its Node, the ordinal of the row (A's
@@ -620,45 +626,78 @@ Node lies on a fan line through (60, 61): 28 of the 68 ring Nodes at r =
 Node; the same fan), one shell every 10 intervals, so about one click
 per 25 intervals at r = 12 and one per 90 at r = 24 on a circle, more on
 a wide loop (every Node of the plane is on some line of the fan within
-radius 8 of the axis' angle grain). The cart's own rows are never
-measured by its own table (they go home); the source's free rows push
-the cart as today (`read`) and are not clicks.
+radius 8 of the axis' angle grain). The source's free rows push the cart
+as today (`read`) and are not clicks.
 
 **The pins it needs before any run (GAMEBOARD by formula until run; the
-cart's clicks the measurement).** From the map of 2.5 (the law as it
-stands: the ring mean with the arrival rate's factor; the per-axis
-drive; the launch at the whole 8 under the key, or 9 as built), the
-recurrence of theta through 2 pi on the cart's count:
+cart's clicks the measurement; the reviewer's read P folded, lines (i)
+to (iii)).** The map of 2.5 ([newton_map.py](newton_map.py), the law as
+it stands: the ring mean with the arrival rate's factor, the per-axis
+drive, the launch at the whole 8 under the key or 9 as built) now
+prints the recurrence of theta through 2 pi, 4 pi and 6 pi on the count
+([newton_map.out](newton_map.out)), and the record reader prints the
+same recurrence off the replayed records
+([newton_records.out](newton_records.out)); the numbers below are those
+files' and not hand-written:
 
 | Launch | the first three turns' counts at r = 12 (the spacings) | at r = 24 | the first apocentres, Links |
 | --- | --- | --- | --- |
-| the key on, n = 8 (A = 1.4838) | 399, 919, 1667 (399, 520, 748) | 794, 1830, 3288 (794, 1036, 1458) | 13.8, 15.6, 21.3 and 27.5, 31.2, 42.2 |
-| as built, n = 9 (A = 1.9098) | 349, 782, 1387 (349, 433, 605) | 694, 1555, 2737 (694, 861, 1182) | 13.1, 13.1, 14.6 and 26.2, 26.1, 22.8 |
+| the key on, n = 8 (A = 1.4838), the map | 399, 919, 1667 (399, 520, 748) | 794, 1830, 3288 (794, 1036, 1458) | 13.8, 15.6, 21.3 and 27.5, 31.2, 42.2 |
+| the same launch on the board, the registered records replayed (GAMEBOARD, 3.2) | 473, 1044 (473, 571), the escape at 1208 | 939, 1898 (939, 959), the escape at 2452 | 18.7, 25.2, 48.6 and 31.8, 43.9, 55.6 |
+| as built, n = 9 (A = 1.9098), the map | 349, 782, 1387 (349, 433, 605) | 694, 1555, 2737 (694, 861, 1182) | 13.1, 13.1, 14.6 and 26.2, 26.1, 22.8 |
 | the ring mean alone (no factor), n = 8: the comparison, not the law's pin | 400, 812, 1206 (400, 412, 394) | 798, 1623, 2412 (798, 825, 789) | 13.3, 13.4, 13.5 and 26.6, 26.7, 26.8 |
 
-The pins: (a) the first turn's count T_1 = 399 at r = 12 and 794 at r =
-24 under the key (349 and 694 as built), each within the grain of the
-kicks, taken as 10 per cent (the register's 9 propagated to the turn's
-count); the ratio T_1(24) / T_1(12) = 1.99 within 0.20: on the FIRST
-turn, before the loops open, the 1 / r ring mean's scale symmetry is
-what the cart reads, and this is Newton's test in the owner's sense.
-(b) The opening: the second and third turns longer than the first by
-the map's factors (1.30 and 1.44 at r = 12 under the key; 1.30 and 1.41
-at r = 24) within 15 per cent, and the apocentres rising as the table
-has them within 15 per cent: the velocity term's signature, which
-decides the undecided (b) of section 4; a loop whose turns stay 400,
-412, 394 refutes the term (the no-factor row) and would say the crossing
-rule's count is not the Doppler count on the lattice. (c) r from the
-clicks at the first turn within 12 +- 3 and 24 +- 4 (CONVERSION). (d)
-The least step: the cart's Node changes by at most one per count between
-consecutive clicks (PR #834's pin). (e) The controls: the same worlds
-without the source (no push): the cart leaves through the face +y at the
-61st Link of the pace 8 / 40, the count 305 +- 6, its clicks of A's rows
-at the ordinals and counts the flight table gives on a straight path.
-Refuted if T_1 or its ratio leaves the band, if the opening is absent or
-differs from the map's beyond the band in either direction, or if a
-control moves. Nothing is compared with nature: Kepler's T proportional
-to r on the plane is the comparison side of pin (a) only.
+The records' first turns, 473 and 939, sit 19 and 18 per cent above the
+noiseless map's 399 and 794 at both radii alike, because the grain
+seeds the loop's opening from the first shell crossings (3.2 (i): the
+first apocentre 18.7 against the map's 13.8); their ratio 939 / 473 =
+1.985. So the single turns carry the grain's band and the ratio is the
+robust reading. The pins:
+
+- (a) **The ratio of the first turns**, T_1(24) / T_1(12) = 2.00 +-
+  0.20, the deciding reading (the map's 1.99; the records' 1.985 on the
+  same plane, source, fan and launch): the plane's 1 / r ring mean's
+  scale symmetry read on the first turn by a detector moving on Nodes on
+  its own count. **The single first turns are REPORTED, not pinned**:
+  against the map's 399 and 794 with the departure the records show
+  (+19 and +18 per cent; the grain's seed), and against the records'
+  own 473 and 939 (the same world but the detector; a first turn off
+  those by more than 10 per cent would say the cart's reading and the
+  fixed line's do not see one loop).
+- (b) **The opening as the velocity term's signature**: the second turn
+  longer than the first (the map's factors 1.30 at r = 12 and 1.30 at r
+  = 24; the records' 1.21 and 1.02, the r = 24 loop touched by the line
+  between), and the loop leaving the board before its fourth turn, as
+  every record and the map have it. The apocentres are REPORTED beside
+  the map's and the records' (the table), not pinned to the noiseless
+  map (the records' first apocentre is 36 per cent above it). The
+  falsifier that HOLDS: a loop whose turns stay at the no-factor row's
+  400, 412, 394 (798, 825, 789), within the grain, refutes the term,
+  since d H / dt = (A / r) u^2 / c >= 0 under the term and a loop that
+  keeps its turns has no such term. The converse does not hold as
+  written: turns growing by factors other than the map's say the
+  noiseless loop is not the lattice's, not that the term is absent or
+  present; the term's SIZE is read from the growth only through the
+  map with the grain's band, not decided by one loop.
+- (c) r from the clicks at the first turn: REPORTED against the
+  records' 3.6 to 48.6 at r = 12 and 17.0 to 55.6 at r = 24
+  (CONVERSION); the first pericentre and apocentre within 25 per cent
+  of the records'.
+- (d) The least step: the cart's Node changes by at most one per count
+  between consecutive clicks (PR #834's pin), and the cart's own count
+  between clicks is at least the clicks' Nodes apart.
+- (e) The controls: the same worlds without the source (no push): the
+  cart leaves through the face +y at the 61st Link of the pace 8 / 40,
+  the count 305 +- 6 (the registered controls' tick, now on the cart's
+  own count), its clicks of A's rows at the ordinals and counts the
+  flight table gives on a straight path (A's rows reach the cart's
+  column x = 60 + r only where a fan line through (60, 61) crosses it).
+
+Refuted if the ratio leaves 2.00 +- 0.20, if a loop keeps its turns (no
+term), or if a control moves; every other line above is a report by
+kind beside the map and the records. Nothing is compared with nature:
+Kepler's T proportional to r on the plane is the comparison side of pin
+(a) only.
 
 **The three tests (one line each; the diagnostician's reading before
 the reviewer's).** Generic: no rule is added; the cart is a measured
@@ -674,19 +713,27 @@ count equals it here, and the reading does not use that).
 **What it decides that the present rows cannot.** (1) Newton read in a
 detector moving on Nodes, on its own count: the period as a recurrence
 of clicks the moving detector makes, the owner's test, which no row on
-the tree has (3.4). (2) The velocity term's size on the lattice (the
-undecided (b)): the turns' growth is its signature, pinned from the map
-before the run. (3) The grain's share (the undecided (a)): the map's
-deterministic loop against the cart's read loop, turn by turn, on the
-same count. (4) The 1 / r ring mean's scale symmetry on the first turn
-at two radii, which the present rows read on loops already opened,
-touched and escaped. What it cannot decide: the value of G (a world's
+the tree has (3.4). (2) Whether the velocity term is there (the
+falsifier of (b)); its size on the lattice only through the map with
+the grain's band (the undecided (b) narrowed, not closed). (3) The
+grain's share (the undecided (a)): the map's deterministic loop against
+the cart's read loop, turn by turn, on the same count. (4) The 1 / r
+ring mean's scale symmetry on the first turn at two radii by the ratio,
+which the present rows read on loops already opened, touched and
+escaped. The reviewer's closing line, taken as the design's own words:
+the first-turn reading is Newton's test in the owner's sense as to the
+detector (a detector moving on Nodes reading its own count); as to the
+law it tests the plane's 1 / r ring mean's scale symmetry (T
+proportional to r, the ratio 2) on a loop the grain has already opened
+by its first turn, so the ratio is the reading that decides and the
+single turns carry the grain's band. What it cannot decide: the value of G (a world's
 inputs, the click frame's table), the inverse square in space (the
 plane's 1 / r only), and r, the count's rate in a crowd (`suspension` 0
 here). The cost, HOST: the key from PR #834 (about eight lines, held),
 the world files by the generator, the reading tool's orbit branch (the
 recurrence of a label's reverse on a count), four worlds of about 25 s
-each. NOT ORDERED.
+each; the reviewer's short second read of these pins before any world
+file. NOT ORDERED.
 
 **A named alternative, not ordered: newton-presence-v1.** Named here
 because the owner was told of it (records 1022 and 1024) and the
