@@ -1144,5 +1144,4 @@ decodes a world file strictly (`json_documents`) and parses it with the
 engine's own parser without running it; the report names the key at fault, or
 summarizes the world (its model, law, shape, ticks, families, measured events
 and detectors). A valid report certifies the configuration only, not a run or
-any physics. The workspace ([WORKSPACE.md](WORKSPACE.md)) uses the same
-preflight and runner.
+any physics.

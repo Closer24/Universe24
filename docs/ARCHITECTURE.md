@@ -3,8 +3,8 @@
 The one engine is the engine of the Beam Law ([BEAM_LAW.md](BEAM_LAW.md),
 its bookkeeping [ENGINE.md](ENGINE.md)):
 `src/event_universe/events/` on the substrate of `src/event_universe/core/`,
-with the host modules (the runner, the preflight, the workspace, retention,
-the snapshot writer) around them. This document owns the repository policy:
+with the host modules (the runner, the preflight, retention, the snapshot
+writer) around them. This document owns the repository policy:
 the local integer operation contract every physical change obeys, who owns
 generated output, the monorepo's single owners, the dependency direction the
 gate enforces, and how a physical feature is added. The boundaries of the
@@ -36,7 +36,7 @@ on the GameBoard, not an intervention.
 placement, strict dependency resolution, portable bundles and input provenance.
 The host loader expands data before the canonical world parser; physical modules
 receive immutable ordinary Events and never load a file or branch on an entity
-label. All runner, preflight and workspace paths use that one loading boundary.
+label. All runner and preflight paths use that one loading boundary.
 
 ## Local integer operation contract
 
@@ -201,8 +201,8 @@ repository path already satisfies the active local integer contract.
 ## Generated output ownership
 
 `retention.py` owns host-only artifact registration, writer leases and expiry.
-Runners own complete fresh output directories; the workspace owns exact input,
-log and export files and declares the child-output dependency for companions.
+Runners own complete fresh output directories; a companion file may declare
+the child-output dependency it keeps alive with (`keep_alive_with`).
 Cleanup uses recorded filesystem generations and operating-system locks, with
 recoverable quarantine before removal. The module never imports or changes
 physical engine state. Its one-shot and singleton watcher interfaces share the
@@ -311,15 +311,3 @@ is [Repository language: English](../AGENTS.md#repository-language-english).
 review checks the actual language. Older branches must follow this rule when
 merged. Mathematical notation remains valid. This affects documentation and
 review, not physical laws.
-
-## Standalone vector-lab experiment
-
-The user-requested [tools/generic_vector_lab](../tools/generic_vector_lab/README.md)
-is an opt-in mechanism experiment with its own explicit JSON laws. It does not
-import, replace or extend the active engine or its schema. The lab runtime owns
-its local transactions; its separate movie tool reads saved states. Generated
-outputs go under artifacts and remain outside source commits. Its local quantum
-coupling is a toy experiment of the lab alone; the repository's shared quantum
-resource was deleted on 2026-09-17. The active source-of-truth boundaries above
-remain unchanged.
-

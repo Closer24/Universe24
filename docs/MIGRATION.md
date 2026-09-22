@@ -24,6 +24,19 @@ record byte for byte as it was (the base commit 59c6b811 holds them):
   `tests/test_buildup_readings.py`; the register entry is one line under
   EXPERIMENTS.md section D.
 
+Old code nothing left reaches (the second commit): `tools/derivations_round7.py`
+and `derivations_round8.py` (the scratch of DERIVATIONS.md rounds 7 and 8, the law
+of the shadow of 2026-09-18; the paper cites DERIVATIONS_BEAM.md, never these);
+`tools/generic_vector_lab/` (the opt-in vector lab beside the engine, nothing in
+the law reads it); `src/event_universe/ui.py` with `ui_assets/`, `docs/WORKSPACE.md`
+and the script `event-universe-ui` (the local configuration workspace; the runner
+and `tools/run_series.py` are the only paths a world takes; `retention.py` keeps
+the companion-lease mechanism the workspace used, with its tests);
+`docs/designs/doppler_v1/` and `docs/designs/push_relative_speed/` (the reviews and
+forms of the key `doppler`, deleted on 2026-09-20 when the crossing rule gave the
+Doppler; their verdicts are in the log and Highlights 5.4). No key, hypothesis or
+rule of the engine moves; TERMINOLOGY.md's retired rows stay as history.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,

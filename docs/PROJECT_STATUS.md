@@ -140,7 +140,7 @@ out, the engines before this one among them.
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
 | The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the GameBoard's addresses and headings, the phase tables; the integer audit |
-| The preflight and the workspace | `configuration_validation.py`, `ui.py` | [ENGINE.md](ENGINE.md), "Preflight"; [WORKSPACE.md](WORKSPACE.md) |
+| The preflight | `configuration_validation.py` | [ENGINE.md](ENGINE.md), "Preflight" |
 | The entity definitions | `world_loading.py` | [ENTITY_DEFINITIONS.md](ENTITY_DEFINITIONS.md) |
 | Generated output | `retention.py` | [RETENTION.md](RETENTION.md) |
 | The check | `tools/check.py` | [CONTRIBUTING.md](../CONTRIBUTING.md) |
@@ -166,8 +166,7 @@ research runs registered in [EXPERIMENTS.md](EXPERIMENTS.md).
 2. Use [README installation instructions](../README.md#install-and-run) and the
    interpreter in [.python-version](../.python-version). The minimum package version
    in [pyproject.toml](../pyproject.toml) does not select the shell interpreter.
-3. Select an explicit initialization and an unused output directory. The
-   [workspace](WORKSPACE.md) changes runtime JSON without rebuilding the engine.
+3. Select an explicit initialization and an unused output directory.
    Visualization is opt-in. Registered outputs expire under [retention](RETENTION.md);
    idle cleanup needs the existing watcher or a scheduled invocation.
 4. Follow [CONTRIBUTING.md](../CONTRIBUTING.md), inspect the affected selection from

@@ -218,7 +218,7 @@ def select(changed, sources):
             tests.add("tests/test_architecture.py")
         # A world, an asset or a tool is a runtime dependency of the tests
         # that name its file (a tool is loaded by its path, never imported).
-        if path.startswith(("examples/", "src/event_universe/ui_assets/", "tools/")):
+        if path.startswith(("examples/", "tools/")):
             tests.update(
                 p
                 for p, text in sources.items()

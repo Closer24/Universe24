@@ -2910,7 +2910,7 @@ arbitrary user-defined algorithms.
 The movie currently omits spatial populations and spatial transfers, although
 those remain in saved state/recording data. Spatial extension settings remain
 editable through complete JSON. This capability limit is documented in
-[WORKSPACE.md](WORKSPACE.md); no visualization was requested or generated.
+`docs/WORKSPACE.md` (the workspace, deleted on 2026-09-22 with `ui.py`, record 871); no visualization was requested or generated.
 The architecture-review Skill now requires role-aware renaming, declaration
 permutations and observed activity. Shared workflow and Boss guidance were
 reviewed and already cover integration ownership and the required full gate.
