@@ -17,7 +17,7 @@ PASS record check: completed (54.2 s, 3000 ticks); PASS the books balanced at ev
 [GAMEBOARD] (a diagnostic) the momentum's length at the step lines nearest the crossings: [404.1, 584.5, 589.6, 421.1, 477.6, 850.8, 798.8, 239.3] million
 [DETECTOR] the proton's reads of the electron's rows: 3; the electron's reads of the proton's rows: 153
 FAIL R1 the loop stays and returns: no escape, at least 3 returns, the first return's count 252 within 10 percent of 212 ([191, 233])
-FAIL R3 the level of the loop between the first and the second returns 104 within 10 percent of the generator's 146 ([132, 160])
+FAIL R3 the level of the loop between the first and the second returns 104 within the pin's band as written, 131 to 161 (LEVELS.md section 5 (d); the generator's 146)
 
 ### r = 7: `rays-atoms-hydrogen-r7-level-v1`
 PASS record check: completed (69.0 s, 3500 ticks); PASS the books balanced at every tick; hypotheses ['bohr-v1', 'centred-step-v1', 'atom-level-v1']; atom_level True
@@ -52,7 +52,7 @@ PASS record check: completed (69.0 s, 3500 ticks); PASS the books balanced at ev
 [GAMEBOARD] (a diagnostic) the momentum's length at the step lines nearest the crossings: [392.9, 477.3, 414.1, 281.9, 332.6, 503.6, 504.2, 325.1, 266.3, 453.7, 490.5, 280.5, 344.3, 520.8, 450.2, 250.1, 371.3] million
 [DETECTOR] the proton's reads of the electron's rows: 11; the electron's reads of the proton's rows: 685
 FAIL R1 the loop stays and returns: no escape, at least 3 returns, the first return's count 612 within 10 percent of 690 ([621, 759])
-PASS R3 the level of the loop between the first and the second returns 70 within 10 percent of the generator's 71 ([64, 78])
+PASS R3 the level of the loop between the first and the second returns 70 within the pin's band as written, 64 to 78 (LEVELS.md section 5 (d); the generator's 71)
 
 ### r = 12: `rays-atoms-hydrogen-r12-level-v1`
 PASS record check: completed (145.3 s, 7500 ticks); PASS the books balanced at every tick; hypotheses ['bohr-v1', 'centred-step-v1', 'atom-level-v1']; atom_level True
@@ -97,7 +97,7 @@ PASS record check: completed (145.3 s, 7500 ticks); PASS the books balanced at e
 [GAMEBOARD] (a diagnostic) the momentum's length at the step lines nearest the crossings: [289.5, 344.0, 329.7, 295.0, 299.3, 287.7, 327.1, 342.9, 287.9, 226.3, 379.8, 392.6, 240.7, 322.4, 440.9, 398.1, 300.6, 297.5, 349.9, 314.6, 286.3, 338.6, 351.8] million
 [DETECTOR] the proton's reads of the electron's rows: 11; the electron's reads of the proton's rows: 1249
 PASS R1 the loop stays and returns: no escape, at least 3 returns, the first return's count 1341 within 10 percent of 1490 ([1341, 1639])
-PASS R3 the level of the loop between the first and the second returns 47 within 10 percent of the generator's 43 ([39, 47])
+PASS R3 the level of the loop between the first and the second returns 47 within the pin's band as written, 40 to 48 (LEVELS.md section 5 (d); the generator's 43)
 
 ### R4 the ratio of two lines (a reported COMPUTATION from three DETECTOR levels, not a pass-or-fail pin)
 [DETECTOR] r = 3: the electron left through face:+x at tick 733: no rung's level (the level between its two +x crossings, 104, is a loop that did not close)

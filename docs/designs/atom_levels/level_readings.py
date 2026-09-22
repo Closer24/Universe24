@@ -54,6 +54,12 @@ GENERATOR = {
     12: {"T": 1490, "j": 4.001, "L": 43},
 }
 BAND = 0.10
+# R3's band as the pin writes it (LEVELS.md section 5 (d): "131 to 161; 64
+# to 78; 40 to 48", 10 percent of the generator's level rounded to the
+# nearest step); carried as written, not re-formed here (the physics-rule
+# reviewer's read L: the tool's ceil and floor differed by one at the edges
+# from the pin's rounding, 132..160 and 39..47; no verdict moved).
+R3_BANDS = {3: (131, 161), 7: (64, 78), 12: (40, 48)}
 # RUN_CENTRED.md section 2: the registered r = 12 world's crossings without
 # the key (DETECTOR), the control of R6 up to the first release.
 CENTRED_CROSSINGS = [
@@ -186,10 +192,11 @@ def read_world(root: Path, radius: int, base) -> dict[str, object]:
     out["loops"] = loops
     # R3: the loop between the first and the second returns.
     r3_level = loops[0]["L"] if loops else None
-    r3 = r3_level is not None and within(r3_level, generator["L"], BAND)
+    low, high = R3_BANDS[radius]
+    r3 = r3_level is not None and low <= r3_level <= high
     out["R3"] = {
         "level": r3_level,
-        "band": [math.ceil(generator["L"] * (1 - BAND)), math.floor(generator["L"] * (1 + BAND))],
+        "band": [low, high],
         "verdict": "PASS" if r3 else ("NOT READ" if r3_level is None else "FAIL"),
     }
     # R2: the engine's level lines (GAMEBOARD).
@@ -259,7 +266,7 @@ def read_world(root: Path, radius: int, base) -> dict[str, object]:
         f"{out['R1']['verdict']} R1 the loop stays and returns: no escape, at least 3 returns, the first return's count {first} within 10 percent of {generator['T']} ({out['R1']['band']})"
     )
     print(
-        f"{out['R3']['verdict']} R3 the level of the loop between the first and the second returns {r3_level} within 10 percent of the generator's {generator['L']} ({out['R3']['band']})"
+        f"{out['R3']['verdict']} R3 the level of the loop between the first and the second returns {r3_level} within the pin's band as written, {low} to {high} (LEVELS.md section 5 (d); the generator's {generator['L']})"
     )
     print()
     return out

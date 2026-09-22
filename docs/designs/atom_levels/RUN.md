@@ -40,7 +40,7 @@ risk, a finding); the r = 7 loop stays four returns with its first return
 at 612 against the generator's 690 (R1 FAIL by the band, 1.3 percent
 below its edge) and the level of its first loop 70 against the
 generator's 71 (R3 PASS); the r = 12 loop stays five returns (R1 PASS at
-1341, the band's edge; R3 PASS at 47, the band's edge) and releases ONCE,
+1341, the band's edge; R3 PASS at 47, one below the band's edge 48) and releases ONCE,
 at its fourth return, four `light` rows of content 4 that click on the
 four faces with the Planck identity holding on the +x and +y faces (R5
 PASS within the declared two steps), its crossings identical to
@@ -68,6 +68,23 @@ blocks are.
 | `hydrogen_r3_level` | 35^3, 3000 | 54.2 s | 463c6dcfeb662500b0f19298b5907485e1b69be09fdb9b29feb6e58d55149866 | 5b725febb07b3509b46a1ddd3b4e1664e2078170c014e0f309e73540fd394250 | 55ec2ffed4aafe56e39bc8db5cb6ea380f20a83b3bdde3641c125f9ca162899f |
 | `hydrogen_r7_level` | 43^3, 3500 | 69.0 s | 627818f12a4ed67b36d0a0bdb1276244a381195fa7ed19bcd4b957e144f3089f | ae7d72bad0199bdc6ff9081ba29fd74ef09493d5c1275f706e39a4d421b742e3 | c60f10581ca2f78b71d0906e761584bf93dbc6fbac56bc0739f4b3cc03918b55 |
 | `hydrogen_r12_level` | 53^3, 7500 | 145.3 s (three runs sharing the host) | 4864e4f9c378e0c8962d00057b51258a93b689a16cdeef1dad9082ec48598ba2 | 473be89ddb73909e21ec168d5b444b13cbe460d8be74ff98541f52b93b46bfdc | 58af16252cdb1689 (the full digest in `expectations.json`) |
+
+The same three worlds were run again on the merged engine (the merge of
+`origin/main` 41b8b136 into the branch, b44d5f6da9dce230e47e0dac35632fb448895b7e;
+the record's `source_sha256`
+e1e8c8d618d72ac44660a0f02890cbae812b83cdd953e9154e4e99e72e28b7a2 against
+the build's 5ab174230fda74fc4584a3f069cf0503a70b69ca382bf97a57fb563a7b3a13e1):
+`state.json`, `events.jsonl` and the audit of each run carry the digests of
+the table above, byte for byte; `run.json` differs by the source digest and
+the elapsed seconds (132.4, 176.0 and 355.7 s, three runs sharing the host
+with the checks). The re-run's block is `rerun` in `expectations.json`.
+
+The bands: R1's is 10 percent of the generator's first return rounded to
+the nearest count; R3's is the pin's as written in LEVELS.md section 5 (d)
+(131 to 161; 64 to 78; 40 to 48), which `level_readings.py` carries and
+does not re-form (its first printout formed 132 to 160 and 39 to 47 by a
+ceiling and a floor, one step inside the pin's rounding at the edges; no
+verdict moved).
 
 ## 2. What the detectors read, world by world (DETECTOR unless labelled)
 
@@ -121,7 +138,7 @@ section 5 (c)).
 | --- | --- | --- | --- |
 | R1 the loop stays and returns (no escape; at least three returns; the first return within 10 percent of the generator's T) | FAIL: the escape at 733; the first return 252 outside 191 to 233 | FAIL by the band: four returns, no escape, the first return 612 against 621 to 759 (1.3 percent below the edge) | PASS: five returns, no escape, the first return 1341 in 1341 to 1639 (at the edge) |
 | R2 the level off the record (GAMEBOARD, a diagnostic, never counted) | 122 at the first return | 75, 73, 59, 58 | 49, 47, 47, 53, 51, 50 |
-| R3 the level of the loop between the first and the second returns from the faces' two counts, within 10 percent of the generator's | FAIL: 104 against 132 to 160, and the loop did not close | PASS: 70 in 64 to 78 (the generator's 71) | PASS: 47 in 39 to 47 (the generator's 43; at the edge) |
+| R3 the level of the loop between the first and the second returns from the faces' two counts, within 10 percent of the generator's | FAIL: 104 against 131 to 161, and the loop did not close | PASS: 70 in 64 to 78 (the generator's 71) | PASS: 47 in 40 to 48 (the generator's 43; one below the edge) |
 | R4 the ratio of two lines (a reported COMPUTATION) | NOT READ: the r = 3 world has no rung's level; two levels give one line, `L_3 - L_4 = 70 - 47 = 23` steps at `[512, 1]` (the generator's 71 - 43 = 28; the `1 / j^2` ladder at the read closures 77 - 44 = 33), and no ratio | | |
 | R5 the releases and the Planck identity | none (the loop left) | none (the level never rose) | PASS: one release at the fourth return, 4 steps against the declared 3 (within two), four rows of content 4; the Planck identity on two faces holds (44 = 44); the fifth return 0 against the declared 2 (within two) |
 | R6 the control | the build's test (a): the byte identity with the key absent PASS | the same | PASS: the twelve crossings up to the release identical to RUN_CENTRED.md's, count for count and Link for Link |

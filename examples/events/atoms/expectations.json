@@ -66,8 +66,8 @@
    "R3": {
     "level": 104,
     "band": [
-     132,
-     160
+     131,
+     161
     ],
     "verdict": "FAIL"
    },
@@ -197,8 +197,8 @@
    "R3": {
     "level": 47,
     "band": [
-     39,
-     47
+     40,
+     48
     ],
     "verdict": "PASS"
    },
@@ -299,5 +299,16 @@
   "first_release": 5465,
   "same_crossings": true
  },
- "made_on": "atom-levels at b5c40b6c85087ed9ce8b6e015025104f6c95f72a (the engine of the build), 2026-09-22, read by docs/designs/atom_levels/level_readings.py"
+ "made_on": "atom-levels at b5c40b6c85087ed9ce8b6e015025104f6c95f72a (the engine of the build), 2026-09-22, read by docs/designs/atom_levels/level_readings.py",
+ "bands": "R1's band is 10 percent of the generator's first return rounded to the nearest count; R3's band is the pin's as written in LEVELS.md section 5 (d) (131 to 161; 64 to 78; 40 to 48), carried by the reader, not re-formed",
+ "rerun": {
+  "made_on": "atom-levels at b44d5f6da9dce230e47e0dac35632fb448895b7e (the merge of origin/main 41b8b136), 2026-09-22, the same three worlds through the register's runner",
+  "source_sha256": "e1e8c8d618d72ac44660a0f02890cbae812b83cdd953e9154e4e99e72e28b7a2",
+  "identical": "state.json, events.jsonl and the audit of each of the three runs carry the digests of the run blocks above, byte for byte; run.json differs by the source digest and the elapsed seconds",
+  "elapsed_seconds": {
+   "hydrogen_r3_level": 132.4,
+   "hydrogen_r7_level": 176.0,
+   "hydrogen_r12_level": 355.7
+  }
+ }
 }
