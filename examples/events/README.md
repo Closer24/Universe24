@@ -305,6 +305,29 @@ entry is
 one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
 mean push reads as derived, the grain of the push breaks the rest.
 
+## The orbit read by a lamp on the probe (series D3, Newton after a detector)
+
+The folder [orbit_lamp/](orbit_lamp/README.md) holds the five worlds of
+series D3, written by `orbit_lamp/make_worlds.py` with their expectations
+before the runs (`orbit_lamp/expectations.json`), the chief physicist's
+design of 2026-09-22 (records 574 and 594) on the owner's word: series
+D's plane and fan source, the probe a body of a paid family `probe` of
+amount 2^12 (the lamp's reservoir) holding the free mass 2^20 the fan
+pushes, at r = 12 and 24 with the circular momentum at n = 10, carrying a
+lamp of rate [1, 8] on +y and -y (the recoil cancelling by the pair), and
+a line of 121 one-Node `wave` detectors at y = 20 reading the rows' age,
+so every click is the probe's x at the row's birth and the birth's tick;
+two controls without the source and the equivalence world holding four
+times the mass. `tools/orbit_lamp_readings.py` reads the click lines alone
+(the period as the recurrence of x, the lagged second difference, the
+ratio, the equivalence, the controls) and labels the probe's end state
+and the homes GAMEBOARD; the register entry is
+[D3, Newton after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#d3-newton-after-a-detector-2026-09-22):
+the equivalence holds to the Node on every click and the controls read
+as pinned on x; the period, the ratio and omega^2 are outside their
+pins, the cause read off the controls' pace (the per-axis drive of
+`main`, not form B's, which the pins assumed), no number moved.
+
 ## The Heisenberg run
 
 The folder [heisenberg/](heisenberg/README.md) holds the eight worlds of

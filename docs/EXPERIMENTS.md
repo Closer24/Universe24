@@ -6879,6 +6879,98 @@ sequential gates on an entangled record, the full register replay.
 - **Reading planned:** a lamp of the wave family and a detector at threshold 1 far from it: clicks per interval, their record, and the digital slowing of a clock at the detector's Node; the negative control a threshold above the bundle (no click).
 - **Status:** planned; a catalog entry, no engine change until the wave family is declared by the owner.
 
+### D3, Newton after a detector (2026-09-22)
+
+- **Confronts.** Newton's law of gravitation read after a detector: series
+  C's 1 / r push on the plane (DERIVATIONS_BEAM 3.3, the ring mean q L C /
+  (2 pi r); series C's and series D's readings are GameBoard diagnostics
+  of the probe's own register, records 562 and 564) against the chief
+  physicist's design of records 574 and 594 on the owner's word ("build
+  them", record 581): what a detector can read of a body in an orbit is
+  where its light comes from and when, so series D's probe carries a lamp
+  and a line of one-Node detectors reads its rows; the 1 / r force as the
+  period proportional to the radius (k = 2 on the plane), the second
+  difference of the clicks' x, and the equivalence principle on a second
+  held mass, every number a detector's click or a labelled GameBoard
+  diagnostic (record 281). A run under the [experimenter skill](../skills/experimenter/SKILL.md).
+- **Model prediction, pinned before the runs
+  ([the pins](../examples/events/orbit_lamp/README.md#the-pins-written-before-the-runs-expectationsjson)).**
+  Series D's plane (121 x 121 x 1, z periodic, S = 32, the fan source of
+  q = 12 units per interval at the centre), the probe a body of the paid
+  family `probe` of amount 2^12 (the lamp's reservoir) holding the free
+  mass 2^20 the fan pushes, at r = 12 and 24 on +x with the tangential
+  momentum p = n Q M_total at n = 10 (the orbit register's lamp worlds:
+  the circular condition under the directional drive, form B), the lamp
+  of rate [1, 8] on +y and -y (the recoil cancelling by the pair), the
+  detector line at y = 20 of 121 `wall` events read as the one-Node
+  `wave` detectors `line_<x>` with `reads: "age"` for `probe` (every
+  click the probe's x at the row's birth and the birth's tick), the
+  source's content 2^32 at `release` [1, 2^32 x 10] (series D's rate, the
+  held mass releasing nothing within the run); two controls without the
+  source and the equivalence world holding 4 x 2^20 at r = 24. Pinned:
+  T = 2 pi r / v = 371 and 742 within 9 percent (the continuum map's
+  margin); T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 from the
+  lagged second difference within T's bracket; the amplitude r - 1 to r +
+  2; the equivalence within one birth interval on T and one Node on x;
+  the controls' x = 60 + r on every click and the escape through the face
+  +y at 295 +- 6. Refuted if the ratio leaves its bracket, a period or
+  omega^2 leaves its bracket, or the two held masses differ beyond one
+  birth interval; a record check (completed, the books balanced) fails
+  the tool.
+- **Features.** A paid family's lamp on a moving body holding a free mass
+  (hubble_stars' form) on the plane; a pair of opposite lamp directions
+  cancelling the recoil; the body's `directions` the same pair (a row of
+  its own taken home re-emitted on them); a line of one-Node `wave`
+  detectors with the age moment on the click (the lensing screen's form);
+  `pass` on the line and the source for the other family; `suspension`
+  0; a source content and a release denominator scaled together.
+- **Two kinds of readings.** DETECTOR: the line's `click` lines alone (x
+  the detector's column, the tick, the age), the faces' click of the
+  probe's escape. GAMEBOARD (diagnostics, labelled, not pinned): the
+  probe's position and momentum at the end off `run.json`, the count of
+  `home` lines.
+- **Run.** `examples/events/orbit_lamp/` (five worlds by `make_worlds.py`
+  with `expectations.json`: `r12`, `r24`, `r24_4m`, `r12_control`,
+  `r24_control`, 4000 intervals, the model ids
+  `rays-orbit-lamp-<name>-plane-v1`); `tools/run_series.py --jobs 4`;
+  `tools/orbit_lamp_readings.py` (the click lines, the crossings of the
+  centre column, the lagged second difference; `tests/test_orbit_lamp_readings.py`
+  pins it to the engine on a 9 x 9 x 1 plane and to a hand-made click
+  list).
+- **Result (2026-09-22, measured against expected).** The checkout of
+  `newton-after-detector` off `origin/main` at `fa2cb6d`, source
+  fingerprint `5a5b79ef438c1c6c`, Python 3.14.0rc2, numpy 2.5.3, headless,
+  four cores; every run completed in 6.7 to 14.2 s with the books balanced
+  at every tick; 0 record checks failed, 3 readings inside, 13 outside,
+  none moved.
+
+  | World | Clicks | x from .. to | Amplitude (expected) | T (expected) | omega^2 (expected) | The probe's escape | Verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r12` | 222 | 28 .. 119 | 45.5 (11 .. 14) | 697 from 3 + 3 crossings (338 .. 404) | 6.42e-5 (2.42e-4 .. 3.47e-4) | `face:+x` at 1940 | outside, outside, outside |
+  | `r24` | 91 | 37 .. 120 | 41.5 (23 .. 26) | none, 2 crossings (675 .. 809) | 1.21e-4 (6.04e-5 .. 8.67e-5) | `face:+x` at 780 | outside, outside, outside |
+  | `r24_4m` | 91 | 37 .. 120 | 41.5 (23 .. 26) | none (675 .. 809) | 1.21e-4 | `face:+x` at 780 | outside, outside, outside |
+  | `r12_control` | 32 | 72 .. 72 | 0 | - | - | `face:+y` at 257 (289 .. 301) | x = 72 on every click: inside; the escape: outside |
+  | `r24_control` | 32 | 84 .. 84 | 0 | - | - | `face:+y` at 257 (289 .. 301) | x = 84 on every click: inside; the escape: outside |
+
+  Across the worlds: the ratio none (no period at r = 24): outside; the
+  equivalence on T none: outside; the equivalence on the clicks: 91
+  common birth ticks, 91 equal, the largest difference 0 Nodes: inside.
+  **The cause, read off the controls, no number moved:** the unpushed
+  probe leaves through the face +y at 257, the pace 0.238 = n / (S + n)
+  of the per-axis drive `main` runs (BEAM_LAW note 17), not the
+  directional drive's 0.2033 the pins assumed (form B, note 49, not
+  landed); under the per-axis drive the circle is at n = 8.83, the whole
+  9 (series D's p = 576), so the declared n = 10 is 25 percent above its
+  circle and makes series D's wide loop, off the plane through the face
+  +x at 780 (r = 24) and 1940 (r = 12). Read and standing: x(t) one
+  birth in every 8 intervals with none late; the equivalence to the Node
+  on every click and to the tick on the escape; the controls' x constant
+  and the pace of the unpushed probe. The same five worlds at n = 9
+  (T = 343 and 687, series D's table) would read the pins: one declared
+  integer, the chief physicist's to order, not run here.
+- **Status:** registered, 3 inside, 13 outside, the cause named, none
+  moved; the period, the ratio and omega^2 unread at n = 10.
+
 ## B. Proof for the paper
 
 ### B1. Exact conservation at every tick under every operation
