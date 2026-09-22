@@ -71,32 +71,48 @@ be a body.
 
 ## 2. The question the world answers, in the algebra's words
 
-For a lamp A at rest and the cart D receding along the axis at the pace v
-(Nodes per count) with beta = v / c, the law as it stands (every count at
-the rate r = 1, DERIVATIONS_BEAM 4.3: "a clock slows by what it reads, never
-by its speed") predicts, by Theorem 1 with `r_A = r_D = 1` (the click frame
-:244 and :252):
+The rule of record 817 (the model owner, 2026-09-22): the paper shows how
+we arrived at Einstein, Lorentz and the step above without deriving from
+them. So every pin here is written from the Inside step and the conversion
+alone, and Einstein's and Lorentz's forms are named only as the thing the
+readings are compared with. The Inside step: A births one row per
+self-creation (its ordinal advances one per interval, no crowd); the row
+crosses 32 Links per 55 intervals (the flight table); the cart hops one
+Node per k self-creations (the drive's pattern) and its own count advances
+one per interval (no owed interval). The conversion: a factor is a ratio
+of two counts apart, the receiver's over the emitter's ordinals. Counting
+the rows that reach the cart in one of its counts gives, for a lamp A at
+rest and the cart D receding along the axis at the pace v (Nodes per count)
+with beta = v / c, exactly in the mean over whole periods (the same
+arithmetic the Einstein Mathematician's Theorem 1 states in general, with
+`r_A = r_D = 1`; the click frame :244 and :252):
 
     k_AB = (D's counts apart) / (A's ordinals apart) = 1 / (1 - beta)        (the missing direction, NOT READ on main),
     k_BA = (R's counts apart) / (D's ordinals apart) = 1 + beta              (READ on main: NATURE row 4b, series G2),
-    k_BA / k_AB = 1 - beta^2                                                  (the law; 1 under Lorentz; (1 + beta) / (1 - beta) for the resident loop),
-    k_AB k_BA  = (1 + beta) / (1 - beta)                                      (the round trip, r-free under every r),
+    k_BA / k_AB = 1 - beta^2                                                  (the law's number; the comparison: 1 is what Lorentz's one symmetric factor would give, (1 + beta) / (1 - beta) the resident loop's),
+    k_AB k_BA  = (1 + beta) / (1 - beta)                                      (the round trip, a ratio of the cart's own counts; the rate r cancels in it),
 
-where R is a transponder at rest behind the cart. By Theorem 2 the cart's
-radar reading of R (its pulse's birth ordinal `n_e` and its own count `n_r`
-at the return, `x_D = c (n_r - n_e) / 2` Links, `t_D = (n_r + n_e) / 2`
-counts) gives R's velocity `delta x_D / delta t_D = -v`, r-free, Einstein's
-already on the law as it stands. By Theorem 3 the cart's place changes by
-one Node per hop and by nothing between hops, the counts between two hops
-are `k` exactly when `1 / v = k` is a whole number and only `k` and `k + 1`
-when `1 / v` lies between them (the quantum of velocity `1 / (k (k + 1))`).
+where R is a transponder at rest behind the cart. The cart's radar reading
+of R is two of its own counts, its pulse's birth ordinal `n_e` and its count
+`n_r` at the return, made into `x_D = c (n_r - n_e) / 2` Links and `t_D =
+(n_r + n_e) / 2` counts; the two legs of the chain of clicks (out at c
+against a cart receding at v, back at c toward it) give `delta x_D / delta
+t_D = -v` exactly, and the rate r cancels because both numbers are the
+cart's own (the arithmetic of the Einstein Mathematician's Theorem 2); the
+comparison is Einstein's radar, which gives the same -v. From the drive's
+pattern the cart's place changes by one Node per hop and by nothing between
+hops, the counts between two hops are `k` exactly when `1 / v = k` is a
+whole number and only `k` and `k + 1` when `1 / v` lies between them (the
+quantum of velocity `1 / (k (k + 1))`, his Theorem 3 in the same words).
 
 The world reads the three things that are NOT READ on main (the click
 frame section 4; the Einstein Mathematician's II.3 to II.5 "NOT READ"): the
-missing direction `k_AB` and with it the ratio that decides between the
-law's `1 - beta^2`, Lorentz's 1 and the loop's `(1 + beta) / (1 - beta)`;
-the radar velocity; the least step and its quantum. It reads them on the
-law with r = 1 and no crowd; what it cannot read is r itself (section 6).
+missing direction `k_AB` and with it the ratio, whose law's number is
+`1 - beta^2` and whose comparisons are Lorentz's 1 and the loop's `(1 +
+beta) / (1 - beta)`; the radar velocity; the least step and its quantum. It
+reads them on the law with r = 1 and no crowd; what it cannot read is r
+itself (section 6). Nothing of Einstein's enters a pin: every number of
+section 5 is the count of rows and hops of section 1 made into a ratio.
 
 ## 3. The world
 
@@ -173,10 +189,12 @@ cart's own counts alone and carry no r.
 At r = 1 (the law), beta = 55 / (32 k), each ratio read over a window of W
 counts apart with the tolerance 2 / W (the hop's one-count remainder at
 each end; the click frame: within 1 / T of the count and 1 / T_D of the
-pace). Lorentz's one-way factor, `sqrt((1 + beta) / (1 - beta))`, is written
-beside as the comparison the law fails at second order (NATURE row 4b).
+pace). Every pin is the Inside step's count made into a ratio by the
+conversion (section 2); Lorentz's one-way factor, `sqrt((1 + beta) / (1 -
+beta))`, is written beside as the comparison only, the one the law fails at
+second order (NATURE row 4b), and enters no pin.
 
-| World | k | beta | `k_AB` = 1/(1 - beta), the law | `k_BA` = 1 + beta, the law | the ratio, the law `1 - beta^2` | Lorentz's one-way factor, both | the round trip `(1 + beta)/(1 - beta)` | the radar velocity | the counts between hops |
+| World | k | beta | `k_AB` = 1/(1 - beta), the law | `k_BA` = 1 + beta, the law | the ratio, the law `1 - beta^2` | the comparison: Lorentz's one-way factor, both directions | the round trip `(1 + beta)/(1 - beta)` | the radar velocity | the counts between hops |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `k3` | 3 | 55/96 = 0.5729 | 96/41 = 2.3415 | 151/96 = 1.5729 | 6191/9216 = 0.6718 | 1.9191 | 151/41 = 3.6829 | -1/3 | 3 only |
 | `k5` | 5 | 11/32 = 0.34375 | 32/21 = 1.5238 | 43/32 = 1.34375 | 903/1024 = 0.8818 | 1.4310 | 43/21 = 2.0476 | -1/5 | 5 only |
@@ -218,38 +236,98 @@ the reading differs from the closed form by at most the tolerance.
   neither is declared here. A crowd world (the cart in a crowd, its count
   stretched by the owed count) is the extension, not built.
 
-## 7. The one thing the design adds to the engine, and the gate
+## 7. The code path: what carries a moving body detector today, what is missing for consecutive clicks, and the smallest change
 
-Everything the world needs exists on `main`: a thrown body with a lamp and
-a `measure` table reading another body (series O), the reader's own lamp as
-its clock (series S), the `rerelease` rule stamping another number's rows
-with its own and keeping the record (the catalog's `sun_planet`), the
-record's ordinal on every click. One thing is missing: a measured event's
-line (`click`, `rerelease`, `read`, `become`) carries the tick and not the
-event's own count, so the cart's count at its click is today read only
-through the tick (equal to it on this world, GAMEBOARD by label). The design
-adds one field, `clock`, the event's `age` at that interval (its own count
-of self-creations, already on its record; the detector's own count is the
-measurement, record 768 and the Boss's word of 06:15Z), on every line a
-measured event writes, under the world key `clock_stamp` (true or false,
-false by default) so that every registered record's digest stands
-(`tests/test_amplitude_click.py` (d) and `tests/test_covariant_readings.py`
-pin `events_sha256`). No new state, no rule, no verb: a field written from
-the record. The five worlds declare the key; the tool refuses a record
-without the field. If the reviewer prefers no key for a record field, the
-alternative is an in-process reading of the event's `age` at each click by
-the tool, as PR #777's tier (b) read r off the detector's own state; the
-reviewer decides at step 2.
+The model owner's order of record 824 ("make sure we know how to run in
+the code Outside with a moving detector, consecutive clicks"), read with
+the Boss's frame: the engine must carry a moving body detector that reads
+consecutive clicks on its own record, and we must show it runs. Line
+numbers are `main`'s at 412f5c61.
+
+**(a) What exists.** A body with a detector role and its own count is
+already three declarations and one count:
+
+- `world.py`: a measured event's keys `MEASURED_KEYS` (:640; `position`,
+  `family`, `amount`, `held`, `momentum`, `fixed`, `table`, `lamp`, ...),
+  parsed by `_measured` (:2577); the lamp by `_lamp` (:1990; `rate`,
+  `wheel`, `directions`); the declared detector sets by `_detectors`
+  (:3584; the `detectors` list, named sets of Nodes with a threshold and a
+  reading, the one set object a body is too). A measured event that is not
+  `fixed` may carry a table and a lamp: the only refusals on a moving body
+  are a declared `E` (:2936) and a momentum on more than one axis (:2945;
+  form B's directional drive is not on `main`, and the cart's momentum lies
+  on the x axis). Series O's stars are exactly this (a thrown
+  body, a lamp of one unit per self-creation, a `measure` table on the
+  other's light, `examples/events/two_stars/symmetric.json`).
+- `engine.py`: the per-axis drive `step_axis` (:119; one Link when
+  `drive + p` reaches `Q S M + |p|`, `by_drive` with `at_most` 1), the
+  body's step in `_move` (:743), and the body's own count in `_suspend`
+  (:708): `entry.age += 1` at every self-creation and not at an interval it
+  owes (:704-705); the body's own face click (:903).
+- `measured.py`: `Measured` (:477) with `number` (:490), `position`
+  (:491), `momentum` (:500), `fixed` (:501), `age` (:553, the own count),
+  `births` (:627, the lamp's ordinal), `clock_age` (:654), `counted`
+  (:659, the interval's arrivals); `clicks` (:600) is the total of units
+  clicked per family, not a list.
+- `nature_beam.py`: step 4, `_measure` (:5437) and `_apply_plans` (:5373):
+  the rules `read` (:5127), `rerelease` (:5210, the transponder: the
+  arriving rows of another number re-created at the entry's next
+  self-creation on its declared directions, stamped with its number, the
+  record kept), the click line at a body (:5284: `tick`, `node`,
+  `measured`, `detector`, `family`, `number`, `amount`, `push`, `phase`,
+  `content`, `reading`, and for a record's row `record`, `branch`,
+  `multiplicity`, `u`, `share`, `age`), the `become` line (:6057, with the
+  trigger's `counted`) and the pair's click (:6187); the record's identity
+  `record_identity(entry.number, entry.births)` (:5605, :5800), the
+  emitter's ordinal on every row it births.
+- PR #777 (the clock audit's tier (b)) changed no engine line: its
+  re-reads took r off the detector's own state in-process; the
+  transponding rule is `rerelease`, on `main` since the law of events.
+
+So the world of section 3 loads and runs on `main` as it is; the cart's
+clicks are written on its record, one line each, with its Node.
+
+**(b) What is missing for consecutive clicks read on the moving body's own
+record.** Three things a reader needs at every click: the body's Node (the
+line's `node`: present), the body's own count (absent: the line carries the
+`tick`, GAMEBOARD, and the row's `age`, not the body's `age`), and the
+count of what arrived (the ordinal in `record`: present). No list per body
+is needed, since the record is the list (every line names `measured`); the
+one absent number is the body's own count at the click.
+
+**(c) The smallest change, under a key, off by default.** The world key
+`clock_stamp` (true or false, false by default; `world.py`'s parse beside
+the other world keys, `massive_rows` at :3803): when true, every line a measured event writes carries
+`"clock": entry.age`, the event's own count at that interval: the click,
+`read` and `rerelease` lines of `_apply_plans` (:5127, :5210, :5284), the
+`become` line (:6057), the pair's click (:6187) and the body's face click
+in the engine (:903); about eight lines, one field, no new state, no rule,
+no verb. Without the key no field is written, so every registered record
+stands byte for byte (`tests/test_amplitude_click.py` (d) and
+`tests/test_covariant_readings.py` pin `events_sha256`); the deciding
+worlds declare it. One test: a moving body at v = 1 / k in no crowd
+(`clock` at each click equals the interval count since its birth, its Node
+advances one per k counts, the ordinals it reads advance one per interval
+of the lamp) and a fixed body in a crowd (`clock` falls behind the tick by
+the owed count, `clock_age` and `age` as the engine keeps them). The
+readings tool (`tools/moving_detector_readings.py`) prints, per body and
+per click j, DETECTOR: `clock_j`, `node_j`, the sender's `number` and the
+ordinal `record mod 2^32`; then the consecutive differences `count_(j+1) -
+count_j` and `place_(j+1) - place_j`, the Outside step of record 803; and
+GAMEBOARD, labelled: the tick of each line and the body's `age` in the
+final state. The alternative, if the reviewer prefers no key for a record
+field: the tool replays the world in-process and reads `entry.age` at each
+click, as PR #777's tier (b) read r; the reviewer decides at step 2.
 
 The three tests of every rule (skills/workflow.md): generic (no family
 name, no kind; the field is the event's own integer), vector (no verb
-touched; the six verbs act as before), local (the event's own record, the
-tick read by nothing). LOCALITY-1: the cart reads only what arrives at its
-Node and its own count; the post re-emits from its own Node at its own next
-self-creation; the host reads the records after the run. The host's cost:
-three measured events, at most three rows born per interval, at most `3 x
-600` rows in flight on 2160 Nodes, fixed local work per Node per interval;
-the tool linear in the number of clicks.
+touched), local (the event's own record; the tick read by nothing).
+LOCALITY-1: the cart reads only what arrives at its Node and its own
+count; the post re-emits from its own Node at its own next self-creation;
+the host reads the records after the run. The host's cost: three measured
+events, at most three rows born per interval, at most `3 x 600` rows in
+flight on 2160 Nodes, fixed local work per Node per interval; the tool
+linear in the number of clicks.
 
 ## 8. What is not built
 
@@ -277,9 +355,19 @@ Lorentz line declared, no r declared, no fit.
    five worlds with `expectations.json` holding the pins of section 5 as
    written; the reading tool; the register entry drafted in
    `examples/events/moving_detector/README.md`; `tools/check.py` exit 0.
-3. Step 4: the run on the owner's word only (`tools/run_series.py`), the
-   readings written under `runs` in `expectations.json` by the tool, the
-   pins untouched; the day's record by the Boss.
+3. Step 4, the capability check, on the owner's word given by record 824:
+   ONE run of the smallest world, `cart_k5` without the post (the lamp A at
+   rest and the cart D at v = 1 / 5, N = 64 as the register's, 300
+   intervals on a bar of 120), its consecutive clicks printed as DETECTOR
+   (the count between clicks, the Node at each click, the ordinal read),
+   nothing pinned as nature's; the design's pins for that world (`k_AB` =
+   32 / 21, the counts between hops 5 only, the place changing by 0 or 1)
+   compared as "read / not read" only.
+4. Step 5: the transponder worlds of section 3 (the post added), the pins
+   of section 5 declared before, run on the owner's word
+   (`tools/run_series.py`), the readings written under `runs` in
+   `expectations.json` by the tool, the pins untouched; the comparison
+   against Einstein's forms only then; the day's record by the Boss.
 
 ## 10. Links
 
