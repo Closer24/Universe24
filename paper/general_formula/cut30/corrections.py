@@ -2716,6 +2716,12 @@ CORRECTIONS = [
         "which is $-(N_l c/\\tau_L)\\,\\nabla \\mathcal A$ in the static case: the acceleration of a body is minus the gradient of the age moment's field.",
         "which is $-(N_l c/\\tau_L)\\,\\nabla \\mathcal A$ in the static case; the gravity column reads $-M_A\\mathbf a$ (Section~\\ref{sec:forces}), so a body's acceleration is $+(N_l c/\\tau_L)\\,\\nabla \\mathcal A$, up the age moment's field, toward the source.",
     ),
+    # Table 3 row 8a kept as history with the derivation beside it (the owner's decision of record 941, relayed by the Boss at 11:27Z); the number and the verdict unchanged.
+    (
+        "Table 3 row 8a: the registered J1 run kept as history beside its number and verdict (the owner's decision, record 941; the Boss's order of 11:27Z)",
+        "8a & The neutron's decay curve, exponential, width over median $3.17$ \\cite{gonzalez2021} & $0.036$, a step (series J1, $64$ clicks) & FAIL: a factor $88$ \\\\",
+        "8a & The neutron's decay curve, exponential, width over median $3.17$ \\cite{gonzalez2021} & $0.036$, a step (series J1, $64$ clicks) & FAIL: a factor $88$; the registered J1 run predates the one flight wall, under which the weak register's become blocks move (the physicist's derivation, records 931 to 933 \\cite{log}), so the row is a reading of the law before it, kept as history, J1's redeclaration in the weak field after the paper \\\\",
+    ),
 ]
 
 

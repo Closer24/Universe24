@@ -4519,3 +4519,23 @@ No number, verdict or citation removed; every new number by kind in
 NUMBERS.md. The count: 37 pages (the body grew by about twenty lines,
 the references moved with it, the roads table's last five rows on page
 37); the page is the Boss's.
+
+## Applied (2026-09-22, the owner's decisions of record 941, the Boss's order of 11:27Z): Table 3 row 8a kept as history
+
+(1) Row 8a (J1, the FAIL by a factor 88): one sentence beside the
+number and the verdict, both unchanged: the registered J1 run predates
+the one flight wall, under which the weak register's become blocks move
+(the physicist's derivation, records 931 to 933), so the row is a
+reading of the law before it, kept as history, J1's redeclaration in
+the weak field after the paper. (2) The referee's point 7: the history
+stays in the body; nothing needed. (3) Row 12 (series T) reads "read
+under the law before the generic entry of 2026-09-22; not readable
+under the law as it stands; ... PASS, of the law before the entry,
+under the age word ...; FAIL under the presence word": historical in
+those words, unchanged. (4) The merge waits for the three SHAs. (5) The
+third referee read's six points were folded at b3e12fae on the owner's
+word to the writer, "go on all of it and come back to me when it is
+resolved to give the referee a PDF", given after the writer's report
+of the six points; the Boss's order of 11:27Z, written before that
+commit's report, holds them not yet authorized: the crossing is
+reported, nothing reverted without a word.
