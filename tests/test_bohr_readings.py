@@ -94,6 +94,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
         "N": 64,
         "release": [1, 4],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "action": 65536,
         "families": [
             {"name": "p", "quantum": 0, "charge": [1, 1], "phase": False},

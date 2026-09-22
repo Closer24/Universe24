@@ -53,6 +53,7 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
         "N": 64,
         "release": [1, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "families": [
             {"name": "p", "quantum": 0, "phase": False, "charge": 3},

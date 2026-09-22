@@ -114,6 +114,12 @@ def world(name: str, bodies: list[Json], width: int = WIDTH, strong: int | list[
         "N": N,
         "release": [1, 1],
         "suspension": 0,
+        # The per-axis drive of history (the world key `per_axis_drive`;
+        # since 2026-09-22 the line drive is the law's drive of a body,
+        # docs/designs/drive_b/DEFAULT.md): series R's registered readings
+        # were read under it and stand as registered until the series is
+        # re-pinned under the law in the campaign of DEFAULT.md section (c).
+        "per_axis_drive": True,
         "width": width,
         "directions": declared,
         "families": [

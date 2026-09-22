@@ -1,5 +1,14 @@
 # Series R: the quarks
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)).
+The seven worlds declare `per_axis_drive`, the per-axis drive of history,
+so that every reading below and every replay block of `expectations.json`
+stands as registered under the drive it was read under, until the series is
+re-pinned under the law in the campaign of DEFAULT.md section (c) (the pins
+by the generator before the run, the readings by kind, the rows below kept
+as history); the key then leaves the worlds.
+
 Seven worlds of one base, written by `make_worlds.py`; the register entry
 is [R, the quarks (2026-09-21)](../../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21)
 and the design is [the quarks as families of the family table](../../../docs/designs/quarks/QUARKS.md)

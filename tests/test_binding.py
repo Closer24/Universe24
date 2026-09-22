@@ -91,7 +91,8 @@ before are kept as history where they are named:
 (f) the fact of the run (the physics-rule review's should-fix): a body of
     `p` (content 5, momentum (-256, 0, 0)) at (3, 3, 3) with a fixed
     occupant of `q` at (2, 3, 3), no body holding a paid family at load
-    (`binding` false, the hypotheses `columns-v1` alone), and a declared
+    (`binding` false, the hypotheses `columns-v1` and the worlds' per-axis
+    drive of history, `per-axis-drive-v1`, since 2026-09-22), and a declared
     `bond` row of amount 2 in transit at (4, 3, 3) on -x, age 0: at tick 1
     the row reaches the body at age 1 and is TAKEN under the keys (held
     `bond` 2, the label -128 taken: momentum (-384, 0, 0)); the body's step
@@ -118,7 +119,7 @@ import numpy as np
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import exact_column_sums
-from event_universe.events.world import BINDING_RULE, COLUMNS_RULE
+from event_universe.events.world import BINDING_RULE, COLUMNS_RULE, PER_AXIS_DRIVE_RULE
 from event_universe.runner import run_initialization
 
 
@@ -185,7 +186,11 @@ def bonded_pair() -> dict[str, object]:
 def test_the_give_at_the_first_hand_over_of_the_pair():
     """(a)."""
     world = parse_nature_beam_world(bonded_pair())
-    assert world.binding is True and world.hypotheses == [COLUMNS_RULE, BINDING_RULE]
+    assert world.binding is True and world.hypotheses == [
+        COLUMNS_RULE,
+        PER_AXIS_DRIVE_RULE,
+        BINDING_RULE,
+    ]
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(world, records.append)
     p1, p2 = simulation.measured[1], simulation.measured[2]
@@ -282,7 +287,7 @@ def test_the_remainder_stays_held():
     """(b)."""
     simulation, records = run(line_world(2, 3), 7)
     body, occupant = simulation.measured[1], simulation.measured[2]
-    assert simulation.world.hypotheses == [COLUMNS_RULE, BINDING_RULE]
+    assert simulation.world.hypotheses == [COLUMNS_RULE, PER_AXIS_DRIVE_RULE, BINDING_RULE]
     assert body.held == [5, 0, 0, 1] and body.momentum == [0, 0, 0] and body.position == (3, 3, 3)
     assert occupant.momentum == [384, 0, 0]
     assert [(r["tick"], r["component"], r["given"], r["momentum"]) for r in contacts(records)] == [
@@ -430,11 +435,11 @@ def taking_world() -> dict[str, object]:
 def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
     """(f)."""
     world = parse_nature_beam_world(taking_world())
-    assert world.binding is False and world.hypotheses == [COLUMNS_RULE]
+    assert world.binding is False and world.hypotheses == [COLUMNS_RULE, PER_AXIS_DRIVE_RULE]
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(world, records.append)
     body = simulation.measured[1]
-    assert simulation.binding is False and simulation.hypotheses == [COLUMNS_RULE]
+    assert simulation.binding is False and simulation.hypotheses == [COLUMNS_RULE, PER_AXIS_DRIVE_RULE]
     for tick in range(1, 8):
         simulation.step()
         assert simulation.books(recount=True)["balanced"], tick
@@ -445,7 +450,7 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
         if tick == 3:
             assert body.held == [5, 0, 0, 0] and body.momentum == [-128, 0, 0]
             assert simulation.binding is True
-            assert simulation.hypotheses == [COLUMNS_RULE, BINDING_RULE]
+            assert simulation.hypotheses == [COLUMNS_RULE, PER_AXIS_DRIVE_RULE, BINDING_RULE]
     assert [(r["tick"], r["component"], r["given"], r["momentum"]) for r in contacts(records)] == [
         (3, -384, 2, [-128, 0, 0]),
         (5, -128, 0, [0, 0, 0]),
@@ -475,7 +480,11 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
     path = tmp_path / "world.json"
     path.write_text(json.dumps(taking_world()), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
-    assert record["status"] == "completed" and record["hypotheses"] == [COLUMNS_RULE, BINDING_RULE]
+    assert record["status"] == "completed" and record["hypotheses"] == [
+        COLUMNS_RULE,
+        PER_AXIS_DRIVE_RULE,
+        BINDING_RULE,
+    ]
     lines = [
         json.loads(line)
         for line in (tmp_path / "run" / "events.jsonl").read_text(encoding="utf-8").splitlines()

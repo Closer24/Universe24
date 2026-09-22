@@ -354,6 +354,13 @@ def neutron_star() -> Json:
         "N": N,
         "release": [1, NEUTRON_RELEASE],
         "suspension": [1, K],
+        # The per-axis drive of history (the world key `per_axis_drive`;
+        # since 2026-09-22 the line drive is the law's drive of a body,
+        # docs/designs/drive_b/DEFAULT.md): under the line drive the star's
+        # accumulator |drive_a| + |p_a| Q passes the law's bound at run
+        # time (record 342's refusal of this kind), so the world keeps the
+        # drive it was written under.
+        "per_axis_drive": True,
         "families": [
             {"name": "neutron", "quantum": 0, "charge": 0, "phase": False},
             {"name": "probe", "quantum": 0, "charge": 0, "phase": False},

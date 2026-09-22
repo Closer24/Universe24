@@ -8,6 +8,7 @@
   "N": 64,
   "release": [1, 256],
   "suspension": [1, 4194304],
+  "per_axis_drive": true,
   "entity_definitions": "../entities/families.json",
   "entities": [
     {

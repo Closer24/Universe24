@@ -53,7 +53,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   (`crowd_clock/moving_1`, `cluster_clock/cluster_moving`,
   `reader_clock/alike_receding`, a mass of content 2^30 at width 2^20) are
   kept as history under `per_axis_drive` on the Boss's default until the
-  owner speaks.
+  owner speaks; so is `catalog/neutron_star` (its accumulator past the bound
+  at run time); series R's seven worlds carry the key until the series is
+  re-pinned in the campaign (their replay blocks stand as registered).
 - **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
   `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
   declare `per_axis_drive` and keep their integers; the law's cases are

@@ -102,6 +102,17 @@ HISTORY = {
     "crowd_clock/moving_1.json",
     "cluster_clock/cluster_moving.json",
     "reader_clock/alike_receding.json",
+    # The neutron star's accumulator passes the bound at run time under the
+    # line drive; series R's registered readings stand under the drive they
+    # were read under until the series is re-pinned (DEFAULT.md (c)).
+    "catalog/neutron_star.json",
+    "quarks/q1_proton_line.json",
+    "quarks/q2_neutron_line.json",
+    "quarks/q3_proton_triangle.json",
+    "quarks/q4_deuteron_rectangle.json",
+    "quarks/q5_deuteron_line.json",
+    "quarks/q6_proton_kick.json",
+    "quarks/q7_proton_dressed.json",
 }
 Q = LABEL_SCALE
 T_H = math.isqrt(3 * Q * Q)
@@ -539,7 +550,7 @@ def test_the_refusals_by_name():
     simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     entry = simulation.measured[1]
     entry.drive = [MOMENTUM_BOUND - 10, 0, 0]
-    with pytest.raises(OverflowError, match="the line drive"):
+    with pytest.raises(OverflowError, match="line-drive accumulator"):
         simulation.step()
     assert MAX_WORK_INT == 2 * MOMENTUM_BOUND + 1
 

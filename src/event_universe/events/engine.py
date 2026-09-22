@@ -929,7 +929,7 @@ class NatureBeamSimulation:
                     rates = [rate * stretched_rate for rate in rates]
             for axis in range(3):
                 if rates[axis]:
-                    bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "the line drive")
+                    bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "line-drive accumulator")
             # centred-step-v1: the step at half the wall under the world key
             # (docs/designs/atom_give/CENTRED_STEP.md section 1); False,
             # the whole wall, without it.
