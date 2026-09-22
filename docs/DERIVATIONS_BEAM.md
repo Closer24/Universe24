@@ -7944,3 +7944,186 @@ where it does not (Planck, Dirac, Einstein's equation). Four programs
 are stopped at their statement (the packet, the books, the fan
 collision, the cavity), each the physicist's or the implementer's after
 the owner's word. Nothing enters the law; no run.
+
+## 27. The constancy of c: do the six verbs with locality force a phase-blind flight? (the owner's word through the paper's writer, 2026-09-22: "go for the proof of c")
+
+**The question.** The flight of the law moves a row along its digital
+line by one accumulator, `by_drive(acc, N_l abs(D)_1, T_D)`: N_l the
+label's scale (64), **D** the direction (an integer vector), `abs(D)_1`
+its Manhattan length, `T_D = isqrt(3 abs(D)_2^2 N_l^2)` the direction's
+wall, a carry a Link crossed; the row's phase f (an integer on the
+circle of N steps) is a second accumulator, advanced per Link by the
+family's declared turn (the paper's def:rules, F). The flight reads
+neither f nor the family's phase rate, so the pace `N_l abs(D)_2 / T_D`
+is the same at every phase and every frequency: no dispersion
+(rem:nodispersion, a fact of the definitions, rung 1). The question put
+here is whether that blindness is FORCED: whether any flight whose pace
+depends on the row's phase accumulator f, or on the family's declared
+phase rate n / d, must fail at least one of five requirements: (R1) the
+three tests as written (record 202: generic, vector, local); (R2) the
+books' exactness at every operation; (R3) th:isometry (the split an
+isometry inverted by its conjugate transpose) and th:bijection (the
+interval injective on the rows' weights, multiplicities and phases);
+(R4) the isotropy within `1 / T_D` of prop:pace; (R5) the generic
+requirement that the flight's declared integers are the direction's
+alone, a row being a body of no content, so no family column in the
+flight. The outcome must be one of three: DERIVED (the constancy of c a
+theorem of the six verbs, rung 1), A HYPOTHESIS (one more requirement
+named), or REFUTED (a dispersive flight passes all five, and the
+constancy of c stands as the declared postulate P9 of the paper, "a
+row's rate in transit constant and its wall the direction's T_D").
+
+**Two kinds of dispersion, kept apart.** (i) Frequency dispersion: the
+pace a function of the family's declared phase rate `n / d` (nature's
+`omega(k)` non-linear). (ii) Phase dispersion: the pace a function of
+the row's phase accumulator f, a state integer of the record, not a
+declared column. The assignment names both; they fall differently.
+
+**(i) fails (R5) by the letter and by nothing else.** A wall `T_D d /
+(d + n)` or a rate `N_l abs(D)_1 (d + n) / d` reads the family's column
+`[n, d]`: (R5) forbids a family column in the flight, so (i) is excluded
+by requirement. It is excluded by no theorem: such a flight passes (R1)
+(one primitive with declared integers, the family's pair read as an
+integer, no branch on a name), (R2) (a pace moves no amount), (R3) (the
+split and the interval read no pace; the injectivity argument of
+th:bijection is per row and per family), and (R4) if the family factor
+multiplies the whole rate (the same factor for every direction). So the
+requirement (R5) is the postulate for frequency dispersion, restated: it
+derives nothing.
+
+**(ii) passes all five: the counterexample.** Take the flight
+
+    rate = N_l abs(D)_1 (N - f),    wall = T_D N,    (the carry a Link, the phase f then advanced by the family's turn as before),
+
+N the circle's own integer, no new declared integer; at f = 0 the pace
+is the law's, at f = N - 1 it is `1 / N` of it; a row's pace changes
+with its phase along its line. Against each requirement, each claim
+exact on the GameBoard (rung 1):
+
+- (R1) generic: one primitive, `by_drive`, with the declared integers
+  N_l, T_D and N and the record's own f; no family name or kind; the
+  same rule for every family; a row of no content is its value case.
+  Vector: a translation of an accumulator at a rate that is a product of
+  the declared `N_l abs(D)_1` and the state integer `N - f`, at most
+  bilinear in the state (the push's rate is the same kind, a content
+  times a flow); the wall declared; no root, no float, no rounding
+  beyond the load's. Local: the row's own record; fixed work (one
+  multiplication more per interval) and fixed storage; nothing kept at a
+  Node.
+- (R2) the books: the rule moves positions, never amounts; every ledger
+  line (measured, transit, escaped) is unchanged at every operation.
+- (R3) th:isometry reads the arriving row's weight and phase and
+  re-emits by the tables at age 0: no pace enters its statement or its
+  proof. th:bijection: the interval's three maps stay injective on
+  weights, multiplicities and phases, and the state the injectivity
+  rests on under a state-dependent stride is the row's AGE, which
+  def:rules and th:bijection's statement already carry. On (Node,
+  phase) alone the phase-dependent stride CAN bring two rows of one
+  record together (the physics-rule reviewer's check, 2026-09-22: at N =
+  64, r = 32 on one heading, two rows born at different split events on
+  one line with flight residues `s_A = s_B + T_D N - N_l abs(D)_1 r`,
+  both below the wall, A crossing its Link and B staying, land at the
+  same Node with the same phase and the same residue after the interval:
+  a collision the law's flight, with its constant stride, cannot make).
+  What separates them is the age: rows of one line that reach one (Node,
+  phase) by different strides were born at different ticks and so differ
+  in age, and the age is a component of the state; rows of equal age and
+  equal birth phase share the whole history of the stride and never
+  collide; rows of equal age and different birth phases `f_0 != f'_0`
+  never meet in (Node, phase), since the same Node from the same age
+  means the same count k of Links crossed and then the phases are `f_0 +
+  k r` and `f'_0 + k r` (r the family's turn per Link), distinct; rows of
+  different families or records are distinct terms already. So the
+  theorem holds under the counterexample, on the state as the theorem
+  states it; the argument of the first draft (one birth event) was one
+  case short.
+- (R4) the pace is `(N - f) / N` times the law's `N_l abs(D)_2 / T_D`,
+  the factor the same for every direction, so at every f the pace over
+  the directions differs by at most `(N - f) / N` of prop:pace's `1 /
+  T_D`: isotropic within `1 / T_D`. (A phase term added to the rate
+  rather than multiplied, `N_l abs(D)_1 + f`, would break isotropy, since
+  the base rate scales with `abs(D)_1` and the term does not; the
+  counterexample multiplies.)
+- (R5) the declared integers of the rule are N_l and T_D (the direction's)
+  and N (the circle's, a grain of the law, no family's); no family
+  column is read; f is the record's state, not a declared integer. N is
+  the circle's grain and not a column: f itself is defined on the circle
+  of N steps, and no rule reads f without N, so a flight that reads f
+  reads N with it; and (R5) is read here as its own justification states
+  it, "no family column in the flight", so the refutation does not hang
+  on a reading of the word "declared".
+
+The merge's cancel and the click's interference do not constrain it
+either, for the reason the paper's writer gives and one more: the click
+reads a record's phase-count vector when the record completes, after
+every one of its rows has ended, so two arms of a Mach-Zehnder whose rows
+arrive at different ticks under this rule still cancel in the
+evaluation `ev(f)` at the dark port (opposite phases, equal amounts,
+whenever they arrive); the fringes and the 64 / 0 are timing-blind, and
+so is Born's form. The phase along a path counts Links, not intervals,
+so the arrival phases are those of the law; only the arrival times move.
+
+**The counterexample disperses frequencies too, with no family column.**
+Over one turn of its phase the row's mean rate factor is the mean of
+`(N - f) / N` over the orbit of f under steps of r, `{s + j g : j = 0 ..
+N / g - 1}` with `g = gcd(r, N)` and `s = f_0 mod g` the birth phase's
+residue: the mean factor is `(N - s - (N - g) / 2) / N`. For r coprime to
+N (g = 1) every family has the same mean pace, `(N + 1) / (2 N)` of the
+law's, whatever its birth phase; for `g > 1` the mean pace depends on the
+family's turn through g and on the birth phase through s (at N = 64 and
+r = 32 the orbit is `{s, s + 32}` and the factor `(48 - s) / 64`, s from 0
+to 31). So a flight reading only the record's own phase, no family
+column, gives a mean pace that depends on the family's declared rate:
+frequency dispersion in the mean arises from (ii) without touching (R5).
+Rung 1 (an exact mean over a finite orbit).
+
+**What would force the blindness, named.** (a) The requirement the law
+already states and the paper numbers P9: the flight's rate and wall are
+declared constants of the direction, the flight table indexed by (**D**,
+tau) alone, the flight in the linear block (the paper's "two blocks": the
+block is linear where its rates are constant); this excludes (ii) by
+forbidding a state integer in the flight's rate, and it is the constancy
+of c itself, not a premise from which it follows. (b) Its method form,
+record 165 and 176: a constant-rate component has a closed form
+(`floor(s_0 + r t)`), the exact phase at the click is a function of the
+row's age and direction (24.1 row 24), and a run only confirms; the
+counterexample is of the feedback class (a state-dependent rate, no
+closed form) and would move the click's exact phase off its closed form
+only in TIME, the arrival tick, never in the phase's value, which counts
+Links (the Mach-Zehnder paragraph above: the fringes, the 64 / 0 and the
+paper's Born form are untouched); the method's rule excludes it, again as
+a choice. (c) The physical
+candidates the writer named do not force it: the retarded field of a
+source with several families (5.1) stays linear and additive under (i)
+and (ii), family by family, and its static Poisson equation holds with a
+coefficient per family; what is lost is one retarded wave operator with
+one c for the sum, a requirement on the DYNAMIC field that the six verbs
+do not state (a hypothesis, if the owner wants it: "the age moment of a
+source of several families is one retarded potential with one c"); and
+the identity's load-time constraint `3 h n = Q S d` (17.6 M7, N5) ties a
+family's phase rate to its quantum, the width and the pair, and says
+nothing of the pace, so it cannot force the pace to ignore the rate. (d)
+Meyer's theorem (the paper's rem:nodispersion, second half) says no local
+linear wave scheme is both isotropic within `1 / T_D` and free of
+dispersion; it shows why a ballistic walker with a passenger phase is the
+form that has both, not that the law must choose it: the counterexample
+is a ballistic walker too, with a phase-dependent stride.
+
+**The outcome: REFUTED.** A dispersive flight, the rule above, passes
+(R1) to (R5), the books, both theorems, the isotropy and the generic
+requirement as written, and it disperses both phases and, in the mean,
+frequencies. The constancy of c is therefore not a theorem of the six
+verbs with locality; it is the declared postulate P9 of the paper (the
+flight's rate constant and its wall the direction's `T_D`, one of the
+"four rules chosen among few"), and 24.1's row 7 keeps its word
+POSTULATE; the ledger's line on dispersion reads "none, by P9", not
+"none, in truth". What the six verbs do force, exactly (rung 1), is
+narrower and already stated: GIVEN a flight whose rate and wall are the
+direction's declared integers, the pace is `N_l abs(D)_2 / T_D` at every
+phase and every rate up to the alias bound (rem:nodispersion), isotropic
+within `1 / T_D` (prop:pace), with `c = 1 / sqrt 3` its limit (13.2
+(a)); and the requirement (R5) closes frequency dispersion by the letter.
+The one addition that would make the blindness a theorem is the linear
+block's constancy itself, so the honest word is the paper's: an
+assumption, not a derivation. No reading is pinned by this section; it
+names no run.
