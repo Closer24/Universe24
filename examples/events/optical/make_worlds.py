@@ -422,8 +422,10 @@ RUN_2026_09_22_FAST: dict[str, object] = {
 # (the world's `width`, the rows' d: Q S M = 2^26) with the momentum
 # (2^26, 0, 0) (E' = 2^27, the Lorentz factor 2, v^2 = 3/4; the pace 0.368
 # Links per interval by form B's wall), from the lamp's Node x = 2 at
-# y = 20 + b beside the light worlds' mass 2^16, under `optical` gamma and
-# `drive_b` together at the pair [1, 16384]; the body's click on the face
+# y = 20 + b beside the light worlds' mass 2^16, under `optical` gamma at
+# the pair [1, 16384] (built with the key `drive_b` beside it; since
+# 2026-09-22 the line drive is the law's and the key is deleted); the
+# body's click on the face
 # x = 56 (`face:+x`) its tick and the Node it left from, DETECTOR; one body
 # per world (no body reads another's rays), b = 10, 12, 14, 16, 18 at
 # gamma 0 and 1, and one control per b without the mass (the click at
@@ -494,7 +496,6 @@ def body_world(b: int, gamma: int, mass: bool) -> Json:
         "suspension": list(SUSPENSION),
         "width": BODY_WIDTH,
         "optical": gamma,
-        "drive_b": True,
         "directions": [list(v) for v in K.DECLARED],
         "families": families,
         "measured": measured,
@@ -552,7 +553,8 @@ def body_expectations() -> Json:
             }
     return {
         "format": "optical-body-expectations-v1",
-        "identity": ["optical-v1", "drive-b-v1"],
+        "identity": ["optical-v1"],
+        "drive": "line (the law's drive since 2026-09-22; built and pinned as drive-b-v1 under the key drive_b, deleted the same day)",
         "derivation": (
             "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the "
             "engine's verbs integer for integer on the light-bending map's stationary crowd (the drive "

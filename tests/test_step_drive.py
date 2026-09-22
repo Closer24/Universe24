@@ -110,6 +110,10 @@ Q = LABEL_SCALE
 
 
 def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
+    """The bar of the per-axis drive, under its key `per_axis_drive` (the
+    drive of history since the line drive became the law's on 2026-09-22;
+    `tests/test_drive_b.py` tests the law's): every integer below is the
+    per-axis rule's as registered."""
     world: dict[str, object] = {
         "law": "beam",
         "model_id": "step-drive-test",
@@ -120,6 +124,7 @@ def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,
         "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": measured,
     }

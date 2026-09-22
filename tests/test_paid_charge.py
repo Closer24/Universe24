@@ -61,8 +61,9 @@ m(tau) = (128 tau + 110) // 220: x = 2 at the ages 1, 2; 3 at 3, 4; 4 at 5,
     charged paid family refused (it would release charge from nothing);
     `charge` -1 on a paid family accepted: the family's `charge` (-1, 1),
     its `charge` column value (0, 1), the run's record `charge` [-1, 1]
-    and the column's value [0, 1], `hypotheses` [] (a report of the books,
-    no identity).
+    and the column's value [0, 1], `hypotheses` naming only the world's
+    per-axis drive of history (`per_axis_drive`, since 2026-09-22; a report
+    of the books, no identity of the charge).
 """
 
 from __future__ import annotations
@@ -102,6 +103,7 @@ def world(
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "families": families(beta_charge),
         "measured": measured,
         "in_transit": [
@@ -225,11 +227,15 @@ def test_the_refusals_and_the_record(tmp_path):
     refused(world([PROTON, lamp]), r"measured\[1\]: a lamp of the charged paid family 'beta'")
     parsed = parse_nature_beam_world(world([PROTON, ABSORBER]))
     assert parsed.families[BETA].charge == (-1, 1) and parsed.families[BETA].columns[1].value == (0, 1)
-    assert parsed.families[BETA].values == ((1, 1), (0, 1)) and parsed.hypotheses == []
+    # The world declares the per-axis drive of history (2026-09-22), the
+    # one identity of its record; no identity of the charge.
+    assert parsed.families[BETA].values == ((1, 1), (0, 1))
+    assert parsed.hypotheses == ["per-axis-drive-v1"]
     path = tmp_path / "world.json"
     path.write_text(json.dumps(world([PROTON, ABSORBER], ticks=6)), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
-    assert record["status"] == "completed" and record["hypotheses"] == []
+    assert record["status"] == "completed" and record["hypotheses"] == ["per-axis-drive-v1"]
+    assert record["drive"] == "per_axis"
     assert record["families"][BETA]["charge"] == [-1, 1]
     assert record["families"][BETA]["columns"][1] == {"name": "charge", "value": [0, 1], "sign": 1}
     assert [entry["charge"] for entry in record["audit"]] == [[0, 1]] * 6

@@ -168,6 +168,7 @@ def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
         "N": 64,
         "release": [1, 10],
         "suspension": [1, 4],
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 8,
         "families": [{"name": "m", "quantum": 0, "phase": False}, {"name": "light", "quantum": 1}],
         "measured": measured,
@@ -597,6 +598,7 @@ def test_a_record_rows_push_keeps_its_remainder_on_the_row():
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "families": [
             {"name": "light", "quantum": 1, "charge": 0},
             {"name": "reader", "quantum": 1, "charge": 0},

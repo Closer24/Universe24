@@ -1,6 +1,7 @@
 """Every family under one wall, step 3 (2026-09-22, the model owner's "finish
 form B"; docs/designs/one_wall/BODY_DRIVE.md): a body's directional drive
-(form B, `drive-b-v1`, the world key `drive_b`) joins the age wall's set
+(form B, built as `drive-b-v1` under the world key `drive_b`; the law's line
+drive since 2026-09-22, the key deleted, record 972) joins the age wall's set
 under `optical` at the coefficient gamma, the space part alone (the body's
 clock, the member `owed` at 1, carries the time part; the two sum to the
 flight's 1 + gamma), and a moving body's gravity charge under the two keys
@@ -9,12 +10,14 @@ body's own momentum over the label scale. The expected integers of
 docs/TEST_EXPECTATIONS.md ("The body's drive under the one wall"), written
 before the first run:
 
-(o) the set: with `optical` alone the flight at 1 + gamma and no drive
-    member; with `drive_b` beside it the drive at gamma (0 at gamma 0,
+(o) the set: with `optical` under the per-axis drive of history (the world
+    key `per_axis_drive`) the flight at 1 + gamma and no drive member; with
+    `optical` under the law's line drive (since 2026-09-22; built as the
+    key `drive_b` beside `optical`) the drive at gamma (0 at gamma 0,
     declared and unstretched; 1 at gamma 1); the clock at 1 throughout;
     `turn` and `action` never members;
 (p) a body on a rest crowd, integer for integer: a bar of 14 x 1 x 1 at
-    `suspension` [1, 4], `width` 1, `optical` 1 and `drive_b`, the body of
+    `suspension` [1, 4], `width` 1, `optical` 1 under the law, the body of
     content 64 (Q S M = 4096, W = 262144 + 660000 = 922144) at x = 0 with
     p = (6000, 0, 0), the rest crowd of m (amount 4, age 3, the age moment
     12) at x = 4 .. 8: off the crowd the drive gains 6000 x 64 x 4 =
@@ -33,12 +36,13 @@ before the first run:
     (1 + gamma v^2 = 7/4); at rest (2^26, 2^20), the content over 1; a
     body of no content (0, 1). The push by hand: an m row of amount 1
     arriving from -y at the body's Node (V = (0, 64, 0)) pushes the body
-    by -4096 on y under `drive_b` alone (today's -M V), by -8192 under
+    by -4096 on y under the law alone (today's -M V), by -8192 under
     `optical` 0 (gamma_L times it) and by -14336 under `optical` 1 (7/4
     of that): gravity's Lambda is Q S = 2^20 under the two keys, 1
     without them;
-(r) the refusal: a moving body under `optical` without `drive_b` is
-    refused at load naming `drive_b`; a fixed body and a body at rest
+(r) the refusal: a moving body under `optical` with the per-axis drive of
+    history (`per_axis_drive`) is refused at load naming the key; a fixed
+    body and a body at rest
     load; a body whose (Q S M)^2 leaves the working bound is refused
     naming the rule;
 (t) the deciding worlds (`examples/events/optical/body_*.json`, the
@@ -81,7 +85,7 @@ FAMILIES = [
 ]
 
 
-def crowd_bar(optical: int | None, *, drive_b: bool = True, ticks: int = 120) -> dict[str, object]:
+def crowd_bar(optical: int | None, *, per_axis: bool = False, ticks: int = 120) -> dict[str, object]:
     """(p): the body of content 64 at x = 0 with p = (6000, 0, 0) and the
     rest crowd of m at x = 4 .. 8 (number 2, amount 4, age 3)."""
     document: dict[str, object] = {
@@ -123,13 +127,13 @@ def crowd_bar(optical: int | None, *, drive_b: bool = True, ticks: int = 120) ->
     }
     if optical is not None:
         document["optical"] = optical
-    if drive_b:
-        document["drive_b"] = True
+    if per_axis:
+        document["per_axis_drive"] = True
     return document
 
 
 def push_bar(
-    optical: int | None, *, drive_b: bool = True, momentum: list[int] | None = None
+    optical: int | None, *, per_axis: bool = False, momentum: list[int] | None = None
 ) -> dict[str, object]:
     """(q): the body of content 64 at S = 16384 (Q S M = 2^26) at (2, 1, 0)
     with p = (2^26, 0, 0), an m row of amount 1 arriving from -y at tick 1
@@ -177,23 +181,25 @@ def push_bar(
     }
     if optical is not None:
         document["optical"] = optical
-    if drive_b:
-        document["drive_b"] = True
+    if per_axis:
+        document["per_axis_drive"] = True
     return document
 
 
 def test_the_drive_joins_the_age_walls_set_at_gamma_beside_the_clock_and_the_flight():
-    """(o)."""
+    """(o). Since the line drive is the law's (2026-09-22) the drive member
+    joins under `optical` with nothing else declared; under the per-axis
+    drive of history (`per_axis_drive`) it never does."""
     assert age_wall_set() == (("owed", 1),)
-    assert age_wall_set(1) == (("owed", 1), (FLIGHT_MEMBER, 2))
-    assert age_wall_set(1, True) == (("owed", 1), (FLIGHT_MEMBER, 2), (DRIVE_MEMBER, 1))
-    assert age_wall_set(0, True) == (("owed", 1), (FLIGHT_MEMBER, 1), (DRIVE_MEMBER, 0))
-    assert age_wall_coefficient(DRIVE_MEMBER, 1, True) == 1
-    assert age_wall_coefficient("owed", 1, True) == 1
+    assert age_wall_set(1, True) == (("owed", 1), (FLIGHT_MEMBER, 2))
+    assert age_wall_set(1) == (("owed", 1), (FLIGHT_MEMBER, 2), (DRIVE_MEMBER, 1))
+    assert age_wall_set(0) == (("owed", 1), (FLIGHT_MEMBER, 1), (DRIVE_MEMBER, 0))
+    assert age_wall_coefficient(DRIVE_MEMBER, 1) == 1
+    assert age_wall_coefficient("owed", 1) == 1
     with pytest.raises(ValueError, match="not a member"):
-        age_wall_coefficient(DRIVE_MEMBER, 1)
+        age_wall_coefficient(DRIVE_MEMBER, 1, True)
     with pytest.raises(ValueError, match="never a member"):
-        age_wall_coefficient("action", 1, True)
+        age_wall_coefficient("action", 1)
 
 
 def by_hand(gamma: int, ticks: int) -> list[int]:
@@ -209,7 +215,7 @@ def by_hand(gamma: int, ticks: int) -> list[int]:
         if not creating:
             owed -= 1
         if creating:
-            coefficient = age_wall_coefficient(DRIVE_MEMBER, gamma, True)
+            coefficient = age_wall_coefficient(DRIVE_MEMBER, gamma)
             if coefficient:
                 scaled, wall = age_wall(1, wall0, coefficient, counted, (1, 4))
                 rates = [r * scaled for r in rates0]
@@ -256,12 +262,12 @@ def test_the_weight_of_a_moving_body_is_the_rows_weight_over_the_label_scale():
     assert body_weight([1 << 26, 0, 0], 64, 16384, 1) == (7 << 25, 1 << 20)
     assert body_weight([0, 0, 0], 64, 16384, 1) == (1 << 26, 1 << 20)
     assert body_weight([1 << 26, 0, 0], 0, 16384, 1) == (0, 1)
-    for optical, drive_b, push, scale in (
-        (None, True, -4096, 1),
-        (0, True, -8192, 1 << 20),
-        (1, True, -14336, 1 << 20),
+    for optical, push, scale in (
+        (None, -4096, 1),
+        (0, -8192, 1 << 20),
+        (1, -14336, 1 << 20),
     ):
-        world = parse_nature_beam_world(push_bar(optical, drive_b=drive_b))
+        world = parse_nature_beam_world(push_bar(optical))
         assert world.column_scales[0] == scale
         simulation = NatureBeamSimulation(world)
         simulation.step()
@@ -270,11 +276,13 @@ def test_the_weight_of_a_moving_body_is_the_rows_weight_over_the_label_scale():
 
 
 def test_a_moving_body_under_optical_needs_the_directional_drive():
-    """(r)."""
-    with pytest.raises(ValueError, match="drive_b"):
-        parse_nature_beam_world(push_bar(1, drive_b=False))
-    parse_nature_beam_world(push_bar(1, drive_b=False, momentum=[0, 0, 0]))
-    document = push_bar(1, drive_b=False)
+    """(r): a moving body under `optical` is refused with the per-axis drive
+    of history (`per_axis_drive`), never a member of the age wall's set; a
+    body at rest and a fixed body are admitted with it."""
+    with pytest.raises(ValueError, match="per_axis_drive"):
+        parse_nature_beam_world(push_bar(1, per_axis=True))
+    parse_nature_beam_world(push_bar(1, per_axis=True, momentum=[0, 0, 0]))
+    document = push_bar(1, per_axis=True)
     document["measured"][0]["fixed"] = True  # type: ignore[index]
     parse_nature_beam_world(document)
     with pytest.raises(OverflowError, match="working bound"):
@@ -305,7 +313,7 @@ def test_the_body_worlds_load_under_both_keys_and_carry_their_pins():
                 (WORLDS / f"{name}.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent
             )
             world = loaded.world
-            assert world.drive_b and world.optical is not None and world.width == 16384
+            assert not world.per_axis_drive and world.optical is not None and world.width == 16384
             body = world.measured[0]
             assert list(body.momentum) == [1 << 26, 0, 0] and tuple(body.position) == (2, 20 + b, 20)
             assert not body.fixed and world.column_scales[0] == 1 << 20

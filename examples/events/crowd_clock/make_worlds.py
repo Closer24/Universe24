@@ -189,7 +189,7 @@ def world(name: str, flux: int, moving: bool) -> Json:
         "fixed": True,
         "table": {"s_px1": {"rule": "measure", "reads": "age"}},
     }
-    return {
+    document: Json = {
         "law": LAW_VALUE,
         "model_id": f"rays-crowd-clock-{name.replace('_', '-')}-v1",
         "shape": list(SHAPE),
@@ -208,6 +208,15 @@ def world(name: str, flux: int, moving: bool) -> Json:
         ],
         "measured": [detector, lamp, *sources],
     }
+    if name == "moving_1":
+        # Kept as history under the per-axis drive (the world key
+        # `per_axis_drive`, the Boss's default of 2026-09-22 until the
+        # owner speaks; docs/designs/drive_b/DEFAULT.md section (b)): its
+        # mass of content 2^30 at width 2^20 has a line-drive wall Q^2 S M
+        # = 2^62, one past the law's bound, and is refused at load under
+        # the law's line drive.
+        document["per_axis_drive"] = True
+    return document
 
 
 def worlds() -> dict[str, Json]:

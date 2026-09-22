@@ -91,6 +91,7 @@ def bar_world() -> dict[str, object]:
         "N": 64,
         "release": [1, 1 << 16],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": WIDTH,
         "families": [
             {"name": "detector", "quantum": 1},

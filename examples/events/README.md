@@ -511,13 +511,16 @@ pins; the register entry is
 ## The drive-b series
 
 The folder [drive_b/](drive_b/README.md) holds the six worlds of series X,
-the directional drive of a body (`drive-b-v1`, the world key `drive_b`, off
-by default; the model owner's approval of form B, 2026-09-22, record 652 of
-the log of 2026-09-20; the design [docs/designs/drive_b/DESIGN.md](../../docs/designs/drive_b/DESIGN.md)),
+the line drive of a body (built as `drive-b-v1` under the world key
+`drive_b` on the model owner's approval of form B, 2026-09-22, record 652 of
+the log of 2026-09-20, the design [docs/designs/drive_b/DESIGN.md](../../docs/designs/drive_b/DESIGN.md);
+the law's drive since the same day on his word, record 972,
+[DEFAULT.md](../../docs/designs/drive_b/DEFAULT.md), the key deleted),
 written by `drive_b/make_worlds.py` with their expectations before the runs
 (`drive_b/expectations.json`): one body of content 64 at |**p**|_1 = 6000
 on the axis, the plane diagonal and the cube diagonal from the centre of an
-open 41^3 box, under the key and, as the controls, without it.
+open 41^3 box, under the law with nothing declared and, as the controls,
+under the per-axis drive of history (the world key `per_axis_drive`).
 `tools/drive_b_readings.py` reads the body's click on a face (DETECTOR) and
 the `step` lines against the line of the momentum and the accumulators'
 bound (GAMEBOARD) against the pins; the register entry is

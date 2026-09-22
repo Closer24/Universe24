@@ -86,6 +86,7 @@ def plane(measured: list[dict[str, object]], **keys: object) -> dict[str, object
         "N": 64,
         "release": [1, 4],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "directions": [[1, 1, 0], [-1, 1, 0], [-1, -1, 0], [1, -1, 0], [3, 1, 0]],
         "families": [{"name": "m", "quantum": 0, "phase": False}],

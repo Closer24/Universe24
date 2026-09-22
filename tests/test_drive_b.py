@@ -1,7 +1,10 @@
-"""drive-b-v1, the directional drive of a body (form B in the integer form (c)
-of docs/designs/light_speed/FORM.md section 3.1; docs/designs/drive_b/DESIGN.md;
-the model owner's approval of form B, 2026-09-22, record 652 of the log of
-2026-09-20), under the world key `drive_b`, absent by default. Three signed
+"""The line drive of a body, the law's drive since 2026-09-22 (form B in the
+integer form (c) of docs/designs/light_speed/FORM.md section 3.1; built as
+drive-b-v1 under the key `drive_b`, docs/designs/drive_b/DESIGN.md, on the
+model owner's approval of form B, record 652 of the log of 2026-09-20; made
+the law's drive on his word of record 972, docs/designs/drive_b/DEFAULT.md:
+the key deleted, the per-axis drive of BEAM_LAW note 17 kept for history
+under the world key `per_axis_drive`, `per-axis-drive-v1`). Three signed
 accumulators on the body's record, the rate p_a Q on each against ONE wall
 W = Q^2 S M + |p|_1 T_h (T_h = isqrt(3 Q^2) = 110, formed at load; Q^2 S M
 alone under `covariant_readings`), at most one Link per interval on the axis
@@ -10,14 +13,15 @@ overflow: the Bresenham line of the momentum with no coincident fire lost and
 no root at run time. The expected integers of docs/TEST_EXPECTATIONS.md
 ("The directional drive"), written down before the first run:
 
-(a) the key absent computes nothing: every registered world outside
-    `drive_b/` (and outside the body worlds of `optical/`, the composition
-    of step 3) parses with `drive_b` false and the identity absent from its
-    hypotheses; the gate world `detector/grouped_12_nodes` replays to the
-    digests of `gate_set.json` byte for byte, its `run.json` without a
-    `drive_b` key; `drive_wall` is Q^2 S M + |p|_1 T_h with the cap and
-    Q^2 S M without it; a bar world without the key steps as `by_drive`
-    against Q S M + |p| (BEAM_LAW note 17);
+(a) the law's drive with nothing declared: every registered world but the
+    three controls of `drive_b/` parses with `per_axis_drive` false and the
+    identity `per-axis-drive-v1` absent from its hypotheses, the controls
+    with both; the gate world `detector/grouped_12_nodes` replays to the
+    digests of `gate_set.json` byte for byte, its `run.json` with `drive`
+    "line" and no `per_axis_drive` key; `drive_wall` is Q^2 S M + |p|_1 T_h
+    with the cap and Q^2 S M without it; a box world under `per_axis_drive`
+    steps as `by_drive` against Q S M + |p| (BEAM_LAW note 17 as it ran
+    until 2026-09-22) and clicks at 36, its record `drive` "per_axis";
 (b) `by_line` against `by_drive` on one axis: from an empty accumulator at a
     constant p = (6000, 0, 0), M = 64, S = 1 (W = 922144, the rate 384000)
     the fires are at the self-creations where floor(n x 384000 / 922144)
@@ -50,10 +54,12 @@ no root at run time. The expected integers of docs/TEST_EXPECTATIONS.md
     residue neither advances nor steps; a refused step at a contact
     (`pass`) subtracts W and does not move the body; the escape's click
     carries the body's momentum;
-(f) the refusals by name: `drive_b` of a type other than a boolean; a
-    momentum whose |p|_1 T_h passes the working bound at load under the key
-    (admitted without it); an accumulator that would pass the bound;
-(g) under `covariant_readings` and the key: a body of content 207 (Q S M =
+(f) the refusals by name: the deleted key `drive_b` with any value, naming
+    the change; `per_axis_drive` of a type other than a boolean; a momentum
+    whose |p|_1 T_h passes the working bound at load under the law
+    (admitted under `per_axis_drive`); an accumulator that would pass the
+    bound;
+(g) under `covariant_readings` and the law: a body of content 207 (Q S M =
     13248) at p = (2574, 2574, 0) and at (2101, 2101, 2101) is admitted at
     load and at the frame (refused without the key with the text as it is),
     its E' 14671 and 14670 as on the axis, its Links per axis over 40
@@ -79,13 +85,24 @@ import pytest
 from event_universe.core.integer import MAX_WORK_INT, by_drive, by_line
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
-from event_universe.events.world import DRIVE_B_RULE, LABEL_SCALE, MOMENTUM_BOUND, drive_wall
+from event_universe.events.world import LABEL_SCALE, MOMENTUM_BOUND, PER_AXIS_DRIVE_RULE, drive_wall
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples" / "events"
 WORLDS = EXAMPLES / "drive_b"
 GATE_SET = EXAMPLES / "gate_set.json"
+# The registered worlds under the per-axis drive of history (the world key
+# `per_axis_drive`): series X's controls and the three clock worlds refused
+# at load under the line drive's wall (DEFAULT.md section (b)).
+HISTORY = {
+    "drive_b/axis_main.json",
+    "drive_b/plane_main.json",
+    "drive_b/cube_main.json",
+    "crowd_clock/moving_1.json",
+    "cluster_clock/cluster_moving.json",
+    "reader_clock/alike_receding.json",
+}
 Q = LABEL_SCALE
 T_H = math.isqrt(3 * Q * Q)
 
@@ -110,7 +127,9 @@ def box_world(
     extra: dict[str, object] | None = None,
 ) -> dict[str, object]:
     """The design's deciding world: one free body of no release at the centre
-    of an open (or periodic) cube, the faces the detectors."""
+    of an open (or periodic) cube, the faces the detectors; `key` True is the
+    law's line drive (nothing declared), False the per-axis drive of history
+    under the world key `per_axis_drive`."""
     document: dict[str, object] = {
         "law": "beam",
         "model_id": "drive-b-box",
@@ -134,8 +153,8 @@ def box_world(
     }
     if periodic:
         document["age_bound"] = 64
-    if key:
-        document["drive_b"] = True
+    if not key:
+        document["per_axis_drive"] = True
     if extra:
         document.update(extra)
     return document
@@ -210,16 +229,20 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     checked = 0
     for path in sorted(EXAMPLES.rglob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(document, dict) or "format" in document or path.parent == WORLDS:
-            continue
-        if path.parent.name == "optical" and path.name.startswith("body_"):
-            # The body worlds of every family under one wall, step 3
-            # (docs/designs/one_wall/BODY_DRIVE.md): the composition of this
-            # key with `optical`, declared by design.
+        if not isinstance(document, dict) or "format" in document:
             continue
         world = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES).world
-        assert world.drive_b is False, path
-        assert DRIVE_B_RULE not in world.hypotheses, path
+        if str(path.relative_to(EXAMPLES)) in HISTORY:
+            # The three controls of series X and the three clock worlds
+            # whose mass of content 2^30 at width 2^20 has a line-drive wall
+            # past the law's bound: the per-axis drive of history under its
+            # declared key, their registered pins kept (DEFAULT.md (b)).
+            assert document["per_axis_drive"] is True and world.per_axis_drive is True, path
+            assert PER_AXIS_DRIVE_RULE in world.hypotheses, path
+            continue
+        assert "drive_b" not in document and "per_axis_drive" not in document, path
+        assert world.per_axis_drive is False, path
+        assert PER_AXIS_DRIVE_RULE not in world.hypotheses, path
         checked += 1
     assert checked >= 100
     gate = json.loads(GATE_SET.read_text(encoding="utf-8"))
@@ -232,16 +255,17 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"])
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
-    assert "drive_b" not in record
-    assert DRIVE_B_RULE not in record["hypotheses"]
+    assert record["drive"] == "line" and "per_axis_drive" not in record and "drive_b" not in record
+    assert PER_AXIS_DRIVE_RULE not in record["hypotheses"]
     assert drive_wall([6000, 0, 0], 64, 1) == Q * Q * 64 + 6000 * T_H == 922144
     assert drive_wall([3000, -3000, 0], 64, 1) == 922144
     assert drive_wall([3000, -3000, 0], 64, 1, cap=False) == Q * Q * 64 == 262144
     assert drive_wall([1, 1, 1], 5, 2) == Q * Q * 10 + 3 * T_H
-    # A world without the key steps by note 17's rule: on the axis the fires
-    # of by_drive against Q S M + |p| (D = 10096 at p = 6000, M = 64).
+    # A world under `per_axis_drive` steps by note 17's rule as it ran until
+    # 2026-09-22: on the axis the fires of by_drive against Q S M + |p| (D =
+    # 10096 at p = 6000, M = 64), the click at 36 (the former integers kept).
     events, simulation = run_in_process(box_world([6000, 0, 0], key=False, ticks=36), 36)
-    assert simulation.world.drive_b is False and DRIVE_B_RULE not in simulation.hypotheses
+    assert simulation.world.per_axis_drive is True and PER_AXIS_DRIVE_RULE in simulation.hypotheses
     ticks = [e["tick"] for e in events if e["event"] == "step"]
     drive, expected = 0, []
     for n in range(1, 37):
@@ -250,6 +274,13 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
             expected.append(n)
     assert ticks == expected[:20] and len(expected) == 21
     assert [e for e in events if e["event"] == "click"][0]["tick"] == 36
+    out = tmp_path / "control"
+    out.mkdir()
+    control = json.dumps(box_world([6000, 0, 0], key=False, ticks=36)).encode("utf-8")
+    execute_nature_beam_run(load_world(control, base_dir=out, root=out).world, control, out, "c", 36)
+    record = json.loads((out / "run.json").read_text(encoding="utf-8"))
+    assert record["drive"] == "per_axis" and record["per_axis_drive"] is True
+    assert PER_AXIS_DRIVE_RULE in record["hypotheses"]
 
 
 # -- (b) ---------------------------------------------------------------------------
@@ -311,12 +342,13 @@ GENERATOR = (
     ],
 )
 def test_the_deciding_worlds_click_where_the_design_pins_them(name, momentum, tick, node, links):
-    """(c), the key on."""
+    """(c), the law's drive, nothing declared."""
     assert GENERATOR is not None
     document = GENERATOR.worlds()[name]
-    assert document["drive_b"] is True and document["measured"][0]["momentum"] == momentum
+    assert "drive_b" not in document and "per_axis_drive" not in document
+    assert document["measured"][0]["momentum"] == momentum
     events, simulation = run_in_process(document, 200)
-    assert DRIVE_B_RULE in simulation.hypotheses
+    assert PER_AXIS_DRIVE_RULE not in simulation.hypotheses
     clicks = [e for e in events if e["event"] == "click"]
     assert len(clicks) == 1
     click = clicks[0]
@@ -348,12 +380,13 @@ def test_the_deciding_worlds_click_where_the_design_pins_them(name, momentum, ti
 
 @pytest.mark.parametrize(("name", "tick"), [("axis_main", 36), ("plane_main", 50), ("cube_main", 65)])
 def test_the_controls_click_by_the_per_axis_drive(name, tick):
-    """(c), the controls: the key off, y and z never moved."""
+    """(c), the controls: the per-axis drive of history under its key, y
+    and z never moved (the registered pins of series X kept)."""
     assert GENERATOR is not None
     document = GENERATOR.worlds()[name]
-    assert "drive_b" not in document
+    assert document["per_axis_drive"] is True
     events, simulation = run_in_process(document, 200)
-    assert DRIVE_B_RULE not in simulation.hypotheses
+    assert PER_AXIS_DRIVE_RULE in simulation.hypotheses
     click = [e for e in events if e["event"] == "click"][0]
     assert (click["tick"], click["detector"], click["node"]) == (tick, "face:+x", [40, 20, 20])
     assert links_of(events) == [20, 0, 0]
@@ -489,20 +522,24 @@ def test_the_edges_of_the_rule():
 
 def test_the_refusals_by_name():
     """(f)."""
-    with pytest.raises(ValueError, match="drive_b must be true or false"):
-        parse_nature_beam_world(box_world([6000, 0, 0], extra={"drive_b": 1}))
-    with pytest.raises(ValueError, match="drive_b must be true or false"):
-        parse_nature_beam_world(box_world([6000, 0, 0], extra={"drive_b": "yes"}))
+    # The deleted key is refused naming the change, whatever its value.
+    for value in (True, False, 1, "yes"):
+        with pytest.raises(ValueError, match="world key 'drive_b' is deleted"):
+            parse_nature_beam_world(box_world([6000, 0, 0], extra={"drive_b": value}))
+    with pytest.raises(ValueError, match="per_axis_drive must be true or false"):
+        parse_nature_beam_world(box_world([6000, 0, 0], extra={"per_axis_drive": 1}))
+    with pytest.raises(ValueError, match="per_axis_drive must be true or false"):
+        parse_nature_beam_world(box_world([6000, 0, 0], extra={"per_axis_drive": "yes"}))
     huge = 1 << 60
-    with pytest.raises(OverflowError, match="drive-b-v1"):
+    with pytest.raises(OverflowError, match="the line drive"):
         parse_nature_beam_world(box_world([huge, 0, 0]))
     parse_nature_beam_world(box_world([huge, 0, 0], key=False))
-    parse_nature_beam_world(box_world([6000, 0, 0], extra={"drive_b": False}))
+    parse_nature_beam_world(box_world([6000, 0, 0], extra={"per_axis_drive": False}))
     world = box_world([6000, 0, 0], periodic=True, ticks=10)
     simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     entry = simulation.measured[1]
     entry.drive = [MOMENTUM_BOUND - 10, 0, 0]
-    with pytest.raises(OverflowError, match="drive-b-v1"):
+    with pytest.raises(OverflowError, match="the line drive"):
         simulation.step()
     assert MAX_WORK_INT == 2 * MOMENTUM_BOUND + 1
 
@@ -530,7 +567,7 @@ def test_under_the_covariant_key_the_off_axis_body_is_admitted(momentum, energy)
             replay.step(momentum)
     assert links_of(events) == replay.links and entry.drive == replay.drives
     assert sum(abs(c) for c in replay.links) >= 5
-    assert set(simulation.hypotheses) == {"covariant-readings-v1", DRIVE_B_RULE}
+    assert simulation.hypotheses == ["covariant-readings-v1"]
 
 
 def test_with_action_the_turn_composes_per_link_crossed():

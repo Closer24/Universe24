@@ -64,6 +64,11 @@ def bar(shape: list[int], measured: list[dict[str, object]], **keys: object) -> 
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        # The series C tool replays the per-axis step rule (`engine.step_axis`,
+        # BEAM_LAW note 17); since the line drive became the law's drive
+        # (2026-09-22) this bar declares the drive of history until the tool
+        # and series C are re-pinned under the law (DEFAULT.md section (c)).
+        "per_axis_drive": True,
         "families": [{"name": "m", "quantum": 0, "phase": False}],
         "measured": measured,
     }

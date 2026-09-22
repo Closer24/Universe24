@@ -73,6 +73,7 @@ def bar(
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "directions": directions or [],
         "families": FAMILIES,
         "measured": measured,

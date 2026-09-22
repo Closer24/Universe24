@@ -73,9 +73,10 @@ of 17.6:
   (refused at load and at the frame); the one-axis domain (the base is
   `main`'s per-axis drive, `step_axis`, on which the pace p / E' holds for a
   momentum on one axis: a body with momentum on more than one axis is
-  refused at load and at the frame unless the world declares `drive_b`
-  (form B's directional drive, `drive-b-v1`, on `main` since 2026-09-22
-  under its own key, off by default; series X);
+  refused at load and at the frame under the world key `per_axis_drive`
+  alone (the per-axis drive of history); the law's line drive (form B,
+  built as `drive-b-v1` under the key `drive_b` and the law's drive since
+  2026-09-22, record 972; series X) admits every axis;
   a `fixed` apparatus is outside both checks); the push ceiling of one grain per
   interval on the push the record took (refused at the frame: under it
   the root's comparisons are at most three per frame; a change of content
@@ -94,8 +95,8 @@ the magnetic part waits for `source-velocity-v1`), and with it the
 contraction and the pair's round trips (pin (b) of 18.1, withdrawn there).
 The base is `main`'s per-axis drive (form B's first build, record 342, was
 BLOCKED in its review, record 348; form B in its integer form (c) is on
-`main` since 2026-09-22 as `drive-b-v1` under the world key `drive_b`, off
-by default, series X): on the two pinned worlds every momentum lies on one
+`main` since 2026-09-22 as `drive-b-v1` under the world key `drive_b`, and
+the law's drive since the same day, record 972, series X): on the two pinned worlds every momentum lies on one
 axis, where the per-axis drive without its cap term and the directional
 drive without its cap term are the same count, so the pinned runs are as
 17.6 derives them; the OFF baseline is `main`'s register, replayed byte for
@@ -145,6 +146,24 @@ after each of the first k - 1 self-creations from an empty accumulator, so
 the discrete cadence lies one (gamma - 1) below the continuum's k gamma
 that the design's 70.9 and 125.2 state; both are pinned, the design's with
 its tolerance and the derived integer exactly.
+
+## Under the law's line drive (2026-09-22): every reading stands, the digests moved by the accumulator's unit
+
+Since 2026-09-22 the line drive is the law's drive of a body (the model
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)).
+Under `covariant_readings` the cap term of the wall is keyed off, so
+`by_line` at the rate `p_a Q` against `Q^2 S M` fires at the same
+self-creations as `by_drive` at `p_a` against `Q S M`, integer for integer:
+every DETECTOR and GAMEBOARD reading of this series stands as registered
+(the 64th self-creation at 64, 70, 124; the clicks at 392, 369, 345; z =
+0.3674). What moved is the unit of the `drive` accumulators on the `step`
+lines and in `state.json` (`p_a Q` for `p_a`), so the state and the events
+digests of `j4_muon_3640`, `j4_muon_12856` and the coasting world moved and
+were re-pinned in `expectations.json` with the former digests kept beside
+them (`former_digests`); the books' digests did not move; `j4_muon_rest`
+(no momentum) is byte for byte as it was. The one-axis domain of the key is
+now raised under `per_axis_drive` alone; the law's line drive admits every
+axis (`tests/test_drive_b.py` (g)).
 
 ## What was measured (2026-09-21)
 

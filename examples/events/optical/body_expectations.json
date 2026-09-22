@@ -1,9 +1,9 @@
 {
  "format": "optical-body-expectations-v1",
  "identity": [
-  "optical-v1",
-  "drive-b-v1"
+  "optical-v1"
  ],
+ "drive": "line (the law's drive since 2026-09-22; built and pinned as drive-b-v1 under the key drive_b, deleted the same day)",
  "derivation": "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the engine's verbs integer for integer on the light-bending map's stationary crowd (the drive member at gamma, the clock's owed count, the charge (w, Q S)); the click's tick within one interval, the face and the Node exact; written before the run (record 205)",
  "constants": {
   "content": 64,

@@ -345,9 +345,13 @@ def test_the_declarations_are_refused_as_stated(tmp_path):
     with pytest.raises(ValueError, match="exceeds Q x S x M = 320, the domain"):
         parse_nature_beam_world(bar_world(321))
     parse_nature_beam_world(bar_world(320))
-    # The one-axis domain (the per-axis base): two components refused at load.
+    # The one-axis domain of the per-axis drive of history (the world key
+    # `per_axis_drive`): two components refused at load under it, admitted
+    # under the law's line drive (since 2026-09-22; `test_drive_b.py` (g)).
     document = bar_world(200)
     document["measured"][0]["momentum"] = [200, 1, 0]  # type: ignore[index]
+    parse_nature_beam_world(document)
+    document["per_axis_drive"] = True
     with pytest.raises(ValueError, match="components on more than one axis"):
         parse_nature_beam_world(document)
     # A fixed apparatus carries no readings: no domain check, and `E` refused.
@@ -497,10 +501,15 @@ def test_the_frame_refuses_the_domain_and_the_axis_and_admits_the_edge():
     assert simulation.measured[1].momentum == [-1024, 0, 0]
     later = [e for e in events if e["event"] == "energy" and e["tick"] > pushes[0]["tick"]]
     assert later and all(e["square"] == 16 * 16 + 3 * 16 * 16 for e in later)
-    # The one-axis domain: a row on +y through the reader's Node pushes it by
-    # -64 on y, and the next frame refuses the two-axis momentum.
+    # The one-axis domain of the per-axis drive of history: a row on +y
+    # through the reader's Node pushes it by -64 on y, and the next frame
+    # refuses the two-axis momentum under the world key `per_axis_drive`;
+    # under the law's line drive (since 2026-09-22) the same run completes.
+    document = reader_world([-100, 0, 0], [60, 0, 0], [0, 1, 0], [81, 3, 1])
+    run_in_process(document, 80)
+    document["per_axis_drive"] = True
     with pytest.raises(ValueError, match="components on more than one axis"):
-        run_in_process(reader_world([-100, 0, 0], [60, 0, 0], [0, 1, 0], [81, 3, 1]), 80)
+        run_in_process(document, 80)
 
 
 def release_world(momentum: int, key: bool) -> dict[str, object]:

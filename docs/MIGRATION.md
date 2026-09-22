@@ -6,6 +6,61 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The line drive as the law's drive, on 2026-09-22 (form B from the key drive_b to beam-v1; the per-axis drive kept under per_axis_drive)
+
+The model owner's word of 2026-09-22 (record 972 of docs/LOG_2026-09-20.md,
+"definitely type B should be the default for now because that is the most
+common"), designed in [docs/designs/drive_b/DEFAULT.md](designs/drive_b/DEFAULT.md)
+after the physics-rule reviewer's ADMISSIBLE. What moves:
+
+- **The law.** A free body's step is the line drive (BEAM_LAW note 49, form
+  B in the integer form (c): three accumulators at `p_a Q` against the one
+  wall `Q^2 S M + |p|_1 T_h`, the axis furthest over the wall stepping,
+  `core.integer.by_line`) with nothing declared, in every world; note 17 as
+  amended states it as the law's drive. The rule has no identity of its
+  own: it is `beam-v1`'s.
+- **The key `drive_b` is deleted.** A world that declares it is refused at
+  load naming the change ("the world key 'drive_b' is deleted: the line
+  drive it declared is the law's drive of a body since 2026-09-22"). The
+  twenty-one registered worlds that declared it (`drive_b/axis_b`,
+  `plane_b`, `cube_b`; `optical/body_*`) are rewritten by their generators
+  without it; their pins stand.
+- **The per-axis drive of history.** The per-axis drive of note 17 as it
+  ran from 2026-09-19 (`engine.step_axis`, `world.step_divisor`, `by_drive`
+  per axis, the coincident fire lost) stays in the engine under the world
+  key `per_axis_drive` (a boolean, false by default; refused otherwise) and
+  the identity `per-axis-drive-v1`, listed under `hypotheses` when declared,
+  for the register's controls (`drive_b/axis_main`, `plane_main`,
+  `cube_main`, rewritten with it) and for a replay of a reading registered
+  under it. Nothing is claimed for it and nothing new is derived under it.
+  Under it the one-axis refusals of `covariant_readings` are raised as they
+  were, and a moving body under `optical` is refused (the per-axis drive is
+  never a member of the age wall's set).
+- **The record.** `run.json` carries `drive` on every record: "line" under
+  the law, "per_axis" under the key (then also `per_axis_drive: true`). A
+  record without the field is one from before this day and was read under
+  the per-axis drive: the paper's rows read under it stay true and say so;
+  a re-read under the law is a new row beside them, never a replacement.
+- **The register.** Every registered world with a moving body (103, by the
+  host scan of DEFAULT.md section (b)) reads the line drive from now: the
+  gate set's digests of the worlds with a moving body moved and are
+  re-pinned in `gate_set.json` with the former digests kept under `former`
+  (the cause and the date beside them); every other gate world is byte for
+  byte as it was. The moving-body series are re-pinned under the law series
+  by series, the pins by each generator before its run, the former integers
+  kept as history in the READMEs (sections (b) and (c) of the design); the
+  three worlds whose wall passes the law's bound under the line drive
+  (`crowd_clock/moving_1`, `cluster_clock/cluster_moving`,
+  `reader_clock/alike_receding`, a mass of content 2^30 at width 2^20) are
+  kept as history under `per_axis_drive` on the Boss's default until the
+  owner speaks.
+- **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
+  `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
+  declare `per_axis_drive` and keep their integers; the law's cases are
+  written with their integers first (`test_drive_b.py`, `test_centred_step.py`
+  (d), `test_optical_body.py`, `test_push_width.py` (d), `test_crossing.py`
+  (f) under the line drive).
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,

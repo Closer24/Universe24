@@ -543,9 +543,12 @@ def test_byte_identity_without_the_key_and_the_declared_set():
     ]
     assert lines and not any("flight" in ray or "push" in ray or "cross" in ray for ray in lines)
     assert age_wall_set(None) == AGE_WALL_SET == (("owed", 1),)
-    assert age_wall_set(0) == (("owed", 1), ("flight", 1)) and age_wall_set(1) == (
+    # Since 2026-09-22 the body's line drive is the law's and a member at
+    # gamma beside the flight (`test_optical_body.py` (o)).
+    assert age_wall_set(0) == (("owed", 1), ("flight", 1), ("drive", 0)) and age_wall_set(1) == (
         ("owed", 1),
         ("flight", 2),
+        ("drive", 1),
     )
     assert not any(name in dict(age_wall_set(1)) for name in AGE_WALL_NEVER)
 

@@ -427,7 +427,9 @@ number and its cause.
 
 ## The body worlds: step 3, the body's drive under the one wall (2026-09-22, branch optical-body-drive)
 
-Form B (`drive-b-v1`, the world key `drive_b`) composed with optical-v1
+Form B (`drive-b-v1`, the world key `drive_b`; since the same day the
+law's line drive, the key deleted, record 972: the body worlds declare
+`optical` alone and their pins stand) composed with optical-v1
 (docs/designs/one_wall/BODY_DRIVE.md): the body's directional drive a
 member of the age wall's set at the coefficient gamma (the clock carries
 the time part, the drive the space part), a moving body's gravity charge

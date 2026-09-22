@@ -169,6 +169,7 @@ def pair_world(gap: int, rule: str | None = None) -> dict[str, object]:
         "N": 64,
         "release": [1, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "families": [
             {"name": "p", "quantum": 0, "phase": False, "charge": 3},
@@ -302,6 +303,7 @@ def isolated(
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "families": [
             {"name": "p", "quantum": 0, "phase": False},
@@ -450,6 +452,7 @@ def nucleon_pair(ticks: int, accumulate: bool = False) -> dict[str, object]:
         "N": 64,
         "release": [1, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "directions": FAN,
         "families": [
@@ -519,6 +522,7 @@ def order_world(first_a: bool) -> dict[str, object]:
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "width": 1,
         "families": [{"name": "p", "quantum": 0, "phase": False}],
         "measured": [a, b] if first_a else [b, a],

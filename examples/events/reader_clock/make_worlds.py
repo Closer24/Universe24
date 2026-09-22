@@ -140,7 +140,7 @@ def crowd(x: int, k: float, moving: bool) -> list[Json]:
 def world(name: str, k_r: float, k_s: float, moving: bool) -> Json:
     measured = [lamp(READER_X, True, False), lamp(SOURCE_X, False, moving)]
     measured += crowd(READER_X, k_r, False) + crowd(SOURCE_X, k_s, moving)
-    return {
+    document: Json = {
         "law": P.LAW_VALUE,
         "model_id": f"rays-reader-clock-{name.replace('_', '-')}-v1",
         "shape": list(SHAPE),
@@ -158,6 +158,14 @@ def world(name: str, k_r: float, k_s: float, moving: bool) -> Json:
         ],
         "measured": measured,
     }
+    if moving:
+        # Kept as history under the per-axis drive (the world key
+        # `per_axis_drive`, the Boss's default of 2026-09-22 until the
+        # owner speaks; docs/designs/drive_b/DEFAULT.md section (b)): the
+        # source's mass of content 2^30 at width 2^20 has a line-drive
+        # wall Q^2 S M = 2^62, one past the law's bound.
+        document["per_axis_drive"] = True
+    return document
 
 
 def worlds() -> dict[str, Json]:

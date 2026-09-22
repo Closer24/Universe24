@@ -121,9 +121,11 @@ set and the turn by momentum"), written down first:
     open axis, two bodies sharing a Node, a detector naming a Node of a
     body that is not its position; the turn's bound: `ticks` 2^40 with
     the momentum 2^20 and N 64; accepted: `span` [3, 1, 1] at x = 0 of a
-    periodic axis; the record carries `action`, `hypotheses` ["bohr-v1"]
-    and per measured event `span` and `phase_by_momentum`, `action` None
-    and `hypotheses` [] without the key, the state `span`;
+    periodic axis; the record carries `action`, `hypotheses` ["bohr-v1",
+    "per-axis-drive-v1"] (the module's worlds declare the per-axis drive of
+    history since 2026-09-22) and per measured event `span` and
+    `phase_by_momentum`, `action` None and `hypotheses`
+    ["per-axis-drive-v1"] without the key, the state `span`;
 (g) one set object shared by a body and a detector, and one moment table
     over the set (the four unifications, the model owner, 2026-09-20, (3),
     the data only; BEAM_LAW note 33; the integers written first): the body
@@ -182,6 +184,7 @@ def world(**keys: object) -> dict[str, object]:
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "families": FAMILIES,
         "measured": [],
     }
@@ -723,9 +726,11 @@ def test_the_refusals_and_the_record(tmp_path):
     path = tmp_path / "world.json"
     path.write_text(json.dumps(turning), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    # The world declares the per-axis drive of history (2026-09-22): its
+    # identity follows `bohr-v1` in the record.
     assert (
         record["action"] == 64
-        and record["hypotheses"] == [BOHR_RULE]
+        and record["hypotheses"] == [BOHR_RULE, "per-axis-drive-v1"]
         and record["status"] == "completed"
     )
     # `become` per number since 2026-09-20 (the transformation): None without.
@@ -741,7 +746,7 @@ def test_the_refusals_and_the_record(tmp_path):
     assert state["measured"][0]["span"] == [1, 3, 1]
     path.write_text(json.dumps({**base, "ticks": 2}), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "plain").read_text(encoding="utf-8"))
-    assert record["action"] is None and record["hypotheses"] == []
+    assert record["action"] is None and record["hypotheses"] == ["per-axis-drive-v1"]
     assert (
         record["numbers"]["1"]["span"] == [1, 1, 1]
         and record["numbers"]["1"]["phase_by_momentum"] is False

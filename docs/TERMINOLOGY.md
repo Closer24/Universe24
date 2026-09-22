@@ -194,7 +194,8 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   `age_wall_set`, `measured.py:364-379`) under the world key `optical` on
   `main` at 8fa9e00b, and for every world once PR #855 merges (gamma the
   key's value, 0 by default); under
-  `optical` and `drive_b` together the body's drive at gamma; never the phase
+  `optical` the body's line drive at gamma (the law's drive since 2026-09-22;
+  never under `per_axis_drive`); never the phase
   per age (`AGE_WALL_NEVER`, `measured.py:346`). A member joins by a declaration
   in the set and nothing else moving.
 - **The crowd at a row's Node** (`optical-v1`): the two moments a row in
@@ -255,11 +256,15 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   `_walk`, `:4050-4073`; `_apply_plan`, `:5242-5254`; `_border`,
   `:6129-6145`) ([massive_rows/DESIGN.md](designs/massive_rows/DESIGN.md)
   section 3; COUPLINGS.md row 29).
-- **Drive**: the body's accumulator of its step, per axis the rate p_a
-  against the wall Q S M + |p_a|, at most one Link per self-creation, the
-  remainder on the body's record (note 17 as amended; the step drive of
-  2026-09-20). Under form B, decided and not built, the flight of the
-  momentum's direction at the fraction the momentum earns (record 301).
+- **Drive**: the body's three accumulators of its step, the rate p_a Q
+  each against the ONE wall Q^2 S M + |p|_1 T_h, the axis furthest over
+  the wall stepping, at most one Link per self-creation, the remainder on
+  the body's record: the line drive, form B in its integer form (c), the
+  law's drive since 2026-09-22 (BEAM_LAW note 17 as amended and note 49;
+  the model owner's record 972; [DEFAULT.md](designs/drive_b/DEFAULT.md)).
+  Under the world key `per_axis_drive` the drive of history: per axis the
+  rate p_a against the wall Q S M + |p_a| (note 17 as it ran from
+  2026-09-19 to 2026-09-22; the step drive of 2026-09-20).
 - **Flight**: the row's position accumulator on the digital line of its
   direction: it starts at T_D, gains 2 S_1 Q per interval against the wall
   2 T_D, and its count picks the unit step of the line; a rest direction
@@ -528,7 +533,8 @@ stated so that it can fail and never enters the law by its list.
 | `columns-v1` | a column beyond `charge` or a lifetime (note 31) | built; under `hypotheses` when declared |
 | `bohr-v1` | the turn by momentum, the world key `action` (note 30) | built; under `hypotheses` when declared |
 | `massive-rows-v1` | the free particle as a record of massive rows: the world key `massive_rows`, the family key `massive`, the lamp key `momentum_magnitude` ([the design](designs/massive_rows/DESIGN.md)) | built (2026-09-21); under `hypotheses` when the key is declared |
-| form B | one motion primitive: a body's drive as the flight of its momentum's direction at a fraction | decided (records 183, 191, 301), not built |
+| form B, the line drive | one motion primitive: a body's drive as the rows' line rule on its momentum against one wall (BEAM_LAW note 49; note 17 as amended) | the law's drive since 2026-09-22 (the model owner, record 972; [DEFAULT.md](designs/drive_b/DEFAULT.md)); built that day as `drive-b-v1` under the key `drive_b`, the key deleted; no identity of its own |
+| `per-axis-drive-v1` | the per-axis drive of note 17 as it ran from 2026-09-19 to 2026-09-22 (`step_axis`, one accumulator per axis against Q S M + abs(p_a), the coincident fire lost): the world key `per_axis_drive` | history (record 972); under `hypotheses` when declared: the controls of series X, a replay of a reading registered under it; nothing claimed for it |
 | `covariant-readings-v1` | the four covariant readings of DERIVATIONS_BEAM section 17 as amended in 17.6, in place of `lorentz-v1`: the world key `covariant_readings` (`world.COVARIANT_READINGS_RULE`, `world.py:561`; `engine.covariant_frame`, `engine.py:218-273`; `energy_root`, `:185-215`) | built (2026-09-21, records 297 and 314); under `hypotheses` when the key is declared (the status row corrected on 2026-09-22 from the code, record 813) |
 | `optical-v1` | the rows' rule at a Node for the bending and the Shapiro delay: the world key `optical` (gamma), the three verbs on a row (the wall on the flight, the push on a row, the label by Bresenham) and the crowd at a row's Node (`world._optical`, `world.py:3755-3817`; the identity at `:1387`; `nature_beam.optical_walk_step`, `optical_turn`; [one_wall/NOTE.md](designs/one_wall/NOTE.md), [EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md); the earlier design [gr_rows/DESIGN.md](designs/gr_rows/DESIGN.md)) | built (2026-09-21, branch optical-v1; the pin worlds [examples/events/optical/](../examples/events/optical/README.md)); under `hypotheses` when the key is declared (the status row corrected on 2026-09-22 from the code, record 813) |
 | `colour-v1` | a Z_3 label on the quarks ([the design](designs/quarks/QUARKS.md)) | decided (record 270), not built |
@@ -640,6 +646,7 @@ which say so; nowhere else.
 | `charge` on a measured event; the row's `charge` and `mass` columns | the emitter's charge and content on the record | the family's charge per unit of content rho; nothing on the row but its number | [MIGRATION](MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone) |
 | a momentum read off a Port; the label along **D** | the momentum before the one label | the momentum label along **u**_d | [MIGRATION](MIGRATION.md#the-label-along-the-unit-vector-of-the-direction-on-2026-09-19-the-momentum-units-change-by-q--64) |
 | the whole part off the clock (`by_clock`) as a count of its own | the count before the fraction-free law | the accumulator's count; `by_clock` its constant-rate identity | [MIGRATION](MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record) |
+| the key `drive_b`, `drive-b-v1` | the line drive of a body under its own key, off by default (the build of 2026-09-22) | the law's drive of a body (BEAM_LAW note 17 as amended, note 49), nothing declared; the key `per_axis_drive` for the per-axis drive of history | the model owner, record 972 (2026-09-22); [MIGRATION](MIGRATION.md#the-line-drive-as-the-laws-drive-on-2026-09-22-form-b-from-the-key-drive_b-to-beam-v1-the-per-axis-drive-kept-under-per_axis_drive) |
 
 ## Naming rule
 

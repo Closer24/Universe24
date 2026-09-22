@@ -1247,7 +1247,9 @@ couplings.
   [docs/designs/drive_b/DESIGN.md](designs/drive_b/DESIGN.md), form B in the
   integer form (c) of [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction);
   [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
-  Under the world key `drive_b` (`drive-b-v1`, absent by default) a free
+  Under the world key `drive_b` (`drive-b-v1`, absent by default until
+  2026-09-22; since that day the law's drive with nothing declared, record
+  972) a free
   body's three drive accumulators gain `p_a Q` each against ONE wall `W =
   Q^2 S M + |p|_1 T_h` (`T_h = isqrt(3 Q^2) = 110`, formed at load; `Q^2 S
   M` alone under `covariant_readings`), and the axis furthest over the wall
@@ -1283,5 +1285,10 @@ couplings.
   off the line of the momentum; an accumulator at or above 3 W; a world
   without the key whose record differs from `main`'s by a byte.
 - **Status.** Built on 2026-09-22 and run once (series X): six worlds, 19
-  readings inside, 0 outside, nothing moved; the key off by default; making
-  it the default is the owner's later decision.
+  readings inside, 0 outside, nothing moved; the key off by default. Made
+  the law's drive the same day on the model owner's word (record 972;
+  [DEFAULT.md](designs/drive_b/DEFAULT.md)): the key `drive_b` deleted, the
+  rule `beam-v1`'s (BEAM_LAW note 17 as amended), the per-axis drive of
+  history under the key `per_axis_drive`; the register's moving-body
+  worlds re-pinned series by series. This entry stays as the record of a
+  hypothesis that entered the law.

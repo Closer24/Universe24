@@ -21,6 +21,22 @@ Links before the escape, `fast_steps`: the host's view, a diagnostic). The
 readings tool is `tools/drive_b_readings.py`, every line labelled by its
 kind.
 
+## Since 2026-09-22 the law's drive (the model owner, record 972)
+
+On the owner's word of the same day (record 972 of the log of 2026-09-20,
+"definitely type B should be the default"; the design
+[docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md))
+the rule below is the law's drive of a body with nothing declared (BEAM_LAW
+note 17 as amended) and the key `drive_b` is deleted: `axis_b`, `plane_b`
+and `cube_b` declare nothing, and the controls `axis_main`, `plane_main` and
+`cube_main` declare `per_axis_drive`, the per-axis drive of history
+(`per-axis-drive-v1`), so that every pin below stands as registered; the
+record carries `drive`, "line" or "per_axis". The section below is the
+record of the build, its "under the key" read as "under the law" from that
+day; the run blocks of `expectations.json` are the registered runs', whose
+digests the flip does not touch (the state, the books and the events are the
+same integers).
+
 ## What was built (the engine, under the world key alone)
 
 The world key `drive_b` (`true`; absent or `false` by default; any other

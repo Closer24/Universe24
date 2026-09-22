@@ -11,6 +11,36 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The line drive the law's drive: the gate set replayed under the flip on main 6cfea3c6 - 2026-09-22
+
+The branch `drive-default` from main `6cfea3c6` (the model owner's word,
+record 972; [the design](designs/drive_b/DEFAULT.md); the key `drive_b`
+deleted, the per-axis drive of history under `per_axis_drive`). The
+seventeen worlds of `examples/events/gate_set.json` replayed at their caps
+(`tools/run_series.py --list examples/events/gate_set.json --fast --jobs
+4`; Python 3.14.0rc2, headless), every run completed with the books
+balanced at every tick. Of the ten worlds with digests, five replayed byte
+for byte: `detector/grouped_12_nodes`, `weak/j2_ladder`,
+`weak/j3_deuteron_crowd` (its cap 1 precedes the first push),
+`hand/wu` (no moving body) and `drive_b/plane_b` (the state `f2de6815...`,
+the events `92ef9f38...`: the line drive under the key and under the law
+are the same integers); five moved, as DEFAULT.md section (f) predicted,
+each keeping its former digests under `former` in the gate set:
+`weak/j3_deuteron` (the state `5ccfca07...` for `b6ebcb93...`, the events
+`5f0b9b52...` for `5344feb6...`, the books unchanged: the nucleons' attempted
+steps and accumulators), `bohr/r2` (the state `66a8f776...`, the books
+`d26bec6a...`, the events `414a3849...`: the electron's orbit at the line
+drive's pace), `nucleus/alpha_square` (`d538cd89...`, `21187688...`,
+`a537ce54...`: the pushed nucleons), `hubble/pushing_age` (the state
+`ec7ec1d8...` alone: the accumulators at the first self-creation, `p_a Q`
+for `p_a`; the books and the events unchanged at the cap 1) and
+`coupling/1b_m16` (`af07c81b...`, `7dd43ac7...`, `def8455b...`: the pushed
+probe). The seven lamp worlds without digests completed as before. Run
+times: `heisenberg/w27_beam` 920 s at 10.7 GB peak, `weak/j3_deuteron` 42 s,
+`bohr/r2` 22 s, `nucleus/alpha_square` 15 s, the rest under 10 s (host
+seconds, the runner's). What the flip predicts (DEFAULT.md (f)): only a world
+with a moving body moves, which the replay shows.
+
 ## Series X, the directional drive: six runs and the gate set's byte identity against main 166403d8 - 2026-09-22
 
 The branch `drive-b-v1` from main `166403d8` (`drive-b-v1`, the world key

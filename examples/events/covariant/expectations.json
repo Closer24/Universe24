@@ -154,9 +154,16 @@
     "amplitude-v1",
     "covariant-readings-v1"
    ],
-   "state_sha256": "e1b1fc8b23bd38eca2abc866d723881b3d478a2f06fcb908981828438ae619e9",
+   "state_sha256": "d6abff37c448a45129527add293c90b577b2fe31d4a7b0236d5849e8b7d80887",
    "audit_sha256": "9f8d91e1b85d22dae9fb6fdd6d4bd27708bc2e63e0e94c5980d0bea5454c7da5",
-   "events_sha256": "296bce62351826477fd976749398cb95a918c129dc1297b9582c14f9358d7a7c",
+   "events_sha256": "2f7ebac9846323819fb7eaa1b14883e6325ec4e1fae52b396b94e0cb5e8596ef",
+   "former_digests": {
+    "state_sha256": "e1b1fc8b23bd38eca2abc866d723881b3d478a2f06fcb908981828438ae619e9",
+    "audit_sha256": "9f8d91e1b85d22dae9fb6fdd6d4bd27708bc2e63e0e94c5980d0bea5454c7da5",
+    "events_sha256": "296bce62351826477fd976749398cb95a918c129dc1297b9582c14f9358d7a7c",
+    "drive": "per_axis",
+    "moved": "2026-09-22, the line drive the law's drive of a body (record 972; DEFAULT.md section (b)): the stars' drive accumulators carry the unit p_a Q in place of p_a, the same fires, every reading of this block standing; the full run replayed once on the flipped engine (66.1 s), the books unchanged"
+   },
    "readings": {
     "z": 0.3674194742687893,
     "energy_at_load_at_the_grain": 1128171883,
@@ -200,9 +207,16 @@
     "weak-v1",
     "covariant-readings-v1"
    ],
-   "state_sha256": "1db7fbd7bad897c0684f53742be9eb7304ae09e575a4cccca7b8224a75cd5285",
+   "state_sha256": "f0f721e0147297a5d15b475aa20b8ec574ebd962f0e23cd17b4a876ad166528f",
    "audit_sha256": "3a2a77159619fa786b4b70039e8abd1b664ae7286d086847a2a2309b5fae5205",
-   "events_sha256": "985f4fdc3727102eee5f6d3d46f8a40ef894884f70b13f75c23c2e96506831e0",
+   "events_sha256": "3480e225b994aba51a2ae258650da40737eb782d0ed9db0bf4cc3b4093fa7e10",
+   "former_digests": {
+    "state_sha256": "1db7fbd7bad897c0684f53742be9eb7304ae09e575a4cccca7b8224a75cd5285",
+    "audit_sha256": "3a2a77159619fa786b4b70039e8abd1b664ae7286d086847a2a2309b5fae5205",
+    "events_sha256": "985f4fdc3727102eee5f6d3d46f8a40ef894884f70b13f75c23c2e96506831e0",
+    "drive": "per_axis",
+    "moved": "2026-09-22, the line drive the law's drive of a body (record 972; DEFAULT.md section (b)): under covariant_readings the cap term is keyed off, the fires are the same self-creations and every reading of this block stands; the drive accumulators on the step lines and in state.json carry the unit p_a Q in place of p_a, so the state and the events digests moved and the books did not"
+   },
    "readings": {
     "energy_at_load": 25910,
     "rest_energy": 13248,
@@ -233,9 +247,16 @@
     "weak-v1",
     "covariant-readings-v1"
    ],
-   "state_sha256": "211f7fc7536ccc7ca92bdcdd8f591d6eeae4b4296af9705bfdaae85a1765dd2e",
+   "state_sha256": "a2cc09070ac6419806b416ccd83cc1337178695650c5fd7c4afb59c09120d0e7",
    "audit_sha256": "1bf82725f23910114151b91ec9ecc0a6dc6978d5c90fc31c9532e3e5588cd158",
-   "events_sha256": "0675fdfbca515e48471e193caaf76f5d0f6abcd5444fd489f84431acd6a4d25a",
+   "events_sha256": "6feab9427041aae55be4029790e6209f6a641a910f58f1e810ea4a1e39f39439",
+   "former_digests": {
+    "state_sha256": "211f7fc7536ccc7ca92bdcdd8f591d6eeae4b4296af9705bfdaae85a1765dd2e",
+    "audit_sha256": "1bf82725f23910114151b91ec9ecc0a6dc6978d5c90fc31c9532e3e5588cd158",
+    "events_sha256": "0675fdfbca515e48471e193caaf76f5d0f6abcd5444fd489f84431acd6a4d25a",
+    "drive": "per_axis",
+    "moved": "2026-09-22, the line drive the law's drive of a body (record 972; DEFAULT.md section (b)): under covariant_readings the cap term is keyed off, the fires are the same self-creations and every reading of this block stands; the drive accumulators on the step lines and in state.json carry the unit p_a Q in place of p_a, so the state and the events digests moved and the books did not"
+   },
    "readings": {
     "energy_at_load": 14671,
     "rest_energy": 13248,
@@ -294,10 +315,17 @@
   "coasting_none_covariant": {
    "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
    "completed_ticks": 60,
-   "state_sha256": "79f8479c52b9cc2ec1247c3dc173cfe0ed46b6ca2e9cfcfb83ef42ce80724320",
+   "state_sha256": "ca03c40c60ce2116267e4fef67ee7412929360f9ee25327739dc0e09826d4f90",
    "audit_sha256": "59c0e5d86786bb000137c6ac722d3d36232ee53c8fc5c51c080d3c0a9f605238",
-   "events_sha256": "f74024ccc54af6db17f5a16484d42595068a5d4cbb2fb72d4301ca896044be02",
-   "note": "the cap replayed by tests/test_covariant_readings.py (f); the full run above is registered once; the state's digest re-pinned under clock-age-v1 (2026-09-21, record 394: the stars' clocks count the age moment of the other stars' light, their owed accumulators moved; the books and the events at the cap unchanged, 775ce3ba... the state's digest until the word)"
+   "events_sha256": "d8de54796636bd14c8f6671b9c59a336a06428b1987ee0c962857f2d95e454b7",
+   "former_digests": {
+    "state_sha256": "79f8479c52b9cc2ec1247c3dc173cfe0ed46b6ca2e9cfcfb83ef42ce80724320",
+    "audit_sha256": "59c0e5d86786bb000137c6ac722d3d36232ee53c8fc5c51c080d3c0a9f605238",
+    "events_sha256": "f74024ccc54af6db17f5a16484d42595068a5d4cbb2fb72d4301ca896044be02",
+    "drive": "per_axis",
+    "moved": "2026-09-22, the line drive the law's drive of a body (record 972; DEFAULT.md section (b)): the stars' drive accumulators carry the unit p_a Q in place of p_a, the same fires; the books at the cap unchanged"
+   },
+   "note": "the cap replayed by tests/test_covariant_readings.py (f); the full run above is registered once; the state's digest re-pinned under clock-age-v1 (2026-09-21, record 394: the stars' clocks count the age moment of the other stars' light, their owed accumulators moved; the books and the events at the cap unchanged, 775ce3ba... the state's digest until the word) and the state's and the events' again under the line drive (2026-09-22, former_digests)"
   }
  },
  "off_replay": {

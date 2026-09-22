@@ -60,7 +60,10 @@ REST = 0  # The first rest direction of the table ("here a").
 
 
 def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
-    """An open bar of 12 x 1 x 1 whose measured events release nothing."""
+    """An open bar of 12 x 1 x 1 whose measured events release nothing, under
+    the per-axis drive of history (the world key `per_axis_drive`, since the
+    line drive became the law's drive on 2026-09-22): the integers of (a) to
+    (c) are the per-axis rule's and are kept under its key; (d) is the law."""
     world: dict[str, object] = {
         "law": "beam",
         "model_id": "push-width-test",
@@ -71,6 +74,7 @@ def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,
         "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": measured,
     }
@@ -129,6 +133,25 @@ def test_width_eight_steps_once_per_nine_self_creations():
     assert steps == [0] * 8 + [1] * 9 + [2] * 9 + [3]
     xs, steps = positions(bar([mover(3, 192)], width=8), 27)
     assert xs == expected and steps[-1] == 3
+
+
+def test_width_eight_under_the_line_drive_steps_once_per_nine_and_three_quarter():
+    """(d), the law's line drive (2026-09-22): the body of content 16 with
+    p = 1024 at width 8 gains 1024 x 64 = 65536 per self-creation against
+    the one wall 64^2 x 8 x 16 + 1024 x 110 = 636928 (`world.drive_wall`),
+    9.72 self-creations per Link: the fires at n = 10, 20, 30 (host: the
+    first n with n x 65536 >= k x 636928), where the per-axis rule of (b)
+    fired at 9, 18, 27; the body of content 3 with p = 192 at the same
+    width (the wall 119424, the rate 12288) at the same n."""
+    expected = [4] * 9 + [5] * 10 + [6] * 8
+    xs, steps = positions(bar([mover(16, 1024)], width=8, per_axis_drive=False), 27)
+    assert xs == expected
+    assert steps == [0] * 9 + [1] * 10 + [2] * 8
+    xs, steps = positions(bar([mover(3, 192)], width=8, per_axis_drive=False), 27)
+    assert xs == expected and steps[-1] == 2
+    # Width 1: the wall 65536 + 112640 = 178176, the fires at 3, 6, 9, 11.
+    xs, steps = positions(bar([mover(16, 1024)], width=1, per_axis_drive=False), 11)
+    assert xs == [4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 8]
 
 
 def test_the_step_is_counted_off_the_clock_with_no_remainder():

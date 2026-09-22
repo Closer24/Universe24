@@ -5,6 +5,35 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The line drive the law's drive of a body; the key drive_b deleted; the per-axis drive of history under per_axis_drive (2026-09-22)
+
+- The model owner's word (record 972 of `docs/LOG_2026-09-20.md`: form B
+  the default) and its design `docs/designs/drive_b/DEFAULT.md`: the line
+  drive of BEAM_LAW note 49 (form B in the integer form (c)) is the law's
+  drive of a body with nothing declared (note 17 as amended); the key
+  `drive_b` is deleted (a world declaring it is refused at load naming the
+  change); the per-axis drive of note 17 as it ran from 2026-09-19 stays in
+  the engine under the world key `per_axis_drive` (`per-axis-drive-v1`,
+  false by default, under `hypotheses` when declared) for the register's
+  controls and for a replay of a reading registered under it; `run.json`
+  carries `drive`, "line" or "per_axis", on every record; under `optical`
+  the drive member and the body's weight apply with nothing else declared,
+  and a moving body under `optical` with `per_axis_drive` is refused; the
+  one-axis refusals of `covariant_readings` are raised under
+  `per_axis_drive` alone.
+- The register: series X's three `_b` worlds declare nothing and the three
+  `_main` controls declare `per_axis_drive` (the six pins unchanged); the
+  fifteen body worlds of `optical/` declare `optical` alone (their pins
+  unchanged); the gate set's digests of the worlds with a moving body moved
+  and are re-pinned with the former digests kept under `former`
+  (`gate_set.json`); the tests of the per-axis rule declare its key and keep
+  their integers, and the law's cases are added with their integers written
+  first (`tests/test_drive_b.py`, `test_centred_step.py`,
+  `test_optical_body.py`, `test_push_width.py`, `test_crossing.py`). The
+  moving-body worlds of the register are re-pinned under the law series by
+  series in the commits that follow (DEFAULT.md sections (b) and (c)); no
+  paper row moves, each names the drive it was read under.
+
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 
 - Twelve worlds by the generator (`examples/events/amplitude/bell_n2048_*`,

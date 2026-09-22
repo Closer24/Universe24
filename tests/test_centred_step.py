@@ -31,15 +31,18 @@ down before the first run:
     centred against the same wall (the rate 384000 against W = 922144 over
     60 self-creations), the furthest-over axis stepping at half the wall
     and the whole wall subtracted, an idle axis at rate 0 never stepping;
-(d) the deciding world on the engine (the box world of `test_drive_b.py`
-    without `drive_b`: a body of content 64 at (20, 20, 20) of an open 41^3
-    box, p = (6000, 0, 0), width 1): under the key the steps fall at the
-    self-creations where `(6000 n + 5048) // 10096` rises (the first at
-    tick 1) and the click on face:+x at tick 35 (the 21st fire), against
-    tick 36 without the key; `run.json` carries `centred_step: true` and
-    the hypotheses `centred-step-v1`; under `drive_b` and the key together
-    the steps are the host's replay of `by_line(..., centred=True)`
-    integer for integer over 60 intervals, the click at the 21st fire;
+(d) the deciding world on the engine (the box world of `test_drive_b.py`:
+    a body of content 64 at (20, 20, 20) of an open 41^3 box, p = (6000, 0,
+    0), width 1): under the per-axis drive of history (the world key
+    `per_axis_drive`, since the line drive became the law's drive on
+    2026-09-22; the former integers of this case) and the key the steps
+    fall at the self-creations where `(6000 n + 5048) // 10096` rises (the
+    first at tick 1) and the click on face:+x at tick 35 (the 21st fire),
+    against tick 36 without the key; `run.json` carries `centred_step:
+    true` and the hypotheses `centred-step-v1`; under the law's line drive
+    and the key the steps are the host's replay of `by_line(...,
+    centred=True)` integer for integer over 60 intervals, the first at
+    tick 2 and the click at the 21st fire, tick 50, against 51 whole;
 (e) the refusals: `centred_step` of a type other than a boolean; and the
     atoms world `hydrogen_r12_centred.json` parses with the key, its
     hypotheses `bohr-v1` then `centred-step-v1`, its electron and proton
@@ -57,7 +60,7 @@ import pytest
 from event_universe.core.integer import by_drive, by_line
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
-from event_universe.events.world import BOHR_RULE, CENTRED_STEP_RULE, DRIVE_B_RULE, LABEL_SCALE
+from event_universe.events.world import BOHR_RULE, CENTRED_STEP_RULE, LABEL_SCALE, PER_AXIS_DRIVE_RULE
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,10 +72,12 @@ RATE, DENOMINATOR = 6000, Q * 64 + 6000  # 10096: the wall of a body of content 
 
 
 def box_world(
-    momentum: list[int], *, key: bool, drive_b: bool = False, ticks: int = 200
+    momentum: list[int], *, key: bool, per_axis: bool = False, ticks: int = 200
 ) -> dict[str, object]:
     """`test_drive_b.py`'s deciding world: one free body of no release at the
-    centre of an open 41^3 cube, the faces the detectors."""
+    centre of an open 41^3 cube, the faces the detectors; `per_axis` declares
+    the per-axis drive of history (the world key `per_axis_drive`), else the
+    law's line drive."""
     document: dict[str, object] = {
         "law": "beam",
         "model_id": "centred-step-box",
@@ -91,8 +96,8 @@ def box_world(
     }
     if key:
         document["centred_step"] = True
-    if drive_b:
-        document["drive_b"] = True
+    if per_axis:
+        document["per_axis_drive"] = True
     return document
 
 
@@ -229,20 +234,25 @@ def test_by_line_centred_on_one_axis_is_by_drive_centred():
 
 
 def test_the_deciding_world_steps_at_the_nearest_whole_number_and_clicks_a_tick_earlier():
-    """(d)."""
-    events, simulation = run_in_process(box_world([6000, 0, 0], key=True, ticks=40), 40)
+    """(d). The per-axis drive of history under its key (the former integers
+    of this case, 35 against 36); then the law's line drive with the key
+    (the 21st fire of `by_line` centred at n = 50 against 51 whole)."""
+    events, simulation = run_in_process(box_world([6000, 0, 0], key=True, per_axis=True, ticks=40), 40)
     assert simulation.world.centred_step is True
     assert CENTRED_STEP_RULE in simulation.hypotheses
+    assert PER_AXIS_DRIVE_RULE in simulation.hypotheses
     ticks = [e["tick"] for e in events if e["event"] == "step"]
     fires = expected_fires(40)
     assert ticks == fires[:20] and ticks[0] == 1
     clicks = [e for e in events if e["event"] == "click"]
     assert clicks and clicks[0]["tick"] == fires[20] == 35
-    control, _ = run_in_process(box_world([6000, 0, 0], key=False, ticks=40), 40)
+    control, _ = run_in_process(box_world([6000, 0, 0], key=False, per_axis=True, ticks=40), 40)
     assert [e for e in control if e["event"] == "click"][0]["tick"] == 36
-    # Under `drive_b` and the key together: the host's replay of `by_line` centred.
-    events, simulation = run_in_process(box_world([6000, 0, 0], key=True, drive_b=True, ticks=60), 60)
-    assert DRIVE_B_RULE in simulation.hypotheses and CENTRED_STEP_RULE in simulation.hypotheses
+    # The law's line drive and the key: the host's replay of `by_line`
+    # centred, the first fire at n = 2 and the 21st (the click) at 50; whole,
+    # the first at 3 and the 21st at 51 (`test_drive_b.py` (b)).
+    events, simulation = run_in_process(box_world([6000, 0, 0], key=True, ticks=60), 60)
+    assert simulation.hypotheses == [CENTRED_STEP_RULE]
     wall = Q * Q * 64 + 6000 * 110
     drives, expected = [0, 0, 0], []
     for n in range(1, 61):
@@ -250,8 +260,10 @@ def test_the_deciding_world_steps_at_the_nearest_whole_number_and_clicks_a_tick_
         if axis is not None:
             expected.append(n)
     ticks = [e["tick"] for e in events if e["event"] == "step"]
-    assert ticks == expected[:20]
-    assert [e for e in events if e["event"] == "click"][0]["tick"] == expected[20]
+    assert ticks == expected[:20] and expected[0] == 2
+    assert [e for e in events if e["event"] == "click"][0]["tick"] == expected[20] == 50
+    whole, _ = run_in_process(box_world([6000, 0, 0], key=False, ticks=60), 60)
+    assert [e for e in whole if e["event"] == "click"][0]["tick"] == 51
 
 
 def test_the_record_carries_the_key_only_under_it(tmp_path):

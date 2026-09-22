@@ -188,6 +188,10 @@ def bar(
         "suspension": 0,
         "width": 1,
         "age_bound": 4096,
+        # The crossing rule's integers were derived on the per-axis drive's
+        # pace (2026-09-21); since the line drive became the law's drive
+        # (2026-09-22) the bar declares the drive of history and keeps them.
+        "per_axis_drive": True,
         "families": [beam, body],
         "measured": [
             {
@@ -381,6 +385,9 @@ def plane(
         "suspension": 0,
         "width": 1,
         "age_bound": 4096,
+        # The per-axis drive of history (as `bar`): the crossing rule's
+        # integers were derived at its pace.
+        "per_axis_drive": True,
         "directions": [list(vector)] if vector != (0, 1, 0) else [],
         "families": [
             {"name": "beam", "quantum": 0, "charge": 1, "phase": False},
@@ -475,8 +482,8 @@ def test_the_sum_over_a_period(case):
 # -- (f) ---------------------------------------------------------------------------
 
 
-def lone(momentum: int, ticks: int) -> dict[str, object]:
-    return {
+def lone(momentum: int, ticks: int, *, per_axis: bool = True) -> dict[str, object]:
+    document: dict[str, object] = {
         "law": "beam",
         "model_id": "crossing-fast-steps-test",
         "shape": [64, 1, 1],
@@ -492,6 +499,10 @@ def lone(momentum: int, ticks: int) -> dict[str, object]:
             {"position": [4, 0, 0], "family": "body", "amount": 1, "momentum": [momentum, 0, 0]}
         ],
     }
+    if per_axis:
+        # The per-axis drive of history, the integers of (f) as registered.
+        document["per_axis_drive"] = True
+    return document
 
 
 @pytest.mark.parametrize(
@@ -510,3 +521,25 @@ def test_the_fast_steps_are_reported(momentum, links, fast, tmp_path):
     path.write_text(json.dumps(lone(momentum, 30)), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
     assert record["fast_steps"] == fast and record["status"] == "completed"
+
+
+@pytest.mark.parametrize(("momentum", "links", "fast"), [(96, 12, 0), (4096, 17, 4), (8192, 17, 4)])
+def test_the_fast_steps_are_reported_under_the_line_drive(momentum, links, fast):
+    """(f), the law's line drive (2026-09-22): the body of content 1 at width
+    1 gains p x 64 per self-creation against the wall 4096 + 110 p; at p =
+    96 (the wall 14656) 12 Links in 30 intervals and none right after
+    another (the pace 0.42), at p = 4096 and 8192 (the pace at the cap, 0.58)
+    17 Links and 4 right after another (host: the fires of `by_line` at
+    2, 4, 6, 7, 9, 11, 13, 14, ...)."""
+    simulation, records = run(lone(momentum, 30, per_axis=False))
+    ticks = steps_of(records, 1)
+    wall = 64 * 64 + momentum * 110  # Q^2 S M + |p|_1 T_h at M = 1, S = 1
+    drive, expected = 0, []
+    for n in range(1, 31):
+        drive += momentum * 64
+        if drive >= wall:
+            drive -= wall
+            expected.append(n)
+    assert ticks == expected and len(ticks) == links
+    assert sum(1 for a, b in zip(ticks, ticks[1:], strict=False) if b == a + 1) == fast
+    assert simulation.fast_steps == fast

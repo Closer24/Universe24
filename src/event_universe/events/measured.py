@@ -352,38 +352,42 @@ AGE_WALL_NEVER: tuple[str, ...] = ("turn", "action")
 # flight accumulator, its coefficient f = 1 + gamma, gamma the world's
 # declared post-Newtonian parameter (`NatureBeamWorld.optical`).
 FLIGHT_MEMBER = "flight"
-# The member the keys `optical` and `drive_b` add together (every family
-# under one wall, step 3, 2026-09-22; docs/designs/one_wall/BODY_DRIVE.md):
-# the body's directional drive (form B's, `drive-b-v1`), its coefficient
-# gamma, the space part alone, because the drive advances per
-# self-creation and the body's clock (`owed`, the coefficient 1) already
-# carries the time part: the body's two members sum to the flight's
-# 1 + gamma, the one coordinate pace 1 - (1 + gamma) U of everything that
-# moves. The per-axis drive of BEAM_LAW note 17 is never a member (the
+# The member the key `optical` adds for a body (every family under one
+# wall, step 3, 2026-09-22; docs/designs/one_wall/BODY_DRIVE.md): the
+# body's line drive (form B's, the law's drive since 2026-09-22, BEAM_LAW
+# note 17 as amended), its coefficient gamma, the space part alone,
+# because the drive advances per self-creation and the body's clock
+# (`owed`, the coefficient 1) already carries the time part: the body's
+# two members sum to the flight's 1 + gamma, the one coordinate pace
+# 1 - (1 + gamma) U of everything that moves. The per-axis drive of
+# history (the world key `per_axis_drive`) is never a member (the
 # physics-rule review of the one-wall note, must-fix 2 and 3: form B
-# first); a world under `optical` with a moving body declares `drive_b`.
+# first); a world under `optical` with a moving body and that key is
+# refused at load.
 DRIVE_MEMBER = "drive"
 
 
-def age_wall_set(optical: int | None = None, drive_b: bool = False) -> tuple[tuple[str, int], ...]:
+def age_wall_set(
+    optical: int | None = None, per_axis_drive: bool = False
+) -> tuple[tuple[str, int], ...]:
     """The age wall's declared set of a world: the law's (`AGE_WALL_SET`,
     the clock at 1, with or without any key); under the world key
-    `optical: gamma` the row's flight at 1 + gamma (`FLIGHT_MEMBER`); under
-    `optical` and `drive_b` together the body's directional drive at gamma
-    (`DRIVE_MEMBER`: the clock carries the time part, the drive the space
-    part, the two summing to the flight's coefficient); the per-axis drive
+    `optical: gamma` the row's flight at 1 + gamma (`FLIGHT_MEMBER`) and
+    the body's line drive at gamma (`DRIVE_MEMBER`: the clock carries the
+    time part, the drive the space part, the two summing to the flight's
+    coefficient); the per-axis drive of history (the key `per_axis_drive`)
     never (form B first, REVIEW_3 must-fix 2 and 3), the release and the
     lamp's count never (per self-creation, gated by the clock's wall
     already), the phase per age never (`AGE_WALL_NEVER`)."""
     if optical is None:
         return AGE_WALL_SET
     members: tuple[tuple[str, int], ...] = (*AGE_WALL_SET, (FLIGHT_MEMBER, 1 + optical))
-    if drive_b:
+    if not per_axis_drive:
         members = (*members, (DRIVE_MEMBER, optical))
     return members
 
 
-def age_wall_coefficient(name: str, optical: int | None = None, drive_b: bool = False) -> int:
+def age_wall_coefficient(name: str, optical: int | None = None, per_axis_drive: bool = False) -> int:
     """The declared coefficient c of a member of the age wall's set
     (`age_wall_set`, the law's members and the keys'), by the count's
     name; a count that is no member is refused (nothing outside the set is
@@ -391,7 +395,7 @@ def age_wall_coefficient(name: str, optical: int | None = None, drive_b: bool = 
     refused before the set is read."""
     if name in AGE_WALL_NEVER:
         raise ValueError(f"the count '{name}' is never a member of the age wall's set")
-    for member, coefficient in age_wall_set(optical, drive_b):
+    for member, coefficient in age_wall_set(optical, per_axis_drive):
         if member == name:
             return coefficient
     raise ValueError(f"the count '{name}' is not a member of the age wall's set")

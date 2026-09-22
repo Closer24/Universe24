@@ -121,9 +121,15 @@ def execute_nature_beam_run(
         # key's declaration and the run's report, written only under the
         # key (every other record byte for byte as it was).
         **({} if world.covariant is None else {"covariant_readings": simulation.covariant_report()}),
-        # drive-b-v1 (2026-09-22): the world key `drive_b` as declared,
-        # written only under the key (every other record byte for byte).
-        **({} if not world.drive_b else {"drive_b": True}),
+        # The drive the body's step ran under (2026-09-22, the line drive
+        # the law's drive, record 972; DEFAULT.md section (a)): "line", the
+        # law's, or "per_axis", the drive of history under the world key
+        # `per_axis_drive` (then also written as declared, and the identity
+        # `per-axis-drive-v1` under `hypotheses`). A record without the
+        # field is one from before that day and was read under the
+        # per-axis drive.
+        "drive": "per_axis" if world.per_axis_drive else "line",
+        **({} if not world.per_axis_drive else {"per_axis_drive": True}),
         # centred-step-v1 (2026-09-22): the world key `centred_step` as
         # declared, written only under the key (every other record byte for
         # byte).

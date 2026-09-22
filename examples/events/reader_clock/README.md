@@ -1,5 +1,13 @@
 # Series S: a reader inside a crowd
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)):
+`alike_receding` declares `per_axis_drive`, the per-axis drive of history,
+and keeps its readings as registered, because its source's mass of content
+2^30 at width 2^20 has a line-drive wall Q^2 S M = 2^62, one past the law's
+bound, and is refused at load under the law (the Boss's default until the
+owner speaks).
+
 The model owner's word (2026-09-21, in conversation): "start", on the
 experimenter's proposal, after series U and V, of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. The design with

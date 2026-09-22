@@ -128,6 +128,7 @@ def world(measured: list[dict[str, object]], **keys: object) -> dict[str, object
         "N": 64,
         "release": [1, 10],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "families": [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}],
         "measured": measured,
     }
@@ -427,6 +428,7 @@ def test_every_age_against_a_key_is_the_one_by_clock():
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        "per_axis_drive": True,  # the per-axis drive of history (2026-09-22): the integers as registered
         "families": [{"name": "s", "quantum": 0, "phase": False, "lifetime": 3}],
         "measured": [],
         "in_transit": [rest, moving],

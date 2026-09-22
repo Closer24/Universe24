@@ -65,7 +65,9 @@ from event_universe.events.world import LABEL_SCALE, T_HEADING  # noqa: E402
 
 Json = dict[str, object]
 
-IDENTITY = "drive-b-v1"
+# The line drive is the law's drive since 2026-09-22 (record 972; DEFAULT.md):
+# the `_b` worlds declare nothing, the `_main` controls the drive of history.
+HISTORY_IDENTITY = "per-axis-drive-v1"
 Q = LABEL_SCALE
 T_H = T_HEADING
 BOX = 41
@@ -104,8 +106,8 @@ def world(name: str, momentum: list[int], key: bool) -> Json:
             }
         ],
     }
-    if key:
-        document["drive_b"] = True
+    if not key:
+        document["per_axis_drive"] = True
     return document
 
 
@@ -273,7 +275,8 @@ def expectation(stem: str, momentum: list[int], key: bool) -> Json:
 def expectations() -> Json:
     found: Json = {
         "format": "drive-b-expectations-v1",
-        "identity": IDENTITY,
+        "drive": "line (the law's, nothing declared) on the `_b` worlds; per_axis (the drive of history, "
+        f"the key per_axis_drive, {HISTORY_IDENTITY}) on the `_main` controls",
         "constants": {"Q": Q, "T_h": T_H, "content": CONTENT, "width": WIDTH, "box": BOX},
         "worlds": {},
         "derivations": {

@@ -414,9 +414,10 @@ WORLD_KEYS = {
     # optical-v1 (2026-09-21): the world's post-Newtonian parameter gamma,
     # a non-negative integer, absent by default (`OPTICAL_RULE`).
     "optical",
-    # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
-    # false by default (`DRIVE_B_RULE`).
-    "drive_b",
+    # per-axis-drive-v1 (2026-09-22): the drive of history, the per-axis
+    # drive of note 17 as it ran until the line drive became the law's
+    # (record 972), a boolean, false by default (`PER_AXIS_DRIVE_RULE`).
+    "per_axis_drive",
     # centred-step-v1 (2026-09-22): the body's step at half the wall, a
     # boolean, false by default (`CENTRED_STEP_RULE`).
     "centred_step",
@@ -442,6 +443,13 @@ AMPLITUDE_RULE = "amplitude-v1"
 # (vii) step 4 (the one click): the record form is the law; a world that
 # declares it is refused naming MIGRATION.
 DELETED_AMPLITUDE_KEY = "amplitude"
+# The world key `drive_b` of drive-b-v1 (2026-09-22, the directional drive
+# of a body under its own key, off by default, BEAM_LAW note 49), deleted
+# the same day when the model owner made form B the law's drive (record 972
+# of docs/LOG_2026-09-20.md; note 17 as amended; docs/designs/drive_b/DEFAULT.md):
+# every world reads the line drive with nothing declared, and a world that
+# declares the key is refused naming the change (MIGRATION).
+DELETED_DRIVE_B_KEY = "drive_b"
 # The circle must hold the quarter turn of a reflection in a recorded world
 # (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
 AMPLITUDE_LEAST_STEPS = 4
@@ -468,17 +476,25 @@ def step_divisor(momentum: int, content: int, width: int, cap: bool = True) -> i
 
 
 # The flight table's resolution on a heading, T_h = isqrt(3 Q^2) = 110: the one
-# root of `drive-b-v1`, formed at load as the flight table's is, never at run
-# time (docs/designs/drive_b/DESIGN.md section 2).
+# root of the line drive, formed at load as the flight table's is, never at
+# run time (docs/designs/drive_b/DESIGN.md section 2).
 T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
-# The identity of the directional drive (the model owner's approval of form B,
-# 2026-09-22, record 652 of the log of 2026-09-20; docs/designs/drive_b/DESIGN.md;
-# light_speed/FORM.md section 3.1 (c)): under the world key `drive_b` a body's
-# three drive accumulators gain p_a Q each against ONE wall, Q^2 S M + |p|_1 T_h,
+# The law's drive of a body since 2026-09-22 is the line drive (form B in the
+# integer form (c) of light_speed/FORM.md 3.1, the model owner's approval of
+# form B in record 652 of the log of 2026-09-20 and his word of record 972,
+# "definitely type B should be the default"; docs/designs/drive_b/DESIGN.md,
+# DEFAULT.md; BEAM_LAW note 17 as amended, note 49 the build): a body's three
+# drive accumulators gain p_a Q each against ONE wall, Q^2 S M + |p|_1 T_h,
 # and the axis furthest over the wall steps (`core.integer.by_line`), the
-# Bresenham line of the momentum with no coincident fire lost. Absent, the
-# per-axis drive of BEAM_LAW note 17 runs unchanged, byte for byte.
-DRIVE_B_RULE = "drive-b-v1"
+# Bresenham line of the momentum with no coincident fire lost. It has no
+# identity of its own: it is `beam-v1`'s. The identity of the drive of
+# history, the per-axis drive of note 17 as it ran from 2026-09-19 to
+# 2026-09-22 (`step_axis`, one accumulator per axis against Q S M + |p_a|,
+# the coincident fire lost), kept for the register's controls and for a
+# replay of a reading registered under it: the world key `per_axis_drive`
+# (false by default), listed under `hypotheses` when declared. Nothing is
+# claimed for it and nothing new is derived under it.
+PER_AXIS_DRIVE_RULE = "per-axis-drive-v1"
 # The identity of the centred step (the model owner's word through the Boss,
 # 2026-09-22, record 953 of the log of 2026-09-20; the cause of the atom's
 # widening, docs/designs/atom_give/CAUSE.md section 2 (v); the design
@@ -495,9 +511,10 @@ CENTRED_STEP_RULE = "centred-step-v1"
 
 
 def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = True) -> int:
-    """W = Q^2 x S x M + |p|_1 x T_h, the one wall of the directional drive
-    (`drive-b-v1`, docs/designs/drive_b/DESIGN.md section 2; light_speed/FORM.md
-    3.1 (c)): M the content, S the world's `width`, Q the label's scale,
+    """W = Q^2 x S x M + |p|_1 x T_h, the one wall of the line drive, the
+    law's drive of a body (BEAM_LAW note 17 as amended on 2026-09-22;
+    docs/designs/drive_b/DESIGN.md section 2; light_speed/FORM.md 3.1 (c)):
+    M the content, S the world's `width`, Q the label's scale,
     |p|_1 the Manhattan norm of the momentum and T_h = isqrt(3 Q^2) = 110
     the flight table's heading resolution; the rate per axis is p_a Q, so
     the Manhattan pace is |p|_1 Q / W Links per interval (on a heading form
@@ -512,7 +529,7 @@ def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = Tr
     scale = LABEL_SCALE * LABEL_SCALE * width
     if content > MOMENTUM_BOUND // scale:
         raise OverflowError(
-            f"{BEAM_LAW}: {DRIVE_B_RULE}: the wall's rest term Q^2 S M = {scale} x {content} exceeds "
+            f"{BEAM_LAW}: the line drive: the wall's rest term Q^2 S M = {scale} x {content} exceeds "
             f"the integer bound {MOMENTUM_BOUND}"
         )
     rest = scale * content
@@ -520,15 +537,16 @@ def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = Tr
         return rest
     if manhattan > MOMENTUM_BOUND // T_HEADING or rest > MOMENTUM_BOUND - manhattan * T_HEADING:
         raise OverflowError(
-            f"{BEAM_LAW}: {DRIVE_B_RULE}: the wall Q^2 S M + |p|_1 T_h = {rest} + {manhattan} x "
+            f"{BEAM_LAW}: the line drive: the wall Q^2 S M + |p|_1 T_h = {rest} + {manhattan} x "
             f"{T_HEADING} exceeds the integer bound {MOMENTUM_BOUND}"
         )
     return rest + manhattan * T_HEADING
 
 
 def body_weight(momentum: Sequence[int], content: int, width: int, gamma: int) -> tuple[int, int]:
-    """The gravity charge of a moving body under `optical` and `drive_b`
-    together (every family under one wall, step 3, 2026-09-22;
+    """The gravity charge of a moving body under `optical` (every family
+    under one wall, step 3, 2026-09-22, then under `drive_b`, the law's line
+    drive since the same day;
     docs/designs/one_wall/BODY_DRIVE.md): the pair (w, Q S) with w = (E'^2
     + 3 gamma p . p) // E' and E' = isqrt((Q S M)^2 + 3 p . p), the rows'
     weight per unit (`nature_beam.unit_weights`) on the body's own
@@ -1237,9 +1255,11 @@ class NatureBeamWorld:
     # post-Newtonian parameter, or None; the flight's coefficient is
     # `flight_coefficient`, 1 + gamma.
     optical: int | None = None
-    # drive-b-v1 (the world key `drive_b`, false by default): the
-    # directional drive of a body (`drive_wall`, `core.integer.by_line`).
-    drive_b: bool = False
+    # per-axis-drive-v1 (the world key `per_axis_drive`, false by default):
+    # the drive of history, the per-axis drive of BEAM_LAW note 17
+    # (`step_axis`); absent, the law's line drive (`drive_wall`,
+    # `core.integer.by_line`).
+    per_axis_drive: bool = False
     # centred-step-v1 (the world key `centred_step`, false by default): the
     # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
     centred_step: bool = False
@@ -1313,9 +1333,9 @@ class NatureBeamWorld:
         found = []
         for column in range(len(self.families[0].columns)):
             scale = 1
-            if column == 0 and self.optical is not None and self.drive_b:
-                # Every family under one wall, step 3: under `optical` and
-                # `drive_b` together a moving body's gravity charge is the
+            if column == 0 and self.optical is not None and not self.per_axis_drive:
+                # Every family under one wall, step 3: under `optical` (the
+                # law's line drive) a moving body's gravity charge is the
                 # pair (w, Q S) (`body_weight`), so gravity's Lambda is Q S.
                 scale = LABEL_SCALE * self.width
             for family in self.families:
@@ -1380,8 +1400,10 @@ class NatureBeamWorld:
         for the world key `massive_rows` (the massive rows beside the law),
         `hand-v1` when the world declares a hand or an axis,
         `covariant-readings-v1` when the world declares `covariant_readings`,
-        `optical-v1` for the world key `optical`, `drive-b-v1` for the world
-        key `drive_b` (the directional drive of a body), `centred-step-v1`
+        `optical-v1` for the world key `optical`, `per-axis-drive-v1` for
+        the world key `per_axis_drive` (the drive of history, the per-axis
+        drive of note 17; the law's line drive has no identity of its own),
+        `centred-step-v1`
         for the world key `centred_step` (the body's step at half the wall)
         and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
@@ -1406,8 +1428,8 @@ class NatureBeamWorld:
             found.append(COVARIANT_READINGS_RULE)
         if self.optical is not None:
             found.append(OPTICAL_RULE)
-        if self.drive_b:
-            found.append(DRIVE_B_RULE)
+        if self.per_axis_drive:
+            found.append(PER_AXIS_DRIVE_RULE)
         if self.centred_step:
             found.append(CENTRED_STEP_RULE)
         if self.binding:
@@ -2995,7 +3017,7 @@ def _covariant(
     width: int,
     turn_rate: tuple[int, int],
     action: int | None,
-    drive_b: bool = False,
+    per_axis_drive: bool = False,
 ) -> CovariantDeclaration | None:
     """The world key `covariant_readings` (`covariant-readings-v1`,
     DERIVATIONS_BEAM 17.6): absent, None, and a measured event's `E` is
@@ -3004,11 +3026,11 @@ def _covariant(
     default); refused with `action` (17.6 S4: the turn by momentum per Link
     and the proper-time cadence do not compose on one phase until designed).
     Per measured event that is not `fixed` (an apparatus carries no readings
-    and may declare no `E`): the momentum on one axis unless the world
-    declares `drive_b` (the base is `main`'s per-axis drive, `step_axis`,
-    where the pace p / E' holds on one axis; under `drive-b-v1` the drive
-    walks the line of the momentum at p_a / (Q S M) per self-creation on
-    every axis, and the refusal is lifted), the domain `|p|_1 <= Q S M` (17.6
+    and may declare no `E`): the momentum on one axis under the world key
+    `per_axis_drive` (the drive of history, `step_axis`, where the pace p /
+    E' holds on one axis alone); under the law's line drive the body walks
+    the line of the momentum at p_a / (Q S M) per self-creation on every
+    axis and no axis is refused, the domain `|p|_1 <= Q S M` (17.6
     N2: above it the drive's one Link per self-creation gives a pace that
     falls with p);
     `W / g^2 = (E'_0 / g)^2 + d (p / g) . (p / g)` within the integer bound,
@@ -3062,13 +3084,12 @@ def _covariant(
             continue
         content = sum(entry.held)
         axes = [axis for axis, component in enumerate(entry.momentum) if component]
-        if len(axes) > 1 and not drive_b:
+        if len(axes) > 1 and per_axis_drive:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{index}]: the momentum {list(entry.momentum)} has components "
-                f"on more than one axis; under {label} a body's momentum lies on one axis (the base "
-                "is the per-axis drive of BEAM_LAW note 17, `step_axis`, where the pace p / E' holds "
-                "on one axis) unless the world declares `drive_b` (form B's directional drive, "
-                "drive-b-v1, off by default)"
+                f"on more than one axis; under {label} with the key per_axis_drive a body's momentum "
+                "lies on one axis (the per-axis drive of BEAM_LAW note 17, `step_axis`, where the "
+                "pace p / E' holds on one axis alone); the law's line drive admits every axis"
             )
         manhattan = sum(abs(component) for component in entry.momentum)
         if manhattan > LABEL_SCALE * width * content:
@@ -3871,6 +3892,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: a world of the Beam Law declares none of the law of events' keys "
             f"({', '.join(events)}); see docs/MIGRATION.md"
         )
+    if DELETED_DRIVE_B_KEY in document:
+        raise ValueError(
+            f"{BEAM_LAW}: the world key {DELETED_DRIVE_B_KEY!r} is deleted: the line drive it "
+            "declared is the law's drive of a body since 2026-09-22 (record 972 of "
+            "docs/LOG_2026-09-20.md; BEAM_LAW note 17 as amended): declare nothing, or "
+            "`per_axis_drive` for the per-axis drive of history (see docs/MIGRATION.md)"
+        )
     if DELETED_AMPLITUDE_KEY in document:
         # The world key `amplitude` is deleted (stage (vii) step 4, the one
         # click): the record form is the law.
@@ -3982,12 +4010,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,
     # its domain and its integers checked at load, None by default.
-    # drive-b-v1 (2026-09-22): the world key `drive_b`, a boolean, false by
-    # default; under it every free body's wall is tested at load.
-    drive_b = obj.get("drive_b", False)
-    if type(drive_b) is not bool:
-        raise ValueError(f"{BEAM_LAW}: drive_b must be true or false (drive-b-v1, off by default)")
-    if drive_b:
+    # per-axis-drive-v1 (2026-09-22): the world key `per_axis_drive`, a
+    # boolean, false by default (the drive of history); without it the law's
+    # line drive, under which every free body's wall is tested at load.
+    per_axis_drive = obj.get("per_axis_drive", False)
+    if type(per_axis_drive) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: per_axis_drive must be true or false (per-axis-drive-v1, the drive of "
+            "history, off by default)"
+        )
+    if not per_axis_drive:
         for entry in measured:
             if not entry.fixed:
                 drive_wall(entry.momentum, sum(entry.held), width, obj.get("covariant_readings") is None)
@@ -3999,7 +4031,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: centred_step must be true or false (centred-step-v1, off by default)"
         )
     covariant = _covariant(
-        obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
+        obj.get("covariant_readings"), measured, families, width, turn_rate, action, per_axis_drive
     )
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
@@ -4011,15 +4043,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for index, entry in enumerate(measured):
             if entry.fixed or not any(entry.momentum):
                 continue
-            if not drive_b:
+            if per_axis_drive:
                 # Every family under one wall, step 3 (2026-09-22): a moving
-                # body under `optical` walks by form B's directional drive,
-                # the member of the age wall's set; the per-axis drive of
-                # note 17 is never a member (REVIEW_3 must-fix 2 and 3).
+                # body under `optical` walks by the law's line drive, the
+                # member of the age wall's set; the per-axis drive of note
+                # 17 is never a member (REVIEW_3 must-fix 2 and 3).
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{index}]: a moving body under the key optical needs the "
-                    "key drive_b (form B's directional drive, the member of the age wall's set; "
-                    "the per-axis drive is never a member, docs/designs/one_wall/BODY_DRIVE.md)"
+                    f"{BEAM_LAW}: measured[{index}]: a moving body under the key optical is refused "
+                    "with the key per_axis_drive (the per-axis drive of history is never a member "
+                    "of the age wall's set; the law's line drive is, "
+                    "docs/designs/one_wall/BODY_DRIVE.md)"
                 )
             body_weight(entry.momentum, sum(entry.held), width, optical)
     world = NatureBeamWorld(
@@ -4046,7 +4079,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         massive_rows=massive_rows,
         covariant=covariant,
         optical=optical,
-        drive_b=drive_b,
+        per_axis_drive=per_axis_drive,
         centred_step=centred_step,
     )
     _record_load_checks(measured, detectors, families, phase_steps)

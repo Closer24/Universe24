@@ -644,7 +644,13 @@ order with each step's inverse:
    126 of the same day, the first form's `|p|` being history), the same
    integers at a momentum of one sign as the whole part off the clock
    (implementation notes 15 and 17; `tests/test_push_width.py`,
-   `tests/test_step_drive.py`).
+   `tests/test_step_drive.py`). **Since 2026-09-22 (note 17 as amended
+   again on the model owner's word, record 972 of docs/LOG_2026-09-20.md)
+   the step is the line drive of note 49: the three drive rows gain `p_a
+   Q` each against the ONE wall `Q^2 S M + |p|_1 T_h` and the axis
+   furthest over the wall steps (`core.integer.by_line`), the coincident
+   fire deferred and never lost; the per-axis count of this paragraph is
+   the drive of history under the world key `per_axis_drive`.**
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1183,8 +1189,40 @@ implementation's part of the contract. The design above is unchanged.
     before any product is formed (`amount x P^2 x rows` against 2^62 - 1,
     `OverflowError` beyond it); the Links crossed per Port (`per_port`,
     for Gauss's flux) remain a diagnostic of the walk, not of the reading.
-17. **The width of the push** (the model owner's D1, 2026-09-19, Highlights
-    5.4, "try D1"). The step rule of step 5 reads the world key `width`
+17. **The drive of a body, and the width of the push. Amended on
+    2026-09-22: the law's drive is the line drive** (the model owner,
+    record 972 of docs/LOG_2026-09-20.md, "definitely type B should be the
+    default for now because that is the most common";
+    [docs/designs/drive_b/DEFAULT.md](designs/drive_b/DEFAULT.md)). Since
+    that day a free body's step at a self-creation is the rule of note 49
+    below, form B in the integer form (c) of
+    [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction):
+    the three drive accumulators of its record gain `p_a Q` each against
+    ONE wall `W = Q^2 S M + |p|_1 T_h` (`T_h = isqrt(3 Q^2) = 110`, formed
+    at load; `Q^2 S M` under `covariant_readings`), the axis furthest over
+    the wall makes the Link toward its accumulator's sign (the lowest axis
+    on a tie) and loses W with that sign, the others keeping their overflow
+    (`core.integer.by_line`, the rows' own argmax carry, note 41 (viii);
+    `world.drive_wall`; `engine._move`): the Bresenham line of the
+    momentum, one Link per interval at most, no coincident fire lost, no
+    direction read, no root at run time; the Manhattan pace `|p|_1 Q / W`
+    on every direction, on a heading `|p| x 64 / (Q S M x 64 + 110 |p|)`,
+    the cap `64 / 110`; with nothing declared, in every world, as the law.
+    The key `drive_b` of the build is deleted (a world that declares it is
+    refused naming the change, MIGRATION), and the record carries `drive:
+    "line"`. The per-axis drive described in the rest of this note (the
+    rule of 2026-09-19 as amended on 2026-09-20, `step_axis`, one
+    accumulator per axis against `Q S M + |p_a|`, the coincident fire
+    lost) is the drive of history, kept in the engine under the world key
+    `per_axis_drive` (`per-axis-drive-v1`, false by default, under
+    `hypotheses` when declared, the record's `drive: "per_axis"`) for the
+    register's controls (series X's `_main` worlds) and for a replay of a
+    reading registered under it; nothing is claimed for it and nothing new
+    is derived under it. The register's worlds with a moving body are
+    re-pinned under the law series by series (DEFAULT.md sections (b) and
+    (c)), every former integer kept as history where it was. **The width
+    of the push** (the model owner's D1, 2026-09-19, Highlights 5.4, "try
+    D1"). The step rule of step 5 reads the world key `width`
     (S, an integer from 1, 1 by default): `_move` steps on an axis when
     `by_clock(age, |p|, S x M + |p|)` is 1, in place of `M + |p|`. With
     S = 1 nothing changes for any existing world (the coupling series' 1b
@@ -4030,8 +4068,13 @@ implementation's part of the contract. The design above is unchanged.
     the hubble worlds, D, H, the catalog's `sun_planet`, the nucleus,
     binding and weak pairs; every world whose measured events are all
     fixed reads the same records.
-49. **The directional drive of a body, `drive-b-v1`, under the world key
-    `drive_b`, off by default** (the model owner's approval of form B,
+49. **The line drive of a body: built as `drive-b-v1` under the world key
+    `drive_b`, off by default; the law's drive since 2026-09-22** (superseded
+    as a key that day on the model owner's word, record 972: the rule of
+    this note is `beam-v1`'s drive, note 17 as amended; the key `drive_b`
+    deleted; this note kept as the record of the build, its "under the
+    key" read as "under the law" from that day) (the model owner's approval
+    of form B,
     2026-09-22, record 652 of docs/LOG_2026-09-20.md; the design
     [docs/designs/drive_b/DESIGN.md](designs/drive_b/DESIGN.md), form B in
     the integer form (c) of
@@ -4064,7 +4107,8 @@ implementation's part of the contract. The design above is unchanged.
     the cap term is keyed off and the wall is `Q^2 S M`, the one primitive
     with one term selected off as `step_divisor` selects it today; the
     one-axis refusals of that key (at load and at the frame) are lifted
-    under `drive_b`, the domain `|p|_1 <= Q S M` kept, so a body on the
+    under the line drive (raised under `per_axis_drive` alone since
+    2026-09-22), the domain `|p|_1 <= Q S M` kept, so a body on the
     plane or the cube diagonal reads `|p|_2 / E'` per lattice interval
     (DERIVATIONS_BEAM 17.6 M8's worlds). Kept as they were: a component of
     0 leaves its accumulator as it is and never steps, `p = 0` never steps,
@@ -4075,10 +4119,14 @@ implementation's part of the contract. The design above is unchanged.
     is checked against the integer bound before its addition and the
     wall's two products by division before they are formed, the run
     refused naming the rule otherwise (proved: every `|drive_a| < 3 W`;
-    observed below `W + 2 max |p_a| Q`). With the key absent the per-axis
-    drive of note 17 runs unchanged, byte for byte (the gate set's
-    digests; `tests/test_drive_b.py` (a)); the record gains `drive_b: true`
-    in `run.json` and `drive-b-v1` under `hypotheses` under the key alone.
+    observed below `W + 2 max |p_a| Q`). Until 2026-09-22, with the key
+    absent, the per-axis drive of note 17 ran unchanged, byte for byte (the
+    gate set's digests; `tests/test_drive_b.py` (a)), and the record gained
+    `drive_b: true` in `run.json` and `drive-b-v1` under `hypotheses` under
+    the key alone; since that day the record carries `drive: "line"` under
+    the law and `drive: "per_axis"` with `per-axis-drive-v1` under
+    `hypotheses` under the key `per_axis_drive` (`tests/test_drive_b.py`
+    (a) as amended).
     **The three tests**: generic (one primitive with the declared integers
     `p_a`, M, S and the constants Q, `T_h`; no family name; the engine
     branches on the world key); vector (the translation of three

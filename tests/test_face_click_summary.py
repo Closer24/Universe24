@@ -67,13 +67,13 @@ BODY_FACES = (
 )
 MASS4 = (
     '{"law":"beam","model_id":"M-BODY-TOF-MASS-INVARIANCE-m4","shape":[25,3,1],"ticks":160,'
-    '"K":1024,"N":64,"release":[0,1],"suspension":[0,1],"width":1,'
+    '"K":1024,"N":64,"release":[0,1],"suspension":[0,1],"width":1,"per_axis_drive":true,'
     '"entity_definitions":"../entities/body_faces.json",'
     '"entities":[{"name":"projectile","definition":"m4_plus","position":[2,1,0]}]}'
 )
 REVERSE = (
     '{"law":"beam","model_id":"M-BODY-TOF-MASS-INVARIANCE-reversal-control","shape":[25,3,1],'
-    '"ticks":160,"K":1024,"N":64,"release":[0,1],"suspension":[0,1],"width":1,'
+    '"ticks":160,"K":1024,"N":64,"release":[0,1],"suspension":[0,1],"width":1,"per_axis_drive":true,'
     '"entity_definitions":"../entities/body_faces.json",'
     '"entities":[{"name":"projectile","definition":"m4_minus","position":[22,1,0]}]}'
 )

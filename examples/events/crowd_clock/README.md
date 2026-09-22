@@ -8,6 +8,15 @@ the Boss". The design with the expectation pinned before any run is
 this folder holds the eight worlds it declares, written by `make_worlds.py`,
 and `expectations.json`, the generator's derivation. Nothing is registered.
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)):
+`moving_1` declares `per_axis_drive`, the per-axis drive of history, and
+keeps its readings as registered, because its mass of content 2^30 at width
+2^20 has a line-drive wall Q^2 S M = 2^62, one past the law's bound, and is
+refused at load under the law (the Boss's default until the owner speaks);
+`moving_08` and `moving_3` read the line drive and are re-pinned in the
+campaign of DEFAULT.md section (c).
+
 ## The worlds
 
 A lamp (`s_px1`, series G2's light family, one unit per self-creation, the

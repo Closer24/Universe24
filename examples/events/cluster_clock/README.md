@@ -1,5 +1,13 @@
 # Series V: a cluster of crowds read by one detector, at rest and moving as one
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)):
+`cluster_moving` declares `per_axis_drive`, the per-axis drive of history,
+and keeps its readings as registered, because its heaviest member's mass of
+content 2^30 at width 2^20 has a line-drive wall Q^2 S M = 2^62, one past
+the law's bound, and is refused at load under the law (the Boss's default
+until the owner speaks).
+
 The model owner's question (2026-09-21, in conversation after series U,
 translated): "so is it possible that this is the matter with galaxy
 clusters that look as if at a constant speed when they should have flown
