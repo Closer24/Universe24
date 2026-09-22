@@ -55,7 +55,6 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # 2026-09-20: every test that loads a shipped world depends on it.
     "examples/events/entities/families.json": (
         "tests/test_entity_definitions.py",
-        "tests/test_entity_catalog.py",
         "tests/test_configuration_validation.py",
         "tests/test_nature_beam_worlds.py",
         "tests/test_bell_choosers.py",

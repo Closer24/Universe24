@@ -132,7 +132,7 @@ the width, and the state with the apparatus; K is section 13's constant.
 | sigma | the strong column's value and sign | nuclear 10000, sign -1 | INPUT | the same |
 | L | a family's lifetime, the border in intervals | nuclear 3, bond 3, w 1; none for the others | INPUT | the same |
 | n / d | a family's phase rate, steps per Link or per interval | light [8591334592, 2^30] on the slits (8 per interval); 0, 8, 16 per Link elsewhere | INPUT | the world files |
-| the hand | +-1 on a chiral family | nubar +1 | INPUT | BEAM_LAW note 39; [designs/hand/FORM.md](designs/hand/FORM.md) |
+| the hand | +-1 on a chiral family | nubar +1 | INPUT | BEAM_LAW note 39; `designs/hand/FORM.md` (deleted on 2026-09-22 with series P's worlds, record 894) |
 | S | the world's width, the push per unit of content per unit of flow (what physics calls Newton's constant, section 3.3) | 1, 8, 32, 512, 45120, 2^20, 2^28 on the register | INPUT | BEAM_LAW step 5 |
 | the extents, the boundary per axis | the torus `Z_X x Z_Y x Z_Z`, periodic or open per axis | per world (60 x 121 x 1 with z periodic on the slits; 301^3 open on the stars; 21 x 1 x 1 on the Bell line) | INPUT | the world files |
 | the initial state | the bodies' positions, momenta and held contents, the rows placed, the lamps' rates and directions | per world | INPUT | the world files; the register |

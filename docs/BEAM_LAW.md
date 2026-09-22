@@ -2953,7 +2953,9 @@ implementation's part of the contract. The design above is unchanged.
     [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
     the physicist's design hand/DESIGN.md, record 122, read against the
     mathematician's integer form FORM.md, record 120; `tests/test_hand.py`
-    (a) to (g); the worlds of series P, `examples/events/hand/`). The one
+    (a) to (g); the worlds of series P, `examples/events/hand/`, deleted on
+    2026-09-22 with the owner's word of record 894 and built since by
+    `tests/support/hand_worlds.py`). The one
     thing the record did not carry: its sense of turning about its own
     direction. **The row** gains one column `hand` in {-1, 0, +1}: +1 a
     right-handed screw along u_d, -1 a left-handed one, 0 none (every row
@@ -3015,7 +3017,7 @@ implementation's part of the contract. The design above is unchanged.
     nuclear spin, and the left-handed beta's spin then points along the
     parent's axis, the product carrying the parent's sense; both forms are
     covariant and give the same parity difference, the sign decides which
-    reading is Wu's and `hand/wu.json` pins Wu's side); (ii) the strict
+    reading is Wu's and the `wu` world of `tests/support/hand_worlds.py` pins Wu's side); (ii) the strict
     hemisphere only, the equator not admitted (a heading perpendicular to
     the axis has no sign against it; on the six headings one direction is
     admitted, not five); (iii) the hand's home on the family, not on the

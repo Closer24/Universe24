@@ -592,7 +592,7 @@ the sha256):
 keys (`ticks` 40, `cap` 23: the antineutrino's face click); its row above
 is from its one run on this source, the base row of the next replay. The worlds of
 series P were run once and read against their pins
-([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
+([the hand series](EXPERIMENTS.md#p-the-hand-2026-09-20); [EXPERIMENTS](EXPERIMENTS.md),
 "P, the hand").
 
 ## Series G2, the Hubble diagram with stars behind the detector: three runs - 2026-09-20

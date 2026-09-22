@@ -107,7 +107,6 @@ kept, their pins the law of events').
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
 | `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
-| `test_gallery_pages.py` | The visual gallery's page tool (`tools/gallery_pages.py`, host-only, headless) reads the engine's stores for the picture and replays no rule: on a head-on pair of declared rows on an open 7^3 GameBoard the capture at the intervals 1 and 3 equals the store (the rows at x = 2 and 4 after the first Link, both at the meeting Node on the rest slots after the collision), a copy and not a view; the frame sampling keeps the ends within its bound; the plane lights the two Nodes and no other; the page carries the frame player, the sprite sheet, the GIF as a visible image and the intervals; a body is drawn with its momentum arrow (none at zero) and its copies, its own rows as translucent discs (the owner's record 279; page 8, the atom) | new (2026-09-21, the visual gallery); the arrow and the copies 2026-09-21 |
 | `test_quarks_expectations.py` | Series R, the quarks (`examples/events/quarks/`; the physicist's design `docs/designs/quarks/QUARKS.md`): the shipped worlds are their generator's, document by document, and parse; the register's push per body at the reference tick (`expectations.json`) derived from the world files by the design's `quark_numbers.py` (the one coupling over the columns with the fan's delivery from the engine's flight table cut at the glue's lifetime) and compared entry by entry; the border's rows per interval (290 per body) and the read mass (the sum of the declared contents) derived and compared; the least strong value that binds each quark pair at one Link (u u 4896, d d 2448, u d 0) from the binding condition on the rows' charges; no number of a run pinned (e) every world's `replay` block (the engine's record of its first 100 intervals by kind: the steps with their Nodes and the hand-overs, GAMEBOARD; the face clicks of the bodies that left, DETECTOR) replayed bit-exact against the register written from the engine by `tools/click_readings/quarks_replay.py`, the fate's `engine_first_step` the replay's first step (2026-09-21, after the crossing rule moved the fate readings; [below](#series-r-the-replay-blocks)) | new (2026-09-21, series R; a formula gives, a run proves, record 205) |
 | `test_redshift_readings.py` | The redshift readings tool (series E, `tools/click_readings/redshift.py`) under the rule of records 562 and 564 (the audit of record 567): the window's k x r^p and the redshift ratio are a replay's numbers, printed as GameBoard diagnostics ("agrees" or "differs") and never counted inside or outside; the header names the probes' own records (the column `k, whole run`, DETECTOR) as the detector reading not yet compared; on a synthetic reading of three shells, one diagnostic per shell from r = 6 and one per radius of the ratio. |
 | `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry; (e) the register of J1 and J3 replayed by the generator's warm run on the shipped worlds (the range of each clock's count over the dwell period, the trigger ticks at its ends) | new (2026-09-20, series J2; (b) with series J1); (d) and (e) 2026-09-21 |
@@ -120,7 +119,6 @@ kept, their pins the law of events').
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
-| `test_entity_catalog.py` | The worlds of the entity catalog (`examples/events/catalog/`; the model owner's decision of 2026-09-20): each is the one its generator writes, parses through the canonical loader with `quantum` on every family and `reading` on every detector, runs its 20 to 50 intervals with the books balanced at every interval, and its readings exist (a record per declared detector, a clock's identity age + waited = the intervals on every probe); since 2026-09-20 the catalog against the parser (every key a row names is the parser's) and the register against the catalog (every declared family named); no number of a world pinned ([below](#the-entity-catalog)) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives; since 2026-09-20 the fraction-free primitive `by_drive` (the whole part by default, the step's cap `at_most`); since 2026-09-21 the age wall `age_wall`, the one wall function of the crowd (clock-age-v1) ([below](#shared-integer-arithmetic)) |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
@@ -574,7 +572,7 @@ expected integers, written down before the first run:
   click at a Node of the face's edge); 4 distinct cell lists, 44 records
   with u = 0's (3 and 32 until the exact phase; the tables' rounding by
   u, no rung moved);
-- (e) test 7: the seventeen worlds of the gate set parse with the key
+- (e) test 7: the fifteen worlds of the test's list (seventeen until the two catalog worlds' deletion on 2026-09-22) parse with the key
   deleted, the identity `amplitude-v1` on the lamp worlds alone;
 - (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
   `mz_equal` and `ev_29` returns `run.json`'s `world`, at least 18
@@ -3410,7 +3408,7 @@ table entry. The expected integers, written down before the first run:
   (tick 9, measured 3, hand +1), one border click (tick 9, at x = 3,
   hand +1), the proton `became` 0 and still `p`, its clicks of `w` 0,
   the books' `left` and `right` of `w` 0;
-- (d) the parity test on the worlds of series P (`nu_hand` at 60
+- (d) the parity test on the worlds of series P built by `tests/support/hand_worlds.py` (`nu_hand` at 60
   intervals), the design's 1.3: every polar thing by g, the axis as an
   axial vector det(g) g A, every hand verbatim, mapped back; under the
   mirror in x (where the axial transform and a verbatim copy of the axis
@@ -3818,46 +3816,10 @@ does what the law says and not as a result.
 
 ## The entity catalog
 
-`tests/test_entity_catalog.py` ([the catalog of the entities](ENTITY_CATALOG.md);
-the model owner's decision of 2026-09-20, Highlights 5.4): the four worlds
-of `examples/events/catalog/` are placements of external things, not
-experiments, so the module pins no number of any world (the model owner's
-rule of 2026-09-17) and checks that each world is what its page says it
-is, the expectations written down first:
-
-- (a) the shipped files equal the documents `make_worlds.worlds()` writes,
-  world by world; each parses through the canonical loader as a world of
-  the Beam Law (its `law` the value `world.LAW_VALUE` names, `beam`, never
-  a literal in the test; its `model_id` naming the catalog), declares
-  `ticks` from 20 through 50, `quantum` on
-  every family and `reading` on every declared detector, and its parsed
-  measured events are as many as declared;
-- (b) each runs its declared intervals headless with the books balanced
-  at every interval and the tick at the end equal to the intervals;
-- (c) the readings the catalog names exist: every declared detector is in
-  the run's detector report with the reading `wave` and an integer
-  `record` per family; at least one declared detector of a world that
-  declares detectors wrote a `record` line; every probe (a measured event
-  whose table passes a family, the clock the catalog reads; the neutron
-  star and the clock near the mass declare them) ends with its clock's
-  identity, age + waited equal to the intervals run, its owed count a
-  non-negative integer.
-- (d) the catalog against the parser (2026-09-20): every key a row names in
-  an "Its keys today" cell (a backticked identifier, the identifier before
-  a colon, the string keys of a backticked JSON object) is a key or a value
-  word of `world.py` (`WORLD_KEYS`, `FAMILY_KEYS`, `MEASURED_KEYS`,
-  `LAMP_KEYS`, `TABLE_ENTRY_KEYS`, `TRANSIT_KEYS`, `DETECTOR_KEYS`,
-  `COLUMN_KEYS`, `BECOME_KEYS`, `WINDOW_READING_KEYS`, the nested keys of
-  `rotate` and `gate`, `TABLES`, `READS`, the readings, the faces, the
-  border, the boundaries, the gate kinds) or a family or column name a
-  registered world declares (the keys of a table object are family names);
-  the nested key sets the test spells are checked against the parser (it
-  accepts exactly them and refuses one more); at least thirty cells read;
-- (e) the register against the catalog: every family name a world under
-  `examples/events/` declares (at least twenty names) is named in
-  `docs/ENTITY_CATALOG.md` in backticks, in a row or in the family-name
-  table, so that a new family cannot enter the register without a row or
-  a gap row.
+The worlds of the entity catalog (`examples/events/catalog/`) and
+`tests/test_entity_catalog.py` were deleted on 2026-09-22 (the model owner's
+word, record 894; the tree's history at 9426899f holds them); the catalog's
+document, [ENTITY_CATALOG.md](ENTITY_CATALOG.md), stays.
 
 ## Generated-output lifetime
 

@@ -1,4 +1,7 @@
-"""Write the worlds of series P, "the hand", under the Beam Law (`hand-v1`;
+"""The worlds of series P, "the hand", built for `tests/test_hand.py` (the
+shipped worlds of `examples/events/hand/` were deleted on 2026-09-22, the
+model owner's word of record 894; the rule `hand-v1` stays in the law and its
+test builds these worlds here instead). The generator as it was (`hand-v1`;
 the model owner, 2026-09-20, record 128 of docs/LOG_2026-09-20.md: "the
 hand's three choices confirmed"; the physicist's design hand/DESIGN.md
 sections 3.1, 3.3 and 3.4 with the mathematician's FORM.md; BEAM_LAW note
@@ -21,16 +24,11 @@ beta leaves against the axis and clicks at x = 0. `nu_hand`: J2's bar with
 the neutrino left-handed and two readers, the first admitting the right
 hand only (0 clicks) and the second the left (every ray).
 
-    python examples/events/hand/make_worlds.py [--out DIR]
+    Loaded by its path in tests/test_hand.py; not a script.
 """
 
 from __future__ import annotations
 
-import argparse
-import json
-from pathlib import Path
-
-HERE = Path(__file__).resolve().parent
 Json = dict[str, object]
 
 N = 64
@@ -184,18 +182,3 @@ def worlds() -> dict[str, Json]:
         "wu": wu_world(),
         "nu_hand": nu_world(),
     }
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", type=Path, default=HERE, help="Directory of the world files")
-    args = parser.parse_args()
-    args.out.mkdir(parents=True, exist_ok=True)
-    for name, world in worlds().items():
-        path = args.out / f"{name}.json"
-        path.write_text(json.dumps(world, separators=(",", ":")) + "\n", encoding="utf-8")
-        print(path)
-
-
-if __name__ == "__main__":
-    main()

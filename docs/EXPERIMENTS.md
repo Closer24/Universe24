@@ -6569,83 +6569,6 @@ sequential gates on an entangled record, the full register replay.
   11 and this entry before it is quoted again; the prediction above stands
   as recorded until then.
 
-### P, the hand (2026-09-20)
-
-- **Confronts.** The model owner's decision of 2026-09-20 (record 128 of
-  [the log](LOG_2026-09-20.md), "the hand's three choices confirmed"):
-  `hand-v1`, the hand on the message, built with the physicist's three
-  choices (hand/DESIGN.md, record 122; the mathematician's integer form,
-  record 120) taken as physics over convention: a left-handed product
-  leaves against the parent's axis (Wu's side), the strict hemisphere,
-  the hand's home on the family. Under the owner's standing principle the
-  GameBoard gets the generic mechanism only ([BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
-  one column on the row, one axial record on the body, one sign of an
-  inner product at a birth, one filter on a table entry) and parity
-  violation is compared with detector readings only: the mirror image of
-  the apparatus with the same left-handed catalog.
-- **Model prediction, pinned before the runs
-  ([the expectations](../examples/events/hand/README.md#the-expectations-pinned-before-the-runs)).**
-  `w_hand` (the W world with a second proton, the W family `hand` -1, the
-  neutron's `axis` -x, both protons filtering `hand` -1): the W born at
-  tick 8 on +x against the axis (the product `[["w", 1, 3, [1, 0, 0],
-  -1]]`, the recoil (-192, 0, 0)), clicked at the proton at x = 3 at tick
-  9 with the push (192, 0, 0) and `hand` -1, the proton at x = 1 taking
-  nothing, the border 0, the charge line [14688, 1] (GAMEBOARD, the books:
-  a diagnostic, not a pin, the proton's own `charge` on its state the
-  detector reading behind it; two protons; the
-  design's table wrote 7344, one proton's), the books `left` 1, `right`
-  0; `w_two_sides` (the control, no axis, no hand): the one W unit sent by
-  the tie of the apportioning at the clock age 7 to the second declared
-  direction, -x, the click at x = 1 (the design read the clock age as 8
-  and pinned x = 3; the engine's documented tie, at - 1, was read before
-  the run); `wu` (Wu's bar of 17, the neutron at x = 8 with the axis +x,
-  `beta` left-handed and `nubar` right-handed): the beta on -x against
-  the axis, clicked at the reader at x = 0 at tick 21 (`hand` -1), the
-  antineutrino on +x out of `face:+x` at tick 23 (`hand` +1), the recoil
-  (128, 0, 0), the reader at x = 16 taking nothing; `nu_hand` (J2's bar
-  with `nu` left-handed, readers admitting the right hand at x = 8 and
-  the left at x = 9): 0 / 1022 / 0 clicks, `left` 1022. The parity test:
-  `w_hand` different by the click's side alone, `w_two_sides` equal, `wu`
-  different (the click at x = 16, the face -x), `nu_hand` equal; the
-  full mirror and a proper rotation equal on all four.
-- **Run.** `examples/events/hand/` (the four worlds written by
-  `make_worlds.py`, the model ids `beam-hand-<name>-v1`), 2026-09-20,
-  through `tools/run_series.py`; the parity test as `tests/test_hand.py`
-  (d), two runs of one world compared, no number of the world pinned.
-- **Result.** Every reading inside its pin: `w_hand` the `become` line
-  `[["w", 1, 3, [1, 0, 0], -1]]` with the recoil [-192, 0, 0], the click
-  at tick 9 at measured 3 with the push [192, 0, 0] and `hand` -1, the
-  proton at x = 1 nothing, the border 0, the charge line [14688, 1] at
-  every tick (GAMEBOARD, the books: a diagnostic, not a pin), `left` 1,
-  `right` 0; `w_two_sides` the click at measured 1
-  at tick 9 with the push [-192, 0, 0], no `hand` on any line; `wu` the
-  beta's click at x = 0 at tick 21 with `hand` -1 and the push [-192, 0,
-  0], the antineutrino through `face:+x` at tick 23 with `hand` +1, the
-  recoil [128, 0, 0], the charge line [0, 1]; `nu_hand` 0 clicks and 1024
-  passes (`hand` -1) at x = 8, 1022 clicks at x = 9, 0 at the far
-  detector, `left` 1022. One reading outside its written form and inside
-  its physics: the antineutrino's passage at Wu's far reader writes no
-  `pass` line (a `pass` rule never writes one, in every registered world
-  too; the design's 3.4 expected a line), the passage shown by the face
-  click at tick 23 as pinned. The parity test as pinned on all four, the
-  full mirror and the rotation equal on all four (`tests/test_hand.py`).
-
-  | World | Reading | Expected | Measured | Verdict |
-  | --- | --- | --- | --- | --- |
-  | `w_hand` | the W's click | measured 3, tick 9, push (192, 0, 0), hand -1; measured 1 nothing; border 0 (DETECTOR) | as expected | inside |
-  | `w_hand` | the `become` line | [["w", 1, 3, [1, 0, 0], -1]], recoil (-192, 0, 0) (GAMEBOARD) | as expected | inside |
-  | `w_hand` | under the mirror | the click at measured 1, push (-192, 0, 0); the rest equal | as expected | inside (different, as pinned) |
-  | `w_two_sides` | the W's click; under the mirror | measured 1, tick 9 (the tie at the clock age 7); equal | as expected | inside |
-  | `wu` | the beta's click; the antineutrino | x = 0, tick 21, hand -1; `face:+x` at tick 23, hand +1 (DETECTOR); the recoil (128, 0, 0) (GAMEBOARD) | as expected; no `pass` line at x = 16 (the rule's record form) | inside (the line's form outside) |
-  | `wu` | under the mirror | the click at x = 16, the face -x | as expected | inside (different, as pinned) |
-  | `nu_hand` | the three readers; under the mirror | 0 / 1022 / 0, `left` 1022; equal | as expected | inside |
-- **Registered as the law's own predictions (against nature):** the
-  asymmetry is complete (one direction admitted among the six; nature's
-  is a cosine of the angle to the spin, sized by the electron's speed);
-  no spin dynamics and no angular-momentum ledger (the axis fixed); the
-  helicity of circular light kept at a mirror (nature reverses it at
-  normal incidence); no V-A energy dependence; no CP.
-
 ### R, the quarks (2026-09-21)
 
 - **Confronts.** The model owner's direction of 2026-09-21 (records 249,
@@ -7792,6 +7715,41 @@ a sixth of itself at about one ray per pixel per interval and gone at 0.14
 (the narrowing 0.292, 0.050 and -0.005 under the pointer's square; 2 inside,
 1 outside), the law's limit as registered on 2026-09-20 and not tuned; the
 runs and their rows are in [the validation log](VALIDATION.md#a10-at-a-low-rate-the-single-click-build-up-three-runs---2026-09-20).
+
+### Deleted on 2026-09-22, the owner's word of record 894: the gallery, hand and catalog worlds
+
+The model owner (record 894, "delete old code"): the three worlds the paper
+names only as a declaration are deleted with their designs, tools and
+register rows: `examples/events/gallery/` (five demonstration worlds;
+`tools/gallery_pages.py`, `docs/pages/gallery/`, `tests/test_gallery_pages.py`),
+`examples/events/hand/` (series P, four worlds; `docs/designs/hand/`; the
+rule `hand-v1` stays in the law, read by series J2, and its parity test
+builds the four worlds from `tests/support/hand_worlds.py`),
+`examples/events/catalog/` (the four placements of the entity catalog;
+`tests/test_entity_catalog.py`; the catalog's document stays). The gate
+set loses `hand/wu`, `catalog/lamp_mirror_screen` and `catalog/sun_planet`
+(fourteen worlds; the lines they covered are named in `gate_set.json`).
+The atoms worlds stay (records 881, 886).
+
+### P, the hand (2026-09-20)
+
+Deleted on 2026-09-22 (above). The hand on the message, `hand-v1` (the
+model owner's decision of 2026-09-20, record 128; BEAM_LAW note 39): the
+four worlds of series P (`w_hand`, `w_two_sides`, `wu`, `nu_hand`) read the
+left-handed product leaving against the parent's axis (the W to the proton
+at x = 3 at tick 9), Wu's beta against the axis at x = 0, the neutrino's
+parity filter (0 clicks on the right hand, every ray on the left), and the
+parity test over all 48 signed axis permutations equal on all four; the
+reading the paper cites for the hand is series J2's (16 of 1024 with 0
+behind, row 8b). The runs are in [the validation log](VALIDATION.md).
+
+### The visual gallery (2026-09-21)
+
+Deleted on 2026-09-22 (above). The model owner's request of 2026-09-21
+(one HTML page per situation of the law, the run playing inside the page):
+fourteen pages under `docs/pages/gallery/` from the register's worlds and
+five demonstration worlds, written by `tools/gallery_pages.py`, registering
+nothing; the pages and the tool are in the tree's history at 9426899f.
 
 ## E. Demonstrations of events
 
@@ -10066,100 +10024,3 @@ sign rule, and its other couplings are catalog entries.
   E x 64 = 44, -44, 44, 44 and S = 176 / 64 = 2.75 against the bounds 2
   and 2 sqrt 2 = 2.83, the runs' gathers equal to the register on every
   world; a demonstration of the registered L3 runs, no new reading.
-
-### The visual gallery (2026-09-21)
-
-The model owner's request of 2026-09-21 (translated: "a visualisation
-agent on a separate, strong machine, so that one can see in beautiful HTML
-pages all the different situations we talk about ... beams and clicks,
-that is what we have; make it beautiful"): one HTML page per situation
-under `docs/pages/gallery/`, each with the run playing inside the page (a
-frame player with play and pause, a slider over the intervals, the GIF as
-a link), the GameBoard drawn with the world file's name of every thing on
-it, and every number from the run's files or from the register with the
-path named; the moving picture a GameBoard reading, the clicks and the
-pushes detector readings. A page made from a registered world changes
-nothing in it and pins nothing; a page made from a demonstration world
-([`examples/events/gallery/`](../examples/events/gallery/README.md)) says
-so and registers nothing. Written by `tools/gallery_pages.py`
-(`tests/test_gallery_pages.py` pins the capture to the engine's stores);
-the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
-
-- [The beam](pages/gallery/beam.html): a lamp's rows spreading on the
-  digital lines of its fan, the phase as colour, the front against the
-  circle of c and the L1 bound (the demonstration world `beam_fan`).
-- [The clicks](pages/gallery/clicks.html): a plate of pixels on the far
-  side of a narrow beam, every record's one click landing on one pixel by
-  the ladder's rungs and its wheel value u, the click list growing one
-  line per record (the demonstration world `clicks_plate`; the catalog's
-  optical bench cited beside it).
-- [Our world](pages/gallery/worlds.html): the vector world, the software
-  world and our world side by side for one record from its birth to its
-  click, on the registered Mach-Zehnder world with equal arms
-  (`amplitude/mz_equal`): the rows as points and the record's pointer at
-  the ports, the store's int64 columns and the gather line, and the one
-  click D1 read; the register's D1 64, D2 0 beside the run's.
-- [The nucleus](pages/gallery/nucleus.html): series I's `deuteron_1`
-  (bound at one Link, the strong rows' escape clicks on the border
-  `lifetime`), `deuteron_3` (free at three Links, the pair leaving through
-  the faces) and `alpha_square` (sheared apart), run as declared; the
-  pushes, hand-overs, steps and exits of the runs beside the register's.
-- [The decay](pages/gallery/decay.html): series J's `j3_neutron_free`
-  (the transformation `become` at 512, the beta's click at the shell),
-  `j3_deuteron` (the bound neutron firing later, at 568) and `w_exchange`
-  (the W thrown and measured one Link and one interval later), run as
-  declared; the trigger ticks and counts of the runs beside the
-  register's, J1, J2 and P cited from the register.
-- [The collision](pages/gallery/collision.html): six declared rows on an
-  open 9^3 cube of free space, the head-on pair parking on the rest slots,
-  turning to another axis and leaving, the triple's odd unit going on, the
-  diagonal unit a spectator; the slots occupied per interval (the
-  demonstration world `collision`).
-- [High-energy rows](pages/gallery/energy.html): series K under the
-  meeting, `mass_meeting` beside `control`, run as declared: the beam bent
-  toward the mass, the screen's centroid, the rows the mass took and the
-  books' turned line of the runs beside the register's.
-- [The atom](pages/gallery/atom.html): series H's `r8`, run as declared:
-  the electron circling the proton with its momentum arrow and its copies
-  spreading, its phase turning by its momentum, the proton's shell of
-  copies; the steps and the exit of the run beside the register's.
-- [In three dimensions](pages/gallery/volume.html): the deuteron
-  (`nucleus/deuteron_1`), the free neutron's decay (`weak/j3_neutron_free`),
-  the atom (`bohr/r8`, the release and the orbit) and the beam beside the
-  mass (`lensing/mass_meeting`), run as declared, the whole GameBoard drawn
-  in an isometric projection with the bodies' copies and arrows.
-- [The quarks](pages/gallery/quarks.html): series R's `q1_proton_line`
-  (the line u d u holding, no step) and `q6_proton_kick` (the kicked u
-  walking off through the face -x), run as declared on today's package,
-  their readings beside the register's; and a demonstration world,
-  `gallery/proton_electron` (the same line with an electron of the charge
-  -7344 thrown at it with 2 x 10^13 label units on +x): the electron hands
-  its momentum to the first quark through the contact, the momentum passes
-  down the line and the far quark walks off through the face +x, the rest
-  following; the law binds and does not confine. Nothing registered.
-- [The clock's word](pages/gallery/clock.html): for the owner's decision on
-  what a body's clock counts (the presence or the age moment; the physicist's
-  note `docs/designs/clock_age/NOTE.md`, PR #567): series U's (formerly P)
-  registered `crowd_clock/still_3` and a demonstration world with the crowd's sources
-  at six Links, replayed; the presence at the lamp's Node 4 F at both
-  distances and the age moment 22 F and 42 F (GameBoard readings), the
-  detector's 1 + z under each word from series T's run (the G2 session, PR
-  #587: 1.3000 and 1.3000 under the presence word, 2.6517 and 4.1500 under
-  the age word, the ratio 1.907, every pin met) beside series U's registered
-  1.300, nature's clocks' table; the owner's word pending. Nothing pinned by
-  the page.
-- [Universe24](pages/gallery/universe24.html): no run; the owner's formula
-  W = E_0^2 + 3 p . p at the top (E by comparisons, E_0 = Q S M, c^2 = 1 / 3
-  derived; the identity of covariant-readings-v1, DERIVATIONS_BEAM 17.6),
-  Einstein's E^2 = E_0^2 + p^2 c^2 beneath it marked his; whose each
-  formula is (the law, Newton, Lorentz, Einstein); the story of the
-  derivations from the top to theirs, step by step, each with its status
-  today; the comparison table, the one map of six verbs and the Einstein
-  map of 21.4 beneath. Nothing added, nothing pinned.
-- [The octahedron and the 48](pages/gallery/formula.html): no run; one
-  Node's six Ports drawn as an octahedron with the sphere of radius
-  c = 1 / sqrt 3 inscribed in it, turning; the 48 signed axis permutations
-  one per frame with the matrix, the determinant, the kind and the hand's
-  bit (24 rotations, then 24 improper ones; the counts enumerated by the
-  builder, records 226 and 231); the general formula stated in the words of
-  HIGHLIGHTS 5.7, no claim added.

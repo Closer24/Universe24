@@ -54,6 +54,19 @@ No arithmetic moved between modules (the tools' helpers differ but for four
 trivial pairs, so no shared module was made); every reading and every register
 byte identical. `tools/amplitude_path.py` stays: the paper cites it at that path.
 
+The owner's strike of record 894 (the fourth commit): `examples/events/gallery/`
+(five demonstration worlds) with `tools/gallery_pages.py`, `docs/pages/gallery/`
+and `tests/test_gallery_pages.py`; `examples/events/hand/` (series P, four
+worlds) with `docs/designs/hand/`, the generator moved to
+`tests/support/hand_worlds.py` so that `tests/test_hand.py` keeps building the
+rule's worlds (hand-v1 stays in the law, read by series J2); and
+`examples/events/catalog/` (four placements) with `tests/test_entity_catalog.py`
+(the catalog's document stays). The gate set loses three rows (fourteen
+worlds; the lines they covered named in its description); the two catalog rows
+leave `tests/test_amplitude_layer.py`'s list of the design's test 7. The register
+entries of series P and the gallery are one line each under EXPERIMENTS.md
+section D with their headings kept. No physical behavior changed.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,
@@ -203,7 +216,7 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   [U](../examples/events/crowd_clock/README.md), [V](../examples/events/cluster_clock/README.md)
   and [S](../examples/events/reader_clock/README.md), the age word's pins
   in each register's block `clock_age_v1`), the catalog's `clock_near_mass`
-  and `neutron_star` ([the README](../examples/events/catalog/README.md)).
+  and `neutron_star` (the README (`examples/events/catalog/`, deleted on 2026-09-22, record 894)).
   The readings tools amended with the word: `tools/coupling_readings.py`
   (item 6 replays the age moment; the ring keys follow the diagnostic's
   `arrived`), `tools/redshift_readings.py` (k x r for both worlds),
