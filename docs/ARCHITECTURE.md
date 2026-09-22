@@ -111,7 +111,7 @@ a float is not an operation of the law.
 All physical numeric inputs, registers, intermediate results and transmitted
 components use the declared bounded integer domains. Reject booleans and
 floating-point inputs rather than coercing them. Python's arbitrary-precision
-integers do not remove the model's working-register bounds: check intermediates
+integers do not remove the working bound (the host's integer bound): check intermediates
 before cancellation, scaling or assignment. Never add float, complex, NumPy,
 Decimal or Fraction arithmetic as a physical fallback.
 
@@ -244,7 +244,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `signed_inner`, `apportion_whole`); the array forms of the two counts over rows (`by_clock_rows`, `by_drive_rows`) live in `events/nature_beam` with numpy |
+| `core/integer` | Standard-library types; owns the working bound (`checked_work`, the host's integer bound) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `signed_inner`, `apportion_whole`); the array forms of the two counts over rows (`by_clock_rows`, `by_drive_rows`) live in `events/nature_beam` with numpy |
 | `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`), the cube's group of 48 with its hand (`cube_symmetries`, `compose_symmetries`, `inverse_symmetry`, `symmetry_hand`; named 2026-09-21) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N, and the circle itself as the cyclic group of N steps with its unit vectors (`PhaseCircle`, `phase_circle`; named 2026-09-21), and their Gram matrix (`phase_gram`, stored through `GRAM_STORED_STEPS`) |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |

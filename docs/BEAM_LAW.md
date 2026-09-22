@@ -3751,7 +3751,7 @@ implementation's part of the contract. The design above is unchanged.
     whole part re-read to peel it off the phase column (its remainder the
     walk's own, derivable the same way; nothing kept on the row is lost);
     (3) the one division of the click, the numerator n made T_d by the
-    denominator d S_1 Q, the numerator within the working register (refused
+    denominator d S_1 Q, the numerator within the working bound (refused
     beyond it naming the place; on every registered world below 2^53), a
     `divmod` whose remainder is kept and reported. So no division at run
     time discards a remainder the row held: the click line of every row of

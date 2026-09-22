@@ -159,7 +159,7 @@ def test_signed_inner_at_the_bound():
     # A component beyond the bound is refused even against 0.
     with pytest.raises(OverflowError, match="component 0 exceeds"):
         signed_inner((REGISTER + 1,), (0,), (1,), REGISTER)
-    # A bound at the working register accepts what the register holds.
+    # A bound at the working bound accepts what it holds.
     assert signed_inner((MAX_WORK_INT,), (1,), (1,), MAX_WORK_INT) == MAX_WORK_INT
 
 

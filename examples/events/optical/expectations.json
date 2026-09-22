@@ -46,6 +46,17 @@
    "delay_bracket": 1.0,
    "lamp_rate": 1.0
   },
+  "far_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "mass": 65536,
+   "impact": 8,
+   "shift": -1.69,
+   "shift_bracket": 0.5,
+   "delay": 2.15,
+   "delay_bracket": 1.0,
+   "lamp_rate": null
+  },
   "control_g1": {
    "gamma": 1,
    "flight_coefficient": 2,
@@ -69,11 +80,24 @@
    "flight_coefficient": 2,
    "mass": 65536,
    "impact": 3,
-   "shift": -4.83,
-   "shift_bracket": 0.5,
    "delay": 4.34,
    "delay_bracket": 1.0,
-   "lamp_rate": 1.0
+   "lamp_rate": 1.0,
+   "taken_by_the_mass": 582,
+   "taken_bracket": 146,
+   "reading": "capture: the centroid is the survivors' (the three outer lines at 3, 4.08 and 5.17 Links); no deflection pin",
+   "shift_pin_superseded": -4.83
+  },
+  "far_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "mass": 65536,
+   "impact": 8,
+   "shift": -3.37,
+   "shift_bracket": 0.5,
+   "delay": 4.29,
+   "delay_bracket": 1.0,
+   "lamp_rate": null
   }
  },
  "ratios": {
@@ -88,13 +112,21 @@
    "delay_f2_over_f1": 2.0,
    "expected": 2.0,
    "bracket": 0.25
+  },
+  "far": {
+   "shift_f2_over_f1": 1.9940828402366866,
+   "delay_f2_over_f1": 1.9953488372093025,
+   "expected": 2.0,
+   "bracket": 0.66,
+   "delay_bracket": 1.04
   }
  },
  "derivations": {
   "shift": "DETECTOR: the centroid of the screen's clicks in pixels against the control's, negative toward the mass (tools/lensing_readings.py, the late window); the continuum's (1 + gamma) 2 G M / (b c^2) on the lattice's lines",
   "delay": "DETECTOR: the mean age of the arrivals at the screen against the control's (the click records carry the age moment, reads: age): Shapiro's delay, the sum of f n A / d over the row's dwell",
-  "ratio_f2_over_f1": "the ratio of the centroid's shift at gamma = 1 over gamma = 0: 2.00, the space part gamma doubling the time part's turn (the number the run reads)",
-  "lamp_rate": "GAMEBOARD: the lamp's clock rate under the age word, its births per interval (clock-age-v1, the law's default; not the key's)"
+  "ratio_f2_over_f1": "the ratio of the centroid's shift at gamma = 1 over gamma = 0: 2.00, the space part gamma doubling the time part's turn (the number the run reads); the bracket 0.25 on mass and near as registered (the 0.25 was by fiat; the bracket propagated in quadrature from +-0.5 pixel and +-1 interval is 0.83 on the delays' ratio at b = 6; the chief physicist, record 540), on far the propagated brackets, 0.66 on the shifts' ratio (`bracket`) and 1.04 on the delays' (`delay_bracket`)",
+  "lamp_rate": "GAMEBOARD: the lamp's clock rate under the age word, its births per interval (clock-age-v1, the law's default; not the key's); far's is None until its first run reads it",
+  "capture": "DETECTOR: the mass's clicks at near, f = 2 (taken_by_the_mass 582 +- 146, the two inner directions of the beam at 0.83 and 1.92 Links, two fifths of 1455): a capture reading, the centroid the survivors' (the three outer lines at 3, 4.08 and 5.17 Links), so near_g1 carries no deflection pin and the old shift pin stays as shift_pin_superseded; the deflection's second pin is far (b = 8, no direction taken, the innermost at 5.83 Links beyond mass's 3.83); the source: the note's map, section E, the one-line form, GAMEBOARD arithmetic, the chief physicist's record 540 (records 505 and 540)"
  },
  "run_2026_09_21": {
   "branch": "optical-v1",

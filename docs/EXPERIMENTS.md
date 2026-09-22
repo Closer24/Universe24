@@ -976,12 +976,23 @@ states "exactly" and means integer equality at every tick.
   three-dimensional GameBoard, and the fixed point is approached slowly (the
   escape 0.948 q at 1000 intervals). Every reading is one run at one
   fingerprint; nothing is a law of nature.
-- **Status.** measured, 2026-09-19: identities held (items 1, 3, 6, 7, the
+- **Status.** measured (the kinds of this entry's last bullet), 2026-09-19: identities held (items 1, 3, 6, 7, the
   derived front of item 4, convergence (d)); readings within the bound
   (item 2, the exponents and the flow of item 5, convergence (c));
   readings outside the bound reported (the carried momentum, the flux at
   h >= 20 and the escape of item 5, the not-frozen bound of item 6 at three
   radii, convergence (a)'s equality with the flow).
+- **The kinds of the readings (2026-09-22; the model owner's words of
+  records 562, 564 and 569).** A probe's own records (its `read` and
+  `contact` records, its clock's (age, waited, owed)) are DETECTOR readings
+  at its Node within its limits (record 569); the replay's count, presence
+  and flow, the ring means, the flux and the axis pattern (items 5 and 5P)
+  are GAMEBOARD readings, the host's view of the state, a diagnostic and
+  never a measurement (record 281), and the pinned far-field readings rest
+  on them; the detector reading of Newton's law, a thrown or falling
+  body's clicks at a detector set (record 564), is not made here; no
+  number, pin or standing of this entry moves
+  ([the worlds' README](../examples/events/coupling/README.md)).
 
 ### A2, under the Beam Law (2026-09-19)
 
@@ -1281,6 +1292,17 @@ states "exactly" and means integer equality at every tick.
   130880 to 130941, the same at every r): on the axis the age moment grows
   with r as the rows' age; GameBoard readings, the tool's item 6 replaying
   the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+- **The kinds of the readings (2026-09-22; the model owner's words of
+  records 562, 564 and 569).** A probe's own records (its `read` and
+  `contact` records, its clock's (age, waited, owed)) are DETECTOR readings
+  at its Node within its limits (record 569); the replay's count, presence
+  and flow, the ring means, the flux and the axis pattern (items 5 and 5P)
+  are GAMEBOARD readings, the host's view of the state, a diagnostic and
+  never a measurement (record 281), and the pinned far-field readings rest
+  on them; the detector reading of Newton's law, a thrown or falling
+  body's clicks at a detector set (record 564), is not made here; no
+  number, pin or standing of this entry moves
+  ([the worlds' README](../examples/events/coupling/README.md)).
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -2082,6 +2104,17 @@ states "exactly" and means integer equality at every tick.
   byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
   as registered; the table with the old values beside the new in
   [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
+- **The kinds of the readings (2026-09-22; the model owner's words of
+  records 562, 564 and 569).** Each probe's own owed count is a DETECTOR
+  reading at its Node within its limits (record 569); the shell means, the
+  fractions counting and the rate ratios of the age clocks are read from
+  the world replayed through the API, GAMEBOARD readings, the host's view
+  of the state, a diagnostic and never a measurement (record 281), and
+  every pinned reading of this entry rests on them; the detector reading
+  of a clock's rate at two distances is series T's (NATURE row 12), and
+  the detector reading of Poisson's equation is not made here; no number,
+  pin or standing of this entry moves
+  ([the worlds' README](../examples/events/redshift/README.md)).
 
 ### G, the Hubble diagram behind the detector (2026-09-20)
 
@@ -3801,7 +3834,21 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   holds 57 lines at age 1 and 13 at age 2, the excess the warm-up's, the
   review of 1716b922); the gated
   and the free neutron unchanged; 13 readings inside and 5 outside (the
-  registered 36 and 0). NATURE row 8a keeps its FAIL in form (a step
+  registered 36 and 0). At the cap 1024 (2026-09-21, N check's run on
+  `main` c47c5fcd, record 545; the 650-interval reading above kept as it
+  was, the reading at its own cap beside it, no pin moved): every neutron
+  fires, 64 of 64 in both worlds (GAMEBOARD), the last trigger ticks 671
+  (`j1_lattice`) and 689 (`j1_source`), where the 650 intervals had
+  reached 56 and 32 of 64 as the declared duration reached them, not the
+  lifetime's count; DETECTOR: the shell's 64 beta clicks in each, the
+  width over the median 0.0787 in `j1_lattice` (inside the step reading,
+  below 0.1) and 0.1147 in `j1_source` (OUTSIDE it, above 0.1, from the
+  wider spread of its trigger ticks, 6 distinct against 4), recorded as
+  it is; whether the step's 0.1 is the lifetime's own bracket or the run's
+  spread is the chief physicist's question (the digests: `j1_lattice`
+  state c6f9e354..., events 75b7e537..., audit 9a812656...; `j1_source`
+  state b1bdb151..., events 2008b437..., audit 44642763...; the worlds'
+  README carries the line). NATURE row 8a keeps its FAIL in form (a step
   against 3.17) but its numbers were read on 64 clicks and the age word's
   on 20 and 8, the rest firing at or after the run's end: whether the row
   is re-read on a longer run is the model owner's question, flagged
@@ -6721,7 +6768,30 @@ sequential gates on an entangled record, the full register replay.
   (`mass`) and -2.42 / -4.83 (`near`), the delay 2.68 / 5.36 and 2.17 /
   4.34 intervals; the number the run reads: the ratio of the two shifts
   2.00 within 0.25 (the space part doubling the time part); the register
-  `examples/events/optical/expectations.json`.
+  `examples/events/optical/expectations.json`. Re-declared on 2026-09-21
+  (records 505 and 540, the chief physicist's word and his correction,
+  the owner's re-declaration): `near` at f = 2 is a capture reading, not a
+  pin of the deflection (the two inner directions of the beam turned into
+  the mass's Node and absorbed: expected 582 +- 146 of the control's 1455
+  clicks taken by the mass, DETECTOR, the bracket one half direction; 547
+  read; its centroid the survivors', no deflection pin, the -4.83 kept in
+  the register as `shift_pin_superseded`); the deflection's
+  second pin moves to b = 8 (the lamp at y = 28), the worlds `far_g0.json`
+  and `far_g1.json` generated with the others, where no direction of the
+  beam is taken (the innermost at 5.83 Links): the pins from the map's
+  one-line form (the note's section E; GAMEBOARD arithmetic before the
+  run, DETECTOR when run) the shift -1.69 +- 0.5 (f = 1) and -3.37 +- 0.5
+  (f = 2), the delay 2.15 +- 1 and 4.29 +- 1, the shifts' ratio 2.00 +-
+  0.66 and the delays' ratio 2.00 +- 1.04 propagated in quadrature, the
+  far worlds' lamp rate None in the register until their first run reads
+  it (GAMEBOARD); b = 9
+  of record 505 set aside as a weak line of the lattice's comb (its delay
+  at f = 1 only 1.5 brackets above zero); the worlds NOT RUN until the
+  Bresenham head stands (record 483's label), where a shift outside by
+  more than the comb's tooth (1.08 pixel) refutes the label's Bresenham,
+  not the wall. The `mass` world's ratio bracket 0.25 stays as registered
+  beside the physicist's remark that the propagated bracket at b = 6 is
+  0.83 (a change of a registered pin is the owner's).
 - **Run.** 2026-09-21 on branch `optical-v1` (`tools/run_series.py --jobs
   2`, 400 intervals, the six worlds in two folders by gamma with a control
   each, 26 to 41 s per world), read by `tools/lensing_readings.py

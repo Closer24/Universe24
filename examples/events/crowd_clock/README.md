@@ -105,3 +105,26 @@ presence 4 F at the lamp's Node once the rows arrive, and the algebra.
   moment, linear in F over the same factor of 400; the moving worlds
   decide nothing until their emulation is re-declared for the age word's
   k, which is the design's to do, not the run's.
+- **Re-read on `main` and the moving worlds re-declared at the age word's
+  k (2026-09-21, the Replicator; Far 2's flag, record 463 (ii)).** The
+  eight worlds run again on `main` at e531de5c (`tools/run_series.py
+  --jobs 3`, 500 intervals, 1.4 to 1.9 s each) and read by the same
+  method: every reading above digit for digit (DETECTOR: 1.0284 / 1.0283,
+  1.4400 / 1.4401, 2.6517 / 2.6514, 6.5002 / 6.5002, 12.0000 / 12.0000;
+  1.6145 / 1.2822, 1.6871 / 1.1978, 1.3540 / 1.1981; the exits at 138, 69,
+  52; the lag 8 Links; every ordinal arrived). The register's block
+  `clock_age_v1` now carries the three moving worlds under
+  `moving_worlds`, each at the age word's k (5.5 times the presence
+  word's, the old k beside it as `k_presence_word`) with the brackets by
+  the presence block's own rule at that k (`make_worlds.moving_entry`,
+  one helper for both blocks): the exit brackets [112, 347], [55, 118]
+  and [41, 59] hold the read exits 138, 69 and 52, and the windows'
+  brackets [1.332, 1.728] and [1.2, 1.728] (`moving_08`), [1.2, 3.18] and
+  [1.2, 1.2] (`moving_3`), [1.2, 7.8] and [1.2, 1.2] (`moving_1`) hold
+  every reading (the second windows of `moving_3` and `moving_1` within
+  0.02 of the Doppler alone). The entry says what the worlds declare: the
+  sources' pace 0.2 c / (1 + k) is for the presence word's k (the world
+  files unchanged), so under the age word the lamp leaves its crowd
+  within the bracket; a re-declaration of the emulation for the age
+  word's k stays the design's. The map `replicated` points at the
+  Replicator's line ([REPLICATIONS](../../../docs/REPLICATIONS.md)).

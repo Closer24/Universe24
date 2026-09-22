@@ -75,6 +75,7 @@ An open box of 57 x 41 x 41 Nodes, the centre c = (28, 20, 20), `"law":
 | `mass` | M = 2^12, one ray per direction per interval | 6 | the same beside the mass |
 | `heavy` | M = 2^13, two rays per direction per interval | 6 | twice the crowd |
 | `near` | M = 2^12 | 3 | half the impact distance |
+| `far` | M = 2^12 | 8 | beyond the beam's inner lines: no direction taken by the mass (optical-v1's second deflection pin, records 505 and 540) |
 
 ## The derivation, before the runs
 
