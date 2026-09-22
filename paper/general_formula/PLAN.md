@@ -3475,7 +3475,12 @@ assumed"), one sentence: "One assumption of the frame (P11): the
 GameBoard, Inside, is read only through its emitters and detectors,
 Outside; every result Outside is a click, a number of the board's state
 is never a reading, and every comparison with experiment is a comparison
-of clicks with readings." In the list, not beside Definition 3, because
+of clicks with readings; a measurement is itself an event of the board:
+an emitter puts a record on it, and a detector ends the record at the
+click, the one step that deletes Inside and the one row that Outside
+gains." (The half sentence after the semicolon is the owner's word to
+the writer, 2026-09-22: a measurement produces something.) In the list,
+not beside Definition 3, because
 it is an assumption about where measurement happens, not a rule of the
 click. The introduction's reading rule (main.tex:124-128) gains its
 name, "(the frame's assumption, P11)", and one sentence: "Every physics
@@ -3564,3 +3569,112 @@ to the results" second clause on the closed form (one); Section 6's
 30 pages held, the split 25 / 2 / 3, to be confirmed by the compile
 when applied. Nothing applied: main.tex, corrections.py and the figures
 are as at 2ba49923.
+
+### 8. More algebra, fewer experiments (the owner's record 772, through the Boss at 06:40Z): prepared, not applied
+
+The owner's word: all this algebraic mathematics only needs to be shown
+in the paper; the paper must be more modern algebra and fewer
+experiments; the way Lorentz was shown above the board, Newton and more
+can be shown: take assumptions and show that under them the formulas
+come out; where none, experiments Inside rise Outside; it is not exactly
+a proof, it shows that this is Lorentz.
+
+(1) THE PAPER'S SHAPE UNDER THAT WORD.
+
+Sections that grow (the algebra):
+- Section 2, the six verbs and their identities: after the list of the
+  six operations, one paragraph of their identities as the derivation's
+  section 11 states them (the carry a bijection s -> (e, s - ed); the
+  linear block's closed form floor(s_0 + r t), the flight as the
+  translation group's shift operator; the split's conjugate transpose;
+  the merge the group ring's addition; the click one bilinear form on
+  the record's integer vector, the derivation's 6.7): about eight lines.
+- Section 6, the click theorem: the three sentences and the paragraph
+  of section 7 (5) above (the frame), plus the conversion table when
+  part 6 lands (the click frame's section 7, "(3) The conversion table:
+  inside the board to outside it": Inside quantity to Outside reading,
+  the interval to a detector's count, the Node to a click's place, the
+  momentum to a velocity of clicks, the walk's dispersion to Eq. 14's
+  identity with the factor 3, the phase to a frequency): a table of
+  about fifteen lines, placed in the discussion beside the frame's
+  paragraph, its rows taken from the merged section 7 with no number
+  the register does not hold.
+- Newton Outside, when part 7 lands: one paragraph after Section 4's
+  "The ground of these derivations", the assumptions named and the
+  inverse square shown to come out under them for clicks, about ten
+  lines; its ledger row's ground stays "fan" (the average that covers
+  the shell), its wording "shown under the named assumptions".
+- The closed forms of the amplitude law that the paper already carries
+  are named once as such in Section 6's opening (the rung, the joint
+  weight, S(N)'s closed form, Born's bound): no new lines.
+
+Rows of Table 2 that shrink to one line each with a pointer to the
+register, because a shown formula gives the number and the run only
+confirms it: the pace (Proposition 1; series Q, L7); the click's power
+(Theorem 4; the (3, 4) split); the interference of one record (the
+tables and Theorem 2; Mach-Zehnder); the exact marginals (Theorem 5);
+GHZ (the joint weights' zeros); Malus (the tables, 219/256 exact); light
+beside a mass (P9, the flight blind; series K). Seven rows become one
+sentence of Section 8 ("Seven formulas shown Inside were confirmed by
+their runs, each number pinned before the run: ... [register]") and one
+list in Appendix C with the series and the fingerprints.
+
+Rows that stay as measurements, because no formula gives them (the
+register's MEASURED ONLY, the Highlights line of records 281 and 562:
+Newton and Poisson count as measured only after a detector): the
+equivalence principle and the 1/r force's scale symmetry (series D3,
+1.997 for 2.00 +- 0.18); the clock's field at two Nodes (series T, the
+ratio 1.907 for the lines' pin 1.909, the 1/r form's limit fan); the
+weak forms (J1, J2, a step and a window); the covariant readings (series
+S, a hypothesis against its pins); Young's spacing's visibility 0.966
+(the fan's grain, FAIL by 0.014 in Table 3); S(N)'s seven grains (shown
+and measured, the figure). Six rows, Table 2 kept for them.
+
+Table 3, the comparison with nature, stays whole: it is Outside against
+reality, result by result, which the framing claims; its rows are the
+paper's experiments and they are the "fewer": the ones with a
+published number.
+
+(2) THE WORDING RULE FOR EVERY RESULT. Each result of the ledger, of
+Section 9's "What is proved" and of the abstract carries one of three
+words, and the ledger's ground column gains it: SHOWN (algebra under
+named assumptions, the assumptions the ledger's third column names;
+Inside; "Theorem" and "proved on the GameBoard" stay for the exact
+algebra of the board, Theorems 1 to 6, because they are proofs about the
+board and not about nature), MEASURED (a run Inside read Outside, the
+series and the register's block named), or SHOWN AND MEASURED (both, as
+S(N)). The conversion to Outside, Lorentz, Newton Outside and the
+conversion table, is "shown": "shows that this is Lorentz", "arrives at
+Lorentz", "the inverse square comes out under the named assumptions";
+never "proves" for anything Outside, never "proves that nature".
+Section 8's opening says the rule once: "Three things are kept apart:
+the gates on the code; what is shown Inside by algebra under named
+assumptions, which needs no experiment; and what is measured, a run
+Inside read Outside, compared with known experiments."
+
+(3) THE COST IN LINES AND PAGES. In: the verbs' identities eight, the
+conversion table fifteen, Newton Outside ten, the wording words two:
+thirty-five, beyond the framing's net twenty-three. Out: Table 2's seven
+shown rows, about twenty lines at its size, replaced by one sentence
+(two lines) and Appendix C's list (six lines in the appendix, where
+page 30 has about twenty-eight free lines); Section 8's "The formulas
+after a detector" paragraph folded into the rule sentence (two); Section
+3's "What a detector measures" to one sentence (three). Net in the body:
+about plus twelve after the framing's twenty-three are paid. What holds
+30: the appendix's free lines take Appendix C's list, and the body's
+twelve are paid by the symbols table's rows for letters used in one
+section only (about ten lines of Appendix B, which page 30 absorbs) and
+by Section 6's "The host, not any Node" paragraph cut to its first
+sentence (two). If parts 6 and 7 together exceed twenty-five lines, the
+paper is 31 pages, or the owner's word takes the S(N) figure back to
+Table 2's row (minus fourteen); the compile decides, and the count is
+reported before the push.
+
+(4) THE ORDER OF APPLICATION. First, the framing list (section 7, items
+1 to 6, P11 with the owner's half sentence), one commit on the owner's
+word and PR #769's merge SHA, the pinning test, check.py, the compile at
+30. Second, this reshaping, one commit after parts 6 and 7 merge, on
+their SHAs: the verbs' identities, the conversion table, Newton Outside,
+Table 2's seven rows to one sentence and Appendix C's list, the wording
+words, the compile, the count reported. Nothing of either is applied
+now: main.tex, corrections.py and the figures are as at 2ba49923.
