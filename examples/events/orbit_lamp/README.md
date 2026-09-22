@@ -421,10 +421,14 @@ the key is in the run); the digests (state, audit, events):
 ([run_flow.out](run_flow.out), every line by kind): 0 record checks
 failed, 4 readings inside, 7 outside, none moved.
 
-DETECTOR readings (the line's clicks: x, tick, age; the radius from x and
-the age):
+The readings by kind (the physics-rule reviewer's kinds, 2026-09-22):
+DETECTOR the line's clicks (x, tick, age), the amplitude, the crossings,
+T and omega^2 read off them, the escape; CONVERSION the radius at the
+births (the age click turned into y by the flight table); COMPUTATION
+the acceleration omega^2 x amplitude (a product of two moments) and the
+ratio T(24) / T(12) (two DETECTOR periods of two records):
 
-| World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | Crossings down, up; the spacings | T (expected) | omega^2 (expected) | a = omega^2 x amplitude | The probe's escape |
+| World | Clicks | x from .. to | Amplitude (expected) | The radius at the births, CONVERSION: least .. greatest, mean | Crossings down, up; the spacings | T (expected) | omega^2 (expected) | a = omega^2 x amplitude, COMPUTATION | The probe's escape |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `r12_flow` | 145 | 31 .. 96 | 32.5 (11 .. 14): outside | 3.2 .. 68.3, 24.3 | 2, 2; 445 .. 732 | 588.7 (343 .. 411): outside | 7.78e-5 (2.34e-4 .. 3.35e-4): outside | 2.53e-3 | none in 4000 intervals |
 | `r24_flow` | 288 | 0 .. 90 | 45 (23 .. 26): outside | 17.0 .. 71.0, 37.6 | 3, 2; 789 .. 1184 | 987.3 (686 .. 822): outside | 3.11e-5 (5.85e-5 .. 8.39e-5): outside | 1.40e-3 | none in 4000 intervals |
@@ -432,8 +436,22 @@ the age):
 | `r24_flow_control` | 38 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 84: inside |
 
 Across the worlds: the ratio T(24) / T(12) = 987.3 / 588.7 = 1.677 (1.82
-.. 2.18): outside. Every birth tick lies on the 8-interval grid (none read
-late). GAMEBOARD, a diagnostic: homes 23 (`r12_flow`), 40, 7, 7.
+.. 2.18), COMPUTATION from two DETECTOR periods of two records: outside.
+Every birth tick lies on the 8-interval grid (none read late). GAMEBOARD,
+a diagnostic: homes 23 (`r12_flow`), 40, 7, 7.
+
+**The paper's row, by kind, as the physics-rule reviewer wrote it
+(2026-09-22):** Under flow-link-v1 (the key `flow_link`) the lamp probe
+launched at the circle's whole n = 8 stays on the plane for 4000
+intervals at r = 12 and 24 (DETECTOR: no escape; as built the loops left
+at 698 and 1239) and reads the periods 588.7 and 987.3 against the pinned
+circle's 377 and 754 +- 9 percent (DETECTOR, the recurrence of x):
+outside; the ratio T(24) / T(12) = 1.677 against 2.00 +- 0.18
+(COMPUTATION from two DETECTOR periods): outside; the controls inside
+(the escape tick 305); FAIL as read; the two loops are not similar
+figures (the mean radii 24.3 and 37.6, DETECTOR), so the scale symmetry
+of the 1 / r force is not tested by them, and nothing here is compared
+with nature.
 
 **The verdict by the pins as written before the run, no number moved.**
 The controls INSIDE: every click at x = 60 + r and the escape at the tick

@@ -1,24 +1,24 @@
 # Series D3 under the key flow_link: the readings of the one run (2026-09-22), tools/orbit_lamp_readings.py --expectations expectations_flow.json
 # The worlds at 485a57dccc54ab1cf6e75848d54e3e7db326cc22 (the key from origin/flow-link-build at a3be9ba13f08); source sha256 00fda864cf1bb868, package 0.3.1, Python 3.14.0rc2, numpy 2.5.3, headless, tools/run_series.py --jobs 4, 4000 intervals.
-# Every line is DETECTOR (the line's clicks: x, tick, age), GAMEBOARD (a diagnostic, not pinned) or a record check, as labelled; no pin moved.
+# Every line is DETECTOR (the line's clicks: x, tick, age), COMPUTATION (arithmetic on DETECTOR readings: the ratio of two periods, the product of two moments), CONVERSION (the age click turned into a radius by the flight table), GAMEBOARD (a diagnostic, not pinned) or a record check, as labelled (the physics-rule reviewer's kinds, 2026-09-22); no pin moved.
 
 r12_flow (artifacts/orbit_lamp_flow/r12_flow/run): 4000 intervals, 18.5 s
   record check passed: completed
   record check passed: the books balanced at every tick
   DETECTOR clicks on the line: 145 (birth ticks off the 8-interval grid: 0); x from 31 to 96, the middle 63.5, the amplitude 32.5; the ages 1 .. 168
-  DETECTOR the radius at the births (y from the age off the flight table): 3.2 .. 68.3, the mean 24.3
+  CONVERSION the radius at the births (y from the age off the flight table): 3.2 .. 68.3, the mean 24.3
   DETECTOR crossings of the centre column: 2 down, 2 up; the spacings 445 .. 732
   DETECTOR the period T (the recurrence of x): 588.7 (expected 343.1 .. 410.9): outside
   DETECTOR the second difference at the lag 96 over 111 samples: the slope -0.6748
   DETECTOR omega^2 (per interval^2): 7.775e-05 (expected 0.0002338 .. 0.0003354): outside
-  DETECTOR the acceleration omega^2 x amplitude: 0.002527 Links per interval^2 (the pin v^2 / r 0.003333; 3.3's small-n limit 0.003864)
+  COMPUTATION the acceleration omega^2 x amplitude: 0.002527 Links per interval^2 (the pin v^2 / r 0.003333; 3.3's small-n limit 0.003864)
   DETECTOR the amplitude (the radius): 32.5 (expected 11 .. 14): outside
   GAMEBOARD (a diagnostic, not pinned): homes 23
 r12_flow_control (artifacts/orbit_lamp_flow/r12_flow_control/run): 4000 intervals, 9.5 s
   record check passed: completed
   record check passed: the books balanced at every tick
   DETECTOR clicks on the line: 38 (birth ticks off the 8-interval grid: 0); x from 72 to 72, the middle 72.0, the amplitude 0.0; the ages 70 .. 172
-  DETECTOR the radius at the births (y from the age off the flight table): 12.0 .. 61.2, the mean 34.1
+  CONVERSION the radius at the births (y from the age off the flight table): 12.0 .. 61.2, the mean 34.1
   DETECTOR every click at x = c_x + r: x in [72] (expected {72}): inside
   DETECTOR the probe left through face:+y (the escape's tick is the face click's tick, the record's ordering; the detector's count of it is the lamp's births to the escape: a label, the pin as registered, the clock audit of 2026-09-22)
   DETECTOR the escape tick: 305 (expected 299 .. 311): inside
@@ -27,23 +27,23 @@ r24_flow (artifacts/orbit_lamp_flow/r24_flow/run): 4000 intervals, 19.3 s
   record check passed: completed
   record check passed: the books balanced at every tick
   DETECTOR clicks on the line: 288 (birth ticks off the 8-interval grid: 0); x from 0 to 90, the middle 45.0, the amplitude 45.0; the ages 1 .. 146
-  DETECTOR the radius at the births (y from the age off the flight table): 17.0 .. 71.0, the mean 37.6
+  CONVERSION the radius at the births (y from the age off the flight table): 17.0 .. 71.0, the mean 37.6
   DETECTOR crossings of the centre column: 3 down, 2 up; the spacings 789 .. 1184
   DETECTOR the period T (the recurrence of x): 987.3 (expected 686.1 .. 821.8): outside
   DETECTOR the second difference at the lag 192 over 211 samples: the slope -1.0417
   DETECTOR omega^2 (per interval^2): 3.112e-05 (expected 5.845e-05 .. 8.386e-05): outside
-  DETECTOR the acceleration omega^2 x amplitude: 0.0014 Links per interval^2 (the pin v^2 / r 0.001667; 3.3's small-n limit 0.001932)
+  COMPUTATION the acceleration omega^2 x amplitude: 0.0014 Links per interval^2 (the pin v^2 / r 0.001667; 3.3's small-n limit 0.001932)
   DETECTOR the amplitude (the radius): 45 (expected 23 .. 26): outside
   GAMEBOARD (a diagnostic, not pinned): homes 40
 r24_flow_control (artifacts/orbit_lamp_flow/r24_flow_control/run): 4000 intervals, 9.4 s
   record check passed: completed
   record check passed: the books balanced at every tick
   DETECTOR clicks on the line: 38 (birth ticks off the 8-interval grid: 0); x from 84 to 84, the middle 84.0, the amplitude 0.0; the ages 70 .. 172
-  DETECTOR the radius at the births (y from the age off the flight table): 24.0 .. 64.6, the mean 40.8
+  CONVERSION the radius at the births (y from the age off the flight table): 24.0 .. 64.6, the mean 40.8
   DETECTOR every click at x = c_x + r: x in [84] (expected {84}): inside
   DETECTOR the probe left through face:+y (the escape's tick is the face click's tick, the record's ordering; the detector's count of it is the lamp's births to the escape: a label, the pin as registered, the clock audit of 2026-09-22)
   DETECTOR the escape tick: 305 (expected 299 .. 311): inside
   GAMEBOARD (a diagnostic, not pinned): homes 7
 across the worlds:
-  DETECTOR the ratio T(24) / T(12): 1.677 (expected 1.82 .. 2.18): outside
+  COMPUTATION the ratio T(24) / T(12): 1.677 (expected 1.82 .. 2.18): outside
 0 record checks failed, 4 readings inside, 7 outside, none moved
