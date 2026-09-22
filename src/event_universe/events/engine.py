@@ -52,6 +52,7 @@ from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import age_wall, apportion_whole, by_drive, by_line, integer_root
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
+    DRIVE_MEMBER,
     TALLIES,
     CovariantReadings,
     DetectorSet,
@@ -92,6 +93,7 @@ from event_universe.events.world import (
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
+    body_weight,
     covariant_square,
     drive_wall,
     step_divisor,
@@ -668,6 +670,14 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
+            if self.world.optical is not None and self.world.drive_b and not entry.fixed:
+                # Every family under one wall, step 3: a moving body's
+                # gravity charge under `optical` and `drive_b` is the pair
+                # (w, Q S), the rows' weight on the body's own momentum
+                # (`world.body_weight`; gravity's Lambda is Q S then).
+                entry.frame_charges[0] = body_weight(
+                    entry.momentum, entry.frame_content, self.world.width, self.world.optical
+                )
             if entry.covariant is not None:
                 # The energy readings of the frame (`covariant-readings-v1`):
                 # E'_0 from the content read here, W from the record's
@@ -851,6 +861,24 @@ class NatureBeamSimulation:
             # tested by division before they are formed (`drive_wall`).
             wall = drive_wall(entry.momentum, content, self.world.width, cap)
             rates = [p * LABEL_SCALE for p in entry.momentum]
+            if self.world.optical is not None:
+                # Every family under one wall, step 3 (2026-09-22,
+                # docs/designs/one_wall/BODY_DRIVE.md): the body's drive is
+                # a member of the age wall's set at the coefficient gamma,
+                # the space part (the clock's owed count carries the time
+                # part): the rates x d against the wall x (d + gamma n A),
+                # A the age moment the body's clock counted at its Node
+                # (`Measured.counted`, the crowd of other numbers there),
+                # the one wall function of the crowd (`core.integer.age_wall`).
+                coefficient = age_wall_coefficient(DRIVE_MEMBER, self.world.optical, True)
+                if coefficient:
+                    # At gamma 0 the member is declared at 0: unstretched,
+                    # the wall function not called (its coefficient is
+                    # positive), the drive as `drive-b-v1` has it.
+                    stretched_rate, wall = age_wall(
+                        1, wall, coefficient, entry.counted, self.world.suspension
+                    )
+                    rates = [rate * stretched_rate for rate in rates]
             for axis in range(3):
                 if rates[axis]:
                     bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "drive under drive-b-v1")

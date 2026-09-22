@@ -133,7 +133,8 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_drive_b.py` | drive-b-v1, the directional drive of a body (2026-09-22, the world key `drive_b`, absent by default; docs/designs/drive_b/DESIGN.md): the key absent computes nothing (every registered world outside `drive_b/` parses with `drive_b` false, the gate world `detector/grouped_12_nodes` replays to its digests byte for byte, `run.json` without the key; `drive_wall` Q^2 S M + \|p\|_1 T_h = 922144 at p = 6000, M = 64, S = 1, and Q^2 S M without the cap); `by_line` on one axis the same integers as `by_drive` against 922144 (the 21st fire at n = 51), the furthest-over axis stepping and the lowest on a tie, an idle axis at rate 0; the deciding worlds on the engine (the clicks at 51, 101 and 152 on face:+x from (40, 20, 20), (40, 40, 20) and (40, 40, 40); the controls at 36, 50, 65 from (40, 20, 20); every step within one Link of the line; the `step` line's fields unchanged); the reviewer's two pins of record 348 (the wandering direction 112, 112, 83 against 111, 111, 83 within 2 at every one of 1000 intervals; the transient -46080 and no Link); the edges (p = 0, the reversal at 34, the idle component, the contact under `pass`, the escape's momentum); the refusals (the key's type, the wall past the bound at load, an accumulator past the bound); under `covariant_readings` the off-axis body admitted with E' 14671 and 14670 and its Links the replay's, and with `action` the turn per Link crossed (the Links [2, 2, 0], the phase 36) | 16 tests |
+| `test_drive_b.py` | drive-b-v1, the directional drive of a body (2026-09-22, the world key `drive_b`, absent by default; docs/designs/drive_b/DESIGN.md): the key absent computes nothing (every registered world outside `drive_b/` and the body worlds of `optical/` parses with `drive_b` false, the gate world `detector/grouped_12_nodes` replays to its digests byte for byte, `run.json` without the key; `drive_wall` Q^2 S M + \|p\|_1 T_h = 922144 at p = 6000, M = 64, S = 1, and Q^2 S M without the cap); `by_line` on one axis the same integers as `by_drive` against 922144 (the 21st fire at n = 51), the furthest-over axis stepping and the lowest on a tie, an idle axis at rate 0; the deciding worlds on the engine (the clicks at 51, 101 and 152 on face:+x from (40, 20, 20), (40, 40, 20) and (40, 40, 40); the controls at 36, 50, 65 from (40, 20, 20); every step within one Link of the line; the `step` line's fields unchanged); the reviewer's two pins of record 348 (the wandering direction 112, 112, 83 against 111, 111, 83 within 2 at every one of 1000 intervals; the transient -46080 and no Link); the edges (p = 0, the reversal at 34, the idle component, the contact under `pass`, the escape's momentum); the refusals (the key's type, the wall past the bound at load, an accumulator past the bound); under `covariant_readings` the off-axis body admitted with E' 14671 and 14670 and its Links the replay's, and with `action` the turn per Link crossed (the Links [2, 2, 0], the phase 36) | 16 tests |
+| `test_optical_body.py` | The body's drive under the one wall (2026-09-22, step 3 of the generic bending, docs/designs/one_wall/BODY_DRIVE.md; the keys `optical` and `drive_b` together): the age wall's set's members and coefficients (the clock 1, the flight 1 + gamma, the drive gamma); a body of content 64 on a rest crowd of age moment 12 at [1, 4] walks by the engine's primitives in its order, its x at every one of 120 ticks integer for integer (the Links at the ticks 10, 50, 86 at gamma 1; 10, 22, 30, 38, 50 at gamma 0); the weight (2^27, 2^20) and (7 x 2^25, 2^20) on p = (2^26, 0, 0) at S = 16384, (2^26, 2^20) at rest, and the push by one m row -4096 / -8192 / -14336 under `drive_b` alone, `optical` 0 and 1 (gravity's Lambda 2^20 under the two keys); a moving body under `optical` without `drive_b` refused at load ([below](#the-bodys-drive-under-the-one-wall)) | new (2026-09-22, step 3) |
 | `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator; every family under one wall (2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md): the weight per unit on the family's own labels (the photon 110 at gamma 0 and 221 at gamma 1, the one floor; `matter` 66 and 70), a massive row walking by its triple under the one wall (39 positions by `by_drive` by hand) with its pushed pair the momentum's with the rest term ((20, 132) to (640, 2328)), the wall's square refused before it is formed (R = 2^45 at the amount 2^40), the two keys loading together and the deciding worlds' pins at b = 10 in the register ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1; extended 2026-09-22, every family under one wall) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
@@ -2174,6 +2175,44 @@ default), the integers written before the run:
   shift -2.60 / -4.40, the arrival 1.94 / 4.49, the wall unstretched
   -0.80 and the blind weight -6.40 at gamma 1, the shifts' ratio 1.69)
   and load with five beam directions and the momentum 40.
+
+## The body's drive under the one wall
+
+`tests/test_optical_body.py` (step 3 of the generic bending, 2026-09-22,
+docs/designs/one_wall/BODY_DRIVE.md; the keys `optical` and `drive_b`
+together), the integers written before the first run:
+
+- (o) the set: `age_wall_set()` is `(("owed", 1),)`; with `optical` 1
+  `(("owed", 1), ("flight", 2))`; with `drive_b` beside it `(("owed", 1),
+  ("flight", 2), ("drive", 1))`, and at gamma 0 the drive member at 0
+  (declared, unstretched); `drive` is no member without `drive_b`;
+  `action` never.
+- (p) a body on a rest crowd: a bar of 14 x 1 x 1 at [1, 4], `width` 1,
+  `optical` gamma, `drive_b`, the body of content 64 (Q S M = 4096, the
+  wall W = 262144 + 660000 = 922144) at x = 0 with p = (6000, 0, 0), the
+  rest crowd of m (amount 4, age 3, the age moment 12) at x = 4 .. 8, a
+  fixed m at x = 13: the body's x after every one of 120 ticks equals the
+  host's chain of `age_wall`, `by_line` and `count_owed` in the engine's
+  order (the frame with the owed count, the move at the stretched wall
+  W (4 + gamma x 12) against the rates 6000 x 64 x 4, the reading, the
+  count owed by_drive(acc, 12, 4) = 3 on the crowd); x = 4 at tick 10 at
+  both gamma; at gamma 1 x = 5 and 6 at the ticks 50 and 86 (a Link per
+  9.6 self-creations, each followed by 3 intervals owed), the body at 6
+  at tick 120; at gamma 0 x = 5 .. 8 at 22, 30, 38, 50 (the clock alone),
+  then off the crowd to 12, the step onto the fixed m refused.
+- (q) the weight: `body_weight((2^26, 0, 0), 64, 16384, 0)` = (2^27,
+  2^20) (E' = isqrt(2^52 + 3 x 2^52) = 2^27, gamma_L = 2), at gamma 1
+  (7 x 2^25, 2^20) (1 + gamma v^2 = 7/4), at rest (2^26, 2^20), a body of
+  no content (0, 1); in a bar of 6 x 3 x 1 at [1, 16384], `width` 16384,
+  an m row of amount 1 arriving from -y at the body's Node at tick 1
+  (V = (0, 64, 0)) pushes the body's momentum to (2^26, -4096, 0) under
+  `drive_b` alone (today's -M V), (2^26, -8192, 0) under `optical` 0 and
+  (2^26, -14336, 0) under `optical` 1; gravity's `column_scales[0]` is
+  2^20 under the two keys and 1 without them.
+- (r) the refusals: `optical` with a body that is not fixed and has a
+  momentum, without `drive_b`, refused at load naming `drive_b`; a body
+  at rest and a fixed body load; a content whose (Q S M)^2 leaves the
+  working bound refused naming it.
 
 ## The covariant readings
 
@@ -4629,7 +4668,8 @@ WITH CORRECTIONS of 2026-09-22). The expected integers, written down before
 the first run:
 
 - (a) the key absent computes nothing: every registered world under
-  `examples/events/` outside `drive_b/` parses with `drive_b` false and the
+  `examples/events/` outside `drive_b/` (and outside the body worlds of
+  `optical/`, the composition of step 3) parses with `drive_b` false and the
   identity absent; the gate set's `detector/grouped_12_nodes` replays to the
   digests of `gate_set.json` byte for byte, its `run.json` without a
   `drive_b` key; `drive_wall([6000, 0, 0], 64, 1)` = 64^2 x 64 + 6000 x 110 =

@@ -30,6 +30,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTATIONS = ROOT / "examples" / "events" / "drive_b" / "expectations.json"
 PREFIX = "beam-drive-b-"
+# A world of several bodies (the flyby worlds of every family under one
+# wall, step 3, examples/events/optical/): the clicks keyed by the body's
+# measured number, the pins under "bodies" of the world's entry; a row's
+# escape through a face (a click with no measured number) is not a body's.
 
 
 @dataclass
@@ -91,6 +95,8 @@ def read_run(folder: Path) -> Reading:
                 continue
             event = json.loads(text)
             if event["event"] == "click" and str(event.get("detector", "")).startswith("face:"):
+                if event.get("measured") is None:
+                    continue  # a row's escape, not a body's click
                 reading.clicks.append(event)
                 reading.momentum = [int(c) for c in event["momentum"]]
             elif event["event"] == "step":
@@ -132,6 +138,37 @@ def lines(reading: Reading, pin: dict[str, object]) -> tuple[list[str], int, int
     if not reading.completed or not reading.balanced:
         failed += 1
         out.append("  RECORD CHECK FAILED: not completed or the books unbalanced")
+    if "bodies" in pin:
+        # Several bodies, each pinned by its measured number: the click's
+        # tick within the tolerance, the face and the Node exact.
+        by_number = {int(event["measured"]): event for event in reading.clicks}
+        for number, body_pin in dict(pin["bodies"]).items():  # type: ignore[union-attr]
+            click = dict(body_pin["click"])  # type: ignore[index]
+            event = by_number.get(int(number))
+            if event is None:
+                outside += 1
+                out.append(
+                    f"  DETECTOR body {number}: no face click (pinned tick {click['tick']}): OUTSIDE"
+                )
+                continue
+            tick, face, node = (
+                int(event["tick"]),
+                str(event["detector"]),
+                [int(c) for c in event["node"]],
+            )
+            ok = (
+                abs(tick - int(click["tick"])) <= int(click["tolerance"])
+                and face == click["face"]
+                and node == list(click["node"])
+            )
+            inside += ok
+            outside += not ok
+            out.append(
+                f"  DETECTOR body {number} ({body_pin.get('line', '')}): tick {tick} on {face} from {node}, "
+                f"the momentum {event['momentum']}: pinned {click['tick']} +- {click['tolerance']} on "
+                f"{click['face']} from {list(click['node'])}: {'inside' if ok else 'OUTSIDE'}"
+            )
+        return out, failed, inside, outside
     click = dict(pin["click"])  # type: ignore[arg-type]
     if len(reading.clicks) != 1:
         outside += 1
@@ -191,13 +228,20 @@ def lines(reading: Reading, pin: dict[str, object]) -> tuple[list[str], int, int
 
 
 def main() -> int:
+    global PREFIX
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("root", type=Path, help="The runs' root (tools/run_series.py --out)")
     parser.add_argument("--register", type=Path, help="Write the run blocks into this expectations file")
     parser.add_argument("--expectations", type=Path, default=EXPECTATIONS)
+    parser.add_argument(
+        "--prefix",
+        default=PREFIX,
+        help="the model id's prefix of the runs to read (the world's name follows it)",
+    )
     args = parser.parse_args()
+    PREFIX = args.prefix
     expected = json.loads(args.expectations.read_text(encoding="utf-8"))
     runs = find_runs(args.root)
     if not runs:
@@ -221,6 +265,7 @@ def main() -> int:
             "fast_steps": reading.fast_steps,
             **reading.digests,
             "click": reading.clicks[0] if len(reading.clicks) == 1 else None,
+            "clicks": reading.clicks if len(reading.clicks) > 1 else None,
             "links_before": reading.links,
             "farthest_from_the_line": round(reading.farthest, 3),
             "largest_drive": reading.largest_drive,

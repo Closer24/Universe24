@@ -509,6 +509,43 @@ def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = Tr
     return rest + manhattan * T_HEADING
 
 
+def body_weight(momentum: Sequence[int], content: int, width: int, gamma: int) -> tuple[int, int]:
+    """The gravity charge of a moving body under `optical` and `drive_b`
+    together (every family under one wall, step 3, 2026-09-22;
+    docs/designs/one_wall/BODY_DRIVE.md): the pair (w, Q S) with w = (E'^2
+    + 3 gamma p . p) // E' and E' = isqrt((Q S M)^2 + 3 p . p), the rows'
+    weight per unit (`nature_beam.unit_weights`) on the body's own
+    momentum, over the label scale Q S at which the body's rest energy is
+    Q S M: at rest the pair is (Q S M, Q S), the content M over 1 exactly
+    (today's push, integer for integer); moving, gamma_L (1 + gamma v^2)
+    times it, with gamma_L = E' / (Q S M) the Lorentz factor and v^2 =
+    3 p . p / E'^2 (the one-wall note's section 4, the drive's integer
+    form). The square is tested against the working bound by division
+    before its terms are formed (the wall's square of `momentum_pair`)
+    and refused naming the rule; a body of no content weighs (0, 1)."""
+    if content <= 0:
+        return 0, 1
+    scale = LABEL_SCALE * width
+    rest = scale * content
+    if rest > MAX_WORK_INT // rest:
+        raise OverflowError(
+            f"{BEAM_LAW}: {OPTICAL_RULE}: the body's rest energy Q S M = {rest} squared exceeds "
+            f"the working bound {MAX_WORK_INT} (the weight of a moving body under optical)"
+        )
+    square = rest * rest
+    for component in momentum:
+        c = abs(int(component))
+        if c and c > ((MAX_WORK_INT - square) // 3) // c:
+            raise OverflowError(
+                f"{BEAM_LAW}: {OPTICAL_RULE}: the body's energy square (Q S M)^2 + 3 p . p with "
+                f"p = {list(momentum)} exceeds the working bound {MAX_WORK_INT}"
+            )
+        square += 3 * c * c
+    energy = integer_root(square)
+    pushed = 3 * gamma * sum(int(c) * int(c) for c in momentum)
+    return (energy * energy + pushed) // energy, scale
+
+
 # The identity of the covariant readings, a hypothesis beside the law (the
 # model owner's decision of 2026-09-21, record 270 of the log of 2026-09-20;
 # DERIVATIONS_BEAM section 17 as amended in 17.6 per the physics-rule
@@ -1256,6 +1293,11 @@ class NatureBeamWorld:
         found = []
         for column in range(len(self.families[0].columns)):
             scale = 1
+            if column == 0 and self.optical is not None and self.drive_b:
+                # Every family under one wall, step 3: under `optical` and
+                # `drive_b` together a moving body's gravity charge is the
+                # pair (w, Q S) (`body_weight`), so gravity's Lambda is Q S.
+                scale = LABEL_SCALE * self.width
             for family in self.families:
                 denominator = family.columns[column].value[1]
                 scale = scale * denominator // bounded_gcd(scale, denominator)
@@ -3656,6 +3698,22 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
+    # Every family under one wall, step 3: a moving body under `optical`.
+    if optical is not None:
+        for index, entry in enumerate(measured):
+            if entry.fixed or not any(entry.momentum):
+                continue
+            if not drive_b:
+                # Every family under one wall, step 3 (2026-09-22): a moving
+                # body under `optical` walks by form B's directional drive,
+                # the member of the age wall's set; the per-axis drive of
+                # note 17 is never a member (REVIEW_3 must-fix 2 and 3).
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}]: a moving body under the key optical needs the "
+                    "key drive_b (form B's directional drive, the member of the age wall's set; "
+                    "the per-axis drive is never a member, docs/designs/one_wall/BODY_DRIVE.md)"
+                )
+            body_weight(entry.momentum, sum(entry.held), width, optical)
     world = NatureBeamWorld(
         model_id,
         shape,

@@ -11,7 +11,8 @@ no root at run time. The expected integers of docs/TEST_EXPECTATIONS.md
 ("The directional drive"), written down before the first run:
 
 (a) the key absent computes nothing: every registered world outside
-    `drive_b/` parses with `drive_b` false and the identity absent from its
+    `drive_b/` (and outside the body worlds of `optical/`, the composition
+    of step 3) parses with `drive_b` false and the identity absent from its
     hypotheses; the gate world `detector/grouped_12_nodes` replays to the
     digests of `gate_set.json` byte for byte, its `run.json` without a
     `drive_b` key; `drive_wall` is Q^2 S M + |p|_1 T_h with the cap and
@@ -210,6 +211,11 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     for path in sorted(EXAMPLES.rglob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(document, dict) or "format" in document or path.parent == WORLDS:
+            continue
+        if path.parent.name == "optical" and path.name.startswith("body_"):
+            # The body worlds of every family under one wall, step 3
+            # (docs/designs/one_wall/BODY_DRIVE.md): the composition of this
+            # key with `optical`, declared by design.
             continue
         world = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES).world
         assert world.drive_b is False, path

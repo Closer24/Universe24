@@ -1,0 +1,451 @@
+{
+ "format": "optical-body-expectations-v1",
+ "identity": [
+  "optical-v1",
+  "drive-b-v1"
+ ],
+ "derivation": "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the engine's verbs integer for integer on the light-bending map's stationary crowd (the drive member at gamma, the clock's owed count, the charge (w, Q S)); the click's tick within one interval, the face and the Node exact; written before the run (record 205)",
+ "constants": {
+  "content": 64,
+  "width": 16384,
+  "momentum": 67108864,
+  "rest_energy": 67108864,
+  "energy": 134217728,
+  "lorentz_factor": 2,
+  "v_squared": 0.75,
+  "mass": 65536,
+  "ticks": 300
+ },
+ "worlds": {
+  "body_control_b10": {
+   "gamma": null,
+   "impact": 10,
+   "click": {
+    "tick": 150,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     30,
+     20
+    ],
+    "links_before": [
+     54,
+     0,
+     0
+    ]
+   },
+   "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)"
+  },
+  "body_b10_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "drive_coefficient": 0,
+   "impact": 10,
+   "control": "body_control_b10",
+   "click": {
+    "tick": 159,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     27,
+     20
+    ],
+    "links_before": [
+     54,
+     -3,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 159,
+     "y": 27
+    },
+    "charge_content_over_one": {
+     "tick": 156,
+     "y": 29
+    }
+   }
+  },
+  "body_b10_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "drive_coefficient": 1,
+   "impact": 10,
+   "control": "body_control_b10",
+   "click": {
+    "tick": 168,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     23,
+     20
+    ],
+    "links_before": [
+     54,
+     -7,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 164,
+     "y": 23
+    },
+    "charge_content_over_one": {
+     "tick": 159,
+     "y": 29
+    }
+   }
+  },
+  "body_control_b12": {
+   "gamma": null,
+   "impact": 12,
+   "click": {
+    "tick": 150,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     32,
+     20
+    ],
+    "links_before": [
+     54,
+     0,
+     0
+    ]
+   },
+   "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)"
+  },
+  "body_b12_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "drive_coefficient": 0,
+   "impact": 12,
+   "control": "body_control_b12",
+   "click": {
+    "tick": 158,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     29,
+     20
+    ],
+    "links_before": [
+     54,
+     -3,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 158,
+     "y": 29
+    },
+    "charge_content_over_one": {
+     "tick": 154,
+     "y": 31
+    }
+   }
+  },
+  "body_b12_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "drive_coefficient": 1,
+   "impact": 12,
+   "control": "body_control_b12",
+   "click": {
+    "tick": 166,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     26,
+     20
+    ],
+    "links_before": [
+     54,
+     -6,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 162,
+     "y": 26
+    },
+    "charge_content_over_one": {
+     "tick": 158,
+     "y": 31
+    }
+   }
+  },
+  "body_control_b14": {
+   "gamma": null,
+   "impact": 14,
+   "click": {
+    "tick": 150,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     34,
+     20
+    ],
+    "links_before": [
+     54,
+     0,
+     0
+    ]
+   },
+   "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)"
+  },
+  "body_b14_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "drive_coefficient": 0,
+   "impact": 14,
+   "control": "body_control_b14",
+   "click": {
+    "tick": 158,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     31,
+     20
+    ],
+    "links_before": [
+     54,
+     -3,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 158,
+     "y": 31
+    },
+    "charge_content_over_one": {
+     "tick": 154,
+     "y": 33
+    }
+   }
+  },
+  "body_b14_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "drive_coefficient": 1,
+   "impact": 14,
+   "control": "body_control_b14",
+   "click": {
+    "tick": 166,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     28,
+     20
+    ],
+    "links_before": [
+     54,
+     -6,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 163,
+     "y": 28
+    },
+    "charge_content_over_one": {
+     "tick": 157,
+     "y": 33
+    }
+   }
+  },
+  "body_control_b16": {
+   "gamma": null,
+   "impact": 16,
+   "click": {
+    "tick": 150,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     36,
+     20
+    ],
+    "links_before": [
+     54,
+     0,
+     0
+    ]
+   },
+   "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)"
+  },
+  "body_b16_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "drive_coefficient": 0,
+   "impact": 16,
+   "control": "body_control_b16",
+   "click": {
+    "tick": 157,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     33,
+     20
+    ],
+    "links_before": [
+     54,
+     -3,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 157,
+     "y": 33
+    },
+    "charge_content_over_one": {
+     "tick": 154,
+     "y": 35
+    }
+   }
+  },
+  "body_b16_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "drive_coefficient": 1,
+   "impact": 16,
+   "control": "body_control_b16",
+   "click": {
+    "tick": 164,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     31,
+     20
+    ],
+    "links_before": [
+     54,
+     -5,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 161,
+     "y": 31
+    },
+    "charge_content_over_one": {
+     "tick": 157,
+     "y": 35
+    }
+   }
+  },
+  "body_control_b18": {
+   "gamma": null,
+   "impact": 18,
+   "click": {
+    "tick": 150,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     38,
+     20
+    ],
+    "links_before": [
+     54,
+     0,
+     0
+    ]
+   },
+   "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)"
+  },
+  "body_b18_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "drive_coefficient": 0,
+   "impact": 18,
+   "control": "body_control_b18",
+   "click": {
+    "tick": 156,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     36,
+     20
+    ],
+    "links_before": [
+     54,
+     -2,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 2,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 156,
+     "y": 36
+    },
+    "charge_content_over_one": {
+     "tick": 154,
+     "y": 37
+    }
+   }
+  },
+  "body_b18_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "drive_coefficient": 1,
+   "impact": 18,
+   "control": "body_control_b18",
+   "click": {
+    "tick": 164,
+    "tolerance": 1,
+    "face": "face:+x",
+    "node": [
+     56,
+     34,
+     20
+    ],
+    "links_before": [
+     54,
+     -4,
+     0
+    ]
+   },
+   "owed_intervals_gameboard": 3,
+   "refuting_readings": {
+    "drive_unstretched": {
+     "tick": 161,
+     "y": 34
+    },
+    "charge_content_over_one": {
+     "tick": 157,
+     "y": 37
+    }
+   }
+  }
+ }
+}

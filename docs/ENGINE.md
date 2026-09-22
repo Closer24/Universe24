@@ -524,7 +524,16 @@ row by the pair of its momentum with the family's rest term,
 `nature_beam.row_pairs` and `momentum_pair`, the wall's square refused
 naming the rule before it is formed, and is pushed at the weight per
 unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels,
-`nature_beam.unit_weights`; the refusal of record 510 lifted); the
+`nature_beam.unit_weights`; the refusal of record 510 lifted); with the
+key `drive_b` beside it (the body's drive under the one wall, step 3,
+2026-09-22, [docs/designs/one_wall/BODY_DRIVE.md](designs/one_wall/BODY_DRIVE.md))
+the body's directional drive is a member of the age wall's set at the
+coefficient gamma (`measured.age_wall_set`: the clock 1, the flight
+1 + gamma, the drive gamma; the rates x d against the wall x (d + gamma n
+A) in `engine._move`), a moving body's gravity charge is (w, Q S), the
+rows' weight on its momentum over the label scale (`world.body_weight`,
+gravity's Lambda Q S), and a moving body under `optical` without
+`drive_b` is refused at load; the
 inverse interval refused under it; the record carries the block `optical` {gamma, flight_coefficient}
 and the identity `optical-v1` under `hypotheses`; without the key every
 world reads as it did, byte for byte); the amplitude law
