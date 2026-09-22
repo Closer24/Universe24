@@ -7,8 +7,8 @@ on the Boss's branch of PR #831; the decision line for Highlights 5.4 is
 the Boss's). A design only: no engine line, no world file, no run, no pin
 moved. Base commit `origin/main` 305ef9266dee0dac5a3ba5ad03a85ec0a87aa53f
 (PR #829 merged); the algebra it corrects is
-[ALGEBRA.md](https://github.com/Closer24/Universe24/blob/643b7ae7d4aeac2062518146aeb6e8b6f2998148/docs/designs/atom_algebra/ALGEBRA.md) at 643b7ae7d4aeac2062518146aeb6e8b6f2998148
-(PR #823, sections 1, 3 (c), 6 and 7; the link is to that head, the file on `origin/main` at `docs/designs/atom_algebra/ALGEBRA.md` once PR #823 merges), read with records 826 (I), 844,
+[ALGEBRA.md](../atom_algebra/ALGEBRA.md) at 643b7ae7d4aeac2062518146aeb6e8b6f2998148
+(PR #823, merged to `main` at 67cee0930fffbdc48a5d84b32d2ae180f10933a5; sections 1, 3 (c), 6 and 7), read with records 826 (I), 844,
 858, 863, 864, 874, 876 and 881. The rule sits OUTSIDE the law under its
 own identity, `atom-give-v1`, until it passes the gate (the three tests,
 the physics-rule reviewer, the owner's go on the build); nothing here is
@@ -509,7 +509,7 @@ named in the six lines' item 5 is kept.
 
 ## Links
 
-[ALGEBRA.md](https://github.com/Closer24/Universe24/blob/643b7ae7d4aeac2062518146aeb6e8b6f2998148/docs/designs/atom_algebra/ALGEBRA.md) (sections 1, 2, 3, 6 and 7 at
+[ALGEBRA.md](../atom_algebra/ALGEBRA.md) (sections 1, 2, 3, 6 and 7 at
 643b7ae7); [the atoms pins](../atoms/PINS.md) and [their generator](../../../examples/events/atoms/make_worlds.py);
 [BEAM_LAW note 40 and note 41](../../BEAM_LAW.md); [DERIVATIONS_BEAM 6.4
 and 19.1](../../DERIVATIONS_BEAM.md); [the local integer operation contract](../../ARCHITECTURE.md#local-integer-operation-contract);
