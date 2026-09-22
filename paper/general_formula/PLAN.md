@@ -5164,3 +5164,23 @@ matrices and an evaluation at the roots of unity"), folded into the
 first; the abstract 246 words (mathematics counted one token each). No
 number moved, no claim changed, no row touched; "derived" nowhere. The
 PDF compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 23:45Z): the reviewer's read AC on the opening, and the owner's third word
+
+A second commit on `paper-opening`, words only. (a) The chain sentence
+with the hypotheses named line by line: under (A1) with (A3), locality
+Outside, the r-free lines of Lorentz's factors; under (A2) their scale
+and Einstein's step; under (A1) and five assumptions of the law as
+built, with no (A2), the equivalence principle and, in a limit under a
+shell average, Newton's inverse square; "reached from the algebra, not
+derived from nothing" kept; "an identity of it under declared tables and
+world conditions". (b) The lattice's symmetries are the 48 signed
+permutations of the axes, their rotations the group of the cube of order
+24, in the paragraph and in the abstract. (c) The paragraph's closing
+sentence ("That order ... is the order in which the model was found")
+dropped: the beginning states, it does not narrate (the owner's word).
+The abstract at 250 words (mathematics counted one token each) after
+four words traded for read AC's: "finite-grain" (One value), "named"
+(Recovered in a limit), "and" for a comma (the one non-local step, the
+only read-out), "conservation" (the books). No number moved, no claim
+changed. The PDF compiled from the true source and read back. 52 pages.

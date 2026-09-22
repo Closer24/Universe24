@@ -3966,6 +3966,51 @@ CORRECTIONS = [
         "One update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity. Exact on the lattice:",
         "The paper begins with one algebraic object: the integer group ring of a cyclic group, the phase grain, on a cubic lattice, the GameBoard, whose symmetry is the cube's rotation group of order $24$; one rule of six integer operations on that ring, bounded, acts at every Node and interval. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Exact on the lattice:",
     ),
+    (
+        "the opening paragraph's closing sentence dropped: the beginning states, it does not narrate (the owner's third word; the Boss's order of 23:45Z)",
+        "is read row by row in Table~\\ref{tab:nature}. That order, the algebra first and the comparison after, is the order in which the model was found.",
+        "is read row by row in Table~\\ref{tab:nature}.",
+    ),
+    (
+        "read AC (a): the chain sentence with the hypotheses named line by line, (A1) with (A3) for the r-free lines, (A2) for the scale and Einstein's step, (A1) with five assumptions for the equivalence principle and Newton (the Boss's order of 23:45Z)",
+        "From the same object, with two hypotheses on how a click reads it, (A1) and (A2), one chain reaches the form of Lorentz's factors, the equivalence principle and Einstein's step above the board, and, in a limit under a shell average, Newton's inverse square: reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}.",
+        "From the same object, with the hypotheses on how a click reads it, one chain reaches above the board: under (A1) with (A3), locality Outside, the $r$-free lines of Lorentz's factors, and under (A2) their scale and Einstein's step; under (A1) and five assumptions of the law as built, with no (A2), the equivalence principle and, in a limit under a shell average, Newton's inverse square (the paragraphs `Newton from the small step' and `The road to each'): reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}.",
+    ),
+    (
+        "read AC (a): exact means an identity under declared tables and world conditions",
+        "an identity of it under declared tables (Theorems~\\ref{th:isometry}",
+        "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry}",
+    ),
+    (
+        "read AC (b): the lattice's symmetries the 48 signed permutations, their rotations the group of order 24 (the paragraph)",
+        "carried on a cubic lattice whose symmetry is the rotation group of the cube, of order $24$ (Theorem~\\ref{th:group})",
+        "carried on a cubic lattice whose symmetries are the $48$ signed permutations of the axes, their rotations the group of the cube of order $24$ (Theorem~\\ref{th:group})",
+    ),
+    (
+        "read AC (b): the same in the abstract",
+        "whose symmetry is the cube's rotation group of order $24$",
+        "whose symmetries are the $48$ signed permutations of the axes, their rotations the cube's group of order $24$",
+    ),
+    (
+        "the abstract at 250: 'finite-grain' traded (read AC's words cost four)",
+        "One finite-grain value, $S = 181/64$, lies inside",
+        "One value, $S = 181/64$, lies inside",
+    ),
+    (
+        "the abstract at 250: 'named' traded",
+        "Recovered in a named limit: $c = 1/\\sqrt3$",
+        "Recovered in a limit: $c = 1/\\sqrt3$",
+    ),
+    (
+        "the abstract at 250: 'and' traded for a comma",
+        "the click, the one non-local step and the only read-out. Exact on the lattice:",
+        "the click, the one non-local step, the only read-out. Exact on the lattice:",
+    ),
+    (
+        "the abstract at 250: 'conservation' traded (the books are named in the text)",
+        "Exact on the lattice: the conservation books, Gauss's law",
+        "Exact on the lattice: the books, Gauss's law",
+    ),
 ]
 
 
