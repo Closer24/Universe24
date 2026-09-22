@@ -301,8 +301,12 @@ ROTATIONS_WITHIN_BOUND = 3
 # A world refused at load is built by the tests and not written as a file.
 UNSHIPPED = {"rotations_4"}
 # L6 at N = 1024 and 4096 (2026-09-20); N = 512 added for the pin of
-# DERIVATIONS_BEAM section 24.4 (2026-09-21).
-PAIR_N = (512, 1024, 4096)
+# DERIVATIONS_BEAM section 24.4 (2026-09-21); N = 2048, 8192 and 16384 added
+# for the plateau's run (2026-09-22, the Boss's order on the owner's word
+# through the paper's writer): the same world with the one declared integer
+# N changed, the tables of 2N up to 65536 (`core.phase`), so 2N = 32768 at
+# 16384 exists.
+PAIR_N = (512, 1024, 2048, 4096, 8192, 16384)
 MAX_TABLE = 4096
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
@@ -1537,8 +1541,28 @@ def gate_expectations() -> dict[str, object]:
 # count over the W births within one of W x its cell's weight over the
 # total. No number moves after the run: a reading outside its pin is
 # reported with its numbers.
-BELL_24_4_N = (512, 4096)
-BELL_24_4_S = (181, 64)
+#
+# The plateau's run (2026-09-22, the Boss's order on the owner's word of
+# 2026-09-22 through the paper's writer): N = 2048 and 8192, the plateau's
+# remaining powers of two, and N = 16384, where the plateau ends. The pin
+# per N is the closed form of 24.4 (the paper's
+# `checks/s_powers_of_two.txt`): S(N) = 8 (c_1 + c_1') / N - 4 with c_1 the
+# ++ count at (0, N / 8) and c_1' the ++ count at (N / 4, N / 8), the
+# counts the rungs of the fixed correlations E_1 = 46565 / 65773 and E_2 =
+# 46452 / 65773 of the tables at the scale 256; S = 181 / 64 at 2048 and
+# 8192 (the four correlations 181 / 256 in kind at 2048, 725 / 1024 and
+# 723 / 1024 at 8192, as at 4096) and S = 5793 / 2048 = 2.828613 at 16384,
+# where both roundings go up (the second pair 2893 / 4096), the value at
+# which the plateau ends. Declared here before any run and checked against
+# the derivation in `bell_24_4_expectations`, never read off a result.
+BELL_24_4_N = (512, 2048, 4096, 8192, 16384)
+BELL_24_4_S: dict[int, tuple[int, int]] = {
+    512: (181, 64),
+    2048: (181, 64),
+    4096: (181, 64),
+    8192: (181, 64),
+    16384: (5793, 2048),
+}
 BELL_24_4_TOLERANCE = 1
 
 
@@ -1567,8 +1591,11 @@ def bell_24_4_expectations() -> dict[str, object]:
     quadruple; the readings of the run are registered beside them."""
     worlds: dict[str, object] = {}
     s_times_n: dict[str, int] = {}
+    s_closed_form: dict[str, int] = {}
+    s_pinned: dict[str, list[int]] = {}
     for n in BELL_24_4_N:
         correlations: list[int] = []
+        plus_plus: list[int] = []
         for a, b in chsh_labels(n):
             name = f"bell_n{n}_{a}_{b}"
             world = bell_n(name, n, a, b)
@@ -1578,6 +1605,8 @@ def bell_24_4_expectations() -> dict[str, object]:
             counts = counts_of(weights, outcomes(2), wheel)
             e = correlation(counts)
             correlations.append(e)
+            plus_plus.append(counts["++"])
+            fraction = Fraction(e, wheel)
             worlds[name] = {
                 "N": n,
                 "wheel": lamp["lamp"]["wheel"],
@@ -1587,14 +1616,24 @@ def bell_24_4_expectations() -> dict[str, object]:
                 "births": wheel,
                 "counts_under": f"pair_n.{n}.pairs.{a}_{b}.counts",
                 "E": e,
+                "E_over_W": [fraction.numerator, fraction.denominator],
                 "marginal": wheel // 2,
                 **cell_widths(weights, outcomes(2), wheel),
             }
         s_times_n[str(n)] = correlations[0] - correlations[1] + correlations[2] + correlations[3]
+        # The closed form of 24.4: S(N) = 8 (c_1 + c_1') / N - 4, c_1 the ++
+        # count at (0, N / 8) and c_1' the ++ count at (N / 4, N / 8).
+        s_closed_form[str(n)] = 8 * (plus_plus[0] + plus_plus[2]) - 4 * n
+        assert s_closed_form[str(n)] == s_times_n[str(n)], (n, s_closed_form, s_times_n)
+        pinned = Fraction(*BELL_24_4_S[n])
+        assert Fraction(s_times_n[str(n)], n) == pinned, (n, s_times_n[str(n)], pinned)
+        s_pinned[str(n)] = list(BELL_24_4_S[n])
     return {
         "reference": "DERIVATIONS_BEAM section 24.4, the pin written before the run",
-        "S": list(BELL_24_4_S),
+        "S": s_pinned,
+        "S_closed_form": "S(N) = 8 (c_1 + c_1') / N - 4, c_1 the ++ count at (0, N / 8), c_1' the ++ count at (N / 4, N / 8); S_times_N_closed_form = 8 (c_1 + c_1') - 4 N",
         "S_times_N": s_times_n,
+        "S_times_N_closed_form": s_closed_form,
         "tolerance": BELL_24_4_TOLERANCE,
         "worlds": worlds,
     }
