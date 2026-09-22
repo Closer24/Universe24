@@ -3768,6 +3768,37 @@ CORRECTIONS = [
         "the bending's constant DOES NOT CLOSE within the grain (the README's rule; the run's own headline names CLOSES on the deciding pin, the pin being inside), $\\gamma$ an input;",
         "the bending's constant DOES NOT CLOSE within the grain (the README's rule, the deciding pin inside beside it), $\\gamma$ an input;",
     ),
+    # Issue #905 of the independent read, option 2 (the Boss's order of 16:51Z under the owner's words of records 951 and 997): the paper's law is the runtime before the generic entry, said at P9 and in Appendix C, with one clause where a reader would take the pinned runtime for the paper's law.
+    (
+        "issue #905, option 2 (the Boss's order of 16:51Z): the paper's law is the runtime before the generic entry, said at P9",
+        "Four rules are chosen among few (P9) and are assumptions, not derivations: the flight is blind to the crowd,",
+        "The law of this paper is the runtime before the generic entry of the bending: the commits of \\texttt{main} that every run of this paper names in Appendix~\\ref{app:reproduction}, on the first-parent line of \\texttt{main} up to the archived law's head 3a9a7109, the last commit before the entry's merge 5b855791; the generic entry (\\texttt{main} at 5b855791 since 2026-09-22, the flight in the age wall's set at $1 + \\gamma$, $\\gamma$ an input \\cite{genericentry}) is a later rule of the law, and the paper's only readings under it are the ring's (Table~\\ref{tab:nature}, row 13). Four rules are chosen among few (P9) and are assumptions, not derivations: the flight is blind to the crowd,",
+    ),
+    (
+        "issue #905, option 2: the reproduction appendix names the archived law's head",
+        "it replaces the concept DOI below.",
+        "it replaces the concept DOI below. The paper's law is the runtime before the generic entry of the bending: the runs' own commits named above, on the first-parent line of \\texttt{main} up to 3a9a7109, the last commit before the entry's merge 5b855791; the generic entry is a later rule of the law (Section~\\ref{sec:law}, P9), and the ring's run (Table~\\ref{tab:nature}, row 13) is this paper's one reading under it.",
+    ),
+    (
+        "issue #905, option 2: the delay section reads under the law before the entry",
+        "Nothing in flight is delayed: a row moves by the flight table at one pace, blind to the crowd (series K, Table~\\ref{tab:nature}).",
+        "Nothing in flight is delayed under the law of this paper, the runtime before the generic entry (P9): a row moves by the flight table at one pace, blind to the crowd (series K, Table~\\ref{tab:nature}).",
+    ),
+    (
+        "issue #905, option 2: the ledger's constancy row names the law before the entry",
+        "the rate in transit constant, the flight blind to the phase (P9, a rule chosen among few),",
+        "the rate in transit constant, the flight blind to the phase and to the crowd (P9, a rule chosen among few; the law before the generic entry),",
+    ),
+    (
+        "issue #905, option 2: the tally's light unbent under the law before the entry",
+        "13 light unbent (Section~\\ref{sec:delay}, against $1.75$ arcseconds)",
+        "13 light unbent under the law before the generic entry (Section~\\ref{sec:delay}, against $1.75$ arcseconds)",
+    ),
+    (
+        "issue #905, option 2: Section 9 (vi) names the law before the entry",
+        "(vi) Light's bending: on the law $0$, the flight blind to the crowd (series K, $0.000$ pixel, DETECTOR; FAIL against $1.75$ arcseconds);",
+        "(vi) Light's bending: on the law of this paper, the runtime before the generic entry, $0$, the flight blind to the crowd (series K, $0.000$ pixel, DETECTOR; FAIL against $1.75$ arcseconds);",
+    ),
 ]
 
 

@@ -4983,3 +4983,24 @@ atom's levels at atom-levels' head 83b1bf2e pending merge; the register
 (b12dd253) and records 991 and 997 pending as they are. The PDF rebuilt
 and committed as the closing build; one small swap commit follows when
 the two branches merge. 50 pages.
+
+## Applied (2026-09-22, the Boss's order of 16:51Z): issue #905, the paper's law identity, option 2
+
+The independent read's batch #900 (issue #905): the pinned runtime on
+main carries the generic entry of the bending as the law, while the
+paper defines and evaluates the flight blind to the crowd. Frozen as
+option 2 under the owner's standing words (record 951, the reader's
+corrections orderly; record 997, the paper closes as it is): the
+paper's law is the runtime before the generic entry, the runs' own
+commits on main's first-parent line up to 3a9a7109 (the last commit
+before the entry's merge 5b855791); the generic entry is a later rule
+of the law, and the ring's run (row 13) is the paper's one reading
+under it. Said in one sentence at P9 and one in Appendix C, and in one
+clause each where a reader would otherwise take the pinned runtime for
+the paper's law: the delay section, the ledger's constancy-of-c row,
+the failures' tally (13), Section 9 (vi); Section 5 carried it
+already. No number, verdict or physics changed; no re-read. Option 1,
+the paper about the runtime with the entry (P9, the ledger, the delay
+and light sections, the tally and the provenance rewritten and every
+affected comparison re-read under the entry), is a later version's
+work, the owner's to order, not this paper's. 50 pages.
