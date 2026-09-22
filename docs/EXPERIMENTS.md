@@ -6992,23 +6992,39 @@ sequential gates on an entangled record, the full register replay.
   Across the worlds: the ratio T(24) / T(12) = 1.997 (1.82 .. 2.18):
   inside; the equivalence on T: 0 (0 .. 8): inside; the equivalence on the
   clicks: 139 common birth ticks, 138 equal, the largest difference 1
-  Node (0 .. 1): inside. What is read: the controls' pace to the tick,
-  the equivalence to the Node and to the tick, and the plane's k = 2 as
-  the ratio of the two radii's recurrences, 1.997, each from one spacing
-  between like crossings (the loops leave the plane after 698 and 1239
-  intervals). What is not read as pinned: the periods (19 percent above
-  their circles alike), the amplitudes and the radii (`r12` from 1.4 to
-  73.2 Links, `r24` from 11 to 62), omega^2 at a quarter period of a
-  loop that is not a circle: the eccentric loops series D registered at
-  the same p = 576 (`s32_r24` T 829 against 687, escaped through `face:-x`
-  at 1054; "the grain of the push breaks the rest"), the push in whole
-  labels of 64 on 576 per unit, 6.4 degrees per ray, along the fan's
-  lines in shells every 10 intervals. No pin moved.
+  Node (0 .. 1): inside. What D3 closes: the equivalence principle after
+  a detector (the 4 M_held world 138 of 139 clicks to the Node, the same
+  escape tick, |dT| = 0) and the controls' pace to the tick. The ratio
+  1.997 is consistent with the 1 / r form and not decisive: a 1 / r
+  force is scale-invariant (r to lambda r, t to lambda t at the same
+  speed), so loops started with the same p at r = 12 and 24 must be
+  similar figures with T(24) / T(12) = 2 for any eccentricity, a property
+  no other power of r has; the loops read are not similar figures (the
+  radii 1.4 to 73.2 about 24.2 against 11.0 to 62.3 about 33.7), one
+  recurrence per radius before the probe leaves the plane (698 and 1239
+  intervals); the scale symmetry of the 1 / r force is the claim it
+  tests, not closed; the deciding reading (similar loops at a finer
+  grain, or several recurrences per radius agreeing) is not run, not
+  proposed. Not read as pinned: the periods (19 percent above their
+  circles alike), the amplitudes and the radii, omega^2 at a quarter
+  period of a loop that is not a circle. Two causes: the grain of the
+  push (the eccentric loops series D registered at the same p = 576,
+  `s32_r24` T 829 against 687, escaped through `face:-x` at 1054; "the
+  grain of the push breaks the rest": whole labels of 64 on 576 per
+  unit, 6.4 degrees per ray, along the fan's lines in shells every 10
+  intervals) and the per-axis drive's own anisotropy (the Euclidean pace
+  on a diagonal heading sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
+  0.2346 against the axis's 0.2195, 6.9 percent faster at 45 degrees:
+  no circle exists under the drive `main` runs even with a continuous
+  push). No pin moved.
 - **Status:** registered twice, none moved: the first run at n = 10 (3
   inside, 13 outside, the cause the drive's pace) and the re-run at n = 9
-  (7 inside, 9 outside): the ratio 1.997 against 2.00, the equivalence
-  and the controls inside; a circle's period, amplitude and omega^2
-  outside, the loops eccentric at this grain as in series D.
+  (7 inside, 9 outside). Closed: the equivalence principle after a
+  detector and the controls' pace to the tick. The ratio 1.997 against
+  2.00: consistent, from one recurrence per radius on loops that are not
+  similar figures; the scale symmetry of the 1 / r force is the claim it
+  tests; not closed. A circle's period, amplitude and omega^2 outside:
+  the grain of the push and the per-axis drive's anisotropy, both named.
 
 ## B. Proof for the paper
 

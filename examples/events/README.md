@@ -327,10 +327,13 @@ registered twice on 2026-09-22, no number moved: the first run at n = 10
 (its pins form B's pace, which the engine does not run: the cause read
 off the controls' pace and named, the rows kept as history) and the
 re-run at n = 9 on the owner's word (the per-axis drive's circle, series
-D's p = 576): the ratio of the two radii's recurrences 1.997 against
-2.00, the equivalence to the Node on every click and the controls' pace
-to the tick inside; a circle's period, amplitude and omega^2 outside,
-the loops eccentric at this grain as series D registered them.
+D's p = 576): the equivalence principle after a detector (to the Node
+on every click) and the controls' pace to the tick closed; the ratio of
+the two radii's recurrences 1.997 against 2.00 consistent with the 1 / r
+force's scale symmetry, from one recurrence per radius on loops that are
+not similar figures, not closed; a circle's period, amplitude and omega^2
+outside, the grain of the push and the per-axis drive's anisotropy both
+named, as series D registered the loops.
 
 ## The Heisenberg run
 

@@ -264,25 +264,38 @@ ticks, 138 equal, the largest difference 1 Node (0 .. 1): inside (the
 birth tick lies on the 8-interval grid (none read late). GAMEBOARD, a
 diagnostic: homes 15 (`r12`), 24, 24, 8, 8.
 
-**What is read and what is not, no number moved.** Read: the controls'
-pace to the tick (the 61st step at 278 exactly, the pin's 60-step count
-of the first run corrected in the derivation, the reading not); the
-equivalence to the Node and to the tick; the ratio of the two radii's
-recurrences 1.997 against 2.00, the plane's k = 2, from one recurrence
-at each radius (the loops leave the plane after 698 and 1239 intervals,
-so each period is one spacing between two like crossings). Not read as
-pinned: the periods themselves (407 against 343 and 813 against 687, 19
-percent above their circles alike, which is why their ratio holds), the
-amplitudes and the radii (`r12` from 1.4 to 73.2 Links about a mean of
-24.2, `r24` from 11 to 62), omega^2 at a quarter period of a loop that
-is not a circle. The loops are the eccentric ones series D registered at
-the same p = 576 (its `s32_r24`: T 829 against 687, escaped through
-`face:-x` at 1054, the mean radius 28.3; its `s32_r12`: T 289, one turn,
-escaped at 2891; "the grain of the push breaks the rest"): the push
-comes in whole labels of 64 on p = 576 per unit of content, 6.4 degrees
-per ray, along the fan's lines and in shells every 10 intervals, and a
-probe on the axis reads the heading's line alone until it moves off it.
-The 1 / r force's signature after a detector is therefore read today in
-the ratio of the recurrences and in the equivalence, both DETECTOR, and
-not in a circle's period; a circle at this grain is not what the law
-gives at S = 32, and no pin is moved to say otherwise.
+**What is read and what is not, no number moved** (the physics
+reviewer's two corrections of 02:24Z folded, prose only). What D3
+closes, DETECTOR: the equivalence principle after a detector (the 4
+M_held world 138 of 139 clicks to the Node, the same escape tick, |dT|
+= 0) and the controls' pace to the tick (the 61st step at 278 exactly;
+the pin's 60-step count of the first run corrected in the derivation,
+the reading not). The ratio of the two radii's recurrences, 1.997
+against 2.00 inside its bracket, is consistent with the 1 / r form and
+not decisive: a 1 / r force is scale-invariant (r to lambda r, t to
+lambda t at the same speed), so two loops started with the same p at r
+= 12 and 24 must be similar figures with T(24) / T(12) = 2 for any
+eccentricity, a property no other power of r has; but the loops read are
+not similar figures (the radii 1.4 to 73.2 about 24.2 against 11.0 to
+62.3 about 33.7), and each period is one recurrence, one spacing between
+two like crossings before the probe leaves the plane (after 698 and
+1239 intervals). The scale symmetry of the 1 / r force is the claim the
+ratio tests; not closed. The reading that would decide, named and not
+run, not proposed: similar loops at a finer grain, or several
+recurrences per radius agreeing. Not read as pinned: the periods
+themselves (407 against 343 and 813 against 687, 19 percent above their
+circles alike), the amplitudes and the radii, omega^2 at a quarter
+period of a loop that is not a circle. Two causes, both named. The
+grain of the push: the loops are the eccentric ones series D registered
+at the same p = 576 (its `s32_r24`: T 829 against 687, escaped through
+`face:-x` at 1054, the mean radius 28.3; its `s32_r12`: T 289, one
+turn, escaped at 2891; "the grain of the push breaks the rest"): the
+push comes in whole labels of 64 on p = 576 per unit of content, 6.4
+degrees per ray, along the fan's lines and in shells every 10
+intervals, and a probe on the axis reads the heading's line alone until
+it moves off it. The per-axis drive's own anisotropy: the Euclidean pace
+on a diagonal heading is sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
+0.2346 against the axis's 0.2195, 6.9 percent faster at 45 degrees, so
+no circle exists under the drive `main` runs even with a continuous
+push. A circle at this grain is not what the law gives at S = 32, and
+no pin is moved to say otherwise.
