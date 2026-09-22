@@ -1695,6 +1695,62 @@ CORRECTIONS = [
         "at ceb6e066 (PR \\#791, pending merge)",
         "on \\texttt{main} at a62441fb (PR \\#791, merged)",
     ),
+    # The owner's word to the writer: from an Inside formula to an Outside formula, family by family, with the attributes; the conversion table's cells name the family and the attributes.
+    (
+        "the discussion: from an Inside formula to an Outside formula, family by family (the owner's word to the writer)",
+        "with the reading that sits on the Outside side. {\\scriptsize",
+        "with the reading that sits on the Outside side.  \\paragraph{From an Inside formula to an Outside formula, family by family.} The same passage, written three times in full with the attributes of the row tuple of Section~\\ref{sec:law} (Node, direction, age, phase, emitter, content per unit, record, label, amount, multiplicity) named at each step, so that a reader sees which attribute each formula reads and where the conversion takes it Outside. \\emph{Light through two slits} (the family \\texttt{light}, $h = 1$, the circle turns): the lamp puts one record on the board with two rows, one per opening, each with amount $1$, multiplicity $2$, the lamp's phase $p_0$ at birth and its own direction on the fan; Inside, each row's phase advances by the declared turn per Link along its digital line, so at the pixel $x$ the two arrive with the phases $p_1(x)$ and $p_2(x)$, the difference $\\Delta(x)$ the path difference times the turn (the attributes read: direction, age, phase; the content plays no part, $h = 1$); the merge adds them, $f = x^{p_1} + x^{p_2}$ in $\\Z[\\Z_{\\Nphi}]$, and an equal pair at $\\Delta = \\Nphi/2$ cancels; the click evaluates $f$ at the root and squares it, $R(x) = 1024\\,(65536 + C[p_1]C[p_2] + S[p_1]S[p_2])$ (the attributes read: amount, multiplicity, phase); the rung lays the pixels on the ladder and the birth wheel selects one, the record is deleted. Outside a detector holds only its counts per pixel: over $\\Nphi$ births the count at $x$ is $\\rung_x - \\rung_{x-1}$, proportional to $1 + \\cos\\Delta(x)$ within $1/\\Nphi$, bright where the two ages differ by a whole turn, which is Young's law with the spacing set by the turn per Link; the reading is the bands' centres $23.5$ pixels apart for the exact law's $23.3$ (L2b, DETECTOR). \\emph{A massive body's clock and its fall} (the families \\texttt{m} and \\texttt{mass}, $h = 0$, no circle): a body carries its Node, its content $M$, its momentum $\\mathbf p$, an integer $3$-vector, and its counts table, each count an accumulator $(s, r, d)$; Inside, its drive moves it at the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis (the attributes read: content, momentum), its clock counts at the rate $1/(1 + a_\\tau n/d)$ with $a_\\tau$ the age moment of the crowd's rows at its Node (the crowd's attributes read: age, amount, direction; the body's: its counts), and the push reads the label flow $\\mathbf a = \\sum \\mathrm{amount} \\times \\mathbf u_D$ of the arrivals into $\\mathbf p$ (the attributes read: amount, direction, content). The conversion is a lamp on the body and a detector at rest: the lamp's births are the body's own counts, the detector counts their arrivals with its own count, and Outside there are only the two counts and the births' Nodes. So $1 + z$ is the ratio of the two counts and the ratio of two lamps' shifts at $3$ and $6$ Links is the clock's form at two distances, $1.907$ for the pin $1.909$ (series T, DETECTOR); and the fall is the birth's Node per count read at a line of detectors, the same Node on $138$ of $139$ births with the held mass four times (D3, DETECTOR), the equivalence read with no mass in the reading. \\emph{The pair} (the choosers \\texttt{sa} and \\texttt{sb}; the pair's record carries the labels $\\{0, 1\\}$ with integer weights on two arms): Inside, a setting $a$ acts on an arm's label pair by the integer matrix $U_a$ (the attributes read: label, amount, phase on each arm; the record's identity joins the arms), the joint weight is $J(o_A, o_B) = \\sum_\\ell U_a[o_A][\\ell]\\,U_b[o_B][\\ell]$ and the cell's offer $R = J^2$, Theorem~\\ref{th:marginals}; the conversion is the one gather of the record from both settings at the completion interval (P6), the rung over the four cells and the wheel's choice. Outside the two detectors hold four counts per setting pair: $E_{\\Nphi}(a, b) = 4c_{++}/\\Nphi - 1$ and $S(\\Nphi)$ from them, Theorem~\\ref{th:bell}, with each party's marginal $\\Nphi/2$ exactly; the reading is $S = 2.75$ at $\\Nphi = 64$ and $32/64$ in every bin (series L, DETECTOR). In each of the three, Outside holds counts and Nodes and nothing of the attributes themselves: the phase, the amount and the multiplicity of one record never pass singly, the content passes as a wall's scale, and what passes is what the click compares. Table~\\ref{tab:conversion} names, row by row, the family and the attributes each Inside formula reads.  {\\scriptsize",
+    ),
+    (
+        "the conversion table's caption names the family column",
+        "and the register's reading on the Outside side (the click frame's section 7",
+        "and the register's reading on the Outside side; each Inside cell opens with the family and the attributes the formula reads (the click frame's section 7",
+    ),
+    (
+        "row 1: the family and attributes",
+        "$W = E_0'^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ on the record, $E'$ the whole root by comparisons; on the law no square, the wall linear &",
+        "\\emph{a body} (\\texttt{mu}; content, momentum): $W = E_0'^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ on the record, $E'$ the whole root by comparisons; on the law no square, the wall linear &",
+    ),
+    (
+        "row 2: the family and attributes",
+        "the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis; under the identity $p/E'$ &",
+        "\\emph{a body} (\\texttt{m}; content, momentum): the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis; under the identity $p/E'$ &",
+    ),
+    (
+        "row 3: the family and attributes",
+        "the phase per age $n/d$, $E = h_qn/d = h_Af$, $\\lambda = h_A/p$ &",
+        "\\emph{light} (phase, age): the phase per age $n/d$, $E = h_qn/d = h_Af$, $\\lambda = h_A/p$ &",
+    ),
+    (
+        "row 4: the family and attributes",
+        "the age wall, the crowd $a_\\tau$ at coefficient $1$, the rate $1/(1 + a_\\tau n/d)$ &",
+        "\\emph{a body's counts; the crowd's rows} (age, amount): the age wall, the crowd $a_\\tau$ at coefficient $1$, the rate $1/(1 + a_\\tau n/d)$ &",
+    ),
+    (
+        "row 5: the family and attributes",
+        "the flight table $T_D$, the pace $N_l|D|/T_D$ &",
+        "\\emph{light} (direction, age): the flight table $T_D$, the pace $N_l|D|/T_D$ &",
+    ),
+    (
+        "row 6: the family and attributes",
+        "the click's bilinear form $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$ &",
+        "\\emph{light, the pair} (phase, amount, multiplicity, label): the click's bilinear form $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$ &",
+    ),
+    (
+        "row 7: the family and attributes",
+        "the spreading, the presence $q\\tau_L/(4\\pi r^2)$ and the age moment",
+        "\\emph{the crowd's rows} (amount, age, direction): the spreading, the presence $q\\tau_L/(4\\pi r^2)$ and the age moment",
+    ),
+    (
+        "row 8: the family and attributes",
+        "the push $-M_A\\mathbf a$ and the drive &",
+        "\\emph{a body; the arrivals} (content, momentum; amount, direction): the push $-M_A\\mathbf a$ and the drive &",
+    ),
+    (
+        "row 9: the family and attributes",
+        "the circular momentum under the push, $v^2/r = GM_B/r^2$ &",
+        "\\emph{a body} (Node, momentum): the circular momentum under the push, $v^2/r = GM_B/r^2$ &",
+    ),
 ]
 
 

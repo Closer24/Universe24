@@ -3850,3 +3850,26 @@ writer's own: NUMBERS.md's parenthetical for tau_L c = 0.993 said "1.72
 times the heading's pace 0.5818", whose product is exactly 1; the
 factor is 1.72 = 110 / 64 times c = 1 / sqrt 3. Every source of the
 paper is now on main; nothing else changes without the owner's word.
+
+## Applied (2026-09-22, the owner's word to the writer): from an Inside formula to an Outside formula, family by family
+
+The owner, in the writer's session: "it must be shown how from the
+Inside formulas one gets the Outside formulas, with the families and
+the attributes." One commit: the discussion's paragraph "From an
+Inside formula to an Outside formula, family by family", three chains
+written in full with the row tuple's attributes named at each step
+(light through two slits: the family light, the two rows' direction,
+age and phase, the merge in the group ring, the evaluation and the
+rung, Outside the count per pixel and Young's spacing, L2b 23.5 for
+23.3; a massive body's clock and fall: m and mass, the content, the
+momentum and the counts table, the crowd's rows' age and amount, the
+drive's pace and the age wall, the lamp's births counted at a detector
+at rest, Outside 1 + z and the ratio of two shifts and the birth's Node
+per count, series T 1.907 and D3 138 of 139; the pair: sa and sb, the
+labels on two arms, U_a on the label pair, J and R = J^2, the one
+gather and the rung, Outside c_++ and S(N), 2.75 and 32/64), and the
+closing sentence that Outside holds counts and Nodes and none of the
+attributes themselves. The conversion table's Inside cells open with
+the family and the attributes each formula reads; its caption says so.
+No new number; 39 pages, the count reported. The Boss was told before
+the commit (the writer's line of 07:52Z).
