@@ -976,12 +976,20 @@ states "exactly" and means integer equality at every tick.
   three-dimensional GameBoard, and the fixed point is approached slowly (the
   escape 0.948 q at 1000 intervals). Every reading is one run at one
   fingerprint; nothing is a law of nature.
-- **Status.** measured, 2026-09-19: identities held (items 1, 3, 6, 7, the
+- **Status.** measured (GAMEBOARD readings), 2026-09-19: identities held (items 1, 3, 6, 7, the
   derived front of item 4, convergence (d)); readings within the bound
   (item 2, the exponents and the flow of item 5, convergence (c));
   readings outside the bound reported (the carried momentum, the flux at
   h >= 20 and the escape of item 5, the not-frozen bound of item 6 at three
   radii, convergence (a)'s equality with the flow).
+- **The kind of every reading (2026-09-22; the model owner's words of
+  records 562 and 564).** Every reading of this entry is a GAMEBOARD
+  reading (a probe's `read` record, the replay's count, presence and flow,
+  the flux, a clock's owed count): the host's view of the state, a
+  diagnostic, never a measurement (record 281); the detector reading of
+  the couplings, Newton's push read after a detector, is not made here;
+  no number, pin or standing of this entry moves
+  ([the worlds' README](../examples/events/coupling/README.md)).
 
 ### A2, under the Beam Law (2026-09-19)
 
@@ -1281,6 +1289,14 @@ states "exactly" and means integer equality at every tick.
   130880 to 130941, the same at every r): on the axis the age moment grows
   with r as the rows' age; GameBoard readings, the tool's item 6 replaying
   the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+- **The kind of every reading (2026-09-22; the model owner's words of
+  records 562 and 564).** Every reading of this entry is a GAMEBOARD
+  reading (a probe's `read` record, the replay's count, presence and flow,
+  the flux, a clock's owed count): the host's view of the state, a
+  diagnostic, never a measurement (record 281); the detector reading of
+  the couplings, Newton's push read after a detector, is not made here;
+  no number, pin or standing of this entry moves
+  ([the worlds' README](../examples/events/coupling/README.md)).
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -2082,6 +2098,14 @@ states "exactly" and means integer equality at every tick.
   byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
   as registered; the table with the old values beside the new in
   [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
+- **The kind of every reading (2026-09-22; the model owner's words of
+  records 562 and 564).** Every reading of this entry is a GAMEBOARD
+  reading (the probes' owed counts, the shell means, the rate ratios of
+  the age clocks): the host's view of the state, a diagnostic, never a
+  measurement (record 281); the detector reading of a clock's rate at two
+  distances is series T's (NATURE row 12), and the detector reading of
+  Poisson's equation is not made here; no number, pin or standing of this
+  entry moves ([the worlds' README](../examples/events/redshift/README.md)).
 
 ### G, the Hubble diagram behind the detector (2026-09-20)
 

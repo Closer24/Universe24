@@ -14,6 +14,17 @@ once, never a test; the derivation and the expectations below were written
 before the runs; a reading outside its expectation is reported with its
 numbers, never moved.
 
+**The kind of every reading (the model owner, 2026-09-22, records 562 and
+564).** Every reading of this series is a GAMEBOARD reading: the probes'
+owed counts (age, waited, owed) read off their registers by the replay, the
+shell means k_s and k_a, the fractions counting and the rate ratios of the
+age clocks are the host's view of the state, a diagnostic for bug fixing
+and never a measurement (record 281; record 562: nobody measures the
+board). The detector reading of a clock's rate at two distances is a lamp's
+births read by a detector, as series T reads them (NATURE row 12); the
+detector reading of Poisson's equation (record 564) is not made in this
+series.
+
 ## The base
 
 An open cube of 31^3 Nodes, the centre c = (15, 15, 15), `"law": "beam"`,
@@ -134,7 +145,7 @@ worktree of `claude/universe24-new-3ytqde` on the age commit), Python
 3.14.0rc2, numpy 2.5.3, headless, four cores, `--jobs 2`; every run
 completed in 16 s with the books balanced at every tick; the tool: 0
 record checks failed, 11 readings inside, 3 outside, registered, none
-moved.
+moved (GAMEBOARD readings, the kind above).
 
 The shell means of the owed count per self-creation (the window 100 to
 300; "counting" the fraction of the shell's probes that owed anything):
@@ -204,7 +215,8 @@ rate(r) / rate(14) measured against the 1 / r law fitted at r = 14 (C =
 
 ## Verdict
 
-The pair of nature holds in space by two readings of the same rays: the
+The pair of nature holds in space, on the GameBoard, by two readings of the
+same rays: the
 presence read by the shell falls as M / r^2 (k_s x r^2 = 41.5 +- 7 %) and
 the age moment as M / r (k_a x r = 36.1 +- 9 %), their ratio sqrt 3 / 2 to
 half a percent, the age of a ray being its distance over the flight's
@@ -212,7 +224,8 @@ speed. The clocks' ratio follows the 1 / r law in form and misses the
 pinned 15 %-of-shift criterion at three radii by the ripple of the shell
 means; the weak-field line needs a weak field. The grain of the fan is as
 predicted: a single probe reads its line's beam, and the laws are the
-shell means.
+shell means. Every number of this verdict is a GAMEBOARD reading; the
+detector reading is not made.
 
 ## Re-read under clock-age-v1 (2026-09-21)
 
