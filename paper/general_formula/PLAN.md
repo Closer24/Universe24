@@ -2819,3 +2819,271 @@ What this fixes for step 2, on top of sections 1 to 4:
    the dense fan, the inputs), and that the description of nature is
    a program with named completions, with the twelve failures counted.
 
+### 6. The two checks of the plan folded in (records 588 and 590; the Boss's word of 01:05Z, 2026-09-22)
+
+The mathematician, section 2 (AGREED with five words and four rows):
+(a) c = 1/sqrt 3 is proved in DERIVATIONS_BEAM 13.2 (a) with 1.4 and
+FORM.md 1 (not 11.1, the linear block's shift operator). (b) Planck and
+de Broglie: derived from the update rules as identities (21.2 rows 51
+and 52: E = h_q s = (h_q N) f the release's cost rule read as an
+identity, lambda = h_A / p the turn rule's), with the constant h and
+the dictionary h = h_q N = h_A an input (24.1 row 25); the "compared
+with" column reads "none after a detector" (series H's closure is a
+GameBoard reading, below). (c) The masses split: a bound set's mass as
+its total content, derived (19.1); the nucleon as a chain of three and
+the strong ratio, in form with the strong column an input (21.5 rows
+41 to 43), so hypothesis or input there. (d) The smallest mass per
+kind: derived, a theorem (16.2 (d)), its premise P8 an input. (e) The
+clock's redshift: derived with the calibration an input, sharper than
+"assumed": by 5.1 and 3.3 the clock's constant and Newton's G have the
+exact ratio (n / d)_susp x S, so a_tau = G M / (r c^2) with 3.3's G
+holds iff the suspension pair is [1, S] (a constraint on the inputs,
+F16). The open list's words: Newton's retarded geodesics "derived (5.3),
+unconfirmed by any registered orbit, the run after a detector not
+made"; Bradley's aberration "derived at first order (12.2), pinned,
+not run"; the deceleration "the law's coasting q = 0 derived (15.4,
+Milne, the thrown stars); G2's -0.108 its reading, a numerical finding
+inside the coasting bracket; the growing wall a hypothesis". Four
+central formulas added to section 2's table, all derived from the
+update rules: Born's rule as a limit with the 1/N bound per cell (6.2;
+21.2 row 12), distinct from the form's row; the continuity equation
+from the books (25.4; record 398 CLOSED); the Lienard-Wiechert retarded
+potential of a moving source at first order (12.1; 21.2 row 21);
+Boltzmann's S = k log W as the count of torus points (14, 16.1; 21.2
+row 53). Two more, closed and small, at the coordinator's call within
+thirty pages: Newton's cooling as the release's exponential (25.9); the
+muon's decay tick under the identity (18.1 (a)); the cut takes the
+first if a line is free, and neither if not.
+
+The physicist, section 3 (the checks' kinds): (a) the replications, the
+books, the inverse interval, the rounding pins and the crossing rule's
+tests are gates and computations, under (a) only. (b) DETECTOR, stay:
+series Q's 290 face clicks and the pace; L7's cone and the counters'
+age 29; L's S at 64 to 4096, the marginals 32 of 64, the Mach-Zehnder
+64/0, the (3, 4) split's cells 63/1, 31/1, 125/3, the two-slit clicks;
+A12's 128 of 256 and 219 of 256; T's ratio 1.907 at 6 and 3 Links (the
+lamp's births at the detector; the clock series' k, a replay, never
+cited); S's face clicks 369 and 345 and z = 0.3674 (the body's own
+record), "under the identity" said as arithmetic on the click ticks
+(S's E' at load, the pace and the invariant out); K's 0.000 pixel and
+0.00 interval (the screen's clicks; the crowd at b out); J1's widths
+0.036 and 0.038 over the 64 beta clicks and J2's 16 of 1024 with 0
+behind (the weak's "the pair holds" out). (c) Rows 1a, 1b, 2a, 2b, 2c,
+8a, 8b, 9, 12 DETECTOR, stay; 5a stays as a bound; 8c a declared input
+against nature, labelled an input, not a measurement; row 3 (q =
+-0.108) DETECTOR in kind, reproduced at head as a verdict with the
+digits moved (-0.104 at t_0 = 350, the pins met, record 408), cited
+with that status; the pinned rows in the one "not run" line. (i)
+Series H: the closure 2.041 to 2.000 and the closing ratio are the
+orbit's r, p and T from the step records, GAMEBOARD: the closure
+leaves; what H reads after a detector is the electron's click on a
+face with its phase, which reads where the orbit ended and not E = h f.
+Series R: the kicked u through the -x face at tick 63 with its 2/3 e (a
+face click) and the read mass (the border's glue rows, the lifetime
+border a detector) DETECTOR, stay; the separations, "no step" and the
+first step's tick GAMEBOARD, leave. Series N (rows 7a, 7b): the bond
+clicks on the lifetime border, the escaped content 4 and 8 and the mass
+a detector reads (3673) DETECTOR, stay, with the pushes, reads, hands
+and kicks; "no step" and "the pair separates" GAMEBOARD, not the
+binding's evidence. Series L's information-cost units (82, 4, 6, 185
+per 1, 2, 3, 6.3 bits): DETECTOR click amounts summed by the host, the
+bits a definition of the coarse graining; they may stay in section 2's
+row as arithmetic on registered click amounts with each amount's
+register key, and they leave (b) and (c); the entropy identity stays as
+a theorem. (ii) G2's z = 0.2636 (row 4b and the coasting q): DETECTOR
+in kind but read before the crossing rule and unreproducible at head
+(record 408, INCONCLUSIVE): out of (b); restated once in the "not
+reproduced at head, re-run pending under the age word" line; row 4b's
+FAIL kept in (c) with that status and no other citation. (iii) The one
+formula-against-formula item is series H's closure (out); S's z from
+the click ticks, 2c's exponent window from the click cells and T's
+ratio against the derivation's pin are arithmetic on clicks and fine
+when the sentence says so; the prediction 181/64 against Poh et al. is
+the law's number, not a simulator measurement. Nothing of the board as
+a measurement anywhere (records 281, 562, 564, 575); the base is
+b684ba0b's text. Step 2, the cut, starts on this word.
+
+### 7. The sixth column, the derivation's ground: three rungs (the proposal of record 605; the mathematician's and the physicist's checks, records 607 and 609, AGREED with corrections; the Boss's word of 01:45Z)
+
+The five-step path gains a sixth column, the ground on which the
+derivation stands, so that "how much the law forces" is counted at
+three levels and never at one: rung 1, exact on the GameBoard (no limit,
+no average); rung 2, a limit of the grain taken on paper with its rate;
+rung 3, a limit under a spatial condition, an average that covers the
+shell, the condition part of the claim.
+
+The head rule (both checkers): a rung-3 claim is stated with its
+condition in the sentence and compared with nature only after a
+detector (record 575), never with a probe's reading; a detector reading
+never lifts a rung-3 claim to rung 1: what a detector run establishes is
+a sharper lattice-exact claim about the world at hand (rung 1 or 2
+arithmetic, pinned from the lattice's lines or the orbit's sweep,
+DETECTOR in its reading), whose agreement with the continuum's form
+within the named ripple is the evidence for rung 3 and never its proof.
+
+Rung 3's condition (the physicist): not "P >> r" alone but an average
+that covers the shell, in three admissible forms, each with its own
+error: (a) over the shell's Nodes, the shell mean, the ripple
+O(r^(theta - 1)) with theta <= 131/208 (3.2), at any declared fan; (b)
+over the directions at one Node, the dense fan K to infinity at fixed
+r, and then only for a fan declared in a ball |D| <= P (a cube's fan
+keeps a cubic anisotropy of 3^(3/2) in the limit); (c) over the path of
+a body that sweeps the fan's lines, one closed turn of an orbit, whose
+mean push per turn is the ring mean exactly, the only one of the three
+readable after a detector. For Poisson and the retarded potential (5.1)
+the same average plus the dwell direction-blind (T_D / (|D| Q) within
+the label's 1.35 percent). Newton's and Coulomb's inverse square,
+Poisson, the retarded potential (12.1 at first order, the fan's grain)
+and the retarded wave equation (5.1) are rung 3.
+
+The placements (both): (1) c: rung 1 holds the identity "the pace of a
+direction is Q |D| / T_D, isotropic within 1 / T_D" and the Manhattan
+bound S_1 Q <= T_D (13.2 (a), exact in integers); "c <= 1 / sqrt 3" is
+not exact on the board (the Euclidean pace is at or above 1 / sqrt 3 on
+282 of the 290 directions, 0.5818 on every heading, 0.5774 on the eight
+diagonals; record 262); the value c = 1 / sqrt 3 attained is rung 2;
+series Q's DETECTOR 0.5718 to 0.5893 is the reading of the
+whole-interval grain of arrival, a third thing, labelled so. (2) The
+books' conservation rung 1; the continuity equation splits: the lattice
+identity from the books rung 1 (25.4), its differential form rung 2.
+(3) Gauss's law of a free family's flux (3.1) rung 1 by name, under
+the declared world condition (a closed surface no periodic axis
+crosses, no absorber inside). (4) S(N): the exact rational at each N
+with the tables at N_t = 256 rung 1; 2 sqrt 2 rung 2. (5) Born: the
+bound itself (a cell within 1 / N, the cumulative within 1 / (2 N))
+exact for every N, rung 1; Born's rule as the equality of probability
+and weight its limit, rung 2. (6) Planck and de Broglie: identities
+under the declared dictionary, the dictionary an input (24.1 row 25):
+rung 1 as identities (Planck's E = h_q s exact at every birth, 6.4; de
+Broglie's circle exact to the floor per Link, 21.5 row 52); not rung 2.
+(7) The redshift row splits in three grounds: the clock's rate
+1 / (1 + a_tau) and its never reaching 0 at a finite count (no horizon;
+the second order 1 - k + k^2) exact on the state, rung 1; the 1 / r
+form of a_tau rung 3; the calibration a_tau = G M / (r c^2) an input of
+the dictionary (5.2), not an average; series T's row says "the form
+measured at a detector at two Nodes (1.907 against the lines' pin
+1.909, nature's 2.00 4.6 percent away), the continuum's 1 / r a rung-3
+limit", never "the 1 / r law measured". (8) Newton's row splits: the
+equivalence principle (push_m = m x push_1 record by record) and the
+third law at rest (exact to the apportioning's grain) rung 1; the
+inverse square rung 3. (9) "The second law as a count" worded as 14's:
+the entropy produced only at the click, the cancel and the leaks, a
+count of torus points; no second law claimed. (10) CLOSED items named
+with their rungs: the muon's decay tick (18.1 (a), rung 1 under
+covariant-readings-v1's identity); Newton's cooling within one birth's
+cost (25.9, rung 1, an exact bound); a body's dispersion (4.4, rung 1);
+the moving clock's rate 1 (4.3, rung 1); the Doppler on the axis by the
+crossing rule (2.2, 2.7: rung 1 for the count per Link with its
+boundary row, rung 2 for the ratio 1 +- v / c); Boltzmann's S = k log W
+(14, 16.1, rung 1); the Lienard-Wiechert retarded potential at first
+order (12.1, rung 3); the retarded wave equation (5.1, rung 3). The
+rest of rungs 1 and 2 as placed in record 605 (the marginals and
+no-signalling, the entropy identity, the 24 and the 48, the isometry
+and the bijection, the click's quadratic form under its two axioms,
+Tsirelson to 8 / N, Young's spacing). Detector readings today: none of
+rung 3's claims has one that lifts it; series T's is the only detector
+reading of a rung-3 form; Newton's and Poisson's runs enter pages 19 to
+21 as one row each only if they land before the cut's PR, else the rows
+say "not made". The owner's word of record 606 stands over all: only
+what the paper needs.
+
+## The thirty-page form, step 2 done (2026-09-22, the Boss's word of 01:45Z)
+
+The cut written as the plan's sections 1 to 7 say: nine sections in the
+owner's order with Eq. (1) on page 1, the forcing ledger (Table 1,
+twenty-six rows with the ground column in three rungs), the hand-worked
+update and the code path, the detector checks table and the
+confrontation table's detector rows, the distance table; three
+appendices (proofs; the tables' rounding and the symbol table;
+reproduction). Out of the body: every "in form", "pinned, not run",
+"not reached" and hypothesis row (HYPOTHESES 27 and one sentence of the
+discussion), the tables of consequences and of assumptions, the What is
+new, What is not claimed and hypotheses sections, Part IV's limits and
+Lorentz sections (their kept content in the discussion), the two-slit
+and S(N) figures (their numbers in the checks table), the literature
+essay (one positioning paragraph). No number moved; three numbers added
+with their source in NUMBERS.md (the hand-worked update, the 282 of
+290, the 4.6 percent). The PDF: 30 pages (the body through 25, the
+references 26 to 27, the appendices 28 to 30; the owner's 23 + 4 + 3
+met in the total, the body two pages longer and the references two
+shorter).
+
+
+## The reviewer's corrections folded (2026-09-22, the owner's word of 01:24Z: the reviewer the paper's writer)
+
+The verdict on the cut at 5c6c4576 was ADMISSIBLE WITH CORRECTIONS (the
+reviewer's report to the Boss, 01:31Z; seven must-fix, eight should-fix;
+the split 25 / 2 / 3 approved by the owner). The corrections are folded
+by `cut30/corrections.py`, one exact replacement each, applied by the
+assembler after the four parts are joined, so that main.tex stays the
+assembler's output (`tests/test_paper_cut30.py` holds it to that). What
+changed, by the report's labels:
+
+- M1 to M3: the abstract and the discussion read the ledger's ground
+  column: exact, the pace of every direction with its Manhattan bound,
+  Gauss's law of a free family's flux under its world condition, and
+  Planck's and de Broglie's relations as identities under the dictionary;
+  a limit of the grain, the value c = 1/sqrt 3; a limit under the average
+  that covers the shell, Newton, Coulomb, the retarded potential and
+  Poisson (records 607, 609; section 7 above).
+- M4: row 2b's verdict rests on the clicks (64/0 over 64 births, the
+  visibility 1.000 above 0.98), not on the offers' 0.9988, a number of the
+  apparatus layer (records 281, 562). The register's row 2b still carries
+  the offers' number; its restatement is the register's own order.
+- M5: the owner's status word (record 573) on every central formula: the
+  ledger's caption says every row is derived from the update rules
+  implemented in the simulator, with what is added beside them in the
+  third column; the sections say "derived" where they said "reached";
+  Coulomb's "in form" (a status record 595 excludes; DERIVATIONS 21.2 row
+  7 has it R) reads "derived under the same average as Newton's, the
+  ratio exact".
+- M6: Appendix C names the defined version, the tag paper-2026-09-22 on
+  the merge commit of the cut's pull request (records 606, 616), and the
+  cut's tree (main merged at 87c7ec6b); the stale b6ab1bb3 out.
+- M7: the editing seams. Their source was `cut30_lib.cutp` with a
+  blank-line end anchor, which matched the empty string and removed the
+  start phrase only, leaving the rest of the sentence; a blank-line end
+  now means the end of the paragraph and the pattern is asserted
+  non-empty; the two conditional patches of part3 (the Gleason
+  parenthesis, which restores the citation of Gleason 1957) and part4
+  ("by definition. That the") apply unconditionally; the cut of "The 48
+  are the GameBoard's stand-in" in part2 is withdrawn (the reviewed text
+  kept the sentence). With the fix, the crowd-audit sentence (23 rules,
+  13 and 10), the constants sentence with the gallery's citation, the
+  world-key history, the "Theorem 2" aside and the second Sinha
+  sentence leave, as the parts intended.
+- S1: the confrontation table's caption counts its rows (four PASS and a
+  fifth under the clock's assumed word; twelve FAIL as seven in a run,
+  four by a pin, one a declared input refuted; two BOUND); the abstract
+  and the discussion say "four readings pass, a fifth under the clock's
+  assumed word".
+- S2: "above 1/sqrt 3 on 282 of the 290 and exactly at it on the eight
+  diagonals" (Proposition prop:pace); NUMBERS.md's row reworded.
+- S3: the muon's row under covariant-readings-v1 leaves the ledger (a
+  result on a hypothesis beside the law; the covariant readings stay in
+  the checks table and the distance table); the ledger has 25 rows.
+- S4: the crowd-clock sentence (runs measured once, not registered)
+  leaves; the three drafted entries leave the references with it.
+- S5: eta and beta named at first use; "the board" reads "the
+  GameBoard's state"; HYPOTHESES 27 cited once, in the discussion; the
+  single opening named once as a row without a run.
+- S6: the Mach-Zehnder record total labelled a number of the apparatus
+  layer; the symbol table pruned to the symbols the paper uses.
+- S7: Gleason 1957 back in the references (through M7's fix).
+- S8: the distance table's harmonic-constants row names the identification
+  of the circle as position and its transform as momentum, a hypothesis,
+  with the single opening as its deciding check.
+
+The references open a page of their own (a `\clearpage` in the
+assembler), so the approved split is read from the page numbers: the
+body through page 25, the references 26 to 27, the appendices 28 to 30;
+30 pages, no overfull vbox, no undefined reference. No number moved; two
+labels added (S2, S6). The 11 overfull hboxes of 2 to 16 points stand as
+cosmetic. The coordinator's last content commit (498b6f31, the exact
+square displayed in the discussion's Lorentz paragraph) and the fold
+together ran the body four lines onto page 26; the sentence on the
+tables' precedents in signal processing (a precedent, not a claim; its
+four references with it) left the positioning paragraph and S8's row was
+shortened, so the body ends on page 25 as approved. The owner's word of
+01:48Z made the reviewer the paper's only writer; the coordinator's
+HANDOFF.md and cut30/notes stand as he left them.
