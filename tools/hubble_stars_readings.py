@@ -22,6 +22,26 @@ rate of the star's light per detector interval (expected 1 / (1 + z) of
 the lamp's rate: a beam does not dilute, so the click rate carries no
 distance beyond the redshift; README.md there).
 
+The pinned reading is in the detector's own clock (the model owner,
+2026-09-22, records 678 and 707 of docs/LOG_2026-09-20.md: a detector's
+time is the clock of the Node it sits on, the interval count less what
+the crowd at that Node owes through the age wall; series G's rule,
+tools/hubble_readings.py). The detector's clock counts r self-creations
+per interval, read off its own record over the run (age / (age + waited)
+of its state in `run.json`, DETECTOR; the per-window step of series G,
+the replay's edges, is not made here), and every reading of the lattice's
+clock is restated by the one closed form 1 + z_d = r (1 + z): the near
+fit's H_d = r H through the clock's own zero z_d(0) = r - 1, the forms
+1 + z_d = r (1 + form(H tau)) with every rms r times the lattice's (the
+nearest and the farthest unchanged, q of the free fit unchanged, its H
+r times), the reading's formula (1 + z_d) = (1 + k)(1 + v / c) r (the
+same ratio), the luminosity as the clicks per the detector's own count,
+L_d = L / r, so L_d (1 + z_d) = L (1 + z) (the pin 1 / (1 + z) is
+clock-free). The reading in the lattice's clock is printed beside it as
+[GAMEBOARD, the lattice's clock] and counted in no criterion; the step
+rule's longest burst (a `step` record) is printed as a GameBoard
+diagnostic and counted in no criterion (2026-09-22).
+
 Every number is labelled by its kind (the model owner, 2026-09-20): a
 DETECTOR reading is the record of the detector's set or of a measured event
 in the world (clicks, the pointer, phases, the ages of arrivals, an owed
@@ -95,6 +115,9 @@ LCDM_A = math.asinh(math.sqrt(OMEGA_L / OMEGA_M))
 Form = Callable[[float], float]
 KIND_DETECTOR = "[DETECTOR]"
 KIND_BOARD = "[GAMEBOARD]"
+# The reading in the lattice's clock, as the register read it until
+# 2026-09-22: printed beside the detector's clock, counted in no criterion.
+KIND_LATTICE = "[GAMEBOARD, the lattice's clock]"
 # The flight's constants of the six headings (the two rest vectors first): m(age)
 # and c are the same on every heading.
 HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
@@ -198,11 +221,17 @@ class Point:
     # consecutive intervals) over the window's emission span.
     stall: int | None = None
     burst: int | None = None
+    # The clock the point is read in: 1 the lattice's interval count, r the
+    # detector's own self-creations per interval; z and rate are in it.
+    clock_rate: float = 1.0
+    # The same point's z in the lattice's clock (nan when z already is).
+    z_lattice: float = math.nan
 
     @property
     def predicted(self) -> float:
-        """The reading's formula from the record's own k and v: (1 + k)(1 + v / c) - 1."""
-        return (1.0 + self.k) * (1.0 + self.v_record) - 1.0
+        """The reading's formula from the record's own k and v in the
+        point's clock: (1 + k)(1 + v / c) r - 1, r the clock's rate."""
+        return (1.0 + self.k) * (1.0 + self.v_record) * self.clock_rate - 1.0
 
 
 @dataclass
@@ -219,6 +248,9 @@ class Fit:
     hubble_near: float
     q_effective: float | None
     points: list[Point]
+    # The clock's rate the fit is read in (1 the lattice's) and its source.
+    clock_rate: float = 1.0
+    clock_kind: str = KIND_LATTICE
 
     @property
     def nearest(self) -> str:
@@ -247,7 +279,19 @@ class Run:
     stars: dict[str, Star]
     document: dict[str, object]
     fingerprint: str
+    # The fits per window in the detector's own clock (the pinned reading)
+    # and in the lattice's clock (printed, not counted).
     fits: dict[tuple[int, int], Fit] = field(default_factory=dict)
+    lattice_fits: dict[tuple[int, int], Fit] = field(default_factory=dict)
+
+    def own_clock(self) -> tuple[float, str]:
+        """The detector's own clock, self-creations per interval, off its
+        own record over the run (DETECTOR); the per-window step (the
+        replay's edges, series G) is not made here."""
+        return self.detector_rate, (
+            f"{KIND_DETECTOR} the detector's own record over the run, age / (age + waited) of its "
+            "state (the per-window step of series G not made here)"
+        )
 
     @property
     def prefix(self) -> str:
@@ -529,6 +573,53 @@ def fit_window(run: Run, window: tuple[int, int]) -> Fit | None:
     return fit_points(points, (window[0] + window[1]) / 2.0)
 
 
+def in_detector_clock(fit: Fit, rate: float, kind: str) -> Fit:
+    """The same window's fit restated in the detector's own clock at the
+    rate r (self-creations per interval): every point 1 + z_d = r (1 + z)
+    and its luminosity L_d = L / r (clicks per the detector's own count),
+    the forms 1 + z_d = r (1 + form(H tau)) so every best-H rms is r times
+    the lattice's at the same H (the nearest and the farthest the same),
+    the free fit's q unchanged and its H_d = r H (the slope of z_d in tau),
+    the near fit's H_d = r H through the clock's own zero z_d(0) = r - 1,
+    the free quadratic on z_d - z_d(0) = r z so q_eff,d = 2 ((q_eff / 2 +
+    1) / r - 1); tau stays the row's own clock (its age at the click,
+    record 707)."""
+    points = [
+        Point(
+            p.name,
+            p.lines,
+            rate * (1.0 + p.z) - 1.0,
+            p.k,
+            p.v_record,
+            p.tau,
+            p.d,
+            p.rate / rate,
+            p.declared,
+            p.v_steps,
+            p.push_fraction,
+            p.momentum_ratio,
+            p.stall,
+            p.burst,
+            clock_rate=rate,
+            z_lattice=p.z,
+        )
+        for p in fit.points
+    ]
+    q_effective = None if fit.q_effective is None else 2.0 * ((fit.q_effective / 2.0 + 1.0) / rate - 1.0)
+    return Fit(
+        t0=fit.t0,
+        best={label: (h, rate * r) for label, (h, r) in fit.best.items()},
+        q_fit=fit.q_fit,
+        h_fit=rate * fit.h_fit,
+        rms_fit=rate * fit.rms_fit,
+        hubble_near=rate * fit.hubble_near,
+        q_effective=q_effective,
+        points=points,
+        clock_rate=rate,
+        clock_kind=kind,
+    )
+
+
 def doppler_part(fit: Fit) -> Fit:
     """The same fits on the Doppler part of the reading alone, z_D = v / c
     from the record's emission ticks and distances (the star's clock
@@ -596,23 +687,31 @@ def verdict(ok: bool) -> str:
 
 
 def print_points(run: Run, window: tuple[int, int], fit: Fit) -> list[tuple[str, bool]]:
+    """The points of one window in the detector's own clock (the pinned
+    reading), the lattice's z beside each as [GAMEBOARD, the lattice's
+    clock]; the formula and the luminosity criteria per star."""
     criteria: list[tuple[str, bool]] = []
+    rate = fit.clock_rate
     print(
-        f"{KIND_DETECTOR} `{run.name}`, the window [{window[0]}, {window[1]}), t_0 = {fit.t0:.0f}: per "
-        "star, 1 + z from the pointer's turn, tau the mean age of the arrivals, d = m(tau), the "
-        "luminosity the click rate per interval; k and v from the record's emission ticks (tick - "
-        f"age) and distances; the checks {KIND_BOARD}: v / c declared, v / c from the `step` lines, "
-        "the push taken in the window over p(0) (outward positive), the momentum left at the "
-        "end, |p(end)| / p(0), and the step rule's longest stall (intervals between two steps) and "
-        "burst (steps on consecutive intervals) over the window's emission span"
+        f"{KIND_DETECTOR} `{run.name}`, the window [{window[0]}, {window[1]}), t_0 = {fit.t0:.0f}, in "
+        f"the detector's own clock (its rate r = {rate:.4f} self-creations per interval: "
+        f"{fit.clock_kind}): per star, 1 + z_d = r (1 + z), z from the pointer's turn per interval, "
+        "tau the mean age of the arrivals (the row's own clock), d = m(tau), the luminosity the "
+        "clicks per the detector's own count, L_d = L / r; k and v from the record's emission ticks "
+        f"(tick - age) and distances; z and L {KIND_LATTICE}; the checks {KIND_BOARD}: v / c declared, "
+        "v / c from the `step` lines, the push taken in the window over p(0) (outward positive), the "
+        "momentum left at the end, |p(end)| / p(0), and the step rule's longest stall (intervals "
+        "between two steps) and burst (steps on consecutive intervals) over the window's emission span"
     )
     print(
-        "| star | v / c declared | lines | z read | k (record) | v / c (record) | (1 + k)(1 + v / c) - 1 "
-        "| ratio (1 + z) | tau | d (Links) | clicks per interval | rate x (1 + z) | v / c (steps) | "
-        "push / p(0) | p(end) / p(0) | stall | burst |"
+        "| star | v / c declared | lines | z_d read | z (lattice) | k (record) | v / c (record) | "
+        "(1 + k)(1 + v / c) r - 1 | ratio (1 + z_d) | tau | d (Links) | L_d, clicks per own count | "
+        "L, clicks per interval (lattice) | L_d x (1 + z_d) | v / c (steps) | push / p(0) | "
+        "p(end) / p(0) | stall | burst |"
     )
     print(
-        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | "
+        "--- | --- | --- |"
     )
     for p in fit.points:
         ratio = (1.0 + p.z) / (1.0 + p.predicted)
@@ -620,14 +719,14 @@ def print_points(run: Run, window: tuple[int, int], fit: Fit) -> list[tuple[str,
         luminosity = p.rate * (1.0 + p.z)
         luminosity_ok = abs(luminosity - 1.0) <= LUMINOSITY_TOLERANCE
         tag = f"{run.name} [{window[0]}, {window[1]}) {p.name}"
-        criteria.append((f"{tag}: the reading's formula", formula_ok))
-        criteria.append((f"{tag}: the luminosity 1 / (1 + z)", luminosity_ok))
+        criteria.append((f"{tag}: the reading's formula (the detector's clock)", formula_ok))
+        criteria.append((f"{tag}: the luminosity 1 / (1 + z) (the detector's clock)", luminosity_ok))
         print(
-            f"| {p.name} | {p.declared:.4f} | {p.lines} | {p.z:.4f} | {p.k:.4f} | {p.v_record:.4f} | "
-            f"{p.predicted:.4f} | {ratio:.4f} {verdict(formula_ok)} | {p.tau:.1f} | {p.d:.1f} | "
-            f"{p.rate:.4f} | {luminosity:.4f} {verdict(luminosity_ok)} | {fmt(p.v_steps)} | "
-            f"{fmt(p.push_fraction, 5)} | {fmt(p.momentum_ratio)} | {'-' if p.stall is None else p.stall} | "
-            f"{'-' if p.burst is None else p.burst} |"
+            f"| {p.name} | {p.declared:.4f} | {p.lines} | {p.z:+.4f} | {fmt(p.z_lattice)} | {p.k:.4f} | "
+            f"{p.v_record:.4f} | {p.predicted:+.4f} | {ratio:.4f} {verdict(formula_ok)} | {p.tau:.1f} | "
+            f"{p.d:.1f} | {p.rate:.4f} | {p.rate * rate:.4f} | {luminosity:.4f} {verdict(luminosity_ok)} | "
+            f"{fmt(p.v_steps)} | {fmt(p.push_fraction, 5)} | {fmt(p.momentum_ratio)} | "
+            f"{'-' if p.stall is None else p.stall} | {'-' if p.burst is None else p.burst} |"
         )
     missing = [s.name for s in run.stars.values() if all(p.name != s.name for p in fit.points)]
     if missing:
@@ -646,10 +745,17 @@ def print_points(run: Run, window: tuple[int, int], fit: Fit) -> list[tuple[str,
 
 def print_fit(label: str, fit: Fit, throw_age: float | None) -> None:
     ht = f", H (t_0 + T_0) = {fit.h_fit * (fit.t0 + throw_age):.4f}" if throw_age is not None else ""
+    clock = (
+        f"in the detector's own clock (r = {fit.clock_rate:.4f}; H_d = r H, z_d(0) = r - 1 = "
+        f"{fit.clock_rate - 1.0:+.4f})"
+        if fit.clock_kind != KIND_LATTICE
+        else "in the lattice's clock, as the register read it until 2026-09-22 (not counted)"
+    )
     print(
-        f"{label}: the power-law family with H and q free: q = {fit.q_fit:+.3f}, H = {fit.h_fit:.5f} "
-        f"per interval{ht}, rms {fit.rms_fit:.4f} in z; the near fit through the origin on z <= {NEAR}: "
-        f"H = {fit.hubble_near:.5f}; the free quadratic's q_eff = {fmt(fit.q_effective, 3)}"
+        f"{label} {clock}: the power-law family with H and q free: q = {fit.q_fit:+.3f}, H = "
+        f"{fit.h_fit:.5f} per interval{ht}, rms {fit.rms_fit:.4f} in z; the near fit through the "
+        f"clock's own zero on z <= {NEAR} (the lattice's z): H = {fit.hubble_near:.5f}; the free "
+        f"quadratic's q_eff = {fmt(fit.q_effective, 3)}"
     )
     print("| form | best H over every point | its H (t_0 + T_0) | its rms |")
     print("| --- | --- | --- | --- |")
@@ -825,10 +931,12 @@ def main(argv: list[str] | None = None) -> int:
     print()
     criteria: list[tuple[str, bool]] = []
     for run in runs:
+        rate, kind = run.own_clock()
         for window in WINDOWS:
             fit = fit_window(run, window)
             if fit is not None:
-                run.fits[window] = fit
+                run.lattice_fits[window] = fit
+                run.fits[window] = in_detector_clock(fit, rate, kind)
     if throw_age is not None:
         stars_design = [
             (str(s["name"]), float(s["speed"]), float(s["initial_distance"])) for s in expected["stars"]
@@ -868,15 +976,19 @@ def main(argv: list[str] | None = None) -> int:
                     "no criterion of this window is counted inside or outside"
                 )
                 continue
+            lattice = run.lattice_fits[window]
             criteria += print_points(run, window, fit)
             print_fit(
                 f"{KIND_DETECTOR} `{run.name}`, the window [{window[0]}, {window[1]})", fit, throw_age
             )
             if window == REGISTERED_WINDOW:
                 criteria += judge_fit(run, window, fit, expected)
-            doppler = doppler_part(fit)
+            print_fit(
+                f"{KIND_LATTICE} `{run.name}`, the window [{window[0]}, {window[1]})", lattice, throw_age
+            )
+            doppler = doppler_part(lattice)
             print(
-                f"{KIND_DETECTOR} `{run.name}`: the Doppler part alone, z_D = v / c from the record's emission "
+                f"{KIND_LATTICE} `{run.name}`: the Doppler part alone, z_D = v / c from the record's emission "
                 f"ticks and distances (the star's clock removed; not pinned): q = {doppler.q_fit:+.3f}, "
                 f"H (t_0 + T_0) = {fmt(doppler.h_fit * (fit.t0 + throw_age) if throw_age is not None else None)}, "
                 f"the nearest form {doppler.nearest}"
@@ -903,18 +1015,16 @@ def main(argv: list[str] | None = None) -> int:
                 burst_max = expected.get("step_burst_max")
                 bursts = [p.burst for p in fit.points if p.burst is not None]
                 if isinstance(burst_max, int) and bursts:
-                    # The step drive (2026-09-20): one Link per interval at most.
+                    # The step drive (2026-09-20): one Link per interval at
+                    # most. A `step` record is the host's view of the body
+                    # (ENGINE.md's table): printed with its expectation as
+                    # a diagnostic, counted in no criterion (records 562 and
+                    # 564; the clock audit of 2026-09-22, finding 5).
                     ok = max(bursts) <= burst_max
-                    criteria.append(
-                        (
-                            f"{run.name}: the step rule's longest burst at most {burst_max} Link per "
-                            f"interval {KIND_BOARD}",
-                            ok,
-                        )
-                    )
                     print(
-                        f"{KIND_BOARD} `{run.name}`: the longest burst {max(bursts)} (expected at most "
-                        f"{burst_max}): {verdict(ok)}"
+                        f"{KIND_BOARD} `{run.name}`: the step rule's longest burst {max(bursts)} (expected "
+                        f"at most {burst_max} Link per interval): {'agrees' if ok else 'differs'}; a "
+                        "diagnostic of the step records, not counted"
                     )
                 k_bracket = crowd.get("k_bracket") if isinstance(crowd, dict) else None
                 if isinstance(k_bracket, list):
@@ -979,17 +1089,29 @@ def main(argv: list[str] | None = None) -> int:
                     "elapsed": run.elapsed,
                     "fingerprint": run.fingerprint,
                     "homes": sum(s.homes for s in run.stars.values()),
+                    "clock_rate": run.detector_rate,
                     "windows": {
                         f"{lo}-{hi}": {
                             "t0": fit.t0,
+                            "clock": "the detector's own clock, 1 + z_d = r (1 + z)",
+                            "clock_rate": fit.clock_rate,
                             "q_fit": fit.q_fit,
                             "h_fit": fit.h_fit,
                             "rms_fit": fit.rms_fit,
                             "hubble_near": fit.hubble_near,
                             "q_effective": fit.q_effective,
                             "best": fit.best,
-                            "doppler_q": doppler_part(fit).q_fit,
+                            "doppler_q": doppler_part(run.lattice_fits[(lo, hi)]).q_fit,
                             "points": [asdict(p) for p in fit.points],
+                            "lattice": {
+                                "kind": "GAMEBOARD, the lattice's clock",
+                                "q_fit": run.lattice_fits[(lo, hi)].q_fit,
+                                "h_fit": run.lattice_fits[(lo, hi)].h_fit,
+                                "rms_fit": run.lattice_fits[(lo, hi)].rms_fit,
+                                "hubble_near": run.lattice_fits[(lo, hi)].hubble_near,
+                                "q_effective": run.lattice_fits[(lo, hi)].q_effective,
+                                "best": run.lattice_fits[(lo, hi)].best,
+                            },
                         }
                         for (lo, hi), fit in run.fits.items()
                     },
@@ -1009,7 +1131,9 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"the reading's formula: {sum(formula)} of {len(formula)} inside {FORMULA_TOLERANCE:.0%}; the "
         f"luminosity 1 / (1 + z): {sum(luminosity)} of {len(luminosity)} inside {LUMINOSITY_TOLERANCE:.0%}; "
-        f"{failed} record check(s) failed; {inside_count} reading(s) inside, {len(criteria) - inside_count} outside"
+        f"{failed} record check(s) failed; {inside_count} reading(s) inside, {len(criteria) - inside_count} outside "
+        "(every criterion in the detector's own clock; the lattice's clock and the step rule's burst "
+        "printed, not counted)"
     )
     return 1 if failed else 0
 

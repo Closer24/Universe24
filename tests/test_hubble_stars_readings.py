@@ -264,6 +264,45 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     # luminosity within their tolerances).
     assert math.isnan(point.z)
     assert point.declared == 0.5 / run.c
+    # The detector's own clock (2026-09-22): a fixed detector at
+    # `suspension` 0 owes nothing, its rate 1 off its own state (DETECTOR).
+    rate, kind = run.own_clock()
+    assert rate == 1.0 and kind.startswith(TOOL.KIND_DETECTOR)
+
+
+def test_the_detector_clock_restates_a_fit_by_one_closed_form():
+    """(d) The detector's own clock (the model owner, 2026-09-22, records
+    678 and 707): at the rate r every point reads 1 + z_d = r (1 + z) and
+    its luminosity L_d = L / r, so L_d (1 + z_d) = L (1 + z) (the pin
+    1 / (1 + z) clock-free) and the reading's formula keeps its ratio;
+    the free fit's q is unchanged and its H_d = r H, every best-H rms r
+    times the lattice's with the same nearest and farthest forms; at r =
+    1 nothing moves. A property of the restatement, no world's numbers."""
+    c = 32 / 55
+    t0, throw_age = 350.0, 90.0
+    design = [(f"s{i}", (3 + i) / throw_age, 3 + i) for i in range(24)]
+    fit = TOOL.fit_points(TOOL.exact_points(design, t0, c, throw_age), t0)
+    rate = 0.8
+    restated = TOOL.in_detector_clock(fit, rate, TOOL.KIND_DETECTOR)
+    assert restated.clock_rate == rate and restated.clock_kind == TOOL.KIND_DETECTOR
+    for before, after in zip(fit.points, restated.points, strict=True):
+        assert abs(after.z - (rate * (1.0 + before.z) - 1.0)) < 1e-12
+        assert after.z_lattice == before.z and after.tau == before.tau
+        assert abs(after.rate * (1.0 + after.z) - before.rate * (1.0 + before.z)) < 1e-12
+        ratio_before = (1.0 + before.z) / (1.0 + before.predicted)
+        ratio_after = (1.0 + after.z) / (1.0 + after.predicted)
+        assert abs(ratio_after - ratio_before) < 1e-12
+    assert restated.q_fit == fit.q_fit
+    assert abs(restated.h_fit - rate * fit.h_fit) < 1e-15
+    assert abs(restated.rms_fit - rate * fit.rms_fit) < 1e-12
+    assert abs(restated.hubble_near - rate * fit.hubble_near) < 1e-15
+    assert restated.nearest == fit.nearest == "q = 0" and restated.farthest == fit.farthest
+    for label in fit.best:
+        assert restated.best[label][0] == fit.best[label][0]
+        assert abs(restated.best[label][1] - rate * fit.best[label][1]) < 1e-12
+    unchanged = TOOL.in_detector_clock(fit, 1.0, TOOL.KIND_DETECTOR)
+    assert unchanged.h_fit == fit.h_fit
+    assert all(abs(a.z - b.z) < 1e-12 for a, b in zip(unchanged.points, fit.points, strict=True))
 
 
 def test_the_fits_read_the_exact_forms():

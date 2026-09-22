@@ -2616,6 +2616,55 @@ states "exactly" and means integer equality at every tick.
   their H (t_0 + T_0) 3.42, 3.37, 4.46), the `_age` and `_none` worlds
   -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
 
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678 and 707 of docs/LOG_2026-09-20.md; the clock
+  audit's finding 5, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the eighteen worlds, the nine base
+  worlds and the nine of `record/`, on main's engine, the age word, by
+  `tools/run_series.py`, read by `tools/hubble_stars_readings.py`; every
+  number DETECTOR unless marked).** The pins restated BEFORE the numbers
+  were read, series G's closed form with the detector's clock read off
+  its own record over the run (age / (age + waited) of its state in
+  `run.json`, DETECTOR; the per-window step of series G, the replay's
+  edges, not made here): 1 + z_d = r (1 + z) per star, the luminosity the
+  clicks per the detector's own count, L_d = L / r, so that the pin L_d
+  (1 + z_d) = 1 within 5 % is clock-free and the reading's formula (1 +
+  z_d) = (1 + k)(1 + v / c) r keeps its ratio; the free fit's q unchanged
+  (a shape) and its H_d = r H, so the brackets on q stand as pinned and
+  the bracket on H (t_0 + T_0) is read on r H (t_0 + T_0); the three
+  forms 1 + z_d = r (1 + form(H tau)) with every best-H rms r times the
+  lattice's, the nearest and the farthest unchanged; the step rule's
+  longest burst (a `step` record, the host's view) out of the counted
+  criteria, printed as a GameBoard diagnostic (the audit's finding 10).
+  The reading, the record worlds in the registered window [300, 400):
+  r = 1.0000 in the three `none` worlds (no clock: nothing moves; q =
+  -0.104, +0.384, +1.116 and H (t_0 + T_0) = 1.0232, 0.9074, 0.7795 as
+  the line of record 394 read them on the head), 0.4825 in
+  `coasting_scalar` and `gravity_scalar`, 0.3725 in `double_scalar`
+  (z_d(0) = -0.5175 and -0.6275: every star read blue at the centre's
+  Node), 0.9875 in the two `age` worlds and 0.9725 in `double_age`;
+  H_d (t_0 + T_0) = 1.6494 (`record/coasting_scalar`; the lattice's
+  3.4185; outside 0.90 .. 1.10 in both clocks), 1.0658 (`coasting_age`;
+  1.0792; inside), 1.6278 (`gravity_scalar`; 3.3738; outside 0.84 ..
+  1.03 in both), 0.9445 (`gravity_age`; 0.9565; inside), 1.6615
+  (`double_scalar`; 4.4603; outside 0.77 .. 0.94 in both), 0.8397
+  (`double_age`; 0.8634; inside); q of the free fit unchanged (-0.950 in
+  the three `scalar` worlds, the fit's grid edge, as the line of record
+  394); the reading's formula 648 of 648 inside 2 %, the luminosity 648
+  of 648 inside 5 %; 0 record checks failed; 1340 readings inside and 19
+  outside (the eighteen burst lines out of the count; the nineteen
+  outside the `scalar` worlds' q, H, nearest, farthest, k and ordering,
+  the lines of record 394, and `record/double_none`'s q above its
+  bracket). No verdict word of this series moves in the detector's
+  clock: the restatement scales z and H by r and the brackets that could
+  move (H (t_0 + T_0) in the three `scalar` worlds) are outside in both
+  clocks by a factor 1.5 to 1.7. The caveat of the line of record 394
+  stands: the record worlds on the head do not reproduce the second
+  run's registered readings (gravity +0.384 for +0.922), so no number of
+  this series is re-registered; the lines above stand as history with
+  their kind, and this line is the detector's-clock reading of the
+  head's replay, dated.
+
 ### H, Bohr's lines behind the detector (2026-09-20)
 
 - **Confronts.** Whether Bohr's lines come out by themselves behind the
