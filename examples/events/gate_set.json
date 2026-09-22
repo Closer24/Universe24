@@ -137,8 +137,8 @@
    "cap": 1,
    "covers": "suspension as a pair, the age moment, a body owing intervals while pushed",
    "digests": {
-    "state_sha256": "ec7ec1d863bcd115d12ea059c8f0da010fcbe61584f5ac684efb8c5b3f1bd5c4",
-    "audit_sha256": "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
+    "state_sha256": "d4d6a113a871d2ab8d4b5bdadf8963e53a696d6eb0c24926904d27322d35a3eb",
+    "audit_sha256": "a128731b8d6d67de0caaf6e6b8b0e3af75d928342355c058aaee2851321150c9",
     "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
    },
    "former": {
@@ -148,7 +148,7 @@
      "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "drive": "per_axis",
-    "moved": "2026-09-22, the line drive the law's drive of a body (the model owner, record 972; docs/designs/drive_b/DEFAULT.md section (f)): the thrown bodies' drive accumulators at the first self-creation (p_a Q in place of p_a); the books and the events unchanged at the cap"
+    "moved": "2026-09-22, the line drive the law's drive of a body (the model owner, record 972; docs/designs/drive_b/DEFAULT.md section (f)): the thrown bodies' drive accumulators at the first self-creation (p_a Q in place of p_a); the books and the events unchanged at the cap (the digests of that day ec7ec1d8..., 7e219a1d..., in git at de55417); and again the same day on series G's re-pin (section (c)): the sources' momenta by the line rule at the declared speeds (px1 234270943 for 225432947), the state and the books at the cap 1 moved with them, the events (none at the cap) unchanged"
    }
   },
   {

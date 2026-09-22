@@ -533,3 +533,56 @@ and the verdicts are in
 [the register's entry](../../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20),
 "Re-read in the detector's own clock (2026-09-22)"; the lines above are
 history with their kind.
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of `expectations.json`, committed at `de55417` before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the four
+worlds with the sources' momenta by the line rule p = Q S M v / (1 - v
+T_D / Q) at the declared speed ladder (px1 234270943 for the per-axis
+225432947; the pushing crowd 16 times at 16 times the content), the pins
+of `expectations.json` (the criteria above with the drive named, each
+source's first Link) committed before the run. A new registration beside
+the runs and re-reads above, never a replacement: the paper's rows rest on
+the re-read in the detector's own clock under the per-axis drive and say
+so.
+
+Source fingerprint `760e373a542f918f` (the checkout of `drive-default` at `de55417`, the
+merged tree: main's generic entry of the bending and the flip), Python
+3.14.0rc2, numpy 2.5.3, headless, four cores, `tools/run_series.py --jobs
+4`; every run completed at 400 intervals (59.5 to 64.6 s) with the books
+balanced at every tick, `run.json` carrying `"drive": "line"`; the digests
+(state, audit, events): `37da0b5205c1`, `43e88eac951e`, `70c0b242d3fa`
+(`coasting_scalar`); `c7247f008801`, `9c470be9ac7b`, `6e70f694d6ec`
+(`coasting_age`); `672dead38b8b`, `80eb8d08988b`, `48138918d9ff`
+(`pushing_scalar`); `abe82f4dd214`, `ede6cf6b118d`, `4e38b22ccf75`
+(`pushing_age`). `tools/hubble_readings.py` (the pinned reading in the
+detector's own clock, the lattice's clock printed and not counted): the
+reading's formula 215 of 216 inside 2 percent; 0 record checks failed;
+230 readings inside, 22 outside; none moved (the per-axis re-read in the
+detector's clock: 288 of 288, 304 inside, 32 outside).
+
+DETECTOR, the late window [300, 400) in the detector's own clock (r_w the
+detector's self-creations per interval over the window):
+
+| World | r_w | The near fit's H t_0 (Milne 1; pushing: below 1) | The coasting form q = 0 the nearest (coasting) / q_eff > 0 (pushing) | The accelerating form q = -0.55 the farthest (pushing) | What is observed today (q = -0.55) the nearest (expected not) |
+| --- | --- | --- | --- | --- | --- |
+| `coasting_scalar` | 0.7500 | -0.5221: outside (the per-axis re-read 0.8415, outside) | outside; the rms below 0.02 outside | - | outside |
+| `coasting_age` | 1.0000 | 1.0102: inside (1.0119, inside) | outside; the rms outside | - | the nearest: inside |
+| `pushing_scalar` | - | no reading in the window (no source with ten record lines: the crowd's clocks) | - | - | - |
+| `pushing_age` | 0.9600 | 1.0290: outside H t_0 < 1 (1.0643, outside) | q_eff > 0: inside | outside | the nearest: inside |
+
+**What is read and what is not, no number moved.** The linear law comes
+out by itself again under the line drive: `coasting_age` reads H t_0 =
+1.0102 at t_0 = 350 in the detector's own clock (the per-axis 1.0119),
+the coasting form's rms and the nearest form as under the per-axis drive
+(the far part below the coasting form of the near fit, the signature of
+the accelerating form by the throw's initial distances and the emitters'
+clocks, not by an acceleration: the registered finding), and `pushing_age`
+decelerates on the GameBoard (q_eff > 0) with H t_0 above 1 as before.
+The `scalar` worlds' lines are history under either drive (the crowd's
+clock term beside the Doppler; `pushing_scalar` gives no reading in the
+late window under the line drive, where the per-axis re-read gave one at
+H_d t_0 = 0.3873; `coasting_scalar`'s near fit through the clock's own
+zero reads a negative H). The change of drive changes no verdict of the
+register's finding.

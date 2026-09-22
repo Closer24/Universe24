@@ -11,6 +11,30 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series G under the law's line drive: four runs on drive-default de55417 - 2026-09-22
+
+The branch `drive-default` at `de55417` (the generator's momenta by the
+line rule committed before the run, DEFAULT.md section (c), with a new
+`expectations.json`): the four worlds of `examples/events/hubble/` run
+through `tools/run_series.py --jobs 4` (Python 3.14.0rc2, numpy 2.5.3,
+headless; source fingerprint `760e373a542f918f`, the merged tree), every run completed
+at 400 intervals with the books balanced at every tick, `run.json`
+carrying `"drive": "line"`; the digests (state, audit, events)
+`37da0b5205c1`, `43e88eac951e`, `70c0b242d3fa` (`coasting_scalar`),
+`c7247f008801`, `9c470be9ac7b`, `6e70f694d6ec` (`coasting_age`),
+`672dead38b8b`, `80eb8d08988b`, `48138918d9ff` (`pushing_scalar`),
+`abe82f4dd214`, `ede6cf6b118d`, `4e38b22ccf75` (`pushing_age`); run times
+59.5 to 64.6 s at 293 to 296 MB peak (host measurements). The gate world
+`hubble/pushing_age` replayed at its cap 1: its state and books moved
+with the momenta and are re-pinned in `gate_set.json` (`d4d6a113...`,
+`a128731b...`; the events none at the cap; the flip day's `ec7ec1d8...`
+in git at de55417, the per-axis under `former`). The readings by kind
+(230 inside, 22 outside in the detector's own clock; `coasting_age` H
+t_0 = 1.0102) are in [the series' README](../examples/events/hubble/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-de55417-before-the-run)
+and [the register](EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20).
+The re-read in the detector's own clock under the per-axis drive stays
+registered as the reading the paper's rows rest on.
+
 ## Series G2 under the law's line drive: eighteen runs on drive-default f187059 - 2026-09-22
 
 The branch `drive-default` at `f187059` (the generator's momenta by the

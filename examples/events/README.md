@@ -219,6 +219,12 @@ t_0 = 350) and the far part falls below the coasting form of the near fit
 in every run, the signature of the accelerating form, by the throw's
 initial distances and the emitters' clocks and not by an acceleration
 (on the GameBoard the pushing sources lose 4 to 32 % of their momentum).
+Since 2026-09-22 the four worlds carry the sources' momenta by the law's
+line drive (a new `hubble/expectations.json` names the drive; the per-axis
+momenta of history reproducible from the generator), and the re-read under
+it is registered beside the re-reads above: the linear law comes out by
+itself (`coasting_age` H t_0 = 1.0102 in the detector's own clock) and the
+register's finding stands.
 
 ## The Bohr series
 

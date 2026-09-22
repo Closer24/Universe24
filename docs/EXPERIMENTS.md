@@ -2482,6 +2482,30 @@ states "exactly" and means integer equality at every tick.
   and -0.0200, the sources reading blue 9, 0, 24 and 0 of 24 (v / c below
   0.2085, 0.0050, 2.4188 and 0.0204); the reading's formula unchanged.
 
+- **Re-read under the law's line drive (2026-09-22; measured against the
+  pins of `expectations.json`, committed at `de55417` before the run; the
+  model owner's record 972, [the design](designs/drive_b/DEFAULT.md) step
+  2; a new registration beside the re-reads above, which the paper's rows
+  rest on).** The four worlds with the sources' momenta by the line rule
+  at the declared speed ladder (px1 234270943 for the per-axis 225432947),
+  the merged tree (fingerprint `760e373a542f918f`), every run completed and balanced,
+  `run.json` carrying `"drive": "line"`; `tools/hubble_readings.py` in the
+  detector's own clock: the reading's formula 215 of 216, 0 record checks
+  failed, 230 readings inside, 22 outside, none moved (the per-axis
+  re-read in the detector's clock 304 and 32). The late window:
+  `coasting_age` H t_0 = 1.0102 (inside; the per-axis 1.0119), the
+  coasting form's nearest and rms verdicts as before; `pushing_age` H
+  t_0 = 1.0290 (outside H t_0 < 1; 1.0643 before), q_eff > 0 inside;
+  `coasting_scalar` -0.5221 (outside; 0.8415 before, outside);
+  `pushing_scalar` no reading in the window (the crowd's clocks). The
+  linear law comes out by itself under the line drive as under the
+  per-axis one, and the register's finding (the far part below the
+  coasting form by the throw's initial distances and the emitters'
+  clocks, not by an acceleration) stands; the `scalar` worlds' lines are
+  history under either drive. The gate world `hubble/pushing_age`'s
+  digests at its cap 1 moved with the momenta and are re-pinned in
+  `gate_set.json` (the former kept). No pin moved.
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**

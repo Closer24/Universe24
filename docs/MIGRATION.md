@@ -68,7 +68,8 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   rewritten by the generator, n = 4, 6, 10 at S = 1, 8, 32, with
   `expectations.json`; the two lamp worlds unchanged) and series G2
   (`hubble_stars/` and `record/`, the stars' momenta by the line rule,
-  both registers with the drive named).
+  both registers with the drive named) and series G (`hubble/`, the four
+  worlds' momenta by the line rule, a new `expectations.json`).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by

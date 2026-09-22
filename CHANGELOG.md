@@ -127,6 +127,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the six worlds rewritten, the two lamp worlds unchanged, and the eight
   runs registered beside the runs of 2026-09-19 to 2026-09-21 (no orbit
   closes by the criterion; the first Link exactly as pinned).
+- Series G re-pinned under the law (`examples/events/hubble/`): the
+  generator's momenta by the line rule at the declared speed ladder, a new
+  `expectations.json` (the drive named, the criteria with their brackets,
+  each source's first Link; the per-axis momenta of history reproducible),
+  the four worlds rewritten, the gate world `hubble/pushing_age` re-pinned,
+  and the four runs registered beside the re-reads of 2026-09-20 to
+  2026-09-22 (the linear law by itself, `coasting_age` H t_0 = 1.0102;
+  230 readings inside, 22 outside, none moved).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers
