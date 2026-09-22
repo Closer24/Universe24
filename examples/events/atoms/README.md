@@ -25,6 +25,26 @@ experimenter, registered as rows of series H.
   Links, three to four returns, the period 1400 to 2000; an escape face
   click FAIL), the cause it answers
   [atom_give/CAUSE.md](../../../docs/designs/atom_give/CAUSE.md).
+- `hydrogen_r3_level.json`, `hydrogen_r7_level.json`, `hydrogen_r12_level.json`
+  (`rays-atoms-hydrogen-r{3,7,12}-level-v1`): hydrogen's construction at the
+  three radii where the shell mean's closure `4 sqrt(r / 12)` is nearest 2, 3
+  and 4 (the generator's own closures 1.892, 3.017, 4.001 under the SAME
+  action h = 16 p_B(8)), each `hydrogen_r12_centred.json`'s construction at
+  its radius (the flux the electron's three Nodes receive on the ring, the
+  orbit under form B's rule, the side of series H's rule, five turns of
+  ticks, `centred_step`) plus the world key `atom_level` (atom-level-v1, off
+  by default: the release at a closure of the difference of two closures'
+  levels, the virial form) with the family `light` (the photon's, quantum 1)
+  and the electron's `level` declaration (`{"family": "light", "pair":
+  [512, 1], "return": [0, -1]}`); the pins before their runs are
+  [atom_levels/LEVELS.md](../../../docs/designs/atom_levels/LEVELS.md)
+  section 5 (the loop stays and returns; the level of the loop between the
+  first and the second returns off the faces' two counts, 146, 71 and 43
+  steps within 10 percent; the ratio of two lines a reported computation
+  with its band; the releases and the Planck identity read from two faces;
+  the control). The r = 12 world is the centred world plus the key, the
+  declaration and the photon's family, integer for integer
+  (`tests/test_atom_level.py`).
 - `helium_r12.json` (`rays-atoms-helium-r12-form-b-v1`): binding-v1's
   square ([binding/alpha_square_bond.json](../binding/alpha_square_bond.json):
   `p` of charge 4 and `n`, each with its held `nuclear` and `bond`) fixed
@@ -59,3 +79,22 @@ one row per crossing (its `read` lines at 30, 442, 882, 1329, 2254; under
 339 clicks of the electron's rows; four pins FAIL, two NOT READ, one PASSES, nothing
 moved; the radius from the step lines 12.00 to 27.86 (GAMEBOARD, a
 diagnostic). Helium is not run. NATURE row 6 stays NOT YET.
+
+## The three runs of the level worlds (2026-09-22)
+
+One run each of `hydrogen_r3_level.json`, `hydrogen_r7_level.json` and
+`hydrogen_r12_level.json` on the Boss's word after the physics-rule
+reviewer's AGREED on the pins as written, read by kind in
+[docs/designs/atom_levels/RUN.md](../../../docs/designs/atom_levels/RUN.md)
+(the reader `level_readings.py` beside it, its printout, the run blocks in
+[expectations.json](expectations.json)); no pin moved after the runs. The
+r = 3 electron LEFT the board through `face:+x` at tick 733 (R1 FAIL: the
+fan's grain at small r, a finding); the r = 7 loop stays four returns
+(the first at 612 against the generator's 690, R1 FAIL by the band; the
+level of its first loop 70 against 71, R3 PASS); the r = 12 loop stays five
+returns (R1 and R3 PASS at the bands' edges, 1341 and 47) and releases once,
+four `light` rows of content 4 at its fourth return, the Planck identity
+read on the +x and +y faces (R5). Two levels give one line and no ratio:
+R4 NOT READ, NATURE row 6 stays NOT YET. By the model owner's word
+(record 997) these runs are the side track's record beside the paper: the
+paper does not cite them as a reading of the levels.

@@ -321,6 +321,10 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             # The turn's remainder of the massive rows (`massive-rows-v1`,
             # 2026-09-21), which no push reads.
             "acc_turn",
+            # The row's own phase rate (`atom-level-v1`, 2026-09-22), an
+            # identity field of the merge, constant 0 without the key
+            # `atom_level`, which no push reads.
+            "turn",
         )
         assert not hasattr(store, "charge") and not hasattr(store, "mass")
         assert simulation.measured[1].charge == (3, 1) if source_charge[0] > 0 else (-3, 1)

@@ -758,10 +758,11 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
         arrival=np.array([0, 0, 0]),
     )
     # `hand` is an identity field; the five accumulators of the key
-    # `optical` (optical-v1, 2026-09-21) and `acc_turn`, the massive rows'
-    # remainder (massive-rows-v1, the same day), follow it, each constant 0
+    # `optical` (optical-v1, 2026-09-21), `acc_turn`, the massive rows'
+    # remainder (massive-rows-v1, the same day), and `turn`, the row's own
+    # phase rate (atom-level-v1, 2026-09-22), follow it, each constant 0
     # without its key (a width of 0 bits when constant as here).
-    assert IDENTITY_FIELDS[-10:] == (
+    assert IDENTITY_FIELDS[-11:] == (
         "hand",
         "made",
         "residue",
@@ -772,6 +773,9 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
         "cross_y",
         "cross_z",
         "acc_turn",
+        # The row's own phase rate of atom-level-v1 (2026-09-22), an identity
+        # field of the merge, constant 0 without the key `atom_level`.
+        "turn",
     )
     with_hand = store.merge_key()
     without = store.merge_key([getattr(store, name) for name in IDENTITY_FIELDS if name != "hand"])

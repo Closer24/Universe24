@@ -505,6 +505,7 @@ class NatureBeamSimulation:
             detector_set,
             span=definition.span,
             phase_by_momentum=definition.phase_by_momentum,
+            level=definition.level,
             column_names=tuple(name for name, _ in self.world.columns),
             family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
@@ -836,6 +837,14 @@ class NatureBeamSimulation:
         content = entry.content
         if content <= 0:
             return
+        if entry.level is not None:
+            # atom-level-v1: the count since the last return, the return's
+            # test on the momentum the last push left, the level and the
+            # release (docs/designs/atom_levels/LEVELS.md section 2 (b)).
+            self._level_return(entry)
+            content = entry.content
+            if content <= 0:
+                return
         # The drive of every axis advances at this self-creation; the first
         # axis whose rule fires makes the step, and a fire on a later axis
         # in the same self-creation is lost (its D subtracted, no Link
@@ -899,6 +908,7 @@ class NatureBeamSimulation:
                 # rule counts on it, crossed or refused at a contact.
                 bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
                 (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
+                self._level_gain(entry, axis, momentum)
             fired = (axis, momentum, sign)
         else:
             # centred-step-v1: the count the nearest whole number under the
@@ -926,6 +936,7 @@ class NatureBeamSimulation:
                     # stepped skipped it: note 30 (ii)).
                     bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
                     (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
+                    self._level_gain(entry, axis, momentum)
                 if fired is None:
                     fired = (axis, momentum, counts[axis])
         if fired is None:
@@ -1132,6 +1143,144 @@ class NatureBeamSimulation:
                     line["given"] = given
                 line["momentum"] = list(entry.momentum)
                 self.record(line)
+
+    def _level_gain(self, entry: Measured, axis: int, momentum: int) -> None:
+        """atom-level-v1 (docs/designs/atom_levels/LEVELS.md section 2 (b)):
+        the action gained on the axis since the last return, `|p_a| N` at
+        every Link the step rule counts on it, the action rows' own rate at
+        the action rows' own Links (DESIGN.md's give rows without the
+        modulus), bounded before it is added."""
+        if entry.level is None:
+            return
+        entry.level_action[axis] = bounded(
+            entry.level_action[axis] + abs(momentum) * self.world.phase_steps, entry, "level action"
+        )
+
+    def _level_return(self, entry: Measured) -> None:
+        """atom-level-v1, the return and the release at it (docs/designs/
+        atom_levels/LEVELS.md section 2 (b); the return DESIGN.md section 1
+        (b) with the reviewer's zero-state line of record 899): at every
+        self-creation the count since the last return gains one; a return
+        is the interval where the momentum's component on the declared axis
+        takes the declared sign while its last nonzero sign was the
+        opposite (`+ -> 0 -> -` fires, `+ -> 0 -> +` and the first interval
+        after a birth at 0 do not); the last nonzero sign is kept on the
+        record. At a return the level of the closure is the whole part of
+        `n_l x (the action gained over the loop)` over `2 h d_l x (the
+        count)`, one Euclidean division of the record's own integers
+        against the declared wall, the remainder the declared band; the
+        first return sets the level of the last release and releases
+        nothing (one closure is no difference); a later return releases the
+        rise of the level above the last released one (`_level_release`)
+        and sets it, or nothing on a fall (the debt kept in the held
+        level, a reversal cancelled first, record 126); then the action
+        rows of the level and the count are zeroed. The return's line on
+        the record is the host's view of the body's store (GAMEBOARD, the
+        readings by type), never a measurement."""
+        declaration = entry.level
+        assert declaration is not None
+        entry.level_count += 1
+        component = entry.momentum[declaration.axis]
+        sign = 1 if component > 0 else (-1 if component < 0 else 0)
+        returned = sign == declaration.sign and entry.level_sign == -declaration.sign
+        if sign:
+            entry.level_sign = sign
+        if not returned:
+            return
+        action = self.world.action
+        assert action is not None
+        n_l, d_l = declaration.pair
+        gained = entry.level_action[0] + entry.level_action[1] + entry.level_action[2]
+        dividend = bounded(n_l * bounded(gained, entry, "level action"), entry, "level dividend")
+        divisor = bounded(2 * action * d_l * entry.level_count, entry, "level divisor")
+        level = dividend // divisor
+        last = entry.level_last
+        released = 0
+        if last is None:
+            entry.level_last = level
+        elif level > last:
+            released = level - last
+            self._level_release(entry, declaration.family, released)
+            entry.level_last = level
+        if self.record is not None:
+            self.record(
+                {
+                    "event": "level",
+                    "tick": self.tick,
+                    "number": entry.number,
+                    "node": list(entry.position),
+                    "action": gained,
+                    "count": entry.level_count,
+                    "level": level,
+                    "last": last,
+                    "released": released,
+                    "content": entry.held[entry.family],
+                    "momentum": list(entry.momentum),
+                }
+            )
+        entry.level_action = [0, 0, 0]
+        entry.level_count = 0
+
+    def _level_release(self, entry: Measured, family: int, rise: int) -> None:
+        """The release of a level's rise (atom-level-v1, LEVELS.md section 2
+        (b)): one row per declared direction of the body, of the declared
+        paid family, amount 1, content per unit `h_q x rise`, age 0, the
+        body's phase and number, no record, the law's one label `c u_d`
+        (`momentum_labels`, the paid birth of `_give`), and the row's own
+        phase rate `rise` steps per interval (section 2 (d)); the body's
+        own content less by the rows' content, its momentum less by their
+        labels (zero on a symmetric list), booked as a paid release is (the
+        body's family's `spent`, the released family's `released` lines).
+        Refused loudly when the rows would take the body's whole content."""
+        definition = self.families[family]
+        per_unit = definition.quantum * rise
+        count = len(entry.directions)
+        given = per_unit * count
+        if given >= entry.held[entry.family]:
+            raise ValueError(
+                f"{BEAM_LAW}: measured event {entry.number} at {list(entry.position)} would release "
+                f"{given} of its content {entry.held[entry.family]} at a level's rise of {rise} "
+                "(atom-level-v1: a body cannot give its whole content)"
+            )
+        origin = entry.position
+        store = self.stores[family]
+        for direction in entry.directions:
+            direction_column = np.array([direction], dtype=np.int64)
+            amount_column = np.array([1], dtype=np.int64)
+            content_column = np.array([per_unit], dtype=np.int64)
+            labels = momentum_labels(
+                self.tables.family_flights[family].labels,
+                direction_column,
+                amount_column,
+                content_column,
+                False,
+                origin,
+            )
+            born = exact_column_sums(labels)
+            entry.momentum = [
+                bounded(a - b, entry, "momentum") for a, b in zip(entry.momentum, born, strict=True)
+            ]
+            entry.held[entry.family] -= per_unit
+            self.ledger.held_spent[entry.family] += per_unit
+            self.ledger.content_released[family] += per_unit
+            self.ledger.transit_released[family] += 1
+            self.ledger.transit_momentum = [
+                a + b for a, b in zip(self.ledger.transit_momentum, born, strict=True)
+            ]
+            store.append(
+                node=np.array([store.flat(origin)], dtype=np.int64),
+                direction=direction_column,
+                age=np.zeros(1, dtype=np.int64),
+                phase=np.array([entry.phase], dtype=np.int64),
+                number=np.array([entry.number], dtype=np.int64),
+                amount=amount_column,
+                content=content_column,
+                arrival=np.array([NO_ARRIVAL], dtype=np.int64),
+                record=np.array([NO_RECORD], dtype=np.int64),
+                branch=np.array([NO_BRANCH], dtype=np.int64),
+                multiplicity=np.array([ONE_PATH], dtype=np.int64),
+                turn=np.array([rise], dtype=np.int64),
+            )
 
     def _give(self, entry: Measured, axis: int, step: int, origin: Address3) -> int:
         """The give of the binding that costs content (`binding-v1`; the
