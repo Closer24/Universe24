@@ -45,6 +45,13 @@ record 972, [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)): its
 momenta and pins are the per-axis drive's (`v = p / (Q S M + p)` exactly),
 the drive of history under which they were derived and read; the key is
 transient and goes when this series is re-pinned under the law.
+Amended at the merge with the law's line drive (PR #907, 2026-09-22; [the preregistration](../../../docs/designs/moving_detector/PREREGISTRATION_V2.md) section 4): the
+six world files gained the one key `per_axis_drive`, the drive of history
+their momenta and pins were derived under and the drive batch 933 ran (the
+engine under the key is byte for byte that drive, `gate_set.json`'s `former`
+digests); batch 933's file hashes are of the files without the key, the
+rerun's inputs are these files with it, and the six worlds' events digests
+under the key against batch 933's `artifact_hashes` are NOT REPLAYED.
 
 ## The pins, before any run (the design's section 5)
 

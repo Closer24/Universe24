@@ -98,6 +98,14 @@ verdict and are not read as a pass of anything: version 2's prediction
 The same five world files are retained unchanged as the rerun's inputs, so
 that batch 933 is its regression evidence.
 
+Amended at the merge with the law's line drive (PR #907, 2026-09-22): the
+six world files gained the one key `per_axis_drive`, the drive of history
+their momenta and pins were derived under and the drive batch 933 ran (the
+engine under the key is byte for byte that drive, `gate_set.json`'s `former`
+digests); batch 933's file hashes are of the files without the key, the
+rerun's inputs are these files with it, and the six worlds' events digests
+under the key against batch 933's `artifact_hashes` are NOT REPLAYED.
+
 ## 5. The round-trip closure finding, by kind
 
 The independent review found the round trip `q` outside the band for

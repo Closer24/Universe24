@@ -198,7 +198,11 @@ record their steps: alpha_square's p4 steps +y at tick 57, q4's rectangle
 disperses at about 160, the coupling probes make 11 steps, the deuteron's
 nucleons attempt 33 and 29 steps at contacts). Together 103 worlds in 20
 folders (17 hold a declared mover; `binding/`, `weak/` and `coupling/`
-hold pushed bodies alone). A body's content M is `sum(held)` as the parser's load check
+hold pushed bodies alone). Since the merge of main on 2026-09-22 the moving
+detector's six worlds (`moving_detector/`, PR #834's series, six declared
+movers whose momenta are the per-axis pace 1/k exactly) are in the
+register too, under the transient key `per_axis_drive` until their own
+re-pin. A body's content M is `sum(held)` as the parser's load check
 takes it; S the world's `width`; the pace per axis under the per-axis
 drive `|p_a| / (Q S M + |p_a|)` (`step_divisor`, the cap on), under the
 line drive `|p_a| Q / W` per axis and `|p|_1 Q / W` Manhattan

@@ -93,7 +93,10 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   and its per-axis digests kept as history.
 - **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
   `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
-  declare `per_axis_drive` and keep their integers; the law's cases are
+  declare `per_axis_drive` and keep their integers, and, since the merge of
+  main on 2026-09-22, the moving detector's six worlds (`moving_detector/`,
+  PR #834's series, their momenta the per-axis pace 1/k exactly) declare
+  it too until the series is re-pinned; the law's cases are
   written with their integers first (`test_drive_b.py`, `test_centred_step.py`
   (d), `test_optical_body.py`, `test_push_width.py` (d), `test_crossing.py`
   (f) under the line drive).

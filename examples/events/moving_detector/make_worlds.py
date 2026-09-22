@@ -24,7 +24,7 @@ of the tick is read by the tool. Every world declares `per_axis_drive`,
 the per-axis drive of history its pins were derived under (the rule above;
 the law's drive is the line drive since 2026-09-22, the model owner's
 record 972, docs/designs/drive_b/DEFAULT.md, under which the cart's pace is
-p Q / (Q^2 S M + p T_D), no longer the exact 1 / k): the key is transient,
+p Q / (Q^2 S M + p T_h), no longer the exact 1 / k; T_h = 110 on a heading): the key is transient,
 removed when this series is re-pinned under the law.
 
 | World | k | the pace v | beta = v / c | the bar | the intervals |
