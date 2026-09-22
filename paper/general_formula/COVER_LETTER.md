@@ -34,24 +34,27 @@ methodological work the journal's scope names.
 every world file, every run's record, the check scripts and the
 derivation records are archived at Zenodo (concept DOI
 10.5281/zenodo.22738746) with the commit named in the reproduction
-appendix. The manuscript's text, figure scripts and check scripts were
-drafted by a large language model (Claude, Anthropic, through Claude
-Code, 2026) under my direction, as the manuscript's declaration states;
-I defined the model, the rules and the experiments, decided every
-reading and verdict, and every number entered the text with a ledger
-row naming its kind and source. The model is not an author.
+appendix. A large language model (Claude, Anthropic, through Claude Code, 2026)
+was used as a tool under my direction for code, computation and the
+drafting of the text, as the manuscript's declaration states; I reviewed
+every statement and am responsible for every claim. I laid down every
+postulate and hypothesis of the model myself and brought in nothing
+external; the forms of Newton, Kepler, Einstein, Lorentz, Bohr and Balmer
+that the paper cites are the things compared with, not inputs to the
+model.
 
 **Preprint.** The manuscript is posted on arXiv (identifier to be
 added) and has not been submitted elsewhere.
 
-**Suggested reviewers** (independent of the author; to be confirmed and
-completed with current affiliations and addresses before submission):
+**Suggested reviewers** (independent of the author; affiliations as
+published on their institutions' pages, checked on 2026-09-22; addresses
+to be taken from those pages at submission):
 
-1. Pablo Arrighi (quantum cellular automata; Natural Computing 18, 885 (2019), cited).
-2. David A. Meyer (quantum lattice gases; J. Stat. Phys. 85, 551 (1996), cited).
-3. Robert W. Spekkens (ontological models, contextuality; Phys. Rev. A 75, 032110 (2007), cited).
-4. Christian Kurtsiefer (precision CHSH measurements; Phys. Rev. Lett. 115, 180408 (2015), cited).
-5. Hans-Thomas Elze (discrete deterministic models of quantum mechanics; not cited, a field reviewer).
+1. Pablo Arrighi, Full Professor of Computer Science, Université Paris-Saclay (LMF laboratory, Inria Saclay; quantum cellular automata; Natural Computing 18, 885 (2019), cited).
+2. David A. Meyer, Professor of Mathematics, University of California San Diego (quantum lattice gases; J. Stat. Phys. 85, 551 (1996), cited).
+3. Robert W. Spekkens, Faculty, Perimeter Institute for Theoretical Physics, Waterloo (quantum foundations, ontological models; Phys. Rev. A 75, 032110 (2007), cited).
+4. Christian Kurtsiefer, Principal Investigator, Centre for Quantum Technologies, National University of Singapore (precision CHSH measurements; Phys. Rev. Lett. 115, 180408 (2015), cited).
+5. Hans-Thomas Elze, Associate Professor, Dipartimento di Fisica "E. Fermi", Università di Pisa (deterministic and integer-valued cellular-automaton models of quantum mechanics; not cited, a field reviewer).
 
 I thank you for your consideration.
 

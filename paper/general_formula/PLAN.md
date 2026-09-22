@@ -5007,3 +5007,19 @@ work, the owner's to order, not this paper's. 50 pages.
 
 Correction (the same day): the build of 58a65a93 is 51 pages, not 50;
 NUMBERS.md carries the correcting row.
+
+## Applied (2026-09-22, the owner's word of record 1014 through the Boss's order of 17:22Z): the declaration in the customary form; the reviewers verified
+
+The declaration of the use of artificial intelligence rewritten short
+and in the journals' customary form: the model named as a tool (code,
+computation, the drafting of the text) under the author's direction,
+the author responsible for every claim, and the author's statement in
+his own words: every postulate and hypothesis laid down by him, nothing
+external brought in, the forms of Newton, Kepler, Einstein, Lorentz,
+Bohr and Balmer the things compared with, not inputs (record 817). The
+cover letter's five suggested reviewers kept, each with an affiliation
+checked on the institution's or a public research page on 2026-09-22
+(Arrighi, Université Paris-Saclay; Meyer, UC San Diego; Spekkens,
+Perimeter Institute; Kurtsiefer, CQT Singapore; Elze, Università di
+Pisa); the letter's own AI statement matched to the declaration. No
+physics, no number. 51 pages.
