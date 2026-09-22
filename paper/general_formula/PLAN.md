@@ -3720,3 +3720,61 @@ sentence, the c-postulate row, row 4b, the bibitem clickframe; 30 pages,
 the split 25 / 2 / 3; the pinning test and tools/check.py pass. Commit B,
 the reshaping, follows on the same branch. The citation swap to the
 merge SHAs is one small commit when they land.
+
+## Applied (2026-09-22, the owner's GO through the Boss): commit B, the reshaping
+
+Plan B applied as written through cut30/corrections.py, one commit: the
+abstract's why clause; "Why physics behaves like modern algebra" (five
+steps) in place of the claim paragraph; Section 2's opening, "The
+GameBoard as a system of information transfer" (the message tuple, the
+six things an interval does to messages, the books, two messages of the
+paper, the passage to the algebra, the family of lattice gases,
+cellular automata machines, quantum cellular automata and Shannon) and
+"The road from the cells to the algebra" (how mass, charge, momentum,
+the phase, the amount, the multiplicity, the age, the field and the
+tables entered); the identities; "When the transition was made"; the
+ledger's caption; "Interference, by the formulas alone" (two slits, one
+slit, Mach-Zehnder, what passes and what does not); Section 8's seven
+confirmations named once; the discussion's "The step beneath and the
+step above" (W the axiom, the conversion the map, Einstein's relation
+its image, shown to order m^2 beta^2 as the conversion's identity
+under A1 and A2, declared for the rows' dynamics, record 270), "The
+smallest thing above" (the quantum of the Outside step from A1 and the
+click's definition), "Newton from the small step" and the Inside |
+Outside conversion table of nine rows with the reading's kind on each;
+the known / ours sentence at the end of "What is proved"; Appendix C's
+seven confirmations and the 24 dated transitions; the four sources at
+their branch heads, "PR #NNN, pending merge" (click frame 1dd81fef
+#769, light-outside 8bd4f811 #791, einstein-outside c25efd01 #792,
+HISTORY.md 8eaaf61a #793); Table 2's seven shown rows out.
+
+The count: the first compile was 35 pages; B.7's named cuts (Section
+6's L2b narrative to four lines, Section 3's registered count and the
+grain's bound to Table 3's row 5a, the symbols table's single-use
+letters, Table 2's rows now carried by Table 3 and the conversion
+table) and four rounds of trims of run narratives (series T in one
+sentence, the GPS term to row 12, the excluded grains, the seven unrun
+rows by number, the Courant sentence, the fingerprints named once,
+Appendix C's reproduction paragraphs) bring it to 34 pages, the body
+through 28, the references 29 to 31, the appendices to 34; no overfull
+vbox, no undefined reference. The plan's budget (30 or 31) is not met:
+the "in" items came in about three pages longer than B.7's thirty-five
+lines, the owner's content (the information-transfer opening, the road,
+the five steps, the step paragraphs, the table, the phenomena, the 24
+transitions) being most of it. The count is reported as the order
+allows. What a further cut could take, each on the owner's word and
+none taken here: the abstract to about 1200 characters (six lines); the
+page break before the references (about twenty lines of page 28); the
+remark on dispersion (Section 3, eleven lines); Table 3's cells (about
+eight lines); the ledger's rows already shown in the conversion table.
+
+Two defects found at the compile and fixed before the commit: the new
+bibitem shannon1948 duplicated the existing one (removed); the
+conversion table's columns were 17 pt wider than the text (narrowed).
+One number corrected: the conversion table's clock row named "series X
+1.0000", a reading the register does not hold; it now carries series
+X's registered k = 0.9089 at r = 4 for the pin 0.9108 (docs/EXPERIMENTS.md,
+series X, on main at 7ef735c8; record 661). NUMBERS.md carries the
+plan-B numbers (the count, 1/c^2 by direction, the click frame's chain,
+the 24 transitions, series X). The citation swap to the merge SHAs is
+one small commit when the four PRs land.
