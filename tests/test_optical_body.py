@@ -187,10 +187,12 @@ def push_bar(
 
 
 def test_the_drive_joins_the_age_walls_set_at_gamma_beside_the_clock_and_the_flight():
-    """(o). Since the line drive is the law's (2026-09-22) the drive member
-    joins under `optical` with nothing else declared; under the per-axis
-    drive of history (`per_axis_drive`) it never does."""
-    assert age_wall_set() == (("owed", 1),)
+    """(o). Since the generic entry of the bending (2026-09-22) the flight is
+    a member for every world at 1 + gamma, gamma 0 by default, and since the
+    line drive is the law's (the same day) the drive member joins at gamma
+    with nothing else declared; under the per-axis drive of history
+    (`per_axis_drive`) it never does."""
+    assert age_wall_set() == (("owed", 1), (FLIGHT_MEMBER, 1), (DRIVE_MEMBER, 0))
     assert age_wall_set(1, True) == (("owed", 1), (FLIGHT_MEMBER, 2))
     assert age_wall_set(1) == (("owed", 1), (FLIGHT_MEMBER, 2), (DRIVE_MEMBER, 1))
     assert age_wall_set(0) == (("owed", 1), (FLIGHT_MEMBER, 1), (DRIVE_MEMBER, 0))
@@ -262,9 +264,15 @@ def test_the_weight_of_a_moving_body_is_the_rows_weight_over_the_label_scale():
     assert body_weight([1 << 26, 0, 0], 64, 16384, 1) == (7 << 25, 1 << 20)
     assert body_weight([0, 0, 0], 64, 16384, 1) == (1 << 26, 1 << 20)
     assert body_weight([1 << 26, 0, 0], 0, 16384, 1) == (0, 1)
+    # Since the generic entry of the bending (2026-09-22) the key absent
+    # is gamma 0; the body's weight is the pair under the law's line drive
+    # at gamma > 0 alone, and at gamma 0 the content itself (the push
+    # -4096 at the scale 1, byte for byte as before the entry: the pair's
+    # root and the working bound on (Q S M)^2 are gamma's alone, so every
+    # registered world with a heavy body loads as it did).
     for optical, push, scale in (
         (None, -4096, 1),
-        (0, -8192, 1 << 20),
+        (0, -4096, 1),
         (1, -14336, 1 << 20),
     ):
         world = parse_nature_beam_world(push_bar(optical))
@@ -316,7 +324,10 @@ def test_the_body_worlds_load_under_both_keys_and_carry_their_pins():
             assert not world.per_axis_drive and world.optical is not None and world.width == 16384
             body = world.measured[0]
             assert list(body.momentum) == [1 << 26, 0, 0] and tuple(body.position) == (2, 20 + b, 20)
-            assert not body.fixed and world.column_scales[0] == 1 << 20
+            # Gravity's Lambda is Q S where the weight pair is formed, at
+            # gamma > 0 alone (the merge of the line drive with the generic
+            # entry, 2026-09-22); at gamma 0 the content itself, the scale 1.
+            assert not body.fixed and world.column_scales[0] == (1 << 20 if world.optical > 0 else 1)
             if name.startswith("body_control"):
                 assert len(world.measured) == 1
             else:

@@ -336,8 +336,14 @@ def test_every_gate_set_world_exists_and_parses_as_a_nature_beam_world():
     for entry in document["worlds"]:
         # `former`: the digests a world had before a change of the law moved
         # them, kept beside the new ones with the cause (record 894; the
-        # line drive the law's drive, 2026-09-22).
-        assert set(entry) - {"digests", "former"} == {"path", "ticks", "cap", "covers"}, entry
+        # line drive the law's drive, 2026-09-22); `refusal`: a world the law
+        # as it stands refuses before its cap (the generic entry of the
+        # bending, 2026-09-22), the interval and the refusal's line, its
+        # digests kept as history.
+        assert set(entry) - {"digests", "former", "refusal"} == {"path", "ticks", "cap", "covers"}, entry
+        if "refusal" in entry:
+            assert set(entry["refusal"]) == {"since", "interval", "match", "note"}, entry["path"]
+            assert 0 < int(entry["refusal"]["interval"]) <= int(entry["cap"]), entry["path"]
         path = gate.parent / entry["path"]
         assert path.is_file(), entry["path"]
         source = json.loads(path.read_text(encoding="utf-8"))

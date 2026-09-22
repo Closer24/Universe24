@@ -121,6 +121,10 @@ def execute_nature_beam_run(
         # key's declaration and the run's report, written only under the
         # key (every other record byte for byte as it was).
         **({} if world.covariant is None else {"covariant_readings": simulation.covariant_report()}),
+        # The row's flight in the age wall's set (optical-v1, 2026-09-21;
+        # the law's own since 2026-09-22): the world's gamma and the flight
+        # coefficient 1 + gamma, written for every world.
+        "optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient},
         # The drive the body's step ran under (2026-09-22, the line drive
         # the law's drive, record 972; DEFAULT.md section (a)): "line", the
         # law's, or "per_axis", the drive of history under the world key
@@ -134,13 +138,9 @@ def execute_nature_beam_run(
         # declared, written only under the key (every other record byte for
         # byte).
         **({} if not world.centred_step else {"centred_step": True}),
-        # optical-v1 (2026-09-21): the key's gamma and the derived flight
-        # coefficient 1 + gamma, written only under the key.
-        **(
-            {}
-            if world.optical is None
-            else {"optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient}}
-        ),
+        # flow-link-v1 (2026-09-22): the world key `flow_link` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.flow_link else {"flow_link": True}),
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

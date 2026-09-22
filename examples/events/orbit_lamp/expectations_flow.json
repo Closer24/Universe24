@@ -1,0 +1,156 @@
+{
+ "format": "orbit-lamp-expectations-v1",
+ "derivations": {
+  "fan": "declared: series D's uniform fan, every primitive (a, b, 0) with 0 < a^2 + b^2 <= 64",
+  "emission": "the fan's directions x the release rate, q = 120 / 10 = 12 units per interval (DERIVATIONS_BEAM 3, the flux q)",
+  "label_magnitude": "the fan's mean |u_d| / Q off unit_label (BEAM_LAW section 2, note 23)",
+  "drive": "declared: flow-link-v1 (the world key `flow_link`, docs/designs/flow_weight/DESIGN.md section 3 (c), ALGEBRA.md section 5; the owner's decision of 2026-09-22, record 915): every push divided by the fan's mean of S_1 / |D|, F_plane = 1.2871 on this fan of 120 (4 / pi in the isotropic limit), so the circle is n x pace(n) = q L C / (2 pi F_plane) under the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds); the real root 8.283, declared the nearest whole 8 (the design's 7.818 divides the whole 9's balance 81 / 41 in place of the real root's q L C / (2 pi); both round to 8); the ratio T(24) / T(12) unchanged (the same fan and the same weight per line at both radii); GAMEBOARD by formula until the run, the clicks the measurement (DETECTOR); Newton's and Kepler's forms on the comparison side only (record 817)",
+  "orbit_n": "DERIVATIONS_BEAM 3.3 with flow-link-v1 (the world key `flow_link`, docs/designs/flow_weight/DESIGN.md section 3 (c), ALGEBRA.md section 5; the owner's decision of 2026-09-22, record 915): every push divided by the fan's mean of S_1 / |D|, F_plane = 1.2871 on this fan of 120 (4 / pi in the isotropic limit), so the circle is n x pace(n) = q L C / (2 pi F_plane) under the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds); the real root 8.283, declared the nearest whole 8 (the design's 7.818 divides the whole 9's balance 81 / 41 in place of the real root's q L C / (2 pi); both round to 8); the ratio T(24) / T(12) unchanged (the same fan and the same weight per line at both radii); GAMEBOARD by formula until the run, the clicks the measurement (DETECTOR); Newton's and Kepler's forms on the comparison side only (record 817)",
+  "pace": "the drive's pace at the declared n (the `drive` entry)",
+  "period": "the analytic circle's T = 2 pi r / v at the pace (DERIVATIONS_BEAM 3.3 on the plane: v the same at every r, T proportional to r); the bracket the continuum map's 9 percent margin (the orbit register's lamp worlds, DERIVATIONS_BEAM 12b.2)",
+  "ratio": "T(24) / T(12) = 2.00 on the plane (the 1 / r force's flat rotation curve; k = 2), the margin 0.18 the periods' 9 percent propagated (record 594)",
+  "omega_squared": "(2 pi / T)^2 per interval^2, read as the slope of the lagged second difference of the clicks' x against x - c_x, -4 sin^2(omega h / 2) at the lag h (the module docstring); the bracket from T's",
+  "acceleration": "a = omega^2 r = v^2 / r at the declared pace, and 3.3's small-n limit q L C / (2 pi r S) beside it (v = n / S there); the ratio a(12) / a(24) = 2.00 in both",
+  "amplitude": "the clicks' (max x - min x) / 2 against r: the loop's extents (the orbit register's map, 24.0 to 25.9 and 12.0 to 13.0), r - 1 to r + 2",
+  "equivalence": "DERIVATIONS_BEAM 3.3: nothing of the body enters the acceleration (the push scales with M_total and the step divides by it), so the 4 M_held world reads the same period within one birth interval and the same x on every common birth tick within one Node (record 594)",
+  "control": "declared: no source, no push; the probe walks +y at the pace and leaves through the face +y at its 61st step, (SIDE - c_y) / v intervals (the step from y = 120 to 121); every click at x = c_x + r; under the key a world without a crowd reads nothing (DESIGN.md section 3 (d)): a control click off x = c_x + r, or an escape off its bracket, is the control moving under the key and refutes",
+  "flight": "the row's age on the click is its flight from the birth's y to Y_D on the heading -y, c = Q / T_D = 32 / 55 Links per interval (DERIVATIONS_BEAM 2.1): the birth tick is the click's tick less its age",
+  "flow_link": "declared: the key `flow_link` true on the four worlds and on none of the registered ones; the pins that move under it are the push's alone (the period, omega^2, the acceleration: by 1 / F_plane on the balance), the ratio, the amplitude's bracket and every clock and flight reading unchanged (DESIGN.md section 3 (c) and (d)); refuted by T outside its bracket, the ratio outside its bracket, or the control moving under the key",
+  "flow_incidence": "the fan's mean of S_1 / |D| over the 120 directions, the Nodes per Euclidean Link of the digital line of D (DESIGN.md section 1.3): the factor the push carries as the law is built and loses under the key; series C's flow x 2 pi r / q = 1.00 per Node becomes 1 / F_plane"
+ },
+ "side": 121,
+ "centre": [
+  60,
+  60,
+  0
+ ],
+ "detector_y": 20,
+ "birth_interval": 8,
+ "fan_directions": 120,
+ "emission": 12.0,
+ "label_magnitude": 0.9999840840444985,
+ "flow_constant": 0.7769169557649399,
+ "width": 32,
+ "drive": "line",
+ "orbit_n_real": 8.282749930175349,
+ "orbit_n": 8,
+ "pace": 0.17486338797814208,
+ "ratio": {
+  "pin": 2.0,
+  "bracket": [
+   1.82,
+   2.18
+  ],
+  "worlds": [
+   "r12_flow",
+   "r24_flow"
+  ]
+ },
+ "worlds": {
+  "r12_flow": {
+   "radius": 12,
+   "source": true,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 538968064,
+   "period": {
+    "pin": 431.1835917051991,
+    "bracket": [
+     392.3770684517312,
+     469.99011495866705
+    ]
+   },
+   "second_difference_lag": 13,
+   "omega_squared": {
+    "pin": 0.00021234169760551557,
+    "bracket": [
+     0.00017872375861082026,
+     0.00025642035696838014
+    ]
+   },
+   "acceleration": {
+    "pin": 0.002548100371266187,
+    "small_n_limit": 0.0038640064334760104
+   },
+   "amplitude": {
+    "pin": 12,
+    "bracket": [
+     11,
+     14
+    ]
+   }
+  },
+  "r24_flow": {
+   "radius": 24,
+   "source": true,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 538968064,
+   "period": {
+    "pin": 862.3671834103982,
+    "bracket": [
+     784.7541369034624,
+     939.9802299173341
+    ]
+   },
+   "second_difference_lag": 27,
+   "omega_squared": {
+    "pin": 5.308542440137889e-05,
+    "bracket": [
+     4.4680939652705064e-05,
+     6.410508924209503e-05
+    ]
+   },
+   "acceleration": {
+    "pin": 0.0012740501856330934,
+    "small_n_limit": 0.0019320032167380052
+   },
+   "amplitude": {
+    "pin": 24,
+    "bracket": [
+     23,
+     26
+    ]
+   }
+  },
+  "r12_flow_control": {
+   "radius": 12,
+   "source": false,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 538968064,
+   "x": 72,
+   "escape_tick": {
+    "pin": 348.84375,
+    "bracket": [
+     342.84375,
+     354.84375
+    ]
+   }
+  },
+  "r24_flow_control": {
+   "radius": 24,
+   "source": false,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 538968064,
+   "x": 84,
+   "escape_tick": {
+    "pin": 348.84375,
+    "bracket": [
+     342.84375,
+     354.84375
+    ]
+   }
+  }
+ },
+ "flow_link": true,
+ "flow_incidence": 1.287138853875851,
+ "acceleration_ratio": {
+  "pin": 2.0,
+  "bracket": [
+   1.82,
+   2.18
+  ]
+ }
+}

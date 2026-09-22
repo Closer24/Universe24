@@ -348,7 +348,8 @@ class CountTable:
 # them whatever the set declares.
 AGE_WALL_SET: tuple[tuple[str, int], ...] = (("owed", 1),)
 AGE_WALL_NEVER: tuple[str, ...] = ("turn", "action")
-# The member the key `optical` adds (optical-v1, 2026-09-21): the row's
+# The member of the row's flight (optical-v1, 2026-09-21; the law's own
+# since 2026-09-22, the generic entry of the bending): the row's
 # flight accumulator, its coefficient f = 1 + gamma, gamma the world's
 # declared post-Newtonian parameter (`NatureBeamWorld.optical`).
 FLIGHT_MEMBER = "flight"
@@ -367,27 +368,28 @@ FLIGHT_MEMBER = "flight"
 DRIVE_MEMBER = "drive"
 
 
-def age_wall_set(
-    optical: int | None = None, per_axis_drive: bool = False
-) -> tuple[tuple[str, int], ...]:
-    """The age wall's declared set of a world: the law's (`AGE_WALL_SET`,
-    the clock at 1, with or without any key); under the world key
-    `optical: gamma` the row's flight at 1 + gamma (`FLIGHT_MEMBER`) and
-    the body's line drive at gamma (`DRIVE_MEMBER`: the clock carries the
-    time part, the drive the space part, the two summing to the flight's
-    coefficient); the per-axis drive of history (the key `per_axis_drive`)
-    never (form B first, REVIEW_3 must-fix 2 and 3), the release and the
-    lamp's count never (per self-creation, gated by the clock's wall
-    already), the phase per age never (`AGE_WALL_NEVER`)."""
-    if optical is None:
-        return AGE_WALL_SET
+def age_wall_set(optical: int = 0, per_axis_drive: bool = False) -> tuple[tuple[str, int], ...]:
+    """The age wall's declared set of a world: the law's members, the
+    body's clock at 1 (`AGE_WALL_SET`) and, since the generic entry of the
+    bending (the model owner, 2026-09-22, record 847: "bring it back
+    immediately"), the row's flight at 1 + gamma (`FLIGHT_MEMBER`), gamma
+    the world's declared input `optical` (0 by default, the time part
+    alone, the law's own number; nature's 1 a declaration per world, never
+    a default), and the body's line drive at gamma (`DRIVE_MEMBER`: the
+    clock carries the time part, the drive the space part, the two summing
+    to the flight's coefficient; at gamma 0 declared at 0, unstretched; the
+    line drive the law's drive of a body since the same day, record 972);
+    the per-axis drive of history (the key `per_axis_drive`) never (form B
+    first, REVIEW_3 must-fix 2 and 3), the release and the lamp's count
+    never (per self-creation, gated by the clock's wall already), the phase
+    per age never (`AGE_WALL_NEVER`)."""
     members: tuple[tuple[str, int], ...] = (*AGE_WALL_SET, (FLIGHT_MEMBER, 1 + optical))
     if not per_axis_drive:
         members = (*members, (DRIVE_MEMBER, optical))
     return members
 
 
-def age_wall_coefficient(name: str, optical: int | None = None, per_axis_drive: bool = False) -> int:
+def age_wall_coefficient(name: str, optical: int = 0, per_axis_drive: bool = False) -> int:
     """The declared coefficient c of a member of the age wall's set
     (`age_wall_set`, the law's members and the keys'), by the count's
     name; a count that is no member is refused (nothing outside the set is

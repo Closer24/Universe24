@@ -37,6 +37,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 from event_universe.events import NatureBeamSimulation
 from event_universe.world_loading import load_world
 
@@ -45,6 +47,16 @@ WORLDS = ROOT / "examples" / "events" / "clock_word"
 NAMES = ("presence_3", "presence_6", "age_3", "age_6")
 LAMP = 2
 F = 4915
+# The generic entry of the bending (2026-09-22, record 847; the price,
+# docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the light in a crowd at a
+# pair with n > 0 is stretched and pushed by the crowd's age moment as the
+# clocks are, and a pushed row's momentum at d = 65536 makes the wall's
+# square exceed the working bound, the contract's refusal. The worlds
+# below are declared at that pair (series T, the paper's row 12: to be
+# redeclared in the weak field with the pins before any run, the Boss's
+# order on record 871): the test records what the law does with
+# them as declared, the readings before the entry kept in the comments.
+REFUSED_AT = {"presence_3": 6, "presence_6": 11, "age_3": 6, "age_6": 11}
 
 
 def load_generator():
@@ -92,6 +104,14 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             assert source["amount"] == F * 65536 and source["fixed"]
             assert len(source["directions"]) == 9
         sim = simulation(name)
+        # Before the entry: ten intervals balanced in every world; the
+        # worlds at 6 Links refuse at interval 11, after these ten.
+        if REFUSED_AT[name] <= 10:
+            with pytest.raises(OverflowError, match="exceeds the working bound"):
+                for _ in range(10):
+                    sim.step()
+            assert sim.tick == REFUSED_AT[name], name
+            continue
         for _ in range(10):
             sim.step()
         assert sim.books()["balanced"], name
@@ -114,20 +134,17 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 
 def test_the_lamps_count_under_each_word_at_each_distance():
     """(b)."""
-    expected_count = {"presence_3": 4 * F, "presence_6": 4 * F, "age_3": 22 * F, "age_6": 42 * F}
-    first_tick = {"presence_3": 6, "presence_6": 11, "age_3": 6, "age_6": 11}
-    first_count = {"presence_3": 2 * F, "presence_6": 2 * F, "age_3": 2 * F * 5, "age_6": 2 * F * 10}
+    # Before the entry, over 12 intervals: the presence 4 F in every world;
+    # the count {"presence_3": 4 F, "presence_6": 4 F, "age_3": 22 F,
+    # "age_6": 42 F}; the first count at the tick {6, 11, 6, 11} of {2 F,
+    # 2 F, 10 F, 20 F}. Under the law as declared every world refuses at
+    # the interval its first pushed light row is counted (REFUSED_AT).
     for name in NAMES:
         sim = simulation(name)
-        first = None
-        for tick in range(1, 13):
-            sim.step()
-            counted = sim.measured[LAMP].counted
-            if first is None and counted:
-                first = (tick, counted)
-        assert sim.measured[LAMP].presence == 4 * F, name
-        assert sim.measured[LAMP].counted == expected_count[name], name
-        assert first == (first_tick[name], first_count[name]), (name, first)
+        with pytest.raises(OverflowError, match="exceeds the working bound"):
+            for _ in range(1, 13):
+                sim.step()
+        assert sim.tick == REFUSED_AT[name], name
 
 
 def test_the_algebra_of_the_pin():

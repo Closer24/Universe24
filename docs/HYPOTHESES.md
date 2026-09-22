@@ -1226,7 +1226,7 @@ couplings.
 | The field equation's static case and the shell-mean inverse square | 3.3, 5.1, 5.5; the paper's Newton section | the fan dense at the reading's distance (`P >> r`), the reading a shell mean; on the 2616-direction fan `r^-1.83` against `r^-2` | the limit stated with its grain, order and error term per row (21.5's columns (3) and (5)) | series C's rings or series E's shells outside the stated ripple; a single-Node reading beside a mass is a comb, not a refutation | this entry |
 | The kinetic closures on the six-heading gas: Euler's form, the sound speed, the viscosity, diffusion, Fick, Fourier | 25.5, 25.6; the paper's flow inventory (cut) | the product-measure (Boltzmann) closure of the slots' densities, its error unbounded | a bound on the closure's error | a registered gas reading outside its pin (none registered) | this entry |
 | Kepler's three laws and the precession on the plane | 21.5 row 58; 3.3, 12b.2 | form B, the drive on the momentum's direction (BLOCKED in review, record 348, not on main); on main's per-axis drive the host's period is 687 | form B admitted into the law and the lamp worlds `s32_r24_lamp`, `s32_r12_lamp` run against row 58's pins | the periods and the apsidal angle outside row 58's pins; today series D closes no orbit (record 131) | this entry |
-| The bending of light, the Shapiro delay, Snell's law, the second-order redshift | 5.4, 5.6; designs/gr_rows/DESIGN.md; designs/one_wall/NOTE.md (the generic form) | `optical-v1` in its generic form, built and merged as Part B (records 430 and 520; PR #659 at 2d5c7cf2) with `gamma` an input: the flight in the wall function's declared set at `1 + gamma` and the turn weighted by `(E^2 + 3 gamma` **p** `. ` **p**`) / E`; its readings in the register (examples/events/optical/README.md), the shifts' ratio at this fan unread | nothing closes it into the law: `gamma` is an input; a derivation of `gamma` from the six verbs would; the wall's and the push's terms are one, so no sum reaches 4 without the input (the mathematician's one-wall page) | series K under the key outside its pins; the law's own `0.000` a FAIL (24.3 row 14) | this entry
+| The bending of light, the Shapiro delay, Snell's law, the second-order redshift | 5.4, 5.6; designs/gr_rows/DESIGN.md; designs/one_wall/NOTE.md (the generic form) | `optical-v1` in its generic form, built and merged as Part B (records 430 and 520; PR #659 at 2d5c7cf2) and, since 2026-09-22, the law's own for every world (record 847, the generic entry of the bending; no hypothesis, the key naming `gamma` alone, 0 by default) with `gamma` an input: the flight in the wall function's declared set at `1 + gamma` and the turn weighted by `(E^2 + 3 gamma` **p** `. ` **p**`) / E`; its readings in the register (examples/events/optical/README.md), the shifts' ratio at this fan unread | nothing closes it into the law: `gamma` is an input; a derivation of `gamma` from the six verbs would; the wall's and the push's terms are one, so no sum reaches 4 without the input (the mathematician's one-wall page) | series K under the key outside its pins; the law's own `0.000` a FAIL (24.3 row 14) | this entry
 | Schrodinger's equation for a free particle | 23 | `massive-rows-v1`, named, not built | its build and the run of `slits_matter` against 23.3's pins | the bright bands off the pins by more than one pixel | entry 26 |
 | The expansion as a growing wall and Hubble's law | 15, 20.4; record 279 | `expansion-v1`: the flight's wall `2 T_D a` with `H` declared, absent by default; a declared assumption | none: an assumption by the owner's word; a derivation of `H` from the law would | rows 3 and 11a to 11c (the coasting `q = -0.108` is the law's own reading, without the wall) | this entry |
 | The magnetic part: Faraday, Ampere-Maxwell, the Lorentz force, Biot-Savart | 12.1, 17.6 | `source-velocity-v1`: a row carrying its source's velocity; named, not designed | a design passing the three tests, then a run against pins | row 5b (the two-arm anisotropy), the transverse push `1 / gamma` | this entry |
@@ -1285,6 +1285,78 @@ couplings.
   off the line of the momentum; an accumulator at or above 3 W; a world
   without the key whose record differs from `main`'s by a byte.
 - **Status.** Built on 2026-09-22 and run once (series X): six worlds, 19
+  readings inside, 0 outside, nothing moved; the key off by default; making
+  it the default is the owner's later decision.
+
+## 29. flow-link-v1: one arrival counts one Euclidean Link of its line, not one Node; the law's two constants of gravity are one, stated so that it can fail
+
+- **Statement (the model owner's decision of 2026-09-22, record 915 of
+  docs/LOG_2026-09-20.md, on his go of record 886; the Flow Weight
+  Designer's design [docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md)
+  with [ALGEBRA.md](designs/flow_weight/ALGEBRA.md); the physics-rule
+  reviewer's ADMISSIBLE of record 902).** Under the world key `flow_link`
+  (absent by default) the arrival flow every reader sums carries per
+  arriving row the flow label **f**_D, the integer vector nearest
+  `|p_D| D / S_1` (per component `sign(D_i) x (2 |p_D| |D_i| + S_1) // (2
+  S_1)`, one Euclidean division per component at load; `|p_D|` is Q for
+  the photon and a massive family's `momentum_magnitude`, each family's
+  flow labels from its own labels), in place of the unit label **u**_D
+  nearest `|p_D| D / |D|`; the push's shell mean then carries no L1 factor
+  (the fan's mean of `S_1 / |D|`, 1.4355 on series K's 290 directions,
+  `3 / 2` in the isotropic limit) and the push's Newton constant equals the
+  clock's, `q / (4 pi S)` at the pin `n S = d`, to three parts in a
+  thousand on series K's fan (the fan's mean of incidence times weight
+  1.0003; the crowd's shell mean 22.85 against the continuum's 23.08
+  beside the clock's 68.72 against 69.23). The age moment, the wall, the
+  flight, the collision, the phase and the momentum a click moves are
+  untouched; the key stands alone or beside `optical`. The scope on record
+  (the physics-rule reviewer's line on the build): a paid family's rays read
+  by a body under `read` still push by their labels per Node (the momentum
+  a click moves), so their flow keeps the L1 factor; the change is confined
+  to a free family's rays, which the law's gravity pushes (series K, C, the
+  atom) all are, and to every row's push by the interval's arrivals.
+- **The expectations, before any run (the design's section 4, GAMEBOARD by
+  the step algebra; DETECTOR when run).** The ring of starts at b = 6 on
+  series K's box (the fan of 290, the mass 2^16, the width 16384, the
+  suspension [1, 16384], 40 lamps on the heading at `|sqrt(y^2 + z^2) - 6|
+  <= 1 / 2`, the screen of one-Node `wave` detectors reading `age`) under
+  `optical: 1` reads the mean radial shift of the arrival Node `0.731 +-
+  0.025` Links over 40 starts (`0.974` as built) and `0.128 +- 0.025` at
+  `optical: 0` (the count of starts moving one Node, 6 +- 1 of 40);
+  `1.625 / 0.845 +- 0.0625` at b = 3 over 16 starts, `0.628 / 0.107 +-
+  0.021` at b = 8 over 48; the delays within 1 interval; `C_ring` expected
+  `2 c_f x 0.990 x L / sqrt(L^2 + b^2)` = `3.86 / 3.93 / 3.79` at b = 6 /
+  3 / 8 with the grain `0.085 / 0.107 / 0.095` (the design's read `3.65 /
+  3.82 / 3.92`); the tangential mean 0; `C_nodes` 2.50 at b = 6, gamma 1,
+  with the lever-arm factor 0.68 stated before the run. The calibration:
+  the registered `optical/mass_g0.json` and `mass_g1.json` under the key
+  read `-1.600 / -3.000` pixels by the algebra (`-1.993 / -3.989`
+  registered, DETECTOR, never edited).
+- **What it depends on.** The direction table's integers D and S_1 alone;
+  no root, no float, no run-time division beyond the law's declared ones;
+  the same six reads and nothing kept at a Node (the three tests written
+  out in the design's section 2, all PASS).
+- **What it does not give.** A derivation of Einstein's 4: the ring reads
+  the declared `2 c_f` against the clock's constant, both on one ground
+  now, the 2 of `c_f` an input of kind 2 (record 817). Newton's rows move
+  by their fan's factor under the key (D3's periods `343 / 687` to `384 /
+  768` by formula), re-derived by their generator before any run.
+- **What would refute it.** A `C_ring` that, after the two stated factors,
+  leaves `2 c_f` by more than the grain in either direction; any clock
+  reading (the lamp's rate, the redshift ratio) that moves under the key;
+  a world without the key whose record differs from `main`'s by a byte.
+- **Status.** Built on 2026-09-22 (the world key `flow_link`, the identity
+  `flow-link-v1`, `tests/test_flow_link.py`); the ring worlds and their
+  pins under `examples/events/flow_link/`, run once the same day: the
+  verdict NOT DECIDED, the deciding pin 0.731 +- 0.025 at b = 6, gamma 1
+  unread (the gamma 1 rings and b = 3, 8 refused by the pair's working
+  bound at d = 16384, the folder's README); the gamma 0 ring at b = 6
+  inside its four pins (the mean radial shift 0.128 against 0.128 +- 0.025,
+  every arrival Node the map's), its `C_ring` 1.806 OUTSIDE the one-grain
+  pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46;
+  the calibration -1.573 / -3.180 pixels against -1.600 / -3.000; the key
+  off by default; admitting it to the law, and the road past the refusal,
+  are the owner's later decisions.
   readings inside, 0 outside, nothing moved; the key off by default. Made
   the law's drive the same day on the model owner's word (record 972;
   [DEFAULT.md](designs/drive_b/DEFAULT.md)): the key `drive_b` deleted, the

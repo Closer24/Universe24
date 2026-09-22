@@ -67,6 +67,27 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   byte as registered) and series D (`orbit/`, the six worlds' momenta
   rewritten by the generator, n = 4, 6, 10 at S = 1, 8, 32, with
   `expectations.json`; the two lamp worlds unchanged).
+- **The merge with the generic entry of the bending (the same day; PR
+  #855 and PR #879 on main).** The row's flight is in the age wall's set
+  for every world at 1 + gamma, gamma the world key `optical` and 0 by
+  default (main's entry), and the body's line drive is the law's drive
+  (this branch): merged, the drive member is in the set at gamma for
+  every moving body with nothing declared, and the body's weight pair
+  (w, Q S) is formed at gamma > 0 alone (`world.body_weight`, gravity's
+  Lambda Q S then), at gamma 0 the content itself, byte for byte (the
+  pair's root and its working bound on (Q S M)^2 are gamma's alone: under
+  the pair at gamma 0 every registered world with a heavy body, series H,
+  the atoms, G2, would have been refused at load by a rule that changes
+  nothing of its integers); a moving body at gamma > 0 is refused at load
+  under `per_axis_drive` (the per-axis drive of history is never a member).
+  The flow worlds of series D3 (`flow_link`, PR #879) keep their whole
+  n = 8 under the line drive (the real root 8.28 against the per-axis
+  7.67), their pins of `expectations_flow.json` re-derived at the line
+  pace (T 431 and 862, the escape 349), the per-axis pins reproducible by
+  `expectations(drive=AXIS_DRIVE, flow=True)`. The gate world
+  `weak/j3_deuteron` is refused before its cap under the generic entry
+  (main's `refusal` block), its line-drive digests of the flip's engine
+  and its per-axis digests kept as history.
 - **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
   `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
   declare `per_axis_drive` and keep their integers; the law's cases are
