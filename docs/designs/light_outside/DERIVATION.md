@@ -96,7 +96,7 @@ with these five arrows, each one of the law's operations:
    lines 359 to 402), and the translation of its phase accumulator by the
    family's declared rate per interval of age (BEAM_LAW lines 3733 to
    3750); the flight reads nothing of the crowd (P9, DERIVATIONS_BEAM
-   24.1 row 7 at line 6985 and section 27 at line 7948).
+   24.1 row 7 at line 6988 and section 27 at line 7948).
 4. `Inside -> Outside_B`, the click: the detector at B reads the
    arrival's record through its declared reading (BEAM_LAW lines 774 to
    830: the threshold, the `wave` pointer, the record `X^2 + Y^2`), and
@@ -158,7 +158,7 @@ Maxwell and nothing of optics is among them (section III).
   `sqrt 3`: `c = 1 / sqrt 3` Links per interval is the operator norm of
   the flight, the largest isotropic pace at which no direction crosses
   two Links in one interval (DERIVATIONS_BEAM 13.2 (a), lines 3588 to
-  3625; 24.1 rows 9 and 10, lines 6987 to 6988;
+  3625; 24.1 rows 9 and 10, lines 6990 to 6991;
   docs/designs/light_speed/FORM.md section 1, lines 15 to 37). The
   heading's rational is `Q / T_h = 64 / 110 = 32 / 55` (DERIVATIONS_BEAM
   2.1, lines 634 to 654).
@@ -178,7 +178,7 @@ Maxwell and nothing of optics is among them (section III).
   content of one unit of light is `E = h s = (h N) f`" (DERIVATIONS_BEAM
   6.4, lines 1499 to 1512); the dictionary `h_A = h_q N`, `h = h_q N =
   h_A`, `hbar = h / (2 pi)`, `E = h f`, `lambda = h / p`, `k = 2 pi p / h`
-  (6.4 lines 1521 to 1555; 24.1 row 25, line 7011: a calibration, the
+  (6.4 lines 1521 to 1555; 24.1 row 25, line 7006: a calibration, the
   value of h an input). "No rule makes the content of a row follow its
   frequency in flight" (6.4, lines 1523 to 1524).
 - **(L5) The spreading over the six Ports.** "On a beam the flow per Node
@@ -202,7 +202,7 @@ Maxwell and nothing of optics is among them (section III).
   1860; 6.5, the lattice Gleason, line 1556: rotation invariance,
   conservation at the balanced splitter and non-negativity force a
   positive quadratic form, Born's member `c_1 = 1` the one imported
-  member, 24.1 row 12, line 6990); Born's `|psi|^2` "holds AT THE CLICK
+  member, 24.1 row 12, line 6993); Born's `|psi|^2` "holds AT THE CLICK
   as the cell's probability to within `1 / (2 N)`, and nowhere between
   clicks" (23.2, lines 6791 to 6797). One record, one click: the ladder
   chooses one cell by the birth phase u and deletes the record's offers
@@ -212,14 +212,14 @@ Maxwell and nothing of optics is among them (section III).
 - **(L7) The crossing rule.** "a row and a body meet ONCE, at the crossing
   of their world lines" (BEAM_LAW note 48, lines 530 to 532;
   DERIVATIONS_BEAM 2.2, lines 655 to 706, and 9.3, lines 2221 to 2241;
-  24.1 row 22, line 7008: DERIVED given the flight and the drive). Its
+  24.1 row 22, line 7003: DERIVED given the flight and the drive). Its
   count on an axis: `1 + v / c` toward the lamp, `1 - v / c` away, 1
   transverse, exact over whole Links and within one row otherwise
   (`tests/test_crossing.py`, the pinned counts).
 - **(L8) The age wall at coefficient 1 on every count.** "a count at the
   rate `rate` against the wall `wall` becomes the count at `rate x d`
   against `wall x (d + a_tau n)`" (`core.integer.age_wall`; the click
-  frame's (N2), lines 940 to 948): a body's self-creations, a lamp's
+  frame's (N2), lines 942 to 949): a body's self-creations, a lamp's
   births and a detector's own count are all stretched by the crowd at
   their Node at coefficient 1 (record 709, Highlights line 399); the
   row's flight and phase are not (L1, L3). The clock's word is the age
@@ -294,7 +294,7 @@ Two readings, both Outside:
 - *The pulse and its return* (record 768, the strict form). B is
   declared a re-emitter (`rerelease`; BEAM_LAW section 5; the isometry
   re-emits the arrival at age 0 on `-`**D** by the tables, DERIVATIONS_BEAM
-  27 (R3), lines 8030 to 8040): the row returns to A on `-`**D**, whose
+  27 (R3), lines 8015 to 8030): the row returns to A on `-`**D**, whose
   `T_D` is the same (`T_D` depends on `|D|_2^2` alone), and A clicks its
   own row back at its count `n_A + 2 tau(j S_1)` within two intervals
   (each leg's ceiling). Nothing but A's own count enters: A emits and
@@ -320,8 +320,8 @@ The anisotropy is the isqrt's rounding of `T_D` above `sqrt 3 |D|_2 Q`:
 and 0 on the body diagonal, bounded by `1 / (sqrt 3 Q - 1)` (NATURE row
 5a and its note, lines 102 and 284 to 312); the isotropic limit is `Q ->
 infinity`, `c_D -> 1 / sqrt 3` on every direction, the factor 3 of Eq.
-14 being that limit's `1 / c^2` (the click frame section 7, lines 780 to
-805: the 3 is `(|D|_1 / |D|_2)^2` on the body diagonal, 9 / 3). The
+14 being that limit's `1 / c^2` (the click frame section 7, lines 777 to
+803: the 3 is `(|D|_1 / |D|_2)^2` on the body diagonal, 9 / 3). The
 isotropy is (L2)'s second axiom and the equality at the supremum its
 third statement (13.2 (a)): SHOWN as a consequence of the flight table,
 which is declared; not derived from the six verbs alone (section 27).
@@ -378,7 +378,7 @@ d` steps of the circle of N (L3), so the row's frequency in the lattice's
 frame is `f = n / (d N)` cycles per interval and its energy `E = h_q n /
 d = (h_q N) f`; its wavelength, the Links the row makes in one turn of
 its phase, `lambda = c_D N d / n` Links (`N d / n` intervals at `c_D`
-Links per interval; DERIVATIONS_BEAM 7.1, line 1953); and the dictionary
+Links per interval; DERIVATIONS_BEAM 7.1, line 1955); and the dictionary
 `lambda = h_A / p`, `p = E / c` for a row of no content, which equals `c
 N d / n` if and only if `h_A = h_q N` (6.4, lines 1526 to 1555).
 
@@ -422,7 +422,7 @@ frequency counted and N; p from `lambda` and h (the massive row's pin,
 **(f) The register, Outside.** The cost per unit at the emitter (DETECTOR,
 the lamp's own births): the Bell lamps of content `K + 2` "paying 2 per
 birth, stalls once, at tick 4: 159 births in 160" (the bell README;
-DERIVATIONS_BEAM 6.4, lines 1512 to 1516); the L1 lamp of content `2^20`
+DERIVATIONS_BEAM 6.4, lines 1513 to 1517); the L1 lamp of content `2^20`
 at `K = 2^20` turning 1 per self-creation and paying 1 per unit, its
 clock stalling once at tick 2 (EXPERIMENTS line 3929, issue #533): MET
 as `E = h s` at the birth. The content per click at B: every face click
@@ -433,7 +433,7 @@ birth's, at every distance (NATURE 11a, `far_lamp_map.out`, not run). The
 wavelength Outside: L2's `lambda = 8 x 32 / 55 = 4.654` Links read as the
 fringe spacing (II.6, MET within the pixel); the frequency Outside: series
 T's controls `1 + z = 1.0000` exactly at rest (DETECTOR, MET), series X's
-three controls 1.0000 (line 6930). The identity `lambda = h / p` on a
+three controls 1.0000 (line 6941). The identity `lambda = h / p` on a
 row that carries a momentum: the pin `256 / 55 = 4.6545` Links of 23.3
 (line 6831) for the massive row's fringes, NOT RUN (the massive row's
 two-slit world not built).
@@ -502,11 +502,11 @@ presence word inside, `k(2) / k(4) = 0.8390` against the pin 0.839989
 potential; the flux's form for the intensity, lines 6835 to 6970). The
 `1 / r^2` at two radii after a detector of light: NOT MADE (the far
 lamp's brightness pinned and not run, NATURE 11a, line 112; the click
-frame's section 8 says the same of the fall's inverse square, line 1060);
+frame's section 8 says the same of the fall's inverse square, line 1062);
 series C's `count x r / q` and series E's `k_s r^2 = 41.5` are GAMEBOARD
 (the probes' view) and are not compared. The luminosity against z of
 G2's stars, `1 / (1 + z)` within 5 percent, 648 of 648 (DETECTOR, MET,
-line 2414), reads the count's stretch of II.8 at one distance, not the
+line 2508), reads the count's stretch of II.8 at one distance, not the
 inverse square.
 
 **Verdict.** SHOWN, rung 2 (the shell mean; rung 1 on a beam and for the
@@ -532,7 +532,7 @@ Manhattan flux `1 + v T_d / (Q S_1)` (2.4, lines 722 to 786).
   each at rest at an empty Node; "B moves at `v = 1 / k`" means the
   click's information passes from `B_i` to `B_(i+1)` every k counts (a
   body of content M carrying the record, stepping by the drive, is the
-  law's realisation: `v = |p| / (Q S M + |p|)`, 2.1 line 651); the
+  law's realisation: `v = |p| / (Q S M + |p|)`, 2.1 line 650); the
   velocity Outside is the Nodes apart over the counts apart between the
   clicks of `B_i` and `B_(i+1)`. What the chain counts is the crossing
   count (L7), and B's own count `n_B` advances one per interval (`r_B =
@@ -624,13 +624,15 @@ Two Outside readings of the direction of the arrivals at B:
   by the face is the lattice's, unchanged by B's motion: no aberration,
   rung 1, exact.
 - *By the passage itself* (the telescope's form: the direction a chain of
-  detectors reads from Nodes apart over counts apart). A row that clicks
-  `B_i` at the Node `(x_i, y_i)` at the count `n_i` is followed by the
-  next row of the stream clicking `B_(i+1)` at `(x_i - c/k... )`: in the
-  chain's own frame (its Nodes counted along itself) the stream's
-  velocity is the composition of Nodes apart over counts apart, `c` **e**_x
-  `- v` **e**_y per count (the law's `c -+ v` of 4.2, line 1061, on the
-  transverse), so the chain reads the stream from the direction
+  detectors reads from Nodes apart over counts apart). Every Outside
+  velocity is Nodes apart over counts apart, and the stream's velocity in
+  the chain's own frame is the composition of the two: the rows advance
+  `c_D` Nodes per count along **e**_x while the chain's clicks pass `v`
+  Nodes per count along **e**_y, so between two clicks of the chain the
+  stream's displacement counted along the chain is `c_D` **e**_x `- v`
+  **e**_y per count (the law's Galilean composition `c -+ v` of 4.2, line
+  1061, taken transverse), and the chain reads the stream from the
+  direction
 
     tan alpha = v / c_D,     alpha the angle by which the source is displaced toward the chain's motion,
 
@@ -761,7 +763,7 @@ both:
 
 and with equal arms and the balanced split the dark port's weight is the
 cancel's 0 exactly: D2 reads 0 of W. Nature's Grangier, Roger and Aspect
-1986 read `alpha = 0.18 +- 0.06 < 1` (EXPERIMENTS A4, line 4665; the
+1986 read `alpha = 0.18 +- 0.06 < 1` (EXPERIMENTS A4, line 4669; the
 ideal single photon 0) and a visibility 0.98 in the recombined device
 (NATURE row 2b, line 97).
 
@@ -828,9 +830,9 @@ between two clocks in two crowds is
 
 and with the crowd's form about a point source (L5, the age moment `q
 dwell / (4 pi c r)`, the `1 / r` potential: the click frame section 8
-(b), lines 1000 to 1015) the first order is Pound and Rebka's `Phi_B -
+(b), lines 991 to 1010) the first order is Pound and Rebka's `Phi_B -
 Phi_A` form, the potential's, with the world's constant `[n, d]` and the
-residence factor in place of `1 / c^2` (section 8 (e), line 1040). At
+residence factor in place of `1 / c^2` (section 8 (e), line 1036). At
 second order the law reads `1 - k + k^2` where nature reads `1 - k -
 k^2 / 2` (DERIVATIONS_BEAM 5.2, lines 1212 to 1235: a different law in
 the strong field, no horizon), below reach at the Earth (24.3 row 12).
@@ -974,7 +976,7 @@ to 8192 (24.3 rows 1 to 3, lines 7063 to 7065).
 **(e) Inverse.** None singly (II.7 (e)).
 
 **(f) The register, Outside** (DETECTOR, the cells over 64 births; NATURE
-row 1a, line 94, and its note, lines 118 to 148; E16, line 9852): the
+row 1a, line 94, and its note, lines 120 to 148; E16, line 9852): the
 four cells 27 / 5 / 5 / 27 of 64 at the labels (0, 8), (0, 24), (16, 8),
 (16, 24), `E x 64 = 44, -44, 44, 44`, `S = 176 / 64 = 2.75`, every marginal
 32 / 64 exact: against Hensen 2015's `2.42 +- 0.20`, 1.65 standard
@@ -995,7 +997,7 @@ The law has no law of reflection: a row meets no surface, reads nothing
 of the crowd in flight (L1, P9) and is neither turned nor stopped by a
 body; a mirror is a declared re-emission table of the apparatus (input
 23: L1's mirrors at (3, 0) and (0, 3), the splitter's "transmitted 20,
-reflected 21 with the quarter turn", EXPERIMENTS line 3903), whose angle
+reflected 21 with the quarter turn", EXPERIMENTS line 3901), whose angle
 is the declared direction and not a formula of the law. The law has no
 refraction: no crowd slows or bends a row on `main` (DERIVATIONS_BEAM
 5.4, lines 1251 to 1292: "a row is neither bent nor delayed beside a
