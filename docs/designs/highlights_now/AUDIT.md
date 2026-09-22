@@ -128,6 +128,15 @@ is untouched by his merge.
 
 ### 2.2 Section 5.4, beyond the Pruner's 37
 
+The owner's word on this section (record 941 of the log, through the Boss):
+MARK, never delete or move; a superseded dated decision is qualified by a
+clause that names what superseded it and the record, and the old line
+stays, since 5.4 is the trail the paper's transitions cite (record 843).
+Every action below is MARK or KEEP; no line of 5.4 is moved to section 10.
+Gamma, wherever the marks name it, is the world's declared input under the
+one flight wall, an int, 0 by default, never the law's constant, its
+standing NOT NOW until the ring's b = 6 run at gamma 1 (record 941).
+
 Lines the Pruner listed as KEEP or MARK are not repeated; his marks are on
 the file. Lines he did not classify (350, 352, 353, 356, 358, 359, 361,
 363, 367 to 370, 372, 376 of the 2026-09-21 block, and the 2026-09-22
