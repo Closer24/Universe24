@@ -110,8 +110,32 @@ MATTER_RESERVOIR_TURN = 1
 MATTER_FAMILIES: dict[str, dict[str, int]] = {
     "matter": {"quantum": 1, "momentum_magnitude": 10},
     "matter2": {"quantum": 2, "momentum_magnitude": 20},
+    # The deciding world of the beam's width for the wall's factor on
+    # matter (EVERY_FAMILY.md section 5c, the second follow-up of section
+    # 6): fast massive rows, p = 40 at E'_0 = 64 (E' = 94, v^2 = 3 p^2 / E'^2
+    # = 0.543, the Lorentz factor 1.47), on series K's five beam lines at
+    # b = 8 beside the light worlds' own mass M = 2^16, 400 intervals with
+    # the window from 200 (a row takes about 122 intervals to the screen at
+    # the pace 40 / 94). A slow row's wall stretch is swamped by Newton's
+    # fall (the reviewer's MUST-FIX 1); a fast row falls eight times less
+    # and dwells 2.8 times less, so the stretch is read against the fall.
+    "fast": {
+        "quantum": 1,
+        "momentum_magnitude": 40,
+        "mass_factor": 16,
+        "impact": 8,
+        "ticks": 400,
+        "window_start": 200,
+        "beam": 1,
+    },
 }
-MATTER_WORLDS: tuple[tuple[str, int], ...] = (("matter", 0), ("matter", 1), ("matter2", 0))
+MATTER_WORLDS: tuple[tuple[str, int], ...] = (
+    ("matter", 0),
+    ("matter", 1),
+    ("matter2", 0),
+    ("fast", 0),
+    ("fast", 1),
+)
 # The family's name in every deciding world is `matter` (the catalog's
 # massive quantum, declared inline with its own quantum and momentum as
 # series W declares it); `matter2` names the world, not a second family.
@@ -149,6 +173,59 @@ MATTER_REFUTING: dict[str, float] = {
     "gamma_1_arrival_wall_unstretched": -11.03,
     "gamma_1_shift_weight_blind_to_speed": -10.45,
     "gamma_0_arrival_without_the_speed_up": 43.99,
+}
+# The pins of the fast worlds (the beam of five lines at b = 8, M = 2^16),
+# from the map's integer walk (every_family_map.py, `walk`, the engine's
+# three verbs on the stationary crowd; its last section), written before
+# the run (record 205, the reviewer's S6): per line the whole pixel and
+# the arrival against that line's own control, and the beam's means, the
+# numbers the screen's centroid and mean age read. GAMEBOARD arithmetic.
+FAST_LINES: tuple[tuple[int, int, int], ...] = (
+    (1, 0, 0),
+    (24, 1, 0),
+    (24, -1, 0),
+    (12, 1, 0),
+    (12, -1, 0),
+)
+FAST_PINS: dict[int, dict[str, object]] = {
+    0: {
+        "shift": -2.60,
+        "arrival": 1.94,
+        "lines": {
+            "(1, 0, 0)": [-3, 2.0],
+            "(24, 1, 0)": [0, 2.8],
+            "(24, -1, 0)": [-5, 2.0],
+            "(12, 1, 0)": [0, 5.2],
+            "(12, -1, 0)": [-5, -2.3],
+        },
+        "arrival_wall_unstretched": -0.66,
+    },
+    1: {
+        "shift": -4.40,
+        "arrival": 4.49,
+        "lines": {
+            "(1, 0, 0)": [-4, 2.6],
+            "(24, 1, 0)": [-2, 6.5],
+            "(24, -1, 0)": [-7, 4.3],
+            "(12, 1, 0)": [-1, 6.0],
+            "(12, -1, 0)": [-8, 3.0],
+        },
+        "arrival_wall_unstretched": -0.80,
+        "shift_weight_blind_to_speed": -6.40,
+    },
+}
+# The ratio the two fast worlds read (GAMEBOARD): the shifts' 4.40 / 2.60
+# = 1.69 by the integer walk (the weight's continuum 1 + gamma v^2 = 1.54
+# at v^2 = 0.543; light's 2.00; the weight blind to the speed 6.40 / 2.60 =
+# 2.46) and the arrivals' 4.49 / 1.94 = 2.31 (the wall's factor 2 with the
+# grain); the deciding reading the gamma 1 arrival 4.49 +- 1 against the
+# wall unstretched -0.80, 5.3 intervals apart, and the gamma 1 shift
+# -4.40 +- 0.5 against the blind -6.40, 2.0 pixels apart.
+FAST_RATIOS: dict[str, float] = {
+    "shift_g1_over_g0": 1.69,
+    "shift_continuum": 1.54,
+    "shift_blind": 2.46,
+    "arrival_g1_over_g0": 2.31,
 }
 # The ratios' bracket: 0.25 on mass and near as registered (by fiat; a
 # registered pin moves on the model owner's word); on far the brackets
@@ -312,10 +389,13 @@ def matter_world(name: str, family: str, gamma: int) -> Json:
     series K's, so that the readings tool reads each against the control
     of its folder."""
     keys = MATTER_FAMILIES[family]
+    mass_factor = int(keys.get("mass_factor", MATTER_MASS_FACTOR))
+    impact = int(keys.get("impact", MATTER_IMPACT))
+    directions = [list(v) for v in FAST_LINES] if keys.get("beam") else [[1, 0, 0]]
     document = K.world(name)
     document["suspension"] = list(SUSPENSION)
     document["optical"] = gamma
-    document["ticks"] = MATTER_TICKS
+    document["ticks"] = int(keys.get("ticks", MATTER_TICKS))
     document["massive_rows"] = True
     document["action"] = MATTER_ACTION
     document["age_bound"] = MATTER_AGE_BOUND
@@ -325,15 +405,15 @@ def matter_world(name: str, family: str, gamma: int) -> Json:
     centre = K.CENTRE
     for entry in document["measured"]:
         if entry["family"] == "m":
-            entry["amount"] = entry["amount"] * MATTER_MASS_FACTOR
+            entry["amount"] = entry["amount"] * mass_factor
         elif "lamp" in entry:
             entry["family"] = MATTER_FAMILY_NAME
-            entry["position"] = [K.LAMP_X, centre[1] + MATTER_IMPACT, centre[2]]
+            entry["position"] = [K.LAMP_X, centre[1] + impact, centre[2]]
             entry["amount"] = K.K * MATTER_RESERVOIR_TURN  # the reservoir K x 1: the turn 1
             entry["lamp"] = {
                 "rate": [1, 1],
                 "wheel": [1, K.N],
-                "directions": [[1, 0, 0]],
+                "directions": directions,
                 "momentum_magnitude": keys["momentum_magnitude"],
             }
         elif entry["family"] == "wall":
@@ -474,7 +554,35 @@ def expectations() -> Json:
                 "control": f"{family}_control_g{gamma}",
             }
             for (family, gamma), pin in MATTER_PINS.items()
+        }
+        | {
+            f"fast_g{gamma}": {
+                "gamma": gamma,
+                "flight_coefficient": 1 + gamma,
+                "family": MATTER_FAMILY_NAME,
+                "quantum": 1,
+                "momentum_magnitude": 40,
+                "energy": 94,
+                "v_squared": 0.543,
+                "mass": 1 << 16,
+                "impact": 8,
+                "ticks": 400,
+                "window_start": 200,
+                "beam": [list(v) for v in FAST_LINES],
+                "shift": pin["shift"],
+                "shift_bracket": SHIFT_BRACKET,
+                "arrival": pin["arrival"],
+                "arrival_bracket": DELAY_BRACKET,
+                "lines": pin["lines"],
+                "refuting_readings": {
+                    k: v for k, v in pin.items() if k not in ("shift", "arrival", "lines")
+                },
+                "control": f"fast_control_g{gamma}",
+                "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)",
+            }
+            for gamma, pin in FAST_PINS.items()
         },
+        "fast_ratios": FAST_RATIOS,
         "refuting_readings": MATTER_REFUTING,
         "equivalence": (
             "matter2_g0 (quantum 2, p = 20, E' = 132) on matter_g0's shift within 0.5 pixel and "

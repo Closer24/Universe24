@@ -416,9 +416,20 @@ its first push moves to the momentum's pair with the Q-scaled root,
 (640, 4242) as **W** -> 0 (the pace 640 / 4242 = 0.15087), 0.43 per cent
 slower, 1.5 intervals over the 52 x-Links, the residual's sign and size;
 the table's floor is massive-rows-v1's registered choice, not this
-step's. What is left is the map's continuous approximation (the crowd
-read at the rounded y, the residue continuous), closed by a map that
-walks the engine's Bresenham exactly (section 6). The five readings of
+step's. The map's integer walk (`every_family_map.py`, `walk`, written
+after the run as the first follow-up of section 6: the engine's three
+verbs integer for integer on the light-bending map's stationary crowd,
+the label's Bresenham step, the residue's rescale at the push, the
+label among the fan neighbours by |**c** + **h** x **P**|^2) reads at b = 10
+(GAMEBOARD) the shift -6 px and the arrival -8.59 at gamma 0, -6 px and
+-7.22 at gamma 1 (the control 339.90 intervals at 52 Links, the engine's
+340.00; 58 Links walked); the wall unstretched -11.85, the weight blind
+to the speed -9 px. Beside the engine's -5 / -12.00 and -6 / -6.00: the
+verbs are exact and the whole pixel at gamma 0 still differs by one, so
+what is left is the crowd itself, the map's stationary lines of one
+unit per direction per interval against the engine's crowd as released
+(the next follow-up: the crowd read off a mass world's own state, a
+GAMEBOARD reading, and the walk on it). The five readings of
 section 2: (1) Newton's fall read, -5.000 for -5.76, the grain; (2) the
 speed-up read, -12.00 against +43.99 without it; (3) the weight's form
 read, -6.000 against -10.45 blind to the speed; (4) the wall's factor on
@@ -430,6 +441,40 @@ width, mean age, first click and count). The refuting reading "no
 speed-up" was +2.57 in the note's first draft (the map's first form,
 the y-Links unpaid) and is +43.99 under the map as kept; both are far
 from the engine's -12.00.
+
+## 5c. The deciding world of the beam's width for the wall's factor on matter: fast rows, pinned before the run
+
+A slow row's wall stretch (about 1 interval at M = 2^14, b = 10) is
+swamped by Newton's fall and its grain (5b; the reviewer's MUST-FIX 1).
+A fast row falls less and dwells less: at p = 40 on E'_0 = 64 (E' = 94,
+v^2 = 3 p^2 / E'^2 = 0.543, the Lorentz factor E' / E'_0 = 1.47) the fall
+is eight times a slow row's below and the dwell 2.8 times shorter, so
+the stretch is read against the fall. The world: series K's five beam
+lines (the heading, (24, +-1, 0), (12, +-1, 0)) of the family `matter` at
+quantum 1 and momentum 40, at b = 8 beside the light worlds' own mass
+M = 2^16, 400 intervals with the window from 200, gamma 0 and 1 with
+their controls (`fast_g0.json`, `fast_g1.json` and the controls by the
+generator). The pins, from the map's integer walk on the beam's five
+lines (the map's last section; GAMEBOARD, written and committed before
+the run, record 205 and the reviewer's S6), per line the whole pixel and
+the arrival against that line's own control, and the beam's means, the
+numbers the screen's centroid and mean age read:
+
+| World | gamma | the shift, pixels (bracket 0.5): the beam's mean; per line | the arrival, intervals (bracket 1): the mean; per line | the wall unstretched (refutes verb 1 on matter) | the weight blind to the speed (refutes verb 2) |
+| --- | --- | --- | --- | --- | --- |
+| `fast_g0` | 0 | -2.60; -3, 0, -5, 0, -5 | +1.94; 2.0, 2.8, 2.0, 5.2, -2.3 | the arrival -0.66 | (the same at gamma 0) |
+| `fast_g1` | 1 | -4.40; -4, -2, -7, -1, -8 | +4.49; 2.6, 6.5, 4.3, 6.0, 3.0 | the arrival -0.80 | the shift -6.40 |
+
+The readings that decide: the gamma 1 arrival +4.49 +- 1 against the
+wall unstretched -0.80 (5.3 intervals apart: verb 1 on a massive row,
+the reading 5b could not make), and the gamma 1 shift -4.40 +- 0.5
+against the blind -6.40 (2.0 pixels apart: the weight's 1 + gamma v^2 =
+1.54 against light's 2). The ratios, GAMEBOARD with the grain: the
+shifts' 1.69 (the continuum 1.54; light's 2.00; the blind 2.46), the
+arrivals' 2.31 (the wall's factor 2). The crowd of the integer walk is
+the map's stationary lines (5b: at b = 10 it left the engine one to
+three intervals and one pixel off); a miss is reported with the engine's
+number and no pin moved.
 
 ## 6. The steps that follow
 
@@ -450,8 +495,12 @@ re-run and re-pinned by the Replicator (the price named to the owner: the
 root taken on the state (section 3, the vector test: admitted with the
 verb, or a root-free pace derived first). Step 6, the Highlights line.
 Beside them, from section 5b: a map that walks the engine's Bresenham
-exactly (the pins to the Link), and a deciding world of the beam's width
-for the wall's factor on a massive row.
+exactly, DONE as far as the verbs go (`walk` in `every_family_map.py`,
+2026-09-22: the three verbs integer for integer; the difference left to
+the engine is the crowd's lines, the next follow-up reading the crowd
+off a mass world's state), and a deciding world of the beam's width for
+the wall's factor on a massive row, its pins per beam line from the
+integer walk (the map's last section), committed before the run.
 
 ## 7. Links
 

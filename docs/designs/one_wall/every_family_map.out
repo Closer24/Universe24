@@ -26,3 +26,31 @@ time against the control's, DETECTOR if run; GAMEBOARD arithmetic before any run
   the readings that refute, at the chosen world (quantum 1, p = 10, M = 2^14):
     b = 10: the rule: gamma 1 less gamma 0 arrival +0.94 intervals, the shifts' ratio 1.061; the massive wall unstretched: the gamma 1 arrival -11.03 (the rule's -7.42); the weight blind to the speed, (1 + gamma) E': the gamma 1 shift -10.45 px (the rule's -6.11); the pace unpushed (no speed-up): the gamma 0 arrival +43.99 (the rule's -8.36)
     b = 12: the rule: gamma 1 less gamma 0 arrival +4.07 intervals, the shifts' ratio 1.165; the massive wall unstretched: the gamma 1 arrival -15.67 (the rule's -9.53); the weight blind to the speed, (1 + gamma) E': the gamma 1 shift -12.16 px (the rule's -6.41); the pace unpushed (no speed-up): the gamma 0 arrival +45.68 (the rule's -13.59)
+
+  the engine's integer walk on the stationary crowd (the follow-up of section 6; the mean
+  crowd the one approximation left): the shift in whole pixels, the arrival against the
+  control's, the Links walked; GAMEBOARD arithmetic, the engine's own readings beside
+
+  the family: quantum 1, p = 10; the heading's neighbours [(24, 1, 0), (24, -1, 0), (12, 1, 0), (12, -1, 0), (5, -1, 0), (5, 0, -1)]
+    M = 2^14, b =  6, gamma 0: the shift -5 px, the arrival -25.35 intervals (the control 339.90 at 52 Links; 57 Links walked)
+    M = 2^14, b =  6, gamma 1: the shift -7 px, the arrival -15.09 intervals (the control 339.90 at 52 Links; 59 Links walked)
+    M = 2^14, b = 10, gamma 0: the shift -6 px, the arrival -8.59 intervals (the control 339.90 at 52 Links; 58 Links walked)
+    M = 2^14, b = 10, gamma 1: the shift -6 px, the arrival -7.22 intervals (the control 339.90 at 52 Links; 58 Links walked)
+
+  the family: quantum 2, p = 20; the heading's neighbours [(24, 1, 0), (24, -1, 0), (12, 1, 0), (12, -1, 0), (5, -1, 0), (5, 0, -1)]
+    M = 2^14, b =  6, gamma 0: the shift -5 px, the arrival -25.35 intervals (the control 339.90 at 52 Links; 57 Links walked)
+    M = 2^14, b =  6, gamma 1: the shift -7 px, the arrival -15.55 intervals (the control 339.90 at 52 Links; 59 Links walked)
+    M = 2^14, b = 10, gamma 0: the shift -6 px, the arrival -8.59 intervals (the control 339.90 at 52 Links; 58 Links walked)
+    M = 2^14, b = 10, gamma 1: the shift -6 px, the arrival -7.54 intervals (the control 339.90 at 52 Links; 58 Links walked)
+    the readings that refute at b = 10 by the integer walk: the massive wall unstretched, the gamma 1 arrival -11.85 (-6 px); the weight blind to the speed, the gamma 1 shift -9 px (-19.95)
+
+  the beam's five lines (the heading and (24, +-1, 0), (12, +-1, 0)) by the integer walk,
+  quantum 1, p = 10, M = 2^14: per line the shift and the arrival against its own control;
+  the beam's mean shift and mean arrival, the pins of the beam-width world; the wall
+  unstretched beside (the reading that would refute verb 1 on matter)
+    b = 10, gamma 0: the mean shift -5.80 px, the mean arrival -11.67 intervals (unstretched -13.69); (1, 0, 0): -6 px, -8.59 (58 Links; unstretched -6 px, -11.09); (24, 1, 0): -6 px, -21.79 (58 Links; unstretched -6 px, -24.29); (24, -1, 0): -6 px, -21.79 (58 Links; unstretched -6 px, -24.29); (12, 1, 0): +0 px, -2.31 (56 Links; unstretched +0 px, -3.50); (12, -1, 0): -11 px, -3.89 (63 Links; unstretched -11 px, -5.28)
+    b = 10, gamma 1: the mean shift -5.80 px, the mean arrival -11.84 intervals (unstretched -15.35); (1, 0, 0): -6 px, -7.22 (58 Links; unstretched -6 px, -11.85); (24, 1, 0): -6 px, -22.72 (58 Links; unstretched -6 px, -26.07); (24, -1, 0): -6 px, -20.42 (58 Links; unstretched -6 px, -25.05); (12, 1, 0): +0 px, -3.38 (56 Links; unstretched +0 px, -5.64); (12, -1, 0): -11 px, -5.48 (63 Links; unstretched -11 px, -8.14)
+    b = 12, gamma 0: the mean shift -4.80 px, the mean arrival -14.86 intervals (unstretched -16.39); (1, 0, 0): -5 px, -12.88 (57 Links; unstretched -5 px, -14.95); (24, 1, 0): -6 px, -14.43 (60 Links; unstretched -6 px, -16.46); (24, -1, 0): -5 px, -27.45 (57 Links; unstretched -5 px, -28.58); (12, 1, 0): +2 px, -14.90 (54 Links; unstretched +2 px, -16.04); (12, -1, 0): -10 px, -4.64 (62 Links; unstretched -10 px, -5.94)
+    b = 12, gamma 1: the mean shift -4.80 px, the mean arrival -12.55 intervals (unstretched -15.30); (1, 0, 0): -5 px, -14.42 (57 Links; unstretched -5 px, -17.63); (24, 1, 0): -6 px, -15.89 (60 Links; unstretched -6 px, -19.52); (24, -1, 0): -5 px, -28.96 (57 Links; unstretched -5 px, -31.13); (12, 1, 0): +2 px, -15.26 (54 Links; unstretched +2 px, -18.14); (12, -1, 0): -10 px, +11.80 (66 Links; unstretched -10 px, +9.93)
+    b = 14, gamma 0: the mean shift -3.80 px, the mean arrival -13.49 intervals (unstretched -20.17); (1, 0, 0): -6 px, -0.92 (58 Links; unstretched -4 px, -15.56); (24, 1, 0): +1 px, -42.73 (53 Links; unstretched +1 px, -44.21); (24, -1, 0): -6 px, -14.12 (58 Links; unstretched -4 px, -28.76); (12, 1, 0): +2 px, -5.85 (54 Links; unstretched +2 px, -7.35); (12, -1, 0): -10 px, -3.80 (62 Links; unstretched -10 px, -4.99)
+    b = 14, gamma 1: the mean shift -3.00 px, the mean arrival -19.64 intervals (unstretched -22.26); (1, 0, 0): -4 px, -15.31 (56 Links; unstretched -4 px, -17.62); (24, 1, 0): +1 px, -43.71 (53 Links; unstretched +1 px, -46.77); (24, -1, 0): -4 px, -28.51 (56 Links; unstretched -4 px, -30.82); (12, 1, 0): +2 px, -5.83 (54 Links; unstretched +2 px, -8.46); (12, -1, 0): -10 px, -4.85 (62 Links; unstretched -10 px, -7.60)

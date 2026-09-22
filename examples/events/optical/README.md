@@ -44,6 +44,9 @@ capped at one Link by the primitive's `at_most` with the surplus kept.
 | `matter_g0.json` | 0 | 1 | 2^14 | 10 | -5.76 +- 0.5 | the arrival -8.36 +- 1 (earlier: a falling row speeds up) |
 | `matter_g1.json` | 1 | 2 | 2^14 | 10 | -6.11 +- 0.5 | the arrival -7.42 +- 1 |
 | `matter2_g0.json` | 0 | 1 | 2^14 | 10 | -5.76 +- 0.5 (on `matter_g0`'s pixel: the equivalence) | the arrival -8.36 +- 1 |
+| `fast_control_g0.json`, `fast_control_g1.json` (the fast rows, `matter` at quantum 1 and momentum 40: E' = 94, v^2 = 0.543; the beam of five lines; 400 intervals, the window from 200) | 0, 1 | 1, 2 | - | - | 0 | 0 |
+| `fast_g0.json` | 0 | 1 | 2^16 | 8 | -2.60 +- 0.5 (the beam's mean by the map's integer walk; per line -3, 0, -5, 0, -5) | the arrival +1.94 +- 1 (per line 2.0, 2.8, 2.0, 5.2, -2.3); the wall unstretched -0.66 |
+| `fast_g1.json` | 1 | 2 | 2^16 | 8 | -4.40 +- 0.5 (per line -4, -2, -7, -1, -8; the weight blind to the speed -6.40) | the arrival +4.49 +- 1 (per line 2.6, 6.5, 4.3, 6.0, 3.0); the wall unstretched -0.80 |
 
 The number the run reads: the ratio of the two shifts (f = 2 over f = 1),
 2.00 within 0.25 (`mass` and `near`, the register's `ratios`; the chief

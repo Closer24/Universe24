@@ -621,6 +621,22 @@ def test_the_pin_worlds_parse_run_and_carry_their_pins():
         "gamma_1_shift_weight_blind_to_speed": -10.45,
         "gamma_0_arrival_without_the_speed_up": 43.99,
     }
+    # The fast worlds (the beam of five lines at b = 8, M = 2^16, p = 40):
+    # the pins of the map's integer walk, written before the run.
+    fast = [matter["worlds"][f"fast_g{g}"] for g in (0, 1)]
+    assert [w["shift"] for w in fast] == [-2.60, -4.40]
+    assert [w["arrival"] for w in fast] == [1.94, 4.49]
+    assert all(w["mass"] == 1 << 16 and w["impact"] == 8 and w["momentum_magnitude"] == 40 for w in fast)
+    assert fast[1]["refuting_readings"] == {
+        "arrival_wall_unstretched": -0.80,
+        "shift_weight_blind_to_speed": -6.40,
+    }
+    assert matter["fast_ratios"]["shift_g1_over_g0"] == 1.69
+    for name in ("fast_g0", "fast_g1", "fast_control_g1"):
+        loaded = load_world((WORLDS / f"{name}.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent)
+        lamp = next(m for m in loaded.world.measured if m.lamp is not None)
+        assert loaded.world.massive_rows and loaded.world.optical is not None
+        assert len(lamp.lamp.directions) == 5 and lamp.lamp.momentum_magnitude == 40
     for name in ("matter_g0", "matter_g1", "matter2_g0", "matter_control_g0"):
         loaded = load_world((WORLDS / f"{name}.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent)
         world = loaded.world
