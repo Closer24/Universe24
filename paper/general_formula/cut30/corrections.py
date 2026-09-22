@@ -1689,6 +1689,12 @@ CORRECTIONS = [
         "where Einstein has $6\\pi\\beta^2$ isotropic, about $300$ times nature's at Mercury's pace and of the wrong symmetry: FAIL on the law, stated as a difference;",
         "where Einstein has $6\\pi\\beta^2$ isotropic, larger than nature's by $1/(6\\pi\\beta)$, about $330$ times at Mercury's pace if its coefficient is of order one, and of the wrong symmetry: FAIL on the law, pinned in order and symmetry, the coefficient NOT MADE;",
     ),
+    # The last citation swap: Light Outside merged (PR #791 at a62441fb).
+    (
+        "Light Outside merged (PR #791 at a62441fb): cite main",
+        "at ceb6e066 (PR \\#791, pending merge)",
+        "on \\texttt{main} at a62441fb (PR \\#791, merged)",
+    ),
 ]
 
 

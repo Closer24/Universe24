@@ -3838,3 +3838,15 @@ taken over ("larger than nature's by 1 / (6 pi beta), about 330 times
 at Mercury's pace if its coefficient is of order one; FAIL pinned in
 order and symmetry, the coefficient NOT MADE"). Light Outside's swap
 waits for its merge SHA, as the Boss ordered.
+
+## Applied (2026-09-22): the last citation swap, Light Outside merged
+
+Light Outside cited on main at a62441fb (PR #791 merged; its verdict
+rows unchanged since 186f0030 but the luminosity pin's label). The
+paper cites no line of it, only its verdict row on the speed of light
+by direction (2.954 / 2.971 / 3.000), which is unchanged in the merged
+file; the words unchanged. In the same commit one record fix of the
+writer's own: NUMBERS.md's parenthetical for tau_L c = 0.993 said "1.72
+times the heading's pace 0.5818", whose product is exactly 1; the
+factor is 1.72 = 110 / 64 times c = 1 / sqrt 3. Every source of the
+paper is now on main; nothing else changes without the owner's word.
