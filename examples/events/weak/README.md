@@ -162,6 +162,19 @@ when the neutron fires at that tick or up to three intervals before it
 | `j3_deuteron_crowd` | the gate | no transformation in 700 intervals, the count above the gate 65536 at every pulse of the key (the expectation GAMEBOARD, the reading the absence of a `become` line on the neutron's own record, DETECTOR); no beta click (DETECTOR) |
 | `j3_neutron_free` | the neutron alone | the transformation at 512 exactly, its clock counting nothing (the expectation GAMEBOARD, the reading the neutron's own `become` line, DETECTOR); one beta click with the content 3 (DETECTOR) |
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md));
+`expectations.json` names it (`drive`). Every pin of this register is
+drive-free (no reader or neutron steps: the counts are the rows'
+arrivals, the triggers the counts, the W's exchange the clock's), and
+the rows of 2026-09-20 to 2026-09-22 below, read under the per-axis
+drive of history, stand as registered. What the drive moves in J3 is the
+deuteron pair's attempted steps and drive accumulators (GAMEBOARD, a
+diagnostic) and the digests of the gate world `j3_deuteron`
+(`gate_set.json`, the former kept; refused before its cap under the
+generic entry of the bending since 2026-09-22, the gate's `refusal`
+block). The re-read under the law is the last section of this page.
+
 Against nature (PREDICTIONS entries 10 and 18, the law's own predictions,
 registered as such): a step where the survival is exponential, a line
 where the beta spectrum is continuous, a bound neutron that decays later

@@ -599,10 +599,26 @@ def main() -> None:
     # never `format`): the tests that read every JSON under examples/events
     # as a world skip it, as they skip an entity definitions file.
     expectations: dict[str, object] = {"format": EXPECTATIONS_FORMAT, "j2": j2_expectations()}
+    # The bodies' drive (since 2026-09-22 the law's line drive, the model
+    # owner's record 972, docs/designs/drive_b/DEFAULT.md): the pins below
+    # are drive-free (the readers and the neutrons never step; a clock's
+    # count is the rows' arrival, the trigger the count), and what the drive
+    # moves in J3 is the pair's attempted steps and the drive accumulators
+    # (GAMEBOARD, a diagnostic) and the digests of the gate world.
+    expectations["drive"] = "line"
     # The source of every entry (the owner's principle of 2026-09-21, record
     # 205: a formula gives, a run proves): the formula or the section of
     # docs/DERIVATIONS_BEAM.md, or "measured" with the target.
     expectations["derivations"] = {
+        "drive": (
+            "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as "
+            "amended, note 49; the model owner's record 972); every pin of this register is drive-free "
+            "(no reader or neutron steps: the counts are the rows' arrivals, the triggers the counts, "
+            "the W's exchange the clock's), the rows of 2026-09-20 to 2026-09-22 read under the "
+            "per-axis drive of history stand as registered; the drive moves the deuteron pair's "
+            "attempted steps and drive accumulators (GAMEBOARD, a diagnostic) and the gate world's "
+            "digests (gate_set.json, the former kept)"
+        ),
         "j2": "the first arrivals from the flight table (the rows born by the ticks a heading row needs to walk 8 Links: ticks - tau_8, tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), DERIVATIONS_BEAM 11.1; BEAM_LAW section 3); the first clicks the arrivals' admitted share on the window (BEAM_LAW note 36: w / N for a stride coprime to N, else the admitted phases of the stride's orbit over the orbit's size: 1/64, the half circle, 2/64, 0); the far detector's clicks the rows of the stride outside the far phase; derived here from the flight table and compared by tests/test_weak_readings.py (d)",
         "become": f"measured, the range over the dwell period of ticks {DWELL[0]} to {DWELL[1]} of a warm run of {WARM_TICKS} intervals of the world without its `become` keys (the count each `n` clock reads at its Node, `Measured.counted`, at every tick of the window: the transient over by tick 36, the window longer than one cycle of the owed count, 2^20 / c intervals; a GameBoard reading of the engine, re-pinned under the fraction-free law on 2026-09-21, the one count at tick 100 until then); the trigger ticks at + floor(at x c / 2^20) at both ends of the range (the owed accumulator of BEAM_LAW note 41 gains between the least and the greatest count per interval once the crowd is steady), the reading inside when the neutron fires within them or up to `slack` intervals before (the build-up); `never` where the `crowd` gate holds; compared with the generator's warm runs on the shipped worlds by tests/test_weak_readings.py (e)",
         "w": "measured (the exchange world: `at` and the click's tick the clock's count under the crowd gate, the label Q x the amount, the content and the charge as declared)",

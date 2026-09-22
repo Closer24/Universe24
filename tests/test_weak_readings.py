@@ -356,7 +356,10 @@ def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_rule():
     folder = ROOT / "examples" / "events" / "weak"
     registered = json.loads((folder / "expectations.json").read_text(encoding="utf-8"))
     assert registered["format"] == "weak-expectations-v1"
-    assert set(registered["derivations"]) == {"j2", "become", "w"}
+    assert set(registered["derivations"]) == {"j2", "become", "w", "drive"}
+    # Since the law's line drive (2026-09-22): the drive named, every pin
+    # drive-free (no reader or neutron steps).
+    assert registered["drive"] == "line"
     derived: dict[str, dict[str, int]] = {}
     for path in sorted(folder.glob("j2_*.json")):
         world = json.loads(path.read_text(encoding="utf-8"))
