@@ -57,8 +57,12 @@ passes from place to place, it cannot jump: a kind of locality also
 Outside"): every Outside passage is a chain of clicks between
 neighbouring places, so the Outside inherits the Inside's locality
 through the conversion. It forbids a reading that would need a jump, a
-velocity above one Node per interval, and a detector reading at a place
-no chain of clicks reaches. It is A1 read from above, and it FOLLOWS
+velocity above one Node per interval of the tick, which in a detector's
+own count (the frame's definition of a velocity Outside, section 1) is
+`1 / r_D` Nodes per count, `r_D` the detector's own count per tick, so
+that light in a crowd reads its c in the detector's stretched count and
+not above it (series T's clocks, `r_D = 1 / 2.65` at 3 Links), and a
+detector reading at a place no chain of clicks reaches. It is A1 read from above, and it FOLLOWS
 FROM A1 ALONE together with the definition of Outside (nothing leaves
 the board but clicks, P6): every Outside event is a click, every click
 moves information one Node at most, so every Outside passage is a chain
@@ -1433,7 +1437,9 @@ maps of the count pairs, the boosts with rational k, dense in SO(1, 1),
 the Lorentz group up to scale their closure. Locality Outside (section
 0): every passage in O is a chain of clicks between neighbouring places,
 so O inherits I's locality through the map, a theorem of A1 and the
-definition of O, with the pair's gather (P6) the one exception.
+definition of O, with the pair's gather (P6) the one exception; the
+bound is one Node per interval of the tick, `1 / r_D` Nodes per the
+detector's own count.
 
 **(2) The map, step by step, with its name at each step.** The
 conversion `Phi: I -> O` is a composite of four maps, and the algebra
