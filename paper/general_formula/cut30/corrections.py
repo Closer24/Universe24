@@ -1824,6 +1824,12 @@ CORRECTIONS = [
         "the click evaluates $f$ at the root and squares it, $R(x) = 1024\\,(65536 + C[p_1]C[p_2] + S[p_1]S[p_2])$",
         "the click evaluates $f$ at the root and squares it, $R(x) = 1024\\,(65536 + C[p_1]C[p_2] + S[p_1]S[p_2])$ (the formulas of Section~\\ref{sec:measurement})",
     ),
+    # The Boss's conditions on the platform paragraph: the kind on every reading; the moving detector's ratio NOT MADE.
+    (
+        "the platform: the kind on every reading of the simulator's road, and the moving detector's ratio NOT MADE (the Boss's conditions)",
+        "A detector at a Node reads each arriving record once, by one comparison, at its own count: the two-slit pixels and the Mach-Zehnder ports (series L), the face clicks of the pace (Q), a lamp's births at a detector in a crowd (T, X). A lamp in motion is read at a detector at rest: the thrown stars' Doppler (G, G2) and the muon's products at three speeds (S); a detector in motion reads Nodes apart over counts apart between neighbouring detectors, and its own one-way ratio, the measurable of the frame, is a reading not yet made. A lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3, T). Every reading carries its kind, DETECTOR, and a number of the board's state is never one.",
+        "A detector at a Node reads each arriving record once, by one comparison, at its own count: the two-slit pixels and the Mach-Zehnder ports (series L, DETECTOR), the face clicks of the pace (Q, DETECTOR), a lamp's births at a detector in a crowd (T, X, DETECTOR). A lamp in motion is read at a detector at rest: the thrown stars' Doppler (G, G2, DETECTOR) and the muon's products at three speeds (S, the face clicks DETECTOR, the self-creations' ticks GAMEBOARD); a detector in motion reads Nodes apart over counts apart between neighbouring detectors, and its own one-way ratio, the measurable of the frame, is a reading NOT MADE. A lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3, T, DETECTOR). Every reading carries its kind, and a number of the board's state is a GAMEBOARD diagnostic, never a reading.",
+    ),
 ]
 
 

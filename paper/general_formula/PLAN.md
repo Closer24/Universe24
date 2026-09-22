@@ -3933,3 +3933,14 @@ duplicated statements of the Outside step's quantum and of c's
 anisotropy in the new-formulas items reduced to pointers; the light
 chain cites Section 6's formulas. No number moved, no claim changed;
 39 pages. The Boss was told before the commit (08:05Z).
+
+## Applied (2026-09-22): the Boss's conditions on the platform paragraph
+
+The Boss's GO (08:35Z) on the platform and the coherence pass reached
+the writer after the commit 38d569d9; its conditions are met in one
+small commit: every reading the simulator's road cites carries its
+kind (L, Q, T, X, G, G2, D3 DETECTOR; series S the face clicks DETECTOR
+and the self-creations' ticks GAMEBOARD), a number of the board's
+state named a GAMEBOARD diagnostic, and the moving detector's own
+one-way ratio "a reading NOT MADE" until the physicist's step 4 and
+the transponder worlds land. The count 39, reported; no cut.
