@@ -233,7 +233,7 @@ every addition, the wall's products by division before they are formed).
 three under the key, three controls without it, each `"law": "beam"`, an
 open box `[41, 41, 41]`, K 2^20, N 64, `release` [1, 2^20] (no row within
 the run), `suspension` 0 (nothing owed), `width` 1, 200 intervals; one
-family `body` (quantum 0, no charge, `phase` false); one measured event of
+family `probe` (the shipped free phase-less mass: quantum 0, charge 0, `phase` false); one measured event of
 `amount` 64 (M = 64, Q S M = 4096) at the centre (20, 20, 20) with the
 momentum below and `directions` the six headings; the six open faces the
 detectors. `|p|_1 = 6000` on all three, so the wall is one number, `W =

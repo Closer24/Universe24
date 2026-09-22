@@ -142,6 +142,17 @@
     "audit_sha256": "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
     "events_sha256": "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988"
    }
+  },
+  {
+   "path": "drive_b/plane_b.json",
+   "ticks": 200,
+   "cap": 200,
+   "covers": "drive-b-v1 (the world key drive_b, 2026-09-22): the directional drive of a body on the plane diagonal, by_line against the one wall, the escape click on face:+x at tick 101",
+   "digests": {
+    "state_sha256": "f2de68150cab31d4fd229d6ca8791ec477e18eb4889615d5ef72f7b8ce9633b6",
+    "audit_sha256": "4f882bb5815439292afeb713d3ab9b77daa6b4b53705ae8047f15224615b9048",
+    "events_sha256": "92ef9f380d83122b579d3c67941a1ff2fcc1517e0cde5641ce715cd2cb5101bc"
+   }
   }
  ]
 }

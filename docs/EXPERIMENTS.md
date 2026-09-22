@@ -6750,6 +6750,68 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### X, the directional drive (2026-09-22)
+
+- **Confronts.** The model owner's approval of form B (2026-09-22, record
+  652 of the log of 2026-09-20, translated: "Form B is approved, go on it"):
+  the directional drive of a body, `drive-b-v1`
+  ([the design](designs/drive_b/DESIGN.md), form B in the integer form (c)
+  of [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction)
+  after the review of record 348; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  [HYPOTHESES 28](HYPOTHESES.md#28-the-directional-drive-of-a-body-the-bresenham-line-of-the-momentum-against-one-wall-stated-so-that-it-can-fail)),
+  a world key beside the law: a body's three drive accumulators gain p_a Q
+  against ONE wall Q^2 S M + |**p**|_1 T_h and the axis furthest over the
+  wall steps, the Bresenham line of the momentum with no coincident fire
+  lost. Against the per-axis drive of BEAM_LAW note 17 that `main` runs
+  (a diagonal body moves along one axis, every coincident fire lost;
+  DERIVATIONS_BEAM 1.3 item 7) and the registered defect of record 301 (a
+  body outrunning its own family's rows). Read at the faces of an open
+  41^3 box (the body's click, DETECTOR); the `step` lines GAMEBOARD.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/drive_b/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  `examples/events/drive_b/expectations.json`, derived by the generator
+  from the rule's own integers).** A body of content 64 (Q S M = 4096) at
+  |**p**|_1 = 6000 (the wall 922144) from the centre (20, 20, 20): under
+  the key the click on face:+x at tick 51 from (40, 20, 20) on the axis,
+  101 from (40, 40, 20) on the plane diagonal, 152 from (40, 40, 40) on
+  the cube's (the 21st x Link at ceil(21 W / (|p_x| Q)), one interval's
+  tolerance on the tick, the face and the Node exact); the controls
+  without the key at 36, 50 and 65 from (40, 20, 20), y and z never moved;
+  every `step` line within one Link of the line of **p**; every `drive`
+  below 3 W.
+- **Features.** The world key `drive_b` and the identity `drive-b-v1`
+  (`core.integer.by_line`, `world.drive_wall`, `world.T_HEADING`, one
+  branch in `engine._move`; the one-axis refusals of `covariant_readings`
+  lifted under the key); no rule of the six verbs changed; no registered
+  world re-registered; the key off by default (the gate set's digests, the
+  gate world `drive_b/plane_b` added).
+- **Run.** `examples/events/drive_b/` (the six worlds written by
+  `make_worlds.py`), `tools/run_series.py --jobs 3`, 200 intervals,
+  headless; the readings by `tools/drive_b_readings.py` (every line
+  DETECTOR or GAMEBOARD). The branch `drive-b-v1` from main `166403d8`, the
+  project's environment (Python 3.14.0rc2, numpy 2.5.3); the source
+  fingerprint `fcaf6f194e62...`; 0.10 to 0.11 s per world, 43 MB peak;
+  every run completed with the books balanced at every tick; the tool: 0
+  record checks failed, 19 readings inside, 0 outside, nothing moved
+  ([the page](../examples/events/drive_b/README.md#what-was-measured-2026-09-22)).
+
+  | World | Expected | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `axis_b` | the click at 51 +- 1 on face:+x from (40, 20, 20); 20 x Links before; on the line; the drives below 3 W; `fast_steps` 0 | tick 51 on face:+x from (40, 20, 20); (20, 0, 0); 0.000 off the line; 381280; 0 | inside (5 of 5) |
+  | `plane_b` | 101 +- 1 from (40, 40, 20); (20, 20, 0); within one Link; below 3 W | tick 101 from (40, 40, 20); (20, 20, 0); 0.707; 1111424 | inside (4 of 4) |
+  | `cube_b` | 152 +- 1 from (40, 40, 40); (20, 20, 20); within one Link; below 3 W | tick 152 from (40, 40, 40); (20, 20, 20); 0.816; 1175424 | inside (4 of 4) |
+  | `axis_main`, `plane_main`, `cube_main` | 36, 50, 65 (+- 1) from (40, 20, 20); (20, 0, 0) | 36, 50, 65 from (40, 20, 20); (20, 0, 0) each | inside (6 of 6) |
+
+- **Verdict (X).** The rule stands on the run: under the key a body walks
+  the digital line of its momentum at the pace the wall gives it on every
+  direction and loses no coincident fire (the plane body leaves through
+  (40, 40, 20), the control through (40, 20, 20)); with the key absent the
+  record is the per-axis drive's to the byte. It establishes no physical
+  law: the cap off the headings is the Manhattan-isotropic 64 / 110, and
+  the body's pace under the law alone (this rule as the owner approved it,
+  or the rows' triple of `momentum_pair`, which needs a root on the state)
+  is the chief physicist's and the owner's question (DESIGN.md section 7).
+
 ### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
 
 - **Confronts.** The bending and the delay of light beside a mass, the

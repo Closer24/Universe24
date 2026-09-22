@@ -121,11 +121,11 @@ def box_world(
         "release": [1, 1 << 20],
         "suspension": 0,
         "width": width,
-        "families": [{"name": "body", "quantum": 0, "phase": False}],
+        "families": [{"name": "probe", "quantum": 0, "charge": 0, "phase": False}],
         "measured": [
             {
                 "position": [shape // 2] * 3,
-                "family": "body",
+                "family": "probe",
                 "amount": content,
                 "momentum": list(momentum),
             }
@@ -171,6 +171,7 @@ class Replay:
         self.content, self.width, self.cap = content, width, cap
         self.drives = [0, 0, 0]
         self.links = [0, 0, 0]
+        self.count = 0
 
     def wall(self, p: list[int]) -> int:
         return Q * Q * self.width * self.content + (sum(abs(c) for c in p) * T_H if self.cap else 0)
@@ -187,6 +188,7 @@ class Replay:
         sign = 1 if self.drives[chosen] > 0 else -1
         self.drives[chosen] -= sign * wall
         self.links[chosen] += sign
+        self.count += 1
         return chosen, sign
 
 
@@ -274,10 +276,12 @@ def test_by_line_on_one_axis_is_by_drive():
     # the other keeps its overflow.
     axis, sign, drives = by_line([wall - 1, wall - 1, 0], [1, 2, 0], wall)
     assert (axis, sign, drives) == (1, 1, [wall, 1, 0])
-    axis, sign, drives = by_line(drives, [0, 0, 0], wall)
-    assert (axis, sign, drives) == (0, 1, [0, 1, 0])
-    axis, sign, drives = by_line([wall, wall, 0], [0, 0, 0], wall)
-    assert (axis, sign, drives) == (0, 1, [0, wall, 0])
+    axis, sign, drives = by_line(drives, [1, 0, 0], wall)
+    assert (axis, sign, drives) == (0, 1, [1, 1, 0])
+    axis, sign, drives = by_line([wall, wall, 0], [1, 1, 0], wall)
+    assert (axis, sign, drives) == (0, 1, [1, wall + 1, 0])
+    # An axis whose rate is 0 is idle: it neither advances nor carries.
+    assert by_line([wall, 0, 0], [0, 0, 0], wall) == (None, 0, [wall, 0, 0])
     with pytest.raises(ValueError):
         by_line([0, 0, 0], [1, 0, 0], 0)
 
@@ -379,7 +383,7 @@ def test_the_reviewers_pin_1_the_wandering_direction():
     assert replay.links == [112, 112, 83]
     assert [e // wall for e in exact] == [111, 111, 83]
     assert worst == 2
-    assert entry.steps == 112 + 112 + 83
+    assert entry.steps == replay.count == 399
 
 
 def test_the_reviewers_pin_2_the_hand_over_transient():
@@ -454,13 +458,13 @@ def test_the_edges_of_the_rule():
     # A refused step at a contact under `pass` pays W and does not move.
     world = box_world([6000, 0, 0], ticks=60)
     world["measured"] = [
-        {**world["measured"][0], "table": {"body": "pass"}},
+        {**world["measured"][0], "table": {"probe": "pass"}},
         {
             "position": [21, 20, 20],
-            "family": "body",
+            "family": "probe",
             "amount": 64,
             "fixed": True,
-            "table": {"body": "pass"},
+            "table": {"probe": "pass"},
         },
     ]
     events, simulation = run_in_process(world, 60)
@@ -527,7 +531,7 @@ def test_with_action_the_turn_composes_per_link_crossed():
     """(g), the turn by momentum under the key."""
     world = box_world([64, 64, 0], content=1, ticks=10, shape=65)
     world["action"] = 7
-    world["families"] = [{"name": "body", "quantum": 0, "charge": 0}]
+    world["families"] = [{"name": "probe", "quantum": 0, "charge": 0}]
     world["measured"][0].update({"phase": 0, "phase_by_momentum": True, "position": [4, 4, 0]})
     world["shape"] = [64, 64, 1]
     events, simulation = run_in_process(world, 10)

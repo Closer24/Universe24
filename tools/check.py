@@ -40,7 +40,12 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_nature_beam_worlds.py",
         "tests/test_amplitude_click.py",
         "tests/test_massive_rows.py",
+        "tests/test_drive_b.py",
     ),
+    # The drive-b register, worlds and generator (2026-09-22): the test that
+    # reads the pins and replays the deciding worlds.
+    "examples/events/drive_b/expectations.json": ("tests/test_drive_b.py",),
+    "examples/events/drive_b/make_worlds.py": ("tests/test_drive_b.py",),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",

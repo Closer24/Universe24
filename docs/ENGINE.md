@@ -256,7 +256,13 @@ step precedes the law: at a constant momentum the same Links at the same
 self-creations, under a push a fire can fall one interval later than it
 did before the crossing rule); the rule of one axis is
 `engine.step_axis`, the owed count `engine.count_owed`, each the one place
-its rule lives and what the readings tools read; `run.json`, `state.json`
+its rule lives and what the readings tools read; under the world key
+`drive_b` (`drive-b-v1`, 2026-09-22, off by default,
+[BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the three drives gain `p_a Q` each against the one wall `world.drive_wall`
+(Q^2 S M + |p|_1 T_h, T_h = 110) and the axis furthest over it steps
+(`core.integer.by_line`): the line of the momentum, the coincident fire
+deferred and never lost, the record's fields unchanged; `run.json`, `state.json`
 and the `step` line carry `drive` and the state `axis_steps`, and since
 the crossing rule the body's two marks `step_port` and `last_step_port`,
 the Ports of its own two last Links, -1 without one (a refused step, an
@@ -897,6 +903,9 @@ recorded world); `massive-rows-v1` when the world declares
 key's block `covariant_readings`: the pair `c2`, the `grain`, `books`, the
 paid families off 3 h n = Q S d as `off_identity`, the most `comparisons`
 one frame took and `waited`, the intervals each body owed to proper time),
+`optical-v1` when the world declares `optical`, `drive-b-v1` when the world
+declares `drive_b` (2026-09-22, the directional drive of a body; the record
+then carries `drive_b: true`, under the key alone),
 last; `[]` without any; in a world with a hand every family carries
 its `hand` and every number its `axis`, the heading's vector or None),
 `columns` (the

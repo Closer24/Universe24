@@ -1240,3 +1240,48 @@ couplings.
   has no entry of its own on this page and gets one when a design with
   pins exists (the rule of this page's head).
 
+## 28. The directional drive of a body: the Bresenham line of the momentum against one wall, stated so that it can fail
+
+- **Statement (the model owner's approval of form B, 2026-09-22, record 652
+  of docs/LOG_2026-09-20.md; the design
+  [docs/designs/drive_b/DESIGN.md](designs/drive_b/DESIGN.md), form B in the
+  integer form (c) of [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction);
+  [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Under the world key `drive_b` (`drive-b-v1`, absent by default) a free
+  body's three drive accumulators gain `p_a Q` each against ONE wall `W =
+  Q^2 S M + |p|_1 T_h` (`T_h = isqrt(3 Q^2) = 110`, formed at load; `Q^2 S
+  M` alone under `covariant_readings`), and the axis furthest over the wall
+  makes the Link, the others keeping their overflow: the Bresenham line of
+  the momentum, one Link per interval at most, no coincident fire lost, no
+  direction read, no root at run time. The Manhattan pace `|p|_1 Q / W` on
+  every direction; on a heading form B's `|p| x 64 / (Q S M x 64 + 110
+  |p|)`; Newton's `|p|_2 / (Q S M)` at a small momentum to zeroth order; the
+  cap `64 / 110` Euclidean on every direction, below the rows' pace on
+  every line and equal to it on the headings (Manhattan-isotropic off
+  them). The one-axis refusals of `covariant_readings` are lifted under the
+  key, so a body on a diagonal reads `|p|_2 / E'` per lattice interval.
+- **The expectations (series X, [EXPERIMENTS](EXPERIMENTS.md#x-the-directional-drive-2026-09-22)).**
+  A body of content 64 at `|p|_1 = 6000` from the centre of an open 41^3
+  box clicks on face:+x (DETECTOR) at tick 51 from (40, 20, 20) on the
+  axis, 101 from (40, 40, 20) on the plane diagonal and 152 from (40, 40,
+  40) on the cube's; the per-axis drive's controls at 36, 50 and 65 from
+  (40, 20, 20) with y and z never moved; every `step` line's Node within one
+  Link of the line (GAMEBOARD); the reviewer's pins of record 348 (112, 112,
+  83 Links against the whole parts 111, 111, 83 within 2 at every n; a
+  cancelled transient leaving -0.050 Link and no Link).
+- **What it depends on.** The constant `T_h = 110` (the flight table's own
+  heading resolution) as the cap's scale; the cap term keyed off under the
+  covariant key; nothing else of the six verbs.
+- **What it does not give.** Form B's Euclidean-isotropic cap on the body's
+  line (the line accumulator of the first build, BLOCKED in record 348: an
+  exact form with a line-independent unit does not exist, FORM.md 3.1);
+  the rows' triple pace `|p|_2 / E'` under the law alone (two dispersions
+  are in the tree, both rung 1: DESIGN.md section 7); any change of the
+  default drive or of a registered world.
+- **What would refute it.** A click of the plane body from a Node with y
+  below 39, or at a tick outside 101 +- 1; a `step` line more than one Link
+  off the line of the momentum; an accumulator at or above 3 W; a world
+  without the key whose record differs from `main`'s by a byte.
+- **Status.** Built on 2026-09-22 and run once (series X): six worlds, 19
+  readings inside, 0 outside, nothing moved; the key off by default; making
+  it the default is the owner's later decision.
