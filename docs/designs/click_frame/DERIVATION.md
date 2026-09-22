@@ -161,13 +161,18 @@ the run is the owner's word.
   `r = 1` (nature: `gamma (1 + beta) = 0.315`, FAIL); under
   covariant-readings-v1 the same world read `z = 0.3674` for the pin
   `0.369 +- 0.003` (DETECTOR, series S), `k_BA = gamma (1 + v)` with the
-  identity's `r = 1 / gamma`. So the B-to-A factor exists in the
-  register in both forms, and it is the identity's r, not a measured
-  one, that moves it.
+  identity's `r = 1 / gamma` AND the identity's own v: under the key the
+  drive's pace is `p / E'`, so the star's beta is 0.3040 (gamma 1.04967),
+  not 4b's 0.2674 at the law's pace `p / (Q S M + p)`; `1.04967 x 1.3040
+  = 1.3688` reproduces the pin, while gamma (1 + 0.2674) would give
+  1.315. So the B-to-A factor exists in the register in both forms, and
+  it is the identity's r and its pace, not a measured r, that move it.
 - **r itself, the moving body's own count: NOT READ AS A MEASUREMENT.**
-  Series J4 reads the muon's `become` at tick 64 at every speed
-  (GAMEBOARD, the self-creation count against the tick; NATURE 4a's
-  register line) and series S reads the 64th self-creation at 70 and 124
+  Series J4 PINS the muon's `become` at tick 64 at every speed
+  (HYPOTHESES 21's pin; NATURE 4a: no world file, not run; the one run
+  reading of 64 is at rest, series S's `j4_muon_rest` under the key, the
+  `become` line at 64, GAMEBOARD) and series S reads the 64th
+  self-creation at 70 and 124
   (GAMEBOARD) with the beta clicks at 392, 369, 345 (DETECTOR, the
   products' face clicks): both are the gate's own count read against the
   tick or through the decay's products, r by declaration (1 on the law,
@@ -175,8 +180,10 @@ the run is the owner's word.
   the spacing of the body's own records.
 - **The clock series (series T, clock-age-v1; NATURE row 12): a different
   factor.** The lamp on a body at rest read at a fixed detector gives the
-  crowd's stretch of the count, the ratio 1.907 for the pin 2.00 at the
-  distances 6 and 3 (DETECTOR; the potential's form): the age moment's
+  crowd's stretch of the count, the ratio 1.907 against the pin `1.909
+  +- 0.05` (the map's, the register's), the continuum's 2.00 outside the
+  pin, at the distances 6 and 3 (DETECTOR; the potential's form): the age
+  moment's
   factor at v = 0, no Doppler direction; it fixes nothing of r(v).
 - **`k_AB`, a lamp at rest counted by a moving transponding body: NOT
   READ, and it is the missing direction.** The world it needs: a lamp at
@@ -186,10 +193,11 @@ the run is the owner's word.
   at the bar's far end; the ground detector's own count between the
   re-emitted records, over T, is `k_AB x k_BA` (the round trip's two
   factors in series: `(1 + v) / (1 - v)` under every r, the k-calculus's
-  round trip, so the round trip alone reads nothing of r); the body's
-  own count of the arrivals, read through a second lamp on the body
-  emitting every T of its own count, gives `k_AB` against the ground's
-  `k_BA`, and their ratio decides. The pins, from the formulas, before
+  round trip, so the round trip alone reads nothing of r under any r,
+  and the second lamp on the body is therefore the whole of the new
+  information); the body's own count of the arrivals, read through that
+  second lamp emitting every T of its own count, gives `k_AB` against
+  the ground's `k_BA`, and their ratio decides. The pins, from the formulas, before
   any run, each within `1 / T` of the count (the accumulators' remainder)
   and, on the Beam Law's lattice, within `1 / T_D` of the pace: `k_AB`
   and `k_BA` at v = 1/2, 1/4, 1/8, 1/16 as the table of section 3 has
