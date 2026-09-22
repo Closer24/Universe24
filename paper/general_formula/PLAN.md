@@ -3266,877 +3266,279 @@ One word of terminology fixed on the way ("a number of the board" to
 formula's, series Q's reading at finite ages in Table 2. The Lorentz
 sentences and the click frame are untouched, as ordered.
 
-## Prepared, not applied (2026-09-22): the click frame's paragraph and the place of the click theorem
-
-The Boss's order of 05:35Z on the owner's records 745 and 749 (the
-Highlights line of 92776f76) and the click frame
-(docs/designs/click_frame/DERIVATION.md on branch click-frame, PR #769,
-its section 0 the click theorem): draft, do not write into the paper.
-The paper's text changes only after the owner sees this paragraph and
-the theorem is on main.
-
-### 1. The place
-
-A new paragraph of the discussion, "The two worlds, and how a click
-brings Lorentz", placed before "The limits, and what does not return",
-whose first two sentences (the rest frame; Lorentz not a limit but a
-property the model must show or lack; the owner's decision of record 270
-building the covariant readings beside the law) it replaces. It carries
-the mathematician's three sentences verbatim, marked as the frame's and
-cited to the derivation's section 0 at its merge SHA, and then the
-writer's paragraph below. The click theorem is not a numbered theorem of
-the paper and gets no ledger row: the ledger holds what the update rules
-force, and the theorem is about the frame's two assumptions on the
-world's clicks, not about the law; it is stated as the frame, with the
-one sentence of fact about the law.
-
-### 2. The three sentences (the mathematician's, section 0 at 149c4dc6, "The paper's frame, three sentences, marked as such (the owner's shape, record 753)")
-
-"To convert the lattice and the momentum inside it into motion in our
-real world, one uses clicks that pass information, a click being the
-passage of information from Node to Node at most one Node per interval
-(A1) and its content an amplitude with a phase that splits each interval
-between staying and hopping, the mass the staying share (A2); Lorentz of
-the real world is assumed, and what is shown is that this conversion
-brings it. The symmetry of the conversion, the transformations between
-click families that preserve (A1) and (A2), is the Lorentz group up to
-scale, acting on the amplitudes of the passing packet as the Dirac
-walk's covariance, so that the passage of clicks is Lorentz to second
-order in the velocity, a detector's own rate sqrt(1 - v^2), and the
-lattice's corrections begin at the fourth order. The conversion is made
-exactly with the amplitudes, converting the packet that passes, and it
-comes out from there; the law as built satisfies (A1) and not (A2), a
-fact stated for the owner's word."
-
-The words are section 0's at the merge; if the head moves again before
-the merge SHA comes, the merge's words replace these.
-
-### 3. The writer's paragraph (ten lines at the page's width; the draft)
-
-To convert the lattice and the momentum inside it into motion in our
-real world, one uses clicks that pass information: the GameBoard (Nodes,
-integer rows and the interval's count, which no detector reads) and our
-reality (detectors and their clicks only: a detector's own count is its
-count of intervals stretched by what arrives at it, a click the event of
-receiving a packet stamped with that count, and a velocity Nodes apart
-over counts apart between neighbouring detectors, never a reading of the
-interval) are two worlds, and the read-out of Definition 3 is the second
-world's click. Lorentz is assumed of the world and required of the
-board: [the three sentences]. The law as built meets (A1), one Node per
-interval with the flight blind to the phase (P9), and not (A2), its hop
-a whole-record schedule with no staying amplitude; so its clicks carry
-the group and its counter runs at the rest rate (rows 4a, 4b): read
-through records, the two one-way Doppler factors are r / (1 - v) and
-(1 + v) / r, alike only at r^2 = 1 - v^2, and the law's r = 1 leaves
-them apart by 1 - v^2, the measurable that decides. No wall of the law
-and no declared identity enter the reading, so Eq. 14 is not needed for
-it and stays a hypothesis under its own identity against series S's
-pins. What the system gives is a computation on the GameBoard whose
-passage to the real world is the clicks, at the quantum level as well:
-the equations of the board are the law's, and the equation of the
-passage from the board to what is measured above it is the click
-theorem's.
-
-### 4. What it replaces or retires, sentence by sentence
-
-- The frame of record 700 (the limits paragraph): its first two
-  sentences replaced as in 1; the rest of the paragraph, the covariant
-  square in its frame (Eq. 14, the owner's word of today) with E' and the
-  gate and series S's readings, STAYS as the hypothesis beside the law;
-  one clause changes: "builds the covariant readings beside it as a
-  hypothesis against the same pins" becomes "the covariant readings, a
-  hypothesis beside the law that the frame does not need for the reading
-  of Lorentz, stay against the same pins" (the Highlights line: record
-  270's identity unnecessary for the reading). Whether Eq. 14 keeps its
-  frame or moves to Table 4 as the hypothesis is the owner's word; the
-  draft keeps it.
-- Theorem 3's quotient: UNTOUCHED. Its click is the record's one
-  deletion at the read-out, which is the frame's click seen from the
-  board (the detector ticks on the record's completion); the injectivity
-  between clicks on Q says nothing about frames. One clause in the
-  paragraph ("the read-out of Definition 3 is the second world's click")
-  ties the two words.
-- The c-postulate row (no dispersion, P9 not forced): STAYS. (A1) is the
-  frame's assumption about the world's clicks; P9 is the law's rule that
-  meets it. Its third column gains six words: "(A1) of the frame asks the
-  same of the clicks".
-- The failures' list (4a, 4b) and Table 3's rows 4a, 4b: STAY as
-  failures; the paragraph names their cause (the law meets (A1), not
-  (A2)); row 4b's verdict gains "the two one-way factors apart by
-  1 - v^2 (the click frame)".
-- Table 4's Lorentz row: the deciding check is rewritten to the frame's
-  measurable: "the ratio of the two one-way Doppler factors read at the
-  ground through records (the click frame's pins, section 3): 1 - v^2
-  under the law, 1 under Lorentz; the split of a row between staying and
-  hopping (A2) as a hypothesis under its own identity, not opened"; the
-  "in hand" clause of the covariant readings goes with it. Two lines
-  shorter.
-- Section 3's sentence "A boost, which mixes a step in space with a step
-  in time, is not among the 48" gains "(the click theorem's third part:
-  the board's corrections begin at the fourth order)".
-- The abstract's "the Lorentz factor" in the list of what no rule forces:
-  STAYS, with four words, "how the clicks carry it is the frame".
-
-### 5. The cost, in lines, and what pays
-
-The three sentences about nine lines at the page's width, the writer's
-paragraph ten, the row and clause changes two: twenty-one. Replaced: the
-limits paragraph's first two sentences, five; Table 4's Lorentz row, two.
-Net fourteen lines on pages 24 and 25, where the page is full. Candidates
-that carry no claim and no table number, in the order of taking: the
-introduction's "How the simulator led to the results" cut to its rule
-(four lines); Section 6's mixture sentence (the flat mixture written out
-as the phase-blind detector, three lines, its content the ledger's
-"harmonic constants free"); Section 8's gate paragraph's inverse-interval
-and second-runner clauses (two lines, both in the appendix and in the
-replications register); Section 5's "Light: no optical metric" second
-sentence (the optical-v1 hypothesis, two lines, Table 4's bending row
-says it); Theorem 5's proof's last sentence on the declared first party
-(two lines, Definition 3 says it); the positioning paragraph's Bohm and
-psi-ontic clauses (one line). Fourteen. 30 pages held, the split 25 / 2 / 3.
-
-### 5a. The Boss's two notes of 05:50Z, folded into the draft above
-
-(1) The detector's count: not "advancing once per packet received" but
-its count of intervals stretched by what arrives at it (the Highlights
-line of record 709, the age wall's member at coefficient 1), a click the
-event of receiving a packet stamped with that count; the k-calculus
-needs the count to advance between arrivals. The paragraph's definition
-says so now; the final wording is section 0's head at the merge (record
-758, the correction in progress). (2) Records 753 and 756 (PR #778 at
-6edff005, PR #779): the paragraph's first sentence and the three
-sentences are aligned to the owner's shape, the conversion from the
-lattice and its momentum to motion in the real world by clicks that pass
-information with the amplitudes, Lorentz to second order exactly, the
-lattice's corrections beyond (section 0 at 149c4dc6). The cost in lines
-is unchanged within one line.
-
-### 6. What is not in the draft
-
-No number of the click frame's section 3 (the pins of the two factors)
-enters the paper until a run reads them after a detector; the paragraph
-names the measurable and its two values, 1 - v^2 and 1, which are
-algebra on the counts (rung 1). The split of a row between staying and
-hopping is named as a hypothesis not opened, with no claim. Nothing of
-this is applied: main.tex, corrections.py and figures are as at the head
-of the Bell commit.
-
-### 7. The framing (the owner's records 762 and 768, and his words to the writer, 2026-09-22): prepared, not applied
-
-The owner's framing, in his words. Two defined words: INSIDE is inside
-the GameBoard (the Nodes, the integer rows, the tick), where no one
-measures; OUTSIDE is the game above the board, the detectors and their
-clicks only. Outside is not reality, it is the game; the paper claims
-that Outside represents reality to a very high degree and shows the
-match, result by result; the GameBoard is the reality through which one
-computes, a computation of a reality no one can know, known only
-through a click. Inside, what follows from the linear algebra is derived
-and needs no experiment; Outside, the clicks recover known formulas and
-are compared with known experiments, quantum and above, named one by
-one. Lorentz is not derived: the paper arrives at it, converting the
-lattice's momentum to clicks above the board. The tone is the tone of
-the papers this one stands beside (lattice gases recovering the
-Navier-Stokes equations in a limit, lattice automata reproducing the
-Weyl and Dirac equations, agreement with experiment within its error):
-"recovers", "reproduces", "agrees with", "arrives at"; never "this is
-how reality works", and no declaration that nature is not so. Six
-items, prepared on main.tex at 2ba49923 (the line numbers are main.tex's
-there; every change goes through cut30/corrections.py by its anchor).
-Records 767 and 768 are the Boss's record of this list and of the two
-words.
-
-(1) THE TITLE. One candidate, carrying the frame, the owner's separating
-word kept: "Universe24: a local integer law Inside the GameBoard, its
-non-local read-out Outside, and what the clicks recover of nature". The
-current title, "Universe24: a local integer law of nature with a
-non-local read-out, and what follows from it", is the fallback; its
-"law of nature" is the one phrase of the paper that places the law in
-nature rather than Inside. Two lines either way.
-
-(2) THE ABSTRACT'S FIRST SENTENCES (main.tex:44-49), in the frame's
-words: "Inside a cubic GameBoard one update law of bounded integers
-propagates records as a beam by algebraic formulas at every Node and
-interval: one map with a rate and a wall per component, its rates and
-walls made of six integer operations. Outside, the game above the
-board, there are detectors and their clicks only, and the beam passes
-to them with amplitudes at one comparison, the click, the one non-local
-step and the only read-out; the paper assumes the GameBoard is read in
-no other way (P11). Inside, the law's consequences are derived and need
-no experiment; Outside, the clicks recover known forms and are compared
-with known experiments, result by result, and the paper shows how far
-Outside represents reality." The third sentence replaces "The paper asks
-how much of physics that map forces ... result by result." The rest of
-the abstract stands ("against nature three readings pass ... the
-failures the law's own" is already the frame's word). Cost: three lines.
-
-(3) THE ASSUMPTION AS A POSTULATE OF THE FRAME, P11, in Section 2's list
-(main.tex:166-169, after P10, before "Nothing outside this list is
-assumed"), one sentence: "One assumption of the frame (P11): the
-GameBoard, Inside, is read only through its emitters and detectors,
-Outside; every result Outside is a click, a number of the board's state
-is never a reading, and every comparison with experiment is a comparison
-of clicks with readings; a measurement is itself an event of the board:
-an emitter puts a record on it, and a detector ends the record at the
-click, the one step that deletes Inside and the one row that Outside
-gains." (The half sentence after the semicolon is the owner's word to
-the writer, 2026-09-22: a measurement produces something.) In the list,
-not beside Definition 3, because
-it is an assumption about where measurement happens, not a rule of the
-click. The introduction's reading rule (main.tex:124-128) gains its
-name, "(the frame's assumption, P11)", and one sentence: "Every physics
-name in this paper (Gauss's, Newton's, Coulomb's, Born's, Planck's,
-Tsirelson's) names the known form that the law's result recovers,
-Inside by derivation or Outside at a detector." Cost: three lines in
-Section 2, one in the introduction.
-
-(4) THE SWEEP. The paper already says "PASS within", "FAIL by", "the
-law's own results", "the comparison with nature", "evidence for the fan
-claim, not its proof"; the ledger, Table 3 and Section 9 need no word.
-The places that place the law in nature, each with its change:
-- main.tex:34, the title: "law of nature" -> "law Inside the GameBoard
-  ... what the clicks recover of nature" (item 1).
-- main.tex:47-48, the abstract: "how much of physics that map forces"
-  -> item 2's third sentence.
-- main.tex:81-83, the claim paragraph: "several different physical
-  phenomena are produced from this one discrete update law" -> "the
-  forms of several different physical phenomena are recovered from this
-  one discrete update law, Inside by derivation and Outside at the
-  clicks" (produced -> recovered ... Inside ... Outside).
-- main.tex:98-100, the same paragraph: "the broad claim that the model
-  describes nature" -> "the broad claim that Outside represents nature"
-  (describes -> represents).
-- main.tex:845, Section 6: "Definition 3 is the Born rule" -> "Definition
-  3 recovers the Born rule's form" (is -> recovers the form of).
-- main.tex:168 and :988 say "Born's form" already; :1309 "the law as
-  declared predicts" is a prediction, kept; :156 "what physics calls
-  Newton's constant", kept.
-And two ordering sentences, the owner's distinction written once each:
-Section 8's opening (main.tex:1174) becomes "Three things are kept
-apart: the gates on the code; the results derived Inside, which need no
-experiment; and the clicks Outside, compared with known experiments";
-the discussion's "What is proved" (main.tex:1280) opens "Derived Inside,
-exact on the GameBoard, no experiment needed:" and its limit sentences
-open "Recovered in the limit of the grain:" and "Recovered under an
-average that covers the shell:". Cost: one line net.
-
-(5) THE CLICK-FRAME PARAGRAPH JOINED TO THE FRAMING, one paragraph of
-the discussion, "Inside and Outside, and how a click arrives at
-Lorentz", replacing the first two sentences of "The limits, and what
-does not return", the draft: "Inside the GameBoard the law propagates
-records as a beam by the algebraic formulas of Section 2, on Nodes,
-integer rows and the interval's count, where no one measures; Outside,
-the game above the board, there are detectors and their clicks only,
-and the beam passes to them with amplitudes at the click (P11). A
-detector's clock is what it emits and receives back, on its own record
-(a detector at rest receives its row back at its own Node); no Node
-holds a detector's time; a detector without a body, an open face, has
-no clock of its own, its tick the record's ordering, a GameBoard
-diagnostic; a velocity is Nodes apart over counts apart between
-neighbouring detectors, never a reading of the interval, and the
-read-out of Definition 3 is the click. To convert the lattice and the
-momentum inside it into motion Outside one uses clicks that pass
-information, and Lorentz, assumed of reality, is what the conversion
-arrives at: [the three sentences of section 2 above, the
-mathematician's]. The law as built meets (A1), one Node per interval
-with the flight blind to the phase (P9), and not (A2), its hop a
-whole-record schedule with no staying amplitude; so its clicks carry
-the group and its counter runs at the rest rate (rows 4a, 4b): read
-through records, the two one-way Doppler factors are r / (1 - v) and
-(1 + v) / r, alike only at r^2 = 1 - v^2, and the law's r = 1 leaves
-them apart by 1 - v^2, the measurable that decides. No wall of the law
-and no declared identity enter the reading, so Eq. 14 is not needed for
-it and stays a hypothesis under its own identity against series S's
-pins. What the system gives is a computation Inside whose passage
-Outside is the clicks, at the quantum level as well: the equations
-Inside are the law's, the equation of the passage is the click
-theorem's, and how far Outside represents reality is what Tables 2 and
-3 show, result by result." Thirteen lines with the three sentences'
-nine: twenty-two. It supersedes the drafts of sections 3 and 5a above.
-
-(6) THE COST AND WHAT PAYS. In: the title two (unchanged count), the
-abstract three, P11 three, the reading rule one, the sweep one, the
-paragraph twenty-two: about thirty. Out: the limits paragraph's first
-two sentences five, Table 4's Lorentz row two: seven. Net twenty-three
-lines. The trims, carrying no claim and no table number, in the order
-of taking: the six of section 5 above (fourteen); the claim paragraph's
-middle (main.tex:93-96, "The three things work together ...", said by
-the ledger's caption and Section 8's opening, three) and its last
-sentence shortened to the frame's (two); Section 2's "In the code" last
-sentence (one); the abstract's "One prediction" sentence folded into
-the sentence before it (one); the introduction's "How the simulator led
-to the results" second clause on the closed form (one); Section 6's
-"The host, not any Node" paragraph's last clause (one). Twenty-three.
-30 pages held, the split 25 / 2 / 3, to be confirmed by the compile
-when applied. Nothing applied: main.tex, corrections.py and the figures
-are as at 2ba49923.
-
-### 8. More algebra, fewer experiments (the owner's record 772, through the Boss at 06:40Z): prepared, not applied
-
-The owner's word: all this algebraic mathematics only needs to be shown
-in the paper; the paper must be more modern algebra and fewer
-experiments; the way Lorentz was shown above the board, Newton and more
-can be shown: take assumptions and show that under them the formulas
-come out; where none, experiments Inside rise Outside; it is not exactly
-a proof, it shows that this is Lorentz.
-
-(1) THE PAPER'S SHAPE UNDER THAT WORD.
-
-Sections that grow (the algebra):
-- Section 2, the six verbs and their identities: after the list of the
-  six operations, one paragraph of their identities as the derivation's
-  section 11 states them (the carry a bijection s -> (e, s - ed); the
-  linear block's closed form floor(s_0 + r t), the flight as the
-  translation group's shift operator; the split's conjugate transpose;
-  the merge the group ring's addition; the click one bilinear form on
-  the record's integer vector, the derivation's 6.7): about eight lines.
-- Section 6, the click theorem: the three sentences and the paragraph
-  of section 7 (5) above (the frame), plus the conversion table when
-  part 6 lands (the click frame's section 7, "(3) The conversion table:
-  inside the board to outside it": Inside quantity to Outside reading,
-  the interval to a detector's count, the Node to a click's place, the
-  momentum to a velocity of clicks, the walk's dispersion to Eq. 14's
-  identity with the factor 3, the phase to a frequency): a table of
-  about fifteen lines, placed in the discussion beside the frame's
-  paragraph, its rows taken from the merged section 7 with no number
-  the register does not hold.
-- Newton Outside, when part 7 lands: one paragraph after Section 4's
-  "The ground of these derivations", the assumptions named and the
-  inverse square shown to come out under them for clicks, about ten
-  lines; its ledger row's ground stays "fan" (the average that covers
-  the shell), its wording "shown under the named assumptions".
-- The closed forms of the amplitude law that the paper already carries
-  are named once as such in Section 6's opening (the rung, the joint
-  weight, S(N)'s closed form, Born's bound): no new lines.
-
-Rows of Table 2 that shrink to one line each with a pointer to the
-register, because a shown formula gives the number and the run only
-confirms it: the pace (Proposition 1; series Q, L7); the click's power
-(Theorem 4; the (3, 4) split); the interference of one record (the
-tables and Theorem 2; Mach-Zehnder); the exact marginals (Theorem 5);
-GHZ (the joint weights' zeros); Malus (the tables, 219/256 exact); light
-beside a mass (P9, the flight blind; series K). Seven rows become one
-sentence of Section 8 ("Seven formulas shown Inside were confirmed by
-their runs, each number pinned before the run: ... [register]") and one
-list in Appendix C with the series and the fingerprints.
-
-Rows that stay as measurements, because no formula gives them (the
-register's MEASURED ONLY, the Highlights line of records 281 and 562:
-Newton and Poisson count as measured only after a detector): the
-equivalence principle and the 1/r force's scale symmetry (series D3,
-1.997 for 2.00 +- 0.18); the clock's field at two Nodes (series T, the
-ratio 1.907 for the lines' pin 1.909, the 1/r form's limit fan); the
-weak forms (J1, J2, a step and a window); the covariant readings (series
-S, a hypothesis against its pins); Young's spacing's visibility 0.966
-(the fan's grain, FAIL by 0.014 in Table 3); S(N)'s seven grains (shown
-and measured, the figure). Six rows, Table 2 kept for them.
-
-Table 3, the comparison with nature, stays whole: it is Outside against
-reality, result by result, which the framing claims; its rows are the
-paper's experiments and they are the "fewer": the ones with a
-published number.
-
-(2) THE WORDING RULE FOR EVERY RESULT. Each result of the ledger, of
-Section 9's "What is proved" and of the abstract carries one of three
-words, and the ledger's ground column gains it: SHOWN (algebra under
-named assumptions, the assumptions the ledger's third column names;
-Inside; "Theorem" and "proved on the GameBoard" stay for the exact
-algebra of the board, Theorems 1 to 6, because they are proofs about the
-board and not about nature), MEASURED (a run Inside read Outside, the
-series and the register's block named), or SHOWN AND MEASURED (both, as
-S(N)). The conversion to Outside, Lorentz, Newton Outside and the
-conversion table, is "shown": "shows that this is Lorentz", "arrives at
-Lorentz", "the inverse square comes out under the named assumptions";
-never "proves" for anything Outside, never "proves that nature".
-Section 8's opening says the rule once: "Three things are kept apart:
-the gates on the code; what is shown Inside by algebra under named
-assumptions, which needs no experiment; and what is measured, a run
-Inside read Outside, compared with known experiments."
-
-(3) THE COST IN LINES AND PAGES. In: the verbs' identities eight, the
-conversion table fifteen, Newton Outside ten, the wording words two:
-thirty-five, beyond the framing's net twenty-three. Out: Table 2's seven
-shown rows, about twenty lines at its size, replaced by one sentence
-(two lines) and Appendix C's list (six lines in the appendix, where
-page 30 has about twenty-eight free lines); Section 8's "The formulas
-after a detector" paragraph folded into the rule sentence (two); Section
-3's "What a detector measures" to one sentence (three). Net in the body:
-about plus twelve after the framing's twenty-three are paid. What holds
-30: the appendix's free lines take Appendix C's list, and the body's
-twelve are paid by the symbols table's rows for letters used in one
-section only (about ten lines of Appendix B, which page 30 absorbs) and
-by Section 6's "The host, not any Node" paragraph cut to its first
-sentence (two). If parts 6 and 7 together exceed twenty-five lines, the
-paper is 31 pages, or the owner's word takes the S(N) figure back to
-Table 2's row (minus fourteen); the compile decides, and the count is
-reported before the push.
-
-(4) THE ORDER OF APPLICATION. First, the framing list (section 7, items
-1 to 6, P11 with the owner's half sentence), one commit on the owner's
-word and PR #769's merge SHA, the pinning test, check.py, the compile at
-30. Second, this reshaping, one commit after parts 6 and 7 merge, on
-their SHAs: the verbs' identities, the conversion table, Newton Outside,
-Table 2's seven rows to one sentence and Appendix C's list, the wording
-words, the compile, the count reported. Nothing of either is applied
-now: main.tex, corrections.py and the figures are as at 2ba49923.
-
-### 9. The owner's word on the list (record 773, through the Boss at 06:45Z): the spine, and the title decided
-
-The owner: the title is not critical; what matters is that everything is
-explained, that the paper rests more on algebra and fewer experiments,
-and that it shows the formulas in fact derived; very many things derive
-from the board when one rises to the clicks; the board slows you (a
-mass, a slower clock), but in the end one wants to move a packet from
-place to place beneath the board and then ask what that packet says
-above the board. His word on the abstract, P11 and the paragraph is
-given with records 762 and 768: the framing list applies as soon as PR
-#769's merge SHA reaches the writer.
-
-The discussion's spine, folded into section 7 (5): the paragraph opens
-on his picture, "A packet moved Inside, from place to place, and the
-question what it says Outside: every formula the paper derives is the
-answer to that question for one packet", and the answers are listed in
-his order as the paper carries them, the clock in a crowd (Section 5),
-the fall and the period (Section 4, series D3), the Doppler factors (the
-frame's two one-way factors), and, when parts 6 and 7 land, the
-conversion table and Newton Outside (section 8 above); the "What is
-proved" paragraph of Section 9 keeps its lists but opens with the same
-sentence in eight words.
-
-The title, the writer's call: the candidate, in lowercase words,
-"Universe24: a local integer law inside the GameBoard, a non-local
-read-out above it, and what the clicks recover of nature". The reasons:
-"law of nature" placed the law in nature where the framing places it
-Inside; "inside the GameBoard" and "above it" are the two worlds in
-plain words without the capitalized terms, which the abstract defines;
-"what the clicks recover of nature" is the frame's verb and the
-paper's claim, the match shown result by result. One line to the Boss.
-
-### 10. The framing list compiled (2026-09-22): 30 pages held, ready for PR #769's merge SHA
-
-The framing list of sections 7 and 9 (the title, the abstract's first
-sentences, P11 with the owner's half sentence, the reading rule's two
-additions, the sweep's five changes, the two ordering sentences, the
-frame's paragraph with the three sentences and the click frame's
-bibitem, the limits paragraph's first two sentences and Table 4's
-Lorentz row replaced, the boost sentence, the c-postulate row, row 4b)
-is written as corrections (the writer's scratch scripts, seven rounds)
-and compiled on a trial: 30 pages, the split 25 / 2 / 3, the references
-on 26 to 27, the appendices on 28 to 30. The trims that paid it, all
-duplicated or narrative text carrying no claim and no table number:
-the introduction's narrative to its rule; the mixture sentence's
-formula; Section 8's inverse-interval clause; the optical-v1 sentence;
-Theorem 5's proof's last sentence and its list of grains; the
-positioning paragraph's Bohm and psi-ontic clauses and the testbed's
-clause; the claim paragraph's middle; the code paragraph's last
-sentence; the host paragraph's last clause; Kennard's sentence and the
-uncertainty's last sentence; Planck's paragraph; the Bell scope
-sentences and the strict-crossing sentence; Theorem 6's proof's middle
-value; the uniform birth phase's run clause; Table 3's caption and
-rows 2c, 4b and 12; the prediction's three assumptions in fewer words
-and its proximity sentence; the proved list's three clauses and its
-opening; the runs paragraph in two lines; Table 4's Newton, Lorentz,
-masses and harmonic cells; the limits paragraph's E' clause; the frame
-paragraph's velocity, rest-rate, open-face and closing clauses. No
-number moved, no claim; the S(N) figure and the covariant square in its
-frame stay. The tree is untouched until the merge SHA of PR #769
-reaches the writer: then the scripts run with the SHA in the click
-frame's bibitem, the three sentences are checked against the merged
-section 0 (with "Outside, the game above the board" for "our real
-world", record 768), main.tex is regenerated, the pinning test and
-check.py run, one commit, one push, the report.
-
-### 8a. Inside formulas, Outside formulas, the bridge (the owner's record 777, through the Boss at 06:55Z): folded into section 8
-
-The owner: W = E_0^2 + 3 p.p (Eq. 14) is an Inside formula, on the
-record, read by no detector; from it the Outside formulas come out (the
-energy at a click, gamma, the rate, the Doppler factors); there are
-Inside formulas and Outside formulas, and the paper shows the
-connections. The algebra's spine in the paper, therefore:
-(a) the Inside formulas, derived from the six verbs: the map, the
-    closed form of the linear block, the books, the split's isometry,
-    the click's bilinear form, the rung, the joint weight, S(N)'s closed
-    form, and Eq. 14 among them, licensed by the click theorem as the
-    conversion's identity (part 6);
-(b) the Outside formulas, each derived from an Inside one by the
-    conversion (A1, A2), in a two-column table, Inside | Outside, with
-    the map in the row (the mathematician recasts the click frame's
-    section 7 table in that shape; part 7, Newton Outside, follows it):
-    the interval to a detector's count, the Node to a click's place,
-    the momentum to a velocity of clicks, W to the energy at a click,
-    gamma, the rate sqrt(1 - v^2), the two Doppler factors, the phase
-    to a frequency;
-(c) the register's readings on the Outside side only, each row of Table
-    2 and Table 3 a reading of an Outside formula's column.
-Eq. 14 moves in the frame from "a hypothesis beside the law" to "the
-Inside identity of the conversion, shown to second order", with the
-fact that the rows still hop whole kept beside it: the reading's
-identity, not yet the rows' dynamics. In the paper: the covariant
-square keeps its frame (Eq. 14) and its sentence becomes "an Inside
-formula, on the record, read by no detector: the Outside formulas of
-the conversion, the energy at a click, gamma, the rate and the Doppler
-factors, come out of it (the table), shown to second order by the click
-theorem; the rows still hop whole, so it is the reading's identity, not
-yet the rows' dynamics"; Table 4's Lorentz row keeps the measurable and
-drops "a hypothesis"; the ledger gains one row, "Eq. 14, the Inside
-identity of the conversion & (A1), (A2) & the rows' dynamics open &
-shown (second order) & Section 9", the ground word "shown" being the
-wording rule's. Since the framing list is applied before part 6 merges,
-its wording of Eq. 14 is neutral, "an Inside formula on the record, read
-by no detector, whose Outside formulas the conversion gives", and the
-reshaping commit says "shown" with part 6's SHA. The application order
-is unchanged.
-
-### 8b. The three formulas, the paper's spine (the owner's word through the Boss, 06:00Z; the Highlights line of record 787): the frame of the algebra part, prepared, not applied
-
-The owner's words: "W = E'^2 + 3 p.p is the formula of ONE STEP beneath
-the board (Inside). One needs the formula of one step ABOVE the board
-(Outside; Einstein and Newton already wrote it), the formula of one
-step beneath the board, and the conversion between them. That is all
-the formulas we need: the step above, the step beneath, the map between
-them; then one can compute anything, light and every Inside phenomenon,
-without code."
-
-The frame of the algebra part, in the paper, three formulas and one
-sentence between them:
-
-1. THE INSIDE STEP. The six verbs' one-interval update, Eq. 1 with its
-   components (Section 2), on a record's rows; its invariant W = E'^2 +
-   3 p.p (Eq. 14, in its frame), the square of the record's energy on
-   the board, read by no detector. One equation and one identity; the
-   ledger's rows "exact on the GameBoard" are its consequences.
-2. THE OUTSIDE STEP. The equation of motion of one step above the
-   board as physics writes it: for a packet, the energy-momentum
-   relation E^2 = m^2 c^4 + p^2 c^2 and the Lorentz boost of its clicks
-   (Einstein); for a body in a crowd, the inverse square and the fall
-   (Newton). These are not the paper's to derive; they are the known
-   forms the paper names, Outside, with the experiments that read them.
-3. THE CONVERSION. The emitter-to-click map: a detector at every place
-   read (the Highlights line of record 787), the interval to a
-   detector's count, the Node to a click's place, the momentum to a
-   velocity of clicks, W to the energy at a click, the phase to a
-   frequency; a transformation per formula, in the two-column table
-   Inside | Outside of section 8a with the map in each row; the click
-   theorem (A1, A2) its symmetry, Lorentz to second order, the lattice's
-   corrections beyond.
-
-Every result of the paper is then placed as OUTSIDE = THE IMAGE OF
-INSIDE UNDER THE CONVERSION, one row each: the pace c = 1 / sqrt 3
-(Inside: the flight table; Outside: the click's velocity, one Node per
-count); the click's weight (Inside: the bilinear form; Outside: Born's
-rule at the detector); S(N) (Inside: the rungs; Outside: the CHSH counts,
-Tsirelson in the limit); the clock in a crowd (Inside: the owed count;
-Outside: the redshift at two Nodes); the fall and the period (Inside:
-the push; Outside: the equivalence and the 1/r scale symmetry); the two
-Doppler factors (Inside: the crossing count; Outside: r / (1 - v) and
-(1 + v) / r); Newton Outside (Inside: the shell mean of the push;
-Outside: the inverse square for clicks, part 7); light (Inside: the
-row's flight; Outside: the click's straight line, the derivation
-light-outside when it lands). The register's readings are the check by
-kind on the Outside column only: SHOWN where the row is algebra under
-named assumptions, MEASURED where a run Inside was read Outside, both
-where both.
-
-The derivations in writing for this frame, whose SHAs come with PR
-#769's merge SHA and their own: light on light-outside, Einstein on
-einstein-outside (about ninety minutes), and the click frame's parts 8
-(the map's algebra) and 9 (Bell and CHSH by the algebra). Their formulas
-enter the paper's Inside | Outside table and its Outside step only from
-the merged texts, each number with its kind. Nothing applied until the
-owner's GO on the reshaping; the framing commit still goes on PR #769's
-merge SHA as agreed. The cost joins section 8's count: the three
-formulas' frame is one paragraph of about eight lines before the
-Inside | Outside table, paid within section 8's plan (Table 2's seven
-rows to a pointer, the symbols table's single-use letters).
-
-## The circularity audit of the paper's formulas (2026-09-22, the owner's word to the writer; the check of skills/paper-coordinator/SKILL.md)
-
-For each formula: its inputs, the road, and whether its form was put in.
-The word the paper must use is in capitals.
-
-- The map, Eq. 1: a DEFINITION (the law). Inputs: P1 to P6; nothing derived.
-- The 48 and the 24 (Theorem 1): DERIVED from the six Ports; no input names it.
-- The books and the continuity equation: DERIVED from the carry (a bijection) and the matrices' conjugate transposes; inputs P3, P5.
-- The pace bound 1 / sqrt 3 (Proposition 1): DERIVED (Cauchy-Schwarz on one Link per interval). The VALUE attained: carried by the wall T_D = floor(sqrt(3 |D|^2 N_l^2)), a rule chosen among few (P9) whose sqrt 3 is the supremum's; the paper says so ("the flight table's choice of the supremum is a third statement"). Not circular; the value is a choice, the bound a theorem.
-- No dispersion, the constancy of c: a POSTULATE (P9), not forced (the derivation's 27). Said so.
-- Gauss's law: DERIVED from the walk under the world condition.
-- Newton's and Coulomb's inverse square: RECOVERED under the shell average from the bilinear push and the flux; no 1 / r^2 among the inputs; G named, N_w an input. Not circular.
-- The retarded potential, Poisson, the clock's 1 / r: RECOVERED under the average; the age moment as the clock's word is P9; the calibration a_tau = G M / (r c^2) is a DICTIONARY INPUT. Said so.
-- The click's weight a quadratic form (Theorem 4): DERIVED from (a) to (e); the strongest input is (b), the balanced splitter's conservation, an axiom of the apparatus, which carries the square (the parallelogram law); the harmonic constants free, the least rank P10. Definition 3's square is then the one admissible form; the hypotheses do not name the square. Not circular. The cos kernel is carried by the tables, a DECLARED INPUT (P7): Born's rule's form is derived, its cosine is put in through the phase circle's tables; the paper says both.
-- Born's bound and rule: DERIVED from the rung (a definition) with the uniform birth phase (a fact of the source).
-- The exact marginals, no-signalling (Theorem 5): DERIVED from the rotation rows' orthogonality.
-- S(N) and Tsirelson's value (Theorem 6): DERIVED from the rungs and the tables; the cos(a - b) correlation is carried by the rotation tables (cosines), so 2 sqrt 2 is RECOVERED as the standard consequence of cosine correlations under a quadratic weight, not a new bound; the finite-N rational and the plateau 181/64 are the paper's, measured at seven grains. Not circular; the paper says "recovered", claims no novelty for the value.
-- Planck's and de Broglie's relations: IDENTITIES UNDER THE DICTIONARY h = h_q N = h_A, an input; circular by construction and said so.
-- The uncertainty bounds: ALGEBRA on Z_N (Donoho-Stark, Maassen-Uffink) under a HYPOTHESIS (the circle as position, its transform as momentum); said so.
-- Young's spacing: RECOVERED from two paths' phase difference in the fan's limit.
-- Eq. 14, W = E_0^2 + 3 p.p: DECLARED (covariant-readings-v1, record 270): the Minkowski norm declared into the wall, as part 4 of the click frame states ("the square that would give YES is the Minkowski norm declared into the wall"). The one formula where Lorentz's form was put in; series S's readings confirm the declaration, not nature. The paper's word is "declared" (the framing commit says "an Inside formula on the record, read by no detector"), and it becomes "shown" only when part 6 derives W's form from the conversion (the walk's dispersion, the factor 3) on main.
-- Lorentz, the click theorem: ARRIVED AT from (A1), one Node per interval for the passage of information (the constancy of c on the clicks), and the one line k_AB = k_BA, the relativity of the two directions; these are the two postulates of special relativity in the click language, and the group follows as in Einstein's 1905 derivation (Alexandrov-Zeeman in three dimensions). Not circular: no transformation is declared; but the paper must say in one sentence that (A1) and the one line are special relativity's two postulates, so that "arrived at Lorentz" is read as "Einstein's road, walked on clicks", and that what the board adds is (A2), the amplitudes that carry sqrt(1 - v^2) into a detector's own rate, and the fact that the law as built lacks (A2) (its two factors apart by 1 - v^2). That sentence goes into the frame paragraph in the reshaping commit.
-- The two Doppler factors r / (1 - v) and (1 + v) / r: DERIVED on the counts (rung 1).
-- The entropy identity: a DEFINITION of the coarse graining plus the click's one deletion.
-- The equivalence principle, D3: MEASURED (no formula; the step rule divides by the content, so equal fall is DERIVED at rest, the measured is the scale symmetry).
-
-The road from the cells to the algebra (the owner's second word), to be
-written once in Section 2 before the six verbs' identities (section 8):
-the physical rules put into the cells and what each is as algebra, in
-the order of skills/paper-coordinator/SKILL.md's last section; about
-eight lines, counted in section 8's cost.
-
-### 8c. Outside, down to Inside, back Outside: the pattern of every phenomenon, and interference by formulas alone (the owner's word to the writer, 2026-09-22; for the Boss too)
-
-The owner: interference, one slit, two slits, all of it can be shown
-with formulas only. One begins Outside (the measurement), goes down to
-Inside to compute, and comes back Outside; every measurement is Outside,
-but to compute it one must enter Inside. So the paper shows what passes
-and what does not with formulas, and the register's readings are the
-check.
-
-The pattern, one paragraph per phenomenon in the reshaped Section 6 and
-Section 8: OUTSIDE (what a detector reads: a fringe, a dark port, a
-count) -> INSIDE (the rows, their phases, the merge, the evaluation) ->
-OUTSIDE (the click's counts over the births, compared with the reading).
-The worked example, interference, in the paper's own formulas:
-
-Two slits. Outside: a screen of pixels, each a detector; the reading is
-the count of clicks per pixel over W births. Inside: one record is born
-with two rows of amount 1, one per opening, m = 2 (Definition 2, B); each
-row's phase advances one turn per Link (F); at pixel x the two arrive
-with phases p_1(x), p_2(x), their difference Delta(x) the path
-difference times the turn; the merge (M) adds them as one element of
-Z[Z_N], and an equal pair with Delta = N / 2 cancels to no row
-(Definition 1); the click evaluates the sum at the root of unity and
-squares it (Definition 3): the offer at x is
-    R(x) = 512 ((C[p_1] + C[p_2])^2 + (S[p_1] + S[p_2])^2)
-         = 1024 (65536 + C[p_1] C[p_2] + S[p_1] S[p_2])   up to the tables' rounding,
-    i.e. R(x) proportional to 1 + cos Delta(x) = 2 cos^2 (Delta(x) / 2).
-Outside again: the ladder's rungs b_x = floor((2 N C_x + C_K) / (2 C_K))
-over the pixels, the click the pixel whose rung u falls under, and over
-N births with u uniform the count at x is b_x - b_(x-1), Born to 1 / N
-per cell (Theorem, Born's bound). What passes: the pixels with Delta near
-0, the rung wide. What does not pass: the pixels with Delta = N / 2, the
-rows cancelled, the offer 0, the rung of width 0, no click can land
-there. The fringe's period in pixels is the turn's and the geometry's
-(Young's spacing, recovered in the fan's limit); the visibility of two
-rows is K(Delta) / K(0) with K the Born kernel (the clause to restore in
-Section 6). The reading: series L2b, the bright pixels 19 to 51, the dark
-0 to 3, the visibility 0.966 in the clicks, the difference from 1 the
-fan's grain (row 2a); the formula gives the pattern, the run confirms it,
-the fan's grain is what the formula does not carry.
-
-One slit. Inside: one row per pixel reached, no pair, nothing cancels;
-R(x) = 1024 x 65536 at every pixel reached: Outside, a flat count within
-the fan's grain, everything passes, no dark pixel (the single opening's
-row 10, its run not made: the formula alone).
-
-Mach-Zehnder. Inside: the balanced splitter (1, 1) sends one row into
-two arms with m = 2, the mirrors turn by N / 4, the second splitter
-recombines: at one port the two phasors add, at the other they are N / 2
-apart and cancel; with the tables at N = 64 the offers are 1681 / 1682
-and 1 / 1682 (the rounding, not 1 and 0). Outside: the rungs give the
-bright port 64 of 64 clicks and the dark port 0 (row 2b, the visibility
-0.9988 of the offers): what passes and what does not, by formulas, the
-run the confirmation. The half turn and the quarter turn (0 / 64, 32 /
-32) follow by the same three lines.
-
-The same pattern, one paragraph each, for the pair (Outside: the CHSH
-counts; Inside: the joint weights J^2 of the two rotations; Outside: the
-rungs, S(N)), for Malus (the rotation table's 219 / 256 at 22.5
-degrees), for GHZ (the zeros of the joint weights), and for the clock
-in a crowd (Outside: the shift at two Nodes; Inside: the owed count and
-the age moment; Outside: the ratio 1.907 for 2.00, the fan's average).
-Each phenomenon then takes about six lines of formulas in place of a
-row of numbers, and Table 2's row becomes its confirmation (section 8).
-The cost joins section 8's count: about twenty lines for the four
-worked phenomena in place of the seven rows of Table 2 and Section 6's
-narrative on the two slits (the paragraph "Against the registered
-integers" and the L2b sentences, about twelve lines), net about eight,
-paid within section 8's plan.
-
-### 8d. Why physics behaves like modern algebra, and when the transition was made (the owner's word through the Boss at 06:15Z; record 793): the reshaping plan's opening argument, prepared, not applied
-
-The owner: what the paper must explain is how we got from ordinary
-physics to algebraic mathematics, and when; from the beginning of the
-paper to the end one only needs to show WHY physics behaves like modern
-algebra, otherwise one is just showing formulas in modern algebra;
-explain it with the couplings and everything we did.
-
-The argument, in five steps, placed before the three formulas of 8b as
-the opening of the algebra part:
-1. Outside is arithmetic in Q: every measured quantity is a count at a
-   click or a ratio of two counts (a velocity is Nodes apart over
-   counts apart; a visibility, a correlation, a redshift are ratios of
-   counts); nothing measured is a real number.
-2. Inside is integer and local: the six verbs on bounded integers at a
-   Node and its six neighbours (the three tests: generic, vector,
-   local); written down, the rules put into the cells are the cyclic
-   group of the phase, the group ring of the arrivals, the integer
-   matrices of the split and the rotation, the evaluation at the roots
-   of unity, the translation group's shift (the road of the skill's last
-   section), so the state is a free Z-module and the interval a Z-linear
-   map on it.
-3. The couplings are tables: the circle's C and S at 1 / 256, the
-   split's table with its multiplicity A = sum a_i^2, the rotation's
-   orthogonal integer matrix, the family table; and the Born rule is a
-   coupling computed from N, the rungs b_k = floor((2 N C_k + C_K) / (2
-   C_K)) over the offers, which is why a click is a comparison of
-   integers and the counts over N births are Born's to 1 / N.
-4. The structure-preserving maps between click families are the
-   Lorentz group up to scale (the click theorem, (A1) and the one
-   line), so the symmetry the Outside has is the algebra's, not a
-   metric put in.
-5. Therefore every result of the paper is an identity of that algebra,
-   checked against the register's readings by kind, and not a formula
-   chosen to fit a reading; where a form was declared (Eq. 14, the
-   dictionary h = h_q N), the audit says so.
-
-When the transition was made: the dated history, from ordinary physics
-(the first testbed with its draw and its return, records of 2026-09-18
-to 09-20) to the algebra (the Beam Law's six verbs, the click as one
-comparison, the shared quantum resource deleted, the three tests, the
-law as one vector algebra, the click theorem), with the record and the
-reading of each step, is the Transition Historian's
-(docs/designs/algebra_transition/HISTORY.md, branch algebra-transition);
-its merged text is the paper's source for the dates and the readings,
-not the writer's memory. The paper carries it as one paragraph of about
-eight lines at the end of Section 2 ("When the transition was made"),
-each step with its record number, and its longer form in Appendix C
-where page 30 has room.
-
-The place and the length, within 30 pages:
-- The abstract's second sentence gains one clause: "... the click, the
-  one non-local step and the only read-out, so that physics above the
-  board is arithmetic on counts and the law beneath it is modern
-  algebra".
-- The introduction's paragraph "The claim and the question" (about
-  twenty lines now) becomes "Why physics behaves like modern algebra",
-  the five steps in about twelve lines, keeping the ledger's sentence
-  and the last sentence on the distance; net minus eight.
-- Section 2 opens with the road from the cells to the algebra (eight
-  lines, section 8) and closes with "When the transition was made"
-  (eight lines, from HISTORY.md); "How the simulator led to the results"
-  folds into it (minus four).
-- Appendix C carries the dated history in full (about fifteen lines, on
-  page 30's free lines).
-Net in the body: about plus four, within section 8's budget; nothing
-applied until the owner's GO on the reshaping and HISTORY.md's merge.
-
-### 8e. How mass, charge and the rest entered the algebra; known and ours for every formula; the Inside step as the centre and the Outside step it gives (the owner's word to the writer, 2026-09-22)
-
-The owner: the account of the road from basic physics to modern algebra
-must say how mass, charge and all such things entered the algebra and
-what operations act on them; every formula in the paper must be checked
-for circularity AND labelled with what is known, what is ours, how we
-got from the one to the other, what is new and what is not; and the
-central formula is the step formula beneath the lattice, W = E'^2 + 3
-p.p, from which one reads what the step formula above is.
-
-(1) THE PHYSICAL QUANTITIES AND THEIR ALGEBRA, the table Section 2's
-road carries (one row each, the paper's own definitions, no new claim):
-- the amount w of a row: a positive integer; verb 1 (the translation),
-  verb 3 (the merge adds amounts, opposite phases subtract);
-- the phase p: an element of Z_N; verb 1 (the turn per Link or per
-  interval), verb 3 (the group ring's addition), verb 5 (the evaluation
-  at the roots of unity);
-- the multiplicity m: a positive integer, A = sum a_i^2 at a split;
-  verb 2 (the split table);
-- the age tau: a count, the rate 1; verb 1; a function of the history
-  (Theorem 3);
-- the content M (mass): a count of units per family, an input of the
-  family table; it enters the drive's wall N_l N_w M + |p_a| (verb 6,
-  the Euclidean division), the push M_A (rho_A rho_B - 1) a (verb 2,
-  a bilinear form), the release rate M_B eta (verb 1) and the rest
-  energy E_0 = N_l N_w M (an identity);
-- the charge rho: the declared charge per unit of content, an input;
-  it enters only the coupling matrix rho_A rho_B of the push (verb 2);
-- the momentum p: an integer vector; translated by the push (verb 1),
-  read by the drive as the rate |p_a| against the wall (verb 6); its
-  square enters W (verb 2, the bilinear form, compared and never rooted);
-- the energy: E_0 = N_l N_w M and W = E_0^2 + 3 p.p, E' the largest
-  integer whose square is at most W (verb 6, the comparison), the gate
-  E_0 / E' on every count of the body;
-- the label flow a = sum amount x u_D at a Node (verb 2, bilinear in
-  the arrivals), the field a body reads;
-- the family table (content, cost h per phase step, charge, the strong
-  column, lifetime, phase rate, hand): declared inputs, read by the
-  verbs, never computed;
-- the couplings: the circle's tables C, S at 1 / 256, the split and
-  rotation tables, the click's Gram matrix: integer matrices and one
-  bilinear form (verb 2), the Born rule the comparison of the rungs
-  (verb 6).
-So mass is a count that sets a wall and scales a bilinear form, charge
-a declared integer in one matrix, momentum a translated integer vector
-whose square is compared: that is how basic physics entered the algebra,
-and the six verbs are the only operations on them.
-
-(2) KNOWN, OURS, THE ROAD, NEW OR NOT: the audit's table, one row per
-formula, the paper's word in the last column (a fifth and sixth column
-added to the circularity audit above):
-- Eq. 1, the map: known, none (a cellular update); ours, the map with a
-  rate and a wall per component; new as a definition.
-- The books, continuity: known, conservation laws; ours, the exact
-  integer identity by the carry's bijection; not new in form, new in
-  exactness.
-- The pace 1 / sqrt 3: known, the lattice Boltzmann sound speed and the
-  Courant bound (cited); ours, the bound from one Link per interval and
-  the wall that attains it; not new (the paper claims no novelty).
-- Gauss, Newton, Coulomb, the retarded potential, Poisson: known,
-  physics' forms; ours, the road from the walk and the bilinear push
-  under the shell average, G = K eta / (4 pi N_w); the forms not new,
-  the integer road and the named condition new.
-- The clock's 1 / (1 + a_tau): known, gravitational redshift's 1 / r;
-  ours, the owed count with the age moment; the form recovered, the
-  count new; the calibration an input.
-- The click's quadratic form: known, Born's rule and Gleason's theorem;
-  ours, the lattice Gleason from (a) to (e) without dimension, the
-  multiplicity rule; new as a theorem on Z_N, the square carried by (b).
-- Born's bound 1 / N: ours, new (a finite-N statement).
-- The exact marginals: known, no-signalling; ours, the exact integer
-  statement with the tie condition; new in the finite form.
-- S(N): known, Tsirelson's 2 sqrt 2 and the cosine correlation; ours,
-  the exact rational at each N, the plateau 181 / 64, the fixed-table
-  limit 186034 / 65773; new as a finite-N prediction, the limit not new.
-- Planck, de Broglie: known; ours, identities under the dictionary; not
-  new, an input.
-- The uncertainty bounds: known (Donoho-Stark, Maassen-Uffink); ours,
-  their reading on the click; not new, the identification a hypothesis.
-- Eq. 14: known, the energy-momentum relation E^2 = E_0^2 + p^2 c^2;
-  ours, the integer W compared and never rooted with the gate E_0 / E';
-  DECLARED (record 270); becomes ours by derivation only when part 6
-  derives it from the conversion (the walk's dispersion, the factor 3).
-- The click theorem: known, the Lorentz group from the two postulates
-  (Einstein 1905; Alexandrov-Zeeman); ours, the click language, (A2)
-  and the detector's own rate, the fact that the law lacks (A2); the
-  group not new, the conversion and the fact new.
-- The two Doppler factors r / (1 - v), (1 + v) / r: known, Bondi's
-  k-calculus; ours, the counts' exact form and the law's r = 1; the
-  measurable 1 - v^2 new as the law's own prediction.
-- The equivalence principle after a detector: known, Galileo; ours, the
-  step rule's division by the content (derived at rest) and the scale
-  symmetry measured; not new in form.
-- The entropy identity: known, Boltzmann; ours, the count of torus
-  points at the click; new as an identity of the click.
-The rule for the text: every result sentence names the known form it
-recovers (with the citation) and, in the same sentence, what is ours;
-"new" is said only where the audit says it; "not new" is said plainly
-(the pace, the limits, the identities).
-
-(3) THE CENTRE: THE INSIDE STEP AND THE OUTSIDE STEP IT GIVES. The
-central formula of the paper is the step formula beneath the lattice,
-Eq. 14 in its frame, W = E'^2 + 3 p.p with E_0 = N_l N_w M and c^2 =
-1 / 3, compared and never rooted, E' the largest integer whose square is
-at most W, and every count of the body gated by E_0 / E'. What the step
-formula above is, read from it by the conversion (the two-column table
-of 8a, the row of W): the energy at a click E = E' in the dictionary's
-units, so that W multiplied by c^4 is E^2 = E_0^2 + p^2 c^2, the known
-step above (Einstein); the gate E_0 / E' is 1 / gamma, the detector's
-own rate sqrt(1 - v^2) of the click theorem; the drive's fraction
-|p_a| / (E_0 + |p_a|) per axis is the click's velocity in the lattice's
-units, against physics' v = p c^2 / E; and the frame's two Doppler
-factors are the step above read at two detectors. Which of these the
-conversion gives exactly, which to second order, and where the factor 3
-enters, is part 6's to state (the mathematician, on branch click-frame,
-section 7); the paper takes the mapping from the merged text and writes
-it as one paragraph under the frame, "The step beneath and the step
-above", with the two formulas side by side and the map between them in
-one line each. Until part 6 is on main the paper says of Eq. 14
-"declared" and of the step above "the known form it is compared with",
-per the audit. The place: the frame paragraph's neighbour in Section 9
-(the reshaping), about eight lines, counted in section 8's budget.
+## Prepared, not applied (2026-09-22): the framing commit and the reshaping commit, one canonical plan each
+
+The owner's word for every agent (through the Boss, 06:50Z): what a
+later word replaced is cut from what one looks at; everything gets
+shorter. This block is the one plan; the cut list at its end names what
+was removed and why. The paper's text is untouched by all of it; the
+scratch scripts of the writer (framing_patch.py and its rounds) carry
+the framing commit's corrections and compile on a trial at 30 pages.
+
+### A. The framing commit (goes on PR #769's merge SHA; records 745, 749, 753, 762, 768, 773, 777, 793)
+
+1. The title, the writer's call (record 773: not critical): "Universe24:
+   a local integer law inside the GameBoard, a non-local read-out above
+   it, and what the clicks recover of nature".
+2. The abstract's first sentences: Inside a cubic GameBoard one update
+   law of bounded integers propagates records as a beam by algebraic
+   formulas at every Node and interval (one map, a rate and a wall per
+   component, six integer operations); Outside, the game above the
+   board, detectors and their clicks only, the beam passing to them with
+   amplitudes at the click, the one non-local step and the only read-out,
+   the GameBoard read in no other way (P11); Inside the consequences are
+   derived and need no experiment, Outside the clicks recover known forms
+   and are compared with known experiments, result by result, and the
+   paper shows how far Outside represents reality. The Lorentz factor in
+   the ledger's list "(how the clicks arrive at it is the frame)".
+3. P11 after P10, one sentence: the GameBoard, Inside, is read only
+   through its emitters and detectors, Outside; every result Outside is
+   a click, a number of the board's state is never a reading, every
+   comparison with experiment is a comparison of clicks with readings;
+   a measurement is itself an event of the board, an emitter putting a
+   record on it and a detector ending the record at the click, the one
+   step that deletes Inside and the one row that Outside gains (the
+   owner's half sentence to the writer).
+4. The reading rule names P11 and adds: every physics name in the paper
+   names the known form the law's result recovers, Inside by derivation
+   or Outside at a detector.
+5. The sweep, five places: the title; the abstract; the claim
+   paragraph ("the forms of several physical phenomena are recovered
+   ... Inside by derivation and Outside at the clicks"; "the broad claim
+   that Outside represents nature"); "Definition 3 recovers the Born
+   rule's form". Two ordering sentences: Section 8's opening (the gates
+   on the code; what is shown Inside by algebra under named assumptions,
+   needing no experiment; what is measured, a run Inside read Outside);
+   "What is proved" opens "Derived Inside, exact on the GameBoard, no
+   experiment needed", its limits "Recovered ...".
+6. The frame paragraph of the discussion, "Inside and Outside, and how a
+   click arrives at Lorentz", before "The limits", replacing that
+   paragraph's first two sentences: a packet moved Inside and what it
+   says Outside; Inside the beam by Section 2's formulas where no one
+   measures, Outside detectors and clicks only (P11); a detector's clock
+   what it emits and receives back on its own record, no Node holding a
+   detector's time, an open face without a clock, its tick the record's
+   ordering (a GameBoard diagnostic), a velocity Nodes apart over counts
+   apart, Definition 3's read-out the click; the three sentences of the
+   click frame's section 0 verbatim at the merge, with "Outside, the game
+   above the board" for "our real world" (record 768), cited
+   \cite{clickframe} (a new bibitem with the merge SHA); the sentence:
+   (A1) and the one line k_AB = k_BA are special relativity's two
+   postulates in the click language, so what is arrived at is Einstein's
+   road walked on clicks, and what the board adds is (A2), the amplitudes
+   that carry sqrt(1 - v^2) into a detector's own rate; the fact: the
+   law meets (A1) and not (A2), its clicks carry the group, its counter
+   runs at the rest rate (rows 4a, 4b), the two one-way Doppler factors
+   r / (1 - v) and (1 + v) / r alike only at r^2 = 1 - v^2, the law's
+   r = 1 leaving 1 - v^2, the measurable; no wall and no declared
+   identity enter the reading, Eq. 14 an Inside formula on the record,
+   read by no detector, whose Outside formulas the conversion gives; the
+   closing: a computation Inside whose passage Outside is the clicks, at
+   the quantum level as well, how far Outside represents reality what
+   Tables 2 and 3 show. The limits paragraph then opens "The covariant
+   readings (record 270) read one Inside formula Outside on one axis,
+   series S against its pins: a body's record carries ..." with Eq. 14
+   in its frame. Table 4's Lorentz row: "the law meets (A1) and not
+   (A2)" and the frame's measurable (1 - v^2 under the law, 1 under
+   Lorentz; the split of a row between staying and hopping, a hypothesis
+   not opened). Section 3's boost sentence: Lorentz's symmetry is that
+   of the clicks Outside, to second order, the corrections from the
+   fourth. The c-postulate row: "(A1) of the frame asks the same of the
+   clicks". Row 4b: "the frame: the two one-way factors apart by 1 - v^2".
+7. The page count: 30, the split 25 / 2 / 3, held on the trial by nine
+   rounds of trims of duplicated or narrative text carrying no claim and
+   no table number (the scripts list them); the S(N) figure and the
+   framed square stay.
+Blocker: PR #769's merge SHA (the mathematician's fold and the reviewer,
+about 06:30Z). Then: the scripts with the SHA, the three sentences
+checked against the merged section 0, main.tex regenerated, the pinning
+test, check.py, one commit, one push, the report.
+
+### B. The reshaping commit (goes on the owner's GO, after parts 6 to 9 of the click frame, the derivations light-outside and einstein-outside, and docs/designs/algebra_transition/HISTORY.md merge; records 772, 777, 787, 793, 799, 802 and the owner's words to the writer)
+
+1. The opening argument, WHY physics behaves like modern algebra
+   (record 793), the introduction's claim paragraph rewritten in five
+   steps (twelve lines): Outside is arithmetic in Q, counts at clicks and
+   their ratios; Inside is integer and local, the six verbs, the three
+   tests; the couplings are tables and the Born rule a coupling computed
+   from N, the rungs; the maps between click families are the Lorentz
+   group up to scale; therefore every result is an identity of the
+   algebra checked by kind, the declared forms named. The abstract's
+   second sentence gains "so that physics above the board is arithmetic
+   on counts and the law beneath it is modern algebra". WHEN: one
+   paragraph closing Section 2, "When the transition was made", the dated
+   steps from HISTORY.md (the Transition Historian's merged text, the
+   only source), the full history in Appendix C.
+2. The road from the cells to the algebra opening Section 2 (the
+   skill's last section) with the table of the physical quantities and
+   their algebra: the amount, the phase in Z_N, the multiplicity, the
+   age; mass the content M setting the drive's wall (verb 6) and scaling
+   the push's bilinear form (verb 2), the release rate, E_0; charge rho
+   in the one coupling matrix; momentum an integer vector translated by
+   the push and compared as a square in W; the label flow; the family
+   table; the couplings as integer matrices, the Born rule the rungs'
+   comparison. Then the six verbs' identities in one paragraph (the carry
+   a bijection, floor(s_0 + r t), the shift, the conjugate transpose,
+   the group ring's addition, the click one bilinear form).
+3. The three formulas as the algebra part's frame (records 787 and the
+   owner's word): THE INSIDE STEP (Eq. 1 with its components; W = E'^2 +
+   3 p.p its invariant, Eq. 14 in its frame, the paper's centre), THE
+   OUTSIDE STEP (Einstein's and Newton's, the known forms the paper
+   names with their experiments), THE CONVERSION (the emitter-to-click
+   map, a detector at every place read, the click theorem its symmetry).
+   The two-column table Inside | Outside with the map in each row (the
+   mathematician's recast of the click frame's section 7 table; part 7
+   follows it): the interval to a detector's count, the Node to a click's
+   place, the momentum to a velocity of clicks, W to the energy at a
+   click, gamma, the rate sqrt(1 - v^2), the two Doppler factors, the
+   phase to a frequency; the register's readings on the Outside side
+   only. Beside the frame the paragraph "The step beneath and the step
+   above": W times c^4 as E^2 = E_0^2 + p^2 c^2, the gate E_0 / E' as
+   1 / gamma, the drive's fraction as the click's velocity, the two
+   factors as the step above at two detectors, which exactly and which
+   to second order and where the factor 3 enters taken from part 6's
+   merged text; Eq. 14 then "the Inside identity of the conversion,
+   shown to second order", the rows still hopping whole beside it (the
+   reading's identity, not yet the rows' dynamics), one ledger row
+   "shown (second order)". Newton Outside after Section 4's ground
+   paragraph when part 7 lands (ten lines, the ground stays fan).
+4. Every result placed as Outside = the image of Inside under the
+   conversion, and the pattern Outside -> Inside -> Outside written per
+   phenomenon with formulas alone (the owner's word): the two slits
+   (two rows, m = 2, the phases per Link, the merge with the cancel at
+   Delta = N / 2, R(x) = 512 ((C[p_1] + C[p_2])^2 + (S[p_1] +
+   S[p_2])^2) proportional to 1 + cos Delta, the rungs, the count
+   b_x - b_(x-1); the dark pixels' rung of width 0 "does not pass"), one
+   slit (no pair, flat within the fan's grain), Mach-Zehnder (the two
+   phasors adding at one port and cancelling at the other, the tables'
+   1681 / 1682 and 1 / 1682, the clicks 64 / 0), the pair, Malus, GHZ,
+   the clock in a crowd, each in about six lines; the visibility clause
+   K(Delta) / K(0) restored in Section 6.
+5. Table 2: the seven rows that only confirm a shown formula (the pace,
+   the click's power, Mach-Zehnder, the marginals, GHZ, Malus, light
+   beside a mass) become one sentence of Section 8 and a list in
+   Appendix C with series and fingerprints; the six that no formula
+   gives stay (D3, series T's 1.907, J1 and J2, series S, Young's 0.966,
+   S(N)'s seven grains, shown and measured). Table 3 stays whole.
+6. The wording rule on every result: SHOWN (algebra under the
+   assumptions the ledger's third column names; "Theorem" and "proved on
+   the GameBoard" for Theorems 1 to 6, about the board), MEASURED (a run
+   Inside read Outside), or both; everything Outside "shown", "arrives
+   at", "comes out under the named assumptions", never "proves"; every
+   result sentence names the KNOWN form it recovers with its citation
+   and, in the same sentence, what is OURS; "new" only where the audit
+   says it, "not new" said plainly.
+7. The cost: about thirty-five lines in beyond the framing (the argument
+   net plus four, the quantities' table and the identities eight, the
+   Inside | Outside table fifteen, the step paragraph eight, Newton
+   Outside ten, the four worked phenomena twenty), about forty out
+   (Table 2's seven rows, Section 6's L2b narrative, two paragraphs of
+   Sections 3 and 8, the symbols table's single-use letters to page 30's
+   free lines); net about plus twelve in the body; 30 pages or, if parts
+   6 and 7 exceed twenty-five lines together, 31 or the S(N) figure back
+   to a row, the compile deciding and the count reported before any push.
+8. For the record, not yet the paper's: the owner's foundational
+   assumption (records 799, 802): in the real world we are built of
+   clicks; to move a click from place to place one puts it into the board
+   and takes it out; that is motion in the real world, and the
+   transformation must be done there; the basis is Inside, and we are
+   operated Outside, by emitters and clicks. A mathematician checks that
+   it holds; it enters the paper only from the merged texts.
+
+### C. The circularity audit (the check of skills/paper-coordinator/SKILL.md; the owner's word to the writer)
+
+For each formula: the inputs, the road, whether the form was put in;
+KNOWN and OURS; the paper's word.
+- Eq. 1, the map: a DEFINITION. Known: none. Ours: the map, a rate and
+  a wall per component. New as a definition.
+- The 48 and the 24: DERIVED from the six Ports.
+- The books, continuity: DERIVED (the carry a bijection, the conjugate
+  transposes; P3, P5). Known: conservation laws. Ours: the exact integer
+  identity.
+- The pace bound 1 / sqrt 3: DERIVED (Cauchy-Schwarz); the value attained
+  carried by the wall T_D, a choice among few (P9). Known: the lattice
+  Boltzmann sound speed, the Courant bound (cited). Not new.
+- No dispersion: a POSTULATE (P9), not forced (the derivation's 27).
+- Gauss: DERIVED under the world condition. Newton, Coulomb, the
+  retarded potential, Poisson: RECOVERED under the shell average from
+  the walk and the bilinear push, no 1 / r^2 among the inputs; G named,
+  N_w an input. Known: physics' forms. Ours: the integer road and the
+  named condition.
+- The clock's 1 / (1 + a_tau) and 1 / r: RECOVERED; the age moment P9;
+  the calibration a DICTIONARY INPUT. Known: gravitational redshift.
+- The click's quadratic form (Theorem 4): DERIVED from (a) to (e), the
+  square carried by (b), the balanced splitter's conservation; the
+  cosine carried by the tables (P7, a declared input); the harmonic
+  constants free; P10. Known: Born, Gleason. Ours: the lattice Gleason
+  on Z_N without dimension, the multiplicity rule. New as a theorem.
+- Born's bound 1 / N: DERIVED from the rung with the uniform birth phase.
+  New (finite N).
+- The exact marginals (Theorem 5): DERIVED from the rotation rows'
+  orthogonality. Known: no-signalling. New in the finite form.
+- S(N), Tsirelson (Theorem 6): DERIVED from the rungs and the tables;
+  the cos(a - b) correlation carried by the rotation tables, so 2 sqrt 2
+  is RECOVERED as the standard consequence of cosine correlations under
+  a quadratic weight, not a new bound; the finite-N rational, the
+  plateau 181 / 64 (measured at seven grains) and the fixed-table limit
+  186034 / 65773 ours and new.
+- Planck, de Broglie: IDENTITIES UNDER THE DICTIONARY h = h_q N, an
+  input; circular by construction, said so; not new.
+- The uncertainty bounds: ALGEBRA on Z_N under a HYPOTHESIS (the circle
+  as position); known (Donoho-Stark, Maassen-Uffink); not new.
+- Young's spacing: RECOVERED in the fan's limit.
+- Eq. 14, W = E_0^2 + 3 p.p: DECLARED (record 270; the Minkowski norm
+  declared into the wall, the click frame's part 4). Known: E^2 = E_0^2
+  + p^2 c^2. Ours: the integer W compared and never rooted with the gate
+  E_0 / E'. Series S confirms the declaration, not nature. "Declared"
+  until part 6 derives it from the conversion on main; then "shown to
+  second order".
+- Lorentz, the click theorem: ARRIVED AT from (A1) and the one line
+  k_AB = k_BA, special relativity's two postulates in the click
+  language (Einstein 1905; Alexandrov-Zeeman); not circular, no
+  transformation declared. Known: the group. Ours: the click language,
+  (A2), the detector's own rate, the fact that the law lacks (A2). The
+  sentence saying so is in the framing commit.
+- The two Doppler factors: DERIVED on the counts (rung 1). Known:
+  Bondi's k-calculus. Ours: the law's r = 1, the measurable 1 - v^2, new.
+- The equivalence principle: DERIVED at rest (the step rule divides by
+  the content); the scale symmetry MEASURED (D3). Known: Galileo.
+- The entropy identity: a DEFINITION of the coarse graining with the
+  click's one deletion. Known: Boltzmann. Ours: the count of torus
+  points at the click, new as an identity of the click.
+
+### Cut on 2026-09-22 (one line each: what, and why)
+
+- The first frame paragraph draft and its "two notes" (the old sections
+  3 and 5a): its "our reality" and "the real world" replaced by "Outside,
+  the game above the board" (record 768); its detector count "advancing
+  once per packet" and then "the count of intervals stretched by what
+  arrives" replaced by the owner's sentence (a detector's clock is what
+  it emits and receives back on its own record); its first sentence
+  replaced by record 753's shape and then by the packet moved Inside
+  (record 773). The canonical paragraph is A.6.
+- The first three sentences (the old section 2, the pre-753 wording) and
+  their 149c4dc6 copy: the paper takes the merged section 0's at PR
+  #769's SHA; the copy is not the source.
+- "Eq. 14 is not needed for the reading and stays a hypothesis under
+  its own identity" and "a hypothesis beside the law that the frame does
+  not need": replaced by "an Inside formula on the record, read by no
+  detector, whose Outside formulas the conversion gives" (record 777),
+  and by "shown to second order" in the reshaping.
+- The old section 4 ("what it replaces or retires") and the old sections
+  5, 6, 7(6), 8(3), 10 (the cost counts and trim lists): superseded by
+  the trial's compile at 30 (A.7) and the reshaping's one budget (B.7);
+  the trims live in the writer's scripts.
+- The first framing list (the old section 7) with "no claim that nature
+  is so" and "our reality": replaced by Inside and Outside and the
+  gentler tone (record 768, the owner's words to the writer); its title
+  candidate with capitalized Inside / Outside replaced by the lowercase
+  one (section 9's decision, now A.1).
+- "The Lorentz-road sentence goes into the reshaping commit": moved to
+  the framing commit by the Boss's word of 06:20Z (A.6).
+- Table 2's rows described as measurements that the algebra shows (the
+  pace, the click's power, Mach-Zehnder, the marginals, GHZ, Malus, light
+  beside a mass): reclassified SHOWN with the run as the confirmation
+  (B.5); "measured" stays only where no formula gives the number.
+- The old 8, 8a, 8b, 8c, 8d, 8e as separate sections: merged into B;
+  the audit's first form merged with its known / ours columns into C.
+- The old section 9's reasons for the title: kept in one line (A.1).
