@@ -416,6 +416,68 @@ at one Node against the map's flight, (c) **P** conserved across a turn,
 (d) the refusals, the two-key world among them, (e) byte identity without
 the key, (f) the pin world's four runs against section 6.
 
+## 9a. Verb 3's form: the label by Bresenham along the line of **P** (the model owner's GO of 2026-09-21, record 536)
+
+The pin worlds' first run (the register's entry) read the fan's comb in
+the shifts' ratio (2.35 in `mass` for the law's 2.00): section 2's verb 3
+hands the conserved momentum **P** to the label D chosen among the fan's
+neighbours, so the difference between the walked path and **P**'s line
+grows with every Link and is remembered nowhere. The model owner's
+decision (record 536, on the chief physicist's recommendation of record
+483): the flight's own primitive, an error accumulator on the row's
+record, **c** = the sum over the row's walked Links **h** of the integer
+cross product **h** x **P** (three integers, `cross`, kept from the first
+push on), and at the turn the label chosen among D and its fan neighbours
+as the one whose next Link **h** (its line's step at the row's place)
+advances along **P** (**h** . **P** > 0) and keeps |**c** + **h** x
+**P**|^2 smallest, ties to D and then to the fan's order; **W** += Q d
+content (**u**_D - **u**_D') as before, **P** conserved, the residue
+rescaled as record 496 has it. Generic (one primitive on the row's
+record, no family name), vector (the cross product and its square, no
+root, no float), local (the row's own accumulator, the fan's table at
+load). Why it works: the mean direction of the walked Links converges to
+**P**'s as a Bresenham line does, the error bounded about the line, so
+the screen reads **P**'s angle and not the nearest tooth; the reading
+that shows it is the shifts' ratio 2.00 +- 0.25 in the `mass` world, the
+readings that refute it a delays' ratio leaving 2.00 +- 0.25 or **P** not
+conserved. The nearest-neighbour form of section 2 is replaced; the
+cosine table at 1/256 is untouched; the key off by default guards the
+gates. `tests/test_optical.py` (i), and (b), (c), (g) re-derived under
+the form.
+
+The pace of a pushed row (the chief physicist's word of 2026-09-21 on
+the build's first reading, DERIVED, not a choice): the flight's one rule
+is the Euclidean pace 1 / sqrt 3 Links per interval along the line
+walked; a Manhattan Link of a line D is |D| / S_1(D) Euclidean, so the
+pace per Manhattan Link is T(D) / (S_1(D) Q) intervals, the pace of the
+line walked. Under the nearest-tooth verb the line walked was the
+label's and the label's pair was right; under Bresenham the line walked
+is **P**'s, and a row charged the label's pace on **P**'s line walks at
+the wrong speed (labelled (24, 1, 0) or (12, 1, 0) it paid 1.664 or 1.604
+intervals per Link for Links that are +x's 1.719 and outran the control
+by 3.3 to 7.2 per cent: the first run's delays, mass -1.02 / +3.34
+intervals, read exactly that). So the pair in a pushed row's wall is the
+momentum's: **P** over the gcd of its three components (exact, the same
+direction, the content out), S_1(P) and T(P) = isqrt(3 |P|^2 Q^2), the
+rate 2 S_1(P) Q d against the wall 2 T(P) (d + f n A); the residue is
+rescaled by S_1(P') / S_1(P) at every push (the label's S_1 before the
+first), floor, the sub-unit remainder dropped, under 1 / (2 Q d S_1(P'))
+of an interval per push (9e-14 to 4.8e-7 over the pin worlds' fan, as
+read), the one truncation of the flight's time, declared in the entry
+per push rather than per turn; the row's **P** is taken afresh at each
+push (the primitive of the pushed row's wall, not once), the label D
+then the phase's, the click's momentum label and the books' alone. T(P)
+= isqrt(3 |P|^2 Q^2) is a run-time integer root admitted under
+optical-v1's identity, not a rule of the law: the same integer_root the
+law takes of every direction at load (T_D, E'_D), here taken per pushed
+row when **P** changes, a bounded host cost, no float, no new primitive.
+The three tests: generic (the flight's one primitive on an integer
+direction, the row's **P** in place of a table's D), vector (no root
+beyond that isqrt, admitted under this identity), local (the row's own
+**P**, **c** and residue, the crowd's moments at its Node). Record 496's residue rule is
+generalised, not superseded: rescaled by the rate's ratio whenever the
+pace's direction changes. `tests/test_optical.py` (j).
+
 ## 10. Questions for the owner, through the Boss, stated on the GameBoard first
 
 1. **On the pair**: the rule makes the world's suspension pair the

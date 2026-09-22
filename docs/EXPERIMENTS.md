@@ -6862,14 +6862,40 @@ sequential gates on an entangled record, the full register replay.
   worlds' README. The key is refused at load beside the key
   `massive_rows` (the composed flight of massive rows under the optical
   key is not reviewed, record 510; a world declares one of the two).
+- **Re-read under verb 3's form by Bresenham with the momentum's pace**
+  (2026-09-22, branch optical-v1-bresenham; the model owner's GO of
+  record 536 and the chief physicist's DERIVED word on the pace: the
+  label follows the line of **P** by the error accumulator `cross`, a
+  pushed row's wall takes the pair of its primitive **P** and its residue
+  is rescaled at every push; the same tools, 400 intervals, the controls
+  byte identical). DETECTOR, the M1 re-read's value beside: `mass` at
+  f = 1 the shift -1.993 (was -1.622) and the delay +2.95 (was 2.97); at
+  f = 2 -3.989 (was -3.805) and +5.10 (was 5.88); `near` at f = 1 -2.608
+  (was -3.000) and +2.99 (was 2.40); at f = 2 -6.412 (was -3.274) and
+  +6.20 (was 4.51), 1452 clicks (was 1001) and 0 taken by the mass (was
+  547); the shifts' ratios 2.00 (`mass`; was 2.35) and 2.46 (`near`; was
+  1.09); the delays' ratios 1.73 (`mass`; was 1.98) and 2.07 (`near`; was
+  1.88). The law's 2 read in the mass world's shifts for the first time,
+  the comb gone; the mass delays inside their pins and their ratio 1.73
+  outside 2.00 +- 0.25 by 0.02, the reading that decides, recorded as it
+  is; `near` at f = 2 outside its shift and delay pins (the whole beam,
+  no longer a survivors' reading, bent more than the one-line pin at
+  b = 3). GAMEBOARD: the mean transverse angle of **P** -4.225 / -9.097
+  (`mass`, 2.153) and -6.812 / -14.478 (`near`, 2.125). The pins
+  unchanged; the head before the physicist's word read the mass shifts
+  -1.794 / -3.966 and the delays -1.02 / +3.34 on the label's pace, the
+  reading that named the pace.
 - **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
-  2.00 after the review's M1; 2.03 and 2.07 before it); the turn bends the
-  beam toward the mass at every f with the shifts inside 0.5 pixel in two
-  of four (three of four before M1; `near` at f = 2 a survivors' reading);
-  the shifts' ratio not read at this fan (2.35 and 1.09 for 2.00 within
-  0.25, the comb's and the survivors'; 2.37 and 1.56 before M1): a
-  hypothesis under its own identity, nothing of it in the law, gamma an
-  input of the world.
+  2.00 after the review's M1; 2.03 and 2.07 before it; 1.73 and 2.07
+  under the Bresenham form, the mass ratio 0.02 outside); the turn bends
+  the beam toward the mass at every f with the shifts inside 0.5 pixel in
+  two of four (three of four before M1 and under the Bresenham form,
+  where `near` at f = 2 is the whole beam outside by 1.08); the shifts'
+  ratio not read at this fan under the nearest-tooth verb (2.35 and 1.09
+  for 2.00 within 0.25, the comb's and the survivors') and read in the
+  mass world under the Bresenham form (2.00; `near` 2.46): a hypothesis
+  under its own identity, nothing of it in the law, gamma an input of the
+  world.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 

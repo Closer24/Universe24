@@ -315,6 +315,9 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             "push_x",
             "push_y",
             "push_z",
+            "cross_x",
+            "cross_y",
+            "cross_z",
             # The turn's remainder of the massive rows (`massive-rows-v1`,
             # 2026-09-21), which no push reads.
             "acc_turn",
