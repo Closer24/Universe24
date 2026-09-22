@@ -3949,3 +3949,71 @@ worked phenomena in place of the seven rows of Table 2 and Section 6's
 narrative on the two slits (the paragraph "Against the registered
 integers" and the L2b sentences, about twelve lines), net about eight,
 paid within section 8's plan.
+
+### 8d. Why physics behaves like modern algebra, and when the transition was made (the owner's word through the Boss at 06:15Z; record 793): the reshaping plan's opening argument, prepared, not applied
+
+The owner: what the paper must explain is how we got from ordinary
+physics to algebraic mathematics, and when; from the beginning of the
+paper to the end one only needs to show WHY physics behaves like modern
+algebra, otherwise one is just showing formulas in modern algebra;
+explain it with the couplings and everything we did.
+
+The argument, in five steps, placed before the three formulas of 8b as
+the opening of the algebra part:
+1. Outside is arithmetic in Q: every measured quantity is a count at a
+   click or a ratio of two counts (a velocity is Nodes apart over
+   counts apart; a visibility, a correlation, a redshift are ratios of
+   counts); nothing measured is a real number.
+2. Inside is integer and local: the six verbs on bounded integers at a
+   Node and its six neighbours (the three tests: generic, vector,
+   local); written down, the rules put into the cells are the cyclic
+   group of the phase, the group ring of the arrivals, the integer
+   matrices of the split and the rotation, the evaluation at the roots
+   of unity, the translation group's shift (the road of the skill's last
+   section), so the state is a free Z-module and the interval a Z-linear
+   map on it.
+3. The couplings are tables: the circle's C and S at 1 / 256, the
+   split's table with its multiplicity A = sum a_i^2, the rotation's
+   orthogonal integer matrix, the family table; and the Born rule is a
+   coupling computed from N, the rungs b_k = floor((2 N C_k + C_K) / (2
+   C_K)) over the offers, which is why a click is a comparison of
+   integers and the counts over N births are Born's to 1 / N.
+4. The structure-preserving maps between click families are the
+   Lorentz group up to scale (the click theorem, (A1) and the one
+   line), so the symmetry the Outside has is the algebra's, not a
+   metric put in.
+5. Therefore every result of the paper is an identity of that algebra,
+   checked against the register's readings by kind, and not a formula
+   chosen to fit a reading; where a form was declared (Eq. 14, the
+   dictionary h = h_q N), the audit says so.
+
+When the transition was made: the dated history, from ordinary physics
+(the first testbed with its draw and its return, records of 2026-09-18
+to 09-20) to the algebra (the Beam Law's six verbs, the click as one
+comparison, the shared quantum resource deleted, the three tests, the
+law as one vector algebra, the click theorem), with the record and the
+reading of each step, is the Transition Historian's
+(docs/designs/algebra_transition/HISTORY.md, branch algebra-transition);
+its merged text is the paper's source for the dates and the readings,
+not the writer's memory. The paper carries it as one paragraph of about
+eight lines at the end of Section 2 ("When the transition was made"),
+each step with its record number, and its longer form in Appendix C
+where page 30 has room.
+
+The place and the length, within 30 pages:
+- The abstract's second sentence gains one clause: "... the click, the
+  one non-local step and the only read-out, so that physics above the
+  board is arithmetic on counts and the law beneath it is modern
+  algebra".
+- The introduction's paragraph "The claim and the question" (about
+  twenty lines now) becomes "Why physics behaves like modern algebra",
+  the five steps in about twelve lines, keeping the ledger's sentence
+  and the last sentence on the distance; net minus eight.
+- Section 2 opens with the road from the cells to the algebra (eight
+  lines, section 8) and closes with "When the transition was made"
+  (eight lines, from HISTORY.md); "How the simulator led to the results"
+  folds into it (minus four).
+- Appendix C carries the dated history in full (about fifteen lines, on
+  page 30's free lines).
+Net in the body: about plus four, within section 8's budget; nothing
+applied until the owner's GO on the reshaping and HISTORY.md's merge.
