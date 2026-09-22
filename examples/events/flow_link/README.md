@@ -154,6 +154,17 @@ after the crowd filled the box) and, for the calibration,
 the record, the readings, the verdicts) are in `expectations.json` under
 `runs`, `calibration_runs` and `host_cost_measured`; no pin moved.
 
+**The order's scope (the Boss, 2026-09-22, about 10:32Z, on the owner's
+word of record 920: the algebra is done, the one run is the measurement).**
+The run is b = 6, both gammas; b = 3 and 8 are declared, with the
+algebra's numbers beside, and run only if b = 6 leaves the verdict
+undecided at the grain. b = 6 at gamma 1 was refused by the register
+(below), so the verdict at b = 6 is undecided and b = 3 and 8 were run
+under that clause (the word reached this session after the runs); they
+were refused alike, and their algebra stands: `C_ring` 3.82 / 3.92 against
+3.93 / 3.79 at gamma 1, the mean radial shift 1.625 / 0.628 Links
+(GAMEBOARD, the map's). The calibration ran at 41 s per world.
+
 **The register's refusal (HOST).** Five of the six rings with the mass
 were stopped by the engine's working bound, not by the key: `momentum_pair`
 forms the pair (S_1, T) of a pushed row's whole momentum **P** = Q d

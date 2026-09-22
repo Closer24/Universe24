@@ -4883,11 +4883,16 @@ def _family_plan(
                 column[i] = rest
     g_ends = (g_starts + g_sizes).tolist()
     # The moment a body's push reads per group: a free family's rays on
-    # the flow labels (flow-link-v1; the amount per row, no record on a
-    # free family's rows), a paid family's their shares of the labels.
+    # the flow labels (flow-link-v1; the amount per row), a paid family's
+    # their shares of the labels. A row that carries a record pushes by
+    # its share of the label whatever its family (stage (vii) step 3): a
+    # free family's rows carry no record today, and the share rule holds
+    # if one ever does (the physics-rule reviewer's guard on d2f87644).
     if free:
         push_rows = flow_unit[read_on[taken]] * a_t[:, None]
-        push_shares = push_rows.tolist()
+        push_shares = [
+            shares[k] if record_t[k] != NO_RECORD else row for k, row in enumerate(push_rows.tolist())
+        ]
     else:
         push_shares = shares
     plan.g_moment = [

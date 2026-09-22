@@ -26,8 +26,9 @@ nearest |p_D| D / |D|; |p_D| is Q = 64 for the photon and a massive family's
 (b) the design's numbers on series K's fan (the 290 primitive directions
     within Manhattan 6, the one copy in `examples/events/lensing/make_worlds.py`):
     the fan's mean of the incidence S_1 / |D| times the weight |f_D| / Q is
-    1.0003 (the exact weight |D| / S_1 gives 1.0000 by identity, the
-    incidence alone 1.4355, F_L1); the worst rounding on (-2, -2, -1),
+    1.000348 within 1e-5 (the design's 1.0003 to seven digits; the exact
+    weight |D| / S_1 gives 1.0000 by identity, the incidence alone
+    1.435506, F_L1); the worst rounding on (-2, -2, -1),
     f = (-26, -26, -13) for (-25.6, -25.6, -12.8); the beam's lines
     (24, 1, 0) -> (61, 3, 0) and (12, 1, 0) -> (59, 5, 0), the heading
     (64, 0, 0) unchanged; on every line |f_i| <= |u_i| per component and
@@ -101,8 +102,10 @@ BAR_DIGESTS = {
     "audit_sha256": "b946a5d62220786c",
     "events_sha256": "6ff9d83d77533d67",
 }
-DESIGN_MEAN = 1.0003
-DESIGN_INCIDENCE = 1.4355
+# The design's 1.0003 and 1.4355 to seven digits, within 1e-5.
+DESIGN_MEAN = 1.000348
+DESIGN_INCIDENCE = 1.435506
+FAN_TOLERANCE = 1e-5
 
 
 def load_script(name: str, path: Path):  # type: ignore[no-untyped-def]
@@ -192,9 +195,9 @@ def test_the_fans_mean_of_incidence_times_weight_is_the_designs():
         assert all(abs(fi) <= abs(ui) for fi, ui in zip(f, u, strict=True)), vector
         assert flow_label(tuple(-c for c in vector), Q) == tuple(-c for c in f)
         assert f == list(flow_label(vector, Q))
-    assert abs(product / 290 - DESIGN_MEAN) <= 0.00005
+    assert abs(product / 290 - DESIGN_MEAN) <= FAN_TOLERANCE
     assert abs(exact / 290 - 1.0) < 1e-12
-    assert abs(incidence / 290 - DESIGN_INCIDENCE) <= 0.00005
+    assert abs(incidence / 290 - DESIGN_INCIDENCE) <= FAN_TOLERANCE
     assert flow_label((-2, -2, -1), Q) == (-26, -26, -13)
     assert flow_label((24, 1, 0), Q) == (61, 3, 0) and flow_label((12, 1, 0), Q) == (59, 5, 0)
     assert flow_label((1, 0, 0), Q) == (64, 0, 0) and flow_label((0, 0, 0), Q) == (0, 0, 0)

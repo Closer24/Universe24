@@ -1307,7 +1307,12 @@ couplings.
   1.0003; the crowd's shell mean 22.85 against the continuum's 23.08
   beside the clock's 68.72 against 69.23). The age moment, the wall, the
   flight, the collision, the phase and the momentum a click moves are
-  untouched; the key stands alone or beside `optical`.
+  untouched; the key stands alone or beside `optical`. The scope on record
+  (the physics-rule reviewer's line on the build): a paid family's rays read
+  by a body under `read` still push by their labels per Node (the momentum
+  a click moves), so their flow keeps the L1 factor; the change is confined
+  to a free family's rays, which the law's gravity pushes (series K, C, the
+  atom) all are, and to every row's push by the interval's arrivals.
 - **The expectations, before any run (the design's section 4, GAMEBOARD by
   the step algebra; DETECTOR when run).** The ring of starts at b = 6 on
   series K's box (the fan of 290, the mass 2^16, the width 16384, the
