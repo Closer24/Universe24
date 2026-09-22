@@ -5,6 +5,127 @@ The derivation mathematician, 2026-09-22, on the Boss's order of about
 form or a registered reading labelled by its kind (DETECTOR or
 GAMEBOARD); the run, if any, is the owner's word.
 
+## 0. The click theorem (the owner's word, records 745 and 749): the assumptions, the theorem, the proof sketch, the paper's frame
+
+**The stance, first.** Lorentz of the real world is assumed here, not
+proved: the theorem explains how a click brings Lorentz to a detector,
+which amplitudes are needed to convert the clicks back to Lorentz, and
+what the board must not contradict. No wall of the law, no declared
+identity and no square of a momentum enters; the language is modern
+algebra (groups on integer counts), no code and no run.
+
+**Definitions.** Two worlds. The GameBoard: Nodes on the cubic lattice,
+integer rows on them, and the tick, the interval's count, which no
+detector ever reads. The real world: detectors and their clicks only. A
+detector D at a Node has its own count `n_D`, an integer that advances
+by one each time it receives a packet (a record's arrival at its Node);
+it ticks on nothing else. A click is a triple (the Node, `n_D`, what
+arrived). A click family `F_D` is the set of clicks of one detector and
+its six neighbours, each with its counts and its contents. A detector's
+velocity is a click that passes information to the detector beside it:
+the pair (Nodes apart, counts apart) between two clicks of neighbouring
+detectors, so a velocity is a ratio of two integers and never a reading
+of the tick. Symbols: t and x the counts and Nodes apart along one axis
+in the hop frame's units (one Node per interval, c = 1, section 1); u =
+t - x and w = t + x the light-cone coordinates; k Bondi's factor; m the
+mass angle and `kappa` the wave number of an amplitude; `omega` its
+frequency per interval; r a detector's own count per interval against
+the tick, a ratio the detector cannot see but two families can compare
+through their clicks.
+
+**The two assumptions, the owner's (records 745, 749).** (A1) A click is
+the passage of information from Node to Node, at most one Node per
+interval: c is the unit, the same in every family, and nothing passes
+faster. (A2) A click's content is an amplitude with a phase that splits
+each interval between staying and hopping, the mass the staying share.
+
+**Theorem (the click theorem).** Let G be the set of transformations
+between click families that preserve the click structure: they carry
+counts to counts and Nodes to Nodes linearly (the counts of a family add,
+so a transformation is a Z-linear map of the pairs (t, x) up to a choice
+of origin), and they preserve (A1) (a click that moves one Node per
+interval in one family moves one Node per interval in every family).
+Then: (i) G is a group, and with (A1) alone it is the Lorentz group up to
+scale: in one dimension the maps `(u, w) -> (k u, w / k)` (and the
+reflection `u <-> w`), the one-parameter group of boosts with the
+invariant `u w = t^2 - x^2`, whose parameter is the one-way factor k of
+section 2 and whose axiom is the equality of the two one-way factors
+(`k_AB = k_BA`); in three dimensions the Lorentz group SO(1, 3) up to
+scale and translation, by the theorem of Alexandrov and Zeeman (the
+bijections of Minkowski space preserving the causal order are the
+Lorentz maps, dilations and translations; Zeeman 1964). (ii) With (A2)
+the group acts on the amplitudes as the covariance of the discrete-time
+Dirac walk (section 6): the boost carries the walk's dispersion `cos
+omega = cos m cos kappa` to itself to second order (`omega^2 - kappa^2 =
+m^2 + O(4)`, the invariant of (i) on the amplitude's frequency and wave
+number), so the boost also fixes the detector's own rate at `r = m /
+omega = sqrt(1 - v^2)` to second order; the amplitudes with phase are
+exactly what converts the clicks back to Lorentz: a click structure of
+(A1) gives the group, and only (A2) gives the group something to act on
+whose invariant is the proper time. (iii) The lattice's own symmetries
+are the 48 (the 24 rotations of the six Ports with the hand), which
+contain no boost; hence (ii) holds exactly to second order in v, and the
+board differs from the world, if at all, from the fourth order on (the
+walk's `kappa^4` anisotropy), where the two could be told apart.
+
+**Proof sketch, in the algebra.** (a) The group: the composition of two
+structure-preserving maps preserves the structure, the identity does,
+and the inverse of a Z-linear bijection that carries the unit-speed
+clicks onto themselves carries them back; so G is a group. (b) One
+dimension: a linear map of (t, x) preserving the cone `{t = x} U {t =
+-x}` maps the light-cone coordinates to multiples of themselves, `u ->
+a u, w -> b w` (or swaps them); the two one-way factors of section 2 are
+`a = k_AB` (A's counts read in B's family) and `1 / b = k_BA`; the
+relativity of the two families, the two directions alike, is `a = 1 / b
+= k`, which is the group's axiom, and then `u w` is invariant: `t^2 -
+x^2` is the same in every family; `k = sqrt((1 + v) / (1 - v))`, `v =
+(k^2 - 1) / (k^2 + 1)`, `gamma = (k + 1 / k) / 2`, the boosts compose by
+`k_1 k_2` (a one-parameter abelian group, SO(1, 1)), the k-calculus of
+section 2 (b) being the theorem's one-dimensional case. The scale: a
+common factor `lambda` on u and w is a dilation, allowed by (A1) and
+removed by fixing the count's unit in one family (the "up to scale").
+(c) Three dimensions: the light cone is `t^2 = x^2 + y^2 + z^2` and the
+group preserving it linearly is O(1, 3) times the dilations
+(Alexandrov, Zeeman); the boosts along an axis are (b) with the
+transverse Nodes fixed. (d) The amplitudes: under (A2) one interval of a
+click's content is the unitary `U = S C` on a two-component amplitude
+per Node, S the shift by one Node of the hopping component and C the
+coin mixing the staying and the hopping components by the mass angle m;
+its plane waves obey `cos omega = cos m cos kappa`; expanding to second
+order, `omega^2 = m^2 + kappa^2`, which is the invariant `u w` of (b)
+written on `(omega, kappa)` in place of `(t, x)` up to the sign of the
+metric, so the boost of (b) carries the walk's small-angle plane waves
+to plane waves of the same m: the walk is covariant to that order (its
+continuum limit is the Dirac equation, exactly covariant), and its
+group velocity `v = d omega / d kappa = kappa / omega + O(3)` gives `r =
+m / omega = sqrt(1 - v^2) + O(4)`. Beyond second order `cos m cos kappa`
+is not a function of `omega^2 - kappa^2` alone, so the covariance fails
+at the fourth order, which is (iii). (e) The 48 contain no boost because
+they are finite and a boost has infinite order; so no lattice symmetry
+implements a boost exactly, and (ii) is the best the lattice affords.
+
+**What the theorem says of the law as it stands**, one sentence, a fact
+and not an order: the law meets (A1) (one Node per interval, the flight
+blind, section 1) and does not meet (A2), its hop being a whole-record
+schedule with no staying amplitude (parts 4 and 5, sections 5 and 6),
+so its clicks carry the group of (i) and, read by one clock, Lorentz's
+radar (section 6, the sharpening's (b)), and lack the amplitude of (ii)
+that would fix `r` at `sqrt(1 - v^2)`.
+
+**The paper's frame, three sentences, marked as such.** We assume
+Lorentz is real in the world, and we explain only how a click brings
+it: a click is the passage of information from Node to Node at most one
+Node per interval (A1), and a click's content is an amplitude with a
+phase that splits each interval between staying and hopping, the mass
+the staying share (A2). The transformations between click families that
+preserve this structure form the Lorentz group up to scale (A1), acting
+on the amplitudes as the Dirac walk's covariance (A2), so that a
+detector's own rate is `sqrt(1 - v^2)` to second order in v and the
+lattice's corrections begin at the fourth. The amplitudes of (A2) are
+therefore exactly what is needed to convert the clicks back to Lorentz;
+the law as built satisfies (A1) and not (A2), a fact stated for the
+owner's word.
+
 **The verdict in one line: LORENTZ FROM THE CLICKS GIVEN the line
 `k_AB = k_BA` (the two directions alike, the relativity principle),
 which is `r^2 = 1 - v^2` for the moving record's own count; NOT WITHOUT
