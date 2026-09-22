@@ -386,6 +386,107 @@
   },
   "note": "the far worlds' first run: both shifts inside 0.5 pixel of the pins -1.69 / -3.37 (read -1.773 / -3.403) and both delays inside 1 interval of 2.15 / 4.29 (read 2.56 / 4.35); the shifts' ratio 1.92 inside 2.00 +- 0.66 and the delays' 1.70 inside 2.00 +- 1.04; no light taken by the mass at either f (the innermost line at 5.83 Links, beyond mass's 3.83); the lamp rate 0.927 read here (the pin was None); the pins untouched"
  },
+ "run_2026_09_22_every_family": {
+  "branch": "optical-every-family",
+  "after": "the composition of optical-v1 with the massive rows (EVERY_FAMILY.md), the weight per unit 221 on the photon at gamma 1",
+  "read_by": "tools/lensing_readings.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
+  "worlds": {
+   "mass_g1": {
+    "shift": -3.989,
+    "delay": 4.94,
+    "clicks": 1395,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.989,
+     "delay": 5.1,
+     "clicks": 1394,
+     "taken_by_the_mass": 0
+    }
+   },
+   "near_g1": {
+    "shift": -6.412,
+    "delay": 6.2,
+    "clicks": 1452,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -6.412,
+     "delay": 6.2,
+     "clicks": 1452,
+     "taken_by_the_mass": 0
+    }
+   },
+   "far_g1": {
+    "shift": -3.403,
+    "delay": 4.33,
+    "clicks": 1344,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.403,
+     "delay": 4.35,
+     "clicks": 1344,
+     "taken_by_the_mass": 0
+    }
+   },
+   "matter_g0": {
+    "shift": -5.0,
+    "arrival": -12.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.26,
+    "arrival_inside": false,
+    "arrival_outside_by": 2.64,
+    "was": null
+   },
+   "matter_g1": {
+    "shift": -6.0,
+    "arrival": -6.0,
+    "clicks": 501,
+    "shift_inside": true,
+    "arrival_inside": false,
+    "arrival_outside_by": 0.42,
+    "was": null
+   },
+   "matter2_g0": {
+    "shift": -5.0,
+    "arrival": -12.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.26,
+    "arrival_inside": false,
+    "arrival_outside_by": 2.64,
+    "equivalence_on_matter_g0": true,
+    "was": null
+   }
+  },
+  "ratios": {
+   "mass": {
+    "shift_f2_over_f1": 2.0,
+    "delay_f2_over_f1": 1.67,
+    "delay_outside_by": 0.08,
+    "was": {
+     "shift_f2_over_f1": 2.0,
+     "delay_f2_over_f1": 1.73
+    }
+   },
+   "near": {
+    "shift_f2_over_f1": 2.46,
+    "delay_f2_over_f1": 2.07,
+    "was": {
+     "shift_f2_over_f1": 2.46,
+     "delay_f2_over_f1": 2.07
+    }
+   },
+   "far": {
+    "shift_f2_over_f1": 1.92,
+    "delay_f2_over_f1": 1.69,
+    "was": {
+     "shift_f2_over_f1": 1.92,
+     "delay_f2_over_f1": 1.7
+    }
+   }
+  },
+  "note": "the weight 221 for 220 moves the mass delay by 0.16 interval and nothing at three decimals in the shifts: the mass delays' ratio 4.94 / 2.95 = 1.67 (was 1.73), outside 2.00 +- 0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by the one floor; the shifts' ratio 2.00 unchanged; far's delays' ratio 1.69 (was 1.70); the matter worlds read in whole pixels and whole y-Links on one line, the wall's factor on a massive row under that grain; no pin moved"
+ },
  "matter": {
   "derivation": "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py (the light-bending map's crowd lines, the row followed along its own momentum, verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): the deciding world of every family under one wall, the mass 2^14, the pair [1, 16384], one massive row per interval on the heading at b = 10; the arrival carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) grows under the push), so the pin is the map's arrival per world and the readings that refute are the map's with one verb changed",
   "mass": 16384,

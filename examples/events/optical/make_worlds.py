@@ -200,6 +200,100 @@ def world(name: str, gamma: int) -> Json:
     return families_by_definition(document, K.FAMILY_DEFINITIONS, K.DEFINITIONS_SOURCE)
 
 
+# Every family under one wall (2026-09-22, branch optical-every-family, the
+# composition of optical-v1 with the massive rows; the physics-rule
+# reviewer's M1 on PR #743): the light worlds at gamma 1 re-read under the
+# weight 221 (the one floor; the Bresenham entry's and the far entry's
+# values beside as "was"; gamma 0 and the controls byte identical, far_g0
+# not re-run) and the three deciding worlds at b = 10 against the matter
+# block's pins (inside / outside as the README has them). DETECTOR unless
+# marked.
+RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
+    "branch": "optical-every-family",
+    "after": "the composition of optical-v1 with the massive rows (EVERY_FAMILY.md), the weight per unit 221 on the photon at gamma 1",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
+    "worlds": {
+        "mass_g1": {
+            "shift": -3.989,
+            "delay": 4.94,
+            "clicks": 1395,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.989, "delay": 5.10, "clicks": 1394, "taken_by_the_mass": 0},
+        },
+        "near_g1": {
+            "shift": -6.412,
+            "delay": 6.20,
+            "clicks": 1452,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -6.412, "delay": 6.20, "clicks": 1452, "taken_by_the_mass": 0},
+        },
+        "far_g1": {
+            "shift": -3.403,
+            "delay": 4.33,
+            "clicks": 1344,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.403, "delay": 4.35, "clicks": 1344, "taken_by_the_mass": 0},
+        },
+        "matter_g0": {
+            "shift": -5.000,
+            "arrival": -12.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.26,
+            "arrival_inside": False,
+            "arrival_outside_by": 2.64,
+            "was": None,
+        },
+        "matter_g1": {
+            "shift": -6.000,
+            "arrival": -6.00,
+            "clicks": 501,
+            "shift_inside": True,
+            "arrival_inside": False,
+            "arrival_outside_by": 0.42,
+            "was": None,
+        },
+        "matter2_g0": {
+            "shift": -5.000,
+            "arrival": -12.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.26,
+            "arrival_inside": False,
+            "arrival_outside_by": 2.64,
+            "equivalence_on_matter_g0": True,
+            "was": None,
+        },
+    },
+    "ratios": {
+        "mass": {
+            "shift_f2_over_f1": 2.00,
+            "delay_f2_over_f1": 1.67,
+            "delay_outside_by": 0.08,
+            "was": {"shift_f2_over_f1": 2.00, "delay_f2_over_f1": 1.73},
+        },
+        "near": {
+            "shift_f2_over_f1": 2.46,
+            "delay_f2_over_f1": 2.07,
+            "was": {"shift_f2_over_f1": 2.46, "delay_f2_over_f1": 2.07},
+        },
+        "far": {
+            "shift_f2_over_f1": 1.92,
+            "delay_f2_over_f1": 1.69,
+            "was": {"shift_f2_over_f1": 1.92, "delay_f2_over_f1": 1.70},
+        },
+    },
+    "note": (
+        "the weight 221 for 220 moves the mass delay by 0.16 interval and nothing at three "
+        "decimals in the shifts: the mass delays' ratio 4.94 / 2.95 = 1.67 (was 1.73), outside "
+        "2.00 +- 0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by the "
+        "one floor; the shifts' ratio 2.00 unchanged; far's delays' ratio 1.69 (was 1.70); the "
+        "matter worlds read in whole pixels and whole y-Links on one line, the wall's factor "
+        "on a massive row under that grain; no pin moved"
+    ),
+}
+
+
 def worlds() -> dict[str, Json]:
     found = {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
     for family, gamma in MATTER_WORLDS:
@@ -336,6 +430,7 @@ def expectations() -> Json:
     out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
     out["run_2026_09_22_bresenham"] = RUN_2026_09_22_BRESENHAM
     out["run_2026_09_22_far"] = RUN_2026_09_22_FAR
+    out["run_2026_09_22_every_family"] = RUN_2026_09_22_EVERY_FAMILY
     for name, pin in PINS.items():
         ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],

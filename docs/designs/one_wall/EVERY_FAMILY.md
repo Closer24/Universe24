@@ -227,7 +227,11 @@ the beam's width is declared); (5) the equivalence, `matter2_g0` on
 -3.30 and the arrivals -5.04 / -4.26, the alternatives' separation under
 the brackets' reach; at b = 12 the alternatives separate more (-15.67 and
 -12.16 against -9.53 and -6.41) with the turn 0.203 / 0.267 and the
-shifts' ratio 1.165: b = 10 at 2^14 is the choice. Under the same weight
+shifts' ratio 1.165: b = 10 at 2^14 is the choice. The map's arrivals are
+not monotonic in b (-16.63, -8.36, -13.59 at b = 8, 10, 12 at gamma 0; the
+reviewer's S2): the row's rounded y reads the source fan's comb (the
+crowd's lines through the Nodes it passes), beside the pixel grain of
+section 5b; a world of the beam's width averages the comb. Under the same weight
 the six light worlds' numbers at gamma 1 move by the one floor (221 for
 220), fifty times below the bracket (section 5a).
 
@@ -262,7 +266,11 @@ the six light worlds' numbers at gamma 1 move by the one floor (221 for
   (the flow's amplitude scale in every component of **W** and of Q d a
   **p**_D), so a <= 22 at E'_0 = 64 is inside, the deciding world's a = 1
   and 2 with margin, a general massive family not: the refusal names it
-  before the square. The same test binds the photon's 3 |**P**|^2 Q^2, which
+  before the square. The margin stated (the reviewer's S3): at [1, 16384]
+  and E'_0 = 64, R = 2^26 before the gcd against the bound's 2^25.5, a
+  factor 2 short, so the deciding world passes because every pushed row's
+  gcd is at least 2 (it is at least 32); E'_0 = 128 (`matter2`) needs
+  g >= 4; the light worlds' margin is about 5. The same test binds the photon's 3 |**P**|^2 Q^2, which
   step 1 formed unbounded (test (h)'s W_x = 2^40, taken there, is refused
   here; W_x = 2^24 taken): the primitive's components stay under 2^24.7,
   which every registered world keeps (the gcd's 32 from the flow's
@@ -358,10 +366,14 @@ run to Far 2's head's digests (`control` 96d9aa366dce, `mass_g0`
 worlds re-read under the weight 221 (DETECTOR, 400 intervals, Far 2's
 head's value as "was"): `mass_g1` the shift -3.989 (was -3.989) and the
 delay +4.94 (was +5.10; the pin 5.36 +- 1, inside), `near_g1` -6.412 /
-+6.20 (was the same), `far_g1` -3.403 / +4.33 (the pins -3.37 +- 0.5 and
-4.29 +- 1, inside both; 1344 clicks of the control's 1455; the far world's
-first read on this head, `far_g0` not run here). The one floor moves the
-mass delay by 0.16 interval, the shifts by nothing at three decimals.
++6.20 (was the same), `far_g1` -3.403 / +4.33 (was +4.35 in the far
+entry; the pins -3.37 +- 0.5 and 4.29 +- 1, inside both; 1344 clicks of
+the control's 1455; `far_g0` not re-run, gamma 0 untouched). The one
+floor moves the mass delay by 0.16 interval, the shifts by nothing at
+three decimals, and the mass delays' ratio from 1.73 to 4.94 / 2.95 =
+1.67, outside 2.00 +- 0.25 by 0.08 (the Bresenham entry's deciding
+reading, recorded as it is; the register's block
+`run_2026_09_22_every_family`).
 
 ## 5b. The runs (2026-09-22): the first run at b = 6, the deciding worlds at b = 10
 
@@ -378,9 +390,9 @@ follow the row along its momentum and b moved to 10, where the row stays
 4 Links off the axis; the b = 6 worlds are not registered.
 
 The deciding worlds at b = 10 (DETECTOR, the screen's click lines, read
-by `tools/lensing_readings.py --no-replay --window-start 500` against
-each folder's control; its verdict column is light's brackets and does
-not apply; the pins compared here):
+by `tools/lensing_readings.py --no-replay --window-start 500 --register
+expectations.json` against each folder's control, the verdicts against
+the matter block's pins (the reviewer's S5)):
 
 | World | clicks (control 501) | centroid y, shift (pin, bracket 0.5) | mean age, arrival (pin, bracket 1) | first click (control 341) | width rms y | inside |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -397,9 +409,15 @@ that Link: the gamma 1 row falls one pixel more than the gamma 0 row and
 arrives 6 intervals later, the grain and not the wall's stretch (the
 map's +0.94). With the grain counted (the map's 5.76 and 6.11 y-Links
 against the engine's 5 and 6) the engine arrives one to two intervals
-later than the map at both gamma, the same sign: the map's continuous
-approximation of the walk (the crowd read at the rounded y, the age
-moment unretarded, the residue continuous), to be closed by a map that
+later than the map at both gamma, the same sign. The checkable cause
+(the reviewer's S1, GAMEBOARD): a row never pushed walks on its table's
+pair, the coarse floor E'_D = 66 (the pace 20 / 132 = 0.15152), and at
+its first push moves to the momentum's pair with the Q-scaled root,
+(640, 4242) as **W** -> 0 (the pace 640 / 4242 = 0.15087), 0.43 per cent
+slower, 1.5 intervals over the 52 x-Links, the residual's sign and size;
+the table's floor is massive-rows-v1's registered choice, not this
+step's. What is left is the map's continuous approximation (the crowd
+read at the rounded y, the residue continuous), closed by a map that
 walks the engine's Bresenham exactly (section 6). The five readings of
 section 2: (1) Newton's fall read, -5.000 for -5.76, the grain; (2) the
 speed-up read, -12.00 against +43.99 without it; (3) the weight's form

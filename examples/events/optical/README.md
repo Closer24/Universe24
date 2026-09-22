@@ -109,7 +109,7 @@ PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g1 ex
 PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g0 --no-replay
 PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g1 --no-replay
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/matter_g0 examples/events/optical/matter_control_g0.json examples/events/optical/matter_g0.json
-PYTHONPATH=src python tools/lensing_readings.py artifacts/matter_g0 --no-replay --window-start 500   # likewise matter_g1 and matter2_g0; the verdict column is light's brackets
+PYTHONPATH=src python tools/lensing_readings.py artifacts/matter_g0 --no-replay --window-start 500 --register examples/events/optical/expectations.json   # likewise matter_g1 and matter2_g0; the verdicts against the matter block's pins
 ```
 
 `tests/test_optical.py` pins the rule (the wall, the push and the turn,
@@ -335,12 +335,18 @@ the same tools; the Bresenham re-read's value as "was"):
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `mass_g1` | 2 | 1395 (was 1394) | 22.011, -3.989 (was -3.989) | 94.34, +4.94 (was +5.10) | 0.9588 | 0 | -3.86 / 5.36 | yes / yes |
 | `near_g1` | 2 | 1452 (was 1452) | 16.588, -6.412 (was -6.412) | 95.60, +6.20 (was +6.20) | 0.9979 | 0 taken | capture 582 +- 146 (superseded shift -4.83) / 4.34 +- 1 | capture OUTSIDE (by 582) / delay OUTSIDE (by 0.86) |
-| `far_g1` | 2 | 1344 | 24.597, -3.403 | 93.73, +4.33 | 0.9237 | 0 | -3.37 / 4.29 | yes / yes |
+| `far_g1` | 2 | 1344 (was 1344) | 24.597, -3.403 (was -3.403) | 93.73, +4.33 (was +4.35) | 0.9237 | 0 | -3.37 / 4.29 | yes / yes |
 
 The one floor moves the mass delay by 0.16 interval and the shifts by
-nothing at three decimals; `far_g1` is the far world's first read on
-this head (the pins of the table above, inside both by 0.03 and 0.04;
-`far_g0` not run here). No pin changed.
+nothing at three decimals (`far_g1`'s "was" is the far entry's,
+`run_2026_09_22_far`; `far_g0` not re-run, gamma 0 untouched by the
+weight as `mass_g0`'s digest shows). The ratios f = 2 over f = 1 it
+moves: the mass delays' 4.94 / 2.95 = 1.67 (was 1.73), outside 2.00 +-
+0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by
+the one floor and recorded as it is; the shifts' 2.00 unchanged; far's
+delays' 4.33 / 2.56 = 1.69 (was 1.70). The register's block
+`run_2026_09_22_every_family` in `expectations.json` (the reviewer's M1).
+No pin changed.
 
 The deciding worlds of the composition: slow massive rows beside the
 mass (the note's section 2; the pins from the map
@@ -377,8 +383,9 @@ rewritten and b moved to 10; the b = 6 worlds are not registered.
 
 The run at b = 10 (DETECTOR, `tools/lensing_readings.py --no-replay
 --window-start 500` against each folder's control, 1000 intervals, 55 s
-per control and 110 s per mass world; the tool's verdict column is
-light's brackets and does not apply, the pins compared here):
+per control and 110 s per mass world; with `--register
+expectations.json` the tool's verdict is against the matter block's pins,
+the reviewer's S5, and agrees with the table):
 
 | World | clicks (control 501) | centroid y, shift (pin, bracket 0.5) | mean age, arrival (pin, bracket 1) | first click (control 341) | width rms y | inside |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -395,8 +402,14 @@ that Link: the gamma 1 row falls one pixel more and arrives 6 intervals
 later, the grain and not the wall's stretch (the map's +0.94). With the
 grain counted (the map's 5.76 and 6.11 y-Links against the engine's 5
 and 6) the engine arrives one to two intervals later than the map at
-both gamma, the same sign: the map's continuous approximation of the
-walk, to be closed by a map that walks the engine's Bresenham exactly.
+both gamma, the same sign. The checkable cause (the reviewer's S1,
+GAMEBOARD): a row never pushed walks on its table's pair, the coarse
+floor E'_D = 66 (the pace 20 / 132 = 0.15152), and at its first push
+moves to the momentum's pair with the Q-scaled root, (640, 4242) as
+**W** -> 0 (the pace 0.15087), 0.43 per cent slower, 1.5 intervals over
+the 52 x-Links: the residual's sign and size; the table's floor is
+massive-rows-v1's registered choice, not this step's. The map that walks
+the engine's Bresenham exactly would show the rest.
 What the run decides, in the note's order: (1) Newton's fall of a slow
 row read, -5.000 for -5.76, outside by 0.26, the pixel's grain; (2) the
 speed-up read, -12.00 against +43.99 without it; (3) the weight's form

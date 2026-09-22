@@ -6886,8 +6886,9 @@ sequential gates on an entangled record, the full register replay.
   four MUST-FIXES on the note folded). Byte identity: the controls and
   `mass_g0` to Far 2's head's digests; the light worlds at gamma 1 under
   the weight 221 (DETECTOR): `mass` -3.989 / +4.94 (was +5.10), `near`
-  -6.412 / +6.20 (the same), `far` -3.403 / +4.33, the far world's first
-  read, inside its pins -3.37 +- 0.5 and 4.29 +- 1. The deciding worlds,
+  -6.412 / +6.20 (the same), `far` -3.403 / +4.33 (was +4.35), inside its
+  pins -3.37 +- 0.5 and 4.29 +- 1; the mass delays' ratio 1.67 (was 1.73),
+  outside 2.00 +- 0.25 by 0.08, the one floor's move. The deciding worlds,
   slow massive rows beside the mass at b = 10 (M = 2^14, the family
   `matter` of quantum 1 and momentum 10, E' = 66, v^2 = 0.069; the pins
   from the map that follows the row along its momentum, verbs 1 and 2

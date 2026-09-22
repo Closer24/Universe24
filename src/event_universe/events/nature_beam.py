@@ -96,6 +96,7 @@ function holds a piece of the law: `direction_flight`, `collision_table` and
 
 from __future__ import annotations
 
+import dataclasses
 import functools
 import itertools
 import math
@@ -1002,6 +1003,12 @@ class FamilyFlight:
     # the pair on a pushed row's momentum, are read from these two.
     rest: int = 0
     energy: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
+    # The weight per unit of amount of the crowd's push under `optical`,
+    # per direction, formed once at load from the energy and the labels at
+    # the world's gamma (`unit_weights`; the physics-rule reviewer's S4 on
+    # step 2: the floor a load-time rounding by construction); the same
+    # integers the turn formed per row before; empty without the key.
+    weight: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
 
     def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """The position's accumulator of a row of direction d at age tau
@@ -1068,29 +1075,35 @@ def family_flight(
     width: int,
     modulus: int,
     action: int | None,
+    optical: int | None = None,
 ) -> FamilyFlight:
     """The family's tables from its keys and the world's flight (`FamilyFlight`):
     a family without the flag `massive` takes Flight's numbers by value and
     the pair (1, 0); a massive family its labels p_D at the scale p, its
     triple from E'_0 = Q S M, its turn |p_{D,a}| N over h and the pair (0,
-    M). Formed once at load (`nature_beam_tables`)."""
+    M). Formed once at load (`nature_beam_tables`), with the weight per
+    unit of the crowd's push at the world's gamma under `optical`
+    (`unit_weights`)."""
     count = flight.vectors.shape[0]
     if not definition.massive:
         turn = np.full((count, DIMENSIONS), definition.phase_per_link, dtype=np.int64)
-        return FamilyFlight(
-            2 * flight.manhattan * Q,
-            2 * flight.resolution,
-            flight.resolution.copy(),
-            flight.manhattan,
-            flight.lines,
-            flight.labels,
-            turn,
-            1,
-            1,
-            0,
-            0,
-            0,
-            unit_energies(flight.labels, 0),
+        return with_weights(
+            FamilyFlight(
+                2 * flight.manhattan * Q,
+                2 * flight.resolution,
+                flight.resolution.copy(),
+                flight.manhattan,
+                flight.lines,
+                flight.labels,
+                turn,
+                1,
+                1,
+                0,
+                0,
+                0,
+                unit_energies(flight.labels, 0),
+            ),
+            optical,
         )
     if action is None:
         raise ValueError(
@@ -1105,20 +1118,34 @@ def family_flight(
     rest = Q * width * definition.quantum
     rate, wall, start = flight_triple(labels, rest)
     turn = np.abs(labels) * modulus
-    return FamilyFlight(
-        rate,
-        wall,
-        start,
-        flight.manhattan,
-        flight.lines,
-        labels,
-        turn,
-        action,
-        0,
-        definition.quantum,
-        definition.quantum,
-        rest,
-        unit_energies(labels, rest),
+    return with_weights(
+        FamilyFlight(
+            rate,
+            wall,
+            start,
+            flight.manhattan,
+            flight.lines,
+            labels,
+            turn,
+            action,
+            0,
+            definition.quantum,
+            definition.quantum,
+            rest,
+            unit_energies(labels, rest),
+        ),
+        optical,
+    )
+
+
+def with_weights(table: FamilyFlight, optical: int | None) -> FamilyFlight:
+    """The family's table with its weight per unit of the crowd's push
+    formed for every direction at the world's gamma (`unit_weights`); empty
+    without the key (nothing of `optical` is read at run time)."""
+    if optical is None:
+        return table
+    return dataclasses.replace(
+        table, weight=unit_weights(table, optical, np.arange(table.labels.shape[0]))
     )
 
 
@@ -1260,7 +1287,9 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
         np.array(circle.sines, dtype=np.int64),
         arc_table(flight.labels),
         tuple(
-            family_flight(definition, flight, world.width, world.phase_steps, world.action)
+            family_flight(
+                definition, flight, world.width, world.phase_steps, world.action, world.optical
+            )
             for definition in world.families
         ),
     )
@@ -3558,7 +3587,9 @@ def unit_weights(table: FamilyFlight, gamma: int, directions: np.ndarray) -> np.
     energy = table.energy[directions]
     return np.array(
         [
-            (int(e) * int(e) + 3 * gamma * sum(int(c) * int(c) for c in label)) // int(e)
+            # A direction of no motion (the rest vector (0, 0, 0) of the
+            # table, energy 0 for the photon) carries no row and weighs 0.
+            ((int(e) * int(e) + 3 * gamma * sum(int(c) * int(c) for c in label)) // int(e) if e else 0)
             for e, label in zip(energy.tolist(), table.labels[directions].tolist(), strict=True)
         ],
         dtype=np.int64,
@@ -3799,8 +3830,9 @@ def optical_turn(frame: Interval) -> None:
         # v^2) E' with v^2 = 3 p . p / E'^2; for the photon (E'_0 = 0) e_D at
         # gamma = 0 exactly and 2 e_D within one unit at gamma = 1 (the root's
         # floor, EVERY_FAMILY.md section 3); for a massive row E'_D at gamma =
-        # 0, Newton's push on a slow row of content M.
-        weight = content * unit_weights(table, gamma, store.direction[rows])
+        # 0, Newton's push on a slow row of content M; formed once at load
+        # (`FamilyFlight.weight`, the reviewer's S4).
+        weight = content * table.weight[store.direction[rows]]
         flow = crowd.arrival_flow(store.node[rows], store.number[rows])
         widest = int(np.abs(flow).max(initial=0))
         heaviest = int(weight.max(initial=0))
