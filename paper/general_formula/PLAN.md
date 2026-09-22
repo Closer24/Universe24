@@ -5184,3 +5184,24 @@ four words traded for read AC's: "finite-grain" (One value), "named"
 (Recovered in a limit), "and" for a comma (the one non-local step, the
 only read-out), "conservation" (the books). No number moved, no claim
 changed. The PDF compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the owner's word of records 1104 and 1108 through the Boss's order of 00:00Z): the central idea visible
+
+A third commit on `paper-opening`, words only. (a) The abstract carries
+the sentence "Everything the paper compares with nature is a count
+between clicks at a detector, or a ratio of such counts; nothing
+measured inside the board is compared", joined to the tally sentence in
+place of "Every reading is compared with nature by kind"; kept at or
+under 250 by trades inside the abstract: "the GameBoard" (named in the
+text), "one rule of ... bounded, acts" to "six bounded integer
+operations ... act", "there are" to "are", "the only read-out", "as" twice
+(the click's weight a positive quadratic form; the CHSH sum an exact
+rational), "count" before marginals, "enter as labelled conjectures from
+the algebra ... neither is established" to "are conjectures, not
+established", "and ... though" to "; ... ,". 248 words (mathematics one
+token each). (b) The opening paragraph, after the sentence on the exact
+identities: "Every quantity compared with nature is a count between
+clicks at a detector or a ratio of such counts; a reading of the board
+itself is a diagnostic and is compared with nothing (the reading rule
+below; Section 8; Table 2)". No number moved, no claim changed. The PDF
+compiled from the true source and read back. 52 pages.
