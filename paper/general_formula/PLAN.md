@@ -4138,3 +4138,26 @@ history and the Inside/Outside repetitions) touch the owner's ordered
 items and are not a verification; the referee's wish for a full
 operational definition of the click beyond P6 is a design question for
 the tree, not a sentence the writer can verify. The count: 36 pages.
+
+## Applied (2026-09-22, the Boss's order of 10:15Z on the owner's decision of record 865): the crowd worlds' status word; the cuts (a) and (c)
+
+Under the generic entry of the bending the crowd worlds at a pair with
+n > 0 are opaque to light (records 861, 865); the physicist's list of
+the paper's readings in them (record 866): series T (the ratio 1.907,
+the clock's word), G and G2 (the diagram's shape, q = -0.108, z =
+0.2636) and X (Poisson's interior); the crowd's clock, the cluster and
+the reader inside a crowd are NUMBERS.md rows only, not the paper's.
+Every sentence carrying one of those readings now says, in the same
+sentence, "read under the law before the generic entry of 2026-09-22,
+not readable under the law as it stands" (nineteen places: Section 5's
+series T and Poisson sentences and its opening, Table 3's rows 3, 4b
+and 12 with their verdicts "of the law before the entry", the chains
+paragraph, Table 4's three rows, item (v), the dark energy item with
+the deceleration parameter's verdict, the platform's simulator road,
+the ground paragraph, the families table's two rows, the abstract's
+fourth reading); the readings and their kinds unchanged; D3's fall
+worlds and the optical worlds untouched (suspension 0). The cuts (a)
+(Appendix B's Mach-Zehnder-total sentence) and (c) (the roads table's
+W row, "the click frame, section 7") applied; not (b). The count:
+37 pages; the status words cost about fifteen lines, more than the
+two cuts saved; the count is reported and the paper holds still.

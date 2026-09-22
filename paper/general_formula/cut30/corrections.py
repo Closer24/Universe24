@@ -2246,6 +2246,108 @@ CORRECTIONS = [
         "\\caption{\\label{tab:nature}The confrontation register's rows read after a detector \\cite{nature}.",
         "\\caption{\\label{tab:nature}The confrontation register's rows read after a detector \\cite{nature}. The criterion per row: PASS where the reading meets nature's value within the stated uncertainty, or, for a visibility, where the model's value lies above the apparatus-limited measurement (a bound met); the model's numbers are ideal, at the registered grain, not a prediction for a given instrument.",
     ),
+    # The crowd worlds at a pair with n > 0 are opaque to light (records 861, 865, 866): the status word on every reading of T, G, G2 and X; the cut (a).
+    (
+        "crowd: Section 5's series T sentence",
+        "every pin met, measured and replicated \\cite{replications}.",
+        "every pin met, measured and replicated \\cite{replications}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands (the crowd opaque to light), so the gravitational redshift's ratio is a reading of the law before the entry, not of the law as it stands.",
+    ),
+    (
+        "crowd: Section 5's opening names it",
+        "series T (row 12 of Table~\\ref{tab:nature}",
+        "series T (row 12 of Table~\\ref{tab:nature}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands",
+    ),
+    (
+        "crowd: Table 3 row 12's verdict",
+        "PASS under the age word (P9) as the form at two Nodes,",
+        "read under the law before the generic entry of 2026-09-22, not readable under the law as it stands; PASS, of the law before the entry, under the age word (P9) as the form at two Nodes,",
+    ),
+    (
+        "crowd: Table 3 row 4b's reading and verdict",
+        "(series G2; the re-run at head pending) & FAIL: $0.315$ expected,",
+        "(series G2; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands) & FAIL, of the law before the entry: $0.315$ expected,",
+    ),
+    (
+        "crowd: Table 3 row 3's reading and verdict",
+        "$-0.104$ at head, record 408 \\cite{log}) & FAIL: no term with $q < 0$",
+        "$-0.104$ at head, record 408 \\cite{log}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands) & FAIL, of the law before the entry: no term with $q < 0$",
+    ),
+    (
+        "crowd: the chains paragraph's series T",
+        "$1.907$ for the pin $1.909$ (series T, DETECTOR);",
+        "$1.907$ for the pin $1.909$ (series T, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands);",
+    ),
+    (
+        "crowd: Table 4's age-wall row",
+        "series T $1.907$ for $1.909 \\pm 0.05$; series X $k = 0.9089$ at $r = 4$ for the pin $0.9108$ (DETECTOR)",
+        "series T $1.907$ for $1.909 \\pm 0.05$; series X $k = 0.9089$ at $r = 4$ for the pin $0.9108$ (DETECTOR; both read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+    ),
+    (
+        "crowd: Table 4's spreading row",
+        "series T $1.907$; series X $1.0029$ for $1.0039$ (DETECTOR)",
+        "series T $1.907$; series X $1.0029$ for $1.0039$ (DETECTOR; both read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+    ),
+    (
+        "crowd: Table 4's light row",
+        "row 4b $0.2636$ (FAIL);",
+        "row 4b $0.2636$ (FAIL, of the law before the entry of 2026-09-22);",
+    ),
+    (
+        "crowd: item (v)'s readings",
+        "the form's readings are series T's $1.907$ and series X's $k$ (DETECTOR),",
+        "the form's readings are series T's $1.907$ and series X's $k$ (DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands),",
+    ),
+    (
+        "crowd: the dark energy item's readings",
+        "the coasting throw's $q = -0.108$ in $0 \\pm 0.25$ (G2, MET; FAIL against nature's $-0.53$, row 3).",
+        "the coasting throw's $q = -0.108$ in $0 \\pm 0.25$ (G2, MET; FAIL against nature's $-0.53$, row 3); both were read under the law before the generic entry of 2026-09-22, not readable under the law as it stands, so the deceleration parameter's verdict is the law's before the entry.",
+    ),
+    (
+        "crowd: the platform's simulator road, the crowd's lamps",
+        "a lamp's births at a detector in a crowd (T, X, DETECTOR).",
+        "a lamp's births at a detector in a crowd (T, X, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands).",
+    ),
+    (
+        "crowd: the platform's simulator road, the thrown stars",
+        "the thrown stars' Doppler (G, G2, DETECTOR)",
+        "the thrown stars' Doppler (G, G2, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+    ),
+    (
+        "crowd: the ground paragraph's Poisson",
+        "Poisson's interior is read after a detector (series X, Section~\\ref{sec:delay}).",
+        "Poisson's interior is read after a detector (series X, Section~\\ref{sec:delay}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands).",
+    ),
+    (
+        "crowd: Section 5's Poisson sentence",
+        "(series X, DETECTOR), the shell theorem's interior;",
+        "(series X, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands, so Poisson's interior is a reading of the law before the entry), the shell theorem's interior;",
+    ),
+    (
+        "crowd: the families table's massive bodies",
+        "series T's $1.907$; series X's $k = 0.9089$; series G2's $z = 0.2636$ (DETECTOR)",
+        "series T's $1.907$; series X's $k = 0.9089$; series G2's $z = 0.2636$ (DETECTOR; T, X and G2 read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+    ),
+    (
+        "crowd: the families table's sources",
+        "series G2's $z = 0.2636$ (row 4b); series T's lamp; the hubble worlds' $q_0 = -0.108$ (row 3) (DETECTOR)",
+        "series G2's $z = 0.2636$ (row 4b); series T's lamp; the hubble worlds' $q_0 = -0.108$ (row 3) (DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+    ),
+    (
+        "crowd: the abstract's fourth reading",
+        "a fourth under the clock's assumed word, twelve fail and one is not compared, the failures the law's own.",
+        "a fourth under the clock's assumed word (read under the law before the generic entry of 2026-09-22), twelve fail and one is not compared, the failures the law's own.",
+    ),
+    (
+        "cut (a): Appendix B's Mach-Zehnder-total sentence (Section 6 has its numbers)",
+        "The Mach-Zehnder record's total over the $64$ birth phases, computed from the tables and not a reading, takes eight values from $65448/65536$ to $65773/65536$ \\cite{register}; the normalisation",
+        "The normalisation",
+    ),
+    # The cut (c) of the Boss's order.
+    (
+        "cut (c): the roads table's W row, where the chain starts",
+        "the click frame, section 7 (the invariant :748, the unit :795); \\cite{clickframe2} &",
+        "the click frame, section 7 &",
+    ),
 ]
 
 
