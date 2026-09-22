@@ -3944,3 +3944,125 @@ and the self-creations' ticks GAMEBOARD), a number of the board's
 state named a GAMEBOARD diagnostic, and the moving detector's own
 one-way ratio "a reading NOT MADE" until the physicist's step 4 and
 the transponder worlds land. The count 39, reported; no cut.
+
+## Step A (2026-09-22, the owner's word of record 852 through the Boss, 08:45Z): the claims table and the cut table, PLAN.md only
+
+The owner: "make sure the paper is shortened to 35 pages and claims
+only established things that will not bring us down." Step A is this
+record; step B, the cut, waits on the Boss's word after the
+physics-rule reviewer's adversarial read of the claims table. The
+paper at 53e07e4c is 39 pages; nothing in it changes here.
+
+### A.1 The claims table
+
+Every claim a hostile referee could test, one row each. Support:
+PROVED (a theorem in the paper or in a cited derivation on main),
+READ (a detector's click in the register, DETECTOR), SHOWN IN FORM
+(an algebraic form with a declared input, rung 2, not read), DECLARED
+(an input of the law or a world file), NOT COMPARED / NOT MADE / FAIL.
+Verdict: KEEP AS IS / KEEP WITH THE STATUS WORD (the word in the same
+sentence) / CUT. The words: "follows", "recovered" where a form was
+put in; "derived" only where none was (record 817); "matches nature",
+never "is nature".
+
+| # | The claim, in the paper's words (section) | Support | Verdict |
+| --- | --- | --- | --- |
+| 1 | One update law of bounded integers propagates records; written down, the rules are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift (abstract; Section 2) | PROVED (the definitions of Section 2; the ledger) | KEEP AS IS |
+| 2 | Physics above the board is arithmetic on counts; every measured quantity a count or a ratio of counts (abstract; intro's five steps) | SHOWN (the click's definition, P11; Theorem 3 of Einstein Outside on main) | KEEP WITH THE STATUS WORD ("a theorem of A1 and the definition of Outside") |
+| 3 | The group of the six Ports and its 24 rotations (Section 3, Theorem 1) | PROVED (Appendix A) | KEEP AS IS (the proof cited to DERIVATIONS_BEAM on main, Appendix A's text cut, A.2 row 14) |
+| 4 | The books' conservation; the lattice continuity equation (Section 4) | PROVED (the books, exact); the continuity equation's differential form a limit | KEEP WITH THE STATUS WORD ("its differential form in the limit") |
+| 5 | Gauss's law of a free family's flux under its world condition (Section 4) | PROVED (exact on the GameBoard) | KEEP AS IS |
+| 6 | The split's isometry; the injectivity of the interval between clicks (Section 6, Theorems 2, 3) | PROVED (Appendix A) | KEEP AS IS |
+| 7 | The pace of every direction isotropic within 1/T_D; c = 1/sqrt 3 the largest isotropic pace the two rules allow; the value attained a limit of the grain (Section 3, Proposition) | PROVED (the Proposition) + READ (series Q, 290 of 290, DETECTOR) | KEEP AS IS |
+| 8 | The table sits at the supremum: T_D = floor(sqrt(3 |D|^2 N_l^2)) (Section 3) | DECLARED (P9, a rule chosen among few) | KEEP WITH THE STATUS WORD (already "a rule chosen among few, not a consequence") |
+| 9 | No dispersion at any phase rate; the GRB 090510 bound met (Section 3, the remark) | a consequence of the postulate P9, no run | CUT (the remark to one clause of Positioning: the pure-shift automaton, Meyer's theorem cited) |
+| 10 | The click's weight is a positive quadratic form of power 2; the lattice Gleason (Section 6, Theorem 4) | PROVED (a sketch in the paper; the full steps DERIVATIONS_BEAM 6.5 on main) | KEEP WITH THE STATUS WORD ("sketch; the steps in full in the derivation on main") |
+| 11 | The power window [1.917, 2.012) from the registered cells: an implementation gate, no evidence about nature (Section 6; Table 3 row 2c) | READ (the cells) | KEEP AS IS (the status already in the sentence) |
+| 12 | The harmonic constants c_j are not derived; the least-rank click is an axiom of the apparatus (P10) | DECLARED | KEEP AS IS |
+| 13 | Born's rule as a frequency to 1/N (the rung); the cumulative to 1/(2N) (Section 6) | PROVED (an integer identity of the floor) | KEEP AS IS |
+| 14 | Interference by the formulas alone: two slits, one slit, Mach-Zehnder 1681/1682 and 1/1682, 64/0 (Section 6) | PROVED (identities of the tables) + READ (L, mz_equal 64/0, DETECTOR) | KEEP AS IS |
+| 15 | The two-slit spacing lambda = c N d / n; Young's lambda D / s in the paraxial limit (Section 6) | SHOWN IN FORM, rung 2 (the fan) + READ (L2b, 23.5 for 23.3, DETECTOR) | KEEP WITH THE STATUS WORD ("rung 2, the fan; Young's on the comparison side") |
+| 16 | Planck's and de Broglie's relations as identities under the declared dictionary (Section 6) | DECLARED (identities of the release) | KEEP AS IS (already "as identities") |
+| 17 | The uncertainty relation from the same evaluation: the support bound, the entropic bound, Kennard's form in the limit (Section 6) | mathematics of Z_N on a stated identification that is a hypothesis (the circle as position); nothing read | CUT to a pointer of three lines (the identification a hypothesis, the bounds the transform's, DERIVATIONS_BEAM 22 on main) |
+| 18 | The exact marginals; no-signalling as an identity of the integers (Section 7, Theorem 5) | PROVED + READ (32/64 in every bin, DETECTOR) | KEEP AS IS |
+| 19 | S(N) an exact rational; abs(S(N) - 2 sqrt 2) <= 8/N + 0.0444; the plateau 181/64; above the bound at 16 and 32 (Theorem 6) | PROVED (the proof in the text, its constant proven) + READ (seven N, DETECTOR) | KEEP AS IS |
+| 20 | One prediction: S = 181/64, inside Poh et al. at 1.05 standard errors, under three assumptions stated (Section 8) | READ + a comparison under three assumptions | KEEP WITH THE STATUS WORD (the three assumptions in the same sentence, as now; "a compatibility, not an advantage") |
+| 21 | The inverse square as a shell mean; Newton's law with G = K eta / (4 pi N_w); the equivalence (Section 4) | SHOWN IN FORM, rung 2 (the shell mean) + READ (D3 138 of 139, 1.997, DETECTOR); G not read | KEEP WITH THE STATUS WORD ("the shell mean; the inverse square's decisive reading NOT MADE") |
+| 22 | Coulomb's law and the one constant (Section 4) | SHOWN IN FORM; no detector reading registered (the coupling worlds) | KEEP WITH THE STATUS WORD ("no detector reading registered"), the paragraph condensed |
+| 23 | The retarded potential and Poisson's equation from the two fields of one stream (Section 5) | SHOWN IN FORM, rung 2 (the limit of every direction) + READ (series X, k(2)/k(4) = 1.0029 for 1.0039, DETECTOR) | KEEP WITH THE STATUS WORD ("in the limit of every direction; the interior flat within the tolerance after a detector") |
+| 24 | The clock's redshift: first order agrees with general relativity under the calibration a_tau = G M / (r c^2); at second order a different law, no horizon (Section 5) | SHOWN IN FORM (the calibration an input) + READ (series T, 1.907 for 1.909, the form at two Nodes, DETECTOR); the strong-field reading not registered | KEEP WITH THE STATUS WORD ("the calibration an input; the strong-field form not read") |
+| 25 | Light: no optical metric; the flight blind; the bending 0.000 (Section 5; item vii) | READ (series K, DETECTOR); FAIL against 1.75 arcseconds | KEEP AS IS (a FAIL stated) |
+| 26 | The click theorem: the transformations between click families preserving A1 and A2 are the Lorentz group up to scale; Lorentz up to corrections of order m^2 v^2 (the frame paragraph, quoted) | PROVED in the cited derivation (the click frame section 0 on main); assumed of the world, shown of the conversion | KEEP WITH THE STATUS WORD (the quote shortened to its theorem sentence; "Lorentz of the world is assumed, what is shown is that the conversion brings it") |
+| 27 | The law as built meets A1 and not A2; its counter runs at the rest rate; the two one-way factors apart by 1 - v^2 (the frame; Table 3 row 4b) | SHOWN IN FORM + READ (row 4b, 0.2636 FAIL, DETECTOR); the one-way ratio NOT MADE | KEEP AS IS (the FAIL and NOT MADE stated) |
+| 28 | W = E_0'^2 + 3 p.p shown to second order as the conversion's identity under A1 and A2, no square declared in the chain; declared for the rows' dynamics (record 270) (the step paragraph) | PROVED to second order (the click frame section 7 on main); DECLARED for the rows | KEEP WITH THE STATUS WORD (both words, as now) |
+| 29 | Einstein's relation follows from the Inside alone; 1/gamma, the composition, the Doppler factors (the step paragraph; Table 8) | SHOWN (Einstein Outside on main, its section III) | KEEP WITH THE STATUS WORD ("follows to second order under A1 and A2; Einstein's on the comparison side") |
+| 30 | The quantum of the Outside step; why the world above is quantized (the smallest thing) | PROVED (Theorem 3 of Einstein Outside on main; no run); the velocity's quantum NOT READ | KEEP WITH THE STATUS WORD ("a theorem of A1, A3 and the conversion; not read as such") |
+| 31 | 1/c_D^2 = 2.954, 2.971, 3.000 by direction (the smallest thing) | a computation on the flight table + READ (Q) | KEEP AS IS |
+| 32 | Newton from the small step: the fall, the equivalence, Kepler's ratio, the clock in a crowd come out Outside (the Newton paragraph) | SHOWN IN FORM, rung 2 + READ (D3, T, X) | KEEP WITH THE STATUS WORD ("the shell mean; the inverse square's reading NOT MADE") |
+| 33 | Nothing was derived from Einstein's, Lorentz's or the Outside step's formulas (the roads paragraph; Table 8) | the check table against the sources' certification tables | KEEP AS IS |
+| 34 | The three chains, family by family (light, a body, the pair) | PROVED (the identities) + READ (L2b, T, D3, L) | KEEP AS IS |
+| 35 | Item (ii): Bell's rounding term and the plateau | PROVED + READ | KEEP AS IS |
+| 36 | Item (iii): the perihelion's order-beta term, FAIL on the law, pi beta^2 under the identity, the coefficient NOT MADE | SHOWN IN FORM (its order and symmetry); FAIL; NOT MADE | KEEP AS IS (a FAIL stated as a difference) |
+| 37 | Item (iv): tau_L c = 0.993 on a heading | a computation | KEEP AS IS (folded into item vi's sentence) |
+| 38 | Item (vi): the equivalence's constant (n S / d)(g Y / c^2), Einstein's when n S = d; the register's n S / d = 16; the reading NOT MADE | DECLARED; NOT MADE | KEEP AS IS |
+| 39 | Item (vii): the bending under the key optical, 2 c_f (n S / d) G M / (c^2 b), NOT COMPARED | SHOWN IN FORM under a hypothesis; NOT COMPARED (the generic entry in work, records 847 and 851) | KEEP AS IS (NOT COMPARED until the entry lands) |
+| 40 | Item (viii): dark energy's shape q_eff = -2 g_1 / (1 + g_1) a property of the conversion; the size an input; the sign from the law's accumulation opposite; the brightness a FAIL | SHOWN IN FORM, rung 2 + READ (series G's shape; G2 -0.108, DETECTOR); FAIL (rows 3, 11a) | KEEP AS IS (the FAILs stated; "not a resolution") |
+| 41 | Table 3: PASS 1a (S = 2.75 for 2.42 +- 0.20), 2b (0.9988), 9 (Malus exact at 45 and 90); 12 under the age word (1.907, 4.6 percent away) | READ | KEEP AS IS |
+| 42 | Table 3: FAIL 1b, 2a (0.966 for 0.98), 3 (-0.108 for -0.53), 4b (0.2636 for 0.315), 7b (factor 6.4), 8a (factor 88), 8b, 8c (the massless input refuted) | READ; FAIL | KEEP AS IS (a FAIL stays in the paper's words) |
+| 43 | Table 3: BOUND 5a (N_l >= 5.8e17), 7a (the deuteron's 0.109 percent); NOT COMPARED 2c | READ | KEEP AS IS |
+| 44 | Row 2a's cause named, "the screen's fan's grain" (Table 3) | a diagnosis, not read | KEEP WITH THE STATUS WORD ("a diagnosis; the pin derived for the screen's fan, not this world's"); the physicist's open item |
+| 45 | Table 2's four rows (Young's spacing, S(N), the clock's field, the equivalence) | READ | CUT the table: every row is in Table 4, Figure 1 or Table 3; the fingerprints to Appendix C |
+| 46 | The covariant readings: a hypothesis beside the law; series S 369, 345 within two; z = 0.3674 for 0.369 (Table 4; the families table) | READ under a hypothesis | KEEP WITH THE STATUS WORD ("a hypothesis beside the law", as now) |
+| 47 | The families table: every family's declared integers, object, verbs, click; "no detector reading registered" (u, q); "not named" | DECLARED (the register's inputs) + READ per family | KEEP AS IS (the owner's, record 822) |
+| 48 | The 24 dated transitions (Appendix C) | history (HISTORY.md on main) | KEEP AS IS (the owner's) |
+| 49 | The seven confirmations (Appendix C; Section 8's sentence) | READ | KEEP AS IS |
+| 50 | The GameBoard as a system of information transfer; of the family of lattice gases, cellular automata machines, quantum cellular automata, Shannon's channel (Section 2) | definitions and positioning, with citations | KEEP AS IS |
+| 51 | Why physics behaves like modern algebra, five steps; the fourth: the click families' transformations are the Lorentz group up to scale (intro) | the click theorem (cited) | KEEP WITH THE STATUS WORD ("the click theorem's, Section 9") |
+| 52 | Positioning: the click is a non-local step forced by Bell's theorem because the marginals are exact and S > 2; the model psi-ontic; the uniform u does the work of quantum equilibrium | PROVED (Theorems 5, 6) for the first; classifications with citations for the rest | KEEP AS IS |
+| 53 | The entropy identity of the click, H(u | K) = log_2 N per record ("What is proved"; the uncertainty paragraph) | an identity of the wheel (a definition) | KEEP WITH THE STATUS WORD ("an identity of the wheel"), one clause after row 17's cut |
+| 54 | Bohr's ratio, the muon's lifetime in flight, the single opening, the far lamp's rows 11a to 11c, the two-way c after a detector, the inverse square at two radii | NOT MADE | KEEP AS IS (named as not made) |
+| 55 | The platform: a formula enters the paper with both roads and nature on the comparison side (the platform paragraph) | the paper's rule | KEEP AS IS |
+| 56 | The abstract: "against nature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared, the failures the law's own" | READ (Table 3) | KEEP AS IS |
+| 57 | The intro's "map of results" (proved, shown numerically, open) | a summary of rows 3 to 54 | CUT (duplicated by "What is proved" and Table 3; A.2 row 10) |
+
+Rows: 57. Rows with the verdict CUT: 9, 17, 45, 57 (four); KEEP WITH
+THE STATUS WORD: 2, 4, 8, 10, 15, 20, 21, 22, 23, 24, 26, 28, 29, 30,
+32, 44, 46, 51, 53 (nineteen, of which every status word but rows 2,
+4, 10, 15, 21, 22, 23, 24, 29, 30, 32, 51 and 53 is already in the
+sentence); the rest KEEP AS IS.
+
+### A.2 The cut table: 39 pages to 35 or fewer
+
+What goes, in order, each with its page estimate (a page is about 45
+lines of the body, 55 of the appendices); the sum at least four pages.
+What stays and is condensed, never cut: the owner's ordered items (the
+inputs table of 817, the families table of 822, the three chains of
+843, the dark energy item of 849, the platform of 850), the click
+theorem and the Bell plateau, the ledger of readings by kind (Table
+3), the conversion table.
+
+| # | What goes or is condensed | Why | Pages |
+| --- | --- | --- | --- |
+| 1 | Section 3's remark on dispersion (the GRB bound, the corpuscle) to one clause in Positioning | a postulate's consequence, not a reading (A.1 row 9) | 0.25 |
+| 2 | Section 3's octahedron figure to one sentence; "The pace of the rows, and the octahedron" condensed | a sentence says it (the inscribed sphere) | 0.25 |
+| 3 | Section 4's "The operations" and "The ground of these derivations" condensed to half | the ledger and Table 4 carry the ground | 0.3 |
+| 4 | Section 4's Coulomb paragraph to three sentences with "no detector reading registered" | A.1 row 22 | 0.15 |
+| 5 | Section 5's "Light: no optical metric" to a pointer at item (vii) | duplicated | 0.1 |
+| 6 | Section 6's uncertainty paragraph to a three-line pointer | A.1 row 17 | 0.35 |
+| 7 | Section 6's "What is derived and what is not" condensed to half; "The limit" merged into the Gleason paragraph | duplicated statements of the constants c_j | 0.2 |
+| 8 | Section 7's "What Theorem 6 does not say" condensed to its two facts (above the bound at half the N; the tables' term fixed) | the rest is in the figure's caption and the checks file | 0.2 |
+| 9 | Section 8: Table 2 cut; its fingerprints to Appendix C; "The formulas after a detector" and "The comparison with nature" condensed | A.1 row 45 | 0.5 |
+| 10 | The intro's "The map of results" cut; "How the simulator led to the results" condensed | A.1 row 57 | 0.2 |
+| 11 | The frame paragraph: the click frame's quotation cut to its theorem sentence with the citation; the detector's clock sentences kept | the quote's three sentences are the theorem, its proof sketch's words and the law's verdict, the last two said again in the step paragraph | 0.35 |
+| 12 | The new-formulas paragraph: items (i), (iv), (v) folded into one line each; (ii), (iii), (vi), (vii), (viii) kept in full | duplicates and pointers | 0.3 |
+| 13 | Section 2: "The road from the cells to the algebra" and "The families in the algebra" made one paragraph; "When the transition was made" to a pointer at Appendix C's 24 entries | duplicated with the families table and Appendix C | 0.35 |
+| 14 | Appendix A: the proofs of Theorems 1 and 3 cited to DERIVATIONS_BEAM on main; Theorem 2's two lines kept | a derivation on main | 0.55 |
+| 15 | Appendix B: the symbols table to the letters used in more than one section; the rounding paragraph kept | the single-section letters are named at their first use | 0.3 |
+| 16 | Appendix C: the reproduction paragraphs condensed (the tag and the three trees in two sentences) | said in NUMBERS.md and the register | 0.1 |
+| 17 | The abstract to about 1500 characters (the platform sentence and the prediction kept) | a paper's abstract | 0.2 |
+| 18 | The discussion's "What is proved" kept as the list of theorems; "What the runs support" merged into it | duplicated by Table 3's caption | 0.1 |
+| | Sum | | 4.7 |
+
+Rows: 18, summing to about 4.7 pages, from 39 to about 34; the compile
+decides and the count is reported. Nothing is added in step B; the
+register and every file outside the paper's sources untouched.
