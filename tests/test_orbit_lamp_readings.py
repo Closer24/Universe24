@@ -160,6 +160,10 @@ def test_the_tool_reads_a_hand_made_click_list():
     other = [(t, x + (1 if t == 16 else 0)) for t, x in samples[:10]]
     assert TOOL.common_x_difference(samples, other) == (10, 9, 1)
     assert TOOL.common_x_difference(samples, []) == (0, 0, 0)
+    # The age gives the birth's y back off the flight table, within one Link.
+    for click in clicks:
+        angle = 2 * math.pi * click.birth / PERIOD
+        assert abs(20 + TOOL.links_of(click.age) - (60 + round(RADIUS * math.sin(angle)))) <= 1
 
 
 SIDE = 9
@@ -248,6 +252,8 @@ def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path):
     assert all(c.x == PROBE[0] and c.age == flight for c in reading.clicks)
     assert [t for t, _ in reading.samples] == list(range(2, 31, 2))
     assert reading.amplitude == 0 and reading.middle == PROBE[0]
+    assert (reading.centre_y, reading.line_y) == (SIDE // 2, LINE_Y)
+    assert reading.radii == [float(PROBE[1] - SIDE // 2)] * len(reading.clicks)
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     line = next(d for d in record["detectors"] if d["name"] == f"line_{PROBE[0]}")
     assert line["families"]["probe"]["clicks"] == len(reading.clicks)

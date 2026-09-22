@@ -61,7 +61,12 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import numpy as np
+
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import parse_nature_beam_world
+from event_universe.events.nature_beam import direction_flight
+from event_universe.events.world import HEADING_OFFSET
 from event_universe.world_loading import world_of_run
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,6 +78,16 @@ DETECTOR = "DETECTOR"
 GAMEBOARD = "GAMEBOARD"
 # The half-Node level the crossings are read at (never a column's own x).
 LEVEL_OFFSET = 0.5
+# The flight table of the six headings: a row's Links walked by its age on a
+# heading, m(age) (the dwell 55 / 32 intervals per Link), so that a click's
+# age gives the birth's y (Y_D + m(age)) and with its x the birth's radius.
+HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+
+
+def links_of(age: int) -> int:
+    """The Links a row has walked on a heading by its age, off the flight table."""
+    return int(HEADINGS_FLIGHT.manhattan_steps(np.array([HEADING_OFFSET]), np.array([age]))[0])
+
 
 Sample = tuple[int, int]  # (the birth tick, the x)
 
@@ -132,6 +147,8 @@ class Reading:
     balanced: bool
     elapsed: float
     centre_x: int
+    centre_y: int
+    line_y: int
     radius: int
     source: bool
     lamp_family: str
@@ -146,6 +163,15 @@ class Reading:
     @property
     def samples(self) -> list[Sample]:
         return sorted((c.birth, c.x) for c in self.clicks)
+
+    @property
+    def radii(self) -> list[float]:
+        """The birth's distance from the centre per click: x the column, y
+        the line's y plus the Links the row walked by its age."""
+        return [
+            math.hypot(c.x - self.centre_x, self.line_y + links_of(c.age) - self.centre_y)
+            for c in self.clicks
+        ]
 
     @property
     def xs(self) -> list[int]:
@@ -267,6 +293,10 @@ def read_run(folder: Path) -> Reading:
     lamp_family = world.families[probe.family].name
     sources = [m for m in world.measured if world.families[m.family].free and m.fixed]
     centre_x = sources[0].position[0] if sources else world.shape[0] // 2
+    centre_y = sources[0].position[1] if sources else world.shape[1] // 2
+    line_y = next(
+        m.position[1] for m in world.measured if m.lamp is None and not world.families[m.family].free
+    )
     radius = abs(probe.position[0] - centre_x)
     clicks: list[Click] = []
     escape = None
@@ -310,6 +340,8 @@ def read_run(folder: Path) -> Reading:
         balanced,
         float(record.get("elapsed_seconds", record.get("elapsed", 0.0)) or 0.0),
         centre_x,
+        centre_y,
+        line_y,
         radius,
         bool(sources),
         lamp_family,
@@ -392,6 +424,12 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             f"{max(reading.xs) if reading.xs else '-'}, the middle {reading.middle}, the amplitude "
             f"{reading.amplitude}; the ages {min(ages) if ages else '-'} .. {max(ages) if ages else '-'}"
         )
+        if reading.clicks:
+            radii = reading.radii
+            print(
+                f"  {DETECTOR} the radius at the births (y from the age off the flight table): "
+                f"{min(radii):.1f} .. {max(radii):.1f}, the mean {sum(radii) / len(radii):.1f}"
+            )
         if pin.get("source"):
             period = period_of(sample, reading.centre_x)
             periods[reading.name] = period.value

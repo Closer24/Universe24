@@ -323,10 +323,14 @@ times the mass. `tools/orbit_lamp_readings.py` reads the click lines alone
 ratio, the equivalence, the controls) and labels the probe's end state
 and the homes GAMEBOARD; the register entry is
 [D3, Newton after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#d3-newton-after-a-detector-2026-09-22):
-the equivalence holds to the Node on every click and the controls read
-as pinned on x; the period, the ratio and omega^2 are outside their
-pins, the cause read off the controls' pace (the per-axis drive of
-`main`, not form B's, which the pins assumed), no number moved.
+registered twice on 2026-09-22, no number moved: the first run at n = 10
+(its pins form B's pace, which the engine does not run: the cause read
+off the controls' pace and named, the rows kept as history) and the
+re-run at n = 9 on the owner's word (the per-axis drive's circle, series
+D's p = 576): the ratio of the two radii's recurrences 1.997 against
+2.00, the equivalence to the Node on every click and the controls' pace
+to the tick inside; a circle's period, amplitude and omega^2 outside,
+the loops eccentric at this grain as series D registered them.
 
 ## The Heisenberg run
 

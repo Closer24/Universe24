@@ -65,10 +65,16 @@ the z axis periodic, the centre c = (60, 60, 0), `suspension` 0, `width` S
 `m` at c releasing one ray per direction every 10 intervals on the uniform
 fan of the 120 primitive in-plane directions with a^2 + b^2 <= 64 (q = 12
 units per interval, L = 1.0000 the fan's mean |u_d| / Q), the probe at (60
-+ r, 60, 0) with the tangential momentum p = n Q M_total, n = 10 (the
-orbit register's lamp worlds: the circular condition n x pace(n) = q L C /
-(2 pi) under the directional drive, form B, the real root 9.63 at S = 32,
-the nearest whole 10). What changes, and nothing else:
++ r, 60, 0) with the tangential momentum p = n Q M_total of the circular
+orbit. The shipped worlds (the re-run of 2026-09-22 on the owner's word of
+01:42Z) declare n = 9, the circle under the per-axis drive the engine runs
+(BEAM_LAW note 17: the pace n / (S + n) per axis, n^2 / (S + n) = q L C /
+(2 pi), the real root 8.83 at S = 32, the whole 9, series D's own p = 576
+per unit of content). The first run declared n = 10, the circle under the
+directional drive (form B, note 49, which the engine does not run: the
+real root 9.63, the whole 10, the orbit register's lamp worlds); its rows
+stay below as history with their cause. What changes from series D, and
+nothing else:
 
 - **The probe** is a body of a paid family of its own, `probe` (`quantum`
   1, the default phase circle), of `amount` R = 2^12, the lamp's
@@ -98,41 +104,48 @@ the nearest whole 10). What changes, and nothing else:
 
 | World | The source | r | `held` m | K | p (label units) | Intervals |
 | --- | --- | --- | --- | --- | --- | --- |
-| `r12` | M, the fan | 12 | 2^20 | 2^20 | 640 x (2^12 + 2^20) = 673 720 320 | 4000 |
+| `r12` | M, the fan | 12 | 2^20 | 2^20 | 576 x (2^12 + 2^20) = 606 348 288 (the first run 640 x, n = 10) | 4000 |
 | `r24` | the same | 24 | 2^20 | 2^20 | the same | 4000 |
-| `r24_4m` | the same | 24 | 2^22 | 2^22 | 640 x (2^12 + 2^22) = 2 687 176 320 | 4000 |
+| `r24_4m` | the same | 24 | 2^22 | 2^22 | 576 x (2^12 + 2^22) = 2 418 458 624 | 4000 |
 | `r12_control` | none | 12 | 2^20 | 2^20 | as `r12` | 4000 |
 | `r24_control` | none | 24 | 2^20 | 2^20 | as `r24` | 4000 |
 
 ## The pins, written before the runs (`expectations.json`)
 
 From DERIVATIONS_BEAM 3.3 on the plane (the 1 / r force, a flat rotation
-curve: v the same at every r, T proportional to r) at the declared n = 10
-under the directional drive's pace 64 n / (64 S + 110 n) = 0.2033 Links
-per interval:
+curve: v the same at every r, T proportional to r) at the declared n = 9
+under the per-axis drive's pace n / (S + n) = 9 / 41 = 0.2195 Links per
+interval (the shipped register; the first run's pins at n = 10 under the
+directional drive's 0.2033, T = 371 and 742 with the same brackets, the
+escape at 60 steps, are reproduced by `expectations(10, "directional")`
+and stand in the history block below):
 
-- **The period** T = 2 pi r / v: 371 at r = 12 and 742 at r = 24, each
-  within the continuum map's own margin of 9 percent (338 to 404; 675 to
-  809; the orbit register's lamp_orbits_map integrates 392 and 784 inside
-  them). DETECTOR: the recurrence of the clicks' x, the mean spacing of
-  successive crossings of the centre column in one direction, each
-  crossing interpolated between the two births that bracket it.
+- **The period** T = 2 pi r / v: 343 at r = 12 and 687 at r = 24 (series
+  D's own table), each within the continuum map's own margin of 9 percent
+  (313 to 374; 625 to 749). DETECTOR: the recurrence of the clicks' x, the
+  mean spacing of successive crossings of the centre column in one
+  direction, each crossing interpolated between the two births that
+  bracket it.
 - **The ratio** T(24) / T(12) = 2.00 +- 0.18; k = 2 on the plane (space's
   k = 3 would give 2.83).
 - **The second difference** of the clicks' x against t at the lag h of a
-  quarter period (96 and 184 intervals): x(t + h) - 2 x(t) + x(t - h) =
-  -4 sin^2(omega h / 2) (x(t) - c_x), so omega^2 = (2 pi / T)^2 = 2.87e-4
-  and 7.18e-5 per interval^2 (the brackets from T's), the acceleration a =
-  omega^2 r = v^2 / r = 3.44e-3 and 1.72e-3 Links per interval^2, the
+  quarter period (88 and 168 intervals): x(t + h) - 2 x(t) + x(t - h) =
+  -4 sin^2(omega h / 2) (x(t) - c_x), so omega^2 = (2 pi / T)^2 = 3.35e-4
+  and 8.37e-5 per interval^2 (the brackets from T's), the acceleration a =
+  omega^2 r = v^2 / r = 4.02e-3 and 2.01e-3 Links per interval^2, the
   ratio 2.00 (3.3's small-n limit q L C / (2 pi r S), with v = n / S, is
-  4.97e-3 and 2.49e-3, the ratio 2.00 again; at n = 10 under the cap the
-  pace is 0.65 of the limit's).
+  4.97e-3 and 2.49e-3, the ratio 2.00 again; at n = 9 the pace 9 / 41 is
+  0.78 of the limit's 9 / 32).
 - **The amplitude** of the clicks' x, (max - min) / 2: r - 1 to r + 2 (the
-  rosette's extents of the map).
+  near-circular loop of the whole 9 above 8.83).
 - **The equivalence**: `r24_4m` reads T within one birth interval (8) of
   `r24`'s and the same x on every common birth tick within one Node.
 - **The controls**: every click at x = 60 + r; the probe leaves through the
-  face +y near the tick 60 / v = 295 (+- 6).
+  face +y at its 61st step (from y = 60 to 121), 61 / v = 278 (+- 6).
+- **Read beside the pins, not pinned**: the radius at every birth from the
+  clicks alone, x the column and y the line's y plus the Links the row
+  walked by its age off the flight table (the tool's `links_of`): its
+  least, greatest and mean over the run, the loop's shape.
 - **Refuted if** the ratio leaves 2.00 +- 0.18, a period or omega^2 leaves
   its bracket, or the two held masses' periods differ beyond one birth
   interval. A record check (completed, the books balanced at every tick)
@@ -146,7 +159,11 @@ PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/orbit_lamp ex
 PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp
 ```
 
-## The readings (2026-09-22, measured against expected)
+## The first run at n = 10 (2026-09-22, history: measured against its pins, the cause named, none moved)
+
+The rows of the first run, at the declared n = 10 under the directional
+drive's pins (T = 371 and 742, the escape 295), kept as registered; the
+re-run at n = 9 on the owner's word of 01:42Z follows in the next section.
 
 Source fingerprint `5a5b79ef438c1c6c` (the checkout of
 `newton-after-detector` off `origin/main` at `fa2cb6d`, package 0.3.1),
@@ -208,3 +225,64 @@ nothing else).
 
 The register entry marks every reading inside or outside as above; the
 brackets are the design's and are not moved.
+
+## The re-run at n = 9 (2026-09-22, measured against the pins of `expectations.json`)
+
+The owner's word of 01:42Z on the first run's cause: the same five worlds
+at n = 9, series D's own p = 576 per unit of content, the circle of the
+per-axis drive the engine runs; the one integer changed in the generator,
+the pins above committed at `fccedae` before the run.
+
+Source fingerprint `5a5b79ef438c1c6c` (the same tree, package 0.3.1),
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores, `tools/run_series.py
+--jobs 4`; every run completed at 4000 intervals (14.1, 14.1, 14.6, 6.3,
+6.5 s for `r12`, `r24`, `r24_4m`, `r12_control`, `r24_control`) with the
+books balanced at every tick; the digests (state, audit, events):
+`2efe9c62ae58`, `51473f85b03e`, `96b08fae30c6` (`r12`); `36aba6039399`,
+`b55f5157d83b`, `91a78c954c4e` (`r24`); `75be887c26e8`, `dd12491c6711`,
+`f6a6e35e2614` (`r24_4m`); `f3e51b857359`, `b91606cc2ff5`,
+`f183a351cb89` (`r12_control`); `1fe2802ea974`, `b91606cc2ff5`,
+`d76f1661df10` (`r24_control`). `tools/orbit_lamp_readings.py`: 0 record
+checks failed, 7 readings inside, 9 outside, none moved.
+
+DETECTOR readings (the line's clicks: x, tick, age; the radius from x and
+the age):
+
+| World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | Crossings down, up | T (expected) | omega^2 (expected) | a = omega^2 x amplitude | The probe's escape |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `r12` | 80 | 18 .. 86 | 34 (11 .. 14): outside | 1.4 .. 73.2, 24.2 | 2, 1; one spacing | 407 (313 .. 374): outside | 1.03e-4 (2.82e-4 .. 4.04e-4): outside | 3.52e-3 | `face:+y` at the tick 698 |
+| `r24` | 139 | 1 .. 103 | 51 (23 .. 26): outside | 11.0 .. 62.3, 33.7 | 2, 1; one spacing | 813 (625 .. 749): outside | 4.16e-5 (7.04e-5 .. 1.01e-4): outside | 2.12e-3 | `face:-x` at the tick 1239 |
+| `r24_4m` | 139 | 1 .. 103 | 51 (23 .. 26): outside | 11.0 .. 62.3, 33.7 | 2, 1; one spacing | 813: outside | 4.16e-5: outside | 2.12e-3 | `face:-x` at the tick 1239 |
+| `r12_control` | 34 | 72 .. 72 | 0 | 12.0 .. 60.2 (the probe walking +y) | - | - | - | - | `face:+y` at the tick 278 (272 .. 284): inside; every click at x = 72: inside |
+| `r24_control` | 34 | 84 .. 84 | 0 | 24.0 .. 63.7 | - | - | - | - | `face:+y` at the tick 278 (272 .. 284): inside; every click at x = 84: inside |
+
+Across the worlds: the ratio T(24) / T(12) = 813.3 / 407.3 = 1.997 (1.82
+.. 2.18): inside; the equivalence on the period |T(`r24_4m`) - T(`r24`)|
+= 0 (0 .. 8): inside; the equivalence on the clicks: 139 common birth
+ticks, 138 equal, the largest difference 1 Node (0 .. 1): inside (the
+4 M_held world leaves through the same face at the same tick). Every
+birth tick lies on the 8-interval grid (none read late). GAMEBOARD, a
+diagnostic: homes 15 (`r12`), 24, 24, 8, 8.
+
+**What is read and what is not, no number moved.** Read: the controls'
+pace to the tick (the 61st step at 278 exactly, the pin's 60-step count
+of the first run corrected in the derivation, the reading not); the
+equivalence to the Node and to the tick; the ratio of the two radii's
+recurrences 1.997 against 2.00, the plane's k = 2, from one recurrence
+at each radius (the loops leave the plane after 698 and 1239 intervals,
+so each period is one spacing between two like crossings). Not read as
+pinned: the periods themselves (407 against 343 and 813 against 687, 19
+percent above their circles alike, which is why their ratio holds), the
+amplitudes and the radii (`r12` from 1.4 to 73.2 Links about a mean of
+24.2, `r24` from 11 to 62), omega^2 at a quarter period of a loop that
+is not a circle. The loops are the eccentric ones series D registered at
+the same p = 576 (its `s32_r24`: T 829 against 687, escaped through
+`face:-x` at 1054, the mean radius 28.3; its `s32_r12`: T 289, one turn,
+escaped at 2891; "the grain of the push breaks the rest"): the push
+comes in whole labels of 64 on p = 576 per unit of content, 6.4 degrees
+per ray, along the fan's lines and in shells every 10 intervals, and a
+probe on the axis reads the heading's line alone until it moves off it.
+The 1 / r force's signature after a detector is therefore read today in
+the ratio of the recurrences and in the equivalence, both DETECTOR, and
+not in a circle's period; a circle at this grain is not what the law
+gives at S = 32, and no pin is moved to say otherwise.

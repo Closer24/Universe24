@@ -6899,21 +6899,27 @@ sequential gates on an entangled record, the full register replay.
   q = 12 units per interval at the centre), the probe a body of the paid
   family `probe` of amount 2^12 (the lamp's reservoir) holding the free
   mass 2^20 the fan pushes, at r = 12 and 24 on +x with the tangential
-  momentum p = n Q M_total at n = 10 (the orbit register's lamp worlds:
-  the circular condition under the directional drive, form B), the lamp
+  momentum p = n Q M_total (the first run at n = 10, the orbit register's
+  lamp worlds' circle under the directional drive, form B, which the
+  engine does not run; the re-run at n = 9 on the owner's word of 01:42Z,
+  series D's own p = 576, the circle of the per-axis drive of BEAM_LAW
+  note 17: the pins below are the re-run's, the first run's T = 371 and
+  742 stand in its own rows as history), the lamp
   of rate [1, 8] on +y and -y (the recoil cancelling by the pair), the
   detector line at y = 20 of 121 `wall` events read as the one-Node
   `wave` detectors `line_<x>` with `reads: "age"` for `probe` (every
   click the probe's x at the row's birth and the birth's tick), the
   source's content 2^32 at `release` [1, 2^32 x 10] (series D's rate, the
   held mass releasing nothing within the run); two controls without the
-  source and the equivalence world holding 4 x 2^20 at r = 24. Pinned:
-  T = 2 pi r / v = 371 and 742 within 9 percent (the continuum map's
-  margin); T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 from the
-  lagged second difference within T's bracket; the amplitude r - 1 to r +
-  2; the equivalence within one birth interval on T and one Node on x;
-  the controls' x = 60 + r on every click and the escape through the face
-  +y at 295 +- 6. Refuted if the ratio leaves its bracket, a period or
+  source and the equivalence world holding 4 x 2^20 at r = 24. Pinned
+  (n = 9, the pace 9 / 41): T = 2 pi r / v = 343 and 687 within 9 percent
+  (the continuum map's margin; 371 and 742 at the first run's n = 10);
+  T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 from the lagged
+  second difference within T's bracket; the amplitude r - 1 to r + 2; the
+  equivalence within one birth interval on T and one Node on x; the
+  controls' x = 60 + r on every click and the escape through the face +y
+  at the 61st step, 278 +- 6 (the first run's pin counted 60 steps at its
+  pace, 295). Refuted if the ratio leaves its bracket, a period or
   omega^2 leaves its bracket, or the two held masses differ beyond one
   birth interval; a record check (completed, the books balanced) fails
   the tool.
@@ -6937,7 +6943,8 @@ sequential gates on an entangled record, the full register replay.
   centre column, the lagged second difference; `tests/test_orbit_lamp_readings.py`
   pins it to the engine on a 9 x 9 x 1 plane and to a hand-made click
   list).
-- **Result (2026-09-22, measured against expected).** The checkout of
+- **Result of the first run, n = 10 (2026-09-22, history: measured
+  against its pins, the cause named, none moved).** The checkout of
   `newton-after-detector` off `origin/main` at `fa2cb6d`, source
   fingerprint `5a5b79ef438c1c6c`, Python 3.14.0rc2, numpy 2.5.3, headless,
   four cores; every run completed in 6.7 to 14.2 s with the books balanced
@@ -6968,8 +6975,40 @@ sequential gates on an entangled record, the full register replay.
   and the pace of the unpushed probe. The same five worlds at n = 9
   (T = 343 and 687, series D's table) would read the pins: one declared
   integer, the chief physicist's to order, not run here.
-- **Status:** registered, 3 inside, 13 outside, the cause named, none
-  moved; the period, the ratio and omega^2 unread at n = 10.
+- **Result of the re-run, n = 9 (2026-09-22, measured against the pins
+  of `expectations.json`, committed at `fccedae` before the run).** The
+  same tree (fingerprint `5a5b79ef438c1c6c`); every run completed in 6.3
+  to 14.6 s with the books balanced at every tick; 0 record checks
+  failed, 7 readings inside, 9 outside, none moved.
+
+  | World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | T (expected) | omega^2 (expected) | The probe's escape | Verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r12` | 80 | 18 .. 86 | 34 (11 .. 14) | 1.4 .. 73.2, 24.2 | 407 from one recurrence (313 .. 374) | 1.03e-4 (2.82e-4 .. 4.04e-4) | `face:+y` at 698 | outside, outside, outside |
+  | `r24` | 139 | 1 .. 103 | 51 (23 .. 26) | 11.0 .. 62.3, 33.7 | 813 from one recurrence (625 .. 749) | 4.16e-5 (7.04e-5 .. 1.01e-4) | `face:-x` at 1239 | outside, outside, outside |
+  | `r24_4m` | 139 | 1 .. 103 | 51 (23 .. 26) | 11.0 .. 62.3, 33.7 | 813 (625 .. 749) | 4.16e-5 | `face:-x` at 1239 | outside, outside, outside |
+  | `r12_control` | 34 | 72 .. 72 | 0 | 12.0 .. 60.2 (walking +y) | - | - | `face:+y` at 278 (272 .. 284) | x = 72 on every click: inside; the escape: inside |
+  | `r24_control` | 34 | 84 .. 84 | 0 | 24.0 .. 63.7 | - | - | `face:+y` at 278 (272 .. 284) | x = 84 on every click: inside; the escape: inside |
+
+  Across the worlds: the ratio T(24) / T(12) = 1.997 (1.82 .. 2.18):
+  inside; the equivalence on T: 0 (0 .. 8): inside; the equivalence on the
+  clicks: 139 common birth ticks, 138 equal, the largest difference 1
+  Node (0 .. 1): inside. What is read: the controls' pace to the tick,
+  the equivalence to the Node and to the tick, and the plane's k = 2 as
+  the ratio of the two radii's recurrences, 1.997, each from one spacing
+  between like crossings (the loops leave the plane after 698 and 1239
+  intervals). What is not read as pinned: the periods (19 percent above
+  their circles alike), the amplitudes and the radii (`r12` from 1.4 to
+  73.2 Links, `r24` from 11 to 62), omega^2 at a quarter period of a
+  loop that is not a circle: the eccentric loops series D registered at
+  the same p = 576 (`s32_r24` T 829 against 687, escaped through `face:-x`
+  at 1054; "the grain of the push breaks the rest"), the push in whole
+  labels of 64 on 576 per unit, 6.4 degrees per ray, along the fan's
+  lines in shells every 10 intervals. No pin moved.
+- **Status:** registered twice, none moved: the first run at n = 10 (3
+  inside, 13 outside, the cause the drive's pace) and the re-run at n = 9
+  (7 inside, 9 outside): the ratio 1.997 against 2.00, the equivalence
+  and the controls inside; a circle's period, amplitude and omega^2
+  outside, the loops eccentric at this grain as in series D.
 
 ## B. Proof for the paper
 
