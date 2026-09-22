@@ -658,7 +658,212 @@ length taken once at load, section 5 (v); the keyed squares of the
 momentum are the hypotheses' beside the law, not the law's), at the
 click over rows that have ended.
 
-## 7. Links
+## 7. Part (6): is Eq. 14 derived from the conversion? The identity from the walk's dispersion, the factor 3, and the conversion table (the owner's word, record 764, as the Boss relayed it)
+
+**The question, as the owner put it.** The paper's Eq. 14 (its label
+`eq:square`), the covariant identity `W = E_0^2 + 3` **p** `.` **p** with
+`E'` the largest integer whose square is at most W (DERIVATIONS_BEAM
+17.6 M3, 17.7; covariant-readings-v1's gate and pace): is it simply
+DERIVED, algebraically, from our equations? His reasoning: Lorentz need
+not be put in by hand to reach the equations, because Lorentz was
+reached through the clicks (section 0), so writing it into the
+equations is permitted and nothing remains to prove; and from there the
+equations of motion in the real world, how what is inside the board
+passes to what is outside it. This part answers the three questions in
+order: (1) the derivation, with the origin of the factor 3 and its
+order; (2) the verdict line and its consequence; (3) the conversion
+table. Record 764 is cited as the Boss relayed it; it is not yet in the
+checked-out log.
+
+**Certification of the inputs.** This part uses only: (1) the click
+theorem's two assumptions (A1) and (A2) and its part (ii) (section 0);
+(2) the amplitude walk those two assumptions define, `U = S C` on a
+two-component amplitude per Node (section 0's proof sketch (d), section
+6's Dirac walk), with its exact plane-wave dispersion on one axis, `cos
+omega = cos m cos kappa`; (3) the law's own map from a row's phase to an
+energy and a momentum, Planck's, already on `main`: `E = h f` with `h`
+the family's quantum and the world's `h_A = h_q N` (DERIVATIONS_BEAM 6.4,
+24.1 row 25, F08 closed), `lambda = h / p` and the wave number `k = 2 pi
+p / h` per Link (23.2), and the rest energy of a family as its rest pair's
+turn rate, `E_0 = h n / d`, so that in the identity's whole units (17.6
+M3, `E / c^2 = 3 E`) `E'_0 = 3 h n / d = Q S M` by the load-time identity
+`3 h n = Q S d` (17.6 M7, N5); (4) the lattice's c, input 9 of 24.1: `c =
+1 / sqrt 3` Links per interval, the operator norm of the flight, derived
+(13.2 (a), record 186), rounded by the grain to the heading's `c_h = Q /
+T_h`, `T_h = isqrt(3 Q^2) = 110` at Q = 64 (input 10; FORM.md 3.1). Lorentz
+enters through (A1) and (A2) only, never as an input; Eq. 14 appears
+below only as the thing the result is compared with. No reading of a
+run is pinned; every number is a formula's value or a registered
+reading named by its kind.
+
+**(1) The derivation.**
+
+(a) *The walk's exact invariant and its orders.* Under (A1) and (A2) one
+interval of a click's content is `U = S C`, and its plane waves
+`exp(i (kappa x - omega t))` on one axis obey, exactly on the lattice,
+
+    cos omega = cos m cos kappa,
+
+m the mass angle of the coin (radians per interval), `kappa` the wave
+number (radians per Node), `omega` the frequency (radians per
+interval). This is the whole of the dynamics' constraint on
+`(omega, kappa, m)`; there is no other. Expanding the cosines,
+
+    omega^2 = m^2 + kappa^2 - m^2 kappa^2 / 3 + O(6)
+
+(the coefficient `-1 / 3` checked on four pairs of small angles, the
+residue `(omega^2 - m^2 - kappa^2) / (m^2 kappa^2)` between `-0.3336` and
+`-0.3354`; the section's arithmetic, not a run). So the second-order
+invariant is `omega^2 - kappa^2 = m^2`, the invariant `u w` of section 0
+(b) written on `(omega, kappa)`, and the boost of (b) carries the walk's
+plane waves to plane waves of the same m to that order (section 0 (ii));
+the exact invariant is the cosine form, `cos m = cos omega / cos kappa`,
+which is not a function of `omega^2 - kappa^2` alone and is therefore
+not carried by any boost beyond second order. In three dimensions the
+second-order form is `omega^2 = m^2 + kappa_x^2 + kappa_y^2 + kappa_z^2`
+(the walk's continuum limit is the Dirac equation), the exact form
+depending on the order of the three axis shifts (the walk's `kappa^4`
+anisotropy, section 0 (ii)), which is why (ii) is stated to second order
+and the three-dimensional exact form is not written here.
+
+(b) *The map to the law's integers.* The conversion's variables are
+angles per interval and per Node; the law's are counts. The map is
+Planck's, and it is the law's own (input (3)): a row's phase advances
+`n / d` turns per interval, so its frequency is `omega = 2 pi n / d` and
+its energy `E = h n / d = hbar omega` with `hbar = h / (2 pi)`; its
+wave number per Link is `kappa = 2 pi p / h`, so `p = hbar kappa`; and
+the coin's mass angle is the family's rest pair, `m = 2 pi n_0 / d_0`,
+so `E_0 = h n_0 / d_0 = hbar m`. Multiplying the second-order invariant
+by `hbar^2`:
+
+    E^2 = E_0^2 + p_hop^2,
+
+with `p_hop` the momentum in the hop frame's unit, where the unit of
+length is the Node hopped and `c = 1` Node per interval (A1). This is
+the energy-momentum relation in units `c = 1`, derived from (A1) and
+(A2) and the law's own Planck map, and nothing else; the `E_0`, `p`
+and E of the law are the same counts multiplied by one common `hbar`,
+so in whole units (`E' = 3 E`, `E'_0 = Q S M`, 17.6 M3, 23.2) the
+identity reads `E'^2 = E'_0^2 + p'_hop . p'_hop` with the same
+conversion on each term.
+
+(c) *Where the factor 3 comes from, exactly.* The hop frame counts
+length in Nodes hopped, one per interval, along the axes: a Manhattan
+unit. The Beam Law counts length in Euclidean Links and its c is input
+9, `c = 1 / sqrt 3` Links per interval: on the body diagonal a row
+crosses one axis Link per interval, x then y then z, so three Nodes
+hopped are `sqrt 3` Euclidean Links, and the pace is `sqrt 3 / 3 = 1 /
+sqrt 3` Links per interval, which the flight table makes isotropic
+within `1 / T_D` (`N_l abs(D)_2 / T_D`, prop:pace). So one Euclidean
+Link per interval is `sqrt 3` hop-frame units, a momentum of p in the
+law's unit (the pace `p / E'` Links per interval, 17.6 M1) is `p_hop =
+sqrt 3 p` in the hop frame's, and
+
+    E'^2 = E'_0^2 + 3 p . p:   the 3 is (abs(D)_1 / abs(D)_2)^2 on the body diagonal, 9 / 3, i.e. 1 / c^2 with c^2 = 1 / 3,
+
+the conversion of the momentum's unit from Euclidean Links per interval
+to light-Links per interval, and nothing about the three axes beyond
+that: in the hop frame's own unit there is no 3, and `abs(kappa)^2 =
+kappa_x^2 + kappa_y^2 + kappa_z^2` enters with coefficient 1 on each
+axis. Eq. 14's 3 is therefore that factor EXACTLY in the lattice's
+isotropic limit (input 9, derived), declared as the pair `[1, 3]` (24.1
+row 11); it is a convention of the unit in the sense that it is 1 in
+the hop frame and 3 in the Beam Law's Links, and it is not the heading's
+own factor, `(T_h / Q)^2 = (110 / 64)^2 = 2.954`, the grain's rounding of
+3 (input 10), which 17.6 M3 names as the alternative pair and which
+would move the muon's 64th self-creation by 0.7 tick at 0.86 c (M3's
+figure, a formula's value).
+
+(d) *Exactly, or to second order.* The derived identity is Eq. 14 to
+second order in the angles `(m, kappa)`, i.e. in `n_0 / d_0` and `p / h`
+per Link, and not exactly: the exact lattice invariant is the cosine
+form, and its fourth-order term makes the walk's frequency fall BELOW
+Eq. 14's root,
+
+    E'_walk = E'_14 (1 - m^2 beta^2 / 6 + O(6)),   beta = kappa / omega = sqrt 3 p / E' the velocity in units of c, m the rest angle in radians per interval,
+
+so the walk's own rate `r = m / omega` is above `E'_0 / E'_14 = sqrt(1 -
+beta^2)` by the same relative amount and its gate falls earlier. The
+size, on the muon of series S (`E'_0 = 13248`, `p = 3640` and `12856`,
+`W = 215 258 304` and `671 339 712`, `E' = 14671` and `25910`, beta
+0.4297 and 0.8594, gamma 1.1074 and 1.9558, `T_64 = 1 + floor(63 E' /
+E'_0) = 70` and `124`, the register's integers reproduced here from Eq.
+14 alone, GAMEBOARD by kind): at a rest angle of one turn in 64
+intervals (`m = 2 pi / 64 = 0.0982`, an illustration of the formula, the
+muon's own pair not read here) the correction is `2.97 x 10^-4` and `1.19
+x 10^-3` of `E'`, 4.4 and 30.7 units of `E'`, and moves `T_64` by 0.02 and
+0.15 tick: below one tick, below the pins' two ticks, invisible to the
+register at that pair, growing as `m^2`. Eq. 14's EXACTNESS on the record
+(`E'^2 <= W < (E' + 1)^2` at every interval, 24.1 row 38) is thus not the
+conversion's: the conversion is exact in the cosine form and quadratic
+only to second order; the record carries the quadratic form exactly by
+declaration (record 270). One remark, not a proposal: the exact cosine
+invariant is expressible in the law's own tables C and S at the scale
+256 (input 13), `C(omega) x 256 = C(m) C(kappa)` within the tables'
+rounding, with no root and no square of the momentum; the owner may
+want it named beside the declared square.
+
+**(2) The verdict line.** EQ. 14 IS DERIVED FROM THE CONVERSION (A1,
+A2): YES TO SECOND ORDER. The one line that decides: the conversion's
+whole constraint is `cos omega = cos m cos kappa`, whose second order,
+`omega^2 - kappa^2 = m^2`, times `hbar^2` in the hop frame's unit and
+times 3 on the momentum in the Beam Law's Links, is `E'^2 = E'_0^2 + 3`
+**p** `.` **p**, and whose fourth order is `-m^2 kappa^2 / 3`, not zero.
+The consequence, stated as a fact for the owner: Eq. 14 enters the law
+as the CONVERSION'S identity, licensed by the click theorem, the
+identity of what the clicks read of an amplitude that hops under (A1)
+and (A2), and not declared bare (record 270's line restated: the
+readings built beside the law under their own identity, against the
+same pins); but the law's own rows still hop whole (parts (4) and (5):
+every hop `by_drive` with `at_most` 1 on the whole record, no staying
+amplitude interfering with a hopping one, the walls linear in
+`abs(p)_1`), so the law's rows meet (A1) and not (A2), and the identity
+is the READING'S, not yet the ROWS' dynamics. The owner's inference holds
+in this form: Lorentz may be written into the readings without a
+further proof, because the readings are the conversion and the
+conversion is Lorentz to second order; it may not yet be said of the
+rows' motion, which would need the split at every Node (part (5)'s
+smallest change) or stand, as it does, as the law's FAIL row beside the
+readings (HIGHLIGHTS 5.4, record 270).
+
+**(3) The conversion table: inside the board to outside it.** The
+owner's "equations of motion in the real world". Inside: a record at a
+Node with its rest count `E'_0 = Q S M` (label units; `E_0 = h n_0 /
+d_0` its rest turn rate), its momentum **p** (label units, the pace `p /
+E'` Links per interval under the identity, `p / (Q S M + p)` per axis on
+`main`), its amount a, its phase f on the circle N, its own count
+`n_B`, and the crowd `a_tau` at its Node. Outside: what a detector
+reads through clicks, each line an integer formula, its order of
+exactness (rung 1 exact on the GameBoard within the accumulator's
+remainder; second order where the walk's cosine form is the exact one),
+its kind, its inverse where one exists, and the registered readings on
+it. The law's forms and the identity's forms are given side by side,
+the law's being the FAIL row of record 270.
+
+| Outside (the reading) | Inside (the record) | The formula, the law | The formula, the identity | Order | Kind | Inverse | Registered readings on this line |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| the velocity v: Nodes apart over counts apart between two clicks of neighbouring detectors (section 1) | **p**, `E'_0` | per axis `abs(p_a) / (Q S M + abs(p_a))` Links per interval (P9, 4.4), rational, linear on both sides | `p / E'` Links per interval, `beta = sqrt 3 p / E'` in units of c, `E' = isqrt(E'_0^2 + 3 p . p)` | rung 1 within `1 / T` of the count and `1 / T_D` of the pace; the identity's beta within `1 / E'` | DETECTOR (a ratio of two counts) | law: `p = E'_0 v / (1 - v)` exact; identity: `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: beta 0.3040 for the star `s_mz2` at its declared momentum (the identity's pace), 0.2674 under the law's (GAMEBOARD, the drive's pace; the detector reads only 1 + z below) |
+| the rate r: the moving record's own count per tick | `E'_0`, `E'` | 1 at every speed, stretched by the crowd alone (`age_wall`, 4.3) | `E'_0 / E' = sqrt(1 - beta^2)` within `1 / E'`; the gate `T_n = 1 + floor((n - 1) E' / E'_0)` (17.7) | rung 1 on its integers; the walk's own r above it by `m^2 beta^2 / 6` | GAMEBOARD (not read as a measurement, section 4; readable only through the two lamps of section 4's world) | `E' = E'_0 / r` | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558), the pins 71 and 125 within one tick; J4's 64 at every speed under the law (pinned, not run) |
+| `1 + z = k_BA`: a lamp on the moving record counted by a detector at rest, the energy it reads `E_read = h f_read = (1 + z) E_emit` | the lamp's rest pair, **p**, r | `1 + v` (r = 1) | `gamma (1 + beta)` within the count's grain | rung 1 within `1 / T` | DETECTOR (the pointer's z at the fixed detector) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)` from the round trip `k^2 = (1 + beta) / (1 - beta)` | NATURE 4b: G2's `z = 0.2636` at beta 0.2674 under the law (FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967 (`1.04967 x 1.3040 = 1.3688`), the pin 0.369 +- 0.003, PASS under the key in its domain |
+| `k_AB`: a lamp at rest counted by the moving transponding record | r, **p** | `1 / (1 - v)` | `sqrt((1 + beta) / (1 - beta))` | rung 1 within `1 / T` | DETECTOR (the record's own count of the arrivals, read through its second lamp) | `v` from `k_AB` and `k_BA` together: `r = k_AB (1 - v)`, the ratio `k_BA / k_AB = (1 - v^2) / r^2` decides r | NOT READ: the missing direction (section 4); pinned from the closed forms only |
+| the round trip `k_AB k_BA` | **p** | `(1 + v) / (1 - v)` | `(1 + beta) / (1 - beta)` | rung 1 within `1 / T`, r-free under every r (section 0 (b)) | DETECTOR | `v = (k^2 - 1) / (k^2 + 1)` | none registered; reads nothing of r under any r |
+| the arrival: the detector's own count at a row's arrival from a Node D Links away | the release count `n_0`, the line D, the crowd at the detector | intervals of flight `L T_D / (N_l abs(D)_2)` for L Euclidean Links along D, `T_D = isqrt(3 abs(D)^2 Q^2)`, within one interval (the flight table, rem:nodispersion), i.e. `sqrt 3` intervals per Link within `1 / T_D`; the detector's own count at that tick stretched by its crowd (the age wall's member at coefficient 1) | the same flight (the rows are the law's; the identity moves bodies, not rows) | rung 1 | DETECTOR (the count at the click), the tick itself GAMEBOARD | `L` from the count and the pace, within one Link | series S: the products' face clicks at 369 and 345 (DETECTOR; the pins 367 and 345 within two ticks; the decay tick derived back by the flight table, 70 and 124); series T: the crowd's stretch, the ratio 1.907 at the distances 6 and 3 against the pin 1.909 +- 0.05 (DETECTOR, the age word; NATURE 12) |
+| the energy of a record read at a click: the count of clicks over many records at one Node | a, f (the amount and the phase) | the click's square `f^T G f` of the summed rows at the Node, normalised by the record's total (6.5, 6.7, 23.2: Born at the click within `1 / (2 N)`) | the same | rung 1 (the click's form; input 12) | DETECTOR (a click) | none: a and f are never read singly, only their square summed at a Node; the phase only through interference at the click | the two-slit and Malus rows (24.3 row 4); not a Lorentz line |
+
+Two facts of the table for the owner. First, every DETECTOR line is a
+ratio or a difference of counts, never the tick, so the whole passage
+from inside to outside is the click theorem's conversion, and the
+identity's column is Lorentz's to second order because the conversion
+is; the law's column differs from it only where r enters (`1` against
+`sqrt(1 - beta^2)`), which is the one place the register can decide
+(section 4's missing direction). Second, the inverse map exists on
+every line but the last: from `(v, 1 + z, the arrival count)` a detector
+recovers **p** and `E'_0` up to the accumulator's remainder, but never
+the amount a and the phase f of one record; those pass outside only as
+the click's square over many records, which is Born's rule at the click
+and the reason the board's inside is not the outside's inverse image.
+
+## 8. Links
 
 [DERIVATIONS_BEAM 4.3](../../DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
