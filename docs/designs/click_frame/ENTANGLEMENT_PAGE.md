@@ -42,9 +42,9 @@ two ends.
 **4. What the algebra shows and what the run measures.** Shown, as
 identities of the rotation's algebra (COMPUTATION): E(a, b) = cos(2 pi
 (a - b) / N) before the tables' rounding and within 2/N + 0.0111 after it;
-the marginals exactly 1/2 for every setting pair (the rows of U_b
-orthogonal on the integers), so no-signalling of the counts is an identity
-of the integers; and S = 2 sqrt 2 at the CHSH settings (0, N/4, N/8,
+the marginals exactly 1/2 (Alice's for every setting pair, the rows of
+U_b orthogonal on the integers; Bob's off a tie of the rung), so
+no-signalling of the counts is an identity of the integers; and S = 2 sqrt 2 at the CHSH settings (0, N/4, N/8,
 3N/8), four cosines of pi/4. Tsirelson's bound |S| <= 2 sqrt 2 is a
 theorem of the operator algebra on the labels (Landau's identity for the
 CHSH operator's square) and bounds the pre-rounding correlations, not the
@@ -57,19 +57,21 @@ N = 512 to 8192, below 2 sqrt 2 by 3.02 x 10^-4, and 5793/2048 above it at
 party's marginal 32/64 in every bin), and the closed form's values at the
 six larger grains, seven in all (the paper's figure of S(N)). Against
 nature: 2.75 lies 0.33 above Hensen et al. 2015's 2.42 +- 0.20 (1.65 of
-its standard error), PASS; the plateau 181/64 lies inside Poh et al.
-2015's 2.82759 +- 0.00051 at 1.05 standard errors. The law's numbers
+its standard error), PASS (NATURE row 1a); beside it, the paper's own
+check (its NUMBERS.md rows 53 and 152, `checks/s_of_n.txt`): the plateau
+181/64 lies inside Poh et al. 2015's 2.82759 +- 0.00051 at 1.05 standard
+errors. The law's numbers
 match nature's within these errors; they are the law's, not nature's.
 
 | What | Verdict | The line that decides | The register (kind) |
 | --- | --- | --- | --- |
 | E(a, b) = cos(2 pi (a - b) / N) within the two grains | SHOWN | J = U_a U_b^T, R = J^2, cos^2 - sin^2 | E x 1024 = 724, -724, 724, 724 at N = 1024 (DETECTOR) |
-| the marginals exactly 1/2 | SHOWN, exact | the rows of U_b orthogonal | 32/64 in every bin at N = 64; N/2 on every plateau world (DETECTOR) |
+| the marginals exactly 1/2 (Alice's every pair; Bob's off a tie) | SHOWN, exact | the rows of U_b orthogonal | 32/64 in every bin at N = 64; N/2 on every plateau world (DETECTOR) |
 | S = 2 sqrt 2 at the CHSH settings | SHOWN as an identity of the cosine | four cosines of pi/4 | 176/64 = 2.75 at N = 64; 181/64 at 512 to 8192 (DETECTOR) |
 | Tsirelson's bound | SHOWN as mathematics; not a bound on S(N) | Landau's identity | S(16) = S(32) = 3 (COMPUTATION; no run) |
 | the rise S(N) to the plateau | SHOWN at every N; MEASURED at seven | S(N) = 8 (c_1 + c_1') / N - 4 | 64, 512, 1024, 2048, 4096, 8192, 16384 (DETECTOR) |
 | the loophole-free geometry | NEITHER | one gather at completion; the arms' order a declaration | `bell_16_24_far`: the same counts with Bob 116 Links farther, not a spacetime test |
-| the order of the outcomes | MEASURED, FAIL | the wheel a counter | 15/16 and -1/16 at lag 1 (DETECTOR, row 1c) against nature's 0 |
+| the order of the outcomes (the order-channel register, not section 10) | MEASURED, FAIL | the wheel a counter | 15/16 and -1/16 at lag 1, Bob's correlation over 192 births (COMPUTATION from DETECTOR clicks, row 1c) against nature's 0 |
 
 **5. What neither shows, and what no experiment of ours tests.** The
 loophole-free geometry: in nature the settings are chosen space-like
@@ -82,9 +84,11 @@ counts: not a spacetime test. The window-form worlds of
 the local setting alone) read S = 2 exactly, the local bound (DETECTOR,
 row 1b): the control that shows what a local read-out gives. The
 choosers' world reads the correlation's bins with fifteen setting pairs
-balanced over every u (DETECTOR); the order-channel run reads the second
-party's outcome order, which carries the first party's setting (row 1c,
-FAIL): the counts are blind to the other setting, the order is not.
+balanced over every u (DETECTOR); the order-channel run (its own register, `docs/designs/order_channel`)
+reads the second party's outcome order, which carries the first party's
+setting (15/16 and -1/16 at lag 1 over 192 births, COMPUTATION from
+DETECTOR clicks, row 1c, FAIL): the counts are blind to the other
+setting, the order is not.
 Unequal weights and more than two labels are open.
 
 **6. In one breath, the owner's question.** Does entanglement need a
