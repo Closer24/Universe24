@@ -1371,6 +1371,95 @@ what the map forgets, and it is the whole of the Lorentz question
 tick (never read), the record after its click (deleted), and the phase's
 absolute value (only differences reach R).
 
+**(5) The theorem: why the measured quantities obey the algebra (the
+owner's clause, as the Boss relayed it: "one only needs to show WHY
+physics behaves like modern algebra, otherwise one is just showing
+formulas in modern algebra").** Stated and proved in the algebra's
+words from the law's objects alone; what is assumed of the world and
+what is the law's construction are separated at the end.
+
+*Theorem.* Let a world be run under the law with a detector family
+`F_D` (section 0). Then (i) every Outside quantity is a rational number
+computed from clicks by addition, subtraction and division of counts;
+(ii) every Inside quantity is an integer computed from the world file
+by the six verbs, so every relation among Inside quantities is an
+identity of Z; (iii) the map from (ii) to (i) is the composite of (2),
+whose first factor is a ring homomorphism and whose last is a ratio of
+counts, so every identity of (ii) that survives the kernel of (2) (the
+cancel) and the invariances of R (the phase's origin and orientation)
+is carried to an identity of Q among the quantities of (i), exact up
+to the rung's grain `1 / N` and the accumulators' remainders `1 / T`;
+(iv) the maps between two detector families that preserve the
+conversion form the Lorentz group up to scale (section 0), so the
+identities of (iii) are the same in every family up to that group; and
+(v) the click's statistics are fixed by the state `chi_1` of the group
+algebra, whose tables are computed from N at the declared scale (the
+circle's tables C, S at `1 / 256`, input 13; HIGHLIGHTS 5.4's row "a
+probability is the Gram weight, the click's frequency over records as
+the wheel sweeps"), so the frequencies Outside are the values of one
+positive functional on Inside's algebra, and not a distribution added
+to the law. Hence every result of the paper is an identity of the
+algebra (a relation among the values of (i) forced by (ii) through
+(iii), invariant under (iv), with its probabilities from (v)), checked
+against a reading, and never a formula fitted to readings.
+
+*Proof.* (i) is (A1) with the definition of a click: a click is a
+triple (the set, `n_D`, the cell), `n_D` an integer count that advances
+by one per interval and is stretched by the age wall's integer count;
+a velocity is Nodes apart over counts apart, a rate a ratio of two
+counts, a Doppler factor a ratio of counts over T, a probability a
+count of clicks over the record's total, an energy `h_q` times a
+counted `n / d`; no Outside quantity is anything else (the closing fact
+of section 7's table), and Q is closed under these operations. (ii) is
+P1 to P4 with the six verbs: the state is bounded integers, the update
+is the six operations on them, and the world file supplies integers;
+so any equation among Inside quantities (the invariant W, the walls,
+the age moment, the flow's shell mean at a fixed lattice) is a
+polynomial identity in Z, or a limit of such identities as the lattice
+grows (rung 2), never a fitted relation. (iii): `ev` is a ring
+homomorphism (section 9 (2) (a)), so an identity `P(f, g, ...) = 0` in
+`Z[Z_N]` holds in `Z[zeta_N]` after ev, and an identity in `Z[zeta_N]`
+that is invariant under `f -> x f` and `f -> f*` holds for R = `abs(ev
+f)^2` (section 9 (2) (b)); the rung carries R's ratios to counts within
+`1 / N` (section 9 (2) (c)); the schedule's side carries the drive's
+integers to Nodes apart over counts apart within `1 / T` (section 9 (2)
+(d)). Composing, an identity Inside becomes an identity among Outside's
+rationals up to the two grains, which is the only sense in which
+"exact" is ever claimed here (rung 1). (iv) is section 0's theorem (i)
+with M3. (v): by `th:gleason`, the hypotheses on the reading (the phase
+rotation, the balanced splitter's conservation, non-negativity, the
+empty reads zero, some input reads) force `R(f) = sum c_j abs(sigma_j
+f)^2`; with P10 (`c_1 = 1`) the reading is `chi_1(f* f)`, a state of
+the group algebra computed from N alone through the tables; so the
+click's frequencies over the wheel are `chi_1(f_k* f_k) / sum_k
+chi_1(f_k* f_k)` within `1 / N`, a functional of the state, and no
+probability law is imported beyond the choice of the pure state. The
+conclusion follows: every Outside relation the paper states is (iii)
+applied to an identity of (ii), is invariant under (iv), and takes its
+probabilities from (v); the register's readings test it and cannot
+alter it, and where the lattice's finite N or finite r leaves no
+closed form, the reading is a reading and is labelled so (MEASURED
+ONLY). QED.
+
+*What is assumed of the world, and what is the law's construction.*
+Assumed of the world: (A1), that a click is the passage of information
+from Node to Node at most one Node per interval, c the unit in every
+family; (A2), that a click's content is an amplitude with a phase that
+splits each interval between staying and hopping (held by the rows
+under the amplitude key, not by the law's whole-record hop, part (5));
+and P10, that the reading is the pure state `c_1 = 1` (which harmonic
+is a relabelling; the constants beyond it not derived). The law's
+construction, needing no assumption about the world: the six verbs on
+bounded integers (P1 to P4), the click as the one read-out (P6), the
+tables computed from N (P7), the age wall at coefficient 1, the flight
+table and the pace (P9, chosen among few), the rung with the wheel.
+So the reason physics Outside behaves like modern algebra is not that
+the algebra was put in: the algebra is what counts at clicks can do (Q
+under ratios, a group acting on click families), what integers under
+six verbs can do (identities of Z and of the group ring), and what the
+one square at the click can do (a state of a *-algebra), and the paper's
+formulas are the identities these three structures share.
+
 **The statement (record 777), in the map's own words.** Every Inside
 formula is made of the six verbs on the record's integers; every Outside
 formula is an Inside one carried by this map and nothing else: on the
