@@ -2348,6 +2348,92 @@ CORRECTIONS = [
         "the click frame, section 7 (the invariant :748, the unit :795); \\cite{clickframe2} &",
         "the click frame, section 7 &",
     ),
+    # The Boss's correction (record 868): the status word on series T only, with the weak-field redeclaration; G2, X and the rest as they were.
+    (
+        "T only: Section 5's series T sentence, the weak-field words",
+        "; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands (the crowd opaque to light), so the gravitational redshift's ratio is a reading of the law before the entry, not of the law as it stands.",
+        "; read under the law before the generic entry of 2026-09-22; not readable under the law as it stands; the four worlds are being redeclared in the weak field (the pair $[1, 16384]$, the crowd's age moment at most $1024$ per Node on the light's path) and re-read, the new numbers to replace these; the gravitational redshift's ratio is a reading of the law before the entry, not of the law as it stands.",
+    ),
+    (
+        "T only: Section 5's opening",
+        "(row 12 of Table~\\ref{tab:nature}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands",
+        "(row 12 of Table~\\ref{tab:nature}; read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field",
+    ),
+    (
+        "T only: row 12's verdict, the weak-field words",
+        "read under the law before the generic entry of 2026-09-22, not readable under the law as it stands; PASS, of the law before the entry, under the age word (P9)",
+        "read under the law before the generic entry of 2026-09-22; not readable under the law as it stands; the four worlds are being redeclared in the weak field (the pair $[1, 16384]$, the crowd's age moment at most $1024$ per Node on the light's path) and re-read, the new numbers to replace these; PASS, of the law before the entry, under the age word (P9)",
+    ),
+    (
+        "not G2: row 4b as it was",
+        "(series G2; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands) & FAIL, of the law before the entry: $0.315$ expected,",
+        "(series G2) & FAIL: $0.315$ expected,",
+    ),
+    (
+        "not G2: row 3 as it was",
+        "record 408 \\cite{log}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands) & FAIL, of the law before the entry: no term with $q < 0$",
+        "record 408 \\cite{log}) & FAIL: no term with $q < 0$",
+    ),
+    (
+        "T only: the chains paragraph",
+        "(series T, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands);",
+        "(series T, DETECTOR; read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field);",
+    ),
+    (
+        "T only: Table 4's age-wall row",
+        "for the pin $0.9108$ (DETECTOR; both read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+        "for the pin $0.9108$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+    ),
+    (
+        "T only: Table 4's spreading row",
+        "$1.0029$ for $1.0039$ (DETECTOR; both read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+        "$1.0029$ for $1.0039$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+    ),
+    (
+        "not G2: Table 4's light row as it was",
+        "row 4b $0.2636$ (FAIL, of the law before the entry of 2026-09-22);",
+        "row 4b $0.2636$ (FAIL);",
+    ),
+    (
+        "T only: item (v)",
+        "series X's $k$ (DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands),",
+        "series X's $k$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field),",
+    ),
+    (
+        "not G, G2: the dark energy item as it was",
+        "; both were read under the law before the generic entry of 2026-09-22, not readable under the law as it stands, so the deceleration parameter's verdict is the law's before the entry.",
+        ".",
+    ),
+    (
+        "T only: the platform's lamps",
+        "(T, X, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands).",
+        "(T, X, DETECTOR; T's four worlds read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field).",
+    ),
+    (
+        "not G, G2: the platform's stars as they were",
+        "(G, G2, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+        "(G, G2, DETECTOR)",
+    ),
+    (
+        "not X: the ground paragraph as it was",
+        "(series X, Section~\\ref{sec:delay}; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands).",
+        "(series X, Section~\\ref{sec:delay}).",
+    ),
+    (
+        "not X: Section 5's Poisson sentence as it was",
+        "(series X, DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands, so Poisson's interior is a reading of the law before the entry),",
+        "(series X, DETECTOR),",
+    ),
+    (
+        "T only: the families table's massive bodies",
+        "(DETECTOR; T, X and G2 read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+        "(DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+    ),
+    (
+        "T only: the families table's sources",
+        "(row 3) (DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
+        "(row 3) (DETECTOR; T's lamp read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+    ),
 ]
 
 

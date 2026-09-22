@@ -4161,3 +4161,25 @@ worlds and the optical worlds untouched (suspension 0). The cuts (a)
 W row, "the click frame, section 7") applied; not (b). The count:
 37 pages; the status words cost about fifteen lines, more than the
 two cuts saved; the count is reported and the paper holds still.
+
+## Applied (2026-09-22, the Boss's correction of 10:40Z, record 868): the status word on series T only
+
+The physicist's relevance check against main.tex: of the crowd worlds
+at n > 0 the paper cites only series T (clock_word's four worlds);
+NATURE rows 3 and 4b rest on coasting_none, the S row on the muon at
+rest and the coasting star, K and D3 on suspension 0, X's shell worlds
+not in the list. So the status word of the previous commit is removed
+from G, G2 and X's places (rows 3 and 4b and their verdicts, Table 4's
+light row, the dark energy item, the platform's stars, the ground
+paragraph, Section 5's Poisson sentence) and kept on series T's, with
+the owner's decision (a) in it: "read under the law before the generic
+entry of 2026-09-22; not readable under the law as it stands; the four
+worlds are being redeclared in the weak field (the pair [1, 16384], the
+crowd's age moment at most 1024 per Node on the light's path) and
+re-read, the new numbers to replace these" in Section 5's series T
+sentence and Table 3's row 12, a short form ("read before the generic
+entry of 2026-09-22, not readable under the law as it stands, being
+re-read in the weak field") where 1.907 is quoted elsewhere (Section
+5's opening, the chains paragraph, Table 4's two rows, item (v), the
+platform, the families table). The cuts (a) and (c) stand. The count:
+36 pages.

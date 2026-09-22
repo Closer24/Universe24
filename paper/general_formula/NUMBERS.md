@@ -196,3 +196,4 @@ re-run in the register after the gate's fix with the same integers;
 | The five-standard-deviation separation of 181 / 64 from 2 sqrt 2: (2.828427 - 2.828125) / 5 = 6.0e-5 | 6.0e-5 | arithmetic |
 | The PDF's page count after the owner's referee read: 36 pages | 36 | DETECTOR reading of the compiled PDF |
 | The PDF's page count with the crowd worlds' status word on every reading of series T, G, G2 and X (records 861, 865, 866) and the cuts (a) and (c): 37 pages | 37 | DETECTOR reading of the compiled PDF |
+| The PDF's page count with the status word on series T only (the Boss's correction, record 868): 36 pages | 36 | DETECTOR reading of the compiled PDF |
