@@ -133,6 +133,9 @@ def test_the_border_rows_and_the_read_mass_are_derived(name: str, numbers, regis
     world = shipped(name)
     shape, families = shape_of(world, numbers)
     pinned = register["worlds"][name]
+    # The rows per interval are per self-creation of the bodies, read at the
+    # border, a fixed detector at k = 0 whose tick is its own clock (record
+    # 569); the tick 20 is the record's ordering (the clock audit of 2026-09-22).
     assert pinned["border_rows_per_interval"] == 290 * len(world["measured"])
     assert len(world["directions"]) + 6 == 290
     assert pinned["read_mass"] == sum(
@@ -191,4 +194,7 @@ def test_the_holds_line_is_a_diagnostic_out_of_the_deciding_set(readings_tool):
     # The books are a gate of the record (GameBoard by ENGINE.md's table), out
     # of the readings count; a body's own push decides.
     assert not readings_tool.deciding(f"[{readings_tool.GATE}] the books (a gate of the record)")
+    # The push per interval is per self-creation of the body, its own clock;
+    # the tick it is read at is the record's ordering (the clock audit of
+    # 2026-09-22): a DETECTOR pin that decides.
     assert readings_tool.deciding(f"[{readings_tool.DETECTOR}] body 1 (u): the push per interval")

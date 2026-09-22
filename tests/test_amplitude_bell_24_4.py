@@ -1,11 +1,12 @@
-"""Bell at N = 512 and 4096 under the one click and the wheel: the pin of
-docs/DERIVATIONS_BEAM.md section 24.4 (the run the law owes before the pin is
-final; the Boss's order of 2026-09-21 under the model owner's record 337), on
-the worlds `bell_n512_<a>_<b>` and `bell_n4096_<a>_<b>` of series L
+"""Bell at N = 512, 2048, 4096, 8192 and 16384 under the one click and the
+wheel: the pin of docs/DERIVATIONS_BEAM.md section 24.4 (the run the law owes
+before the pin is final; the Boss's order of 2026-09-21 under the model
+owner's record 337, and the plateau's run of 2026-09-22 on the owner's word
+through the paper's writer), on the worlds `bell_n<N>_<a>_<b>` of series L
 (`examples/events/amplitude/make_worlds.py`, `expectations.json` under
 `bell_24_4` and `pair_n`; the register's L6 entry). The expected integers of
-docs/TEST_EXPECTATIONS.md ("The amplitude law: Bell at N = 512 and 4096, the
-pin of 24.4"), written before the run; the test holds no literal of a world's
+docs/TEST_EXPECTATIONS.md ("The amplitude law: Bell at N = 512 to 16384, the
+pin of 24.4"), written before the runs; the test holds no literal of a world's
 number, it derives the pin from the worlds and reads the register:
 
 (a) the pin derived from each world file and the ladder: the world's N, its
@@ -18,8 +19,11 @@ number, it derives the pin from the worlds and reads the register:
     within one of W x its cell's weight over the total; both marginals
     W / 2 exactly; E x W the register's;
 (b) S over the CHSH quadruple of each N, from the derived counts: the
-    register's S x N (1448 at N = 512, 11584 at 4096) and, as a fraction,
-    the register's S, 181 / 64 exactly at both N;
+    register's S x N (1448 at N = 512, 5792 at 2048, 11584 at 4096, 23168 at
+    8192, 46344 at 16384), the closed form of 24.4, S x N = 8 (c_1 + c_1') -
+    4 N with c_1 the ++ count at (0, N / 8) and c_1' the ++ count at (N / 4,
+    N / 8), and, as a fraction, the register's S per N: 181 / 64 exactly on
+    the plateau 512 to 8192 and 5793 / 2048 at 16384, where the plateau ends;
 (c) the replay of each shipped world file in-process, loaded as the runner
     loads it, bit-exact against the registered
     readings of the run (DETECTOR): one gather per record over the first W
@@ -28,7 +32,7 @@ number, it derives the pin from the worlds and reads the register:
     world's settings; the GameBoard reading of the run (GAMEBOARD, the
     books) registered as conserved at every completed tick;
 (d) S from the registered readings' E: the derived S of (b), so the run's
-    S is 181 / 64 at both N.
+    S is the pinned fraction at every N.
 """
 
 from __future__ import annotations
@@ -68,6 +72,16 @@ CIRCLES = tuple(sorted({int(PIN["worlds"][name]["N"]) for name in NAMES}))
 
 def world_file(name: str) -> dict[str, object]:
     return json.loads((WORLDS / f"{name}.json").read_text("utf-8"))
+
+
+def run_block(name: str) -> dict[str, object]:
+    """The run block of the register that holds the world's readings: the
+    run of 2026-09-21 (`run`, N = 512 and 4096) or the plateau's run of
+    2026-09-22 (`run_2048_8192_16384`); one block per run, each with its
+    own date, tree and source digest."""
+    blocks = [PIN[key] for key in PIN if key.startswith("run") and name in PIN[key]["worlds"]]
+    assert len(blocks) == 1, (name, len(blocks))
+    return blocks[0]
 
 
 def registered(path: str) -> object:
@@ -149,6 +163,8 @@ def test_the_pin_is_derived_from_the_world_and_the_ladder(name: str) -> None:
     assert counts["++"] + counts["+-"] == pinned["marginal"] == wheel // 2
     assert counts["++"] + counts["-+"] == wheel // 2
     assert correlation(counts) == pinned["E"]
+    fraction = Fraction(pinned["E"], wheel)
+    assert pinned["E_over_W"] == [fraction.numerator, fraction.denominator]
 
 
 @pytest.mark.parametrize("n", CIRCLES)
@@ -158,9 +174,12 @@ def test_s_over_the_quadruple_is_the_registered_fraction(n: int) -> None:
     assert [PIN["worlds"][name]["settings"] for name in names] == [
         list(pair) for pair in GENERATOR.chsh_labels(n)
     ]
-    s = quadruple([correlation(derived_counts(world_file(name))[0]) for name in names])
+    counts = [derived_counts(world_file(name))[0] for name in names]
+    s = quadruple([correlation(c) for c in counts])
     assert s == PIN["S_times_N"][str(n)] == EXPECTATIONS["pair_n"][str(n)]["S"]
-    assert Fraction(s, n) == Fraction(*PIN["S"])
+    # The closed form of 24.4: S x N = 8 (c_1 + c_1') - 4 N.
+    assert s == 8 * (counts[0]["++"] + counts[2]["++"]) - 4 * n == PIN["S_times_N_closed_form"][str(n)]
+    assert Fraction(s, n) == Fraction(*PIN["S"][str(n)])
 
 
 def replay(name: str) -> NatureBeamSimulation:
@@ -188,7 +207,7 @@ def test_the_replay_is_bit_exact_against_the_registered_readings(name: str) -> N
     world = world_file(name)
     _, wheel, (a, b), _ = apparatus(world)
     pinned = PIN["worlds"][name]
-    run = PIN["run"]["worlds"][name]
+    run = run_block(name)["worlds"][name]
     detector = run["readings"]["DETECTOR"]
     assert run["readings"]["GAMEBOARD"]["conserved_at_every_completed_tick"] is True
     simulation = replay(name)
@@ -216,7 +235,9 @@ def test_the_replay_is_bit_exact_against_the_registered_readings(name: str) -> N
 def test_the_runs_s_is_the_derived_s(n: int) -> None:
     """(d)."""
     names = names_of(n)
-    measured = quadruple([PIN["run"]["worlds"][name]["readings"]["DETECTOR"]["E"] for name in names])
+    measured = quadruple(
+        [run_block(name)["worlds"][name]["readings"]["DETECTOR"]["E"] for name in names]
+    )
     derived = quadruple([correlation(derived_counts(world_file(name))[0]) for name in names])
     assert measured == derived == PIN["S_times_N"][str(n)]
-    assert Fraction(measured, n) == Fraction(*PIN["S"])
+    assert Fraction(measured, n) == Fraction(*PIN["S"][str(n)])

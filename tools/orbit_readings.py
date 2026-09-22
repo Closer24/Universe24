@@ -22,9 +22,13 @@ least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
 record checks (completed, the books balanced at every tick) fail the tool;
-the orbit readings are registered inside or outside their expectation
-(docs/EXPERIMENTS.md, "D, the orbit under the Beam Law, on the plane
-(2026-09-19)") and never moved.
+the orbit's T, its ratios and the drift are step records, GAMEBOARD
+diagnostics printed and never pinned (records 562 and 564; the clock audit
+of 2026-09-22: a period is read after a detector off a lamp's births, series
+D3), and "C measured" divides the probe's own pushes (DETECTOR) by the
+host's interval count, a GameBoard rate; the entry is docs/EXPERIMENTS.md,
+"D, the orbit under the Beam Law, on the plane (2026-09-19)", whose
+numbers are never moved.
 
     PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
 
@@ -293,8 +297,9 @@ def print_table(readings: list[Reading]) -> None:
     print(
         "GAMEBOARD (a diagnostic, never pinned: the orbit from the probe's step records: closed, T, the mean "
         "radius, the drift per orbit, the turns, r min .. max, the end) beside DETECTOR (the probe's own "
-        "`read` records: reads, units, C measured); the detector reading behind the period, the `beam` "
-        "sets' click ticks (the lamp's returns), not yet read"
+        "`read` records: reads, units; C measured divides their pushes by the host's interval count, "
+        "GAMEBOARD as a rate, the clock audit of 2026-09-22); the detector reading behind the period, the "
+        "`beam` sets' click ticks (the lamp's returns), not yet read"
     )
     print(
         "| World | S | r | p (label units) | closed | T | mean radius | drift per orbit | turns | "

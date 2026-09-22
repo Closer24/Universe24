@@ -131,7 +131,14 @@ def test_a_step_or_a_separation_is_a_diagnostic_and_a_push_or_a_click_decides():
     assert TOOL.deciding("the label 0 after every hand-over")
     # The shear is a sum of the bodies' own pushes per row: a detector pin.
     assert TOOL.deciding("the shear 49,090,283,970 per row per interval")
-    assert TOOL.deciding("290 lifetime clicks per body per interval from tick 4")
+    assert TOOL.deciding(
+        "290 lifetime clicks per body per interval at tick 20 (the border, a fixed detector)"
+    )
+    assert TOOL.deciding("the kick outweighed by the pushes read")
+    # An onset in host ticks is the record's ordering: a GameBoard
+    # diagnostic (the clock audit of 2026-09-22), even beside a click or a kick.
+    assert not TOOL.deciding(f"the border's first clicks at tick 4, {TOOL.ONSET}")
+    assert not TOOL.deciding(f"the kick outweighed by tick 5, {TOOL.ONSET}")
     assert TOOL.deciding("both bodies leave through the faces")
     assert not TOOL.deciding("no step in the run")
     assert not TOOL.deciding("the pair separates beyond 10 Links and never returns")

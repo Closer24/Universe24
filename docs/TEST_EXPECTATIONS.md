@@ -99,6 +99,7 @@ kept, their pins the law of events').
 | `test_crowd_clock.py` | Series U, a lamp inside a crowd, still and moving (`examples/events/crowd_clock/`, docs/designs/crowd_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the moving bodies at 0.2 c by the drive's rule; the presence at the still lamp's Node once the crowd's rows arrive is 4 F (328 for F = 82) and the lamp's clock owes the age moment since clock-age-v1 (2026-09-21): `still_1` counts 22 F = 360448 (k = 5.5) and births once in 6.5 intervals (12 of 80 within 1; under the presence word k = 1 and 40 of 80 within 2); the algebra (z = 1 needs a slowed clock for v < c, a still lamp at k = 1 and 2 reads z = 1 and 2, the lag k v t / (1 + k) and the exit from a fan of reach 4 at 69 intervals for k = 1); the expected values in the module's docstring ([below](#a-lamp-inside-a-crowd-series-u)) | new (2026-09-21, series U; design and pins, the run in the design's section 7) |
 | `test_reader_clock.py` | Series S, a reader inside a crowd (`examples/events/reader_clock/`, docs/designs/reader_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the reader at x = 10 with a lamp of its own measuring `s_px1` by age, the source at x = 70, the crowds' fluxes k 2^16 / 4, the receding source at 0.2 c and its sources at 0.1 c by the drive's rule; the presence 4 F at the reader and the source after twelve intervals; the algebra of the ratio (0.5, 1, 4 / 3, 1.1); the expected values in the module's docstring ([below](#a-reader-inside-a-crowd-series-s)) | new (2026-09-21, series S; design and pins, the run in the design's section 7) |
 | `test_clock_word.py` | Series T, the clock's word (`examples/events/clock_word/`, docs/designs/clock_age/NOTE.md section 6, the register's entry "T, the clock's word"): the shipped worlds equal their generator's and run ten intervals balanced (the lamp at x = 10, the detector at x = 110 reading `age`, the two `mass` sources at 3 or 6 Links at F = 4915, the lamp's `mass` entry `pass` or `{"rule": "pass", "reads": "age"}`); after twelve intervals the lamp's count is 4 F under the presence word at both distances and 22 F, 42 F under the age word, the presence 4 F in all, the first counting tick 6 and 11 with the first row's count alone; the algebra (k = 0.3, 0.3, 1.65, 3.15; the ratio 1 and 42 / 22 = 1.909 against the continuum's 2); the expected values in the module's docstring ([below](#the-clocks-word-series-t)) | new (2026-09-21, series T; the pins the physicist's, the run in the register) |
+| `test_shell_clock.py` | Series X, Poisson after a detector (`examples/events/shell_clock/`, the chief physicist's design of record 574; the pins from docs/designs/clock_age/clock_age_map.py section E, the register's entry "X, Poisson after a detector"): the nine shipped worlds equal their generator's (the lamp at x = 103 shining -x, the detector at x = 3 reading `age`, 450 `mass` sources a half Link from the shell of radius 6 about a centre 2, 4 or 12 Links from the lamp, each of the amount 1431597 naming series E's fan of 290 by the indices of the world's table, the control the same GameBoard with the shell removed); the register carries the map's pins; the algebra of the pin with no world run (the shell theorem's one integer 5086 at both inside Nodes against the presence 499 and 596, the ratios 1.003917, 0.839989 and 0.618270 within 0.02, the presence word's departure from 1 more than forty times the age word's ripple); the readings tool on a hand-made click list (1 + z = 2.0000, only the detector's click lines read, a missed pin moving the verdict); a detector whose own clock is slowed clicking on the same lattice ticks as an unslowed one; one shell world parsing and running balanced; the expected values in the module's docstring ([below](#poisson-after-a-detector-series-x)) | new (2026-09-22, series X; the pins the map's, the run in the register) |
 | `test_cluster_clock.py` | Series V, a cluster of crowds read by one detector (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the five lamps at numbers 2, 3, 6, 9, 12 with the momenta of 0.2 c and their sources' of 0.2 c / (1 + k) by the drive's rule; the presence at every lamp of a crowd is 4 F after twelve intervals and the bare lamp's at most 8; the algebra of the sum 1 + k + v / c against the product (1 + k)(1 + v / c) and the pinned dispersion 0.363 around 0.4; the expected values in the module's docstring ([below](#a-cluster-of-crowds-series-v)) | new (2026-09-21, series V; design and pins, the run in the design's section 7) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it (on an entry that reads `age`; since clock-age-v1, 2026-09-21, on every entry but one that reads `presence`); the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_clock_age.py` | clock-age-v1, the clock's word (the model owner's word of 2026-09-21, record 394; BEAM_LAW section 3 step 5 and note 25): on the bar of the age tests' (c) a reader whose entry omits `reads` counts the age moment (5 then 11, the ages of the `age` reader) with its `read` records carrying the flow, and so does every word but `presence`; the word `presence` counts the presence as before (the ages 1 .. 18, 18) with the record carrying the presence; the edges: no crowd owes nothing under either word, an unknown word refused naming the words, `presence` accepted on `pass` and a window still refused there, series T's `presence_3` declaring the word parses and keeps its pin; the shape: one wall function `core.integer.age_wall` over the declared set `measured.AGE_WALL_SET`, the clock its one member at the coefficient 1, the phase per age never a member, the owed count the excess of the stretched wall integer for integer with `by_drive(acc, k n, d)` ([below](#the-clocks-word-clock-age-v1)) | new (2026-09-21, clock-age-v1) |
@@ -133,15 +134,16 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1) |
+| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator; every family under one wall (2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md): the weight per unit on the family's own labels (the photon 110 at gamma 0 and 221 at gamma 1, the one floor; `matter` 66 and 70), a massive row walking by its triple under the one wall (39 positions by `by_drive` by hand) with its pushed pair the momentum's with the rest term ((20, 132) to (640, 2328)), the wall's square refused before it is formed (R = 2^45 at the amount 2^40), the two keys loading together and the deciding worlds' pins at b = 10 in the register ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1; extended 2026-09-22, every family under one wall) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)); every number of the series read from `expectations.json` (2026-09-21) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)); every number of the series read from `expectations.json` under `pair` and `ghz` (2026-09-21) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)); every number of the series read from `expectations.json` under `gate` and `pair_n` (2026-09-21) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
-| `test_amplitude_bell_24_4.py` | Bell at N = 512 and 4096 under the one click and the wheel, the pin of DERIVATIONS_BEAM 24.4 (the run the law owes before the pin is final): the pin derived from each world file and the ladder (N, the wheel W = N, the settings off the counters' windows, the labels off the lamp; the design's joint weights and the rungs b_k = (2 W C_k + T) // (2 T) give the register's counts, widths and rungs; every count within one of W x its weight; the marginals W / 2; S = 1448 / 512 and 11584 / 4096, both 181 / 64 exactly), and the replay of the eight worlds bit-exact against the registered readings of the run of 2026-09-21 (the counts per cell, E x W, the marginals, one gather per record, the rungs and the windows on every gather) ([below](#the-amplitude-law-bell-at-n--512-and-4096-the-pin-of-244)); every number read from `expectations.json` under `bell_24_4` and `pair_n` | new (2026-09-21; the Boss's order under the model owner's record 337; DERIVATIONS_BEAM 24.4) |
+| `test_amplitude_bell_24_4.py` | Bell at N = 512, 2048, 4096, 8192 and 16384 under the one click and the wheel, the pin of DERIVATIONS_BEAM 24.4 (the run the law owes before the pin is final; the plateau's run of 2026-09-22): the pin derived from each world file and the ladder (N, the wheel W = N, the settings off the counters' windows, the labels off the lamp; the design's joint weights and the rungs b_k = (2 W C_k + T) // (2 T) give the register's counts, widths and rungs; every count within one of W x its weight; the marginals W / 2; S x N = 1448, 5792, 11584, 23168 and 46344, the closed form 8 (c_1 + c_1') - 4 N, so S = 181 / 64 exactly on the plateau 512 to 8192 and 5793 / 2048 at 16384, where the plateau ends), and the replay of the twenty worlds bit-exact against the registered readings of the runs of 2026-09-21 and 2026-09-22 (the counts per cell, E x W, the marginals, one gather per record, the rungs and the windows on every gather) ([below](#the-amplitude-law-bell-at-n--512-to-16384-the-pin-of-244)); every number read from `expectations.json` under `bell_24_4` and `pair_n` | new (2026-09-21; the Boss's order under the model owner's record 337; DERIVATIONS_BEAM 24.4); extended to N = 2048, 8192 and 16384 (2026-09-22; the Boss's order on the owner's word through the paper's writer) |
 | `test_amplitude_mz_345_n.py` | The (3, 4) split at N = 32 and 128 under the one click and the wheel, the power window of DERIVATIONS_BEAM 6.5 pinned from above: the pin derived from each world file and the engine's own tables and ladder (N and the wheel W = N off the lamp; the ports' rows off the lamp's turns and the splitter's weights and turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 with the multiplicity 50; the pointers on `phase_cosines` and `phase_sines`, the rungs by `amplitude.rungs` and the cell of every u by `amplitude.cell_of` give the register's counts 31 / 1 and 125 / 3, the u to D2 (31; 125, 126, 127), the rungs (31, 32) and (125, 128) equal to the exact offers' rung (2 N x 49 + 50) // 100, and the totals' spread; the same derivation gives the registered 63 / 1 at N = 64), the power window per N from the rung ([1.548, 2.129), [1.917, 2.489), [1.835, 2.012)) and its intersection with the pair's [1.784, 2.054), [1.917, 2.012), containing 2 and excluding 1 and 3, and the replay of both worlds bit-exact against the registered readings of the run of 2026-09-21 (the counts per port, the u to D2, the rungs on every gather, the totals' spread, the births, gathers and open records, the books balanced) ([below](#the-amplitude-law-the-3-4-split-at-n--32-and-128)); every number read from `expectations.json` under `mz_345_n` and `mach_zehnder` | new (2026-09-21; the Boss's order on the auditor's round 4; DERIVATIONS_BEAM 6.5) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)); the gate worlds' digests read from `gate_set.json` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
+| `test_aperture_preflight.py` | The aperture's multiplicity at load (issue #714): a world whose openings send two paths of one record to one set with multiplicities whose ratio is not a square is refused by the loader, naming the rule, the two multiplicities, the openings of both paths, the ratio and the aperture's width, before tick 0 (the run's check at the offer kept as the guard); the square norm accepted and run; the edge, the norm 2 whose rays never meet, accepted ([below](#the-amplitude-law-the-aperture-at-load)) | new (2026-09-22; issue #714, the batch of issue #661) |
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
@@ -494,6 +496,38 @@ integers, written down before the first run:
   N - 1, `inputs` naming an undeclared direction; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
   refuses the run naming the Node (3, 3).
 
+## The amplitude law: the aperture at load
+
+`tests/test_aperture_preflight.py` (issue #714; the rule of the design's
+section 2.5 unchanged, `amplitude.common_denominator` and the run's refusal
+at the offer kept as the guard). The loader walks a lamp's record through the
+openings per arm (`world._aperture_load_check`): a plain `rerelease` fan's
+norm is its count of directions, a declared split's the sum of its squared
+weights; a `pass` entry is stepped through, any other measured event ends
+the path at its set, the walk along the direction's digital line as the
+flight walks it; a world with a gate is left to the run. A minimal
+aperture on 5 x 5 x 1: a lamp at (0, 2) on +x, the openings A (2, 2) and B
+(2, 3), a screen of five `sum` sets at x = 4:
+
+- (a) the fan [0, 1, 0], [1, 1, 0], [1, 0, 0] (the norm 3; a row walks
+  its direction's digital line one Link at a time, the lowest axis first,
+  `world.bresenham_line`): A's row on [1, 1, 0] reaches screen_3 with 3,
+  A's row on [0, 1, 0] re-released at B reaches screen_3 on [1, 0, 0]
+  with 9; refused at load: "reach screen_3 with the multiplicities 3
+  (through the openings at [[2, 2, 0]]) and 9 (through [[2, 2, 0], [2, 3,
+  0]]), whose ratio 1:3 is not a square (an aperture 2 Nodes wide ...)"
+  (with the loader's check off the run refuses the same world at tick 8,
+  "the multiplicities 3 and 9": the bug); the same fan on A alone accepted
+  and 20 intervals run;
+- (b) the fan with [1, -1, 0] added (the norm 4): 4 against 16 at
+  screen_2, a square ratio; accepted and 20 intervals run;
+- (c) the norm 2 (the fan [0, 1, 0], [1, 1, 0], the smallest non-square
+  norm): A reaches screen_3 with 2, B screen_4 with 4, no set twice;
+  accepted and 20 intervals run (3 is the smallest non-square
+  multiplicity an aperture brings to one set); the width 3 (an opening at
+  (2, 1) added) with the fan of (a) refused naming "an aperture 3 Nodes
+  wide".
+
 ## The amplitude law: the layer
 
 `tests/test_amplitude_layer.py` (docs/BEAM_LAW.md note 37; the design,
@@ -596,8 +630,9 @@ written down before the first run:
   multiplicity 8, its units 3, the record's one cell the set with the
   rung 64, its total and weight 2 x 2^58 (the two paths add: a re-meeting
   is not unitary, the design's 2.5); with the second re-emitter of
-  weights [1, 1] on two directions (m 4 against 2) the run is refused:
-  "record 4294967297 at the set end carry the multiplicities 2 and 4";
+  weights [1, 1] on two directions (m 4 against 2) the world is refused
+  at load (issue #714, `test_aperture_preflight.py`): "reach end with the
+  multiplicities 4 ... and 2 ..., whose ratio 2:1 is not a square";
 - (c) a keyed bar of 6 Nodes with a lamp on +x, a declared row of light
   of no record at x = 3 and a counter at x = 5: after one interval
   `state.json` holds one row with the three columns and one without;
@@ -764,34 +799,50 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
   42.00 are the rate 8's, `test_exact_phase`); under the integer form no
   `exact` is written; the file's pins under `cone.exact`.
 
-## The amplitude law: Bell at N = 512 and 4096, the pin of 24.4
+## The amplitude law: Bell at N = 512 to 16384, the pin of 24.4
 
-`tests/test_amplitude_bell_24_4.py`, on `bell_n512_<a>_<b>` and
-`bell_n4096_<a>_<b>` (series L6, `examples/events/amplitude/expectations.json`
+`tests/test_amplitude_bell_24_4.py`, on `bell_n512_<a>_<b>`,
+`bell_n2048_<a>_<b>`, `bell_n4096_<a>_<b>`, `bell_n8192_<a>_<b>` and
+`bell_n16384_<a>_<b>` (series L6, `examples/events/amplitude/expectations.json`
 under `bell_24_4` and `pair_n`; the register's L6 entry and the README's
-section), the pin of DERIVATIONS_BEAM section 24.4 written before the run
-of 2026-09-21; the test holds no literal of a world's number:
+sections), the pin of DERIVATIONS_BEAM section 24.4 written before the run
+of 2026-09-21 (N = 512 and 4096) and before the plateau's run of 2026-09-22
+(N = 2048, 8192 and 16384, the S per N from the closed form of 24.4, the
+paper's `checks/s_powers_of_two.txt`); the test holds no literal of a
+world's number:
 
 - (a) the pin derived from each world file and the ladder: N, the lamp's
   wheel [1, W] with W = N, the settings off the counters' windows on the
   two sides of the lamp and the labels off its `branches`; the design's
   joint weights on the half-angle tables of 2N and the rungs
   b_k = (2 W C_k + T) // (2 T) on W give the register's counts per cell
-  (219, 37, 37, 219 and 218, 38, 38, 218 at N = 512; 1749, 299, 299, 1749
-  and 1747, 301, 301, 1747 at 4096), widths and rungs; every count within
-  one of W x its cell's weight over the total; both marginals W / 2; E x W
-  the register's (364, -364, 360, 360; 2900, -2900, 2892, 2892);
+  (219, 37, 37, 219 and 218, 38, 38, 218 at N = 512; 874, 150, 150, 874
+  on every pair at 2048; 1749, 299, 299, 1749 and 1747, 301, 301, 1747 at
+  4096; 3498, 598, 598, 3498 and 3494, 602, 602, 3494 at 8192; 6996, 1196,
+  1196, 6996 and 6989, 1203, 1203, 6989 at 16384), widths and rungs; every
+  count within one of W x its cell's weight over the total; both marginals
+  W / 2; E x W the register's (364, -364, 360, 360; 1448, -1448, 1448,
+  1448; 2900, -2900, 2892, 2892; 5800, -5800, 5784, 5784; 11600, -11600,
+  11572, 11572) and E / W as the register's reduced fraction (91 / 128 and
+  45 / 64 at 512; 181 / 256 at 2048; 725 / 1024 and 723 / 1024 at 4096 and
+  8192; 725 / 1024 and 2893 / 4096 at 16384);
 - (b) S over the CHSH quadruple of each N from the derived counts: 1448 at
-  N = 512 and 11584 at 4096, the register's S x N, and as a fraction the
-  register's S, 181 / 64 exactly at both N;
+  N = 512, 5792 at 2048, 11584 at 4096, 23168 at 8192 and 46344 at 16384,
+  the register's S x N; the closed form of 24.4, S x N = 8 (c_1 + c_1') -
+  4 N with c_1 the ++ count at (0, N / 8) and c_1' the ++ count at (N / 4,
+  N / 8), the same integers; and as a fraction the register's S per N,
+  181 / 64 exactly on the plateau 512, 2048, 4096 and 8192 and 5793 / 2048
+  at 16384, where the plateau ends;
 - (c) the replay of each world in-process, bit-exact against the registered
-  readings of the run (DETECTOR): one gather per record over the first W
-  records by ordinal, the counts per cell, E x W and both marginals the
-  register's, every gather's rungs the pinned list and its windows the
-  world's settings with the turn 0; the run's GameBoard reading
-  (GAMEBOARD) registered as conserved at every completed tick;
+  readings of its run (DETECTOR; the block `run` for N = 512 and 4096, the
+  block `run_2048_8192_16384` for the plateau's run, found by the world's
+  name): one gather per record over the first W records by ordinal, the
+  counts per cell, E x W and both marginals the register's, every gather's
+  rungs the pinned list and its windows the world's settings with the turn
+  0; the run's GameBoard reading (GAMEBOARD) registered as conserved at
+  every completed tick;
 - (d) S from the registered readings' E equals the derived S of (b): the
-  run's S is 181 / 64 at both N.
+  run's S is the pinned fraction at every N.
 
 ## The amplitude law: the (3, 4) split at N = 32 and 128
 
@@ -2082,11 +2133,15 @@ default), the integers written before the run:
   2^63 - 1 - 14080 on x walks (the primitive (1, 0, 0)) and is refused at
   the push, the pair of **P**' beyond the bound ("pair on the
   momentum"); preset on -y it is refused at the walk, the wall on the
-  primitive **P** beyond the bound; W_x = 2^40 is taken (the push's
-  **P**' = (2^40 + 16384, -14080, 0) over its gcd 1280 is (858993472,
-  -11, 0), the residue 72 x 858993483); W_y = 2^54 + 1 is refused at the
-  walk (T(P) about 2^60.8, the wall 2 T d over the bound); the push's and
-  the turn's sums are guards below it.
+  primitive **P** beyond the bound; W_x = 2^24 is taken (the push's
+  **P**' = (2^24 + 16384, -14144, 0) over its gcd 64 is (262400, -221,
+  0), the residue 72 x 262621); W_x = 2^40 and W_y = 2^54 + 1 are refused
+  before the root, the square 3 |P|^2 Q^2 of the primitive (about 2^81.6
+  and 2^121) over the working bound (every family under one wall,
+  2026-09-22, the reviewer's MUST-FIX 2: the intermediate respects the
+  bound; on the head before, W_x = 2^40 was taken with its square formed
+  unbounded and its wall 2 T d inside); the push's and the turn's sums
+  are guards below it.
 - (i) verb 3's form, the label by Bresenham along the line of **P** (the
   model owner's GO of record 536): a bar of 230 x 16 x 1 at [1, 56],
   `optical` 1, the fan the twelve diagonals with (24, +-1, 0) and
@@ -2113,6 +2168,46 @@ default), the integers written before the run:
   integer with `by_drive`, **P** conserved at every interval, the row at
   (54, 1, 0); on the label's pace (c0e8187) the 52nd Link came one
   interval early.
+- (k) every family under one wall (2026-09-22, EVERY_FAMILY.md sections
+  1 and 3): the weight per unit of amount on the family's own labels,
+  (E'_D^2 + 3 gamma p_D . p_D) // E'_D: the photon's e_D = 110 on a heading
+  at gamma = 0 (2 e_D = 220 until this day) and (12100 + 12288) // 110 =
+  221 at gamma = 1 (the one floor, 2 e_D + 1); `matter` (quantum 1,
+  momentum 10 at width 1: E'_0 = 64, E' = 66, the triple (20, 132, 66) on
+  the heading) 66 at gamma = 0 and (4356 + 300) // 66 = 70 at gamma = 1.
+- (l) a row never pushed carries its family's pair (20, 132); pushed
+  along its momentum by **W** = (2560, 0, 0) its pair is (640, 2328):
+  **P** = (5120, 0, 0) and the rest term 16384 over their gcd 1024 are
+  (5, 0, 0) and 16, T = isqrt((16^2 + 3 x 25) x 4096) = 1164, the pace
+  640 / 2328 = 0.275 against the triple's 20 / 132 = 0.152 (a falling
+  row speeds up).
+- (m) the bar of (a) with a massive lamp in place of light's (its
+  reservoir the world's K = 4096, so that its turn is 1 and it births one
+  row of content 1 per interval): the first row's accumulator gains the
+  rate 2 p d = 80 against the wall 2 E' (d + f n A) = 528 off the crowd
+  and 3696 on it, from the start E' d = 264; its x after the ticks 2 to
+  40 by `by_drive` by hand (one Link per 6.6 intervals off the crowd, per
+  46 on it), the 39 positions integer for integer with the run.
+- (n) the working bound before the wall's square (the physics-rule
+  reviewer's MUST-FIX 2 on EVERY_FAMILY.md): the massive row of (m) with a
+  push of 2560 on x and the amount 4 (the deciding worlds' largest) has
+  **P** = (12800, 0, 0) and R = 65536 over their gcd 512, (25, 0, 0) and
+  128, T = isqrt((128^2 + 3 x 625) x 4096) = 8648, the pair (3200, 17296),
+  taken; at the amount 2^40, R = 2^45 (g = 512), whose square leaves the
+  bound 2^63 - 1 over Q^2 (R under 2^25.5): refused at the walk naming
+  the wall's square, before the root.
+- the register (`expectations.json`, test (f) extended): the deciding
+  worlds `matter_g0`, `matter_g1` and `matter2_g0` of
+  examples/events/optical/ (b = 10, M = 2^14, `massive_rows` with `action`
+  1024 and `age_bound` 1024) carry the pins of the map
+  docs/designs/one_wall/every_family_map.py (the shift -5.76 / -6.11 /
+  -5.76 +- 0.5, the arrival -8.36 / -7.42 / -8.36 +- 1) and the three
+  refuting readings (-11.03, -10.45, +43.99); the two keys load together;
+  the fast worlds `fast_g0` and `fast_g1` (the beam of five lines at b =
+  8, M = 2^16, the momentum 40) carry the map's integer walk's pins (the
+  shift -2.60 / -4.40, the arrival 1.94 / 4.49, the wall unstretched
+  -0.80 and the blind weight -6.40 at gamma 1, the shifts' ratio 1.69)
+  and load with five beam directions and the momentum 40.
 
 ## The covariant readings
 
@@ -4262,6 +4357,51 @@ series U's generator; the register's entry "T, the clock's word"):
 - (c) the algebra of the pin: k = (count per F) x F / 2^16; the ratio of the
   two k at the same F is 1 under the presence word and 42 / 22 = 1.909
   under the age word, against the continuum's potential 2.000.
+
+## Poisson after a detector (series X)
+
+`tests/test_shell_clock.py` (the chief physicist's design of 2026-09-22,
+record 574 of docs/LOG_2026-09-20.md; the worlds of
+`examples/events/shell_clock/` by `make_worlds.py`, which imports series T's
+generator and series E's; the pins from docs/designs/clock_age/clock_age_map.py
+section E; the register's entry "X, Poisson after a detector"):
+
+- (a) the nine shipped worlds equal `make_worlds.worlds()` document for
+  document: the detector number 1 at x = 3 with `reads: "age"`, the lamp
+  number 2 at x = 103 fixed with its lamp on -x and its `mass` entry
+  `{"rule": "pass", "reads": "age"}` or `{"rule": "pass", "reads":
+  "presence"}` (the control declaring no entry and holding no source), 450
+  `mass` sources each a half Link from the shell of radius 6 about a centre
+  2, 4 or 12 Links along +x from the lamp, each fixed, of the amount 1431597
+  and naming series E's fan of 290 by the indices of the world's direction
+  table (which resolve to that fan); the GameBoard 110 + r x 15 x 15, 500
+  intervals; `expectations.json` declares `shell-clock-expectations-v1`, the
+  windows [200, 350] and [350, 500], the shell's block (450 Nodes, the fan
+  290, the amount 1431597, the sources' own count 0.787 to 0.932 and the
+  release they keep, 11.3054 to 12.2240) and the pinned k 0.914351, 0.910783,
+  0.563110, 0.089647, 0.106724, 0.029271 and three zeros.
+- (b) the algebra of the pin, no world run: the release is 2 F x 2^16 / 450 =
+  1431597, so 21.8444 units per source per direction per interval; with
+  uniform sources k = the map's age moment x that release / 2^16, which is
+  one number, 1.695264, at r = 2 and at r = 4 (the shell theorem: the age
+  moment 5086 is one integer at both, where the presence 499 and 596 differ)
+  and 1.047957 at r = 12; the register's ratios 1.003917, 0.839989 and
+  0.618270, the continuum's 1 and 0.5, the tolerance 0.02 above the ripple,
+  and the presence word's departure from 1 more than forty times the age
+  word's.
+- (c) the readings tool on a hand-made click list: 150 clicks every other
+  tick with the ordinals in order from 1 read 1 + z = 2.0000 exactly in both
+  windows, the click rate 0.5, k = 1.0 and no ordinal missing, with the
+  detector's click lines alone taken from a file that also holds another
+  reader's click and a birth; the same list against a pin of k = 2.0 reads
+  the verdict `moved` or `failed`.
+- (d) the rule the whole reading rests on, on a minimal GameBoard: a
+  detector whose own clock is slowed by a crowd at its Node (its `waited`
+  above zero) clicks at exactly the same ticks, with the same ordinals, as
+  one with no crowd, so the shell's rows reaching the detector cannot move
+  1 + z; only the lamp's clock does.
+- (e) one shell world parses under the law, holds 452 measured events and
+  runs two intervals with the books balanced.
 
 ## The clock's word, clock-age-v1
 

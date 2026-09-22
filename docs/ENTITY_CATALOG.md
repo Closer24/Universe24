@@ -216,7 +216,7 @@ the register without a row or a gap row.
 | Family names in the register | The row | Note | The definition in `entities/families.json` |
 | --- | --- | --- | --- |
 | `light` | the photon | seven series; as a record with `phase_per_link` as a pair in the amplitude series | `photon` |
-| `matter` | the massive quantum, the free particle as a record of massive rows (`massive-rows-v1`) | series W ([the massive rows](../examples/events/massive_rows/README.md)): `quantum` 64, `massive`, the lamp's `momentum_magnitude` 220 in the pin, spelled inline by the design's row with its own lamp; the small replay world at 4 and 400 | `massive_quantum` |
+| `matter` | the massive quantum, the free particle as a record of massive rows (`massive-rows-v1`) | series W ([the massive rows](../examples/events/massive_rows/README.md)): `quantum` 64, `massive`, the lamp's `momentum_magnitude` 220 in the pin, spelled inline by the design's row with its own lamp; the small replay world at 4 and 400; the deciding worlds of every family under one wall ([`optical/`](../examples/events/optical/README.md), 2026-09-22) at 1 with the momentum 10, at 2 with 20 and at 1 with 40 (the fast worlds, the beam of five lines), under the key `optical` beside `massive_rows` | `massive_quantum` |
 | `e` | the electron | series H (Bohr) | `electron` |
 | `beta` | the electron born by `become` (the weak's electron, a paid family with a whole charge under D-1) | series J | `electron_born_by_become` |
 | `mu` | the muon (a free family of content 207 per measured event, the electron's whole charge -7344 over its 207 units, `become` at 64 into `e` with the products `beta` and `nu`) | series S | `muon` |

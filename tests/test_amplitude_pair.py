@@ -258,6 +258,9 @@ def test_no_maintenance_over_a_long_flight():
         simulation, _ = run(WORLDS[f"{name}_far"])
         gathers = gathers_of(simulation)
         assert correlation(counts_of(gathers)) == expected, name
+        # The flight as gather tick less birth tick is the record's ordering,
+        # GAMEBOARD, a self-check (the clock audit of 2026-09-22); the row's age on its
+        # click is the detector's form.
         flown = min(int(g["tick"]) - int(g["born"]) for g in gathers)  # type: ignore[call-overload]
         assert flown >= PAIR["far_min_flight"], name
 

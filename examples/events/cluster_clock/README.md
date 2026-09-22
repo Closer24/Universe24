@@ -50,6 +50,11 @@ presence 4 F at every lamp, the emulated pace and the algebra.
   pinned 1.2, 1.3, 1.5, 1.8, 2.2 (the product form, 2.4 at k = 1, refuted),
   the dispersion 0.368; every lamp within one Link of its emulated sources;
   no light lost.
+- **The clock of the reading (the clock audit of 2026-09-22; record 678).** The denominator of
+  every 1 + z here is the click's tick at a fixed detector in no crowd at
+  `suspension` 0, which is that detector's own clock to the digit (record
+  569); the strict form, the reader's own lamp, is
+  `examples/events/reader_clock`.
 - **Re-read under `clock-age-v1` (2026-09-21; record 394: a clock counts
   the age moment by default).** The two worlds run again on the head of
   branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 500 intervals) and

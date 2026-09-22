@@ -301,8 +301,12 @@ ROTATIONS_WITHIN_BOUND = 3
 # A world refused at load is built by the tests and not written as a file.
 UNSHIPPED = {"rotations_4"}
 # L6 at N = 1024 and 4096 (2026-09-20); N = 512 added for the pin of
-# DERIVATIONS_BEAM section 24.4 (2026-09-21).
-PAIR_N = (512, 1024, 4096)
+# DERIVATIONS_BEAM section 24.4 (2026-09-21); N = 2048, 8192 and 16384 added
+# for the plateau's run (2026-09-22, the Boss's order on the owner's word
+# through the paper's writer): the same world with the one declared integer
+# N changed, the tables of 2N up to 65536 (`core.phase`), so 2N = 32768 at
+# 16384 exists.
+PAIR_N = (512, 1024, 2048, 4096, 8192, 16384)
 MAX_TABLE = 4096
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
@@ -1150,15 +1154,55 @@ def malus_worlds() -> dict[str, dict[str, object]]:
     return {name: malus(name, rotate, window) for name, (rotate, window) in MALUS_SETTINGS.items()}
 
 
+# The pair's lamp on the A2 board: the content K + 2 (`bell`), the birth of
+# a record 4 rows of amount 1 (two directions, the labels 0 and 3), and the
+# gather of a record 12 intervals after its birth on every registered run
+# (the flight to Alice's and Bob's counters; the registered `bell_n*` runs,
+# tick - born = 12 on every gather line).
+BELL_LAMP_CONTENT_OVER_K = 2
+BELL_BIRTH_COST = 4
+BELL_FLIGHT_TO_GATHER = 12
+
+
+def interval_of_birth(
+    births: int, k: int, extra: int = BELL_LAMP_CONTENT_OVER_K, cost: int = BELL_BIRTH_COST
+) -> int:
+    """The interval at which a paid lamp of content K + `extra`, paying
+    `cost` per birth, makes its `births`-th birth (BEAM_LAW note 41: the
+    turn's accumulator gains the content the frame reads before the birth
+    pays, K + extra - cost x births so far, one turn per K by `by_drive`,
+    one birth per turn); its exact clock stalls where the content has
+    fallen below K, so W births take more than W intervals: 513 at W = 512,
+    4099 at 4096 (the registered 4096 births in 4099 intervals), 8201 at
+    8192, 16419 at 16384."""
+    accumulator = 0
+    made = 0
+    interval = 0
+    while made < births:
+        interval += 1
+        accumulator += k + extra - cost * made
+        turns, accumulator = divmod(accumulator, k)
+        made += turns
+    return interval
+
+
 def bell_n(name: str, n: int, a: int, b: int) -> dict[str, object]:
-    """The pair at the CHSH labels at N = n on the A2 board, one birth per u."""
+    """The pair at the CHSH labels at N = n on the A2 board, one birth per u.
+    The duration: N + 20 intervals where the W-th record's gather falls
+    within them (the registered N up to 4096, and 2048), else the W-th
+    birth's interval + 20 (the same margin of 8 past the gather: 8221 at
+    8192, 16439 at 16384; declared from `interval_of_birth` on 2026-09-22
+    after the first declaration N + 20 ended with the last records of the
+    wheel in flight or unborn at those two N: 8191 of 8192 and 16357 of
+    16384 gathered, every gathered record on its rung)."""
     world = bell(name, (a, b))
     world["N"] = n
     # The birth wheel [1, N] with this world's N (the count of births mod N).
     for entry in world["measured"]:
         if "lamp" in entry:
             entry["lamp"]["wheel"] = [1, n]
-    world["ticks"] = n + 20
+    last_gather = interval_of_birth(n, int(world["K"])) + BELL_FLIGHT_TO_GATHER
+    world["ticks"] = n + 20 if last_gather <= n + 20 else last_gather + 8
     return world
 
 
@@ -1537,8 +1581,28 @@ def gate_expectations() -> dict[str, object]:
 # count over the W births within one of W x its cell's weight over the
 # total. No number moves after the run: a reading outside its pin is
 # reported with its numbers.
-BELL_24_4_N = (512, 4096)
-BELL_24_4_S = (181, 64)
+#
+# The plateau's run (2026-09-22, the Boss's order on the owner's word of
+# 2026-09-22 through the paper's writer): N = 2048 and 8192, the plateau's
+# remaining powers of two, and N = 16384, where the plateau ends. The pin
+# per N is the closed form of 24.4 (the paper's
+# `checks/s_powers_of_two.txt`): S(N) = 8 (c_1 + c_1') / N - 4 with c_1 the
+# ++ count at (0, N / 8) and c_1' the ++ count at (N / 4, N / 8), the
+# counts the rungs of the fixed correlations E_1 = 46565 / 65773 and E_2 =
+# 46452 / 65773 of the tables at the scale 256; S = 181 / 64 at 2048 and
+# 8192 (the four correlations 181 / 256 in kind at 2048, 725 / 1024 and
+# 723 / 1024 at 8192, as at 4096) and S = 5793 / 2048 = 2.828613 at 16384,
+# where both roundings go up (the second pair 2893 / 4096), the value at
+# which the plateau ends. Declared here before any run and checked against
+# the derivation in `bell_24_4_expectations`, never read off a result.
+BELL_24_4_N = (512, 2048, 4096, 8192, 16384)
+BELL_24_4_S: dict[int, tuple[int, int]] = {
+    512: (181, 64),
+    2048: (181, 64),
+    4096: (181, 64),
+    8192: (181, 64),
+    16384: (5793, 2048),
+}
 BELL_24_4_TOLERANCE = 1
 
 
@@ -1567,8 +1631,11 @@ def bell_24_4_expectations() -> dict[str, object]:
     quadruple; the readings of the run are registered beside them."""
     worlds: dict[str, object] = {}
     s_times_n: dict[str, int] = {}
+    s_closed_form: dict[str, int] = {}
+    s_pinned: dict[str, list[int]] = {}
     for n in BELL_24_4_N:
         correlations: list[int] = []
+        plus_plus: list[int] = []
         for a, b in chsh_labels(n):
             name = f"bell_n{n}_{a}_{b}"
             world = bell_n(name, n, a, b)
@@ -1578,6 +1645,8 @@ def bell_24_4_expectations() -> dict[str, object]:
             counts = counts_of(weights, outcomes(2), wheel)
             e = correlation(counts)
             correlations.append(e)
+            plus_plus.append(counts["++"])
+            fraction = Fraction(e, wheel)
             worlds[name] = {
                 "N": n,
                 "wheel": lamp["lamp"]["wheel"],
@@ -1587,14 +1656,24 @@ def bell_24_4_expectations() -> dict[str, object]:
                 "births": wheel,
                 "counts_under": f"pair_n.{n}.pairs.{a}_{b}.counts",
                 "E": e,
+                "E_over_W": [fraction.numerator, fraction.denominator],
                 "marginal": wheel // 2,
                 **cell_widths(weights, outcomes(2), wheel),
             }
         s_times_n[str(n)] = correlations[0] - correlations[1] + correlations[2] + correlations[3]
+        # The closed form of 24.4: S(N) = 8 (c_1 + c_1') / N - 4, c_1 the ++
+        # count at (0, N / 8) and c_1' the ++ count at (N / 4, N / 8).
+        s_closed_form[str(n)] = 8 * (plus_plus[0] + plus_plus[2]) - 4 * n
+        assert s_closed_form[str(n)] == s_times_n[str(n)], (n, s_closed_form, s_times_n)
+        pinned = Fraction(*BELL_24_4_S[n])
+        assert Fraction(s_times_n[str(n)], n) == pinned, (n, s_times_n[str(n)], pinned)
+        s_pinned[str(n)] = list(BELL_24_4_S[n])
     return {
         "reference": "DERIVATIONS_BEAM section 24.4, the pin written before the run",
-        "S": list(BELL_24_4_S),
+        "S": s_pinned,
+        "S_closed_form": "S(N) = 8 (c_1 + c_1') / N - 4, c_1 the ++ count at (0, N / 8), c_1' the ++ count at (N / 4, N / 8); S_times_N_closed_form = 8 (c_1 + c_1') - 4 N",
         "S_times_N": s_times_n,
+        "S_times_N_closed_form": s_closed_form,
         "tolerance": BELL_24_4_TOLERANCE,
         "worlds": worlds,
     }
@@ -2215,6 +2294,820 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
                             "gathered": 4101,
                             "open": 12,
                         },
+                    },
+                },
+            },
+        },
+        # The plateau's run of 2026-09-22 (the Boss on the model owner's word
+        # of that day through the paper's writer): the pair at N = 2048 and
+        # 8192 and N = 16384, where the plateau ends; the same readings by
+        # kind as the run above, the digests of the four artifacts per world
+        # and the second read (the replication) beside each; the eight runs
+        # of the first declaration of the duration kept under
+        # `first_declaration`. Read by tests/test_amplitude_bell_24_4.py.
+        "run_2048_8192_16384": {
+            "date": "2026-09-22",
+            "order": "the plateau of DERIVATIONS_BEAM section 24.4 measured at N = 2048 and 8192 and its "
+            "end at 16384; the Boss on the model owner's word of 2026-09-22 through the paper's "
+            "writer",
+            "runner": "python -m event_universe --init <world> --output <dir>, headless, one world at a "
+            "time, Python 3.14",
+            "main": "97395444",
+            "branch": "bell-plateau-runs",
+            "package_version": "0.3.1",
+            "source_sha256": "663b984ef7c151e8edd6ba570756e6f6b09a9e19d0196002c3af3ca73ab2ae88",
+            "families_sha256": "28e09ab86a2f774abc39fecb4534fdc0cb15a8dc2d3b56d9ffcb7517512632df",
+            "readings_by_kind": "DETECTOR: the gathers of the first W records by ordinal (the counts per "
+            "cell, E x W, the + counts per party, the rungs and the totals on the "
+            "gather lines); GAMEBOARD: the books and the layer's counts, a "
+            "diagnostic; the host's seconds GAMEBOARD, apart from the model's cost",
+            "host_cost": "the runner's wall time per world, apart from the model's cost: the bar's 21 "
+            "Nodes at fixed local work per interval over the world's intervals, one record's "
+            "offers held at the layer until its completion",
+            "duration": "N + 20 intervals at 2048 (the wheel's last record gathered within them); at 8192 "
+            "and 16384 the first declaration N + 20 ended with the wheel's last records in "
+            "flight or unborn (the lamp's clock stalls 9 and 35 times as the births spend its "
+            "content, BEAM_LAW note 41; a record gathers 12 intervals after its birth), its "
+            "readings kept per world under first_declaration; the duration then declared from "
+            "the generator's interval_of_birth, the W-th birth's interval + 20 (8221, 16439), "
+            "and the worlds run again",
+            "replication": "the second read, 2026-09-22: every world run again in a fresh process on the "
+            "same tree; the digests of state.json, events.jsonl, the gathers and the "
+            "ledger byte-identical to the first read's, the readings equal, on all twelve "
+            "worlds (and on the eight runs of the first declaration)",
+            "verdict": "PASS: every pin met on the twelve worlds, S x N = 5792, 23168 and 46344 (181 / "
+            "64, 181 / 64 and 5793 / 2048), no number moved",
+            "worlds": {
+                "bell_n2048_0_256": {
+                    "initialization_sha256": "161810c34aef742583a306b37b59d89a5e5717d7b27ecf1b2609905b4dc673af",
+                    "expanded_sha256": "e3bde013b807bd5061ce66ecf57f94a98c8f64fce584b22f62a07422ba81312e",
+                    "completed_ticks": 2068,
+                    "elapsed_seconds": 4.84,
+                    "host_wall_seconds": 5.22,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 874, "+-": 150, "-+": 150, "--": 874},
+                            "E": 1448,
+                            "alice_plus": 1024,
+                            "bob_plus": 1024,
+                            "gathered_of_W": 2048,
+                            "rungs_on_every_gather": [874, 1024, 1174, 2048],
+                            "distinct_totals": 124,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 2067,
+                            "gathered": 2055,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs on "
+                    "every gather",
+                    "digests": {
+                        "state_sha256": "527b94fdfbb3d05c3a43cb9d5de2e97c601f47ccdca531f5180a438134fe6128",
+                        "events_sha256": "7a4b6cac39fe0d93c3ee615e48facb021b0a31467a17b07d8482cc0aea9684f5",
+                        "gathers_sha256": "27f0790cc9536f8dc5de688903d1911ab1a7f200831f40a2431990dfeadd83b4",
+                        "ledger_sha256": "4dd632ae64528ff94e2f7c7707a5def21376e81b50b344fe2d0e54fcbcfef469",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 5.14,
+                        "host_wall_seconds": 5.49,
+                    },
+                },
+                "bell_n2048_0_768": {
+                    "initialization_sha256": "4faa93ff5abfce14a556d74b6fb016fc4d4dfc39dbab5d41a848895e4472b412",
+                    "expanded_sha256": "0dabbf67e67c8c2dfe28b6cfdfcd9361ca4b3ab455f81dd4e613a72ecaae1779",
+                    "completed_ticks": 2068,
+                    "elapsed_seconds": 4.92,
+                    "host_wall_seconds": 5.37,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 150, "+-": 874, "-+": 874, "--": 150},
+                            "E": -1448,
+                            "alice_plus": 1024,
+                            "bob_plus": 1024,
+                            "gathered_of_W": 2048,
+                            "rungs_on_every_gather": [150, 1024, 1898, 2048],
+                            "distinct_totals": 124,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 2067,
+                            "gathered": 2055,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs on "
+                    "every gather",
+                    "digests": {
+                        "state_sha256": "f1efea1608aa7381e0092cd8f530bd457f95ba0bb1415f09855dd92c6491b87c",
+                        "events_sha256": "06d92f3d4aad199c10d694386ff3bdeec3242404212a36cdf12b1f3ef54a536f",
+                        "gathers_sha256": "f19ba2f955fce4bb5adffcc925f3330f667586e79906d66d1e00ddbff7b2d062",
+                        "ledger_sha256": "4dd632ae64528ff94e2f7c7707a5def21376e81b50b344fe2d0e54fcbcfef469",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 4.92,
+                        "host_wall_seconds": 5.25,
+                    },
+                },
+                "bell_n2048_512_256": {
+                    "initialization_sha256": "3980ac1dc5472e9fb41c38a216c81be3ff20bd48f171f54020a360b0ff37c277",
+                    "expanded_sha256": "6953d48aa9e2bdcb8ba9f56ef71cfc1835149fe192f772068cbdd97486ca2891",
+                    "completed_ticks": 2068,
+                    "elapsed_seconds": 4.85,
+                    "host_wall_seconds": 5.22,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 874, "+-": 150, "-+": 150, "--": 874},
+                            "E": 1448,
+                            "alice_plus": 1024,
+                            "bob_plus": 1024,
+                            "gathered_of_W": 2048,
+                            "rungs_on_every_gather": [874, 1024, 1174, 2048],
+                            "distinct_totals": 124,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 2067,
+                            "gathered": 2055,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "bc50ae4db31dc99b547c90164023b671f1c8621d1a9aba1b1b55614cadc94a5e",
+                        "events_sha256": "4184b2b16beb4188257159b13d742beb4a03b1e971a55531ccfb8ef99387df9b",
+                        "gathers_sha256": "fff771ac6f47d51656f9e3403727357f4a3b108e6c41e669f184092281ae467a",
+                        "ledger_sha256": "4dd632ae64528ff94e2f7c7707a5def21376e81b50b344fe2d0e54fcbcfef469",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 4.84,
+                        "host_wall_seconds": 5.18,
+                    },
+                },
+                "bell_n2048_512_768": {
+                    "initialization_sha256": "ae1247b74a9c039c520a672f2c44de98dc61a2ed6a96faed235b497e821bd804",
+                    "expanded_sha256": "01c659912a3963f67fa840f3cf3c58ba2a08e0d342d93eb40f8cdcf179eb021f",
+                    "completed_ticks": 2068,
+                    "elapsed_seconds": 5.07,
+                    "host_wall_seconds": 5.48,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 874, "+-": 150, "-+": 150, "--": 874},
+                            "E": 1448,
+                            "alice_plus": 1024,
+                            "bob_plus": 1024,
+                            "gathered_of_W": 2048,
+                            "rungs_on_every_gather": [874, 1024, 1174, 2048],
+                            "distinct_totals": 124,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 2067,
+                            "gathered": 2055,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "90cc54ef5095a0c47b1a69f37b0fa91eaf26c568192b691e44ab7b1ca648cbd3",
+                        "events_sha256": "d767b32b33ba6e0cdb773d2c22cf5f120cbe4c9d0c420136fcd99b5838319bfe",
+                        "gathers_sha256": "61afbef8238b497bc123b8c2594e18d3eb137d24e67b39263c738a6014d5712d",
+                        "ledger_sha256": "4dd632ae64528ff94e2f7c7707a5def21376e81b50b344fe2d0e54fcbcfef469",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 4.85,
+                        "host_wall_seconds": 5.18,
+                    },
+                },
+                "bell_n8192_0_1024": {
+                    "initialization_sha256": "04be5948b0031a61826ecff3ff7261432c4870e2c3ede1d470e4e26b8c644f2e",
+                    "expanded_sha256": "afc1734416df1828d464652754f3f4b84a6e5e2fabdc9c664075fb50548ad01f",
+                    "completed_ticks": 8221,
+                    "elapsed_seconds": 20.26,
+                    "host_wall_seconds": 21.4,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 3498, "+-": 598, "-+": 598, "--": 3498},
+                            "E": 5800,
+                            "alice_plus": 4096,
+                            "bob_plus": 4096,
+                            "gathered_of_W": 8192,
+                            "rungs_on_every_gather": [3498, 4096, 4694, 8192],
+                            "distinct_totals": 149,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 8212,
+                            "gathered": 8200,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "08b6f031808596f68561a481a0915ea36b7780144a2de51f6308d65e691a4bdc",
+                        "events_sha256": "a7125f353204fb6c7d8bb8a8c016842477405229f3048d0f9ed3407ddeb25c8f",
+                        "gathers_sha256": "3675fc93ec896e842dd5e27c4d457a7b2637086eb541f25d834d9ef8c703c458",
+                        "ledger_sha256": "c85b1ffa8c1dc45706762465eea3a9fc6616bf42fbd88be9273b458e310f5688",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 20.44,
+                        "host_wall_seconds": 21.29,
+                    },
+                    "first_declaration": {
+                        "ticks": 8212,
+                        "initialization_sha256": "f907d842da940e6fb14b3174853bcd4b18a9a0bc85de92128252184b3be7e2f2",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 3498, "+-": 598, "-+": 598, "--": 3497},
+                                "E": 5799,
+                                "alice_plus": 4096,
+                                "bob_plus": 4096,
+                                "gathered_of_W": 8191,
+                                "rungs_on_every_gather": [3498, 4096, 4694, 8192],
+                                "distinct_totals": 149,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 8203,
+                                "gathered": 8191,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last cell: "
+                        "the wheel's last records "
+                        "in flight or unborn at the "
+                        "end (1 of W not gathered), "
+                        "every gathered record on "
+                        "its pinned rung, the "
+                        "marginals and the first "
+                        "three cells exact; the "
+                        "duration re-declared from "
+                        "the lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [22.08, 21.36],
+                    },
+                },
+                "bell_n8192_0_3072": {
+                    "initialization_sha256": "dd51ff86b6a35afbf7441ecd8915c9499aaa2005917d9d5edb610cc7870fcf4b",
+                    "expanded_sha256": "e1149c961b3efe56da15e70b2aae473f8a187086cc27bc369df19c292019d602",
+                    "completed_ticks": 8221,
+                    "elapsed_seconds": 20.74,
+                    "host_wall_seconds": 21.91,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 598, "+-": 3498, "-+": 3498, "--": 598},
+                            "E": -5800,
+                            "alice_plus": 4096,
+                            "bob_plus": 4096,
+                            "gathered_of_W": 8192,
+                            "rungs_on_every_gather": [598, 4096, 7594, 8192],
+                            "distinct_totals": 149,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 8212,
+                            "gathered": 8200,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "dccc889329ec208777c1259700388890fb887b8f5dcb8395d477db9aca7769d6",
+                        "events_sha256": "e9f3073265222eb05fbbc6283ff164747c6c4d19d9ca64865d983699b909a7b2",
+                        "gathers_sha256": "77a0e05460afe0679fd01a1d6211d7f4b2f8450b90a6faea334392cde3d98c07",
+                        "ledger_sha256": "c85b1ffa8c1dc45706762465eea3a9fc6616bf42fbd88be9273b458e310f5688",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 20.37,
+                        "host_wall_seconds": 21.25,
+                    },
+                    "first_declaration": {
+                        "ticks": 8212,
+                        "initialization_sha256": "c12a562319e09f4b8637d86d839ecf3a316c2e17424015ffc677a1531a5c18e3",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 598, "+-": 3498, "-+": 3498, "--": 597},
+                                "E": -5801,
+                                "alice_plus": 4096,
+                                "bob_plus": 4096,
+                                "gathered_of_W": 8191,
+                                "rungs_on_every_gather": [598, 4096, 7594, 8192],
+                                "distinct_totals": 149,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 8203,
+                                "gathered": 8191,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last cell: "
+                        "the wheel's last records "
+                        "in flight or unborn at the "
+                        "end (1 of W not gathered), "
+                        "every gathered record on "
+                        "its pinned rung, the "
+                        "marginals and the first "
+                        "three cells exact; the "
+                        "duration re-declared from "
+                        "the lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [21.81, 21.04],
+                    },
+                },
+                "bell_n8192_2048_1024": {
+                    "initialization_sha256": "eb2594e1502542d5930333156cb65c81e38337730c4c0319ae79264a14911087",
+                    "expanded_sha256": "08ffdc6e3805a08bc5186f40fb5a87f0bc5c1d51e40dd62cb5ef19d12c80a907",
+                    "completed_ticks": 8221,
+                    "elapsed_seconds": 20.42,
+                    "host_wall_seconds": 21.62,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 3494, "+-": 602, "-+": 602, "--": 3494},
+                            "E": 5784,
+                            "alice_plus": 4096,
+                            "bob_plus": 4096,
+                            "gathered_of_W": 8192,
+                            "rungs_on_every_gather": [3494, 4096, 4698, 8192],
+                            "distinct_totals": 149,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 8212,
+                            "gathered": 8200,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within "
+                    "one of its width, E x W, both marginals, the "
+                    "rungs on every gather",
+                    "digests": {
+                        "state_sha256": "dcae86e5a718c9ab039cfc3773f071a5e5b4d34407132a992aaf7e6fc8c71067",
+                        "events_sha256": "2922bbcda294e4b7c99990d59a4095823aeeb285847ed1a6cc34d355387e2f5d",
+                        "gathers_sha256": "90a3e993767b8f9e316fd08e29e7c9579bdaeeead44e831777cef55b4841386f",
+                        "ledger_sha256": "c85b1ffa8c1dc45706762465eea3a9fc6616bf42fbd88be9273b458e310f5688",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 20.42,
+                        "host_wall_seconds": 21.31,
+                    },
+                    "first_declaration": {
+                        "ticks": 8212,
+                        "initialization_sha256": "5eaee5e4fc774c1c7b726c71176f65c4f9cec41a9535e04dccc149054f25c23e",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 3494, "+-": 602, "-+": 602, "--": 3493},
+                                "E": 5783,
+                                "alice_plus": 4096,
+                                "bob_plus": 4096,
+                                "gathered_of_W": 8191,
+                                "rungs_on_every_gather": [3494, 4096, 4698, 8192],
+                                "distinct_totals": 149,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 8203,
+                                "gathered": 8191,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last "
+                        "cell: the wheel's last "
+                        "records in flight or "
+                        "unborn at the end (1 of "
+                        "W not gathered), every "
+                        "gathered record on its "
+                        "pinned rung, the "
+                        "marginals and the first "
+                        "three cells exact; the "
+                        "duration re-declared "
+                        "from the lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [21.56, 21.29],
+                    },
+                },
+                "bell_n8192_2048_3072": {
+                    "initialization_sha256": "948b98a7b7c4312550b174cc535b481b5ee45e9089cdf6a7813525e81bc9f8f9",
+                    "expanded_sha256": "d67d5b23ade76cff7a3adf4684b05c1ee55cde9c9111f54b6d8e9ad643e59d43",
+                    "completed_ticks": 8221,
+                    "elapsed_seconds": 20.43,
+                    "host_wall_seconds": 21.45,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 3494, "+-": 602, "-+": 602, "--": 3494},
+                            "E": 5784,
+                            "alice_plus": 4096,
+                            "bob_plus": 4096,
+                            "gathered_of_W": 8192,
+                            "rungs_on_every_gather": [3494, 4096, 4698, 8192],
+                            "distinct_totals": 149,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 8212,
+                            "gathered": 8200,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within "
+                    "one of its width, E x W, both marginals, the "
+                    "rungs on every gather",
+                    "digests": {
+                        "state_sha256": "87ea7222c84031294873e22c7de43ca3fb9e690a6110a2223c85c4d7eaa27e4f",
+                        "events_sha256": "65eeb715f3548954b4bdf145310009db3f0970abf085de302250276c7b1344e5",
+                        "gathers_sha256": "7c12bf1f05341d037da69299f59a3e53fbfc445ad81e28f67417ef7b619e7d0b",
+                        "ledger_sha256": "c85b1ffa8c1dc45706762465eea3a9fc6616bf42fbd88be9273b458e310f5688",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 20.27,
+                        "host_wall_seconds": 21.16,
+                    },
+                    "first_declaration": {
+                        "ticks": 8212,
+                        "initialization_sha256": "de9d66600edf9a47b594004b65bc7aaddbb1d880a5080b37f298fc1e8c95e08b",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 3494, "+-": 602, "-+": 602, "--": 3493},
+                                "E": 5783,
+                                "alice_plus": 4096,
+                                "bob_plus": 4096,
+                                "gathered_of_W": 8191,
+                                "rungs_on_every_gather": [3494, 4096, 4698, 8192],
+                                "distinct_totals": 149,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 8203,
+                                "gathered": 8191,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last "
+                        "cell: the wheel's last "
+                        "records in flight or "
+                        "unborn at the end (1 of "
+                        "W not gathered), every "
+                        "gathered record on its "
+                        "pinned rung, the "
+                        "marginals and the first "
+                        "three cells exact; the "
+                        "duration re-declared "
+                        "from the lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [21.78, 21.2],
+                    },
+                },
+                "bell_n16384_0_2048": {
+                    "initialization_sha256": "f3d980d8d58c51f2067fb720d891f53ef3d812554261018b49edcb88c8b0c3ab",
+                    "expanded_sha256": "65afc22dbc157a8935f537eff4287b087a6492b70d7f1b73d6d36bddf01b81f9",
+                    "completed_ticks": 16439,
+                    "elapsed_seconds": 52.14,
+                    "host_wall_seconds": 54.98,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 6996, "+-": 1196, "-+": 1196, "--": 6996},
+                            "E": 11600,
+                            "alice_plus": 8192,
+                            "bob_plus": 8192,
+                            "gathered_of_W": 16384,
+                            "rungs_on_every_gather": [6996, 8192, 9388, 16384],
+                            "distinct_totals": 153,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 16404,
+                            "gathered": 16392,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "3b8d3454a47cca8295289ab7cd11fd44c1e3bee49c04bbb62d176a227238cddc",
+                        "events_sha256": "4b7a545d02bad7865f9ca079a17b8cd3d7a3417e36b9c7b83d614803e0b18c19",
+                        "gathers_sha256": "8e1ef7bcbfe84c22116353ef4864c6d6663e19d682c9c79008a764587a599215",
+                        "ledger_sha256": "5f7561410c80577b30b4f8846eaaf5a36afb9117efd0374a90b40464f1161f24",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 52.54,
+                        "host_wall_seconds": 55.36,
+                    },
+                    "first_declaration": {
+                        "ticks": 16404,
+                        "initialization_sha256": "554ee53b0d7fe4671b593337e21920d25efff27c5ecd375e1fbcf317cb214e21",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 6996, "+-": 1196, "-+": 1196, "--": 6969},
+                                "E": 11573,
+                                "alice_plus": 8192,
+                                "bob_plus": 8192,
+                                "gathered_of_W": 16357,
+                                "rungs_on_every_gather": [6996, 8192, 9388, 16384],
+                                "distinct_totals": 153,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 16369,
+                                "gathered": 16357,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last cell: "
+                        "the wheel's last records "
+                        "in flight or unborn at "
+                        "the end (27 of W not "
+                        "gathered), every gathered "
+                        "record on its pinned "
+                        "rung, the marginals and "
+                        "the first three cells "
+                        "exact; the duration "
+                        "re-declared from the "
+                        "lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [55.84, 54.63],
+                    },
+                },
+                "bell_n16384_0_6144": {
+                    "initialization_sha256": "94b948a6d066f52f871cb32a602bcf725906a1ceb1862095ea90d8860d461031",
+                    "expanded_sha256": "b4355777666bce4d0ad3d83423713194d05ec18b61601b2dd0733ef5596729da",
+                    "completed_ticks": 16439,
+                    "elapsed_seconds": 53.01,
+                    "host_wall_seconds": 55.81,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 1196, "+-": 6996, "-+": 6996, "--": 1196},
+                            "E": -11600,
+                            "alice_plus": 8192,
+                            "bob_plus": 8192,
+                            "gathered_of_W": 16384,
+                            "rungs_on_every_gather": [1196, 8192, 15188, 16384],
+                            "distinct_totals": 153,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 16404,
+                            "gathered": 16392,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within one "
+                    "of its width, E x W, both marginals, the rungs "
+                    "on every gather",
+                    "digests": {
+                        "state_sha256": "33e40480c5c8c6747981046bc9afe1af9e540971f62f3acc01de814e765747c2",
+                        "events_sha256": "2ffd969047d1a5872041087c62fedc3fac1f8f0cbf71c45c95053fd7bf63e93b",
+                        "gathers_sha256": "79e831b1f8e78f1383a83595872d0f0507d12abc6afde03c81adb8c09e8d75f9",
+                        "ledger_sha256": "5f7561410c80577b30b4f8846eaaf5a36afb9117efd0374a90b40464f1161f24",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 52.42,
+                        "host_wall_seconds": 55.17,
+                    },
+                    "first_declaration": {
+                        "ticks": 16404,
+                        "initialization_sha256": "62cc69a0c0ebba5ab1e9ab416e8ef16521eb6234bf3909edbb7fe53d018a0bcc",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 1196, "+-": 6996, "-+": 6996, "--": 1169},
+                                "E": -11627,
+                                "alice_plus": 8192,
+                                "bob_plus": 8192,
+                                "gathered_of_W": 16357,
+                                "rungs_on_every_gather": [1196, 8192, 15188, 16384],
+                                "distinct_totals": 153,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 16369,
+                                "gathered": 16357,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last cell: "
+                        "the wheel's last records "
+                        "in flight or unborn at "
+                        "the end (27 of W not "
+                        "gathered), every gathered "
+                        "record on its pinned "
+                        "rung, the marginals and "
+                        "the first three cells "
+                        "exact; the duration "
+                        "re-declared from the "
+                        "lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [55.3, 54.18],
+                    },
+                },
+                "bell_n16384_4096_2048": {
+                    "initialization_sha256": "c626664c8d1f07f16754c9d217e0b7a4d5335fde8c4a071d3a20c45e5f5a5e77",
+                    "expanded_sha256": "ee29202e349fd64e3dd5f4769565cbb55d018fab4cc655a9a5a7d186541137f8",
+                    "completed_ticks": 16439,
+                    "elapsed_seconds": 53.28,
+                    "host_wall_seconds": 56.07,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 6989, "+-": 1203, "-+": 1203, "--": 6989},
+                            "E": 11572,
+                            "alice_plus": 8192,
+                            "bob_plus": 8192,
+                            "gathered_of_W": 16384,
+                            "rungs_on_every_gather": [6989, 8192, 9395, 16384],
+                            "distinct_totals": 153,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 16404,
+                            "gathered": 16392,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within "
+                    "one of its width, E x W, both marginals, the "
+                    "rungs on every gather",
+                    "digests": {
+                        "state_sha256": "5570d8fa09a37fc2c58806981b8264a31a544e1d904ef04e9fab0575725b9a59",
+                        "events_sha256": "a809a25d866c128db518bdd851a30bd3648bbc36b95f0423ef23489fd1ebdd79",
+                        "gathers_sha256": "1d88aa51e0b190bec93b36524b512394989705b1e50645b01c077b13f1825479",
+                        "ledger_sha256": "5f7561410c80577b30b4f8846eaaf5a36afb9117efd0374a90b40464f1161f24",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 52.8,
+                        "host_wall_seconds": 55.57,
+                    },
+                    "first_declaration": {
+                        "ticks": 16404,
+                        "initialization_sha256": "fbf71a64597c1f92233bfded65a18fcad26136210fb65983ef3a0330ebc10604",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 6989, "+-": 1203, "-+": 1203, "--": 6962},
+                                "E": 11545,
+                                "alice_plus": 8192,
+                                "bob_plus": 8192,
+                                "gathered_of_W": 16357,
+                                "rungs_on_every_gather": [6989, 8192, 9395, 16384],
+                                "distinct_totals": 153,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 16369,
+                                "gathered": 16357,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last "
+                        "cell: the wheel's last "
+                        "records in flight or "
+                        "unborn at the end (27 "
+                        "of W not gathered), "
+                        "every gathered record "
+                        "on its pinned rung, "
+                        "the marginals and the "
+                        "first three cells "
+                        "exact; the duration "
+                        "re-declared from the "
+                        "lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [54.73, 54.79],
+                    },
+                },
+                "bell_n16384_4096_6144": {
+                    "initialization_sha256": "6a2f8356ef3e4c4f572246d0728d09e256ebe89d493b2350bc29f43f3842b2d9",
+                    "expanded_sha256": "298159ea8ba3c3bc7b309ef329fcea23535161ed9a2ce2e937651f911b1577f1",
+                    "completed_ticks": 16439,
+                    "elapsed_seconds": 53.17,
+                    "host_wall_seconds": 55.93,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 6989, "+-": 1203, "-+": 1203, "--": 6989},
+                            "E": 11572,
+                            "alice_plus": 8192,
+                            "bob_plus": 8192,
+                            "gathered_of_W": 16384,
+                            "rungs_on_every_gather": [6989, 8192, 9395, 16384],
+                            "distinct_totals": 153,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 16404,
+                            "gathered": 16392,
+                            "open": 12,
+                        },
+                    },
+                    "verdict": "MET: every cell its pinned count and within "
+                    "one of its width, E x W, both marginals, the "
+                    "rungs on every gather",
+                    "digests": {
+                        "state_sha256": "d631058dc5be5d1218b3953b8c424f76861320bac5681483661e203538ac9a41",
+                        "events_sha256": "8e7f6c3fec025e1d191aa0c3e195055e9d6fb83ad7f0fb4429933e4f051f230b",
+                        "gathers_sha256": "fafd9ef66e7f2b710cbd0906bf66d278d8972fa662e2d5b3566dedba46704db6",
+                        "ledger_sha256": "5f7561410c80577b30b4f8846eaaf5a36afb9117efd0374a90b40464f1161f24",
+                    },
+                    "replication": {
+                        "date": "2026-09-22",
+                        "how": "the same world run again in a fresh process, one world at a time",
+                        "byte_identical": True,
+                        "elapsed_seconds": 53.23,
+                        "host_wall_seconds": 56.01,
+                    },
+                    "first_declaration": {
+                        "ticks": 16404,
+                        "initialization_sha256": "973f5497cc06955e27d14f38320b3983fbb634844bfbd2c6077e73b8ebd2f186",
+                        "readings": {
+                            "DETECTOR": {
+                                "counts": {"++": 6989, "+-": 1203, "-+": 1203, "--": 6962},
+                                "E": 11545,
+                                "alice_plus": 8192,
+                                "bob_plus": 8192,
+                                "gathered_of_W": 16357,
+                                "rungs_on_every_gather": [6989, 8192, 9395, 16384],
+                                "distinct_totals": 153,
+                            },
+                            "GAMEBOARD": {
+                                "conserved_at_every_completed_tick": True,
+                                "books_balanced_every_tick": True,
+                                "born": 16369,
+                                "gathered": 16357,
+                                "open": 12,
+                            },
+                        },
+                        "verdict": "NOT MET on the last "
+                        "cell: the wheel's last "
+                        "records in flight or "
+                        "unborn at the end (27 "
+                        "of W not gathered), "
+                        "every gathered record "
+                        "on its pinned rung, "
+                        "the marginals and the "
+                        "first three cells "
+                        "exact; the duration "
+                        "re-declared from the "
+                        "lamp's clock",
+                        "byte_identical_replication": True,
+                        "host_wall_seconds": [54.85, 54.5],
                     },
                 },
             },

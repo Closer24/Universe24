@@ -294,7 +294,9 @@ def print_table(readings: list[Reading]) -> tuple[int, int]:
         f"{first.sine(len(first.pixels) - 1):.3f}]; the window [{first.window[0]}, the last tick] per run"
     )
     print(
-        f"{DETECTOR} | world | rate (units per lamp per interval) | window | clicks | rays per pixel per interval "
+        f"{DETECTOR} (the per-interval columns count the pixels' own clock: fixed detectors in no crowd at "
+        "suspension 0, whose tick is their age, record 569; the clock audit of 2026-09-22) "
+        "| world | rate (units per lamp per interval) | window | clicks | rays per pixel per interval "
         "| cells with a click | cells with 2+ rays (share) | clicks in such cells (share) "
         "| record FWHM (count FWHM) | w x record FWHM | record rms (count rms) | narrowing 1 - rms_R / rms_C "
         "| R / I at the peak pixel (at the centre pixel, reported) | R / I least .. greatest | cross term R - I | verdict |"

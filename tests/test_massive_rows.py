@@ -843,6 +843,12 @@ def test_the_pin_is_derived_from_the_world_and_the_tables():
     assert rerelease == pin["first_rerelease_tick"]
     for name, entry in pin["first_click_tick"].items():
         assert rerelease + first[int(name.split("_")[1])] == entry["value"], name
+    # The pace in the row's own clock (2026-09-22): the row's `age` on its
+    # first `click` line at the pixel, the first fan row's flight by the
+    # accumulator rule; the click's tick is the re-release plus this age.
+    for name, entry in pin["first_click_age"].items():
+        assert first[int(name.split("_")[1])] == entry["value"], name
+        assert entry["value"] + rerelease == pin["first_click_tick"][name]["value"]
     assert longest == pin["longest_row"]["value"]
     assert pin["births"] + pin["lamp_leg"]["value"] + longest <= pin["intervals"]
     small = EXPECTATIONS["slits_matter_1024"]

@@ -346,7 +346,10 @@ N/4, 3N/8 on the A2 board, N + 20 intervals, one birth per u: S as the
 integer ratio at each N against the design's 2896/1024 and the bound
 |E - cos| <= 1/N (`expectations.json` under `pair_n`; the register's L6
 entry). `bell_n512_<a>_<b>`, the same at N = 512, added on 2026-09-21
-for the pin of 24.4 (the section below).
+for the pin of 24.4 (the section below); `bell_n2048_<a>_<b>`,
+`bell_n8192_<a>_<b>` and `bell_n16384_<a>_<b>`, the same at N = 2048,
+8192 and 16384, added on 2026-09-22 for the plateau's run (the section
+after it).
 
 ## Bell at N = 512 and 4096 under the click and the wheel: the pin of 24.4
 
@@ -402,6 +405,85 @@ record's offers held at the layer until its completion. Verdict: PASS,
 the pin of 24.4 stands as written; `tests/test_amplitude_bell_24_4.py`
 derives the pin from the worlds and the ladder and replays the eight
 worlds bit-exact against the registered counts.
+
+## Bell at N = 2048, 8192 and 16384: the plateau of 24.4 and its end
+
+The two runs that turn the paper's one prediction from computed into
+measured (the Boss's order of 2026-09-22 on the model owner's word of that
+day through the paper's writer): the Bell world of the section above with
+the one declared integer N changed by the generator (`bell_n2048_<a>_<b>`,
+the CHSH labels 0, 256, 512, 768; `bell_n8192_<a>_<b>`, 0, 1024, 2048,
+3072; `bell_n16384_<a>_<b>`, 0, 2048, 4096, 6144; every other shipped world
+byte-identical), the tables of 2N up to 65536 (`core.phase`), so the
+half-angle table of 32768 at N = 16384 exists. **Pinned before the run
+(`expectations.json` under `bell_24_4`, the S per N declared in the
+generator, the counts per cell under `pair_n`; the derivation the closed
+form of [DERIVATIONS_BEAM 24.4](../../../docs/DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry),
+S(N) = 8 (c_1 + c_1') / N - 4 with c_1 the ++ count at (0, N / 8) and c_1'
+the ++ count at (N / 4, N / 8), the paper's `checks/s_powers_of_two.txt`):**
+S = 181 / 64 exactly at N = 2048 (5792 / 2048, the four correlations
+181 / 256 in kind: the cells 874, 150, 150, 874 on every pair, E x W 1448,
+-1448, 1448, 1448) and at N = 8192 (23168 / 8192, the correlations
+725 / 1024 and 723 / 1024 as at 4096: 3498, 598, 598, 3498 (5800) at
+(0, 1024) and (0, 3072), 3494, 602, 602, 3494 (5784) at (2048, 1024) and
+(2048, 3072)); S = 5793 / 2048 = 2.828613 at N = 16384, the value at
+which the plateau ends (46344 / 16384: 6996, 1196, 1196, 6996 (11600,
+725 / 1024) at (0, 2048) and (0, 6144), 6989, 1203, 1203, 6989 (11572,
+2893 / 4096) at (4096, 2048) and (4096, 6144)); the marginals W / 2 and
+every count within one of W x its cell's weight over the total. The
+register's `within_1_over_N` reads false on every pair at 8192 and 16384
+(as at 4096): that is the tables' fixed correlation E_1 = 46565 / 65773 =
+0.70796 against cos 45 degrees = 0.70711, the closed form's own limit
+2.828425 as N grows, not a miss of a pin. What
+refutes: any count outside its rung by more than one, a marginal off
+W / 2, or S off its pinned fraction; no number moves after the run.
+
+**Run (2026-09-22, the branch `bell-plateau-runs` on main 97395444, the
+runner headless one world at a time, `python -m event_universe --init
+<world> --output <dir>`, Python 3.14; the source sha256
+`663b984ef7c151e8...`, the families' `28e09ab86a2f774a...`, the
+initialization shas per world in the register's block
+`run_2048_8192_16384`; completed and conserved at every tick, the books
+balanced; DETECTOR, the gathers of the first W records by ordinal):**
+every pin met on the twelve worlds: every count equal to its pinned count
+and within one of its width, E x W and S x N as pinned (5792, 23168,
+46344: 181 / 64, 181 / 64, 5793 / 2048), Alice's and Bob's + counts W / 2
+on every world, the rungs on every gather one list, the pinned one (the
+records' totals take 124 distinct values at N = 2048, 149 at 8192 and 153
+at 16384, the tables' rounding by u, and move no rung); one gather per
+record, W of W gathered. The first declaration of the duration, N + 20
+intervals as at every registered N, ended the runs at 8192 and 16384 with
+the wheel's last records in flight or unborn (8191 of 8192 and 16357 of
+16384 gathered, 12 records open at the end, the last cell short by the
+rest, every gathered record on its pinned rung, the marginals and the
+other three cells exact; kept in the register under `first_declaration`
+with its own byte-identical replication): the lamp's exact clock stalls
+where its content has fallen below K (BEAM_LAW note 41; the turn's
+accumulator gains K + 2 - 4 b before the b-th birth pays, one turn per
+K), once by W = 2048, 3 times by 4096, 9 by 8192 and 35 by 16384, and a
+record gathers 12 intervals after its birth; the generator's
+`interval_of_birth` reproduces every registered birth count and stall
+tick, and the duration is now declared from it, N + 20 where the W-th
+gather falls within it (every registered world unchanged) else the W-th
+birth's interval + 20: 8221 at 8192 and 16439 at 16384, the runs above.
+GAMEBOARD: conserved at every completed tick, the books balanced at every
+tick; 2067 born, 2055 gathered and 12 open at N = 2048 (2068 intervals),
+8212, 8200 and 12 at 8192 (8221), 16404, 16392 and 12 at 16384 (16439).
+The host (GAMEBOARD): the runner's wall time 5.2 to 5.5 s per world at
+N = 2048 (the engine's own 4.8 to 5.1 s), 21.4 to 21.9 s at 8192 (20.3 to
+20.7 s) and 55.0 to 56.1 s at 16384 (52.1 to 53.3 s), apart from the
+model's cost, the bar's 21 Nodes at fixed local work per interval over
+the world's intervals and one record's offers held at the layer until
+its completion; the two reads of the twelve worlds about 12 minutes of
+host time in all, the first declaration's eight runs and their second
+reads another 10. **Replication (2026-09-22, the same tree, each world
+run again in a fresh process, the second read):** the digests of
+`state.json`, `events.jsonl`, the gathers and the ledger byte-identical
+to the first read's on every world, the readings equal, the wall times in
+the register. Verdict: PASS, the pin of 24.4 stands as written on the
+plateau and at its end; `tests/test_amplitude_bell_24_4.py` derives the
+pin and the closed form from the worlds and replays the twelve worlds
+bit-exact against the registered counts.
 
 ## L7: the cone, which length a row's phase counts
 
