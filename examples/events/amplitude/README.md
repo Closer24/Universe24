@@ -430,7 +430,11 @@ S = 181 / 64 exactly at N = 2048 (5792 / 2048, the four correlations
 which the plateau ends (46344 / 16384: 6996, 1196, 1196, 6996 (11600,
 725 / 1024) at (0, 2048) and (0, 6144), 6989, 1203, 1203, 6989 (11572,
 2893 / 4096) at (4096, 2048) and (4096, 6144)); the marginals W / 2 and
-every count within one of W x its cell's weight over the total. What
+every count within one of W x its cell's weight over the total. The
+register's `within_1_over_N` reads false on every pair at 8192 and 16384
+(as at 4096): that is the tables' fixed correlation E_1 = 46565 / 65773 =
+0.70796 against cos 45 degrees = 0.70711, the closed form's own limit
+2.828425 as N grows, not a miss of a pin. What
 refutes: any count outside its rung by more than one, a marginal off
 W / 2, or S off its pinned fraction; no number moves after the run.
 

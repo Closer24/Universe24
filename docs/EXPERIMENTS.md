@@ -4200,7 +4200,12 @@ and 9).**
   so the generator now declares the duration from the lamp's turn
   recurrence (`interval_of_birth`, which reproduces every registered
   birth count and stall tick), 8221 here, every registered world
-  unchanged. GAMEBOARD: the books balanced at every tick, 2067 born,
+  unchanged. The rule of every N: a run's duration is declared from the
+  world's own clocks (the lamp's turn recurrence and the flight to the
+  gather), derived before the run and never a fixed margin; a first
+  declaration that falls short is kept with its readings and the
+  re-declaration is derived, never chosen to meet a number. GAMEBOARD:
+  the books balanced at every tick, 2067 born,
   2055 gathered, 12 open at 2048 and 8212, 8200, 12 at 8192; the host
   (GAMEBOARD) 5.2 to 5.5 s of wall per world at 2048 and 21.4 to 21.9 s
   at 8192, apart from the model's cost. Replication (the same day, each
