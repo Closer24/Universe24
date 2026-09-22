@@ -149,13 +149,25 @@ The order's form `A_ret_a` (the action at the last return, set at each
 return) and this row are one arithmetic: `D_a = A_a - A_ret_a`, and the
 row's accumulator is `D_a mod (N h)` because it is zeroed at the return
 (section 1 (c)) and gains exactly what the action row gains between
-returns. Two integers per axis on the record, nothing else (section 7).
+returns, with the action row's own convention at a Link counted but not
+crossed (BEAM_LAW note 30 (ii)): on `main`'s per-axis drive a coincident
+fire on a later axis is lost and its whole part is discarded, and the
+give row of that axis discards the same gain; under form B (`drive_b`)
+no fire is lost and nothing is discarded on either row. So `D_a = A_a -
+A_ret_a` holds on both drives, Link for Link. Two integers per axis on
+the record, nothing else (section 7).
 
 **(b) The return.** A return is a fact of the body's own record: the
 body's momentum on the declared axis crossing zero in the declared
-sense, `sign(p_a)` passing from the declared sign to its opposite
-between one interval and the next (the record's one extra integer: the
-sign of `p_a` at the last interval, 0 at birth). On any loop that
+sense. On the lattice `p_a` passes exactly through 0 (the atoms world
+starts with `p_x = 0` on the +x axis, and the integer push can land
+`p_a` on 0), so the record's one extra integer is the LAST NONZERO sign
+of `p_a` (0 at birth, updated at every interval where `p_a` is not 0),
+and the return fires at an interval where `p_a` takes the sign opposite
+to the declared one while that last nonzero sign was the declared one:
+`0 -> -` at the first interval after the start does not fire (the last
+nonzero sign is 0), `+ -> 0 -> -` does, and `+ -> 0 -> +` does not (a
+touch, not a crossing). On any loop that
 circles a centre once per turn the declared component of **p** changes
 sign twice per turn, once in each sense, so the declared sense fires
 exactly once per loop; on a straight flight it never fires, and a free
@@ -363,8 +375,9 @@ What would make the give first order, named and NOT chosen: a given row
 carrying the body's momentum per unit of content, the label `G p / M`
 in place of `G Q` (then `p' = p (1 - G / M)`, the same loop at the same
 a with `J' = J (1 - G / M)`, downward toward the closure j by `(j + f) G
-/ M` per return, 0.0137 per return at r = 8 with G = 8, the band reached
-in 11 returns at a cost of 88 units), which is a change of the label
+/ M` per return, 0.0137 per return at r = 8 with G = 8: from f = 0.1416
+the band `f < 1 / 16` is reached in 6 returns and the closure f = 0 in
+11, at a cost of 88 units), which is a change of the label
 rule (note 18: the one label of the law is Q per unit of content) and
 therefore a different rule, the owner's to name if he wants it.
 
@@ -407,8 +420,8 @@ section 2 (d)'s fan table, and the pin `j = 4.001` falls, not the form).
 What refutes section 4 (b)'s algebra: an open loop at r = 8 whose
 fraction f (reading 4) falls into the band within the run's returns, or
 whose gives stop while the body has given less than a tenth of its
-content. What confirms it: 9 returns at r = 8 each giving 4 rows of
-content 2, f constant to `10^-3`, the body's content 1836 to 1764.
+content. What confirms it: 10 returns at r = 8 each giving 4 rows of
+content 2, f constant to `10^-3`, the body's content 1836 to 1756.
 
 ## 5. The pins, declared before any run (GAMEBOARD by formula until a detector clicks)
 
@@ -439,13 +452,13 @@ inside the band.
 | The pin | `hydrogen_r12` (closed) | `hydrogen_r8` (open) | Kind | How it is read |
 | --- | --- | --- | --- | --- |
 | the circles per return, `j + f = 2 pi p r / h` | 4.0010, f = 0.0010 | 3.1416, f = 0.1416 (the fraction pi - 3, the generator's `h = 16 p(8)`) | GAMEBOARD by formula (ALGEBRA.md 2 (c) reading 1 is the DETECTOR form) | the electron's rows' phase increments unwrapped over one return, on the faces |
-| the period T | 1490 (the atoms pins, form B) | 811 (`1490 x (8 / 12)^(3 / 2)`, Kepler's ratio of ALGEBRA.md section 2 (b), used as a formula of the limit and compared, not put in) | GAMEBOARD by formula | the count between two `at_proton` clicks from the same axis |
-| the returns in 7500 ticks | 5 (at 1490, 2980, 4470, 5960, 7450) | 9 (the first at 811) | GAMEBOARD by formula | the count of give events; the faces' `light` clicks grouped per return |
+| the period T | 1490 (the atoms pins, form B) | 735 to 750: the register's own r = 8 periods 722 and 736 on `main`'s drive (EXPERIMENTS.md, series H's `r8` row, GAMEBOARD) scaled by form B's 1490 / 1462, with the atoms pins' spread; the lattice's ratio to r = 12 is near 0.50 and not Kepler's 0.544 (the fan's exponent, ALGEBRA.md section 2 (d)), so the shell mean's 811 is the comparison and not the pin | GAMEBOARD by the register's reading, scaled | the count between two `at_proton` clicks from the same axis |
+| the returns in 7500 ticks | 5 (at 1490, 2980, 4470, 5960, 7450) | 10 (the first at about 740) | GAMEBOARD by formula | the count of give events; the faces' `light` clicks grouped per return |
 | the give per return | 0 on every return (`floor(16 x 0.0010) = 0`) | 2 quanta per row, 4 rows, G = 8 units of content | EXPECTED DETECTOR (the faces' clicks of `light` rows, content 2 each, 4 per return) | the faces' escaped lines: family `light`, content per row |
 | the given rows' frequency | none | 2 steps per interval | EXPECTED DETECTOR | two faces' phases and counts on one line (section 4 (d) 2) |
-| the body's content at the end | 1836 | `1836 - 9 x 8 = 1764` | GAMEBOARD (the record); DETECTOR through the faces' summed content 72 | the sum of the `light` rows' content on the faces |
-| the fraction's drift per return | 0 | `+ 1.2 x 10^-4` (section 4 (b)), 1.1 x 10^-3 over the run, below the band's resolution | GAMEBOARD by formula | reading 4 at the last return against the first |
-| the loop's widening | none | `a' = a (1 + 2 G / M)`: 0.87 percent per return, 8 to 8.6 Links over 9 returns | GAMEBOARD by formula (the arrival Nodes of the electron's rows, DETECTOR with a detector at every Node) | not read by the faces |
+| the body's content at the end | 1836 | `1836 - 10 x 8 = 1756` | GAMEBOARD (the record); DETECTOR through the faces' summed content 80 | the sum of the `light` rows' content on the faces |
+| the fraction's drift per return | 0 | `+ 1.2 x 10^-4` (section 4 (b)), 1.2 x 10^-3 over the run, below the band's resolution | GAMEBOARD by formula | reading 4 at the last return against the first |
+| the loop's widening | none | `a' = a (1 + 2 G / M)`: 0.87 percent per return, 8 to 8.7 Links over 10 returns | GAMEBOARD by formula (the arrival Nodes of the electron's rows, DETECTOR with a detector at every Node) | not read by the faces |
 | the tolerance | the give exactly 0 (an integer) | the give exactly 2 per row; f within 1/16 of 0.1416; T within the atoms pins' spread (1454 to 1658 registered at r = 12, `+- 7 percent`) | | a give of 1 or 3 per row at r = 8 is a lattice reading of f outside `[0.125, 0.1875)`, the pin missed and f read, not the form refuted |
 
 The refuting reading of the form is any `light` click in `hydrogen_r12`
