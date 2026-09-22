@@ -95,4 +95,6 @@ level of its first loop 70 against 71, R3 PASS); the r = 12 loop stays five
 returns (R1 and R3 PASS at the bands' edges, 1341 and 47) and releases once,
 four `light` rows of content 4 at its fourth return, the Planck identity
 read on the +x and +y faces (R5). Two levels give one line and no ratio:
-R4 NOT READ, NATURE row 6 stays NOT YET.
+R4 NOT READ, NATURE row 6 stays NOT YET. By the model owner's word
+(record 997) these runs are the side track's record beside the paper: the
+paper does not cite them as a reading of the levels.

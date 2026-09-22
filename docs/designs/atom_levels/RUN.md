@@ -24,6 +24,16 @@ the host's tick) or COMPUTATION (the level from two counts, the ratio), as
 the reader labels it. Bohr's whole number, Kepler's period and Balmer's
 ratio appear only on the comparison side (record 817).
 
+**The side track (the owner's word, record 997, about 15:40Z).** The
+atom's levels cannot be read on any lattice we can run (the electron's
+radius over the nucleus's is about sixty thousand in nature); the atom
+enters the paper by the algebraic formula alone, stated as the algebra's
+convergence and not shown in nature, and these runs are the SIDE TRACK's
+record beside the paper: the paper does not wait for them and does not
+cite them as a reading of the levels. The side track's next design, a
+declared scale of the electron's coupling to the proton under its own
+identity, is [SCALED_COUPLING.md](SCALED_COUPLING.md).
+
 **The verdict in one line.** The r = 3 electron LEFT the board through
 `face:+x` at tick 733 (R1 FAIL: the fan's grain at small r, the named
 risk, a finding); the r = 7 loop stays four returns with its first return
