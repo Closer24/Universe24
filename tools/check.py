@@ -215,6 +215,8 @@ def select(changed, sources):
         tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
             tests.add("tests/test_architecture.py")
+            # The algebra gate reads the physical modules by their path.
+            tests.add("tests/test_integer_algebra.py")
         # A world, an asset or a tool is a runtime dependency of the tests
         # that name its file (a tool is loaded by its path, never imported).
         if path.startswith(("examples/", "tools/")):
