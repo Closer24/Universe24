@@ -1022,3 +1022,159 @@ EXPERIMENTS lines 6972 to 7165; NATURE row 13, line 115: NOT COMPARED,
 gamma an input of kind 2). Nothing of it enters any row above; the
 consistency rule holds there too: the shift is read at the screen's
 pixels, the delay at the screen's count.
+
+## III. The certification of the inputs
+
+**Nothing of Maxwell and nothing of optics is assumed.** No wave
+equation, no field **E** or **B**, no Huygens principle, no Fresnel
+coefficient, no Snell's law, no Malus's law, no Planck spectrum and no
+Doppler formula is an input of any row. What each row uses: the flight
+table (L1, L2), the phase per age and the exact phase at the click (L3),
+the release's cost and the dictionary of h (L4), the count of Nodes on a
+shell (L5, arithmetic), the click's bilinear form and the one click (L6),
+the crossing rule (L7), the age wall at coefficient 1 (L8) and the label
+bit with its rotation (L9), every one a line of `main` at 46cf692b with
+its line number in section I. The wave equation, its Lorentz symmetry
+for the free rows, the inverse square, the fringes, the cos^2 and the
+gravitational redshift come OUT of those lines at the rungs named; where
+a row says "the paraxial limit", "the shell mean", "the fan of every
+direction" or "within the tables' rounding" it names the limit taken and
+its error term, and where the lattice departs from the limit at finite
+grain it says MEASURED ONLY.
+
+**What is assumed of the world, said once.** (A1) a click is the passage
+of information from Node to Node, at most one Node per interval; (A2) a
+click's content is an amplitude with a phase that splits between staying
+and hopping (the click frame lines 41 to 53). Every row uses (A1) at the
+click, as the one Node per interval of the count's ratio; (A2) is used
+only at the click through Born's form (L6, the one imported member `c_1 =
+1` of 24.1 row 12), and in no row's dynamics: the law's rows hop whole
+(the click frame lines 185 to 202), so every `r` above is the law's `r =
+1` at an empty Node and `1 / (1 + k)` in a crowd, and nature's root
+(gamma) is absent at second order in v wherever a row reads a moving
+record (II.4, II.5), which is stated as FAIL where the register has read
+it and never softened. The frame's own assumption, that the board is
+read only through detectors and emitters (Highlights line 401, record
+762), is the consistency rule's ground and is assumed, not shown.
+
+**What is not in the law, said under its own identity, outside the law.**
+Nothing new is proposed inside the law here. Three things named above
+stand outside it and are cited as such: covariant-readings-v1 (the
+identity with `r = E'_0 / E'`, II.4 (f)), the emitter's aberration
+operation of DERIVATIONS_BEAM 12.2 (II.5, a proposal, not on `main`) and
+optical-v1 with every family under one wall (II.11, II.12, a hypothesis
+under its own identity). No seventh verb is used in any row. Every
+number in section II is a formula's value (GAMEBOARD until a detector
+reads it, named so) or a registered detector reading named so; none is
+pinned here from a run, and no run is named.
+
+**The three tests, for the record** (skills/workflow.md, "The three
+tests"): this document adds no rule, so there is nothing to admit; every
+operation it reads is on `main` and already admitted. The verdicts:
+generic, one flight, one phase, one click for every family (the same
+rows serve `light`, `matter` and the Bell pair); vector, every row a
+translation, a declared matrix, a bilinear form or a comparison, no root
+at run time (the roots in section II are the derivation's, taken on
+paper in the limit, never a step of the law; `isqrt` at load is the
+declared rounding); local, every count a detector's own record and the
+six neighbours, nothing kept at a Node (the consistency rule is LOCALITY-1
+read Outside: a reading at another place is a detector at that place).
+
+## IV. The verdict table
+
+SHOWN: it comes out algebraically under section I's lines at the rung
+named. MEASURED ONLY: no closed form Outside; the register's run rises
+Outside. NEITHER: no closed form and no reading. FAIL: a registered pin
+missed, or nature's form missed where the register has read it (a pin
+met is MET, a pin missed is FAIL, in the same font). The register's
+readings by kind; every number DETECTOR unless labelled.
+
+| The formula Outside | Verdict | The one line that decides | The register (DETECTOR unless labelled) |
+| --- | --- | --- | --- |
+| the speed of light, `c_D = Q |D|_2 / T_D` by the row's age or by the pulse and its return; the anisotropy `1 / c_D^2 = 2.954 / 2.971 / 3.000` on the heading, the face diagonal and the body diagonal; the isotropic limit `1 / sqrt 3` | SHOWN, rung 1 in the count, rung 2 in the isotropy; FAIL against nature's isotropy at the grain | the flight table's `tau_k = ceil((2 k - 1) T_D / (2 S_1 Q))` (L1, L2), the age on the record read at B, the round trip A's own count | series Q: 290 of 290 at the derived tick, Node and face, the pace 0.5718 to 0.5893, mean 0.5810 (MET); series T: 172 counts for 100 Links, `1.72 = 110 / 64` (MET); NATURE 5a: `7.6 x 10^-3` against `10^-17` (FAIL at Q = 64, a bound `Q >= 5.8 x 10^16`); the two-way c after a detector NOT MADE (pinned here: 110 counts over 32 Links there and back, GAMEBOARD) |
+| `E = h f` at a click, `lambda = h / p` | SHOWN, rung 1 (an identity of the release and the calibration `h_A = h_q N`) | the content per click is the birth's `h_q s` and follows nothing in flight (L4); the frequency B counts is the lamp's turn per `k_AB` | the paid lamps' stalls (159 births in 160 at 2 per birth; L1's at tick 2) (MET at the emitter); Q's clicks carry their birth content (MET); T's and X's controls `1 + z = 1.0000` (MET); `lambda` through L2's fringes (MET); the massive row's `256 / 55` (23.3) NOT RUN |
+| the intensity of a source: `q K / (4 pi r^2)` per detector in the shell mean, `1 / r^0` on a beam, the count over a closed surface conserved | SHOWN, rung 2 (the shell mean); rung 1 on a beam and for the conservation; the finite-r ripple MEASURED ONLY | K beams over `N(r)` Nodes (L5); every row leaves the shell once | Q: 290 of 290 at the faces (MET, the conservation); T's presence word 1.3000 at 3 and at 6 Links (MET as `1 / r^0` on a beam; FAIL against nature's `1 / r` for a clock, NATURE 12); X's presence word inside 0.8390 for 0.839989 (MET, the flux rises toward the shell); the `1 / r^2` at two radii after a detector of light NOT MADE (NATURE 11a pinned, not run); series C and E GAMEBOARD, not compared |
+| the Doppler of a moving detector `1 / (1 -+ v)`, of a moving lamp `1 +- v`, the transverse 1, the round trip `(1 + v) / (1 - v)` | SHOWN, rung 1; matches nature at first order; FAIL at second order on the law | the crossing count `1 +- v / c` (L7) and the rows' spacing `c -+ v` (2.5); `r = 1` on the law where nature has `sqrt(1 - v^2)` | the crossing counts 45 / 58 / 19 / 38 in 32 and 48 intervals, 183 and 311 over 32 Links (MET, `tests/test_crossing.py`); G2 `coasting_none` z = v / c within 0.004 per star (MET on the law's form); NATURE 4b: 0.2636 against 0.315 at beta 0.2674 (FAIL, gamma absent); series S under covariant-readings-v1 0.3674 for `0.369 +- 0.003` (MET in its domain, beside the law); the one-way ratio `k_BA / k_AB` NOT MADE |
+| the aberration of a moving detector: `tan alpha = v / c` by the passage of clicks, 0 by the click's face | SHOWN at first order; NOT READ; the second order the law's `r = 1` | Nodes apart over counts apart compose as `c -+ v` (4.2); the label is the row's own | none registered; 12.2's emitter aberration pinned in 12.4, NOT RUN, not on `main` |
+| the two-slit fringes: bright where `L_1 - L_2 = j lambda`, `lambda = c N d / n`, one turn of the phase per age per fringe; Young's `lambda D / s` paraxial | SHOWN, rung 2 (the fan), Born rung 1 within `1 / (2 N)` | the two rows' age difference at ONE detector, `(n / d)(L_1 - L_2) / c` steps, squared at the click (L3, L6) | L2b: the bands' centres 23.5 apart for the exact law's 23.3 (MET within the pixel), the dark cells 0 to 3 (MET); the visibility 0.966 against 0.98 (FAIL by 0.014, the fan's grain); Pearson 0.891 against the pin 0.96 (FAIL, the pin the screen's fan's); L1's unequal arms 64 / 0, 32 / 32, 0 / 64 at 0, 16, 32 steps (MET exactly); W's massive bands 37.06 / 59.99 / 83.02 (PASS) |
+| the click's indivisibility: one click per record, never two; `alpha = 0`; the dark port 0 | SHOWN, rung 1 (exact) | the ladder chooses one cell and deletes the offers (L6, note 37 (x)); the cancel exact | `mz_equal` 64 / 0 (NATURE 2b PASS, MET); `mz_345` 63 / 1, 31 / 1, 125 / 3 at N = 64, 32, 128 (MET exactly); `ev_29` 32 / 17 / 15, 64 clicks for 64 records at three places (MET) |
+| the redshift through a crowd `1 + z_d = r_B (1 + k_A)(1 + v / c) = r (1 + z)`; at rest `(1 + k_A) / (1 + k_B)`, the potential's `1 / r` at first order | SHOWN, rung 1 (three counts), the `1 / r` rung 2; the second order in k the law's own (below reach) | the age wall at coefficient 1 on the lamp's births and on the detector's own count, the row's phase never stretched (L8, L3, BEAM_LAW 609) | G: 288 of 288 within 2 percent, `H t_0 = 1.029` (MET); tier (b)'s `r_w` 0.7500 to 1.0000 and the crowd's well blue for 15 and 20 of 24 (record 754, PR #777 pending); G2: 648 of 648 and the luminosity 648 of 648 (MET); T: 2.6517 and 4.1500, the ratio 1.907 for `1.909 +- 0.05` (MET); NATURE 12's presence word 1.000 against 2.00 (FAIL, the default word); X: nine of nine, inside 1.0029, outside 0.6285 (MET); the far lamp 11b `b = 1` (PASS pinned), 11a `q_eff = +1` against `-0.53` and 11c `n = 1` against 4 (FAIL pinned, not run) |
+| Malus: `P(pass) = cos^2 theta` within the tables' rounding | SHOWN, rung 1 within `+0.0019` | the rotated label's Gram form (L9, L6) | A12 under the click: 128 / 0 / 64 of 256 (NATURE 9 PASS, MET exactly); 219 / 256 and 187 / 256 at 22.5 degrees (MET on the pins; OPEN at `10^-3`) |
+| the Bell pair's `E(a, b)` and `S(N)` at two places, the marginals `1 / 2` exact | SHOWN, rung 1 (exact at every N) | one Gram form over two arms, one cell at two places (L6) | 27 / 5 / 5 / 27, `S = 2.75` for Hensen's `2.42 +- 0.20` (NATURE 1a PASS, MET); against Poh's `2.82759 +- 0.00051` REFUTED at N = 64 and 256 (FAIL), OPEN on the plateau 2.828125 |
+| reflection | NEITHER | a row meets no surface; a mirror is the apparatus's declared table (input 23) | the register's mirrors are declarations (L1), no law read |
+| refraction | NEITHER | no crowd slows or bends a row on `main` (5.4, P9); optical-v1 a hypothesis outside the law, no Snell there either | series K's 0.000 (the rows blind) |
+| the bending and the delay by a mass | the Einstein Mathematician's; named, not derived | `main` blind; the every-family wall a hypothesis under its own identity | K 0.000; the optical pin worlds `-1.993 / -3.989`, the far worlds `-3.403 / +4.33` inside their pins, the delays' ratio 1.67 outside `2.00 +- 0.25` (NATURE 13 NOT COMPARED, gamma an input) |
+
+**The verdict line: LIGHT OUTSIDE FROM THE BOARD: PARTLY.** SHOWN under
+the nine lines of the law and (A1) at the click: the speed of light
+Outside by a row's age and by a pulse and its return with its anisotropy
+and its isotropic limit, `E = h f` and `lambda = h / p` as identities of
+the release, the intensity's inverse square in the shell mean and its
+`1 / r^0` on a beam, the two Doppler forms and the r-free round trip,
+the aberration at first order, the two-slit law with its spacing from
+the phase per age, the one click per record, the redshift through a
+crowd as the product of three counts, Malus's cos^2 and the pair's
+correlation; and MEASURED where the register reads them: Q (290 of
+290), T (172; 1.907), G (288 of 288), G2 (648 of 648), X (nine of nine),
+L1 and L2b (the spacing 23.5 for 23.3), `mz_equal` (64 / 0), A12 (128 /
+0 / 64), the pair (2.75). FAIL, in the same font, where the law's `r =
+1` meets nature's root: the Doppler at second order (4b, 0.2636 against
+0.315) and with it the transverse and the aberration's second order; the
+anisotropy of c at the register's grain (5a); the two-slit visibility
+(0.966 against 0.98) and its correlation pin; the presence word's form
+(12); the far lamp's brightness and Tolman's test (11a, 11c, pinned not
+run); the precision Bell test at the registered N. MEASURED ONLY: the
+lattice's ripple at finite r. NOT MADE: the two-way c after a detector,
+the inverse square of light at two radii, the moving detector's one-way
+ratio, the massive row's `h / p`. NEITHER: reflection and refraction.
+The one line: every Outside formula of light is a ratio or a difference
+of counts at clicks, the emitter's and the detector's, joined by the
+flight's two accumulators, and where nature's formula has a root the
+law's count has none, which the register reads and this document does
+not hide.
+
+## V. Three sentences for the paper (marked as such; the paper coordinator's to take or leave)
+
+(i) Every equation of light the model reaches Outside is the same map
+written for a named emitter and a named detector: the emitter's births
+at its place pass Inside as a row with a content, a phase, a direction
+and an age; the flight translates two accumulators at declared constant
+rates and reads nothing; the click at the detector's place reads the
+row's record and Born's form at one cell, and the Outside formula is a
+ratio or a difference of the two detectors' own counts, so that the
+speed of light, Planck's `E = h f`, the inverse square, the Doppler
+forms, Young's fringes, the one click per quantum, the gravitational
+redshift and Malus's law are shown, not assumed, at the rungs stated.
+(ii) These come out with the lattice's own grain named at each: the
+speed of light `Q |D| / T_D` per direction with `1 / c^2` from 2.954 on a
+heading to 3.000 on the body diagonal and `1 / sqrt 3` in the limit, the
+fringes to a pixel, the redshift through a crowd as the product of three
+counts, and they match the register's detectors where it reads them
+(290 of 290 face clicks at the derived tick, the fringe spacing 23.5 for
+23.3, `1 + z` 2.6517 and 4.1500 for 2.650 and 4.150, one click per
+record in 64 of 64). (iii) What the model does not have it states in the
+same font: no root enters any count, so the Doppler, the transverse
+shift and the aberration match nature at first order in `v / c` and miss
+it at second (the registered 0.2636 against 0.315); light is neither
+reflected nor refracted by any law of the model, only by declared
+tables; and a reading at another place is always a detector at that
+place, which is why every number above is a click and none is the tick.
+
+## VI. Links
+
+[The click frame at 3268e7d5 (PR #769, not yet merged)](https://github.com/Closer24/Universe24/blob/3268e7d5bff7b27d7d8adf2062f0f51a356bcbe5/docs/designs/click_frame/DERIVATION.md):
+section 0 (lines 8 to 202), section 7 (lines 688 to 912), section 8
+(lines 913 to 1119); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md)
+sections 2, 3.2, 4.1, 4.2, 5.1, 5.2, 5.4, 6.4, 6.5, 6.7, 7.1, 9.3, 12.2,
+13.2, 15.3, 23.2, 23.3, 24.1, 24.3, 27; [BEAM_LAW](../../BEAM_LAW.md)
+sections 3 and 5 and its notes 37, 45 and 48;
+[the statement of c](../light_speed/FORM.md); [the far lamp's
+brightness](../far_lamp/BRIGHTNESS.md); [Malus](../malus/NOTE.md);
+[every family under one wall](../one_wall/EVERY_FAMILY.md);
+[NATURE](../../NATURE.md) rows 1a, 2a, 2b, 4b, 5a, 5b, 9, 11a to 11c, 12
+and 13; [EXPERIMENTS](../../EXPERIMENTS.md) series Q, S, T, G, G2, X, L,
+W, A12, the optical pin worlds, E15 and E16;
+[TERMINOLOGY](../../TERMINOLOGY.md), the readings;
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector), lines 360, 381,
+395 to 403; the log's records 158, 394, 569, 709, 723, 754, 762, 768, 772
+and 777 ([LOG_2026-09-20](../../LOG_2026-09-20.md)).
