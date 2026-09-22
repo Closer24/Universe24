@@ -188,4 +188,7 @@ def test_the_holds_line_is_a_diagnostic_out_of_the_deciding_set(readings_tool):
     assert not readings_tool.deciding(
         f"[{board}] (a diagnostic, not counted: the step records) the set holds"
     )
-    assert readings_tool.deciding(f"[{readings_tool.DETECTOR}] the books")
+    # The books are a gate of the record (GameBoard by ENGINE.md's table), out
+    # of the readings count; a body's own push decides.
+    assert not readings_tool.deciding(f"[{readings_tool.GATE}] the books (a gate of the record)")
+    assert readings_tool.deciding(f"[{readings_tool.DETECTOR}] body 1 (u): the push per interval")

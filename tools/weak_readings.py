@@ -16,13 +16,13 @@ such thing" about the host's readings of the GameBoard):
   spectrum) and their ages (the flight), the nucleons' own clocks (their
   `age` and `waited`), each measured event's `become` line (the tick its
   clock fired, the count it read: the event's own record, DETECTOR by
-  ENGINE.md's table; the audit of record 567, F8) (J1, J3);
+  ENGINE.md's table; the audit of record 567, F8), its `contact` records
+  (the hand-overs taken) and its momentum (J1, J3; record 569);
 - GAMEBOARD readings, the host's view of the mechanism: the expectation
   computed from the engine's flight rule (the rays born early enough to
   reach a distance within the run) or from the engine's own presence
   reading before the run (`expectations.json`), the source's stride, the
-  bodies' steps, their attempted steps and their `contact` records (the
-  hand-overs). Since the model owner's rule of 2026-09-22 (records 562
+  bodies' steps and their attempted steps. Since the model owner's rule of 2026-09-22 (records 562
   and 564) a GAMEBOARD criterion is a diagnostic (the kind DIAGNOSTIC
   below): printed with its expectation, never counted inside or outside,
   naming the detector reading behind it, not yet read.
@@ -520,7 +520,7 @@ def w_expectations(reading: Reading, expected: dict[str, object]) -> list[Criter
         (
             f"the momentum exchanged: -{label} on the neutron become proton, +{label} on the proton",
             neutron.momentum == (-label, 0, 0) and proton.momentum == (label, 0, 0),
-            GAMEBOARD,
+            DETECTOR,
         ),
     ]
 
@@ -621,8 +621,8 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
         for thing in bodies:
             print(
                 f"[{GAMEBOARD}]   number {thing.number} ({thing.family}) at {thing.position}: {thing.steps} steps "
-                f"of {thing.attempts} attempted (the refused ones handed over), {thing.contacts} hand-overs "
-                "taken (the step and contact records: a diagnostic)"
+                f"of {thing.attempts} attempted (the refused ones handed over; the step records, a diagnostic); "
+                f"[{DETECTOR}] {thing.contacts} hand-overs taken (the event's own `contact` records)"
             )
         total = sum(reading.shell_clicks.values())
         median, low, high, ratio = curve_shape(reading.shell_clicks)

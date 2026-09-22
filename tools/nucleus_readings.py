@@ -16,14 +16,14 @@ is no such thing" about the host's readings of the GameBoard):
   records, summed over the families and per family, in label units), the
   hand-overs at its refused steps (its `contact` records: the count, the
   first tick, the largest component, whether its label is 0 after each),
-  the tick by which the pushes it read outweigh a declared kick, and the
-  clicks on the border `lifetime` per interval;
+  the tick by which the pushes it read outweigh a declared kick, the sum of
+  the pushes over a row of the square (the shear, the bodies' own reads)
+  and the clicks on the border `lifetime` per interval;
 - GAMEBOARD readings, the host's view of the mechanism, which exist for us
   and not in reality: the bodies' steps (the count, the first step and its
-  direction, the final position, the escape through a face), the
+  direction, the final position, the escape through a face) and the
   separation of a pair over the run (its start, its largest value, whether
-  it ever shrank after growing), and the sum of the pushes over a row of
-  the square (the shear).
+  it ever shrank after growing).
 
 The expectation, written before the runs (README.md, docs/EXPERIMENTS.md):
 the deuteron at one Link reads 310 967 280 640 per interval on each body
@@ -362,10 +362,10 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
 
 def deciding(label: str) -> bool:
     """A criterion counts inside or outside when it reads a body's own
-    records (its pushes, reads, hand-overs, kicks and clicks, the border's
-    clicks); a step, a position or a separation is a diagnostic (record
-    567, F12)."""
-    return any(word in label for word in ("push", "read", "hand", "kick", "click", "leave"))
+    records (its pushes and their row sums, the shear; its reads, hand-overs,
+    kicks and clicks; the border's clicks); a step, a position or a
+    separation is a diagnostic (record 567, F12)."""
+    return any(word in label for word in ("push", "shear", "read", "hand", "kick", "click", "leave"))
 
 
 DEUTERON_PUSH = 310_967_280_640

@@ -49,9 +49,10 @@ Two fast cases pin the tool to the engine's record:
     1839, its charge (0, 1), its momentum (192, 0, 0); the border
     `lifetime` 0 for `w`; against the pinned integers (at 3, the click
     tick 4, the label 192, the content 1839, the charge [0, 1]) the five
-    criteria inside, the kinds DETECTOR (the `become` line, the event's own
-    record: record 567, F8), DETECTOR, DETECTOR, DETECTOR, GAMEBOARD; with
-    the click tick pinned at 5 the second outside. In (b) the criterion
+    criteria inside, every kind DETECTOR (the `become` line, the click, the
+    charge, the border and the momentum: a measured event's own records,
+    records 567 F8 and 569); with the click tick pinned at 5 the second
+    outside. In (b) the criterion
     "the pair holds" of `j3_deuteron` is the kind DIAGNOSTIC (F9): printed,
     out of the deciding set.
 (d) the register of series J2 (`examples/events/weak/expectations.json`)
@@ -297,13 +298,10 @@ def test_read_run_reads_the_w_world(tmp_path):
     }
     criteria = TOOL.expectations(reading, pinned)
     assert [ok for _, ok, _ in criteria] == [True] * 5
-    assert [kind for _, _, kind in criteria] == [
-        TOOL.DETECTOR,
-        TOOL.DETECTOR,
-        TOOL.DETECTOR,
-        TOOL.DETECTOR,
-        TOOL.GAMEBOARD,
-    ]
+    # Every criterion of the W world reads a measured event's own record
+    # (the become line, the click, the charge, the border, the momentum:
+    # record 569), so every kind is DETECTOR.
+    assert [kind for _, _, kind in criteria] == [TOOL.DETECTOR] * 5
     late = {"w": {"w_exchange": {**pinned["w"]["w_exchange"], "click_tick": 5}}}
     assert [ok for _, ok, _ in TOOL.expectations(reading, late)] == [True, False, True, True, True]
 

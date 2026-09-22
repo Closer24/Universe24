@@ -253,9 +253,12 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
                 f"the final {reading.final_spread:.2f}; the toy's first step {fate.get('toy_first_step', fate.get('engine_first_step'))}",
             )
         )
+    # The books are the GameBoard's ledger (ENGINE.md's table) and a gate of
+    # the record (record 567): they fail the tool, never a reading counted
+    # inside or outside.
     out.append(
         (
-            f"[{DETECTOR}] the books",
+            f"[{GATE}] the books (a gate of the record, not a reading)",
             reading.conserved,
             "balanced at every tick" if reading.conserved else "NOT balanced",
         )
@@ -263,11 +266,15 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     return out
 
 
+GATE = "GATE"
+
+
 def deciding(what: str) -> bool:
     """A pin counts inside or outside when it reads the bodies' own records
     (DETECTOR); a GameBoard line (the steps, the separations) is a
-    diagnostic, printed and not counted (record 567, F13)."""
-    return not what.startswith(f"[{GAMEBOARD}]")
+    diagnostic, printed and not counted (record 567, F13); the books are a
+    gate of the record, failing the tool and never counted as a reading."""
+    return not what.startswith((f"[{GAMEBOARD}]", f"[{GATE}]"))
 
 
 def report(out_dir: Path) -> int:
@@ -292,7 +299,10 @@ def report(out_dir: Path) -> int:
                 f"final {body.final}"
             )
         for what, ok, numbers in expectations(reading, pinned):
-            if deciding(what):
+            if what.startswith(f"[{GATE}]"):
+                verdict = "PASS (a gate, not a reading)" if ok else "FAIL (a gate, not a reading)"
+                failed += not ok
+            elif deciding(what):
                 verdict = "inside" if ok else "OUTSIDE"
                 inside += ok
                 outside += not ok

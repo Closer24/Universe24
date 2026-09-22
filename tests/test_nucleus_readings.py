@@ -129,6 +129,8 @@ def test_a_step_or_a_separation_is_a_diagnostic_and_a_push_or_a_click_decides():
     (records 562 and 564; the audit of record 567, F12)."""
     assert TOOL.deciding("the push on the proton 310,967,280,640 toward the neutron")
     assert TOOL.deciding("the label 0 after every hand-over")
+    # The shear is a sum of the bodies' own pushes per row: a detector pin.
+    assert TOOL.deciding("the shear 49,090,283,970 per row per interval")
     assert TOOL.deciding("290 lifetime clicks per body per interval from tick 4")
     assert TOOL.deciding("both bodies leave through the faces")
     assert not TOOL.deciding("no step in the run")
