@@ -4735,3 +4735,11 @@ computation), one line takes the number if BOUND.md lands. The atom is
 out of the paper. The one thing waited for: the order channel's NATURE
 row (the Order Channel Runner, the pins 15/16 and -5/16 against
 nature's 0), into Table 2 on its merge SHA.
+
+## Applied (2026-09-22, the owner's question "why did you take the octahedron out of the PDF?")
+
+The figure had been cut at 8f7408eb (Step B, the cut to 35 pages under
+record 852, A.2 row 2), with its words kept in Section 3. Returned as
+Figure 2 in Section 3 with its caption as it was (drawn by
+octahedron.py from the definitions, no run), the paragraph pointing at
+it. 41 pages.

@@ -3125,6 +3125,17 @@ CORRECTIONS = [
         "\\bibitem{register} The experiments register, \\texttt{docs/EXPERIMENTS.md} of the archived code \\cite{zenodo}.",
         "\\bibitem{register} The experiments register, \\texttt{docs/EXPERIMENTS.md} of the archived code \\cite{zenodo}; consolidated by PR \\#860 (its head b12dd253, pending merge).",
     ),
+    # The octahedron figure returned to Section 3 (the owner's question of 2026-09-22; it was cut at 8f7408eb under record 852's page count).
+    (
+        "the octahedron figure back in Section 3 (the owner's question of 2026-09-22: why was it out; cut at 8f7408eb under record 852's page)",
+        "\\paragraph{The pace of the rows, and the octahedron.}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.3\\textwidth]{figures/octahedron.pdf}\\caption{\\label{fig:octahedron}The Nodes one interval from a Node: the six neighbours are the vertices of the octahedron $|x| + |y| + |z| \\le 1$, the causal front of one interval; its inscribed sphere, of radius $1/\\sqrt3$, touches the eight faces on the cube diagonals and is the rows' pace $c$ (Proposition~\\ref{prop:pace}); the faint cube shares the $48$ signed permutations of the axes. Drawn by \\texttt{octahedron.py} from the definitions; no run.}\\end{figure}\n\n\\paragraph{The pace of the rows, and the octahedron.}",
+    ),
+    (
+        "the octahedron figure named in its paragraph",
+        "The octahedron $|x| + |y| + |z| \\le 1$ of the six neighbours, scaled by the age, is the causal front, inside which every row stays;",
+        "The octahedron $|x| + |y| + |z| \\le 1$ of the six neighbours (Figure~\\ref{fig:octahedron}), scaled by the age, is the causal front, inside which every row stays;",
+    ),
 ]
 
 
