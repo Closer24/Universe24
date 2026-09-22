@@ -1,13 +1,22 @@
 # The Gleason bound: what the tables' rounding does to hypothesis (a), and the weight of a mixture the register cannot exclude (the Gleason Bound Mathematician, docs only, 2026-09-22)
 
 The order: the Boss's brief of 2026-09-22 on the owner's second referee
-read, verified by the paper writer at 10:05Z: the rounding of the tables
-breaks hypothesis (a) of the lattice Gleason theorem on the referee's
-example `f = 256 x^8 - 181 (1 + x^16)` at N = 64, and the paper's
-sentence "excludes every mixture" (Section 6, the paragraph "Against the
-registered integers", `paper/general_formula/main.tex` line 1004) is too
-strong without a bound. Read against `main` at 30c84db7 (PR #843): the
-theorem and its hypotheses (`main.tex` lines 912 to 975), the tables'
+read, verified by the paper writer at 10:05Z (record 916 (b) of the log
+of 2026-09-20): the rounding of the tables breaks hypothesis (a) of the
+lattice Gleason theorem on the referee's example `f = 256 x^8 - 181 (1 +
+x^16)` at N = 64, and the paper's sentence "excludes every mixture"
+(Section 6, the paragraph "Against the registered integers",
+`paper/general_formula/main.tex` line 1004 on `main`) is too strong
+without a bound. The writer narrowed the sentence on the owner's direct
+word (record 921; the paper branch `claude/paper-owner-review-five` at
+65674bcb, `main.tex` line 805, and at e6117ef6 after the cut, line 794,
+the sentence unchanged): "exclude every mixture the readings resolve; a
+mixture of a weight below the readings' rounding cell is not excluded,
+and the bound on that weight is not computed", and the norm range said
+to bound "one phasor's error ... and not the relative error of a sum
+that nearly cancels, for which no theorem is given". This note computes
+that weight and gives that theorem. Read against `main` at 30c84db7
+(PR #843): the theorem and its hypotheses (`main.tex` lines 912 to 975), the tables'
 definition and norm range (Appendix, the technical details, lines 1457 to
 1470), the rounding rule ([DERIVATIONS_BEAM 6.2](../../DERIVATIONS_BEAM.md),
 the three roundings declared once: the rung, the tables at the scale 256,
@@ -245,9 +254,17 @@ phase differences 0, 16 and 32, where `cos(2 pi j D / 64)` is 1, 0 and
 
 ## 4. The one sentence for the paper (Section 6, line 1004), in two forms
 
-The sentence now: "... and Malus at 22.5 degrees (219/256 and 187/256
-exact) admits `j = +-1 mod 8` and excludes every mixture: the register
-pins the fundamental, and the least-rank click (P10) stores it."
+The sentence on `main` (line 1004): "... and Malus at 22.5 degrees
+(219/256 and 187/256 exact) admits `j = +-1 mod 8` and excludes every
+mixture: the register pins the fundamental, and the least-rank click
+(P10) stores it." The sentence on the paper branch (65674bcb, line 805;
+record 921): "... admit the harmonic `j = +-1 mod 8` and exclude every
+mixture the readings resolve; a mixture of a weight below the readings'
+rounding cell is not excluded, and the bound on that weight is not
+computed: the register pins the fundamental to that resolution, and the
+least-rank click (P10) stores it." The two forms below sharpen the
+narrowed sentence into its number; the writer takes one of them on the
+merge SHA and the owner's word.
 
 **Form 1, with the weight:** "... and Malus at 22.5 degrees (219/256 and
 187/256 exact) admits `j = +-1 mod 8` and excludes every mixture of weight
@@ -265,9 +282,13 @@ weights the register does not exclude a mixture: not below 0.00066 on
 below the bands' cell, one click in 51, on `j = +-1 mod 8`, where Malus at
 22.5, 45 and 90 degrees reads every member alike."
 
-And for the sentence before it ("the built click is this form to the
-tables' rounding ... the norm range of Appendix A is the error bound
-between the two"), the bound as proved: "to the tables' rounding: within
+And for the sentence before it (on `main`, "the built click is this
+form to the tables' rounding ... the norm range of Appendix A is the
+error bound between the two"; on the paper branch, "the norm range of
+Appendix B bounds one phasor's error between the ideal reading and the
+tables and not the relative error of a sum that nearly cancels, for which
+no theorem is given"), the bound as proved, lemma 3 being the theorem
+the branch says is not given: "to the tables' rounding: within
 `A sqrt(2 R*) + A^2 / 2` of the exact weight `R*` for a record of total
 amount A (a part in 181 at full scale, the one-row extreme a part in
 276), and with no relative bound where the record's rows cancel below
@@ -286,7 +307,11 @@ at the window 32.
 ## 6. Links
 
 - The theorem and its hypotheses: `paper/general_formula/main.tex` lines
-  912 to 975; the sentence: line 1004; the tables: lines 1457 to 1470.
+  912 to 975; the sentence: line 1004 on `main` at 30c84db7, line 805 on
+  `claude/paper-owner-review-five` at 65674bcb (line 794 at e6117ef6);
+  the tables: lines 1457 to 1470.
+- The referee's point and its folding: records 916 (b) and 921 of the
+  log of 2026-09-20.
 - The rounding rule: [DERIVATIONS_BEAM 6.2](../../DERIVATIONS_BEAM.md);
   the Gram matrix's eight diagonal values: 6.7 there.
 - The tables: `src/event_universe/core/phase.py` (`phase_cosines`,
