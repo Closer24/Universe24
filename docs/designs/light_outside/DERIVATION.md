@@ -2,8 +2,8 @@
 
 The Light Mathematician, 2026-09-22, on the Boss's order; a derivation
 on paper in the shape of the click frame's sections 0 and 8 (the click
-frame at e26c1f43, PR #769, not yet merged, cited by its line numbers
-at that head and not edited); no code, no world file, no run; every number a closed
+frame at 1dd81fef, PR #769, which merges at that head, cited by its line
+numbers there and not edited); no code, no world file, no run; every number a closed
 form or a registered reading labelled by its kind, DETECTOR or GAMEBOARD;
 a number whose kind is not named is not a result. Every symbol is named
 in English at its first use and its kind is shown by its type: a scalar
@@ -62,7 +62,7 @@ Node's crowd where no body counts, the amount or the phase of one
 record between its birth and its click) is not an Outside formula and is
 labelled GAMEBOARD wherever it appears. The emitter and the click are
 one transformation between place and place, and its place-to-place
-form is the k-calculus of the click frame's section 0 (lines 94 to 165
+form is the k-calculus of the click frame's section 0 (lines 110 to 200
 there): the ratio of two detectors' counts between two clicks.
 
 ## 0. The three formulas (the Inside step, the Outside step, the conversion), and the frame
@@ -116,7 +116,7 @@ per interval, in this order:
   translation, never changed by the walk): W is the step's invariant, not
   the step; its whole root `E' = isqrt(W)` is `sqrt 3 |p|`, the row's
   energy in whole units, consistent with the pace `p / E' = 1 / sqrt 3 =
-  c` (17.6 M3; the click frame section 7 row 1, line 898, the unit chain
+  c` (17.6 M3; the click frame section 7 row 1, line 914, the unit chain
   `E^2 = E_0^2 + c^2 p^2`, `E' = E / c^2`, the 3 being `1 / c^2`).
 
 **(2) THE OUTSIDE STEP: the equation of light above the board as
@@ -205,14 +205,14 @@ with these five arrows, each one of the law's operations:
    probability of the cell within `1 / (2 N)` of Born's (23.2, line
    6762). What passes Outside is the click's triple; what never passes
    singly is the amount and the phase of one record (the click frame lines
-   908 to 923, its second fact).
+   924 to 939, its second fact).
 5. `Outside_B`, the reading: a ratio or a difference of counts at clicks,
    B's `n_B` against A's `n_A` carried on the record (the lamp's ordinal
    and wheel value and the row's age since; record 709), never the tick.
 
 **The place-to-place form.** Between A and B the whole map is one
 number per pair of clicks, Bondi's factor of the click frame's section 0
-(lines 94 to 165) and section 2: `k_AB`, the count B reads between two
+(lines 110 to 200) and section 2: `k_AB`, the count B reads between two
 arrivals over the count A read between the two births. Under the law
 as it stands, with `r_A` and `r_B` the two detectors' own rates against
 the tick (1 at an empty Node, `1 / (1 + a_tau n / d)` in a crowd) and v
@@ -223,13 +223,13 @@ the velocity of A away from B as a fraction of the direction's pace c
     k_AB = (r_B / r_A) / (1 - v)      (B moving away, A at rest: the receiver's count under the crossing rule, DERIVATIONS_BEAM 2.2 and 9.3),
 
 and the round trip `k_AB k_BA = (1 + v) / (1 - v)` is free of every r
-(the click frame lines 94 to 165: the boost is r-free, the dilation
+(the click frame lines 110 to 200: the boost is r-free, the dilation
 carries r alone). Every row below is one instance of `k_AB` or of a
 count at B alone; the rows differ in which operation of the flight the
 count reads. Where nature's form has a root (`gamma`, the Lorentz
 factor) the law's rows have `r = 1`, and the difference is the click
 theorem's (A2), which the law's rows do not meet (the click frame lines
-54 to 93 and 185 to 202): stated in each row as FAIL where the register
+70 to 109 and 201 to 218): stated in each row as FAIL where the register
 has read it, never hidden.
 
 ## I. The assumptions, each in the law's own words with its source line on `main`
@@ -288,7 +288,7 @@ Maxwell and nothing of optics is among them (section III).
   lattice's count of Nodes on a shell (DERIVATIONS_BEAM 3.2, lines 874 to
   937; 5.1, lines 1168 to 1211: the presence `q dwell / (4 pi r^2)`, the
   age moment `q dwell / (4 pi c r)`). This is the arithmetic of six
-  Ports and a fan of K directions, not a law (the click frame line 978,
+  Ports and a fan of K directions, not a law (the click frame line 994,
   its (M)).
 - **(L6) Born at the click, the conversion's line.** The `wave` reading:
   "the coherent pointer over the whole set `(X, Y) = (sum A_u C[phase_u],
@@ -307,7 +307,7 @@ Maxwell and nothing of optics is among them (section III).
   chooses one cell by the birth phase u and deletes the record's offers
   in the same interval (BEAM_LAW note 37 (x), line 2849; EXPERIMENTS E15,
   line 9836). In the click frame's table this is the row "the click's
-  bilinear form" (line 903): the conversion's (A2) at the click.
+  bilinear form" (line 919): the conversion's (A2) at the click.
 - **(L7) The crossing rule.** "a row and a body meet ONCE, at the crossing
   of their world lines" (BEAM_LAW note 48, lines 530 to 532;
   DERIVATIONS_BEAM 2.2, lines 655 to 706, and 9.3, lines 2221 to 2241;
@@ -318,7 +318,7 @@ Maxwell and nothing of optics is among them (section III).
 - **(L8) The age wall at coefficient 1 on every count.** "a count at the
   rate `rate` against the wall `wall` becomes the count at `rate x d`
   against `wall x (d + a_tau n)`" (`core.integer.age_wall`; the click
-  frame's (N2), lines 953 to 960): a body's self-creations, a lamp's
+  frame's (N2), lines 969 to 976): a body's self-creations, a lamp's
   births and a detector's own count are all stretched by the crowd at
   their Node at coefficient 1 (record 709, Highlights line 399); the
   row's flight and phase are not (L1, L3). The clock's word is the age
@@ -337,11 +337,11 @@ Maxwell and nothing of optics is among them (section III).
   passes faster. (A2) A click's content is an amplitude with a phase that
   splits each interval between staying and hopping, the mass the staying
   share: the packet that passes is converted by its amplitudes" (the
-  click frame lines 41 to 53). Every row below needs (A1) at the click
+  click frame lines 41 to 69). Every row below needs (A1) at the click
   (one Node per interval, the count's ratio the velocity); (A2) enters
   only through Born at the click (L6), which is (A2)'s form at the one
   place a record is read, and through no row's dynamics: the law's rows
-  hop whole (the click frame lines 185 to 202), a fact stated and not
+  hop whole (the click frame lines 201 to 218), a fact stated and not
   hidden.
 - **(A3) Locality Outside (the owner's word, as the Boss relayed it).**
   (A1) read from above: every Outside passage of light is a chain of
@@ -450,8 +450,8 @@ The anisotropy is the isqrt's rounding of `T_D` above `sqrt 3 |D|_2 Q`:
 and 0 on the body diagonal, bounded by `1 / (sqrt 3 Q - 1)` (NATURE row
 5a and its note, lines 102 and 284 to 312); the isotropic limit is `Q ->
 infinity`, `c_D -> 1 / sqrt 3` on every direction, the factor 3 of Eq.
-14 being that limit's `1 / c^2` (the click frame section 7, lines 777 to
-806: the 3 is `(|D|_1 / |D|_2)^2` on the body diagonal, 9 / 3). The
+14 being that limit's `1 / c^2` (the click frame section 7, lines 793 to
+822: the 3 is `(|D|_1 / |D|_2)^2` on the body diagonal, 9 / 3). The
 isotropy is (L2)'s second axiom and the equality at the supremum its
 third statement (13.2 (a)): SHOWN as a consequence of the flight table,
 which is declared; not derived from the six verbs alone (section 27).
@@ -545,7 +545,22 @@ is Planck's constant times the frequency B counts, with `h = h_q N`; in
 motion or in a crowd the content stays the birth's while the counted
 frequency moves by `k_AB` (II.4, II.8): the law carries no rule by which
 a click's content follows the frequency read (L4's last line), a fact
-for the far lamp (NATURE 11a, II.3 (d)).
+for the far lamp (NATURE 11a, II.3 (d)). THE CONDITION, A DECLARATION
+AND NOT THE LAW (the physics-rule reviewer's must-fix 1): the click's
+content equals h times the FLIGHT's frequency `n / (d N)` only where the
+world declares the lamp's turn per self-creation equal to the family's
+phase rate per interval, `s = n / d`; the law ties the content at the
+birth and not afterwards (L4). On the register the two are declared
+apart: the two-slit worlds declare the lamp's rate `[1, 1]` with the
+pair form 8.00 steps per interval (7.1, `slits_low`), L1's lamp turns 1
+per self-creation with the pair form 0, `[8, 1]` or `[16, 1]`, and
+series Q's lamp births once and turns 0 afterwards; no registered light
+world I have read declares `s = n / d`. So `E = h f` stands on the
+register as the identity of the release, `E = h_q s = (h_q N) f_lamp`
+with `f_lamp = s / N` the lamp's own frequency (6.4: "Reached, as an
+identity of the release"), and the Planck relation between a click's
+content and the flight's phase rate is a declaration met by no
+registered world.
 
 *The order.* Rung 1: the content exact at every click (the books'
 identity, GAMEBOARD as a check of the record; the click's content
@@ -576,8 +591,9 @@ row that carries a momentum: the pin `256 / 55 = 4.6545` Links of 23.3
 (line 6831) for the massive row's fringes, NOT RUN (the massive row's
 two-slit world not built).
 
-**Verdict.** SHOWN, rung 1 (an identity of the release and of the
-calibration `h_A = h_q N`); MET at the emitter (the stall) and at B (the
+**Verdict.** SHOWN, rung 1 (an identity of the release, `E = h_q s = h
+f_lamp`, and of the calibration `h_A = h_q N`; `E = h f_flight` a
+declaration, `s = n / d`, met by no registered world); MET at the emitter (the stall) and at B (the
 content per click, the frequency 1.0000 at rest, the wavelength through
 II.6); `lambda = h / p` on a massive row NOT RUN. What matches nature:
 the form `E = h f`, `lambda = h / p`; the value of h is an input (24.1
@@ -594,7 +610,7 @@ that place), each counting its clicks per its own count; the quantity
 read is the click rate per detector and its sum over the shell.
 
 **(b) Inside, the step that computes it.** A lamp releasing q rows per self-creation on a fan of K
-directions; on each digital line the row arrives at every Node of the
+directions (the fan declared, input 17); on each digital line the row arrives at every Node of the
 line, so the flow along a beam is `1 / r^0` and off every beam 0; the
 shell mean over the `N(r)` Nodes of the shell at the distance r is `q K
 / N(r)` arrivals per interval per Node, `N(r) -> 4 pi r^2` in space,
@@ -648,7 +664,7 @@ presence word inside, `k(2) / k(4) = 0.8390` against the pin 0.839989
 potential; the flux's form for the intensity, lines 6835 to 6970). The
 `1 / r^2` at two radii after a detector of light: NOT MADE (the far
 lamp's brightness pinned and not run, NATURE 11a, line 112; the click
-frame's section 8 says the same of the fall's inverse square, line 1101);
+frame's section 8 says the same of the fall's inverse square, line 1117);
 series C's `count x r / q` and series E's `k_s r^2 = 41.5` are GAMEBOARD
 (the probes' view) and are not compared. The luminosity against z of
 G2's stars, `1 / (1 + z)` within 5 percent, 648 of 648 (DETECTOR, MET,
@@ -709,7 +725,7 @@ the axis's pace `c = Q / T_h`:
     the moving detector:   1 + z = 1 / (1 -+ v)     (receding -, approaching +: the rows per B's count are 1 -+ v, the receiver's count),
     the moving lamp:       1 + z = 1 +- v           (receding +, approaching -: the source's spacing),
     the transverse:        1 + z = 1                (exactly),
-    the round trip:        k_AB k_BA = (1 + v) / (1 - v)   (r-free: Lorentz's, the click frame lines 94 to 165).
+    the round trip:        k_AB k_BA = (1 + v) / (1 - v)   (r-free: Lorentz's, the click frame lines 110 to 200).
 
 The two one-way forms differ at second order, `(1 + v) / (1 / (1 - v)) =
 1 - v^2`, and nature has one form for both, `sqrt((1 + v) / (1 - v)) =
@@ -719,7 +735,7 @@ nature's at first order in v and differ at `v^2 / 2` (DERIVATIONS_BEAM
 the moving record, `r = 1` on the law against `sqrt(1 - v^2)`). Under
 covariant-readings-v1, an identity beside the law with its own name (not
 the law), the moving lamp's `r = E'_0 / E'` gives `gamma (1 + beta)` (the
-click frame section 7, line 900).
+click frame section 7, line 916).
 
 *The order.* Rung 1 within one row over a window (exact over whole
 Links) for the counts; the forms exact in the limit of many intervals;
@@ -754,7 +770,7 @@ EXPERIMENTS lines 6652 to 6735). The transverse 1 against nature's gamma
 detector as a chain of face detectors, and the ratio of the two one-way
 factors `k_BA / k_AB` that decides between `1 - v^2` (the law), `1` (the
 relativity principle) and the loop's `(1 + v) / (1 - v)`: NOT MADE (the
-click frame section 4's missing direction, lines 332 to 388; record
+click frame section 4's missing direction, lines 348 to 404; record
 762's moving detector).
 
 **Verdict.** SHOWN, rung 1, at first order matching nature; FAIL at
@@ -839,7 +855,10 @@ difference of the two chains' counts read at ONE place.
 
 **(b) Inside, the step that computes it.** One record born at the lamp with the birth phase u on the
 wheel; at each opening the re-emission on a fan of K directions (the
-split with equal weights); two rows of the record reach the screen's
+split with equal weights), the fan DECLARED as the apparatus's (inputs
+17 and 23 of 24.1: the fan's grain P and the angle weights), not derived
+from the flight, which only carries each row on its line: Huygens'
+construction is the declaration (the reviewer's must-fix 5); two rows of the record reach the screen's
 Node at the height y by the paths `L_1` and `L_2` (Euclidean, the cone
 Euclidean: 4.1, line 1038), at the ages `tau_i = L_i / c` (L1), with the
 path phases `(n / d) tau_i` steps (L3, the exact phase at the click);
@@ -872,7 +891,8 @@ age enters only through the age difference of two rows read at ONE
 place.
 
 *The order.* The exact two-path law in the limit of every direction
-(rung 2: the fan's grain, K), the click's Born within `1 / (2 N)`, the
+(rung 2: the fan's grain K, the fan declared as apparatus and not derived
+from the flight), the click's Born within `1 / (2 N)`, the
 wheel's resolution `1 / W`, the arrival at a whole interval (an eighth
 of the wavelength at `lambda = 8` intervals; 7.1's list). Young's
 paraxial form rung 2 in `s / D`.
@@ -1055,7 +1075,7 @@ declared Pythagorean pair (20, 21).
 
 *The inverse.* None: the amount and the phase of one record never pass
 Outside singly; the weights pass only as fractions over many records
-(the click frame's second fact, lines 908 to 923).
+(the click frame's second fact, lines 924 to 939).
 
 **(d) The register, Outside** (DETECTOR, the gathers over 64 births;
 EXPERIMENTS lines 3900 to 3950; NATURE 2b's note, lines 186 to 199).
@@ -1113,16 +1133,26 @@ factors, each a count:
     1 + z_d = k_AB = (1 + k_A) x (1 + v / c) x r_B = r_B (1 + z),     1 + z = (1 + k_A)(1 + v / c) the lattice-frame form (series G's formula),   r_B = 1 / (1 + k_B),
 
 the record 754 primitive derived: the lamp's stretch, the throw's
-spacing, the detector's own rate. At `v = 0` the gravitational redshift
+spacing, the detector's own rate. The three factors multiply ONE count
+of ONE detector, B's count between two clicks, and are not three counts:
+the lamp's stretch and the throw's spacing enter B's count through the
+arrivals' spacing in the tick, and B's own rate through its count per
+tick; A's count between the two births is the unit, one. At `v = 0` the gravitational redshift
 between two clocks in two crowds is
 
     1 + z_d = (1 + k_A) / (1 + k_B) = 1 + k_A - k_B + O(k^2),
 
 and with the crowd's form about a point source (L5, the age moment `q
 dwell / (4 pi c r)`, the `1 / r` potential: the click frame section 8
-(b), lines 1009 to 1028) the first order is Pound and Rebka's `Phi_B -
+(b), lines 1025 to 1044) the first order is Pound and Rebka's `Phi_B -
 Phi_A` form, the potential's, with the world's constant `[n, d]` and the
-residence factor in place of `1 / c^2` (section 8 (e), line 1061). At
+residence factor in place of `1 / c^2` (section 8 (e), line 1077); the
+click frame's rows 7 and 8 write that constant `(n S / d)(g h / c^2)`,
+and on the register `n S / d = 16` for every world declaring `suspension`
+`[1, 65536]` with the width 1048576 (series T and X among them; GAMEBOARD,
+the world files, the Einstein Mathematician's reconciliation), and 1 / 2
+and 1 for series E's redshift worlds at S = 1 (`[1, 2]` and `[1, 1]`);
+this document's rows use `k = a_tau n / d` and never `n S / d`. At
 second order the law reads `1 - k + k^2` where nature reads `1 - k -
 k^2 / 2` (DERIVATIONS_BEAM 5.2, lines 1212 to 1235: a different law in
 the strong field, no horizon), below reach at the Earth (24.3 row 12).
@@ -1144,15 +1174,16 @@ second order in k the law's own; the second order in v II.4's.
 *The inverse.* `k_A - k_B` from `z_d` at `v = 0` at first order; `v / c`
 from `z_d` at `k = 0`; `r_B` from a control lamp at rest in no crowd
 (series T's and X's controls), `k = (1 + z) / (1 + z_0) - 1` against it
-(the click frame's table, line 901).
+(the click frame's table, line 917).
 
 **(d) The register, Outside** (DETECTOR unless said). Series G
 (EXPERIMENTS lines 2125 to 2360): `(1 + z) / ((1 + k)(1 + v / c))` from
 0.995 to 1.005 over 24 sources, 288 of 288 inside 2 percent over three
 windows, the coasting worlds `z = v / c` to 0.003 and `H t_0 = 1.029` at
-`t_0 = 350` (MET); under the detector's own clock (record 754, tier (b),
-branch clock-rereads, PR #777 not merged at this writing: cited from the
-record on `main`, line 1711) `r_w = 0.7500, 1.0000, 0.3400, 0.9600` in
+`t_0 = 350` (MET); under the detector's own clock (record 754, tier (b); the G and G2
+denominator is the host tick, GAMEBOARD, on `main` before f8c5367d and
+the detector's own count, DETECTOR, since f8c5367d, where PR #777
+clock-rereads merged) `r_w = 0.7500, 1.0000, 0.3400, 0.9600` in
 the late windows, the formula 288 of 288, 304 inside and 32 outside, and
 the crowd's well `z_d(0) = r - 1` blue for 15 and 20 of 24 sources in the
 scalar worlds. Series G2 (lines 2361 to 2548): the formula 648 of 648,
@@ -1181,7 +1212,8 @@ FAIL pinned) and Tolman's `n = 1` against 4 (11c, FAIL pinned): the law
 carries one factor of `1 + z` where nature has two, because a click's
 content never follows its frequency (II.2 (c), the Outside formula).
 
-**Verdict.** SHOWN, rung 1 (the three factors are three counts; the
+**Verdict.** SHOWN, rung 1 (the three factors are one count of one
+detector, each factor a ratio of counts; the
 potential's `1 / r` rung 2); MET on G (288 of 288), G2 (648 of 648), T
 (1.907 for 1.909) and X (nine of nine); FAIL on the presence word's form
 (NATURE 12, the law's default word, 1.000 against 2.00; the age word the
@@ -1271,7 +1303,13 @@ the marginals `N_+ / W = 1 / 2` at each place whatever the other's
 setting (no signalling: a click at Bob's place reads nothing of Alice's
 setting, the consistency rule's sharpest case); and
 
-    S(N) = the register's exact rational of the tables and the rungs,   S -> 2 sqrt 2   as N -> infinity within  8 / N + 16 arcsin(sqrt 2 / (2 Q)).
+    S(N) = the register's exact rational of the tables and the rungs,   S -> 2 sqrt 2   as N -> infinity within  8 / N + 0.0444,
+
+the second term the tables' rounding at the scale `N_t = 256` with `rho
+= N_t - sqrt 2 / 2 = 255.3` (the physics-rule reviewer's correction of
+22.3's 256): at N = 64 the bound is 0.169 and the deficit `2 sqrt 2 -
+2.75 = 0.078` lies within it, at N = 4096 the bound is 0.046 and the
+deficit 0.0003.
 
 *The order.* Rung 1 exact at every N (the tables and the rungs);
 Tsirelson's bound reached as a limit, the plateau `181 / 64` from N = 512
@@ -1351,7 +1389,7 @@ grain it says MEASURED ONLY.
 **What is assumed of the world, said once.** (A1) a click is the passage
 of information from Node to Node, at most one Node per interval; (A2) a
 click's content is an amplitude with a phase that splits between staying
-and hopping (the click frame lines 41 to 53); (A3) locality Outside, (A1)
+and hopping (the click frame lines 41 to 69); (A3) locality Outside, (A1)
 read from above: every passage of light Outside is a chain of clicks
 between neighbouring places, no jump, no velocity above one Node per
 interval, no reading where no chain reaches (the owner's word, section
@@ -1359,7 +1397,7 @@ I). Every row uses (A1) at the
 click, as the one Node per interval of the count's ratio; (A2) is used
 only at the click through Born's form (L6, the one imported member `c_1 =
 1` of 24.1 row 12), and in no row's dynamics: the law's rows hop whole
-(the click frame lines 185 to 202), so every `r` above is the law's `r =
+(the click frame lines 201 to 218), so every `r` above is the law's `r =
 1` at an empty Node and `1 / (1 + k)` in a crowd, and nature's root
 (gamma) is absent at second order in v wherever a row reads a moving
 record (II.4, II.5), which is stated as FAIL where the register has read
@@ -1402,13 +1440,13 @@ readings by kind; every number DETECTOR unless labelled.
 | The formula Outside | Verdict | The one line that decides | The register (DETECTOR unless labelled) |
 | --- | --- | --- | --- |
 | the speed of light, `c_D = Q |D|_2 / T_D` by the row's age or by the pulse and its return; the anisotropy `1 / c_D^2 = 2.954 / 2.971 / 3.000` on the heading, the face diagonal and the body diagonal; the isotropic limit `1 / sqrt 3` | SHOWN, rung 1 in the count, rung 2 in the isotropy; FAIL against nature's isotropy at the grain | the flight table's `tau_k = ceil((2 k - 1) T_D / (2 S_1 Q))` (L1, L2), the age on the record read at B, the round trip A's own count | series Q: 290 of 290 at the derived tick, Node and face, the pace 0.5718 to 0.5893, mean 0.5810 (MET); series T: 172 counts for 100 Links, `1.72 = 110 / 64` (MET); NATURE 5a: `7.6 x 10^-3` against `10^-17` (FAIL at Q = 64, a bound `Q >= 5.8 x 10^16`); the two-way c after a detector NOT MADE (pinned here: 110 counts over 32 Links there and back, GAMEBOARD) |
-| `E = h f` at a click, `lambda = h / p` | SHOWN, rung 1 (an identity of the release and the calibration `h_A = h_q N`) | the content per click is the birth's `h_q s` and follows nothing in flight (L4); the frequency B counts is the lamp's turn per `k_AB` | the paid lamps' stalls (159 births in 160 at 2 per birth; L1's at tick 2) (MET at the emitter); Q's clicks carry their birth content (MET); T's and X's controls `1 + z = 1.0000` (MET); `lambda` through L2's fringes (MET); the massive row's `256 / 55` (23.3) NOT RUN |
+| `E = h f` at a click, `lambda = h / p` | SHOWN, rung 1 (an identity of the release, `E = h_q s = h f_lamp`, and the calibration `h_A = h_q N`; `E = h f_flight` a declaration `s = n / d` met by no registered world) | the content per click is the birth's `h_q s` and follows nothing in flight (L4); the frequency B counts is the lamp's turn per `k_AB` | the paid lamps' stalls (159 births in 160 at 2 per birth; L1's at tick 2) (MET at the emitter); Q's clicks carry their birth content (MET); T's and X's controls `1 + z = 1.0000` (MET); `lambda` through L2's fringes (MET); the massive row's `256 / 55` (23.3) NOT RUN |
 | the intensity of a source: `q K / (4 pi r^2)` per detector in the shell mean, `1 / r^0` on a beam, the count over a closed surface conserved | SHOWN, rung 2 (the shell mean); rung 1 on a beam and for the conservation; the finite-r ripple MEASURED ONLY | K beams over `N(r)` Nodes (L5); every row leaves the shell once | Q: 290 of 290 at the faces (MET, the conservation); T's presence word 1.3000 at 3 and at 6 Links (MET as `1 / r^0` on a beam; FAIL against nature's `1 / r` for a clock, NATURE 12); X's presence word inside 0.8390 for 0.839989 (MET, the flux rises toward the shell); the `1 / r^2` at two radii after a detector of light NOT MADE (NATURE 11a pinned, not run); series C and E GAMEBOARD, not compared |
 | the Doppler of a moving detector `1 / (1 -+ v)`, of a moving lamp `1 +- v`, the transverse 1, the round trip `(1 + v) / (1 - v)` | SHOWN, rung 1; matches nature at first order; FAIL at second order on the law | the crossing count `1 +- v / c` (L7) and the rows' spacing `c -+ v` (2.5); `r = 1` on the law where nature has `sqrt(1 - v^2)` | the crossing counts 45 / 58 / 19 / 38 in 32 and 48 intervals, 183 and 311 over 32 Links (MET, `tests/test_crossing.py`); G2 `coasting_none` z = v / c within 0.004 per star (MET on the law's form); NATURE 4b: 0.2636 against 0.315 at beta 0.2674 (FAIL, gamma absent); series S under covariant-readings-v1 0.3674 for `0.369 +- 0.003` (MET in its domain, beside the law); the one-way ratio `k_BA / k_AB` NOT MADE |
 | the aberration of a moving detector: `tan alpha = v / c` by the passage of clicks, 0 by the click's face | SHOWN at first order; NOT READ; the second order the law's `r = 1` | Nodes apart over counts apart compose as `c -+ v` (4.2); the label is the row's own | none registered; 12.2's emitter aberration pinned in 12.4, NOT RUN, not on `main` |
 | the two-slit fringes: bright where `L_1 - L_2 = j lambda`, `lambda = c N d / n`, one turn of the phase per age per fringe; Young's `lambda D / s` paraxial | SHOWN, rung 2 (the fan), Born rung 1 within `1 / (2 N)` | the two rows' age difference at ONE detector, `(n / d)(L_1 - L_2) / c` steps, squared at the click (L3, L6) | L2b: the bands' centres 23.5 apart for the exact law's 23.3 (MET within the pixel), the dark cells 0 to 3 (MET); the visibility 0.966 against 0.98 (FAIL by 0.014, the fan's grain); Pearson 0.891 against the pin 0.96 (FAIL, the pin the screen's fan's); L1's unequal arms 64 / 0, 32 / 32, 0 / 64 at 0, 16, 32 steps (MET exactly); W's massive bands 37.06 / 59.99 / 83.02 (PASS) |
 | the click's indivisibility: one click per record, never two; `alpha = 0`; the dark port 0 | SHOWN, rung 1 (exact) | the ladder chooses one cell and deletes the offers (L6, note 37 (x)); the cancel exact | `mz_equal` 64 / 0 (NATURE 2b PASS, MET); `mz_345` 63 / 1, 31 / 1, 125 / 3 at N = 64, 32, 128 (MET exactly); `ev_29` 32 / 17 / 15, 64 clicks for 64 records at three places (MET) |
-| the redshift through a crowd `1 + z_d = r_B (1 + k_A)(1 + v / c) = r (1 + z)`; at rest `(1 + k_A) / (1 + k_B)`, the potential's `1 / r` at first order | SHOWN, rung 1 (three counts), the `1 / r` rung 2; the second order in k the law's own (below reach) | the age wall at coefficient 1 on the lamp's births and on the detector's own count, the row's phase never stretched (L8, L3, BEAM_LAW 609) | G: 288 of 288 within 2 percent, `H t_0 = 1.029` (MET); tier (b)'s `r_w` 0.7500 to 1.0000 and the crowd's well blue for 15 and 20 of 24 (record 754, PR #777 pending); G2: 648 of 648 and the luminosity 648 of 648 (MET); T: 2.6517 and 4.1500, the ratio 1.907 for `1.909 +- 0.05` (MET); NATURE 12's presence word 1.000 against 2.00 (FAIL, the default word); X: nine of nine, inside 1.0029, outside 0.6285 (MET); the far lamp 11b `b = 1` (PASS pinned), 11a `q_eff = +1` against `-0.53` and 11c `n = 1` against 4 (FAIL pinned, not run) |
+| the redshift through a crowd `1 + z_d = r_B (1 + k_A)(1 + v / c) = r (1 + z)`; at rest `(1 + k_A) / (1 + k_B)`, the potential's `1 / r` at first order | SHOWN, rung 1 (three counts), the `1 / r` rung 2; the second order in k the law's own (below reach) | the age wall at coefficient 1 on the lamp's births and on the detector's own count, the row's phase never stretched (L8, L3, BEAM_LAW 609) | G: 288 of 288 within 2 percent, `H t_0 = 1.029` (MET); tier (b)'s `r_w` 0.7500 to 1.0000 and the crowd's well blue for 15 and 20 of 24 (record 754; the denominator GAMEBOARD on `main` before f8c5367d, DETECTOR since f8c5367d); G2: 648 of 648 and the luminosity 648 of 648 (MET); T: 2.6517 and 4.1500, the ratio 1.907 for `1.909 +- 0.05` (MET); NATURE 12's presence word 1.000 against 2.00 (FAIL, the default word); X: nine of nine, inside 1.0029, outside 0.6285 (MET); the far lamp 11b `b = 1` (PASS pinned), 11a `q_eff = +1` against `-0.53` and 11c `n = 1` against 4 (FAIL pinned, not run) |
 | Malus: `P(pass) = cos^2 theta` within the tables' rounding | SHOWN, rung 1 within `+0.0019` | the rotated label's Gram form (L9, L6) | A12 under the click: 128 / 0 / 64 of 256 (NATURE 9 PASS, MET exactly); 219 / 256 and 187 / 256 at 22.5 degrees (MET on the pins; OPEN at `10^-3`) |
 | the Bell pair's `E(a, b)` and `S(N)` at two places, the marginals `1 / 2` exact | SHOWN, rung 1 (exact at every N) | one Gram form over two arms, one cell at two places (L6) | 27 / 5 / 5 / 27, `S = 2.75` for Hensen's `2.42 +- 0.20` (NATURE 1a PASS, MET); against Poh's `2.82759 +- 0.00051` REFUTED at N = 64 and 256 (FAIL), OPEN on the plateau 2.828125 |
 | reflection | NEITHER | a row meets no surface; a mirror is the apparatus's declared table (input 23) | the register's mirrors are declarations (L1), no law read |
@@ -1425,7 +1463,7 @@ the release, the intensity's inverse square in the shell mean and its
 `1 / r^0` on a beam, the two Doppler forms and the r-free round trip,
 the aberration at first order, the two-slit law with its spacing from
 the phase per age, the one click per record, the redshift through a
-crowd as the product of three counts, Malus's cos^2 and the pair's
+crowd as one detector's count with three factors, Malus's cos^2 and the pair's
 correlation; and MEASURED where the register reads them: Q (290 of
 290), T (172; 1.907), G (288 of 288), G2 (648 of 648), X (nine of nine),
 L1 and L2b (the spacing 23.5 for 23.3), `mz_equal` (64 / 0), A12 (128 /
@@ -1474,10 +1512,10 @@ place, which is why every number above is a click and none is the tick.
 
 ## VI. Links
 
-[The click frame at e26c1f43 (PR #769, not yet merged)](https://github.com/Closer24/Universe24/blob/e26c1f4300f62648a348d56ea82058606d82f55a/docs/designs/click_frame/DERIVATION.md):
-section 0 (lines 8 to 202), section 7 (lines 688 to 923), section 8
-(lines 924 to 1161), section 9, the conversion as a map (lines 1162 to
-1319), section 10, Bell by the algebra (lines 1320 to 1507); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md)
+[The click frame at 1dd81fef (PR #769)](https://github.com/Closer24/Universe24/blob/1dd81fefcac22f7bfb7fcaf5a846b5a1d5c86b6f/docs/designs/click_frame/DERIVATION.md):
+section 0 (lines 8 to 218), section 7 (lines 704 to 939), section 8
+(lines 940 to 1177), section 9, the conversion as a map (lines 1178 to
+1364), section 10, Bell by the algebra (lines 1365 to 1553); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md)
 sections 2, 3.2, 4.1, 4.2, 5.1, 5.2, 5.4, 6.4, 6.5, 6.7, 7.1, 9.3, 12.2,
 13.2, 15.3, 23.2, 23.3, 24.1, 24.3, 27; [BEAM_LAW](../../BEAM_LAW.md)
 sections 3 and 5 and its notes 37, 45 and 48;
