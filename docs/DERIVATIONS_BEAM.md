@@ -864,10 +864,12 @@ any closed surface per interval equals the release inside it, exactly:
 
     sum over the surface's Ports of the amount crossed = q.
 
-**Reached exactly.** Registered: series C item 5, the flux through the
-square of half-width h over q is `1.0000` at h = 4, 8, 12, 20, 40 and
-the escape through the faces `1.0000 q` (the tool sums the Links crossed,
-`per_port`, the walk's own diagnostic).
+**Reached exactly.** Registered as a GAMEBOARD reading of the probes (the
+host's view of the state, a diagnostic, never a measurement): series C
+item 5, the flux through the square of half-width h over q is `1.0000`
+at h = 4, 8, 12, 20, 40 and the escape through the faces `1.0000 q` (the
+tool sums the Links crossed, `per_port`, the walk's own diagnostic). The
+detector reading of Gauss's law is not made.
 
 ### 3.2 The far field: a beam does not dilute, a shell does
 
@@ -889,9 +891,9 @@ r + O(r^theta)` with `theta <= 131 / 208` (Huxley), so the shell mean's
 relative ripple vanishes as `r^(theta - 1)`. **Reached in the shell
 mean**, with the ripple named.
 
-**The registered check** (series C item 5, world 5, the nine radii; the
-tool's ring is `abs(dist - r) < 0.5`, `engine.py:1120-1143`): the
-register's `count x r / q` and `flow x 2 pi r / q` are `r / N(r)` and `2
+**The registered check, a GAMEBOARD reading** (series C item 5, world 5,
+the nine radii; the probes' view of the state, a diagnostic; the tool's
+ring is `abs(dist - r) < 0.5`, `engine.py:1120-1143`): the register's `count x r / q` and `flow x 2 pi r / q` are `r / N(r)` and `2
 pi r / N(r)` to every printed digit, N(r) counted on the lattice
 (the arithmetic check of this section):
 
@@ -914,7 +916,8 @@ the design's `+-10 %` was missed at r = 12, 16, 20 because `N(16) = N(20)
 q> -> 1 / (2 pi) = 0.159`, which the nine readings straddle (0.125 to
 0.179). The verdict of series C ("the far-field readings follow the
 GameBoard ring's Node count and not r") is this identity read off the
-register.
+register's GAMEBOARD readings; the detector reading of the inverse square
+(Newton after a detector) is not made.
 
 **Per Node, not in the mean.** A single body at r reads a beam or nothing
 (item 6: "a Node reads one ray or none"), so the inverse square on ONE
@@ -944,11 +947,14 @@ interval^2, so
 in Links^3 per unit of content per interval^2: G is the source's release
 rate per unit of content per direction `n / d`, times the number of
 directions K, over `4 pi` and the world's width S. Nothing of A enters: the
-equivalence principle is exact (item 1 registered: `push_m = m x push_1`
-record by record for m = 1, 4, 16, and the step rule divides by M_A). The
-third law at rest is exact to the apportioning's grain (item 2: the two
-sources' momenta `9612145197056` and `-9612088573952`, the ratio 1.0000).
-**Reached in the shell mean, G named**; per Node in the limit of every
+equivalence principle is exact (item 1 registered as a GAMEBOARD reading of
+the probes' momenta, a diagnostic: `push_m = m x push_1` record by record
+for m = 1, 4, 16, and the step rule divides by M_A). The third law at rest
+is exact to the apportioning's grain (item 2, GAMEBOARD: the two sources'
+momenta `9612145197056` and `-9612088573952`, the ratio 1.0000). Every
+series C number of this section is the host's view of the state; the
+detector reading of Newton's law (Newton after a detector) is not made,
+and only it would be a measurement. **Reached in the shell mean, G named**; per Node in the limit of every
 direction. Two departures from Newton's law as written, both stated: the
 field is retarded at c = Q / T_d (item 4: the front at r arrives at the
 tick `1 + m^-1(r)`: 8, 11, 14, 21, 28, 35, 42, 52, 69 at r = 4 .. 40),
@@ -1013,7 +1019,7 @@ law (record 106: the masses and charges are the initialisation).
 | Formula | Verdict | The constant or the place |
 | --- | --- | --- |
 | Gauss's law | **reached** exactly (the walk a translation; the flux 1.0000 at every h) | none |
-| The inverse square | **reached** in the shell mean, `<V> = q Q / N(r)`, `N(r) -> 4 pi r^2`; per Node only in the limit of every direction; the nine ring readings of series C are `r / N(r)` and `2 pi r / N(r)` exactly | the Gauss circle problem's ripple `r^(theta - 1)`; a cube fan's `3^(3/2)` |
+| The inverse square | **reached** in the shell mean, `<V> = q Q / N(r)`, `N(r) -> 4 pi r^2`; per Node only in the limit of every direction; the nine ring readings of series C (GAMEBOARD, the probes' reading) are `r / N(r)` and `2 pi r / N(r)` exactly | the Gauss circle problem's ripple `r^(theta - 1)`; a cube fan's `3^(3/2)` |
 | Newton's `a = -G M / r^2` | **reached** in the shell mean with the equivalence principle exact and the third law exact at rest; retarded at c; the speed capped at 1 | `G = K (n / d) / (4 pi S)` |
 | Coulomb's `F = k q_A q_B / r^2` | **reached** in form, `k_C = G`, the ratio `-rho_A rho_B` exact (item 7, series 7) | the hierarchy `rho_p^2 = 1.24 x 10^36` a declaration |
 
@@ -1192,7 +1198,10 @@ vector, `V = (q Q / (4 pi r^2)) r_hat`, which is `-(Q c / dwell)
 grad(A)` in the static case: the acceleration of a body is minus the
 gradient of the age moment's field. **Reached**: the delay field obeys
 Poisson's equation and, dynamically, the retarded scalar wave equation;
-the push is its gradient. The registered check is series E: `k_s x r^2 =
+the push is its gradient. The registered check is series E, a GAMEBOARD
+reading of the probes' clocks and presences (the host's view of the state,
+a diagnostic; the detector reading of Poisson's source term after a
+detector is not made): `k_s x r^2 =
 41.5` (39.0 to 44.8 over r = 6 .. 14; the design's `q dwell / (4 pi) =
 290 x 1.72 / 12.57 = 39.7`) and `k_a x r = 36.1` (33.1 to 39.2), their
 ratio 0.870 against `sqrt 3 / 2 = 0.866` (the age at r is `r sqrt 3`
@@ -1211,7 +1220,9 @@ rate(r_2) = 1 - k(r_1) + k(r_2)` at first order, is the `1 / r` law.
 **Reached at first order.** At second order the lattice reads `1 - k +
 k^2` against `1 - k - k^2 / 2`, and its rate never reaches 0 at a finite
 k: **different law** in the strong field, no horizon (the crowd only
-slows; nothing stops a clock). Registered: series E's rate ratios `rate(r)
+slows; nothing stops a clock). Registered as a GAMEBOARD reading of the
+probe clocks (a diagnostic; the one detector reading of the field's outside
+form is series T, NATURE row 12): series E's rate ratios `rate(r)
 / rate(14) = 0.3453, 0.5015, 0.5701, 0.7227, 0.8215` at r = 4 .. 12
 against the 1 / r law's `0.3627, 0.5162, 0.6548, 0.7805, 0.8951`: the
 form is the law's (the nearer clock slower, the shift `1 / r - 1 / 14`),
@@ -1305,9 +1316,9 @@ equation; **reached** for its weak-field flux form and its retardation.
 
 | Formula | Verdict | The place |
 | --- | --- | --- |
-| Poisson's equation for the delay field | **reached**: the age moment is the retarded potential `q(t - r/c) dwell / (4 pi c r)`, the presence its flux; series E's `k_a r = 36.1`, `k_s r^2 = 41.5`, the ratio `sqrt 3 / 2` | linear, additive over sources |
+| Poisson's equation for the delay field | **reached**: the age moment is the retarded potential `q(t - r/c) dwell / (4 pi c r)`, the presence its flux; series E's (GAMEBOARD, the probes' reading) `k_a r = 36.1`, `k_s r^2 = 41.5`, the ratio `sqrt 3 / 2` | linear, additive over sources |
 | The retarded wave equation of the field | **reached** (a scalar field propagating at c, sourced by the release) | no self-source |
-| The gravitational redshift | **reached at first order** (`1 / (1 + k)`, the 1 / r form of series E); **different law** at second order, no horizon | the strong field k = 2 .. 9 registered |
+| The gravitational redshift | **reached at first order** (`1 / (1 + k)`, the 1 / r form of series E (GAMEBOARD, the probes' reading)); **different law** at second order, no horizon | the strong field k = 2 .. 9 registered |
 | Newton's geodesics | **reached**, retarded; the post-Newtonian terms **not reached** | the coupling bilinear |
 | The bending of light | **not reached** on `main` (0.000 registered); under `meeting-v1` **reached in form** `~ M / b` toward the mass, the constant a grain | the flight blind to the crowd |
 | The Shapiro delay | **not reached** on `main` (0.00); under the key **different law**: a phase `~ M / b` from the flow, not `M ln(4 r_1 r_2 / b^2)` from the potential, and no delay in time | the meeting reads the flow |
@@ -4642,7 +4653,7 @@ is registered:
 | the first law (inertia) | the drive: **p** an accumulator translated by nothing between pushes (T) | a body with no rows arriving keeps **p** exactly | G2's 24 thrown stars, `abs(p(end)) / abs(p(0))` = 1.0000 (section 11.4) |
 | the second law `F = m a` | the push `-M_A <V>` (B), the drive `v = p / (Q S M + p / c)` | `a = push / (Q S M)` for `p << Q S M c`: `F = m a` with `m = Q S M` | series 7's `push_m = m x push_1` for m = 1, 4, 16 (section 3.3, item 1) |
 | the third law | the apportioning of the rows' momentum at the release (the free family's release takes no recoil, section 12.4) | the two sources' momenta equal and opposite to the grain | `9612145197056` against `-9612088573952` at rest (section 3.3, item 2) |
-| gravitation `G M / r^2` | the shell mean of the flux, `G = K (n / d) / (4 pi S)` (3.3); the age moment obeying Poisson's equation (5.1) | the inverse square, retarded at c; the equivalence principle exact (`M_A` cancels) | series E's `k_s r^2 = 41.5`, `k_a r = 36.1`; series D's orbit |
+| gravitation `G M / r^2` | the shell mean of the flux, `G = K (n / d) / (4 pi S)` (3.3); the age moment obeying Poisson's equation (5.1) | the inverse square, retarded at c; the equivalence principle exact (`M_A` cancels) | series E's (GAMEBOARD, the probes' reading) `k_s r^2 = 41.5`, `k_a r = 36.1`; series D's orbit |
 | Galilean composition | the momenta add (the drive reads `p`) | velocities add where `v` is linear in `p` | 12b.2's shear at `0.21 c` is the departure |
 
 **Where the law leaves Newton, and in what order.** Under form B the
@@ -5989,11 +6000,11 @@ column.
 | 3 | the plane wave, `omega = c k`, the light cone | E on the phase, the flight | the rows' limit is the retarded wave equation at c | 4.1, 5.1 | `lorentz_field.py` | series K: the mean age 89.40 in every world | pinned: the mean age of the arrivals the control's within 1 interval, the flight table's 89 and 90 (series K) | second order in the Link | not stated; the flight table's per-direction pace (1.5 percent above `1 / sqrt 3` on a heading) would state it (row 48) | R |
 | 4 | Doppler on the axis | D, the crossing rule (record 158; BEAM_LAW note 48; built, PR #468 at 562fb736) | `1 +- v / c` head-on and behind, exactly 1 across | 2.2, 2.3, 2.7 | (record 158's crossing_sim) | `tests/test_crossing.py`: 45 / 58 toward, 19 / 38 away, 48 at rest; 183 / 311 and 74 / 202 over 32 Links; the doppler bar's 97, 45, 303, 0, 58 (the deleted key's limit) | pinned: 45 / 58 toward, 19 / 38 away, 48 at rest, the sums 183 / 311 / 74 / 202 (TEST_EXPECTATIONS.md, "The crossing rule", written before the first run; the plane's pins from `crossing_2d.py`); the doppler bar's five numbers are the deleted key's registered readings, no pin claimed | exact over whole Links | one boundary row per Link | R, built |
 | 5 | the fan direction's count | D on the Manhattan flux | `1 + v T_d / (Q S_1)`, off the Euclidean by `abs(D)^2 / (a S_1)` | 2.4 | `mover_counter.py` | record 158's `1 + 2.44 / k` on the bar | no pin; a design reading (`crossing_sim.py` of record 158, the physicist's scratch map, not a registered run) | exact | none: another formula, stated | D (stated) |
-| 6 | Newton's inverse square, G | B (the push), the shell mean of the flux | `a = -G M / r^2`, `G = K_fan (n / d) / (4 pi S)` | 3.3 |  | series 7 (`push_m = m push_1`), series D's orbit | pinned: item 1 the identity `push_m = m x push_1` record by record, item 6 the count `~ 1 / r` in the mean over a ring (series C under the Beam Law); series D's orbit closed within r / 4, T within 15 % | the leading term of the shell mean | the fan's grain: the ring flux `r^-1.83` against `r^-2` (7.2), the shell's Node-count ripple (3.2) | R |
-| 7 | Coulomb with one constant | B, the charge column | `k_C = G`, the ratio `-rho_A rho_B` | 3.4 |  | item 7's `-1` and `-1 / 4` exactly | pinned: item 7 `-Qq / (M m)` exactly (series C) | exact in form | the apportioning's grain | R |
-| 8 | the third law | the apportioning at the release | the sources' momenta equal and opposite to the grain | 3.3 |  | `9612145197056` against `-9612088573952` | pinned: item 2 the third law 1.00 exactly, the cumulative ratio 1.0000 at four decimals (series C); the two integers are the run's reading of that pin | exact to the grain | 6 parts in `10^6` (the two sources' momenta) | R (at rest) |
-| 9 | Poisson and the retarded wave equation of the field | B (the age moment), the release | `A = q dwell / (4 pi c r)`, the source `(dwell / c) q delta` | 5.1 |  | series E: `k_a r = 36.1`, `k_s r^2 = 41.5`, ratio `sqrt 3 / 2` | pinned: `k_s r^2` constant (40 with the heading's dwell) within +- 15 % over r >= 6, `k_a r` constant within +- 15 %, the ratio `sqrt 3 / 2` (series E); 36.1 and 41.5 are the measured means inside those pins | the leading term | the dwell's direction dependence (1.72 on a heading, 1 on the diagonal), the shell means 39.0 to 44.8 | R |
-| 10 | the gravitational redshift | D (the owed count) on the age moment | `1 / (1 + k_a)`, `k_a = G M / (r c^2)` at first order | 5.2 |  | series E's shells r = 4 .. 14 | pinned: the age clocks' ratio against the 1 / r law fitted at r = 14 within 15 % of the law's shift, the first-order line expected to fail (series E) | first order in k | the second order: `k^2` against nature's `k^2 / 2` | R at first order, D beyond |
+| 6 | Newton's inverse square, G | B (the push), the shell mean of the flux | `a = -G M / r^2`, `G = K_fan (n / d) / (4 pi S)` | 3.3 |  | series 7 (`push_m = m push_1`), series D's orbit | pinned: item 1 the identity `push_m = m x push_1` record by record, item 6 the count `~ 1 / r` in the mean over a ring (series C (GAMEBOARD, the probes' reading) under the Beam Law); series D's orbit closed within r / 4, T within 15 % | the leading term of the shell mean | the fan's grain: the ring flux `r^-1.83` against `r^-2` (7.2), the shell's Node-count ripple (3.2) | R |
+| 7 | Coulomb with one constant | B, the charge column | `k_C = G`, the ratio `-rho_A rho_B` | 3.4 |  | item 7's `-1` and `-1 / 4` exactly | pinned: item 7 `-Qq / (M m)` exactly (series C (GAMEBOARD, the probes' reading)) | exact in form | the apportioning's grain | R |
+| 8 | the third law | the apportioning at the release | the sources' momenta equal and opposite to the grain | 3.3 |  | `9612145197056` against `-9612088573952` | pinned: item 2 the third law 1.00 exactly, the cumulative ratio 1.0000 at four decimals (series C (GAMEBOARD, the probes' reading)); the two integers are the run's reading of that pin | exact to the grain | 6 parts in `10^6` (the two sources' momenta) | R (at rest) |
+| 9 | Poisson and the retarded wave equation of the field | B (the age moment), the release | `A = q dwell / (4 pi c r)`, the source `(dwell / c) q delta` | 5.1 |  | series E (GAMEBOARD, the probes' reading): `k_a r = 36.1`, `k_s r^2 = 41.5`, ratio `sqrt 3 / 2` | pinned: `k_s r^2` constant (40 with the heading's dwell) within +- 15 % over r >= 6, `k_a r` constant within +- 15 %, the ratio `sqrt 3 / 2` (series E); 36.1 and 41.5 are the measured means inside those pins | the leading term | the dwell's direction dependence (1.72 on a heading, 1 on the diagonal), the shell means 39.0 to 44.8 | R |
+| 10 | the gravitational redshift | D (the owed count) on the age moment | `1 / (1 + k_a)`, `k_a = G M / (r c^2)` at first order | 5.2 |  | series E's (GAMEBOARD, the probes' reading) shells r = 4 .. 14 | pinned: the age clocks' ratio against the 1 / r law fitted at r = 14 within 15 % of the law's shift, the first-order line expected to fail (series E) | first order in k | the second order: `k^2` against nature's `k^2 / 2` | R at first order, D beyond |
 | 11 | the bending of light, Shapiro | the rows blind to the crowd | none on `main`; `~ M / b` under the meeting key | 5.4 |  | series K: 0.000 registered | pinned: the centroid's deflection 0 within 0.5 pixel at every M and b (series K) | none | none: a different law | D |
 | 12 | Born's rule | E, the norm, the rung | `abs(P - W / T) <= 1 / (2 N)` | 6.2 | `click_gram.py` | `mz_equal` 64 / 0, `mz_345` 63 / 1 | pinned: `mz_equal` 64 / 0 and `mz_345` 63 / 1 from the offers 1681 / 1682 and 49 / 50 (`amplitude/expectations.json`, series L1) | the rung, `1 / (2 N)` | `1 / (2 N)` = 0.0078 at N = 64, the tables' rounding a part in 276 | R as a limit |
 | 13 | Gleason on the lattice (the form of the click forced) | rotation, the balanced splitter, non-negativity | `R = sum c_j abs(sigma_j f)^2`, the power 2 pinned to [1.917, 2.489) | 6.5 | `click_gram.py` | `mz_345`'s 63 / 1, the first cell 27 | pinned: `mz_345` 63 / 1 (series L1); the window `[1.917, 2.489)` and the first cell 27 no pin; a host reading (`click_gram.py` after the run) | exact in form | the rung's window on the power: [1.917, 2.489); with N = 32 and 128 registered (34f505ec) the intersection [1.917, 2.012) | R |
@@ -6030,7 +6041,7 @@ column.
 | 44 | the equivalence principle for a bound body | the release reads the body's own `E' / (Q S)` (17.6 M6), per lattice interval (17.6 N4); the energy in flight is the rows' | `by_drive(acc_release, E' x n, Q S x d)`; the field of a body equal to its own rest plus kinetic energy; the binding fraction E16's | 19.5, 17.6 M6 | `rest_of_masses.py` | a thrown body beside a probe of content 1: the probe's push against the body's drive, 1 at rest and `gamma` in motion | pinned, not run: the probe's push 1 at rest and `gamma` in motion (17.6 M6, N4) | none | none: a condition | H for the body's own energy; the binding part `field-source-v1` (E16) |
 | 45 | the hadrons, the leptons, the neutrino | no rule selects a count | inputs; Koide a coincidence; the massless neutrino refuted | 19.5, 16.2 (g) | `rest_of_masses.py` |  | no run: nature's masses as inputs | none | none: inputs | I, X |
 | 46 | the periodic universe | the two boards under the wall against the measured bounds | open; `L / (2 chi_rec) > 0.97` | 20 | `periodic_images.py` | pins for a periodic world under the wall | pinned, not run: the two boards' image counts against the catalogues (20) | none | none: a bound of nature's | B (a convention today) |
-| 47 | Gauss's law and the continuity of the field | the release, the flight, the presence (T, B), the books | `div(g) = -4 pi G rho`, `d rho / dt + div(j) = 0` | 5.5, 21.5 |  | series E's `k_s r^2 = 41.5` | pinned: `k_s r^2` constant, 40 within +- 15 % (series E); 41.5 the measured mean, inside | exact at every instant; the shell mean's leading term | the fan's grain (`r^-1.83`), the shell ripple | R |
+| 47 | Gauss's law and the continuity of the field | the release, the flight, the presence (T, B), the books | `div(g) = -4 pi G rho`, `d rho / dt + div(j) = 0` | 5.5, 21.5 |  | series E's (GAMEBOARD, the probes' reading) `k_s r^2 = 41.5` | pinned: `k_s r^2` constant, 40 within +- 15 % (series E); 41.5 the measured mean, inside | exact at every instant; the shell mean's leading term | the fan's grain (`r^-1.83`), the shell ripple | R |
 | 48 | the wave equation of the field | the flight at c, the age moment (T, B) | the retarded scalar wave equation at c | 5.1, 21.5 | `lorentz_field.py` | series K's ages 89.40; the potential to `10^-15` | pinned: the mean age 89 and 90 within 1 interval (series K); the potential to `10^-15` no pin; a host reading (`lorentz_field.py`) | second order in the Link | the cube's anisotropic term at `(k Link)^2`, the pace 1.5 percent off on a heading | R |
 | 49 | Faraday and Ampere-Maxwell, the moving charge's field with the magnetic term | the age moment as the scalar potential; the vector potential from a carried source velocity (`source-velocity-v1`) | Jefimenko's retarded fields from both potentials | 12.1, 17.6 M4, 21.5 | `lorentz_field.py` | the potential to `10^-15`; the pair's transverse push `1 / gamma` when **A** exists | no pin; a host reading (`lorentz_field.py`); the transverse push under **A** pinned, not run (17.6 M4) | the potentials' order | the age's integer, the fan's grain | H (`source-velocity-v1`) |
 | 50 | the Lorentz force and Biot-Savart | `-grad(A)` across the six Ports; `q v x B` and the magnetostatic **A** | `q (E + v x B)`; `B = (mu_0 / 4 pi) integral of J x r / r^3` | 17.6 M4, 21.5 |  | the deuteron fan at k = 4: `1 / gamma` across, `1 - beta^2` along under **A** | pinned, not run: `1 / gamma` across and `1 - beta^2` along on the deuteron's fan at k = 4 under **A** (17.6 M4); the fan's numbers a host reading | first order in the Link | the central difference's `Link^2` term | H (the electric part covariant-readings-v1, the magnetic `source-velocity-v1`) |
@@ -6081,8 +6092,8 @@ meet, written before it.
 | E5 | `E = m c^2`, the inertia of energy | not reached (4.5, 12.4) | `E = h f` for a row; the content and the momentum of a body untied | `E'_0 = Q S M` forced by the Newtonian limit, `W` gaining `Q S (2 E'_0 + Q S dM) dM` on a change of content, the load-time identity `3 h n = Q S d` (17.6 M3, M7), covariant-readings-v1 | a lamp emitting two opposite units keeps its pace, its `W` falling by the content identity's `Q S (2 E'_0 - Q S h s) h s` per unit paid (whether that equals the rows' energy on one c is the exchange's accounting, withdrawn until derived, 17.6 N5); the identity check a diagnostic line at load, a refusal only where the world declares the accounting |
 | E6 | the invariant `E^2 - p^2 c^2 = E_0^2`, `v = p c^2 / E`, the velocity addition | D (`v = p / (m + p / c)`, 4.4) | the drive's rational form, first order off Newton | `W = E'_0^2 + 3 p . p` exact and `E'` by comparisons (17.6 M3): the discrete form is exact by construction, the open item of 17.1's note closed; the pace `p / E'`; form B's directional accumulator without the cap term (M8) | `E'^2 <= W < (E' + 1)^2` at every interval of a pinned run; the composition of two throws by momenta within the grain |
 | E7 | the field of a moving charge (Heaviside), the magnetic term | D (12.1, 12b.1: the flux along `n_ret`; the count's number right, the field short) | the age moment is the Lienard-Wiechert potential exactly (12.1); its gradient across the six Ports gives `-grad(A)` only (17.6 M4) | the magnetic part: `source-velocity-v1`, named, not designed; NOT in covariant-readings-v1 | none until then; under `-grad(A)` alone the co-moving pair's pushes are the rest force along and `gamma` times the rest across, pinned as such |
-| E8 | Poisson's equation, the field of a source | R (5.1) | the age moment, sourced by the release | nothing | series E: `k_a r = 36.1`, `k_s r^2 = 41.5` |
-| E9 | the gravitational redshift at first order | R (5.2) | the owed count on the age moment, `1 / (1 + k_a)` | nothing | series E's shells |
+| E8 | Poisson's equation, the field of a source | R (5.1) | the age moment, sourced by the release | nothing | series E (GAMEBOARD, the probes' reading): `k_a r = 36.1`, `k_s r^2 = 41.5` |
+| E9 | the gravitational redshift at first order | R (5.2) | the owed count on the age moment, `1 / (1 + k_a)` | nothing | series E's (GAMEBOARD, the probes' reading) shells |
 | E10 | Newton's geodesics (the retarded inverse square, the orbit) | R (3.3, 5.3) | the push and the drive | nothing | series D's orbit; `push_m = m push_1` |
 | E11 | the second-order redshift, `sqrt(1 - 2 G M / (r c^2))` | D (5.2: `1 / (1 + k)` at second order, no horizon) | a clock slowed by what it reads, linear in the crowd | the field's self-source: the rows in flight as sources of rows (the content in flight gravitates), `field-source-v1`, not decided | the strong-field probes k = 2 .. 9 of series E re-read: the rate `1 - k + k^2 / 2 - ...` against `1 - k + k^2 - ...` |
 | E12 | the perihelion advance, `6 pi G M / (c^2 a (1 - e^2))` | not reached (5.6: post-Newtonian terms) | the retarded push gives the drift and the decay of 12b.2, not a precession | one sixth from the velocity terms of covariant-readings-v1 (the special-relativistic advance), five sixths from the field's nonlinearity, `field-source-v1` | the thrown orbit's apsidal drift per turn in the Newtonian regime: `pi beta_orbit^2` per turn from the readings alone (one sixth of Einstein's), the rest after the self-source |
@@ -6144,7 +6155,8 @@ interval is the release inside it, 5.5); the continuum form `div(g) =
 the fan's 48 for the shell mean, none for the flux count. (5) The error:
 the fan's grain, the ring flux `r^-1.83` on the 2616-direction fan
 against `r^-2` (7.2) and the shell's Node-count ripple (3.2). (6) The
-check: series E's `k_s r^2 = 41.5` (39.0 to 44.8 over r = 6 .. 14). The
+check: series E's `k_s r^2 = 41.5` (39.0 to 44.8 over r = 6 .. 14), a
+GAMEBOARD reading of the probes. The
 three tests: pass (the law's own reading). **R.**
 
 **48. The wave equation of the field.** (1) The flight at c and the age
