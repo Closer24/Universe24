@@ -4915,3 +4915,15 @@ clock's form) and in row 12. The paper's "the law as built" for the
 flight (series K's 0.000 pixel, row 13) is the law before the entry;
 no reading of the bending under the entry is in the paper until the
 Boss names one. 49 pages.
+
+## Applied (2026-09-22, the independent read's issue #896): the six-heading check's factor 1
+
+Issue #896 (batch #893) asks what the paper's MUST-FIX (f) fold
+already gives (the unit-width shell, the incidence count S_1 / |D| per
+beam, the fan's mean F in Eqs. (2) to (4) and the ledger, the presence
+absorbing it, flow-link-v1 dividing by the same mean) and, its item 5,
+that the six-heading check (series C) has the factor 1 and does not
+test the coefficient: one clause added after Eq. (2). Its item 6 (the
+three-dimensional shell count's error source) is the mathematician's
+SHOULD-FIX 11 and waits on the owner's word. Answered on the issue with
+the head's SHA. No number added. 49 pages.

@@ -3509,6 +3509,12 @@ CORRECTIONS = [
         "\\bibitem{orbitread} The orbit's inward push read on the fan:",
         "\\bibitem{genericentry} The generic entry of the bending: the flight in the age wall's set at $1 + \\gamma$ for every world, $\\gamma$ an input, the one form of the last Link's time, the square ladder in place of the root, of the archived code \\cite{zenodo}, on \\texttt{main} at 5b855791 (PR \\#855, merged; the branch head it carried 3760754c). \\bibitem{orbitread} The orbit's inward push read on the fan:",
     ),
+    # The independent read's issue #896, item 5: the six-heading check has the factor 1.
+    (
+        "the shell mean's factor: the six-heading check has the factor 1 (issue #896 of the independent read, item 5)",
+        "divides every push by the same mean);",
+        "divides every push by the same mean; the derivation's check of the shell mean on the six headings, series C, has the factor $1$ on every heading and does not test it, and no non-heading fan check of the coefficient is registered);",
+    ),
 ]
 
 
