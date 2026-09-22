@@ -1286,7 +1286,195 @@ the detector's own count, which is the age wall's member at coefficient
 what the algebra does not already have is the composite, and that is the
 law's own, the click.
 
-## 10. Links
+## 10. Part (9): entanglement, Bell and CHSH by the algebra (the owner's word, by voice, 2026-09-22, as the Boss relayed it)
+
+**The owner's word.** "Entanglement, Bell, CHSH, all these can be shown
+in formulas, in modern algebra; no need to show them on the board at
+all, I think." This part is in the shape of section 0: the assumptions
+first, in the law's own words; then the theorem; then what the paper
+needs; then SHOWN / MEASURED ONLY / NEITHER with the register's numbers
+by kind, what the algebra gives that no run can and what the run gives
+that the algebra cannot, and the locality sentence in the algebra's
+words. The paper, the register and NATURE.md are not touched.
+
+**Certification of the inputs.** The registered pair as it is built
+(`examples/events/amplitude/bell_0_8.json` and its siblings: the lamp's
+`arms` 2 and `branches` `[[0, 1], [3, 1]]`, the joint labels 00 and 11
+with the weights `(1, 1)`, Alice's arm the arm 0; the four counters
+reading `sum` with `phase_window` a and b, the channels + and -; the
+README's L3 and L6; `expectations.json` under `pair` and `pair_n`); the
+paper's rule R (the rotation `U_s` on the label pair with the half-angle
+tables `C'[s], S'[s]`, `theta_s = pi s / N`), its `eq:joint` (`J(o_A,
+o_B) = sum_l c_l U_a[o_A][l] U_b[o_B][l]`, `R = J^2`), `eq:rung`, P6 (the
+click of a pair is one gather of one record from both settings, the
+law's one non-local operation), P10 (Born's `c_1 = 1`), `th:isometry`,
+`th:marginals`, `th:bell`; section 9's names (the group ring, the state
+`chi_1`, the rung as a stochastic map); NATURE row 1a and the register's
+L6 entry for the numbers by kind. Cited as mathematics and not as the
+law's: Cirel'son 1980 (the bound) and Landau 1987 (the identity of the
+CHSH operator's square). Nothing else enters; every number below is a
+closed form from these definitions, checked here by my own arithmetic on
+the paper's formulas (not a run), or a registered reading named by kind.
+
+**(1) The assumptions, in the law's words.**
+
+- (B1) *The pair's record.* One record, born at the lamp (rule B) with
+  two arms and two joint labels of weight 1 each: as an element of
+  Inside it is `psi = 1 . (00) + 1 . (11)` in `Z^2 (x) Z^2`, tensored
+  with its phase in `Z[Z_N]`; the amplitude and the phase are carried by
+  verb 1 (the flight's translation of the phase) on each arm's rows and
+  by verb 3 (the merge) where rows meet; nothing of one arm is written
+  on the other in flight.
+- (B2) *The settings.* A detector's setting is the integer s of its
+  `phase_window`; at the set the labels are rotated by the integer matrix
+  `U_s = [[C'[s], S'[s]], [-S'[s], C'[s]]]` (rule R, verb 2 with a
+  declared matrix), `U_s^T U_s = n_s I` exactly, `n_s = C'[s]^2 +
+  S'[s]^2` (`th:isometry`); Alice's arm reads `U_a`, Bob's `U_b`.
+- (B3) *Born at the click* (section 7's row 6, section 9 (b)): the cell
+  `(o_A, o_B)` has the weight `R = J^2` with `J` the pair's summed
+  pointer at that cell, and the click is one gather of the one record
+  from both arms at completion (P6), the cell selected by the wheel's u
+  through the rung (`eq:rung`).
+- (B4) *What is assumed of the world, not supplied by the law:* that
+  the settings a, b are chosen freely of the record (the choosers), and
+  that a detector's reading is the click with `c_1 = 1` (P10). No
+  Hilbert space is assumed: the objects are integer lattices with the
+  click's quadratic form, and the tables' cosine is `C'[s] / 256` within
+  `1 / 512`.
+
+**(2) The theorem.**
+
+*(i) The correlation.* With `c_l = (1, 1)`, `J(o_A, o_B) = (U_a
+U_b^T)_(o_A o_B)`, so `J(+, +) = J(-, -) = C'[a] C'[b] + S'[a] S'[b]` and
+`J(+, -) = -J(-, +) = C'[a] S'[b] - S'[a] C'[b]`: before the tables'
+rounding, `256^2 cos(theta_a - theta_b)` and `-256^2 sin(theta_a -
+theta_b)`; the weights `R` are their squares, `C_K = 2 n_a n_b`, and
+
+    E(a, b) = (R_++ + R_-- - R_+- - R_-+) / C_K = cos^2 - sin^2 = cos(2 (theta_a - theta_b)) = cos(2 pi (a - b) / N),
+
+an identity of the rotation's algebra, exact on the tables' cosine;
+with the tables' rounding within `4 delta = 0.0111` and with the rung
+within `2 / N` (`th:bell`, `eq:ebound`). In the algebra's words: the
+observable of the setting a is the involution `A_a = U_a^T diag(1, -1)
+U_a / n_a` in `M_2(Q)` (`A_a^2 = I` by `th:isometry`), the pair's state
+the vector `psi = (00) + (11)`, and `E(a, b) = <psi | A_a (x) B_b | psi> /
+<psi | psi>`: the textbook's expectation, computed on `Z^2 (x) Z^2` with
+the Euclidean form, which is exactly what the click's `J^2 / C_K` is.
+The marginals: `sum_(o_B) R = n_a n_b` for each `o_A` (the rows of `U_b`
+orthogonal on the integers), so Alice's + count is exactly `N / 2` for
+every (a, b) and every N, and Bob's is `N / 2` off a tie
+(`th:marginals`, rung 1, exact): no-signalling as an identity of the
+integers, not of a limit.
+
+*(ii) The CHSH sum at the optimal settings.* At the labels `(a, a', b,
+b') = (0, N / 4, N / 8, 3 N / 8)`, `2 (theta_a - theta_b)` runs over
+`-pi / 4, -3 pi / 4, pi / 4, -pi / 4`, so
+
+    S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = sqrt 2 / 2 + sqrt 2 / 2 + sqrt 2 / 2 + sqrt 2 / 2 = 2 sqrt 2
+
+as an identity of the cosine; on the lattice `S(N)` is the exact
+rational the rung gives, and `abs(S(N) - 2 sqrt 2) <= 8 / N + 0.0444`
+(`th:bell`). Computed here from the definitions (rule R, `eq:joint`,
+`eq:rung`; my arithmetic, no engine): `S(64) = 11 / 4 = 176 / 64`,
+`S(256) = 45 / 16 = 720 / 256`, `S(1024) = 181 / 64 = 2896 / 1024`,
+`S(4096) = 181 / 64 = 11584 / 4096`, the marginals `N / 2` at every pair:
+the register's rationals reproduced from the formulas alone.
+
+*(iii) Tsirelson's bound, a theorem of the operator algebra, cited as
+mathematics.* For self-adjoint involutions `A, A'` and `B, B'` with `A`'s
+commuting with `B`'s, the CHSH operator `X = A (x) (B + B') + A' (x) (B -
+B')` satisfies `X^2 = 4 . 1 - [A, A'] (x) [B, B']` (Landau 1987), so
+`norm(X)^2 <= 4 + norm([A, A']) norm([B, B']) <= 4 + 2 . 2 = 8` and
+`abs(<X>) <= norm(X) <= 2 sqrt 2` in every state (Cirel'son 1980). In
+the law's objects the involutions are the `A_a` above in `M_2(Q)`, the
+commutator `[A_a, A_a']` is `2 sin(2 (theta_a - theta_a'))` times the
+rotation by a quarter turn (nonzero unless `a - a'` is a multiple of `N
+/ 2`: this is where the noncommutativity of section 9 (b) sits, in
+`M_2 (x) M_2` on the labels, not in the abelian phase algebra), and the
+bound applies EXACTLY to the pre-rounding correlations `cos(2 pi (a - b)
+/ N)`, which are a quantum state's expectations on `C^2 (x) C^2`. It does
+NOT bound the finite-N rational: `S(16) = S(32) = 3 > 2 sqrt 2`
+(`th:bell`), because the rung's rounding of the four cells by up to `1 /
+N` each is not a state's expectation; the bound is a statement about the
+identity of (i), and the lattice's departure from it is the wheel's
+grain, two-sided about `2 sqrt 2` (the plateau `181 / 64` below it by
+`3.02 x 10^-4`, `5793 / 2048` above at 16384).
+
+*(iv) Entanglement, in the algebra's words.* The pair's state `(00) +
+(11)` in `Z^2 (x) Z^2` has tensor rank 2 (it is not `u (x) v` for any
+integer vectors u, v: its coefficient matrix is the identity, of rank
+2), which is the Schmidt rank of the maximally entangled state; a
+product state has rank 1 and gives `E(a, b) = E_A(a) E_B(b)` with `abs(S)
+<= 2` (Bell's inequality, the CHSH form). So the violation `S > 2` is the
+statement that the record's coefficient matrix has rank 2, an integer
+fact of Inside, and the reading of that rank Outside is the four
+correlations at two clicks.
+
+**(3) What the paper needs: the certification as for Lorentz.** If a
+Hilbert space, a state vector and Born's rule are assumed, (i) to (iii)
+are the textbook's. What the law supplies of them, exactly: the state
+(the record's integer weights on two arms, B1), the observables (the
+rotations `U_s`, integer matrices, B2), Born (the click's square `J^2`
+per cell and the rung, B3; the pure state `chi_1` of section 9), the
+tensor product (the two arms of one record, gathered once), and the
+marginals exactly `1 / 2`. What is assumed of the world: the free
+settings and `c_1 = 1` (B4). What is NOT assumed: a Hilbert space (an
+integer lattice with a quadratic form; the complex field enters only as
+the tables' cosine within `1 / 512`), continuity, or any limit; the
+limit `N -> infinity, N_t -> infinity` is where the lattice's numbers
+meet the textbook's `2 sqrt 2`.
+
+**(4) SHOWN / MEASURED ONLY / NEITHER.**
+
+| The formula Outside | Verdict | The one line that decides | The register (kind) |
+| --- | --- | --- | --- |
+| `E(a, b) = cos(2 pi (a - b) / N)` within `2 / N + 0.0111` | SHOWN (rung 1 within the two grains) | `J = U_a U_b^T` and `R = J^2`: `cos^2 - sin^2` | L6: `E x 1024 = 724, -724, 724, 724` at N = 1024 (DETECTOR, the run of 2026-09-20, "every count the reading's") |
+| the marginals exactly `1 / 2`, no-signalling | SHOWN, rung 1 exact | the rows of `U_b` orthogonal on the integers, `C_K = 2 n_a n_b` (`th:marginals`) | `32 / 64` in every pair at N = 64 (the reviewer's recount of one registered world's rows, DETECTOR) |
+| `S = 2 sqrt 2` at the optimal settings | SHOWN as an identity of the cosine; on the lattice the exact rational `S(N)` | four cosines of `pi / 4` | NATURE 1a: `S = 176 / 64 = 2.75` at N = 64 (DETECTOR; Hensen 2015's `2.42 +- 0.20`, PASS, 0.33 above it, 1.65 of its standard error; 0.078 below the bound); L6: `2896 / 1024` and `11584 / 4096 = 2.828125` (DETECTOR), `3.02 x 10^-4` below `2 sqrt 2`, the paper's one prediction (24.4) |
+| Tsirelson's `abs(S) <= 2 sqrt 2` | SHOWN as mathematics for the pre-rounding correlations; NOT a bound on `S(N)` | Landau's identity `X^2 = 4 - [A, A'] (x) [B, B']` | `S(16) = S(32) = 3` above the bound by the rung's grain (`th:bell`, a computation, GAMEBOARD by kind: no run at 16) |
+| the rise `S(N)` to the plateau `181 / 64` | SHOWN by the closed form at every N (a computation from the definitions, not a run); MEASURED at 64, 1024, 4096 | the rung on the fixed correlations, `S(N) = 8 (c_1 + c_1') / N - 4` | the three engine values equal to the closed form's (DETECTOR); the plateau's other N (512, 2048, 8192) computed, not run |
+| the loophole-free geometry (space-like separated settings) | NEITHER | the pair's click is one gather at completion; "the near party's outcome is written at the far party's tick"; the arms' order a declaration | none; `bell_16_24_far` reads the same counts with Bob 116 Links farther (no maintenance), not a spacetime test |
+| unequal weights, more than two labels | NEITHER (open) | `th:marginals`' scope | none |
+
+**What the algebra gives that no run can:** the bound, why `2 sqrt 2`
+and not more (Landau's identity is an operator fact, true in every state
+of every dimension; no finite run reaches "every"), and the limit (the
+joint limit of `S(N)` in N and `N_t` is `2 sqrt 2`; with the tables fixed
+`186034 / 65773`). **What the run gives that the algebra cannot:** that
+the six verbs' integers reach it (that the engine's rows, merges,
+rotations, squares and rungs compose, interval by interval on a
+GameBoard of 21 Nodes, to the closed form: the bijection theorem plus
+the run, and the three engine values equal to the formula's), the
+finite-N rise `S(N)` at the N actually built, and the marginals read from
+rows rather than proved.
+
+**The locality sentence, in the algebra's words.** The title says the
+law is local and the read-out is not. The non-locality sits in ONE
+object: the pair's record, an element of `Z[Z_N] (x) Z^2 (x) Z^2` of
+tensor rank 2, carried by local verbs on two arms (each row at its own
+Node with its six neighbours; no Node keeps anything beyond the events
+there, P4, the law of events) and read by ONE gather at two clicks (P6,
+the one non-local operation). In the textbook's words: the state is
+entangled (not a product), the local observables commute (`A_a (x) 1`
+with `1 (x) B_b`), the correlation violates CHSH, and the partial trace
+is the uniform marginal: no-signalling. The law has that structure with
+Z in place of C, and its one departure from the textbook is the rung,
+whose grain is what a finite N adds.
+
+**Three sentences for the paper (marked as such; the coordinator's to
+take or leave).** (i) Bell's correlation is an identity of the rotation's
+algebra on the record's two labels, `E(a, b) = cos(2 pi (a - b) / N)`
+before the tables' rounding and within `2 / N + 0.0111` after it, the
+marginals exactly `1 / 2` for every setting pair, and `S = 2 sqrt 2` at
+the CHSH labels is four cosines of `pi / 4`. (ii) Tsirelson's bound is
+a theorem of the operator algebra on the labels' `M_2 (x) M_2` and bounds
+the pre-rounding correlations, not the finite-N rational, which the rung
+rounds two-sided about `2 sqrt 2` (3 at N = 16 and 32, `181 / 64` on the
+plateau). (iii) The non-locality is the tensor rank 2 of one record read
+by one gather at two clicks; the rows are local and no Node keeps
+anything, so the law is local and its read-out is not.
+
+## 11. Links
 
 [DERIVATIONS_BEAM 4.3](../../DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
