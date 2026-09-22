@@ -4026,6 +4026,41 @@ CORRECTIONS = [
         "\\title{Universe24: Physical Relations from a Common Discrete Update Rule}",
         "\\title{Universe24: Physical Relations from the Group Ring of a Cyclic Group under the Octahedral Group of Order 24}",
     ),
+    (
+        "the group of order 24, the name everywhere (the owner's word; the Boss's order of 00:25Z): the abstract",
+        "their rotations the cube's group of order $24$;",
+        "their rotations the group of order $24$;",
+    ),
+    (
+        "the group of order 24: the opening paragraph",
+        "their rotations the group of the cube of order $24$ (Theorem~\\ref{th:group})",
+        "their rotations the group of order $24$ (Theorem~\\ref{th:group})",
+    ),
+    (
+        "the group of order 24: Theorem 1's statement, the name first, the rotation group of the cube in apposition once, the symmetric group S_4 named where the isomorphism is stated",
+        "its kernel, the rotations of the cube, has\nindex $2$ and order $24$, and is the group of the permutations of the\ncube's four body diagonals;",
+        "its kernel, the group of order $24$ (the rotation group of the cube), has index $2$ and is the group of the permutations of the cube's four body diagonals, the symmetric group $S_4$;",
+    ),
+    (
+        "the group of order 24: the ledger's row",
+        "The group of the six Ports, $48$ and $24$ & the six Ports, the hand bit",
+        "The group of the six Ports, $48$, and within it the group of order $24$ & the six Ports, the hand bit",
+    ),
+    (
+        "the group of order 24: Section 9, what is proved",
+        "the group of the six Ports and its $24$ rotations;",
+        "the group of the six Ports and, within it, the group of order $24$;",
+    ),
+    (
+        "the group of order 24: Appendix A, the proof of Theorem 1 (S_4 and the 48 kept)",
+        "its kernel, the rotations, has index $2$ and order $24$, and it acts faithfully on the cube's four body diagonals, so it is the symmetric group on them;",
+        "its kernel, the group of order $24$, has index $2$ and acts faithfully on the cube's four body diagonals, so it is the symmetric group $S_4$ on them;",
+    ),
+    (
+        "the group of order 24: Appendix C, the symbols' list",
+        "the six Ports' hyperoctahedral group, $48$ signed permutations, $24$ rotations (Theorem~\\ref{th:group})",
+        "the six Ports' hyperoctahedral group, $48$ signed permutations, their rotations the group of order $24$ (Theorem~\\ref{th:group})",
+    ),
 ]
 
 

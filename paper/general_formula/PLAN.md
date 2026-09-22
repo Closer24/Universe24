@@ -5215,3 +5215,43 @@ Relations from a Common Discrete Update Rule". The lattice leaves the
 title and stays in the abstract as the way. A fourth commit on
 `paper-opening`; nothing else changed; the PDF compiled from the true
 source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 00:25Z): "the group of order 24", the name everywhere
+
+A fifth commit on `paper-opening`, words only. The group is named "the
+group of order 24" wherever the paper names it in words; "the rotation
+group of the cube" and "the symmetric group S_4" follow in apposition
+once each, in Theorem 1 and in its proof, where the isomorphism is
+stated; the 48 signed permutations stay where read AC put them. Every
+occurrence, before and after:
+- the abstract: "their rotations the cube's group of order 24" to
+  "their rotations the group of order 24";
+- the opening paragraph: "their rotations the group of the cube of
+  order 24 (Theorem 1)" to "their rotations the group of order 24
+  (Theorem 1)";
+- Theorem 1's statement: "its kernel, the rotations of the cube, has
+  index 2 and order 24, and is the group of the permutations of the
+  cube's four body diagonals" to "its kernel, the group of order 24
+  (the rotation group of the cube), has index 2 and is the group of the
+  permutations of the cube's four body diagonals, the symmetric group
+  S_4"; the sentence "tells the 24 rotations from the 24 reflections"
+  stays (a count of elements, not the name);
+- the ledger's row: "The group of the six Ports, 48 and 24" to "The
+  group of the six Ports, 48, and within it the group of order 24";
+- Section 9, "What is proved": "the group of the six Ports and its 24
+  rotations" to "the group of the six Ports and, within it, the group
+  of order 24";
+- Appendix A, the proof: "its kernel, the rotations, has index 2 and
+  order 24, and it acts faithfully on the cube's four body diagonals, so
+  it is the symmetric group on them" to "its kernel, the group of order
+  24, has index 2 and acts faithfully on the cube's four body diagonals,
+  so it is the symmetric group S_4 on them" (B_3 and the 48 kept);
+- Appendix C, the symbols: "48 signed permutations, 24 rotations" to
+  "48 signed permutations, their rotations the group of order 24";
+- left as they are: Section 3's "48 in all, the symmetry group of the
+  cube" (the 48, not the 24); "the GameBoard's stand-in for the rotation
+  group" (the continuum's rotation group, not the model's); Theorem 1's
+  title "the 24 of the name"; the title's "the Octahedral Group of
+  Order 24" (the owner's choice, the name with its apposition).
+The abstract 247 words. No number moved. The PDF compiled from the true
+source and read back. 52 pages.
