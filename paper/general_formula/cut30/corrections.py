@@ -3916,6 +3916,16 @@ CORRECTIONS = [
         "(the merge of PR #891 from \\texttt{atom-levels};",
         "(the merge of \\texttt{atom-levels};",
     ),
+    (
+        "Definition 8: the first party's outcome determined at its arrival by u alone and written only at the completion (issue #941, option 1; the Boss's order of 21:08Z)",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, fixed at its arrival; for the second",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, determined at its arrival by $u$ alone, computable there from the record's own wheel, and written only at the completion; for the second",
+    ),
+    (
+        "after Theorem 6: no-signalling in the arrival intervals and in the counts, the record's availability waiting on the last arm (issue #941, option 1)",
+        "No-signalling in the times as well as in the counts: the arrival interval at either arm is that arm's flight alone, independent of the other arm's setting and length (Definition~\\ref{def:click}, the flight blind);",
+        "No-signalling in the arrival intervals and in the counts: the arrival interval at either arm is that arm's flight alone, independent of the other arm's setting and length (Definition~\\ref{def:click}, the flight blind); neither party's recorded outcome exists as a row before the completion, whose interval is the last arm's, so the availability of the record, unlike the arrival, waits on the far arm's length, and the paper claims no independence for that latency;",
+    ),
 ]
 
 

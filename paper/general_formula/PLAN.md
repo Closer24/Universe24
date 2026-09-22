@@ -5084,3 +5084,19 @@ commits were compiled from a stale copy of main.tex (f82e73d1) left in
 the compile directory, so the committed PDF on main is f82e73d1's text;
 this commit's PDF is compiled from the true source and read back. 52
 pages, not 51: the true count of the text since PR #930.
+
+## Applied (2026-09-22, the Boss's order of 21:08Z): issue #941, the two sentences of the timing claim, option 1
+
+On `paper-941` off main at d7c0ddc0, one commit, words only, no number.
+Definition 8: the first party's outcome "determined at its arrival by u
+alone, computable there from the record's own wheel, and written only at
+the completion" in place of "fixed at its arrival". After Theorem 6:
+"No-signalling in the arrival intervals and in the counts" in place of
+"in the times as well as in the counts", with the clause that neither
+party's recorded outcome exists as a row before the completion, whose
+interval is the last arm's, so the availability of the record, unlike
+the arrival, waits on the far arm's length, and the paper claims no
+independence for that latency. The count theorem and the
+sequential-order FAIL unchanged; no engine change. The PDF compiled from
+the true source (no copy of main.tex in the compile directory) and read
+back. 52 pages.
