@@ -1,0 +1,65 @@
+{
+ "format": "nucleus-expectations-v1",
+ "derivations": {
+  "pushes": "declared: the design's integers per interval (README.md, the table of the expectations; the physicist's design of the strong force): a push is a row's label read at the body, the same under either drive",
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the accumulators gain p_a Q per interval against the one wall Q^2 S M + |p|_1 T_D, the axis furthest over the wall carrying",
+  "centred": "declared (docs/designs/drive_b/DEFAULT.md section (e), record 955): under `centred_step` the first Link comes at half the wall; the column the model owner decides at the paper's close",
+  "kick_pace": "GAMEBOARD: the pace of the kicked body at 10^12 on a heading before any push, the drive's rule at the content M + 1 (the held unit)",
+  "first_link": "GAMEBOARD, the toy: a constant push per interval from its onset tick on top of the kick (the design's numbers), the drive's accumulators against the wall; the tick of the first carry, or none within the run (the registered runs read the first steps off the `step` lines, which the toy brackets and does not pin: the fan's lines arrive over the first ticks and the hand-overs at contacts move the momenta)",
+  "width": "declared"
+ },
+ "drive": "line",
+ "centred": false,
+ "width": 268435456,
+ "kick": 1000000000000,
+ "worlds": {
+  "deuteron_3": {
+   "kick_pace": {
+    "p": 0.030049729576029152,
+    "n": 0.030003261985942515
+   },
+   "first_link": {
+    "p": 33,
+    "n": 33
+   },
+   "separates": "beyond 10 Links, never returns, both leave through the faces (README.md)"
+  },
+  "deuteron_1_kick": {
+   "kick_pace": {
+    "p": 0.030049729576029152,
+    "n": 0.030003261985942515
+   },
+   "first_link": {
+    "p": 21,
+    "n": 21
+   },
+   "kick_outweighed_by": "tick 5 (3.1 x 10^11 x 4 > 10^12); no step (README.md)"
+  },
+  "pp_1_weak": {
+   "first_link": 119,
+   "bracket": [
+    1,
+    200
+   ]
+  },
+  "pp_3": {
+   "first_link": 70,
+   "bracket": [
+    30,
+    60
+   ]
+  },
+  "alpha_square": {
+   "first_link_p4": 19,
+   "bracket": [
+    1,
+    100
+   ]
+  },
+  "no_step": [
+   "deuteron_1",
+   "pp_1",
+   "alpha_line"
+  ]
+ }
+}

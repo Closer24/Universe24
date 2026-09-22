@@ -33,6 +33,12 @@ from pathlib import Path
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events" / "nucleus"
+GENERATOR_SPEC = importlib.util.spec_from_file_location("nucleus_make_worlds", WORLDS / "make_worlds.py")
+GENERATOR = importlib.util.module_from_spec(GENERATOR_SPEC)
+sys.modules["nucleus_make_worlds"] = GENERATOR
+GENERATOR_SPEC.loader.exec_module(GENERATOR)
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "nucleus_readings_tool", ROOT / "tools" / "nucleus_readings.py"
@@ -144,3 +150,63 @@ def test_a_step_or_a_separation_is_a_diagnostic_and_a_push_or_a_click_decides():
     assert not TOOL.deciding("no step in the run")
     assert not TOOL.deciding("the pair separates beyond 10 Links and never returns")
     assert not TOOL.deciding("the cluster disperses (the largest separation beyond 3 Links)")
+
+
+def test_the_generators_pins_under_the_two_drives():
+    """(c) The generator's pins under the two drives (2026-09-22,
+    docs/designs/drive_b/DEFAULT.md section (c)): the eight shipped worlds
+    equal the generator's (no momentum but the kicks, the same under either
+    drive), `expectations.json` equals `expectations()` under the line drive
+    (`drive` "line", `centred` false, a derivation entry for every pinned
+    quantity), the kicked proton's pace 10^12 x 64 / (64^2 x 2^28 x 1837 +
+    10^12 x 110) = 0.0300 (the per-axis drive of history's 10^12 / (64 x
+    2^28 x 1837 + 10^12) = 0.0307), and the toy's first Links by `by_line`
+    on the same integers: the kicked pair of `deuteron_3` at its first
+    carry, `deuteron_1_kick` at none (the push outweighs the kick)."""
+    from event_universe.core.integer import by_line
+
+    for name, document in GENERATOR.worlds().items():
+        document = GENERATOR.families_by_definition(
+            document, GENERATOR.FAMILY_DEFINITIONS, GENERATOR.DEFINITIONS_SOURCE
+        )
+        assert json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8")) == document, name
+        assert "per_axis_drive" not in document
+    pinned = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads(json.dumps(GENERATOR.expectations()))
+    pinned.pop("replicated", None)
+    expected.pop("replicated", None)
+    assert pinned == expected and pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned["drive"] == GENERATOR.LINE_DRIVE and pinned["centred"] is False
+    assert set(pinned["derivations"]) >= {"pushes", "drive", "centred", "kick_pace", "first_link"}
+    kick = pinned["worlds"]["deuteron_3"]["kick_pace"]["p"]
+    assert abs(kick - 10**12 * 64 / (64 * 64 * (1 << 28) * 1837 + 10**12 * 110)) < 1e-15
+    assert abs(kick - 0.0300) < 5e-5
+    history = GENERATOR.expectations(GENERATOR.AXIS_DRIVE)
+    assert (
+        abs(
+            history["worlds"]["deuteron_3"]["kick_pace"]["p"] - 10**12 / (64 * (1 << 28) * 1837 + 10**12)
+        )
+        < 1e-15
+    )
+    assert abs(history["worlds"]["deuteron_3"]["kick_pace"]["p"] - 0.0307) < 5e-5
+    # The kicked proton of deuteron_3 by the engine's own line rule on its
+    # wall (the gravity push from tick 6 on top of the kick), the same tick
+    # as the toy's.
+    p = [-(10**12), 0, 0]
+    drives = [0, 0, 0]
+    fired = None
+    for tick in range(1, 200):
+        if tick >= 6:
+            p[0] -= GENERATOR.DEUTERON_GRAVITY
+        wall = 64 * 64 * (1 << 28) * 1837 + abs(p[0]) * 110
+        axis, _sign, drives = by_line(drives, [p[0] * 64, 0, 0], wall)
+        if axis is not None:
+            fired = tick
+            break
+    assert fired == pinned["worlds"]["deuteron_3"]["first_link"]["p"]
+    # The kicked pair at one Link: the push at one Link (3.1e11 per interval
+    # against the kick 10^12) reverses each momentum within four intervals,
+    # so the toy's first Link is inward, at 21 under the line drive (20
+    # under the per-axis drive of history): the kick does not separate them.
+    assert pinned["worlds"]["deuteron_1_kick"]["first_link"] == {"p": 21, "n": 21}
+    assert history["worlds"]["deuteron_1_kick"]["first_link"] == {"p": 20, "n": 20}

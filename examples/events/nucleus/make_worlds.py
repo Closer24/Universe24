@@ -43,6 +43,20 @@ lifetimes across fans are not run):
 | `alpha_square` | p n / n p, the 2 x 2 square |
 | `alpha_line` | p n n p on the axis |
 
+The bodies' drive (since 2026-09-22 the law's line drive, the model
+owner's record 972, docs/designs/drive_b/DEFAULT.md; the registered runs
+of 2026-09-20 were read under the per-axis drive of history, the world key
+`per_axis_drive`): the pushes above are the design's integers under either
+drive (a push is a row's label, the drive reads the momentum after it),
+and what the drive moves is the pace of a kicked body (10^12 on a heading:
+the line drive's p Q / (Q^2 S M + p T_D) = 0.0300 for a proton, the
+per-axis p / (Q S M + p) = 0.0307) and the tick of a pushed body's first
+Link (the toy: a constant push F per interval from its onset, the
+accumulator against the wall). `expectations(drive, centred)` writes
+`expectations.json` with these, every entry with its source in
+`derivations`; the eight world files carry no momentum but the kicks and
+are the same under either drive.
+
     python examples/events/nucleus/make_worlds.py [--out DIR]
 """
 
@@ -57,6 +71,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -79,6 +94,26 @@ LIFETIME = 3
 KICK = 10**12
 FAN_REACH = 6
 HEADINGS = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+# The two drives a body's step is derived under (docs/designs/drive_b/DEFAULT.md
+# section (c)): the line drive, the law's since 2026-09-22 (the accumulator
+# gains p_a Q per interval against the wall Q^2 S M + |p|_1 T_D), and the
+# per-axis drive of history (p_a against Q S M + |p_a|; the world key
+# `per_axis_drive`), the drive the registered runs were read under.
+LINE_DRIVE = "line"
+AXIS_DRIVE = "axis"
+DRIVE = LINE_DRIVE
+Q = 64
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2)
+EXPECTATIONS_FORMAT = "nucleus-expectations-v1"
+# The design's pushes per interval (README.md, the physicist's integers;
+# the readings tool holds the same numbers): the toy of the dispersal's
+# first step reads them as a constant push from its onset tick.
+DEUTERON_PUSH = 310_967_280_640
+DEUTERON_GRAVITY = 1_067_524_788
+PP_PUSH = 148_716_220_864
+PP_WEAK_PUSH = 4_691_779_136
+PP_3_PUSH = 15_977_466_864
+SQUARE_P4_PUSH = (355_957_892_670, 320_048_730_393, 0)
 Json = dict[str, object]
 
 
@@ -185,6 +220,124 @@ def worlds() -> dict[str, Json]:
     }
 
 
+def pace(p: int, content: int, drive: str = DRIVE) -> float:
+    """A body's pace at the momentum p on a heading, Links per interval: the
+    line drive's p Q / (Q^2 S M + p T_D) or the per-axis drive of history's
+    p / (Q S M + p)."""
+    if drive == LINE_DRIVE:
+        return p * Q / (Q * Q * WIDTH * content + p * T_D_AXIS)
+    if drive == AXIS_DRIVE:
+        return p / (Q * WIDTH * content + p)
+    raise ValueError(f"unknown drive {drive!r}")
+
+
+def first_link(
+    push: tuple[int, int, int],
+    content: int,
+    onset: int,
+    kick: tuple[int, int, int] = (0, 0, 0),
+    drive: str = DRIVE,
+    centred: bool = False,
+    limit: int = TICKS,
+) -> int | None:
+    """The toy of a body's first Link, a GAMEBOARD number: from the onset
+    tick the momentum grows by the constant push per interval on top of the
+    kick, the drive's accumulators gain their rates against the wall (the
+    line drive: p_a Q against Q^2 S M + |p|_1 T_D, the axis furthest over
+    the wall carrying; the per-axis drive: p_a against Q S M + |p_a| on
+    each axis), the threshold half the wall under `centred_step`; the
+    interval of the first carry, or None within `limit`."""
+    momentum = list(kick)
+    drives = [0, 0, 0]
+    for tick in range(1, limit + 1):
+        if tick >= onset:
+            momentum = [m + f for m, f in zip(momentum, push, strict=True)]
+        if drive == LINE_DRIVE:
+            wall = Q * Q * WIDTH * content + sum(abs(m) for m in momentum) * T_D_AXIS
+            threshold = wall - wall // 2 if centred else wall
+            drives = [d + m * Q for d, m in zip(drives, momentum, strict=True)]
+            over = [abs(d) - threshold for d, m in zip(drives, momentum, strict=True) if m]
+            if over and max(over) >= 0:
+                return tick
+        elif drive == AXIS_DRIVE:
+            drives = [d + m for d, m in zip(drives, momentum, strict=True)]
+            for d, m in zip(drives, momentum, strict=True):
+                wall = Q * WIDTH * content + abs(m)
+                threshold = wall - wall // 2 if centred else wall
+                if m and abs(d) >= threshold:
+                    return tick
+        else:
+            raise ValueError(f"unknown drive {drive!r}")
+    return None
+
+
+def expectations(drive: str = DRIVE, centred: bool = False) -> Json:
+    """The pins before the runs under the named drive (the module docstring):
+    the design's pushes are README.md's table under either drive; here the
+    drive-dependent numbers, every entry with its source in `derivations`.
+    The shipped register is `expectations()`; `expectations(AXIS_DRIVE)`
+    reproduces the numbers the registered runs of 2026-09-20 were read
+    under."""
+    if drive == LINE_DRIVE:
+        drive_note = (
+            "the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, "
+            "note 49; the model owner's record 972): the accumulators gain p_a Q per interval against "
+            "the one wall Q^2 S M + |p|_1 T_D, the axis furthest over the wall carrying"
+        )
+    else:
+        drive_note = (
+            "the per-axis drive of history (BEAM_LAW note 17 as it ran until 2026-09-22, the world key "
+            "`per_axis_drive`): each axis's accumulator gains p_a against Q S M + |p_a|"
+        )
+    m_p, m_n = PROTON + 1, NEUTRON + 1
+    return {
+        "format": EXPECTATIONS_FORMAT,
+        "derivations": {
+            "pushes": "declared: the design's integers per interval (README.md, the table of the expectations; the physicist's design of the strong force): a push is a row's label read at the body, the same under either drive",
+            "drive": "declared: " + drive_note,
+            "centred": "declared (docs/designs/drive_b/DEFAULT.md section (e), record 955): under `centred_step` the first Link comes at half the wall; the column the model owner decides at the paper's close",
+            "kick_pace": "GAMEBOARD: the pace of the kicked body at 10^12 on a heading before any push, the drive's rule at the content M + 1 (the held unit)",
+            "first_link": "GAMEBOARD, the toy: a constant push per interval from its onset tick on top of the kick (the design's numbers), the drive's accumulators against the wall; the tick of the first carry, or none within the run (the registered runs read the first steps off the `step` lines, which the toy brackets and does not pin: the fan's lines arrive over the first ticks and the hand-overs at contacts move the momenta)",
+            "width": "declared",
+        },
+        "drive": drive,
+        "centred": centred,
+        "width": WIDTH,
+        "kick": KICK,
+        "worlds": {
+            "deuteron_3": {
+                "kick_pace": {"p": pace(KICK, m_p, drive), "n": pace(KICK, m_n, drive)},
+                "first_link": {
+                    "p": first_link((-DEUTERON_GRAVITY, 0, 0), m_p, 6, (-KICK, 0, 0), drive, centred),
+                    "n": first_link((DEUTERON_GRAVITY, 0, 0), m_n, 6, (KICK, 0, 0), drive, centred),
+                },
+                "separates": "beyond 10 Links, never returns, both leave through the faces (README.md)",
+            },
+            "deuteron_1_kick": {
+                "kick_pace": {"p": pace(KICK, m_p, drive), "n": pace(KICK, m_n, drive)},
+                "first_link": {
+                    "p": first_link((DEUTERON_PUSH, 0, 0), m_p, 2, (-KICK, 0, 0), drive, centred),
+                    "n": first_link((-DEUTERON_PUSH, 0, 0), m_n, 2, (KICK, 0, 0), drive, centred),
+                },
+                "kick_outweighed_by": "tick 5 (3.1 x 10^11 x 4 > 10^12); no step (README.md)",
+            },
+            "pp_1_weak": {
+                "first_link": first_link((-PP_WEAK_PUSH, 0, 0), m_p, 2, drive=drive, centred=centred),
+                "bracket": [1, 200],
+            },
+            "pp_3": {
+                "first_link": first_link((-PP_3_PUSH, 0, 0), m_p, 6, drive=drive, centred=centred),
+                "bracket": [30, 60],
+            },
+            "alpha_square": {
+                "first_link_p4": first_link(SQUARE_P4_PUSH, m_p, 3, drive=drive, centred=centred),
+                "bracket": [1, 100],
+            },
+            "no_step": ["deuteron_1", "pp_1", "alpha_line"],
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -202,6 +355,18 @@ def main() -> None:
         document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path)
+    register = args.out / "expectations.json"
+    register.write_text(
+        json.dumps(carry_replicated(register, expectations()), indent=1) + "\n", encoding="utf-8"
+    )
+    expected = expectations()
+    print(
+        f"the {DRIVE} drive: the kicked deuteron's pace {expected['worlds']['deuteron_3']['kick_pace']['p']:.4f}, "
+        f"the toy's first Links {expected['worlds']['deuteron_3']['first_link']}, "
+        f"pp_1_weak {expected['worlds']['pp_1_weak']['first_link']}, pp_3 {expected['worlds']['pp_3']['first_link']}, "
+        f"alpha_square p4 {expected['worlds']['alpha_square']['first_link_p4']}"
+    )
+    print(register)
 
 
 if __name__ == "__main__":
