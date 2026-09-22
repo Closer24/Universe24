@@ -43,6 +43,17 @@ step 4 (the lamp and the cart only).
 
 ## The pins, before any run (the design's section 5)
 
+**Superseded on the radar velocity's sign (issue #937, 2026-09-22): the
+coordinate `x_D = c (n_r - n_e) / 2` gives `+ v`; the versioned
+preregistration is
+[docs/designs/moving_detector/PREREGISTRATION_V2.md](../../../docs/designs/moving_detector/PREREGISTRATION_V2.md),
+and `expectations.json`'s `radar_velocity` pins below are version 1's,
+kept as written until the build commit before the rerun (the owner's
+word). The five-world run of batch 933 on `main` at 4376712e read the
+radar velocity `+ 0.3323`, `+ 0.2008`, `+ 0.1105`, `+ 0.0584`, `+ 0.4279`
+against `- 1/3`, `- 1/5`, `- 1/9`, `- 1/17`, `- 3/7`: five FAILs, recorded
+as such in version 2's section 4.**
+
 At the law's rate r = 1, beta = 55 / (32 k): `k_AB` = 1 / (1 - beta) (the
 cart's counts apart over the lamp's ordinals apart; the missing direction of
 the click frame), `k_BA` = 1 + beta (the post's counts apart over the cart's

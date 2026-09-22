@@ -199,6 +199,14 @@ radar velocity are ratios of the cart's own counts alone and carry no r.
 
 ## 5. The pins, from the formulas, before any run
 
+**Superseded on the radar velocity's sign (2026-09-22, issue #937): the
+frozen coordinate `x_D = c (n_r - n_e) / 2` gives `+ v`, not the `- v`
+pinned below; the versioned preregistration is
+[PREREGISTRATION_V2.md](PREREGISTRATION_V2.md) (the coordinate kept, the
+prediction `+ v`, the batch-933 failures preserved, the round-trip band
+answered by kind). The text of sections 5 and 6 below is kept verbatim as
+version 1.**
+
 At r = 1 (the law), beta = 55 / (32 k), each ratio read over a window of W
 counts apart with the tolerance 2 / W (the hop's one-count remainder at
 each end; the click frame: within 1 / T of the count and 1 / T_D of the
