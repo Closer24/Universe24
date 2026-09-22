@@ -3356,6 +3356,50 @@ test, check.py, one commit, one push, the report.
 
 ### B. The reshaping commit (goes on the owner's GO, after parts 6 to 9 of the click frame, the derivations light-outside and einstein-outside, and docs/designs/algebra_transition/HISTORY.md merge; records 772, 777, 787, 793, 799, 802 and the owner's words to the writer)
 
+0. THE ORDER, the owner's word (through the Boss, 07:35Z), binding on
+   this plan: the paper begins with the step beneath and everything
+   follows from it, in this order, before the phenomena:
+   (1) THE STEP BENEATH: the Inside step, the six verbs on the record,
+       Eq. 1 with its components, W = E'^2 + 3 p.p its invariant (Eq.
+       14 in its frame), the basis; nothing else is assumed (the road
+       from the cells to the algebra and the quantities' table sit here,
+       B.2).
+   (2) THE STEP ABOVE THAT FOLLOWS FROM IT: Einstein's, the most
+       general, E^2 = E_0^2 + p^2 c^2, the clock's rate 1 / gamma, the
+       composition of velocities, the Doppler factors; the conversion
+       the map (B.3); and Lorentz follows the same way, from (A1) and the
+       one line, per the click theorem. The words, per the audit:
+       "follows", "recovered", "arrived at", never "derived" where the
+       form was put in, and "declared" for Eq. 14 until part 6 is on
+       main; the sentence that nothing of Einstein's was put into the
+       formulas, only the Inside was used.
+   (3) THE SMALLEST THING ABOVE, the quantum of the Outside step: a
+       theorem of (A1) and the conversion with no run: one Link between
+       two places read is the least distance a click can report; a pulse
+       and its return is the least time a detector times; one Node per k
+       counts is the least step of a velocity; c is one Link per the
+       least count; every reading Outside is a whole number of these,
+       so the world above is quantized, and the click's amount w is the
+       unit that arrives. The sentence: this is what physics above
+       cannot get from its own formulas and ours give, why the world
+       above is quantized. The theorem's statement is taken from the
+       merged texts (the click frame's parts 8 and 9, light-outside
+       8bd4f811 / PR #791, einstein-outside at its final head); the
+       paper names it and shows the four smallest things in four lines.
+   (4) NEWTON FROM THE SMALL STEP: the limit, the shell mean, the
+       equivalence, already shown (Sections 4 and 5; Newton Outside when
+       part 7 lands); the register's D3, T and X the confirmation.
+   (5) THE PHENOMENA BY FORMULAS (B.4), the register by kind (B.5, B.6),
+       the no-circularity words (C).
+   The sources are the merged texts only: the click frame (PR #769),
+   light-outside (8bd4f811, PR #791), einstein-outside (its final head),
+   HISTORY.md; nothing applied until the owner's GO. The items B.1 to
+   B.7 below are the same plan in this order: B.2 and B.3 are steps (1)
+   and (2), the smallest thing is a new paragraph of about six lines
+   after B.3's "The step beneath and the step above", B.4 to B.6 are
+   step (5); the cost joins B.7 (plus six, within the budget's margin
+   or the compile's word).
+
 1. The opening argument, WHY physics behaves like modern algebra
    (record 793), the introduction's claim paragraph rewritten in five
    steps (twelve lines): Outside is arithmetic in Q, counts at clicks and
