@@ -3015,6 +3015,24 @@ states "exactly" and means integer equality at every tick.
   `r8`'s 0.969 and C(2) = 1.24, are the action-row re-read's to the
   digit; 0 record checks failed, 2 readings inside, 0 outside. The
   verdict stands.
+- **The atoms series' baseline run as the law stands (2026-09-22; measured,
+  nothing pinned here; record 886 on record 884 (2)).** One run of
+  `examples/events/atoms/hydrogen_r12.json` (series H's `r12` with the
+  momentum derived for form B's circle, 293 783 192, and h_B = 5 536 242 544;
+  form B's key not declared, so the drive on `main`), the pins declared
+  before it from the atom's algebra and the clicks read after it in
+  [docs/designs/atom_baseline/RUN.md](designs/atom_baseline/RUN.md): the
+  electron widens every quarter turn (the crossings at 13, 13, 17 and 26
+  Links from the proton's Node, the arrival Nodes of its rows on the side
+  faces, DETECTOR) and leaves through `face:+y` at count 3407 (DETECTOR),
+  the register's precedent at this radius repeated (`r12` under the signed
+  drive left through `face:+x` at 2059); no return, no period, no closure
+  read; the dwell 20.0 counts per Link about the three crossings inside
+  r = 17 (19.05 by formula at r = 12; 23.06 over all 16 hops, FAIL as
+  declared); one row read by the proton per crossing (DETECTOR); four pins FAIL, two NOT READ, one PASSES; nothing moved; the radius from the step lines 12.00 to
+  27.86 (GAMEBOARD, a diagnostic); nothing compared with nature, NATURE
+  row 6 NOT YET. A labelled baseline for the stability rule's design
+  (atom-give-v1, record 881), not a re-read of series H's verdict.
 
 ### I, the nucleus (2026-09-20)
 
