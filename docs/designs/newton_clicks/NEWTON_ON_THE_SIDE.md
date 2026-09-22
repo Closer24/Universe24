@@ -323,7 +323,15 @@ a face click of the row is the control's FAIL.
 
 **Side B, the orbit on the ordinals.** The body's pace on a heading
 under the per-axis drive is v = abs(p_a) / (Q S M + abs(p_a)) Links per
-self-creation, exactly 1 / k when abs(p_a) = Q S M / (k - 1), whole when
+self-creation, the drive of `main` today; under the line drive of PR
+#907 the pace is p Q / (Q^2 S M + abs(p) T_h) (T_h = 110, the heading's
+period constant) and 17 is no rung of it, so the k17 worlds declare
+`per_axis_drive` (the drive of history their pins are derived under, as
+the moving detector's six worlds do on the branch `drive-default` of PR
+#907, where the key lives; on `main` at the base commit the per-axis
+drive is the law's and the key does not exist), the choice taken here
+over re-deriving the rung from (Q^2 S M + p T_h) / (p Q) whole; the
+pace is exactly 1 / k when abs(p_a) = Q S M / (k - 1), whole when
 k - 1 divides Q S M (M = 2^12 + 2^20 = 1052672 in D3); the circular
 balance n^2 / (S + n) = A with n = p / (Q M) = S / (k - 1) gives S = A k
 (k - 1). The rung chosen here: **k = 17, S = 404, p = 4 x 404 x M**
@@ -462,6 +470,10 @@ first self-creation (the birth's convention, one count) and the click
 whose row's last Link and the receiver's owed count fall in one interval
 (the count's grain, one); both inside the margin; a control that reads
 979 on every click but one says which convention the line carries.
+The held mass at 2^10 under the release [1, 4096] births one row per
+direction per four self-creations (`by_clock(age, 2^10, 2^12)`), so the
+crowd's shell is every four intervals and its grain is larger than the
+design's at 2^16; the 8 per cent margin covers it at 40 Links.
 What PASS means: the reading matches Newton's form for a slow particle
 (the advance's (c / v)^2 and the bending's 2 G M / (b v^2)) beside
 Einstein's light forms in the same world, with the constant n S / d in
@@ -474,12 +486,14 @@ rung is not whole, or the wall acts without the push.
 The world: series D3's plane and source (121 x 121, the source at (60,
 60) releasing its fan of 120 every 10 intervals), the probe as
 registered but S = 404 and p = 4 x 404 x M on the launch axis (the whole
-n = 25.25 at the balance), `clock_stamp` true, the detector line as
-registered but moved to y = 2 (58 Links below the source, beyond the
-apocentres the estimate of 3 (b) allows within the turns the run
-holds; whether a pericentre reaches it is the map's to say before the
-run) or the loops read at the source's Node as the lamp worlds do; the
-period read on the ordinals.
+n = 25.25 at the balance), `clock_stamp` true, ONE detector: the
+detector line as registered, moved to y = 2 (58 Links below the source;
+a pericentre reaches it only when the loop's far side reaches 58 Links,
+which the estimate of 3 (b) puts beyond the turns the run holds; the
+map prints whether one does at k = 17 before the pins are declared, and
+a loop that reaches the line is read as D3's contacts were, a loop
+re-made); the first-turn pins below are written on that line's clicks,
+the ordinal on each; the period read on the ordinals.
 
 | The reading | COMPUTATION | Kind | PASS | FAIL |
 | --- | --- | --- | --- | --- |
@@ -505,8 +519,12 @@ this task (the physicist writes them on the owner's word):
   `phase_per_link`} and the family `m` {`quantum` 0, no phase, `charge`
   0}; the receiver family `wall` (a paid family of one unit as D3's
   line uses). The lamp A: a measured event of `matter` at (2, 26, 20),
-  fixed, its content equal to the world's `K` (the clock's pair, so that
-  the turn is exactly 1 at the birth), `lamp`
+  fixed, its content equal to the world's `K` at the first birth (the
+  turn exactly 1); each birth costs it M_row = 21 (`nature_beam.py:6002`
+  at the base commit, `cost = definition.quantum * turn`), so the turn
+  skips one self-creation in about `K` / (births x 21) thereafter and is
+  never 2; no pin of 4.1 depends on one birth per interval, the arrival
+  count being per click; `lamp`
   {`rate` [1, 1], `wheel` [2531, 4096], `directions` [[1, 0, 0]],
   `momentum_magnitude` 71}, `table` {`m`: `pass`}. The held mass: a
   measured event of `m` at (28, 20, 20), fixed, `amount` 1024, series
