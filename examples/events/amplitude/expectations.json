@@ -2128,7 +2128,7 @@
      0,
      1024
     ],
-    "ticks": 8212,
+    "ticks": 8221,
     "births": 8192,
     "counts_under": "pair_n.8192.pairs.0_1024.counts",
     "E": 5800,
@@ -2173,7 +2173,7 @@
      0,
      3072
     ],
-    "ticks": 8212,
+    "ticks": 8221,
     "births": 8192,
     "counts_under": "pair_n.8192.pairs.0_3072.counts",
     "E": -5800,
@@ -2218,7 +2218,7 @@
      2048,
      1024
     ],
-    "ticks": 8212,
+    "ticks": 8221,
     "births": 8192,
     "counts_under": "pair_n.8192.pairs.2048_1024.counts",
     "E": 5784,
@@ -2263,7 +2263,7 @@
      2048,
      3072
     ],
-    "ticks": 8212,
+    "ticks": 8221,
     "births": 8192,
     "counts_under": "pair_n.8192.pairs.2048_3072.counts",
     "E": 5784,
@@ -2308,7 +2308,7 @@
      0,
      2048
     ],
-    "ticks": 16404,
+    "ticks": 16439,
     "births": 16384,
     "counts_under": "pair_n.16384.pairs.0_2048.counts",
     "E": 11600,
@@ -2353,7 +2353,7 @@
      0,
      6144
     ],
-    "ticks": 16404,
+    "ticks": 16439,
     "births": 16384,
     "counts_under": "pair_n.16384.pairs.0_6144.counts",
     "E": -11600,
@@ -2398,7 +2398,7 @@
      4096,
      2048
     ],
-    "ticks": 16404,
+    "ticks": 16439,
     "births": 16384,
     "counts_under": "pair_n.16384.pairs.4096_2048.counts",
     "E": 11572,
@@ -2443,7 +2443,7 @@
      4096,
      6144
     ],
-    "ticks": 16404,
+    "ticks": 16439,
     "births": 16384,
     "counts_under": "pair_n.16384.pairs.4096_6144.counts",
     "E": 11572,

@@ -1154,15 +1154,55 @@ def malus_worlds() -> dict[str, dict[str, object]]:
     return {name: malus(name, rotate, window) for name, (rotate, window) in MALUS_SETTINGS.items()}
 
 
+# The pair's lamp on the A2 board: the content K + 2 (`bell`), the birth of
+# a record 4 rows of amount 1 (two directions, the labels 0 and 3), and the
+# gather of a record 12 intervals after its birth on every registered run
+# (the flight to Alice's and Bob's counters; the registered `bell_n*` runs,
+# tick - born = 12 on every gather line).
+BELL_LAMP_CONTENT_OVER_K = 2
+BELL_BIRTH_COST = 4
+BELL_FLIGHT_TO_GATHER = 12
+
+
+def interval_of_birth(
+    births: int, k: int, extra: int = BELL_LAMP_CONTENT_OVER_K, cost: int = BELL_BIRTH_COST
+) -> int:
+    """The interval at which a paid lamp of content K + `extra`, paying
+    `cost` per birth, makes its `births`-th birth (BEAM_LAW note 41: the
+    turn's accumulator gains the content the frame reads before the birth
+    pays, K + extra - cost x births so far, one turn per K by `by_drive`,
+    one birth per turn); its exact clock stalls where the content has
+    fallen below K, so W births take more than W intervals: 513 at W = 512,
+    4099 at 4096 (the registered 4096 births in 4099 intervals), 8201 at
+    8192, 16419 at 16384."""
+    accumulator = 0
+    made = 0
+    interval = 0
+    while made < births:
+        interval += 1
+        accumulator += k + extra - cost * made
+        turns, accumulator = divmod(accumulator, k)
+        made += turns
+    return interval
+
+
 def bell_n(name: str, n: int, a: int, b: int) -> dict[str, object]:
-    """The pair at the CHSH labels at N = n on the A2 board, one birth per u."""
+    """The pair at the CHSH labels at N = n on the A2 board, one birth per u.
+    The duration: N + 20 intervals where the W-th record's gather falls
+    within them (the registered N up to 4096, and 2048), else the W-th
+    birth's interval + 20 (the same margin of 8 past the gather: 8221 at
+    8192, 16439 at 16384; declared from `interval_of_birth` on 2026-09-22
+    after the first declaration N + 20 ended with the last records of the
+    wheel in flight or unborn at those two N: 8191 of 8192 and 16357 of
+    16384 gathered, every gathered record on its rung)."""
     world = bell(name, (a, b))
     world["N"] = n
     # The birth wheel [1, N] with this world's N (the count of births mod N).
     for entry in world["measured"]:
         if "lamp" in entry:
             entry["lamp"]["wheel"] = [1, n]
-    world["ticks"] = n + 20
+    last_gather = interval_of_birth(n, int(world["K"])) + BELL_FLIGHT_TO_GATHER
+    world["ticks"] = n + 20 if last_gather <= n + 20 else last_gather + 8
     return world
 
 
