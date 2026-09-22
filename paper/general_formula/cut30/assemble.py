@@ -61,7 +61,7 @@ def build() -> str:
     return (
         HEADER
         + body[:i]
-        + "{\\small\n"
+        + "{\\footnotesize\n"  # the references at footnotesize (the owner's "cut" to 36, record 922; the Boss's order of 11:30Z)
         + head
         + "".join(kept)
         + "\\end{thebibliography}}\n\n"

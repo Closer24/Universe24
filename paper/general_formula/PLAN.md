@@ -4471,3 +4471,12 @@ few lines on pages 34 and 35, below one row of the families table
 36 is as it was. Next lossless candidates, measured in a trial build
 and not applied: (H) the references at footnotesize instead of small;
 (I) the notation table at scriptsize. The owner decides.
+
+## Applied (2026-09-22, the Boss's order of 11:30Z under the owner's "cut", record 922): H, the references at footnotesize
+
+One line of cut30/assemble.py: the bibliography's wrapper "{\small"
+to "{\footnotesize". No word, claim, number, verdict or citation of
+the paper changed. The count: 36 pages, measured in the real build
+(the references end on page 33, Appendix A follows them there, the
+roads table closes on page 36). I (the notation table at scriptsize)
+not applied. If the owner wants H undone, one revert commit.
