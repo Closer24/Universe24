@@ -487,6 +487,46 @@
   },
   "note": "the weight 221 for 220 moves the mass delay by 0.16 interval and nothing at three decimals in the shifts: the mass delays' ratio 4.94 / 2.95 = 1.67 (was 1.73), outside 2.00 +- 0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by the one floor; the shifts' ratio 2.00 unchanged; far's delays' ratio 1.69 (was 1.70); the matter worlds read in whole pixels and whole y-Links on one line, the wall's factor on a massive row under that grain; no pin moved"
  },
+ "run_2026_09_22_fast": {
+  "branch": "optical-every-family",
+  "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
+  "read_by": "tools/lensing_readings.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
+  "worlds": {
+   "fast_g0": {
+    "shift": -3.0,
+    "arrival": 1.64,
+    "clicks": 920,
+    "control_clicks": 1005,
+    "taken_by_the_mass": 0,
+    "shift_inside": true,
+    "arrival_inside": true,
+    "was": null
+   },
+   "fast_g1": {
+    "shift": -4.804,
+    "arrival": 4.44,
+    "clicks": 924,
+    "control_clicks": 1005,
+    "taken_by_the_mass": 0,
+    "shift_inside": true,
+    "arrival_inside": true,
+    "was": null
+   }
+  },
+  "ratios": {
+   "shift_g1_over_g0": 1.6,
+   "arrival_g1_over_g0": 2.71,
+   "pinned": {
+    "shift_g1_over_g0": 1.69,
+    "arrival_g1_over_g0": 2.31
+   }
+  },
+  "gameboard_crowd_at_b": {
+   "presence": 9.92,
+   "age_moment": 136.3
+  },
+  "note": "every pin met: verb 1 on a massive row read for the first time at the detector (the gamma 1 arrival 4.44 against the pin 4.49 and the wall unstretched -0.80, 5.2 intervals away; gamma 0 1.64 against 1.94, the unstretched -0.66); the weight's form read between Newton's and light's (the shifts' ratio 1.60 against the continuum's 1.54, light's 2.00 and the blind 2.46; the gamma 1 shift -4.804 against the blind -6.40); no pin moved"
+ },
  "matter": {
   "derivation": "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py (the light-bending map's crowd lines, the row followed along its own momentum, verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): the deciding world of every family under one wall, the mass 2^14, the pair [1, 16384], one massive row per interval on the heading at b = 10; the arrival carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) grows under the push), so the pin is the map's arrival per world and the readings that refute are the map's with one verb changed",
   "mass": 16384,

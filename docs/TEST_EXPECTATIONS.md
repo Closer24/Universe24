@@ -2149,7 +2149,12 @@ default), the integers written before the run:
   1024 and `age_bound` 1024) carry the pins of the map
   docs/designs/one_wall/every_family_map.py (the shift -5.76 / -6.11 /
   -5.76 +- 0.5, the arrival -8.36 / -7.42 / -8.36 +- 1) and the three
-  refuting readings (-11.03, -10.45, +43.99); the two keys load together.
+  refuting readings (-11.03, -10.45, +43.99); the two keys load together;
+  the fast worlds `fast_g0` and `fast_g1` (the beam of five lines at b =
+  8, M = 2^16, the momentum 40) carry the map's integer walk's pins (the
+  shift -2.60 / -4.40, the arrival 1.94 / 4.49, the wall unstretched
+  -0.80 and the blind weight -6.40 at gamma 1, the shifts' ratio 1.69)
+  and load with five beam directions and the momentum 40.
 
 ## The covariant readings
 

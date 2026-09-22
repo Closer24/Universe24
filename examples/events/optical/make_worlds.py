@@ -371,6 +371,51 @@ RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
 }
 
 
+# The fast worlds' run (2026-09-22, branch optical-every-family, after the
+# pins' commit 22064bc3; EVERY_FAMILY.md section 5c): the wall's factor on
+# a massive row read at the detector. DETECTOR unless marked.
+RUN_2026_09_22_FAST: dict[str, object] = {
+    "branch": "optical-every-family",
+    "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
+    "read_by": "tools/lensing_readings.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
+    "worlds": {
+        "fast_g0": {
+            "shift": -3.000,
+            "arrival": 1.64,
+            "clicks": 920,
+            "control_clicks": 1005,
+            "taken_by_the_mass": 0,
+            "shift_inside": True,
+            "arrival_inside": True,
+            "was": None,
+        },
+        "fast_g1": {
+            "shift": -4.804,
+            "arrival": 4.44,
+            "clicks": 924,
+            "control_clicks": 1005,
+            "taken_by_the_mass": 0,
+            "shift_inside": True,
+            "arrival_inside": True,
+            "was": None,
+        },
+    },
+    "ratios": {
+        "shift_g1_over_g0": 1.60,
+        "arrival_g1_over_g0": 2.71,
+        "pinned": {"shift_g1_over_g0": 1.69, "arrival_g1_over_g0": 2.31},
+    },
+    "gameboard_crowd_at_b": {"presence": 9.92, "age_moment": 136.3},
+    "note": (
+        "every pin met: verb 1 on a massive row read for the first time at the detector (the gamma 1 "
+        "arrival 4.44 against the pin 4.49 and the wall unstretched -0.80, 5.2 intervals away; gamma 0 "
+        "1.64 against 1.94, the unstretched -0.66); the weight's form read between Newton's and light's "
+        "(the shifts' ratio 1.60 against the continuum's 1.54, light's 2.00 and the blind 2.46; the gamma "
+        "1 shift -4.804 against the blind -6.40); no pin moved"
+    ),
+}
+
+
 def worlds() -> dict[str, Json]:
     found = {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
     for family, gamma in MATTER_WORLDS:
@@ -511,6 +556,7 @@ def expectations() -> Json:
     out["run_2026_09_22_bresenham"] = RUN_2026_09_22_BRESENHAM
     out["run_2026_09_22_far"] = RUN_2026_09_22_FAR
     out["run_2026_09_22_every_family"] = RUN_2026_09_22_EVERY_FAMILY
+    out["run_2026_09_22_fast"] = RUN_2026_09_22_FAST
     for name, pin in PINS.items():
         ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],

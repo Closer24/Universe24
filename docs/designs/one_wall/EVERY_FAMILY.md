@@ -476,6 +476,36 @@ the map's stationary lines (5b: at b = 10 it left the engine one to
 three intervals and one pixel off); a miss is reported with the engine's
 number and no pin moved.
 
+The fast worlds, run after the pins' commit (22064bc3; DETECTOR,
+`tools/run_series.py --jobs 2`, 400 intervals, the window from 200,
+`tools/lensing_readings.py --no-replay --window-start 200 --register
+expectations.json`, the verdicts the tool's against the pins):
+
+| World | f | clicks (control 1005) | centroid y, shift (pin, bracket 0.5) | mean age, arrival (pin, bracket 1) | width rms y, delta | count ratio | first click (control 121) | inside |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `fast_g0` | 1 | 920 | 25.000, -3.000 (-2.60) | 122.84, +1.64 (+1.94) | 3.162, +0.334 | 0.9154 | 122 | yes (by 0.10) / yes (by 0.70) |
+| `fast_g1` | 2 | 924 | 23.196, -4.804 (-4.40) | 125.64, +4.44 (+4.49) | 2.925, +0.096 | 0.9194 | 123 | yes (by 0.10) / yes (by 0.95) |
+
+GAMEBOARD: the crowd at b = 8, the presence 9.92 rays per Node and the
+age moment 136.3 (the far worlds'); the centroid in z 20.000; the mass
+takes no row; the count ratio 0.92 (the beam's outer lines leaving the
+screen's window, as the far light worlds' 0.92). What the run decides:
+(1) verb 1 on a massive row read at the detector for the first time,
+the gamma 1 arrival +4.44 against the pin +4.49 +- 1 and the wall
+unstretched -0.80 (5.2 intervals away), the gamma 0 arrival +1.64
+against +1.94 (the unstretched -0.66, 2.3 away); the arrivals' ratio
+4.44 / 1.64 = 2.71 (the pinned walk's 2.31; the wall's factor 2 with
+the grain); (2) verb 2's weight on a fast row read, the gamma 1 shift
+-4.804 against the pin -4.40 and the blind -6.40 (1.6 pixels away); the
+shifts' ratio 4.804 / 3.000 = 1.60 (the walk's 1.69, the continuum's
+1 + gamma v^2 = 1.54, light's 2.00, the blind 2.46): the weight's form
+(E'^2 + 3 gamma **p** . **p**) // E' read between Newton's and light's;
+(3) the four pins met by the integer walk's numbers, the one to three
+intervals of the single-line world at b = 10 averaged by the beam's five
+lines. The light worlds at the same mass and b read -1.773 / -3.403
+pixels and +2.56 / +4.35 intervals: the fast rows (v = 0.74 c) bend more
+(the dwell) and delay the same within the grain. No pin moved.
+
 ## 6. The steps that follow
 
 Step 3, the body's drive in the age wall's set at the same 1 + gamma (form
@@ -500,7 +530,8 @@ exactly, DONE as far as the verbs go (`walk` in `every_family_map.py`,
 the engine is the crowd's lines, the next follow-up reading the crowd
 off a mass world's state), and a deciding world of the beam's width for
 the wall's factor on a massive row, its pins per beam line from the
-integer walk (the map's last section), committed before the run.
+integer walk (the map's last section), committed before the run: DONE
+(5c, the fast worlds, every pin met, verb 1 on a massive row read).
 
 ## 7. Links
 

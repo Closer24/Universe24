@@ -6907,6 +6907,23 @@ sequential gates on an entangled record, the full register replay.
   speed-up that the first draft's pins missed (the reviewer's MUST-FIX
   1) and is not registered. No pin moved; the register
   examples/events/optical/README.md.
+- **The fast worlds, the wall's factor on matter read** (2026-09-22,
+  branch optical-every-family, 22064bc3 the pins then the run; the
+  chief physicist): a slow row's stretch is swamped by Newton's fall, so
+  the deciding world of the beam's width takes fast rows, `matter` at
+  quantum 1 and momentum 40 (E' = 94, v^2 = 0.543) on series K's five
+  beam lines at b = 8 beside the light worlds' mass 2^16, 400 intervals;
+  the pins from the map's integer walk (the engine's three verbs integer
+  for integer on the stationary crowd), committed before the run: the
+  shift -2.60 / -4.40 +- 0.5 and the arrival +1.94 / +4.49 +- 1 at gamma
+  0 / 1, the wall unstretched -0.66 / -0.80, the blind weight -6.40.
+  DETECTOR: `fast_g0` -3.000 pixel / +1.64 intervals, `fast_g1` -4.804 /
+  +4.44 (920 and 924 clicks of the control's 1005), every pin met: verb
+  1 on a massive row read at the detector for the first time (the gamma
+  1 arrival 5.2 intervals from the wall unstretched), the weight's form
+  read between Newton's and light's (the shifts' ratio 1.60 against the
+  continuum's 1.54, light's 2.00, the blind 2.46; the arrivals' 2.71).
+  No pin moved.
 - **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
   2.00 after the review's M1; 2.03 and 2.07 before it; 1.73 and 2.07
   under the Bresenham form, the mass ratio 0.02 outside); the turn bends
