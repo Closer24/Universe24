@@ -285,10 +285,13 @@ class NatureBeam:
     # optical-v1's verb 3 by Bresenham along the line of **P** (the model
     # owner's GO of record 536): the row's error accumulator **c** (three
     # integers), the sum over its walked Links **h** of the cross product
-    # **h** x **P**, read from the first push on; the label is chosen among
-    # D and its fan neighbours as the one whose next Link keeps
-    # |**c** + **h** x **P**|^2 smallest (`optical_turn`). (0, 0, 0) on
-    # every row of a world without the key and on every row never pushed.
+    # **h** x **P**, read from the first push on, **P** = Q d content
+    # **u**_D + **W** taken afresh at each Link (it changes as **W** does
+    # at a push, so **c** is the running area between the walked path and
+    # **P**'s line); the label is chosen among D and its fan neighbours as
+    # the one whose next Link keeps |**c** + **h** x **P**|^2 smallest
+    # (`optical_turn`). (0, 0, 0) on every row of a world without the key
+    # and on every row never pushed.
     cross_x: int = 0
     cross_y: int = 0
     cross_z: int = 0
@@ -3509,13 +3512,7 @@ def optical_walk_step(
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
     primitive's own `at_most` with the surplus kept in the accumulator
     (the rate never exceeds a row's own wall, so a row on its own direction
-    counts 0 or 1 with nothing to keep; a residue carried across a turn is
-    rescaled by `optical_turn` to the new direction's rate, record 496,
-    and may then exceed the new wall by the ratio T_old S_new / (S_old
-    T_new), at most 1.2035 over the pin worlds' fan (GAMEBOARD, the flight
-    table at load: a heading to (0, 4, -1), 110 x 5 / 457; a heading to
-    (24, 1, 0) 1.0331), a Link already paid, which the cap counts once and
-    keeps whatever the surplus: the review of record 494, M1), is the
+    counts 0 or 1 with nothing to keep), is the
     interval's Manhattan step on the
     row's line at the place `made mod S_1`, and the accumulator after is
     kept on the row with the count made. A row whose accumulator is empty
@@ -3523,8 +3520,15 @@ def optical_walk_step(
     flight's off-age
     pair at its age scaled to the stretched units (`Flight.accumulator`
     times d): the same integers as the flight without the key at A = 0.
-    Returns the step and a function giving the time of the last Link of a
-    row as (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
+    The pair (S_1, T) of the row is its label's on a row never pushed and
+    its momentum's on a pushed row (`momentum_pair`, the chief physicist's
+    word on verb 3's form: the flight's Euclidean pace along the line
+    walked, which is the row's momentum **P**'s under Bresenham), and the
+    residue is rescaled to the momentum's rate at each push by
+    `optical_turn`, not at the label's turn (record 496 generalised: the
+    rate's ratio whenever the pace's direction changes). Returns the step
+    and a function giving the time of the last Link of a row as
+    (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
     flight = frame.flight
     world = frame.world
     assert frame.crowd is not None
@@ -3614,7 +3618,8 @@ def optical_turn(frame: Interval) -> None:
     the line the row's label follows by Bresenham (verb 3's form, the
     model owner's GO of record 536 on the chief physicist's
     recommendation of record 483): the row's error accumulator **c** (the
-    fields `cross`, the sum over its walked Links **h** of **h** x **P**,
+    fields `cross`, the sum over its walked Links **h** of **h** x **P**
+    with **P** the row's whole momentum taken afresh at each Link,
     kept by `optical_walk_step` from the first push on) is read against
     the next Link of D and of each of its fan neighbours (the line's step
     at the row's place, `made mod S_1`), and among the Links that advance
@@ -3633,23 +3638,23 @@ def optical_turn(frame: Interval) -> None:
     the sums the accumulator takes, W + n weight V and W + Q d content
     (u_D - u_D'), tested against the working bound before they are
     formed (the review of record 494, S1); the row's phase, amount,
-    content, number and record untouched. The residue s of the row's
-    flight accumulator crosses the turn as the time of its last Link
-    (the chief physicist's word of record 496 on the review's M1, record
-    494): the accumulator is the row's age paid at its direction's rate
-    r = 2 S_1 Q d (`Flight.accumulator`, note 41 (viii)) and the click
-    reads the last Link's time as age - s / r (`optical_last_link`), so
-    the residue in the new direction's units is s' = (s x S_new) // S_old,
-    exact from a heading (S_old = 1); at a turn between two off-heading
-    directions the remainder under one unit of the accumulator (1 / (2 Q d
-    S_new) of an interval) is dropped, the one truncation of the flight's
-    time, bounded by one unit per turn (the exact form carries a
-    denominator that grows with every turn, refused by the bounded local
-    record). The rescaled residue may exceed the new wall by the ratio
-    T_old S_new / (S_old T_new), at most 1.2035 over the pin worlds' fan
-    (GAMEBOARD, the flight table at load: a heading to (0, 4, -1), 110 x 5
-    / 457; a heading to (24, 1, 0) 1.0331), a Link already paid, which the
-    walk's cap counts once and keeps whatever the surplus."""
+    content, number and record untouched. The row's line under Bresenham
+    is its whole momentum **P**'s, not the label's, so a pushed row's pace
+    is its momentum's (the chief physicist's word of record 496 as
+    generalised on 2026-09-22, DERIVED): the accumulator is the row's age
+    paid at the rate r = 2 S_1(P) Q d of the primitive **P** (its wall
+    `momentum_pair`) and the click reads the last Link's time as
+    age - s / r (`optical_last_link`). At every push, where **P** changes,
+    the residue is rescaled to the new momentum's rate by
+    s' = (s x S_1(P')) // S_1(P) (the label's S_1 before the first push),
+    the time of the last Link carried, floor; the sub-unit remainder,
+    under 1 / (2 Q d S_1(P')) of an interval (9e-14 to 4.8e-7 over the pin
+    worlds' fan), is dropped, the one truncation of the flight's time,
+    now per push rather than per turn (record 496's residue rule
+    generalised: the rate's ratio whenever the pace's direction changes;
+    the exact form carries a denominator that grows with every push,
+    refused by the bounded local record). The residue is not rescaled at
+    the label's turn, where **P** is conserved."""
     assert frame.crowd is not None
     world = frame.world
     flight = frame.flight

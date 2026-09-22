@@ -270,7 +270,7 @@ moved. DETECTOR, the M1 re-read's value beside each new one as "was":
 | `mass_g0` | 1 | 1347 (was 1398) | 24.007, -1.993 (was -1.622) | 2.839, +0.010 (was +0.502) | 92.35, +2.95 (was +2.97) | 0.9258 (was 0.9608) | 0 (was 0) | -1.93 / 2.68 | yes / yes |
 | `mass_g1` | 2 | 1394 (was 1389) | 22.011, -3.989 (was -3.805) | 2.848, +0.020 (was +0.836) | 94.50, +5.10 (was +5.88) | 0.9581 (was 0.9546) | 0 (was 0) | -3.86 / 5.36 | yes / yes |
 | `near_g0` | 1 | 1453 (was 1455) | 20.392, -2.608 (was -3.000) | 4.124, +1.296 (was +1.367) | 92.39, +2.99 (was +2.40) | 0.9986 (was 1.0000) | 0 (was 0) | -2.42 / 2.17 | yes (by 0.19; was no) / yes |
-| `near_g1` | 2 | 1452 (was 1001) | 16.588, -6.412 (was -3.274) | 5.677, +2.848 (was +1.638) | 95.60, +6.20 (was +4.51) | 0.9979 (was 0.6880) | 0 (was 547) | -4.83 / 4.34 | no (by 1.08) / no (by 0.86) |
+| `near_g1` | 2 | 1452 (was 1001) | 16.588, -6.412 (was -3.274) | 5.677, +2.848 (was +1.638) | 95.60, +6.20 (was +4.51) | 0.9979 (was 0.6880) | 0 taken (was 547) | capture 582 +- 146 (superseded shift -4.83) / 4.34 +- 1 | capture OUTSIDE (by 582) / delay OUTSIDE (by 0.86) |
 
 The ratios f = 2 over f = 1: the shifts 2.00 (`mass`, 3.989 / 1.993 =
 2.0015, was 2.35: the law's 2.00 within 0.25, read for the first time)
@@ -279,7 +279,17 @@ and 2.46 (`near`, was 1.09), the delays 1.73 (`mass`, 5.10 / 2.95, was
 centroid in z 20.000 in every world; the mass takes no light in any of
 the four (was 547 in `near` at f = 2): the rows along **P**'s line pass
 it, and `near` at f = 2 reads the whole beam, no longer a survivors'
-reading. What the re-read decides, in the physicist's order: (1) the
+reading. `near_g1`'s row is read against `main`'s re-declared pins (PR
+#689): the capture reads 0 taken against the historical pin 582 +- 146
+(record 505), OUTSIDE (DETECTOR), the pin kept beside as history and the
+shift pin -4.83 superseded as `main` has it; the delay 6.20 against
+4.34 +- 1 is OUTSIDE by 0.86. That capture pin names the nearest-tooth
+verb's own mechanism (the two inner directions taken at the last units
+of their pace), so it binds that verb and not the Bresenham head (the
+physics-rule reviewer in the chief physicist's place, record 615, M3
+(ii)); the capture expectation for the Bresenham form awaits its
+re-declaration by the generator from the geometry before any re-run
+(record 205), not derived here and never read off the 0. What the re-read decides, in the physicist's order: (1) the
 wall's factor as Shapiro's, the mass delays 2.95 / 5.10 inside the pins
 2.68 / 5.36 +- 1, `near`'s 2.99 inside 2.17 +- 1 and 6.20 outside
 4.34 +- 1 by 0.86; the mass delays' ratio 1.73 leaves 2.00 +- 0.25 by
@@ -291,4 +301,6 @@ one-line pin at b = 3); (3) the shifts' ratio read at this fan: `mass`
 changed; a pin the run does not meet is reported with the engine's
 number. The head before the physicist's word (c0e8187, the label's pace
 on **P**'s line) read the mass shifts -1.794 / -3.966 (2.21) and the
-delays -1
+delays -1.02 / +3.34 on the label's pace, the reading that named the
+pace (the delays outside their pins, rows outrunning the control, until
+the momentum's pace corrected them above).

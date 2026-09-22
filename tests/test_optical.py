@@ -134,7 +134,10 @@ default). One rule per case, the integers written before the run:
     89.375 after the push less the residue's 0.168 plus the crowd's
     0.094, integer for integer with `by_drive`; on the label's pace (the
     head before this word) the 52 Links took 52 x 2662 / (25 x 64) = 86.5
-    intervals, three too few;
+    intervals, three too few. The test asserts the by-hand (made, residue)
+    chain against the run, the row's whole momentum (901120, 0, 0) at
+    every interval (P conserved), and the 53rd made at tick 91 with the
+    row at (54, 1, 0);
 (h) S1 of the same review, under the momentum's pace ((j)): the sums the
     push accumulator takes are tested against the working bound before
     they are formed, and below them the pair on the momentum and the

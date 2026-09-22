@@ -2097,7 +2097,7 @@ default), the integers written before the run:
   (|e x P| <= 2 P_x), **P** conserved at every interval, the fields
   `cross` nonzero on the row and 0 on every row without the key.
 - (j) the pace of a pushed row is its momentum's (the chief physicist's
-  word of 2026-09-22, DERIVED): a bar of 60 x 3 x 1 at [1, 220] and
+  word of 2026-09-21 23:48Z, record 551, DERIVED): a bar of 60 x 3 x 1 at [1, 220] and
   `optical` 1, a row of `light` on (24, 1, 0) at (1, 1, 0) pushed at
   (2, 1, 0) in interval 1 by an m row of amount 3 arriving from -y,
   **W** = (0, -42240, 0), **P** = (901120, 0, 0) exactly +x (the primitive

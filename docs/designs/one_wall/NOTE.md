@@ -461,16 +461,20 @@ momentum's: **P** over the gcd of its three components (exact, the same
 direction, the content out), S_1(P) and T(P) = isqrt(3 |P|^2 Q^2), the
 rate 2 S_1(P) Q d against the wall 2 T(P) (d + f n A); the residue is
 rescaled by S_1(P') / S_1(P) at every push (the label's S_1 before the
-first), floor, the sub-unit remainder dropped, under 1 / (2 Q d S_1) of
-an interval per push, the one truncation of the flight's time, declared
-in the entry per push rather than per turn; the label D is then the
-phase's, the click's momentum label and the books' alone. T(P) is the
-law's own integer root, the resolution the law takes of every direction
-at load, here per pushed row when **P** changes: a bounded host cost,
-no float, no new primitive. The three tests: generic (the flight's one
-primitive on an integer direction, the row's **P** in place of a table's
-D), vector (no root beyond isqrt), local (the row's own **P**, **c** and
-residue, the crowd's moments at its Node). Record 496's residue rule is
+first), floor, the sub-unit remainder dropped, under 1 / (2 Q d S_1(P'))
+of an interval per push (9e-14 to 4.8e-7 over the pin worlds' fan, as
+read), the one truncation of the flight's time, declared in the entry
+per push rather than per turn; the row's **P** is taken afresh at each
+push (the primitive of the pushed row's wall, not once), the label D
+then the phase's, the click's momentum label and the books' alone. T(P)
+= isqrt(3 |P|^2 Q^2) is a run-time integer root admitted under
+optical-v1's identity, not a rule of the law: the same integer_root the
+law takes of every direction at load (T_D, E'_D), here taken per pushed
+row when **P** changes, a bounded host cost, no float, no new primitive.
+The three tests: generic (the flight's one primitive on an integer
+direction, the row's **P** in place of a table's D), vector (no root
+beyond that isqrt, admitted under this identity), local (the row's own
+**P**, **c** and residue, the crowd's moments at its Node). Record 496's residue rule is
 generalised, not superseded: rescaled by the rate's ratio whenever the
 pace's direction changes. `tests/test_optical.py` (j).
 
