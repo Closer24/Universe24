@@ -150,3 +150,52 @@ are identical. The verdict stands ([migration](../../../docs/MIGRATION.md#the-fr
 ## Re-run at head (2026-09-22)
 
 The criteria runner re-ran the three worlds at `origin/main` `4028b020` for the paper's Table 3 rows 7a and 7b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): B1 two `bond` clicks at tick 19 of content 2, the escaped 4, the mass read 3673; B3 four clicks, the escaped 8, the ratio 2.0 (DETECTOR, every pin met); the first contacts one interval later than in 2026-09-20 (B1 at tick 17; B3's gives at 16, 16, 16, 17; GAMEBOARD, the tick of a line); B2's lamp 2958 gathers of content 8 and 35 of 7 (registered 2961 and 32); the register's entry carries the dated line.
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of expectations.json committed at f5ed3ed before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the three
+worlds byte for byte as registered (no declared momentum; the pins with
+the drive named written by the generator before the run), run once each
+on the checkout of `drive-default` at `f5ed3ed` (source fingerprint
+`c71927e33dea0e12`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3,
+headless, `tools/run_series.py --jobs 3`, 32.6 to 175.5 s per world;
+every run completed at 3000 intervals with the books balanced at every
+tick, `run.json` carrying `"drive": "line"`; read off `events.jsonl`,
+`run.json` and `state.json` as the rows above were. Every DETECTOR pin
+met, nothing moved: B1 two `bond` clicks of amount 2 and content 2 at
+(8, 10, 10) (number 1, the label (-128, 0, 0)) and (13, 10, 10) (number
+2, (128, 0, 0)), the escaped `bond` 4, the mass read 3673 (`held` (1834,
+0, 1, 0) and (0, 1837, 1, 0)), `given` 2 at each body's first contact and
+0 on the 319 later (161 by p, 158 by n), the push on p 310 956 229 248
+before the give and 310 945 171 840 after, on n -310 956 211 200 and
+-310 945 171 840, the recoil +128 on p and -128 on n at their first
+contacts, no step; B3 four `bond` clicks of amount 2 and content 2, the
+escaped 8, the ratio 2.0 to the deuteron (nature 12.72: the failure as
+stated), `given` 2 at each first contact and 0 after; B2 no contact, no
+`bond` click, `held.bond` 2, no step, its record byte for byte the
+re-run's at head `4028b020` (the digests `5ac833225257`, `e994ab4c63af`,
+`a6df0ee9feb4`: no body moves in the control, so the drive touches
+nothing there; the lamp's 2958 gathers of content 8 and 35 of 7 as
+registered at head). What the drive moves, GAMEBOARD (the tick of a
+line): B1's first contacts at tick 18 on both bodies (the toy's 18 under
+the line drive; 16 on 2026-09-20 and 17 at head under the drive of
+history) and the clicks at 20 (19, 19: the first contact + 2, as
+pinned); B3's gives at 18 (n2, n3, p4) and 19 (p1) (15, 15, 15, 16 and
+16, 16, 16, 17; the toy's 19 for p4), the clicks at 20, 20, 20 and 21;
+B3's dispersal p4 +y at tick 97, n3 +x at 105, p1 -x at 117, n2 -x at
+125 (81, 89, 95, 111; series I's square under the line drive: 97, 105,
+105, 107), out through face:+y at 245 (p1), face:-y at 251 (n3),
+face:-x at 276 (n2) and face:+x at 404 (p4). The momentum sums
+(measured + transit + escaped, DESIGN section 2): B1 0 at tick 1, then
++18 048 on x per interval to 306 816 at the first contact (tick 18) and
+constant after (the same gap of the fans, stopped by the first
+hand-over: 270 720 from tick 16 on 2026-09-20), outside 0 as registered;
+B3 0 through tick 17, (0, 0, 0) at 18 with the recoil in the books, then
+off 0 as registered (285 382 210 334 on x at tick 100; the escaped
+(-935 050 649 794, 800 120 156 464, 165 304 967 007) at 3000), OUTSIDE
+as before, the same reading. The verdict stands: the give once, the
+clicks with the content, the pair stable, the books exact, the alpha at
+2.0 x. The rows above stand as registered, read under the per-axis drive
+of history; the register entry has the numbers beside them
+([N, the binding that costs content](../../../docs/EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).

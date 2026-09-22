@@ -11,6 +11,28 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series N under the law's line drive: three runs on drive-default f5ed3ed - 2026-09-22
+
+The branch `drive-default` at `f5ed3ed` (the generator's pins with the
+drive named committed before the run, a new `expectations.json`,
+DEFAULT.md section (c); the three worlds byte for byte as registered):
+the three worlds of `examples/events/binding/` run through
+`tools/run_series.py --jobs 3` (Python 3.14.0rc2, numpy 2.5.3, headless;
+source fingerprint `c71927e33dea0e12`), every run completed at 3000
+intervals with the books balanced at every tick, `run.json` carrying
+`"drive": "line"`; the digests (state, audit, events) `5d8ff505ecb6`,
+`1f4eba4a65c0`, `230755705ff9` (`deuteron_bond`), `2a8bdf2ad467`,
+`f9a435908a04`, `f7e435b0f0e2` (`alpha_square_bond`), `5ac833225257`,
+`e994ab4c63af`, `a6df0ee9feb4` (`proton_bond_lamp`, identical to the
+re-run at head `4028b020`: no body moves in the control); run times 32.6
+to 175.5 s at 92 to 130 MB peak (host measurements). No gate world is in
+this series. The readings by kind (every DETECTOR pin met; the first
+contacts and the dispersal moved with the drive, GAMEBOARD) are in
+[the series' README](../examples/events/binding/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-f5ed3ed-before-the-run)
+and [the register](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20).
+The rows of 2026-09-20 and the re-run at head stay registered as read
+under the per-axis drive of history.
+
 ## Series R under the law's line drive: seven runs on drive-default 754a9c1 - 2026-09-22
 
 The branch `drive-default` at `754a9c1` (the transient `per_axis_drive`

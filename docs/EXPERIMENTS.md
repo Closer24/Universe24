@@ -5040,6 +5040,46 @@ sequential gates on an entangled record, the full register replay.
   at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
   are identical (no lamp, no crowd on a fan). The verdict stands.
 - **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`; the three worlds through `tools/run_series.py --jobs 2`, 3000 intervals, 98.0, 21.6 and 59.9 s, completed and conserved; read off the record; the criteria in [docs/designs/paper_criteria/CRITERIA.md](designs/paper_criteria/CRITERIA.md), rows 7a and 7b, pinned before the run).** DETECTOR: B1 two `bond` clicks at tick 19 at (8, 10, 10) and (13, 10, 10) of amount 2 and content 2, the escaped 4, the mass read 3673 (`held` (1834, 0, 1, 0) and (0, 1837, 1, 0)), `given` 2 at each body's first contact and 0 on the 346 later; B3 four `bond` clicks at 18, 18, 18, 19, the escaped 8, the ratio 2.0; B2 no contact, no `bond` click, `held.bond` 2, the lamp's 2993 gathers 2958 of content 8 and 35 of 7 (registered 2961 and 32). In the lattice's clock (GAMEBOARD, the tick of a line) the first contacts fall one interval later than in 2026-09-20 (B1 at 17, B3's gives at 16, 16, 16, 17; the alpha's first step at 82). Every pin of the rows met; NATURE rows 7a BOUND and 7b FAIL stand. The digests: `deuteron_bond` state `36d43a04f9ac`, audit `3243dd29965b`, events `46cd2ba58723`; `alpha_square_bond` `647f45e71e86` / `ba6e81715af5` / `c18da506c68e`; `proton_bond_lamp` `5ac833225257` / `e994ab4c63af` / `a6df0ee9feb4`. No number re-registered; this line dated.
+- **Result of the re-run under the law's line drive (2026-09-22,
+  measured against the pins of `examples/events/binding/expectations.json`,
+  committed at `f5ed3ed` before the run; a new registration beside the
+  rows above, which stand as read under the per-axis drive of
+  history).** The flip (the model owner's word, record 972; [the
+  design](designs/drive_b/DEFAULT.md), step 2): the three worlds byte for
+  byte as registered (no declared momentum; the DETECTOR pins drive-free,
+  the toy's first contact under the drive: B1 at 18, B3's p4 at 19; 17
+  and 16 per axis), run once each on the checkout of `drive-default` at
+  `f5ed3ed` (source fingerprint `c71927e33dea0e12`, package 0.3.1), Python
+  3.14.0rc2, numpy 2.5.3, headless, `tools/run_series.py --jobs 3`, 32.6
+  to 175.5 s per world at 92 to 130 MB peak (host measurements); every
+  run completed at 3000 intervals with the books balanced at every tick,
+  `run.json` carrying `"drive": "line"`; the digests (state, audit,
+  events) `5d8ff505ecb6`, `1f4eba4a65c0`, `230755705ff9`
+  (`deuteron_bond`), `2a8bdf2ad467`, `f9a435908a04`, `f7e435b0f0e2`
+  (`alpha_square_bond`), `5ac833225257`, `e994ab4c63af`, `a6df0ee9feb4`
+  (`proton_bond_lamp`, byte for byte the re-run's at head `4028b020`: no
+  body moves in the control). DETECTOR, every pin met, nothing moved: B1
+  two `bond` clicks at (8, 10, 10) and (13, 10, 10) of amount 2 and
+  content 2 (the labels (-128, 0, 0) and (128, 0, 0)), the escaped 4, the
+  mass read 3673 (`held` (1834, 0, 1, 0) and (0, 1837, 1, 0)), `given` 2
+  at each body's first contact and 0 on the 319 later, the push on p
+  310 956 229 248 before the give and 310 945 171 840 after (on n
+  -310 956 211 200 and -310 945 171 840), the recoil +-128, no step; B3
+  four `bond` clicks of amount 2 and content 2, the escaped 8, the ratio
+  2.0; B2 no contact, no `bond` click, `held.bond` 2, the lamp's 2958
+  gathers of content 8 and 35 of 7 (the head re-run's record). GAMEBOARD,
+  the tick of a line: B1's first contacts at 18 on both (16 on
+  2026-09-20, 17 at head; the toy's 18) and the clicks at 20 (19); B3's
+  gives at 18, 18, 18, 19 (15, 15, 15, 16; 16, 16, 16, 17; the toy's 19
+  for p4) and the clicks at 20, 20, 20, 21; B3's dispersal p4 +y at 97,
+  n3 +x at 105, p1 -x at 117, n2 -x at 125 (81, 89, 95, 111), out at 245,
+  251, 276, 404. The momentum sums: B1 +18 048 on x per interval to
+  306 816 at the first contact and constant after (270 720 from tick 16
+  before), B3 off 0 from tick 100 on as before: both OUTSIDE 0 as
+  registered, the same reading. The verdict stands (the give once, the
+  clicks with the content, the pair stable, the books exact, the alpha at
+  2.0 x; NATURE rows 7a BOUND and 7b FAIL stand); the paper's rows rest
+  on the readings above, read under the per-axis drive. No pin moved.
 
 ### Q, c measured behind a detector (2026-09-21)
 

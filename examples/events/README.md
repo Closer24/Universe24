@@ -335,6 +335,10 @@ deuteron against nature's 12.7, the law's failure stated before the run).
 The pins were written before the run and the readings beside them; the
 register entry is
 [N, the binding that costs content (2026-09-20)](../../docs/EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20).
+Under the law's line drive (2026-09-22; `binding/expectations.json` names
+the drive) the three worlds ran again, unchanged: every DETECTOR pin met,
+the first contacts at tick 18 and the square's dispersal moved with the
+drive (the series' README).
 
 ## The orbit series
 

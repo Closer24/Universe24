@@ -165,6 +165,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the law's drive; the seven runs registered beside the rows of
   2026-09-21 (41 readings inside, 0 outside; the verdict standing; the
   kicked world's pair leaving as a pair where it broke before, a finding).
+- Series N re-pinned under the law (`examples/events/binding/`): the
+  generator writes `expectations.json` (the DETECTOR integers drive-free,
+  the toy's first contact under the drive), the three worlds unchanged,
+  and the three runs registered beside the rows of 2026-09-20 and the
+  re-run at head (every DETECTOR pin met; the first contacts at 18 and
+  the square's dispersal moved with the drive; the control byte for byte
+  the head re-run's).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers
