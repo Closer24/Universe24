@@ -2884,6 +2884,42 @@ CORRECTIONS = [
         "\\begin{theorem}[The finite-$\\Nphi$ Bell value]\\label{th:bell}",
         "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.8\\linewidth]{figures/pair_64.pdf}\\caption{\\label{fig:pair}The pair at $\\Nphi = 64$: $E(a, b)$ computed from the rule at every setting difference $a - b$ (the counts of Theorem~\\ref{th:marginals} with the repository's tables, a computation \\cite{checks}), the tables' cosine $C[a - b]/256$ dashed, and after a detector the registered CHSH worlds (circles) and the choosers' bins (squares) of series L (DETECTOR).}\\end{figure}\n\n\\begin{theorem}[The finite-$\\Nphi$ Bell value]\\label{th:bell}",
     ),
+    # The tables set ragged right in every column and the families table's first column widened (the owner's word of 2026-09-22: the tables correct, telling, and good to look at).
+    (
+        "the tables (the owner's word of 2026-09-22): a ragged-right column type",
+        "\\usepackage{array}\n",
+        "\\usepackage{array}\n\\newcolumntype{L}[1]{>{\\raggedright\\arraybackslash}p{#1}}\n",
+    ),
+    (
+        "the tables: the ledger ragged right",
+        "\\begin{longtable}{p{1.3in}p{1.5in}p{1.45in}p{0.85in}p{0.85in}}",
+        "\\begin{longtable}{L{1.3in}L{1.5in}L{1.45in}L{0.85in}L{0.85in}}",
+    ),
+    (
+        "the tables: the nature table ragged right",
+        "\\begin{longtable}{p{0.3in}p{2.0in}p{1.5in}p{2.2in}}",
+        "\\begin{longtable}{L{0.3in}L{2.0in}L{1.5in}L{2.2in}}",
+    ),
+    (
+        "the tables: the conversion table ragged right",
+        "\\begin{longtable}{p{1.6in}p{1.6in}p{1.5in}p{1.4in}}",
+        "\\begin{longtable}{L{1.6in}L{1.6in}L{1.5in}L{1.4in}}",
+    ),
+    (
+        "the tables: the notation table ragged right",
+        "\\begin{longtable}{p{1.75in}p{1.0in}p{3.25in}}",
+        "\\begin{longtable}{L{1.75in}L{1.0in}L{3.25in}}",
+    ),
+    (
+        "the tables: the families table, the family column widened ragged right",
+        "\\begin{longtable}{p{0.7in}p{1.35in}p{1.35in}p{1.15in}p{1.5in}}",
+        "\\begin{longtable}{L{0.95in}L{1.3in}L{1.3in}L{1.1in}L{1.4in}}",
+    ),
+    (
+        "the tables: the roads table ragged right",
+        "\\begin{longtable}{p{1.5in}p{1.75in}p{1.5in}p{1.4in}}",
+        "\\begin{longtable}{L{1.5in}L{1.75in}L{1.5in}L{1.4in}}",
+    ),
 ]
 
 

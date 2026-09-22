@@ -4590,3 +4590,17 @@ no need to cut": 37 pages stand.
 
 No claim, number, verdict or citation removed. 39 pages (the owner's
 word on the page: leave it).
+
+## Applied (2026-09-22, the owner's word: the tables correct, telling, and good to look at)
+
+Checked: Table 2's caption counts against its rows (three PASS, 1a, 2b,
+9, and 12 under the caveat; seven FAIL in a run, 1b, 2a, 3, 4b, 7b, 8a,
+8b, plus 8c the refuted input and four pins not in the table; BOUND 5a,
+7a; NOT COMPARED 2c), every row cited in the text either in the table
+or named by the caption as a pin outside it (4a, 6, 10, 11a); the
+ledger's rows against their sections; the conversion table's readings
+each with a kind. Changed, formatting only: every longtable column set
+ragged right (a column type L in the preamble), which ends the
+stretched word spacing of justified narrow cells; the families table's
+first column widened to 0.95 in so the family names no longer break
+letter by letter. No word changed. 39 pages.
