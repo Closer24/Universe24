@@ -5142,3 +5142,116 @@ and the symbol list's `m` the mass; `\texttt{m}` in the tables is a
 family's name. None of those touched; no plain m of doubtful meaning. No
 number moved. The PDF compiled from the true source and read back. 52
 pages.
+
+## Applied (2026-09-22, the owner's word through the Boss's order of 23:00Z): the opening, the algebraic object first
+
+On `paper-opening` off main at 067b2472, one commit, words only. (a) A
+new first paragraph of the Introduction, "The algebra first", before
+"The paper in one page": the object (the integer group ring of the
+cyclic group of the phase grain on the cubic lattice whose symmetry is
+the cube's rotation group of order 24, Theorem 1), the six integer
+operations, what is exact as identities under declared tables (Theorems
+2 to 6, the books, Gauss's law, the pace), and what is reached from the
+same object under (A1) and (A2): Lorentz's factors' form, the
+equivalence principle, Einstein's step, and in a limit under a shell
+average Newton's inverse square; "reached from the algebra, not derived
+from nothing"; the law as built meets (A1) and not (A2); Table 2 row by
+row; the closing sentence, the owner's own word, that the algebra first
+and the comparison after is the order in which the model was found. (b)
+The abstract's first sentence turned to the object; the sentence traded
+is the third ("The rules are a cyclic group, a group ring, integer
+matrices and an evaluation at the roots of unity"), folded into the
+first; the abstract 246 words (mathematics counted one token each). No
+number moved, no claim changed, no row touched; "derived" nowhere. The
+PDF compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 23:45Z): the reviewer's read AC on the opening, and the owner's third word
+
+A second commit on `paper-opening`, words only. (a) The chain sentence
+with the hypotheses named line by line: under (A1) with (A3), locality
+Outside, the r-free lines of Lorentz's factors; under (A2) their scale
+and Einstein's step; under (A1) and five assumptions of the law as
+built, with no (A2), the equivalence principle and, in a limit under a
+shell average, Newton's inverse square; "reached from the algebra, not
+derived from nothing" kept; "an identity of it under declared tables and
+world conditions". (b) The lattice's symmetries are the 48 signed
+permutations of the axes, their rotations the group of the cube of order
+24, in the paragraph and in the abstract. (c) The paragraph's closing
+sentence ("That order ... is the order in which the model was found")
+dropped: the beginning states, it does not narrate (the owner's word).
+The abstract at 250 words (mathematics counted one token each) after
+four words traded for read AC's: "finite-grain" (One value), "named"
+(Recovered in a limit), "and" for a comma (the one non-local step, the
+only read-out), "conservation" (the books). No number moved, no claim
+changed. The PDF compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the owner's word of records 1104 and 1108 through the Boss's order of 00:00Z): the central idea visible
+
+A third commit on `paper-opening`, words only. (a) The abstract carries
+the sentence "Everything the paper compares with nature is a count
+between clicks at a detector, or a ratio of such counts; nothing
+measured inside the board is compared", joined to the tally sentence in
+place of "Every reading is compared with nature by kind"; kept at or
+under 250 by trades inside the abstract: "the GameBoard" (named in the
+text), "one rule of ... bounded, acts" to "six bounded integer
+operations ... act", "there are" to "are", "the only read-out", "as" twice
+(the click's weight a positive quadratic form; the CHSH sum an exact
+rational), "count" before marginals, "enter as labelled conjectures from
+the algebra ... neither is established" to "are conjectures, not
+established", "and ... though" to "; ... ,". 248 words (mathematics one
+token each). (b) The opening paragraph, after the sentence on the exact
+identities: "Every quantity compared with nature is a count between
+clicks at a detector or a ratio of such counts; a reading of the board
+itself is a diagnostic and is compared with nothing (the reading rule
+below; Section 8; Table 2)". No number moved, no claim changed. The PDF
+compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's choice): the title from the group of order 24
+
+The owner chose candidate B of the four put to him: "Universe24:
+Physical Relations from the Group Ring of a Cyclic Group under the
+Octahedral Group of Order 24", in place of "Universe24: Physical
+Relations from a Common Discrete Update Rule". The lattice leaves the
+title and stays in the abstract as the way. A fourth commit on
+`paper-opening`; nothing else changed; the PDF compiled from the true
+source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 00:25Z): "the group of order 24", the name everywhere
+
+A fifth commit on `paper-opening`, words only. The group is named "the
+group of order 24" wherever the paper names it in words; "the rotation
+group of the cube" and "the symmetric group S_4" follow in apposition
+once each, in Theorem 1 and in its proof, where the isomorphism is
+stated; the 48 signed permutations stay where read AC put them. Every
+occurrence, before and after:
+- the abstract: "their rotations the cube's group of order 24" to
+  "their rotations the group of order 24";
+- the opening paragraph: "their rotations the group of the cube of
+  order 24 (Theorem 1)" to "their rotations the group of order 24
+  (Theorem 1)";
+- Theorem 1's statement: "its kernel, the rotations of the cube, has
+  index 2 and order 24, and is the group of the permutations of the
+  cube's four body diagonals" to "its kernel, the group of order 24
+  (the rotation group of the cube), has index 2 and is the group of the
+  permutations of the cube's four body diagonals, the symmetric group
+  S_4"; the sentence "tells the 24 rotations from the 24 reflections"
+  stays (a count of elements, not the name);
+- the ledger's row: "The group of the six Ports, 48 and 24" to "The
+  group of the six Ports, 48, and within it the group of order 24";
+- Section 9, "What is proved": "the group of the six Ports and its 24
+  rotations" to "the group of the six Ports and, within it, the group
+  of order 24";
+- Appendix A, the proof: "its kernel, the rotations, has index 2 and
+  order 24, and it acts faithfully on the cube's four body diagonals, so
+  it is the symmetric group on them" to "its kernel, the group of order
+  24, has index 2 and acts faithfully on the cube's four body diagonals,
+  so it is the symmetric group S_4 on them" (B_3 and the 48 kept);
+- Appendix C, the symbols: "48 signed permutations, 24 rotations" to
+  "48 signed permutations, their rotations the group of order 24";
+- left as they are: Section 3's "48 in all, the symmetry group of the
+  cube" (the 48, not the 24); "the GameBoard's stand-in for the rotation
+  group" (the continuum's rotation group, not the model's); Theorem 1's
+  title "the 24 of the name"; the title's "the Octahedral Group of
+  Order 24" (the owner's choice, the name with its apposition).
+The abstract 247 words. No number moved. The PDF compiled from the true
+source and read back. 52 pages.

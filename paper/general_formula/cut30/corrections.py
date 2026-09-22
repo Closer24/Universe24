@@ -3956,6 +3956,111 @@ CORRECTIONS = [
         "|z|^2 = \\frac{w^2}{m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
         "|z|^2 = \\frac{w^2}{\\mathtt m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
     ),
+    (
+        "the Introduction's opening paragraph, the algebraic object first (the owner's word of 22:2xZ; the Boss's order of 23:00Z)",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The paper in one page.}",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The algebra first.} This paper begins with one algebraic object and states what follows from it. The object is the integer group ring of a cyclic group, the phase grain $\\Nphi$, carried on a cubic lattice whose symmetry is the rotation group of the cube, of order $24$ (Theorem~\\ref{th:group}); the law is six integer operations on that ring, and every result the paper calls exact is an identity of it under declared tables (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction). From the same object, with two hypotheses on how a click reads it, (A1) and (A2), one chain reaches the form of Lorentz's factors, the equivalence principle and Einstein's step above the board, and, in a limit under a shell average, Newton's inverse square: reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}. That order, the algebra first and the comparison after, is the order in which the model was found.\n\n\\paragraph{The paper in one page.}",
+    ),
+    (
+        "the abstract's first sentence turned to the object, the third sentence (the rules are a cyclic group, a group ring, integer matrices and an evaluation) folded into it, the abstract at or under 250 words (the owner's word; the Boss's order of 23:00Z)",
+        "One update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity. Exact on the lattice:",
+        "The paper begins with one algebraic object: the integer group ring of a cyclic group, the phase grain, on a cubic lattice, the GameBoard, whose symmetry is the cube's rotation group of order $24$; one rule of six integer operations on that ring, bounded, acts at every Node and interval. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Exact on the lattice:",
+    ),
+    (
+        "the opening paragraph's closing sentence dropped: the beginning states, it does not narrate (the owner's third word; the Boss's order of 23:45Z)",
+        "is read row by row in Table~\\ref{tab:nature}. That order, the algebra first and the comparison after, is the order in which the model was found.",
+        "is read row by row in Table~\\ref{tab:nature}.",
+    ),
+    (
+        "read AC (a): the chain sentence with the hypotheses named line by line, (A1) with (A3) for the r-free lines, (A2) for the scale and Einstein's step, (A1) with five assumptions for the equivalence principle and Newton (the Boss's order of 23:45Z)",
+        "From the same object, with two hypotheses on how a click reads it, (A1) and (A2), one chain reaches the form of Lorentz's factors, the equivalence principle and Einstein's step above the board, and, in a limit under a shell average, Newton's inverse square: reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}.",
+        "From the same object, with the hypotheses on how a click reads it, one chain reaches above the board: under (A1) with (A3), locality Outside, the $r$-free lines of Lorentz's factors, and under (A2) their scale and Einstein's step; under (A1) and five assumptions of the law as built, with no (A2), the equivalence principle and, in a limit under a shell average, Newton's inverse square (the paragraphs `Newton from the small step' and `The road to each'): reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}.",
+    ),
+    (
+        "read AC (a): exact means an identity under declared tables and world conditions",
+        "an identity of it under declared tables (Theorems~\\ref{th:isometry}",
+        "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry}",
+    ),
+    (
+        "read AC (b): the lattice's symmetries the 48 signed permutations, their rotations the group of order 24 (the paragraph)",
+        "carried on a cubic lattice whose symmetry is the rotation group of the cube, of order $24$ (Theorem~\\ref{th:group})",
+        "carried on a cubic lattice whose symmetries are the $48$ signed permutations of the axes, their rotations the group of the cube of order $24$ (Theorem~\\ref{th:group})",
+    ),
+    (
+        "read AC (b): the same in the abstract",
+        "whose symmetry is the cube's rotation group of order $24$",
+        "whose symmetries are the $48$ signed permutations of the axes, their rotations the cube's group of order $24$",
+    ),
+    (
+        "the abstract at 250: 'finite-grain' traded (read AC's words cost four)",
+        "One finite-grain value, $S = 181/64$, lies inside",
+        "One value, $S = 181/64$, lies inside",
+    ),
+    (
+        "the abstract at 250: 'named' traded",
+        "Recovered in a named limit: $c = 1/\\sqrt3$",
+        "Recovered in a limit: $c = 1/\\sqrt3$",
+    ),
+    (
+        "the abstract at 250: 'and' traded for a comma",
+        "the click, the one non-local step and the only read-out. Exact on the lattice:",
+        "the click, the one non-local step, the only read-out. Exact on the lattice:",
+    ),
+    (
+        "the abstract at 250: 'conservation' traded (the books are named in the text)",
+        "Exact on the lattice: the conservation books, Gauss's law",
+        "Exact on the lattice: the books, Gauss's law",
+    ),
+    (
+        "the central idea in the abstract (the owner's word of records 1104 and 1108; the Boss's order of 00:00Z): everything compared with nature a count between clicks or a ratio of such counts, nothing inside the board; the abstract kept at or under 250 by trades listed in PLAN.md",
+        "The paper begins with one algebraic object: the integer group ring of a cyclic group, the phase grain, on a cubic lattice, the GameBoard, whose symmetries are the $48$ signed permutations of the axes, their rotations the cube's group of order $24$; one rule of six integer operations on that ring, bounded, acts at every Node and interval. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step, the only read-out. Exact on the lattice: the books, Gauss's law of a free family's flux, the pace of every direction, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind, the failures stated as the law's own: three pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.",
+        "The paper begins with one algebraic object: the integer group ring of a cyclic group, the phase grain, on a cubic lattice whose symmetries are the $48$ signed permutations of the axes, their rotations the cube's group of order $24$; six bounded integer operations on that ring act at every Node and interval. Outside the lattice are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step. Exact on the lattice: the books, Gauss's law of a free family's flux, the pace of every direction, the click's weight a positive quadratic form under one axiom of the apparatus, a pair's marginals, and the CHSH sum an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Everything the paper compares with nature is a count between clicks at a detector, or a ratio of such counts; nothing measured inside the board is compared; the failures are the law's own: three pass, twelve fail, two are bounds, one is not compared. Two relations, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder, are conjectures, not established. The law as built recovers no relativistic dynamics; its sequential wheel signals in the order of a pair's outcomes, not in their counts. One value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.",
+    ),
+    (
+        "the central idea in the opening paragraph, after the sentence on the exact identities (the Boss's order of 00:00Z)",
+        "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction).",
+        "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction). Every quantity compared with nature is a count between clicks at a detector or a ratio of such counts; a reading of the board itself is a diagnostic and is compared with nothing (the reading rule below; Section~\\ref{sec:checks}; Table~\\ref{tab:nature}).",
+    ),
+    (
+        "the title from the group of order 24 (the owner's choice, candidate B, 2026-09-23 00:2xZ): the group ring of a cyclic group under the octahedral group of order 24",
+        "\\title{Universe24: Physical Relations from a Common Discrete Update Rule}",
+        "\\title{Universe24: Physical Relations from the Group Ring of a Cyclic Group under the Octahedral Group of Order 24}",
+    ),
+    (
+        "the group of order 24, the name everywhere (the owner's word; the Boss's order of 00:25Z): the abstract",
+        "their rotations the cube's group of order $24$;",
+        "their rotations the group of order $24$;",
+    ),
+    (
+        "the group of order 24: the opening paragraph",
+        "their rotations the group of the cube of order $24$ (Theorem~\\ref{th:group})",
+        "their rotations the group of order $24$ (Theorem~\\ref{th:group})",
+    ),
+    (
+        "the group of order 24: Theorem 1's statement, the name first, the rotation group of the cube in apposition once, the symmetric group S_4 named where the isomorphism is stated",
+        "its kernel, the rotations of the cube, has\nindex $2$ and order $24$, and is the group of the permutations of the\ncube's four body diagonals;",
+        "its kernel, the group of order $24$ (the rotation group of the cube), has index $2$ and is the group of the permutations of the cube's four body diagonals, the symmetric group $S_4$;",
+    ),
+    (
+        "the group of order 24: the ledger's row",
+        "The group of the six Ports, $48$ and $24$ & the six Ports, the hand bit",
+        "The group of the six Ports, $48$, and within it the group of order $24$ & the six Ports, the hand bit",
+    ),
+    (
+        "the group of order 24: Section 9, what is proved",
+        "the group of the six Ports and its $24$ rotations;",
+        "the group of the six Ports and, within it, the group of order $24$;",
+    ),
+    (
+        "the group of order 24: Appendix A, the proof of Theorem 1 (S_4 and the 48 kept)",
+        "its kernel, the rotations, has index $2$ and order $24$, and it acts faithfully on the cube's four body diagonals, so it is the symmetric group on them;",
+        "its kernel, the group of order $24$, has index $2$ and acts faithfully on the cube's four body diagonals, so it is the symmetric group $S_4$ on them;",
+    ),
+    (
+        "the group of order 24: Appendix C, the symbols' list",
+        "the six Ports' hyperoctahedral group, $48$ signed permutations, $24$ rotations (Theorem~\\ref{th:group})",
+        "the six Ports' hyperoctahedral group, $48$ signed permutations, their rotations the group of order $24$ (Theorem~\\ref{th:group})",
+    ),
 ]
 
 
