@@ -202,3 +202,4 @@ re-run in the register after the gate's fix with the same integers;
 | The PDF's page count with the click's two parts and the algebraic family: 37 pages | 37 | DETECTOR reading of the compiled PDF |
 | The PDF's page count after the two condensations of the Boss's word of 09:35Z (the platform's series once each; the frame's detector-clock sentences): 37 pages | 37 | DETECTOR reading of the compiled PDF |
 | The PDF's page count with the one chain from the board to Einstein's step (the owner's word): 37 pages | 37 | DETECTOR reading of the compiled PDF |
+| The PDF's page count after the owner's four content cuts (record 886): 36 pages | 36 | DETECTOR reading of the compiled PDF |

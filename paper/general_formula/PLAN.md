@@ -4281,3 +4281,25 @@ its form, both one step above and neither put in; the r-free lines
 Einstein's exactly from A1, A3 and the conversion, the scaled lines
 Einstein's iff r^2 = 1 - v^2, which A2 gives to order m^2 v^2 and the
 law as built (r = 1) does not. The count: 37 pages.
+
+## Applied (2026-09-22, the owner's "go for it", record 886): the four content cuts, in the order of least loss
+
+The cut table's four new rows: (i) the five steps of "Why physics
+behaves like modern algebra" to three, the claims merged (the couplings
+into the second step, the identity of every result into the third), no
+claim dropped; (ii) Table 5, the distance, folded into "What is proved"
+as one sentence with every needed item and its deciding check, the
+numbers and kinds kept (G not read, form B not built, 1 - v^2 against 1,
+1.75 arcseconds, 22.5 degrees, row 10, 10^-4, 181/64 against 2 sqrt 2);
+(iii) the 24 transitions to Appendix C's lines with the citation
+(HISTORY.md on main at 412f5c61) and the dates once, one clause per
+date; (iv) the roads table's nine rows to six: the place-to-place
+factor's row out (a lemma of the boost and the rate rows, Theorem 1 of
+Einstein Outside cited there), the composition's row out (named in the
+roads paragraph as r-free, II.3), the quantum's row out (Theorem 3 cited
+in "The smallest thing above"); the six kept: W to second order, the
+boost, 1/gamma, E^2 = E_0^2 + c^2 p^2, the Outside step with Einstein's
+step, Newton's step as the limit. No reading, kind, number, verdict or
+citation removed; the seven confirmations and the GHZ clause as they
+are; the framing sentence and the click theorem's sentences word for
+word. The count: 36 pages.
