@@ -147,3 +147,50 @@ for n_l, d_l in PAIRS:
     print(
         f"  [{n_l}, {d_l}]: n_l x 8 N h = {n_l * 8 * N * ACTION:.3e}; 2 h d_l x 10^4 = {2 * ACTION * d_l * 10**4:.3e}; 2^62 = {2**62:.3e}"
     )
+
+print(
+    "[COMPUTATION] the 1 / j^2 law at the read closures, anchored at the rung-4 level (the reviewer's line on cd0c2029)"
+)
+anchor = rungs[12]["j"] / (2 * rungs[12]["T"])
+ladder = {r: anchor * (4 / rungs[r]["j"]) ** 2 for r in RUNGS}
+for r in RUNGS:
+    print(
+        f"  r = {r}: the ladder's level {ladder[r]:.6f} circles per interval ({512 * 64 * ladder[r]:.1f} steps at [512, 1]); "
+        f"the generator's {g(r):.6f} ({512 * 64 * g(r):.1f} steps), {(g(r) / ladder[r] - 1) * 100:.1f} percent off"
+    )
+print(
+    f"  the ratio from the ladder's levels at the read closures: {(ladder[3] - ladder[12]) / (ladder[3] - ladder[7]):.4f}"
+)
+
+print(
+    "[COMPUTATION] the band of the ratio from an error of e on every level, every sign tried (L_2, L_3, L_4 = 146, 71, 43)"
+)
+import itertools  # noqa: E402
+
+for e in (0.03, 0.05, 0.10):
+    found = []
+    for s2, s3, s4 in itertools.product((-e, e), repeat=3):
+        a, b, c = 146 * (1 + s2), 71 * (1 + s3), 43 * (1 + s4)
+        found.append((a - c) / (a - b))
+    print(f"  e = {e:.2f}: the ratio between {min(found):.3f} and {max(found):.3f}")
+for name, (a, b, c) in {
+    "L_2 + 5 percent": (146 * 1.05, 71, 43),
+    "L_3 + 5 percent": (146, 71 * 1.05, 43),
+    "L_4 + 5 percent": (146, 71, 43 * 1.05),
+}.items():
+    print(f"  {name} alone: {(a - c) / (a - b):.3f}")
+print(
+    "[COMPUTATION] the registered r = 12 run's returns against the generator (RUN_CENTRED.md): "
+    "the first return at 1341 (the loop from the birth), the loop 1341 to 2772 at T = 1431, j = 4.125"
+)
+print(
+    f"  the first return's count against T = 1490: {(1341 / rungs[12]['T'] - 1) * 100:.1f} percent; "
+    f"the level of the loop from the birth at j about 4.1: {512 * 64 * 4.1 / (2 * 1341):.1f} steps ({(512 * 64 * 4.1 / (2 * 1341) / (512 * 64 * g(12)) - 1) * 100:.0f} percent above the generator's {512 * 64 * g(12):.1f}); "
+    f"the loop 1341 to 2772: T {(1431 / rungs[12]['T'] - 1) * 100:.1f} percent, the level {512 * 64 * 4.125 / (2 * 1431):.1f} steps ({(512 * 64 * 4.125 / (2 * 1431) / (512 * 64 * g(12)) - 1) * 100:.0f} percent above)"
+)
+print(
+    "[COMPUTATION] the ladder at larger radii with the same h, r = 12 (j / 4)^2 and T = 1490 (j / 4)^3, the side 2 (r + 14) + 1"
+)
+for j in (4, 6, 8):
+    r = 12 * (j / 4) ** 2
+    print(f"  j = {j}: r = {r:.0f} Links, T = {1490 * (j / 4) ** 3:.0f}, side {2 * (int(r) + 14) + 1}")

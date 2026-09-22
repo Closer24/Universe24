@@ -31,3 +31,21 @@
 [COMPUTATION] the bounds: n_l Delta A and 2 h d_l T against 2^62
   [256, 1]: n_l x 8 N h = 7.256e+14; 2 h d_l x 10^4 = 1.107e+14; 2^62 = 4.612e+18
   [512, 1]: n_l x 8 N h = 1.451e+15; 2 h d_l x 10^4 = 1.107e+14; 2^62 = 4.612e+18
+[COMPUTATION] the 1 / j^2 law at the read closures, anchored at the rung-4 level (the reviewer's line on cd0c2029)
+  r = 3: the ladder's level 0.006000 circles per interval (196.6 steps at [512, 1]); the generator's 0.004457 (146.1 steps), -25.7 percent off
+  r = 7: the ladder's level 0.002360 circles per interval (77.3 steps at [512, 1]); the generator's 0.002187 (71.7 steps), -7.3 percent off
+  r = 12: the ladder's level 0.001342 circles per interval (44.0 steps at [512, 1]); the generator's 0.001342 (44.0 steps), 0.1 percent off
+  the ratio from the ladder's levels at the read closures: 1.2798
+[COMPUTATION] the band of the ratio from an error of e on every level, every sign tried (L_2, L_3, L_4 = 146, 71, 43)
+  e = 0.03: the ratio between 1.302 and 1.459
+  e = 0.05: the ratio between 1.260 and 1.525
+  e = 0.10: the ratio between 1.172 and 1.739
+  L_2 + 5 percent alone: 1.340
+  L_3 + 5 percent alone: 1.442
+  L_4 + 5 percent alone: 1.345
+[COMPUTATION] the registered r = 12 run's returns against the generator (RUN_CENTRED.md): the first return at 1341 (the loop from the birth), the loop 1341 to 2772 at T = 1431, j = 4.125
+  the first return's count against T = 1490: -10.0 percent; the level of the loop from the birth at j about 4.1: 50.1 steps (14 percent above the generator's 44.0); the loop 1341 to 2772: T -4.0 percent, the level 47.2 steps (7 percent above)
+[COMPUTATION] the ladder at larger radii with the same h, r = 12 (j / 4)^2 and T = 1490 (j / 4)^3, the side 2 (r + 14) + 1
+  j = 4: r = 12 Links, T = 1490, side 53
+  j = 6: r = 27 Links, T = 5029, side 83
+  j = 8: r = 48 Links, T = 11920, side 125

@@ -30,8 +30,10 @@ identities"). The rules obeyed: Bohr's, Balmer's and Rydberg's forms
 appear only on the comparison side, never as an input (record 817);
 every number is labelled COMPUTATION (the algebra on the law's
 integers), GAMEBOARD (the host's view of the mechanism) or DETECTOR (a
-click, a record's moments, a body's own record, record 281); a GAMEBOARD
-reading is a diagnostic and is never pinned; nothing here claims that
+click, a record's moments, an external thing's reading, record 281); a
+GAMEBOARD reading (the host's view of a store, a book, a presence or a
+phase, a body's own give rows and count among them) is a diagnostic and
+is never pinned; nothing here claims that
 nature is so (record 762). Every number is a COMPUTATION from the
 declared integers of the registered world
 `examples/events/atoms/hydrogen_r12_centred.json`, from the atoms
@@ -62,13 +64,19 @@ the rule (section 3 (c)), and the three tests pass (section 4). The
 transition itself is in no rule of this file (section 6), so the levels
 are read on three worlds, one per rung at whole Links (r = 3, 7 and 12;
 the generator's own closures 1.892, 3.017 and 4.001), the level of each
-off the body's own record and off the faces' counts, and the ratio of
-two lines is a COMPUTATION from three DETECTOR readings (section 5): the
-generator predicts `103 / 75 = 1.373` at the pair `[512, 1]`, above
-Balmer's `27 / 20` by 1.7 percent through the fan's grain at r = 3
-(`j = 1.892` against the shell mean's 2), inside the band the lattice's
-own closures carry (plus or minus 0.13 at 5 percent per level); the
-reading decides, and the paper's row says the band it was read within.
+off two counts of the faces (DETECTOR; the body's own give rows and
+count the same arithmetic as the host's view, GAMEBOARD, a diagnostic
+beside it), and the ratio of two lines is a COMPUTATION from three
+DETECTOR levels (section 5): the generator predicts `103 / 75 = 1.373`
+at the pair `[512, 1]`, from two departures of its read levels from the
+`1 / j^2` ladder anchored at r = 12 (26 percent short at r = 3, 7 percent
+at r = 7; the `1 / j^2` law at the read closures alone gives `1.280`),
+within a band the lattice's own closures set at about plus or minus 10
+percent per level, `1.17` to `1.74`, which admits Balmer's `1.350`, the
+generator's `1.373`, the `1 / j^2` law's `1.280` and the fan's power
+law's `1.431` alike: at this grain the three worlds give NATURE row 6 a
+reading with a band, and no match of the ladder's form is claimed
+(section 5 (c), section 6 (2)).
 
 **The six lines (the report's head; every number labelled).**
 
@@ -81,7 +89,9 @@ reading decides, and the paper's row says the band it was read within.
    (the momentum's declared component crossing zero in the declared
    sense, once per loop, read off its own record) the body forms its
    level, `L = floor(n_l Delta A / (2 h d_l T))`, from the two integers
-   of its own record, and, when L exceeds the level at the last release
+   of its own record (the level so formed is the host's view of a store,
+   GAMEBOARD; the DETECTOR level is the same arithmetic on two counts of
+   the faces, section 5), and, when L exceeds the level at the last release
    by `s >= 1`, releases one row per declared direction of the declared
    paid family, content per unit `h_q s`, the row's phase turning s
    steps per interval of its age, its content less by `D h_q s` and its
@@ -121,8 +131,8 @@ reading decides, and the paper's row says the band it was read within.
    (linear in `j - i` from the action rows; Balmer's `1 / i^2 - 1 / j^2`
    from the level as a ratio of counts), and what no rule gives (the
    transition); and it reads the levels where the law can read them,
-   one rung per world, so that NATURE row 6 gets a detector reading with
-   a declared band in place of NOT YET.
+   one rung per world, so that NATURE row 6 gets a reading with a band
+   in place of NOT YET: a reading, not a match, at this grain.
 5. *The Highlights.* Kept: the six verbs and no seventh (record 181),
    the click as the one operation (P6), charge per unit of content (note
    28), the three tests (record 202), only a detector's reading a
@@ -562,13 +572,19 @@ generator's `Delta A = j N h` and T rounded:
     s(4 to 2) = L_2 - L_4 = 103,   s(3 to 2) = L_2 - L_3 = 75,   the ratio 103 / 75 = 1.3733 (the grain's band 1 / 75 = 0.0133);   at [256, 1]: 52, 38, 26 / 19 = 1.3684 (1 / 38 = 0.0263);
     the generator's own ratio before the floor 1.3720;   the shell mean's whole rungs 2, 3, 4: 27 / 20 = 1.35 (Balmer's, on the comparison side; the ladder of section 1 (b)).
 
-The generator's ratio sits 1.7 percent above Balmer's, and the whole of
-that is the fan's grain at r = 3 (`j_2 = 1.892` in place of 2: the
-levels at r = 7 and 12 stand at 71.23 and 43.98 against the ladder's
-`(4 / j)^2` of the rung-4 level, 71.5 and 43.98, within the grain; the
-level at r = 3 stands at 154.6 against the ladder's 178.9 from rung 4
-through the shell mean, and at `j / (2 T)` it is 0.004457 against the
-ladder's 0.006000 through `(4 / j)^2` of its own read j). Under the
+The generator's ratio sits 1.7 percent above Balmer's, and it comes
+from two departures of the read levels from the `1 / j^2` ladder
+anchored at the rung-4 level (43.98 steps at `[512, 1]`, `j / (2 T) =
+0.001342` circles per interval): the ladder's `(4 / j)^2` of that level
+at the read closures puts r = 7 at `0.002360` (77.3 steps) and r = 3 at
+`0.006000` (196.6 steps), and the generator's own levels stand at
+`0.002187` (71.7 steps, 7 percent short) and `0.004457` (146.1 steps, 26
+percent short; the whole-rung form `n_l N j / (2 T)` at j = 2 reads
+154.6, 21 percent short, the reviewer's number on cd0c2029); the `1 /
+j^2` law at the read closures 1.892, 3.017 and 4.001 alone gives the
+ratio `(196.6 - 44.0) / (196.6 - 77.3) = 1.280`, and the generator's
+`1.373` is the two departures combining (the reviewer's line, checked
+against rungs_map.out). Under the
 lattice's ring flux `r^-k` the level goes as `j^-(2 k - 2) / (3 - k)` in
 place of `j^-2` (the balance `p^2 ~ r^(1 - k)`, the closure `r ~ j^(2 /
 (3 - k))`, `T ~ r / p`), so the ratio the fan's exponent alone predicts
@@ -580,39 +596,58 @@ and by 6 to 16 percent if the flux between the rungs followed a power
 law of the register's exponents; the generator's count is the pin, the
 exponents the road of the departure.
 
-**(c) The band the lattice carries.** The loops on the lattice do not
-sit at the generator's closure: the centred world's first return read
-`j = 4.125` and `T = 1431` against 4.001 and 1490 (RUN_CENTRED.md), a
-level of 47.2 steps at `[512, 1]` against the generator's 44.0, 7
-percent above, and the loop then tightens by about a Link per turn. The
-ratio of two differences amplifies a level's error (`L_2` enters both;
-5 percent on `L_2` alone moves the ratio to 1.340, on `L_3` alone to
-1.442, on `L_4` alone to 1.345), so with each level read within 5
-percent of the generator's the ratio lies between 1.26 and 1.53 in the
-worst case, and within 3 percent between 1.30 and 1.46 (COMPUTATION,
-every sign of the three errors tried). That is the honest band of a
-ratio read on three separate lattice loops: about plus or minus 0.13 at
-5 percent per level, inside which Balmer's 1.350, the generator's 1.373
-and the fan's 1.431 all lie. The pins below therefore pin the levels
-first (each against the generator's within 5 percent at the FIRST
-return, before the drift) and the ratio second with the band the levels
-propagate; the paper's row, if the levels pass, states the ratio with
-that band and "matches nature within it" means within it, no more.
+**(c) The band the lattice carries, and which return each pin reads.**
+The loops on the lattice do not sit at the generator's closure, and the
+registered r = 12 run says by how much (RUN_CENTRED.md, DETECTOR): its
+FIRST return, the loop from the birth, is at the count 1341 against the
+generator's T = 1490 (10 percent short), with a level of about 50 steps
+at `[512, 1]` against the generator's 44 (j about 4.1 over 1341 counts,
+14 percent above); the loop from the first return to the second reads
+`T = 1431` and `j = 4.125`, a level of 47 (3.9 percent below and 7
+percent above the generator's); then the loop tightens by about a Link
+per turn (the periods 1500, 1150, 1040 and the levels 44, 53, 55). So
+the pins name their return: R1 reads the FIRST return's count (the loop
+from the birth) and R3 the level of the loop between the first and the
+second returns (the first loop read between two returns, RUN_CENTRED's
+C5 reading), each with the band the lattice shows, about plus or minus
+10 percent on T and on L at r = 12; the r = 3 and r = 7 worlds have no
+registered run, so their bands are the same 10 percent, declared
+provisional, their later returns reported. The ratio of two differences
+amplifies a level's error (`L_2` enters both; 5 percent on `L_2` alone
+moves the ratio to 1.340, on `L_3` alone to 1.442, on `L_4` alone to
+1.345): with each level read within 10 percent of the generator's the
+ratio lies between `1.17` and `1.74` in the worst case, within 5 percent
+between 1.26 and 1.53, within 3 percent between 1.30 and 1.46
+(COMPUTATION, every sign of the three errors tried, rungs_map.out).
+Either band contains the `1 / j^2` law at the read closures (1.280),
+Balmer's (1.350), the generator's (1.373), the fan's power law at k =
+1.83 (1.431) and at k = 1.69 (1.49) alike, and excludes only the action
+form's 2, which the algebra excluded already: R4 is therefore NOT a
+pass-or-fail pin against Balmer but a reported COMPUTATION from three
+DETECTOR levels with its propagated band; no match of the ladder's form
+is read at this grain, and the paper's row states the three levels, the
+ratio and the band, so that NATURE row 6 gets a reading with a band and
+not a match.
 
 **(d) The pins.** Every pin EXPECTED DETECTOR unless labelled; the
 reading the runner's method (RUN_CENTRED.md section 2: the faces' clicks
 paired into releases, the arrival Nodes, the crossings, the returns; the
-`light` clicks grouped per return; the body's own record read as the
-record's kind, record 281).
+`light` clicks grouped per return; the body's own give rows and count
+written at the return as the host's view, GAMEBOARD, record 281).
 
 | Pin | The world | Declared | The band | Kind, and how it is read | The reading that refutes it |
 | --- | --- | --- | --- | --- | --- |
-| R1 the loop stays and returns | each of the three | no escape face click of the electron within the ticks; at least three returns to the +x axis (r = 3: 14 in 3000 by T = 212; r = 7: 5 in 3500; r = 12: 5 in 7500 as read); the first return's count within 5 percent of the generator's T (202 to 223; 655 to 724; 1416 to 1565, RUN_CENTRED's 1431 inside) | as stated | DETECTOR: the electron's escape line (none); the faces' pairs and the `at_proton` count between clicks of rows from the +x axis | an escape click; fewer than three returns; a first period outside 5 percent (the r = 3 world's pulse of 17 degrees per shell the named risk: its FAIL is the fan's grain at small r, a finding, not the rule's) |
-| R2 the level off the body's own record | each | at the first return, `L = floor(512 Delta A / (2 h T))` from the record's own `Delta A` and T: 146, 71, 43 (the generator's); read again at every later return | each within 5 percent of the generator's at the first return (139 to 153; 67 to 75; 41 to 45); later returns reported, not pinned (the drift) | DETECTOR: the body's own record (its give rows' sum and its count at the return, written to the record's line at the return, record 281's kind) | a first-return level outside 5 percent: the closure or the period of that world is not the generator's (R1 says which) |
-| R3 the level by `Delta A` and T from the faces | each | the same L computed from the faces' readings: `Delta A / (N h)` the circles per return unwrapped from the rows' phase increments (ALGEBRA.md 2 (c) reading 1) and T the count between two clicks of rows from the same axis (reading 2); equal to R2's L within one step | one step | DETECTOR (two counts of the faces or of `at_proton`); COMPUTATION of L from them | R2 and R3 differing by two steps or more: the record's `Delta A` or count is not what the rows carry (a defect of the build, not of the rule) |
-| R4 the ratio of two lines | the three together | `(L_2 - L_4) / (L_2 - L_3)` from the three first-return levels of R2: the generator's `103 / 75 = 1.373`; on the comparison side Balmer's `27 / 20 = 1.350` (NATURE row 6) | the band the three levels' own readings propagate, at most plus or minus 0.13 (5 percent per level, the worst case); the grain 1 / 75 beneath it | COMPUTATION from three DETECTOR readings (never a click of a transition: section 6) | a ratio outside 1.26 to 1.53 with every level inside R2 (impossible by the arithmetic: the pin is the levels'); a ratio inside is the reading, stated with its band; nature's 1.350 inside the band is "matches nature within it", outside it a FAIL by the number |
+| R1 the loop stays and returns | each of the three | no escape face click of the electron within the ticks; at least three returns to the +x axis (r = 3: 14 in 3000 by T = 212; r = 7: 5 in 3500; r = 12: 5 in 7500 as read); the FIRST return's count (the loop from the birth) within 10 percent of the generator's T (191 to 233; 621 to 759; 1341 to 1639, RUN_CENTRED's 1341 at the edge, inside) | 10 percent, the lattice's at r = 12; provisional at r = 3 and 7 | DETECTOR: the electron's escape line (none); the faces' pairs and the `at_proton` count between clicks of rows from the +x axis | an escape click; fewer than three returns; a first count outside 10 percent (the r = 3 world's pulse of 17 degrees per shell the named risk: its FAIL is the fan's grain at small r, a finding, not the rule's) |
+| R2 the level off the body's own give rows and count (A DIAGNOSTIC, never counted) | each | at every return the engine writes the record's `Delta A`, T and `L = floor(512 Delta A / (2 h T))` to the run's record: the host's view of the store (record 281's own words) beside R3's reading; expected 146, 71, 43 at the first loop between two returns as R3 | none (not counted) | GAMEBOARD: the body's own give rows and count at the return | R2 and R3 differing by two steps or more at one return: the record's `Delta A` or count is not what the rows carry (a defect of the build, not of the rule) |
+| R3 the level by `Delta A` and T from the faces (THE DETECTOR LEVEL) | each | for the loop between the FIRST and the SECOND returns: `Delta A / (N h)` the circles per return unwrapped from the rows' phase increments on the faces (ALGEBRA.md 2 (c) reading 1) and T the count between the two clicks of rows from the +x axis (reading 2), the level `floor(512 x (the circles) x N / (2 T))` computed from them: 146, 71, 43 (the generator's); read again on every later loop, reported | each within 10 percent of the generator's on that loop (131 to 161; 64 to 78; 40 to 48, RUN_CENTRED's 47 inside); the r = 3 and r = 7 bands provisional; later loops reported, not pinned (the drift) | DETECTOR (two counts of the faces or of `at_proton`); COMPUTATION of L from them | a level of that loop outside 10 percent: the closure or the period of that world is not the generator's (R1 says which) |
+| R4 the ratio of two lines (A REPORTED COMPUTATION, not a pass-or-fail pin) | the three together | `(L_2 - L_4) / (L_2 - L_3)` from the three levels of R3: the generator's `103 / 75 = 1.373`; beside it, on the comparison side, the `1 / j^2` law at the read closures `1.280`, Balmer's `27 / 20 = 1.350` (NATURE row 6) and the fan's power law `1.431` | the band the three R3 levels propagate: at 10 percent per level `1.17` to `1.74` (at 5 percent 1.26 to 1.53); the grain 1 / 75 beneath it; every value on the comparison side lies inside either band, so the reading decides between none of them at this grain | COMPUTATION from three DETECTOR levels (never a click of a transition: section 6) | nothing: the ratio is reported with its band (a ratio outside the band with every level inside R3 is impossible by the arithmetic); the paper's row states the three levels, the ratio and the band, NATURE row 6 a reading with a band and not a match |
 | R5 the releases and the Planck identity | each (the r = 12 world's expected from RUN_CENTRED.md) | on a loop that stays at its level no `light` row (the r = 3 and r = 7 worlds if their loops hold); on the r = 12 loop the level rises with the tightening: the first return sets `L_rel` from the loop since the birth (about 50 steps: j about 4.1 over 1341 counts, not read by RUN_CENTRED.md) and releases nothing; the four loops RUN_CENTRED.md read give 47, 44, 53, 55 steps at the returns 2 to 5 (their j 4.125, 4.094, 3.750, 3.500 and T 1431, 1500, 1150, 1040), so the releases are 0, 0, 3, 2 by `L - L_rel` (47 and 44 below the first loop's level; 53 - 50; 55 - 53), each release four `light` rows of content s, the electron's content less by `4 s`; for every level row the phase rate read from two faces' clicks of one release (the +x face and the +y face: `(phase_y - phase_x) mod N = s x (age_y - age_x) mod N`) equals its content over the quantum | each release's s within two steps of the algebra's on the r = 12 world (its levels move with the drift, RUN_CENTRED's periods the source); the Planck identity exact for `s < N / 2` | DETECTOR: the faces' `light` clicks grouped by release (content, phase, count) | a `light` click whose content is not `L - L_rel` of the record's two levels; a release on a loop whose level fell; a phase difference off by one step or more on a row below the alias bound |
 | R6 the control | each | the same world without the key replays byte for byte (the build's test on the gate set and on the three worlds' twins without the key); with the key on and no release, every click of every family identical to the world without the key (the r = 3 and r = 7 worlds if no row is released; the r = 12 world before its first release) | exact | the build's test; DETECTOR (the faces' clicks) | a byte differing with the key absent (FAIL of the build); a click differing before the first release |
+
+R5's "the record's two levels" are R2's diagnostic lines; the content of
+a `light` click is compared with the difference of the two R2 levels
+the engine wrote (the rule's own arithmetic on its own store), and with
+R3's levels beside it.
 
 Two diagnostics reported beside the pins and never counted: (i) the
 momentum form's level at each return, `floor(n_l N (p . p) / (2 Q S M h
@@ -647,22 +682,25 @@ build about two hours (the head's line 6); the CI the gate.
    Neither Balmer's `4 to 2` nor `3 to 2` is an event of any world of
    this law as it stands, and no run of section 5 reads a line of
    hydrogen as a click: the lines' rows themselves are NOT IN THE LAW.
-   What the three worlds read is the LEVEL of each rung, a body's own
-   record and two counts of the faces, and the lines' ratio is a
+   What the three worlds read is the LEVEL of each rung, two counts of
+   the faces (the body's own give rows and count the host's view of the
+   same arithmetic, a diagnostic beside them), and the lines' ratio is a
    computation of three such readings.
 2. **What the three readings compare, and what they do not.** They
    compare the ratio of two level differences, read on three separate
-   loops of the lattice at the generator's radii, with Balmer's ratio,
-   within the band the three loops' own closures carry (section 5 (c)):
-   a match within plus or minus 0.13 is a match of the ladder's
-   `1 / j^2` form to the fan's grain, and the paper's row must say so;
-   it is not a line of hydrogen read after a detector, not a frequency
-   of a released row, and not a test that the levels are what nature's
-   are in any unit (the pair `[512, 1]` sets the step, a declaration of
-   the dictionary). The fan's grain at r = 3 already puts the
-   generator's ratio 1.7 percent above Balmer's, inside the band; a
-   reading that lands on 1.43 would be the register's flux exponent and
-   not nature, inside the same band. The band is the finding's honesty,
+   loops of the lattice at the generator's radii, with the values on the
+   comparison side, within the band the three loops' own closures carry
+   (section 5 (c), about plus or minus 10 percent per level, `1.17` to
+   `1.74` on the ratio): that band admits the `1 / j^2` law at the read
+   closures (1.280), Balmer's 27 / 20 (1.350), the generator's 1.373 and
+   the fan's power law (1.431) alike, so NO MATCH of the ladder's form
+   is read at this grain, in either direction: a reading inside the band
+   is a reading with a band, and the paper's row states the three
+   levels, the ratio and the band, NATURE row 6 a reading with a band
+   and not a match. It is not a line of hydrogen read after a detector,
+   not a frequency of a released row, and not a test that the levels
+   are what nature's are in any unit (the pair `[512, 1]` sets the step,
+   a declaration of the dictionary). The band is the finding's honesty,
    not its excuse.
 3. **A rung on this lattice other than the generator's three.** The
    register's j table at this h has one whole rung (ALGEBRA.md section 2
@@ -683,10 +721,23 @@ build about two hours (the head's line 6); the CI the gate.
    alone carries the level, `E = h_q s` as a birth identity and not as a
    frequency in flight.
 6. **GAMEBOARD readings.** The momenta at the crossings (the step
-   lines), the host's tick, the remainders below one step, the momentum
-   form's diagnostic and the ladder's `(4 / j)^2` beside each level are
-   the host's view and are never pinned; a number whose kind is not
-   named is not a result.
+   lines), the host's tick, the remainders below one step, the body's
+   own give rows and count and the level the engine forms from them
+   (R2), the momentum form's diagnostic and the ladder's `(4 / j)^2`
+   beside each level are the host's view and are never pinned; a number
+   whose kind is not named is not a result.
+7. **What would decide it (named for the owner, not ordered).** A
+   reading that told Balmer's form from the fan's departure needs the
+   levels to about one percent per rung (the ratio's band then about
+   plus or minus 0.03, which separates 1.280, 1.350, 1.373 and 1.431),
+   and the fan's grain at r = 3 forbids it (the flux 17 percent below
+   the inverse square, 21 shells of 17 degrees per loop). The same
+   ladder at larger radii with the same h, r = 12, 27 and 48 for j = 4,
+   6 and 8 (`a_j = 12 (j / 4)^2`), trades the grain for larger boards
+   (sides 53, 83 and 125) and longer loops (T about 1490, 5030 and
+   11 920), and the fan's exponent between those radii is the
+   register's to state first (ALGEBRA.md section 2 (d): `r^-1.83` and
+   not a power law between r = 10 and 14).
 
 The words asked, through the Boss: the owner's on the form (the Boss
 takes the reviewer's, the virial form, unless the owner says otherwise
