@@ -5128,3 +5128,17 @@ brought to the clause after the marginals theorem (Theorem 5 in the
 PDF's numbering, label th:marginals; the sentence follows its proof):
 "its interval the last arm's (as after Theorem 5)". Nothing else; words only; the PDF compiled from the
 true source and read back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 22:10Z): issue #953, the multiplicity's symbol in Definition 7's equation
+
+On `paper-953` off main at 5757c6b9, one commit, notation only. The one
+occurrence changed: the displayed equation of Definition 7, the square's
+denominator, `\frac{w^2}{m}` to `\frac{w^2}{\mathtt m}` (main.tex line
+539 on main). The search over the whole paper for a plain m meant as the
+multiplicity found no other: every other multiplicity is `\mathtt m`
+(the tuple, the split's `\mathtt m A`, Theorem 2 and its proof, the five
+`w^2/\mathtt m`); the plain `m` at Sections 2 and 9 is the mass angle
+and the symbol list's `m` the mass; `\texttt{m}` in the tables is a
+family's name. None of those touched; no plain m of doubtful meaning. No
+number moved. The PDF compiled from the true source and read back. 52
+pages.
