@@ -143,6 +143,7 @@ kept, their pins the law of events').
 | `test_amplitude_bell_24_4.py` | Bell at N = 512, 2048, 4096, 8192 and 16384 under the one click and the wheel, the pin of DERIVATIONS_BEAM 24.4 (the run the law owes before the pin is final; the plateau's run of 2026-09-22): the pin derived from each world file and the ladder (N, the wheel W = N, the settings off the counters' windows, the labels off the lamp; the design's joint weights and the rungs b_k = (2 W C_k + T) // (2 T) give the register's counts, widths and rungs; every count within one of W x its weight; the marginals W / 2; S x N = 1448, 5792, 11584, 23168 and 46344, the closed form 8 (c_1 + c_1') - 4 N, so S = 181 / 64 exactly on the plateau 512 to 8192 and 5793 / 2048 at 16384, where the plateau ends), and the replay of the twenty worlds bit-exact against the registered readings of the runs of 2026-09-21 and 2026-09-22 (the counts per cell, E x W, the marginals, one gather per record, the rungs and the windows on every gather) ([below](#the-amplitude-law-bell-at-n--512-to-16384-the-pin-of-244)); every number read from `expectations.json` under `bell_24_4` and `pair_n` | new (2026-09-21; the Boss's order under the model owner's record 337; DERIVATIONS_BEAM 24.4); extended to N = 2048, 8192 and 16384 (2026-09-22; the Boss's order on the owner's word through the paper's writer) |
 | `test_amplitude_mz_345_n.py` | The (3, 4) split at N = 32 and 128 under the one click and the wheel, the power window of DERIVATIONS_BEAM 6.5 pinned from above: the pin derived from each world file and the engine's own tables and ladder (N and the wheel W = N off the lamp; the ports' rows off the lamp's turns and the splitter's weights and turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 with the multiplicity 50; the pointers on `phase_cosines` and `phase_sines`, the rungs by `amplitude.rungs` and the cell of every u by `amplitude.cell_of` give the register's counts 31 / 1 and 125 / 3, the u to D2 (31; 125, 126, 127), the rungs (31, 32) and (125, 128) equal to the exact offers' rung (2 N x 49 + 50) // 100, and the totals' spread; the same derivation gives the registered 63 / 1 at N = 64), the power window per N from the rung ([1.548, 2.129), [1.917, 2.489), [1.835, 2.012)) and its intersection with the pair's [1.784, 2.054), [1.917, 2.012), containing 2 and excluding 1 and 3, and the replay of both worlds bit-exact against the registered readings of the run of 2026-09-21 (the counts per port, the u to D2, the rungs on every gather, the totals' spread, the births, gathers and open records, the books balanced) ([below](#the-amplitude-law-the-3-4-split-at-n--32-and-128)); every number read from `expectations.json` under `mz_345_n` and `mach_zehnder` | new (2026-09-21; the Boss's order on the auditor's round 4; DERIVATIONS_BEAM 6.5) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)); the gate worlds' digests read from `gate_set.json` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
+| `test_aperture_preflight.py` | The aperture's multiplicity at load (issue #714): a world whose openings send two paths of one record to one set with multiplicities whose ratio is not a square is refused by the loader, naming the rule, the two multiplicities, the openings of both paths, the ratio and the aperture's width, before tick 0 (the run's check at the offer kept as the guard); the square norm accepted and run; the edge, the norm 2 whose rays never meet, accepted ([below](#the-amplitude-law-the-aperture-at-load)) | new (2026-09-22; issue #714, the batch of issue #661) |
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
@@ -495,6 +496,38 @@ integers, written down before the first run:
   N - 1, `inputs` naming an undeclared direction; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
   refuses the run naming the Node (3, 3).
 
+## The amplitude law: the aperture at load
+
+`tests/test_aperture_preflight.py` (issue #714; the rule of the design's
+section 2.5 unchanged, `amplitude.common_denominator` and the run's refusal
+at the offer kept as the guard). The loader walks a lamp's record through the
+openings per arm (`world._aperture_load_check`): a plain `rerelease` fan's
+norm is its count of directions, a declared split's the sum of its squared
+weights; a `pass` entry is stepped through, any other measured event ends
+the path at its set, the walk along the direction's digital line as the
+flight walks it; a world with a gate is left to the run. A minimal
+aperture on 5 x 5 x 1: a lamp at (0, 2) on +x, the openings A (2, 2) and B
+(2, 3), a screen of five `sum` sets at x = 4:
+
+- (a) the fan [0, 1, 0], [1, 1, 0], [1, 0, 0] (the norm 3; a row walks
+  its direction's digital line one Link at a time, the lowest axis first,
+  `world.bresenham_line`): A's row on [1, 1, 0] reaches screen_3 with 3,
+  A's row on [0, 1, 0] re-released at B reaches screen_3 on [1, 0, 0]
+  with 9; refused at load: "reach screen_3 with the multiplicities 3
+  (through the openings at [[2, 2, 0]]) and 9 (through [[2, 2, 0], [2, 3,
+  0]]), whose ratio 1:3 is not a square (an aperture 2 Nodes wide ...)"
+  (with the loader's check off the run refuses the same world at tick 8,
+  "the multiplicities 3 and 9": the bug); the same fan on A alone accepted
+  and 20 intervals run;
+- (b) the fan with [1, -1, 0] added (the norm 4): 4 against 16 at
+  screen_2, a square ratio; accepted and 20 intervals run;
+- (c) the norm 2 (the fan [0, 1, 0], [1, 1, 0], the smallest non-square
+  norm): A reaches screen_3 with 2, B screen_4 with 4, no set twice;
+  accepted and 20 intervals run (3 is the smallest non-square
+  multiplicity an aperture brings to one set); the width 3 (an opening at
+  (2, 1) added) with the fan of (a) refused naming "an aperture 3 Nodes
+  wide".
+
 ## The amplitude law: the layer
 
 `tests/test_amplitude_layer.py` (docs/BEAM_LAW.md note 37; the design,
@@ -597,8 +630,9 @@ written down before the first run:
   multiplicity 8, its units 3, the record's one cell the set with the
   rung 64, its total and weight 2 x 2^58 (the two paths add: a re-meeting
   is not unitary, the design's 2.5); with the second re-emitter of
-  weights [1, 1] on two directions (m 4 against 2) the run is refused:
-  "record 4294967297 at the set end carry the multiplicities 2 and 4";
+  weights [1, 1] on two directions (m 4 against 2) the world is refused
+  at load (issue #714, `test_aperture_preflight.py`): "reach end with the
+  multiplicities 4 ... and 2 ..., whose ratio 2:1 is not a square";
 - (c) a keyed bar of 6 Nodes with a lamp on +x, a declared row of light
   of no record at x = 3 and a counter at x = 5: after one interval
   `state.json` holds one row with the three columns and one without;

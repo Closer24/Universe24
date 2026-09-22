@@ -162,6 +162,7 @@ from event_universe.events.world import (
     Transformation,
     Vector,
     axis_sign,
+    bresenham_line,
     default_reads,
     default_rule,
     default_width,
@@ -842,21 +843,6 @@ def unit_label(vector: Vector) -> Vector:
     return found[0], found[1], found[2]
 
 
-def _bresenham(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
-    """The S_1 unit steps of one period of the digital line of v: at each
-    step the axis whose progress is furthest behind, the lowest axis first."""
-    s1 = sum(abs(c) for c in vector)
-    line: list[tuple[int, int, int]] = []
-    position = [0, 0, 0]
-    for j in range(s1):
-        best = max(range(3), key=lambda i: (abs(vector[i]) * (j + 1) - s1 * abs(position[i]), -i))
-        step = [0, 0, 0]
-        step[best] = 1 if vector[best] > 0 else -1
-        position[best] += step[best]
-        line.append((step[0], step[1], step[2]))
-    return line
-
-
 def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
     """The flight of a direction set, its constants computed once at load."""
     count = len(vectors)
@@ -875,7 +861,7 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         p = t // bounded_gcd(s1 * Q, t)
         per_period = s1 * Q * p // t
         period[index] = p * (s1 // bounded_gcd(per_period, s1))
-        lines_list.append(_bresenham(vector))
+        lines_list.append(bresenham_line(vector))
     longest = max(1, int(manhattan.max(initial=0)))
     lines = np.zeros((count, longest, 3), dtype=np.int64)
     for index, line in enumerate(lines_list):
