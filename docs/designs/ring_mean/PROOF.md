@@ -21,9 +21,8 @@ register holds from a detector is quoted with its kind, **DETECTOR**, and
 its source line. Sources: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md)
 sections 3.2 and 3.3 (the push and its shell mean), section 5.1 (the dwell
 along a line) and entry 58 of section 21.5 (Kepler's laws under the six
-points); `docs/designs/light_bending/STEP_ALGEBRA.md` section 9 on
-branch `light-bending-algebra` (PR #821, head `23ef9ce9`, not yet on main, so
-cited by path and not linked; the ring of starts and its mean); record 872 of [the log](../../LOG_2026-09-20.md) (where the
+points); [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md) section 9 (PR #821,
+merged to main at `e9798aa8`; the ring of starts and its mean); record 872 of [the log](../../LOG_2026-09-20.md) (where the
 L1 incidence factor comes from); record 817 (Newton's and Kepler's forms on
 the comparison side only); the paper's Section 4 ground paragraph in
 `paper/general_formula/main.tex` on branch `claude/paper-owner-review-five`
@@ -548,11 +547,11 @@ statements of the law's push matching a form, never of how nature is
   3.3 (Newton's form, line 938), 5.1 (the dwell along a line, lines 1168 to
   1198), section 21.5 entry 58 (Kepler's laws under the six points, lines
   6422 to 6510).
-- `docs/designs/light_bending/STEP_ALGEBRA.md` section 9 (the ring
+- [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md) section 9 (the ring
   of starts: the construction of the ring mean, `F_L1`, the tangential mean
-  `0.00000`, the grain `0.085` to `0.107`), on branch
-  `light-bending-algebra` at `23ef9ce93721963098c45e0add3f846a7154a1fb`
-  (PR #821).
+  `0.00000`, the grain `0.085` to `0.107`), read at
+  `23ef9ce93721963098c45e0add3f846a7154a1fb` (PR #821, merged to main at
+  `e9798aa86b9fe1cd48f0c97660ef427367d5ad44`).
 - [The log](../../LOG_2026-09-20.md): records 762 (whatever can be computed
   algebraically is computed algebraically; matching nature, never how
   nature is), 817 (Einstein's, Lorentz's and Newton's forms on the
