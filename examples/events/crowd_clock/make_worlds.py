@@ -37,6 +37,18 @@ chosen so that the pinned k runs from 0.005 to 2) and three moving (the lamp
 and its two sources thrown together at 0.2 c along +x, away from the
 detector, at k = 0.08, 0.3 and 1).
 
+The moving bodies' drive (since 2026-09-22 the law's line drive, the model
+owner's record 972, docs/designs/drive_b/DEFAULT.md): the momenta of
+`moving_08` and `moving_3` are the line rule's, p = Q S M v / (1 - v T_D /
+Q) at v = 0.2 c (`momentum(v, content, LINE_DRIVE)`); `moving_1` keeps the
+per-axis drive of history under the world key `per_axis_drive` (its mass
+of content 2^30 at width 2^20 has a line-drive wall Q^2 S M = 2^62, one
+past the law's bound, and is refused at load under the law; the Boss's
+default until the owner speaks), so its momenta are the per-axis rule's,
+p = Q S M v / (1 - v). The pins (k, the brackets, the exits) are the
+speed's and the crowd's, drive-free; `expectations.json` names the drive
+and the momenta per moving world.
+
     python examples/events/crowd_clock/make_worlds.py     # the worlds and expectations.json
 """
 
@@ -106,6 +118,16 @@ FAN_REACH = 4
 # but behind its crowd's heading (the oblique directions' crossing Nodes).
 K_LOW = 0.25
 EXPECTATIONS_FORMAT = "crowd-clock-expectations-v1"
+# The drive of a body (docs/designs/drive_b/DEFAULT.md): the law's line
+# drive since 2026-09-22; the per-axis drive of history under the key.
+LINE_DRIVE = "line"
+AXIS_DRIVE = "axis"
+DRIVE = LINE_DRIVE
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
+PACE_TERM = T_D_AXIS / Q  # 110 / 64, the line drive's second wall term per unit of v
+# The world kept as history under `per_axis_drive` (refused at load under
+# the line drive: its wall Q^2 S M = 2^62 passes the bound by one).
+HISTORY_WORLDS = ("moving_1",)
 Json = dict[str, object]
 
 
@@ -119,12 +141,31 @@ def beam_speed() -> float:
 C = beam_speed()
 
 
-def momentum(v: float, content: int) -> int:
-    return round(Q * WIDTH * content * v / (1 - v))
+def momentum(v: float, content: int, drive: str = DRIVE) -> int:
+    """The momentum p (label units) that gives the speed v (Links per
+    interval) to a free measured event of content `content` under the named
+    drive: the line drive's v = p Q / (Q^2 S M + p T_D), so p = Q S M v / (1
+    - v T_D / Q); the per-axis drive of history's v = p / (Q S M + p)."""
+    if drive == LINE_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v * PACE_TERM))
+    if drive == AXIS_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v))
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+def speed(p: int, content: int, drive: str = DRIVE) -> float:
+    """The speed of the momentum p under the named drive (Links per interval)."""
+    if drive == LINE_DRIVE:
+        return p * Q / (Q * Q * WIDTH * content + p * T_D_AXIS)
+    if drive == AXIS_DRIVE:
+        return p / (Q * WIDTH * content + p)
+    raise ValueError(f"unknown drive {drive!r}")
+
+
+def drive_of(name: str) -> str:
+    """The drive a world's momenta are derived for: the law's line drive,
+    the per-axis drive of history for the worlds kept under the key."""
+    return AXIS_DRIVE if name in HISTORY_WORLDS else DRIVE
 
 
 def fan(axis: int) -> list[list[int]]:
@@ -154,6 +195,7 @@ def world(name: str, flux: int, moving: bool) -> Json:
     detector_x = MOVING_DETECTOR_X if moving else STILL_DETECTOR_X
     light_direction = [-1, 0, 0] if moving else [1, 0, 0]
     v = SPEED_OVER_C * C if moving else 0.0
+    drive = drive_of(name)
     lamp: Json = {
         "position": [lamp_x, Y0, Z0],
         "family": "s_px1",
@@ -163,7 +205,7 @@ def world(name: str, flux: int, moving: bool) -> Json:
         "table": {"mass": {"rule": "pass"}},
     }
     if moving:
-        lamp["momentum"] = [momentum(v, LIGHT), 0, 0]
+        lamp["momentum"] = [momentum(v, LIGHT, drive), 0, 0]
     else:
         lamp["fixed"] = True
     sources: list[Json] = []
@@ -178,7 +220,7 @@ def world(name: str, flux: int, moving: bool) -> Json:
             "table": {"s_px1": {"rule": "pass"}},
         }
         if moving:
-            source["momentum"] = [momentum(v, amount), 0, 0]
+            source["momentum"] = [momentum(v, amount, drive), 0, 0]
         else:
             source["fixed"] = True
         sources.append(source)
@@ -208,13 +250,13 @@ def world(name: str, flux: int, moving: bool) -> Json:
         ],
         "measured": [detector, lamp, *sources],
     }
-    if name == "moving_1":
+    if name in HISTORY_WORLDS:
         # Kept as history under the per-axis drive (the world key
         # `per_axis_drive`, the Boss's default of 2026-09-22 until the
         # owner speaks; docs/designs/drive_b/DEFAULT.md section (b)): its
         # mass of content 2^30 at width 2^20 has a line-drive wall Q^2 S M
         # = 2^62, one past the law's bound, and is refused at load under
-        # the law's line drive.
+        # the law's line drive; its momenta the per-axis rule's.
         document["per_axis_drive"] = True
     return document
 
@@ -305,6 +347,18 @@ def expectations() -> Json:
         "speed_over_c_moving": SPEED_OVER_C,
         "still_windows": [list(w) for w in STILL_WINDOWS],
         "moving_windows": [list(w) for w in MOVING_WINDOWS],
+        # The drive (2026-09-22): the law's line drive for the moving
+        # worlds' momenta but the history worlds' (`per_axis_drive`); the
+        # pins below are the speed's and the crowd's, drive-free.
+        "drive": DRIVE,
+        "momenta": {
+            name: {
+                "drive": drive_of(name),
+                "lamp": momentum(SPEED_OVER_C * C, LIGHT, drive_of(name)),
+                "source": momentum(SPEED_OVER_C * C, flux * RELEASE[1] // RELEASE[0], drive_of(name)),
+            }
+            for name, flux in MOVING.items()
+        },
         "worlds": {},
     }
     for name, flux in STILL.items():

@@ -25,6 +25,24 @@
    400
   ]
  ],
+ "drive": "line",
+ "momenta": {
+  "moving_08": {
+   "drive": "line",
+   "lamp": 10235453698569,
+   "source": 838667487426523
+  },
+  "moving_3": {
+   "drive": "line",
+   "lamp": 10235453698569,
+   "source": 3144203433029259
+  },
+  "moving_1": {
+   "drive": "axis",
+   "lamp": 9266665899939,
+   "source": 9489065881537834
+  }
+ },
  "worlds": {
   "still_005": {
    "flux": 82,

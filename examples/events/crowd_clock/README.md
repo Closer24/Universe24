@@ -14,8 +14,11 @@ owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive
 keeps its readings as registered, because its mass of content 2^30 at width
 2^20 has a line-drive wall Q^2 S M = 2^62, one past the law's bound, and is
 refused at load under the law (the Boss's default until the owner speaks);
-`moving_08` and `moving_3` read the line drive and are re-pinned in the
-campaign of DEFAULT.md section (c).
+`moving_08` and `moving_3` read the line drive: their momenta are the
+line rule's since the series' re-pin (p = Q S M v / (1 - v T_D / Q) at
+0.2 c, `expectations.json`'s `momenta`, the drive named), the pins (k, the
+brackets, the exits) the speed's and the crowd's, drive-free; the re-read
+under the law is the last section of this page.
 
 ## The worlds
 

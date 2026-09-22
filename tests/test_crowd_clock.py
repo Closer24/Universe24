@@ -110,10 +110,20 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             [lamp["position"][0], 4, 7],
         ]
         if moving:
+            # The law's line drive since 2026-09-22 (record 972), the per-axis
+            # drive of history for `moving_1` under its key.
+            drive = generator.drive_of(name)
+            assert (drive == generator.AXIS_DRIVE) == (name == "moving_1")
+            assert ("per_axis_drive" in document) == (name == "moving_1")
             for body in (lamp, *sources):
                 assert "fixed" not in body
-                v = generator.speed(body["momentum"][0], body["amount"])
+                v = generator.speed(body["momentum"][0], body["amount"], drive)
                 assert abs(v - 0.2 * c) < 1e-6, (name, v)
+            momenta = generator.expectations()["momenta"][name]
+            assert momenta["drive"] == drive
+            assert (
+                lamp["momentum"][0] == momenta["lamp"] and sources[0]["momentum"][0] == momenta["source"]
+            )
         else:
             assert lamp["position"][0] == 10
             assert all(body["fixed"] for body in (lamp, *sources))
@@ -125,6 +135,16 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
         assert sim.books()["balanced"], name
     expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expected["format"] == generator.EXPECTATIONS_FORMAT
+    assert expected["drive"] == generator.LINE_DRIVE
+    assert expected["momenta"] == generator.expectations()["momenta"]
+    assert expected["momenta"]["moving_08"]["drive"] == "line"
+    assert expected["momenta"]["moving_1"]["drive"] == "axis"
+    # The lamp of 2^20 at 0.2 c: the line rule's and the per-axis rule's momenta.
+    assert expected["momenta"]["moving_08"]["lamp"] == generator.momentum(0.2 * c, 1 << 20)
+    assert expected["momenta"]["moving_1"]["lamp"] == generator.momentum(
+        0.2 * c, 1 << 20, generator.AXIS_DRIVE
+    )
+    assert expected["momenta"]["moving_08"]["lamp"] > expected["momenta"]["moving_1"]["lamp"]
     assert expected["still_windows"] == [[200, 350], [350, 500]]
     assert expected["moving_windows"] == [[100, 250], [250, 400]]
     assert set(expected["worlds"]) == set(generated)
