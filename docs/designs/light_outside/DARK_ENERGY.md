@@ -209,8 +209,8 @@ Nature's dark energy was read from the brightness of standard lamps
 (Riess 1998, Perlmutter 1999): `d_L(z) = (c / H_0) [z + (1 - q_0) z^2 / 2
 + ...]`, `d_L` the luminosity distance from the flux, `F = L / (4 pi
 d_L^2)`. What the law's detector reads of a standard lamp (BRIGHTNESS.md
-section 1; G2's luminosity pin `1 / (1 + z)`, 648 of 648, the tick-based
-pin GAMEBOARD by its denominator): the click rate falls by one factor `1
+section 1; G2's luminosity pin `1 / (1 + z)`, 648 of 648, clock-free,
+record 754, DETECTOR): the click rate falls by one factor `1
 / (1 + z_d)` and the content per click is the birth's, so
 
     F = L / (4 pi D^2 (1 + z_d)),    d_L = D sqrt(1 + z_d),    D = c tau  (Nodes apart, the row's age on the click),
@@ -246,7 +246,7 @@ factors), Milne's 0 needing nature's `D_M` in place of the law's `c tau`.
 | its size, `g_1 = 0.36` for nature's `-0.53` | NEITHER: an input (the suspension pair), no number of the law gives it | `k = a_tau n / d`, the scale the world's `[n, d]` (NATURE 12's note) | G's k up to 0.07 on declared pairs; nature's wells `10^-6` to `10^-5` |
 | its sign from the law's own crowd history (Seeliger, `k ~ t^2`) | SHOWN, and the WRONG sign: `q_eff = 2 k_0 (3 - k_0) / (1 - k_0)^2 > 0` | the older light was born in a thinner crowd | none run; the growing wall's steady presence gives Milne's 0 (15.4, 15.5) |
 | the coasting throw itself | SHOWN, `q = 0` exactly (Milne) | the source's classical Doppler on the throw | G: `z = v / c` to 0.003, `H t_0 = 1.029`; G2 `coasting_none` `q = -0.108` in `0 +- 0.25` (MET); NATURE 3: FAIL against `-0.53` |
-| the brightness, `d_L = D sqrt(1 + z_d)`, `q_eff = 2 / (1 + g_1)` | FAIL by one factor of `1 + z` for every `g_1`; the growing wall's `+1` | the click's content is the birth's (L4) | NATURE 11a FAIL (pinned, not run); 11b PASS; 11c FAIL; G2's luminosity `1 / (1 + z)` 648 of 648 (GAMEBOARD denominator) |
+| the brightness, `d_L = D sqrt(1 + z_d)`, `q_eff = 2 / (1 + g_1)` | FAIL by one factor of `1 + z` for every `g_1`; the growing wall's `+1` | the click's content is the birth's (L4) | NATURE 11a FAIL (pinned, not run); 11b PASS; 11c FAIL; G2's luminosity `1 / (1 + z)` 648 of 648 (clock-free, record 754; DETECTOR) |
 
 **The verdict line: DARK ENERGY NOT NEEDED: NOT SHOWN; THE ACCELERATING
 SHAPE FROM THE PASSAGE: SHOWN.** What the passage from Inside to Outside

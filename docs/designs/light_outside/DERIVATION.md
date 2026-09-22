@@ -675,9 +675,10 @@ lamp's brightness pinned and not run, NATURE 11a, line 112; the click
 frame's section 8 says the same of the fall's inverse square, line 1117);
 series C's `count x r / q` and series E's `k_s r^2 = 41.5` are GAMEBOARD
 (the probes' view) and are not compared. The luminosity against z of
-G2's stars, `1 / (1 + z)` within 5 percent, 648 of 648 (the tick-based
-pin, GAMEBOARD by its denominator, MET as pinned,
-line 2508), reads the count's stretch of II.8 at one distance, not the
+G2's stars, `1 / (1 + z)` within 5 percent, 648 of 648 (clock-free, record
+754: the flux per own count and `1 + z_d` both carry one factor of `r_w`,
+which cancels, so the pin holds under the tick and under the own count
+alike; DETECTOR, MET, line 2508), reads the count's stretch of II.8 at one distance, not the
 inverse square.
 
 **Verdict.** SHOWN, rung 2 (the shell mean; rung 1 on a beam and for the
@@ -1198,9 +1199,11 @@ re-read, DETECTOR, under the detector's own clock (record 754, tier
 (b)): `r_w = 0.7500, 1.0000, 0.3400, 0.9600` in the late windows, 304
 inside and 32 outside, and the crowd's well `z_d(0) = r - 1` blue for 15
 and 20 of 24 sources in the scalar worlds. Series G2 (lines 2361 to
-2548), the same two kinds: the tick-based formula 648 of 648 and the
-luminosity `1 / (1 + z)` 648 of 648 within 5 percent (MET as pinned,
-GAMEBOARD denominator), and DETECTOR under the own count `r = 1`
+2548), the same two kinds: the tick-based formula 648 of 648 (MET as
+pinned, GAMEBOARD denominator), the luminosity `1 / (1 + z)` 648 of 648
+within 5 percent (clock-free, record 754: `r_w` cancels between the flux
+per own count and `1 / (1 + z_d)`; DETECTOR, MET), and DETECTOR under
+the own count `r = 1`
 in the `none` worlds and 0.4825 / 0.3725 in the scalar worlds (record
 754); `coasting_none`'s stars `z = v / c` within 0.004 (MET on the law's
 form; FAIL against nature's gamma, II.4). Series T (lines 6737 to 6835;
@@ -1467,7 +1470,7 @@ readings by kind; every number DETECTOR unless labelled.
 | the aberration of a moving detector: `tan alpha = v / c` by the passage of clicks, 0 by the click's face | SHOWN at first order; NOT READ; the second order the law's `r = 1` | Nodes apart over counts apart compose as `c -+ v` (4.2); the label is the row's own | none registered; 12.2's emitter aberration pinned in 12.4, NOT RUN, not on `main` |
 | the two-slit fringes: bright where `L_1 - L_2 = j lambda`, `lambda = c N d / n`, one turn of the phase per age per fringe; Young's `lambda D / s` paraxial | SHOWN, rung 2 (the fan), Born rung 1 within `1 / (2 N)` | the two rows' age difference at ONE detector, `(n / d)(L_1 - L_2) / c` steps, squared at the click (L3, L6) | L2b: the bands' centres 23.5 apart for the exact law's 23.3 (MET within the pixel), the dark cells 0 to 3 (MET); the visibility 0.966 against 0.98 (FAIL by 0.014, the fan's grain); Pearson 0.891 against the pin 0.96 (FAIL, the pin the screen's fan's); L1's unequal arms 64 / 0, 32 / 32, 0 / 64 at 0, 16, 32 steps (MET exactly); W's massive bands 37.06 / 59.99 / 83.02 (PASS) |
 | the click's indivisibility: one click per record, never two; `alpha = 0`; the dark port 0 | SHOWN, rung 1 (exact) | the ladder chooses one cell and deletes the offers (L6, note 37 (x)); the cancel exact | `mz_equal` 64 / 0 (NATURE 2b PASS, MET); `mz_345` 63 / 1, 31 / 1, 125 / 3 at N = 64, 32, 128 (MET exactly); `ev_29` 32 / 17 / 15, 64 clicks for 64 records at three places (MET) |
-| the redshift through a crowd `1 + z_d = r_B (1 + k_A)(1 + v / c) = r (1 + z)`; at rest `(1 + k_A) / (1 + k_B)`, the potential's `1 / r` at first order | SHOWN, rung 1 (one count of one detector, three factors), the `1 / r` rung 2; the second order in k the law's own (below reach) | the age wall at coefficient 1 on the lamp's births and on the detector's own count, the row's phase never stretched (L8, L3, BEAM_LAW 609) | G, two numbers by kind on `main` since f8c5367d: the tick-based 288 of 288 within 2 percent and `H t_0 = 1.029` (GAMEBOARD denominator, MET as pinned), and the own-count re-read `r_w` 0.7500 to 1.0000, 304 inside and 32 outside, the crowd's well blue for 15 and 20 of 24 (DETECTOR; record 754); G2 likewise: the tick-based 648 of 648 and the luminosity 648 of 648 (GAMEBOARD denominator, MET as pinned), `r = 1` and 0.4825 / 0.3725 under the own count (DETECTOR); T: 2.6517 and 4.1500, the ratio 1.907 for `1.909 +- 0.05` (MET); NATURE 12's presence word 1.000 against 2.00 (FAIL, the default word); X: nine of nine, inside 1.0029, outside 0.6285 (MET); the far lamp 11b `b = 1` (PASS pinned), 11a `q_eff = +1` against `-0.53` and 11c `n = 1` against 4 (FAIL pinned, not run) |
+| the redshift through a crowd `1 + z_d = r_B (1 + k_A)(1 + v / c) = r (1 + z)`; at rest `(1 + k_A) / (1 + k_B)`, the potential's `1 / r` at first order | SHOWN, rung 1 (one count of one detector, three factors), the `1 / r` rung 2; the second order in k the law's own (below reach) | the age wall at coefficient 1 on the lamp's births and on the detector's own count, the row's phase never stretched (L8, L3, BEAM_LAW 609) | G, two numbers by kind on `main` since f8c5367d: the tick-based 288 of 288 within 2 percent and `H t_0 = 1.029` (GAMEBOARD denominator, MET as pinned), and the own-count re-read `r_w` 0.7500 to 1.0000, 304 inside and 32 outside, the crowd's well blue for 15 and 20 of 24 (DETECTOR; record 754); G2 likewise: the tick-based 648 of 648 (GAMEBOARD denominator, MET as pinned), the luminosity 648 of 648 (clock-free, record 754; DETECTOR, MET), `r = 1` and 0.4825 / 0.3725 under the own count (DETECTOR); T: 2.6517 and 4.1500, the ratio 1.907 for `1.909 +- 0.05` (MET); NATURE 12's presence word 1.000 against 2.00 (FAIL, the default word); X: nine of nine, inside 1.0029, outside 0.6285 (MET); the far lamp 11b `b = 1` (PASS pinned), 11a `q_eff = +1` against `-0.53` and 11c `n = 1` against 4 (FAIL pinned, not run) |
 | Malus: `P(pass) = cos^2 theta` within the tables' rounding | SHOWN, rung 1 within `+0.0019` | the rotated label's Gram form (L9, L6) | A12 under the click: 128 / 0 / 64 of 256 (NATURE 9 PASS, MET exactly); 219 / 256 and 187 / 256 at 22.5 degrees (MET on the pins; OPEN at `10^-3`) |
 | the Bell pair's `E(a, b)` and `S(N)` at two places, the marginals `1 / 2` exact | SHOWN, rung 1 (exact at every N) | one Gram form over two arms, one cell at two places (L6) | 27 / 5 / 5 / 27, `S = 2.75` for Hensen's `2.42 +- 0.20` (NATURE 1a PASS, MET); against Poh's `2.82759 +- 0.00051` REFUTED at N = 64 and 256 (FAIL), OPEN on the plateau 2.828125 |
 | reflection | NEITHER | a row meets no surface; a mirror is the apparatus's declared table (input 23) | the register's mirrors are declarations (L1), no law read |
