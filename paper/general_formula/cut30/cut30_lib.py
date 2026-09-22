@@ -42,9 +42,17 @@ def sub(text, old, new, count=1):
 
 
 def cutp(text, start, end):
-    """Remove from `start` to just before `end` inside `text` (whitespace tolerant anchors)."""
+    """Remove from `start` to just before `end` inside `text` (whitespace tolerant anchors).
+
+    An `end` of blank space alone (`"\\n\\n"`) means the end of the paragraph: the
+    cut runs to the next blank line. Before 2026-09-22 such an end matched the
+    empty string and the cut removed the start anchor only, leaving the rest of
+    the sentence as a fragment (the reviewer's must-fix M7); the pattern is now
+    asserted non-empty.
+    """
     ps = r"\s+".join(re.escape(t) for t in start.split())
-    pe = r"\s+".join(re.escape(t) for t in end.split())
+    pe = r"\n[ \t]*\n" if not end.split() else r"\s+".join(re.escape(t) for t in end.split())
+    assert pe, ("cutp end pattern empty", end[:60])
     ms = re.search(ps, text)
     assert ms, ("cutp start", start[:60])
     me = re.search(pe, text[ms.end() :])

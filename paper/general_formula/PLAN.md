@@ -3008,3 +3008,82 @@ references 26 to 27, the appendices 28 to 30; the owner's 23 + 4 + 3
 met in the total, the body two pages longer and the references two
 shorter).
 
+
+## The reviewer's corrections folded (2026-09-22, the owner's word of 01:24Z: the reviewer the paper's writer)
+
+The verdict on the cut at 5c6c4576 was ADMISSIBLE WITH CORRECTIONS (the
+reviewer's report to the Boss, 01:31Z; seven must-fix, eight should-fix;
+the split 25 / 2 / 3 approved by the owner). The corrections are folded
+by `cut30/corrections.py`, one exact replacement each, applied by the
+assembler after the four parts are joined, so that main.tex stays the
+assembler's output (`tests/test_paper_cut30.py` holds it to that). What
+changed, by the report's labels:
+
+- M1 to M3: the abstract and the discussion read the ledger's ground
+  column: exact, the pace of every direction with its Manhattan bound,
+  Gauss's law of a free family's flux under its world condition, and
+  Planck's and de Broglie's relations as identities under the dictionary;
+  a limit of the grain, the value c = 1/sqrt 3; a limit under the average
+  that covers the shell, Newton, Coulomb, the retarded potential and
+  Poisson (records 607, 609; section 7 above).
+- M4: row 2b's verdict rests on the clicks (64/0 over 64 births, the
+  visibility 1.000 above 0.98), not on the offers' 0.9988, a number of the
+  apparatus layer (records 281, 562). The register's row 2b still carries
+  the offers' number; its restatement is the register's own order.
+- M5: the owner's status word (record 573) on every central formula: the
+  ledger's caption says every row is derived from the update rules
+  implemented in the simulator, with what is added beside them in the
+  third column; the sections say "derived" where they said "reached";
+  Coulomb's "in form" (a status record 595 excludes; DERIVATIONS 21.2 row
+  7 has it R) reads "derived under the same average as Newton's, the
+  ratio exact".
+- M6: Appendix C names the defined version, the tag paper-2026-09-22 on
+  the merge commit of the cut's pull request (records 606, 616), and the
+  cut's tree (main merged at 87c7ec6b); the stale b6ab1bb3 out.
+- M7: the editing seams. Their source was `cut30_lib.cutp` with a
+  blank-line end anchor, which matched the empty string and removed the
+  start phrase only, leaving the rest of the sentence; a blank-line end
+  now means the end of the paragraph and the pattern is asserted
+  non-empty; the two conditional patches of part3 (the Gleason
+  parenthesis, which restores the citation of Gleason 1957) and part4
+  ("by definition. That the") apply unconditionally; the cut of "The 48
+  are the GameBoard's stand-in" in part2 is withdrawn (the reviewed text
+  kept the sentence). With the fix, the crowd-audit sentence (23 rules,
+  13 and 10), the constants sentence with the gallery's citation, the
+  world-key history, the "Theorem 2" aside and the second Sinha
+  sentence leave, as the parts intended.
+- S1: the confrontation table's caption counts its rows (four PASS and a
+  fifth under the clock's assumed word; twelve FAIL as seven in a run,
+  four by a pin, one a declared input refuted; two BOUND); the abstract
+  and the discussion say "four readings pass, a fifth under the clock's
+  assumed word".
+- S2: "above 1/sqrt 3 on 282 of the 290 and exactly at it on the eight
+  diagonals" (Proposition prop:pace); NUMBERS.md's row reworded.
+- S3: the muon's row under covariant-readings-v1 leaves the ledger (a
+  result on a hypothesis beside the law; the covariant readings stay in
+  the checks table and the distance table); the ledger has 25 rows.
+- S4: the crowd-clock sentence (runs measured once, not registered)
+  leaves; the three drafted entries leave the references with it.
+- S5: eta and beta named at first use; "the board" reads "the
+  GameBoard's state"; HYPOTHESES 27 cited once, in the discussion; the
+  single opening named once as a row without a run.
+- S6: the Mach-Zehnder record total labelled a number of the apparatus
+  layer; the symbol table pruned to the symbols the paper uses.
+- S7: Gleason 1957 back in the references (through M7's fix).
+- S8: the distance table's harmonic-constants row names the identification
+  of the circle as position and its transform as momentum, a hypothesis,
+  with the single opening as its deciding check.
+
+The references open a page of their own (a `\clearpage` in the
+assembler), so the approved split is read from the page numbers: the
+body through page 25, the references 26 to 27, the appendices 28 to 30;
+30 pages, no overfull vbox, no undefined reference. No number moved; two
+labels added (S2, S6). The 11 overfull hboxes of 2 to 16 points stand as
+cosmetic. The coordinator's last content commit (498b6f31, the exact
+square displayed in the discussion's Lorentz paragraph) and the fold
+together ran the body four lines onto page 26; the sentence on the
+tables' precedents in signal processing (a precedent, not a claim; its
+four references with it) left the positioning paragraph and S8's row was
+shortened, so the body ends on page 25 as approved. The owner's word of
+01:48Z made the reviewer the paper's only writer; the coordinator's
+HANDOFF.md and cut30/notes stand as he left them.

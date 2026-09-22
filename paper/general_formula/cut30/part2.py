@@ -43,7 +43,6 @@ sym = sub(
     "(the families' tables give, family by family, the group each declared quantity lives on \\cite{familiesaudit}).",
     "\\cite{familiesaudit}.",
 )
-sym = cutp(sym, "The $48$\nare the GameBoard's stand-in for the rotation group", "\n\n")
 sym = sym.rstrip() + "\n\n"
 out.append(sym)
 pace = B("\\paragraph{The pace of the rows, and the octahedron.}", "\\begin{proposition}[The pace]")

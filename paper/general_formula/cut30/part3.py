@@ -121,14 +121,10 @@ reached = B(
     "\\paragraph{What is reached and what is not.}", "\\paragraph{Against the registered integers.}"
 )
 reached = cutp(reached, "(Gleason's theorem \\cite{gleason1957} needs", "The multiplicity rule")
-reached = (
-    sub(
-        reached,
-        "continuity and no dimension . The multiplicity rule",
-        "continuity and no dimension (Gleason's theorem \\cite{gleason1957} needs dimension three; the lattice version does not, because (b) holds for every two inputs, the parallelogram law, a stronger hypothesis the balanced splitter grants). The multiplicity rule",
-    )
-    if "continuity and no dimension . The multiplicity rule" in reached
-    else reached
+reached = sub(
+    reached,
+    "continuity and no dimension The multiplicity rule",
+    "continuity and no dimension (Gleason's theorem \\cite{gleason1957} needs dimension three; the lattice version does not, because (b) holds for every two inputs, the parallelogram law, a stronger hypothesis the balanced splitter grants). The multiplicity rule",
 )
 out.append(reached)
 against = B("\\paragraph{Against the registered integers.}", "\\paragraph{The limit.}")

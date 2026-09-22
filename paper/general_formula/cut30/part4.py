@@ -242,11 +242,7 @@ out.append(r"""\appendix
 """)
 pg = B("A map of the six Ports that keeps opposite Ports opposite permutes the", "\\end{proof}")
 pg = cutp(pg, "; series P's parity worlds with an", "That the\nsix operations commute")
-pg = (
-    sub(pg, "by definition. That the", "by definition. That the")
-    if "by definition. That the" in pg
-    else pg
-)
+pg = sub(pg, "by definitionThat the", "by definition. That the")
 out.append(pg.rstrip() + "\n\n\\paragraph{Proof of Theorem~\\ref{th:isometry}.}\n")
 pi = B(
     "$\\sum_i (wa_i)^2/(\\mathtt m A) = w^2 \\sum_i a_i^2/(\\mathtt m A) = w^2/\\mathtt m$.",
