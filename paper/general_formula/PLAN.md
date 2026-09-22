@@ -4193,3 +4193,29 @@ families table's two rows, the full words kept in Section 5 and Table
 3's row 12, the medium form in the prose; (iii) the 24 transitions
 with the date once per group; not (ii). NUMBERS.md's rows 147, 157 and
 169 (series T) carry the status word. The count: 36 pages.
+
+## Applied (2026-09-22, the owner's two words on his referee points 2 and 4)
+
+(2) "The click does not signal; everything is local; verify and put
+definitions accordingly." Verified against the engine
+(amplitude.py, LiveRecord and Layer.complete: a record is gathered once
+when its live count reaches 0; the rows' content is placed at their
+arrival; the flight is blind, P9) and against Theorem 5's proof (the
+coarse rung of the first-declared party sits at N/2 for every setting,
+so its outcome is a function of u alone). The definition of the click
+now names the click's two parts, the arrival (local, at the arm's own
+interval, independent of the other arm's setting and length) and the
+outcome (the first party's fixed at its arrival by u, the second's at
+the completion by the joint weights), with the near outcome's writing
+at the far tick a bookkeeping of the host; the sentence after Theorem 5
+now states no-signalling in the times as well as in the counts, with
+the one non-local step named as the assignment of the second outcome
+on the labels, not on the times; Positioning says the same. The
+earlier sentence ("no-signalling in the times is not claimed") is
+replaced, since the claim is now verified and stated. (4) "The paper
+can check algebraically": the prediction paragraph now says the
+dependence on the grain and the tables is algebraic, the family of
+exact rationals (181/64 from 512 to 8192, 5793/2048 to the tables'
+bound), and that a measurement below 2.828125 or above 2.828613 by five
+standard deviations refutes every grain from 512 up at once. The count:
+37 pages.
