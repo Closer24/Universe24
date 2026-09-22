@@ -417,6 +417,9 @@ WORLD_KEYS = {
     # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
     # false by default (`DRIVE_B_RULE`).
     "drive_b",
+    # centred-step-v1 (2026-09-22): the body's step at half the wall, a
+    # boolean, false by default (`CENTRED_STEP_RULE`).
+    "centred_step",
     "directions",
     "direction_bound",
     "families",
@@ -476,6 +479,19 @@ T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
 # Bresenham line of the momentum with no coincident fire lost. Absent, the
 # per-axis drive of BEAM_LAW note 17 runs unchanged, byte for byte.
 DRIVE_B_RULE = "drive-b-v1"
+# The identity of the centred step (the model owner's word through the Boss,
+# 2026-09-22, record 953 of the log of 2026-09-20; the cause of the atom's
+# widening, docs/designs/atom_give/CAUSE.md section 2 (v); the design
+# docs/designs/atom_give/CENTRED_STEP.md): under the world key `centred_step`
+# the count of a body's step is the NEAREST whole number of its accumulator in
+# units of the wall, on both drives (`core.integer.by_drive` and `by_line`,
+# `centred`), so a step fires when the accumulated motion passes half a Link
+# beyond the Node and the whole wall is subtracted: the body's Node the
+# nearest to its accumulated motion, the lag of the Node behind the motion
+# (half a Link per axis in the mean, which turns the push read at the Node
+# along the motion) zero in the mean. Every other count keeps the whole
+# part. Absent, every registered world replays byte for byte.
+CENTRED_STEP_RULE = "centred-step-v1"
 
 
 def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = True) -> int:
@@ -1224,6 +1240,9 @@ class NatureBeamWorld:
     # drive-b-v1 (the world key `drive_b`, false by default): the
     # directional drive of a body (`drive_wall`, `core.integer.by_line`).
     drive_b: bool = False
+    # centred-step-v1 (the world key `centred_step`, false by default): the
+    # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
+    centred_step: bool = False
 
     @property
     def flight_coefficient(self) -> int | None:
@@ -1362,7 +1381,9 @@ class NatureBeamWorld:
         `hand-v1` when the world declares a hand or an axis,
         `covariant-readings-v1` when the world declares `covariant_readings`,
         `optical-v1` for the world key `optical`, `drive-b-v1` for the world
-        key `drive_b` (the directional drive of a body) and, last,
+        key `drive_b` (the directional drive of a body), `centred-step-v1`
+        for the world key `centred_step` (the body's step at half the wall)
+        and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""
@@ -1387,6 +1408,8 @@ class NatureBeamWorld:
             found.append(OPTICAL_RULE)
         if self.drive_b:
             found.append(DRIVE_B_RULE)
+        if self.centred_step:
+            found.append(CENTRED_STEP_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -3968,6 +3991,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for entry in measured:
             if not entry.fixed:
                 drive_wall(entry.momentum, sum(entry.held), width, obj.get("covariant_readings") is None)
+    # centred-step-v1 (2026-09-22): the world key `centred_step`, a boolean,
+    # false by default (docs/designs/atom_give/CENTRED_STEP.md section 1).
+    centred_step = obj.get("centred_step", False)
+    if type(centred_step) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: centred_step must be true or false (centred-step-v1, off by default)"
+        )
     covariant = _covariant(
         obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
     )
@@ -4017,6 +4047,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         covariant=covariant,
         optical=optical,
         drive_b=drive_b,
+        centred_step=centred_step,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)

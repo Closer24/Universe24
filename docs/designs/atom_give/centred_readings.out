@@ -1,0 +1,39 @@
+PASS record check: completed (77.1 s, 7500 ticks)
+PASS record check: the books balanced at every completed tick
+[GAMEBOARD] world `rays-atoms-hydrogen-r12-centred-step-v1`: centred_step True, hypotheses ['bohr-v1', 'centred-step-v1'], the electron's declared momentum [0, 293783192, 0], start [38, 26, 26], the proton at (26, 26, 26)
+
+[DETECTOR] the electron's rows clicked on the side faces: face:+x 762, face:-x 726, face:+y 756, face:-y 735; 738 releases paired, 56 clicks unpaired
+[DETECTOR] the escape: none: the electron is on the board at the end
+[DETECTOR] the axis crossings read from the arrival Nodes: 23
+[DETECTOR]   +y at count 402: the electron at (26, 38), 12.00 Links from the proton
+[DETECTOR]   -x at count 721: the electron at (16, 26), 10.00 Links from the proton
+[DETECTOR]   -y at count 992: the electron at (26, 15), 11.00 Links from the proton
+[DETECTOR]   +x at count 1341: the electron at (38, 26), 12.00 Links from the proton
+[DETECTOR]   +y at count 1742: the electron at (26, 38), 12.00 Links from the proton
+[DETECTOR]   -x at count 2111: the electron at (13, 26), 13.00 Links from the proton
+[DETECTOR]   -y at count 2492: the electron at (26, 15), 11.00 Links from the proton
+[DETECTOR]   +x at count 2772: the electron at (36, 26), 10.00 Links from the proton
+[DETECTOR]   +y at count 3092: the electron at (26, 39), 13.00 Links from the proton
+[DETECTOR]   -x at count 3652: the electron at (10, 26), 16.00 Links from the proton
+[DETECTOR]   -y at count 4072: the electron at (26, 17), 9.00 Links from the proton
+[DETECTOR]   +x at count 4272: the electron at (35, 26), 9.00 Links from the proton
+[DETECTOR]   +y at count 4632: the electron at (26, 40), 14.00 Links from the proton
+[DETECTOR]   -x at count 5071: the electron at (16, 26), 10.00 Links from the proton
+[DETECTOR]   -y at count 5282: the electron at (26, 19), 7.00 Links from the proton
+[DETECTOR]   +x at count 5422: the electron at (33, 26), 7.00 Links from the proton
+[DETECTOR]   +y at count 5692: the electron at (26, 37), 11.00 Links from the proton
+[DETECTOR]   -x at count 6102: the electron at (15, 26), 11.00 Links from the proton
+[DETECTOR]   -y at count 6342: the electron at (26, 19), 7.00 Links from the proton
+[DETECTOR]   +x at count 6462: the electron at (33, 26), 7.00 Links from the proton
+[DETECTOR]   +y at count 6692: the electron at (26, 37), 11.00 Links from the proton
+[DETECTOR]   -x at count 7141: the electron at (16, 26), 10.00 Links from the proton
+[DETECTOR]   -y at count 7352: the electron at (26, 19), 7.00 Links from the proton
+[DETECTOR] the returns to the +x axis: 5 at [1341, 2772, 4272, 5422, 6462]; the periods [1431, 1500, 1150, 1040]
+[GAMEBOARD] (a diagnostic, not counted) the momentum's length at the step lines nearest the crossings: [289.5, 344.0, 329.7, 295.0, 299.3, 287.7, 327.1, 342.9, 287.9, 226.3, 379.8, 392.6, 240.7, 322.4, 440.9, 398.1, 270.5, 301.4, 446.4, 437.4, 280.7, 301.8, 437.8] million label units (the pin C4: 200 to 350)
+[DETECTOR] C5 (reported, not pinned) the circles per return from the rows' phases: ['4.125', '4.094', '3.750', '3.500']
+[DETECTOR] the proton's reads of the electron's rows: 8; the electron's reads of the proton's rows: 1215
+
+PASS C1 the loop stays: no escape face click and at least 12 quarter crossings (read 23 crossings; no escape)
+FAIL C2 every crossing within 9 to 20 Links, the first four within 10 to 15 (read [12.0, 10.0, 11.0, 12.0, 12.0, 13.0, 11.0, 10.0, 13.0, 16.0, 9.0, 9.0, 14.0, 10.0, 7.0, 7.0, 11.0, 11.0, 7.0, 7.0, 11.0, 10.0, 7.0])
+FAIL C3 3 to 4 returns to the +x axis with every period within (1400, 2000) (read 5 returns, the periods [1431, 1500, 1150, 1040])
+1 PASS, 2 FAIL, 0 NOT READ of 3 pins (DETECTOR); the GameBoard lines above are diagnostics, not counted

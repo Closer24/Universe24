@@ -14,6 +14,17 @@ experimenter, registered as rows of series H.
   form B's drive (293783192 in place of 288249497), the action re-fixed
   by series H's rule under the same drive (h = 16 p(8) = 5536242544), a
   `wave` detector `at_proton` on the proton's Node, 7500 intervals.
+- `hydrogen_r12_centred.json` (`rays-atoms-hydrogen-r12-centred-step-v1`):
+  `hydrogen_r12.json` as registered plus the world key `centred_step`
+  (centred-step-v1, off by default: the body's step fires when its
+  accumulated motion reaches half the wall, the whole wall subtracted,
+  so the electron's Node is the nearest to its accumulated motion) and
+  nothing else; the pins before its run are
+  [atom_give/CENTRED_STEP.md](../../../docs/designs/atom_give/CENTRED_STEP.md)
+  section 4 (the loop stays five turns, the crossings within 9 to 20
+  Links, three to four returns, the period 1400 to 2000; an escape face
+  click FAIL), the cause it answers
+  [atom_give/CAUSE.md](../../../docs/designs/atom_give/CAUSE.md).
 - `helium_r12.json` (`rays-atoms-helium-r12-form-b-v1`): binding-v1's
   square ([binding/alpha_square_bond.json](../binding/alpha_square_bond.json):
   `p` of charge 4 and `n`, each with its held `nuclear` and `bond`) fixed
