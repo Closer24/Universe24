@@ -48,8 +48,12 @@ The pins, written here before any run, each with its kind:
   interval of every run (GAMEBOARD; the engine refuses otherwise).
 
 The `coasting_none` world under the key (17.6 M2, N5; NATURE row 4b; pin
-(c) of 18.1): series G2's `coasting_none` as registered (the momenta as
-declared, the centre's `wave` set, the families by reference) with the key
+(c) of 18.1): series G2's `coasting_none` as registered on 2026-09-20 (the
+momenta as then declared, by the per-axis rule of history, kept here since
+series G2's re-pin under the line drive on 2026-09-22: the pins and the
+digests of this world are on the registered momentum, and under the key
+the drive's cap term is off; the centre's `wave` set, the families by
+reference) with the key
 `c2` [1, 3], `grain` 2^18 (W / g^2 within the integer bound; 2^16 is
 refused) and the model id `rays-hubble-stars-record-covariant-none-space-v1`,
 which tells the readings tool to read z from the gather lines (since the
@@ -179,11 +183,20 @@ def coasting_world() -> Json:
     register reads z from the gather lines, the slope of the record's birth
     phase u (the lamp's birth wheel, one step per self-creation) against
     the arrival's tick (the `source` rule of record 124;
-    `tools/hubble_stars_readings.py` reads it under that model id)."""
+    `tools/hubble_stars_readings.py` reads it under that model id). The
+    stars' momenta are the registered ones of 2026-09-20 (series G2's
+    generator under its per-axis rule of history, `AXIS_DRIVE`): this
+    world's pins (17.6 M2, the pace on the registered momentum) and its
+    digests were registered on them, and under the key the drive's cap
+    term is off (`step_divisor`), so the world declares no drive of
+    history; series G2's own worlds carry the line rule's momenta since
+    the re-pin of 2026-09-22 (docs/designs/drive_b/DEFAULT.md)."""
     generator = load_generator(
         "hubble_stars_make_worlds", HERE.parent / "hubble_stars" / "make_worlds.py"
     )
-    document: Json = generator.referenced(generator.world("coasting", "none"))
+    document: Json = generator.referenced(
+        generator.world("coasting", "none", drive=generator.AXIS_DRIVE)
+    )
     found: Json = {}
     for key, value in document.items():
         found[key] = COASTING_MODEL if key == "model_id" else value
@@ -275,7 +288,7 @@ def muon_expectation(name: str, momentum: int) -> Json:
 
 def coasting_expectation() -> Json:
     generator = sys.modules["hubble_stars_make_worlds"]
-    star = next(s for s in generator.stars(generator.MASS) if s["name"] == STAR)
+    star = next(s for s in generator.stars(generator.MASS, generator.AXIS_DRIVE) if s["name"] == STAR)
     content = int(generator.MASS) + int(generator.LIGHT)
     momentum = int(star["momentum"])
     rest = Q * int(generator.WIDTH) * content
