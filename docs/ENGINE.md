@@ -536,7 +536,32 @@ gravity's Lambda Q S), and a moving body under `optical` without
 `drive_b` is refused at load; the
 inverse interval refused under it; the record carries the block `optical` {gamma, flight_coefficient}
 and the identity `optical-v1` under `hypotheses`; without the key every
-world reads as it did, byte for byte); the amplitude law
+world reads as it did, byte for byte); `flow_link` (since 2026-09-22,
+`flow-link-v1`, the model owner's decision of record 915 on the Flow
+Weight Designer's design
+[docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md), the
+physics-rule reviewer's ADMISSIBLE of record 902; true or false, false by
+default, any other type refused: under it the arrival flow every reader
+sums counts each arriving row of direction D with the flow label f_D, the
+integer vector nearest |p_D| D / S_1 (the label per Euclidean Link of the
+line, S_1 = |a| + |b| + |c|; per component sign(D_i) x (2 |p_D| |D_i| +
+S_1) // (2 S_1), one Euclidean division per component at load,
+`nature_beam.flow_label`, the one product tested by division before it is
+formed), in place of the unit label u_D nearest |p_D| D / |D| (the label
+per Node); |p_D| is Q for the photon (`Flight.flow_labels`) and a massive
+family's `momentum_magnitude` (`FamilyFlight.flow_labels`, each family's
+from its own labels); read by the flow's sums alone, the rows' push
+(`nature_beam.CrowdMoments`, `optical_turn`) and a body's push through
+the group moment of a free family's rays (`_family_plan`, `push_form`);
+the age moment, the wall, the flight, the collision, the phase and the
+momentum a click moves (a paid family's push, the label Q per unit, note
+18) untouched; the push's shell mean then carries no L1 factor (the
+fan's mean of S_1 / |D|, 1.4355 on series K's 290 directions) and the
+push's constant of gravity is the clock's; the record carries `flow_link:
+true` and the identity `flow-link-v1` under `hypotheses`; the first world
+that declares it is `examples/events/flow_link/` (the ring of starts at
+b = 6); without the key the flow labels ARE the labels and every world
+reads as it did, byte for byte, `tests/test_flow_link.py` (a)); the amplitude law
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
 step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
@@ -927,7 +952,9 @@ paid families off 3 h n = Q S d as `off_identity`, the most `comparisons`
 one frame took and `waited`, the intervals each body owed to proper time),
 `optical-v1` when the world declares `optical`, `drive-b-v1` when the world
 declares `drive_b` (2026-09-22, the directional drive of a body; the record
-then carries `drive_b: true`, under the key alone),
+then carries `drive_b: true`, under the key alone), `flow-link-v1` when
+the world declares `flow_link` (2026-09-22, the flow label per Euclidean
+Link; the record then carries `flow_link: true`, under the key alone),
 last; `[]` without any; in a world with a hand every family carries
 its `hand` and every number its `axis`, the heading's vector or None),
 `columns` (the

@@ -1,0 +1,2563 @@
+{
+ "format": "flow-link-expectations-v1",
+ "identity": "flow-link-v1",
+ "design": "docs/designs/flow_weight/DESIGN.md section 4 and ALGEBRA.md section 4 (b463ac24, PR #839); the model docs/designs/flow_weight/flow_weight_map.py, its output flow_weight_map.out section 4; STEP_ALGEBRA.md sections 9 and 11",
+ "decision": "the model owner, 2026-09-22, record 915 of docs/LOG_2026-09-20.md: admit flow-link-v1 to the ring world and run it once",
+ "constants": {
+  "Q": 64,
+  "mass": 65536,
+  "suspension": [
+   1,
+   16384
+  ],
+  "width": 16384,
+  "fan": 290,
+  "units_per_interval": 4640,
+  "c_f": 2,
+  "path_half_length": 26,
+  "shells_factor": 0.99,
+  "nodes_conversion": 14.791,
+  "ticks": 400,
+  "lamp_x": 2,
+  "screen_x": 54
+ },
+ "worlds": {
+  "ring_b6_g0": {
+   "impact": 6,
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "starts": 40,
+   "control": "ring_b6_control_g0",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 0.128,
+    "tolerance": 0.025,
+    "as_built": 0.451,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-6,-2)": [
+      0,
+      0
+     ],
+     "(-6,-1)": [
+      0,
+      0
+     ],
+     "(-6,0)": [
+      1,
+      0
+     ],
+     "(-6,1)": [
+      0,
+      0
+     ],
+     "(-6,2)": [
+      0,
+      0
+     ],
+     "(-5,-4)": [
+      0,
+      0
+     ],
+     "(-5,-3)": [
+      0,
+      0
+     ],
+     "(-5,3)": [
+      0,
+      0
+     ],
+     "(-5,4)": [
+      0,
+      0
+     ],
+     "(-4,-5)": [
+      0,
+      0
+     ],
+     "(-4,-4)": [
+      0,
+      0
+     ],
+     "(-4,4)": [
+      0,
+      -1
+     ],
+     "(-4,5)": [
+      0,
+      0
+     ],
+     "(-3,-5)": [
+      0,
+      0
+     ],
+     "(-3,5)": [
+      0,
+      0
+     ],
+     "(-2,-6)": [
+      0,
+      0
+     ],
+     "(-2,6)": [
+      0,
+      0
+     ],
+     "(-1,-6)": [
+      0,
+      0
+     ],
+     "(-1,6)": [
+      0,
+      0
+     ],
+     "(0,-6)": [
+      0,
+      0
+     ],
+     "(0,6)": [
+      0,
+      -1
+     ],
+     "(1,-6)": [
+      0,
+      0
+     ],
+     "(1,6)": [
+      0,
+      0
+     ],
+     "(2,-6)": [
+      0,
+      0
+     ],
+     "(2,6)": [
+      0,
+      0
+     ],
+     "(3,-5)": [
+      0,
+      0
+     ],
+     "(3,5)": [
+      0,
+      0
+     ],
+     "(4,-5)": [
+      0,
+      0
+     ],
+     "(4,-4)": [
+      -1,
+      0
+     ],
+     "(4,4)": [
+      -1,
+      0
+     ],
+     "(4,5)": [
+      0,
+      0
+     ],
+     "(5,-4)": [
+      0,
+      0
+     ],
+     "(5,-3)": [
+      0,
+      0
+     ],
+     "(5,3)": [
+      0,
+      0
+     ],
+     "(5,4)": [
+      0,
+      0
+     ],
+     "(6,-2)": [
+      0,
+      0
+     ],
+     "(6,-1)": [
+      0,
+      0
+     ],
+     "(6,0)": [
+      -1,
+      0
+     ],
+     "(6,1)": [
+      0,
+      0
+     ],
+     "(6,2)": [
+      0,
+      0
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     34,
+     6,
+     0,
+     0
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 0.4,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.025,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 0.437,
+    "tolerance": 0.085,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 1.805,
+    "lever_arm_factor": 0.242,
+    "expected": 1.929,
+    "grain": 0.085,
+    "path_factor": 0.974,
+    "shells_factor": 0.99,
+    "as_built": 2.599,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.02033
+   }
+  },
+  "ring_b6_g1": {
+   "impact": 6,
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "starts": 40,
+   "control": "ring_b6_control_g1",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 0.731,
+    "tolerance": 0.025,
+    "as_built": 0.974,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-6,-2)": [
+      0,
+      0
+     ],
+     "(-6,-1)": [
+      0,
+      0
+     ],
+     "(-6,0)": [
+      3,
+      0
+     ],
+     "(-6,1)": [
+      0,
+      0
+     ],
+     "(-6,2)": [
+      0,
+      0
+     ],
+     "(-5,-4)": [
+      1,
+      0
+     ],
+     "(-5,-3)": [
+      1,
+      0
+     ],
+     "(-5,3)": [
+      1,
+      0
+     ],
+     "(-5,4)": [
+      1,
+      0
+     ],
+     "(-4,-5)": [
+      0,
+      0
+     ],
+     "(-4,-4)": [
+      1,
+      0
+     ],
+     "(-4,4)": [
+      1,
+      -1
+     ],
+     "(-4,5)": [
+      0,
+      0
+     ],
+     "(-3,-5)": [
+      0,
+      0
+     ],
+     "(-3,5)": [
+      0,
+      -1
+     ],
+     "(-2,-6)": [
+      0,
+      0
+     ],
+     "(-2,6)": [
+      0,
+      -1
+     ],
+     "(-1,-6)": [
+      0,
+      0
+     ],
+     "(-1,6)": [
+      0,
+      -1
+     ],
+     "(0,-6)": [
+      0,
+      0
+     ],
+     "(0,6)": [
+      0,
+      -3
+     ],
+     "(1,-6)": [
+      0,
+      0
+     ],
+     "(1,6)": [
+      0,
+      -1
+     ],
+     "(2,-6)": [
+      0,
+      0
+     ],
+     "(2,6)": [
+      0,
+      -1
+     ],
+     "(3,-5)": [
+      0,
+      0
+     ],
+     "(3,5)": [
+      0,
+      -1
+     ],
+     "(4,-5)": [
+      0,
+      0
+     ],
+     "(4,-4)": [
+      -1,
+      0
+     ],
+     "(4,4)": [
+      -1,
+      -1
+     ],
+     "(4,5)": [
+      0,
+      0
+     ],
+     "(5,-4)": [
+      -1,
+      0
+     ],
+     "(5,-3)": [
+      -1,
+      0
+     ],
+     "(5,3)": [
+      -1,
+      0
+     ],
+     "(5,4)": [
+      -1,
+      0
+     ],
+     "(6,-2)": [
+      -1,
+      0
+     ],
+     "(6,-1)": [
+      -1,
+      0
+     ],
+     "(6,0)": [
+      -3,
+      0
+     ],
+     "(6,1)": [
+      -1,
+      0
+     ],
+     "(6,2)": [
+      -1,
+      0
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     15,
+     20,
+     2,
+     3
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 0.78,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.025,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 2.496,
+    "tolerance": 0.085,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 3.652,
+    "lever_arm_factor": 0.683,
+    "expected": 3.859,
+    "grain": 0.085,
+    "path_factor": 0.974,
+    "shells_factor": 0.99,
+    "as_built": 5.116,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.04115
+   }
+  },
+  "ring_b3_g0": {
+   "impact": 3,
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "starts": 16,
+   "control": "ring_b3_control_g0",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 0.845,
+    "tolerance": 0.0625,
+    "as_built": 0.996,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-3,-1)": [
+      1,
+      0
+     ],
+     "(-3,0)": [
+      2,
+      0
+     ],
+     "(-3,1)": [
+      1,
+      0
+     ],
+     "(-2,-2)": [
+      1,
+      0
+     ],
+     "(-2,2)": [
+      1,
+      0
+     ],
+     "(-1,-3)": [
+      0,
+      0
+     ],
+     "(-1,3)": [
+      0,
+      -1
+     ],
+     "(0,-3)": [
+      0,
+      0
+     ],
+     "(0,3)": [
+      0,
+      -1
+     ],
+     "(1,-3)": [
+      0,
+      0
+     ],
+     "(1,3)": [
+      0,
+      -1
+     ],
+     "(2,-2)": [
+      -1,
+      0
+     ],
+     "(2,2)": [
+      -1,
+      0
+     ],
+     "(3,-1)": [
+      -1,
+      0
+     ],
+     "(3,0)": [
+      -2,
+      0
+     ],
+     "(3,1)": [
+      -1,
+      0
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     3,
+     11,
+     2,
+     0
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 0.62,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.0625,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 1.442,
+    "tolerance": 0.107,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 1.901,
+    "lever_arm_factor": 0.759,
+    "expected": 1.967,
+    "grain": 0.107,
+    "path_factor": 0.993,
+    "shells_factor": 0.99,
+    "as_built": 2.605,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.04284
+   }
+  },
+  "ring_b3_g1": {
+   "impact": 3,
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "starts": 16,
+   "control": "ring_b3_control_g1",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 1.625,
+    "tolerance": 0.0625,
+    "as_built": 2.091,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-3,-1)": [
+      2,
+      0
+     ],
+     "(-3,0)": [
+      4,
+      0
+     ],
+     "(-3,1)": [
+      1,
+      -1
+     ],
+     "(-2,-2)": [
+      1,
+      0
+     ],
+     "(-2,2)": [
+      1,
+      -1
+     ],
+     "(-1,-3)": [
+      1,
+      0
+     ],
+     "(-1,3)": [
+      0,
+      -2
+     ],
+     "(0,-3)": [
+      0,
+      0
+     ],
+     "(0,3)": [
+      0,
+      -3
+     ],
+     "(1,-3)": [
+      -1,
+      0
+     ],
+     "(1,3)": [
+      0,
+      -2
+     ],
+     "(2,-2)": [
+      -1,
+      0
+     ],
+     "(2,2)": [
+      -1,
+      -1
+     ],
+     "(3,-1)": [
+      -2,
+      0
+     ],
+     "(3,0)": [
+      -4,
+      0
+     ],
+     "(3,1)": [
+      -1,
+      -1
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     1,
+     4,
+     8,
+     1
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 1.31,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.0625,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 2.773,
+    "tolerance": 0.107,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 3.821,
+    "lever_arm_factor": 0.726,
+    "expected": 3.934,
+    "grain": 0.107,
+    "path_factor": 0.993,
+    "shells_factor": 0.99,
+    "as_built": 5.442,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.08611
+   }
+  },
+  "ring_b8_g0": {
+   "impact": 8,
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "starts": 48,
+   "control": "ring_b8_control_g0",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 0.107,
+    "tolerance": 0.0208,
+    "as_built": 0.409,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-8,-2)": [
+      0,
+      0
+     ],
+     "(-8,-1)": [
+      0,
+      0
+     ],
+     "(-8,0)": [
+      1,
+      0
+     ],
+     "(-8,1)": [
+      0,
+      0
+     ],
+     "(-8,2)": [
+      0,
+      0
+     ],
+     "(-7,-4)": [
+      0,
+      0
+     ],
+     "(-7,-3)": [
+      0,
+      0
+     ],
+     "(-7,3)": [
+      0,
+      0
+     ],
+     "(-7,4)": [
+      0,
+      0
+     ],
+     "(-6,-6)": [
+      0,
+      0
+     ],
+     "(-6,-5)": [
+      0,
+      0
+     ],
+     "(-6,5)": [
+      0,
+      0
+     ],
+     "(-6,6)": [
+      0,
+      -1
+     ],
+     "(-5,-6)": [
+      0,
+      0
+     ],
+     "(-5,6)": [
+      0,
+      0
+     ],
+     "(-4,-7)": [
+      0,
+      0
+     ],
+     "(-4,7)": [
+      0,
+      0
+     ],
+     "(-3,-7)": [
+      0,
+      0
+     ],
+     "(-3,7)": [
+      0,
+      0
+     ],
+     "(-2,-8)": [
+      0,
+      0
+     ],
+     "(-2,8)": [
+      0,
+      0
+     ],
+     "(-1,-8)": [
+      0,
+      0
+     ],
+     "(-1,8)": [
+      0,
+      0
+     ],
+     "(0,-8)": [
+      0,
+      0
+     ],
+     "(0,8)": [
+      0,
+      -1
+     ],
+     "(1,-8)": [
+      0,
+      0
+     ],
+     "(1,8)": [
+      0,
+      0
+     ],
+     "(2,-8)": [
+      0,
+      0
+     ],
+     "(2,8)": [
+      0,
+      0
+     ],
+     "(3,-7)": [
+      0,
+      0
+     ],
+     "(3,7)": [
+      0,
+      0
+     ],
+     "(4,-7)": [
+      0,
+      0
+     ],
+     "(4,7)": [
+      0,
+      0
+     ],
+     "(5,-6)": [
+      0,
+      0
+     ],
+     "(5,6)": [
+      0,
+      0
+     ],
+     "(6,-6)": [
+      -1,
+      0
+     ],
+     "(6,-5)": [
+      0,
+      0
+     ],
+     "(6,5)": [
+      0,
+      0
+     ],
+     "(6,6)": [
+      -1,
+      0
+     ],
+     "(7,-4)": [
+      0,
+      0
+     ],
+     "(7,-3)": [
+      0,
+      0
+     ],
+     "(7,3)": [
+      0,
+      0
+     ],
+     "(7,4)": [
+      0,
+      0
+     ],
+     "(8,-2)": [
+      0,
+      0
+     ],
+     "(8,-1)": [
+      0,
+      0
+     ],
+     "(8,0)": [
+      -1,
+      0
+     ],
+     "(8,1)": [
+      0,
+      0
+     ],
+     "(8,2)": [
+      0,
+      0
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     42,
+     6,
+     0,
+     0
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 0.27,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.0208,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 0.486,
+    "tolerance": 0.095,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 1.932,
+    "lever_arm_factor": 0.252,
+    "expected": 1.892,
+    "grain": 0.095,
+    "path_factor": 0.956,
+    "shells_factor": 0.99,
+    "as_built": 2.905,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.01632
+   }
+  },
+  "ring_b8_g1": {
+   "impact": 8,
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "starts": 48,
+   "control": "ring_b8_control_g1",
+   "radial_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the arrival Node (dy, dz) of each start against its control's, the mean over the ring of -(dy y + dz z) / r in Links",
+    "value": 0.628,
+    "tolerance": 0.0208,
+    "as_built": 0.854,
+    "derivation": "DESIGN.md section 4 and ALGEBRA.md section 4 (the step algebra's walk of every start under the flow label f_D; flow_weight_map.out section 4, form flow); the tolerance one Node per start over the ring's count"
+   },
+   "arrival_nodes": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: per start (y, z) the arrival Node's (dy, dz) against the control's",
+    "value": {
+     "(-8,-2)": [
+      1,
+      0
+     ],
+     "(-8,-1)": [
+      0,
+      0
+     ],
+     "(-8,0)": [
+      3,
+      0
+     ],
+     "(-8,1)": [
+      0,
+      0
+     ],
+     "(-8,2)": [
+      1,
+      0
+     ],
+     "(-7,-4)": [
+      1,
+      0
+     ],
+     "(-7,-3)": [
+      0,
+      0
+     ],
+     "(-7,3)": [
+      0,
+      0
+     ],
+     "(-7,4)": [
+      1,
+      0
+     ],
+     "(-6,-6)": [
+      1,
+      0
+     ],
+     "(-6,-5)": [
+      0,
+      0
+     ],
+     "(-6,5)": [
+      0,
+      -1
+     ],
+     "(-6,6)": [
+      1,
+      -1
+     ],
+     "(-5,-6)": [
+      0,
+      0
+     ],
+     "(-5,6)": [
+      0,
+      0
+     ],
+     "(-4,-7)": [
+      0,
+      0
+     ],
+     "(-4,7)": [
+      0,
+      -1
+     ],
+     "(-3,-7)": [
+      0,
+      0
+     ],
+     "(-3,7)": [
+      0,
+      -1
+     ],
+     "(-2,-8)": [
+      0,
+      0
+     ],
+     "(-2,8)": [
+      0,
+      -1
+     ],
+     "(-1,-8)": [
+      0,
+      0
+     ],
+     "(-1,8)": [
+      0,
+      0
+     ],
+     "(0,-8)": [
+      0,
+      0
+     ],
+     "(0,8)": [
+      0,
+      -3
+     ],
+     "(1,-8)": [
+      0,
+      0
+     ],
+     "(1,8)": [
+      0,
+      0
+     ],
+     "(2,-8)": [
+      0,
+      0
+     ],
+     "(2,8)": [
+      0,
+      -1
+     ],
+     "(3,-7)": [
+      0,
+      0
+     ],
+     "(3,7)": [
+      0,
+      -1
+     ],
+     "(4,-7)": [
+      0,
+      0
+     ],
+     "(4,7)": [
+      0,
+      -1
+     ],
+     "(5,-6)": [
+      0,
+      0
+     ],
+     "(5,6)": [
+      0,
+      0
+     ],
+     "(6,-6)": [
+      -1,
+      0
+     ],
+     "(6,-5)": [
+      -1,
+      0
+     ],
+     "(6,5)": [
+      -1,
+      0
+     ],
+     "(6,6)": [
+      -1,
+      -1
+     ],
+     "(7,-4)": [
+      -1,
+      0
+     ],
+     "(7,-3)": [
+      -1,
+      0
+     ],
+     "(7,3)": [
+      -1,
+      0
+     ],
+     "(7,4)": [
+      -1,
+      0
+     ],
+     "(8,-2)": [
+      -1,
+      0
+     ],
+     "(8,-1)": [
+      0,
+      0
+     ],
+     "(8,0)": [
+      -3,
+      0
+     ],
+     "(8,1)": [
+      0,
+      0
+     ],
+     "(8,2)": [
+      -1,
+      0
+     ]
+    },
+    "moved_by_0_1_2_3_nodes": [
+     22,
+     21,
+     2,
+     3
+    ],
+    "derivation": "flow_weight_map.out section 4, form flow, the arrival Nodes per start"
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the click's age (reads: age) less the control's, the mean over the ring in intervals",
+    "value": 0.98,
+    "tolerance": 1.0,
+    "derivation": "flow_weight_map.out section 4; the register's bracket of one interval"
+   },
+   "tangential_shift": {
+    "kind": "DETECTOR",
+    "line": "click on a screen pixel: the mean over the ring of the arrival Node's tangential shift (dy (-z) + dz y) / r in Links",
+    "value": 0.0,
+    "tolerance": 0.0208,
+    "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
+   },
+   "c_nodes": {
+    "kind": "COMPUTATION on the DETECTOR reading",
+    "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
+    "value": 2.856,
+    "tolerance": 0.095,
+    "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
+   },
+   "c_ring": {
+    "kind": "COMPUTATION through the stated lever-arm factor",
+    "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
+    "value": 3.918,
+    "lever_arm_factor": 0.729,
+    "expected": 3.785,
+    "grain": 0.095,
+    "path_factor": 0.956,
+    "shells_factor": 0.99,
+    "as_built": 5.859,
+    "derivation": "ALGEBRA.md section 3: the algebra's C_ring from the momentum (GAMEBOARD, not what a run compares) and its expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2); Einstein's 4 on the comparison side only (record 817)"
+   },
+   "tan_alpha_r": {
+    "kind": "GAMEBOARD",
+    "line": "the momentum's radial deflection at the screen, the step algebra's number, not read by the run",
+    "value": 0.03312
+   }
+  }
+ },
+ "controls": {
+  "ring_b6_control_g0": {
+   "impact": 6,
+   "gamma": 0,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  },
+  "ring_b6_control_g1": {
+   "impact": 6,
+   "gamma": 1,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  },
+  "ring_b3_control_g0": {
+   "impact": 3,
+   "gamma": 0,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  },
+  "ring_b3_control_g1": {
+   "impact": 3,
+   "gamma": 1,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  },
+  "ring_b8_control_g0": {
+   "impact": 8,
+   "gamma": 0,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  },
+  "ring_b8_control_g1": {
+   "impact": 8,
+   "gamma": 1,
+   "expected": "every start arrives at its own (y, z) at the control's age (about 89 to 90 intervals on the heading); no crowd, so the key reads nothing"
+  }
+ },
+ "calibration": {
+  "calibration_mass_g0": {
+   "kind": "DETECTOR",
+   "line": "the screen's centroid shift in pixels against the registered control of its gamma (tools/lensing_readings.py)",
+   "value": -1.6,
+   "tolerance": 0.5,
+   "registered_as_built": -1.993,
+   "derivation": "ALGEBRA.md section 1 (the map's section 3, form flow): the five lines' shifts under the rule, -1, -1, -2, -2, -2 at gamma 0 and -3 x 5 at gamma 1; the registered files never edited"
+  },
+  "calibration_mass_g1": {
+   "kind": "DETECTOR",
+   "line": "the screen's centroid shift in pixels against the registered control of its gamma (tools/lensing_readings.py)",
+   "value": -3.0,
+   "tolerance": 0.5,
+   "registered_as_built": -3.989,
+   "derivation": "ALGEBRA.md section 1 (the map's section 3, form flow): the five lines' shifts under the rule, -1, -1, -2, -2, -2 at gamma 0 and -3 x 5 at gamma 1; the registered files never edited"
+  }
+ },
+ "refutes": [
+  "a C_ring that, after the two stated factors (the shells' 0.990 and the finite path's L / sqrt(L^2 + b^2)) and through the stated lever-arm factor, leaves 2 c_f by more than the grain in either direction",
+  "any clock reading that moves under the key (the control worlds' ages; the calibration's delay outside the register's bracket)",
+  "a world without the key that differs from main's by a byte (tests/test_flow_link.py (a))",
+  "a mean radial shift of 0.974 at b = 6, gamma 1: the key not in the run (the law as built)"
+ ],
+ "host_cost_estimate": {
+  "kind": "HOST",
+  "line": "STEP_ALGEBRA.md section 11, DESIGN.md section 5: the ring world about the mass world's cost times the lamps' rows (the crowd's 290 rows per interval the cost; the ring's 40 rows per interval a tenth more than the crowd, the beam's 5); the estimate before the run, the measure after it in README.md",
+  "ring_world_seconds": [
+   60,
+   120
+  ],
+  "control_world_seconds": [
+   2,
+   10
+  ],
+  "wall_clock_minutes_at_4_jobs": [
+   5,
+   8
+  ],
+  "peak_memory_mb_per_world": 1000,
+  "basis": "optical/mass_g1.json: 2.0 s for its first 40 intervals on this host (4 cores, 15 GB); 110 s at 1000 intervals on the owner's machine (optical/README.md)"
+ },
+ "runs": {
+  "ring_b6_control_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 34.295,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a368b60125ac69896feb23fa017900c60d798b53f0b490db43ee49e33351eb46",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_control_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 33.6,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a368b60125ac69896feb23fa017900c60d798b53f0b490db43ee49e33351eb46",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 64.431,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "11f1797bb2a5263746037c53be2b832e03eb440f182639001ee1b8589133a4dd",
+   "audit_sha256": "1457c184eb095340f0ba8b3e6e9d93e64b669ec7024a8b53007860979cc15cd8",
+   "events_sha256": "9ea8f4070ba9aeb0926e84e5cb1bedd43c81c8a8b09de11d83eb4b94c33fec08",
+   "starts": 40,
+   "moved_by_0_1_2_3_nodes": [
+    34,
+    6,
+    0,
+    0
+   ],
+   "arrival_nodes_agreeing_with_the_map": 40,
+   "radial_shift_sd": 0.314,
+   "per_start": {
+    "(-6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.128,
+    "expected": 0.128,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0177,
+    "expected": 0.0,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.4,
+    "expected": 0.4,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 0.437,
+    "expected": 0.437,
+    "tolerance": 0.085,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 1.8059,
+    "expected": 1.929,
+    "tolerance": 0.085,
+    "inside": false
+   },
+   "c_ring_residual_grains": -1.45,
+   "c_ring_algebra_residual_grains": -1.46,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "NOT DECIDED by the README's rule: the deciding pin 0.731 +- 0.025 at b = 6, gamma 1 is unread (ring_b6_g1 refused at interval 79); this gamma 0 ring is inside its four pins (the mean radial shift, the tangential mean, the delay, C_nodes; the arrival Nodes the map's, 40 of 40) and C_ring 1.806 is OUTSIDE the one-grain pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46"
+  },
+  "ring_b6_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 79,
+   "elapsed_seconds": 10.044,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "2d2d01c363bc94935c8d453e5e26f4b071d1570b337539dbaadd7801b39c89ff",
+   "audit_sha256": "91cba92a09732d4a303ad092c8cb89cb386621b06886e31e34e2fa1c3e008002",
+   "events_sha256": "70e11038839284f654a826caa5ea48e2b890dd9877d6a60cc143da65a7bacecb",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [32901461, 1149200, -1147979] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
+  },
+  "ring_b3_control_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 24.153,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b30e440cbedf753af4af65a10b1e854eb27960b7f3029db19dbadeb05102ce98",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_control_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 23.132,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b30e440cbedf753af4af65a10b1e854eb27960b7f3029db19dbadeb05102ce98",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 79,
+   "elapsed_seconds": 8.007,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "9d337d9cd9bed8eddb748d782e89610eeb2cec4fb2f0afc3a55260797a2b405b",
+   "audit_sha256": "335f67d6abaf6a0e7442996c205a055af99f02e2b12750604bbb700b5a32af1c",
+   "events_sha256": "f278761ce650d4938c543a1cb0caab7882f4306d08f64ccf6b011c116cf8f919",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33507403, 409525, -1064800] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
+  },
+  "ring_b3_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 77,
+   "elapsed_seconds": 7.827,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a60f8bc5acb2bce50a839c51d8d5488093bade6fef5f593619261a67559bea84",
+   "audit_sha256": "521871fd6ac79fca4c4260e1400098d45e9ec0fdad4f1ced095b6de5b059f269",
+   "events_sha256": "d956ac4ef5767932db3c6f2734de51e5230d7249f0e4348b030d87773416197e",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33523131, 804995, 2102152] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
+  },
+  "ring_b8_control_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 31.511,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a7182019071344e33c20168d2172e002be7c6a0d4a255e84d56a96d0e5c8c295",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_control_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 32.171,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a7182019071344e33c20168d2172e002be7c6a0d4a255e84d56a96d0e5c8c295",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_g0": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 135,
+   "elapsed_seconds": 18.575,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "c5234005643ac212c0daf0f325070a13f0f7f238a046115407db9e9405fdf28a",
+   "audit_sha256": "ee3b97f1c7a95ff3adc0ec954f6fa0c48a12f2a934ab7c44630f88c5812fd11f",
+   "events_sha256": "b860a060453878b5b7f026414cd98b97f080338b33eaca7a31cfbea432e4908e",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33568237, 390720, -390115] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
+  },
+  "ring_b8_g1": {
+   "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
+   "completed_ticks": 89,
+   "elapsed_seconds": 11.208,
+   "hypotheses": [
+    "amplitude-v1",
+    "optical-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "5cf4e0328ee8b4cdd3ca95523eff167dd7c27fae89306e679f442c21b47e57a5",
+   "audit_sha256": "c86de4bd258210e323fffa018864e5804463599228239daf0b6ad073c9bd0937",
+   "events_sha256": "6a8f2fa96bf18a656dd4374684141b69b853868d66365a964e8cb1dffc681846",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [66131823, 1205776, -1203345] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
+  }
+ },
+ "host_cost_measured": {
+  "kind": "HOST",
+  "line": "tools/run_series.py --jobs 4 on this host (4 cores, 15 GB; Python 3.14.0rc2, numpy 2.5.3, headless), 400 intervals; the refused rings stopped at the interval given",
+  "worlds": {
+   "calibration_mass_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 40.909,
+    "wall_seconds": 42.168,
+    "peak_rss_mb": 111.2
+   },
+   "calibration_mass_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 40.06,
+    "wall_seconds": 41.325,
+    "peak_rss_mb": 110.5
+   },
+   "control_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 22.132,
+    "wall_seconds": 23.413,
+    "peak_rss_mb": 98.9
+   },
+   "control_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 21.676,
+    "wall_seconds": 23.054,
+    "peak_rss_mb": 98.9
+   },
+   "ring_b3_control_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 24.153,
+    "wall_seconds": 25.531,
+    "peak_rss_mb": 117.2
+   },
+   "ring_b3_control_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 23.132,
+    "wall_seconds": 24.643,
+    "peak_rss_mb": 117.2
+   },
+   "ring_b3_g0": {
+    "status": "failed",
+    "ticks": 79,
+    "runner_seconds": 8.007,
+    "wall_seconds": 9.669,
+    "peak_rss_mb": 104.4
+   },
+   "ring_b3_g1": {
+    "status": "failed",
+    "ticks": 77,
+    "runner_seconds": 7.827,
+    "wall_seconds": 9.468,
+    "peak_rss_mb": 103.9
+   },
+   "ring_b6_control_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 34.295,
+    "wall_seconds": 35.849,
+    "peak_rss_mb": 146.4
+   },
+   "ring_b6_control_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 33.6,
+    "wall_seconds": 35.195,
+    "peak_rss_mb": 146.5
+   },
+   "ring_b6_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 64.431,
+    "wall_seconds": 66.102,
+    "peak_rss_mb": 156.7
+   },
+   "ring_b6_g1": {
+    "status": "failed",
+    "ticks": 79,
+    "runner_seconds": 10.044,
+    "wall_seconds": 11.661,
+    "peak_rss_mb": 108.6
+   },
+   "ring_b8_control_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 31.511,
+    "wall_seconds": 33.055,
+    "peak_rss_mb": 156.4
+   },
+   "ring_b8_control_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 32.171,
+    "wall_seconds": 33.728,
+    "peak_rss_mb": 155.7
+   },
+   "ring_b8_g0": {
+    "status": "failed",
+    "ticks": 135,
+    "runner_seconds": 18.575,
+    "wall_seconds": 20.078,
+    "peak_rss_mb": 117.5
+   },
+   "ring_b8_g1": {
+    "status": "failed",
+    "ticks": 89,
+    "runner_seconds": 11.208,
+    "wall_seconds": 12.676,
+    "peak_rss_mb": 107.4
+   }
+  },
+  "note": "the estimate before the run (host_cost_estimate: 60 to 120 s per ring world with the mass, 2 to 10 s per control) against the measure: the completed ring with the mass 64 s, the controls 23 to 34 s (the 1681 detectors of the screen and the ring's 16 to 48 lamps, not the crowd, are the controls' cost), the calibration mass worlds 41 s, the peak 157 MB"
+ },
+ "calibration_runs": {
+  "calibration_mass_g0": {
+   "status": "completed",
+   "ticks": 400,
+   "runner_seconds": 40.909,
+   "wall_seconds": 42.168,
+   "peak_rss_mb": 111.2,
+   "read_by": "tools/lensing_readings.py --no-replay against the registered control of its gamma (optical/control_g0.json, control_g1.json run as they are, the window [110, 400])",
+   "shift": {
+    "kind": "DETECTOR",
+    "value": -1.573,
+    "expected": -1.6,
+    "tolerance": 0.5,
+    "inside": true,
+    "registered_as_built": -1.993
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "value": 2.65,
+    "registered_as_built": 2.95,
+    "bracket": 1.0,
+    "inside": true,
+    "algebra": 2.6
+   },
+   "clicks_in_the_window": 1344,
+   "count_ratio": 0.9237,
+   "centroid_z_shift": 0.0,
+   "light_the_mass_took": 0
+  },
+  "calibration_mass_g1": {
+   "status": "completed",
+   "ticks": 400,
+   "runner_seconds": 40.06,
+   "wall_seconds": 41.325,
+   "peak_rss_mb": 110.5,
+   "read_by": "tools/lensing_readings.py --no-replay against the registered control of its gamma (optical/control_g0.json, control_g1.json run as they are, the window [110, 400])",
+   "shift": {
+    "kind": "DETECTOR",
+    "value": -3.18,
+    "expected": -3.0,
+    "tolerance": 0.5,
+    "inside": true,
+    "registered_as_built": -3.989
+   },
+   "delay": {
+    "kind": "DETECTOR",
+    "value": 4.92,
+    "registered_as_built": 4.94,
+    "bracket": 1.0,
+    "inside": true,
+    "algebra": 5.0
+   },
+   "clicks_in_the_window": 1392,
+   "count_ratio": 0.9567,
+   "centroid_z_shift": 0.0,
+   "light_the_mass_took": 0
+  },
+  "ratio_g1_over_g0": {
+   "kind": "DETECTOR",
+   "value": 2.02,
+   "algebra_pixels": 1.88,
+   "algebra_momentum": 2.17,
+   "registered_as_built": 2.0
+  },
+  "controls": {
+   "control_g0": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 22.132,
+    "wall_seconds": 23.413,
+    "peak_rss_mb": 98.9
+   },
+   "control_g1": {
+    "status": "completed",
+    "ticks": 400,
+    "runner_seconds": 21.676,
+    "wall_seconds": 23.054,
+    "peak_rss_mb": 98.9
+   }
+  }
+ },
+ "verdict": "NOT DECIDED (2026-09-22): the deciding pin at b = 6, gamma 1 unread; the folder's README"
+}

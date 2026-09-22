@@ -771,6 +771,12 @@ class Flight:
     # fan a row turns on (`optical_turn`).
     energy: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
     neighbours: np.ndarray = field(default_factory=lambda: np.zeros((0, 0), dtype=np.int64))
+    # flow-link-v1 (2026-09-22; docs/designs/flow_weight/DESIGN.md section
+    # 1.2): the flow label f_D of every direction, the integer vector
+    # nearest Q D / S_1 (`flow_label`, one Euclidean division per component
+    # at load), what the arrival flow counts per arriving row under the
+    # world key `flow_link`; `labels` itself without the key, byte for byte.
+    flow_labels: np.ndarray = field(default_factory=lambda: np.zeros((0, 3), dtype=np.int64))
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
@@ -844,8 +850,42 @@ def unit_label(vector: Vector) -> Vector:
     return found[0], found[1], found[2]
 
 
-def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
-    """The flight of a direction set, its constants computed once at load."""
+def flow_label(vector: Vector, magnitude: int) -> Vector:
+    """The flow label of a direction under `flow-link-v1` (docs/designs/
+    flow_weight/DESIGN.md section 1.2; the physics-rule reviewer's line of
+    record 902): the integer vector nearest |p_D| D / S_1, the label of one
+    unit per EUCLIDEAN LINK of the digital line in place of `unit_label`'s
+    per Node, S_1 = |a| + |b| + |c| the line's Nodes per period, in integers
+    only: each component |a| is rounded as k(|a|) = (2 |p_D| |a| + S_1) //
+    (2 S_1), the nearest whole (the tie upward), and the sign restored, so
+    that f_{-D} = -f_D exactly and f_{gD} = g f_D for the 48 signed axis
+    permutations (k depends on |a| and S_1 alone). `magnitude` is |p_D|: Q
+    for the photon (`direction_flight`) and a massive family's
+    `momentum_magnitude` (`family_flight`); the photon is the case |p_D| =
+    Q. A heading gives exactly |p_D| e_d, the zero vector the zero vector,
+    and every component is within the unit label's on the same line (|D|
+    <= S_1, the rounding monotone), so every bound the flow's sums test on
+    the labels covers the flow labels. The one product 2 |p_D| |a| is
+    tested by division before it is formed, as the pair's are."""
+    s1 = sum(abs(c) for c in vector)
+    if s1 == 0:
+        return ZERO3
+    found = []
+    for a in vector:
+        if magnitude and abs(a) > (MAX_WORK_INT - s1) // (2 * magnitude):
+            raise OverflowError(
+                f"{BEAM_LAW}: flow-link-v1's flow label 2 x {magnitude} x {abs(a)} + {s1} on the "
+                f"direction {list(vector)} exceeds the working bound {MAX_WORK_INT}"
+            )
+        k = (2 * magnitude * abs(a) + s1) // (2 * s1)
+        found.append(k if a >= 0 else -k)
+    return found[0], found[1], found[2]
+
+
+def direction_flight(vectors: tuple[tuple[int, int, int], ...], flow_link: bool = False) -> Flight:
+    """The flight of a direction set, its constants computed once at load;
+    under `flow_link` (flow-link-v1) the flow labels f_D beside the labels
+    u_D, else the labels themselves."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
     resolution = np.ones(count, dtype=np.int64)
@@ -874,6 +914,11 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         [integer_root(3 * sum(int(c) * int(c) for c in label)) for label in labels.tolist()],
         dtype=np.int64,
     )
+    flow_labels = (
+        np.array([flow_label(vector, Q) for vector in vectors], dtype=np.int64).reshape(count, 3)
+        if flow_link
+        else labels
+    )
     return Flight(
         np.array(vectors, dtype=np.int64).reshape(count, 3),
         manhattan,
@@ -883,6 +928,7 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         labels,
         energy,
         fan_neighbours(vectors),
+        flow_labels,
     )
 
 
@@ -995,6 +1041,15 @@ class FamilyFlight:
     # step 2: the floor a load-time rounding by construction); the same
     # integers the turn formed per row before; empty without the key.
     weight: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
+    # flow-link-v1 (2026-09-22): the family's flow labels, what the arrival
+    # flow counts per arriving row of the family under the world key
+    # `flow_link`: formed from its own labels by `flow_label`'s one division
+    # with |p_D| in Q's place (Q for a family without the flag `massive`,
+    # `momentum_magnitude` for a massive one, the reviewer's line of record
+    # 902); `labels` itself without the key. Read by `CrowdMoments` for the
+    # rows' push and by a body's push through the group moment of a free
+    # family's rays; never by the momentum a click moves.
+    flow_labels: np.ndarray = field(default_factory=lambda: np.zeros((0, 3), dtype=np.int64))
 
     def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """The position's accumulator of a row of direction d at age tau
@@ -1062,6 +1117,7 @@ def family_flight(
     modulus: int,
     action: int | None,
     optical: int | None = None,
+    flow_link: bool = False,
 ) -> FamilyFlight:
     """The family's tables from its keys and the world's flight (`FamilyFlight`):
     a family without the flag `massive` takes Flight's numbers by value and
@@ -1069,7 +1125,9 @@ def family_flight(
     triple from E'_0 = Q S M, its turn |p_{D,a}| N over h and the pair (0,
     M). Formed once at load (`nature_beam_tables`), with the weight per
     unit of the crowd's push at the world's gamma under `optical`
-    (`unit_weights`)."""
+    (`unit_weights`) and, under `flow_link` (flow-link-v1), the flow labels
+    from the family's own label magnitude (`flow_label`; Flight's by value
+    for a family without the flag)."""
     count = flight.vectors.shape[0]
     if not definition.massive:
         turn = np.full((count, DIMENSIONS), definition.phase_per_link, dtype=np.int64)
@@ -1088,6 +1146,7 @@ def family_flight(
                 0,
                 0,
                 unit_energies(flight.labels, 0),
+                flow_labels=flight.flow_labels,
             ),
             optical,
         )
@@ -1104,6 +1163,14 @@ def family_flight(
     rest = Q * width * definition.quantum
     rate, wall, start = flight_triple(labels, rest)
     turn = np.abs(labels) * modulus
+    flow_labels = (
+        np.array(
+            [flow_label((int(v[0]), int(v[1]), int(v[2])), scale) for v in flight.vectors],
+            dtype=np.int64,
+        ).reshape(count, DIMENSIONS)
+        if flow_link
+        else labels
+    )
     return with_weights(
         FamilyFlight(
             rate,
@@ -1119,6 +1186,7 @@ def family_flight(
             definition.quantum,
             rest,
             unit_energies(labels, rest),
+            flow_labels=flow_labels,
         ),
         optical,
     )
@@ -1264,7 +1332,7 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     """Build a world's tables once at load (`NatureBeamTables`): the flight per direction, the
     collision table, the phase circle of N and every family's tables."""
     circle = phase_circle(world.phase_steps)
-    flight = direction_flight(world.directions)
+    flight = direction_flight(world.directions, world.flow_link)
     return NatureBeamTables(
         flight,
         collision_table(),
@@ -1274,7 +1342,13 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
         arc_table(flight.labels),
         tuple(
             family_flight(
-                definition, flight, world.width, world.phase_steps, world.action, world.optical
+                definition,
+                flight,
+                world.width,
+                world.phase_steps,
+                world.action,
+                world.optical,
+                world.flow_link,
             )
             for definition in world.families
         ),
@@ -3086,7 +3160,8 @@ class CrowdMoments:
         self.empty = False
         node = np.concatenate(nodes)
         # The flow's labels on each family's own table (u_D by value for a
-        # family without the flag `massive`, p_D for a massive one).
+        # family without the flag `massive`, p_D for a massive one; under
+        # the world key `flow_link` the flow labels f_D, flow-link-v1).
         unit_rows = np.concatenate(
             [u[np.maximum(s.arrival, 0)] for s, u in zip(stores, units, strict=True) if s.size]
         )
@@ -3289,7 +3364,7 @@ def interval_frame(
         trail_nodes=trail_nodes,
         trail_events=trail_events,
         crowd=(
-            CrowdMoments(stores, [t.labels for t in tables.family_flights])
+            CrowdMoments(stores, [t.flow_labels for t in tables.family_flights])
             if world.optical is not None
             else None
         ),
@@ -3796,8 +3871,10 @@ def optical_turn(frame: Interval) -> None:
     # crossing rule's set, what a body's push reads in the same interval;
     # the arrival marks are cleared at the merge), read here after the walk
     # and the collision, each family's arrivals on its own labels; the age
-    # moment of the wall was read before step 1.
-    crowd = CrowdMoments(frame.stores, [t.labels for t in family_flights])
+    # moment of the wall was read before step 1. The flow's labels are the
+    # families' flow labels (flow-link-v1: f_D under the world key
+    # `flow_link`, u_D by value without it).
+    crowd = CrowdMoments(frame.stores, [t.flow_labels for t in family_flights])
     numerator, denominator = world.suspension
     gamma = world.optical
     assert gamma is not None
@@ -4331,6 +4408,14 @@ def _family_plan(
     # by (the crossing rule reads a row's last steps).
     table = frame.family_flights[family]
     unit = table.labels
+    # flow-link-v1 (2026-09-22): the flow a body's push reads from a FREE
+    # family's rays (the field the reader sums, `push_form`'s columns) is
+    # taken on the family's flow labels (f_D under the world key
+    # `flow_link`, u_D by value without it); a paid family's rays push by
+    # the momentum they carry, which stays on the labels (the label moved
+    # at a click stays Q per unit, BEAM_LAW note 18; the physics-rule
+    # reviewer's line of record 902: the key changes no conservation).
+    flow_unit = table.flow_labels
     flight = frame.flight
     modulus = frame.modulus
     entries = frame.entries
@@ -4797,8 +4882,21 @@ def _family_plan(
             for column, (_, rest) in zip(columns, found, strict=True):
                 column[i] = rest
     g_ends = (g_starts + g_sizes).tolist()
+    # The moment a body's push reads per group: a free family's rays on
+    # the flow labels (flow-link-v1; the amount per row), a paid family's
+    # their shares of the labels. A row that carries a record pushes by
+    # its share of the label whatever its family (stage (vii) step 3): a
+    # free family's rows carry no record today, and the share rule holds
+    # if one ever does (the physics-rule reviewer's guard on d2f87644).
+    if free:
+        push_rows = flow_unit[read_on[taken]] * a_t[:, None]
+        push_shares = [
+            shares[k] if record_t[k] != NO_RECORD else row for k, row in enumerate(push_rows.tolist())
+        ]
+    else:
+        push_shares = shares
     plan.g_moment = [
-        [sum(shares[k][axis] for k in range(s, e)) for axis in range(3)]
+        [sum(push_shares[k][axis] for k in range(s, e)) for axis in range(3)]
         for s, e in zip(g_starts.tolist(), g_ends, strict=True)
     ]
     plan.g_remainder = [
@@ -4814,7 +4912,7 @@ def _family_plan(
         members = [k for k in range(s_k, e_k) if recorded_rows[k]]
         plan.g_recorded_total.append(sum(int(a_t[k]) for k in members))
         plan.g_recorded_content.append(sum(int(carried_t[k]) for k in members))
-        plan.g_recorded_moment.append([sum(shares[k][axis] for k in members) for axis in range(3)])
+        plan.g_recorded_moment.append([sum(push_shares[k][axis] for k in members) for axis in range(3)])
         plan.g_recorded_label.append([sum(int(labels[k, axis]) for k in members) for axis in range(3)])
     plan.g_number = num_t[g_starts].tolist()
     plan.g_start = g_starts.tolist()

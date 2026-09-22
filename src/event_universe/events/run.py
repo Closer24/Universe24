@@ -124,6 +124,9 @@ def execute_nature_beam_run(
         # drive-b-v1 (2026-09-22): the world key `drive_b` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.drive_b else {"drive_b": True}),
+        # flow-link-v1 (2026-09-22): the world key `flow_link` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.flow_link else {"flow_link": True}),
         # optical-v1 (2026-09-21): the key's gamma and the derived flight
         # coefficient 1 + gamma, written only under the key.
         **(
