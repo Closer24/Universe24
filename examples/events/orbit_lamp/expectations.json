@@ -1,0 +1,187 @@
+{
+ "format": "orbit-lamp-expectations-v1",
+ "derivations": {
+  "fan": "declared: series D's uniform fan, every primitive (a, b, 0) with 0 < a^2 + b^2 <= 64",
+  "emission": "the fan's directions x the release rate, q = 120 / 10 = 12 units per interval (DERIVATIONS_BEAM 3, the flux q)",
+  "label_magnitude": "the fan's mean |u_d| / Q off unit_label (BEAM_LAW section 2, note 23)",
+  "orbit_n": "DERIVATIONS_BEAM 3.3 with the directional drive (BEAM_LAW note 49): n x pace(n) = q L C / (2 pi), the real root 9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds)",
+  "pace": "the directional drive's pace on a heading, n Q / (Q S + n T_D) per unit of content at n = 10 (BEAM_LAW note 49; docs/designs/light_speed/FORM.md section 3)",
+  "period": "the analytic circle's T = 2 pi r / v at the pace (DERIVATIONS_BEAM 3.3 on the plane: v the same at every r, T proportional to r); the bracket the continuum map's 9 percent margin (the orbit register's lamp worlds, DERIVATIONS_BEAM 12b.2)",
+  "ratio": "T(24) / T(12) = 2.00 on the plane (the 1 / r force's flat rotation curve; k = 2), the margin 0.18 the periods' 9 percent propagated (record 594)",
+  "omega_squared": "(2 pi / T)^2 per interval^2, read as the slope of the lagged second difference of the clicks' x against x - c_x, -4 sin^2(omega h / 2) at the lag h (the module docstring); the bracket from T's",
+  "acceleration": "a = omega^2 r = v^2 / r at the declared pace, and 3.3's small-n limit q L C / (2 pi r S) beside it (v = n / S there); the ratio a(12) / a(24) = 2.00 in both",
+  "amplitude": "the clicks' (max x - min x) / 2 against r: the rosette's extents of the orbit register's map (24.0 to 25.9, 12.0 to 13.0), r - 1 to r + 2",
+  "equivalence": "DERIVATIONS_BEAM 3.3: nothing of the body enters the acceleration (the push scales with M_total and the step divides by it), so the 4 M_held world reads the same period within one birth interval and the same x on every common birth tick within one Node (record 594)",
+  "control": "declared: no source, no push; the probe walks +y at the pace and leaves through the face +y at (SIDE - 1 - c_y) / v intervals, every click at x = c_x + r",
+  "flight": "the row's age on the click is its flight from the birth's y to Y_D on the heading -y, c = Q / T_D = 32 / 55 Links per interval (DERIVATIONS_BEAM 2.1): the birth tick is the click's tick less its age"
+ },
+ "side": 121,
+ "centre": [
+  60,
+  60,
+  0
+ ],
+ "detector_y": 20,
+ "birth_interval": 8,
+ "fan_directions": 120,
+ "emission": 12.0,
+ "label_magnitude": 0.9999840840444985,
+ "flow_constant": 1.0,
+ "width": 32,
+ "orbit_n_real": 9.629266319223532,
+ "orbit_n": 10,
+ "pace": 0.20330368487928843,
+ "ratio": {
+  "pin": 2.0,
+  "bracket": [
+   1.82,
+   2.18
+  ]
+ },
+ "worlds": {
+  "r12": {
+   "radius": 12,
+   "source": true,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 673710080,
+   "period": {
+    "pin": 370.86501275627506,
+    "bracket": [
+     337.48716160821033,
+     404.24286390433986
+    ]
+   },
+   "second_difference_lag": 12,
+   "omega_squared": {
+    "pin": 0.00028703047420484046,
+    "bracket": [
+     0.00024158780759602757,
+     0.00034661330057340943
+    ]
+   },
+   "acceleration": {
+    "pin": 0.0034443656904580853,
+    "small_n_limit": 0.004973512812153226
+   },
+   "amplitude": {
+    "pin": 12,
+    "bracket": [
+     11,
+     14
+    ]
+   }
+  },
+  "r24": {
+   "radius": 24,
+   "source": true,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 673710080,
+   "period": {
+    "pin": 741.7300255125501,
+    "bracket": [
+     674.9743232164207,
+     808.4857278086797
+    ]
+   },
+   "second_difference_lag": 23,
+   "omega_squared": {
+    "pin": 7.175761855121011e-05,
+    "bracket": [
+     6.039695189900689e-05,
+     8.665332514335236e-05
+    ]
+   },
+   "acceleration": {
+    "pin": 0.0017221828452290426,
+    "small_n_limit": 0.002486756406076613
+   },
+   "amplitude": {
+    "pin": 24,
+    "bracket": [
+     23,
+     26
+    ]
+   }
+  },
+  "r24_4m": {
+   "radius": 24,
+   "source": true,
+   "held_mass": 4194304,
+   "reservoir": 4096,
+   "momentum": 2686976000,
+   "period": {
+    "pin": 741.7300255125501,
+    "bracket": [
+     674.9743232164207,
+     808.4857278086797
+    ]
+   },
+   "second_difference_lag": 23,
+   "omega_squared": {
+    "pin": 7.175761855121011e-05,
+    "bracket": [
+     6.039695189900689e-05,
+     8.665332514335236e-05
+    ]
+   },
+   "acceleration": {
+    "pin": 0.0017221828452290426,
+    "small_n_limit": 0.002486756406076613
+   },
+   "amplitude": {
+    "pin": 24,
+    "bracket": [
+     23,
+     26
+    ]
+   }
+  },
+  "r12_control": {
+   "radius": 12,
+   "source": false,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 673710080,
+   "x": 72,
+   "escape_tick": {
+    "pin": 295.125,
+    "bracket": [
+     289.125,
+     301.125
+    ]
+   }
+  },
+  "r24_control": {
+   "radius": 24,
+   "source": false,
+   "held_mass": 1048576,
+   "reservoir": 4096,
+   "momentum": 673710080,
+   "x": 84,
+   "escape_tick": {
+    "pin": 295.125,
+    "bracket": [
+     289.125,
+     301.125
+    ]
+   }
+  }
+ },
+ "equivalence": {
+  "worlds": [
+   "r24",
+   "r24_4m"
+  ],
+  "period_difference_bracket": 8,
+  "x_difference_bracket": 1
+ },
+ "acceleration_ratio": {
+  "pin": 2.0,
+  "bracket": [
+   1.82,
+   2.18
+  ]
+ }
+}
