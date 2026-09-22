@@ -4803,3 +4803,29 @@ crowd's stretch g_1 and the periodic against the open GameBoard, the
 detector's constants c_j, and rows 13 and 14 pending; apart from these
 the inputs for which the law has no formula (rho_p, h, the content per
 unit, N_phi). No number added. 43 pages.
+
+## Applied (2026-09-22, the Boss's consolidated order of 14:23Z, commit 1): rows 13 and 14 read, the algebra beside the runs, the merge SHAs
+
+Row 14 (newton-one-constant at f44a69e5, PR #879, pending merge): by
+formula first (F_plane = 1.2871, n = 8, 384 / 768, the ratio 2.00), then
+the run of 2026-09-22 (the controls inside, the orbits outside, the ratio
+1.677 against 1.82 to 2.18, 4 inside, 7 outside, none moved), FAIL as
+read; the registered D3 row (n = 9) history beside it. Row 13
+(flow-link-build at a3be9ba1, PR #854, pending merge): the law's FAIL
+(series K, 0.000 pixel) carried in the row as the physicist reviewer's
+finding 4 asks; the algebra first (STEP_ALGEBRA.md: C_ring = 5.12 as
+built, the M / b form recovered; flow_weight/ALGEBRA.md: 3.65 / 3.82 /
+3.92 against 4, 2 c_f within two factors, gamma an input); the run: b = 6
+gamma 0 inside its four pins, C_ring 1.806 against 1.929 +- 0.085 (the
+README pins it, OUTSIDE by 0.038, 1.45 grains, as the algebra's own
+1.46; written by the source, COMPUTATION from the clicks), b = 6 gamma 1
+refused by the working bound, NOT DECIDED. Row 6 and Section 9 (viii):
+the atom's algebra first (atom_algebra/ALGEBRA.md, NEEDS A NEW RULE),
+the law's FAIL (the escape at 3407) beside the key's C1 PASS, the lines
+NOT COMPUTABLE by any run of the law as built (the physicist's finding
+5). Section 5's bending paragraph and Section 9 (vi): the algebra's
+number first, the run's reading after. Merge SHAs swapped: the order
+channel (main 804a8da0, PR #874), the centred step (a4794cc6, PR #876),
+the Gleason bound (e6809713, PR #875); PR #860 (b12dd253), #879 and #854
+still pending. Five bibitems added (stepalgebra, flowalgebra,
+atomalgebra, ringrun, newtonrun). No figure. 46 pages.
