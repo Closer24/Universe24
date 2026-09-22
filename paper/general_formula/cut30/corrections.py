@@ -3576,6 +3576,177 @@ CORRECTIONS = [
         "on the branch \\texttt{flow-link-build} at a3be9ba1 (PR \\#854 opened, not yet merged; the merge commit replaces this).",
         "on the branch \\texttt{flow-link-build} at de4f4410, the run on the split ladder (PR \\#854 opened, not yet merged; the merge commit replaces this).",
     ),
+    # The submission form (the owner's word of 2026-09-22, 'go'): the abstract at journal length with the long abstract as the introduction's first paragraph, the contribution statement, the declarations with the use of artificial intelligence, the author in place of the model owner, the pull request numbers out of the references.
+    (
+        "the submission form (the owner's word): the abstract at journal length; the long abstract becomes the introduction's first paragraph",
+        "\\begin{abstract}\nInside a cubic GameBoard one update law of bounded integers propagates records as a beam by algebraic formulas at every Node and interval: one map with a rate and a wall per component, its rates and walls made of six integer operations. Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them at one comparison, the click, the one non-local step and the only read-out; the GameBoard is read in no other way (P11). Physics above the board is arithmetic on counts, a theorem of the click's definition, and the law beneath it is modern algebra: the rules put into the cells are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result the paper calls exact is an identity of that algebra under its declared tables, on the board or in a named limit, compared with the register's readings by kind. Exact on the GameBoard: the books, Gauss's law of a free family's flux, the pace of every direction with its Manhattan bound, the click's weight a quadratic form of power $2$ under one axiom of the apparatus, a pair's marginals and its CHSH sum, $181/64$ from $512$ to $8192$; recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value $2\\sqrt2$ (a limit, not a bound of the construction, whose finite-grain $S$ lies on both sides of it), Young's spacing, and under an average that covers the shell, the condition part of the claim, Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation. What no rule forces is said in the same ledger: the Lorentz factor (how the clicks arrive at it is the frame, under an amplitude split the law as built lacks), the bending of light, the values of the masses, the harmonic constants. Against nature three readings pass (1a, 2b, 9); twelve fail in the table, eleven in a registered run (1b, 1c, 2a, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); two are bounds (5a, 7a); one is not compared (2c); one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table 2), the failures the law's own. Two relations enter as conjectures from the algebra, labelled so and distinguished from what a detector reads: the bending's coefficient $2(1 + \\gamma)$ on the one constant, and the atom's ladder $1/j^2$ with Balmer's $27/20$; the ring under its rule is read and its constant does not close within the grain, and the ladder is not read on the board, no lattice able to hold the atom's scale being run. The law as built meets (A1) and not (A2), so it recovers no relativistic dynamics; and its sequential wheel signals in the order of the pair's outcomes, though not in their counts. One finite-grain value, $S = 181/64$, inside Poh et al. at $1.05$ standard errors, a prediction once the wheel meets no-signalling in the order of its outcomes. The method is one platform, by the algebra and by the simulator alike: an Inside step on a family's attributes, the conversion by an emitter and a detector, an Outside form as a ratio of counts, and a detector's reading pinned before the run.\n\\end{abstract}",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, its rates and walls made of six integer operations. Outside the lattice there are detectors and their clicks only, and a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average Newton's and Coulomb's inverse square and Poisson's equation. Every reading is compared with nature by kind and the failures are stated as the law's own: three readings pass, twelve fail, two are bounds, one is not compared. Two relations enter as conjectures from the algebra, labelled so: the bending's coefficient $2(1 + \\gamma)$ on one constant and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors and becomes a prediction once no-signalling in the order holds.\n\\end{abstract}",
+    ),
+    (
+        "the submission form: the paper in one page, the former abstract, opening the introduction",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The general formula.}",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The paper in one page.} Inside a cubic GameBoard one update law of bounded integers propagates records as a beam by algebraic formulas at every Node and interval: one map with a rate and a wall per component, its rates and walls made of six integer operations. Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them at one comparison, the click, the one non-local step and the only read-out; the GameBoard is read in no other way (P11). Physics above the board is arithmetic on counts, a theorem of the click's definition, and the law beneath it is modern algebra: the rules put into the cells are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result the paper calls exact is an identity of that algebra under its declared tables, on the board or in a named limit, compared with the register's readings by kind. Exact on the GameBoard: the books, Gauss's law of a free family's flux, the pace of every direction with its Manhattan bound, the click's weight a quadratic form of power $2$ under one axiom of the apparatus, a pair's marginals and its CHSH sum, $181/64$ from $512$ to $8192$; recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value $2\\sqrt2$ (a limit, not a bound of the construction, whose finite-grain $S$ lies on both sides of it), Young's spacing, and under an average that covers the shell, the condition part of the claim, Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation. What no rule forces is said in the same ledger: the Lorentz factor (how the clicks arrive at it is the frame, under an amplitude split the law as built lacks), the bending of light, the values of the masses, the harmonic constants. Against nature three readings pass (1a, 2b, 9); twelve fail in the table, eleven in a registered run (1b, 1c, 2a, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); two are bounds (5a, 7a); one is not compared (2c); one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}), the failures the law's own. Two relations enter as conjectures from the algebra, labelled so and distinguished from what a detector reads: the bending's coefficient $2(1 + \\gamma)$ on the one constant, and the atom's ladder $1/j^2$ with Balmer's $27/20$; the ring under its rule is read and its constant does not close within the grain, and the ladder is not read on the board, no lattice able to hold the atom's scale being run. The law as built meets (A1) and not (A2), so it recovers no relativistic dynamics; and its sequential wheel signals in the order of the pair's outcomes, though not in their counts. One finite-grain value, $S = 181/64$, inside Poh et al. at $1.05$ standard errors, a prediction once the wheel meets no-signalling in the order of its outcomes. The method is one platform, by the algebra and by the simulator alike: an Inside step on a family's attributes, the conversion by an emitter and a detector, an Outside form as a ratio of counts, and a detector's reading pinned before the run.\n\n\\paragraph{The general formula.}",
+    ),
+    (
+        "the submission form: what the paper contributes and what it does not claim, at the end of the introduction",
+        "the program's glossary is on the tree\n\\cite{terminology}, and every number has its one source \\cite{checks}.\n\\section{The law and its implementation}",
+        "the program's glossary is on the tree\n\\cite{terminology}, and every number has its one source \\cite{checks}.\n\n\\paragraph{What this paper contributes, and what it does not claim.} New here: one explicitly stated update rule with its implementation, run from world files with every reading pinned before the run; exact conditional algebraic results on the lattice (the quadratic read-out characterization, the count marginals, the CHSH sum as an exact rational of the grain, $181/64$ on the registered plateau); one platform on which every formula is reached by the algebra and by the simulator alike; and a confrontation register that states the failures with the same care as the passes. Not claimed: a derivation of the Lorentz group from the six operations, the atom's levels as a reading, a unique prediction of $181/64$ without a rule that fixes the grain, or any comparison with nature beyond the rows of Table~\\ref{tab:nature}, each read by kind.\n\\section{The law and its implementation}",
+    ),
+    (
+        "the submission form: the declarations (funding, competing interests, data and code, contributions, the use of artificial intelligence)",
+        "\n\\appendix\n",
+        "\n\\section*{Declarations}\n\\paragraph{Funding.} None.\n\\paragraph{Competing interests.} The author declares no competing interests.\n\\paragraph{Ethics approval.} Not applicable.\n\\paragraph{Data and code availability.} The simulator, every world file, every registered run's record, the check scripts with their outputs, the figures' scripts and the derivation records cited in this paper are archived at Zenodo \\cite{zenodo} (concept DOI 10.5281/zenodo.22738746); the commit of the archived version is named in Appendix~\\ref{app:reproduction}, and every number of the paper has one row in the ledger of that archive (\\texttt{paper/general\\_formula/NUMBERS.md}) naming its kind and its source.\n\\paragraph{Author contributions.} Sole author: the model, its rules, the worlds and the experiments, every reading and its verdict, and the decisions recorded in the archived log.\n\\paragraph{Use of artificial intelligence.} The manuscript's text, the figures' scripts and the check scripts were drafted by a large language model (Claude, Anthropic, through Claude Code, 2026) under the author's direction, from the author's model, the simulator's registered runs and the repository's derivation records; independent review sessions of the same kind read the manuscript, and their findings were folded by the author's decision. The author defined the model, the rules and the experiments, decided every reading and verdict, and every number entered the text only with a ledger row naming its kind and its archived source. No figure is generated by the model from data the author did not produce: every figure is drawn by a script from the definitions or from a registered run. The model is not an author and bears no responsibility for the content.\n\n\\appendix\n",
+    ),
+    (
+        "the submission form: the author, not the model owner (1)",
+        "it becomes the default on the model owner's word, not before;",
+        "it becomes the default only by a declared decision of the author, not before;",
+    ),
+    (
+        "the submission form: the author, not the model owner (2)",
+        "is not run (the model owner, \\cite[record 997, pending merge]{log}).",
+        "is not run (\\cite[record 997, pending merge]{log}).",
+    ),
+    (
+        "the submission form: the author, not the model owner (3)",
+        "is a hypothesis under its own name until the model owner makes it the law;",
+        "is a hypothesis under its own name until the author makes it the law;",
+    ),
+    (
+        "the submission form: the log cited by its record number",
+        "\\bibitem{log} The dated log of 2026-09-20, \\texttt{docs/LOG\\_2026-09-20.md} of the archived code",
+        "\\bibitem{log} The dated working log of the model, cited by the number of its record, \\texttt{docs/LOG\\_2026-09-20.md} of the archived code",
+    ),
+    (
+        "the submission form: pull request numbers out of the references (on \\texttt{main} at a62441fb (PR \\#791, )",
+        "on \\texttt{main} at a62441fb (PR \\#791, merged).",
+        "on \\texttt{main} at a62441fb.",
+    ),
+    (
+        "the submission form: pull request numbers out of the references (on \\texttt{main} at c8ac2ffb (PR \\#791, )",
+        "on \\texttt{main} at c8ac2ffb (PR \\#791, merged).",
+        "on \\texttt{main} at c8ac2ffb.",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#855, merged; the branch head it ca)",
+        "(PR \\#855, merged; the branch head it carried 3760754c)",
+        "(the branch head it carried 3760754c)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#769, merged; the file identical to)",
+        "(PR \\#769, merged; the file identical to its head 1dd81fef)",
+        "(the file identical to its head 1dd81fef)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#891 opened, not yet merged; the me)",
+        "(PR \\#891 opened, not yet merged; the merge commit replaces this)",
+        "(pending merge; the merge commit on \\texttt{main} replaces this)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#879 opened, not yet merged; the me)",
+        "(PR \\#879 opened, not yet merged; the merge commit replaces this)",
+        "(pending merge; the merge commit on \\texttt{main} replaces this)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#854 opened, not yet merged; the me)",
+        "(PR \\#854 opened, not yet merged; the merge commit replaces this)",
+        "(pending merge; the merge commit on \\texttt{main} replaces this)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references ((PR \\#860, its head \\texttt{b12dd253} on)",
+        "(PR \\#860, its head \\texttt{b12dd253} on \\texttt{register-paper-sources}, pending merge; the merge commit replaces it)",
+        "(its head \\texttt{b12dd253} on the branch \\texttt{register-paper-sources}, pending merge; the merge commit replaces it)",
+    ),
+    (
+        "the submission form: pull request numbers out of the references (consolidated by PR \\#860 (its head b12dd)",
+        "consolidated by PR \\#860 (its head b12dd253, pending merge).",
+        "consolidated on the branch \\texttt{register-paper-sources} (its head b12dd253, pending merge).",
+    ),
+    (
+        "the submission form: pull request number out of the references (876)",
+        " (PR \\#876, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (875)",
+        " (PR \\#875, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (874)",
+        " (PR \\#874, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (867)",
+        " (PR \\#867, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (851)",
+        " (PR \\#851, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (840)",
+        " (PR \\#840, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (823)",
+        " (PR \\#823, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (821)",
+        " (PR \\#821, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (810)",
+        " (PR \\#810, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (805)",
+        " (PR \\#805, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (801)",
+        " (PR \\#801, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (793)",
+        " (PR \\#793, merged)",
+        "",
+    ),
+    (
+        "the submission form: pull request number out of the references (792)",
+        " (PR \\#792, merged)",
+        "",
+    ),
+    (
+        "the submission form: the abstract within 250 words",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, its rates and walls made of six integer operations. Outside the lattice there are detectors and their clicks only, and a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average Newton's and Coulomb's inverse square and Poisson's equation. Every reading is compared with nature by kind and the failures are stated as the law's own: three readings pass, twelve fail, two are bounds, one is not compared. Two relations enter as conjectures from the algebra, labelled so: the bending's coefficient $2(1 + \\gamma)$ on one constant and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors and becomes a prediction once no-signalling in the order holds.\n\\end{abstract}",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, its rates and walls made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind and the failures are stated as the law's own: three readings pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.\n\\end{abstract}",
+    ),
+    (
+        "the submission form: the abstract within 250 words (second trim)",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, its rates and walls made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind and the failures are stated as the law's own: three readings pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.\n\\end{abstract}",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind, the failures stated as the law's own: three pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.\n\\end{abstract}",
+    ),
+    (
+        "the submission form: the abstract within 250 words (third trim)",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Under the declared tables the rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity, and every result called exact is an identity of that algebra, on the lattice or in a named limit. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction within its Manhattan bound, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind, the failures stated as the law's own: three pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.\n\\end{abstract}",
+        "\\begin{abstract}\nOne update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity, and every result called exact is an identity of that algebra. Exact on the lattice: the conservation books, Gauss's law of a free family's flux, the pace of every direction, the click's weight as a positive quadratic form under one axiom of the apparatus, a pair's count marginals, and the CHSH sum as an exact rational of the phase grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value, Young's spacing, and under a shell average the inverse square and Poisson's equation. Every reading is compared with nature by kind, the failures stated as the law's own: three pass, twelve fail, two are bounds, one is not compared. Two relations enter as labelled conjectures from the algebra, the bending's coefficient $2(1 + \\gamma)$ and the atom's $1/j^2$ ladder; neither is established. The law as built recovers no relativistic dynamics, and its sequential wheel signals in the order of a pair's outcomes though not in their counts. One finite-grain value, $S = 181/64$, lies inside the measured CHSH value at $1.05$ standard errors.\n\\end{abstract}",
+    ),
+    (
+        "the submission form: the abstract within 250 words (fourth trim)",
+        "The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity, and every result called exact is an identity of that algebra. Exact on the lattice:",
+        "The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity. Exact on the lattice:",
+    ),
 ]
 
 

@@ -4949,3 +4949,24 @@ are the ring's alone; Section 9 (vi), the abstract, "What is proved",
 the not-computed paragraph and the ledger's bending row updated the
 same way; the ringrun reference at de4f4410. Series K's FAIL stays;
 "matches nature" nowhere. 49 pages.
+
+## Applied (2026-09-22, the owner's word "go"): the submission form
+
+The owner asked what could reject the paper at an editor's desk and
+where to submit; the answer (arXiv first, then Foundations of Physics,
+International Journal of Theoretical Physics second) and the five
+changes he approved: (1) the declaration of the use of artificial
+intelligence, in a Declarations section before the references, with
+funding, competing interests, ethics, data and code availability (the
+Zenodo concept DOI, the commit of Appendix C, the ledger) and author
+contributions; (2) the abstract at journal length, the long abstract
+kept as the introduction's first paragraph "The paper in one page";
+(3) a paragraph "What this paper contributes, and what it does not
+claim" at the end of the introduction; (4) the project's jargon out:
+"the author" for "the model owner", the log cited by its record
+number, the pull request numbers out of the references (the merged
+ones by their main commit, the pending ones by branch and head, the
+merge commits still to be swapped in); (5) COVER_LETTER.md, a draft
+for the author's hand with five suggested reviewers from the cited
+literature, affiliations to be confirmed by the author. No physics and
+no number changed. 50 pages.
