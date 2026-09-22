@@ -67,9 +67,9 @@ not the step. Section 2 is THE CONVERSION, the map: the place-to-place
 factor of a packet between a named emitter and a named detector
 (Theorem 1) and its radar form (Theorem 2). Section 3 is THE OUTSIDE
 STEP, a theorem: the image of the Inside step under the conversion,
-with its own quantum derived and not assumed, and Newton's and
-Einstein's equations named as what the image becomes in the continuum
-limit. Every derived formula of section II is the Outside step obtained
+with its own quantum a theorem and not an assumption, Einstein's step
+named first as the most general form the image takes and Newton's as
+its limit. Every formula of section II follows as the Outside step obtained
 from the Inside step by the conversion, to a stated order; where the
 Inside step by the conversion does not give Einstein's or Newton's
 formula, the row says FAIL or NEITHER with the one line that decides.
@@ -447,56 +447,26 @@ as it stands; the ones with a scale hang on r, which the law fixes at
 (section 0 (i), :62-70) applied formula by formula, and the reason the
 verdict of section IV is what it is.
 
-## 3. THE OUTSIDE STEP (a theorem): the image of the Inside step under the conversion, its quantum, and what it becomes in the continuum limit
+## 3. THE OUTSIDE STEP (a theorem): Einstein's step as the most general, the quantum of the step above from A1 and the conversion, and Newton as the limit
 
 The Outside step is not a second formula beside the Inside step: it is
-what section 1 looks like through section 2, and this section derives
-it, its quantum first (the owner's question: "what is the minimal
-distance between a click and a click? The step above as a formula").
+what section 1 looks like through section 2. The owner's order for this
+section (07:35Z, as the Boss relayed it): "the step beneath leads to
+the step above, which is Einstein, the most general; from there we
+show what the smallest thing is; then, from the small step, Newton
+follows. Einstein follows and Lorentz follows, not 'derived', they
+follow; we only used the Inside. And formulas follow that physics
+cannot get: why the world above is quantized." So: (a) Einstein's step
+first, as the most general form the image takes; (b) the quantum of
+the step above, a theorem from (A1) and the conversion with no run;
+(c) Newton's step as the limit of the small step; (d) the one sentence
+on why the world above is quantized. The words: a form of Einstein's
+or Newton's FOLLOWS or is RECOVERED; "derived" is kept for what was
+not put in.
 
-**Theorem 3 (the quantum of the Outside step).** Under (A1) and (A3)
-with the conversion of section 2:
-
-(a) *A body read by clicks.* The least step Outside is one Node per
-hop, and between two hops k whole counts of the detector that reads it
-(the hop pattern `x(t) = floor(t / k)`, the click frame :222; the
-drive's closed form of section 1 (b) 4 at `abs(p_a) / D_a = 1 / k`).
-So a velocity Outside is a ratio of two whole counts, Nodes over
-counts, and the velocities a detector can read are the rationals: a
-body between the patterns `1 / k` and `1 / (k + 1)` reads as a mean of
-the two over many hops (the drive's remainder), never as a number
-between them at one hop; the quantum of velocity at the pace `1 / k` is
-`1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, and on the Beam Law's lattice
-the pace is a ratio over Q (the click frame's M3, :62-70: "a Q-linear
-map on the counts' ratios in the mean"). The bound is one Node per
-count of an unslowed detector: c Outside, Einstein's second postulate
-in the click language, is the quantum itself, the least distance per
-least count.
-
-(b) *A clock.* The least thing a detector times is a pulse to its
-neighbour and its return (W5): two intervals Inside, the detector's own
-unit Outside (two of its counts at `r_D = 1`; `2 r_D` in general, which
-is how r shows: the same two intervals are fewer counts for a slowed
-detector); the tick itself is GAMEBOARD and never read. A detector at
-rest receives its pulse back at its own Node, a moving one at the next
-(record 768), and the difference is the one-Node quantum of (a) again.
-
-(c) *A signal.* c Outside is one Link per the least count: a packet's
-chain of clicks advances one Node per interval, and by (A3) nothing
-Outside passes faster or jumps a Node; so the least distance between a
-click and a click is one Link, and the least time is one count.
-
-*Proof.* (a) is the drive's closed form (the floor of a linear
-function, one Link per self-creation at most, `by_drive`'s `at_most`
-1) read through Theorem 1 (i) at `r = 1`: the ground detector's count
-between two hops is k; a pattern `floor(t / k)` hops once per k and no
-oftener; two patterns with k and `k + 1` differ by one hop per `k (k +
-1)` intervals. (b) is Theorem 2 (a) at `X = 1`. (c) is (A1) as the
-detector sees it. QED. All rung 1, exact by the primitive.
-
-**Theorem 4 (the Outside step, and what it becomes).** The image of
-the Inside step (section 1 (b)) under the conversion is, for a body
-read by a line L of detectors at rest and a ground detector G:
+**(a) Einstein's step, the most general.** The image of the Inside
+step (section 1 (b)) under the conversion (section 2), for a body read
+by a line L of detectors at rest and a ground detector G, is
 
     the Node after the count:   x_L(n + 1) - x_L(n) = the whole part gained by the drive at that self-creation (0 or 1 per axis),
     the momentum's change:      p_a(n + 1) - p_a(n) = -M <V_a>  (the push, exact in the gravity column),
@@ -505,59 +475,119 @@ read by a line L of detectors at rest and a ground detector G:
 
 each a DETECTOR reading of clicks (the births' Nodes and the counts
 between them) and each the corresponding Inside line read through
-Theorem 1 at `r_L = 1` (rung 1 within one Node and one count). In the
-continuum limit (many self-creations, `v << c`, the shell mean of (M))
-this image becomes
-
-    Newton's step:    dp / dt = F,  F = -G M M_B / r^2 (r_hat),  p = m_i v,  m_i = Q S M      (DERIVATIONS_BEAM 3.3; the click frame section 8 (2)(c), :1030-1046),
-
-whose it is: Newton's second law with his gravitation, named as such.
-Beyond `v << c` the image keeps the drive's own form `p = m_i v / (1 -
-v)` per axis (II.7) and the law's clock rate 1 (II.1), and Einstein's
-step as physics writes it,
+Theorem 1 at `r_L = 1` (rung 1 within one Node and one count). Read by
+any detector in motion (Theorem 2), its coordinates are Lorentz's up to
+the one scale r, so the most general form the image takes above the
+board is Einstein's step as physics writes it,
 
     Einstein's step:  dp / dt = F with p = gamma m v,  E^2 = E_0^2 + c^2 p^2,  d tau / dt = sqrt(1 - v^2),  and the geodesic's first terms (the equivalence of the fall, the redshift g Y / c^2, the deflection 4 G M / (c^2 b)),
 
-is what the image becomes only where the conversion supplies the scale
-r: the r-free lines of the image are Einstein's exactly (Theorems 1
-and 2: the round trip, the composition, the aberration; II.2, II.3,
-II.5), the scaled lines are Einstein's if and only if `r^2 = 1 - v^2`
-(II.1, II.4, II.6), which (A2) gives up to `m^2 v^2` and the law does
-not give (r = 1), and the geodesic's terms are Newton's first order
-(II.9, II.10) with light's terms absent on the law (II.11). The orders
-of the difference between the image and the continuum: the drive's
-pace against the walk's group velocity, the lattice offset `m^2 / 3`
-(the click frame :801-806, record 781); the k-calculus's r against
-`sqrt(1 - v^2)`, `1 - kappa^2 / 6` (the click frame :74-80); the
-lattice's anisotropy at `1 / T_D` on the pace and at `abs(p)_1`
-against `abs(p)_2` on the drive.
+and it FOLLOWS in this sense: the r-free lines of the image are
+Einstein's exactly, from (A1), (A3) and the conversion alone (Theorems
+1 and 2: the round trip, the composition, the aberration; II.2, II.3,
+II.5), Lorentz's group up to scale following with them (the click
+frame section 0); the scaled lines are Einstein's if and only if `r^2
+= 1 - v^2` (II.1, II.4, II.6), which (A2) gives up to `m^2 v^2` and
+the law as built does not give (r = 1); the geodesic's terms follow at
+Newton's first order (II.9, II.10) with light's terms absent on the
+law (II.11). Nothing of Einstein's was put in: only the Inside step
+and the map.
+
+**(b) Theorem 3 (the quantum of the Outside step).** Under (A1) and
+(A3) with the conversion of section 2, with no run:
+
+(i) *Two places.* The least separation of two places a detector reads
+is one Link: a packet's chain of clicks advances one Node per
+interval, and by (A3) nothing Outside passes faster or jumps a Node,
+so the least distance between a click and a click is one Link (Theorem
+2 (a) at `X = 1`).
+
+(ii) *A clock.* The least thing a detector times is a pulse to its
+neighbour and its return (W5): two intervals Inside, the detector's
+own unit Outside (two of its counts at `r_D = 1`; `2 r_D` in general,
+which is how r shows: the same two intervals are fewer counts for a
+slowed detector); the tick itself is GAMEBOARD and never read. A
+detector at rest receives its pulse back at its own Node, a moving one
+at the next (record 768), and the difference is the one-Node quantum
+of (i) again.
+
+(iii) *A velocity.* The least step of a body read by clicks is one
+Node per hop, and between two hops k whole counts of the detector that
+reads it (the hop pattern `x(t) = floor(t / k)`, the click frame :222;
+the drive's closed form of section 1 (b) 4 at `abs(p_a) / D_a = 1 /
+k`). So a velocity Outside is a ratio of two whole counts, Nodes over
+counts, and the velocities a detector can read are the rationals `1 /
+k` and their means: a body between the patterns `1 / k` and `1 / (k +
+1)` reads as a mean of the two over many hops (the drive's remainder),
+never as a number between them at one hop; the quantum of velocity at
+the pace `1 / k` is `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, and on the
+Beam Law's lattice the pace is a ratio over Q (the click frame's M3,
+:62-70: "a Q-linear map on the counts' ratios in the mean").
+
+(iv) *c.* c Outside is one Link per the least count: the bound of (iii)
+at `k = 1`, Einstein's second postulate in the click language, is the
+quantum itself, the least distance per least count.
+
+*Proof.* (i) and (iv) are (A1) as the detector sees it through Theorem
+2 (a). (ii) is Theorem 2 (a) at `X = 1`. (iii) is the drive's closed
+form (the floor of a linear function, one Link per self-creation at
+most, `by_drive`'s `at_most` 1) read through Theorem 1 (i) at `r = 1`:
+the ground detector's count between two hops is k; a pattern `floor(t
+/ k)` hops once per k and no oftener; two patterns with k and `k + 1`
+differ by one hop per `k (k + 1)` intervals. QED. All rung 1, exact by
+the primitive, from modern algebra and no run.
+
+**(c) Theorem 4 (Newton's step as the limit of the small step).** In
+the continuum limit of the image (a) (many self-creations, `v << c`,
+the shell mean of (M)) the small step of (b) becomes
+
+    Newton's step:    dp / dt = F,  F = -G M M_B / r^2 (r_hat),  p = m_i v,  m_i = Q S M      (DERIVATIONS_BEAM 3.3; the click frame section 8 (2)(c), :1030-1046),
+
+whose it is: Newton's second law with his gravitation, RECOVERED, named
+as such. Beyond `v << c` the image keeps the drive's own form `p = m_i
+v / (1 - v)` per axis (II.7) and the law's clock rate 1 (II.1), which
+is where the law parts from Einstein's step of (a). The orders of the
+difference between the image and the continuum: the drive's pace
+against the walk's group velocity, the lattice offset `m^2 / 3` (the
+click frame :801-806, record 781); the k-calculus's r against `sqrt(1
+- v^2)`, `1 - kappa^2 / 6` (the click frame :74-80); the lattice's
+anisotropy at `1 / T_D` on the pace and at `abs(p)_1` against
+`abs(p)_2` on the drive.
+
+**(d) Why the world above is quantized: what the continuum's formulas
+cannot give and this law gives, one sentence, honest.** The Outside is
+counts at clicks and nothing else (W4, A3), so every Outside quantity
+is a ratio of whole numbers, a distance a whole number of Links, a
+time a whole number of a detector's own counts, a velocity a rational
+`1 / k` in the mean over hops, and Einstein's and Newton's continuum
+formulas are the limits of these ratios and cannot say that they are
+ratios; this law says it, by Theorem 3, from (A1) and the conversion
+with no run. The register's readings that show a least step, by kind:
+the muon's 64th self-creation at the ticks 70 and 124 under the
+identity (series S), counts of self-creations against the tick,
+GAMEBOARD (the `become` lines), the count's quantum one self-creation;
+its products' face clicks at 369 and 345 (DETECTOR) one count apart
+from the flight table's 369 and 345, the arrival's quantum one count;
+series W's first-click ages 815 at `screen_60` and 876 at `screen_37`
+and `screen_83`, the row's own age on its first click at the pixel
+(DETECTOR, `first_click_age`, within 5 of the accumulator rule's pin;
+the click's tick 955 and 1016 GAMEBOARD; docs/EXPERIMENTS.md on the
+clock re-reads, PR #777 at 11edfe9e, the massive rows' entry), a
+whole count of intervals per Link, the least step of a row; series
+D3's 138 of 139 births at the same Node with the held mass four times
+(DETECTOR), the body's least step one Node, read as the birth's Node,
+the one exception one Node apart. The velocity's quantum `1 / (k (k +
+1))` and the clock's two counts NOT READ as such (no world reads a
+body between two patterns or a neighbour's pulse).
 
 *What is a theorem of (A1), (A3) and the conversion, and what needs
-more.* Theorem 3's quantum, Theorem 4's image, Newton's step as its
+more.* Theorem 3's quantum, the image (a), Newton's step (c) as its
 limit, and the r-free Einstein lines are theorems of (A1), (A3) and
 the six verbs on `main`; the scaled Einstein lines need (A2) (the
 amplitude's r) or the identity's declared square; the geodesic's light
 terms need the flight in the age wall's set (the key `optical`, an
 identity); the post-Newtonian terms need more than any of these
 (II.12, II.13).
-
-*The register's readings that show a least step, by kind.* The muon's
-64th self-creation at the ticks 70 and 124 under the identity (series
-S): counts of self-creations against the tick, GAMEBOARD (the `become`
-lines), the count's quantum one self-creation; its products' face
-clicks at 369 and 345 (DETECTOR) one interval apart from the flight
-table's derived 369 and 345, the quantum of the arrival one count.
-Series W's first-click ages 815 at `screen_60` and 876 at `screen_37`
-and `screen_83`, the row's own age on its first click at the pixel
-(DETECTOR, `first_click_age`, within 5 of the accumulator rule's pin;
-the click's tick 955 and 1016 GAMEBOARD; docs/EXPERIMENTS.md on the
-clock re-reads, PR #777 at 11edfe9e, the massive rows' entry): a
-whole count of intervals per Link, the least step of a row. Series
-D3's 138 of 139 births at the same Node with the held mass four times
-(DETECTOR): the body's least step, one Node, read as the birth's Node,
-the one exception one Node apart. The velocity's quantum `1 / (k (k +
-1))` and the clock's two counts NOT READ as such (no world reads a
-body between two patterns or a neighbour's pulse).
 
 ## II. The formulas, each in the owner's order: OUTSIDE, INSIDE, the CONVERSION back, the REGISTER
 
