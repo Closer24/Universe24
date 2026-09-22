@@ -2,9 +2,13 @@
 
 The order (the Boss, 2026-09-22, on the model owner's word of record 1014
 of [the log](../../LOG_2026-09-20.md), "understand why Newton fell"):
-about ninety minutes, docs only, no law change, nothing built. Base
-`044b13d0` (origin/main at the time of writing; the branch
-`newton-diagnosis`). The sources: [the flow weight design](../flow_weight/DESIGN.md)
+about ninety minutes, docs only, no law change, nothing built; the
+frame added on the owner's word of record 1016 ("Newton comes from the
+algebra, but one has to see it in a detector moving on Nodes. That is the
+test"): section 3.4 names the detector behind every Newton row, and the
+one proposal of section 6 is the moving-detector test of Newton on the
+cart of PR #834. Base `044b13d0` (origin/main at the first commit; main
+merged in after; the branch `newton-diagnosis`). The sources: [the flow weight design](../flow_weight/DESIGN.md)
 and [its algebra](../flow_weight/ALGEBRA.md) (section 5, Newton's rows by
 formula), [the click frame's section 8](../click_frame/DERIVATION.md)
 (Newton Outside, PARTLY), [DERIVATIONS_BEAM 3.3](../../DERIVATIONS_BEAM.md)
@@ -433,6 +437,28 @@ world's scale of 67371008 label units per n-unit) and 1400 (9.75 taken); the esc
 equivalence outside after the closest passes (the reservoir's 0.3 per
 cent, the register's own cause).
 
+### 3.4 Which detector produced each Newton row, and whether it moves on Nodes (the owner's frame, record 1016)
+
+One line per row, by kind. The owner's sense: a detector that moves
+across Nodes and clicks, reading its own count, its Node and the ordinal
+the packet brings (the cart of PR #834; records 816, 824, 1016); the
+body's own record is GAMEBOARD (record 991).
+
+| The row | The detector that produced the reading | Moving on Nodes? | Kind |
+| --- | --- | --- | --- |
+| Series D, `orbit/` `s32_r12`, `s32_r24` (T 289 / 829 at p = 576 as registered; the line drive's 480, 762 / 924 on the branch) | none: the probe's own `step` lines and momentum (records 562, 564) | no detector clicks; the moving body's own record | GAMEBOARD, a diagnostic, never compared with nature |
+| Series D's lamp worlds `s32_r12_lamp`, `s32_r24_lamp` (the pins 371 / 742 under form B, written 2026-09-21; run under the line drive on `drive-default`: 525, 712 / 952, the ratio 1.81) | the fixed one-Node detector `source` at the source's Node, clicking the probe's rows that reach it (the tick and the row's label, whose reverse is the probe's direction) | no: the detector is fixed at the centre; the emitter (the probe's lamp on the whole fan) moves | DETECTOR, read on the detector's tick, not on a moving count |
+| Series D3 as registered (the per-axis drive, n = 9: T 407 / 813, the ratio 1.997; the paper's row) | the fixed line of 121 one-Node detectors of the family `wall` at y = 20, each clicking the lamp's rows toward -y with their age (`measure`, `reads: "age"`) | no: the detectors are fixed on a line; the lamp on the probe moves, and a click gives where the light came from (x) and when (the tick less the age) | DETECTOR (the clicks' x, tick, age); the escape a face click; the probe's path GAMEBOARD |
+| Series D3 under `flow_link` (PR #879: 588.7 / 987.3, the ratio 1.677) | the same fixed line at y = 20 | no, as above; and the line is also a wall the probe touched (the contacts of 3.1) | DETECTOR; the escapes at 1208 and 2452 face clicks not read by the tool; the contacts GAMEBOARD |
+| The line-drive read (`drive-default`, PR #907: 674 / 1019, the ratio 1.512) | the same fixed line at y = 20 | no, as above (the contacts at 917 and 1400, the escapes at 2096 and 1949, registered there) | DETECTOR and GAMEBOARD as above |
+
+So no Newton row on the tree was read by a detector moving on Nodes:
+every reading is a fixed detector clicking a moving lamp's rows (the
+lamp worlds, D3 in its three runs) or the body's own record (series D).
+In the owner's sense of the test, Newton has not been tested yet; what
+the rows read is the fixed detectors' view of a moving emitter, in the
+detectors' own tick. The reading that would be the test is section 6.
+
 ## 4. The candidates, DECIDED or NOT DECIDED
 
 1. **The force law's falloff on the lattice steeper or shallower than
@@ -523,72 +549,143 @@ records decide; the ring mean's 1 / r form is not refuted (the lattice's
 ring mean within 5 per cent of 1 / r, the periods scaling with the
 loops' own mean radii); the grain's share of the seed against the
 launch's, and the velocity factor's exact size on the lattice, remain
-undecided.
+undecided. Where the fall is: in the algebra first (the velocity term is
+the law's own continuum, present with no lattice at all), in the
+lattice's grain second (the seed of the eccentricity, the first
+apocentre 18.7 against the map's 13.8), and in the detector that read it
+third (a fixed line that the loops crossed and touched, whose tool did
+not print the escape; not a detector moving on Nodes, so not the test
+the owner names).
 
-## 6. One proposal, under its own identity, NOT ORDERED: newton-presence-v1
+## 6. One proposal, under its own identity, NOT ORDERED: newton-cart-v1, the moving-detector test of Newton
 
-**The identity.** `newton-presence-v1`: a body's push reads the rows
-PRESENT at its Node in the interval, each weighted by its line's rate
-over its wall, in place of the rows it met; the same integers for a
-body at rest, no velocity term at first order for a body in motion.
-Stated here as the one candidate the diagnosis names; nothing of it is
-built, run or pinned by this file; it enters nothing without the
-reviewer's gate and the owner's word.
+**The identity.** `newton-cart-v1`: the cart with a click of PR #834
+(branch `moving-detector-build` at `8f5b42fbbcf6240d096052832db21c4e330d2ec2`,
+HELD by the owner's scope word of record 920, read here and not touched)
+carried ON the orbit of series D3 at r = 12 and 24, so that the orbit is
+read by a detector moving on Nodes, on its own count, and not by a fixed
+line in the tick. Stated as the one candidate; nothing of it is built, run
+or pinned by this file; it needs PR #834's key `clock_stamp` on main and
+enters nothing without the reviewer's gate and the owner's word. It
+replaces nothing in the law: no rule, no verb, no key of a hypothesis
+(the key `flow_link` may be on or off as the owner chooses; the pins
+below are written for both).
 
-**The rule, one line.** The gravity column's flow becomes **V** = sum
-over the rows present at the reader's Node (arrived or dwelling, less
-its own number's, the set the age moment already sums, `CrowdMoments`)
-of amount x **f**_D x (2 S_1 Q) over (2 T_D), the pair the flight
-already holds per direction (`FamilyFlight.rate` over `.wall`, the
-inverse of the dwell T_D / (S_1 Q)), taken through the reader's push
-accumulator as `push_form` takes every column (the numerator on the
-rate, the wall the denominator, the remainder kept below it): a row
-dwelling T_D / (S_1 Q) intervals at a Node is counted once per interval
-at 1 / dwell of its label, so a resting reader takes the same mean push
-per row as today (one label per crossing), while a reader moving
-through the stream reads the stream's density where it is, which does
-not depend on its speed at first order. What it removes: the factor (1
-+ u / c) of 2.3, the anti-damping of 2.4. What it keeps: the ring mean
-A / r, F_plane's cancellation under the key, the equivalence (the push
-M_A times the flow, the step over M_A), the wall and the clock
-untouched.
+**The world (the design's words, PR #834 sections 1, 3, 4, 7, turned to
+the orbit).** Series D3's plane (121 x 121, the source `m` at (60, 60)
+releasing its fan of 120 every 10 intervals, the width 32, `suspension`
+0), with three changes and no other: (i) the probe becomes the cart D: a
+body of a paid family with the held mass 2^20 and a reservoir R = 2^16
+(one row per self-creation, so its birth ordinals are its own count as
+the cart's are; 4000 rows over the run, 6 per cent of M_total, stated
+beside the pins), its lamp on the whole in-plane fan of 120 (one row per
+direction per birth would cost 120 units per interval: too dear; the
+lamp on the fan at the rate [1, 40], one shell of 120 rows every 40
+intervals, 12000 units over the run, the reservoir 2^14 then), its table
+measuring the family `lamp` (`measure`, `reads: "age"`); (ii) a lamp A
+at rest, one measured event of the paid family `lamp` at the Node (60,
+61) beside the source (two events cannot share a Node), releasing one
+row per direction of the same fan of 120 every 10 intervals (the
+register's q); (iii) the world key `clock_stamp` true, so every click
+the cart writes carries `clock`, the cart's own count of
+self-creations. The line at y = 20 is removed (no wall on the plane;
+the faces stay open, the escape a face click). The post R of PR #834
+(the radar) is not carried: the cart's own rows would need the fan to
+find the post from every place, and one reading at a time.
 
-**The three tests, one line each (the diagnostician's reading before
-the reviewer's).** Generic: one primitive, the flow summed over the
-rows present with a declared pair per direction of the table, for every
-family alike, no name; the pair is the flight's own. Vector: the same
-verb 3 sum, the translation of the push accumulator by a rate (amount x
-**f**_D x 2 S_1 Q) against a wall (2 T_D), the Euclidean division with the
-remainder kept; no root at run time (T_D is the flight's, formed at
-load). Local: the rows at the reader's own Node, less its own number,
-the set already read for the age moment; fixed work per row present;
-nothing kept at a Node. The doubt the reviewer would have to settle: a
-wall per direction inside one column's accumulator (`push_form` holds
-one Lambda per column) is a change of the accumulator's shape, or a
-common wall (the lcm of 2 T_D over the table, or the rounding of 2 S_1
-Q / (2 T_D) to a declared grain at load as **f**_D is rounded) must be
-declared; the first form is exact, the second is a rounding at load.
+**What the cart reads, DETECTOR, on its own record.** At every click of
+A's rows: its own count `clock`, its Node, the ordinal of the row (A's
+count at the emission, `record` mod 2^32) and the row's label **f**_D
+(its direction from A, the reverse of the cart's direction from the
+centre). From them, on the cart's count alone: the direction theta of
+the centre at every click (the label's reverse); the flight's count,
+`clock` less the ordinal (A's count is the tick here, no crowd stretches
+it, and so is the cart's; the reading is written on the cart's count and
+would stand in a crowd), which the flight table turns into the distance
+r = c_D x (clock - ordinal) Links (CONVERSION, the register's `links_of`);
+the period T as the recurrence of theta through 2 pi on the cart's count
+(the click frame's method, section 0: a velocity Outside is Nodes apart
+over counts apart); r's minima and maxima per turn (the loop's opening
+or closure); the cart's Node at each click against its count (the least
+step, one Node per count at most). A's rows reach the cart where its
+Node lies on a fan line through (60, 61): 28 of the 68 ring Nodes at r =
+12 and 16 of 144 at r = 24 (the orbit register's count for the source's
+Node; the same fan), one shell every 10 intervals, so about one click
+per 25 intervals at r = 12 and one per 90 at r = 24 on a circle, more on
+a wide loop (every Node of the plane is on some line of the fan within
+radius 8 of the axis' angle grain). The cart's own rows are never
+measured by its own table (they go home); the source's free rows push
+the cart as today (`read`) and are not clicks.
 
-**The pins it would need (GAMEBOARD by formula until run; the same
-worlds, S = 32, the key on, the whole 8).** From the map without the
-factor (2.5, the first row): T(12) = 403 and T(24) = 808 within 9 per
-cent (367 to 439; 735 to 881), the ratio 2.00 +- 0.18; r within 11.6 to
-13.5 and 23.4 to 27.0 on every birth (CONVERSION); no contact with the
-line and no escape in 4000 intervals (DETECTOR, the face clicks, to be
-printed by the tool for the source worlds as well); at least eight
-recurrences at r = 12 and four at r = 24 agreeing within the grain
-(DETECTOR). Refuted if a loop opens (an apocentre beyond 13.5 or 27.0
-growing turn by turn), if the ratio leaves its band, or if a control
-moves. The equivalence world beside them as registered. What it buys:
-the first reading of T proportional to r on this law at a width the
-engine runs in 20 seconds; what it costs: one table pair per direction
-read by the push, one accumulator shape or one declared grain, the
-reviewer's gate, one run of four worlds. NOT ORDERED.
+**The pins it needs before any run (GAMEBOARD by formula until run; the
+cart's clicks the measurement).** From the map of 2.5 (the law as it
+stands: the ring mean with the arrival rate's factor; the per-axis
+drive; the launch at the whole 8 under the key, or 9 as built), the
+recurrence of theta through 2 pi on the cart's count:
+
+| Launch | the first three turns' counts at r = 12 (the spacings) | at r = 24 | the first apocentres, Links |
+| --- | --- | --- | --- |
+| the key on, n = 8 (A = 1.4838) | 399, 919, 1667 (399, 520, 748) | 794, 1830, 3288 (794, 1036, 1458) | 13.8, 15.6, 21.3 and 27.5, 31.2, 42.2 |
+| as built, n = 9 (A = 1.9098) | 349, 782, 1387 (349, 433, 605) | 694, 1555, 2737 (694, 861, 1182) | 13.1, 13.1, 14.6 and 26.2, 26.1, 22.8 |
+| the ring mean alone (no factor), n = 8: the comparison, not the law's pin | 400, 812, 1206 (400, 412, 394) | 798, 1623, 2412 (798, 825, 789) | 13.3, 13.4, 13.5 and 26.6, 26.7, 26.8 |
+
+The pins: (a) the first turn's count T_1 = 399 at r = 12 and 794 at r =
+24 under the key (349 and 694 as built), each within the grain of the
+kicks, taken as 10 per cent (the register's 9 propagated to the turn's
+count); the ratio T_1(24) / T_1(12) = 1.99 within 0.20: on the FIRST
+turn, before the loops open, the 1 / r ring mean's scale symmetry is
+what the cart reads, and this is Newton's test in the owner's sense.
+(b) The opening: the second and third turns longer than the first by
+the map's factors (1.30 and 1.44 at r = 12 under the key; 1.30 and 1.41
+at r = 24) within 15 per cent, and the apocentres rising as the table
+has them within 15 per cent: the velocity term's signature, which
+decides the undecided (b) of section 4; a loop whose turns stay 400,
+412, 394 refutes the term (the no-factor row) and would say the crossing
+rule's count is not the Doppler count on the lattice. (c) r from the
+clicks at the first turn within 12 +- 3 and 24 +- 4 (CONVERSION). (d)
+The least step: the cart's Node changes by at most one per count between
+consecutive clicks (PR #834's pin). (e) The controls: the same worlds
+without the source (no push): the cart leaves through the face +y at the
+61st Link of the pace 8 / 40, the count 305 +- 6, its clicks of A's rows
+at the ordinals and counts the flight table gives on a straight path.
+Refuted if T_1 or its ratio leaves the band, if the opening is absent or
+differs from the map's beyond the band in either direction, or if a
+control moves. Nothing is compared with nature: Kepler's T proportional
+to r on the plane is the comparison side of pin (a) only.
+
+**The three tests (one line each; the diagnostician's reading before
+the reviewer's).** Generic: no rule is added; the cart is a measured
+event with a lamp and a `measure` entry as any, the world key
+`clock_stamp` a record field of every measured event's own count (PR
+#834 section 7 (c)), no family name, no kind. Vector: no verb touched;
+the push, the step and the flight as they stand; the conversion of a
+count into a length is the reading tool's, after the run. Local: the
+cart reads what arrives at its Node and its own count; A releases from
+its own Node; the tick is read by nothing above the board (the cart's
+count equals it here, and the reading does not use that).
+
+**What it decides that the present rows cannot.** (1) Newton read in a
+detector moving on Nodes, on its own count: the period as a recurrence
+of clicks the moving detector makes, the owner's test, which no row on
+the tree has (3.4). (2) The velocity term's size on the lattice (the
+undecided (b)): the turns' growth is its signature, pinned from the map
+before the run. (3) The grain's share (the undecided (a)): the map's
+deterministic loop against the cart's read loop, turn by turn, on the
+same count. (4) The 1 / r ring mean's scale symmetry on the first turn
+at two radii, which the present rows read on loops already opened,
+touched and escaped. What it cannot decide: the value of G (a world's
+inputs, the click frame's table), the inverse square in space (the
+plane's 1 / r only), and r, the count's rate in a crowd (`suspension` 0
+here). The cost, HOST: the key from PR #834 (about eight lines, held),
+the world files by the generator, the reading tool's orbit branch (the
+recurrence of a label's reverse on a count), four worlds of about 25 s
+each. NOT ORDERED.
 
 ## 7. Links
 
 - [newton_map.py](newton_map.py), [newton_map.out](newton_map.out): the continuum map (COMPUTATION).
 - [newton_records.py](newton_records.py), [newton_records.out](newton_records.out): the replay's record read (GAMEBOARD, DETECTOR the face clicks).
+- PR #834's design and register on the branch `moving-detector-build` at `8f5b42fb`: `docs/designs/moving_detector/DESIGN.md`, `examples/events/moving_detector/README.md` (read there; not on main).
 - [The flow weight design](../flow_weight/DESIGN.md) and [algebra](../flow_weight/ALGEBRA.md) section 5; [the click frame](../click_frame/DERIVATION.md) section 8; [the line drive's default](../drive_b/DEFAULT.md); [DERIVATIONS_BEAM 3.3](../../DERIVATIONS_BEAM.md).
 - [Series D3's register](../../../examples/events/orbit_lamp/README.md), [run_flow.out](../../../examples/events/orbit_lamp/run_flow.out), [expectations_flow.json](../../../examples/events/orbit_lamp/expectations_flow.json); the branch `drive-default` (PR #907) for the line drive's rows.
-- [The log](../../LOG_2026-09-20.md): records 574, 594, 630, 648, 655 (series D3 and its causes), 872, 886, 915, 923, 962, 966, 981, 1006, 1007, 1014.
+- [The log](../../LOG_2026-09-20.md): records 574, 594, 630, 648, 655 (series D3 and its causes), 816, 824, 872, 886, 915, 923, 962, 966, 981, 991, 1006, 1007, 1014, 1016.
