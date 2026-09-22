@@ -253,6 +253,122 @@ CORRECTIONS = [
         "Born's rule to $1/(2\\Nphi)$ per cell, Tsirelson's bound",
         "Born's rule to $1/\\Nphi$ per cell and the cumulative rungs to $1/(2\\Nphi)$, Tsirelson's bound",
     ),
+    # Newton after a detector, series D3 (PR #718; the physics-rule
+    # reviewer's ADMISSIBLE WITH CORRECTIONS; the Boss's order of 02:24Z): the
+    # equivalence principle measured after a detector, the 1 / r force's scale
+    # symmetry read consistent on loops that are not similar figures, not
+    # closed; G's value not read; the circle's pins outside as registered.
+    # With it, four trims that hold the body at 25 pages: the second
+    # departure's test-fixture clause (not a registered world), the "own
+    # geometries" clause of the positioning paragraph, one sentence of the
+    # ledger's caption, the distance line.
+    (
+        "D3 the checks table's Newton row",
+        "$1.909 \\pm 0.05$; replicated \\\\",
+        "$1.909 \\pm 0.05$; replicated \\\\\nThe equivalence principle after a detector; the $1/r$ force's scale symmetry & D3, a probe carrying a lamp on series D's plane at $r = 12$ and $24$, its births read at a line of one-Node detectors; the held mass four times at $r = 24$; two controls & the same $x$ on $138$ of $139$ common birth ticks (one Node the largest difference) and the same escape tick at four times the mass; $T(24)/T(12) = 1.997$ from one recurrence per radius on loops that are not similar figures; the controls at $x = 60 + r$ on every click; the circle's period, amplitude and $\\omega^2$ outside their pins & one birth interval and one Node; $2.00 \\pm 0.18$; $60 + r$, the escape $278 \\pm 6$ \\\\",
+    ),
+    (
+        "D3 the distance table's Newton line",
+        "Newton's and Poisson's laws measured after a detector & a body carrying a lamp beside a source, its births' Doppler read at a detector over time; a face detector's count of the escape against the release; the clock's form at more distances (series T's method) \\\\",
+        "Newton's inverse square closed after a detector (the equivalence measured, series D3; the $1/r$ form's scale symmetry consistent, $1.997$ for $2.00 \\pm 0.18$, on loops that are not similar figures; $G$ not read), and Poisson's law measured & a closed orbit's period at two radii under the directional drive (form B, not built); a face detector's count of the escape against the release; the clock's form at more distances (series T's method) \\\\",
+    ),
+    (
+        "D3 the ground paragraph of Section 4",
+        "No detector reading of these laws is registered; their measurement after a detector is a run not made (Section~\\ref{sec:discussion}).",
+        "After a detector the equivalence principle is measured (series D3, Table~\\ref{tab:checks}) and the $1/r$ force's scale symmetry reads consistent, $1.997$ for $2.00 \\pm 0.18$, on loops that are not similar figures: the inverse square is not closed after a detector and $G$'s value is not read; Coulomb's and Poisson's runs are not made (Section~\\ref{sec:discussion}).",
+    ),
+    (
+        "D3 the introduction's open list",
+        "Open, with the check that decides each: the measurement of Newton's and Poisson's laws after a detector, the clock",
+        "Open, with the check that decides each: the closing of Newton's inverse square after a detector (the equivalence measured, series D3) and Poisson's law, the clock",
+    ),
+    (
+        "D3 the page count: the second departure's fixture",
+        "so a body can outrun its own field's rows on the drive as built on main (shown by the test fixture of the derivation's Doppler section, a body at $0.75$ Links per interval, not by a registered world).",
+        "so a body can outrun its own field's rows on the drive as built on main.",
+    ),
+    (
+        "D3 the page count: the own-geometries clause",
+        "both sides of Tsirelson's bound \\cite{tsirelson1980,pr1994}; the experiments the checks are named for \\cite{tonomura1989,grangier1986,ghsz1990,ev1993} are reproduced in none of their own geometries. The earlier testbed",
+        "both sides of Tsirelson's bound \\cite{tsirelson1980,pr1994}. The earlier testbed",
+    ),
+    (
+        "D3 the page count: the ledger's caption",
+        "Every row is derived from the update rules implemented in the simulator; what is added beside the rules, with its kind (an axiom of the apparatus, an input, a definition, a hypothesis), is the third column, and a result that rests on a hypothesis beside the law has no row.",
+        "Every row is derived from the update rules implemented in the simulator; the third column names what is added beside them with its kind; a result resting on a hypothesis beside the law has no row.",
+    ),
+    (
+        "D3 the page count: the octahedron figure",
+        "\\includegraphics[width=0.34\\textwidth]{figures/octahedron.pdf}",
+        "\\includegraphics[width=0.27\\textwidth]{figures/octahedron.pdf}",
+    ),
+    (
+        "D3 the page count: the figure's caption",
+        "The Nodes one interval from a Node. The six neighbours at the ends of the six Links (the Ports $\\pm x$, $\\pm y$, $\\pm z$) are the vertices of the octahedron $|x| + |y| + |z| \\le 1$, the causal front of one interval. Its inscribed sphere, of radius $1/\\sqrt3$, touches the eight faces on the cube diagonals at $(\\pm1, \\pm1, \\pm1)/3$ and is the rows' pace $c$, the largest isotropic pace under one Link per interval (Proposition~\\ref{prop:pace}); a row's mean pace lies within $1/T_D$ of the sphere and never at a vertex. The faint cube shares the octahedron's symmetry, the $48$ signed permutations of the axes, $3! \\times 2^3$, $24$ rotations and $24$ reflections told apart by the determinant, the GameBoard's stand-in for the rotation group. Drawn by \\texttt{octahedron.py} from the definitions; no run.}",
+        "The Nodes one interval from a Node: the six neighbours are the vertices of the octahedron $|x| + |y| + |z| \\le 1$, the causal front of one interval; its inscribed sphere, of radius $1/\\sqrt3$, touches the eight faces on the cube diagonals and is the rows' pace $c$ (Proposition~\\ref{prop:pace}); the faint cube shares the $48$ signed permutations of the axes. Drawn by \\texttt{octahedron.py} from the definitions; no run.}",
+    ),
+    (
+        "D3 the page count: the symmetries' parenthesis",
+        "up to the law's two declared ties, the digital line's axis order and the collision's Port order (\\cite{beamlaw}, note 39 and section 4; the apportioning's tie, by the row's age, breaks no axis symmetry; this paper meets the first, Section~\\ref{sec:measurement}); under the circle",
+        "up to the law's two declared ties, the digital line's axis order and the collision's Port order (\\cite{beamlaw}, note 39 and section 4); under the circle",
+    ),
+    (
+        "D3 the page count: the code paragraph",
+        "the readings at each Node (the presence, the age moment and the first moment of the arriving rows), the collision,",
+        "the readings at each Node, the collision,",
+    ),
+    (
+        "the ledger's no-dispersion row: the flight's blindness to the phase is put in (P9), not forced (the owner's word of 02:50Z)",
+        "No dispersion & the flight table indexed by direction and age & none & exact & \\ref{sec:geometry} \\\\",
+        "No dispersion, the constancy of $c$ & the flight table indexed by direction and age & the rate in transit constant, the flight blind to the phase (P9, a rule chosen among few); whether the six operations force it is open & exact & \\ref{sec:geometry} \\\\",
+    ),
+    (
+        "GRB 090510: the constancy of c by the postulate meets the photon-dispersion bound (the Boss's word of 02:53Z; NUMBERS.md rows 97 to 99, a computation)",
+        "free of dispersion by construction, as a classical corpuscle is.",
+        "free of dispersion by construction, as a classical corpuscle is. By the postulate P9 the pace has no dispersion at any phase rate, so the model meets the bound on an energy-dependent speed of light from GRB 090510, a difference below $2.6 \\times 10^{-18}$ between $31$ GeV and the keV band \\cite{abdo2009}, a computation \\cite{checks}, not a run, and a consequence of the postulate until the six operations are shown to force it.",
+    ),
+    (
+        "GRB 090510: the reference",
+        "\\bibitem{nagel2015} M. Nagel,",
+        "\\bibitem{abdo2009} A. A. Abdo et al. (Fermi LAT and Fermi GBM Collaborations), Nature 462, 331 (2009).\n\\bibitem{nagel2015} M. Nagel,",
+    ),
+    # The page count with the GRB sentence and the honest ledger row: seven
+    # trims of duplicated sentences and asides, no claim and no table number.
+    (
+        "page count: the anisotropy bound said twice in Section 3",
+        "same age $29$. Nature's bound on the anisotropy of $c$, below $10^{-18}$ \\cite{nagel2015}, is a bound on the grain, $N_l$ at or above $5.8 \\times 10^{17}$ (Section~\\ref{sec:checks}, row 5a).",
+        "same age $29$.",
+    ),
+    (
+        "page count: the delay section's operations list (the ledger's row carries it)",
+        "its push reads the flow of the same rows. The operations: the release and the walk (translations), the reading (the zeroth moment, the age moment, the first moment: bilinear forms), the owed count (the Euclidean division), the coupling (a bilinear form).",
+        "its push reads the flow of the same rows.",
+    ),
+    (
+        "page count: the theorem's parenthetical repeated in the next paragraph",
+        "2.828125$ at every power of two from $512$ through $8192$ (run at $512$ and $4096$, computed exactly at $2048$ and $8192$; $5793/2048$ at $16384$ and $32768$, the closed form of the derivation's 24.4) \\cite{checks}.",
+        "2.828125$ at every power of two from $512$ through $8192$ \\cite{checks}.",
+    ),
+    (
+        "page count: the harmonic's aside in the limit paragraph",
+        "the fundamental is what the register reads and what the phase means (one step per declared rate; a detector at the harmonic $j$ is a detector reading the wavelength $\\Lambda/j$).",
+        "the fundamental is what the register reads and what the phase means.",
+    ),
+    (
+        "page count: the symbol table without Lambda",
+        "$\\Lambda$, $\\lambda$, $\\psi_r$, $\\theta$ & scalars, an element & a wavelength in Links and in the continuum, the state of the record $r$ in the group ring, an angle",
+        "$\\lambda$, $\\psi_r$, $\\theta$ & scalars, an element & a wavelength, the state of the record $r$ in the group ring, an angle",
+    ),
+    (
+        "page count: the read-out's aside",
+        "The click reads one comparison and nothing else leaves the rows (a detector's other readings, the counts, the flow and the moments of the rows at its Node, read and delete nothing): for a record",
+        "The click reads one comparison and nothing else leaves the rows: for a record",
+    ),
+    (
+        "page count: the introduction's window",
+        "which pinned the power of the click's weight to a window containing $2$ and excluding $1$ and $3$ before the form was proved;",
+        "which pinned the power of the click's weight to a window containing $2$ before the form was proved;",
+    ),
 ]
 
 
