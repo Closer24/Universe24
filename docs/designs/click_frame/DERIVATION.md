@@ -17,10 +17,15 @@ algebra (groups on integer counts), no code and no run.
 **Definitions.** Two worlds. The GameBoard: Nodes on the cubic lattice,
 integer rows on them, and the tick, the interval's count, which no
 detector ever reads. The real world: detectors and their clicks only. A
-detector D at a Node has its own count `n_D`, an integer that advances
-by one each time it receives a packet (a record's arrival at its Node);
-it ticks on nothing else. A click is a triple (the Node, `n_D`, what
-arrived). A click family `F_D` is the set of clicks of one detector and
+detector D at a Node has its own count `n_D`, its count of intervals
+stretched by what arrives at it (the age wall's member at coefficient
+1, record 709): an internal count that advances every interval and is
+slowed by the crowd at its Node; the detector never reads the tick,
+only `n_D`. A click is the event of receiving a packet (a record's
+arrival at the detector's Node), stamped with `n_D`: a triple (the
+Node, `n_D` at the arrival, what arrived); between arrivals `n_D`
+advances on its own, which is how A emits every T of its own count
+with nothing arriving (section 2). A click family `F_D` is the set of clicks of one detector and
 its six neighbours, each with its counts and its contents. A detector's
 velocity is a click that passes information to the detector beside it:
 the pair (Nodes apart, counts apart) between two clicks of neighbouring
@@ -84,11 +89,23 @@ and the inverse of a Z-linear bijection that carries the unit-speed
 clicks onto themselves carries them back; so G is a group. (b) One
 dimension: a linear map of (t, x) preserving the cone `{t = x} U {t =
 -x}` maps the light-cone coordinates to multiples of themselves, `u ->
-a u, w -> b w` (or swaps them); the two one-way factors of section 2 are
-`a = k_AB` (A's counts read in B's family) and `1 / b = k_BA`; the
-relativity of the two families, the two directions alike, is `a = 1 / b
-= k`, which is the group's axiom, and then `u w` is invariant: `t^2 -
-x^2` is the same in every family; `k = sqrt((1 + v) / (1 - v))`, `v =
+a u, w -> b w` (or swaps them), and every such map is a boost by `k =
+sqrt(a / b)` times a dilation `lambda = sqrt(a b)`. The two one-way
+factors of section 2 are `a = k_AB = r / (1 - v)` (A's counts read in
+B's family) and `1 / b = k_BA = (1 + v) / r`, so `k = sqrt(k_AB k_BA) =
+sqrt((1 + v) / (1 - v))` for EVERY r (the boost, Lorentz's, is r-free:
+the round trip `a / b` reads nothing of r) and `lambda = sqrt(a b) =
+r / sqrt(1 - v^2)` (the dilation carries r alone). The dilation is
+physical here: it is the moving record's own rate r against the tick,
+left free by (A1) alone, which is exactly what "up to scale" means; the
+relativity of the two families, the two directions alike (`a = 1 / b`,
+`k_AB = k_BA`), or (A2), is what fixes it at Lorentz's, `lambda = 1`, `r
+= sqrt(1 - v^2)`, and then `u w` is invariant: `t^2 - x^2` is the same in
+every family. The law as built fixes it at `r = 1`: `a = 1 / (1 - v)`, `1
+/ b = 1 + v`, `lambda = 1 / sqrt(1 - v^2) = gamma = (k + 1 / k) / 2`, a
+dilation by gamma away from Lorentz, which is why its round trip (`a /
+b = k^2`) is Lorentz's and its one-way factors are not (sections 2 and
+6); `k = sqrt((1 + v) / (1 - v))`, `v =
 (k^2 - 1) / (k^2 + 1)`, `gamma = (k + 1 / k) / 2`, the boosts compose by
 `k_1 k_2` (a one-parameter abelian group, SO(1, 1)), the k-calculus of
 section 2 (b) being the theorem's one-dimensional case. The scale: a
