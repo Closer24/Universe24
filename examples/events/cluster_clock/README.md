@@ -71,3 +71,20 @@ presence 4 F at every lamp, the emulated pace and the algebra.
   dispersion 0.7514 (was 0.3683). The sum form is not re-decided by this
   run: the emulation holds for the presence word's k alone, and its
   re-declaration is the design's.
+- **Re-read on `main` and the moving members re-declared at the age word's
+  k (2026-09-21, the Replicator; Far 2's flag, record 463 (ii)).** The two
+  worlds run again on `main` at e531de5c (`tools/run_series.py --jobs 3`,
+  500 intervals, 2.9 and 3.3 s) and read by the same method: every reading
+  above digit for digit (DETECTOR: at rest 1.0000, 1.5510, 2.6502, 4.2992,
+  6.4990, the z mean 2.1999 and the dispersion 1.9977; moving as one
+  1.2007, 1.4717, 1.5585, 2.0127, 3.3219, the z mean 0.9131 and the
+  dispersion 0.7514; every ordinal arrived). The register's block
+  `clock_age_v1` now carries, per moving member, k under the age word
+  (5.5 times the presence word's) beside `k_presence_word` and the
+  statement that the shipped world paces every member's sources at
+  0.2 c / (1 + k) for the presence word's k (the world file unchanged),
+  so the additive pin 1 + k + v / c is readable in this world for the
+  bare member alone (`pin_readable_in_the_shipped_world`); the others
+  stand for a world whose sources pace the age word's k, the design's
+  re-declaration. The map `replicated` points at the Replicator's line
+  ([REPLICATIONS](../../../docs/REPLICATIONS.md)).

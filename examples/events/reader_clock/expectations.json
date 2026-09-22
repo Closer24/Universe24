@@ -1,5 +1,9 @@
 {
  "format": "reader-clock-expectations-v1",
+ "replicated": {
+  "worlds": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own",
+  "clock_age_v1": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own"
+ },
  "c": 0.5818181818181818,
  "ticks": 500,
  "window": [
@@ -99,7 +103,11 @@
     "k_reader": 5.5,
     "k_source": 5.5,
     "one_plus_z_lattice": 6.7,
-    "one_plus_z_readers_clock": 1.0307692307692309
+    "one_plus_z_readers_clock": 1.0307692307692309,
+    "k_reader_presence_word": 1.0,
+    "k_source_presence_word": 1.0,
+    "crowd_emulated_for_k": 1.0,
+    "pin_readable_in_the_shipped_world": false
    }
   }
  }

@@ -31,6 +31,7 @@ a mass is series E's reading). The lamp's entry for `m` is `pass` as well.
 | `mass` | M = SOURCE, one ray per direction per interval | 6 | the same beside the mass |
 | `heavy` | M = 2 SOURCE, two rays per direction per interval | 6 | twice the crowd |
 | `near` | M = SOURCE | 3 | half the impact distance |
+| `far` | M = SOURCE | 8 | beyond the beam's inner lines (optical-v1's second deflection pin) |
 
 The expectation, written before the runs (README.md): a ray in transit is
 moved by the flight table alone and turned only by the collision, which
@@ -95,6 +96,9 @@ WORLDS: dict[str, dict[str, int | None]] = {
     "mass": {"mass": SOURCE, "impact": 6},
     "heavy": {"mass": 2 * SOURCE, "impact": 6},
     "near": {"mass": SOURCE, "impact": 3},
+    # optical-v1's second deflection pin (records 505 and 540): b = 8, beyond
+    # the beam's inner lines, so that no direction is taken by the mass.
+    "far": {"mass": SOURCE, "impact": 8},
 }
 # The lens world under the meeting: two lamps at +-b, a box longer in x so
 # that the crossing of the two turned beams lies before the screen.

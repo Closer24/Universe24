@@ -1190,3 +1190,53 @@ couplings.
 - **Status.** Built on 2026-09-21 beside the law (`tests/test_massive_rows.py`,
   the register byte identical without the key); the pin's run and its
   verdict in the series README as run.
+
+## 27. The conditional derivations of the Beam Law, each a declared hypothesis outside the law
+
+- **Statement (the Boss's assignment under the owner's GO of 2026-09-21,
+  about 23:28Z, its record to follow; the criterion of record 454 of
+  docs/LOG_2026-09-20.md, under which the paper's cut dropped every
+  conditional derivation).** A conditional derivation ties a formula to
+  the law under a condition no derivation has closed: a limit taken, an
+  identity beside the law, a calibration, a closure. In the repository
+  such a derivation sat between the law and a hypothesis, and a reader
+  could not tell which. From this entry on it has one status: a declared
+  hypothesis outside the law, listed here with its condition, what would
+  close it (a derivation in [DERIVATIONS_BEAM](DERIVATIONS_BEAM.md)) and
+  what would refute it (a registered detector reading of the
+  [confrontation register](NATURE.md) or the
+  [experiments register](EXPERIMENTS.md)). No line of the law's text
+  ([LAW.md](designs/vector_form/LAW.md), [BEAM_LAW](BEAM_LAW.md)) claims
+  any of them; the paper carries them as HYPOTHESIS or OPEN rows without a
+  number. The list is the derivation mathematician's closure of
+  2026-09-21 (record 398, CONDITIONAL) with the conditional passages the
+  paper's cut removed (the cut table of PLAN.md's wave 29). A row leaves
+  this list when its derivation closes in DERIVATIONS_BEAM and a
+  registered reading with its fingerprint confirms it (then it is the
+  law's), or a registered reading refutes it (then a FAIL row under its
+  identity); a closed derivation alone makes nothing the law's (record
+  300: a formula gives, a run proves); nothing here is claimed by a run
+  of the law.
+- **The list.** Section numbers are DERIVATIONS_BEAM's; rows are NATURE's.
+
+| Derivation | Where it lived | The condition | What would close it | What would refute it | Held by |
+| --- | --- | --- | --- | --- | --- |
+| The wave limit of the rows and its Poincare symmetry for arbitrary row data (the external reviewer's F06) | 4.1, 17.1; the paper's Lorentz theorem | derived for a plane-wave stream, second order in the Link; for arbitrary row data assumed | a proof in 4.1 for arbitrary row data with its error term (21.5's columns) | a registered front reading anisotropic or dispersive beyond the flight table's `1 / T_D` at the declared scale (series L7's cone, series Q's face clicks are the readings to date, inside) | this entry |
+| Lorentz covariance of the bodies: the clock, the Doppler and the energy in motion | 17.6, 18.6; the paper's Lorentz section | the identity `covariant-readings-v1` (a body's readings covariant by declaration, one axis, gamma at most 2) | nothing closes it into the law: it is a hypothesis by construction; a derivation of the four readings from the six verbs would | rows 4a and 4b under the key (series S's readings inside their pins to date); a reading outside the identity's pins in its domain | entry 25 |
+| The field equation's static case and the shell-mean inverse square | 3.3, 5.1, 5.5; the paper's Newton section | the fan dense at the reading's distance (`P >> r`), the reading a shell mean; on the 2616-direction fan `r^-1.83` against `r^-2` | the limit stated with its grain, order and error term per row (21.5's columns (3) and (5)) | series C's rings or series E's shells outside the stated ripple; a single-Node reading beside a mass is a comb, not a refutation | this entry |
+| The kinetic closures on the six-heading gas: Euler's form, the sound speed, the viscosity, diffusion, Fick, Fourier | 25.5, 25.6; the paper's flow inventory (cut) | the product-measure (Boltzmann) closure of the slots' densities, its error unbounded | a bound on the closure's error | a registered gas reading outside its pin (none registered) | this entry |
+| Kepler's three laws and the precession on the plane | 21.5 row 58; 3.3, 12b.2 | form B, the drive on the momentum's direction (BLOCKED in review, record 348, not on main); on main's per-axis drive the host's period is 687 | form B admitted into the law and the lamp worlds `s32_r24_lamp`, `s32_r12_lamp` run against row 58's pins | the periods and the apsidal angle outside row 58's pins; today series D closes no orbit (record 131) | this entry |
+| The bending of light, the Shapiro delay, Snell's law, the second-order redshift | 5.4, 5.6; designs/gr_rows/DESIGN.md; designs/one_wall/NOTE.md (the generic form) | `optical-v1` in its generic form, built and merged as Part B (records 430 and 520; PR #659 at 2d5c7cf2) with `gamma` an input: the flight in the wall function's declared set at `1 + gamma` and the turn weighted by `(E^2 + 3 gamma` **p** `. ` **p**`) / E`; its readings in the register (examples/events/optical/README.md), the shifts' ratio at this fan unread | nothing closes it into the law: `gamma` is an input; a derivation of `gamma` from the six verbs would; the wall's and the push's terms are one, so no sum reaches 4 without the input (the mathematician's one-wall page) | series K under the key outside its pins; the law's own `0.000` a FAIL (24.3 row 14) | this entry
+| Schrodinger's equation for a free particle | 23 | `massive-rows-v1`, named, not built | its build and the run of `slits_matter` against 23.3's pins | the bright bands off the pins by more than one pixel | entry 26 |
+| The expansion as a growing wall and Hubble's law | 15, 20.4; record 279 | `expansion-v1`: the flight's wall `2 T_D a` with `H` declared, absent by default; a declared assumption | none: an assumption by the owner's word; a derivation of `H` from the law would | rows 3 and 11a to 11c (the coasting `q = -0.108` is the law's own reading, without the wall) | this entry |
+| The magnetic part: Faraday, Ampere-Maxwell, the Lorentz force, Biot-Savart | 12.1, 17.6 | `source-velocity-v1`: a row carrying its source's velocity; named, not designed | a design passing the three tests, then a run against pins | row 5b (the two-arm anisotropy), the transverse push `1 / gamma` | this entry |
+| The weak forms: the decay curve memoryless, the neutrino's passage | 18.2 with its addendum | `decay-by-crowd-v1`: the rate the family's, the crowd supplying the freshness | the run against the addendum's pins (J1's neutrons, the beam-and-bottle pin) | rows 8a and 8b under the identity (the law's own rows FAIL) | this entry |
+| The uncertainty relation's physical reading (the external reviewer's F07) | 22.1, 22.2 | the phase circle read as position and its transform as momentum, a stated identification; the finite-Fourier bounds themselves are mathematics on `Z_N` | a derivation of the reading from a detector's rule | row 10, the single opening under the one click (pinned, not run) | this entry |
+
+- **Two items of record 398's neighbourhood are not here**: the energy
+  dictionary, closed as 24.1 row 25; the minimal mass, a theorem given P8.
+- **What this entry does not do.** It adds no derivation and moves no
+  number; it names no run. Where a row says "this entry", the hypothesis
+  has no entry of its own on this page and gets one when a design with
+  pins exists (the rule of this page's head).
+

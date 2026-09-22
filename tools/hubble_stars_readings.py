@@ -850,6 +850,24 @@ def main(argv: list[str] | None = None) -> int:
             if fit is None:
                 print(f"`{run.name}`: no reading in the window [{window[0]}, {window[1]})")
                 continue
+            if math.isnan(fit.rms_fit):
+                # The register's statement (docs/EXPERIMENTS.md, series G2, the
+                # re-run under the one click; tests/test_hubble_stars_readings.py
+                # (b)): in a world whose stars birth records the `wave` set's
+                # phase never turns, so the acoustic rule's z (the slope of the
+                # record's phase) is undefined; the reading is the `source`
+                # rule of the record worlds. An undefined reading is neither
+                # inside nor outside: the criteria of this window are not
+                # counted (2026-09-21, the Replicator, record 463 (iii)).
+                print(
+                    f"{KIND_DETECTOR} `{run.name}`, the window [{window[0]}, {window[1]}): NOT READABLE "
+                    "under the acoustic rule: the stars birth records, the set's phase never turns and "
+                    "the slope of the record's phase is undefined (the register's statement, "
+                    "docs/EXPERIMENTS.md series G2, the re-run under the one click); the reading of "
+                    "these worlds is the record worlds' `source` rule (examples/events/hubble_stars/record); "
+                    "no criterion of this window is counted inside or outside"
+                )
+                continue
             criteria += print_points(run, window, fit)
             print_fit(
                 f"{KIND_DETECTOR} `{run.name}`, the window [{window[0]}, {window[1]})", fit, throw_age
@@ -920,7 +938,12 @@ def main(argv: list[str] | None = None) -> int:
             by_crowd = {
                 run.crowd: run.fits[REGISTERED_WINDOW].q_fit
                 for run in runs
-                if run.clock == clock and run.prefix == prefix and REGISTERED_WINDOW in run.fits
+                if run.clock == clock
+                and run.prefix == prefix
+                and REGISTERED_WINDOW in run.fits
+                # an undefined reading (the acoustic rule on a record world,
+                # rms nan) orders nothing
+                and not math.isnan(run.fits[REGISTERED_WINDOW].rms_fit)
             }
             crowds = [c for c in ordering["crowds"] if c in by_crowd]
             if len(crowds) < 2:

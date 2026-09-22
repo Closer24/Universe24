@@ -2604,3 +2604,218 @@ from the shipped definitions or naming a family the definitions lack.
 (4) The assumptions table's uncertainty row: "an identity on the
 circle; the physical identification a stated hypothesis (22, assumed)".
 
+### After the merge (2026-09-21, about 23:30Z): the conditional derivations the cut removed are hypotheses on the tree
+
+The Boss's assignment under the owner's GO (its record to follow): every
+conditional derivation the cut removed (record 454's criterion) has one
+status on the tree, a declared hypothesis outside the law, docs/HYPOTHESES.md
+entry 27, each with its condition, what closes it and what refutes it;
+DERIVATIONS_BEAM 24.5 links to it. The paper is unchanged: it carries
+them as HYPOTHESIS or OPEN rows without a number since wave 30.
+
+### The bijection theorem restated on the GameBoard alone (the owner's word, 2026-09-21, about 23:50Z)
+
+The owner's question: why lean on the apparatus's record if only a
+detector measures? Theorem th:bijection and its proof no longer lean on
+the engine's event record (a host diagnostic read by no rule): the
+interval is injective on the rows' weights, multiplicities and phases,
+the GameBoard's state alone; a row's age is its count since its last
+event by Definition def:rules, so a split, an event, restarts it at 0
+by definition and loses nothing; the click is the one deletion. The
+read-out paragraph of Part I says the same. No number moved; 38 pages.
+
+### Newton and Poisson are checked on GameBoard readings, labelled so (the owner's word, 2026-09-22, about 00:30Z)
+
+The owner: "Make sure the law is clear. Newton and Poisson measured after
+a detector. Nobody measures the board. Make sure the law is clear in the
+Highlights." The Highlights carry the rule (records 277 and 281); the
+paper applied it to the register's rows but not to the checks of series
+C and E, which are probe readings of the GameBoard (no detector in those
+worlds). Every such check now says so: the consequences table's rows for
+Gauss, Newton, Coulomb, Poisson, the field's Gauss law and the redshift;
+the Newton and delay sections' "registered" sentences; the rings table's
+caption; the table's legend. Newton's and Poisson's measurement after a
+detector is a run not made, named as such; the owner's word sent to the
+Boss for Highlights 5.4 and the register's labels.
+
+### No probe reading of the GameBoard in the paper (the owner's word, 2026-09-22, about 00:50Z)
+
+The owner: "No probe reading that samples the board in the paper at all;
+it has no meaning without a detector." Every series C and E number left
+the paper: the rings table, the Gauss, Newton, Coulomb, Poisson, field
+and redshift checks (now "no detector reading registered; the run after
+a detector not made"), the equivalence principle's, the third law's and
+the retardation's integers, the Coulomb coefficients, the two fields'
+constants and the strong-field rate ratios; the derivations stand as
+derivations, and series T (a detector's reading of the clock's field at
+two distances) is the field's one measurement. Reproducibility no longer
+names series C's fingerprint.
+
+## The thirty-page plan (the owner's instruction of 2026-09-22, its record 573; step 1 of the Boss's order, 2026-09-22, 00:25Z)
+
+The owner's instruction (translated by the Boss): thirty pages in all,
+twenty-three of body, four of references, three of appendices; the title
+and the abstract counted, no title page; the paper built around the
+general formula, its implementation in the simulator and the physical
+formulas derived from the model's rules; the introduction says how the
+work with the simulator led to the results and the derivations; the
+general formula on the first page with a short explanation, its full
+definition in the next chapter; every central derivation states its
+relation to the law. This section is the plan only (step 1); the cut
+(step 2) waits on the Boss's word after the mathematician's and the
+physicist's checks of the statuses below. The base is head b684ba0b
+(37 pages after the removal of every probe reading; the Boss's order
+named 9e1dbbef's 39). The measurement rule throughout: records 281, 562
+and 564 (only a detector's reading is a measurement; no GameBoard number
+stands as one; every external entity is a detector or an emitter).
+
+### 1. The page map: today's 37 pages onto the owner's 30
+
+| Pages | The owner's content | From today's paper (its pages) | What unites, what is cut, what moves | Expected |
+| --- | --- | --- | --- | --- |
+| 1-2 | abstract and introduction: the general formula, the physical idea, the simulator's role, the new contribution; the map of results (proved, shown numerically, open) | the abstract and the introduction (p1-3: "One law", "What this paper carries", "Method", the notation table) | the abstract to about 1200 characters; Eq. (1) printed on page 1 with four lines of meaning (section 4 below); one new paragraph, "How the simulator led to the results" (the runs registered before the text, the pins, the second runner, the derivation record: the path from a run to a derivation, from PLAN.md's history); the map of results as one short list (proved: the theorems; numerically: the detector readings of pages 19-21; open: Newton's and Poisson's detector runs, the muon under the law, the harmonic constants); "What this paper carries" cut; the notation table to appendix B | 2 |
+| 3-5 | the law and its implementation: variables, operations, rates, walls, neighbourhood, time; rules apart from parameters and initial conditions; a hand-worked update; its realisation in the code | Part I (p4-10): the postulates P1-P10, the assumptions table, Eq. (1) and the six operations, the state, the components, the two blocks, the read-out, the five statements, the inputs | the postulates and the five statements united into one definition list (the Node and its six Ports, the interval, the row and the body as the two kinds, the accumulators with rate and wall, the six operations, the click as the one read-out, the least-rank click P10 as an axiom of the apparatus); the assumptions table cut (each row's content returns in its formula's five-step path); "the inputs" becomes "rules, parameters, initial conditions": the world file's families, widths and apparatus as parameters and initial conditions, the law as rules; NEW: the hand-worked update, a row on a heading: rate 2 S_1 N_l = 128 against the wall 2 T_D = 220 (T_D = floor(sqrt(3) x 64) = 110), the accumulator 128, 256 (an event, 36), 164, 292 (an event, 72), 200, 328 (an event, 108), 236 (an event, 16): Links at the intervals 2, 4, 6, 7, the pace 128/220 = 0.5818 Links per interval, the heading's pace the paper already carries; and how the code realises it (the step of an interval in docs/ENGINE.md, the accumulator per component, the carry as the event; the module and function ENGINE.md names) | 3 |
+| 6-7 | geometry and symmetries: the directions, c = 1/sqrt 3, the geometric bound, the implementation's choice, what a detector measures | the group paragraph and th:group (p9-10); prop:pace and rem:nodispersion with the octahedron figure (p22-23) | united here: the 48 signed permutations and the 24 rotations (th:group, statement and the two-line proof), the fan of directions and the flight table (D, tau), the wall T_D as the implementation's choice among few (P9), the Courant bound and the lattice Boltzmann sound speed as the geometric bound (the literature in one sentence), no dispersion by construction (the remark's first half); what a detector measures: series Q's 290 of 290 face clicks at the derived interval, Node and face, the pace 0.5718 to 0.5893 (DETECTOR), series L7's cone, two rows at the same age 29 (DETECTOR); the isotropy bound on N_l from nature's 10^-18 (row 5a); the octahedron figure kept small | 2 |
+| 8-10 | conservation and the forces: conservation to flux to Gauss to 1/r^2; the coupling assumptions, the shell mean, the constants' standing | the books (I5), the Newton and Coulomb section (p14-15), the INPUT rows of the table | the chain in five steps: the books exact at every operation (P3, P5), the walk as a translation, Gauss exact for a closed surface, the shell mean over the fan and Gauss's circle problem, the bilinear push, Newton's inverse square with G = K eta / (4 pi N_w), the equivalence principle and the third law from the step rule, Coulomb with the same constant and the charge as a declared rho; the coupling assumptions stated (two additivities, 24.2); the constants' standing (G a formula of the release rate, the fan and the width, the width an input; rho an input, the hierarchy not the law's); the retardation and the saturation as the two departures; no detector reading of any of it, said once; the drive as built on main (per axis) | 3 |
+| 11-12 | the delay field: the age field, the delayed potential, Poisson, the boundary assumptions, the relation to clocks | the delay section (p15-17) and the light paragraph | the two fields of one stream and the retarded wave equation (5.1) with the assumptions named (the dense fan P >> r, the open box, the shell mean); the clock's redshift at first order under the calibration a_tau = G M / (r c^2), assumed, and the second-order difference (no horizon); the relation to clocks measured after a detector: series T (the form at two distances, 1.907 for the pinned 1.909 against nature's 2.00, replicated; row 12) and the crowd-clock pages (measured once, entries drafted); light in two sentences (no optical metric; series K's 0.000 DETECTOR against nature's 1.75; optical-v1 a hypothesis with gamma an input) | 2 |
+| 13-16 | measurement and the quadratic form: the click, the splitter assumption, the central proof; Planck, de Broglie, the uncertainty relations, with what is derived and what is defined | the click model (p21-25 less the pace parts), the lattice Gleason (p17-19), the Planck and uncertainty rows | the record as an element of the group ring, the split, the rotation, the merge, the evaluation at the roots of unity, the ladder and the click (def:row, def:rules, def:click, in one page); the splitter's conservation as the measurement axiom beyond the six operations, stated as an assumption; th:gleason and its proof (the central proof, one page); the harmonic constants not derived and the least-rank click P10 as the apparatus's axiom (definition); Planck's E = h f and de Broglie's lambda = h / p as identities under the declared dictionary, h an input (24.1 row 25: definition or input); the uncertainty relation: the support, entropic and Weyl statements as mathematics on Z_N, the identification of the circle as position and its transform as momentum a hypothesis (F07); the isometry and bijection theorems stated in one line each, their proofs to appendix A; the "in one sentence" and "GameBoard and circle" paragraphs compressed; the tables' rounding (N_t = 256, the norm's window) to appendix B | 4 |
+| 17-18 | Bell and CHSH: from weights to counts and correlations, the finite-resolution result, its limit, no-signalling | th:marginals and th:bell (p26-27), the Bell section (p29), the one prediction (p31-32), fig:sofn | the pair's joint weights, the rungs and the counts (eq:joint, eq:rung), E(a, b) and S; th:marginals (exact marginals, the one gather) and th:bell (S(N) exact, 181/64 at the powers of two 512 to 8192, 5793/2048 at 16384 and 32768, the limit 2 sqrt 2 with the bound eq:ebound), with the proofs' decisive steps; the prediction stated here as the law's number (eq:prediction) with its criterion; the comparison with Poh et al. (1.05 standard errors) and the loophole-free experiments moves to page 21; fig:sofn kept at half width or cut (the numbers are in the text) | 2 |
+| 19-21 | the simulator's checks and the comparison with nature, separately: (a) the code implements the law, (b) the numerical checks of the formulas, (c) the comparisons with measurements; predictions, results, deviations, failures | the measurements (p27-29), the confrontation with nature (p19-21), the differs section's comparison, the replications | (a) one paragraph: the second runner's bit-exact replications (record 353's rule; series L, T and 15 more worlds REPLICATED), the books balanced at every interval, the engine's inverse interval on worlds without a measured event, the rule's tests (the crossing rule, the rounding at 63/1, 31/1, 125/3 pinned before the run): computations that the code implements the law, not measurements; (b) the representative detector checks of the formulas (section 3 below), one compact table; (c) the confrontation register as one table of the detector rows with their verdicts (section 3 below), the pinned rows in one line ("not run"), the prediction against Poh et al., the twelve failures named as the law's results | 3 |
+| 22-23 | discussion and conclusions: what is proved, what the runs support, what the observations support; the limits and the next decisive checks | What is new, What is not claimed, the hypotheses paragraph, the continuum limits, Lorentz, the literature (p29-34) | united: proved (the theorems and the exact identities), supported by runs (the detector readings of pages 19-21, each measured or replicated), supported or refuted by observations (four PASS, twelve FAIL, the decisive three: the unslowed clock, the bending, the deceleration); the limits in one paragraph (Tsirelson as a limit, the cone, the two conservations; not a limit: Lorentz invariance, Einstein's equation); Lorentz in one paragraph (the law's falsifiable row, record 270's decision, covariant-readings-v1 as a hypothesis with series S's face clicks 369 and 345 and z = 0.3674 DETECTOR, its one-axis domain); the hypotheses named in one sentence with HYPOTHESES 27 on the tree; the next checks that decide: Newton's and Poisson's detector runs, the muon in flight under the law, a CHSH measurement at 1e-4, the bending under optical-v1's key against its pins; the literature in one paragraph (the finite kinematics, the lattice gas, the automata, Bohm, PR boxes); fig:square cut (its one equation line stays) | 2 |
+| 24-27 | references: the derivations' literature, the methods, the experimental data | the bibliography (p35-37, 92 items) | the literature items kept (about 60: Bell, CHSH, Tsirelson, Gleason, Weyl, Schwinger, Courant, the lattice gas and automata, Bohm, Spekkens, the experiments Hensen, Giustina, Shalm, Poh, Grangier, Sinha, Tonomura, Bailey, Botermann, Nagel, Nairz, AME 2020, PDG, KATRIN, Ashby, Pound and Rebka, Delva, Planck 2018, Riess, Perlmutter, Blondin, Lubin, Tolman, Huxley, Donoho, Maassen, Kennard, Robertson, Shannon, Landauer, Meyer, Bialynicki-Birula, Arrighi, HPP, FHP, Qian, Jarrett, Shimony, GRW, Fine, PR); the repository items (the derivation, the registers, the notes, the designs, the checks) move to appendix C as the reproduction list with paths and the commit; four pages at the class's size (a full page each for three groups, one for the data) | 4 |
+| 28-30 | appendices and reproduction: essential auxiliary proofs, technical details, reproduction instructions with a defined code version and the runs' parameters | the theorems' proofs, the notation table, Reproducibility, the AI line, the check scripts | A (1 page): the proofs of th:isometry, th:bijection (as restated on the GameBoard alone) and prop:pace, compressed; B (1 page): the notation table compact, the tables' rounding and the norm's window, the click's rung formula, the tie rule; C (1 page): the archived version (the tagged release after the merge; the commit named), the worlds and their fingerprints (ff5c382d672f, 731d0f56c9f9, 4bf55a62e6fd, series S's 24e0c1ba, series T's afb533a), the check scripts with their outputs, NUMBERS.md as the one source per number, the register's replications, the runners' commands; the AI line | 3 |
+
+Sum: 2 + 3 + 2 + 3 + 2 + 4 + 2 + 3 + 2 = 23 pages of body, 4 of references, 3 of appendices: 30. The figures kept: the octahedron (small, pages 6-7), the two-slit clicks (small, page 20) and S(N) at half width (page 18) if the count allows; fig:square cut. The tables kept: the compact consequences table folds into the five-step statuses of section 2 (one short table on page 2, the map of results) and into the checks tables of pages 19-21; the assumptions table cut; the notation table to appendix B.
+
+### 2. The central formulas, each on the five-step path, with its status and the section of DERIVATIONS_BEAM that proves it
+
+Status words, the owner's: "derived from the update rules implemented in the simulator" (a proof exists), "numerical finding" (a relation found in runs alone), "hypothesis" (a relation under a condition or an identity beside the law), "definition or input" (a relation defined in advance in the model). The five steps per formula: (1) the update rules it starts from, (2) the assumptions and approximations, (3) the decisive steps, (4) the domain and the free parameters, (5) the comparison with the simulator's detector readings and with nature.
+
+| Formula | Status on the path | Proved in | The rules it starts from; the assumptions; the free parameters | Compared with (DETECTOR only) |
+| --- | --- | --- | --- | --- |
+| Eq. (1), the map per component | definition (the law) | section 0; LAW.md | the accumulator, the rate, the wall, the cap, the carry as the event; the six operations | none: a definition |
+| c = 1 / sqrt 3 Links per interval, isotropic within 1 / T_D | derived from the update rules | 13.2, 11.1; prop:pace | the flight table (D, tau) with the wall T_D = floor(sqrt(3 abs(D)^2 N_l^2)); the fan declared; N_l free (a grain) | series Q's face clicks (290 of 290 at the derived interval; the pace 0.5718 to 0.5893), series L7's cone (the age 29 on both rows); nature: the isotropy bound on N_l (row 5a, BOUND) |
+| The 24 rotations and the 48 with the hand | derived (a theorem) | this paper, th:group | the six Ports and the hand bit | none: mathematics |
+| Gauss's law of a free family's flux | derived from the update rules | 3.1 | the walk as a translation, the books; a closed surface no periodic axis crosses, no absorber inside | no detector reading; the run after a detector not made |
+| The shell mean and Newton's inverse square; G = K eta / (4 pi N_w); the equivalence principle; the third law | derived from the update rules (in the shell mean) | 3.2, 3.3; 24.2 | the bilinear push on the arriving rows' first moment; two additivities; the shell mean over the fan; N_w an input (units), eta the release rate | no detector reading; the run after a detector not made (a body carrying a lamp beside a source, its births' Doppler read at a detector) |
+| Coulomb's law, k_C = G, the sign | derived from the update rules (in form) | 3.4 | the charge column; rho an input (the hierarchy not the law's) | no detector reading |
+| The two fields of one stream, the retarded wave equation, Poisson's equation | derived from the update rules, in the limit of every direction | 5.1, 5.5 | the release, the flight, the presence and the age moment as moments; the dense fan (P >> r), the open box; the coefficient tau_L | no detector reading of the fields; the clock's form at two distances: series T (row 12, 1.907 for 2.00, PASS under the age word, replicated) |
+| The clock's redshift, first order; the second-order difference | derived under a calibration (a_tau = G M / (r c^2), assumed) | 5.2 | the owed count; the calibration free; the clock's word P9 (the age moment, an assumption) | series T (as above); the strong field not measured after a detector |
+| The click's weight, a positive quadratic form of power 2 (Born's form) | derived from the update rules plus one axiom of the apparatus (the balanced splitter's conservation) | 6.5, 6.6; th:gleason | the phase rotation, the splitter's conservation for every pair, non-negativity; the harmonic constants c_j not derived; the least-rank click P10 a definition | series L's cells 63/1 and 27, 5, 5, 27 at N = 64, 31/1 at 32 and 125/3 at 128 (clicks, pinned before the run; the power's window [1.917, 2.012)); nature: row 2c (Sorkin's kappa, compatible), rows 2a, 2b (the visibilities, FAIL by 0.014 and PASS) |
+| Planck's E = h f and de Broglie's lambda = h / p | definition or input (identities under the declared dictionary; one constant h = h_q N = h_A, its value an input) | 6.4, 7.2; 24.1 row 25 | the release's cost per phase step and the turn per Link | series H's closure on the digital circle (2.041 to 2.000; the entry's reading kind to be confirmed by the register's audit) |
+| The uncertainty relation | mathematics on Z_N (derived); the physical identification a hypothesis | 22 | the evaluation at the roots of unity; the identification of the circle as position and the transform as momentum | none after a detector (row 10 not run) |
+| Young's spacing | derived from the update rules (the limit) | 7.1 | the two paths' phase difference, the fan's grain | series L2b's clicks under the wheel: the bright pixels 19 to 51, the dark 0 to 3, the visibility 0.966; nature: row 2a (0.98; FAIL by 0.014, the fan's grain named) |
+| Malus's law, cos^2 theta | derived from the tables (the declared rounding at 1 / 256) | the Malus note; A12 | the tables' entries in force; the rounding an input (record 328) | A12's clicks: 128 of 256 at 45 degrees exactly, 0 crossed, 64 with the third between; 219 of 256 at 22.5 degrees; nature: row 9 PASS |
+| The pair: exact marginals, no-signalling | derived (a theorem) | 6.2; th:marginals | the one gather of a record from both settings; equal weights; open beyond | series L: 32 of 64 in all setting pairs (clicks) |
+| S(N, N_t) exact; 181/64 at 512 to 8192; 5793/2048 beyond; 2 sqrt 2 the limit | derived from the update rules (a theorem with its closed form) | 6.2; 24.4; th:bell | the rungs of the ladder, the tables at N_t = 256, the settings (0, N/8, N/4, 3N/8) | series L's clicks: 176/64 at 64, 1448/512, 2896/1024, 11584/4096 (the 24.4 block, replicated); nature: Poh et al. (1.05 standard errors; row 1a Hensen PASS, row 1b the phase form FAIL) |
+| The information cost per record; the entropy identity (bits read plus bits not read = log_2 N) | derived (identities) | 6.1, 6.3, 14 | the click's one deletion; the coarse graining | the identity needs no reading; series L's units per bit only if the register labels them DETECTOR (to confirm), else the identity alone |
+| The masses: a bound set's mass as its total content; the nucleon a chain | derived in form | 19.1 to 19.5 | the strong column, the give at contact; the families' contents inputs | series R: the kicked u through the face at 63 (a face reading; the entry's kind to confirm), nature: rows 7a, 7b (series N; the register's kind to confirm), 8c (a declared input refuted) |
+| The smallest mass per kind | a theorem given the input P8 (definition or input) | 16.2 (d) | nature's whole charge, an input | none |
+| The receiver's and the source's Doppler | derived from the update rules | 2.2, 2.5, 2.7 | the crossing rule (division) | the rule's tests (a computation); series G2's z (the pointer's reading; the second runner's FAIL at head, record 408: to be restated before it is cited) |
+| The Lorentz factor absent: the counter at the rest rate, the Doppler 1 + beta, the pace per axis | derived from the update rules; a falsifiable difference from nature | 4.3, 4.4, 12, 17; the Lorentz section | the drive per axis on main, the owed count | row 4b (G2's 0.2636 against 0.315, FAIL); row 4a a pin, not run; the hypothesis covariant-readings-v1 beside it: series S's face clicks 369 and 345 against 392, z = 0.3674 (PASS in its domain) |
+| Light beside a mass: no bending, no delay | derived from the update rules (the flight blind to the crowd) | 5.4 | no rule reads the crowd into a row | series K: 0.000 pixel and 0.00 interval at the screen; nature: 1.75 arcseconds, REFUTED (24.3 row 14); optical-v1 a hypothesis with gamma an input (HYPOTHESES 27) |
+| The deceleration parameter q; the expansion | the law's coasting q = -0.108 a numerical finding of series G2; the growing wall a hypothesis (expansion-v1) | 15, 20.4 | the thrown stars; H an input under the hypothesis | row 3 (FAIL against -0.53); rows 11a to 11c pins, not run |
+| The weak forms: a step and a window | derived from the update rules; a difference from nature | 18.2 | the lifetime column, the click's filter | series J1, J2: rows 8a, 8b (FAIL) |
+| Kepler, Bohr's condition, Bradley, Newton's geodesics, Compton, E = m c^2, Schrodinger, Faraday-Maxwell, Einstein's equation, the flow inventory | open, hypothesis or not reached, one line each in the discussion; the hypotheses in HYPOTHESES 27 | 3.3, 7.2, 12.2, 5.3, 17.6, 23, 12.1, 5.5, 25 | as the tree states | none after a detector |
+
+Two register kinds to confirm before step 2, by the physicist's audit of record 562: series H (Bohr's lines behind the detector: the closure 2.041 to 2.000), series R's face reading and the read mass, series N's binding (rows 7a, 7b), series L's information-cost units, series G2's z after the replication's FAIL; any of them not a detector's reading leaves the checks tables and the register's row, per the rule.
+
+### 3. The representative checks kept for pages 19-21 (DETECTOR readings only)
+
+(a) The code implements the law (computations, not measurements): the second runner's replications bit-exact from the register's worlds at main (series L, T and the round-2 worlds; docs/REPLICATIONS.md); the books balanced at every interval in every run; the engine's inverse interval on worlds without a measured event; the rounding pins met (63/1 at 64, 31/1 at 32, 125/3 at 128; the (3, 4) split); the crossing rule's tests (toward k + 55/32 rows per k intervals, away k - 55/32, at rest k).
+(b) The numerical checks of the formulas after a detector: series Q (the pace on the six headings and the 290 directions, face clicks); series L7 (the cone, the counters' age 29); series L (the CHSH S at 64, 512, 1024, 4096; the marginals 32 of 64; the Mach-Zehnder 64/0; the (3, 4) split's cells; the two-slit clicks under the wheel); A12 (Malus at 45 and 22.5 degrees); series T (the clock's form at two distances); series S (the covariant readings' face clicks and z, under the identity); series K (light beside a mass: 0.000, 0.00); series J1, J2 (the weak forms); series G2 (z of the coasting stars, once restated after record 408).
+(c) The comparisons with nature (the confrontation register's rows with a detector reading): 1a, 1b, 2a (the clicks), 2b, 2c, 3, 4b, 8a, 8b, 8c, 9, 12 with their verdicts; 5a BOUND; the pinned rows 4a, 5b, 6, 10, 11a, 11b, 11c in one line, "not run"; rows 7a, 7b after the audit's word on series N; the prediction 181/64 against Poh et al.; the twelve failures named as the law's own results, the three decisive ones first (the unslowed clock, the bending, the deceleration).
+
+### 4. What the first page says of the general formula
+
+Page 1 carries Eq. (1) as it stands, s <- s + r; e <- sign(s) min(floor(abs(s) / d), a); s <- s - e d, with four lines: one map at every Node of a cubic GameBoard at every interval; each component of the state is a bounded integer accumulator with a declared rate r and a declared wall d, translated by its rate, counted in walls (capped at one for the drive), reduced by the walls it holds; every wall counted is an event (a Link crossed, a phase step, a count completed, a birth, a push), and nothing else happens; the rates and walls are made of six integer operations (translation, a declared integer matrix or bilinear form, the group-ring sum, a permutation, the evaluation at the roots of unity with its norm, the division with the remainder kept and the comparison); one comparison, the click, is the only read-out, and only a detector's reading is a measurement. The full definition (the state, the components, the two blocks, the read-out, the rules apart from the parameters and the initial conditions) is chapter 2 (pages 3-5); every derivation of the paper names which of these rules it starts from.
+
+### 5. The guiding statement for the cut (the owner, 2026-09-22, about 00:50Z, in Hebrew; translated; its record to follow)
+
+The owner's words: "Use only the things that are closed with us, that
+have a clear claim and a clear proof; throw out what is not clear; you
+know from the reviews what is clear and proved, use that. In my view the
+central thing in the paper is the claim that several different physical
+phenomena can be produced from one shared discrete update law and a
+small number of assumptions. The general formula is the starting point.
+The possible novelty lies in showing how the same mechanism leads to the
+geometry of propagation, to the flux and the forces, and further to
+measurement and to correlations. The decisive question is how many of
+the results the law really forces. If for every phenomenon a rule must
+be added that puts the desired result in beforehand, the law's
+explanatory power shrinks; if the same rules force several different
+results with little freedom of choice, that is the strong scientific
+contribution. So the three things must work together: the general
+formula defines the mechanism; the derivations show what follows from
+it and under what conditions; the simulator and the comparison with
+experiment check the results and their limits. In the version I read,
+the contribution that can be established now is an explicit model with
+several conditional mathematical results and numerical checks; the
+broad claim that it describes nature still needs completions. I would
+build the paper around a precise statement of the distance between
+these two."
+
+What this fixes for step 2, on top of sections 1 to 4:
+
+1. **The spine is the forcing ledger.** Every result the paper keeps
+   carries three columns in its five-step path: the rules of Eq. (1)
+   it starts from (nothing added), the assumptions added beside the
+   rules (each named once, with its kind: an axiom of the apparatus,
+   a calibration, a limit, an input), and the freedom left (the
+   parameters). The paper's central table is this ledger, one row per
+   result, so that a reader counts what the law forces and what was
+   put in: the flight table forces c = 1/sqrt 3 and the isotropy bound;
+   the walk and the books force Gauss's flux exactly; the bilinear push
+   forces the inverse square in the shell mean under the dense fan; the
+   same rows' moments force the retarded potential and Poisson under
+   the same fan; the evaluation at the roots of unity plus one axiom
+   (the balanced splitter's conservation) forces the quadratic form of
+   power 2; the one gather forces exact marginals; the rungs force
+   S(N) exactly with its limit 2 sqrt 2; no rule of the law forces the
+   Lorentz factor, the bending, the masses' values or the harmonic
+   constants, and the paper says so in the same table.
+2. **What stays: the closed results only.** The derivation
+   mathematician's closure (record 398, CLOSED) and this paper's
+   theorems: the click rule and the rung rounding (6.2); the split
+   identities and the norm rule (6.5); the group count and the second
+   law at the click as a count (14); the pace bound and c = 1/sqrt 3
+   (FORM.md 1; prop:pace); S(N) exact with the plateau 512 to 8192
+   (24.4; th:bell); the quadratic-form classification under its axioms
+   (6.5; th:gleason); the continuity equation from the books (25.4);
+   the 24 rotations (th:group); the isometry and the bijection on the
+   GameBoard alone (th:isometry, th:bijection); exact marginals
+   (th:marginals); Gauss's flux (3.1); the shell mean and Newton's
+   inverse square, and the retarded potential and Poisson, each with
+   its stated condition (the dense fan, the shell mean: 3.3, 5.1),
+   since a result with its condition written is a clear claim.
+3. **What leaves: everything without a clear claim and proof.** Every
+   "in form", "pinned, not run", "not reached" and hypothesis row
+   (Kepler, Bohr's condition, Bradley, the geodesics, Compton,
+   E = m c^2, Schrodinger, Faraday-Maxwell, the masses in form, the
+   expansion under a wall, the smallest mass's theorem given an input)
+   leaves the body; the hypotheses stay on the tree (HYPOTHESES 27)
+   and the discussion names them in one sentence as the completions
+   the broad claim needs. The DIFFERENT rows stay, because a
+   difference from nature with the law's number and nature's is a
+   clear claim (the unslowed clock, the Doppler without the factor,
+   light unbent, the weak forms' step and window, the coasting q):
+   they are the measured distance the owner asks for.
+4. **The distance, stated precisely.** The discussion (pages 22-23)
+   states in one table what is established now (an explicit model; the
+   theorems above; the numerical checks after a detector that agree
+   with the theorems: the pace, the cells, S at four N, Malus, the
+   clock's form at two distances) and what the broad claim still
+   needs, item by item with the check that would decide it: the
+   detector runs of Newton's and Poisson's laws; the muon in flight
+   under the law (row 4a, a pin); the bending under a rule that reads
+   the crowd (optical-v1's pins); the Lorentz factor (the FAIL rows and
+   the covariant readings beside them); the harmonic constants and the
+   identification of position and momentum; the masses' values; a CHSH
+   measurement at 1e-4. Nothing in between: no "reached in form", no
+   number of the board.
+5. **The abstract says the two things and the distance**: what the
+   law forces (the list of item 1), what was assumed beside it (the
+   splitter axiom, the least-rank click, the calibration of the clock,
+   the dense fan, the inputs), and that the description of nature is
+   a program with named completions, with the twelve failures counted.
+

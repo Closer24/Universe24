@@ -508,6 +508,10 @@ exactly: a wrong small condition is caught by the large system's pins.
  Form B of the body's drive was the first rule read against
 the three (record 201 of the log of 2026-09-20).
 
+## The six lines of every report (the model owner, 2026-09-21, records 530, 533, 534, 535 and 536)
+
+Every report, proposal, review finding or question a role sends to the Boss, and every one the Boss sends the owner, opens with six short lines, one each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows, never a patch beside it (record 421); (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; (4) why do this at all: what it buys the law or a measurement, and what stays unread or wrong if it is not done; (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change, a change being an option proposed with its evidence and made on the owner's word as a new line naming the one it supersedes; (6) the implementation: what changes in the tree (engine, register, documents), which identities and registrations it touches, the time end to end (the build, the runs, the review) as a host estimate, and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default. The six lines are the report's head; the evidence follows them. Every number in them is labelled DETECTOR or GAMEBOARD.
+
 ## How the team works now (the model owner, 2026-09-21, record 309)
 
 The owner's instruction: the Skills describe the team as he builds it now. The

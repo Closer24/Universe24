@@ -541,19 +541,29 @@ def test_the_pin_worlds_parse_run_and_carry_their_pins():
         plain.inverse_step()
     expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expected["format"] == generator.EXPECTATIONS_FORMAT
-    assert [expected["worlds"][n]["shift"] for n in ("mass_g0", "mass_g1", "near_g0", "near_g1")] == [
-        -1.93,
-        -3.86,
-        -2.42,
-        -4.83,
-    ]
-    assert [expected["worlds"][n]["delay"] for n in ("mass_g0", "mass_g1", "near_g0", "near_g1")] == [
-        2.68,
-        5.36,
-        2.17,
-        4.34,
-    ]
+    # The deflection pins: mass and far at both gammas, near at f = 1; near
+    # at f = 2 is a capture reading (records 505 and 540), its old shift pin
+    # kept beside it as superseded.
+    assert [
+        expected["worlds"][n]["shift"] for n in ("mass_g0", "mass_g1", "near_g0", "far_g0", "far_g1")
+    ] == [-1.93, -3.86, -2.42, -1.69, -3.37]
+    near_g1 = expected["worlds"]["near_g1"]
+    assert "shift" not in near_g1 and near_g1["shift_pin_superseded"] == -4.83
+    assert near_g1["taken_by_the_mass"] == 582 and near_g1["taken_bracket"] == 146
+    assert near_g1["reading"].startswith("capture:")
+    assert [
+        expected["worlds"][n]["delay"]
+        for n in ("mass_g0", "mass_g1", "near_g0", "near_g1", "far_g0", "far_g1")
+    ] == [2.68, 5.36, 2.17, 4.34, 2.15, 4.29]
+    assert expected["worlds"]["far_g0"]["lamp_rate"] is None
     assert expected["ratios"]["mass"]["expected"] == 2.0 and expected["brackets"]["shift_pixels"] == 0.5
+    assert (
+        expected["ratios"]["mass"]["bracket"] == 0.25 and expected["ratios"]["near"]["bracket"] == 0.25
+    )
+    assert (
+        expected["ratios"]["far"]["bracket"] == 0.66
+        and expected["ratios"]["far"]["delay_bracket"] == 1.04
+    )
 
 
 def long_world(

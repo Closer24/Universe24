@@ -335,6 +335,26 @@ new, every line labelled:
   of 64 at the pinned 524 to 529 and up to 3 after), the counts read
   171027 to 303435; the shell's clicks 8 within the run (was 64), the
   median 634, the width 0.0110 (was 0.038); the content 3.
+- The two J1 worlds at the cap 1024 (2026-09-21, N check's run on `main`
+  c47c5fcd, record 545; the 650-interval lines above are kept as they
+  were, the reading at its own cap beside them, one line per reading with
+  its cap, no pin moved; entered by the Replicator, item 4 of the Boss's
+  order, the numbers verbatim from the record): the 650 intervals reached
+  56 of 64 and 32 of 64 as the declared duration reached them, not the
+  lifetime's count; at 1024 every neutron fires, 64 of 64 in both worlds
+  (GAMEBOARD), the last trigger ticks 671 (`j1_lattice`) and 689
+  (`j1_source`); DETECTOR: the shell's 64 beta clicks in each; the
+  10th-to-90th-percentile width over the median 0.0787 in `j1_lattice`,
+  inside the step reading (below 0.1), and 0.1147 in `j1_source`, OUTSIDE
+  it (above 0.1), from the wider spread of its trigger ticks (6 distinct
+  against 4); the digests of the runs `j1_lattice` state c6f9e354...,
+  events 75b7e537..., audit 9a812656...; `j1_source` state b1bdb151...,
+  events 2008b437..., audit 44642763... (the full digests in N check's
+  report). Whether the step's 0.1 is the lifetime's own bracket or the
+  run's spread is a question for the chief physicist, not decided here;
+  the outside reading is recorded as it is. `expectations.json` is the
+  generator's warm-run output (the `become` ranges) and carries no run
+  block, so this reading lives in this README and in EXPERIMENTS.md.
 - `j3_deuteron`: the transformation at 577 (568 on main's engine, the
   register's tick under the fraction-free law; 577 was the first stage's),
   the count read at the trigger 152471 (was 128590): the trigger moved 9
