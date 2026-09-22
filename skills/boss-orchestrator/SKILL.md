@@ -364,3 +364,7 @@ A rule enters the law only if it is generic (one primitive with declared integer
 ## A formula gives, a run proves (the owner, 2026-09-21, record 205)
 
 No run is ordered without its derived expectation and the named vector it will read; the register entry carries the derivation's section; a run without one is a research run and is ordered as such; skills/workflow.md, "The main course".
+
+### Modern algebra and limits first, a run only after, if needed (the owner, 2026-09-22, record 799)
+
+Everything that can be shown in formulas in modern algebra is shown in modern algebra, with its limits; a run is ordered only for what the algebra cannot give, and after the algebra (skills/workflow.md, the refinement of record 762). A run Outside is the same kind of run as any other: the engine runs with its declared conditions (the emitters and detectors placed) and the reading is the clicks alone. The Boss states, in every derivation order, the assumption of the Outside's locality: velocity Outside is a click carrying information to the neighbouring Node and the packet received there; a packet passes from place to place and never jumps; every passage goes Outside to Inside, moves there, and comes out again, so the Outside inherits the Inside's locality through the conversion.

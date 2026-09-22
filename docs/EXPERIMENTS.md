@@ -2358,6 +2358,82 @@ states "exactly" and means integer equality at every tick.
   outside over the four; the table with the forms and the detectors' own
   clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
 
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md: the GameBoard
+  holds the clock of every experiment read through a detector, and a
+  detector's time is the clock of the Node it sits on, the interval count
+  less what the crowd at that Node owes through the age wall; the clock
+  audit's finding 4, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the four worlds on main's engine, the
+  age word of record 394, by `tools/run_series.py`, read by
+  `tools/hubble_readings.py` with its replay; every number DETECTOR unless
+  marked).** The pins restated BEFORE the numbers were read, from the
+  closed form: the detector at the centre sits in its six masses' crowd,
+  so its clock counts r_w self-creations per interval over a window (its
+  age from its state at the window's edges over the intervals between
+  them: a step of the replay, GAMEBOARD until the strict run with the
+  reader's own lamp, examples/events/reader_clock's form; over the whole
+  run its own state, age / (age + waited), DETECTOR), a phase step of
+  Delta t intervals is r_w Delta t of its counts, and 1 + z_d = r_w (1 +
+  z), tau the row's own clock (its age at the click) unchanged (the
+  product H_d t_0 is the same under either convention of tau: with tau
+  and t_0 in the detector's count, tau_d = r_w tau and t_0,d = r_w t_0,
+  H_d = H per unit of tau_d and H_d t_0,d = r_w H t_0 as well, so the
+  Milne pin is convention-free; the physics-rule reviewer's check on PR
+  #777); (i) the
+  reading's formula (1 + z_d) = (1 + k)(1 + v / c) r_w within 2 % (the
+  same ratio, both sides in one clock); (ii) the throw's own form z_d =
+  (1 + v / c) r_w - 1, a source with v / c below 1 / r_w - 1 reading blue
+  (rms reported, no bracket: v / c declared is GAMEBOARD); (iii) the
+  linear law through the clock's own zero z_d(0) = r_w - 1, H_d = r_w H,
+  the Milne pin H_d t_0 = 1 within 10 % in the coasting worlds and H_d
+  t_0 < 1 in the pushing ones (the brackets of 2026-09-20, on the reading
+  in the detector's clock); (iv) the three forms 1 + z_d = r_w (1 +
+  form(H tau)), every rms r_w times the lattice's (the nearest form
+  unchanged), the coasting form's rms below 0.02; (v) q_eff,d = 2 ((q_eff
+  / 2 + 1) / r_w - 1). The reading in the lattice's clock (the tick count
+  of the `record` lines, every line of this entry until today) is printed
+  by the tool as [GAMEBOARD, the lattice's clock] and counted in no
+  criterion; the lines above stand as history with their kind.
+  The reading, the late window [300, 400): r_w = 0.7500 (`coasting_scalar`),
+  1.0000 (`coasting_age`), 0.3400 (`pushing_scalar`), 0.9600
+  (`pushing_age`) [GAMEBOARD, the replay's edges]; z_d(0) = r_w - 1 =
+  -0.250, 0, -0.660, -0.040; the sources reading blue 15, 0, 20 and 0 of
+  24 (the threshold v / c < 0.333, 0, 1.941, 0.042); H_d t_0 = 1.1770
+  (outside 1 +- 10 %; the lattice's clock 1.5693, outside), 1.0123
+  (inside; 1.0123, inside), 3.1243 (outside H t_0 < 1; 9.1890, outside),
+  1.0425 (outside; 1.0860, outside); the earlier windows [100, 200) and
+  [200, 300): r_w = 0.8600 and 0.8000, 1.0000 and 1.0000, 0.4200 and
+  0.4000, 0.9800 and 0.9700; H_d t_0 = 0.8898 and 1.0148 in
+  `coasting_scalar` (the lattice's 1.0346 and 1.2685: the first window
+  moves from inside to outside, the second from outside to inside),
+  0.8718 and 0.9667 in `coasting_age` (unchanged), 1.9708 and 2.8202 in
+  `pushing_scalar` (4.6923 and 7.0505; outside as before), 0.8280 and
+  0.9829 in `pushing_age` (0.8449 and 1.0133: the second window moves
+  from outside to inside on H t_0 < 1); the coasting form's rms and the
+  nearest form keep their verdicts in every window (an rms times r_w
+  crosses no bracket here); the reading's formula 288 of 288 inside 2 %;
+  0 record checks failed; 304 readings inside and 32 outside (the
+  lattice's clock on the same replay: 303 and 33, the line of record
+  394). The verdict: in its own clock the detector at the centre reads
+  the whole diagram blue-shifted by the crowd's well at its Node (the
+  slowest sources with a negative z_d wherever its clock runs below the
+  lattice's) and a Hubble rate r_w times the lattice's; the three
+  verdict words that move are the near fit's H t_0 in the two earlier
+  windows named above, and the registered late window keeps every
+  verdict word; the strict form (the reader's own lamp at the centre, its
+  births its own clock, the per-window rate then a detector reading) is
+  the re-run the audit lists as tier (c) 3. The presence word's rows
+  above (the fraction-free re-read of 2026-09-20; the detector's rates
+  0.8275, 0.9950, 0.2925 and 0.9800 over the run) restated by the same
+  form on the register's own numbers, GAMEBOARD arithmetic of the record
+  (main's engine no longer replays the presence word without a
+  declaration): H_d t_0 at t_0 = 350 reads 0.8415 (outside; 1.017 read
+  inside), 1.0119 (inside), 0.3873 (inside H t_0 < 1; 1.324 read outside)
+  and 1.0643 (outside; 1.086 outside); z_d(0) = -0.1725, -0.0050, -0.7075
+  and -0.0200, the sources reading blue 9, 0, 24 and 0 of 24 (v / c below
+  0.2085, 0.0050, 2.4188 and 0.0204); the reading's formula unchanged.
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
@@ -2544,6 +2620,55 @@ states "exactly" and means integer equality at every tick.
   -0.950, `record/double_scalar` -0.950 (the fit's grid ends at -0.95;
   their H (t_0 + T_0) 3.42, 3.37, 4.46), the `_age` and `_none` worlds
   -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
+
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md; the clock
+  audit's finding 5, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the eighteen worlds, the nine base
+  worlds and the nine of `record/`, on main's engine, the age word, by
+  `tools/run_series.py`, read by `tools/hubble_stars_readings.py`; every
+  number DETECTOR unless marked).** The pins restated BEFORE the numbers
+  were read, series G's closed form with the detector's clock read off
+  its own record over the run (age / (age + waited) of its state in
+  `run.json`, DETECTOR; the per-window step of series G, the replay's
+  edges, not made here): 1 + z_d = r (1 + z) per star, the luminosity the
+  clicks per the detector's own count, L_d = L / r, so that the pin L_d
+  (1 + z_d) = 1 within 5 % is clock-free and the reading's formula (1 +
+  z_d) = (1 + k)(1 + v / c) r keeps its ratio; the free fit's q unchanged
+  (a shape) and its H_d = r H, so the brackets on q stand as pinned and
+  the bracket on H (t_0 + T_0) is read on r H (t_0 + T_0); the three
+  forms 1 + z_d = r (1 + form(H tau)) with every best-H rms r times the
+  lattice's, the nearest and the farthest unchanged; the step rule's
+  longest burst (a `step` record, the host's view) out of the counted
+  criteria, printed as a GameBoard diagnostic (the audit's finding 10).
+  The reading, the record worlds in the registered window [300, 400):
+  r = 1.0000 in the three `none` worlds (no clock: nothing moves; q =
+  -0.104, +0.384, +1.116 and H (t_0 + T_0) = 1.0232, 0.9074, 0.7795 as
+  the line of record 394 read them on the head), 0.4825 in
+  `coasting_scalar` and `gravity_scalar`, 0.3725 in `double_scalar`
+  (z_d(0) = -0.5175 and -0.6275: every star read blue at the centre's
+  Node), 0.9875 in the two `age` worlds and 0.9725 in `double_age`;
+  H_d (t_0 + T_0) = 1.6494 (`record/coasting_scalar`; the lattice's
+  3.4185; outside 0.90 .. 1.10 in both clocks), 1.0658 (`coasting_age`;
+  1.0792; inside), 1.6278 (`gravity_scalar`; 3.3738; outside 0.84 ..
+  1.03 in both), 0.9445 (`gravity_age`; 0.9565; inside), 1.6615
+  (`double_scalar`; 4.4603; outside 0.77 .. 0.94 in both), 0.8397
+  (`double_age`; 0.8634; inside); q of the free fit unchanged (-0.950 in
+  the three `scalar` worlds, the fit's grid edge, as the line of record
+  394); the reading's formula 648 of 648 inside 2 %, the luminosity 648
+  of 648 inside 5 %; 0 record checks failed; 1340 readings inside and 19
+  outside (the eighteen burst lines out of the count; the nineteen
+  outside the `scalar` worlds' q, H, nearest, farthest, k and ordering,
+  the lines of record 394, and `record/double_none`'s q above its
+  bracket). No verdict word of this series moves in the detector's
+  clock: the restatement scales z and H by r and the brackets that could
+  move (H (t_0 + T_0) in the three `scalar` worlds) are outside in both
+  clocks by a factor 1.5 to 1.7. The caveat of the line of record 394
+  stands: the record worlds on the head do not reproduce the second
+  run's registered readings (gravity +0.384 for +0.922), so no number of
+  this series is re-registered; the lines above stand as history with
+  their kind, and this line is the detector's-clock reading of the
+  head's replay, dated.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -3867,6 +3992,87 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   is re-read on a longer run is the model owner's question, flagged
   ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
 
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md; the clock
+  audit's finding 6, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the eleven worlds on main's engine,
+  the age word, by `tools/run_series.py` at their declared durations and
+  the two J1 worlds again at the cap 1024 of record 545, read by
+  `tools/weak_readings.py`; every number DETECTOR unless marked).** The
+  pins restated BEFORE the numbers were read, from the closed form: (i)
+  the trigger is read off the neutron's own `become` line as the count
+  its clock read at the trigger, `counted` (its own clock reads its key
+  `at` = 512 at the trigger by the law: the self-creation whose age
+  reaches the key), pinned within the range of counts the generator
+  wrote over the dwell period (`counts` of `expectations.json`, the
+  range the trigger ticks were derived from by at + floor(at x c /
+  2^20)); the trigger tick `triggered` is the record's ordering, printed
+  as [GAMEBOARD, the lattice's clock] and counted in no criterion; (ii)
+  the survival curve at the shell keyed by the betas' births, the
+  click's tick less the beta's age on its click line (`reading` under
+  `reads: "age"`), so that the flight to the shell (ages 17 to 41) is out
+  of the abscissa and its 10-to-90 width over its median is the
+  triggers' spread alone, against the step pin below 0.1 (nature's ln 9
+  / ln 2 = 3.17): [GAMEBOARD, the lattice's clock], printed and counted
+  in no criterion, since the tick less the row's age is the trigger's
+  tick, the record's ordering, and no clock is under it (the neutrons'
+  own clocks all read the key, a delta; the physics-rule reviewer's
+  correction of 2026-09-22 on PR #777), the curve in the click ticks
+  printed beside it likewise; the detector reading behind both, a lamp
+  at the shell counted between the clicks, is not yet made (tier (c));
+  (iii) the W's delay is the row's own clock,
+  its lifetime 1 (a row born at a self-creation is at one Link at the
+  age 1, m(1) = 1), the proton's click read as its own record (one click
+  of `w`, one unit, the content, the charge), the click's tick 9 the
+  ordering, not counted (the proton has no `reads: "age"` entry, so the
+  W's age is not on its click line; the reading of the age would need
+  that word, a world-file change, not made). The reading at the declared
+  durations (650, 650, 700, 700, 600 and 16 intervals): `j1_lattice` 56
+  of 64 fired, the counts at the trigger 154476 to 338172 within their
+  pinned ranges where fired, the criterion outside on the 8 unfired (as
+  the tick criterion was); the shell's 20 clicks in the betas' births
+  from 602 to 621, the median 621, the width over the median 0.0306
+  [GAMEBOARD, the lattice's clock] (inside the step pin, not counted; in
+  the click ticks 0.0265, the line of record 394); `j1_source` 32 of 64
+  fired, the count criterion outside on the 32 unfired; 8 clicks all
+  born at 607, the width 0.0000 [GAMEBOARD, the lattice's clock] (0.0110
+  in the ticks); `j3_deuteron` the count 152471 at the trigger inside its
+  range 47762 .. 152471 (inside; the tick 577 inside 535 .. 586), the
+  beta born at 577, clicked at 590; `j3_deuteron_crowd` never, inside;
+  `j3_neutron_free` the count 0 at the trigger (inside), the tick 512
+  the ordering; `w_exchange` one click of `w` of one unit, the content
+  1839 and the charge [0, 1] after, nothing on the border, the momentum
+  exchanged (5 of 5 inside), the tick 9 not counted; 0 record checks
+  failed, 29 readings inside and 4 outside, 1 diagnostic and 10
+  lattice-clock lines printed and not counted (the line of record 394:
+  13 inside, 5 outside; the tool at 11edfe9e read 31 and 4 with the
+  births' curve counted, until the reviewer's correction). At the cap 1024 (record 545's reading, the
+  digests as there): `j1_lattice` 64 of 64 fired, the counts 154476 to
+  338172 every one within its pinned range (inside), the trigger ticks
+  602 to 671; the shell's 64 clicks in the betas' births from 602 to
+  671, the median 621, the 10th and 90th percentiles 602 and 671, the
+  width over the median 0.1111 [GAMEBOARD, the lattice's clock]: outside
+  the step pin, not counted, where the same clicks by their ticks read
+  0.0787 inside (the flight's spread had narrowed the curve relative to
+  its later median); `j1_source` 64 of 64, the counts 171027 to 367454,
+  one or more outside its pinned range while every tick is inside its
+  range (outside; the count at the trigger under the fan's dwells is not
+  the dwell period's range), the births from 607 to 689, the width over
+  the median 0.1279 [GAMEBOARD, the lattice's clock] (0.1147 in the
+  ticks, outside as record 545 read it); the counted readings at the cap
+  5 inside and 1 outside (the tool at 11edfe9e read 5 and 3 with the
+  births' curve counted, until the reviewer's correction). The verdict: in the neutrons' own clocks the
+  decay is a step at the key exactly (the detector reading: every
+  `become` line at the count `at`); the curve the shell reads in the
+  betas' births, the triggers' spread over the crowd's counts, 0.11 to
+  0.13 of the median at the cap, is a GameBoard number in the lattice's
+  clock, still a step against nature's 3.17 (NATURE row 8a's FAIL stands
+  in form; its numbers 0.036 and 0.038 are the click ticks' of the
+  presence word, the lattice's clock, kept as history); the one verdict
+  word that moves is `j1_source`'s trigger criterion at the cap (inside
+  on the ticks, outside on the counts); the registered J1 verdict (a
+  step, a line, the bound neutron later) stands.
+
 ### L, the amplitude law (2026-09-20)
 
 - **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
@@ -4445,6 +4651,33 @@ sequential gates on an entangled record, the full register replay.
   0.964, the dark maximum 1, 433 clicks); the reading in the series README
   and under `slits_matter_1024.run` in its register, the same digests on
   the three heads that ran it. The 4096-birth pin when the host allows.
+
+- **Re-read in the row's own clock (2026-09-22; the model owner's word of
+  records 678, 707 and 709 of docs/LOG_2026-09-20.md: the GameBoard holds the
+  clock of every experiment read through a detector; the clock audit's
+  finding 7, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of `slits_matter_1024` on main's engine
+  through the runner, its first `click` lines read off the record).** The
+  pin restated BEFORE the number was read: the group pace is the row's
+  `age` on its first `click` line at the pixel, the row's own clock since
+  its re-release at the opening (a re-released row is born again at the
+  age 0: the small world's click at tick 18 after its re-release at tick
+  7 carries the age 11), 815 at `screen_60` and 876 at `screen_37` and
+  `screen_83` within 5 (the first fan row's flight by the accumulator
+  rule on the engine's lines, the round-2 map's B; DETECTOR;
+  `first_click_age` of `expectations.json`, beside the tick pin); the
+  line's tick is the record's ordering, the re-release tick 140 plus the
+  age (955 and 1016; GAMEBOARD, the lattice's clock, so labelled in the
+  pin's line and in `read_run.py`, which reads the age under DETECTOR
+  and the tick under GAMEBOARD since this day). The reading: the `age`
+  815 on the first click at `screen_60` (its tick 955), 876 on the first
+  clicks at `screen_37` and `screen_83` (their ticks 1016): inside, every
+  one at its pin exactly. The verdict PASS of 2026-09-21 stands, now on
+  the row's own clock: the tick difference 955 - 140 = 815 the register
+  read as the pace was the same integer taken off the host's ordering,
+  and the row's age carries it on the record. The 4096-birth pin is
+  restated likewise (`first_click_age` beside `first_click_tick`), to be
+  read when the host allows that run.
 
 ### N, the binding that costs content (2026-09-20)
 

@@ -95,17 +95,34 @@
    "screen_60": {
     "value": 955,
     "within": 5,
-    "line": "the first `click` line of `matter` at the detector `screen_60` (a row's arrival, the group pace: 815 intervals after the re-release at 140); DETECTOR"
+    "line": "the first `click` line of `matter` at the detector `screen_60` (a row's arrival, the group pace: 815 intervals after the re-release at 140); since 2026-09-22 GAMEBOARD, the lattice's clock: the record's ordering, the re-release tick plus the row's age (the pin in the row's own clock is first_click_age)"
    },
    "screen_37": {
     "value": 1016,
     "within": 5,
-    "line": "the first `click` line at `screen_37` (876 after the re-release); DETECTOR"
+    "line": "the first `click` line at `screen_37` (876 after the re-release); since 2026-09-22 GAMEBOARD, the lattice's clock: the record's ordering, the re-release tick plus the row's age (the pin in the row's own clock is first_click_age)"
    },
    "screen_83": {
     "value": 1016,
     "within": 5,
-    "line": "the first `click` line at `screen_83`; DETECTOR"
+    "line": "the first `click` line at `screen_83`; since 2026-09-22 GAMEBOARD, the lattice's clock: the record's ordering, the re-release tick plus the row's age (the pin in the row's own clock is first_click_age)"
+   }
+  },
+  "first_click_age": {
+   "screen_60": {
+    "value": 815,
+    "within": 5,
+    "line": "the row's `age` on the first `click` line of `matter` at `screen_60` (the row's own clock since its re-release at the opening: the first fan row's flight by the accumulator rule on the engine's lines; the group pace in the row's clock, the model owner's word of 2026-09-22, records 678 and 707 of docs/LOG_2026-09-20.md); DETECTOR"
+   },
+   "screen_37": {
+    "value": 876,
+    "within": 5,
+    "line": "the row's `age` on the first `click` line of `matter` at `screen_37` (the row's own clock since its re-release at the opening: the first fan row's flight by the accumulator rule on the engine's lines; the group pace in the row's clock, the model owner's word of 2026-09-22, records 678 and 707 of docs/LOG_2026-09-20.md); DETECTOR"
+   },
+   "screen_83": {
+    "value": 876,
+    "within": 5,
+    "line": "the row's `age` on the first `click` line of `matter` at `screen_83` (the row's own clock since its re-release at the opening: the first fan row's flight by the accumulator rule on the engine's lines; the group pace in the row's clock, the model owner's word of 2026-09-22, records 678 and 707 of docs/LOG_2026-09-20.md); DETECTOR"
    }
   },
   "longest_row": {
@@ -136,7 +153,7 @@
    "max": 3,
    "line": "every dark pixel's count 0 to 3 (the map's expected 0 to 2.3); DETECTOR"
   },
-  "refutes": "a band off by more than one pixel (the wavelength not h / p); the centre's first `click` line off by more than 5 intervals of 955 (the pace not p / E'); no fringes (the phase not p . x)",
+  "refutes": "a band off by more than one pixel (the wavelength not h / p); the row's `age` on the centre's first `click` line off by more than 5 of 815 (the pace not p / E'; the line's tick 955 the ordering); no fringes (the phase not p . x)",
   "diagnostics": "the records whose completion the ladder places at a face (about a third on the photon's lines and amounts) or at the wall's own sets (x = 7 and 8) are a GAMEBOARD diagnostic reported beside the pin, not a reading of it; the screen's gathers are the detector reading"
  },
  "slits_matter_1024": {
@@ -161,6 +178,20 @@
    },
    "screen_83": {
     "value": 1016,
+    "within": 5
+   }
+  },
+  "first_click_age": {
+   "screen_60": {
+    "value": 815,
+    "within": 5
+   },
+   "screen_37": {
+    "value": 876,
+    "within": 5
+   },
+   "screen_83": {
+    "value": 876,
     "within": 5
    }
   },
@@ -371,7 +402,14 @@
      "screen_60": 955,
      "screen_37": 1016,
      "screen_83": 1016
-    }
+    },
+    "first_click_tick_kind": "read as DETECTOR on 2026-09-21; since 2026-09-22 GAMEBOARD, the lattice's clock: the record's ordering, the re-release tick 140 plus the row's age",
+    "first_click_age": {
+     "screen_60": 815,
+     "screen_37": 876,
+     "screen_83": 876
+    },
+    "first_click_age_kind": "DETECTOR: the row's `age` on its first `click` line at the pixel, the row's own clock since its re-release; read off the register's replay of the world on main's engine on 2026-09-22 (the model owner's word of records 678 and 707 of docs/LOG_2026-09-20.md)"
    },
    "GAMEBOARD": {
     "wall_completions": 215,
@@ -738,7 +776,8 @@
   "slits_matter.visibility": "the reviewer's visibility_round2.py on the map's weights: 0.965, the dark pixels 0 to 2.3",
   "slits_matter_1024": "the same derivations at W = 1024",
   "slits_matter_small": "measured (the engine as shipped, replayed)",
-  "byte_identity": "measured: the base tree's bytes (the design's head b1248102, main 65b65f45)"
+  "byte_identity": "measured: the base tree's bytes (the design's head b1248102, main 65b65f45)",
+  "slits_matter.first_click_age": "the round-2 map's B: the first fan row's flight to each pixel by the accumulator rule on the engine's lines, the row's own clock (its `age` on the click line); the tick pin is this age plus the re-release at 140"
  },
  "replicated": {}
 }
