@@ -34,7 +34,9 @@ default). One rule per case, the integers written before the run:
     (0, 1, 0) and (1, 0, +-1)'s (0, 0, +-1) do not advance; the label
     moves to (1, -1, 0) and **W** += Q d content (**u**_x - **u**_(1,-1,0))
     = 256 x (19, 45, 0): **W** = (4864, -16640, 0), **P** conserved, the
-    residue 72 of the heading rescaled to 144 (S_1 2 over 1, (g)); the
+    residue 72 of the heading rescaled at the push to the momentum's
+    units, 72 x 87 = 6264 (**P** over its gcd 512 is (32, -55, 0), S_1 87;
+    (j)) and not at the turn; the
     books' `turned` line of `light` (-19, -45, 0) (the label (45, -45, 0)
     less (64, 0, 0)) and the transit momentum (45, 83, 0) (the light's
     label and the m row's (0, 128, 0)) balanced; the m row (a free family,
@@ -62,45 +64,37 @@ default). One rule per case, the integers written before the run:
     shifts -1.93 / -3.86 and -2.42 / -4.83 pixels, the delays, the ratio
     2.00 with its bracket); the inverse interval is refused under the key;
 (g) M1 of the physics-rule review of 408cf719 (record 494) under the
-    chief physicist's word on the residue's units at a turn (record 496):
-    the flight's accumulator is the row's age paid at its direction's rate
-    r = 2 S_1 Q d and the residue crosses a turn as the time of the last
-    Link, s' = (s x S_new) // S_old, the count then capped at one Link by
-    the primitive's `at_most` with the surplus kept. A GameBoard of
-    40 x 3 x 1 at [1, 64] and `optical` 1, the fan the twelve edge
-    diagonals with (24, +-1, 0) (the pin worlds' long direction: T_D 2662,
-    S_1 25, the label (64, 3, 0), against the heading's T_D 110, S_1 1); a
-    row of `light` at (1, 1, 0) and a row of `m` whose arrival at its Node
-    pushes it once, the turns then verb 3's by Bresenham ((i)). From
-    (1, 0, 0) at age 5 (its pair (3, 90 x 64)) pushed at (1, 1, 0) to
-    **P** = (262144, 14080, 0) (3.07 degrees): the row walks nine Links on
-    +x, its error c_z = 9 x 14080 = 126720, and at made 12 (interval 15)
-    the +y Link of (24, 1, 0) at its place 12 keeps the smaller error
-    (|126720 - 262144| = 135424 against +x's 140800), so the label moves
-    to (24, 1, 0) with **W** = (0, 1792, 0) and the residue 1480 of the
-    heading becomes 25 x 1480 = 37000 (the last Link's time 1480 / 8192 =
-    37000 / 204800 unchanged); the chain of (made, residue) after each
-    interval, integer for integer with `by_drive` at `at_most` 1 and the
-    walls 14080 (A = 0) or 14520 (A = 1, the m row at the Node in interval
-    2) and 340736: (3, 13952), (4, 7624), (5, 1736), (5, 9928), (6, 4040),
-    (6, 12232), (7, 6344), (8, 456), (8, 8648), (9, 2760), (9, 10952),
-    (10, 5064), (10, 13256), (11, 7368), (12, 37000), (12, 241800),
-    (13, 105864) (the +y Link at place 12), (13, 310664), (14, 174728),
-    (15, 38792), the label +x through interval 14 and (24, 1, 0) from 15.
-    From (24, 1, 0) at age 4 (its pair (2, 4814 x 64)) pushed at (2, 1, 0)
-    to **P** = (262144, -1792, 0) (-0.39 degrees): the row walks the long
-    line to made 12 (interval 16), where its own +y Link does not advance
-    along **P** and the heading's (1, 0, 0) is the candidate, so the label
-    moves to (1, 0, 0) and the residue 166888 becomes 166888 // 25 = 6675
-    (the remainder 13 dropped, under one unit of the accumulator, the time
-    within 1 / 8192 of an interval); the chain (3, 172160), (4, 25576)
-    (A = 1), (4, 230376), (5, 94440), (5, 299240), (6, 163304), (7, 27368),
-    (7, 232168), (8, 96232), (8, 301032), (9, 165096), (10, 29160),
-    (10, 233960), (11, 98024), (11, 302824), (12, 6675), (13, 787),
-    (13, 8979), the label (24, 1, 0) through interval 15 and (1, 0, 0) from
-    16. The head before M1 carried the residue unscaled and kept the
-    residue of the uncapped count (`by_drive(172160, 8192, 14520)` =
-    (12, 6112)): twelve walls of paid credit destroyed;
+    chief physicist's words on the residue's units (record 496) and on the
+    pace of a pushed row ((j)): the flight's accumulator is the row's age
+    paid at its rate r = 2 S_1 Q d, the count capped at one Link by the
+    primitive's `at_most` with the surplus kept; the pair (S_1, T) is the
+    label's until the row is pushed and the momentum's from then on, the
+    residue rescaled at the push by S_1(P) / S_1(D) (floor) as the time of
+    the last Link, and not at the label's turn. A GameBoard of 40 x 3 x 1
+    at [1, 64] and `optical` 1, the fan the twelve edge diagonals with
+    (24, +-1, 0) (T_D 2662, S_1 25; the heading's 110, 1); a row of `light`
+    pushed once by a row of `m` arriving at its Node. From (1, 0, 0) at
+    age 5 (its pair (3, 90 x 64)) pushed at (1, 1, 0) to **P** =
+    (262144, 14080, 0), the primitive (1024, 55, 0) with S_1 1079 and
+    T 113675: the residue 13952 becomes 13952 x 1079 = 15054208 (the
+    time 13952 / 8192 = 15054208 / 8839168 unchanged), the rate 8839168
+    against the wall 227350 x (64 + 2 A); the chain of (made, residue)
+    after each interval (3, 15054208), (4, 8888276) (A = 1), (5, 3177044),
+    ..., (11, 13105492), (12, 7394260) at interval 15, where the label
+    moves to (24, 1, 0) by Bresenham with no rescale, (13, 1683028), ...,
+    the label +x through interval 14 and (24, 1, 0) from 15, integer for
+    integer with `by_drive` at `at_most` 1. From (24, 1, 0) at age 4 (its
+    pair (2, 4814 x 64)) pushed at (2, 1, 0) to **P** = (262144, -1792, 0),
+    the primitive (1024, -7, 0) with S_1 1031 and T 113514: the residue
+    172160 of the label becomes 172160 x 1031 // 25 = 7099878 (the
+    remainder 10 of 25 dropped, under one unit of the accumulator), the
+    chain (3, 7099878), (4, 561982) (A = 1), (4, 9007934), ..., (11,
+    8650814), (12, 2566974) at interval 16, where the label moves to
+    (1, 0, 0) with no rescale, (12, 11012926), (13, 4929086), the label
+    (24, 1, 0) through interval 15 and (1, 0, 0) from 16. The head before
+    M1 carried the residue unscaled and kept the residue of the uncapped
+    count (`by_drive(172160, 8192, 14520)` = (12, 6112)): twelve walls of
+    paid credit destroyed;
 (i) verb 3's form, the label by Bresenham along the line of **P** (the
     model owner's GO of record 536, the chief physicist's recommendation
     of record 483): the row's error accumulator **c** = the sum over its
@@ -118,13 +112,41 @@ default). One rule per case, the integers written before the run:
     stays within two Links of **P**'s line (|e x P| <= 2 |P_x|), **P**
     conserved at every interval, the walked Links' angle 3.51 and not the
     tooth's 2.39; the fields `cross` are 0 on every row without the key;
-(h) S1 of the same review: the push accumulator's sums are tested against
-    the working register before they are formed. The turn world of (b)
-    with the light row's **W** preset: W_x = 2^63 - 1 - 14080 takes the
-    push n weight V = 14080 at the bound (no turn, the row keeps +x);
-    W_x one more refuses naming the rule; W_y = -(2^63 - 1 - 14080) takes
-    the push at the bound and the turn's shift Q d content (u_D - u_D') is
-    then refused at the register.
+(j) the pace of a pushed row is its momentum's (the chief physicist's
+    word of 2026-09-21, DERIVED, relayed as the Boss's order after record
+    547): the flight's one rule is the Euclidean pace 1 / sqrt 3 along the
+    line walked, and under Bresenham the line walked is **P**'s, so the
+    pair in the wall is the primitive **P**'s (**P** over the gcd of its
+    components), S_1(P) and T(P) = isqrt(3 |P|^2 Q^2), the rate 2 S_1(P) Q d
+    against the wall 2 T(P) (d + f n A), and the residue is rescaled by
+    S_1(P') / S_1(P) at every push (the label's S_1 before the first),
+    floor, the sub-unit remainder dropped. A bar of 60 x 3 x 1 at [1, 220]
+    and `optical` 1: a row of `light` on (24, 1, 0) at (1, 1, 0), pushed at
+    (2, 1, 0) in interval 1 by an m row of amount 3 arriving from -y,
+    **W** = (0, -42240, 0), so that **P** = (901120, 0, 0) is +x exactly
+    (the primitive (1, 0, 0), the control's pair 1 and 110): its residue
+    118360 in the label's units becomes 118360 // 25 = 4734, and from
+    then on it walks +x Links at the control's pace, the rate 28160
+    against the wall 48400 (49720 and 51040 while the m row of amount 3
+    sits at its Node, A = 3 and 6, the Link of interval 3 counted against
+    51040), the 52nd Link after the push at the exact time 1 + (52 x
+    48400 + 2640 - 4734) / 28160 = 90.300 intervals, 52 x 110 / 64 =
+    89.375 after the push less the residue's 0.168 plus the crowd's
+    0.094, integer for integer with `by_drive`; on the label's pace (the
+    head before this word) the 52 Links took 52 x 2662 / (25 x 64) = 86.5
+    intervals, three too few;
+(h) S1 of the same review, under the momentum's pace ((j)): the sums the
+    push accumulator takes are tested against the working register before
+    they are formed, and below them the pair on the momentum and the
+    residue's rescale are: the turn world of (b) with the light row's
+    **W** preset at 2^63 - 1 - 14080 on x walks (the primitive (1, 0, 0))
+    and is refused at the push, the pair of **P**' beyond the register;
+    preset on -y it is refused at the walk, the wall on the primitive
+    **P** beyond the register; W_x = 2^40 is taken (the push's
+    **P**' = (2^40 + 16384, -14080, 0) over its gcd 1280 is
+    (858993472, -11, 0), the residue 72 x 858993483);
+    W_y = 2^54 + 1 is refused at the walk (T(P) about 2^60.8, the wall
+    2 T d over the register).
 """
 
 from __future__ import annotations
@@ -132,6 +154,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from fractions import Fraction
+from math import isqrt
 from pathlib import Path
 
 import pytest
@@ -395,9 +418,10 @@ def test_the_push_turns_a_row_to_the_fans_nearest_direction():
     assert light.size == 1 and crowd.size == 1
     assert vectors[int(light.direction[0])].tolist() == [1, -1, 0]
     assert (int(light.push_x[0]), int(light.push_y[0]), int(light.push_z[0])) == (4864, -16640, 0)
-    # the residue 72 of the heading (S_1 = 1) rescaled to the diagonal's
-    # (S_1 = 2) at the turn, 72 x 2 // 1 (record 496; (g))
-    assert (int(light.made[0]), int(light.residue[0])) == (1, 144)
+    # the residue 72 of the heading (S_1 = 1) rescaled at the push to the
+    # momentum's units: P = (16384, -28160, 0) over its gcd 512 is
+    # (32, -55, 0), S_1 = 87, 72 x 87 // 1 = 6264; not rescaled at the turn
+    assert (int(light.made[0]), int(light.residue[0])) == (1, 6264)
     assert light.coordinates(light.node[:1])[0][0] == 2 and light.coordinates(light.node[:1])[1][0] == 1
     assert books["momentum"]["turned"] == [-19, -45, 0] and books["momentum"]["transit"] == [45, 83, 0]
     assert (int(crowd.push_x[0]), int(crowd.push_y[0]), int(crowd.push_z[0])) == (0, 0, 0)
@@ -544,21 +568,22 @@ def long_world(
 
 def test_the_residue_carried_across_a_turn_keeps_what_the_wall_paid_for():
     """(g)."""
-    # By hand: the pair (rate, wall) per interval off the direction's
-    # (S_1, T_D) and the crowd's age moment A at the row's Node, the count
-    # capped at one Link by the primitive with the surplus kept, and the
-    # residue rescaled by S_new / S_old where the label changes (at the end
-    # of the interval, after the walk).
+    # By hand: the count capped at one Link by the primitive with the
+    # surplus kept; the pair (S_1, T) the label's until the push and the
+    # momentum's from it (P over its gcd), the residue rescaled at the push
+    # by S_1(P) / S_1(D) (floor) and not at the label's turn.
     heading, long = (1, 110), (25, 2662)
 
-    def chain(start: tuple[int, int], path: list[tuple[tuple[int, int], int]]) -> list[tuple[int, int]]:
+    def chain(
+        start: tuple[int, int], pushed: tuple[int, int], path: list[tuple[tuple[int, int], int]]
+    ) -> list[tuple[int, int]]:
         (made, residue), out = start, []
         for k, ((s1, t), moment) in enumerate(path):
             rate, wall = age_wall(2 * s1, 2 * t, 2, moment, (1, 64))
             count, residue = by_drive(residue, rate * Q, wall, at_most=1)
             made += count
-            s_after = path[k + 1][0][0] if k + 1 < len(path) else s1
-            residue = residue * s_after // s1
+            if k == 0:  # the push at the end of interval 1
+                residue = residue * pushed[0] // s1
             out.append((made, residue))
         return out
 
@@ -577,54 +602,69 @@ def test_the_residue_carried_across_a_turn_keeps_what_the_wall_paid_for():
         return labels, seen
 
     # From the heading at age 5, pushed at (1, 1, 0) by the m row arriving
-    # from +y (V = (0, -64, 0), W = (0, 14080, 0)); the label moves to
-    # (24, 1, 0) at made 12 (interval 15), 1480 x 25 = 37000.
+    # from +y (V = (0, -64, 0), W = (0, 14080, 0)): P = (262144, 14080, 0),
+    # over its gcd 256 the primitive (1024, 55, 0), S_1 1079, T 113675.
     assert (5 * 128 + 110) // 220 == 3 and (5 * 128 + 110) % 220 == 90
-    path = [(heading, 0), (heading, 1)] + [(heading, 0)] * 13 + [(long, 0)] * 5
-    expected = chain((3, 90 * 64), path)
-    assert expected[:3] == [(3, 13952), (4, 7624), (5, 1736)]
-    assert expected[13:17] == [(11, 7368), (12, 37000), (12, 241800), (13, 105864)]
-    assert expected[19] == (15, 38792)
-    assert 9 * 14080 == 126720 and abs(126720 - 262144) < 126720 + 14080  # the +y Link's error
-    assert Fraction(1480, 2 * 1 * Q * 64) == Fraction(37000, 2 * 25 * Q * 64)  # the time
-    labels, seen = run(long_world(PLUS_X, 5, [1, 2, 0], MINUS_Y), 20)
-    assert labels[:14] == [[1, 0, 0]] * 14 and labels[14:] == [[24, 1, 0]] * 6
+    assert isqrt(3 * (1024**2 + 55**2) * Q * Q) == 113675 and 13952 * 1079 == 15054208
+    on_p = (1079, 113675)
+    path = [(heading, 0), (on_p, 1)] + [(on_p, 0)] * 20
+    expected = chain((3, 90 * 64), on_p, path)
+    assert expected[:3] == [(3, 15054208), (4, 8888276), (5, 3177044)]
+    assert expected[13:16] == [(11, 13105492), (12, 7394260), (13, 1683028)]
+    assert Fraction(13952, 2 * 1 * Q * 64) == Fraction(15054208, 2 * 1079 * Q * 64)  # the time
+    labels, seen = run(long_world(PLUS_X, 5, [1, 2, 0], MINUS_Y), 22)
+    assert labels[:14] == [[1, 0, 0]] * 14 and labels[14:] == [[24, 1, 0]] * 8
     assert seen == expected
     # From the long direction at age 4, pushed at (2, 1, 0) by the m row
-    # arriving from -y (V = (0, 64, 0), W = (0, -14080, 0)); at made 12
-    # (interval 16) the long line's +y Link does not advance along P and
-    # the label moves to the heading, 166888 // 25 = 6675.
+    # arriving from -y (V = (0, 64, 0), W = (0, -14080, 0)): P = (262144,
+    # -1792, 0), the primitive (1024, -7, 0), S_1 1031, T 113514; the
+    # residue 172160 of the label (S_1 25) becomes 172160 x 1031 // 25 =
+    # 7099878 (the remainder 10 of 25 dropped); at made 12 (interval 16)
+    # the label moves to the heading with no rescale.
     assert (4 * 2 * 25 * Q + 2662) // 5324 == 2 and (4 * 2 * 25 * Q + 2662) % 5324 == 4814
-    path = [(long, 0), (long, 1)] + [(long, 0)] * 14 + [(heading, 0)] * 2
-    expected = chain((2, 4814 * 64), path)
-    assert expected[:3] == [(3, 172160), (4, 25576), (4, 230376)]
-    assert expected[14:] == [(11, 302824), (12, 6675), (13, 787), (13, 8979)]
-    assert 166888 // 25 == 6675 and 166888 % 25 == 13
-    assert abs(Fraction(166888, 2 * 25 * Q * 64) - Fraction(6675, 2 * Q * 64)) < Fraction(1, 2 * Q * 64)
+    assert isqrt(3 * (1024**2 + 7**2) * Q * Q) == 113514 and 172160 * 1031 // 25 == 7099878
+    on_p = (1031, 113514)
+    path = [(long, 0), (on_p, 1)] + [(on_p, 0)] * 18
+    expected = chain((2, 4814 * 64), on_p, path)
+    assert expected[:3] == [(3, 7099878), (4, 561982), (4, 9007934)]
+    assert expected[14:18] == [(11, 8650814), (12, 2566974), (12, 11012926), (13, 4929086)]
+    assert abs(Fraction(172160, 2 * 25 * Q * 64) - Fraction(7099878, 2 * 1031 * Q * 64)) < Fraction(
+        1, 2 * 1031 * Q * 64
+    )
     assert by_drive(172160, 8192, 14520) == (12, 6112)  # the head before M1, unscaled and uncapped
-    labels, seen = run(long_world(LONG, 4, [2, 0, 0], PLUS_Y), 18)
-    assert labels[:15] == [[24, 1, 0]] * 15 and labels[15:] == [[1, 0, 0]] * 3
+    labels, seen = run(long_world(LONG, 4, [2, 0, 0], PLUS_Y), 20)
+    assert labels[:15] == [[24, 1, 0]] * 15 and labels[15:] == [[1, 0, 0]] * 5
     assert seen == expected
 
 
 def test_the_push_accumulators_sums_are_tested_at_the_register():
     """(h)."""
     push = 1 * 2 * 1 * 110 * 64  # n x weight x |V| of (b)
+    # W_x at the register's edge: P = (2^63 + 2303, 0, 0) is the primitive
+    # (1, 0, 0) and walks; the push then makes P' = (2^63 + 2303, -14080, 0)
+    # whose pair leaves the register: refused at the push naming the rule.
+    # W_y at the edge: the primitive is P itself, its wall over the
+    # register at the walk.
+    for axis, sign in (("push_x", 1), ("push_y", -1)):
+        simulation = NatureBeamSimulation(parse_nature_beam_world(turn_world()))
+        getattr(simulation.stores[0], axis)[0] = sign * (MAX_WORK_INT - push)
+        with pytest.raises(OverflowError, match="pair on the momentum"):
+            simulation.step()
+    # Inside the register: W_x = 2^40 makes the primitive (1, 0, 0), taken,
+    # and the push's P' = (2^40 + 16384, -14080, 0) over its gcd 1280 (2^8
+    # x 5, since 2^26 + 1 = 5 x 13421773) is (858993472, -11, 0), S_1 =
+    # 858993483, the residue 72 x 858993483 taken; W_y = 2^54 + 1
+    # makes the primitive (16384, 2^54 + 1, 0), T(P) = isqrt(3 |P|^2 Q^2)
+    # about 2^60.8, the wall 2 T d over the register at d = 4: refused.
     simulation = NatureBeamSimulation(parse_nature_beam_world(turn_world()))
-    light = simulation.stores[0]
-    light.push_x[0] = MAX_WORK_INT - push
+    simulation.stores[0].push_x[0] = 1 << 40
     simulation.step()
-    assert simulation.books()["balanced"]
     light = simulation.stores[0]
-    assert simulation.tables.flight.vectors[int(light.direction[0])].tolist() == [1, 0, 0]
-    assert (int(light.push_x[0]), int(light.push_y[0])) == (MAX_WORK_INT - push, -push)
+    assert ((1 << 40) + 16384) // 1280 == 858993472 and 14080 // 1280 == 11
+    assert simulation.books()["balanced"] and int(light.residue[0]) == 72 * 858993483
     simulation = NatureBeamSimulation(parse_nature_beam_world(turn_world()))
-    simulation.stores[0].push_x[0] = MAX_WORK_INT - push + 1
-    with pytest.raises(OverflowError, match="push accumulator"):
-        simulation.step()
-    simulation = NatureBeamSimulation(parse_nature_beam_world(turn_world()))
-    simulation.stores[0].push_y[0] = -(MAX_WORK_INT - push)
-    with pytest.raises(OverflowError, match="turn"):
+    simulation.stores[0].push_y[0] = (1 << 54) + 1
+    with pytest.raises(OverflowError, match="pair on the momentum"):
         simulation.step()
 
 
@@ -664,3 +704,61 @@ def test_a_pushed_row_walks_along_the_line_of_its_momentum_not_the_nearest_tooth
     assert ey >= 11, (ex, ey)  # the tooth (24, 1, 0) reaches 8.3
     cross = (int(light.cross_x[0]), int(light.cross_y[0]), int(light.cross_z[0]))
     assert cross != (0, 0, 0)
+
+
+def pace_world() -> dict[str, object]:
+    document = fan_world(LONG, 0, [2, 0, 0], PLUS_Y)
+    document["shape"] = [60, 3, 1]
+    document["ticks"] = 120
+    document["suspension"] = [1, 220]
+    document["measured"][1]["position"] = [59, 1, 0]  # type: ignore[index]
+    document["in_transit"][1]["amount"] = 3  # type: ignore[index]
+    return document
+
+
+def test_a_pushed_rows_pace_is_its_momentums():
+    """(j)."""
+    # By hand: the first walk on the label (24, 1, 0), 2662 x 220 + 704000
+    # against the wall 1171280, one Link and the residue 118360; the push
+    # to P = (901120, 0, 0), the residue 118360 // 25 = 4734 in +x's units;
+    # then +x's pair with the crowd's stretch in intervals 2 and 3 (the m
+    # row's amount 3 times its age).
+    assert 2662 * 220 + 2 * 25 * Q * 220 - 2 * 2662 * 220 == 118360 and 118360 // 25 == 4734
+    residue, made, chain = 4734, 1, [(1, 4734)]
+    for tick in range(2, 121):
+        moment = {2: 3, 3: 6}.get(tick, 0)
+        rate, wall = age_wall(2 * 1, 2 * 110, 2, moment, (1, 220))
+        assert rate * Q == 28160 and wall == 48400 + 440 * moment
+        count, residue = by_drive(residue, 28160, wall, at_most=1)
+        made += count
+        chain.append((made, residue))
+    ticks_52 = next(tick for tick, (m, _) in enumerate(chain, start=1) if m == 53)
+    exact = Fraction(ticks_52 * 28160 - chain[ticks_52 - 1][1], 28160)
+    # the Link of interval 3 counted against the stretched wall 51040 (+2640)
+    assert exact == 1 + Fraction(52 * 48400 + 2640 - 4734, 28160)
+    assert exact - 1 == 52 * Fraction(110, 64) - Fraction(4734 - 2640, 28160)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(pace_world()))
+    unit = simulation.tables.flight.labels
+    seen: list[tuple[int, int]] = []
+    for tick in range(1, 121):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        light = simulation.stores[0]
+        assert light.size == 1, tick
+        seen.append((int(light.made[0]), int(light.residue[0])))
+        whole = Q * 220 * int(light.amount[0]) * int(light.content[0])
+        held = [int(light.push_x[0]), int(light.push_y[0]), int(light.push_z[0])]
+        assert [
+            whole * int(u) + w for u, w in zip(unit[int(light.direction[0])], held, strict=True)
+        ] == [
+            901120,
+            0,
+            0,
+        ]
+        if int(light.made[0]) == 53:
+            break
+    assert tick == ticks_52 and seen == chain[:ticks_52]
+    assert (
+        int(light.coordinates(light.node[:1])[0][0]) == 54
+        and int(light.coordinates(light.node[:1])[1][0]) == 1
+    )
