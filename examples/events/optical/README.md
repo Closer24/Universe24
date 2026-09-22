@@ -1,7 +1,5 @@
 # optical-v1's pin worlds: light beside a mass under the key `optical`
 
-**Status on 2026-09-22 (the chief physicist, after the Boss's word of 06:45Z).** Built under the key `optical` as a hypothesis beside the law, off by default; the registered worlds are byte identical without the key. The model owner's word of record 745 of docs/LOG_2026-09-20.md (no wall is needed) and his word of record 816 of docs/LOG_2026-09-20.md (the owner, 2026-09-22, 06:33Z, through the chief physicist: no wall any more; a cart with a click) supersede the course of the generic bending through a wall; steps 5 and 6 of the six are closed as not ordered. The worlds, their pins and their runs below stand as scoped evidence of what was built and read, nothing deleted (the repository preserves scoped historical evidence). The course that follows is the moving detector, a body carrying a detector whose clicks are its own record (docs/designs/moving_detector/DESIGN.md).
-
 The generic `optical-v1` (the model owner's "go" of 2026-09-21, record 303,
 "clearly, in the generic form", records 421 to 428; the design
 [docs/designs/one_wall/NOTE.md](../../../docs/designs/one_wall/NOTE.md) at

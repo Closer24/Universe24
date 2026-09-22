@@ -1,7 +1,5 @@
 # Every family under one wall: the composition of optical-v1 with the massive rows (the chief physicist, 2026-09-22)
 
-**Status on 2026-09-22 (the chief physicist, after the Boss's word of 06:45Z).** Built under the key `optical` as a hypothesis beside the law, off by default; the registered worlds are byte identical without the key. The model owner's word of record 745 of docs/LOG_2026-09-20.md (no wall is needed) and his word of record 816 of docs/LOG_2026-09-20.md (the owner, 2026-09-22, 06:33Z, through the chief physicist: no wall any more; a cart with a click) supersede the course of the generic bending through a wall; steps 5 and 6 of the six are closed as not ordered. The worlds, their pins and their runs below stand as scoped evidence of what was built and read, nothing deleted (the repository preserves scoped historical evidence). The course that follows is the moving detector, a body carrying a detector whose clicks are its own record (docs/designs/moving_detector/DESIGN.md).
-
 The model owner's word of 2026-09-22 ("build this with me"): the
 gravitational bending enters the law generically, in six steps. This note
 is step 2, the composition of `optical-v1` (on `main` at 2d5c7cf2, light's
