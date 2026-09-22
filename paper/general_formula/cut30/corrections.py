@@ -907,6 +907,384 @@ CORRECTIONS = [
         "the CHSH sum as an exact function of the grain and the tables, with its closed form;",
         "the CHSH sum as an exact function of the grain and the tables;",
     ),
+    # The framing (the owner's records 762, 768 and 773, 2026-09-22): Inside
+    # and Outside, the read-out the frame's assumption (P11), the clicks
+    # recovering known forms, the click theorem's three sentences (the
+    # derivation mathematician's, section 0 of the click frame at its merge)
+    # and the writer's paragraph; the limits paragraph's first two sentences
+    # and Table 4's Lorentz row replaced; the page count paid by duplicated
+    # text carrying no claim and no table number.
+    (
+        "framing: the title",
+        "\\title{Universe24: a local integer law of nature with a non-local read-out, and what follows from it}",
+        "\\title{Universe24: a local integer law inside the GameBoard, a non-local read-out above it, and what the clicks recover of nature}",
+    ),
+    (
+        "framing: the abstract's first sentences",
+        "One update law of bounded integers, applied at every Node of a cubic GameBoard at every interval, is stated as one map with a rate and a wall per component; its rates and walls are made of six integer operations, and one comparison, the click, the one non-local step, is its only read-out. The paper asks how much of physics that map forces with few assumptions, and answers in one ledger, result by result.",
+        "Inside a cubic GameBoard one update law of bounded integers propagates records as a beam by algebraic formulas at every Node and interval: one map with a rate and a wall per component, its rates and walls made of six integer operations. Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them with amplitudes at one comparison, the click, the one non-local step and the only read-out; the paper assumes the GameBoard is read in no other way (P11). Inside, the law's consequences are derived and need no experiment; Outside, the clicks recover known forms and are compared with known experiments, result by result, in one ledger, and the paper shows how far Outside represents reality.",
+    ),
+    (
+        "framing: the abstract's Lorentz factor",
+        "What no rule forces is said in the same ledger: the Lorentz factor, the bending of light,",
+        "What no rule forces is said in the same ledger: the Lorentz factor (how the clicks arrive at it is the frame), the bending of light,",
+    ),
+    (
+        "framing: P11 after P10",
+        "and the harmonic constants are not derived. Nothing outside this list is assumed.",
+        "and the harmonic constants are not derived. One assumption of the frame (P11): the GameBoard, Inside, is read only through its emitters and detectors, Outside; every result Outside is a click, a number of the board's state is never a reading, and every comparison with experiment is a comparison of clicks with readings; a measurement is itself an event of the board, an emitter putting a record on it and a detector ending the record at the click, the one step that deletes Inside and the one row that Outside gains. Nothing outside this list is assumed.",
+    ),
+    (
+        "framing: the reading rule names P11 and the physics names",
+        "Only a detector's reading is a measurement: a click, a record's moments or an external thing's reading, as the world file declares.",
+        "Only a detector's reading is a measurement (the frame's assumption, P11): a click, a record's moments or an external thing's reading, as the world file declares. Every physics name in this paper (Gauss's, Newton's, Coulomb's, Born's, Planck's, Tsirelson's) names the known form that the law's result recovers, Inside by derivation or Outside at a detector.",
+    ),
+    (
+        "framing: the claim paragraph, produced -> recovered",
+        "several different physical phenomena are produced from this one discrete update law and a small number of assumptions:",
+        "the forms of several different physical phenomena are recovered from this one discrete update law and a small number of assumptions, Inside by derivation and Outside at the clicks:",
+    ),
+    (
+        "framing: the claim paragraph, describes -> represents, and the frame's last sentence",
+        "What can be established now is an explicit model, a set of exact and conditional mathematical results, and numerical checks after a detector; the broad claim that the model describes nature still needs the completions Section~\\ref{sec:discussion} names, and the paper is built around the precise distance between the two.",
+        "What can be established now is an explicit model, exact and conditional results and checks after a detector; the broad claim that Outside represents nature still needs the completions Section~\\ref{sec:discussion} names, and the paper is built around the distance between the two.",
+    ),
+    (
+        "framing: Definition 3 recovers the Born rule's form",
+        "Definition~\\ref{def:click} \\emph{is} the Born rule: the weight is",
+        "Definition~\\ref{def:click} recovers the Born rule's form: the weight is",
+    ),
+    (
+        "framing: Section 8's opening states the rule",
+        "Three things are kept apart: the gates on the code, the formulas' checks after a detector, and the comparisons with nature.",
+        "Three things are kept apart: the gates on the code; what is shown Inside by algebra under named assumptions, which needs no experiment; and what is measured, a run Inside read Outside, compared with known experiments.",
+    ),
+    (
+        "framing: the proved paragraph opens on the spine",
+        "\\paragraph{What is proved.} Exact on the GameBoard:",
+        "\\paragraph{What is proved.} A packet moved Inside, from place to place, and what it says Outside: every formula below is the answer for one packet. Derived Inside, exact on the GameBoard, no experiment needed:",
+    ),
+    (
+        "framing: recovered in the limit",
+        "In the limit of the grain, with a rate: Born's rule",
+        "Recovered in the limit of the grain, with a rate: Born's rule",
+    ),
+    (
+        "framing: recovered under the average",
+        "In the limit under an average that covers the shell, with the condition in the claim: Newton's",
+        "Recovered under an average that covers the shell, with the condition in the claim: Newton's",
+    ),
+    (
+        "framing: the boost sentence of Section 3",
+        "Lorentz's symmetry is not a symmetry of the GameBoard but of the limit of its linear block, the wave equation at $c$ (Section~\\ref{sec:discussion}).",
+        "Lorentz's symmetry is not a symmetry of the GameBoard but of its clicks Outside, to second order in the velocity, the lattice's corrections from the fourth (Section~\\ref{sec:discussion}).",
+    ),
+    (
+        "framing: the c-postulate row and (A1)",
+        "not forced by the six operations: a dispersive flight passes every requirement (the derivation's 27)",
+        "not forced by the six operations: a dispersive flight passes every requirement (the derivation's 27); (A1) of the frame asks the same of the clicks",
+    ),
+    (
+        "framing: row 4b's verdict",
+        "for the pinned $0.369 \\pm 0.003$ (series S), the law's row stays FAIL \\\\",
+        "for the pinned $0.369 \\pm 0.003$ (series S), the law's row stays FAIL; the two one-way factors apart by $1 - v^2$ (the frame) \\\\",
+    ),
+    (
+        "framing: the frame's paragraph before the limits paragraph",
+        "\\end{longtable}} \\paragraph{The limits, and what does not return.}",
+        "\\end{longtable}}\n\n\\paragraph{Inside and Outside, and how a click arrives at Lorentz.} A packet moved Inside, from place to place, and the question what it says Outside: inside the GameBoard the law propagates records as a beam by the algebraic formulas of Section~\\ref{sec:law}, on Nodes, integer rows and the interval's count, where no one measures; Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them with amplitudes at the click (P11). A detector's clock is what it emits and receives back, on its own record (a detector at rest receives its row back at its own Node); no Node holds a detector's time; a detector without a body, an open face, has no clock of its own, its tick the record's ordering, a GameBoard diagnostic; a velocity is Nodes apart over counts apart between neighbouring detectors, never a reading of the interval, and the read-out of Definition~\\ref{def:click} is the click. The frame's three sentences, the derivation's \\cite{clickframe}: ``To convert the lattice and the momentum inside it into motion Outside, the game above the board, one uses clicks that pass information, a click being the passage of information from Node to Node at most one Node per interval (A1) and its content an amplitude with a phase that splits each interval between staying and hopping, the mass the staying share (A2); Lorentz of the world is assumed, and what is shown is that this conversion brings it. The symmetry of the conversion, the transformations between click families that preserve (A1) and (A2), is the Lorentz group up to scale, acting on the amplitudes of the passing packet as the Dirac walk's covariance, so that the passage of clicks is Lorentz up to corrections of order $m^2 v^2$, exact in the continuum limit, a detector's own rate $\\sqrt{1 - v^2}\\,(1 - \\kappa^2/6)$ with the mass angle $m$ the spacing over the reduced Compton wavelength; in three dimensions the lattice's anisotropy begins at the fourth order. The conversion is made exactly with the amplitudes, converting the packet that passes, and it comes out from there; the law as built satisfies (A1) and not (A2).'' (A1) and the one line, the relativity of the two directions ($k_{AB} = k_{BA}$), are special relativity's two postulates in the click language, so what is arrived at is Einstein's road walked on clicks, and what the board adds is (A2), the amplitudes that carry $\\sqrt{1 - v^2}$ into a detector's own rate, up to corrections of order $m^2 v^2$. The law as built meets (A1), one Node per interval with the flight blind to the phase (P9), and not (A2), its hop a whole-record schedule with no staying amplitude; so its clicks carry the group and its counter runs at the rest rate at every speed, the Doppler $1 + \\beta$ without the clock's factor (rows 4a, 4b): read through records, the two one-way Doppler factors are $r/(1 - v)$ and $(1 + v)/r$, alike only at $r^2 = 1 - v^2$, and the law's $r = 1$ leaves them apart by $1 - v^2$, the measurable that decides. No wall of the law and no declared identity enter the reading; Eq.~\\eqref{eq:square} is an Inside formula on the record, read by no detector, whose Outside formulas the conversion gives. What the system gives is a computation Inside whose passage Outside is the clicks, at the quantum level as well: the equations Inside are the law's, the equation of the passage is the click theorem's, and how far Outside represents reality is what Tables~\\ref{tab:checks} and~\\ref{tab:nature} show, result by result.\n\n\\paragraph{The limits, and what does not return.}",
+    ),
+    (
+        "framing: the limits paragraph's first two sentences replaced",
+        "The GameBoard and its interval are a rest frame, and Lorentz invariance is not a limit of the model but a property it must show or lack: the law as declared predicts a body's counter at the rest rate at every speed and the Doppler $1 + \\beta$ without the clock's factor, falsifiable rows (4a, 4b); the owner's decision (record 270 \\cite{log}) keeps that prediction and builds the covariant readings beside it as a hypothesis against the same pins, in its one-axis domain: a body's record carries the exact square of its energy,",
+        "The covariant readings (record 270 \\cite{log}) read one Inside formula Outside on one axis, series S against its pins: a body's record carries the exact square of its energy,",
+    ),
+    (
+        "framing: Table 4's Lorentz row on the frame's measurable",
+        "The Lorentz factor: no rule of the six reads a body's momentum into its clock, and a boost is not among the $48$ & the muon in flight under the law (row 4a, a pin: the counter at the rest rate); beside the law, the covariant readings (Eq.~\\eqref{eq:square}; series S's face clicks inside their pins on one axis) against the same pins, their entry into the law in hand (the owner's word of 2026-09-22), the off-axis runs pending \\\\",
+        "The Lorentz factor: the law meets (A1) and not (A2) & the ratio of the two one-way Doppler factors read at the ground through records: $1 - v^2$ under the law, $1$ under Lorentz; the split of a row between staying and hopping (A2) as a hypothesis under its own identity, not opened \\\\",
+    ),
+    (
+        "framing: the click frame's bibitem",
+        "\\bibitem{derivations} The derivations of the beam law, \\texttt{docs/DERIVATIONS\\_BEAM.md} of the archived code \\cite{zenodo}.",
+        "\\bibitem{derivations} The derivations of the beam law, \\texttt{docs/DERIVATIONS\\_BEAM.md} of the archived code \\cite{zenodo}.\n\\bibitem{clickframe} Lorentz from the clicks: the click frame, its section 0 the click theorem, \\texttt{docs/designs/click\\_frame/DERIVATION.md} of the archived code \\cite{zenodo}, at 1dd81fef (PR \\#769, pending merge).",
+    ),
+    # The page count: duplicated text, no claim, no table number.
+    (
+        "framing, page count: the introduction's narrative to its rule",
+        "The lattice Gleason theorem (Section~\\ref{sec:measurement}) came from a click count, $63$ of $64$ births in one channel of an unbalanced splitter; the exact CHSH function $S(\\Nphi)$ (Section~\\ref{sec:bell}) came from three registered values, $176/64$, $2896/1024$ and $11584/4096$, whose pattern the closed form then explained; the runs at $2048$, $8192$ and $16384$ met it (Figure~\\ref{fig:sofn}). Where a derivation closed,",
+        "Where a derivation closed,",
+    ),
+    (
+        "framing, page count: the mixture sentence",
+        "a mixture is a different law, the flat mixture being the phase-blind detector $R(f) = \\sum_{p < \\Nphi/2} f_p^2$ on the reduced basis $1, x, \\dots, x^{\\Nphi/2-1}$, which satisfies (a), (b), (c) exactly. The algebra admits the phase-blind detector; what excludes it",
+        "a mixture is a different law, the flat mixture being the phase-blind detector, which satisfies (a), (b), (c) exactly; what excludes it",
+    ),
+    (
+        "framing, page count: Section 8's gate clauses",
+        "the engine's inverse interval returns a world without a measured event to its birth; the rounding pins",
+        "the rounding pins",
+    ),
+    (
+        "framing, page count: the optical-v1 sentence is Table 4's",
+        "A rule under which the rows read the crowd's age moment (optical-v1) is a hypothesis beside the law, designed and reviewed, not built; the equivalence principle holds",
+        "The equivalence principle holds",
+    ),
+    (
+        "framing, page count: the preferred party is Definition 3's",
+        "Which party is first is the world file's declaration of the arms' order, not a property of the GameBoard: the model has a preferred party by declaration, and swapping the arms moves outcomes between the parties while the counts stay \\cite{log}.",
+        "",
+    ),
+    (
+        "framing, page count: the positioning paragraph's Bohm and psi-ontic clauses",
+        "the uniform $u$ and the ruler do the work of quantum equilibrium in Bohm's theory \\cite{bohm1952,dgz1992}; the model is $\\psi$-ontic in the classification of \\cite{spekkens2007,hs2010}; Theorem",
+        "the uniform $u$ does the work of quantum equilibrium \\cite{bohm1952,dgz1992}; the model is $\\psi$-ontic \\cite{spekkens2007,hs2010}; Theorem",
+    ),
+    (
+        "framing, page count: the claim paragraph's middle",
+        "The three things work together: the formula defines the mechanism, the derivations show what follows and under what conditions, the simulator and the comparison with experiment check the results and their limits. What can be established",
+        "What can be established",
+    ),
+    (
+        "framing, page count: the code paragraph's last sentence",
+        "A world file declares the parameters and the initial conditions and nothing of the rules; the same engine runs every world of this paper.",
+        "The same engine runs every world of this paper from its world file.",
+    ),
+    (
+        "framing, page count: the host paragraph's last clause",
+        "so no Node ever holds both rows \\cite{log}; it is no measurement.",
+        "so no Node ever holds both rows \\cite{log}.",
+    ),
+    (
+        "framing, page count: Kennard's sentence",
+        "Kennard's variance form $\\Delta x\\,\\Delta p \\ge \\hbar/2$ \\cite{kennard1927,robertson1929} follows, as is well known, by the Cauchy--Schwarz argument on the Gram form of Theorem~\\ref{th:gleason} in the limit $\\Nphi \\to \\infty$ of a record spread over many phases, with $\\hbar = h/(2\\pi) = h_q\\Nphi/(2\\pi)$; at finite $\\Nphi$ the bound is the finite group's and the Gaussian equality case does not exist on $\\Z_{\\Nphi}$.",
+        "Kennard's variance form $\\Delta x\\,\\Delta p \\ge \\hbar/2$ \\cite{kennard1927,robertson1929} follows by Cauchy--Schwarz on the Gram form of Theorem~\\ref{th:gleason} in the limit $\\Nphi \\to \\infty$, with $\\hbar = h/(2\\pi) = h_q\\Nphi/(2\\pi)$; at finite $\\Nphi$ the bound is the finite group's.",
+    ),
+    (
+        "framing, page count: the uncertainty's last sentence",
+        "What makes it an uncertainty and not a spread is the one read-out: a record read at a Node gives its position and erases its phase vector, a record read on the fan's angle gives its momentum's direction and not the Node it came from, and the two are not jointly readable for the same reason the law has no joint distribution for Bell (Theorem~\\ref{th:bell}).",
+        "What makes it an uncertainty and not a spread is the one read-out: read at a Node a record gives its position and loses its phase, read on the fan's angle it gives its momentum's direction and not its Node, and the two are not jointly readable, as the law has no joint distribution for Bell (Theorem~\\ref{th:bell}).",
+    ),
+    (
+        "framing, page count: Planck's paragraph",
+        "Under the declared dictionary the release's cost rule reads as $E = h_q s = (h_q\\Nphi) f$ and the turn rule as $\\lambda = h_A/p$: Planck's and de Broglie's relations are identities of the update rules, with one constant, $h = h_q\\Nphi = h_A$, a constraint on the inputs whose value is an input (Table~\\ref{tab:ledger}). No detector reading of them is registered; the electron's click on a face reads where an orbit ended, not $E = hf$.",
+        "Under the declared dictionary the release's cost rule reads as $E = h_q s = (h_q\\Nphi) f$ and the turn rule as $\\lambda = h_A/p$: Planck's and de Broglie's relations are identities of the update rules with one constant, $h = h_q\\Nphi = h_A$, an input (Table~\\ref{tab:ledger}); no detector reading of them is registered.",
+    ),
+    (
+        "framing, page count: the Bell scope sentences",
+        "Where the two settings meet is explicit in Definition~\\ref{def:click}: $B$'s rung is computed from $R(o_A, o_B)$ with $a$ and $o_A$ supplied by the layer. That the marginal at $B$ is nevertheless $\\Nphi/2$ for every $a$ is the content of the theorem; the joint counts are not local, and the model does not claim they are.",
+        "That the marginal at $B$ is $\\Nphi/2$ for every $a$ although $B$'s rung is computed from $R(o_A, o_B)$ with $a$ and $o_A$ supplied by the layer (Definition~\\ref{def:click}) is the content of the theorem; the joint counts are not local, and the model does not claim they are.",
+    ),
+    (
+        "framing, page count: Theorem 6's proof, the values beyond the tables",
+        "(\\cite{checks}; the derivation's 24.4, \\texttt{bell\\_plateau.py}, the same values): $11585/4096 = 2.828369$ at $65536$, $46341/16384 = 2.828430$ at $131072$ and $370727/131072 = 2.828423$ at $2^{20}$, two-sided about the bound; with the",
+        "(\\cite{checks}; the derivation's 24.4, the same values): $11585/4096 = 2.828369$ at $65536$ and $370727/131072 = 2.828423$ at $2^{20}$, two-sided about the bound; with the",
+    ),
+    (
+        "framing, page count: the uniform birth phase's run clause",
+        "which is how every run below is made (one birth per $u$), and its independence of the settings",
+        "(one birth per $u$ in every run below), and its independence of the settings",
+    ),
+    (
+        "framing, page count: the marginals theorem's list of grains",
+        "No tie occurs for any setting pair at $\\Nphi = 8, 16, 24, 32, 48, 64, 96, 128, 192, 256, 512, 1024$, nor at the CHSH labels for any multiple of $8$ up to $4096$ (computed from the rule \\cite{checks}).",
+        "No tie occurs for any setting pair at the twelve grains from $8$ to $1024$ of \\cite{checks}, nor at the CHSH labels for any multiple of $8$ up to $4096$.",
+    ),
+    (
+        "framing, page count: the strict-crossing sentence",
+        "The strict-crossing rung $\\Nphi C_k > uC_K$ gives the second party $33/64$ in $3944$ of the $4096$ setting pairs at $\\Nphi = 64$, a signalling of $1/\\Nphi$ made by the rounding \\cite{design}; the nearest rung of \\eqref{eq:rung} is what Theorem~\\ref{th:marginals} needs.",
+        "The strict-crossing rung $\\Nphi C_k > uC_K$ would give the second party $33/64$ in $3944$ of the $4096$ setting pairs at $\\Nphi = 64$, a signalling of $1/\\Nphi$ made by the rounding \\cite{design}; the nearest rung is what the theorem needs.",
+    ),
+    (
+        "framing, page count: Table 3's caption",
+        "Three PASS (each replicated by the second runner \\cite{replications}) and a fourth under the clock's assumed word (row 12); twelve FAIL: seven in a registered run, four by a pin without its run (not in this table), one a declared input refuted by nature (8c); two BOUND (5a; 7a on a declared input); one NOT COMPARED (2c).",
+        "Three PASS (replicated \\cite{replications}), a fourth under the clock's assumed word (12); twelve FAIL (seven in a registered run, four by a pin without its run and not in this table, one a declared input refuted, 8c); two BOUND (5a, 7a); one NOT COMPARED (2c).",
+    ),
+    (
+        "framing, page count: row 4b's verdict, shorter",
+        "FAIL: $0.315$ expected, $17$ grains below; under covariant-readings-v1 the same star reads $0.3674$ for the pinned $0.369 \\pm 0.003$ (series S), the law's row stays FAIL; the two one-way factors apart by $1 - v^2$ (the frame) \\\\",
+        "FAIL: $0.315$ expected, $17$ grains below; under covariant-readings-v1 $0.3674$ for the pinned $0.369 \\pm 0.003$ (series S), the law's row FAIL; the frame: the two one-way factors apart by $1 - v^2$ \\\\",
+    ),
+    (
+        "framing, page count: row 12's limit clause is Table 2's",
+        "the presence clock $1.000$; the continuum's $1/r$ a limit under the shell's average &",
+        "the presence clock $1.000$ &",
+    ),
+    (
+        "framing, page count: the spine said once, in the frame's paragraph",
+        "\\paragraph{What is proved.} A packet moved Inside, from place to place, and what it says Outside: every formula below is the answer for one packet. Derived Inside, exact on the GameBoard, no experiment needed:",
+        "\\paragraph{What is proved.} Derived Inside, exact on the GameBoard, no experiment needed, each the answer for one packet moved from place to place:",
+    ),
+    (
+        "framing, page count: the frame paragraph's closing sentence",
+        "What the system gives is a computation Inside whose passage Outside is the clicks, at the quantum level as well: the equations Inside are the law's, the equation of the passage is the click theorem's, and how far Outside represents reality is what Tables~\\ref{tab:checks} and~\\ref{tab:nature} show, result by result.",
+        "What the system gives is a computation Inside whose passage Outside is the clicks, at the quantum level as well, the equations Inside the law's and the equation of the passage the click theorem's; how far Outside represents reality is what Tables~\\ref{tab:checks} and~\\ref{tab:nature} show, result by result.",
+    ),
+    (
+        "framing, page count: the detector at rest, a parenthesis",
+        "A detector's clock is what it emits and receives back, on its own record (a detector at rest receives its row back at its own Node); no Node holds",
+        "A detector's clock is what it emits and receives back, on its own record; no Node holds",
+    ),
+    (
+        "framing, page count: the earlier testbed in five words",
+        "The earlier testbed \\cite{paper1} is history: no rule of it survives here.",
+        "The earlier testbed \\cite{paper1} is history.",
+    ),
+    (
+        "framing, page count: row 2c, shorter",
+        "from the click cells, a read-back of the built click, which carries the square & NOT COMPARED ($\\kappa$ not computed): the window a gate on the implementation, no evidence about nature; no three-opening world is registered \\\\",
+        "from the click cells, a read-back of the built click & NOT COMPARED ($\\kappa$ not computed): the window an implementation gate, no evidence about nature; no three-opening world is registered \\\\",
+    ),
+    (
+        "framing, page count: the proximity sentence",
+        "The proximity is a compatibility, not an advantage over quantum mechanics, whose bound the law approaches from below on this range; what refutes it",
+        "The proximity is a compatibility, not an advantage over quantum mechanics; what refutes it",
+    ),
+    (
+        "framing, page count: the proved list's two clauses",
+        "the split's isometry and the injectivity of the interval on the rows' weights, multiplicities and phases for a fixed event history; the pace of every direction, isotropic within $1/T_D$, with its Manhattan bound;",
+        "the split's isometry and the injectivity of the interval on the amplitudes for a fixed event history; the pace of every direction, isotropic within $1/T_D$;",
+    ),
+    (
+        "framing, page count: the runs paragraph in one sentence",
+        "each inside an expectation written before the run; nothing of the GameBoard's state is read as a measurement. Against nature three readings pass,",
+        "each inside an expectation written before the run, nothing of the GameBoard's state among them; against nature three readings pass,",
+    ),
+    (
+        "framing, page count: Table 4's Newton check, shorter",
+        "a face detector's count of the escape against the release; the clock's form at more distances \\\\",
+        "the escape's count at a face detector; the clock's form at more distances \\\\",
+    ),
+    (
+        "framing, page count: the limits paragraph's E' clause",
+        "compared and never rooted, with $E'$ the largest integer whose square is at most $W$, kept by comparisons, and every count of the body gated by $E_0/E'$; multiplied by $c^4$ it is the energy--momentum relation of special relativity, and the identity's own content is the integer form (series S, Table~\\ref{tab:checks}, inside their pins).",
+        "compared and never rooted, with $E'$ the largest integer whose square is at most $W$ and every count of the body gated by $E_0/E'$; multiplied by $c^4$ it is the energy--momentum relation of special relativity (series S, Table~\\ref{tab:checks}, inside their pins).",
+    ),
+    (
+        "framing, page count: the frame paragraph's velocity clause",
+        "a velocity is Nodes apart over counts apart between neighbouring detectors, never a reading of the interval, and the read-out of Definition~\\ref{def:click} is the click. The frame's three sentences, the derivation's \\cite{clickframe}:",
+        "a velocity is Nodes apart over counts apart between neighbouring detectors, and the read-out of Definition~\\ref{def:click} is the click. The frame \\cite{clickframe}:",
+    ),
+    (
+        "framing, page count: the rest rate clause",
+        "so its clicks carry the group and its counter runs at the rest rate at every speed, the Doppler $1 + \\beta$ without the clock's factor (rows 4a, 4b): read through records,",
+        "so its clicks carry the group and its counter runs at the rest rate at every speed (rows 4a, 4b): read through records,",
+    ),
+    (
+        "framing, page count: the proved paragraph's opening, shorter",
+        "\\paragraph{What is proved.} Derived Inside, exact on the GameBoard, no experiment needed, each the answer for one packet moved from place to place:",
+        "\\paragraph{What is proved.} Derived Inside, exact on the GameBoard, no experiment needed:",
+    ),
+    (
+        "framing, page count: Table 4's harmonic check, shorter",
+        "the least-rank click, an axiom of the apparatus, pinned by the two-slit period and Malus at $22.5$ degrees, not derived; the identification by the single opening against its pin (row 10) \\\\",
+        "the least-rank click, an axiom of the apparatus pinned by the two-slit period and Malus at $22.5$ degrees; the single opening against its pin (row 10) \\\\",
+    ),
+    (
+        "framing, page count: row 12's verdict, shorter",
+        "PASS under the age word, the clock's word by assumption (P9), nature's $2.00$ $4.6$ percent away; FAIL under the presence word",
+        "PASS under the age word (P9), nature's $2.00$ $4.6$ percent away; FAIL under the presence word",
+    ),
+    (
+        "framing, page count: row 4b's reading, shorter",
+        "(series G2, before the crossing rule; the re-run at head pending)",
+        "(series G2; the re-run at head pending)",
+    ),
+    (
+        "framing, page count: the prediction's three assumptions in fewer words",
+        "(that nature's pairs are this model's pairs at some $\\Nphi$, that fair sampling holds, and that the experiment's four settings are the model's labels)",
+        "(nature's pairs this model's pairs at some $\\Nphi$, fair sampling, the four settings the model's labels)",
+    ),
+    (
+        "framing, page count: Table 4's masses cell in two lines",
+        "The masses' values: every rule linear in the content, every equal split a fixed point; floors only &",
+        "The masses' values: every rule linear in the content, every equal split a fixed point &",
+    ),
+    (
+        "framing, page count: the open face in fewer words",
+        "a detector without a body, an open face, has no clock of its own, its tick the record's ordering, a GameBoard diagnostic;",
+        "an open face, without a body, has no clock, its tick the record's ordering (a GameBoard diagnostic);",
+    ),
+    (
+        "framing, page count: Table 4's Lorentz check in two lines",
+        "the ratio of the two one-way Doppler factors read at the ground through records: $1 - v^2$ under the law, $1$ under Lorentz; the split of a row between staying and hopping (A2) as a hypothesis under its own identity, not opened \\\\",
+        "the ratio of the two one-way Doppler factors through records: $1 - v^2$ under the law, $1$ under Lorentz; the split of a row between staying and hopping (A2), a hypothesis not opened \\\\",
+    ),
+    (
+        "framing, page count: the runs paragraph in two lines",
+        "After a detector the simulator reads what Table~\\ref{tab:checks} lists, each inside an expectation written before the run, nothing of the GameBoard's state among them; against nature",
+        "After a detector the simulator reads Table~\\ref{tab:checks}'s list, each inside an expectation written before the run; against nature",
+    ),
+    (
+        "framing, page count: Planck's clause in the proved list",
+        "Planck's and de Broglie's relations as identities under the declared dictionary, an input.",
+        "Planck's and de Broglie's relations as identities under the declared dictionary.",
+    ),
+    (
+        "framing, page count: the frame paragraph's first clause",
+        "and the question what it says Outside: inside the GameBoard the law propagates records as a beam",
+        "and the question what it says Outside: Inside, the law propagates records as a beam",
+    ),
+    (
+        "framing, page count: Table 4's Newton cell in two lines",
+        "Newton's inverse square and Poisson's law closed after a detector ($G$ not read; series D3, Table~\\ref{tab:checks}) &",
+        "Newton's inverse square and Poisson's law closed after a detector ($G$ not read; D3) &",
+    ),
+    (
+        "framing, page count: the positioning paragraph's transport clause",
+        "the transport is a lattice gas's exact integer dynamics \\cite{hpp1976,fhp1986}, a walker free of dispersion where the lattice automata of",
+        "the transport a lattice gas's exact integer dynamics \\cite{hpp1976,fhp1986}, free of dispersion where the lattice automata of",
+    ),
+    (
+        "framing, page count: the axioms clause of the proved list",
+        "the click's weight a positive quadratic form of power $2$ under the axioms (a) to (e); the exact marginals",
+        "the click's weight a positive quadratic form of power $2$; the exact marginals",
+    ),
+    (
+        "framing, page count: the beam clause of the frame paragraph",
+        "there are detectors and their clicks only, and the beam passes to them with amplitudes at the click (P11).",
+        "there are detectors and their clicks only, the beam passing to them with amplitudes at the click (P11).",
+    ),
+    (
+        "framing, page count: the hypotheses' sentence in five words",
+        "The hypotheses beside the law are on the tree \\cite{hypotheses}, claimed nowhere here.",
+        "The hypotheses beside the law are on the tree \\cite{hypotheses}.",
+    ),
+    (
+        "framing, page count: the frame paragraph's opening clause",
+        "and the question what it says Outside: Inside, the law propagates records as a beam by the algebraic formulas of Section~\\ref{sec:law}, on Nodes, integer rows and the interval's count, where no one measures;",
+        "and what it says Outside: Inside, the law propagates records as a beam by the algebraic formulas of Section~\\ref{sec:law}, where no one measures;",
+    ),
+    (
+        "framing, page count: the Doppler factors' clause",
+        "the two one-way Doppler factors are $r/(1 - v)$ and $(1 + v)/r$, alike only at $r^2 = 1 - v^2$,",
+        "the two one-way Doppler factors $r/(1 - v)$ and $(1 + v)/r$ are alike only at $r^2 = 1 - v^2$,",
+    ),
+    (
+        "framing, page count: the distance paragraph's first clause is the introduction's",
+        "What is established is an explicit model with the results above and their checks after a detector; what the broad claim still needs, and the check that decides each:",
+        "What the broad claim still needs, and the check that decides each:",
+    ),
+    (
+        "framing, page count: the field equation's sentence is Table 4's scope",
+        "(series S, Table~\\ref{tab:checks}, inside their pins). Einstein's field equation is not reached.",
+        "(series S, Table~\\ref{tab:checks}, inside their pins).",
+    ),
+    (
+        "framing, page count: the bending row's parenthesis",
+        "(a hypothesis, its coefficient an input, the six operations giving Newton's half) against nature's $1.75$ arcseconds",
+        "(a hypothesis, its coefficient an input) against nature's $1.75$ arcseconds",
+    ),
+    (
+        "framing, page count: the closing sentence's middle clause",
+        "at the quantum level as well, the equations Inside the law's and the equation of the passage the click theorem's; how far Outside represents reality",
+        "at the quantum level as well; how far Outside represents reality",
+    ),
+    (
+        "framing, page count: the order clause said once, in the quote",
+        "the amplitudes that carry $\\sqrt{1 - v^2}$ into a detector's own rate, up to corrections of order $m^2 v^2$. The law as built meets (A1)",
+        "the amplitudes that carry $\\sqrt{1 - v^2}$ into a detector's own rate. The law as built meets (A1)",
+    ),
 ]
 
 

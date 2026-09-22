@@ -3706,3 +3706,17 @@ KNOWN and OURS; the paper's word.
 - The old 8, 8a, 8b, 8c, 8d, 8e as separate sections: merged into B;
   the audit's first form merged with its known / ours columns into C.
 - The old section 9's reasons for the title: kept in one line (A.1).
+
+## Applied (2026-09-22, the owner's GO through the Boss at 08:15Z): commit A, the framing
+
+Plan A applied as written, one commit through cut30/corrections.py
+(the writer's ten rounds folded into the table): the title, the
+abstract's first sentences, P11, the reading rule, the sweep, the two
+ordering sentences, the frame paragraph with the click frame's three
+sentences at 1dd81fef (PR #769, pending merge; "Outside, the game above
+the board" for "our real world", record 768) and the Lorentz-road
+sentence, the limits paragraph's and Table 4's replacements, the boost
+sentence, the c-postulate row, row 4b, the bibitem clickframe; 30 pages,
+the split 25 / 2 / 3; the pinning test and tools/check.py pass. Commit B,
+the reshaping, follows on the same branch. The citation swap to the
+merge SHAs is one small commit when they land.
