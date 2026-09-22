@@ -220,6 +220,7 @@ def expectations() -> Json:
     out["run_2026_09_21"] = RUN_2026_09_21
     out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
     out["run_2026_09_22_bresenham"] = RUN_2026_09_22_BRESENHAM
+    out["run_2026_09_22_far"] = RUN_2026_09_22_FAR
     for name, pin in PINS.items():
         ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -399,6 +400,58 @@ RUN_2026_09_22_BRESENHAM: dict[str, object] = {
         "gone); the mass delays inside their pins, their ratio 1.73 outside 2.00 +- 0.25 by 0.02, "
         "the reading that decides, recorded as it is; near at f = 2 the whole beam (0 taken), "
         "outside its shift and delay pins; the rule and the pins unchanged"
+    ),
+}
+
+
+# The far worlds' first run, on branch optical-v1-bresenham (records 505
+# and 540; verb 3 by Bresenham with the momentum's pace, 32358f3): the
+# deflection's second pin at b = 8, run for the first time, so "was" is
+# None for both. DETECTOR unless marked; the lamp rate GAMEBOARD, read
+# here (the pin left None until the first run).
+RUN_2026_09_22_FAR: dict[str, object] = {
+    "branch": "optical-v1-bresenham",
+    "after": "the merge of main's far worlds (PR #689) onto verb 3's Bresenham form with the momentum's pace",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "worlds": {
+        "far_g0": {
+            "shift": -1.773,
+            "delay": 2.56,
+            "clicks": 1348,
+            "taken_by_the_mass": 0,
+            "lamp_rate": 0.927,
+            "was": None,
+        },
+        "far_g1": {
+            "shift": -3.403,
+            "delay": 4.35,
+            "clicks": 1344,
+            "taken_by_the_mass": 0,
+            "lamp_rate": 0.927,
+            "was": None,
+        },
+    },
+    "ratios": {
+        "far": {
+            "shift_f2_over_f1": 1.92,
+            "shift_bracket": 0.66,
+            "delay_f2_over_f1": 1.70,
+            "delay_bracket": 1.04,
+            "was": None,
+        },
+    },
+    "gameboard_mean_transverse_angle_degrees": {
+        "far_g0": -3.855,
+        "far_g1": -7.788,
+        "ratio": 2.020,
+        "was": None,
+    },
+    "note": (
+        "the far worlds' first run: both shifts inside 0.5 pixel of the pins -1.69 / -3.37 (read "
+        "-1.773 / -3.403) and both delays inside 1 interval of 2.15 / 4.29 (read 2.56 / 4.35); the "
+        "shifts' ratio 1.92 inside 2.00 +- 0.66 and the delays' 1.70 inside 2.00 +- 1.04; no light "
+        "taken by the mass at either f (the innermost line at 5.83 Links, beyond mass's 3.83); the "
+        "lamp rate 0.927 read here (the pin was None); the pins untouched"
     ),
 }
 
