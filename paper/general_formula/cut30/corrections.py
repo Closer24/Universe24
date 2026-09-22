@@ -682,6 +682,12 @@ CORRECTIONS = [
         "the extreme a part in $276$), the norm range of Appendix~\\ref{app:technical} the error bound.",
         "the extreme a part in $276$), and the norm range of Appendix~\\ref{app:technical} is the error bound between the two.",
     ),
+    # The owner's word (2026-09-22): the big formula in a frame.
+    (
+        "the covariant square in a frame",
+        "W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3,",
+        "\\boxed{\\,W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3\\,}",
+    ),
 ]
 
 

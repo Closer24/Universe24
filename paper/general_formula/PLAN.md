@@ -3233,3 +3233,8 @@ the error bound between the two"). No number moved; 30 pages held (the
 body through 25, the references 26 to 27, the appendices 28 to 30). The
 S(N) figure at half width waits for the Bell runner's rows on main, one
 commit after the Boss's SHA.
+The owner's word of the same day on the formulas' places: every central
+formula is a numbered display (the map, the shell, Newton, Coulomb, the
+fields, the wave, the rung, the joint weight, Gleason's form, the bound,
+the prediction, the covariant square), and the covariant square, Eq. 14,
+his "big formula", is set in a frame; 30 pages held.
