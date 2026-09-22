@@ -82,7 +82,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   tool's step replay under the law's drive and ordered by the crossing
   rule, the worlds unchanged, no register file) and series O
   (`two_stars/`, the three worlds' momenta by the line rule, the pins
-  with its push factor).
+  with its push factor) and series U (`crowd_clock/`, `moving_08` and
+  `moving_3` by the line rule, `moving_1` kept under the key; both re-run
+  worlds refused by the generic entry before their 500 intervals).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by

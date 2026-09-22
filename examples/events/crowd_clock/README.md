@@ -146,3 +146,44 @@ presence 4 F at the lamp's Node once the rows arrive, and the algebra.
   within the bracket; a re-declaration of the emulation for the age
   word's k stays the design's. The map `replicated` points at the
   Replicator's line ([REPLICATIONS](../../../docs/REPLICATIONS.md)).
+
+## Re-read under the law's line drive (2026-09-22, the two admitted moving worlds; measured against the pins of expectations.json committed at ca5fa00 before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): `moving_08` and
+`moving_3` rewritten by the generator with the line rule's momenta (the
+same 0.2 c; the pins the speed's and the crowd's, drive-free, committed
+before the run; `moving_1` kept under `per_axis_drive`, refused at load
+under the law; the five still worlds without a moving body untouched),
+run once each on the checkout of `drive-default` at `ca5fa00` (source
+fingerprint `c71927e33dea0e12`, package 0.3.1), Python 3.14.0rc2, numpy
+2.5.3, headless, `tools/run_series.py --jobs 2`, `run.json` carrying
+`"drive": "line"`. Neither completes its 500 intervals under the law as it
+stands: `moving_08` is REFUSED at interval 490 (a ray carrying the age
+473 past the world's `age_bound` 472: the light stretched by the crowd's
+age moment under the generic entry of the bending, record 847) and
+`moving_3` at interval 300 (the entry's wall 2 T_D (d + f n A) past the
+working bound), the books balanced at every completed tick (the digests
+at the refusal `570887f4d86a`, `832f86484592`, `c5857060c938` and
+`6a16cf2b1da5`, `557a0010e708`, `4a13f565d076`). The refusals are the
+entry's, not the drive's: the worlds as they were before this re-pin
+(the per-axis momenta) refuse the same way under the line drive at 495
+and 286 and under the key `per_axis_drive` at 490 and 300 (HOST probes,
+not registered). What could be read, by the method of the design's
+section 7 (1 + z from the birth ordinal against the click's tick; the lag
+from the step lines): `moving_08` in [100, 250) reads 1 + z = 2.3489 at
+the detector (26 clicks; DETECTOR), outside the presence word's bracket
+[1.224, 1.296] and the age word's [1.2, 1.728] alike (the registered
+readings before the entry 1.2827 and 1.6145), and nothing in [250, 400)
+(no click: the lamp's clock owes 429 of its 490 intervals under the
+entry's stretch, age 62, 61 births in all, 59 clicked); its lamp leaves
+its crowd at tick 104 (the lag past four Links; the age word's bracket
+[112, 347], the registered exit 138), the lag 50 Links at the refusal;
+`moving_3` reads nothing (11 births in 300 intervals, one click at the
+detector), its lamp out of its crowd at tick 52 (the bracket [55, 118],
+the registered 69), the lag 33 Links. Under the entry these worlds as
+declared are in the regime the test records (the model owner's word of
+record 871: not in the paper; the Register Architect's to remove after
+the entry merges); the re-pin under the drive is complete up to that, and
+the drive itself moved nothing readable here. Nothing is registered (the
+entry above stays drafted).

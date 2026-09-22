@@ -195,6 +195,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the three runs read beside the first run of 2026-09-21 (19 readings
   inside, 8 outside; the control byte for byte as before; the contacts
   outside as before); the series stays unregistered.
+- Series U re-pinned under the law (`examples/events/crowd_clock/`): the
+  generator's momenta by the line rule for `moving_08` and `moving_3`
+  (`moving_1` the per-axis drive of history under its key, refused at
+  load), `expectations.json` with the drive and the momenta named, the
+  two worlds rewritten; run once, both refused before 500 intervals by
+  the generic entry of the bending (490 and 300; the same under the
+  per-axis drive), what could be read recorded beside the rows; the
+  series stays unregistered.
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

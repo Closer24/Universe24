@@ -11,6 +11,28 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series U under the law's line drive: the two admitted moving worlds on drive-default ca5fa00 - 2026-09-22
+
+The branch `drive-default` at `ca5fa00` (the generator's momenta by the
+line rule for `moving_08` and `moving_3` committed before the run,
+DEFAULT.md section (c); `expectations.json` with the drive and the momenta
+named; `moving_1` under `per_axis_drive`, refused at load; the still
+worlds untouched): the two worlds of `examples/events/crowd_clock/` run
+through `tools/run_series.py --jobs 2` (Python 3.14.0rc2, numpy 2.5.3,
+headless; source fingerprint `c71927e33dea0e12`), `run.json` carrying
+`"drive": "line"`; neither completed: `moving_08` REFUSED at interval 490
+(a ray's age 473 past `age_bound` 472) and `moving_3` at 300 (the generic
+entry's wall past the working bound), the books balanced at every
+completed tick; the digests at the refusal (state, audit, events)
+`570887f4d86a`, `832f86484592`, `c5857060c938` (`moving_08`, 490) and
+`6a16cf2b1da5`, `557a0010e708`, `4a13f565d076` (`moving_3`, 300). The
+refusals are the generic entry's (record 847), reproduced by the pre-pin
+worlds under either drive (HOST probes at 495 / 490 and 286 / 300, not
+registered). No gate world is in this series; the series is not
+registered. What could be read (`moving_08`'s first window 2.3489,
+outside both blocks' brackets; its exit at 104; `moving_3` unreadable) is
+in [the series' README](../examples/events/crowd_clock/README.md#re-read-under-the-laws-line-drive-2026-09-22-the-two-admitted-moving-worlds-measured-against-the-pins-of-expectationsjson-committed-at-ca5fa00-before-the-run).
+
 ## Series O under the law's line drive: three runs on drive-default a5de093 - 2026-09-22
 
 The branch `drive-default` at `a5de093` (the generator's momenta by the
