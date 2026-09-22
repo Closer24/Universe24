@@ -2638,3 +2638,16 @@ caption; the table's legend. Newton's and Poisson's measurement after a
 detector is a run not made, named as such; the owner's word sent to the
 Boss for Highlights 5.4 and the register's labels.
 
+### No probe reading of the GameBoard in the paper (the owner's word, 2026-09-22, about 00:50Z)
+
+The owner: "No probe reading that samples the board in the paper at all;
+it has no meaning without a detector." Every series C and E number left
+the paper: the rings table, the Gauss, Newton, Coulomb, Poisson, field
+and redshift checks (now "no detector reading registered; the run after
+a detector not made"), the equivalence principle's, the third law's and
+the retardation's integers, the Coulomb coefficients, the two fields'
+constants and the strong-field rate ratios; the derivations stand as
+derivations, and series T (a detector's reading of the clock's field at
+two distances) is the field's one measurement. Reproducibility no longer
+names series C's fingerprint.
+
