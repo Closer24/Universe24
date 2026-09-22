@@ -54,8 +54,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   `reader_clock/alike_receding`, a mass of content 2^30 at width 2^20) are
   kept as history under `per_axis_drive` on the Boss's default until the
   owner speaks; so is `catalog/neutron_star` (its accumulator past the bound
-  at run time); series R's seven worlds carry the key until the series is
-  re-pinned in the campaign (their replay blocks stand as registered). The
+  at run time); series R's seven worlds carried the key until the series'
+  re-pin under the law (below; their replay blocks of 2026-09-21 under
+  `former`, replayed under the key by the test). The
   re-pins made so far, each one commit of pins and one of readings: series
   D3 (`orbit_lamp/`, the circle at n = 10 under the line drive, the
   per-axis n = 9 kept as history), series H (`bohr/`, the seven worlds'

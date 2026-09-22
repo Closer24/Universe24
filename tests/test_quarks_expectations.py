@@ -25,6 +25,14 @@ formula gives, a run proves; the template `tests/test_amplitude_cone.py`).
     replayed here bit-exact, so the register cannot drift from the tree
     again; the fate's `engine_first_step` is the replay's first step.
 
+(f) since the law's line drive (2026-09-22, the model owner's record 972):
+    the worlds declare no drive key and load without the per-axis identity;
+    every world's `former` block (the replay of 2026-09-21 under the
+    per-axis drive of history) replays bit-exact under the world key
+    `per_axis_drive`, so the rows of history stay reproducible;
+(g) the kicked u's pace pins (`kick_pace`, GAMEBOARD, written by the
+    generator before the run) are the drive rules' closed forms at M = 5,
+    S = 2^37 and p = 10^13: 0.1635 under the line drive, 0.1853 per axis.
 No number of a 3000-interval run is pinned here: the 3000-interval fates
 are the register's readings (`tools/quarks_readings.py`).
 """
@@ -41,6 +49,7 @@ import pytest
 
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
+from event_universe.events.world import PER_AXIS_DRIVE_RULE
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "quarks"
@@ -78,7 +87,10 @@ def register() -> dict[str, object]:
         "read_mass",
         "fate",
         "replay",
+        "drive",
+        "kick_pace",
     }
+    assert found["drive"] == "line"
     return found
 
 
@@ -109,6 +121,9 @@ def test_the_shipped_worlds_are_the_generators():
         assert shipped(name) == generated[name], name
         world = parse_nature_beam_world(shipped(name))
         assert {f.name for f in world.families} == {"u", "d", "glue"}, name
+        # (f): the law's drive, nothing declared.
+        assert "per_axis_drive" not in shipped(name)
+        assert world.per_axis_drive is False and PER_AXIS_DRIVE_RULE not in world.hypotheses
 
 
 @pytest.mark.parametrize("name", NAMES)
@@ -180,6 +195,49 @@ def test_the_replay_of_every_world_reads_as_registered(
     first = min((ticks[0][0] for ticks in steps.values() if ticks), default=None)
     assert pinned["fate"]["engine_first_step"] == first
     assert "step_every_about" not in pinned["fate"]
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_the_former_replay_of_every_world_reads_under_the_per_axis_drive(
+    name: str, register, readings_tool, tmp_path: Path
+):
+    """(f)."""
+    former = register["worlds"][name]["former"]
+    assert former["drive"] == "per_axis"
+    replay = former["replay"]
+    cap = int(replay["cap"])
+    document = shipped(name)
+    document["per_axis_drive"] = True
+    source = json.dumps(document).encode("utf-8")
+    world = parse_nature_beam_world(json.loads(source))
+    assert world.per_axis_drive is True and PER_AXIS_DRIVE_RULE in world.hypotheses
+    out = tmp_path / "former"
+    out.mkdir()
+    execute_nature_beam_run(world, source, out, name, cap)
+    assert readings_tool.replay_block(out, cap) == replay
+    steps = replay["steps"]
+    first = min((ticks[0][0] for ticks in steps.values() if ticks), default=None)
+    assert former["engine_first_step"] == first
+
+
+def test_the_kicked_pace_pins_are_the_drive_rules(register):
+    """(g)."""
+    generator = load("quarks_make_worlds_pins", WORLDS / "make_worlds.py")
+    pinned = register["worlds"]["q6_proton_kick"]["kick_pace"]
+    assert pinned == generator.kick_pins("line")
+    p, m, s = 10**13, 5, 1 << 37
+    assert pinned["content"] == m and generator.KICK == p and generator.WIDTH == s
+    assert pinned["pace"] == p * 64 / (64 * 64 * s * m + p * 110)
+    assert abs(pinned["pace"] - 0.1635) < 5e-5
+    assert abs(pinned["intervals_per_link"] - 6.1) < 0.05
+    assert pinned["per_axis"]["pace"] == p / (64 * s * m + p)
+    assert abs(pinned["per_axis"]["pace"] - 0.1853) < 5e-5
+    assert abs(pinned["per_axis"]["intervals_per_link"] - 5.4) < 0.05
+    # The kicked u of history stepped at 6, 12, 19, 25, 32, 38, 45, 51, 58
+    # (6 and 7 alternating, 6.5 per Link with the pushes on it); the line
+    # drive's 6.1 before any push is the pin the run's steps are read beside.
+    former = register["worlds"]["q6_proton_kick"]["former"]["replay"]["steps"]["1"]
+    assert [t[0] for t in former] == [6, 12, 19, 25, 32, 38, 45, 51, 58]
 
 
 def test_the_holds_line_is_a_diagnostic_out_of_the_deciding_set(readings_tool):

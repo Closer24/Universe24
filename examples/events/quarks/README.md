@@ -1,13 +1,19 @@
 # Series R: the quarks
 
 Since 2026-09-22 the law's drive of a body is the line drive (the model
-owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)).
-The seven worlds declare `per_axis_drive`, the per-axis drive of history,
-so that every reading below and every replay block of `expectations.json`
-stands as registered under the drive it was read under, until the series is
-re-pinned under the law in the campaign of DEFAULT.md section (c) (the pins
-by the generator before the run, the readings by kind, the rows below kept
-as history); the key then leaves the worlds.
+owner, record 972; [docs/designs/drive_b/DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)),
+and the seven worlds declare no drive key (the transient `per_axis_drive`
+of the flip day left them at the series' re-pin, DEFAULT.md section (c)).
+The rows of 2026-09-21 below were read under the per-axis drive of history
+and stand as history: `expectations.json` names the drive (`drive`), pins
+the kicked u's pace under both (`kick_pace`, GAMEBOARD: 0.1635 on a
+heading, a Link every 6.1 intervals; 0.1853 and 5.4 per axis) and keeps
+every world's replay block of 2026-09-21 under `former`, replayed
+bit-exact under the world key `per_axis_drive` by the test's (f); the
+`replay` blocks are the engine's under the law's drive, written by
+`replay_register.py` before the run. The pushes are the design's integers
+under either drive (a push is a row's label); what the drive moves is the
+ticks of the steps and the hand-overs.
 
 Seven worlds of one base, written by `make_worlds.py`; the register entry
 is [R, the quarks (2026-09-21)](../../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21)

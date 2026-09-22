@@ -58,7 +58,18 @@ def main() -> None:
     parser.add_argument("--cap", type=int, default=DEFAULT_CAP)
     args = parser.parse_args()
     register = json.loads(REGISTER.read_text(encoding="utf-8"))
+    drive = str(register.get("drive", "per_axis"))
     for name, pinned in register["worlds"].items():
+        # The former blocks (2026-09-21, read under the per-axis drive of
+        # history) stand as history beside the law's, replayed under the
+        # world key `per_axis_drive` by the test's (f); written once, when
+        # the register's drive column first names the line drive.
+        if "former" not in pinned and drive == "line":
+            pinned["former"] = {
+                "drive": "per_axis",
+                "replay": pinned["replay"],
+                "engine_first_step": pinned["fate"]["engine_first_step"],
+            }
         block = replay_of(name, args.cap)
         pinned["replay"] = block
         steps = block["steps"]

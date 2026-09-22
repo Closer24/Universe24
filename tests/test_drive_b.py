@@ -103,8 +103,8 @@ HISTORY = {
     "cluster_clock/cluster_moving.json",
     "reader_clock/alike_receding.json",
     # The neutron star's accumulator passes the bound at run time under the
-    # line drive; series R's registered readings stand under the drive they
-    # were read under until the series is re-pinned (DEFAULT.md (c)).
+    # line drive (DEFAULT.md (c)); series R's seven worlds left the set on
+    # their re-pin under the law (their rows of history under `former`).
     "catalog/neutron_star.json",
     # The moving detector's six worlds (main's series, PR #834; merged on
     # 2026-09-22): the cart's momentum derived for the per-axis drive's
@@ -116,13 +116,6 @@ HISTORY = {
     "moving_detector/cart_k9.json",
     "moving_detector/cart_k17.json",
     "moving_detector/cart_quantum.json",
-    "quarks/q1_proton_line.json",
-    "quarks/q2_neutron_line.json",
-    "quarks/q3_proton_triangle.json",
-    "quarks/q4_deuteron_rectangle.json",
-    "quarks/q5_deuteron_line.json",
-    "quarks/q6_proton_kick.json",
-    "quarks/q7_proton_dressed.json",
 }
 Q = LABEL_SCALE
 T_H = math.isqrt(3 * Q * Q)
