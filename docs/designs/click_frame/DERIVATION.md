@@ -33,20 +33,30 @@ frequency per interval; r a detector's own count per interval against
 the tick, a ratio the detector cannot see but two families can compare
 through their clicks.
 
-**The two assumptions, the owner's (records 745, 749).** (A1) A click is
-the passage of information from Node to Node, at most one Node per
-interval: c is the unit, the same in every family, and nothing passes
-faster. (A2) A click's content is an amplitude with a phase that splits
-each interval between staying and hopping, the mass the staying share.
+**The conversion, and the two assumptions that define it (the owner's,
+records 745, 749, 753).** What is to be shown is a statement about a
+CONVERSION: from the lattice and the momentum inside it (an integer
+vector **p** on a record) to motion in the real world, the conversion
+made by clicks that pass information, with the amplitudes of the
+passing packet; the claim is that this conversion is Lorentz. The two
+assumptions define the conversion. (A1) A click is the passage of
+information from Node to Node, at most one Node per interval: c is the
+unit, the same in every family, and nothing passes faster. (A2) A
+click's content is an amplitude with a phase that splits each interval
+between staying and hopping, the mass the staying share: the packet
+that passes is converted by its amplitudes.
 
-**Theorem (the click theorem).** Let G be the set of transformations
-between click families that preserve the click structure: they carry
-counts to counts and Nodes to Nodes linearly (the counts of a family add,
-so a transformation is a Z-linear map of the pairs (t, x) up to a choice
-of origin), and they preserve (A1) (a click that moves one Node per
-interval in one family moves one Node per interval in every family).
-Then: (i) G is a group, and with (A1) alone it is the Lorentz group up to
-scale: in one dimension the maps `(u, w) -> (k u, w / k)` (and the
+**Theorem (the click theorem).** The conversion defined by (A1) and
+(A2), from the lattice's momentum to motion read by clicks, is Lorentz:
+to second order in the velocity exactly, with the lattice's own
+corrections beyond. In the algebra: let G be the set of transformations
+between click families that preserve the conversion's structure: they
+carry counts to counts and Nodes to Nodes linearly (the counts of a
+family add, so a transformation is a Z-linear map of the pairs (t, x)
+up to a choice of origin), and they preserve (A1) (a click that moves
+one Node per interval in one family moves one Node per interval in
+every family); G is the conversion's symmetry. Then: (i) G is a group,
+and with (A1) alone it is the Lorentz group up to scale: in one dimension the maps `(u, w) -> (k u, w / k)` (and the
 reflection `u <-> w`), the one-parameter group of boosts with the
 invariant `u w = t^2 - x^2`, whose parameter is the one-way factor k of
 section 2 and whose axiom is the equality of the two one-way factors
@@ -112,19 +122,22 @@ so its clicks carry the group of (i) and, read by one clock, Lorentz's
 radar (section 6, the sharpening's (b)), and lack the amplitude of (ii)
 that would fix `r` at `sqrt(1 - v^2)`.
 
-**The paper's frame, three sentences, marked as such.** We assume
-Lorentz is real in the world, and we explain only how a click brings
-it: a click is the passage of information from Node to Node at most one
-Node per interval (A1), and a click's content is an amplitude with a
-phase that splits each interval between staying and hopping, the mass
-the staying share (A2). The transformations between click families that
-preserve this structure form the Lorentz group up to scale (A1), acting
-on the amplitudes as the Dirac walk's covariance (A2), so that a
-detector's own rate is `sqrt(1 - v^2)` to second order in v and the
-lattice's corrections begin at the fourth. The amplitudes of (A2) are
-therefore exactly what is needed to convert the clicks back to Lorentz;
-the law as built satisfies (A1) and not (A2), a fact stated for the
-owner's word.
+**The paper's frame, three sentences, marked as such (the owner's shape,
+record 753).** To convert the lattice and the momentum inside it into
+motion in our real world, one uses clicks that pass information, a
+click being the passage of information from Node to Node at most one
+Node per interval (A1) and its content an amplitude with a phase that
+splits each interval between staying and hopping, the mass the staying
+share (A2); Lorentz of the real world is assumed, and what is shown is
+that this conversion brings it. The symmetry of the conversion, the
+transformations between click families that preserve (A1) and (A2), is
+the Lorentz group up to scale, acting on the amplitudes of the passing
+packet as the Dirac walk's covariance, so that the passage of clicks is
+Lorentz to second order in the velocity, a detector's own rate `sqrt(1 -
+v^2)`, and the lattice's corrections begin at the fourth order. The
+conversion is made exactly with the amplitudes, converting the packet
+that passes, and it comes out from there; the law as built satisfies
+(A1) and not (A2), a fact stated for the owner's word.
 
 **The verdict in one line: LORENTZ FROM THE CLICKS GIVEN the line
 `k_AB = k_BA` (the two directions alike, the relativity principle),
