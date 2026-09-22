@@ -5165,6 +5165,151 @@ form B's register of its 47 moving-body worlds, not `main`'s. Rows 38 and
 44 of 21.2 and E5 of 21.4 carry the amendment.
 
 
+### 17.7 The proper-time gate without a root: two counters compared, against the whole root (the owner's word, 2026-09-22, records 642 and 647)
+
+**The question.** covariant-readings-v1 gates a body's self-creations by
+the whole root `E' = isqrt(W)` of its exact square `W = m^2 + 3` **p**
+`.` **p** (17.6 M3; m = Q S M the rest energy in the identity's units,
+**p** the momentum label, `c^2 = 1 / 3`), and the physics-rule reviewer's
+vector verdict is that a whole root of the state's quadratic form at run
+time is not a form at most bilinear in the state (record 202). The owner
+names a gate with no root: two counters since a reset, t the intervals
+and n the self-creations, and the n-th self-creation allowed when `t^2
+m^2 >= n^2 W`, a comparison of two integer products (verbs 1, 2 and 6),
+the physics the same, `t / n >= sqrt(W) / m = gamma`. This section
+derives what the counters give against the whole-root gate, exactly, on
+the domain `abs(p)_1 <= m` (`gamma <= 2`), with the enumeration
+[root_free_gate.py](designs/covariant_readings/root_free_gate.py) (its
+output [root_free_gate.out](designs/covariant_readings/root_free_gate.out);
+integers only, no root and no float anywhere; a check, not a run).
+
+**The whole-root gate's closed form.** From an empty proper-time
+accumulator and the first self-creation at tick 1, the body owes
+`by_drive(acc_tau, E' - m, m)` intervals after every self-creation with
+the remainder kept (17.6 M1), so the n-th self-creation falls at
+
+    T_n = n + floor((n - 1) (E' - m) / m) = 1 + floor((n - 1) E' / m),
+
+the form 18.1 (a) uses (`T_64 = 70` and `124` for the muon). Equivalently
+`T_n = min {t : t m > (n - 1) E'}`.
+
+**Two root-free gates on the counters.** (A) The owner's, as stated: the
+n-th self-creation at the first tick t (the first interval after the
+reset is t = 1) with `t^2 m^2 >= n^2 W`, i.e. `T'_n = ceil(n sqrt(W) /
+m)`. (B) The same comparison at the whole-root gate's origin, strict:
+the n-th at the first t with `t^2 m^2 > (n - 1)^2 W`, i.e. `T''_n = 1 +
+floor((n - 1) sqrt(W) / m)`. Both are comparisons of integers; `sqrt(W)`
+is never formed, it only names the value the comparison decides.
+
+**(1) Exactness.** For (B): `T''_n = T_n` unless a multiple of m lies in
+the half-open interval `((n - 1) E', (n - 1) sqrt(W)]`, whose length
+`(n - 1) (sqrt(W) - E')` is below `n - 1`; so for `n <= m + 1` the
+interval holds at most one multiple of m and `T''_n - T_n` is 0 or 1,
+never negative (`E' <= sqrt(W)`); in general `0 <= T''_n - T_n <= ceil((n
+- 1) / m)`. Equality for every n when W is a perfect square (**p** = 0;
+`gamma = 2` exactly, `W = 4 m^2`, where both give `T_n = 2 n - 1`), and
+for every n with `(n - 1) (sqrt(W) - E') < m - ((n - 1) E' mod m)`. For
+(A): `T'_n - T_n = ceil(n gamma) - 1 - floor((n - 1) E' / m)`, which is 0
+at **p** = 0, exactly 1 at `gamma = 2`, never negative, and at most 3 on
+the domain (the enumeration: 3 is attained, at m = 16, 64, 100 and 128
+alike, for n near m); (A) is later than the whole root at almost every
+W (identical for 1 value of W in 2359 at m = 64, the rest case) because
+its first self-creation waits `ceil(gamma)` intervals where the
+whole-root gate fires at tick 1 and owes afterwards. The bound, as an
+integer: (B) 1 for `n <= m + 1`; (A) 3 on the domain. An exact root-free
+form exists with one division: `T_n = min {t : c^2 > W, c = ceil(t m /
+(n - 1))}` for `n >= 2` (`t m > (n - 1) E'` if and only if `ceil(t m / (n -
+1)) > sqrt(W)`, E' being the largest integer below `sqrt(W)`), verbs 6, 2
+and 6, no root; it reproduces every tick of the whole-root gate, but it
+keeps t and n growing like (B).
+
+**(2) The counters' bound and the reset.** The structural fact first,
+the section's theorem: every accumulator of the law is bounded because
+its slope is a rational of declared integers, a rate over a wall, and
+its residue lives below the wall; a slope that is irrational, here
+`sqrt(W) / m`, has no bounded exact accumulator, so a bounded state
+costs a declared rounding of the slope, and two are on offer: the whole
+root `E' / m` (the identity's M3, the comparison walk, the state
+bounded, the period reset below for `m <= 2^15`) or a rational grain
+`m / g` small enough for the run, which coarsens the gate's resolution.
+The counters of (A) and (B) grow with the
+run: `t^2 m^2 <= 2^63 - 1` holds up to `t = floor(sqrt(2^63 - 1) / m)`,
+i.e. 229 242 intervals for the muon's `m = 13 248`, 47 453 132 for `m =
+64`, 2 896 for `m = 2^20` and 181 for `m = 2^24`; and `n^2 W <= 2^63 - 1`
+at `gamma = 2` up to `n = 114 621`, 23 726 566, 1 448 and 90
+self-creations respectively. The registered covariant worlds run 420
+ticks (`j4_muon_3640`, `j4_muon_12856`), so the muon's products stay
+below `2^49` with no reset; a general body at `m = 2^24` overflows the
+working bound within 181 intervals and needs one. A reset of (t, n) to
+(0, 0) at a self-creation with nothing carried moves the ticks: the next
+self-creation would fall at `floor(gamma) + 1 = 2` intervals for every `1
+< gamma < 2`, a rate 1 / 2 in place of `1 / gamma`; and the residue `t^2
+m^2 - n^2 W` is not a state that can be carried, since after the reset
+the comparison needs the old counters themselves (the cross terms `2 T
+t' m^2 - 2 n n' W`) and the residue grows like `2 t m^2`. The reset that
+moves no tick is the sequence's own period: the whole-root gate is
+periodic in n with period m and shift E', `T_(n + m) = T_n + E'` (the
+floor's identity; checked on the muon for every `n <= m + 1` at both
+momenta), so after m self-creations the counters may drop by (E', m)
+with E' read as the elapsed ticks, no root computed; that reset comes
+after `m gamma` intervals, within the working bound for `m <= 2^15`
+(`4 m^4 <= 2^63`) and not beyond. Gate (B) has no exact period (its
+shift per m self-creations is `sqrt(W)`, not an integer), so it has no
+tick-preserving reset at all: its exactness within 1 holds only while
+the counters run unreset, `n <= m + 1`.
+
+**(3) Series S under the root-free gates**, from the tables, no run
+(`m = 13 248`, `c^2 = [1, 3]`; the whole-root values are 18.1 (a)'s, the
+register's pins, the beta product's flight to the +x face as run: 328,
+299 and 221 intervals): at `p = 3640` (`W = 215 258 304`, `E' = 14 671`)
+the 64th self-creation is 70 under the whole root and under (B), 71 under
+(A); the beta click 369 (the run's 369, the pin 367 +- 2) under (B), about
+370 under (A) (the muon gains under one Link in the extra interval), outside
+the pin. At `p = 12 856` (`W = 671 339 712`, `E' = 25 910`): 124 under the
+whole root and (B), 126 under (A); the click 345 (the run's 345, the pin
+345 +- 2) under (B), 346 to 347 under (A), inside the pin by its bracket.
+At rest all three give 64 and the click 392. So (B) reproduces both of
+series S's decay ticks and both clicks exactly; (A) misses the integer
+pins 70 and 124 by 1 and 2. Note 18.1 (a)'s continuum values `64 gamma
+= 70.9` and `125.2`: (A) is the gate that rounds them up (71, 126), the
+whole root and (B) the gate that starts at tick 1 (70, 124); the
+register's pins are the latter's.
+
+**(4) The three tests**, for the gate as a rule of the law. Generic: one
+primitive for every body, the record's own integers m and W (the
+identity's M3), no family name, the counters two more integers of the
+record. Vector: with the two products kept as accumulators, `A <- A + (2
+t + 1) m^2` per interval and `B <- B + (2 n - 1) W` per self-creation,
+the rates are bilinear in the state (`t` with `m^2`, `n` with `W`), the
+gate one comparison `A > B` (verbs 1, 2 and 6), no root and no float:
+the physics-rule reviewer's PASS (2026-09-22) on the condition that
+`m^2` and `W` are record integers formed by verb 2, the rates then
+bilinear and the gate one comparison;
+stated as `t^2 m^2` against `n^2 W` the products are degree four in the
+record's integers, the same admission as the comparisons of 17.6 M3 and
+M7 and the frame's `(p . D)^2 abs(D')^2`, which the reviewer must rule
+on once for all three. Local: the record's own four integers, nothing at
+a Node, the fixed work one multiplication, one addition and one
+comparison per interval and one multiplication per self-creation; the
+storage bounded only on the declared domain of (2), since gate (B) has
+no exact period and no tick-preserving reset.
+
+**The word.** For the owner's gate as stated (A): NOT the same ticks,
+EQUIVALENT WITHIN 3 on the domain, later and never earlier, and outside
+series S's decay pins (71 and 126 for 70 and 124). For the same
+comparison at the whole-root gate's origin and strict (B): EQUIVALENT
+WITHIN 1 for `n <= m + 1`, exact on both of series S's worlds and
+whenever W is a perfect square, with no tick-preserving reset. EXACT
+only with the division form `ceil(t m / (n - 1))^2 > W`, or with the
+whole root itself; the difference between (B) and the whole root is the
+root's own rounding (`E' = floor(sqrt W)`), which (B) removes: (B) is the
+gate nearer to `gamma`, the whole root the one the register pinned.
+The physics-rule reviewer's recommendation to the owner (his, recorded
+here, not this section's): the whole-root gate with its rounding
+declared per frame fits the law's shape; (B) stands as the proof that
+the root's rounding is the only price, exact within 1 and on series S
+exact.
+
 ## 18. The three structural failures of the register under one logic
 
 **The question** (the owner, records 264 and 265, translated: "explain
