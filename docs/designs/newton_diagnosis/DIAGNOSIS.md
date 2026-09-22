@@ -43,9 +43,9 @@ pace c = 64 / 110, and the push the law runs counts the rows a body
 MEETS, once each at the crossing of the world lines (the crossing rule),
 so a body falling toward the source meets the outgoing shells at the
 rate (1 + u / c) times a resting body's, u its inward speed, and the
-push is A (1 + u / c) / r, not A / r. That velocity term does positive
-work on every in-fall and less negative work on every out-going, the
-circular orbit is unstable, and every radial excursion grows by a factor
+push is A (1 + u / c) / r, not A / r. That velocity term raises the
+ring-mean push's invariant at every phase of the motion, in and out
+alike, the circular orbit is unstable, and every radial excursion grows by a factor
 of order two per turn (the map of section 2: the apocentres 12.0, 13.8,
 15.6, 21.3, 51.4 Links from the whole-8 launch alone; 24.0, 27.5, 31.2,
 42.2, 99.3 at r = 24). The records (section 3) show that growth on the
@@ -251,10 +251,15 @@ drive, H = sum over the axes of (|n_a| - S ln(1 + |n_a| / S)) + A ln r
 (its derivative along the drive's pace is v_a = n_a / (S + n_a) per axis,
 so d H / dt = 0 when the push is A / r and nothing else; A ln r is the
 plane's logarithmic potential). Under the push with the factor, d H / dt
-= (A / r)(u / c) u: positive on every in-fall (u > 0) and negative on
-every out-going (u < 0), and over one radial cycle the in-fall's gain
-exceeds the out-going's loss because the force is larger while falling
-in, so Delta H per cycle = the integral of (A / r)(u^2 / c) dt > 0. For
+= (A / r)(u / c) u = (A / r) u^2 / c, non-negative at EVERY phase (the
+physics-rule reviewer's read N, folded): under the ring-mean push with
+the factor H rises monotonically, on the out-goings too, since the
+conservative part of the force is already in A ln r and what the factor
+adds is (A / r)(u / c) along the motion whichever way the body moves; so
+Delta H per cycle = the integral of (A / r)(u^2 / c) dt > 0. The records'
+falls of H on the out-goings (-0.59 at r = 12; -0.30 and -0.65 at r =
+24, section 3.2) are not the algebra's but the grain's and the drive's
+torque. For
 a small radial oscillation about a circle at the pace v_c this is of the
 order of Delta H / H_radial = 2 pi v_c / c per turn (a first-order
 estimate), 2.2 at v_c / c = 0.344: the radial excursion grows by a factor
@@ -384,12 +389,14 @@ n-units). (ii) From there the apocentres grow 18.7, 25.2, 48.6, 68 at
 r = 12 (the factors 1.35, 1.93, 1.4) and 31.8, 43.9, 55.6, 70.2 at r =
 24 (1.38, 1.27, 1.26), the pericentres fall (7.2, 7.3, 3.6; 17.0, 18.1,
 23.0 with the contact between), the map's growth in the map's order.
-(iii) H, constant under A / r, rises on the in-falls more than it falls
-on the out-goings at r = 12: +0.85 (115 to 282), -0.59 (282 to 447),
-+1.60 (447 to 600), then the contact; 4.55 at the launch to 13.2 at the
-escape. At r = 24, where u / c stays within 0.2, the rises are +0.66,
--0.30, +0.34, +0.01, +0.83, -0.65: a net rise of 1.0 in six half cycles
-within the noise of the kicks. (iv) L is not conserved: the per-axis
+(iii) H, constant under A / r and rising at every phase under the
+factor (2.4), rises over the run: at r = 12 +0.85 (115 to 282), -0.59
+(282 to 447), +1.60 (447 to 600), then the contact; 4.55 at the launch
+to 13.2 at the escape. At r = 24, where u / c stays within 0.2, the
+changes are +0.66, -0.30, +0.34, +0.01, +0.83, -0.65: a net rise of 1.0
+in six half cycles. The falls on the out-goings are not the algebra's
+(which rises monotonically) but the grain's shot noise and the per-axis
+drive's torque (iv), which H does not account for. (iv) L is not conserved: the per-axis
 drive's velocity is not parallel to the momentum (the torque v_x n_y -
 v_y n_x, up to 0.25 n-units x Links per interval at n = 8 and larger at
 the pericentres' n = 14 to 30, where the drive is far from the slow
