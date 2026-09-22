@@ -227,6 +227,16 @@ CORRECTIONS = [
         "of their own geometries. The declared rounding of the circle's tables has its precedents in the fixed-point transforms of signal processing \\cite{malvar2003,welch1969,mathews1963,goodman1970}. The earlier testbed",
         "of their own geometries. The earlier testbed",
     ),
+    # The owner's word of 2026-09-22 in the writer's session: the covariant
+    # rule's entry into the law is in hand (the Boss orders the route: the
+    # Highlights line superseding record 270's, the three-tests verdict, the
+    # directional drive, the off-axis runs); the paper says so in the
+    # distance table's row and claims nothing until the readings land.
+    (
+        "the covariant rule in hand (the owner's word of 2026-09-22)",
+        "the covariant readings (a body's energy as an exact square, its counts gated by $E_0/E$; series S's face clicks inside their pins on one axis) against the same pins \\\\",
+        "the covariant readings (Eq.~\\eqref{eq:square}; series S's face clicks inside their pins on one axis) against the same pins; their entry into the law is in hand on the owner's word of 2026-09-22, the runs off the one axis pending, and this text claims nothing of it until they land \\\\",
+    ),
 ]
 
 
