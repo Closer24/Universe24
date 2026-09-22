@@ -24,9 +24,17 @@ initial condition: the star at the initial distance r_0 has the speed v =
 r_0 / T_0 Links per interval, T_0 = THROW_AGE intervals, as if every star
 left the centre at the time -T_0 (r_0 = 3 .. 26 Links, one integer per
 star, dealt round-robin over the six axes in Port order, so no star ever
-overtakes another on its axis); the momentum is the label p = Q S M_total v
-/ (1 - v) (BEAM_LAW section 3 step 5; M_total the light plus the mass held,
-the content the step rule reads). The star's clock turns ONE step of the
+overtakes another on its axis); the momentum is the label that gives v
+under the law's drive of a body, since 2026-09-22 the line drive (the model
+owner's word, record 972; docs/designs/drive_b/DEFAULT.md; BEAM_LAW note
+17 as amended, note 49): v = p Q / (Q^2 S M_total + p T_D) on a heading,
+T_D = 110, so p = Q S M_total v / (1 - v T_D / Q) (M_total the light plus
+the mass held, the content the step rule reads). The per-axis drive of
+history (note 17 as it ran until that day, the world key `per_axis_drive`,
+the drive every registered run of the series was read under: v = p / (Q S
+M_total + p), p = Q S M_total v / (1 - v)) is kept as `AXIS_DRIVE`:
+`stars(mass, AXIS_DRIVE)` and `expectations(drive=AXIS_DRIVE)` reproduce
+its momenta and pins. The star's clock turns ONE step of the
 circle of N per self-creation (K = M_total: the turn `by_clock(age,
 content, K)` = 1 while the light spent, at most TICKS units, is small
 against the mass).
@@ -147,6 +155,17 @@ CLOCKS = {"none": 0, "scalar": [1, 1 << 16], "age": [1, 1 << 23]}
 CROWDS = {"coasting": (MASS, "pass"), "gravity": (MASS, "read"), "double": (2 * MASS, "read")}
 WINDOWS = ((100, 200), (200, 300), (300, 400))
 EXPECTATIONS_FORMAT = "hubble-stars-expectations-v1"
+# The two drives a throw is derived under (docs/designs/drive_b/DEFAULT.md
+# section (c)): the line drive, the law's drive of a body since 2026-09-22
+# (the pace p Q / (Q^2 S M + p T_D) on a heading; a row of amount a moves
+# the speed by (1 - v T_D / Q)^2 a / S), and the per-axis drive of history
+# (the pace p / (Q S M + p); (1 - v)^2 a / S per row; the world key
+# `per_axis_drive`), the drive the registered runs were read under.
+LINE_DRIVE = "line"
+AXIS_DRIVE = "axis"
+DRIVE = LINE_DRIVE
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
+PACE_TERM = T_D_AXIS / Q  # 110 / 64, the line drive's second wall term per unit of v
 Json = dict[str, object]
 
 
@@ -161,28 +180,51 @@ def beam_speed() -> float:
 C = beam_speed()
 
 
-def momentum(v: float, content: int) -> int:
+def momentum(v: float, content: int, drive: str = DRIVE) -> int:
     """The momentum p (label units) that gives the speed v (Links per
-    interval) to a free measured event of content `content`: v = p / (Q S
-    M + p)."""
-    return round(Q * WIDTH * content * v / (1 - v))
+    interval) to a free measured event of content `content` under the
+    named drive: the line drive's v = p Q / (Q^2 S M + p T_D), so p = Q S M
+    v / (1 - v T_D / Q); the per-axis drive of history's v = p / (Q S M +
+    p), so p = Q S M v / (1 - v)."""
+    if drive == LINE_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v * PACE_TERM))
+    if drive == AXIS_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v))
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+def speed(p: int, content: int, drive: str = DRIVE) -> float:
+    """The speed of the momentum p at the content under the named drive."""
+    if drive == LINE_DRIVE:
+        return p * Q / (Q * Q * WIDTH * content + p * T_D_AXIS)
+    if drive == AXIS_DRIVE:
+        return p / (Q * WIDTH * content + p)
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def stars(mass: int) -> list[Json]:
+def push_factor(v: float, drive: str = DRIVE) -> float:
+    """A row of amount a moves a star's speed by push_factor(v) x a / S
+    toward the emitter: dv / dp at the speed v times the push M a Q, (1 - v
+    T_D / Q)^2 / S under the line drive, (1 - v)^2 / S under the per-axis
+    drive of history (the continuum derivation of the throw)."""
+    if drive == LINE_DRIVE:
+        return (1 - abs(v) * PACE_TERM) ** 2
+    if drive == AXIS_DRIVE:
+        return (1 - abs(v)) ** 2
+    raise ValueError(f"unknown drive {drive!r}")
+
+
+def stars(mass: int, drive: str = DRIVE) -> list[Json]:
     """The twenty-four stars of the design: name, axis (Port index), rank,
     initial distance r_0, speed v = r_0 / T_0, v / c, the momentum for the
-    content mass + LIGHT, and the position."""
+    content mass + LIGHT under the named drive, and the position."""
     content = mass + LIGHT
     found: list[Json] = []
     for rank in range(1, CHAIN + 1):
         for axis, name in enumerate(AXES):
             r0 = FIRST_DISTANCE + axis + 6 * (rank - 1)
             v = r0 / THROW_AGE
-            p = momentum(v, content)
+            p = momentum(v, content, drive)
             port = PORT_HEADINGS[axis]
             found.append(
                 {
@@ -190,8 +232,8 @@ def stars(mass: int) -> list[Json]:
                     "axis": axis,
                     "rank": rank,
                     "initial_distance": r0,
-                    "speed": speed(p, content),
-                    "speed_over_c": speed(p, content) / C,
+                    "speed": speed(p, content, drive),
+                    "speed_over_c": speed(p, content, drive) / C,
                     "momentum": p,
                     "position": [CENTRE[k] + port[k] * r0 for k in range(3)],
                     "momentum_vector": [port[k] * p for k in range(3)],
@@ -202,7 +244,7 @@ def stars(mass: int) -> list[Json]:
     return found
 
 
-def world(crowd: str, clock: str, record: bool = False) -> Json:
+def world(crowd: str, clock: str, record: bool = False, drive: str = DRIVE) -> Json:
     """One world; with `record` the same world reading `sum` at the centre
     (the record click of amplitude-v1, docs/designs/hubble_stars/DESIGN.md
     section 2.4; since the one click of stage (vii) every lamp births
@@ -216,7 +258,7 @@ def world(crowd: str, clock: str, record: bool = False) -> Json:
     is the count of the rows it crosses."""
     mass, mass_rule = CROWDS[crowd]
     content = mass + LIGHT
-    thrown = stars(mass)
+    thrown = stars(mass, drive)
     names = [str(s["name"]) for s in thrown]
     families: list[Json] = [
         {"name": "detector", "quantum": 1},
@@ -317,12 +359,15 @@ def load_tool():
     return module
 
 
-def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, object]:
+def throw_derivation(
+    crowd: str, reading_rule: str = "acoustic", drive: str = DRIVE
+) -> dict[str, object]:
     """The continuum derivation of the throw under the crowd's push (a
     GameBoard expectation, written before the runs): on each line (an axis,
     both chains) every star releases F rows per direction per interval; a
-    row of amount a passing a star moves its speed by (1 - |v|)^2 a / S
-    toward the emitter; the rows of a star l reach a star j at the acoustic
+    row of amount a passing a star moves its speed by push_factor(v) a / S
+    toward the emitter ((1 - |v| T_D / Q)^2 under the line drive, (1 -
+    |v|)^2 under the per-axis drive of history); the rows of a star l reach a star j at the acoustic
     rate F (c - u_r) / (c - u_s) (u the two speeds along the row's
     heading; `reading_rule` "acoustic", the rule pinned before the runs)
     once the first row has crossed the distance between them; with the
@@ -347,7 +392,7 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
     emission), tau (the light-travel time) and |p(end)| / p(0)."""
     mass, rule = CROWDS[crowd]
     F = mass * RELEASE[0] / RELEASE[1] if rule == "read" else 0.0
-    design = stars(mass)
+    design = stars(mass, drive)
     by_line: dict[int, list[int]] = {}
     for index, star in enumerate(design):
         by_line.setdefault(int(star["axis"]) // 2, []).append(index)
@@ -380,7 +425,7 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
                     else:
                         reader = C
                     rate = F * g * reader / (C - u_s)
-                    push -= s * rate * (1 - abs(speeds[j])) ** 2 / WIDTH
+                    push -= s * rate * push_factor(speeds[j], drive) / WIDTH
                 new_v[j] = speeds[j] + push
         speeds = new_v
         positions = [x + v for x, v in zip(positions, speeds, strict=True)]
@@ -445,7 +490,7 @@ def fits_of(tool, points: list[dict[str, float]], t0: float) -> dict[str, object
     }
 
 
-def expectations(reading_rule: str = "acoustic") -> Json:
+def expectations(reading_rule: str = "acoustic", drive: str = DRIVE, centred: bool = False) -> Json:
     """The expectations before the runs: the design table, the derived
     points and fits per crowd and window, and the brackets the tool
     judges the late window against. `reading_rule` "acoustic" is the first
@@ -485,25 +530,47 @@ def expectations(reading_rule: str = "acoustic") -> Json:
     the one-dimensional, Doppler-weighted gravity of this world; (v) the
     stars' clocks k within 0 .. 0.05 (the design's 0.01 to 0.02 with a
     factor of two and a half); (vi) what is observed today, q = -0.55,
-    expected NOT the nearest in every world."""
+    expected NOT the nearest in every world.
+
+    `drive` names the drive the momenta and the derivation are under (the
+    shipped register the line drive's; `AXIS_DRIVE` reproduces the pins the
+    registered runs were read under) and `centred` the column of the
+    centred step (record 955: the first Link of every star half a wall
+    earlier, no pin of this series moved by it)."""
     tool = load_tool()
     c = C
-    design = stars(MASS)
+    design = stars(MASS, drive)
+    if drive == LINE_DRIVE:
+        drive_note = (
+            "the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, "
+            "note 49; the model owner's record 972): v = p Q / (Q^2 S M + p T_D) on a heading, so p = "
+            "Q S M v / (1 - v T_D / Q); a row of amount a moves the speed by (1 - v T_D / Q)^2 a / S"
+        )
+    else:
+        drive_note = (
+            "the per-axis drive of history (BEAM_LAW note 17 as it ran until 2026-09-22, the world key "
+            "`per_axis_drive`): v = p / (Q S M + p), so p = Q S M v / (1 - v); a row of amount a moves "
+            "the speed by (1 - v)^2 a / S"
+        )
     found: Json = {
         "format": EXPECTATIONS_FORMAT,
         "reading_rule": reading_rule,
+        "drive": drive,
+        "centred": centred,
         "c": c,
         # The source of every entry (the owner's principle of 2026-09-21,
         # record 205: a formula gives, a run proves): the formula or the
         # section of docs/DERIVATIONS_BEAM.md, or "measured" with the target.
         "derivations": {
             "reading_rule": "declared (the design's reading rule of this run)",
+            "drive": "declared: " + drive_note,
+            "centred": "declared (docs/designs/drive_b/DEFAULT.md section (e), record 955): under `centred_step` every star's first Link comes half a wall earlier and no pin of this series moves; the column the model owner decides at the paper's close",
             "c": "DERIVATIONS_BEAM 2.1: c = Q / T_D = 64 / 110 = 32 / 55 Links per interval on a heading (T_D = isqrt(3 Q^2)); derived from the flight table and compared by tests/test_hubble_stars_readings.py (a)",
             "throw_age": "declared (the design's throw)",
             "ticks": "declared",
             "windows": "declared (the reading windows)",
             "registered_window": "declared",
-            "stars": "the speed declared by the design (the throw's fractions of c); the momentum from it by the drive's rule v = p / (Q S M + p) (DERIVATIONS_BEAM 2.1) at the grain; the distances declared",
+            "stars": "the speed declared by the design (the throw's fractions of c); the momentum from it by the drive's rule (the `drive` entry; DERIVATIONS_BEAM 2.1) at the grain; the distances declared",
             "crowds": "measured (target 5: the gravitational redshift reached at first order, the second order a different law, DERIVATIONS_BEAM 5.2; the brackets the design's)",
             "exact_coasting_form": "the coasting form 1 + z = 1 + v / c, the receiver's Doppler (DERIVATIONS_BEAM 2.2): q = 0, h the throw's rate; the fit of the exact form",
             "ordering": "declared (the design's ordering criterion)",
@@ -550,7 +617,7 @@ def expectations(reading_rule: str = "acoustic") -> Json:
         found["step_burst_max"] = 1
         found["derivations"]["step_burst_max"] = "declared (the step rule's cap under the signed drive)"
     for crowd in CROWDS:
-        derivation = throw_derivation(crowd, reading_rule)
+        derivation = throw_derivation(crowd, reading_rule, drive)
         fits = {
             key: fits_of(tool, points, (int(key.split("-")[0]) + int(key.split("-")[1])) / 2.0)
             for key, points in derivation["windows"].items()
@@ -637,7 +704,10 @@ def main() -> None:
                 )
             )
         return
-    print(f"c = {C:.5f} Links per interval on a heading (the flight table); T_0 = {THROW_AGE} intervals")
+    print(
+        f"c = {C:.5f} Links per interval on a heading (the flight table); T_0 = {THROW_AGE} intervals; "
+        f"the {DRIVE} drive"
+    )
     print(
         "| star | axis | rank | r_0 | v (Links per interval) | v / c | p (mass 2^20) | p (mass 2^21) |"
     )

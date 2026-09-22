@@ -331,3 +331,50 @@ def test_the_fits_read_the_exact_forms():
     fit_eds = TOOL.fit_points(decelerating, t0)
     assert abs(fit_eds.q_fit - 0.5) < 1e-3
     assert fit_eds.nearest == "q = +0.5"
+
+
+def test_the_generators_pins_under_the_two_drives():
+    """(f) The generator's momenta and pins under the two drives (2026-09-22,
+    docs/designs/drive_b/DEFAULT.md section (c)): the shipped
+    `expectations.json` and `record/expectations.json` are the line drive's
+    (`drive` "line", `centred` false, a derivation entry for each), the
+    stars' momenta the line rule's p = Q S M v / (1 - v T_D / Q) at the
+    declared speeds (s_px1 at v = 1 / 30 with M = 2^22 + 2^12:
+    9962425798633, its speed 1 / 30 within the rounding), and the per-axis
+    drive of history gives the registered integers (s_px1 9715512228193 by
+    p = Q S M v / (1 - v)); the pushing crowds' derived q under the line
+    drive within the shipped brackets and above the coasting crowd's."""
+    generator = load("hubble_stars_make_worlds", WORLDS / "make_worlds.py")
+    expectations = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    pinned = json.loads((WORLDS / "record" / "expectations.json").read_text(encoding="utf-8"))
+    for register in (expectations, pinned):
+        assert register["drive"] == generator.LINE_DRIVE and register["centred"] is False
+        assert "drive" in register["derivations"] and "centred" in register["derivations"]
+    content = generator.MASS + generator.LIGHT
+    first = expectations["stars"][0]
+    assert first["name"] == "s_px1" and first["momentum"] == 9962425798633
+    assert first["momentum"] == round(64 * (1 << 20) * content * (1 / 30) / (1 - 110 / 64 / 30))
+    assert abs(first["speed"] - 1 / 30) < 1e-9
+    assert (
+        abs(
+            generator.speed(first["momentum"], content)
+            - first["momentum"] * 64 / (64 * 64 * (1 << 20) * content + first["momentum"] * 110)
+        )
+        < 1e-15
+    )
+    history = generator.stars(generator.MASS, generator.AXIS_DRIVE)
+    assert (
+        history[0]["momentum"]
+        == 9715512228193
+        == round(64 * (1 << 20) * content * (1 / 30) / (1 - 1 / 30))
+    )
+    assert abs(history[0]["speed"] - 1 / 30) < 1e-9
+    assert generator.push_factor(0.0) == 1.0 and generator.push_factor(0.1) == (1 - 0.1 * 110 / 64) ** 2
+    assert generator.push_factor(0.1, generator.AXIS_DRIVE) == 0.9**2
+    for crowd in ("gravity", "double"):
+        entry = expectations["crowds"][crowd]
+        q = entry["derived_fits"]["300-400"]["q_fit"]
+        assert entry["q_bracket"][0] <= q <= entry["q_bracket"][1]
+        assert q > expectations["crowds"]["coasting"]["derived_fits"]["300-400"]["q_fit"] + 0.1
+    assert generator.momentum(1 / 30, content) == 9962425798633
+    assert generator.momentum(1 / 30, content, generator.AXIS_DRIVE) == 9715512228193
