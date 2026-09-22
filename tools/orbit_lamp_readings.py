@@ -516,7 +516,11 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
         # The probe's escape and its contacts with the detector line, for every
         # world alike: a source world's escape is not pinned, and before
         # 2026-09-22 it was read and never printed (the Newton Diagnostician's
-        # finding on the run under flow_link, record 1022).
+        # finding on the run under flow_link, record 1022). The escape is a
+        # face click, DETECTOR; a contact is the wall's measure entry taking a
+        # momentum component from the probe at its Node, no detector's click,
+        # and reads GAMEBOARD as the register labels a contact line (the
+        # atom register's give, DIAGNOSIS.md 3.1; the reviewer, 2026-09-22).
         print(
             f"  {DETECTOR} the probe left through {reading.escape[0]} at the tick {reading.escape[1]} "
             "(the face click's tick, the record's ordering; the detector's count of it is the lamp's "
@@ -525,14 +529,14 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             else f"  {DETECTOR} the probe did not leave the plane in {reading.ticks} intervals"
         )
         print(
-            f"  {DETECTOR} the probe touched the detector line {len(reading.contacts)} time(s): "
+            f"  {GAMEBOARD} (a contact line) the probe touched the detector line {len(reading.contacts)} time(s): "
             + "; ".join(
                 f"the tick {c.tick} at {list(c.node)} (the wall's rule {c.rule}, the axis {c.axis} "
                 f"component {c.component} taken)"
                 for c in reading.contacts
             )
             if reading.contacts
-            else f"  {DETECTOR} the probe never touched the detector line"
+            else f"  {GAMEBOARD} (a contact line) the probe never touched the detector line"
         )
         print(
             f"  {GAMEBOARD} (a diagnostic, not pinned): homes {reading.homes}; the probe at the end "

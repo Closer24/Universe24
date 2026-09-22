@@ -362,10 +362,10 @@ def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path, capsys)
     assert TOOL.report([reading, second], pins) == 0
     printed = capsys.readouterr().out
     assert "DETECTOR the probe did not leave the plane in 40 intervals" in printed
-    assert "DETECTOR the probe never touched the detector line" in printed
+    assert "GAMEBOARD (a contact line) the probe never touched the detector line" in printed
     assert "DETECTOR the probe left through face:+y at the tick 37" in printed
     assert (
-        "DETECTOR the probe touched the detector line 1 time(s): the tick 20 at [4, 2, 0] "
+        "GAMEBOARD (a contact line) the probe touched the detector line 1 time(s): the tick 20 at [4, 2, 0] "
         "(the wall's rule measure, the axis 1 component -5 taken)"
     ) in printed
     assert "the escape tick: 37 (expected 30 .. 40): inside" in printed

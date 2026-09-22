@@ -453,7 +453,10 @@ this correction, and `run_flow.out` is regenerated from the same events
 the detector line at y = 20 once (the register's `contact` lines of the
 probe's number: `r12_flow` at the tick 808 at (31, 21), `r24_flow` at 633
 at (71, 21), the wall's `measure` entry taking the whole p_y component of
-the probe's momentum), DETECTOR; the controls never did. So the periods
+the probe's momentum), GAMEBOARD, a contact line: the wall taking a
+momentum component from the probe at its Node, no detector's click, the
+register's kind for a contact (the atom register's give); the controls
+never did. The escapes are face clicks and stay DETECTOR. So the periods
 588.7 and 987.3 are the means of two and three spacings of loops that
 never closed: the probes left the plane at 1208 and 2452, after 145 and
 288 clicks, and each period is read from the crossings before the
