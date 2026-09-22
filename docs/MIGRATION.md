@@ -84,7 +84,12 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   (`two_stars/`, the three worlds' momenta by the line rule, the pins
   with its push factor) and series U (`crowd_clock/`, `moving_08` and
   `moving_3` by the line rule, `moving_1` kept under the key; both re-run
-  worlds refused by the generic entry before their 500 intervals).
+  worlds refused by the generic entry before their 500 intervals); the
+  replays of series X (byte for byte) and of the optical bodies (the
+  gamma-0 bodies moved by the merge's weight-pair judgment, frozen) close
+  step 2's list; the moving detector's six worlds stay under the
+  transient key (their preregistered pace 1 / k exactly is not a whole
+  momentum under the line drive: the design owner's word).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by

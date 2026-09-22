@@ -11,6 +11,30 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series X and the optical bodies replayed under the law after the merges with main: drive-default a560877 - 2026-09-22
+
+Step 2 of DEFAULT.md, the byte-identity replays: the six worlds of
+`examples/events/drive_b/` and the fifteen body worlds of
+`examples/events/optical/` as shipped, run once on the checkout of
+`drive-default` at `a560877` (source fingerprint `c71927e33dea0e12`;
+after the merges with main's generic entry and split ladder), through
+`tools/run_series.py --jobs 4` (Python 3.14.0rc2, numpy 2.5.3, headless),
+every run completed with the books balanced at every tick. Series X: every
+digest identical to the run blocks of `drive_b/expectations.json`
+(`97d5da647b12`, `f2de68150cab`, `a78247085c9f` the states; `65d837f2920f`,
+`92ef9f380d83`, `aa3c5a29f801` the `_b` events; `3dcd225edafb`,
+`f5a5e395de35`, `65c097c085aa` the controls'), `tools/drive_b_readings.py`
+19 inside, 0 outside. The optical bodies (`tools/drive_b_readings.py
+--expectations body_expectations.json`, the register frozen and not
+written): 12 inside, 18 outside; the five controls byte for byte; the five
+gamma-1 bodies clicking as the run blocks (four events digests identical,
+`body_b14_g1`'s moved with the same click); the five gamma-0 bodies moved
+to the flip-day table's "the charge (M, 1)" column (155 from y 29, 154
+from 31, 33, 35, 37), the merge's weight-pair judgment that read U
+disputes, frozen for the owner's word; the digests in
+[the optical README](../examples/events/optical/README.md#the-replay-under-the-laws-line-drive-after-the-merges-with-main-2026-09-22-drive-default-a560877)
+and [the drive_b README](../examples/events/drive_b/README.md#the-replay-under-the-law-after-the-merges-with-main-2026-09-22-drive-default-a560877).
+
 ## Series U under the law's line drive: the two admitted moving worlds on drive-default ca5fa00 - 2026-09-22
 
 The branch `drive-default` at `ca5fa00` (the generator's momenta by the

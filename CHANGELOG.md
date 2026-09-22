@@ -203,6 +203,12 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the generic entry of the bending (490 and 300; the same under the
   per-axis drive), what could be read recorded beside the rows; the
   series stays unregistered.
+- Series X and the optical bodies replayed under the law after the
+  merges with main (step 2's last item): series X byte for byte (19
+  inside, 0 outside); the optical controls byte for byte, the gamma-1
+  bodies clicking as their run blocks, the gamma-0 bodies moved to the
+  charge (M, 1) column of the flip-day table by the merge's weight-pair
+  judgment (frozen for the owner's word; the register not written).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

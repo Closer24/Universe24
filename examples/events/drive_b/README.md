@@ -137,3 +137,19 @@ absent the record is the per-axis drive's to the byte. It establishes no
 physical law: the cap off the headings is the Manhattan-isotropic 64 / 110,
 and the choice between this pace and the rows' triple under the law alone
 is the chief physicist's and the owner's (DESIGN.md section 7).
+
+## The replay under the law after the merges with main (2026-09-22, drive-default a560877)
+
+Step 2 of DEFAULT.md, series X's replay: the six worlds as shipped run
+once more on the checkout of `drive-default` at `a560877` (source
+fingerprint `c71927e33dea0e12`; after the merges with main's generic entry
+and split ladder), `tools/run_series.py --jobs 4`, 200 intervals each,
+every run completed with the books balanced at every tick; every digest
+(state, audit, events) identical to the run blocks of `expectations.json`,
+byte for byte, the `_b` worlds under the law with `"drive": "line"` and no
+identity, the `_main` controls under `per_axis_drive` with
+`per-axis-drive-v1`; `tools/drive_b_readings.py`: 0 record checks failed,
+19 readings inside, 0 outside, nothing moved (the clicks at 51, 101 and
+152 on face:+x from (40, 20, 20), (40, 40, 20) and (40, 40, 40); the
+controls at 36, 50 and 65 from (40, 20, 20)). What the merges did not
+touch: a body at gamma 0 with nothing declared but its momentum.

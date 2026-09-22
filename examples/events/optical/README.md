@@ -496,6 +496,41 @@ both, and the click's momenta of the first run read 7/4; (3) the
 controls exact. A world of the beam's width for bodies is the follow-up
 that averages the Link's grain, as the fast rows did for the rows.
 
+### The replay under the law's line drive after the merges with main (2026-09-22, drive-default a560877)
+
+Step 2 of [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md), the
+byte-identity replay: the fifteen body worlds as shipped (no drive key
+since the flip day) run once more on the checkout of `drive-default` at
+`a560877` (source fingerprint `c71927e33dea0e12`; after the merges with
+main's generic entry and split ladder), `tools/run_series.py --jobs 4`,
+every run completed at 300 intervals with the books balanced at every
+tick, `run.json` carrying `"drive": "line"`, and read by
+`tools/drive_b_readings.py --expectations body_expectations.json` without
+`--register` (the register frozen for the owner's word on the weight pair,
+the physics-rule reviewer's read U): 0 record checks failed, 12 readings
+inside, 18 outside, nothing moved. The five controls replay byte for byte
+(the click at 150 from (56, 20 + b, 20)). The five gamma-1 bodies click
+as on the flip day, tick for tick and Node for Node (167 from y 24, 166
+from 27, 163 from 30, 163 from 32, 164 from 34; the events digests of
+four identical to the run blocks, `body_b14_g1`'s events moved with the
+same click and momentum; every state digest moved by the record's fields
+since the merges). The five gamma-0 bodies MOVED: the clicks at 155 from
+y 29 (b = 10) and 154 from 31, 33, 35, 37 (b = 12 to 18) where the run
+blocks hold 158 from 27 and 156 from 30, 32, 34, 36, one to two Links
+less of fall and two to three intervals earlier: the table above's column
+"the charge (M, 1)" to the Node (its 156 at b = 10 read 155). The cause is
+the merge's judgment on the weight pair (the pair (w, Q S) formed at
+`optical` above 0 alone, the content itself at gamma 0), which read U
+names a third rule and the owner decides (A, B or C); until his word the
+register's run blocks stand as the flip day's and this replay is the
+record of the merged head, GAMEBOARD and DETECTOR as labelled. The
+digests: `3956cae6db28` / `665b8ecb9e90` (`body_b10_g0`, state / events),
+`afb8d3f37adf` / `e99c6646e977` (`b12_g0`), `1c2c2e19011d` /
+`ca2cbc690a6d` (`b14_g0`), `b1be232cb626` / `ed78614f4d4d` (`b16_g0`),
+`0bdf38daf0eb` / `0800168f06fd` (`b18_g0`); the gamma-1 events
+`2e862e668a35`, `8254ac7920c4`, `8ba8ad77cd9b` (`b14_g1`, moved),
+`f4395fc2108c`, `7d47cbca266e`.
+
 ## The deciding world of the beam's width for the wall's factor on matter (2026-09-22, branch optical-every-family): fast rows
 
 A slow row's wall stretch is swamped by Newton's fall and its grain (the
