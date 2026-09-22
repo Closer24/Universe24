@@ -7083,7 +7083,17 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
-### X, the directional drive (2026-09-22)
+### Y, the directional drive (2026-09-22)
+
+(Named series X until 2026-09-22; the letter X is "Poisson after a
+detector"'s, `shell_clock`, below; the physics-rule reviewer's line on
+PR #813.)
+
+#### X, the directional drive (2026-09-22)
+
+The former heading of series Y above, kept so that the links written to
+that name resolve until they are moved (HYPOTHESES.md's among them); the
+entry is the one above.
 
 - **Confronts.** The model owner's approval of form B (2026-09-22, record
   652 of the log of 2026-09-20, translated: "Form B is approved, go on it"):
@@ -7099,7 +7109,9 @@ sequential gates on an entangled record, the full register replay.
   (a diagonal body moves along one axis, every coincident fire lost;
   DERIVATIONS_BEAM 1.3 item 7) and the registered defect of record 301 (a
   body outrunning its own family's rows). Read at the faces of an open
-  41^3 box (the body's click, DETECTOR); the `step` lines GAMEBOARD.
+  41^3 box (the body's click, DETECTOR: the face and the Node; its tick
+  GAMEBOARD, the engine's count, equal to the body's own count at
+  suspension 0); the `step` lines GAMEBOARD.
 - **Model prediction, pinned before the run
   ([the expectations](../examples/events/drive_b/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
   `examples/events/drive_b/expectations.json`, derived by the generator
@@ -7108,7 +7120,8 @@ sequential gates on an entangled record, the full register replay.
   the key the click on face:+x at tick 51 from (40, 20, 20) on the axis,
   101 from (40, 40, 20) on the plane diagonal, 152 from (40, 40, 40) on
   the cube's (the 21st x Link at ceil(21 W / (|p_x| Q)), one interval's
-  tolerance on the tick, the face and the Node exact); the controls
+  tolerance on the tick, GAMEBOARD; the face and the Node exact,
+  DETECTOR); the controls
   without the key at 36, 50 and 65 from (40, 20, 20), y and z never moved;
   every `step` line within one Link of the line of **p**; every `drive`
   below 3 W.
@@ -7135,7 +7148,7 @@ sequential gates on an entangled record, the full register replay.
   | `cube_b` | 152 +- 1 from (40, 40, 40); (20, 20, 20); within one Link; below 3 W | tick 152 from (40, 40, 40); (20, 20, 20); 0.816; 1175424 | inside (4 of 4) |
   | `axis_main`, `plane_main`, `cube_main` | 36, 50, 65 (+- 1) from (40, 20, 20); (20, 0, 0) | 36, 50, 65 from (40, 20, 20); (20, 0, 0) each | inside (6 of 6) |
 
-- **Verdict (X).** The rule stands on the run: under the key a body walks
+- **Verdict (Y).** The rule stands on the run: under the key a body walks
   the digital line of its momentum at the pace the wall gives it on every
   direction and loses no coincident fire (the plane body leaves through
   (40, 40, 20), the control through (40, 20, 20)); with the key absent the
@@ -7456,7 +7469,11 @@ sequential gates on an entangled record, the full register replay.
   momentum): one fast body (content 64, S = 16384, p = 2^26, the Lorentz
   factor 2, v^2 = 3/4) beside the light worlds' mass at b = 10, 12, 14,
   16, 18 at gamma 0 and 1, the pins per world from the map's body walk
-  committed before the run (the click's tick +- 1 and Node). DETECTOR:
+  committed before the run (the click's tick +- 1 and Node; the Node
+  DETECTOR, the tick GAMEBOARD, the engine's count, which the body's own
+  count equals at suspension 0 and falls behind in a crowd by the owed
+  count, so at these worlds' pair the tick is the host's view of the
+  click's time). DETECTOR the Nodes, GAMEBOARD the ticks:
   the first run at the mass 2^12 (a generator slip, the crowd sixteen
   times weaker) clicked at 150 / 151 with no fall, tick for tick the
   walk's at that crowd, its click momenta reading the weight's 7/4 (the

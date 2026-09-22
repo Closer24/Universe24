@@ -1,8 +1,11 @@
-# Series X: the directional drive of a body (`drive-b-v1`)
+# Series Y: the directional drive of a body (`drive-b-v1`)
 
-The six worlds of series X, written by `make_worlds.py` with their
+(Named series X until 2026-09-22; the letter X is series "Poisson after
+a detector"'s, `shell_clock`, the physics-rule reviewer's line on PR #813.)
+
+The six worlds of series Y, written by `make_worlds.py` with their
 expectations before the runs (`expectations.json`); the register entry is
-[X, the directional drive (2026-09-22)](../../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22)
+[Y, the directional drive (2026-09-22)](../../../docs/EXPERIMENTS.md#y-the-directional-drive-2026-09-22)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The model
 owner's approval of form B (2026-09-22, record 652 of the log of
 2026-09-20, translated: "Form B is approved, go on it"), the design
@@ -14,10 +17,12 @@ research run, made once, never a test; every expectation below was written
 before the run; a reading outside its expectation is reported with its
 numbers, never moved. Every number is one of two kinds
 ([the register](../../../docs/EXPERIMENTS.md), "Two kinds of readings"): a
-DETECTOR reading (the body's click on a face of the open box: its tick, the
-face, the Node it left from) or a GAMEBOARD reading (the `step` lines'
-Nodes against the line of the momentum, the `drive` accumulators, the
-Links before the escape, `fast_steps`: the host's view, a diagnostic). The
+DETECTOR reading (the body's click on a face of the open box: the face
+and the Node it left from) or a GAMEBOARD reading (the click's tick, the
+engine's count, equal to the body's own count at suspension 0 and pinned
+with one interval's tolerance; the `step` lines' Nodes against the line
+of the momentum, the `drive` accumulators, the Links before the escape,
+`fast_steps`: the host's view, a diagnostic). The
 readings tool is `tools/drive_b_readings.py`, every line labelled by its
 kind.
 
@@ -80,17 +85,20 @@ controls; the same integers as `docs/designs/drive_b/drive_b_map.py` (A)):
 
 | World | Reading | Kind | The pin |
 | --- | --- | --- | --- |
-| `axis_b` | the click on a face | DETECTOR | tick 51 +- 1, face:+x, from (40, 20, 20) (the 21st x Link at ceil(21 W / (6000 Q)) = 51) |
-| `plane_b` | the click | DETECTOR | tick 101 +- 1, face:+x, from (40, 40, 20) (ceil(21 W / (3000 Q)) = 101; x wins every tie, y trails by one Link) |
-| `cube_b` | the click | DETECTOR | tick 152 +- 1, face:+x, from (40, 40, 40) (ceil(21 W / (2000 Q)) = 152) |
-| `axis_main`, `plane_main`, `cube_main` | the click | DETECTOR | tick 36, 50, 65 (+- 1), face:+x, from (40, 20, 20): y and z never moved (21 and 42 coincident fires lost) |
+| `axis_b` | the click on a face (the face and the Node DETECTOR; the tick GAMEBOARD) | DETECTOR, GAMEBOARD | tick 51 +- 1, face:+x, from (40, 20, 20) (the 21st x Link at ceil(21 W / (6000 Q)) = 51) |
+| `plane_b` | the click | DETECTOR, GAMEBOARD | tick 101 +- 1, face:+x, from (40, 40, 20) (ceil(21 W / (3000 Q)) = 101; x wins every tie, y trails by one Link) |
+| `cube_b` | the click | DETECTOR, GAMEBOARD | tick 152 +- 1, face:+x, from (40, 40, 40) (ceil(21 W / (2000 Q)) = 152) |
+| `axis_main`, `plane_main`, `cube_main` | the click | DETECTOR, GAMEBOARD | tick 36, 50, 65 (+- 1), face:+x, from (40, 20, 20): y and z never moved (21 and 42 coincident fires lost) |
 | every world under the key | the Links before the escape | GAMEBOARD | (20, 0, 0), (20, 20, 0), (20, 20, 20) |
 | every world under the key | every `step` line's Node against the line of **p** | GAMEBOARD | within one Link (the replay's 0, 0.707, 0.816) |
 | every world under the key | the largest `drive` on a `step` line | GAMEBOARD | below 3 W = 2766432 (proved, DESIGN.md section 4); the replay's 381280, 1111424, 1175424, below W + 2 max |p_a| Q |
 | `axis_b` | `fast_steps` | GAMEBOARD | 0 |
 
 The tolerance of one interval on the tick covers the engine's numbering of
-its first advance alone; the face, the Node and the Links are exact.
+its first advance alone; the face, the Node and the Links are exact. The
+tick is the engine's count (GAMEBOARD); the body's own count of
+self-creations equals it in these worlds, at suspension 0 (the world key
+`clock_stamp` of the moving detector would write it on the click line).
 
 ## What was measured (2026-09-22)
 
@@ -103,11 +111,11 @@ moved.
 
 | World | Reading | Kind | Measured | Verdict |
 | --- | --- | --- | --- | --- |
-| `axis_b` | the click | DETECTOR | tick 51 on face:+x from (40, 20, 20), the momentum (6000, 0, 0) | inside (the pin 51 +- 1, the Node exact) |
+| `axis_b` | the click | DETECTOR (the face, the Node), GAMEBOARD (the tick) | tick 51 on face:+x from (40, 20, 20), the momentum (6000, 0, 0) | inside (the pin 51 +- 1, the Node exact) |
 | | the Links before the escape; the line; the accumulators; `fast_steps` | GAMEBOARD | (20, 0, 0); 0.000 Link off the line; the largest drive 381280; 0 | inside |
-| `plane_b` | the click | DETECTOR | tick 101 on face:+x from (40, 40, 20) | inside (101 +- 1, the Node exact) |
+| `plane_b` | the click | DETECTOR, GAMEBOARD | tick 101 on face:+x from (40, 40, 20) | inside (101 +- 1, the Node exact) |
 | | the Links; the line; the accumulators | GAMEBOARD | (20, 20, 0); 0.707 Link; 1111424 (below 3 W and below 1306144); `fast_steps` 20 reported | inside |
-| `cube_b` | the click | DETECTOR | tick 152 on face:+x from (40, 40, 40) | inside (152 +- 1, the Node exact) |
+| `cube_b` | the click | DETECTOR, GAMEBOARD | tick 152 on face:+x from (40, 40, 40) | inside (152 +- 1, the Node exact) |
 | | the Links; the line; the accumulators | GAMEBOARD | (20, 20, 20); 0.816 Link; 1175424 (below 1178144); `fast_steps` 40 reported | inside |
 | `axis_main` | the click | DETECTOR | tick 36 from (40, 20, 20) | inside (the control: today's rule, 0.594 Links per interval) |
 | `plane_main` | the click | DETECTOR | tick 50 from (40, 20, 20), y never moved | inside (the control: 21 fires lost) |

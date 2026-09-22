@@ -7,10 +7,11 @@ Usage: `PYTHONPATH=src python tools/drive_b_readings.py <runs root>
 runs `tools/run_series.py` wrote (`<root>/<world>/run/`), told apart by the
 model of their record (`beam-drive-b-<name>-v1`). Every line is one of two
 kinds ([the register](../docs/EXPERIMENTS.md), "Two kinds of readings"):
-DETECTOR, a detector's record (the body's click on a face: its tick, the
-face, the Node it left from), or GAMEBOARD, the host's view (every `step`
-line's Node against the line of the momentum, the `drive` accumulators
-against the proved bound 3 W, `fast_steps`). The record checks (completed,
+DETECTOR, a detector's record (the body's click on a face: the face and
+the Node it left from), or GAMEBOARD, the host's view (the click's tick,
+the engine's count, equal to the body's own count at suspension 0; every
+`step` line's Node against the line of the momentum, the `drive`
+accumulators against the proved bound 3 W, `fast_steps`). The record checks (completed,
 the books balanced at every tick) fail the tool; a reading outside its pin
 is printed with its numbers and never moved. With `--register` the run
 blocks (the source sha256, the digests of the record, the readings) are
@@ -148,7 +149,8 @@ def lines(reading: Reading, pin: dict[str, object]) -> tuple[list[str], int, int
             if event is None:
                 outside += 1
                 out.append(
-                    f"  DETECTOR body {number}: no face click (pinned tick {click['tick']}): OUTSIDE"
+                    f"  DETECTOR body {number}: no face click (pinned at the tick {click['tick']}, "
+                    "GAMEBOARD): OUTSIDE"
                 )
                 continue
             tick, face, node = (
@@ -164,8 +166,9 @@ def lines(reading: Reading, pin: dict[str, object]) -> tuple[list[str], int, int
             inside += ok
             outside += not ok
             out.append(
-                f"  DETECTOR body {number} ({body_pin.get('line', '')}): tick {tick} on {face} from {node}, "
-                f"the momentum {event['momentum']}: pinned {click['tick']} +- {click['tolerance']} on "
+                f"  DETECTOR body {number} ({body_pin.get('line', '')}): the click on {face} from {node}, "
+                f"the momentum {event['momentum']}; its tick {tick} GAMEBOARD (the engine's count, the "
+                f"body's own at suspension 0): pinned {click['tick']} +- {click['tolerance']} on "
                 f"{click['face']} from {list(click['node'])}: {'inside' if ok else 'OUTSIDE'}"
             )
         return out, failed, inside, outside
@@ -184,8 +187,9 @@ def lines(reading: Reading, pin: dict[str, object]) -> tuple[list[str], int, int
         inside += ok
         outside += not ok
         out.append(
-            f"  DETECTOR the click: tick {tick} on {face} from {node}, the momentum {event['momentum']}: "
-            f"pinned {click['tick']} +- {click['tolerance']} on {click['face']} from {list(click['node'])}: "
+            f"  DETECTOR the click: on {face} from {node}, the momentum {event['momentum']}; its tick "
+            f"{tick} GAMEBOARD (the engine's count, the body's own at suspension 0): pinned "
+            f"{click['tick']} +- {click['tolerance']} on {click['face']} from {list(click['node'])}: "
             f"{'inside' if ok else 'OUTSIDE'}"
         )
         links_ok = reading.links == list(click["links_before"])

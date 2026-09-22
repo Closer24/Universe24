@@ -521,7 +521,7 @@ open 41^3 box, under the key and, as the controls, without it.
 `tools/drive_b_readings.py` reads the body's click on a face (DETECTOR) and
 the `step` lines against the line of the momentum and the accumulators'
 bound (GAMEBOARD) against the pins; the register entry is
-[X, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22).
+[Y, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#y-the-directional-drive-2026-09-22).
 
 ## The hand series
 

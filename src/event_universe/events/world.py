@@ -466,7 +466,10 @@ def step_divisor(momentum: int, content: int, width: int, cap: bool = True) -> i
 
 # The flight table's resolution on a heading, T_h = isqrt(3 Q^2) = 110: the one
 # root of `drive-b-v1`, formed at load as the flight table's is, never at run
-# time (docs/designs/drive_b/DESIGN.md section 2).
+# time (docs/designs/drive_b/DESIGN.md section 2). Composed with `optical`
+# (every family under one wall, step 3, docs/designs/one_wall/BODY_DRIVE.md
+# D5) the body's weight adds a second root, E' = isqrt((Q S M)^2 + 3 p . p),
+# taken at every frame (`body_weight`): the composition's own cost.
 T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
 # The identity of the directional drive (the model owner's approval of form B,
 # 2026-09-22, record 652 of the log of 2026-09-20; docs/designs/drive_b/DESIGN.md;
@@ -521,7 +524,14 @@ def body_weight(momentum: Sequence[int], content: int, width: int, gamma: int) -
     (today's push, integer for integer); moving, gamma_L (1 + gamma v^2)
     times it, with gamma_L = E' / (Q S M) the Lorentz factor and v^2 =
     3 p . p / E'^2 (the one-wall note's section 4, the drive's integer
-    form). The square is tested against the working bound by division
+    form). Two declarations under record 817 stand in it, named: the
+    factor 1 + gamma v^2 is the PPN push declared under optical-v1 (gamma
+    an input of kind 2), and gamma_L = E' / (Q S M) is the root of the
+    declared square, a declared form; the root is taken at every frame
+    under the two keys (`engine._move`, the frame's charges), unlike
+    `covariant_frame`'s one root by comparisons, and that per-frame root
+    is the identity's cost (E' by comparisons the alternative, not
+    chosen). The square is tested against the working bound by division
     before its terms are formed (the wall's square of `momentum_pair`)
     and refused naming the rule; a body of no content weighs (0, 1)."""
     if content <= 0:

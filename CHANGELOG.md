@@ -28,7 +28,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   (`world.drive_wall`, T_h = 110 formed at load) and the axis furthest over
   the wall steps (`core.integer.by_line`), the Bresenham line of the
   momentum with no coincident fire lost; the one-axis refusals of
-  `covariant_readings` lifted under the key. Series X
+  `covariant_readings` lifted under the key. Series Y (named X until
+  2026-09-22, the letter being series "Poisson after a detector"'s)
   (`examples/events/drive_b/`, six worlds by the generator, the pins before
   the runs, 19 readings inside); `tests/test_drive_b.py`; `plane_b` in the
   gate set. With the key absent every registered world reads as it did,

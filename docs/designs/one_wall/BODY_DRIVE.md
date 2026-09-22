@@ -51,8 +51,11 @@ labelled DETECTOR (a click) or GAMEBOARD (the host's arithmetic).
    section 4, the drive's integer form). The deciding worlds (section 4):
    a fast body (v^2 = 3/4, gamma_L = 2) beside the light worlds' mass at
    five impact distances, at gamma 0 and 1. The readings that show it,
-   DETECTOR: the body's click on the far face, its tick and its Node,
-   pinned per world by the map's body walk; at gamma 1 the tick is 3 to 4
+   DETECTOR: the body's click on the far face and its Node; its tick
+   GAMEBOARD (the engine's count; the body's own count falls behind it
+   in a crowd by the owed count, and the world key `clock_stamp` of the
+   moving detector writes the own count on the click line where it is
+   wanted), pinned per world by the map's body walk; at gamma 1 the tick is 3 to 4
    intervals later than with the drive unstretched (the member read), and
    the Node is 2 to 6 pixels lower than with the charge held at (M, 1)
    (the weight read). The readings that refute it: the unstretched tick
@@ -108,7 +111,16 @@ The chief physicist's, as the owner asked for them by name:
   (E'^2 + 3 gamma **p** . **p**) // E', E' = isqrt((Q S M)^2 + 3 **p** . **p**):
   gamma_L (1 + gamma v^2) times the content, the rows' formula on the
   body's own momentum; only under the keys (without them series D would
-  move by 8 per cent, the one-wall note's section 4).
+  move by 8 per cent, the one-wall note's section 4). Two declarations
+  under record 817 stand in it, named: the factor 1 + gamma v^2 is the
+  PPN push declared under optical-v1 (gamma an input of kind 2), and
+  gamma_L = E' / (Q S M) is the root of the declared square (Q S M)^2 +
+  3 **p** . **p**, a declared form. The root is taken at every frame
+  under the two keys (`engine._move`, the frame's charges), unlike
+  `covariant_frame`'s one root by comparisons: this per-frame root is
+  the identity's cost, stated as such (the alternative, E' kept by
+  comparisons as the covariant key keeps it, is named and not chosen
+  here); `world.py`'s comment on T_HEADING points to this composition.
 - **D6, a world under `optical` with a moving body and no `drive_b`** is
   refused at load naming the rule; a fixed body and a body at rest load.
 
@@ -131,7 +143,7 @@ The chief physicist's, as the owner asked for them by name:
 - `world.parse_nature_beam_world`: `optical` with a measured event that
   is not fixed and has a momentum refuses without `drive_b`; with it the
   weight's bound is tested at load.
-- Without both keys nothing changes: the drive-b worlds (series X, at
+- Without both keys nothing changes: the drive-b worlds (series Y, at
   suspension 0) and every optical world without a moving body (the light,
   matter and fast worlds; their mass is fixed) read as they did, byte for
   byte (the tests of section 5 and the register's digests).
@@ -150,8 +162,13 @@ The chief physicist's, as the owner asked for them by name:
 - **Local.** The body's own record (its accumulators, its momentum, its
   counted moment), the crowd at its Node; nothing kept at a Node.
 - **The bounds.** The drive's stretched wall W (d + gamma n A) and the
-  rates p_a Q d are the products the wall function forms (W under 2^62 /
-  d by `drive_wall`'s tests, A the reading); the accumulators checked
+  rates p_a Q d are the products the wall function forms; `drive_wall`'s
+  tests bound W alone (the unstretched wall against 2^62), not the
+  stretched products, so `engine._move` tests the stretched wall and
+  every stretched rate against the working bound after `age_wall` and
+  before `by_line`, refusing with the rule's name (the physics-rule
+  reviewer's line on PR #813; `engine.stretched_drive`,
+  `tests/test_optical_body.py` (s)); the accumulators checked
   against the working bound before every addition (form B's guard); the
   weight's square by division before its terms; the push's products by
   division in `push_form`; gravity's Lambda^2 = (Q S)^2 at load
@@ -180,7 +197,7 @@ the reading at the Node reached, the push at the charge (w, Q S) over
 (Q S)^2, the count owed; the stationary crowd of the light-bending map at
 the scale 16), GAMEBOARD arithmetic before any world file:
 
-| World | b | gamma | the click, DETECTOR (tick +- 1; face:+x; the Node's y at x = 56, z = 20) | the drive unstretched (refutes the member) | the charge (M, 1) (refutes the weight) | owed, GAMEBOARD |
+| World | b | gamma | the click (the tick +- 1, GAMEBOARD; face:+x and the Node's y at x = 56, z = 20, DETECTOR) | the drive unstretched (refutes the member) | the charge (M, 1) (refutes the weight) | owed, GAMEBOARD |
 | --- | --- | --- | --- | --- | --- | --- |
 | `body_b10_g0` | 10 | 0 | 159; y 27 | 159; 27 (the member at 0) | 156; 29 | 3 |
 | `body_b12_g0` | 12 | 0 | 158; y 29 | 158; 29 | 154; 31 | 3 |
@@ -202,7 +219,8 @@ which alone gives 1 to 2), at gamma 1 six to seven (1 + gamma v^2 =
 7/4), where the charge (M, 1) gives one to two at both; the fall in
 whole Links, exact from the walk. (3) The controls at 150 from (56, 20 +
 b, 20). The tolerance one interval on the tick (the engine's numbering
-of its first advance, as series X has it); the crowd of the walk is the
+of its first advance, as series Y, the directional drive, has it; the
+tick is the engine's count, GAMEBOARD); the crowd of the walk is the
 map's stationary lines, which left the fast rows' beam inside every pin
 and a single slow row one to three intervals off (EVERY_FAMILY.md 5b): a
 miss is reported with the engine's number and its cause, no pin moved.
@@ -228,7 +246,7 @@ detector and in the walk. The worlds regenerated with the mass 2^16
 `tools/drive_b_readings.py --expectations body_expectations.json
 --register`, the run blocks in the register):
 
-| World | the click, DETECTOR: tick; the Node's y | the pin (tick +- 1; y) | inside | the drive unstretched | the charge (M, 1) |
+| World | the click: the tick (GAMEBOARD); the Node's y (DETECTOR) | the pin (tick +- 1; y) | inside | the drive unstretched | the charge (M, 1) |
 | --- | --- | --- | --- | --- | --- |
 | `body_b10_g0` | 158; 27 | 159; 27 | yes | 159; 27 | 156; 29 |
 | `body_b12_g0` | 156; 30 | 158; 29 | no (one Link of fall less, two intervals earlier) | 158; 29 | 154; 31 |
@@ -269,7 +287,7 @@ x at every one of 120 ticks integer for integer, the Links at the ticks
 0 and (7 x 2^25, 2^20) at gamma 1 on p = (2^26, 0, 0), (2^26, 2^20) at
 rest, and the push by one m row: -4096 under `drive_b` alone, -8192 and
 -14336 under `optical` 0 and 1, gravity's Lambda 2^20 under the two
-keys; (r) the refusals. The drive-b suite (series X, the gate set's
+keys; (r) the refusals. The drive-b suite (series Y, the gate set's
 digests) and the optical suite unchanged: 41 tests on the merged tree
 before this step's code, 46 with it.
 
@@ -287,5 +305,5 @@ after the run.
 ## 7. Links
 
 - [Every family under one wall (step 2)](EVERY_FAMILY.md), [the one-wall note](NOTE.md).
-- [drive-b-v1, form B](../drive_b/DESIGN.md) and [series X](../../../examples/events/drive_b/README.md).
+- [drive-b-v1, form B](../drive_b/DESIGN.md) and [series Y](../../../examples/events/drive_b/README.md).
 - [The optical worlds' register](../../../examples/events/optical/README.md).

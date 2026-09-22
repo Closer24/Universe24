@@ -49,7 +49,14 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import age_wall, apportion_whole, by_drive, by_line, integer_root
+from event_universe.core.integer import (
+    MAX_WORK_INT,
+    age_wall,
+    apportion_whole,
+    by_drive,
+    by_line,
+    integer_root,
+)
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
     DRIVE_MEMBER,
@@ -152,6 +159,39 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
         return None, drive
     fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width), at_most=1)
     return (fired or None), drive
+
+
+def stretched_drive(
+    rates: list[int],
+    wall: int,
+    coefficient: int,
+    counted: int,
+    suspension: tuple[int, int],
+    entry: Measured,
+) -> tuple[list[int], int]:
+    """The body's drive stretched by the crowd (every family under one wall,
+    step 3, docs/designs/one_wall/BODY_DRIVE.md): the rates p_a Q times d
+    against the wall W (d + gamma n A) by the one wall function
+    (`core.integer.age_wall`), the stretched wall and every stretched rate
+    tested against the working bound before `by_line` adds them, refused
+    naming the rule (the physics-rule reviewer's line on PR #813:
+    `drive_wall` bounds W alone, not the products the stretch forms)."""
+    stretched_rate, stretched_wall = age_wall(1, wall, coefficient, counted, suspension)
+    if stretched_wall > MAX_WORK_INT:
+        raise OverflowError(
+            f"{BEAM_LAW}: the body's drive under optical: the stretched wall W (d + gamma n A) = "
+            f"{stretched_wall} of measured event {entry.number} at {list(entry.position)} exceeds "
+            f"the working bound {MAX_WORK_INT} (W = {wall}, the age moment {counted})"
+        )
+    stretched = [rate * stretched_rate for rate in rates]
+    for axis, rate in enumerate(stretched):
+        if abs(rate) > MAX_WORK_INT:
+            raise OverflowError(
+                f"{BEAM_LAW}: the body's drive under optical: the stretched rate p_a Q d = {rate} "
+                f"on the axis {axis} of measured event {entry.number} at {list(entry.position)} "
+                f"exceeds the working bound {MAX_WORK_INT}"
+            )
+    return stretched, stretched_wall
 
 
 def count_owed(accumulator: int, counted: int, suspension: tuple[int, int]) -> tuple[int, int]:
@@ -875,10 +915,9 @@ class NatureBeamSimulation:
                     # At gamma 0 the member is declared at 0: unstretched,
                     # the wall function not called (its coefficient is
                     # positive), the drive as `drive-b-v1` has it.
-                    stretched_rate, wall = age_wall(
-                        1, wall, coefficient, entry.counted, self.world.suspension
+                    rates, wall = stretched_drive(
+                        rates, wall, coefficient, entry.counted, self.world.suspension, entry
                     )
-                    rates = [rate * stretched_rate for rate in rates]
             for axis in range(3):
                 if rates[axis]:
                     bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "drive under drive-b-v1")

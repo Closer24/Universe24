@@ -57,7 +57,7 @@ import pytest
 
 from event_universe.core.integer import MAX_WORK_INT, age_wall, by_line
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.engine import count_owed
+from event_universe.events.engine import count_owed, stretched_drive
 from event_universe.events.measured import (
     DRIVE_MEMBER,
     FLIGHT_MEMBER,
@@ -279,6 +279,23 @@ def test_a_moving_body_under_optical_needs_the_directional_drive():
     parse_nature_beam_world(document)
     with pytest.raises(OverflowError, match="working bound"):
         body_weight([0, 0, 0], MAX_WORK_INT // (Q * 16384) + 1, 16384, 1)
+
+
+def test_the_stretched_wall_and_rates_are_tested_against_the_working_bound():
+    """(s): the physics-rule reviewer's line on PR #813. `drive_wall` bounds W
+    alone; the stretched wall W (d + gamma n A) and the stretched rates
+    p_a Q d are tested before `by_line`, refused naming the rule."""
+    world = parse_nature_beam_world(push_bar(1, drive_b=True))
+    entry = NatureBeamSimulation(world).measured[1]
+    rates, wall = stretched_drive([64 * (1 << 26), 0, 0], 1 << 40, 1, 1000, (1, 16384), entry)
+    assert wall == (1 << 40) * (16384 + 1000) and rates == [64 * (1 << 26) * 16384, 0, 0]
+    with pytest.raises(OverflowError, match="stretched wall"):
+        stretched_drive([1, 0, 0], MAX_WORK_INT // 16384, 1, 1, (1, 16384), entry)
+    with pytest.raises(OverflowError, match="stretched rate"):
+        stretched_drive([MAX_WORK_INT // 16384 + 1, 0, 0], 1 << 40, 1, 0, (1, 16384), entry)
+    # A body whose stretched wall is inside the bound walks as before.
+    rates, wall = stretched_drive([5, -3, 0], 1000, 2, 0, (1, 4), entry)
+    assert (rates, wall) == ([20, -12, 0], 4000)
 
 
 WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events" / "optical"

@@ -15,7 +15,7 @@ parallel. Entries below keep the scope they had when recorded.
 
 The branch `drive-b-v1` from main `166403d8` (`drive-b-v1`, the world key
 `drive_b`, off by default; [the design](designs/drive_b/DESIGN.md),
-[the register entry](EXPERIMENTS.md#x-the-directional-drive-2026-09-22)).
+[the register entry](EXPERIMENTS.md#y-the-directional-drive-2026-09-22)).
 The six worlds of `examples/events/drive_b/` run once through
 `tools/run_series.py --jobs 3` on the head (the source fingerprint
 `fcaf6f194e62...` of `run.json`; Python 3.14.0rc2, numpy 2.5.3, headless):
