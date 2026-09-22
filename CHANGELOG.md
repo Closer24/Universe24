@@ -149,6 +149,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   and the four runs registered beside the re-reads of 2026-09-20 to
   2026-09-22 (the linear law by itself, `coasting_age` H t_0 = 1.0102;
   230 readings inside, 22 outside, none moved).
+- Series I re-pinned under the law (`examples/events/nucleus/`): the
+  generator derives under either drive and writes `expectations.json`
+  (the kicked body's pace, the toy of a body's first Link per world,
+  GAMEBOARD numbers; the pushes the design's integers, drive-free), the
+  eight worlds unchanged byte for byte, and the eight runs registered
+  beside the rows of 2026-09-20 (18 readings inside, 0 outside; the
+  verdict standing; the steps and hand-over counts moved with the drive,
+  no designed push).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

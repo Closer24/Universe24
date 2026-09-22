@@ -142,3 +142,40 @@ step first at ticks 81 to 110 and leave between 275 and 339), the line
 holds with 230, 184, 133, 230 hand-overs, the kicked deuteron holds with
 167 and 155; 29 readings inside and 1 outside (`pp_3`'s first step). The
 verdict stands. The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of expectations.json committed at 983d563 before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the eight
+worlds as registered, byte for byte (no world declares a momentum but
+the kicks; the pushes are the design's integers under either drive), run
+once each on the checkout of `drive-default` at `983d563` (source
+fingerprint `c71927e33dea0e12`, package 0.3.1), Python 3.14.0rc2, numpy
+2.5.3, headless, `tools/run_series.py --jobs 3`, 16.2 to 323.6 s per
+world; every run completed at 3000 intervals with the books balanced at
+every tick, `run.json` carrying `"drive": "line"`. `tools/nucleus_readings.py`:
+0 record checks failed, 18 readings inside, 0 outside (the tool counts the
+DETECTOR criteria alone since the kinds were separated; the 29 and 1 of
+the earlier rows counted the GameBoard criteria too), nothing moved. The
+verdict stands: bound at one Link, free at three, the line rigid and the
+square sheared. What the drive moves is the bodies' steps (GAMEBOARD)
+and with them the hand-overs at the contacts (DETECTOR): the deuteron
+at one Link holds with 156 and 153 hand-overs, the largest
+4 975 476 490 240; the kicked deuteron at three Links steps first at
+tick 34 (the toy's line-drive first Link 33) and leaves at 352 and 316;
+the kicked pair at one Link is turned back by tick 5 and holds, its
+first refused steps at ticks 22 and 23 (the toy's inward first Link 21);
+the two protons at one Link hold (132 and 132 hand-overs), at G = 7000
+step first at tick 120 (the toy's 119) and leave at 373 and 353, at
+three Links step first at tick 70 (the toy's 70; the steady bracket
+30 .. 60 differs as in every run) and leave at 296 and 275; the square
+reads the design at tick 20 (the pushes per body and the shear
+49 090 283 970 inside) and disperses, p4 stepping +y at tick 97, p1 and
+n3 at 105, n2 at 107, the four out between 198 and 306 (the toy's 19
+for p4 is not the run's 97: the square's contacts hand the labels over
+from tick 18 and cancel what the toy accumulates; a GAMEBOARD number
+that pins nothing); the line holds with 217, 211, 195 and 217 hand-overs,
+the largest 7 776 223 182 528. The rows of 2026-09-20 stand as
+registered, read under the per-axis drive of history; the register entry
+has every number beside them
+([I, the nucleus](../../../docs/EXPERIMENTS.md#i-the-nucleus-2026-09-20)).

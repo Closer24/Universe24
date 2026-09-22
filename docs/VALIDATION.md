@@ -11,6 +11,31 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series I under the law's line drive: eight runs on drive-default 983d563 - 2026-09-22
+
+The branch `drive-default` at `983d563` (the generator's pins under the
+line drive committed before the run, DEFAULT.md section (c), a new
+`expectations.json` with the drive named; the eight worlds byte for byte
+as registered): the eight worlds of `examples/events/nucleus/` run
+through `tools/run_series.py --jobs 3` (Python 3.14.0rc2, numpy 2.5.3,
+headless; source fingerprint `c71927e33dea0e12`), every run completed at
+3000 intervals with the books balanced at every tick, `run.json`
+carrying `"drive": "line"`; the digests (state, audit, events)
+`85d25e07ab2b`, `54e373a1d156`, `8d62e216304d` (`deuteron_1`),
+`5d51ee765913`, `2c1062f5f1da`, `a315b931acdd` (`deuteron_3`),
+`9f739f8cde5d`, `54e373a1d156`, `4ab64ce8226f` (`deuteron_1_kick`),
+`2d687dafd90b`, `31452b6be4e5`, `5bd19c4d8234` (`pp_1`), `c03f32461e34`,
+`b1c5406977f2`, `88a547e87b90` (`pp_1_weak`), `21bbf67c2234`,
+`aa3d2c5c8d38`, `36ebae60f69c` (`pp_3`), `2742bd5c430b`, `7104392edf07`,
+`d1aa87e809a4` (`alpha_square`), `6796ee43e00c`, `42a70bc30270`,
+`ed1e90dc29ec` (`alpha_line`); run times 16.2 to 323.6 s at 84.9 to
+720.2 MB peak (host measurements). No gate world is in this series. The
+readings by kind (18 inside, 0 outside; the verdict standing, bound at
+one Link, free at three, the line rigid and the square sheared) are in
+[the series' README](../examples/events/nucleus/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-983d563-before-the-run)
+and [the register](EXPERIMENTS.md#i-the-nucleus-2026-09-20). The rows of
+2026-09-20 stay registered as read under the per-axis drive of history.
+
 ## Series G under the law's line drive: four runs on drive-default de55417 - 2026-09-22
 
 The branch `drive-default` at `de55417` (the generator's momenta by the

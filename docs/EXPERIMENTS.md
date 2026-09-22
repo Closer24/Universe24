@@ -3378,6 +3378,71 @@ states "exactly" and means integer equality at every tick.
   4 908 378 332 160. 29 readings inside and 1 outside (`pp_3`'s first
   step at tick 68, as before). The verdict stands: bound at one Link,
   free at three, the line rigid and the square sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Result of the re-run under the law's line drive (2026-09-22,
+  measured against the pins of `expectations.json`, committed at
+  `983d563` before the run; a new registration beside the rows above,
+  which stand as read under the per-axis drive of history).** The flip
+  (the model owner's word, record 972; [the design](designs/drive_b/DEFAULT.md),
+  step 2): the eight worlds byte for byte as registered (no declared
+  momentum but the kicks; the pushes the design's integers under either
+  drive; the kicked body's pace on a heading 10^12 x 64 / (64^2 x 2^28 x
+  1837 + 10^12 x 110) = 0.0300, the per-axis 0.0307), run once each on
+  the checkout of `drive-default` at `983d563` (source fingerprint
+  `c71927e33dea0e12`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3,
+  headless, `tools/run_series.py --jobs 3`, 16.2 to 323.6 s per world at
+  84.9 to 720.2 MB peak (host measurements); every run completed at 3000
+  intervals with the books balanced at every tick, `run.json` carrying
+  `"drive": "line"`; the digests (state, audit, events) `85d25e07ab2b`,
+  `54e373a1d156`, `8d62e216304d` (`deuteron_1`), `5d51ee765913`,
+  `2c1062f5f1da`, `a315b931acdd` (`deuteron_3`), `9f739f8cde5d`,
+  `54e373a1d156`, `4ab64ce8226f` (`deuteron_1_kick`), `2d687dafd90b`,
+  `31452b6be4e5`, `5bd19c4d8234` (`pp_1`), `c03f32461e34`,
+  `b1c5406977f2`, `88a547e87b90` (`pp_1_weak`), `21bbf67c2234`,
+  `aa3d2c5c8d38`, `36ebae60f69c` (`pp_3`), `2742bd5c430b`,
+  `7104392edf07`, `d1aa87e809a4` (`alpha_square`), `6796ee43e00c`,
+  `42a70bc30270`, `ed1e90dc29ec` (`alpha_line`). `tools/nucleus_readings.py`:
+  0 record checks failed, 18 readings inside, 0 outside (the tool counts
+  the DETECTOR criteria alone since the kinds were separated; the 29 and
+  1 of the rows above counted the GameBoard criteria too), nothing
+  moved. By world, the signed-drive numbers of 2026-09-20 in
+  parentheses: `deuteron_1` no step, 156 hand-overs on p from tick 18
+  and 153 on n from tick 19, the largest 4 975 476 490 240 (169 from 16
+  and 158 from 17; 4 664 509 209 600), the label 0 after each, the
+  designed push 310 967 280 640 read on both, 290 border clicks per body
+  per interval, 6 of 6 inside; `deuteron_3` no strong read, gravity
+  1 067 524 788, the first steps at tick 34 on both (33 and 34; the toy's
+  first Link 33 under the line drive, 33 per axis), out through face:-x
+  at 352 and face:+x at 316 (346 and 311), inside; `deuteron_1_kick` the
+  kick outweighed by tick 5, no step, 158 hand-overs on p from tick 22
+  and 155 on n from tick 23 (167 from 20, 155 from 21), the largest
+  5 219 345 612 800 (4 908 378 332 160), the first refused step of each
+  toward the other (the toy's inward first Link 21 under the line drive,
+  20 per axis: the tick of the first contact less one), inside; `pp_1`
+  no step, 132 hand-overs on each from ticks 24 and 25 (119 from 23,
+  115 from 24), the largest 3 271 756 859 008, inside; `pp_1_weak` the
+  first steps at tick 120 on both (118; the toy's 119, 118 per axis),
+  out at 373 and 353 (364 and 345), 120 strong reads per body, inside;
+  `pp_3` the first steps at tick 70 on both (68; the toy's 70, 69 per
+  axis), out at 296 and 275, the designed repulsion 15 977 466 864
+  inside, the steady bracket 30 .. 60 a GAMEBOARD diagnostic that
+  differs as in every run; `alpha_square` reads the design at tick 20
+  (the pushes per body and the shear 49 090 283 970 per row inside), p4
+  steps +y at tick 97, p1 -y and n3 +x at 105, n2 -x at 107 (81, 89, 95,
+  110), out through face:-y at 198 (n3), face:-x at 219 (n2), face:+y at
+  255 (p4) and face:+x at 306 (p1) (275 to 339), 3, 12, 12 and 3
+  hand-overs (5, 11, 12, 3), the label 0 after each, the largest
+  separation 21.93 at the end (25.0); the toy's first Link for p4, 19
+  under the line drive (16 per axis), is not the run's 97: the square's
+  contacts hand the labels over from tick 18 and cancel what the toy's
+  constant push accumulates, a GAMEBOARD number that pins nothing;
+  `alpha_line` holds, no step, 217, 211, 195 and 217 hand-overs from
+  ticks 17, 21, 22 and 17 (230, 184, 133, 230), the largest
+  7 776 223 182 528 (7 380 392 774 624), the label 0 after each, the
+  designed push 403 332 137 616 on the first proton, inside. The verdict
+  stands: bound at one Link, free at three, the line rigid and the
+  square sheared. The line drive moves no designed push (a push is a
+  row's label) and moves every step and every hand-over count; no pin
+  moved.
 
 
 ### K, light beside a mass (2026-09-20)

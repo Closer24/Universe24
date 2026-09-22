@@ -295,6 +295,9 @@ entry is
 the deuteron bound at one Link and free at three, two protons bound or
 repelled by the sign of Q^2 - G^2 - M^2, the square sheared apart and the
 line held, 29 readings inside and 1 outside, registered and not tuned.
+Under the law's line drive (2026-09-22; `expectations.json` names the
+drive) the eight worlds ran again, unchanged, and read 18 inside and 0
+outside with the verdict standing (the series' README).
 
 ## The quarks series
 
