@@ -2195,6 +2195,57 @@ CORRECTIONS = [
         " L7, the cone. The click's power:",
         " The click's power:",
     ),
+    # The owner's referee read (2026-09-22): the six points verified against the register and the sources; the status words they require.
+    (
+        "R1: Born to 1/N holds for the exact tables; the declared tables' rounding, 8/N on a worked pair (verified)",
+        "and over $\\Nphi$ births the count at $x$ is $\\rung_x - \\rung_{x-1}$, Born's to $1/\\Nphi$.",
+        "and over $\\Nphi$ births the count at $x$ is $\\rung_x - \\rung_{x-1}$, Born's to $1/\\Nphi$, with the exact tables. With the declared tables at $1/256$ the weights vary with the birth phase within the tables' rounding (hypothesis (a) of Theorem~\\ref{th:gleason} holds only to that rounding), so the count over the births departs from the rung difference by up to that rounding: two offers of equal ideal weight at the phases $u$ and $u + 1824$, $\\Nphi = 8192$, read $4104$ and $4088$ for $4096$ each, a departure of $8/\\Nphi$ (a computation from Eqs.~\\eqref{eq:joint} and~\\eqref{eq:rung}, not a run); the built click's bound is the tables' rounding, the theorem's $1/\\Nphi$ its ideal.",
+    ),
+    (
+        "R1: what is proved says so",
+        "Born's rule to $1/\\Nphi$ per cell and the cumulative rungs to $1/(2\\Nphi)$,",
+        "Born's rule to $1/\\Nphi$ per cell and the cumulative rungs to $1/(2\\Nphi)$ with the exact tables (to the tables' rounding with the declared ones, Section~\\ref{sec:measurement}),",
+    ),
+    (
+        "R2: no-signalling in the times of the clicks is not claimed (verified against P6)",
+        "The absence of ties at the listed $\\Nphi$ is the computation over every setting pair \\cite{checks}. \\end{proof}",
+        "The absence of ties at the listed $\\Nphi$ is the computation over every setting pair \\cite{checks}. \\end{proof} Theorem~\\ref{th:marginals} is a statement about the outcomes' counts. The pair's click is one gather at the completion interval, the later of the two arms' arrivals (P6), so the interval at which the near detector's outcome becomes readable depends on the far arm's length; no-signalling in the times of the clicks is not claimed, the gather is the law's one non-local step, and when a local outcome becomes available before the completion is a definition the paper does not give.",
+    ),
+    (
+        "R3: Einstein's relation under the extension A2, which the law as built does not meet (verified against the click frame's part 5)",
+        "and Einstein's relation follows from the Inside alone, to second order under (A1) and (A2);",
+        "and Einstein's relation follows from the Inside step under (A1) and (A2), to second order, an extension the law as built does not meet, its rows hopping whole without (A2);",
+    ),
+    (
+        "R3: the abstract says under which extension",
+        "the Lorentz factor (how the clicks arrive at it is the frame),",
+        "the Lorentz factor (how the clicks arrive at it is the frame, under an amplitude split the law as built lacks),",
+    ),
+    (
+        "R4: the prediction's parameters and the five-sigma separation (verified: 3.02e-4 / 5 = 6.0e-5)",
+        "what refutes it is a CHSH measurement with an uncertainty below $1 \\times 10^{-4}$ reading a deficit below $2 \\times 10^{-4}$ or above $4 \\times 10^{-4}$.",
+        "what refutes it is a CHSH measurement at an uncertainty below $1 \\times 10^{-4}$ reading a deficit below $2 \\times 10^{-4}$ or above $4 \\times 10^{-4}$, and a separation of $181/64$ from $2\\sqrt2$ at five standard deviations needs an uncertainty below $6 \\times 10^{-5}$ before systematic errors. The value is the model's at its declared table scale $N_t = 256$ and at the registered grains $512$ to $8192$; why nature's grain would lie there the paper does not say.",
+    ),
+    (
+        "R5: the orbit's mean equals the ring mean only under a uniform dwell, not proved here (verified: no source)",
+        "or the ring mean over one closed turn of an orbit, the only one readable after a detector;",
+        "or the mean over one closed turn of an orbit, the only one readable after a detector, which equals the ring mean only where the body's dwell is uniform in angle, a sampling the paper does not prove;",
+    ),
+    (
+        "R6: row 2b's criterion, the register's (verified: NATURE row 2b)",
+        "PASS: $0.9988$, above $0.98$",
+        "PASS as a bound met, not a quantitative agreement: the clicks' visibility $1.000$ ($64/0$, DETECTOR) above the apparatus-limited $0.98$; the offers' $0.9988$ a diagnostic of the apparatus layer",
+    ),
+    (
+        "R6: row 12's criterion, the register's (verified: NATURE row 12)",
+        "PASS under the age word (P9), nature's $2.00$ $4.6$ percent away; FAIL under the presence word",
+        "PASS under the age word (P9) as the form at two Nodes, the lattice's dwelling ages $5, 6$ and $10, 11$ pinning $1.909$ for the continuum's $2.00$, $4.6$ percent away, a lattice-exact reading and not a fit; FAIL under the presence word",
+    ),
+    (
+        "R6: the criterion per row in Table 3's caption",
+        "\\caption{\\label{tab:nature}The confrontation register's rows read after a detector \\cite{nature}.",
+        "\\caption{\\label{tab:nature}The confrontation register's rows read after a detector \\cite{nature}. The criterion per row: PASS where the reading meets nature's value within the stated uncertainty, or, for a visibility, where the model's value lies above the apparatus-limited measurement (a bound met); the model's numbers are ideal, at the registered grain, not a prediction for a given instrument.",
+    ),
 ]
 
 

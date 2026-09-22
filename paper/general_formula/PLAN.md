@@ -4103,3 +4103,38 @@ the stale "no detector reading of the two fields is registered"; the
 fourth of the five steps names the click theorem. Nothing added;
 no number moved; every FAIL kept; the register untouched. The count:
 36 pages.
+
+## The owner's referee read of the 39-page version (2026-09-22): six points, what was verified and changed
+
+The owner read the paper as a referee and sent six points with "check
+what is relevant and correct; change only what you verify." Verified
+and changed, one commit: (1) the Born-to-1/N statement holds for the
+exact tables; with the declared tables the weights vary with the birth
+phase within the rounding, and the owner's worked pair (two equal
+offers at u and u + 1824, N = 8192) reproduces exactly, 4104 / 4088 for
+4096 each, 8 / N: the interference paragraph and "What is proved" now
+say so, the theorem untouched. (2) Theorem 5 covers the outcomes'
+counts; the pair's gather at the completion interval (P6) makes the
+near outcome's readable time depend on the far arm's length: the paper
+now says no-signalling in the times is not claimed and that the
+availability of a local outcome before the completion is a definition
+it does not give. (3) Einstein's relation "follows from the Inside step
+under (A1) and (A2), to second order, an extension the law as built
+does not meet"; the abstract's Lorentz clause says "under an amplitude
+split the law as built lacks". (4) The prediction's parameters named
+(N_t = 256, the grains 512 to 8192, why nature's grain would lie there
+not said) and the five-sigma separation 6e-5 added to the refutation
+sentence; the paper had no five-sigma criterion of its own, so the
+owner's premise there was not the paper's, and the number is stated as
+arithmetic. (5) The orbit's mean equals the ring mean only under a
+uniform dwell, "a sampling the paper does not prove" (no source on
+main names a proof). (6) Table 3's criterion per row stated in its
+caption; row 2b's PASS as a bound met with the clicks' 1.000 (the
+register's DETECTOR number; the offers' 0.9988 was the apparatus
+layer's diagnostic, wrongly the paper's number) and row 12's PASS as
+the lattice-exact form (the dwelling ages 5, 6 and 10, 11 pinning
+1.909). Not changed, and why: the presentation remarks (shorten the
+history and the Inside/Outside repetitions) touch the owner's ordered
+items and are not a verification; the referee's wish for a full
+operational definition of the click beyond P6 is a design question for
+the tree, not a sentence the writer can verify. The count: 36 pages.
