@@ -14,16 +14,21 @@ once, never a test; the derivation and the expectations below were written
 before the runs; a reading outside its expectation is reported with its
 numbers, never moved.
 
-**The kind of every reading (the model owner, 2026-09-22, records 562 and
-564).** Every reading of this series is a GAMEBOARD reading: the probes'
-owed counts (age, waited, owed) read off their registers by the replay, the
+**The kinds of the readings (the model owner, 2026-09-22, records 562, 564
+and 569).** Two kinds. Each probe's own owed count (age, waited, owed in
+the run's `run.json`) is a DETECTOR reading at its Node within its limits
+(record 569: an emitter behaves like a detector at its own Node). The
 shell means k_s and k_a, the fractions counting and the rate ratios of the
-age clocks are the host's view of the state, a diagnostic for bug fixing
-and never a measurement (record 281; record 562: nobody measures the
-board). The detector reading of a clock's rate at two distances is a lamp's
-births read by a detector, as series T reads them (NATURE row 12); the
-detector reading of Poisson's equation (record 564) is not made in this
-series.
+age clocks are read by the tool from the world replayed through the API
+(the probes' (age, waited) at the window's two ends): GAMEBOARD readings,
+the host's view of the state, a diagnostic and never a measurement (record
+281; record 562: nobody measures the board), and every pinned reading of
+this series rests on them (the audit of record 567: a shell mean from a
+replay is the board; from the probes' own records it would be a detector's,
+to be verified by the Replicator's re-read). The detector reading of a
+clock's rate at two distances is a lamp's births read by a detector, as
+series T reads them (NATURE row 12); the detector reading of Poisson's
+equation (record 564) is not made in this series.
 
 ## The base
 
@@ -145,7 +150,7 @@ worktree of `claude/universe24-new-3ytqde` on the age commit), Python
 3.14.0rc2, numpy 2.5.3, headless, four cores, `--jobs 2`; every run
 completed in 16 s with the books balanced at every tick; the tool: 0
 record checks failed, 11 readings inside, 3 outside, registered, none
-moved (GAMEBOARD readings, the kind above).
+moved (the kinds as above).
 
 The shell means of the owed count per self-creation (the window 100 to
 300; "counting" the fraction of the shell's probes that owed anything):
@@ -224,8 +229,8 @@ speed. The clocks' ratio follows the 1 / r law in form and misses the
 pinned 15 %-of-shift criterion at three radii by the ripple of the shell
 means; the weak-field line needs a weak field. The grain of the fan is as
 predicted: a single probe reads its line's beam, and the laws are the
-shell means. Every number of this verdict is a GAMEBOARD reading; the
-detector reading is not made.
+shell means. Every number of this verdict is a shell mean by the replay,
+GAMEBOARD; the detector reading is not made.
 
 ## Re-read under clock-age-v1 (2026-09-21)
 

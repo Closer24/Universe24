@@ -504,10 +504,11 @@ nature's bound on the atom's neutrality). No Compton reading is
 registered (the mass ladder A10 of section A is planned). Coulomb's and
 Newton's inverse square are registered as shell means of the presence
 (series E, k_s x r^2 constant within 7 percent over r = 6 to 14), which
-are GAMEBOARD readings of probes and not admissible here (records 163 (5),
-562 and 564: nobody measures the board); the detector form, Newton after a
-detector (a probe read by clicks at a detector set at two distances), awaits
-its run and is not yet registered.
+are shell means by a replay, GAMEBOARD readings, and not admissible here
+(records 163 (5), 562, 564 and 569: a probe's own record is a detector
+reading at its Node, a replay or a shell mean is the board); the detector
+form, Newton after a detector (a thrown body's clicks at a detector set at
+two radii), awaits its run and is not yet registered.
 
 ## The tally
 
@@ -562,7 +563,7 @@ any unit is chosen).
 | The constant | Its place on the GameBoard (5.7's dictionary) | What the conversion needs | The dimensionless ratio that comes first (section 16) |
 | --- | --- | --- | --- |
 | c in metres per second | 1 / sqrt 3 Links per interval, the norm of the flight operator (record 191); a ruler-and-clock reading between two detectors | the Link in metres and the interval in seconds, fixed together by one reading (a unit conversion, record 191) | none: c is the unit's definition; its isotropy (rows 5a, 5b) is the dimensionless test |
-| G, Newton's constant | the width S, the push per unit of content per unit of flow (record 189, kind 2); the push a body reads (target 3; series C reads it on the GameBoard, records 562 and 564, the detector reading awaited) | the unit of content in kilograms and the Link and interval above | the gravitational coupling of two bodies of one content against their electric one at the same distance: the register's `Q^2 - G^2 - M^2` at the nucleus (series I, the threshold G = 7111) against nature's 10^36 between two protons |
+| G, Newton's constant | the width S, the push per unit of content per unit of flow (record 189, kind 2); the push a body reads (target 3; series C reads it as a probe's own record at one Node, a detector reading of the push and not of the motion, records 564 and 569; the detector reading of Newton's law awaited) | the unit of content in kilograms and the Link and interval above | the gravitational coupling of two bodies of one content against their electric one at the same distance: the register's `Q^2 - G^2 - M^2` at the nucleus (series I, the threshold G = 7111) against nature's 10^36 between two protons |
 | h, Planck's constant | the cost h of one phase step, E = h f (the family's `quantum`); the click's amount | the interval in seconds and the unit of content in joules | the fine-structure constant alpha = 1 / 137.036, the charge's square over h c, which section 16 must form from the register's charge per unit of content (4 on the proton, 15 on Bohr's electron), the cost h and c before any unit is chosen |
 | e, the elementary charge | a whole number of phase steps per Link, a winding number (PREDICTIONS 26) | the charge step in coulombs, with h above | the same ratio; the neutrality of the atom exact by the family table |
 | the masses | the content M, on the non-compact scale, free (PREDICTIONS 26); the minimal mass one unit (record 243) | the unit of content in kilograms | the mass ratios: m_p / m_e = 1836.153 against the register's 1836 / 1 (Bohr) or the ladder of the masses design, which found no ratio derived; the smallest unit count reproducing the ratio to the measured precision (record 243) |
