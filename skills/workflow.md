@@ -404,6 +404,14 @@ consequences govern how every role works.
    clicks per record; the program's advantage is there, and every design
    states on which side its world lies.
 
+**Refined by the model owner on 2026-09-22 (record 762): whatever can be
+computed algebraically is computed algebraically.** The GameBoard is a
+finite, computable thing, so a phenomenon, a prediction or a reading, measured
+or not yet, is first derived in closed form from the law's integer operations;
+a run proves what the algebra cannot, and never discovers a number the algebra
+could have given. Every result is stated as matching nature, never as how
+nature is (the paper's framing, the same record).
+
 **Refined by the model owner on 2026-09-21 (record 205): a formula gives, a
 run proves; and after the detector, the vector.** (1) A register entry
 carries the formula, or the derivation's section, beside its number, and
