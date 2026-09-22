@@ -228,14 +228,14 @@ def test_an_offer_of_two_multiplicities_takes_the_common_denominator():
     assert first.gather["chosen"] == [["end", 0, "0"]]
     assert first.gather["total"] == [2 * UNIT, 1] and first.gather["weight"] == [2 * UNIT, 1]
     assert first.gather["cells"] == [[[["end", 0, "0"]], N]]
-    refused = NatureBeamSimulation(
-        parse_nature_beam_world(meeting_world([1, 1], [[1, 0, 0], [0, 1, 0]]))
-    )
+    # The same meeting with the multiplicities 2 and 4 is refused at load
+    # since issue #714 (the loader walks the record's paths to the set;
+    # `test_aperture_preflight.py`), before the run's check at the offer.
     with pytest.raises(
-        ValueError, match=r"record 4294967297 at the set end carry the multiplicities 2 and 4"
+        ValueError,
+        match=r"reach end with the multiplicities 4 .* and 2 .*, whose ratio 2:1 is not a square",
     ):
-        for _ in range(30):
-            refused.step()
+        parse_nature_beam_world(meeting_world([1, 1], [[1, 0, 0], [0, 1, 0]]))
 
 
 def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):

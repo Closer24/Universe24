@@ -772,7 +772,14 @@ joins nothing; the `gate` and `rotate` record lines; the multiplicity a
 row can reach through every re-emitter of the world (the splits' norms,
 65536 per rotation, 2^parties per gate) is bounded at load by 2^62 - 1
 (the register's ceiling: three label rotations on a path fit, Grover's
-six do not); a `phase_window` on a `rerelease` entry whose Node reads no
+six do not); two paths of one record that the GameBoard's geometry
+brings to one set with multiplicities whose ratio is not a square (an
+aperture two Nodes wide under a fan with the direction along it: the
+norm of the second opening between the siblings) are refused at load,
+naming the rule, the multiplicities and the aperture's width (issue
+#714; the loader walks the record's paths through the openings per arm,
+a world with a gate left to the run's check at the offer); a
+`phase_window` on a `rerelease` entry whose Node reads no
 `sum` set is dead (a split takes no gate) and refused at
 load; a free family's rows (no record) keep the apportioning and
 gates of a row of no record at every entry;
