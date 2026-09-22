@@ -4219,3 +4219,34 @@ exact rationals (181/64 from 512 to 8192, 5793/2048 to the tables'
 bound), and that a measurement below 2.828125 or above 2.828613 by five
 standard deviations refutes every grain from 512 up at once. The count:
 37 pages.
+
+## The owner's referee points 5 and 6, handed to the Boss (2026-09-22, the owner's word to the writer: "5 to the Boss for handling; 6 ask that what is needed be re-run; handle everything")
+
+Point 5, the orbit's mean and the ring mean: the paper says (Section
+4, the ground paragraph) that the mean push over one closed turn of an
+orbit equals the ring mean "only where the body's dwell is uniform in
+angle, a sampling the paper does not prove". Handed to the Boss for a
+mathematician: prove the equality under the body's dwell weighting, or
+give the error bound in terms of the orbit's eccentricity and the
+lattice's grain, with series D3's loops (not similar figures, one
+recurrence per radius, T(24)/T(12) = 1.997) as the registered case;
+the paper takes the theorem or the bound on the Boss's SHA, the
+sentence then "proved" or "bounded by ...".
+
+Point 6, Table 3's criteria: the paper's caption states the criterion
+per row and rows 2b and 12 carry theirs; the owner asks that every row
+get, from the register's side, what exactly is measured (the click
+line), whether the number is an ideal prediction or one for a given
+instrument, and the rejection criterion, and that whatever the criteria
+need be re-run. Handed to the Boss with the list of what the paper
+names as pending or not made: row 2a's two-slit visibility with the pin
+derived for this world's fan (the physicist's open item, the screen's
+fan's grain); row 4b's re-run at head (pending); row 3's -0.104 at head
+against the paper's -0.108 (record 408), which is the register's
+number; row 12 in the weak field (ordered, record 865); rows 11a to 11c
+(the far lamp) not run; rows 8a and 8b (J1, J2) if the criterion needs
+more than 64 clicks; the two-way c after a detector, the inverse
+square's decisive reading (form B), the moving detector's one-way ratio
+and the velocity's quantum, all NOT MADE. The paper takes each new
+number by kind on the Boss's SHA, one commit per batch; a PASS or FAIL
+that changes under a stated criterion changes in the paper's words.
