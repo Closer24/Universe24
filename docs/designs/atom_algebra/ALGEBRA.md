@@ -487,10 +487,12 @@ needs a SECOND ACCUMULATOR on the body's record, local: the action at
 the last return, `A_ret` (one row per axis, set to the action rows at
 each return; the return itself a click of the body's own row, a row it
 released, returned to it by a declared re-emitter; a click, not a
-hold). Three facts of the law fix how that row comes back, verified in
-the tree: (i) the one reading set reads everything at the Node BUT the
-reader's own number, "here" included (BEAM_LAW :23-25,
-`tests/test_one_reading_set.py`), so a body never reads its own rows
+hold). Three facts of the law fix how that row comes back: (i) the one
+reading set reads everything at the Node BUT the reader's own number,
+"here" included (BEAM_LAW :23-25; tested in `tests/test_meeting.py`,
+`tests/test_nature_beam_readings.py` and
+`tests/test_nature_beam_window_reads.py`, each naming the reader's own
+number as never read), so a body never reads its own rows
 directly, on a periodic axis or otherwise; the row must return through
 a re-emitter (the proton under `rerelease`), which stamps its own number
 and age 0 and keeps the arriving phase and content per unit (BEAM_LAW
