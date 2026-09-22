@@ -4539,3 +4539,21 @@ resolved to give the referee a PDF", given after the writer's report
 of the six points; the Boss's order of 11:27Z, written before that
 commit's report, holds them not yet authorized: the crossing is
 reported, nothing reverted without a word.
+
+## Applied (2026-09-22, the owner's words): the title; Inside a beam, Outside a wave; the page stays at 37
+
+The title, the owner's: "Universe24: Physical Relations from a Common
+Discrete Update Rule" (the writer's variant, "Physical Laws Recovered
+from a Single Discrete Update Rule", offered and not taken; one line
+if the owner wants it). The small explanation the owner asked for,
+placed after the frame paragraph's opening in the discussion: a thing
+propagates Inside as a beam, rows on digital lines at one Link per
+interval, and shows Outside as a wave, the click's weight being the
+squared sum of the rows' amplitudes, which adds and cancels as
+amplitudes do (Young's bands, the Mach-Zehnder's ports), the wave the
+read-out of the beam and not a second thing on the board. Written from
+the paper's own statements (the abstract's "as a beam", Definition 3's
+click, Section 6's interference by the formulas alone); its wording
+sent to the Boss for the chief physicist's confirmation, to be
+adjusted on his word. The page: the owner's word "leave it as it is,
+no need to cut": 37 pages stand.

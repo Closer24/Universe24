@@ -2722,6 +2722,17 @@ CORRECTIONS = [
         "8a & The neutron's decay curve, exponential, width over median $3.17$ \\cite{gonzalez2021} & $0.036$, a step (series J1, $64$ clicks) & FAIL: a factor $88$ \\\\",
         "8a & The neutron's decay curve, exponential, width over median $3.17$ \\cite{gonzalez2021} & $0.036$, a step (series J1, $64$ clicks) & FAIL: a factor $88$; the registered J1 run predates the one flight wall, under which the weak register's become blocks move (the physicist's derivation, records 931 to 933 \\cite{log}), so the row is a reading of the law before it, kept as history, J1's redeclaration in the weak field after the paper \\\\",
     ),
+    # The title and the small explanation of the beam Inside and the wave Outside (the owner's word of 2026-09-22).
+    (
+        "the title (the owner's word of 2026-09-22)",
+        "\\title{Universe24: a local integer law inside the GameBoard, a non-local read-out above it, and what the clicks recover of nature}",
+        "\\title{Universe24: Physical Relations from a Common Discrete Update Rule}",
+    ),
+    (
+        "Inside a beam, Outside a wave: the small explanation (the owner's word of 2026-09-22; the wording for the physicist's confirmation)",
+        "Outside, the game above the board, there are detectors and their clicks only, the beam passing to them with amplitudes at the click (P11).",
+        "Outside, the game above the board, there are detectors and their clicks only, the beam passing to them with amplitudes at the click (P11). So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the squared sum of the rows' amplitudes (Definition~\\ref{def:click}), which adds and cancels as amplitudes do, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
+    ),
 ]
 
 
