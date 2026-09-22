@@ -180,6 +180,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   bending as the gate set records, its neutron firing at 595 with the
   count 180026 before the refusal, outside the registered range and
   inside the warm run under the law as it stands; the beta not read).
+- Series C re-pinned under the law (`examples/events/coupling/`): the
+  readings tool replays the law's line drive (`steps_by_rule` with
+  `by_line` against the one wall; the per-axis drive of history under
+  the key) with its step replay ordered by the crossing rule, the test's
+  bar declares no drive key, the twenty-one worlds unchanged, and the
+  twenty-one runs registered beside the rows of 2026-09-19 to 2026-09-21
+  (371 criteria passed, 0 failed; the free probes' 11 steps at 24 to 43
+  for 22 to 32, the same records for the three contents).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

@@ -268,3 +268,49 @@ have `suspension` 0 and read as they did (their digests, record 409); the
 tool's three FAIL lines on 1b's first step (tick 23 where its line says
 22) and its item 5 readings outside are not the word's (those worlds read
 no clock) and stand as the tool left them on `main`.
+
+## Re-read under the law's line drive (2026-09-22, measured against the tool's rule committed at 057e57c before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the
+twenty-one worlds byte for byte as registered (no declared momentum; the
+tool's rule the pin, `steps_by_rule` with `by_line` against the one wall
+committed before the run), run once each on the checkout of
+`drive-default` at `057e57c` (source fingerprint `c71927e33dea0e12`,
+package 0.3.1), Python 3.14.0rc2, numpy 2.5.3, headless,
+`tools/run_series.py --jobs 4`, 1.1 to 13.2 s per world; every run
+completed with the books balanced at every tick, `run.json` carrying
+`"drive": "line"`. `tools/coupling_readings.py` (its step replay ordered
+by the crossing rule in the commit after the run, `2422a6c`: the drive at
+tick t advances by the momentum the reads before that tick left, BEAM_LAW
+note 48, where the tool had read the free probes' steps one interval
+early since the rule, the three FAIL lines recorded above; the test's
+integers under both drives unchanged): 371 criteria passed, 0 failed; 0
+readings inside or outside (every criterion of this series is the
+engine's own function, registered and not moved); 73 GameBoard
+diagnostics printed and not counted, the same diagnostics differing as
+before (item 5's ring means and slopes, the reader of record 281). Every
+identity holds as registered: item 1's push_m = m x push_1 at every read
+and axis, the first read at tick 21 with amount 131072; the third law,
+superposition, retardation, the far field, the clock (age, waited, owed
+equal to the replay at all nine radii) and the electric reading as on
+2026-09-19 to 2026-09-21 (the eighteen worlds without a free body read
+the same records). What the drive moves, GAMEBOARD: the free probes of
+`1b_m1`, `1b_m4` and `1b_m16` make the same 11 steps to the Node beside
+the source at the ticks 24, 26, 28, 30, 32, 34, 36, 37, 39, 41 and 43
+(a Link every two intervals under the line drive's wall Q^2 S m + |p|_1
+T_h on the reads' cumulative push; 22 to 32 under the per-axis drive of
+history, one per interval), identical for the three m and equal to the
+tool's rule, the momentum at every step m times `1b_m1`'s; from tick 45
+every refused step hands the probe's x component to the source, 103
+`contact` records per world (168 from tick 33 before: the line drive's
+accumulator refills to a larger wall between hand-overs), the first
+-534 775 104 for m = 1 (m times it for 4 and 16); the probe's momentum at
+the end -37 750 080 (m = 1), -151 000 320, -604 001 280 (0 before: the
+pushes read since the last hand-over) and the source's -1 386 220 800,
+-4 471 141 376, -15 737 081 856 (-1 185 431 936, -3 667 985 920,
+-13 598 201 856 under the step drive); the reads unchanged. The gate
+world `1b_m16` stands as re-pinned on the flip day (its digests at the cap
+25 in `gate_set.json`, the former kept). The rows above stand as
+registered, read under the per-axis drive of history ([the
+register](../../../docs/EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19)).

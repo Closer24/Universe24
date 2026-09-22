@@ -11,6 +11,43 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series C under the law's line drive: twenty-one runs on drive-default 057e57c - 2026-09-22
+
+The branch `drive-default` at `057e57c` (the tool's step replay under
+the law's drive committed before the run, DEFAULT.md section (c); the
+worlds byte for byte as registered): the twenty-one worlds of
+`examples/events/coupling/` run through `tools/run_series.py --jobs 4`
+(Python 3.14.0rc2, numpy 2.5.3, headless; source fingerprint
+`c71927e33dea0e12`), every run completed with the books balanced at every
+tick, `run.json` carrying `"drive": "line"`; the digests (state, audit,
+events) of the three worlds with a free body `ab265681061a`,
+`cff0c45be9ff`, `c590d7aa3dd0` (`1b_m1`), `d5c13864cecc`, `be522eb98791`,
+`d6f051cb0c1b` (`1b_m4`), `d4d0e2f92a7d`, `e9c7835dcb31`, `6e70646334a6`
+(`1b_m16`, the gate world, re-pinned at its cap 25 on the flip day); the
+eighteen others `258f68f26230` / `f5ddb818ac02` / `063fd46b8fa4`
+(`1a_m1`), `1956441bb30a` / `f509f902acab` / `3857b6ad0513` (`1a_m4`),
+`3b2b6d650bca` / `0aee7c5d4ab3` / `60a6d3cce721` (`1a_m16`),
+`f71f9f0782f2` / `8c3a51533265` / `f3a4543e69b1` (`2`), `1f562cdd2ee3` /
+`9f2d886595cb` / `4672cfa6a5ed` (`3`), `e49474b1b1fd` / `934d45e02d96` /
+`e88cb18d9c1f` (`3a`), `ea92c80c6164` / `cc0380fec1dc` / `b6b3abc8ab38`
+(`3b`), `f35fb4ed9b61` / `7d8e50df271b` / `1b2df150004e` (`4`),
+`f4497f65be84` / `d3c65b0a815b` / `d58fdb01b3fb` (`5`), `8c4846fe8109` /
+`6ce9ebbcc6c4` / `97d44c563d66` (`5_long`), `32f28737dd57` /
+`d0dd6f0a617b` / `4472ff1ea5de` (`5p`), `d10c130df0a3` / `ea57d6592a51`
+/ `efa75665054a` (`6`), `92cf01299ff8` / `a314709d3a59` / `5807e01bf1e2`
+(`7_00`), `0923667493da` / `258f4bb93e0a` / `da177386799d` (`7_mm`),
+`5f30a1c4a5f1` / `8f6b945e01ef` / `3798fe502aa1` (`7_mp`),
+`fd9f00892c78` / `01aec7ff500f` / `3798fe502aa1` (`7_pm`),
+`186665804143` / `d08c7314e064` / `da177386799d` (`7_pp`),
+`dbaf1cdf846a` / `b9dd2150a148` / `2bed192118e3` (`7_pp_m4`); run times
+1.1 to 13.2 s (host measurements). The readings (371 criteria passed, 0
+failed with the tool's replay ordered by the crossing rule in `2422a6c`;
+the free probes' 11 steps at 24 to 43 under the law, GAMEBOARD) are in
+[the series' README](../examples/events/coupling/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-tools-rule-committed-at-057e57c-before-the-run)
+and [the register](EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19).
+The rows of 2026-09-19 to 2026-09-21 stay registered as read under the
+per-axis drive of history.
+
 ## Series J3 under the law's line drive: three runs on drive-default d03d138 - 2026-09-22
 
 The branch `drive-default` at `d03d138` (the weak register's drive column

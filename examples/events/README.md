@@ -153,6 +153,10 @@ prints every criterion and every reading against the expectations of
 [BEAM_LAW section 8](../../docs/BEAM_LAW.md#8-independent-expectations-for-the-re-registered-readings);
 the register entry is
 [C, the couplings under the Beam Law, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19).
+Under the law's line drive (2026-09-22; the tool replays it) the
+twenty-one worlds ran again, unchanged: 371 criteria passed, 0 failed,
+the free probes' 11 steps at the ticks 24 to 43 for 22 to 32 (the
+series' README).
 
 ## The redshift series
 
