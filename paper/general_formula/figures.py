@@ -186,6 +186,73 @@ def figure_pair(summary: dict, checks, output: Path) -> None:
     plt.close(fig)
 
 
+def figure_lattice(output: Path) -> None:
+    """The GameBoard in space, drawn from the definitions and no run: a cubic
+    array of Nodes, here 6 x 6 x 6, each joined to its six neighbours by
+    Links through the Ports +-x, +-y, +-z; one Node and its six neighbours
+    marked, the Nodes one interval away (the owner's item of 2026-09-22)."""
+    from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
+    n = 6
+    fig = plt.figure(figsize=(4.6, 4.2))
+    ax = fig.add_subplot(111, projection="3d")
+    rng = range(n)
+    # the Links along the three axes
+    for a in rng:
+        for b in rng:
+            ax.plot([0, n - 1], [a, a], [b, b], color=PALE, linewidth=0.5, zorder=1)
+            ax.plot([a, a], [0, n - 1], [b, b], color=PALE, linewidth=0.5, zorder=1)
+            ax.plot([a, a], [b, b], [0, n - 1], color=PALE, linewidth=0.5, zorder=1)
+    xs = [i for i in rng for j in rng for k in rng]
+    ys = [j for i in rng for j in rng for k in rng]
+    zs = [k for i in rng for j in rng for k in rng]
+    ax.scatter(xs, ys, zs, s=6, color=MID, depthshade=False, zorder=2)
+    # one Node and its six neighbours, the Links between them in ink
+    c = (2, 2, 2)
+    ports = [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]
+    for d in ports:
+        q = (c[0] + d[0], c[1] + d[1], c[2] + d[2])
+        ax.plot([c[0], q[0]], [c[1], q[1]], [c[2], q[2]], color=INK, linewidth=1.8, zorder=4)
+        ax.scatter(
+            [q[0]],
+            [q[1]],
+            [q[2]],
+            s=28,
+            color=WHITE,
+            edgecolor=INK,
+            linewidth=1.0,
+            depthshade=False,
+            zorder=5,
+        )
+    ax.scatter([c[0]], [c[1]], [c[2]], s=40, color=INK, depthshade=False, zorder=6)
+    for d, name in zip(ports, ("$+x$", "$-x$", "$+y$", "$-y$", "$+z$", "$-z$"), strict=True):
+        ax.text(
+            c[0] + 1.35 * d[0],
+            c[1] + 1.35 * d[1],
+            c[2] + 1.35 * d[2],
+            name,
+            fontsize=7,
+            ha="center",
+            va="center",
+            color=INK,
+        )
+    ax.text2D(
+        0.5,
+        0.03,
+        "one Node and its six Ports, the Links to its six neighbours",
+        fontsize=7.5,
+        ha="center",
+        transform=ax.transAxes,
+        color=INK,
+    )
+    ax.set_box_aspect((1, 1, 1))
+    ax.view_init(elev=22, azim=-58)
+    ax.set_axis_off()
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    fig.savefig(output / "lattice.pdf")
+    plt.close(fig)
+
+
 def figure_mechanism(output: Path) -> None:
     """The mechanism, drawn from the definitions and no run: Inside, a
     GameBoard of Nodes joined by Links, an emitter putting one record of two
@@ -392,6 +459,7 @@ def main() -> None:
     summary = json.loads(args.summary.read_text(encoding="utf-8"))
     checks = load_checks()
     args.output.mkdir(parents=True, exist_ok=True)
+    figure_lattice(args.output)
     figure_mechanism(args.output)
     figure_mach_zehnder(summary, args.output)
     figure_two_slits(summary, args.output)

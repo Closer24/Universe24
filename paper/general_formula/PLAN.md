@@ -4743,3 +4743,19 @@ record 852, A.2 row 2), with its words kept in Section 3. Returned as
 Figure 2 in Section 3 with its caption as it was (drawn by
 octahedron.py from the definitions, no run), the paragraph pointing at
 it. 41 pages.
+
+## Applied (2026-09-22, the owner's word): the GameBoard in space, a new Figure 1; the folds verified; the figures checked
+
+The owner asked for a picture of the Nodes in space, six by six, how
+they are arranged: Figure 1, a 6 x 6 x 6 cubic array of Nodes joined
+by Links through the six Ports, one Node and its six neighbours marked
+(figures.py, figure_lattice, from the definitions, no run), placed
+after "The words of this paper" with the mechanism as Figure 2 and the
+octahedron as Figure 3. Verified in the PDF at dbcf1c93: every fold of
+the fourth referee read's nine points is in (the acceleration's
+coefficient, the theorem's name, the operational statement, the
+finite-grain value, Tsirelson's value, the conditional extension, W
+declared, the rotations' depth, the read-out characterization, the
+abstract's limitation); the figures' pages and captions checked one by
+one (the mechanism, the octahedron at 0.3 of the width, the two slits
+with the Mach-Zehnder, the pair, S(N)). 41 pages.

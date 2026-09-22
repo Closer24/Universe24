@@ -3136,6 +3136,12 @@ CORRECTIONS = [
         "The octahedron $|x| + |y| + |z| \\le 1$ of the six neighbours, scaled by the age, is the causal front, inside which every row stays;",
         "The octahedron $|x| + |y| + |z| \\le 1$ of the six neighbours (Figure~\\ref{fig:octahedron}), scaled by the age, is the causal front, inside which every row stays;",
     ),
+    # The lattice figure, the Nodes in space (the owner's word of 2026-09-22).
+    (
+        "the lattice figure: the Nodes in space (the owner's word of 2026-09-22)",
+        "GAMEBOARD, a number of the board's state, a diagnostic and never a result. Figure~\\ref{fig:mechanism} draws the two sides.",
+        "GAMEBOARD, a number of the board's state, a diagnostic and never a result. Figure~\\ref{fig:lattice} draws the board in space, Figure~\\ref{fig:mechanism} the two sides.\n\n\\begin{figure}[!tb]\\centering\\includegraphics[width=0.55\\linewidth]{figures/lattice.pdf}\\caption{\\label{fig:lattice}The GameBoard in space: a cubic array of Nodes, here $6 \\times 6 \\times 6$, each joined to its six neighbours by Links through the Ports $\\pm x$, $\\pm y$, $\\pm z$ (the faint lines); one Node and its six neighbours marked, the Nodes one interval away from it, whose convex hull is the octahedron of Figure~\\ref{fig:octahedron}. Nothing sits at a Node beyond the rows there. Drawn from the definitions; no run.}\\end{figure}",
+    ),
 ]
 
 
