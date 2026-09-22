@@ -3678,3 +3678,35 @@ their SHAs: the verbs' identities, the conversion table, Newton Outside,
 Table 2's seven rows to one sentence and Appendix C's list, the wording
 words, the compile, the count reported. Nothing of either is applied
 now: main.tex, corrections.py and the figures are as at 2ba49923.
+
+### 9. The owner's word on the list (record 773, through the Boss at 06:45Z): the spine, and the title decided
+
+The owner: the title is not critical; what matters is that everything is
+explained, that the paper rests more on algebra and fewer experiments,
+and that it shows the formulas in fact derived; very many things derive
+from the board when one rises to the clicks; the board slows you (a
+mass, a slower clock), but in the end one wants to move a packet from
+place to place beneath the board and then ask what that packet says
+above the board. His word on the abstract, P11 and the paragraph is
+given with records 762 and 768: the framing list applies as soon as PR
+#769's merge SHA reaches the writer.
+
+The discussion's spine, folded into section 7 (5): the paragraph opens
+on his picture, "A packet moved Inside, from place to place, and the
+question what it says Outside: every formula the paper derives is the
+answer to that question for one packet", and the answers are listed in
+his order as the paper carries them, the clock in a crowd (Section 5),
+the fall and the period (Section 4, series D3), the Doppler factors (the
+frame's two one-way factors), and, when parts 6 and 7 land, the
+conversion table and Newton Outside (section 8 above); the "What is
+proved" paragraph of Section 9 keeps its lists but opens with the same
+sentence in eight words.
+
+The title, the writer's call: the candidate, in lowercase words,
+"Universe24: a local integer law inside the GameBoard, a non-local
+read-out above it, and what the clicks recover of nature". The reasons:
+"law of nature" placed the law in nature where the framing places it
+Inside; "inside the GameBoard" and "above it" are the two worlds in
+plain words without the capitalized terms, which the abstract defines;
+"what the clicks recover of nature" is the frame's verb and the
+paper's claim, the match shown result by result. One line to the Boss.
