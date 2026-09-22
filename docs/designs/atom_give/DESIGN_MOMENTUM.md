@@ -480,6 +480,19 @@ fraction per orbit 0.234 on its own h) says the r = 8 loop does not stay
 either. So there is no closed loop at r = 12 under the pin "unmoved",
 and the design's pins are declared against the loop as read.
 
+The CAUSE of the widening, read by algebra from the runner's records
+before these pins on the owner's word (record 935), is in
+[CAUSE.md](CAUSE.md): not a shortfall of the radial push (no push
+factor fits the crossings) but a torque, the loop's angular momentum up
+30 percent and its energy up 45 percent over the first three quarters
+of a turn; candidates (i) the fan's L1 factor, (ii) the drive's wall and
+(iii) the proton's reads each tested and NOT ACCOUNTING for it; the
+source a rule of the push or the drive the algebra does not carry, to be
+named by two host readings of the existing records; under flow-link-v1
+the push's size in the plane falls by 1.287 and the torque is untouched,
+so the key selects no other baseline, and these pins stand against the
+register's as the law stands (CAUSE.md sections 3 and 4).
+
 What the algebra predicts, first order, GAMEBOARD by formula: the
 momentum give changes the loop's action, never its Nodes. Section 5 (b)
 holds on any loop, closed or not: after a give `p' / M' = p / M` to the
