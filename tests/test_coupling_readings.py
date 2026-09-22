@@ -12,12 +12,22 @@ engine"), written down first:
     (`test_nature_beam_flight` (a)) and equal, at every m, the first interval at
     which one unit declared on +x at (0, 0, 0) of an open 14 x 1 x 1 bar
     stands m Links out;
-(b) the step rule: a free probe of content 1 pushed once by (64, 0, 0) (one
-    unit's label) steps by the tool's rule at the ticks 2, 4, 6, 8, 10 on x
-    at width 1 and at 4, 8 at width 3; pushed by (64, 64, 0) at the ticks
-    2, 4, 6, 8, 10 on x alone (x before y, at most one Link per interval);
-    on the GameBoard a free measured event of content 1 with that declared
-    momentum makes the same `step` records (tick, axis), width by width;
+(b) the step rule under the law's line drive (since 2026-09-22, record
+    972): a free probe of content 1 pushed once by (64, 0, 0) (one unit's
+    label) steps by the tool's rule at the ticks 3, 6, 9 on x at width 1
+    (the accumulator p Q = 4096 per interval against the wall Q^2 S m +
+    |p|_1 T_h = 4096 + 7040 = 11136, the overflow kept) and at 5, 10 at
+    width 3 (the wall 19328); pushed by (64, 64, 0) at (5, x), (6, y), (9,
+    x), (10, y) (the wall 4096 + 128 x 110 = 18176 for both axes, x first
+    on the tie at 5 with y keeping its overflow and stepping at 6, then
+    x again on the tie at 9: the line of the momentum, no fire lost);
+    under the per-axis drive of history (a
+    bar declaring `per_axis_drive`, the tool's `drive` "per_axis") the same
+    probe steps at 2, 4, 6, 8, 10 on x at width 1, at 4, 8 at width 3, and
+    at 2, 4, 6, 8, 10 on x alone under (64, 64, 0) (x before y, the y fires
+    lost); on the GameBoard a free measured event of content 1 with that
+    declared momentum makes the same `step` records (tick, axis), width by
+    width and drive by drive;
 (c) the release: `RELEASE_PER_HEADING` = by_clock(0, 2^24, 128) = 131072
     and q = 6 x 131072 = 786432; a source of 2^24 on the six headings at
     `release` [1, 128] has released 786432 units after its first
@@ -64,11 +74,8 @@ def bar(shape: list[int], measured: list[dict[str, object]], **keys: object) -> 
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        # The series C tool replays the per-axis step rule (`engine.step_axis`,
-        # BEAM_LAW note 17); since the line drive became the law's drive
-        # (2026-09-22) this bar declares the drive of history until the tool
-        # and series C are re-pinned under the law (DEFAULT.md section (c)).
-        "per_axis_drive": True,
+        # The law's line drive with nothing declared (since 2026-09-22); the
+        # per-axis drive of history under the key, passed by (b).
         "families": [{"name": "m", "quantum": 0, "phase": False}],
         "measured": measured,
     }
@@ -92,14 +99,19 @@ def test_the_front_is_the_flight_tables_first_arrival_as_the_engine_walks_it():
     assert [walked[m] for m in range(1, 12)] == [arrivals[m] for m in range(1, 12)]
 
 
-def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
+def engine_steps(momentum: list[int], width: int, per_axis: bool = False) -> list[tuple[int, int]]:
     """The (tick, axis) of the `step` records of a free measured event of
-    content 1 at (2, 1, 0) of an open 20 x 3 x 1 GameBoard with the declared
-    momentum, over ten intervals at the world's `width`."""
+    content 1 at (2, 2, 0) of an open 20 x 5 x 1 GameBoard (room for two
+    steps on y) with the declared momentum, over ten intervals at the
+    world's `width`, under the law's drive or, with `per_axis`, the drive
+    of history under its key."""
     records: list[dict[str, object]] = []
-    probe = {"position": [2, 1, 0], "family": "m", "amount": 1, "momentum": momentum}
+    probe = {"position": [2, 2, 0], "family": "m", "amount": 1, "momentum": momentum}
+    keys: dict[str, object] = {"width": width}
+    if per_axis:
+        keys["per_axis_drive"] = True
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(bar([20, 3, 1], [probe], width=width)), records.append
+        parse_nature_beam_world(bar([20, 5, 1], [probe], **keys)), records.append
     )
     for _ in range(10):
         simulation.step()
@@ -109,16 +121,32 @@ def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
 
 def test_the_step_rule_is_the_engines_step_off_the_clock():
     """(b)."""
-    x_only = [(t, 0) for t in (2, 4, 6, 8, 10)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10) == x_only
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3) == [(4, 0), (8, 0)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1) == x_only
+    # The law's line drive: the integers written first (the docstring).
+    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10) == [(3, 0), (6, 0), (9, 0)]
+    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3) == [(5, 0), (10, 0)]
+    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1) == [
+        (5, 0),
+        (6, 1),
+        (9, 0),
+        (10, 1),
+    ]
     for momentum, width in (([UNIT, 0, 0], 1), ([UNIT, 0, 0], 3), ([UNIT, UNIT, 0], 1)):
         reads = {1: (0, (momentum[0], momentum[1], momentum[2]))}
         assert engine_steps(momentum, width) == TOOL.steps_by_rule(reads, 1, 1, 10, width), (
             momentum,
             width,
         )
+    # The per-axis drive of history under its key.
+    x_only = [(t, 0) for t in (2, 4, 6, 8, 10)]
+    axis = TOOL.AXIS_DRIVE
+    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 1, axis) == x_only
+    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3, axis) == [(4, 0), (8, 0)]
+    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1, axis) == x_only
+    for momentum, width in (([UNIT, 0, 0], 1), ([UNIT, 0, 0], 3), ([UNIT, UNIT, 0], 1)):
+        reads = {1: (0, (momentum[0], momentum[1], momentum[2]))}
+        assert engine_steps(momentum, width, per_axis=True) == TOOL.steps_by_rule(
+            reads, 1, 1, 10, width, axis
+        ), (momentum, width)
 
 
 def test_the_release_per_heading_is_the_engines_clock():

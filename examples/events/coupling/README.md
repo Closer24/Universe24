@@ -30,6 +30,18 @@ falling body's clicks at a detector set (the owner's word of record 564),
 is not made in this series: a probe's read is the push at one Node, not
 the motion the law predicts.
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)):
+the tool replays it (`steps_by_rule` with `by_line` against the one wall,
+the per-axis drive of history under the key `per_axis_drive`), and the
+readings below, of 2026-09-19 to 2026-09-21, stand as read under the
+per-axis drive. The series has no register file: every expectation is the
+engine's own function (the front, the push, the release, the step rule),
+so the pins under the law are the tool's rule, written before the run;
+what the drive moves is the free probes' step ticks (GAMEBOARD, item 1b)
+and the gate world `1b_m16`'s digests. The re-read under the law is the
+last section of this page.
+
 ## The base
 
 A GameBoard of 121 x 121 x 1 Nodes with the z axis declared periodic
@@ -77,7 +89,7 @@ rays of 2^17.
 | World | Item | Measured events | Intervals | What its record reads (the kinds as above) |
 | --- | --- | --- | --- | --- |
 | `1a_m1`, `1a_m4`, `1a_m16` | 1, equivalence | the source; a fixed probe of content m at (72, 60, 0), r = 12 on +x | 200 | the probe's `read` records of number 1: push_m(t) = m x push_1(t) at every tick and axis (identity); the first read at tick 21 with amount 2^17 (the front) |
-| `1b_m1`, `1b_m4`, `1b_m16` | 1, equivalence | the same probe free (`fixed` false, momentum 0) | 200 | the `step` records identical for the three m and equal to the rule off the clock on the reads' cumulative push (by_clock(t - 1, \|p\|, m + \|p\|), x before y), one x-step per interval from the first read (tick 21) to the Node beside the source (x = 61 at tick 31), every further step refused (no merge since 2026-09-19), no `merged` record, the probe present at the end |
+| `1b_m1`, `1b_m4`, `1b_m16` | 1, equivalence | the same probe free (`fixed` false, momentum 0) | 200 | the `step` records identical for the three m and equal to the drive's rule on the reads' cumulative push (since 2026-09-22 the law's line drive, `by_line` against Q^2 S m + \|p\|_1 T_h; by_clock(t - 1, \|p\|, Q m + \|p\|), x before y, under the per-axis drive of history), one x-step per interval from the first read (tick 21 under the drive of history; the line drive's ticks in the re-read below) to the Node beside the source (x = 61), every further step refused (no merge since 2026-09-19), no `merged` record, the probe present at the end |
 | `2` | 2, the third law | A = 2^22 at (56, 60, 0), B = 2^20 at (64, 60, 0) | 200 | `pushed` and the `read` pushes per 50-interval window: toward each other; the same reading ticks; per tick \|push_A + push_B\| / \|push_A\| below 1 % (the grain of the whole apportioning of 2^15 and 2^13 over six headings); cumulative \|P_A + P_B\| / \|P_A\| below 1e-4; zero over the first window |
 | `3`, `3a`, `3b` | 3, superposition | the item-2 pair with a probe of content 1 at (60, 68, 0); A alone with the probe; B alone with the probe | 200 | the probe's records by number in `3` equal those of `3a` and `3b` exactly, its total push the sum (identity); off both axes the probe reads nothing (the beams do not spread) |
 | `4` | 4, retardation | the source; probes of content 1 at r = 4 on -x, 6 on +y, 8 on -y, 12 on +x | 200 | the first `read` of each probe (tick, amount, push) against the flight table above; with `1a_m1`, `7_00` and the +x probes of `5p` and `6` |

@@ -72,13 +72,19 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS
-from event_universe.core.integer import by_clock
+from event_universe.core.integer import by_clock, by_line
 from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import count_owed
 from event_universe.events.engine import step_axis as rule_step
 from event_universe.events.nature_beam import direction_flight, unit_label
-from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
+from event_universe.events.world import (
+    BEAM_LAW,
+    HEADING_OFFSET,
+    LABEL_SCALE,
+    NatureBeamWorld,
+    drive_wall,
+)
 from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.world_loading import world_of_run
 
@@ -163,31 +169,48 @@ def step_axis(event: Record) -> int:
     return next(axis for axis in range(3) if origin[axis] != target[axis])
 
 
-def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -> list[tuple[int, int]]:
+LINE_DRIVE = "line"
+AXIS_DRIVE = "per_axis"
+
+
+def steps_by_rule(
+    reads: Reads, m: int, first: int, last: int, width: int = 1, drive: str = LINE_DRIVE
+) -> list[tuple[int, int]]:
     """The (tick, axis) at which a free probe of content m steps by the
-    engine's step rule on the record (`NatureBeamSimulation._move`, ENGINE.md;
-    since 2026-09-20 the step drive, BEAM_LAW note 17 as amended: on an
-    axis whose momentum component is p the signed drive gains p at every
-    self-creation and the body steps when it reaches Q x S x m + |p|, the
-    engine's own `engine.step_axis` called here): its momentum is the
-    cumulative push of its reads (born at rest), at tick t after that
-    tick's read the first axis whose rule fires steps (the momentum in
-    label units, Q = `LABEL_SCALE`, S the world's `width`); at most one per
-    interval, x before y before z, wherever it lands (a refused step
-    counts); the drive of every axis advances at every interval as the
-    engine's does, and a fire on a later axis in the interval of an
-    earlier axis's step is lost, as the frame loses it."""
+    engine's drive on the record (`NatureBeamSimulation._move`, ENGINE.md):
+    its momentum is the cumulative push of its reads (born at rest), and
+    at tick t after that tick's read the drive advances once (the momentum
+    in label units, Q = `LABEL_SCALE`, S the world's `width`); at most one
+    Link per interval, wherever it lands (a refused step counts). Under
+    the law's line drive (since 2026-09-22, BEAM_LAW note 17 as amended on
+    the model owner's record 972, note 49; the engine's own `by_line` and
+    `drive_wall` called here) the three drive rows gain p_a Q against the
+    one wall Q^2 S m + |p|_1 T_h and the axis furthest over the wall makes
+    the Link, the others keeping their overflow, no fire lost. Under the
+    per-axis drive of history (`drive` "per_axis", the world key
+    `per_axis_drive`; the step drive of 2026-09-20, the engine's own
+    `engine.step_axis`) on an axis whose momentum component is p the signed
+    drive gains p at every self-creation and the body steps when it
+    reaches Q x S x m + |p|, x before y before z, a fire on a later axis in
+    the interval of an earlier axis's step lost as the frame loses it."""
     momentum = [0, 0, 0]
-    drive = [0, 0, 0]
+    drive_rows = [0, 0, 0]
     fired: list[tuple[int, int]] = []
     for tick in range(first, last + 1):
         if tick in reads:
             momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
         stepped = None
-        for axis in range(3):
-            sign, drive[axis] = rule_step(drive[axis], momentum[axis], m, width)
-            if sign is not None and stepped is None:
-                stepped = axis
+        if drive == LINE_DRIVE:
+            wall = drive_wall(momentum, m, width)
+            rates = [p * LABEL_SCALE for p in momentum]
+            stepped, _sign, drive_rows = by_line(drive_rows, rates, wall)
+        elif drive == AXIS_DRIVE:
+            for axis in range(3):
+                sign, drive_rows[axis] = rule_step(drive_rows[axis], momentum[axis], m, width)
+                if sign is not None and stepped is None:
+                    stepped = axis
+        else:
+            raise ValueError(f"unknown drive {drive!r}")
         if stepped is not None:
             fired.append((tick, stepped))
     return fired
@@ -487,9 +510,10 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
             ((CENTRE[0] + 1, CENTRE[1], CENTRE[2]), [1, 2]),
         )
         walked = [(int(e["tick"]), step_axis(e)) for e in steps]
-        by_rule = steps_by_rule(reads, m, min(reads), run.ticks, run.parsed.width)
+        rule = AXIS_DRIVE if run.parsed.per_axis_drive else LINE_DRIVE
+        by_rule = steps_by_rule(reads, m, min(reads), run.ticks, run.parsed.width, rule)
         checks.equal(
-            f"1b_m{m}: the steps walked are the first {len(walked)} steps of the rule off the clock on the reads' cumulative push",
+            f"1b_m{m}: the steps walked are the first {len(walked)} steps of the {rule} drive's rule on the reads' cumulative push",
             walked,
             by_rule[: len(walked)],
         )
@@ -532,7 +556,8 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
     lines.append("")
     lines.append(
         f"the first read at tick {base_tick} with amount {base[base_tick][0]} (the front of the flight); the "
-        f"first step at tick {first_step} (the rule off the clock: by_clock(t - 1, |p|, Q m + |p|) on the cumulative push in label units); "
+        f"first step at tick {first_step} (the drive's rule on the cumulative push in label units: the line drive's by_line against "
+        "Q^2 S m + |p|_1 T_h since 2026-09-22, by_clock(t - 1, |p|, Q m + |p|) under per_axis_drive); "
         "the steps onto the source refused, the probe beside it (no merge since 2026-09-19)"
     )
     return lines
