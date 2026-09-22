@@ -1285,3 +1285,61 @@ couplings.
 - **Status.** Built on 2026-09-22 and run once (series X): six worlds, 19
   readings inside, 0 outside, nothing moved; the key off by default; making
   it the default is the owner's later decision.
+
+## 29. flow-link-v1: one arrival counts one Euclidean Link of its line, not one Node; the law's two constants of gravity are one, stated so that it can fail
+
+- **Statement (the model owner's decision of 2026-09-22, record 915 of
+  docs/LOG_2026-09-20.md, on his go of record 886; the Flow Weight
+  Designer's design [docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md)
+  with [ALGEBRA.md](designs/flow_weight/ALGEBRA.md); the physics-rule
+  reviewer's ADMISSIBLE of record 902).** Under the world key `flow_link`
+  (absent by default) the arrival flow every reader sums carries per
+  arriving row the flow label **f**_D, the integer vector nearest
+  `|p_D| D / S_1` (per component `sign(D_i) x (2 |p_D| |D_i| + S_1) // (2
+  S_1)`, one Euclidean division per component at load; `|p_D|` is Q for
+  the photon and a massive family's `momentum_magnitude`, each family's
+  flow labels from its own labels), in place of the unit label **u**_D
+  nearest `|p_D| D / |D|`; the push's shell mean then carries no L1 factor
+  (the fan's mean of `S_1 / |D|`, 1.4355 on series K's 290 directions,
+  `3 / 2` in the isotropic limit) and the push's Newton constant equals the
+  clock's, `q / (4 pi S)` at the pin `n S = d`, to three parts in a
+  thousand on series K's fan (the fan's mean of incidence times weight
+  1.0003; the crowd's shell mean 22.85 against the continuum's 23.08
+  beside the clock's 68.72 against 69.23). The age moment, the wall, the
+  flight, the collision, the phase and the momentum a click moves are
+  untouched; the key stands alone or beside `optical`.
+- **The expectations, before any run (the design's section 4, GAMEBOARD by
+  the step algebra; DETECTOR when run).** The ring of starts at b = 6 on
+  series K's box (the fan of 290, the mass 2^16, the width 16384, the
+  suspension [1, 16384], 40 lamps on the heading at `|sqrt(y^2 + z^2) - 6|
+  <= 1 / 2`, the screen of one-Node `wave` detectors reading `age`) under
+  `optical: 1` reads the mean radial shift of the arrival Node `0.731 +-
+  0.025` Links over 40 starts (`0.974` as built) and `0.128 +- 0.025` at
+  `optical: 0` (the count of starts moving one Node, 6 +- 1 of 40);
+  `1.625 / 0.845 +- 0.0625` at b = 3 over 16 starts, `0.628 / 0.107 +-
+  0.021` at b = 8 over 48; the delays within 1 interval; `C_ring` expected
+  `2 c_f x 0.990 x L / sqrt(L^2 + b^2)` = `3.86 / 3.93 / 3.79` at b = 6 /
+  3 / 8 with the grain `0.085 / 0.107 / 0.095` (the design's read `3.65 /
+  3.82 / 3.92`); the tangential mean 0; `C_nodes` 2.50 at b = 6, gamma 1,
+  with the lever-arm factor 0.68 stated before the run. The calibration:
+  the registered `optical/mass_g0.json` and `mass_g1.json` under the key
+  read `-1.600 / -3.000` pixels by the algebra (`-1.993 / -3.989`
+  registered, DETECTOR, never edited).
+- **What it depends on.** The direction table's integers D and S_1 alone;
+  no root, no float, no run-time division beyond the law's declared ones;
+  the same six reads and nothing kept at a Node (the three tests written
+  out in the design's section 2, all PASS).
+- **What it does not give.** A derivation of Einstein's 4: the ring reads
+  the declared `2 c_f` against the clock's constant, both on one ground
+  now, the 2 of `c_f` an input of kind 2 (record 817). Newton's rows move
+  by their fan's factor under the key (D3's periods `343 / 687` to `384 /
+  768` by formula), re-derived by their generator before any run.
+- **What would refute it.** A `C_ring` that, after the two stated factors,
+  leaves `2 c_f` by more than the grain in either direction; any clock
+  reading (the lamp's rate, the redshift ratio) that moves under the key;
+  a world without the key whose record differs from `main`'s by a byte.
+- **Status.** Built on 2026-09-22 (the world key `flow_link`, the identity
+  `flow-link-v1`, `tests/test_flow_link.py`); the ring worlds and their
+  pins under `examples/events/flow_link/`; the one run recorded there when
+  made; the key off by default; admitting it to the law is the owner's
+  later decision.
