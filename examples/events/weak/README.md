@@ -416,3 +416,40 @@ the cap 1024; the pins restated, the readings and the verdicts are in
 ## Re-run at head (2026-09-22)
 
 The criteria runner re-ran `j1_lattice` and `j1_source` at the cap 1024 and `j2_filter` at `origin/main` `4028b020` for the paper's Table 3 rows 8a and 8b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): every number equal to the replay of 2026-09-22 (64 of 64 at their keys, 64 clicks of content 3, DETECTOR; the widths 0.1111 / 0.0787 and 0.1279 / 0.1147 in the lattice's clock, GAMEBOARD; 16 of 1024 with 0 behind); the register's entry carries the dated line.
+
+## Re-read under the law's line drive (2026-09-22, J3; measured against the pins of expectations.json committed at d03d138 before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the three J3
+worlds byte for byte as registered (no declared momentum; the pins
+drive-free, the drive named in `expectations.json`), run once each on the
+checkout of `drive-default` at `d03d138` (source fingerprint
+`c71927e33dea0e12`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3,
+headless, `tools/run_series.py --jobs 3`; `run.json` carrying `"drive":
+"line"`. `tools/weak_readings.py`: 1 record check failed, 6 readings
+inside, 3 outside, nothing moved. `j3_neutron_free` completed at 600
+with the books balanced: the neutron fires at 512 exactly on its own
+clock with the count 0, one beta click at the shell of content 3 at tick
+526 (the age 14), 4 of 4 inside, no attempted step. `j3_deuteron_crowd`
+completed at 700 with the books balanced: no transformation, no beta
+click (2 of 2 inside); the pair holds, 0 steps of 35 attempted on each
+body, 35 hand-overs each (GAMEBOARD, the attempts; DETECTOR, the
+hand-overs). `j3_deuteron` REFUSED at interval 596 of 700 (the gate
+set's `refusal` block: the generic entry of the bending, the beta row
+thrown at the transformation pushed by the pair's crowd at the pair
+[1, 2^20], its wall's square R^2 + 3 |P|^2 past the working bound before
+the ladder takes it; the record's check fails, the books balanced at
+every completed tick): before the refusal the neutron fires at 595 on
+its own clock with the count 180026 (DETECTOR), OUTSIDE the registered
+range 47762 .. 152471 of 2026-09-21 (read under the per-axis drive before
+the generic entry, the count 152471 at 577 then) and inside the block
+beside it, the warm run under the law as it stands (101035 .. 222277,
+the ticks 561 .. 620: a derivation, no pin); the pair holds to the
+refusal, 0 steps of 30 and 29 attempted, 29 and 30 hand-overs (39 and 21
+attempted on 2026-09-20); the beta's content and its click at the shell
+NOT READ (the two readings outside are the unread ones). What the drive
+moves here is the attempts and the accumulators alone (GAMEBOARD); what
+moved the trigger is the generic entry's crowd (main's, record 847), not
+the drive, and the refusal is the entry's, recorded in the gate set on
+the flip day. No pin moved; the rows above stand as registered, read
+under the per-axis drive of history ([the register](../../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20)).

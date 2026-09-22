@@ -75,7 +75,10 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   with the drive named, the steps and hand-overs re-read) and series R
   (`quarks/`, the transient key removed, the replay blocks of 2026-09-21
   under `former`, the law's under `replay`) and series N (`binding/`, the
-  three worlds unchanged, a new `expectations.json` with the drive named).
+  three worlds unchanged, a new `expectations.json` with the drive named)
+  and series J3 (`weak/`, the register's drive column, the worlds
+  unchanged; `j3_deuteron` refused before its cap by the generic entry,
+  its trigger read before the refusal).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by

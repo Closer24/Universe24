@@ -11,6 +11,34 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series J3 under the law's line drive: three runs on drive-default d03d138 - 2026-09-22
+
+The branch `drive-default` at `d03d138` (the weak register's drive column
+committed before the run, every pin drive-free, DEFAULT.md section (c);
+the worlds byte for byte as registered): the three J3 worlds of
+`examples/events/weak/` run through `tools/run_series.py --jobs 3`
+(Python 3.14.0rc2, numpy 2.5.3, headless; source fingerprint
+`c71927e33dea0e12`), `run.json` carrying `"drive": "line"`;
+`j3_neutron_free` completed at 600 and `j3_deuteron_crowd` at 700 with
+the books balanced at every tick, `j3_deuteron` REFUSED at interval 596
+of 700 by the generic entry of the bending (the gate set's `refusal`
+block of the flip day, the beta row's wall square past the working
+bound; the books balanced at every completed tick); the digests (state,
+audit, events) `4235fd646dea`, `4896e3cedfc0`, `ca857e2846aa`
+(`j3_neutron_free`), `6cccb462fc2b`, `5e435594f716`, `5e9a38d13c5e`
+(`j3_deuteron_crowd`), `1e51fc2a326b`, `9bdc6858482f`, `8635fcd6c7c9`
+(`j3_deuteron` at 595); run times 33.5 to 57.1 s at 80 to 85 MB peak
+(host measurements). The gate world `weak/j3_deuteron` keeps its entry
+(the line-drive digests of the flip's engine before the entry, the
+per-axis under `former`, the refusal at 596 reproduced here). The
+readings by kind (6 inside, 3 outside, the three the refused world's
+unread beta and its count outside the registered range and inside the
+warm run under the law as it stands) are in
+[the series' README](../examples/events/weak/README.md#re-read-under-the-laws-line-drive-2026-09-22-j3-measured-against-the-pins-of-expectationsjson-committed-at-d03d138-before-the-run)
+and [the register](EXPERIMENTS.md#j-the-weak-force-2026-09-20). The rows
+of 2026-09-20 to 2026-09-22 stay registered as read under the per-axis
+drive of history.
+
 ## Series N under the law's line drive: three runs on drive-default f5ed3ed - 2026-09-22
 
 The branch `drive-default` at `f5ed3ed` (the generator's pins with the

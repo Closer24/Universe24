@@ -543,7 +543,12 @@ clock's rule and the counts a warm run read (`expectations.json`). The W
 world (`w_exchange`, no key added): the W a paid family with a whole
 charge per unit of amount and `lifetime` 1, thrown by a neutron's
 `become` and measured by the proton one Link away one interval later,
-which then has a neutron's charge and content.
+which then has a neutron's charge and content. Under the law's line drive
+(2026-09-22; `weak/expectations.json` names the drive, every pin
+drive-free) the three J3 worlds ran again, unchanged: the free neutron
+and the gated pair inside, `j3_deuteron` refused at interval 596 by the
+generic entry of the bending (the gate set's `refusal` block), its
+neutron firing at 595 before it (the series' README).
 
 ## The covariant series
 
