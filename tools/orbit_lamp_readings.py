@@ -145,6 +145,15 @@ class SecondDifference:
 
 
 @dataclass
+class Contact:
+    tick: int
+    node: tuple[int, int, int]
+    rule: str
+    axis: int
+    component: int
+
+
+@dataclass
 class Reading:
     name: str
     folder: Path
@@ -161,6 +170,10 @@ class Reading:
     probe_number: int
     clicks: list[Click]
     escape: tuple[str, int] | None
+    # The probe's contacts with the detector line (the register's `contact`
+    # events of the probe's number: the tick, the Node, the wall's rule and
+    # the momentum component the wall's `measure` entry took), in order.
+    contacts: list[Contact]
     homes: int
     final_position: list[int] | None
     final_momentum: list[int] | None
@@ -306,11 +319,26 @@ def read_run(folder: Path) -> Reading:
     radius = abs(probe.position[0] - centre_x)
     clicks: list[Click] = []
     escape = None
+    contacts: list[Contact] = []
     homes = 0
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"home"' in line and '"event": "home"' in line:
                 homes += 1
+                continue
+            if '"contact"' in line:
+                event = json.loads(line)
+                if event.get("event") == "contact" and int(event.get("number", 0)) == probe_number:
+                    node = tuple(int(c) for c in event["node"])
+                    contacts.append(
+                        Contact(
+                            int(event["tick"]),
+                            (node[0], node[1], node[2]),
+                            str(event.get("rule")),
+                            int(event.get("axis", -1)),
+                            int(event.get("component", 0)),
+                        )
+                    )
                 continue
             if '"click"' not in line:
                 continue
@@ -354,6 +382,7 @@ def read_run(folder: Path) -> Reading:
         probe_number,
         clicks,
         escape,
+        contacts,
         homes,
         final_position,
         final_momentum,
@@ -481,14 +510,34 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             if reading.escape is None:
                 verdicts.bracket("the escape tick", None, pin["escape_tick"]["bracket"])
             else:
-                print(
-                    f"  {DETECTOR} the probe left through {reading.escape[0]} (the escape's tick is the face "
-                    "click's tick, the record's ordering; the detector's count of it is the lamp's births "
-                    "to the escape: a label, the pin as registered, the clock audit of 2026-09-22)"
-                )
                 verdicts.bracket(
                     "the escape tick", float(reading.escape[1]), pin["escape_tick"]["bracket"]
                 )
+        # The probe's escape and its contacts with the detector line, for every
+        # world alike: a source world's escape is not pinned, and before
+        # 2026-09-22 it was read and never printed (the Newton Diagnostician's
+        # finding on the run under flow_link, record 1022). The escape is a
+        # face click, DETECTOR; a contact is the wall's measure entry taking a
+        # momentum component from the probe at its Node, no detector's click,
+        # and reads GAMEBOARD as the register labels a contact line (the
+        # atom register's give, DIAGNOSIS.md 3.1; the reviewer, 2026-09-22).
+        print(
+            f"  {DETECTOR} the probe left through {reading.escape[0]} at the tick {reading.escape[1]} "
+            "(the face click's tick, the record's ordering; the detector's count of it is the lamp's "
+            "births to the escape: a label, the clock audit of 2026-09-22)"
+            if reading.escape is not None
+            else f"  {DETECTOR} the probe did not leave the plane in {reading.ticks} intervals"
+        )
+        print(
+            f"  {GAMEBOARD} (a contact line) the probe touched the detector line {len(reading.contacts)} time(s): "
+            + "; ".join(
+                f"the tick {c.tick} at {list(c.node)} (the wall's rule {c.rule}, the axis {c.axis} "
+                f"component {c.component} taken)"
+                for c in reading.contacts
+            )
+            if reading.contacts
+            else f"  {GAMEBOARD} (a contact line) the probe never touched the detector line"
+        )
         print(
             f"  {GAMEBOARD} (a diagnostic, not pinned): homes {reading.homes}; the probe at the end "
             f"{reading.final_position}, |p| / |p_0| = "

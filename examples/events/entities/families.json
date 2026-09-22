@@ -261,6 +261,25 @@
    "detectors": []
   },
   {
+   "name": "moving_detector",
+   "families": [
+    {
+     "name": "post",
+     "quantum": 1
+    },
+    {
+     "name": "source",
+     "quantum": 1
+    },
+    {
+     "name": "cart",
+     "quantum": 1
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
    "name": "mass_m",
    "families": [
     {

@@ -564,7 +564,11 @@ walk's `last_link`; the physics-rule reviewer's line on PR #855: a row no
 crowd moved reads the count's own floor, made T_d / (S_1 Q), by identity,
 and no row reads two forms; the amplitude worlds' clicks byte for byte);
 the pushed row's wall T(P) is a comparison ladder of squares, no root in
-the interval (`nature_beam.square_ladder`); a row
+the interval (`nature_beam.square_ladder`; since the ring worlds of
+flow-link-v1, 2026-09-22, the split ladder `nature_beam.split_ladder`:
+the wall's square X = R^2 + 3 |P|^2 is bounded, X Q^2 never formed, T = Q a
++ b reached by a ladder on X and a ladder on the remainder, the same
+floor; the physics-rule reviewer's route (b)); a row
 whose direction a collision or the meeting changed reads its age on its
 present line, its accumulator the table's own count there
 (`nature_beam.reseed_flight`, the crowd's carry on the old line dropped
@@ -683,7 +687,13 @@ is refused naming the lamp; the inverse interval is refused with the key;
 `run.json` carries `massive_rows` as declared, the identity under
 `hypotheses` when it is true and per family `massive` and
 `momentum_magnitude` only then; without the key every world reads as it
-did, byte for byte (`tests/test_massive_rows.py`); `doppler` (the reading's
+did, byte for byte (`tests/test_massive_rows.py`); the clock stamp (2026-09-22,
+the moving detector, docs/designs/moving_detector/DESIGN.md section 7): the
+world key `clock_stamp` (true or false, false by default), under which every
+line a measured event writes carries `clock`, its own count of
+self-creations (the readings table below); `run.json` carries the key only
+when true; no hypothesis, no rule, no verb, and without the key every
+record is byte identical (`tests/test_moving_detector.py`); `doppler` (the reading's
 weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
 2026-09-21 with the crossing rule,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
@@ -1205,6 +1215,7 @@ things themselves, one row each in the three worlds, are in
 | the age of a row | scalar | `age` on the `click` line of a record's row; the age moment `reading` when the entry reads `age` (sum amount x age) | intervals (the moment: units x intervals) | detector (read whole only by a measured event) |
 | the content | scalar M | `content` on a `click`, `read`, `home` or `rerelease` line (amount x content per unit); `content` and `held` of a measured event's state; `content` and `measured_content` on a face | units of content | detector |
 | the clock of a measured event | scalars | `age` (its intervals), `phase_steps` (its turns), `owed` (the count owed in a crowd), `waited`, `steps` of its state | intervals, steps, units | detector |
+| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines and its face click): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
 | the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rows that arrived) or `here` (the rows that did not step) | units of amount | detector |
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |

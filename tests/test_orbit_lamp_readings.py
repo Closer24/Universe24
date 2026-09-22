@@ -41,6 +41,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import math
+import shutil
 import sys
 from pathlib import Path
 
@@ -290,7 +291,7 @@ def tiny_world() -> dict[str, object]:
     }
 
 
-def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path):
+def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path, capsys):
     document = tiny_world()
     folder = tmp_path / "tiny" / "run"
     folder.mkdir(parents=True)
@@ -324,3 +325,63 @@ def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path):
     line = next(d for d in record["detectors"] if d["name"] == f"line_{PROBE[0]}")
     assert line["families"]["probe"]["clicks"] == len(reading.clicks)
     assert TOOL.period_of(reading.samples, reading.centre_x).value is None
+    assert reading.contacts == []
+    # The probe's escape and its contacts with the detector line are read
+    # from the register's own lines and printed for every world, a source
+    # world's included (the Newton Diagnostician's finding of 2026-09-22 on
+    # the run under flow_link: the source worlds' escape was read and never
+    # printed, record 1022). A copy of the run with a face click of the
+    # probe's number and a contact line appended, under another name.
+    copy = tmp_path / "copy" / "run"
+    shutil.copytree(folder, copy)
+    record["model"] = "rays-orbit-lamp-tiny-two-plane-v1"
+    (copy / "run.json").write_text(json.dumps(record), encoding="utf-8")
+    with (copy / "events.jsonl").open("a", encoding="utf-8") as stream:
+        stream.write(
+            json.dumps(
+                {
+                    "event": "contact",
+                    "tick": 20,
+                    "number": 1,
+                    "node": [4, 2, 0],
+                    "to": [4, 1, 0],
+                    "occupant": 6,
+                    "family": "probe",
+                    "rule": "measure",
+                    "axis": 1,
+                    "component": -5,
+                    "momentum": [0, 0, 0],
+                }
+            )
+            + "\n"
+        )
+        stream.write(
+            json.dumps(
+                {"event": "click", "tick": 37, "detector": "face:+y", "family": "probe", "measured": 1}
+            )
+            + "\n"
+        )
+    (second,) = TOOL.find_runs(tmp_path / "copy")
+    assert second.name == "tiny_two" and len(second.clicks) == len(reading.clicks)
+    assert second.escape == ("face:+y", 37)
+    assert second.contacts == [TOOL.Contact(20, (4, 2, 0), "measure", 1, -5)]
+    pins = {
+        "birth_interval": 2,
+        "ratio": {"bracket": [1.82, 2.18]},
+        "worlds": {
+            "tiny": {"source": False, "x": PROBE[0], "escape_tick": {"bracket": [30.0, 40.0]}},
+            "tiny_two": {"source": False, "x": PROBE[0], "escape_tick": {"bracket": [30.0, 40.0]}},
+        },
+    }
+    capsys.readouterr()
+    assert TOOL.report([reading, second], pins) == 0
+    printed = capsys.readouterr().out
+    assert "DETECTOR the probe did not leave the plane in 40 intervals" in printed
+    assert "GAMEBOARD (a contact line) the probe never touched the detector line" in printed
+    assert "DETECTOR the probe left through face:+y at the tick 37" in printed
+    assert (
+        "GAMEBOARD (a contact line) the probe touched the detector line 1 time(s): the tick 20 at [4, 2, 0] "
+        "(the wall's rule measure, the axis 1 component -5 taken)"
+    ) in printed
+    assert "the escape tick: 37 (expected 30 .. 40): inside" in printed
+    assert "the escape tick: none (expected 30 .. 40): outside" in printed

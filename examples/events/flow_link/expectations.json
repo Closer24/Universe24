@@ -2559,5 +2559,5283 @@
    }
   }
  },
- "verdict": "NOT DECIDED (2026-09-22): the deciding pin at b = 6, gamma 1 unread; the folder's README"
+ "verdict": "DOES NOT CLOSE by the README's rule (2026-09-22, the run on the split ladder 89f43572): C_ring through the stated lever-arm factor reads OUTSIDE the one-grain pin as written at four rings of six (2.40 / 1.07 / 1.40 grains at gamma 1, 1.45 at b = 6 gamma 0). Beside the word, the run's finding by kind: the deciding pin inside (0.731 against 0.731 +- 0.025 at b = 6 gamma 1, DETECTOR), every arrival Node the map's (168 of 168, DETECTOR), every ring's mean radial shift, tangential mean, delay and C_nodes inside, and C_ring the algebra's own walk to 0.01 at every ring (COMPUTATION: 3.655 / 3.819 / 3.918 against this file's c_ring values 3.652 / 3.821 / 3.918, the algebra's number against the continuum with no tolerance), so what failed the grain is the continuum formula's pin 2 c_f x 0.990 x L / sqrt(L^2 + b^2), not the engine's walk of the rule; the folder's README",
+ "runs_on_the_merged_engine_5f3f18bf": {
+  "ring_b6_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 22.199,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "e67d92aa0abecb6fdc57b3d28bbb8151c0297426ac719eab03f5a6d84c897961",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 22.212,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "e67d92aa0abecb6fdc57b3d28bbb8151c0297426ac719eab03f5a6d84c897961",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 49.452,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "53dc643f6a66defa184bc448562481c3608b497e752be280b86658281c376081",
+   "audit_sha256": "1457c184eb095340f0ba8b3e6e9d93e64b669ec7024a8b53007860979cc15cd8",
+   "events_sha256": "9ea8f4070ba9aeb0926e84e5cb1bedd43c81c8a8b09de11d83eb4b94c33fec08",
+   "starts": 40,
+   "moved_by_0_1_2_3_nodes": [
+    34,
+    6,
+    0,
+    0
+   ],
+   "arrival_nodes_agreeing_with_the_map": 40,
+   "radial_shift_sd": 0.314,
+   "per_start": {
+    "(-6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.128,
+    "expected": 0.128,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0177,
+    "expected": 0.0,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.4,
+    "expected": 0.4,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 0.437,
+    "expected": 0.437,
+    "tolerance": 0.085,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 1.8059,
+    "expected": 1.929,
+    "tolerance": 0.085,
+    "inside": false
+   },
+   "c_ring_residual_grains": -1.45,
+   "c_ring_algebra_residual_grains": -1.46,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "NOT DECIDED by the README's rule (the deciding pin at b = 6, gamma 1 still unread); this gamma 0 ring reads as the first run byte for byte (the audit and the events the same digests): inside its four pins, C_ring 1.806 OUTSIDE the one-grain pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46"
+  },
+  "ring_b6_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 79,
+   "elapsed_seconds": 7.69,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "6532495c20a89875c86446ffdc0f4fc17e6890caf97b5a97ac71115386bfe74d",
+   "audit_sha256": "91cba92a09732d4a303ad092c8cb89cb386621b06886e31e34e2fa1c3e008002",
+   "events_sha256": "70e11038839284f654a826caa5ea48e2b890dd9877d6a60cc143da65a7bacecb",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [32901461, 1149200, -1147979] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: still refused by the wall's square before the ladder at the same interval with the same primitive momentum as on the head before the merge; no pin moved; the run stops here by the order"
+  },
+  "ring_b3_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 19.714,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "7c5dd449ba746e7c39d92c6234c78c4c42043ec10a3bd4302cc2e898590a44d8",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 19.397,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "7c5dd449ba746e7c39d92c6234c78c4c42043ec10a3bd4302cc2e898590a44d8",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 79,
+   "elapsed_seconds": 6.694,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "11169ba1e085dd9a148674864ba06427a3d5d3c3efd735105cc01fe3b2edcbde",
+   "audit_sha256": "335f67d6abaf6a0e7442996c205a055af99f02e2b12750604bbb700b5a32af1c",
+   "events_sha256": "f278761ce650d4938c543a1cb0caab7882f4306d08f64ccf6b011c116cf8f919",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33507403, 409525, -1064800] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: still refused by the wall's square before the ladder at the same interval with the same primitive momentum as on the head before the merge; no pin moved; the run stops here by the order"
+  },
+  "ring_b3_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 77,
+   "elapsed_seconds": 6.4,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "00cee99d3100bdbdc31e77f8c0d5d21d4a260af640f3e88e6067c545c233237e",
+   "audit_sha256": "521871fd6ac79fca4c4260e1400098d45e9ec0fdad4f1ced095b6de5b059f269",
+   "events_sha256": "d956ac4ef5767932db3c6f2734de51e5230d7249f0e4348b030d87773416197e",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33523131, 804995, 2102152] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: still refused by the wall's square before the ladder at the same interval with the same primitive momentum as on the head before the merge; no pin moved; the run stops here by the order"
+  },
+  "ring_b8_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 25.923,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b6aad6aacba201f543e169edc3a7aadf350ca4e7f9e8a87efa462a935c84c042",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 25.674,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b6aad6aacba201f543e169edc3a7aadf350ca4e7f9e8a87efa462a935c84c042",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 135,
+   "elapsed_seconds": 15.986,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "c5b1c1b72aff4e5bc00f862ff1aa9084eb85214e758d1b5ba05e1a080f51018a",
+   "audit_sha256": "ee3b97f1c7a95ff3adc0ec954f6fa0c48a12f2a934ab7c44630f88c5812fd11f",
+   "events_sha256": "b860a060453878b5b7f026414cd98b97f080338b33eaca7a31cfbea432e4908e",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [33568237, 390720, -390115] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: still refused by the wall's square before the ladder at the same interval with the same primitive momentum as on the head before the merge; no pin moved; the run stops here by the order"
+  },
+  "ring_b8_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 89,
+   "elapsed_seconds": 9.458,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "2fc1d6074dd2aada5905437aa803d724acf4c765f57859c41ffb84c32cd2993b",
+   "audit_sha256": "c86de4bd258210e323fffa018864e5804463599228239daf0b6ad073c9bd0937",
+   "events_sha256": "6a8f2fa96bf18a656dd4374684141b69b853868d66365a964e8cb1dffc681846",
+   "refusal": "OverflowError: beam-v1: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 with R = 0 and P = [66131823, 1205776, -1203345] at d = 16384, times Q^2 = 4096, exceeds the working bound 9223372036854775807 before the root is taken",
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 1
+   },
+   "verdict": "NOT READ: still refused by the wall's square before the ladder at the same interval with the same primitive momentum as on the head before the merge; no pin moved; the run stops here by the order"
+  }
+ },
+ "runs_on_the_split_ladder_89f43572": {
+  "ring_b6_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 22.199,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "e67d92aa0abecb6fdc57b3d28bbb8151c0297426ac719eab03f5a6d84c897961",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 22.212,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "e67d92aa0abecb6fdc57b3d28bbb8151c0297426ac719eab03f5a6d84c897961",
+   "audit_sha256": "2899e6147e2d078c01ea0ce07058f96ce8e0fc8f6d62798d07e79962abe58907",
+   "events_sha256": "e4245a8cff23493c996044365901c37d669af372226a788909e64a21a410f205",
+   "starts_clicking": 40,
+   "starts_at_their_own_node": 40,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b6_g1": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 50.819,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "a93b67020ff1917d59d2316dcb5e0821507392fafe22af6e4fca66b2cd08dee4",
+   "audit_sha256": "8932723f4c4bdf93d29c903e0bc8f85c55390ef9e70dea3c793961a81faa62af",
+   "events_sha256": "95bb843f2926847f2bbbdc2ea4b0c4adbfaaf2bc0232bb33638c103a491ab2bb",
+   "starts": 40,
+   "moved_by_0_1_2_3_nodes": [
+    15,
+    20,
+    2,
+    3
+   ],
+   "arrival_nodes_agreeing_with_the_map": 40,
+   "radial_shift_sd": 0.7999,
+   "per_start": {
+    "(-6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,0)": {
+     "clicks": 184,
+     "shift_mean": [
+      3.0,
+      0.0
+     ],
+     "shift_modal": [
+      3,
+      0
+     ],
+     "radial_shift": 3.0,
+     "delay": 6.0,
+     "map": [
+      3,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7809,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7809,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 2.0,
+     "map": [
+      1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9864,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(0,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,6)": {
+     "clicks": 184,
+     "shift_mean": [
+      0.0,
+      -3.0
+     ],
+     "shift_modal": [
+      0,
+      -3
+     ],
+     "radial_shift": 3.0,
+     "delay": 5.0,
+     "map": [
+      0,
+      -3
+     ],
+     "agrees": true
+    },
+    "(1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9864,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      -1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 2.0,
+     "map": [
+      -1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7809,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.8575,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7809,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9864,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,0)": {
+     "clicks": 184,
+     "shift_mean": [
+      -3.0,
+      0.0
+     ],
+     "shift_modal": [
+      -3,
+      0
+     ],
+     "radial_shift": 3.0,
+     "delay": 5.0,
+     "map": [
+      -3,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9864,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.7313,
+    "expected": 0.731,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0,
+    "expected": 0.0,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.775,
+    "expected": 0.78,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 2.4961,
+    "expected": 2.496,
+    "tolerance": 0.085,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 3.6546,
+    "expected": 3.859,
+    "tolerance": 0.085,
+    "inside": false
+   },
+   "c_ring_residual_grains": -2.4,
+   "c_ring_algebra_residual_grains": -2.44,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "DOES NOT CLOSE by the README's rule: C_ring through the lever-arm factor 3.655 against the expected 3.859 +- 0.085, OUTSIDE the one-grain pin as written by 0.119, 2.40 grains below (COMPUTATION; the algebra's own 2.44, this file's c_ring value 3.652). The finding by kind: the deciding pin inside, the mean radial shift 0.731 against 0.731 +- 0.025 (DETECTOR), every arrival Node the map's (40 of 40, the starts moved by 0 / 1 / 2 / 3 Nodes 15 / 20 / 2 / 3), the tangential 0.000, the delay 0.775, C_nodes 2.496 inside: the engine walks the rule as the algebra walks it"
+  },
+  "ring_b3_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 19.714,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "7c5dd449ba746e7c39d92c6234c78c4c42043ec10a3bd4302cc2e898590a44d8",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 19.397,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "7c5dd449ba746e7c39d92c6234c78c4c42043ec10a3bd4302cc2e898590a44d8",
+   "audit_sha256": "22677625bd641701632c9e28f212a943560500eb2f0f0d6f2de00b5a49e958cd",
+   "events_sha256": "0a3855aa2871e205578eeb1e550a33f4a85c8bf550d13c60d2a17b020c914a0c",
+   "starts_clicking": 16,
+   "starts_at_their_own_node": 16,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b3_g0": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 38.26,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "c5320a8a8e7d9b92b9773f672362842cfc46cb233bffe54a70519c515da87745",
+   "audit_sha256": "f333b164fdbe99d7b9363582f53827ac1cd169f4686710ecdb84983b21f2c225",
+   "events_sha256": "89d887bedc83c7c5bc82864004b9e8f5fc059202e62a4d0bad4d5351a79512fd",
+   "starts": 16,
+   "moved_by_0_1_2_3_nodes": [
+    3,
+    11,
+    2,
+    0
+   ],
+   "arrival_nodes_agreeing_with_the_map": 16,
+   "radial_shift_sd": 0.5759,
+   "per_start": {
+    "(-3,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 0.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,0)": {
+     "clicks": 201,
+     "shift_mean": [
+      2.0,
+      0.0
+     ],
+     "shift_modal": [
+      2,
+      0
+     ],
+     "radial_shift": 2.0,
+     "delay": 3.0,
+     "map": [
+      2,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 0.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(0,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 1.0,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(1,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9487,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(2,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 0.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,0)": {
+     "clicks": 201,
+     "shift_mean": [
+      -2.0,
+      0.0
+     ],
+     "shift_modal": [
+      -2,
+      0
+     ],
+     "radial_shift": 2.0,
+     "delay": 3.0,
+     "map": [
+      -2,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9487,
+     "delay": 0.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.845,
+    "expected": 0.845,
+    "tolerance": 0.0625,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0,
+    "expected": 0.0,
+    "tolerance": 0.0625,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.75,
+    "expected": 0.62,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 1.4422,
+    "expected": 1.442,
+    "tolerance": 0.107,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 1.9001,
+    "expected": 1.967,
+    "tolerance": 0.107,
+    "inside": true
+   },
+   "c_ring_residual_grains": -0.63,
+   "c_ring_algebra_residual_grains": -0.62,
+   "readings": {
+    "inside": 5,
+    "outside": 0,
+    "record_checks_failed": 0
+   },
+   "verdict": "inside every pin: the mean radial shift 0.845 against 0.845 +- 0.0625, the arrival Nodes the map's 16 of 16, C_ring 1.900 against 1.967 +- 0.107 inside (0.63 grains below, the algebra's 0.62)"
+  },
+  "ring_b3_g1": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 38.053,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "9e8b5e09aaa9cb68fc61fce25c298aef804bff748044abf291588dab694d301e",
+   "audit_sha256": "ebfa3bd27ed48a0abaa87484dd145598764df39e0280722fb58e59b861463891",
+   "events_sha256": "c2ef88e98f35254174402e3685b8b2dc2f2498ff9975b77c600671211aadb75b",
+   "starts": 16,
+   "moved_by_0_1_2_3_nodes": [
+    1,
+    4,
+    8,
+    1
+   ],
+   "arrival_nodes_agreeing_with_the_map": 16,
+   "radial_shift_sd": 1.1991,
+   "per_start": {
+    "(-3,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      2.0,
+      0.0
+     ],
+     "shift_modal": [
+      2,
+      0
+     ],
+     "radial_shift": 1.8974,
+     "delay": 1.0,
+     "map": [
+      2,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,0)": {
+     "clicks": 201,
+     "shift_mean": [
+      4.0,
+      0.0
+     ],
+     "shift_modal": [
+      4,
+      0
+     ],
+     "radial_shift": 4.0,
+     "delay": 6.0,
+     "map": [
+      4,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      1,
+      -1
+     ],
+     "radial_shift": 1.2649,
+     "delay": 1.0,
+     "map": [
+      1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-2,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": -1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 1.0,
+     "map": [
+      1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-1,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.3162,
+     "delay": -1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -2.0
+     ],
+     "shift_modal": [
+      0,
+      -2
+     ],
+     "radial_shift": 1.8974,
+     "delay": 1.0,
+     "map": [
+      0,
+      -2
+     ],
+     "agrees": true
+    },
+    "(0,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -3.0
+     ],
+     "shift_modal": [
+      0,
+      -3
+     ],
+     "radial_shift": 3.0,
+     "delay": 5.0,
+     "map": [
+      0,
+      -3
+     ],
+     "agrees": true
+    },
+    "(1,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.3162,
+     "delay": -1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -2.0
+     ],
+     "shift_modal": [
+      0,
+      -2
+     ],
+     "radial_shift": 1.8974,
+     "delay": 1.0,
+     "map": [
+      0,
+      -2
+     ],
+     "agrees": true
+    },
+    "(2,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": -1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      -1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 1.0,
+     "map": [
+      -1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(3,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -2.0,
+      0.0
+     ],
+     "shift_modal": [
+      -2,
+      0
+     ],
+     "radial_shift": 1.8974,
+     "delay": 1.0,
+     "map": [
+      -2,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,0)": {
+     "clicks": 201,
+     "shift_mean": [
+      -4.0,
+      0.0
+     ],
+     "shift_modal": [
+      -4,
+      0
+     ],
+     "radial_shift": 4.0,
+     "delay": 6.0,
+     "map": [
+      -4,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      -1,
+      -1
+     ],
+     "radial_shift": 1.2649,
+     "delay": 1.0,
+     "map": [
+      -1,
+      -1
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 1.6246,
+    "expected": 1.625,
+    "tolerance": 0.0625,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0,
+    "expected": 0.0,
+    "tolerance": 0.0625,
+    "inside": true
+   },
+   "delay": {
+    "value": 1.3125,
+    "expected": 1.31,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 2.7727,
+    "expected": 2.773,
+    "tolerance": 0.107,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 3.8192,
+    "expected": 3.934,
+    "tolerance": 0.107,
+    "inside": false
+   },
+   "c_ring_residual_grains": -1.07,
+   "c_ring_algebra_residual_grains": -1.06,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "inside its four pins (1.625 against 1.625 +- 0.0625, the arrival Nodes the map's 16 of 16); C_ring 3.819 against 3.934 +- 0.107: OUTSIDE the one-grain pin by 0.008, 1.07 grains below, the algebra's 1.06"
+  },
+  "ring_b8_control_g0": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 25.923,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b6aad6aacba201f543e169edc3a7aadf350ca4e7f9e8a87efa462a935c84c042",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_control_g1": {
+   "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
+   "completed_ticks": 400,
+   "elapsed_seconds": 25.674,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "b6aad6aacba201f543e169edc3a7aadf350ca4e7f9e8a87efa462a935c84c042",
+   "audit_sha256": "efe74db86afc240a2b30bfe26bde01a671ad551898228c355f7035e0c03d5d8a",
+   "events_sha256": "50f8fc81b89a62a6cae0f82fb3c94ebdc61950901cbac4e0c083ecec66f14c49",
+   "starts_clicking": 48,
+   "starts_at_their_own_node": 48,
+   "mean_age": 89.0,
+   "readings": {
+    "inside": 0,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "ring_b8_g0": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 55.31,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "779aa04e865db7ce958d5260017eea1f9dd69dd8c367363aef99a0e5e0df8608",
+   "audit_sha256": "4cf64b3fe6cd790a80160ed24830f203045d5ad3bb1ddaa22494adaf4a8f2bdb",
+   "events_sha256": "028cc73bc184299086175a8bcc1891a8983dc5c4fc3f60ccbbb9674eda85653b",
+   "starts": 48,
+   "moved_by_0_1_2_3_nodes": [
+    42,
+    6,
+    0,
+    0
+   ],
+   "arrival_nodes_agreeing_with_the_map": 48,
+   "radial_shift_sd": 0.29,
+   "per_start": {
+    "(-8,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 2.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-5,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,-8)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,8)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 1.0,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(1,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,6)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.1067,
+    "expected": 0.107,
+    "tolerance": 0.0208,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0147,
+    "expected": 0.0,
+    "tolerance": 0.0208,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.2917,
+    "expected": 0.27,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 0.4856,
+    "expected": 0.486,
+    "tolerance": 0.095,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 1.9269,
+    "expected": 1.892,
+    "tolerance": 0.095,
+    "inside": true
+   },
+   "c_ring_residual_grains": 0.37,
+   "c_ring_algebra_residual_grains": 0.42,
+   "readings": {
+    "inside": 5,
+    "outside": 0,
+    "record_checks_failed": 0
+   },
+   "verdict": "inside every pin: 0.107 against 0.107 +- 0.0208, the arrival Nodes the map's 48 of 48, C_ring 1.927 against 1.892 +- 0.095 inside (0.37 grains above, the algebra's 0.42)"
+  },
+  "ring_b8_g1": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 52.476,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "1ff8e85b7992bfee8f95676cc31abc9b9785df1f8674039b40aabd73466ecc21",
+   "audit_sha256": "06be92cb5e1e152907b7d3216addd31d4b80bffd3311dfac5e13470448c86b41",
+   "events_sha256": "b14475d672a4d40d0962376bd0e9139ef88c0cbced635595cf9bafb647ccac6d",
+   "starts": 48,
+   "moved_by_0_1_2_3_nodes": [
+    22,
+    21,
+    2,
+    3
+   ],
+   "arrival_nodes_agreeing_with_the_map": 48,
+   "radial_shift_sd": 0.775,
+   "per_start": {
+    "(-8,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.9701,
+     "delay": 0.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,0)": {
+     "clicks": 184,
+     "shift_mean": [
+      3.0,
+      0.0
+     ],
+     "shift_modal": [
+      3,
+      0
+     ],
+     "radial_shift": 3.0,
+     "delay": 6.0,
+     "map": [
+      3,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-8,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.9701,
+     "delay": 0.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-7,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.6402,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-6,6)": {
+     "clicks": 184,
+     "shift_mean": [
+      1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 4.0,
+     "map": [
+      1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-5,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-3,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9191,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-2,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9701,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-1,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,-8)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,8)": {
+     "clicks": 184,
+     "shift_mean": [
+      0.0,
+      -3.0
+     ],
+     "shift_modal": [
+      0,
+      -3
+     ],
+     "radial_shift": 3.0,
+     "delay": 6.0,
+     "map": [
+      0,
+      -3
+     ],
+     "agrees": true
+    },
+    "(1,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,-8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,8)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9701,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(3,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.9191,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(4,-7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": -1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,7)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(5,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.841,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7682,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7682,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,6)": {
+     "clicks": 184,
+     "shift_mean": [
+      -1.0,
+      -1.0
+     ],
+     "shift_modal": [
+      -1,
+      -1
+     ],
+     "radial_shift": 1.4142,
+     "delay": 4.0,
+     "map": [
+      -1,
+      -1
+     ],
+     "agrees": true
+    },
+    "(7,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9191,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9191,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(7,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.8682,
+     "delay": 1.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9701,
+     "delay": 0.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,0)": {
+     "clicks": 184,
+     "shift_mean": [
+      -3.0,
+      0.0
+     ],
+     "shift_modal": [
+      -3,
+      0
+     ],
+     "radial_shift": 3.0,
+     "delay": 6.0,
+     "map": [
+      -3,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(8,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.9701,
+     "delay": 0.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.6276,
+    "expected": 0.628,
+    "tolerance": 0.0208,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.016,
+    "expected": 0.0,
+    "tolerance": 0.0208,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.9133,
+    "expected": 0.98,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 2.8564,
+    "expected": 2.856,
+    "tolerance": 0.095,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 3.9182,
+    "expected": 3.785,
+    "tolerance": 0.095,
+    "inside": false
+   },
+   "c_ring_residual_grains": 1.4,
+   "c_ring_algebra_residual_grains": 1.4,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "inside its four pins (0.628 against 0.628 +- 0.0208, the arrival Nodes the map's 48 of 48); C_ring 3.918 against 3.785 +- 0.095: OUTSIDE the one-grain pin by 0.038, 1.40 grains above, the algebra's 1.40"
+  },
+  "ring_b6_g0": {
+   "source_sha256": "bc7b9366e2be3e509512eb5b4e9b96dd81c47225e3ce0fa84a8d10492f6ed879",
+   "completed_ticks": 400,
+   "elapsed_seconds": 52.203,
+   "hypotheses": [
+    "amplitude-v1",
+    "flow-link-v1"
+   ],
+   "flow_link": true,
+   "window_start": 200,
+   "state_sha256": "53dc643f6a66defa184bc448562481c3608b497e752be280b86658281c376081",
+   "audit_sha256": "1457c184eb095340f0ba8b3e6e9d93e64b669ec7024a8b53007860979cc15cd8",
+   "events_sha256": "9ea8f4070ba9aeb0926e84e5cb1bedd43c81c8a8b09de11d83eb4b94c33fec08",
+   "starts": 40,
+   "moved_by_0_1_2_3_nodes": [
+    34,
+    6,
+    0,
+    0
+   ],
+   "arrival_nodes_agreeing_with_the_map": 40,
+   "radial_shift_sd": 0.314,
+   "per_start": {
+    "(-6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      1.0,
+      0.0
+     ],
+     "shift_modal": [
+      1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      1,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(-4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": 0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(-1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,-6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 1.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(0,6)": {
+     "clicks": 185,
+     "shift_mean": [
+      0.0,
+      -1.0
+     ],
+     "shift_modal": [
+      0,
+      -1
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      0,
+      -1
+     ],
+     "agrees": true
+    },
+    "(1,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(1,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,-6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(2,6)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(3,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 0.7071,
+     "delay": 2.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(4,5)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,-3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,3)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(5,4)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,-1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,0)": {
+     "clicks": 185,
+     "shift_mean": [
+      -1.0,
+      0.0
+     ],
+     "shift_modal": [
+      -1,
+      0
+     ],
+     "radial_shift": 1.0,
+     "delay": 3.0,
+     "map": [
+      -1,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,1)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    },
+    "(6,2)": {
+     "clicks": 201,
+     "shift_mean": [
+      0.0,
+      0.0
+     ],
+     "shift_modal": [
+      0,
+      0
+     ],
+     "radial_shift": -0.0,
+     "delay": 0.0,
+     "map": [
+      0,
+      0
+     ],
+     "agrees": true
+    }
+   },
+   "radial_shift": {
+    "value": 0.128,
+    "expected": 0.128,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "tangential_shift": {
+    "value": 0.0177,
+    "expected": 0.0,
+    "tolerance": 0.025,
+    "inside": true
+   },
+   "delay": {
+    "value": 0.4,
+    "expected": 0.4,
+    "tolerance": 1.0,
+    "inside": true
+   },
+   "c_nodes": {
+    "value": 0.437,
+    "expected": 0.437,
+    "tolerance": 0.085,
+    "inside": true
+   },
+   "c_ring": {
+    "value": 1.8059,
+    "expected": 1.929,
+    "tolerance": 0.085,
+    "inside": false
+   },
+   "c_ring_residual_grains": -1.45,
+   "c_ring_algebra_residual_grains": -1.46,
+   "readings": {
+    "inside": 4,
+    "outside": 1,
+    "record_checks_failed": 0
+   },
+   "verdict": "inside its four pins as on both engines before (0.128 against 0.128 +- 0.025, the arrival Nodes the map's 40 of 40); C_ring 1.806 OUTSIDE the one-grain pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46; the audit and the events byte for byte the first run's (1457c184eb09..., 9ea8f4070ba9...): the ladder reaches the root's floor"
+  }
+ }
 }

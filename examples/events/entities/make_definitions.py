@@ -99,6 +99,14 @@ def families() -> dict[str, object]:
         family_definition("carrier_material", [{"name": "carrier", **inert}]),
         family_definition("detector_material", [{"name": "detector", **inert}]),
         family_definition("detector_material_d", [{"name": "d", "quantum": 1, "phase": False}]),
+        # The moving detector, a cart with a click (2026-09-22,
+        # docs/designs/moving_detector/DESIGN.md): the post (the transponder
+        # at rest), the source (the lamp at rest) and the cart (the moving
+        # body detector), three paid families of one unit of content.
+        family_definition(
+            "moving_detector",
+            [{"name": "post", **inert}, {"name": "source", **inert}, {"name": "cart", **inert}],
+        ),
         family_definition("mass_m", [{"name": "m", **free_mass}]),
         family_definition("mass", [{"name": "mass", **free_mass}]),
         family_definition("neutron_star_material", [{"name": "neutron", **free_mass}]),

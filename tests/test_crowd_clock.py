@@ -35,8 +35,6 @@ import json
 import sys
 from pathlib import Path
 
-import pytest
-
 from event_universe.events import NatureBeamSimulation
 from event_universe.world_loading import load_world
 
@@ -54,7 +52,30 @@ LAMP = 2
 # owner's word of record 871: not needed; the Register Architect's to
 # remove after the entry merges): the test records what the law does with
 # them as declared, the readings before the entry kept in the comments.
-REFUSED = ("still_005", "still_08", "still_3", "moving_08", "moving_3")  # at interval 6
+REFUSED_BEFORE_THE_LADDER = (
+    "still_005",
+    "still_08",
+    "still_3",
+    "moving_08",
+    "moving_3",
+)  # at interval 6
+# Under the split ladder of the pushed row's wall (flow-link-build, 2026-09-22,
+# 89f43572: T = Q a + b from the wall's square X alone, X Q^2 never formed)
+# the refusal above is lifted: these worlds run balanced past the interval
+# where they refused. Their readings under the ladder are a RECORD by kind
+# (GAMEBOARD: the host's view of the lamp's presence and counted clock, the
+# measured events' counters after 12 intervals), NOT pinned and NOT compared
+# with the registered pins of the worlds that never refused; the refusal
+# stays as history ("refused before the ladder at interval N").
+READ_UNDER_THE_SPLIT_LADDER = {
+    "kind": "GAMEBOARD",
+    "after_intervals": 12,
+    "still_005": {"presence": 4 * 82, "counted": 22 * 82},
+    "still_08": {"presence": 4 * 1311, "counted": 22 * 1311},
+    "still_3": {"presence": 14 * 4915, "counted": 112 * 4915},
+    "moving_08": {"presence": 4 * 1311, "counted": 22 * 1311},
+    "moving_3": {"presence": 14 * 4915, "counted": 112 * 4915},
+}
 
 
 def load_generator():
@@ -97,12 +118,8 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             assert lamp["position"][0] == 10
             assert all(body["fixed"] for body in (lamp, *sources))
         sim = simulation(name)
-        if name in REFUSED:
-            # Before the entry: ten intervals balanced in every world.
-            with pytest.raises(OverflowError, match="exceeds the working bound"):
-                for _ in range(10):
-                    sim.step()
-            continue
+        # Ten intervals balanced in every world (before the ladder the
+        # worlds of REFUSED_BEFORE_THE_LADDER refused at interval 6).
         for _ in range(10):
             sim.step()
         assert sim.books()["balanced"], name
@@ -129,12 +146,15 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 def test_the_presence_at_the_lamp_is_four_times_the_flux_and_the_clock_owes_it():
     """(b)."""
     # Before the entry: 12 intervals of `still_005`, the presence at the
-    # lamp 4 x 82 = 328; under the law as declared the world refuses at
-    # interval 6 (REFUSED).
+    # lamp 4 x 82 = 328; under the law as declared, before the ladder, the
+    # world refused at interval 6 (REFUSED_BEFORE_THE_LADDER); under the
+    # split ladder it runs the 12 intervals balanced (the presence 328 and
+    # the count 1804 the record READ_UNDER_THE_SPLIT_LADDER, GAMEBOARD,
+    # not a pin).
     sim = simulation("still_005")
-    with pytest.raises(OverflowError, match="exceeds the working bound"):
-        for _ in range(12):
-            sim.step()
+    for _ in range(12):
+        sim.step()
+    assert sim.tick == 12 and sim.books()["balanced"]
     births: list[int] = []
     sim = NatureBeamSimulation(
         load_world((WORLDS / "still_1.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent).world,

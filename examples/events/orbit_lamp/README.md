@@ -440,23 +440,48 @@ ratio T(24) / T(12) (two DETECTOR periods of two records):
 
 | World | Clicks | x from .. to | Amplitude (expected) | The radius at the births, CONVERSION: least .. greatest, mean | Crossings down, up; the spacings | T (expected) | omega^2 (expected) | a = omega^2 x amplitude, COMPUTATION | The probe's escape |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `r12_flow` | 145 | 31 .. 96 | 32.5 (11 .. 14): outside | 3.2 .. 68.3, 24.3 | 2, 2; 445 .. 732 | 588.7 (343 .. 411): outside | 7.78e-5 (2.34e-4 .. 3.35e-4): outside | 2.53e-3 | none in 4000 intervals |
-| `r24_flow` | 288 | 0 .. 90 | 45 (23 .. 26): outside | 17.0 .. 71.0, 37.6 | 3, 2; 789 .. 1184 | 987.3 (686 .. 822): outside | 3.11e-5 (5.85e-5 .. 8.39e-5): outside | 1.40e-3 | none in 4000 intervals |
-| `r12_flow_control` | 38 | 72 .. 72 | 0 | 12.0 .. 61.2 (walking +y) | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 72: inside |
-| `r24_flow_control` | 38 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 84: inside |
+| `r12_flow` | 145 | 31 .. 96 | 32.5 (11 .. 14): outside | 3.2 .. 68.3, 24.3 | 2, 2; 445 .. 732 | 588.7 (343 .. 411): outside | 7.78e-5 (2.34e-4 .. 3.35e-4): outside | 2.53e-3 | `face:+y` at the tick 1208 (the detector line touched at 808) |
+| `r24_flow` | 288 | 0 .. 90 | 45 (23 .. 26): outside | 17.0 .. 71.0, 37.6 | 3, 2; 789 .. 1184 | 987.3 (686 .. 822): outside | 3.11e-5 (5.85e-5 .. 8.39e-5): outside | 1.40e-3 | `face:-x` at the tick 2452 (the detector line touched at 633) |
+| `r12_flow_control` | 38 | 72 .. 72 | 0 | 12.0 .. 61.2 (walking +y) | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 72: inside; the detector line never touched |
+| `r24_flow_control` | 38 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 84: inside; the detector line never touched |
 
 Across the worlds: the ratio T(24) / T(12) = 987.3 / 588.7 = 1.677 (1.82
 .. 2.18), COMPUTATION from two DETECTOR periods of two records: outside.
 Every birth tick lies on the 8-interval grid (none read late). GAMEBOARD,
 a diagnostic: homes 23 (`r12_flow`), 40, 7, 7.
 
+**The correction of 2026-09-22 (the Newton Diagnostician's replay of the
+registered events, the Boss's record 1022; the register's first record of
+this run, record 966, said "none in 4000 intervals").** The probes'
+own face clicks are in the registered events (`click` lines of the
+probe's number on a `face:` detector): `r12_flow` ESCAPED through
+`face:+y` at the tick 1208 and `r24_flow` through `face:-x` at 2452,
+DETECTOR. The tool read them and printed the escape only for the
+controls; it prints the escape and the contacts for every world since
+this correction, and `run_flow.out` is regenerated from the same events
+(the digests unchanged, no other number moved). Both probes also touched
+the detector line at y = 20 once (the register's `contact` lines of the
+probe's number: `r12_flow` at the tick 808 at (31, 21), `r24_flow` at 633
+at (71, 21), the wall's `measure` entry taking the whole p_y component of
+the probe's momentum), GAMEBOARD, a contact line: the wall taking a
+momentum component from the probe at its Node, no detector's click, the
+register's kind for a contact (the atom register's give); the controls
+never did. The escapes are face clicks and stay DETECTOR. So the periods
+588.7 and 987.3 are the means of two and three spacings of loops that
+never closed: the probes left the plane at 1208 and 2452, after 145 and
+288 clicks, and each period is read from the crossings before the
+escape. No pin moved, no verdict moved: FAIL as read stands.
+
 **The paper's row, by kind, as the physics-rule reviewer wrote it
 (2026-09-22):** Under flow-link-v1 (the key `flow_link`) the lamp probe
-launched at the circle's whole n = 8 stays on the plane for 4000
-intervals at r = 12 and 24 (DETECTOR: no escape; as built the loops left
-at 698 and 1239) and reads the periods 588.7 and 987.3 against the pinned
-circle's 377 and 754 +- 9 percent (DETECTOR, the recurrence of x):
-outside; the ratio T(24) / T(12) = 1.677 against 2.00 +- 0.18
+launched at the circle's whole n = 8 leaves the plane at r = 12 and 24
+(DETECTOR: through `face:+y` at the tick 1208 and `face:-x` at 2452,
+after touching the detector line at 808 and 633; as built the loops left
+at 698 and 1239; the reviewer's row as first written said "no escape",
+corrected here by the registered events) and reads the periods 588.7 and
+987.3, the means of two and three spacings of loops that never closed,
+against the pinned circle's 377 and 754 +- 9 percent (DETECTOR, the
+recurrence of x): outside; the ratio T(24) / T(12) = 1.677 against 2.00 +- 0.18
 (COMPUTATION from two DETECTOR periods): outside; the controls inside
 (the escape tick 305); FAIL as read; the two loops are not similar
 figures (the mean radii 24.3 and 37.6, DETECTOR), so the scale symmetry
@@ -481,7 +506,7 @@ causes, named and not moved:
   built, n = 9: 1.4 to 73.2 about 24.2 and 11.0 to 62.3 about 33.7); the
   mean radii's ratio is 1.55, not 2. Each period is the mean of two or
   three unequal spacings (445 to 732; 789 to 1184), the recurrence of a
-  loop, not a circle's. The scale symmetry of the 1 / r force (T(24) /
+  loop that never closed (the escapes at 1208 and 2452), not a circle's. The scale symmetry of the 1 / r force (T(24) /
   T(12) = 2 for similar loops, any eccentricity) is not tested by loops
   that are not similar; read beside, not pinned: T / (the mean radius) =
   24.2 and 26.3 (COMPUTATION), the periods scaling with the loops' own
@@ -505,9 +530,10 @@ causes, named and not moved:
 
 What the run establishes, DETECTOR and HOST: the key is in the run (every
 record's `flow_link: true`); the controls' pace to the tick at the whole
-8; two loops under the key that stay on the plane for 4000 intervals
-(the registered loops as built left at 698 and 1239) with their
-recurrences read. What it does not establish: the constant under the key
+8; two loops under the key that leave the plane at 1208 and 2452 (the
+registered loops as built left at 698 and 1239) after touching the
+detector line at 808 and 633, with their recurrences before the escape
+read. What it does not establish: the constant under the key
 against the constant as built, which these worlds cannot separate from
 the grain (no world as built at n = 8 was run, none ordered); the reading
 that would, named and not run, not proposed: the same two worlds without

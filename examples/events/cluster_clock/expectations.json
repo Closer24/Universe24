@@ -186,5 +186,59 @@
   "cluster_rest": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector",
   "cluster_moving": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector",
   "clock_age_v1": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector"
+ },
+ "read_under_the_split_ladder_89f43572": {
+  "kind": "GAMEBOARD",
+  "line": "the host's view of the lamps' counters (presence, counted) after 12 intervals on flow-link-build at 89f43572 (the split ladder of the pushed row's wall, X Q^2 never formed): the worlds that refused at the working bound before the ladder run balanced past their refusal; a RECORD, not a pin, not compared with the registered pins of the worlds that never refused",
+  "refused_before_the_ladder_at": {
+   "cluster_rest": 6,
+   "cluster_moving": 6
+  },
+  "worlds": {
+   "cluster_rest": {
+    "m0": {
+     "presence": 0,
+     "counted": 0
+    },
+    "m01": {
+     "presence": 6552,
+     "counted": 36036
+    },
+    "m03": {
+     "presence": 68810,
+     "counted": 550480
+    },
+    "m06": {
+     "presence": 137620,
+     "counted": 1100960
+    },
+    "m1": {
+     "presence": 229376,
+     "counted": 1835008
+    }
+   },
+   "cluster_moving": {
+    "m0": {
+     "presence": 0,
+     "counted": 0
+    },
+    "m01": {
+     "presence": 6552,
+     "counted": 36036
+    },
+    "m03": {
+     "presence": 68810,
+     "counted": 550480
+    },
+    "m06": {
+     "presence": 137620,
+     "counted": 1100960
+    },
+    "m1": {
+     "presence": 229376,
+     "counted": 1835008
+    }
+   }
+  }
  }
 }
