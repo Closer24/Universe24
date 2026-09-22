@@ -5223,7 +5223,16 @@ form exists with one division: `T_n = min {t : c^2 > W, c = ceil(t m /
 and 6, no root; it reproduces every tick of the whole-root gate, but it
 keeps t and n growing like (B).
 
-**(2) The counters' bound and the reset.** The counters grow with the
+**(2) The counters' bound and the reset.** The structural fact first,
+the section's theorem: every accumulator of the law is bounded because
+its slope is a rational of declared integers, a rate over a wall, and
+its residue lives below the wall; a slope that is irrational, here
+`sqrt(W) / m`, has no bounded exact accumulator, so a bounded state
+costs a declared rounding of the slope, and two are on offer: the whole
+root `E' / m` (the identity's M3, the comparison walk, the state
+bounded, the period reset below for `m <= 2^15`) or a rational grain
+`m / g` small enough for the run, which coarsens the gate's resolution.
+The counters of (A) and (B) grow with the
 run: `t^2 m^2 <= 2^63 - 1` holds up to `t = floor(sqrt(2^63 - 1) / m)`,
 i.e. 229 242 intervals for the muon's `m = 13 248`, 47 453 132 for `m =
 64`, 2 896 for `m = 2^20` and 181 for `m = 2^24`; and `n^2 W <= 2^63 - 1`
@@ -5272,14 +5281,18 @@ identity's M3), no family name, the counters two more integers of the
 record. Vector: with the two products kept as accumulators, `A <- A + (2
 t + 1) m^2` per interval and `B <- B + (2 n - 1) W` per self-creation,
 the rates are bilinear in the state (`t` with `m^2`, `n` with `W`), the
-gate one comparison `A > B` (verbs 1, 2 and 6), no root and no float;
+gate one comparison `A > B` (verbs 1, 2 and 6), no root and no float:
+the physics-rule reviewer's PASS (2026-09-22) on the condition that
+`m^2` and `W` are record integers formed by verb 2, the rates then
+bilinear and the gate one comparison;
 stated as `t^2 m^2` against `n^2 W` the products are degree four in the
 record's integers, the same admission as the comparisons of 17.6 M3 and
 M7 and the frame's `(p . D)^2 abs(D')^2`, which the reviewer must rule
 on once for all three. Local: the record's own four integers, nothing at
 a Node, the fixed work one multiplication, one addition and one
-comparison per interval, one multiplication per self-creation, and the
-period reset's two subtractions.
+comparison per interval and one multiplication per self-creation; the
+storage bounded only on the declared domain of (2), since gate (B) has
+no exact period and no tick-preserving reset.
 
 **The word.** For the owner's gate as stated (A): NOT the same ticks,
 EQUIVALENT WITHIN 3 on the domain, later and never earlier, and outside
@@ -5291,6 +5304,11 @@ only with the division form `ceil(t m / (n - 1))^2 > W`, or with the
 whole root itself; the difference between (B) and the whole root is the
 root's own rounding (`E' = floor(sqrt W)`), which (B) removes: (B) is the
 gate nearer to `gamma`, the whole root the one the register pinned.
+The physics-rule reviewer's recommendation to the owner (his, recorded
+here, not this section's): the whole-root gate with its rounding
+declared per frame fits the law's shape; (B) stands as the proof that
+the root's rounding is the only price, exact within 1 and on series S
+exact.
 
 ## 18. The three structural failures of the register under one logic
 
