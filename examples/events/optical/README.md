@@ -37,12 +37,13 @@ capped at one Link by the primitive's `at_most` with the surplus kept.
 | `mass_g0.json` | 0 | 1 | 2^16 | 6 | -1.93 +- 0.5 | 2.68 +- 1 |
 | `mass_g1.json` | 1 | 2 | 2^16 | 6 | -3.86 +- 0.5 | 5.36 +- 1 |
 | `near_g0.json` | 0 | 1 | 2^16 | 3 | -2.42 +- 0.5 | 2.17 +- 1 |
-| `near_g1.json` | 1 | 2 | 2^16 | 3 | -4.83 +- 0.5 (re-declared a capture reading, record 505 and 540: 582 +- 146 of the control's 1455 clicks taken by the mass, DETECTOR; no deflection pin) | 4.34 +- 1 |
+| `near_g1.json` | 1 | 2 | 2^16 | 3 | no deflection pin: re-declared a capture reading (records 505 and 540), 582 +- 146 of the control's 1455 clicks taken by the mass (DETECTOR; the register's `taken_by_the_mass` and `taken_bracket`); the shift pin -4.83 superseded, kept as `shift_pin_superseded` | 4.34 +- 1 |
 | `far_g0.json` | 0 | 1 | 2^16 | 8 | -1.69 +- 0.5 | 2.15 +- 1 |
 | `far_g1.json` | 1 | 2 | 2^16 | 8 | -3.37 +- 0.5 | 4.29 +- 1 |
 
 The number the run reads: the ratio of the two shifts (f = 2 over f = 1),
-2.00 within 0.25 (`mass`; the chief physicist's remark of record 540: the
+2.00 within 0.25 (`mass` and `near`, the register's `ratios`; the chief
+physicist's remark of record 540: the
 bracket propagated in quadrature from the shifts' 0.5 pixel each is 0.83
 at b = 6, met by the delays' 2.03 / 1.98, and the 0.25 was set by fiat; a
 change of a registered pin is the model owner's, so 0.25 stays as
@@ -69,7 +70,9 @@ the same M = 2^16, the same pair [1, 16384] and the same crowd; generated
 with the other worlds by `make_worlds.py` over series K's generator): no
 capture (the innermost direction at 5.83 Links, beyond the `mass` world's
 3.83 where nothing was taken at either f) and every pin at least 2.2
-brackets from zero. The physicist's map at [1, 16384], M = 2^16, per
+brackets from zero; the register's `lamp_rate` of the two far worlds is
+None until their first run reads it (GAMEBOARD; `mass` carries 0.918 and
+`near` 1.0). The physicist's map at [1, 16384], M = 2^16, per
 impact b (the shift at f = 1 / f = 2 in pixels, the delay at f = 1 / f = 2
 in intervals; the one-line form, the note's section E, GAMEBOARD
 arithmetic before any run): b = 7 -2.20 / -4.39, 1.95 / 3.90; b = 8 -1.69

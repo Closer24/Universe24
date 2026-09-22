@@ -6741,14 +6741,17 @@ sequential gates on an entangled record, the full register replay.
   pin of the deflection (the two inner directions of the beam turned into
   the mass's Node and absorbed: expected 582 +- 146 of the control's 1455
   clicks taken by the mass, DETECTOR, the bracket one half direction; 547
-  read; its centroid the survivors', no deflection pin); the deflection's
+  read; its centroid the survivors', no deflection pin, the -4.83 kept in
+  the register as `shift_pin_superseded`); the deflection's
   second pin moves to b = 8 (the lamp at y = 28), the worlds `far_g0.json`
   and `far_g1.json` generated with the others, where no direction of the
   beam is taken (the innermost at 5.83 Links): the pins from the map's
   one-line form (the note's section E; GAMEBOARD arithmetic before the
   run, DETECTOR when run) the shift -1.69 +- 0.5 (f = 1) and -3.37 +- 0.5
   (f = 2), the delay 2.15 +- 1 and 4.29 +- 1, the shifts' ratio 2.00 +-
-  0.66 and the delays' ratio 2.00 +- 1.04 propagated in quadrature; b = 9
+  0.66 and the delays' ratio 2.00 +- 1.04 propagated in quadrature, the
+  far worlds' lamp rate None in the register until their first run reads
+  it (GAMEBOARD); b = 9
   of record 505 set aside as a weak line of the lattice's comb (its delay
   at f = 1 only 1.5 brackets above zero); the worlds NOT RUN until the
   Bresenham head stands (record 483's label), where a shift outside by
