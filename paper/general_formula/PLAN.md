@@ -3420,3 +3420,142 @@ algebra on the counts (rung 1). The split of a row between staying and
 hopping is named as a hypothesis not opened, with no claim. Nothing of
 this is applied: main.tex, corrections.py and figures are as at the head
 of the Bell commit.
+
+### 7. The framing (the owner's record 762, through the Boss at 06:00Z): prepared, not applied
+
+The owner's framing, in his words: inside the board we propagate as a
+beam, with our beam's algebraic formulas; above the board we pass with
+amplitudes to above the GameBoard, which is our reality; the paper shows
+natural phenomena that agree with our computations; we do not claim that
+nature is so, we say that what we computed matches the results in
+nature; all of nature's results are in detectors and emitters; we
+assume that the board cannot be measured in any other way; this goes
+into the title and everywhere. Six items, prepared on main.tex at
+2ba49923 (the line numbers below are main.tex's there; every change
+goes through cut30/corrections.py by its anchor text).
+
+(1) THE TITLE. One candidate, carrying the frame (the law inside, the
+read-out above, matches), the owner's separating word kept:
+"Universe24: a local integer law inside the GameBoard, its non-local
+read-out above it, and what matches nature". The current title,
+"Universe24: a local integer law of nature with a non-local read-out,
+and what follows from it", is the fallback; its "law of nature" is the
+one place of the paper that says nature is so in four words, and
+"matches nature" is the frame's word for it. Two lines either way.
+
+(2) THE ABSTRACT'S FIRST TWO SENTENCES (main.tex:44-49), in the frame's
+words: "Inside a cubic GameBoard one update law of bounded integers
+propagates records as a beam by algebraic formulas at every Node and
+interval: one map with a rate and a wall per component, its rates and
+walls made of six integer operations. Above the GameBoard, our reality,
+there are detectors and emitters only, and the beam passes to them with
+amplitudes at one comparison, the click, the one non-local step and the
+only read-out; the paper assumes the GameBoard is measured in no other
+way (P11). The paper asks how much of what the detectors read that map
+forces with few assumptions, and answers in one ledger, result by
+result: what the law computes is compared with nature's readings and
+matches or fails, and the paper claims nowhere that nature is so." The
+third sentence replaces "The paper asks how much of physics that map
+forces ... result by result." The rest of the abstract stands (its
+"against nature three readings pass ... the failures the law's own" is
+already the frame's word). Cost: two lines.
+
+(3) THE ASSUMPTION AS A POSTULATE OF THE FRAME, P11, in Section 2's list
+(main.tex:166-169, after P10 and before "Nothing outside this list is
+assumed"), one sentence: "One assumption of the frame (P11): the
+GameBoard is measured only through its emitters and detectors, so every
+result above the board is a click, a number of the board's state is
+never a reading, and every comparison with nature is a comparison of
+clicks with readings." It sits in the list and not beside Definition 3
+because it is an assumption about reality, not a rule of the click; the
+introduction's reading rule (main.tex:124-128) gains its name in four
+words, "(the frame's assumption, P11)", and one sentence for the sweep
+below: "Every physics name in this paper (Gauss's, Newton's, Coulomb's,
+Born's, Planck's, Tsirelson's) names the form that the law's result
+matches, never a claim that nature is the law." Cost: three lines in
+Section 2, one in the introduction.
+
+(4) THE SWEEP, every place that says nature is so, with its one-word
+change (the rest of the paper already says "PASS within", "FAIL by",
+"the law's own results", "the comparison with nature", "evidence for the
+fan claim, not its proof"; the ledger, Table 3 and Section 9 need no
+word):
+- main.tex:34, the title: "law of nature" -> "law inside the GameBoard
+  ... what matches nature" (item 1).
+- main.tex:47-48, the abstract: "how much of physics that map forces" ->
+  "how much of what the detectors read that map forces" (item 2).
+- main.tex:81-83, the claim paragraph: "several different physical
+  phenomena are produced from this one discrete update law" -> "the
+  forms of several different physical phenomena follow from this one
+  discrete update law and match the detectors' readings" (produced ->
+  follow from ... and match).
+- main.tex:98-100, the same paragraph: "the broad claim that the model
+  describes nature still needs the completions" -> "the broad claim that
+  the model's readings match nature's still needs the completions"
+  (describes -> match).
+- main.tex:845, Section 6: "Definition 3 is the Born rule" -> "Definition
+  3 has the Born rule's form" (is -> has the form of).
+- main.tex:168 and :988 say "Born's form" and "the Born form" already;
+  main.tex:1309 "the law as declared predicts" is a prediction, kept;
+  main.tex:156 "what physics calls Newton's constant" kept.
+No row of Table 2, Table 3 or the ledger says nature is so: Table 2's
+columns are the law's readings against expectations written before the
+run, Table 3's are the law's readings against nature's values with a
+verdict word, the ledger's rows are what the update rules force. Cost:
+zero lines net (the claim paragraph's two changes add half a line).
+
+(5) THE CLICK-FRAME PARAGRAPH JOINED TO THE FRAMING, one paragraph of
+the discussion, "The two worlds, and how a click brings Lorentz",
+replacing the first two sentences of "The limits, and what does not
+return" (section 1 above), the draft: "Inside the GameBoard the law
+propagates records as a beam by the algebraic formulas of Section 2, on
+Nodes, integer rows and the interval's count that no detector reads;
+above the GameBoard, our reality, there are detectors and emitters only,
+and the beam passes to them with amplitudes at the click (P11): a
+detector's own count is its count of intervals stretched by what
+arrives at it, a click the event of receiving a packet stamped with
+that count, a velocity Nodes apart over counts apart between
+neighbouring detectors, never a reading of the interval, and the
+read-out of Definition 3 is that click. To convert the lattice and the
+momentum inside it into motion in our reality one uses clicks that pass
+information, and Lorentz is assumed of reality and required of the
+board: [the three sentences of section 2 above, the mathematician's].
+The law as built meets (A1), one Node per interval with the flight blind
+to the phase (P9), and not (A2), its hop a whole-record schedule with no
+staying amplitude; so its clicks carry the group and its counter runs
+at the rest rate (rows 4a, 4b): read through records, the two one-way
+Doppler factors are r / (1 - v) and (1 + v) / r, alike only at r^2 =
+1 - v^2, and the law's r = 1 leaves them apart by 1 - v^2, the
+measurable that decides. No wall of the law and no declared identity
+enter the reading, so Eq. 14 is not needed for it and stays a
+hypothesis under its own identity against series S's pins. What the
+system gives is a computation on the GameBoard whose passage to
+reality is the clicks, at the quantum level as well: the equations of
+the board are the law's, the equation of the passage from the board to
+what is measured above it is the click theorem's, and everything the
+board shows by computation is compared with reality and matches or
+fails, never "this is how reality works"." Twelve lines with the three
+sentences' nine: twenty-one, as in section 5 above.
+
+(6) THE COST AND WHAT PAYS. In: the title two (unchanged count), the
+abstract two, P11 three, the reading rule one, the sweep half, the
+paragraph twenty-one: about twenty-eight. Out: the limits paragraph's
+first two sentences five, Table 4's Lorentz row two: seven. Net
+twenty-one lines. The trims, carrying no claim and no table number, in
+the order of taking: the six of section 5 above (fourteen: the
+introduction's narrative cut to its rule, four; Section 6's mixture
+sentence, three; Section 8's gate clauses said in the appendix and the
+replications register, two; Section 5's optical-v1 sentence said by
+Table 4, two; Theorem 5's proof's last sentence said by Definition 3,
+two; the positioning paragraph's Bohm and psi-ontic clauses, one); then
+the claim paragraph's middle (main.tex:93-96, "The three things work
+together ..." said by the ledger's caption and Section 8's opening,
+three) and its last sentence shortened to the frame's ("What can be
+established now is an explicit model, exact and conditional results and
+checks after a detector; the claim that its readings match nature's
+needs the completions of Section 9", two); Section 2's "In the code"
+last sentence (the world file declares no rule, said in Section 8's
+gates, one); the abstract's "One prediction" sentence folded into the
+sentence before it (one). Twenty-one. 30 pages held, the split 25 / 2 /
+3, to be confirmed by the compile when applied. Nothing applied:
+main.tex, corrections.py and the figures are as at 2ba49923.
