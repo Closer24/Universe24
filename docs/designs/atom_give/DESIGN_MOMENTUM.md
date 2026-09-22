@@ -485,13 +485,19 @@ before these pins on the owner's word (record 935), is in
 [CAUSE.md](CAUSE.md): not a shortfall of the radial push (no push
 factor fits the crossings) but a torque, the loop's angular momentum up
 30 percent and its energy up 45 percent over the first three quarters
-of a turn; candidates (i) the fan's L1 factor, (ii) the drive's wall and
-(iii) the proton's reads each tested and NOT ACCOUNTING for it; the
-source a rule of the push or the drive the algebra does not carry, to be
-named by two host readings of the existing records; under flow-link-v1
-the push's size in the plane falls by 1.287 and the torque is untouched,
-so the key selects no other baseline, and these pins stand against the
-register's as the law stands (CAUSE.md sections 3 and 4).
+of a turn; candidates (i) the fan's L1 factor, (ii) the drive's wall, (iii) the
+proton's reads and (v) the pulsed crowd each tested and NOT ACCOUNTING
+for it; the source the drive's step (iv 2), with a closed form: the
+body's Node lags its accumulated motion by half a Link in the mean, so
+the push read at the Node has a part along the motion of `1 / (2 r)`
+and pumps `pi F(r)` per turn; the kick map of CAUSE.md section 2 (v)
+reproduces the escape with the steady shell-mean push alone and holds
+the loop at r = 12 under a step fired at half the wall (the centred
+step), a hypothesis under its own identity for the owner's word; under
+flow-link-v1 the push's size in the plane falls by 1.287 and the pump is
+untouched, so the key selects no other baseline, and these pins stand
+against the register's as the law stands, transferring to the centred
+step's world if the owner names it (CAUSE.md sections 3 and 4).
 
 What the algebra predicts, first order, GAMEBOARD by formula: the
 momentum give changes the loop's action, never its Nodes. Section 5 (b)

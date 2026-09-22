@@ -16,24 +16,36 @@ reviewer's line of record 872 and the Flow Weight Designer's
 #854). Bohr's and Kepler's forms appear only as the thing compared with
 (record 817). Nothing here moves a pin, a rule or a world.
 
-**The finding in one line.** The widening is not a shortfall of the
-radial push: no push factor gives the crossings read (a conic from the
-start has its far side at half a turn and comes home at the full turn,
-against 13, 13, 17, 26 Links and no home); the loop's angular momentum
-and its energy both RISE over the first three quarters of a turn (L by
-30 percent, E by 45 percent of its bound value, GAMEBOARD by formula
-from the crossings' momenta), which a central push cannot do: the push
-the electron received had a tangential part along its motion of about
-5 percent of its radial part. Candidates (i) to (iii) each change the
-radial push's size or the pace and none makes a torque: NOT ACCOUNTED.
-The torque's source is a rule of the push or the drive that the
-algebra does not carry (iv), and the reading that names it is already
-in the baseline's records (the electron's 305 `read` lines and its step
-lines), a host reading and no run. Under flow-link-v1 the radial push
-in the plane falls by 1.287 and the declared momentum is 13 percent
-above the key's circle; the key does not touch the torque, so the loop
-does not close under it either; the baseline the momentum give is read
-against stays the register's as the law stands (section 3).
+**The finding in one line (revised at the Boss's second order, record
+937's candidate (v)).** The widening is not a shortfall of the radial
+push (no push factor fits the crossings: section 1 (a)) and not the
+pulse (section 2 (v)): the loop's angular momentum and its energy both
+RISE over the first three quarters of a turn (L by 30 percent, E by 45
+percent of its bound value, from the crossings' momenta), a tangential
+push along the motion of about 5 percent of the radial. ITS SOURCE IS
+THE DRIVE'S STEP, with a closed form: the count primitive fires a step
+when the accumulated motion reaches a whole wall, so the body's Node
+lags its accumulated motion by half a Link in the mean, and the push
+read at the Node (the rows' labels there, along the lines from the
+proton to the NODE) has a part along the motion of `1 / (2 r)` of its
+size, 4.2 percent at r = 12 against 4.7 read, pumping `pi x F(r)` of the
+loop's constant per turn, `3.9 x 10^6` at r = 12 against 3.5 read over
+three quarters. The kick map of section 2 (v) (the Atom Algebraist's
+body step under the shell mean, the fan's grain absent) reproduces the
+escape with the steady push alone and, with the push read at the
+accumulated position, or with the step fired at HALF the wall (the Node
+the nearest to the accumulated motion), holds the loop at r = 12 for
+five turns with the pulse and the lost fires on top. Candidates (i) to
+(iii) and (v) do not account for it; (iv) 2, the drive's rule, does,
+and the stationary crowd of record 937 does not stay either, so the
+drive itself is the question, as the physicist's condition names it.
+Under flow-link-v1 the radial push in the plane falls by 1.287; the
+pump is untouched by the key and the re-pinned loop leaves as well; with
+the centred step it stays. The cure is one declaration of the drive (the
+step at half the wall), local, no register, no root, no float, a
+hypothesis under its own identity for the owner's word; until it, no
+loop of the atoms series stays, and form (a) has nothing to close
+(section 4).
 
 ## 1. The loop's shape, and the push it implies
 
@@ -232,12 +244,94 @@ named, with what each would show in the records the run already wrote
    clicks' equal counts make unlikely; then a minimal reproduction on a
    two-Node GameBoard by the engine's owner.
 
-Verdict on the cause: NOT ACCOUNTED by (i), (ii) or (iii); the reading
-is a torque; candidate (iv) 1 or 2 by the two host readings of the
-existing records, in that order; the per-axis drive's lost fires are
-the one mechanism the algebra finds of the right kind, an order too
-small by its estimate. The algebra can go no further without the
-records' lines; it orders no run.
+**(v) The pulsed crowd (record 937, the chief physicist).** The
+proton's release is one shell per 10 intervals (`[1, 18360]`), so the
+electron receives about 149 kicks of about 2.4 degrees per orbit (PINS.md
+section 2, item 4: `1.24 x 10^7` label units per shell against the
+declared momentum 293 783 192), not a steady push; the fan's density is
+not the cure (2616 directions, the comb mild). Tested by algebra beside
+(i) to (iv) with the Atom Algebraist's body step (ALGEBRA.md section 3
+(b): the per-axis count `k = 1 + Q S M / abs(p_a)`, the accumulator of
+`core.integer.by_drive`'s form) driven by the SHELL MEAN of the push
+(`E(r) = 6.588 (12 / r)^k` entries per shell at the Node's radius, one
+label of size Q times 16 times M per entry, toward the proton's Node;
+the fan's grain absent by construction), steady (a tenth of a shell
+every interval) or pulsed (one shell every 10 intervals), with and
+without `main`'s lost coincident fires; the map is
+[cause_kicks.py](cause_kicks.py) with its printout
+[cause_kicks.out](cause_kicks.out), a host computation and no run of
+the engine, GAMEBOARD by formula. The radius at the quarter crossings
+over 7500 intervals (the reading: 13, 13, 17, 26, the escape at 3407):
+
+| The case | The drive | The push | r at the quarters, Links | The fate |
+| --- | --- | --- | --- | --- |
+| A, as the algebra | no fire lost | steady, `r^-2` | 13, 17, 20, 19, 20, 25 | leaves at 5006 |
+| B, the pulse alone | no fire lost | pulsed, `r^-2` | 13, 16, 18, 19, 21, 25 | leaves at 5101 |
+| C, the lost fires alone | `main`'s per-axis | steady, `r^-2` | 13, 17, 19, 18, 21 | leaves at 3885 |
+| D, both | `main`'s per-axis | pulsed, `r^-2` | 13, 16, 18, 19, 21, 25, 26, 25, 25 | stays at r = 25 |
+| E, F, the lattice's flux `r^-1.83` | either | either | 13, 16 to 18, 18 to 24 | leave at 6623, 5321 |
+| G, the stationary crowd of record 937 (the circle's momentum, the same mean push, no pulse) | no fire lost | steady, `r^-2` | 12, 15, 19, 21, 20, 22 | leaves at 4835 |
+| L, N, THE CONTROL: the push read at the accumulated position (the Node plus the accumulator over the wall) | no fire lost | steady, `r^-2` | 12, 13, 12, 12, 12, 13, ... (N: 12 at every quarter) | stay, 19 quarters |
+| O, THE CENTRED STEP: a step fired at half the wall, the whole wall subtracted | no fire lost | steady, `r^-2` | 13, 13, 13, 12, 13, 13, 13, 12, 12, 13, ... | stays, the +x crossings at 12, 12, 13, 13 |
+| P, the centred step with the pulse and the lost fires | `main`'s per-axis | pulsed, `r^-2` | 13, 13, 10, 10, 13, 13, 11, 10, 13, 14, 11, 10 | stays, the +x crossings at 10, 10, 10, 11 |
+| R, the centred step at the circle's momentum, the lattice's flux | `main`'s per-axis | pulsed, `r^-1.83` | 12, 12, 12, 12, 11, 12, 13, 14, 12, 12, 13, 13 | stays, the +x crossings at 12, 14, 13, 11 |
+
+What the map says, by algebra: (1) the steady shell-mean push on the
+law's step ALONE reproduces the reading's kind (A: 13, 17, 20 and the
+escape; the loop's constant from -7.5 to -3.5 as the reading's -7.5 to
+-4.0), so the fan's grain is not needed for the widening; (2) the
+pulse changes almost nothing beside it (B against A, D against C): the
+149 kicks of 2.4 degrees are a symplectic map of the loop and bound its
+constant, as the algebra of a kick map says; the physicist's candidate
+(v) does NOT account for the widening; (3) the stationary crowd (G)
+does not stay: the drive itself is the question; (4) the push read at
+the accumulated position (L, N) holds the loop at r = 12 for five
+turns, which names the cause: the LAG of the Node behind the body's
+accumulated motion. The closed form: the accumulator of an axis runs
+from 0 to the wall between steps, so the Node lags the accumulated
+motion by half a Link in the mean along the motion; the push read at the
+Node is along the lines from the proton to the Node, which the true
+position leads by that half Link, so the push has a part along the
+motion of `sin(1 / (2 r))`, 4.2 percent at r = 12, 3.8 at 13, 2.9 at 17,
+1.9 at 26, against the 4.7 percent read (section 1 (c)); the work per
+turn is `(1 / (2 r)) x F(r) x 2 pi r = pi F(r)`, independent of the
+radius for a given push, `3.9 x 10^6` at r = 12 against the reading's
+3.5 over three quarters, and falling as `F(r)` with the widening,
+which is the reading's flattening from r = 17 out. (5) The cure of one
+declaration (O, P, R): the step fired when the accumulated motion
+passes HALF a Link beyond the Node and the whole wall subtracted, so the
+accumulator runs in `[-wall / 2, wall / 2)` and the Node is the nearest
+to the accumulated motion, the lag zero in the mean; then the loop
+stays at r = 12 for five turns with the pulse, the lost fires and the
+lattice's flux on top (P, R wander by two Links, the pulse's and the
+lost fires' grain). Local (the body's own accumulator, as today), no
+register, no root, no float, no run-time division beyond the law's; a
+change of the count primitive's threshold (`by_drive`, BEAM_LAW note 41,
+record 108), which moves every step of every body in every registered
+world, so it is a hypothesis under its own identity (a world key, off
+by default, every world byte identical without it), the owner's to
+name, and its run on the registered `hydrogen_r12` with the fan's grain
+is what the map cannot give (the grain is absent here by construction).
+
+**(iv), resolved.** The torque of section 1 is candidate (iv) 2, the
+drive's rule, with the closed form above; not a defect (the count
+primitive does what record 108 decided), not the push's rule (the push
+is the Node's flow, as the law has it; the lag is where the body IS
+against where it is COUNTED to be). The two host readings of the
+records stand as the reading that confirms it on the run: the
+electron's `read` lines' pushes are radial from its NODE within the
+grain (the push's rule), and the step lines show the lag (the
+accumulator's fraction at each push, `acc / wall`, on the `step` lines'
+drive rows).
+
+Verdict on the cause: NOT ACCOUNTED by (i), (ii), (iii) or (v);
+ACCOUNTED by (iv) 2, the drive's step: the half-Link lag of the Node
+behind the accumulated motion turns the push by `1 / (2 r)` along the
+motion and pumps `pi F(r)` per turn; the kick map reproduces the escape
+with the steady push alone and holds the loop with the centred step or
+the push at the accumulated position. The algebra orders no run; the
+run that confirms it on the lattice with the fan's grain is the owner's
+word on the centred step's identity.
 
 ## 3. Under flow-link-v1 (the key `flow_link`, PR #854, record 898): what the corrected flow does at r = 12
 
@@ -266,28 +360,52 @@ size per line), so whatever gives the push its tangential part gives it
 under the key too, and a loop that leaves the board at the declared
 momentum leaves it under the key at the re-pinned momentum unless the
 torque's source is (iv) 2, the drive's, which the key does not touch
-either. So the key does not select a new baseline: the atom's first run
-under `flow_link` would read the corrected size of the push (the far
-side 21.7 against 26 at the declared momentum, or a circle at the
-re-pinned one if the torque is absent) and the torque at the same
-time, two unknowns in one reading, and is not the baseline the momentum
-give is read against until the torque is named. What remains: the
-torque's source, by the two host readings of section 2 (iv); after it,
-the same world under `drive_b` (the atoms series' own form) and, if the
-owner admits the key, under `flow_link` with the re-pinned momentum,
-each read against the register's as the law stands.
+either. The kick map of section 2 (v) under the key's factor: at the declared
+momentum the loop leaves at 1332 (steady) and 1383 (pulsed, the lost
+fires), the far side 16 to 17 at the first quarter (H, I); at the
+re-pinned momentum it widens as without the key, 12, 15, 19, 21, and
+leaves at 5489 (steady) and 5023 (pulsed, J, K): the pump of section 2
+(v) is there under the key, since the key changes the push's size per
+line and not where it is read; with the centred step and the re-pinned
+momentum the loop stays on the board (S: 12, 12, 12, 14, 17, 18, 15,
+14, 16, 20, 19, 17), wider and wandering more than without the key
+(the re-pinned momentum is the inverse-square estimate against the
+wall's nonlinearity and the pulse, one part in twenty; the generator
+re-solves it). So the key does not select a new baseline and does not
+cure the widening: the same two questions have the same answers under
+it, the steady push corrected by the L1 factor widens by the lag and the
+pulse adds nothing to it. What remains is the owner's word on the
+centred step; after it, the registered `hydrogen_r12` under that
+identity (with the fan's grain, which the map cannot give), then under
+`drive_b` (the atoms series' own form; the lag is the same on the line
+drive, since the position is counted in whole Links there too) and, if
+the owner admits the key, under `flow_link` with the re-pinned
+momentum, each read against the register's as the law stands.
 
 ## 4. The consequence for the pins of atom-give-momentum-v1 (record 926)
 
-Section 3 selects no baseline beyond the register's: the pins of
-[DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) section 6 stand as declared
-against the baseline as the law stands (`hydrogen_r12_give` against the
-runner's clicks, `hydrogen_r8_give` against the register's `r8`), the
-two worlds under `drive_b` conditional on form B's loop returning, and
-the give's own prediction is untouched by the cause: the momentum give
-changes a loop's action and never its Nodes (DESIGN_MOMENTUM.md section
-5 (b) and (g)), so it neither adds to nor takes from the torque, and a
-torque that widens the loop widens it with the key on as without. One
+The physicist's reading of DESIGN_MOMENTUM.md section 5 (g) is
+CONFIRMED: form (a) cannot hold a loop the law lets go and does not
+claim to; at r = 12 as the law stands the rule fires once at the +x
+crossing at 2191 and the escape at 3407 is unchanged up to the grain,
+because the give changes a loop's action and never its Nodes
+(DESIGN_MOMENTUM.md section 5 (b)), so it neither adds to nor takes
+from the lag's pump, and the pump widens the loop with the give's key
+on as without. Section 3 selects no baseline beyond the register's:
+the pins of [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) section 6 stand as
+declared against the baseline as the law stands (`hydrogen_r12_give`
+against the runner's clicks, `hydrogen_r8_give` against the register's
+`r8`), the two worlds under `drive_b` conditional on form B's loop
+returning, which the map says it does not (the lag is the line drive's
+too). What the map adds: under the centred step the loop at r = 12
+stays by algebra (section 2 (v), cases O, P, R), so form (a) would have
+something to close there, a loop whose closure fraction the give reads
+at every return; the atoms series' first world under the centred step,
+if the owner names it, is the baseline the momentum give is read
+against, and DESIGN_MOMENTUM.md's pins for the closed loop (the give 0
+at every return at `j = 4.001`) and for the open loop (the staircase at
+r = 8) transfer to it as declared, the periods re-pinned from that
+world's own crossings; until then the register's stands. One
 line is added to the pins by this file: whatever names the torque
 (section 2 (iv)) is read on the give's worlds too, since the give's rows
 leave with the electron's momentum per unit of content and their
@@ -300,6 +418,8 @@ beside the step lines, DETECTOR.
 [RUN.md](../atom_baseline/RUN.md) and [baseline_readings.out](../atom_baseline/baseline_readings.out)
 (`main` at 384b15c6); [ALGEBRA.md](../atom_algebra/ALGEBRA.md) sections
 1 to 3; [PINS.md](../atoms/PINS.md) section 2; [the flow weight design](../flow_weight/DESIGN.md)
-(flow-link-v1); [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) sections 5 (g)
+(flow-link-v1); [cause_kicks.py](cause_kicks.py) and [its printout](cause_kicks.out)
+(the kick map, no engine import); [`core.integer.by_drive`](../../../src/event_universe/core/integer.py)
+(the count primitive, BEAM_LAW note 41, record 108); [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) sections 5 (g)
 and 6; [BEAM_LAW note 30](../../BEAM_LAW.md); [DERIVATIONS_BEAM 12b.1](../../DERIVATIONS_BEAM.md);
-records 652, 817, 872, 898, 926 and 935 of [the log](../../LOG_2026-09-20.md).
+records 108, 652, 817, 872, 898, 926, 935 and 937 of [the log](../../LOG_2026-09-20.md).
