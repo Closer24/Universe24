@@ -5,6 +5,20 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### flow-link-v1 under its key, and the split ladder of the pushed row's wall (2026-09-22)
+
+- The world key `flow_link` (off by default; the model owner's decision of
+  record 915): every flow sum counts an arriving row with the flow label per
+  Euclidean Link (`nature_beam.flow_label`), the ring worlds of
+  `examples/events/flow_link/` with their pins before the run and the run's
+  record. The pushed row's wall T(P) by the split ladder
+  (`nature_beam.split_ladder`, the physics-rule reviewer's route (b)): the
+  wall's square X = R^2 + 3 |P|^2 bounded, X Q^2 never formed, the same floor
+  as the root; the three crowd clocks' worlds that refused at the working
+  bound under the generic entry (series T, U and V, eleven worlds) run under
+  the split ladder since 89f43572, their readings a record in their
+  registers (`read_under_the_split_ladder_89f43572`), no pin.
+
 ### The generic entry of the bending: the row's flight in the age wall's set for every world (2026-09-22)
 
 - The model owner's word (record 847, "do not freeze; bring it back

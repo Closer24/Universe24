@@ -997,6 +997,7 @@ class NatureBeamSimulation:
                         "held": list(entry.held),
                         "home": [entry.pending_amount(f) for f in range(len(self.families))],
                         "home_content": [entry.pending_content(f) for f in range(len(self.families))],
+                        **({"clock": entry.age} if self.world.clock_stamp else {}),
                     }
                 )
             return

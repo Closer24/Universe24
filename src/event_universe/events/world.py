@@ -408,6 +408,7 @@ WORLD_KEYS = {
     "action",
     "meeting",
     "massive_rows",
+    "clock_stamp",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -1305,6 +1306,10 @@ class NatureBeamWorld:
     # centred-step-v1 (the world key `centred_step`, false by default): the
     # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
     centred_step: bool = False
+    # The clock stamp (the world key `clock_stamp`, false by default): every
+    # line a measured event writes carries `clock`, its own count of
+    # self-creations; a record field, no physics, no hypothesis.
+    clock_stamp: bool = False
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -4051,6 +4056,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "(twice the flight bound) is not its bound; declare the largest age a row may carry"
         )
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
+    # The clock stamp (the moving detector, 2026-09-22, the chief physicist's
+    # design docs/designs/moving_detector/DESIGN.md section 7): true or
+    # false, false by default; with it every line a measured event writes
+    # (its `click`, `read`, `rerelease` and `become` lines and its face
+    # click) carries `clock`, the event's own count of self-creations (its
+    # `age`). A record field and no physics: it enters neither the model
+    # identity nor the hypothesis list, and without it every record is byte
+    # identical to what it was.
+    clock_stamp = obj.get("clock_stamp", False)
+    if type(clock_stamp) is not bool:
+        raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -4185,6 +4201,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         drive_b=drive_b,
         flow_link=flow_link,
         centred_step=centred_step,
+        clock_stamp=clock_stamp,
         atom_level=atom_level,
     )
     _record_load_checks(measured, detectors, families, phase_steps)

@@ -24,7 +24,11 @@ content u_D + W, its primitive of the order Q d |u_D| = 64 x 65536 x 64 =
 2.7 x 10^8 at d = 65536 whenever the push leaves the gcd small, and the
 square 3 |P|^2 Q^2 must stay under 2^63 (the primitive's components under
 about 2^24.7; EVERY_FAMILY.md, MUST-FIX 2), so every pushed light row at
-d = 65536 is refused before the root is taken (14 of the 20 run). (ii) The
+d = 65536 is refused before the root is taken (14 of the 20 run; since the
+split ladder of flow-link-build, 89f43572 of 2026-09-22, the wall's square X
+is bounded and X Q^2 never formed, so the eleven worlds of series T, U and V
+whose tests recorded that refusal run balanced past it, their readings a
+record in their registers, no pin). (ii) The
 age bound: the crowd's age moment at the mass Nodes is about 1.3 x 10^9,
 the flight's wall there stretched by 1 + A n / d = 19,880 at gamma 0 (3 to
 4 at the median Node), the lamps' rows freeze in the crowd and their age

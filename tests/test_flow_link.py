@@ -67,7 +67,21 @@ nearest |p_D| D / |D|; |p_D| is Q = 64 for the photon and a massive family's
     product 2 |p_D| |D_i| + S_1 tested by division before it is formed:
     the magnitude 2^62 - 1 on the heading (1, 0, 0) passes with the label
     (2^62 - 1, 0, 0) (2 (2^62 - 1) + 1 = 2^63 - 1, the bound itself), the
-    magnitude 2^62 refused naming flow-link-v1 and the working bound.
+    magnitude 2^62 refused naming flow-link-v1 and the working bound;
+(e) the split ladder (the physics-rule reviewer's route (b) on the refused
+    rings, 2026-09-22): `split_ladder(X, Q)` equals `square_ladder(X Q^2)`
+    and isqrt(X Q^2) on the eleven values of `tests/test_optical.py`'s
+    ladder check (0 .. MAX_WORK_INT) and on the wall's squares X of the five
+    refused rings (3 |P / g|^2 for P / g = (32901461, 1149200, -1147979),
+    (33507403, 409525, -1064800), (33523131, 804995, 2102152), (33568237,
+    390720, -390115), (66131823, 1205776, -1203345): X between 2^51.5 and
+    2^53.6, within the bound, X Q^2 beyond it, which `square_ladder` cannot
+    take within the bound), the floors 3651610259, 3716489807, 3724449256,
+    3721584405, 7333227087 (T = Q a + b with b = 19, 15, 40, 21, 15); at
+    the scale 1 it is `square_ladder`; a negative square or a scale below 1
+    refused; `momentum_pair` takes it: the turn world's pushed row keeps
+    the pair of `tests/test_optical.py` (b) (S_1 349, T of (128, -221, 0)),
+    and a wall's square beyond the bound is refused naming the ladder.
 """
 
 from __future__ import annotations
@@ -79,11 +93,19 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import direction_flight, flow_label, nature_beam_tables
+from event_universe.events.nature_beam import (
+    direction_flight,
+    flow_label,
+    momentum_pair,
+    nature_beam_tables,
+    split_ladder,
+    square_ladder,
+)
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import BINDING_RULE, FLOW_LINK_RULE, OPTICAL_RULE, Q
 from event_universe.world_loading import load_world
@@ -381,3 +403,44 @@ def test_the_refusals_and_the_edge_of_the_working_bound():
         flow_label((1, 0, 0), edge + 1)
     with pytest.raises(OverflowError, match="flow-link-v1"):
         flow_label((2, 1, 0), edge)
+
+
+# -- (e) ---------------------------------------------------------------------------
+
+REFUSED_PRIMITIVES = {
+    "ring_b6_g1": ((32901461, 1149200, -1147979), 3651610259),
+    "ring_b3_g0": ((33507403, 409525, -1064800), 3716489807),
+    "ring_b3_g1": ((33523131, 804995, 2102152), 3724449256),
+    "ring_b8_g0": ((33568237, 390720, -390115), 3721584405),
+    "ring_b8_g1": ((66131823, 1205776, -1203345), 7333227087),
+}
+
+
+def test_the_split_ladder_reaches_the_root_of_the_walls_square_within_the_bound():
+    """(e)."""
+    for value in (0, 1, 2, 3, 4, 15, 16, 17, 12288, 3 * 64 * 64 * 65536 - 1, MAX_WORK_INT):
+        assert split_ladder(value, Q) == math.isqrt(value * Q * Q)
+        assert split_ladder(value, 1) == square_ladder(value) == math.isqrt(value)
+        if value * Q * Q <= MAX_WORK_INT:
+            assert split_ladder(value, Q) == square_ladder(value * Q * Q)
+    for name, (primitive, floor) in REFUSED_PRIMITIVES.items():
+        square = 3 * sum(c * c for c in primitive)
+        assert square <= MAX_WORK_INT < square * Q * Q, name
+        assert split_ladder(square, Q) == math.isqrt(square * Q * Q) == floor, name
+        a = square_ladder(square)
+        assert 0 <= floor - Q * a < Q, name
+    for scale in (2, 3, 7, 64, 1000):
+        for value in (0, 1, 5, 99, 4096, 123456789, (1 << 40) + 3):
+            assert split_ladder(value, scale) == math.isqrt(value * scale * scale), (value, scale)
+    with pytest.raises(ValueError):
+        split_ladder(-1, Q)
+    with pytest.raises(ValueError):
+        split_ladder(4, 0)
+    # momentum_pair takes the split ladder: the pushed row of the turn world
+    # keeps its pair (S_1 349, T = isqrt(3 x (128^2 + 221^2) x 64^2)).
+    simulation = NatureBeamSimulation(parse_nature_beam_world(optical_tests.turn_world()))
+    simulation.stores[1].amount[0] = 2
+    simulation.step()
+    light = simulation.stores[0]
+    s1, t = momentum_pair(light, simulation.tables.family_flights[0], 4, np.arange(1))
+    assert s1.tolist() == [349] and t.tolist() == [math.isqrt(3 * (128 * 128 + 221 * 221) * Q * Q)]

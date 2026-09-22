@@ -1345,13 +1345,25 @@ couplings.
   a world without the key whose record differs from `main`'s by a byte.
 - **Status.** Built on 2026-09-22 (the world key `flow_link`, the identity
   `flow-link-v1`, `tests/test_flow_link.py`); the ring worlds and their
-  pins under `examples/events/flow_link/`, run once the same day: the
-  verdict NOT DECIDED, the deciding pin 0.731 +- 0.025 at b = 6, gamma 1
-  unread (the gamma 1 rings and b = 3, 8 refused by the pair's working
-  bound at d = 16384, the folder's README); the gamma 0 ring at b = 6
-  inside its four pins (the mean radial shift 0.128 against 0.128 +- 0.025,
-  every arrival Node the map's), its `C_ring` 1.806 OUTSIDE the one-grain
-  pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46;
-  the calibration -1.573 / -3.180 pixels against -1.600 / -3.000; the key
-  off by default; admitting it to the law, and the road past the refusal,
-  are the owner's later decisions.
+  pins under `examples/events/flow_link/`, run the same day. On the engine
+  as built the gamma 1 rings and b = 3, 8 were refused by the pair's
+  working bound at d = 16384 (the wall's square X Q^2 over 2^63 - 1; the
+  folder's README); on the split ladder of the same day (the physics-rule
+  reviewer's route (b): T = Q a + b from X alone, X Q^2 never formed) every
+  ring ran; the verdict by the folder's rule is DOES NOT CLOSE (`C_ring`
+  through the stated factors outside the one-grain pin as written at four
+  rings of six), and beside it the run's finding by kind: the deciding
+  pin inside, the ring at b = 6, gamma 1 reading the mean radial shift
+  0.731 against 0.731 +- 0.025 (DETECTOR) with every arrival Node the
+  map's (40 of 40); every ring's mean radial
+  shift, tangential mean, delay and C_nodes inside (0.128, 1.625 / 0.845,
+  0.628 / 0.107 Links at b = 6 gamma 0, b = 3, b = 8, the arrival Nodes the
+  map's 40 / 16 / 48 of 40 / 16 / 48); `C_ring` through the stated
+  lever-arm factor the algebra's own walk to 0.01 at every ring
+  (COMPUTATION: 3.655 / 3.819 / 3.918 at gamma 1 against ALGEBRA.md's 3.652 /
+  3.821 / 3.918), 2.40 / 1.07 / 1.40 grains from the continuum formula's
+  pin 3.859 / 3.934 / 3.785, so what failed the grain is that pin, not the
+  engine's walk of the rule; the calibration
+  -1.573 / -3.180 pixels against -1.600 / -3.000; the clock's word unmoved.
+  The key off by default; admitting it to the law is the owner's later
+  decision.
