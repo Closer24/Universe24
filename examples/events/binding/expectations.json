@@ -1,0 +1,106 @@
+{
+ "format": "binding-expectations-v1",
+ "drive": "line",
+ "centred": false,
+ "derivations": {
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972); the rows of 2026-09-20 and the re-run at head 4028b020 were read under the per-axis drive of history (`expectations(NUCLEUS.AXIS_DRIVE)`)",
+  "first_contact": "GAMEBOARD, the toy: the design's push at one Link (series I's integers) from the onset tick 3, the drive's accumulators against the wall Q^2 S M + |p|_1 T_h (the per-axis Q S M + |p_a|); the tick of the first refused step, the give's",
+  "border_clicks": "DETECTOR: the give's rows, `held // quantum` units of content 1 as one row of content 2 per body on the heading opposite to the refused step, clicked by the border `lifetime` two Links from their birth (DESIGN section 4); their tick the first contact's plus two (GAMEBOARD, the walk of two Links)",
+  "pushes": "DETECTOR: series I's push at one Link before the give (the `n` and `nuclear` rows), and after it on the content less the two units given (DESIGN section 2)",
+  "escaped": "DETECTOR: the border's escaped content of `bond`, 2 per body; its fraction of the set's content",
+  "held": "GAMEBOARD: the bodies' held content at the end; DETECTOR: the mass read, the sum"
+ },
+ "worlds": {
+  "deuteron_bond": {
+   "first_contact": {
+    "p": 18,
+    "n": 18
+   },
+   "given": {
+    "first": 2,
+    "after": 0
+   },
+   "border_clicks": {
+    "count": 2,
+    "amount": 2,
+    "content": 2,
+    "nodes": [
+     [
+      8,
+      10,
+      10
+     ],
+     [
+      13,
+      10,
+      10
+     ]
+    ],
+    "labels": [
+     [
+      -128,
+      0,
+      0
+     ],
+     [
+      128,
+      0,
+      0
+     ]
+    ],
+    "tick": "the first contact + 2"
+   },
+   "escaped_bond": {
+    "content": 4,
+    "of": 3677
+   },
+   "push_p": {
+    "before": 310956229248,
+    "after": 310945171840
+   },
+   "push_n": {
+    "before": -310956211200,
+    "after": -310945171840
+   },
+   "recoil": 128,
+   "held": {
+    "p": [
+     1834,
+     0,
+     1,
+     0
+    ],
+    "n": [
+     0,
+     1837,
+     1,
+     0
+    ]
+   },
+   "mass_read": 3673,
+   "no_step": true
+  },
+  "proton_bond_lamp": {
+   "contacts": 0,
+   "bond_clicks": 0,
+   "held_bond": 2,
+   "no_step": true,
+   "lamp_gathers": 2993
+  },
+  "alpha_square_bond": {
+   "first_contact_p4": 19,
+   "border_clicks": {
+    "count": 4,
+    "amount": 2,
+    "content": 2,
+    "tick": "the first contact + 2"
+   },
+   "escaped_bond": {
+    "content": 8,
+    "of": 7354,
+    "ratio_to_deuteron": 2.0
+   },
+   "disperses": "the first steps and the faces a reading (series I's square under the drive)"
+  }
+ }
+}

@@ -490,3 +490,50 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
         for line in (tmp_path / "run" / "events.jsonl").read_text(encoding="utf-8").splitlines()
     ]
     assert [r["given"] for r in lines if r["event"] == "contact"] == [2, 0]
+
+
+# -- (i) ---------------------------------------------------------------------------
+
+
+def test_the_register_pins_of_series_n_are_the_generators_under_both_drives():
+    """(i): since the law's line drive (2026-09-22, record 972) the series'
+    generator writes `expectations.json` with the drive named; the DETECTOR
+    integers are drive-free and the toy's first contact moves with the
+    drive (18 for B1 under the line drive, 17 per axis, the registered
+    contact at head 4028b020 under the drive of history; 19 and 16 for
+    B3's p4), the same integers as `core.integer.by_line` on one axis."""
+    from event_universe.core.integer import by_line
+
+    root = Path(__file__).resolve().parents[1] / "examples" / "events" / "binding"
+    generator = load_script("binding_make_worlds", root / "make_worlds.py")
+    shipped = json.loads((root / "expectations.json").read_text(encoding="utf-8"))
+    assert shipped == generator.expectations()
+    assert shipped["drive"] == "line" and shipped["format"] == "binding-expectations-v1"
+    line = generator.expectations("line")["worlds"]
+    axis = generator.expectations("axis")["worlds"]
+    assert line["deuteron_bond"]["first_contact"] == {"p": 18, "n": 18}
+    assert axis["deuteron_bond"]["first_contact"] == {"p": 17, "n": 17}
+    assert line["alpha_square_bond"]["first_contact_p4"] == 19
+    assert axis["alpha_square_bond"]["first_contact_p4"] == 16
+    # The drive-free pins are the same under both drives.
+    for name in ("deuteron_bond", "proton_bond_lamp", "alpha_square_bond"):
+        drive_free = {
+            k: v for k, v in line[name].items() if k not in ("first_contact", "first_contact_p4")
+        }
+        assert drive_free == {
+            k: v for k, v in axis[name].items() if k not in ("first_contact", "first_contact_p4")
+        }
+    # B1's toy under the line drive by the law's own primitive.
+    nucleus = generator.NUCLEUS
+    push, content, wall_base = nucleus.DEUTERON_PUSH, nucleus.PROTON + 1, 64 * 64 * (1 << 28)
+    momentum, drives, fired = 0, [0, 0, 0], None
+    for tick in range(1, 100):
+        if tick >= generator.TOY_ONSET:
+            momentum += push
+        axis_hit, _sign, drives = by_line(
+            drives, [momentum * 64, 0, 0], wall_base * content + momentum * 110
+        )
+        if axis_hit is not None:
+            fired = tick
+            break
+    assert fired == 18

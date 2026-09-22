@@ -31,6 +31,18 @@ DETECTOR reading (the bodies' own `read` and `contact` records, the border's
 clicks, a set's gathers: the only kind reality has) or a GAMEBOARD reading
 (the bodies' steps, their held content, the host's view of the mechanism).
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md));
+the rows of 2026-09-20 and the re-run at head `4028b020` below were read
+under the per-axis drive of history and stand as history. The generator
+now writes `expectations.json` beside the worlds with the drive named:
+the DETECTOR integers of the table below are drive-free (a push is a row's
+label, a give a contact's, the clicks the rows' content), and what the
+drive moves is the tick of the first contact (GAMEBOARD, the toy of series
+I's generator: 18 for B1 under the line drive, 17 per axis; 19 and 16 for
+B3's p4) and with it the border clicks' tick, two Links after the give.
+The re-read under the law is the last section of this page.
+
 ## The base
 
 Series I's ([the nucleus](../nucleus/README.md), `nucleus/make_worlds.py`,
