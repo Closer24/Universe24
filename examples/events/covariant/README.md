@@ -73,7 +73,9 @@ of 17.6:
   (refused at load and at the frame); the one-axis domain (the base is
   `main`'s per-axis drive, `step_axis`, on which the pace p / E' holds for a
   momentum on one axis: a body with momentum on more than one axis is
-  refused at load and at the frame until form B's directional drive lands;
+  refused at load and at the frame unless the world declares `drive_b`
+  (form B's directional drive, `drive-b-v1`, on `main` since 2026-09-22
+  under its own key, off by default; series X);
   a `fixed` apparatus is outside both checks); the push ceiling of one grain per
   interval on the push the record took (refused at the frame: under it
   the root's comparisons are at most three per frame; a change of content
@@ -90,12 +92,16 @@ Not built, per 17.6 and record 314: reading **(ii)** the push as the
 gradient of the age moment (`-grad(A)` alone is not Lorentz's 1904 pair;
 the magnetic part waits for `source-velocity-v1`), and with it the
 contraction and the pair's round trips (pin (b) of 18.1, withdrawn there).
-The base is `main`'s per-axis drive (form B, record 342, is BLOCKED in its
-review, record 348, and not on `main`): on the two pinned worlds every
-momentum lies on one axis, where the per-axis drive without its cap term
-and form B's directional accumulator without its cap term are the same
-count, so the pinned runs are as 17.6 derives them; the OFF baseline is
-`main`'s register, replayed byte for byte (below), not form B's.
+The base is `main`'s per-axis drive (form B's first build, record 342, was
+BLOCKED in its review, record 348; form B in its integer form (c) is on
+`main` since 2026-09-22 as `drive-b-v1` under the world key `drive_b`, off
+by default, series X): on the two pinned worlds every momentum lies on one
+axis, where the per-axis drive without its cap term and the directional
+drive without its cap term are the same count, so the pinned runs are as
+17.6 derives them; the OFF baseline is `main`'s register, replayed byte for
+byte (below). A world that declares both keys admits a momentum off the
+axis and reads `|p|_2 / E'` per lattice interval on every direction (the
+worlds of 17.6 M8, not run here).
 
 ## The worlds
 

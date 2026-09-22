@@ -18,6 +18,21 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   declared from the lamp's clock (BEAM_LAW note 41) where N + 20 intervals
   end before the wheel's last records gather (8221 at 8192, 16439 at
   16384; every registered world unchanged). No engine change.
+### drive-b-v1, the directional drive of a body under its own key (2026-09-22)
+
+- The world key `drive_b` (absent by default) and the identity `drive-b-v1`
+  (the model owner's approval of form B, record 652; the design
+  `docs/designs/drive_b/DESIGN.md`, form B in the integer form (c) of
+  `light_speed/FORM.md` 3.1; BEAM_LAW note 49): a body's three drive
+  accumulators gain p_a Q each against one wall Q^2 S M + |p|_1 T_h
+  (`world.drive_wall`, T_h = 110 formed at load) and the axis furthest over
+  the wall steps (`core.integer.by_line`), the Bresenham line of the
+  momentum with no coincident fire lost; the one-axis refusals of
+  `covariant_readings` lifted under the key. Series X
+  (`examples/events/drive_b/`, six worlds by the generator, the pins before
+  the runs, 19 readings inside); `tests/test_drive_b.py`; `plane_b` in the
+  gate set. With the key absent every registered world reads as it did,
+  byte for byte; nothing re-registered.
 
 ### Series L7, the cone: which length a row's phase counts (2026-09-20)
 

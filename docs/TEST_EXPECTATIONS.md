@@ -133,6 +133,7 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
+| `test_drive_b.py` | drive-b-v1, the directional drive of a body (2026-09-22, the world key `drive_b`, absent by default; docs/designs/drive_b/DESIGN.md): the key absent computes nothing (every registered world outside `drive_b/` parses with `drive_b` false, the gate world `detector/grouped_12_nodes` replays to its digests byte for byte, `run.json` without the key; `drive_wall` Q^2 S M + \|p\|_1 T_h = 922144 at p = 6000, M = 64, S = 1, and Q^2 S M without the cap); `by_line` on one axis the same integers as `by_drive` against 922144 (the 21st fire at n = 51), the furthest-over axis stepping and the lowest on a tie, an idle axis at rate 0; the deciding worlds on the engine (the clicks at 51, 101 and 152 on face:+x from (40, 20, 20), (40, 40, 20) and (40, 40, 40); the controls at 36, 50, 65 from (40, 20, 20); every step within one Link of the line; the `step` line's fields unchanged); the reviewer's two pins of record 348 (the wandering direction 112, 112, 83 against 111, 111, 83 within 2 at every one of 1000 intervals; the transient -46080 and no Link); the edges (p = 0, the reversal at 34, the idle component, the contact under `pass`, the escape's momentum); the refusals (the key's type, the wall past the bound at load, an accumulator past the bound); under `covariant_readings` the off-axis body admitted with E' 14671 and 14670 and its Links the replay's, and with `action` the turn per Link crossed (the Links [2, 2, 0], the phase 36) | 16 tests |
 | `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -28160, 0) then, by Bresenham along **P**, the label to (1, -1, 0) and **W** = (4864, -16640, 0), the books' `turned` line (-19, -45, 0); an m row of amount 1 leaves the row on +x); **P** conserved across the turn; verb 3's form by Bresenham (record 536): a pushed row at 3.51 degrees between the teeth 2.39 and 4.76 reaches y >= 12 at 199 Links with the error within two Links of **P**'s line, where the nearest tooth reached 8.3; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the count capped at one Link by the primitive with the surplus kept and the residue rescaled at the push to the momentum's units, S_1(P) / S_1(D), not at the label's turn (records 494 and 496 under the physicist's word on the pace; the chains integer for integer over 22 and 20 intervals, 13952 x 1079 = 15054208 and 172160 x 1031 // 25 = 7099878); the register's refusals at the pair on P and the residue's rescale; a pushed row's pace its momentum's, a row of label (24, 1, 0) pushed to +x exactly walking 52 Links at the control's pace to the unit of the accumulator; every family under one wall (2026-09-22, docs/designs/one_wall/EVERY_FAMILY.md): the weight per unit on the family's own labels (the photon 110 at gamma 0 and 221 at gamma 1, the one floor; `matter` 66 and 70), a massive row walking by its triple under the one wall (39 positions by `by_drive` by hand) with its pushed pair the momentum's with the rest term ((20, 132) to (640, 2328)), the wall's square refused before it is formed (R = 2^45 at the amount 2^40), the two keys loading together and the deciding worlds' pins at b = 10 in the register ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1; extended 2026-09-22, every family under one wall) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
@@ -4619,3 +4620,65 @@ hubble_stars (the register and `record/expectations.json`), two_stars,
 cluster_clock, crowd_clock, reader_clock and c_measured, so the
 replicator's entries land on any register without a generator dropping
 them.
+
+`tests/test_drive_b.py` (`drive-b-v1`, the world key `drive_b`, absent by
+default; docs/designs/drive_b/DESIGN.md, form B in the integer form (c) of
+light_speed/FORM.md 3.1; the model owner's approval of form B, 2026-09-22,
+record 652 of the log of 2026-09-20; the physics-rule reviewer's ADMISSIBLE
+WITH CORRECTIONS of 2026-09-22). The expected integers, written down before
+the first run:
+
+- (a) the key absent computes nothing: every registered world under
+  `examples/events/` outside `drive_b/` parses with `drive_b` false and the
+  identity absent; the gate set's `detector/grouped_12_nodes` replays to the
+  digests of `gate_set.json` byte for byte, its `run.json` without a
+  `drive_b` key; `drive_wall([6000, 0, 0], 64, 1)` = 64^2 x 64 + 6000 x 110 =
+  922144, the same at (3000, -3000, 0), 262144 without the cap; a box world
+  without the key steps at the fires of `by_drive(drive, 6000, 10096,
+  at_most 1)` and clicks at 36;
+- (b) `by_line` on one axis: from an empty accumulator at the rate 384000
+  against 922144 the fires where floor(n x 384000 / 922144) rises, 24 in 60
+  self-creations, the 21st at n = 51, the accumulator n x 384000 mod
+  922144 (`by_drive`'s integers); a negative rate counts to the - side; of
+  two axes over the wall the furthest over steps, the lowest on a tie; an
+  axis at rate 0 neither advances nor carries; a wall below 1 refused;
+- (c) the generator's deciding worlds on the engine (an open 41^3 box,
+  content 64, `width` 1, 200 intervals): `axis_b` clicks on face:+x at tick
+  51 from (40, 20, 20) after 20 x steps, `plane_b` at 101 from (40, 40, 20)
+  after 20 and 20, `cube_b` at 152 from (40, 40, 40) after 20, 20, 20; every
+  `step` line's Node within one Link of the line of p; the `step` line's
+  keys the ten it carries without the key; `fast_steps` 0 on the axis; the
+  controls `axis_main`, `plane_main`, `cube_main` at 36, 50, 65 from (40,
+  20, 20) after 20 x steps alone;
+- (d) the reviewer's pins (record 348): (1) on a periodic 41^3 box the
+  momentum cycling every 50 intervals through (6000, 0, 0), (3000, 1000,
+  2000), (0, 6000, 0), (2000, 2000, 2000), (-3000, -1000, 2000): the
+  engine's Links per axis and accumulators equal the host's replay at every
+  one of 1000 intervals, 112, 112, 83 at the end against the whole parts
+  111, 111, 83, the largest deviation 2, 399 steps; (2) a hand-over of -720
+  on y for the one interval 51 leaves the y accumulator -46080 and fires no
+  y Link in the 100 intervals after;
+- (e) the edges: p = 0 leaves the accumulators and steps nothing; a y
+  component set to 0 with a residue neither advances nor steps while x
+  walks on; the reversal (6000, 0, 0) to (-6000, 0, 0) at n = 30 fires its
+  first -x Link at n = 34 = 30 + ceil((30 x 384000 mod 922144 + 922144) /
+  384000), the accumulators the replay's at every n; a fixed occupant at
+  (21, 20, 20) under `pass` refuses every step, 24 steps counted in 60
+  intervals, the body at (20, 20, 20), the accumulator 60 x 384000 mod
+  922144, the momentum unchanged; the escape's click carries (6000, 0, 0)
+  on face:+x at 51;
+- (f) the refusals: `drive_b` 1 or "yes" refused naming the key; p = 2^60
+  refused at load under the key ("drive-b-v1", the wall past the bound) and
+  admitted without it; an accumulator seeded at the bound less 10 refused
+  at the next step naming the rule;
+- (g) under `covariant_readings` (`c2` [1, 3], `grain` 1) and the key a body
+  of content 207 at (2574, 2574, 0), (2101, 2101, 2101) and (3640, 0, 0):
+  admitted at load and at the frame (the off-axis ones refused without the
+  key, "components on more than one axis"), E' 14671, 14670, 14671 on every
+  `energy` line of 40 intervals, the Links per axis the replay's with the
+  wall Q^2 S M over its self-creations, the hypotheses the two identities;
+  with `action` 7 (no covariant key) a body of content 1 at (64, 64, 0):
+  the wall 18176, the rate 4096, the steps at 5, 6, 9, 10 (x, then y
+  deferred by one), the position (6, 6, 0), `axis_steps` [2, 2, 0], the
+  `action` rows' residues (2 x 4096) mod 7 and the phase 2 x floor(2 x 4096
+  / 7) mod 64 = 36.
