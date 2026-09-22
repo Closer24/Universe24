@@ -4927,3 +4927,25 @@ test the coefficient: one clause added after Eq. (2). Its item 6 (the
 three-dimensional shell count's error source) is the mathematician's
 SHOULD-FIX 11 and waits on the owner's word. Answered on the issue with
 the head's SHA. No number added. 49 pages.
+
+## Applied (2026-09-22, the Boss's order of 15:37Z): the atom by the algebra alone with the scale statement; the ring read on the split ladder
+
+(1) The owner's word (record 997): the atom's levels cannot be read on
+any lattice that can be run (the orbit's radius sixty thousand times the
+nucleus's; the lattice's r = 3 to 12; the fan's grain the named limit;
+a lattice of order fifty thousand on a side not run). Section 9
+(viii), row 6 and the ledger's atom row: the conjecture's label kept,
+the scale statement added, "computed from the algebra, not read on the
+board; a lattice able to hold the scale is not run"; the three-rung
+sentence removed (a side track, no run of the levels cited as a
+reading); row 6 NOT YET on the line; what is read stays as read. (2)
+The ring's run on the split ladder (flow-link-build at de4f4410, PR
+#854, pending merge): the reviewer's sentence by kind carried word for
+word in row 13; the verdict DOES NOT CLOSE within the grain by the
+README's rule (its headline CLOSES on the deciding pin, the pin inside,
+said in the row); Section 5 says the law as built is the law before
+the generic entry (main at 5b855791) and the readings under the entry
+are the ring's alone; Section 9 (vi), the abstract, "What is proved",
+the not-computed paragraph and the ledger's bending row updated the
+same way; the ringrun reference at de4f4410. Series K's FAIL stays;
+"matches nature" nowhere. 49 pages.

@@ -3515,6 +3515,67 @@ CORRECTIONS = [
         "divides every push by the same mean);",
         "divides every push by the same mean; the derivation's check of the shell mean on the six headings, series C, has the factor $1$ on every heading and does not test it, and no non-heading fan check of the coefficient is registered);",
     ),
+    # The Boss's order of 15:37Z: the owner's word on the atom (the scale statement, the algebra alone; record 997) and the ring's run on the split ladder (de4f4410, pending merge), the reviewer's sentence word for word.
+    (
+        "row 13: the ring's run on the split ladder (flow-link-build at de4f4410, pending merge), the reviewer's sentence by kind, DOES NOT CLOSE within the grain (the Boss's order of 15:37Z)",
+        "The run of 2026-09-22 under the key \\texttt{flow\\_link} \\cite{ringrun}: the ring at $b = 6$, $\\gamma = 0$ inside its four pins (the mean radial shift $0.128 \\pm 0.025$ Links, the tangential mean, the delay, $C_{\\mathrm{nodes}}$; DETECTOR), its $C_{\\mathrm{ring}}$ through the lever-arm factor $1.806$ against $1.929 \\pm 0.085$, outside by $0.038$, $1.45$ grains below as the algebra's own $1.46$ (COMPUTATION from the clicks); the deciding ring at $b = 6$, $\\gamma = 1$ refused by the engine's working bound at the pushed row's wall square (a refusal is not a reading; the pin $0.731 \\pm 0.025$ NOT READ) & FAIL, the law's: $0$ against $1.75$ arcseconds (series K); the ring under the key NOT DECIDED, $\\gamma$ an input; the coefficient $2(1 + \\gamma)$ on the one constant conjectured from the algebra, not read \\\\",
+        "The run of 2026-09-22 on the split ladder (the wall's square reached without the root; the first run's deciding ring had been refused by the working bound) \\cite{ringrun}: Under flow-link-v1 (the key \\texttt{flow\\_link}, off by default) the six ring worlds read their mean radial shifts at the algebra's numbers ($b = 6$, $\\gamma = 1$, the deciding pin: $0.731$ Links against $0.731 \\pm 0.025$; every arrival Node the map's, $168$ of $168$; DETECTOR), and the constant through the stated lever-arm factor, $C_{\\mathrm{ring}} = 3.655$, $3.819$, $3.918$ at $b = 6$, $3$, $8$ and $\\gamma = 1$ (COMPUTATION), is the algebra's own walk to $0.01$ and $2.40$, $1.07$, $1.40$ grains from the continuum's $2c_f \\times 0.990 \\times L/\\sqrt{L^2 + b^2}$, outside the one-grain pin: the engine walks the rule as the algebra walks it, and the bending's $4$ does not close within the grain ($3.655$, $3.819$, $3.918$ bare against $4$); $c_f = 2$ is an input, $nS = d$ a declaration, $4$ on the comparison side; nothing here is compared with nature. & FAIL, the law's: $0$ against $1.75$ arcseconds (series K); the ring's rule read (DETECTOR, inside its pins), the bending's constant DOES NOT CLOSE within the grain (the README's rule; the run's own headline names CLOSES on the deciding pin, the pin being inside), $\\gamma$ an input; the coefficient $2(1 + \\gamma)$ on the one constant stays conjectured from the algebra \\\\",
+    ),
+    (
+        "Section 5: the law as built is the law before the generic entry; the readings under the entry are the ring's",
+        "\\paragraph{Light: no optical metric.} A row reads nothing of the crowd: beside a mass it is neither bent nor delayed (series K, three worlds, the deflection $0.000$ pixel and the delay $0.00$ interval, DETECTOR; FAIL against nature's $1.75$ arcseconds, Table~\\ref{tab:nature});",
+        "\\paragraph{Light: no optical metric.} A row reads nothing of the crowd: beside a mass it is neither bent nor delayed (series K, three worlds, the deflection $0.000$ pixel and the delay $0.00$ interval, DETECTOR; FAIL against nature's $1.75$ arcseconds, Table~\\ref{tab:nature}); the law as built here is the law before the generic entry of 2026-09-22 (on \\texttt{main} at 5b855791 since that day \\cite{genericentry}), and the paper's readings under the entry are the ring's alone (row 13);",
+    ),
+    (
+        "Section 5: the ring read on the split ladder",
+        "and the deciding $\\gamma = 1$ ring NOT READ, refused by the working bound. The run after the algebra, and the ring's refusal by the register, are Table~\\ref{tab:nature}, row 13.",
+        "and, on the split ladder, the deciding $\\gamma = 1$ ring read at $0.731$ against $0.731 \\pm 0.025$ with every arrival Node the map's (DETECTOR), the constant through the stated factors outside the one-grain pin at the three $\\gamma = 1$ rings by $2.40$, $1.07$, $1.40$ grains (COMPUTATION): the ring's rule read, the bending's $4$ not closing within the grain. The run after the algebra is Table~\\ref{tab:nature}, row 13.",
+    ),
+    (
+        "Section 9 (vi): the ring read, DOES NOT CLOSE within the grain",
+        "and the $\\gamma = 1$ ring refused by the working bound, NOT DECIDED \\cite{ringrun}.",
+        "and, on the split ladder, every ring read inside its pins (the deciding pin $0.731$ against $0.731 \\pm 0.025$, DETECTOR), the constant through the stated factors outside the one-grain pin by $2.40$, $1.07$, $1.40$ grains at $\\gamma = 1$: DOES NOT CLOSE within the grain \\cite{ringrun}.",
+    ),
+    (
+        "the abstract: the ring read, the ladder not read on the board",
+        "and the atom's ladder $1/j^2$ with Balmer's $27/20$; neither is read.",
+        "and the atom's ladder $1/j^2$ with Balmer's $27/20$; the ring under its rule is read and its constant does not close within the grain, and the ladder is not read on the board, no lattice able to hold the atom's scale being run.",
+    ),
+    (
+        "What is proved: the ring read, the ladder not read on the board",
+        "and the atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, with Balmer's $27/20$ in the shell mean's limit. After a detector",
+        "and the atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, with Balmer's $27/20$ in the shell mean's limit; the ring's run reads its rule inside its pins and its constant outside the one-grain pin, and the ladder is computed from the algebra, not read on the board. After a detector",
+    ),
+    (
+        "the not-computed paragraph, item (viii): the ring read",
+        "conjectured from the algebra, not computed, the deciding ring NOT READ (row 13).",
+        "conjectured from the algebra; the ring's rule read inside its pins and the constant $4$ not closing within the grain (row 13).",
+    ),
+    (
+        "the ledger's bending row: the ring read",
+        "The bending's coefficient $2(1 + \\gamma)$ on the one constant, the $M/b$ form & the flow counted per Euclidean Link (flow-link-v1), the ring of starts & a hypothesis beside the law; $c_f$ and $\\gamma$ inputs; the two stated factors & conjectured from the algebra, not read & \\ref{sec:delay} \\\\",
+        "The bending's coefficient $2(1 + \\gamma)$ on the one constant, the $M/b$ form & the flow counted per Euclidean Link (flow-link-v1), the ring of starts & a hypothesis beside the law; $c_f$ and $\\gamma$ inputs; the two stated factors & conjectured from the algebra; the ring read inside its pins, $4$ not closing within the grain & \\ref{sec:delay} \\\\",
+    ),
+    (
+        "the ledger's atom row: not read on the board, the scale not run (the owner's word, record 997)",
+        "The atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, Balmer's $27/20$ & the closure congruence of the action rows, the balance of the shell mean, the virial form & the shell mean's limit; atom-level-v1 (a hypothesis) for the release & conjectured from the algebra, not read & \\ref{sec:discussion} \\\\",
+        "The atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, Balmer's $27/20$ & the closure congruence of the action rows, the balance of the shell mean, the virial form & the shell mean's limit; atom-level-v1 (a hypothesis) for the release & conjectured from the algebra; computed from the algebra, not read on the board; a lattice able to hold the scale is not run & \\ref{sec:discussion} \\\\",
+    ),
+    (
+        "Section 9 (viii): the atom by the algebra alone, the scale statement (the owner's word, record 997)",
+        "At the lattice's grain the three-rung ratio cannot decide between Balmer's form and the fan's departure (the physics-rule reviewer's read of 2026-09-22, \\cite[record 991, pending merge]{log}: $1/j^2$ at the read closures $1.892$, $3.017$, $4.001$ gives $1.280$; the generator $1.373$; the fan's $1.431$; the band about $\\pm 0.13$ to $0.29$), so a reading of the levels enters as a reading with its band, not a match, and row 6 stays NOT YET on the line.",
+        "The atom enters the paper by the algebraic formula alone, and the paper says plainly why: its levels cannot be read on any lattice that can be run. In nature the electron's orbit radius over the nucleus's radius is about sixty thousand (the Bohr radius $5.3 \\times 10^{-11}$ m over the proton's $0.84 \\times 10^{-15}$ m), while the lattice worlds put the electron at $r = 3$ to $12$ Nodes from the proton, where the fan's grain (about $17$ degrees per shell at $r = 3$, the flux $17$ percent below the inverse square) is the named limit; a lattice of order fifty thousand on a side would be needed and is not run (the model owner, \\cite[record 997, pending merge]{log}). So the ladder is the algebra's convergence to Balmer's form in the limit: computed from the algebra, not read on the board; a lattice able to hold the scale is not run; not shown in nature. No run of the levels is cited as a reading, and row 6 stays NOT YET on the line.",
+    ),
+    (
+        "row 6: not read on the board, the scale not run",
+        "; the ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$ and Balmer's $27/20$ conjectured from the algebra in the shell mean's limit, not read (Section~\\ref{sec:discussion} (viii)) \\\\",
+        "; the ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$ and Balmer's $27/20$ conjectured from the algebra in the shell mean's limit, computed from the algebra, not read on the board; a lattice able to hold the scale (the orbit's radius sixty thousand times the nucleus's) is not run (Section~\\ref{sec:discussion} (viii)) \\\\",
+    ),
+    (
+        "the references: the ring's run at the split ladder's commit",
+        "on the branch \\texttt{flow-link-build} at a3be9ba1 (PR \\#854 opened, not yet merged; the merge commit replaces this).",
+        "on the branch \\texttt{flow-link-build} at de4f4410, the run on the split ladder (PR \\#854 opened, not yet merged; the merge commit replaces this).",
+    ),
 ]
 
 
