@@ -1,0 +1,33 @@
+[COMPUTATION] the world's action h = 16 p_B(8) = 5536242544 (the generator's rule); N = 64; Q = 64; S = 45120; M = 1836
+[COMPUTATION] r = 3: E_body = 87.500 entries per shell; p_B = 555685910; v = 0.08881 Links per interval; j = 2 pi p r / h = 1.8920 (the shell mean's 4 sqrt(r / 12) = 2.0000); T = 2 pi r / v = 212.2; kicks per loop = 21.2; side 35 (c = 17), the electron at (c + 3, c, c); ticks 3000
+[COMPUTATION] r = 7: E_body = 18.400 entries per shell; p_B = 379720613; v = 0.06377 Links per interval; j = 2 pi p r / h = 3.0167 (the shell mean's 4 sqrt(r / 12) = 3.0551); T = 2 pi r / v = 689.7; kicks per loop = 69.0; side 43 (c = 21), the electron at (c + 7, c, c); ticks 3500
+[COMPUTATION] r = 12: E_body = 6.588 entries per shell; p_B = 293783192; v = 0.05059 Links per interval; j = 2 pi p r / h = 4.0010 (the shell mean's 4 sqrt(r / 12) = 4.0000); T = 2 pi r / v = 1490.3; kicks per loop = 149.0; side 53 (c = 26), the electron at (c + 12, c, c); ticks 7500
+[COMPUTATION] the level at each rung, L = floor(n_l Delta A / (2 h d_l T)) with Delta A = j N h on the closed loop, T the period rounded
+  [256, 1] r = 3: L = 73 steps from the generator's j 1.8920 and T 212 (the whole rung's n_l N j / (2 T) = 77.28); alias bound 32
+  [256, 1] r = 7: L = 35 steps from the generator's j 3.0167 and T 690 (the whole rung's n_l N j / (2 T) = 35.62); alias bound 32
+  [256, 1] r = 12: L = 21 steps from the generator's j 4.0010 and T 1490 (the whole rung's n_l N j / (2 T) = 21.99); alias bound 32
+  [256, 1] the lines: s(4 to 2) = L_2 - L_4 = 52, s(3 to 2) = L_2 - L_3 = 38, the ratio 26/19 = 1.3684, the grain's band 1 / 38 = 0.0263
+  the shell mean's ratio from the whole rungs 2, 3, 4: 27/20 = 1.35 (Balmer's, on the comparison side)
+  [512, 1] r = 3: L = 146 steps from the generator's j 1.8920 and T 212 (the whole rung's n_l N j / (2 T) = 154.57); alias bound 32
+  [512, 1] r = 7: L = 71 steps from the generator's j 3.0167 and T 690 (the whole rung's n_l N j / (2 T) = 71.23); alias bound 32
+  [512, 1] r = 12: L = 43 steps from the generator's j 4.0010 and T 1490 (the whole rung's n_l N j / (2 T) = 43.98); alias bound 32
+  [512, 1] the lines: s(4 to 2) = L_2 - L_4 = 103, s(3 to 2) = L_2 - L_3 = 75, the ratio 103/75 = 1.3733, the grain's band 1 / 75 = 0.0133
+  the shell mean's ratio from the whole rungs 2, 3, 4: 27/20 = 1.35 (Balmer's, on the comparison side)
+[COMPUTATION] the ratio of the two levels' ladder as the generator's own j and T give it (no whole rung assumed)
+  r = 3: j / (2 T) = 0.004457 circles per interval; against the rung-4 value x (4 / j)^2: 0.006000
+  r = 7: j / (2 T) = 0.002187 circles per interval; against the rung-4 value x (4 / j)^2: 0.002360
+  r = 12: j / (2 T) = 0.001342 circles per interval; against the rung-4 value x (4 / j)^2: 0.001342
+  the ratio (L_2 - L_4) / (L_2 - L_3) from the generator's own numbers, before the floor: 1.3720
+[COMPUTATION] the fan's departure: a level ~ j^-e with e = (2 k - 2) / (3 - k) under a flux r^-k
+  k = 2.0: e = 2.000; (4 to 2) / (3 to 2) = 1.3500; (5 to 2) / (3 to 2) = 1.5120
+  k = 1.83: e = 1.419; (4 to 2) / (3 to 2) = 1.4310; (5 to 2) / (3 to 2) = 1.6630
+  k = 1.69: e = 1.053; (4 to 2) / (3 to 2) = 1.4906; (5 to 2) / (3 to 2) = 1.7810
+  k = 1.5: e = 0.667; (4 to 2) / (3 to 2) = 1.5623; (5 to 2) / (3 to 2) = 1.9299
+  k = 1.35: e = 0.424; (4 to 2) / (3 to 2) = 1.6121; (5 to 2) / (3 to 2) = 2.0381
+[COMPUTATION] the pulse's grain per rung: the proton's shells per loop and the kick per shell in degrees of the momentum
+  r = 3: 21.2 shells per loop, 16.96 degrees per shell
+  r = 7: 69.0 shells per loop, 5.22 degrees per shell
+  r = 12: 149.0 shells per loop, 2.42 degrees per shell
+[COMPUTATION] the bounds: n_l Delta A and 2 h d_l T against 2^62
+  [256, 1]: n_l x 8 N h = 7.256e+14; 2 h d_l x 10^4 = 1.107e+14; 2^62 = 4.612e+18
+  [512, 1]: n_l x 8 N h = 1.451e+15; 2 h d_l x 10^4 = 1.107e+14; 2^62 = 4.612e+18

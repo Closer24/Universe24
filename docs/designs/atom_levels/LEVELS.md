@@ -5,18 +5,25 @@ under the model owner's word of that day ("Of course, go for it. That
 this should be the default level of the atom. And it should go into the
 paper if it proves to be a very good match", record 973 of
 [docs/LOG_2026-09-20.md](../../LOG_2026-09-20.md) once merged; his
-question of the levels' algebraic formula, record 972). Step 1, docs
-only: no engine line, no world file, no run, no pin moved after this
-file. Base `origin/main` 0ac9f3b (PR #885 merged). The algebra it
-continues is [ALGEBRA.md](../atom_algebra/ALGEBRA.md) (the closure as an
-integer congruence, section 1 (a); the ladder `a_j / a_i = (j / i)^2`,
-section 2; the click, section 3; the comparison side, section 4; the
-verdict NEEDS A NEW RULE and the primitive it names, section 6); the
-loop it would be read on is the one that stays under the centred step
+question of the levels' algebraic formula, record 972). Step 1 (9cef450d,
+docs only) named the rule and the pins for one world; step 2a (this
+revision, docs only) redraws the rule in the VIRIAL FORM on the
+physics-rule reviewer's recommendation (ADMISSIBLE under either form at
+9cef450d; the virial form exact for every closed loop of the
+inverse-square limit, the momentum form a labelled diagnostic beside it)
+and the pins for THREE WORLDS, one per rung, on the owner's word
+"straight to the three worlds" (no single-world run). No engine line, no
+world file, no run, no pin moved after this file. Base `origin/main`
+0ac9f3b (PR #885 merged). The algebra it continues is
+[ALGEBRA.md](../atom_algebra/ALGEBRA.md) (the closure as an integer
+congruence, section 1 (a); the ladder `a_j / a_i = (j / i)^2`, section 2;
+the click, section 3; the comparison side, section 4; the verdict NEEDS A
+NEW RULE and the primitive it names, section 6); the loop it is read on
+is the one that stays under the centred step
 ([CENTRED_STEP.md](../atom_give/CENTRED_STEP.md), [RUN_CENTRED.md](../atom_give/RUN_CENTRED.md),
-the cause in [CAUSE.md](../atom_give/CAUSE.md)); the return and the paid
-release are those of [DESIGN.md](../atom_give/DESIGN.md) section 1 (b)
-and (c) (atom-give-v1, records 881, 899), reused, nothing copied; the
+the cause in [CAUSE.md](../atom_give/CAUSE.md)); the return, the give
+rows and the paid release are those of [DESIGN.md](../atom_give/DESIGN.md)
+section 1 (atom-give-v1, records 881, 899), reused, nothing copied; the
 frequency of a row is the paper's Planck identity (`E = h_q s = (h_q
 N_phi) f`, paper/general_formula/main.tex, "Planck and de Broglie, as
 identities"). The rules obeyed: Bohr's, Balmer's and Rydberg's forms
@@ -25,13 +32,16 @@ every number is labelled COMPUTATION (the algebra on the law's
 integers), GAMEBOARD (the host's view of the mechanism) or DETECTOR (a
 click, a record's moments, a body's own record, record 281); a GAMEBOARD
 reading is a diagnostic and is never pinned; nothing here claims that
-nature is so (record 762). Every number in this file is a COMPUTATION
-from the declared integers of the registered world
-`examples/events/atoms/hydrogen_r12_centred.json` (its `action`, its
-electron's momentum, N, Q, the width, the content) or from the readings
-RUN_CENTRED.md already made on that world, each labelled with its kind;
-the script that prints them is beside this file
-([levels_map.py](levels_map.py), its output [levels_map.out](levels_map.out)).
+nature is so (record 762). Every number is a COMPUTATION from the
+declared integers of the registered world
+`examples/events/atoms/hydrogen_r12_centred.json`, from the atoms
+generator's arithmetic at the three radii, or from the readings
+RUN_CENTRED.md already made, each labelled with its kind; the scripts
+that print them are beside this file ([levels_map.py](levels_map.py),
+[levels_map.out](levels_map.out): the ladder, the two forms' lines, the
+momentum form's diagnostic; [rungs_map.py](rungs_map.py),
+[rungs_map.out](rungs_map.out): the three rungs from the generator, the
+levels, the ratio, the fan's departure).
 
 **The verdict in one line.** The rule as ALGEBRA.md section 6 names it,
 corrected so that it reads the DIFFERENCE of two closures and not the
@@ -39,79 +49,80 @@ body's own circles (section 2 (a)), releases at a closure a content
 linear in `j - i`, the difference of the two closures' ACTIONS, so it
 gives the ratio `nu(4 to 2) / nu(3 to 2) = 2` exactly, against Balmer's
 `27 / 20 = 1.35` (section 3 (b)): SAID PLAINLY, a mismatch by the
-algebra before any run. The least change within the six verbs that gives
-the difference of the loops' CONSTANTS is to read the closure through
-the momentum's bilinear form in place of the action rows' difference:
-the release at a closure of `(p . p - p_ret . p_ret) / (2 Q S M)`, the
-same three integers held on the record, one verb swapped (section 3
-(c)); under it the ratio is exactly `27 / 20` in the shell mean's limit
-for two circles, with no constant tuned to it (the ratio is free of
-every declared integer of the rule), and `18 / 13` or `289 / 214` at
-the two grains a world can declare (section 3 (d)). That corrected form
-is what this file names `atom-level-v1`; it passes the three tests
-(section 4). What no rule of this file gives (section 6): the
-transition itself (no operation of the law carries the body from the
-closed loop j to the closed loop i with `2 i^2 < j^2`, ALGEBRA.md
-section 3 (c)), and therefore no run of the one world reads two lines
-of hydrogen: the pins of section 5 read the rule's arithmetic on the
-lattice's loop, DETECTOR, and NATURE row 6 stays NOT YET whatever that
-run reads. The owner's condition (into the paper only if the reading
-matches nature within its declared band) cannot be met by the one run;
-what could meet it is named in section 6 (three worlds, one per rung,
-the levels read and the ratio a computation of three detector
-readings), not ordered here.
+algebra before any run. Within the six verbs the loops' CONSTANTS are on
+the record in two forms, and atom-level-v1 carries the virial one: the
+level of a closure is the action gained over the loop over twice its
+count, `Delta A / (2 N T)`, minus the loop's constant of the limit for
+EVERY closed loop of the inverse square (`-j h / (2 T_j)` on the rung j,
+the ratio of two counts the faces already read), and the release at a
+closure is the difference of this return's level and the last released
+one (section 2 (b)); under it two lines stand in Balmer's ratio exactly
+in the shell mean's limit, `27 / 20`, free of every declared integer of
+the rule (section 3 (c)), and the three tests pass (section 4). The
+transition itself is in no rule of this file (section 6), so the levels
+are read on three worlds, one per rung at whole Links (r = 3, 7 and 12;
+the generator's own closures 1.892, 3.017 and 4.001), the level of each
+off the body's own record and off the faces' counts, and the ratio of
+two lines is a COMPUTATION from three DETECTOR readings (section 5): the
+generator predicts `103 / 75 = 1.373` at the pair `[512, 1]`, above
+Balmer's `27 / 20` by 1.7 percent through the fan's grain at r = 3
+(`j = 1.892` against the shell mean's 2), inside the band the lattice's
+own closures carry (plus or minus 0.13 at 5 percent per level); the
+reading decides, and the paper's row says the band it was read within.
 
 **The six lines (the report's head; every number labelled).**
 
 1. *The information.* A body whose record turns by momentum (the three
    action rows under `phase_by_momentum`) carries, under the world key
-   `atom_level`, three more integers, its momentum at the last return
-   `p_ret` (the birth momentum at birth), one signed accumulator `level`
-   and the last nonzero sign of `p_axis` (DESIGN.md's return). At a
-   return (the momentum's declared component crossing zero in the
-   declared sense, once per loop, read off its own record) the body adds
-   `p . p - p_ret . p_ret` to `level`, sets `p_ret := p`, and, when
-   `level` holds a whole wall `W_l = floor(2 Q S M h d_l / (N n_l))`,
-   releases one row per declared direction of the declared paid family,
-   content per unit `h_q s` with s the whole part (the remainder kept),
-   the row's phase turning s steps per interval of its age, the body's
-   content less by `D h_q s` and its momentum less by the rows' labels
-   (zero on a symmetric list). Nothing is kept at a Node; each row
-   crosses one Link per interval and clicks at a detector with its
+   `atom_level`, DESIGN.md's three give rows (the action gained on each
+   axis since the last return, here WITHOUT the modulus), one count
+   (its self-creations since the last return), one integer (the level at
+   the last release) and the last nonzero sign of `p_axis`. At a return
+   (the momentum's declared component crossing zero in the declared
+   sense, once per loop, read off its own record) the body forms its
+   level, `L = floor(n_l Delta A / (2 h d_l T))`, from the two integers
+   of its own record, and, when L exceeds the level at the last release
+   by `s >= 1`, releases one row per declared direction of the declared
+   paid family, content per unit `h_q s`, the row's phase turning s
+   steps per interval of its age, its content less by `D h_q s` and its
+   momentum less by the rows' labels (zero on a symmetric list); then
+   zeroes the give rows and the count. Nothing is kept at a Node; each
+   row crosses one Link per interval and clicks at a detector with its
    content, its phase and its count (DETECTOR); the host's tick is lost
    (GAMEBOARD).
-2. *The generic solution.* One primitive for every family alike: three
-   held integers and one accumulator on the record, one bilinear form
-   with the declared identity matrix (verb 2), one translation with a
-   wall (verb 1), one Euclidean division with the remainder kept (verb
-   6), the law's own paid release; the declared integers N, h, Q, S of
-   the world, M of the body, `h_q` of the family, the pair `[n_l, d_l]`
-   and `[axis, sign]` of the apparatus; no family name, no kind; a body
-   that never returns releases nothing, a value and not a branch.
-3. *Why it works, and what refutes it.* On the ladder's circles the
-   momentum is `p_j = p_1 / j` in the shell mean (ALGEBRA.md section 2
-   (b)) and the loop's constant is `-p_j . p_j / (2 m_i)`, so the
-   difference of two closures' bilinear forms is the difference of the
-   levels, `E_1 (1 / i^2 - 1 / j^2)`, and two lines' contents stand in
-   Balmer's ratio exactly (COMPUTATION, the limit's); a body on the same
-   closed loop returns with the same momentum and releases nothing (the
-   stability of a rung is a fixed point). On the lattice's loop of
-   RUN_CENTRED.md (which tightens, 12 to 7 Links over five turns) the
-   momentum's bilinear form rises at every return to the +x axis, so the
-   rule releases 0, 2, 2, 1, 2 steps at the five returns at the pair
-   `[64, 1]`, 7 in all (EXPECTED DETECTOR, section 5). What refutes the
-   rule's arithmetic: a `light` click at a return whose content is off
-   the algebra's by more than one step, or a release at a return where
-   the bilinear form fell. What refutes the identity: any registered
-   world differing by a byte with the key absent.
+2. *The generic solution.* One primitive for every family alike: the
+   give rows and one count translated by their rates (verb 1), one
+   Euclidean division of the record's action by the record's count
+   against the declared wall (verb 6, the give's division by the body's
+   own M its precedent), one comparison, the law's own paid release; the
+   declared integers N, h of the world, `h_q` of the family, the pair
+   `[n_l, d_l]` and `[axis, sign]` of the apparatus; no family name, no
+   kind; a body that never returns releases nothing, a value and not a
+   branch.
+3. *Why it works, and what refutes it.* On every closed loop of the
+   inverse-square limit the sum over the loop of `abs(p_axis)` is the
+   line integral of **p**, `2 T` times the mean kinetic term, `-2 T`
+   times the loop's constant (the virial identity), so `Delta A / (2 N
+   T) = -E` exactly there and on the rung j `-E_j = j h / (2 T_j)`: the
+   ratio of two counts. A body that stays on its loop reads the same
+   level at every return and releases nothing (the stability of a rung
+   is a fixed point); two lines' contents stand in Balmer's ratio in
+   the limit (COMPUTATION). On the three worlds the generator gives the
+   levels 146, 71 and 43 steps at `[512, 1]` (EXPECTED DETECTOR, section
+   5), the lines 103 and 75, the ratio 1.373. What refutes the rule's
+   arithmetic: a level read off the record that differs from `floor(n_l
+   Delta A / (2 h d_l T))` of the same record's `Delta A` and T, or a
+   `light` click whose content is not the difference of two levels the
+   record read. What refutes the identity: any registered world
+   differing by a byte with the key absent.
 4. *Why do this at all.* It writes down, from the law's integers, what
    the levels ARE (the ladder `a_j`, `T_j`, `E_j` with their kinds,
    section 1), what a release of the difference of two closures GIVES
    (linear in `j - i` from the action rows; Balmer's `1 / i^2 - 1 / j^2`
-   from the momentum's bilinear form), and what no rule gives (the
-   transition); without it the owner's question of record 972 has the
-   ladder and no line, and the run he asked for would be made on a rule
-   that misses 1.35 before it starts.
+   from the level as a ratio of counts), and what no rule gives (the
+   transition); and it reads the levels where the law can read them,
+   one rung per world, so that NATURE row 6 gets a detector reading with
+   a declared band in place of NOT YET.
 5. *The Highlights.* Kept: the six verbs and no seventh (record 181),
    the click as the one operation (P6), charge per unit of content (note
    28), the three tests (record 202), only a detector's reading a
@@ -119,27 +130,28 @@ readings), not ordered here.
    comparison side only (record 817), the closure as an integer
    congruence in the law (record 864), the atom's rules outside the law
    under their own identities until their gates (records 881, 910), the
-   centred step and form B as keys until the paper's close (records 955,
-   972). Nothing asked to change; one word asked of the owner in section
-   6: which of the two forms of section 3 the identity carries (the
-   corrected action form, exact in the law's integers and off Balmer's
-   ratio by construction; or the momentum form, Balmer's in the limit),
-   this file recommending the second.
-6. *The implementation.* None in the tree by this file: one design file,
-   one map script with its output, one index row. Step 2, on the Boss's
-   word after the reviewer's ADMISSIBLE: the world key and the body key
-   (`world.py`), five integers on the counts table (`measured.py`), the
-   return, the bilinear form, the wall and the release through
-   `engine._give`'s path (`engine.py`), the row's own phase rate under
-   the key (`nature_beam.py`, one column), one test module with the gate
-   set's byte identity, one world file (`hydrogen_r12_level.json`, the
-   centred world plus the key), one run of 7500 ticks (about 80 s and
-   125 MB, RUN_CENTRED.md's cost) read by the runner's method with the
-   `light` clicks grouped per return; host estimate about three hours
-   end to end (the build two, the run and the reading one), the review
-   beside. Dangerous: nothing with the key off (the byte identity
-   asserted); with it on, a body loses `D h_q s` of content at a giving
-   return, at most 12 units of 1836 per return on the world of section 5.
+   centred step as a key until the paper's close and form B the default
+   drive from now (records 955, 972). Nothing asked to change; the one
+   word the owner has not given is the form (the Boss takes the
+   reviewer's, the virial form, unless he says otherwise before the
+   build).
+6. *The implementation.* None in the tree by this file: one design
+   file, two map scripts with their outputs, one index row. Step 2b, on
+   the Boss's word after the reviewer's short read: the world key and
+   the body key (`world.py`), the give rows without the modulus, the
+   count and the last level on the counts table (`measured.py`), the
+   return, the division, the release through `engine._give`'s path
+   (`engine.py`), the row's own phase rate under the key
+   (`nature_beam.py`, one column), one test module with the gate set's
+   byte identity, the generator extended with a radius and the key
+   (`examples/events/atoms/make_worlds.py`), three world files, three
+   headless runs (about 80, 40 and 30 s: 7500, 3500 and 3000 ticks on
+   53^3, 43^3 and 35^3), the reading by kind, RUN.md; host estimate
+   about three hours end to end (the build two, the runs and the reading
+   one), the CI the gate. Dangerous: nothing with the key off (the byte
+   identity asserted); with it on, a body loses `D h_q s` of content at
+   a releasing return, a few units of 1836 per return on a loop that
+   wanders by a step of its level.
 
 **Notation** (skills/workflow.md, "Notation"; ALGEBRA.md's, with the
 additions). N = 64 the phase circle's steps (`N_phi` in the paper); h the
@@ -149,22 +161,26 @@ content; `m_i = Q S M = 5 301 780 480` the inertial constant of the
 drive's limit (Theorem 4 of the Einstein Outside derivation); `h_q` a
 family's quantum (1 on `light`); **p** the body's momentum vector in
 label units, `p_a` its component on the axis a, `p . p` its bilinear
-form with the identity matrix (`p_x^2 + p_y^2 + p_z^2`); **p_ret** the
-momentum held at the last return; `A_a` the action row of the axis a,
-`A_ret_a` its value at the last return, `Delta A = sum over a of (A_a -
-A_ret_a)` the action gained over one loop; j, i whole numbers (the
-circles the phase turns per return of two closed loops, `j > i` for a
-release); `a_j` the semi-major axis of the closed loop j; `T_j` its
-period (a count of the body's self-creations, or of a detector's, between
-two returns); `E_j` the loop's constant in the shell mean's limit (a name
-of the limit, ALGEBRA.md section 3 (c), never of the law); s the turn of
-a released row (a count of phase steps, the paper's s); f its frequency
-in circles per interval (`f = s / N`); c its content per unit (`c = h_q
-s`); w its amount (1); D the count of the body's declared directions (4
-on the electron); `[n_l, d_l]` the rule's pair (section 2 (c)); `W_l` the
-rule's wall; `floor(x)` the whole part; pi the circle's ratio (the
-limit's only). COMPUTATION, GAMEBOARD, DETECTOR and EXPECTED DETECTOR
-are the kinds of a number (record 281; the atoms pins' usage).
+form with the identity matrix; `A_a` the action row of the axis a,
+`Delta A = sum over a of (A_a - A_ret_a)` the action gained over one
+loop (the give rows' sum, `j N h` on a closed loop); T the count of the
+body's self-creations between two returns (the loop's period; the same
+count a detector reads between two clicks of rows from one axis); L the
+level of a closure (a count of phase steps, section 2 (b)); `L_rel` the
+level at the last release; j, i whole numbers (the circles the phase
+turns per return of two closed loops, `j > i` for a release); `a_j` the
+semi-major axis of the closed loop j; `T_j` its period; `E_j` the loop's
+constant in the shell mean's limit (a name of the limit, ALGEBRA.md
+section 3 (c), never of the law); s the turn of a released row (a count
+of phase steps, the paper's s); f its frequency in circles per interval
+(`f = s / N`); c its content per unit (`c = h_q s`); w its amount (1); D
+the count of the body's declared directions (4 on the electron); `[n_l,
+d_l]` the rule's pair (section 2 (c)); `E_body(r)` the entries per shell
+the electron's three Nodes receive on the ring at r (the generator's
+flux count); k the exponent of the lattice's ring flux `r^-k`;
+`floor(x)` the whole part; pi the circle's ratio (the limit's only).
+COMPUTATION, GAMEBOARD, DETECTOR and EXPECTED DETECTOR are the kinds of
+a number (record 281; the atoms pins' usage).
 
 ## 1. The ladder of closed loops from the congruence, in the law's integers
 
@@ -195,14 +211,20 @@ the balance `p^2 = kappa m_i / r` of the shell mean (ALGEBRA.md section
 rung j has (ALGEBRA.md section 2 (b), the limit's algebra, no root on
 the GameBoard):
 
-    a_j = j^2 h^2 / (4 pi^2 kappa m_i),   p_j = 2 pi kappa m_i / (j h),   T_j = j^3 h^3 / (4 pi^2 kappa^2 m_i),   E_j = -p_j^2 / (2 m_i) = -kappa / (2 a_j).
+    a_j = j^2 h^2 / (4 pi^2 kappa m_i),   p_j = 2 pi kappa m_i / (j h),   T_j = j^3 h^3 / (4 pi^2 kappa^2 m_i),   E_j = -p_j^2 / (2 m_i) = -kappa / (2 a_j) = -j h / (2 T_j).
 
-The last equality is the balance itself (`kappa / a_j = p_j^2 / m_i` on
-the circle): the loop's constant of the inverse-square limit is minus
-the bilinear form of its momentum over `2 m_i`. Against the registered
-rung (r = 12, the declared momentum `p_4 = 293 783 192`, the closure `j
-= 4.001` under this h, [PINS.md](../atoms/PINS.md) section 2) the limit
-gives the others by the ratios alone, kappa cancelling:
+The second equality is the balance itself (`kappa / a_j = p_j^2 / m_i`
+on the circle); the third is the same constant written in the law's own
+counts: `p_j v_j / 2` is the kinetic term, `2 pi a_j = v_j T_j` the loop,
+`2 pi p_j a_j = j h` the closure, so `p_j v_j / 2 = j h / (2 T_j)`. More
+than the circle: on ANY closed loop of the inverse-square limit the line
+integral of **p** over the loop is `2 T` times the time-mean of the
+kinetic term and `-2 T E` (the virial identity of the `1 / r` force),
+so `E = -(the loop's action) / (2 T)` for every bound loop, the circle
+the case `a = r`. Against the registered rung (r = 12, the declared
+momentum `p_4 = 293 783 192`, the closure `j = 4.001` under this h,
+[PINS.md](../atoms/PINS.md) section 2) the limit gives the others by the
+ratios alone, kappa cancelling:
 
     p_j = 4 p_4 / j,   a_j = 12 (j / 4)^2 Links,   T_j = T_4 (j / 4)^3,   E_j = E_1 / j^2,   E_1 = (4 p_4)^2 / (2 m_i).
 
@@ -220,15 +242,16 @@ whole only where j divides `4 p_4`; the period from the registered
 `T_4 = 1462` of series H on `main`'s drive, 1490 under form B, 1431 at
 the centred world's first return, DETECTOR each, RUN_CENTRED.md
 section 2), `E_1 = 1 348 571 310 964 201 / 10 355 040` exactly, the
-sixth the dictionary's `h = h_q N` applied to the level (`N E_j / h`).
-The held content is the body's own M, unchanged on a closed loop by the
-law (the electron's rows are free, ALGEBRA.md section 0) and unchanged
-by the rule of section 2 (a closed loop returns with the same momentum
-and releases nothing). The ratios, r-free and kappa-free, are the
-ladder's own: `a_j / a_i = (j / i)^2`, `T_j / T_i = (j / i)^3`, `p_j /
-p_i = i / j`, `E_j / E_i = (i / j)^2`; on the lattice the fan's exponent
-1.709 replaces 2 in the first (ALGEBRA.md section 2 (d)), and the
-register's j table has one whole rung at this h, r = 12.
+sixth the dictionary's `h = h_q N` applied to the level (`N E_j / h =
+N j / (2 T_j)`, a ratio of two counts). The held content is the body's
+own M, unchanged on a closed loop by the law (the electron's rows are
+free, ALGEBRA.md section 0) and unchanged by the rule of section 2 (a
+closed loop reads the same level at every return and releases nothing).
+The ratios, r-free and kappa-free, are the ladder's own: `a_j / a_i =
+(j / i)^2`, `T_j / T_i = (j / i)^3`, `p_j / p_i = i / j`, `E_j / E_i =
+(i / j)^2`; on the lattice the fan's exponent 1.709 replaces 2 in the
+first (ALGEBRA.md section 2 (d)) and the fan's own departure of the
+levels is computed in section 5.
 
 What the sixth column says before any rule: the whole spectrum of the
 rung-4 world, `E_1`, is 1.5 steps of the phase circle at the world's
@@ -266,12 +289,14 @@ exact in the law's integers, generic, vector and local (the same five
 integers as DESIGN.md's give rows plus one); section 3 (b) shows what it
 gives, and why it is not the rule this file names.
 
-**(b) The rule named, in the law's integers (the momentum form of
-section 3 (c)).** Under the world key `atom_level` a body that declares
-`level` carries on its record, beside the law's three action rows:
+**(b) The rule named, in the law's integers (the virial form; the
+reviewer's recommendation on 9cef450d).** Under the world key
+`atom_level` a body that declares `level` carries on its record, beside
+the law's three action rows:
 
-    p_ret_x, p_ret_y, p_ret_z    the momentum at the last return (the birth momentum at birth; three integers);
-    level                        one signed accumulator, 0 at birth (the energy difference since the last release, in label units squared);
+    D_x, D_y, D_z    DESIGN.md's give rows WITHOUT the modulus: the action gained on each axis since the last return, the same rate abs(p_a) N at the same Links as the action rows, with the action rows' convention at a Link counted but not crossed (note 30 (ii)); Delta A = D_x + D_y + D_z;
+    T                the count of the body's self-creations since the last return (one integer, 0 at birth, +1 per self-creation);
+    L_rel            the level at the last release (UNSET at birth: the first return sets it and releases nothing, one closure being no difference);
     the last nonzero sign of p_axis on the declared axis (DESIGN.md section 1 (b), unchanged).
 
 The return is DESIGN.md's (section 1 (b), the reviewer's zero-state
@@ -280,32 +305,35 @@ declared sign while its last nonzero sign was the opposite, once per
 loop, never on a straight flight. At a return, in this order and in one
 interval:
 
-    rate  = (p . p) - (p_ret . p_ret)                            (two bilinear forms with the declared identity matrix, one subtraction; verb 2)
-    level := level + rate                                        (the translation of the accumulator by its rate; verb 1)
-    p_ret := p                                                   (the held momentum set to the record's)
-    s     = floor(level / W_l)  if level >= W_l,  else 0          (the Euclidean division by the declared wall, the remainder kept; verb 6)
-    level := level - s W_l
+    L     = floor(n_l Delta A / (2 h d_l T))                    (the level of this closure, a count of phase steps: one Euclidean division of the record's action by the record's count against the declared wall 2 h d_l, the remainder discarded as the band; verb 6)
+    s     = L - L_rel   if L_rel is set and L > L_rel,   else 0   (the difference of two closures' levels; one comparison, one subtraction; at the first return L_rel := L and s = 0)
     if s > 0: for each declared direction d of the body, one row of the declared paid family F is born at the body's Node:
         amount 1, content per unit c = h_q s, age 0, the body's phase and number, no record, the label c u_d (the law's paid birth, engine._give's path, BEAM_LAW note 40),
         the row's phase turning s steps per interval of its age (section 2 (d));
-    the body:  M := M - D h_q s;   p := p - (the sum of the rows' labels)      (the paid release's own recoil, born_recoil; zero on a symmetric list);
-        refuse loudly if D h_q s >= M (a body cannot give its whole content).
+        the body:  M := M - D h_q s;   p := p - (the sum of the rows' labels)      (the paid release's own recoil, born_recoil; zero on a symmetric list);
+        L_rel := L;   refuse loudly if D h_q s >= M (a body cannot give its whole content)
+    D_x := D_y := D_z := 0;   T := 0                              (A_ret_a := A_a on each axis; the count restarted)
 
-The wall, fixed at load from the declared integers (one rounding
-declared at load, the kind the three tests allow):
-
-    W_l = floor(2 Q S M h d_l / (N n_l))        (2 Q S M the drive's inertial constant times two, Theorem 4's `p^2 / (2 m_i)`; h / N the dictionary's quantum in the action's units; [n_l, d_l] the rule's pair),
-
-so that s is the whole part of `(p . p - p_ret . p_ret) / (2 m_i)`, the
-difference of the two closures' constants in the limit's name, in units
-of `h d_l / (N n_l)`: at `[1, 1]` the dictionary's own quantum `h / N`
-(one phase step of the world's action), at `[64, 1]` a sixty-fourth of
-it. A negative `level` (the bilinear form fell: the loop widened, the
-body's constant rose) releases nothing and holds the debt, which a later
-fall repays before any release (the signed accumulator's convention,
-record 126: a rate that reverses first cancels what it had accumulated).
-A body that never returns (a straight flight, a free body) never reads
-the rule: nothing on its record changes but the sign integer.
+What the integers say. On a closed loop `Delta A = j N h` and T is the
+loop's period, so `L = floor(n_l N j / (2 d_l T_j))`, the level `-E_j =
+j h / (2 T_j)` of section 1 (b) in units of `h d_l / (N n_l)`: at `[1,
+1]` the dictionary's own quantum `h / N` (one phase step of the world's
+action), at `[512, 1]` a five-hundred-and-twelfth of it. On the lattice
+`Delta A` carries the loop's fraction (`(j + f) N h`) and T its own
+count: the level is read exactly as the record has it, whole rung or
+not. A body that stays on its loop reads the same L at every return
+(within the fraction's and the count's grain) and releases nothing; a
+loop that tightens (its constant falls, L rises) releases the rise; a
+loop that widens (L falls) releases nothing, and `L_rel` holds the last
+released level so that a later rise releases only the net above it (the
+convention of the signed accumulator, record 126: what was accumulated
+the other way is cancelled first; the debt is kept in one integer, no
+draw). The momentum form of 9cef450d (`level += p . p - p_ret . p_ret`
+over the wall `2 Q S M h d_l / (N n_l)`) stays as a labelled GAMEBOARD
+diagnostic beside the runs (section 5, diagnostic (i)): exact for the
+ladder's circles, it reads the constant of an eccentric loop through
+its momentum at the apsis alone and misses the potential's difference
+at two apsides; the virial form reads the whole loop.
 
 **(c) The declarations and their bounds (all int64; kind 2 by the world
 and the tables, kind 3 by the apparatus).**
@@ -313,25 +341,26 @@ and the tables, kind 3 by the apparatus).**
 | The declaration | Where | What it says | Default |
 | --- | --- | --- | --- |
 | `atom_level: true` | the world | the identity `atom-level-v1`, listed under `hypotheses` in the record; the body key and the row's own phase rate are refused without it | absent: nothing parsed, every registered world byte identical |
-| `level: {"family": F, "pair": [n_l, d_l], "return": [axis, sign]}` | the body (a measured event with `phase_by_momentum`) | F the paid family of the released rows (quantum `h_q > 0`, refused on a free family); the pair the rule's grain (positive integers; `[1, 1]` the dictionary's); the return's axis (0, 1, 2) and the sign `p_axis` crosses TO (-1 or +1), DESIGN.md's | absent: no held integers, no return read |
+| `level: {"family": F, "pair": [n_l, d_l], "return": [axis, sign]}` | the body (a measured event with `phase_by_momentum`) | F the paid family of the released rows (quantum `h_q > 0`, refused on a free family); the pair the rule's grain (positive integers; `[1, 1]` the dictionary's); the return's axis (0, 1, 2) and the sign `p_axis` crosses TO (-1 or +1), DESIGN.md's | absent: no give rows, no count, no return read |
 | the body's `directions` | the body | the D headings the rows are born on (the electron's four in-plane headings; a symmetric list sums the recoil to zero) | the body's own list, no new key |
 
 | The integer | What it is | Its bound | Where checked |
 | --- | --- | --- | --- |
-| `p_a` | the body's momentum, one component | `abs(p_a) < 2^30` at every return under the key (then `p . p < 3 x 2^60 < 2^62`); the law's own `2^62 - 1` elsewhere | the engine, once per return, refused loudly (the atoms world: at most 4.5 x 10^8 read, RUN_CENTRED.md, a margin of 2.4) |
-| `rate` | `p . p - p_ret . p_ret` | `abs(rate) < 3 x 2^60` | follows |
-| `level` | the accumulator | `abs(level) < 3 x 2^60 + W_l < 2^62` | the parser refuses `W_l >= 2^60`; the engine's `bounded` at every return |
-| `W_l` | the wall | `1 <= W_l < 2^60`; computed at load in unbounded arithmetic and refused outside | the parser (`2 Q S M h` alone is `5.9 x 10^19`, beyond int64: the product is formed at load, never at run time) |
-| s | the turn | `s < N / 2` (the alias bound of the phase circle: a rate of N / 2 steps per interval or more is not read back from the clicks), refused loudly otherwise; `D h_q s < M` | the engine at the release |
+| `D_a`, `Delta A` | the give rows and their sum | `Delta A < 2^62 / n_l`: at `[512, 1]` a loop of at most `2^53 / (N h)` circles, `2.5 x 10^4` here; the engine refuses loudly at a return beyond it (a loop of eight circles is `2.8 x 10^12`) | the engine's `bounded` at every counted Link, as the action rows' |
+| T | the count since the last return | `2 h d_l T < 2^62`: T below `4 x 10^8` at this h; refused loudly beyond | the engine at the return (the periods here 212 to 1490) |
+| `n_l Delta A` | the dividend | `< 2^62` (`7.3 x 10^14` for eight circles at `[512, 1]`) | the engine at the return |
+| `2 h d_l T` | the divisor | `< 2^62` (`1.7 x 10^13` at T = 1490) | the engine at the return |
+| L, `L_rel`, s | the levels and the turn | `L <= n_l Delta A / (2 h d_l)`: at `[512, 1]` at most 256 per circle per count, 146 on the rung-2 world; `D h_q s < M` refused loudly; s taken modulo N for the row's rate (below), the content whole | the engine at the release |
 | c = `h_q s`, the label `c Q` | the row's content and label | the law's label bound (`c Q <= 2^62 - 1`) | `momentum_labels`, as at every birth |
 
-On the centred world at `[64, 1]`: `W_l = 14 332 003 248 205 440`
-(`1.43 x 10^16`, below `2^60 = 1.15 x 10^18`); at `[1, 1]`: `W_l = 917
-248 207 885 148 160` (`9.2 x 10^17`, below `2^60`). No root, no float,
-no run-time division beyond the one declared (by `W_l`), the remainder
-kept in `level`; the row's rate s steps per interval is one
-multiplication at the click (`phase_0 + s x age mod N`, the exact phase
-at the click from the row's accumulators, record 156) and no division.
+No root, no float, no run-time division beyond the one declared (by `2
+h d_l T`, the record's own count in the divisor as the momentum give's
+division by the body's own M, record 910's design, section 2); the
+remainder below one step is the band, discarded as declared (the same
+declaration as the give's `g`, DESIGN.md section 1 (c)); the row's rate
+s steps per interval is one multiplication at the click (`phase_0 + s x
+age mod N`, the exact phase at the click from the row's accumulators,
+record 156) and no division.
 
 **(d) The second declaration the identity makes: the row's phase rate
 from its content.** The law has one phase-per-age pair per family
@@ -348,9 +377,15 @@ row the law births), read where the row's phase is read (the click, a
 re-emission's stamp, the face click), carried unchanged by the
 collision and the meeting, an identity field of the merge (two rows are
 one only at equal rates); with the key absent the column is not
-allocated and every phase is as today. A row's frequency is then its
-content: `f = s / N` circles per interval, and the ratio of two lines'
-frequencies is the ratio of their contents, which section 3 computes.
+allocated and every phase is as today. The phase circle reads a rate
+modulo N: a release with `s >= N / 2` turns at `s mod N` and its
+frequency is not read back from the clicks unambiguously (the alias
+bound of the paper, `N_phi / 2`), so the run's record names every such
+release and the Planck pin of section 5 is read on the rows below it;
+the content carries s whole in every case. A row's frequency is then
+its content: `f = s / N` circles per interval, and the ratio of two
+lines' frequencies is the ratio of their contents, which section 3
+computes.
 
 ## 3. What the rule gives for the released row, and Balmer's ratio on the comparison side
 
@@ -361,16 +396,18 @@ operation of the law does it; the algebra here is what each form
 RELEASES at the first return after), the released row has the content
 `c = h_q s`, the family's declared pair as its rate without the second
 declaration (every line at one frequency), and with it the frequency `f
-= s / N` by the Planck identity. Every number COMPUTATION; the last
-two columns the dictionary's `[1, 1]` and the grain `[64, 1]` of the
-run's world:
+= s / N` by the Planck identity. The constants' form (the virial level
+`j h / (2 T_j)` and the momentum form's `p_j . p_j / (2 m_i)` are the
+same `E_j = E_1 / j^2` on the rungs, section 1 (b)) against the action
+form. Every number COMPUTATION; the last three columns the dictionary's
+`[1, 1]`, the run's `[512, 1]` and `[4096, 1]`:
 
-| `(j, i)` | the corrected action form (section 2 (a)): `g = j - i`, `f = g / N` | the momentum form (the rule): `Delta E = E_1 (1 / i^2 - 1 / j^2)`, exact | `Delta E`, label units x Links per interval | s at `[1, 1]` (`floor(N Delta E / h)`) | s at `[64, 1]` |
-| --- | --- | --- | --- | --- | --- |
-| (3, 2) | 1, `f = 1 / 64` | `E_1 x 5 / 36 = 1 348 571 310 964 201 / 74 556 288` | 18 087 962.09 | 0 (0.2091) | 13 (13.38) |
-| (4, 2) | 2, `f = 1 / 32` | `E_1 x 3 / 16 = 1 348 571 310 964 201 / 55 226 880` | 24 418 748.82 | 0 (0.2823) | 18 (18.07) |
-| (5, 2) | 3, `f = 3 / 64` | `E_1 x 21 / 100 = 9 439 999 176 749 407 / 345 168 000` | 27 348 998.68 | 0 (0.3162) | 20 (20.23) |
-| (2, 1) | 1, `f = 1 / 64` | `E_1 x 3 / 4 = 1 348 571 310 964 201 / 13 806 720` | 97 674 995.29 | 1 (1.1291) | 72 (72.27; above N / 2, refused: aliased on the circle of 64) |
+| `(j, i)` | the corrected action form (section 2 (a)): `g = j - i`, `f = g / N` | the constants' form (the rule): `Delta E = E_1 (1 / i^2 - 1 / j^2)`, exact | `Delta E`, label units x Links per interval | s at `[1, 1]` (`floor(N Delta E / h)`) | s at `[512, 1]` | s at `[4096, 1]` |
+| --- | --- | --- | --- | --- | --- | --- |
+| (3, 2) | 1, `f = 1 / 64` | `E_1 x 5 / 36 = 1 348 571 310 964 201 / 74 556 288` | 18 087 962.09 | 0 (0.2091) | 107 (107.06) | 856 |
+| (4, 2) | 2, `f = 1 / 32` | `E_1 x 3 / 16 = 1 348 571 310 964 201 / 55 226 880` | 24 418 748.82 | 0 (0.2823) | 144 (144.53) | 1156 |
+| (5, 2) | 3, `f = 3 / 64` | `E_1 x 21 / 100 = 9 439 999 176 749 407 / 345 168 000` | 27 348 998.68 | 0 (0.3162) | 161 (161.87) | 1294 |
+| (2, 1) | 1, `f = 1 / 64` | `E_1 x 3 / 4 = 1 348 571 310 964 201 / 13 806 720` | 97 674 995.29 | 1 (1.1291) | 578 (578.12) | 4624 |
 
 **(b) The corrected action form gives a difference linear in `j - i`.
 SAID PLAINLY.** Its release is `h_q (j - i)`, the difference of the two
@@ -393,150 +430,210 @@ over Balmer's `(3 to 2)` `27 / 5 = 5.4`. The action form misses all
 three by construction: `2` against `1.35`, `3` against `1.512`, `1`
 against `5.4`. No run is needed to say so, and no run would move it.
 
-**(c) The least change within the six verbs that gives the constants'
-difference.** The loop's constant is not on the record by name, but its
-value on the ladder's circles is: `E_j = -p_j . p_j / (2 m_i)` (section
-1 (b), the balance itself), and `p . p` is the bilinear form of the
-state vector **p** with the declared identity matrix, verb 2, its rate
-bilinear in the state as the click's weight is (`f^T G f`, record 173).
-So the least change is to hold the momentum at the last return in place
-of the action rows' value there (the same three integers on the record,
-`p_ret_a` for `A_ret_a`) and to release the difference of the two
-bilinear forms over the declared `2 Q S M`, which is section 2 (b). In
-the shell mean's limit, for two circles j and i:
+**(c) The constants' difference within the six verbs: two forms, the
+virial one taken.** The loop's constant is not on the record by name,
+but its value is, twice. (i) On the ladder's circles `E_j = -p_j . p_j
+/ (2 m_i)` (section 1 (b), the balance itself), and `p . p` is the
+bilinear form of the state vector **p** with the declared identity
+matrix, verb 2: the momentum form of 9cef450d, the momentum held at the
+last return in place of the action rows' value there and the release
+the difference of the two bilinear forms over the declared `2 Q S M`.
+(ii) On every closed loop of the inverse-square limit `E = -(the loop's
+action) / (2 T)` (section 1 (b), the virial identity), and both are on
+the record at a return: `Delta A` in the give rows (the action rows'
+own primitive, ALGEBRA.md section 6's) and T in the body's own count:
+the virial form of section 2 (b), one Euclidean division, the momentum
+give's division by the record's own M its precedent (record 910). In
+the shell mean's limit both give, for two rungs j and i,
 
-    (p_i . p_i - p_j . p_j) / (2 m_i) = E_1 (1 / i^2 - 1 / j^2) = E_j - E_i,        exactly (COMPUTATION, the limit's; the balance and the closure and nothing else),
+    E_j - E_i = E_1 (1 / i^2 - 1 / j^2),        exactly (COMPUTATION, the limit's; the balance and the closure and nothing else),
 
-the difference of the two closures' constants, and
+and
 
     nu(4 to 2) / nu(3 to 2) = (1 / 4 - 1 / 16) / (1 / 4 - 1 / 9) = 27 / 20        exactly, before any floor:
 
 the ratio is free of `E_1`, of `m_i`, of h, of N, of `h_q` and of the
 pair, which set the content's scale and never its ratio: no fitting,
-no constant tuned to it. The factor 2 in the wall is Theorem 4's (the
-drive's limit is Newton's, `p^2 / (2 m_i)`), and a wall without it would
-double every content and leave every ratio. Two facts stated for the
-reviewer: (i) the identity `E = -p . p / (2 m_i)` holds on the CIRCLES
-of the limit (the balance); on two closed loops of any shape it holds
-for the constants' difference only up to the potential's difference at
-the two return Nodes, `kappa (1 / r_ret_i - 1 / r_ret_j)`, which the body
-cannot read (its distance to the proton is not on its record: the local
-test forbids it), so the rule reads the ladder's rungs exactly and an
-eccentric loop's constant only through its momentum at the return; (ii)
-a second form within the six verbs, exact for ANY closed loop of the
-limit, reads the constant as the action gained over the loop over twice
-its count, `E = -Delta A / (2 N T)` (the virial identity of the
-inverse-square limit: the sum over a loop of `abs(p_axis)` is the line
-integral of **p**, equal to `2 T` times the mean kinetic term, equal to
-`-2 T E`), from the two integers the law already holds at a return
-(`Delta A`, the action rows' difference; T, the body's own count since
-the last return), a division by the count T (verb 6 with a state
-divisor, the momentum give's division by M its precedent), one more held
-integer (the last loop's quotient); it is named here as the form to
-take if the reviewer holds (i) against the momentum form, and it is not
-the one designed, being two integers and one state division heavier.
+no constant tuned to it. The factor 2 is the virial's (in the momentum
+form Theorem 4's `p^2 / (2 m_i)`, the same constant), and a wall
+without it would double every content and leave every ratio. The two
+forms differ off the circles: the momentum form reads an eccentric
+loop's constant through its momentum at the return Node alone and
+misses the potential's difference at two apsides, `kappa (1 / r_ret_i -
+1 / r_ret_j)`, which the body cannot read (its distance to the proton is
+not on its record: the local test forbids it); the virial form reads
+the whole loop and is exact for every closed loop of the limit. On the
+lattice's tightening loop of RUN_CENTRED.md the two disagree by the
+diagnostic of section 5 (6.07 to 13.35 against 5.90 to 6.89 steps at
+`[64, 1]`), which is why the reviewer's recommendation, and this file,
+take the virial form as the rule and keep the momentum form as the
+diagnostic beside it: two integers read against three held, the ratio
+of two counts the faces already read (ALGEBRA.md section 2 (c),
+readings 1 and 2), one state division per return.
 
-**(d) The grain, stated before any run.** The rule's s is a whole part,
+**(d) The grain, stated before any run.** The rule's L is a whole part,
 so the ratio it releases is a ratio of two whole numbers whose band is
-one part in the smaller: at `[64, 1]` on the rung-4 world, `s(3 to 2) =
-13` and `s(4 to 2) = 18`, the ratio `18 / 13 = 1.3846`, Balmer's `27 /
-20` inside its band `1 / 13 = 0.077`; at `[4096, 1]` (or at `[1, 1]` on
-a world of N = 4096, the same floor), `856` and `1156`, the ratio `289 /
-214 = 1.3505`, the band `1 / 856 = 0.0012`; at the dictionary's `[1, 1]`
-on the world of N = 64 every Balmer pair is below one step (`0.21`,
-`0.28`, `0.32` steps) and the release is 0: the ratio is not readable at
-that grain, and no rule of this file changes that, only the world's
-declared N or the pair. The smallest pair that reads Balmer's alpha at
-one step is `n_l / d_l >= 4.79`; at ten steps, `47.9`; at a hundred,
-`479` (COMPUTATION). The pair is the released family's Planck constant
-in units of the world's action (`h_F = h d_l / n_l`), a declaration of
-the dictionary and not of the ratio.
+one part in the smaller: at `[512, 1]` on the ladder's rungs from the
+rung-4 world's `E_1`, `s(3 to 2) = 107` and `s(4 to 2) = 144`, the ratio
+`144 / 107 = 1.3458`, Balmer's `27 / 20` inside its band `1 / 107 =
+0.0093`; at `[4096, 1]`, `856` and `1156`, the ratio `289 / 214 =
+1.3505`, the band `1 / 856 = 0.0012`; at the dictionary's `[1, 1]` on
+the world of N = 64 every Balmer pair is below one step (`0.21`, `0.28`,
+`0.32` steps) and the release is 0: the ratio is not readable at that
+grain, and no rule of this file changes that, only the world's declared
+N or the pair. The smallest pair that reads Balmer's alpha at one step
+is `n_l / d_l >= 4.79`; at ten steps, `47.9`; at a hundred, `479`
+(COMPUTATION). The pair is the released family's Planck constant in
+units of the world's action (`h_F = h d_l / n_l`), a declaration of the
+dictionary and not of the ratio; `[512, 1]` is declared for the three
+worlds of section 5 because it resolves the generator's levels to one
+part in 75 on the two lines and keeps the releases of a wandering loop
+below the alias bound (the r = 12 loop's rises at `[64, 1]` were 0 to 1
+step per return, `[512, 1]` reads them at 0 to 9).
 
-## 4. The three tests of every rule (skills/workflow.md, record 202), on atom-level-v1
+## 4. The three tests of every rule (skills/workflow.md, record 202), on atom-level-v1 (the virial form)
 
 | The test | The rule's answer | Verdict |
 | --- | --- | --- |
-| Generic | one primitive for every family alike: three held integers, one accumulator, one bilinear form with the declared identity matrix, one wall from the declared integers (Q, S, N, h of the world, M of the body, `[n_l, d_l]` of the apparatus), one Euclidean division, the law's own paid release with the family's declared quantum; no family name, no kind, no branch on a name; the electron, a muon, a planet alike (a planet of content `2^24` on a closed loop returns with its momentum and releases nothing; the rule's effect at a fixed level difference vanishes as `h / (N n_l)` against `2 Q S M x` the difference, the correspondence limit, compared with and not put in); a body that never returns, or whose family declares no phase circle, releases nothing as a value | PASS |
-| Vector | verb 2 (the bilinear form of **p** with the identity, twice, and their difference), verb 1 (the translation of `level` by that rate, and of `p_ret` to **p**), verb 6 (the Euclidean division of `level` by `W_l` with the remainder kept); the rate at most bilinear in the state; no root, no float; one rounding declared at load (`W_l`), none at run time; the bounds of section 2 (c) checked where `bounded` checks the drive today; the released row's rate s a multiplication at the click, no division | PASS |
-| Local | the body reads its own record only (its momentum, its held momentum, its accumulator, its content, its sign); the rows born cross one Link per interval on their digital lines; the row's rate rides on its own record; nothing kept at a Node beyond the events there (no register, no remainder elsewhere, no draw: the remainder is in `level`, on the record); fixed work (three products and three sums per return, one comparison, one division, D births) and fixed storage (five integers and one sign per body, one column per row under the key) for fixed K | PASS |
+| Generic | one primitive for every family alike: three give rows and one count translated by their rates, one held level, one Euclidean division of the record's action by the record's count against the declared wall (`2 h d_l`, from N, h of the world and the pair of the apparatus), one comparison, the law's own paid release with the family's declared quantum; no family name, no kind, no branch on a name; the electron, a muon, a planet alike (a planet of content `2^24` on a closed loop reads the same level at every return and releases nothing; its level `n_l N j / (2 d_l T)` is a count like any body's, the correspondence limit compared with and not put in); a body that never returns, or whose family declares no phase circle, releases nothing as a value | PASS |
+| Vector | verb 1 (the translation of the give rows by `abs(p_a) N` at the counted Links and of the count by 1 per self-creation; of `L_rel` to L at a release), verb 6 (the Euclidean division of `n_l Delta A` by `2 h d_l T`, the remainder the declared band), one comparison; the rates linear in the state; the divisor a product of declared integers and one record count (the momentum give's division by the record's own M the precedent, record 910); no root, no float; no rounding at load beyond the law's; the bounds of section 2 (c) checked where `bounded` checks the action rows today; the released row's rate s a multiplication at the click, no division | PASS |
+| Local | the body reads its own record only (its give rows, its count, its held level, its content, its sign); the rows born cross one Link per interval on their digital lines; the row's rate rides on its own record; nothing kept at a Node beyond the events there (no register, no remainder elsewhere, no draw: the debt of a widening is one integer on the record); fixed work (three additions per counted Link, one per self-creation, at a return one product, one division, one comparison, D births) and fixed storage (five integers and one sign per body, one column per row under the key) for fixed K | PASS |
 
 All three pass in the mathematician's judgement; the physics-rule
 reviewer's read decides. The corrected action form of section 2 (a)
 passes the same three (DESIGN.md's rows plus one integer) and is not
-the rule named, for the reason of section 3 (b).
+the rule named, for the reason of section 3 (b); the momentum form of
+9cef450d passes them too (verbs 2, 1, 6) and is the diagnostic beside
+the runs, for the reason of section 3 (c).
 
-## 5. The pins, declared before any run, for one world (GAMEBOARD by formula from RUN_CENTRED.md's readings until a detector clicks)
+## 5. The three worlds, one per rung, and their pins, declared before any run (COMPUTATION from the generator until a detector clicks)
 
-**The world.** `hydrogen_r12_level.json`, written by the build (step 2):
-`examples/events/atoms/hydrogen_r12_centred.json` as registered (the
-loop that stays, RUN_CENTRED.md section 1: `main`'s per-axis drive,
-`centred_step: true`, the electron at (38, 26, 26) with **p** = (0, 293
-783 192, 0), 7500 ticks) plus `atom_level: true`, the electron's `level:
-{"family": "light", "pair": [64, 1], "return": [0, -1]}` (the x axis,
-`p_x` crossing from + to - at the +x axis crossing of a loop that turns
-from +x toward +y, the start's own crossing, so the first return reads
-one whole loop; DESIGN_MOMENTUM.md section 6's declaration), `light` in
-the world's families (the photon's family of `families.json`, quantum 1),
-and nothing else; the record's `hypotheses` then `bohr-v1`,
-`centred-step-v1`, `atom-level-v1`. The pair `[64, 1]` is declared
-because at `[1, 1]` every return of this world reads below one step
-(section 3 (d): the five differences 0.001, 0.03, 0.04, 0.005, 0.04 of
-a step) and the run would release nothing; `[64, 1]` reads them at two
-to three steps, within the alias bound. The control is RUN_CENTRED.md
-itself (the same world without the key).
+**(a) The construction.** Each world is `hydrogen_r12_centred.json`'s
+construction at its radius by the atoms generator
+(`examples/events/atoms/make_worlds.py`, extended with a radius and the
+key in step 2b; its arithmetic imported from series H's, unchanged): the
+fan of the 2616 primitive directions, the proton of content 1836 fixed
+at the centre c releasing one shell per 10 intervals, the electron (`e`,
+content 1836, `span` [1, 1, 3], `phase_by_momentum`) at `(c + r, c, c)`
+with the momentum along +y derived for the circular orbit under form B's
+rule from the flux `E_body(r)` the generator counts on the engine's own
+flight lines, the action `h = 16 p_B(8) = 5 536 242 544` (the series'
+rule, the SAME h on the three worlds so that the three closures are one
+ladder), the width 45120, `centred_step: true` (the loop that stays,
+RUN_CENTRED.md), the `wave` detector `at_proton`, the faces, and the
+key: `atom_level: true`, the electron's `level: {"family": "light",
+"pair": [512, 1], "return": [0, -1]}` (the x axis, `p_x` crossing from +
+to - at the +x crossing of a loop that turns from +x toward +y, the
+start's own crossing, so the first return reads one whole loop), `light`
+in the world's families (the photon's family, quantum 1). Three radii,
+the whole Links where the shell mean puts `j = 4 sqrt(r / 12)` nearest a
+whole number (2.00 at r = 3, 3.06 at r = 7, 4.00 at r = 12; the
+generator's own count is the pin). Every number below is the
+generator's ([rungs_map.out](rungs_map.out)), COMPUTATION, GAMEBOARD by
+formula until the detector clicks:
 
-**What the algebra predicts (COMPUTATION from RUN_CENTRED.md's
-readings).** The +x returns at 1341, 2772, 4272, 5422, 6462 (DETECTOR),
-the momentum's length at the step lines nearest them 295.0, 342.9,
-392.6, 398.1, 437.4 million label units, the birth's 293.783 192
-(GAMEBOARD, the diagnostic C4, read to a tenth of a million): the
-rates `p . p - p_ret . p_ret` are `7.2 x 10^14`, `3.06 x 10^16`, `3.66
-x 10^16`, `4.35 x 10^15`, `3.28 x 10^16` (the bilinear form rises at
-every return: the loop tightens, its constant falls); against `W_l =
-1.433 x 10^16` the accumulator gives 0, 2, 2, 1, 2 steps at the five
-returns (the remainders 0.05, 0.18, 0.73, 0.04, 0.33 of the wall), 7 in
-all (`7.33` walls in the sum); each giving return four rows of `light`
-of content 2, 2, 1, 2 at the ages 0 from the Nodes (36, 26, 26), (35,
-26, 26), (33, 26, 26), (33, 26, 26); the content given 8, 8, 4, 8, the
-electron's content 1836 to 1808. The recoil is zero exactly (the four
-headings sum to zero); the content lost widens the loop by about `2 G /
-M` per giving return (DESIGN.md section 4 (b), the give of content: 0.9
-percent at G = 8), so the crossings after 2772 are RUN_CENTRED.md's
-within a Link and the periods within 3 percent, and the momenta at the
-later returns move by less than a percent, which moves no give by more
-than one step at the wall's remainders above (the third return's 0.73
-is the nearest to a wall and can read 3; the fourth's 0.04 can read 0).
+| The world | r | side, c | `E_body(r)` (entries per shell) | `p_B` (label units) | v (Links per interval) | `j = 2 pi p r / h` | T (intervals) | shells per loop, degrees per shell | ticks |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `hydrogen_r3_level` | 3 | 35, 17 | 87.500 | 555 685 910 | 0.08881 | 1.8920 | 212.2 | 21.2, 16.96 | 3000 |
+| `hydrogen_r7_level` | 7 | 43, 21 | 18.400 | 379 720 613 | 0.06377 | 3.0167 | 689.7 | 69.0, 5.22 | 3500 |
+| `hydrogen_r12_level` | 12 | 53, 26 | 6.588 | 293 783 192 | 0.05059 | 4.0010 | 1490.3 | 149.0, 2.42 | 7500 |
 
-**The pins.**
+THE FAN'S GRAIN AT SMALL r, THE RISK, NAMED: the shell mean's flux at r
+= 3 is `16 x 6.588 = 105.4` entries per shell (the inverse square from r
+= 12) and the generator counts 87.5, so the rung-2 world closes at `j =
+1.892` and not 2.00 (5.4 percent short; at r = 7, 3.017 against 3.055,
+1.2 percent); and the proton's pulse is 21 shells per loop of 17 degrees
+each at r = 3 (149 of 2.4 degrees at r = 12; PINS.md section 2 item 4:
+the whole kicks have no closed form and are what breaks the orbit at
+every radius). Whether the r = 3 loop stays under the centred step is
+the first pin, and the algebra does not promise it; the r = 12 loop
+stays and tightens (RUN_CENTRED.md), the r = 7 loop is between.
 
-| Pin | Declared (EXPECTED DETECTOR unless labelled) | The band | Kind, and how it is read | The reading that refutes it |
-| --- | --- | --- | --- | --- |
-| L1 the releases | `light` rows at the returns 2772, 4272, 5422, 6462 and none at 1341; the content per row 2, 2, 1, 2; four rows per giving return; the sum of the released content 28 | each return's content within one step of the algebra's; the sum 24 to 32; no `light` row before 2772 | DETECTOR: the faces' `light` clicks grouped by their release count (the runner's pairing, RUN_CENTRED.md section 2), their content | a `light` click whose content is off by two steps or more; a release at 1341; a release at a return where the bilinear form fell; fewer or more than four rows at a giving return |
-| L2 the Planck identity read after a detector | for every level row the phase rate read from two clicks of one release (the +x face at the age 16 to 19 and the +y face at the age 26: `(phase_y - phase_x) mod N = s x (age_y - age_x) mod N`) equals the row's content over the quantum, s | exact (integers; s below 8 is unique modulo 64 over an age difference of 7 to 10) | DETECTOR: the faces' clicks' phase and count | a phase difference off by one step or more: `E = h_q s = h_q N f` fails as a reading of the row |
-| L3 the periods of two loops against `(j / i)^3` | for successive returns k and k + 1, `T_k / T_(k+1)` against `(j_k / j_(k+1))^3` with j the circles per return read on the faces (ALGEBRA.md section 2 (c) reading 1, RUN_CENTRED.md's C5): the ladder's relation `T ~ J^3` of the limit, for any bound loop of the inverse square | within 15 percent (the atoms pins' spread, PINS.md section 2) on each of the four ratios of the five returns; RUN_CENTRED.md's own readings without the key sit at 0.954 against 1.023, 1.304 against 1.301, 1.106 against 1.230 (6.7, 0.2 and 10 percent), inside | DETECTOR: the `at_proton` count between two clicks of rows from the same axis, or the faces' pairs (the runner's returns); the phase increments unwrapped over each return | a ratio outside 15 percent |
-| L4 the ratio of two lines' pairs | the rates of the rows released at two successive giving returns, `s_(k+1) / s_k`: `2 / 2`, `1 / 2`, `2 / 1` by L1; the ratio of two lines of the lattice's tightening loop, NOT a ratio of two lines of hydrogen (section 6) | the ratios of L1's contents within their bands; NOT COMPARED with NATURE row 6 | DETECTOR: L2's rates | (L1's) |
-| L5 the control and the loop | the same world without the key replays RUN_CENTRED.md byte for byte (the build's test); with it on, no click of any family differs before 2772; the crossings' Nodes within one Link of RUN_CENTRED.md's 23 and the returns' counts within 3 percent; no escape | as stated | the build's test; DETECTOR (the faces' clicks, the arrival Nodes) | a byte differing with the key absent (FAIL of the build); a click differing before 2772; a crossing off by two Links or a period off by more than 3 percent (the content loss's algebra refuted, or the build's) |
+**(b) The levels and the ratio the generator predicts.** At `[512, 1]`
+the level of each rung, `L = floor(n_l Delta A / (2 h d_l T))` with the
+generator's `Delta A = j N h` and T rounded:
+
+| r | j (the generator's) | T | L at `[512, 1]` (steps) | the whole rung's `n_l N j / (2 T)` | L at `[256, 1]` |
+| --- | --- | --- | --- | --- | --- |
+| 3 | 1.8920 | 212 | 146 | 154.57 | 73 |
+| 7 | 3.0167 | 690 | 71 | 71.23 | 35 |
+| 12 | 4.0010 | 1490 | 43 | 43.98 | 21 |
+
+    s(4 to 2) = L_2 - L_4 = 103,   s(3 to 2) = L_2 - L_3 = 75,   the ratio 103 / 75 = 1.3733 (the grain's band 1 / 75 = 0.0133);   at [256, 1]: 52, 38, 26 / 19 = 1.3684 (1 / 38 = 0.0263);
+    the generator's own ratio before the floor 1.3720;   the shell mean's whole rungs 2, 3, 4: 27 / 20 = 1.35 (Balmer's, on the comparison side; the ladder of section 1 (b)).
+
+The generator's ratio sits 1.7 percent above Balmer's, and the whole of
+that is the fan's grain at r = 3 (`j_2 = 1.892` in place of 2: the
+levels at r = 7 and 12 stand at 71.23 and 43.98 against the ladder's
+`(4 / j)^2` of the rung-4 level, 71.5 and 43.98, within the grain; the
+level at r = 3 stands at 154.6 against the ladder's 178.9 from rung 4
+through the shell mean, and at `j / (2 T)` it is 0.004457 against the
+ladder's 0.006000 through `(4 / j)^2` of its own read j). Under the
+lattice's ring flux `r^-k` the level goes as `j^-(2 k - 2) / (3 - k)` in
+place of `j^-2` (the balance `p^2 ~ r^(1 - k)`, the closure `r ~ j^(2 /
+(3 - k))`, `T ~ r / p`), so the ratio the fan's exponent alone predicts
+is `1.431` at k = 1.83 (the register's), `1.49` at k = 1.69, `1.56` at k
+= 1.5 (the local exponents between r = 10 and 14, PINS.md section 2
+item 3): the fan's grain moves the ratio UP from 27 / 20, by 1.7
+percent through the generator's own flux count at these three radii,
+and by 6 to 16 percent if the flux between the rungs followed a power
+law of the register's exponents; the generator's count is the pin, the
+exponents the road of the departure.
+
+**(c) The band the lattice carries.** The loops on the lattice do not
+sit at the generator's closure: the centred world's first return read
+`j = 4.125` and `T = 1431` against 4.001 and 1490 (RUN_CENTRED.md), a
+level of 47.2 steps at `[512, 1]` against the generator's 44.0, 7
+percent above, and the loop then tightens by about a Link per turn. The
+ratio of two differences amplifies a level's error (`L_2` enters both;
+5 percent on `L_2` alone moves the ratio to 1.340, on `L_3` alone to
+1.442, on `L_4` alone to 1.345), so with each level read within 5
+percent of the generator's the ratio lies between 1.26 and 1.53 in the
+worst case, and within 3 percent between 1.30 and 1.46 (COMPUTATION,
+every sign of the three errors tried). That is the honest band of a
+ratio read on three separate lattice loops: about plus or minus 0.13 at
+5 percent per level, inside which Balmer's 1.350, the generator's 1.373
+and the fan's 1.431 all lie. The pins below therefore pin the levels
+first (each against the generator's within 5 percent at the FIRST
+return, before the drift) and the ratio second with the band the levels
+propagate; the paper's row, if the levels pass, states the ratio with
+that band and "matches nature within it" means within it, no more.
+
+**(d) The pins.** Every pin EXPECTED DETECTOR unless labelled; the
+reading the runner's method (RUN_CENTRED.md section 2: the faces' clicks
+paired into releases, the arrival Nodes, the crossings, the returns; the
+`light` clicks grouped per return; the body's own record read as the
+record's kind, record 281).
+
+| Pin | The world | Declared | The band | Kind, and how it is read | The reading that refutes it |
+| --- | --- | --- | --- | --- | --- |
+| R1 the loop stays and returns | each of the three | no escape face click of the electron within the ticks; at least three returns to the +x axis (r = 3: 14 in 3000 by T = 212; r = 7: 5 in 3500; r = 12: 5 in 7500 as read); the first return's count within 5 percent of the generator's T (202 to 223; 655 to 724; 1416 to 1565, RUN_CENTRED's 1431 inside) | as stated | DETECTOR: the electron's escape line (none); the faces' pairs and the `at_proton` count between clicks of rows from the +x axis | an escape click; fewer than three returns; a first period outside 5 percent (the r = 3 world's pulse of 17 degrees per shell the named risk: its FAIL is the fan's grain at small r, a finding, not the rule's) |
+| R2 the level off the body's own record | each | at the first return, `L = floor(512 Delta A / (2 h T))` from the record's own `Delta A` and T: 146, 71, 43 (the generator's); read again at every later return | each within 5 percent of the generator's at the first return (139 to 153; 67 to 75; 41 to 45); later returns reported, not pinned (the drift) | DETECTOR: the body's own record (its give rows' sum and its count at the return, written to the record's line at the return, record 281's kind) | a first-return level outside 5 percent: the closure or the period of that world is not the generator's (R1 says which) |
+| R3 the level by `Delta A` and T from the faces | each | the same L computed from the faces' readings: `Delta A / (N h)` the circles per return unwrapped from the rows' phase increments (ALGEBRA.md 2 (c) reading 1) and T the count between two clicks of rows from the same axis (reading 2); equal to R2's L within one step | one step | DETECTOR (two counts of the faces or of `at_proton`); COMPUTATION of L from them | R2 and R3 differing by two steps or more: the record's `Delta A` or count is not what the rows carry (a defect of the build, not of the rule) |
+| R4 the ratio of two lines | the three together | `(L_2 - L_4) / (L_2 - L_3)` from the three first-return levels of R2: the generator's `103 / 75 = 1.373`; on the comparison side Balmer's `27 / 20 = 1.350` (NATURE row 6) | the band the three levels' own readings propagate, at most plus or minus 0.13 (5 percent per level, the worst case); the grain 1 / 75 beneath it | COMPUTATION from three DETECTOR readings (never a click of a transition: section 6) | a ratio outside 1.26 to 1.53 with every level inside R2 (impossible by the arithmetic: the pin is the levels'); a ratio inside is the reading, stated with its band; nature's 1.350 inside the band is "matches nature within it", outside it a FAIL by the number |
+| R5 the releases and the Planck identity | each (the r = 12 world's expected from RUN_CENTRED.md) | on a loop that stays at its level no `light` row (the r = 3 and r = 7 worlds if their loops hold); on the r = 12 loop the level rises with the tightening: the first return sets `L_rel` from the loop since the birth (about 50 steps: j about 4.1 over 1341 counts, not read by RUN_CENTRED.md) and releases nothing; the four loops RUN_CENTRED.md read give 47, 44, 53, 55 steps at the returns 2 to 5 (their j 4.125, 4.094, 3.750, 3.500 and T 1431, 1500, 1150, 1040), so the releases are 0, 0, 3, 2 by `L - L_rel` (47 and 44 below the first loop's level; 53 - 50; 55 - 53), each release four `light` rows of content s, the electron's content less by `4 s`; for every level row the phase rate read from two faces' clicks of one release (the +x face and the +y face: `(phase_y - phase_x) mod N = s x (age_y - age_x) mod N`) equals its content over the quantum | each release's s within two steps of the algebra's on the r = 12 world (its levels move with the drift, RUN_CENTRED's periods the source); the Planck identity exact for `s < N / 2` | DETECTOR: the faces' `light` clicks grouped by release (content, phase, count) | a `light` click whose content is not `L - L_rel` of the record's two levels; a release on a loop whose level fell; a phase difference off by one step or more on a row below the alias bound |
+| R6 the control | each | the same world without the key replays byte for byte (the build's test on the gate set and on the three worlds' twins without the key); with the key on and no release, every click of every family identical to the world without the key (the r = 3 and r = 7 worlds if no row is released; the r = 12 world before its first release) | exact | the build's test; DETECTOR (the faces' clicks) | a byte differing with the key absent (FAIL of the build); a click differing before the first release |
 
 Two diagnostics reported beside the pins and never counted: (i) the
-level at each return from the momentum's bilinear form, `s_level =
-floor(N n_l (p . p) / (2 Q S M h d_l))` from the step lines (GAMEBOARD:
-6.07, 8.20, 10.75, 11.06, 13.35 steps at `[64, 1]` on the five returns), and
-from the virial form `N n_l j / (2 T d_l)` of the read j and T
-(COMPUTATION from DETECTOR: 5.9, 5.6, 6.7, 6.9 on the four loops): the
-two agree on a circle of the limit and disagree here (the loop is
-eccentric and tightening within a turn), a reading of how far the
-lattice's loop is from a rung, not a pin; (ii) the ladder's prediction
-of the gives from the read j alone, `E_1 (1 / j_(k+1)^2 - 1 / j_k^2)` at
-the pair, 0.09, 1.10, 1.01 steps on the three loops against the
-momentum form's 2, 2, 1: the same statement. Bohr's whole number,
-Kepler's period and Balmer's ratio appear here only as the thing
-compared with afterwards; no pin is a comparison with nature.
+momentum form's level at each return, `floor(n_l N (p . p) / (2 Q S M h
+d_l))` from the body's momentum at the return (the r = 12 loop's 6.07,
+8.20, 10.75, 11.06, 13.35 steps at `[64, 1]` from RUN_CENTRED's step
+lines, GAMEBOARD) against the virial level (5.90, 5.59, 6.68, 6.89 at
+`[64, 1]` from the read j and T): the two agree on a circle of the
+limit and disagree on the lattice's eccentric tightening loop, a
+reading of how far the loop is from a rung; (ii) the ladder's `(4 /
+j)^2` of the rung-4 level against each world's read level, the fan's
+departure rung by rung (section 5 (b)). Bohr's whole number, Kepler's
+period and Balmer's ratio appear here only as the thing compared with
+afterwards; no pin but R4's comparison side names nature, and R4 is a
+computation of three readings with its band.
 
-**The run's cost (host).** One run of 7500 ticks, about 80 s and 125 MB
-(RUN_CENTRED.md's 77 s, 123.5 MB), the records under the 24-hour
-retention policy; the reading by `centred_readings.py`'s method with
-the `light` clicks grouped per return, about half an hour; step 2's
-build about two hours (section 6 of the head's line 6).
+**The runs' cost (host).** Three headless runs: 7500 ticks on 53^3
+(about 80 s, 125 MB: RUN_CENTRED.md's), 3500 on 43^3 (about 40 s),
+3000 on 35^3 (about 30 s); the records under the 24-hour retention
+policy; the reading by `centred_readings.py`'s method with the levels
+and the `light` clicks added, about one hour for the three; step 2b's
+build about two hours (the head's line 6); the CI the gate.
 
 ## 6. What the rule does NOT give (the kinds' honesty, record 281)
 
@@ -546,61 +643,55 @@ build about two hours (section 6 of the head's line 6).
    = 3 and no lower; a release unbinds, 3 (d)); the rule of section 2
    releases at a closure what a passage between closures left on the
    record and makes no passage: its recoil is zero on the electron's
-   symmetric headings and at most `D h_q s Q` label units on any list,
-   `768` against `3 x 10^8` here. Neither Balmer's `4 to 2` nor `3 to 2`
-   is an event of any world of this law as it stands, and no run of
-   this file's world reads a line of hydrogen: the rows it reads are the
-   lattice's tightening loop's, whose cause RUN_CENTRED.md section 4
-   leaves unclaimed.
-2. **The ratio `27 / 20` as a detector reading.** It is a COMPUTATION of
-   the limit (section 3 (c)), exact there, and NOT COMPARED after a
-   detector: NATURE row 6 stays NOT YET whatever the one run reads, and
-   the owner's condition for the paper (a reading that matches nature
-   within its band) is not met by it. What could meet it, named and not
-   ordered: the levels themselves are readable without a transition,
-   one world per rung, the body's momentum at its return being a reading
-   of its own record (record 281's kinds) and `Delta A` and T two
-   detector counts (ALGEBRA.md section 2 (c)); three worlds at the rungs
-   the shell mean puts at whole Links on this fan (r = 3, 7 and 12, the
-   circles per return 2.0, 3.06 and 4.0 by `j = 4 sqrt(r / 12)`, against
-   the register's j table 2.30 at r = 4, 2.71 at 6, 3.14 at 8: the fan's
-   grain at small r is the risk, PINS.md section 2 item 3), each read for
-   its closure on the faces and its level at its returns, and the ratio
-   `(s_2 - s_4) / (s_2 - s_3)` a COMPUTATION from three DETECTOR readings
-   with the band of the grain; the lines' rows themselves would still be
-   NOT IN THE LAW. A separate design, on the owner's word.
-3. **A rung on this lattice other than r = 12.** The register's j table
-   at this h has one whole rung (ALGEBRA.md section 2 (d)); the ladder's
-   `a_3 = 6.75` and `a_5 = 18.75` Links of the shell mean are `7.3` and
-   `17.6` under the fan's exponent and no registered world closes there.
-   The rule reads the difference of two closures and this world offers
-   one rung and a wandering loop: section 5's L1 and L4 are the rule's
-   arithmetic on that loop, not the ladder's lines.
-4. **The level's constant on a loop that is not a circle.** The momentum
-   form reads `-p . p / (2 m_i)` at the return Node, the circle's
-   constant; on the lattice's eccentric loop it differs from the virial
-   form's `-Delta A / (2 N T)` (section 5's diagnostic (i), 2, 2, 1
-   against 0.09, 1.10, 1.01 steps on the three loops already read): the
-   rule's release on such a loop is a reading of its momentum at the
-   apsis, exact as arithmetic, and not the loop's constant of the limit.
+   symmetric headings and at most `D h_q s Q` label units on any list.
+   Neither Balmer's `4 to 2` nor `3 to 2` is an event of any world of
+   this law as it stands, and no run of section 5 reads a line of
+   hydrogen as a click: the lines' rows themselves are NOT IN THE LAW.
+   What the three worlds read is the LEVEL of each rung, a body's own
+   record and two counts of the faces, and the lines' ratio is a
+   computation of three such readings.
+2. **What the three readings compare, and what they do not.** They
+   compare the ratio of two level differences, read on three separate
+   loops of the lattice at the generator's radii, with Balmer's ratio,
+   within the band the three loops' own closures carry (section 5 (c)):
+   a match within plus or minus 0.13 is a match of the ladder's
+   `1 / j^2` form to the fan's grain, and the paper's row must say so;
+   it is not a line of hydrogen read after a detector, not a frequency
+   of a released row, and not a test that the levels are what nature's
+   are in any unit (the pair `[512, 1]` sets the step, a declaration of
+   the dictionary). The fan's grain at r = 3 already puts the
+   generator's ratio 1.7 percent above Balmer's, inside the band; a
+   reading that lands on 1.43 would be the register's flux exponent and
+   not nature, inside the same band. The band is the finding's honesty,
+   not its excuse.
+3. **A rung on this lattice other than the generator's three.** The
+   register's j table at this h has one whole rung (ALGEBRA.md section 2
+   (d)); the three radii are where the generator's own count puts the
+   closures nearest 2, 3 and 4 at whole Links (1.892, 3.017, 4.001), not
+   whole closures; the levels are read as the record has them, and the
+   ladder's `1 / j^2` is compared with at the read j.
+4. **The level's constant on a loop that is not closed.** The virial
+   form is exact for a CLOSED loop of the limit; on the lattice's
+   wandering loop `Delta A / (2 N T)` is the record's own ratio, exact
+   as arithmetic, and the loop's constant of the limit only as far as
+   the loop returns to its own state (RUN_CENTRED's first two returns
+   within 0.125 circles, then the drift): R2 pins the first return and
+   reports the rest.
 5. **A frequency without the second declaration.** Without the row's
    own rate (section 2 (d)) every released row turns at the family's
    one pair and every line has one frequency, the ratio 1: the content
    alone carries the level, `E = h_q s` as a birth identity and not as a
    frequency in flight.
 6. **GAMEBOARD readings.** The momenta at the crossings (the step
-   lines), the host's tick, the accumulator's remainders and the level
-   diagnostics of section 5 are the host's view and are never pinned; a
-   number whose kind is not named is not a result.
+   lines), the host's tick, the remainders below one step, the momentum
+   form's diagnostic and the ladder's `(4 / j)^2` beside each level are
+   the host's view and are never pinned; a number whose kind is not
+   named is not a result.
 
-The one word asked of the owner, through the Boss: which form the
-identity carries, the corrected action form (section 2 (a): exact in
-the law's integers, generic, and off Balmer's ratio by construction,
-`2` against `1.35`) or the momentum form (section 2 (b): Balmer's
-`27 / 20` in the limit, the same three integers held, one verb swapped),
-this file naming the second as atom-level-v1; and whether the one run of
-section 5 is worth its three hours knowing that it reads the rule's
-arithmetic on the lattice's loop and no line of hydrogen.
+The words asked, through the Boss: the owner's on the form (the Boss
+takes the reviewer's, the virial form, unless the owner says otherwise
+before the build); the reviewer's short read of sections 2 (b), 4 and 5
+as redrawn; then step 2b on the Boss's word.
 
 ## Links
 
@@ -611,7 +702,8 @@ the give rows, the paid release) and [DESIGN_MOMENTUM.md](../atom_give/DESIGN_MO
 [CAUSE.md](../atom_give/CAUSE.md), [CENTRED_STEP.md](../atom_give/CENTRED_STEP.md)
 and [RUN_CENTRED.md](../atom_give/RUN_CENTRED.md) (the loop that stays,
 its returns, periods, momenta and closure fractions); [PINS.md](../atoms/PINS.md)
-section 2 (the rung at r = 12, the fan's grain); [the world](../../../examples/events/atoms/hydrogen_r12_centred.json)
+section 2 (the rung at r = 12, the fan's grain); [the atoms generator](../../../examples/events/atoms/make_worlds.py),
+[the world](../../../examples/events/atoms/hydrogen_r12_centred.json)
 and [the atoms README](../../../examples/events/atoms/README.md);
 [the Einstein Outside derivation](../einstein_outside/DERIVATION.md)
 (Theorem 4, `m_i = Q S M`); [DERIVATIONS_BEAM 6.4 and 7.2](../../DERIVATIONS_BEAM.md);
@@ -621,4 +713,5 @@ row 6 (paper/general_formula/main.tex); [the three tests](../../../skills/workfl
 [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 754,
 817, 844, 881, 886, 910, 941, 955, 972); records 874, 899, 972 and 973
 of [the log](../../LOG_2026-09-20.md); [levels_map.py](levels_map.py) and
-[its output](levels_map.out).
+[its output](levels_map.out); [rungs_map.py](rungs_map.py) and
+[its output](rungs_map.out).
