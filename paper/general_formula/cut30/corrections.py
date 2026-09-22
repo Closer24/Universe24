@@ -2733,6 +2733,157 @@ CORRECTIONS = [
         "Outside, the game above the board, there are detectors and their clicks only, the beam passing to them with amplitudes at the click (P11).",
         "Outside, the game above the board, there are detectors and their clicks only, the beam passing to them with amplitudes at the click (P11). So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the squared sum of the rows' amplitudes (Definition~\\ref{def:click}), which adds and cancels as amplitudes do, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
     ),
+    # The owner's five items of 2026-09-22 ('put them in unequivocally, in the body'): the run line, the words of this paper, the long sentences split, the project's references as citation notes, four figures in the body.
+    (
+        "the owner's five items, 1: how to run the archived code",
+        "The interpreter is Python 3.14, no floating point in any physical module, the runs seconds each.",
+        "The interpreter is Python 3.14, no floating point in any physical module, the runs seconds each. To run a registered world from the archive: \\texttt{python -m pip install -e .} and then \\texttt{python -m event\\_universe --init} \\texttt{examples/events/amplitude/bell\\_0\\_24.json} \\texttt{--output artifacts/bell\\_0\\_24}; the worlds of this paper are under \\texttt{examples/events/amplitude/}, the pair \\texttt{bell\\_*.json}, the two slits \\texttt{slits\\_huygens.json}, the Mach-Zehnder \\texttt{mz\\_equal.json}, \\texttt{mz\\_half.json} and \\texttt{mz\\_quarter.json}; a run writes its metadata and its events beside the output, and the check scripts read them. The runs' fingerprints: the register's \\texttt{ff5c382d672f} (series L), L7 \\texttt{4bf55a62e6fd}, S \\texttt{24e0c1ba}, T \\texttt{afb533a}.",
+    ),
+    (
+        "the owner's five items, 1: the fingerprints named once, in Appendix C",
+        "The register's runs carry the fingerprint \\texttt{ff5c382d672f}, the figures' runs \\texttt{731d0f56c9f9} (\\texttt{figures/summary.json} \\cite{checks}), the two cone worlds of L7 \\texttt{4bf55a62e6fd}.",
+        "The figures' runs carry the fingerprint \\texttt{731d0f56c9f9} (\\texttt{figures/summary.json} \\cite{checks}).",
+    ),
+    (
+        "the owner's five items, 2 and 5: the words of this paper, and the mechanism figure",
+        "Section~\\ref{sec:law} gives the full definition; every derivation of this paper names which of these rules it starts from.",
+        "Section~\\ref{sec:law} gives the full definition; every derivation of this paper names which of these rules it starts from.\n\n\\paragraph{The words of this paper.} The \\emph{GameBoard} is the cubic array of Nodes, each joined to six neighbours by Links through directional Ports; time is a sequence of intervals. \\emph{Inside} is the board and what moves on it, where no one measures; \\emph{Outside} is the game above the board, the emitters, the detectors and their clicks, the only place a number is read. A \\emph{row} is one message on the board (a Node, a direction, an age, a phase, an amount, a multiplicity and its record); a \\emph{record} is the rows born together at one emitter, one quantum. The \\emph{click} is a detector's one comparison, which reads a record once and deletes it: the only read-out, and the one non-local step. A \\emph{rung} is one integer threshold of the click's ladder over the birth phase (Eq.~\\eqref{eq:rung}); the cell the phase falls in is the outcome. Every number carries its \\emph{kind}: DETECTOR, a count of clicks, the only measurement; GAMEBOARD, a number of the board's state, a diagnostic and never a result. Figure~\\ref{fig:mechanism} draws the two sides.\n\n\\begin{figure}[!tb]\\centering\\includegraphics[width=0.96\\linewidth]{figures/mechanism.pdf}\\caption{\\label{fig:mechanism}The mechanism, drawn from the definitions and no run. Inside (left): a GameBoard of Nodes joined by Links; an emitter puts one record of two rows on the board, each row on the digital line of its direction at one Link per interval, its phase turned per Link, nothing kept at a Node; a detector is a set of Nodes. Outside (right): the click, one comparison of the record's birth phase $u$ against the rungs of its ladder (Eq.~\\eqref{eq:rung}); the cell $u$ falls in is the outcome, and the record is deleted. Nothing else is read.}\\end{figure}",
+    ),
+    (
+        "the owner's five items, 3: the intro's first paragraph split",
+        "The rates and walls are made of six integer operations and nothing else: the translation, the multiplication by a declared integer matrix or bilinear form, the sum in the group ring of the phase circle, a permutation, the evaluation of a record at the roots of unity with its norm, and the division with the remainder kept together with the comparison that is the event. One comparison, the click, is the only read-out, and only a detector's reading is a measurement.",
+        "The rates and walls are made of six integer operations and nothing else. They are the translation; the multiplication by a declared integer matrix or bilinear form; the sum in the group ring of the phase circle; a permutation; the evaluation of a record at the roots of unity with its norm; and the division with the remainder kept, together with the comparison that is the event. One comparison, the click, is the only read-out. Only a detector's reading is a measurement.",
+    ),
+    (
+        "the owner's five items, 3: 'Second, Inside' split",
+        "Second, Inside is integer and local: six operations on bounded integers at a Node and its six neighbours, each rule generic, vector and local; written down, the rules put into the cells are the cyclic group of the phase, the group ring of the arrivals, the integer matrices of the split and the rotation, the evaluation at the roots of unity and the translation group's shift, so the state is a free $\\Z$-module and the interval a $\\Z$-linear map on it (Section~\\ref{sec:law}); its couplings are tables, the circle's $C$ and $S$, the split's and the rotation's integer matrices, the family table, and Born's rule is a coupling computed from $\\Nphi$, the rungs of Eq.~\\eqref{eq:rung}, so a click is a comparison of integers.",
+        "Second, Inside is integer and local: six operations on bounded integers at a Node and its six neighbours, each rule generic, vector and local. Written down, the rules put into the cells are the cyclic group of the phase, the group ring of the arrivals, the integer matrices of the split and the rotation, the evaluation at the roots of unity and the translation group's shift. So the state is a free $\\Z$-module and the interval a $\\Z$-linear map on it (Section~\\ref{sec:law}). Its couplings are tables: the circle's $C$ and $S$, the split's and the rotation's integer matrices, the family table. Born's rule is a coupling computed from $\\Nphi$, the rungs of Eq.~\\eqref{eq:rung}, so a click is a comparison of integers.",
+    ),
+    (
+        "the owner's five items, 3: 'Third' split",
+        "Third, the transformations between click families that preserve the passage of information are the Lorentz group up to scale, the click theorem's \\cite{clickframe} (Section~\\ref{sec:discussion}), so the symmetry Outside has is the algebra's and not a metric put in, and every result the paper calls exact is an identity of that algebra under its declared tables, matrices and family table, which are inputs (Table~\\ref{tab:ledger}), checked against the register's readings by kind and not chosen to fit a reading; where a form was declared, the paper says so.",
+        "Third, the transformations between click families that preserve the passage of information are the Lorentz group up to scale, the click theorem's \\cite{clickframe} (Section~\\ref{sec:discussion}), so the symmetry Outside has is the algebra's and not a metric put in. Every result the paper calls exact is an identity of that algebra under its declared tables, matrices and family table, which are inputs (Table~\\ref{tab:ledger}). Each is checked against the register's readings by kind and not chosen to fit a reading; where a form was declared, the paper says so.",
+    ),
+    (
+        "the owner's five items, 3: 'So the paper keeps one ledger' split",
+        "So the paper keeps one ledger (Table~\\ref{tab:ledger}): for every result, the rules of Eq.~\\eqref{eq:map} it starts from, the assumptions added with their kind, the freedom left and the ground of the derivation; what can be established now is an explicit model with exact and conditional results and checks after a detector, and the paper is built around the distance between that and the broad claim that Outside represents nature.",
+        "So the paper keeps one ledger (Table~\\ref{tab:ledger}): for every result, the rules of Eq.~\\eqref{eq:map} it starts from, the assumptions added with their kind, the freedom left and the ground of the derivation. What can be established now is an explicit model with exact and conditional results and checks after a detector. The paper is built around the distance between that and the broad claim that Outside represents nature.",
+    ),
+    (
+        "the owner's five items, 3: 'What no rule of the law forces' split into sentences",
+        "What no rule of the law forces, with the check that decides each: Newton's inverse square and Poisson's law closed after a detector ($G$ not read; D3), by a closed orbit's period at two radii under the directional drive (form B, not built), the escape's count at a face detector and the clock's form at more distances; the Lorentz factor, the law meeting (A1) and not (A2), by the ratio of the two one-way Doppler factors through records, $1 - v^2$ under the law and $1$ under Lorentz, and by the split of a row between staying and hopping (A2), a hypothesis not opened; the bending of light, the flight blind to the crowd, by a rule under which a row's wall reads the crowd's age moment (a hypothesis, its coefficient an input) against nature's $1.75$ arcseconds; the masses' values, every rule linear in the content and every equal split a fixed point, by a nonlinear closure on the amounts under its own identity, the family table an input until then; the click's harmonic constants and the circle as position (a hypothesis, Section~\\ref{sec:measurement}), by the least-rank click, an axiom of the apparatus pinned by the two-slit period and Malus at $22.5$ degrees, and the single opening against its pin (row 10); and a CHSH measurement at $10^{-4}$, deciding $181/64$ against $2\\sqrt2$.",
+        "What no rule of the law forces, with the check that decides each. Newton's inverse square and Poisson's law closed after a detector ($G$ not read; D3): decided by a closed orbit's period at two radii under the directional drive (form B, not built), the escape's count at a face detector and the clock's form at more distances. The Lorentz factor, the law meeting (A1) and not (A2): decided by the ratio of the two one-way Doppler factors through records, $1 - v^2$ under the law and $1$ under Lorentz, and by the split of a row between staying and hopping (A2), a hypothesis not opened. The bending of light, the flight blind to the crowd: decided by a rule under which a row's wall reads the crowd's age moment (a hypothesis, its coefficient an input) against nature's $1.75$ arcseconds. The masses' values, every rule linear in the content and every equal split a fixed point: decided by a nonlinear closure on the amounts under its own identity, the family table an input until then. The click's harmonic constants and the circle as position (a hypothesis, Section~\\ref{sec:measurement}): decided by the least-rank click, an axiom of the apparatus pinned by the two-slit period and Malus at $22.5$ degrees, and by the single opening against its pin (row 10). And a CHSH measurement at $10^{-4}$, deciding $181/64$ against $2\\sqrt2$.",
+    ),
+    (
+        "the owner's five items, 3: the platform's simulator sentence split",
+        "A detector at a Node reads each arriving record once, by one comparison, at its own count (series L, Q, X and T, T's four worlds read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field); a lamp in motion is read at a detector at rest (G, G2, S), and a detector in motion reads Nodes apart over counts apart between neighbouring detectors, its own one-way ratio, the measurable of the frame, a reading NOT MADE; a lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3).",
+        "A detector at a Node reads each arriving record once, by one comparison, at its own count (series L, Q, X and T; T's four worlds were read before the generic entry of 2026-09-22, are not readable under the law as it stands, and are being re-read in the weak field). A lamp in motion is read at a detector at rest (G, G2, S). A detector in motion reads Nodes apart over counts apart between neighbouring detectors, its own one-way ratio, the measurable of the frame, a reading NOT MADE. A lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3).",
+    ),
+    (
+        "the owner's five items, 3: 'The same way, with five assumptions' split",
+        "The same way, with five assumptions on \\texttt{main} today and no (A2) (the crowd read as the age moment, the age wall at coefficient $1$, the push, the flight blind, the reading a pulse and its return) and the spreading of $K$ beams over a shell of $N(r)$ Nodes, which is arithmetic and not a law, the fall, the equivalence principle, Kepler's ratio and the clock in a crowd come out Outside, the inverse square at the shell mean's rung and the equivalence exactly, $M_A$ cancelling record by record; the register's D3, T and X are their confirmation, and the inverse square's decisive reading is not made \\cite{clickframe}.",
+        "The same way, with five assumptions of the law as built and no (A2) (the crowd read as the age moment, the age wall at coefficient $1$, the push, the flight blind, the reading a pulse and its return) and the spreading of $K$ beams over a shell of $N(r)$ Nodes, which is arithmetic and not a law, the fall, the equivalence principle, Kepler's ratio and the clock in a crowd come out Outside. The inverse square comes at the shell mean's rung and the equivalence exactly, $M_A$ cancelling record by record. The register's D3, T and X are their confirmation, and the inverse square's decisive reading is not made \\cite{clickframe}.",
+    ),
+    (
+        "the owner's five items, 3: 'So 1 + z' split",
+        "So $1 + z$ is the ratio of the two counts and the ratio of two lamps' shifts at $3$ and $6$ Links is the clock's form at two distances, $1.907$ for the pin $1.909$ (series T, DETECTOR; read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field); and the fall is the birth's Node per count read at a line of detectors, the same Node on $138$ of $139$ births with the held mass four times (D3, DETECTOR), the equivalence read with no mass in the reading.",
+        "So $1 + z$ is the ratio of the two counts. The ratio of two lamps' shifts at $3$ and $6$ Links is the clock's form at two distances, $1.907$ for the pin $1.909$ (series T, DETECTOR; read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field). The fall is the birth's Node per count read at a line of detectors, the same Node on $138$ of $139$ births with the held mass four times (D3, DETECTOR), the equivalence read with no mass in the reading.",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (11)",
+        "as the owner's high-rate runs read (record 340 \\cite{log}).",
+        "as the high-rate runs read \\cite[record 340]{log}.",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (12)",
+        "(the potential's form, the owner's word of record 394 \\cite{log})",
+        "(the potential's form, \\cite[record 394]{log})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (13)",
+        "an assumption of the law (P9; record 394 \\cite{log})",
+        "an assumption of the law (P9; \\cite[record 394]{log})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (14)",
+        "at $C_K = 0$ the engine gathers nowhere, record 363 \\cite{log})",
+        "at $C_K = 0$ the engine gathers nowhere, \\cite[record 363]{log})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (15)",
+        "(the model owner's finding, record 340 \\cite{log}; the derivation's 6.5 restated with them)",
+        "(\\cite[record 340]{log}; the derivation's 6.5 restated with them)",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (16)",
+        "$125/3$ at $\\Nphi = 64$, $32$ and $128$ (record 363 \\cite{log})",
+        "$125/3$ at $\\Nphi = 64$, $32$ and $128$ \\cite[record 363]{log}",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (17)",
+        "$-0.104$ at head, record 408 \\cite{log})",
+        "$-0.104$ at head, \\cite[record 408]{log})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (18)",
+        "(the physicist's derivation, records 931 to 933 \\cite{log})",
+        "(\\cite[records 931 to 933]{log})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (19)",
+        "$W$ remains the declared identity of record 270 \\cite{log}",
+        "$W$ remains the declared identity of \\cite[record 270]{log}",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (20)",
+        "The covariant readings (record 270 \\cite{log})",
+        "The covariant readings \\cite[record 270]{log}",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (21)",
+        "the ground of the derivation (the owner's decision of 2026-09-22 \\cite{highlights})",
+        "the ground of the derivation \\cite[2026-09-22]{highlights}",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (22)",
+        "NOT COMPARED, the route the owner's decision (\\cite{einsteinoutside}, II.11)",
+        "NOT COMPARED, the route chosen (\\cite{einsteinoutside}, II.11)",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (23)",
+        "read against the certification tables of the two sources and audited by the physics-rule reviewer.",
+        "read against the certification tables of the two sources and audited in their review.",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (24)",
+        "was put to the GameBoard as series T, the physicist's pins written before the run \\cite{register,clockage}",
+        "was put to the GameBoard as series T, the pins written before the run \\cite{register,clockage}",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (25)",
+        "(the last three on main at \\texttt{b34fe114}; Figure~\\ref{fig:sofn})",
+        "(the last three \\cite[at b34fe114]{register}; Figure~\\ref{fig:sofn})",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (26)",
+        "the register's block of the derivation's 24.4, the last three on main at \\texttt{b34fe114});",
+        "the register's block of the derivation's 24.4, the last three \\cite[at b34fe114]{register});",
+    ),
+    (
+        "the owner's five items, 4: the project's references as citation notes (27)",
+        "registered with its source fingerprint (series L \\texttt{ff5c382d672f}, L7 \\texttt{4bf55a62e6fd}, S \\texttt{24e0c1ba}, T \\texttt{afb533a} \\cite{register,replications})",
+        "registered with its source fingerprint (Appendix~\\ref{app:reproduction}; \\cite{register,replications})",
+    ),
+    (
+        "the owner's five items, 5: the two-slit and Mach-Zehnder figures before the interference paragraph",
+        "\\paragraph{Interference, by the formulas alone.}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.48\\linewidth]{figures/two_slits.pdf}\\hfill\\includegraphics[width=0.48\\linewidth]{figures/mach_zehnder.pdf}\\caption{\\label{fig:interference}Interference read at a detector, from the runs of series L at $\\Nphi = 64$ (the figures' runs, Appendix~\\ref{app:reproduction}). Left, the two-slit world \\texttt{slits\\_huygens}: above, the record's weight per pixel of the screen, a number of the board (GAMEBOARD, a diagnostic); below, the clicks over $64$ births (DETECTOR) and the histogram conditioned on the screen, bright where the two rows' ages differ by whole turns. Right, the Mach-Zehnder worlds: the clicks over $64$ births at the two ports and the absorber (DETECTOR), equal arms $64/0$, a half turn $0/64$, a quarter turn $32/32$, the $(1, 1)$ and $(3, 4)$ splits, the unequal arms and the two Elitzur-Vaidman worlds (Table~\\ref{tab:nature}, row 2b; Appendix~\\ref{app:reproduction}).}\\end{figure}\n\n\\paragraph{Interference, by the formulas alone.}",
+    ),
+    (
+        "the owner's five items, 5: the pair's correlation figure before the Bell value theorem",
+        "\\begin{theorem}[The finite-$\\Nphi$ Bell value]\\label{th:bell}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.8\\linewidth]{figures/pair_64.pdf}\\caption{\\label{fig:pair}The pair at $\\Nphi = 64$: $E(a, b)$ computed from the rule at every setting difference $a - b$ (the counts of Theorem~\\ref{th:marginals} with the repository's tables, a computation \\cite{checks}), the tables' cosine $C[a - b]/256$ dashed, and after a detector the registered CHSH worlds (circles) and the choosers' bins (squares) of series L (DETECTOR).}\\end{figure}\n\n\\begin{theorem}[The finite-$\\Nphi$ Bell value]\\label{th:bell}",
+    ),
 ]
 
 

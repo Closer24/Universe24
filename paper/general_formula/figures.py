@@ -186,6 +186,105 @@ def figure_pair(summary: dict, checks, output: Path) -> None:
     plt.close(fig)
 
 
+def figure_mechanism(output: Path) -> None:
+    """The mechanism, drawn from the definitions and no run: Inside, a
+    GameBoard of Nodes joined by Links, an emitter putting one record of two
+    rows on the board, each row on the digital line of its direction at one
+    Link per interval; Outside, a detector's set of Nodes and its one
+    comparison, the click, the birth phase u against the rungs of the
+    record's ladder, the one read-out (the owner's item of 2026-09-22)."""
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.0), gridspec_kw={"width_ratios": [2.6, 1]})
+    nx, ny = 11, 7
+    for i in range(nx):
+        ax.plot([i, i], [0, ny - 1], color=PALE, linewidth=0.6, zorder=1)
+    for j in range(ny):
+        ax.plot([0, nx - 1], [j, j], color=PALE, linewidth=0.6, zorder=1)
+    for i in range(nx):
+        for j in range(ny):
+            ax.plot(i, j, "o", color=WHITE, markeredgecolor=MID, markersize=3.2, zorder=2)
+    # the emitter at the left, the detector's column at the right
+    ax.plot(0, 3, "s", color=INK, markersize=8, zorder=4)
+    ax.annotate(
+        "emitter",
+        (0, 3),
+        (0.2, 5.6),
+        fontsize=8,
+        arrowprops={"arrowstyle": "-", "color": DARK, "lw": 0.6},
+    )
+    for j in range(ny):
+        ax.plot(nx - 1, j, "s", color=LIGHT, markeredgecolor=INK, markersize=7, zorder=3)
+    ax.annotate(
+        "detector (a set of Nodes)",
+        (nx - 1, ny - 1),
+        (5.6, 6.5),
+        fontsize=8,
+        ha="left",
+        arrowprops={"arrowstyle": "-", "color": DARK, "lw": 0.6},
+    )
+    # row 1 on the heading +x; row 2 on the digital line of the direction (3, 1)
+    xs = list(range(0, nx))
+    ax.plot(xs, [3] * nx, color=INK, linewidth=1.6, zorder=3)
+    path = [(0, 3)]
+    x, y = 0, 3
+    for step in range(9):
+        # the digital line of D = (2, 1): two Links along x per one along y
+        if step % 3 == 1:
+            y += 1
+        else:
+            x += 1
+        path.append((x, y))
+    ax.plot(
+        [q[0] for q in path], [q[1] for q in path], color=INK, linewidth=1.6, linestyle="--", zorder=3
+    )
+    ax.annotate(
+        "row 1, heading $+x$",
+        (5, 3),
+        (3.2, 1.7),
+        fontsize=8,
+        arrowprops={"arrowstyle": "-", "color": DARK, "lw": 0.6},
+    )
+    ax.annotate(
+        "row 2, the digital line of $D = (2, 1)$",
+        (4, 5),
+        (1.0, 0.4),
+        fontsize=8,
+        arrowprops={"arrowstyle": "-", "color": DARK, "lw": 0.6},
+    )
+    ax.text(
+        0.0, -1.35, "Inside: one Link per interval, the phase turned per Link", fontsize=8, ha="left"
+    )
+    ax.set_xlim(-0.7, nx - 0.3)
+    ax.set_ylim(-1.9, ny + 0.3)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    # the click: the ladder of rungs over the circle, u falls in one cell
+    n = 8
+    rungs = [0, 1, 3, 4, 6, 7, 8, 8]
+    ax2.set_xlim(0, 1.6)
+    ax2.set_ylim(-0.6, n + 0.6)
+    for b in rungs:
+        ax2.plot([0.2, 1.0], [b, b], color=INK, linewidth=1.0)
+    ax2.plot([0.2, 0.2], [0, n], color=INK, linewidth=0.8)
+    ax2.plot([1.0, 1.0], [0, n], color=INK, linewidth=0.8)
+    for y0, y1, name in (
+        (0, 1, "pixel 1"),
+        (1, 3, "pixel 2"),
+        (3, 4, "pixel 3"),
+        (4, 6, "pixel 4"),
+        (6, 7, "pixel 5"),
+        (7, 8, "pixel 6"),
+    ):
+        ax2.text(1.06, (y0 + y1) / 2, name, fontsize=6.5, va="center")
+    ax2.plot(0.45, 4.6, "o", color=INK, markersize=3)
+    ax2.text(0.62, 4.6, "$u$", fontsize=9, ha="left", va="center")
+    ax2.text(0.6, n + 0.3, "the rungs $b_k$ of the ladder", fontsize=7.5, ha="center")
+    ax2.text(0.2, -0.5, "Outside: the click", fontsize=8, ha="left")
+    ax2.axis("off")
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.98, bottom=0.05, wspace=0.05)
+    fig.savefig(output / "mechanism.pdf")
+    plt.close(fig)
+
+
 def figure_s_of_n(summary: dict, checks, output: Path) -> None:
     """S(N) at the CHSH labels, one panel at half the page's width: the closed form
     computed from the rule with the tables at 256 as the curve, the detector
@@ -293,6 +392,7 @@ def main() -> None:
     summary = json.loads(args.summary.read_text(encoding="utf-8"))
     checks = load_checks()
     args.output.mkdir(parents=True, exist_ok=True)
+    figure_mechanism(args.output)
     figure_mach_zehnder(summary, args.output)
     figure_two_slits(summary, args.output)
     figure_pair(summary, checks, args.output)

@@ -4557,3 +4557,36 @@ click, Section 6's interference by the formulas alone); its wording
 sent to the Boss for the chief physicist's confirmation, to be
 adjusted on his word. The page: the owner's word "leave it as it is,
 no need to cut": 37 pages stand.
+
+## Applied (2026-09-22, the owner's word "put them in unequivocally, in the body of the paper"): the five items of the comparison with other papers
+
+1. The run line in Appendix C: the install and the run command of the
+   README, the world files of the pair, the two slits and the
+   Mach-Zehnder, and the runs' fingerprints named once there.
+2. "The words of this paper" after the introduction's first paragraph:
+   GameBoard, Inside and Outside, row and record, the click, a rung,
+   the kinds DETECTOR and GAMEBOARD, each in one sentence from its
+   definition.
+3. The longest sentences of the introduction and the discussion split
+   (the first paragraph, "Second", "Third", "So the paper keeps one
+   ledger", "What no rule of the law forces", the platform's simulator
+   sentence, "The same way", "So 1 + z"); the same words, full stops
+   for semicolons; the click theorem's quotation, the chain sentence
+   and the frame's opening untouched.
+4. The project's references as citation notes: "record N \cite{log}"
+   to "\cite[record N]{log}" throughout the body; the roles ("the
+   model owner's finding", "the owner's word", "the physicist's
+   derivation", "the physics-rule reviewer", "the physicist's pins")
+   out of the body, the citations kept; the commit b34fe114 and the
+   runs' fingerprints as citation notes and in Appendix C.
+5. Four figures in the body: Figure 1, the mechanism (a new drawing
+   from the definitions, figures.py figure_mechanism, no run: the
+   board, an emitter, two rows on their digital lines, a detector's
+   Nodes; the click as the ladder of rungs over u); Figure 2, the
+   two-slit weights and clicks beside the Mach-Zehnder worlds' clicks
+   (the figures' runs, series L, both kinds named); Figure 3, the
+   pair's E(a, b) computed from the rule against the tables' cosine
+   with the registered worlds; Figure 4, S(N) as before.
+
+No claim, number, verdict or citation removed. 39 pages (the owner's
+word on the page: leave it).
