@@ -62,14 +62,16 @@ about 2^24.7, needs d at most 16384; the pin n S = d then needs S at most
 1024 per Node crossed (the stretch at most 1.0625, the clock's k at the
 reader of the order 1 / 16); no run of any redeclared world before the
 owner's one letter. His word of the same hour, after the relevance check
-reached him: "I do not care about the worlds; check that it is a good law
-on a click." So the check that decides is not any registered world's
-digest but the click: the lensing worlds of `examples/events/optical/`
-(the mass at gamma 0 and 1 against their controls) run with the key
-`clock_stamp` of the moving detector, each screen pixel's first click read
-as the click's Node and the pixel's own count (DETECTOR), the shift and
-the delay compared line by line with the step algebra's Nodes; the
-redeclaration of series T waits behind that check.
+reached him (record 871, as the Boss gave it): the 32 crowd worlds are
+not needed at all, they are not in the paper; a Register Architect lists
+and deletes every world, experiment and code path the paper does not
+reach, after this insertion merges (one writer per file: the refusal list
+above stays as it is, nothing deleted here). Series T's four worlds stay
+as long as NATURE row 12 stays in the paper, and their weak-field
+redeclaration proceeds as the Boss ordered, the pins committed before any
+run; the other 28 are the Architect's to remove. The owner's passing
+words of the same minutes about a check "on a click" were withdrawn by
+him: the click is the cart's (the moving detector), not this law's check.
 
 **The register's digests.** REPLICATIONS.md records for these series the
 world file's sha256 and the readings, not the record's digests, so the
