@@ -91,7 +91,7 @@ def read_run(folder: Path) -> Reading:
     roles: dict[str, int] = {}
     for number, entry in record["numbers"].items():
         roles[str(entry["family"])] = int(number)
-    cart, lamp, post = roles["cart"], roles["lamp"], roles.get("post")
+    cart, lamp, post = roles["cart"], roles["source"], roles.get("post")
     model = str(record["model"])
     reading = Reading(
         name=model[len(PREFIX) : -len("-v1")].replace("-", "_"),

@@ -23,7 +23,7 @@
    "quantum": 1
   },
   {
-   "name": "lamp",
+   "name": "source",
    "quantum": 1
   },
   {
@@ -44,7 +44,7 @@
     1,
     1
    ],
-   "family": "lamp",
+   "family": "source",
    "amount": 8192,
    "phase": 0,
    "fixed": true,
@@ -126,7 +126,7 @@
     ]
    },
    "table": {
-    "lamp": {
+    "source": {
      "rule": "measure",
      "reads": "age"
     },

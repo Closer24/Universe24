@@ -18,7 +18,7 @@ A bar of 240 x 3 x 3 Nodes (320 for the quantum world), open, no crowd, no
 key of a hypothesis, series O's numbers (N = 64, K = 2^22 + 2^13, Q = 64, the
 width 2^20). Three measured events on the axis: the post R (fixed at x = 1,
 the transponder: the cart's pulses re-emitted on +x by the rule `rerelease`,
-stamped with its number), the lamp A (fixed at x = 3, one row per
+stamped with its number), the lamp A (the family `source`, fixed at x = 3, one row per
 self-creation on +x), and the cart D (the moving body detector: from x = 20
 at the pace v = 1 / k Nodes per self-creation exactly, a lamp of its own on
 -x, its table measuring the lamp's rows and its own returned pulses). Every

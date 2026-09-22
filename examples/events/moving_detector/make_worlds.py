@@ -13,8 +13,8 @@ M}, series G2's kind), a lamp of one unit per self-creation on -x (its
 birth ordinals are its own count), a momentum on x that gives the pace v =
 1 / k Nodes per self-creation exactly (`p = Q S M / (k - 1)`, the drive's
 rule v = p / (Q S M + p), M the content the drive's wall reads: the held
-mass plus the light), and a table that measures the lamp's rows (`lamp`,
-the missing direction k_AB) and its own pulses returned by the post
+mass plus the light), and a table that measures the lamp's rows (the family
+`source`, the missing direction k_AB) and its own pulses returned by the post
 (`cart`, stamped with the post's number by the `rerelease` rule: the radar
 and the round trip). The lamp A at rest at x = 3 shines +x, one row per
 self-creation. The post R at rest at x = 1 re-emits the cart's pulses on +x
@@ -124,7 +124,7 @@ WORLDS: dict[str, tuple[Fraction, int, int, bool]] = {
 
 def post() -> Json:
     """The transponder at rest: the cart's pulses re-emitted on +x at its
-    next self-creation, stamped with its number (`rerelease`); the lamp's
+    next self-creation, stamped with its number (`rerelease`); the source's
     rows never reach it; the cart's mass rows pass."""
     return {
         "position": [POST_X, 1, 1],
@@ -132,12 +132,13 @@ def post() -> Json:
         "amount": 1,
         "fixed": True,
         "directions": [PLUS_X],
-        "table": {"cart": {"rule": "rerelease"}, "lamp": {"rule": "pass"}, "mass": {"rule": "pass"}},
+        "table": {"cart": {"rule": "rerelease"}, "source": {"rule": "pass"}, "mass": {"rule": "pass"}},
     }
 
 
-def lamp() -> Json:
-    """The lamp at rest: one row per self-creation on +x toward the cart; the
+def source() -> Json:
+    """The source, the lamp at rest (the family `source`, since the family
+    name `lamp` would read as the lamp key): one row per self-creation on +x toward the cart; the
     returned pulses and the cart's mass rows pass through it. It holds the
     same mass as the cart so that its content equals K and its phase turns
     once per interval (a turn of 0 releases nothing; series O's star); its
@@ -145,7 +146,7 @@ def lamp() -> Json:
     cart's pace stays the drive's exact 1 / k)."""
     return {
         "position": [LAMP_X, 1, 1],
-        "family": "lamp",
+        "family": "source",
         "amount": LIGHT,
         "phase": 0,
         "fixed": True,
@@ -170,7 +171,7 @@ def cart(v: Fraction) -> Json:
         "directions": [MINUS_X],
         "lamp": {"rate": LAMP_RATE, "wheel": [1, N], "directions": [MINUS_X]},
         "table": {
-            "lamp": {"rule": "measure", "reads": "age"},
+            "source": {"rule": "measure", "reads": "age"},
             "cart": {"rule": "measure", "reads": "age"},
             "mass": {"rule": "pass"},
         },
@@ -179,7 +180,7 @@ def cart(v: Fraction) -> Json:
 
 def world(name: str) -> Json:
     v, length, ticks, with_post = WORLDS[name]
-    measured = ([post()] if with_post else []) + [lamp(), cart(v)]
+    measured = ([post()] if with_post else []) + [source(), cart(v)]
     return {
         "law": LAW_VALUE,
         "model_id": f"beam-moving-detector-{name.replace('_', '-')}-v1",
@@ -194,7 +195,7 @@ def world(name: str) -> Json:
         "clock_stamp": True,
         "families": [
             {"name": "post", "quantum": 1},
-            {"name": "lamp", "quantum": 1},
+            {"name": "source", "quantum": 1},
             {"name": "cart", "quantum": 1},
             {"name": "mass", "quantum": 0, "charge": 0, "phase": False},
         ],
