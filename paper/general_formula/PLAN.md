@@ -4450,3 +4450,24 @@ pagetotal at the bibliography's start), the references still begin on
 page 31. The appendix side gained the families table's 8 lines only.
 What would give the remaining 25 lines without loss is not on the
 owner's list; the Boss decides.
+
+## Applied (2026-09-22, the Boss's order of 11:05Z under the owner's "cut", record 922): the lossless appendix-side candidates D, E, F
+
+D: the families table to 0.7, 1.35, 1.35, 1.15, 1.5 in and the roads
+table to 1.5, 1.75, 1.5, 1.4 in (the text width less the column
+separations). E: Appendix C's "seven confirmations" in one sentence
+pointing at Tables 3 and 7, every number kept (the far pair's cells
+27, 5, 5, 27, the half-turn 0/64, GHZ's 16 each, Malus's 0 of 256
+crossed and series K's 0.000 pixel and 0.00 interval stand nowhere
+else). F: the symbols caption shortened; the grains, directions and
+groups rows tightened; the notation table's third column 3.3 to 3.25
+in, which ends its 3.5 pt overfull. G untouched. No claim, number,
+verdict or citation removed.
+
+The count: 37 pages, unchanged; the roads table's last five rows (25
+lines) still on page 37. The appendix-side savings of D, E, F are a
+few lines on pages 34 and 35, below one row of the families table
+(its rows 4 to 8 lines tall and unbreakable), so no row moved and page
+36 is as it was. Next lossless candidates, measured in a trial build
+and not applied: (H) the references at footnotesize instead of small;
+(I) the notation table at scriptsize. The owner decides.

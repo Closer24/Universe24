@@ -2624,6 +2624,42 @@ CORRECTIONS = [
         "and every result is an identity of that algebra, exact on the board or in a named limit, compared with the register's readings by kind. Exact on the GameBoard: the books' conservation, Gauss's law of a free family's flux, the pace of every direction with its Manhattan bound, the click's weight a positive quadratic form of power $2$ under one axiom of the apparatus, the exact marginals of a pair, and the CHSH sum as an exact rational of the grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's bound, Young's spacing; under an average that covers the shell, the condition part of the claim: Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation.",
         "and every result the paper calls exact is an identity of that algebra under its declared tables, on the board or in a named limit, compared with the register's readings by kind. Exact on the GameBoard: the books, Gauss's law of a free family's flux, the pace of every direction with its Manhattan bound, the click's weight a quadratic form of power $2$ under one axiom of the apparatus, a pair's marginals and its CHSH sum, $181/64$ from $512$ to $8192$; recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's bound, Young's spacing, and under an average that covers the shell, the condition part of the claim, Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation.",
     ),
+    # The lossless appendix-side candidates D, E, F (the Boss's order of 11:05Z under the owner's 'cut', record 922): the tables to the text width, the seven confirmations in one sentence with every number, the symbols table tightened.
+    (
+        "cut D (the Boss's order of 11:05Z): the families table to the text width",
+        "\\begin{longtable}{p{0.7in}p{1.3in}p{1.3in}p{1.1in}p{1.45in}}",
+        "\\begin{longtable}{p{0.7in}p{1.35in}p{1.35in}p{1.15in}p{1.5in}}",
+    ),
+    (
+        "cut D: the roads table to the text width",
+        "\\begin{longtable}{p{1.5in}p{1.7in}p{1.5in}p{1.4in}}",
+        "\\begin{longtable}{p{1.5in}p{1.75in}p{1.5in}p{1.4in}}",
+    ),
+    (
+        "cut E: the seven confirmations in one sentence, every number kept",
+        "\\paragraph{The seven confirmations.} {\\footnotesize The pace: series Q, $290$ of $290$ primitive directions ($|a| + |b| + |c| \\le 6$) clicking at the derived interval, Node and face, the pace $0.5718$ to $0.5893$ at finite ages;  The click's power: series L, the $(3, 4)$ split, $63/1$ at $\\Nphi = 64$, $31/1$ at $32$, $125/3$ at $128$, the far pair's cells $27, 5, 5, 27$. The interference of one record: Mach-Zehnder, $64/0$ equal arms, $0/64$ half turn, $32/32$ quarter turn over $64$ births. The exact marginals: the pair at $\\Nphi = 64$, $32/64$ for each party in every bin. GHZ: the four allowed triples $16$ each, the products $+1$ and $-1$, the others $0$. Malus: A12, $128$ of $256$ at $45$ degrees, $0$ of $256$ crossed, $219$ of $256$ at $22.5$. Light beside a mass: series K, three worlds, the deflection $0.000$ pixel, the delay $0.00$ interval \\cite{register,replications}.}",
+        "\\paragraph{The seven confirmations.} {\\footnotesize Each a run's clicks against the formula shown Inside, the rows in Tables~\\ref{tab:nature} and~\\ref{tab:families}: the pace, series Q, $290$ of $290$ primitive directions ($|a| + |b| + |c| \\le 6$) at the derived interval, Node and face, $0.5718$ to $0.5893$ at finite ages; the click's power, series L, the $(3, 4)$ split $63/1$, $31/1$, $125/3$ at $\\Nphi = 64$, $32$, $128$, the far pair's cells $27, 5, 5, 27$; Mach-Zehnder, $64/0$ equal arms, $0/64$ at a half turn, $32/32$ at a quarter, over $64$ births; the marginals, $32/64$ per party in every bin at $\\Nphi = 64$; GHZ, the four allowed triples $16$ each, the products $+1$ and $-1$, the others $0$; Malus (A12), $128$, $0$ and $219$ of $256$ at $45$, $90$ and $22.5$ degrees; light beside a mass, series K, three worlds, the deflection $0.000$ pixel, the delay $0.00$ interval \\cite{register,replications}.}",
+    ),
+    (
+        "cut F: the symbols caption shortened; the table to the text width (the 3.5pt overfull)",
+        "\\begin{longtable}{p{1.75in}p{1.0in}p{3.3in}}\n\\caption{\\label{tab:notation}The symbols of this paper, under the one rule: physics' letters keep physics' meanings, the law's grains are $N$ with a subscript, a world key is in code font.}\\\\",
+        "\\begin{longtable}{p{1.75in}p{1.0in}p{3.25in}}\n\\caption{\\label{tab:notation}The symbols: physics' letters keep physics' meanings, the law's grains are $N$ with a subscript, a world key is in code font.}\\\\",
+    ),
+    (
+        "cut F: the grains row tightened",
+        "the content (a count of units), the label's scale, the width, the phase circle, the direction bound, the fan's angular grain, the birth wheel, the cosine tables' scale: the grains of the lattice, its definition lines (the law's documents write $Q$, $S$ and $N$ for $N_l$, $N_w$ and $\\Nphi$ until their writers' next pass \\cite{notation}) \\\\",
+        "the content (a count of units), the label's scale, the width, the phase circle, the direction bound, the fan's angular grain, the birth wheel, the cosine tables' scale (the law's documents write $Q$, $S$ and $N$ for $N_l$, $N_w$ and $\\Nphi$ until their writers' next pass \\cite{notation}) \\\\",
+    ),
+    (
+        "cut F: the directions row tightened",
+        "the number of directions of a fan (the ladder's $K$, the count of a record's cells in $C_K$ and $\\rung_K$, is Section~\\ref{sec:measurement}'s) \\\\",
+        "the number of directions of a fan (the ladder's $K$ of $C_K$ and $\\rung_K$ is Section~\\ref{sec:measurement}'s) \\\\",
+    ),
+    (
+        "cut F: the groups row tightened",
+        "the phase circle, the turn its shift; the arrivals' group ring, the merge its addition; its quotient by $x^{\\Nphi/2} + 1$, the cyclotomic integers, where opposite phases cancel; the pair's arms, the settings acting by integer matrices; the six Ports' hyperoctahedral group, $48$ signed permutations, its $24$ rotations (Theorem~\\ref{th:group}); the flight is the translation group's shift along the digital line (Section~\\ref{sec:law}) \\\\",
+        "the phase circle, the turn its shift; the arrivals' group ring, the merge its addition; its quotient by $x^{\\Nphi/2} + 1$, the cyclotomic integers, where opposite phases cancel; the pair's arms under the settings' integer matrices; the six Ports' hyperoctahedral group, $48$ signed permutations, $24$ rotations (Theorem~\\ref{th:group}); the flight the translation group's shift (Section~\\ref{sec:law}) \\\\",
+    ),
 ]
 
 
