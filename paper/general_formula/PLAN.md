@@ -3215,3 +3215,21 @@ repeats; no claim moved. NUMBERS.md carries the new numbers with their
 kinds. The Highlights line, NATURE.md and DERIVATIONS_BEAM are the
 Boss's, the physicist's and the mathematician's commits; the paper
 follows them.
+
+## The title (2026-09-22, the owner's word "A, go", through the Boss)
+
+The owner keeps candidate 3's frame and adds the word that separates the
+law from its read-out: the law is local (the six operations at a Node and
+its six neighbours), the click is one gather from both detectors,
+non-local. The title is "Universe24: a local integer law of nature with a
+non-local read-out, and what follows from it", and the abstract's first
+sentence names the click "the one non-local step"; no other change on
+the title. With it, the writer's re-read of the five: row 2b's criterion
+written on the bright and dark ports' offers, (b - d) / (b + d), without
+the direction's letter D; row 2a's wheel named "the birth wheel" as the
+paper names it everywhere; Q, the quotient of Theorem 3, in the symbols
+table; the Gleason sentence's end whole ("the norm range of Appendix B is
+the error bound between the two"). No number moved; 30 pages held (the
+body through 25, the references 26 to 27, the appendices 28 to 30). The
+S(N) figure at half width waits for the Bell runner's rows on main, one
+commit after the Boss's SHA.
