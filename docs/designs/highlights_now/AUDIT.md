@@ -1,0 +1,282 @@
+# The Highlights now: the audit of 2026-09-22 (what is no longer with us, what is superseded without a mark, what is said in old words, and every wall)
+
+The Highlights Auditor, 2026-09-22, on the model owner's word of record 927
+(2026-09-22, in Hebrew, verbatim in translation as the Boss relayed it):
+"Make sure the Highlights is clean of what is no longer with us, and built
+on the clicks and measurements and the connection of clicks from Inside to
+Outside. And in general defines the system now as it is. The wall flew, and
+other things..." Record 927 is not yet on main at the base below (the log
+ends at record 925), so this file names it and does not link it; the Boss
+adds the link when the record lands.
+
+**The base:** origin/main at `8fa9e00b` (PR #849 merged, 2026-09-22), the
+file `docs/HIGHLIGHTS.md` of 866 lines; line numbers below are that
+commit's. **The deletions read:** the Register Architect's branch
+`register-paper-sources` at `93aff8f2` (step 3 of record 871: deletion 1 at
+`215c6db0`, deletion 2 at `3b262ec5`, the click readings moved) and its
+`docs/designs/register_paper_sources/PLAN.md` as it is there (the path
+exists on that branch only, so it is named and not linked until its merge).
+**The records read:** 281, 578, 606, 721, 749, 754, 802, 817, 820, 822,
+871, 894, 913, 920 of [the log](../../LOG_2026-09-20.md), the model of
+sections 5.1 to 5.3, the decisions of 5.4 from 2026-09-17 to 2026-09-22
+and the acceptance tests of 5.5, [POSTULATES.md](../../../POSTULATES.md),
+the display and measurement contracts of
+[SIMULATOR_DEFINITIONS.md](../../../SIMULATOR_DEFINITIONS.md), and
+[the readings by type](../../ENGINE.md#the-detectors-readings-by-type).
+Docs only; no run, no code, no rule of the law moved.
+
+**The rule.** Nothing of the owner's decisions is deleted (the standing
+rule of section 5.4, restated by record 802: a superseded line is marked
+and pointed, never deleted; the owner's word on deleting dated decisions is
+asked by the Boss and not yet given). Four actions, applied in the two
+commits after this one:
+
+- KEEP: the line stands, or is history already labelled as such.
+- MARK: one dated clause in the file's own convention, "Superseded on
+  <date> by record NNN: <ten words>", every mark linking its record; in
+  sections 3.1 to 3.30 one line under the heading, the physics of the
+  section untouched.
+- MOVE: the text goes verbatim to a history section at the end of the file
+  ("10. The head and the reading map before 2026-09-22"), its heading kept
+  in place so that every anchor another document links to stays valid
+  (`tests/test_repository_navigation.py`; the anchors linked from outside
+  are 5.4, the day blocks, 5.5, 5.6, 5.7, 1, 2, 3.3, 3.11, 3.17, 3.18,
+  3.26, 3.28, 3.29 and the world-file keys of 5.6).
+- REWRITE: the head (before 3.1) and sections 5.1 to 5.3 are written again
+  as the statement of the system today, every sentence anchored in a record
+  or a file (commit 2); the old text is MOVED, not lost.
+
+The Highlights Pruner marked 37 lines on 2026-09-22 (record 802,
+[CONTRADICTIONS.md](../highlights_prune/CONTRADICTIONS.md)); this audit
+lists what he did not reach. His line numbers were those of main
+`b51f9245`; the 2026-09-22 block of 5.4 has since gained its own heading, so
+his numbers from 378 on read three higher here.
+
+## 1. What Highlights names that is deleted from main or being deleted (a)
+
+The state "on main" is origin/main at `8fa9e00b`; "on the branch" is
+`register-paper-sources` at `93aff8f2`. What the branch deletes after the
+merge SHAs of `generic-bending` and `moving-detector-build` is listed as
+"after the SHAs" (PLAN.md sections B and D).
+
+| Thing | State now | The record | Highlights line, first words | Action |
+| --- | --- | --- | --- | --- |
+| The UI workspace: `src/event_universe/ui.py`, `ui_assets/`, `docs/WORKSPACE.md`, the script `event-universe-ui` | on main; deleted on the branch at `3b262ec5` | [894](../../LOG_2026-09-20.md#894-the-owner-1-go-and-fast-2-delete-old-code-3-good-speed-everyone-up-and-no-unnecessary-checks-the-carts-step-5-go-the-ui-workspace-and-gallery-hand-catalog-deleted-the-papers-last-page-by-a-b-and-c-the-pace-order-to-every-session-2026-09-22-about-0921z-recorded-by-the-boss-at-1145z-the-owners-word-hebrew-on-the-bosss-message-of-0925z-1-the-cart-go-and-fast-pr-834-merges-on-green-after-the-physicists-merge-of-main-with-the-should-fix-and-step-5-the-transponder-worlds-cart_k3-to-cart_quantum-the-posts-rerelease-is-go-as-the-design-has-it-the-pins-already-declared-in-expectationsjson-the-readings-by-kind-2-delete-old-code-the-ui-workspace-uipy-ui_assets-docsworkspacemd-is-deleted-now-and-the-three-thin-worlds-gallery-hand-and-catalog-are-deleted-with-their-designs-tools-and-register-rows-atoms-stays-records-881-886-3-good-the-papers-last-page-by-the-writers-three-candidates-a-b-and-c-together-record-893-one-commit-to-35-and-to-everyone-speed-everyone-up-and-no-unnecessary-checks-from-now-checkpy---base-originmain-per-commit-and---full-only-when-the-boss-asks-no-repeated-suites-no-second-read-by-the-reviewer-of-his-own-folded-lines-unless-a-number-or-a-rule-moved-one-push-per-step-the-six-lines-short-acts-the-physicist-told-trig_01a2gvaa1xwenjhrdkkbyehv-the-register-architect-told-trig_01rkkjocb6z1mxdalebygxd6-the-writer-told-trig_01w4xdxmrbtjfl3twypzc1nd-the-reviewer-told-trig_015eene371uwjvh1p1agz6as-the-atom-give-designer-the-flow-weight-designer-the-ring-mean-mathematician-the-criteria-runner-and-the-atom-baseline-runner-told-trig_018qhdzezabzymvkvxfu96pf-trig_01wdnzjgrahbhbcj34jgfqqj-trig_019qfreriduxgvjnrnscr3gv-trig_01duqzkjubmuihcdbnrmtysk-trig_01kr4rem33xfcehz28jukaez-highlights-54-three-lines-old-code-goes-the-ui-included-the-papers-35-by-a-b-and-c-the-pace-no-unnecessary-checks), [913](../../LOG_2026-09-20.md#913-the-register-architects-deletion-2-at-3b262ec5-the-old-code-2026-09-22-0956z-recorded-by-the-boss-at-1001z-step-2-2-of-record-871-toolsderivations_round7py-and-derivations_round8py-the-scratch-of-derivationsmd-rounds-7-and-8-the-paper-cites-derivations_beammd-never-these-toolsgeneric_vector_lab-9-files-srcevent_universeuipy-with-ui_assets-3-files-docsworkspacemd-and-the-script-event-universe-ui-docsdesignsdoppler_v1-and-docsdesignspush_relative_speed-deleted-consumers-updated-teststest_entity_loading_consumerspys-ui-cases-readmemd-architecturemd-enginemd-project_statusmd-retentionmd-validationmd-derivationsmd-sentences-toolscheckpys-ui_assets-prefix-pyprojecttoml-and-manifestin-four-docsreadmemd-rows-one-migrationmd-paragraph-planmds-done-line-2-retentionpy-keeps-its-companion-lease-mechanism-runnerpy-and-checkpy-use-it-no-key-hypothesis-or-rule-of-the-engine-moved-branch-register-paper-sources-head-3b262ec539c7c291625e8c0415a35af856b92a29-pushed-checkpy---base-originmain-under-python-3140rc2-the-whole-suite-selected-because-pyprojecttoml-changed-1455-passed-1-skipped-1-xfailed-pre-existing-ruff-and-mypy-clean-the-three-gates-green-physics-nothing-one-line-for-the-boss-skillsregression-checkskillmd-line-108-still-named-ui_assets-the-boss-dropped-the-words-in-this-records-commit-next-step-3-the-readings-package-toolsclick_readings-for-the-16-tools-no-in-flight-branch-touches-bell_chsh-bell_choosers-bohr-c_measured-coupling-covariant-heisenberg-hubble-hubble_stars-nucleus-orbit-orbit_lamp-quarks-with-quarksreplay_register-redshift-weak-massive_rows-read_run-and-replay_register-toolsamplitude_pathpy-stays-the-papers-recordmd-run_seriespy-and-checkpy-cite-it-by-path-the-json-registers-not-edited-their-derivation-strings-naming-a-tools-old-path-stay-as-history-every-expectationsjson-byte-identical-finding-for-c3-the-tools-find_runs-and-read_run-bodies-all-differ-but-four-trivial-pairs-so-no-shared-recordpy-is-warranted-the-step-is-a-move-with-the-root-paths-and-consumers-updated-no-formula-touched-the-architects-report-crossed-the-bosss-word-of-record-907-shell_clocks-six-keep-the-strike-as-ruled-the-merge-shas-of-generic-bending-and-moving-detector-build-still-pending) | 472, "Old code goes, the UI workspace included" (the decision) | KEEP |
+| the same | | | 782, 5.6 item 22, "`ui.py`'s renderer CSP and `.html` branch (audit A9)" | KEEP as the dated snapshot; one MARK line under the heading of 5.6 says the snapshot's `ui.py` is deleted by record 913 |
+| `tools/generic_vector_lab/` (9 files) | on main; deleted on the branch at `3b262ec5` | 913 | not named in Highlights | none |
+| `tools/derivations_round7.py`, `derivations_round8.py` | on main; deleted on the branch at `3b262ec5` | 913 | "round 8" at 53, 119, 135, 139, 147, 231, 263, 317, 329, 593 names the rounds of DERIVATIONS.md (the document, kept), never the scratch tools | KEEP (history, labelled) |
+| The key `doppler`, `doppler-v1`, the grain G, `docs/designs/doppler_v1/`, `docs/designs/push_relative_speed/` | the key and G deleted from main on 2026-09-21 (the crossing rule, [MIGRATION](../../MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted)); the two design directories on main, deleted on the branch at `3b262ec5` | [158](../../LOG_2026-09-20.md#158-the-crossing-rule-designed-record-153s-order-the-physicist-read-only-scratchpad-crossingdesignmd-with-crossing_simpy-main-unchanged-a-row-and-a-body-meet-once-at-the-crossing-of-their-world-lines-a-body-at-rest-reads-arrivals-as-today-in-the-interval-of-a-step-it-also-meets-the-rows-that-crossed-its-own-link-the-other-way-and-the-rows-resident-at-the-destination-moving-against-it-and-it-does-not-meet-the-rows-moving-with-it-the-rows-behind-it-on-its-link-or-one-interval-later-the-rows-it-met-at-the-origin-the-leapfrog-the-bodys-own-two-last-links-are-the-only-facts-nothing-at-a-node-proved-on-the-experimenters-streams-toward-k--4-45-reads-in-32-intervals-k--8-58-in-48-away-19-in-32-38-in-48-rest-48-no-row-twice-none-missed-the-integer-form-moves-_move-before-the-law-and-makes-met-the-crossing-expression-doppler-v1-and-g-deleted-with-the-list-the-emergent-doppler-exact-on-the-axis-and-the-transverse-an-encounter-count-on-a-fan-direction-a-limit-to-state-not-to-tune-admissible), 913 | 538, "Series G2"; 540, "doppler-v1 in the grain flux form"; 556, "Go on everything, in parallel" | KEEP: each carries the chain to the crossing rule in its own text |
+| the same | | | 553, "Change 2 as proposed ... the same pair on the arrivals under a world key doppler-v1 off by default ... is the one to decide on" | MARK: superseded on 2026-09-21 by record 158 (the key deleted); the designs of change 2 and of the grain deleted on 2026-09-22 (record 913) |
+| the same | | | 539, "Five words ... the grain form waits for the mathematician" | MARK on the grain form: superseded by the crossing rule (record 158, the line below); the other four words landed |
+| `examples/events/two_stars/` (series O), `docs/designs/two_stars/` | on main; deleted on the branch at `215c6db0` | 871, 913 | 223 speaks of "two stars turn each other" in the 2026-09-17 prose of 3.19, not of series O; series O is named nowhere | none (3.19 gets its marker under (b)) |
+| `examples/events/masses/`, `docs/designs/masses/` (series M) | on main; deleted on the branch at `215c6db0` | 871; the masses closed by [106](../../LOG_2026-09-20.md#106-decided-the-masses-and-charges-are-the-initialisation-the-catalog-of-the-families-not-derivable-in-this-law-the-two-sentences-superseded-the-binding-design-pending) | 546, "Series M, the ladder of loop-closing contents, on a separate machine" | MARK: closed on 2026-09-20 by record 106; the design and the worlds deleted on 2026-09-22 (records 871, 913) |
+| `examples/events/buildup/`, `tools/buildup_readings.py` (A10 at a low rate) | on main; deleted on the branch at `215c6db0` | 871 (superseded by the one click) | 515, "The amplitude, option 1 now ... the single-click build-up" (already marked superseded by record 72); 557 names `buildup w27` inside its anchor only | KEEP |
+| `examples/events/gallery/` (5 worlds), `tools/gallery_pages.py`, `docs/pages/gallery/`; `examples/events/hand/` (4 worlds, `hand/wu` in the gate set); `examples/events/catalog/` (4 worlds, `lamp_mirror_screen` and `sun_planet` in the gate set) | on main; ordered deleted with their designs, tools and register rows by record 894; NOT yet deleted on the branch at `93aff8f2` (its PLAN.md A.1 still lists the three as thin reach, kept; the word of record 894 came after the plan) | 894 | 472, "Old code goes ... the thin worlds gallery, hand and catalog go" (the decision) | KEEP |
+| the same | | | 496, "Every experiment shows its results on a page with the GameBoard drawn" (record 12) | MARK: the gallery's pages and tool go with the thin worlds (record 894); a page is made only for what the paper needs (record 606) |
+| the same | | | 504, "The catalog of the entities ... the external things placeable on the GameBoard" (record 30) | MARK: the catalog worlds are deleted by record 894; the families and their keys stay the declared inputs (5.7, record 189; record 817) |
+| the same | | | 556, "... hand/wu the 16th gate world" | MARK: the hand worlds and `hand/wu` are deleted by record 894; the rule `hand-v1` stands, its reading series J2's |
+| Q-ORACLE-1 (the shared quantum resource, section 3.18) | deleted on 2026-09-17; named as deleted in AGENTS.md, SIMULATOR_DEFINITIONS.md (LOCALITY-1) and POSTULATES 14 | Highlights 3.18 | 175, 3.10, "the Q-ORACLE-1 convention lapsed with section 3.18"; 209, 3.18 | KEEP the sections; one MARK line under each heading (the deletion, and that no draw and no returning ray remain, record 15 of 2026-09-19) |
+| The crowd worlds the paper does not cite: `crowd_clock/` (8), `cluster_clock/` (2), `reader_clock/` (5), `gallery/clock_6`, `hubble_stars/{gravity,double}_*` (6) and their three designs | on main; deleted on the branch after the SHA of `generic-bending` (PLAN.md B.1, D); series T's four (`clock_word/`) stay (NATURE row 12, record 886); `shell_clock/`'s six stay by the rule of reach (the Boss's word of record 907, "six KEEP") | [871](../../LOG_2026-09-20.md#871-the-owner-the-32-crowd-worlds-are-not-needed-at-all-they-are-not-in-the-paper-an-architect-to-remove-every-world-or-experiment-not-in-the-paper-the-new-click-code-ordered-old-code-goes-2026-09-22-0857z-recorded-by-the-boss-at-0902z-the-owners-words-hebrew-dictated-it-turns-out-we-do-not-need-the-32-crowd-worlds-at-all-they-are-not-in-the-paper-start-an-architect-to-remove-worlds-or-experiments-that-are-not-in-the-paper-order-the-new-code-of-the-clicks-old-code-goes-this-supersedes-the-a-for-series-t-and-history-for-the-28-closure-of-record-868-as-far-as-the-28-go-they-are-to-be-deleted-not-kept-as-history-the-bosss-reading-put-to-the-owner-for-his-overrule-series-ts-four-worlds-clock_word-are-in-the-paper-nature-row-12-the-ratio-1907-so-they-stay-and-their-weak-field-redesign-continues-unless-he-strikes-row-12-acts-a-new-session-the-register-architect-session_01wzuxwogrix86mzyet7ixbp-branch-register-paper-sources-step-1-the-table-docsdesignsregister_paper_sourcesplanmd-the-papers-reached-set-from-maintex-numbersmd-recordmd-checks-figurespy-summarize_runspy-and-the-cited-tests-every-other-world-experiment-design-and-code-path-with-delete-or-keep-and-its-tests-the-click-codes-order-the-new-code-and-the-old-it-supersedes-counts-at-the-top-one-commit-reported-step-2-the-deletions-in-commits-worlds-and-experiments-then-unreached-code-then-the-click-code-ordered-under-one-module-boundary-each-green-under-toolscheckpy---full-at-the-end-nothing-deleted-from-highlights-or-the-logs-no-physical-behavior-change-byte-identical-readings-for-kept-worlds-the-in-flight-branches-generic-bending-moving-detector-build-the-papers-light-bending-algebra-atom-algebra-untouched-their-overlapping-deletions-after-their-merge-shas-the-physicist-told-trig_01jnbuhpgxq4ic2rks2zccbs-his-insertion-commit-unchanged-the-28-deleted-by-the-architect-after-his-merge-series-t-continues-the-cart-is-new-click-code-to-be-ordered-not-deleted) | 453, "The registered crowd worlds at n > 0 are marked not readable ... their old digests kept as history" (record 865); 455, "... the other crowd worlds at n > 0 stay history" (record 868) | MARK both: superseded on the 28 by record 871 (deleted, not kept as history); series T's four stay (record 886) |
+| the same | | | 457, "The paper's sources only ... the 32 crowd worlds are not needed" (record 871) | KEEP |
+| The one-wall course's step 3: `examples/events/optical/body_*` (20 worlds), `body_expectations.json`, `tests/test_optical_body.py`, `docs/designs/one_wall/BODY_DRIVE.md`, `PHYSICIST.md`, `MATHEMATICIAN.md` and their maps; `tools/optical_readings.py`; `docs/designs/optical_v1/` | on main; deleted on the branch after the SHA of `generic-bending` (PLAN.md B.1, B.2, C.2); the key `optical` itself is being removed by `generic-bending` (the coupling inserted into the law, records 847 and 851) | [816](../../LOG_2026-09-20.md#816-the-owner-through-the-chief-physicist-there-is-no-wall-any-more-we-need-a-cart-with-a-click-the-bosss-frame-the-moving-body-detectors-design-and-pins-first-one-writer-the-run-on-the-owners-word-2026-09-22-0633z-recorded-by-the-boss-at-0644z-the-owners-words-to-the-chief-physicist-hebrew-by-voice-as-the-physicist-translated-them-sync-with-the-boss-about-what-is-needed-and-what-is-not-because-all-kinds-of-things-changed-we-no-longer-need-a-wall-this-way-we-need-a-cart-with-a-click-see-what-needs-cleaning-what-does-not-need-cleaning-what-needs-doing-consult-the-boss-there-is-no-wall-any-more-the-physicists-reading-agreed-by-the-boss-the-whole-one-wall-course-records-745-to-780-a-rows-flight-stretched-by-the-crowds-age-moment-a-bodys-drive-stretched-the-same-form-b-on-optical-body-drive-at-f490da6d36f01da2fe7b3a69fb8508a79aabc07d-with-15-body-worlds-pinned-before-the-run-and-run-6-tests-body_drivemd-is-superseded-by-record-745-no-wall-is-needed-and-this-word-the-cart-with-a-click-is-the-moving-body-detector-record-762-a-moving-detector-can-be-built-the-einstein-mathematicians-one-transponder-and-moving-detector-world-the-click-frames-missing-direction-k_ab-the-bosss-decisions-trig_01wshe2edyjdvr44y2a1add9-i-the-branch-optical-body-drive-gets-its-pr-as-the-record-of-step-3-the-pins-before-the-run-the-runs-registered-the-key-optical-off-by-default-the-registered-worlds-byte-identical-after-one-status-head-commit-the-reviewers-code-review-not-a-verdict-on-the-course-steps-5-and-6-closed-as-not-ordered-ii-the-marks-not-deletions-the-pruners-convention-record-802-one-status-head-each-on-every_familymd-body_drivemd-and-exampleseventsopticalreadmemd-citing-record-745-and-this-record-iii-the-frame-one-writer-the-chief-physicist-step-1-docs-only-docsdesignsmoving_detectordesignmd-on-branch-moving-detector-the-world-a-lamp-at-rest-a-transponding-body-with-its-own-lamp-a-moving-body-detector-at-one-node-per-k-intervals-the-detector-a-body-with-its-own-count-record-768-a-one-node-detector-without-a-body-has-no-count-its-clicks-written-on-its-own-record-a-click-its-measurement-record-281-what-it-reads-only-its-own-count-between-clicks-record-803-place_j1---place_j-count_j1---count_j-and-the-ratio-of-two-lamps-in-one-window-record-754-the-pins-from-the-formulas-before-any-run-k_ab--r--1---v-k_ba--1--v--r-at-r--1-the-ratio-1---v2-on-the-law-1-under-lorentz-the-least-step-1--k-the-quantum-1--k-k--1-the-einstein-mathematicians-r-composition-contraction-and-aberration-pins-the-reading-that-refutes-a-radar-velocity-or-angle-off-einsteins-under-any-r-refutes-a1-on-the-board-the-kinds-detector-the-clicks-gameboard-anything-the-host-reads-nothing-of-it-pinned-the-one-thing-added-to-the-engine-if-anything-step-2-the-reviewers-admissible-step-3-the-build-under-a-key-off-by-default-only-what-the-pins-need-step-4-the-run-on-the-owners-word-only-records-762-799-the-paper-stays-the-one-course-record-606-the-cart-is-the-run-the-click-frame-einstein-outside-and-light-outside-name-as-the-missing-direction-and-its-algebra-is-already-written-the-design-costs-about-forty-minutes-and-no-code-added-to-highlights-54-as-the-owners-decision-the-owner-hears-the-frame-in-the-six-lines-if-he-changes-it-the-physicist-is-told), 871 | 425, "There is no wall any more; we need a cart with a click" | MARK (under (b): qualified by records 847 and 851) |
+| the same | | | 366, "optical-v1, the rows' rule at a Node" (its status of 2026-09-22 already marked); 391, 441, 447 (the generic bending's lines) | KEEP |
+| The ray-event model, the law of the bit, the law of the shadow, the law of events (`events-v1`, `field-only-v1`), the features 8 to 20, experiments A1 to A14, the return modes, the external body of 2026-09-17 | deleted from main on 2026-09-19 with the old engine ([MIGRATION](../../MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)) | [15 of 2026-09-19](../../LOG_2026-09-19.md#15-decided-the-law-of-the-ray) | the head, lines 16 to 78; sections 2, 3.1 to 3.6, 3.8, 3.10, 3.12 to 3.15, 3.17 to 3.20, 3.26, 3.28 to 3.30, 4, 5.1 to 5.3, 5.5 | the head and 5.1 to 5.3: REWRITE and MOVE; 3.x and 4: one MARK line under each heading; 5.5: KEEP (history, labelled), one MARK line under its heading |
+
+No line of `docs/HIGHLIGHTS.md` links to a path the Architect's branch
+deletes (checked by name against PLAN.md's lists), so the navigation gate
+is untouched by his merge.
+
+## 2. Superseded by a later decision without a marker on the line (b)
+
+### 2.1 The head and sections 1 to 5.3
+
+| Line, first words | What it states | What supersedes it | Action |
+| --- | --- | --- | --- |
+| 3 to 14, "This file is the Universe 24 Highlights specification" | the file's provenance (the Google Doc's revision of 2026-09-16), the documents brought into step after every change | stands as provenance; the documents restating a rule are BEAM_LAW, POSTULATES, TERMINOLOGY (the head of 5.4) | REWRITE (kept in substance, shortened) |
+| 16 to 25, "How to read this document (2026-09-19)" | the law is the law of events; the chain of superseding sentences | the Beam Law since the evening of 2026-09-19 (record 15 of 2026-09-19), the click frame and Inside and Outside since 2026-09-22 (records 749, 768) | REWRITE; the old paragraph MOVED |
+| 27 to 78, the five revision notes of 2026-09-17 to 2026-09-19 | which sections each law of those days restated | history; every law they name is deleted from main (MIGRATION, one engine) | MOVE to section 10 |
+| 86, section 1, "This English-language Highlights document summarizes the central model specification" | the central specification (a Google Doc) owns the full definitions | since 2026-09-17 this file is the authoritative text (its own bracket says so); the law's contract is BEAM_LAW.md | REWRITE (section 1 becomes the statement of the system today; the bracket's substance kept) |
+| 88, "The name" (record 231, sharpened by 749) | Universe24 is the universe of the 24 rotations | current | KEEP, moved whole into the new section 1 |
+| 90, the link to the central specification (a Google Doc) | | history | MOVE |
+| 94 to 105, section 2, "The whole model, as decided on 2026-09-17, is four definitions and one principle" and the Snake paragraph | rays, the Detector's bit, the phase at the family's rest rate, the field ray; a draw at a Detector | every item superseded and chained; the picture today is rows and bodies on the GameBoard, the click the one measurement (records 183, 15 of 2026-09-19, 281) | MOVE the body to section 10; under the kept heading one paragraph: the picture today, with the pointer to the history |
+| 111, 3.1, "The selected layout is periodic ... No fixed private-register decomposition or 36-register layer is required" | periodic by default; registers named to deny them | open on every face by default, a periodic axis declared, a closed board refused (record 15 of 2026-09-19); nothing at a Node (record 155) | MARK line under the heading |
+| 115, 3.2 | the number a pair shares travels on the returning ray; the Detector a Node like any other | no return; a detector is a declared set of measured events (records 15 and 28 of 2026-09-19) | MARK line |
+| 119 to 129, 3.3 | ray and event; the phase at the family's rest rate; the Born table declared; no light and no matter | rows and bodies (record 183); the phase stamped at birth and turned per Link, a body's by its pair K (record 15 of 2026-09-19); the Born rule the Gram form of the tables computed from N (record 188) | MARK line |
+| 133 to 139, 3.4 | matter a bound group, binding a periodic orbit of the meeting rule, the ladder of masses | a body is a measured event (record 15 of 2026-09-19); binding-v1 the give at the contact (records 115, 143); the masses are the initialisation (record 106) | MARK line |
+| 143 to 153, 3.5 | the field as rays released in all directions, the return, the split table, feature 12 | the crowd of rows read by the one coupling, a signed inner product over the columns (records 27 and 35 of 2026-09-20); a release costs the emitter E = h f (record 10 of 2026-09-19); nothing returns | MARK line |
+| 157 to 159, 3.6 | one ray, one catalog; the only draw at a marked Node; the list of PASS clicks | rows and bodies, no draw, the click (records 183, 15 of 2026-09-19); the world is the list of clicks (record 77) | MARK line |
+| 167, 3.8 | a returning ray is ordinary propagation | no returning ray; a row crosses at most one Link per interval (LOCALITY-1; record 15 of 2026-09-19) | MARK line |
+| 175, 3.10 | delta_t_min; output delay and Link transit as declared durations; Q-ORACLE-1 lapsed | the interval is the tick, GAMEBOARD, never read by a detector (record 754); a duration is a detector's reading of a clock (record 678) | MARK line |
+| 179, 3.11 | marked by the Pruner (record 558) | | MARK line under the heading pointing to the same record |
+| 183, 3.12 | fixed-capacity channels; "their encounter implementation still needs verification" | the store's rows, fixed local storage and work (BEAM_LAW section 3; the third test, record 202) | MARK line |
+| 187, 3.13 | the interaction an absorption with the holder's cross-section | the push, the bilinear form over the columns, and the click (records 27 of 2026-09-20, 15 of 2026-09-19) | MARK line |
+| 191, 3.14 | the opposite momentum carried by the field; what escapes | the recoil at the release, the books' momentum lines exact at every interval (record 10 of 2026-09-19; ENGINE, the books) | MARK line |
+| 195 to 197, 3.15 | the books per bit; reconstruction by a returning ray | the ledger per family, the measured, transit, content and charge lines, `balanced` at every interval (ENGINE); no return | MARK line |
+| 205, 3.17 | marked by the Pruner (record 155) | | MARK line under the heading |
+| 209, 3.18 | Q-ORACLE-1 deleted; "the first draw's outcome travels on the returning ray" | no draw and no return; Bell and CHSH by the algebra of the state, S = 2 sqrt 2 an identity (record 820, part 10) | MARK line |
+| 213 to 223, 3.19 | the mark, the draw, 1 and 0, the external body | a detector is a declared set of measured events (record 28 of 2026-09-19), the click its measurement (record 281); a fixed body is an emitter and a detector (record 569); the click Outside the passage of information (record 749) | MARK line |
+| 227 to 237, 3.20 | alternatives, siblings, the return as the inverse split, the return modes | the record and its one click, the gather at the ladder (record 86); Bell by the algebra (record 820) | MARK line |
+| 261 to 263, 3.26 | forces and polarization as catalog entries; the gluon a thing; features 10, 11, 14; hypothesis 13 | a force of nature is a column with a sign and a lifetime (record 27 of 2026-09-20, `columns-v1`); the weak force `become` (`weak-v1`, record 78); colour-v1 decided and not built (record 270); the families and their charges the initialisation (record 106) | MARK line |
+| 271 to 285, 3.28 | output clocks, the lag register, the phase circle small; "Speed is a clock slowing" marked by the Pruner | the one wall function of the crowd, the age moment the clock's word (`clock-age-v1`, record 394); no register at a Node (record 155); the phase circle N a constant of the law (5.7) | MARK line |
+| 295, 3.29 | marked by the Pruner (records 28 of 2026-09-19, 562, 768) | | MARK line under the heading |
+| 299 to 305, 3.30 | a Node whose Detector bit is set draws; property definitions to detector records | no draw; the detector's readings by type (record 205); the click (record 15 of 2026-09-19) | MARK line |
+| 309, section 4, "Central statement" | properties propagate in ray form; the only draw at a marked Node | the Beam Law; the statement of the system today is the head of the file | MARK line |
+| 313 to 319, 5.1 | the ray's state, lanes and slots, the parked shadows, the layers | the store's rows and the bodies' records (BEAM_LAW sections 2 and 3); nothing at a Node | REWRITE; the old text MOVED |
+| 323 to 325, 5.2 | the Node's law in five steps with the two marks | the six steps of `nature_beam` (BEAM_LAW, "The owner's name"; MIGRATION, the interval in named steps) | REWRITE; MOVED |
+| 329, 5.3 | six output clocks, transit H, the round-8 questions | the coupling, the clocks as accumulators of the counts table, the click frame | REWRITE; MOVED |
+
+### 2.2 Section 5.4, beyond the Pruner's 37
+
+Lines the Pruner listed as KEEP or MARK are not repeated; his marks are on
+the file. Lines he did not classify (350, 352, 353, 356, 358, 359, 361,
+363, 367 to 370, 372, 376 of the 2026-09-21 block, and the 2026-09-22
+lines from 425 on, which landed after his read) are read here.
+
+| Line, first words (its record) | What it states | What supersedes it | Action |
+| --- | --- | --- | --- |
+| 344, "The vector program" (191) | form B as the one motion primitive; the scheduler to the next carry; BEAM_LAW restated once the three land | form B a development project under `drive-b-v1`, off by default (652); nothing ordered beyond the paper (606): the scheduler and the restatement stand decided and not ordered; the click's Gram form landed (7e523c55) | MARK |
+| 350, "One paper on the general formula" (264, 266) | one paper on the big formula, the click paper its measurement chapter | one paper still; thirty then thirty-five pages (573, 852), framed Inside and Outside on the three formulas (762, 788); the click frame the measurement's theorem (820) | MARK (refined) |
+| 352, "Colour, to be tried" (270) | colour-v1 designed and tried as a hypothesis | not ordered since record 606 (the paper the one course); the quarks enter the paper as families in the algebra (822) | MARK |
+| 369, "The electron as a record of massive rows in flight" (332) | "nothing built before the check" | built on 2026-09-21 as `massive-rows-v1` under its key ([MIGRATION](../../MIGRATION.md#the-massive-rows-on-2026-09-21-massive-rows-v1-an-identity-beside-the-law-every-world-without-the-key-byte-identical); series W read in the detector's own clock, record 754) | MARK |
+| 370, "The Boss decides alone for the hour and a half from 12:51Z" (370) | a delegation until about 14:20Z of 2026-09-21 | expired by its own clock; the sessions rule since is record 578 | MARK (expired) |
+| 390, "The paper is the one course" (606) | nothing ordered that the paper does not need | qualified by record 920: the atom continues beside the paper's items | MARK (qualified) |
+| 393, "The cut's closing: a new reviewer session, the tag paper-2026-09-22" (616) | the thirty-page cut read by a new reviewer at once | the cut is to 35 pages (852) and the reviewer's read waits for a stable version (857); the tag at the merge stands | MARK (in part) |
+| 394, "Every agent closes its own tasks ... an Architect when optimization is needed" (622) | the Boss opens an Architect for an optimization | the line below (629) supersedes the Architect clause and says so; 394 carries no mark of its own | MARK |
+| 425, "There is no wall any more; we need a cart with a click" (816) | the one-wall course superseded and marked | qualified by records 847 and 851: the generic bending's steps 5 and 6 are back on (every row's flight a member of the age wall's set at 1 + gamma, the coupling inserted into the law, the algebra checked, then the pin); what stays superseded is the body's drive under the wall (step 3) and the wall as the route to Lorentz; the cart's build is held (920) | MARK |
+| 431, "Einstein and Lorentz are not enough" (822) | the light bending's route is the owner's open decision | decided by records 839, 847 and 851: the algebra of steps first, the coupling inserted, the pin after | MARK |
+| 433, "Search for more quantum or light formulas ... a moving detector reading consecutive clicks" (824) | the cart's capability run; two algebra tasks | the cart held (920); the atom's algebra closed into the stability rule (881, 910) | MARK (in part) |
+| 439, "The atom: yes to the bounded algebra task" (844) | docs only, no run | the stability rule chosen (881), form (a) under `atom-give-momentum-v1` (910), one baseline run of hydrogen at r = 12 ordered (886) | MARK |
+| 453, "The registered crowd worlds at n > 0 are marked not readable" (865) | none redeclared; the digests kept as history | the 28 the paper does not cite are deleted (871); series T's four stay (886) | MARK |
+| 455, "The redeclaration in the weak field is for the worlds the paper needs" (868) | the other crowd worlds stay history | the same (871) | MARK |
+| 459, "The atom's stability rule: the give of content at the return" (881) | the give of content | form (a), the give of momentum per content, `atom-give-momentum-v1` (910; the line at 478) | MARK |
+| 464, "The paper to 35 pages by the writer's four content cuts" (886) | four content cuts | the three candidates A, B and C (894), held (895), then cut on the owner's word (922) | MARK |
+| 465, "One constant of gravity on the GameBoard ... (flow-dwell-v1 proposed)" (886) | the identity's proposed name | named `flow-link-v1` in its design (docs/designs/flow_weight/DESIGN.md); to the ring world by record 915, one run | MARK (the name) |
+| 474, "The pace ... the cart's transponder worlds go" (894) | the cart's step 5 go | the cart held by record 920, nothing deleted | MARK (qualified) |
+| 476, "Qualifies the line above on the paper's last page ... no cut ... unless the owner says 'cut'" (895) | the hold at 36 pages | the owner said "cut" (922, the line at 486, which says it supersedes 895); 476 carries no mark | MARK |
+| 480, "flow-link-v1 goes to the ring world ... Newton's rows ... in parallel" (915) | in parallel | conditional on the ring's CLOSES at b = 6 (924, the line at 488) | MARK (qualified) |
+| 482, "Everything in flight continues, but fast ... the cart" (918) | the cart continues | the cart held (920) | MARK (qualified) |
+| 496, 504, 553, 539, 546, 556 | see the (a) table | | MARK as there |
+| 509, "Every external thing ... With 'there is no outside' (record 58)" (41, 58, 74) | the detector's Nodes are on the GameBoard, "no outside" | the two words of record 768: the detector's Nodes are Inside, its clicks the Outside, the game above the board; record 58's "no outside" speaks of the Nodes | MARK (read with 768) |
+| 526, "Form A is the design; form B the recorded alternative" (84) | amplitude-v1's all-local alternative, "form B" | not superseded; the name collides with form B of the drive (records 183 and 652), see (c) | MARK (one clause naming which form B) |
+| 530, "The paper is coordinated by a separate agent" (88) | a separate coordinator | the coordinator archived at the cut's merge (616), the paper's one writer the Paper Writer (639) | MARK |
+| 543, "The owner's standing order for the next twelve hours" (137) | a standing order of 2026-09-20 | expired; nothing ordered beyond the paper (606), no new development project without the owner's word (629) | MARK (expired) |
+| 545, "The step drive signed ... the flat-curve ratio 3.73 against 4" (126, 131) | a number compared with 4 | the ratio is a GameBoard reading of series D (a body's steps), never compared with nature since record 564; Newton after a detector is series D3 (581) | MARK (the kind) |
+| 556, "... one orbit closes by D's criterion at S = 32, r = 24; H's r8 closes four times" (119) | closures of series D and H | GameBoard readings (a body's steps, the tick), diagnostics by records 564 and 754 | MARK (the kind) |
+| 338, 340, 347, 348, 353, 356, 358, 359, 361, 363, 367, 368, 372, 376, 381, 382, 384, 387, 388, 391, 392, 395, 396, 400, 403 to 423, 427, 429, 435, 437, 441, 443, 445, 447, 449, 451, 457, 460, 462, 466, 468, 470, 472, 473, 478, 484, 486, 488 | the law's rules and the decisions that stand, or lines a later line already qualifies in its own words | nothing, or a refinement without contradiction (338, 340, 347, 348 by 762 and 920: algebra first) | KEEP |
+| 492 to 495, 497 to 503, 505 to 507, 510 to 525, 527 to 529, 531 to 538, 540 to 542, 544, 547 to 552, 554, 555, 557 | landed, marked, or standing | | KEEP |
+| 561 to 578 | the road to the Beam Law, each with its note | | KEEP (history, labelled) |
+| 557, "The fan as a width P of the law ... built with the exact phase after the crossing rule" (160, 163, 164, 175) | the fan's weights by angle: TERMINOLOGY calls the fan "decided, not built" while the line's record 175 reports 95 worlds identical and 39 moved under P | a contradiction between two documents, not between two decisions: which is right is the Boss's to check against the engine (`nature_beam`'s release over `directions`); no mark until then | KEEP; flagged in section 6 |
+
+### 2.3 Sections 5.5 to 9
+
+| Line, first words | What it states | What supersedes it | Action |
+| --- | --- | --- | --- |
+| 585 to 595, 5.5 | the acceptance principle; the open decisions of 2026-09-17 and 2026-09-18, each with its closing note; the tests of `events-v1` with their note | history, labelled in its own text; the tests rule of 2026-09-17 stands (skills/workflow.md) | KEEP; one MARK line under the heading |
+| 599 to 783, 5.6 | the architect's snapshot of 2026-09-20 with the "As built at main 7e523c55" paragraph | dated in its own head; names `rays-v1`, the flight table, "phase register" and `ui.py` as the snapshot's | KEEP (history, dated); one MARK line under the heading (the current names are TERMINOLOGY's; `ui.py` deleted by record 913) |
+| 787 to 848, 5.7 | the conversions, the six verbs, the principles, the inputs, the three tests, the dictionary; the Pruner's five marks on it | current, with the two words of 2026-09-22 already in its text (records 768, 772) | KEEP |
+| 844, 5.7, "Decided and in build (2026-09-21)" | the status at main 81661d9e | dated as a status; form B's status marked at 341, 365, 804 | KEEP (history, dated) |
+| 852 to 866, sections 6 to 9 | history, the working method, the integrity check, the owner's instruction | each carries its pointer | KEEP |
+
+## 3. Stated in terms the system no longer uses (c)
+
+| Term | Where in Highlights | The term today | Action |
+| --- | --- | --- | --- |
+| a measurement that is not a detector's click: the Detector's draw, "1, the measurement", the mark's efficiency, "Detector distributions" | 3.19 (213 to 219), 3.20 (227), 3.30 (305), 4 (309), 5.2 (325), 5.5 (585) | the click, a paid row's units merged into a body's record, the only one-way border (BEAM_LAW section 5); only a detector's click is compared with nature (records 281, 721) | MARK lines (3.x, 4, 5.5); REWRITE (5.2) |
+| a number whose kind is not named | 545 ("3.73 against 4"), 556 (the closures of D and H); the run summaries of 2026-09-20 in 5.4 count ticks (554, "bound for 3000 intervals") | DETECTOR, GAMEBOARD, or a number the algebra gives (records 281, 754, 920) | MARK 545 and 556; 554 KEEP (its clicks are named as border clicks; the interval count is GAMEBOARD by record 754, said once in the new head) |
+| "Site" | none (782 has `Sec-Fetch-Site`, an HTTP header) | | none |
+| "lattice", "grid", "board" as the noun for the GameBoard | the old sections (history); in 5.4 "on the lattice" and "the lattice's corrections" are the mathematical term TERMINOLOGY allows; "the board", "above the board", "beneath the board" in the lines of 2026-09-22 are the owner's own words quoted and the Boss's paraphrase of them | GameBoard (record 05 of 2026-09-20); the two words Inside and Outside (record 768) | KEEP in 5.4 (quoted decisions); the new head and 5.1 to 5.3 use GameBoard, Inside and Outside |
+| "the flight table" | 398 (P9 "the flight table indexed by direction and age"), 435 ("the flight table, the hop rule"); 541, 601, 803 say it is retired; 725 the snapshot | the flight, the row's position accumulator (`Flight.accumulator`, `walk_step`; MIGRATION, no registers at Nodes, no tables) | MARK 398 and 435 with one clause; the rest KEEP |
+| a remainder, a register or a draw kept at a Node: the lag register, the parked shadows, the lanes and slots, "phase register" | 3.28 (285), 5.1 (315), 5.5 (591, with its note), 5.6 (625, the snapshot) | nothing at a Node; every count an accumulator on the body's record with its remainder kept (record 155; the third test, record 202); the working bound never a register (record 558) | MARK line (3.28); REWRITE (5.1); KEEP (5.5, 5.6, labelled) |
+| the external body, the two marks | 3.19 (223), 3.28 (285), 5.2 (325), POSTULATES 10's addition | a fixed body: a measured event with `fixed`, an emitter and a detector at its Node (record 569); every external entity a detector or an emitter (record 562) | MARK line (3.19, 3.28); REWRITE (5.2) |
+| "form B" for two things | 526 (amplitude-v1's all-local alternative, record 84) and 341, 365, 397, 804 (the drive's form B, records 183, 301, 652) | `drive-b-v1` for the drive; the amplitude's alternative has no identity (not built) | MARK 526 with one clause |
+| "the central specification" as the owner of the definitions | 86, 90, 585, 852, 862 | this file since 2026-09-17; BEAM_LAW.md the law's contract | REWRITE (86, 90); KEEP with their brackets (585, 852, 862) |
+| the kinds of a number: DETECTOR and GAMEBOARD are defined (ENGINE.md, the readings by type; TERMINOLOGY); a third kind for a number the algebra gives without a run ("GAMEBOARD by formula", records 920 and 923) has no label on main | the Boss's brief names it COMPUTATION | the new head defines the three kinds once and says which record each rests on; TERMINOLOGY's row is the Boss's to add | REWRITE (the head); flagged in section 6 |
+
+## 4. Every wall in HIGHLIGHTS.md, with its state in the code today
+
+The owner said "the wall flew" (record 927) and did not name which. Every
+"wall" the file uses is listed with what it is, where it stands in the
+engine at `8fa9e00b` (the function and its line), and whether the law, a
+key off by default, or history holds it. No guess is made; the Boss asks.
+
+| The wall | Where Highlights says it | What it is | In the code today | Held by |
+| --- | --- | --- | --- | --- |
+| The flight's wall, 2 T_D | 802 (5.7, "rate 2 S_1 Q, wall 2 T_D"); 820 (the three tests, "a rate, a wall") | the denominator of a row's position accumulator: from the start T_D the accumulator gains 2 S_1 Q per interval, and its count picks the next unit step of the digital line | `nature_beam.py:783` `Flight.accumulator` (held = age x 2 S_1 Q + T_d over 2 T_d) and `:803` `walk_step` (`by_drive_rows(residue, rate, 2 * t)`); the one count verb `core/integer.py:79` `by_drive`, `:60` `by_clock` | the law (`beam-v1`, BEAM_LAW section 3, the flight rule) |
+| The drive's wall per axis, Q S M + abs(p_a) | 341, 365 (form B's lines: "the wall Q S M + abs(p)"); 804, 844 (5.7); TERMINOLOGY "Drive" | the denominator of a body's drive on one axis: the accumulator gains p_a per self-creation and the body steps one Link when it reaches Q S M + abs(p_a) (BEAM_LAW note 17 as amended) | `world.py:453` `step_divisor` (D_a = Q S M + abs(p_a); under `covariant_readings` the term abs(p_a) keyed off, `engine.py:849`); `engine.py:901` `entry.counts.advance("drive", ...)` | the law: main's drive is per axis (the click frame, part 5; record 652) |
+| Form B's one wall, Q^2 S M + abs(p)_1 T_h | 397 ("Form B, the directional drive"); 341's mark; TERMINOLOGY "Drive", form B | one wall for the three drive rows, the axis furthest over it steps, the Bresenham line of the momentum | `world.py:481` `drive_wall`; `engine.py:862` (under `drive_b`); `core/integer.py:118` `by_line`; the identity `drive-b-v1`, `world.py:478` | a key off by default (`drive_b`; HYPOTHESES 28; record 652) |
+| The age wall, the one wall function of the crowd | 402 ("a member of the age wall's set at coefficient 1"), 409, 417, 437, 441, 447, 847; TERMINOLOGY "Wall", "Suspension pair"; ENGINE's owed count | the wall of every accumulator of a declared set, stretched by the crowd's age moment at the Node: the rate x d against the wall x (d + c x a_tau x n), [n, d] the world's `suspension`; today the set is the body's clock at the coefficient 1 (the owed count) | `core/integer.py:153` `age_wall`; `measured.py:345` `AGE_WALL_SET = (("owed", 1),)`, `:364` `age_wall_set`, `:382` `age_wall_coefficient`; `engine.py:157` `count_owed` | the law for the body's clock (`clock-age-v1` the default word, record 394); the row's flight joins the set only under the key `optical` (`measured.py:376`, at 1 + optical) until the generic bending's insertion lands (records 847, 851; branch `generic-bending`, not on main) |
+| optical-v1's stretched wall, 2 T_D (d + f n A) | 366 ("a row's flight wall reads the crowd's age moment"), 431, 435, 441 | the flight's wall stretched by the age wall at the coefficient f = 1 + gamma for every row of every family | `nature_beam.py:3602` `optical_rate_and_wall`; `:3070` the rule's docstring; `:3482` `wall_square_overflow`; `world.py:3762` the parse of `optical` | a key absent by default (`optical`; TERMINOLOGY: decided as a hypothesis, built under its key, record 780); the key is being removed by `generic-bending` (PLAN.md B.4) and its `body_*` worlds, `optical_readings.py` and `optical_v1/` deleted after that SHA (PLAN.md B.1, B.3, C.2) |
+| The one-wall course, "every family under one wall" (the massive rows' wall 2 E'_D; the body's drive in the age wall's set) | 425 ("There is no wall any more"), 391, 402, 431, 441, 847; records 745 to 780 | the composition of optical-v1 with the massive rows (each family's flight against its own wall 2 E'_D at the rate 2 abs(p_D)_1) and with form B (the body's drive a member of the age wall's set at gamma) | `nature_beam.py:1035` `flight_triple` (2 E'_D), `:982` to `:1055`, `:3501` to `:3599` `row_pairs`; `engine.py:865` to `:880` (the drive in the set under `drive_b` and `optical`); `measured.py:352` to `:361` | superseded by record 816 (marked, not deleted); on main only under the keys `optical` and `drive_b` together; its step-3 files are deleted after the SHA of `generic-bending` (PLAN.md C.2) |
+| The release's wall under the covariant readings, E'_0 / g x d | 351 ("Lorentz, B replaced"), 754 (the mathematician's "covariant-readings-v1's W") | the release rate held x E' / g against the wall E'_0 / g x d: the turn per proper time | `nature_beam.py:5486` (the `release` row's denominators); the identity `covariant-readings-v1`, `world.py:561` | a key absent by default (`covariant_readings`; HYPOTHESES 25; no declared identity enters the reading, records 749, 774) |
+| The turn's wall, d of the clock's pair K = [n, d] | 5.6 (624, "the turn s = by_clock(clock_age, content x n, d)"); TERMINOLOGY "Wall", "Turn" | the phase steps a body's clock gains at a self-creation: the `turn` row gains content x n against d | `engine.py:715` `entry.counts.advance("turn", values=[content])` (the denominator d from `world.turn_rate`, `engine.py:664`) | the law (BEAM_LAW section 3 step 5, note 33) |
+| The growing wall of expansion-v1 | 353, 358, 361, 364 ("the growing wall" of DERIVATIONS_BEAM section 15 and 20.4) | the flight's wall growing at a declared rate H, a coasting expansion q = 0 | none: `expansion` appears in no module of `src/event_universe` (the only hit is a JSON size message in `world_loading.py:403`) | a declared assumption, not built (record 279; TERMINOLOGY, the identities) |
+| The click's wall test, [u < b_k] | 541 ("the choice u < b_k the wall test"), 795 (5.7, the third conversion); record 180 | the one threshold of the click: the record's wheel value u against the rungs b_k = (2 W C_k + Total) // (2 Total) of the cells' cumulative weights | `amplitude.py:241` `rungs`, `:266` the cell of u by the rungs | the law (`amplitude-v1` in every recorded world; BEAM_LAW notes 37 (iii) and 46) |
+| The interference wall, a detector | 382 ("the interference wall is a detector", record 562) | the screen the pattern falls on: an external entity, a set of measured events read by their clicks; the slit wall the family `wall_material` | `examples/events/entities/families.json:186` (`wall_material`); `two_slits.json`, `one_slit.json` (the screen as `detectors`, threshold 1, reading `wave`) | the law (a body's table, `measure`; record 562) |
+| The collision table's crowd slot, "a crowd slot is a wall" | 356 (the crowd audit's anchor text, record 276) | in the eight-slot collision table a crowd slot is not entered by a single row | `nature_beam.py:1203` `collision_table` | the law (BEAM_LAW section 4) |
+| "a wall being a body that absorbs"; "a wall, a screen and a beam stop are the default"; "invented opaque walls" | 151 (3.5), 223 (3.19), 105 (section 2) | the apparatus of 2026-09-17: an external body that absorbs | a measured event with the table rule `measure` (the default for a paid family, `world.py` `default_table`) | history (the external body is superseded; see (c)) |
+| "the walls' rms 0.0044" (364, in the anchor of record 300) and "44 s of wall time" (371) | anchor text only | a paper number's name and the host's clock | not walls of the law | none |
+
+The owner's "the wall flew" is, on the words of the same day, most likely
+the one-wall course of records 745 to 780 (record 816: "there is no wall
+any more"), and what he named in the same breath, "and other things", is
+the pruning of record 802; but the age wall (the body's clock) and the
+flight's wall are the law's and stand, and the generic bending brings the
+row's flight back under the age wall (records 847, 851). Which of the
+rows above he means is his to say; this table gives the Boss the names.
+
+## 5. What the two commits after this one apply
+
+**Commit 2, the system as it is.** The head of the file (lines 1 to 105)
+is written again as a short statement of the system today: the file's
+provenance and how to read it; the GameBoard of Nodes with integer
+NodeState (rows and bodies), the six verbs on the state vector, the local
+integer operation contract and the three tests; the families and the
+tables as declared inputs (5.7 record 189; record 817, nothing of physics's
+forms an input); the click as the one measurement (records 281, 721, 754);
+the detector's own count (records 709, 768); the connection of clicks from
+Inside to Outside (the click frame, records 749 and 820: Lorentz's form up
+to corrections of order m^2 v^2, exact in the continuum limit, on the
+comparison side only, record 817); the three kinds of a number; the
+identities on main and which are off by default (`optical`,
+`covariant_readings`, `drive_b`, `massive_rows`, `meeting`, `action` off;
+`clock_stamp` when the cart merges, `flow_link` when the ring build
+merges, `atom-give-momentum-v1` when built); and what the law does not
+contain (the atom's stability rule, the seventh verb, the shared quantum
+resource). Sections 5.1 to 5.3 are written again under their kept headings
+as the state, the interval and the measurement. The old head (lines 16 to
+78, 90, 94 to 105) and the old 5.1 to 5.3 move verbatim to a new section
+10 at the end of the file, labelled history. Sections 3.1 to 3.30 and 4
+get the one MARK line under each heading named in 2.1; their physics is
+not rewritten. Every mark links its record.
+
+**Commit 3, section 5.4.** Nothing deleted. At the top of 5.4 a short
+table, "The system on 2026-09-22", of the decisions that define the system
+now, each linking its record: the click (749), the three tests (202), the
+paper's roads and the declared inputs (817), the measurement rule (281,
+562, 721), the detector's clock (768), algebra first (920), the paper as
+the one course (606), the click frame on main (820), the readings by type
+(205). Then the MARK lines of 2.2 and 3, one clause each, in the file's
+convention. The navigation gate is run by `python tools/check.py --base
+origin/main` under the repository's Python 3.14.
+
+## 6. Open for the Boss
+
+1. Record 927 is not on main at `8fa9e00b`; the new head cites it as
+   text. When the record lands, its anchor is added in the head's first
+   paragraph (one line).
+2. The kind of a number the algebra gives with no run has no label on
+   main (records 920 and 923 say "GAMEBOARD by formula"); the Boss's brief
+   names it COMPUTATION. The new head defines the three kinds once with
+   their records; a row in TERMINOLOGY's readings and in ENGINE's table
+   is the Boss's to order, one line each.
+3. The fan of record 160: TERMINOLOGY says decided and not built; the 5.4
+   line at 557 (record 175) reports the registered worlds re-read under P
+   with the weights. One of the two is wrong; the engine decides
+   (`nature_beam`'s release over `directions`), not this audit.
+4. "form B" names two things (526 and 341); the mark on 526 says which.
+5. The Architect's branch has not yet deleted `gallery`, `hand` and
+   `catalog` (record 894); their Highlights lines are marked here on the
+   record, not on the branch.
+6. Series T's four worlds stay unless the owner strikes NATURE row 12
+   (records 871, 886); the 28 go; `shell_clock`'s six stay on the Boss's
+   word (record 907). The marks on 453 and 455 say so.
