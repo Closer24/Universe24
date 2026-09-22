@@ -3496,6 +3496,98 @@ test, check.py, one commit, one push, the report.
    operated Outside, by emitters and clicks. A mathematician checks that
    it holds; it enters the paper only from the merged texts.
 
+### B'. Two words folded into plan B (2026-09-22, the Boss at 08:00Z and the owner to the writer)
+
+1. THE 24 TRANSITIONS MUST ENTER THE PAPER (the owner's word, binding).
+   B.1's "when" is not optional: the abstract's second sentence one
+   clause; the introduction's five steps (the argument in order reaches
+   the group in its fourth paragraph); Section 2 opening with the road
+   from the cells to the algebra and closing with "When the transition
+   was made"; Appendix C the dated history in full, given the room it
+   needs (the owner's "everything gets shorter" applies to what is
+   superseded, not to this history). The framing for the text, the
+   Boss's two clarifications: the 24 entries are the road (each physical
+   thing, the algebraic object it became, when, where in the code, the
+   reading that showed it), not the group; the group is where the road
+   arrives, at entry 17 (the click without amplitudes: the group ring
+   Z[Z_N], the cyclotomic integers, the complex numbers leave) and entry
+   23 (the click theorem: the structure-preserving maps between click
+   families are the Lorentz group up to scale). Source:
+   docs/designs/algebra_transition/HISTORY.md at 8eaaf61a (PR #793),
+   plus the re-pointing commit of record 788 if it lands before the
+   merge; the paper takes the entries only from the merged text. The
+   cost: Appendix C grows by the 24 entries at one line each (about
+   twenty-six lines), on page 30's free lines and, if they do not
+   suffice, the symbols table's single-use letters go; the body's cost
+   is B.1's.
+
+2. THE GAMEBOARD AS A SYSTEM OF INFORMATION TRANSFER (the owner's word
+   to the writer: "something very, very important for the paper: the
+   paper as information transfer; Inside, the GameBoard, is a system of
+   information transfer, how messages pass, rows, attributes; explain it
+   very cleanly, with an example or two; that is the explanation of the
+   passage from physics to modern algebra; see how other papers do it").
+   The place: the opening of Section 2, before the road from the cells
+   to the algebra (B.2), so that the road starts from messages. The
+   draft, in the paper's voice, about twelve lines:
+
+   "The GameBoard is a system of information transfer. Its only objects
+   are messages, the rows: a row is a tuple (Node, direction, age,
+   phase, emitter, content per unit, record, label, amount,
+   multiplicity), and a Link is a channel that carries at most one step
+   of a row per interval in each direction. Nothing else exists Inside:
+   no field at a Node, no register, no memory beyond the rows present.
+   Each interval does six things to messages and nothing else: it moves
+   a row one Link along its digital line (the translation), turns its
+   phase (the translation on the circle), splits it at a splitter into
+   rows with integer weights (the multiplication by a declared table),
+   rotates a labelled pair (an integer matrix), merges the rows that
+   meet at a Node with equal words, opposite phases cancelling (the
+   addition), and, at a detector, reads a record once by one comparison
+   and deletes it (the evaluation and the count). The books say that no
+   message is lost or made in transit: released equals in transit plus
+   absorbed plus escaped plus cancelled at every interval. Written down,
+   a message is a basis element of a free Z-module, the passage is the
+   translation group's shift, the split and the rotation are integer
+   matrices, the merge is the group ring's addition, and the read-out is
+   one bilinear form: the passage from physics to modern algebra is the
+   passage from messages with attributes to vectors with coordinates,
+   and the six things an interval does are six linear maps and one
+   comparison."
+
+   Two examples, about eight lines, from the paper's own numbers:
+   (a) one message in flight, the hand-worked update already in Section
+   2: a row on +x with the accumulator's rate 128 against the wall 220
+   crosses Links at the intervals 1, 3, 5, 7, 8, five Links in eight
+   intervals, its phase turning at each Link; the message's whole
+   history is the closed form floor(s_0 + r t), nothing kept at a Node.
+   (b) one message split and merged: at the balanced splitter one row
+   of amount 1 becomes two rows of amount 1 and multiplicity 2 on two
+   arms; at the second splitter the two meet at each port, at one port
+   with equal phases (the words add, amount 2) and at the other N / 2
+   apart (an equal pair is no row, the message cancels); the detector
+   at the first port reads the record and deletes it: the dark port is
+   the cancelled message, the bright port the click, 64 of 64 births
+   (series L, Mach-Zehnder). The pair adds a third example in one line
+   if room allows: two labelled messages of one record, gathered once.
+
+   How other papers do it, for the positioning sentence: the lattice
+   gases of Hardy, de Pazzis and Pomeau and of Frisch, Hasslacher and
+   Pomeau carry particles as bits on links with collision tables and
+   recover the Navier-Stokes equations in the limit; Toffoli and
+   Margolus's cellular automata machines are lattices of local update
+   rules on bits; the quantum cellular automata surveyed by Arrighi are
+   local unitaries on a lattice of cells; Shannon's channel is the
+   message and its capacity. The GameBoard is of that family, a lattice
+   of message channels with one message step per interval per
+   direction, with two differences the paper states: the messages carry
+   a phase on a bounded circle and an integer amount, and the only
+   read-out is the click. Cost: the twelve lines plus the eight, minus
+   the six of Section 2's present "The state" paragraph, which the
+   message tuple replaces, and the "In the code" paragraph's four,
+   folded into the six things; net about ten, in section B.7's budget
+   or the compile's word. Nothing applied until the owner's GO.
+
 ### C. The circularity audit (the check of skills/paper-coordinator/SKILL.md; the owner's word to the writer)
 
 For each formula: the inputs, the road, whether the form was put in;
