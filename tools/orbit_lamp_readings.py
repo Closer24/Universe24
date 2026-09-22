@@ -76,6 +76,12 @@ DETECTOR_PREFIX = "line_"
 FACE_PREFIX = "face:"
 DETECTOR = "DETECTOR"
 GAMEBOARD = "GAMEBOARD"
+# The reviewer's two kinds beside them (2026-09-22, the run under flow_link):
+# a COMPUTATION is arithmetic on DETECTOR readings (the ratio of two periods,
+# the product of two moments); a CONVERSION is a click turned into a
+# distance by the flight table (the radius at the births from the age).
+COMPUTATION = "COMPUTATION"
+CONVERSION = "CONVERSION"
 # The half-Node level the crossings are read at (never a column's own x).
 LEVEL_OFFSET = 0.5
 # The flight table of the six headings: a row's Links walked by its age on a
@@ -379,17 +385,19 @@ class Verdicts:
         if not ok:
             self.failed_checks += 1
 
-    def bracket(self, label: str, value: float | None, bracket: list[float]) -> None:
+    def bracket(
+        self, label: str, value: float | None, bracket: list[float], kind: str = DETECTOR
+    ) -> None:
         lo, hi = bracket
         if value is None:
             self.outside += 1
-            print(f"  {DETECTOR} {label}: none (expected {lo:.4g} .. {hi:.4g}): outside")
+            print(f"  {kind} {label}: none (expected {lo:.4g} .. {hi:.4g}): outside")
             return
         ok = lo <= value <= hi
         self.inside += ok
         self.outside += not ok
         print(
-            f"  {DETECTOR} {label}: {value:.4g} (expected {lo:.4g} .. {hi:.4g}): {'inside' if ok else 'outside'}"
+            f"  {kind} {label}: {value:.4g} (expected {lo:.4g} .. {hi:.4g}): {'inside' if ok else 'outside'}"
         )
 
     def exact(self, label: str, ok: bool, detail: str) -> None:
@@ -427,7 +435,7 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
         if reading.clicks:
             radii = reading.radii
             print(
-                f"  {DETECTOR} the radius at the births (y from the age off the flight table): "
+                f"  {CONVERSION} the radius at the births (y from the age off the flight table): "
                 f"{min(radii):.1f} .. {max(radii):.1f}, the mean {sum(radii) / len(radii):.1f}"
             )
         if pin.get("source"):
@@ -455,7 +463,7 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             if second.omega_squared is not None and reading.amplitude:
                 acceleration = second.omega_squared * reading.amplitude
                 print(
-                    f"  {DETECTOR} the acceleration omega^2 x amplitude: {acceleration:.4g} Links per interval^2 "
+                    f"  {COMPUTATION} the acceleration omega^2 x amplitude: {acceleration:.4g} Links per interval^2 "
                     f"(the pin v^2 / r {pin['acceleration']['pin']:.4g}; 3.3's small-n limit "
                     f"{pin['acceleration']['small_n_limit']:.4g})"
                 )
@@ -491,10 +499,23 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
     print("across the worlds:")
     ratio_pin = pins["ratio"]
     assert isinstance(ratio_pin, dict)
-    t12, t24 = periods.get("r12"), periods.get("r24")
+    # The two worlds of the ratio: the registered `r12` and `r24`, or the
+    # names the pins carry (the one-constant worlds `r12_flow`, `r24_flow`).
+    near, far = ratio_pin.get("worlds", ("r12", "r24"))
+    t12, t24 = periods.get(near), periods.get(far)
     ratio = t24 / t12 if t12 and t24 else None
-    verdicts.bracket("the ratio T(24) / T(12)", ratio, ratio_pin["bracket"])
-    equivalence = pins["equivalence"]
+    # A COMPUTATION from two DETECTOR periods of two records (the reviewer, 2026-09-22).
+    verdicts.bracket("the ratio T(24) / T(12)", ratio, ratio_pin["bracket"], COMPUTATION)
+    equivalence = pins.get("equivalence")
+    if equivalence is None:
+        # No equivalence world in this register (the one-constant worlds:
+        # the equivalence carries no constant and is closed by the
+        # registered run).
+        print(
+            f"{verdicts.failed_checks} record checks failed, {verdicts.inside} readings inside, "
+            f"{verdicts.outside} outside, none moved"
+        )
+        return 1 if verdicts.failed_checks else 0
     assert isinstance(equivalence, dict)
     first, second = equivalence["worlds"]
     if (

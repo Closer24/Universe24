@@ -1408,11 +1408,9 @@ class NatureBeamWorld:
         `covariant-readings-v1` when the world declares `covariant_readings`,
         `optical-v1` for the world key `optical`, `drive-b-v1` for the world
         key `drive_b` (the directional drive of a body), `flow-link-v1` for
-        the world key `flow_link` (the flow label per Euclidean Link) and,
-        last, `binding-v1` when a measured event holds a paid family (`binding`;
-        key `drive_b` (the directional drive of a body), `centred-step-v1`
-        for the world key `centred_step` (the body's step at half the wall)
-        and, last,
+        the world key `flow_link` (the flow label per Euclidean Link),
+        `centred-step-v1` for the world key `centred_step` (the body's step at
+        half the wall) and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""

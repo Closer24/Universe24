@@ -588,7 +588,8 @@ the rates x d against the wall x (d + gamma n A) in `engine._move`), a
 moving body's gravity charge is (w, Q S), the rows' weight on its
 momentum over the label scale (`world.body_weight`, gravity's Lambda
 Q S), and a moving body at gamma > 0 without `drive_b` is refused at
-load (the per-axis drive is never a member)); `flow_link` (since 2026-09-22,
+load (the per-axis drive is never a member));
+`flow_link` (since 2026-09-22,
 `flow-link-v1`, the model owner's decision of record 915 on the Flow
 Weight Designer's design
 [docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md), the
