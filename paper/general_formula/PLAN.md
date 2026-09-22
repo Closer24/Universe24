@@ -4636,3 +4636,37 @@ rows' amplitudes" became "the quadratic form of the rows' phase counts
 sum)" and "as amplitudes do" became "as a phased sum at the roots of
 unity does" ((A2) not built). His caution, no change: "shows Outside as
 a wave" is right for the count over many clicks; one click is one Node.
+
+## Applied (2026-09-22, the owner's three corrections of record 951 and the form B sentence; the Boss's orders of 12:01Z and 12:08Z)
+
+1. The pace clause, "per axis where the axes' fires do not coincide;
+   one Link per interval in all", added where a body's speed appeared
+   without it: the conversion list of Section 2 ("whose speed
+   p / (N_l N_w M + p) saturates ...") and the Newton paragraph ("the
+   speed the push builds saturates ..."); the notation table's drive
+   row names no pace, unchanged. No number changed.
+2. The click's zero: "the GameBoard's cancel and the click's zero are
+   one relation, exactly" became "the GameBoard's cancel and the ideal
+   click's zero, the evaluation on Z[zeta_Nphi], are one relation,
+   exactly", the odd-factor parenthesis kept, and one sentence added:
+   the table click is a different map, an ideal zero a table zero (the
+   merge cancels before the tables), and whether the tables add zeros of
+   their own, beyond the one instance Section 6 shows, and in what
+   measure, is a computation (the Gleason bound's note), not a relation
+   of the module. The one instance is the paper's own computation of
+   the third referee read's point 3 (256 x^8 - 181 (1 + x^16) at 64
+   reading (0, 0) under the tables), kept as a shown case, the measure
+   left to BOUND.md.
+3. The multiplicity's bound: "bounded with every integer of the run by
+   the engine's 2^63 - 1" became the law's bound 2^62 - 1 of an amount,
+   a multiplicity and a momentum component (events/world.py) inside the
+   host's working bound 2^63 - 1 (core/integer.py), a run passing either
+   refused; the ledger and the notation table name no bound, unchanged;
+   NUMBERS.md one row by kind.
+4. Form B: beside Section 2's drive rule, the physicist's sentence (form
+   B exists as a declared identity off by default, the world key drive_b,
+   series Y, no coincident fire lost, read inside its pins on six
+   registered worlds; the default on the model owner's word; until then
+   a diagonal body is the per-axis walk); the discussion's "form B, not
+   built" to "built off by default, series Y". Record 938's "not built"
+   was wrong (PR #813 at e0761893).

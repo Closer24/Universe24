@@ -3012,6 +3012,37 @@ CORRECTIONS = [
         "So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the squared sum of the rows' amplitudes (Definition~\\ref{def:click}), which adds and cancels as amplitudes do, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
         "So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the quadratic form of the rows' phase counts (Definition~\\ref{def:click}'s $X^2 + Y^2$, the same integer as the square of a phased sum), which adds and cancels as a phased sum at the roots of unity does, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
     ),
+    # The owner's three corrections of record 951 (the pace clause; the ideal click's zero; the multiplicity's bound 2^62 - 1 inside the host's 2^63 - 1) and the form B sentence (the Boss's orders of 12:01Z and 12:08Z).
+    (
+        "the owner's three corrections, 1: the pace clause in the conversion list",
+        "whose speed $p/(N_l N_w M + p)$ saturates at one Link per interval, above the rows' pace;",
+        "whose speed $p/(N_l N_w M + p)$ per axis where the axes' fires do not coincide, one Link per interval in all, saturates at one Link per interval, above the rows' pace;",
+    ),
+    (
+        "the owner's three corrections, 1: the pace clause in the Newton paragraph",
+        "and the speed the push builds saturates at one Link per interval, above the rows' pace, so a body can outrun its own field's rows on the drive as built on main.",
+        "and the speed the push builds, per axis where the axes' fires do not coincide and one Link per interval in all, saturates at one Link per interval, above the rows' pace, so a body can outrun its own field's rows on the drive as built.",
+    ),
+    (
+        "the owner's three corrections, 2: the ideal click's zero and the table click",
+        "the GameBoard's cancel and the click's zero are one relation, exactly (for an $\\Nphi$ with an odd factor they are not; the register has no such $\\Nphi$).",
+        "the GameBoard's cancel and the ideal click's zero, the evaluation on $\\Z[\\zeta_{\\Nphi}]$, are one relation, exactly (for an $\\Nphi$ with an odd factor they are not; the register has no such $\\Nphi$). The table click, Definition~\\ref{def:click} with the declared integer tables, is a different map: an ideal zero is a table zero (the merge cancels before the tables), and whether the tables add zeros of their own, beyond the one instance Section~\\ref{sec:measurement} shows, and in what measure, is a computation (the Gleason bound's note), not a relation of the module.",
+    ),
+    (
+        "the owner's three corrections, 3: the multiplicity's bound, the law's and the host's",
+        "is bounded with every integer of the run by the engine's $2^{63} - 1$, a run that would pass it refused (P1's bound, named here).",
+        "is bounded by the law's bound of an amount, a multiplicity and a momentum component, $2^{62} - 1$ (\\texttt{events/world.py}, one bit spared for one more sum), inside the host's working bound $2^{63} - 1$ for every intermediate (\\texttt{core/integer.py}); a run that would pass either is refused (P1's bound, named here).",
+    ),
+    (
+        "the form B sentence beside the drive rule (the chief physicist's, the Boss's order of 12:08Z)",
+        "the sum of a body's paces bounded by $1$ (the directional drive, form B, is not built);",
+        "the sum of a body's paces bounded by $1$; the directional drive of the momentum's line, form B \\cite[record 652]{log}, exists as a declared identity off by default (the world key \\texttt{drive\\_b}, series Y), no coincident fire lost, read inside its pins on six registered worlds; it becomes the default on the model owner's word, not before; until then a diagonal body is the per-axis walk;",
+    ),
+    (
+        "form B in the discussion's list: built, off by default",
+        "under the directional drive (form B, not built),",
+        "under the directional drive (form B, built off by default, series Y),",
+    ),
 ]
 
 
