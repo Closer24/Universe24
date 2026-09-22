@@ -4717,3 +4717,21 @@ a wave" is right for the count over many clicks; one click is one Node.
     page.
 
 No number, verdict or citation removed; 40 pages.
+
+## Applied (2026-09-22, the Boss's order of 12:27Z, record 958): the register's consolidation cited pending merge; the paper does not wait for the Gleason bound
+
+PR #860's head b12dd253 (register-paper-sources) cited in Appendix C
+and in the register's reference as pending merge, the merge commit to
+replace it; verified on that head: every world the paper cites stands
+(amplitude, bell, c_measured, hubble_stars, binding, weak, clock_word,
+orbit_lamp, shell_clock, covariant), and the worlds it removes are
+cited by no row. NUMBERS.md rows 130 to 134 marked: 130, 133, 134 the
+crowd's clock, the cluster and the reader, cited by the paper no longer
+(record 871), their directories standing on b12dd253; 131 series Q's
+fan world, cited, standing; 132 the collision's tie, the gallery worlds
+removed on b12dd253, the row history. The Gleason bound's number: not
+waited for; the sentence stands (the instance shown, the measure a
+computation), one line takes the number if BOUND.md lands. The atom is
+out of the paper. The one thing waited for: the order channel's NATURE
+row (the Order Channel Runner, the pins 15/16 and -5/16 against
+nature's 0), into Table 2 on its merge SHA.

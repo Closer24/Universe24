@@ -3114,6 +3114,17 @@ CORRECTIONS = [
         "the lattice Gleason on $\\Z_{\\Nphi}$, the measurable $1 - v^2$",
         "the quadratic read-out characterization on $\\Z_{\\Nphi}$ (Gleason-like), the measurable $1 - v^2$",
     ),
+    # The register's consolidation (PR #860) cited at its branch head, pending merge (the Boss's order of 12:27Z, record 958).
+    (
+        "the register's consolidation cited pending merge (the Boss's order of 12:27Z, record 958)",
+        "the criterion of every row of Table~\\ref{tab:nature}, what is measured, its kind, what would refute it and the re-run at head, is \\cite{criteria}.",
+        "the criterion of every row of Table~\\ref{tab:nature}, what is measured, its kind, what would refute it and the re-run at head, is \\cite{criteria}. The register's consolidation (PR \\#860, its head \\texttt{b12dd253} on \\texttt{register-paper-sources}, pending merge; the merge commit replaces it) keeps every world this paper cites, and the worlds it removes are cited by no row of this paper; NUMBERS.md marks the rows whose worlds the paper no longer cites.",
+    ),
+    (
+        "the register's bibitem: the consolidation pending merge",
+        "\\bibitem{register} The experiments register, \\texttt{docs/EXPERIMENTS.md} of the archived code \\cite{zenodo}.",
+        "\\bibitem{register} The experiments register, \\texttt{docs/EXPERIMENTS.md} of the archived code \\cite{zenodo}; consolidated by PR \\#860 (its head b12dd253, pending merge).",
+    ),
 ]
 
 
