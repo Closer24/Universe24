@@ -8,9 +8,11 @@ GAMEBOARD); the run, if any, is the owner's word.
 **The verdict in one line: LORENTZ FROM THE CLICKS GIVEN the line
 `k_AB = k_BA` (the two directions alike, the relativity principle),
 which is `r^2 = 1 - v^2` for the moving record's own count; NOT WITHOUT
-IT.** And for part (4), the energy of the hop (section 5): LORENTZ FROM
-THE CLICKS GIVEN THE ENERGY OF THE HOP: ONLY BY DECLARATION, the rest
-share `r = E_0 / E'` of the identity's own square being that line. Under the law as it stands the two factors differ (`k_BA / k_AB =
+IT.** And for part (4), the board's own cost of a hop with no square as an
+input (section 5): LORENTZ FROM THE BOARD'S OWN COST OF A HOP: NO; every
+wall of the law is linear in the Manhattan momentum, the cost gives `r =
+1 - beta` or 1, and the square that would give YES is the Minkowski norm
+declared into the wall. Under the law as it stands the two factors differ (`k_BA / k_AB =
 1 - v^2`), under the loop's resident count they differ the other way
 (`(1 + v) / (1 - v)`), and under covariant-readings-v1 they are equal
 by that identity's declared rate. The measurable that decides is the
@@ -195,75 +197,107 @@ the run is the owner's word.
   `(1 + v) / (1 - v)` the resident loop's. No reading is pinned here
   from a run; these are the closed forms, and the run is the owner's.
 
-## 5. Part (4): the energy of the hop as the moving detector's own count (the owner's word, record 729)
+## 5. Part (4), corrected (the owner's word, record 732: "make sure Lorentz is not already in the formula"): the board's own cost of a hop, with no square as an input
 
-**The claim, exact.** Let the moving detector be a record that keeps its
-rest energy `E_0` (its identity, `Q S M` in the identity's units) and
-carries its motion's energy in the exact square the law already holds
-beside it, `W = E_0^2 + 3` **p** `.` **p** (17.6 M3; `c^2 = 1 / 3`),
-`E'` the whole root, `E'^2 <= W < (E' + 1)^2` (17.7). Suppose its own
-count per interval is its rest share, `r = E_0 / E'`, and the velocity
-the clicks read (Nodes apart over the difference of two counts) is the
-identity's pace, which in units of c is `beta = sqrt 3 abs(p) / E'`, so
-`beta^2 = 3` **p** `.` **p** `/ E'^2`. Then, with the real root in place
-of the whole one,
+**Certification of the inputs.** This section uses only: (1) the six
+verbs (skills/workflow.md, record 202); (2) the law's drive on `main`,
+the pace `v = p / (Q S M + p)` Links per interval (DERIVATIONS_BEAM 3.3
+and 4.4; the paper's P9, `abs(p_a) / (N_l N_w M + abs(p_a))` per axis),
+linear in p on both sides; (3) form B's directional drive
+(docs/designs/light_speed/FORM.md section 3.1; the path
+docs/designs/drive_b/DESIGN.md named in the order does not exist on
+`main`): the rate `abs(p)_1 Q` against the wall `Q^2 S M + abs(p)_1 T_h`,
+`T_h = isqrt(3 Q^2) = 110`, linear in the Manhattan momentum `abs(p)_1`;
+(4) the age wall's crowd, `a_tau`, entering every wall linearly
+(`core.integer.age_wall`); (5) stage 1's resident count, `r = 1 -
+abs(v)_1` (docs/designs/clock_loop/DERIVATION.md). None of these
+carries a square of the momentum or of a length: (2) and (3) are linear
+in `abs(p)_1`, (4) is linear in `a_tau`, (5) is linear in `abs(v)_1`.
+The identity's square `W = E_0^2 + 3` **p** `.` **p** and its root `E'`
+appear below only as the thing the result is compared with, never as an
+input; the previous draft of this section, which took r = E_0 / E' from
+W, derived Lorentz from Lorentz and is withdrawn (its conclusion "only by
+declaration" stands, restated at the end as what the declaration is).
 
-    r^2 = E_0^2 / W = (W - 3 p . p) / W = 1 - beta^2,
+**(i) The energy the law charges for a hop.** On `main` the law charges
+no energy for a body's motion: the push adds momentum for free (`p +=
+push`, 3.3), the content M is unchanged, and the law has no energy of
+motion (E5 not reached, 4.5). What the pace costs is momentum: at `v = 1
+/ k` on an axis, `v = p / (Q S M + p)` gives `p = Q S M v / (1 - v) = E_0
+/ (k - 1)` in label units, `E_0 = Q S M`; linear in v at small v (`p =
+E_0 v (1 + v + ...)`). Under form B the body's wall carries the motion:
+`Q^2 S M + abs(p)_1 T_h = Q (E_0 + u)` with `u = abs(p)_1 T_h / Q` the
+motion's share in the units of `E_0`, and the pace in units of the
+rows' `c_h = Q / T_h` is `beta = u / (E_0 + u)`, so `u = E_0 beta / (1 -
+beta)` and the wall is
 
-an identity of W by one subtraction: the line of section 2 (b) holds
-with nothing added, `k_AB = k_BA = sqrt((1 + beta) / (1 - beta))`, and
-the two Doppler factors agree; Lorentz follows from the clicks. With the
-whole root the identity holds within the root's rounding, `r^2 = E_0^2 /
-E'^2` against `1 - 3 p . p / E'^2`, their difference `(W - E'^2) / E'^2 <
-(2 E' + 1) / E'^2`, one part in `E'` (17.7's "the root's rounding the only
-price"); on the muon's worlds `E' = 14671` and `25910`, below a part in
-`10^4`. Rung 1 (exact algebra on the declared integers).
+    E_B(beta) = E_0 + u = E_0 / (1 - beta):   linear in beta at first order (E_0 beta), not E_0 beta^2 / 2, and not E_0 / sqrt(1 - beta^2).
 
-**Which r the engine gives today**, read from `src/event_universe`. On
-`main` without a key: a body's self-creation is one per interval,
-stretched only by the crowd at its Node (`engine.count_owed`: the age
-wall's declared set is the clock alone, `measured.AGE_WALL_SET =
-(("owed", 1),)`, the coefficient 1 on the age moment `a_tau`); a hopping
-body self-creates in its hop intervals as in the others (the drive's
-`step_axis` moves it, `_suspend` gates it by the crowd only): `r = 1` at
-every speed in no crowd, DERIVATIONS 4.3, NATURE 4a's FAIL. Neither
-stage 1's resident count (`1 - abs(v)_1`, the loop picture's steps with
-no energy cost) nor the rest share is the law's on `main`. Under the
-world key `covariant_readings` (covariant-readings-v1 as built, PR #582;
-BEAM_LAW's paragraph on the key): the proper-time gate `by_drive(acc_tau,
-E' - E'_0, E'_0)` is a SECOND owed count composed with the crowd's as
-intervals (`engine._suspend`, 17.6 M1 and N1), so the self-creations
-come one per `E' / E'_0` intervals in the mean, `r = E'_0 / E'` exactly
-in the mean (the muon's 64th at 70 and 124, GAMEBOARD), and the drive's
-pace is `p / E'` per lattice interval on one axis (`step_divisor` with
-the cap off): the rest share and the identity's pace, both from the one
-W. The register's clock series (series T, clock-age-v1) reads the
-crowd's factor at rest and nothing of r(v).
+So the board's cost of a hop is LINEAR in `abs(p)_1` (both walls), first
+order in beta, and no quadratic cost is present in any wall of the law:
+the one square the verbs hold is verb 2, the bilinear form with a
+declared matrix, and the law applies it at the click alone (the Gram
+form of the phase-count vector, 6.5), never to a body's momentum. Rung
+1 (the walls as declared).
 
-**Reading, declaration or hypothesis.** Making the moving detector's
-clock its rest share is not a reading of the law as it stands (`main`
-gives 1) and not one more member of the age wall (the tau gate is a
-separate accumulator composed as intervals, not a coefficient on
-`a_tau`; the age wall's set stays the clock alone); it is a DECLARATION
-already made under its own identity, covariant-readings-v1: the same W
-the drive uses under that key, the gate `E' - E'_0` over `E'_0`, and the
-pace `p / E'`, the three rules of one declared square (17.6 M1, M3, the
-pace), with the whole root's rounding declared per frame (17.7) and the
-reviewer's vector verdict on the root pending the owner's admission or
-the counters' form. It needs no new identity, and it is not the law's:
-the law's own FAIL row (4a) stands beside it.
+**(ii) The r it gives.** Two readings of the moving record's own count
+from these inputs, and no third: (a) the law as it stands, `r = 1` at
+every speed, the counter stretched by the crowd's `a_tau` alone (the age
+wall's one member), a hop costing the clock nothing (4.3; NATURE 4a's
+FAIL); (b) the rest share of the LINEAR wall, `r = E_0 / E_B = 1 - beta`,
+which is stage 1's resident count on an axis, `1 - abs(v)_1`, reached
+now from form B's wall instead of the loop's steps: the same first-order
+law by two roads, both Manhattan (the wall reads `abs(p)_1`, the loop
+counts hops), anisotropic by `sqrt 2` and `sqrt 3` on the diagonals. No
+input of this section gives `sqrt(1 - beta^2)`, since none holds a
+square.
 
-**The verdict for (4): LORENTZ FROM THE CLICKS GIVEN THE ENERGY OF THE
-HOP: ONLY BY DECLARATION.** The one line that decides: "the moving
-detector's own count per interval is its rest share `E_0 / E'`, `E'` the
-whole root of the drive's own square `W = E_0^2 + 3 p . p`, and its
-velocity the pace of that square" (covariant-readings-v1's gate and
-pace); under it `r^2 = 1 - beta^2` is an identity of W and the two
-factors of section 2 agree with no further line, YES, within the root's
-rounding; on `main`, where the count is 1 at every speed, NO, the factors
-differ by `1 - v^2`. The energy of the hop supplies exactly the line of
-section 2 (b), and it supplies it as the identity's declared square, not
-as a count the six verbs make on their own.
+**(iii) The two Doppler factors under that r.** With section 2's forms,
+`k_AB = r / (1 - beta)` and `k_BA = (1 + beta) / r`: under (a), `k_AB = 1
+/ (1 - beta)` and `k_BA = 1 + beta`, the ratio `k_BA / k_AB = 1 - beta^2`
+(3/4, 15/16, 63/64, 255/256 at v = 1/2, 1/4, 1/8, 1/16); under (b),
+`k_AB = 1` exactly (the resident loss cancels the stretch) and `k_BA = (1
++ beta) / (1 - beta)`, the ratio `(1 + beta) / (1 - beta)` (3, 5/3, 9/7,
+17/15). Neither agrees; the relativity line `k_AB = k_BA` fails under
+both.
+
+**(iv) Approximate Lorentz at small v, and the order.** Expand in beta.
+Lorentz: `k = sqrt((1 + beta) / (1 - beta)) = 1 + beta + beta^2 / 2 +
+O(beta^3)`, `r = 1 - beta^2 / 2 - beta^4 / 8`. Under (a): `k_AB = 1 +
+beta + beta^2 + ...`, `k_BA = 1 + beta`: the two agree with each other
+and with Lorentz to FIRST order and part at second (`beta^2` against
+`beta^2 / 2` and 0): Lorentz to order 1, by charging the clock nothing.
+Under (b): `k_AB = 1`, `k_BA = 1 + 2 beta + ...`: they part at FIRST
+order; a linear cost breaks the symmetry at the order it enters. A
+quadratic cost, `r = 1 - beta^2 / 2`, would give `k_AB = 1 + beta +
+beta^2 / 2 + ...` and `k_BA = 1 + beta + beta^2 / 2 + ...`, agreement to
+second order and Lorentz to order 2 (exact only with the full root,
+whose expansion adds `- beta^4 / 8`, the identity's W): that is the
+form no input of this section has. The lattice's anisotropy enters
+where the Manhattan length does: under (b) at first order (`abs(v)_1`
+against `abs(v)_2`, `sqrt 2` on a face diagonal); under (a) not through
+r (which is 1 in every direction) but only through the light's own
+grain, at `1 / T_D` on the Beam Law's isotropic flight or at first order
+in `abs(v)_1` in the hop frame's Manhattan light (section 2 (a)).
+
+**(v) The verdict for (4): LORENTZ FROM THE BOARD'S OWN COST OF A HOP:
+NO.** The one line that decides: every wall of the law is linear in
+`abs(p)_1` (`Q S M + p` on `main`, `Q^2 S M + abs(p)_1 T_h` under form
+B), so the record's own rate from the board's cost is `1 - beta` (first
+order, the two factors parting at first order) or 1 (no cost, the
+factors agreeing to first order only), and no square of the momentum is
+formed anywhere but at the click. What a cost would have to be for YES,
+as a question for the owner and not as a rule: the wall the drive reads
+would have to satisfy `E(p)^2 - E_0^2 = 3` **p** `.` **p** in the
+identity's units, i.e. be verb 2's quadratic form on (E_0, **p**) with
+the matrix `diag(1, 3, 3, 3)`; the verbs allow it (a bilinear form with
+a declared matrix, the three tests as 17.6 M3 and 17.7 pass them), the
+law chose the linear wall, and the quadratic choice is the Minkowski
+norm itself, so Lorentz would then be declared by that choice, not
+derived: does the owner want the drive's wall to be that square? The
+three tests apply to any such cost, and nothing is kept at a Node beyond
+the events there under either wall. The earlier "only by declaration"
+is this: the declaration is the square in the wall.
 
 ## 6. Links
 
