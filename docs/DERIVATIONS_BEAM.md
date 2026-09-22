@@ -8016,8 +8016,12 @@ exact on the GameBoard (rung 1):
   re-emits by the tables at age 0: no pace enters its statement or its
   proof. th:bijection: the interval's three maps stay injective on
   weights, multiplicities and phases, and the state the injectivity
-  rests on under a state-dependent stride is the row's AGE, which
-  def:rules and th:bijection's statement already carry. On (Node,
+  rests on under a state-dependent stride is the row's AGE, a function
+  of the event history the record keeps (the current tick less the tick
+  of the row's last event), which def:rules and th:bijection's
+  statement carry: the paper's Theorem 3 is stated on the quotient that
+  forgets the age for a fixed event history, and 14.1's "injective given
+  the record" is the same conditioning. On (Node,
   phase) alone the phase-dependent stride CAN bring two rows of one
   record together (the physics-rule reviewer's check, 2026-09-22: at N =
   64, r = 32 on one heading, two rows born at different split events on
@@ -8027,7 +8031,8 @@ exact on the GameBoard (rung 1):
   a collision the law's flight, with its constant stride, cannot make).
   What separates them is the age: rows of one line that reach one (Node,
   phase) by different strides were born at different ticks and so differ
-  in age, and the age is a component of the state; rows of equal age and
+  in age, and the age is the history's function, so the history the
+  state keeps separates them; rows of equal age and
   equal birth phase share the whole history of the stride and never
   collide; rows of equal age and different birth phases `f_0 != f'_0`
   never meet in (Node, phase), since the same Node from the same age
