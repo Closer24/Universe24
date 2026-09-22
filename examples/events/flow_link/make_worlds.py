@@ -252,14 +252,14 @@ def expectations() -> Json:
                     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map",
                 },
                 "c_nodes": {
-                    "kind": "CONVERSION of the DETECTOR reading",
+                    "kind": "COMPUTATION on the DETECTOR reading",
                     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
                     "value": flow["c_nodes"],
                     "tolerance": round(tolerance / PATH_HALF_LENGTH * b * NODES_CONVERSION, 3),
                     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run",
                 },
                 "c_ring": {
-                    "kind": "CONVERSION through the stated lever-arm factor",
+                    "kind": "COMPUTATION through the stated lever-arm factor",
                     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
                     "value": flow["c_ring"],
                     "lever_arm_factor": round(lever_arm, 3),

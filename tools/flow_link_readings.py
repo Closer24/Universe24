@@ -20,7 +20,7 @@ detector's reading is a measurement):
   tangential shift, the click's age less the control's (the delay); the
   ring's means over its starts; the count of starts moved by 0, 1, 2, 3
   Nodes (by the modal pixel).
-- CONVERSION (of the DETECTOR reading, labelled so): C_nodes = (the mean
+- COMPUTATION (the host's arithmetic on a DETECTOR reading, labelled so): C_nodes = (the mean
   radial shift / 26) x b x 4 pi S / (3 q), the Nodes' own conversion
   (record 872 (e)), and C_ring = C_nodes / (the lever-arm factor the
   algebra stated before the run), against the expected 2 c_f x 0.990 x
@@ -61,7 +61,7 @@ SCREEN_PREFIX = "screen_"
 # The window of the reading: clicks from this tick on (a row born after the
 # crowd has filled the box, about 118 intervals, arrives after about 210).
 WINDOW_START = 200
-DETECTOR, CONVERSION, GAMEBOARD, HOST = "DETECTOR", "CONVERSION", "GAMEBOARD", "HOST"
+DETECTOR, COMPUTATION, GAMEBOARD, HOST = "DETECTOR", "COMPUTATION", "GAMEBOARD", "HOST"
 
 
 @dataclass
@@ -332,7 +332,7 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
         ),  # type: ignore[index]
         (
             "c_nodes",
-            CONVERSION,
+            COMPUTATION,
             "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q)",
             c_nodes,
             float(pin["c_nodes"]["value"]),
@@ -340,7 +340,7 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
         ),  # type: ignore[index]
         (
             "c_ring",
-            CONVERSION,
+            COMPUTATION,
             f"C_ring = C_nodes / {lever} (the stated lever-arm factor) against the expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2)",
             c_ring,
             float(pin["c_ring"]["expected"]),
@@ -383,7 +383,7 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
     block["c_ring_residual_grains"] = round(residual, 2)
     block["c_ring_algebra_residual_grains"] = round(algebra, 2)
     out.lines.append(
-        f"  {CONVERSION}: C_ring's residual from the expected in grains: {residual:+.2f} (the algebra's own "
+        f"  {COMPUTATION}: C_ring's residual from the expected in grains: {residual:+.2f} (the algebra's own "
         f"{algebra:+.2f} at this b and gamma; the design's verdict sentence: within one to three grains)"
     )
     as_built = float(pin["radial_shift"]["as_built"])  # type: ignore[index]
@@ -392,7 +392,7 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
         f"{'the key is in the run' if abs(mean_radial - as_built) > abs(mean_radial - float(pin['radial_shift']['value'])) else 'NEARER THE LAW AS BUILT'}"  # type: ignore[index]
     )
     out.lines.append(
-        f"  {CONVERSION}: C_ring bare against 4: {fmt(c_ring)} (Einstein's 4 on the comparison side only, record 817; "
+        f"  {COMPUTATION}: C_ring bare against 4: {fmt(c_ring)} (Einstein's 4 on the comparison side only, record 817; "
         f"the expected {pin['c_ring']['expected']} carries the shells' {pin['c_ring']['shells_factor']} and the path's {pin['c_ring']['path_factor']})"  # type: ignore[index]
     )
     out.block = block

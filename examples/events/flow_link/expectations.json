@@ -224,14 +224,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 0.437,
     "tolerance": 0.085,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 1.805,
     "lever_arm_factor": 0.242,
@@ -450,14 +450,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 2.496,
     "tolerance": 0.085,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 3.652,
     "lever_arm_factor": 0.683,
@@ -580,14 +580,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 1.442,
     "tolerance": 0.107,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 1.901,
     "lever_arm_factor": 0.759,
@@ -710,14 +710,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 2.773,
     "tolerance": 0.107,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 3.821,
     "lever_arm_factor": 0.726,
@@ -968,14 +968,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 0.486,
     "tolerance": 0.095,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 1.932,
     "lever_arm_factor": 0.252,
@@ -1226,14 +1226,14 @@
     "derivation": "the fan's symmetry under the 48 signed axis permutations (STEP_ALGEBRA.md section 9): 0.00000 at every ring in the map"
    },
    "c_nodes": {
-    "kind": "CONVERSION of the DETECTOR reading",
+    "kind": "COMPUTATION on the DETECTOR reading",
     "line": "C_nodes = (mean radial shift / 26) x b x 4 pi S / (3 q), 4 pi S / (3 q) = 14.79 at this M and pin",
     "value": 2.856,
     "tolerance": 0.095,
     "derivation": "DESIGN.md section 4 (the Nodes' own conversion, record 872 (e)); the lever arm's factor C_nodes / C_ring stated before the run"
    },
    "c_ring": {
-    "kind": "CONVERSION through the stated lever-arm factor",
+    "kind": "COMPUTATION through the stated lever-arm factor",
     "line": "C_ring = C_nodes / (the lever-arm factor), against 2 c_f x 0.990 x L / sqrt(L^2 + b^2) on the clock's G M = q / (4 pi S)",
     "value": 3.918,
     "lever_arm_factor": 0.729,
@@ -2153,7 +2153,8 @@
     "inside": 4,
     "outside": 1,
     "record_checks_failed": 0
-   }
+   },
+   "verdict": "NOT DECIDED by the README's rule: the deciding pin 0.731 +- 0.025 at b = 6, gamma 1 is unread (ring_b6_g1 refused at interval 79); this gamma 0 ring is inside its four pins (the mean radial shift, the tangential mean, the delay, C_nodes; the arrival Nodes the map's, 40 of 40) and C_ring 1.806 is OUTSIDE the one-grain pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46"
   },
   "ring_b6_g1": {
    "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
@@ -2174,7 +2175,8 @@
     "inside": 0,
     "outside": 0,
     "record_checks_failed": 1
-   }
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
   },
   "ring_b3_control_g0": {
    "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
@@ -2241,7 +2243,8 @@
     "inside": 0,
     "outside": 0,
     "record_checks_failed": 1
-   }
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
   },
   "ring_b3_g1": {
    "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
@@ -2262,7 +2265,8 @@
     "inside": 0,
     "outside": 0,
     "record_checks_failed": 1
-   }
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
   },
   "ring_b8_control_g0": {
    "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
@@ -2329,7 +2333,8 @@
     "inside": 0,
     "outside": 0,
     "record_checks_failed": 1
-   }
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
   },
   "ring_b8_g1": {
    "source_sha256": "3eb1f922c0499510134a9c1dcf5a775b59a81d1397c3a3db2cf804b73191e34d",
@@ -2350,7 +2355,8 @@
     "inside": 0,
     "outside": 0,
     "record_checks_failed": 1
-   }
+   },
+   "verdict": "NOT READ: refused by the pair's working bound (the refusal above); no pin moved"
   }
  },
  "host_cost_measured": {
@@ -2552,5 +2558,6 @@
     "peak_rss_mb": 98.9
    }
   }
- }
+ },
+ "verdict": "NOT DECIDED (2026-09-22): the deciding pin at b = 6, gamma 1 unread; the folder's README"
 }

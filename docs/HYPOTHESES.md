@@ -1345,11 +1345,13 @@ couplings.
   a world without the key whose record differs from `main`'s by a byte.
 - **Status.** Built on 2026-09-22 (the world key `flow_link`, the identity
   `flow-link-v1`, `tests/test_flow_link.py`); the ring worlds and their
-  pins under `examples/events/flow_link/`, run once the same day: the ring
-  at b = 6, gamma 0 inside its pins (the mean radial shift 0.128 against
-  0.128 +- 0.025, every arrival Node the map's; `C_ring` 1.45 grains below
-  the expected, as the algebra), the calibration -1.573 / -3.180 pixels
-  against -1.600 / -3.000; the gamma 1 rings and b = 3, 8 refused by the
-  pair's working bound at d = 16384 (the folder's README), the deciding pin
-  0.731 +- 0.025 not read; the key off by default; admitting it to the
-  law, and the road past the refusal, are the owner's later decisions.
+  pins under `examples/events/flow_link/`, run once the same day: the
+  verdict NOT DECIDED, the deciding pin 0.731 +- 0.025 at b = 6, gamma 1
+  unread (the gamma 1 rings and b = 3, 8 refused by the pair's working
+  bound at d = 16384, the folder's README); the gamma 0 ring at b = 6
+  inside its four pins (the mean radial shift 0.128 against 0.128 +- 0.025,
+  every arrival Node the map's), its `C_ring` 1.806 OUTSIDE the one-grain
+  pin 1.929 +- 0.085 by 0.038, 1.45 grains below as the algebra's 1.46;
+  the calibration -1.573 / -3.180 pixels against -1.600 / -3.000; the key
+  off by default; admitting it to the law, and the road past the refusal,
+  are the owner's later decisions.

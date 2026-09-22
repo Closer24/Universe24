@@ -17,10 +17,11 @@ written before the run; a reading outside its expectation is reported with
 its numbers, never moved. Every number is one of the kinds of
 [the register](../../../docs/EXPERIMENTS.md) ("Two kinds of readings"):
 DETECTOR (the screen's clicks: the arrival Node and the age of each start's
-rows), a CONVERSION of a DETECTOR reading labelled so (`C_nodes`, and
-`C_ring` through the lever-arm factor the algebra stated before the run),
-GAMEBOARD (the step algebra's momentum, not read by a run) or HOST (the
-run's cost). Einstein's 4 appears on the comparison side only (record 817);
+rows), COMPUTATION (the host's arithmetic on a DETECTOR reading, labelled
+so: `C_nodes`, and `C_ring` through the lever-arm factor the algebra stated
+before the run; the kind the Highlights head names for host arithmetic on
+readings), GAMEBOARD (the step algebra's momentum, not read by a run) or
+HOST (the run's cost). Einstein's 4 appears on the comparison side only (record 817);
 nothing here is pinned as nature's. The readings tool is
 `tools/flow_link_readings.py`, every line labelled by its kind.
 
@@ -87,7 +88,7 @@ Nodes). The per-start arrival Nodes (dy, dz) are in `expectations.json`
 under `arrival_nodes`; the tolerance of the ring's mean is one Node per
 start over the ring's count.
 
-| World | the mean radial shift of the arrival Node, Links (DETECTOR) | as built | the mean delay, intervals (within 1) | starts moved by 0 / 1 / 2 / 3 Nodes | `C_nodes` (CONVERSION) | the lever-arm factor | `C_ring` (CONVERSION through the factor) against the expected `2 c_f x 0.990 x L / sqrt(L^2 + b^2)`, the grain |
+| World | the mean radial shift of the arrival Node, Links (DETECTOR) | as built | the mean delay, intervals (within 1) | starts moved by 0 / 1 / 2 / 3 Nodes | `C_nodes` (COMPUTATION) | the lever-arm factor | `C_ring` (COMPUTATION through the factor) against the expected `2 c_f x 0.990 x L / sqrt(L^2 + b^2)`, the grain |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `ring_b6_g1` | `0.731 +- 0.025` (the deciding pin) | 0.974 | 0.78 | 15 / 20 / 2 / 3 | 2.50 | 0.68 | 3.65 against 3.86, the grain 0.085 |
 | `ring_b6_g0` | `0.128 +- 0.025` (6 +- 1 of 40 starts move one Node) | 0.451 | 0.40 | 34 / 6 / 0 / 0 | 0.44 | 0.24 | 1.81 against 1.93, 0.085 |
@@ -206,9 +207,9 @@ start in the window, 185 on the four moved starts of the axes).
 | the ring's mean radial shift of the arrival Node | DETECTOR | 0.128 Links (the radial shifts' sd 0.314) | 0.128 +- 0.025 (0.451 as built) | inside; the key is in the run |
 | the ring's mean tangential shift | DETECTOR | 0.018 Links | 0 +- 0.025 | inside |
 | the ring's mean delay | DETECTOR | 0.40 intervals | 0.40 +- 1 | inside |
-| `C_nodes` | CONVERSION | 0.437 | 0.437 +- 0.085 | inside |
-| `C_ring` through the lever-arm factor 0.242 | CONVERSION | 1.806 | the expected `c_f x 0.990 x L / sqrt(L^2 + b^2)` = 1.929 +- 0.085 | OUTSIDE by 0.038: 1.45 grains below, the algebra's own 1.46 |
-| `C_ring` bare against 2 (gamma 0's `c_f`) | CONVERSION | 1.806 | 2 on the comparison side only | 9.7 per cent below, as the algebra |
+| `C_nodes` | COMPUTATION | 0.437 | 0.437 +- 0.085 | inside |
+| `C_ring` through the lever-arm factor 0.242 | COMPUTATION | 1.806 | the expected `c_f x 0.990 x L / sqrt(L^2 + b^2)` = 1.929 +- 0.085 | OUTSIDE by 0.038: 1.45 grains below, the algebra's own 1.46 |
+| `C_ring` bare against 2 (gamma 0's `c_f`) | COMPUTATION | 1.806 | 2 on the comparison side only | 9.7 per cent below, as the algebra |
 | the controls' mean age | DETECTOR | 89.00 intervals at every ring and gamma, every start at its own (y, z) | the clock's word unchanged | inside |
 
 **The calibration (DETECTOR, `tools/lensing_readings.py` against the
@@ -224,18 +225,19 @@ key moves the push and nothing else: the controls' digests are one number
 at gamma 0 and 1 (no crowd), and the calibration's delays sit where the
 register's do.
 
-**The verdict, by the pins as written before the run.** At b = 6, gamma 0:
-**CLOSES WITHIN THE STATED FACTORS**: the mean radial shift, the tangential
-mean, the delay and `C_nodes` are inside their pins, the arrival Nodes are
-the map's start by start, and `C_ring` through the stated lever-arm factor
-sits 1.45 grains below `c_f x 0.990 x L / sqrt(L^2 + b^2)` (the design's
-verdict sentence "to one to three grains"; the algebra itself sits 1.46
-grains below there), outside the strict one-grain pin of `expectations.json`
-by 0.038: the run reads what the algebra says, at the gamma 0 grain (six of
-forty starts move one Node). Not CLOSES: 1.806 against 2 bare. The
+**The verdict, by the pins as written before the run: NOT DECIDED.** The
 deciding pin of the design, the gamma 1 ring's `0.731 +- 0.025` at b = 6,
-is **NOT READ**: the world is refused by the register at interval 79, as
-are b = 3 and b = 8 at both gammas. What decides it is the model owner's
+is NOT READ: the world is refused by the register at interval 79, as are
+b = 3 and b = 8 at both gammas, so none of the three verdict words of this
+README's rule (CLOSES, CLOSES WITHIN THE STATED FACTORS, DOES NOT CLOSE) is
+reached. The gamma 0 ring at b = 6 is inside its four pins (the mean radial
+shift, the tangential mean, the delay, `C_nodes`; the arrival Nodes the
+map's start by start) and `C_ring` through the stated lever-arm factor is
+1.806, OUTSIDE the one-grain pin 1.929 +- 0.085 by 0.038, 1.45 grains below
+as the algebra's own 1.46 (the design's verdict sentence reads "to one to
+three grains"; the pin as written is one grain): the run reads what the
+algebra says, at the gamma 0 grain (six of forty starts move one Node);
+1.806 against 2 bare. What decides it is the model owner's
 and the architect's, not this run's: either the pair's bound on a pushed
 row's momentum (an engine rule: the primitive **P** / g at d = 16384 with
 content 8) or the ring's pin (a smaller d with S = d kept, the design's map
