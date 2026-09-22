@@ -7065,6 +7065,68 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### X, the directional drive (2026-09-22)
+
+- **Confronts.** The model owner's approval of form B (2026-09-22, record
+  652 of the log of 2026-09-20, translated: "Form B is approved, go on it"):
+  the directional drive of a body, `drive-b-v1`
+  ([the design](designs/drive_b/DESIGN.md), form B in the integer form (c)
+  of [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction)
+  after the review of record 348; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  [HYPOTHESES 28](HYPOTHESES.md#28-the-directional-drive-of-a-body-the-bresenham-line-of-the-momentum-against-one-wall-stated-so-that-it-can-fail)),
+  a world key beside the law: a body's three drive accumulators gain p_a Q
+  against ONE wall Q^2 S M + |**p**|_1 T_h and the axis furthest over the
+  wall steps, the Bresenham line of the momentum with no coincident fire
+  lost. Against the per-axis drive of BEAM_LAW note 17 that `main` runs
+  (a diagonal body moves along one axis, every coincident fire lost;
+  DERIVATIONS_BEAM 1.3 item 7) and the registered defect of record 301 (a
+  body outrunning its own family's rows). Read at the faces of an open
+  41^3 box (the body's click, DETECTOR); the `step` lines GAMEBOARD.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/drive_b/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  `examples/events/drive_b/expectations.json`, derived by the generator
+  from the rule's own integers).** A body of content 64 (Q S M = 4096) at
+  |**p**|_1 = 6000 (the wall 922144) from the centre (20, 20, 20): under
+  the key the click on face:+x at tick 51 from (40, 20, 20) on the axis,
+  101 from (40, 40, 20) on the plane diagonal, 152 from (40, 40, 40) on
+  the cube's (the 21st x Link at ceil(21 W / (|p_x| Q)), one interval's
+  tolerance on the tick, the face and the Node exact); the controls
+  without the key at 36, 50 and 65 from (40, 20, 20), y and z never moved;
+  every `step` line within one Link of the line of **p**; every `drive`
+  below 3 W.
+- **Features.** The world key `drive_b` and the identity `drive-b-v1`
+  (`core.integer.by_line`, `world.drive_wall`, `world.T_HEADING`, one
+  branch in `engine._move`; the one-axis refusals of `covariant_readings`
+  lifted under the key); no rule of the six verbs changed; no registered
+  world re-registered; the key off by default (the gate set's digests, the
+  gate world `drive_b/plane_b` added).
+- **Run.** `examples/events/drive_b/` (the six worlds written by
+  `make_worlds.py`), `tools/run_series.py --jobs 3`, 200 intervals,
+  headless; the readings by `tools/drive_b_readings.py` (every line
+  DETECTOR or GAMEBOARD). The branch `drive-b-v1` from main `166403d8`, the
+  project's environment (Python 3.14.0rc2, numpy 2.5.3); the source
+  fingerprint `fcaf6f194e62...`; 0.10 to 0.11 s per world, 43 MB peak;
+  every run completed with the books balanced at every tick; the tool: 0
+  record checks failed, 19 readings inside, 0 outside, nothing moved
+  ([the page](../examples/events/drive_b/README.md#what-was-measured-2026-09-22)).
+
+  | World | Expected | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `axis_b` | the click at 51 +- 1 on face:+x from (40, 20, 20); 20 x Links before; on the line; the drives below 3 W; `fast_steps` 0 | tick 51 on face:+x from (40, 20, 20); (20, 0, 0); 0.000 off the line; 381280; 0 | inside (5 of 5) |
+  | `plane_b` | 101 +- 1 from (40, 40, 20); (20, 20, 0); within one Link; below 3 W | tick 101 from (40, 40, 20); (20, 20, 0); 0.707; 1111424 | inside (4 of 4) |
+  | `cube_b` | 152 +- 1 from (40, 40, 40); (20, 20, 20); within one Link; below 3 W | tick 152 from (40, 40, 40); (20, 20, 20); 0.816; 1175424 | inside (4 of 4) |
+  | `axis_main`, `plane_main`, `cube_main` | 36, 50, 65 (+- 1) from (40, 20, 20); (20, 0, 0) | 36, 50, 65 from (40, 20, 20); (20, 0, 0) each | inside (6 of 6) |
+
+- **Verdict (X).** The rule stands on the run: under the key a body walks
+  the digital line of its momentum at the pace the wall gives it on every
+  direction and loses no coincident fire (the plane body leaves through
+  (40, 40, 20), the control through (40, 20, 20)); with the key absent the
+  record is the per-axis drive's to the byte. It establishes no physical
+  law: the cap off the headings is the Manhattan-isotropic 64 / 110, and
+  the body's pace under the law alone (this rule as the owner approved it,
+  or the rows' triple of `momentum_pair`, which needs a root on the state)
+  is the chief physicist's and the owner's question (DESIGN.md section 7).
+
 ### X, Poisson after a detector (2026-09-22)
 
 - **Confronts.** Poisson's equation as the law states it
@@ -7368,6 +7430,29 @@ sequential gates on an entangled record, the full register replay.
   speed-up that the first draft's pins missed (the reviewer's MUST-FIX
   1) and is not registered. No pin moved; the register
   examples/events/optical/README.md.
+- **Step 3, the body's drive under the one wall** (2026-09-22, branch
+  optical-body-drive; form B composed with optical-v1,
+  docs/designs/one_wall/BODY_DRIVE.md: the body's directional drive a
+  member of the age wall's set at gamma, the clock at 1, the flight at
+  1 + gamma; a moving body's charge (w, Q S), the rows' weight on its
+  momentum): one fast body (content 64, S = 16384, p = 2^26, the Lorentz
+  factor 2, v^2 = 3/4) beside the light worlds' mass at b = 10, 12, 14,
+  16, 18 at gamma 0 and 1, the pins per world from the map's body walk
+  committed before the run (the click's tick +- 1 and Node). DETECTOR:
+  the first run at the mass 2^12 (a generator slip, the crowd sixteen
+  times weaker) clicked at 150 / 151 with no fall, tick for tick the
+  walk's at that crowd, its click momenta reading the weight's 7/4 (the
+  ratio 1.785) and the engine's push 8 to 16 per cent below the map's;
+  the run at 2^16: gamma 0 the ticks 158, 156, 156, 156, 156 from y 27,
+  30, 32, 34, 36 (the pins 159, 158, 158, 157, 156 from 27, 29, 31, 33,
+  36), gamma 1 167, 166, 163, 163, 164 from 24, 27, 30, 32, 34 (the pins
+  168, 166, 166, 164, 164 from 23, 26, 28, 31, 34), the controls 150
+  exact: 16 readings inside, 14 outside, one y-Link of fall less than
+  the walk at six worlds (the push 8 to 16 per cent below the stationary
+  crowd). Read: the drive member at gamma 1 (the ticks 2 to 4 intervals
+  past the drive unstretched at four of five b), the weight (the fall
+  doubling from gamma 0 to 1 where the charge (M, 1) gives one Link).
+  No pin moved.
 - **The fast worlds, the wall's factor on matter read** (2026-09-22,
   branch optical-every-family, 22064bc3 the pins then the run; the
   chief physicist): a slow row's stretch is swamped by Newton's fall, so

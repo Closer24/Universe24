@@ -115,6 +115,41 @@ def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple
     return count, drive - count * denominator
 
 
+def by_line(drives: Sequence[int], rates: Sequence[int], wall: int) -> tuple[int | None, int, list[int]]:
+    """The line count of `drive-b-v1` (docs/designs/drive_b/DESIGN.md section
+    2; docs/designs/light_speed/FORM.md section 3.1 (c), the mathematician's
+    form; the model owner's approval of form B, 2026-09-22): the rows' own
+    line rule (the deficits' argmax carry of the flight, BEAM_LAW note 41
+    (viii)) on a body's momentum. Every accumulator whose rate is not 0
+    gains its rate (a signed rate: the momentum's component times Q); of
+    the accumulators at or beyond the one `wall` in magnitude, among the
+    axes whose rate is not 0, the one furthest over the wall carries
+    (the lowest axis on a tie): one Link on that axis toward the
+    accumulator's sign, and the wall subtracted with that sign, the others
+    keeping their overflow for the following self-creations (a coincident
+    fire deferred, never dropped). Returns (the axis or None, the sign or 0,
+    the accumulators after). An accumulator whose rate is 0 is left as it
+    is and never carries (a momentum of 0 never steps); one Link at most
+    per call. On one axis the same integers as `by_drive(drive, rate, wall,
+    at_most=1)`. The caller bounds the sums before the call."""
+    if wall < 1:
+        raise ValueError("positive wall required")
+    if len(drives) != len(rates):
+        raise ValueError("one rate per accumulator required")
+    after = [drive + rate for drive, rate in zip(drives, rates, strict=True)]
+    chosen: int | None = None
+    for axis, (drive, rate) in enumerate(zip(after, rates, strict=True)):
+        if rate == 0 or abs(drive) < wall:
+            continue
+        if chosen is None or abs(drive) > abs(after[chosen]):
+            chosen = axis
+    if chosen is None:
+        return None, 0, after
+    sign = 1 if after[chosen] > 0 else -1
+    after[chosen] -= sign * wall
+    return chosen, sign, after
+
+
 def age_wall(
     rate: int, wall: int, coefficient: int, age_moment: int, suspension: tuple[int, int]
 ) -> tuple[int, int]:

@@ -508,6 +508,21 @@ invariant and the intervals owed to proper time (GAMEBOARD) against the
 pins; the register entry is
 [S, the covariant readings (2026-09-21)](../../docs/EXPERIMENTS.md#s-the-covariant-readings-2026-09-21).
 
+## The drive-b series
+
+The folder [drive_b/](drive_b/README.md) holds the six worlds of series X,
+the directional drive of a body (`drive-b-v1`, the world key `drive_b`, off
+by default; the model owner's approval of form B, 2026-09-22, record 652 of
+the log of 2026-09-20; the design [docs/designs/drive_b/DESIGN.md](../../docs/designs/drive_b/DESIGN.md)),
+written by `drive_b/make_worlds.py` with their expectations before the runs
+(`drive_b/expectations.json`): one body of content 64 at |**p**|_1 = 6000
+on the axis, the plane diagonal and the cube diagonal from the centre of an
+open 41^3 box, under the key and, as the controls, without it.
+`tools/drive_b_readings.py` reads the body's click on a face (DETECTOR) and
+the `step` lines against the line of the momentum and the accumulators'
+bound (GAMEBOARD) against the pins; the register entry is
+[X, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22).
+
 ## The hand series
 
 The folder [hand/](hand/README.md) holds the worlds of series P, the hand

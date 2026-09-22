@@ -1,0 +1,1 @@
+{"law":"beam","model_id":"beam-drive-b-axis_b-v1","shape":[41,41,41],"boundary":"open","ticks":200,"K":1048576,"N":64,"release":[1,1048576],"suspension":0,"width":1,"families":[{"name":"probe","quantum":0,"charge":0,"phase":false}],"measured":[{"position":[20,20,20],"family":"probe","amount":64,"momentum":[6000,0,0]}],"drive_b":true}
