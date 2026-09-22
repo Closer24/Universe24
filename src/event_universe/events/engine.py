@@ -1543,15 +1543,30 @@ class NatureBeamSimulation:
         # A row's `acc_turn` is written in a world that declares
         # `massive_rows` alone (0 on every row without it).
         massive = self.world.massive_rows
+        denominator = self.world.suspension[1]
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
             families = entry["families"]
             assert isinstance(families, list)
-            for family, store in zip(self.families, self.stores, strict=True):
+            for f, (family, store) in enumerate(zip(self.families, self.stores, strict=True)):
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, handed, massive) for beam in store.rows(lo, hi)]
+                # A row's flight accumulator is written only where a crowd
+                # moved it off the table's own count at its age (the value
+                # the walk seeds from, `optical_walk_step`), so that every
+                # world in which no crowd acts keeps its state byte for byte
+                # (the generic entry of the bending, 2026-09-22).
+                flight = self.tables.family_flights[f]
+                made0, residue0 = flight.accumulator(store.direction[lo:hi], store.age[lo:hi])
+                memoryless = (
+                    ((store.made[lo:hi] == 0) & (store.residue[lo:hi] == 0))
+                    | ((store.made[lo:hi] == made0) & (store.residue[lo:hi] == residue0 * denominator))
+                ).tolist()
+                beams = [
+                    beam.record_line(vectors, handed, massive, memoryless=plain)
+                    for beam, plain in zip(store.rows(lo, hi), memoryless, strict=True)
+                ]
                 families.append({"family": family.name, "rays": beams})
             yield entry

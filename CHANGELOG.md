@@ -5,6 +5,34 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The generic entry of the bending: the row's flight in the age wall's set for every world (2026-09-22)
+
+- The model owner's word (record 847, "do not freeze; bring it back
+  immediately", then "implement it, now"): the row's flight is a member of
+  the age wall's declared set for every world at the coefficient 1 + gamma,
+  gamma the world key `optical`'s declared value and 0 by default (the time
+  part alone, the law's own number; nature's 1 a declaration per world and
+  never a default), the same one wall function that slows a body's clock
+  in a crowd delaying and bending every family's rows (`measured.age_wall_set`
+  with no None state, `world.NatureBeamWorld.optical` an integer,
+  `nature_beam` acting in every world, `run.json` carrying `optical` for
+  every world). `optical-v1` names no hypothesis any more. The three load
+  refusals of the key are lifted (at suspension 0 nothing is stretched and
+  nothing pushed; under `meeting` the meeting's turn keeps the heading; a
+  heading without a neighbour turns to nothing); the inverse interval is
+  refused at a pair with n > 0 only. The snapshot writes a row's flight
+  accumulator only where a crowd moved it off the table's own count at its
+  age (the value the walk seeds from), so every world in which no crowd
+  acts keeps its record and its state byte for byte (the crowd worlds at
+  [0, d] and every crowd-free world; `tests/test_optical.py` (e), the gate
+  set's digests). The registered crowd worlds at a pair with n > 0 read
+  the light stretched by their crowd's age moment as their clocks are (at
+  their declared inputs the light freezes in the mass rows and one world
+  refuses on the pushed momentum's square); their standing is the model
+  owner's decision, pending; no pin of theirs moves and none re-runs
+  before his word (docs/designs/one_wall/EVERY_FAMILY.md section 6, step
+  5; ENGINE.md).
+
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 
 - Twelve worlds by the generator (`examples/events/amplitude/bell_n2048_*`,

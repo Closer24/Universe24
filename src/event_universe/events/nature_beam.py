@@ -310,7 +310,11 @@ class NatureBeam:
     acc_turn: int = 0
 
     def record_line(
-        self, vectors: np.ndarray, handed: bool = False, massive: bool = False
+        self,
+        vectors: np.ndarray,
+        handed: bool = False,
+        massive: bool = False,
+        memoryless: bool = False,
     ) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
@@ -338,7 +342,7 @@ class NatureBeam:
             line["share"] = [self.share_x, self.share_y, self.share_z]
         if massive:
             line["acc_turn"] = self.acc_turn
-        if self.made or self.residue:
+        if (self.made or self.residue) and not memoryless:
             line["flight"] = [self.made, self.residue]
         if self.push_x or self.push_y or self.push_z:
             line["push"] = [self.push_x, self.push_y, self.push_z]
@@ -1061,7 +1065,7 @@ def family_flight(
     width: int,
     modulus: int,
     action: int | None,
-    optical: int | None = None,
+    optical: int = 0,
 ) -> FamilyFlight:
     """The family's tables from its keys and the world's flight (`FamilyFlight`):
     a family without the flag `massive` takes Flight's numbers by value and
@@ -1124,12 +1128,10 @@ def family_flight(
     )
 
 
-def with_weights(table: FamilyFlight, optical: int | None) -> FamilyFlight:
+def with_weights(table: FamilyFlight, optical: int) -> FamilyFlight:
     """The family's table with its weight per unit of the crowd's push
-    formed for every direction at the world's gamma (`unit_weights`); empty
-    without the key (nothing of `optical` is read at run time)."""
-    if optical is None:
-        return table
+    formed for every direction at the world's gamma (`unit_weights`), for
+    every world (the coupling is the law's since 2026-09-22)."""
     return dataclasses.replace(
         table, weight=unit_weights(table, optical, np.arange(table.labels.shape[0]))
     )
@@ -3288,11 +3290,11 @@ def interval_frame(
         entered=entered,
         trail_nodes=trail_nodes,
         trail_events=trail_events,
-        crowd=(
-            CrowdMoments(stores, [t.labels for t in tables.family_flights])
-            if world.optical is not None
-            else None
-        ),
+        # The crowd's moments at every Node with a row, for every world
+        # (the row's flight in the age wall's set is the law's own since
+        # 2026-09-22; at a pair with n = 0 or with no crowd they stretch
+        # nothing and the walk is the table's, integer for integer).
+        crowd=CrowdMoments(stores, [t.labels for t in tables.family_flights]),
     )
 
 
@@ -3336,11 +3338,11 @@ def nature_beam(
     # it by its phase register; the crowd untouched (`meeting.meet`).
     if world.meeting:
         meet(stores, world, tables, frame.occupied, ledger)
-    # optical-v1 (under the world key `optical`): the turn at the same
-    # place, the rows pushed by the crowd's flow and turned to the fan's
-    # nearest direction (`optical_turn`); refused together with `meeting`
-    # at load (one turn verb per row).
-    if world.optical is not None:
+    # The turn at the same place, the rows pushed by the crowd's flow and
+    # turned to the line of their momentum (`optical_turn`; the law's own
+    # since 2026-09-22): under `meeting` the meeting's turn keeps the
+    # heading and this one does not act, one turn verb per row.
+    if not world.meeting:
         optical_turn(frame)
 
     # 4. The measured events' tables and the detectors.
@@ -3426,10 +3428,11 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
             f"({MASSIVE_ROWS_RULE}): the inverse of the turn on the row's accumulator is exact per "
             "Link but is not built (as the border `lifetime` has no inverse)"
         )
-    if world.optical is not None:
+    if world.suspension[0] > 0:
         raise ValueError(
-            f"{BEAM_LAW}: the inverse interval is refused under the key optical: a row's wall reads "
-            "the crowd of the interval before, which the after-state does not hold (optical-v1)"
+            f"{BEAM_LAW}: the inverse interval is refused at the pair {list(world.suspension)}: "
+            "a row's wall reads the crowd of the interval before, which the after-state does not "
+            "hold (the row's flight in the age wall's set, the generic entry of the bending)"
         )
     for definition in families:
         if definition.lifetime is not None:
@@ -3799,8 +3802,6 @@ def optical_turn(frame: Interval) -> None:
     # moment of the wall was read before step 1.
     crowd = CrowdMoments(frame.stores, [t.labels for t in family_flights])
     numerator, denominator = world.suspension
-    gamma = world.optical
-    assert gamma is not None
     for family, store in enumerate(frame.stores):
         if store.size == 0:
             continue

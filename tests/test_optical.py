@@ -413,12 +413,25 @@ def test_the_flight_walks_against_the_wall_the_crowd_stretches():
         and by_hand[6:18] == [4] * 12
         and by_hand[18:30] == [5] * 12
     )
+    # The generic entry of the bending (2026-09-22): the flight is a member
+    # for every world, at the coefficient 1 when the key is absent (gamma
+    # 0, the time part alone), so the same hand chain at f = 1 is the walk
+    # of the world without the key.
+    acc, x, by_hand_time_part = 110 * 4, 0, []
+    for _ in range(2, 41):
+        moment = 12 if 4 <= x <= 8 else 0
+        rate, wall = age_wall(2 * 1, 2 * 110, 1, moment, (1, 4))
+        count, acc = by_drive(acc, 512, wall)
+        x += count
+        by_hand_time_part.append(x)
+    assert by_hand_time_part != by_hand
     for optical, expected in (
         (1, by_hand),
-        (None, [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7, 8, 8, 9, 9, 10, 10, 11]),
+        (None, by_hand_time_part),
     ):
         parsed = parse_nature_beam_world(bar(optical))
-        assert (OPTICAL_RULE in parsed.hypotheses) == (optical is not None)
+        assert OPTICAL_RULE not in parsed.hypotheses
+        assert parsed.optical == (optical or 0) and parsed.flight_coefficient == 1 + (optical or 0)
         simulation = NatureBeamSimulation(parsed)
         walked: list[int] = []
         fields: list[tuple[int, int]] = []
@@ -434,9 +447,7 @@ def test_the_flight_walks_against_the_wall_the_crowd_stretches():
                 walked.append(x_now)
             fields.append((int(store.made[index]), int(store.residue[index])))
         assert walked == expected[: len(walked)], optical
-        if optical is None:
-            assert set(fields) == {(0, 0)}
-        else:
+        if optical is not None:
             assert fields[1] == (1, 72) and fields[8] == (4, 1016)
 
 
@@ -503,15 +514,16 @@ def test_the_whole_momentum_is_conserved_across_the_turn():
 
 def test_the_refusals_and_the_identity():
     """(d)."""
-    with pytest.raises(ValueError, match="refused with suspension"):
-        parse_nature_beam_world({**turn_world(), "suspension": 0})
-    with pytest.raises(ValueError, match="one turn verb per row"):
-        parse_nature_beam_world(turn_world(meeting=True))
+    # The three refusals of optical-v1 are lifted since the generic entry
+    # of the bending (2026-09-22): at suspension 0 nothing is stretched and
+    # nothing pushed, a heading without a neighbour turns to nothing, and
+    # under `meeting` the meeting's turn keeps the heading.
+    assert parse_nature_beam_world({**turn_world(), "suspension": 0}).optical == 1
+    assert parse_nature_beam_world(turn_world(meeting=True)).meeting
+    assert parse_nature_beam_world({**turn_world(), "directions": []}).optical == 1
     for bad in (-1, True, "2", 1.5):
         with pytest.raises(ValueError, match="optical must be a non-negative integer"):
             parse_nature_beam_world(turn_world(bad))  # type: ignore[arg-type]
-    with pytest.raises(ValueError, match=r"direction \[1, 0, 0\] has no neighbour"):
-        parse_nature_beam_world({**turn_world(), "directions": []})
     # the two keys together load since 2026-09-22 (every family under one
     # wall, docs/designs/one_wall/EVERY_FAMILY.md; the refusal of record 510
     # lifted): every family walks by its own table under the age wall
@@ -521,19 +533,27 @@ def test_the_refusals_and_the_identity():
         {**turn_world(None), "massive_rows": True, "age_bound": 64}
     ).massive_rows
     parsed = parse_nature_beam_world(turn_world(1))
-    assert (
-        parsed.hypotheses[-1] == OPTICAL_RULE and parsed.optical == 1 and parsed.flight_coefficient == 2
-    )
-    assert OPTICAL_RULE not in parse_nature_beam_world(turn_world(None)).hypotheses
+    # gamma is a declared input of the law, no hypothesis: `optical-v1`
+    # names none since 2026-09-22
+    assert OPTICAL_RULE not in parsed.hypotheses
+    assert parsed.optical == 1 and parsed.flight_coefficient == 2
+    absent = parse_nature_beam_world(turn_world(None))
+    assert OPTICAL_RULE not in absent.hypotheses
+    assert absent.optical == 0 and absent.flight_coefficient == 1
 
 
-def test_byte_identity_without_the_key_and_the_declared_set():
+def test_byte_identity_without_a_crowd_and_the_declared_set():
     """(e)."""
-    simulation = NatureBeamSimulation(parse_nature_beam_world(bar(None)))
+    # A world in which no crowd acts keeps its state byte for byte: the
+    # flight accumulator on a row is the table's own count at its age (the
+    # memoryless form the walk seeds from), and the snapshot omits it.
+    document = bar(None)
+    document.pop("in_transit")
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document))
     for _ in range(20):
         simulation.step()
     for store in simulation.stores:
-        for name in ("made", "residue", "push_x", "push_y", "push_z", "cross_x", "cross_y", "cross_z"):
+        for name in ("push_x", "push_y", "push_z", "cross_x", "cross_y", "cross_z"):
             assert not getattr(store, name).any(), name
     lines = [
         ray
@@ -542,11 +562,9 @@ def test_byte_identity_without_the_key_and_the_declared_set():
         for ray in family["rays"]
     ]
     assert lines and not any("flight" in ray or "push" in ray or "cross" in ray for ray in lines)
-    assert age_wall_set(None) == AGE_WALL_SET == (("owed", 1),)
-    assert age_wall_set(0) == (("owed", 1), ("flight", 1)) and age_wall_set(1) == (
-        ("owed", 1),
-        ("flight", 2),
-    )
+    assert AGE_WALL_SET == (("owed", 1),)
+    assert age_wall_set() == age_wall_set(0) == (("owed", 1), ("flight", 1))
+    assert age_wall_set(1) == (("owed", 1), ("flight", 2))
     assert not any(name in dict(age_wall_set(1)) for name in AGE_WALL_NEVER)
 
 
@@ -561,7 +579,7 @@ def test_the_pin_worlds_parse_run_and_carry_their_pins():
         assert json.loads(path.read_text(encoding="utf-8")) == document, name
         loaded = load_world(path.read_bytes(), base_dir=WORLDS, root=WORLDS.parent)
         world = loaded.world
-        assert OPTICAL_RULE in world.hypotheses and world.suspension == (1, 16384)
+        assert OPTICAL_RULE not in world.hypotheses and world.suspension == (1, 16384)
         assert world.optical == int(name[-1]) and world.flight_coefficient == 1 + world.optical
         simulation = NatureBeamSimulation(world)
         for _ in range(10):
@@ -573,7 +591,7 @@ def test_the_pin_worlds_parse_run_and_carry_their_pins():
         parse_nature_beam_world({**turn_world(1), "measured": [], "in_transit": []})
     )
     plain.step()
-    with pytest.raises(ValueError, match="refused under the key optical"):
+    with pytest.raises(ValueError, match="refused at the pair"):
         plain.inverse_step()
     expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expected["format"] == generator.EXPECTATIONS_FORMAT

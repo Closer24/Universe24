@@ -343,26 +343,28 @@ class CountTable:
 # them whatever the set declares.
 AGE_WALL_SET: tuple[tuple[str, int], ...] = (("owed", 1),)
 AGE_WALL_NEVER: tuple[str, ...] = ("turn", "action")
-# The member the key `optical` adds (optical-v1, 2026-09-21): the row's
+# The member of the row's flight (optical-v1, 2026-09-21; the law's own
+# since 2026-09-22, the generic entry of the bending): the row's
 # flight accumulator, its coefficient f = 1 + gamma, gamma the world's
 # declared post-Newtonian parameter (`NatureBeamWorld.optical`).
 FLIGHT_MEMBER = "flight"
 
 
-def age_wall_set(optical: int | None = None) -> tuple[tuple[str, int], ...]:
-    """The age wall's declared set of a world: the law's (`AGE_WALL_SET`,
-    the clock at 1, with or without any key) and, under the world key
-    `optical: gamma`, the row's flight at 1 + gamma (`FLIGHT_MEMBER`); the
-    body's drive is not a member on `main` (its pin waits on form B,
-    REVIEW_3 must-fix 2 and 3), the release and the lamp's count never
-    (per self-creation, gated by the clock's wall already), the phase per
-    age never (`AGE_WALL_NEVER`)."""
-    if optical is None:
-        return AGE_WALL_SET
+def age_wall_set(optical: int = 0) -> tuple[tuple[str, int], ...]:
+    """The age wall's declared set of a world: the law's members, the
+    body's clock at 1 (`AGE_WALL_SET`) and, since the generic entry of the
+    bending (the model owner, 2026-09-22, record 847: "bring it
+    back immediately"), the row's flight at 1 + gamma (`FLIGHT_MEMBER`),
+    gamma the world's declared input `optical` (0 by default, the time part
+    alone, the law's own number; nature's 1 a declaration per world, never
+    a default); the body's drive is not a member on `main` (its pin waits
+    on form B, REVIEW_3 must-fix 2 and 3), the release and the lamp's count
+    never (per self-creation, gated by the clock's wall already), the phase
+    per age never (`AGE_WALL_NEVER`)."""
     return (*AGE_WALL_SET, (FLIGHT_MEMBER, 1 + optical))
 
 
-def age_wall_coefficient(name: str, optical: int | None = None) -> int:
+def age_wall_coefficient(name: str, optical: int = 0) -> int:
     """The declared coefficient c of a member of the age wall's set
     (`age_wall_set`, the law's members and the key's), by the count's
     name; a count that is no member is refused (nothing outside the set is
