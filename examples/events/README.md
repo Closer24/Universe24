@@ -311,7 +311,10 @@ and end to end, a kicked quark and a dressed line whose glue makes the
 read mass 1836; the pins derived by the design's `quark_numbers.py` in
 `quarks/expectations.json` and compared by `tests/test_quarks_expectations.py`;
 `tools/quarks_readings.py` reads the bodies' `read`, `contact` and step
-records and the border's clicks. The register entry is
+records and the border's clicks. Under the law's line drive (2026-09-22;
+`expectations.json` names the drive, the replay blocks of 2026-09-21
+under `former`) the seven worlds ran again and read 41 inside and 0
+outside with the verdict standing (the series' README). The register entry is
 [R, the quarks (2026-09-21)](../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21);
 the design is [the quarks as families of the family table](../../docs/designs/quarks/QUARKS.md).
 

@@ -157,6 +157,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   beside the rows of 2026-09-20 (18 readings inside, 0 outside; the
   verdict standing; the steps and hand-over counts moved with the drive,
   no designed push).
+- Series R re-pinned under the law (`examples/events/quarks/`): the
+  transient `per_axis_drive` leaves the seven worlds; `expectations.json`
+  names the drive, pins the kicked u's pace under both drives and keeps
+  the replay blocks of 2026-09-21 under `former` (replayed under the key
+  by the test's (f)), the `replay` blocks rewritten from the engine under
+  the law's drive; the seven runs registered beside the rows of
+  2026-09-21 (41 readings inside, 0 outside; the verdict standing; the
+  kicked world's pair leaving as a pair where it broke before, a finding).
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

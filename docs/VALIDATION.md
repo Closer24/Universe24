@@ -11,6 +11,33 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series R under the law's line drive: seven runs on drive-default 754a9c1 - 2026-09-22
+
+The branch `drive-default` at `754a9c1` (the transient `per_axis_drive`
+left the seven worlds; `expectations.json` names the drive, pins the
+kicked u's pace under both drives and keeps the replay blocks of
+2026-09-21 under `former`, the `replay` blocks rewritten from the engine
+under the law's drive before the run, DEFAULT.md section (c)): the seven
+worlds of `examples/events/quarks/` run through `tools/run_series.py
+--jobs 3` (Python 3.14.0rc2, numpy 2.5.3, headless; source fingerprint
+`c71927e33dea0e12`), every run completed at 3000 intervals with the books
+balanced at every tick, `run.json` carrying `"drive": "line"`; the
+digests (state, audit, events) `a9a61353edb0`, `85e91079ccc5`,
+`f6ade6fa935e` (`q1_proton_line`), `062546a2a3e9`, `7c661377c0d1`,
+`860bf744abb0` (`q2_neutron_line`), `ab7628599a0a`, `12bfe418afb9`,
+`a05d6ba9adb5` (`q3_proton_triangle`), `7d1362f239ad`, `3c068587031c`,
+`46b5b529b7ac` (`q4_deuteron_rectangle`), `95883928527c`, `98d61945e9a7`,
+`7560f0d9898c` (`q5_deuteron_line`), `021e83e3eafd`, `2f5deb5c5c0a`,
+`915fc0e975ac` (`q6_proton_kick`), `8d221ebcca7d`, `6b359061dc06`,
+`4ff217b5e7b5` (`q7_proton_dressed`); run times 24.4 to 482.7 s at 90 to
+1912 MB peak (host measurements). No gate world is in this series. The
+readings by kind (41 inside, 0 outside; the verdict standing; the kicked
+world's pair leaving as a pair at 1207 and 1225 where it broke under the
+drive of history, a finding) are in
+[the series' README](../examples/events/quarks/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-754a9c1-before-the-run)
+and [the register](EXPERIMENTS.md#r-the-quarks-2026-09-21). The rows of
+2026-09-21 stay registered as read under the per-axis drive of history.
+
 ## Series I under the law's line drive: eight runs on drive-default 983d563 - 2026-09-22
 
 The branch `drive-default` at `983d563` (the generator's pins under the

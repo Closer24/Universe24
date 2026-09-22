@@ -7144,6 +7144,75 @@ sequential gates on an entangled record, the full register replay.
   the proton's 99 % binding is not in the law. Nothing was tuned; the
   design's section 5 stands; the paper takes the quark rows as inputs
   with these readings.
+- **Result of the re-run under the law's line drive (2026-09-22,
+  measured against the pins of `expectations.json`, committed at
+  `754a9c1` before the run; a new registration beside the rows above,
+  which stand as read under the per-axis drive of history).** The flip
+  (the model owner's word, record 972; [the design](designs/drive_b/DEFAULT.md),
+  step 2): the seven worlds without the drive key (the transient
+  `per_axis_drive` of the flip day left them; the pushes the design's
+  integers under either drive; the kicked u's pace on a heading 10^13 x
+  64 / (64^2 x 2^37 x 5 + 10^13 x 110) = 0.1635, a Link every 6.1
+  intervals, the per-axis 0.1853 and 5.4; the replay blocks rewritten
+  from the engine under the law's drive by `replay_register.py`, the
+  blocks of 2026-09-21 kept under `former` and replayed under the key by
+  the test), run once each on the checkout of `drive-default` at
+  `754a9c1` (source fingerprint `c71927e33dea0e12`, package 0.3.1),
+  Python 3.14.0rc2, numpy 2.5.3, headless, `tools/run_series.py --jobs
+  3`, 24.4 to 482.7 s per world at 90 to 1912 MB peak (host
+  measurements); every run completed at 3000 intervals with the books
+  balanced at every tick, `run.json` carrying `"drive": "line"`; the
+  digests (state, audit, events) `a9a61353edb0`, `85e91079ccc5`,
+  `f6ade6fa935e` (`q1_proton_line`), `062546a2a3e9`, `7c661377c0d1`,
+  `860bf744abb0` (`q2_neutron_line`), `ab7628599a0a`, `12bfe418afb9`,
+  `a05d6ba9adb5` (`q3_proton_triangle`), `7d1362f239ad`, `3c068587031c`,
+  `46b5b529b7ac` (`q4_deuteron_rectangle`), `95883928527c`,
+  `98d61945e9a7`, `7560f0d9898c` (`q5_deuteron_line`), `021e83e3eafd`,
+  `2f5deb5c5c0a`, `915fc0e975ac` (`q6_proton_kick`), `8d221ebcca7d`,
+  `6b359061dc06`, `4ff217b5e7b5` (`q7_proton_dressed`).
+  `tools/quarks_readings.py`: 0 record checks failed, 41 readings inside,
+  0 outside, nothing moved: the push on every body at the reference tick
+  the design's integer exactly (the dressed world to the accumulator's
+  one unit), the border's rows and the read mass the exact sums in every
+  world. The verdict stands: a bound set in a line and in no other shape,
+  the tower collinear, the law binding and not confining, no binding
+  energy in the read mass. What the drive moves is every step (GAMEBOARD)
+  and with it the hand-overs (DETECTOR), the numbers of 2026-09-21 in
+  parentheses: `q1_proton_line` no step, 378 hand-overs on the d from
+  tick 19 and 12 on the right u from 256 (398 on the left u from 17, 13
+  on the right from 242), the largest 6 939 914 555 928
+  (6 664 493 899 136); `q2_neutron_line` no step, 280 on the u from 24
+  and 22 on the right d from 152 (290 from 22, 28 from 126), the largest
+  9 578 184 190 784 (9 142 812 182 112); `q3_proton_triangle` disperses,
+  the first step at tick 31 (27; the toy's 25), 59 steps, 3 hand-overs,
+  the largest separation 23.0, out through face:+z at 219, face:+x at
+  230 and face:+y at 469 (51 steps, 4 hand-overs, 21.2);
+  `q4_deuteron_rectangle` disperses, the first step at tick 169 (176;
+  the toy's 161), 89 steps, 133 hand-overs, the largest separation 21.2,
+  the six out between 410 and 917 (127 steps, 279 hand-overs, 25.3);
+  `q5_deuteron_line` no step, 951 hand-overs on the four inner bodies
+  from ticks 19 to 29 (963 from 17 to 27), the largest
+  12 927 435 361 104 (12 931 222 766 152); `q6_proton_kick` the kicked u
+  steps -x at 7, 14, 22, 29, 37, 44, 52, 59 and 67 (7 and 8 alternating,
+  7.5 per Link with the pair's pull on it, against the pin 6.1 before
+  any push; history's 6, 12, ..., 58 at 6.5 against its 5.4) and leaves
+  through face:-x at tick 75 with its 2/3 e (64; the page's pin 70 to 90
+  of 2026-09-21 is the per-axis toy's, read inside now by the line drive's
+  slower walk, not moved and not claimed); the u d pair left behind
+  drifts -x as a pair at one Link (the d steps at 673, 839, 934, 989,
+  1044, 1080, 1117, 1138, 1166, 1190, the u nine to sixteen ticks after
+  each, the gaps shortening from 166 to 24; 62 hand-overs on the d) and
+  leaves through face:-x at 1207 and 1225 STILL A PAIR, where under the
+  per-axis drive the d stepped +z at 1166 and the pair broke at about
+  1190: a finding, not a pin, the line drive keeping a pair of unequal
+  contents on its axis to the face (no fire lost off the line), the
+  third-law gap of the fans drifting it and not breaking it; the page's
+  pin "a bound pair" of 2026-09-21 reads inside on the drift and is not
+  claimed either; `q7_proton_dressed` no step, 388 hand-overs on the d
+  from 18 and 26 on the right u from 142 (408 from 16, 27 from 119), the
+  largest 6 696 756 937 808 (6 278 209 629 195), the read mass 1836. No
+  pin moved; the paper's rows rest on the readings of 2026-09-21, read
+  under the per-axis drive.
 
 
 ### S, the covariant readings (2026-09-21)

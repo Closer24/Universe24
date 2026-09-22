@@ -72,7 +72,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   both registers with the drive named) and series G (`hubble/`, the four
   worlds' momenta by the line rule, a new `expectations.json`) and series
   I (`nucleus/`, the eight worlds unchanged, a new `expectations.json`
-  with the drive named, the steps and hand-overs re-read).
+  with the drive named, the steps and hand-overs re-read) and series R
+  (`quarks/`, the transient key removed, the replay blocks of 2026-09-21
+  under `former`, the law's under `replay`).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by
