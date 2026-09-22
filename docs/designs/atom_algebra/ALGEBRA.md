@@ -46,10 +46,11 @@ word.
    in-plane heading stamped with its phase, which reaches a detector Node
    at one Link per interval and clicks there with the detector's own
    count; nothing is kept at a Node, and the tick is lost (GAMEBOARD).
-2. *The generic solution.* One accumulator (the action row) and one
-   division by one declared integer (h) for every family alike: a loop
-   is closed when the action row's gain over a return is a multiple of
-   `N h`, exactly; the ratio of two closing radii is the square of the
+2. *The generic solution.* One accumulator per axis (the three action
+   rows) and one division by one declared integer (h) for every family
+   alike: a loop is closed when each axis's action row gains a multiple
+   of h over a return and the three quotients sum to a multiple of N,
+   exactly; the ratio of two closing radii is the square of the
    ratio of two counts a detector reads (the circles the phase turns per
    return, unwrapped from successive rows), `a_j / a_i = (j / i)^2` in the
    shell mean; the click that moves the body is the one click of the law,
@@ -130,31 +131,45 @@ stamped at release and turn no further).
 
 ## 1. What a closed radius is, in the law's integers (the six verbs; Bohr compared with afterwards)
 
-**(a) The body's closure (the atom's).** Let the electron's action row
-on the axis a stand at `A_a` (the exact sum of `abs(p_a) N` over the
-Links counted on that axis since its birth, record 155). Its phase is
-`floor((A_x + A_y + A_z) / h) mod N` plus its birth phase, the whole
-parts delivered at the Links crossed. A RETURN is the body's arrival at
-a Node it left one loop earlier with the same momentum vector (the
-loop's own period; a return is a fact of the step record, GAMEBOARD, or
-of the rows the body releases at that Node, DETECTOR, section 2). Over
-one return the action rows gain
+**(a) The body's closure (the atom's).** The engine keeps ONE ACTION
+ROW PER AXIS, each with its own remainder below h (`measured.py:422`,
+the three `Count("action", ...)` rows; `engine.py:846-856`,
+`counts.advance("action", index=axis)`): on the axis a the row stands at
+`A_a` (the exact sum of `abs(p_a) N` over the Links counted on that
+axis since its birth, record 155), and the phase is the sum of the
+three per-axis whole parts, `floor(A_x / h) + floor(A_y / h) + floor(A_z
+/ h) mod N` plus the birth phase, each whole part delivered at a Link
+crossed on its axis (`engine.py:930-935`). A RETURN is the body's
+arrival at a Node it left one loop earlier with the same momentum
+vector (the loop's own period; a return is a fact of the step record,
+GAMEBOARD, or of the rows the body releases at that Node, DETECTOR,
+section 2). Over one return the action row of the axis a gains
 
-    Delta A = N x (the sum over the Links stepped in the loop of abs(p_axis))        (an integer, GAMEBOARD),
+    Delta A_a = N x (the sum over the Links stepped on the axis a of abs(p_a))        (an integer per axis, GAMEBOARD),
 
-and the phase turns `floor((A + Delta A) / h) - floor(A / h)` steps.
-The loop CLOSES ON ITS OWN PHASE when that turn is a whole number of
-circles for every starting A, which holds exactly when
+and the phase turns `sum over a of (floor((A_a + Delta A_a) / h) -
+floor(A_a / h))` steps. The loop CLOSES ON ITS OWN PHASE when that turn
+is a whole number of circles for every starting state `(A_x, A_y,
+A_z)`, which holds exactly when
 
-    Delta A = j N h,   j whole,   i.e.   the sum over the Links stepped of abs(p_axis) = j h        (the closure, exact, no grain),
+    Delta A_a = 0 mod h on each axis a,   and   (Delta A_x + Delta A_y + Delta A_z) / h = j N,   j whole        (the closure, exact, no grain: three congruences and one sum),
 
-since then `floor((A + j N h) / h) - floor(A / h) = j N` for every A
-(the floor's telescoping is exact at a multiple of h; at any other
-`Delta A` the turn is `floor(Delta A / h)` or one more, and its residue
-mod N is what the rows carry). This is the law's condition: an integer
-congruence on the action row's gain, one primitive (the accumulator
-and its division by h), no family named, read off the body's own
-record. The count of the body's steps between two returns is the
+i.e. the sum over the Links stepped on each axis of `abs(p_a)` is a
+multiple of h, and the sum of the three quotients is `j N`, so that
+the sum over the Links stepped of `abs(p_axis) = j h`; since then
+`floor((A_a + Delta A_a) / h) - floor(A_a / h) = Delta A_a / h` on each
+axis for every `A_a` (the floor's telescoping is exact at a multiple of
+h). The per-axis statement is the exact one: a return whose SUM `Delta
+A_x + Delta A_y + Delta A_z` is a multiple of `N h` while one axis's gain
+is off a multiple of h turns one step more or less depending on the
+start (the per-axis remainders below h give at most two steps of N per
+return either way), so the residue mod N the rows carry is the sum of
+the per-axis fractions, and the deciding reading at r = 12 (section 4)
+is the fraction of the per-axis sums, not of their total. In the limit
+the ladder is unchanged (section 2). This is the law's condition: three
+integer congruences on three accumulators of one primitive (the
+accumulator per axis and its division by h), no family named, read off
+the body's own record. The count of the body's steps between two returns is the
 loop's Link count L (the drive's floors, one per axis per
 self-creation); the closure is not a condition on L but on the
 momentum-weighted L1 length `sum abs(p_axis)` over those L Links.
@@ -411,7 +426,7 @@ Einstein file's table.**
 
 | The formula arrived at | The inputs actually used in its chain | Where the chain starts (this file) | The word |
 | --- | --- | --- | --- |
-| the closure `Delta A = j N h`, i.e. `sum abs(p_axis) = j h` | the action row (BEAM_LAW note 30 (ii); `engine.py:846-856`, `930-935`; record 155), the Euclidean division with the remainder kept, N and h declared (kind 2) | section 1 (a) | follows (an integer congruence of one accumulator) |
+| the closure `Delta A_a = 0 mod h` on each axis with the quotients summing to `j N`, i.e. `sum abs(p_axis) = j h` | the three per-axis action rows (BEAM_LAW note 30 (ii); `measured.py:422`; `engine.py:846-856`, `930-935`; record 155), the Euclidean division with the remainder kept per axis, N and h declared (kind 2) | section 1 (a) | follows (three integer congruences of three accumulators of one primitive) |
 | Bohr's condition, the integral of p . dl = j h | the closure; the limit of small Links with the step following the momentum (7.2's digits) | section 1 (c) | RECOVERED in the limit; Bohr's form on the comparison side only |
 | the row's return `tau n_phi = j d_phi N` | the pair form (`world.py:789-795`), the exact phase (record 156), W5 | section 1 (b) | follows; a clock, not the atom |
 | the circle's momentum `p^2 = kappa m_i / r` | the push (W2; 3.4's shell mean), the drive's pace (Theorem 3 (iii)), the arithmetic (M) at `abs(p) << Q S M` | section 2 (a) | follows in the shell mean; Newton's balance RECOVERED as the limit (Theorem 4) |
@@ -453,18 +468,34 @@ reasons written down).
 The one primitive it would need, named and NOT written into the law: a
 give at the closure, binding-v1's verb (the give of content in flight
 from the bound set, 19.1, the set's mass less by what escaped) with its
-amount read off the body's action row instead of declared once: at a
-click of the body's own row (a row it released, returned to it by a
-declared re-emitter or on a periodic axis; a click, not a hold), the set
-gives as the content of one released row the whole part of the action
-row's excess over the last closure, in units of the family's quantum,
-`w c = h_q x floor((A mod N h) / h)`, with the declared integers h (the
-world's action), `h_q` (the family's quantum), the release pair and the
-re-emitter's declaration, and the body's momentum left to the push. Its
-three tests as stated: generic (one accumulator, one division, one
-declared quantum; no family named), vector (the Euclidean division with
-the remainder kept, then the evaluation into the row's content), local
-(the body's own record; the returning row's click at its own Node). It
+amount read off the body's action rows instead of declared once. The
+action rows alone cannot carry it: `floor((A mod N h) / h)` is `floor(A
+/ h) mod N`, the body's phase step itself, so a give of that amount
+releases the body's phase and not a transition; the excess over the
+last closure, `(j - i) N h`, a whole number of circles, is a difference
+of two closures that `A mod N h` cannot hold. The primitive therefore
+needs a SECOND ACCUMULATOR on the body's record, local: the action at
+the last return, `A_ret` (one row per axis, set to the action rows at
+each return; the return itself a click of the body's own row, a row it
+released, returned to it by a declared re-emitter or on a periodic
+axis; a click, not a hold). At that click the set gives as the content
+of one released row the whole part of the difference over the world's
+action, in units of the family's quantum,
+
+    w c = h_q x floor((sum over a of (A_a - A_ret_a)) / (N h)),   then A_ret_a := A_a on each axis,
+
+with the declared integers h (the world's action), `h_q` (the family's
+quantum), the release pair and the re-emitter's declaration, and the
+body's momentum left to the push and to the released row's recoil. Its
+three tests as stated: generic (two accumulators per axis, one
+division, one declared quantum; no family named), vector (the
+translation of `A_ret`, the Euclidean division with the remainder
+kept, then the evaluation into the row's content), local (the body's
+own record; the returning row's click at its own Node). Under it the
+reach theorem of section 3 (c) applies to its one row as to any: the
+released row's recoil is one impulse, so the loop after the give has a
+semi-major axis of at least half the radius at the give, and the give
+alone does not carry the body to Balmer's or Lyman's loop either. It
 sits outside the law under its own identity (a name for the identity
 alone, `atom-give-v1`) until the owner's word; and even under it the
 LINE needs the second declaration named in record 826's line (4), the
@@ -484,11 +515,22 @@ drive on `main`), with three additions declared in the world file and
 nothing in the engine: a passive detector at every Node (record 721;
 the per-Node array of the moving detector's design, if it lands), the
 electron's table `measure` for one paid family `t` (quantum 1, content
-per unit `c` at the declared turn), and one lamp of that family at the
-electron's Node aimed on -y with the amount 1 and the content `c = 1 319
-161` (Q = 64: the label 84 426 304 against the motion, section 3 (c)) at
-the count of the electron's first +x crossing (about the tick 31 + T /
-4). What the detectors read (DETECTOR, stated before any run; the
+per unit `c` at the declared turn), and one lamp of that family ONE
+NODE OFF the electron's crossing Node on +y, aimed on -y, with the
+amount 1 and the content `c = 1 319 161` (Q = 64: the label 84 426 304
+against the motion, section 3 (c)): a row born at the body's own Node
+is a birth and not an arrival and is not measured there, so the lamp
+sits beside the Node and its row arrives. The click is placed at a
+crossing named by the axis and the momentum, not by a tick: `r12.json`
+starts the electron on the +x axis at (38, 26, 26) with **p** = (0, 288
+249 497, 0), the proton at (26, 26, 26), so its first crossing of the
++x axis after the start is at T (about 1462) and the +y axis at about
+T / 4; the crossing to use is one of the x axis, where **p** lies along
+y and a -y row is against the motion (at the start Node itself, or at
+the +x crossing one period later); the body's dwell at the crossing
+Node is about 19 to 20 of its counts (the atoms pins, the axis gap
+19.39), enough for one declared birth count of the lamp. What the
+detectors read (DETECTOR, stated before any run; the
 numbers the limit's through the design's GAMEBOARD momenta, to be met or
 missed and never moved): before the click the circles per return 4 (the
 increments 1.75 steps per release unwrapped over one return, the sum 256
