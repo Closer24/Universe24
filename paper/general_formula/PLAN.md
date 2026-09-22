@@ -3105,3 +3105,41 @@ passed to the Boss: the engine refuses a momentum on more than one axis
 until form B's directional drive lands (examples/events/covariant/README.md,
 17.6 N2), so the off-axis runs wait on the Architect's build. 30 pages,
 the split 25 / 2 / 3 held.
+
+## The Newton row (2026-09-22, series D3 on main; the Boss's order of 02:24Z)
+
+Newton after a detector landed as series D3 (PR #718, the physics-rule
+reviewer's ADMISSIBLE WITH CORRECTIONS). What the paper carries, and no
+further: the equivalence principle measured after a detector (the held
+mass four times, the same clicks to the Node on 138 of 139 common birth
+ticks and the same escape tick, rung 1 on the detector); the controls'
+pace to the tick; the 1 / r force's scale symmetry consistent, T(24) /
+T(12) = 1.997 against 2.00 +- 0.18, from one recurrence per radius on
+loops that are not similar figures, not closed; G's value not read; the
+circle's period, amplitude and omega^2 outside their pins as registered.
+Four places changed through cut30/corrections.py: the checks table's new
+row, the distance table's Newton line, Section 4's ground paragraph (the
+"run not made" now Coulomb's and Poisson's), the introduction's open
+list. The row cost about 27 lines of body; the body is held at 25 pages
+by trims that carry no claim: the octahedron figure smaller with its
+caption cut to its facts (Theorem 1 states the rest), the second
+departure's clause on a test fixture (not a registered world), the
+positioning paragraph's "own geometries" clause (three references with
+it), the symmetries' parenthesis on the ties, the code paragraph's list
+of readings, one sentence of the ledger's caption. 30 pages, the split
+25 / 2 / 3 held.
+
+Added in the same commit on the Boss's words of 02:53Z: the ledger's
+no-dispersion row names what is put in (the rate in transit constant, the
+flight blind to the phase, P9; whether the six operations force it is
+open, the mathematician's assignment on the owner's word "go for the proof
+of c"); one sentence in the no-dispersion remark that the constancy of c,
+by the postulate, meets GRB 090510's bound on an energy-dependent speed of
+light (Abdo et al. 2009; a computation of NUMBERS.md rows 97 to 99, not a
+run, not a derived result). Seven further trims of duplicated sentences
+and asides held the body at 25 pages: the anisotropy bound said twice in
+Section 3, the delay section's operations list (Table 1's row carries it),
+Theorem 6's parenthetical repeated in the paragraph after it, the
+harmonic's aside in the limit paragraph (and Lambda from the symbol
+table), the read-out's aside, the introduction's "excluding 1 and 3", the
+GRB sentence itself kept to three lines.
