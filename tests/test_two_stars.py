@@ -9,8 +9,12 @@ of the other"), written down first:
     (`s_mx1`, number 4) at x = 130 with -p in `symmetric`, B at rest and A
     at the momentum of 0.4 c in `rest_frame`; the speed of the momentum
     by the drive's rule is 0.2 c within 1e-6 (0.4 c for the mover of
-    `rest_frame`); `expectations.json` declares the generator's format, the
-    two windows and the three worlds;
+    `rest_frame`); since the law's line drive (2026-09-22, record 972) the
+    momenta are the line rule's, 41021779276297 at 0.2 c and 109391411403460
+    at 0.4 c (the per-axis drive of history's 37139059427100 and
+    85543046832089 reproducible by `worlds(AXIS_DRIVE)`); `expectations.json`
+    declares the generator's format, the drive, the two windows and the
+    three worlds;
 (b) the derivation's algebra, no world's numbers: under the law as built a
     reader moving at v_r toward a lamp moving at v_s toward it reads
     1 + z = (1 - v_s / c) / (1 + v_r / c); with v_s = v_r = 0.2 c that is
@@ -22,8 +26,10 @@ of the other"), written down first:
 (c) the expectation pins the first contact of `symmetric_pass` at tick 254
     (the stars 60 Links apart closing at 0.4 c = 0.2327 Links per interval
     to one Link: 59 / 0.2327 = 253.5) and earlier under gravity (`symmetric`
-    237, `rest_frame` 236), and every star's speed at the contact above its
-    initial speed under gravity and equal to it without.
+    240, `rest_frame` 238 under the line drive, whose push factor (1 - v
+    T_D / Q)^2 is smaller than the per-axis (1 - v)^2; 237 and 236 under the
+    per-axis drive of history), and every star's speed at the contact above
+    its initial speed under gravity and equal to it without.
 """
 
 from __future__ import annotations
@@ -68,14 +74,30 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             p = entry.momentum[0]
             assert (p > 0) == (v > 0) and (p == 0) == (v == 0)
             assert abs(generator.speed(abs(p), generator.CONTENT) / generator.C - abs(v)) < 1e-6
+        # The line rule's momenta, and the drive of history's reproducible.
+        assert sorted(abs(entry.momentum[0]) for entry in stars) == sorted(
+            abs(v) for v in generator.expectations()["momenta"][name].values()
+        )
         simulation = NatureBeamSimulation(world)
         for tick in range(1, 11):
             simulation.step()
             assert simulation.books()["balanced"], (name, tick)
+    assert generator.momentum(0.2 * generator.C, generator.CONTENT) == 41021779276297
+    assert generator.momentum(0.4 * generator.C, generator.CONTENT) == 109391411403460
+    assert (
+        generator.momentum(0.2 * generator.C, generator.CONTENT, generator.AXIS_DRIVE) == 37139059427100
+    )
+    assert (
+        generator.momentum(0.4 * generator.C, generator.CONTENT, generator.AXIS_DRIVE) == 85543046832089
+    )
+    history = generator.worlds(generator.AXIS_DRIVE)["symmetric"]["measured"][2]["momentum"]
+    assert history == [37139059427100, 0, 0]
     expectations = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expectations["format"] == generator.EXPECTATIONS_FORMAT
+    assert expectations["drive"] == generator.LINE_DRIVE
     assert expectations["windows"] == [[50, 150], [150, 250]]
     assert set(expectations["worlds"]) == set(generated)
+    assert {k: v for k, v in expectations.items() if k != "runs"} == generator.expectations()
 
 
 def test_the_readings_algebra_of_the_two_frames():
@@ -97,8 +119,14 @@ def test_the_expectation_pins_the_contact_and_the_speeds():
     generator = load_generator()
     expected = generator.expectations()["worlds"]
     assert expected["symmetric_pass"]["contact_tick"] == 254
-    assert expected["symmetric"]["contact_tick"] == 237
-    assert expected["rest_frame"]["contact_tick"] == 236
+    assert expected["symmetric"]["contact_tick"] == 240
+    assert expected["rest_frame"]["contact_tick"] == 238
+    history = generator.expectations(generator.AXIS_DRIVE)["worlds"]
+    assert history["symmetric_pass"]["contact_tick"] == 254
+    assert history["symmetric"]["contact_tick"] == 237
+    assert history["rest_frame"]["contact_tick"] == 236
+    assert abs(history["symmetric"]["windows"]["50-150"]["A_reads_B"] - 0.6497) < 5e-5
+    assert abs(expected["symmetric"]["windows"]["50-150"]["A_reads_B"] - 0.6528) < 5e-5
     at_contact = expected["symmetric"]["speeds_at_contact"]
     assert at_contact["v_a_over_c"] > 0.2 and at_contact["v_b_over_c"] < -0.2
     free = expected["symmetric_pass"]["speeds_at_contact"]

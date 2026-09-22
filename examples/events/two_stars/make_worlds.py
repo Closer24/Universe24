@@ -42,7 +42,16 @@ question is the motion's reading alone):
 
 v = 0.2 c on the lattice (c = 32 / 55 Links per interval on a heading), so
 the closing speed is 0.4 c in every world; the momentum from the speed by
-the drive's rule v = p / (Q S M + p), the content the light plus the mass.
+the drive's rule, the content the light plus the mass. Since 2026-09-22 the
+law's drive of a body is the line drive (the model owner's record 972,
+docs/designs/drive_b/DEFAULT.md; BEAM_LAW note 17 as amended): v = p Q /
+(Q^2 S M + p T_D) with T_D = 110, so p = Q S M v / (1 - v T_D / Q), and a
+row of amount a moves a star's speed by (1 - v T_D / Q)^2 a / S toward the
+emitter. The per-axis drive of history (v = p / (Q S M + p), p = Q S M v /
+(1 - v), the push (1 - v)^2 a / S; the first run of 2026-09-21 was read
+under it) is kept as `AXIS_DRIVE`: `momentum(v, content, AXIS_DRIVE)` and
+`expectations(AXIS_DRIVE)` reproduce its momenta and pins. `expectations.json`
+names the drive.
 
     python examples/events/two_stars/make_worlds.py            # the worlds and expectations.json
 """
@@ -89,6 +98,13 @@ LAB_RIGHT_X = 195
 SPEED_OVER_C = 0.2
 WINDOWS = ((50, 150), (150, 250))
 EXPECTATIONS_FORMAT = "two-stars-expectations-v1"
+# The drive of a body (docs/designs/drive_b/DEFAULT.md): the law's line
+# drive since 2026-09-22, the per-axis drive of history for the first run.
+LINE_DRIVE = "line"
+AXIS_DRIVE = "axis"
+DRIVE = LINE_DRIVE
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
+PACE_TERM = T_D_AXIS / Q  # 110 / 64, the line drive's second wall term per unit of v
 Json = dict[str, object]
 
 PLUS_X = list(PORT_HEADINGS[0])
@@ -107,15 +123,38 @@ C = beam_speed()
 CONTENT = MASS + LIGHT
 
 
-def momentum(v: float, content: int) -> int:
+def momentum(v: float, content: int, drive: str = DRIVE) -> int:
     """The momentum p (label units) that gives the speed v (Links per
-    interval) to a free measured event of content `content`: v = p / (Q S
-    M + p)."""
-    return round(Q * WIDTH * content * v / (1 - v))
+    interval) to a free measured event of content `content` under the named
+    drive: the line drive's v = p Q / (Q^2 S M + p T_D), so p = Q S M v / (1
+    - v T_D / Q); the per-axis drive of history's v = p / (Q S M + p), so p
+    = Q S M v / (1 - v)."""
+    if drive == LINE_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v * PACE_TERM))
+    if drive == AXIS_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v))
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+def speed(p: int, content: int, drive: str = DRIVE) -> float:
+    """The speed of the momentum p under the named drive (Links per interval)."""
+    if drive == LINE_DRIVE:
+        return p * Q / (Q * Q * WIDTH * content + p * T_D_AXIS)
+    if drive == AXIS_DRIVE:
+        return p / (Q * WIDTH * content + p)
+    raise ValueError(f"unknown drive {drive!r}")
+
+
+def push_factor(v: float, drive: str = DRIVE) -> float:
+    """How far a row of amount 1 moves a star's speed (Links per interval)
+    toward the emitter, times S: dv / dp at the speed v times the push M a
+    Q, (1 - v T_D / Q)^2 under the line drive, (1 - v)^2 under the per-axis
+    drive of history."""
+    if drive == LINE_DRIVE:
+        return (1 - abs(v) * PACE_TERM) ** 2
+    if drive == AXIS_DRIVE:
+        return (1 - abs(v)) ** 2
+    raise ValueError(f"unknown drive {drive!r}")
 
 
 # The three worlds: the two stars' speeds on the lattice as fractions of c
@@ -127,9 +166,9 @@ WORLDS: dict[str, tuple[float, float, str]] = {
 }
 
 
-def star(name: str, x: int, v_over_c: float, mass_rule: str, other: str) -> Json:
+def star(name: str, x: int, v_over_c: float, mass_rule: str, other: str, drive: str = DRIVE) -> Json:
     v = v_over_c * C
-    p = momentum(abs(v), CONTENT) * (1 if v > 0 else -1 if v < 0 else 0)
+    p = momentum(abs(v), CONTENT, drive) * (1 if v > 0 else -1 if v < 0 else 0)
     table: Json = {other: {"rule": "measure", "reads": "age"}}
     # A world declares only what differs from the generated table: `read`
     # is a free family's default, so the mass entry is written for `pass`.
@@ -158,7 +197,7 @@ def lab(x: int) -> Json:
     }
 
 
-def world(name: str) -> Json:
+def world(name: str, drive: str = DRIVE) -> Json:
     v_a, v_b, mass_rule = WORLDS[name]
     return {
         "law": LAW_VALUE,
@@ -180,14 +219,14 @@ def world(name: str) -> Json:
         "measured": [
             lab(LAB_LEFT_X),
             lab(LAB_RIGHT_X),
-            star("s_px1", STAR_A_X, v_a, mass_rule, "s_mx1"),
-            star("s_mx1", STAR_B_X, v_b, mass_rule, "s_px1"),
+            star("s_px1", STAR_A_X, v_a, mass_rule, "s_mx1", drive),
+            star("s_mx1", STAR_B_X, v_b, mass_rule, "s_px1", drive),
         ],
     }
 
 
-def worlds() -> dict[str, Json]:
-    return {name: world(name) for name in WORLDS}
+def worlds(drive: str = DRIVE) -> dict[str, Json]:
+    return {name: world(name, drive) for name in WORLDS}
 
 
 # -- The expectation before the runs ------------------------------------------
@@ -214,12 +253,12 @@ def relativistic_sum(a: float, b: float) -> float:
     return (a + b) / (1 + a * b)
 
 
-def derivation(name: str) -> Json:
+def derivation(name: str, drive: str = DRIVE) -> Json:
     """The continuum derivation of the approach: the two stars' speeds under
     the gravity of the line (each reads the other's F = MASS / 2^16 units per
     self-creation, arriving at the rate (1 + v_r / c) / (1 - v_s / c) of the
-    emitter's rate, each row of amount a moving the reader's speed by (1 -
-    |v|)^2 a / S toward the emitter, BEAM_LAW note 31), the first contact
+    emitter's rate, each row of amount a moving the reader's speed by
+    `push_factor(v, drive)` x a / S toward the emitter, BEAM_LAW note 31), the first contact
     (the stars one Link apart), and per window the mutual 1 + z each star
     reads of the other, the lab detectors' 1 + z of the receding stars, and
     nature's value at the same closing speed."""
@@ -236,8 +275,8 @@ def derivation(name: str) -> Json:
             # B's rows reach A moving -x at c; A moves +x at v_a: the rate.
             rate_a = F * (1 + v_a / C) / (1 - (-v_b) / C) if gap > 1 else 0.0
             rate_b = F * (1 + (-v_b) / C) / (1 - v_a / C) if gap > 1 else 0.0
-            v_a += rate_a * (1 - abs(v_a)) ** 2 / WIDTH
-            v_b -= rate_b * (1 - abs(v_b)) ** 2 / WIDTH
+            v_a += rate_a * push_factor(v_a, drive) / WIDTH
+            v_b -= rate_b * push_factor(v_b, drive) / WIDTH
             x_a += v_a
             x_b += v_b
             if x_b - x_a <= 1.0:
@@ -245,12 +284,12 @@ def derivation(name: str) -> Json:
                 # body's x component to the occupant (BEAM_LAW note 31 (ix));
                 # the lower number (A) steps first: A's component to B.
                 contact = t
-                p_a = momentum(abs(v_a), CONTENT) * (1 if v_a > 0 else -1)
-                p_b = momentum(abs(v_b), CONTENT) * (1 if v_b > 0 else -1 if v_b < 0 else 0)
+                p_a = momentum(abs(v_a), CONTENT, drive) * (1 if v_a > 0 else -1)
+                p_b = momentum(abs(v_b), CONTENT, drive) * (1 if v_b > 0 else -1 if v_b < 0 else 0)
                 p_b += p_a
                 p_a = 0
                 v_a = 0.0
-                v_b = speed(abs(p_b), CONTENT) * (1 if p_b > 0 else -1 if p_b < 0 else 0)
+                v_b = speed(abs(p_b), CONTENT, drive) * (1 if p_b > 0 else -1 if p_b < 0 else 0)
                 x_b = x_a + 1.0
         else:
             # After the contact the pair is at one Link: every further step
@@ -298,14 +337,24 @@ def derivation(name: str) -> Json:
     }
 
 
-def expectations() -> Json:
+def expectations(drive: str = DRIVE) -> Json:
     return {
         "format": EXPECTATIONS_FORMAT,
+        "drive": drive,
         "c": C,
         "ticks": TICKS,
         "windows": [list(w) for w in WINDOWS],
         "grain_in_z": 0.003,
-        "worlds": {name: derivation(name) for name in WORLDS},
+        "momenta": {
+            name: {
+                "s_px1": momentum(abs(v_a * C), CONTENT, drive)
+                * (1 if v_a > 0 else -1 if v_a < 0 else 0),
+                "s_mx1": momentum(abs(v_b * C), CONTENT, drive)
+                * (1 if v_b > 0 else -1 if v_b < 0 else 0),
+            }
+            for name, (v_a, v_b, _) in WORLDS.items()
+        },
+        "worlds": {name: derivation(name, drive) for name in WORLDS},
     }
 
 

@@ -8,6 +8,17 @@ this folder holds the three worlds it declares, written by `make_worlds.py`,
 and `expectations.json`, the generator's derivation. The first run and its
 readings are the design's section 7 (2026-09-21); nothing is registered.
 
+Since 2026-09-22 the law's drive of a body is the line drive (the model
+owner, record 972; [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)):
+the generator's momenta are the line rule's (p = Q S M v / (1 - v T_D / Q):
+41 021 779 276 297 at 0.2 c, 109 391 411 403 460 at 0.4 c; the per-axis
+drive of history's 37 139 059 427 100 and 85 543 046 832 089, the first
+run's, reproducible by `worlds(AXIS_DRIVE)`), its derivation moves a star
+by (1 - v T_D / Q)^2 a / S per row (the per-axis (1 - v)^2 a / S), and
+`expectations.json` names the drive. The first run of 2026-09-21 (the
+design's section 7) stands as read under the per-axis drive; the re-read
+under the law is the last section of this page.
+
 ## The worlds
 
 Two of the register's stars (series G2's kind: one measured event of a paid
@@ -33,11 +44,14 @@ star at 1 + v_s / c. In the symmetric frame both stars read 2 / 3 exactly
 (gravity off), nature's value too; in the rest frame the mover reads 0.697
 and the star at rest reads 0.581 where nature reads 0.637 for both; the
 labs read 1.200 and 1.409 where nature reads 1.225 and 1.543. Under gravity
-the approach speeds up by 15 %, the mutual 1 + z falls from 0.650 to 0.633
-between the windows, and the first contact comes at tick 237 (236 in the
-rest frame) against 254 in the control; at the contact the stepping star
-hands its momentum to the other. The brackets, the refutation lines and
-what the run cannot decide are the design's sections 3 to 5.
+the approach speeds up (by 15 % under the per-axis drive of history, 12 %
+under the line drive), the mutual 1 + z falls between the windows (from
+0.650 to 0.633 per axis; from 0.653 to 0.639 under the line drive, whose
+push factor is smaller), and the first contact comes at tick 237 (236 in
+the rest frame) per axis, 240 (238) under the line drive, against 254 in
+the control under either; at the contact the stepping star hands its
+momentum to the other. The brackets, the refutation lines and what the
+run cannot decide are the design's sections 3 to 5.
 
 ## Run and read
 
