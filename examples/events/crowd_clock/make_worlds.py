@@ -352,7 +352,40 @@ def expectations() -> Json:
             for name, flux in MOVING.items()
         },
     }
+    out["gameboard_diagnostics"] = gameboard_diagnostics(
+        [
+            "worlds.<name>.k",
+            "worlds.<name>.k_bracket",
+            "worlds.<name>.clock_rate",
+            "clock_age_v1.age_moment_over_presence",
+            "clock_age_v1.worlds.<name>.k",
+            "clock_age_v1.moving_worlds.<name>.k",
+            "clock_age_v1.moving_worlds.<name>.k_bracket",
+            "clock_age_v1.moving_worlds.<name>.k_presence_word",
+        ]
+    )
     return out
+
+
+def gameboard_diagnostics(keys: list[str]) -> Json:
+    """The register's k and every number derived from it alone, labelled: a
+    replay of the store (GAMEBOARD), a diagnostic since the model owner's
+    rule of 2026-09-22 (records 562 and 564; the audit of record 567, F1),
+    never pinned, never compared with nature, out of the PASS/FAIL count;
+    the pin is 1 + z at the detector; the detector reading behind k, the
+    reader's own `counted` on its record, not yet read."""
+    return {
+        "kind": "GAMEBOARD",
+        "keys": keys,
+        "statement": (
+            "the crowd's moment at the reader's Node (the count its clock owes, k, and every number "
+            "derived from it alone) is a replay of the store: a diagnostic, never pinned, never "
+            "compared with nature, not in the PASS/FAIL count (the model owner, 2026-09-22, records "
+            "562 and 564; the audit, record 567, F1); the pin of this series is 1 + z at the detector "
+            "(DETECTOR); the detector reading behind k, the reader's own `counted` on its record, "
+            "not yet read"
+        ),
+    }
 
 
 def main() -> None:

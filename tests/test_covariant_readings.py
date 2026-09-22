@@ -612,3 +612,27 @@ def test_the_registered_coasting_run_replays_bit_exact_at_its_cap(tmp_path):
     # The fixed detector carries no readings; every star does.
     assert "covariant" not in record["measured"][0]
     assert all("covariant" in state for state in record["measured"][1:])
+
+
+def test_a_gameboard_number_is_a_diagnostic_out_of_the_verdicts():
+    """E' at load, the pace over the late window and the invariant are the
+    host's view (records 562 and 564; the audit of record 567, F5 and F7):
+    `tools/covariant_readings.py` prints them beside their expectation as
+    diagnostics, labelled GAMEBOARD, out of the verdicts; the `become` line
+    and the click are DETECTOR (F6)."""
+    path = WORLDS.parents[2] / "tools" / "covariant_readings.py"
+    spec = importlib.util.spec_from_file_location("covariant_readings_tool", path)
+    assert spec is not None and spec.loader is not None
+    tool = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = tool
+    spec.loader.exec_module(tool)
+    lines: list[str] = []
+    diagnostics: dict[str, object] = {}
+    tool.diagnostic(lines, diagnostics, "energy_at_load", False, "E' at load 471", "the click", 471, 470)
+    assert diagnostics == {
+        "energy_at_load": {"kind": tool.GAMEBOARD, "found": 471, "expected": 470, "agrees": False}
+    }
+    assert lines == [
+        f"  [{tool.GAMEBOARD}] (a diagnostic, not counted) E' at load 471: differs; "
+        "the detector reading behind it, the click, not yet read"
+    ]

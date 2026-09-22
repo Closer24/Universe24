@@ -9,6 +9,13 @@ the host's view of the mechanism). A pin outside is reported with its
 numbers and never moved.
 
     PYTHONPATH=src python tools/quarks_readings.py artifacts/quarks
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -231,7 +238,7 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     if holds:
         out.append(
             (
-                f"[{GAMEBOARD}] the set holds: no step in {reading.ticks} intervals",
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records) the set holds: no step in {reading.ticks} intervals",
                 steps == 0,
                 f"steps {steps}, the first at {first}, the largest separation {reading.largest_spread:.2f}, "
                 f"the final {reading.final_spread:.2f}",
@@ -240,7 +247,7 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     else:
         out.append(
             (
-                f"[{GAMEBOARD}] the set does not hold: a step, the bodies beyond three Links",
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records) the set does not hold: a step, the bodies beyond three Links",
                 steps > 0 and reading.largest_spread > 3,
                 f"steps {steps}, the first at {first}, the largest separation {reading.largest_spread:.2f}, "
                 f"the final {reading.final_spread:.2f}; the toy's first step {fate.get('toy_first_step', fate.get('engine_first_step'))}",
@@ -254,6 +261,13 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
         )
     )
     return out
+
+
+def deciding(what: str) -> bool:
+    """A pin counts inside or outside when it reads the bodies' own records
+    (DETECTOR); a GameBoard line (the steps, the separations) is a
+    diagnostic, printed and not counted (record 567, F13)."""
+    return not what.startswith(f"[{GAMEBOARD}]")
 
 
 def report(out_dir: Path) -> int:
@@ -278,9 +292,15 @@ def report(out_dir: Path) -> int:
                 f"final {body.final}"
             )
         for what, ok, numbers in expectations(reading, pinned):
-            verdict = "inside" if ok else "OUTSIDE"
-            inside += ok
-            outside += not ok
+            if deciding(what):
+                verdict = "inside" if ok else "OUTSIDE"
+                inside += ok
+                outside += not ok
+            else:
+                verdict = (
+                    f"{'agrees' if ok else 'differs'}; the detector reading behind it, the face clicks "
+                    "of a body that left and the read mass, not yet read"
+                )
             print(f"   {what}: {numbers} -> {verdict}")
     print(f"{failed} record checks failed, {inside} readings inside, {outside} outside, nothing moved")
     return 1 if failed else 0

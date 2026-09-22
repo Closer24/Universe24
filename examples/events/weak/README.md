@@ -156,9 +156,9 @@ when the neutron fires at that tick or up to three intervals before it
 
 | World | What | Expected |
 | --- | --- | --- |
-| `j1_lattice` | the neutrons alone | the trigger ticks 522 .. 524 (the warm counts 22068, 23907 and 25746: 12, 13 and 14 rows of 1839; GAMEBOARD); the shell's 64 beta clicks a step, the 10th-to-90th-percentile width of the click ticks over their median below 0.1 (nature's memoryless decay: ln 9 / ln 2 = 3.17); every click the content 3 (a line); the count 64 (DETECTOR) |
-| `j1_source` | the source's fan on the lattice | the trigger ticks 524 .. 529 (the warm counts 25746 .. 36195, the neutrons on the fan's lines counting more and firing later; GAMEBOARD); the step, the line and the count 64 (DETECTOR) |
-| `j3_deuteron` | the bound neutron | the transformation at 574 (the warm count 128590 at one Link from the proton; later than the free neutron's 512, not never; GAMEBOARD); the pair then two protons at one Link, holding (no step; GAMEBOARD); one beta click at the shell with the content 3 (DETECTOR) |
+| `j1_lattice` | the neutrons alone | the trigger ticks 522 .. 524 (the warm counts 22068, 23907 and 25746: 12, 13 and 14 rows of 1839; the expectation GAMEBOARD, the reading the neutron's own `become` line, DETECTOR: record 567, F8); the shell's 64 beta clicks a step, the 10th-to-90th-percentile width of the click ticks over their median below 0.1 (nature's memoryless decay: ln 9 / ln 2 = 3.17); every click the content 3 (a line); the count 64 (DETECTOR) |
+| `j1_source` | the source's fan on the lattice | the trigger ticks 524 .. 529 (the warm counts 25746 .. 36195, the neutrons on the fan's lines counting more and firing later; the expectation GAMEBOARD, the reading the `become` lines, DETECTOR); the step, the line and the count 64 (DETECTOR) |
+| `j3_deuteron` | the bound neutron | the transformation at 574 (the warm count 128590 at one Link from the proton; later than the free neutron's 512, not never; the expectation GAMEBOARD, the reading the neutron's own `become` line, DETECTOR); the pair then two protons at one Link, holding (no step; GAMEBOARD, a diagnostic, printed and not counted since records 562 and 564, F9); one beta click at the shell with the content 3 (DETECTOR) |
 | `j3_deuteron_crowd` | the gate | no transformation in 700 intervals, the count above the gate 65536 at every pulse of the key (GAMEBOARD); no beta click (DETECTOR) |
 | `j3_neutron_free` | the neutron alone | the transformation at 512 exactly, its clock counting nothing (GAMEBOARD); one beta click with the content 3 (DETECTOR) |
 

@@ -20,10 +20,15 @@ made once, never a test; every expectation below was written before the
 run; a reading outside its expectation is reported with its numbers, never
 moved. Every number is one of two kinds ([the register](../../../docs/EXPERIMENTS.md),
 "Two kinds of readings"): a DETECTOR reading (the products' clicks on the
-+x face; the centre's pointer) or a GAMEBOARD reading (the `become` line's
-tick, the `energy` lines, the intervals owed to proper time: the host's
-view, a diagnostic). The readings tool is `tools/covariant_readings.py`,
-every line labelled by its kind.
++x face; the centre's pointer; the body's `become` line, its tick and
+Node, and the `energy` lines' ticks: the event's own record, ENGINE.md's
+table; the audit of record 567, F6) or a GAMEBOARD reading (E' at load
+and E'_0, the pace over the late window from the step lines, the
+invariant, the intervals owed to proper time: the host's view, a
+diagnostic, printed with its expectation and never a verdict since the
+model owner's rule of 2026-09-22, records 562 and 564; F5 and F7). The
+readings tool is `tools/covariant_readings.py`, every line labelled by
+its kind.
 
 ## What was built (the engine, under the world key alone)
 

@@ -38,6 +38,13 @@ the first hundred intervals; the line p n n p holds. The record checks
 are registered inside or outside their expectation and never moved.
 
     PYTHONPATH=src python tools/nucleus_readings.py artifacts/nucleus
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -341,11 +348,24 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         print(f"[{GAMEBOARD}]   the largest separation of two bodies at the end {largest:.2f}")
     criteria += expectations(reading)
     for label, ok in criteria:
-        print(
-            f"[{DETECTOR if 'push' in label or 'read' in label or 'hand' in label or 'kick' in label else GAMEBOARD}]   {label}: {'inside' if ok else 'outside'}"
-        )
+        if deciding(label):
+            print(f"[{DETECTOR}]   {label}: {'inside' if ok else 'outside'}")
+        else:
+            print(
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records)   {label}: "
+                f"{'agrees' if ok else 'differs'}; the detector reading behind it, the faces' and the "
+                "border's clicks of the bodies, not yet read"
+            )
     print()
-    return criteria
+    return [c for c in criteria if deciding(c[0])]
+
+
+def deciding(label: str) -> bool:
+    """A criterion counts inside or outside when it reads a body's own
+    records (its pushes, reads, hand-overs, kicks and clicks, the border's
+    clicks); a step, a position or a separation is a diagnostic (record
+    567, F12)."""
+    return any(word in label for word in ("push", "read", "hand", "kick", "click", "leave"))
 
 
 DEUTERON_PUSH = 310_967_280_640
@@ -519,8 +539,8 @@ def main(argv: list[str] | None = None) -> int:
     print()
     print(
         f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the steps, the "
-        f"separations; exists for us, not in reality) or [{DETECTOR}] (a measured event's own records: "
-        "the only kind reality has)"
+        f"separations; exists for us, not in reality; a criterion of this kind is a diagnostic, printed "
+        f"and not counted) or [{DETECTOR}] (a measured event's own records: the only kind reality has)"
     )
     print()
     criteria: list[tuple[str, bool]] = []
@@ -528,7 +548,8 @@ def main(argv: list[str] | None = None) -> int:
         criteria += print_world(r)
     inside = sum(1 for _, ok in criteria if ok)
     print(
-        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside"
+        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside "
+        "(the GameBoard diagnostics printed above are not counted)"
     )
     return 1 if failed else 0
 

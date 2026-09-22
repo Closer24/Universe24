@@ -49,8 +49,11 @@ Two fast cases pin the tool to the engine's record:
     1839, its charge (0, 1), its momentum (192, 0, 0); the border
     `lifetime` 0 for `w`; against the pinned integers (at 3, the click
     tick 4, the label 192, the content 1839, the charge [0, 1]) the five
-    criteria inside, the kinds GAMEBOARD, DETECTOR, DETECTOR, DETECTOR,
-    GAMEBOARD; with the click tick pinned at 5 the second outside.
+    criteria inside, the kinds DETECTOR (the `become` line, the event's own
+    record: record 567, F8), DETECTOR, DETECTOR, DETECTOR, GAMEBOARD; with
+    the click tick pinned at 5 the second outside. In (b) the criterion
+    "the pair holds" of `j3_deuteron` is the kind DIAGNOSTIC (F9): printed,
+    out of the deciding set.
 (d) the register of series J2 (`examples/events/weak/expectations.json`)
     derived from the five shipped worlds and the engine's flight table and
     compared, entry by entry (the register's `derivations`; a formula gives,
@@ -226,12 +229,22 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
         ranged = {"become": {"j1_lattice": {"ticks": {"1": pair}, "slack": 0}}}
         assert TOOL.expectations(reading, ranged)[0][1] is inside, pair
     assert [ok for _, ok, _ in criteria] == [True, True, True, True]
+    # The trigger tick and the count at the trigger are the neutron's own
+    # `become` line: DETECTOR (the audit of record 567, F8).
     assert [kind for _, _, kind in criteria] == [
-        TOOL.GAMEBOARD,
+        TOOL.DETECTOR,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
     ]
+    # "The pair holds" (the step records) is a GameBoard diagnostic (F9):
+    # printed with its verdict, out of the deciding set, the number unchanged.
+    reading.name = "j3_deuteron"
+    held = TOOL.expectations(reading, {"become": {"j3_deuteron": {"ticks": {"1": 3}, "slack": 0}}})
+    pair = [c for c in held if c[0].startswith("the pair holds")]
+    assert len(pair) == 1 and pair[0][1] is True and pair[0][2] == TOOL.DIAGNOSTIC
+    assert pair[0] not in TOOL.deciding(held) and len(TOOL.deciding(held)) == len(held) - 1
+    reading.name = "j1_lattice"
     assert (
         TOOL.expectations(reading, {"become": {"j1_lattice": {"never": True, "gate": 1}}})[0][1] is False
     )
@@ -285,7 +298,7 @@ def test_read_run_reads_the_w_world(tmp_path):
     criteria = TOOL.expectations(reading, pinned)
     assert [ok for _, ok, _ in criteria] == [True] * 5
     assert [kind for _, _, kind in criteria] == [
-        TOOL.GAMEBOARD,
+        TOOL.DETECTOR,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
         TOOL.DETECTOR,

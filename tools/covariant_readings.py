@@ -8,12 +8,17 @@ the runs `tools/run_series.py` wrote (`<root>/<world>/run/`), told apart by
 the model of their record (`beam-covariant-j4_muon_<name>-v1` and
 `rays-hubble-stars-covariant-none-space-v1`). Every line is one of two
 kinds ([the register](../docs/EXPERIMENTS.md), "Two kinds of readings"):
-DETECTOR, a detector's record (the products' clicks on the +x face of the
-J4 bar; the centre's pointer of the coasting world, whose z is read by
-`tools/hubble_stars_readings.py`'s own rule), or GAMEBOARD, the host's
-view (the `become` line's tick, the `energy` lines: E', E'_0, W and the
-invariant E'^2 <= W < (E' + 1)^2 at every interval, the intervals owed to
-proper time, the comparisons). The record checks (completed, the books
+DETECTOR, a detector's record or a measured event's own record (the
+products' clicks on the +x face of the J4 bar; the centre's pointer of the
+coasting world, whose z is read by `tools/hubble_stars_readings.py`'s own
+rule; the body's `become` line, its tick and Node; the `energy` lines'
+ticks), or GAMEBOARD, the host's view (E' at load and E'_0, the pace over
+the late window from the step lines, the invariant E'^2 <= W < (E' + 1)^2
+at every interval, the intervals owed to proper time, the comparisons).
+Since the audit of record 567 (the model owner's rule, records 562 and
+564) a GAMEBOARD number is a diagnostic: printed with its expectation,
+never a verdict, never counted inside or outside; each names the detector
+reading behind it, not yet read. The record checks (completed, the books
 balanced at every tick, the invariant on every line) fail the tool; a
 reading outside its pin is printed with its numbers and never moved.
 With `--register` the run blocks (the source sha256, the digests of the
@@ -185,6 +190,26 @@ def resolved_view(folder: Path) -> Path:
     return view
 
 
+def diagnostic(
+    lines: list[str],
+    diagnostics: dict[str, object],
+    key: str,
+    ok: bool,
+    text: str,
+    behind: str,
+    found: object,
+    expected: object,
+) -> None:
+    """A GAMEBOARD number beside its expectation: a diagnostic line, out of
+    the verdicts (records 562 and 564; the audit of record 567), recorded
+    under `diagnostics` with its kind."""
+    diagnostics[key] = {"kind": GAMEBOARD, "found": found, "expected": expected, "agrees": ok}
+    lines.append(
+        f"  [{GAMEBOARD}] (a diagnostic, not counted) {text}: {'agrees' if ok else 'differs'}; "
+        f"the detector reading behind it, {behind}, not yet read"
+    )
+
+
 def fmt(value: float) -> str:
     return f"{value:.4f}"
 
@@ -202,14 +227,22 @@ def muon_lines(
     first = reading.first_energy.get(1, {})
     registered["energy_at_load"] = int(first.get("energy", -1))
     registered["rest_energy"] = int(first.get("rest", -1))
+    diagnostics: dict[str, object] = {}
+    registered["diagnostics"] = diagnostics
     ok = (
         registered["energy_at_load"] == expected["energy_at_load"]
         and registered["rest_energy"] == expected["rest_energy"]
     )
-    verdicts.append(ok)
-    lines.append(
-        f"  [{GAMEBOARD}] E' at load {registered['energy_at_load']} (E'_0 {registered['rest_energy']}): "
-        f"expected {expected['energy_at_load']} ({expected['rest_energy']}): {'inside' if ok else 'OUTSIDE'}"
+    diagnostic(
+        lines,
+        diagnostics,
+        "energy_at_load",
+        ok,
+        f"E' at load {registered['energy_at_load']} (E'_0 {registered['rest_energy']}): "
+        f"expected {expected['energy_at_load']} ({expected['rest_energy']})",
+        "the products' clicks and the centre's pointer under the identity (series S)",
+        [registered["energy_at_load"], registered["rest_energy"]],
+        [expected["energy_at_load"], expected["rest_energy"]],
     )
     become_tick = None if reading.become is None else int(reading.become["tick"])
     become_node = None if reading.become is None else list(reading.become["node"])  # type: ignore[arg-type]
@@ -220,7 +253,7 @@ def muon_lines(
     derived_ok = become_tick == int(decay["derived_tick"]) and become_node == list(decay["derived_node"])
     verdicts += [design_ok, derived_ok]
     lines.append(
-        f"  [{GAMEBOARD}] the `become` line (the 64th self-creation) at tick {become_tick} at {become_node}: "
+        f"  [{DETECTOR}] the `become` line (the 64th self-creation, the body's own record) at tick {become_tick} at {become_node}: "
         f"the design's {decay['design']} +- {decay['tolerance']}: {'inside' if design_ok else 'OUTSIDE'}"
         + (
             ""
@@ -234,7 +267,7 @@ def muon_lines(
     ok = sixty_fourth == become_tick
     verdicts.append(ok)
     lines.append(
-        f"  [{GAMEBOARD}] the 64th `creating` energy line at tick {sixty_fourth}, the `become` line's tick: "
+        f"  [{DETECTOR}] the 64th `creating` energy line at tick {sixty_fourth}, the `become` line's tick: "
         f"{'inside' if ok else 'OUTSIDE'}"
     )
     beta = [c for c in reading.clicks if c["family"] == "beta" and c["detector"] == "face:+x"]
@@ -261,14 +294,20 @@ def muon_lines(
             f"named as derived)"
         )
     ok = reading.invariant_failures == 0 and reading.energy_lines >= reading.ticks
-    verdicts.append(ok)
     registered["energy_lines"] = reading.energy_lines
     registered["most_comparisons"] = reading.most_comparisons
     registered["waited"] = reading.waited
-    lines.append(
-        f"  [{GAMEBOARD}] the invariant E'^2 <= W < (E' + 1)^2 on {reading.energy_lines} energy lines: "
-        f"{reading.invariant_failures} failures: {'inside' if ok else 'OUTSIDE'}; the most comparisons in one "
-        f"frame {reading.most_comparisons}; intervals owed to proper time {reading.waited}"
+    diagnostic(
+        lines,
+        diagnostics,
+        "invariant",
+        ok,
+        f"the invariant E'^2 <= W < (E' + 1)^2 on {reading.energy_lines} energy lines: "
+        f"{reading.invariant_failures} failures; the most comparisons in one frame "
+        f"{reading.most_comparisons}; intervals owed to proper time {reading.waited}",
+        "the product's click tick against the decay's derived tick (above)",
+        reading.invariant_failures,
+        0,
     )
     return lines, verdicts, registered
 
@@ -306,31 +345,51 @@ def coasting_lines(
         energy_at_load == expected["energy_at_load_at_the_grain"]
         and rest == expected["rest_energy_at_the_grain"]
     )
-    verdicts.append(ok)
-    lines.append(
-        f"  [{GAMEBOARD}] {expected['star']}'s E' / g at load {energy_at_load} (E'_0 / g {rest}, gamma "
+    diagnostics: dict[str, object] = {}
+    registered["diagnostics"] = diagnostics
+    diagnostic(
+        lines,
+        diagnostics,
+        "energy_at_load_at_the_grain",
+        ok,
+        f"{expected['star']}'s E' / g at load {energy_at_load} (E'_0 / g {rest}, gamma "
         f"{energy_at_load / max(rest, 1):.5f}): expected {expected['energy_at_load_at_the_grain']} "
-        f"({expected['rest_energy_at_the_grain']}, gamma {float(expected['gamma']):.5f}): {'inside' if ok else 'OUTSIDE'}"
+        f"({expected['rest_energy_at_the_grain']}, gamma {float(expected['gamma']):.5f})",
+        "the star's 1 + z from the centre's pointer (above, DETECTOR)",
+        [energy_at_load, rest],
+        [expected["energy_at_load_at_the_grain"], expected["rest_energy_at_the_grain"]],
     )
     steps = [t for t in star.steps if window[0] <= t < window[1]]
     pace = len(steps) / (window[1] - window[0])
     registered["pace_in_the_late_window"] = pace
     ok = abs(pace - float(expected["pace"])) <= 0.01
-    verdicts.append(ok)
-    lines.append(
-        f"  [{GAMEBOARD}] {expected['star']}'s pace over the late window {pace:.4f} Links per interval "
-        f"({len(steps)} steps): p / E' = {float(expected['pace']):.4f} within 0.01: {'inside' if ok else 'OUTSIDE'}"
+    diagnostic(
+        lines,
+        diagnostics,
+        "pace_in_the_late_window",
+        ok,
+        f"{expected['star']}'s pace over the late window {pace:.4f} Links per interval "
+        f"({len(steps)} steps, the step lines): p / E' = {float(expected['pace']):.4f} within 0.01",
+        "the star's arrivals at the centre (the click ticks and ages, DETECTOR)",
+        pace,
+        float(expected["pace"]),
     )
     ok = reading.invariant_failures == 0 and reading.energy_lines >= reading.ticks
-    verdicts.append(ok)
     registered["energy_lines"] = reading.energy_lines
     registered["most_comparisons"] = reading.most_comparisons
     registered["waited"] = reading.waited
-    lines.append(
-        f"  [{GAMEBOARD}] the invariant on {reading.energy_lines} energy lines: {reading.invariant_failures} "
-        f"failures: {'inside' if ok else 'OUTSIDE'}; the most comparisons in one frame {reading.most_comparisons}; "
+    diagnostic(
+        lines,
+        diagnostics,
+        "invariant",
+        ok,
+        f"the invariant on {reading.energy_lines} energy lines: {reading.invariant_failures} "
+        f"failures; the most comparisons in one frame {reading.most_comparisons}; "
         f"intervals owed to proper time by {expected['star']} (number {star.number}) "
-        f"{reading.waited.get(str(star.number))}"
+        f"{reading.waited.get(str(star.number))}",
+        "the star's 1 + z from the centre's pointer (above, DETECTOR)",
+        reading.invariant_failures,
+        0,
     )
     off = list(reading.report.get("off_identity", []))  # type: ignore[arg-type]
     lines.append(
@@ -356,10 +415,13 @@ def main(argv: list[str] | None = None) -> int:
     failed = 0
     inside = 0
     total = 0
+    diagnostics = 0
     blocks: dict[str, object] = {}
     print(
-        f"Every line is [{DETECTOR}] (a detector's record: the only kind reality has) or [{GAMEBOARD}] "
-        "(the host's view); the pins are examples/events/covariant/expectations.json, written before the runs."
+        f"Every line is [{DETECTOR}] (a detector's record or a measured event's own record: the only kind "
+        f"reality has) or [{GAMEBOARD}] (the host's view: a diagnostic, printed with its expectation, never "
+        "a verdict, records 562 and 564); the pins are examples/events/covariant/expectations.json, "
+        "written before the runs."
     )
     for reading in runs:
         print(
@@ -385,6 +447,7 @@ def main(argv: list[str] | None = None) -> int:
             print(line)
         inside += sum(verdicts)
         total += len(verdicts)
+        diagnostics += len(registered.get("diagnostics", {}))  # type: ignore[arg-type]
         blocks[reading.name] = {
             "source_sha256": reading.fingerprint,
             "completed_ticks": reading.ticks,
@@ -395,7 +458,10 @@ def main(argv: list[str] | None = None) -> int:
             "inside": sum(verdicts),
             "of": len(verdicts),
         }
-    print(f"{failed} record check(s) failed; {inside} reading(s) inside, {total - inside} outside")
+    print(
+        f"{failed} record check(s) failed; {inside} reading(s) inside, {total - inside} outside; "
+        f"{diagnostics} GameBoard diagnostic(s) printed and not counted"
+    )
     if args.register is not None:
         document = json.loads(args.register.read_text(encoding="utf-8"))
         document.setdefault("runs", {}).update(blocks)
