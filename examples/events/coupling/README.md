@@ -15,6 +15,17 @@ a test; a reading outside its expectation is reported with its numbers,
 never moved. The registered readings of the law of events keep their scope
 in the register.
 
+**The kind of every reading (the model owner, 2026-09-22, records 562 and
+564).** Every reading of this series is a GAMEBOARD reading: a probe's
+`read` record (the push its register takes), the replay's count, presence
+and flow at the ring's Nodes, the flux through the square, the axis pattern
+and a clock's (age, waited, owed) are the host's view of the state, a
+diagnostic for bug fixing and never a measurement (record 281: only a
+detector's reading is compared with nature; record 562: nobody measures the
+board). The detector reading of the couplings, Newton's push read after a
+detector (a probe read by clicks at a detector set), is not made in this
+series.
+
 ## The base
 
 A GameBoard of 121 x 121 x 1 Nodes with the z axis declared periodic
@@ -59,7 +70,7 @@ rays of 2^17.
 
 ## The worlds
 
-| World | Item | Measured events | Intervals | What its record reads |
+| World | Item | Measured events | Intervals | What its record reads (GAMEBOARD) |
 | --- | --- | --- | --- | --- |
 | `1a_m1`, `1a_m4`, `1a_m16` | 1, equivalence | the source; a fixed probe of content m at (72, 60, 0), r = 12 on +x | 200 | the probe's `read` records of number 1: push_m(t) = m x push_1(t) at every tick and axis (identity); the first read at tick 21 with amount 2^17 (the front) |
 | `1b_m1`, `1b_m4`, `1b_m16` | 1, equivalence | the same probe free (`fixed` false, momentum 0) | 200 | the `step` records identical for the three m and equal to the rule off the clock on the reads' cumulative push (by_clock(t - 1, \|p\|, m + \|p\|), x before y), one x-step per interval from the first read (tick 21) to the Node beside the source (x = 61 at tick 31), every further step refused (no merge since 2026-09-19), no `merged` record, the probe present at the end |
@@ -109,7 +120,8 @@ Branch `claude/universe24-new-3ytqde`, the Beam Law's commits on the base
 every run completed with the books balanced at every tick, the measured
 content constant and age + waited = the intervals completed, 0.5 to 3.3 s
 per run (21 runs in about 20 s, four at a time); 392 criteria passed, 0
-failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
+failed, exit 0; 19 readings inside the expectation, 9 outside, registered
+(GAMEBOARD readings, the kind above):
 
 - Item 1, identity held: push_m = m x push_1 at all 180 records and three
   axes for m = 4, 16; the first read at tick 21 with amount 131072 (the
@@ -187,7 +199,8 @@ rule as `by_clock(t - 1, |p|, 64 m + |p|)`. The twenty-one worlds
 (unchanged files) run on the source fingerprint
 `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a`, Python 3.14, headless, 0.3 to 2.5 s per run: 392
 criteria passed, 0 failed, exit 0; 19 readings inside the expectation, 9
-outside, every reading equal to the result above. In label units: item
+outside, every reading equal to the result above (GAMEBOARD readings, the
+kind above). In label units: item
 1's first read (21, 131072, (-8388608, 0, 0)), `pushed` (-2258636288, 0,
 0) for m = 1; item 2 P_A = (615177292611584, 0, 0), P_B =
 (-615173668732928, 0, 0), the ratio 1.0000 and the sum 5.89e-6 of the
@@ -205,7 +218,7 @@ lone-arrival chain 131072, 14563, ..., count x r / q 0.33 constant, flow x
 2 pi r / q 0.95 to 1.08, the carried momentum 1.45 q / (2 pi r), the clock
 frozen at r = 4, 6, 20. The engine of that run is deleted
 ([migration](../../../docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
-the readings keep their scope.
+the readings keep their scope (GAMEBOARD readings, the kind above).
 
 ## Re-read under the step drive (2026-09-20)
 
