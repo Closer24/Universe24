@@ -1,0 +1,53 @@
+PASS record check: completed (70.8 s, 7500 ticks)
+PASS record check: the books balanced at every completed tick
+[GAMEBOARD] world `rays-atoms-hydrogen-r12-form-b-v1`: h = 5536242544, N = 64, the electron's declared momentum [0, 293783192, 0], start (38, 26, 26), the proton at (26, 26, 26)
+
+[DETECTOR] the clicks per detector over the run (run.json `detectors`, per family):
+[DETECTOR]   at_proton (1 Nodes, wave): p: clicks 0, measured 0, record 0; e: clicks 0, measured 0, record 0
+[DETECTOR]   face:+x (2809 Nodes, ?): p: clicks 328045, measured 328045, record 1303773360160768; e: clicks 342, measured 342, record 22968167424
+[DETECTOR]   face:-x (2809 Nodes, ?): p: clicks 328045, measured 328045, record 1303773360160768; e: clicks 337, measured 337, record 22632585216
+[DETECTOR]   face:+y (2809 Nodes, ?): p: clicks 325073, measured 325073, record 1258299320172544; e: clicks 342, measured 342, record 22968638464
+[DETECTOR]   face:-y (2809 Nodes, ?): p: clicks 325073, measured 325073, record 1258299320172544; e: clicks 339, measured 339, record 22766985216
+[DETECTOR]   face:+z (2809 Nodes, ?): p: clicks 322101, measured 322101, record 1220803181936640; e: clicks 0, measured 0, record 0
+[DETECTOR]   face:-z (2809 Nodes, ?): p: clicks 322101, measured 322101, record 1220803181936640; e: clicks 0, measured 0, record 0
+[DETECTOR]   escaped 0: {'family': 'p', 'amount': 1950438, 'content': 0, 'momentum': [0, 0, 0]}
+[DETECTOR]   escaped 1: {'family': 'e', 'amount': 1360, 'content': 0, 'momentum': [-172906816, 35392088, 0]}
+[DETECTOR] the electron's rows clicked on the side faces (events.jsonl): face:+x 342, face:-x 337, face:+y 342, face:-y 339
+[DETECTOR] the proton's reads of the electron's rows: 5 `read` lines; the electron's own reads of the proton's rows: 305
+[DETECTOR] the electron left through face:+y at tick 3407
+
+[DETECTOR] releases read from the faces' clicks: 334 paired (+x with +y), 28 clicks unpaired; the release counts modulo 10: [1, 2]; the first at 11, the last at 3402
+[DETECTOR] the electron's position per release from the arrival Nodes: the distance from the proton's Node least 12.00, greatest 27.86 Links; the last release read at (29, 52) at count 3402
+[DETECTOR] the axis crossings read from the arrival Nodes: 4
+[DETECTOR]   +y at count 412: the electron at (26, 39), 13.00 Links from the proton
+[DETECTOR]   -x at count 851: the electron at (13, 26), 13.00 Links from the proton
+[DETECTOR]   -y at count 1302: the electron at (26, 9), 17.00 Links from the proton
+[DETECTOR]   +x at count 2191: the electron at (52, 26), 26.00 Links from the proton
+[DETECTOR] the returns to the +x axis: 1, the counts between them []; the return's distance from the start in Links [14]
+[DETECTOR]   the +y crossings: 1, the counts between them []
+[DETECTOR]   the -x crossings: 1, the counts between them []
+[DETECTOR]   the -y crossings: 1, the counts between them []
+
+[DETECTOR] the dwell about the crossings, first click to first click at the next Node along the motion: 16 hops, the gaps [19, 21, 20, 19, 20, 20, 20, 20, 21, 20, 19, 21, 29, 40, 30, 30]
+[DETECTOR] the mean dwell over those hops: 23.06 counts per Link (the release grain 10)
+
+[DETECTOR] the phase per release: the increments' range 0 to 5 steps (unwrapped below N / 2 = 32); the mean 1.174 steps per release
+[DETECTOR] the circles per return j (the sum of the increments over a return over N): []; the residue in steps of 64: []
+[DETECTOR] the phase stamped at the +x crossings: [53] (the same step every return on a closed loop, within the release grain)
+
+[DETECTOR] the proton's reads of the electron's rows per crossing (within 60 counts of the crossing plus the flight): [1, 1, 1, 1]; total 5
+
+[GAMEBOARD] (a diagnostic, not pinned) the electron's radius over the run from its step lines: least 12.00, greatest 27.86, at the end 26.17 at (29, 52, 26); 1.23 turns of the angle; the closings of the angle at ticks [2181], T [2181]
+[GAMEBOARD] (a diagnostic) the loop does not stay: the electron the electron left through face:+y at tick 3407
+[GAMEBOARD] (a diagnostic) the per-axis action gained over the crossed Links between closings, |p_a| N summed on the axis stepped, as quotients of h with the fraction:
+[GAMEBOARD]   closing at 2181: x 159.663, y 150.473, z 0.000; the sum 310.136 = 4.8459 circles; the body's phase at the closing 53
+[GAMEBOARD] (a diagnostic) the dwell from the step lines at the same hops: 24 gaps, the mean 22.46, the least 18, the greatest 31 (the formula's 19.05 at the start's crossing)
+
+FAIL P6 the electron's rows on each side face: 750 each (read [337, 339, 342, 342])
+FAIL P2 returns to the +x axis 4 to 5 with every period within (1319, 1785) (read 1, [])
+FAIL P2b every return within 3 Links of the start (read [14])
+FAIL P1 the mean dwell per Node about the crossings within 17 to 22.5 counts (read 23.06 over 16 hops)
+NOT READ P3 the circles per return j = 4.00 within 0.05 (read []: no return; the pin unmet)
+NOT READ P3b the residue per return within 3 steps of 64 (read []: no return; the pin unmet)
+PASS P5 the proton's reads per crossing within (0, 2) (read [1, 1, 1, 1])
+1 PASS, 4 FAIL, 2 NOT READ of 7 pins (DETECTOR); the GameBoard lines above are diagnostics, not counted

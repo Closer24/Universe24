@@ -1,0 +1,220 @@
+The kick map of the atom's loop at r = 12, by algebra: the Atom
+[GAMEBOARD] Q S M = 5301780480, E_12 = 6.588 entries per shell, the kick per shell 1.239e+07 label units (2.42 degrees of the declared momentum)
+[GAMEBOARD by formula] the lag's pump, per axis: the Node lags the accumulated motion by half a Link in the mean on each axis toward the motion's sign, (1 / 2) S_1(v) / |v| Links along the motion, so the push read at the Node has a part along the motion of (S_1(v) / |v|) / (2 r) of its size (4.2 percent on an axis heading, 5.9 on the diagonal, 5.3 averaged round the circle at r = 12), and the work per turn is pi x F(r) x S_1 / |v|: 3.89e+06 on an axis heading, 4.95e+06 averaged on the plane, at r = 12 against the bound value -6.72e+06
+[GAMEBOARD by formula] A. as the algebra: steady, no fire lost: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0
+    quarter at   367: r =  13.00 Links, abs(p) =  287.4 million, E =   -5.93 x 10^6
+    quarter at   867: r =  17.00 Links, abs(p) =  239.7 million, E =   -5.07 x 10^6
+    quarter at  1624: r =  20.00 Links, abs(p) =  208.7 million, E =   -4.81 x 10^6
+    quarter at  2436: r =  19.00 Links, abs(p) =  227.6 million, E =   -4.50 x 10^6
+    quarter at  3152: r =  20.00 Links, abs(p) =  235.8 million, E =   -3.67 x 10^6
+    quarter at  4052: r =  25.00 Links, abs(p) =  195.2 million, E =   -3.54 x 10^6
+    the loop leaves the board at 5006
+[GAMEBOARD by formula] B. the pulse alone: pulsed, no fire lost: p0 = 293783192, pulsed (one shell per 10 intervals), no fire lost, flux r^-2.00, flow factor 1.0
+    quarter at   377: r =  13.00 Links, abs(p) =  280.9 million, E =   -6.28 x 10^6
+    quarter at   878: r =  16.00 Links, abs(p) =  244.5 million, E =   -5.51 x 10^6
+    quarter at  1547: r =  18.00 Links, abs(p) =  224.7 million, E =   -5.15 x 10^6
+    quarter at  2269: r =  19.00 Links, abs(p) =  231.6 million, E =   -4.33 x 10^6
+    quarter at  3031: r =  21.00 Links, abs(p) =  219.5 million, E =   -3.95 x 10^6
+    quarter at  4016: r =  25.00 Links, abs(p) =  192.4 million, E =   -3.64 x 10^6
+    the loop leaves the board at 5101
+[GAMEBOARD by formula] C. the lost fires alone: steady, main's per-axis drive: p0 = 293783192, steady (a tenth of a shell every interval), lost coincident fires, flux r^-2.00, flow factor 1.0
+    quarter at   367: r =  13.00 Links, abs(p) =  287.4 million, E =   -5.93 x 10^6
+    quarter at   867: r =  17.00 Links, abs(p) =  239.7 million, E =   -5.07 x 10^6
+    quarter at  1611: r =  19.00 Links, abs(p) =  219.1 million, E =   -4.86 x 10^6
+    quarter at  2327: r =  18.00 Links, abs(p) =  246.0 million, E =   -4.20 x 10^6
+    quarter at  3012: r =  21.00 Links, abs(p) =  229.7 million, E =   -3.52 x 10^6
+    the loop leaves the board at 3885
+[GAMEBOARD by formula] D. both: pulsed, main's per-axis drive: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.0
+    quarter at   377: r =  13.00 Links, abs(p) =  280.9 million, E =   -6.28 x 10^6
+    quarter at   878: r =  16.00 Links, abs(p) =  244.5 million, E =   -5.51 x 10^6
+    quarter at  1547: r =  18.00 Links, abs(p) =  224.7 million, E =   -5.15 x 10^6
+    quarter at  2269: r =  19.00 Links, abs(p) =  231.6 million, E =   -4.33 x 10^6
+    quarter at  3031: r =  21.00 Links, abs(p) =  219.5 million, E =   -3.95 x 10^6
+    quarter at  4016: r =  25.00 Links, abs(p) =  192.4 million, E =   -3.64 x 10^6
+    quarter at  5250: r =  26.00 Links, abs(p) =  186.0 million, E =   -3.60 x 10^6
+    quarter at  6389: r =  25.00 Links, abs(p) =  203.6 million, E =   -3.23 x 10^6
+    quarter at  7440: r =  25.00 Links, abs(p) =  206.7 million, E =   -3.10 x 10^6
+    the loop stays for 7500 intervals; 9 quarter crossings, r at the +x crossings [19.0, 25.0]
+[GAMEBOARD by formula] E. the lattice's flux r^-1.83: steady, no fire lost: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-1.83, flow factor 1.0
+    quarter at   367: r =  13.00 Links, abs(p) =  288.2 million, E =   -5.88 x 10^6
+    quarter at   852: r =  16.00 Links, abs(p) =  246.7 million, E =   -5.41 x 10^6
+    quarter at  1499: r =  18.00 Links, abs(p) =  236.5 million, E =   -4.63 x 10^6
+    quarter at  2141: r =  18.00 Links, abs(p) =  249.4 million, E =   -4.04 x 10^6
+    quarter at  2819: r =  20.00 Links, abs(p) =  233.4 million, E =   -3.78 x 10^6
+    quarter at  3703: r =  23.00 Links, abs(p) =  208.7 million, E =   -3.65 x 10^6
+    quarter at  4719: r =  24.00 Links, abs(p) =  211.2 million, E =   -3.23 x 10^6
+    quarter at  5691: r =  24.00 Links, abs(p) =  219.5 million, E =   -2.89 x 10^6
+    the loop leaves the board at 6623
+[GAMEBOARD by formula] F. the lattice's flux r^-1.83: pulsed, main's per-axis drive: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-1.83, flow factor 1.0
+    quarter at   376: r =  13.00 Links, abs(p) =  282.2 million, E =   -6.21 x 10^6
+    quarter at   934: r =  17.00 Links, abs(p) =  258.1 million, E =   -4.21 x 10^6
+    quarter at  1615: r =  21.00 Links, abs(p) =  227.6 million, E =   -3.61 x 10^6
+    quarter at  2579: r =  24.00 Links, abs(p) =  201.2 million, E =   -3.61 x 10^6
+    quarter at  3578: r =  23.00 Links, abs(p) =  222.2 million, E =   -3.10 x 10^6
+    quarter at  4470: r =  24.00 Links, abs(p) =  224.3 million, E =   -2.69 x 10^6
+    the loop leaves the board at 5321
+[GAMEBOARD by formula] G. the stationary crowd at the circle's momentum: steady, no fire lost: p0 = 288249497, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0
+    quarter at   365: r =  12.00 Links, abs(p) =  291.7 million, E =   -6.84 x 10^6
+    quarter at   793: r =  15.00 Links, abs(p) =  265.9 million, E =   -5.22 x 10^6
+    quarter at  1426: r =  19.00 Links, abs(p) =  217.1 million, E =   -4.94 x 10^6
+    quarter at  2280: r =  21.00 Links, abs(p) =  211.7 million, E =   -4.27 x 10^6
+    quarter at  3082: r =  20.00 Links, abs(p) =  228.4 million, E =   -4.00 x 10^6
+    quarter at  3902: r =  22.00 Links, abs(p) =  213.9 million, E =   -3.79 x 10^6
+    the loop leaves the board at 4835
+[GAMEBOARD by formula] H. flow-link-v1 (1.2871), the declared momentum: steady, no fire lost: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.2871
+    quarter at   439: r =  16.00 Links, abs(p) =  239.9 million, E =   -3.23 x 10^6
+    the loop leaves the board at 1332
+[GAMEBOARD by formula] I. flow-link-v1 (1.2871), the declared momentum: pulsed, main's per-axis drive: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.2871
+    quarter at   451: r =  17.00 Links, abs(p) =  234.4 million, E =   -2.97 x 10^6
+    the loop leaves the board at 1383
+[GAMEBOARD by formula] J. flow-link-v1 (1.2871), the re-pinned momentum: steady, no fire lost: p0 = 254075280, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.2871
+    quarter at   413: r =  12.00 Links, abs(p) =  256.0 million, E =   -5.37 x 10^6
+    quarter at   901: r =  15.00 Links, abs(p) =  233.4 million, E =   -4.10 x 10^6
+    quarter at  1617: r =  19.00 Links, abs(p) =  191.5 million, E =   -3.83 x 10^6
+    quarter at  2584: r =  21.00 Links, abs(p) =  185.8 million, E =   -3.34 x 10^6
+    quarter at  3501: r =  20.00 Links, abs(p) =  199.9 million, E =   -3.16 x 10^6
+    quarter at  4430: r =  22.00 Links, abs(p) =  188.9 million, E =   -2.93 x 10^6
+    the loop leaves the board at 5489
+[GAMEBOARD by formula] K. flow-link-v1 (1.2871), the re-pinned momentum: pulsed, main's per-axis drive: p0 = 254075280, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.2871
+    quarter at   405: r =  11.00 Links, abs(p) =  274.4 million, E =   -5.50 x 10^6
+    quarter at   813: r =  13.00 Links, abs(p) =  250.6 million, E =   -4.74 x 10^6
+    quarter at  1506: r =  20.00 Links, abs(p) =  185.0 million, E =   -3.70 x 10^6
+    quarter at  2598: r =  21.00 Links, abs(p) =  176.9 million, E =   -3.65 x 10^6
+    quarter at  3451: r =  17.00 Links, abs(p) =  230.2 million, E =   -3.15 x 10^6
+    quarter at  4088: r =  18.00 Links, abs(p) =  223.0 million, E =   -3.01 x 10^6
+    the loop leaves the board at 5023
+[GAMEBOARD by formula] L. the control of the lag: steady, no fire lost, the push at the accumulated position: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0, THE CONTROL: the push read at the Node plus the accumulator's fraction
+    quarter at   366: r =  12.00 Links, abs(p) =  282.1 million, E =   -7.36 x 10^6
+    quarter at   778: r =  13.00 Links, abs(p) =  266.8 million, E =   -7.00 x 10^6
+    quarter at  1200: r =  12.00 Links, abs(p) =  276.8 million, E =   -7.63 x 10^6
+    quarter at  1579: r =  12.00 Links, abs(p) =  291.0 million, E =   -6.87 x 10^6
+    quarter at  1952: r =  12.00 Links, abs(p) =  281.4 million, E =   -7.40 x 10^6
+    quarter at  2371: r =  13.00 Links, abs(p) =  264.7 million, E =   -7.11 x 10^6
+    quarter at  2807: r =  13.00 Links, abs(p) =  272.7 million, E =   -6.71 x 10^6
+    quarter at  3200: r =  12.00 Links, abs(p) =  288.2 million, E =   -7.03 x 10^6
+    quarter at  3579: r =  12.00 Links, abs(p) =  280.5 million, E =   -7.44 x 10^6
+    quarter at  4006: r =  13.00 Links, abs(p) =  262.7 million, E =   -7.21 x 10^6
+    quarter at  4455: r =  13.00 Links, abs(p) =  268.8 million, E =   -6.91 x 10^6
+    quarter at  4861: r =  12.00 Links, abs(p) =  285.5 million, E =   -7.17 x 10^6
+    the loop stays for 7500 intervals; 18 quarter crossings, r at the +x crossings [12.0, 12.0, 12.0, 12.0]
+[GAMEBOARD by formula] M. the control of the lag: pulsed, main's per-axis drive, the push at the accumulated position: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.0, THE CONTROL: the push read at the Node plus the accumulator's fraction
+    quarter at   375: r =  12.00 Links, abs(p) =  276.5 million, E =   -7.66 x 10^6
+    quarter at   799: r =  13.00 Links, abs(p) =  266.3 million, E =   -7.03 x 10^6
+    quarter at  1211: r =  12.00 Links, abs(p) =  282.8 million, E =   -7.32 x 10^6
+    quarter at  1619: r =  13.00 Links, abs(p) =  300.8 million, E =   -5.19 x 10^6
+    quarter at  2074: r =  16.00 Links, abs(p) =  246.8 million, E =   -5.40 x 10^6
+    quarter at  2886: r =  21.00 Links, abs(p) =  197.3 million, E =   -4.82 x 10^6
+    quarter at  3671: r =  16.00 Links, abs(p) =  255.4 million, E =   -5.00 x 10^6
+    quarter at  4120: r =  13.00 Links, abs(p) =  295.6 million, E =   -5.48 x 10^6
+    quarter at  4590: r =  16.00 Links, abs(p) =  245.5 million, E =   -5.46 x 10^6
+    quarter at  5319: r =  18.00 Links, abs(p) =  204.8 million, E =   -5.95 x 10^6
+    quarter at  5935: r =  14.00 Links, abs(p) =  278.8 million, E =   -5.41 x 10^6
+    quarter at  6316: r =  12.00 Links, abs(p) =  321.3 million, E =   -5.13 x 10^6
+    the loop stays for 7500 intervals; 13 quarter crossings, r at the +x crossings [13.0, 13.0, 12.0]
+[GAMEBOARD by formula] N. the control at the circle's momentum: steady, no fire lost, the push at the accumulated position: p0 = 288249497, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0, THE CONTROL: the push read at the Node plus the accumulator's fraction
+    quarter at   363: r =  12.00 Links, abs(p) =  287.0 million, E =   -7.09 x 10^6
+    quarter at   734: r =  12.00 Links, abs(p) =  283.3 million, E =   -7.29 x 10^6
+    quarter at  1112: r =  12.00 Links, abs(p) =  282.7 million, E =   -7.33 x 10^6
+    quarter at  1488: r =  12.00 Links, abs(p) =  285.0 million, E =   -7.20 x 10^6
+    quarter at  1862: r =  12.00 Links, abs(p) =  284.3 million, E =   -7.24 x 10^6
+    quarter at  2243: r =  12.00 Links, abs(p) =  280.6 million, E =   -7.44 x 10^6
+    quarter at  2633: r =  12.00 Links, abs(p) =  279.7 million, E =   -7.49 x 10^6
+    quarter at  3020: r =  12.00 Links, abs(p) =  282.2 million, E =   -7.35 x 10^6
+    quarter at  3404: r =  12.00 Links, abs(p) =  282.1 million, E =   -7.36 x 10^6
+    quarter at  3794: r =  12.00 Links, abs(p) =  278.4 million, E =   -7.55 x 10^6
+    quarter at  4194: r =  12.00 Links, abs(p) =  277.1 million, E =   -7.62 x 10^6
+    quarter at  4591: r =  12.00 Links, abs(p) =  279.6 million, E =   -7.49 x 10^6
+    the loop stays for 7500 intervals; 19 quarter crossings, r at the +x crossings [12.0, 12.0, 12.0, 12.0]
+[GAMEBOARD by formula] O. the centred step: steady, no fire lost, the push at the Node: p0 = 293783192, steady (a tenth of a shell every interval), no fire lost, flux r^-2.00, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   357: r =  13.00 Links, abs(p) =  282.0 million, E =   -6.22 x 10^6
+    quarter at   767: r =  13.00 Links, abs(p) =  268.3 million, E =   -6.93 x 10^6
+    quarter at  1179: r =  13.00 Links, abs(p) =  280.1 million, E =   -6.32 x 10^6
+    quarter at  1551: r =  12.00 Links, abs(p) =  291.7 million, E =   -6.84 x 10^6
+    quarter at  1921: r =  13.00 Links, abs(p) =  282.2 million, E =   -6.21 x 10^6
+    quarter at  2327: r =  13.00 Links, abs(p) =  269.9 million, E =   -6.85 x 10^6
+    quarter at  2740: r =  13.00 Links, abs(p) =  278.1 million, E =   -6.43 x 10^6
+    quarter at  3121: r =  12.00 Links, abs(p) =  288.0 million, E =   -7.04 x 10^6
+    quarter at  3490: r =  12.00 Links, abs(p) =  286.0 million, E =   -7.15 x 10^6
+    quarter at  3876: r =  13.00 Links, abs(p) =  278.0 million, E =   -6.43 x 10^6
+    quarter at  4284: r =  13.00 Links, abs(p) =  272.7 million, E =   -6.70 x 10^6
+    quarter at  4688: r =  13.00 Links, abs(p) =  280.6 million, E =   -6.29 x 10^6
+    the loop stays for 7500 intervals; 19 quarter crossings, r at the +x crossings [12.0, 12.0, 13.0, 13.0]
+[GAMEBOARD by formula] P. the centred step: pulsed, main's per-axis drive, the push at the Node: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   368: r =  13.00 Links, abs(p) =  274.4 million, E =   -6.62 x 10^6
+    quarter at   807: r =  13.00 Links, abs(p) =  275.5 million, E =   -6.56 x 10^6
+    quarter at  1152: r =  10.00 Links, abs(p) =  336.1 million, E =   -7.18 x 10^6
+    quarter at  1412: r =  10.00 Links, abs(p) =  325.9 million, E =   -7.82 x 10^6
+    quarter at  1764: r =  13.00 Links, abs(p) =  263.0 million, E =   -7.20 x 10^6
+    quarter at  2224: r =  13.00 Links, abs(p) =  263.3 million, E =   -7.18 x 10^6
+    quarter at  2573: r =  11.00 Links, abs(p) =  323.7 million, E =   -6.33 x 10^6
+    quarter at  2842: r =  10.00 Links, abs(p) =  327.5 million, E =   -7.72 x 10^6
+    quarter at  3200: r =  13.00 Links, abs(p) =  257.8 million, E =   -7.45 x 10^6
+    quarter at  3712: r =  14.00 Links, abs(p) =  247.1 million, E =   -6.98 x 10^6
+    quarter at  4099: r =  11.00 Links, abs(p) =  318.4 million, E =   -6.65 x 10^6
+    quarter at  4384: r =  10.00 Links, abs(p) =  343.2 million, E =   -6.73 x 10^6
+    the loop stays for 7500 intervals; 18 quarter crossings, r at the +x crossings [10.0, 10.0, 10.0, 11.0]
+[GAMEBOARD by formula] R. the centred step at the circle's momentum: pulsed, main's per-axis drive, the lattice's flux r^-1.83: p0 = 288249497, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-1.83, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   363: r =  12.00 Links, abs(p) =  282.1 million, E =   -7.36 x 10^6
+    quarter at   739: r =  12.00 Links, abs(p) =  286.1 million, E =   -7.14 x 10^6
+    quarter at  1106: r =  12.00 Links, abs(p) =  287.6 million, E =   -7.06 x 10^6
+    quarter at  1472: r =  12.00 Links, abs(p) =  286.5 million, E =   -7.12 x 10^6
+    quarter at  1822: r =  11.00 Links, abs(p) =  312.2 million, E =   -7.02 x 10^6
+    quarter at  2150: r =  12.00 Links, abs(p) =  306.9 million, E =   -5.98 x 10^6
+    quarter at  2517: r =  13.00 Links, abs(p) =  272.1 million, E =   -6.74 x 10^6
+    quarter at  2978: r =  14.00 Links, abs(p) =  258.0 million, E =   -6.46 x 10^6
+    quarter at  3389: r =  12.00 Links, abs(p) =  295.7 million, E =   -6.62 x 10^6
+    quarter at  3727: r =  12.00 Links, abs(p) =  300.6 million, E =   -6.34 x 10^6
+    quarter at  4117: r =  13.00 Links, abs(p) =  264.2 million, E =   -7.14 x 10^6
+    quarter at  4578: r =  13.00 Links, abs(p) =  265.9 million, E =   -7.05 x 10^6
+    the loop stays for 7500 intervals; 19 quarter crossings, r at the +x crossings [12.0, 14.0, 13.0, 11.0]
+[GAMEBOARD by formula] S. the centred step under flow-link-v1 at the re-pinned momentum: pulsed, main's per-axis drive: p0 = 254075280, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.2871, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   411: r =  12.00 Links, abs(p) =  246.3 million, E =   -5.83 x 10^6
+    quarter at   840: r =  12.00 Links, abs(p) =  250.9 million, E =   -5.61 x 10^6
+    quarter at  1249: r =  12.00 Links, abs(p) =  254.9 million, E =   -5.42 x 10^6
+    quarter at  1726: r =  14.00 Links, abs(p) =  246.9 million, E =   -4.15 x 10^6
+    quarter at  2298: r =  17.00 Links, abs(p) =  209.9 million, E =   -3.99 x 10^6
+    quarter at  3065: r =  18.00 Links, abs(p) =  195.3 million, E =   -4.10 x 10^6
+    quarter at  3734: r =  15.00 Links, abs(p) =  232.4 million, E =   -4.15 x 10^6
+    quarter at  4261: r =  14.00 Links, abs(p) =  249.5 million, E =   -4.03 x 10^6
+    quarter at  4787: r =  16.00 Links, abs(p) =  224.9 million, E =   -3.89 x 10^6
+    quarter at  5591: r =  20.00 Links, abs(p) =  184.9 million, E =   -3.70 x 10^6
+    quarter at  6526: r =  19.00 Links, abs(p) =  193.4 million, E =   -3.76 x 10^6
+    quarter at  7280: r =  17.00 Links, abs(p) =  227.8 million, E =   -3.26 x 10^6
+    the loop stays for 7500 intervals; 12 quarter crossings, r at the +x crossings [14.0, 14.0, 17.0]
+[GAMEBOARD by formula] T. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the inverse square: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   368: r =  13.00 Links, abs(p) =  274.4 million, E =   -6.62 x 10^6
+    quarter at   807: r =  13.00 Links, abs(p) =  275.5 million, E =   -6.56 x 10^6
+    quarter at  1152: r =  10.00 Links, abs(p) =  336.1 million, E =   -7.18 x 10^6
+    quarter at  1412: r =  10.00 Links, abs(p) =  325.9 million, E =   -7.82 x 10^6
+    quarter at  1764: r =  13.00 Links, abs(p) =  263.0 million, E =   -7.20 x 10^6
+    quarter at  2224: r =  13.00 Links, abs(p) =  263.3 million, E =   -7.18 x 10^6
+    quarter at  2573: r =  11.00 Links, abs(p) =  323.7 million, E =   -6.33 x 10^6
+    quarter at  2842: r =  10.00 Links, abs(p) =  327.5 million, E =   -7.72 x 10^6
+    quarter at  3200: r =  13.00 Links, abs(p) =  257.8 million, E =   -7.45 x 10^6
+    quarter at  3712: r =  14.00 Links, abs(p) =  247.1 million, E =   -6.98 x 10^6
+    quarter at  4099: r =  11.00 Links, abs(p) =  318.4 million, E =   -6.65 x 10^6
+    quarter at  4384: r =  10.00 Links, abs(p) =  343.2 million, E =   -6.73 x 10^6
+    quarter at  4690: r =  13.00 Links, abs(p) =  288.8 million, E =   -5.85 x 10^6
+    quarter at  5273: r =  17.00 Links, abs(p) =  213.9 million, E =   -6.18 x 10^6
+    quarter at  5854: r =  14.00 Links, abs(p) =  274.9 million, E =   -5.61 x 10^6
+    quarter at  6201: r =  11.00 Links, abs(p) =  327.7 million, E =   -6.09 x 10^6
+    quarter at  6538: r =  13.00 Links, abs(p) =  280.8 million, E =   -6.28 x 10^6
+    quarter at  7187: r =  19.00 Links, abs(p) =  211.1 million, E =   -5.18 x 10^6
+    the loop stays for 7500 intervals; 18 quarter crossings, r at the +x crossings [10.0, 10.0, 10.0, 11.0]
+[GAMEBOARD by formula] U. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the lattice's flux r^-1.83: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-1.83, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   367: r =  13.00 Links, abs(p) =  275.2 million, E =   -6.58 x 10^6
+    quarter at   801: r =  13.00 Links, abs(p) =  279.4 million, E =   -6.36 x 10^6
+    quarter at  1209: r =  13.00 Links, abs(p) =  278.7 million, E =   -6.40 x 10^6
+    quarter at  1648: r =  14.00 Links, abs(p) =  265.6 million, E =   -6.09 x 10^6
+    quarter at  2106: r =  14.00 Links, abs(p) =  268.0 million, E =   -5.97 x 10^6
+    quarter at  2577: r =  14.00 Links, abs(p) =  287.6 million, E =   -4.94 x 10^6
+    quarter at  2973: r =  13.00 Links, abs(p) =  286.9 million, E =   -5.96 x 10^6
+    quarter at  3440: r =  15.00 Links, abs(p) =  255.9 million, E =   -5.72 x 10^6
+    quarter at  3966: r =  15.00 Links, abs(p) =  254.7 million, E =   -5.77 x 10^6
+    quarter at  4446: r =  14.00 Links, abs(p) =  274.0 million, E =   -5.66 x 10^6
+    quarter at  4893: r =  14.00 Links, abs(p) =  270.3 million, E =   -5.85 x 10^6
+    quarter at  5404: r =  16.00 Links, abs(p) =  259.2 million, E =   -4.81 x 10^6
+    quarter at  5961: r =  16.00 Links, abs(p) =  255.9 million, E =   -4.97 x 10^6
+    quarter at  6503: r =  16.00 Links, abs(p) =  253.4 million, E =   -5.09 x 10^6
+    quarter at  7055: r =  15.00 Links, abs(p) =  254.0 million, E =   -5.81 x 10^6
+    the loop stays for 7500 intervals; 15 quarter crossings, r at the +x crossings [14.0, 15.0, 16.0]
