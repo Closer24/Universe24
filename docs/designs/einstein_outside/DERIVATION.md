@@ -421,7 +421,21 @@ to the reflection the two numbers
 
     x_D = (n_r - n_e) / 2,     t_D = (n_r + n_e) / 2        (c = 1; in Links x_D = c (n_r - n_e) / 2),
 
-both DETECTOR, both on D's own record. (a) For D at rest in no crowd
+both DETECTOR, both on D's own record. *The definition.* The halving is
+Einstein's 1905 light-signal definition of distance and simultaneity,
+the symmetric half of the round trip (Bondi's radar convention),
+adopted here as a DEFINITION and nothing more: it fixes which distant
+event D calls simultaneous with its own count `t_D`, and how far, from
+D's own two counts; it takes nothing of Lorentz's beyond the one-way
+pace being the same both ways, which is (A1) on the lattice. The rows
+that need it: the boost's form as a map of coordinates ((b) below) and
+II.4's two readings at equal `t_G` and equal `t_D` (a length is a
+statement about simultaneity at two places). The rows that are
+convention-free, formed of round trips or of ratios of half round
+trips alone: the dilation by the two one-way factors (II.1), the
+round-trip Doppler (II.2), the composition by the factors `(1 + w) / (1
+- w) = k_DR k_RD` (II.3), and the aberration by the ratio of two half
+round trips (II.5, the halving cancelling). (a) For D at rest in no crowd
 (`r_D = 1`, the pulse one Node per interval each way) `x_D` is the
 reflection's Node and `t_D` its tick, exactly within the hop's
 remainder: the radar of a rest detector is the lattice's own
@@ -984,7 +998,7 @@ at their pace to the tick (DETECTOR, `x = 60 + r` on every click, the
 birth ordinal against the Node). What the register reads of `p(v)` is
 v only; p is never a reading. Verdict: on the law FAIL at second order
 (a different law, 4.4's table :1117-1122: 0.500 against 0.707 at `p =
-m_i`); under the identity SHOWN by declaration (the square in the
+m_i`); under the identity FOLLOWS from the declared square (the square in the
 wall); the momentum itself NEITHER (no reading).
 
 ### II.8 The mass-energy of a crowd
@@ -1392,7 +1406,8 @@ term does not vanish in the mean), and the wrong symmetry: FAIL pinned
 in order and symmetry, the coefficient NOT MADE. Under the
 identity (the pace `p / E'`, the isotropic W): the special-relativistic
 advance `pi beta^2` per revolution, one sixth of Einstein's (21.4 row
-E12 :6244, "from the readings alone"), SHOWN in form, FAIL in number by
+E12 :6244, "from the readings alone"), FOLLOWS from the declared square
+in form (record 817's rule: a result under a form put in), FAIL in number by
 a factor 6; the field's five sixths NEITHER. **The decision: FAIL, not
 NEITHER, on the law**, because NEITHER is the word for a quantity the
 law says nothing about, and here the law says something a detector
@@ -1476,7 +1491,7 @@ this file where the chain starts, and the word used for it.
 | The formula arrived at | The inputs actually used in its chain | Where the chain starts (this file) | The word |
 | --- | --- | --- | --- |
 | the place-to-place factor `k_XY = (r_Y / r_X)(1 - s.v_X) / (1 - s.v_Y)` | (A1), (A3), the counts (W4); r a free symbol | Theorem 1, :355 (the formula :369) | follows (a theorem of A1) |
-| the radar map, Lorentz times the dilation `r_D gamma` | (A1), (A3), (W5), Theorem 1 | Theorem 2, :416 (the map :422) | follows; Lorentz's form RECOVERED as the result of two legs, the scale left free |
+| the radar map, Lorentz times the dilation `r_D gamma` | (A1), (A3), (W5), Theorem 1; the halving a DEFINITION (Einstein 1905, Bondi's radar convention) | Theorem 2, :416 (the map :422) | follows; Lorentz's form RECOVERED as the result of two legs, the scale left free |
 | `1 / gamma` (time dilation as r) | Theorems 1, 2; r from two factors; the three r cited (the law's declaration r = 1; the identity's `E'_0 / E'`, declared; (A2)'s walk, shown to second order in the click frame) | II.1, :647 | follows in r; `sqrt(1 - v^2)` RECOVERED under the line, shown to second order under (A2), declared under the identity |
 | the composition `w = (v_R - v) / (1 - v v_R)` | Theorems 1, 2, (A3) | II.3, :733 | follows, r-free (Einstein's form RECOVERED) |
 | the contraction `(1 - v^2) / r` and r | Theorem 2, the transponding rule (the click frame 2 (c)), (A3) | II.4, :783 | follows in r; `1 / gamma` RECOVERED under the line |
@@ -1484,7 +1499,7 @@ this file where the chain starts, and the word used for it.
 | `E^2 = E_0^2 + c^2 p^2` | the definitions `E = E_0 / r`, `p = E v`; the line of II.1; the click frame's section 7 for W under (A1), (A2), the Planck map | II.6, :887 | follows as the line; W shown to second order (the click frame); exact by declaration under the identity |
 | `E_0 = hbar m` | the Planck map on `main` (6.4), (A2) | II.6, :910 | follows (Compton's form RECOVERED) |
 | `E_0 = m_i c^2` | the load identity `3 h n_K = Q S d_K`, a declaration | II.6, :910 and after | declared (a unit); NEITHER on the law |
-| `p_law / p_nat = k` | (W2) as declared; Einstein's `gamma m v` on the comparison side only | II.7, :966 | follows (the law's form); Einstein's declared under the identity's wall |
+| `p_law / p_nat = k` | (W2) as declared; Einstein's `gamma m v` on the comparison side only | II.7, :966 | follows (the law's form); Einstein's FOLLOWS from the declared square under the identity's wall |
 | the Outside step (Theorem 4's image) and Einstein's step as the most general form it takes | (A1), (A3), section 1, Theorems 1, 2 | section 3 (a), :481 (Einstein's form named at :497 as the comparison) | follows; Einstein's form RECOVERED where r is supplied, never an input |
 | the quantum of the step above (Theorem 3) | (A1), (A3), the drive's `at_most` 1, Theorem 2 (a) | section 3 (b), :510 | follows (a theorem; no run) |
 | Newton's step as the limit | Theorem 4, (M), `v << c` | section 3 (c), :554 (the form :558) | RECOVERED (the limit) |
@@ -1537,7 +1552,7 @@ differs. One line per formula.
 | `E^2 = E_0^2 + c^2 p^2` | SHOWN as the line (r-dependent); MEASURED under the identity (MET); FAIL on the law | `E^2 - p^2 = E_0^2 (1 - v^2) / r^2` | S (DETECTOR) through r and v |
 | `E_0 = hbar m` (the rest energy the rest frequency) | SHOWN (the Planck map on `main`) | `E = h f` and the mass angle | mass ratios only (NATURE :604) |
 | `E_0 = m_i c^2` (the drive's mass) | a UNIT (the load identity `3 h n_K = Q S d_K`); NEITHER on the law | the content and the phase rate untied on `main` (4.5) | the load report (GAMEBOARD) |
-| `p = gamma m_i v` | FAIL on the law at second order (`p_law = k p_nat`); SHOWN by declaration under the identity | the linear wall against the square | the pace GAMEBOARD; p never a reading |
+| `p = gamma m_i v` | FAIL on the law at second order (`p_law = k p_nat`); FOLLOWS from the declared square under the identity | the linear wall against the square | the pace GAMEBOARD; p never a reading |
 | the mass-energy of a crowd | NEITHER | the rows carry no content as a source; no operation ties energy to content | none |
 | the equivalence principle (the fall) | SHOWN, rung 1; MEASURED (MET) | `M_A` cancels record by record | D3 138 of 139 (DETECTOR) |
 | the accelerated detector's redshift `g Y / c^2` | SHOWN, rung 2 | Theorem 1 with the ceiling receding at `g Y / c` | NOT READ |
@@ -1546,7 +1561,7 @@ differs. One line per formula.
 | the pin `n S = d` | CONSISTENT (a world may declare it); nothing about the click | the suspension pair the inverse of the width; the three pairs `[n, d]` distinct; the ratio pins free of it | T's and X's ratios unchanged (DETECTOR); the absolute k re-pinned |
 | the bending of light, `4 G M / (c^2 b)` | FAIL on the law (0); SHOWN in form under the key, its constant an input | the flight not in the age wall's set on `main`; one chain of clicks | K 0.000 (DETECTOR); NATURE 13 NOT COMPARED under the key |
 | the Shapiro delay | FAIL on the law (0); SHOWN in form under the key (`c_f (n S / d) G M ln(4 r_1 r_2 / b^2) / c^3`) | the same set; the wall's stretch summed along the path | K 89.40 in every world, 0.00 (DETECTOR) |
-| the perihelion advance `6 pi G M / (c^2 a (1 - e^2))` | FAIL pinned in order and symmetry on the law (a first-order anisotropic term, the coefficient NOT MADE); one sixth SHOWN under the identity; the field's five sixths NEITHER | the drive parts from Newton at first order with the lattice's symmetry; the push bilinear | D3, D: loops not closed, read as history (DETECTOR); NOT MADE |
+| the perihelion advance `6 pi G M / (c^2 a (1 - e^2))` | FAIL pinned in order and symmetry on the law (a first-order anisotropic term, the coefficient NOT MADE); one sixth FOLLOWS from the declared square under the identity; the field's five sixths NEITHER | the drive parts from Newton at first order with the lattice's symmetry; the push bilinear | D3, D: loops not closed, read as history (DETECTOR); NOT MADE |
 | gravitational waves | NEITHER | a scalar monopole wave, no tensor, no energy carried | none |
 | horizons | NEITHER (a different law) | `1 / (1 + k)` never 0; the flight blind | none |
 | the field equations | NEITHER beyond the weak static limit | no tensor source, no self-source, no metric for the rows, no cosmological term | G2's q FAIL (DETECTOR) |
