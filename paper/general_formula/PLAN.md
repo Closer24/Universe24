@@ -5004,3 +5004,6 @@ the paper about the runtime with the entry (P9, the ledger, the delay
 and light sections, the tally and the provenance rewritten and every
 affected comparison re-read under the entry), is a later version's
 work, the owner's to order, not this paper's. 50 pages.
+
+Correction (the same day): the build of 58a65a93 is 51 pages, not 50;
+NUMBERS.md carries the correcting row.
