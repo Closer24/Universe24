@@ -4786,3 +4786,20 @@ nist). Every new number a NUMBERS.md row by kind. 43 pages. Held next:
 the ring's SHA (row 13) and Newton's SHA (row 14), each folded on its
 head the same way; the merge SHAs swapped in when order-channel-run,
 atom-give-momentum, gleason-bound and PR #860 land.
+
+## Applied (2026-09-22, the owner's word): what the law names and has not computed
+
+The owner asked that the paper state, somewhere, the things the law
+could compute and this paper has not computed. One paragraph in
+Section 9 before Positioning, "What the law names and has not
+computed": the atom's lines (row 6), third-order interference (row 2c),
+the single opening and the rows pinned without their run (10; 4a, 5b,
+11), the quarks and the nucleon's binding with colour designed and not
+built (records 248, 270), the unseen content (the dark sector note on
+main at aa243019: Newton's field in the shell mean, the short periodic
+dimension failing the Tully-Fisher slope, unseen content admitted only
+as an input family; no rotation curve read after a detector), the
+crowd's stretch g_1 and the periodic against the open GameBoard, the
+detector's constants c_j, and rows 13 and 14 pending; apart from these
+the inputs for which the law has no formula (rho_p, h, the content per
+unit, N_phi). No number added. 43 pages.
