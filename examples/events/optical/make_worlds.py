@@ -475,7 +475,12 @@ def body_world(b: int, gamma: int, mass: bool) -> Json:
         }
     ]
     if mass:
-        measured.append(next(e for e in base["measured"] if e["family"] == "m"))  # type: ignore[index]
+        # The light worlds' mass, 2^16 (series K's 4096 times MASS_FACTOR, the
+        # crowd of the light, matter and fast worlds; the first run of
+        # 2026-09-22 left the factor out, the crowd 16 times weaker, README).
+        entry = dict(next(e for e in base["measured"] if e["family"] == "m"))  # type: ignore[index]
+        entry["amount"] = int(entry["amount"]) * MASS_FACTOR
+        measured.append(entry)
     name = f"body_b{b}_g{gamma}" if mass else f"body_control_b{b}"
     document: Json = {
         "law": "beam",

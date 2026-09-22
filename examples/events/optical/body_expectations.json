@@ -447,5 +447,937 @@
     }
    }
   }
+ },
+ "runs": {
+  "body_b10_g0": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 10.876,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 3,
+   "state_sha256": "2b6dd3d767826bddb374618ae685122295efde5dd861d6e5bb3813a40357b859",
+   "audit_sha256": "b15e07eafcec524105243af79de14dcb495b9db0aae7cdca89db2578659e24c6",
+   "events_sha256": "5153a3588f330927368ae6dda1e639f694ed3088aa933dbf276ecf392a3ba567",
+   "click": {
+    "event": "click",
+    "tick": 158,
+    "node": [
+     56,
+     27,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     66316613,
+     -8721434,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -3,
+    0
+   ],
+   "farthest_from_the_line": 10.962,
+   "largest_drive": 12323473716,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b10_g1": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 10.904,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 6,
+   "state_sha256": "317409f5a8a1c4ee79ab0f4881a7bd73ee6a38a1029574e4e396dd0711c9256d",
+   "audit_sha256": "f4a6fd900cd0867d27a005ea2702fa7f29866fe6972366ceb3ea503896b1ead9",
+   "events_sha256": "2e862e668a35180c68fa44ca2ea53ece04f39d3ac35cf42c01df176ea7e205de",
+   "click": {
+    "event": "click",
+    "tick": 167,
+    "node": [
+     56,
+     24,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     62442216,
+     -16818239,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -6,
+    0
+   ],
+   "farthest_from_the_line": 11.294,
+   "largest_drive": 232478656660704,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b12_g0": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 11.177,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 2,
+   "state_sha256": "6a7675bb0a6c3a47e5ef9f6222634096dd82ea6e59ffc10220e4bdbd3477a02c",
+   "audit_sha256": "e9fbcd3098d58f9a552827ff9991923e8cc977b2ca9785b116532b74beaefe98",
+   "events_sha256": "a4f9dca07dc811710f7267319ddb1b69bd2d6f148690f26ef81ebebdea406cfc",
+   "click": {
+    "event": "click",
+    "tick": 156,
+    "node": [
+     56,
+     30,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     66482632,
+     -6762592,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -2,
+    0
+   ],
+   "farthest_from_the_line": 12.985,
+   "largest_drive": 12024333384,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b12_g1": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 11.341,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 3,
+   "state_sha256": "885f1e779d1f6289ba419cc904dfe4d8e4193604501e89d47d08005cd11a6fdc",
+   "audit_sha256": "611926faed6792c3880c5b01f32eaba7318f923ed3a5ca210837e411b40f221e",
+   "events_sha256": "8254ac7920c4ec1e67eef9fdc9d62e3119e21d7d9dc303ed5f76876afa29e8d0",
+   "click": {
+    "event": "click",
+    "tick": 166,
+    "node": [
+     56,
+     27,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     61443041,
+     -14554650,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -5,
+    0
+   ],
+   "farthest_from_the_line": 13.549,
+   "largest_drive": 219601183730944,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b14_g0": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 11.03,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 2,
+   "state_sha256": "9ebfd12c73ace0855bef4cc45679f241b63e87c73ec8a666f65788bac56fc3bd",
+   "audit_sha256": "e19b75c994bd286bc0bcff0303d2af68882f06e5d9ceed08cd107dfc18a6e847",
+   "events_sha256": "64808dbca1244dca10ba23a33709fff3073069c8f166b78cfd396e5b016aa32d",
+   "click": {
+    "event": "click",
+    "tick": 156,
+    "node": [
+     56,
+     32,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     65696648,
+     -6553594,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -2,
+    0
+   ],
+   "farthest_from_the_line": 15.082,
+   "largest_drive": 11924578688,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b14_g1": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 10.929,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 4,
+   "state_sha256": "62b27a747b62a27ebaf49009dbe917b312a57bc7da9082341d042a6829a05773",
+   "audit_sha256": "c80bb2d48fa3cd7205fa019ef1448f0da0912cba54e94da585982ab045826097",
+   "events_sha256": "961d1af1e7081c080fb7b61c25e973cf73ff72ebdc0b8feef6fde0be844ef7c4",
+   "click": {
+    "event": "click",
+    "tick": 163,
+    "node": [
+     56,
+     30,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     64497887,
+     -12622055,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -4,
+    0
+   ],
+   "farthest_from_the_line": 15.405,
+   "largest_drive": 220916666432096,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b16_g0": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 11.035,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 3,
+   "state_sha256": "cdd72fc53bc0b423edcdb270cb5056cb35c09728b940bb5eaa509028763fa0b0",
+   "audit_sha256": "ca03de3f5a746c546e096a46f8b005d13cd9e929f662391ddaf1f3aca65be5a8",
+   "events_sha256": "56d3cf860144e15abeb081f7b2e89b8e8f6be3216def545db6c2d85fc2a642b5",
+   "click": {
+    "event": "click",
+    "tick": 156,
+    "node": [
+     56,
+     34,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     65953811,
+     -6357197,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -2,
+    0
+   ],
+   "farthest_from_the_line": 17.116,
+   "largest_drive": 12307806874,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b16_g1": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 11.07,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 4,
+   "state_sha256": "3bbbff67a7d9f562fa4d2d058d4d5fab65ac5a08f674f700fc6c1e1a3e6b6f14",
+   "audit_sha256": "bc74ac87b4ebde21ac7123581d4e98aacabcf7409a83b685f9408dd01b525c62",
+   "events_sha256": "f4395fc2108c2764070ccd0d1ef24a216025367f77086d14d227f5b4a72bbfed",
+   "click": {
+    "event": "click",
+    "tick": 163,
+    "node": [
+     56,
+     32,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     64598346,
+     -12710734,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -4,
+    0
+   ],
+   "farthest_from_the_line": 17.18,
+   "largest_drive": 215503553614784,
+   "readings": {
+    "inside": 0,
+    "outside": 2,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b18_g0": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 10.903,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 2,
+   "state_sha256": "e40a0247a62077637fd35355278a5f0e416a5aa68ddfc74d3db39e7b44a3161b",
+   "audit_sha256": "ef40106581f7b3fe9121e0ffc0e58e9c54d4bbc4c191246271879250b7bad9ba",
+   "events_sha256": "5629d6fa6f3ca23af5acea441658c2070c7ea5772bcfbbf8f3ef83b0979c7ed1",
+   "click": {
+    "event": "click",
+    "tick": 156,
+    "node": [
+     56,
+     36,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     66214281,
+     -5400304,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -2,
+    0
+   ],
+   "farthest_from_the_line": 19.22,
+   "largest_drive": 12206833896,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_b18_g1": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 10.879,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 4,
+   "state_sha256": "ecd3eec924d06f84bbfc0e679481ed11fb41317c7578bb6e5f8db5768f60ca77",
+   "audit_sha256": "f08a1beb2dacd7578c2fdd21c120d2395da850c556f9ccba53568ee30dccde9a",
+   "events_sha256": "7d47cbca266e0cb197e299cda1b96165e67526c04d9315f96b029bc81c36e231",
+   "click": {
+    "event": "click",
+    "tick": 164,
+    "node": [
+     56,
+     34,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     63315268,
+     -12219759,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    -4,
+    0
+   ],
+   "farthest_from_the_line": 19.322,
+   "largest_drive": 211425668528256,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_control_b10": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 0.49,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 0,
+   "state_sha256": "22b8a0072aa21bafaa9d09944e96185cafbd058064d16973daca454e83304b55",
+   "audit_sha256": "97efb7a7e0439d2b01696c0b7d196c5eba6c0851cd120d2b7d6d57e342aed710",
+   "events_sha256": "6efe58af684fa30f56b6a9ecc840b9cb39278c73f9c9b2cb3b6c28fa48cd0bf8",
+   "click": {
+    "event": "click",
+    "tick": 150,
+    "node": [
+     56,
+     30,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     67108864,
+     0,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    0,
+    0
+   ],
+   "farthest_from_the_line": 10.0,
+   "largest_drive": 4160749568,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_control_b12": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 0.47,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 0,
+   "state_sha256": "22b8a0072aa21bafaa9d09944e96185cafbd058064d16973daca454e83304b55",
+   "audit_sha256": "370a942a4a3469b6e69b1fceeffbd95f2df01b4b61a6f722f20e3d13a6d95c37",
+   "events_sha256": "03b84a9974adf8d3cd02706b041a6140fc953e04fbbf03a66e98f2115f8c52fd",
+   "click": {
+    "event": "click",
+    "tick": 150,
+    "node": [
+     56,
+     32,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     67108864,
+     0,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    0,
+    0
+   ],
+   "farthest_from_the_line": 12.0,
+   "largest_drive": 4160749568,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_control_b14": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 0.469,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 0,
+   "state_sha256": "22b8a0072aa21bafaa9d09944e96185cafbd058064d16973daca454e83304b55",
+   "audit_sha256": "58374e800bbe51d0110e5f6b44d86bd003543696823531f279d7dd74f9f9fe14",
+   "events_sha256": "f09d95d6493c098809b532ca20bfc0ab5c588e469cea00ae932855d4f04f0424",
+   "click": {
+    "event": "click",
+    "tick": 150,
+    "node": [
+     56,
+     34,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     67108864,
+     0,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    0,
+    0
+   ],
+   "farthest_from_the_line": 14.0,
+   "largest_drive": 4160749568,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_control_b16": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 0.476,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 0,
+   "state_sha256": "22b8a0072aa21bafaa9d09944e96185cafbd058064d16973daca454e83304b55",
+   "audit_sha256": "aa2f4b086171a6b69e71fa80444ff35af9aab5c045eb4cb9471a07affa93aa9b",
+   "events_sha256": "9e3edbc4fb55d48e111dbdcb9a67cc400557c4ddbfb60bb6578bee77b68a34aa",
+   "click": {
+    "event": "click",
+    "tick": 150,
+    "node": [
+     56,
+     36,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     67108864,
+     0,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    0,
+    0
+   ],
+   "farthest_from_the_line": 16.0,
+   "largest_drive": 4160749568,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  },
+  "body_control_b18": {
+   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "completed_ticks": 300,
+   "elapsed_seconds": 0.473,
+   "hypotheses": [
+    "optical-v1",
+    "drive-b-v1"
+   ],
+   "fast_steps": 0,
+   "state_sha256": "22b8a0072aa21bafaa9d09944e96185cafbd058064d16973daca454e83304b55",
+   "audit_sha256": "adf94e0805983c4bbd99c1609dbc84a657f37982e766e7f929cbbf40d6b73f52",
+   "events_sha256": "917e0d9d17099ee00b5dadfec4ce7dc77f13b612a8a7932abc21c36a5686fd95",
+   "click": {
+    "event": "click",
+    "tick": 150,
+    "node": [
+     56,
+     38,
+     20
+    ],
+    "measured": 1,
+    "detector": "face:+x",
+    "family": "probe",
+    "number": 1,
+    "amount": 64,
+    "phase": 0,
+    "momentum": [
+     67108864,
+     0,
+     0
+    ],
+    "content": 64,
+    "held": [
+     64,
+     0,
+     0
+    ],
+    "home": [
+     0,
+     0,
+     0
+    ],
+    "home_content": [
+     0,
+     0,
+     0
+    ]
+   },
+   "clicks": null,
+   "links_before": [
+    54,
+    0,
+    0
+   ],
+   "farthest_from_the_line": 18.0,
+   "largest_drive": 4160749568,
+   "readings": {
+    "inside": 2,
+    "outside": 0,
+    "record_checks_failed": 0
+   }
+  }
  }
 }

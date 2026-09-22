@@ -7060,6 +7060,29 @@ sequential gates on an entangled record, the full register replay.
   speed-up that the first draft's pins missed (the reviewer's MUST-FIX
   1) and is not registered. No pin moved; the register
   examples/events/optical/README.md.
+- **Step 3, the body's drive under the one wall** (2026-09-22, branch
+  optical-body-drive; form B composed with optical-v1,
+  docs/designs/one_wall/BODY_DRIVE.md: the body's directional drive a
+  member of the age wall's set at gamma, the clock at 1, the flight at
+  1 + gamma; a moving body's charge (w, Q S), the rows' weight on its
+  momentum): one fast body (content 64, S = 16384, p = 2^26, the Lorentz
+  factor 2, v^2 = 3/4) beside the light worlds' mass at b = 10, 12, 14,
+  16, 18 at gamma 0 and 1, the pins per world from the map's body walk
+  committed before the run (the click's tick +- 1 and Node). DETECTOR:
+  the first run at the mass 2^12 (a generator slip, the crowd sixteen
+  times weaker) clicked at 150 / 151 with no fall, tick for tick the
+  walk's at that crowd, its click momenta reading the weight's 7/4 (the
+  ratio 1.785) and the engine's push 8 to 16 per cent below the map's;
+  the run at 2^16: gamma 0 the ticks 158, 156, 156, 156, 156 from y 27,
+  30, 32, 34, 36 (the pins 159, 158, 158, 157, 156 from 27, 29, 31, 33,
+  36), gamma 1 167, 166, 163, 163, 164 from 24, 27, 30, 32, 34 (the pins
+  168, 166, 166, 164, 164 from 23, 26, 28, 31, 34), the controls 150
+  exact: 16 readings inside, 14 outside, one y-Link of fall less than
+  the walk at six worlds (the push 8 to 16 per cent below the stationary
+  crowd). Read: the drive member at gamma 1 (the ticks 2 to 4 intervals
+  past the drive unstretched at four of five b), the weight (the fall
+  doubling from gamma 0 to 1 where the charge (M, 1) gives one Link).
+  No pin moved.
 - **The fast worlds, the wall's factor on matter read** (2026-09-22,
   branch optical-every-family, 22064bc3 the pins then the run; the
   chief physicist): a slow row's stretch is swamped by Newton's fall, so

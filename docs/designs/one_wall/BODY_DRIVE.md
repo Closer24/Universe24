@@ -205,6 +205,58 @@ map's stationary lines, which left the fast rows' beam inside every pin
 and a single slow row one to three intervals off (EVERY_FAMILY.md 5b): a
 miss is reported with the engine's number and its cause, no pin moved.
 
+
+## 4a. The runs (2026-09-22): the first run at the mass 2^12, the run at 2^16
+
+The first run's generator left the light worlds' mass factor out (the
+mass 4096 = 2^12, the crowd sixteen times weaker than the pins' world):
+DETECTOR every body clicked at tick 150 (gamma 0) or 151 (gamma 1) from
+its own line's Node, no Link of fall; the map's body walk at that crowd
+(the scale 1) gives the same ten clicks, tick for tick and Node for Node,
+and the click's momentum, the label the body carries out (DETECTOR),
+read the push: at b = 10 the momentum's y -506339 at gamma 0 and -903936
+at gamma 1 (the walk's -548755 and -979333; the ratio 1.785, the weight's
+1 + gamma v^2 = 7/4 within one per cent), the engine's push 8 to 16 per
+cent below the map's stationary crowd at every b, the same shortfall and
+sign as the slow rows' (EVERY_FAMILY.md 5b). The one interval of gamma
+1 over gamma 0 at that crowd is the drive member's stretch, read at the
+detector and in the walk. The worlds regenerated with the mass 2^16
+(the generator's `MASS_FACTOR`), the pins untouched, and run again
+(`tools/run_series.py --jobs 2`, 300 intervals, 11 s per mass world;
+`tools/drive_b_readings.py --expectations body_expectations.json
+--register`, the run blocks in the register):
+
+| World | the click, DETECTOR: tick; the Node's y | the pin (tick +- 1; y) | inside | the drive unstretched | the charge (M, 1) |
+| --- | --- | --- | --- | --- | --- |
+| `body_b10_g0` | 158; 27 | 159; 27 | yes | 159; 27 | 156; 29 |
+| `body_b12_g0` | 156; 30 | 158; 29 | no (one Link of fall less, two intervals earlier) | 158; 29 | 154; 31 |
+| `body_b14_g0` | 156; 32 | 158; 31 | no (the same) | 158; 31 | 154; 33 |
+| `body_b16_g0` | 156; 34 | 157; 33 | no (the same) | 157; 33 | 154; 35 |
+| `body_b18_g0` | 156; 36 | 156; 36 | yes | 156; 36 | 154; 37 |
+| `body_b10_g1` | 167; 24 | 168; 23 | no (one Link less, the tick inside) | 164; 23 | 159; 29 |
+| `body_b12_g1` | 166; 27 | 166; 26 | no (one Link less, the tick exact) | 162; 26 | 158; 31 |
+| `body_b14_g1` | 163; 30 | 166; 28 | no (two Links less, three intervals earlier) | 163; 28 | 157; 33 |
+| `body_b16_g1` | 163; 32 | 164; 31 | no (one Link less, the tick inside) | 161; 31 | 157; 35 |
+| `body_b18_g1` | 164; 34 | 164; 34 | yes | 161; 34 | 157; 37 |
+| the five controls | 150; 20 + b | 150; 20 + b | yes | | |
+
+Sixteen readings inside and fourteen outside (the click and the Links
+of each world), no pin moved. The cause, named and checked: the engine's
+push is 8 to 16 per cent below the map's stationary crowd (the first
+run's momenta above), one y-Link less of fall at six of the seven
+worlds outside and two at one, the tick following the Links (2.7
+intervals per Link at this pace). What the run decides: (1) the drive
+member: at gamma 1 the ticks 167, 166, 163, 164 at b = 10, 12, 16, 18
+are 2 to 4 intervals past the drive unstretched (164, 162, 161, 161)
+and within one of the rule's (168, 166, 164, 164); at b = 14 the two
+Links of fall less cover the member (163 against 163 and 166); the
+first run's 151 against 150 the member at the weak crowd; (2) the
+weight: the fall doubles from gamma 0 to gamma 1 at every b (3 to 6, 2 to
+5, 2 to 4, 2 to 4, 2 to 4 pixels) where the charge (M, 1) gives one at
+both, and the click's momenta of the first run read 7/4; (3) the
+controls exact. A world of the beam's width for bodies is the follow-up
+that averages the Link's grain, as the fast rows did for the rows.
+
 ## 5. The tests, written first (`tests/test_optical_body.py`)
 
 (o) the set's members and coefficients under each key; (p) a body on a

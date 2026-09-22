@@ -40,10 +40,18 @@ before the first run:
 (r) the refusal: a moving body under `optical` without `drive_b` is
     refused at load naming `drive_b`; a fixed body and a body at rest
     load; a body whose (Q S M)^2 leaves the working bound is refused
-    naming the rule.
+    naming the rule;
+(t) the deciding worlds (`examples/events/optical/body_*.json`, the
+    register `body_expectations.json`): the fifteen worlds load under both
+    keys with the light worlds' mass 2^16 and the body's momentum
+    (2^26, 0, 0) at `width` 16384; the pins as the note's section 4 has
+    them (body_b10_g1: tick 168 from (56, 23, 20); the controls 150).
 """
 
 from __future__ import annotations
+
+import json
+from pathlib import Path
 
 import pytest
 
@@ -57,6 +65,7 @@ from event_universe.events.measured import (
     age_wall_set,
 )
 from event_universe.events.world import HEADING_OFFSET, T_HEADING, Q, body_weight, drive_wall
+from event_universe.world_loading import load_world
 
 PLUS_Y = HEADING_OFFSET + 2
 # The twelve diagonals of the optical tests' fan: every heading has a
@@ -270,3 +279,40 @@ def test_a_moving_body_under_optical_needs_the_directional_drive():
     parse_nature_beam_world(document)
     with pytest.raises(OverflowError, match="working bound"):
         body_weight([0, 0, 0], MAX_WORK_INT // (Q * 16384) + 1, 16384, 1)
+
+
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events" / "optical"
+
+
+def test_the_body_worlds_load_under_both_keys_and_carry_their_pins():
+    """(t)."""
+    register = json.loads((WORLDS / "body_expectations.json").read_text(encoding="utf-8"))
+    pins = register["worlds"]
+    assert pins["body_b10_g1"]["click"] == {
+        "tick": 168,
+        "tolerance": 1,
+        "face": "face:+x",
+        "node": [56, 23, 20],
+        "links_before": [54, -7, 0],
+    }
+    assert pins["body_b10_g1"]["refuting_readings"] == {
+        "drive_unstretched": {"tick": 164, "y": 23},
+        "charge_content_over_one": {"tick": 159, "y": 29},
+    }
+    for b in (10, 12, 14, 16, 18):
+        for name in (f"body_b{b}_g0", f"body_b{b}_g1", f"body_control_b{b}"):
+            loaded = load_world(
+                (WORLDS / f"{name}.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent
+            )
+            world = loaded.world
+            assert world.drive_b and world.optical is not None and world.width == 16384
+            body = world.measured[0]
+            assert list(body.momentum) == [1 << 26, 0, 0] and tuple(body.position) == (2, 20 + b, 20)
+            assert not body.fixed and world.column_scales[0] == 1 << 20
+            if name.startswith("body_control"):
+                assert len(world.measured) == 1
+            else:
+                assert world.measured[1].fixed and world.measured[1].amount == 1 << 16
+            assert pins[name]["click"]["tick"] == (
+                150 if "control" in name else pins[name]["click"]["tick"]
+            )
