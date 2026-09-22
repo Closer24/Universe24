@@ -3043,6 +3043,77 @@ CORRECTIONS = [
         "under the directional drive (form B, not built),",
         "under the directional drive (form B, built off by default, series Y),",
     ),
+    # The fourth referee read (2026-09-22), the owner's word 'fix what is needed': points 1 to 9 verified and folded; 10 (the length) not.
+    (
+        "referee 4, point 1: the body's acceleration carries the drive's conversion, c / (N_w tau_L)",
+        "so a body's acceleration is $+(N_l c/\\tau_L)\\,\\nabla \\mathcal A$, up the age moment's field, toward the source.",
+        "so a body's acceleration, the push over $N_l N_w M_A$ (the drive's conversion of a push to a pace, as in Eq.~\\eqref{eq:coulomb}'s $a_e$), is $+(c/(N_w\\tau_L))\\,\\nabla \\mathcal A$, up the age moment's field, toward the source.",
+    ),
+    (
+        "referee 4, point 2: Theorem 5 named for what it proves",
+        "\\begin{theorem}[Exact marginals; no-signalling of the counts]\\label{th:marginals}",
+        "\\begin{theorem}[Exact count marginals]\\label{th:marginals}",
+    ),
+    (
+        "referee 4, point 2: the operational statement after the channel",
+        "open until the wheel is other than a counter, which P4 (no draw) does not allow, or the claim is kept to the counts, as it is here.",
+        "open until the wheel is other than a counter, which P4 (no draw) does not allow, or the claim is kept to the counts, as it is here. Stated plainly: the law as built, with its sequential wheel, does not meet operational no-signalling; its counts are blind to the other party's setting, the order of its outcomes is not, and until the wheel is other than a counter the pair's construction models a Bell experiment in its counts only, not in its record of outcomes.",
+    ),
+    (
+        "referee 4, point 2: the ledger's row",
+        "Exact marginals; no-signalling of the counts (the order of the outcomes signals) & the one gather, the nearest rung & equal weights; open beyond & exact & \\ref{sec:bell} \\\\",
+        "Exact count marginals; no-signalling of the counts only (the order of the outcomes signals) & the one gather, the nearest rung & equal weights; open beyond & exact & \\ref{sec:bell} \\\\",
+    ),
+    (
+        "referee 4, point 3: the finite-grain value, a prediction on a condition",
+        "\\paragraph{The one prediction.} The law's number is",
+        "\\paragraph{The finite-grain value, and what would make it a prediction.} The construction's number is",
+    ),
+    (
+        "referee 4, point 3: the condition stated at the paragraph's end",
+        "which the model does not model; the comparison with nature is Section~\\ref{sec:checks}.",
+        "which the model does not model; the comparison with nature is Section~\\ref{sec:checks}. It is a prediction of the law only once the pair's wheel meets no-signalling in the order of the outcomes (above), which the sequential wheel as built does not; until then it is the exact consequence of the declared construction at its grain.",
+    ),
+    (
+        "referee 4, points 3, 4 and 9: the abstract's prediction, Tsirelson's value, and the limitation",
+        "twelve fail and one is not compared, the failures the law's own. One prediction: $S = 181/64$, inside Poh et al. at $1.05$ standard errors.",
+        "twelve fail and one is not compared, the failures the law's own. The law as built meets (A1) and not (A2), so it recovers no relativistic dynamics; and its sequential wheel signals in the order of the pair's outcomes, though not in their counts. One finite-grain value, $S = 181/64$, inside Poh et al. at $1.05$ standard errors, a prediction once the wheel meets no-signalling in the order of its outcomes.",
+    ),
+    (
+        "referee 4, point 4: Tsirelson's value a limit, not a bound at finite grain",
+        "recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's bound, Young's spacing,",
+        "recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's value $2\\sqrt2$ (a limit, not a bound of the construction, whose finite-grain $S$ lies on both sides of it), Young's spacing,",
+    ),
+    (
+        "referee 4, point 5: the conditional extension named at its head",
+        "\\paragraph{Inside and Outside, and how a click arrives at Lorentz.} A packet moved Inside,",
+        "\\paragraph{Inside and Outside, and how a click arrives at Lorentz.} This paragraph and the two after it are the conditional extension of the law, the click frame under (A1) and (A2): where (A2) enters, the result is not a consequence of the law as built, which meets (A1) only, and each line names it; the $r$-free lines follow from (A1), (A3) and the conversion alone. A packet moved Inside,",
+    ),
+    (
+        "referee 4, point 6: W declared, beside its equation",
+        "multiplied by $c^4$ it is the energy--momentum relation of special relativity (series S, Table~\\ref{tab:conversion}, inside their pins).",
+        "multiplied by $c^4$ it is the energy--momentum relation of special relativity (series S, Table~\\ref{tab:conversion}, inside their pins). Eq.~\\eqref{eq:square} is a declared identity of the record's representation in the law as built, not derived from the rows' dynamics; under (A2), an extension the law does not meet, $W$ is shown to second order (Section~\\ref{sec:discussion}).",
+    ),
+    (
+        "referee 4, point 7: the depth of successive rotations against the bound",
+        "a run that would pass either is refused (P1's bound, named here).",
+        "a run that would pass either is refused (P1's bound, named here). In the row form of Theorem~\\ref{th:isometry} a rotation multiplies $\\mathtt m$ by $65536$, so four in succession would pass the law's bound; the engine does not carry that factor, keeping a record's label set and applying the tables once at the click's form, the cell's weight reduced by its greatest common divisor, so the depth of successive rotations is not limited by the bound; where the bound binds, it is a limit of the implementation's domain and never a prediction.",
+    ),
+    (
+        "referee 4, point 8: the theorem's name",
+        "\\begin{theorem}[The lattice Gleason]\\label{th:gleason}",
+        "\\begin{theorem}[The quadratic read-out on the phase lattice, a Gleason-like characterization]\\label{th:gleason}",
+    ),
+    (
+        "referee 4, point 8: the paragraph's name",
+        "\\paragraph{The click's square as a positive quadratic form: a lattice Gleason.}",
+        "\\paragraph{The click's square as a positive quadratic form: a quadratic read-out characterization.}",
+    ),
+    (
+        "referee 4, point 8: the discussion's list",
+        "the lattice Gleason on $\\Z_{\\Nphi}$, the measurable $1 - v^2$",
+        "the quadratic read-out characterization on $\\Z_{\\Nphi}$ (Gleason-like), the measurable $1 - v^2$",
+    ),
 ]
 
 

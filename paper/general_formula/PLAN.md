@@ -4670,3 +4670,50 @@ a wave" is right for the count over many clicks; one click is one Node.
    a diagonal body is the per-axis walk); the discussion's "form B, not
    built" to "built off by default, series Y". Record 938's "not built"
    was wrong (PR #813 at e0761893).
+
+## Applied (2026-09-22, the owner's word "be critical and fix what is needed"): the fourth referee read, points 1 to 9; point 10 not
+
+1. The body's acceleration in the age moment's field: the sentence of
+   the third read's sign fix carried the flow's coefficient; the body's
+   acceleration is the push over N_l N_w M_A (the drive's conversion,
+   as Eq. coulomb's a_e), so +(c / (N_w tau_L)) grad A, verified
+   against Section 4's push and a_e. Corrected.
+2. Theorem 5 renamed "Exact count marginals"; after the channel, the
+   plain statement that the law as built with its sequential wheel does
+   not meet operational no-signalling, its counts blind to the other
+   setting and its order not, the pair's construction a model of a Bell
+   experiment in its counts only; the ledger's row the same.
+3. "The one prediction" became "The finite-grain value, and what would
+   make it a prediction": a prediction of the law once the wheel meets
+   no-signalling in the order of the outcomes, until then the exact
+   consequence of the declared construction at its grain; the abstract
+   the same.
+4. Tsirelson's value 2 sqrt 2 named a limit and not a bound of the
+   construction at finite grain (S on both sides of it), in the abstract;
+   the Bell section already said so.
+5. The conditional extension named at the head of the frame paragraph:
+   the click frame under (A1) and (A2), where (A2) enters not a
+   consequence of the law as built, the r-free lines from (A1), (A3) and
+   the conversion alone; the owner's framing sentence and the chain
+   sentence untouched.
+6. Beside Eq. (square): a declared identity of the record's
+   representation in the law as built, not derived from the rows'
+   dynamics; under (A2) shown to second order.
+7. The depth of successive rotations against the bound: in the row form
+   a rotation multiplies m by 65536, four would pass 2^62 - 1; the
+   engine keeps the label set and applies the tables once at the click
+   (amplitude.py, rotate; the cells' weight reduced by its gcd), so the
+   depth is not limited; where the bound binds, a limit of the
+   implementation's domain, never a prediction.
+8. "The lattice Gleason" renamed "The quadratic read-out on the phase
+   lattice, a Gleason-like characterization", the paragraph and the
+   discussion's list with it.
+9. The abstract carries the limitation: the law as built meets (A1) and
+   not (A2), recovers no relativistic dynamics, and its sequential wheel
+   signals in the order of the pair's outcomes though not in their
+   counts. The abstract's structure is the owner's and stays.
+10. The length (25 to 30 pages, the history and the tables to a
+    supplement): not applied; the owner's items and his word on the
+    page.
+
+No number, verdict or citation removed; 40 pages.
