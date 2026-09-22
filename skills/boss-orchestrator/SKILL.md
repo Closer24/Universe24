@@ -29,12 +29,29 @@ check runs; the records of the wake are then written in one batch and
 checked once (`python tools/check.py` takes minutes; one run per batch,
 never one per record).
 
-**No new agent without the owner's word; the existing sessions only (the
-model owner, 2026-09-21, record 413).** The Boss opens no session and no
-in-session subagent on its own: a new order goes to one of the owner's
-existing sessions (their titles are his), and when none fits the Boss asks
-him for one in one line. Idle sessions are closed when he says so, and a
-session he closed stays closed.
+**Every new task, a new session; an existing session only for exactly the
+same task (the model owner, 2026-09-22, record 578; supersedes the
+existing-sessions-only rule of record 413).** Four rules, the owner's words:
+(1) when to open: "every new task, a new subagent; continue an existing one
+only if it is exactly the same task"; a session lives from its order to the
+merge of its PR (or the owner's word that closes the item) and is archived
+then; (2) what passes: "give it only the relevant files and the conclusion,
+not the debugging process"; the order carries the state (the branch and
+head, the files, the pins, the decision that stands, the record numbers),
+never the history of how the Boss got there; (3) the report: "a summary of
+what it did, not all the output": the six lines with the head SHA and the
+gates' exits, never a log; (4) no needless splitting: "do it yourself,
+without a subagent" for a small task (a record, a PR opened or merged, a
+one-line label, a grep, a read of one diff): every session starts from zero
+and rediscovers what the Boss already knows. The sessions kept across tasks
+are the three whose task is one continuing thing: the paper coordinator (the
+paper's one writer), the chief physicist (the law's physics word) and the
+derivation mathematician (DERIVATIONS_BEAM's one writer); a session mid-task
+finishes it (Far 2 to the Bresenham merge; the Replicator to the register
+fixes' merge) and is then archived; a runner, a reviewer or an Architect item
+opens a new session per item with its state. The same rule binds the Boss's
+in-session subagents (the Agent tool). A session the owner closed stays
+closed.
 
 **No new work without the owner's word; every question comes with a proposed
 solution (the model owner, 2026-09-21, record 434).** The list of work in
