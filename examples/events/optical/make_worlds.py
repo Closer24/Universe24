@@ -169,6 +169,7 @@ def expectations() -> Json:
             }
     out["run_2026_09_21"] = RUN_2026_09_21
     out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
+    out["run_2026_09_22_bresenham"] = RUN_2026_09_22_BRESENHAM
     for name, pin in PINS.items():
         out["ratios"][name] = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -277,6 +278,73 @@ RUN_2026_09_21_M1: dict[str, object] = {
         "before; the shifts inside 0.5 pixel in two of four (three before M1): near at f = 2 now "
         "outside by 1.06, a survivors' reading with 547 taken; the shifts' ratio outside as before; "
         "the rule and the pins unchanged"
+    ),
+}
+
+
+# The re-read of 2026-09-22 on branch optical-v1-bresenham (the model
+# owner's GO of record 536: verb 3's label by Bresenham along the line of
+# P; the chief physicist's DERIVED word: a pushed row's pace is its
+# momentum's); the M1 re-read's value beside each as "was"; DETECTOR
+# unless marked.
+RUN_2026_09_22_BRESENHAM: dict[str, object] = {
+    "branch": "optical-v1-bresenham",
+    "after": "record 536 (verb 3 by Bresenham) and the chief physicist's word on the pace",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "worlds": {
+        "mass_g0": {
+            "shift": -1.993,
+            "delay": 2.95,
+            "clicks": 1347,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -1.622, "delay": 2.97, "clicks": 1398, "taken_by_the_mass": 0},
+        },
+        "mass_g1": {
+            "shift": -3.989,
+            "delay": 5.10,
+            "clicks": 1394,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.805, "delay": 5.88, "clicks": 1389, "taken_by_the_mass": 0},
+        },
+        "near_g0": {
+            "shift": -2.608,
+            "delay": 2.99,
+            "clicks": 1453,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.000, "delay": 2.40, "clicks": 1455, "taken_by_the_mass": 0},
+        },
+        "near_g1": {
+            "shift": -6.412,
+            "delay": 6.20,
+            "clicks": 1452,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.274, "delay": 4.51, "clicks": 1001, "taken_by_the_mass": 547},
+        },
+    },
+    "ratios": {
+        "mass": {
+            "shift_f2_over_f1": 2.00,
+            "delay_f2_over_f1": 1.73,
+            "was": {"shift_f2_over_f1": 2.35, "delay_f2_over_f1": 1.98},
+        },
+        "near": {
+            "shift_f2_over_f1": 2.46,
+            "delay_f2_over_f1": 2.07,
+            "was": {"shift_f2_over_f1": 1.09, "delay_f2_over_f1": 1.88},
+        },
+    },
+    "gameboard_mean_transverse_angle_degrees": {
+        "mass_g0": -4.225,
+        "mass_g1": -9.097,
+        "near_g0": -6.812,
+        "near_g1": -14.478,
+        "was": {"mass_g0": -4.203, "mass_g1": -8.976, "near_g0": -6.993, "near_g1": -8.277},
+    },
+    "note": (
+        "the controls byte identical; the law's 2.00 read in the mass world's shifts (the comb "
+        "gone); the mass delays inside their pins, their ratio 1.73 outside 2.00 +- 0.25 by 0.02, "
+        "the reading that decides, recorded as it is; near at f = 2 the whole beam (0 taken), "
+        "outside its shift and delay pins; the rule and the pins unchanged"
     ),
 }
 

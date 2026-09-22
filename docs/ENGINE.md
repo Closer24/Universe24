@@ -496,9 +496,18 @@ Q d content **u**_D + **W** by Bresenham (the model owner's GO of record
 its walked Links (the fields `cross`, read from the first push on), the
 label chosen among D and its fan neighbours as the one whose next Link
 **h** advances along **P** and keeps |**c** + **h** x **P**|^2 smallest,
-ties to D, the momentum conserved across the turn and
-the flight's residue rescaled to the new direction's rate, s' = (s x
-S_new) // S_old, the time of the row's last Link (records 494 and 496;
+ties to D, the momentum conserved across the turn; a pushed row's pace
+is its momentum's (the chief physicist's word of 2026-09-21, DERIVED:
+the flight's one rule is the Euclidean pace 1 / sqrt 3 along the line
+walked, and the line walked is **P**'s): the pair in its wall is the
+primitive **P**'s (**P** over the gcd of its components), S_1(P) and
+T(P) = isqrt(3 |P|^2 Q^2), the rate 2 S_1(P) Q d against the wall
+2 T(P) (d + f n A) (`nature_beam.momentum_pair`), and its residue is
+rescaled by S_1(P') / S_1(P) at every push, the label's S_1 before the
+first, floor, the sub-unit remainder dropped (record 496's rule for the
+time of the last Link, generalised: the pace's direction changed), not
+at the label's turn; the label D is then the phase's, the click's
+momentum label and the books' alone (records 494 and 496;
 `nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
 turn verb per row), with a direction that has no neighbour within a right
 angle, with gamma out of range, and with the key `massive_rows` (the

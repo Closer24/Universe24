@@ -193,3 +193,48 @@ was 1.744; 80 rows at f = 2 for 122 at f = 1, was 99 for 122); per row
 the angle of **P** against the label's, the mean +0.53 / -0.52 degrees
 (`mass`, was +0.55 / -0.29) and +0.48 / -0.35 (`near`, was +0.57 /
 +0.08), the largest 1.7 to 3.6 degrees (was 3.0 to 4.2).
+
+## Re-read under verb 3's form by Bresenham with the momentum's pace (2026-09-22, branch optical-v1-bresenham)
+
+The model owner's GO (record 536): verb 3's label follows the line of
+**P** by Bresenham (the error accumulator `cross`, the label chosen among
+D and its fan neighbours by the next Link's |**c** + **h** x **P**|^2);
+the chief physicist's word on the build's first reading (DERIVED): a
+pushed row's pace is its momentum's, the pair (S_1(P), T(P)) of the
+primitive **P** in the wall and the residue rescaled by S_1(P') / S_1(P)
+at every push. The one truncation of the flight's time is now per push
+rather than per turn: the sub-unit remainder of that rescale, under
+1 / (2 Q d S_1(P)) of an interval (about 10^-13 here), dropped; whether
+it is carried at the price of a denominator per row stays the model
+owner's footnote. The six worlds run on the head (`tools/run_series.py
+--jobs 2`, 400 intervals), read by the same tools; the two controls byte
+identical to the first run (no crowd, no push), the four mass worlds
+moved. DETECTOR, the M1 re-read's value beside each new one as "was":
+
+| World | f | clicks in the window (control 1455) | centroid y, shift | width rms y, delta | mean age, delay | count ratio | light the mass took | pinned shift / delay | inside |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `mass_g0` | 1 | 1347 (was 1398) | 24.007, -1.993 (was -1.622) | 2.839, +0.010 (was +0.502) | 92.35, +2.95 (was +2.97) | 0.9258 (was 0.9608) | 0 (was 0) | -1.93 / 2.68 | yes / yes |
+| `mass_g1` | 2 | 1394 (was 1389) | 22.011, -3.989 (was -3.805) | 2.848, +0.020 (was +0.836) | 94.50, +5.10 (was +5.88) | 0.9581 (was 0.9546) | 0 (was 0) | -3.86 / 5.36 | yes / yes |
+| `near_g0` | 1 | 1453 (was 1455) | 20.392, -2.608 (was -3.000) | 4.124, +1.296 (was +1.367) | 92.39, +2.99 (was +2.40) | 0.9986 (was 1.0000) | 0 (was 0) | -2.42 / 2.17 | yes (by 0.19; was no) / yes |
+| `near_g1` | 2 | 1452 (was 1001) | 16.588, -6.412 (was -3.274) | 5.677, +2.848 (was +1.638) | 95.60, +6.20 (was +4.51) | 0.9979 (was 0.6880) | 0 (was 547) | -4.83 / 4.34 | no (by 1.08) / no (by 0.86) |
+
+The ratios f = 2 over f = 1: the shifts 2.00 (`mass`, 3.989 / 1.993 =
+2.0015, was 2.35: the law's 2.00 within 0.25, read for the first time)
+and 2.46 (`near`, was 1.09), the delays 1.73 (`mass`, 5.10 / 2.95, was
+1.98; outside 2.00 +- 0.25 by 0.02) and 2.07 (`near`, was 1.88). The
+centroid in z 20.000 in every world; the mass takes no light in any of
+the four (was 547 in `near` at f = 2): the rows along **P**'s line pass
+it, and `near` at f = 2 reads the whole beam, no longer a survivors'
+reading. What the re-read decides, in the physicist's order: (1) the
+wall's factor as Shapiro's, the mass delays 2.95 / 5.10 inside the pins
+2.68 / 5.36 +- 1, `near`'s 2.99 inside 2.17 +- 1 and 6.20 outside
+4.34 +- 1 by 0.86; the mass delays' ratio 1.73 leaves 2.00 +- 0.25 by
+0.02, the reading that decides, recorded as it is; (2) the shifts inside
+0.5 pixel in three of four, `near` at f = 1 now inside (was outside by
+0.08) and `near` at f = 2 outside by 1.08 (the beam bent more than the
+one-line pin at b = 3); (3) the shifts' ratio read at this fan: `mass`
+2.00, the comb gone; `near` 2.46 (the beam's width at b = 3). No pin was
+changed; a pin the run does not meet is reported with the engine's
+number. The head before the physicist's word (c0e8187, the label's pace
+on **P**'s line) read the mass shifts -1.794 / -3.966 (2.21) and the
+delays -1

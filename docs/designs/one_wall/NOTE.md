@@ -445,6 +445,35 @@ cosine table at 1/256 is untouched; the key off by default guards the
 gates. `tests/test_optical.py` (i), and (b), (c), (g) re-derived under
 the form.
 
+The pace of a pushed row (the chief physicist's word of 2026-09-21 on
+the build's first reading, DERIVED, not a choice): the flight's one rule
+is the Euclidean pace 1 / sqrt 3 Links per interval along the line
+walked; a Manhattan Link of a line D is |D| / S_1(D) Euclidean, so the
+pace per Manhattan Link is T(D) / (S_1(D) Q) intervals, the pace of the
+line walked. Under the nearest-tooth verb the line walked was the
+label's and the label's pair was right; under Bresenham the line walked
+is **P**'s, and a row charged the label's pace on **P**'s line walks at
+the wrong speed (labelled (24, 1, 0) or (12, 1, 0) it paid 1.664 or 1.604
+intervals per Link for Links that are +x's 1.719 and outran the control
+by 3.3 to 7.2 per cent: the first run's delays, mass -1.02 / +3.34
+intervals, read exactly that). So the pair in a pushed row's wall is the
+momentum's: **P** over the gcd of its three components (exact, the same
+direction, the content out), S_1(P) and T(P) = isqrt(3 |P|^2 Q^2), the
+rate 2 S_1(P) Q d against the wall 2 T(P) (d + f n A); the residue is
+rescaled by S_1(P') / S_1(P) at every push (the label's S_1 before the
+first), floor, the sub-unit remainder dropped, under 1 / (2 Q d S_1) of
+an interval per push, the one truncation of the flight's time, declared
+in the entry per push rather than per turn; the label D is then the
+phase's, the click's momentum label and the books' alone. T(P) is the
+law's own integer root, the resolution the law takes of every direction
+at load, here per pushed row when **P** changes: a bounded host cost,
+no float, no new primitive. The three tests: generic (the flight's one
+primitive on an integer direction, the row's **P** in place of a table's
+D), vector (no root beyond isqrt), local (the row's own **P**, **c** and
+residue, the crowd's moments at its Node). Record 496's residue rule is
+generalised, not superseded: rescaled by the rate's ratio whenever the
+pace's direction changes. `tests/test_optical.py` (j).
+
 ## 10. Questions for the owner, through the Boss, stated on the GameBoard first
 
 1. **On the pair**: the rule makes the world's suspension pair the

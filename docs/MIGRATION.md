@@ -206,7 +206,28 @@ without the key). Under the key:
   step at the row's place) advances along **P** and keeps |**c** + **h** x
   **P**|^2 smallest, ties to D and then to the fan's order; when the label
   moves to D', **W** += Q d content (**u**_D - **u**_D'): **P** is
-  conserved, the books' `turned` line takes the label's change. The
+  conserved, the books' `turned` line takes the label's change. A pushed
+  row's pace is its momentum's (the chief physicist's word of 2026-09-21
+  on this form, DERIVED, not a choice: the flight's one rule is the
+  Euclidean pace 1 / sqrt 3 along the line walked; under the nearest-
+  tooth verb the line walked was the label's and the label's pair was
+  right, under Bresenham it is **P**'s, and a row charged the label's
+  pace on **P**'s line walked at the wrong speed, 3.3 to 7.2 per cent
+  faster than the control on the near fan's teeth): the pair in its wall
+  is the primitive **P**'s, **P** over the gcd of its three components
+  (exact, the same direction, the content out), S_1(P) its Manhattan
+  length and T(P) = isqrt(3 |P|^2 Q^2) its resolution
+  (`nature_beam.momentum_pair`, the law's own integer root taken per
+  pushed row when **P** changes, a bounded host cost), the rate 2 S_1(P)
+  Q d against the wall 2 T(P) (d + f n A), refused naming the rule beyond
+  the working bound; its residue is rescaled by S_1(P') / S_1(P) at every
+  push (the label's S_1 before the first push), floor, the sub-unit
+  remainder dropped, under 1 / (2 Q d S_1) of an interval per push, the
+  one truncation of the flight's time, declared in the entry; not
+  rescaled at the label's turn (**P** is conserved there). The label D is
+  then the phase's (`phase_per_link` on the label's Links, the place of
+  the next Link on the label's line), the click's momentum label and the
+  books' alone. The
   push's accumulator is `push` on the row (`push_x`, `push_y`, `push_z`;
   not massive-rows' `acc_turn`, the phase's turn count, a different thing
   that is never in the set). The note's Q S content **u**_D + **w**
