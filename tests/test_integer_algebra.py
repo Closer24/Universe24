@@ -11,15 +11,21 @@ The gate reads the source as tokens and as a syntax tree, never running
 a world, and asserts on every physical module: (a) no float literal token;
 (b) no `/` operator token (only `//`); (c) no import of `random`,
 `fractions`, `decimal`, `cmath` or `statistics`, and of `math` only its
-integer functions `gcd` and `isqrt`; (d) every numpy dtype named is
-`int64`, `bool` or `object` (no `float*`, `complex*`, `floating`, no
-narrower integer); (e) none of numpy's functions that leave the integers
-(`sqrt`, `mean`, `float`, `true_divide`, `divide`, `exp`, `log`, `sin`,
-`cos`, `tan`, `average`, `std`, `var`); (f) a root (`math.isqrt` or
-`core.integer.integer_root`) only in the functions ALLOWED_ROOTS names,
-exactly those: a root that appears anywhere else fails, and a root that
-leaves a listed function fails too, so that the list is always the
-inventory. The reasons distinguish a rounding at load (a table constant,
+integer functions `gcd` and `isqrt`, and no alias of `math`, `isqrt` or
+`integer_root`; (d) every numpy dtype named is `int64`, `bool` or `object`
+(no `float*`, `complex*`, `floating`, no narrower integer), every
+allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` carries a `dtype`
+(float64 by default without one), `np.array` takes no non-integer
+literal, and `.astype` names one of the same; (e) none of numpy's
+functions that leave the integers (`sqrt`, `mean`, `float`, `true_divide`,
+`divide`, `exp`, `log`, `sin`, `cos`, `tan`, `average`, `std`, `var`), none
+of its families `np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`,
+`np.polyfit`, `np.interp` (the attribute chains rooted at `np` walked), no
+call of the builtin `float` and no method `.mean`, `.std`, `.var`; (f) a
+root (`math.isqrt` or `core.integer.integer_root`, under any alias) only
+in the functions ALLOWED_ROOTS names, exactly those: a root that appears
+anywhere else fails, and a root that leaves a listed function fails too,
+so that the list is always the inventory. The reasons distinguish a rounding at load (a table constant,
 docs/designs/vector_form/LAW.md section 6), a predicate (a perfect-square
 test, no rounded number enters a reading) and a root at run time (the
 seventh verb, named in docs/designs/register_paper_sources/NODE_ALGEBRA.md
@@ -184,56 +190,149 @@ def true_divisions(source: str) -> list[int]:
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
+    """Every forbidden import, and every alias of `math`, `isqrt` or
+    `integer_root` (an alias would hide a root from `roots`, so aliasing
+    them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
                 if alias.name.split(".")[0] in FORBIDDEN_IMPORTS:
                     found.append(alias.name)
+                if alias.name == "math" and alias.asname not in (None, "math"):
+                    found.append(f"math aliased as {alias.asname}")
         elif isinstance(node, ast.ImportFrom):
             module = (node.module or "").split(".")[0]
             if module in FORBIDDEN_IMPORTS:
                 found.append(node.module or "")
             if module == "math":
                 found.extend(f"math.{a.name}" for a in node.names if a.name not in MATH_ALLOWED)
+            for alias in node.names:
+                if alias.name in ROOT_NAMES and alias.asname not in (None, alias.name):
+                    found.append(f"{alias.name} aliased as {alias.asname}")
         elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
             if node.value.id == "math" and node.attr not in MATH_ALLOWED:
                 found.append(f"math.{node.attr}")
     return found
 
 
+ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
+NUMPY_CHAIN_FORBIDDEN = {
+    "linalg",
+    "linspace",
+    "logspace",
+    "geomspace",
+    "fft",
+    "random",
+    "polyfit",
+    "interp",
+    "polynomial",
+}
+METHODS_FORBIDDEN = {"mean", "std", "var"}
+
+
+def numpy_chain(node: ast.AST) -> list[str] | None:
+    """The attribute chain of an expression rooted at the name `np`
+    (`np.linalg.norm` -> ["linalg", "norm"]), None when not rooted there."""
+    chain: list[str] = []
+    while isinstance(node, ast.Attribute):
+        chain.append(node.attr)
+        node = node.value
+    if isinstance(node, ast.Name) and node.id == "np":
+        return list(reversed(chain))
+    return None
+
+
+def is_integer_literal(node: ast.AST) -> bool:
+    """A literal that is an integer or a (nested) list or tuple of integers
+    and booleans; anything else (a float, a string, a name) is not."""
+    if isinstance(node, ast.Constant):
+        return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
+    if isinstance(node, (ast.List, ast.Tuple)):
+        return all(is_integer_literal(item) for item in node.elts)
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
+        return is_integer_literal(node.operand)
+    return True  # a name or a call: judged where it is made
+
+
 def numpy_violations(tree: ast.AST) -> list[str]:
-    """Every `np.<name>` that names a forbidden dtype or a function that
-    leaves the integers, and every `dtype=` or `astype(...)` argument that
-    is not `np.int64`, `bool`, `object` or a variable."""
+    """Every `np.<chain>` that names a forbidden dtype, a function that
+    leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`,
+    `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation
+    `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword
+    (float64 by default) and every `np.array` of a non-integer literal;
+    every call of the builtin `float`; every method call `.mean`, `.std`,
+    `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64`,
+    `bool`, `object`, `int` or the name `dtype` (a variable carrying one)."""
     found = []
     for node in ast.walk(tree):
-        if (
-            isinstance(node, ast.Attribute)
-            and isinstance(node.value, ast.Name)
-            and node.value.id == "np"
-        ):
-            if node.attr in NUMPY_DTYPES_FORBIDDEN or node.attr in NUMPY_FORBIDDEN:
-                found.append(f"np.{node.attr} at line {node.lineno}")
-        if isinstance(node, ast.Call):
-            arguments = [k.value for k in node.keywords if k.arg == "dtype"]
-            if isinstance(node.func, ast.Attribute) and node.func.attr == "astype":
-                arguments.extend(node.args[:1])
-            for value in arguments:
-                if isinstance(value, ast.Attribute) and isinstance(value.value, ast.Name):
-                    if value.value.id == "np" and value.attr not in NUMPY_DTYPES_ALLOWED:
-                        found.append(f"dtype np.{value.attr} at line {node.lineno}")
-                elif isinstance(value, ast.Name):
-                    if value.id not in BUILTIN_DTYPES_ALLOWED and value.id != "dtype":
-                        found.append(f"dtype {value.id} at line {node.lineno}")
-                elif isinstance(value, ast.Constant):
-                    if value.value not in ("int64", "bool", "object"):
-                        found.append(f"dtype {value.value!r} at line {node.lineno}")
+        chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
+        if chain:
+            head = chain[0]
+            if (
+                head in NUMPY_DTYPES_FORBIDDEN
+                or head in NUMPY_FORBIDDEN
+                or head in NUMPY_CHAIN_FORBIDDEN
+            ):
+                found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
+        if not isinstance(node, ast.Call):
+            continue
+        callee = node.func
+        keywords = {k.arg for k in node.keywords}
+        if isinstance(callee, ast.Name) and callee.id == "float":
+            found.append(f"float() at line {node.lineno}")
+        if isinstance(callee, ast.Attribute):
+            if callee.attr in METHODS_FORBIDDEN:
+                found.append(f".{callee.attr}() at line {node.lineno}")
+            call_chain = numpy_chain(callee)
+            if call_chain and len(call_chain) == 1:
+                if call_chain[0] in ALLOCATIONS_NEEDING_DTYPE and "dtype" not in keywords:
+                    found.append(f"np.{call_chain[0]} without dtype at line {node.lineno}")
+                if (
+                    call_chain[0] in ("array", "asarray")
+                    and node.args
+                    and not is_integer_literal(node.args[0])
+                ):
+                    found.append(f"np.{call_chain[0]} of a non-integer literal at line {node.lineno}")
+        arguments = [k.value for k in node.keywords if k.arg == "dtype"]
+        if isinstance(callee, ast.Attribute) and callee.attr == "astype":
+            arguments.extend(node.args[:1])
+        for value in arguments:
+            if isinstance(value, ast.Attribute) and isinstance(value.value, ast.Name):
+                if value.value.id == "np" and value.attr not in NUMPY_DTYPES_ALLOWED:
+                    found.append(f"dtype np.{value.attr} at line {node.lineno}")
+            elif isinstance(value, ast.Name):
+                if value.id not in BUILTIN_DTYPES_ALLOWED and value.id != "dtype":
+                    found.append(f"dtype {value.id} at line {node.lineno}")
+            elif isinstance(value, ast.Constant):
+                if value.value not in ("int64", "bool", "object"):
+                    found.append(f"dtype {value.value!r} at line {node.lineno}")
+            else:
+                found.append(f"dtype of an unnamed form at line {node.lineno}")
     return found
 
 
+def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
+    """The local names bound to `isqrt` or `integer_root` (with or without
+    an alias) and the local names of the `math` module."""
+    names: set[str] = set()
+    modules: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name == "math":
+                    modules.add(alias.asname or "math")
+        elif isinstance(node, ast.ImportFrom):
+            for alias in node.names:
+                if alias.name in ROOT_NAMES:
+                    names.add(alias.asname or alias.name)
+    return names | ROOT_NAMES, modules | {"math"}
+
+
 def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
-    """Every call of `isqrt` or `integer_root` with its enclosing function."""
+    """Every call of `isqrt` or `integer_root`, under any alias, with its
+    enclosing function."""
+    names, modules = root_aliases(tree)
     found: set[tuple[str | None, int]] = set()
 
     def walk(node: ast.AST, function: str | None) -> None:
@@ -243,8 +342,13 @@ def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
             )
             if isinstance(child, ast.Call):
                 callee = child.func
-                name = callee.attr if isinstance(callee, ast.Attribute) else getattr(callee, "id", "")
-                if name in ROOT_NAMES:
+                if isinstance(callee, ast.Name) and callee.id in names:
+                    found.add((inner, child.lineno))
+                elif (
+                    isinstance(callee, ast.Attribute)
+                    and callee.attr in ROOT_NAMES
+                    and (not isinstance(callee.value, ast.Name) or callee.value.id in modules)
+                ):
                     found.add((inner, child.lineno))
             walk(child, inner)
 
@@ -302,6 +406,17 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
         ("import numpy as np\ny = np.zeros(3, dtype=np.float64)\n", lambda s, t: numpy_violations(t)),
         ("import numpy as np\ny = x.astype(np.int32)\n", lambda s, t: numpy_violations(t)),
         ("import numpy as np\ny = np.zeros(3, dtype=float)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.zeros(3)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.full(3, 0)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.array([1.5, 2])\n", lambda s, t: numpy_violations(t)),
+        ("y = float(x)\n", lambda s, t: numpy_violations(t)),
+        ("y = x.mean()\n", lambda s, t: numpy_violations(t)),
+        ("y = x.astype(scale)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.linalg.norm(x)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.linspace(0, 1, 3)\n", lambda s, t: numpy_violations(t)),
+        ("import numpy as np\ny = np.random.default_rng()\n", lambda s, t: numpy_violations(t)),
+        ("import math as m\n", lambda s, t: forbidden_imports(t)),
+        ("from math import isqrt as r\n", lambda s, t: forbidden_imports(t)),
     ],
 )
 def test_the_gate_catches_each_violation(source: str, checker) -> None:
@@ -312,7 +427,7 @@ def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
     source = (
         "import numpy as np\nimport math\n"
         "x = np.zeros(3, dtype=np.int64)\nm = np.ones(3, dtype=bool)\no = np.full(2, None, dtype=object)\n"
-        "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\n"
+        "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(dtype)\n"
     )
     tree = ast.parse(source)
     assert float_literals(source) == [] and true_divisions(source) == []
@@ -321,4 +436,16 @@ def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
 
 def test_a_root_outside_the_list_is_found_with_its_function() -> None:
     source = "import math\ndef wall(x):\n    return math.isqrt(x)\n"
+    assert roots(ast.parse(source)) == {("wall", 3)}
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "from math import isqrt as r\ndef wall(x):\n    return r(x)\n",
+        "import math as m\ndef wall(x):\n    return m.isqrt(x)\n",
+        "from event_universe.core.integer import integer_root as ir\ndef wall(x):\n    return ir(x)\n",
+    ],
+)
+def test_a_root_under_an_alias_is_still_found(source: str) -> None:
     assert roots(ast.parse(source)) == {("wall", 3)}

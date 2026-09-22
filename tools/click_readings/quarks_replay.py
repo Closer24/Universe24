@@ -1,6 +1,6 @@
 """Write the register's `replay` blocks of series R from the engine as
 shipped: every world run headless for the register's cap of intervals and
-its record read by kind (`tools/quarks_readings.replay_block`), no number
+its record read by kind (`tools/click_readings/quarks.replay_block`), no number
 typed by hand (the model owner, record 205: a run proves; the Boss's order
 of 2026-09-21 after the crossing rule moved the fate readings). Run from
 the repository root:
