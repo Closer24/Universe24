@@ -56,13 +56,12 @@ def build() -> str:
         if key in cited:
             kept.append(re.sub(r"\\end\{thebibliography\}.*", "", it, flags=re.S))
     i = body.index("\\appendix")
-    # The references open a page of their own, so the owner's approved split
-    # (the body through page 25, the references 26 to 27, the appendices 28 to
-    # 30) is read from the page numbers and not from a heading at a page's foot.
+    # The references follow the body on its last page (the cut to 35 pages of
+    # 2026-09-22, record 852); the page split is read from the page numbers.
     return (
         HEADER
         + body[:i]
-        + "\\clearpage\n{\\small\n"
+        + "{\\small\n"
         + head
         + "".join(kept)
         + "\\end{thebibliography}}\n\n"

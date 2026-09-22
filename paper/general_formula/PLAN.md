@@ -4066,3 +4066,40 @@ theorem and the Bell plateau, the ledger of readings by kind (Table
 Rows: 18, summing to about 4.7 pages, from 39 to about 34; the compile
 decides and the count is reported. Nothing is added in step B; the
 register and every file outside the paper's sources untouched.
+
+## Step B applied (2026-09-22, the Boss's GO of 09:15Z on the owner's word of record 852): the cut, 36 pages
+
+One commit through cut30/corrections.py and one line of cut30/assemble.py
+(the page break before the references removed; the references follow
+the body on its last page, as in most papers). Applied from A.2, in
+order: the abstract to about 1900 characters; the intro's map of
+results cut and the simulator paragraph condensed; the road and the
+families one paragraph, the transition paragraph a pointer; the
+dispersion remark and the octahedron figure cut (the octahedron said
+in words); the ground paragraph condensed with the inverse square's
+reading NOT MADE; Coulomb condensed with "no detector reading
+registered"; light's paragraph a pointer with its FAIL; the
+uncertainty paragraph a pointer with the identification named a
+hypothesis and the entropy identity "an identity of the wheel"; "What
+is derived" condensed with "The limit" folded in; Young's spacing
+"rung 2, the fan"; "What Theorem 6 does not say" condensed; Table 2
+cut, its fingerprints in "The formulas after a detector", its rows
+pointed at Table 4 and Figure 1; "The comparison with nature"
+condensed; every reference to Table 2 re-pointed (Appendix C, Table 3,
+Table 4, Figure 1); the frame's quotation cut to the theorem's two
+sentences; Einstein's relation "to second order under A1 and A2"; the
+quantization "a theorem of A1, A3 and the conversion, not read as
+such"; item (iv) folded into the equivalence's constant and the items
+renumbered (i) to (vii), dark energy now (vii); "What the runs
+support" merged into "What is proved" with nature's count; the proofs
+of Theorems 1, 2 and 3 condensed; the symbols table to the letters
+not named at their first use; the reproduction paragraphs condensed;
+the six Ports paragraph without the duplicated octahedron; the
+operations and the five steps' close condensed; Appendix B's
+directions sentence out; Appendix D's captions shorter and the two
+inline families one row; the AI statement shorter. Also folded, from
+A.1: Poisson's interior read after a detector (series X) in place of
+the stale "no detector reading of the two fields is registered"; the
+fourth of the five steps names the click theorem. Nothing added;
+no number moved; every FAIL kept; the register untouched. The count:
+36 pages.

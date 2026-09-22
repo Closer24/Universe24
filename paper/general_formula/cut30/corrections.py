@@ -1830,6 +1830,371 @@ CORRECTIONS = [
         "A detector at a Node reads each arriving record once, by one comparison, at its own count: the two-slit pixels and the Mach-Zehnder ports (series L), the face clicks of the pace (Q), a lamp's births at a detector in a crowd (T, X). A lamp in motion is read at a detector at rest: the thrown stars' Doppler (G, G2) and the muon's products at three speeds (S); a detector in motion reads Nodes apart over counts apart between neighbouring detectors, and its own one-way ratio, the measurable of the frame, is a reading not yet made. A lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3, T). Every reading carries its kind, DETECTOR, and a number of the board's state is never one.",
         "A detector at a Node reads each arriving record once, by one comparison, at its own count: the two-slit pixels and the Mach-Zehnder ports (series L, DETECTOR), the face clicks of the pace (Q, DETECTOR), a lamp's births at a detector in a crowd (T, X, DETECTOR). A lamp in motion is read at a detector at rest: the thrown stars' Doppler (G, G2, DETECTOR) and the muon's products at three speeds (S, the face clicks DETECTOR, the self-creations' ticks GAMEBOARD); a detector in motion reads Nodes apart over counts apart between neighbouring detectors, and its own one-way ratio, the measurable of the frame, is a reading NOT MADE. A lamp on a body and a line of detectors at rest read the body's own counts as births and its place as the birth's Node (D3, T, DETECTOR). Every reading carries its kind, and a number of the board's state is a GAMEBOARD diagnostic, never a reading.",
     ),
+    # Step B (the owner's word, record 852; the Boss's GO of 09:15Z): the cut per PLAN.md A.2, the status words per A.1.
+    (
+        "B: the abstract to a paper's abstract (A.2 row 17)",
+        "\\begin{abstract}\nInside a cubic GameBoard one update law of bounded integers propagates records as a beam by algebraic formulas at every Node and interval: one map with a rate and a wall per component, its rates and walls made of six integer operations. Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them with amplitudes at one comparison, the click, the one non-local step and the only read-out; the paper assumes the GameBoard is read in no other way (P11). Physics above the board is arithmetic on counts and the law beneath it is modern algebra, and the paper says why: the rules put into the cells are, written down, a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result is an identity of that algebra, exact on the board or in a named limit, compared with the register's readings by kind. Inside, the law's consequences are derived and need no experiment; Outside, the clicks recover known forms and are compared with known experiments, result by result, in one ledger, and the paper shows how far Outside represents reality. Exact on the GameBoard: the conservation of the books and the lattice form of the continuity equation, Gauss's law of a free family's flux under its world condition, the pace of every direction with its Manhattan bound, the click's weight a positive quadratic form of power $2$ under one axiom of the apparatus, the exact marginals of a pair, the CHSH sum as an exact function of the grain, $181/64$ at the powers of two from $512$ to $8192$, and Planck's and de Broglie's relations as identities under the declared dictionary. In the limit of the grain: the value $c = 1/\\sqrt3$, Born's rule, Tsirelson's bound, Young's spacing. In the limit under an average that covers the shell, the condition part of the claim: Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation. What no rule forces is said in the same ledger: the Lorentz factor (how the clicks arrive at it is the frame), the bending of light, the values of the masses, the harmonic constants. After a\ndetector the simulator confirms the exact results and the pace; against\nnature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared, the failures the law's own.\nOne prediction: $S = 181/64$, inside Poh et al. at $1.05$ standard errors. The method is one platform, by the algebra and by the simulator alike: an Inside step on a family's attributes, the conversion by an emitter and a detector, an Outside form as a ratio of counts, and a detector's reading pinned before the run.\n\\end{abstract}",
+        "\\begin{abstract}\nInside a cubic GameBoard one update law of bounded integers propagates records as a beam by algebraic formulas at every Node and interval: one map with a rate and a wall per component, its rates and walls made of six integer operations. Outside, the game above the board, there are detectors and their clicks only, and the beam passes to them at one comparison, the click, the one non-local step and the only read-out; the GameBoard is read in no other way (P11). Physics above the board is arithmetic on counts, a theorem of the click's definition, and the law beneath it is modern algebra: the rules put into the cells are a cyclic group, a group ring, integer matrices, an evaluation at the roots of unity and a shift, and every result is an identity of that algebra, exact on the board or in a named limit, compared with the register's readings by kind. Exact on the GameBoard: the books' conservation, Gauss's law of a free family's flux, the pace of every direction with its Manhattan bound, the click's weight a positive quadratic form of power $2$ under one axiom of the apparatus, the exact marginals of a pair, and the CHSH sum as an exact rational of the grain, $181/64$ from $512$ to $8192$. Recovered in a named limit: $c = 1/\\sqrt3$, Born's rule, Tsirelson's bound, Young's spacing; under an average that covers the shell, the condition part of the claim: Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation. What no rule forces is said in the same ledger: the Lorentz factor (how the clicks arrive at it is the frame), the bending of light, the values of the masses, the harmonic constants. Against nature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared, the failures the law's own. One prediction: $S = 181/64$, inside Poh et al. at $1.05$ standard errors. The method is one platform, by the algebra and by the simulator alike: an Inside step on a family's attributes, the conversion by an emitter and a detector, an Outside form as a ratio of counts, and a detector's reading pinned before the run.\n\\end{abstract}",
+    ),
+    (
+        "B: the intro's map of results cut (A.1 row 57)",
+        "\\paragraph{The map of results.} Proved: the theorems of\nSections~\\ref{sec:geometry} to~\\ref{sec:bell} (the group of the six\nPorts, the pace bound, the lattice Gleason form, the isometry and the\ninjectivity of the interval, the exact marginals, the finite-$\\Nphi$ Bell\nvalue). Shown numerically after a detector: the pace and its\nisotropy, the click's cells, $S$ at seven grains,\nMalus's law, the clock's field at two distances\n(Section~\\ref{sec:checks}). Open, with the check that decides each: the closing of Newton's inverse square after a detector (the equivalence measured, series D3) and Poisson's law, the clock\nof a body in flight, the bending of light, the values of the masses, the\nharmonic constants (Section~\\ref{sec:discussion}).",
+        "",
+    ),
+    (
+        "B: how the simulator led, condensed (A.2 row 10)",
+        "\\paragraph{How the simulator led to the results.} The simulator ran\nfirst and the derivations followed it. Every run was registered with\nits expectation written before the run, its world file and its source fingerprint, and each registered number was then traced back to the operations of the map until a derivation stood or the\nnumber was marked a finding. Where a derivation closed, the paper says\n``derived from the update rules implemented in the simulator''; a\nrelation found in runs alone is a numerical finding; a relation defined in advance is a definition or an input. The two roads, the algebra's and the simulator's, are one platform, stated in Section~\\ref{sec:discussion} so that a reader can arrive at a formula the same way: the Inside step on a family's attributes, the conversion, the Outside form, the reading by kind.",
+        "\\paragraph{How the simulator led to the results.} The simulator ran first and the derivations followed it: every run registered with its expectation written before the run, its world file and its source fingerprint, each registered number traced back to the operations of the map until a derivation stood or the number was marked a finding; a relation defined in advance is a definition or an input. The two roads, the algebra's and the simulator's, are one platform, stated in Section~\\ref{sec:discussion} so that a reader can arrive at a formula the same way.",
+    ),
+    (
+        "B: the fourth step names the click theorem (A.1 row 51)",
+        "are the Lorentz group up to scale (Section~\\ref{sec:discussion}), so the symmetry Outside has",
+        "are the Lorentz group up to scale, the click theorem's \\cite{clickframe} (Section~\\ref{sec:discussion}), so the symmetry Outside has",
+    ),
+    (
+        "B: the road and the families one paragraph (A.2 row 13)",
+        "\\paragraph{The families in the algebra.} Every family of the register is one row of declared integers (P8) and nothing else:",
+        "Every family of the register is one row of declared integers (P8) and nothing else:",
+    ),
+    (
+        "B: the transition paragraph a pointer (A.2 row 13)",
+        "\\paragraph{When the transition was made.} The road from ordinary physics to this algebra was walked in twenty-four dated steps, each a thing of physics becoming an object of the law, recorded with the reading that showed it \\cite{history} (Appendix~\\ref{app:reproduction} lists them): on 2026-09-17 the shared quantum resource was deleted and locality held without exception, the amplitude became a phase with a conserved content and Born's rule a declared table; on 09-18 the Born table was computed from $\\Nphi$ and a Node became its six Ports; on 09-19 a quantum became an integer row on a record, the click the one one-way border, the push one bilinear form and charge a rational per unit of content, and $E = hf$ the cost of a release; on 09-20 every force became a column with a sign, the readings became two kinds, the masses the initialisation, every count an accumulator on its reader's own record, the Doppler the count of rows a mover crosses; on 09-21 the whole law became one vector operation of six verbs under three tests, the record an element of $\\Z[\\Z_{\\Nphi}]$ with the weight one bilinear form, the lattice the translation group and $c$ the norm of the flight operator, and the Lorentz factor, a root, was refused as a seventh verb; on 09-22 a detector's clock became a member of the age wall, the click theorem placed the Lorentz group Outside, and the paper's framing, Inside and Outside, was set.",
+        "\\paragraph{When the transition was made.} The road from ordinary physics to this algebra was walked in twenty-four dated steps between 2026-09-17 and 2026-09-22, each a thing of physics becoming an object of the law, recorded with the reading that showed it \\cite{history}; Appendix~\\ref{app:reproduction} lists them.",
+    ),
+    (
+        "B: the dispersion remark cut (A.1 row 9, A.2 row 1)",
+        "\\paragraph{No dispersion.} What the GameBoard does not do to the pace is\nas definite as what it does.\n\n\\begin{remark}[The pace is the direction's]\\label{rem:nodispersion}\nBy Definition~\\ref{def:rules} the flight table is indexed by $(D, \\tau)$,\nthe phase is a separate accumulator, and no rule of the interval (the\nflight, the birth, the split, the rotation, the merge; the archived\ncollision table reads no phase) reads a phase into a direction or a\nstep. So a row's pace\nis $N_l|D|/T_D$ at every phase rate up to the alias bound of $\\Nphi/2$\nsteps per interval (a turn every two intervals, $1.15$ to $1.16$ Links),\nand the anisotropy of Proposition~\\ref{prop:pace} is the same at every\nrate. This is the pure-shift case of a lattice automaton\n\\cite{meyer1996}: a ballistic walker with a passenger phase, free of dispersion by construction, as a classical corpuscle is. By P9 the pace has no dispersion at any phase rate, so the bound on an energy-dependent speed of light from GRB 090510 \\cite{abdo2009} is met, a consequence of the postulate and not a run. That no local linear wave scheme on the GameBoard is both isotropic and free of dispersion is Meyer's theorem \\cite{meyer1996}, not this paper's.\n\\end{remark}",
+        "",
+    ),
+    (
+        "B: the octahedron figure cut (A.2 row 2)",
+        "\\begin{figure}[H]\\centering\n\\includegraphics[width=0.27\\textwidth]{figures/octahedron.pdf}\n\\caption{\\label{fig:octahedron}The Nodes one interval from a Node: the six neighbours are the vertices of the octahedron $|x| + |y| + |z| \\le 1$, the causal front of one interval; its inscribed sphere, of radius $1/\\sqrt3$, touches the eight faces on the cube diagonals and is the rows' pace $c$ (Proposition~\\ref{prop:pace}); the faint cube shares the $48$ signed permutations of the axes. Drawn by \\texttt{octahedron.py} from the definitions; no run.}\n\\end{figure}",
+        "",
+    ),
+    (
+        "B: the octahedron named in words",
+        "the vertices of the octahedron $|x| + |y| + |z| \\le 1$ (Figure~\\ref{fig:octahedron});",
+        "the vertices of the octahedron $|x| + |y| + |z| \\le 1$, whose inscribed sphere of radius $1/\\sqrt3$ touches the faces on the cube diagonals;",
+    ),
+    (
+        "B: the ground paragraph condensed, the inverse square's reading NOT MADE (A.1 row 21, A.2 row 3)",
+        "\\paragraph{The ground of these derivations.} Gauss's law of the flux,\nthe equivalence principle and the third law at rest are exact on the\nGameBoard. The inverse square, Newton's and Coulomb's, is a limit under\na spatial condition, an average that covers the shell, in one of three\nadmissible forms, each with its own error: over the shell's Nodes (the\nshell mean, the ripple $O(r^{\\theta - 1})$ with $\\theta \\le 131/208$, at\nany declared fan); over the directions at one Node, the fan dense at\nfixed $r$, and then only for a fan declared in a ball (a cube's fan\nkeeps a cubic anisotropy of $3^{3/2}$ in the limit); or over the path of\na body that sweeps the fan's lines, one closed turn of an orbit, whose\nmean push per turn is the ring mean exactly, the only one of the three\nreadable after a detector. On one Node beside a source the field is a\ncomb of beams, and no single reading of the GameBoard's state is the inverse square; the condition is part of the claim (the ledger's caption). After a detector the equivalence principle is measured (series D3, Table~\\ref{tab:checks}) and the $1/r$ force's scale symmetry reads consistent, $1.997$ for $2.00 \\pm 0.18$, on loops that are not similar figures: the inverse square is not closed after a detector and $G$'s value is not read; Coulomb's and Poisson's runs are not made (Section~\\ref{sec:discussion}).",
+        "\\paragraph{The ground of these derivations.} Gauss's law of the flux, the equivalence principle and the third law at rest are exact on the GameBoard. The inverse square, Newton's and Coulomb's, is a limit under an average that covers the shell, in one of three admissible forms, each with its own error: the shell mean (the ripple $O(r^{\\theta - 1})$ with $\\theta \\le 131/208$), the fan dense at one Node for a fan declared in a ball, or the ring mean over one closed turn of an orbit, the only one readable after a detector; on one Node beside a source the field is a comb of beams, and the condition is part of the claim (the ledger's caption). After a detector the equivalence principle is measured (series D3) and the $1/r$ force's scale symmetry reads consistent, $1.997$ for $2.00 \\pm 0.18$, on loops that are not similar figures; the inverse square's decisive reading is NOT MADE and $G$'s value is not read; Coulomb's run is not made; Poisson's interior is read after a detector (series X, Section~\\ref{sec:delay}).",
+    ),
+    (
+        "B: Newton's paragraph: the decisive reading NOT MADE (A.1 row 21)",
+        "No detector reading of either form is registered.",
+        "No detector reading of either form is registered; the decisive reading, a closed orbit's period at two radii, is NOT MADE.",
+    ),
+    (
+        "B: Coulomb condensed with its status (A.1 row 22, A.2 row 4)",
+        "\\paragraph{Coulomb's law and the one constant.} The charge column adds\n$+\\rho_A\\rho_B M_A \\mathbf a$ per axis. With the charges $q_A =\n\\rho_A M_A$ and $q_B = \\rho_B M_B$ and $\\langle a\\rangle$ proportional\nto $M_B$ as above, the electric push in the shell mean is\n\\begin{equation}\\label{eq:coulomb}\n\\mathrm{push}_e = q_A q_B\\,\\frac{K\\eta\\,N_l}{4\\pi r^2}, \\qquad\na_e = \\frac{q_A q_B}{M_A}\\,\\frac{G}{r^2},\n\\end{equation}\nCoulomb's inverse square with the same constant as gravity, $k_C = G$ in\nthe law's units (charge in units of content), repulsive for like signs\nsince $\\mathbf a$ points away from the source. The ratio of the two\nforces on one body is $-\\rho_A\\rho_B = -q_A q_B/(M_A M_B)$ at every $r$.\nDerived under the same average as Newton's, the ratio $-\\rho_A\\rho_B$ exact at every $r$; no detector reading of it is registered. Nature's ratio for two protons, $e^2/(4\\pi\\epsilon_0 G\nm_p^2) = 1.24 \\times 10^{36}$ ($e$ the elementary charge, $\\epsilon_0$\nthe vacuum permittivity, $m_p$ the proton's mass), is $\\rho_p^2$ here,\n$\\rho_p = 1.1 \\times 10^{18}$ units of charge per unit of content: the\nhierarchy is the declared $\\rho$, an input, not a formula of the law.",
+        "\\paragraph{Coulomb's law and the one constant.} The charge column adds $+\\rho_A\\rho_B M_A \\mathbf a$ per axis; with $q_A = \\rho_A M_A$, $q_B = \\rho_B M_B$ and $\\langle a\\rangle$ proportional to $M_B$, the electric push in the shell mean is\n\\begin{equation}\\label{eq:coulomb}\n\\mathrm{push}_e = q_A q_B\\,\\frac{K\\eta\\,N_l}{4\\pi r^2}, \\qquad a_e = \\frac{q_A q_B}{M_A}\\,\\frac{G}{r^2},\n\\end{equation}\nCoulomb's inverse square with the same constant as gravity, $k_C = G$ in the law's units, repulsive for like signs; the ratio of the two forces on one body is $-\\rho_A\\rho_B$ at every $r$. Derived under the same average as Newton's; no detector reading of it is registered. Nature's ratio for two protons, $1.24 \\times 10^{36}$, is $\\rho_p^2$ here, $\\rho_p = 1.1 \\times 10^{18}$ units of charge per unit of content: the hierarchy is the declared $\\rho$, an input, not a formula of the law.",
+    ),
+    (
+        "B: light's paragraph a pointer (A.2 row 5)",
+        "\\paragraph{Light: no optical metric.} A row reads nothing of the crowd:\nbeside a mass it is neither bent nor delayed, exactly (series K, three\nworlds: the deflection $0.000$ pixel and the delay $0.00$ interval at a\ncrowd where nature would capture the beam, against nature's $1.75$\narcseconds at the Sun's limb; the derivation's 24.3, row 14, REFUTED\non main; Table~\\ref{tab:nature}). The equivalence principle holds for\nbodies and not for rows, and the delay field is a metric for clocks and\nfor the bodies' pushes, not for the flight.",
+        "\\paragraph{Light: no optical metric.} A row reads nothing of the crowd: beside a mass it is neither bent nor delayed (series K, three worlds, the deflection $0.000$ pixel and the delay $0.00$ interval, DETECTOR; FAIL against nature's $1.75$ arcseconds, Table~\\ref{tab:nature}); the delay field is a metric for clocks and for the bodies' pushes, not for the flight (Section~\\ref{sec:discussion}, the bending under the key).",
+    ),
+    (
+        "B: Poisson's interior read after a detector (A.1 row 23)",
+        "No detector reading of the two fields is registered.",
+        "After a detector the interior of a shell reads flat within the tolerance, $k(2)/k(4) = 1.0029$ for the map's pin $1.0039$ (series X, DETECTOR), the shell theorem's interior; the finite-$r$ ripple is MEASURED ONLY.",
+    ),
+    (
+        "B: the uncertainty paragraph a pointer (A.1 rows 17 and 53, A.2 row 6)",
+        "\\paragraph{The uncertainty relation, from the same evaluation.} A record\nis the element $f$ of $\\Z[\\Z_{\\Nphi}]$ of the amounts that ended at each\nphase. The click evaluates $f$ at the $\\Nphi$th roots of unity, which\nis the discrete Fourier transform on the circle. That the circle is\nread as position (the Node its rows ended at) and its transform as\nmomentum (the label whose turn per Link is $|p|\\Nphi/h$, de Broglie's\n$\\lambda = h/|p|$ Links as the declared turn) is a stated\nidentification of the program, a hypothesis and not a derivation\n(\\cite{derivations}, section 22); on it, three statements are the\ntransform's mathematics on $\\Z_{\\Nphi}$ and nothing of the law. The support bound: a record whose\nrows end on $s$ phases has an evaluation supported on at least $\\Nphi/s$\nroots, $|\\mathrm{supp}\\,f|\\,|\\mathrm{supp}\\,\\hat f| \\ge \\Nphi$\n\\cite{donoho1989}, checked by enumeration at $\\Nphi = 64$ on the register's\nrecords. The entropic bound: the\ntwo Shannon entropies sum to at least $\\log_2 \\Nphi$ \\cite{maassen1988},\nof the same form as the entropy identity of the ledger, bits read plus bits not read of $u$ ($H(u \\mid K)$ for the outcome $K$) $= \\log_2 \\Nphi$ per record, the outcome's coarse graining ($u$ stays in the world's list as a GameBoard diagnostic), read for the\nconjugate pair. The algebra: the Weyl relation of the shift and the phase\nmultiplication, an identity of the group ring, the finite commutator in\nplace of $i\\hbar$. Kennard's variance form $\\Delta x\\,\\Delta p \\ge \\hbar/2$ \\cite{kennard1927,robertson1929} follows by Cauchy--Schwarz on the Gram form of Theorem~\\ref{th:gleason} in the limit $\\Nphi \\to \\infty$, with $\\hbar = h/(2\\pi) = h_q\\Nphi/(2\\pi)$; at finite $\\Nphi$ the bound is the finite group's. What makes it an uncertainty and not a spread is the one read-out: read at a Node a record gives its position and loses its phase, read on the fan's angle it gives its momentum's direction and not its Node, and the two are not jointly readable, as the law has no joint distribution for Bell (Theorem~\\ref{th:bell}).",
+        "\\paragraph{The uncertainty relation.} On the identification of the circle as position and its transform as momentum, a hypothesis of the program and not a derivation (\\cite{derivations}, section 22), the support bound $|\\mathrm{supp}\\,f|\\,|\\mathrm{supp}\\,\\hat f| \\ge \\Nphi$ \\cite{donoho1989}, the entropic bound \\cite{maassen1988} and Kennard's form $\\Delta x\\,\\Delta p \\ge \\hbar/2$ in the limit \\cite{kennard1927,robertson1929} are the transform's mathematics on $\\Z_{\\Nphi}$ and nothing of the law; the entropy identity of the click, bits read plus bits not read of $u$ equal to $\\log_2 \\Nphi$ per record, is an identity of the wheel. What makes it an uncertainty is the one read-out: a record read at a Node gives its position and loses its phase, read on the fan's angle it gives its momentum's direction and not its Node.",
+    ),
+    (
+        "B: what is derived, condensed, the limit folded in (A.2 row 7)",
+        "\\paragraph{What is derived and what is not.} Derived from the update rules and the axiom (b): the reading is a\npositive quadratic form of the record's element, forced by the rotation,\nthe balanced splitter's conservation and the counts alone, with no\ncontinuity and no dimension (Gleason's theorem \\cite{gleason1957} needs dimension three; the lattice version does not, because (b) holds for every two inputs, the parallelogram law, a stronger hypothesis the balanced splitter grants). The multiplicity rule $A = \\sum a_i^2$ is derived here, not assumed; the\nsquare is the only power ($R(af) = a^2R(f)$: no $|w|^k$ with $k \\ne 2$\nconserves); and the cross term $2ab\\,\\mathcal K(\\Delta)$, a product\nbetween two rows the GameBoard never forms, is forced to exist at the\nclick, because the two outputs of a balanced splitter conserve the total\nonly through cross terms that cancel between them. Not reached by the\nalgebra: the constants $c_j$, the detector's response to the harmonics\nof the phase, the exact analogue of Gleason's free state: a free positive\noperator commuting with the rotation, diagonal on the Galois planes. A\nsingle harmonic $j$ alone is the Born form under the relabelling $p \\to\njp$ of the phase steps, a change of the declaration and not of the law;\na mixture is a different law, the flat mixture being the phase-blind detector, which satisfies (a), (b), (c) exactly; what excludes it is interference, nature's (Table~\\ref{tab:nature}, row 2a) and, for the implementation, the built click's.",
+        "\\paragraph{What is derived and what is not.} Derived from the update rules and the axiom (b): the reading is a positive quadratic form of the record's element, forced by the rotation, the balanced splitter's conservation and the counts alone, with no continuity and no dimension (Gleason's theorem \\cite{gleason1957} needs dimension three; the lattice version does not, the parallelogram law being granted by the balanced splitter); the multiplicity rule $A = \\sum a_i^2$ and the square as the only power are derived, and the cross term $2ab\\,\\mathcal K(\\Delta)$ is forced at the click. Not reached by the algebra: the constants $c_j$, the detector's response to the harmonics of the phase; a single harmonic $j$ is the Born form under the relabelling $p \\to jp$, a mixture a different law, the flat mixture the phase-blind detector, which interference excludes (Table~\\ref{tab:nature}, row 2a; the built click). As $\\Nphi$ grows the admissible readings are the same family, the cone of the even positive-definite functions on the circle with odd harmonics only; no $\\Nphi$ and no continuity forces $c_j = [j = 1]$, and the fundamental is what the register reads.",
+    ),
+    (
+        "B: the limit paragraph folded (A.2 row 7)",
+        "\\paragraph{The limit.} As $\\Nphi = 2^k$ grows the admissible readings are the\nsame family with $\\Nphi/4$ constants: for two rows at the angle $\\theta =\n2\\pi \\Delta/\\Nphi$, $\\mathcal K(\\theta) = \\sum_{j\\ \\mathrm{odd}} c_j\\cos(j\\theta)$, the\nclosed cone of the even positive-definite functions on the circle with\nodd harmonics only, whose extreme rays are the single cosines; the Born kernel $\\cos\\theta$ is the first of them. The limit adds nothing: no $\\Nphi$ and no continuity\nforces $c_j = [j = 1]$; the fundamental is what the register reads and what the phase means.",
+        "",
+    ),
+    (
+        "B: Young's spacing rung 2 (A.1 row 15)",
+        "Young's $\\lambda D/s$ only in the paraxial limit \\cite{lightoutside};",
+        "Young's $\\lambda D/s$ only in the paraxial limit (rung 2, the fan) \\cite{lightoutside};",
+    ),
+    (
+        "B: what Theorem 6 does not say, condensed (A.2 row 8)",
+        "What Theorem~\\ref{th:bell} does not say: that $S(\\Nphi) \\le 2\\sqrt2$, which is\nfalse for about half the $\\Nphi$; nor that the deficit is $O(1/\\Nphi)$ from below,\nwhich holds at the three $\\Nphi$ the engine ran and not in general. The\ntables' term in \\eqref{eq:ebound} does not shrink with $\\Nphi$; it is the\nresolution $1/256$ of the circle's tables. At the CHSH labels the tables'\nentries are the same at every $\\Nphi$ ($237, 98$ and $181, 181$), so\n$E(0, \\Nphi/8) = 46565/65773$ and $E(\\Nphi/4, \\Nphi/8) = 46452/65773$ exactly at every\n$\\Nphi$ before the rounding of the cells; the rounding gives $181/64$ at\nthe powers of two from $512$ through $8192$ and $5793/2048 = 2.828613$ at $16384$ and $32768$ (measured at $16384$, Table~\\ref{tab:checks}), where the second pair of settings rounds to $2893/4096$ and the tables' bound $2\\Nphi \\le 65536$ stops their computation (\\cite{checks}, \\texttt{s\\_powers\\_of\\_two})\nBeyond it the rungs on the fixed correlations are a closed form,\n$S(\\Nphi) = 8(c_1 + c_1')/\\Nphi - 4$ with $c_1$ and $c_1'$ the first\ncell's counts, the rungs of $(1 + E)/4$ at the two pairs of settings\n(\\cite{checks}; the derivation's 24.4, the same values): $11585/4096 = 2.828369$ at $65536$ and $370727/131072 = 2.828423$ at $2^{20}$, two-sided about the bound; with the\ntables fixed the limit in $\\Nphi$ is $2(46565 + 46452)/65773 =\n186034/65773 = 2.828425$, $2.1 \\times 10^{-6}$ below $2\\sqrt2$, and\n$2\\sqrt2$ is the joint limit in $\\Nphi$ and $N_t$ alone\n\\cite{checks,register}.  At a tie $c_{--} = c_{++} - 1$ and\n$E_{\\Nphi}$ drops by $2/\\Nphi$; no tie occurs at the CHSH labels up to $4096$.",
+        "What Theorem~\\ref{th:bell} does not say: that $S(\\Nphi) \\le 2\\sqrt2$, false for about half the $\\Nphi$; nor that the deficit is $O(1/\\Nphi)$ from below. The tables' term in \\eqref{eq:ebound} is the resolution $1/256$ of the circle's tables and does not shrink with $\\Nphi$; at the CHSH labels the tables' entries are the same at every $\\Nphi$, so the rounding gives $181/64$ at the powers of two from $512$ through $8192$ and $5793/2048 = 2.828613$ at $16384$ and $32768$ (measured at $16384$, DETECTOR), and beyond the tables' bound $2\\Nphi \\le 65536$ the rungs on the fixed correlations are the closed form $S(\\Nphi) = 8(c_1 + c_1')/\\Nphi - 4$ with $c_1$, $c_1'$ the first cell's counts, whose limit with the tables fixed is $186034/65773 = 2.828425$, $2.1 \\times 10^{-6}$ below $2\\sqrt2$; $2\\sqrt2$ is the joint limit in $\\Nphi$ and $N_t$ \\cite{checks,register}. At a tie $c_{--} = c_{++} - 1$ and $E_{\\Nphi}$ drops by $2/\\Nphi$; no tie occurs at the CHSH labels up to $4096$.",
+    ),
+    (
+        "B: the formulas after a detector, Table 2's fingerprints kept (A.2 row 9)",
+        "\\paragraph{The formulas after a detector.} Every number of\nTable~\\ref{tab:checks} is a count of clicks or a click's tick at a\ndeclared detector, registered with its fingerprint; a number of the GameBoard's state appears nowhere. Seven formulas shown Inside (the pace, the click's power, Mach-Zehnder, the marginals, GHZ, Malus, light beside a mass) were confirmed by their runs, each number pinned before the run, and are listed in Appendix~\\ref{app:reproduction} with their series and fingerprints; Table~\\ref{tab:checks} keeps the readings that no formula gives.",
+        "\\paragraph{The formulas after a detector.} Every number read after a detector is a count of clicks or a click's tick at a declared detector, registered with its source fingerprint (series L \\texttt{ff5c382d672f}, L7 \\texttt{4bf55a62e6fd}, S \\texttt{24e0c1ba}, T \\texttt{afb533a} \\cite{register,replications}), its expectation written before the run; a number of the GameBoard's state appears nowhere. Seven formulas shown Inside (the pace, the click's power, Mach-Zehnder, the marginals, GHZ, Malus, light beside a mass) were confirmed by their runs (Appendix~\\ref{app:reproduction}); the readings that no formula gives are Table~\\ref{tab:conversion}'s (the clock's field at two Nodes, the equivalence after a detector, the covariant readings) and Figure~\\ref{fig:sofn}'s ($S$ at seven grains).",
+    ),
+    (
+        "B: Table 2 cut (A.1 row 45)",
+        "{\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\begin{longtable}{p{1.25in}p{1.35in}p{1.65in}p{1.7in}}\n\\caption{\\label{tab:checks}The representative detector checks of the formulas. Series L's runs carry the source fingerprint \\texttt{ff5c382d672f}, L7's \\texttt{4bf55a62e6fd}, series S's \\texttt{24e0c1ba}, series T's \\texttt{afb533a} \\cite{register,replications}; each expectation was written before its run.}\\\\\n\\toprule\nFormula & Run (series, world) & Detector reading & Expected before the run \\\\\n\\midrule\n\\endfirsthead\n\\toprule\nFormula & Run & Detector reading & Expected \\\\\n\\midrule\n\\endhead\n\\bottomrule\n\\endlastfoot\n\n\n\nYoung's spacing & L2b, two slits under the birth wheel, $4096$ births & the bright pixels $19$ to $51$, the dark $0$ to $3$, the visibility $0.966$ in the clicks & the dark pixels as pinned; the rungs within one \\\\\n\n$S(\\Nphi)$ & L and L6, the pair at $\\Nphi = 64$, $512$, $1024$, $2048$, $4096$, $8192$, $16384$ (the last three on main at \\texttt{b34fe114}) & $176/64$; $1448/512$; $2896/1024$; $5792/2048$; $11584/4096$; $23168/8192$; $46344/16384$ & the same, Theorem~\\ref{th:bell} and its closed form: the plateau $181/64$ and its end $5793/2048$ \\\\\n\n\nThe clock's field at two Nodes (the continuum's $1/r$ its limit) & T, a lamp's births at a detector, two sources at $3$ and at $6$ Links & the ratio of the two shifts $1.907$ (age word); $1.000$ (presence word) & the lines' pin $1.909 \\pm 0.05$; replicated \\\\\nThe equivalence principle after a detector; the $1/r$ force's scale symmetry & D3, a probe carrying a lamp on series D's plane at $r = 12$ and $24$, its births read at a line of one-Node detectors; the held mass four times at $r = 24$; two controls & the same $x$ on $138$ of $139$ common birth ticks (one Node the largest difference) and the same escape tick at four times the mass; $T(24)/T(12) = 1.997$ from one recurrence per radius on loops that are not similar figures; the controls at $x = 60 + r$ on every click; the circle's period, amplitude and $\\omega^2$ outside their pins & one birth interval and one Node; $2.00 \\pm 0.18$; $60 + r$, the escape $278 \\pm 6$ \\\\\n\n\n\n\\end{longtable}}",
+        "",
+    ),
+    (
+        "B: the comparison with nature condensed (A.2 row 9)",
+        "\\paragraph{The comparison with nature.} The confrontation register\n\\cite{nature} keeps one row per registered detector reading with a\ndimensionless counterpart in nature, under one parameter set, one\npublished source per value and one verdict per row: PASS within the\nstated uncertainty, FAIL with the number, BOUND where the comparison bounds a free parameter, NOT COMPARED where the law does not compute the observable. A FAIL is a result of the law and is stated\nwith the same care as a pass. Table~\\ref{tab:nature} carries the rows\nread after a detector; seven rows of the register (4a, 5b, 6, 10, 11a to 11c) rest on a pin whose run is not made and carry no number here. Every verdict is the law's as built at the merge\ncommit named in Appendix~\\ref{app:reproduction}; a hypothesis's PASS\nbeside the law never changes the law's FAIL.",
+        "\\paragraph{The comparison with nature.} The confrontation register \\cite{nature} keeps one row per registered detector reading with a dimensionless counterpart in nature, one published source per value and one verdict per row (PASS within the stated uncertainty, FAIL with the number, BOUND where the comparison bounds a free parameter, NOT COMPARED where the law does not compute the observable); a FAIL is a result of the law and is stated with the same care as a pass. Table~\\ref{tab:nature} carries the rows read after a detector; seven rows (4a, 5b, 6, 10, 11a to 11c) rest on a pin whose run is not made; every verdict is the law's as built at the commit of Appendix~\\ref{app:reproduction}, and a hypothesis's PASS beside the law never changes the law's FAIL.",
+    ),
+    (
+        "B: the ledger's caption points at Table 3",
+        "what a run measures is Table~\\ref{tab:checks}'s.",
+        "what a run measures is Table~\\ref{tab:nature}'s.",
+    ),
+    (
+        "B: Section 7's reference to Table 2",
+        "$16384$ (Table~\\ref{tab:checks}, the last three on main at \\texttt{b34fe114}; Figure~\\ref{fig:sofn})",
+        "$16384$ (the last three on main at \\texttt{b34fe114}; Figure~\\ref{fig:sofn})",
+    ),
+    (
+        "B: the frame's reference to Table 2",
+        "is what Tables~\\ref{tab:checks} and~\\ref{tab:nature} show, result by result.",
+        "is what Tables~\\ref{tab:conversion} and~\\ref{tab:nature} show, result by result.",
+    ),
+    (
+        "B: the platform's reference to Table 2",
+        "the simulator's reading with its series and kind (Tables~\\ref{tab:checks} and~\\ref{tab:conversion})",
+        "the simulator's reading with its series and kind (Table~\\ref{tab:conversion} and Figure~\\ref{fig:sofn})",
+    ),
+    (
+        "B: item (ii)'s reference to Table 2",
+        "measured at seven $\\Nphi$ (Table~\\ref{tab:checks}, DETECTOR).",
+        "measured at seven $\\Nphi$ (Figure~\\ref{fig:sofn}, DETECTOR).",
+    ),
+    (
+        "B: the frame's quotation cut to the theorem (A.2 row 11)",
+        "in three dimensions the lattice's anisotropy begins at the fourth order. The conversion is made exactly with the amplitudes, converting the packet that passes, and it comes out from there; the law as built satisfies (A1) and not (A2).''",
+        "in three dimensions the lattice's anisotropy begins at the fourth order.''",
+    ),
+    (
+        "B: Einstein's relation to second order (A.1 row 29)",
+        "and Einstein's relation follows from the Inside alone;",
+        "and Einstein's relation follows from the Inside alone, to second order under (A1) and (A2);",
+    ),
+    (
+        "B: the quantization a theorem (A.1 row 30)",
+        "Every reading Outside is a whole number of these, which is why the world above the board is quantized: physics above cannot take this from its own formulas, and the Inside gives it.",
+        "Every reading Outside is a whole number of these, which is why the world above the board is quantized, a theorem of (A1), (A3) and the conversion (Theorem 3 of \\cite{einsteinoutside}; the velocity's quantum not read as such): physics above cannot take this from its own formulas, and the Inside gives it.",
+    ),
+    (
+        "B: item (iv) folded into the equivalence's constant (A.2 row 12)",
+        "(iv) The grain: the radial residence factor times the pace, $\\tau_L c = 0.993$ on a heading, multiplies every constant read at a finite grain and is $1$ in the limit of every direction. ",
+        "",
+    ),
+    (
+        "B: the grain in the constant's item",
+        "Einstein's $gY/c^2$ exactly when $nS = d$, a condition on an Inside declaration and not a result;",
+        "Einstein's $gY/c^2$ exactly when $nS = d$ (times the grain's $\\tau_L c = 0.993$ on a heading, $1$ in the limit of every direction), a condition on an Inside declaration and not a result;",
+    ),
+    (
+        "B: renumber (v)",
+        "(v) The anisotropy of $c$ by direction, stated above",
+        "(iv) The anisotropy of $c$ by direction, stated above",
+    ),
+    (
+        "B: renumber (vi)",
+        "(vi) The equivalence's constant:",
+        "(v) The equivalence's constant:",
+    ),
+    (
+        "B: renumber (vii)",
+        "(vii) Light's bending:",
+        "(vi) Light's bending:",
+    ),
+    (
+        "B: renumber (viii)",
+        "(viii) Dark energy's shape:",
+        "(vii) Dark energy's shape:",
+    ),
+    (
+        "B: what the runs support merged into what is proved (A.2 row 18)",
+        "\\paragraph{What the runs support and what nature says.} After a detector the simulator reads Table~\\ref{tab:checks}'s list, each inside an expectation written before the run; against nature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared (Table~\\ref{tab:nature}).",
+        "",
+    ),
+    (
+        "B: what is proved closes with nature's count; the entropy identity's status (A.1 row 53)",
+        "the measurable $1 - v^2$ and the entropy identity of the click; the value $1/\\sqrt3$, Tsirelson's limit and the dictionary's identities claim no novelty.",
+        "the measurable $1 - v^2$ and the entropy identity of the click (an identity of the wheel); the value $1/\\sqrt3$, Tsirelson's limit and the dictionary's identities claim no novelty. After a detector every reading sits inside an expectation written before the run; against nature three pass, a fourth under the clock's assumed word, twelve fail and one is not compared (Table~\\ref{tab:nature}).",
+    ),
+    (
+        "B: the proof of Theorem 1 condensed (A.2 row 14)",
+        "\\paragraph{Proof of Theorem~\\ref{th:group}.}\nA map of the six Ports that keeps opposite Ports opposite permutes the\nthree axes ($3!$ choices) and then fixes a sign on each ($2^3$ choices),\nand every such choice is realised by one signed permutation matrix; so\nthe group is the hyperoctahedral group $B_3$, the symmetry group of the\ncube and of the octahedron of the Ports, of order $48$. The determinant\nof a signed permutation matrix is $\\pm 1$ and multiplicative, and it is\n$-1$ on the reflection in one coordinate plane, so it is onto $\\{+1,\n-1\\}$; the kernel of a homomorphism onto a group of two elements has\nindex $2$, so there are $24$ rotations and $24$ reflections. A rotation\nof the cube permutes its four body diagonals; the only signed\npermutations fixing all four diagonals as lines are the identity and\nthe central inversion, whose determinant is $-1$, so the action of the\nkernel is faithful, and both groups having order $24$, the rotations are\nthe symmetric group on the four diagonals. A pseudoscalar column goes to\n$\\det(g)$ times itself by definition. That the\nsix operations commute with the $48$ up to the declared ties is the\nstatement above, not part of this theorem.",
+        "\\paragraph{Proof of Theorem~\\ref{th:group}.} A map of the six Ports that keeps opposite Ports opposite is a signed permutation of the three axes, $3!\\,2^3 = 48$ of them, the hyperoctahedral group $B_3$; the determinant is a homomorphism onto $\\{+1, -1\\}$, so its kernel, the rotations, has index $2$ and order $24$, and it acts faithfully on the cube's four body diagonals, so it is the symmetric group on them; a pseudoscalar column goes to $\\det(g)$ times itself by definition. That the six operations commute with the $48$ up to the declared ties is the statement above, not part of this theorem.",
+    ),
+    (
+        "B: the proof of Theorem 3 condensed (A.2 row 14)",
+        "\\paragraph{Proof of Theorem~\\ref{th:bijection}.}\n$F$ maps a basis element of $Q$ to a basis element, the Node moved by an offset that is a function of $D$ and of the age, the history's; with the history fixed it is injective on the basis. $S$ absorbs the arriving row\nand re-emits its weight, multiplicity and phase on its outputs at age\n$0$, an event; on $Q$ it is injective by Theorem~\\ref{th:isometry} (the conjugate transpose inverts it on the weights, multiplicities and phases); on $Q$ there are no two rows differing only in age, and their ages are the history's, the count since this event. (The engine's record of the event, a host diagnostic read by no rule and compared with nothing, is the history the statement fixes; it keeps the age the row arrived with for the books and the replay.) $R$ is injective\nbecause $U_{s,t} = U_s\\,\\mathrm{diag}(1, v(t))$, the turn a bijection and\n$U_s^{\\mathsf T}U_s = n_s I$. $M$ replaces a\nrepresentative by the normal form of the same element of $M_r$, the\nidentity on the module. A composition of injective linear maps is\ninjective. The collision permutes the directions of the amount-$1$ rows\nat a Node as a function of the whole set present \\cite{beamlaw}, a\nbijection of states and not a linear map, which is why it is excluded\nfrom the linear statement. The engine's inverse interval is the witness\non worlds without a measured event \\cite{beamlaw}; with splitters the\nstatement is the algebraic one above.",
+        "\\paragraph{Proof of Theorem~\\ref{th:bijection}.} $F$ maps a basis element of $Q$ to a basis element, the Node moved by an offset that is a function of $D$ and of the age, the history's, so with the history fixed it is injective on the basis; $S$ absorbs the arriving row and re-emits its weight, multiplicity and phase on its outputs at age $0$, injective on $Q$ by Theorem~\\ref{th:isometry}; $R$ is injective because the turn is a bijection and $U_s^{\\mathsf T}U_s = n_s I$; $M$ is the identity on the module; a composition of injective linear maps is injective. The collision, a permutation of the amount-$1$ rows at a Node as a function of the whole set present, is a bijection of states and not a linear map, which is why it is excluded from the linear statement; the engine's inverse interval is the witness on worlds without a measured event \\cite{beamlaw}.",
+    ),
+    (
+        "B: the symbols table's single-section row out (A.2 row 15)",
+        "$\\lambda$, $Q$, $\\theta$ & scalars, a module & a wavelength, the quotient of the rows' module that forgets the age (Theorem~\\ref{th:bijection}), an angle \\\\",
+        "",
+    ),
+    (
+        "B: the reproduction paragraph condensed (A.2 row 16)",
+        "The code, the worlds of series L with their expectation file written\nbefore the runs, the reading tool that replays a run's register into its\nworld list, the check scripts of the exact computations with their\noutputs, the runs' summary and the two figure scripts are archived \\cite{zenodo}; the register entry of each series carries every run's world, duration and source fingerprint, and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}.",
+        "The code, the worlds with their expectation files written before the runs, the check scripts with their outputs, the runs' summary and the figure scripts are archived \\cite{zenodo}; the register carries every run's world, duration and source fingerprint, and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}.",
+    ),
+    # Step B, round 2: the dangling references, the condensations of A.2 rows 3, 14, 15, 16.
+    (
+        "B2: Section 3's reading of the pace cites Appendix C",
+        "Two registered runs read the pace after a detector (Table~\\ref{tab:checks}):",
+        "Two registered runs read the pace after a detector (Appendix~\\ref{app:reproduction}):",
+    ),
+    (
+        "B2: Section 5's series K cites Table 3",
+        "blind to the crowd (series K, Table~\\ref{tab:checks}).",
+        "blind to the crowd (series K, Table~\\ref{tab:nature}).",
+    ),
+    (
+        "B2: Section 8's rounding pins cite Appendix C",
+        "the rounding pins of the $(3, 4)$ split were met (Table~\\ref{tab:checks});",
+        "the rounding pins of the $(3, 4)$ split were met (Appendix~\\ref{app:reproduction});",
+    ),
+    (
+        "B2: the six Ports paragraph without the duplicated octahedron",
+        "The same six Ports bound\nthe pace: the Nodes one interval away are the six neighbours at the\nends of the Links, the vertices of the octahedron $|x| + |y| + |z| \\le\n1$, the causal front of one interval; a pace that is the same in every\ndirection and crosses at most one Link per interval is at most the\nradius of that octahedron's inscribed sphere, $1/\\sqrt3$ Links per\ninterval, the sphere touching the eight faces on the cube's diagonals\n(Proposition~\\ref{prop:pace}, Figure~\\ref{fig:octahedron}); that the\nrows' pace $c$ sits at that bound and not below is the flight's\ndeclared wall $T_D$, the design's third statement and a rule chosen\namong few (P9), and given the wall the value is the flight operator's\nnorm, attained exactly on the body diagonals (the derivation's 24.1,\nrow 9).",
+        "The same six Ports bound the pace (Proposition~\\ref{prop:pace} below); that the rows' pace $c$ sits at that bound and not below is the flight's declared wall $T_D$, a rule chosen among few (P9), and given the wall the value is the flight operator's norm, attained exactly on the body diagonals (the derivation's 24.1, row 9).",
+    ),
+    (
+        "B2: the operations condensed (A.2 row 3)",
+        "\\paragraph{The operations.} Six operations, of three of Section~\\ref{sec:law}'s kinds\n(the translation, the bilinear form, the Euclidean division), make the\nwhole of gravitation and electricity in the law. The free release (a\ncount against a wall): a body of content $M_B$ holding a free family\nreleases at each self-creation the carry of the count of rate $M_B\\eta$, $\\eta$ the release rate per unit of content per direction, against the wall $1$ (the whole part of $M_B\\eta$ per self-creation,\n$M_B\\eta$ in the mean) on every declared direction, so a fan of $K$\ndirections releases $q = K M_B\\eta$ per interval while the source's\nclock owes nothing. The walk (a translation): each unit walks its\ndigital line at the pace of Proposition~\\ref{prop:pace}. The reading (a\nbilinear form): the label flow $\\mathbf a = \\sum \\mathrm{amount} \\times\n\\mathbf u_D$ of the rows arriving at the reader's Node, $\\mathbf u_D$\nthe label per unit along the direction $D$, the integer unit vector at\nthe scale $N_l$, $|\\mathbf u_D| = N_l$ within $1.35$ percent on every\ndirection. The coupling (a bilinear form with a declared integer\nmatrix): per axis $\\mathrm{push}_A = M_A (\\rho_A\\rho_B - 1)\\,\\mathbf a$,\nthe gravity column $-M_A \\mathbf a$ and the charge column\n$+\\rho_A\\rho_B M_A \\mathbf a$, $\\rho$ the declared charge per unit of\ncontent of each family. The momentum (a translation): $\\mathbf p_A\n\\leftarrow \\mathbf p_A + \\mathrm{push}_A$. The step (the Euclidean\ndivision): one Link per $d_p/|p_a|$ self-creations on the axis $a$, the\nwall $d_p = N_l N_w M_A + |p_a|$, $N_w$ the world's width; per interval, for a\nbody whose clock owes nothing, the speed on the axis is $|p_a|/(N_l N_w\nM_A + |p_a|)$.",
+        "\\paragraph{The operations.} Six operations, of three of Section~\\ref{sec:law}'s kinds (the translation, the bilinear form, the Euclidean division), make the whole of gravitation and electricity in the law. The free release: a body of content $M_B$ holding a free family releases at each self-creation the carry of the count of rate $M_B\\eta$ against the wall $1$, $\\eta$ the release rate per unit of content per direction, on every declared direction, so a fan of $K$ directions releases $q = K M_B\\eta$ per interval. The walk: each unit walks its digital line at the pace of Proposition~\\ref{prop:pace}. The reading: the label flow $\\mathbf a = \\sum \\mathrm{amount} \\times \\mathbf u_D$ of the rows arriving at the reader's Node, $\\mathbf u_D$ the integer unit vector at the scale $N_l$ ($|\\mathbf u_D| = N_l$ within $1.35$ percent on every direction). The coupling, a bilinear form with a declared integer matrix: per axis $\\mathrm{push}_A = M_A (\\rho_A\\rho_B - 1)\\,\\mathbf a$, the gravity column $-M_A \\mathbf a$ and the charge column $+\\rho_A\\rho_B M_A \\mathbf a$, $\\rho$ the declared charge per unit of content. The momentum: $\\mathbf p_A \\leftarrow \\mathbf p_A + \\mathrm{push}_A$. The step, the Euclidean division: one Link per $d_p/|p_a|$ self-creations on the axis $a$, the wall $d_p = N_l N_w M_A + |p_a|$, $N_w$ the world's width, so that for a body whose clock owes nothing the speed on the axis is $|p_a|/(N_l N_w M_A + |p_a|)$ per interval.",
+    ),
+    (
+        "B2: the five steps' close condensed",
+        "The decisive question is how much of that the law really forces: if every phenomenon needed a rule that puts its result in beforehand, the law would explain nothing; if the same rules force several results with little freedom, that is the contribution. So the paper keeps one ledger (Table~\\ref{tab:ledger}): for every result, the rules of Eq.~\\eqref{eq:map} it starts from, the assumptions added beside them with their kind, the freedom left, and the ground on which the derivation stands. What can be established now is an explicit model, exact and conditional results and checks after a detector; the broad claim that Outside represents nature still needs the completions Section~\\ref{sec:discussion} names, and the paper is built around the distance between the two.",
+        "The decisive question is how much of that the law really forces: if every phenomenon needed a rule that puts its result in beforehand, the law would explain nothing; if the same rules force several results with little freedom, that is the contribution. So the paper keeps one ledger (Table~\\ref{tab:ledger}): for every result, the rules of Eq.~\\eqref{eq:map} it starts from, the assumptions added with their kind, the freedom left and the ground of the derivation; what can be established now is an explicit model with exact and conditional results and checks after a detector, and the paper is built around the distance between that and the broad claim that Outside represents nature.",
+    ),
+    (
+        "B2: the proof of Theorem 2 condensed (A.2 row 14)",
+        "\\paragraph{Proof of Theorem~\\ref{th:isometry}.}\n$\\sum_i (wa_i)^2/(\\mathtt m A) = w^2 \\sum_i a_i^2/(\\mathtt m A) = w^2/\\mathtt m$. The conjugate\ntranspose maps the outputs $(wa_i, \\mathtt m A, p + t_i)$ to $\\sum_i a_i (w a_i)$\nat the phase $p$ on the input direction with multiplicity $\\mathtt m A \\cdot A$,\nthat is $(Aw, A^2 \\mathtt m, p) \\sim (w, \\mathtt m, p)$; for two inputs at one splitter\nthe cross terms carry phases differing by $\\Nphi/2$ (a reflection's quarter\nturn taken forward and its reverse taken back) and cancel in the normal\nform, which the check with the pairs $(20, 21)$, $(3, 4, 5)$ and\n$(119, 120, 169)$ confirms integer by integer \\cite{design} (with the\nturns kept instead of reversed the inputs are not returned), and the\nengine's merge reproduces on its own rows \\cite{beamlaw}. For $U_s$ the\ndiagonal of $U_s^{\\mathsf T}U_s$ is $C'^2 + S'^2$ and the off-diagonal\n$C'S' - S'C' = 0$ in integers.",
+        "\\paragraph{Proof of Theorem~\\ref{th:isometry}.} $\\sum_i (wa_i)^2/(\\mathtt m A) = w^2/\\mathtt m$. The conjugate transpose maps the outputs $(wa_i, \\mathtt m A, p + t_i)$ to $(Aw, A^2 \\mathtt m, p) \\sim (w, \\mathtt m, p)$; for two inputs at one splitter the cross terms carry phases differing by $\\Nphi/2$ and cancel in the normal form, which the check with the pairs $(20, 21)$, $(3, 4, 5)$ and $(119, 120, 169)$ confirms integer by integer \\cite{design}, and the engine's merge reproduces on its own rows \\cite{beamlaw}. For $U_s$ the diagonal of $U_s^{\\mathsf T}U_s$ is $C'^2 + S'^2$ and the off-diagonal $C'S' - S'C' = 0$ in integers.",
+    ),
+    (
+        "B2: the symbols table's second-meaning row out (A.2 row 15)",
+        "$q$, $f$, $s$, $e$, $r$, $d$, $H$, $S$, $W$ & letters with a second meaning, named where the text uses it & a source's release $q$ (Sections~\\ref{sec:forces} and~\\ref{sec:delay}) beside the deceleration parameter; a record's count vector $f$ in $R(f)$ beside the frequency; the turn's steps $s$ in $E = hs$ beside the accumulator; Euler's $e$ beside the event count; the radius $r$ beside the rate; the pair's denominator, a phase difference in steps and the derivation's density $d$ beside the wall; Shannon's $H$ of the entropy identity; the CHSH sum $S$, and Boltzmann's $S$ and $W$ \\\\",
+        "",
+    ),
+    (
+        "B2: the long form in one sentence (A.2 row 16)",
+        "The long form of this manuscript, with the derivation record of every formula, is the tree's paper at the commit \\texttt{c15c1174}, the forty-page cut before it at \\texttt{b0d1ebf7}; this paper is the cut to what is proved, measured after a detector or replicated, built around the general formula.",
+        "The long form of this manuscript, with the derivation record of every formula, is the tree's paper at the commit \\texttt{c15c1174}; the forty-page cut before it at \\texttt{b0d1ebf7}.",
+    ),
+    # Step B, round 3: Appendix B's duplicate sentence and two rows, Appendix D's captions and two rows, the AI statement.
+    (
+        "B3: Appendix B's directions sentence, said in Section 3",
+        " Directions $D$ are the six headings and declared\nprimitive integer vectors; the flight table gives, per direction $D$ and\nage $\\tau$, the Node offset $\\mathrm{pos}_D(\\tau)$ on the digital line of\n$D$, at most one Link per interval, and Euclidean speed $N_l|D|/T_D$ with\n$T_D = \\lfloor\\sqrt{3|D|^2N_l^2}\\rfloor$ and the flight scale $N_l = 64$:\nwithin $0.8$ percent of $1/\\sqrt3$ for every $D$, exact on $(1,1,1)$\n\\cite{beamlaw}.",
+        "",
+    ),
+    (
+        "B3: the symbols table's cap row out",
+        "$a$, $\\varrho$ & scalars & the cap of Eq.~(\\ref{eq:map}), or, where the text says so, an acceleration or a party's setting; the tables' radius $N_t - \\sqrt2/2$ (Theorem~\\ref{th:bell}) \\\\",
+        "",
+    ),
+    (
+        "B3: the symbols table's multiplicity row out (named in Section 2)",
+        "$\\mathtt m$ & a row's attribute, in code font & a row's multiplicity \\\\",
+        "",
+    ),
+    (
+        "B3: the families table's two inline families one row",
+        "\\texttt{mu} (the muon, the covariant worlds) & inline: $h = 0$; $M = 13248$ (series S) & the record's $W = E'^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ with $E'$ the whole root by comparisons (the identity, a hypothesis beside the law) & the covariant readings, 09-21 (entry 20) & 1, 2, 6 & the 64th self-creation at $70$ and $124$ (GAMEBOARD); its products' face clicks (DETECTOR, series S) \\\\\n\\texttt{matter} (the massive rows) & inline: $h = 0$; the rows' content per unit & a paid row, its content per unit on $\\Z$, its momentum content $\\times\\,\\mathbf u_D$ & the massive rows, series W (09-21) & 1, 6 & series W's first-click ages $815$ and $876$ at the pixels (DETECTOR) \\\\",
+        "the inline families \\texttt{mu} (the muon, the covariant worlds) and \\texttt{matter} (the massive rows) & $h = 0$; \\texttt{mu}'s $M = 13248$ (series S); \\texttt{matter}'s content per unit & the record's $W = E'^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ with $E'$ the whole root by comparisons (the identity, a hypothesis beside the law); a paid row's content per unit on $\\Z$ & the covariant readings, 09-21 (entry 20); the massive rows, series W (09-21) & 1, 2, 6 & the 64th self-creation at $70$ and $124$ (GAMEBOARD) and the products' face clicks (DETECTOR, series S); series W's first-click ages $815$ and $876$ (DETECTOR) \\\\",
+    ),
+    (
+        "B3: the families table's caption shorter",
+        "\\caption{\\label{tab:families}Every family of the register \\cite{familiesaudit}: its declared integers ($h$, the charge $\\rho$, the columns, the lifetime $L$, the circle, the hand; the content $M$ on the measured worlds), its algebraic object (the frame's section 9 \\cite{clickframe}; \\cite{history}), when it entered (the record), the verbs that act on it (1 translation, 2 bilinear form, 3 group-ring addition, 4 permutation, 5 evaluation, 6 division) and the click that reads it, by kind. ``Not named'' is a cell the tree does not fill.}",
+        "\\caption{\\label{tab:families}Every family of the register \\cite{familiesaudit}: its declared integers ($h$, $\\rho$, the columns, the lifetime, the circle, the hand; the content $M$ on the measured worlds), its algebraic object \\cite{clickframe,history}, when it entered, the verbs that act on it (1 translation, 2 bilinear form, 3 group-ring addition, 4 permutation, 5 evaluation, 6 division) and the click that reads it, by kind; ``not named'' is a cell the tree does not fill.}",
+    ),
+    (
+        "B3: the roads table's caption shorter",
+        "\\caption{\\label{tab:roads}The check of the roads (record 817): one row per formula the paper arrives at, the inputs its chain used, the file and line where the chain starts, and the word used. No row lists Einstein's or Lorentz's formula among its inputs; ``derived'' stands in no row. The sources: the click frame on \\texttt{main} at 70e9781a \\cite{clickframe} and Einstein Outside on \\texttt{main} at e8432e6c \\cite{einsteinoutside}, whose section III is the same check made in the source.}",
+        "\\caption{\\label{tab:roads}The check of the roads (record 817): one row per formula the paper arrives at, the inputs its chain used, the file and line where the chain starts (the click frame on \\texttt{main} at 70e9781a \\cite{clickframe}; Einstein Outside at e8432e6c \\cite{einsteinoutside}, whose section III is the same check in the source) and the word. No row lists Einstein's or Lorentz's formula among its inputs; ``derived'' stands in no row.}",
+    ),
+    (
+        "B3: the AI statement shorter",
+        "\\paragraph{Use of AI tools.} The code, the design documents, the check scripts and the drafts of this manuscript were produced with AI coding agents under the author's direction and review; the author verified every number against the archived runs and is responsible for the whole text; no AI system is an author. [The tool and version are named at submission.]",
+        "\\paragraph{Use of AI tools.} The code, the documents, the checks and the drafts of this manuscript were produced with AI coding agents under the author's direction and review; the author verified every number against the archived runs and is responsible for the whole text; no AI system is an author. [The tool and version are named at submission.]",
+    ),
+    # Step B, round 4: symbol rows, the interference paragraph's duplicates of Appendix C, the families table's cells.
+    (
+        "B4: Appendix B's range parenthetical out",
+        " (at $\\Nphi = 64$ the range is $-88$ to $+237$)",
+        "",
+    ),
+    (
+        "B4: the a_r row out (named at their first use)",
+        "$a_r$, $a_\\tau$, $[n, d]$ pairs & scalars, pairs & the presence a body read, the age moment it read, the declared rates (suspension, clock, release) as keys \\\\",
+        "",
+    ),
+    (
+        "B4: the u row out (named at their first use)",
+        "$u$, $\\tau$, $\\rung_k$, $C_k$, $C_K$ & scalars & the birth wheel's value, the age, a rung of the ladder, a cumulative weight, the total \\\\",
+        "",
+    ),
+    (
+        "B4: the label flow's symbol row out",
+        "$\\mathbf a$ & vector & the label flow read at a Node \\\\",
+        "",
+    ),
+    (
+        "B4: the Mach-Zehnder sentence without the half and quarter turns (Appendix C keeps them)",
+        "Mach-Zehnder: the balanced splitter, two arms, the mirrors' turn $\\Nphi/4$, the second splitter; at one port the two phasors add and at the other they are $\\Nphi/2$ apart and cancel; with the tables at $\\Nphi = 64$ the offers are $1681/1682$ and $1/1682$, the rounding and not $1$ and $0$, and the rungs give the bright port $64$ of $64$ clicks and the dark port $0$ (row 2b); the half turn and the quarter turn, $0/64$ and $32/32$, follow by the same lines.",
+        "Mach-Zehnder: the balanced splitter, two arms, the mirrors' turn $\\Nphi/4$, the second splitter; at one port the two phasors add and at the other they are $\\Nphi/2$ apart and cancel; with the tables at $\\Nphi = 64$ the offers are $1681/1682$ and $1/1682$, the rounding and not $1$ and $0$, and the rungs give the bright port $64$ of $64$ clicks and the dark port $0$ (row 2b).",
+    ),
+    (
+        "B4: the pair, Malus and GHZ sentence out of the interference paragraph (Appendix C keeps them)",
+        " The pair (Section~\\ref{sec:bell}), Malus's $219/256$ at $22.5$ degrees from the rotation table, and GHZ's zeros from the joint weights are the same three lines each; the register's runs confirm them (Section~\\ref{sec:checks}).",
+        "",
+    ),
+    (
+        "B4: Theorem 1's proof without its last sentence",
+        " That the six operations commute with the $48$ up to the declared ties is the statement above, not part of this theorem.",
+        "",
+    ),
+    (
+        "B4: the light row's object cell shorter",
+        "a free row, an element of $\\Z[\\Z_{\\Nphi}]$ born at the lamp, its amount the coefficient, its direction on the fan under the $48$; its phase per Link the declared turn",
+        "a free row, an element of $\\Z[\\Z_{\\Nphi}]$ born at the lamp, its amount the coefficient, its direction on the fan under the $48$, its turn per Link declared",
+    ),
+    (
+        "B4: the families table's repeated entry cell, p",
+        "the catalog, record 30; one definition per family, record 113 (09-20) & 1, 2, 6 & series N's border clicks",
+        "the catalog, records 30 and 113 (09-20) & 1, 2, 6 & series N's border clicks",
+    ),
+    (
+        "B4: the families table's repeated entry cell, beta and w",
+        "the catalog, record 30; one definition per family, record 113 (09-20) & 1, 2, 6 & the neutron's decay clicks",
+        "the catalog, records 30 and 113 (09-20) & 1, 2, 6 & the neutron's decay clicks",
+    ),
+    # Step B, round 5: four lines.
+    (
+        "B5: the symbols table's h, f row out (named at first use)",
+        "$h$, $f$ & scalars & the quantum of action ($E = hf$), the frequency \\\\",
+        "",
+    ),
+    (
+        "B5: Appendix B's half-angle sentence out (Definition 2 names them)",
+        " The half-angle tables are $C'_{\\Nphi} = C_{2\\Nphi}$, $S'_{\\Nphi} = S_{2\\Nphi}$.",
+        "",
+    ),
+    (
+        "B5: the roads table's factor row without the formula (Table 4 has it)",
+        "the place-to-place factor $k_{XY} = (r_Y/r_X)(1 - \\mathbf s\\cdot\\mathbf v_X)/(1 - \\mathbf s\\cdot\\mathbf v_Y)$ &",
+        "the place-to-place factor $k_{XY}$ &",
+    ),
+    (
+        "B5: the seven confirmations' cone clause",
+        " L7, the cone. The click's power:",
+        " The click's power:",
+    ),
 ]
 
 
