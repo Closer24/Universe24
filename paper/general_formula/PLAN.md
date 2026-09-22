@@ -2819,3 +2819,87 @@ What this fixes for step 2, on top of sections 1 to 4:
    the dense fan, the inputs), and that the description of nature is
    a program with named completions, with the twelve failures counted.
 
+### 6. The two checks of the plan folded in (records 588 and 590; the Boss's word of 01:05Z, 2026-09-22)
+
+The mathematician, section 2 (AGREED with five words and four rows):
+(a) c = 1/sqrt 3 is proved in DERIVATIONS_BEAM 13.2 (a) with 1.4 and
+FORM.md 1 (not 11.1, the linear block's shift operator). (b) Planck and
+de Broglie: derived from the update rules as identities (21.2 rows 51
+and 52: E = h_q s = (h_q N) f the release's cost rule read as an
+identity, lambda = h_A / p the turn rule's), with the constant h and
+the dictionary h = h_q N = h_A an input (24.1 row 25); the "compared
+with" column reads "none after a detector" (series H's closure is a
+GameBoard reading, below). (c) The masses split: a bound set's mass as
+its total content, derived (19.1); the nucleon as a chain of three and
+the strong ratio, in form with the strong column an input (21.5 rows
+41 to 43), so hypothesis or input there. (d) The smallest mass per
+kind: derived, a theorem (16.2 (d)), its premise P8 an input. (e) The
+clock's redshift: derived with the calibration an input, sharper than
+"assumed": by 5.1 and 3.3 the clock's constant and Newton's G have the
+exact ratio (n / d)_susp x S, so a_tau = G M / (r c^2) with 3.3's G
+holds iff the suspension pair is [1, S] (a constraint on the inputs,
+F16). The open list's words: Newton's retarded geodesics "derived (5.3),
+unconfirmed by any registered orbit, the run after a detector not
+made"; Bradley's aberration "derived at first order (12.2), pinned,
+not run"; the deceleration "the law's coasting q = 0 derived (15.4,
+Milne, the thrown stars); G2's -0.108 its reading, a numerical finding
+inside the coasting bracket; the growing wall a hypothesis". Four
+central formulas added to section 2's table, all derived from the
+update rules: Born's rule as a limit with the 1/N bound per cell (6.2;
+21.2 row 12), distinct from the form's row; the continuity equation
+from the books (25.4; record 398 CLOSED); the Lienard-Wiechert retarded
+potential of a moving source at first order (12.1; 21.2 row 21);
+Boltzmann's S = k log W as the count of torus points (14, 16.1; 21.2
+row 53). Two more, closed and small, at the coordinator's call within
+thirty pages: Newton's cooling as the release's exponential (25.9); the
+muon's decay tick under the identity (18.1 (a)); the cut takes the
+first if a line is free, and neither if not.
+
+The physicist, section 3 (the checks' kinds): (a) the replications, the
+books, the inverse interval, the rounding pins and the crossing rule's
+tests are gates and computations, under (a) only. (b) DETECTOR, stay:
+series Q's 290 face clicks and the pace; L7's cone and the counters'
+age 29; L's S at 64 to 4096, the marginals 32 of 64, the Mach-Zehnder
+64/0, the (3, 4) split's cells 63/1, 31/1, 125/3, the two-slit clicks;
+A12's 128 of 256 and 219 of 256; T's ratio 1.907 at 6 and 3 Links (the
+lamp's births at the detector; the clock series' k, a replay, never
+cited); S's face clicks 369 and 345 and z = 0.3674 (the body's own
+record), "under the identity" said as arithmetic on the click ticks
+(S's E' at load, the pace and the invariant out); K's 0.000 pixel and
+0.00 interval (the screen's clicks; the crowd at b out); J1's widths
+0.036 and 0.038 over the 64 beta clicks and J2's 16 of 1024 with 0
+behind (the weak's "the pair holds" out). (c) Rows 1a, 1b, 2a, 2b, 2c,
+8a, 8b, 9, 12 DETECTOR, stay; 5a stays as a bound; 8c a declared input
+against nature, labelled an input, not a measurement; row 3 (q =
+-0.108) DETECTOR in kind, reproduced at head as a verdict with the
+digits moved (-0.104 at t_0 = 350, the pins met, record 408), cited
+with that status; the pinned rows in the one "not run" line. (i)
+Series H: the closure 2.041 to 2.000 and the closing ratio are the
+orbit's r, p and T from the step records, GAMEBOARD: the closure
+leaves; what H reads after a detector is the electron's click on a
+face with its phase, which reads where the orbit ended and not E = h f.
+Series R: the kicked u through the -x face at tick 63 with its 2/3 e (a
+face click) and the read mass (the border's glue rows, the lifetime
+border a detector) DETECTOR, stay; the separations, "no step" and the
+first step's tick GAMEBOARD, leave. Series N (rows 7a, 7b): the bond
+clicks on the lifetime border, the escaped content 4 and 8 and the mass
+a detector reads (3673) DETECTOR, stay, with the pushes, reads, hands
+and kicks; "no step" and "the pair separates" GAMEBOARD, not the
+binding's evidence. Series L's information-cost units (82, 4, 6, 185
+per 1, 2, 3, 6.3 bits): DETECTOR click amounts summed by the host, the
+bits a definition of the coarse graining; they may stay in section 2's
+row as arithmetic on registered click amounts with each amount's
+register key, and they leave (b) and (c); the entropy identity stays as
+a theorem. (ii) G2's z = 0.2636 (row 4b and the coasting q): DETECTOR
+in kind but read before the crossing rule and unreproducible at head
+(record 408, INCONCLUSIVE): out of (b); restated once in the "not
+reproduced at head, re-run pending under the age word" line; row 4b's
+FAIL kept in (c) with that status and no other citation. (iii) The one
+formula-against-formula item is series H's closure (out); S's z from
+the click ticks, 2c's exponent window from the click cells and T's
+ratio against the derivation's pin are arithmetic on clicks and fine
+when the sentence says so; the prediction 181/64 against Poh et al. is
+the law's number, not a simulator measurement. Nothing of the board as
+a measurement anywhere (records 281, 562, 564, 575); the base is
+b684ba0b's text. Step 2, the cut, starts on this word.
+
