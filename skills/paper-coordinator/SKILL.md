@@ -50,3 +50,55 @@ The method section says what record 305 says: the infinite limit derives the
 form, the run confirms the number, the pin orders that the first be written
 before the second; every derived formula to the six-point standard of record
 300.
+
+## The no-circularity check of every formula, and the road from the cells to the algebra (the model owner, 2026-09-22, to the writer)
+
+The owner's word (translated): "For everything that comes in, check it
+and think about it, so that there is no circularity: not 'we put Lorentz
+in to reach Lorentz', but understand how we arrived at Lorentz, and then
+say Lorentz is good. For all our formulas, understand how we reached them
+and make sure there is no circularity in them. And show how we arrived at
+modern algebra from the physical laws we put into the cells."
+
+The check, run on every formula before it enters the paper and recorded
+in PLAN.md as the paper's circularity audit:
+
+1. Name the inputs: the postulates (P1 to P11), the declared inputs (the
+   tables, the grains, the family table, the dictionary), the assumptions
+   the ledger's third column names, and any identity a hypothesis
+   declared (record 270's covariant identity is one).
+2. Name the operations from the inputs to the result: which of the six
+   verbs, which limit, which average, which theorem of the paper.
+3. Ask whether the result, or its form, is among the inputs. If it is,
+   the paper says DECLARED (or "an identity under the dictionary") and
+   never "derived", "shown" or "recovered"; a reading that confirms a
+   declared form confirms the declaration, not nature.
+4. If it is not, the paper says by which inputs it was reached and in
+   what words: derived (exact on the GameBoard), recovered (in a limit),
+   arrived at (a conversion Outside under the frame's assumptions), and
+   names the strongest input in the same sentence, so that the reader
+   sees what carries the result (the balanced splitter's conservation
+   carries the square; the tables' cosines carry the cos^2 correlation;
+   (A1) with the relativity of the two directions carries the Lorentz
+   group; the wall T_D carries the value 1 / sqrt 3).
+5. Where a derivation in writing would remove a declaration (part 6 of
+   the click frame for Eq. 14), the paper waits for the merged text and
+   says "declared" until then.
+
+The road from the cells to the algebra, an account the paper carries in
+Section 2 and the discussion: the rules put into the cells (an amount
+conserved on its line; a phase on a bounded circle; arrivals that add
+and opposite phases that cancel; a splitter that conserves the total; a
+rotation of labels; a read-out that counts; six neighbours and one Link
+per interval) are, written down, integer accumulators with a carry, the
+cyclic group Z_N, the group ring Z[Z_N] and its addition, an integer
+matrix with the sum of squares as its multiplicity, an orthogonal
+integer matrix from the tables, the evaluation at the roots of unity
+with its norm, and the translation group's shift. So the state is a free
+Z-module, the interval a Z-linear map on it, and the click one bilinear
+form: modern algebra is not assumed, it is what the cell rules are when
+written down, and the theorems of the paper (the isometry, the
+injectivity, the lattice Gleason, the exact marginals, S(N)) are
+properties of that algebra; the passage Outside is a group (the click
+theorem). The paper shows this road once, in that order, before any
+result.

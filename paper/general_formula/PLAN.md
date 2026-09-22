@@ -3847,3 +3847,35 @@ merge SHA as agreed. The cost joins section 8's count: the three
 formulas' frame is one paragraph of about eight lines before the
 Inside | Outside table, paid within section 8's plan (Table 2's seven
 rows to a pointer, the symbols table's single-use letters).
+
+## The circularity audit of the paper's formulas (2026-09-22, the owner's word to the writer; the check of skills/paper-coordinator/SKILL.md)
+
+For each formula: its inputs, the road, and whether its form was put in.
+The word the paper must use is in capitals.
+
+- The map, Eq. 1: a DEFINITION (the law). Inputs: P1 to P6; nothing derived.
+- The 48 and the 24 (Theorem 1): DERIVED from the six Ports; no input names it.
+- The books and the continuity equation: DERIVED from the carry (a bijection) and the matrices' conjugate transposes; inputs P3, P5.
+- The pace bound 1 / sqrt 3 (Proposition 1): DERIVED (Cauchy-Schwarz on one Link per interval). The VALUE attained: carried by the wall T_D = floor(sqrt(3 |D|^2 N_l^2)), a rule chosen among few (P9) whose sqrt 3 is the supremum's; the paper says so ("the flight table's choice of the supremum is a third statement"). Not circular; the value is a choice, the bound a theorem.
+- No dispersion, the constancy of c: a POSTULATE (P9), not forced (the derivation's 27). Said so.
+- Gauss's law: DERIVED from the walk under the world condition.
+- Newton's and Coulomb's inverse square: RECOVERED under the shell average from the bilinear push and the flux; no 1 / r^2 among the inputs; G named, N_w an input. Not circular.
+- The retarded potential, Poisson, the clock's 1 / r: RECOVERED under the average; the age moment as the clock's word is P9; the calibration a_tau = G M / (r c^2) is a DICTIONARY INPUT. Said so.
+- The click's weight a quadratic form (Theorem 4): DERIVED from (a) to (e); the strongest input is (b), the balanced splitter's conservation, an axiom of the apparatus, which carries the square (the parallelogram law); the harmonic constants free, the least rank P10. Definition 3's square is then the one admissible form; the hypotheses do not name the square. Not circular. The cos kernel is carried by the tables, a DECLARED INPUT (P7): Born's rule's form is derived, its cosine is put in through the phase circle's tables; the paper says both.
+- Born's bound and rule: DERIVED from the rung (a definition) with the uniform birth phase (a fact of the source).
+- The exact marginals, no-signalling (Theorem 5): DERIVED from the rotation rows' orthogonality.
+- S(N) and Tsirelson's value (Theorem 6): DERIVED from the rungs and the tables; the cos(a - b) correlation is carried by the rotation tables (cosines), so 2 sqrt 2 is RECOVERED as the standard consequence of cosine correlations under a quadratic weight, not a new bound; the finite-N rational and the plateau 181/64 are the paper's, measured at seven grains. Not circular; the paper says "recovered", claims no novelty for the value.
+- Planck's and de Broglie's relations: IDENTITIES UNDER THE DICTIONARY h = h_q N = h_A, an input; circular by construction and said so.
+- The uncertainty bounds: ALGEBRA on Z_N (Donoho-Stark, Maassen-Uffink) under a HYPOTHESIS (the circle as position, its transform as momentum); said so.
+- Young's spacing: RECOVERED from two paths' phase difference in the fan's limit.
+- Eq. 14, W = E_0^2 + 3 p.p: DECLARED (covariant-readings-v1, record 270): the Minkowski norm declared into the wall, as part 4 of the click frame states ("the square that would give YES is the Minkowski norm declared into the wall"). The one formula where Lorentz's form was put in; series S's readings confirm the declaration, not nature. The paper's word is "declared" (the framing commit says "an Inside formula on the record, read by no detector"), and it becomes "shown" only when part 6 derives W's form from the conversion (the walk's dispersion, the factor 3) on main.
+- Lorentz, the click theorem: ARRIVED AT from (A1), one Node per interval for the passage of information (the constancy of c on the clicks), and the one line k_AB = k_BA, the relativity of the two directions; these are the two postulates of special relativity in the click language, and the group follows as in Einstein's 1905 derivation (Alexandrov-Zeeman in three dimensions). Not circular: no transformation is declared; but the paper must say in one sentence that (A1) and the one line are special relativity's two postulates, so that "arrived at Lorentz" is read as "Einstein's road, walked on clicks", and that what the board adds is (A2), the amplitudes that carry sqrt(1 - v^2) into a detector's own rate, and the fact that the law as built lacks (A2) (its two factors apart by 1 - v^2). That sentence goes into the frame paragraph in the reshaping commit.
+- The two Doppler factors r / (1 - v) and (1 + v) / r: DERIVED on the counts (rung 1).
+- The entropy identity: a DEFINITION of the coarse graining plus the click's one deletion.
+- The equivalence principle, D3: MEASURED (no formula; the step rule divides by the content, so equal fall is DERIVED at rest, the measured is the scale symmetry).
+
+The road from the cells to the algebra (the owner's second word), to be
+written once in Section 2 before the six verbs' identities (section 8):
+the physical rules put into the cells and what each is as algebra, in
+the order of skills/paper-coordinator/SKILL.md's last section; about
+eight lines, counted in section 8's cost.
