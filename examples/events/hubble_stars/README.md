@@ -70,10 +70,16 @@ N 64, 400 intervals, `width` S = 2^20, `release` [1, 2^16].
   the farther star on an axis is the faster and none overtakes another
   (a step onto an occupied Node is a contact). The speeds run from 0.057 c
   to 0.497 c (c = 32 / 55 Links per interval on a heading, read off the
-  flight table). The momentum is the label p = Q S M_total v / (1 - v)
-  ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
-  step 5; M_total = 4096 + M, the content the step rule reads; the table
-  `make_worlds.py` prints). The clock turns ONE step of the circle per
+  flight table). The momentum is the label that gives v under the law's
+  drive of a body, since 2026-09-22 the line drive (the model owner's
+  record 972; [the design](../../../docs/designs/drive_b/DEFAULT.md);
+  [BEAM_LAW note 17](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  as amended, note 49): v = p Q / (Q^2 S M_total + p T_D) on a heading
+  with T_D = 110, so p = Q S M_total v / (1 - v T_D / Q) (M_total = 4096 +
+  M, the content the step rule reads; the table `make_worlds.py` prints;
+  the per-axis drive of history, the drive every registered run below was
+  read under, gave p = Q S M_total v / (1 - v), reproduced by
+  `stars(mass, AXIS_DRIVE)`). The clock turns ONE step of the circle per
   self-creation: K = M_total.
 - **The detector.** ONE measured event of the paid family `detector` (it
   releases nothing) at the centre declared as the detector `centre` of one
@@ -93,9 +99,10 @@ N 64, 400 intervals, `width` S = 2^20, `release` [1, 2^16].
   stars farther out on its own chain: inward, growing with the rank, the
   one-dimensional "mass inside" (Newton's shell theorem holds in one
   dimension, and the six chains are three independent lines, x, y and z,
-  each of eight stars). A star's speed changes by (1 - v)^2 x amount / S
-  per row whatever its mass (the equivalence principle): what "mass" means
-  here is the rows a star releases.
+  each of eight stars). A star's speed changes by (1 - v T_D / Q)^2 x
+  amount / S per row under the line drive ((1 - v)^2 x amount / S under
+  the per-axis drive of history) whatever its mass (the equivalence
+  principle): what "mass" means here is the rows a star releases.
 
 ## Three crowds, three clocks: the nine worlds
 
@@ -162,21 +169,27 @@ generator; a GameBoard expectation).** On each line every star releases F
 rows per direction per interval; the rows of a star l reach a star j at
 the acoustic rate F (c - u_r) / (c - u_s) (u_s, u_r the two speeds along
 the row's heading) once the first row has crossed the distance between
-them; a row moves j's speed by (1 - |v_j|)^2 F / S toward l; the outward
+them; a row moves j's speed by (1 - |v_j| T_D / Q)^2 F / S toward l under
+the line drive ((1 - |v_j|)^2 F / S under the per-axis drive of history,
+`push_factor` in the generator); the outward
 rows of a moving star are partly taken home (a star that steps into the
 Node of the row it just released, the fraction |v|, re-created half inward
 and half outward: the outward beam (1 - |v|) / (1 - |v| / 2) of F, the
 inward 1 / (1 - |v| / 2)); the clocks, the flight table's grain and the
 step rule's grain are ignored and flagged. The light of each star at the
 window's centre t_0 leaves at the t_e with t_e + |x(t_e)| / c = t_0; z =
-|v(t_e)| / c, tau = t_0 - t_e. Derived at t_0 = 350: `gravity` q = +0.245,
-H (t_0 + T_0) = 0.933, |p(end)| / p(0) from 0.67 to 1.11 (the inner stars
+|v(t_e)| / c, tau = t_0 - t_e. Derived at t_0 = 350 under the line drive
+(the shipped `expectations.json` since 2026-09-22): `gravity` q = +0.265,
+H (t_0 + T_0) = 0.941, |p(end)| / p(0) from 0.69 to 1.09 (the inner stars
 of the fast lines GAIN speed: the rows of the receding opposite chain
 arrive at the reduced acoustic rate while the slowly receding outer stars
-of the own chain pull nearly in full); `double` q = +0.594, H (t_0 + T_0)
-= 0.854, |p(end)| / p(0) from 0.28 to 1.27. At the first design (M = 2^20,
-F = 16) the derivation read q = +0.05, within the grain's reach of the
-coasting form, which is why M is 2^22.
+of the own chain pull nearly in full); `double` q = +0.603, H (t_0 + T_0)
+= 0.876, |p(end)| / p(0) from 0.32 to 1.22. Under the per-axis drive of
+history (the registered runs' pins, `expectations(drive=AXIS_DRIVE)`):
+`gravity` q = +0.245, H (t_0 + T_0) = 0.933, |p(end)| / p(0) from 0.67 to
+1.11; `double` q = +0.594, H (t_0 + T_0) = 0.854, from 0.28 to 1.27. At
+the first design (M = 2^20, F = 16) the derivation read q = +0.05, within
+the grain's reach of the coasting form, which is why M is 2^22.
 
 ## The criteria, pinned before the runs (`expectations.json`)
 
@@ -197,11 +210,14 @@ coasting form, which is why M is 2^22.
   0.01 (GameBoard); k within 0 .. 0.05.
 - **The gravity and double crowds** (the late window): q within the
   derived q +- the larger of 0.2 and half the derived deceleration
-  (`gravity` +0.04 .. +0.44, `double` +0.30 .. +0.89); H (t_0 + T_0) within
-  10 % of the derived (0.84 .. 1.03; 0.77 .. 0.94); the nearest of the
-  three forms q = +0.5 or q = 0 and the farthest q = -0.55; |p(end)| /
-  p(0) within the derived spread widened by half of itself (0.51 .. 1.16;
-  0.00 .. 1.41) (GameBoard); k within 0 .. 0.05.
+  (`gravity` +0.07 .. +0.47, `double` +0.30 .. +0.90 under the line drive;
+  +0.04 .. +0.44 and +0.30 .. +0.89 under the per-axis drive of history);
+  H (t_0 + T_0) within 10 % of the derived (0.85 .. 1.04; 0.79 .. 0.96;
+  the history's 0.84 .. 1.03; 0.77 .. 0.94); the nearest of the three
+  forms q = +0.5 or q = 0 and the farthest q = -0.55; |p(end)| / p(0)
+  within the derived spread widened by half of itself (0.54 .. 1.14; 0.00
+  .. 1.33; the history's 0.51 .. 1.16; 0.00 .. 1.41) (GameBoard); k within
+  0 .. 0.05.
 - **The ordering** (per clock): q_coasting < q_gravity < q_double with
   every gap above 0.1.
 - **What is observed today** (every world): whether q = -0.55 is the
