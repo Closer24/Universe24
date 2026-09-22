@@ -417,6 +417,9 @@ WORLD_KEYS = {
     # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
     # false by default (`DRIVE_B_RULE`).
     "drive_b",
+    # flow-link-v1 (2026-09-22): one arrival counts one Euclidean Link of
+    # its line, a boolean, false by default (`FLOW_LINK_RULE`).
+    "flow_link",
     # centred-step-v1 (2026-09-22): the body's step at half the wall, a
     # boolean, false by default (`CENTRED_STEP_RULE`).
     "centred_step",
@@ -660,6 +663,23 @@ MEETING_RULE = "meeting-v1"
 # nearest its whole momentum (`nature_beam.optical_turn`). Absent, nothing
 # of it exists and every world reads as it did, byte for byte.
 OPTICAL_RULE = "optical-v1"
+# The identity of the flow label (`flow-link-v1`; the model owner's decision of
+# 2026-09-22, record 915 of docs/LOG_2026-09-20.md, on the Flow Weight
+# Designer's design docs/designs/flow_weight/DESIGN.md, the physics-rule
+# reviewer's ADMISSIBLE of record 902): under the world key `flow_link` (a
+# boolean, absent by default) the arrival flow every reader sums counts each
+# arriving row of direction D with the flow label f_D, the integer vector
+# nearest |p_D| D / S_1 (the label per Euclidean Link of the line, S_1 = |a| +
+# |b| + |c| the line's Nodes per period), in place of the unit label u_D, the
+# integer vector nearest |p_D| D / |D| (the label per Node); |p_D| is Q for
+# the photon and a massive family's `momentum_magnitude`. Formed once at load
+# by one Euclidean division per component (`nature_beam.flow_label`), read
+# by the flow's sums alone (`nature_beam.CrowdMoments`, a body's push through
+# the group moment of a free family's rays); the age moment, the wall, the
+# flight, the collision, the phase and the momentum a click moves untouched.
+# Absent, the flow labels are the labels and every world reads as it did,
+# byte for byte.
+FLOW_LINK_RULE = "flow-link-v1"
 # The identity of the hand (`hand-v1`; the model owner, 2026-09-20, record
 # 128 of docs/LOG_2026-09-20.md, "the hand's three choices confirmed"; the
 # physicist's design hand/DESIGN.md with the mathematician's FORM.md; BEAM_LAW
@@ -1241,6 +1261,10 @@ class NatureBeamWorld:
     # drive-b-v1 (the world key `drive_b`, false by default): the
     # directional drive of a body (`drive_wall`, `core.integer.by_line`).
     drive_b: bool = False
+    # flow-link-v1 (the world key `flow_link`, false by default): the flow
+    # label per Euclidean Link in place of the unit label per Node
+    # (`nature_beam.flow_label`, formed once at load).
+    flow_link: bool = False
     # centred-step-v1 (the world key `centred_step`, false by default): the
     # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
     centred_step: bool = False
@@ -1383,9 +1407,10 @@ class NatureBeamWorld:
         `hand-v1` when the world declares a hand or an axis,
         `covariant-readings-v1` when the world declares `covariant_readings`,
         `optical-v1` for the world key `optical`, `drive-b-v1` for the world
-        key `drive_b` (the directional drive of a body), `centred-step-v1`
-        for the world key `centred_step` (the body's step at half the wall)
-        and, last,
+        key `drive_b` (the directional drive of a body), `flow-link-v1` for
+        the world key `flow_link` (the flow label per Euclidean Link),
+        `centred-step-v1` for the world key `centred_step` (the body's step at
+        half the wall) and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""
@@ -1412,6 +1437,8 @@ class NatureBeamWorld:
         # records as history.
         if self.drive_b:
             found.append(DRIVE_B_RULE)
+        if self.flow_link:
+            found.append(FLOW_LINK_RULE)
         if self.centred_step:
             found.append(CENTRED_STEP_RULE)
         if self.binding:
@@ -3965,6 +3992,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for entry in measured:
             if not entry.fixed:
                 drive_wall(entry.momentum, sum(entry.held), width, obj.get("covariant_readings") is None)
+    # flow-link-v1 (2026-09-22): the world key `flow_link`, a boolean, false
+    # by default; the flow labels it declares are formed once at load by
+    # `nature_beam.direction_flight` and `nature_beam.family_flight`, their
+    # one product tested by division before it is formed.
+    flow_link = obj.get("flow_link", False)
+    if type(flow_link) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: flow_link must be true or false ({FLOW_LINK_RULE}, off by default), "
+            f"not {flow_link!r}"
+        )
     # centred-step-v1 (2026-09-22): the world key `centred_step`, a boolean,
     # false by default (docs/designs/atom_give/CENTRED_STEP.md section 1).
     centred_step = obj.get("centred_step", False)
@@ -4023,6 +4060,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         covariant=covariant,
         optical=optical,
         drive_b=drive_b,
+        flow_link=flow_link,
         centred_step=centred_step,
     )
     _record_load_checks(measured, detectors, families, phase_steps)

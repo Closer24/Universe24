@@ -300,3 +300,209 @@ on a diagonal heading is sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
 no circle exists under the drive `main` runs even with a continuous
 push. A circle at this grain is not what the law gives at S = 32, and
 no pin is moved to say otherwise.
+
+## The one-constant worlds (flow-link-v1, 2026-09-22): the pins before any run
+
+The owner's decision of 2026-09-22 (record 915 of
+[the log](../../../docs/LOG_2026-09-20.md), about 10:05Z): Newton's rows
+go on the one constant of gravity, the hypothesis flow-link-v1 of
+[the design](../../../docs/designs/flow_weight/DESIGN.md) (section 3 (c),
+the pins that move; section 6, the key) and
+[its algebra](../../../docs/designs/flow_weight/ALGEBRA.md) (section 5,
+Newton's rows by formula), in parallel with the ring world's run. Under
+the world key `flow_link` the arrival flow every reader sums carries per
+arriving row the flow label nearest `Q D / S_1` in place of the unit
+label, so every push is divided by its fan's mean of `S_1 / |D|`, the
+Nodes per Euclidean Link of a digital line; the age moment, the wall and
+the flight are untouched. The key is the Flow Link Builder's (one writer
+of the code); these four worlds and their pins are series D3's side of
+it, written by the generator before any run (`worlds(flow=True)`,
+`expectations(flow=True)`, `expectations_flow.json`), the registered
+five worlds and `expectations.json` untouched, byte for byte.
+
+| World | The source | r | `flow_link` | `held` m | K | p (label units) | Intervals |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `r12_flow` | M, the fan | 12 | true | 2^20 | 2^20 | 512 x (2^12 + 2^20) = 538 968 064 (n = 8) | 4000 |
+| `r24_flow` | the same | 24 | true | 2^20 | 2^20 | the same | 4000 |
+| `r12_flow_control` | none | 12 | true | 2^20 | 2^20 | as `r12_flow` | 4000 |
+| `r24_flow_control` | none | 24 | true | 2^20 | 2^20 | as `r24_flow` | 4000 |
+
+Each is the registered `r12`, `r24` or its control with two changes and
+no other: the key `flow_link: true`, and the probe's momentum at the
+whole n = 8 of the circle under the key (the model ids
+`rays-orbit-lamp-r12-flow-plane-v1` and so on). No equivalence world: the
+equivalence carries no constant and is closed by the registered run.
+
+**The derivation, the generator's own and not by hand.** The generator
+computes on its own fan of 120 the mean of `S_1 / |D|`, `F_plane =
+1.2871` (the design's number; `4 / pi = 1.2732` in the isotropic limit),
+and divides its circular balance by it: `A = q L C / (2 pi) = 1.9098`
+becomes `A / F_plane = 1.4838`, and `n^2 / (S + n) = A / F_plane` at S =
+32 has the real root `n = 7.672`. The generator takes the nearest whole,
+8, as it took 9 for the register's 8.83: the momentum is a whole count of
+label units per unit of content, `p = n Q M_total`, and the register
+declares the whole nearest the root. The design's `7.818` is the same
+formula on the declared whole 9's balance `81 / 41 = 1.976` in place of
+the real root's `1.910`; the two round to the same 8, and the design's
+`384 / 768` at 7.818 are the generator's `377 / 754` at the whole 8, which
+the design names in the same line. The band is the register's: the
+generator's own margin on a period is the continuum map's 9 percent, the
+one number, propagated to 0.18 on the ratio.
+
+**The pins (`expectations_flow.json`), GAMEBOARD by formula until the
+run; the clicks the measurement (DETECTOR); Newton's and Kepler's forms on
+the comparison side only (record 817):**
+
+- **The period** T = 2 pi r (S + n) / n at n = 8, the pace 8 / 40 =
+  0.2000 Links per interval: 377.0 at r = 12 and 754.0 at r = 24, each
+  within 9 percent (343 to 411; 686 to 822). DETECTOR: the recurrence of
+  the clicks' x across the centre column, read as in the registered run
+  (`tools/orbit_lamp_readings.py`, the same tool, the pins by
+  `--expectations`).
+- **The ratio** T(24) / T(12) = 2.00 +- 0.18, unchanged: the same fan at
+  both radii and the weight of a line a constant of the line, not of r,
+  so the factor cancels (754.0 / 377.0 = 2.000).
+- **The second difference**: omega^2 = (2 pi / T)^2 = 2.78e-4 and 6.94e-5
+  per interval^2 (the brackets from T's; the lag 12 and 24 births), the
+  acceleration a = omega^2 r = v^2 / r = 3.33e-3 and 1.67e-3 (3.3's
+  small-n limit with the constant C / F_plane = 0.777 in C's place:
+  3.86e-3 and 1.93e-3), the ratio 2.00.
+- **The amplitude**: r - 1 to r + 2, as registered.
+- **The controls**: every click at x = 60 + r; the escape through the
+  face +y at the 61st step of the pace 8 / 40, the tick 305 +- 6. A
+  world without a crowd reads nothing under the key (the design's section
+  3 (d)).
+- **Refuted if** T leaves its band, the ratio leaves 2.00 +- 0.18, or the
+  control moves under the key (a click off x = 60 + r, or the escape off
+  305 +- 6). A record check (completed, the books balanced at every tick)
+  fails the tool.
+- **Read beside the pins, not pinned.** The registered run at n = 9 read
+  its periods 19 percent above the circle's (407 and 813 against 343 and
+  687) with two causes named, the grain of the push and the per-axis
+  drive's anisotropy; both stand under the key, which changes the push's
+  constant and nothing of its grain. The pins here are the circle's by
+  the register's convention, and a reading outside its band is registered
+  with its cause and never moved. The byte identity of a flow control
+  with a keyless control at n = 8 is the design's by formula (section 3
+  (d)) and is not run here.
+
+**The world files.** `make_worlds.py` writes the four world files with
+the key beside the registered ones; they ship in the commit that runs
+them, after the key is on `main`, because the loader refuses a key it
+does not know (`beam-v1: the world has unknown keys: flow_link`, the
+validation gate over every shipped world) until the Flow Link Builder's
+merge. The pins ship first, here. Run and read, then:
+
+```bash
+PYTHONPATH=src python examples/events/orbit_lamp/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/orbit_lamp_flow \
+    examples/events/orbit_lamp/r*_flow*.json
+PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp_flow \
+    --expectations examples/events/orbit_lamp/expectations_flow.json
+```
+
+## The run under the key (2026-09-22): measured against the pins of `expectations_flow.json`, none moved
+
+The Boss's order of record 962 on the owner's word (Newton in the paper,
+the runs in parallel with the ring's re-run): the four worlds as committed
+at `485a57dc` (the key from `origin/flow-link-build` at `a3be9ba13f08`,
+merged at `c52d6946`), run once, headless, and read by the clicks alone.
+Source fingerprint `00fda864cf1bb868` (package 0.3.1), Python 3.14.0rc2,
+numpy 2.5.3, four cores, `tools/run_series.py --jobs 4`; every run
+completed at 4000 intervals (18.5, 19.3, 9.5, 9.4 s for `r12_flow`,
+`r24_flow`, `r12_flow_control`, `r24_flow_control`) with the books
+balanced at every tick; every run record carries `flow_link: true` (HOST:
+the key is in the run); the digests (state, audit, events):
+`0ea77ef65795`, `f7f1665f5440`, `68b713ddfd7b` (`r12_flow`);
+`5e8c8a49508f`, `40b90c718659`, `7821c7a1a39f` (`r24_flow`);
+`00f547a511a9`, `fc6e4b4f9a6b`, `aed4121a5f37` (`r12_flow_control`);
+`b8005f85c902`, `fc6e4b4f9a6b`, `2c15504c6b4d` (`r24_flow_control`).
+`tools/orbit_lamp_readings.py --expectations expectations_flow.json`
+([run_flow.out](run_flow.out), every line by kind): 0 record checks
+failed, 4 readings inside, 7 outside, none moved.
+
+The readings by kind (the physics-rule reviewer's kinds, 2026-09-22):
+DETECTOR the line's clicks (x, tick, age), the amplitude, the crossings,
+T and omega^2 read off them, the escape; CONVERSION the radius at the
+births (the age click turned into y by the flight table); COMPUTATION
+the acceleration omega^2 x amplitude (a product of two moments) and the
+ratio T(24) / T(12) (two DETECTOR periods of two records):
+
+| World | Clicks | x from .. to | Amplitude (expected) | The radius at the births, CONVERSION: least .. greatest, mean | Crossings down, up; the spacings | T (expected) | omega^2 (expected) | a = omega^2 x amplitude, COMPUTATION | The probe's escape |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `r12_flow` | 145 | 31 .. 96 | 32.5 (11 .. 14): outside | 3.2 .. 68.3, 24.3 | 2, 2; 445 .. 732 | 588.7 (343 .. 411): outside | 7.78e-5 (2.34e-4 .. 3.35e-4): outside | 2.53e-3 | none in 4000 intervals |
+| `r24_flow` | 288 | 0 .. 90 | 45 (23 .. 26): outside | 17.0 .. 71.0, 37.6 | 3, 2; 789 .. 1184 | 987.3 (686 .. 822): outside | 3.11e-5 (5.85e-5 .. 8.39e-5): outside | 1.40e-3 | none in 4000 intervals |
+| `r12_flow_control` | 38 | 72 .. 72 | 0 | 12.0 .. 61.2 (walking +y) | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 72: inside |
+| `r24_flow_control` | 38 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | - | - | `face:+y` at the tick 305 (299 .. 311): inside; every click at x = 84: inside |
+
+Across the worlds: the ratio T(24) / T(12) = 987.3 / 588.7 = 1.677 (1.82
+.. 2.18), COMPUTATION from two DETECTOR periods of two records: outside.
+Every birth tick lies on the 8-interval grid (none read late). GAMEBOARD,
+a diagnostic: homes 23 (`r12_flow`), 40, 7, 7.
+
+**The paper's row, by kind, as the physics-rule reviewer wrote it
+(2026-09-22):** Under flow-link-v1 (the key `flow_link`) the lamp probe
+launched at the circle's whole n = 8 stays on the plane for 4000
+intervals at r = 12 and 24 (DETECTOR: no escape; as built the loops left
+at 698 and 1239) and reads the periods 588.7 and 987.3 against the pinned
+circle's 377 and 754 +- 9 percent (DETECTOR, the recurrence of x):
+outside; the ratio T(24) / T(12) = 1.677 against 2.00 +- 0.18
+(COMPUTATION from two DETECTOR periods): outside; the controls inside
+(the escape tick 305); FAIL as read; the two loops are not similar
+figures (the mean radii 24.3 and 37.6, DETECTOR), so the scale symmetry
+of the 1 / r force is not tested by them, and nothing here is compared
+with nature.
+
+**The verdict by the pins as written before the run, no number moved.**
+The controls INSIDE: every click at x = 60 + r and the escape at the tick
+305 exactly, the 61st step of the pace 8 / 40; a world without a crowd
+reads nothing under the key (the design's section 3 (d)), the controls'
+two audits one digest. The periods OUTSIDE their bands, 588.7 against the
+circle's 377 (56 percent above) and 987.3 against 754 (31 percent above),
+and the ratio OUTSIDE its band, 1.677 against 2.00 +- 0.18: the two
+readings the section above named as refuting, both read. What is refuted
+is the pinned prediction, the circle's period at the whole n = 8 under
+the key and the ratio 2.00 of two loops started at r = 12 and 24; the
+causes, named and not moved:
+
+- **The loops are not circles and not similar figures.** The radius at
+  the births runs from 3.2 to 68.3 about 24.3 at the declared 12 and from
+  17.0 to 71.0 about 37.6 at the declared 24 (the registered run as
+  built, n = 9: 1.4 to 73.2 about 24.2 and 11.0 to 62.3 about 33.7); the
+  mean radii's ratio is 1.55, not 2. Each period is the mean of two or
+  three unequal spacings (445 to 732; 789 to 1184), the recurrence of a
+  loop, not a circle's. The scale symmetry of the 1 / r force (T(24) /
+  T(12) = 2 for similar loops, any eccentricity) is not tested by loops
+  that are not similar; read beside, not pinned: T / (the mean radius) =
+  24.2 and 26.3 (COMPUTATION), the periods scaling with the loops' own
+  mean radii within 9 percent and not with the declared radii.
+- **The whole-n grain of the launch.** At the whole 8 the launch's n^2 /
+  (S + n) = 1.600 is 7.8 percent above the balance under the key (1.484,
+  the root 7.672), twice the registered launch's 3.4 percent above its
+  balance as built (1.976 against 1.910 at the whole 9): the probe starts
+  further above its circle than the registered probe did, and the loop
+  it makes is the wider for it. The momentum is a whole count of label
+  units per unit of content; the register declares the whole nearest the
+  root, and the nearest whole here sits on the far side of it.
+- **The push's grain and the drive's anisotropy stand.** Whole labels of
+  64 on p = 512 per unit of content (7.2 degrees per ray, 6.4 registered),
+  along the fan's lines in shells every 10 intervals, and the per-axis
+  drive's Euclidean pace 6.9 percent faster on a diagonal heading: the
+  two causes the registered run named for its own periods 19 percent
+  above their circles. The key changes the push's constant, not its
+  grain; no circle exists on this engine at S = 32 with the key or
+  without it.
+
+What the run establishes, DETECTOR and HOST: the key is in the run (every
+record's `flow_link: true`); the controls' pace to the tick at the whole
+8; two loops under the key that stay on the plane for 4000 intervals
+(the registered loops as built left at 698 and 1239) with their
+recurrences read. What it does not establish: the constant under the key
+against the constant as built, which these worlds cannot separate from
+the grain (no world as built at n = 8 was run, none ordered); the reading
+that would, named and not run, not proposed: the same two worlds without
+the key at the same whole 8, or a finer grain (a larger S) at both. On
+flow-link-v1 itself this run decides nothing: its pins are the circle's
+by the register's convention, the engine at this grain gives no circle
+under the key as it gave none as built, and the hypothesis's own reading
+is the ring's, stated beside this row when it comes.
