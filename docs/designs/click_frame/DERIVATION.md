@@ -401,6 +401,83 @@ It would be a hypothesis under its own identity beside the law, the
 pins rewritten before any run; not built here. The question: does the
 owner want the flight to be a split with phase at every Node?
 
+**The owner's sharpening (record 742), answered in five points.**
+
+(a) The correspondence, in the law's letters. At the law's pace `v = p /
+(Q S M + p)` the wall of the drive is the sum of two shares: the mass
+share `Q S M` and the momentum share p; each interval the drive gains p
+and carries one Link when it reaches the wall, so the momentum share is
+what hops and the mass share is what stays, the mass slowing the
+passage and c the bound as p outgrows `Q S M` (the pace tends to one
+Link per interval on `main`, to the rows' `c_h` under form B's wall).
+A change of direction costs momentum (the push, and the drive's signed
+residual cancelling what was driven the other way, `step_axis`). And
+`r = 1` is the declaration that the record's own count is the tick:
+the self-creation fires every interval whether the record hopped or
+stayed (`_suspend` gates it by the crowd alone). That is the owner's
+picture and it is the law as built.
+
+(b) Under `r = 1` every one-clock reading is Lorentzian. The round trip
+of section 4, `k_AB k_BA = (1 / (1 - v)) (1 + v) = (1 + v) / (1 - v)`, is
+exactly Bondi's `k^2`, so every radar reading (one clock, out and back:
+a distance, a relative velocity, a rate read by echo) is the Lorentz
+one; what differs is the one-way split alone, `1 / (1 - v)` and `1 + v`
+against two equal roots `sqrt((1 + v) / (1 - v))`, a difference of
+`1 - v^2` in their ratio (second order). This is the owner's
+"demonstrate it in our world": the law's clicks, read by one clock,
+already give Lorentz's radar; the one place they part from Lorentz is
+the comparison of two clocks' own counts, which needs the second lamp
+on the moving body (section 4's missing direction) to be read at all.
+
+(c) The one difference, and the code. In the law the staying share and
+the hopping share ADD AS AMOUNTS: the wall is `Q S M + p` (E = m + p,
+the Manhattan dispersion, section 5), and a massive row's stay or hop
+each interval is a schedule of the whole amount by one accumulator:
+`nature_beam.walk_step`, "the residue gains the rate over the wall
+(`by_drive_rows`, the one verb; the rate within the wall, so the count
+is 0 or 1), and the step is the m-th unit step of the direction's line"
+(`moved, _ = by_drive_rows(residue, rate, self.wall[direction])`; the
+Link `self.lines[direction, place] * moved`, one whole step or none);
+the phase advances at the Link only, `turned`: "the phase steps rows
+gain at the Link they cross ... the remainder kept on the row"; and the
+body likewise, `step_axis`'s `by_drive(drive, momentum, D, at_most=1)`.
+Between the stayed and the hopped part there is no interference in
+flight because there are no two parts: the row is one term of the group
+ring at one Node with one phase; the merge (`merge_words`, "equal words
+are identical rows") sums identical rows and cancels an equal opposite
+pair of one record at one Node, a linear addition of terms that happen
+to meet, never a split of one row. In the Dirac walk the two shares add
+as amplitudes with a phase, linearly at every interval through the coin
+(the staying and the hopping components of one amplitude are recombined
+by a rotation before the next hop), and the square appears only at the
+detection; the quadrature `w^2 = m^2 + k^2` is the composition of those
+rotations, not a square taken in flight.
+
+(d) The smallest change, restated exactly. It is not a square in flight
+(verb 2's square before the next hop would be a measurement at every
+Node and would kill the interference); it is the SPLIT: each interval a
+row of amount a and phase f at a Node becomes a hopping row and a
+staying row by one declared table over the circle (the splitter's `C'`,
+`S'`, the two entries the coin's two shares; the mass angle m the
+family's rest pair `[n, d]`, the hop's phase the flight's per Link), and
+where the paths of one record meet at a Node the merge adds them as it
+already does (verb 3, the cancel included); the square stays at the
+click. The integers: the family's `[n, d]`, the split table at the
+declared rounding (record 328), the row's amount and phase; the
+recombination rule the existing merge. The three tests: generic (one
+table per interval for every family, no name); vector (verb 2 for the
+split's weights, verb 3 for the merge, no root); local (the row's own
+Node and its six neighbours, the storage bounded by 6 N rows per Node
+after the merge). The cost to the registered pins: every flight pin
+moves (the beams spread: series Q, L7, C, the massive rows' bands of
+23.3, the covariant gate's r); the Bell family is NOT untouched: the
+pair's rows would spread on their way to the settings and the click's
+counts at the four settings would change, though the theorem's form
+(exact marginals, the rungs) stands and `S(N)` would be recomputed from
+the new arrivals; the two-slit fringes keep their form with new
+numbers. A hypothesis under its own identity, its pins before any run;
+the question for the owner: shall the row split at every Node?
+
 **(5) The verdict for part (5): CLICKS BEHAVE LIKE LORENTZ IN OUR SPACE:
 NO.** The hop is a pattern and the resident count is linear. The one
 line that decides: every hop of the law is `by_drive` with `at_most` 1
