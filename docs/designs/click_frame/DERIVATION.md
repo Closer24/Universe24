@@ -7,8 +7,9 @@ GAMEBOARD); the run, if any, is the owner's word.
 
 ## 0. The click theorem (the owner's word, records 745 and 749): the assumptions, the theorem, the proof sketch, the paper's frame
 
-**The stance, first.** Lorentz of the real world is assumed here, not
-proved: the theorem explains how a click brings Lorentz to a detector,
+**The stance, first.** Lorentz of the Outside (the game above the
+board, which represents reality and is not reality; the owner's word)
+is assumed here, not proved: the theorem explains how a click brings Lorentz to a detector,
 which amplitudes are needed to convert the clicks back to Lorentz, and
 what the board must not contradict. No wall of the law, no declared
 identity and no square of a momentum enters; the language is modern
@@ -16,7 +17,7 @@ algebra (groups on integer counts), no code and no run.
 
 **Definitions.** Two worlds. The GameBoard: Nodes on the cubic lattice,
 integer rows on them, and the tick, the interval's count, which no
-detector ever reads. The real world: detectors and their clicks only. A
+detector ever reads. The Outside: detectors and their clicks only. A
 detector D at a Node has its own count `n_D`, its count of intervals
 stretched by what arrives at it (the age wall's member at coefficient
 1, record 709): an internal count that advances every interval and is
@@ -41,7 +42,7 @@ through their clicks.
 **The conversion, and the two assumptions that define it (the owner's,
 records 745, 749, 753).** What is to be shown is a statement about a
 CONVERSION: from the lattice and the momentum inside it (an integer
-vector **p** on a record) to motion in the real world, the conversion
+vector **p** on a record) to motion Outside, the conversion
 made by clicks that pass information, with the amplitudes of the
 passing packet; the claim is that this conversion is Lorentz. The two
 assumptions define the conversion. (A1) A click is the passage of
@@ -205,11 +206,11 @@ that would fix `r` at `sqrt(1 - v^2)`.
 
 **The paper's frame, three sentences, marked as such (the owner's shape,
 record 753).** To convert the lattice and the momentum inside it into
-motion in our real world, one uses clicks that pass information, a
+motion Outside, one uses clicks that pass information, a
 click being the passage of information from Node to Node at most one
 Node per interval (A1) and its content an amplitude with a phase that
 splits each interval between staying and hopping, the mass the staying
-share (A2); Lorentz of the real world is assumed, and what is shown is
+share (A2); Lorentz of the Outside is assumed, and what is shown is
 that this conversion brings it. The symmetry of the conversion, the
 transformations between click families that preserve (A1) and (A2), is
 the Lorentz group up to scale, acting on the amplitudes of the passing
@@ -307,7 +308,15 @@ only if
 by one multiplication. Under it the common factor is Bondi's, `k =
 sqrt((1 + v) / (1 - v))`, and the rest is linear algebra with no further
 physics: A assigns an event the radar coordinates `(t, x)` from its
-emission count `t - x` and its reception count `t + x` (c = 1); B's
+emission count `t - x` and its reception count `t + x` (c = 1), that is
+`x = (n_r - n_e) / 2` and `t = (n_r + n_e) / 2` with `n_e` the count at
+emission and `n_r` at reception. THE DEFINITION ADOPTED, named: this is
+Einstein's 1905 light-signal definition of distance and simultaneity
+(Bondi's radar convention), the symmetric half of the round trip; the
+boost's form as a map of coordinates below rests on it, while the
+r-free readings do not (the ratio `k_BA / k_AB`, the round trip, the
+composition of boosts, the aberration are ratios of counts and need no
+coordinate). B's
 counts of the same two records are `k (t - x)` and `(t + x) / k` (the
 first record went A to B, the second B to A, each stretched by the one
 k), so B's radar coordinates `(t', x')` satisfy `t' - x' = k (t - x)`
@@ -1850,6 +1859,45 @@ rounds two-sided about `2 sqrt 2` (3 at N = 16 and 32, `181 / 64` on the
 plateau). (iii) The non-locality is the tensor rank 2 of one record read
 by one gather at two clicks; the rows are local and no Node keeps
 anything, so the law is local and its read-out is not.
+
+## Cut on 2026-09-22 (the owner's word: delete what no longer applies; everything gets shorter)
+
+The later statement is the canonical text; the earlier is kept as one
+line with its pointer. No verdict, number or record's citation is
+deleted.
+
+- "The real world" for the game above the board: superseded by the
+  owner's two words, Inside and Outside (section 8's head; Outside
+  represents reality and is not reality); replaced in this file's own
+  prose, kept inside the owner's quotations.
+- Section 0's order statements "to second order in the velocity, the
+  corrections from the fourth order on": superseded by M4 (the
+  correction of relative order `m^2 v^2 / 6`, second order in v at fixed
+  m, vanishing as m -> 0; the fourth order kept for the three-dimensional
+  anisotropy alone), folded at fe498362 in sections 0, 6 and 7.
+- The dilation's two readings (`lambda = gamma` with `1 / b = 1 + v`,
+  `lambda = k` with `b = 1 + v`): reconciled in section 0 (b) as one
+  parenthesis; the round trip r-free in either.
+- Part (6)'s first step (c), the `sqrt 3` conversion of p: withdrawn at
+  0d0b30b3 and superseded by the unit chain (`E^2 = E_0^2 + c^2 p^2` with
+  p per Link, `E' = E / c^2`, the 3 = `1 / c^2` = d), section 7 (1) (c).
+- Section 8 (e)'s first constant (`a = -(N_l c / tau_L) grad A`): withdrawn
+  at e26c1f43 (the flow's coefficient written for the acceleration) and
+  superseded by `a = -(c^2 / N_w) grad A`, `delta k = (n S / d)(g h /
+  c^2)`.
+- Part (8)'s first opening (three formulas with a "meeting" of the two
+  steps and the quantum as a paragraph): superseded at 964711b4 by the
+  owner's one direction (the Inside step the axiom, the Outside step a
+  theorem, the quantization of the Outside a theorem, Newton the limit)
+  and replaced whole.
+- Part (4)'s first draft (r = `E_0 / E'` taken from W as an input,
+  "Lorentz from Lorentz"): withdrawn and superseded by section 5's
+  certified inputs (the withdrawal stated there).
+- The clock loop's stage 1, once written here as a section 28 of
+  DERIVATIONS_BEAM and reverted: lives in
+  [the clock loop](../clock_loop/DERIVATION.md); cited, not repeated.
+- "Derived" where a form was put in: replaced by "follows" (the writer's
+  audit), the section 7 title kept in the owner's own question.
 
 ## 11. Links
 
