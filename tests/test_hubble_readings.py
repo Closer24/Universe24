@@ -45,6 +45,12 @@ from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
 
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events" / "hubble"
+GENERATOR_SPEC = importlib.util.spec_from_file_location("hubble_make_worlds", WORLDS / "make_worlds.py")
+GENERATOR = importlib.util.module_from_spec(GENERATOR_SPEC)
+sys.modules["hubble_make_worlds"] = GENERATOR
+GENERATOR_SPEC.loader.exec_module(GENERATOR)
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "hubble_readings_tool", ROOT / "tools" / "hubble_readings.py"
@@ -254,3 +260,49 @@ def test_from_one_point_collapses_a_coasting_throw_onto_the_milne_form():
     bias = TOOL.near_fit_of_the_coasting_form(shifted)
     assert bias > 1.0
     assert shifted.rms_far["q = -0.55"] < shifted.rms_far["q = 0"] < shifted.rms_far["q = +0.5"]
+
+
+def test_the_shipped_worlds_and_the_pins_are_the_generators_under_the_two_drives():
+    """(e) The generator's momenta and pins under the two drives (2026-09-22,
+    docs/designs/drive_b/DEFAULT.md section (c)): the four shipped worlds
+    equal the generator's under the line drive and `expectations.json`
+    equals `expectations()` (`drive` "line", `centred` false, a derivation
+    entry for every pinned quantity); px1's coasting momentum by the line
+    rule p = Q S M v / (1 - v T_D / Q) at v = 0.6 c / 7 with M = 64
+    (234270943), the pushing crowd's 16 times it at 16 times the content,
+    the per-axis drive of history's 225432947 by p = Q S M v / (1 - v)
+    (the registered integer); the first Link by `by_line` on px1's wall."""
+    from event_universe.core.integer import by_line
+
+    for crowd in ("coasting", "pushing"):
+        for clock in ("scalar", "age"):
+            shipped = json.loads((WORLDS / f"{crowd}_{clock}.json").read_text(encoding="utf-8"))
+            document = GENERATOR.families_by_definition(
+                GENERATOR.world(crowd, clock), GENERATOR.FAMILY_DEFINITIONS, GENERATOR.DEFINITIONS_SOURCE
+            )
+            assert shipped == document, (crowd, clock)
+    pinned = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads(json.dumps(GENERATOR.expectations()))
+    pinned.pop("replicated", None)
+    expected.pop("replicated", None)
+    assert pinned == expected and pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned["drive"] == GENERATOR.LINE_DRIVE and pinned["centred"] is False
+    assert set(pinned["derivations"]) == set(pinned) - {"format", "derivations"}
+    first = pinned["sources"][0]
+    v = 0.6 * (32 / 55) / 7
+    assert first["name"] == "px1" and abs(first["speed"] - v) < 1e-9
+    assert first["momentum_coasting"] == 234270943 == round(64 * (1 << 20) * 64 * v / (1 - v * 110 / 64))
+    assert first["momentum_pushing"] == 16 * first["momentum_coasting"]
+    history = GENERATOR.sources(1, GENERATOR.AXIS_DRIVE)
+    assert history[0][2] == [225432947, 0, 0] and 225432947 == round(64 * (1 << 20) * 64 * v / (1 - v))
+    assert abs(GENERATOR.speed(225432947, 64, GENERATOR.AXIS_DRIVE) - v) < 1e-9
+    p = first["momentum_coasting"]
+    wall = 64 * 64 * (1 << 20) * 64 + p * 110
+    drives = [0, 0, 0]
+    fired = None
+    for tick in range(1, 60):
+        axis, _sign, drives = by_line(drives, [p * 64, 0, 0], wall)
+        if axis is not None:
+            fired = tick
+            break
+    assert fired == first["first_link"] == GENERATOR.first_link(p, 64)

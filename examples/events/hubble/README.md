@@ -36,8 +36,16 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
   faster the farther, so that no source overtakes another (a step onto an
   occupied Node is refused and its momentum is kept, [Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector),
   the contact defect). A source of content M with the momentum p along its
-  axis steps one Link per (Q S M + p) / p self-creations ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
-  step 5, Q = 64): its speed is v = p / (Q S M + p) Links per interval.
+  axis moves under the law's drive of a body, since 2026-09-22 the line
+  drive (the model owner's record 972; [the design](../../../docs/designs/drive_b/DEFAULT.md);
+  [BEAM_LAW note 17](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  as amended, note 49): its accumulator gains p Q per interval against the
+  wall Q^2 S M + p T_D (Q = 64, T_D = 110), so its speed is v = p Q / (Q^2 S
+  M + p T_D) Links per interval and p = Q S M v / (1 - v T_D / Q) (the
+  shipped worlds and `expectations.json` since 2026-09-22); under the
+  per-axis drive of history, the drive the registered runs below were read
+  under, it stepped one Link per (Q S M + p) / p self-creations, v = p /
+  (Q S M + p), p = Q S M v / (1 - v) (`sources(factor, AXIS_DRIVE)`).
   The speed ladder: v = c x V(axis) x (2 i - 1) / 7 with V = 0.6, 0.55,
   0.5, 0.45, 0.4, 0.35 on +x, -x, +y, -y, +z, -z, twenty-four speeds from
   0.05 c to 0.6 c, c the ray's speed on a heading **read off the flight
@@ -201,7 +209,10 @@ a^2 - 1).
 
 **The pushing throw decelerates.** The net pull on rank i is i F units per
 interval inward (Doppler factors on the arrival rates aside), so a source
-loses i F t (1 - v)^2 / S of its speed by the interval t: with F = 16,
+loses i F t (1 - v)^2 / S of its speed by the interval t under the per-axis
+drive of history (i F t (1 - v T_D / Q)^2 / S under the line drive, the
+factor 0.89 to 0.99 of the per-axis one at these speeds; `push_factor` in
+the generator): with F = 16,
 S = 2^20 and t = 400 the fraction u lost is i F t (1 - v)^2 / (S v): 0.06
 to 0.32 on the +x chain (V = 0.6, the inner ranks losing the larger
 fraction) and 0.1 to 0.5 on the -z chain (V = 0.35). For a self-similar

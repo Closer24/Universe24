@@ -13,9 +13,16 @@ axes: on every axis a chain of CHAIN sources of ranks i = 1 .. CHAIN at the
 initial distances r_0 = 1 + SPACING x i, the faster the farther (no source
 ever overtakes another: a step onto an occupied Node would be refused). A
 source is a free measured event of content M with the momentum p along its
-axis; it steps one Link per (Q S M + p) / p self-creations (BEAM_LAW section
-3 step 5, Q = 64, S the world's `width`), so its speed is v = p / (Q S M +
-p) Links per interval, and p is chosen for the speed ladder v = c x V(axis)
+axis; under the law's drive of a body, since 2026-09-22 the line drive (the
+model owner's word, record 972; docs/designs/drive_b/DEFAULT.md; BEAM_LAW
+note 17 as amended, note 49), its accumulator gains p Q per interval against
+the wall Q^2 S M + p T_D (Q = 64, S the world's `width`, T_D = 110), so its
+speed is v = p Q / (Q^2 S M + p T_D) Links per interval and p = Q S M v /
+(1 - v T_D / Q); the per-axis drive of history (note 17 as it ran until that
+day, the world key `per_axis_drive`, the drive the registered runs were read
+under: one Link per (Q S M + p) / p self-creations, v = p / (Q S M + p), p =
+Q S M v / (1 - v)) is kept as `AXIS_DRIVE` and `sources(factor, AXIS_DRIVE)`
+reproduces its momenta; p is chosen for the speed ladder v = c x V(axis)
 x (2 i - 1) / (2 CHAIN - 1) with V from 0.35 to 0.6: the twenty-four speeds
 span 0.05 c to 0.6 c, c the ray's speed on a heading read off the flight
 table (`direction_flight`: m(L) Links per period L, 32 / 55 = 0.5818 per
@@ -81,6 +88,12 @@ and with the age of the crowd). The detector's entries read `age` in every
 world (the distance reading needs the age on the arrival record); its own
 clock paces nothing (it releases nothing).
 
+The pins are written to `expectations.json` (`expectations(drive,
+centred)`, the register's form of `orbit_lamp/`): the sources' speeds and
+momenta under the drive, the interval of each source's first Link (a
+GAMEBOARD number), the criteria of README.md with their brackets, every
+entry with its source in `derivations`.
+
     python examples/events/hubble/make_worlds.py
 """
 
@@ -98,6 +111,7 @@ sys.path.insert(0, str(HERE.parents[2] / "src"))
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -134,6 +148,16 @@ AXES = ("px", "mx", "py", "my", "pz", "mz")
 # The clocks' widths: the presence over 2^12, the age moment over 2^19.
 CLOCKS = {"scalar": [1, 1 << 12], "age": [1, 1 << 19]}
 CROWDS = {"coasting": 1, "pushing": FACTOR}
+# The two drives a throw is derived under (docs/designs/drive_b/DEFAULT.md
+# section (c)): the line drive, the law's drive of a body since 2026-09-22
+# (v = p Q / (Q^2 S M + p T_D)), and the per-axis drive of history (v = p /
+# (Q S M + p); the world key `per_axis_drive`).
+LINE_DRIVE = "line"
+AXIS_DRIVE = "axis"
+DRIVE = LINE_DRIVE
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
+PACE_TERM = T_D_AXIS / Q  # 110 / 64
+EXPECTATIONS_FORMAT = "hubble-expectations-v1"
 Json = dict[str, object]
 
 
@@ -149,18 +173,58 @@ def beam_speed() -> float:
 C = beam_speed()
 
 
-def momentum(fraction: float, content: int) -> int:
+def momentum(fraction: float, content: int, drive: str = DRIVE) -> int:
     """The momentum p (in label units) that gives the speed `fraction` x c
-    to a free source of content `content`: v = p / (Q S M + p)."""
+    to a free source of content `content` under the named drive: the line
+    drive's v = p Q / (Q^2 S M + p T_D), so p = Q S M v / (1 - v T_D / Q);
+    the per-axis drive of history's v = p / (Q S M + p), p = Q S M v / (1 -
+    v)."""
     v = fraction * C
-    return round(Q * WIDTH * content * v / (1 - v))
+    if drive == LINE_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v * PACE_TERM))
+    if drive == AXIS_DRIVE:
+        return round(Q * WIDTH * content * v / (1 - v))
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+def speed(p: int, content: int, drive: str = DRIVE) -> float:
+    """The speed of the momentum p at the content under the named drive."""
+    if drive == LINE_DRIVE:
+        return p * Q / (Q * Q * WIDTH * content + p * T_D_AXIS)
+    if drive == AXIS_DRIVE:
+        return p / (Q * WIDTH * content + p)
+    raise ValueError(f"unknown drive {drive!r}")
 
 
-def sources(factor: int) -> list[tuple[str, tuple[int, int, int], list[int], int]]:
+def push_factor(v: float, drive: str = DRIVE) -> float:
+    """A row of amount a moves a source's speed by push_factor(v) x a / S
+    toward the emitter: (1 - v T_D / Q)^2 under the line drive, (1 - v)^2
+    under the per-axis drive of history."""
+    if drive == LINE_DRIVE:
+        return (1 - abs(v) * PACE_TERM) ** 2
+    if drive == AXIS_DRIVE:
+        return (1 - abs(v)) ** 2
+    raise ValueError(f"unknown drive {drive!r}")
+
+
+def first_link(p: int, content: int, drive: str = DRIVE, centred: bool = False) -> int:
+    """The interval of a source's first Link from rest, a GAMEBOARD number:
+    ceil(W / (p Q)) on the wall W = Q^2 S M + p T_D under the line drive
+    (half the wall under `centred_step`), ceil((Q S M + p) / p) under the
+    per-axis drive of history."""
+    if drive == LINE_DRIVE:
+        wall = Q * Q * WIDTH * content + p * T_D_AXIS
+        gain = p * Q
+    elif drive == AXIS_DRIVE:
+        wall = Q * WIDTH * content + p
+        gain = p
+    else:
+        raise ValueError(f"unknown drive {drive!r}")
+    threshold = wall - wall // 2 if centred else wall
+    return -(-threshold // gain)
+
+
+def sources(factor: int, drive: str = DRIVE) -> list[tuple[str, tuple[int, int, int], list[int], int]]:
     """(family name, position, momentum vector, rank) of the twenty-four
     sources: on each axis a chain of CHAIN sources at r_0 = MASS_RADIUS +
     SPACING x rank, the speed c x LADDER[axis] x (2 rank - 1) / (2 CHAIN -
@@ -171,7 +235,7 @@ def sources(factor: int) -> list[tuple[str, tuple[int, int, int], list[int], int
         port = PORT_HEADINGS[axis]
         for rank in range(1, CHAIN + 1):
             fraction = ladder * (2 * rank - 1) / (2 * CHAIN - 1)
-            p = momentum(fraction, LIGHT) * factor
+            p = momentum(fraction, LIGHT, drive) * factor
             distance = MASS_RADIUS + SPACING * rank
             x, y, z = (CENTRE[k] + port[k] * distance for k in range(3))
             found.append((f"{name}{rank}", (x, y, z), [port[k] * p for k in range(3)], rank))
@@ -185,10 +249,10 @@ def inward(p: list[int]) -> list[list[int]]:
     return [[-v for v in outward]]
 
 
-def world(crowd: str, clock: str) -> Json:
+def world(crowd: str, clock: str, drive: str = DRIVE) -> Json:
     factor = CROWDS[crowd]
     content = LIGHT * factor
-    thrown = sources(factor)
+    thrown = sources(factor, drive)
     names = [name for name, _, _, _ in thrown]
     families: list[Json] = [
         {"name": "detector", "quantum": 1},
@@ -264,8 +328,80 @@ def world(crowd: str, clock: str) -> Json:
     }
 
 
+def expectations(drive: str = DRIVE, centred: bool = False) -> Json:
+    """The pins before the runs (README.md, the criteria) under the named
+    drive, every entry with its source in `derivations`; `centred` gives
+    the same pins with every source's first Link at half the wall
+    (`centred_step`, record 955: the column decided at the paper's close).
+    The shipped register is `expectations()`; `expectations(AXIS_DRIVE)`
+    reproduces the momenta the registered runs of 2026-09-20 were read
+    with."""
+    if drive == LINE_DRIVE:
+        drive_note = (
+            "the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, "
+            "note 49; the model owner's record 972): v = p Q / (Q^2 S M + p T_D) on a heading, so p = "
+            "Q S M v / (1 - v T_D / Q); a row of amount a moves the speed by (1 - v T_D / Q)^2 a / S"
+        )
+    else:
+        drive_note = (
+            "the per-axis drive of history (BEAM_LAW note 17 as it ran until 2026-09-22, the world key "
+            "`per_axis_drive`): v = p / (Q S M + p), so p = Q S M v / (1 - v); a row of amount a moves "
+            "the speed by (1 - v)^2 a / S"
+        )
+    found: Json = {
+        "format": EXPECTATIONS_FORMAT,
+        "derivations": {
+            "c": "DERIVATIONS_BEAM 2.1: c = Q / T_D = 32 / 55 Links per interval on a heading, read off the flight table",
+            "drive": "declared: " + drive_note,
+            "centred": "declared (docs/designs/drive_b/DEFAULT.md section (e), record 955): under `centred_step` every source's first Link comes half a wall earlier and no pin of this series moves; the column the model owner decides at the paper's close",
+            "ticks": "declared",
+            "windows": "declared (the reading windows; the late window the registered reading)",
+            "sources": "the speed ladder declared by the design (v = c x V(axis) x (2 i - 1) / (2 CHAIN - 1)); the momentum from it by the drive's rule at the grain (the `drive` entry), the pushing crowd's FACTOR times the coasting crowd's at FACTOR times the content; the first Link a GAMEBOARD number, ceil(W / (p Q)) on the wall (the `drive` entry)",
+            "formula": "DETECTOR: 1 + z from the pointer's turn against (1 + k)(1 + v / c) with k and v from the same record, within 2 percent (README.md, the criteria)",
+            "linear_law": "the coasting worlds: H fitted through the origin on z <= 0.2, H t_0 = 1 within 10 percent (the Milne form, README.md)",
+            "coasting_form": "the coasting worlds: of the three forms at the near fit's H the least rms over the far part is q = 0, that rms below 0.02 in z",
+            "decelerating_form": "the pushing worlds: H t_0 < 1, q_eff > 0, the accelerating form q = -0.55 the farthest of the three (a free ray pushes its reader toward its emitter)",
+            "observed_today": "every world: whether the far part resembles q = -0.55 best of the three; expected outside in every run",
+        },
+        "c": C,
+        "drive": drive,
+        "centred": centred,
+        "ticks": TICKS,
+        "windows": [[100, 200], [200, 300], [300, 400]],
+        "sources": [],
+        "formula": {"tolerance": 0.02},
+        "linear_law": {"pin": 1.0, "bracket": [0.9, 1.1]},
+        "coasting_form": {"nearest": "q = 0", "rms_below": 0.02},
+        "decelerating_form": {
+            "hubble_time_below": 1.0,
+            "q_effective_above": 0.0,
+            "farthest": "q = -0.55",
+        },
+        "observed_today": {"form": "q = -0.55", "expected": "not the nearest"},
+    }
+    for (name, _position, p, rank), (_, _, p_push, _) in zip(
+        sources(1, drive), sources(FACTOR, drive), strict=True
+    ):
+        axis = next(k for k in range(3) if p[k])
+        v = speed(abs(p[axis]), LIGHT, drive)
+        found["sources"].append(
+            {
+                "name": name,
+                "axis": axis,
+                "rank": rank,
+                "initial_distance": MASS_RADIUS + SPACING * rank,
+                "speed_over_c": v / C,
+                "speed": v,
+                "momentum_coasting": abs(p[axis]),
+                "momentum_pushing": abs(p_push[axis]),
+                "first_link": first_link(abs(p[axis]), LIGHT, drive, centred),
+            }
+        )
+    return found
+
+
 def main() -> None:
-    print(f"c = {C:.5f} Links per interval on a heading (the flight table)")
+    print(f"c = {C:.5f} Links per interval on a heading (the flight table); the {DRIVE} drive")
     print("| axis | rank | r_0 | v / c | v (Links per interval) | p coasting | p pushing |")
     print("| --- | --- | --- | --- | --- | --- | --- |")
     for (name, _, p, rank), (_, _, p_push, _) in zip(sources(1), sources(FACTOR), strict=True):
@@ -284,6 +420,11 @@ def main() -> None:
             )
             path.write_text(json.dumps(document) + "\n", encoding="utf-8")
             print(path.relative_to(HERE.parents[2]))
+    register = HERE / "expectations.json"
+    register.write_text(
+        json.dumps(carry_replicated(register, expectations()), indent=1) + "\n", encoding="utf-8"
+    )
+    print(register.relative_to(HERE.parents[2]))
 
 
 if __name__ == "__main__":

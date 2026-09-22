@@ -1,0 +1,323 @@
+{
+ "format": "hubble-expectations-v1",
+ "derivations": {
+  "c": "DERIVATIONS_BEAM 2.1: c = Q / T_D = 32 / 55 Links per interval on a heading, read off the flight table",
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): v = p Q / (Q^2 S M + p T_D) on a heading, so p = Q S M v / (1 - v T_D / Q); a row of amount a moves the speed by (1 - v T_D / Q)^2 a / S",
+  "centred": "declared (docs/designs/drive_b/DEFAULT.md section (e), record 955): under `centred_step` every source's first Link comes half a wall earlier and no pin of this series moves; the column the model owner decides at the paper's close",
+  "ticks": "declared",
+  "windows": "declared (the reading windows; the late window the registered reading)",
+  "sources": "the speed ladder declared by the design (v = c x V(axis) x (2 i - 1) / (2 CHAIN - 1)); the momentum from it by the drive's rule at the grain (the `drive` entry), the pushing crowd's FACTOR times the coasting crowd's at FACTOR times the content; the first Link a GAMEBOARD number, ceil(W / (p Q)) on the wall (the `drive` entry)",
+  "formula": "DETECTOR: 1 + z from the pointer's turn against (1 + k)(1 + v / c) with k and v from the same record, within 2 percent (README.md, the criteria)",
+  "linear_law": "the coasting worlds: H fitted through the origin on z <= 0.2, H t_0 = 1 within 10 percent (the Milne form, README.md)",
+  "coasting_form": "the coasting worlds: of the three forms at the near fit's H the least rms over the far part is q = 0, that rms below 0.02 in z",
+  "decelerating_form": "the pushing worlds: H t_0 < 1, q_eff > 0, the accelerating form q = -0.55 the farthest of the three (a free ray pushes its reader toward its emitter)",
+  "observed_today": "every world: whether the far part resembles q = -0.55 best of the three; expected outside in every run"
+ },
+ "c": 0.5818181818181818,
+ "drive": "line",
+ "centred": false,
+ "ticks": 400,
+ "windows": [
+  [
+   100,
+   200
+  ],
+  [
+   200,
+   300
+  ],
+  [
+   300,
+   400
+  ]
+ ],
+ "sources": [
+  {
+   "name": "px1",
+   "axis": 0,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.08571428557439727,
+   "speed": 0.049870129788740225,
+   "momentum_coasting": 234270943,
+   "momentum_pushing": 3748335088,
+   "first_link": 21
+  },
+  {
+   "name": "px2",
+   "axis": 0,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.25714285703969897,
+   "speed": 0.1496103895503703,
+   "momentum_coasting": 865000406,
+   "momentum_pushing": 13840006496,
+   "first_link": 7
+  },
+  {
+   "name": "px3",
+   "axis": 0,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.428571428526288,
+   "speed": 0.24935064932438572,
+   "momentum_coasting": 1874167547,
+   "momentum_pushing": 29986680752,
+   "first_link": 5
+  },
+  {
+   "name": "px4",
+   "axis": 0,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.6000000000197906,
+   "speed": 0.34909090910242363,
+   "momentum_coasting": 3748335095,
+   "momentum_pushing": 59973361520,
+   "first_link": 3
+  },
+  {
+   "name": "mx1",
+   "axis": 0,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.07857142864148825,
+   "speed": 0.045714285755047705,
+   "momentum_coasting": 213083649,
+   "momentum_pushing": 3409338384,
+   "first_link": 22
+  },
+  {
+   "name": "mx2",
+   "axis": 0,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.23571428561990915,
+   "speed": 0.13714285708794713,
+   "momentum_coasting": 770685720,
+   "momentum_pushing": 12330971520,
+   "first_link": 8
+  },
+  {
+   "name": "mx3",
+   "axis": 0,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.392857142801608,
+   "speed": 0.22857142853911738,
+   "momentum_coasting": 1616928864,
+   "momentum_pushing": 25870861824,
+   "first_link": 5
+  },
+  {
+   "name": "mx4",
+   "axis": 0,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.5499999999963984,
+   "speed": 0.3199999999979045,
+   "momentum_coasting": 3054198966,
+   "momentum_pushing": 48867183456,
+   "first_link": 4
+  },
+  {
+   "name": "py1",
+   "axis": 1,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.0714285715844477,
+   "speed": 0.0415584416491332,
+   "momentum_coasting": 192222313,
+   "momentum_pushing": 3075557008,
+   "first_link": 25
+  },
+  {
+   "name": "py2",
+   "axis": 1,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.21428571434451593,
+   "speed": 0.12467532470953653,
+   "momentum_coasting": 681515472,
+   "momentum_pushing": 10904247552,
+   "first_link": 9
+  },
+  {
+   "name": "py3",
+   "axis": 1,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.3571428570944126,
+   "speed": 0.20779220776402188,
+   "momentum_coasting": 1388272257,
+   "momentum_pushing": 22212356112,
+   "first_link": 5
+  },
+  {
+   "name": "py4",
+   "axis": 1,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.4999999999872671,
+   "speed": 0.29090909090168265,
+   "momentum_coasting": 2498890063,
+   "momentum_pushing": 39982241008,
+   "first_link": 4
+  },
+  {
+   "name": "my1",
+   "axis": 1,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.06428571429067456,
+   "speed": 0.03740259740548338,
+   "momentum_coasting": 171679470,
+   "momentum_pushing": 2746871520,
+   "first_link": 27
+  },
+  {
+   "name": "my2",
+   "axis": 1,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.19285714296457201,
+   "speed": 0.11220779227029644,
+   "momentum_coasting": 597079927,
+   "momentum_pushing": 9553278832,
+   "first_link": 9
+  },
+  {
+   "name": "my3",
+   "axis": 1,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.3214285714756517,
+   "speed": 0.18701298704037916,
+   "momentum_coasting": 1183684767,
+   "momentum_pushing": 18938956272,
+   "first_link": 6
+  },
+  {
+   "name": "my4",
+   "axis": 1,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.44999999996538464,
+   "speed": 0.26181818179804195,
+   "momentum_coasting": 2044546415,
+   "momentum_pushing": 32712742640,
+   "first_link": 4
+  },
+  {
+   "name": "pz1",
+   "axis": 2,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.05714285728025693,
+   "speed": 0.03324675332669494,
+   "momentum_coasting": 151447883,
+   "momentum_pushing": 2423166128,
+   "first_link": 31
+  },
+  {
+   "name": "pz2",
+   "axis": 2,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.17142857137396908,
+   "speed": 0.0997402597084911,
+   "momentum_coasting": 517011737,
+   "momentum_pushing": 8272187792,
+   "first_link": 11
+  },
+  {
+   "name": "pz3",
+   "axis": 2,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.28571428566305707,
+   "speed": 0.16623376620396046,
+   "momentum_coasting": 999556025,
+   "momentum_pushing": 15992896400,
+   "first_link": 7
+  },
+  {
+   "name": "pz4",
+   "axis": 2,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.4000000000357977,
+   "speed": 0.23272727274810048,
+   "momentum_coasting": 1665926709,
+   "momentum_pushing": 26654827344,
+   "first_link": 5
+  },
+  {
+   "name": "mz1",
+   "axis": 2,
+   "rank": 1,
+   "initial_distance": 3,
+   "speed_over_c": 0.05000000013063982,
+   "speed": 0.029090909166917714,
+   "momentum_coasting": 131520530,
+   "momentum_pushing": 2104328480,
+   "first_link": 35
+  },
+  {
+   "name": "mz2",
+   "axis": 2,
+   "rank": 2,
+   "initial_distance": 5,
+   "speed_over_c": 0.1499999998914609,
+   "speed": 0.08727272720957725,
+   "momentum_coasting": 440980599,
+   "momentum_pushing": 7055689584,
+   "first_link": 12
+  },
+  {
+   "name": "mz3",
+   "axis": 2,
+   "rank": 3,
+   "initial_distance": 7,
+   "speed_over_c": 0.24999999991541702,
+   "speed": 0.14545454540533354,
+   "momentum_coasting": 832963354,
+   "momentum_pushing": 13327413664,
+   "first_link": 7
+  },
+  {
+   "name": "mz4",
+   "axis": 2,
+   "rank": 4,
+   "initial_distance": 9,
+   "speed_over_c": 0.35000000002743037,
+   "speed": 0.20363636365232313,
+   "momentum_coasting": 1345556188,
+   "momentum_pushing": 21528899008,
+   "first_link": 5
+  }
+ ],
+ "formula": {
+  "tolerance": 0.02
+ },
+ "linear_law": {
+  "pin": 1.0,
+  "bracket": [
+   0.9,
+   1.1
+  ]
+ },
+ "coasting_form": {
+  "nearest": "q = 0",
+  "rms_below": 0.02
+ },
+ "decelerating_form": {
+  "hubble_time_below": 1.0,
+  "q_effective_above": 0.0,
+  "farthest": "q = -0.55"
+ },
+ "observed_today": {
+  "form": "q = -0.55",
+  "expected": "not the nearest"
+ }
+}
