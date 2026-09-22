@@ -2660,6 +2660,62 @@ CORRECTIONS = [
         "the phase circle, the turn its shift; the arrivals' group ring, the merge its addition; its quotient by $x^{\\Nphi/2} + 1$, the cyclotomic integers, where opposite phases cancel; the pair's arms, the settings acting by integer matrices; the six Ports' hyperoctahedral group, $48$ signed permutations, its $24$ rotations (Theorem~\\ref{th:group}); the flight is the translation group's shift along the digital line (Section~\\ref{sec:law}) \\\\",
         "the phase circle, the turn its shift; the arrivals' group ring, the merge its addition; its quotient by $x^{\\Nphi/2} + 1$, the cyclotomic integers, where opposite phases cancel; the pair's arms under the settings' integer matrices; the six Ports' hyperoctahedral group, $48$ signed permutations, $24$ rotations (Theorem~\\ref{th:group}); the flight the translation group's shift (Section~\\ref{sec:law}) \\\\",
     ),
+    # The third referee read (2026-09-22), the owner's word 'go on all of it': the drive's rule and bound, the signalling channel in the order of the outcomes, the two evaluations, the module and the bound, Gauss by net crossings, the sign of the acceleration.
+    (
+        "referee 3, point 1: the drive's rule of the first axis and the lost coincident fire, the sum of the paces bounded by 1",
+        "a body's drive is the flight at the fraction its momentum earns, $|p_a|/(N_l N_w M + |p_a|)$ per axis; the collision's permutation is the cyclic shift;",
+        "a body's drive is the flight at the fraction its momentum earns, $|p_a|/(N_l N_w M + |p_a|)$ per axis, each axis's count advancing every interval, the first axis whose count fires making the step and a later axis's coincident fire lost, its wall subtracted and nothing carried (the axes $x$ before $y$ before $z$; the engine's rule \\cite{engine}), so that a body crosses at most one Link per interval (P5) and the per-axis fraction is its pace only where the fires do not coincide: three equal momenta $N_l N_w M$ would give $1/2$ per axis, $3/2$ in all, and the built body moves on $x$ alone at $1/2$, the sum of a body's paces bounded by $1$ (the directional drive, form B, is not built); the collision's permutation is the cyclic shift;",
+    ),
+    (
+        "referee 3, point 1: the ledger's row",
+        "A body's dispersion, its momentum's fraction; the moving clock's rate $1$ & the drive per axis, the owed count & none: the law's own predictions & exact & 4.",
+        "A body's dispersion, its momentum's fraction per axis where the axes' fires do not coincide, the sum of the paces at most $1$; the moving clock's rate $1$ & the drive per axis, the first axis's step, the owed count & none: the law's own predictions & exact & 4.",
+    ),
+    (
+        "referee 3, point 1: the conversion table's cell",
+        "its drive moves it at the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis (the attributes read: content, momentum),",
+        "its drive moves it at the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis where the axes' fires do not coincide, one Link per interval in all (the attributes read: content, momentum),",
+    ),
+    (
+        "referee 3, point 2: the theorem's name, no-signalling of the counts",
+        "\\begin{theorem}[Exact marginals; no-signalling]\\label{th:marginals}",
+        "\\begin{theorem}[Exact marginals; no-signalling of the counts]\\label{th:marginals}",
+    ),
+    (
+        "referee 3, point 2: the channel in the order of the outcomes, a computation; the claim kept to the counts",
+        "Two things the theorem does not cover, stated here. The wheel of the registered pair worlds runs at the rate $1$ against $\\Nphi$, one birth per $u$ in order, so the first party's outcomes over the births are $\\Nphi/2$ of $+$ followed by $\\Nphi/2$ of $-$, a square wave whose serial correlation over a cycle is $1 - 4/\\Nphi$ ($0.9990$ at $4096$), a prediction of the sequence in time that no run reads and no row compares with nature's record of outcomes, which shows no such order; and the marginal of Theorem~\\ref{th:marginals} is for settings fixed or chosen independently of the wheel: a setting chosen from $u$ ($a = 0$ for $u < \\Nphi/2$ and $a = \\Nphi/2$ after, $b = 0$) gives the second party $+$ at every one of the $64$ births at $\\Nphi = 64$ (a computation from the theorem's cells, not a run), so the independence of the settings from the birth phase is an assumption of the frame, physics' measurement independence, and what keeps a party from the wheel the law does not say.",
+        "What the theorem does not cover, stated here. The wheel of the registered pair worlds runs at the rate $1$ against $\\Nphi$, one birth per $u$ in order, so the first party's outcomes over the births are $\\Nphi/2$ of $+$ followed by $\\Nphi/2$ of $-$, a square wave whose serial correlation over a cycle is $1 - 4/\\Nphi$ ($0.9990$ at $4096$), a prediction of the sequence in time that no run reads and no row compares with nature's record of outcomes, which shows no such order. The marginal is for settings fixed or chosen independently of the wheel: a setting chosen from $u$ ($a = 0$ for $u < \\Nphi/2$ and $a = \\Nphi/2$ after, $b = 0$) gives the second party $+$ at every one of the $64$ births at $\\Nphi = 64$. And the order of the second party's outcomes carries the first party's settings even when they are independent of the wheel: the cells give $B = A$ at $a = b$ and $B = -A$ at $a = b + \\Nphi/2$ exactly, so with $b = 0$ a first party keeping $a = 0$ leaves the second a serial correlation $\\langle B_tB_{t+1}\\rangle = 15/16$ over $192$ births at $\\Nphi = 64$, and one cycling $a = \\Nphi/2, 0, 0$ (the period $3$, coprime to $\\Nphi$, the independence criterion above) leaves $-5/16$, the marginal $96/96$ in both, the same at every shift of the wheel and of the chooser (a computation from the theorem's cells, not a run): the second party reads one bit of the first's choice from the order of its own outcomes. So the theorem's no-signalling is of the counts over a cycle and of the arrival times; the sequence in time signals under the sequential wheel, a result of the law as built and a FAIL of any claim beyond the counts, open until the wheel is other than a counter, which P4 (no draw) does not allow, or the claim is kept to the counts, as it is here.",
+    ),
+    (
+        "referee 3, point 2: the discussion's positioning sentence",
+        "no-signalling is Theorem~\\ref{th:marginals} \\cite{grw1980}.",
+        "no-signalling of the counts is Theorem~\\ref{th:marginals} \\cite{grw1980}, and the order of the outcomes signals under the sequential wheel (Section~\\ref{sec:bell}).",
+    ),
+    (
+        "referee 3, point 2: the ledger's row",
+        "Exact marginals; no-signalling & the one gather, the nearest rung & equal weights; open beyond & exact & \\ref{sec:bell} \\\\",
+        "Exact marginals; no-signalling of the counts (the order of the outcomes signals) & the one gather, the nearest rung & equal weights; open beyond & exact & \\ref{sec:bell} \\\\",
+    ),
+    (
+        "referee 3, point 3: the exact evaluation and the tables' are two maps with different zeros",
+        "and the click one bilinear form $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$ with $\\mathbf G$ the tables' Gram matrix, then one comparison.",
+        "and the click one bilinear form $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$ with $\\mathbf G$ the tables' Gram matrix, then one comparison. The exact evaluation at the roots of unity and the evaluation by the tables at $1/256$ are two maps: the cancel's zero, an equal pair at $\\Nphi/2$, is a zero of both, the click's other zeros are the tables' own (Section~\\ref{sec:measurement}), and each claim below says which of the two it is about.",
+    ),
+    (
+        "referee 3, point 4: the scaling an identification at the read-out, not a relation of the module; the multiplicity's bound named",
+        "with $|p + \\Nphi/2\\rangle = -|p\\rangle$, taken modulo the scaling $(w, \\mathtt m) \\sim (kw, k^2 \\mathtt m)$; the GameBoard's state is one normal form per element of $\\bigoplus_r M_r$.",
+        "with $|p + \\Nphi/2\\rangle = -|p\\rangle$; the scaling $(w, \\mathtt m) \\to (kw, k^2 \\mathtt m)$ leaves the amplitude and the norm unchanged and is an identification at the read-out, not a relation of the module (the quotient by it would not be free, $b_1 = 2b_4 = 4b_{16} = \\cdots$ for the rows $b_{\\mathtt m}$ of amount $1$); the GameBoard's state is one normal form per element of $\\bigoplus_r M_r$, and the multiplicity, which every split multiplies by $A$, is bounded with every integer of the run by the engine's $2^{63} - 1$, a run that would pass it refused (P1's bound, named here).",
+    ),
+    (
+        "referee 3, point 5: Gauss's law by net signed crossings",
+        "crosses the surface once and never returns (no collision acts on a fan or on lone beams), so once the front has passed, the amount crossing the surface per interval equals the release inside it, exactly.",
+        "crosses the surface outward once more than inward (a non-convex surface it may leave, re-enter and leave again, the signed crossings summing to one; no collision acts on a fan or on lone beams), so once the front has passed, the net amount crossing the surface per interval equals the release inside it, exactly.",
+    ),
+    (
+        "referee 3, point 6: the sign of a body's acceleration against the age moment's field",
+        "which is $-(N_l c/\\tau_L)\\,\\nabla \\mathcal A$ in the static case: the acceleration of a body is minus the gradient of the age moment's field.",
+        "which is $-(N_l c/\\tau_L)\\,\\nabla \\mathcal A$ in the static case; the gravity column reads $-M_A\\mathbf a$ (Section~\\ref{sec:forces}), so a body's acceleration is $+(N_l c/\\tau_L)\\,\\nabla \\mathcal A$, up the age moment's field, toward the source.",
+    ),
 ]
 
 

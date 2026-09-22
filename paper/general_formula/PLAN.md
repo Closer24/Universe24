@@ -4480,3 +4480,42 @@ the paper changed. The count: 36 pages, measured in the real build
 (the references end on page 33, Appendix A follows them there, the
 roads table closes on page 36). I (the notation table at scriptsize)
 not applied. If the owner wants H undone, one revert commit.
+
+## Applied (2026-09-22, the owner's word "go on all of it"): the third referee read, six points, in the paper's words
+
+1. The drive on three axes and P5: Section 2's P9 sentence states the
+   engine's rule (each axis's count advances every interval, the first
+   axis whose count fires steps, a later axis's coincident fire is lost,
+   its wall subtracted, x before y before z), so a body crosses one Link
+   per interval and the per-axis fraction is its pace only where the
+   fires do not coincide; three equal momenta N_l N_w M give 1/2 per
+   axis, 3/2 in all, and the built body moves on x alone at 1/2, the sum
+   of the paces at most 1; form B not built. The ledger's row and the
+   conversion table's cell say the same. Whether the lost step is the
+   law's intent is the physicist's (record 342).
+2. No-signalling of the counts: Theorem 5 renamed "Exact marginals;
+   no-signalling of the counts"; the Bell section states the channel in
+   the order of the outcomes (B = A at a = b, B = -A at a = b + N/2;
+   15/16 against -5/16 over 192 births at 64, the marginal 96/96, at
+   every shift), a computation, a FAIL of any claim beyond the counts,
+   open until the wheel is other than a counter (P4 forbids a draw) or
+   the claim is kept to the counts; the ledger's row and the discussion's
+   positioning sentence say the same. The law's fix is the owner's and
+   the physicist's, not the paper's.
+3. The exact evaluation and the tables' are two maps with different
+   zeros, the cancel's zero (an equal pair at N/2) a zero of both; said
+   once in Section 2's "Written as algebra" sentence.
+4. Definition 1: the scaling (w, m) -> (kw, k^2 m) an identification at
+   the read-out and not a relation of the module (the quotient would not
+   be free); the multiplicity's bound named, the engine's 2^63 - 1, a run
+   passing it refused.
+5. Gauss's law: the crossing claim to net signed crossings (a non-convex
+   surface left, re-entered, left again; the sum one).
+6. The sign: a body's acceleration is +(N_l c / tau_L) grad A, toward the
+   source, from the flow a = -(N_l c / tau_L) grad A and the gravity
+   column -M_A a; the sentence's "minus the gradient" was wrong.
+
+No number, verdict or citation removed; every new number by kind in
+NUMBERS.md. The count: 37 pages (the body grew by about twenty lines,
+the references moved with it, the roads table's last five rows on page
+37); the page is the Boss's.
