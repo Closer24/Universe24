@@ -3238,3 +3238,30 @@ formula is a numbered display (the map, the shell, Newton, Coulomb, the
 fields, the wave, the rung, the joint weight, Gleason's form, the bound,
 the prediction, the covariant square), and the covariant square, Eq. 14,
 his "big formula", is set in a frame; 30 pages held.
+
+## The Bell runs measured and the S(N) figure (2026-09-22, the owner's "B, go"; PR #759 on main at b34fe114)
+
+The Bell runner's rows are on main: S x N = 5792 at N = 2048 and 23168
+at 8192 (181/64 exactly, the plateau) and 46344 at 16384 (5793/2048, the
+plateau's end where the closed form put it), DETECTOR readings of the
+register's block bell_24_4 / run_2048_8192_16384, the replication
+byte-identical, no pin changed. The paper: Theorem 6's last sentence,
+the proof's 16384, the prediction paragraph, Table 2's S(N) row (with
+b34fe114 as the source of the last three), the introduction's map ("S at
+seven grains") and its narrative say "measured"; the S(N) figure returns
+at half the width beside Table 2 with its caption at its side: the
+closed form at every multiple of 8 as the curve (a computation), the
+seven detector readings as circles, the inset with the plateau 181/64
+and its end 5793/2048, 2 sqrt 2 dashed; every point named by its kind
+in the caption. figures.py's figure_s_of_n is rewritten for it (the
+readings from the runs' summary and the amplitude register's expectation
+file) and figures/s_of_n.pdf regenerated. The page count, 30 held, is
+paid by duplicated text carrying no claim and no table number: the pace
+readings and the rounding pins said once in Table 2, the ledger's caption
+not repeated in Section 4, the read-out paragraph of Section 2 shortened
+to what Definition 3 does not say, the reviewer's and the gate review's
+recomputations left to NUMBERS.md and the log, and small parentheses.
+One word of terminology fixed on the way ("a number of the board" to
+"of the GameBoard's state"); row 5a names the flight table's pace as the
+formula's, series Q's reading at finite ages in Table 2. The Lorentz
+sentences and the click frame are untouched, as ordered.

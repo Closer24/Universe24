@@ -688,6 +688,225 @@ CORRECTIONS = [
         "W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3,",
         "\\boxed{\\,W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3\\,}",
     ),
+    # The Bell runs on main (PR #759 at b34fe114; the owner's word "B, go"):
+    # N = 2048, 8192 and 16384 measured after a detector, the S(N) figure at
+    # half the width beside Table 2, the page count paid by duplicated text.
+    (
+        "Bell measured: Theorem 6's last sentence",
+        "and equals $181/64 = 2.828125$ at every power of two from $512$ through $8192$ \\cite{checks}.",
+        "and equals $181/64 = 2.828125$ at every power of two from $512$ through $8192$ and $5793/2048 = 2.828613$ at $16384$ \\cite{checks}; measured after a detector at $512$, $1024$, $2048$, $4096$, $8192$ and $16384$ \\cite{register} (Figure~\\ref{fig:sofn}).",
+    ),
+    (
+        "Bell measured: the proof's 16384",
+        "$5793/2048 = 2.828613$ at $16384$ and $32768$, where the second pair of settings rounds to $2893/4096$",
+        "$5793/2048 = 2.828613$ at $16384$ and $32768$ (measured at $16384$: $S\\Nphi = 46344$ \\cite{register}), where the second pair of settings rounds to $2893/4096$",
+    ),
+    (
+        "Bell measured: the prediction paragraph",
+        "It was computed in advance, run at $\\Nphi = 512$ and $4096$ under the click and the wheel with every pin met (the register's block of the derivation's 24.4), and re-run by the second runner \\cite{replications}.",
+        "It was computed in advance and measured after a detector at $\\Nphi = 512$, $2048$, $4096$, $8192$ and, the plateau's end, $16384$ (Table~\\ref{tab:checks}, the last three on main at \\texttt{b34fe114}; Figure~\\ref{fig:sofn}), under the click and the wheel with every pin met (the register's block of the derivation's 24.4); $512$ and $4096$ were re-run by the second runner \\cite{replications}.",
+    ),
+    (
+        "Bell measured: Table 2's row",
+        "$S(\\Nphi)$ & L, the pair at $\\Nphi = 64$, $512$, $1024$, $4096$ & $176/64$; $1448/512$; $2896/1024$; $11584/4096$ & the same, Theorem~\\ref{th:bell} and its closed form \\\\",
+        "$S(\\Nphi)$ & L and L6, the pair at $\\Nphi = 64$, $512$, $1024$, $2048$, $4096$, $8192$, $16384$ (the last three on main at \\texttt{b34fe114}) & $176/64$; $1448/512$; $2896/1024$; $5792/2048$; $11584/4096$; $23168/8192$; $46344/16384$ & the same, Theorem~\\ref{th:bell} and its closed form: the plateau $181/64$ and its end $5793/2048$ \\\\",
+    ),
+    (
+        "the S(N) figure at half width beside Table 2",
+        "\\end{longtable}} \\paragraph{The comparison with nature.}",
+        "\\end{longtable}}\n\n\\begin{figure}[!tb]\n\\begin{minipage}[c]{0.5\\linewidth}\\centering\\includegraphics[width=\\linewidth]{figures/s_of_n.pdf}\\end{minipage}\\hfill\n\\begin{minipage}[c]{0.47\\linewidth}\\caption{\\label{fig:sofn}$S(\\Nphi)$ at the CHSH labels. The curve is the closed form $S(\\Nphi) = 8(c_1 + c_1')/\\Nphi - 4$ computed from the rule at every multiple of $8$ with the tables at $N_t = 256$, a computation \\cite{checks}; the circles are detector readings (DETECTOR) at $\\Nphi = 64$, $512$, $1024$, $2048$, $4096$, $8192$ and $16384$ (series L, L6 and the register's block of the derivation's 24.4, the last three on main at \\texttt{b34fe114}); the inset marks the plateau $181/64$ from $512$ through $8192$ and its end $5793/2048$ at $16384$; the dashed line is $2\\sqrt2$.}\\end{minipage}\n\\end{figure}\n\n\\paragraph{The comparison with nature.}",
+    ),
+    (
+        "Bell measured: the map of results",
+        "the click's cells, $S$ at four grains,",
+        "the click's cells, $S$ at seven grains,",
+    ),
+    (
+        "Bell measured: the introduction's narrative",
+        "whose pattern the closed form then explained through $8192$ and beyond.",
+        "whose pattern the closed form then explained; the runs at $2048$, $8192$ and $16384$ met it (Figure~\\ref{fig:sofn}).",
+    ),
+    # The page count: duplicated text, no claim, no table number.
+    (
+        "page count: the host layer's sentence",
+        "so no Node ever holds both rows, and the coherent sum exists only in the record's ledger \\cite{log}; the GameBoard never reads it, and it is no measurement.",
+        "so no Node ever holds both rows \\cite{log}; it is no measurement.",
+    ),
+    (
+        "page count: the reviewer's recomputation is NUMBERS.md's",
+        "\\cite{log}); the reviewer also recomputed the marginals from the rows of one registered world at $\\Nphi = 64$ for all 4096 setting pairs, $32/64$ in every pair \\cite{log}.",
+        "\\cite{log}).",
+    ),
+    (
+        "page count: the second runner is said in Section 8",
+        "its world file and its source fingerprint; a second runner re-ran each registered world from the register and compared bit by bit; and each registered number was then traced back",
+        "its world file and its source fingerprint, and each registered number was then traced back",
+    ),
+    (
+        "page count: the lemma's parenthesis",
+        "(with $C_K > 0$: for a record born with a nonzero row whose every end is an offer, the offers summed over all its ends are the born row's norm up to the tables' rounding, Theorem~\\ref{th:isometry}; at $C_K = 0$ the engine gathers nowhere, the auditor's rounds 4 and 4b, record 363 \\cite{log})",
+        "(with $C_K > 0$, the born row's norm up to the tables' rounding, Theorem~\\ref{th:isometry}; at $C_K = 0$ the engine gathers nowhere, record 363 \\cite{log})",
+    ),
+    (
+        "page count: the introduction's Gleason narrative",
+        "came from a click count, $63$ of $64$ births in one channel of an unbalanced splitter, whose window for the click's power, containing $2$, was read back from the built click before the form was proved, a check of the implementation; the exact CHSH function",
+        "came from a click count, $63$ of $64$ births in one channel of an unbalanced splitter; the exact CHSH function",
+    ),
+    (
+        "page count: the pace readings are Table 2's",
+        "Two registered runs read the pace after a detector. Series Q \\cite{register}: a lamp releasing one row on each of the $290$ primitive directions with $|a| + |b| + |c| \\le 6$, with detectors on the six faces; $290$ of $290$ face clicks landed at the derived interval, Node and face, and the pace read from the clicks is $0.5718$ to $0.5893$ Links per interval (mean $0.5810$; the table's asymptotic $0.5774$ to $0.5818$). Series L7, the cone: a row of $17$ Links on an axis and a row of $24$ Links on the plane diagonal, at the same Euclidean distance to one percent, reached their counters at the same age $29$.",
+        "Two registered runs read the pace after a detector (Table~\\ref{tab:checks}): series Q, a lamp releasing one row on each of the $290$ primitive directions with $|a| + |b| + |c| \\le 6$ toward detectors on the six faces, every click at the derived interval, Node and face, the pace $0.5718$ to $0.5893$ Links per interval at finite ages against the table's asymptotic $0.5774$ to $0.5818$; and series L7, the cone, a row of $17$ Links on an axis and a row of $24$ on the plane diagonal, the same Euclidean distance to one percent, at their counters at the same age.",
+    ),
+    (
+        "page count: the ground paragraph repeats the ledger's caption",
+        "no single reading of the GameBoard's state is the inverse square; the condition is part of the claim, and a detector run, when made, establishes a lattice-exact claim about the world at hand whose agreement with the continuum's form within the ripple is evidence for the inverse square and not its proof.",
+        "no single reading of the GameBoard's state is the inverse square; the condition is part of the claim (the ledger's caption).",
+    ),
+    (
+        "page count: the derived-not-derived summary is the ledger's",
+        "the fundamental is what the register reads and what the phase means. Derived: the form, the power and the multiplicity rule; not derived: the harmonic constants; Tsirelson's value as a limit is Theorem~\\ref{th:bell}.",
+        "the fundamental is what the register reads and what the phase means.",
+    ),
+    (
+        "page count: Section 8's opening",
+        "Three things are kept apart: the checks that the code implements the law, which are computations; the numerical checks of the formulas after a detector, which are measurements of the simulator; and the comparisons with measurements of nature.",
+        "Three things are kept apart: the gates on the code, the formulas' checks after a detector, and the comparisons with nature.",
+    ),
+    (
+        "page count: the reading rule's last clause is Section 8's",
+        "never compared with nature and never pinned, and none appears in this paper as a check.",
+        "never compared with nature and never pinned.",
+    ),
+    (
+        "terminology: the GameBoard, not the board",
+        "a number of the board appears nowhere.",
+        "a number of the GameBoard's state appears nowhere.",
+    ),
+    (
+        "row 5a: the flight table's pace, series Q's reading at finite ages in Table 2",
+        "the pace $0.5774$ to $0.5818$ at $N_l = 64$ (series Q)",
+        "the flight table's pace $0.5774$ to $0.5818$ at $N_l = 64$ (series Q within it at finite ages, Table~\\ref{tab:checks})",
+    ),
+    (
+        "page count: the gate review's parenthesis is the log's",
+        "(computed from the rule, \\cite{checks}; the gate review found none at $64$, $256$, $1024$ and at $4096$ for $a = 0, 1024$, \\cite{log}).",
+        "(computed from the rule \\cite{checks}).",
+    ),
+    (
+        "page count: the gathered record's afterthought",
+        "A row of a gathered record that reached a set afterwards would offer nothing; no reported world has one, since completion needs every row ended. A set that reads",
+        "A set that reads",
+    ),
+    (
+        "page count: the hypotheses' sentence, shorter",
+        "Everything the program stated beside the law, the hypotheses under their identities, is on the tree \\cite{hypotheses} and claimed nowhere here.",
+        "The hypotheses beside the law are on the tree \\cite{hypotheses}, claimed nowhere here.",
+    ),
+    (
+        "page count: the read-out paragraph is Definition 3's",
+        "sums the rows' integer phasors per cell through the tables, squares the sums (the one quadratic step of the law, where the Born rule enters, forced in form by Theorem~\\ref{th:gleason} and free in its constants), lays the cells on a ladder by those squared sums, and compares the record's coordinate $u$, the wheel's, with the ladder's rungs; the cell whose rung $u$ falls under is the click, and the record is done.",
+        "sums the rows' integer phasors per cell through the tables, squares the sums (the one quadratic step, forced in form by Theorem~\\ref{th:gleason}), lays the cells on a ladder and compares the record's coordinate $u$ with the rungs; the cell whose rung $u$ falls under is the click.",
+    ),
+    (
+        "page count: the single opening's sentence is Section 8's",
+        "The single opening (row 10 of the register) carries no number here (Section~\\ref{sec:checks}).",
+        "",
+    ),
+    (
+        "page count: the enumeration's parenthesis",
+        "records (one phase gives all $64$ roots, a comb of every eighth phase $8$, the equality case). The entropic bound:",
+        "records. The entropic bound:",
+    ),
+    (
+        "page count: Planck's row references are the ledger's",
+        "relations are identities of the update rules (the derivation's 21.2, rows 51 and 52), with one constant, $h = h_q\\Nphi = h_A$, a constraint on the inputs whose value is an input (24.1, row 25).",
+        "relations are identities of the update rules, with one constant, $h = h_q\\Nphi = h_A$, a constraint on the inputs whose value is an input (Table~\\ref{tab:ledger}).",
+    ),
+    (
+        "page count: the choosers' parenthesis",
+        "(periods $3$ and $5$ against $\\Nphi = 64$, every bin one birth per $u$, every marginal $32/64$)",
+        "(periods $3$ and $5$ against $\\Nphi = 64$)",
+    ),
+    (
+        "page count: the rounding pins are Table 2's",
+        "the rounding pins were met before the run ($63/1$ at $\\Nphi = 64$, $31/1$ at $32$, $125/3$ at $128$ for the $(3, 4)$ split);",
+        "the rounding pins of the $(3, 4)$ split were met (Table~\\ref{tab:checks});",
+    ),
+    (
+        "page count: the second runner's sentence, shorter",
+        "a second runner re-ran the worlds of series L, T and fifteen more from the register at main and compared every field bit by bit \\cite{replications};",
+        "a second runner re-ran series L, T and fifteen more worlds bit by bit \\cite{replications};",
+    ),
+    (
+        "page count: the sequential-instrument sentence, shorter",
+        "A read, then a rotation of the labels, then a second read, taken as two outcomes in time (a sequential-instrument test), is not modelled: the first read's selector, keyed by the labels at the read, is applied at the gather to the labels as the rotation left them, once (\\cite{engine}, the readings by type).",
+        "A read, then a rotation of the labels, then a second read, taken as two outcomes in time, is not modelled: the first read's selector is applied once, at the gather, to the labels as the rotation left them \\cite{engine}.",
+    ),
+    (
+        "page count: the lemma's delay sentence",
+        "Every record of the worlds below is of this kind. The world's row carries the completion interval and the last arrival's interval; the delay between them is a delay of the record, not of the GameBoard.",
+        "Every record of the worlds below is of this kind; the delay between a record's last arrival and its completion is the record's, not the GameBoard's.",
+    ),
+    (
+        "page count: the norm range is the appendix's",
+        "($-351/65536$ to $+361/65536$ per row for the powers of two through $65536$; Appendix~\\ref{app:technical})",
+        "(Appendix~\\ref{app:technical})",
+    ),
+    (
+        "page count: the failures' list names Table 3's rows once",
+        "The failures are the law's own results: the unslowed clock (4b, and 4a by its pin), the deceleration (3), light unbent (Section~\\ref{sec:delay}, against $1.75$ arcseconds), the weak forms (8a, 8b), the strong ratio (7b), the two-slit visibility by the fan's grain (2a), the phase-form window (1b), the massless neutrino (8c); each refutes the law as declared on its own, and no count of passes weighs against them.",
+        "The failures are the law's own results (Table~\\ref{tab:nature}; light unbent is Section~\\ref{sec:delay}'s, against $1.75$ arcseconds): the unslowed clock, the deceleration, light unbent, the weak forms, the strong ratio, the two-slit visibility, the phase-form window, the massless neutrino; each refutes the law as declared on its own, and no count of passes weighs against them.",
+    ),
+    (
+        "page count: the distance paragraph's opening",
+        "What is established now is an explicit model with the exact and conditional results above and their numerical checks after a detector. What the broad claim still needs, and the check that would decide each:",
+        "What is established is an explicit model with the results above and their checks after a detector; what the broad claim still needs, and the check that decides each:",
+    ),
+    (
+        "page count: Table 4's bending cell",
+        "a rule under which a row's wall reads the crowd's age moment (built as a hypothesis with a coefficient that is an input, the six operations giving Newton's half) run against nature's $1.75$ arcseconds",
+        "a rule under which a row's wall reads the crowd's age moment (a hypothesis, its coefficient an input, the six operations giving Newton's half) against nature's $1.75$ arcseconds",
+    ),
+    (
+        "page count: Table 4's harmonic cell, the Galois clause in Section 6",
+        "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position (a hypothesis, Section~\\ref{sec:measurement}) &",
+        "The click's harmonic constants; the circle as position (a hypothesis, Section~\\ref{sec:measurement}) &",
+    ),
+    (
+        "page count: Table 4's masses cell, shorter still",
+        "The masses' values: every rule is linear in the content, every equal split a fixed point; floors only &",
+        "The masses' values: every rule linear in the content, every equal split a fixed point; floors only &",
+    ),
+    (
+        "page count: the runs paragraph's last clause is the prediction paragraph's",
+        "twelve fail and one is not compared (Table~\\ref{tab:nature}); each failure refutes the law as declared.",
+        "twelve fail and one is not compared (Table~\\ref{tab:nature}).",
+    ),
+    (
+        "page count: Table 4's Newton check cell",
+        "a face detector's count of the escape against the release; the clock's form at more distances (series T's method) \\\\",
+        "a face detector's count of the escape against the release; the clock's form at more distances \\\\",
+    ),
+    (
+        "page count: the positioning paragraph's asides",
+        "no-signalling is Theorem~\\ref{th:marginals}, as it is a theorem of quantum mechanics \\cite{grw1980}.",
+        "no-signalling is Theorem~\\ref{th:marginals} \\cite{grw1980}.",
+    ),
+    (
+        "page count: the lattice gas clause",
+        "\\cite{hpp1976,fhp1986} with the click's reading of one record added, a walker",
+        "\\cite{hpp1976,fhp1986}, a walker",
+    ),
+    (
+        "page count: the earlier testbed, one clause",
+        "The earlier testbed of this program \\cite{paper1} is history: no rule of it survives here.",
+        "The earlier testbed \\cite{paper1} is history: no rule of it survives here.",
+    ),
+    (
+        "page count: the closed form clause of the proved list",
+        "the CHSH sum as an exact function of the grain and the tables, with its closed form;",
+        "the CHSH sum as an exact function of the grain and the tables;",
+    ),
 ]
 
 
