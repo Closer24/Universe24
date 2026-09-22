@@ -144,7 +144,8 @@ arrival Node on Nodes that are detectors).
 [baseline_readings.py](baseline_readings.py) before the run.** (i) The
 releases: each `face:+x` click (Node y) is paired with the `face:+y` click
 (Node x) of the same release by the flight table's delays, `t1 - f(52 - x)
-= t2 - f(52 - y)` within 3 counts, the same phase and the same z; the
+= t2 - f(52 - y)` within 3 counts, the same phase and the same z (the z was dropped
+after the run: section 4's note); the
 release's count is that common value and the electron's position at it is
 (x, y), read at two detector Nodes. (ii) The crossings: a pass of y through
 26 with x > 26 is a crossing of the +x axis (the start's), with x < 26 of
@@ -226,9 +227,9 @@ No pin above was edited.
 **The verdict in one line.** The loop does not stay: as the law stands
 the electron widens every quarter turn (the crossings at 13, 13, 17 and 26
 Links from the proton's Node, DETECTOR) and leaves through `face:+y` at
-count 3407 (DETECTOR), so no return, no period and no closure are read;
+count (the tick at r = 1) 3407 (DETECTOR), so no return, no period and no closure are read;
 the dwell about the three crossings inside r = 17 reads 20.0 counts per
-Link; the proton read one row per crossing; six pins FAIL, one PASSES;
+Link; the proton read one row per crossing; four pins FAIL, two NOT READ, one PASSES;
 nothing is moved, nothing is compared with nature, NATURE row 6 stays NOT
 YET.
 
@@ -258,8 +259,8 @@ YET.
 | P1 the dwell per Node | 19.05 to 20.5 counts, the mean over the hops read within 17 to 22.5 | 23.06 over 16 hops (20.0 over the 12 hops inside r = 17, 32.3 over the 4 at r = 26) | FAIL as declared (the mean over all the hops read); the hops at the three crossings the formula's radius covers read 20.0, inside, stated as a reading and not as the pin |
 | P2 the period and the returns | T = 1552 within 15 percent, 4 or 5 returns | 1 crossing of the +x axis at 2191, no period | FAIL |
 | P2b the return within 3 Links of the start | 3 Links | 14 Links | FAIL |
-| P3 the closure j = 4.00 within 0.05 | 4.00 | not read (no return) | FAIL (not readable on this run) |
-| P3b the residue per return within 3 steps | 0.06 steps | not read | FAIL (not readable on this run) |
+| P3 the closure j = 4.00 within 0.05 | 4.00 | not read (no return) | NOT READ (no return; the pin unmet) |
+| P3b the residue per return within 3 steps | 0.06 steps | not read | NOT READ (no return; the pin unmet) |
 | P5 the proton's reads per crossing 0 to 2 | 0.63 in the mean | 1, 1, 1, 1 | PASS |
 | P6 750 clicks of `e` per side face | 750 less the rows in flight | 342, 337, 342, 339 (340 releases before the escape at 3407) | FAIL |
 

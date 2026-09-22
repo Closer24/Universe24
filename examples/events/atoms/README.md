@@ -45,6 +45,6 @@ crossings inside r = 17 reads 20.0 counts per Link (the formula's 19.05 at
 r = 12; 23.06 over all 16 hops read, FAIL as declared), the proton reads
 one row per crossing (its `read` lines at 30, 442, 882, 1329, 2254; under
 `read` the `at_proton` set clicks 0), the four side faces 342, 337, 342 and
-339 clicks of the electron's rows; six pins FAIL, one PASSES, nothing
+339 clicks of the electron's rows; four pins FAIL, two NOT READ, one PASSES, nothing
 moved; the radius from the step lines 12.00 to 27.86 (GAMEBOARD, a
 diagnostic). Helium is not run. NATURE row 6 stays NOT YET.

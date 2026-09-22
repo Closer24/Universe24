@@ -7,7 +7,10 @@ owner, records 281 and 754): DETECTOR, a detector's record or a measured
 event's own record (the faces' `click` lines, the proton's `read` lines,
 the clicks per detector of `run.json`); GAMEBOARD, the host's view of the
 board (the electron's `step` lines: its position, radius, phase), printed
-beside as a diagnostic, never pinned.
+beside as a diagnostic, never pinned. The engine's flight table builder
+`direction_flight` is imported only for the delays f(L) (the least age at
+which a row on a heading has made L Manhattan steps); no step of the law is
+run by this script, which reads records and nothing else.
 
 The method, fixed before the run (RUN.md section 3):
 
@@ -306,7 +309,7 @@ def main(argv: list[str] | None = None) -> int:
     momentum = [int(v) for v in electron["momentum"]]
     start = tuple(int(v) for v in electron["position"])
     electron_family, proton_family = str(electron["family"]), str(proton["family"])
-    verdicts: list[tuple[str, bool]] = []
+    verdicts: list[tuple[str, bool | None]] = []
 
     completed = record["status"] == "completed"
     balanced = bool(record["conserved_at_every_completed_tick"])
@@ -452,17 +455,19 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"[{DETECTOR}] the circles per return j (the sum of the increments over a return over N): {[f'{j:.3f}' for j in circles]}; the residue in steps of {modulus}: {residues}"
     )
-    inside = bool(circles) and all(abs(j - PIN_CIRCLES) <= PIN_CIRCLES_TOLERANCE for j in circles)
+    # A pin with no reading (no return) is NOT READ, neither PASS nor FAIL
+    # (RUN.md section 3's fail clause: FAIL is a pin read outside its band).
+    inside = None if not circles else all(abs(j - PIN_CIRCLES) <= PIN_CIRCLES_TOLERANCE for j in circles)
     verdicts.append(
         (
-            f"P3 the circles per return j = {PIN_CIRCLES:.2f} within {PIN_CIRCLES_TOLERANCE} (read {[f'{j:.3f}' for j in circles]})",
+            f"P3 the circles per return j = {PIN_CIRCLES:.2f} within {PIN_CIRCLES_TOLERANCE} (read {[f'{j:.3f}' for j in circles]}{'' if circles else ': no return; the pin unmet'})",
             inside,
         )
     )
-    inside = bool(residues) and all(abs(s) <= PIN_RESIDUE_STEPS for s in residues)
+    inside = None if not residues else all(abs(s) <= PIN_RESIDUE_STEPS for s in residues)
     verdicts.append(
         (
-            f"P3b the residue per return within {PIN_RESIDUE_STEPS} steps of {modulus} (read {residues})",
+            f"P3b the residue per return within {PIN_RESIDUE_STEPS} steps of {modulus} (read {residues}{'' if residues else ': no return; the pin unmet'})",
             inside,
         )
     )
@@ -556,9 +561,12 @@ def main(argv: list[str] | None = None) -> int:
         )
     print()
     for label, ok in verdicts:
-        print(f"{'PASS' if ok else 'FAIL'} {label}")
+        print(f"{'NOT READ' if ok is None else 'PASS' if ok else 'FAIL'} {label}")
+    passed = sum(1 for _, ok in verdicts if ok)
+    failed = sum(1 for _, ok in verdicts if ok is False)
+    unread = sum(1 for _, ok in verdicts if ok is None)
     print(
-        f"{sum(1 for _, ok in verdicts if ok)} PASS, {sum(1 for _, ok in verdicts if not ok)} FAIL of {len(verdicts)} pins (DETECTOR); the GameBoard lines above are diagnostics, not counted"
+        f"{passed} PASS, {failed} FAIL, {unread} NOT READ of {len(verdicts)} pins (DETECTOR); the GameBoard lines above are diagnostics, not counted"
     )
     return 0 if completed and balanced else 1
 

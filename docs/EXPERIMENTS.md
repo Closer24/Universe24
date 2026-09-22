@@ -3029,8 +3029,7 @@ states "exactly" and means integer equality at every tick.
   drive left through `face:+x` at 2059); no return, no period, no closure
   read; the dwell 20.0 counts per Link about the three crossings inside
   r = 17 (19.05 by formula at r = 12; 23.06 over all 16 hops, FAIL as
-  declared); one row read by the proton per crossing (DETECTOR); six pins
-  FAIL, one PASSES; nothing moved; the radius from the step lines 12.00 to
+  declared); one row read by the proton per crossing (DETECTOR); four pins FAIL, two NOT READ, one PASSES; nothing moved; the radius from the step lines 12.00 to
   27.86 (GAMEBOARD, a diagnostic); nothing compared with nature, NATURE
   row 6 NOT YET. A labelled baseline for the stability rule's design
   (atom-give-v1, record 881), not a re-read of series H's verdict.
