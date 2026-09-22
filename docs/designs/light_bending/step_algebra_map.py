@@ -540,8 +540,8 @@ def main() -> None:
 
 
 def ring_starts(b: int) -> list[tuple[int, int]]:
-    """The ring of impact distance b: every Node (y, z) of the screen's
-    plane with |sqrt(y^2 + z^2) - b| <= 1 / 2, in a fixed order."""
+    """The ring of impact distance b: every Node (y, z) of the lamp's
+    plane x = 2 with |sqrt(y^2 + z^2) - b| <= 1 / 2, in a fixed order."""
     found = []
     for y in range(-b - 1, b + 2):
         for z in range(-b - 1, b + 2):
@@ -598,6 +598,35 @@ def ring_section() -> None:
     l1_factor = shell_mean / (len(fan) / (4 * math.pi))
     manhattan_ratio = sum(sum(abs(a) for a in v) / math.sqrt(sum(a * a for a in v)) for v in fan) / len(
         fan
+    )
+    # The reviewer's two numbers, computed here: the age moment's shell mean
+    # over the same shells (no L1 factor: the dwell cancels the incidence)
+    # and the isotropic limit of the fan's mean S_1 / |D|, the mean of
+    # |x| + |y| + |z| over the unit sphere, 3 / 2, by quadrature.
+    age_shells = []
+    for r in range(4, 15):
+        nodes = [
+            (x, y, z)
+            for x in range(-15, 16)
+            for y in range(-15, 16)
+            for z in range(-15, 16)
+            if abs(math.sqrt(x * x + y * y + z * z) - r) < 0.5
+        ]
+        age_shells.append(sum(crowd.age_moment.get(node, 0) / 16 for node in nodes) / len(nodes) * r)
+    steps = 720
+    sphere_sum = sphere_weight = 0.0
+    for i in range(steps):
+        theta = (i + 0.5) * math.pi / steps
+        for j in range(steps):
+            phi = (j + 0.5) * 2 * math.pi / steps
+            x, y, z = math.sin(theta) * math.cos(phi), math.sin(theta) * math.sin(phi), math.cos(theta)
+            sphere_sum += (abs(x) + abs(y) + abs(z)) * math.sin(theta)
+            sphere_weight += math.sin(theta)
+    print(
+        f"   the age moment's shell mean A r over r = 4 .. 14 is {sum(age_shells) / len(age_shells):.2f} "
+        f"against the continuum's 3 q / (4 pi) = {3 * len(fan) / (4 * math.pi):.2f}: no L1 factor on the "
+        f"clock's word; the isotropic limit of the fan's mean S_1 / |D|, the sphere mean of |x| + |y| + |z|, "
+        f"is {sphere_sum / sphere_weight:.4f} (3 / 2 exactly), so F_L1 tends to 1.5 with a denser fan"
     )
     print(
         f"   the fan's L1 factor of the flow: the shell mean of |V| r^2 / Q over r = 4 .. 14 is "

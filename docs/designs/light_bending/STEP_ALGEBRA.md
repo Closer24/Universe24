@@ -48,12 +48,14 @@ b = 6 (5.44 at b = 3, 5.86 at b = 8) at gamma 1, flat in b within 15
 per cent (the `M / b` form recovered) but not 4 within the ring's grain
 (0.09 to 0.11); the factor left, 1.28 to 1.46, is the fan's L1 factor of
 the flow (the same crowd's shell mean `|V| r^2 / Q = 32.79` against the
-continuum's 23.08, `F_L1 = 1.421`), and against the lattice's own push
-constant the ring reads `3.60 / 3.83 / 4.12` at b = 6 / 3 / 8. So the
-registered geometry's failure is the plane's, what remains is a constant
-of the fan and not of b, and the world that decides is the registered
-box with a ring of lamps, its arrival Nodes pinned in section 9. The
-one-line question for the owner is in section 10.
+continuum's 23.08, `F_L1 = 1.421`, `3 / 2` in the isotropic limit), and
+against the push's own constant the ring reads `3.60 / 3.83 / 4.12` at
+b = 6 / 3 / 8, the declared `2 c_f` read back, no test of 4. So the
+registered geometry's failure is the plane's, what remains is the gap
+between the law's two constants of gravity (the clock's, which the pin
+makes nature's, and the push's), and the world that decides is the
+registered box with a ring of lamps, its arrival Nodes pinned in section
+9. The one-line question for the owner is in section 10.
 
 ## 1. The order
 
@@ -433,9 +435,28 @@ mean is, with no denser fan and no scaling of M. The coefficient
 pin, and beside it the same against the lattice's own push constant:
 from the same crowd the shell mean of `|V| r^2 / Q` over r = 4 .. 14 is
 32.79 against the continuum's `q / (4 pi) = 23.08`, the fan's L1 factor
-`F_L1 = 1.421` (the fan's mean `S_1 / |D|` is 1.436; the one-wall note's
-section 5 found the same 32.79 against 23.08), so the push a body reads
-on this fan is `1.421 x q / (4 pi S r^2)`. The grain: one Node per start
+`F_L1 = 1.421` (the one-wall note's section 5 found the same 32.79
+against 23.08). **Where F_L1 comes from and where it goes** (the
+physics-rule reviewer's line, the numbers computed here): the arrival
+flow counts one arrival per Node per interval on each line, and a
+digital line has `S_1 / |D|` Nodes per Euclidean Link, so the flow's
+shell mean carries the fan's mean of `S_1 / |D|`: 1.436 over the 290
+directions (computed in the map, the .out's section 9 line) and 1.421
+weighted by the shells; while the clock's presence per Node on a line,
+the dwell `sqrt 3 |D| / S_1` intervals, cancels that incidence, so the
+age moment's shell mean is the continuum's with no L1 factor (computed
+here from the same crowd: `A r = 68.72` over r = 4 .. 14 against the
+continuum's `3 q / (4 pi) = 69.23`), which is why the one-wall note
+found 32.79 against 23.08 between the two words. And the factor is not
+the finite fan's: in the isotropic limit the mean of `|x| + |y| + |z|`
+over the unit sphere is exactly `3 / 2` (the mean of `|x|` is `1 / 2`;
+computed here by quadrature, 1.5000), so a denser fan raises F_L1 toward
+1.5, and the ring's C against the clock's `G M` tends to `2 c_f x 3 / 2
+= 6` at `c_f = 2`, not to 4. So the push a body reads on this fan is
+`1.421 x q / (4 pi S r^2)`, `3 / 2 x q / (4 pi S r^2)` in the limit, and
+`C_ring / F_L1` is the input read back: `2 c_f` by construction, 4 at
+`c_f = 2`, the residual 3.6 to 4.1 the grain and the dwell's `1 + c_f k`;
+it is no test of 4. The grain: one Node per start
 over the 26 Links, `1 / 26` radian per start, `0.5689 b` on C per start,
 divided by the ring's count on its mean. The step algebra's simulation
 of the board, not a run:
@@ -462,11 +483,12 @@ plane was the b-exponent's failure. (ii) Against the continuum's
 number is 5.1 to 5.9 at gamma 1, 2.6 to 2.9 at gamma 0, above Einstein's
 4 and Newton's 2 by the factor 1.28 to 1.46. (iii) That factor is the
 fan's L1 factor of the flow, 1.421, a constant of the fan's Manhattan
-lines and not of b: against the lattice's own push constant, which a
-body's fall on this crowd reads, the ring reads 3.60, 3.83 and 4.12 at
-b = 6, 3 and 8 (Einstein's 4 within 0.17 at b = 3 and 0.12 at b = 8,
-within 0.40 at b = 6; the grain 0.09 to 0.11), and 1.83, 1.83, 2.05 at
-gamma 0 against Newton's 2. (iv) The screen's own reading, the arrival
+lines and not of b, `3 / 2` in the isotropic limit: the column
+`C_ring / F_L1` (3.60, 3.83 and 4.12 at b = 6, 3 and 8 at gamma 1; 1.83,
+1.83, 2.05 at gamma 0) is the declared `2 c_f` read back through the
+push's own constant, 4 at `c_f = 2` by construction, its residual the
+grain and the dwell's `1 + c_f k`; it tests nothing about 4. (iv) The
+screen's own reading, the arrival
 Node's radial shift, gives a smaller C (3.3 to 3.9 against the
 continuum's `G M`) than the momentum does, because the bend is spread
 along the whole path (the fan's lines cross the row from x = -26 to
@@ -477,15 +499,15 @@ of the ring world is the Nodes and their mean, not the momentum.
 **The verdict of this section.** The registered geometry's failure is
 the plane's, not the fan's: the orientation average removes the growth
 with b and brings the coefficient from 11 to 30 down to 5.1 to 5.9, and
-what remains is the fan's L1 factor of the flow, 1.42, the same constant
-the one-wall note found between the clock's word and the push's word on
-this fan. Against the continuum's `G M` the ring does not read 4 (the
-number is 5.12 at b = 6); against the law's own push constant on the
-same lines it reads 3.6 to 4.1, Einstein's 4 to within the tenth at two
-of the three rings and within 0.4 at b = 6. Whether the coefficient is
-to be read against the continuum's `q / (4 pi S)` or against the
-lattice's own flow is the owner's question of section 10, now with the
-plane out of it. **The world that decides**, one world, on the owner's
+what remains is the fan's L1 factor of the flow, 1.42 on this fan and
+`3 / 2` in the limit, the same constant the one-wall note found between
+the clock's word and the push's word. Against the clock's `G M`, which
+the pin `n S = d` makes nature's, the ring does not read 4: the number is
+5.12 at b = 6 and tends to 6 with a denser fan; against the push's own
+constant it reads the declared `2 c_f` back, no test. The law has two
+constants of gravity on this GameBoard, the clock's and the push's,
+F_L1 apart; which one the coefficient stands on is the owner's question
+of section 10, now with the plane out of it. **The world that decides**, one world, on the owner's
 word only: the registered box, fan, mass `2^16` and pair `[1, 16384]`
 with the width 16384 declared (the pin), the lamp replaced by a ring of
 lamps on the heading at every start listed in the .out (40 at b = 6),
@@ -526,11 +548,19 @@ input read back, the space part still an input), or against the
 continuum's `G M`, which needs one new world where a row reads the shell
 mean (the beam off the mass's plane at a denser fan with M scaled down
 by the fan's count, a new pin from this algebra before it runs)?** With
-the plane taken out by the ring of section 9 the question sharpens: the
-ring reads 5.1 to 5.9 against the continuum's `G M` and 3.6 to 4.1
-against the lattice's own push constant, so the choice is which `G M`
-the comparison stands on, and the ring world of section 9 is the one
-world that reads it.
+the plane taken out by the ring of section 9 the question is the
+choice between the law's two constants of gravity: **the clock's, `q /
+(4 pi S)` from the age moment (the pin `n S = d` makes it nature's `G
+M`), against which the ring reads 5.1 to 5.9 and tends to 6 with a
+denser fan; or the push's, `F_L1` times larger on the registered fan
+(1.421) and `3 / 2` times in the isotropic limit, against which the ring
+reads the declared `2 c_f` back.** Two ways to make the two one, named
+and not proposed: a rule change under its own identity, the flow
+weighted per line by `|D| / S_1` (the label per Euclidean Link in place
+of per Node), which would remove F_L1 from the push and leave the wall's
+delay as it is; or `c_f` absorbing the factor, `1 + gamma = 4 / 3` in
+the limit, which the wall's delay would then miss by the same `3 / 2`.
+The ring world of section 9 reads the coefficient on either ground.
 
 ## 11. What a run would add
 
