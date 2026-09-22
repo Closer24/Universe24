@@ -305,11 +305,20 @@ that deletes), the click's weight is the bilinear form once, the row's
 label moves onto the electron's momentum and its content onto the
 electron's held content, exactly,
 
-    p' = p + w c u_d   (a paid row; w u_d a free one),   M' = M + w c,
+    p' = p + w c u_d   (a paid row),   M' = M + w c,
 
 the detector at the electron's Node (or the electron as a body detector,
 record 754) stamps its own count, and nothing else changes (the six
-verbs: the bilinear form and the evaluation). The recoil of the
+verbs: the bilinear form and the evaluation). Verified in the tree
+(`nature_beam.py:4981-4989`): the taken-in label is added to the body's
+momentum only for a paid family; a FREE row moves no label at a click:
+under `read` and `measure` alike its whole effect on the momentum is the
+push of the form, `M (rho_A rho_B - 1)` times its label (BEAM_LAW
+section 5, the re-emission note: "a free family's rays met by the rule
+give the push of the form"), and the click only ends the row. Series
+H's electron releases free rows (c = 0), so a returning row of its own
+family would move no momentum by its label; the click of section 3 is a
+paid row's. The recoil of the
 electron's OWN paid release is the same arithmetic with the sign
 reversed, `p' = p - w c u_d`, `M' = M - w c`.
 
@@ -477,8 +486,25 @@ of two closures that `A mod N h` cannot hold. The primitive therefore
 needs a SECOND ACCUMULATOR on the body's record, local: the action at
 the last return, `A_ret` (one row per axis, set to the action rows at
 each return; the return itself a click of the body's own row, a row it
-released, returned to it by a declared re-emitter or on a periodic
-axis; a click, not a hold). At that click the set gives as the content
+released, returned to it by a declared re-emitter; a click, not a
+hold). Three facts of the law fix how that row comes back, verified in
+the tree: (i) the one reading set reads everything at the Node BUT the
+reader's own number, "here" included (BEAM_LAW :23-25,
+`tests/test_one_reading_set.py`), so a body never reads its own rows
+directly, on a periodic axis or otherwise; the row must return through
+a re-emitter (the proton under `rerelease`), which stamps its own number
+and age 0 and keeps the arriving phase and content per unit (BEAM_LAW
+:904-908), and is then read as any other body's row: this is what makes
+the rule generic (any body's rows, through any re-emitter, one table
+word); (ii) the click's weight is the bilinear form on the RECORD's
+phase-count vector (6.7, `f^T G f` over the rows that ended), and the
+body's own phase enters no click today, so a rule that reads the
+returning row's phase against the body's phase (the interference of
+the loop with itself, de Broglie's picture) needs the body's phase as
+one component of the record, a new entry of the vector and not the
+click as built; (iii) the row must be of a paid family (section 3 (a):
+a free row moves no label and carries no content). At that click the
+set gives as the content
 of one released row the whole part of the difference over the world's
 action, in units of the family's quantum,
 
