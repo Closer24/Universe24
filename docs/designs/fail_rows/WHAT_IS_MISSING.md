@@ -108,7 +108,10 @@ grain: the fan's width, the wheel, the lattice's scale, where the
 comparison is the continuum's limit; the fix: none in the clicks, the
 grain is the declaration's and the limit is computed. **Mode G**, the
 click's order: the wheel a counter, the outcome order deterministic;
-the fix: none in the clicks (a draw is not a click). The last column of
+the fix: none in the clicks (a draw is not a click). F and G are the
+residue where the clicks are right and a declaration's grain or a
+theorem is what nature refutes, not modes of an error in the clicks;
+they are kept so that every row has its column. The last column of
 the table names each row's modes, and the audit line of each section
 says whether anything of the row was measured inside the board. Where
 one fix in the clicks moves several rows at once it heads section 2:
@@ -128,7 +131,7 @@ detector (row 14 first, then 8a, 7b and 6 by design).
 | 6 the atom's loop opening | the electron escapes at 3407 intervals (DETECTOR, series H's world); under `centred_step` the loop stays, C1 PASS, C2 and C3 FAIL as declared (DETECTOR); no line read; nature Balmer's 27 / 20 | SHOWN: a closed loop is an integer congruence of the action row (ALGEBRA.md 1 (a)); the one-click reach 2 i^2 >= j^2 and that a release unbinds (3 (c), (d)); SHOWN IN FORM: the ladder (j / i)^2 and (j / i)^3 in the shell mean, 27 / 20 under the virial form in the limit (LEVELS.md 2 (b)); NOT SHOWN: the transition itself, any rule that selects the row (ALGEBRA.md 6) | RULE: atom-give-v1 / atom-level-v1, the give at the closure with its amount read off the action rows, under its own identity (record 973); generic, vector and local PASS in the mathematician's judgement, the reviewer's read decides (LEVELS.md 4); and no lattice we can run holds the scale (record 997), so the row stays FAIL by any run and the ladder a conjecture | F and E; inside YES in part (the loop's radius and period off the body's own record in the levels design; the escape and the quarter crossings clicks) |
 | 7b the strong ratio | 2.0, the border's four clicks against two (DETECTOR, series N); nature 12.72 | SHOWN: the give once per body, held // h units at a contact, so the alpha gives 8 against the deuteron's 4 whatever the partners (binding_v1/DESIGN.md 1 (A), lines 202-207); the ratio a constant of the rule, blind to the give's value | RULE: a give that grows with the bonds a body makes (DESIGN.md lines 213-219): a bilinear form on the partners' rows at the Node passes the three tests in form; per partner it gives 6, per partner squared 18 (COMPUTATION), nature's 12.72 the partners' count to the power 1.68, reachable only by a declared integer per shape, a fit | E; inside NO (the border clicks; the escaped content of the books a check) |
 | 8a the neutron's step | every neutron at its key on its own clock, the width 0 (DETECTOR, 64 clicks of content 3); in the lattice's clock 0.036 registered, 0.08 to 0.13 at head (GAMEBOARD); nature's exponential, width over median ln 9 / ln 2 = 3.17 | SHOWN: the `become` at a declared count is a step in each body's own clock at any count (BEAM_LAW note 36 (iii); CRITERIA row 8a (b), (c)); the spread in the tick is the crowd's spread of 1 + k over the 64 Nodes, bounded by the crowd's range (the trigger ticks 602 to 671, GAMEBOARD) | RULE: decay-by-crowd-v1 (HYPOTHESES 27's table; WEAK.md 2.4's declared bath, J1b not built): the `become` fired by a met row of a declared family instead of by a count, so the waiting time is the arrivals' inter-arrival distribution, exponential only where the declared bath's arrivals approach a Poisson comb (COMPUTATION from the declaration). Generic, vector (verb 5 and 6) and local in form. The re-run of record 1053 (b) reads the crowd's spread alone and cannot reach 3.17: a step again is the algebra's expectation | E, audited A; inside YES (the width over the median in the lattice's clock, the paper's number; the clicks and the `become` lines outside) |
-| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty (BEAM_LAW note 36 (i)); the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with row 8c). Content 0, no turn: 0 behind, as read. Content 1 under massive-rows-v1 (the row turns its phase per Link by h): each reader admits a class shifted by h x, the second reader's rate over the first's 63 / 64 = 0.984 when h is coprime to N (COMPUTATION), 0 again when h x is 0 mod N at the reader's spacing (the edge case) | D; inside NO (the readers' own records) |
+| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty (BEAM_LAW note 36 (i)); the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with row 8c). Content 0, no turn: 0 behind, as read. Content 1 under massive-rows-v1 (the row turns its phase per Link by h): each reader admits a class shifted by the turn per Link, and the window empties a class: 16 rows per class over 1024 births, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION); the far detector 1024 less 16 per class covered by the 128 readers' shifts, 0 when all 64 are; 0 behind again when the shift per Link abs(p_a) N / h is 0 mod N (the edge case: p = 2^12 with h a power of two) | D; inside NO (the readers' own records) |
 | 8c the massless neutrino | the `nu` family with no content, an input; nature's heaviest state above 9.8 x 10^-8 of the electron's | SHOWN: a family's content is a declared integer of the family table (CRITERIA row 8c) | DECLARATION: the `nu` family's quantum 1 under `massive_rows`. 0: refuted. 1: the electron's declared content must then be at least 1.02 x 10^7 units (COMPUTATION on the comparison side), inside the working bound at S_w = 1 (E'_0 = Q S_w M about 6.5 x 10^8, its square 4.3 x 10^17 under 2^63) | D; inside NO (an input) |
 | 11a the far lamp's brightness | the pin q_eff = +1 (COMPUTATION, `far_lamp_map.out` section 2; the run not made, expansion-v1 not built); nature -0.53 | SHOWN IN FORM: the click count falls as 1 / (1 + z) and the content per click stays the birth's, one factor where nature's flux has two (BRIGHTNESS.md sections 1 to 3, rung 2 for the inverse square) | RULE: a click whose read energy follows the row's frequency in flight (BRIGHTNESS.md 6: "not one of the six"). In form it is the massive row's phase turn per Link read as h f at the detector (a key and a reading), which gives q_eff = 0, Milne's, and then row 3's RULE remains: the row stays FAIL by the same missing term as row 3 | D and A; inside YES (no click made; the chain's inverse square the shell mean, rung 2) |
 | 11c Tolman's test | the pin n = 1 in (1 + z)^-n (COMPUTATION, `far_lamp_map.out` section 4 (b)); nature 4 | SHOWN IN FORM: the Nodes and the fan's lines fixed under the wall, a ruler of l Nodes at d subtends l / d; the flux one power of 1 + z (BRIGHTNESS.md 5) | RULE: the same as 11a for one power (n = 2 at most), and for the other two an angular size that grows with the redshift, a board whose Links stretch, which is no verb on the state vector: it fails the vector test and the local test. Not reachable inside the six verbs | D and A; inside YES (the same chain; the ruler's size the board's Nodes) |
@@ -144,12 +147,15 @@ Table 2 that is not a FAIL, and per reading the paper names as a
 formula's confirmation or as a conversion read; the reading and its
 kind (CRITERIA.md and the register), why it passed by the algebra
 (which counts, which declared integers, which theorem or identity), and
-the same audit line as the FAIL rows. No new number. What the passes
-share: every one reads a count of clicks or a ratio of two counts at a
-declared detector, from a formula that is exact on the law's integers
-(the rungs, the tables, the flight table, the window) with no shell
-mean, no tick and no body's own record in the chain; and the FAIL rows
-are the same chain with one thing missing, named in their column.
+the same audit line as the FAIL rows. No new number. What the three
+passes and the two bounds share: each reads a count of clicks or a
+ratio of two counts at a declared detector, from a formula that is
+exact on the law's integers (the rungs, the tables, the flight table,
+the window) with no shell mean, no tick and no body's own record in the
+chain; the four YES rows of the table (12 a history row, S the
+hypothesis's, X and the Doppler the confirmations) are host-tick
+readings and stand beside them; and the FAIL rows are the same chain
+with one thing missing, named in their column.
 
 | Row or reading | The reading, its kind | Why it passed, by the algebra | Inside the board? |
 | --- | --- | --- | --- |
@@ -324,9 +330,13 @@ detector's own pulse-and-return clock NOT READ); under the key 0.3674
 for the pin 0.369 +- 0.003 (DETECTOR, series S; CRITERIA row 4b).
 
 **The chain.** (a) A rest detector counts what it meets: a lamp moving
-at v toward it puts its rows c - v apart, so the count ratio is k_BA =
-(1 + v) / r_D with r_D the mover's own count per tick, exact over whole
-Links (DERIVATIONS_BEAM 2.2: 183 = 128 + 55 at k = 4; the click frame
+at v away from it emits every T / r_D ticks and each record leaves from
+v T / r_D farther, so its arrivals are (1 + v) T / r_D apart and the
+count ratio is k_BA = (1 + v) / r_D (the click frame section 2 (a)),
+with r_D the mover's own count per tick; a lamp approaching gives (1 -
+v) / r_D; the same factor 1 + v is the head-on crossing count of a mover
+through a rest lamp's stream, exact over whole Links (DERIVATIONS_BEAM
+2.2: 183 = 128 + 55 at k = 4), another arrangement (the click frame
 section 4). On the law r_D = 1 (a hop costs the clock nothing, section
 5 (ii); the linear wall gives at most 1 - beta and "no input of this
 section gives sqrt(1 - beta^2), since none holds a square"), so 1 + z =
@@ -357,7 +367,9 @@ S, DETECTOR) and 4a's gamma form reached at gamma <= 2, with the row's
 default there; its flip to the law's default decided by record 972 and,
 at this file's base, on the branch `drive-default`, PR #907) lifts the cap: a second declaration, the domain,
 which the Boss reads on the tree. The admission is the owner's word
-(record 1053 (a)).
+(record 1053 (a)). The DECLARATION here is a key to a hypothesis,
+covariant-readings-v1, its three tests REVIEW_3's and its admission the
+owner's: the word rests on the key's existence, not on a world integer.
 
 **(e) The reading that decides the declaration from the clicks: k_AB,
 the missing direction (the click frame section 4).** Not needed for the
@@ -587,17 +599,22 @@ under 2^63 = 9.2 x 10^18; the split ladder never forms X Q^2). 8b
 next: under massive-rows-v1 (massive_rows/DESIGN.md sections 1 to 3;
 NEWTON_FROM_CLICKS section 3, the row's description) a massive row
 turns its phase per Link by the action h, so a reader at x sees the
-class u + h x, shifted per Node: if h is coprime to N the readers at
-successive Nodes admit disjoint classes, and each admits w / N of what
-reaches it: the first reader 1 / 64 of 1024 = 16, the second 1 / 64 of
-the 1008 survivors = 15.75, the second reader's rate over the first's
-63 / 64 = 0.984 (COMPUTATION), nature's "about 1" as the thing compared
-with, and the far detector without a window reads all that survives
-the 128 readers, 95 of the 711 that reach it within the run's ticks
-(1024 x (63 / 64)^128 = 136 over the full stream). The edge case: if h x is 0
-mod N at the readers' spacing (h a multiple of N, or the spacing a
-multiple of N / gcd(h, N)) the classes coincide again and the second
-reader reads 0. The pace: at quantum 1 and S_w = 1 the row's rest energy
+class u + h x, shifted per Node: if the shift per Link abs(p_a) N / h
+is not 0 mod N the readers at successive Nodes admit different classes,
+and the window empties a class (the reader is a class filter,
+deterministic, section 0b's own theorem: a window admits w / N of a
+stride coprime to N and EMPTIES that class; it does not thin a stream):
+1024 births over the wheel [1, 64] put 16 rows in each of 64 classes,
+the first reader takes its class, 16, the second reader at a fresh
+class takes 16, the ratio 1.000 exactly (COMPUTATION), nature's "about
+1" as the thing compared with; the far detector reads 1024 minus 16 per
+distinct class among the 128 readers' shifts floor(x abs(p_a) N / h)
+mod N (the turn per axis Link, world.py 730), at most 64 classes, so 0
+when they cover all 64 (55 / 4 steps per Link at p = 220, h = 1024 does
+over 128 consecutive Nodes). The edge case: at p = 2^12 with h a power
+of two the shift is 0 mod 64 and every reader sees the first's class: 0
+behind again. The pin waits on the `nu` family's declared p and h, not
+fixed in this file. The pace: at quantum 1 and S_w = 1 the row's rest energy
 E'_0 is 64 label units and its pace p / isqrt(E'_0^2 + 3 p^2) is within
 10^-4 of c at p = 2^12 (COMPUTATION), so the flight's 711 of 1024
 reaching x = 190 within the run changes by less than the run's margin.
@@ -837,7 +854,9 @@ count under `clock_stamp`, is on main already and is the audit's first
 fix for rows 3, 4b, 12, 5b, 13 and 14; by the algebra it moves a number
 only where a crowd stretches the detector (13, 14, 12) and not on the
 crowd-free worlds of 3 and 4b, so it rides with items 3 and 4 and does
-not head the list.
+not head the list. The order is by cost; the owner's orders in force
+(records 953, 964, 1099) put rows 13 and 14 first, and this list yields
+to them.
 
 1. **Rows 4a and 4b, one decision, no run.** The key `covariant_readings`
    admitted or not (record 1053 (a)); decides two rows at once and the
@@ -847,7 +866,8 @@ not head the list.
 2. **Rows 8c and 8b, one declaration, a physics-rule read and a run of
    seconds.** The `nu` quantum 1 under `massive_rows`; the reviewer's
    line that the window reads the turned phase; `j2_filter` redeclared
-   against the pins 16, 63 / 64, 136 (section 1.9). Decides two rows.
+   against the pins 16, 1.000, and 1024 less 16 per class covered, at
+   the declared p and h (section 1.9). Decides two rows.
 3. **Row 13, the owner's word, no run.** gamma_PPN = 1 as the declared
    strength (record 941); the walk's trend at larger b a COMPUTATION of
    minutes with the existing script, no engine. Decides one row in the
