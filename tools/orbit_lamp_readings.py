@@ -38,11 +38,13 @@ diagnostic, never pinned):
   own number taken home and created again on the lamp's pair: the reason
   a birth may be read late or not at all).
 
-The pins (`expectations.json`): T = 371 at r = 12 and 742 at r = 24 within
-9 percent; T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 within T's
-bracket; the amplitude r - 1 to r + 2; the equivalence within one birth
-interval on T and one Node on x; the controls' x = c_x + r on every click
-and the escape near (SIDE - 1 - c_y) / v. The record checks (completed,
+The pins (`expectations.json`): T = 343 at r = 12 and 687 at r = 24 within
+9 percent (the re-run of 2026-09-22 at n = 9, the per-axis drive's circle;
+the first run's 371 and 742 at n = 10 stay in the register as history);
+T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 within T's bracket;
+the amplitude r - 1 to r + 2; the equivalence within one birth interval on
+T and one Node on x; the controls' x = c_x + r on every click and the
+escape near (SIDE - c_y) / v, the 61st step. The record checks (completed,
 the books balanced at every tick) fail the tool; the readings are
 registered inside or outside their bracket and never moved.
 

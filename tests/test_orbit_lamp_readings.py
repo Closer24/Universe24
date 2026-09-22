@@ -7,7 +7,10 @@ lines alone). The expected integers, written down first:
 (a) the shipped worlds equal `make_worlds.worlds()` document for document
     and `expectations.json` equals `make_worlds.expectations()` (its
     `replicated` map aside), declares its format and names a derivation
-    for every pinned quantity;
+    for every pinned quantity; the shipped pins are the per-axis drive's
+    at n = 9 (T = 2 pi r x 41 / 9: 343 and 687, the escape at the 61st
+    step) and the generator reproduces the first run's pins at n = 10
+    under the directional drive (371 and 742);
 (b) on a hand-made click list of a circle of radius 24 about the column 60
     turning once per 742 intervals, sampled at every 8th interval over 4000
     (500 clicks, each at the tick of its birth plus a flight), the tool
@@ -95,7 +98,20 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_are_pinned()
         "flight",
     ):
         assert key in pinned["derivations"], key
-    assert pinned["orbit_n"] == 10 and pinned["birth_interval"] == BIRTH_INTERVAL
+    assert pinned["orbit_n"] == 9 and pinned["drive"] == GENERATOR.AXIS_DRIVE
+    assert pinned["birth_interval"] == BIRTH_INTERVAL
+    # The shipped pins at n = 9 under the per-axis drive (T = 343 and 687,
+    # series D's table) and the first run's at n = 10 under the directional
+    # drive (T = 371 and 742), both reproducible from the generator.
+    assert abs(pinned["worlds"]["r12"]["period"]["pin"] - 2 * math.pi * 12 * 41 / 9) < 1e-9
+    assert abs(pinned["worlds"]["r24"]["period"]["pin"] - 2 * math.pi * 24 * 41 / 9) < 1e-9
+    assert pinned["worlds"]["r12"]["momentum"] == 9 * 64 * ((1 << 12) + (1 << 20))
+    assert abs(pinned["worlds"]["r12_control"]["escape_tick"]["pin"] - 61 * 41 / 9) < 1e-9
+    history = GENERATOR.expectations(GENERATOR.HISTORY_N, GENERATOR.DIRECTIONAL_DRIVE)
+    assert history["orbit_n"] == 10 and history["drive"] == GENERATOR.DIRECTIONAL_DRIVE
+    assert abs(history["worlds"]["r12"]["period"]["pin"] - 370.9) < 0.1
+    assert abs(history["worlds"]["r24"]["period"]["pin"] - 741.7) < 0.1
+    assert GENERATOR.worlds(GENERATOR.HISTORY_N)["r12"] != generated["r12"]
     assert (
         abs(pinned["worlds"]["r24"]["period"]["pin"] / pinned["worlds"]["r12"]["period"]["pin"] - 2.0)
         < 1e-9
