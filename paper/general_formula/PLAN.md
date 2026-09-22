@@ -3265,3 +3265,134 @@ One word of terminology fixed on the way ("a number of the board" to
 "of the GameBoard's state"); row 5a names the flight table's pace as the
 formula's, series Q's reading at finite ages in Table 2. The Lorentz
 sentences and the click frame are untouched, as ordered.
+
+## Prepared, not applied (2026-09-22): the click frame's paragraph and the place of the click theorem
+
+The Boss's order of 05:35Z on the owner's records 745 and 749 (the
+Highlights line of 92776f76) and the click frame
+(docs/designs/click_frame/DERIVATION.md on branch click-frame, PR #769,
+its section 0 the click theorem): draft, do not write into the paper.
+The paper's text changes only after the owner sees this paragraph and
+the theorem is on main.
+
+### 1. The place
+
+A new paragraph of the discussion, "The two worlds, and how a click
+brings Lorentz", placed before "The limits, and what does not return",
+whose first two sentences (the rest frame; Lorentz not a limit but a
+property the model must show or lack; the owner's decision of record 270
+building the covariant readings beside the law) it replaces. It carries
+the mathematician's three sentences verbatim, marked as the frame's and
+cited to the derivation's section 0 at its merge SHA, and then the
+writer's paragraph below. The click theorem is not a numbered theorem of
+the paper and gets no ledger row: the ledger holds what the update rules
+force, and the theorem is about the frame's two assumptions on the
+world's clicks, not about the law; it is stated as the frame, with the
+one sentence of fact about the law.
+
+### 2. The three sentences (the mathematician's, section 0, "The paper's frame, three sentences, marked as such")
+
+"We assume Lorentz is real in the world, and we explain only how a click
+brings it: a click is the passage of information from Node to Node at
+most one Node per interval (A1), and a click's content is an amplitude
+with a phase that splits each interval between staying and hopping, the
+mass the staying share (A2). The transformations between click families
+that preserve this structure form the Lorentz group up to scale (A1),
+acting on the amplitudes as the Dirac walk's covariance (A2), so that a
+detector's own rate is sqrt(1 - v^2) to second order in v and the
+lattice's corrections begin at the fourth. The amplitudes of (A2) are
+therefore exactly what is needed to convert the clicks back to Lorentz;
+the law as built satisfies (A1) and not (A2), a fact stated for the
+owner's word."
+
+### 3. The writer's paragraph (ten lines at the page's width; the draft)
+
+The GameBoard (Nodes, integer rows and the interval's count, which no
+detector reads) and our reality (detectors and their clicks only: a
+detector's count advances once per packet received, a click is that
+count with its Node and content, and a velocity is Nodes apart over
+counts apart between neighbouring detectors, never a reading of the
+interval) are two worlds, and the read-out of Definition 3 is the second
+world's click. Lorentz is assumed of the world and required of the
+board: [the three sentences]. The law as built meets (A1), one Node per
+interval with the flight blind to the phase (P9), and not (A2), its hop
+a whole-record schedule with no staying amplitude; so its clicks carry
+the group and its counter runs at the rest rate (rows 4a, 4b): read
+through records, the two one-way Doppler factors are r / (1 - v) and
+(1 + v) / r, alike only at r^2 = 1 - v^2, and the law's r = 1 leaves
+them apart by 1 - v^2, the measurable that decides. No wall of the law
+and no declared identity enter the reading, so Eq. 14 is not needed for
+it and stays a hypothesis under its own identity against series S's
+pins. What the system gives is a computation on the GameBoard whose
+passage to the real world is the clicks, at the quantum level as well:
+the equations of the board are the law's, and the equation of the
+passage from the board to what is measured above it is the click
+theorem's.
+
+### 4. What it replaces or retires, sentence by sentence
+
+- The frame of record 700 (the limits paragraph): its first two
+  sentences replaced as in 1; the rest of the paragraph, the covariant
+  square in its frame (Eq. 14, the owner's word of today) with E' and the
+  gate and series S's readings, STAYS as the hypothesis beside the law;
+  one clause changes: "builds the covariant readings beside it as a
+  hypothesis against the same pins" becomes "the covariant readings, a
+  hypothesis beside the law that the frame does not need for the reading
+  of Lorentz, stay against the same pins" (the Highlights line: record
+  270's identity unnecessary for the reading). Whether Eq. 14 keeps its
+  frame or moves to Table 4 as the hypothesis is the owner's word; the
+  draft keeps it.
+- Theorem 3's quotient: UNTOUCHED. Its click is the record's one
+  deletion at the read-out, which is the frame's click seen from the
+  board (the detector ticks on the record's completion); the injectivity
+  between clicks on Q says nothing about frames. One clause in the
+  paragraph ("the read-out of Definition 3 is the second world's click")
+  ties the two words.
+- The c-postulate row (no dispersion, P9 not forced): STAYS. (A1) is the
+  frame's assumption about the world's clicks; P9 is the law's rule that
+  meets it. Its third column gains six words: "(A1) of the frame asks the
+  same of the clicks".
+- The failures' list (4a, 4b) and Table 3's rows 4a, 4b: STAY as
+  failures; the paragraph names their cause (the law meets (A1), not
+  (A2)); row 4b's verdict gains "the two one-way factors apart by
+  1 - v^2 (the click frame)".
+- Table 4's Lorentz row: the deciding check is rewritten to the frame's
+  measurable: "the ratio of the two one-way Doppler factors read at the
+  ground through records (the click frame's pins, section 3): 1 - v^2
+  under the law, 1 under Lorentz; the split of a row between staying and
+  hopping (A2) as a hypothesis under its own identity, not opened"; the
+  "in hand" clause of the covariant readings goes with it. Two lines
+  shorter.
+- Section 3's sentence "A boost, which mixes a step in space with a step
+  in time, is not among the 48" gains "(the click theorem's third part:
+  the board's corrections begin at the fourth order)".
+- The abstract's "the Lorentz factor" in the list of what no rule forces:
+  STAYS, with four words, "how the clicks carry it is the frame".
+
+### 5. The cost, in lines, and what pays
+
+The three sentences about nine lines at the page's width, the writer's
+paragraph ten, the row and clause changes two: twenty-one. Replaced: the
+limits paragraph's first two sentences, five; Table 4's Lorentz row, two.
+Net fourteen lines on pages 24 and 25, where the page is full. Candidates
+that carry no claim and no table number, in the order of taking: the
+introduction's "How the simulator led to the results" cut to its rule
+(four lines); Section 6's mixture sentence (the flat mixture written out
+as the phase-blind detector, three lines, its content the ledger's
+"harmonic constants free"); Section 8's gate paragraph's inverse-interval
+and second-runner clauses (two lines, both in the appendix and in the
+replications register); Section 5's "Light: no optical metric" second
+sentence (the optical-v1 hypothesis, two lines, Table 4's bending row
+says it); Theorem 5's proof's last sentence on the declared first party
+(two lines, Definition 3 says it); the positioning paragraph's Bohm and
+psi-ontic clauses (one line). Fourteen. 30 pages held, the split 25 / 2 / 3.
+
+### 6. What is not in the draft
+
+No number of the click frame's section 3 (the pins of the two factors)
+enters the paper until a run reads them after a detector; the paragraph
+names the measurable and its two values, 1 - v^2 and 1, which are
+algebra on the counts (rung 1). The split of a row between staying and
+hopping is named as a hypothesis not opened, with no claim. Nothing of
+this is applied: main.tex, corrections.py and figures are as at the head
+of the Bell commit.
