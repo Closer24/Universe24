@@ -424,6 +424,62 @@ print(
     f"{(1 + shell_k[4][1]) / (1 + shell_k[2][1]):.4f} under the presence word; rate(4) / rate(12) = "
     f"{(1 + shell_k[12][0]) / (1 + shell_k[4][0]):.4f} outside under the age word"
 )
+# The interior on the axis and the detector's Node (the physics-rule
+# reviewer's read of 2026-09-22, PR #766): the age moment with uniform
+# sources at r = 0 to 5 from the centre, and the detector's own count k_D at
+# x = 3 per world, 102, 104 and 112 Links from the centre on the axis, where
+# the shell's on-axis rows reach it. This walk is bounded by the bar's
+# cross-section (|y|, |z| <= 7 about the axis: a row past a face is gone) and
+# reaches 125 Links; the pins above are untouched.
+INTERIOR_RADII = range(0, 6)
+DETECTOR_OFFSETS = {2: 102, 4: 104, 12: 112}
+DETECTOR_REACH = 125
+far_targets = {(-r, 0, 0): index for index, r in enumerate(INTERIOR_RADII)}
+for offset in DETECTOR_OFFSETS.values():
+    far_targets[(-offset, 0, 0)] = len(far_targets)
+far_walk = {d: lines_e.nodes(d, DETECTOR_REACH) for d in fan_e}
+far_dwell = {(d, made): lines_e.dwell(d, made) for d in fan_e for _, made in far_walk[d]}
+far_presence = [[0] * len(far_targets) for _ in shell_nodes]
+far_moment = [[0] * len(far_targets) for _ in shell_nodes]
+for index, (ox, oy, oz) in enumerate(shell_nodes):
+    for d in fan_e:
+        for (dx, dy, dz), made in far_walk[d]:
+            if abs(oy + dy) > 7 or abs(oz + dz) > 7:
+                break
+            target = far_targets.get((ox + dx, oy + dy, oz + dz))
+            if target is not None:
+                ages = far_dwell[(d, made)]
+                far_presence[index][target] += len(ages)
+                far_moment[index][target] += sum(ages)
+print(
+    "   the interior on the axis, uniform sources (the age moment at r = 0 to 5): "
+    + ", ".join(f"{sum(row[far_targets[(-r, 0, 0)]] for row in far_moment)}" for r in INTERIOR_RADII)
+    + "; with the sources' own clocks k = "
+    + ", ".join(
+        f"{sum(effective[i] * far_moment[i][far_targets[(-r, 0, 0)]] for i in range(len(shell_nodes))) * SUSPENSION[0] / SUSPENSION[1]:.3f}"
+        for r in INTERIOR_RADII
+    )
+    + " (a lattice ripple of about +-2.4 percent; 5086 at r = 2 and at r = 4 is a coincidence "
+    "of the lattice at the design's two Nodes)"
+)
+for radius, offset in DETECTOR_OFFSETS.items():
+    target = far_targets[(-offset, 0, 0)]
+    k_d_age = (
+        sum(effective[i] * far_moment[i][target] for i in range(len(shell_nodes)))
+        * SUSPENSION[0]
+        / SUSPENSION[1]
+    )
+    k_d_presence = (
+        sum(effective[i] * far_presence[i][target] for i in range(len(shell_nodes)))
+        * SUSPENSION[0]
+        / SUSPENSION[1]
+    )
+    print(
+        f"   the detector's own count at x = 3 in the world r = {radius:2d} ({offset} Links from "
+        f"the centre): k_D = {k_d_age:.4f} under the age word, {k_d_presence:.4f} under the "
+        "presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z "
+        "(record 569)"
+    )
 print(
     "   THE PINS OF SERIES X IN ONE LINE (what the register quotes, six decimals; the release "
     f"{SHELL_AMOUNT} / 2^16 per source per direction):"

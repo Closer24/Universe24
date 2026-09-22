@@ -6813,10 +6813,8 @@ sequential gates on an entangled record, the full register replay.
   word, run beside it as series T ran the two words), at r = 2 and 4
   (inside) and 12 (outside), each with its control, the lamp alone on the
   same GameBoard.
-  **With uniform sources the lattice gives the shell theorem exactly:** the
-  age moment at the lamp's Node is ONE INTEGER, 5086, at r = 2 and at
-  r = 4, and 3144 at r = 12, against the presence 499, 596 and 163, which
-  rises toward the shell as a flux does. **The one thing the design did not
+  **The interior by the map:** the map's interior on the axis runs 5009 to 5246 with uniform sources (the age moment at r = 0 to 5: 5162, 5009, 5086, 5130, 5086, 5246; with the sources' own clocks k = 0.932, 0.898, 0.914, 0.919, 0.911, 0.943), a lattice ripple of about +-2.4 percent about the shell theorem's flat interior; the equality 5086 at r = 2 and at r = 4 is a coincidence of the lattice at the two Nodes the design named before the map (record 574); at r = 12 the age moment is 3144; the
+  presence 499, 596 and 163 rises toward the shell as a flux does. **The one thing the design did not
   foresee, which the map states and solves:** the shell's sources stand in
   one another's rows, so each source's own clock counts the age moment of
   its neighbours by the law's default word and a source releases only at
@@ -6824,10 +6822,11 @@ sequential gates on an entangled record, the full register replay.
   iterates that fixed point (the sources' own k 0.787 to 0.932, mean 0.866,
   so each keeps 11.31 to 12.22 of its declared 21.84 units, 0.536 of the
   rate). It is the law's own nonlinearity, not a rule added here: a dense
-  shell slows its own clocks and so releases less. With uniform sources the
-  interior is flat to the last digit, and the SPREAD of the sources' own
-  clocks over the lattice shell is the whole of the ripple the inside pin
-  carries.
+  shell slows its own clocks and so releases less. At the two Nodes the
+  design named the uniform sources give one integer, and the spread of the
+  sources' own clocks over the lattice shell is what moves the inside pin off
+  1 there; the lattice interior's own ripple, +-2.4 percent by the map, is
+  not read at two Nodes.
   DETECTOR, the lamp's light at x = 3, `1 + z` the inverse slope of the
   birth ordinal against the click's tick in each window and `k = 1 + z - 1`:
   the pinned k 0.914351 (r = 2), 0.910783 (r = 4) and 0.563110 (r = 12)
@@ -6860,10 +6859,11 @@ sequential gates on an entangled record, the full register replay.
   the reading rests on: a detector whose own clock is slowed by a crowd at
   its Node clicks on the same lattice ticks as one with no crowd, so the
   shell's rows reaching the detector cannot move `1 + z`; only the lamp's
-  clock does).
+  clock does). The reading's denominator is the host tick, the detector's own clock only at k_D = 0 (record 569); the map gives k_D = 0.0945, 0.0927 and 0.1357 at x = 3 (the detector in the shell's on-axis rows); in the strict form (records 678 and 709) the inside ratio is 0.9994, the outside 0.5134 and the presence word's k near zero or negative; the convention is the owner's (the clock audit's uncertainty (a)), the same as series T's.
 - **Run (2026-09-22, `tools/run_series.py --jobs 1` one world at a time on
   the branch at cb634db, headless, 500 intervals each, the nine worlds
-  completed and conserved at every tick; the readings by
+  completed (the books balanced at every tick, GAMEBOARD, a gate of the
+  record); the readings by
   `examples/events/shell_clock/read_runs.py` from the detector's click
   lines alone, shipped as `examples/events/shell_clock/readings.json`, no
   number typed by hand; DETECTOR unless said; measured once, awaiting
@@ -6882,9 +6882,7 @@ sequential gates on an entangled record, the full register replay.
   within the tolerance); inside under the presence word 0.8390 (the pin
   0.839989, MET, NOT flat, the FAIL the design expected); outside under the
   age word `k(12) / k(4)` = 0.6285 (the pin 0.618270, MET; the continuum's
-  0.5 outside the tolerance by the lattice's grain, as pinned). The presence
-  word's departure from flatness is 56 times the age word's on the same
-  shell. **Verdict per world: every one of the nine MET; every pin of the
+  0.5 outside the tolerance by the lattice's grain, as pinned). Per window the three ratios read inside under the age word 0.9994 / 1.0063, inside under the presence word 0.8379 / 0.8401, outside under the age word 0.6381 / 0.6189, and k drifts from the first window to the second by +1.3, +0.6 and -2.4 percent (the presence word +0.3, 0.0 and -2.0), so the outside MET is met at the reading's resolution (the windows 0.638 and 0.619 against the tolerance 0.02). **Verdict per world: every one of the nine MET; every pin of the
   entry met, nothing moved, nothing failed.** The host's cost, apart from
   the readings (GAMEBOARD): 1396 to 1465 s and 1284 to 1349 MB peak per
   shell world, about 12 GB of record each (450 sources on the fan of 290:
@@ -6896,8 +6894,9 @@ sequential gates on an entangled record, the full register replay.
   word), bb1df5874c84 (the three controls, the same light in three boxes;
   the full sha256 in `readings.json`). What the run establishes: on the
   engine as built a clock inside a shell of sources reads the same age
-  moment 2 and 4 Links from its centre (the potential flat: Poisson's source
-  term after a detector) and a clock outside it reads the point source's
+  moment within 0.02 at the two Nodes the design named, 2 and 4 Links from
+  its centre (the windows 0.9994 and 1.0063; the lattice interior's own
+  ripple, +-2.4 percent by the map, is not resolved by this run) and a clock outside it reads the point source's
   `C / r` as the lattice gives it, while the same clock under the presence
   word reads a flux that rises toward the shell and is not flat; the shell's
   own sources slow one another as the law's default word says they must,

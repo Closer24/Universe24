@@ -18,7 +18,8 @@ detector"), written down first:
     release 2 F x 2^16 / 450 = 1431597 so 21.8444 units per source per
     direction per interval, and with uniform sources k = the map's age
     moment x the release / 2^16, which gives one number, 1.695264, at
-    r = 2 and at r = 4 (the shell theorem: 5086 is one integer at both) and
+    r = 2 and at r = 4 (5086 is one integer at both, a coincidence of the
+    lattice at the design's two Nodes; the map's interior runs 5009 to 5246) and
     1.047957 at r = 12; the register's pinned ratios 1.003917, 0.839989 and
     0.618270 with the tolerance 0.02, and the presence word's departure
     from 1 more than forty times the age word's;
@@ -29,7 +30,10 @@ detector"), written down first:
 (d) the rule the whole reading rests on, on a minimal GameBoard: a detector
     whose OWN clock is slowed by a crowd at its Node clicks on the same
     lattice ticks as one with no crowd, so the shell's rows reaching the
-    detector cannot move the reading; only the lamp's clock moves 1 + z;
+    detector cannot move the reading; only the lamp's clock moves 1 + z (the
+    reading's denominator is the host tick, the detector's own clock only at
+    k_D = 0, record 569; the map gives k_D = 0.0945, 0.0927 and 0.1357 at
+    x = 3, the convention the owner's, the same as series T's);
 (e) one shell world parses under the law and runs two intervals with the
     books balanced.
 """

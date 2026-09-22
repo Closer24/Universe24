@@ -55,10 +55,15 @@ iterates one fixed point the design did not foresee and the world requires:
 THE SHELL'S SOURCES STAND IN ONE ANOTHER'S ROWS, so each source's own clock
 counts the age moment at its Node (the law's default word) and a source
 releases only at its self-creations, at its declared rate over 1 + its own
-count. With uniform sources the interior is flat exactly, one integer, 5086,
-at r = 2 and at r = 4; the spread of the sources' own clocks over the
-lattice shell (their count runs 0.787 to 0.932) is the ripple the pin
-carries, 0.0039 on the inside ratio, and nothing else moves it.
+count. The map's interior on the axis runs 5009 to 5246 with uniform sources
+(the age moment at r = 0 to 5: 5162, 5009, 5086, 5130, 5086, 5246), a
+lattice ripple of about +-2.4 percent; the equality 5086 at r = 2 and at
+r = 4 is a coincidence of the lattice at the two Nodes the design named
+before the map, and there the spread of the sources' own clocks over the
+lattice shell (their count runs 0.787 to 0.932) is what moves the inside
+pin off 1, by 0.0039. The detector's own clock is slowed by the shell's
+on-axis rows (the map's k_D below); the reading's denominator is the host
+tick, so k_D does not enter it (record 569).
 
     python examples/events/shell_clock/make_worlds.py   # the worlds and expectations.json
 """
@@ -143,6 +148,12 @@ PINNED_K = {
     "presence": {2: 0.089647, 4: 0.106724, 12: 0.029271},
 }
 PINNED_K_UNIFORM = {2: 1.695264, 4: 1.695264, 12: 1.047957}
+# The map's interior on the axis with uniform sources (the age moment at
+# r = 0 to 5) and the detector's own count at x = 3 per world (the shell's
+# on-axis rows reach it; the reading's denominator is the host tick, so it
+# does not enter 1 + z: record 569).
+INTERIOR_AGE_MOMENT = {0: 5162, 1: 5009, 2: 5086, 3: 5130, 4: 5086, 5: 5246}
+DETECTOR_K = {2: 0.0945, 4: 0.0927, 12: 0.1357}
 PINNED_RATIOS = {
     "inside_age": 1.003917,
     "inside_presence": 0.839989,
@@ -265,7 +276,9 @@ def expectations() -> Json:
             "docs/designs/clock_age/clock_age_map.py section E (its output in clock_age_map.out "
             "beside it), the shell's lines on the engine's own flight table: per unit of the "
             "release the whole shell leaves the age moment 5086 at r = 2 and 5086 at r = 4, one "
-            "integer (the shell theorem on the lattice: the interior is flat exactly), and 3144 at "
+            "integer at the two Nodes the design named (a coincidence of the lattice: the map's "
+            "interior on the axis runs 5009 to 5246, a ripple of about +-2.4 percent about the "
+            "shell theorem's flat interior), and 3144 at "
             "r = 12, against the presence 499, 596 and 163 (the flux rises toward the shell); then "
             "the fixed point of the sources' own clocks, which the shell requires and the design "
             "did not foresee (a source stands in its neighbours' rows, counts their age moment by "
@@ -280,6 +293,7 @@ def expectations() -> Json:
         "ticks": TICKS,
         "flux": FLUX,
         "windows": [list(w) for w in WINDOWS],
+        "interior_age_moment": {str(r): a for r, a in INTERIOR_AGE_MOMENT.items()},
         "shell": {
             "radius": RADIUS,
             "nodes": len(SHELL),
@@ -356,6 +370,7 @@ def expectations() -> Json:
             "uniform_presence": None if control else UNIFORM_PRESENCE[radius],
             "uniform_age_moment": None if control else UNIFORM_AGE_MOMENT[radius],
             "k_uniform_sources": None if control else PINNED_K_UNIFORM[radius],
+            "detector_k": None if control else DETECTOR_K[radius],
         }
     out["ratios"] = {
         "inside_age": {

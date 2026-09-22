@@ -69,6 +69,10 @@ E. THE SHELL'S LINES: POISSON'S SOURCE TERM AFTER A DETECTOR (series X; host)
    THE PIN INSIDE (the presence word, expected to FAIL): k(2) / k(4) = 0.8400, 41 times the age word's ripple from 1: the one reading that tells the two words apart at a source term
    THE PIN OUTSIDE (the age word): k(12) / k(4) = 0.6183, the continuum's R / 12 = 0.5000 (the shell's exterior is the point source's C / r); the lattice reads above it by the grain of section C, where the age moment x r rises with r (1.237 of the continuum's)
    the rates a detector reads: rate(2) / rate(4) = 0.9981 inside under the age word, 1.0157 under the presence word; rate(4) / rate(12) = 0.8180 outside under the age word
+   the interior on the axis, uniform sources (the age moment at r = 0 to 5): 5162, 5009, 5086, 5130, 5086, 5246; with the sources' own clocks k = 0.932, 0.898, 0.914, 0.919, 0.911, 0.943 (a lattice ripple of about +-2.4 percent; 5086 at r = 2 and at r = 4 is a coincidence of the lattice at the design's two Nodes)
+   the detector's own count at x = 3 in the world r =  2 (102 Links from the centre): k_D = 0.0945 under the age word, 0.0005 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
+   the detector's own count at x = 3 in the world r =  4 (104 Links from the centre): k_D = 0.0927 under the age word, 0.0005 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
+   the detector's own count at x = 3 in the world r = 12 (112 Links from the centre): k_D = 0.1357 under the age word, 0.0007 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
    THE PINS OF SERIES X IN ONE LINE (what the register quotes, six decimals; the release 1431597 / 2^16 per source per direction):
      r =  2: k_age 0.914351  k_presence 0.089647  k_age_uniform 1.695264
      r =  4: k_age 0.910783  k_presence 0.106724  k_age_uniform 1.695264

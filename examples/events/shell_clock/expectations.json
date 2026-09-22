@@ -1,6 +1,6 @@
 {
  "format": "shell-clock-expectations-v1",
- "derivation": "docs/designs/clock_age/clock_age_map.py section E (its output in clock_age_map.out beside it), the shell's lines on the engine's own flight table: per unit of the release the whole shell leaves the age moment 5086 at r = 2 and 5086 at r = 4, one integer (the shell theorem on the lattice: the interior is flat exactly), and 3144 at r = 12, against the presence 499, 596 and 163 (the flux rises toward the shell); then the fixed point of the sources' own clocks, which the shell requires and the design did not foresee (a source stands in its neighbours' rows, counts their age moment by the law's default word and releases only at its self-creations, at its rate over 1 + its own count), whose spread over the lattice shell is the ripple of the inside pin. DERIVATIONS_BEAM section 5.1 (A = q dwell / (4 pi c r) per source, the superposition, Poisson's equation with the release as the density) and 5.2 (the rate 1 / (1 + k_a)); BEAM_LAW section 3 step 5 and note 25; clock-age-v1 (record 394, the age word the law's default)",
+ "derivation": "docs/designs/clock_age/clock_age_map.py section E (its output in clock_age_map.out beside it), the shell's lines on the engine's own flight table: per unit of the release the whole shell leaves the age moment 5086 at r = 2 and 5086 at r = 4, one integer at the two Nodes the design named (a coincidence of the lattice: the map's interior on the axis runs 5009 to 5246, a ripple of about +-2.4 percent about the shell theorem's flat interior), and 3144 at r = 12, against the presence 499, 596 and 163 (the flux rises toward the shell); then the fixed point of the sources' own clocks, which the shell requires and the design did not foresee (a source stands in its neighbours' rows, counts their age moment by the law's default word and releases only at its self-creations, at its rate over 1 + its own count), whose spread over the lattice shell is the ripple of the inside pin. DERIVATIONS_BEAM section 5.1 (A = q dwell / (4 pi c r) per source, the superposition, Poisson's equation with the release as the density) and 5.2 (the rate 1 / (1 + k_a)); BEAM_LAW section 3 step 5 and note 25; clock-age-v1 (record 394, the age word the law's default)",
  "c": 0.5818181818181818,
  "ticks": 500,
  "flux": 4915,
@@ -14,6 +14,14 @@
    500
   ]
  ],
+ "interior_age_moment": {
+  "0": 5162,
+  "1": 5009,
+  "2": 5086,
+  "3": 5130,
+  "4": 5086,
+  "5": 5246
+ },
  "shell": {
   "radius": 6,
   "nodes": 450,
@@ -53,7 +61,8 @@
    "flight": 171.875,
    "uniform_presence": 499,
    "uniform_age_moment": 5086,
-   "k_uniform_sources": 1.695264
+   "k_uniform_sources": 1.695264,
+   "detector_k": 0.0945
   },
   "age_4": {
    "word": "age",
@@ -74,7 +83,8 @@
    "flight": 171.875,
    "uniform_presence": 596,
    "uniform_age_moment": 5086,
-   "k_uniform_sources": 1.695264
+   "k_uniform_sources": 1.695264,
+   "detector_k": 0.0927
   },
   "age_12": {
    "word": "age",
@@ -95,7 +105,8 @@
    "flight": 171.875,
    "uniform_presence": 163,
    "uniform_age_moment": 3144,
-   "k_uniform_sources": 1.047957
+   "k_uniform_sources": 1.047957,
+   "detector_k": 0.1357
   },
   "presence_2": {
    "word": "presence",
@@ -116,7 +127,8 @@
    "flight": 171.875,
    "uniform_presence": 499,
    "uniform_age_moment": 5086,
-   "k_uniform_sources": 1.695264
+   "k_uniform_sources": 1.695264,
+   "detector_k": 0.0945
   },
   "presence_4": {
    "word": "presence",
@@ -137,7 +149,8 @@
    "flight": 171.875,
    "uniform_presence": 596,
    "uniform_age_moment": 5086,
-   "k_uniform_sources": 1.695264
+   "k_uniform_sources": 1.695264,
+   "detector_k": 0.0927
   },
   "presence_12": {
    "word": "presence",
@@ -158,7 +171,8 @@
    "flight": 171.875,
    "uniform_presence": 163,
    "uniform_age_moment": 3144,
-   "k_uniform_sources": 1.047957
+   "k_uniform_sources": 1.047957,
+   "detector_k": 0.1357
   },
   "control_2": {
    "word": null,
@@ -179,7 +193,8 @@
    "flight": 171.875,
    "uniform_presence": null,
    "uniform_age_moment": null,
-   "k_uniform_sources": null
+   "k_uniform_sources": null,
+   "detector_k": null
   },
   "control_4": {
    "word": null,
@@ -200,7 +215,8 @@
    "flight": 171.875,
    "uniform_presence": null,
    "uniform_age_moment": null,
-   "k_uniform_sources": null
+   "k_uniform_sources": null,
+   "detector_k": null
   },
   "control_12": {
    "word": null,
@@ -221,7 +237,8 @@
    "flight": 171.875,
    "uniform_presence": null,
    "uniform_age_moment": null,
-   "k_uniform_sources": null
+   "k_uniform_sources": null,
+   "detector_k": null
   }
  },
  "ratios": {

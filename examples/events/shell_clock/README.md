@@ -88,10 +88,9 @@ beside it. The map walks every source's lines on the engine's own flight
 table and states, per unit of the release, what the whole shell leaves at
 each lamp's Node.
 
-**With uniform sources the lattice gives the shell theorem exactly.** The
-age moment at the lamp's Node is ONE INTEGER, 5086, at r = 2 and at r = 4,
-and 3144 at r = 12; the presence is 499, 596 and 163, rising toward the
-shell as a flux does and not flat inside.
+**The interior by the map:** the map's interior on the axis runs 5009 to 5246 with uniform sources (the age moment at r = 0 to 5: 5162, 5009, 5086, 5130, 5086, 5246; with the sources' own clocks k = 0.932, 0.898, 0.914, 0.919, 0.911, 0.943), a lattice ripple of about +-2.4 percent about the shell theorem's flat interior; the equality 5086 at r = 2 and at r = 4 is a coincidence of the lattice at the two Nodes the design named before the map (record 574); at r = 12 the age moment is 3144; the
+presence is 499, 596 and 163, rising toward the shell as a flux does and
+not flat inside.
 
 **The sources' own clocks, the one thing the design did not foresee.** The
 shell's sources stand in one another's rows, so each source's own clock
@@ -101,9 +100,11 @@ declared rate over 1 + its own count. The map iterates that fixed point to
 convergence: the sources' own k runs 0.787 to 0.932 (mean 0.866), so each
 keeps 11.31 to 12.22 of its declared 21.84 units, 0.536 of the rate. This
 is the law's own nonlinearity, not a rule added here: a dense shell slows
-its own clocks and so releases less. With uniform sources the interior is
-flat to the last digit, and the SPREAD of the sources' own clocks over the
-lattice shell is the whole of the ripple the inside pin carries.
+its own clocks and so releases less. At the two Nodes the design named the
+uniform sources give one integer, and the spread of the sources' own clocks
+over the lattice shell is what moves the inside pin off 1 there; the
+lattice interior's own ripple, +-2.4 percent by the map, is not read at two
+Nodes.
 
 | The reading (DETECTOR, k = 1 + z - 1 from the detector's click lines) | Pinned | Refuted if |
 | --- | --- | --- |
@@ -151,9 +152,10 @@ under the age word `k(2) / k(4)` = 1.0029 (the pin 1.003917, MET; flat
 within the tolerance: YES), inside under the presence word 0.8390 (the pin
 0.839989, MET; flat: NO, the FAIL expected), outside under the age word
 `k(12) / k(4)` = 0.6285 (the pin 0.618270, MET; the continuum's 0.5 outside
-the tolerance, as the map said before the run). The presence word's
-departure from flatness is 56 times the age word's on the same shell: the
-one reading that tells the two words apart at a source term. Host cost
+the tolerance, as the map said before the run). Per window the three ratios read inside under the age word 0.9994 / 1.0063, inside under the presence word 0.8379 / 0.8401, outside under the age word 0.6381 / 0.6189, and k drifts from the first window to the second by +1.3, +0.6 and -2.4 percent (the presence word +0.3, 0.0 and -2.0), so the outside MET is met at the reading's resolution (the windows 0.638 and 0.619 against the tolerance 0.02). The inside reading is the
+same age moment within 0.02 at the two Nodes the design named (the windows
+0.9994 and 1.0063); the lattice interior's own ripple, +-2.4 percent by the
+map, is not resolved by this run. Host cost
 (GAMEBOARD, apart from the readings): 1396 to 1465 s and 1284 to 1349 MB
 peak per shell world, about a second per control; the events' fingerprints
 5a228c2c398f, 63335a44c98c, 2e6f934ce491 (age), 0b76092af867, e8cf7b0e15d9,
@@ -165,4 +167,4 @@ algebra of the pin, the readings tool on a hand-made click list, and the
 rule the whole reading rests on: a detector whose own clock is slowed by a
 crowd at its Node clicks on the same lattice ticks as one with no crowd, so
 the shell's rows reaching the detector cannot move `1 + z`; only the lamp's
-clock does.
+clock does. The reading's denominator is the host tick, the detector's own clock only at k_D = 0 (record 569); the map gives k_D = 0.0945, 0.0927 and 0.1357 at x = 3 (the detector in the shell's on-axis rows); in the strict form (records 678 and 709) the inside ratio is 0.9994, the outside 0.5134 and the presence word's k near zero or negative; the convention is the owner's (the clock audit's uncertainty (a)), the same as series T's.
