@@ -77,6 +77,7 @@ declares them (the world-file keys in
 | W, the birth wheel | the birth ordinal mod N on `main` (u = t - 1); W = 4096 decided (records 163 and 180), in build on the click branch | the lamp's record | rows 2a and 2b say what the wheel changes |
 | K, the clock's pair [1, K] | 2^20 | the world key `K` | the Bell pair lamps 15 x 2^20 (rows 1a, 1b); `slits_huygens`, Bohr and Heisenberg 2^30 (rows 2a, 6, 10); J2 4096 (row 8b); the Hubble stars 4 198 400 (rows 3, 4b) |
 | S, the width of the push (what physics calls Newton's constant; an input of kind 2, record 189) | a world input, stated per row: 2^28 (the nucleus, J3, the binding), 45120 (Bohr), 2^20 (the Hubble stars), 1 (the bars, the default) | the world key `width` | not a grain; listed for completeness |
+| gamma, the post-Newtonian parameter of the space part (the weak-field metric's g_ii = 1 + 2 gamma U beside g_00 = -(1 - 2 U); an input of kind 2 as S is, declared by the model owner on 2026-09-22, step 4 of the generic bending, [EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md) section 6: no derivation of the space part from the law exists, [DERIVATIONS_BEAM 5.4](DERIVATIONS_BEAM.md#54-light-no-optical-metric-on-main-the-meetings-turn-as-a-key)) | 1, nature's: gamma - 1 = (2.1 +- 2.3) x 10^-5 from the Cassini radio delay (Bertotti, Iess and Tortora 2003, Nature 425, 374) and 0.99992 +- 0.00012 from the VLBI deflection (Lambert and Le Poncin-Lafitte 2011, Astron. Astrophys. 529, A70) (to verify against the sources); 0 in the controls of the form (the time part alone) | the world key `optical` (its value gamma; the flight's coefficient 1 + gamma in the age wall's set) until step 5 puts the flight in the set always | the optical worlds at 0 (the wall's factor read as the ratio of the two, row 13); every other world without the key, unbent |
 | The family table | each world's `entity_definitions` (the catalog's families): the proton of content 1836 with the charge 4 per unit, the neutron 1839, the strong column 10000 with the lifetime 3, the beta -7344 per unit of amount, a paid `light` of quantum 1 | [the entity catalog](ENTITY_CATALOG.md) | none: the same families wherever they appear |
 
 The declared roundings at load (the tables at 1/256, T_D by `isqrt`, u_d)
@@ -111,6 +112,7 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | 11a | The deceleration parameter q read from the brightness of a far lamp at rest under the growing wall (the second order of the Hubble diagram, d_L = (c / H)(z + (1 - q) z^2 / 2 + ...)) | q_0 = -0.53 +- 0.01, Planck 2018, Aghanim et al. 2020, A&A 641, A6 (row 3's source); the Hubble diagram's shape from the supernovae, Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | a derivation's pin, [the far lamp through a detector](designs/far_lamp/BRIGHTNESS.md) (record 282): the stream read at 1 / (1 + z) of the lamp's rate with the birth content per click (DERIVATIONS_BEAM 6.4), the flux L / (4 pi d^2 (1 + z)) with d = (c_0 / H) ln(1 + z), d_L = (c_0 / H) ln(1 + z) sqrt(1 + z) = (c_0 / H)(z - z^3 / 24 + ...): q_eff = +1; `far_lamp_map.out` section 2 | H = 1 / 400, T_D = 110, S_1 Q = 64 (section 15's stream); `expansion-v1` not built | FAIL: +1 against -0.53, 1.53 apart, on the decelerating side of Einstein-de Sitter (+0.5); pinned; the run not made |
 | 11b | The stretch of a far lamp's stream over 1 + z (the time dilation of the light curve) | the exponent b of the stretch (1 + z)^b: b = 0.97 +- 0.10, Blondin et al. 2008, ApJ 682, 724 (to verify against the source); the expanding form's b = 1 | the same pin: 400 rows released over 400 intervals arrive over 1452 intervals at 300 Links, the factor 3.639 against e^(H d / c_0) = 3.629 (`far_lamp_map.out` section 4 (a)); the stretch equals 1 + z, b = 1 | the same | PASS: b = 1 within the measured 0.97 +- 0.10; pinned; the run not made |
 | 11c | The surface brightness of a resolved source at z over its surface brightness at rest (Tolman's test) | (1 + z)^-4, Tolman 1930; measured as (1 + z)^-n with n between 2.3 and 3.1 in the R and I bands before any correction and consistent with 4 once the sources' own brightening is removed, Lubin and Sandage 2001, AJ 122, 1084 (to verify against the source) | the same pin: the board's Nodes and the fan's lines fixed under the wall (15.5), a ruler of l Nodes at d subtends l / d, the flux (1 + z)^-1: the surface brightness (1 + z)^-1, n = 1 (`far_lamp_map.out` section 4 (b)) | the same | FAIL: n = 1 against 4 (against 2.3 at the least), three powers of 1 + z at the most; at z = 1 the ratio 0.500 against 0.062; pinned; the run not made |
+| 13 | The bending of light beside a mass, the full deflection over the time part's alone, 1 + gamma (the space part doubling the time part; the delay likewise) | 2 at the Sun's limb: 1.75 arcsec against the time part's 0.87 (Dyson, Eddington and Davidson 1920, Phil. Trans. R. Soc. A 220, 291, read 1.98 +- 0.16 in units of 0.87 arcsec; the VLBI 0.99992 +- 0.00012 of gamma above) (to verify against the source) | the optical pin worlds, [`examples/events/optical/`](../examples/events/optical/README.md) (series K's geometry at the pair [1, 16384], M = 2^16, the beam at b = 6 and 8; `expectations.json`, `run_2026_09_22_bresenham` and `run_2026_09_22_every_family`): the beam's centroid shift on the screen -1.993 / -3.989 pixels at gamma 0 / 1 (DETECTOR), the ratio 2.00 within the pinned 0.25; at b = 8 the ratio 1.92 within 0.66; the delays 2.95 / 4.94 intervals, the ratio 1.67 outside 2.00 +- 0.25 by 0.08 | N = 64; K = 2^30 (series K's); the pixel's 0.5 and the interval's 1 | NOT COMPARED (gamma an input of kind 2, the owner's declaration of 2026-09-22): the ratio 2.00 reads the declared 1 + gamma back, the form of the space part doubling the time part on the lattice's lines, an implementation gate as row 2c's and not evidence about nature; the reading that would compare is a derivation of the space part from the law, which no one has |
 | 12 | The clock's field at two distances from a crowd at the same push (the same g): the ratio of the two clocks' shifts, the form of the field a clock reads (the potential, 1 / r, or the flux, 1 / r^2) | 2.00 at the distances 6 and 3: the potential Phi = g r at equal g, the form nature's clocks share between two heights: the GPS gravitational term 45.7 us per day equals the potential's G M (1 / R - 1 / r) / c^2 with the one constant fixed by the ground's gradient g h / c^2 (Ashby 2003, Living Rev. Relativity 6, 1; Pound and Rebka 1960, Phys. Rev. Lett. 4, 337: 2.46 x 10^-15 over 22.5 m), and the eccentric Galileo satellites' modulation follows the potential to 2.5 x 10^-5 (Delva et al. 2018, Phys. Rev. Lett. 121, 231101) (to verify against the source); a flux form would read 0.62 of the GPS term and twice the Galileo modulation | series T, `examples/events/clock_word/` (the register's entry [T, the clock's word](EXPERIMENTS.md#t-the-clocks-word-2026-09-21), `readings.json`, main afb533a8; REPLICATED by the Replicator, every reading of `readings.json` and every fingerprint equal, [REPLICATIONS.md's block `clock_word (T)`](REPLICATIONS.md#clock_word-t), PR #601): DETECTOR, the `1 + z` of a lamp's light at x = 110 from a lamp at 3 and at 6 Links from two crowds of the same release F in the windows 200 to 350 and 350 to 500: the presence word (the law's default, BEAM_LAW step 5: the owed rate a_r n / d, a_r the presence, n / d the suspension pair) 1.3000 / 1.3000 at 3 and 1.3000 / 1.3000 at 6, the ratio of the two rates 1.000; the age word (`reads: "age"` on the lamp's entry, note 25) 2.6517 / 2.6514 at 3 and 4.1500 / 4.1506 at 6 (the rate a_tau n / d, a_tau the age moment), the ratio 3.1503 / 1.6516 = 1.907 (the pin 1.909, [the read](designs/clock_age/NOTE.md) section 6: the lattice's dwelling ages 5, 6 and 10, 11) | N = 64; `suspension` [1, 2^16], F = 4915 per source per interval, the owed rate 0.30 to 3.15 (the scale is the suspension pair's, not the word's: nature's G M / (r c^2) is 7 x 10^-10 at the Earth); the word declared per table entry | the presence word FAIL on the form: 1.000 against 2.00 (the clock reads the flux, flat along the beam; at the Earth 0.62 of the GPS term and twice the Galileo modulation); the age word PASS on the form: 1.907 against 2.00, 4.7 percent below by the lattice's grain (the potential's form); the law's default word is the owner's to choose; replicated (the block `clock_word (T)` of REPLICATIONS.md) |
 
 ## The notes to the rows
@@ -440,6 +442,26 @@ one click, with the crowd form's 22 percent as the last reading. Nature's
 Nairz, Arndt and Zeilinger 2002 as the verification of the uncertainty
 relation.
 
+**13, the bending of light and gamma's standing.** The optical identity
+(`optical-v1`, [the one-wall note](designs/one_wall/NOTE.md); every family
+under one wall, [EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md))
+stretches a row's flight wall by the crowd's age moment at the
+coefficient 1 + gamma and pushes the row at the weight (E'^2 + 3 gamma
+**p** . **p**) // E', gamma the world's key: at gamma 0 the time part alone
+(the bending 2 G M / (b c^2) of a clock's rate, the delay of the wall),
+at gamma 1 the space part beside it, the doubling nature reads. The
+model's registered ratio 2.00 (the mass world's shifts; the far world's
+1.92; the delays' 1.67, outside its bracket by 0.08 under the one floor)
+is the engine reading back the coefficient declared in the key, as row
+2c's window reads back the click's square: an implementation gate. What
+would make it a comparison is a derivation of gamma from the six verbs,
+which no one has ([DERIVATIONS_BEAM 5.4](DERIVATIONS_BEAM.md#54-light-no-optical-metric-on-main-the-meetings-turn-as-a-key));
+the model owner declared gamma = 1 an input of kind 2 (the one set's
+table; 2026-09-22, step 4 of the generic bending, on his word "continue
+until the whole list is handled"), so the row is NOT COMPARED until such
+a derivation exists, and the bending enters the law (step 5) with gamma
+as an input, as S enters it.
+
 **12, the clock's word.** [The read](designs/clock_age/NOTE.md) of
 2026-09-21 pinned the test before the run (section 6): two crowds of the
 same release at 3 and at 6 Links are the same push (on the lattice only
@@ -520,7 +542,7 @@ its run and is not yet registered.
 | FAIL | 12 under the presence word, the law's default (the clock's field flat, 1.000 against 2.00), 1b (the window form, S = 2), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
 | BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
 | NOT YET | 6 (Bohr's ratio), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
-| NOT COMPARED | 2c (the power of the click: the window [1.917, 2.012) is an implementation gate, kappa not computed) |
+| NOT COMPARED | 2c (the power of the click: the window [1.917, 2.012) is an implementation gate, kappa not computed), 13 (the bending of light: the ratio 2.00 reads the declared gamma = 1 back, an input of kind 2) |
 
 What the tally says, in the register's terms: the click's form (Born,
 the pair, the power) passes, and Malus's fractions pass exactly at 45 and
@@ -545,7 +567,10 @@ figure of the paper); Malus 1809 (the citation); Formaggio and Zeller 2012
 (the cross-section's order; the attenuation per metre in row 8b is an
 order-of-magnitude estimate from it, not a figure of the paper); Blondin
 et al. 2008 (the stretch's exponent 0.97 +- 0.10); Lubin and Sandage 2001
-(the exponents 2.3 to 3.1 before correction). The values not marked
+(the exponents 2.3 to 3.1 before correction); Bertotti, Iess and Tortora
+2003 (gamma - 1 = (2.1 +- 2.3) x 10^-5) and Lambert and Le Poncin-Lafitte
+2011 (0.99992 +- 0.00012); Dyson, Eddington and Davidson 1920 (1.98 +-
+0.16 in units of 0.87 arcsec). The values not marked
 (Hensen 2015's 2.42 +- 0.20, Cirel'son's 2 sqrt 2, Planck 2018's Omega_m,
 AME2020's binding energies, Michelson and Morley 1887, the exponential's
 ln 9 / ln 2, Balmer's 27 / 20) are known to the precision stated.

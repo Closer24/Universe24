@@ -436,9 +436,14 @@ from the engine's -12.00.
 Step 3, the body's drive in the age wall's set at the same 1 + gamma (form
 B's drive at the fraction, the same metric factor on the coordinate pace),
 its pin a body beside the mass with a lamp (the Newton session's form,
-record 607). Step 4, gamma's standing: a derivation of the space part from
-the law, which no one has, or the owner's declaration of gamma = 1 as an
-input of kind 2 with its NATURE row. Step 5, the key removed: the flight
+record 607); form B first (the body's directional drive, the owner's
+approval of record 652, the Drive Builder's build, record 698). Step 4,
+gamma's standing: a derivation of the space part from the law, which no
+one has, or the owner's declaration of gamma = 1 as an input of kind 2
+with its NATURE row: DONE on 2026-09-22 by the declaration, on the
+owner's word "continue until the whole list is handled" (docs/NATURE.md,
+the one set's gamma row and row 13, NOT COMPARED: the ratio 2.00 reads
+the declared coefficient back). Step 5, the key removed: the flight
 member in the age wall's set always, every registered world with a crowd
 re-run and re-pinned by the Replicator (the price named to the owner: the
 0.000 of series K becomes a bending), and the owner's decision on the
