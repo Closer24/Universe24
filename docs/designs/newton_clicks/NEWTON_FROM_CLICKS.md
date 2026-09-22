@@ -105,8 +105,10 @@ click count gives (1 + u / c) on a body's push; the count without a
 term, the rows present at their lines' rates, is not a click count and
 stays outside the law under `newton-presence-v1`); the value of G; the
 post-Newtonian terms; the decisive detector reading, NOT MADE. Section 3
-writes the moving detector WITH MASS, a massive row released at rest
-past a held mass: its deflection has the form 2 (n S / d) (G M / (b
+writes the photon's pins on the gr_rows design's world (its row is the
+photon, `light`) and, in a subsection of its own to be read on its own
+(3 (d)), the moving detector WITH MASS (record 1046), a massive row
+released at rest past a held mass: its deflection has the form 2 (n S / d) (G M / (b
 v^2)) (1 + gamma_PPN v^2 / c^2), the light row's 2 (1 + gamma_PPN) (n S /
 d) G M / (c^2 b) at v = c, and its arrival count has two terms of
 opposite sign, the wall's delay and the push's advance, Newton's advance
@@ -519,51 +521,33 @@ against its ordinals, would; not ordered). (c) Which count the ROW should
 carry: the code's arrivals at its Node (no term) or the crossing (the
 term at u = v); separable only by section 3 (c)'s lever-arm pin.
 
-## 3. The moving detector's reading the algebra predicts: the released row with mass past a held mass, its arrival click, and the control
+## 3. The moving detector's reading the algebra predicts: the photon's pins on the design's world; the released row with mass (record 1046) to follow, a read of its own
 
-**The world, in the owner's words (records 1043 and 1046).** A detector
-A at rest releases, at its own count (the ordinal on the row), a row of
-a MASSIVE family in a declared direction **D**: `massive-rows-v1`
-(TERMINOLOGY, the identities; `docs/designs/massive_rows/DESIGN.md`
-sections 1 to 3): the world key `massive_rows`, the family flag
-`massive` on a paid family with the content M_row per row (`quantum`),
-the lamp key `momentum_magnitude` p, so that at load the row's label per
-direction is p_D (the integer vector nearest p **D** / abs(**D**)), its
-rest energy E'_0 = Q S M_row and its pace wall E'_D = isqrt(E'_0^2 + 3
-p_D . p_D); it walks the Bresenham line of **D** by the flight
-accumulator at the rate 2 abs(p_D)_1 against the wall 2 E'_D, the
-Euclidean pace v = p / E'_D Links per interval (the pin world
-`slits_matter`: M_row = 64, S = 1, p = 220, E'_D = 4113, v = 0.0535 =
-0.0926 c); it turns its phase per Link by the action h; it carries its
-ordinal, its age (its own count) and its content; and its arrival at
+**The world, in the owner's words (records 1043 and 1046), and the
+reviewer's order of this part.** A detector A at rest releases, at its
+own count (the ordinal on the row), a paid row in a declared direction
+**D**; it travels Node by Node on the digital line of **D** past a held
+mass M_B (a body at rest at the impact distance b from the line,
+releasing q rows per interval on its fan: the field) and its arrival at
 the far detector B (a body at rest with its own count n_B, L Links from
-the mass's plane on the line) is the click: the Node of B's set it
-lands on, its ordinal, and n_B at the arrival, DETECTOR under the world
-key `clock_stamp` (PR #834 on `main` at ee3d34f6, record 1049) (under the identity the
-record's quantum is placed at the completion's chosen Node, the click
-line reporting what arrived; DESIGN.md section 3). "It must have mass,
-otherwise there is no matter to transfer": the row's content M_row is
-the matter transferred, and it is a declared integer. The load
-condition, from the physicist's inventory (branch
-`massive-release-inventory` at b7db226f, `MASSIVE_RELEASE_INVENTORY.md`,
-its list of declarations): a lamp births only at a self-creation whose
-turn is above 0, the turn its content over K per count, and a massive
-birth needs the turn exactly 1 (DESIGN.md's M3), so the emitter's
-content must equal the world's K; an emitter below K births nothing,
-and the world of this part declares the emitter at K. The held mass M_B
-is a body at rest at the impact distance b from the line, releasing q
-rows per interval on its fan (a free family: the field). The control:
-the same world with no mass. Two Inside rules act on the row on `main`,
-both the law's own since the generic entry (record 847): the flight in
-the age wall's set at c_f = 1 + gamma_PPN (`age_wall_set`,
-`measured.py:369-386`), and the push on a paid row by the crowd's
-arrival flow with the label's line by Bresenham and the pace wall
-re-formed when **P** changes (`optical_turn`, `nature_beam.py:3931`;
-`momentum_pair`, the split ladder; TERMINOLOGY "The push on a row",
-"The label by Bresenham", "The wall on the flight"). The light row (a
-family without the flag, E'_D = isqrt(3 Q^2) = T_D on the heading, v =
-c_D) is the same rule by value and is written beside the massive row
-where the two differ, as the amendment asks; no cart anywhere.
+the mass's plane on the line) is the click: the Node of B's set it lands
+on, its ordinal, and n_B at the arrival (n_B on the click line under the
+world key `clock_stamp`, PR #834 on `main` at ee3d34f6, record 1049).
+The control: the same world with no mass. The gr_rows design's pin
+world, whose derived values this part quotes, releases the PHOTON (the
+family `light`, quantum 1, no `massive`), so parts (a) to (c) are the
+photon's pins, and the owner's moving detector WITH MASS (record 1046,
+"it must have mass, otherwise there is no matter to transfer") is part
+(d), its forms written beside the photon's where the two differ, to be
+read on its own before any pin world of its own. Two Inside rules act
+on the row on `main`, both the law's own since the generic entry
+(record 847): the flight in the age wall's set at c_f = 1 + gamma_PPN
+(`age_wall_set`, `measured.py:369-386`), and the push on a paid row by
+the crowd's arrival flow with the label's line by Bresenham and the
+pace wall re-formed when **P** changes (`optical_turn`,
+`nature_beam.py:3931`; `momentum_pair`, the split ladder; TERMINOLOGY
+"The push on a row", "The label by Bresenham", "The wall on the
+flight"). No cart anywhere.
 
 **The one click reading every pin below is written in.** The crowd of
 the held mass at the impact distance b is read, not taken from the
@@ -582,113 +566,162 @@ its own re-derives them by the same forms with its read k_a(b).
 the end of the Bresenham line of **D** from A, exactly (the flight blind
 to everything but its own accumulator when a_tau = 0). The arrival count
 is the flight's first age at L Links, the least tau with floor((2 tau
-abs(p_D)_1 + E'_D) / (2 E'_D)) >= L (the massive triple; the light row's
-with 2 S_1 Q and T_D), in the mean L E'_D / abs(p_D)_1 intervals (on a
-heading 972 intervals for 52 Links at the pin world's pace; the light
-row's ceil((2 L - 1) T_D / (2 S_1 Q)), 55 for 32 Links), read as n_B at
-the arrival less the ordinal in no crowd (r_B = 1, DETECTOR, the count
-ratio 1.0000 exactly as series X's controls read it); the light row's
-registered control on the lensing fan is the mean age 89.40 at the
-screen (DETECTOR, the rows' age at the click).
+S_1 Q + T_D) / (2 T_D)) >= L, ceil((2 L - 1) T_D / (2 S_1 Q)) on a
+heading (55 intervals for 32 Links at Q = 64, T_D = 110), read as n_B at
+the arrival less the ordinal in no crowd (r_B = 1, DETECTOR under
+`clock_stamp`; the count ratio 1.0000 exactly as series X's controls
+read it); the registered control on the lensing fan is the mean age
+89.40 at the screen (DETECTOR, the rows' age at the click). The row with
+mass has its own triple, (d).
 
-**(b) The wall's delay, exact in form, the same rule for both rows.**
-With the flight in the set, the row's accumulator gains 2 abs(p_D)_1 d
-per interval against the wall 2 E'_D (d + c_f n a_tau(x)) at its Node x,
-so it spends, per Link at x, (E'_D / abs(p_D)_1) x (1 + c_f k_a(x))
-intervals in the mean with k_a(x) = (n / d) a_tau(x), the remainder kept
-on the row, and the arrival's excess over the control from the wall
-alone is
+**(b) The wall's delay, exact in form.** With the flight in the set, the
+photon's accumulator gains 2 S_1 Q d per interval against the wall 2 T_D
+(d + c_f n a_tau(x)) at its Node x, so it spends, per Link at x, (T_D /
+(S_1 Q)) x (1 + c_f k_a(x)) intervals in the mean with k_a(x) = (n / d)
+a_tau(x), the remainder kept on the row, and the arrival's excess over
+the control from the wall is
 
-    delta t_wall = c_f (1 / v) x sum over the path's Links of k_a(x)   (rung 1 within one interval given k_a(x); v the row's pace),
+    delta t_wall = c_f (1 / c) x sum over the path's Links of k_a(x)   (rung 1 within one interval given k_a(x); tau_L c = 1),
 
 and in the shell mean, k_a(x) = k_a(b) b / r along a straight path with
 r_1, r_2 >> b (rung 2),
 
-    delta t_wall = c_f (b k_a(b) / v) ln(4 r_1 r_2 / b^2) = c_f (n S / d) (G M_B / (c^2 v)) ln(4 r_1 r_2 / b^2)   (tau_L c = 1),
+    delta t_wall = c_f (b k_a(b) / c) ln(4 r_1 r_2 / b^2) = c_f (n S / d) (G M_B / c^3) ln(4 r_1 r_2 / b^2)   (the Einstein Outside II.11),
 
-the light row's c_f (n S / d) (G M_B / c^3) ln(4 r_1 r_2 / b^2) at v = c
-(the Einstein Outside II.11), Shapiro's form the comparison with the
-coefficient c_f (n S / d) in place of nature's 1 + gamma_PPN; the
-massive row's larger by c / v. The wall is a PRESENCE read (section 2
-(iv)), so this term carries no velocity term under either count of
-section 2.
+Shapiro's form the comparison with the coefficient c_f (n S / d) in
+place of nature's 1 + gamma_PPN. The pin, COMPUTATION conditional on the
+read k_a(b): 3.97 intervals at b = 6 (the design's; reproduced here as 2
+x 1.153 / 0.5774 = 3.99), the mean age 93.37 against the control's
+89.40, the bracket one interval, GAMEBOARD in the tick; in B's OWN
+count, B at 26.7 Links from the mass with its count at 1 / (1 + k_B) =
+0.9901 (itself the count ratio a lamp at B reads), the click's count
+excess is 93.37 x 0.9901 - 89.40 = 3.05 counts (COMPUTATION), and the
+cleaner DETECTOR form is the count ratio of two clicks, (1 + k_A) / (1
++ k_B) = 0.990 (the design's count ratio pin, the bracket 1 percent).
+The wall is a PRESENCE read (section 2 (iv)), so this term carries no
+velocity term under either count of section 2 and decides nothing
+between them: its pin is common to both.
 
-**(c) The push on the row: the deflection, exact in form, and where the
-turn happens.** At every Node x of free space it visits the row's push
-accumulator gains **W** -= n x weight x **V**(x), weight = M_row x
-(E'_D^2 + 3 gamma_PPN p_D . p_D) // E'_D formed at load, **V**(x) the
-label flow of the mass's rows that arrived at x; its whole momentum
-**P** = Q d M_row (the family's label) + **W** is the line its label
+**(c) The push on the photon: the deflection, exact in form, and where
+the turn happens.** At every Node x of free space it visits the row's
+push accumulator gains **W** -= n x weight x **V**(x), weight = the
+row's content x (E'_D^2 + 3 gamma_PPN **u**_D . **u**_D) // E'_D formed
+at load with E'_D = isqrt(3 **u**_D . **u**_D) for the photon (the
+content, 1 for `light`, cancels against the label's in the angle),
+**V**(x) the label flow of the mass's rows that arrived at x; its whole
+momentum **P** = Q d x content x **u**_D + **W** is the line its label
 follows, the next Link chosen among the fan neighbours to keep abs(**c**
 + **h** x **P**)^2 least, **P** conserved across a turn, and its pace
-wall re-formed as E'(**P**) by the split ladder when **P** changes. So
-the transverse deflection is a ratio of two integers,
+wall re-formed as E'(**P**) by the split ladder when **P** changes, the
+photon's pace fixed at 1 / sqrt 3 by the square's own cap (E'^2 = 3
+**P** . **P**: a photon is bent and delayed, never sped up). So the
+transverse deflection is a ratio of two integers,
 
     tan alpha = abs(W_perp) / abs(P_parallel),   W_perp = -n x weight x sum over the path's Nodes of V_perp(x)   (rung 1 given V(x); COMPUTATION by walking the mass's rows and the row's line),
 
 and the arrival Node on B's set is the end of that walk. In the shell
 mean along the straight path (rung 2), with abs(**V**) = q Q / (4 pi
-r^2) per Node and the path element ds = v dt, the turn per Link is d
-alpha / ds = (n / d) ((E'_D^2 + 3 gamma_PPN p^2) / p^2) q sin theta / (4
-pi r^2) and the integral of sin theta / r^2 along the path is 2 / b, so
+r^2) per Node, the turn per Link is d alpha / ds = 3 (1 + gamma_PPN) (n
+/ d) q sin theta / (4 pi r^2) and the integral of sin theta / r^2 along
+the path is 2 / b, so
 
-    alpha = 2 k_a(b) x (c^2 / v^2) x (1 + gamma_PPN v^2 / c^2)   (k_a(b) = 3 (n / d) q / (4 pi b) = (n S / d) G M_B / (b c^2), the one click reading above),
-          = 2 (n S / d) (G M_B / (b v^2)) (1 + gamma_PPN v^2 / c^2),
+    alpha = 2 (1 + gamma_PPN) k_a(b) = 2 (1 + gamma_PPN) (n S / d) G M_B / (c^2 b)   (k_a(b) = 3 (n / d) q / (4 pi b) = (n S / d) G M_B / (b c^2), the one click reading above),
 
-which for the light row (E'_D^2 = 3 p^2, v = c) is 2 (1 + gamma_PPN)
-k_a(b) = 2 (1 + gamma_PPN) (n S / d) G M_B / (c^2 b), the design's 2 c_f
-k_a(b) and Einstein's 2 (1 + gamma_PPN) G M / (c^2 b) as the thing
-compared with, and for the massive row at v << c is 2 (n S / d) G M_B /
-(b v^2), Newton's 2 G M / (b v^2) for a particle at the speed v as the
-thing compared with, the PPN form (1 + gamma_PPN v^2 / c^2) between
-them; so the massive released row is bent MORE than the light row by
-c^2 / v^2, the same way nature's forms differ, with the constant n S /
-d in front of both. The condition of the straight-path form is alpha
-<< 1, k_a(b) << v^2 / c^2 for a slow row (at the pin world's v / c =
-0.0926 the design's k_a(b) = 0.0445 gives alpha = 10.5, a capture, not
-a deflection: that world is not the pin for a slow row). The numbers,
-COMPUTATION conditional on the read k_a(b): the light row at k_a(b) =
-0.0445, gamma_PPN = 1: alpha = 0.178 radians, the centroid 4.63 pixels
-toward the mass at L = 26 (the design's row); the massive row of
-`slits_matter` (v / c = 0.0926) past a mass one sixty-fourth of the
-design's (M_B = 2^10, k_a(b) = 6.95 x 10^-4 by the linear scaling of
-k_a with M_B, gamma_PPN = 1): alpha = 2 x 6.95 x 10^-4 x (116.6 + 1) =
-0.163 radians, the centroid 4.25 pixels toward the mass at L = 26, its
-bracket the design's 0.5 pixel. WHERE the turn happens (the deciding
-question of section 2 on the row): under the law as coded the row reads
-the arrivals at its Node (no velocity term), the turning's weight along
-the path is sin theta and its mean place <s> = 0 at the mass's plane,
-the centroid alpha x L; under the crossing count the row at pace v
-meets the mass's radial rows at (1 + u / c) = (1 - (v / c) cos theta)
-times the arrivals count, the weight sin theta (1 - (v / c) cos theta),
-the total unchanged (the odd part integrates to zero over the symmetric
-path, COMPUTATION) and the mean place <s> = -(pi b / 4) (v / c), before
-the mass, so the centroid grows by alpha x (pi b / 4) (v / c): for the
-light row at b = 6 and L = 26, 4.712 Links of lever arm, -5.47 pixels
-against -4.63 (18.1 percent), outside the bracket; for the massive row
-at v / c = 0.0926, 0.44 Links, -4.32 against -4.25 pixels, inside the
-bracket. So the light row is the reading that separates the two counts
-and the slow massive row cannot, at this grain: both are stated. Two
-cautions beside the light row's lever-arm pin (the reviewer's read W):
-the separation is in the continuum straight-path integral at r_1 = r_2
-= 26 (limit 6 of section 5, the 0.6 percent), and the design's own
-back-reaction range is -4.73 to -4.81, so the deciding bracket is 0.5
-pixel about -4.63 against -5.47 and not tighter; and n_B on the click
-line is DETECTOR under `clock_stamp`, on `main` since ee3d34f6.
+the design's 2 c_f k_a(b), and Einstein's 2 (1 + gamma_PPN) G M / (c^2
+b) as the thing compared with; the centroid's shift on the screen is
+alpha x (L + <s>), <s> the mean place of the turning along the path
+measured from the mass's plane. The pin, COMPUTATION conditional on the
+read k_a(b) = 0.0445 at gamma_PPN = 1: alpha = 0.178 radians, the
+centroid -4.63 pixels (toward the mass) at L = 26 with <s> = 0 (the
+design's row, its bracket 0.5 pixel, the back-reaction -4.73 to -4.81
+as its range). WHERE the turn happens (the deciding question of section
+2 on the row): under the law as coded the row reads the arrivals at its
+Node (no velocity term), the turning's weight along the path is sin
+theta and <s> = 0; under the crossing count the photon meets the mass's
+radial rows at (1 - cos theta) times the arrivals count (u = -c cos
+theta, theta the angle from the row's direction to the outward radial),
+the weight sin theta (1 - cos theta), the total unchanged (the odd part
+integrates to zero over the symmetric path, COMPUTATION) and the mean
+place <s> = -pi b / 4, before the mass, so the centroid grows by alpha x
+pi b / 4: at b = 6 and L = 26, 4.712 Links of lever arm, -5.47 pixels
+against -4.63 (18.1 percent), outside the bracket: the one reading of
+the row that separates the two counts of section 2, declared here
+before any run. Two cautions (the reviewer's read W): the separation is
+in the continuum straight-path integral at r_1 = r_2 = 26 (limit 6 of
+section 5, the 0.6 percent), and the design's own back-reaction range
+is -4.73 to -4.81, so the deciding bracket is 0.5 pixel about -4.63
+against -5.47 and not tighter; and n_B on the click line is DETECTOR
+under `clock_stamp` (PR #834, on `main` at ee3d34f6). The delay's pin
+above is its control.
 
-**(d) The push's advance: the massive row speeds up, the light row does
-not.** The push has a radial part too: approaching the mass the row's
-abs(**P**) grows and its pace v = p / E'(**P**) rises, since d v / d p =
-E'_0^2 / E'^3 (from v = p / E' and E'^2 = E'_0^2 + 3 p^2), which is 1 /
-E'_0 for a slow row (Newton's) and 0 for the light row (E'_0 = 0, the
-pace fixed at 1 / sqrt 3 by the square's own cap: a light row is bent
-and delayed, never sped up). Exact in form: the arrival count is the sum
-over the path's Links of E'(**P**(x)) / abs(**P**(x))_1 times the wall's
-factor of (b), **P**(x) the accumulated push, one Euclidean division per
-Link with the remainder kept (rung 1 given **V**(x)). In the shell mean
-at first order in k_a (rung 2): the radial push gives d v / d t = (n /
-d) (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) q cos theta / (4 pi r^2)
-along the path, so the row's fall has the constant
+**(d) The released row with mass (record 1046): the forms, a read of
+its own to follow.** Not in the reviewer's read W of this file (the
+design's world's row is the photon); written because the amendment asked
+for both forms where they differ, and to be read on its own before any
+pin world of its own; nothing here is a pin until then. The row:
+`massive-rows-v1` (TERMINOLOGY, the identities; `docs/designs/massive_rows/DESIGN.md`
+sections 1 to 3): the world key `massive_rows`, the family flag
+`massive` on a paid family with the content M_row per row (`quantum`),
+the lamp key `momentum_magnitude` p, the label per direction p_D (the
+integer vector nearest p **D** / abs(**D**)), the rest energy E'_0 = Q S
+M_row, the pace wall E'_D = isqrt(E'_0^2 + 3 p_D . p_D); it walks its
+line by the flight accumulator at the rate 2 abs(p_D)_1 against the wall
+2 E'_D, the Euclidean pace v = p / E'_D Links per interval (the pin world
+`slits_matter`: M_row = 64, S = 1, p = 220, E'_D = 4113, v = 0.0535 =
+0.0926 c, c = 1 / sqrt 3; 0.0919 of light's pace on the heading); it
+turns its phase per Link by the action h; it carries its
+ordinal, its age and its content, the matter transferred; under the
+identity the record's quantum is placed at the completion's chosen Node,
+the click line reporting what arrived (DESIGN.md section 3). The load
+condition, from the physicist's inventory (branch
+`massive-release-inventory` at b7db226f, `MASSIVE_RELEASE_INVENTORY.md`,
+its list of declarations): a lamp births only at a self-creation whose
+turn is above 0, the turn its content over K per count, and a massive
+birth needs the turn exactly 1 (DESIGN.md's M3), so the emitter's
+content is the world's K at its first birth (the turn 1 exactly); each
+unit born costs it M_row, and an emitter below K turns 1 on the fraction
+content / K of its self-creations and 0 on the rest, birthing on most
+and refused never (`nature_beam.py:5965-5976` refuses a turn above 1
+alone), so the emitter's rate is read as the ordinal against n_B, not
+as one birth per interval (the turn an accumulator at the rate content
+against the wall K, `engine.py:715`; each unit born costs the lamp
+M_row, `nature_beam.py:6062`; the reviewer's read Y); the world of this
+part declares the emitter at K. The control: the
+arrival count is the least tau with floor((2 tau abs(p_D)_1 + E'_D) /
+(2 E'_D)) >= L, in the mean L E'_D / abs(p_D)_1 intervals (972 for 52
+Links on a heading at `slits_matter`'s pace). The wall's delay, the same
+rule as (b) on the row's own dwell E'_D / abs(p_D)_1 per Link:
+
+    delta t_wall = c_f (1 / v) x sum over the path's Links of k_a(x)  ->  c_f (n S / d) (G M_B / (c^2 v)) ln(4 r_1 r_2 / b^2),
+
+larger than the photon's by c / v. The deflection, the same rule as (c)
+with the family's triple by value: weight = M_row x (E'_D^2 + 3
+gamma_PPN p_D . p_D) // E'_D, **P** = Q d M_row p_D + **W**, tan alpha =
+abs(W_perp) / abs(P_parallel) exact given **V**(x); in the shell mean
+the turn per Link is d alpha / ds = (n / d) ((E'_D^2 + 3 gamma_PPN p^2) /
+p^2) q sin theta / (4 pi r^2), so
+
+    alpha = 2 k_a(b) (c^2 / v^2) (1 + gamma_PPN v^2 / c^2) = 2 (n S / d) (G M_B / (b v^2)) (1 + gamma_PPN v^2 / c^2),
+
+which at v = c (E'_D^2 = 3 p^2) is the photon's (c), and at v << c is
+Newton's 2 G M / (b v^2) for a particle at the speed v as the thing
+compared with, the PPN form (1 + gamma_PPN v^2 / c^2) between them, the
+constant n S / d in front of both: the row with mass is bent MORE than
+the photon by c^2 / v^2, the same way nature's forms differ. The
+condition of the straight-path form is alpha << 1, k_a(b) << v^2 / c^2
+for a slow row (at v / c = 0.0926 the design's k_a(b) = 0.0445 gives
+alpha = 10.5, a capture and not a deflection: the design's world is not
+the world for a slow row). The push's advance, which the photon does not
+have: approaching the mass the row's abs(**P**) grows and its pace v = p
+/ E'(**P**) rises, since d v / d p = E'_0^2 / E'^3 (from v = p / E' and
+E'^2 = E'_0^2 + 3 p^2), 1 / E'_0 for a slow row (Newton's) and 0 for the
+photon. Exact in form: the arrival count is the sum over the path's
+Links of E'(**P**(x)) / abs(**P**(x))_1 times the wall's factor of (b),
+**P**(x) the accumulated push, one Euclidean division per Link with the
+remainder kept (rung 1 given **V**(x)). In the shell mean at first order
+in k_a (rung 2): the radial push gives d v / d t = (n / d) (1 - v^2 /
+c^2) (1 + gamma_PPN v^2 / c^2) q cos theta / (4 pi r^2) along the path,
+so the row's fall has the constant
 
     G_row = (n S / d) (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) G,
 
@@ -697,33 +730,37 @@ moving detector with mass falls as a held body does under the same pin
 that closes the clock's constant (section 1.3), a fact for the owner;
 and the arrival is EARLIER by
 
-    delta t_push = -(1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) (b k_a(b) / v) (c^2 / v^2) ln(4 r_1 r_2 / b^2) = -(n S / d) (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) (G M_B / v^3) ln(4 r_1 r_2 / b^2),
+    delta t_push = -(n S / d) (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) (G M_B / v^3) ln(4 r_1 r_2 / b^2),
 
 Newton's advance of a slow particle in a 1 / r potential, -(G M / v^3)
 ln(4 r_1 r_2 / b^2), as the thing compared with at v << c, and 0 at v =
-c. So the massive row's arrival count against the control carries two
-terms of opposite sign,
+c. So the row with mass arrives, against the control, by two terms of
+opposite sign,
 
     delta t = (n S / d) G M_B ln(4 r_1 r_2 / b^2) x [ c_f / (c^2 v) - (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) / v^3 ],
 
-Shapiro's delay at v = c (the first term alone, the light row) and
-Newton's advance at v << c (the second term, larger by c^2 / v^2), nature's
-two limits as the things compared with and nothing in between compared;
-the constant n S / d in front of both. The numbers, COMPUTATION
-conditional on the read k_a(b), on the massive row of `slits_matter`
-past M_B = 2^10 at b = 6, r_1 = r_2 = 26 (ln(4 r_1 r_2 / b^2) = 4.319; b
-k_a(b) ln = 0.01801 Links; v = 0.05349): delta t_wall = +0.67 intervals
-at c_f = 2; delta t_push = -39.3 intervals (0.9914 x 1.0086 x 0.3367 x
-116.6); the net arrival 38.6 intervals EARLY on a control flight of 972
-intervals for 52 Links, GAMEBOARD in the tick and DETECTOR in B's own
-count (B in no crowd at M_B = 2^10 within 0.1 percent: the design's
-0.9901 at 2^16 scaled); for the light row at M_B = 2^16 the wall's 3.97
-intervals (the design's, reproduced here as 2 x 1.153 / 0.5774 = 3.99)
-and no advance.
+Shapiro's delay at v = c (the first term alone, the photon) and Newton's
+advance at v << c (the second, larger by c^2 / v^2), nature's two limits
+as the things compared with and nothing between them compared; the
+constant n S / d in front of both. The numbers, COMPUTATION conditional
+on a read k_a(b), on `slits_matter`'s row past M_B = 2^10 at b = 6, r_1
+= r_2 = 26 (ln(4 r_1 r_2 / b^2) = 4.319; k_a(b) = 6.95 x 10^-4 by the
+linear scaling of the design's 0.0445 with M_B; b k_a(b) ln = 0.01801
+Links; v = 0.05349): alpha = 2 x 6.95 x 10^-4 x (116.6 + 1) = 0.163
+radians, the centroid -4.25 pixels at L = 26; delta t_wall = +0.67
+intervals at c_f = 2; delta t_push = -39.3 intervals (0.9914 x 1.0086 x
+0.3367 x 116.6); the net arrival 38.6 intervals EARLY on a control
+flight of 972 intervals for 52 Links, GAMEBOARD in the tick and DETECTOR
+in B's own count (B in no crowd at M_B = 2^10 within 0.1 percent). WHERE
+the turn happens for the slow row: under the crossing count the factor
+is (1 - (v / c) cos theta), the mean place <s> = -(pi b / 4) (v / c) =
+-0.44 Links, the centroid -4.32 against -4.25 pixels, inside the
+bracket: the slow row with mass cannot separate the two counts at this
+grain; the photon of (c) can. Both are stated.
 
 **(e) By kind, in one table (the pins of any later run).**
 
-| The reading | The control (no mass) | The light row (k_a(b) = 0.0445, c_f = 2, b = 6, L = 26) | The massive row (v / c = 0.0926, k_a(b) = 6.95 x 10^-4, c_f = 2, b = 6, L = 26) | Kind | What refutes |
+| The reading | The control (no mass) | The photon, (a) to (c) (k_a(b) = 0.0445, c_f = 2, b = 6, L = 26) | The row with mass, (d), a read of its own to follow (v / c = 0.0926, k_a(b) = 6.95 x 10^-4, c_f = 2, b = 6, L = 26) | Kind | What refutes |
 | --- | --- | --- | --- | --- | --- |
 | the arrival Node of the click | the line's end Node exactly | the centroid -4.63 pixels (toward the mass) under the arrivals count; -5.47 under the crossing count; the bracket 0.5 about -4.63, the back-reaction -4.73 to -4.81 inside it | -4.25 pixels under the arrivals count; -4.32 under the crossing count | DETECTOR (the click's Node); the values COMPUTATION conditional on the read k_a(b) | a centroid off both by more than the bracket 0.5; a control off its Node |
 | the arrival's count against the control | the flight's first age at L Links (55 for 32 Links, light; 972 for 52 Links, massive) | + 3.97 intervals | - 38.6 intervals (+ 0.67 the wall, - 39.3 the push) | DETECTOR (n_B less the ordinal, B's own count under `clock_stamp`; the tick GAMEBOARD) | the excess off by more than one interval (light) or the first-order margin 8 percent (massive) |
@@ -769,8 +806,9 @@ One sentence per proposed change, each marked for the writer:
   corrections to the row are the diagnostician's and before the writer);
   the status "NOT MADE" for the decisive reading stands, and its next
   reading is named: the arrival click of a released massive row past a
-  held mass (section 3, the released row with mass); the body's reading
-  not named here (the owner's); no cart.
+  held mass (section 3, the photon's pins; the row with mass to follow,
+  a read of its own); the body's reading not named here (the owner's);
+  no cart.
 - **The roads table (tab:roads), Newton's row.** The word: Newton's step
   FOLLOWS exactly in form from the Inside step and the conversion (the
   second difference over the ordinals, the one inertia form with r, the
@@ -783,7 +821,8 @@ One sentence per proposed change, each marked for the writer:
 - **The passage "A massive body's clock and its fall".** Add the
   moving detector with mass: a massive row released past a held mass is
   bent by 2 (n S / d) (G M / (b v^2)) (1 + gamma_PPN v^2 / c^2) and arrives
-  by the wall's delay less the push's advance (section 3 (c), (d)),
+  by the wall's delay less the push's advance (section 3 (d), the forms
+  to be read on their own),
   Newton's slow-particle forms and Einstein's light forms the two limits
   compared with, the constant n S / d in front of both.
 - **What is not claimed.** One line: the law's Newton carries the click
