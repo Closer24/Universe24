@@ -103,7 +103,7 @@ def test_the_speed_and_the_distance_are_the_flight_tables():
     assert TOOL.links([16.0, 33.0]).tolist() == [9, 19]
 
 
-def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
+def test_read_run_reads_the_record_and_the_engines_world(tmp_path, monkeypatch):
     document = bar_world()
     world = parse_nature_beam_world(document)
     folder = tmp_path / "coasting_scalar"
@@ -151,6 +151,71 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert abs((1.0 + point.z) / (1.0 + point.predicted) - 1.0) <= TOOL.FORMULA_TOLERANCE
     assert point.declared == 0.5 / run.c
     assert point.initial_distance == 5.0
+    # (c) The detector's own clock (2026-09-22): a fixed detector at
+    # `suspension` 0 owes nothing, so its age is the interval count and
+    # its rate 1 in every clock: off its own state over the run (DETECTOR)
+    # without the replay, off the replay's edges (GAMEBOARD) with it.
+    assert run.detector_rate == 1.0
+    rate, kind = run.window_rate((20, TICKS))
+    assert rate == 1.0 and kind.startswith(TOOL.KIND_DETECTOR)
+    monkeypatch.setattr(TOOL, "WINDOWS", ((20, TICKS),))
+    TOOL.replay(run)
+    assert set(run.replay) == {20, TICKS}
+    assert run.replay[TICKS][TOOL.DETECTOR_NUMBER][0] == TICKS
+    rate, kind = run.window_rate((20, TICKS))
+    assert rate == 1.0 and kind.startswith(TOOL.KIND_BOARD)
+    fit = TOOL.fit_points([point, point, point], 40.0)
+    same = TOOL.in_detector_clock(fit, rate, kind)
+    assert same.hubble == fit.hubble and same.points[0].z == point.z
+    assert same.points[0].z_lattice == point.z and same.clock_rate == 1.0
+
+
+def test_the_detector_clock_restates_a_fit_by_one_closed_form():
+    """(d) The detector's own clock (the model owner, 2026-09-22, records
+    678 and 707): at the rate r every point reads 1 + z_d = r (1 + z), the
+    reading's formula keeps its ratio (both sides in one clock), the near
+    fit's H_d = r H through the clock's own zero z_d(0) = r - 1, every rms
+    r times the lattice's with the same nearest form, the free quadratic's
+    q_eff,d = 2 ((q_eff / 2 + 1) / r - 1); at r = 1 nothing moves; a
+    source with v / c below 1 / r - 1 reads blue. A property of the
+    restatement, no world's numbers."""
+    c = 32 / 55
+    t0 = 350.0
+    points = []
+    for rank, fraction in enumerate((0.05, 0.15, 0.25, 0.35, 0.45, 0.6), start=1):
+        v = fraction * c
+        tau = v * t0 / (c + v)
+        points.append(
+            TOOL.Point(
+                f"s{rank}", 20, v / c, 0.0, v / c, tau, tau * c, None, None, None, None, v / c, tau
+            )
+        )
+    fit = TOOL.fit_points(points, t0)
+    rate = 0.8
+    restated = TOOL.in_detector_clock(fit, rate, TOOL.KIND_BOARD)
+    assert restated.clock_rate == rate and restated.clock_kind == TOOL.KIND_BOARD
+    for before, after in zip(fit.points, restated.points, strict=True):
+        assert abs(after.z - (rate * (1.0 + before.z) - 1.0)) < 1e-12
+        assert after.z_lattice == before.z and after.clock_rate == rate and after.tau == before.tau
+        ratio_before = (1.0 + before.z) / (1.0 + before.predicted)
+        ratio_after = (1.0 + after.z) / (1.0 + after.predicted)
+        assert abs(ratio_after - ratio_before) < 1e-12
+        assert (after.z < 0.0) == (before.declared < 1.0 / rate - 1.0)
+    # v / c = 0.25 sits on the boundary 1 / r - 1 and reads z_d = 0: two blue.
+    assert sum(1 for p in restated.points if p.z < 0.0) == 2
+    assert abs(restated.hubble - rate * fit.hubble) < 1e-15
+    assert abs(restated.hubble_intercept[0] - rate * fit.hubble_intercept[0]) < 1e-15
+    assert abs(restated.hubble_intercept[1] - (rate * (1.0 + fit.hubble_intercept[1]) - 1.0)) < 1e-12
+    for label in fit.rms_far:
+        assert abs(restated.rms_far[label] - rate * fit.rms_far[label]) < 1e-12
+        assert restated.best[label][0] == fit.best[label][0]
+        assert abs(restated.best[label][1] - rate * fit.best[label][1]) < 1e-12
+    assert fit.q_effective is not None and restated.q_effective is not None
+    assert abs(restated.q_effective - 2.0 * ((fit.q_effective / 2.0 + 1.0) / rate - 1.0)) < 1e-12
+    unchanged = TOOL.in_detector_clock(fit, 1.0, TOOL.KIND_DETECTOR)
+    assert unchanged.hubble == fit.hubble and unchanged.rms_far == fit.rms_far
+    assert all(abs(a.z - b.z) < 1e-12 for a, b in zip(unchanged.points, fit.points, strict=True))
+    assert unchanged.q_effective == fit.q_effective
 
 
 def test_from_one_point_collapses_a_coasting_throw_onto_the_milne_form():

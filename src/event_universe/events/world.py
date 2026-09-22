@@ -301,7 +301,8 @@ family or a content that is not a positive integer.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+import math
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
 from functools import cached_property
 
@@ -1582,6 +1583,23 @@ def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[i
     if len(set(found)) != len(found):
         raise ValueError(f"{BEAM_LAW}: {label} repeats a direction")
     return found
+
+
+def bresenham_line(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
+    """The S_1 unit steps of one period of the digital line of v: at each
+    step the axis whose progress is furthest behind, the lowest axis first
+    (the flight's walk, `nature_beam.direction_flight`; the loader's walk of
+    a record's paths, `_aperture_load_check`)."""
+    s1 = sum(abs(c) for c in vector)
+    line: list[tuple[int, int, int]] = []
+    position = [0, 0, 0]
+    for j in range(s1):
+        best = max(range(3), key=lambda i: (abs(vector[i]) * (j + 1) - s1 * abs(position[i]), -i))
+        step = [0, 0, 0]
+        step[best] = 1 if vector[best] > 0 else -1
+        position[best] += step[best]
+        line.append((step[0], step[1], step[2]))
+    return line
 
 
 def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
@@ -3165,6 +3183,266 @@ def _record_load_checks(
                 )
 
 
+def _aperture_load_check(
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    detectors: tuple[DetectorDefinition, ...],
+    table: tuple[Vector, ...],
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+) -> None:
+    """The aperture's multiplicity, refused at load (issue #714). Two rows
+    of one record add exactly at a set only when their multiplicities
+    differ by a square factor (`amplitude.common_denominator`, the design's
+    section 2.5); the run refuses any other meeting at the offer. A row's
+    multiplicity is the lamp's (the paths per arm times the branches' norm)
+    times the norm of every opening it was re-released at (a `rerelease`
+    entry: the sum of its squared weights, the count of its directions
+    where none is declared), and which openings a row meets is the
+    GameBoard's geometry, known at load: an aperture two Nodes wide whose
+    fan holds the direction along the aperture re-releases a row at one
+    opening and its sibling at both, the second opening's norm between
+    them (the frozen widths 3 and 5 of the batch of issue #661, refused at
+    tick 13 with 201 against 201 x 67; the loader and the run agree on the
+    meeting, the loader before tick 0). So the loader walks the record's
+    paths: per family and per lamp, per arm (an offer is per arm), from
+    each of the arm's directions Link by Link along the direction's digital
+    line, the flight's own walk (`bresenham_line`; the periodic axes wrapped,
+    a `pass` entry stepped through, at most X + Y + Z Links: a crossing of
+    the GameBoard on every axis) to the first other measured event on the
+    ray; an opening of the family multiplies the path's multiplicity by
+    its norm on that arrival and the walk goes on from it over every
+    direction its split can send the row on; the entry that emitted the
+    row (the lamp, or the last opening) takes it home, no offer; any other
+    measured event ends the path at its set (its detector's, else its
+    own), the edge loses it.
+    Two paths of one arm at one set whose multiplicities' ratio is not a
+    square refuse the world, naming the rule, the two multiplicities, the
+    openings of both paths, the ratio and the aperture's width (the
+    openings that feed one another, counted). The paths are followed by
+    the class of their multiplicity (equal classes at an opening are
+    walked once), so a cycle of openings (the two slits feeding each other
+    under a fan with the direction between them) ends. The run's check at
+    the offer remains the guard for what the walk does not model: a world
+    with a gate (records of several lamps joined), a rebirth, a body on
+    several Nodes, a detector Node without a measured event."""
+    if not any(entry.lamp is not None for entry in measured):
+        return
+    if any(gate is not None for entry in measured for gate in entry.gates):
+        return
+    at_position = {entry.position: index for index, entry in enumerate(measured)}
+    set_of = {position: detector.name for detector in detectors for position in detector.positions}
+    extents = (shape[0], shape[1], shape[2])
+    reach = sum(extents)
+
+    def ray(start: Address3, vector: Vector, family: int) -> int | None:
+        """The index of the first measured event on the ray from `start`
+        along the digital line of `vector` (the flight's own unit steps,
+        `bresenham_line`) that is not a `pass` for the family, None where
+        the ray leaves the GameBoard or `reach` Links pass none."""
+        line = bresenham_line((vector[0], vector[1], vector[2]))
+        if not line:
+            return None
+        x, y, z = start
+        for j in range(reach):
+            step = line[j % len(line)]
+            x, y, z = x + step[0], y + step[1], z + step[2]
+            if periodic[0]:
+                x %= extents[0]
+            if periodic[1]:
+                y %= extents[1]
+            if periodic[2]:
+                z %= extents[2]
+            if not (0 <= x < extents[0] and 0 <= y < extents[1] and 0 <= z < extents[2]):
+                return None
+            index = at_position.get((x, y, z))
+            if index is not None and not _passes(measured[index], family):
+                return index
+        return None
+
+    for at, family in enumerate(families):
+        openings = {index for index, entry in enumerate(measured) if _re_releases(entry, at)}
+        if not openings:
+            continue
+        feeds: dict[int, set[int]] = {index: set() for index in openings}
+        for index in openings:
+            for direction in _fed_directions(measured[index], at):
+                reached = ray(measured[index].position, table[direction], at)
+                if reached is not None and reached in openings and reached != index:
+                    feeds[index].add(reached)
+                    feeds[reached].add(index)
+        for source, entry in enumerate(measured):
+            lamp = entry.lamp
+            if lamp is None or entry.family != at:
+                continue
+            ways = len(lamp.directions)
+            paths = ways // lamp.arms
+            multiplicity = paths * sum(weight * weight for _, weight in lamp.branches)
+            for arm in range(lamp.arms):
+                _walk_arm(
+                    measured,
+                    family.name,
+                    at,
+                    source,
+                    lamp.directions[arm * paths : (arm + 1) * paths],
+                    multiplicity,
+                    openings,
+                    feeds,
+                    set_of,
+                    table,
+                    ray,
+                )
+
+
+def _walk_arm(
+    measured: tuple[MeasuredDefinition, ...],
+    family_name: str,
+    family: int,
+    source: int,
+    directions: tuple[int, ...],
+    multiplicity: int,
+    openings: set[int],
+    feeds: dict[int, set[int]],
+    set_of: dict[Address3, str],
+    table: tuple[Vector, ...],
+    ray: Callable[[Address3, Vector, int], int | None],
+) -> None:
+    """The paths of one arm of a lamp's record through the openings to the
+    sets (`_aperture_load_check`): refuses the world at the first set two
+    paths reach with multiplicities whose ratio is not a square."""
+    reached_sets: dict[str, tuple[int, tuple[int, ...]]] = {}
+    walked: dict[int, list[int]] = {index: [] for index in openings}
+    pending: list[tuple[int, int, tuple[int, ...]]] = []
+
+    def arrive(index: int, direction: int, product: int, path: tuple[int, ...]) -> None:
+        if index == (path[-1] if path else source):
+            # Home: a row back at the entry that emitted it (its number)
+            # is taken to be created again, not offered (`plan.home`).
+            return
+        if index in openings:
+            norm = _split_norm(measured[index], family, direction)
+            if norm is None:
+                return
+            product *= norm
+            if any(_same_class(held, product) for held in walked[index]):
+                return
+            walked[index].append(product)
+            pending.append((index, product, path + (index,)))
+            return
+        name = set_of.get(measured[index].position, f"the set of measured[{index}]")
+        held = reached_sets.get(name)
+        if held is None:
+            reached_sets[name] = (product, path)
+            return
+        if _same_class(held[0], product):
+            return
+        common = gcd_of(held[0], product)
+        aperture = _aperture_of(set(held[1]) | set(path), feeds)
+        if any(feeds[index] for index in aperture):
+            geometry = (
+                f"an aperture {len(aperture)} Nodes wide: the openings at "
+                f"{_positions(measured, tuple(sorted(aperture)))} feed one another"
+            )
+        else:
+            geometry = "no opening feeds another: the openings are fed apart"
+        raise ValueError(
+            f"{BEAM_LAW}: two paths of one record of {family_name!r} from the lamp "
+            f"measured[{source}] at {list(measured[source].position)} reach {name} with "
+            f"the multiplicities {held[0]} (through the openings at "
+            f"{_positions(measured, held[1])}) and {product} (through "
+            f"{_positions(measured, path)}), whose ratio {held[0] // common}:{product // common} "
+            f"is not a square ({geometry}); two paths of one record add exactly at a set only "
+            "when their multiplicities differ by a square factor (amplitude-v1, the design's "
+            "section 2.5), so the run would refuse the record at that set: declare weights "
+            "whose squares sum to a square, or open the aperture one Node wide"
+        )
+
+    position = measured[source].position
+    for direction in directions:
+        reached = ray(position, table[direction], family)
+        if reached is not None:
+            arrive(reached, direction, multiplicity, ())
+    while pending:
+        index, product, path = pending.pop()
+        for direction in _fed_directions(measured[index], family):
+            reached = ray(measured[index].position, table[direction], family)
+            if reached is not None:
+                arrive(reached, direction, product, path)
+
+
+def gcd_of(a: int, b: int) -> int:
+    """Euclid on Python integers (the loader's exact products)."""
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def _same_class(held: int, arriving: int) -> bool:
+    """Whether two multiplicities differ by a square factor: their product
+    is a square (`amplitude.common_denominator` finds their denominator)."""
+    product = held * arriving
+    return math.isqrt(product) ** 2 == product
+
+
+def _positions(measured: tuple[MeasuredDefinition, ...], path: tuple[int, ...]) -> list[list[int]]:
+    return [list(measured[index].position) for index in path]
+
+
+def _aperture_of(openings: set[int], feeds: dict[int, set[int]]) -> set[int]:
+    """The openings that feed one another, from `openings` outward (the
+    component of the feeding graph): the aperture."""
+    found = set(openings)
+    pending = list(openings)
+    while pending:
+        index = pending.pop()
+        for other in feeds.get(index, ()):
+            if other not in found:
+                found.add(other)
+                pending.append(other)
+    return found
+
+
+def _re_releases(entry: MeasuredDefinition, family: int) -> bool:
+    """Whether the entry re-releases rows of the family (an opening)."""
+    return family < len(entry.table) and entry.table[family] == "rerelease"
+
+
+def _passes(entry: MeasuredDefinition, family: int) -> bool:
+    """Whether the entry lets rows of the family pass (`pass`)."""
+    return family < len(entry.table) and entry.table[family] == "pass"
+
+
+def _fed_directions(entry: MeasuredDefinition, family: int) -> tuple[int, ...]:
+    """The directions of the table an opening's split can send a row of
+    the family on: every declared direction under a plain `rerelease`
+    (every weight 1), those with a positive weight in some row of the
+    declared split."""
+    split = entry.splits[family] if entry.splits else None
+    if split is None:
+        return entry.directions
+    return tuple(
+        direction
+        for k, direction in enumerate(entry.directions)
+        if any(row[k] > 0 for row in split.weights)
+    )
+
+
+def _split_norm(entry: MeasuredDefinition, family: int, arrival: int) -> int | None:
+    """The norm an opening multiplies the multiplicity of a row of the
+    family arriving on `arrival` by: the sum of its squared weights, the
+    count of its directions under a plain `rerelease`; None where the
+    split declares `inputs` that do not name the arrival (the run refuses
+    that row by its own message)."""
+    split = entry.splits[family] if entry.splits else None
+    if split is None:
+        return len(entry.directions)
+    chosen = split.row(arrival)
+    if chosen is None:
+        return None
+    weights, _ = chosen
+    return sum(a * a for a in weights)
+
+
 def event_charges(families: tuple[FamilyDefinition, ...], held: dict[int, int]) -> list[tuple[int, int]]:
     """A declared measured event's charge in every column from what it
     holds at the start (family index to content): per column the exact
@@ -3741,6 +4019,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         drive_b=drive_b,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
+    _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
     # tested where Lambda_c is formed (`column_scales`): a world whose column
     # scales leave the register is refused here, at load, not at its first

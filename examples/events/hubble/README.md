@@ -508,3 +508,17 @@ clock term is no longer small beside the Doppler in these worlds, whose
 F was chosen for the presence word; the `age` worlds carry the age word's
 reading as registered, and the `scalar` worlds' lines are history unless
 the design re-declares their F for the age word.
+
+## Re-read in the detector's own clock (2026-09-22)
+
+The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
+a detector's time is the clock of the Node it sits on. The four worlds
+replayed on main's engine and read by `tools/hubble_readings.py`, whose
+pinned reading is now in the detector's own clock (1 + z_d = r_w (1 +
+z), H_d = r_w H, r_w the detector's self-creations per interval over the
+window from the replay's edges) with the lattice's clock printed beside
+it as [GAMEBOARD, the lattice's clock]; the pins restated, the readings
+and the verdicts are in
+[the register's entry](../../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20),
+"Re-read in the detector's own clock (2026-09-22)"; the lines above are
+history with their kind.

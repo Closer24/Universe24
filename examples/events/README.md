@@ -169,7 +169,28 @@ probes on the axis and the diagonals and the redshift ratios of the age
 clocks; the register entry is
 [E, the clock's redshift in space under the age reading (2026-09-20)](../../docs/EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20):
 the presence falls as M / r^2 and the age moment as M / r from the same
-rays, their ratio the flight's sqrt 3 / 2.
+rays, their ratio the flight's sqrt 3 / 2. Those are GameBoard readings of
+probes in a world with no detector; the detector reading of the same field
+is series T (outside a source) and series X below (its source term).
+
+## The shell series: Poisson after a detector
+
+The folder [shell_clock/](shell_clock/README.md) holds the nine worlds of
+series X, written by `shell_clock/make_worlds.py` (series T's generator
+imported for the speeds, series E's for the one copy of the fan of 290):
+series T's lamp and detector 100 Links apart, and a shell of 450 fixed
+`mass` sources of radius 6 (the Nodes at |distance - R| < 1/2, series E's
+selection) centred 2, 4 or 12 Links from the lamp, each source releasing
+21.8444 units per direction per interval on the full fan (series T's crowd's
+total release pair spread over the shell's Nodes). The lamp's entry for the
+crowd declares the age word or the presence word, and each world has its
+control, the lamp alone on the same GameBoard. `shell_clock/read_runs.py`
+reads the detector's click lines and nothing else: 1 + z per window, the
+count k = 1 + z - 1 and the three ratios the map pinned before the run. The
+register entry is
+[X, Poisson after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#x-poisson-after-a-detector-2026-09-22):
+inside a shell the potential is flat and the flux is not, so the interior
+tells the clock's two words apart at a source term.
 
 ## The Hubble series
 

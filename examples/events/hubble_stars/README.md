@@ -824,3 +824,16 @@ the rows it crosses (1 + v / c toward, 1 - v / c away on an axis, as a
 count) and its step precedes the law, so the nine base worlds and the
 nine `record/` worlds move where a star steps; their run under the rule,
 with its expectations pinned first, is the G2 session's.
+
+## Re-read in the detector's own clock (2026-09-22)
+
+The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
+a detector's time is the clock of the Node it sits on. The eighteen
+worlds replayed on main's engine and read by
+`tools/hubble_stars_readings.py`, whose pinned reading is now in the
+detector's own clock (1 + z_d = r (1 + z), L_d = L / r, H_d = r H, r the
+detector's rate off its own record over the run) with the lattice's
+clock printed beside it and the step rule's burst printed as a diagnostic,
+not counted; the pins restated, the readings and the verdicts are in
+[the register's entry](../../../docs/EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20),
+"Re-read in the detector's own clock (2026-09-22)".

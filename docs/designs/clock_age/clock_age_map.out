@@ -52,3 +52,29 @@ D. NATURE'S FORM: THE SHIFT BETWEEN TWO HEIGHTS UNDER EACH WORD (the constant fi
    the ground-to-orbit shift per day: the age word 45.7 us (nature's 45.7, Ashby 2003); the presence word with the ground's gradient 28.3 us, the ratio 0.620
    an eccentric orbit (Galileo 5 and 6, e = 0.162): the modulation of k over the orbit, peak to peak over the mean: M / r gives 0.333, M / r^2 gives 0.631: the presence word doubles the modulation nature reads at the potential's value
    a cluster member at a velocity dispersion sigma = 1000 km/s: the potential term G M / (r c^2) ~ sigma^2 / c^2 = 1.1e-05; the Doppler spread sigma / c = 3.3e-03
+
+E. THE SHELL'S LINES: POISSON'S SOURCE TERM AFTER A DETECTOR (series X; host)
+   the shell |r - 6| < 1/2: 450 Nodes, each releasing on the fan of 290; the lamp at 2, 4, 12 Links from the centre
+   uniform sources, r =  2: per unit of the release the presence   499, the age moment   5086  (inside)
+   uniform sources, r =  4: per unit of the release the presence   596, the age moment   5086  (inside)
+   uniform sources, r = 12: per unit of the release the presence   163, the age moment   3144  (outside)
+   the shell theorem on the lattice, the age moment: 5086 at r = 2 and 5086 at r = 4, the ratio 1.000000 (the continuum's 1 exactly; the flat interior)
+   the presence at the same two Nodes: 499 and 596, the ratio 0.8372 (the flux rises toward the shell: 1 / r^2 obeys Gauss, not Poisson, and is not flat inside)
+   the declared release per source per direction: 1431597 / 2^16 = 21.8444 units per interval (series T's crowd's total 2 F over 450 Nodes)
+   the sources' own clocks (the fixed point after 41 rounds, the last move 5.5e-13): each source's own count k 0.787 to 0.932 (mean 0.866), so its release per interval is 11.3054 to 12.2240 (mean 11.7078), 0.536 of the declared rate
+   r =  2: the age word k = 0.9144 (uniform sources 1.6953), 1 + z = 1.9144, the clicks per interval 0.5224; the presence word k = 0.0896, 1 + z = 1.0896
+   r =  4: the age word k = 0.9108 (uniform sources 1.6953), 1 + z = 1.9108, the clicks per interval 0.5233; the presence word k = 0.1067, 1 + z = 1.1067
+   r = 12: the age word k = 0.5631 (uniform sources 1.0480), 1 + z = 1.5631, the clicks per interval 0.6398; the presence word k = 0.0293, 1 + z = 1.0293
+   THE PIN INSIDE (the age word): k(2) / k(4) = 1.0039, the continuum's 1.0000 (the shell theorem); the ripple 0.0039 is the spread of the sources' own clocks over the lattice shell, nothing else (with uniform sources the two are one integer)
+   THE PIN INSIDE (the presence word, expected to FAIL): k(2) / k(4) = 0.8400, 41 times the age word's ripple from 1: the one reading that tells the two words apart at a source term
+   THE PIN OUTSIDE (the age word): k(12) / k(4) = 0.6183, the continuum's R / 12 = 0.5000 (the shell's exterior is the point source's C / r); the lattice reads above it by the grain of section C, where the age moment x r rises with r (1.237 of the continuum's)
+   the rates a detector reads: rate(2) / rate(4) = 0.9981 inside under the age word, 1.0157 under the presence word; rate(4) / rate(12) = 0.8180 outside under the age word
+   the interior on the axis, uniform sources (the age moment at r = 0 to 5): 5162, 5009, 5086, 5130, 5086, 5246; with the sources' own clocks k = 0.932, 0.898, 0.914, 0.919, 0.911, 0.943 (a lattice ripple of about +-2.4 percent; 5086 at r = 2 and at r = 4 is a coincidence of the lattice at the design's two Nodes)
+   the detector's own count at x = 3 in the world r =  2 (102 Links from the centre): k_D = 0.0945 under the age word, 0.0005 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
+   the detector's own count at x = 3 in the world r =  4 (104 Links from the centre): k_D = 0.0927 under the age word, 0.0005 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
+   the detector's own count at x = 3 in the world r = 12 (112 Links from the centre): k_D = 0.1357 under the age word, 0.0007 under the presence word; the reading's denominator is the host tick, so k_D does not enter 1 + z (record 569)
+   THE PINS OF SERIES X IN ONE LINE (what the register quotes, six decimals; the release 1431597 / 2^16 per source per direction):
+     r =  2: k_age 0.914351  k_presence 0.089647  k_age_uniform 1.695264
+     r =  4: k_age 0.910783  k_presence 0.106724  k_age_uniform 1.695264
+     r = 12: k_age 0.563110  k_presence 0.029271  k_age_uniform 1.047957
+     k_age(2) / k_age(4) 1.003917   k_presence(2) / k_presence(4) 0.839989   k_age(12) / k_age(4) 0.618270

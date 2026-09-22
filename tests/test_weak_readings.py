@@ -220,7 +220,11 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     assert (
         reading.shell_clicks == {6: 1} and reading.shell_contents == {3: 1} and reading.shell_ages == [3]
     )
+    # The beta's birth read back from its click line: the tick less its
+    # age (the row's own clock), the trigger's interval (2026-09-22).
+    assert reading.shell_births == {3: 1}
     assert TOOL.curve_shape(reading.shell_clicks) == (6, 6, 6, 0.0)
+    assert TOOL.curve_shape(reading.shell_births) == (3, 3, 3, 0.0)
     pinned = {"become": {"j1_lattice": {"ticks": {"1": 3}, "slack": 0, "counts": {"1": 0}}}}
     criteria = TOOL.expectations(reading, pinned)
     # A pinned tick as a range [lo, hi] (the re-pin of 2026-09-21): the
@@ -229,19 +233,29 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     for pair, inside in (([2, 3], True), ([3, 4], True), ([4, 5], False), ([1, 2], False)):
         ranged = {"become": {"j1_lattice": {"ticks": {"1": pair}, "slack": 0}}}
         assert TOOL.expectations(reading, ranged)[0][1] is inside, pair
-    assert [ok for _, ok, _ in criteria] == [True, True, True, True]
-    # The trigger tick and the count at the trigger are the neutron's own
-    # `become` line: DETECTOR (the audit of record 567, F8). The curve's
-    # width over its median is keyed by the clicks' ticks, the record's
-    # ordering: a GameBoard diagnostic since the clock audit of 2026-09-22,
-    # printed and out of the deciding set.
+    assert [ok for _, ok, _ in criteria] == [True] * 6
+    # The count at the trigger is the neutron's own `become` line, the
+    # pinned reading (DETECTOR: the audit of record 567, F8; the clock's
+    # word of 2026-09-22); the trigger tick is the record's ordering (the
+    # lattice's clock, printed and not counted); the curve in the betas'
+    # births (the trigger's tick, the record's ordering: the physics-rule
+    # reviewer's correction on PR #777) and in the click ticks both the
+    # lattice's clock, printed and not counted.
     assert [kind for _, _, kind in criteria] == [
         TOOL.DETECTOR,
+        TOOL.LATTICE,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
-        TOOL.DIAGNOSTIC,
+        TOOL.LATTICE,
+        TOOL.LATTICE,
     ]
+    assert criteria[0][0].startswith("every neutron fires at its key on its own clock")
+    assert criteria[4][0].startswith("the survival curve in the betas' births")
     assert len(TOOL.deciding(criteria)) == 3
+    # A count outside its pinned range is outside on the neutron's own
+    # record whatever the tick reads.
+    off = {"become": {"j1_lattice": {"ticks": {"1": 3}, "slack": 0, "counts": {"1": [1, 2]}}}}
+    assert [ok for _, ok, _ in TOOL.expectations(reading, off)[:2]] == [False, True]
     # "The pair holds" (the step records) is a GameBoard diagnostic (F9):
     # printed with its verdict, out of the deciding set, the number unchanged.
     reading.name = "j3_deuteron"
@@ -301,13 +315,24 @@ def test_read_run_reads_the_w_world(tmp_path):
         "w": {"w_exchange": {"at": 3, "click_tick": 4, "label": 192, "content": 1839, "charge": [0, 1]}}
     }
     criteria = TOOL.expectations(reading, pinned)
-    assert [ok for _, ok, _ in criteria] == [True] * 5
+    assert [ok for _, ok, _ in criteria] == [True] * 6
     # Every criterion of the W world reads a measured event's own record
     # (the become line, the click, the charge, the border, the momentum:
-    # record 569), so every kind is DETECTOR.
-    assert [kind for _, _, kind in criteria] == [TOOL.DETECTOR] * 5
+    # record 569), so every kind is DETECTOR but the click's tick, the
+    # record's ordering (the lattice's clock, printed and not counted since
+    # 2026-09-22: the W's delay is the row's age 1, not on the proton's
+    # click line without `reads: "age"`).
+    assert [kind for _, _, kind in criteria] == [
+        TOOL.DETECTOR,
+        TOOL.DETECTOR,
+        TOOL.LATTICE,
+        TOOL.DETECTOR,
+        TOOL.DETECTOR,
+        TOOL.DETECTOR,
+    ]
+    assert len(TOOL.deciding(criteria)) == 5
     late = {"w": {"w_exchange": {**pinned["w"]["w_exchange"], "click_tick": 5}}}
-    assert [ok for _, ok, _ in TOOL.expectations(reading, late)] == [True, False, True, True, True]
+    assert [ok for _, ok, _ in TOOL.expectations(reading, late)] == [True, True, False, True, True, True]
 
 
 def first_arrival_age(table, distance: int) -> int:

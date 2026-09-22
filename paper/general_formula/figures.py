@@ -187,46 +187,88 @@ def figure_pair(summary: dict, checks, output: Path) -> None:
 
 
 def figure_s_of_n(summary: dict, checks, output: Path) -> None:
-    ns = [64, 256, 512, 1024, 2048, 4096, 8192]  # the registered and computed powers of two only
-    values = [float(checks.chsh(n)[0]) for n in ns]
-    runs = [(int(n), entry["S_float"]) for n, entry in summary["pair"].items()]
-    fig, (ax, zoom) = plt.subplots(1, 2, figsize=(7.2, 3.2), gridspec_kw={"width_ratios": [1.15, 1]})
-    for axis, lo, hi, ylim in ((ax, 64, 8192, (2.70, 2.86)), (zoom, 512, 8192, (2.820, 2.837))):
-        axis.axhline(TSIRELSON, color=INK, linewidth=1.0, linestyle="--", label="2 sqrt 2")
-        axis.axhspan(
-            POH_S - 3 * POH_SIGMA,
-            POH_S + 3 * POH_SIGMA,
-            color=PALE,
-            linewidth=0,
-            label="Poh et al. 2015, 3 sigma",
-        )
-        pts = [(n, s) for n, s in zip(ns, values, strict=True) if lo <= n <= hi]
-        axis.scatter(
-            [n for n, _ in pts],
-            [s for _, s in pts],
-            s=7,
-            color=DARK,
-            linewidth=0,
-            label="S(N) computed from the rule",
-        )
-        rp = [(n, s) for n, s in runs if lo <= n <= hi]
-        axis.scatter(
-            [n for n, _ in rp],
-            [s for _, s in rp],
-            s=70,
-            facecolors="none",
-            edgecolors=INK,
-            linewidths=1.6,
-            zorder=4,
-            label="engine runs",
-        )
-        axis.set_xscale("log", base=2)
-        axis.set_ylim(*ylim)
-        axis.set_xlabel("N (the circle's steps)")
-        style(axis)
-    ax.set_ylabel("S at the CHSH labels")
-    ax.legend(frameon=False, fontsize=7, loc="lower right")
-    zoom.set_title("N from 512 to 8192", fontsize=9, color=INK)
+    """S(N) at the CHSH labels, one panel at half the page's width: the closed form
+    computed from the rule with the tables at 256 as the curve, the detector
+    readings of the register as open circles (series L and L6 through the runs'
+    summary; the derivation's 24.4 block, `bell_24_4`, through the amplitude
+    register's expectation file), the plateau 181/64 and its end 5793/2048 marked."""
+    expectations = HERE.parent.parent / "examples" / "events" / "amplitude" / "expectations.json"
+    block = json.loads(expectations.read_text(encoding="utf-8"))["bell_24_4"]["S"]
+    measured = {int(n): entry["S_float"] for n, entry in summary["pair"].items()}
+    measured.update({int(n): p / q for n, (p, q) in block.items()})
+    ns = [n for n in range(64, 16384 + 1, 8)]
+    curve = [float(checks.chsh(n)[0]) for n in ns]
+    plateau, plateau_end = 181 / 64, 5793 / 2048
+    fig, ax = plt.subplots(figsize=(3.4, 2.15))
+    xs = sorted(measured)
+    ax.axhline(TSIRELSON, color=INK, linewidth=0.9, linestyle="--", label="2 sqrt 2")
+    ax.plot(ns, curve, color=MID, linewidth=0.6, label="the closed form (computed)")
+    ax.scatter(
+        xs,
+        [measured[n] for n in xs],
+        s=30,
+        facecolors=WHITE,
+        edgecolors=INK,
+        linewidths=1.1,
+        zorder=4,
+        label="detector readings",
+    )
+    ax.set_xscale("log", base=2)
+    ax.set_xlim(48, 24000)
+    ax.set_ylim(2.70, 2.86)
+    ax.set_xlabel("N (the circle's steps)", fontsize=8)
+    ax.set_ylabel("S at the CHSH labels", fontsize=8)
+    ax.tick_params(labelsize=7)
+    style(ax)
+    ax.legend(frameon=False, fontsize=6, loc="lower right")
+    # The inset: the plateau and its end, where the main panel cannot resolve them.
+    powers = [n for n in ns if n & (n - 1) == 0 and n >= 512]
+    inset = ax.inset_axes([0.38, 0.33, 0.58, 0.36])
+    inset.axhline(TSIRELSON, color=INK, linewidth=0.8, linestyle="--")
+    inset.plot(
+        powers,
+        [float(checks.chsh(n)[0]) for n in powers],
+        color=MID,
+        linewidth=0.6,
+        marker=".",
+        markersize=3,
+    )
+    inset.hlines(plateau, 512, 8192, color=INK, linewidth=1.3, zorder=3)
+    inset.scatter(
+        [n for n in xs if n >= 512],
+        [measured[n] for n in xs if n >= 512],
+        s=22,
+        facecolors=WHITE,
+        edgecolors=INK,
+        linewidths=1.0,
+        zorder=4,
+    )
+    inset.annotate(
+        "181/64",
+        (2048, plateau),
+        xytext=(0, -8),
+        textcoords="offset points",
+        ha="center",
+        fontsize=6,
+        color=INK,
+    )
+    inset.annotate(
+        "5793/2048",
+        (16384, plateau_end),
+        xytext=(-3, 4),
+        textcoords="offset points",
+        ha="right",
+        fontsize=6,
+        color=INK,
+    )
+    inset.set_xscale("log", base=2)
+    inset.set_xlim(400, 22000)
+    inset.set_ylim(2.8275, 2.8292)
+    inset.set_yticks([2.828, 2.829])
+    inset.tick_params(labelsize=5.5, length=2, pad=1)
+    inset.set_title("512 to 16384", fontsize=6, pad=2)
+    for side in ("top", "right"):
+        inset.spines[side].set_visible(False)
     fig.tight_layout()
     fig.savefig(output / "s_of_n.pdf")
     plt.close(fig)
