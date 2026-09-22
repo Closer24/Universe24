@@ -1180,6 +1180,72 @@ bijection (`th:bijection`); section 0's click theorem with M3 (the
 counts' ratios over Q) and the dilation; the conversion table of section
 7 (3). Nothing else enters.
 
+**(0) The three formulas (the owner's clause, as the Boss relayed it).**
+"W = E'^2 + 3 p . p is the formula of ONE STEP beneath the board. One
+needs the formula of one step ABOVE the board (which Einstein and Newton
+already wrote), the formula of one step beneath the board, and the
+conversion between them. That is all the formulas we need; then one can
+compute anything, without code." So part (8) opens with the three
+formulas, and the rest of the part names the third.
+
+*(I) THE INSIDE STEP: one interval of a record, in closed form on its
+state vector, by the six verbs.* A record's state at a Node is the
+vector `(x, D, p, tau, f, acc_drive, acc_push, acc_owed)`: its Node, its
+direction, its momentum (a body) or phase turn (a row), its age, its
+rows' element `f` of the group ring `Z[Z_N]` (the amount at each phase),
+and its accumulators. One interval applies, in order, verb 1 (the
+translation of every accumulator by its rate), verb 6 (the division
+with the remainder kept, whose whole part is the event), verb 2 (the
+bilinear form with the declared matrix, at the push and at the click),
+verbs 3 and 5 (the merge in `Z[Z_N]` and the evaluation at `zeta_N`,
+where rows meet and where they end), and verb 4 (the permutation, at a
+collision, none in these worlds):
+
+    hop:    acc_drive <- acc_drive + rate;   e <- sign(acc_drive) min(floor(abs(acc_drive) / wall), 1);   acc_drive <- acc_drive - e wall;   x <- x + e D_hat
+            a row:  rate = N_l abs(D)_1, wall = T_D   (the flight table, P9; c = N_l abs(D)_2 / T_D);   a body:  rate = abs(p_a), wall = N_l N_w M + abs(p_a) per axis  (the pace, P9)
+    phase:  f <- x^(phi(tau)) f,   phi(tau) = floor((tau + 1) n / d) - floor(tau n / d)   (the turn per interval of age; a row's E = h_q n / d)
+    push:   acc_push <- acc_push + M_A V_c;   p <- p + sign(acc_push) floor(abs(acc_push) / Lambda_c^2) (the gravity column: Lambda = 1, p <- p - M_A V exactly)
+    crowd:  (rate, wall) of the owed count <- (rate d, wall (d + a_tau n)),   a_tau = sum over the rays present of amount x age   (the age wall, coefficient 1)
+    split (A2, at a splitter or a setting):   f -> (a_i x^(t_i) f) on the output d_i,   A = sum a_i^2;   a setting: the label pair by U_s
+    merge (rows meeting at one Node):   f <- f + g in Z[Z_N], x^(N / 2) = -1 (the cancel)
+    click (a record whose rows have all ended):   R_k = abs(ev f_k)^2 per cell,   rung_k = floor((2 N C_k + C_K) / (2 C_K)),   the cell with rung_(k - 1) <= u < rung_k;   the record deleted
+    age:    tau <- tau + 1
+
+Every line is one of the six verbs on bounded integers, and `W = E'_0^2
++ 3` **p** `.` **p** is not a line of the step: it is the step's
+INVARIANT under the identity (kept on the record, `E'` by comparisons,
+17.6 M3), the quantity the hop's schedule and the owed count conserve
+between pushes, as `omega^2 - kappa^2 = m^2` is the walk's invariant and
+not its update.
+
+*(II) THE OUTSIDE STEP: the equation of motion above the board, as
+physics writes it.* Newton: `m d^2 x / dt^2 = -m grad Phi`, `Laplacian
+Phi = 4 pi G rho`, the clock rate `1 - Phi / c^2` between two heights
+(the weak field), Kepler's `T^2 ~ a^3`. Einstein (special): `E^2 = m^2
+c^4 + p^2 c^2`, `v = p c^2 / E`, `d tau = sqrt(1 - v^2 / c^2) dt`, the
+Doppler `nu' / nu = sqrt((1 + beta) / (1 - beta))`; (general, weak
+field): the clock at the potential `sqrt(1 - 2 G M / (r c^2))`, the fall
+along the geodesic of `g_00 = 1 + 2 Phi / c^2`. These are formulas of
+Outside: every symbol in them is a count at a click or a ratio of
+counts (a time is a detector's own count, a length Nodes apart, an
+energy `h` times a counted frequency, a mass a rest count), by the
+closing fact of section 7's table.
+
+*(III) THE CONVERSION*, the map of this part: the four named steps of
+(2) below (a ring homomorphism, a pure state's square, a threshold, a
+count ratio) with the group of section 0 acting on the result. What
+this part shows is that (II) is the image of (I) under (III) to the
+stated order: Einstein's rows exactly on the identity's integers and up
+to corrections of relative order `m^2 beta^2` through the walk (parts
+(6) and section 0); Newton's rows exactly for the clock's rate and the
+equivalence, and in the shell mean (rung 2) for the potential, the fall
+and Kepler (part (7)), with the equivalence's constant `(n S / d)(g h /
+c^2)` a declared input. Then, as the owner says, one computes without
+code: the Outside number is (III) applied to (I), an identity checked
+against a reading and not a run's output; the run's place is the
+register, where the identity is tested and the finite-N and finite-r
+departures, which have no closed form, rise Outside.
+
 **(1) The two structures.**
 
 *Inside* (I): the GameBoard's state, at every Node a bounded integer
