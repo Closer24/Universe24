@@ -29,7 +29,7 @@ before the first run:
 (e) the bound: the pair form [2^55, 1] loads on a bar of age bound 100
     ((age_bound + 1) x n within 2^62 - 1) and the click 17 Links away is
     refused naming the exact phase, the measured event (the counter, 1)
-    and the numerator 2^55 x 17 x 110 beyond the working register 2^63 - 1;
+    and the numerator 2^55 x 17 x 110 beyond the working bound 2^63 - 1;
 (f) the primitive itself: `exact_phase` on the flight of +x and
     (1, 1, 0) gives (a), (b) and (d) from the phase, the terms and the age
     of the last Link; a rest slot and a family without the pair form return

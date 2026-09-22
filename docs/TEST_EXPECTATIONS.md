@@ -1054,7 +1054,7 @@ expected integers, written down before the first run:
 - (e) the bound: the pair form [2^55, 1] loads on a bar of age bound 100
   and the click 17 Links away is refused naming the exact phase, the
   counter (measured event 1) and the numerator 2^55 x 17 x 110 beyond the
-  working register 2^63 - 1;
+  working bound 2^63 - 1;
 - (f) the primitive `exact_phase` on the flight table of +x and (1, 1, 0)
   gives (a), (b) and (d) from the phase, the terms and the age of the last
   Link; a rest slot and a family without the pair form return the phase
@@ -2567,7 +2567,7 @@ with 0 over 10: 0, 5), a negative rate counts with its sign (-5 with -12:
 keeps the rest (0 with 30 over 10 under the cap 1: 1, 20; without the cap
 3, 0), an accumulator one below the wall with a rate of 1 counts 1 and
 leaves 0 (9 with 1; the mirror -9 with -1: -1, 0); a denominator below 1
-is refused and a sum past the working register (2^63 - 1 plus 1) is
+is refused and a sum past the working bound (2^63 - 1 plus 1) is
 refused before it is formed. The flight reads it: `test_nature_beam_flight`
 (g).
 
@@ -3801,7 +3801,7 @@ still requires review. No physical calculation changes as part of translation.
 ## Shared integer arithmetic
 
 `test_integer_arithmetic.py` pins the primitives of `core/integer.py` that the
-Beam Law uses: the working register (`checked_work` accepts +-(2^63 - 1),
+Beam Law uses: the working bound (`checked_work` accepts +-(2^63 - 1),
 refuses one beyond and a boolean); the exact integer square root
 (`integer_root`: 0, 1, 2, 3, 4, 15, 16, 17, 2^62 and 2^63 - 1 give 0, 1, 1, 1,
 2, 3, 4, 4, 2^31 and 3037000499, each the floor with the next square above the
