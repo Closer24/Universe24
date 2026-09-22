@@ -50,14 +50,24 @@ orbit's mean is the smaller of the two by the factor
 `r_bar^2 / <r^2>_theta`, which lies between `1 - e^2` and `1` for a loop
 whose radius over the turn runs from `r_min` to `r_max`,
 `e = (r_max - r_min) / (r_max + r_min)`, and equals `1` only where the
-radius is constant in angle, the circle (Theorem B, step B6). On the
-lattice the equality holds up to four named grain terms (Theorem A, section
-3): the ring's Node count against `2 pi r` (Gauss's circle problem; on the
-plane `68 / 75.40 = 0.902` at `r = 12` and `144 / 150.80 = 0.955` at
-`r = 24`), the ring's incidence against the fan's L1 factor (the sums `144`
-and `160` over the 120 lines against `154.5`), the drive's anisotropy at
-the registered pace (`6.9` per cent, `0` as `v / c -> 0`) and one Node's
-dwell per crossing of a line. The L1 incidence factor `F_L1` of record 872
+radius is constant in angle, the circle (Theorem B, step B6). "BOUNDED
+on the lattice" means this and no more: the equality holds up to four named
+grain terms (Theorem A, section 3), three of them given as numbers and the
+fourth given per crossing only. The ring's Node count against `2 pi r`
+(Gauss's circle problem; on the plane `68 / 75.40 = 0.902` at `r = 12` and
+`144 / 150.80 = 0.955` at `r = 24`), the ring's incidence against the fan's
+L1 factor (the sums `144` and `160` over the 120 lines against `154.5`:
+`1.073` and `0.966`) and the drive's anisotropy at the registered pace
+(`6.9` per cent, `0` as `v / c -> 0`) are numbers. The fourth, one Node's
+dwell per crossing of a line, has the per-crossing ceiling `1.55` at the
+registered pace, a ceiling free of `r_0`, so at `r = 12` and `24` the bound
+on that term alone is empty and the lattice equality rests on the mean over
+the fan's 120 crossings with their phases spread, which is assumed and not
+proved; the evidence that the mean is of a few per cent is the ring's own
+incidence, each line's count `m_d` being `1` or `2` and averaging `1.20`
+and `1.33` over the 120 lines against the fan's `1.29`. The tangential
+remainder, at most `1 / r_0`, is the small term beside these. The L1
+incidence factor `F_L1` of record 872
 multiplies both means alike and cancels from their ratio (section 1.3).
 For series D3 the turn's extreme radii are not on record; the run's
 whole-record extremes give `e <= 0.96` at `r = 12` and `e <= 0.70` at
@@ -81,7 +91,8 @@ lowest axis on a tie), one Node per Manhattan step, so that `L_d` has
 one Link, in each coordinate, of the Euclidean line through the origin
 along **d**. At each self-creation the source releases
 `by_clock(age, M_B n, d)` units on every direction of the fan
-(`nature_beam.py:3546-3566`), the same count per direction; a released row
+(DERIVATIONS_BEAM 3.2, lines 839 to 843), the same count per direction; a
+released row
 walks its line one Link per step and is never split, so in the steady state
 the amount arriving per interval is the same at every Node of the line
 (DERIVATIONS_BEAM line 876: "the field along a beam is `1 / r^0`"). Call
@@ -260,9 +271,15 @@ source, `omega` its mean over the turn). Then
                              / sum_d phi_d m_d(r_0)] x (1 + eta),         (3.1)
     abs(eta) <= 2 delta_a + max_d abs(g_d) + 1 / r_0     (to first order),
 
-and in the limit `r_0 -> infinity` at fixed fan, `v / c -> 0` and the
-crossings' phases spread, every factor tends to `1`: the orbit's mean equals
-the ring mean at `r_0`, up to the grain term named in (3.1).
+and in the limit `r_0 -> infinity` and `K -> infinity` (the dense fan,
+Theorem B's setting; or the mean over the ring's radii at fixed fan),
+`v / c -> 0` and the crossings' phases spread, every factor tends to `1`:
+the orbit's mean equals the ring mean at `r_0`, up to the grain term named
+in (3.1). The first factor alone is `r_0`'s: at a fixed fan the second,
+`sum_d phi_d m_d(r_0)` against `F_L1 K`, does not tend to `1` with `r_0`
+(`1.073` at `12`, `0.966` at `24`; each line's `m_d` is `1` or `2` about
+`1.29`, its crossing phase moving with `r_0`), only with `K` or in the mean
+over radii.
 
 **Proof, in the integers where it can be.**
 
@@ -307,9 +324,15 @@ per-axis form `v_i = p_i / (Q S M_A + abs(p_i))` at `abs(p) / (Q S M_A) =
 registered pace and `0` as `v / c -> 0`; and one Node's dwell per crossing
 of a line, `abs(g_d) <= 2 tau_node / tau_d`, on the plane at the registered
 pace `tau_node = 4.556` intervals along an axis against the mean crossing
-dwell `F_L1 / v_t = 5.86` intervals: a bound of order one per crossing,
-smaller in the mean over 120 crossings if their phases are spread (not
-proved). (iv) The tangential remainder, at most `1 / r_0`: `0.083` at
+dwell `F_L1 / v_t = 5.86` intervals: the ceiling `2 x 4.556 / 5.86 = 1.55`
+per crossing, and it is free of `r_0` (`2 abs(e) abs(d) v_t / (S_1(e)
+S_1(d) v)`), so at `r_0 = 12` and `24` the bound (3.1) puts on `eta` is
+empty for this term as stated, and the lattice equality rests on the mean
+over the 120 crossings with their phases spread, which is assumed here and
+not proved; the ring's own incidence is the evidence that the mean is of a
+few per cent (`m_d` is `1` or `2` per line and averages `1.20` at `r_0 =
+12` and `1.33` at `24` against the fan's `1.29`). (iv) The tangential
+remainder, at most `1 / r_0`: `0.083` at
 `r_0 = 12`, `0.042` at `24`, and `0` in the mean over the fan's 48 signed
 axis permutations on a loop with the same symmetry (section 9's tangential
 mean `0.00000` at every ring).
@@ -494,7 +517,9 @@ it only where the radius is constant in angle; on the lattice the equality
 holds up to the ring's count against `2 pi r` (`0.90` at `r = 12`, `0.95`
 at `r = 24` on the plane), the ring's incidence against the fan's L1 factor
 (`1.07` and `0.97`), the drive's anisotropy at the registered pace (`0.069`)
-and one Node's dwell per crossing of a line, GAMEBOARD by formula."
+and one Node's dwell per crossing of a line (`1.55` per crossing at the
+registered pace, small in the mean over the fan's crossings under the
+spread of their phases, assumed), GAMEBOARD by formula."
 
 **Form "bounded by" (the registered case):** "On series D3's loops the
 mean push over the read turn lies between `1 - e^2` and `1` times the ring
