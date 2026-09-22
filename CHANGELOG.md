@@ -56,7 +56,16 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the same world without the light), and the gate set's `weak/j3_deuteron`
   (refuses at interval 596 of its 700: the entry carries `refusal` beside
   its digests, read by `test_nature_beam_worlds`, `test_massive_rows` and
-  `test_amplitude_click`).
+  `test_amplitude_click`). The weak register's `become` blocks of
+  `j1_lattice`, `j1_source` and `j3_deuteron` (the warm run's count ranges
+  and trigger ticks) move, their crowds' rows stretched by the other
+  numbers' crowds: each keeps its registered block and carries
+  `under_the_generic_entry`, the warm run under the law as it stands (a
+  derivation, no pin), which `test_weak_readings` (e) reads; the paper's
+  row 8a rests on J1's run, its standing the model owner's decision.
+  `test_become` (c) and `test_clock_age` (d) read the law (the crowd's
+  own rows stretched at a test world's pair [1, 128]; the flight a member
+  for every world).
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 

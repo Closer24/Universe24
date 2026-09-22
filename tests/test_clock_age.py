@@ -133,8 +133,12 @@ def test_the_age_word_is_one_wall_function_over_a_declared_set():
         assert name not in dict(AGE_WALL_SET)
         with pytest.raises(ValueError, match="never a member"):
             age_wall_coefficient(name)
+    # Since the generic entry of the bending (2026-09-22) the row's flight
+    # is a member for every world at 1 + gamma (before it, without the key
+    # `optical`: "not a member"); the release is never in the set.
+    assert age_wall_coefficient("flight") == 1 and age_wall_coefficient("flight", 1) == 2
     with pytest.raises(ValueError, match="not a member"):
-        age_wall_coefficient("flight")
+        age_wall_coefficient("release")
     assert age_wall(1, 1, age_wall_coefficient("owed"), 11, (1, 4)) == (4, 15)
     assert count_owed(0, 11, (1, 4)) == by_drive(0, 15 - 4, 4) == (2, 3)
     crowd = [0, 0, 0, 0, 5] + [11] * 19

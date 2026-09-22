@@ -89,7 +89,17 @@ comments; the step drive's (g) world (the register's deuteron at d = 2^27
 with a light lamp) refuses at interval 4 and the bound pair is read on the
 same world without the light; the gate set's `weak/j3_deuteron` refuses at
 interval 596 of its 700, its entry carrying `refusal` beside the digests
-it had. Nothing is deleted or skipped; no pin of a paper row moves.
+it had; the weak register's `become` blocks of `j1_lattice`, `j1_source`
+and `j3_deuteron` (the generators' warm run: the count ranges and the
+trigger ticks of the neutrons' `become`, at the pair [1, 2^20]) move,
+each keeping its registered block and carrying `under_the_generic_entry`,
+the warm run under the law as it stands (J1's earliest trigger 533
+against the registered 549, the latest 953 against 714; J3 refuses at
+596). The paper's row 8a (the neutron's decay curve, series J1) rests on
+J1's registered run: whether J1 is redeclared in the weak field with row
+8a, or row 8a carries the registered reading as history, is the model
+owner's decision (the Boss's list of record 871 names series T alone).
+Nothing is deleted or skipped; no registered pin moves.
 
 **The register's digests.** REPLICATIONS.md records for these series the
 world file's sha256 and the readings, not the record's digests, so the
