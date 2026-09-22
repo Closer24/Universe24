@@ -329,7 +329,7 @@ section 4, :365-388): `k_GR = r / (1 - v)`.
 **Outside.** From the two factors read at G alone,
 
     v = (k_GR k_RG - 1) / (k_GR k_RG + 1)   (the round trip, r-free),
-    r = sqrt((1 - v^2) k_GR / k_RG) = sqrt((1 - v^2) x k_GR / k_RG),
+    r = sqrt((1 - v^2) k_GR / k_RG),
 
 the moving record's own count per interval, DETECTOR: time dilation is
 this r, and nothing else Outside is. Under the line `k_GR = k_RG` it is
@@ -485,8 +485,8 @@ built). GAMEBOARD.
 
 **Transformation.** An angle Outside is a ratio of two lengths, so by
 rule (C) it is read by one moving detector D with two co-moving
-transponders: a pinhole P and, `L_0` lattice Nodes behind it along the
-motion, a screen of transponders. A packet of lattice direction
+transponders: a pinhole P and, `L_0` lattice Nodes from it along the axis of
+the motion, a screen of transponders. A packet of lattice direction
 `(cos theta, sin theta)` (theta against D's velocity axis, GAMEBOARD)
 enters at P at the tick `t_1` and, moving straight, meets the screen
 at the lattice offset `y_hit = L_0 sin theta / (cos theta - v)` across
@@ -681,8 +681,8 @@ the floor A and the detector Y at the ceiling B, `Y` Links above it on
 the axis, both at rest at the emission and both accelerating at g
 (Links per interval squared, GAMEBOARD) away from the packet's
 direction; the packet takes `Y / c` intervals, in which Y gains the
-velocity `g Y / c`; so `s . v_X = 0` at the emission and `s . v_Y = -g
-Y / c^2` at the arrival (the ceiling recedes), and
+velocity `g Y / c`; so `s . v_X = 0` at the emission and `s . v_Y = +g
+Y / c^2` at the arrival (the ceiling moves along **s**, away from the packet), and
 
     k_XY = 1 / (1 - g Y / c^2) = 1 + g Y / c^2 + O((g Y / c^2)^2)   (r_X = r_Y, the same rule for both):
 
@@ -834,7 +834,7 @@ gamma_PPN`; and the bending, by Fermat's principle on the same delay
 field (the wavefront's differential delay across the beam,
 `alpha = integral of the transverse gradient of the delay per Link`),
 
-    alpha = c_f (n / d) tau_L x integral of (dA / db) ds = 2 c_f (n S / d) G M_B / (c^2 b),
+    alpha = c_f (n / d) (c tau_L) x integral of (dA / db) ds = 2 c_f (n S / d) G M_B / (c^2 b),
 
 nature's `2 (1 + gamma_PPN) G M / (c^2 b)`, Einstein's `4 G M / (c^2
 b)` at `gamma_PPN = 1`. Both rung 2 (the shell mean, the straight-path
@@ -894,7 +894,7 @@ apsides from the clicks' radii, the advance per revolution as the
 angle between successive apsides, DETECTOR.
 
 **Outside.** The law: an apsidal motion of order beta per revolution,
-anisotropic, where nature has `3 pi beta^2` per revolution for a
+anisotropic, where nature has `6 pi beta^2` per revolution for a
 circular orbit (Mercury: beta `1.6 x 10^-4`, `5.0 x 10^-7` radians per
 revolution, 43 arcseconds per century, isotropic): the law's term is of
 the wrong order (about 300 times nature's at Mercury's pace) and the
