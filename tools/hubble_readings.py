@@ -518,7 +518,11 @@ def in_detector_clock(fit: Fit, rate: float, kind: str) -> Fit:
     times the lattice's at the same H and the nearest form is the same,
     the free quadratic on z_d - z_d(0) = r z so q_eff,d = 2 ((q_eff / 2 +
     1) / r - 1); tau stays the row's own clock (its age at the click,
-    record 707: the moving thing's clock, a separate reading)."""
+    record 707: the moving thing's clock, a separate reading). The
+    product H_d t_0 is the same under either convention of tau: with tau
+    and t_0 in the detector's count, tau_d = r tau and t_0,d = r t_0, the
+    slope of z_d per unit of tau_d is H and H_d t_0,d = r H t_0 as well,
+    so the Milne pin is convention-free."""
     points = [
         Point(
             p.name,

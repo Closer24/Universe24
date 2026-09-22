@@ -42,12 +42,15 @@ and counted in no criterion:
   generator wrote over the dwell period (`counts` of expectations.json);
   the tick `triggered` at + floor(at x c / 2^20) is the closed form's
   ordering, printed beside it;
-- the survival curve at the shell is keyed by the betas' births, the
-  click's tick less the beta's age on the click line (`reading` under
-  `reads: "age"`, the row's own clock: D3's form, tools/
-  orbit_lamp_readings.py), so the flight to the shell is out of the
-  curve and its 10-to-90 width over its median is the triggers' spread
-  alone; the curve keyed by the click ticks is printed beside it;
+- the survival curve at the shell is printed twice and counted in no
+  criterion: keyed by the betas' births, the click's tick less the beta's
+  age on the click line (`reading` under `reads: "age"`), which is the
+  trigger's tick, the record's ordering (the flight to the shell is out
+  of the abscissa, but no clock is under it: the neutrons' own clocks all
+  read the key, a delta; the physics-rule reviewer's correction of
+  2026-09-22 on PR #777), and keyed by the click ticks; both [GAMEBOARD,
+  the lattice's clock]; the detector reading behind them, a lamp at the
+  shell counted between the clicks, is not yet made (tier (c));
 - the W's delay is its lifetime 1 on the row's own clock (a row born at a
   self-creation is at one Link at the age 1, m(1) = 1) and the proton's
   click is read as its own record (one click of `w`, one unit); the
@@ -441,8 +444,9 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
     """J1 and J3 against the expectations the generator pinned from the
     engine's own presence reading: the counts at the trigger (the
     neutrons' own `become` lines; the trigger ticks beside them as the
-    lattice's clock), the shell's curve in the betas' births, the
-    spectrum, the pair's binding."""
+    lattice's clock), the shell's curve in the betas' births and in the
+    click ticks (both the lattice's clock, not counted), the spectrum,
+    the pair's binding."""
     found: list[Criterion] = []
     neutrons = reading.of_family("n")
     fired = {thing.number: thing.become for thing in neutrons if thing.become is not None}
@@ -522,30 +526,32 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
                 DETECTOR,
             )
         )
-        # The pinned reading (2026-09-22): the curve keyed by the betas'
-        # births (the click's tick less the beta's age, the row's own
-        # clock), the flight to the shell out of it.
+        # The curve keyed by the betas' births (the click's tick less the
+        # beta's age): the abscissa is the trigger's tick, the record's
+        # ordering, so the width over the median is a host number (the
+        # physics-rule reviewer's correction of 2026-09-22): the lattice's
+        # clock, printed and out of the deciding set; the detector reading
+        # behind it, a lamp at the shell counted between the clicks, is not
+        # yet made.
         median, low, high, ratio = curve_shape(reading.shell_births)
         found.append(
             (
-                "the survival curve in the betas' births (the click's tick less the beta's age) is "
-                "a step: its 10-to-90 width over its median below 0.1 "
-                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                "the survival curve in the betas' births (the click's tick less the beta's age: the "
+                "trigger's tick, the record's ordering) is a step: its 10-to-90 width over its median "
+                f"below 0.1 (nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f}); the detector "
+                "reading behind it, a lamp's count at the shell between the clicks, not yet made",
                 bool(reading.shell_births) and ratio < 0.1,
-                DETECTOR,
+                LATTICE,
             )
         )
         median, low, high, ratio = curve_shape(reading.shell_clicks)
-        # The same curve keyed by the clicks' ticks, the record's ordering,
-        # so its width over its median is a GameBoard number (the clock
-        # audit of 2026-09-22): the lattice's clock, printed and out of the
-        # deciding set; the detector reading behind it, the curve in the
-        # betas' births, is counted above (the re-read of 2026-09-22).
+        # The same curve keyed by the clicks' ticks, the record's ordering
+        # with the flight inside it (the clock audit of 2026-09-22): the
+        # lattice's clock, printed and out of the deciding set.
         found.append(
             (
                 "the survival curve in the shell's click ticks (the record's ordering, the flight "
-                "to the shell inside it) is a step: its 10-to-90 width over its median below 0.1; the "
-                "detector reading behind it, the curve in the betas' births, is counted above",
+                "to the shell inside it) is a step: its 10-to-90 width over its median below 0.1",
                 bool(reading.shell_clicks) and ratio < 0.1,
                 LATTICE,
             )
@@ -736,8 +742,8 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
         print(
             f"[{DETECTOR}]   the shell's beta clicks: {total} in all"
             + (
-                f"; in the betas' births (the click's tick less the beta's age, the row's own clock: "
-                f"the triggers' intervals) from {min(reading.shell_births)} to {max(reading.shell_births)}, "
+                f"; [{LATTICE}] in the betas' births (the click's tick less the beta's age: the "
+                f"triggers' ticks, the record's ordering) from {min(reading.shell_births)} to {max(reading.shell_births)}, "
                 f"the median {median}, the 10th and 90th percentiles {low} and {high}, the width over "
                 f"the median {ratio:.4f} (nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})"
                 if total

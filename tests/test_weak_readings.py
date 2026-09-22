@@ -238,18 +238,20 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     # pinned reading (DETECTOR: the audit of record 567, F8; the clock's
     # word of 2026-09-22); the trigger tick is the record's ordering (the
     # lattice's clock, printed and not counted); the curve in the betas'
-    # births DETECTOR, in the click ticks the lattice's clock.
+    # births (the trigger's tick, the record's ordering: the physics-rule
+    # reviewer's correction on PR #777) and in the click ticks both the
+    # lattice's clock, printed and not counted.
     assert [kind for _, _, kind in criteria] == [
         TOOL.DETECTOR,
         TOOL.LATTICE,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
-        TOOL.DETECTOR,
+        TOOL.LATTICE,
         TOOL.LATTICE,
     ]
     assert criteria[0][0].startswith("every neutron fires at its key on its own clock")
     assert criteria[4][0].startswith("the survival curve in the betas' births")
-    assert len(TOOL.deciding(criteria)) == 4
+    assert len(TOOL.deciding(criteria)) == 3
     # A count outside its pinned range is outside on the neutron's own
     # record whatever the tick reads.
     off = {"become": {"j1_lattice": {"ticks": {"1": 3}, "slack": 0, "counts": {"1": [1, 2]}}}}

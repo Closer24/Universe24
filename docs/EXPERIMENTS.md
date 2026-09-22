@@ -2359,7 +2359,7 @@ states "exactly" and means integer equality at every tick.
   clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
 
 - **Re-read in the detector's own clock (2026-09-22; the model owner's
-  word of records 678 and 707 of docs/LOG_2026-09-20.md: the GameBoard
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md: the GameBoard
   holds the clock of every experiment read through a detector, and a
   detector's time is the clock of the Node it sits on, the interval count
   less what the crowd at that Node owes through the age wall; the clock
@@ -2375,7 +2375,12 @@ states "exactly" and means integer equality at every tick.
   reader's own lamp, examples/events/reader_clock's form; over the whole
   run its own state, age / (age + waited), DETECTOR), a phase step of
   Delta t intervals is r_w Delta t of its counts, and 1 + z_d = r_w (1 +
-  z), tau the row's own clock (its age at the click) unchanged; (i) the
+  z), tau the row's own clock (its age at the click) unchanged (the
+  product H_d t_0 is the same under either convention of tau: with tau
+  and t_0 in the detector's count, tau_d = r_w tau and t_0,d = r_w t_0,
+  H_d = H per unit of tau_d and H_d t_0,d = r_w H t_0 as well, so the
+  Milne pin is convention-free; the physics-rule reviewer's check on PR
+  #777); (i) the
   reading's formula (1 + z_d) = (1 + k)(1 + v / c) r_w within 2 % (the
   same ratio, both sides in one clock); (ii) the throw's own form z_d =
   (1 + v / c) r_w - 1, a source with v / c below 1 / r_w - 1 reading blue
@@ -2617,7 +2622,7 @@ states "exactly" and means integer equality at every tick.
   -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
 
 - **Re-read in the detector's own clock (2026-09-22; the model owner's
-  word of records 678 and 707 of docs/LOG_2026-09-20.md; the clock
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md; the clock
   audit's finding 5, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
   no run: the register's replay of the eighteen worlds, the nine base
   worlds and the nine of `record/`, on main's engine, the age word, by
@@ -3988,7 +3993,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
 
 - **Re-read in the detector's own clock (2026-09-22; the model owner's
-  word of records 678 and 707 of docs/LOG_2026-09-20.md; the clock
+  word of records 678, 707 and 709 of docs/LOG_2026-09-20.md; the clock
   audit's finding 6, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
   no run: the register's replay of the eleven worlds on main's engine,
   the age word, by `tools/run_series.py` at their declared durations and
@@ -4003,13 +4008,19 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   range the trigger ticks were derived from by at + floor(at x c /
   2^20)); the trigger tick `triggered` is the record's ordering, printed
   as [GAMEBOARD, the lattice's clock] and counted in no criterion; (ii)
-  the survival curve at the shell is keyed by the betas' births, the
+  the survival curve at the shell keyed by the betas' births, the
   click's tick less the beta's age on its click line (`reading` under
-  `reads: "age"`, the row's own clock: D3's form), so the flight to the
-  shell (ages 17 to 41) is out of the curve and its 10-to-90 width over
-  its median is the triggers' spread alone, pinned below 0.1 as before
-  (nature's ln 9 / ln 2 = 3.17); the curve in the click ticks printed
-  beside it, not counted; (iii) the W's delay is the row's own clock,
+  `reads: "age"`), so that the flight to the shell (ages 17 to 41) is out
+  of the abscissa and its 10-to-90 width over its median is the
+  triggers' spread alone, against the step pin below 0.1 (nature's ln 9
+  / ln 2 = 3.17): [GAMEBOARD, the lattice's clock], printed and counted
+  in no criterion, since the tick less the row's age is the trigger's
+  tick, the record's ordering, and no clock is under it (the neutrons'
+  own clocks all read the key, a delta; the physics-rule reviewer's
+  correction of 2026-09-22 on PR #777), the curve in the click ticks
+  printed beside it likewise; the detector reading behind both, a lamp
+  at the shell counted between the clicks, is not yet made (tier (c));
+  (iii) the W's delay is the row's own clock,
   its lifetime 1 (a row born at a self-creation is at one Link at the
   age 1, m(1) = 1), the proton's click read as its own record (one click
   of `w`, one unit, the content, the charge), the click's tick 9 the
@@ -4021,42 +4032,46 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   pinned ranges where fired, the criterion outside on the 8 unfired (as
   the tick criterion was); the shell's 20 clicks in the betas' births
   from 602 to 621, the median 621, the width over the median 0.0306
-  (inside; in the click ticks 0.0265, the line of record 394);
-  `j1_source` 32 of 64 fired, the count criterion outside on the 32
-  unfired; 8 clicks all born at 607, the width 0.0000 (inside; 0.0110 in
-  the ticks); `j3_deuteron` the count 152471 at the trigger inside its
+  [GAMEBOARD, the lattice's clock] (inside the step pin, not counted; in
+  the click ticks 0.0265, the line of record 394); `j1_source` 32 of 64
+  fired, the count criterion outside on the 32 unfired; 8 clicks all
+  born at 607, the width 0.0000 [GAMEBOARD, the lattice's clock] (0.0110
+  in the ticks); `j3_deuteron` the count 152471 at the trigger inside its
   range 47762 .. 152471 (inside; the tick 577 inside 535 .. 586), the
   beta born at 577, clicked at 590; `j3_deuteron_crowd` never, inside;
   `j3_neutron_free` the count 0 at the trigger (inside), the tick 512
   the ordering; `w_exchange` one click of `w` of one unit, the content
   1839 and the charge [0, 1] after, nothing on the border, the momentum
   exchanged (5 of 5 inside), the tick 9 not counted; 0 record checks
-  failed, 31 readings inside and 4 outside, 1 diagnostic and 8
+  failed, 29 readings inside and 4 outside, 1 diagnostic and 10
   lattice-clock lines printed and not counted (the line of record 394:
-  13 inside, 5 outside). At the cap 1024 (record 545's reading, the
+  13 inside, 5 outside; the tool at 11edfe9e read 31 and 4 with the
+  births' curve counted, until the reviewer's correction). At the cap 1024 (record 545's reading, the
   digests as there): `j1_lattice` 64 of 64 fired, the counts 154476 to
   338172 every one within its pinned range (inside), the trigger ticks
   602 to 671; the shell's 64 clicks in the betas' births from 602 to
   671, the median 621, the 10th and 90th percentiles 602 and 671, the
-  width over the median 0.1111: OUTSIDE the step pin, where the same
-  clicks by their ticks read 0.0787 inside (the flight's spread had
-  narrowed the curve relative to its later median); `j1_source` 64 of
-  64, the counts 171027 to 367454, one or more outside its pinned range
-  while every tick is inside its range (outside; the count at the
-  trigger under the fan's dwells is not the dwell period's range), the
-  births from 607 to 689, the width over the median 0.1279: outside
-  (0.1147 in the ticks, outside as record 545 read it); 5 readings inside
-  and 3 outside at the cap. The verdict: in the neutrons' own clocks the
-  decay is a step at the key exactly and the curve the shell reads in
-  the betas' births is the triggers' spread over the crowd's counts, 0.11
-  to 0.13 of the median at the cap, still a step against nature's 3.17
-  (NATURE row 8a's FAIL stands in form; its numbers 0.036 and 0.038 are
-  the click ticks' of the presence word, the lattice's clock, kept as
-  history); the verdict words that move are `j1_lattice`'s step criterion
-  at the cap (inside in the ticks, outside in the births) and
-  `j1_source`'s trigger criterion at the cap (inside on the ticks,
-  outside on the counts); the registered J1 verdict (a step, a line, the
-  bound neutron later) stands.
+  width over the median 0.1111 [GAMEBOARD, the lattice's clock]: outside
+  the step pin, not counted, where the same clicks by their ticks read
+  0.0787 inside (the flight's spread had narrowed the curve relative to
+  its later median); `j1_source` 64 of 64, the counts 171027 to 367454,
+  one or more outside its pinned range while every tick is inside its
+  range (outside; the count at the trigger under the fan's dwells is not
+  the dwell period's range), the births from 607 to 689, the width over
+  the median 0.1279 [GAMEBOARD, the lattice's clock] (0.1147 in the
+  ticks, outside as record 545 read it); the counted readings at the cap
+  5 inside and 1 outside (the tool at 11edfe9e read 5 and 3 with the
+  births' curve counted, until the reviewer's correction). The verdict: in the neutrons' own clocks the
+  decay is a step at the key exactly (the detector reading: every
+  `become` line at the count `at`); the curve the shell reads in the
+  betas' births, the triggers' spread over the crowd's counts, 0.11 to
+  0.13 of the median at the cap, is a GameBoard number in the lattice's
+  clock, still a step against nature's 3.17 (NATURE row 8a's FAIL stands
+  in form; its numbers 0.036 and 0.038 are the click ticks' of the
+  presence word, the lattice's clock, kept as history); the one verdict
+  word that moves is `j1_source`'s trigger criterion at the cap (inside
+  on the ticks, outside on the counts); the registered J1 verdict (a
+  step, a line, the bound neutron later) stands.
 
 ### L, the amplitude law (2026-09-20)
 
@@ -4638,7 +4653,7 @@ sequential gates on an entangled record, the full register replay.
   the three heads that ran it. The 4096-birth pin when the host allows.
 
 - **Re-read in the row's own clock (2026-09-22; the model owner's word of
-  records 678 and 707 of docs/LOG_2026-09-20.md: the GameBoard holds the
+  records 678, 707 and 709 of docs/LOG_2026-09-20.md: the GameBoard holds the
   clock of every experiment read through a detector; the clock audit's
   finding 7, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
   no run: the register's replay of `slits_matter_1024` on main's engine

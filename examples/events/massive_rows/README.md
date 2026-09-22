@@ -144,7 +144,7 @@ omitted from the rows' record, no `waiting` line).
 
 ## Re-read in the row's own clock (2026-09-22)
 
-The model owner's word of records 678 and 707 of docs/LOG_2026-09-20.md:
+The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
 the GameBoard holds the clock of every experiment read through a
 detector. The group pace is pinned as the row's `age` on its first
 `click` line at `screen_60`, `screen_37` and `screen_83` (the row's own

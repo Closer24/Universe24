@@ -384,13 +384,17 @@ with this re-registration; nothing in NATURE moved on this branch.
 
 ## Re-read in the detector's own clock (2026-09-22)
 
-The model owner's word of records 678 and 707 of docs/LOG_2026-09-20.md.
+The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md.
 `tools/weak_readings.py` reads the trigger off the neutron's own
 `become` line as its count at the trigger (`counted`, within the pinned
-range of counts), the survival curve in the betas' births (the click's
-tick less the beta's age, the row's own clock) and the W's click as the
-proton's own record; the tick of a line is printed as [GAMEBOARD, the
-lattice's clock] and counted in no criterion. The eleven worlds replayed
+range of counts) and the W's click as the proton's own record; the
+survival curve in the betas' births (the click's tick less the beta's
+age: the trigger's tick, the record's ordering, no clock under it) and
+in the click ticks are both [GAMEBOARD, the lattice's clock], printed
+and counted in no criterion (the physics-rule reviewer's correction on
+PR #777; the detector reading behind them, a lamp at the shell counted
+between the clicks, not yet made); the tick of a line is printed as
+[GAMEBOARD, the lattice's clock] and counted in no criterion. The eleven worlds replayed
 on main's engine at their declared durations and the two J1 worlds at
 the cap 1024; the pins restated, the readings and the verdicts are in
 [the register's entry](../../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20),

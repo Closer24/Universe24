@@ -827,7 +827,7 @@ with its expectations pinned first, is the G2 session's.
 
 ## Re-read in the detector's own clock (2026-09-22)
 
-The model owner's word of records 678 and 707 of docs/LOG_2026-09-20.md:
+The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
 a detector's time is the clock of the Node it sits on. The eighteen
 worlds replayed on main's engine and read by
 `tools/hubble_stars_readings.py`, whose pinned reading is now in the
