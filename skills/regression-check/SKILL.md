@@ -104,8 +104,8 @@ compilation, dependency reinstallation, long simulation or visualization is
 needed for an ordinary audit.
 
 Review new code and dynamic consumers beyond the baseline. Inspect initialization,
-field arithmetic, coupling and scheduling, runner metadata, diagnostic rendering,
-and ui_assets. Check field/type renaming and declaration-order independence,
+field arithmetic, coupling and scheduling, runner metadata and diagnostic
+rendering. Check field/type renaming and declaration-order independence,
 scalar/vector handling, local field rules, rotation, signed accounting, decay,
 and open/periodic boundaries. Distinguish legitimate schema roles and laws in
 JSON from physical-name branches or hidden model-specific assumptions in code.

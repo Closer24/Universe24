@@ -178,6 +178,83 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   (the model owner, records 150 and 155 (3)).
 - **Count**: the whole part an accumulator yields at a self-creation, the
   sixth verb; a clock's count of self-creations; the owed count.
+- **The age wall**: the one wall function of the crowd, `core.integer.age_wall`
+  (`core/integer.py:153-187`): a count at the rate r against the wall w
+  becomes the count at the rate r x d against the wall w x (d + c a_tau n),
+  [n, d] the suspension pair, a_tau the age moment the reader read at its own
+  Nodes less its own number, c the member's declared coefficient; the owed
+  count is the excess of the stretched wall over the stretched rate in units
+  of d (`engine.count_owed`, `engine.py:157-182`; `clock-age-v1`, record 394;
+  the generic shape of records 421, 422 and 428; BEAM_LAW note 25;
+  [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md) rows 2 and 19).
+- **The age wall's set**: the declared members whose wall the crowd's age
+  moment stretches, each with its coefficient, `measured.AGE_WALL_SET`
+  (`measured.py:345`): the body's clock (`owed`) at 1 on the law; the row's
+  flight at 1 + gamma (gamma the post-Newtonian parameter, `FLIGHT_MEMBER`,
+  `age_wall_set`, `measured.py:364-379`) under the world key `optical` on
+  `main` at 8fa9e00b, and for every world once PR #855 merges (gamma the
+  key's value, 0 by default); under
+  `optical` and `drive_b` together the body's drive at gamma; never the phase
+  per age (`AGE_WALL_NEVER`, `measured.py:346`). A member joins by a declaration
+  in the set and nothing else moving.
+- **The crowd at a row's Node** (`optical-v1`): the two moments a row in
+  transit reads of the one reading set at its own Node, less its own number,
+  `nature_beam.CrowdMoments` (`nature_beam.py:3069-3153`): the age moment
+  a_tau over the rows present at the end of the interval before (the wall's
+  read, one interval retarded, before step 1) and the arrival flow **V** over
+  the interval's own arrivals on each family's own labels (the push's read,
+  after the walk and the collision); segmented sums, nothing kept at a Node
+  (the physics-rule review of 408cf719, record 494, S3; COUPLINGS.md row 20).
+- **The wall on the flight** (`optical-v1`, verb 1): under the world key
+  `optical` the row's flight accumulator is a member of the age wall's set at
+  the coefficient f = 1 + gamma: its residue gains rate x d against the wall
+  x (d + f n a_tau), one Link at most with the surplus kept
+  (`nature_beam.optical_walk_step`, `nature_beam.py:3634-3710`;
+  `optical_rate_and_wall`, `:3602-3631`); the pair (rate, wall) is the
+  family's on a row never pushed and the momentum's on a pushed row
+  (`row_pairs`, `:3585-3599`; `momentum_pair`, `:3494-3560`, one integer root
+  per pushed row when **P** changes, the design's declared root)
+  ([one_wall/NOTE.md](designs/one_wall/NOTE.md) sections 1 and 2;
+  [EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md); COUPLINGS.md row 19).
+- **The push on a row** (`optical-v1`, verb 2): at a Node of free space the
+  row's push accumulator **W** is translated by the crowd's arrival flow at
+  the rate n x weight, **W** -= n x weight x **V**, the weight the row's
+  content times the family's weight per unit (E'_D^2 + 3 gamma **p**_D .
+  **p**_D) // E'_D formed once at load (`nature_beam.unit_weights`,
+  `nature_beam.py:3563-3582`; `optical_turn`, `:3730-3885`); a free family's
+  row has content 0 and never turns; at every push the residue is rescaled
+  to the new pace, s' = s x S_1(**P**') // S_1(**P**), the sub-unit remainder
+  dropped (record 496 as generalised; COUPLINGS.md row 21).
+- **The label by Bresenham** (`optical-v1`, verb 3): a pushed row's whole
+  momentum **P** = Q d content **u**_D + **W** is the line its label follows:
+  among its direction and the fan neighbours the label whose next Link
+  **h** keeps abs(**c** + **h** x **P**)^2 smallest among the Links with
+  **h** . **P** > 0 is chosen, **c** the row's error accumulator (the sum
+  of **h** x **P** over its walked Links), and **W** += Q d content
+  (**u**_D - **u**_D') so that **P** is conserved across the turn
+  (`nature_beam.optical_turn`, `nature_beam.py:3886-3963`;
+  `optical_walk_step`, `:3681-3703`; `fan_neighbours`, `:895`; record 536;
+  COUPLINGS.md row 22).
+- **The phase per age**: the pair form of the family key `phase_per_link`,
+  [n, d]: a row's phase gains `by_clock(age, n, d)` at every walk that
+  advances its age, the first difference of a floor with no remainder on the
+  row (`nature_beam.by_clock_rows`, `nature_beam.py:569-583`; `_walk`,
+  `:4161-4163`; `world._families`, `world.py:1842-1860`), the exact phase at
+  the click reading the remainder (note 45); the integer form turns per Link
+  crossed (`FamilyFlight.turned`, `:1023-1031`); never a member of the age
+  wall's set (BEAM_LAW note 37, the owner's unification (1); COUPLINGS.md
+  row 24).
+- **The placed fraction and the completion's quantum**: the pair (f_F, q_F)
+  of a family, `FamilyFlight.placed` and `quantum`
+  (`nature_beam.py:979-980`): (1, 0) for a family without the flag `massive`
+  (a row's units, content and label are placed where it ends, the click as
+  built) and (0, M) for a massive one (nothing is placed at the arrival; at
+  the record's completion the chosen end takes the family's quantum M and
+  M x the label of the chosen row's direction, the rest of the waiting goes
+  to the books' `cancelled` lines: `_place_completion`, `:6363-6455`;
+  `_walk`, `:4050-4073`; `_apply_plan`, `:5242-5254`; `_border`,
+  `:6129-6145`) ([massive_rows/DESIGN.md](designs/massive_rows/DESIGN.md)
+  section 3; COUPLINGS.md row 29).
 - **Drive**: the body's accumulator of its step, per axis the rate p_a
   against the wall Q S M + |p_a|, at most one Link per self-creation, the
   remainder on the body's record (note 17 as amended; the step drive of
@@ -452,8 +529,8 @@ stated so that it can fail and never enters the law by its list.
 | `bohr-v1` | the turn by momentum, the world key `action` (note 30) | built; under `hypotheses` when declared |
 | `massive-rows-v1` | the free particle as a record of massive rows: the world key `massive_rows`, the family key `massive`, the lamp key `momentum_magnitude` ([the design](designs/massive_rows/DESIGN.md)) | built (2026-09-21); under `hypotheses` when the key is declared |
 | form B | one motion primitive: a body's drive as the flight of its momentum's direction at a fraction | decided (records 183, 191, 301), not built |
-| `covariant-readings-v1` | the four covariant readings of DERIVATIONS_BEAM section 17, in place of `lorentz-v1` | decided (record 270), not built |
-| `optical-v1` | the rows' rule at a Node for the bending, the Shapiro delay, the second-order redshift and Snell ([the design](designs/gr_rows/DESIGN.md)) | decided as a hypothesis, not built |
+| `covariant-readings-v1` | the four covariant readings of DERIVATIONS_BEAM section 17 as amended in 17.6, in place of `lorentz-v1`: the world key `covariant_readings` (`world.COVARIANT_READINGS_RULE`, `world.py:561`; `engine.covariant_frame`, `engine.py:218-273`; `energy_root`, `:185-215`) | built (2026-09-21, records 297 and 314); under `hypotheses` when the key is declared (the status row corrected on 2026-09-22 from the code, record 813) |
+| `optical-v1` | the rows' rule at a Node for the bending and the Shapiro delay: the world key `optical` (gamma), the three verbs on a row (the wall on the flight, the push on a row, the label by Bresenham) and the crowd at a row's Node (`world._optical`, `world.py:3755-3817`; the identity at `:1387`; `nature_beam.optical_walk_step`, `optical_turn`; [one_wall/NOTE.md](designs/one_wall/NOTE.md), [EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md); the earlier design [gr_rows/DESIGN.md](designs/gr_rows/DESIGN.md)) | built (2026-09-21, branch optical-v1; the pin worlds [examples/events/optical/](../examples/events/optical/README.md)); under `hypotheses` when the key is declared (the status row corrected on 2026-09-22 from the code, record 813) |
 | `flow-link-v1` | one arrival counts one Euclidean Link of its line, not one Node: under the world key `flow_link` every flow sum counts an arriving row of direction D with the flow label f_D, the integer vector nearest abs(p_D) D / S_1, in place of the unit label u_D nearest abs(p_D) D / abs(D); the push's constant of gravity becomes the clock's ([the design](designs/flow_weight/DESIGN.md)) | built (2026-09-22, the model owner's decision of record 915); under `hypotheses` when the key is declared |
 | `colour-v1` | a Z_3 label on the quarks ([the design](designs/quarks/QUARKS.md)) | decided (record 270), not built |
 | `expansion-v1` | the growing wall of the flight with the rate H declared, absent by default | a declared assumption (record 279), not built |
@@ -484,6 +561,9 @@ names everywhere.
 | L_d | the period of a direction's line | scalar | intervals | BEAM_LAW section 3 |
 | **D** | a direction of the world's table, a primitive integer vector | vector | Links | BEAM_LAW section 2 |
 | **u**_d | the unit vector of a direction at the scale Q | vector | label units | BEAM_LAW section 2, note 23 |
+| **f**_D | the flow label of `flow-link-v1`, the integer vector nearest Q **D** / S_1 (the label per Euclidean Link of the line, in place of **u**_D in the flow sums alone), f_D[i] = sign(D[i]) x (2 Q abs(D[i]) + S_1) // (2 S_1), one Euclidean division per component at load; a massive family's on its own label magnitude in Q's place; equal to **u**_D without the world key `flow_link` | vector | label units | [flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md) section 1.2 (record 898; the reviewer's ADMISSIBLE, record 902); on branch flow-link-build (`direction_flight`, `flow_labels`), not on `main` at 8fa9e00b; COUPLINGS.md row 23 |
+| **W**, **P**, **c** | a pushed row's push accumulator (the store's `push_x`, `push_y`, `push_z`), its whole momentum **P** = Q d content **u**_D + **W**, and its error accumulator (the store's `cross_x`, `cross_y`, `cross_z`), under `optical-v1` | vectors | label units x d; label units x d; label units x d x Links | `nature_beam.optical_turn`, `optical_walk_step`; COUPLINGS.md rows 21 and 22 |
+| f_F, q_F | the placed fraction of an arrival and the completion's quantum of a family, (1, 0) without the flag `massive`, (0, M) with it | scalars | dimensionless; units of content | `nature_beam.FamilyFlight.placed`, `quantum`; massive_rows/DESIGN.md section 3; COUPLINGS.md row 29 |
 | tau | the age of a row | scalar | intervals | BEAM_LAW section 2 |
 | `m(tau)` (a row's field) | the flight's count at the age, the row's place on its line, in code font, never in a formula beside the mass m | scalar | unit steps of the line | BEAM_LAW section 3; record 369 |
 | **p**, p_x | a body's momentum vector and its component on an axis | vector, scalar | label units | BEAM_LAW section 2 |

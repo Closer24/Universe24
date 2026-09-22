@@ -76,7 +76,9 @@ def by_clock(age: int, numerator: int, denominator: int) -> int:
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
 
 
-def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple[int, int]:
+def by_drive(
+    drive: int, rate: int, denominator: int, at_most: int = 0, centred: bool = False
+) -> tuple[int, int]:
     """The one count primitive of the Beam Law (the model owner's record
     108 of 2026-09-20, "a generic solution if he can"; the step drive of
     the same day, and since the fraction-free law of that day, BEAM_LAW
@@ -103,11 +105,22 @@ def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple
     sign, and the accumulator is `sign x (n x |rate| mod denominator)`,
     the remainder `by_clock` keeps nowhere; where the rate changes the
     count is the whole part of the sum of the rates, exact over any
-    period, which `by_clock` at the current rate is not."""
+    period, which `by_clock` at the current rate is not. `centred` (the
+    body's step under the world key `centred_step`, `centred-step-v1`,
+    docs/designs/atom_give/CENTRED_STEP.md section 1; False for every
+    other count): the count is the NEAREST whole number the accumulator
+    holds in units of the denominator, `(abs(drive) + denominator // 2)
+    // denominator` with the sign, so a count fires when the accumulated
+    motion passes half the denominator and the whole denominator is
+    subtracted, the accumulator then in [-(denominator - denominator //
+    2), denominator // 2): the body's Node the nearest to its accumulated
+    motion, the lag of the Node behind the motion zero in the mean (the
+    flight's own start at the half, BEAM_LAW note 41 (viii), applied to
+    the body's drive)."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     drive += rate
-    count = abs(drive) // denominator
+    count = (abs(drive) + (denominator // 2 if centred else 0)) // denominator
     if at_most and count > at_most:
         count = at_most
     if drive < 0:
@@ -115,7 +128,9 @@ def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple
     return count, drive - count * denominator
 
 
-def by_line(drives: Sequence[int], rates: Sequence[int], wall: int) -> tuple[int | None, int, list[int]]:
+def by_line(
+    drives: Sequence[int], rates: Sequence[int], wall: int, centred: bool = False
+) -> tuple[int | None, int, list[int]]:
     """The line count of `drive-b-v1` (docs/designs/drive_b/DESIGN.md section
     2; docs/designs/light_speed/FORM.md section 3.1 (c), the mathematician's
     form; the model owner's approval of form B, 2026-09-22): the rows' own
@@ -131,15 +146,22 @@ def by_line(drives: Sequence[int], rates: Sequence[int], wall: int) -> tuple[int
     the accumulators after). An accumulator whose rate is 0 is left as it
     is and never carries (a momentum of 0 never steps); one Link at most
     per call. On one axis the same integers as `by_drive(drive, rate, wall,
-    at_most=1)`. The caller bounds the sums before the call."""
+    at_most=1)`. The caller bounds the sums before the call. `centred`
+    (`centred-step-v1`, docs/designs/atom_give/CENTRED_STEP.md section 1):
+    an accumulator is at or beyond the wall when its magnitude reaches
+    HALF the wall, `wall - wall // 2`, the whole wall subtracted with the
+    sign as before, so the accumulators run in [-(wall - wall // 2), wall
+    // 2) and the Node is the nearest to the accumulated motion; on one
+    axis the same integers as `by_drive(..., centred=True)`."""
     if wall < 1:
         raise ValueError("positive wall required")
     if len(drives) != len(rates):
         raise ValueError("one rate per accumulator required")
+    threshold = wall - wall // 2 if centred else wall
     after = [drive + rate for drive, rate in zip(drives, rates, strict=True)]
     chosen: int | None = None
     for axis, (drive, rate) in enumerate(zip(after, rates, strict=True)):
-        if rate == 0 or abs(drive) < wall:
+        if rate == 0 or abs(drive) < threshold:
             continue
         if chosen is None or abs(drive) > abs(after[chosen]):
             chosen = axis

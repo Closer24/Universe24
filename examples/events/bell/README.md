@@ -269,3 +269,18 @@ pair, the minus counters never), no quadruple of settings occurs, 68 of
 verdict: the law does not correlate what never met; Bell's assumption is
 a measurement here, not an assumption; S = 2 stands with the choosers on
 the GameBoard, the model's limit as before.
+
+## The order channel (2026-09-22)
+
+Two more worlds, off the gate set and outside both generators' lists, for
+the reading of Bob's outcome ORDER under Alice's setting sequence (the
+third referee read, record 938 (2) of the log of 2026-09-20):
+`order_a0_b0.json`, the paper's pair world `../amplitude/bell_0_8.json`
+with the four windows 0 and 212 intervals, and `order_a0_21_42_b0.json`,
+the chooser form `../amplitude/bell_choosers.json` with Bob's chooser
+removed (his windows the integer 0) and Alice's window read from `sa` at
+the stride 64 / 3 (a = 0, 21, 42 with period 3), 220 intervals. The pins
+before the run, the reading tool and the readings are in
+[docs/designs/order_channel/](../../../docs/designs/order_channel/PINS.md)
+(PINS.md, RUN.md): Bob's serial correlation at lag 1 reads 15 / 16 and
+-1 / 16, his counts 96 / 96 in both.
