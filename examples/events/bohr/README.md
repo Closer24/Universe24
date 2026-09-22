@@ -241,3 +241,88 @@ and the books of the seven worlds move, the readings do not (every
 orbit, closing, phase at a closing and C(2) as under the action row; 2
 readings inside, 0 outside). The verdict stands; the register entry has
 the line ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of `expectations.json`, committed at `543d202` before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the seven
+worlds at the generator's circle under the line drive, the law's drive of
+a body (the momenta and the action of the table above, h = 5536242544,
+the intervals 3000 to 10400), the pins committed before the run. A new
+registration beside the runs of 2026-09-20, never a replacement: the
+paper's rows of series H (the closure at r = 8, j = 2; the 2.041 to 2.000)
+rest on the runs under the per-axis drive and say so.
+
+Source fingerprint `e67f6b9a5469d75d` (the checkout of `drive-default` at
+`543d202`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3, headless, four
+cores, `tools/run_series.py --jobs 4`; every run completed at its declared
+intervals (47.1, 53.0, 53.3, 75.5, 130.7, 181.1, 189.7 s for `r2` to
+`r16`; a slower host than the runs of 2026-09-20) with the books balanced
+at every tick, `run.json` carrying `"drive": "line"`; the digests (state,
+audit, events): `44017b44f66b`, `c2d460c3f1a5`, `7b4cc6dedd12` (`r2`);
+`18eb629c707b`, `7cb5dbcf37d7`, `9fd752af138b` (`r4`); `88b7b85a9666`,
+`3912506e4c30`, `1b1eccd2798d` (`r6`); `f4f00d3b7ad2`, `775bd147c597`,
+`da83bca6186a` (`r8`); `f679e97bc54b`, `92077bd37aa5`, `f130c0bdbaa3`
+(`r12`); `19d1004433c1`, `81c0dc66c280`, `789a21214a5c` (`r15`);
+`cc0d52b69e70`, `fe47bb711572`, `ec97eb215469` (`r16`).
+`tools/bohr_readings.py`: 0 record checks failed, 0 readings inside, 0
+outside (no coherence reading at any radius: fewer than two closed turns
+everywhere), 1 GameBoard diagnostic printed and not counted, none moved.
+
+The turns of the angle, the closings and their T, the radii, the returns,
+the ends, the phase's turn per orbit and the first Link are GAMEBOARD
+readings (the step records); C and the slope are DETECTOR readings (the
+four side faces pooled: at `r8` the per-face C 0.41, 0.30, 0.30, 0.59 over
+397, 378, 390 and 381 clicks); the ends are the electron's own click on
+the face:
+
+| World | r | j (kind) | Expected | Turns of the angle | Closings: T (pinned, 15 percent) | Mean radius | Return (Links) | r min .. max | End | Phase turn per orbit, the fraction (design) | C(2), slope | The first Link (pinned) | Verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `r2` | 2 | 0.963 (closing) | C >= T / 2 | 0.93 | 0 (122) | - | - | 2.0 .. 17.5 | face:+x at 377 | - | - | 10 (10) | no reading: thrown out within the first turn |
+| `r4` | 4 | 1.478 (between) | C < 2 | 1.66 | 1: 834 (304; 258 .. 350) | 8.65 | 6.0 | 4.0 .. 21.6 | face:-y at 1945 | - | - | 13 (13) | no reading: one wide turn |
+| `r6` | 6 | 1.731 (between) | C < 2 | 1.02 | 1: 1053 (565; 480 .. 650) | 10.59 | 14.0 | 6.0 .. 20.2 | face:+x at 1140 | - | - | 15 (15) | no reading: one wide turn |
+| `r8` | 8 | 2.000 (closing) | C >= 1.0 | 2.16 | 2: 1191, 2680 (857; 728 .. 985) | 10.27, 18.11 | 4.0, 10.0 | 8.0 .. 20.9 | on the GameBoard at the end of 4300 | 0.172 (0.000) | 0.31, 0.90 | 18 (18) | the closing ratio differs (a GAMEBOARD diagnostic, not counted) |
+| `r12` | 12 | 2.547 (between) | C < 2 | 1.63 | 1: 2201 (1490; 1267 .. 1714) | 16.33 | 6.1 | 11.7 .. 34.7 | face:-y at 4125 | - | - | 20 (20) | no reading: one wide turn |
+| `r15` | 15 | 2.858 (between) | C < 2 | 1.16 | 1: 2362 (2057; 1748 .. 2365) | 17.05 | 4.0 | 13.0 .. 34.7 | face:+y at 3161 | - | - | 22 (22) | no reading: one wide turn |
+| `r16` | 16 | 3.234 (between) | C < 2 | 1.19 | 1: 4685 (2078; 1766 .. 2390) | 26.01 | 12.0 | 16.0 .. 33.1 | face:+y at 5883 | - | - | 21 (21) | no reading: one wide turn |
+
+The electron's own reads (DETECTOR), the inward push summed in units of Q
+per unit of content: 56 481 593 over 67 `read` records (`r2`), 58 608 664
+over 323 (`r4`), 34 783 726 over 174 (`r6`), 61 356 750 over 551 (`r8`),
+41 392 316 over 395 (`r12`), 28 646 337 over 304 (`r15`), 22 507 000 over
+326 (`r16`); per interval over the host's tick count, a GAMEBOARD rate,
+18 827, 19 536, 11 595, 14 269, 5 519, 2 781 and 2 164.
+
+**What is read and what is not, no number moved.** The one pin the line
+drive's own rule gives, the interval of the electron's first Link from
+rest (ceil(W / (p Q)) on the wall W = Q^2 S M_e + p T_D), reads exactly at
+every radius: 10, 13, 15, 18, 20, 22 and 21. No orbit closes by the
+criterion (the return within r / 4 at the closing of the angle) at any
+radius, as under the per-axis drive: at r = 8, the design's closing
+radius, the electron closes the angle twice (T 1191 and 2680 against the
+circle's 857, both outside 15 percent; the returns 4 and 10 Links outside
+r / 4 = 2; the mean radii 10.27 and 18.11) and is on the GameBoard at the
+end of 4300 intervals (under the per-axis signed drive it left at 3869 of
+4200 with T 1292 and 2016), the phase's turn per orbit 0.172 of a circle
+against the design's 0 and the faces' record C(2) = 0.31 against the
+expected 1.0 (a diagnostic, differs); r = 2 is thrown out within its
+first turn (face:+x at 377; under the per-axis drive it closed once at T
+449 and left at 1264), and r = 4, 6, 12, 15 and 16 make one wide turn
+each (T 834, 1053, 2201, 2362, 4685 against 304, 565, 1490, 2057, 2078:
+every period 14 to 175 percent above its circle's, the mean radii 8.7 to
+26.0 against 4 to 16) and leave through a side face at 1945, 1140, 4125,
+3161 and 5883. Bohr's lines are still not read behind the detector,
+neither for nor against, and the registered verdicts stand as history
+under the drive they name; what the law lacks is a stable closed orbit
+under whole kicks, under the line drive as under the per-axis one. The
+causes named, as before: the grain of the push (one shell per 10
+intervals, whole labels of 64 on p, 12 to 208 lumps per orbit of 1.7 to
+29.6 degrees), the close pass; and the drive's own anisotropy, small at
+these speeds and of the opposite sign to the per-axis drive's (the wall
+carries |p|_1 T_D: on a diagonal heading at r = 8 the pace is 4.0 percent
+below the axis's; the per-axis drive was 1.8 percent above). A reading
+under the line drive of what the per-axis drive's re-reads found, that
+every loop widens from its first quarter turn, is what this run adds: the
+loops are wider (r to 2.6 x r at the far side) and slower than under the
+per-axis drive at the same fan, and the change of drive does not change
+the finding.

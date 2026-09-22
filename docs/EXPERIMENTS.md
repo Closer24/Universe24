@@ -3034,6 +3034,89 @@ states "exactly" and means integer equality at every tick.
   27.86 (GAMEBOARD, a diagnostic); nothing compared with nature, NATURE
   row 6 NOT YET. A labelled baseline for the stability rule's design
   (atom-give-v1, record 881), not a re-read of series H's verdict.
+- **Re-read under the law's line drive (2026-09-22; measured against the
+  pins of `expectations.json`, committed at `543d202` before the run;
+  the model owner's record 972, [the design](designs/drive_b/DEFAULT.md)
+  step 2; a new registration beside the runs above, which the paper's
+  rows rest on and which stand under the per-axis drive they name).** The
+  seven worlds at the generator's circle under the line drive, the law's
+  drive of a body (p(8) = 346015159, h = 16 p(8) = 5536242544, the atoms
+  series' integers; the momenta 666688231, 511320667, 399263266,
+  346015159, 293783192, 263735809, 279779624 at r = 2 to 16; the
+  intervals 3000, 3000, 3000, 4300, 7500, 10300, 10400). The checkout of
+  `drive-default` at `543d202`, source fingerprint `e67f6b9a5469d75d`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run completed
+  in 47 to 190 s with the books balanced at every tick, `run.json`
+  carrying `"drive": "line"`; 0 record checks failed; no coherence reading
+  taken at any radius (fewer than two closed turns everywhere); 1
+  GameBoard diagnostic printed and not counted; none moved.
+
+  | World | r | j (kind) | Expected | Turns of the angle | Closings: T (pinned, 15 percent) | Mean radius | Return (Links) | r min .. max | End | Phase turn per orbit, the fraction (design) | C(2), slope | The first Link (pinned) | Verdict |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r2` | 2 | 0.963 (closing) | C >= T / 2 | 0.93 | 0 (122) | - | - | 2.0 .. 17.5 | face:+x at 377 | - | - | 10 (10) | no reading: thrown out within the first turn |
+  | `r4` | 4 | 1.478 (between) | C < 2 | 1.66 | 1: 834 (304; 258 .. 350) | 8.65 | 6.0 | 4.0 .. 21.6 | face:-y at 1945 | - | - | 13 (13) | no reading: one wide turn |
+  | `r6` | 6 | 1.731 (between) | C < 2 | 1.02 | 1: 1053 (565; 480 .. 650) | 10.59 | 14.0 | 6.0 .. 20.2 | face:+x at 1140 | - | - | 15 (15) | no reading: one wide turn |
+  | `r8` | 8 | 2.000 (closing) | C >= 1.0 | 2.16 | 2: 1191, 2680 (857; 728 .. 985) | 10.27, 18.11 | 4.0, 10.0 | 8.0 .. 20.9 | on the GameBoard at the end of 4300 | 0.172 (0.000) | 0.31, 0.90 | 18 (18) | the closing ratio differs (a GAMEBOARD diagnostic, not counted) |
+  | `r12` | 12 | 2.547 (between) | C < 2 | 1.63 | 1: 2201 (1490; 1267 .. 1714) | 16.33 | 6.1 | 11.7 .. 34.7 | face:-y at 4125 | - | - | 20 (20) | no reading: one wide turn |
+  | `r15` | 15 | 2.858 (between) | C < 2 | 1.16 | 1: 2362 (2057; 1748 .. 2365) | 17.05 | 4.0 | 13.0 .. 34.7 | face:+y at 3161 | - | - | 22 (22) | no reading: one wide turn |
+  | `r16` | 16 | 3.234 (between) | C < 2 | 1.19 | 1: 4685 (2078; 1766 .. 2390) | 26.01 | 12.0 | 16.0 .. 33.1 | face:+y at 5883 | - | - | 21 (21) | no reading: one wide turn |
+
+  The electron's own reads (DETECTOR), the inward push summed in units of
+  Q per unit of content: 56 481 593 over 67 records (`r2`), 58 608 664
+  over 323 (`r4`), 34 783 726 over 174 (`r6`), 61 356 750 over 551 (`r8`),
+  41 392 316 over 395 (`r12`), 28 646 337 over 304 (`r15`), 22 507 000
+  over 326 (`r16`). The first Link, the one pin the line drive's own rule
+  gives (ceil(W / (p Q)) on W = Q^2 S M_e + p T_D), reads exactly at every
+  radius. No orbit closes by the criterion at any radius, as under the
+  per-axis drive: at r = 8 two closings (T 1191 and 2680 against the
+  circle's 857, the returns 4 and 10 Links outside r / 4, the mean radii
+  10.27 and 18.11), on the GameBoard at the end of 4300 (under the
+  per-axis signed drive out at 3869 of 4200), the phase's turn per orbit
+  0.172 against 0, C(2) = 0.31 against 1.0 (a diagnostic, differs); r = 2
+  thrown out within its first turn (377); the others one wide turn each
+  (every period 14 to 175 percent above its circle's, the mean radii 8.7
+  to 26.0) and out through a side face (1945, 1140, 4125, 3161, 5883).
+  Bohr's lines are still not read behind the detector, neither for nor
+  against; the registered verdicts stand as history under their drive;
+  what the law lacks is a stable closed orbit under whole kicks, under
+  the line drive as under the per-axis one. The causes named: the grain
+  of the push and the close pass, as before; the drive's own anisotropy,
+  small at these speeds and of the opposite sign (the wall carries |p|_1
+  T_D: 4.0 percent slower on a diagonal at r = 8, where the per-axis
+  drive was 1.8 percent faster). The loops under the line drive are wider
+  and slower than under the per-axis drive at the same fan; the change of
+  drive does not change the finding. No pin moved.
+- **The atoms series under the law's line drive (2026-09-22; measured
+  against the pins of PINS.md and CENTRED_STEP.md section 4, nothing
+  moved; series H's re-pin, [the design](designs/drive_b/DEFAULT.md)
+  step 2).** The three worlds of `examples/events/atoms/` as registered,
+  byte for byte (their momenta derived for this drive on 2026-09-21), run
+  once each on `drive-default` at `543d202` (fingerprint
+  `e67f6b9a5469d75d`, Python 3.14.0rc2, headless), every run completed
+  with the books balanced, `run.json` carrying `"drive": "line"`; the
+  readings by kind in [the series' README](../examples/events/atoms/README.md#the-three-worlds-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-pinsmd-and-centred_stepmd-section-4-nothing-moved).
+  `hydrogen_r12` (now series H's `r12` to the integer): the electron
+  widens every quarter turn (the crossings 12, 13, 19, 18, 16, 23 Links,
+  DETECTOR) and leaves through `face:-y` at 4125; one return at 6 Links,
+  no period, no closure; the dwell 22.00 counts per Link (P1 PASS), the
+  proton's reads per crossing 0 to 1 (P5 PASS), P2, P2b, P6 FAIL as
+  declared, P3, P3b NOT READ. `hydrogen_r12_centred` (the line drive
+  started at the half wall): the loop stays for the 7500 intervals (C1
+  PASS; 19 quarter crossings), four returns with the periods 1421, 1410,
+  1310 against the circle's 1490 (C3 FAIL as declared, the third below
+  1400; the registered per-axis run fell to 1040), the crossings' radii 7
+  to 23 Links (C2 FAIL as declared), the circles per return from the
+  rows' phases 4.031, 4.016, 4.094 (C5, reported, not pinned; the
+  circle's 4.001), the momentum's length at the crossings 160 to 478
+  million (C4, a diagnostic). `helium_r12`: the pinned decay (the
+  momentum at the first closing 0.34 to 0.66 of the start) reads OUTSIDE
+  on the other side: one electron falls to 1.6 Links of the square's
+  centre, is slung past the nucleus (a `contact` onto a nucleon at 516,
+  its `measure` entry taking p_x) with 5.69 x the start at its one
+  closing (510) and leaves through `face:+y` at 617; the other turns 0.64
+  without closing and leaves at 700 with 1.30 x the start; the pair
+  scattered within one turn by the close pass, not by the drag;
+  `at_nucleus` clicks 0 for `e`. Nothing moved; NATURE row 6 NOT YET.
 
 ### I, the nucleus (2026-09-20)
 

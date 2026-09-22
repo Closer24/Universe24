@@ -39,6 +39,15 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   re-run at n = 9 kept as history (`expectations(9, "axis")`), and the
   five worlds run once more with their readings registered beside the two
   earlier runs (`docs/EXPERIMENTS.md`, D3; `docs/VALIDATION.md`).
+- Series H re-pinned under the law (`examples/events/bohr/`): the
+  generator derives the circle per radius under the line drive (p(8) =
+  346015159, h = 5536242544, the atoms series' integers) and writes
+  `expectations.json` (the per-axis pins of history reproducible by
+  `expectations(AXIS_DRIVE)`), the seven worlds rewritten, the gate
+  world `bohr/r2` re-pinned, and the seven runs registered beside the
+  runs of 2026-09-20 (no orbit closes by the criterion; the first Link
+  exactly as pinned). The atoms series' worlds, derived for this drive on
+  2026-09-21, are unchanged and run under it.
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 

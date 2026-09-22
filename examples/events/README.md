@@ -241,7 +241,14 @@ under the step drive (2026-09-20) the reference orbit closes four times
 and stays on the GameBoard for the run, the coherence at the closing
 radius outside (C(4) = 1.01 against 2.0, the phase's turn per orbit 0.75
 to 0.83 against 0): the orbit closes and Bohr's condition is not met,
-registered as the finding and not tuned.
+registered as the finding and not tuned. Since 2026-09-22 the shipped
+worlds and the pins of `bohr/expectations.json` are the generator's circle
+under the law's line drive (h = 5536242544, the atoms series' integers;
+the per-axis pins of history reproducible from the same file), and the
+re-read under it is registered beside the runs above: no orbit closes by
+the criterion at any radius, the loops wider and slower than under the
+per-axis drive, the electron's first Link exactly as the line drive's rule
+pins it, Bohr's lines still not read.
 
 ## The atoms series
 
@@ -254,7 +261,14 @@ binding-v1's square fixed as the nucleus with two electrons of the
 register's electron point-symmetric about it, each releasing on the fan's
 band so that the partner's rays push it. The pins before the runs are
 [docs/designs/atoms/PINS.md](../../docs/designs/atoms/PINS.md); the runs
-come after form B lands.
+come after form B lands. Form B's drive is the law's since 2026-09-22
+(the line drive), and the three worlds ran under it that day, registered
+as rows of series H beside the per-axis baseline and centred runs: the
+hydrogen loop widens and leaves (now series H's `r12` to the integer), the
+centred loop stays for the run with four returns near the circle's period
+and its rows' phases whole within 0.1 circle per return, and helium's
+pair is scattered by a close pass, the pinned decay outside on the other
+side.
 
 ## The nucleus series
 

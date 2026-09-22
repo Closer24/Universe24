@@ -34,9 +34,9 @@
    "cap": 689,
    "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span",
    "digests": {
-    "state_sha256": "66a8f7761e32e23891483f3a04aa82e01e96cc1a659a85cb8d39d527c9e658df",
-    "audit_sha256": "d26bec6a0c77408f143000868c2c3d76b32fa91a6e9c5a8b248123f1d677daf5",
-    "events_sha256": "414a38490f3b9268a379c8ab3f1cd56295dcab2c0b388accd06ac1f536c368cb"
+    "state_sha256": "02b91cd0142ddac44761962c02fb740146cc575b4ca93539d5aed91a8d824377",
+    "audit_sha256": "51fe825facc93304f09a0ed520b52fb9763118d567d7760e7e1284508c8feff7",
+    "events_sha256": "fe666ff970be74aac56d4dbc45f478d53079009777d653e392dd664cebc9cd6c"
    },
    "former": {
     "digests": {
@@ -45,7 +45,7 @@
      "events_sha256": "05d83fef6cc1b1a7ad6c6dd501264e8aca2bc2604a511828e2142550de031004"
     },
     "drive": "per_axis",
-    "moved": "2026-09-22, the line drive the law's drive of a body (the model owner, record 972; docs/designs/drive_b/DEFAULT.md section (f)): the electron's orbit under the line drive's pace"
+    "moved": "2026-09-22, the line drive the law's drive of a body (the model owner, record 972; docs/designs/drive_b/DEFAULT.md section (f)): the electron's orbit under the line drive's pace (the digests of that day at the registered integers, 66a8f776..., d26bec6a..., 414a3849..., in git at 5b3c7686); and again the same day on series H's re-pin (section (c)): the world's momentum 666688231 and action 5536242544 the generator's circle under the line drive"
    }
   },
   {

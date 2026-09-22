@@ -11,6 +11,44 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series H under the law's line drive: seven runs on drive-default 543d202 - 2026-09-22
+
+The branch `drive-default` at `543d202` (the generator's pins under the
+line drive committed before the run, DEFAULT.md section (c): p(8) =
+346015159, h = 5536242544, `expectations.json`): the seven worlds of
+`examples/events/bohr/` run through `tools/run_series.py --jobs 4` (Python
+3.14.0rc2, numpy 2.5.3, headless; source fingerprint `e67f6b9a5469d75d`),
+every run completed at its declared intervals (3000 to 10400) with the
+books balanced at every tick, `run.json` carrying `"drive": "line"`; the
+digests (state, audit, events) `44017b44f66b`, `c2d460c3f1a5`,
+`7b4cc6dedd12` (`r2`), `18eb629c707b`, `7cb5dbcf37d7`, `9fd752af138b`
+(`r4`), `88b7b85a9666`, `3912506e4c30`, `1b1eccd2798d` (`r6`),
+`f4f00d3b7ad2`, `775bd147c597`, `da83bca6186a` (`r8`), `f679e97bc54b`,
+`92077bd37aa5`, `f130c0bdbaa3` (`r12`), `19d1004433c1`, `81c0dc66c280`,
+`789a21214a5c` (`r15`), `cc0d52b69e70`, `fe47bb711572`, `ec97eb215469`
+(`r16`); run times 47 to 190 s at 82 to 354 MB peak (host measurements).
+The gate world `bohr/r2` replayed at its cap 689 with the world's new
+momentum and action: its digests moved again and are re-pinned in
+`gate_set.json` (`02b91cd0...`, `51fe825f...`, `fe666ff9...`; the flip
+day's `66a8f776...` at the registered integers in git at 5b3c7686, the
+per-axis digests kept under `former`). The readings by kind (no
+coherence reading at any radius; the first Link exactly as pinned at
+every radius) are in [the series' README](../examples/events/bohr/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-543d202-before-the-run)
+and [the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20).
+The runs of 2026-09-20 stay registered as the readings the paper's rows
+of series H rest on, under the drive they name. The atoms series' three
+worlds (`examples/events/atoms/`, unchanged by the flip: their momenta
+were derived for this drive) ran once each on the same checkout
+(`tools/run_series.py --jobs 3`; the digests `80425f1adcab`,
+`92077bd37aa5`, `e0ee793f1653` for `hydrogen_r12` in 126 s,
+`ac10ba004826`, `acedae509e82`, `6bd33ee057e2` for `hydrogen_r12_centred`
+in 135 s, `cb93a6bbed5c`, `5714d91bea4e`, `1a169e20d306` for `helium_r12`
+in 236 s), every run completed with the books balanced; the readings
+against the pins of PINS.md and CENTRED_STEP.md section 4 are in
+[the atoms' README](../examples/events/atoms/README.md) (the centred loop
+stays for the run with the periods 1421, 1410, 1310; helium's pair
+scattered by a close pass).
+
 ## Series D3 under the law's line drive: five runs at n = 10 on drive-default ec267fe - 2026-09-22
 
 The branch `drive-default` at `ec267fe` (the generator's pins under the

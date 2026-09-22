@@ -55,7 +55,16 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   kept as history under `per_axis_drive` on the Boss's default until the
   owner speaks; so is `catalog/neutron_star` (its accumulator past the bound
   at run time); series R's seven worlds carry the key until the series is
-  re-pinned in the campaign (their replay blocks stand as registered).
+  re-pinned in the campaign (their replay blocks stand as registered). The
+  re-pins made so far, each one commit of pins and one of readings: series
+  D3 (`orbit_lamp/`, the circle at n = 10 under the line drive, the
+  per-axis n = 9 kept as history), series H (`bohr/`, the seven worlds'
+  momentum and action rewritten by the generator under the line drive,
+  p(8) = 346015159 and h = 5536242544, the atoms series' integers, with
+  `expectations.json`; the per-axis pins of history reproducible by
+  `expectations(AXIS_DRIVE)`) and the atoms (`atoms/`, whose momenta were
+  derived for the line drive on 2026-09-21 and whose worlds are byte for
+  byte as registered).
 - **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
   `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
   declare `per_axis_drive` and keep their integers; the law's cases are
