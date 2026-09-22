@@ -179,9 +179,13 @@ def steps_by_rule(
     """The (tick, axis) at which a free probe of content m steps by the
     engine's drive on the record (`NatureBeamSimulation._move`, ENGINE.md):
     its momentum is the cumulative push of its reads (born at rest), and
-    at tick t after that tick's read the drive advances once (the momentum
-    in label units, Q = `LABEL_SCALE`, S the world's `width`); at most one
-    Link per interval, wherever it lands (a refused step counts). Under
+    at tick t the drive advances once by the momentum the reads before
+    that tick left (the crossing rule, BEAM_LAW note 48, since 2026-09-21:
+    the step precedes the interval's law, so a push read at tick t drives
+    from tick t + 1; the momentum in label units, Q = `LABEL_SCALE`, S the
+    world's `width`); at most one Link per interval, wherever it lands (a
+    refused step counts). A momentum declared at the start is a read at
+    tick 0. Under
     the law's line drive (since 2026-09-22, BEAM_LAW note 17 as amended on
     the model owner's record 972, note 49; the engine's own `by_line` and
     `drive_wall` called here) the three drive rows gain p_a Q against the
@@ -197,8 +201,6 @@ def steps_by_rule(
     drive_rows = [0, 0, 0]
     fired: list[tuple[int, int]] = []
     for tick in range(first, last + 1):
-        if tick in reads:
-            momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
         stepped = None
         if drive == LINE_DRIVE:
             wall = drive_wall(momentum, m, width)
@@ -213,6 +215,8 @@ def steps_by_rule(
             raise ValueError(f"unknown drive {drive!r}")
         if stepped is not None:
             fired.append((tick, stepped))
+        if tick in reads:
+            momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
     return fired
 
 

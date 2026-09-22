@@ -27,7 +27,9 @@ engine"), written down first:
     at 2, 4, 6, 8, 10 on x alone under (64, 64, 0) (x before y, the y fires
     lost); on the GameBoard a free measured event of content 1 with that
     declared momentum makes the same `step` records (tick, axis), width by
-    width and drive by drive;
+    width and drive by drive (the declared momentum a read at tick 0: since
+    the crossing rule, BEAM_LAW note 48, a push read at tick t drives from
+    tick t + 1, as the tool's rule has it);
 (c) the release: `RELEASE_PER_HEADING` = by_clock(0, 2^24, 128) = 131072
     and q = 6 x 131072 = 786432; a source of 2^24 on the six headings at
     `release` [1, 128] has released 786432 units after its first
@@ -122,30 +124,30 @@ def engine_steps(momentum: list[int], width: int, per_axis: bool = False) -> lis
 def test_the_step_rule_is_the_engines_step_off_the_clock():
     """(b)."""
     # The law's line drive: the integers written first (the docstring).
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10) == [(3, 0), (6, 0), (9, 0)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3) == [(5, 0), (10, 0)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1) == [
+    assert TOOL.steps_by_rule({0: (0, (UNIT, 0, 0))}, 1, 0, 10) == [(3, 0), (6, 0), (9, 0)]
+    assert TOOL.steps_by_rule({0: (0, (UNIT, 0, 0))}, 1, 0, 10, 3) == [(5, 0), (10, 0)]
+    assert TOOL.steps_by_rule({0: (0, (UNIT, UNIT, 0))}, 1, 0, 10, 1) == [
         (5, 0),
         (6, 1),
         (9, 0),
         (10, 1),
     ]
     for momentum, width in (([UNIT, 0, 0], 1), ([UNIT, 0, 0], 3), ([UNIT, UNIT, 0], 1)):
-        reads = {1: (0, (momentum[0], momentum[1], momentum[2]))}
-        assert engine_steps(momentum, width) == TOOL.steps_by_rule(reads, 1, 1, 10, width), (
+        reads = {0: (0, (momentum[0], momentum[1], momentum[2]))}
+        assert engine_steps(momentum, width) == TOOL.steps_by_rule(reads, 1, 0, 10, width), (
             momentum,
             width,
         )
     # The per-axis drive of history under its key.
     x_only = [(t, 0) for t in (2, 4, 6, 8, 10)]
     axis = TOOL.AXIS_DRIVE
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 1, axis) == x_only
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3, axis) == [(4, 0), (8, 0)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1, axis) == x_only
+    assert TOOL.steps_by_rule({0: (0, (UNIT, 0, 0))}, 1, 0, 10, 1, axis) == x_only
+    assert TOOL.steps_by_rule({0: (0, (UNIT, 0, 0))}, 1, 0, 10, 3, axis) == [(4, 0), (8, 0)]
+    assert TOOL.steps_by_rule({0: (0, (UNIT, UNIT, 0))}, 1, 0, 10, 1, axis) == x_only
     for momentum, width in (([UNIT, 0, 0], 1), ([UNIT, 0, 0], 3), ([UNIT, UNIT, 0], 1)):
-        reads = {1: (0, (momentum[0], momentum[1], momentum[2]))}
+        reads = {0: (0, (momentum[0], momentum[1], momentum[2]))}
         assert engine_steps(momentum, width, per_axis=True) == TOOL.steps_by_rule(
-            reads, 1, 1, 10, width, axis
+            reads, 1, 0, 10, width, axis
         ), (momentum, width)
 
 
