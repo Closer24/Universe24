@@ -46,9 +46,11 @@ def test_main_tex_is_the_assemblers_output() -> None:
     )
 
 
-def test_every_correction_is_applied_once() -> None:
-    if not _base_commit_available():
-        pytest.skip("the base commit of the assembly is not in this checkout's history")
+def test_every_correction_has_its_own_label() -> None:
+    """Each correction is named once; that every one applies exactly once is
+    asserted by the build itself (cut30_lib.sub), which the test above runs.
+    A later correction may rewrite text an earlier one inserted, so no
+    correction's text is required to survive verbatim."""
     sys.path.insert(0, str(CUT30))
     try:
         import corrections  # noqa: PLC0415
@@ -58,7 +60,4 @@ def test_every_correction_is_applied_once() -> None:
         sys.path.remove(str(CUT30))
         sys.modules.pop("corrections", None)
     assert len(labels) == len(set(labels)), "a correction's label is repeated"
-    text = MAIN_TEX.read_text(encoding="utf-8")
-    for _, old, new in corrections.CORRECTIONS:
-        if new:
-            assert " ".join(new.split()) in " ".join(text.split()), old[:60]
+    assert all(old for _, old, _ in corrections.CORRECTIONS), "a correction has an empty anchor"

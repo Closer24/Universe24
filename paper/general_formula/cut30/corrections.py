@@ -237,6 +237,22 @@ CORRECTIONS = [
         "the covariant readings (a body's energy as an exact square, its counts gated by $E_0/E$; series S's face clicks inside their pins on one axis) against the same pins \\\\",
         "the covariant readings (Eq.~\\eqref{eq:square}; series S's face clicks inside their pins on one axis) against the same pins; their entry into the law is in hand on the owner's word of 2026-09-22, the runs off the one axis pending, and this text claims nothing of it until they land \\\\",
     ),
+    # Issues #553 and #544 against the merged cut (the Boss's word of 02:12Z,
+    # record 651): the antiphase pair 1 + x^(N/2) is zero in the declared
+    # quotient, so its "support 32" is the full DFT of an unreduced
+    # representative and leaves the enumeration; the discussion's Born
+    # clause reads the ledger's bound (a cell within 1 / N, the cumulative
+    # within 1 / (2N)), not 1 / (2N) per cell.
+    (
+        "#553 the antiphase pair out of the support enumeration",
+        "(one phase gives all $64$ roots, the antiphase pair $32$, a comb of every eighth phase $8$, the equality case)",
+        "(one phase gives all $64$ roots, a comb of every eighth phase $8$, the equality case)",
+    ),
+    (
+        "#544 the discussion's Born clause",
+        "Born's rule to $1/(2\\Nphi)$ per cell, Tsirelson's bound",
+        "Born's rule to $1/\\Nphi$ per cell and the cumulative rungs to $1/(2\\Nphi)$, Tsirelson's bound",
+    ),
 ]
 
 
