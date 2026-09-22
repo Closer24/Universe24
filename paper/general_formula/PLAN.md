@@ -3744,3 +3744,44 @@ frame's bibitem, the three sentences are checked against the merged
 section 0 (with "Outside, the game above the board" for "our real
 world", record 768), main.tex is regenerated, the pinning test and
 check.py run, one commit, one push, the report.
+
+### 8a. Inside formulas, Outside formulas, the bridge (the owner's record 777, through the Boss at 06:55Z): folded into section 8
+
+The owner: W = E_0^2 + 3 p.p (Eq. 14) is an Inside formula, on the
+record, read by no detector; from it the Outside formulas come out (the
+energy at a click, gamma, the rate, the Doppler factors); there are
+Inside formulas and Outside formulas, and the paper shows the
+connections. The algebra's spine in the paper, therefore:
+(a) the Inside formulas, derived from the six verbs: the map, the
+    closed form of the linear block, the books, the split's isometry,
+    the click's bilinear form, the rung, the joint weight, S(N)'s closed
+    form, and Eq. 14 among them, licensed by the click theorem as the
+    conversion's identity (part 6);
+(b) the Outside formulas, each derived from an Inside one by the
+    conversion (A1, A2), in a two-column table, Inside | Outside, with
+    the map in the row (the mathematician recasts the click frame's
+    section 7 table in that shape; part 7, Newton Outside, follows it):
+    the interval to a detector's count, the Node to a click's place,
+    the momentum to a velocity of clicks, W to the energy at a click,
+    gamma, the rate sqrt(1 - v^2), the two Doppler factors, the phase
+    to a frequency;
+(c) the register's readings on the Outside side only, each row of Table
+    2 and Table 3 a reading of an Outside formula's column.
+Eq. 14 moves in the frame from "a hypothesis beside the law" to "the
+Inside identity of the conversion, shown to second order", with the
+fact that the rows still hop whole kept beside it: the reading's
+identity, not yet the rows' dynamics. In the paper: the covariant
+square keeps its frame (Eq. 14) and its sentence becomes "an Inside
+formula, on the record, read by no detector: the Outside formulas of
+the conversion, the energy at a click, gamma, the rate and the Doppler
+factors, come out of it (the table), shown to second order by the click
+theorem; the rows still hop whole, so it is the reading's identity, not
+yet the rows' dynamics"; Table 4's Lorentz row keeps the measurable and
+drops "a hypothesis"; the ledger gains one row, "Eq. 14, the Inside
+identity of the conversion & (A1), (A2) & the rows' dynamics open &
+shown (second order) & Section 9", the ground word "shown" being the
+wording rule's. Since the framing list is applied before part 6 merges,
+its wording of Eq. 14 is neutral, "an Inside formula on the record, read
+by no detector, whose Outside formulas the conversion gives", and the
+reshaping commit says "shown" with part 6's SHA. The application order
+is unchanged.
