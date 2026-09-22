@@ -4303,3 +4303,25 @@ step, Newton's step as the limit. No reading, kind, number, verdict or
 citation removed; the seven confirmations and the GHZ clause as they
 are; the framing sentence and the click theorem's sentences word for
 word. The count: 36 pages.
+
+## The last page's candidates, named and not cut (2026-09-22, the Boss's word of 11:20Z under record 852; the owner decides)
+
+From 36 pages (the last page full) to 35 needs about fifty lines. The
+three candidates, in the order of least loss, each with what it loses;
+together they reach 35, none is cut until the owner's word:
+
+| # | The candidate | What it loses | Lines |
+| --- | --- | --- | --- |
+| A | The discussion's "The road to each, and the check that nothing was derived from them" condensed to eight lines pointing at the one chain (now in "The step beneath and the step above") and at Table 8 | the prose of the three roads (Lorentz, Einstein, the Outside step) told a second time; no claim, no number, no citation (Table 8 keeps the check, the chain keeps the roads) | about 10 |
+| B | The duplicated sentences: the frame paragraph's close (the two one-way Doppler factors and 1 - v^2, now in the chain sentence); Section 6's "Interference, by the formulas alone" without the Mach-Zehnder and one-slit sentences the light chain of Section 9 repeats (the formula R(x), the spacing and the readings stay); Section 3's "The pace of the rows, and the octahedron" to three lines (the six Ports paragraph and the Proposition say it) | no claim, no reading, no number: each statement stays in its other place | about 18 |
+| C | The families table's "when it entered" and "the verbs" columns merged into one, its object cells shortened; the abstract from twenty lines to fourteen (the platform sentence and the prediction kept) | the families table's readability (one column fewer), six lines of the abstract's list of exact results (the list stays in "What is proved") | about 21 |
+
+The writer's recommendation: all three. The owner was shown the same
+list in six items (the three above split); the simulator and the code
+stay named in the introduction, the platform, Section 8 and Appendix
+C; Table 7 stays. Also noted from the Boss (record 891): NUMBERS.md's
+rows 130 to 134 (the crowd's clock, the cluster, the reader in a crowd)
+cite worlds main.tex no longer carries; on the Register Architect's
+merge SHA they are marked "world removed from the register, record
+871, SHA ..." and not deleted; shell_clock's six worlds (series X) stay
+in the register, cited by the paper.
