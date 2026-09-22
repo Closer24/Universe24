@@ -48,7 +48,8 @@ class Case:
     at_fraction: bool = (
         False  # the control: the push read at the accumulated position, Node plus acc / wall
     )
-    centred: bool = False  # the candidate cure: the accumulator starts at half the wall (the Node the nearest to the accumulated motion)
+    centred: bool = False  # the centred step: the step fires at half the wall, the whole wall subtracted
+    shown: int = 12  # the quarter crossings printed
 
 
 def run(case: Case) -> str:
@@ -130,7 +131,7 @@ def run(case: Case) -> str:
             else ""
         )
     ]
-    for t, r, p, energy in crossings[:12]:
+    for t, r, p, energy in crossings[: case.shown]:
         lines.append(
             f"    quarter at {t:5d}: r = {r:6.2f} Links, abs(p) = {p:6.1f} million, E = {energy:7.2f} x 10^6"
         )
@@ -251,6 +252,24 @@ CASES = [
         2.0,
         1.2871,
         centred=True,
+    ),
+    Case(
+        "T. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the inverse square",
+        293783192,
+        True,
+        True,
+        2.0,
+        centred=True,
+        shown=24,
+    ),
+    Case(
+        "U. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the lattice's flux r^-1.83",
+        293783192,
+        True,
+        True,
+        1.83,
+        centred=True,
+        shown=24,
     ),
 ]
 

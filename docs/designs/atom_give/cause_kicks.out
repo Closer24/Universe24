@@ -181,3 +181,40 @@ The kick map of the atom's loop at r = 12, by algebra: the Atom
     quarter at  6526: r =  19.00 Links, abs(p) =  193.4 million, E =   -3.76 x 10^6
     quarter at  7280: r =  17.00 Links, abs(p) =  227.8 million, E =   -3.26 x 10^6
     the loop stays for 7500 intervals; 12 quarter crossings, r at the +x crossings [14.0, 14.0, 17.0]
+[GAMEBOARD by formula] T. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the inverse square: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-2.00, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   368: r =  13.00 Links, abs(p) =  274.4 million, E =   -6.62 x 10^6
+    quarter at   807: r =  13.00 Links, abs(p) =  275.5 million, E =   -6.56 x 10^6
+    quarter at  1152: r =  10.00 Links, abs(p) =  336.1 million, E =   -7.18 x 10^6
+    quarter at  1412: r =  10.00 Links, abs(p) =  325.9 million, E =   -7.82 x 10^6
+    quarter at  1764: r =  13.00 Links, abs(p) =  263.0 million, E =   -7.20 x 10^6
+    quarter at  2224: r =  13.00 Links, abs(p) =  263.3 million, E =   -7.18 x 10^6
+    quarter at  2573: r =  11.00 Links, abs(p) =  323.7 million, E =   -6.33 x 10^6
+    quarter at  2842: r =  10.00 Links, abs(p) =  327.5 million, E =   -7.72 x 10^6
+    quarter at  3200: r =  13.00 Links, abs(p) =  257.8 million, E =   -7.45 x 10^6
+    quarter at  3712: r =  14.00 Links, abs(p) =  247.1 million, E =   -6.98 x 10^6
+    quarter at  4099: r =  11.00 Links, abs(p) =  318.4 million, E =   -6.65 x 10^6
+    quarter at  4384: r =  10.00 Links, abs(p) =  343.2 million, E =   -6.73 x 10^6
+    quarter at  4690: r =  13.00 Links, abs(p) =  288.8 million, E =   -5.85 x 10^6
+    quarter at  5273: r =  17.00 Links, abs(p) =  213.9 million, E =   -6.18 x 10^6
+    quarter at  5854: r =  14.00 Links, abs(p) =  274.9 million, E =   -5.61 x 10^6
+    quarter at  6201: r =  11.00 Links, abs(p) =  327.7 million, E =   -6.09 x 10^6
+    quarter at  6538: r =  13.00 Links, abs(p) =  280.8 million, E =   -6.28 x 10^6
+    quarter at  7187: r =  19.00 Links, abs(p) =  211.1 million, E =   -5.18 x 10^6
+    the loop stays for 7500 intervals; 18 quarter crossings, r at the +x crossings [10.0, 10.0, 10.0, 11.0]
+[GAMEBOARD by formula] U. THE PIN CASE, the registered hydrogen_r12 under the centred step: pulsed, main's per-axis drive, the lattice's flux r^-1.83: p0 = 293783192, pulsed (one shell per 10 intervals), lost coincident fires, flux r^-1.83, flow factor 1.0, THE CENTRED STEP: a step at half the wall, the whole wall subtracted
+    quarter at   367: r =  13.00 Links, abs(p) =  275.2 million, E =   -6.58 x 10^6
+    quarter at   801: r =  13.00 Links, abs(p) =  279.4 million, E =   -6.36 x 10^6
+    quarter at  1209: r =  13.00 Links, abs(p) =  278.7 million, E =   -6.40 x 10^6
+    quarter at  1648: r =  14.00 Links, abs(p) =  265.6 million, E =   -6.09 x 10^6
+    quarter at  2106: r =  14.00 Links, abs(p) =  268.0 million, E =   -5.97 x 10^6
+    quarter at  2577: r =  14.00 Links, abs(p) =  287.6 million, E =   -4.94 x 10^6
+    quarter at  2973: r =  13.00 Links, abs(p) =  286.9 million, E =   -5.96 x 10^6
+    quarter at  3440: r =  15.00 Links, abs(p) =  255.9 million, E =   -5.72 x 10^6
+    quarter at  3966: r =  15.00 Links, abs(p) =  254.7 million, E =   -5.77 x 10^6
+    quarter at  4446: r =  14.00 Links, abs(p) =  274.0 million, E =   -5.66 x 10^6
+    quarter at  4893: r =  14.00 Links, abs(p) =  270.3 million, E =   -5.85 x 10^6
+    quarter at  5404: r =  16.00 Links, abs(p) =  259.2 million, E =   -4.81 x 10^6
+    quarter at  5961: r =  16.00 Links, abs(p) =  255.9 million, E =   -4.97 x 10^6
+    quarter at  6503: r =  16.00 Links, abs(p) =  253.4 million, E =   -5.09 x 10^6
+    quarter at  7055: r =  15.00 Links, abs(p) =  254.0 million, E =   -5.81 x 10^6
+    the loop stays for 7500 intervals; 15 quarter crossings, r at the +x crossings [14.0, 15.0, 16.0]
