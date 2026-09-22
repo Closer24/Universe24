@@ -1757,6 +1757,22 @@ CORRECTIONS = [
         "Born's to $1/\\Nphi$. What passes:",
         "Born's to $1/\\Nphi$. The spacing is the law's own: $\\lambda = c\\Nphi d/n$ Links, one turn of the phase per age per fringe, Young's $\\lambda D/s$ only in the paraxial limit \\cite{lightoutside}; the bands' centres are $23.5$ pixels apart for the exact two-path law's $23.3$ (L2b, DETECTOR). What passes:",
     ),
+    # Dark energy's shape (the owner's word to the writer): item (viii) of the new formulas; the two lists on main cited.
+    (
+        "the new-formulas paragraph cites the two lists on main (QUANTA.md, LIGHT.md), as the Boss ordered when the section is next touched",
+        "Formulas of the six verbs taken Outside by the conversion, each with the click that reads it and its kind; none of them is a formula of the continuum.",
+        "Formulas of the six verbs taken Outside by the conversion, each with the click that reads it and its kind; none of them is a formula of the continuum; the full lists, each candidate under the three tests with its reading, are \\cite{quanta} for quanta and bodies and \\cite{lightformulas} for light.",
+    ),
+    (
+        "the new-formulas paragraph: (viii) dark energy's shape, the owner's word to the writer",
+        "the route the owner's decision (\\cite{einsteinoutside}, II.11). The families of the register,",
+        "the route the owner's decision (\\cite{einsteinoutside}, II.11). (viii) Dark energy's shape: the diagram of redshift against flight time read at a detector carries, beside the throw's Doppler $1 + z = 1/(1 - x)$, $x = H\\tau$ (Milne's coasting form, $q = 0$ exactly), one factor $g(\\tau) = (1 + k_A(\\tau))/(1 + k_B)$, the emitters' clock stretch by their crowd over the detector's own; with $g = 1 + g_1 x + \\dots$ the deceleration parameter a reader fits is $q_{\\mathrm{eff}} = -2g_1/(1 + g_1)$, an apparent acceleration for every $g_1 > 0$ with nothing accelerating on the board, a property of the conversion and not of any dynamics (\\cite{darkenergy}; rung 2, the throw's continuum). The register read that shape (series G, the accelerating form the nearest of three in all six pushing windows, DETECTOR) and the coasting throw's $q = -0.108$ in $0 \\pm 0.25$ (G2, MET; FAIL against nature's $-0.53$, row 3). What the law does not give, stated in the same font: the size, $g_1 = 0.36$ for $-0.53$, an input of the crowd (a declared pair, four orders above the known wells); the sign from its own accumulation of the crowd, $q_{\\mathrm{eff}} = 2k_0(3 - k_0)/(1 - k_0)^2 > 0$, the older light born in a thinner crowd; and the brightness of a standard lamp, which reads $q_{\\mathrm{eff}} = 2/(1 + g_1)$, a deceleration, one factor of $1 + z$ short of the expanding form because a click carries the content of its birth (row 11a, FAIL). The model has no cosmological constant and needs none as a rule; it states the supernova diagram as a failure, not a resolution. The families of the register,",
+    ),
+    (
+        "the bibitems darkenergy, quanta, lightformulas on main",
+        "\\bibitem{toffoli1987}",
+        "\\bibitem{darkenergy} Dark energy Outside: what the passage from Inside to Outside puts into the Hubble diagram, and what it does not, \\texttt{docs/designs/light\\_outside/DARK\\_ENERGY.md} of the archived code \\cite{zenodo} on \\texttt{main} at c8ac2ffb (PR \\#791, merged). \\bibitem{quanta} New formulas of quanta and bodies: candidates that the Inside step gives Outside and the continuum cannot state, \\texttt{docs/designs/new\\_formulas/QUANTA.md} of the archived code \\cite{zenodo} on \\texttt{main} at 477daa1d (PR \\#805, merged). \\bibitem{lightformulas} New formulas of light: what the Inside step gives Outside that the continuum cannot state, \\texttt{docs/designs/new\\_formulas/LIGHT.md} of the archived code \\cite{zenodo} on \\texttt{main} at 7370d524 (PR \\#810, merged). \\bibitem{toffoli1987}",
+    ),
 ]
 
 

@@ -3886,3 +3886,21 @@ Section 6's "Interference, by the formulas alone", after Born's rule,
 with Young's lambda D / s named on the comparison side only. 39 pages.
 QUANTA.md and LIGHT.md (PRs #805, #810) are cited when the new-formulas
 section is next touched, as the Boss ordered, not here.
+
+## Applied (2026-09-22, the owner's word to the writer): dark energy's shape, derived from the model's own computations
+
+The owner: "make sure the dark energy formula, derived from our own
+computations, is in the paper." It was not (only row 3's q_0 = -0.108
+FAIL). One commit: item (viii) of the discussion's "What the Inside
+step gives Outside that the continuum cannot state": the apparent
+acceleration q_eff = -2 g_1 / (1 + g_1) from the emitters' clock stretch
+over the detector's own, a property of the conversion with nothing
+accelerating on the board (DARK_ENERGY.md on main at c8ac2ffb, SHOWN in
+form, rung 2), the shape read by series G (DETECTOR) and the coasting
+throw's q = -0.108 (G2, MET; FAIL against -0.53), and in the same font
+what the law does not give: the size an input, the sign from its own
+accumulation the opposite, the brightness one factor short (row 11a
+FAIL); the model has no cosmological constant and states the supernova
+diagram as a failure, not a resolution. Since the section was touched,
+QUANTA.md (477daa1d) and LIGHT.md (7370d524) are cited on main as the
+full lists, as the Boss ordered. 39 pages, the count reported.
