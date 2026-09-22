@@ -899,7 +899,214 @@ the amount a and the phase f of one record; those pass outside only as
 the click's square over many records, which is Born's rule at the click
 and the reason the board's inside is not the outside's inverse image.
 
-## 8. Links
+## 8. Part (7): Newton Outside, the same way (the owner's word, record 772, as the Boss relayed it)
+
+**The owner's word, and the two words.** "If you got Lorentz above the
+board from the clicks, you will get Newton too, and perhaps more; the
+same way: take assumptions and show that under them the formulas come
+out; where none comes out, an experiment Inside rises Outside; it is not
+exactly a proof, it shows that this is Lorentz; the paper more modern
+algebra, fewer experiments." Inside is inside the GameBoard, where no
+one measures (the tick, the rows, a body's accumulators, the host's view
+of them: GAMEBOARD by kind); Outside is the game above the board, the
+detectors and their clicks, which represents reality and is not reality
+(DETECTOR by kind). This part does for Newton what section 0 did for
+Lorentz: the assumptions as few as the law allows and in its own words,
+the formulas that come out Outside under them with their order, and for
+each formula SHOWN, MEASURED ONLY or NEITHER, with the one line that
+decides. Record 772 is cited as the Boss relayed it; it is not yet in
+the checked-out log. One difference from section 0 is stated first:
+Lorentz needed (A2), which the law's rows do not have (part (5)), while
+every assumption below is on `main` today, so Newton Outside stands
+nearer the law than Lorentz Outside does.
+
+**(1) The assumptions, stated as such.** Five, in the law's words, and
+one piece of mathematics that is not an assumption.
+
+- (N1) *The crowd.* What a body reads at its Node is the age moment
+  `a_tau` of the rays of other numbers there, the sum over those rays of
+  amount times age (the clock's word, the owner's decision of record
+  394; the paper's P9, its fourth clause; `core.integer.age_wall`'s
+  docstring). Each row carries its age, the intervals since its release.
+- (N2) *The age wall.* The crowd stretches the wall of a body's
+  self-creation count by `a_tau` at coefficient 1: a count at the rate
+  `rate` against the wall `wall` becomes the count at `rate x d` against
+  `wall x (d + a_tau n)`, `[n, d]` the world's suspension pair
+  (`age_wall`; `measured.AGE_WALL_SET = (("owed", 1),)`), so after every
+  self-creation the body owes the whole part of `a_tau n / d` intervals
+  before the next (the paper's "What is delayed"): its rate is `1 / (1 +
+  a_tau n / d)`.
+- (N3) *The push.* Per interval a body of content `M_A` gains the
+  momentum `-M_A` **V** from the rays arriving at its Node, **V** their
+  label flow (the gravity column of `nature_beam.push_form`: "the count
+  is `|V M_A|` exactly, the law's `-M_A V_B`"; DERIVATIONS_BEAM 3.3),
+  and its pace per axis is `|p_a| / (N_l N_w M_A + |p_a|)` Links per
+  interval (the paper's P9, second clause; 4.4).
+- (N4) *The flight blind (P9).* A source of content `M_B` releases rows
+  at the rate `q` per interval on a fan of K directions, and every row
+  flies by the flight table at the pace c of its direction, isotropic
+  within `1 / T_D`, reading nothing of the crowd (P9, first clause;
+  input 7 of 24.1).
+- (N5) *The reading (A1, and record 768).* Nothing leaves the board but
+  clicks, one Node per interval at most; a clock Outside is a pulse and
+  its return: a lamp's rows read at a detector, `1 + z` the inverse slope
+  of the birth ordinal against the click's tick (series T's and X's
+  method), or the round trip of section 2; the detector's own count is
+  itself stretched by its crowd (N2 at the detector).
+- (M) *The spreading, not an assumption.* K beams from one Node cross a
+  shell at distance r at K of its `N(r)` Nodes; the mean over the shell
+  of what a Node reads is the beam's value times `K / N(r)`, and `N(r) ->
+  4 pi r^2` in space (`2 pi r` on the plane), the lattice's count of Nodes
+  on a shell with its ripple (Gauss's circle problem, `N(r) = 2 pi r +
+  O(r^theta)`, `theta <= 131 / 208`; the paper's `eq:shell`). This is
+  the arithmetic of six Ports, not a law: on one beam the flow is the
+  same at every Node (`1 / r^0`) and off every beam it is 0; the inverse
+  square is the density of beams over a shell, and it exists per Node
+  only in the limit of every direction (rung 2, the shell mean; rung 3
+  on a fan declared as a cube, whose anisotropy is `3^(3/2)`).
+
+**(2) The formulas that come out Outside.** Each with its assumptions
+named and its order: rung 1 exact on the GameBoard; rung 2 a limit (the
+shell mean, the Link to zero, `v << c`); rung 3 a limit under a spatial
+condition.
+
+(a) *The clock's rate in a crowd.* From N2 alone: `rate = 1 / (1 + k)`,
+`k = a_tau n / d`, rung 1, exact at every k, never 0 at a finite count
+(no horizon; 5.2). Outside, by N5: the ratio of two lamps' `1 + z` at
+one detector is the ratio of their rates, `(1 + k_2) / (1 + k_1)`,
+within the count's grain; the detector's own `k_D` divides both alike
+and cancels in the ratio (series X's note on record 569).
+
+(b) *The form of k about a source.* From N1, N4 and M: a row of age
+`r / c` dwells `tau_L` intervals per Link (`T_D / (N_l |D|)`, 1.72 on a
+heading, `sqrt 3` in the limit of every direction), so the presence at
+r is `q tau_L / (4 pi r^2)` and the age moment is the presence times the
+age, `A(r) = q tau_L / (4 pi c r)` (DERIVATIONS 5.1; the paper's
+`eq:fields`): the clock's word falls as `1 / r`, the retarded potential
+of the release, and obeys the wave equation with the release as its
+source, Poisson's in the static limit; rung 2. Two consequences that
+are Newton's theorems and not assumptions: outside a point source the
+ratio of two clocks' shifts at the distances 3 and 6 is `2.00` (the
+potential's form; the flux's would be 4.00 in the shift's ratio and
+1.00 in series T's rate ratio); inside a shell of sources the age
+moment is flat and the presence is not (the shell theorem for `1 / r`,
+from M applied to every source of the shell: the `1 / r` weights over a
+sphere sum to a constant inside), rung 2 with the lattice's ripple.
+
+(c) *The falling body's acceleration.* From N3, N4 and M: the push per
+interval in the shell mean is `-M_A <V>` with `<V> = q N_l / N(r) -> q
+N_l / (4 pi r^2)`, and at `|p| << N_l N_w M_A` the drive gives the
+acceleration `push / (N_l N_w M_A)`, so
+
+    a = - G M_B / r^2,   G = K eta / (4 pi N_w)   (space; on the plane a = - G' M_B / r, G' = K eta / (2 pi N_w)),
+
+`eta` the release per unit of content per direction (3.3; the paper's
+`eq:newton`): the inverse square, rung 2 (the shell mean), retarded at
+c, with the ripple of M at finite r and the first-order inertia of the
+drive (`p = N_l N_w M v / (1 - v)`) beyond `v << c`. On a beam there is
+no inverse square (rung 3: `1 / r^0` along the beam). Nothing of A
+enters: the equivalence principle is rung 1, exact record by record
+(the push is `M_A` times the flow, the drive divides by `M_A`; 3.3's
+item 1).
+
+(d) *Kepler's third law.* From (c) and the drive at small p: a circular
+orbit has `v^2 / r = G M_B / r^2`, so `T = 2 pi r^(3/2) / sqrt(G M_B)`
+in space and `T = 2 pi r / v` with `v` fixed by the momentum on the
+plane, `T ~ r` (the `1 / r` force; DERIVATIONS 24.1 row 58, entry 58):
+rung 2, `v << c`, the period above the Newtonian by `1 / (1 - v / c)` at
+first order under form B's inertia. The ratio at two radii is a
+theorem of the force's scale symmetry alone: a `1 / r` force is
+invariant under `r -> lambda r, t -> lambda t` at the same speed, so
+loops started with the same momentum at `r = 12` and `24` are similar
+figures with `T(24) / T(12) = 2` for any eccentricity, a property no
+other power of r has (the D3 entry); the pin from the map before the
+run, `2.00 +- 0.18`.
+
+(e) *The equivalence of the clock's slowing and the fall.* From (b) and
+(c): the clock reads the age moment A and the push reads the flow,
+which in the static limit is the gradient of the same field, `a = -(N_l
+c / tau_L) grad A` (the paper's "the two fields of one stream"): one
+crowd, two readings, the potential and its gradient, rung 2. The
+constant between them is the world's: the clock's shift between two
+heights h apart is `delta k = (n / d) delta A` and the fall's `g h =
+(N_l c / tau_L) delta A`, so `delta k = (n tau_L / (d N_l c)) g h`, where
+nature has `g h / c^2`; the law has the FORM of the equivalence (one
+field read twice) and its constant is the suspension pair `[n, d]` with
+the residence factor, a declared input, not `c^2` (NATURE row 12's
+note: the scale is the suspension pair's). Stated as a fact, not a
+failure: the paper's G likewise carries Newton's constant through
+`N_w`.
+
+**(3) For each formula: SHOWN, MEASURED ONLY, or NEITHER.** SHOWN: it
+comes out algebraically under the assumptions at the rung named.
+MEASURED ONLY: no closed form Outside; the register's run rises Outside.
+NEITHER: no closed form and no reading. The register's rows by kind.
+
+| The formula Outside | Verdict | The one line that decides | The register (DETECTOR unless labelled) |
+| --- | --- | --- | --- |
+| the clock's rate `1 / (1 + k)`, `k = a_tau n / d` | SHOWN, rung 1 | N2 is the formula: the owed count's whole part of `a_tau n / d` per self-creation | series T: the age word's `1 + z` 2.6517 at 3 and 4.1500 at 6 Links from equal crowds (NATURE 12); series X: the controls 1.0000 exactly |
+| the `1 / r` form of k about a point source (the potential, not the flux) | SHOWN, rung 2 (the shell mean, with the ripple) | age times presence: `(r / c) x 1 / r^2` (N1, N4, M) | series T: the ratio of the two shifts 1.907 against the pin `1.909 +- 0.05`, the continuum's 2.00 outside it by the lattice's grain (PASS on the form; the presence word 1.000, FAIL); series X outside: `k(12) / k(4) = 0.6285` against the pin 0.618270 (MET), the continuum's 0.5 outside the tolerance by the grain |
+| the shell theorem's flat interior (Poisson's source term) | SHOWN, rung 2 | the `1 / r` weights of a shell sum to a constant inside, the `1 / r^2` weights do not (M on every source) | series X inside: the age word `k(2) / k(4) = 1.0029` against the pin `1.003917 +- 0.02` (MET, flat); the presence word 0.8400 against 0.839989 (MET, not flat: the FAIL the design expected) |
+| the ripple of the shell mean at finite r (the departure from `1 / r` and `1 / r^2`) | MEASURED ONLY | `N(r)` is the lattice's count of Nodes on a shell, no closed form at finite r (Gauss's circle problem, an exponent bound and no formula) | series X's 0.6285 against the continuum's 0.5 and T's 1.907 against 2.00, the grain read; series E's shell means (GAMEBOARD, the probes: `k_a r = 36.1` within `+- 15` percent) |
+| the inverse square of the fall, `a = -G M_B / r^2` | SHOWN, rung 2; its decisive reading Outside NOT MADE | the push `-M_A <V>` with `<V> -> q N_l / (4 pi r^2)` (N3, M); on the plane `1 / r` | series D3 on the plane: the ratio `T(24) / T(12) = 1.997` (1.82 to 2.18) inside its bracket, consistent with `1 / r` and not decisive (the loops read are not similar figures: the radii 1.4 to 73.2 about 24.2 against 11.0 to 62.3 about 33.7, one recurrence each); the deciding reading (similar loops at a finer grain) not run; series C's `1 / r` on the plane and the exponent `r^-1.83` on the 2616-direction shell: GAMEBOARD, the probes' momenta (records 562, 564) |
+| the equivalence principle (the fall independent of `M_A`) | SHOWN, rung 1 | `M_A` multiplies the push and divides the drive, record by record (N3) | series D3: the held mass four times at `r = 24`, 138 of 139 common birth ticks at the same Node (the largest difference 1 Node), `|dT| = 0`, the same escape tick; 3.3's `push_m = m x push_1` for m = 1, 4, 16 (GAMEBOARD) |
+| Kepler's third law, `T^2 ~ r^3` in space, `T ~ r` on the plane | SHOWN, rung 2 (`v << c`); the exponent in space NOT READ | the circular orbit under (c) and the drive; the ratio 2 at two radii the `1 / r` force's scale symmetry (entry 58) | series D3: 1.997 for `2.00 +- 0.18` (inside); the periods 19 percent above their circles alike (outside: the loops are not circles, the plane's grain), read as history; entry 58's host check in space `T(24) / T(12) = 2.8284 = 2^(3 / 2)` at S = 512 (GAMEBOARD, not after a detector) |
+| the equivalence of the clock's slowing and the fall (one field, the potential and its gradient) | SHOWN in form, rung 2; the constant a declared input | `a = -(N_l c / tau_L) grad A` in the static shell mean; `delta k = (n tau_L / (d N_l c)) g h` | series T and X read the potential's side, D3 the gradient's, on different worlds; no world reads both on one crowd: the one reading that would close the constant is NOT MADE |
+| the post-Newtonian terms (the perihelion's `3 / 2` of the potential's square; the clock at second order `1 - k + k^2` against `1 - k - k^2 / 2`; a horizon) | NEITHER (a different law, stated) | the push is bilinear in the flow and the content, no `v^2 / c^2` and no `(G M / r c^2)^2` term (5.3); the clock never stops (5.2) | none Outside; series E's strong-field ratios (k = 2 to 9) GAMEBOARD |
+| the value of G (Newton's constant as a number) | NEITHER Outside | `G = K eta / (4 pi N_w)` names it from the world's inputs; no detector reading of G is registered (the paper: "G not read") | none |
+
+**(4) Certification of the inputs.** N1 to N5 are the law's own words
+on `main` (record 394 and P9 for N1 and N4; `age_wall` and the owed
+count for N2; `push_form` and the per-axis drive for N3; A1 and the
+clicks for N5); M is arithmetic (the count of Nodes on a shell). Nothing
+Newtonian is an input: no `1 / r^2` is assumed anywhere, it comes out of
+M applied to the beams of N4; no potential is assumed, the `1 / r` is
+the age carried by the rows (N1) over the spreading (M); no equivalence
+is assumed, `M_A` cancels in N3; no Kepler is assumed, the third law is
+(c) with the drive; no `c^2` in the equivalence, the constant stays the
+world's `[n, d]` and `tau_L`. Where a formula needs the shell mean it is
+marked rung 2, and its finite-r departure is MEASURED ONLY. Every number
+in the table is a registered reading named by its kind or a pin written
+before its run; none is pinned here from a run.
+
+**(5) The verdict line.** NEWTON OUTSIDE FROM THE ASSUMPTIONS: PARTLY.
+SHOWN under N1 to N5 and M: the clock's rate `1 / (1 + k)` (exact), the
+equivalence principle (exact), the `1 / r` potential and the `1 / r^2`
+flow of one stream with Poisson's equation, the shell theorem's flat
+interior, the inverse square of the fall, Kepler's third law and the `1
+/ r` force's scale symmetry, and the equivalence of the clock's slowing
+and the fall as one field read twice (all in the shell mean, rung 2,
+`v << c`); and these SHOWN formulas are MEASURED where the register
+reads them: the potential's form (T, 1.907; X outside, 0.6285), the flat
+interior (X, 1.0029), the equivalence (D3, 138 of 139), the scale
+symmetry's ratio (D3, 1.997). MEASURED ONLY: the lattice's departure
+from the continuum at finite r (X's 0.6285 against 0.5, T's 1.907
+against 2.00, D3's periods 19 percent above their circles), which no
+closed form gives and the runs rise Outside. NEITHER: the inverse
+square's decisive reading after a detector (D3 consistent, not
+decisive, the similar loops not run), the constant of the equivalence
+and the value of G, and the post-Newtonian terms, which the law does not
+have. The one line: Newton's formulas are the shell mean of five rules
+the law already runs, so they are shown and not assumed; what the
+lattice adds at finite r is not a formula but a reading.
+
+**Three sentences for the paper (marked as such; the paper coordinator's
+to take or leave).** (i) Newton's law is not assumed by the model: the
+inverse square is the density of beams over a shell, the potential is
+the age the rows carry over that density, and a body's acceleration is
+the gradient of the clock's field, all three the shell mean of the rules
+P9 and the age wall, exact in the limit of every direction and departing
+from it at finite radius by the lattice's count of Nodes on a shell,
+which has no closed form and is read (series T, X, D3). (ii) The
+equivalence principle is exact on the GameBoard, the content multiplying
+the push and dividing the drive, and it is measured after a detector
+(series D3, 138 of 139 births at the same Node with the held mass four
+times). (iii) What the model does not have it states: no term of the
+post-Newtonian order enters the push, the clock in a strong crowd reads
+`1 - k + k^2` and never stops, and the value of G is a world's inputs
+and is not read.
+
+## 9. Links
 
 [DERIVATIONS_BEAM 4.3](../../DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
