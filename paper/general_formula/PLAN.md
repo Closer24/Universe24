@@ -3143,3 +3143,20 @@ Theorem 6's parenthetical repeated in the paragraph after it, the
 harmonic's aside in the limit paragraph (and Lambda from the symbol
 table), the read-out's aside, the introduction's "excluding 1 and 3", the
 GRB sentence itself kept to three lines.
+
+## The constancy of c a postulate (2026-09-22, the mathematician's verdict, DERIVATIONS_BEAM 27)
+
+On the owner's word "go for the proof of c" the derivation mathematician
+asked whether the six operations with locality force a phase-blind
+flight, and refuted it: a dispersive flight (the rate N_l |D|_1 (N - f)
+against the wall T_D N) passes the three tests, the books, the split's
+isometry, the interval's injectivity, the isotropy within 1 / T_D and
+the direction-only requirement, and disperses frequencies in the mean
+for gcd(r, N) > 1. So the constancy of c is the declared postulate P9,
+and what the verbs force is what the paper already carries: given a
+direction-only flight, the pace at every phase and rate, isotropic
+within 1 / T_D, c = 1 / sqrt 3 its limit. Two corrections through
+cut30/corrections.py: the ledger's no-dispersion row closes its third
+column on the fact (P9, not forced, the derivation's 27), and the GRB
+sentence stays a consequence of the postulate without the "until"
+clause. No number moved; 30 pages held.

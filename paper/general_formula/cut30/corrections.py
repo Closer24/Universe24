@@ -369,6 +369,20 @@ CORRECTIONS = [
         "which pinned the power of the click's weight to a window containing $2$ and excluding $1$ and $3$ before the form was proved;",
         "which pinned the power of the click's weight to a window containing $2$ before the form was proved;",
     ),
+    # The constancy of c is the declared postulate P9 and not a theorem of the
+    # six operations (DERIVATIONS_BEAM section 27: a dispersive flight passes
+    # the three tests, the books, the isometry, the injectivity, the isotropy
+    # and the direction-only requirement); the Boss's word of 03:08Z.
+    (
+        "c a postulate: the ledger's no-dispersion row closed",
+        "the rate in transit constant, the flight blind to the phase (P9, a rule chosen among few); whether the six operations force it is open & exact",
+        "the rate in transit constant, the flight blind to the phase (P9, a rule chosen among few), not forced by the six operations: a dispersive flight passes every requirement (the derivation's 27) & exact",
+    ),
+    (
+        "c a postulate: the GRB sentence",
+        "a computation \\cite{checks}, not a run, and a consequence of the postulate until the six operations are shown to force it.",
+        "a computation \\cite{checks}, not a run, and a consequence of the postulate.",
+    ),
 ]
 
 
