@@ -8,7 +8,9 @@ GAMEBOARD); the run, if any, is the owner's word.
 **The verdict in one line: LORENTZ FROM THE CLICKS GIVEN the line
 `k_AB = k_BA` (the two directions alike, the relativity principle),
 which is `r^2 = 1 - v^2` for the moving record's own count; NOT WITHOUT
-IT.** Under the law as it stands the two factors differ (`k_BA / k_AB =
+IT.** And for part (4), the energy of the hop (section 5): LORENTZ FROM
+THE CLICKS GIVEN THE ENERGY OF THE HOP: ONLY BY DECLARATION, the rest
+share `r = E_0 / E'` of the identity's own square being that line. Under the law as it stands the two factors differ (`k_BA / k_AB =
 1 - v^2`), under the loop's resident count they differ the other way
 (`(1 + v) / (1 - v)`), and under covariant-readings-v1 they are equal
 by that identity's declared rate. The measurable that decides is the
@@ -193,7 +195,77 @@ the run is the owner's word.
   `(1 + v) / (1 - v)` the resident loop's. No reading is pinned here
   from a run; these are the closed forms, and the run is the owner's.
 
-## 5. Links
+## 5. Part (4): the energy of the hop as the moving detector's own count (the owner's word, record 729)
+
+**The claim, exact.** Let the moving detector be a record that keeps its
+rest energy `E_0` (its identity, `Q S M` in the identity's units) and
+carries its motion's energy in the exact square the law already holds
+beside it, `W = E_0^2 + 3` **p** `.` **p** (17.6 M3; `c^2 = 1 / 3`),
+`E'` the whole root, `E'^2 <= W < (E' + 1)^2` (17.7). Suppose its own
+count per interval is its rest share, `r = E_0 / E'`, and the velocity
+the clicks read (Nodes apart over the difference of two counts) is the
+identity's pace, which in units of c is `beta = sqrt 3 abs(p) / E'`, so
+`beta^2 = 3` **p** `.` **p** `/ E'^2`. Then, with the real root in place
+of the whole one,
+
+    r^2 = E_0^2 / W = (W - 3 p . p) / W = 1 - beta^2,
+
+an identity of W by one subtraction: the line of section 2 (b) holds
+with nothing added, `k_AB = k_BA = sqrt((1 + beta) / (1 - beta))`, and
+the two Doppler factors agree; Lorentz follows from the clicks. With the
+whole root the identity holds within the root's rounding, `r^2 = E_0^2 /
+E'^2` against `1 - 3 p . p / E'^2`, their difference `(W - E'^2) / E'^2 <
+(2 E' + 1) / E'^2`, one part in `E'` (17.7's "the root's rounding the only
+price"); on the muon's worlds `E' = 14671` and `25910`, below a part in
+`10^4`. Rung 1 (exact algebra on the declared integers).
+
+**Which r the engine gives today**, read from `src/event_universe`. On
+`main` without a key: a body's self-creation is one per interval,
+stretched only by the crowd at its Node (`engine.count_owed`: the age
+wall's declared set is the clock alone, `measured.AGE_WALL_SET =
+(("owed", 1),)`, the coefficient 1 on the age moment `a_tau`); a hopping
+body self-creates in its hop intervals as in the others (the drive's
+`step_axis` moves it, `_suspend` gates it by the crowd only): `r = 1` at
+every speed in no crowd, DERIVATIONS 4.3, NATURE 4a's FAIL. Neither
+stage 1's resident count (`1 - abs(v)_1`, the loop picture's steps with
+no energy cost) nor the rest share is the law's on `main`. Under the
+world key `covariant_readings` (covariant-readings-v1 as built, PR #582;
+BEAM_LAW's paragraph on the key): the proper-time gate `by_drive(acc_tau,
+E' - E'_0, E'_0)` is a SECOND owed count composed with the crowd's as
+intervals (`engine._suspend`, 17.6 M1 and N1), so the self-creations
+come one per `E' / E'_0` intervals in the mean, `r = E'_0 / E'` exactly
+in the mean (the muon's 64th at 70 and 124, GAMEBOARD), and the drive's
+pace is `p / E'` per lattice interval on one axis (`step_divisor` with
+the cap off): the rest share and the identity's pace, both from the one
+W. The register's clock series (series T, clock-age-v1) reads the
+crowd's factor at rest and nothing of r(v).
+
+**Reading, declaration or hypothesis.** Making the moving detector's
+clock its rest share is not a reading of the law as it stands (`main`
+gives 1) and not one more member of the age wall (the tau gate is a
+separate accumulator composed as intervals, not a coefficient on
+`a_tau`; the age wall's set stays the clock alone); it is a DECLARATION
+already made under its own identity, covariant-readings-v1: the same W
+the drive uses under that key, the gate `E' - E'_0` over `E'_0`, and the
+pace `p / E'`, the three rules of one declared square (17.6 M1, M3, the
+pace), with the whole root's rounding declared per frame (17.7) and the
+reviewer's vector verdict on the root pending the owner's admission or
+the counters' form. It needs no new identity, and it is not the law's:
+the law's own FAIL row (4a) stands beside it.
+
+**The verdict for (4): LORENTZ FROM THE CLICKS GIVEN THE ENERGY OF THE
+HOP: ONLY BY DECLARATION.** The one line that decides: "the moving
+detector's own count per interval is its rest share `E_0 / E'`, `E'` the
+whole root of the drive's own square `W = E_0^2 + 3 p . p`, and its
+velocity the pace of that square" (covariant-readings-v1's gate and
+pace); under it `r^2 = 1 - beta^2` is an identity of W and the two
+factors of section 2 agree with no further line, YES, within the root's
+rounding; on `main`, where the count is 1 at every speed, NO, the factors
+differ by `1 - v^2`. The energy of the hop supplies exactly the line of
+section 2 (b), and it supplies it as the identity's declared square, not
+as a count the six verbs make on their own.
+
+## 6. Links
 
 [DERIVATIONS_BEAM 4.3](../../DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
