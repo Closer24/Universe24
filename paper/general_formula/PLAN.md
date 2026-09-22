@@ -4970,3 +4970,16 @@ merge commits still to be swapped in); (5) COVER_LETTER.md, a draft
 for the author's hand with five suggested reviewers from the cited
 literature, affiliations to be confirmed by the author. No physics and
 no number changed. 50 pages.
+
+## Applied (2026-09-22, the Boss's order of 16:43Z): the final build
+
+The owner's word (record 993): the paper closes. The swaps: Newton's
+run at its merge on main, 7682c57d (the reading's files unchanged by
+the merge); the ring's run at flow-link-build's head b094c53b pending
+merge (the run's numbers de4f4410's; the README's own headline now
+DOES NOT CLOSE by its rule with the deciding pin inside, so the
+parenthesis on the headline is dropped, the row's word unchanged); the
+atom's levels at atom-levels' head 83b1bf2e pending merge; the register
+(b12dd253) and records 991 and 997 pending as they are. The PDF rebuilt
+and committed as the closing build; one small swap commit follows when
+the two branches merge. 50 pages.

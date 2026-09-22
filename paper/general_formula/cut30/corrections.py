@@ -3747,6 +3747,27 @@ CORRECTIONS = [
         "The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity, and every result called exact is an identity of that algebra. Exact on the lattice:",
         "The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity. Exact on the lattice:",
     ),
+    # The final build (the Boss's order of 16:43Z, the owner's word of record 993): the merge SHA of Newton's run, the branch heads of the ring's run and the atom's levels.
+    (
+        "the final build (the Boss's order of 16:43Z): Newton's run merged, main 7682c57d",
+        "on the branch \\texttt{newton-one-constant} at f44a69e5 (pending merge; the merge commit on \\texttt{main} replaces this)",
+        "on \\texttt{main} at 7682c57d (the reading's files as at the branch head f44a69e5)",
+    ),
+    (
+        "the final build: the ring's run at the branch head b094c53b pending merge",
+        "on the branch \\texttt{flow-link-build} at de4f4410, the run on the split ladder (pending merge; the merge commit on \\texttt{main} replaces this)",
+        "on the branch \\texttt{flow-link-build} at b094c53b, the run on the split ladder (pending merge; the merge commit on \\texttt{main} replaces this)",
+    ),
+    (
+        "the final build: the atom's levels at the branch head 83b1bf2e pending merge",
+        "on the branch \\texttt{atom-levels} at cd0c2029 (pending merge; the merge commit on \\texttt{main} replaces this)",
+        "on the branch \\texttt{atom-levels} at 83b1bf2e (pending merge; the merge commit on \\texttt{main} replaces this)",
+    ),
+    (
+        "the final build: the README's headline at b094c53b reads DOES NOT CLOSE, the parenthesis dropped",
+        "the bending's constant DOES NOT CLOSE within the grain (the README's rule; the run's own headline names CLOSES on the deciding pin, the pin being inside), $\\gamma$ an input;",
+        "the bending's constant DOES NOT CLOSE within the grain (the README's rule, the deciding pin inside beside it), $\\gamma$ an input;",
+    ),
 ]
 
 
