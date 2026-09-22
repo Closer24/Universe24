@@ -1628,6 +1628,67 @@ CORRECTIONS = [
         "its hand $-1$ on \\texttt{hand/wu}",
         "its hand $-1$ on the world \\texttt{wu}",
     ),
+    # The citation swap: click-frame-2, Einstein Outside and the algebra transition merged (PRs #801, #792, #793); Table 8's lines and the perihelion's wording at the merged head.
+    (
+        "click-frame-2 merged (PR #801 at af051aaf): cite main",
+        "on the branch click-frame-2 at 097b2006, pending its PR.",
+        "on \\texttt{main} at af051aaf (PR \\#801, merged), one file with the click frame.",
+    ),
+    (
+        "Einstein Outside merged (PR #792 at e8432e6c): cite main",
+        "at d1b4af84 (PR \\#792, pending merge)",
+        "on \\texttt{main} at e8432e6c (PR \\#792, merged)",
+    ),
+    (
+        "the algebra transition merged (PR #793 at 412f5c61): cite main",
+        "at 928f056d (PR \\#793, pending merge)",
+        "on \\texttt{main} at 412f5c61 (PR \\#793, merged)",
+    ),
+    (
+        "Table 8's caption names the merged head",
+        "Einstein Outside at d1b4af84 \\cite{einsteinoutside}",
+        "Einstein Outside on \\texttt{main} at e8432e6c \\cite{einsteinoutside}",
+    ),
+    (
+        "Table 8: Theorem 1's line at the merged head",
+        "Einstein Outside, Theorem 1 :349",
+        "Einstein Outside, Theorem 1 :355",
+    ),
+    (
+        "Table 8: II.1's line at the merged head",
+        "Einstein Outside, II.1 :636",
+        "Einstein Outside, II.1 :647",
+    ),
+    (
+        "Table 8: II.3's line at the merged head",
+        "Einstein Outside, II.3 :716",
+        "Einstein Outside, II.3 :733",
+    ),
+    (
+        "Table 8: II.6's line at the merged head",
+        "Einstein Outside, II.6 :870",
+        "Einstein Outside, II.6 :887",
+    ),
+    (
+        "Table 8: section 3 (a)'s lines at the merged head",
+        "Einstein Outside, section 3 (a) :470 (Einstein's form named at :486 as the comparison)",
+        "Einstein Outside, section 3 (a) :481 (Einstein's form named at :497 as the comparison)",
+    ),
+    (
+        "Table 8: section 3 (b)'s line at the merged head",
+        "Einstein Outside, section 3 (b) :499",
+        "Einstein Outside, section 3 (b) :510",
+    ),
+    (
+        "Table 8: section 3 (c)'s line at the merged head",
+        "Einstein Outside, section 3 (c) :543",
+        "Einstein Outside, section 3 (c) :554",
+    ),
+    (
+        "the perihelion's wording at the merged head (larger by 1/(6 pi beta), about 330 times if the coefficient is of order one)",
+        "where Einstein has $6\\pi\\beta^2$ isotropic, about $300$ times nature's at Mercury's pace and of the wrong symmetry: FAIL on the law, stated as a difference;",
+        "where Einstein has $6\\pi\\beta^2$ isotropic, larger than nature's by $1/(6\\pi\\beta)$, about $330$ times at Mercury's pace if its coefficient is of order one, and of the wrong symmetry: FAIL on the law, pinned in order and symmetry, the coefficient NOT MADE;",
+    ),
 ]
 
 

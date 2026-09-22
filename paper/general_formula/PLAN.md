@@ -3821,3 +3821,20 @@ on row 2b (PR #797 merged). The count: 38 pages, the body through 30,
 Appendix D two pages; the tables in the appendix and one paragraph
 each in the body, as the Boss allowed; nothing else cut. NUMBERS.md
 carries the new numbers.
+
+## Applied (2026-09-22): the citation swap for the three merged sources
+
+Click-frame-2 (PR #801 at af051aaf), Einstein Outside (PR #792 at
+e8432e6c) and the algebra transition (PR #793 at 412f5c61) cited on
+main; the click frame's lines stay at 70e9781a (a commit on main whose
+lines Table 8 cites). Table 8's Einstein Outside lines re-checked
+against the merged file's own check table (Theorem 1 :355, II.1 :647,
+II.3 :733, II.6 :887, section 3 :481, :497, :510, :554; the words
+unchanged on the cited rows); the five places the later commits
+changed were read: the composition pin, series G's grains and II.2's
+E = h_q s are not cited by the paper; Theorem 1's order is stated in
+its statement, not in the paper's row; the perihelion's wording is
+taken over ("larger than nature's by 1 / (6 pi beta), about 330 times
+at Mercury's pace if its coefficient is of order one; FAIL pinned in
+order and symmetry, the coefficient NOT MADE"). Light Outside's swap
+waits for its merge SHA, as the Boss ordered.
