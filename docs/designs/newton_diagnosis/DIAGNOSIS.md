@@ -688,6 +688,30 @@ the world files by the generator, the reading tool's orbit branch (the
 recurrence of a label's reverse on a count), four worlds of about 25 s
 each. NOT ORDERED.
 
+**A named alternative, not ordered: newton-presence-v1.** Named here
+because the owner was told of it (records 1022 and 1024) and the
+physics-rule reviewer read it; which road to take is his decision. The
+form: a body's push reads the rows PRESENT at the reader's Node in the
+interval, each at its line's rate 2 S_1 Q over its wall 2 T_D (the pair
+the flight already holds per direction, the inverse of the dwell), in
+place of the rows met; a resting reader takes the same mean push per
+row as today, and a reader in motion reads the stream's density where
+it is, with no velocity term at first order (the factor of 2.3 removed).
+The reviewer's verdict on the three tests (read N): generic PASSES;
+local PASSES; vector PASSES SUBJECT TO the declared form: the exact
+common wall as the lcm of 2 T_D over the fan is beyond the working
+bound and not available (T_D runs from 110 to 887 on the 120 lines), so
+the two admissible forms are per-direction accumulators (exact; fixed
+work and storage times the fan's count for a fixed K) or the rounding at
+load of 2 S_1 Q / (2 T_D) to a declared grain as **f**_D is rounded; no
+root and no float at run time under either. The pins it would need,
+from the map without the term (2.5, the first row): T(12) = 403 and
+T(24) = 808 within 9 per cent, the ratio 2.00 +- 0.18, no contact with
+the line and no escape in 4000 intervals, at least eight and four
+recurrences agreeing. The order the Boss recommends to the owner:
+newton-cart-v1 first (no law change, the owner's test), the presence
+form only if the cart's reading shows the velocity term's signature.
+
 ## 7. Links
 
 - [newton_map.py](newton_map.py), [newton_map.out](newton_map.out): the continuum map (COMPUTATION).
