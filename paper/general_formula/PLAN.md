@@ -3778,3 +3778,46 @@ series X, on main at 7ef735c8; record 661). NUMBERS.md carries the
 plan-B numbers (the count, 1/c^2 by direction, the click frame's chain,
 the 24 transitions, series X). The citation swap to the merge SHAs is
 one small commit when the four PRs land.
+
+## Applied (2026-09-22, the owner's words of records 817 and 822 through the Boss): commit C, the roads, the families, the new formulas
+
+Three things folded, one commit through cut30/corrections.py, on top of
+commit B: (1) record 817, "show how we arrived at Einstein, at Lorentz
+and at the step-above formula, without deriving from them": the
+discussion's paragraph "The road to each, and the check that nothing
+was derived from them" (the three roads, A3 named, the words, the
+sentence that Einstein's, Lorentz's and the Outside step's formulas
+appear only as the thing compared with) and Table 8, the check of the
+roads, in the new Appendix D: one row per formula arrived at (W to
+second order, the boost, the factor, 1 / gamma, the composition, the
+energy-momentum relation, the Outside step, its quantum, Newton's step
+as the limit) with the inputs used, the file and line where the chain
+starts (the click frame on main at 70e9781a; Einstein Outside at
+d1b4af84, whose section III is the same check made in the source) and
+the word; how the check was made: each chain read against the two
+sources' certification tables. (2) record 822, the mass families in
+the algebra: Section 2's paragraph "The families in the algebra" and
+Table 7 in Appendix D, every family of the register (the shipped
+definitions and the inline ones, the mathematician's audit) with its
+declared integers, its algebraic object (the frame's section 9, the
+history's table), when it entered (the record), the verbs that act on
+it and the click that reads it by kind; "not named" and "no detector
+reading registered" where the tree does not fill the cell; the mass
+angle a world's declaration (the rest pair), not the family's. (3)
+record 822, the new formulas: the discussion's paragraph "What the
+Inside step gives Outside that the continuum cannot state", seven
+items, each with its click and kind (the quantum of the Outside step
+and the velocity's 1 / (k (k + 1)); Bell's rounding term and the
+plateau; the perihelion's order-beta term, FAIL and NOT MADE with its
+pin; the grain tau_L c = 0.993; the anisotropy of c; the equivalence's
+constant with n S = d as the condition and the register's n S / d = 16
+stated; light's bending, 0 on the law and the key's form NOT COMPARED,
+the route the owner's decision). The citations: the click frame on
+main at 70e9781a (PR #769 merged, the file identical to 1dd81fef);
+click-frame-2 at 097b2006 cited for the W phrase, pending its PR;
+light-outside at ceb6e066, einstein-outside at d1b4af84,
+algebra-transition at 928f056d, each "pending merge"; Grangier quoted
+on row 2b (PR #797 merged). The count: 38 pages, the body through 30,
+Appendix D two pages; the tables in the appendix and one paragraph
+each in the body, as the Boss allowed; nothing else cut. NUMBERS.md
+carries the new numbers.
