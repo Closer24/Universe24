@@ -3087,3 +3087,21 @@ four references with it) left the positioning paragraph and S8's row was
 shortened, so the body ends on page 25 as approved. The owner's word of
 01:48Z made the reviewer the paper's only writer; the coordinator's
 HANDOFF.md and cut30/notes stand as he left them.
+
+## The covariant rule in hand (2026-09-22, the owner's word in the writer's session)
+
+The owner asked how W = E_0^2 + 3 p.p, a hypothesis beside the law
+(covariant-readings-v1), becomes a law with us; the writer answered in
+three steps (the three tests, with E' kept by comparisons and no root;
+the same pins read after a detector off the one axis; the Highlights
+line superseding record 270's) and the owner said "go for it", then:
+the Boss handles the implementation, the paper says it is being
+handled. One correction added to cut30/corrections.py: the distance
+table's Lorentz row cites the displayed exact square (Eq. eq:square)
+instead of restating it and says the rule's entry into the law is in
+hand on the owner's word of 2026-09-22, the runs off the one axis
+pending, the text claiming nothing of it until they land. One finding
+passed to the Boss: the engine refuses a momentum on more than one axis
+until form B's directional drive lands (examples/events/covariant/README.md,
+17.6 N2), so the off-axis runs wait on the Architect's build. 30 pages,
+the split 25 / 2 / 3 held.
