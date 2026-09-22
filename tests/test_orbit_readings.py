@@ -49,7 +49,20 @@ engine"), written down first:
     (until the crossing rule the probe at (7,
     4, 0) on +y read the diagonal row that reached its origin as it
     stepped away, the leapfrog read the rule removes: from there it meets
-    no row of the eight directions in 12 intervals).
+    no row of the eight directions in 12 intervals);
+(d) the generator's pins under the two drives (docs/designs/drive_b/DEFAULT.md
+    section (c); the line drive the law's since 2026-09-22): the shipped
+    `expectations.json` is `expectations()` under the line drive, the
+    circle's whole n = 4, 6, 10 at S = 1, 8, 32 (the real roots 3.79, 5.88,
+    9.63; p = 256, 384, 640 label units), the pace 64 n / (64 S + 110 n)
+    and T = 2 pi r / v (T(12) = 371 at S = 32); the lamp worlds' n = 10 and
+    p = 655360 under either argument; the eight world files carry the
+    register's momenta; `expectations(AXIS_DRIVE)` gives the registered
+    integers (n = 3, 5, 9; p = 192, 320, 576; T(12) = 343 at S = 32); the
+    first Link of the S = 32 probe is the 5th interval under the line
+    drive by `by_line` on the world's wall (64^2 x 32 + 640 x 110 = 201472
+    over 640 x 64 = 40960 per interval) and the 3rd under `centred_step`,
+    as `first_link` gives.
 """
 
 from __future__ import annotations
@@ -60,6 +73,7 @@ import math
 import sys
 from pathlib import Path
 
+from event_universe.core.integer import by_line
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 
@@ -70,6 +84,11 @@ SPEC = importlib.util.spec_from_file_location(
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["orbit_readings_tool"] = TOOL
 SPEC.loader.exec_module(TOOL)
+WORLDS = ROOT / "examples" / "events" / "orbit"
+GENERATOR_SPEC = importlib.util.spec_from_file_location("orbit_make_worlds", WORLDS / "make_worlds.py")
+GENERATOR = importlib.util.module_from_spec(GENERATOR_SPEC)
+sys.modules["orbit_make_worlds"] = GENERATOR
+GENERATOR_SPEC.loader.exec_module(GENERATOR)
 
 Q = 64
 DIAGONAL = math.hypot(45, 45)
@@ -182,3 +201,46 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
             "reached the Node beside the source" if reading.least_radius <= 1 else ""
         )
     assert [r.name for r in TOOL.find_runs(tmp_path)] == ["s1_r3"]
+
+
+def test_the_generators_pins_under_the_two_drives():
+    """(d)."""
+    pinned = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads(json.dumps(GENERATOR.expectations()))
+    expected.pop("replicated", None)
+    pinned.pop("replicated", None)
+    assert pinned == expected
+    assert pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned["drive"] == GENERATOR.LINE_DRIVE and pinned["centred"] is False
+    worlds = pinned["worlds"]
+    assert [worlds[f"s{s}_r12"]["orbit_n"] for s in (1, 8, 32)] == [4, 6, 10]
+    assert [round(worlds[f"s{s}_r12"]["orbit_n_real"], 2) for s in (1, 8, 32)] == [3.79, 5.88, 9.63]
+    assert [worlds[f"s{s}_r12"]["momentum"] for s in (1, 8, 32)] == [256, 384, 640]
+    assert abs(worlds["s32_r12"]["pace"] - 640 / (64 * 32 + 10 * 110)) < 1e-12
+    assert abs(worlds["s32_r12"]["period"]["pin"] - 2 * math.pi * 12 / (640 / 3148)) < 1e-9
+    assert abs(worlds["s32_r12"]["period"]["pin"] - 370.9) < 0.1
+    assert worlds["s32_r12_lamp"]["orbit_n"] == 10 and worlds["s32_r12_lamp"]["momentum"] == 655360
+    assert abs(worlds["s32_r24_lamp"]["period"]["pin"] - 741.7) < 0.1
+    for name, entry in worlds.items():
+        document = json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8"))
+        assert document["measured"][1]["momentum"] == [0, entry["momentum"], 0], name
+        assert document["width"] == entry["width"] and "per_axis_drive" not in document, name
+    history = GENERATOR.expectations(GENERATOR.AXIS_DRIVE)
+    assert history["drive"] == GENERATOR.AXIS_DRIVE
+    assert [history["worlds"][f"s{s}_r12"]["orbit_n"] for s in (1, 8, 32)] == [3, 5, 9]
+    assert [history["worlds"][f"s{s}_r12"]["momentum"] for s in (1, 8, 32)] == [192, 320, 576]
+    assert abs(history["worlds"]["s32_r12"]["period"]["pin"] - 2 * math.pi * 12 * 41 / 9) < 1e-9
+    assert history["worlds"]["s32_r12_lamp"]["momentum"] == 655360
+    # The first Link by the engine's own line rule on the world's wall.
+    p = 640
+    wall = 64 * 64 * 32 * 1 + p * 110
+    for centred, expected_tick in ((False, 5), (True, 3)):
+        drives = [0, 0, 0]
+        fired = None
+        for tick in range(1, 20):
+            axis, _sign, drives = by_line(drives, [0, p * 64, 0], wall, centred)
+            if axis is not None:
+                fired = tick
+                break
+        assert fired == expected_tick == GENERATOR.first_link(10, 32, 1, GENERATOR.LINE_DRIVE, centred)
+    assert worlds["s32_r12"]["first_link"] == 5 and worlds["s1_r12"]["first_link"] == 2

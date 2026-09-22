@@ -1,0 +1,223 @@
+{
+ "format": "orbit-expectations-v1",
+ "derivations": {
+  "fan": "declared: every primitive in-plane direction (a, b, 0) with 0 < a^2 + b^2 <= 8^2, 120 directions, one shell every 10 intervals",
+  "emission": "the fan's directions x the release rate, q = 120 / 10 = 12 units per interval (DERIVATIONS_BEAM 3, the flux q)",
+  "label_magnitude": "the fan's mean |u_d| / Q off unit_label (BEAM_LAW section 2, note 23)",
+  "circle_constant": "A = q L C / (2 pi), the mean inward push per unit of content and radius (README.md, the derivation; C = 1 taken, series C's 1.00 +- 0.10)",
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace 64 n / (64 S + 110 n) on a heading, n = p / (Q m); the circle 64 n^2 = A (64 S + 110 n)",
+  "orbit_n": "the real root of n x pace(n) = A under the drive and the nearest whole, the declared momentum Q x whole per unit of content (the grain of the push: whole labels of Q per arriving ray)",
+  "pace": "the drive's pace at the whole n",
+  "period": "the analytic circle's T = 2 pi r / v at the pace (the same v at every r on the plane, T proportional to r); the bracket 15 percent (the criteria: C = 1.00 +- 0.10 and the drive's anisotropy); T is a step record, GAMEBOARD, a diagnostic and not a pin (records 562 and 564)",
+  "ratio": "T(24)^2 / T(12)^2 = 4 +- 15 percent (k = 2, the plane; Kepler's k = 3 would give 8)",
+  "closed": "GAMEBOARD: at the first tick at which the angle about the source reaches 2 pi the probe is within one Link of its start on each axis with its momentum's y component of the initial sign; the mean radius over the first orbit r +- 1; the drift per orbit within 1 Link",
+  "constant": "the mean inward push per interval over the orbit divided by m q L / (2 pi r_mean) gives C, expected 1.00 +- 0.15 (the probe's own reads, DETECTOR; the division by the host's interval count a GameBoard rate)",
+  "first_link": "GAMEBOARD: the interval of the probe's first Link from rest, ceil(W / (p Q)) under the line drive with W = Q^2 S m + p T_D (half the wall under centred_step), ceil((Q S m + p) / p) under the per-axis drive",
+  "lamp_worlds": "the S = 32 worlds with the probe a lamp of its own light and the source its detector (README.md, the lamp worlds; DERIVATIONS_BEAM 21.5 row 58): the circle under the line drive at n = 10, the period within the continuum map's 9 percent, the mean radius, the precession per radial period, the ratio T(24) / T(12) = 2.00 +- 0.15, the clicks at the source"
+ },
+ "drive": "line",
+ "centred": false,
+ "fan_directions": 120,
+ "emission": 12.0,
+ "label_magnitude": 0.9999840840444985,
+ "flow_constant": 1.0,
+ "circle_constant": 1.9098289198668388,
+ "period_margin": 0.15,
+ "ratio": {
+  "pin": 4.0,
+  "bracket": [
+   3.4,
+   4.6
+  ]
+ },
+ "worlds": {
+  "s1_r12": {
+   "width": 1,
+   "radius": 12,
+   "content": 1,
+   "orbit_n_real": 3.7868502359607454,
+   "orbit_n": 4,
+   "momentum": 256,
+   "pace": 0.5079365079365079,
+   "period": {
+    "pin": 148.44025288211773,
+    "bracket": [
+     126.17421494980007,
+     170.7062908144354
+    ]
+   },
+   "mean_radius": {
+    "pin": 12,
+    "bracket": [
+     11,
+     13
+    ]
+   },
+   "first_link": 2,
+   "ticks": 4000
+  },
+  "s1_r24": {
+   "width": 1,
+   "radius": 24,
+   "content": 1,
+   "orbit_n_real": 3.7868502359607454,
+   "orbit_n": 4,
+   "momentum": 256,
+   "pace": 0.5079365079365079,
+   "period": {
+    "pin": 296.88050576423547,
+    "bracket": [
+     252.34842989960015,
+     341.4125816288708
+    ]
+   },
+   "mean_radius": {
+    "pin": 24,
+    "bracket": [
+     23,
+     25
+    ]
+   },
+   "first_link": 2,
+   "ticks": 4000
+  },
+  "s8_r12": {
+   "width": 8,
+   "radius": 12,
+   "content": 1,
+   "orbit_n_real": 5.8806416373320625,
+   "orbit_n": 6,
+   "momentum": 384,
+   "pace": 0.32764505119453924,
+   "period": {
+    "pin": 230.12166187545236,
+    "bracket": [
+     195.6034125941345,
+     264.6399111567702
+    ]
+   },
+   "mean_radius": {
+    "pin": 12,
+    "bracket": [
+     11,
+     13
+    ]
+   },
+   "first_link": 4,
+   "ticks": 4000
+  },
+  "s8_r24": {
+   "width": 8,
+   "radius": 24,
+   "content": 1,
+   "orbit_n_real": 5.8806416373320625,
+   "orbit_n": 6,
+   "momentum": 384,
+   "pace": 0.32764505119453924,
+   "period": {
+    "pin": 460.2433237509047,
+    "bracket": [
+     391.206825188269,
+     529.2798223135404
+    ]
+   },
+   "mean_radius": {
+    "pin": 24,
+    "bracket": [
+     23,
+     25
+    ]
+   },
+   "first_link": 4,
+   "ticks": 4000
+  },
+  "s32_r12": {
+   "width": 32,
+   "radius": 12,
+   "content": 1,
+   "orbit_n_real": 9.629266319223532,
+   "orbit_n": 10,
+   "momentum": 640,
+   "pace": 0.20330368487928843,
+   "period": {
+    "pin": 370.86501275627506,
+    "bracket": [
+     315.2352608428338,
+     426.4947646697163
+    ]
+   },
+   "mean_radius": {
+    "pin": 12,
+    "bracket": [
+     11,
+     13
+    ]
+   },
+   "first_link": 5,
+   "ticks": 4000
+  },
+  "s32_r24": {
+   "width": 32,
+   "radius": 24,
+   "content": 1,
+   "orbit_n_real": 9.629266319223532,
+   "orbit_n": 10,
+   "momentum": 640,
+   "pace": 0.20330368487928843,
+   "period": {
+    "pin": 741.7300255125501,
+    "bracket": [
+     630.4705216856676,
+     852.9895293394326
+    ]
+   },
+   "mean_radius": {
+    "pin": 24,
+    "bracket": [
+     23,
+     25
+    ]
+   },
+   "first_link": 5,
+   "ticks": 4000
+  },
+  "s32_r12_lamp": {
+   "width": 32,
+   "radius": 12,
+   "content": 1024,
+   "drive": "line",
+   "orbit_n_real": 9.629266319223532,
+   "orbit_n": 10,
+   "momentum": 655360,
+   "pace": 0.20330368487928843,
+   "period": {
+    "pin": 370.86501275627506,
+    "bracket": [
+     337.48716160821033,
+     404.24286390433986
+    ]
+   },
+   "first_link": 5,
+   "ticks": 4000
+  },
+  "s32_r24_lamp": {
+   "width": 32,
+   "radius": 24,
+   "content": 1024,
+   "drive": "line",
+   "orbit_n_real": 9.629266319223532,
+   "orbit_n": 10,
+   "momentum": 655360,
+   "pace": 0.20330368487928843,
+   "period": {
+    "pin": 741.7300255125501,
+    "bracket": [
+     674.9743232164207,
+     808.4857278086797
+    ]
+   },
+   "first_link": 5,
+   "ticks": 4000
+  }
+ }
+}

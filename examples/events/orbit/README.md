@@ -58,23 +58,42 @@ inward push per interval at r is
 
     F = m x q x L x C / (2 pi r),  L = 1.0000 (the fan's mean |u_d| / Q),  C = 1 (taken; series C: 1.00 +- 0.10).
 
-With the width S the probe steps on an axis whose momentum component is p
-(label units) once per (Q S m + p) / p self-creations, the speed v = n /
-(S + n) per axis with n = p / (Q m) (every interval is a self-creation at
-`suspension` 0). A circular orbit turns the momentum vector of magnitude
-p at the rate v / r per interval, so it needs |dp/dt| = p v / r = Q F:
+Under the line drive, the law's drive of a body since 2026-09-22 (the
+model owner's word, record 972; [the design](../../../docs/designs/drive_b/DEFAULT.md);
+BEAM_LAW note 17 as amended, note 49), the probe's accumulator on each
+axis gains p_a Q per interval against the one wall Q^2 S m + |p|_1 T_D
+(T_D = 110), so with the width S it walks the line of its momentum at the
+pace v = 64 n / (64 S + 110 n) on a heading with n = p / (Q m) (every
+interval is a self-creation at `suspension` 0). A circular orbit turns the
+momentum vector of magnitude p at the rate v / r per interval, so it needs
+|dp/dt| = p v / r = Q F:
 
-    n v = n^2 / (S + n) = q L C / (2 pi),
+    n v = 64 n^2 / (64 S + 110 n) = q L C / (2 pi),
 
 independent of r: on the plane a 1 / r force gives the same speed at
 every radius (a flat rotation curve) and T = 2 pi r / v proportional to r,
 so T(24)^2 / T(12)^2 = (24 / 12)^2 = 4, the exponent k = 2 (Kepler's k = 3
 of the 1 / r^2 force in space would give 8). With n in units of the
 probe's content (the equivalence: the push per unit of label is m, so n
-counts the labels taken and the speed n / (S + n) does not depend on m)
-and A = q L C / (2 pi) = 12 / 6.2832 = 1.910:
+counts the labels taken and the pace reads n alone) and A = q L C / (2 pi)
+= 12 / 6.2832 = 1.910:
 
-    n = (A + sqrt(A^2 + 4 S A)) / 2,  the declared momentum p = 64 n.
+    n = (110 A + sqrt(110^2 A^2 + 4 x 64^2 S A)) / 128,  the declared momentum p = 64 n.
+
+The shipped pins (`expectations.json`, written by the generator before any
+run; the probe's first Link a GAMEBOARD number, ceil(W / (p Q)) on the
+wall W = Q^2 S m + p T_D: the 2nd, 4th and 5th interval at S = 1, 8, 32):
+
+| S | n | p (the nearest whole; label units) | v = 64 n / (64 S + 110 n) on a heading | T(12) = 2 pi 12 / v (within 15 percent) | T(24) | Against the rays' 1 / sqrt 3 = 0.577 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 3.787 | 4; 256 | 0.5079 | 148 (126 .. 171) | 297 (252 .. 341) | slower, for the first time at S = 1 (the cap 64 / 110 = 0.582): a kick of 64 on 256 turns 14.4 degrees per ray |
+| 8 | 5.881 | 6; 384 | 0.3276 | 230 (196 .. 265) | 460 (391 .. 529) | slower: a kick of 64 on 384 turns 9.6 degrees per ray |
+| 32 | 9.629 | 10; 640 | 0.2033 | 371 (315 .. 426) | 742 (630 .. 853) | slower: closed expected within the grain, 5.7 degrees per ray |
+
+The pins of history, under the per-axis drive (the registered runs of
+2026-09-19 to 2026-09-21 and their re-reads below were read against
+these; the pace n / (S + n) per axis, n^2 / (S + n) = A, n = (A +
+sqrt(A^2 + 4 S A)) / 2; `expectations(AXIS_DRIVE)`):
 
 | S | n | p (the nearest whole; label units) | v = n / (S + n) per axis | T(12) = 2 pi 12 / v | T(24) | Against the rays' 1 / sqrt 3 = 0.577 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -98,10 +117,12 @@ expected to show in the readings:
   grows (from r of about 16 on some ring Nodes lie on no line).
 - **The flight's anisotropy.** As before: the speed n / (S + n) is per
   axis, a step at most one Link per interval, x before y.
-- **The speed at S = 1.** The derived v exceeds the rays' speed, so the
-  probe is expected to outrun the field, as the S = 1 probes did in the
-  earlier registrations; at S = 8 the derived v is below the rays' for
-  the first time.
+- **The speed at S = 1.** Under the per-axis drive of history the derived
+  v exceeded the rays' speed, so the probe was expected to outrun the
+  field, as the S = 1 probes did in the earlier registrations (the defect
+  of record 301); under the line drive no body outruns its rows (the cap
+  64 / 110), the pace at S = 1 is 0.5079 below the rays' 0.577, and the
+  S = 1 probes are expected to stay in the field for the first time.
 
 ## The criteria, pinned before the runs
 
@@ -129,9 +150,9 @@ expected to show in the readings:
 
 | World | S | r | p (label units; units of m) | Intervals |
 | --- | --- | --- | --- | --- |
-| `s1_r12`, `s1_r24` | 1 | 12, 24 | 192; 3 | 4000 |
-| `s8_r12`, `s8_r24` | 8 | 12, 24 | 320; 5 | 4000 |
-| `s32_r12`, `s32_r24` | 32 | 12, 24 | 576; 9 | 4000 |
+| `s1_r12`, `s1_r24` | 1 | 12, 24 | 256; 4 (the per-axis drive of history: 192; 3) | 4000 |
+| `s8_r12`, `s8_r24` | 8 | 12, 24 | 384; 6 (320; 5) | 4000 |
+| `s32_r12`, `s32_r24` | 32 | 12, 24 | 640; 10 (576; 9) | 4000 |
 
 Run them in parallel and read the records:
 
