@@ -317,9 +317,15 @@ parser refusal, an overflow, a silent lamp, a failing check) is that
 session's to fix in the code with a dedicated test (inputs, expected result,
 an edge case) on its own branch, without asking; the fix and its test are
 named in the report; a physical question (a pin's derivation, a law's
-reading) still comes to the Boss in one line; (3) a run that needs
-optimization to finish is said in one line, and the Boss opens an Architect
-session for it with the state. The law's rules do not move under this word:
+reading) still comes to the Boss in one line; (3) an optimization problem,
+a bug or anything to fix is that session's own: it does it, in the code with
+a test, and reports that it solved it; the Boss opens no Architect for it
+(the owner, 2026-09-22, record 629, superseding the Architect clause of
+record 622). Two rules beside them (record 629): the Boss works only for the
+paper, coordinating the tasks that set it in order; and no new development
+project (a new rule, series, tool or build) starts without the owner's
+approval, while bugs, labels and small corrections need none. The law's
+rules do not move under this word:
 LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
 the pins declared before the run, `python tools/check.py` before the push.
 
