@@ -436,6 +436,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--register", action="store_true", help="write the run blocks into the expectations file"
     )
+    parser.add_argument(
+        "--runs-key",
+        default="runs",
+        help="the key of the expectations file the run blocks are written under (a re-run on another head keeps the first run's blocks)",
+    )
     args = parser.parse_args(argv)
     register = json.loads(args.expectations.read_text(encoding="utf-8"))
     readings = find_runs(args.root, args.window_start)
@@ -473,7 +478,7 @@ def main(argv: list[str] | None = None) -> int:
         }
     print(f"\n{failed} record checks failed, {inside} readings inside, {outside} outside; nothing moved")
     if args.register:
-        register["runs"] = {**register.get("runs", {}), **runs}
+        register[args.runs_key] = {**register.get(args.runs_key, {}), **runs}
         args.expectations.write_text(json.dumps(register, indent=1) + "\n", encoding="utf-8")
         print(f"the run blocks written to {args.expectations}")
     return 1 if failed else 0

@@ -251,3 +251,35 @@ move from the register's to the algebra's; the clock's word does not move.
 It establishes no physical law: `c_f = 2` is an input, and the ring's
 `2 c_f` at gamma 1 on the one constant stays unread until the refusal is
 resolved.
+
+## The re-run on the merged engine (2026-09-22, head 5f3f18bf: the root replaced, the generic entry, the centred step)
+
+The Boss's order (records 956 and 961, the owner's word: half an hour, not
+hours): origin/generic-bending at 3760754c (the physicist's fold, a ladder
+of comparisons of squares in place of the root in `momentum_pair`; the
+generic entry; the centred step; main merged in) merged into this branch,
+and every ring and its control run again with the SAME worlds and pins
+(`tools/run_series.py --jobs 4`, 400 intervals; the run blocks under
+`runs_on_the_merged_engine_5f3f18bf` of `expectations.json`; no pin,
+world or rule moved).
+
+**Still refused (HOST), at the same intervals with the same primitive
+momenta.** The ladder replaces the root, but the wall's square 3 |**P** /
+g|^2 Q^2 is still formed and still tested against 2^63 - 1 before the
+ladder takes it, so the register refuses the same rows: `ring_b6_g1` at
+interval 79 (**P** / g = (32901461, 1149200, -1147979)), `ring_b3_g0` at 79
+((33507403, 409525, -1064800)), `ring_b3_g1` at 77 ((33523131, 804995,
+2102152)), `ring_b8_g0` at 135 ((33568237, 390720, -390115)), `ring_b8_g1`
+at 89 ((66131823, 1205776, -1203345)); the bound's numbers: |**P** / g|
+<= 27 397 079 for 3 |**P** / g|^2 x 4096 to stay under 2^63 - 1, against
+3.3 x 10^7 to 6.6 x 10^7 read. The six controls completed (the ages 89.00,
+every start at its own Node) and `ring_b6_g0` completed with the books
+(the audit) and the events byte for byte the first run's (the audit
+`1457c184eb09...`, the events `9ea8f4070ba9...`): the same readings, 0.128
+against 0.128 +- 0.025, the arrival Nodes the map's, `C_ring` 1.806.
+
+**The verdict stands: NOT DECIDED.** The deciding pin `0.731 +- 0.025` at
+b = 6, gamma 1 is still unread; by the order, this run stops here. What
+remains is the register's rule on a pushed row's momentum at d = 16384 (the
+wall's square over the working bound, whichever way its root is taken),
+which is the architect's and the owner's, not this branch's.
