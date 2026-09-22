@@ -1,0 +1,59 @@
+== r12_flow/run: the probe number 2, M_total 1052672, M_held 1048576, the source at (60, 60)
+  steps 381, reads (kicks) 125, contacts 1
+  THE ESCAPE, a face click of the probe (DETECTOR): ('face:+y', 1208, [97, 120, 0], [409391096, 1674431176, 0])
+  the contact (GAMEBOARD): tick 808 from [31, 21] onto [31, 20], the occupant 34 took the axis 1 component -522063804 (-7.75 n-units); the momentum after [-71593408, 0, 0]
+  the momentum rebuilt from the reads and the contact at the end (409391096, 1674431176); the escape click's [409391096, 1674431176]
+  the kicks: 125; the mean |kick| 1.154 n-units, the mean radial part -1.154 (negative toward the source); rows per read [1, 2, 3, 4, 5, 7]; the ticks mod 10 [(0, 10), (1, 15), (2, 16), (3, 16), (4, 19), (5, 10), (6, 11), (7, 11), (8, 9), (9, 8)]
+  turns about the source to the escape: 2.16
+  the radial extrema (the kind, the tick, r, n, H, L, the turns):
+    apo  t =   115  r =  18.68  n =  5.30  H =   4.746  L =   98.56  turns =  0.207
+    peri t =   282  r =   7.21  n = 14.36  H =   5.593  L =  103.27  turns =  0.656
+    apo  t =   447  r =  25.18  n =  3.85  H =   5.004  L =   87.21  turns =  0.981
+    peri t =   600  r =   7.28  n = 17.45  H =   6.599  L =  126.69  turns =  1.294
+    apo  t =   818  r =  48.60  n =  0.86  H =   5.774  L =  -41.76  turns =  1.648
+    peri t =  1034  r =   3.61  n = 30.44  H =  11.855  L =   99.95  turns =  1.844
+  every 400 intervals (the tick, r, n, H, L, the turns):
+        0  r =  12.00  n =  8.00  H =   4.547  L =   96.00  turns =  0.000
+      400  r =  23.09  n =  5.25  H =   5.055  L =   87.60  turns =  0.951
+      800  r =  47.20  n =  8.46  H =   6.678  L =  176.75  turns =  1.649
+     1200  r =  68.26  n = 25.59  H =  13.242  L =  542.29  turns =  2.162
+  the arrival rate against the inward radial speed u / c (bins of 0.2; bins under 60 intervals left out):
+    u / c   intervals  kicks   kicks x r per interval   impulse x r per interval (n-units)
+    -0.8       75        3        1.714                   1.635
+    -0.6       61        4        1.060                   1.268
+    -0.4      177       11        1.279                   1.252
+    -0.2      222       22        1.379                   1.542
+    +0.0      235       27        1.658                   2.201
+    +0.2      242       30        1.907                   2.187
+    +0.4       83       15        2.760                   3.328
+    +0.6       72       12        3.096                   3.139
+== r24_flow/run: the probe number 2, M_total 1052672, M_held 1048576, the source at (60, 60)
+  steps 628, reads (kicks) 163, contacts 1
+  THE ESCAPE, a face click of the probe (DETECTOR): ('face:-x', 2452, [0, 96, 0], [-57917368, -270319908, 0])
+  the contact (GAMEBOARD): tick 633 from [71, 21] onto [71, 20], the occupant 74 took the axis 1 component -202115808 (-3.00 n-units); the momentum after [381002936, 0, 0]
+  the momentum rebuilt from the reads and the contact at the end (-57917368, -270319268); the escape click's [-57917368, -270319908]
+  the kicks: 163; the mean |kick| 0.863 n-units, the mean radial part -0.863 (negative toward the source); rows per read [1, 2, 3]; the ticks mod 10 [(0, 18), (1, 24), (2, 20), (3, 18), (4, 22), (5, 18), (6, 9), (7, 10), (8, 12), (9, 12)]
+  turns about the source to the escape: 2.41
+  the radial extrema (the kind, the tick, r, n, H, L, the turns):
+    apo  t =   183  r =  31.76  n =  6.04  H =   5.649  L =  191.50  turns =  0.172
+    peri t =   415  r =  17.00  n = 13.04  H =   6.308  L =  221.24  turns =  0.500
+    apo  t =   712  r =  43.91  n =  5.21  H =   6.005  L =  228.84  turns =  0.834
+    peri t =  1051  r =  18.11  n = 12.83  H =   6.347  L =  232.38  turns =  1.232
+    apo  t =  1460  r =  55.57  n =  5.23  H =   6.357  L =  290.06  turns =  1.584
+    peri t =  1898  r =  23.00  n = 14.47  H =   7.186  L =  332.64  turns =  2.000
+    apo  t =  1935  r =  24.17  n = 14.14  H =   7.240  L =  341.17  turns =  2.068
+    peri t =  1945  r =  23.85  n = 14.03  H =   7.204  L =  331.05  turns =  2.092
+    apo  t =  2427  r =  70.18  n =  3.93  H =   6.533  L =  271.02  turns =  2.409
+  every 400 intervals (the tick, r, n, H, L, the turns):
+        0  r =  24.00  n =  8.00  H =   5.575  L =  192.00  turns =  0.000
+      400  r =  17.46  n = 12.89  H =   6.302  L =  219.43  turns =  0.463
+      800  r =  39.62  n =  6.88  H =   6.111  L =  232.80  turns =  0.881
+     1200  r =  34.79  n =  8.33  H =   6.233  L =  268.38  turns =  1.449
+     1600  r =  49.04  n =  6.66  H =   6.388  L =  282.29  turns =  1.641
+     2000  r =  26.00  n = 12.74  H =   6.976  L =  299.09  turns =  2.187
+     2400  r =  71.03  n =  3.89  H =   6.549  L =  273.40  turns =  2.402
+  the arrival rate against the inward radial speed u / c (bins of 0.2; bins under 60 intervals left out):
+    u / c   intervals  kicks   kicks x r per interval   impulse x r per interval (n-units)
+    -0.2      938       53        2.006                   1.701
+    +0.0      795       60        2.335                   1.959
+    +0.2      667       48        2.203                   2.013
