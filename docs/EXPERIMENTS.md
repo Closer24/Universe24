@@ -598,7 +598,7 @@ states "exactly" and means integer equality at every tick.
   at each self-creation); every click's phase equal to its age mod 64 and
   inside its Node's window (d = (phase - s) mod 64 below 16 or from 48);
   every pass at a plus Node, outside its window, clicking at the minus
-  Node next; the offsets plus tick = age + 9, minus tick = age + 10.
+  Node next; the offsets plus tick = age + 9, minus tick = age + 10. The offsets are host ticks less the age, a flight self-check on the record's ordering: GAMEBOARD, not compared with nature (the clock audit of 2026-09-22).
   No-signalling, exact: the set of ages at which `alice_plus` clicks
   identical across all runs with the same a whatever b, and Bob's likewise
   for the same b.
@@ -617,7 +617,7 @@ states "exactly" and means integer equality at every tick.
   non-saturating quadruple: (0, 12) 40, 24, 24, 40, E +1/4; (4, 8) 56, 8,
   8, 56, E +3/4; (4, 12) 48, 16, 16, 48, E +1/2; S' = 3/2 exactly. The
   offsets read off the record: plus tick = age + 9, minus tick = age + 10,
-  the same in every run. `tools/bell_chsh.py`: 326 criteria checked, 0
+  the same in every run. The offset is the tick less the age, the record's ordering: GAMEBOARD, a flight self-check, not compared with nature (the clock audit of 2026-09-22). `tools/bell_chsh.py`: 326 criteria checked, 0
   failed, in every run the books balanced at all 138 ticks, nothing
   escaped, only `click` and `pass` records, the lamp at the end at age 138,
   phase 10, content K + 2 - 276, momentum [0, 0, 0], with 16 or 17 units
@@ -707,7 +707,7 @@ states "exactly" and means integer equality at every tick.
   step at the first read, the merge at 2r + 1 = 25); the steps are the
   rule off the clock, by_clock(t - 1, |p|, m + |p|) on the reads'
   cumulative push p, x before y, at most one per interval (identity on the
-  record).
+  record). The ticks of these records and the one step per interval are the record's ordering, GAMEBOARD (the clock audit of 2026-09-22); the probe's own clock, its age at each read, is the detector's time.
   Item 2, the third law with unequal contents (a reading, not an
   identity): A = 2^22 at (56, 60, 0) and B = 2^20 at (64, 60, 0), both
   fixed, 200 intervals; P_A,x > 0 and P_B,x < 0 (toward each other);
@@ -734,7 +734,7 @@ states "exactly" and means integer equality at every tick.
   are read too: derived at -x 4 (5, 180), +y 6 (7, 2), -y 8 (9, 2), +x 4
   (5, 180), +x 6 (7, 3); registered, not derived, on +x past the front
   (r = 8 and r >= 12), the same in every world that holds a probe there;
-  the push -amount x m along the axis at every first read (identity).
+  the push -amount x m along the axis at every first read (identity). The front's tick is the record's ordering, GAMEBOARD; the amount read whole is the detector reading and the probe's age at the read its own clock (the clock audit of 2026-09-22).
   Item 5, the far field (Gauss on a circle): world 5, the source alone,
   300 intervals, replayed through the API over ticks 251-300: the ring
   means (the Nodes at Euclidean distance |d - r| < 1 / 2 in the plane,
@@ -764,7 +764,7 @@ states "exactly" and means integer equality at every tick.
   equals size x 1 // 32 read at that self-creation and the ages match the
   replay exactly (identity); the clock slowed, never frozen (age(200) >
   age(60)); age(r) and the lost fraction 1 - age / 200 per r and its trend
-  (the size ~ 1 / sqrt(r) on the plane, so k ~ 1 / sqrt(r)).
+  (the size ~ 1 / sqrt(r) on the plane, so k ~ 1 / sqrt(r)). The denominator 200 is the host's interval count, so the lost fraction is GAMEBOARD as a rate; the probe's age is the detector reading (the clock audit of 2026-09-22).
   Item 7, the electric reading (identity): the family `q` of kind free,
   the source with `charge` Q in 0, +2^23, -2^23 and a fixed probe of
   content 1 at (72, 60, 0) with `charge` q in 0, +2, -2, the pairs (0, 0),
@@ -836,7 +836,7 @@ states "exactly" and means integer equality at every tick.
   and by_clock(14, 1, 2) = 0, so the first step comes at tick 16 after the
   second read, p = 3m, by_clock(15, 3, 4) = 1); one `merged` record at tick
   27 = 2r + 3 into the source with amount m; the source's content
-  2^24 + m at the end; 13 reads per free probe, m times 1b_m1's.
+  2^24 + m at the end; 13 reads per free probe, m times 1b_m1's. The step ticks and the merge tick are the record's ordering, GAMEBOARD (the clock audit of 2026-09-22).
   Item 2: per 50-interval window (P_A, P_B, the ratio of the axial parts)
   1-50 (135840923648, -41943040, 0), (-176993337344, 186646528, 0), 0.768;
   51-100 (280443748352, -2403336192, 0), (-307688898560, -2453667840, 0),
@@ -854,7 +854,7 @@ states "exactly" and means integer equality at every tick.
   past the front, the same in every world: r = 8 (11, 8), r = 12 (15, 1),
   16 (19, 1), 20 (23, 1), 24 (27, 1), 30 (33, 1), 40 (43, 1): past the
   front the first read comes three intervals after r Links, one unit whole
-  by its momentum from r = 12 on. Item 5, world 5 over ticks 251-300 (r:
+  by its momentum from r = 12 on. The first read's tick is the record's ordering, GAMEBOARD; the amount and the push are the probe's own record (the clock audit of 2026-09-22). Item 5, world 5 over ticks 251-300 (r:
   count x r / q, flow x 2 pi r / q, carried x 2 pi r / q over the six
   Ports, over the four in-plane Ports, size x sqrt(r) / sqrt(q)): 4:
   0.3320, 1.0762, 1.5023, 1.2642, 0.8743; 6: 0.3252, 1.0325, 1.4468,
@@ -892,7 +892,7 @@ states "exactly" and means integer equality at every tick.
   (31, 169, 43), 24 (38, 162, 134), 30 (47, 153, 21), 40 (63, 137, 8); age
   + waited = 200 everywhere; the source at age 200, waited 0; the lost
   fraction 0.970, 0.955, 0.935, 0.905, 0.875, 0.845, 0.810, 0.765, 0.685,
-  falling with r; k over ticks 151-200 395, 323, 281, 229, 201, 185, 172,
+  falling with r (the lost fraction over the host's 200 intervals, GAMEBOARD as a rate; the ages are DETECTOR: the clock audit of 2026-09-22); k over ticks 151-200 395, 323, 281, 229, 201, 185, 172,
   139, 100 (k x sqrt(r) 790 to 840 up to r = 24, then 762 and 636 where
   the field is still filling), k / (k + 1) 0.9975 to 0.9901; the count
   written at the last self-creation 403 (tick 19), 346 (32), 330 (89), 251
@@ -915,7 +915,7 @@ states "exactly" and means integer equality at every tick.
   departures' momentum at a Node counts the back-scattered shares, which
   carry outward momentum while moving inward, and the stub's returns,
   while the flow counts the net units; the flow is Gauss's constant, the
-  carried is 1.45 times it on the plane. (b) The lost fraction against
+  carried is 1.45 times it on the plane. (b) The lost fraction (GAMEBOARD as a rate, over the host's tick count; the clock audit of 2026-09-22) against
   k / (k + 1): 0.685 to 0.970 found against 0.990 to 0.998, the difference
   the self-creations before the front arrives and the field builds (age
   about the arrival tick plus a few); the reviewer's limit stands: the
@@ -944,7 +944,7 @@ states "exactly" and means integer equality at every tick.
   suspended, and its probes read at threshold 1 without windows, where the
   set's gate is the number's; every reading and identity above stands as
   registered (old = new). Item 4, the front as
-  derived at every derived Node; the +x pattern past the front registered.
+  derived at every derived Node; the +x pattern past the front registered. The front's tick is the record's ordering, GAMEBOARD (the clock audit of 2026-09-22).
   Item 5, the exponents within their bounds (count -0.99, flow -1.05,
   carried -1.01, size -0.48: Gauss on a circle) and the flow about 1;
   outside the bound: the carried momentum (1.45, a GameBoard reading of what
@@ -1011,7 +1011,7 @@ states "exactly" and means integer equality at every tick.
   flies at 1 / sqrt 3 by the flight table, so the eight Links to a plus Node
   take 13 walks after the ray's first walk and the ninth two more; the
   offsets are expected at plus 14 and minus 16 (the law of events: 9 and
-  10) and the run needs 160 intervals for the 128 pairs.
+  10) and the run needs 160 intervals for the 128 pairs. The offsets are host ticks less the age, a flight self-check on the record's ordering: GAMEBOARD, not compared with nature (the clock audit of 2026-09-22).
 - **Features.** The one engine (`rays-v1`): a lamp of a paid family releasing
   one ray per self-creation on +X and on -X (`lamp.directions`), detectors
   of threshold 1 and the phase window (`tests/test_nature_beam_window.py`); the
@@ -1032,7 +1032,7 @@ states "exactly" and means integer equality at every tick.
   settings, S = 2 exactly; the controls +1 (128 / 0), -1 (0 / 128), 0
   (64 / 64); E +1/4 (80 / 48), +3/4 (112 / 16), +1/2 on the non-saturating
   quadruple, S' = 3/2 exactly; the offsets plus 14, minus 16 in every run
-  (expected 14 and 16); no-signalling exact; the books balanced at every
+  (expected 14 and 16; host ticks less the age, GAMEBOARD, a flight self-check: the clock audit of 2026-09-22); no-signalling exact; the books balanced at every
   tick, nothing escaped, the lamp's momentum [0, 0, 0]; 326 criteria, 0
   failed, exit 0. Measured = expected on every line. The model's limit,
   outcome 1 of A2 against the 2015 data; not a law of nature. Limits as in
@@ -1106,7 +1106,7 @@ states "exactly" and means integer equality at every tick.
   1.0000 at four decimals, zero over the first window); item 3 the identity
   (the probe off both axes reads nothing); item 4 the front at r at tick
   1 + m^-1(r): r = 4 tick 8, 6: 11, 8: 14, 12: 21, 16: 28, 20: 35, 24: 42,
-  30: 52, 40: 69, amount 2^17 whole; item 5 count x r / q constant within
+  30: 52, 40: 69, amount 2^17 whole (the tick the record's ordering, GAMEBOARD; the amount the probe's reading: the clock audit of 2026-09-22); item 5 count x r / q constant within
   10 % for r >= 8, on the six headings a ring mean over mostly empty Nodes
   0.15 to 0.19, flow x 2 pi r / q 1.00 +- 0.10, the flux through the square
   within 2 % of q, the slopes -1.00 +- 0.10 (the flow +- 0.15); item 6 the
@@ -1153,7 +1153,7 @@ states "exactly" and means integer equality at every tick.
   - Item 4 (expected the flight table's ticks with 2^17 whole): measured
     (8, 131072) at r = 4 on -x, (11, 131072) at 6 on +y, (14, 131072) at 8
     on -y, (21, 131072) at 12 on +x, and on +x in `5p` and `6` (8, 11, 14,
-    21, 28, 35, 42, 52, 69) at r = 4 to 40. Measured = expected.
+    21, 28, 35, 42, 52, 69) at r = 4 to 40. Measured = expected. The ticks are the record's ordering, GAMEBOARD, and the tool prints the front's tick as a diagnostic since 2026-09-22 and counts the amount whole; the probe's age at the read is its own clock (the clock audit of 2026-09-22).
   - Item 5 (world 5, ticks 251-300; expected count x r / q constant within
     10 %, 0.15 to 0.19 on the six headings; flow x 2 pi r / q 1.00 +- 0.10;
     the flux within 2 %; the slopes -1.00): measured count x r / q 0.125,
@@ -1183,7 +1183,7 @@ states "exactly" and means integer equality at every tick.
     design's accepted price, section 8 item 6); off the axis a Node reads
     nothing. The reading "the share lost against k / (k + 1), k = q /
     (6 r)" 0.96 to 0.66 at r = 4 to 40 is inside the expectation at every r
-    and says only that the clock counted before the front arrived.
+    and says only that the clock counted before the front arrived. Its denominator, the run's 200 intervals, is the host's tick count, so the share lost is GAMEBOARD as a rate and the tool prints it as a diagnostic since 2026-09-22; the probe's (age, waited, owed) are the detector reading (the clock audit of 2026-09-22; the registered inside stands as written).
   - Item 7 (expected -Qq / (M m) exactly): measured like signs `pushed`
     [0, 0, 0], unlike twice the uncharged world's (-70582384, 0, 0), the
     content-4 probe 3 times; electric / gravity -1 and -1/4 exactly.
@@ -1531,7 +1531,7 @@ states "exactly" and means integer equality at every tick.
     leaves through -x at tick 1054 (1.46 turns).
   - The ratio at S = 32: T(24)^2 / T(12)^2 = (829 / 289)^2 = 8.23
     (outside 4 +- 15 %; 8 would be Kepler's k = 3, but neither T is a
-    closed orbit's period); at S = 8 no T(24).
+    closed orbit's period; the periods are step records, GAMEBOARD, their ratio against Kepler a diagnostic, the detector form being D3's lamp: the clock audit of 2026-09-22); at S = 8 no T(24).
 - **Verdict (the third registration).** Under the label along the unit
   vector no orbit closes by the criterion (a return within one Link with
   the heading kept), at any width or radius; measured against the
@@ -1644,7 +1644,7 @@ states "exactly" and means integer equality at every tick.
   radius (343 x 16.63 / 12 = 475), a coincidence of one loop that is not
   a reading of the criterion. What the series now predicts and what
   would refute it, nothing pinned here (the next run pins its own numbers
-  first): (i) the closed turn is a reading of `beam-v1` as amended, the
+  first; every T here is a step record, GAMEBOARD, a pin on it would be a diagnostic's, the detector form being D3's lamp: the clock audit of 2026-09-22): (i) the closed turn is a reading of `beam-v1` as amended, the
   same world under the same law re-reading T 623 (the GameBoard is
   deterministic), and a change that un-closes it is registered as a law
   change or a bug, never silently; (ii) a closed orbit at S = 32, r = 12
@@ -1695,7 +1695,7 @@ states "exactly" and means integer equality at every tick.
   the angle with the heading kept (the returns 5 and 9 Links): a reading
   of the derived law within its 15 %, on turns that are not closed
   orbits, so the law is measured for and not against by this one pair,
-  not established. The unsigned drive's closed return at r = 24 was the
+  not established. The two periods are step records, GAMEBOARD, so this measuring is a diagnostic's, the detector form being D3 (the clock audit of 2026-09-22). The unsigned drive's closed return at r = 24 was the
   reversal defect's: a component turning through zero on the orbit
   discharged its accumulated |p| as a Link the other way (record 126),
   a kick back toward the source at every turn of a component's sign,
@@ -1720,8 +1720,8 @@ states "exactly" and means integer equality at every tick.
   run of 4000 under the signed drive); T(24)^2 / T(12)^2 from the first
   turns 932 and 525 = 3.15 against the expected 4 (3.73 before); no orbit
   closes by the criterion; the record checks 0 failed. By kind: T, the
-  returns, the radii and C are GAMEBOARD readings (the probe's `step` and
-  `read` records, the host's view); the exits are DETECTOR readings (the
+  returns, the radii, C and the ratio of the periods against 4 are GAMEBOARD readings (the probe's `step` and
+  `read` records, the host's view; a diagnostic, the detector form D3's lamp: the clock audit of 2026-09-22); the exits are DETECTOR readings (the
   face detectors' clicks). No pin moved, no world changed. For C = 1.29
   and 1.87 against the derivation's 1, the physicist's orbit note
   (`docs/designs/orbit_read/NOTE.md`, PR #597): a digital line crosses
@@ -1879,7 +1879,7 @@ states "exactly" and means integer equality at every tick.
   with the lamps' `rate` 47 (the registered rate), 8 and 1 units per
   interval, the opening's Nodes re-emitting n units on n consecutive
   directions of the 47-fan per interval (`apportion_whole`), so the
-  screen receives about 6, 1 and 0.14 rays per pixel per interval; the
+  screen receives about 6, 1 and 0.14 rays per pixel per interval (the interval count is the pixels' own clock: fixed detectors in no crowd at `suspension` 0, record 569; the clock audit of 2026-09-22); the
   runs 420, 1200 and 7780 intervals so that the window from tick 260 (every
   pixel has clicked by 235) holds the same 172 000 clicks. Derived: the
   record of a `wave` pixel is the square of the pointer of the rays it
@@ -2702,7 +2702,7 @@ states "exactly" and means integer equality at every tick.
   2.873 (15), 3.248 (16); the fan's ring flux falls as about r^-1.83 and
   is not smooth at r >= 13, so j = 3 falls between the GameBoard radii 15
   and 16. Expected: an orbit closed (the return within r / 4 at the
-  closing of the angle, T within 15 %), the phase's turn per orbit whole
+  closing of the angle, T within 15 %; T a step record, GAMEBOARD, a diagnostic and not a pin: the clock audit of 2026-09-22), the phase's turn per orbit whole
   at a closing radius; the coherence ratio of the faces' records (the
   cumulative coherent pointer squared over the sum of the per-turn
   squares, through the engine's `coherent_pointer`) C(T) >= T / 2 after
@@ -2754,19 +2754,19 @@ states "exactly" and means integer equality at every tick.
   | `r15` | 15 | 2.873 (between) | C < 2 | 2.88 | 2: 1640, 2291 (2022) | 14.36, 18.67 | 8.1, 12.0 | 1.0 .. 40.3 | face:+x at 4683 | 0.188 (0.873) | 0.52, 2.78 | inside (two eccentric turns only) |
   | `r16` | 16 | 3.248 (between) | C < 2 | 1.24 | 1: 2917 (2040) | 22.12 | 5.0 | 8.0 .. 31.6 | face:+y at 3568 | - | - | no reading: one wide turn |
 
-  The turns of the angle, the closings, the radii, the returns, the ends
-  and the phase's turn per orbit are GAMEBOARD readings; C and the slope
+  The turns of the angle, the closings and their T, the radii, the returns, the ends
+  and the phase's turn per orbit are GAMEBOARD readings (the tool prints T and the per-turn C as diagnostics, not counted, the detector reading behind them, the turn per orbit from the faces' click phases, not yet read: the clock audit of 2026-09-22); C and the slope
   are DETECTOR readings (the four side faces pooled, the per-face values
   in the tool's output); the ends are the electron's own click on the face.
   - The orbit (expected closed within r / 4, T within 15 %): measured no
     orbit closed by the criterion at any radius. At r = 8, the reference,
     the two turns kept the mean radius (8.11, 7.95 against 8) with T 14 %
-    short (722, 736 against 838, outside), returned 5 and 4 Links off
+    short (722, 736 against 838, outside: a GameBoard diagnostic's word, T being a step record, the clock audit of 2026-09-22), returned 5 and 4 Links off
     (outside r / 4 = 2) on an eccentric loop from r = 3 to 28, and the
     close pass of the third turn threw the electron out through face:+y.
     The other radii fell inward (r = 2, 4, 15: to the Node beside the
     proton at r = 2 and 15) or swung outward (r = 6, 12, 16) within the
-    first turn or two and escaped. The electron's own reads (DETECTOR):
+    first turn or two and escaped. The electron's own reads (DETECTOR; the mean per interval divides by the host's tick count, GAMEBOARD as a rate, the electron's own clock being the detector's time: the clock audit of 2026-09-22):
     the mean inward push per interval on the GameBoard at r = 8 was 40 600 in
     units of Q per unit of content against the derivation's 39 660 (1.02):
     the mean flux the body reads is the derived one; the orbit is broken
@@ -3088,8 +3088,15 @@ states "exactly" and means integer equality at every tick.
   | `deuteron_1_kick` | the kick 10^12 outweighed by the pushes read by tick 5 (DETECTOR); no step; the first refused step toward the other | tick 5 on both; no step; 190 hand-overs on p from tick 13 (the largest 9 329 018 419 200), 147 on n from tick 138 | inside (3 of 3) |
   | `pp_1` | the push 148 716 220 864 toward the other (DETECTOR); no step; the label 0 after every hand-over | 148 716 220 864 (the `nuclear` rows 300 805 525 696, the `p` rows -152 089 304 832) and the mirror; no step; 171 hand-overs on p1 from tick 16, 0 after each, the largest 7 138 378 601 472 | inside (3 of 3) |
   | `pp_1_weak` (G 7000) | the push -4 691 779 136, repulsion (DETECTOR); separates, never returns; the first step within 200 intervals (GAMEBOARD) | -4 691 779 136 (the `nuclear` rows 147 397 525 696) and the mirror; the first steps at tick 167, 1 to 19 Links, out through face:+x at 334 and face:-x at 379; 169 strong reads per body before the reach was passed | inside (3 of 3) |
-  | `pp_3` | the push -15 977 466 864 from tick 6, no strong read (DETECTOR); the first step at tick 30 .. 60; separates, never returns (GAMEBOARD) | -15 977 466 864 and the mirror; 0 strong reads; the first steps at tick 66; 3 to 19 Links, out at 269 and 282 | 3 of 4 inside: the first step at tick 66, outside the steady toy's 30 .. 60 (the pushes begin at tick 6 and the fan's lines arrive over the next ticks, which the toy lacked) |
+  | `pp_3` | the push -15 977 466 864 from tick 6, no strong read (DETECTOR); the first step at tick 30 .. 60; separates, never returns (GAMEBOARD) | -15 977 466 864 and the mirror; 0 strong reads; the first steps at tick 66; 3 to 19 Links, out at 269 and 282 | 3 of 4 inside: the first step at tick 66, outside the steady toy's 30 .. 60 (the pushes begin at tick 6 and the fan's lines arrive over the next ticks, which the toy lacked; the first step's tick is a step record, GAMEBOARD, which the tool prints as a diagnostic and does not count since the audit of record 567; the registered 29 / 1 stand as written, the clock audit of 2026-09-22) |
   | `alpha_square` | the push per body at L = 3 as designed (DETECTOR); the shear 49 090 283 970 per row per interval (GAMEBOARD); a proton's step within 100 intervals; disperses beyond 3 Links (GAMEBOARD) | p1 (355 957 892 670, 320 048 730 393, 0), n2 (-405 048 176 640, 376 205 857 440, 0), n3 and p4 the mirrors; the rows' x pushes -49 090 283 970 and +49 090 283 970; p4 steps +y at tick 57, n3 at 63, n2 at 70, p1 at 84; n3 out through face:+x at 180, p4 face:+y at 236, p1 face:-y at 393, n2 face:-x at 538; the largest separation 23.6 at the end; 3, 11, 8 and 4 hand-overs, 0 after each | inside (4 of 4) |
+
+  The onset ticks of the rows above (the border's first clicks from tick 4, the
+  kick outweighed by tick 5, the first steps) are the record's ordering,
+  GAMEBOARD; the rates per interval at the border, a fixed detector at k = 0
+  whose tick is its own clock (record 569), and the pushes read are the
+  DETECTOR readings; the tool prints the onsets as diagnostics and counts the
+  rates since 2026-09-22 (the clock audit of 2026-09-22; no number moves).
   | `alpha_line` | the push on p1 403 332 137 616 on x (DETECTOR); no step in 3000; the label 0 after every hand-over | 403 332 137 616 (n 13 702 153 608, nuclear 405 607 450 872, p -15 977 466 864), on n2 108 358 928 000; no step; 257, 247, 11 and 251 hand-overs, 0 after each, the largest 16 500 521 232 560 (the toy's number) | inside (3 of 3) |
 
   The pushes, the hand-overs and the border's clicks are DETECTOR
@@ -3261,7 +3268,7 @@ states "exactly" and means integer equality at every tick.
     mean age 89.40 in every world, the delta 0.00, the first click at 90.
   - The count and the phase rate (DETECTOR): 1455 clicks in every world,
     the ratio 1.0000, nothing on the faces, nothing taken by the mass;
-    8.000 steps per interval, no redshift of the light in flight.
+    8.000 steps per interval, no redshift of the light in flight. (The rate per interval is against the pixels' own clock, fixed detectors at `suspension` 0 whose tick is their age, record 569; the strict form reads it against the lamp's counted births: the clock audit of 2026-09-22.)
   - The replay (GAMEBOARD): 447 rows of the beam in flight at most, none
     at rest, none off the lamp's directions in any world; the crowd's
     rows 13618 at most; 162 Nodes per interval (156 in `near`) holding a
@@ -3398,7 +3405,7 @@ states "exactly" and means integer equality at every tick.
 
   | Reading | Kind | Expected | Measured | Verdict |
   | --- | --- | --- | --- | --- |
-  | The offsets (tick = age + offset) | detector | 6, 11, 13, 14 (the flight table) | 6, 11, 13, 14, one value per counter | inside |
+  | The offsets (tick = age + offset) | GameBoard (the tick less the lamp's record count, a flight self-check anchored on the lamp's clock; not compared with nature: the clock audit of 2026-09-22) | 6, 11, 13, 14 (the flight table) | 6, 11, 13, 14, one value per counter | inside |
   | The warm-up, the pairs before every counter had a setting | detector | 7 | 7 (3 of them escaped on -x, the other 4 clicked at Alice's minus) | inside |
   | The settings read | detector | Alice 0, 12, 25, 38, 51; Bob 8, 29, 51 | the same, 15 bins of 128 pairs | inside |
   | Every minus window the plus window's complement | detector | every pair | every pair | inside |
@@ -3478,7 +3485,7 @@ states "exactly" and means integer equality at every tick.
   `heavy` -4.3 with 209 rays wrapped to the faces (+- a quarter); `near`
   -2.6 with 136; the phase offset of the arrivals about 55 steps of 64
   (`mass`, `near`: 119 and 183 crowd units met modulo 64) and 24 (`heavy`:
-  216 modulo 64), +- 8 steps; the phase rate the lamp's turn 8 +- 0.05;
+  216 modulo 64), +- 8 steps; the phase rate the lamp's turn 8 +- 0.05 (per interval of the pixels' own clock, fixed detectors at `suspension` 0, record 569; the clock audit of 2026-09-22);
   the control unchanged, byte for byte; the lens world's two beams at
   +-b = 6 crossing about 70 Links past the mass, a grain of the fan and
   not a focal law (no bracket). The sign toward the mass in every world,
@@ -4266,7 +4273,7 @@ and 9).**
   exact (Alice + for u < 32), the 15 pairs' E and S = 156/64 on the
   registered quadruple, the which-path E and S = 88/64, the far counters
   E 44 and 0 with every record gathered at least 200 intervals after its
-  birth (`tests/test_amplitude_pair.py`). The tables' rounding does not
+  birth (`tests/test_amplitude_pair.py`). The flight is the gather's tick less the birth's, the record's ordering: GAMEBOARD, a self-check; the row's age on its click is the detector's form (the clock audit of 2026-09-22). The tables' rounding does not
   enter: both arms' rows carry the one phase u, whose factor is common
   to every cell.
 
@@ -4361,6 +4368,72 @@ and 9).**
   host 1.5 s and 9.4 s of wall per world apart from the model's cost.
   PASS, no number moved; `tests/test_amplitude_bell_24_4.py` derives the
   pin and replays the worlds bit-exact against the registered counts.
+- **The pair at N = 2048 and N = 8192, the plateau of 24.4 measured
+  (2026-09-22; the Boss's order on the model owner's word of 2026-09-22
+  through the paper's writer;
+  [the README's section](../examples/events/amplitude/README.md#bell-at-n--2048-8192-and-16384-the-plateau-of-244-and-its-end);
+  `expectations.json` under `bell_24_4`, the block `run_2048_8192_16384`).**
+  The Bell world above with the one declared integer N changed by the
+  generator (`bell_n2048_*`, 2068 intervals; `bell_n8192_*`, 8221). Pinned
+  before the run from the closed form of
+  [DERIVATIONS_BEAM 24.4](DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry),
+  S(N) = 8 (c_1 + c_1') / N - 4 (the paper's `checks/s_powers_of_two.txt`):
+  S = 181 / 64 exactly at both N, the four correlations 181 / 256 in kind
+  at 2048 (the cells 874, 150, 150, 874 on every pair) and 725 / 1024 and
+  723 / 1024 at 8192 (3498, 598, 598, 3498 and 3494, 602, 602, 3494), the
+  marginals W / 2, every count within one of its width. Run (the branch
+  `bell-plateau-runs` on main 97395444, headless one world at a time,
+  Python 3.14, the source sha256 `663b984ef7c151e8...`; completed and
+  conserved at every tick; DETECTOR, the gathers of the first W records
+  by ordinal): every pin met on the eight worlds, every count its pinned
+  count, E x W 1448, -1448, 1448, 1448 and 5800, -5800, 5784, 5784, S x N
+  = 5792 and 23168, both exactly 181 / 64, the + counts 1024 of 2048 and
+  4096 of 8192 on every world, the rungs one list on every gather (124
+  and 149 distinct totals). At 8192 the first declaration of the
+  duration, N + 20 = 8212 intervals, ended with the 8192nd record in
+  flight (8191 of 8192 gathered, the last cell 3497 and 3493 for 3498
+  and 3494, every gathered record on its rung; kept under
+  `first_declaration`): the lamp's clock stalls 9 times by W = 8192
+  (BEAM_LAW note 41) and a record gathers 12 intervals after its birth,
+  so the generator now declares the duration from the lamp's turn
+  recurrence (`interval_of_birth`, which reproduces every registered
+  birth count and stall tick), 8221 here, every registered world
+  unchanged. The rule of every N: a run's duration is declared from the
+  world's own clocks (the lamp's turn recurrence and the flight to the
+  gather), derived before the run and never a fixed margin; a first
+  declaration that falls short is kept with its readings and the
+  re-declaration is derived, never chosen to meet a number. GAMEBOARD:
+  the books balanced at every tick, 2067 born,
+  2055 gathered, 12 open at 2048 and 8212, 8200, 12 at 8192; the host
+  (GAMEBOARD) 5.2 to 5.5 s of wall per world at 2048 and 21.4 to 21.9 s
+  at 8192, apart from the model's cost. Replication (the same day, each
+  world again in a fresh process): the digests of `state.json`,
+  `events.jsonl`, the gathers and the ledger byte-identical on every
+  world, the readings equal. PASS, no number moved.
+- **N = 16384, where the plateau ends (2026-09-22; the same order, README
+  section and register block).** `bell_n16384_*`, 16439 intervals, the
+  half-angle table of 2N = 32768 (the tables end at 65536). Pinned before
+  the run from the closed form: S = 5793 / 2048 = 2.828613, both roundings
+  of N (1 + E) / 4 up, the correlations 725 / 1024 at (0, 2048) and
+  (0, 6144) (6996, 1196, 1196, 6996) and 2893 / 4096 at (4096, 2048) and
+  (4096, 6144) (6989, 1203, 1203, 6989), the marginals 8192, every count
+  within one of its width; what refutes, a count off its rung by more
+  than one or S off 5793 / 2048. Run (as above; DETECTOR): every pin met
+  on the four worlds, E x W 11600, -11600, 11572, 11572, S x N = 46344 =
+  5793 / 2048 x 16384 exactly, the + counts 8192 of 16384 on every world,
+  the rungs one list on every gather (153 distinct totals): the plateau's
+  end is measured where 24.4 computed it. The first declaration, 16404
+  intervals, ended with 27 records of the wheel unborn or in flight
+  (16357 of 16384 gathered, 35 stalls of the lamp's clock; the last cell
+  6969 and 6962 for 6996 and 6989, the rest exact; kept under
+  `first_declaration`), re-declared as at 8192. GAMEBOARD: the books
+  balanced at every tick, 16404 born, 16392 gathered, 12 open; the host
+  (GAMEBOARD) 55.0 to 56.1 s of wall per world (the engine's own 52.1 to
+  53.3 s), apart from the model's cost. Replication (the same day, a
+  fresh process per world): byte-identical digests and equal readings on
+  every world. PASS, no number moved; `tests/test_amplitude_bell_24_4.py`
+  derives the pin per N and the closed form and replays the twelve
+  worlds of the two runs bit-exact against the registered counts.
 
 **L7, the cone: which length a row's phase counts (the paper session's
 question, issue #376; the Boss's approval of 2026-09-20).**
@@ -4891,7 +4964,7 @@ sequential gates on an entangled record, the full register replay.
   after all returns have arrived the two rays' Δp are equal and opposite
   exactly, and before that their difference equals the momentum carried by
   field rays in flight exactly; the first recoil of each releaser arrives at
-  exactly twice the transit of the field ray to the meeting; the log-log
+  exactly twice the transit of the field ray to the meeting (a duration in host ticks with no clock declared: a GameBoard reading of the retired law, historical; the clock audit of 2026-09-22); the log-log
   least-squares exponent of |Δp(b)| over the five b is −1.0 ± 0.15 (standard
   error from the five points); like charges deflect apart and the
   electron-positron pair together; the neutral control goes straight; no
@@ -4989,7 +5062,7 @@ sequential gates on an entangled record, the full register replay.
   at c (the transit of the axis field ray is b, the recoil would be due at
   tick 48 + 3b/2 at a releaser at rest, and the first co-arrival with own
   field, tick 65 at b = 4, is the turned ray's own release, not the
-  recoil); (4) fail: |Δp(b)| = 3, 0, 0, 0, 0 over b = 4, 6, 8, 12, 16 for
+  recoil; these ticks are the record's ordering, GAMEBOARD, historical: the clock audit of 2026-09-22); (4) fail: |Δp(b)| = 3, 0, 0, 0, 0 over b = 4, 6, 8, 12, 16 for
   both rays in both charge pairs, no logarithm of four zeros and no
   exponent, a fail of the outward dilution of the declared table against
   Coulomb, stated as such: floor(A × 6/11) per Link empties a release of 16
@@ -5091,7 +5164,7 @@ sequential gates on an entangled record, the full register replay.
   body is the change of its momentum register per interval, read from the
   `external_body_absorbed` records, and its steady state is read as the
   mean over the last 32 ticks, the per-tick series recorded so that a
-  reader sees the transient and the steady state (the front reaches the
+  reader sees the transient and the steady state (a rate per host interval with no clock or detector declared: a GameBoard reading of the retired law, historical; the clock audit of 2026-09-22) (the front reaches the
   other body at tick r; at 4096 per heading the axis is lit at once and
   the registers fill over time). Recorded per tick: each body's momentum
   register and position, the world ledger with the bodies' momentum line,
@@ -5109,7 +5182,7 @@ sequential gates on an entangled record, the full register replay.
   proportional to its source); (4) the steady-state push per interval F(r)
   over the five axis r, the mean over the last 32 ticks of the push on B
   along x, has log-log least-squares exponent −2.0 ± 0.2 (standard error
-  from the five points); (5) like charges pushed apart (A's register on
+  from the five points; the push per interval is GAMEBOARD, historical: the clock audit of 2026-09-22); (5) like charges pushed apart (A's register on
   −X, B's on +X) and opposite charges together, with the same magnitudes;
   (6) the diagonal series: F at Euclidean distance d against the axis fit
   of (4) evaluated at the same d, the ratio reported per point, no
@@ -5235,7 +5308,7 @@ sequential gates on an entangled record, the full register replay.
   F(r) on B, the mean push per interval over the last 32 ticks, 742.81,
   252.81, 89.75, 13.19 and 2.41 quanta per interval at r = 4, 6, 8, 12,
   16 (the window sums 23770, 8090, 2872, 422, 77; r²F 11885, 9101, 5744,
-  1899, 616), exponent −4.14 ± 0.37, outside −2.0 ± 0.2; (5) like charges
+  1899, 616), exponent −4.14 ± 0.37, outside −2.0 ± 0.2 (the push per host interval from the momentum register: GAMEBOARD, historical, the clock audit of 2026-09-22); (5) like charges
   apart (A's push on −X, B's on +X) and opposite charges together at every
   r, the opposite-charge series the exact negation of the like-charge
   series tick by tick; (6) the diagonal, B at (d, d, 0): |F| = 133.42,
@@ -5391,7 +5464,7 @@ sequential gates on an entangled record, the full register replay.
   at every tick of every world; (2) the two registers equal and opposite
   at every tick of every two-body world, the control's (0, 0, 0) at every
   tick; (3) the engine's steady-state push F(r) on B, the mean over the
-  last 32 ticks, equals the prediction above within 3 % at every r run;
+  last 32 ticks (a rate per host interval off the momentum register: GAMEBOARD, historical, the clock audit of 2026-09-22), equals the prediction above within 3 % at every r run;
   (4) the log-log exponent of F(r) over the r run (12, 16, 20, and 24 if
   run) equals the mean field's over the same points, −2.79 (−2.63 with r
   = 24), within ± 0.1, the asymptote −2 stated beside it with the r from
@@ -5509,7 +5582,7 @@ sequential gates on an entangled record, the full register replay.
   a shadow of its own owner is home and never a push, and every shadow that
   pushes turns back with the opposite sign carrying -dp (point 3). The push
   per interval on each body is the change of its momentum per tick, read
-  from the runner's `momentum` line (things 2 and 3); the momentum in flight
+  from the runner's `momentum` line (things 2 and 3; a rate per host interval with no detector: GAMEBOARD, historical, the clock audit of 2026-09-22); the momentum in flight
   on the shadows is read by `analyze.py` replaying every world in-process
   (every shadow's `momentum` on its way and parked, from the layer's arrays
   and the engine's Nodes; the runner's ledger line of the momentum field does
@@ -5572,7 +5645,7 @@ sequential gates on an entangled record, the full register replay.
   windows of twenty at d = 4 read -765, -3846, -42680, -6783 and -13059 +-
   8185 (ticks 101 to 120), at d = 6 +5964, -2078, -12285, -6432, +14940 +-
   10704, at d = 8 +2689, +4541, +14681, -8918, -19126 +- 9765, at d = 12
-  +925, +5609, -9163, -10615, -4784 +- 4263: on the periodic GameBoard A's
+  +925, +5609, -9163, -10615, -4784 +- 4263 (pushes per host interval off the runner's momentum line: GAMEBOARD, historical, the clock audit of 2026-09-22): on the periodic GameBoard A's
   train comes around from the far side (A's image 25 Links beyond B on the
   axis) and pushes B toward A, B's train pushes A likewise, and the two
   bodies of every pair are pushed toward each other over most of the run
@@ -5914,7 +5987,7 @@ sequential gates on an entangled record, the full register replay.
   (Euclidean 27.7) from A; `shadow_wait` absent, `thing` and `field` at w = 1, and the
   control without M; 150 ticks. Recorded per run: the runner's record
   (`run.json`: the momentum line per thing per tick, the ledger, the
-  standing set's record, the fingerprint), the events (every arrival of a
+  standing set's record, the fingerprint; every time below is the host's tick count, GAMEBOARD, historical: the clock audit of 2026-09-22), the events (every arrival of a
   light thing), the world; the records stay outside the tree, the
   analyzer's `record.json` beside the worlds. No world of the series is
   open: "only closed worlds are tested" (the model owner, 2026-09-18,
@@ -5936,7 +6009,7 @@ sequential gates on an entangled record, the full register replay.
   lines at b = 8 read the tail of the transient or nothing.
 - **Result (1), the clock, `m256` at w = 1** (eight cavities, two worlds
   per reading, 300 ticks; the rate is the intervals moved over the intervals
-  the thing stayed between its mirrors, the deficit 1 − rate; the standing
+  the thing stayed between its mirrors, the deficit 1 − rate, a ratio of host tick counts with no lamp declared: GAMEBOARD, historical, the clock audit of 2026-09-22; the standing
   set was not reached in 300 intervals in any of the four runs, the field of
   the closed GameBoard circulating at the end with a residual of 15 947 to
   17 224 array cells and 25 741 to 27 910 quanta between consecutive states,
@@ -5955,7 +6028,7 @@ sequential gates on an entangled record, the full register replay.
   A = 3.538 (rss 0.900), B/r² with B = 14.38 (rss 1.077); `amplitude`
   A = 3.535 (rss 0.895), B = 14.37 (rss 1.070); per world, batch a A = 3.66
   and B = 13.3, batch b A = 3.35 and B = 17.2, under both readings alike.
-  Against GM = 244.5: A/GM = 0.0145 (GR's coefficient is 1 at the GR w;
+  Against GM = 244.5 (a GameBoard rate against GR, historical: the clock audit of 2026-09-22): A/GM = 0.0145 (GR's coefficient is 1 at the GR w;
   round 6's `amplitude` coefficient at w = 1, halved for a cavity that
   reads every other interval, is (w/3) 0.537 √(GM)/2 = 1.40, round 5's
   count (√3 w/2) GM/2 = 106). What came out is a step, not a slope: inside
@@ -5970,7 +6043,7 @@ sequential gates on an entangled record, the full register replay.
   one cavity that read tens of quanta over hundreds of intervals (274
   against 236).
 - **Result (2), the redshift, `m256` at w = 1.** Within one world, z =
-  rate(r_far)/rate(r_near) − 1: batch a, 5 → 8 (5.10 → 8.06): 72.8 (a frozen
+  rate(r_far)/rate(r_near) − 1 (a ratio of host tick counts, GAMEBOARD, historical; the detector form is series T's lamp: the clock audit of 2026-09-22): batch a, 5 → 8 (5.10 → 8.06): 72.8 (a frozen
   clock against a running one); batch b, 6 → 10 (6.08 → 10.05): 0.079
   with the −Y clock at 6 and 22.7 with the −Z one; 4 → 6: 137 and 5.3.
   Against GR's GM(1/r_near − 1/r_far) = 15.9 for 6 → 10 at the GR w,
@@ -6007,7 +6080,7 @@ sequential gates on an entangled record, the full register replay.
   b = 3, 4, 6, 8 (GM = 244.5, in the derivation's unit: every b of this
   GameBoard is inside the capture radius b_c = GM), Newton's 2GM/b and the
   derivation's GM/b = 82, 61, 41, 31: a mass this heavy captures, and the
-  register reads no angle. The Shapiro delay: 0 ticks on the ten lines
+  register reads no angle. The Shapiro delay (a host tick count, GAMEBOARD, historical: the clock audit of 2026-09-22): 0 ticks on the ten lines
   that arrived (b = 8), against GR's 2GM ln(4x_Ax_B/b²) = 1354 ticks,
   round 6's (w/3) 0.537 √(GM) ln(1024/64) = 7.8 under `amplitude` and
   round 5's 2.72 w GM/b = 83 under `amount`; a line that reads no whole
@@ -6078,7 +6151,7 @@ sequential gates on an entangled record, the full register replay.
   32, delay 0. So at S = 384 the frozen region ends between r = 4 and 6
   (between 5 and 7 at S = 1536) and outside it a line of content 1 reads
   no whole quantum at all: the image is a capture radius, GM/b reads no
-  angle at either mass, and the Shapiro delay is 0 on every line that
+  angle at either mass, and the Shapiro delay (host ticks, GAMEBOARD, historical: the clock audit of 2026-09-22) is 0 on every line that
   arrives, against GR's 2GM ln(4x_Ax_B/b²) = 322 ticks at b = 6 (GM = 61.1),
   round 6's (w/3) 0.537 √(GM) ln(1024/36) = 4.7 under `amplitude` and round
   5's 2.72 w GM/b = 28 under `amount` at w = 1.
@@ -6174,7 +6247,7 @@ sequential gates on an entangled record, the full register replay.
   over its bound rays for a group; the audit's bodies' momentum line and
   the accumulator for an external body), every field ray in flight, the
   tick of the first return, the audits. The rate of momentum gain dp/dt of
-  body 1 is read over the 2r intervals after its first return.
+  body 1 is read over the 2r intervals after its first return. The clock and the detector are declared before any run: dp/dt is read off a clock on the board (a lamp at its declared rate, or body 1's own clock, its age) at a detector that reads body 1, never off the host's interval count (record 678; the clock audit of 2026-09-22).
 - **Criterion.** Pass, all of, in each series: momentum exact at every tick
   over both bodies and all field rays; each body's momentum points toward
   the other; the
@@ -6274,7 +6347,7 @@ sequential gates on an entangled record, the full register replay.
   0. Recorded: per group the tick of its firing or its survival; the
   products' families, charges, energies and momenta at every conversion;
   the number of draws per tick (from the ticket consumption, feature 10);
-  the audits. Recorded as a finding, not pinned: the ratio n/d that the
+  the audits. The clock and the detector are declared before any run: the half-life is read off a clock on the board (a lab lamp at its declared rate, or the groups' own clocks, their `counted` at the firing) at a detector reading the products, never off the host's interval count (record 678; the clock audit of 2026-09-22). Recorded as a finding, not pinned: the ratio n/d that the
   physical half-life needs at one Planck time per interval, about 2^-154,
   and whether the bounded setting of feature 2 can hold it.
 - **Criterion.** Pass, all of: exactly one draw per neutron group per tick
@@ -6736,7 +6809,7 @@ sequential gates on an entangled record, the full register replay.
   proton line's ends +-416 530 868 696 on x, the neutron line's
   +-435 372 008 672, the triangle's three vectors, the rectangle's six and
   the line of six, the kicked world's +-336 852 257 664 at tick 2); 290
-  glue rows per body per interval on the border; the read mass the sum
+  glue rows per body per interval on the border (per self-creation of the bodies, read at the border, a fixed detector at k = 0 whose tick is its own clock, record 569; the tick 20 the record's ordering: the clock audit of 2026-09-22); the read mass the sum
   (20, 25, 20, 45, 45, 20, 1836); the fates from the strong design's toy
   (the steady delivery with the step drive and the contact rule): the
   lines u d u, d u d and u d u d u d hold with no step and hand-overs from
@@ -6917,7 +6990,7 @@ sequential gates on an entangled record, the full register replay.
   flow the push would read the same; the age moment is 22 F at 3 (the ages
   5 and 6 per source) and 42 F at 6 (10 and 11). DETECTOR, the lamp's light
   at x = 110, `1 + z` the inverse slope of the birth ordinal against the
-  click's tick in the windows 200 to 350 and 350 to 500: the presence word
+  click's tick in the windows 200 to 350 and 350 to 500 (the tick at the fixed detector in no crowd at `suspension` 0 is that detector's own clock to the digit, record 569; the strict form, the reader's own lamp, is `examples/events/reader_clock`: the clock audit of 2026-09-22): the presence word
   1.300 at 3 AND at 6 (k = 4 F / 2^16 = 0.300; the presence clock cannot
   tell the two distances apart), refuted outside 1.30 +- 0.02 or if the
   two worlds differ by more than 0.02; the age word 2.650 at 3
@@ -7185,7 +7258,7 @@ sequential gates on an entangled record, the full register replay.
   0; a source content and a release denominator scaled together.
 - **Two kinds of readings.** DETECTOR: the line's `click` lines alone (x
   the detector's column, the tick, the age), the faces' click of the
-  probe's escape. GAMEBOARD (diagnostics, labelled, not pinned): the
+  probe's escape. The escape's tick is the face click's tick, the record's ordering (a label: the detector's count of it is the lamp's births to the escape; the clock audit of 2026-09-22); T is the recurrence of x over the lamp's births, tick less the row's age. GAMEBOARD (diagnostics, labelled, not pinned): the
   probe's position and momentum at the end off `run.json`, the count of
   `home` lines.
 - **Run.** `examples/events/orbit_lamp/` (five worlds by `make_worlds.py`
@@ -7488,7 +7561,7 @@ sequential gates on an entangled record, the full register replay.
   ray at the birth Node at tick 64, the transmission on Bob's line, and Bob's
   Detector receiving the bit at tick 64 + 96 = 160, after Bob's own ray
   arrived at tick 96; the table of arrival ticks over the 2^8 pairs, all
-  equal.
+  equal. The ticks are the record's ordering, GAMEBOARD; the siblings' claim is the equality of the arrivals and needs no time (the clock audit of 2026-09-22).
 - **Status.** planned.
 
 ### A14. Kinematic time dilation of a moving bound group
@@ -7496,7 +7569,7 @@ sequential gates on an entangled record, the full register replay.
 - **Confronts:** the Lorentz factor, clock rate √(1 − v²) (the muon lifetime in flight, 2.2 µs at rest, longer by γ in flight; Rossi–Hall 1941 and every accelerator since).
 - **Model's prediction today:** hypothesis 15: everything moves at c, matter is slow only by its output clock, and a bound group's tick fires only while it is resident, so a group moving one Link every k intervals ticks at (k − 1)/k = 1 − v to first order; the per-face clocks of Highlights 3.28 may change the curve.
 - **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
-- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a GameBoard long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
+- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a GameBoard long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact. The clock and the detector are declared before any run: the group's clock (its firings, its age) is read at a detector against a lab clock on the board, a fixed lamp at its declared rate or a fixed body's own clock, never against the host's 64 intervals on their own (record 678; the clock audit of 2026-09-22).
 - **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a GameBoard anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
 - **Status:** planned (after feature 8; after feature 14, binding as a loop,
   Highlights 3.4, 2026-09-17, the moving group's motion being its corners
@@ -7599,7 +7672,7 @@ sign rule, and its other couplings are catalog entries.
   `conserved_at_every_completed_tick` true. The record's reading (the ray
   viewer's extractor, ring):
   one group on the square, content 11 (electron 8, light 3), period 8, clock
-  electron 1 and light 0, read from tick 5 to tick 23.
+  electron 1 and light 0, read from tick 5 to tick 23. The period is the group reader's count of host ticks: a GameBoard reading of the retired law, historical; the period of a loop is read after a detector from a lamp's births (the clock audit of 2026-09-22).
 - **The literal translation refused.** As in the first record: the outputs
   rule "light a + electron m to electron rays only, content m + a" is
   refused at initialization with the electron's charge -3 (`ray meeting
@@ -7646,7 +7719,7 @@ sign rule, and its other couplings are catalog entries.
   P2 after the even ticks and at P1 and P3 after the odd ones, the corners
   turning them, content 24, the state repeating every 8 ticks: the record
   reads one group, ring the square, content 24 (proton 12, neutron 12),
-  period 8, clock 1 and 1, from tick 1 to tick 19. Ticks 20 and 21: the low
+  period 8, clock 1 and 1, from tick 1 to tick 19. The period is the group reader's count of host ticks: a GameBoard reading of the retired law, historical; the period of a loop is read after a detector from a lamp's births (the clock audit of 2026-09-22). Ticks 20 and 21: the low
   light meets the pair at P0 and then at P1; the guard reads 2 > 3 as 0 both
   times, `strong` turns the pair and the light crosses, walking on along +X
   to the boundary (escaped at tick 26). Tick 21: the high light at P3 with
@@ -7704,7 +7777,7 @@ sign rule, and its other couplings are catalog entries.
   the light at (5,6,10); tick 15: escaped. Ticks 10 to 31: the ground ring,
   which the record reads as one group, content 8, period 8, clock 1, from
   tick 10 (the excited state of ticks 4 to 9 is shorter than two of its
-  periods and is read as no group). At every tick: totals electron 8, light
+  periods and is read as no group). The period is the group reader's count of host ticks: a GameBoard reading of the retired law, historical; the period of a loop is read after a detector from a lamp's births (the clock audit of 2026-09-22). At every tick: totals electron 8, light
   4 (in the world with the escaped), the charge line electron -24, every
   audit line balanced, `conserved_at_every_completed_tick` true.
 - **The lifetime is declared.** Five intervals, one integer, the ticks
@@ -7779,7 +7852,7 @@ sign rule, and its other couplings are catalog entries.
   past the nucleus on either side, positions 21, 20, 19, 20, 21, ..., one
   recoil of 256 every second interval alternating in sign, the body's
   momentum between 2048 and 1792, no Link stepped (2^20 needed). Observed
-  period 4 intervals against the computed 64: the engine's bound state of
+  period 4 intervals (a count of host ticks: a GameBoard reading of the retired law, historical; the clock audit of 2026-09-22) against the computed 64: the engine's bound state of
   He+ is a two-Link cage through the nucleus, for every r, m and field
   amount, because the body's field is on its six axis lines only and the
   landed turn is whole. At every tick: electron 4, none escaped;
@@ -7860,7 +7933,7 @@ sign rule, and its other couplings are catalog entries.
   every ledger line balanced, no `bound_groups` in the snapshot (the key is
   gone with the held form), no `bound_tick`; the record's reading by the
   ray viewer's extractor: one group, ring P0, P1, P2, P3, content 8, period
-  4, clock 2 on the 8-step circle, from tick 1. `ring_open.json`: after
+  4, clock 2 on the 8-step circle, from tick 1. The period is the group reader's count of host ticks: a GameBoard reading of the retired law, historical; the period of a loop is read after a detector from a lamp's births (the clock audit of 2026-09-22). `ring_open.json`: after
   tick 2 one ray of amount 2 at each corner, walking +Y or -Y off the
   square, the GameBoard empty from tick 8, 8 escaped, every line balanced, no
   group read. The integers are pinned in
@@ -7877,7 +7950,7 @@ sign rule, and its other couplings are catalog entries.
   `deeae3635bb5924ff90f36e9996f4acd7c7b6e235a5c6315630c62a5e442e539`;
   outcome: every pinned line as stated, the ring held and read as one group
   of content 8, period 4, clock 2, the control dispersed and read as none,
-  exact at every tick.
+  exact at every tick. (The period is a GameBoard reading of the retired law, historical: the clock audit of 2026-09-22.)
 
 ### E6. The screen: the field of an electron at rest on seven marks
 
@@ -8211,7 +8284,7 @@ sign rule, and its other couplings are catalog entries.
   `conserved_at_every_completed_tick` true; (2) the record's group reader
   (the ray viewer's extractor with the recording) reads exactly one group,
   ring P0, P1, P2, P3, content 32, `{"electron": 32}`, period 8, clock 1 on
-  8 steps, from tick 1 to tick 239, so that the eight ring rays' states
+  8 steps, from tick 1 to tick 239 (the period a count of host ticks: a GameBoard reading of the retired law, historical, the clicks at the marks the detector readings; the clock audit of 2026-09-22), so that the eight ring rays' states
   recur at every corner through the whole run: the source stays bound while
   radiating and its content does not change, because a release is booked as
   a source (Highlights 3.15); (3) all seven marks click within 240 ticks,
@@ -8278,7 +8351,7 @@ sign rule, and its other couplings are catalog entries.
   ticks, 92 s; outcome: pass in every clause. (1) every ledger line
   balanced at every completed tick, `conserved_at_every_completed_tick`
   true; (2) one group, the ring, content 32, `{"electron": 32}`, period 8,
-  clock 1 on 8 steps, from tick 1 to tick 239; (3) all seven marks click,
+  clock 1 on 8 steps, from tick 1 to tick 239 (the period a GameBoard reading of the retired law, historical: the clock audit of 2026-09-22); (3) all seven marks click,
   17, 4, 4, 1, 1, 1, 1 from the axis outward, the pairs equal, the on-axis
   mark most; (4) `light` in a layer of its own, the events of the kinds
   listed only, the electron line without source, escape, annulment or
@@ -8334,7 +8407,7 @@ sign rule, and its other couplings are catalog entries.
   charge electron -96, light 0; every line balanced at every tick,
   `conserved_at_every_completed_tick` true. The group: exactly one, the
   ring (1, 5, 5), (2, 5, 5), (2, 5, 6), (1, 5, 6), content 32, `{"electron":
-  32}`, period 8, clock 1 on 8 steps, from tick 1 to tick 239 over 1912
+  32}`, period 8 (a GameBoard reading of the retired law, historical: the clock audit of 2026-09-22), clock 1 on 8 steps, from tick 1 to tick 239 over 1912
   electron chains, every tick row bound `{"electron": [32]}`, as in the
   first record. The events: `spatial_cycle` 176018, `spatial_sent` 96225,
   `spatial_received` 60685, `field_spread` 60065, `spatial_escaped` 5369,
@@ -8811,7 +8884,7 @@ sign rule, and its other couplings are catalog entries.
   in flight and in the registers, the content per Node, the radial
   momentum (Σ amount × (heading · r) as an integer and Σ amount ×
   (heading · r) / |r| as a real, per shell and per Node), the outward flux
-  through the shell (the content that crossed the surface between k and
+  through the shell (a rate per host interval off the books, GAMEBOARD, the detector reading of it not made: the clock audit of 2026-09-22; the content that crossed the surface between k and
   k + 1 in the last interval: what arrived on shell k + 1 from shell k less
   what arrived on shell k from shell k + 1, from the arrivals and their
   headings; about the body, the release less the sink's take), the net
@@ -8872,7 +8945,7 @@ sign rule, and its other couplings are catalog entries.
   tick 7 and the electron are both resident at (10, 14, 10) after tick 10,
   the push is in interval 11, the recoil (a fresh event ray of 256 on −Y)
   walks back four Links and is absorbed by A at the end of interval 14:
-  t0 = 7, t1 = 11, t2 = 14. The push moves the electron by −1 × 256 ×
+  t0 = 7, t1 = 11, t2 = 14. (Host ticks, the record's ordering: GAMEBOARD.) The push moves the electron by −1 × 256 ×
   (0, 1, 0), the register (64, 0, 0) → (64, −256, 0), the DDA then taking
   four −Y Links per +X Link, and the meeting books the push (0, −256, 0)
   and the reversal −2 × 256 × (0, 1, 0) as its source; the light's momentum
@@ -8932,7 +9005,7 @@ sign rule, and its other couplings are catalog entries.
   (the electron's register − its launch) + absorbed + escaped, the light's
   amount identity, sourced = in flight + registers + absorbed + escaped,
   and the electron's amount 64 (in the world or escaped); with t0, t1 and
-  t2 marked in the table; and the plain statement of what the books say.
+  t2 marked in the table; and the plain statement of what the books say. Every time in it is the host's tick count: GAMEBOARD, the detector reading named as not made (the clock audit of 2026-09-22).
   The runs are made once; nothing is tuned after them.
 - **Shows.** Run once each on 2026-09-18 (the point source 343 s for 192
   ticks, the spread book world 9.0 s, the axis book world 0.8 s); every
@@ -8942,7 +9015,7 @@ sign rule, and its other couplings are catalog entries.
   2^20 at every tick and its register (0, 0, 0) at every tick; light sourced
   24576 per tick; at tick 192 sourced 4718592 = in flight 3492438 + registers
   278058 + escaped 159516 + absorbed 788580; nothing escapes before tick 88,
-  and at tick 192 the escape is 3828 per interval and the sink's take 4288
+  and at tick 192 the escape is 3828 per interval and the sink's take 4288 (rates per host interval off the books: GAMEBOARD, the detector reading not made; the clock audit of 2026-09-22)
   (the mean field's 4291 at the same tick, 4369 at the steady state) against
   the release of 24576, so the field is still filling the box (at the
   steady state the escape is the effective source S = 20206.7); the shells
@@ -8961,7 +9034,7 @@ sign rule, and its other couplings are catalog entries.
   273.4 / 272.4, 68.2 / 69.5, 30.3 / 31.7, 15.6 / 18.1, 7.3 / 9.7 at k = 1,
   2, 4, 8, 12, 16, 22; the shell's radial sum is nearly constant, 21906 at
   k = 1, 17591 at 8, 15999 at 16, 14210 at 22. The flux through the surface
-  between shells k and k + 1 in the last interval, engine / mean field at the
+  between shells k and k + 1 in the last interval (GAMEBOARD, a rate per host interval compared with Gauss as a diagnostic; the clock audit of 2026-09-22), engine / mean field at the
   same tick: 20286 / 20285 at k = 1, 20166 / 20197 at 4, 19680 / 19783 at
   8, 19446 / 18867 at 12, 17304 / 17405 at 16, 13788 / 14418 at 22, the
   release less the sink's take 20286 about the body; the mean field's steady
@@ -8997,7 +9070,7 @@ sign rule, and its other couplings are catalog entries.
   slope −1.86, −1.49, −1.92, −2.36, −1.80, −1.98, −1.86, −2.09, −2.02,
   −1.93, −1.99, −1.96, −2.03, −1.92, −2.00, −2.02, −2.04, −1.97, −1.97,
   −2.05, −1.91, the flux the same S through every shell at the steady
-  state. In one sentence: the flux through every shell is the same number
+  state. In one sentence (a GameBoard reading, the detector form not made: the clock audit of 2026-09-22): the flux through every shell is the same number
   once the field is steady, the radial momentum per Node on a shell falls
   as 1/k² from k = 2 on because that constant flux is shared by the shell's
   ≈ 4k² Nodes, the content per Node falls as k^−1.15 near the source and
@@ -9194,7 +9267,7 @@ sign rule, and its other couplings are catalog entries.
   rides with it and pushes nothing (one meeting, one push): the ignored lane
   carries the wave's backward share. One probe per world, since every push
   returns as field. The settled push per direction is the probe's mean
-  radial push per interval over the last twenty ticks (101 to 120), with its
+  radial push per interval over the last twenty ticks (101 to 120; a rate per host interval off the runner's momentum line, GAMEBOARD, the clock audit of 2026-09-22), with its
   standard error and beside it every window of twenty and the settling tick
   (the first from which every later window of twenty stays within 10 % of
   the last); the 1/r^2 fit is the log-log least-squares slope over the three

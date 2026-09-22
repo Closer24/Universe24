@@ -15,7 +15,11 @@ and prints, per world, two kinds of number, each line labelled (the model
 owner, 2026-09-20: "in reality there is no such thing" about the host's
 readings of the board):
 
-- DETECTOR readings, the only kind reality has: the screen's pixels (each
+- DETECTOR readings, the only kind reality has (the phase rate per
+  interval and the first click's tick count the pixels' own clock: fixed
+  detectors in no crowd at suspension 0, whose tick is their age, record
+  569; the strict form reads the rate against the lamp's counted births;
+  the clock audit of 2026-09-22): the screen's pixels (each
   a `DetectorSet` of one Node) over the late window: the count of clicks
   per pixel and the centroid of the arrival on the screen (in pixels, y
   and z, the deflection against the control with its sign toward the mass
@@ -568,7 +572,9 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
     base = analyse(control) if control is not None else None
     inside = outside = 0
     print(
-        f"{DETECTOR} | world | M | b | clicks in the window "
+        f"{DETECTOR} (the phase rate per interval and the first click's tick count the pixels' own clock: "
+        "fixed detectors in no crowd at suspension 0, whose tick is their age, record 569; the clock audit "
+        "of 2026-09-22) | world | M | b | clicks in the window "
         "| centroid y (the deflection off the beam's axis, against the control's) | centroid z (deflection) | width rms y (delta) | mean age (delta) | first click "
         "| count ratio | phase rate (delta vs the turn) | light on the faces | light the mass took | verdicts |"
     )
@@ -621,7 +627,9 @@ def print_meeting_readings(readings: list[Reading]) -> tuple[int, int]:
     base = analyse(control) if control is not None else None
     inside = outside = 0
     print(
-        f"{DETECTOR} under `meeting: true` | world | M | b | clicks in the window | centroid y (the shift off the "
+        f"{DETECTOR} under `meeting: true` (the phase rate per interval counts the pixels' own clock: fixed "
+        "detectors at suspension 0, whose tick is their age, record 569; the clock audit of 2026-09-22) "
+        "| world | M | b | clicks in the window | centroid y (the shift off the "
         "beam's axis against the control's; expected) | centroid z (shift; expected 0) | width rms y (delta) "
         "| mean age (delta; expected) | count ratio (expected) | light on the faces (expected) | light the mass took "
         "| phase rate (delta vs the turn) | phase offset, steps of N (expected), resultant, clicks read | verdicts |"

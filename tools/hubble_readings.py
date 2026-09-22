@@ -36,7 +36,9 @@ sides in one clock) and the free quadratic's q_eff on z_d - z_d(0). The
 window's rate r_w is the detector's age from its state at the window's
 edges over the intervals between them, a step of the replay (GAMEBOARD,
 until the strict run with the reader's own lamp, examples/events/
-reader_clock's form); without the replay the detector's own record over
+reader_clock's form); this r_w is the detector's own count of intervals
+stretched by what arrives at it, the age wall's member at the coefficient
+1 (the owner's record 709); without the replay the detector's own record over
 the run, age / (age + waited) of its state in `run.json`, stands for
 every window (DETECTOR). The reading in the lattice's clock (the tick
 count of the `record` lines, every number as the register read it until

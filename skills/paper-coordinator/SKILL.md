@@ -1,8 +1,9 @@
 # Paper coordinator
 
 The writer of the one paper on the general formula (the model owner's GO,
-record 264 of docs/LOG_2026-09-20.md; the title of record 275, "Universe24: a
-local integer law of nature and what follows from it"), in its own session on
+record 264 of docs/LOG_2026-09-20.md; the title of record 275 as the owner
+sharpened it on 2026-09-22, record 712, "Universe24: a local integer law of
+nature with a non-local read-out, and what follows from it"), in its own session on
 its own branch, following [the shared workflow](../workflow.md) and its
 section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
 

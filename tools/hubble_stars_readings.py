@@ -27,7 +27,9 @@ The pinned reading is in the detector's own clock (the model owner,
 time is the clock of the Node it sits on, the interval count less what
 the crowd at that Node owes through the age wall; series G's rule,
 tools/hubble_readings.py). The detector's clock counts r self-creations
-per interval, read off its own record over the run (age / (age + waited)
+per interval, its own count of intervals stretched by what arrives at it,
+the age wall's member at the coefficient 1 (the owner's record 709), read
+off its own record over the run (age / (age + waited)
 of its state in `run.json`, DETECTOR; the per-window step of series G,
 the replay's edges, is not made here), and every reading of the lattice's
 clock is restated by the one closed form 1 + z_d = r (1 + z): the near
@@ -1016,15 +1018,18 @@ def main(argv: list[str] | None = None) -> int:
                 bursts = [p.burst for p in fit.points if p.burst is not None]
                 if isinstance(burst_max, int) and bursts:
                     # The step drive (2026-09-20): one Link per interval at
-                    # most. A `step` record is the host's view of the body
-                    # (ENGINE.md's table): printed with its expectation as
-                    # a diagnostic, counted in no criterion (records 562 and
-                    # 564; the clock audit of 2026-09-22, finding 5).
+                    # most. The burst is counted on the `step` lines' ticks,
+                    # the record's ordering, a `step` record the host's view
+                    # of the body (ENGINE.md's table): a GameBoard diagnostic,
+                    # printed with its expectation and out of the counted
+                    # criteria (records 562 and 564; the clock audit of
+                    # 2026-09-22, findings 5 and 10); the detector reading
+                    # behind it, the stars' arrivals at the centre, is read above.
                     ok = max(bursts) <= burst_max
                     print(
-                        f"{KIND_BOARD} `{run.name}`: the step rule's longest burst {max(bursts)} (expected "
-                        f"at most {burst_max} Link per interval): {'agrees' if ok else 'differs'}; a "
-                        "diagnostic of the step records, not counted"
+                        f"{KIND_BOARD} (a diagnostic, not counted) `{run.name}`: the step rule's longest "
+                        f"burst {max(bursts)} Link per interval (expected at most {burst_max}): "
+                        f"{'agrees' if ok else 'differs'}"
                     )
                 k_bracket = crowd.get("k_bracket") if isinstance(crowd, dict) else None
                 if isinstance(k_bracket, list):

@@ -501,7 +501,8 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
         (
             f"every neutron's trigger tick within its pinned range or up to {slack} before it "
             f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned; "
-            "the ordering at + floor(at x c / 2^20))",
+            "the `become` line is the neutron's own record, its `triggered` tick the record's ordering "
+            "at + floor(at x c / 2^20) and its `counted` the clock's number: the clock audit of 2026-09-22)",
             inside,
             LATTICE if count_ranges else DETECTOR,
         )
@@ -535,10 +536,16 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
             )
         )
         median, low, high, ratio = curve_shape(reading.shell_clicks)
+        # The same curve keyed by the clicks' ticks, the record's ordering,
+        # so its width over its median is a GameBoard number (the clock
+        # audit of 2026-09-22): the lattice's clock, printed and out of the
+        # deciding set; the detector reading behind it, the curve in the
+        # betas' births, is counted above (the re-read of 2026-09-22).
         found.append(
             (
-                "the survival curve in the shell's click ticks (the flight inside it) is a step: "
-                "its 10-to-90 width over its median below 0.1",
+                "the survival curve in the shell's click ticks (the record's ordering, the flight "
+                "to the shell inside it) is a step: its 10-to-90 width over its median below 0.1; the "
+                "detector reading behind it, the curve in the betas' births, is counted above",
                 bool(reading.shell_clicks) and ratio < 0.1,
                 LATTICE,
             )

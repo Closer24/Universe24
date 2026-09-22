@@ -78,9 +78,10 @@ nothing else:
 
 - **The probe** is a body of a paid family of its own, `probe` (`quantum`
   1, the default phase circle), of `amount` R = 2^12, the lamp's
-  reservoir, holding the free mass `held` {"m": 2^20} the fan pushes
-  (`table` {"m": "read"}); M_total = R + M_held, the reservoir 0.4 % of
-  it; K = M_held so that the turn is 1 at every self-creation and never 0
+  reservoir, holding the free mass `held` {"m": 2^20} the fan pushes (the
+  keys' own rule for `m`, `read`, not written out); M_total = R + M_held,
+  the reservoir 0.4 % of it; K = M_held so that the turn is 1 at every
+  self-creation and never 0
   (a turn of 0 skips the birth). The deviation of 00:56Z: the design's
   `amount` 1 silences the lamp (the birth gate `held // (cost x quanta)
   >= 1` with the cost 1 and 2 quanta per birth), settled by the chief

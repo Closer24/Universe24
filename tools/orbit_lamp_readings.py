@@ -473,7 +473,11 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             if reading.escape is None:
                 verdicts.bracket("the escape tick", None, pin["escape_tick"]["bracket"])
             else:
-                print(f"  {DETECTOR} the probe left through {reading.escape[0]}")
+                print(
+                    f"  {DETECTOR} the probe left through {reading.escape[0]} (the escape's tick is the face "
+                    "click's tick, the record's ordering; the detector's count of it is the lamp's births "
+                    "to the escape: a label, the pin as registered, the clock audit of 2026-09-22)"
+                )
                 verdicts.bracket(
                     "the escape tick", float(reading.escape[1]), pin["escape_tick"]["bracket"]
                 )

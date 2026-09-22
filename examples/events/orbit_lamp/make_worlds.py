@@ -35,8 +35,8 @@ the chief physicist's word on it):
   a family without one), of `amount` R = 2^12, the lamp's reservoir (the
   form of hubble_stars' stars: a lamp spends its own family's content, one
   unit per row at the turn 1), holding the free mass `held` {"m": M_held}
-  with M_held = 2^20 that the fan pushes (`table` {"m": "read"}: the push
-  taken, the rays go on); the content the push scales with and the step
+  with M_held = 2^20 that the fan pushes (the keys' own rule for `m`,
+  `read`, not written out: the push taken, the rays go on); the content the push scales with and the step
   divides by is M_total = R + M_held, so the momentum is p = n Q M_total
   and the reservoir is 0.4 % of it. The world's clock K is M_held, so the
   turn is 1 at every self-creation (2 at about 16 of 4000, the reservoir
@@ -318,7 +318,9 @@ def world(name: str, n: int = ORBIT_N) -> Json:
             # In label units: n units of the probe's whole content, Q each.
             "momentum": [0, n * LABEL_SCALE * total, 0],
             "held": {MASS_FAMILY: mass},
-            "table": {MASS_FAMILY: "read"},
+            # The entry for `m` is the keys' own, `read` (the push taken, the
+            # rays go on), and a default entry is not written out (the
+            # default-table rule (d), `tests/test_default_table.py`).
             # The directions the body re-emits on (a row of its own taken
             # home): the lamp's pair, not the six headings (the docstring).
             "directions": [list(v) for v in LAMP_DIRECTIONS],
