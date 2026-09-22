@@ -1,0 +1,22 @@
+N = 64, births analysed L = 192 (three turns of the wheel, one joint period with a period-3 cycle), b = 0
+COMPUTATION: the cells of the ladder at (a, 0), Bob's + set over u:
+  a =  0: Alice + for u < 32 (Theorem 5); Bob + at 32 of 64 u: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+  a = 32: Alice + for u < 32 (Theorem 5); Bob + at 32 of 64 u: [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+  a = 21: Alice + for u < 32 (Theorem 5); Bob + at 32 of 64 u: [0, 1, 2, 3, 4, 5, 6, 7, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]
+  a = 42: Alice + for u < 32 (Theorem 5); Bob + at 32 of 64 u: [0, 1, 2, 3, 4, 5, 6, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56]
+
+P1 Alice constant a = 0 (the referee's 'send 0': the world order_a0_b0.json)
+  shift 0 (Alice's setting at the analysed birth t is [0][(t + 0) mod 1]): Bob's serial correlation at lag 1 = 15/16 cyclic (181/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 192 of 192
+P2 Alice a = 32, 0 with period 2 (a chooser at the stride 32: REFUSED by the loader, 2 x content must stay below K x N; no world)
+  shift 0 (Alice's setting at the analysed birth t is [32, 0][(t + 0) mod 2]): Bob's serial correlation at lag 1 = -15/16 cyclic (-181/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 96 of 192
+  shift 1 (Alice's setting at the analysed birth t is [32, 0][(t + 1) mod 2]): Bob's serial correlation at lag 1 = -15/16 cyclic (-181/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 96 of 192
+P3 Alice a = 0, 21, 42 with period 3 (the register's chooser at the stride 64 / 3: the world order_a0_21_42_b0.json)
+  shift 0 (Alice's setting at the analysed birth t is [0, 21, 42][(t + 0) mod 3]): Bob's serial correlation at lag 1 = -1/16 cyclic (-11/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 94 of 192
+  shift 1 (Alice's setting at the analysed birth t is [0, 21, 42][(t + 1) mod 3]): Bob's serial correlation at lag 1 = -1/16 cyclic (-11/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 94 of 192
+  shift 2 (Alice's setting at the analysed birth t is [0, 21, 42][(t + 2) mod 3]): Bob's serial correlation at lag 1 = -1/16 cyclic (-11/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 94 of 192
+P0 the referee's a = 32, 0, 0 with period 3 (not expressible by the register's keys; the check of record 938 (2))
+  shift 0 (Alice's setting at the analysed birth t is [32, 0, 0][(t + 0) mod 3]): Bob's serial correlation at lag 1 = -5/16 cyclic (-61/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 128 of 192
+  shift 1 (Alice's setting at the analysed birth t is [32, 0, 0][(t + 1) mod 3]): Bob's serial correlation at lag 1 = -5/16 cyclic (-61/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 128 of 192
+  shift 2 (Alice's setting at the analysed birth t is [32, 0, 0][(t + 2) mod 3]): Bob's serial correlation at lag 1 = -5/16 cyclic (-59/191 open, unpinned); Bob's marginal 96 / 96; Alice's marginal 96 / 96, Alice's serial 15/16 cyclic; same-sign pairs 128 of 192
+
+nature: 0 on Bob's serial correlation under any setting sequence of Alice's (the comparison value, record 817's rule: the thing compared with)
