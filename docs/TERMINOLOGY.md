@@ -341,6 +341,20 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   row's position, the count or flow at a Node, a body's steps, the shell
   means, the books; a diagnostic, labelled GAMEBOARD wherever it appears and
   never compared with nature (records 163 (5) and 281).
+- **Inside and Outside** (the model owner, 2026-09-22, record 768): Inside
+  is inside the GameBoard, the Nodes, the integer rows and the tick, where
+  no one measures; Outside is the game above the board, the detectors and
+  their clicks only, which is not reality but is claimed to represent it,
+  the match shown result by result (Highlights 5.4, records 762 and 768).
+  A number Inside is a GameBoard reading; a click Outside is a detector
+  reading. The paper's two worlds use these two words.
+- **A detector's clock** (the model owner, 2026-09-22, record 768; record
+  709 restated): what the detector emits and receives back, counted on its
+  own record; a detector at rest receives its row back at its own Node, a
+  moving one at the next; the emission at the detector's own self-creations,
+  stretched by the crowd; no Node holds a detector's time. A detector
+  without a body (an open face) has no clock of its own; the tick of its
+  click line is the record's ordering, GAMEBOARD.
 - **The crowd (the one reading set)**: everything present at the Node but
   the reader's own number, here included: the arrivals of every family and
   number and, here, the content of the body at the Node under its number;

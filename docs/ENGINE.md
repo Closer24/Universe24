@@ -510,10 +510,16 @@ at the label's turn; the label D is then the phase's, the click's
 momentum label and the books' alone (records 494 and 496;
 `nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
 turn verb per row), with a direction that has no neighbour within a right
-angle, with gamma out of range, and with the key `massive_rows` (the
-composed flight of massive rows under the optical key is not reviewed,
-record 510: declare one of the two); the inverse interval refused under
-it; the record carries the block `optical` {gamma, flight_coefficient}
+angle and with gamma out of range; with the key `massive_rows` admitted
+since 2026-09-22 (every family under one wall,
+[docs/designs/one_wall/EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md):
+every row walks by its own family's table under the one wall, a pushed
+row by the pair of its momentum with the family's rest term,
+`nature_beam.row_pairs` and `momentum_pair`, the wall's square refused
+naming the rule before it is formed, and is pushed at the weight per
+unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels,
+`nature_beam.unit_weights`; the refusal of record 510 lifted); the
+inverse interval refused under it; the record carries the block `optical` {gamma, flight_coefficient}
 and the identity `optical-v1` under `hypotheses`; without the key every
 world reads as it did, byte for byte); the amplitude law
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
@@ -772,7 +778,14 @@ joins nothing; the `gate` and `rotate` record lines; the multiplicity a
 row can reach through every re-emitter of the world (the splits' norms,
 65536 per rotation, 2^parties per gate) is bounded at load by 2^62 - 1
 (the register's ceiling: three label rotations on a path fit, Grover's
-six do not); a `phase_window` on a `rerelease` entry whose Node reads no
+six do not); two paths of one record that the GameBoard's geometry
+brings to one set with multiplicities whose ratio is not a square (an
+aperture two Nodes wide under a fan with the direction along it: the
+norm of the second opening between the siblings) are refused at load,
+naming the rule, the multiplicities and the aperture's width (issue
+#714; the loader walks the record's paths through the openings per arm,
+a world with a gate left to the run's check at the offer); a
+`phase_window` on a `rerelease` entry whose Node reads no
 `sum` set is dead (a split takes no gate) and refused at
 load; a free family's rows (no record) keep the apportioning and
 gates of a row of no record at every entry;

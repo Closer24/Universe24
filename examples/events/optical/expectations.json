@@ -385,5 +385,369 @@
    "was": null
   },
   "note": "the far worlds' first run: both shifts inside 0.5 pixel of the pins -1.69 / -3.37 (read -1.773 / -3.403) and both delays inside 1 interval of 2.15 / 4.29 (read 2.56 / 4.35); the shifts' ratio 1.92 inside 2.00 +- 0.66 and the delays' 1.70 inside 2.00 +- 1.04; no light taken by the mass at either f (the innermost line at 5.83 Links, beyond mass's 3.83); the lamp rate 0.927 read here (the pin was None); the pins untouched"
+ },
+ "run_2026_09_22_every_family": {
+  "branch": "optical-every-family",
+  "after": "the composition of optical-v1 with the massive rows (EVERY_FAMILY.md), the weight per unit 221 on the photon at gamma 1",
+  "read_by": "tools/lensing_readings.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
+  "worlds": {
+   "mass_g1": {
+    "shift": -3.989,
+    "delay": 4.94,
+    "clicks": 1395,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.989,
+     "delay": 5.1,
+     "clicks": 1394,
+     "taken_by_the_mass": 0
+    }
+   },
+   "near_g1": {
+    "shift": -6.412,
+    "delay": 6.2,
+    "clicks": 1452,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -6.412,
+     "delay": 6.2,
+     "clicks": 1452,
+     "taken_by_the_mass": 0
+    }
+   },
+   "far_g1": {
+    "shift": -3.403,
+    "delay": 4.33,
+    "clicks": 1344,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.403,
+     "delay": 4.35,
+     "clicks": 1344,
+     "taken_by_the_mass": 0
+    }
+   },
+   "matter_g0": {
+    "shift": -5.0,
+    "arrival": -12.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.26,
+    "arrival_inside": false,
+    "arrival_outside_by": 2.64,
+    "was": null
+   },
+   "matter_g1": {
+    "shift": -6.0,
+    "arrival": -6.0,
+    "clicks": 501,
+    "shift_inside": true,
+    "arrival_inside": false,
+    "arrival_outside_by": 0.42,
+    "was": null
+   },
+   "matter2_g0": {
+    "shift": -5.0,
+    "arrival": -12.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.26,
+    "arrival_inside": false,
+    "arrival_outside_by": 2.64,
+    "equivalence_on_matter_g0": true,
+    "was": null
+   }
+  },
+  "ratios": {
+   "mass": {
+    "shift_f2_over_f1": 2.0,
+    "delay_f2_over_f1": 1.67,
+    "delay_outside_by": 0.08,
+    "was": {
+     "shift_f2_over_f1": 2.0,
+     "delay_f2_over_f1": 1.73
+    }
+   },
+   "near": {
+    "shift_f2_over_f1": 2.46,
+    "delay_f2_over_f1": 2.07,
+    "was": {
+     "shift_f2_over_f1": 2.46,
+     "delay_f2_over_f1": 2.07
+    }
+   },
+   "far": {
+    "shift_f2_over_f1": 1.92,
+    "delay_f2_over_f1": 1.69,
+    "was": {
+     "shift_f2_over_f1": 1.92,
+     "delay_f2_over_f1": 1.7
+    }
+   }
+  },
+  "note": "the weight 221 for 220 moves the mass delay by 0.16 interval and nothing at three decimals in the shifts: the mass delays' ratio 4.94 / 2.95 = 1.67 (was 1.73), outside 2.00 +- 0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by the one floor; the shifts' ratio 2.00 unchanged; far's delays' ratio 1.69 (was 1.70); the matter worlds read in whole pixels and whole y-Links on one line, the wall's factor on a massive row under that grain; no pin moved"
+ },
+ "run_2026_09_22_fast": {
+  "branch": "optical-every-family",
+  "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
+  "read_by": "tools/lensing_readings.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
+  "worlds": {
+   "fast_g0": {
+    "shift": -3.0,
+    "arrival": 1.64,
+    "clicks": 920,
+    "control_clicks": 1005,
+    "taken_by_the_mass": 0,
+    "shift_inside": true,
+    "arrival_inside": true,
+    "was": null
+   },
+   "fast_g1": {
+    "shift": -4.804,
+    "arrival": 4.44,
+    "clicks": 924,
+    "control_clicks": 1005,
+    "taken_by_the_mass": 0,
+    "shift_inside": true,
+    "arrival_inside": true,
+    "was": null
+   }
+  },
+  "ratios": {
+   "shift_g1_over_g0": 1.6,
+   "arrival_g1_over_g0": 2.71,
+   "pinned": {
+    "shift_g1_over_g0": 1.69,
+    "arrival_g1_over_g0": 2.31
+   }
+  },
+  "gameboard_crowd_at_b": {
+   "presence": 9.92,
+   "age_moment": 136.3
+  },
+  "note": "every pin met: verb 1 on a massive row read for the first time at the detector (the gamma 1 arrival 4.44 against the pin 4.49 and the wall unstretched -0.80, 5.2 intervals away; gamma 0 1.64 against 1.94, the unstretched -0.66); the weight's form read between Newton's and light's (the shifts' ratio 1.60 against the continuum's 1.54, light's 2.00 and the blind 2.46; the gamma 1 shift -4.804 against the blind -6.40); no pin moved"
+ },
+ "matter": {
+  "derivation": "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py (the light-bending map's crowd lines, the row followed along its own momentum, verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): the deciding world of every family under one wall, the mass 2^14, the pair [1, 16384], one massive row per interval on the heading at b = 10; the arrival carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) grows under the push), so the pin is the map's arrival per world and the readings that refute are the map's with one verb changed",
+  "mass": 16384,
+  "impact": 10,
+  "ticks": 1000,
+  "window_start": 500,
+  "families": {
+   "matter": {
+    "quantum": 1,
+    "momentum_magnitude": 10
+   },
+   "matter2": {
+    "quantum": 2,
+    "momentum_magnitude": 20
+   },
+   "fast": {
+    "quantum": 1,
+    "momentum_magnitude": 40,
+    "mass_factor": 16,
+    "impact": 8,
+    "ticks": 400,
+    "window_start": 200,
+    "beam": 1
+   }
+  },
+  "worlds": {
+   "matter_g0": {
+    "gamma": 0,
+    "flight_coefficient": 1,
+    "family": "matter",
+    "quantum": 1,
+    "momentum_magnitude": 10,
+    "angle_radians": 0.242,
+    "shift": -5.76,
+    "shift_bracket": 0.5,
+    "arrival": -8.36,
+    "arrival_bracket": 1.0,
+    "control": "matter_control_g0"
+   },
+   "matter_g1": {
+    "gamma": 1,
+    "flight_coefficient": 2,
+    "family": "matter",
+    "quantum": 1,
+    "momentum_magnitude": 10,
+    "angle_radians": 0.252,
+    "shift": -6.11,
+    "shift_bracket": 0.5,
+    "arrival": -7.42,
+    "arrival_bracket": 1.0,
+    "control": "matter_control_g1"
+   },
+   "matter2_g0": {
+    "gamma": 0,
+    "flight_coefficient": 1,
+    "family": "matter",
+    "quantum": 2,
+    "momentum_magnitude": 20,
+    "angle_radians": 0.242,
+    "shift": -5.76,
+    "shift_bracket": 0.5,
+    "arrival": -8.36,
+    "arrival_bracket": 1.0,
+    "control": "matter2_control_g0"
+   },
+   "fast_g0": {
+    "gamma": 0,
+    "flight_coefficient": 1,
+    "family": "matter",
+    "quantum": 1,
+    "momentum_magnitude": 40,
+    "energy": 94,
+    "v_squared": 0.543,
+    "mass": 65536,
+    "impact": 8,
+    "ticks": 400,
+    "window_start": 200,
+    "beam": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      24,
+      1,
+      0
+     ],
+     [
+      24,
+      -1,
+      0
+     ],
+     [
+      12,
+      1,
+      0
+     ],
+     [
+      12,
+      -1,
+      0
+     ]
+    ],
+    "shift": -2.6,
+    "shift_bracket": 0.5,
+    "arrival": 1.94,
+    "arrival_bracket": 1.0,
+    "lines": {
+     "(1, 0, 0)": [
+      -3,
+      2.0
+     ],
+     "(24, 1, 0)": [
+      0,
+      2.8
+     ],
+     "(24, -1, 0)": [
+      -5,
+      2.0
+     ],
+     "(12, 1, 0)": [
+      0,
+      5.2
+     ],
+     "(12, -1, 0)": [
+      -5,
+      -2.3
+     ]
+    },
+    "refuting_readings": {
+     "arrival_wall_unstretched": -0.66
+    },
+    "control": "fast_control_g0",
+    "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)"
+   },
+   "fast_g1": {
+    "gamma": 1,
+    "flight_coefficient": 2,
+    "family": "matter",
+    "quantum": 1,
+    "momentum_magnitude": 40,
+    "energy": 94,
+    "v_squared": 0.543,
+    "mass": 65536,
+    "impact": 8,
+    "ticks": 400,
+    "window_start": 200,
+    "beam": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      24,
+      1,
+      0
+     ],
+     [
+      24,
+      -1,
+      0
+     ],
+     [
+      12,
+      1,
+      0
+     ],
+     [
+      12,
+      -1,
+      0
+     ]
+    ],
+    "shift": -4.4,
+    "shift_bracket": 0.5,
+    "arrival": 4.49,
+    "arrival_bracket": 1.0,
+    "lines": {
+     "(1, 0, 0)": [
+      -4,
+      2.6
+     ],
+     "(24, 1, 0)": [
+      -2,
+      6.5
+     ],
+     "(24, -1, 0)": [
+      -7,
+      4.3
+     ],
+     "(12, 1, 0)": [
+      -1,
+      6.0
+     ],
+     "(12, -1, 0)": [
+      -8,
+      3.0
+     ]
+    },
+    "refuting_readings": {
+     "arrival_wall_unstretched": -0.8,
+     "shift_weight_blind_to_speed": -6.4
+    },
+    "control": "fast_control_g1",
+    "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)"
+   }
+  },
+  "fast_ratios": {
+   "shift_g1_over_g0": 1.69,
+   "shift_continuum": 1.54,
+   "shift_blind": 2.46,
+   "arrival_g1_over_g0": 2.31
+  },
+  "refuting_readings": {
+   "gamma_1_arrival_wall_unstretched": -11.03,
+   "gamma_1_shift_weight_blind_to_speed": -10.45,
+   "gamma_0_arrival_without_the_speed_up": 43.99
+  },
+  "equivalence": "matter2_g0 (quantum 2, p = 20, E' = 132) on matter_g0's shift within 0.5 pixel and its arrival within 1 interval, each against its own control: the same fall at twice the content (the pace and v^2 equal to the integer, the push twice on twice the momentum; GAMEBOARD arithmetic of the declaration)",
+  "readings": "DETECTOR: the screen's click lines of the massive family (each click's Node and its age moment, `reads: age`), the centroid's shift and the mean age's arrival against the control in the late window; no store, no replay"
  }
 }
