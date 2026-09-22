@@ -4929,6 +4929,9 @@ def _apply_plan(
     the rule (read, re-release or click, with the transformation's click
     trigger), and after the set's last active measured event the set's
     record and the phase returned to the set."""
+    # The clock stamp (the world key `clock_stamp`): the event's own count
+    # of self-creations on every line it writes.
+    stamp = frame.world.clock_stamp
     measured = frame.measured
     tick = frame.tick
     record = frame.record
@@ -5136,6 +5139,8 @@ def _apply_plan(
                         "content": group_content,
                         "reading": reading_value,
                     }
+                    if stamp:
+                        read_line["clock"] = entry.age
                     recorded_rows = taken_rows(plan, k0, k1)
                     if recorded_rows:
                         read_line["rows"] = recorded_rows
@@ -5219,6 +5224,8 @@ def _apply_plan(
                         "content": group_content,
                         "reading": reading_value,
                     }
+                    if stamp:
+                        group_line["clock"] = entry.age
                     recorded_rows = taken_rows(plan, k0, k1)
                     if recorded_rows:
                         group_line["rows"] = recorded_rows
@@ -5294,6 +5301,8 @@ def _apply_plan(
                         "content": plan.t_carried[k],
                         "reading": reading_value,
                     }
+                    if stamp:
+                        click_line["clock"] = entry.age
                     if families[family].phase_per_age is not None:
                         # The phase at the exact time of the last
                         # Link, the click's, with its remainder
@@ -6065,6 +6074,7 @@ def _release(frame: Interval) -> None:
                             "products": thrown_rows,
                             "recoil": thrown_recoil,
                             "counted": count_read,
+                            **({"clock": entry.age} if frame.world.clock_stamp else {}),
                         }
                     )
             entry.transformed = []
