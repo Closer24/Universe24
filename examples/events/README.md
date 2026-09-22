@@ -338,7 +338,16 @@ its drift and the period ratio against the plane's k = 2; the register
 entry is
 [D, the orbit under the Beam Law, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19):
 one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
-mean push reads as derived, the grain of the push breaks the rest.
+mean push reads as derived, the grain of the push breaks the rest. Since
+2026-09-22 the six worlds and the pins of `orbit/expectations.json` are
+the generator's circle under the law's line drive (n = 4, 6, 10 at S =
+1, 8, 32; the per-axis pins of history reproducible from the same file;
+the two lamp worlds unchanged), and the re-read under it is registered
+beside the runs above: no orbit closes by the criterion at any width, the
+S = 1 probe no longer outruns the field, the S = 32 rosettes wider than
+under the per-axis drive, the first Link exactly as the line drive's rule
+pins it in all eight worlds, the lamp worlds' loops the S = 32 worlds' to
+the Link.
 
 ## The orbit read by a lamp on the probe (series D3, Newton after a detector)
 

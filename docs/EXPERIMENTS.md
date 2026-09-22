@@ -1731,6 +1731,54 @@ states "exactly" and means integer equality at every tick.
   headings where the factor is 1.
 
 
+- **Re-read under the law's line drive (2026-09-22; measured against the
+  pins of `expectations.json`, committed at `01178c9` before the run;
+  the model owner's record 972, [the design](designs/drive_b/DEFAULT.md)
+  step 2; a new registration beside the runs above, which the paper's
+  rows rest on and which stand under the per-axis drive they name).** The
+  six worlds at the generator's circle under the line drive (n = 4, 6, 10
+  at S = 1, 8, 32; p = 256, 384, 640; the pace 64 n / (64 S + 110 n) =
+  0.508, 0.328, 0.203; T(12) = 148, 230, 371 within 15 percent) and the
+  two lamp worlds unchanged (n = 10, derived under this drive on
+  2026-09-21). The checkout of `drive-default` at `01178c9`, fingerprint
+  `e67f6b9a5469d75d`, Python 3.14.0rc2, numpy 2.5.3, headless, four cores;
+  every run completed at 4000 intervals in 10 to 15 s with the books
+  balanced, `run.json` carrying `"drive": "line"`; 0 record checks
+  failed; no orbit closed by the criterion; the lamp worlds read by a
+  host script (the source detector's clicks: the recurrence of the rows'
+  direction through 2 pi, DETECTOR).
+
+  | World | S | r | p (label units) | closed | T (pinned, 15 percent) | mean radius (r +- 1) | drift per orbit | turns | r min .. max | reads | units | C (1.00 +- 0.15) | first Link (pinned) | end |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `s1_r12` | 1 | 12 | 256 | - | - (148) | - | - | 0.23 | 12.0 .. 60.5 | 3 | 232 | 0.02 | 2 (2) | face:+y at 133 |
+  | `s1_r24` | 1 | 24 | 256 | - | - (297) | - | - | 0.19 | 24.0 .. 64.6 | 0 | 0 | 0.00 | 2 (2) | face:+y at 121 |
+  | `s8_r12` | 8 | 12 | 384 | - | - (230) | - | - | 0.92 | 4.5 .. 68.5 | 36 | 4404 | 0.47 | 4 (4) | face:+x at 434 |
+  | `s8_r24` | 8 | 24 | 384 | - | - (460) | - | - | 0.98 | 7.6 .. 60.5 | 35 | 4140 | 0.40 | 4 (4) | face:+x at 533 |
+  | `s32_r12` | 32 | 12 | 640 | no (the return (+11, 0)) | 480, 762 (371; 315 .. 426) | 16.51, 27.24 | +11, -12 | 2.45 | 7.0 .. 63.6 | 141 | 17560 | 1.51 (1.87 on the second turn) | 5 (5) | face:-x at 1504 |
+  | `s32_r24` | 32 | 24 | 640 | no (the return (+12, +1)) | 924 (742; 630 .. 853) | 29.94 | +12 | 1.65 | 13.0 .. 75.6 | 117 | 11296 | 1.37 | 5 (5) | face:-y at 1548 |
+  | `s32_r12_lamp` | 32 | 12 | 655360 (640 per unit) | the loop `s32_r12`'s to the Link | DETECTOR 525, 712 (371; 337 .. 404): outside | 22.7 over the run | - | 2.41 (the clicks' direction) | 7.0 .. 63.6 | - | - | - | 5 (5) | face:-x at 1504 |
+  | `s32_r24_lamp` | 32 | 24 | 655360 | the loop `s32_r24`'s to the Link | DETECTOR 952 (742; 675 .. 808): outside | 31.0 over the run | - | 1.62 | 13.0 .. 75.6 | - | - | - | 5 (5) | face:-y at 1548 |
+
+  T(24)^2 / T(12)^2 = 3.71 at S = 32 (4 +- 0.6, a diagnostic); the lamp
+  worlds' T(24) / T(12) = 952 / 525 = 1.81 from the clicks (2.00 +- 0.15:
+  outside); their loops are the S = 32 worlds' to the Link (the same
+  escapes at 1504 and 1548: the content enters nothing); their precession
+  not read (the loops not near-circular). The first Link, the one pin the
+  line drive's own rule gives, reads exactly in all eight worlds. At S =
+  1 the probe no longer outruns the field (0.508 against 0.577; the
+  per-axis 0.750, the defect of record 301) and still meets almost none
+  of it (3 and 0 reads) before leaving through face:+y at 133 and 121;
+  at S = 8 most of a loop and out at 434 and 533; at S = 32 the eccentric
+  rosettes series D registered, wider than under the per-axis drive
+  (`s32_r12` T 480 and 762 against 371, the mean radii 16.5 and 27.2, out
+  at 1504; `s32_r24` T 924 against 742, 29.9, out at 1548; C 1.37 to
+  1.87 as the registered 1.29 to 1.87). No orbit closes by the criterion
+  at any width, as under the per-axis drive; the causes named: the grain
+  of the push (5.7 to 14.4 degrees per ray) and the drive's own
+  anisotropy of the opposite sign (12.6 percent slower on a diagonal at
+  n = 10; the per-axis 6.9 percent faster). The change of drive does not
+  change the finding. No pin moved.
+
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
 - **Confronts.** The uncertainty relation in its diffraction form: a

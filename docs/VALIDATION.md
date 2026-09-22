@@ -11,6 +11,32 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series D under the law's line drive: eight runs on drive-default 01178c9 - 2026-09-22
+
+The branch `drive-default` at `01178c9` (the generator's pins under the
+line drive committed before the run, DEFAULT.md section (c): n = 4, 6, 10
+at S = 1, 8, 32, `expectations.json`): the eight worlds of
+`examples/events/orbit/` (the six and the two lamp worlds, unchanged) run
+through `tools/run_series.py --jobs 4` (Python 3.14.0rc2, numpy 2.5.3,
+headless; source fingerprint `e67f6b9a5469d75d`), every run completed at 4000
+intervals with the books balanced at every tick, `run.json` carrying
+`"drive": "line"`; the digests (state, audit, events) `59be4ca61a3d`,
+`1aaa91745a3f`, `71a07e974623` (`s1_r12`), `9290bd45da8a`,
+`093ee9a4f342`, `0864d3f9b739` (`s1_r24`), `427229f38496`,
+`0dbe076f857d`, `2b62770b018a` (`s8_r12`), `5290784349c1`,
+`1b1309bb81ea`, `5aa469e76af2` (`s8_r24`), `c80fafec6823`,
+`ffa81ca1cd85`, `7fa866a5c1ca` (`s32_r12`), `df0e4a62fdda`,
+`4042645cc047`, `51ac141d66d5` (`s32_r24`), `b16ee1dc218a`,
+`b47bb336a684`, `e2d5f8cde2fe` (`s32_r12_lamp`), `a0a4562bc3fc`,
+`83189e4e0aec`, `6e49bb6b6cae` (`s32_r24_lamp`); run times 10 to 15 s
+(host measurements). The readings by kind (no orbit closed by the
+criterion; the first Link exactly as pinned in all eight; the lamp
+worlds' loops the S = 32 worlds' to the Link) are in
+[the series' README](../examples/events/orbit/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-01178c9-before-the-run)
+and [the register](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19).
+The runs of 2026-09-19 to 2026-09-21 stay registered as the readings the
+paper's rows of series D rest on, under the drive they name.
+
 ## Series H under the law's line drive: seven runs on drive-default 543d202 - 2026-09-22
 
 The branch `drive-default` at `543d202` (the generator's pins under the

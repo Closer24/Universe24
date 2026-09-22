@@ -381,3 +381,95 @@ records); the exits are the face detectors' clicks. Measured once by the
 auditor at main e42c49e5 and read the same by the tool on this tree;
 nothing pinned, no pin moved. The register entry has the numbers
 ([EXPERIMENTS, D](../../../docs/EXPERIMENTS.md)).
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of `expectations.json`, committed at `01178c9` before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the six worlds
+at the generator's circle under the line drive, the law's drive of a body
+(n = 4, 6, 10 at S = 1, 8, 32; p = 256, 384, 640 label units; the table
+of the shipped pins above), and the two lamp worlds unchanged (their n =
+10 was derived under this drive on 2026-09-21), the pins committed before
+the run. A new registration beside the runs of 2026-09-19 to 2026-09-21,
+never a replacement: the paper's rows of series D (Table 1's cells) rest
+on the runs under the per-axis drive and say so.
+
+Source fingerprint `e67f6b9a5469d75d` (the checkout of `drive-default` at
+`01178c9`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3, headless, four
+cores, `tools/run_series.py --jobs 4`; every run completed at 4000
+intervals (10.3 to 14.9 s) with the books balanced at every tick,
+`run.json` carrying `"drive": "line"`; the digests (state, audit,
+events): `59be4ca61a3d`, `1aaa91745a3f`, `71a07e974623` (`s1_r12`);
+`9290bd45da8a`, `093ee9a4f342`, `0864d3f9b739` (`s1_r24`);
+`427229f38496`, `0dbe076f857d`, `2b62770b018a` (`s8_r12`);
+`5290784349c1`, `1b1309bb81ea`, `5aa469e76af2` (`s8_r24`);
+`c80fafec6823`, `ffa81ca1cd85`, `7fa866a5c1ca` (`s32_r12`);
+`df0e4a62fdda`, `4042645cc047`, `51ac141d66d5` (`s32_r24`);
+`b16ee1dc218a`, `b47bb336a684`, `e2d5f8cde2fe` (`s32_r12_lamp`);
+`a0a4562bc3fc`, `83189e4e0aec`, `6e49bb6b6cae` (`s32_r24_lamp`).
+`tools/orbit_readings.py` on the six: 0 record checks failed, no orbit
+closed by the criterion; the lamp worlds read by a host script of the
+campaign (the source detector's clicks of the probe's rows, DETECTOR: the
+tick and the row's label, whose reverse is the probe's direction from the
+source, so the recurrence of that direction through 2 pi is the period;
+the probe's steps, GAMEBOARD).
+
+The closings, T, the mean radius, the drift, the turns, the radii, the
+first Link and the ends are GAMEBOARD readings (the step records; the
+ends the face's click of the probe); the reads, the units and C the
+probe's own record (DETECTOR; C divides by the host's interval count, a
+GAMEBOARD rate); the lamp worlds' periods are DETECTOR readings:
+
+| World | S | r | p (label units) | closed | T (pinned, 15 percent) | mean radius (r +- 1) | drift per orbit | turns | r min .. max | reads | units | C (1.00 +- 0.15) | first Link (pinned) | end |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `s1_r12` | 1 | 12 | 256 | - | - (148) | - | - | 0.23 | 12.0 .. 60.5 | 3 | 232 | 0.02 | 2 (2) | face:+y at 133 |
+| `s1_r24` | 1 | 24 | 256 | - | - (297) | - | - | 0.19 | 24.0 .. 64.6 | 0 | 0 | 0.00 | 2 (2) | face:+y at 121 |
+| `s8_r12` | 8 | 12 | 384 | - | - (230) | - | - | 0.92 | 4.5 .. 68.5 | 36 | 4404 | 0.47 | 4 (4) | face:+x at 434 |
+| `s8_r24` | 8 | 24 | 384 | - | - (460) | - | - | 0.98 | 7.6 .. 60.5 | 35 | 4140 | 0.40 | 4 (4) | face:+x at 533 |
+| `s32_r12` | 32 | 12 | 640 | no (the return (+11, 0)) | 480, 762 (371; 315 .. 426) | 16.51, 27.24 | +11, -12 | 2.45 | 7.0 .. 63.6 | 141 | 17560 | 1.51 (1.87 on the second turn) | 5 (5) | face:-x at 1504 |
+| `s32_r24` | 32 | 24 | 640 | no (the return (+12, +1)) | 924 (742; 630 .. 853) | 29.94 | +12 | 1.65 | 13.0 .. 75.6 | 117 | 11296 | 1.37 | 5 (5) | face:-y at 1548 |
+| `s32_r12_lamp` | 32 | 12 | 655360 (640 per unit) | the loop `s32_r12`'s to the Link | DETECTOR 525, 712 (371; 337 .. 404): outside | 22.7 over the run | - | 2.41 (the clicks' direction) | 7.0 .. 63.6 | - | - | - | 5 (5) | face:-x at 1504 |
+| `s32_r24_lamp` | 32 | 24 | 655360 | the loop `s32_r24`'s to the Link | DETECTOR 952 (742; 675 .. 808): outside | 31.0 over the run | - | 1.62 | 13.0 .. 75.6 | - | - | - | 5 (5) | face:-y at 1548 |
+
+Across the widths: T(24)^2 / T(12)^2 = 924^2 / 480^2 = 3.71 at S = 32
+(the pin 4 +- 0.6; a diagnostic from the step records); the lamp worlds'
+ratio from the clicks T(24) / T(12) = 952 / 525 = 1.81 (the pin 2.00 +-
+0.15: outside). The lamp worlds' loops are the S = 32 worlds' to the
+Link, the same radii and the same escapes at 1504 and 1548: the content
+enters nothing, as the design said (the push per ray is one unit of n
+whatever m, and the pace reads n alone). The precession per radial
+period of the lamp worlds (the pin -81 +- 15 degrees for a near-circular
+loop) is not read: the loops read are not near-circular (the radius 7.0
+to 63.6 and 13.0 to 75.6), and the map does not pin a loop widened to
+eccentricity.
+
+**What is read and what is not, no number moved.** The one pin the line
+drive's own rule gives, the interval of the probe's first Link from rest
+(ceil(W / (p Q)) on the wall W = Q^2 S m + p T_D), reads exactly in all
+eight worlds: 2, 2, 4, 4, 5, 5, 5, 5. At S = 1 the probe no longer
+outruns the field (the pace 0.508 against the rows' 0.577; under the
+per-axis drive of history 0.750, the defect of record 301) and still
+reads almost nothing of it (3 and 0 rows) before leaving through face:+y
+at 133 and 121: at this pace it nearly keeps step with the rays on its
+own heading and meets few of them. At S = 8 the probes turn most of a
+loop (0.92 and 0.98 turns) from r = 4.5 to 68.5 and 7.6 to 60.5 and leave
+through face:+x at 434 and 533 (C 0.47 and 0.40 over the fragment). At S
+= 32 the loops are the eccentric rosettes series D registered, wider
+than under the per-axis drive: `s32_r12` closes the angle twice (T 480
+and 762 against the circle's 371, the returns 11 and 1 Links, the mean
+radii 16.51 and 27.24, C 1.51 and 1.87) and leaves through face:-x at
+1504 (under the per-axis drive of the crossing-rule re-read: T 525, the
+mean radius 17.90, out at 932); `s32_r24` closes once (T 924 against 742,
+the return 12 Links, the mean radius 29.94, C 1.37) and leaves through
+face:-y at 1548 (T 932, 34.16, out at 1239 before). No orbit closes by the
+criterion at any width, as under the per-axis drive; the mean push read
+over a turn is above the derived (C 1.37 to 1.87: the loop spends its
+time inside r on the fast side of the rosette, where the ring mean is
+larger than at r), as the registered runs read (1.29 to 1.87). The
+causes named, as before: the grain of the push (a kick of 64 on 256, 384
+and 640, 14.4, 9.6 and 5.7 degrees per ray, the shells every 10
+intervals) and the drive's own anisotropy, of the opposite sign to the
+per-axis drive's (the wall carries |p|_1 T_D: on a diagonal heading at n
+= 10 the pace is 0.1776 against the axis's 0.2033, 12.6 percent slower;
+the per-axis drive was 6.9 percent faster at n = 9). The change of drive
+does not change the finding: the grain of the push breaks the rest.

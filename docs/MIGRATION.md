@@ -62,9 +62,11 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   momentum and action rewritten by the generator under the line drive,
   p(8) = 346015159 and h = 5536242544, the atoms series' integers, with
   `expectations.json`; the per-axis pins of history reproducible by
-  `expectations(AXIS_DRIVE)`) and the atoms (`atoms/`, whose momenta were
+  `expectations(AXIS_DRIVE)`), the atoms (`atoms/`, whose momenta were
   derived for the line drive on 2026-09-21 and whose worlds are byte for
-  byte as registered).
+  byte as registered) and series D (`orbit/`, the six worlds' momenta
+  rewritten by the generator, n = 4, 6, 10 at S = 1, 8, 32, with
+  `expectations.json`; the two lamp worlds unchanged).
 - **The tests.** The tests of the per-axis rule (`tests/test_step_drive.py`,
   `test_push_width.py` (a) to (c), `test_crossing.py`, `test_coupling_readings.py`)
   declare `per_axis_drive` and keep their integers; the law's cases are

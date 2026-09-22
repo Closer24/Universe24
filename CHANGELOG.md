@@ -48,6 +48,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   runs of 2026-09-20 (no orbit closes by the criterion; the first Link
   exactly as pinned). The atoms series' worlds, derived for this drive on
   2026-09-21, are unchanged and run under it.
+- Series D re-pinned under the law (`examples/events/orbit/`): the
+  generator derives the circle under the line drive (n = 4, 6, 10 at S =
+  1, 8, 32; p = 256, 384, 640) and writes `expectations.json` (the
+  per-axis pins of history reproducible by `expectations(AXIS_DRIVE)`),
+  the six worlds rewritten, the two lamp worlds unchanged, and the eight
+  runs registered beside the runs of 2026-09-19 to 2026-09-21 (no orbit
+  closes by the criterion; the first Link exactly as pinned).
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 
