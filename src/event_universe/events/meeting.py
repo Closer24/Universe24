@@ -296,7 +296,7 @@ def meet(
     or, with `inverse`, read back from the after-state; the module
     docstring. The one call site of each is `nature_beam` (step 3 after the
     table; the inverse before it)."""
-    from event_universe.events.nature_beam import exact_column_sums, momentum_labels
+    from event_universe.events.nature_beam import exact_column_sums, momentum_labels, reseed_flight
 
     families = world.families
     unit = tables.flight.labels
@@ -401,6 +401,9 @@ def meet(
                 a + b for a, b in zip(ledger.turned_momentum[family], delta, strict=True)
             ]
             store.direction[chosen] = turned
+            # The turned rows read their age on their present line
+            # (`nature_beam.reseed_flight`, as after a collision).
+            reseed_flight(store, tables.family_flights[family], chosen, world.suspension[1])
         store.phase[rows] = (phase_after + birth) % modulus
 
 

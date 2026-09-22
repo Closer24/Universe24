@@ -519,11 +519,43 @@ with its NATURE row: DONE on 2026-09-22 by the declaration, on the
 owner's word "continue until the whole list is handled" (docs/NATURE.md,
 the one set's gamma row and row 13, NOT COMPARED: the ratio 2.00 reads
 the declared coefficient back). Step 5, the key removed: the flight
-member in the age wall's set always, every registered world with a crowd
-re-run and re-pinned by the Replicator (the price named to the owner: the
-0.000 of series K becomes a bending), and the owner's decision on the
-root taken on the state (section 3, the vector test: admitted with the
-verb, or a root-free pace derived first). Step 6, the Highlights line.
+member in the age wall's set always. IN THE CODE on 2026-09-22 on the
+model owner's word (record 847, "do not freeze; bring it back
+immediately", then "implement it, now"): the row's flight is a member for
+every world at 1 + gamma, gamma the world key `optical`'s declared value
+and 0 by default (the time part alone, the law's own number; nature's 1 a
+declaration per world, never a default, record 817), `optical-v1` names no
+hypothesis any more, the three load refusals are lifted (at suspension 0
+nothing is stretched and nothing pushed; under `meeting` the meeting's
+turn keeps the heading; a heading without a neighbour turns to nothing),
+the inverse interval is refused at a pair with n > 0 only, and the
+snapshot writes a row's flight accumulator only where a crowd moved it off
+the table's own count at its age, so that every world in which no crowd
+acts keeps its record and its state byte for byte (verified on main's
+code against the new one: two_stars/symmetric_pass and lensing/mass, a
+crowd at suspension 0, and a lamp world with no crowd at [1, 65536], SAME
+events and SAME state; `tests/test_optical.py` (e)). Two corrections of
+the price named above: series K's 0.000 does NOT become a bending, its
+pair being [0, 1] (n = 0 declares no stretch at all; the bending on the
+law is read where a world declares a pair with n > 0, the optical worlds
+at [1, 16384], whose numbers stand unchanged); and the registered crowd
+worlds at a pair with n > 0 (32: clock_word 4, cluster_clock 2,
+crowd_clock 8, gallery 1, hubble_stars 6, reader_clock 5, shell_clock 6)
+are not re-pinned by a shift of numbers: their crowd's age moment at the
+mass Nodes is about 1.3 x 10^9, so the flight's wall there is stretched by
+about 20,000 (3 to 4 at the median Node) and the lamps' rows freeze in
+the crowd (crowd_clock/still_1 one measured click in 200 intervals against
+hundreds before; clock_word/age_3 refuses at run time, a pushed row's
+momentum making the wall's square exceed the working bound, the
+contract's refusal). Those worlds were tuned for the clock's slowing alone
+at potentials of order c^2 at the reader and 10^4 c^2 inside the mass
+rows; light that couples to the same potential is trapped there. Their
+standing (redeclared in the weak field as new worlds with pins from the
+map before their runs, or their entries marked as not readable under the
+law since 2026-09-22) is the model owner's decision, pending; no pin of
+theirs moves and none re-runs until his word. The owner's decision on
+the root taken on the state (section 3, the vector test) stands as
+before. Step 6, the Highlights line, the Boss's from the six lines.
 Beside them, from section 5b: a map that walks the engine's Bresenham
 exactly, DONE as far as the verbs go (`walk` in `every_family_map.py`,
 2026-09-22: the three verbs integer for integer; the difference left to
