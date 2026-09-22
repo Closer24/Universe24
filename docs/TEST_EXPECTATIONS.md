@@ -99,6 +99,7 @@ kept, their pins the law of events').
 | `test_crowd_clock.py` | Series U, a lamp inside a crowd, still and moving (`examples/events/crowd_clock/`, docs/designs/crowd_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the moving bodies at 0.2 c by the drive's rule; the presence at the still lamp's Node once the crowd's rows arrive is 4 F (328 for F = 82) and the lamp's clock owes the age moment since clock-age-v1 (2026-09-21): `still_1` counts 22 F = 360448 (k = 5.5) and births once in 6.5 intervals (12 of 80 within 1; under the presence word k = 1 and 40 of 80 within 2); the algebra (z = 1 needs a slowed clock for v < c, a still lamp at k = 1 and 2 reads z = 1 and 2, the lag k v t / (1 + k) and the exit from a fan of reach 4 at 69 intervals for k = 1); the expected values in the module's docstring ([below](#a-lamp-inside-a-crowd-series-u)) | new (2026-09-21, series U; design and pins, the run in the design's section 7) |
 | `test_reader_clock.py` | Series S, a reader inside a crowd (`examples/events/reader_clock/`, docs/designs/reader_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the reader at x = 10 with a lamp of its own measuring `s_px1` by age, the source at x = 70, the crowds' fluxes k 2^16 / 4, the receding source at 0.2 c and its sources at 0.1 c by the drive's rule; the presence 4 F at the reader and the source after twelve intervals; the algebra of the ratio (0.5, 1, 4 / 3, 1.1); the expected values in the module's docstring ([below](#a-reader-inside-a-crowd-series-s)) | new (2026-09-21, series S; design and pins, the run in the design's section 7) |
 | `test_clock_word.py` | Series T, the clock's word (`examples/events/clock_word/`, docs/designs/clock_age/NOTE.md section 6, the register's entry "T, the clock's word"): the shipped worlds equal their generator's and run ten intervals balanced (the lamp at x = 10, the detector at x = 110 reading `age`, the two `mass` sources at 3 or 6 Links at F = 4915, the lamp's `mass` entry `pass` or `{"rule": "pass", "reads": "age"}`); after twelve intervals the lamp's count is 4 F under the presence word at both distances and 22 F, 42 F under the age word, the presence 4 F in all, the first counting tick 6 and 11 with the first row's count alone; the algebra (k = 0.3, 0.3, 1.65, 3.15; the ratio 1 and 42 / 22 = 1.909 against the continuum's 2); the expected values in the module's docstring ([below](#the-clocks-word-series-t)) | new (2026-09-21, series T; the pins the physicist's, the run in the register) |
+| `test_shell_clock.py` | Series X, Poisson after a detector (`examples/events/shell_clock/`, the chief physicist's design of record 574; the pins from docs/designs/clock_age/clock_age_map.py section E, the register's entry "X, Poisson after a detector"): the nine shipped worlds equal their generator's (the lamp at x = 103 shining -x, the detector at x = 3 reading `age`, 450 `mass` sources a half Link from the shell of radius 6 about a centre 2, 4 or 12 Links from the lamp, each of the amount 1431597 naming series E's fan of 290 by the indices of the world's table, the control the same GameBoard with the shell removed); the register carries the map's pins; the algebra of the pin with no world run (the shell theorem's one integer 5086 at both inside Nodes against the presence 499 and 596, the ratios 1.003917, 0.839989 and 0.618270 within 0.02, the presence word's departure from 1 more than forty times the age word's ripple); the readings tool on a hand-made click list (1 + z = 2.0000, only the detector's click lines read, a missed pin moving the verdict); a detector whose own clock is slowed clicking on the same lattice ticks as an unslowed one; one shell world parsing and running balanced; the expected values in the module's docstring ([below](#poisson-after-a-detector-series-x)) | new (2026-09-22, series X; the pins the map's, the run in the register) |
 | `test_cluster_clock.py` | Series V, a cluster of crowds read by one detector (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the five lamps at numbers 2, 3, 6, 9, 12 with the momenta of 0.2 c and their sources' of 0.2 c / (1 + k) by the drive's rule; the presence at every lamp of a crowd is 4 F after twelve intervals and the bare lamp's at most 8; the algebra of the sum 1 + k + v / c against the product (1 + k)(1 + v / c) and the pinned dispersion 0.363 around 0.4; the expected values in the module's docstring ([below](#a-cluster-of-crowds-series-v)) | new (2026-09-21, series V; design and pins, the run in the design's section 7) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it (on an entry that reads `age`; since clock-age-v1, 2026-09-21, on every entry but one that reads `presence`); the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_clock_age.py` | clock-age-v1, the clock's word (the model owner's word of 2026-09-21, record 394; BEAM_LAW section 3 step 5 and note 25): on the bar of the age tests' (c) a reader whose entry omits `reads` counts the age moment (5 then 11, the ages of the `age` reader) with its `read` records carrying the flow, and so does every word but `presence`; the word `presence` counts the presence as before (the ages 1 .. 18, 18) with the record carrying the presence; the edges: no crowd owes nothing under either word, an unknown word refused naming the words, `presence` accepted on `pass` and a window still refused there, series T's `presence_3` declaring the word parses and keeps its pin; the shape: one wall function `core.integer.age_wall` over the declared set `measured.AGE_WALL_SET`, the clock its one member at the coefficient 1, the phase per age never a member, the owed count the excess of the stretched wall integer for integer with `by_drive(acc, k n, d)` ([below](#the-clocks-word-clock-age-v1)) | new (2026-09-21, clock-age-v1) |
@@ -4216,6 +4217,51 @@ series U's generator; the register's entry "T, the clock's word"):
 - (c) the algebra of the pin: k = (count per F) x F / 2^16; the ratio of the
   two k at the same F is 1 under the presence word and 42 / 22 = 1.909
   under the age word, against the continuum's potential 2.000.
+
+## Poisson after a detector (series X)
+
+`tests/test_shell_clock.py` (the chief physicist's design of 2026-09-22,
+record 574 of docs/LOG_2026-09-20.md; the worlds of
+`examples/events/shell_clock/` by `make_worlds.py`, which imports series T's
+generator and series E's; the pins from docs/designs/clock_age/clock_age_map.py
+section E; the register's entry "X, Poisson after a detector"):
+
+- (a) the nine shipped worlds equal `make_worlds.worlds()` document for
+  document: the detector number 1 at x = 3 with `reads: "age"`, the lamp
+  number 2 at x = 103 fixed with its lamp on -x and its `mass` entry
+  `{"rule": "pass", "reads": "age"}` or `{"rule": "pass", "reads":
+  "presence"}` (the control declaring no entry and holding no source), 450
+  `mass` sources each a half Link from the shell of radius 6 about a centre
+  2, 4 or 12 Links along +x from the lamp, each fixed, of the amount 1431597
+  and naming series E's fan of 290 by the indices of the world's direction
+  table (which resolve to that fan); the GameBoard 110 + r x 15 x 15, 500
+  intervals; `expectations.json` declares `shell-clock-expectations-v1`, the
+  windows [200, 350] and [350, 500], the shell's block (450 Nodes, the fan
+  290, the amount 1431597, the sources' own count 0.787 to 0.932 and the
+  release they keep, 11.3054 to 12.2240) and the pinned k 0.914351, 0.910783,
+  0.563110, 0.089647, 0.106724, 0.029271 and three zeros.
+- (b) the algebra of the pin, no world run: the release is 2 F x 2^16 / 450 =
+  1431597, so 21.8444 units per source per direction per interval; with
+  uniform sources k = the map's age moment x that release / 2^16, which is
+  one number, 1.695264, at r = 2 and at r = 4 (the shell theorem: the age
+  moment 5086 is one integer at both, where the presence 499 and 596 differ)
+  and 1.047957 at r = 12; the register's ratios 1.003917, 0.839989 and
+  0.618270, the continuum's 1 and 0.5, the tolerance 0.02 above the ripple,
+  and the presence word's departure from 1 more than forty times the age
+  word's.
+- (c) the readings tool on a hand-made click list: 150 clicks every other
+  tick with the ordinals in order from 1 read 1 + z = 2.0000 exactly in both
+  windows, the click rate 0.5, k = 1.0 and no ordinal missing, with the
+  detector's click lines alone taken from a file that also holds another
+  reader's click and a birth; the same list against a pin of k = 2.0 reads
+  the verdict `moved` or `failed`.
+- (d) the rule the whole reading rests on, on a minimal GameBoard: a
+  detector whose own clock is slowed by a crowd at its Node (its `waited`
+  above zero) clicks at exactly the same ticks, with the same ordinals, as
+  one with no crowd, so the shell's rows reaching the detector cannot move
+  1 + z; only the lamp's clock does.
+- (e) one shell world parses under the law, holds 452 measured events and
+  runs two intervals with the books balanced.
 
 ## The clock's word, clock-age-v1
 
