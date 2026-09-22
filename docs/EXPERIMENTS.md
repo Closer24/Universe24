@@ -3102,7 +3102,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/lensing/` (four worlds by `make_worlds.py`,
   `control`, `mass`, `heavy`, `near`, 400 intervals, the model ids
   `rays-lensing-<name>-space-v1`); `tools/run_series.py --jobs 4`;
-  `tools/lensing_readings.py` (the window sums off `events.jsonl`, the
+  `tools/click_readings/lensing.py` (the window sums off `events.jsonl`, the
   turn and the mass's rays per direction off `by_clock`, the speed and
   the dwell off `flight_table`, the replay; `tests/test_lensing_readings.py`
   pins it to the engine on a 13 x 5 x 3 box).
@@ -3337,7 +3337,7 @@ states "exactly" and means integer equality at every tick.
   tuned; a reading outside its bracket is reported with its numbers.
 - **Model prediction, pinned before the runs** (the design's offline
   flight of the beam beside the replayed crowd, `k_deflection.py`, the
-  register N = 64; the brackets fixed in `tools/lensing_readings.py`
+  register N = 64; the brackets fixed in `tools/click_readings/lensing.py`
   before the runs): `mass` the centroid -3.0 +- 0.5 pixels in y toward the
   mass and 0 +- 0.5 in z, the width about 6.0, the mean age about 90.4
   (+- 1: the bent path's extra Links, no delay in time), about 1547 of
@@ -3368,7 +3368,7 @@ states "exactly" and means integer equality at every tick.
   books' `turned` line, the x where the lens world's two beams are closest.
 - **Run.** `examples/events/lensing/` (`make_worlds.py` writes the five
   meeting worlds beside the four of K); `tools/run_series.py --jobs 2`;
-  `tools/lensing_readings.py` (the record checks, the DETECTOR tables of
+  `tools/click_readings/lensing.py` (the record checks, the DETECTOR tables of
   both kinds of world and the GAMEBOARD replay; `tests/test_lensing_readings.py`
   pins it to the engine).
 - **Result (2026-09-20, measured against expected).** The worktree of
@@ -6880,7 +6880,7 @@ sequential gates on an entangled record, the full register replay.
   gate world `drive_b/plane_b` added).
 - **Run.** `examples/events/drive_b/` (the six worlds written by
   `make_worlds.py`), `tools/run_series.py --jobs 3`, 200 intervals,
-  headless; the readings by `tools/drive_b_readings.py` (every line
+  headless; the readings by `tools/click_readings/drive_b.py` (every line
   DETECTOR or GAMEBOARD). The branch `drive-b-v1` from main `166403d8`, the
   project's environment (Python 3.14.0rc2, numpy 2.5.3); the source
   fingerprint `fcaf6f194e62...`; 0.10 to 0.11 s per world, 43 MB peak;
@@ -6990,7 +6990,7 @@ sequential gates on an entangled record, the full register replay.
   whole on every direction of a 290-direction fan from 450 sources at once;
   a source's directions named by the indices of the world's direction
   table; the lamp's births as the clock's record and the record form's
-  click line with `age`; `examples/events/shell_clock/read_runs.py`, which
+  click line with `age`; `tools/click_readings/shell_clock.py`, which
   reads the detector's `click` lines and nothing else, no store, no
   `state.json`, no replay (the owner's word of 2026-09-22, records 562 and
   564); `tests/test_shell_clock.py` (the shipped worlds the generator's,
@@ -7003,7 +7003,7 @@ sequential gates on an entangled record, the full register replay.
   the branch at cb634db, headless, 500 intervals each, the nine worlds
   completed (the books balanced at every tick, GAMEBOARD, a gate of the
   record); the readings by
-  `examples/events/shell_clock/read_runs.py` from the detector's click
+  `tools/click_readings/shell_clock.py` from the detector's click
   lines alone, shipped as `examples/events/shell_clock/readings.json`, no
   number typed by hand; DETECTOR unless said; measured once, awaiting
   replication).** `1 + z` in the two windows: the age word 1.9056 and
@@ -7086,7 +7086,7 @@ sequential gates on an entangled record, the full register replay.
   0.83 (a change of a registered pin is the owner's).
 - **Run.** 2026-09-21 on branch `optical-v1` (`tools/run_series.py --jobs
   2`, 400 intervals, the six worlds in two folders by gamma with a control
-  each, 26 to 41 s per world), read by `tools/lensing_readings.py
+  each, 26 to 41 s per world), read by `tools/click_readings/lensing.py
   --no-replay` against each folder's control (DETECTOR; its verdict
   lines are series K's own pins, not this entry's): `mass` at f = 1 the
   centroid's shift -1.607 pixels (pinned -1.93: inside 0.5) and the delay
@@ -7112,7 +7112,7 @@ sequential gates on an entangled record, the full register replay.
   of the pin (0.25 against the propagated 0.58 / 0.46 from the shifts'
   0.5 pixel each; the pin stays as written and refuted at 0.25); the
   `near` shift at f = 2 a survivors' reading (398 taken). The bounded
-  diagnostic (GAMEBOARD, `tools/optical_readings.py`): the mean transverse
+  diagnostic (GAMEBOARD, `tools/optical_readings.py`, deleted on 2026-09-22, record 871): the mean transverse
   angle of **P** before the screen -4.181 / -8.680 degrees (`mass`, the
   ratio 2.076) and -6.854 / -11.955 (`near`, 1.744, the survivors), verb
   2's arithmetic read back to itself, nothing about where the light

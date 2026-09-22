@@ -184,7 +184,7 @@ selection) centred 2, 4 or 12 Links from the lamp, each source releasing
 21.8444 units per direction per interval on the full fan (series T's crowd's
 total release pair spread over the shell's Nodes). The lamp's entry for the
 crowd declares the age word or the presence word, and each world has its
-control, the lamp alone on the same GameBoard. `shell_clock/read_runs.py`
+control, the lamp alone on the same GameBoard. `tools/click_readings/shell_clock.py`
 reads the detector's click lines and nothing else: 1 + z per window, the
 count k = 1 + z - 1 and the three ratios the map pinned before the run. The
 register entry is
@@ -381,7 +381,7 @@ of the paid family `light` sending a narrow beam (five directions within
 family `m` at the centre (series E's fan of 290 directions, one or two
 rays per direction per interval) at the impact distance b = 6 or 3,
 toward a screen of 1681 one-Node `wave` pixels with the age moment on the
-click record, and a control without the mass. `tools/lensing_readings.py`
+click record, and a control without the mass. `tools/click_readings/lensing.py`
 reads the deflection of the arrival's centroid, its width, the mean age
 of the arrivals (the delay), the count and the phase rate against the
 control (DETECTOR) and replays the world for the beam's rows, the rays a
@@ -500,7 +500,7 @@ written by `drive_b/make_worlds.py` with their expectations before the runs
 (`drive_b/expectations.json`): one body of content 64 at |**p**|_1 = 6000
 on the axis, the plane diagonal and the cube diagonal from the centre of an
 open 41^3 box, under the key and, as the controls, without it.
-`tools/drive_b_readings.py` reads the body's click on a face (DETECTOR) and
+`tools/click_readings/drive_b.py` reads the body's click on a face (DETECTOR) and
 the `step` lines against the line of the momentum and the accumulators'
 bound (GAMEBOARD) against the pins; the register entry is
 [X, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22).

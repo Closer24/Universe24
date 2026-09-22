@@ -2,7 +2,7 @@
 (`drive-b-v1`; `examples/events/drive_b/`), read from the runner's record and
 compared with the pins of `expectations.json`, written before the runs.
 
-Usage: `PYTHONPATH=src python tools/drive_b_readings.py <runs root>
+Usage: `PYTHONPATH=src python tools/click_readings/drive_b.py <runs root>
 [--register examples/events/drive_b/expectations.json]`. The root holds the
 runs `tools/run_series.py` wrote (`<root>/<world>/run/`), told apart by the
 model of their record (`beam-drive-b-<name>-v1`). Every line is one of two
@@ -27,7 +27,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 EXPECTATIONS = ROOT / "examples" / "events" / "drive_b" / "expectations.json"
 PREFIX = "beam-drive-b-"
 # A world of several bodies (the flyby worlds of every family under one

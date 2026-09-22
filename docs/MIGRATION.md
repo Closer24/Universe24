@@ -67,6 +67,14 @@ leave `tests/test_amplitude_layer.py`'s list of the design's test 7. The registe
 entries of series P and the gallery are one line each under EXPERIMENTS.md
 section D with their headings kept. No physical behavior changed.
 
+The readings' package completed for every tool no branch in flight touches
+(the Boss, record 932: the cart does not block): `tools/lensing_readings.py`
+-> `tools/click_readings/lensing.py`, `tools/drive_b_readings.py` -> `drive_b.py`,
+`examples/events/shell_clock/read_runs.py` -> `shell_clock.py`; `tools/optical_readings.py`
+(a GAMEBOARD diagnostic of the optical pin worlds, never a detector reading)
+deleted. `examples/events/clock_word/read_runs.py` waits on `generic-bending`
+(its test is that branch's), the cart's tool on `moving-detector-build`.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,

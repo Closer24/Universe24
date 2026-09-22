@@ -80,7 +80,7 @@ of the turn. The record checks (completed, the books balanced at every
 tick) fail the tool; the readings are registered inside or outside their
 bracket and never moved.
 
-    PYTHONPATH=src python tools/lensing_readings.py artifacts/lensing
+    PYTHONPATH=src python tools/click_readings/lensing.py artifacts/lensing
 """
 
 from __future__ import annotations

@@ -18,7 +18,7 @@ DETECTOR reading (the body's click on a face of the open box: its tick, the
 face, the Node it left from) or a GAMEBOARD reading (the `step` lines'
 Nodes against the line of the momentum, the `drive` accumulators, the
 Links before the escape, `fast_steps`: the host's view, a diagnostic). The
-readings tool is `tools/drive_b_readings.py`, every line labelled by its
+readings tool is `tools/click_readings/drive_b.py`, every line labelled by its
 kind.
 
 ## What was built (the engine, under the world key alone)
@@ -94,7 +94,7 @@ its first advance alone; the face, the Node and the Links are exact.
 
 ## What was measured (2026-09-22)
 
-`tools/drive_b_readings.py` on the six runs (`tools/run_series.py --jobs
+`tools/click_readings/drive_b.py` on the six runs (`tools/run_series.py --jobs
 3`, 200 intervals each; the head `fcaf6f194e62...` of `run.json`'s
 `source_sha256`; Python 3.14.0rc2, numpy 2.5.3, headless; 0.10 to 0.11 s
 per world, 43 MB peak; every run completed with the books balanced at

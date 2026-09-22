@@ -35,12 +35,14 @@ script with `PYTHONPATH=src python tools/click_readings/<module>.py ...`
 | `quarks.py`, `quarks_replay.py` | R, the quarks (the readings; the replay block of the register) | `tests/test_quarks_expectations.py` |
 | `redshift.py` | E, the clock's redshift in space | `tests/test_redshift_readings.py` |
 | `weak.py` | J, the weak force | `tests/test_weak_readings.py` |
+| `lensing.py` | K, light beside a mass (and the optical pin worlds under the key) | `tests/test_lensing_readings.py` |
+| `drive_b.py` | the directional drive of a body, drive-b-v1 | `tests/test_drive_b.py` |
+| `shell_clock.py` | X, Poisson after a detector | `tests/test_shell_clock.py` |
 
 Still outside the package until the branches that touch them merge (PLAN.md
-section D): `tools/lensing_readings.py` (K), `tools/drive_b_readings.py`
-(the directional drive), `examples/events/clock_word/read_runs.py` (T),
-`examples/events/shell_clock/read_runs.py` (X) and the cart's
-`tools/moving_detector_readings.py`. `tools/amplitude_path.py` stays at its
+section D): `examples/events/clock_word/read_runs.py` (T, its test a file of
+`generic-bending`) and the cart's `tools/moving_detector_readings.py` (a file
+of `moving-detector-build`). `tools/amplitude_path.py` stays at its
 path because the paper's RECORD.md cites it there.
 
 ## The clicks' certificate (the Boss's order of 2026-09-22 on the owner's word, record 920)
@@ -79,10 +81,10 @@ record; no tool runs a rule of the law or reads a Node during a run.
 | `redshift.py` (E) | run.json, initialization.json | nothing | k as a ratio of counts, display | none |
 | `weak.py` (J) | run.json, events.jsonl, initialization.json | nothing | the width over the median, display | `deciding` |
 | `tools/amplitude_path.py` (L) | run.json, events.jsonl | a JSON list of the clicks (the replay's report, no pin) | none | none: the layer's replay through `events/amplitude.py`, integers |
-| `tools/lensing_readings.py` (K) | run.json, events.jsonl, initialization.json | the register's block under `--register` | the deflection in pixels and the delay in intervals as ratios, display | `slope` (the beam's centroid line), `verdict` |
-| `tools/drive_b_readings.py` (drive-b-v1) | run.json, events.jsonl, state.json | the register's run block under `--register` | the pace as a ratio, display | none |
+| `lensing.py` (K) | run.json, events.jsonl, initialization.json | the register's block under `--register` | the deflection in pixels and the delay in intervals as ratios, display | `slope` (the beam's centroid line), `verdict` |
+| `drive_b.py` (drive-b-v1) | run.json, events.jsonl, state.json | the register's run block under `--register` | the pace as a ratio, display | none |
 | `examples/events/clock_word/read_runs.py` (T) | events.jsonl | `readings.json` beside the worlds (the readings, no pin) | k and 1 + z as ratios of counts, display | `slope` (the clock's field over distance) |
-| `examples/events/shell_clock/read_runs.py` (X) | events.jsonl, state.json | `readings.json` beside the worlds | k(r) as ratios, display | `slope` |
+| `shell_clock.py` (X) | events.jsonl, state.json | `readings.json` beside the worlds | k(r) as ratios, display | `slope` |
 
 Three tools compute a fit outside the engine and say so on their lines
 (`hubble.py` and `hubble_stars.py`, the Milne shape and q; `coupling.py`,

@@ -2,7 +2,7 @@
 `expectations.json` and write `readings.json` beside them (the measured
 block the register's entry quotes; no number typed by hand).
 
-    PYTHONPATH=src python examples/events/shell_clock/read_runs.py <runs dir>
+    PYTHONPATH=src python tools/click_readings/shell_clock.py <runs dir>
 
 THE CLICK LINES ALONE ARE READ (the model owner's word of 2026-09-22,
 records 562 and 564: no experiment reads the GameBoard, only after a
@@ -32,6 +32,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+WORLDS = HERE.parents[1] / "examples" / "events" / "shell_clock"
 DETECTOR = 1
 
 
@@ -100,7 +101,7 @@ def read_world(runs: Path, name: str, pinned: dict, expected: dict) -> dict[str,
 
 def main() -> None:
     runs = Path(sys.argv[1])
-    expected = json.loads((HERE / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     summary = json.loads((runs / "summary.json").read_text(encoding="utf-8"))
     readings: dict[str, object] = {
         "format": "shell-clock-readings-v1",
