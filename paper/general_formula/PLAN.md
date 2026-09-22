@@ -4017,3 +4017,126 @@ The place and the length, within 30 pages:
   page 30's free lines).
 Net in the body: about plus four, within section 8's budget; nothing
 applied until the owner's GO on the reshaping and HISTORY.md's merge.
+
+### 8e. How mass, charge and the rest entered the algebra; known and ours for every formula; the Inside step as the centre and the Outside step it gives (the owner's word to the writer, 2026-09-22)
+
+The owner: the account of the road from basic physics to modern algebra
+must say how mass, charge and all such things entered the algebra and
+what operations act on them; every formula in the paper must be checked
+for circularity AND labelled with what is known, what is ours, how we
+got from the one to the other, what is new and what is not; and the
+central formula is the step formula beneath the lattice, W = E'^2 + 3
+p.p, from which one reads what the step formula above is.
+
+(1) THE PHYSICAL QUANTITIES AND THEIR ALGEBRA, the table Section 2's
+road carries (one row each, the paper's own definitions, no new claim):
+- the amount w of a row: a positive integer; verb 1 (the translation),
+  verb 3 (the merge adds amounts, opposite phases subtract);
+- the phase p: an element of Z_N; verb 1 (the turn per Link or per
+  interval), verb 3 (the group ring's addition), verb 5 (the evaluation
+  at the roots of unity);
+- the multiplicity m: a positive integer, A = sum a_i^2 at a split;
+  verb 2 (the split table);
+- the age tau: a count, the rate 1; verb 1; a function of the history
+  (Theorem 3);
+- the content M (mass): a count of units per family, an input of the
+  family table; it enters the drive's wall N_l N_w M + |p_a| (verb 6,
+  the Euclidean division), the push M_A (rho_A rho_B - 1) a (verb 2,
+  a bilinear form), the release rate M_B eta (verb 1) and the rest
+  energy E_0 = N_l N_w M (an identity);
+- the charge rho: the declared charge per unit of content, an input;
+  it enters only the coupling matrix rho_A rho_B of the push (verb 2);
+- the momentum p: an integer vector; translated by the push (verb 1),
+  read by the drive as the rate |p_a| against the wall (verb 6); its
+  square enters W (verb 2, the bilinear form, compared and never rooted);
+- the energy: E_0 = N_l N_w M and W = E_0^2 + 3 p.p, E' the largest
+  integer whose square is at most W (verb 6, the comparison), the gate
+  E_0 / E' on every count of the body;
+- the label flow a = sum amount x u_D at a Node (verb 2, bilinear in
+  the arrivals), the field a body reads;
+- the family table (content, cost h per phase step, charge, the strong
+  column, lifetime, phase rate, hand): declared inputs, read by the
+  verbs, never computed;
+- the couplings: the circle's tables C, S at 1 / 256, the split and
+  rotation tables, the click's Gram matrix: integer matrices and one
+  bilinear form (verb 2), the Born rule the comparison of the rungs
+  (verb 6).
+So mass is a count that sets a wall and scales a bilinear form, charge
+a declared integer in one matrix, momentum a translated integer vector
+whose square is compared: that is how basic physics entered the algebra,
+and the six verbs are the only operations on them.
+
+(2) KNOWN, OURS, THE ROAD, NEW OR NOT: the audit's table, one row per
+formula, the paper's word in the last column (a fifth and sixth column
+added to the circularity audit above):
+- Eq. 1, the map: known, none (a cellular update); ours, the map with a
+  rate and a wall per component; new as a definition.
+- The books, continuity: known, conservation laws; ours, the exact
+  integer identity by the carry's bijection; not new in form, new in
+  exactness.
+- The pace 1 / sqrt 3: known, the lattice Boltzmann sound speed and the
+  Courant bound (cited); ours, the bound from one Link per interval and
+  the wall that attains it; not new (the paper claims no novelty).
+- Gauss, Newton, Coulomb, the retarded potential, Poisson: known,
+  physics' forms; ours, the road from the walk and the bilinear push
+  under the shell average, G = K eta / (4 pi N_w); the forms not new,
+  the integer road and the named condition new.
+- The clock's 1 / (1 + a_tau): known, gravitational redshift's 1 / r;
+  ours, the owed count with the age moment; the form recovered, the
+  count new; the calibration an input.
+- The click's quadratic form: known, Born's rule and Gleason's theorem;
+  ours, the lattice Gleason from (a) to (e) without dimension, the
+  multiplicity rule; new as a theorem on Z_N, the square carried by (b).
+- Born's bound 1 / N: ours, new (a finite-N statement).
+- The exact marginals: known, no-signalling; ours, the exact integer
+  statement with the tie condition; new in the finite form.
+- S(N): known, Tsirelson's 2 sqrt 2 and the cosine correlation; ours,
+  the exact rational at each N, the plateau 181 / 64, the fixed-table
+  limit 186034 / 65773; new as a finite-N prediction, the limit not new.
+- Planck, de Broglie: known; ours, identities under the dictionary; not
+  new, an input.
+- The uncertainty bounds: known (Donoho-Stark, Maassen-Uffink); ours,
+  their reading on the click; not new, the identification a hypothesis.
+- Eq. 14: known, the energy-momentum relation E^2 = E_0^2 + p^2 c^2;
+  ours, the integer W compared and never rooted with the gate E_0 / E';
+  DECLARED (record 270); becomes ours by derivation only when part 6
+  derives it from the conversion (the walk's dispersion, the factor 3).
+- The click theorem: known, the Lorentz group from the two postulates
+  (Einstein 1905; Alexandrov-Zeeman); ours, the click language, (A2)
+  and the detector's own rate, the fact that the law lacks (A2); the
+  group not new, the conversion and the fact new.
+- The two Doppler factors r / (1 - v), (1 + v) / r: known, Bondi's
+  k-calculus; ours, the counts' exact form and the law's r = 1; the
+  measurable 1 - v^2 new as the law's own prediction.
+- The equivalence principle after a detector: known, Galileo; ours, the
+  step rule's division by the content (derived at rest) and the scale
+  symmetry measured; not new in form.
+- The entropy identity: known, Boltzmann; ours, the count of torus
+  points at the click; new as an identity of the click.
+The rule for the text: every result sentence names the known form it
+recovers (with the citation) and, in the same sentence, what is ours;
+"new" is said only where the audit says it; "not new" is said plainly
+(the pace, the limits, the identities).
+
+(3) THE CENTRE: THE INSIDE STEP AND THE OUTSIDE STEP IT GIVES. The
+central formula of the paper is the step formula beneath the lattice,
+Eq. 14 in its frame, W = E'^2 + 3 p.p with E_0 = N_l N_w M and c^2 =
+1 / 3, compared and never rooted, E' the largest integer whose square is
+at most W, and every count of the body gated by E_0 / E'. What the step
+formula above is, read from it by the conversion (the two-column table
+of 8a, the row of W): the energy at a click E = E' in the dictionary's
+units, so that W multiplied by c^4 is E^2 = E_0^2 + p^2 c^2, the known
+step above (Einstein); the gate E_0 / E' is 1 / gamma, the detector's
+own rate sqrt(1 - v^2) of the click theorem; the drive's fraction
+|p_a| / (E_0 + |p_a|) per axis is the click's velocity in the lattice's
+units, against physics' v = p c^2 / E; and the frame's two Doppler
+factors are the step above read at two detectors. Which of these the
+conversion gives exactly, which to second order, and where the factor 3
+enters, is part 6's to state (the mathematician, on branch click-frame,
+section 7); the paper takes the mapping from the merged text and writes
+it as one paragraph under the frame, "The step beneath and the step
+above", with the two formulas side by side and the map between them in
+one line each. Until part 6 is on main the paper says of Eq. 14
+"declared" and of the step above "the known form it is compared with",
+per the audit. The place: the frame paragraph's neighbour in Section 9
+(the reshaping), about eight lines, counted in section 8's budget.
