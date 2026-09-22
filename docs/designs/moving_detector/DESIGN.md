@@ -104,6 +104,7 @@ pattern the cart's place changes by one Node per hop and by nothing between
 hops, the counts between two hops are `k` exactly when `1 / v = k` is a
 whole number and only `k` and `k + 1` when `1 / v` lies between them (the
 quantum of velocity `1 / (k (k + 1))`, his Theorem 3 in the same words).
+Superseded on 2026-09-22 by [PREREGISTRATION_V2.md](PREREGISTRATION_V2.md) section 1 (the radar coordinate `x_D = c (n_r - n_e) / 2` gives `+v`; the five FAILs of version 1 preserved in its section 4).
 
 The world reads the three things that are NOT READ on main (the click
 frame section 4; the Einstein Mathematician's II.3 to II.5 "NOT READ"): the

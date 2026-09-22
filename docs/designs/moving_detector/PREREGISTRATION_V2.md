@@ -102,9 +102,11 @@ that batch 933 is its regression evidence.
 
 The independent review found the round trip `q` outside the band for
 `cart_k3`, `cart_k5` and `cart_quantum` (the three largest `beta`) and
-inside for `cart_k9` and `cart_k17`. The closure numbers themselves are
-not in the issue and not in the register; nothing is said of their size
-here.
+inside for `cart_k9` and `cart_k17`. The reviewer's read Z adds that the
+`k_AB` reading also lies outside the band in three of the worlds,
+`cart_k3`, `cart_k5` and `cart_quantum`. The closure numbers themselves
+are not in the issue and not in the register; nothing is said of their
+size here.
 
 - **What the band is.** Version 1's tolerance, `2 / W` over a window of W
   counts apart (DESIGN.md section 5: "the hop's one-count remainder at
@@ -128,17 +130,17 @@ here.
   of the radar velocity, `c (q - 1) / (q + 1)`, is untouched by this grain;
   its magnitude carries the same `q`-scaled grain, which is why the five
   magnitudes sit near the paces and not on them.
-- **Version 2's band for the round trip and the radar, derived, not
-  fitted.** From the three sources above the count of a return departs
-  from the continuous line within a range of fewer than five counts, so
-  two returns' spans differ from the line by at most four counts: `abs(q_read
-  - q) <= 4 q / W` and, for the radar velocity, `abs(v_read - v) <= 8 c q
-  / ((1 + q)^2 W)`, W the window's counts apart. The one-way factors keep
-  version 1's `2 / W`. The batch-933 readings were not used to set these
-  bounds; whether they lie inside them is the rerun's to say, and a
-  reading outside them under version 2 refutes as section 6 of the design
-  says (a packet not passing one Node per interval at the table's pace,
-  or a re-emission not keeping the record).
+- **Version 2's band, one rule for every ratio, stated once (the
+  physics-rule reviewer's read Z).** For every ratio R read over a window,
+  `abs(R_read - R) <= 2 g / (ordinals apart)`, with g = 1 for a whole-k
+  reading and g = 3 for the quantum reading, and a round trip counting +2
+  counts. No ratio carries a band of its own: the one-way factors, the
+  round trip and the radar velocity are all read against this rule.
+  The batch-933 readings were not used to set it; whether they lie inside
+  it is the rerun's to say, and a reading outside it under version 2
+  refutes as section 6 of the design says (a packet not passing one Node
+  per interval at the table's pace, or a re-emission not keeping the
+  record).
 
 ## 6. What changes where, and when
 
