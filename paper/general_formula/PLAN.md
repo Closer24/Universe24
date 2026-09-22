@@ -2987,3 +2987,24 @@ reading of a rung-3 form; Newton's and Poisson's runs enter pages 19 to
 say "not made". The owner's word of record 606 stands over all: only
 what the paper needs.
 
+## The thirty-page form, step 2 done (2026-09-22, the Boss's word of 01:45Z)
+
+The cut written as the plan's sections 1 to 7 say: nine sections in the
+owner's order with Eq. (1) on page 1, the forcing ledger (Table 1,
+twenty-six rows with the ground column in three rungs), the hand-worked
+update and the code path, the detector checks table and the
+confrontation table's detector rows, the distance table; three
+appendices (proofs; the tables' rounding and the symbol table;
+reproduction). Out of the body: every "in form", "pinned, not run",
+"not reached" and hypothesis row (HYPOTHESES 27 and one sentence of the
+discussion), the tables of consequences and of assumptions, the What is
+new, What is not claimed and hypotheses sections, Part IV's limits and
+Lorentz sections (their kept content in the discussion), the two-slit
+and S(N) figures (their numbers in the checks table), the literature
+essay (one positioning paragraph). No number moved; three numbers added
+with their source in NUMBERS.md (the hand-worked update, the 282 of
+290, the 4.6 percent). The PDF: 30 pages (the body through 25, the
+references 26 to 27, the appendices 28 to 30; the owner's 23 + 4 + 3
+met in the total, the body two pages longer and the references two
+shorter).
+
