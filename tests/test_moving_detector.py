@@ -19,9 +19,13 @@ tick by the owed count in a crowd.
 (c) The key off: no line carries `clock`, and the record equals the keyed
     record with the field removed (byte identical otherwise); the key must
     be a boolean.
-(d) The edge: the same world at the suspension pair [1, 64] (a crowd of
+(d) The edge: the same world at the suspension pair [1, 16384] (a crowd of
     the lamp's rows at the cart): the cart's count falls behind the tick by
     what it owes, never exceeds it, and its last click's count is its `age`.
+    (Written at [1, 64] before the generic entry of the bending, 2026-09-22;
+    under the law as it stands the crowd's push at d = 64 turns every light
+    row off the three-Node bar before it reaches the cart, no click and no
+    crowd at the cart's Node, so the edge is read at the weak-field pair.)
 """
 
 from __future__ import annotations
@@ -165,7 +169,9 @@ def test_the_key_off_writes_nothing_and_must_be_a_boolean():
 def test_the_count_falls_behind_the_tick_by_the_owed_count_in_a_crowd():
     """(d)."""
     document = json.loads((WORLDS / "capability_k5.json").read_text(encoding="utf-8"))
-    document["suspension"] = [1, 64]
+    # The pair [1, 16384]: at [1, 64] the generic entry's push turns the
+    # lamp's rows off the bar before the cart (no click; the module docstring).
+    document["suspension"] = [1, 16384]
     lines, simulation = run_lines(document, 120)
     cart = next(number for number, entry in simulation.measured.items() if not entry.fixed)
     clicks = [line for line in lines if line["event"] == "click" and line.get("measured") == cart]
