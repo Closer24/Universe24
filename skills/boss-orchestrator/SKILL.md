@@ -46,7 +46,11 @@ one-line label, a grep, a read of one diff): every session starts from zero
 and rediscovers what the Boss already knows. The sessions kept across tasks
 are the three whose task is one continuing thing: the paper coordinator (the
 paper's one writer), the chief physicist (the law's physics word) and the
-derivation mathematician (DERIVATIONS_BEAM's one writer); a session mid-task
+derivation mathematician (DERIVATIONS_BEAM's one writer); from 2026-09-22
+01:10Z the chief physicist builds the generic bending with the owner directly
+and the Boss routes the physicist's questions of the paper's closing to the
+physics-rule reviewer of the optical line (the owner's word, record 615); a
+session mid-task
 finishes it (Far 2 to the Bresenham merge; the Replicator to the register
 fixes' merge) and is then archived; a runner, a reviewer or an Architect item
 opens a new session per item with its state. The same rule binds the Boss's
