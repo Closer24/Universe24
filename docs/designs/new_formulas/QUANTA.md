@@ -13,8 +13,8 @@ here (the anisotropy of c, the arrival, the phase in flight). Sources
 on `main` at d0e94c2 (PR #769 merged at 70e9781a, PR #793 at 412f5c61):
 the click frame `docs/designs/click_frame/DERIVATION.md` (cited by
 line), DERIVATIONS_BEAM (by section and line), NATURE.md (by row), and
-the Einstein Outside derivation at 844dfd05 (PR #792, not yet on main:
-cited by section). The owner's rules: no claim "matches nature" without
+the Einstein Outside derivation on main (PR #792 merged at e8432e6c;
+`docs/designs/einstein_outside/DERIVATION.md`, cited by section). The owner's rules: no claim "matches nature" without
 a registered reading; "is nature" nowhere (record 762); no form of
 Einstein's, Lorentz's, Planck's or Schrodinger's put in (record 817);
 a candidate is REJECTED, honestly, where the continuum has the same
@@ -49,7 +49,10 @@ energy in whole units; `E'` the whole root of `W = E'_0^2 + 3` **p**
 `.` **p** under the identity covariant-readings-v1. beta: a pace in
 units of c. `frac(x)`: the fractional part. `[P]`: 1 if P holds, 0
 if not. `w_1, w_2`: two rows' amounts at one Node. `S(N)`: the CHSH
-sum at the circle N. `delta`: the tables' rounding, `1 / 256`.
+sum at the circle N. `delta = arcsin(sqrt 2 / (2 rho))`, `rho = 255.3`: the tables' angle
+term (the paper's `eq:ebound`; `4 delta = 0.01108` per correlation E,
+`16 delta = 0.0444` on S). `E'_14`: Eq. 14's whole root, the click
+frame's.
 
 ## 1. The two-valued hop: the quantum of a body's velocity
 
@@ -71,10 +74,14 @@ Outside derivation, Theorem 3).
 of velocity, no two-valued spacing. The difference: the spacing of a
 body's births' Nodes takes two values only.
 (d) The click: a lamp on the body read at a line L of one-Node
-detectors at rest, the differences of successive birth ticks
-(DETECTOR). Register: series D3's controls, `x = 60 + r` on every click
-(DETECTOR), read as the mean pace to the tick, not as the histogram of
-the gaps: the two-valuedness NOT READ.
+detectors at rest: the births' Nodes are DETECTOR; the ticks and their
+differences at a one-Node detector without a body are GAMEBOARD (a
+detector without a body has no count of its own, record 768); the
+two-valued gaps are DETECTOR only as a body detector's own count of
+the arrivals (record 754). Register: series D3's controls, `x = 60 +
+r` on every click (the Nodes DETECTOR, the ticks GAMEBOARD), read as
+the mean pace, not as the histogram of the gaps: the two-valuedness
+NOT READ.
 (e) At the register's `k = 2, 4, 8, 16` (the click frame section 3):
 the gaps `2 / 3`, `4 / 5`, `8 / 9`, `16 / 17`. At nature's scale, the
 Earth's `beta = 10^-4`: `k = 10^4`, the two patterns `10^-8 c` apart
@@ -104,8 +111,10 @@ self-creations (the release), read at a detector through Theorem 1
 alike; a clock's ticks are equally spaced. The difference: a
 two-valued spectrum of the gaps with a rational weight, the beat
 `frac(k)` per gap.
-(d) The click: the lamp's records at a fixed detector, the differences
-of successive birth ordinals' arrival counts (the series T method) as a
+(d) The click: the lamp's records at a fixed body detector with its
+own count (its own `k_D` stretching that count too, cancelling only in
+a ratio, the click frame section 8 (2)(a)), the differences of
+successive birth ordinals' arrival counts (the series T method) as a
 histogram (DETECTOR). Register: series T reads `1 + z` 2.6517 and
 4.1500 as means (DETECTOR, NATURE row 12); the histogram NOT READ.
 (e) At series T's `k = 1.6517` (at 3 Links) the gaps are 2 and 3 with
@@ -138,9 +147,13 @@ release and their flight to a face (the flight table's closed form).
 the survival memoryless, `exp(-t / tau)`. The difference: a staircase
 of width `E'_0 / (k - 1)` in `E'`, and at rest a step where nature has
 an exponential.
-(d) The click: the products' face clicks (DETECTOR). Register: series S
-reads 369 and 345 (DETECTOR, MET within two ticks) from the `become` at
-70 and 124 (GAMEBOARD); the staircase itself (two momenta on one stair
+(d) The click: the products' arrivals counted on a body detector's own
+count (DETECTOR, record 754); a face set without a body has no count
+of its own, so a face click's tick is the record's ordering (GAMEBOARD,
+record 768). Register: series S reads 369 and 345 on the +x face (the
+register's DETECTOR label; the ticks on the face set's ordering,
+GAMEBOARD by record 768; MET within two ticks) from the `become` at 70
+and 124 (GAMEBOARD); the staircase itself (two momenta on one stair
 giving one lifetime) NOT READ. The step at rest is registered as a
 FAIL: NATURE row 8a, the decay curve's width over its median 0.036
 against `ln 9 / ln 2 = 3.17` (series J1, DETECTOR).
@@ -162,22 +175,27 @@ law's and nature refutes its shape (row 8a).
 so the energy at a wave number kappa is below Einstein's root by the
 relative `m^2 beta^2 / 6` on `E'` (`m^2 beta^2 / 3` on W), and in three
 dimensions the fourth order depends on the direction (the walk's
-`kappa^4` anisotropy). In the conversion's units: `E = E_14 (1 - m^2
+`kappa^4` anisotropy). In the conversion's units: `E' = E'_14 (1 - m^2
 beta^2 / 6)`, m the spacing over the reduced Compton wavelength.
 (b) The split of each interval between staying and hopping (the coin C
 and the shift S, `U = S C`, the click frame section 0 (d) and section
 6); the plane waves of that map (the group ring); the Planck map to
 counts (`E = hbar omega`, `p = hbar kappa`, `E_0 = hbar m`, the click
-frame section 7 (b), :772-792).
+frame section 7 (b), :772-792), which rests on two declarations: the
+release rule `E = h_q s` (declared, record 10 of 2026-09-19) and the
+equality of the row's phase pair `[n_phi, d_phi]` with the lamp's turn
+s on the K pair (declared, true in no registered light world; the light-outside derivation (its lines :958 and :1275, as the reviewer cites them)).
 (c) The continuum: Dirac's `E^2 = m^2 c^4 + p^2 c^2` exactly at every
 kappa, isotropic. The difference: `-m^2 kappa^2 / 3` and the
 anisotropy from the fourth order on (the click frame section 7 (d),
 :823-846).
-(d) The click: the muon's products' face clicks at a fixed momentum
-(the gate falls earlier by `T_64 x m^2 beta^2 / 6`), DETECTOR.
-Register: series S's 369 and 345 with the pins' two ticks; the
-correction moves `T_64` by 0.02 and 0.15 tick at the illustrative `m
-= 2 pi / 64` (the click frame :836-846): below the grain, NOT READ.
+(d) The click: the muon's products' arrivals at a fixed momentum,
+counted on a body detector's own count (DETECTOR, record 754; a face
+set's ticks GAMEBOARD, record 768): the gate falls earlier by `T_64 x
+m^2 beta^2 / 6`. Register: series S's 369 and 345 with the pins' two
+ticks; the correction moves `T_64` by 0.02 and 0.15 tick at the
+illustrative `m = 2 pi / 64` (the click frame :836-846): below the
+grain, NOT READ.
 (e) At the register's `m = 2 pi / 64 = 0.098` and beta 0.43 and 0.86:
 `2.97 x 10^-4` and `1.19 x 10^-3` of `E'`. At nature's scale, the
 electron with the spacing the Planck length: `m = 1.6 x 10^-35 / 3.9 x
@@ -202,7 +220,9 @@ family's mass angle is rational (`m / (2 pi)` a rational with the
 denominator `d_phi N`).
 (b) The row's phase per age (the translation of the phase accumulator
 by its pair, `world.py:789-795`); the release stamping the phase (the
-lamp's turn); the Planck map of the click frame section 7 (b).
+lamp's turn, `E = h_q s`, declared); the Planck map of the click frame
+section 7 (b), which equates the phase pair with the lamp's turn by a
+second declaration (the same two declarations as candidate 4 (b)).
 (c) The continuum: masses are real numbers with no structure; Compton's
 `E_0 = hbar omega_0` holds for any `omega_0`. The difference: the
 allowed set is rational at a declared denominator; but the law does not
@@ -224,7 +244,7 @@ allows, in one line, for the family table's writer.
 (a) The CHSH sum of the pair read at two detectors at the circle N is
 the exact rational the rung gives,
 
-    S(N) = (R_++ + R_-- - R_+- - R_-+) summed over the four settings, each cell a whole number of N,   abs(S(N) - 2 sqrt 2) <= 8 / N + 4 delta,
+    S(N) = (R_++ + R_-- - R_+- - R_-+) summed over the four settings, each cell a whole number of N,   abs(S(N) - 2 sqrt 2) <= 8 / N + 16 delta = 8 / N + 0.0444,
 
 with `S(64) = 176 / 64 = 2.75`, `S(256) = 45 / 16`, `S(512) = 1448 /
 512`, `S(1024) = 2896 / 1024 = 181 / 64` (the plateau to 8192), and
@@ -239,7 +259,10 @@ frame section 10, :1420-1475).
 (c) The continuum: `S = 2 sqrt 2` at the optimal settings, and
 Tsirelson's `abs(S) <= 2 sqrt 2` in every state. The difference: the
 rounded cells are not a state's expectations, so the lattice's S(N) is
-a rational above or below the bound by up to `8 / N + 4 delta`, and
+a rational above or below the bound by up to `8 / N + 16 delta = 8 / N
++ 0.0444` (the proven bound: `2 / N + 4 delta = 0.01108` per
+correlation E, the paper's `eq:ebound` and `th:bell`, the click frame
+:1452), and
 above it at N = 16, 32, 128.
 (d) The click: the four counters' counts at the CHSH labels
 (DETECTOR). Register: NATURE row 1a, `S = 2.75` at N = 64 (DETECTOR,
@@ -326,7 +349,9 @@ and reads are countable there and nowhere in the continuum).
 revolution by an angle of order beta with the lattice's symmetry
 (the square's, per axis on `main`); nature's is `6 pi beta^2`
 isotropic; the ratio `1 / (6 pi beta)`, about 330 at Mercury's pace if
-the coefficient is of order one.
+the coefficient is of order one, which the isotropic part of the
+averaged `abs(p_x)^3 + abs(p_y)^3`, `8 / (3 pi)` of `abs(p)^3`,
+supports.
 (b) The drive per axis `abs(p_a) / (Q S M + abs(p_a))` (the division
 with `at_most` 1); the push `-M` **V** (the bilinear form); in the
 continuum limit `H = sum f(p_a) + U(r)`, `f(p) = p^2 / (2 m_i) -
@@ -364,10 +389,12 @@ section 8 (its (2)(e), :1061-1088).
 principle for clocks. The difference: the law's constant is an Inside
 declaration, and nature's 1 is the condition `n S = d` on it.
 (d) The click: the fall's second difference of a probe lamp's births
-at a line, and two lamps' `1 + z` at one detector, on one crowd
-(DETECTOR). Register: T and X read the shift (DETECTOR), D3 the fall
-(DETECTOR), on different worlds; on one crowd NOT MADE (the click
-frame :1120).
+at a line (the births' Nodes DETECTOR; the fall DETECTOR only as a body
+detector's own count of the arrivals, record 754; a one-Node
+detector's ticks GAMEBOARD, record 768), and two lamps' `1 + z` at one
+body detector, on one crowd (DETECTOR). Register: T and X read the
+shift (DETECTOR), D3 the fall (DETECTOR), on different worlds; on one
+crowd NOT MADE (the click frame :1120).
 (e) On the register's crowd worlds `n S / d = 16` (the 35 files at
 `[1, 65536]` and width `2^20`), 2 and 256 on series G, `1 / 2` and 1
 on series E (GAMEBOARD, declared); nature's 1 (Pound and Rebka to 1
@@ -416,26 +443,32 @@ click of its own row, under its own identity, outside the law.
   clock's slowing, kept on the record below d; the continuum's clock
   has a rate and no remainder. KEPT (in 2).
 - **The presence word**: a clock that reads the crowd's count (the
-  flux, `1 / r^2`) instead of the age moment (the potential, `1 / r`):
-  a formula the continuum cannot state and nature refutes (series T's
-  presence word 1.000 against the potential's 2.00, NATURE row 12
-  FAIL); the law's default is the age word (record 394). KEPT WITH A
-  FAIL, as the register has it.
+  flux, `1 / r^2`) instead of the age moment (the potential, `1 / r`).
+  REJECTED as a new formula by this file's own rule: a clock's shift
+  following a scalar potential of the flux's form is a continuum
+  formula; kept only as the record's quantity, with NATURE row 12's
+  FAIL as the register has it (series T's presence word 1.000 against
+  the potential's 2.00, DETECTOR). Row 12's "the law's default" against
+  `main`'s age word (record 394) is NATURE's owner's to reconcile, not
+  this file's.
 - **The wheel `u` and the birth ordinal**: the click's choice among the
-  ladder's cells by the record's own ordinal mod N (the permutation),
-  a deterministic choice where the continuum has a probability with no
-  seed; the marginals exactly `N / 2` for every setting (the click
-  frame section 10, "no-signalling as an identity of the integers").
-  KEPT: needs the Inside; its reading is the exact marginals (series
-  A2's counters, DETECTOR).
+  ladder's cells by `u = ordinal x r mod W` with the declared wheel `[r,
+  W] = [2531, 4096]` (HIGHLIGHTS record 180; BEAM_LAW note 46), a
+  comparison at the threshold: a deterministic choice where the
+  continuum has a probability with no seed. The marginals exactly `N /
+  2` for every setting are `th:marginals`' (the click frame
+  :1439-1443), true for every u, so they do not read the wheel; the
+  wheel is a declaration, and by this file's verdict at candidate 5 a
+  declaration's structure is REJECTED as a prediction: KEPT only as
+  the record's deterministic choice, its reading NONE.
 
 ## 14. The list in one table
 
 | Candidate | Verdict | Why it needs the Inside (one line) | The register (kind) |
 | --- | --- | --- | --- |
-| 1 the two-valued hop, the velocity's quantum `1 / (k (k + 1))` | KEPT | the whole part with the remainder kept | D3's controls read the mean only; NOT READ |
+| 1 the two-valued hop, the velocity's quantum `1 / (k (k + 1))` | KEPT | the whole part with the remainder kept | D3's controls read the mean only (the Nodes DETECTOR, the ticks GAMEBOARD); the gaps DETECTOR on a body detector's own count; NOT READ |
 | 2 the clock's two gaps, the beat `frac(k)` | KEPT | the owed accumulator's remainder | T reads the mean (DETECTOR, row 12); NOT READ |
-| 3 the lifetime's staircase; the step at rest | KEPT WITH A FAIL | the gate a whole count | S 369 / 345 MET (DETECTOR); 8a FAIL (DETECTOR) |
+| 3 the lifetime's staircase; the step at rest | KEPT WITH A FAIL | the gate a whole count | S 369 / 345 MET (the register's DETECTOR label; the face set's ticks GAMEBOARD, record 768); 8a FAIL (DETECTOR) |
 | 4 `-m^2 kappa^2 / 3` on W, the fourth-order anisotropy | KEPT (below every reading) | the exact cosine of the split | S's ticks below the grain; NOT READ |
 | 5 the rational mass angle, the allowed spectrum | REJECTED as a prediction | a declaration's structure | none |
 | 6 `S(N)` above and below Tsirelson | KEPT | the rung and the tables | 1a 2.75 (DETECTOR); the plateau MEASURED |
@@ -443,14 +476,18 @@ click of its own row, under its own identity, outside the law.
 | 8 the which-path step | KEPT WITH A DIFFERENT LAW | a read is whole | 176 / 64 and 88 / 64 (DETECTOR) |
 | 9 the boundary as `(rows, reads)` | KEPT | countable on the record | L1's ends (DETECTOR) |
 | 10 the perihelion's order-beta term | KEPT WITH A FAIL | the drive's first order | D3 history (DETECTOR); NOT MADE |
-| 11 the equivalence's constant `n S / d` | KEPT | an Inside declaration | T, X, D3 on separate worlds; NOT MADE on one |
+| 11 the equivalence's constant `n S / d` | KEPT | an Inside declaration | T, X, D3 on separate worlds (the fall DETECTOR on a body detector's own count); NOT MADE on one |
 | 12 the orbit's closure; the atom | REJECTED / NOT IN THE LAW | the same closure; no transition | H (GAMEBOARD); row 6 NOT YET |
-| 13 the owed remainder, the presence word, the wheel | KEPT (with 2's FAIL for the presence word) | quantities of the record | T (DETECTOR); A2's marginals (DETECTOR) |
+| 13 the owed remainder, the presence word, the wheel | the remainder KEPT (in 2); the presence word REJECTED as new, kept as the record's quantity with row 12's FAIL; the wheel KEPT as the record's choice, reading NONE | quantities of the record | T (DETECTOR, row 12 FAIL for the presence word); the marginals `N / 2` do not read the wheel |
 
 **Certification.** No form of Einstein's, Lorentz's, Planck's or
 Schrodinger's is an input of any block: candidate 4 uses (A1), (A2)
-and the Planck map as the click frame's section 7 does (cited, the
-map the law's own release identity `E = h_q s`); candidates 1, 2, 3, 7,
+and the Planck map as the click frame's section 7 does (cited), and
+the map DERIVES FROM two declarations, named at 4 (b) and 5 (b): the
+release rule `E = h_q s` (record 10 of 2026-09-19) and the equality of
+the phase pair `[n_phi, d_phi]` with the lamp's turn s on the K pair
+(true in no registered light world), so candidates 4 and 5 rest on
+those two declarations and on nothing of Einstein's or Planck's forms; candidates 1, 2, 3, 7,
 8, 9 and 13 are the six verbs' remainders and forms read through the
 conversion; candidate 6 is the rung and the tables with the pair's
 gather; candidates 10, 11 and 12 are the drive, the push and the turn
@@ -464,5 +501,5 @@ made without a registered reading, and "is nature" appears nowhere.
 [The click frame](../click_frame/DERIVATION.md) (sections 7 and 10);
 [DERIVATIONS_BEAM 6.2, 6.3, 7.2, 24.3](../../DERIVATIONS_BEAM.md);
 [NATURE rows 1a, 2c, 6, 8a, 12](../../NATURE.md);
-[the Einstein Outside derivation at 844dfd05](https://github.com/Closer24/Universe24/blob/844dfd05711661bb25874dc578964e2dc3dd71a9/docs/designs/einstein_outside/DERIVATION.md) (PR #792, not yet on main);
+[the Einstein Outside derivation](../einstein_outside/DERIVATION.md) (PR #792, merged at e8432e6c);
 [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector).
