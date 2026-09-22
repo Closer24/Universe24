@@ -32,8 +32,16 @@ gained per loop scales with the content left, so the closure fraction
 moves DOWNWARD at first order, exactly `-(j + f) G / M` per return
 (section 5), which is what a stability rule needs and the give of
 content did not have (DESIGN.md section 4 (b)); the price is one
-declaration against note 18 (section 3), made only for the given rows
-and only under the key.
+declaration against note 18 (section 3), made only for the given rows and only under the key. Against the
+baseline run (the Atom Baseline Runner, branch `atom-baseline-run` at
+01e8618379c1d54e696ce3c7d6a8f9bb2fd1fe21, `docs/designs/atom_baseline/RUN.md`
+section 4: the r = 12 loop does not stay, the escape through `face:+y`
+at count 3407, DETECTOR) the same algebra says, first order and before
+any run, that the momentum give does NOT close a loop the law lets go:
+it acts on the action per loop and never on the loop in space (`a' =
+a`), so a loop that leaves the GameBoard leaves it with the key on as
+without, and the rule's closure (the whole number of circles per
+return) is readable only on a loop that returns (section 5 (g)).
 
 **The six lines (the report's head; every number DETECTOR or GAMEBOARD).**
 
@@ -67,11 +75,19 @@ and only under the key.
    for two returns, then 1 per row for eight, then nothing (the pair's
    own staircase), the content 1836 to 1788, GAMEBOARD by formula; the
    reviewer's linear count at a constant G = 8 reads the band in 6
-   returns and f = 0 in 11 (record 899). What refutes the form: a give
-   at r = 12 while the electron's rows' phase per return is whole within
-   1/16 from above; or an open loop at r = 8 whose fraction does not
-   fall by the give's order (a drift of `10^-4` per return, the content
-   give's, in place of `10^-2`); or its period changing with the gives.
+   returns and f = 0 in 11 (record 899). On the lattice as the law
+   stands neither loop returns (the baseline at r = 12: one +x crossing
+   at 2191, the escape at 3407; the register's `r8`: two closings, the
+   escape at 1864), so the give fires once at r = 12 (13 per row, 52
+   units at 2191) and twice at r = 8 (2 per row, 8 units each), and the
+   loop's Nodes, its escape face and its escape count are unchanged up
+   to the remainders' grain (section 5 (g)): the rule does not hold a
+   loop the law lets go. What refutes the form: a give at a return
+   while the electron's rows' phase per return is whole within 1/16
+   from above. What refutes the algebra: a loop whose fate changes with
+   the key (a return where the baseline read none, another face,
+   another count beyond the grain), or a fraction that does not fall by
+   `(j + f) G / M` per giving return, or a period moving with the gives.
 4. *Why do this at all.* The give of content cannot select a radius
    (content is a scale of Kepler's problem, DESIGN.md section 4 (b),
    confirmed by the reviewer in record 899); a rule that closes an open
@@ -94,12 +110,15 @@ and only under the key.
    `events/engine.py`; the store's three `excess` columns, read at the
    click, the face click, the transit line, the re-emission and the
    home, riding through the collision and the meeting, an identity field
-   of the merge, in `nature_beam.py`; one test module; two worlds of the
+   of the merge, in `nature_beam.py`; one test module; four worlds of the
    atoms series (section 7). Host: about three hours for the build and
-   its tests, each world 60 to 100 s and a few hundred megabytes.
-   Dangerous: nothing with the key off (every world byte for byte as it
-   was); with it on, a loop short of a whole circle by less than the
-   band descends to the closure below (section 5 (d)).
+   its tests, each world 60 to 100 s and a few hundred megabytes; two
+   worlds as the law stands (r = 12 and r = 8) read against the
+   baseline's clicks, two under `drive_b` that read the staircase only
+   if form B's loop returns. Dangerous: nothing with the key off (every
+   world byte for byte as it was); with it on, a loop short of a whole
+   circle by less than the band descends to the closure below (section
+   5 (d)), and a loop that leaves the board gives once on its way out.
 
 **Notation** is DESIGN.md's, with: **n** the body's momentum per unit of
 its content, `n_a = sign(p_a) x (abs(p_a) // M)`, the law's signed
@@ -433,73 +452,156 @@ confirms it: at r = 8 the staircase of (c) within its ranges, the
 period constant, the given rows' momenta as in reading 1, and no give
 after the band.
 
+**(g) The baseline's finding, and what the rule does to a loop the law
+lets go.** The Atom Baseline Runner's one run of the registered
+`hydrogen_r12` as the law stands (`main`'s drive, no `drive_b`;
+`docs/designs/atom_baseline/RUN.md` on the branch `atom-baseline-run` at
+01e8618379c1d54e696ce3c7d6a8f9bb2fd1fe21, section 4; its PR open; not
+touched here) reads, in the runner's kinds: the loop does not stay; the
+crossings at 13, 13, 17 and 26 Links from the proton's Node (+y at 412,
+-x at 851, -y at 1302, +x at 2191 at (52, 26)), DETECTOR; one +x
+crossing, 14 Links from the start, no count between two +x crossings,
+DETECTOR; the escape through `face:+y` at count 3407 with the momentum
+(-172 906 816, 35 392 088, 0), DETECTOR; the dwell 20.0 counts per Link
+over the twelve hops inside r = 17, DETECTOR; the proton's reads one per
+crossing, DETECTOR; the radius 12.00 to 27.86 and the momentum's length
+at the crossings 283, 308, 273 and 182 million, GAMEBOARD (a
+diagnostic); the per-axis action over the crossed Links to the closing
+of the angle at 2181: x 159.66, y 150.47, z 0 quotients of h, 4.85
+circles, GAMEBOARD (a diagnostic, not a closure reading: the angle
+closed at a radius grown from 12 to 26); six of the seven pins of the
+algebra FAIL, P5 PASSES; nothing moved, nothing compared with nature.
+The register's precedent (series H's `r12`, the escape through `face:+x`
+at 2059) is now a detector's reading, and the register's `r8` on the
+same drive (EXPERIMENTS.md, series H's table: two closings with the
+derived periods 722 and 736, the returns 5.0 and 4.0 Links off, the
+radius 3.0 to 27.8, the escape through `face:+y` at 1864, the phase's
+fraction per orbit 0.234 on its own h) says the r = 8 loop does not stay
+either. So there is no closed loop at r = 12 under the pin "unmoved",
+and the design's pins are declared against the loop as read.
+
+What the algebra predicts, first order, GAMEBOARD by formula: the
+momentum give changes the loop's action, never its Nodes. Section 5 (b)
+holds on any loop, closed or not: after a give `p' / M' = p / M` to the
+remainder's share, the pace and the push per unit of content are
+functions of n alone, so the electron's path after the give is the
+baseline's path Link for Link, up to the remainders of the drive's
+accumulators (the count on an axis shifts by at most one step over the
+run, since a remainder below the denominator is not scaled with the rate
+and the denominator: one dwell of about 20 counts at most per axis) and
+of the push's rounding (below one label unit per interval against a
+momentum of `10^8`). A loop that widens by thirteen Links over a turn
+widens by the fan's grain and the whole kicks (PINS.md section 2, items
+3 and 4), which no give at a return touches; the give cannot hold it,
+and does not claim to. At r = 12 as the law stands the rule fires ONCE,
+at the +x crossing at 2191 (the electron arrives there moving toward +y
+with `p_x` from + to - and the last nonzero sign +, so the crossing IS a
+return by section 1's rule, reading the action since the birth): the
+sum of the give rows is the baseline's 4.85 circles by the crossed
+Links (the give rows count every Link the action rows count, the
+coincident fires included, so the lattice's r may differ from the step
+lines' 4.85 by the lost fires' share, the tolerance below), `f = 0.85`,
+`g = floor(16 x 0.85) = 13` per row, four rows of content 13, `G = 52`,
+the content 1836 to 1784, the rows' momentum `13 n` with n the momentum
+per unit of content at that crossing (the baseline's 182 million label
+units over 1836: about 99 000 per unit along the momentum's direction,
+about 1.29 million per row), the recoil `52 n`, 2.8 percent of the
+momentum, along it; then the loop continues as the baseline read it and
+leaves through `face:+y` at 3407 within the grain. At r = 8 as the law
+stands the rule fires at each +x crossing the loop makes before its
+escape, twice by the register's `r8` (about 722 and 1458 on that world's
+integers), 2 per row and 8 units each time if the lattice's f reads in
+[0.125, 0.1875) as the formula's pi - 3 says, and the escape at about
+1864 is unchanged. In one sentence: the rule is a stability rule of the
+PHASE (the closure fraction falls to the band on a loop that returns,
+section 5 (c)), not of the ORBIT; whether the loop stays is the drive's
+and the push's matter, and the baseline says that as the law stands it
+does not. The staircase of section 5 (c) is therefore readable only on
+a loop that returns: form B's, if it closes as PINS.md pins it (its own
+honest expectation is the signed drive's, no closing), or a loop the
+owner names.
+
+What refutes THIS prediction (the run against the baseline): with the
+key on, a fate that differs from the baseline's beyond the remainders'
+grain: a return where the baseline read none, an escape through another
+face, or an escape count off 3407 by more than 2 percent (about 70
+counts, three dwells); or the clicks of the electron's own rows before
+2191 differing from the baseline's by one click (before the give
+nothing may differ: the key adds no row and moves nothing before the
+first return). What confirms it: the baseline's clicks reproduced
+before 2191, four `light` rows of content 13 at 2191 with their momentum
+along the electron's, the escape as read.
+
 ## 6. The pins, declared before any run (GAMEBOARD by formula until a detector clicks)
 
-**The worlds.** Three, none written here; the build writes them
+**The worlds.** Four, none written here; the build writes them
 (section 7), the generator `examples/events/atoms/make_worlds.py`
-extended with a radius and the keys. The declarations for the read on
-each: `give_momentum: true`; on the electron `give: {"family": "light",
-"pair": [16, 1], "return": [0, -1]}` (the x axis, `p_x` crossing from +
-to - at the +x axis crossing of a loop that turns from +x toward +y: the
-start's own crossing, so the first return reads one whole loop); on
-`light` `frequency_by_content: true`; `light` in the world's families
-(quantum 1, kind 2). The pair [16, 1] as DESIGN.md section 5 chose it.
+extended with a radius, the drive and the keys. The declarations for
+the read on each: `give_momentum: true`; on the electron `give:
+{"family": "light", "pair": [16, 1], "return": [0, -1]}` (the x axis,
+`p_x` crossing from + to - at the +x axis crossing of a loop that turns
+from +x toward +y: the start's own crossing, so the first return reads
+one whole loop); on `light` `frequency_by_content: true`; `light` in
+the world's families (quantum 1, kind 2). The pair [16, 1] as DESIGN.md
+section 5 chose it. The two worlds AS THE LAW STANDS are the design's
+pins proper (the baseline is a detector's reading, section 5 (g)); the
+two under `drive_b` read the staircase of section 5 (c) only if form
+B's loop returns, and read form B's own fate otherwise.
 
-1. `hydrogen_r12_give`: the atoms series' `hydrogen_r12` AS REGISTERED
-   (the baseline run of record 886, `main`'s drive, no `drive_b`) plus
-   the declarations. The baseline run (the Atom Baseline Runner's branch
-   `atom-baseline-run` at 01e86183, `docs/designs/atom_baseline/RUN.md`
-   section 4, not yet on `main`) read NO return at r = 12 on `main`'s
-   drive: one +x crossing at 2191 and the escape through `face:+y` at
-   3407. So on this world the rule fires once at most (the +x crossing
-   at 2191, if the last nonzero sign rule reads it as a return: the
-   electron arrives from the -y side with `p_x > 0` before and `p_x < 0`
-   after, so it does), reading the action since the birth of a loop
-   that widened from 12 to 26 Links, `4.85` circles by the baseline's
-   per-axis action (RUN.md section 4), so `f = 0.85`, `g = 13`, four
-   rows of content 13, `G = 52`, at count 2191; then the escape.
-2. `hydrogen_r12_b_give`: `hydrogen_r12` with `drive_b: true` (form B,
-   `drive-b-v1`, record 652; the pins of PINS.md section 2: T = 1490, `j
-   = 4.001`) plus the declarations: THE CLOSED LOOP'S TEST, if form B
-   closes as PINS.md pins it (its honest expectation there is the
-   signed drive's, no closing; this world reads both at once).
-3. `hydrogen_r8_b_give`: the named variant at RADIUS 8 under `drive_b:
-   true` (DESIGN.md section 5: the electron at (34, 26, 26) with **p** =
-   (0, 346 015 159, 0), `h / 16` exactly) plus the declarations, with
-   `ticks` 12000 (16 returns at T = 750, so that the give's stop is
-   inside the run for every start in the tolerance band): THE OPEN
-   LOOP'S TEST.
+1. `hydrogen_r12_give`: `hydrogen_r12` AS REGISTERED (the baseline's
+   world, `main`'s drive) plus the declarations. Read against the
+   baseline's clicks (RUN.md section 4): one give at 2191, then the
+   escape.
+2. `hydrogen_r8_give`: the generator at RADIUS 8 as the law stands
+   (`main`'s drive; the electron at (34, 26, 26) with **p** = (0, 346 015
+   159, 0) = `h / 16` exactly under the series' h, so `phi = pi` by
+   formula; 2.2 percent above `main`'s circle momentum 338 411 520,
+   PINS.md section 2, as the r = 12 world's is 1.9 percent above its
+   circle's) plus the declarations. Read against the register's `r8`
+   (series H's table, EXPERIMENTS.md): two closings, the escape at 1864.
+3. `hydrogen_r12_b_give`: `hydrogen_r12` with `drive_b: true` (form B,
+   `drive-b-v1`, record 652; PINS.md section 2's pins T = 1490, `j =
+   4.001`) plus the declarations: the closed loop's test IF form B
+   closes.
+4. `hydrogen_r8_b_give`: the r = 8 variant with `drive_b: true`, `ticks`
+   12000 (16 returns at T = 750, so that the give's stop is inside the
+   run for every start in the tolerance band): the staircase's test IF
+   form B's loop returns.
 
 **The pins, by kind.** Every number GAMEBOARD by formula unless
-labelled; the closed loop's pins are the baseline's (record 886, RUN.md
-section 3: P2 the period and the returns, P3 the closure, P6 the clicks
-per face) and PINS.md section 2's under form B, unmoved by this rule.
+labelled; the baseline's numbers DETECTOR as the runner labels them
+(RUN.md section 4), the register's `r8` numbers GAMEBOARD (series H's
+table, the host's tick); form B's pins PINS.md's (record 886's P2, P3
+and P6 as RUN.md section 3 states them), unmoved by this rule.
 
-| The pin | `hydrogen_r12_give` (as registered) | `hydrogen_r12_b_give` (form B, closed) | `hydrogen_r8_b_give` (form B, open) | Kind | How it is read |
-| --- | --- | --- | --- | --- | --- |
-| the circles per return, `phi = 2 pi p r / h` | not a return: 4.85 circles to the one +x crossing at 2191 (the baseline's action rows, RUN.md section 4) | 4.0010, f = 0.0010 (PINS.md; record 886's P3: 4.00 within 0.05) | pi = 3.1416 exactly by the generator's rule, f = 0.1416 | GAMEBOARD by formula; DETECTOR as reading 4 | the electron's rows' phase increments unwrapped over one return, on the faces |
-| the period T | none (the baseline's P2 FAIL: no period, the escape at 3407) | 1490 (PINS.md; record 886's P2: within 15 percent) | 735 to 750 (the register's r8 722 and 736 scaled by 1490 / 1462, record 899), the spread +-7 percent; UNCHANGED across the gives (section 5 (b)) | GAMEBOARD by the register's reading, scaled | the `at_proton` count between two clicks from the same axis |
-| the returns in the run | 1 at most (2191) | 5 in 7500 ticks (1490, 2980, 4470, 5960, 7450) | 16 in 12000 ticks (15 to 17 with the spread) | GAMEBOARD by formula | the give events; the faces' `light` clicks grouped per return |
-| the give per return | 13 per row, 4 rows, G = 52 at 2191; nothing else | 0 at every return (`floor(16 x 0.0010) = 0`) | the staircase of section 5 (c): 2, 2, then 1 for eight returns, then 0; with the fan's grain 10 to 14 giving returns | EXPECTED DETECTOR (the faces' `light` clicks, content per row) | the faces' escaped lines: family `light`, content per row |
-| the given rows' momentum | `(0, 13 x 160 012, 0)` less the +x crossing's `p_x` share | none | `(0, 376 922, 0)` at c = 2, `(0, 188 461, 0)` at c = 1, on every face reached (`n_x` at most the push per interval over M, `n_z = 0`) | EXPECTED DETECTOR | the `momentum` of the `light` click lines on the faces |
-| the given rows' frequency | 13 steps per interval | none | 2 then 1 steps per interval | EXPECTED DETECTOR | two faces' phases and counts on one line |
-| the body's content at the end | 1784 (1836 - 52) | 1836 | 1788 (1760 to 1796 with the grain) | GAMEBOARD (the record); DETECTOR through the faces' summed `light` content | the sum of the `light` rows' content on the faces |
-| the fraction's drift per giving return | one give | 0 | `-(j + f) G / M`: -0.0137 at G = 8, -0.0068 at G = 4; the content give's +0.00012 refuted at the first return | GAMEBOARD by formula | reading 4 return against return |
-| the loop's widening per give | the baseline's own (the loop widened without any rule) | none | NONE (`a' = a`, section 5 (b)); the content give's 0.87 percent per return refuted by the period | GAMEBOARD by formula; DETECTOR through T | the `at_proton` period, return against return |
-| the clicks of the other families | the baseline's, click for click, until 2191; after it the electron's momentum is `p - 52 n` and its path changes | the baseline's P6: 750 `e` clicks per side face less the rows in flight | 1200 `e` clicks per side face less the rows in flight | DETECTOR | the faces' `e` clicks |
-| the tolerance | the one give exactly 13 per row (or 12 to 14 with the grain of 4.85) | the give exactly 0 (an integer); f within 1/16 of 0.0010 from above | the first give 2 per row (f in [0.125, 0.1875)); g non-increasing; the give stops within 14 returns; the content given 40 to 76; T within +-7 percent and the same at the first and the last return | | a first give of 1 or 3 per row at r = 8 is a lattice reading of f outside the band, the pin missed and f read, not the form refuted |
+| The pin | `hydrogen_r12_give` (as the law stands) | `hydrogen_r8_give` (as the law stands) | `hydrogen_r12_b_give` (form B) | `hydrogen_r8_b_give` (form B) | Kind | How it is read |
+| --- | --- | --- | --- | --- | --- | --- |
+| the loop's fate | the baseline's: the crossings at 13, 13, 17, 26 Links, the escape through `face:+y` at 3407, UNCHANGED by the key within the grain (section 5 (g)) | the register's `r8`: two closings, the radius 3 to 27.8, the escape through `face:+y` at about 1864, UNCHANGED within the grain | closes at T = 1490 if form B holds (PINS.md); else the signed drive's escape, unchanged by the key | returns at T 735 to 750 if form B holds; else the escape, unchanged | DETECTOR (the faces' clicks, the escape line) | the electron's escape line; the crossings from the faces' pairs (RUN.md section 2) |
+| the returns in the run (the give events) | 1 (the +x crossing at 2191; its count within 2 percent of the baseline's: nothing differs before it) | 2 (at about 722 and 1458, the register's closings, within 10 percent), then the escape | 5 in 7500 ticks (1490, 2980, 4470, 5960, 7450) if it closes | 16 in 12000 ticks (15 to 17) if it returns | GAMEBOARD by formula; DETECTOR as the `light` clicks grouped per return | the faces' `light` clicks grouped per return |
+| the circles per return read by the give rows | 4.85 at 2191 by the baseline's step lines (the crossed Links; the lost coincident fires the tolerance) | pi = 3.1416 by the generator's rule, f = 0.1416 | 4.0010, f = 0.0010 (PINS.md; RUN.md's P3 4.00 within 0.05) | pi, f = 0.1416 | GAMEBOARD by formula; DETECTOR as reading 4 | the electron's rows' phase increments unwrapped over the return, on the faces |
+| the give per return | 13 per row (12 to 14 with the grain of 4.85), 4 rows, G = 52 | 2 per row, 4 rows, G = 8, at each of the two returns (1 to 3 per row with the fan's grain) | 0 at every return | the staircase of section 5 (c): 2, 2, then 1 for eight returns, then 0 (10 to 14 giving returns with the grain) | EXPECTED DETECTOR | the faces' escaped lines: family `light`, content per row |
+| the given rows' momentum | `13 n` at the crossing's momentum (182 million over 1836: about 1.29 million per row along the electron's momentum) | `(0, 376 922, 0)` per row (n = (0, 188 461, 0) at the declared momentum; at the second return the momentum as the loop then has it) | none | `(0, 376 922, 0)` at c = 2, `(0, 188 461, 0)` at c = 1 | EXPECTED DETECTOR | the `momentum` of the `light` click lines on the faces |
+| the given rows' frequency | 13 steps per interval | 2 | none | 2 then 1 | EXPECTED DETECTOR | two faces' phases and counts on one line |
+| the body's content at the end | 1784 | 1820 | 1836 | 1788 (1760 to 1796 with the grain) | GAMEBOARD (the record); DETECTOR through the faces' summed `light` content | the sum of the `light` rows' content on the faces |
+| the fraction's drift per giving return | one give: not read (no second return) | `-(j + f) G / M = -0.0137`: the second return's f 0.1279 (DETECTOR as reading 4, the fan's grain) | 0 | -0.0137 at G = 8, -0.0068 at G = 4 | GAMEBOARD by formula | reading 4 return against return |
+| the loop's Nodes and period across a give | the baseline's path after 2191 within the remainders' grain (section 5 (g)) | the second closing's period within the register's spread (722 to 736, +-2 percent) | T constant if it closes | T constant across the gives (+-7 percent) | GAMEBOARD by formula; DETECTOR through the crossings and T | the crossings' counts and Nodes; the `at_proton` period |
+| the clicks of the other families | the baseline's, click for click, before 2191; after it the same within the grain | the register's `r8`'s within the grain | RUN.md's P6 if it closes | 1200 `e` clicks per side face less the rows in flight if it returns | DETECTOR | the faces' `e` clicks |
+| the tolerance | the give exactly 13 per row (12 to 14); the escape face the same; the escape count within 2 percent of 3407; no click differs before 2191 | the first give 2 per row (1 to 3); two gives; the escape face the same, its count within 10 percent of 1864 | the give exactly 0; f within 1/16 of 0.0010 from above | the first give 2 per row; g non-increasing; the give stops within 14 returns; the content given 40 to 76; T the same at the first and the last return within 7 percent | | a give outside the bracket is a lattice reading of f, the pin missed and f read, not the form refuted; a fate that changes with the key refutes section 5 (g) |
 
-The refuting reading of the form is any `light` click in
-`hydrogen_r12_b_give` with reading 4 whole within 1/16 from above; the
-refuting reading of section 5 (b) is a fraction at r = 8 that does not
-fall by the staircase's order, or a period that moves with the gives.
-Bohr's condition and Kepler's third law appear here only as the thing
-the closure and the period are compared with afterwards (ALGEBRA.md
-section 4; `T ~ a^(3/2)` is why `T' = T` at `a' = a` is the comparison's
-statement of section 5 (b), not its input). Host cost: the r12 worlds
-about 60 s each, the r8 world about 100 s, a few hundred megabytes
-each; the per-Node detector array, when it lands, `53^3` integers per
-interval (record 721).
+The refuting reading of the form is any `light` click at a return whose
+reading 4 is whole within 1/16 from above; the refuting reading of
+section 5 (g) is a loop whose fate changes with the key (a return the
+baseline did not read, another face, another count beyond the grain);
+the refuting reading of section 5 (b) is a fraction on a returning loop
+that does not fall by the staircase's order, or a period that moves
+with the gives. Bohr's condition and Kepler's third law appear here
+only as the thing the closure and the period are compared with
+afterwards (ALGEBRA.md section 4; `T ~ a^(3/2)` is why `T' = T` at `a'
+= a` is the comparison's statement of section 5 (b), not its input).
+Host cost: the r12 worlds about 60 to 70 s each (the baseline's 70.8 s
+and 124 MB peak, RUN.md section 4), the r8 worlds 60 to 100 s, a few
+hundred megabytes each; the per-Node detector array, when it lands,
+`53^3` integers per interval (record 721).
 
 ## 7. What the build touches (step 2, after the reviewer's ADMISSIBLE, the same identity, off by default)
 
@@ -511,13 +613,13 @@ interval (record 721).
 | `src/event_universe/events/nature_beam.py` | the store's three `excess` columns (int64, per unit of amount), allocated only under the key; `momentum_labels` unchanged; a row's momentum where it is MOVED (`measure`'s click onto a body and onto the detector's record, the face click's booking, the re-emitter's and the home's intake, the transit line's recount) is `amount x (one label + excess)` under the key; the excess an identity field of the merge; carried unchanged by the collision and the meeting; zero on every re-created row | the columns absent, every read as today |
 | `src/event_universe/events/books.py` (or where the transit momentum line lives) | the transit line adds the excesses under the key | as today |
 | `tests/test_atom_give_momentum.py` | one module: (i) the return's threshold on a minimal GameBoard (the three sign cases of section 1); (ii) r and g on declared integers, a closed loop giving 0 for three starts of the accumulators, an open loop giving `floor(16 f)`; (iii) n and the excess on declared integers with the remainder checked (`p_a = M n_a + rem_a`, `abs(rem_a) < M`, the sign convention), the recoil `p' = p - G n` and `M' = M - G` exact; (iv) a given row's click on a detector booking `c n`, a law row's booking `c Q u_d` beside it; (v) the merge refusing two rows of unequal excess; (vi) a collision in free space carrying the excess through unchanged, the momentum sum equal before and after; (vii) the refusals of the parser; (viii) the gate set (`examples/events/gate_set.json`) byte-identical with the key absent | |
-| `examples/events/atoms/make_worlds.py`, `examples/events/atoms/README.md`, the three worlds of section 6 | the generator takes a radius and the keys; `hydrogen_r12_give.json`, `hydrogen_r12_b_give.json`, `hydrogen_r8_b_give.json`; the README names them and their pins' file | the registered `hydrogen_r12.json` and `helium_r12.json` untouched |
+| `examples/events/atoms/make_worlds.py`, `examples/events/atoms/README.md`, the three worlds of section 6 | the generator takes a radius, the drive and the keys; `hydrogen_r12_give.json`, `hydrogen_r8_give.json`, `hydrogen_r12_b_give.json`, `hydrogen_r8_b_give.json`; the README names them and their pins' file | the registered `hydrogen_r12.json` and `helium_r12.json` untouched |
 | `docs/HYPOTHESES.md` section 27 | one row, written by its owner on the Boss's word (DESIGN.md section 8's row with the identity, the condition and the refutation of this file) | |
 | `docs/EXPERIMENTS.md`, `docs/README.md` | the runs' rows after the runs (the Runner's); the index row (this PR's) | |
 
 Host estimate: the build and its tests about three hours (DESIGN.md's
-two plus the store's column and its five read points), the three worlds
-about four minutes together, the reviews beside. Not touched: the
+two plus the store's column and its five read points), the four worlds
+about five minutes together, the reviews beside. Not touched: the
 drive, the push, the meeting's reading, the collision table, the
 families' file, `BEAM_LAW.md` (the note that records the identity is
 written when the owner admits the rule and not before).
@@ -529,7 +631,7 @@ written when the owner admits the rule and not before).
 | a Node | nothing (LOCALITY-1; the rows born are events at the Node, as every release) | nothing beyond the law's | the law's |
 | a body's record | DESIGN.md's: two integers per axis (the action row's remainder below h, the give row's accumulator below N h) and one sign, four beyond the action rows, fixed for fixed K | one addition per counted Link on the stepped axis, one sign comparison; at a return one sum, two Euclidean divisions, three signed divisions by M, one comparison (`G < M`), D births with three products and three subtractions each, one recoil of three products and three subtractions | the law's, fixed |
 | a row's record | three integers (the excess), under the key only; zero on every row but a given one | none in flight (it rides); three additions where the row's momentum is moved | the law's, fixed per row |
-| the host | the identity under `hypotheses`; the store's three columns per row under the key (24 bytes per row: at a few hundred thousand rows in flight in the atoms worlds, a few megabytes); the per-Node detector array if declared | the worlds' runs, 60 to 100 s each | host, separate |
+| the host | the identity under `hypotheses`; the store's three columns per row under the key (24 bytes per row: at a few hundred thousand rows in flight in the atoms worlds, a few megabytes); the per-Node detector array if declared | the worlds' runs, 60 to 100 s each (the baseline's 70.8 s, 124 MB peak) | host, separate |
 
 ## 9. What it is not
 
@@ -564,8 +666,10 @@ written when the owner admits the rule and not before).
 its sections 1 (a) and (b), 2, 3, 4 (b) and 5 that this file amends);
 [ALGEBRA.md](../atom_algebra/ALGEBRA.md) (sections 1, 2 and 3 (c)); [the
 atoms pins](../atoms/PINS.md) section 2 and [their generator](../../../examples/events/atoms/make_worlds.py);
-the baseline run (`atom-baseline-run` at 01e86183,
-`docs/designs/atom_baseline/RUN.md`, record 886); [BEAM_LAW notes 18,
+the baseline run (`atom-baseline-run` at
+01e8618379c1d54e696ce3c7d6a8f9bb2fd1fe21, `docs/designs/atom_baseline/RUN.md`
+sections 3 and 4, record 886; the register's `r8` in EXPERIMENTS.md,
+series H's table); [BEAM_LAW notes 18,
 30, 35, 37 and 40](../../BEAM_LAW.md); [DERIVATIONS_BEAM 6.4](../../DERIVATIONS_BEAM.md);
 [the local integer operation contract](../../ARCHITECTURE.md#local-integer-operation-contract);
 [LOCALITY-1](../../../SIMULATOR_DEFINITIONS.md); [the three tests](../../../skills/workflow.md);
