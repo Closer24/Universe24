@@ -4170,6 +4170,67 @@ and 9).**
   host 1.5 s and 9.4 s of wall per world apart from the model's cost.
   PASS, no number moved; `tests/test_amplitude_bell_24_4.py` derives the
   pin and replays the worlds bit-exact against the registered counts.
+- **The pair at N = 2048 and N = 8192, the plateau of 24.4 measured
+  (2026-09-22; the Boss's order on the model owner's word of 2026-09-22
+  through the paper's writer;
+  [the README's section](../examples/events/amplitude/README.md#bell-at-n--2048-8192-and-16384-the-plateau-of-244-and-its-end);
+  `expectations.json` under `bell_24_4`, the block `run_2048_8192_16384`).**
+  The Bell world above with the one declared integer N changed by the
+  generator (`bell_n2048_*`, 2068 intervals; `bell_n8192_*`, 8221). Pinned
+  before the run from the closed form of
+  [DERIVATIONS_BEAM 24.4](DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry),
+  S(N) = 8 (c_1 + c_1') / N - 4 (the paper's `checks/s_powers_of_two.txt`):
+  S = 181 / 64 exactly at both N, the four correlations 181 / 256 in kind
+  at 2048 (the cells 874, 150, 150, 874 on every pair) and 725 / 1024 and
+  723 / 1024 at 8192 (3498, 598, 598, 3498 and 3494, 602, 602, 3494), the
+  marginals W / 2, every count within one of its width. Run (the branch
+  `bell-plateau-runs` on main 97395444, headless one world at a time,
+  Python 3.14, the source sha256 `663b984ef7c151e8...`; completed and
+  conserved at every tick; DETECTOR, the gathers of the first W records
+  by ordinal): every pin met on the eight worlds, every count its pinned
+  count, E x W 1448, -1448, 1448, 1448 and 5800, -5800, 5784, 5784, S x N
+  = 5792 and 23168, both exactly 181 / 64, the + counts 1024 of 2048 and
+  4096 of 8192 on every world, the rungs one list on every gather (124
+  and 149 distinct totals). At 8192 the first declaration of the
+  duration, N + 20 = 8212 intervals, ended with the 8192nd record in
+  flight (8191 of 8192 gathered, the last cell 3497 and 3493 for 3498
+  and 3494, every gathered record on its rung; kept under
+  `first_declaration`): the lamp's clock stalls 9 times by W = 8192
+  (BEAM_LAW note 41) and a record gathers 12 intervals after its birth,
+  so the generator now declares the duration from the lamp's turn
+  recurrence (`interval_of_birth`, which reproduces every registered
+  birth count and stall tick), 8221 here, every registered world
+  unchanged. GAMEBOARD: the books balanced at every tick, 2067 born,
+  2055 gathered, 12 open at 2048 and 8212, 8200, 12 at 8192; the host
+  (GAMEBOARD) 5.2 to 5.5 s of wall per world at 2048 and 21.4 to 21.9 s
+  at 8192, apart from the model's cost. Replication (the same day, each
+  world again in a fresh process): the digests of `state.json`,
+  `events.jsonl`, the gathers and the ledger byte-identical on every
+  world, the readings equal. PASS, no number moved.
+- **N = 16384, where the plateau ends (2026-09-22; the same order, README
+  section and register block).** `bell_n16384_*`, 16439 intervals, the
+  half-angle table of 2N = 32768 (the tables end at 65536). Pinned before
+  the run from the closed form: S = 5793 / 2048 = 2.828613, both roundings
+  of N (1 + E) / 4 up, the correlations 725 / 1024 at (0, 2048) and
+  (0, 6144) (6996, 1196, 1196, 6996) and 2893 / 4096 at (4096, 2048) and
+  (4096, 6144) (6989, 1203, 1203, 6989), the marginals 8192, every count
+  within one of its width; what refutes, a count off its rung by more
+  than one or S off 5793 / 2048. Run (as above; DETECTOR): every pin met
+  on the four worlds, E x W 11600, -11600, 11572, 11572, S x N = 46344 =
+  5793 / 2048 x 16384 exactly, the + counts 8192 of 16384 on every world,
+  the rungs one list on every gather (153 distinct totals): the plateau's
+  end is measured where 24.4 computed it. The first declaration, 16404
+  intervals, ended with 27 records of the wheel unborn or in flight
+  (16357 of 16384 gathered, 35 stalls of the lamp's clock; the last cell
+  6969 and 6962 for 6996 and 6989, the rest exact; kept under
+  `first_declaration`), re-declared as at 8192. GAMEBOARD: the books
+  balanced at every tick, 16404 born, 16392 gathered, 12 open; the host
+  (GAMEBOARD) 55.0 to 56.1 s of wall per world (the engine's own 52.1 to
+  53.3 s), apart from the model's cost. Replication (the same day, a
+  fresh process per world): byte-identical digests and equal readings on
+  every world. PASS, no number moved; `tests/test_amplitude_bell_24_4.py`
+  derives the pin per N and the closed form and replays the twelve
+  worlds of the two runs bit-exact against the registered counts.
 
 **L7, the cone: which length a row's phase counts (the paper session's
 question, issue #376; the Boss's approval of 2026-09-20).**
