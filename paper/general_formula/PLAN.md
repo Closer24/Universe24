@@ -4902,3 +4902,16 @@ is proved" naming the two conjectures and distinguishing them from what
 is read; in the not-computed paragraph the two moved to "conjectured,
 not computed". Never "recovered", never "matches nature". (D) No SHA
 swapped; the citations as they stand. 49 pages.
+
+## Applied (2026-09-22, the Boss's order of 15:26Z): the generic entry cited at its merge
+
+PR #855 (the generic entry of the bending: the flight in the age wall's
+set at 1 + gamma, gamma an input; the one form of the last Link's time;
+the square ladder in place of the root) merged to main at 5b855791. The
+paper cited the entry by its date only, never by a branch head or as
+pending, so no SHA was swapped; the entry is given its reference
+(genericentry, main at 5b855791) at the first mention (Section 5, the
+clock's form) and in row 12. The paper's "the law as built" for the
+flight (series K's 0.000 pixel, row 13) is the law before the entry;
+no reading of the bending under the entry is in the paper until the
+Boss names one. 49 pages.

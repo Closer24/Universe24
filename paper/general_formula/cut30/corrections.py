@@ -3493,6 +3493,22 @@ CORRECTIONS = [
         "\\bibitem{ringrun} The ring worlds of flow-link-v1:",
         "\\bibitem{atomlevels} atom-level-v1: the release at a closure of the difference of two closures, the ladder of levels in the law's integers and what the rule gives against Balmer's ratio, \\texttt{docs/designs/atom\\_levels/LEVELS.md} of the archived code \\cite{zenodo}, on the branch \\texttt{atom-levels} at cd0c2029 (PR \\#891 opened, not yet merged; the merge commit replaces this). \\bibitem{ringrun} The ring worlds of flow-link-v1:",
     ),
+    # The Boss's order of 15:26Z: the generic entry of the bending (PR #855) cited at its merge commit on main, 5b855791.
+    (
+        "the generic entry cited at its merge (PR #855 merged to main at 5b855791; the Boss's order of 15:26Z), first mention",
+        "(row 12 of Table~\\ref{tab:nature}; read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field).",
+        "(row 12 of Table~\\ref{tab:nature}; read before the generic entry of 2026-09-22 \\cite{genericentry}, not readable under the law as it stands, being re-read in the weak field).",
+    ),
+    (
+        "the generic entry cited at its merge, row 12",
+        "& read under the law before the generic entry of 2026-09-22; not readable under the law as it stands;",
+        "& read under the law before the generic entry of 2026-09-22 \\cite{genericentry}; not readable under the law as it stands;",
+    ),
+    (
+        "the references: the generic entry of the bending at its merge commit",
+        "\\bibitem{orbitread} The orbit's inward push read on the fan:",
+        "\\bibitem{genericentry} The generic entry of the bending: the flight in the age wall's set at $1 + \\gamma$ for every world, $\\gamma$ an input, the one form of the last Link's time, the square ladder in place of the root, of the archived code \\cite{zenodo}, on \\texttt{main} at 5b855791 (PR \\#855, merged; the branch head it carried 3760754c). \\bibitem{orbitread} The orbit's inward push read on the fan:",
+    ),
 ]
 
 
