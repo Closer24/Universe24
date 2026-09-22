@@ -132,6 +132,9 @@ def execute_nature_beam_run(
         # declared, written only under the key (every other record byte for
         # byte).
         **({} if not world.centred_step else {"centred_step": True}),
+        # flow-link-v1 (2026-09-22): the world key `flow_link` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.flow_link else {"flow_link": True}),
         # atom-level-v1 (2026-09-22): the world key `atom_level` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.atom_level else {"atom_level": True}),
