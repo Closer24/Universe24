@@ -100,7 +100,7 @@ derived pin, labelled; nothing was run.
    (g)): the code flip with its tests and the gate set's digests 3 hours;
    the re-pin runs about 55 minutes of engine time in all (about 20 at
    four jobs), the generators' pins, the readings by kind and the
-   register's rows 6 to 8 hours over the 15 series; the review 2 hours;
+   register's rows 6 to 8 hours over the 13 series; the review 2 hours;
    end to end about two working days. Danger: medium. What can break:
    every registered moving-body reading (guarded by the pins declared by
    each generator before its run and the readings by kind), the three
@@ -196,8 +196,9 @@ releasing at the world's `release` rate within `ticks`), which the rows'
 push can set in motion (21 more worlds, "pushed"; the register's READMEs
 record their steps: alpha_square's p4 steps +y at tick 57, q4's rectangle
 disperses at about 160, the coupling probes make 11 steps, the deuteron's
-nucleons attempt 33 and 29 steps at contacts). Together 103 worlds in 17
-folders. A body's content M is `sum(held)` as the parser's load check
+nucleons attempt 33 and 29 steps at contacts). Together 103 worlds in 20
+folders (17 hold a declared mover; `binding/`, `weak/` and `coupling/`
+hold pushed bodies alone). A body's content M is `sum(held)` as the parser's load check
 takes it; S the world's `width`; the pace per axis under the per-axis
 drive `|p_a| / (Q S M + |p_a|)` (`step_divisor`, the cap on), under the
 line drive `|p_a| Q / W` per axis and `|p|_1 Q / W` Manhattan
@@ -256,7 +257,9 @@ R 7, N 3, J3 3, C 3); 24 whose DETECTOR pins stand (X 6, the optical
 bodies 15, S 3, of which S's digests move); 3 refused at load until the
 owner's word (the clocks' heavy masses); 2 deleted by PR #860. Beside the
 register, PR #879's four D3 worlds under `flow_link` (`r12_flow`,
-`r24_flow` and their controls, pinned at the per-axis pace 9 / 41) join
+`r24_flow` and their controls, pinned at the whole n = 8, the per-axis
+pace 8 / 40 = 0.2, the momentum 538968064 = 8 x 64 x (2^12 + 2^20),
+`expectations_flow.json`) join
 series D3's re-pin if PR #879 lands before the flip (section (e)). Every
 other registered world (amplitude, bell, buildup, c_measured, clock_word,
 detector, hand, heisenberg, lensing, masses, massive_rows, redshift,
@@ -273,7 +276,9 @@ then the run, the reading by kind, nothing moved after. For every series
 of the 74 the order is one commit of the generator's pins, then one run,
 then one commit of the readings.
 
-- **The generator.** Each `make_worlds.py` of the 13 folders gains the
+- **The generator.** Each `make_worlds.py` of the 13 folders of the 74
+  (the clocks' one admitted folder `crowd_clock/` among them; the other
+  two clock folders hold only the refused worlds) gains the
   line drive's pace as its `pace()` (the orbit_lamp generator already
   carries both, `AXIS_DRIVE` and `DIRECTIONAL_DRIVE`; the others compute
   `n / (S + n)` or read the engine's `step_divisor`) and derives its pins
@@ -388,13 +393,19 @@ rows as they are, each with its drive named.
   declaration. The ring worlds carry no moving body.
 - **PR #879 (Newton under the one constant): series D3's four worlds
   under `flow_link`.** Four more worlds with a moving body (the probe at
-  n = 9, the per-axis pace 9 / 41; their pins in
-  `expectations_flow.json`: T(12) in 343 .. 411, T(24) in 686 .. 822, the
-  controls' escape 299 .. 311). They are read under the per-axis drive
-  on that PR; when it lands they enter D3's re-pin at the line drive's
-  n = 10 (T 371 and 742 within 9 percent) as a second reading beside the
-  first, and their FAIL (the ratio 1.677) is read again under the drive
-  their design assumed.
+  the whole n = 8, the per-axis pace 8 / 40 = 0.2; their pins in
+  `expectations_flow.json`, derived under the per-axis drive as the file
+  says: T(12) in 343 .. 411, T(24) in 686 .. 822, the controls' escape
+  299 .. 311). They are read under the per-axis drive on that PR; when
+  it lands they enter D3's re-pin under the line drive with the pin the
+  generator's own derivation gives, not the registered worlds' n = 10:
+  under `flow_link` the circle's balance is divided by the plane's flow
+  constant, so the line drive's root is `n^2 / (S + 1.71875 n) = 1.4838`,
+  n = 8.28, the whole 8, the pace `8 x 64 / (64 x 32 + 8 x 110) = 8 /
+  45.75 = 0.1749`, T(12) = 431 and T(24) = 862 (the reviewer's
+  arithmetic, HOST; the generator decides the pin), as a second reading
+  beside the first, and their FAIL (the ratio 1.677) is re-read under
+  the law's drive.
 
 ## (f) The three tests on the switch; the byte-identity tests that change
 
@@ -493,7 +504,7 @@ origin/main` per commit, `--full` once at the end (record 894).
    serial, about 20 minutes at four jobs; the host work around the runs
    (the generators' pins, the readings tools by kind, the READMEs'
    history rows, EXPERIMENTS and VALIDATION rows) 6 to 8 hours over the
-   15 series. The three refused clock worlds wait for the owner's word
+   13 series. The three refused clock worlds wait for the owner's word
    and cost nothing until it comes.
 3. **The CI as the gate**: green on every push; the reviewer reads the
    head again before the merge, since registered integers move (the
