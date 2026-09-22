@@ -145,20 +145,26 @@ reading with a band, and no match of the ladder's form is claimed
    word the owner has not given is the form (the Boss takes the
    reviewer's, the virial form, unless he says otherwise before the
    build).
-6. *The implementation.* None in the tree by this file: one design
-   file, two map scripts with their outputs, one index row. Step 2b, on
-   the Boss's word after the reviewer's short read: the world key and
-   the body key (`world.py`), the give rows without the modulus, the
-   count and the last level on the counts table (`measured.py`), the
-   return, the division, the release through `engine._give`'s path
-   (`engine.py`), the row's own phase rate under the key
-   (`nature_beam.py`, one column), one test module with the gate set's
-   byte identity, the generator extended with a radius and the key
-   (`examples/events/atoms/make_worlds.py`), three world files, three
-   headless runs (about 80, 40 and 30 s: 7500, 3500 and 3000 ticks on
-   53^3, 43^3 and 35^3), the reading by kind, RUN.md; host estimate
-   about three hours end to end (the build two, the runs and the reading
-   one), the CI the gate. Dangerous: nothing with the key off (the byte
+6. *The implementation.* The build (step 2b, on the reviewer's
+   ADMISSIBLE of the rule and the three tests): the world key
+   `atom_level` and the body key `level` with their refusals
+   (`world.py`, `LevelDeclaration`, `ATOM_LEVEL_RULE` under
+   `hypotheses`), the give rows without the modulus, the count, the last
+   level and the sign on the body's record (`measured.py`), the gain at
+   the action rows' own Links, the return, the division and the release
+   through the paid birth of `_give` (`engine.py`, `_level_gain`,
+   `_level_return`, `_level_release`; the `level` line of the record),
+   the row's own phase rate as one store column (`nature_beam.py`,
+   `turn`), the record's key (`run.py`), `tests/test_atom_level.py` (the
+   gate set's byte identity with the key absent, the level on declared
+   integers, the first return and a release on the engine with the
+   Planck identity read on two faces, the refusals and the three worlds),
+   the generator extended with the radius and the key
+   (`examples/events/atoms/make_worlds.py`, `LEVEL_RADII`) and the three
+   world files `hydrogen_r{3,7,12}_level.json`. Still to come on the
+   Boss's word: three headless runs (about 80, 40 and 30 s: 7500, 3500
+   and 3000 ticks on 53^3, 43^3 and 35^3), the reading by kind, RUN.md;
+   the CI the gate. Dangerous: nothing with the key off (the byte
    identity asserted); with it on, a body loses `D h_q s` of content at
    a releasing return, a few units of 1836 per return on a loop that
    wanders by a step of its level.
@@ -384,10 +390,13 @@ interval of its age, read off its content over the family's quantum (`s
 h_q s = (h_q N) f` as a rule of the row and not of the birth alone. One
 column on the row's record under the key (`turn`, an integer, 0 on every
 row the law births), read where the row's phase is read (the click, a
-re-emission's stamp, the face click), carried unchanged by the
-collision and the meeting, an identity field of the merge (two rows are
-one only at equal rates); with the key absent the column is not
-allocated and every phase is as today. The phase circle reads a rate
+face click), carried unchanged by the collision and the meeting, an
+identity field of the merge (two rows are one only at equal rates), not
+carried through a re-emission (the re-emitter's row is the law's, at its
+family's rate); with the key absent the column is 0 on every row and
+every phase is as today (the build: `NatureBeam.turn`, one addition in
+the flight and in the inverse walk, written to a row's state line only
+when it is not 0). The phase circle reads a rate
 modulo N: a release with `s >= N / 2` turns at `s mod N` and its
 frequency is not read back from the clicks unambiguously (the alias
 bound of the paper, `N_phi / 2`), so the run's record names every such

@@ -19,6 +19,7 @@ from event_universe.events.world import (
     PRESENCE_WORD,
     SUM_READING,
     Gate,
+    LevelDeclaration,
     Rotation,
     Split,
     Transformation,
@@ -540,6 +541,21 @@ class Measured:
     # momentum, a rule of the measured event, the external thing).
     span: tuple[int, int, int] = (1, 1, 1)
     phase_by_momentum: bool = False
+    # atom-level-v1 (2026-09-22; docs/designs/atom_levels/LEVELS.md section
+    # 2 (b)): the body's `level` declaration (None without the key), and on
+    # its record the action gained on each axis since its last return
+    # (`level_action`, DESIGN.md's give rows without the modulus: the same
+    # rate |p_a| N at the same Links as the action rows), the count of its
+    # self-creations since that return (`level_count`), the level at its
+    # last release (`level_last`, None until the first return sets it: one
+    # closure is no difference) and the last nonzero sign of the momentum's
+    # component on the return's axis (`level_sign`, 0 at birth). Five
+    # integers and a sign on the body's own record, nothing at a Node.
+    level: LevelDeclaration | None = None
+    level_action: list[int] = field(default_factory=lambda: [0, 0, 0])
+    level_count: int = 0
+    level_last: int | None = None
+    level_sign: int = 0
     # The world's columns (their names, gravity first, charge second) and
     # every family's aligned values per unit of content, (n, d) per column:
     # what the event's charges are read from (`charges`).

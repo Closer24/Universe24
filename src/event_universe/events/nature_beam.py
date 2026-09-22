@@ -308,6 +308,16 @@ class NatureBeam:
     # column is 0 on every row of every world without the key. An identity
     # field of the merge (two rows with different remainders are two rows).
     acc_turn: int = 0
+    # The row's own phase rate (`atom-level-v1`, 2026-09-22; docs/designs/
+    # atom_levels/LEVELS.md section 2 (d)): the steps its phase turns per
+    # interval of its age beyond its family's rate, its content over the
+    # family's quantum on a row a level release bore (the Planck identity
+    # E = h_q s = h_q N f as a rule of the row); 0 on every row the law
+    # births, so the column is 0 on every row of every world without the
+    # key. An identity field of the merge (two rows of different rates are
+    # two rows); carried by the collision and the meeting; not carried
+    # through a re-emission (the re-emitter's row is the law's).
+    turn: int = 0
 
     def record_line(
         self, vectors: np.ndarray, handed: bool = False, massive: bool = False
@@ -338,6 +348,8 @@ class NatureBeam:
             line["share"] = [self.share_x, self.share_y, self.share_z]
         if massive:
             line["acc_turn"] = self.acc_turn
+        if self.turn:
+            line["turn"] = self.turn
         if self.made or self.residue:
             line["flight"] = [self.made, self.residue]
         if self.push_x or self.push_y or self.push_z:
@@ -1498,6 +1510,9 @@ FIELDS = (
     "cross_y",
     "cross_z",
     "acc_turn",
+    # atom-level-v1 (2026-09-22): the row's own phase rate, 0 on every row
+    # of every world without the key (`NatureBeam.turn`).
+    "turn",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -1528,6 +1543,7 @@ IDENTITY_FIELDS = (
     "cross_y",
     "cross_z",
     "acc_turn",
+    "turn",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
@@ -1551,6 +1567,7 @@ COLUMN_DEFAULTS = {
     "cross_y": 0,
     "cross_z": 0,
     "acc_turn": 0,
+    "turn": 0,
 }
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
@@ -1920,6 +1937,7 @@ class NatureBeamStore:
         self.cross_y: np.ndarray
         self.cross_z: np.ndarray
         self.acc_turn: np.ndarray
+        self.turn: np.ndarray
 
     @property
     def size(self) -> int:
@@ -2156,6 +2174,7 @@ class NatureBeamStore:
                 int(self.cross_y[i]),
                 int(self.cross_z[i]),
                 int(self.acc_turn[i]),
+                int(self.turn[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -3473,6 +3492,9 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
         per_age = families[family].phase_per_age
         if per_age is not None:
             turned = turned + np.where(resting, 0, by_clock_rows(back, per_age[0], per_age[1]))
+        # The row's own rate (`atom-level-v1`), a whole number of steps per
+        # interval of age, walked back as it was walked forward.
+        turned = turned + np.where(resting, 0, store.turn)
         store.phase = (store.phase - turned) % modulus
         store.arrival[:] = NO_ARRIVAL
         store.merge()
@@ -4161,6 +4183,12 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         if definition.phase_per_age is not None:
             rate_n, rate_d = definition.phase_per_age
             turned = turned + np.where(resting, 0, by_clock_rows(store.age, rate_n, rate_d))
+        # The row's own rate (`atom-level-v1`, docs/designs/atom_levels/
+        # LEVELS.md section 2 (d)): a row a level release bore turns `turn`
+        # steps per interval of its age beside its family's rate, one
+        # addition, no division; 0 on every row of every world without the
+        # key, so the phase is as it was.
+        turned = turned + np.where(resting, 0, store.turn)
         store.age = np.where(resting, store.age, store.age + 1)
         store.phase = (store.phase + turned) % modulus
         store.arrival = arrival

@@ -417,6 +417,7 @@ WORLD_KEYS = {
     # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
     # false by default (`DRIVE_B_RULE`).
     "drive_b",
+    "atom_level",
     # centred-step-v1 (2026-09-22): the body's step at half the wall, a
     # boolean, false by default (`CENTRED_STEP_RULE`).
     "centred_step",
@@ -492,6 +493,21 @@ DRIVE_B_RULE = "drive-b-v1"
 # along the motion) zero in the mean. Every other count keeps the whole
 # part. Absent, every registered world replays byte for byte.
 CENTRED_STEP_RULE = "centred-step-v1"
+# The identity of the atom's levels (`atom-level-v1`, 2026-09-22; the model
+# owner's word of record 973 through the Boss; docs/designs/atom_levels/
+# LEVELS.md section 2 (b), the virial form on the physics-rule reviewer's
+# recommendation): under the world key `atom_level` a body that declares
+# `level` carries, beside its action rows, the action gained on each axis
+# since its last return (DESIGN.md's give rows without the modulus), the
+# count of its self-creations since that return and the level at its last
+# release; at a return (the momentum's declared component crossing zero in
+# the declared sense) its level is the whole part of n_l x (the action
+# gained) over 2 h d_l x (the count), and the rise of that level above the
+# last released one is released as one row per declared direction of the
+# declared paid family, content h_q x (the rise), the row's phase turning
+# that many steps per interval of its age (the Planck identity as a rule of
+# the row). Absent by default: every registered world byte for byte.
+ATOM_LEVEL_RULE = "atom-level-v1"
 
 
 def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = True) -> int:
@@ -749,6 +765,7 @@ MEASURED_KEYS = {
     "fixed",
     "span",
     "phase_by_momentum",
+    "level",
     "directions",
     "table",
     "lamp",
@@ -1064,6 +1081,24 @@ class WindowReading:
 
 
 @dataclass(frozen=True)
+class LevelDeclaration:
+    """A body's `level` under `atom-level-v1` (docs/designs/atom_levels/
+    LEVELS.md section 2 (c)): `family` the paid family of the released
+    rows (its quantum h_q the content per step), `pair` the rule's grain
+    [n_l, d_l] (the released family's Planck constant in units of the
+    world's action, h d_l / (N n_l) per phase step; [1, 1] the
+    dictionary's own), `axis` the axis of the return and `sign` the sign
+    the momentum's component crosses TO at a return (DESIGN.md section 1
+    (b): once per loop on any loop that circles a centre, never on a
+    straight flight)."""
+
+    family: int
+    pair: tuple[int, int]
+    axis: int
+    sign: int
+
+
+@dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
     phase, its momentum, whether it is held in place, the directions it
@@ -1136,6 +1171,8 @@ class MeasuredDefinition:
     # The energy E' declared under `covariant_readings` (`E`, whole units of
     # the identity), None for the load-time root `isqrt(E'_0^2 + d p . p)`.
     energy: int | None = None
+    # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
+    level: LevelDeclaration | None = None
 
     def __post_init__(self) -> None:
         if not self.hands:
@@ -1243,6 +1280,10 @@ class NatureBeamWorld:
     # centred-step-v1 (the world key `centred_step`, false by default): the
     # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
     centred_step: bool = False
+    # atom-level-v1 (the world key `atom_level`, false by default): the
+    # release at a closure of the difference of two closures' levels
+    # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
+    atom_level: bool = False
 
     @property
     def flight_coefficient(self) -> int | None:
@@ -1410,6 +1451,8 @@ class NatureBeamWorld:
             found.append(DRIVE_B_RULE)
         if self.centred_step:
             found.append(CENTRED_STEP_RULE)
+        if self.atom_level:
+            found.append(ATOM_LEVEL_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -2692,6 +2735,79 @@ def _table_entry(
             )
         hand = _hand(obj["hand"], f"{label}.hand")
     return str(rule), window, str(reads), width, transformation, hand
+
+
+def _atom_levels(
+    value: object,
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    atom_level: bool,
+    action: int | None,
+    ticks: int,
+) -> tuple[MeasuredDefinition, ...]:
+    """The bodies' `level` declarations under the world key `atom_level`
+    (`atom-level-v1`, docs/designs/atom_levels/LEVELS.md section 2 (c)):
+    `{"family": F, "pair": [n_l, d_l], "return": [axis, sign]}` on a
+    measured event that turns its phase by its momentum and is not fixed;
+    F a paid family with a phase circle (its rows carry the turn); the pair
+    two positive integers; the axis 0, 1 or 2 and the sign -1 or +1. Refused
+    without the key, and the key's bounds refused at load: the divisor
+    `2 h d_l T` for a count T up to the run's ticks within the register."""
+    assert isinstance(value, list)
+    found = list(measured)
+    names = {family.name: index for index, family in enumerate(families)}
+    for index, (entry, definition) in enumerate(zip(value, measured, strict=True)):
+        assert isinstance(entry, dict)
+        if "level" not in entry:
+            continue
+        label = f"measured[{index}].level"
+        if not atom_level:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} is refused without the world key atom_level "
+                "(atom-level-v1, off by default)"
+            )
+        obj = _object(entry["level"], label, {"family", "pair", "return"}, {"family", "pair", "return"})
+        family_name = obj["family"]
+        if not isinstance(family_name, str) or family_name not in names:
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
+        family = names[family_name]
+        if families[family].free:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.family names the free family {family_name!r}: a released "
+                "row carries content h_q x (the rise of the level), so the family is paid"
+            )
+        if not families[family].phase:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.family names the family {family_name!r} without a phase "
+                "circle: a released row turns its phase by its content over the quantum"
+            )
+        pair_value = obj["pair"]
+        if not isinstance(pair_value, list) or len(pair_value) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}.pair must be two positive integers [n_l, d_l]")
+        pair = (
+            _integer(pair_value[0], f"{label}.pair[0]", 1),
+            _integer(pair_value[1], f"{label}.pair[1]", 1),
+        )
+        return_value = obj["return"]
+        if not isinstance(return_value, list) or len(return_value) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}.return must be [axis, sign]")
+        axis = _integer(return_value[0], f"{label}.return[0]", 0, 2)
+        sign = _integer(return_value[1], f"{label}.return[1]", -1, 1)
+        if sign == 0:
+            raise ValueError(f"{BEAM_LAW}: {label}.return[1] must be -1 or +1, the sign crossed to")
+        if definition.fixed or not definition.phase_by_momentum:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} needs a body that steps and turns its phase by its momentum "
+                "(phase_by_momentum, not fixed): the level is read off its action rows"
+            )
+        assert action is not None
+        if 2 * action * pair[1] > MOMENTUM_BOUND // max(ticks, 1):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: the level's divisor 2 h d_l x (the count) leaves the "
+                f"integer bound {MOMENTUM_BOUND} within the run's ticks"
+            )
+        found[index] = replace(definition, level=LevelDeclaration(family, pair, axis, sign))
+    return tuple(found)
 
 
 def _measured(
@@ -3998,6 +4114,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f"{BEAM_LAW}: centred_step must be true or false (centred-step-v1, off by default)"
         )
+    # atom-level-v1 (2026-09-22): the world key `atom_level`, a boolean,
+    # false by default, and the bodies' `level` declarations under it
+    # (docs/designs/atom_levels/LEVELS.md section 2 (b) and (c)).
+    atom_level = obj.get("atom_level", False)
+    if type(atom_level) is not bool:
+        raise ValueError(f"{BEAM_LAW}: atom_level must be true or false (atom-level-v1, off by default)")
+    measured = _atom_levels(obj["measured"], measured, families, atom_level, action, ticks)
     covariant = _covariant(
         obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
     )
@@ -4048,6 +4171,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         optical=optical,
         drive_b=drive_b,
         centred_step=centred_step,
+        atom_level=atom_level,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)

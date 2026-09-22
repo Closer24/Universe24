@@ -25,6 +25,26 @@ experimenter, registered as rows of series H.
   Links, three to four returns, the period 1400 to 2000; an escape face
   click FAIL), the cause it answers
   [atom_give/CAUSE.md](../../../docs/designs/atom_give/CAUSE.md).
+- `hydrogen_r3_level.json`, `hydrogen_r7_level.json`, `hydrogen_r12_level.json`
+  (`rays-atoms-hydrogen-r{3,7,12}-level-v1`): hydrogen's construction at the
+  three radii where the shell mean's closure `4 sqrt(r / 12)` is nearest 2, 3
+  and 4 (the generator's own closures 1.892, 3.017, 4.001 under the SAME
+  action h = 16 p_B(8)), each `hydrogen_r12_centred.json`'s construction at
+  its radius (the flux the electron's three Nodes receive on the ring, the
+  orbit under form B's rule, the side of series H's rule, five turns of
+  ticks, `centred_step`) plus the world key `atom_level` (atom-level-v1, off
+  by default: the release at a closure of the difference of two closures'
+  levels, the virial form) with the family `light` (the photon's, quantum 1)
+  and the electron's `level` declaration (`{"family": "light", "pair":
+  [512, 1], "return": [0, -1]}`); the pins before their runs are
+  [atom_levels/LEVELS.md](../../../docs/designs/atom_levels/LEVELS.md)
+  section 5 (the loop stays and returns; the level of the loop between the
+  first and the second returns off the faces' two counts, 146, 71 and 43
+  steps within 10 percent; the ratio of two lines a reported computation
+  with its band; the releases and the Planck identity read from two faces;
+  the control). The r = 12 world is the centred world plus the key, the
+  declaration and the photon's family, integer for integer
+  (`tests/test_atom_level.py`).
 - `helium_r12.json` (`rays-atoms-helium-r12-form-b-v1`): binding-v1's
   square ([binding/alpha_square_bond.json](../binding/alpha_square_bond.json):
   `p` of charge 4 and `n`, each with its held `nuclear` and `bond`) fixed

@@ -128,6 +128,9 @@ def execute_nature_beam_run(
         # declared, written only under the key (every other record byte for
         # byte).
         **({} if not world.centred_step else {"centred_step": True}),
+        # atom-level-v1 (2026-09-22): the world key `atom_level` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.atom_level else {"atom_level": True}),
         # optical-v1 (2026-09-21): the key's gamma and the derived flight
         # coefficient 1 + gamma, written only under the key.
         **(
