@@ -66,7 +66,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   derived for the line drive on 2026-09-21 and whose worlds are byte for
   byte as registered) and series D (`orbit/`, the six worlds' momenta
   rewritten by the generator, n = 4, 6, 10 at S = 1, 8, 32, with
-  `expectations.json`; the two lamp worlds unchanged).
+  `expectations.json`; the two lamp worlds unchanged) and series G2
+  (`hubble_stars/` and `record/`, the stars' momenta by the line rule,
+  both registers with the drive named).
 - **The merge with the generic entry of the bending (the same day; PR
   #855 and PR #879 on main).** The row's flight is in the age wall's set
   for every world at 1 + gamma, gamma the world key `optical` and 0 by

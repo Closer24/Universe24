@@ -2719,6 +2719,28 @@ states "exactly" and means integer equality at every tick.
   head's replay, dated.
 - **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`; `record/coasting_none` and the base `coasting_none` through `tools/run_series.py`, 400 intervals, 62.6 and 60.4 s, completed and conserved; read by `tools/hubble_stars_readings.py`; the criteria in [docs/designs/paper_criteria/CRITERIA.md](designs/paper_criteria/CRITERIA.md), rows 3 and 4b, pinned before the run).** DETECTOR, the window [300, 400) in the detector's own clock (r = 1.0000): q = -0.104, H (t_0 + T_0) = 1.0232, rms 0.0019; `s_mz2`'s z = 0.2647; 150 readings inside, 0 outside; equal to the replay of 2026-09-22 above and to the Replicator's at `6b707a5`, nothing moved at head (the digests state `3993941601dc`, audit `33cf0ac763ce`, events `0fa8cfa523de`; the base world NOT READABLE under the acoustic rule, its digests `1a385429c948` / `33cf0ac763ce` / `f75ca18274d2`). Under the paper's criteria NATURE rows 3 and 4b stay FAIL (-0.104 against -0.527 +- 0.011; 0.2647 against 0.315). No number re-registered; this line dated.
 
+- **Re-read under the law's line drive (2026-09-22; measured against the
+  pins of `expectations.json` and `record/expectations.json`, committed at
+  `f187059` before the run; the model owner's record 972, [the
+  design](designs/drive_b/DEFAULT.md) step 2; a new registration beside
+  the runs above, which the paper's rows rest on).** The eighteen worlds
+  with the stars' momenta by the line rule at the declared speeds
+  (`hubble_stars/README.md`, the re-read section), the flip's engine
+  (fingerprint `e67f6b9a5469d75d`, before the merge with the generic entry), every run
+  completed and balanced; the reading's formula 648 of 648, the
+  luminosity 648 of 648, 1340 readings inside, 19 outside, none moved.
+  The `record/` worlds, the late window: `coasting_none` q = -0.104, H
+  (t_0 + T_0) = 1.0232 (the re-run at head's numbers to the digit);
+  `gravity_none` +0.352 (the derived +0.265, the bracket +0.07 .. +0.47),
+  0.9285; `double_none` +0.960 (the derived +0.603, the bracket +0.30 ..
+  +0.90: outside by 0.06), 0.823; under the age clock -0.216, +0.239,
+  +0.604; under the scalar clock every crowd -0.95 with k of about 1
+  (outside, as in every registration); the ordering inside under the
+  clock-free and age clocks; q = -0.55 not the nearest form in any
+  gravitating world under them. The coasting form is the Milne form
+  exactly under the line drive as under the per-axis one; the gravitating
+  crowds decelerate as derived and a little more. No pin moved.
+
 ### H, Bohr's lines behind the detector (2026-09-20)
 
 - **Confronts.** Whether Bohr's lines come out by themselves behind the

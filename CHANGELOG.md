@@ -127,6 +127,14 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the six worlds rewritten, the two lamp worlds unchanged, and the eight
   runs registered beside the runs of 2026-09-19 to 2026-09-21 (no orbit
   closes by the criterion; the first Link exactly as pinned).
+- Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
+  the generator's momenta by the line rule at the declared speeds and the
+  continuum derivation's push factor (1 - v T_D / Q)^2, both registers
+  rewritten with the drive named (the per-axis momenta and pins of history
+  reproducible), the eighteen worlds rewritten, and the eighteen runs
+  registered beside the runs of 2026-09-20 to 2026-09-22 (the coasting
+  form the Milne form exactly; 1340 readings inside, 19 outside, none
+  moved).
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 

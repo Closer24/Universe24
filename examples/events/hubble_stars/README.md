@@ -857,3 +857,80 @@ not counted; the pins restated, the readings and the verdicts are in
 ## Re-run at head (2026-09-22)
 
 The criteria runner re-ran `record/coasting_none` and `coasting_none` at `origin/main` `4028b020` for the paper's Table 3 rows 3 and 4b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): q = -0.104, H (t_0 + T_0) = 1.0232, `s_mz2`'s z = 0.2647 in the detector's own clock (DETECTOR), 150 readings inside, equal to the replay of 2026-09-22; the register's entry carries the dated line.
+
+## Re-read under the law's line drive (2026-09-22, measured against the pins of `expectations.json` and `record/expectations.json`, committed at `f187059` before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the eighteen
+worlds with the stars' momenta by the line rule p = Q S M v / (1 - v T_D
+/ Q) at the declared speeds (the pins above, the push factor (1 - v T_D
+/ Q)^2 in the derivation), committed before the run. A new registration
+beside the runs above, never a replacement: the paper's rows 3 and 4b
+rest on the re-run at head under the per-axis drive and say so.
+
+Source fingerprint `e67f6b9a5469d75d` (the checkout of `drive-default` at `f187059`,
+package 0.3.1, the flip's engine before the merge with main's generic
+entry of the bending), Python 3.14.0rc2, numpy 2.5.3, headless, four
+cores, `tools/run_series.py --jobs 4`; every run completed at 400
+intervals (62 to 76 s each) with the books balanced at every tick,
+`run.json` carrying `"drive": "line"`; the digests (state, audit,
+events): `8365f2a0cc89`, `588c9d9eb6bd`, `fb01768df48a` (`coasting_none`),
+`4e3ff97ba4a5`, `9695a6dfb91a`, `0ed8528a0e7b` (`coasting_scalar`),
+`34b08b91d21c`, `7198c819b0e2`, `7eca0210007e` (`coasting_age`),
+`1a80bc7238cb`, `eead0356d8ba`, `f2ff74542719` (`gravity_none`),
+`16d74b53da3d`, `08a9150db340`, `757e1573a5b6` (`gravity_scalar`),
+`dea934d72cce`, `d6b0b6a4950c`, `b38591d21410` (`gravity_age`),
+`c9bd56658b52`, `b6e6aad33093`, `c1d17483d0e4` (`double_none`),
+`cf7ca22ef00d`, `2b8e15903821`, `c5dee7038432` (`double_scalar`),
+`fc5ab31f2831`, `e55abc4a0a79`, `6d5591113714` (`double_age`); the
+`record/` nine `d7d04c05397c`, `588c9d9eb6bd`, `1daaa18193e5`,
+`5500c3593e90`, `9695a6dfb91a`, `cd121d9ee599`, `75575829ea9a`,
+`7198c819b0e2`, `7f06fb4282ee`, `338ec2f40555`, `eead0356d8ba`,
+`6776a214c274`, `9aae3ed20171`, `08a9150db340`, `cb6297616ad3`,
+`b04475ea392f`, `d6b0b6a4950c`, `46e110af1690`, `69d204d2644a`,
+`b6e6aad33093`, `3d34d5771062`, `6a92167931d2`, `2b8e15903821`,
+`2429f4918271`, `682fa874c23e`, `e55abc4a0a79`, `2ca73c3c5a59` (the
+books of each base world and its record world the same).
+`tools/hubble_stars_readings.py`: the reading's formula 648 of 648 inside
+2 percent, the luminosity 648 of 648 inside 5 percent, 0 record checks
+failed, 1340 readings inside, 19 outside, none moved (every criterion in
+the detector's own clock).
+
+DETECTOR readings of the late window [300, 400) on the `record/` worlds
+(the registered reading since the second run; the `wave` worlds' pointer
+readings printed and not counted):
+
+| World (`record/`) | q of the free fit (bracket) | H (t_0 + T_0) (bracket) | nearest form (expected) | farthest | |p(end)| / p(0) (bracket, GAMEBOARD) | k (0 .. 0.05) | Verdicts |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `coasting_none` | -0.104 (-0.25 .. +0.25) | 1.0232 (0.90 .. 1.10) | q = 0 (any) | q = +0.5 | 1.000 .. 1.000 (0.99 .. 1.01) | 0 | all inside; the same q and H as the per-axis re-run at head, to the digit |
+| `coasting_scalar` | -0.95 | 1.649 | q = -0.55 | - | 1.000 | 0.45 .. 0.99 | q, H, the observed form and k outside (the scalar clock's k of about 1, as in every registered run) |
+| `coasting_age` | -0.216 | 1.066 | q = -0.55 (not expected) | - | 1.000 | 0 .. 0.022 | q and H inside; the observed form nearest, outside |
+| `gravity_none` | +0.352 (+0.07 .. +0.47) | 0.9285 (0.85 .. 1.04) | q = +0.5 | q = -0.55 | 0.626 .. 1.042 (0.54 .. 1.14) | 0 | all inside |
+| `gravity_scalar` | -0.95 | 1.655 | q = -0.55 | - | 0.657 .. 0.955 | 0.45 .. 1.04 | q, H, the forms and k outside (the scalar clock) |
+| `gravity_age` | +0.239 | 0.9636 | q = 0 | q = -0.55 | 0.631 .. 1.039 | 0 .. 0.022 | all inside |
+| `double_none` | +0.960 (+0.30 .. +0.90) | 0.823 (0.79 .. 0.96) | q = +0.5 | q = -0.55 | 0.194 .. 1.110 (0.00 .. 1.33) | 0 | q outside by 0.06 (the derivation's bracket; the second run read +1.500 at the fit's edge), the rest inside |
+| `double_scalar` | -0.95 | 1.687 | q = -0.55 | - | 0.332 .. 0.911 | 0.68 .. 1.46 | q, H, the forms and k outside (the scalar clock) |
+| `double_age` | +0.604 | 0.8766 | q = +0.5 | q = -0.55 | 0.192 .. 1.093 | 0.008 .. 0.024 | all inside |
+
+The ordering q_coasting < q_gravity < q_double with every gap above 0.1:
+inside under the clock-free and the age clocks (-0.104 < +0.352 < +0.960;
+-0.216 < +0.239 < +0.604), outside under the scalar clock (every crowd at
+-0.95, the clock's k of about 1 as in every registered run). What is
+observed today, q = -0.55, is not the nearest form in any gravitating
+world under the clock-free and age clocks.
+
+**What is read and what is not, no number moved.** The coasting throw
+reads the Milne form exactly as under the per-axis drive (q = -0.104, H
+(t_0 + T_0) = 1.0232, the re-run at head's numbers to the digit: the
+stars' momenta were re-solved to the same speeds, and a coasting star's
+steps read the same at this grain); the gravitating crowds decelerate as
+derived, `gravity_none` q = +0.352 against the derived +0.265 (the second
+run's +0.922 against +0.859 under the per-axis drive and the step
+rule's burst of that day), `double_none` +0.960 against +0.603 (the second
+run's +1.500 at the fit's edge), 0.06 above its bracket's top: the
+line drive's pushed stars decelerate a little more than the continuum
+derivation with its push factor says, as the per-axis runs did. The
+scalar clock's worlds read outside as they have in every registration
+(k of about 1: the presence word). Nothing compared with nature beyond
+the forms; the paper's rows 3 and 4b stand on the per-axis re-run at
+head.

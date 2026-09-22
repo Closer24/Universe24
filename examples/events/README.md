@@ -481,7 +481,15 @@ them that a body's own motion does not Doppler what it reads). The
 physicist's design is `docs/designs/hubble_stars/DESIGN.md`; the same
 worlds under the record click (`make_worlds.py --record`, the key
 `amplitude`, the branch `claude/amplitude-impl`) read the same list of
-clicks and the same numbers to the last digit.
+clicks and the same numbers to the last digit. Since 2026-09-22 the
+eighteen worlds carry the stars' momenta by the law's line drive (p = Q S
+M v / (1 - v T_D / Q) at the declared speeds; both registers name the
+drive, the per-axis momenta of history reproducible from the generator),
+and the re-read under it is registered beside the runs above: the
+coasting form the Milne form exactly (q = -0.104, H (t_0 + T_0) = 1.0232,
+the re-run at head's numbers to the digit), the gravitating crowds
+decelerating as derived and a little more, the scalar clock's worlds
+outside as in every registration.
 
 ## The weak-force series
 

@@ -11,6 +11,27 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series G2 under the law's line drive: eighteen runs on drive-default f187059 - 2026-09-22
+
+The branch `drive-default` at `f187059` (the generator's momenta by the
+line rule committed before the run, DEFAULT.md section (c); both
+registers with the drive named): the nine worlds of
+`examples/events/hubble_stars/` and the nine of `record/` run through
+`tools/run_series.py --jobs 4` (Python 3.14.0rc2, numpy 2.5.3, headless;
+source fingerprint `e67f6b9a5469d75d`, the flip's engine before the merge with main's
+generic entry), every run completed at 400 intervals with the books
+balanced at every tick, `run.json` carrying `"drive": "line"`; the
+digests in [the series' README](../examples/events/hubble_stars/README.md#re-read-under-the-laws-line-drive-2026-09-22-measured-against-the-pins-of-expectationsjson-and-recordexpectationsjson-committed-at-f187059-before-the-run);
+run times 62 to 76 s at 308 to 319 MB peak (host measurements).
+`tools/hubble_stars_readings.py`: the reading's formula 648 of 648, the
+luminosity 648 of 648, 1340 readings inside, 19 outside (the scalar
+clock's worlds, as in every registration; `double_none`'s q 0.06 above
+its bracket; `coasting_age`'s nearest form), none moved; the coasting
+form the Milne form exactly (`record/coasting_none` q = -0.104, H (t_0 +
+T_0) = 1.0232, the re-run at head's numbers to the digit). The runs of
+2026-09-20 to 2026-09-22 stay registered as the readings the paper's rows
+3 and 4b rest on, under the drive they name.
+
 ## Series D under the law's line drive: eight runs on drive-default 01178c9 - 2026-09-22
 
 The branch `drive-default` at `01178c9` (the generator's pins under the
