@@ -184,7 +184,10 @@ def push_bar(
 
 def test_the_drive_joins_the_age_walls_set_at_gamma_beside_the_clock_and_the_flight():
     """(o)."""
-    assert age_wall_set() == (("owed", 1),)
+    # Since the generic entry of the bending (2026-09-22) the flight is a
+    # member for every world at 1 + gamma, gamma 0 by default (before it:
+    # `age_wall_set() == (("owed", 1),)` without the key).
+    assert age_wall_set() == (("owed", 1), (FLIGHT_MEMBER, 1))
     assert age_wall_set(1) == (("owed", 1), (FLIGHT_MEMBER, 2))
     assert age_wall_set(1, True) == (("owed", 1), (FLIGHT_MEMBER, 2), (DRIVE_MEMBER, 1))
     assert age_wall_set(0, True) == (("owed", 1), (FLIGHT_MEMBER, 1), (DRIVE_MEMBER, 0))
@@ -256,8 +259,11 @@ def test_the_weight_of_a_moving_body_is_the_rows_weight_over_the_label_scale():
     assert body_weight([1 << 26, 0, 0], 64, 16384, 1) == (7 << 25, 1 << 20)
     assert body_weight([0, 0, 0], 64, 16384, 1) == (1 << 26, 1 << 20)
     assert body_weight([1 << 26, 0, 0], 0, 16384, 1) == (0, 1)
+    # Since the generic entry of the bending (2026-09-22) the key absent
+    # is gamma 0, the body's weight the pair under `drive_b` alone (before
+    # it, without the key: the push -4096 at the scale 1).
     for optical, drive_b, push, scale in (
-        (None, True, -4096, 1),
+        (None, True, -8192, 1 << 20),
         (0, True, -8192, 1 << 20),
         (1, True, -14336, 1 << 20),
     ):

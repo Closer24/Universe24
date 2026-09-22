@@ -176,8 +176,12 @@ def test_a_face_reads_the_exact_phase_of_the_link_it_leaves_through():
 def test_the_numerator_beyond_the_register_is_refused():
     """(e)."""
     declared = world([[1, 0, 0]], [19, 1, 1], [[17, 0, 0]], phase_per_link=[1 << 55, 1], age_bound=100)
+    # Since the generic entry of the bending (2026-09-22) the engine hands the
+    # one form of the last Link's time, n x (age r - s + T d) with r = 2 S_1 Q
+    # (here 17 x 220 = 3740, the same time as the count's 17 x 110 over
+    # S_1 Q); before it the refusal named n x made x T_d, "... x 17 x 110".
     with pytest.raises(
-        OverflowError, match=r"the exact phase at measured event 1: .*36028797018963968 x 17 x 110"
+        OverflowError, match=r"the exact phase at measured event 1: .*36028797018963968 x 3740"
     ):
         lines_of(declared)
 

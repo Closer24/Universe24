@@ -35,6 +35,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 from event_universe.events import NatureBeamSimulation
 from event_universe.world_loading import load_world
 
@@ -43,6 +45,16 @@ WORLDS = ROOT / "examples" / "events" / "crowd_clock"
 STILL = ("still_005", "still_08", "still_3", "still_1", "still_2")
 MOVING = ("moving_08", "moving_3", "moving_1")
 LAMP = 2
+# The generic entry of the bending (2026-09-22, record 847; the price,
+# docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the light in a crowd at a
+# pair with n > 0 is stretched and pushed by the crowd's age moment as the
+# clocks are, and a pushed row's momentum at d = 65536 makes the wall's
+# square exceed the working bound, the contract's refusal. The worlds
+# below are declared at that pair and are not in the paper (the model
+# owner's word of record 871: not needed; the Register Architect's to
+# remove after the entry merges): the test records what the law does with
+# them as declared, the readings before the entry kept in the comments.
+REFUSED = ("still_005", "still_08", "still_3", "moving_08", "moving_3")  # at interval 6
 
 
 def load_generator():
@@ -85,6 +97,12 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             assert lamp["position"][0] == 10
             assert all(body["fixed"] for body in (lamp, *sources))
         sim = simulation(name)
+        if name in REFUSED:
+            # Before the entry: ten intervals balanced in every world.
+            with pytest.raises(OverflowError, match="exceeds the working bound"):
+                for _ in range(10):
+                    sim.step()
+            continue
         for _ in range(10):
             sim.step()
         assert sim.books()["balanced"], name
@@ -110,11 +128,13 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 
 def test_the_presence_at_the_lamp_is_four_times_the_flux_and_the_clock_owes_it():
     """(b)."""
+    # Before the entry: 12 intervals of `still_005`, the presence at the
+    # lamp 4 x 82 = 328; under the law as declared the world refuses at
+    # interval 6 (REFUSED).
     sim = simulation("still_005")
-    for _ in range(12):
-        sim.step()
-    lamp = sim.measured[LAMP]
-    assert lamp.presence == 4 * 82 == 328
+    with pytest.raises(OverflowError, match="exceeds the working bound"):
+        for _ in range(12):
+            sim.step()
     births: list[int] = []
     sim = NatureBeamSimulation(
         load_world((WORLDS / "still_1.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent).world,
@@ -124,12 +144,16 @@ def test_the_presence_at_the_lamp_is_four_times_the_flux_and_the_clock_owes_it()
     )
     for _ in range(100):
         sim.step()
-    assert sim.measured[LAMP].presence == 4 * 16384
-    # clock-age-v1: the clock counts the age moment, 22 F, k = 5.5 (the
-    # presence word's k = 1 gave 40 births, within 2).
-    assert sim.measured[LAMP].counted == 22 * 16384 == 360448
+    # `still_1` runs: its light is stretched by its own crowd (GAMEBOARD,
+    # the law at the declared inputs, a strong field): the presence at the
+    # lamp 190 F after 100 intervals, the age moment counted 9880 F, one
+    # birth in the window. Before the entry: the presence 4 x 16384, the
+    # count 22 x 16384 = 360448 (clock-age-v1, k = 5.5; the presence
+    # word's k = 1 gave 40 births), 12 births within 2.
+    assert sim.measured[LAMP].presence == 190 * 16384 == 3112960
+    assert sim.measured[LAMP].counted == 9880 * 16384 == 161873920
     inside = sum(1 for t in births if 20 <= t < 100)
-    assert abs(inside - 12) <= 1, inside
+    assert inside == 1, inside
 
 
 def test_the_algebra_of_the_crowds_clock():

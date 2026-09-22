@@ -45,7 +45,8 @@ moment (the wall, the clock), the flight, the collision, the phase and the
 momentum a click moves (a paid family's push, Q per unit) are untouched.
 With the key absent the flow labels ARE the labels and every world reads
 as it did, byte for byte (`tests/test_flow_link.py` (a): the gate world
-`coupling/1b_m16` to its digests, the optical bar to main ab96e7e8's).
+`coupling/1b_m16` to its digests, the optical bar to the base tree's, main
+ab96e7e8 before the generic entry and origin/generic-bending 3760754c after it).
 
 ## The worlds
 

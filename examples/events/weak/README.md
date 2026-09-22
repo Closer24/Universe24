@@ -399,3 +399,7 @@ on main's engine at their declared durations and the two J1 worlds at
 the cap 1024; the pins restated, the readings and the verdicts are in
 [the register's entry](../../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20),
 "Re-read in the detector's own clock (2026-09-22)".
+
+## Re-run at head (2026-09-22)
+
+The criteria runner re-ran `j1_lattice` and `j1_source` at the cap 1024 and `j2_filter` at `origin/main` `4028b020` for the paper's Table 3 rows 8a and 8b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): every number equal to the replay of 2026-09-22 (64 of 64 at their keys, 64 clicks of content 3, DETECTOR; the widths 0.1111 / 0.0787 and 0.1279 / 0.1147 in the lattice's clock, GAMEBOARD; 16 of 1024 with 0 behind); the register's entry carries the dated line.

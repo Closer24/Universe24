@@ -16,6 +16,17 @@ is the owner. The engines before it (the law of events, `events-v1`, of the
 evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
 
+The physical path (`nature_beam.py`, `meeting.py`, `engine.py`, `world.py`,
+`amplitude.py` on `core/integer.py` and `core/phase.py`) is the six verbs on
+bounded integers and nothing else (the model owner, records 181, 202 and
+929; every coupling of the atom worlds and the light worlds read against
+the six in [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md)), gated by
+`tests/test_integer_algebra.py` (the Register Architect's, record 920 (A));
+beneath it two integer roots are taken at run time, each declared by its
+design: the meeting's norm under the key `meeting` (`meeting.py:359-361`,
+BEAM_LAW note 35) and the pushed row's pair under the key `optical`
+(`nature_beam.py:3549`, EVERY_FAMILY.md; being replaced on PR #855).
+
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
@@ -221,10 +232,12 @@ model owner's word, record 394), or for a family whose table entry reads
 the age word's shape one wall function of the crowd, `core.integer.age_wall`,
 the rate r x d against the wall w x (d + c k n) over the declared set
 `measured.AGE_WALL_SET` of accumulators with a coefficient c each, today the
-clock alone at c = 1, the owed count the excess of its stretched wall over
-its stretched rate in units of d, integer for integer as before; the flight
-joins under optical-v1's key at its own coefficient by a declaration in the
-set, the phase per age never (`AGE_WALL_NEVER`);
+clock at c = 1, the owed count the excess of its stretched wall over its
+stretched rate in units of d, integer for integer as before, and the row's
+flight at c = 1 + gamma (the law's own since 2026-09-22, the generic entry
+of the bending, the model owner's word of record 847; gamma the
+world's declared `optical`, 0 by default), the phase per age never
+(`AGE_WALL_NEVER`);
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in
@@ -482,12 +495,15 @@ register, [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 3 and note 35; refused with a paid family without a phase circle,
 and refused when it is not true or false; the record carries it and the
 identity `meeting-v1` under `hypotheses` when it is true); `optical`
-(since 2026-09-21, `optical-v1` in its generic form, the model owner's
-"go" of record 303 and "clearly, in the generic form", records 421 to
-428; docs/designs/one_wall/NOTE.md; absent by default: gamma, the
-post-Newtonian parameter, a non-negative integer, nature's 1; under it
-the row's flight joins the age wall's declared set at the coefficient
-f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
+(since 2026-09-21 `optical-v1` in its generic form under its key, the
+model owner's "go" of record 303 and "clearly, in the generic form",
+records 421 to 428, docs/designs/one_wall/NOTE.md; since 2026-09-22 the
+law's own for every world, the generic entry of the bending, the model
+owner's word of record 847, "bring it back immediately": gamma,
+the post-Newtonian parameter, a non-negative integer, 0 by default, the
+time part alone, the law's own number; nature's 1 a declaration per world
+and never a default, record 817; the row's flight is a member of the age
+wall's declared set at the coefficient f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
 wall 2 T_D (d + f n A), A the crowd's age moment at the row's Node read
 before step 1, one interval retarded, the accumulator a field of the row
 with its residue, `nature_beam.optical_walk_step`, one Link per interval
@@ -514,9 +530,11 @@ first, floor, the sub-unit remainder dropped (record 496's rule for the
 time of the last Link, generalised: the pace's direction changed), not
 at the label's turn; the label D is then the phase's, the click's
 momentum label and the books' alone (records 494 and 496;
-`nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
-turn verb per row), with a direction that has no neighbour within a right
-angle and with gamma out of range; with the key `massive_rows` admitted
+`nature_beam.optical_turn`, the books' `turned` line); refused with gamma out of range; at
+`suspension` 0 nothing is stretched and nothing pushed; under `meeting`
+the meeting's turn keeps the heading and this turn does not act (one turn
+verb per row); a direction without a neighbour within a right angle turns
+to nothing (the three refusals of optical-v1 lifted on 2026-09-22); with the key `massive_rows` admitted
 since 2026-09-22 (every family under one wall,
 [docs/designs/one_wall/EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md):
 every row walks by its own family's table under the one wall, a pushed
@@ -524,19 +542,49 @@ row by the pair of its momentum with the family's rest term,
 `nature_beam.row_pairs` and `momentum_pair`, the wall's square refused
 naming the rule before it is formed, and is pushed at the weight per
 unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels,
-`nature_beam.unit_weights`; the refusal of record 510 lifted); with the
-key `drive_b` beside it (the body's drive under the one wall, step 3,
-2026-09-22, [docs/designs/one_wall/BODY_DRIVE.md](designs/one_wall/BODY_DRIVE.md))
+`nature_beam.unit_weights`; the refusal of record 510 lifted); the
+inverse interval refused at a pair with n > 0 (a row's wall reads the
+crowd of the interval before, which the after-state does not hold); the
+record carries the block `optical` {gamma, flight_coefficient} for every
+world and no identity (`optical-v1` names no hypothesis since
+2026-09-22); a world at [0, d] or with no crowd walks integer for integer
+as before, its record and its state byte for byte: the stretch is n / d
+times the crowd's age moment and the push n times its flow, and the
+snapshot writes a row's flight accumulator only where a crowd moved it
+off the table's own count at its age, the value the walk seeds from
+(`tests/test_optical.py` (e), the gate set's digests), and by the same
+test the click's exact time is the count's own on a row no crowd moved
+and the accumulator's where one did, in ONE form for every row of every
+world, (age r - s + T d) / r with T the half wall of the row's present
+pair, the start its accumulator was seeded from (`optical_last_link`, the
+walk's `last_link`; the physics-rule reviewer's line on PR #855: a row no
+crowd moved reads the count's own floor, made T_d / (S_1 Q), by identity,
+and no row reads two forms; the amplitude worlds' clicks byte for byte);
+the pushed row's wall T(P) is a comparison ladder of squares, no root in
+the interval (`nature_beam.square_ladder`); a row
+whose direction a collision or the meeting changed reads its age on its
+present line, its accumulator the table's own count there
+(`nature_beam.reseed_flight`, the crowd's carry on the old line dropped
+with the old line), so two rows alike on the new line are alike in the
+merge; the inverse interval at n = 0 returns the rows fresh, the store
+bit for bit (`tests/test_nature_beam_bijection.py`, `tests/test_meeting.py`
+(e)); at the register's
+crowd worlds at a pair with n > 0 the light is stretched by the crowd's
+age moment as the clocks are, which is the law and their inputs' number
+(the standing of the 32 registered crowd worlds at such a pair: the
+model owner's word of record 871, not needed, not in the paper, the
+Register Architect's to remove; series T's four stay with NATURE row
+12 and are redeclared in the weak field); with the key `drive_b`
+beside it (the body's drive under the one wall, step 3, 2026-09-22,
+[docs/designs/one_wall/BODY_DRIVE.md](designs/one_wall/BODY_DRIVE.md))
 the body's directional drive is a member of the age wall's set at the
 coefficient gamma (`measured.age_wall_set`: the clock 1, the flight
-1 + gamma, the drive gamma; the rates x d against the wall x (d + gamma n
-A) in `engine._move`), a moving body's gravity charge is (w, Q S), the
-rows' weight on its momentum over the label scale (`world.body_weight`,
-gravity's Lambda Q S), and a moving body under `optical` without
-`drive_b` is refused at load; the
-inverse interval refused under it; the record carries the block `optical` {gamma, flight_coefficient}
-and the identity `optical-v1` under `hypotheses`; without the key every
-world reads as it did, byte for byte); `flow_link` (since 2026-09-22,
+1 + gamma, the drive gamma, at gamma 0 declared at 0 and unstretched;
+the rates x d against the wall x (d + gamma n A) in `engine._move`), a
+moving body's gravity charge is (w, Q S), the rows' weight on its
+momentum over the label scale (`world.body_weight`, gravity's Lambda
+Q S), and a moving body at gamma > 0 without `drive_b` is refused at
+load (the per-axis drive is never a member)); `flow_link` (since 2026-09-22,
 `flow-link-v1`, the model owner's decision of record 915 on the Flow
 Weight Designer's design
 [docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md), the
@@ -931,8 +979,8 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `optical` (since 2026-09-21, under the key alone:
-`gamma` and `flight_coefficient` 1 + gamma), `fast_steps` (since the crossing rule of 2026-09-21,
+false by default), `optical` (`gamma` and `flight_coefficient` 1 + gamma, for every world
+since 2026-09-22), `fast_steps` (since the crossing rule of 2026-09-21,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the count of Links a body crossed in the interval right after another of
 its Links, where the rule's one-per-crossing count is not proved; a

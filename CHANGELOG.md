@@ -5,6 +5,73 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The generic entry of the bending: the row's flight in the age wall's set for every world (2026-09-22)
+
+- The model owner's word (record 847, "do not freeze; bring it back
+  immediately", then "implement it, now"): the row's flight is a member of
+  the age wall's declared set for every world at the coefficient 1 + gamma,
+  gamma the world key `optical`'s declared value and 0 by default (the time
+  part alone, the law's own number; nature's 1 a declaration per world and
+  never a default), the same one wall function that slows a body's clock
+  in a crowd delaying and bending every family's rows (`measured.age_wall_set`
+  with no None state, `world.NatureBeamWorld.optical` an integer,
+  `nature_beam` acting in every world, `run.json` carrying `optical` for
+  every world). `optical-v1` names no hypothesis any more. The three load
+  refusals of the key are lifted (at suspension 0 nothing is stretched and
+  nothing pushed; under `meeting` the meeting's turn keeps the heading; a
+  heading without a neighbour turns to nothing); the inverse interval is
+  refused at a pair with n > 0 only. The snapshot writes a row's flight
+  accumulator only where a crowd moved it off the table's own count at its
+  age (the value the walk seeds from), so every world in which no crowd
+  acts keeps its record and its state byte for byte (the crowd worlds at
+  [0, d] and every crowd-free world; `tests/test_optical.py` (e), the gate
+  set's digests). The registered crowd worlds at a pair with n > 0 read
+  the light stretched by their crowd's age moment as their clocks are (at
+  their declared inputs the light freezes in the mass rows and one world
+  refuses on the pushed momentum's square); the model owner's word of
+  record 871: they are not needed and not in the paper, the Register
+  Architect's to remove after this entry merges; series T's four stay
+  with NATURE row 12 and are redeclared in the weak field, the pins
+  before any run (docs/designs/one_wall/EVERY_FAMILY.md section 6, step
+  5; docs/designs/one_wall/GENERIC_BENDING_PRICE.md; ENGINE.md).
+- Three rules the entry needed, found by the suites (the law acting where
+  the key never did): the click's exact time is the count's own on a row
+  no crowd moved and the accumulator's where one did
+  in one form for every row, (age r - s + T d) / r with T the half wall
+  of the row's present pair (`optical_last_link`, the walk's `last_link`;
+  the reviewer's line on PR #855: the count's own floor on a row no crowd
+  moved, by identity, and no row reads two forms; the amplitude worlds'
+  clicks byte for byte); the pushed row's wall T(P) by a comparison ladder
+  of squares in place of the root at run time (`square_ladder`, the same
+  floor; the Register Architect's NODE_ALGEBRA.md section 2); a row whose direction a
+  collision or the meeting changed reads its age on its present line, its
+  accumulator reseeded from the table there (`nature_beam.reseed_flight`;
+  the merge as without a crowd); the inverse interval at n = 0 returns
+  the rows fresh, the store bit for bit. With `drive_b` (PR #813 merged
+  in): the drive member at gamma, at gamma 0 declared at 0 and
+  unstretched; a moving body's weight the pair under `drive_b` alone; a
+  moving body at gamma > 0 without `drive_b` refused at load.
+- The tests of the crowd worlds at a pair with n > 0 record what the law
+  does with them as declared, the readings before the entry kept in the
+  comments, nothing deleted or skipped: `crowd_clock` (5 of 8 refuse at
+  interval 6; `still_1`'s presence 190 F), `clock_word` (all 4 refuse at
+  6 or 11), `cluster_clock` (both refuse at 6), `reader_clock` (the
+  presences 3.5 times), the step drive's (g) (its deuteron world at d =
+  2^27 with a light lamp refuses at interval 4; the bound pair read on
+  the same world without the light), and the gate set's `weak/j3_deuteron`
+  (refuses at interval 596 of its 700: the entry carries `refusal` beside
+  its digests, read by `test_nature_beam_worlds`, `test_massive_rows` and
+  `test_amplitude_click`). The weak register's `become` blocks of
+  `j1_lattice`, `j1_source` and `j3_deuteron` (the warm run's count ranges
+  and trigger ticks) move, their crowds' rows stretched by the other
+  numbers' crowds: each keeps its registered block and carries
+  `under_the_generic_entry`, the warm run under the law as it stands (a
+  derivation, no pin), which `test_weak_readings` (e) reads; the paper's
+  row 8a rests on J1's run, its standing the model owner's decision.
+  `test_become` (c) and `test_clock_age` (d) read the law (the crowd's
+  own rows stretched at a test world's pair [1, 128]; the flight a member
+  for every world).
+
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 
 - Twelve worlds by the generator (`examples/events/amplitude/bell_n2048_*`,
