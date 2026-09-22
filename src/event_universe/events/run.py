@@ -121,6 +121,9 @@ def execute_nature_beam_run(
         # key's declaration and the run's report, written only under the
         # key (every other record byte for byte as it was).
         **({} if world.covariant is None else {"covariant_readings": simulation.covariant_report()}),
+        # drive-b-v1 (2026-09-22): the world key `drive_b` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.drive_b else {"drive_b": True}),
         # optical-v1 (2026-09-21): the key's gamma and the derived flight
         # coefficient 1 + gamma, written only under the key.
         **(

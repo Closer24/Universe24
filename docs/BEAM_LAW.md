@@ -4030,3 +4030,68 @@ implementation's part of the contract. The design above is unchanged.
     the hubble worlds, D, H, the catalog's `sun_planet`, the nucleus,
     binding and weak pairs; every world whose measured events are all
     fixed reads the same records.
+49. **The directional drive of a body, `drive-b-v1`, under the world key
+    `drive_b`, off by default** (the model owner's approval of form B,
+    2026-09-22, record 652 of docs/LOG_2026-09-20.md; the design
+    [docs/designs/drive_b/DESIGN.md](designs/drive_b/DESIGN.md), form B in
+    the integer form (c) of
+    [light_speed/FORM.md 3.1](designs/light_speed/FORM.md#31-amended-after-the-physics-rule-review-of-the-build-m1-the-residue-across-lines-and-the-correction)
+    after the review of record 348; the physics-rule reviewer's ADMISSIBLE
+    WITH CORRECTIONS of 2026-09-22 folded in). Under the key a free body's
+    step at a self-creation is the rows' own line rule (note 41 (viii), the
+    deficits' argmax carry) on its momentum: the three drive accumulators
+    of its record gain `p_a Q` each against ONE wall
+
+        W = Q^2 S M + |p|_1 T_h,    T_h = isqrt(3 Q^2) = 110 (the flight table's heading resolution, formed at load; `world.T_HEADING`),
+
+    and the axis furthest over the wall makes the Link toward the
+    accumulator's sign (the lowest axis on a tie) and loses W with that
+    sign, the others keeping their overflow for the following
+    self-creations (`core.integer.by_line`; `world.drive_wall`; `_move`'s
+    one branch on the key): the Bresenham line of the momentum, one Link
+    per interval at most, the coincident fire deferred and never lost
+    (DERIVATIONS_BEAM 1.3 item 7 closed under the key), no direction read,
+    no root at run time. The Manhattan pace is `|p|_1 Q / W` Links per
+    interval on every direction: on a heading form B's `|p| x 64 / (Q S M x
+    64 + 110 |p|)`, the registered `1 / (1 + 0.72 v)` of today's `v = |p| /
+    (Q S M + |p|)`; at a small momentum Newton's `|p|_2 / (Q S M)` to zeroth
+    order (a first-order anisotropy `(|p|_1 / |p|_2 - 1) x 1.72 v`); the
+    cap `64 / 110` Euclidean on every direction, the rows' pace on a
+    heading and below it on every line (record 301's condition: no body
+    outruns its family's rows), Manhattan-isotropic off the headings (the
+    Euclidean-isotropic cap of form B's line accumulator is not reachable
+    with a line-independent unit, FORM.md 3.1). Under `covariant_readings`
+    the cap term is keyed off and the wall is `Q^2 S M`, the one primitive
+    with one term selected off as `step_divisor` selects it today; the
+    one-axis refusals of that key (at load and at the frame) are lifted
+    under `drive_b`, the domain `|p|_1 <= Q S M` kept, so a body on the
+    plane or the cube diagonal reads `|p|_2 / E'` per lattice interval
+    (DERIVATIONS_BEAM 17.6 M8's worlds). Kept as they were: a component of
+    0 leaves its accumulator as it is and never steps, `p = 0` never steps,
+    a reversal cancels first (record 126), a refused step at a contact pays
+    W and does not move the body, the escape clicks on the face, the
+    `action` row of the stepped axis gains `|p_a| N` per Link the rule
+    counts on it (no fire lost, so no count discarded); every accumulator
+    is checked against the integer bound before its addition and the
+    wall's two products by division before they are formed, the run
+    refused naming the rule otherwise (proved: every `|drive_a| < 3 W`;
+    observed below `W + 2 max |p_a| Q`). With the key absent the per-axis
+    drive of note 17 runs unchanged, byte for byte (the gate set's
+    digests; `tests/test_drive_b.py` (a)); the record gains `drive_b: true`
+    in `run.json` and `drive-b-v1` under `hypotheses` under the key alone.
+    **The three tests**: generic (one primitive with the declared integers
+    `p_a`, M, S and the constants Q, `T_h`; no family name; the engine
+    branches on the world key); vector (the translation of three
+    accumulators by their rates, one comparison for the order, one
+    Euclidean division with the remainder kept; no root at run time, no
+    float); local (the body's own record; fixed work and storage). **The
+    deciding worlds** (series X, `examples/events/drive_b/`, DETECTOR): a
+    body of content 64 at `|p|_1 = 6000` from the centre of an open 41^3
+    box clicks on face:+x at tick 51 from (40, 20, 20) on the axis, 101
+    from (40, 40, 20) on the plane diagonal and 152 from (40, 40, 40) on
+    the cube's, where the per-axis drive's controls click at 36, 50 and 65
+    from (40, 20, 20) with y and z never moved; all six read as pinned.
+    **Not decided here**: the body's pace under the law alone (this rule
+    as the owner approved it, or the rows' triple of `momentum_pair`,
+    which needs a root on the state) is the chief physicist's and the
+    owner's question (DESIGN.md section 7); the key stays off by default.
