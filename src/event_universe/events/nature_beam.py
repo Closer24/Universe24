@@ -595,7 +595,7 @@ def by_drive_rows(
     the same integers as `by_drive` row by row (`tests/test_fraction_free.py`
     (j)). The flight's step reads it at the row's residue
     (`Flight.walk_step`); `by_clock_rows` is its constant-rate identity.
-    The bound: the accumulator plus the rate must fit the working register
+    The bound: the accumulator plus the rate must fit the working bound
     (|drive| + |rate| <= 2^63 - 1), checked on the extremes before the sum
     is formed, as `checked_work` bounds the scalar; a denominator below 1
     is refused."""
@@ -639,7 +639,7 @@ def exact_phase(
         phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q))   (mod N),
 
     ONE floor at the click: a Euclidean division of the numerator n made T_d
-    (within the working register, refused beyond it naming the place) by
+    (within the working bound, refused beyond it naming the place) by
     the denominator d S_1 Q, the remainder kept. Returns (phi, the
     remainder, the denominator). A family without the pair form, or a row
     on a rest slot, reads its phase as it is (the remainder 0 over 1); the
@@ -663,7 +663,7 @@ def exact_phase(
         except OverflowError as error:
             raise OverflowError(
                 f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s) = "
-                f"{numerator} x {time_numerator} exceeds the working register {MAX_WORK_INT}"
+                f"{numerator} x {time_numerator} exceeds the working bound {MAX_WORK_INT}"
             ) from error
         divisor = denominator * time_denominator
         made_phase, remainder = divmod(product, divisor)
@@ -675,7 +675,7 @@ def exact_phase(
     except OverflowError as error:
         raise OverflowError(
             f"{BEAM_LAW}: the exact phase at {where}: the numerator n x made x T_d = "
-            f"{numerator} x {made} x {resolution} exceeds the working register {MAX_WORK_INT}"
+            f"{numerator} x {made} x {resolution} exceeds the working bound {MAX_WORK_INT}"
         ) from error
     divisor = denominator * s1 * Q
     whole, rest = divmod(product, divisor)
@@ -3059,7 +3059,7 @@ class CrowdMoments:
         if largest and fullest > MAX_WORK_INT // max(1, largest * max(oldest, Q)):
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's reading of {fullest} rows at one Node exceeds the "
-                f"working register {MAX_WORK_INT}"
+                f"working bound {MAX_WORK_INT}"
             )
         self.moment = np.zeros(self.keys.shape[0], dtype=np.int64)
         np.add.at(self.moment, inverse, moment)
@@ -3460,7 +3460,7 @@ def momentum_pair(
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's pair on the momentum, the rate 2 S_1(P) Q d = 2 x "
                 f"{manhattan} x {Q} x {denominator} or the wall 2 T(P) d = 2 x {resolution} x "
-                f"{denominator}, exceeds the working register {MAX_WORK_INT}"
+                f"{denominator}, exceeds the working bound {MAX_WORK_INT}"
             )
         s1[k] = manhattan
         t[k] = resolution
@@ -3479,7 +3479,7 @@ def optical_rate_and_wall(
     at the row's Node; the pair (S_1, T) per row is the label's (S_1(D),
     T_D) on a row never pushed and the momentum's (`momentum_pair`) on a
     pushed row, whose line is **P**'s. The largest wall of the rows is
-    tested against the working register before any product is formed,
+    tested against the working bound before any product is formed,
     refused naming the rule."""
     numerator, denominator = world.suspension
     coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
@@ -3489,7 +3489,7 @@ def optical_rate_and_wall(
     if 2 * largest_t > MAX_WORK_INT // max(1, stretch):
         raise OverflowError(
             f"{BEAM_LAW}: optical-v1's wall 2 T_D (d + f n A) = 2 x {largest_t} x {stretch} "
-            f"exceeds the working register {MAX_WORK_INT}"
+            f"exceeds the working bound {MAX_WORK_INT}"
         )
     rate = np.zeros(s1.shape[0], dtype=np.int64)
     wall = np.zeros(s1.shape[0], dtype=np.int64)
@@ -3564,7 +3564,7 @@ def optical_walk_step(
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's error accumulator |c| + |P| = "
                 f"{int(np.abs(cross).max())} + {int(np.abs(momentum).max())} exceeds the "
-                f"working register {MAX_WORK_INT}"
+                f"working bound {MAX_WORK_INT}"
             )
         cross = cross + np.cross(step[held], momentum)
         store.cross_x[held], store.cross_y[held], store.cross_z[held] = (
@@ -3631,7 +3631,7 @@ def optical_turn(frame: Interval) -> None:
     the comb's teeth in the pin worlds, is replaced by this one).
     Bounds: n x weight x |V| tested by division before the product, and
     the sums the accumulator takes, W + n weight V and W + Q d content
-    (u_D - u_D'), tested against the working register before they are
+    (u_D - u_D'), tested against the working bound before they are
     formed (the review of record 494, S1); the row's phase, amount,
     content, number and record untouched. The residue s of the row's
     flight accumulator crosses the turn as the time of its last Link
@@ -3678,7 +3678,7 @@ def optical_turn(frame: Interval) -> None:
         if widest and heaviest and numerator * heaviest > MAX_WORK_INT // (widest * 2):
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's push n x weight x V = {numerator} x {heaviest} x "
-                f"{widest} on the family {families[family].name!r} exceeds the working register "
+                f"{widest} on the family {families[family].name!r} exceeds the working bound "
                 f"{MAX_WORK_INT}"
             )
         turn = np.stack([store.push_x[rows], store.push_y[rows], store.push_z[rows]], axis=1)
@@ -3689,7 +3689,7 @@ def optical_turn(frame: Interval) -> None:
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's push accumulator |W| + n x weight x V = {largest} + "
                 f"{numerator} x {heaviest} x {widest} on the family {families[family].name!r} "
-                f"exceeds the working register {MAX_WORK_INT}"
+                f"exceeds the working bound {MAX_WORK_INT}"
             )
         before = turn
         turn = turn - numerator * weight[:, None] * flow
@@ -3729,7 +3729,7 @@ def optical_turn(frame: Interval) -> None:
             if rescaled and max(rescaled) > MAX_WORK_INT:
                 raise OverflowError(
                     f"{BEAM_LAW}: optical-v1's residue rescaled at the push, {max(rescaled)}, exceeds "
-                    f"the working register {MAX_WORK_INT}"
+                    f"the working bound {MAX_WORK_INT}"
                 )
             store.residue[index_now] = np.array(rescaled, dtype=np.int64)
         # Verb 3 by Bresenham along the line of P (record 536), for the rows
@@ -3802,7 +3802,7 @@ def optical_turn(frame: Interval) -> None:
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's turn |W| + Q d content |u_D - u_D'| = {largest} + "
                 f"{int(np.abs(shift).max())} on the family {families[family].name!r} exceeds "
-                f"the working register {MAX_WORK_INT}"
+                f"the working bound {MAX_WORK_INT}"
             )
         store.push_x[chosen_rows] += shift[:, 0]
         store.push_y[chosen_rows] += shift[:, 1]

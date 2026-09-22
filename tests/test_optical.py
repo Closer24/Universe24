@@ -136,7 +136,7 @@ default). One rule per case, the integers written before the run:
     head before this word) the 52 Links took 52 x 2662 / (25 x 64) = 86.5
     intervals, three too few;
 (h) S1 of the same review, under the momentum's pace ((j)): the sums the
-    push accumulator takes are tested against the working register before
+    push accumulator takes are tested against the working bound before
     they are formed, and below them the pair on the momentum and the
     residue's rescale are: the turn world of (b) with the light row's
     **W** preset at 2^63 - 1 - 14080 on x walks (the primitive (1, 0, 0))
