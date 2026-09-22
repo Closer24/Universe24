@@ -58,8 +58,10 @@ ring of starts (section 4) under the rule reads `C_ring = 3.65 / 3.82 /
 1.90 / 1.93` against 2 at gamma 0; the ratio `2.02`, the declared `c_f`
 read back), the residual `0.08 to 0.35` the finite path's `L / sqrt(L^2 +
 b^2)` (0.97 to 0.96) and the shells' `0.990`, one to three grains of the
-ring (`0.085 to 0.107`): **2 c_f = 4 within five per cent, no longer 5.1
-to 5.9**. The alternative not chosen, `c_f` absorbing the factor (`1 +
+ring (`0.085 to 0.107`): **the ring reads `2 c_f` within the finite
+path's factor `L / sqrt(L^2 + b^2)` and the shells' `0.990`, to one to
+three grains (`3.65 / 3.82 / 3.92` against the expected `3.86 / 3.93 /
+3.79`), where it read 5.1 to 5.9 as built**. The alternative not chosen, `c_f` absorbing the factor (`1 +
 gamma = 4 / 3` in the limit), leaves the wall's delay off by the same
 `3 / 2` and is named in section 3 (e).
 
@@ -149,7 +151,22 @@ component, the nearest whole,
 
 formed once at load in `direction_flight` beside `labels`, one column
 `flow_labels` of the same shape (directions, 3), and read by the flow as
-a constant; the remainder is dropped at load as **u**_D's is
+a constant. That formula is the photon's, whose label per unit is **u**_D
+of magnitude `Q`. A massive family's rows carry their own label **p**_D
+of magnitude `|`**p**_D`|` (the lamp's `momentum_magnitude`,
+`FamilyFlight.labels :944, :959`, `scaled_label`), and the same weight
+`|`**D**`| / S_1` on it gives the flow label nearest `|`**p**_D`|` **D** `/
+S_1`, not `Q` **D** `/ S_1`: so `FamilyFlight` forms its `flow_labels`
+from its own labels by the same division with `|`**p**_D`|` in `Q`'s
+place, `f_D[i] = sign(D[i]) x (2 |`**p**_D`| |D[i]| + S_1) // (2 S_1)`,
+the photon the case `|`**p**_D`| = Q` (the reviewer's line, record 902);
+else the generic test would be passed by the photon alone and the massive
+rows' flow would keep the L1 factor. The map's numbers use the right
+magnitude: series K's crowd is the photon family at `Q = 64` (the mass's
+free rays, `u_D` at the scale `Q`), and D3's plane fan is the free
+family's rays at the scale `Q` too (`|u_d| / Q = 1.0000`, the orbit
+register), where only the ratio `F_plane` enters, magnitude-free. The
+remainder is dropped at load as **u**_D's is the remainder is dropped at load as **u**_D's is
 (`unit_label :824`, "the integer vector nearest"), a declared rounding at
 load and none at run time. Per line the rounding is at most `1 / (2 Q
 |`**D**`| / S_1)` on a component: the largest relative error of `|`**f**_D`|`
@@ -239,15 +256,17 @@ asked. A per-Node weight (a table by Node) fails the local test's
 1. **Generic: PASS.** One primitive, a table column per direction of the
    world's table, `flow_labels`, formed at load from the declared integers
    **D** and `S_1` by one Euclidean division, and read by every family's
-   flow alike (the photon's rows, a massive family's rows on its own
-   labels `FamilyFlight.labels :944`, the free family's rays a body reads
+   flow alike (the photon's rows at `Q`, a massive family's rows on its
+   own labels `FamilyFlight.labels :944` at `|`**p**_D`|`, each family's
+   `flow_labels` formed from its own labels by the one division, the free family's rays a body reads
    through `g_moment`); no family name, no kind, no branch: the engine
    reads `flow_labels` where it read `labels` in the flow's sum, and the
    rest direction's label is `(0, 0, 0)` as before. A world without the
    key has `flow_labels` equal to `labels`, byte for byte.
 2. **Vector: PASS.** The flow is verb 3, the group-ring addition of
    labels over the interval's arrivals (`np.add.at :3119`), unchanged; the
-   only division is verb 6 at load, `(2 Q |D[i]| + S_1) // (2 S_1)`, the
+   only division is verb 6 at load, `(2 |`**p**_D`| |D[i]| + S_1) // (2
+   S_1)` on each family's own label magnitude (`Q` for the photon), the
    nearest whole declared at load as **u**_D's is; no root (the root of
    `|`**D**`|` cancels against **u**_D's, section 1.2), no float, no
    rounding at run time. The push's rate `n x weight x` **V** stays
@@ -351,8 +370,11 @@ before). The ratio gamma 1 / gamma 0 of the ring's mean is `2.01 / 2.02 /
 derived.
 
 **Read against the pins.** (i) On the clock's `G M = q / (4 pi S)`, the
-one constant now, the ring reads `2 c_f` within five per cent: `3.65 to
-3.92` against 4 at gamma 1, `1.81 to 1.93` against 2 at gamma 0, where it
+one constant now, the ring reads `2 c_f` within the finite path's factor
+`L / sqrt(L^2 + b^2)` and the shells' `0.990`, to one to three grains:
+`3.65 / 3.82 / 3.92` against the expected `3.86 / 3.93 / 3.79` at b = 6 /
+3 / 8 at gamma 1 (bare against 4: 8.7, 4.5 and 2.0 per cent below),
+`1.81 / 1.90 / 1.93` against `1.93 / 1.97 / 1.89` at gamma 0, where it
 read `5.1 to 5.9` and `2.6 to 2.9` as built. (ii) The residual below 4 is
 accounted for and not free: the finite path from x = -26 to +26 sums
 `L / sqrt(L^2 + b^2)` of the continuum's transverse impulse (`0.993 /

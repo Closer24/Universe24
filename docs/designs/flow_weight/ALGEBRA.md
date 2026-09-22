@@ -30,9 +30,12 @@ weight a declaration under its own identity (DESIGN.md section 1).
 
 ## 0. The verdict, at the top
 
-**CLOSES TO `2 c_f` WITHIN FIVE PER CENT, on the one constant.** Under
+**CLOSES TO `2 c_f` within the finite path's factor and the shells'
+`0.990`, to one to three grains, on the one constant.** Under
 the rule (the flow label `f_D`, the integer vector nearest `Q D / S_1`,
-per arriving row in place of `u_D`) the push's constant of gravity is the
+per arriving row in place of `u_D`; the photon's magnitude `Q`, a massive
+family's its own `|p_D|` in `Q`'s place, record 902; every crowd walked
+here is the photon family at `Q = 64`) the push's constant of gravity is the
 clock's: the same crowd's shell mean of the weighted flow is `22.85`
 against the continuum's `q / (4 pi) = 23.08` (`0.990 +- 0.018`, the
 shells' error of the mean) beside the clock's `A r = 68.72` against
@@ -221,10 +224,10 @@ clock reading unchanged (the age moment untouched).
 
 ## 6. The verdict (e)
 
-**CLOSES TO `2 c_f` WITHIN FIVE PER CENT ON THE ONE CONSTANT: 3.65 to
-3.92 against 4 at `c_f = 2`, the two stated factors (the shells' `0.990`,
-the finite path's `0.96 to 0.99`) and the ring's grain accounting for
-the rest; not CLOSES (4 is not read within the grain bare), not CANNOT
+**CLOSES TO `2 c_f` ON THE ONE CONSTANT within the finite path's factor
+`L / sqrt(L^2 + b^2)` and the shells' `0.990`, to one to three grains:
+`3.65 / 3.82 / 3.92` against the expected `3.86 / 3.93 / 3.79` at b = 6 /
+3 / 8 at `c_f = 2` (bare against 4: 8.7, 4.5 and 2.0 per cent below); not CLOSES (4 is not read within the grain bare), not CANNOT
 CLOSE (the ground is one).** What is declared: `c_f = 2` (the key),
 `[1, 16384]` and the fan (the world), `n S = d` (the pin), `f_D` (the
 hypothesis). What follows: the push's constant equal to the clock's
