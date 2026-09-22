@@ -1,5 +1,7 @@
 # The body's drive under the one wall: step 3 of the generic bending (the chief physicist, 2026-09-22)
 
+**Status on 2026-09-22 (the chief physicist, after the Boss's word of 06:45Z).** Built under the key `optical` as a hypothesis beside the law, off by default; the registered worlds are byte identical without the key. The model owner's word of record 745 of docs/LOG_2026-09-20.md (no wall is needed) and his word of record 816 of docs/LOG_2026-09-20.md (the owner, 2026-09-22, 06:33Z, through the chief physicist: no wall any more; a cart with a click) supersede the course of the generic bending through a wall; steps 5 and 6 of the six are closed as not ordered. The worlds, their pins and their runs below stand as scoped evidence of what was built and read, nothing deleted (the repository preserves scoped historical evidence). The course that follows is the moving detector, a body carrying a detector whose clicks are its own record (docs/designs/moving_detector/DESIGN.md).
+
 The model owner's word of 2026-09-22 ("finish form B"; "continue until the
 whole list is handled"): step 3 of the generic bending, the body's drive in
 the age wall's set, built on form B (`drive-b-v1`, the Drive Builder's
