@@ -19,10 +19,12 @@ nearest |p_D| D / |D|; |p_D| is Q = 64 for the photon and a massive family's
     the key changes) replays at its cap to the digests of `gate_set.json`
     byte for byte, its `run.json` without a `flow_link` key; the small
     optical bar of `tests/test_optical.py` (a) (a lamp, a rest crowd, the
-    wall and the push) runs 40 intervals to the digests main
-    `ab96e7e899d5e7c5be58c00a0f5a02a97a337d8a` produced (the state
-    `48e145edb54885d6...`, the audit `b946a5d62220786c...`, the events
-    `6ff9d83d77533d67...`);
+    wall and the push) runs 40 intervals to the digests the base tree
+    produced without the key (origin/generic-bending at
+    `3760754c1bea035ccb8b0fc5a1f9dded6c998e36`, main merged in: the state
+    `19db8e884b3128fa...`, the audit `b946a5d62220786c...`, the events
+    `6ff9d83d77533d67...`; on main ab96e7e8 before the generic entry the
+    state was `48e145edb54885d6...`, the audit and the events the same);
 (b) the design's numbers on series K's fan (the 290 primitive directions
     within Manhattan 6, the one copy in `examples/events/lensing/make_worlds.py`):
     the fan's mean of the incidence S_1 / |D| times the weight |f_D| / Q is
@@ -55,10 +57,11 @@ nearest |p_D| D / |D|; |p_D| is Q = 64 for the photon and a massive family's
     (4) the clock's word unchanged: the bar of `tests/test_optical.py` (a)
     under the key walks the same x chain as without it (the crowd at rest
     carries the zero label; the wall reads the age moment, not the flow);
-    (5) the record: the identity `flow-link-v1` under `hypotheses` (after
-    `optical-v1`, before `binding-v1`) and `flow_link: true` in `run.json`
-    under the key alone; the key stands alone (a world without `optical`
-    declares it and carries the identity);
+    (5) the record: the identity `flow-link-v1` under `hypotheses` (last
+    before `binding-v1`; `optical-v1` names no hypothesis since the generic
+    entry, gamma a declared input) and `flow_link: true` in `run.json`
+    under the key alone; the key stands alone (a world without `optical`,
+    gamma 0 by default, declares it and carries the identity);
 (d) the refusals and the edge of the working bound: `flow_link` 1, "true",
     null or [] refused at load naming flow-link-v1; the flow label's one
     product 2 |p_D| |D_i| + S_1 tested by division before it is formed:
@@ -94,11 +97,12 @@ FLOW_LINK_WORLDS = EXAMPLES / "flow_link"
 # The gate world whose path the key changes: a phase-less family's push on a
 # body through the group moment.
 GATE_WORLD = "coupling/1b_m16.json"
-# The digests main ab96e7e8 produced for the optical bar (a) (the first 16
+# The digests the base tree (origin/generic-bending 3760754c, main merged in)
+# produced without the key for the optical bar (a) (the first 16
 # hex digits of each sha256; the run through `execute_nature_beam_run` at
 # 40 intervals, the source the world's JSON).
 BAR_DIGESTS = {
-    "state_sha256": "48e145edb54885d6",
+    "state_sha256": "19db8e884b3128fa",
     "audit_sha256": "b946a5d62220786c",
     "events_sha256": "6ff9d83d77533d67",
 }
@@ -169,7 +173,7 @@ def test_the_key_absent_reads_byte_for_byte_as_main(tmp_path):
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "flow_link" not in record and FLOW_LINK_RULE not in record["hypotheses"]
-    # The small optical bar against main's digests.
+    # The small optical bar against the base tree's digests.
     document = optical_tests.bar(1)
     out = tmp_path / "bar"
     out.mkdir()
@@ -178,7 +182,9 @@ def test_the_key_absent_reads_byte_for_byte_as_main(tmp_path):
     )
     assert {k: v[:16] for k, v in digests(out).items()} == BAR_DIGESTS
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
-    assert "flow_link" not in record and record["hypotheses"] == ["amplitude-v1", OPTICAL_RULE]
+    # gamma is a declared input of the law since the generic entry: `optical-v1`
+    # names no hypothesis.
+    assert "flow_link" not in record and record["hypotheses"] == ["amplitude-v1"]
 
 
 # -- (b) ---------------------------------------------------------------------------
@@ -275,12 +281,12 @@ def test_the_engine_reads_the_flow_label_under_the_key():
         assert (FLOW_LINK_RULE in simulation.hypotheses) is key
         assert (FLOW_LINK_RULE in simulation.world.hypotheses) is key
     hypotheses = parse_nature_beam_world(diagonal_turn_world(True)).hypotheses
-    assert hypotheses.index(OPTICAL_RULE) < hypotheses.index(FLOW_LINK_RULE)
+    assert OPTICAL_RULE not in hypotheses and hypotheses[-1] == FLOW_LINK_RULE
     # The key stands alone: without `optical` the world declares it and
     # carries the identity; with a held paid family the identity precedes
     # binding-v1.
     alone = parse_nature_beam_world(with_key(optical_tests.turn_world(None)))
-    assert alone.flow_link and alone.optical is None and alone.hypotheses[-1] == FLOW_LINK_RULE
+    assert alone.flow_link and alone.optical == 0 and alone.hypotheses[-1] == FLOW_LINK_RULE
     assert BINDING_RULE not in alone.hypotheses
 
 
@@ -356,7 +362,7 @@ def test_the_clocks_word_and_the_record(tmp_path):
     )
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["flow_link"] is True
-    assert record["hypotheses"] == ["amplitude-v1", OPTICAL_RULE, FLOW_LINK_RULE]
+    assert record["hypotheses"] == ["amplitude-v1", FLOW_LINK_RULE]
 
 
 # -- (d) ---------------------------------------------------------------------------
