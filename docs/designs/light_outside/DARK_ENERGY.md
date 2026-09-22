@@ -19,8 +19,12 @@ acceleration into the Hubble diagram read as redshift against flight
 time, `q_eff = -2 g_1 / (1 + g_1)`, from any stretch of the emitters'
 clocks that grows linearly with the flight time (`g_1` per Hubble
 length), with NOTHING accelerating on the GameBoard, and the register
-has read that shape (series G, the accelerating form the nearest of the
-three in every pushing window, the cause the emitters' clocks); but the
+has read that shape in the one way the register reads it (series G: the
+accelerating form the nearest of the three fixed forms in all six
+pushing windows, while the fitted `q_eff` itself was POSITIVE in five of
+six, EXPERIMENTS lines 2236 to 2243; the shape read is the
+nearest-of-three comparison, not a fitted negative q; the cause the
+emitters' clocks); but the
 size nature needs, `g_1 = 0.36`, is a declared input of the law and not a
 number it gives, the law's own accumulation of the crowd gives the
 opposite sign, and by nature's own method, the brightness of a standard
@@ -51,9 +55,14 @@ is the shape, as a property of the conversion, and it says it below.
   nearest of the three in all six ... The cause is the emitters' clocks:
   the inner ranks sit in the thickest part of the crowd's rays and their
   clocks run slowest (k up to 0.07 with the scalar clock), which reddens
-  the near part and inflates the near fit's H" (DETECTOR; the
-  denominator the tick, GAMEBOARD, before f8c5367d, the own count since,
-  record 754). And in the coasting worlds, with no crowd at all, "the
+  the near part and inflates the near fit's H". Two numbers by kind,
+  both on `main` since f8c5367d (`tools/hubble_readings.py` forms `1 + z`
+  against the tick and multiplies by `r_w` beside it, record 754): the
+  tick-based readings above (the fitted `q_eff`, `H t_0`, the nearest of
+  the three forms, the formula 288 of 288) are GAMEBOARD by their
+  denominator; the own-count re-read (`r_w` 0.7500 to 1.0000, 304 inside
+  and 32 outside, the crowd's well blue for 15 and 20 of 24 sources) is
+  DETECTOR. And in the coasting worlds, with no crowd at all, "the
   accelerating form's signature" at the far fit from the sources' initial
   distances `r_0` alone.
 - **NATURE row 3** (docs/NATURE.md line 99): `q_0 = -0.53 +- 0.01` (Planck
@@ -80,7 +89,9 @@ is the shape, as a property of the conversion, and it says it below.
 So the register's word today is: the law does not need dark energy as a
 rule (nothing of the six is a cosmological constant), and it does not
 reach nature's `-0.53` either; what it has read is the accelerating SHAPE
-appearing from the emitters' clocks. Section 2 derives that shape from
+appearing from the emitters' clocks, as the nearest of three fixed forms
+(G's fitted `q_eff` positive in five of six pushing windows, the
+accelerating form nearest in all six), never as a fitted negative q. Section 2 derives that shape from
 the conversion; section 3 says what Inside can supply its size; section
 4 does the brightness; section 5 is the verdict by kind.
 
@@ -102,7 +113,10 @@ coasting one, the far part lower than the near slope's extrapolation.
 rows fly blind at c; a lamp in the crowd `a_tau,A` births at the rate `1 /
 (1 + k_A)`, `k_A = a_tau n / d`; a detector in the crowd `a_tau,B` counts at
 `r_B = 1 / (1 + k_B)`; the momenta of the thrown stars are constant
-(coasting) or fall under the push (G2's `p(400) / p(0)` 0.68 to 0.96,
+(coasting) or fall under the push (series G's table, EXPERIMENTS line
+2214: the momentum left `p(400) / p(0)` 0.68 to 0.96 over the four ranks
+of the pushing worlds, 1.03 to 1.00 coasting; series G2, line 2418:
+"every momentum down by 14 to 58 percent on the GameBoard"; both
 GAMEBOARD): nothing on the GameBoard ever accelerates a star outward
 (DERIVATIONS_BEAM 20.2; series G2's verdict).
 
@@ -175,9 +189,14 @@ with its sign and its size on the law's own numbers:
   known crowds (the wells of galaxies and clusters, `10^-6` to `10^-5` in
   k) are four orders below it.
 - **(b) The crowd's history** (Seeliger's accumulation, DERIVATIONS_BEAM
-  14.3 and 15.5): on a static board every ray keeps its age and the age
-  moment of a homogeneous crowd of eternal sources grows as `t^2`
-  (the rays of age up to `c t` from the shells, each beam undiluted), so
+  14.3 and 15.5, which say the PRESENCE of a homogeneous crowd of eternal
+  sources on a static board grows linearly in t; the step from the
+  presence to the age moment is this file's own arithmetic: the age
+  moment is the presence times the mean age of the rays present, and the
+  mean age of the rays reaching a Node from shells out to `c t` is `t /
+  2`, so the age moment grows as `t^2`): on a static board every ray
+  keeps its age and the age moment of such a crowd grows as `t^2` (the
+  rays of age up to `c t` from the shells, each beam undiluted), so
   the emitters, read at the earlier time `t_0 - tau`, sat in a THINNER
   crowd than the detector's today: `k_A(tau) = k_0 (1 - x)^2`, `g(x) = (1
   + k_0 (1 - x)^2) / (1 + k_0)`, `g_1 = -2 k_0 / (1 + k_0) < 0`, `g_2 = k_0
@@ -242,7 +261,7 @@ factors), Milne's 0 needing nature's `D_M` in place of the law's `c tau`.
 
 | The formula Outside | Verdict | The one line that decides | The register (DETECTOR unless labelled) |
 | --- | --- | --- | --- |
-| the apparent acceleration of z against flight time, `q_eff = -2 g_1 / (1 + g_1)`, from the clocks' stretch growing with the flight time, nothing accelerating | SHOWN in form, rung 2 (the shape is the conversion's) | a term linear in tau is a larger H_0, the throw's curvature stays Milne's | series G: the accelerating form the nearest of the three in all six pushing windows, the cause the emitters' clocks (the tick denominator GAMEBOARD; the own-count re-read DETECTOR, the well blue for 15 and 20 of 24); G2: the nearest only where a star's clock scatters the diagram |
+| the apparent acceleration of z against flight time, `q_eff = -2 g_1 / (1 + g_1)`, from the clocks' stretch growing with the flight time, nothing accelerating | SHOWN in form, rung 2 (the shape is the conversion's) | a term linear in tau is a larger H_0, the throw's curvature stays Milne's | series G, two numbers by kind on `main` since f8c5367d: the tick-based fits (the accelerating form the nearest of the three fixed forms in all six pushing windows while the fitted `q_eff` was positive in five of six, the cause the emitters' clocks) GAMEBOARD by their denominator; the own-count re-read (`r_w` 0.7500 to 1.0000, 304 inside and 32 outside, the well blue for 15 and 20 of 24) DETECTOR; G2: the nearest only where a star's clock scatters the diagram |
 | its size, `g_1 = 0.36` for nature's `-0.53` | NEITHER: an input (the suspension pair), no number of the law gives it | `k = a_tau n / d`, the scale the world's `[n, d]` (NATURE 12's note) | G's k up to 0.07 on declared pairs; nature's wells `10^-6` to `10^-5` |
 | its sign from the law's own crowd history (Seeliger, `k ~ t^2`) | SHOWN, and the WRONG sign: `q_eff = 2 k_0 (3 - k_0) / (1 - k_0)^2 > 0` | the older light was born in a thinner crowd | none run; the growing wall's steady presence gives Milne's 0 (15.4, 15.5) |
 | the coasting throw itself | SHOWN, `q = 0` exactly (Milne) | the source's classical Doppler on the throw | G: `z = v / c` to 0.003, `H t_0 = 1.029`; G2 `coasting_none` `q = -0.108` in `0 +- 0.25` (MET); NATURE 3: FAIL against `-0.53` |
