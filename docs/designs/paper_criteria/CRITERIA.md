@@ -578,6 +578,101 @@ session's scratchpad; the readings recorded in the rows below as they
 land, PASS or FAIL under the declared criterion, the register's entries
 given a dated line, no pin edited after a run, no prior reading deleted.
 
+## Three items from the owner's second referee read (the Boss's order of about 10:10Z, 2026-09-22)
+
+### Item (a). Bell, measurement independence: the assumption and the reading that tests it
+
+- **The assumption the paper does not state.** The settings are independent
+  of the wheel. In the registered Bell worlds (`bell_0_8`, `bell_0_24`,
+  `bell_16_8`, `bell_16_24` at N = 64, the wheel [1, 64] at rate 1; the
+  plateau worlds `bell_n512_*` .. `bell_n16384_*` at the wheel [1, N]) the
+  record's coordinate is u = ordinal mod W, and the ladder's marginal cells
+  are W / 2 exact with the first party's rungs at W / 2 (the register: "the
+  marginals 32 / 64 exact (Alice + for u < 32)", the L3 entry and
+  `expectations.json` under `pair`, `marginal` 32), so the first party's
+  outcome sequence over the births is a square wave of period W: + for u <
+  W / 2, - after. A setting chosen as a function of u (as u < W / 2, as u's
+  parity) would bias the second party's marginal; the CHSH sum of the
+  register assumes the settings blind to u.
+- **How the registered worlds meet it.** By construction: in the four CHSH
+  worlds each setting pair is the world's declaration (the counters'
+  windows the integers), the same for every u; in `bell_choosers` the
+  settings are two chooser sources (`sa` at x = 0, `sb` at x = 20, their
+  rows' phases the counters' windows through `phase_window` with an
+  offset), and the register reads "the 960 births from tick 8 see the
+  choosers' 15 setting pairs with every u" (960 = 64 x 15), every u
+  meeting every pair once, the marginal 32 of 64 (DETECTOR, the registered
+  run's gathers). Nothing in the register chooses a setting from u.
+- **The reading that tests it, read from the existing register (no run).**
+  The outcome sequence's serial correlation at lag 1: from the registered
+  sequence (Alice + for u < 32 over the 64 births of each CHSH world, the
+  gathers' `chosen` per record, DETECTOR) the correlation over one period
+  of the wheel is 1 - 4 / W (COMPUTATION on the registered clicks): 0.9375
+  at W = 64 (the four CHSH worlds and the choosers), 0.9921875 at 512,
+  0.9990234375 at 4096, 0.999755859375 at 16384 (the plateau worlds; over
+  the W births of one run without the wrap the same sequence reads (W - 3)
+  / (W - 1): 0.9683 at 64, 0.99951 at 4096). The register's statement pins
+  the sequence, so no run is ordered; the reading that would refute the
+  assumption's hold in a world is a marginal off W / 2 with the settings
+  chosen from u, which no registered world does. What the paper should say
+  (the writer's, on this SHA): the CHSH values assume the settings
+  independent of the lamp's wheel; on the register the settings are declared
+  per world or balanced over every u; the outcome sequence is a square
+  wave with the serial correlation 1 - 4 / W, so a choice of settings from
+  u would bias the marginals, and nature's freedom-of-choice loophole has
+  its counterpart here in the wheel, not closed by the register.
+
+### Item (b). Table 3 row 2a's source: a two-slit single-photon visibility
+
+- **The finding.** Row 2a cites Grangier, Roger and Aspect 1986 (0.98) for a
+  two-slit visibility; that experiment is a Mach-Zehnder, row 2b's source,
+  and the register's own row 2a marks it "to verify against the source".
+- **A two-path source of the two-slit kind.** Jacques, Wu, Toury,
+  Treussart, Aspect, Grangier and Roch, "Single-photon wavefront-splitting
+  interference: an illustration of the light quantum in action", Eur.
+  Phys. J. D 35, 561 (2005): single photons from one N-V colour centre in a
+  diamond nanocrystal, the wavefront split by a Fresnel biprism (Young's
+  two-path geometry), the clicks registered on an intensified CCD; the
+  abstract as the search engine's summary renders it: "a visibility of 94
+  percent can be associated to the central fringe". Marked TO VERIFY
+  AGAINST THE SOURCE: the journal's, the arXiv's and the ADS abstract
+  pages are blocked by this session's egress proxy, so the 94 percent is
+  taken from the abstract's rendering and not read in the paper; the
+  paper's writer verifies it before it enters the table. Two true
+  double-slit single-photon experiments found without a visibility figure
+  at hand: Aspden, Padgett and Spalding, Am. J. Phys. 84, 671 (2016), the
+  video recording of single-photon double-slit interference; Rueckner and
+  Peidle, Am. J. Phys. 81, 951 (2013), the double slit with single photons
+  and a quantum eraser (the visibility polarization-dependent, no single
+  figure in the abstract). No number is invented: until the 94 percent is
+  verified the row's comparison against a two-slit source is NOT COMPARED.
+- **What the criterion then reads.** Under the caption's criterion (PASS
+  where the model's value lies above the apparatus-limited measurement,
+  the ideal 1): against Jacques 2005's 0.94, once verified, the clicks'
+  0.9659 (DETECTOR, the run at head, bit for bit the pin) lies 0.026 ABOVE
+  the measured, a bound met, PASS in the caption's sense and still 0.034
+  below the ideal; against Grangier 1986's 0.98 (a Mach-Zehnder, another
+  geometry) the row reads FAIL by 0.014 as it stands. The verdict is the
+  writer's to word on the Boss's routing; this table reports both
+  readings under the one criterion and moves nothing.
+
+### Item (c). Row 12 (series T) under this table's criteria: historical
+
+- **Status by kind.** The readings are DETECTOR (the lamp's light at the
+  detector's record: 1 + z 1.3000 / 1.3000 under the presence word at 3
+  and 6 Links, 2.6517 / 2.6514 and 4.1500 / 4.1506 under the age word; the
+  ratio of the two k 1.907 for the pin 1.909 +- 0.05; the tree `afb533a`,
+  replicated bit-exact in round 2 part 1), read under the law before the
+  generic entry of the bending (2026-09-22). Under the law as it stands
+  since record 865 the four worlds are NOT READABLE (the light trapped in
+  a crowd at a pair with n > 0), and the series is being redeclared in the
+  weak field by the chief physicist (records 868 and 894), its re-read
+  pending. The row's status under this table: PASS under the old law,
+  HISTORICAL; not a PASS of the law as it stands; the fourth PASS of the
+  caption's tally counts only with that word until the physicist's
+  weak-field re-read lands, which then replaces these numbers on his SHA.
+  Nothing of it is this runner's to run.
+
 ## The readings at head (step 2)
 
 Recorded in each row's bullet (f) as the runs landed: rows 3 and 4b, 7a and 7b, 8a and 8b at 09:40Z to 09:44Z; row 2a at 09:56Z (the pin met bit for bit). Every number by kind; no pin edited after a run; the register's entries given a dated line (EXPERIMENTS.md, series G2, N and J and the L2b entry; the worlds' READMEs).
