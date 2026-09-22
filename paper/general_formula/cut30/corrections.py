@@ -3951,6 +3951,11 @@ CORRECTIONS = [
         "a non-local step on the labels, not on the times, forced by Bell's theorem",
         "a non-local step on the labels, its interval the last arm's (as after Theorem~\\ref{th:marginals}), forced by Bell's theorem",
     ),
+    (
+        "Definition 7's displayed equation: the square's denominator the multiplicity \\mathtt m, not a plain m, which is the mass angle elsewhere (issue #953; the Boss's order of 22:10Z; notation only)",
+        "|z|^2 = \\frac{w^2}{m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
+        "|z|^2 = \\frac{w^2}{\\mathtt m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
+    ),
 ]
 
 
