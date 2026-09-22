@@ -32,7 +32,7 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # test that reads the pin, the byte-identity digests and the replay.
     "examples/events/massive_rows/expectations.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/make_worlds.py": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/replay_register.py": ("tests/test_massive_rows.py",),
+    "tools/click_readings/massive_rows_replay.py": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),

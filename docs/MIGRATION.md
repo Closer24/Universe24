@@ -37,6 +37,23 @@ forms of the key `doppler`, deleted on 2026-09-20 when the crossing rule gave th
 Doppler; their verdicts are in the log and Highlights 5.4). No key, hypothesis or
 rule of the engine moves; TERMINOLOGY.md's retired rows stay as history.
 
+The readings of a click under one boundary (the third commit): the package
+`tools/click_readings/` ([its README](../tools/click_readings/README.md)) holds the
+readings tools, one module per series, renamed by the series' subject and moved
+byte for byte but for their root path: `tools/bell_chsh.py` -> `bell.py`,
+`tools/bell_choosers.py` -> `bell_choosers.py`, `tools/<series>_readings.py` ->
+`<series>.py` for bohr, c_measured, coupling, covariant, heisenberg, hubble,
+hubble_stars, nucleus, orbit, orbit_lamp, quarks, redshift and weak,
+`examples/events/massive_rows/read_run.py` -> `massive_rows.py`,
+`examples/events/massive_rows/replay_register.py` -> `massive_rows_replay.py`,
+`examples/events/quarks/replay_register.py` -> `quarks_replay.py`. The tests load
+them by the new path; the usage lines of the worlds' READMEs, EXPERIMENTS.md,
+TEST_EXPECTATIONS.md, BEAM_LAW.md and ENGINE.md name the new path; the JSON
+registers, the generators and the dated evidence keep the old names as history.
+No arithmetic moved between modules (the tools' helpers differ but for four
+trivial pairs, so no shared module was made); every reading and every register
+byte identical. `tools/amplitude_path.py` stays: the paper cites it at that path.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,

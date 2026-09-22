@@ -26,5 +26,5 @@ experimenter, registered as rows of series H.
 ```bash
 python examples/events/atoms/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/atoms examples/events/atoms/*.json
-PYTHONPATH=src python tools/bohr_readings.py artifacts/atoms
+PYTHONPATH=src python tools/click_readings/bohr.py artifacts/atoms
 ```

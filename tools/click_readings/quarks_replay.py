@@ -5,7 +5,7 @@ typed by hand (the model owner, record 205: a run proves; the Boss's order
 of 2026-09-21 after the crossing rule moved the fate readings). Run from
 the repository root:
 
-    python examples/events/quarks/replay_register.py [--cap 100]
+    python tools/click_readings/quarks_replay.py [--cap 100]
 
 `tests/test_quarks_expectations.py` (e) replays the same blocks bit-exact.
 """
@@ -23,14 +23,15 @@ from event_universe.events import parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
-REGISTER = HERE / "expectations.json"
+ROOT = HERE.parents[1]
+WORLDS = ROOT / "examples" / "events" / "quarks"
+REGISTER = WORLDS / "expectations.json"
 DEFAULT_CAP = 100
 
 
 def readings_tool():
     """The readings tool loaded by its path (a reader of the record)."""
-    path = ROOT / "tools" / "quarks_readings.py"
+    path = ROOT / "tools" / "click_readings" / "quarks.py"
     spec = importlib.util.spec_from_file_location("quarks_readings_tool", path)
     module = importlib.util.module_from_spec(spec)
     sys.modules["quarks_readings_tool"] = module
@@ -42,7 +43,7 @@ def replay_of(name: str, cap: int) -> dict[str, object]:
     """Run one shipped world for `cap` intervals into a temporary folder and
     read its replay block."""
     tool = readings_tool()
-    source = (HERE / f"{name}.json").read_bytes()
+    source = (WORLDS / f"{name}.json").read_bytes()
     world = parse_nature_beam_world(json.loads(source))
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "run"

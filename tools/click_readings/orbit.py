@@ -30,7 +30,7 @@ host's interval count, a GameBoard rate; the entry is docs/EXPERIMENTS.md,
 "D, the orbit under the Beam Law, on the plane (2026-09-19)", whose
 numbers are never moved.
 
-    PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
+    PYTHONPATH=src python tools/click_readings/orbit.py artifacts/orbit
 
 The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
 record 567): only a detector's reading or a measured event's own record

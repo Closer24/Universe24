@@ -24,7 +24,7 @@ outside their expectation (docs/EXPERIMENTS.md, "A10, the width of an
 opening and the spread behind it, under the Beam Law") and never
 moved.
 
-    PYTHONPATH=src python tools/heisenberg_readings.py artifacts/heisenberg
+    PYTHONPATH=src python tools/click_readings/heisenberg.py artifacts/heisenberg
 """
 
 from __future__ import annotations

@@ -148,6 +148,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/diagnostics/shell_readings.py` | The shell means of the engine's readings, a read-only host diagnostic in floating point |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end; `--wall-seconds` and `--memory-mb` stop a run past the host's budget and report it not completed |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
+| `tools/click_readings/` | The readings of the register's series from a run's record, one module per series: the clicks alone (DETECTOR) with the GameBoard's lines labelled (GAMEBOARD); nothing here runs a rule |
 | `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
 | `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |

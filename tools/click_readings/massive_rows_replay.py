@@ -8,7 +8,7 @@ at the end, the layer's line and the sha256 of `state.json`, of the books
 (the audit of `run.json`, JSON-encoded) and of `events.jsonl`. A law
 change re-registers it by this script; the test replays it bit-exact.
 
-    PYTHONPATH=src python examples/events/massive_rows/replay_register.py
+    PYTHONPATH=src python tools/click_readings/massive_rows_replay.py
 """
 
 from __future__ import annotations
@@ -20,13 +20,14 @@ import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
+ROOT = HERE.parents[1]
+WORLDS = ROOT / "examples" / "events" / "massive_rows"
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.events.run import execute_nature_beam_run  # noqa: E402
 from event_universe.world_loading import load_world  # noqa: E402
 
-WORLD = HERE / "slits_matter_small.json"
+WORLD = WORLDS / "slits_matter_small.json"
 FAMILY = "matter"
 BASE = 1 << 32
 
@@ -74,7 +75,7 @@ def replay(births: int) -> dict[str, object]:
 
 
 def main() -> None:
-    path = HERE / "expectations.json"
+    path = WORLDS / "expectations.json"
     register = json.loads(path.read_text(encoding="utf-8"))
     block = register["slits_matter_small"]
     block["replay"] = replay(int(block["births"]))

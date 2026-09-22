@@ -21,12 +21,12 @@ formula gives, a run proves; the template `tests/test_amplitude_cone.py`).
     crossing rule moved the fate readings): the engine's record of the
     first `cap` intervals by kind (the steps with their Nodes and the
     hand-overs, GAMEBOARD; the face clicks of the bodies that left,
-    DETECTOR), written from the engine by `replay_register.py` and
+    DETECTOR), written from the engine by `tools/click_readings/quarks_replay.py` and
     replayed here bit-exact, so the register cannot drift from the tree
     again; the fate's `engine_first_step` is the replay's first step.
 
 No number of a 3000-interval run is pinned here: the 3000-interval fates
-are the register's readings (`tools/quarks_readings.py`).
+are the register's readings (`tools/click_readings/quarks.py`).
 """
 
 from __future__ import annotations
@@ -160,7 +160,7 @@ def test_the_least_strong_value_that_binds_each_pair(numbers):
 
 @pytest.fixture(scope="module")
 def readings_tool():
-    return load("quarks_readings_tool", ROOT / "tools" / "quarks_readings.py")
+    return load("quarks_readings_tool", ROOT / "tools" / "click_readings" / "quarks.py")
 
 
 @pytest.mark.parametrize("name", NAMES)

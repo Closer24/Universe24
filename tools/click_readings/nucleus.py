@@ -37,7 +37,7 @@ the first hundred intervals; the line p n n p holds. The record checks
 (completed, the books balanced at every tick) fail the tool; the readings
 are registered inside or outside their expectation and never moved.
 
-    PYTHONPATH=src python tools/nucleus_readings.py artifacts/nucleus
+    PYTHONPATH=src python tools/click_readings/nucleus.py artifacts/nucleus
 
 The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
 record 567): only a detector's reading or a measured event's own record
@@ -56,7 +56,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.world_loading import world_of_run  # noqa: E402

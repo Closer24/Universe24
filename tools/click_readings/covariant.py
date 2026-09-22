@@ -2,7 +2,7 @@
 `examples/events/covariant/`), read from the runner's record and compared
 with the pins of `expectations.json`, written before the runs.
 
-Usage: `PYTHONPATH=src python tools/covariant_readings.py <runs root>
+Usage: `PYTHONPATH=src python tools/click_readings/covariant.py <runs root>
 [--register examples/events/covariant/expectations.json]`. The root holds
 the runs `tools/run_series.py` wrote (`<root>/<world>/run/`), told apart by
 the model of their record (`beam-covariant-j4_muon_<name>-v1` and
@@ -10,7 +10,7 @@ the model of their record (`beam-covariant-j4_muon_<name>-v1` and
 kinds ([the register](../docs/EXPERIMENTS.md), "Two kinds of readings"):
 DETECTOR, a detector's record or a measured event's own record (the
 products' clicks on the +x face of the J4 bar; the centre's pointer of the
-coasting world, whose z is read by `tools/hubble_stars_readings.py`'s own
+coasting world, whose z is read by `tools/click_readings/hubble_stars.py`'s own
 rule; the body's `become` line, its Node and its `counted`, the body's own
 record), or GAMEBOARD, the host's view (E' at load and E'_0, the `energy`
 lines and their ticks, the pace over the late window from the step lines,
@@ -44,7 +44,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 EXPECTATIONS = ROOT / "examples" / "events" / "covariant" / "expectations.json"
 MUON_PREFIX = "beam-covariant-"
 STARS_MODEL = "rays-hubble-stars-record-covariant-none-space-v1"
@@ -180,7 +180,7 @@ def heading_age(steps: int) -> int:
 def resolved_view(folder: Path) -> Path:
     """A view of the run's folder whose `initialization.json` is the resolved
     world (the shipped world places catalog definitions, which the runner
-    expands into `resolved_initialization.json`; `hubble_stars_readings.py`
+    expands into `resolved_initialization.json`; `click_readings/hubble_stars.py`
     reads the inline world): the record files linked, nothing copied."""
     resolved = folder / "resolved_initialization.json"
     if not resolved.exists():
@@ -334,7 +334,7 @@ def coasting_lines(
     lines: list[str] = []
     verdicts: list[bool] = []
     registered: dict[str, object] = {}
-    tool = load_tool("hubble_stars_readings_tool", ROOT / "tools" / "hubble_stars_readings.py")
+    tool = load_tool("hubble_stars_readings_tool", ROOT / "tools" / "click_readings" / "hubble_stars.py")
     run = tool.read_run(resolved_view(reading.folder))
     star = run.stars[str(expected["star"])]
     pin = dict(expected["z"])  # type: ignore[call-overload]

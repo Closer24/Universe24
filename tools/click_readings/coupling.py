@@ -41,7 +41,7 @@ The probes read (`read`: the push taken, the rays go on), so the stream of
 the source's number is the same in the worlds 5, 5P and 6: the replay of
 world 5 serves the three, and the identity is checked at every tick.
 
-    PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling
+    PYTHONPATH=src python tools/click_readings/coupling.py artifacts/coupling
 
 Two kinds of numbers (the model owner, 2026-09-22, records 562 and 564;
 the audit of record 567): a DETECTOR reading is a probe's own record

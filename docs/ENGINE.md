@@ -127,7 +127,7 @@ radius)` (a host diagnostic outside the engine since 2026-09-21; before, the
 engine's method) gives the shell means of the count (the amount that
 arrived, the zeroth moment outside), the presence (every row at the Node)
 and the radial flow (the first moment), read-only, in floating point.
-`tools/coupling_readings.py` sums the four in-plane faces itself on the
+`tools/click_readings/coupling.py` sums the four in-plane faces itself on the
 plane. A thin periodic GameBoard is a
 compact graph with return Links; it establishes no equivalence with
 unbounded three-dimensional space and requires its own experiment

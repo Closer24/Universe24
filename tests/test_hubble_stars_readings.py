@@ -1,4 +1,4 @@
-"""The Hubble-stars readings tool (series G2, `tools/hubble_stars_readings.py`)
+"""The Hubble-stars readings tool (series G2, `tools/click_readings/hubble_stars.py`)
 reads the engine's own functions (the experimenter skill: a readings tool
 reads the engine, never replays a rule of it), and the worlds of
 `examples/events/hubble_stars/` are the ones their generator writes. The
@@ -70,7 +70,7 @@ def load(name: str, path: Path):
     return module
 
 
-TOOL = load("hubble_stars_readings_tool", ROOT / "tools" / "hubble_stars_readings.py")
+TOOL = load("hubble_stars_readings_tool", ROOT / "tools" / "click_readings" / "hubble_stars.py")
 
 TICKS = 60
 WIDTH = 1 << 20

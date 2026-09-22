@@ -51,7 +51,7 @@ is registered with its cause and never moved.
    or an emitter; an emitter is also a detector at its own Node), the pin
    first, the fraction-free law. Nothing proposed to change.
 6. **The implementation.** The generator here (five worlds, the pins), the
-   tool `tools/orbit_lamp_readings.py` (the click lines only), the test
+   tool `tools/click_readings/orbit_lamp.py` (the click lines only), the test
    `tests/test_orbit_lamp_readings.py`, this README, the register entry,
    the index row; no engine change; danger none (a new folder, a new tool,
    a new test); host time 14 s per world with the source, 7 s without
@@ -157,7 +157,7 @@ Run and read:
 ```bash
 PYTHONPATH=src python examples/events/orbit_lamp/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/orbit_lamp examples/events/orbit_lamp/r*.json
-PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp
+PYTHONPATH=src python tools/click_readings/orbit_lamp.py artifacts/orbit_lamp
 ```
 
 ## The first run at n = 10 (2026-09-22, history: measured against its pins, the cause named, none moved)
@@ -176,7 +176,7 @@ books balanced at every tick; the digests (state, audit, events):
 `11d80c9ec029`, `494337f52bcc` (`r24`); `330741539a62`, `c082e13c5f93`,
 `75b4a7dfa20e` (`r24_4m`); `85f0b01726ac`, `1f207245cd75`,
 `072fd725e929` (`r12_control`); `3add671fad16`, `1f207245cd75`,
-`beff00cf66eb` (`r24_control`). `tools/orbit_lamp_readings.py`: 0 record
+`beff00cf66eb` (`r24_control`). `tools/click_readings/orbit_lamp.py`: 0 record
 checks failed, 3 readings inside, 13 outside, none moved.
 
 DETECTOR readings (the line's clicks: x, tick, age):
@@ -243,7 +243,7 @@ books balanced at every tick; the digests (state, audit, events):
 `b55f5157d83b`, `91a78c954c4e` (`r24`); `75be887c26e8`, `dd12491c6711`,
 `f6a6e35e2614` (`r24_4m`); `f3e51b857359`, `b91606cc2ff5`,
 `f183a351cb89` (`r12_control`); `1fe2802ea974`, `b91606cc2ff5`,
-`d76f1661df10` (`r24_control`). `tools/orbit_lamp_readings.py`: 0 record
+`d76f1661df10` (`r24_control`). `tools/click_readings/orbit_lamp.py`: 0 record
 checks failed, 7 readings inside, 9 outside, none moved.
 
 DETECTOR readings (the line's clicks: x, tick, age; the radius from x and

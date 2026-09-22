@@ -52,7 +52,7 @@ the readings are registered inside or outside their expectation and never
 moved; an orbit that does not close (no full turn, or a return farther
 than a quarter of the radius) is registered as the finding.
 
-    PYTHONPATH=src python tools/bohr_readings.py artifacts/bohr
+    PYTHONPATH=src python tools/click_readings/bohr.py artifacts/bohr
 
 The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
 record 567): only a detector's reading or a measured event's own record

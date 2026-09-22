@@ -114,7 +114,7 @@ under the Beam Law, written by `bell/make_worlds.py`: one bar of
 21 x 1 x 1, a lamp of `light` at the centre releasing one ray per
 self-creation on +X and on -X, and four counters with phase windows, Alice's
 pair at x = 2 and 1 and Bob's at x = 18 and 19, the settings the only
-difference between the files. `tools/bell_chsh.py` reads their records and
+difference between the files. `tools/click_readings/bell.py` reads their records and
 prints the counts, E, S and every criterion; the register entry is
 [A2, under the Beam Law (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19):
 S = 2 exactly, the model's limit, unchanged from the law of events.
@@ -128,7 +128,7 @@ file but read from the phase of a stream arriving from a third lamp
 periods (5 and 3) coprime to each other and to the circle, so every
 combination of settings meets every phase of the pair; `read.json` is the
 run, `written_a<a>_b<b>.json`, `fixed.json` and `one_clock.json` its
-three controls. `tools/bell_choosers.py` bins the clicks by the window
+three controls. `tools/click_readings/bell_choosers.py` bins the clicks by the window
 they carry and prints every E, S on the quadruple, the largest S over
 every quadruple that occurred and the marginals; the register entry is
 [A2 with the choosers on the GameBoard (2026-09-20)](../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
@@ -147,7 +147,7 @@ rays go on). The items: the equivalence, the third law with unequal contents
 front from the flight table), the far field (the ring means of the count,
 the presence and the flow, the flux through the square, the escape; the
 axis pattern at the probes), the clock (`suspension` 1: the ages replayed
-from the presence read) and the electric reading. `tools/coupling_readings.py`
+from the presence read) and the electric reading. `tools/click_readings/coupling.py`
 reads their records, replays the source-alone worlds through the API and
 prints every criterion and every reading against the expectations of
 [BEAM_LAW section 8](../../docs/BEAM_LAW.md#8-independent-expectations-for-the-re-registered-readings);
@@ -163,7 +163,7 @@ self-creation on the 290 primitive directions with |a| + |b| + |c| <= 6,
 and probes of content 1 at every Node of the shells r = 4 to 14 that
 `pass` the rays and count, in the `scalar` world the presence and in the
 `age` world the age moment (`reads: "age"`, the ray's age kept whole on
-the record since 2026-09-20). `tools/redshift_readings.py` reads the shell
+the record since 2026-09-20). `tools/click_readings/redshift.py` reads the shell
 means of the owed count per self-creation, k x r^2 and k x r, the single
 probes on the axis and the diagonals and the redshift ratios of the age
 clocks; the register entry is
@@ -205,7 +205,7 @@ on the click record) and six masses inside at one Link (the crowd's mass
 inside every source), in a coasting crowd (rows of one ray, the masses of
 content 1) and a pushing crowd (rows of sixteen, the masses releasing 64
 per self-creation), each with the emitters' clocks counting the presence
-(`scalar`) or the age moment (`age`). `tools/hubble_readings.py` reads,
+(`scalar`) or the age moment (`age`). `tools/click_readings/hubble.py` reads,
 per source, the redshift from the rate at which the pointer of the
 detector's record turns against the emitter's declared turn and the
 distance from the ages of the arriving rays, fits the linear law on the
@@ -233,7 +233,7 @@ own flight lines, turning its phase by its momentum at every Link it steps
 (`phase_by_momentum` under the world's `action`, h = 16 p(8) so that
 4 p r = 2 h at r = 8) and releasing rays that carry that phase to the
 open faces, the `wave` detectors of what comes out of the atom.
-`tools/bohr_readings.py` reads the orbit (GAMEBOARD) and the faces'
+`tools/click_readings/bohr.py` reads the orbit (GAMEBOARD) and the faces'
 coherent record per turn and cumulatively (DETECTOR), every line
 labelled by its kind; the register entry is
 [H, Bohr's lines behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20):
@@ -267,7 +267,7 @@ of `nuclear` (`held`) and releasing one row per direction of the 290
 primitive directions with |a| + |b| + |c| <= 6 per interval, `width` 2^28:
 the deuteron at one and at three Links (kicked), two protons at one Link
 (G = 10000 and 7000) and at three, the square p n / n p and the line p n
-n p. `tools/nucleus_readings.py` reads the bodies' own `read` and
+n p. `tools/click_readings/nucleus.py` reads the bodies' own `read` and
 `contact` records and the border's clicks (DETECTOR) and their steps and
 separations (GAMEBOARD), every line labelled by its kind; the register
 entry is
@@ -287,7 +287,7 @@ lifetime 3), three bodies in a line, a triangle, two triples side by side
 and end to end, a kicked quark and a dressed line whose glue makes the
 read mass 1836; the pins derived by the design's `quark_numbers.py` in
 `quarks/expectations.json` and compared by `tests/test_quarks_expectations.py`;
-`tools/quarks_readings.py` reads the bodies' `read`, `contact` and step
+`tools/click_readings/quarks.py` reads the bodies' `read`, `contact` and step
 records and the border's clicks. The register entry is
 [R, the quarks (2026-09-21)](../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21);
 the design is [the quarks as families of the family table](../../docs/designs/quarks/QUARKS.md).
@@ -318,7 +318,7 @@ of content 2^10 releasing one shell every 10 intervals on a fan of 120
 primitive in-plane directions (q = 12 units per interval), and a free probe
 of content 1 at r = 12 or 24 with the tangential momentum the README derives
 for a circular orbit under the measured push law, at the widths of the push
-`width` 1, 8 and 32. `tools/orbit_readings.py` reads the probe's steps and
+`width` 1, 8 and 32. `tools/click_readings/orbit.py` reads the probe's steps and
 pushes and prints whether the orbit closed, its period, its mean radius,
 its drift and the period ratio against the plane's k = 2; the register
 entry is
@@ -339,7 +339,7 @@ lamp of rate [1, 8] on +y and -y (the recoil cancelling by the pair), and
 a line of 121 one-Node `wave` detectors at y = 20 reading the rows' age,
 so every click is the probe's x at the row's birth and the birth's tick;
 two controls without the source and the equivalence world holding four
-times the mass. `tools/orbit_lamp_readings.py` reads the click lines alone
+times the mass. `tools/click_readings/orbit_lamp.py` reads the click lines alone
 (the period as the recurrence of x, the lagged second difference, the
 ratio, the equivalence, the controls) and labels the probe's end state
 and the homes GAMEBOARD; the register entry is
@@ -364,7 +364,7 @@ to 120 x 161, a plane wave from a row of lamps on one heading, a wall
 with ONE opening of width w (1, 3, 9, 27 Nodes) declared as one detector
 that re-emits on a forward fan of 47 directions, and a screen 108 Links
 behind it read as 161 one-Node detectors, every detector under the
-world's `reading` (`wave` or `beam`). `tools/heisenberg_readings.py` reads
+world's `reading` (`wave` or `beam`). `tools/click_readings/heisenberg.py` reads
 the spread of the screen's record and of its count against the
 wavelength lambda = 8 / sqrt 3; the register entry is
 [A10, the width of an opening and the spread behind it](../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20):
@@ -417,7 +417,7 @@ run), the model's own gravity between them (the mass rows on the axes, the
 push through the detector to the opposite chain), a detector of one Node at
 the centre reading `wave` with `reads: "age"`; three crowds (the coupling
 off, on, doubled) and three clocks (none, the presence, the age moment).
-`tools/hubble_stars_readings.py` reads, per star, the redshift from the
+`tools/click_readings/hubble_stars.py` reads, per star, the redshift from the
 pointer's turn, the distance from the arrivals' ages and the luminosity from
 the click rate, fits the deceleration q with H free (the power-law family
 and the three exact forms), validates the criterion on the exact coasting
@@ -443,7 +443,7 @@ fixed source of the free family `nu` releasing one ray per self-creation
 with the stride 1 or 2 over the circle, 128 fixed readers of a paid family
 measuring `nu` under a window of `phase_width` 1 or the default half
 circle, their centres all 0, all 1 or a ladder x mod 64, and a far
-detector counting every ray that reaches it). `tools/weak_readings.py`
+detector counting every ray that reaches it). `tools/click_readings/weak.py`
 reads the readers' clicks and passes and the far detector's clicks
 (DETECTOR) against the counts computed before the run from the engine's
 flight table (GAMEBOARD), every line labelled by its kind; the register
@@ -483,7 +483,7 @@ the runs (`covariant/expectations.json`): the muon of J4 (the catalog's
 `mu`, content 207, `become` at 64 into `e` with the products `beta` and
 `nu`) at rest, at p = 3640 and at p = 12 856 label units on an open bar of
 201 x 1 x 1 with the +x face at x = 200, and series G2's `coasting_none` in
-its record form under the key at the grain 2^18. `tools/covariant_readings.py`
+its record form under the key at the grain 2^18. `tools/click_readings/covariant.py`
 reads the products' clicks on the +x face and the centre's pointer
 (DETECTOR) and the `become` lines, the `energy` lines with their
 invariant and the intervals owed to proper time (GAMEBOARD) against the
@@ -556,7 +556,7 @@ escape of every direction, DERIVATIONS_BEAM.md section 11.1, written before
 the run): an open cube of 65^3 whose six faces are the detectors, one lamp
 of `light` at the centre holding exactly one birth's content (one record
 of 290 rows on the fan of 290 primitive directions with |a| + |b| + |c| <=
-6 at tick 1, then nothing), 100 intervals. `tools/c_measured_readings.py`
+6 at tick 1, then nothing), 100 intervals. `tools/click_readings/c_measured.py`
 reads the faces' clicks (the tick, the Node, the face; the direction off
 the engine's label table) against the derived tick, Node and face of
 every direction and the escapes' pace against c = 1 / sqrt 3; the
@@ -577,7 +577,7 @@ record 332; the design docs/designs/massive_rows/DESIGN.md), written by
 p 220 at S 1 and h 1024, 4096 births over 5750 intervals), the 1024-birth
 run `slits_matter_1024` (the wheel [633, 1024], 2700 intervals) and the
 small replay world `slits_matter_small` (8 births read over 48 intervals,
-its record registered by `replay_register.py`); `read_run.py` reads a run
+its record registered by `tools/click_readings/massive_rows_replay.py`); `tools/click_readings/massive_rows.py` reads a run
 against the pin, every number labelled DETECTOR (the screen's gathers,
 the first `click` lines) or GAMEBOARD (the faces' and the wall's
 completions, the books). The register entry is

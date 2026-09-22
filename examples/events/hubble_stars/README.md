@@ -214,11 +214,11 @@ coasting form, which is why M is 2^22.
 ```bash
 PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py          # the worlds and expectations.json
 PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/hubble_stars examples/events/hubble_stars/*_none.json examples/events/hubble_stars/*_scalar.json examples/events/hubble_stars/*_age.json
-PYTHONPATH=src python tools/hubble_stars_readings.py artifacts/hubble_stars [--png DIR] [--json FILE]
+PYTHONPATH=src python tools/click_readings/hubble_stars.py artifacts/hubble_stars [--png DIR] [--json FILE]
 PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py --after  # derivation_after_the_runs.json (below)
 ```
 
-`tools/hubble_stars_readings.py` reads the engine's own record
+`tools/click_readings/hubble_stars.py` reads the engine's own record
 (`events.jsonl`, `run.json`, `initialization.json`) and the flight table
 through the engine's own function, prints the validation of the criterion
 on the exact coasting form at the worlds' taus, the record checks, the
@@ -432,7 +432,7 @@ and run on the branch `claude/amplitude-impl` at commit `62369cb8` with its
 ```bash
 PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py --record
 PYTHONPATH=<the branch's src> python tools/run_series.py --jobs 3 --out artifacts/hubble_stars_record examples/events/hubble_stars/record/*.json
-PYTHONPATH=<the branch's src> python tools/hubble_stars_readings.py artifacts
+PYTHONPATH=<the branch's src> python tools/click_readings/hubble_stars.py artifacts
 ```
 
 Under the key every unit of a star's light is born as one record of one row
@@ -539,7 +539,7 @@ they add no answer to the question).
 ```bash
 PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py --record
 PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/hubble_stars_drive examples/events/hubble_stars/record/{coasting_none,gravity_none,double_none,gravity_scalar,gravity_age}.json
-PYTHONPATH=src python tools/hubble_stars_readings.py artifacts/hubble_stars_drive --expectations examples/events/hubble_stars/record/expectations.json --png <dir> --json <file>
+PYTHONPATH=src python tools/click_readings/hubble_stars.py artifacts/hubble_stars_drive --expectations examples/events/hubble_stars/record/expectations.json --png <dir> --json <file>
 ```
 
 ### The readings (2026-09-20, measured against the pinned expectations)
@@ -830,7 +830,7 @@ with its expectations pinned first, is the G2 session's.
 The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
 a detector's time is the clock of the Node it sits on. The eighteen
 worlds replayed on main's engine and read by
-`tools/hubble_stars_readings.py`, whose pinned reading is now in the
+`tools/click_readings/hubble_stars.py`, whose pinned reading is now in the
 detector's own clock (1 + z_d = r (1 + z), L_d = L / r, H_d = r H, r the
 detector's rate off its own record over the run) with the lattice's
 clock printed beside it and the step rule's burst printed as a diagnostic,

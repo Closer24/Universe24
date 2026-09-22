@@ -8,7 +8,7 @@ reality has) or GAMEBOARD (the bodies' steps, positions and separations:
 the host's view of the mechanism). A pin outside is reported with its
 numbers and never moved.
 
-    PYTHONPATH=src python tools/quarks_readings.py artifacts/quarks
+    PYTHONPATH=src python tools/click_readings/quarks.py artifacts/quarks
 
 The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
 record 567): only a detector's reading or a measured event's own record
@@ -27,7 +27,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 WORLDS = ROOT / "examples" / "events" / "quarks"
 Vector = tuple[int, int, int]
 DETECTOR = "DETECTOR"
@@ -155,7 +155,7 @@ def replay_block(folder: Path, cap: int) -> dict[str, object]:
     ([tick, x, y, z] of the Node stepped to; GAMEBOARD), per occupant its
     hand-overs (the `contact` ticks; GAMEBOARD) and the face clicks of the
     bodies that left ([tick, number, detector]; DETECTOR). Written by
-    `examples/events/quarks/replay_register.py` from the engine's run and
+    `tools/click_readings/quarks_replay.py` from the engine's run and
     replayed bit-exact by `tests/test_quarks_expectations.py` (e)."""
     steps: dict[str, list[list[int]]] = {}
     contacts: dict[str, list[int]] = {}

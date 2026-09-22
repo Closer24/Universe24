@@ -48,7 +48,7 @@ escape near (SIDE - c_y) / v, the 61st step. The record checks (completed,
 the books balanced at every tick) fail the tool; the readings are
 registered inside or outside their bracket and never moved.
 
-    PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp
+    PYTHONPATH=src python tools/click_readings/orbit_lamp.py artifacts/orbit_lamp
 """
 
 from __future__ import annotations
@@ -69,7 +69,7 @@ from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET
 from event_universe.world_loading import world_of_run
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 EXPECTATIONS = ROOT / "examples" / "events" / "orbit_lamp" / "expectations.json"
 MODEL_PATTERN = re.compile(r"^rays-orbit-lamp-(?P<name>.+)-plane-v1$")
 DETECTOR_PREFIX = "line_"

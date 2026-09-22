@@ -1,6 +1,6 @@
 """The weak-force readings tool reads the runner's record and the engine's
 flight table and nothing else (the experimenter's rule, 2026-09-20: a
-readings tool never replays a rule of the engine; `tools/weak_readings.py`
+readings tool never replays a rule of the engine; `tools/click_readings/weak.py`
 reads the things' `events`, `age`, `waited`, `steps` and `contacts` off
 `run.json`, their `pass`, `become` and the shell's `click` lines off
 `events.jsonl`, and the first-arrival age off `nature_beam.direction_flight`).
@@ -97,7 +97,9 @@ from event_universe.events.world import default_width
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("weak_readings_tool", ROOT / "tools" / "weak_readings.py")
+SPEC = importlib.util.spec_from_file_location(
+    "weak_readings_tool", ROOT / "tools" / "click_readings" / "weak.py"
+)
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["weak_readings_tool"] = TOOL
 SPEC.loader.exec_module(TOOL)

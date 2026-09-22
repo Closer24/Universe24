@@ -28,8 +28,8 @@ when the run ends, are excluded. E is (same - different) / PAIRS, expected
 1 - 4 k / N with d = (a - b) mod N and k = min(d, N - d): the triangle of a
 deterministic local window.
 
-    python tools/bell_chsh.py artifacts/bell
-    python tools/bell_chsh.py artifacts/bell/a0_b8 artifacts/bell/a0_b24 ...
+    python tools/click_readings/bell.py artifacts/bell
+    python tools/click_readings/bell.py artifacts/bell/a0_b8 artifacts/bell/a0_b24 ...
 """
 
 from __future__ import annotations
@@ -42,7 +42,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.world_loading import world_of_run  # noqa: E402

@@ -26,7 +26,7 @@ The pinned reading is in the detector's own clock (the model owner,
 2026-09-22, records 678 and 707 of docs/LOG_2026-09-20.md: a detector's
 time is the clock of the Node it sits on, the interval count less what
 the crowd at that Node owes through the age wall; series G's rule,
-tools/hubble_readings.py). The detector's clock counts r self-creations
+tools/click_readings/hubble.py). The detector's clock counts r self-creations
 per interval, its own count of intervals stretched by what arrives at it,
 the age wall's member at the coefficient 1 (the owner's record 709), read
 off its own record over the run (age / (age + waited)
@@ -76,7 +76,7 @@ tool; the readings are registered inside or outside their expectation
 (`expectations.json` beside the worlds, written by the generator before
 the runs) and never moved.
 
-    PYTHONPATH=src python tools/hubble_stars_readings.py artifacts/hubble_stars [--png DIR] [--expectations FILE] [--json FILE]
+    PYTHONPATH=src python tools/click_readings/hubble_stars.py artifacts/hubble_stars [--png DIR] [--expectations FILE] [--json FILE]
 """
 
 from __future__ import annotations
@@ -97,7 +97,7 @@ from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
 from event_universe.world_loading import world_of_run
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 MODEL_PREFIX = "rays-hubble-stars-"
 MODEL_SUFFIX = "-space-v1"
 DETECTOR = "centre"

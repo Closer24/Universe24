@@ -3,7 +3,7 @@
 (the screen's gathers, the first `click` lines) or a GAMEBOARD reading (the
 faces' and the wall's completions, the books), labelled so.
 
-    PYTHONPATH=src python examples/events/massive_rows/read_run.py <run dir> [--births W] [--write KEY]
+    PYTHONPATH=src python examples/events/tools/click_readings/massive_rows.py <run dir> [--births W] [--write KEY]
 
 `<run dir>` holds `run.json` and `events.jsonl` of the runner; `--births`
 the records read (the wheel's W by default, read from the world); `--write`
@@ -32,6 +32,7 @@ import math
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+WORLDS = HERE.parents[1] / "examples" / "events" / "massive_rows"
 BRIGHT = [35, 36, 37, 38, 59, 60, 61, 82, 83, 84, 85]
 DARK = list(range(13, 21)) + [48, 49, 50, 70, 71, 72] + list(range(100, 108))
 BANDS = {"left": range(30, 44), "centre": range(53, 68), "right": range(77, 91)}
@@ -159,7 +160,7 @@ def main() -> None:
     reading = read(args.run, args.births)
     print(json.dumps(reading, indent=1))
     if args.write:
-        path = HERE / "expectations.json"
+        path = WORLDS / "expectations.json"
         register = json.loads(path.read_text(encoding="utf-8"))
         register[args.write]["run"] = reading
         path.write_text(json.dumps(register, indent=1) + "\n", encoding="utf-8")

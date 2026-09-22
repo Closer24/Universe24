@@ -22,7 +22,7 @@ the derived ones and against c = 1 / sqrt 3. A differing row is printed
 with its direction; the tool exits 1 on any difference or on a record that
 did not complete with the books balanced. Nothing is moved.
 
-    PYTHONPATH=src python tools/c_measured_readings.py artifacts/c_measured/run \\
+    PYTHONPATH=src python tools/click_readings/c_measured.py artifacts/c_measured/run \\
         [--expectations examples/events/c_measured/expectations.json]
 """
 
@@ -40,7 +40,7 @@ from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import nature_beam_tables
 from event_universe.world_loading import world_of_run
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_EXPECTATIONS = ROOT / "examples" / "events" / "c_measured" / "expectations.json"
 FORMAT = "c-measured-expectations-v1"
 DETECTOR = "DETECTOR"

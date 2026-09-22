@@ -25,7 +25,7 @@ the readings are registered inside or outside their expectation
 (docs/EXPERIMENTS.md, "E, the clock's redshift in space under the age
 reading (2026-09-20)") and never moved.
 
-    PYTHONPATH=src python tools/redshift_readings.py artifacts/redshift
+    PYTHONPATH=src python tools/click_readings/redshift.py artifacts/redshift
 
 The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
 record 567): only a detector's reading or a measured event's own record

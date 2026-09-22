@@ -575,12 +575,12 @@ states "exactly" and means integer equality at every tick.
   `run.json` (`audit`, `conserved_at_every_completed_tick`, `escaped`,
   `measured`, `detectors`) and `events.jsonl` (the `click` and `pass`
   records with their `detector`, `tick` and `phase`), read by
-  `tools/bell_chsh.py` (standard library, `fractions.Fraction`, no float
+  `tools/click_readings/bell.py` (standard library, `fractions.Fraction`, no float
   in a criterion), which prints the table and every criterion and exits
   nonzero on a failure. The commands: `python
   examples/events/bell/make_worlds.py`; for each of the ten worlds `python
   -m event_universe --init examples/events/bell/<name>.json --output
-  artifacts/bell/<name>`; `python tools/bell_chsh.py artifacts/bell`.
+  artifacts/bell/<name>`; `python tools/click_readings/bell.py artifacts/bell`.
 - **Expected (written before the run).** Per run at 128 pairs,
   E = 1 - 4 k / 64: (0, 8) k 8, E +1/2, same 96 and different 32; (0, 24)
   k 24, -1/2, 32 and 96; (16, 8) k 8, +1/2, 96 and 32; (16, 24) k 8, +1/2,
@@ -617,7 +617,7 @@ states "exactly" and means integer equality at every tick.
   non-saturating quadruple: (0, 12) 40, 24, 24, 40, E +1/4; (4, 8) 56, 8,
   8, 56, E +3/4; (4, 12) 48, 16, 16, 48, E +1/2; S' = 3/2 exactly. The
   offsets read off the record: plus tick = age + 9, minus tick = age + 10,
-  the same in every run. The offset is the tick less the age, the record's ordering: GAMEBOARD, a flight self-check, not compared with nature (the clock audit of 2026-09-22). `tools/bell_chsh.py`: 326 criteria checked, 0
+  the same in every run. The offset is the tick less the age, the record's ordering: GAMEBOARD, a flight self-check, not compared with nature (the clock audit of 2026-09-22). `tools/click_readings/bell.py`: 326 criteria checked, 0
   failed, in every run the books balanced at all 138 ticks, nothing
   escaped, only `click` and `pass` records, the lamp at the end at age 138,
   phase 10, content K + 2 - 276, momentum [0, 0, 0], with 16 or 17 units
@@ -811,14 +811,14 @@ states "exactly" and means integer equality at every tick.
   `conserved_at_every_completed_tick`, `measured_content`, `escaped`,
   `measured` with `pushed`, `age`, `waited`, `owed`) and `events.jsonl`
   (the `read`, `step` and `merged` records), read by
-  `tools/coupling_readings.py` (integers and `fractions.Fraction` for the
+  `tools/click_readings/coupling.py` (integers and `fractions.Fraction` for the
   identities, floats for the ring means, the ripple bounds and the slopes;
   the replay of worlds 5 and 5_long through `EventSimulation`), which
   prints the tables and every criterion and exits nonzero on a failure.
   The commands: `python examples/events/coupling/make_worlds.py`; for each
   world `python -m event_universe --init examples/events/coupling/<name>.json
   --output artifacts/coupling/<name>`; `PYTHONPATH=src python
-  tools/coupling_readings.py artifacts/coupling`.
+  tools/click_readings/coupling.py artifacts/coupling`.
 - **Result (2026-09-19).** Every run completed; in every world the books
   balanced at every interval, the measured content constant and age +
   waited = the intervals completed. 390 criteria passed, 15 failed, exit 1;
@@ -1022,7 +1022,7 @@ states "exactly" and means integer equality at every tick.
   the dictionary in the [README](../examples/events/bell/README.md)): the
   base of the entry above with `"law": "rays"`, `ticks` 160, the model ids
   `rays-bell-a{a}-b{b}-v1`; the same ten settings; the analysis
-  `tools/bell_chsh.py` unchanged in its criteria (the `record` line admitted
+  `tools/click_readings/bell.py` unchanged in its criteria (the `record` line admitted
   among the record kinds; the plus offset checked below the minus).
   `tests/test_nature_beam_worlds.py` (b) runs the ten worlds through the tool.
 - **Result (2026-09-19, measured).** Branch `claude/universe24-new-3ytqde`,
@@ -1044,7 +1044,7 @@ states "exactly" and means integer equality at every tick.
   note 23; source fingerprint `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a`): every count, phase, offset and
   book as registered, S = 2 exactly, S' = 3/2, no-signalling exact, the
   lamp's momentum [0, 0, 0] (its recoils on +X and -X cancel in label
-  units as they did before), `tools/bell_chsh.py` 326 criteria, 0 failed;
+  units as they did before), `tools/click_readings/bell.py` 326 criteria, 0 failed;
   the paid labels x 64 appear in the momentum lines of the clicks only.
   Measured = expected; the Bell setup reads no momentum.
 
@@ -1066,7 +1066,7 @@ states "exactly" and means integer equality at every tick.
   (the count of its turn accumulator) stalls once, at tick 4: 159 births
   in 160 intervals in every one of the ten worlds (160), every birth
   after tick 3 one tick later, and `tick - phase` is no longer one offset
-  per Node. `tools/bell_chsh.py` pairs a row by its record (the age its
+  per Node. `tools/click_readings/bell.py` pairs a row by its record (the age its
   birth ordinal less one; `record` and `u` on every click and pass line)
   and reports the tick offsets as the flight's smallest tick - age (plus
   14; the minus Nodes silent under the one click): S = 2 and S' = 2 as
@@ -1125,7 +1125,7 @@ states "exactly" and means integer equality at every tick.
   `make_worlds.py`, the dictionary in the
   [README](../examples/events/coupling/README.md)), the model ids
   `rays-coupling-<name>-plane-v1`; `tools/run_series.py --jobs 4`;
-  `tools/coupling_readings.py` rewritten for the ray record (the replay of
+  `tools/click_readings/coupling.py` rewritten for the ray record (the replay of
   world 5 reading the count, the presence and the flow at every tick, the
   flux through the square summed in the tool, the readings printed inside
   or outside).
@@ -1199,7 +1199,7 @@ states "exactly" and means integer equality at every tick.
   identical byte for byte to the run on the tip before it (fingerprint
   `70763568dc216a8b7a0ecdfac36654cdf1e1da80bb6b20d34eccfac2d8c62c8e`), the series 7 `read` records among them row by row (kappa 0
   in `7_pp` and `7_mm`, -2^25 and -2 in `7_mp` and `7_pm`, -12582912 and
-  -3 in `7_pp_m4`, -2^24 and -1 in `7_00`); `tools/coupling_readings.py`:
+  -3 in `7_pp_m4`, -2^24 and -1 in `7_00`); `tools/click_readings/coupling.py`:
   392 criteria passed, 0 failed, 19 readings inside and 9 outside, every
   printed line equal to the line above but the fingerprint. The one form
   equals the three-branch push integer by integer ([validation](VALIDATION.md)).
@@ -1214,7 +1214,7 @@ states "exactly" and means integer equality at every tick.
   the registered one times 64 exactly, the electric part included (q_A
   q_B / M_B is an integer on every series 7 world), while the counts, the
   presences, the clock and Gauss's flux off the Port crossings are
-  unchanged; `tools/coupling_readings.py` divides the labels by Q where it
+  unchanged; `tools/click_readings/coupling.py` divides the labels by Q where it
   compares with the emission q or an amount, so the expectations of BEAM_LAW
   section 8 keep their meaning: 392 criteria passed, 0 failed, 19 readings
   inside and 9 outside, every reading equal to the registered one (count x
@@ -1247,7 +1247,7 @@ states "exactly" and means integer equality at every tick.
   0, 0), 0, (2147483648, 0, 0), (4026531840, 0, 0)), the books balanced
   with the recount. The probe's `read` records now carry the family `p`
   (the source reads the probe's rays under `p`, the probe the source's
-  under `q`); `tools/coupling_readings.py` item 7 reads the declared
+  under `q`); `tools/click_readings/coupling.py` item 7 reads the declared
   charges (Q, q) off the families' pairs times the amounts (the tool's
   owner). No integer of the register moves.
 - **Verdict.** Every identity, book and timing of the Beam Law holds on the
@@ -1376,7 +1376,7 @@ states "exactly" and means integer equality at every tick.
   probe's content; the second registration's 11, 15, 23 and the first's
   3, 5, 9 in the old units are in git), the model ids
   `rays-orbit-s<S>-r<r>-plane-v1`; `tools/run_series.py --jobs 4`;
-  `tools/orbit_readings.py` (the trajectory from the probe's `step`
+  `tools/click_readings/orbit.py` (the trajectory from the probe's `step`
   records, the push from its `read` records in units of Q, C against
   m q L / (2 pi r), L the fan's mean |u_d| / Q).
 - **Result (2026-09-19, the night, measured against expected).** The
@@ -1710,7 +1710,7 @@ states "exactly" and means integer equality at every tick.
   [VALIDATION's crossing-rule table](VALIDATION.md#the-crossing-rule-the-gate-set-and-the-movers-replayed-against-no-tables-2bbc5a64---2026-09-21)
   records the orbit worlds' events moved). Under it, the auditor's round
   9 at main e42c49e5 and the architect's own run of
-  `tools/orbit_readings.py` on the two shipped worlds (unchanged, sha256
+  `tools/click_readings/orbit.py` on the two shipped worlds (unchanged, sha256
   27c40ef0 and 68e4e681) read the same: `s32_r12` closes the angle once
   (T 525, the return (-11, 0), heading kept, the mean radius 17.90, C
   1.87) and leaves through face:-x at 932 (three closings at 363, 482,
@@ -1766,7 +1766,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/heisenberg/` (eight worlds by
   `make_worlds.py`, `w<w>_<reading>`, 120 x 161 x 1 with z periodic, 350
   intervals, the model ids `rays-heisenberg-w<w>-<reading>-v1`);
-  `tools/run_series.py --jobs 4`; `tools/heisenberg_readings.py` (the
+  `tools/run_series.py --jobs 4`; `tools/click_readings/heisenberg.py` (the
   FWHM of the record over sin theta after a five-pixel moving mean, the
   count's FWHM, the weighted rms of sin theta, the product).
 - **Result (2026-09-20, measured against expected).** The worktree of
@@ -1898,7 +1898,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/redshift/` (two worlds by `make_worlds.py`,
   `scalar` and `age`, 300 intervals each), the model ids
   `rays-redshift-<kind>-space-v1`; `tools/run_series.py --jobs 2`;
-  `tools/redshift_readings.py` (the shell means over the window 100 to 300
+  `tools/click_readings/redshift.py` (the shell means over the window 100 to 300
   by a replay of the world through the API, the single probes, the
   redshift ratios).
 - **Result (2026-09-20, measured against expected).** The worktree of
@@ -2036,7 +2036,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/hubble/` (four worlds by `make_worlds.py`,
   `coasting_scalar`, `coasting_age`, `pushing_scalar`, `pushing_age`, the
   model ids `rays-hubble-<crowd>-<clock>-space-v1`); `tools/run_series.py
-  --jobs 4`; `tools/hubble_readings.py` (the pointer's turn per detector
+  --jobs 4`; `tools/click_readings/hubble.py` (the pointer's turn per detector
   interval by a least-squares slope of the `record` lines' unwrapped
   phases, the ages off the click records, m(tau) and c off the engine's
   `flight_table`, the replay for the checks; `tests/test_hubble_readings.py`
@@ -2221,7 +2221,7 @@ states "exactly" and means integer equality at every tick.
   audit's finding 4, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
   no run: the register's replay of the four worlds on main's engine, the
   age word of record 394, by `tools/run_series.py`, read by
-  `tools/hubble_readings.py` with its replay; every number DETECTOR unless
+  `tools/click_readings/hubble.py` with its replay; every number DETECTOR unless
   marked).** The pins restated BEFORE the numbers were read, from the
   closed form: the detector at the centre sits in its six masses' crowd,
   so its clock counts r_w self-creations per interval over a window (its
@@ -2336,7 +2336,7 @@ states "exactly" and means integer equality at every tick.
   presence, the age moment, none).
 - **Run.** `examples/events/hubble_stars/` (nine worlds by `make_worlds.py`,
   `<crowd>_<clock>`, the model ids `rays-hubble-stars-<crowd>-<clock>-space-v1`);
-  `tools/run_series.py --jobs 3`; `tools/hubble_stars_readings.py`;
+  `tools/run_series.py --jobs 3`; `tools/click_readings/hubble_stars.py`;
   `tests/test_hubble_stars_readings.py`.
 - **Result (2026-09-20, measured against expected).** Fingerprint
   `b4d074f2b762e58d15037a46b614e89609a48bcee2211eaf471af16e3d4923d1`,
@@ -2434,7 +2434,7 @@ states "exactly" and means integer equality at every tick.
   `gravity_scalar` q = +0.380 and H = 0.896 (+0.749 and 0.854),
   `gravity_age` +0.750 and 0.858 (+0.461 and 0.874); under `doppler`
   `gravity_scalar` -0.125 and 1.006 (-0.158 and 1.008), `gravity_age`
-  +0.170 and 0.972 (+0.093 and 0.958). `tools/hubble_stars_readings.py` on
+  +0.170 and 0.972 (+0.093 and 0.958). `tools/click_readings/hubble_stars.py` on
   the nine record worlds: the reading's formula 648 of 648 inside 2 %,
   the luminosity 648 of 648 inside 5 %, 0 record checks failed, 1362
   readings inside and 6 outside (the scalar and age clocks' late-window q
@@ -2461,7 +2461,7 @@ states "exactly" and means integer equality at every tick.
   (the six base worlds and the six `record/` worlds whose stars' entries
   measure the other stars' light without a word) moved by their digests
   (record 409) and are not re-read here: the register's own tool,
-  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none` in its
+  `tools/click_readings/hubble_stars.py`, reads NaN for `coasting_none` in its
   plain mode (a world the word does not touch) and, in its record mode
   with the register's expectations, +0.384 in the late window for
   `record/gravity_none` against the registered +0.922 while
@@ -2481,7 +2481,7 @@ states "exactly" and means integer equality at every tick.
   audit's finding 5, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
   no run: the register's replay of the eighteen worlds, the nine base
   worlds and the nine of `record/`, on main's engine, the age word, by
-  `tools/run_series.py`, read by `tools/hubble_stars_readings.py`; every
+  `tools/run_series.py`, read by `tools/click_readings/hubble_stars.py`; every
   number DETECTOR unless marked).** The pins restated BEFORE the numbers
   were read, series G's closed form with the detector's clock read off
   its own record over the run (age / (age + waited) of its state in
@@ -2594,7 +2594,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/bohr/` (seven worlds by `make_worlds.py`,
   `r<r>` for r in 2, 4, 6, 8, 12, 15, 16, 3000 to 10300 intervals each),
   the model ids `rays-bohr-r<r>-space-v1`; `tools/run_series.py --jobs 4`;
-  `tools/bohr_readings.py` (every line labelled by its kind).
+  `tools/click_readings/bohr.py` (every line labelled by its kind).
 - **Result (2026-09-20, measured against expected).** The worktree of
   `claude/universe24-new-3ytqde` on the turn-by-momentum commit, source
   fingerprint `d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`,
@@ -2932,7 +2932,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/nucleus/` (eight worlds written by
   `make_worlds.py`, the model ids `beam-nucleus-<name>-space-v1`),
   `tools/run_series.py --jobs 3`, 3000 intervals each; the readings by
-  `tools/nucleus_readings.py` (every line labelled DETECTOR or GAMEBOARD).
+  `tools/click_readings/nucleus.py` (every line labelled DETECTOR or GAMEBOARD).
   The worktree of `claude/universe24-new-3ytqde` on the commits of the one
   mechanism (the columns `de6c4968`, the lifetime and the held content
   `7a77fa0c`, the contact `b2c164c2`), source fingerprint
@@ -3243,7 +3243,7 @@ states "exactly" and means integer equality at every tick.
   and Bob's 8, 29, 51 (the bisectors read with the engine's tables). The
   ages 7..1926, 1920 pairs (128 per combination), after the warm-up of 7
   pairs before the first `sa` ray reaches Alice's plus counter; 1940
-  intervals. The reading `tools/bell_choosers.py` (the offsets off the
+  intervals. The reading `tools/click_readings/bell_choosers.py` (the offsets off the
   record, the bins by the window carried on the plus counters' lines, the
   complement, one outcome per side per age, every E against the triangle,
   S on the quadruple, the largest S over every quadruple that occurred,
@@ -3273,7 +3273,7 @@ states "exactly" and means integer equality at every tick.
   | S on (0, 25) x (8, 29) | detector | 2 | E(0,8) - E(0,29) + E(25,8) + E(25,29) = 1/2 + 13/16 - 1/16 + 3/4 = 2 exactly | inside |
   | The largest S over the 5 x 3 settings' quadruples | detector | 2 | 2, on (0, 12) x (8, 29), the triangle's own | inside |
   | No-signalling: each side's marginal per own setting | detector | 1/2, equal across the other side's settings | 1/2 exactly in every one of the 15 bins | inside |
-  | Control 1a: A2's ten worlds replayed with the key in the engine | detector | byte-identical, S = 2 | `events.jsonl`, `state.json`, `run.json` identical; `tools/bell_chsh.py` 326 criteria, 0 failed | inside |
+  | Control 1a: A2's ten worlds replayed with the key in the engine | detector | byte-identical, S = 2 | `events.jsonl`, `state.json`, `run.json` identical; `tools/click_readings/bell.py` 326 criteria, 0 failed | inside |
   | Control 1b: the four written worlds, the streams present and unread | detector | S = 2 | E 1/2, -13/16, -1/16, 3/4; S = 2 exactly; 91 criteria, 0 failed | inside |
   | Control 2: the streams at fixed phases (0 and 8) | detector | E(0, 8) = 1/2 as A2's a0_b8 | 1/2 (48, 16, 16, 48), 24 criteria, 0 failed | inside |
   | Control 3: the three lamps fed from one clock | detector | not the triangle (a correlation built in) | 64 bins of one pair phase each, E = 1 in every bin, both plus counters clicking every pair and the minus counters never, no quadruple of settings occurring (Alice's and Bob's settings locked 13 steps apart), 68 of 214 criteria failed | seen, as it must be |
@@ -3303,7 +3303,7 @@ states "exactly" and means integer equality at every tick.
   pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
   The pair lamp (content K + 2) stalls once, at tick 4, in `read`,
   `one_clock`, `fixed` and the four written worlds (1939 births in 1940
-  intervals, 147 in 148, 140 in 141). `tools/bell_choosers.py` reads a
+  intervals, 147 in 148, 140 in 141). `tools/click_readings/bell_choosers.py` reads a
   pair by its record: the tick offsets reported as the flight's (6, 11,
   13, 14 in `read`), the warm-up 6 pairs by record (7 by tick: the 7th
   record is born at tick 8), 1921 pairs analysed in `read` (the ages
@@ -3536,7 +3536,7 @@ change of law).**
 - **Run.** `examples/events/weak/` (the five `j2_*.json` worlds written by
   `make_worlds.py`, the model ids `beam-weak-j2_<name>-v1`),
   `tools/run_series.py --jobs 4`, 1037 intervals each; the readings by
-  `tools/weak_readings.py` (every line labelled DETECTOR or GAMEBOARD).
+  `tools/click_readings/weak.py` (every line labelled DETECTOR or GAMEBOARD).
   The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`
   on the commit of the window's width, source fingerprint
   `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941`,
@@ -3786,7 +3786,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   now), the shell's 64 beta clicks a step (the median 551.5 and 553.5,
   the 10th-to-90th-percentile ticks 542 to 562 and 542 to 563, the width
   over the median 0.036 and 0.038 as registered), every click the content
-  3. `tools/weak_readings.py`: 0 record checks failed, 34 readings inside
+  3. `tools/click_readings/weak.py`: 0 record checks failed, 34 readings inside
   and 2 outside over the eleven worlds. `j3_neutron_free` (512 exactly),
   `w_exchange` and the five J2 worlds are identical. The digests of the
   four moved worlds; the numbers above are kept as history.
@@ -3804,7 +3804,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   `j3_deuteron` 523 to 574, `j3_neutron_free` 512, the gate as it was.
   Against the runs at `main` (the same runs: 522 to 524, 523 to 528, 568,
   never, 512) every neutron fires within its range with no slack needed.
-  `tools/weak_readings.py`: 0 record checks failed, 36 readings inside and
+  `tools/click_readings/weak.py`: 0 record checks failed, 36 readings inside and
   0 outside over the eleven worlds: the two readings outside since the
   first registration, `j1_lattice`'s trigger criterion (the corners at 524
   against the one-tick pin 522) and `j3_deuteron`'s (568 against 574),
@@ -3853,7 +3853,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   no run: the register's replay of the eleven worlds on main's engine,
   the age word, by `tools/run_series.py` at their declared durations and
   the two J1 worlds again at the cap 1024 of record 545, read by
-  `tools/weak_readings.py`; every number DETECTOR unless marked).** The
+  `tools/click_readings/weak.py`; every number DETECTOR unless marked).** The
   pins restated BEFORE the numbers were read, from the closed form: (i)
   the trigger is read off the neutron's own `become` line as the count
   its clock read at the trigger, `counted` (its own clock reads its key
@@ -4523,7 +4523,7 @@ sequential gates on an entangled record, the full register replay.
   `first_click_age` of `expectations.json`, beside the tick pin); the
   line's tick is the record's ordering, the re-release tick 140 plus the
   age (955 and 1016; GAMEBOARD, the lattice's clock, so labelled in the
-  pin's line and in `read_run.py`, which reads the age under DETECTOR
+  pin's line and in `tools/click_readings/massive_rows.py`, which reads the age under DETECTOR
   and the tick under GAMEBOARD since this day). The reading: the `age`
   815 on the first click at `screen_60` (its tick 955), 876 on the first
   clicks at `screen_37` and `screen_83` (their ticks 1016): inside, every
@@ -4681,12 +4681,12 @@ sequential gates on an entangled record, the full register replay.
   derived range.
 - **Features.** The open faces as detectors, the lamp's single birth (E =
   h f: the content spent), the record form's click line per row;
-  `tools/c_measured_readings.py`; `tests/test_c_measured.py`
+  `tools/click_readings/c_measured.py`; `tests/test_c_measured.py`
   (derive-and-compare, the template `tests/test_amplitude_cone.py`).
 - **Run (2026-09-21, `python -m event_universe --init
   examples/events/c_measured/c_measured.json`, headless, 100 intervals,
   0.39 s, the source fingerprint `acf789fe0811`, completed and conserved
-  at every tick; the readings by `tools/c_measured_readings.py`, its
+  at every tick; the readings by `tools/click_readings/c_measured.py`, its
   verdict inside; DETECTOR unless said).** One birth at tick 1; 290 clicks
   on the faces (`face:+x` 57, `face:-x` 57, `face:+y` 47, `face:-y` 47,
   `face:+z` 41, `face:-z` 41), 290 of 290 at the derived tick, Node and
@@ -6695,7 +6695,7 @@ sequential gates on an entangled record, the full register replay.
 - **Run.** `examples/events/quarks/` (the seven `q*.json` worlds written
   by `make_worlds.py`, the model ids `beam-quarks-<name>-space-v1`),
   `tools/run_series.py --jobs 2`, 3000 intervals each, headless; the
-  readings by `tools/quarks_readings.py` (every line DETECTOR or
+  readings by `tools/click_readings/quarks.py` (every line DETECTOR or
   GAMEBOARD). The worktree `quarks-design` from main `25a62924`, the
   project's environment (Python 3.14.0rc2, numpy 2.5.3), four cores, two
   jobs.
@@ -6703,7 +6703,7 @@ sequential gates on an entangled record, the full register replay.
   Every run completed with the books balanced at every tick; 10 min 37 s
   of wall time for the seven at two jobs (the runner's seconds per world
   in the table; the pins committed at `eba635dd` before the run);
-  `tools/quarks_readings.py`: 0 record checks failed, 55 readings inside
+  `tools/click_readings/quarks.py`: 0 record checks failed, 55 readings inside
   among the tool's pins, 0 outside; two of the page's pins on the kicked
   world outside, reported, not moved
   ([the page](../examples/events/quarks/README.md#what-was-measured-2026-09-21)).
@@ -6785,7 +6785,7 @@ sequential gates on an entangled record, the full register replay.
   apparatus) carries no readings.
 - **Run.** `examples/events/covariant/` (the four worlds written by
   `make_worlds.py`), `tools/run_series.py --jobs 2`, 420 and 400
-  intervals, headless; the readings by `tools/covariant_readings.py`
+  intervals, headless; the readings by `tools/click_readings/covariant.py`
   (every line DETECTOR or GAMEBOARD). The worktree `covariant_readings`
   from main `f5417ab3`, the project's environment (Python 3.14.0rc2, numpy
   2.5.3); the source fingerprint `24e0c1ba...`; the J4 runs 0.3 s each, the
@@ -7405,7 +7405,7 @@ sequential gates on an entangled record, the full register replay.
   with `expectations.json`: `r12`, `r24`, `r24_4m`, `r12_control`,
   `r24_control`, 4000 intervals, the model ids
   `rays-orbit-lamp-<name>-plane-v1`); `tools/run_series.py --jobs 4`;
-  `tools/orbit_lamp_readings.py` (the click lines, the crossings of the
+  `tools/click_readings/orbit_lamp.py` (the click lines, the crossings of the
   centre column, the lagged second difference; `tests/test_orbit_lamp_readings.py`
   pins it to the engine on a 9 x 9 x 1 plane and to a hand-made click
   list).

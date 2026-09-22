@@ -18,7 +18,7 @@ birth: the record's identity, the lamp's number x 2^32 + the birth's
 ordinal, is carried on every click and pass line): A = +1 for a click at
 `alice_plus`, -1 at `alice_minus`, B likewise; the AGE of a pair is its
 birth ordinal less one, read off the record on the line, and its phase is
-that age mod N (u, the birth phase), as in `tools/bell_chsh.py`. Since the
+that age mod N (u, the birth phase), as in `tools/click_readings/bell.py`. Since the
 fraction-free law (2026-09-20, BEAM_LAW note 41) a paid lamp's exact clock
 stalls where its content has fallen below K, so the tick of a birth is
 not the age of the lamp's clock and a pair is read by its record, never
@@ -39,10 +39,10 @@ that occurred (over the four placements of the minus sign), against the
 triangle's own value on the same quadruple, and no-signalling: each
 side's marginal of +1 per bin, equal across the other side's settings.
 
-    python tools/bell_choosers.py artifacts/bell363/read
-    python tools/bell_choosers.py artifacts/bell363/written_a0_b8 artifacts/bell363/written_a0_b29 \
+    python tools/click_readings/bell_choosers.py artifacts/bell363/read
+    python tools/click_readings/bell_choosers.py artifacts/bell363/written_a0_b8 artifacts/bell363/written_a0_b29 \
         artifacts/bell363/written_a25_b8 artifacts/bell363/written_a25_b29
-    python tools/bell_choosers.py artifacts/bell363/fixed --replay 40
+    python tools/click_readings/bell_choosers.py artifacts/bell363/fixed --replay 40
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ from itertools import combinations
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
@@ -450,7 +450,7 @@ def parse_quadruple(text: str) -> tuple[tuple[int, int], tuple[int, int]]:
 
 def merged(runs: list[Run]) -> dict[Setting, Bin]:
     """The bins of several runs merged by setting (a control of one setting
-    per run gives its quadruple over four runs, as `tools/bell_chsh.py`
+    per run gives its quadruple over four runs, as `tools/click_readings/bell.py`
     reads A2's ten)."""
     found: dict[Setting, Bin] = {}
     for run in runs:

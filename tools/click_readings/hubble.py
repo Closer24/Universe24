@@ -80,7 +80,7 @@ the near fit through the origin on z <= 0.2 reads the Milne curvature
 (z = H tau + (H tau)^2 + ...) as a larger H, so the far part of an exact
 coasting throw from one point lies below the coasting form at that H.
 
-    PYTHONPATH=src python tools/hubble_readings.py artifacts/hubble [--png DIR] [--no-replay] [--from-one-point]
+    PYTHONPATH=src python tools/click_readings/hubble.py artifacts/hubble [--png DIR] [--no-replay] [--from-one-point]
 """
 
 from __future__ import annotations

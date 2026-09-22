@@ -24,7 +24,7 @@ measured behind a detector").
     table from the click's momentum), every direction once, one gather,
     the books balanced at the end;
 (c) the readings tool reads the runner's record: the world run through the
-    runner into a temporary folder, `tools/c_measured_readings.py`'s
+    runner into a temporary folder, `tools/click_readings/c_measured.py`'s
     reading finds the registered births and clicks, no unmatched click,
     every escape at its derived row, the verdict inside; the same reading
     with one registered tick moved reads that row as differing.
@@ -221,7 +221,7 @@ def test_every_escape_click_is_the_derived_tick(world: dict, register: dict) -> 
 
 
 def test_the_readings_tool_reads_the_record(tmp_path: Path, register: dict) -> None:
-    tool = load("c_measured_readings", ROOT / "tools" / "c_measured_readings.py")
+    tool = load("c_measured_readings", ROOT / "tools" / "click_readings" / "c_measured.py")
     run = run_initialization(WORLD, tmp_path / "run").parent
     reading = tool.read_run(run, register)
     assert reading.status == "completed" and reading.balanced
