@@ -1009,3 +1009,71 @@ def test_the_walls_square_is_refused_before_it_is_formed():
         row_pairs(store, table, 4)
     with pytest.raises(OverflowError, match="wall's square"):
         simulation.step()
+
+
+def test_the_last_links_time_is_one_form_and_the_counts_own_on_a_row_no_crowd_moved():
+    """(g): the physics-rule reviewer's line on PR #855. The one form
+    (age r - s + T d) / r of `optical_last_link` and the walk's `last_link`
+    gives, on every row no crowd moved, the count's own floor made T_d /
+    (S_1 Q) that `exact_phase` forms without `last_link`, floor for floor
+    and as the same fraction; and `square_ladder` is the integer root's
+    floor by comparisons alone."""
+    from event_universe.core.integer import integer_root
+    from event_universe.events.nature_beam import exact_phase, optical_last_link, square_ladder
+
+    world = parse_nature_beam_world(
+        {
+            "law": "beam",
+            "model_id": "one-form-test",
+            "shape": [40, 5, 5],
+            "boundary": "open",
+            "ticks": 30,
+            "K": 1,
+            "N": 64,
+            "release": [0, 1],
+            "suspension": [1, 128],
+            "age_bound": 200,
+            "directions": [[3, 1, 0], [2, 1, 1], [5, 2, 1]],
+            "families": [{"name": "light", "quantum": 1, "phase_per_link": [16, 3]}],
+            "measured": [],
+            "in_transit": [
+                {
+                    "position": [0, 2, 2],
+                    "family": "light",
+                    "number": 1,
+                    "direction": direction,
+                    "amount": 1,
+                    "phase": 5 * k,
+                }
+                for k, direction in enumerate(([1, 0, 0], [3, 1, 0], [2, 1, 1], [5, 2, 1]))
+            ],
+        }
+    )
+    simulation = NatureBeamSimulation(world)
+    checked = 0
+    for _ in range(25):
+        simulation.step()
+        store = simulation.stores[0]
+        table = simulation.tables.family_flights[0]
+        for index in range(store.size):
+            age = int(store.age[index])
+            common = (
+                int(store.phase[index]),
+                age,
+                age,
+                int(store.direction[index]),
+                simulation.tables.flight,
+                world.families[0].phase_per_age,
+                64,
+                "test",
+            )
+            counted = exact_phase(*common, None)
+            one_form = exact_phase(*common, optical_last_link(store, table, world, index, age))
+            assert counted[0] == one_form[0], (index, age)
+            assert Fraction(counted[1], counted[2]) == Fraction(one_form[1], one_form[2]), (index, age)
+            checked += 1
+    assert checked >= 40
+    for value in (0, 1, 2, 3, 4, 15, 16, 17, 12288, 3 * 64 * 64 * 65536 - 1, MAX_WORK_INT):
+        assert square_ladder(value) == integer_root(value) == isqrt(value)
+    with pytest.raises(ValueError):
+        square_ladder(-1)

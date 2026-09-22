@@ -543,8 +543,14 @@ snapshot writes a row's flight accumulator only where a crowd moved it
 off the table's own count at its age, the value the walk seeds from
 (`tests/test_optical.py` (e), the gate set's digests), and by the same
 test the click's exact time is the count's own on a row no crowd moved
-and the accumulator's where one did (`nature_beam.memoryless_flight`,
-`optical_last_link`; the amplitude worlds' clicks byte for byte); a row
+and the accumulator's where one did, in ONE form for every row of every
+world, (age r - s + T d) / r with T the half wall of the row's present
+pair, the start its accumulator was seeded from (`optical_last_link`, the
+walk's `last_link`; the physics-rule reviewer's line on PR #855: a row no
+crowd moved reads the count's own floor, made T_d / (S_1 Q), by identity,
+and no row reads two forms; the amplitude worlds' clicks byte for byte);
+the pushed row's wall T(P) is a comparison ladder of squares, no root in
+the interval (`nature_beam.square_ladder`); a row
 whose direction a collision or the meeting changed reads its age on its
 present line, its accumulator the table's own count there
 (`nature_beam.reseed_flight`, the crowd's carry on the old line dropped

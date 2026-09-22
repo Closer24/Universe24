@@ -631,7 +631,7 @@ def exact_phase(
     rate: tuple[int, int] | None,
     modulus: int,
     where: str,
-    last_link: tuple[int, int] | None = None,
+    last_link: tuple[int, int, int] | None = None,
 ) -> tuple[int, int, int]:
     """The phase of a row at the exact time of its last Link (the model
     owner's decision of 2026-09-21, record 163 (2) of the log of 2026-09-20;
@@ -654,30 +654,38 @@ def exact_phase(
     on a rest slot, reads its phase as it is (the remainder 0 over 1); the
     phase per Link crossed (the integer form) is exact per Link already. A
     row whose direction a collision changed reads its age on its present
-    line, as the flight table does for its next step. Under `optical`
-    (optical-v1, 2026-09-21) the time of the last Link is not the count's:
-    the caller hands `last_link` = (age r - s, r), r = 2 S_1 Q d the
-    stretched rate and s the row's stored residue after the carry (the
-    last Link crossed at the fraction 1 - s / r of its interval), and the
-    one floor is floor(n (age r - s) / (d r))."""
+    line, as the flight table does for its next step. Since the generic
+    entry of the bending (2026-09-22; the physics-rule reviewer's line on
+    PR #855) the engine hands `last_link` for every row of every world, the
+    ONE form of the last Link's time: (age r - s + T d, r, 2 d) with r =
+    2 S_1 Q d the stretched rate, s the row's stored residue after the
+    carry and T d the half wall the accumulator was seeded from (T_D on
+    the family's line, T(P) on a pushed row's), and the one floor is
+    floor(n (age r - s + T d) / (d_n r)); on a row no crowd moved this is
+    made T_d / (S_1 Q) exactly, the count's form below, which stays as the
+    identity a test asserts. The remainder is written over the family's
+    own units where it is exact there (the pair divided by what it shares
+    with 2 d, the stretched units' scale; the count's form's pair on every
+    row no crowd moved, byte for byte), else over the stretched units."""
     s1 = int(flight.manhattan[direction])
     if rate is None or s1 == 0:
         return phase % modulus, 0, 1
     numerator, denominator = rate
     resolution = int(flight.resolution[direction])
     if last_link is not None:
-        time_numerator, time_denominator = last_link
+        time_numerator, time_denominator, unit = last_link
         try:
             product = checked_work(numerator * time_numerator)
         except OverflowError as error:
             raise OverflowError(
-                f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s) = "
+                f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s + T d) = "
                 f"{numerator} x {time_numerator} exceeds the working bound {MAX_WORK_INT}"
             ) from error
         divisor = denominator * time_denominator
         made_phase, remainder = divmod(product, divisor)
+        shared = math.gcd(remainder, unit)
         held = (terms * numerator) // denominator
-        return (phase - held + made_phase) % modulus, remainder, divisor
+        return (phase - held + made_phase) % modulus, remainder // shared, divisor // shared
     made = (2 * made_at * s1 * Q + resolution) // (2 * resolution)
     try:
         product = checked_work(checked_work(numerator * made) * resolution)
@@ -3516,6 +3524,27 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
     return GameBoardDiagnostics(shape, unit, [])
 
 
+def square_ladder(square: int) -> int:
+    """The largest T with T^2 <= `square`, by a ladder of comparisons of
+    squares and nothing else (no root primitive: the form LAW.md gives the
+    meeting, the Register Architect's NODE_ALGEBRA.md section 2, the model
+    owner's word of record 920 that the board is algebra): from the high
+    bit down, the candidate T + 2^k is kept when its square does not exceed
+    `square`. Exact integers; the same floor as the integer root, reached by
+    comparisons alone, so the pushed row's wall T(P) of `momentum_pair` is
+    a comparison in the law's interval and not a seventh verb."""
+    if square < 0:
+        raise ValueError("a square is not negative")
+    found = 0
+    bit = 1 << ((square.bit_length() + 1) // 2)
+    while bit:
+        candidate = found + bit
+        if candidate * candidate <= square:
+            found = candidate
+        bit >>= 1
+    return found
+
+
 def wall_square_overflow(rest: int, primitive: list[int], denominator: int) -> OverflowError:
     """The refusal of the wall's square on a pushed row's momentum before
     it is formed (`momentum_pair`): R^2 + 3 |**P**|^2 with R the rest term
@@ -3583,7 +3612,7 @@ def momentum_pair(
             if c and c > ((room - square) // 3) // c:
                 raise wall_square_overflow(rest_primitive, primitive, denominator)
             square += 3 * c * c
-        resolution = math.isqrt(square * Q * Q)
+        resolution = square_ladder(square * Q * Q)
         if 2 * resolution > MAX_WORK_INT // max(1, denominator) or 2 * manhattan * Q > (
             MAX_WORK_INT // max(1, denominator)
         ):
@@ -3670,7 +3699,7 @@ def optical_rate_and_wall(
 
 def optical_walk_step(
     frame: Interval, store: NatureBeamStore, table: FamilyFlight
-) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int] | None]]:
+) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int, int]]]:
     """Step 1 under `optical`: the row's stored accumulator gains the
     stretched rate against the wall the crowd's age moment stretches
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
@@ -3739,52 +3768,45 @@ def optical_walk_step(
             cross[:, 2],
         )
     rates = rate
+    half_walls = wall0 // 2
 
-    def last_link(index: int, age_after: int) -> tuple[int, int] | None:
-        if memoryless_flight(store, table, denominator, index, age_after):
-            return None
+    def last_link(index: int, age_after: int) -> tuple[int, int, int]:
+        # The one form of the last Link's time (the physics-rule reviewer's
+        # line on PR #855): (age r - s + T d) / r, T the half wall of the
+        # row's present pair (T_D on its family's line, T(P) on a pushed
+        # row's), the start the accumulator was seeded from; 2 d the
+        # stretched units' scale (`exact_phase`).
         r = int(rates[index])
-        return age_after * r - int(store.residue[index]), r
+        numerator = age_after * r - int(store.residue[index]) + int(half_walls[index]) * denominator
+        return numerator, r, 2 * denominator
 
     return step, last_link
 
 
-def memoryless_flight(
-    store: NatureBeamStore, table: FamilyFlight, denominator: int, index: int, age: int
-) -> bool:
-    """Whether a row's flight accumulator after the walk is the table's own
-    count at its age on its line, scaled to the stretched units (the value
-    a fresh row is seeded from): no crowd has moved it, and the time of its
-    last Link is the count's (`exact_phase` without `last_link`), the same
-    reading as without a crowd, byte for byte; the snapshot omits such an
-    accumulator by the same test (`engine.snapshot_stream`)."""
-    made0, residue0 = table.accumulator(
-        store.direction[index : index + 1], np.array([age], dtype=np.int64)
-    )
-    return (
-        int(store.made[index]) == int(made0[0])
-        and int(store.residue[index]) == int(residue0[0]) * denominator
-    )
-
-
 def optical_last_link(
     store: NatureBeamStore, table: FamilyFlight, world: NatureBeamWorld, index: int, age: int
-) -> tuple[int, int] | None:
+) -> tuple[int, int, int]:
     """The time of a row's last Link off its stored accumulator, after the
-    walk: (age r - s, r) with r the row's stretched rate, its family's
-    rate times d on a row never pushed (2 S_1 Q d for the photon) and the
-    momentum's 2 S_1(P) Q d on a pushed row, and s the residue
-    (`exact_phase`'s `last_link`); None on a row no crowd has moved
-    (`memoryless_flight`), whose last Link's time is the count's own."""
-    if memoryless_flight(store, table, world.suspension[1], index, age):
-        return None
+    walk, in the one form of every world (the physics-rule reviewer's line
+    on PR #855): (age r - s + T d, r, 2 d) with r the row's stretched rate (its
+    family's rate times d on a row never pushed, 2 S_1 Q d for the photon;
+    the momentum's 2 S_1(P) Q d on a pushed row), s the residue and T the
+    half wall of the row's present pair (T_D on its family's line, T(P) on
+    a pushed row's), the start the accumulator was seeded from in stretched
+    units. On a row no crowd has moved this is the count's own form, made
+    T_d / (S_1 Q), floor for floor (`exact_phase`, the identity
+    `tests/test_optical.py` asserts); on a row a crowd moved it is the
+    accumulator's, and no row reads two forms."""
     rows = np.array([index], dtype=np.int64)
     if store.push_x[index] or store.push_y[index] or store.push_z[index]:
-        rate0 = 2 * int(momentum_pair(store, table, world.suspension[1], rows)[0][0]) * Q
+        s1, t = momentum_pair(store, table, world.suspension[1], rows)
+        rate0, half_wall = 2 * int(s1[0]) * Q, int(t[0])
     else:
         rate0 = int(table.rate[store.direction[index]])
-    r = rate0 * world.suspension[1]
-    return age * r - int(store.residue[index]), r
+        half_wall = int(table.wall[store.direction[index]]) // 2
+    d = world.suspension[1]
+    r = rate0 * d
+    return age * r - int(store.residue[index]) + half_wall * d, r, 2 * d
 
 
 def optical_turn(frame: Interval) -> None:
@@ -4056,21 +4078,18 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         # by the family's triple; under `optical` the accumulator on the row
         # against the wall the crowd's age moment stretches
         # (`optical_walk_step`, on the world's flight).
-        if frame.crowd is None:
-            step, moved, node_after, escaped = _walk_rows(table, store, world.periodic, extents)
-            last_link = None
-        else:
-            step, last_link = optical_walk_step(frame, store, table)
-            moved = step.any(axis=1)
-            x, y, z = store.coordinates(store.node)
-            coordinates = np.stack([x, y, z], axis=1) + step
-            escaped = np.zeros(store.size, dtype=bool)
-            for axis in range(3):
-                if world.periodic[axis]:
-                    coordinates[:, axis] %= extents[axis]
-                else:
-                    escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
-            node_after = coordinates @ np.array(store.strides, dtype=np.int64)
+        # The one walk of every world (the generic entry of the bending, 2026-09-22).
+        step, last_link = optical_walk_step(frame, store, table)
+        moved = step.any(axis=1)
+        x, y, z = store.coordinates(store.node)
+        coordinates = np.stack([x, y, z], axis=1) + step
+        escaped = np.zeros(store.size, dtype=bool)
+        for axis in range(3):
+            if world.periodic[axis]:
+                coordinates[:, axis] %= extents[axis]
+            else:
+                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        node_after = coordinates @ np.array(store.strides, dtype=np.int64)
         left = bool(escaped.any())
         # The Port of the Link crossed (a diagnostic of the walk, and the
         # face a ray leaves through) and the direction the ray arrived on.
@@ -4143,7 +4162,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                     definition.phase_per_age,
                     modulus,
                     FACE_NAMES[int(port[index])],
-                    None if last_link is None else last_link(index, int(store.age[index]) + 1),
+                    last_link(index, int(store.age[index]) + 1),
                 )
                 for index in gone.tolist()
             }
@@ -4906,9 +4925,7 @@ def _family_plan(
             families[family].phase_per_age,
             modulus,
             f"measured event {int(e)}",
-            None
-            if frame.crowd is None
-            else optical_last_link(store, table, frame.world, int(ix), int(ag)),
+            optical_last_link(store, table, frame.world, int(ix), int(ag)),
         )
         for ph, ag, ar, e, ix in zip(
             ph_t.tolist(),
@@ -6214,9 +6231,7 @@ def _border(frame: Interval) -> None:
                 definition.phase_per_age,
                 modulus,
                 LIFETIME_NAME,
-                None
-                if frame.crowd is None
-                else optical_last_link(store, table, frame.world, int(index), int(store.age[index])),
+                optical_last_link(store, table, frame.world, int(index), int(store.age[index])),
             )
             for index in gone.tolist()
         }

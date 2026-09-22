@@ -78,7 +78,9 @@ in).** Fourteen failures on the branch's suites, three of them the law's
 own gaps, closed in code: the click's exact time was read off the
 accumulator in every world (the amplitude worlds' clicks moved at
 suspension 0; now the count's own on a row no crowd moved,
-`nature_beam.memoryless_flight`), a row whose direction a collision or the
+`optical_last_link`'s one form, (age r - s + T d) / r, the count's own
+floor by identity on a row no crowd moved, the reviewer's line on PR
+#855), a row whose direction a collision or the
 meeting changed kept the old line's accumulator (now reseeded from the
 table at its age on the new line, `nature_beam.reseed_flight`), and the
 inverse interval at n = 0 left the accumulators on the rows (now the rows

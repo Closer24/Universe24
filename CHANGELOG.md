@@ -37,8 +37,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 - Three rules the entry needed, found by the suites (the law acting where
   the key never did): the click's exact time is the count's own on a row
   no crowd moved and the accumulator's where one did
-  (`nature_beam.memoryless_flight`, the same test as the snapshot's; the
-  amplitude worlds' clicks byte for byte); a row whose direction a
+  in one form for every row, (age r - s + T d) / r with T the half wall
+  of the row's present pair (`optical_last_link`, the walk's `last_link`;
+  the reviewer's line on PR #855: the count's own floor on a row no crowd
+  moved, by identity, and no row reads two forms; the amplitude worlds'
+  clicks byte for byte); the pushed row's wall T(P) by a comparison ladder
+  of squares in place of the root at run time (`square_ladder`, the same
+  floor; the Register Architect's NODE_ALGEBRA.md section 2); a row whose direction a
   collision or the meeting changed reads its age on its present line, its
   accumulator reseeded from the table there (`nature_beam.reseed_flight`;
   the merge as without a crowd); the inverse interval at n = 0 returns
