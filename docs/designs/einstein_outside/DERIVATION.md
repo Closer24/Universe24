@@ -1439,6 +1439,40 @@ Inside step.
 | II.12 (perihelion) | (W2), 3.3 | no post-Newtonian term assumed; the first-order term is the drive's own |
 | II.13 | 5.1, 5.2, 5.5 | cited |
 
+**The owner's check (record 817, as the Boss relayed it: "show how we
+arrived at Einstein, how we arrived at Lorentz, and at the end the
+step-above formula, how we arrived at it; without deriving from it;
+and make sure that we are not deriving").** One row per formula this
+file arrives at: the inputs actually used in its chain, the line of
+this file where the chain starts, and the word used for it.
+
+| The formula arrived at | The inputs actually used in its chain | Where the chain starts (this file) | The word |
+| --- | --- | --- | --- |
+| the place-to-place factor `k_XY = (r_Y / r_X)(1 - s.v_X) / (1 - s.v_Y)` | (A1), (A3), the counts (W4); r a free symbol | Theorem 1, :349 (the formula :360) | follows (a theorem of A1) |
+| the radar map, Lorentz times the dilation `r_D gamma` | (A1), (A3), (W5), Theorem 1 | Theorem 2, :405 (the map :411) | follows; Lorentz's form RECOVERED as the result of two legs, the scale left free |
+| `1 / gamma` (time dilation as r) | Theorems 1, 2; r from two factors; the three r cited (the law's declaration r = 1; the identity's `E'_0 / E'`, declared; (A2)'s walk, shown to second order in the click frame) | II.1, :636 | follows in r; `sqrt(1 - v^2)` RECOVERED under the line, shown to second order under (A2), declared under the identity |
+| the composition `w = (v_R - v) / (1 - v v_R)` | Theorems 1, 2, (A3) | II.3, :716 | follows, r-free (Einstein's form RECOVERED) |
+| the contraction `(1 - v^2) / r` and r | Theorem 2, the transponding rule (the click frame 2 (c)), (A3) | II.4, :766 | follows in r; `1 / gamma` RECOVERED under the line |
+| the aberration `tan theta_D = sin theta / (gamma (cos theta - v))` | Theorem 2 (c), (A3) | II.5, :821 | follows, r-free (Einstein's form RECOVERED; the gamma computed) |
+| `E^2 = E_0^2 + c^2 p^2` | the definitions `E = E_0 / r`, `p = E v`; the line of II.1; the click frame's section 7 for W under (A1), (A2), the Planck map | II.6, :870 | follows as the line; W shown to second order (the click frame); exact by declaration under the identity |
+| `E_0 = hbar m` | the Planck map on `main` (6.4), (A2) | II.6, :893 | follows (Compton's form RECOVERED) |
+| `E_0 = m_i c^2` | the load identity `3 h n_K = Q S d_K`, a declaration | II.6, :893 and after | declared (a unit); NEITHER on the law |
+| `p_law / p_nat = k` | (W2) as declared; Einstein's `gamma m v` on the comparison side only | II.7, :949 | follows (the law's form); Einstein's declared under the identity's wall |
+| the Outside step (Theorem 4's image) and Einstein's step as the most general form it takes | (A1), (A3), section 1, Theorems 1, 2 | section 3 (a), :470 (Einstein's form named at :486 as the comparison) | follows; Einstein's form RECOVERED where r is supplied, never an input |
+| the quantum of the step above (Theorem 3) | (A1), (A3), the drive's `at_most` 1, Theorem 2 (a) | section 3 (b), :499 | follows (a theorem; no run) |
+| Newton's step as the limit | Theorem 4, (M), `v << c` | section 3 (c), :543 (the form :547) | RECOVERED (the limit) |
+| the accelerated detector's redshift `g Y / c^2` | Theorem 1, no crowd | II.9, :1039 | follows |
+| the gravitational redshift `(1 + k_A) / (1 + k_B)` | (W1), Theorem 1 (iv); the `1 / r` form from 5.1 and (M) | II.10, :1070 | follows (the click frame section 8, cited) |
+| the equivalence's constant `n S / d` against `1 / c^2` | (W1), (W2), 5.1, 3.3, (M), the world files' declared pairs | II.10, :1091 | follows in form; the constant DECLARED (the pin `n S = d` a condition on the declaration) |
+| the delay and the bending under the key | (W3) under the key `optical` (a declaration, `c_f`), (W1), (M), Fermat's limit | II.11, :1283 and :1291 | follows in form under a declaration; on the law 0, follows from the declared set |
+
+One sentence under the table, true at every row: Einstein's and
+Lorentz's forms and the Outside step appear in this file only as the
+thing compared with; no chain takes them as an input. The two rows
+whose word is "declared" (`E_0 = m_i c^2`; the equivalence's constant)
+take a declaration of the law's own inputs, not a form of Einstein's;
+no row's word is "derived".
+
 Three statements for the guard. (1) The word gamma is written in this
 document only as the value of `1 / r` under the click frame's one line
 or as the computed ratio of two radar scales; it is never an input. (2)
