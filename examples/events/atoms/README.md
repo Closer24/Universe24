@@ -79,3 +79,20 @@ one row per crossing (its `read` lines at 30, 442, 882, 1329, 2254; under
 339 clicks of the electron's rows; four pins FAIL, two NOT READ, one PASSES, nothing
 moved; the radius from the step lines 12.00 to 27.86 (GAMEBOARD, a
 diagnostic). Helium is not run. NATURE row 6 stays NOT YET.
+
+## The three runs of the level worlds (2026-09-22)
+
+One run each of `hydrogen_r3_level.json`, `hydrogen_r7_level.json` and
+`hydrogen_r12_level.json` on the Boss's word after the physics-rule
+reviewer's AGREED on the pins as written, read by kind in
+[docs/designs/atom_levels/RUN.md](../../../docs/designs/atom_levels/RUN.md)
+(the reader `level_readings.py` beside it, its printout, the run blocks in
+[expectations.json](expectations.json)); no pin moved after the runs. The
+r = 3 electron LEFT the board through `face:+x` at tick 733 (R1 FAIL: the
+fan's grain at small r, a finding); the r = 7 loop stays four returns
+(the first at 612 against the generator's 690, R1 FAIL by the band; the
+level of its first loop 70 against 71, R3 PASS); the r = 12 loop stays five
+returns (R1 and R3 PASS at the bands' edges, 1341 and 47) and releases once,
+four `light` rows of content 4 at its fourth return, the Planck identity
+read on the +x and +y faces (R5). Two levels give one line and no ratio:
+R4 NOT READ, NATURE row 6 stays NOT YET.
