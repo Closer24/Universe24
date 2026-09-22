@@ -646,6 +646,48 @@ CORRECTIONS = [
         "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position, its transform as momentum (a hypothesis, Section~\\ref{sec:measurement}) &",
         "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position (a hypothesis, Section~\\ref{sec:measurement}) &",
     ),
+    # The owner's word on the title (2026-09-22, through the Boss: "A, go"):
+    # the word that separates the law, local, from its read-out, the click,
+    # non-local, goes into candidate 3's frame; the abstract's first sentence
+    # says the same. With it, the writer's re-read of the five: the ports'
+    # offers without the direction's letter, the birth wheel named as the
+    # paper names it, Q in the symbols table, the Gleason sentence whole.
+    (
+        "the title: the law local, its read-out non-local",
+        "\\title{Universe24: a local integer law of nature and what follows from it}",
+        "\\title{Universe24: a local integer law of nature with a non-local read-out, and what follows from it}",
+    ),
+    (
+        "the abstract's first sentence with the title",
+        "and one comparison, the click, is its only read-out.",
+        "and one comparison, the click, the one non-local step, is its only read-out.",
+    ),
+    (
+        "row 2b: the ports' offers, not the direction's letter",
+        "the criterion the offers' visibility $(D_1 - D_2)/(D_1 + D_2)$ of \\texttt{mz\\_equal}, no apparatus model",
+        "the criterion the visibility $(b - d)/(b + d)$ of the bright and dark ports' offers of \\texttt{mz\\_equal}, no apparatus model",
+    ),
+    (
+        "row 2a: the birth wheel as the paper names it",
+        "(the golden-rate wheel, $4096$ births under the exact phase; L2b)",
+        "(the birth wheel, $4096$ births; L2b)",
+    ),
+    (
+        "the symbols table: Q",
+        "$\\lambda$, $\\psi_r$, $\\theta$ & scalars, an element & a wavelength, the state of the record $r$ in the group ring, an angle \\\\",
+        "$\\lambda$, $\\psi_r$, $Q$, $\\theta$ & scalars, an element, a module & a wavelength, the state of the record $r$ in the group ring, the quotient of the rows' module that forgets the age (Theorem~\\ref{th:bijection}), an angle \\\\",
+    ),
+    (
+        "the Gleason sentence whole",
+        "the extreme a part in $276$), the norm range of Appendix~\\ref{app:technical} the error bound.",
+        "the extreme a part in $276$), and the norm range of Appendix~\\ref{app:technical} is the error bound between the two.",
+    ),
+    # The owner's word (2026-09-22): the big formula in a frame.
+    (
+        "the covariant square in a frame",
+        "W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3,",
+        "\\boxed{\\,W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3\\,}",
+    ),
 ]
 
 
