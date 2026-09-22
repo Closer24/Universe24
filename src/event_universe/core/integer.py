@@ -1,4 +1,4 @@
-"""Domain-neutral integer arithmetic: the working-register bound and the Beam
+"""Domain-neutral integer arithmetic: the working bound (the host's integer bound) and the Beam
 Law's integer primitives; callers own payload bounds and operation costs."""
 
 from collections.abc import Sequence
@@ -7,7 +7,7 @@ MAX_WORK_INT = (1 << 63) - 1
 
 
 def checked_work(value: int) -> int:
-    """Bound intermediate arithmetic to a signed 64-bit working register."""
+    """Bound intermediate arithmetic to the working bound, a signed 64-bit range."""
     if type(value) is not int:
         raise TypeError("integer intermediate required")
     if not -MAX_WORK_INT <= value <= MAX_WORK_INT:
