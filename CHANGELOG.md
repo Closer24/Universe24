@@ -5,6 +5,20 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
+
+- Twelve worlds by the generator (`examples/events/amplitude/bell_n2048_*`,
+  `bell_n8192_*`, `bell_n16384_*`: the registered Bell world of L6 with the
+  one declared integer N changed), the pin per N written before the run
+  from the closed form of DERIVATIONS_BEAM 24.4 (`expectations.json` under
+  `bell_24_4`: S = 181 / 64 at 2048 and 8192, 5793 / 2048 at 16384, where
+  the plateau ends), the runs and their replications in the register's
+  block `run_2048_8192_16384` and the L6 entry, `tests/test_amplitude_bell_24_4.py`
+  extended to the five N and the closed form. The worlds' duration is
+  declared from the lamp's clock (BEAM_LAW note 41) where N + 20 intervals
+  end before the wheel's last records gather (8221 at 8192, 16439 at
+  16384; every registered world unchanged). No engine change.
+
 ### Series L7, the cone: which length a row's phase counts (2026-09-20)
 
 - Two worlds of one geometry under the amplitude law

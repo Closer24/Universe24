@@ -21,7 +21,11 @@ Read [the shared workflow](../workflow.md), current
 or receive a scenario from Boss, tests or a field owner.
 
 **Input:** source tree, model, initial state, parameters, duration and acceptance
-conditions. **Output:** the exact invocation/setup, completion/failure metadata
+conditions. A run's duration is declared from the world's own clocks (the
+lamp's turn recurrence and the flight to the gather), derived before the run
+and never a fixed margin; a first declaration that falls short is kept with
+its readings and the re-declaration is derived, never chosen to meet a number
+(the Bell runs of 2026-09-22, series L6). **Output:** the exact invocation/setup, completion/failure metadata
 and events. Runs are headless by default: do not capture frames, import rendering
 dependencies or create HTML/GIF unless visualization is explicitly requested.
 Use the existing Python runner and optional renderer; an API-only candidate must
