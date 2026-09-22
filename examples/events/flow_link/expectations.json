@@ -2559,7 +2559,7 @@
    }
   }
  },
- "verdict": "CLOSES on the deciding pin (2026-09-22, the run on the split ladder 89f43572): the ring at b = 6, gamma 1 reads the mean radial shift 0.731 against 0.731 +- 0.025 with every arrival Node the map's; every ring's mean radial shift, tangential mean, delay and C_nodes inside; C_ring through the stated lever-arm factor reads the algebra's number to 0.01 at every ring, one to three grains from the expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2) as the design's verdict sentence states (outside the one-grain pin as written at the three gamma 1 rings, by 2.40 / 1.07 / 1.40 grains); the folder's README",
+ "verdict": "DOES NOT CLOSE by the README's rule (2026-09-22, the run on the split ladder 89f43572): C_ring through the stated lever-arm factor reads OUTSIDE the one-grain pin as written at four rings of six (2.40 / 1.07 / 1.40 grains at gamma 1, 1.45 at b = 6 gamma 0). Beside the word, the run's finding by kind: the deciding pin inside (0.731 against 0.731 +- 0.025 at b = 6 gamma 1, DETECTOR), every arrival Node the map's (168 of 168, DETECTOR), every ring's mean radial shift, tangential mean, delay and C_nodes inside, and C_ring the algebra's own walk to 0.01 at every ring (COMPUTATION: 3.655 / 3.819 / 3.918 against this file's c_ring values 3.652 / 3.821 / 3.918, the algebra's number against the continuum with no tolerance), so what failed the grain is the continuum formula's pin 2 c_f x 0.990 x L / sqrt(L^2 + b^2), not the engine's walk of the rule; the folder's README",
  "runs_on_the_merged_engine_5f3f18bf": {
   "ring_b6_control_g0": {
    "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",
@@ -4408,7 +4408,7 @@
     "outside": 1,
     "record_checks_failed": 0
    },
-   "verdict": "CLOSES on the deciding pin: the mean radial shift 0.731 against 0.731 +- 0.025 inside, every arrival Node the map's (40 of 40, the starts moved by 0 / 1 / 2 / 3 Nodes 15 / 20 / 2 / 3), the tangential 0.000, the delay 0.775, C_nodes 2.496 inside; C_ring through the lever-arm factor 3.655 against the expected 3.859 +- 0.085: OUTSIDE the one-grain pin as written by 0.119, 2.40 grains below, the algebra's own 2.44 (the design's verdict sentence: within one to three grains)"
+   "verdict": "DOES NOT CLOSE by the README's rule: C_ring through the lever-arm factor 3.655 against the expected 3.859 +- 0.085, OUTSIDE the one-grain pin as written by 0.119, 2.40 grains below (COMPUTATION; the algebra's own 2.44, this file's c_ring value 3.652). The finding by kind: the deciding pin inside, the mean radial shift 0.731 against 0.731 +- 0.025 (DETECTOR), every arrival Node the map's (40 of 40, the starts moved by 0 / 1 / 2 / 3 Nodes 15 / 20 / 2 / 3), the tangential 0.000, the delay 0.775, C_nodes 2.496 inside: the engine walks the rule as the algebra walks it"
   },
   "ring_b3_control_g0": {
    "source_sha256": "0300198b1db8800cca4c1ff10533ab56e649b41c46f10caee432306671ce806c",

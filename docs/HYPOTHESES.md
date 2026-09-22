@@ -1350,16 +1350,20 @@ couplings.
   working bound at d = 16384 (the wall's square X Q^2 over 2^63 - 1; the
   folder's README); on the split ladder of the same day (the physics-rule
   reviewer's route (b): T = Q a + b from X alone, X Q^2 never formed) every
-  ring ran, and the verdict is CLOSES on the deciding pin: the ring at
-  b = 6, gamma 1 reads the mean radial shift 0.731 against 0.731 +- 0.025
-  with every arrival Node the map's (40 of 40); every ring's mean radial
+  ring ran; the verdict by the folder's rule is DOES NOT CLOSE (`C_ring`
+  through the stated factors outside the one-grain pin as written at four
+  rings of six), and beside it the run's finding by kind: the deciding
+  pin inside, the ring at b = 6, gamma 1 reading the mean radial shift
+  0.731 against 0.731 +- 0.025 (DETECTOR) with every arrival Node the
+  map's (40 of 40); every ring's mean radial
   shift, tangential mean, delay and C_nodes inside (0.128, 1.625 / 0.845,
   0.628 / 0.107 Links at b = 6 gamma 0, b = 3, b = 8, the arrival Nodes the
   map's 40 / 16 / 48 of 40 / 16 / 48); `C_ring` through the stated
-  lever-arm factor the algebra's number to 0.01 at every ring, 3.655 /
-  3.819 / 3.918 at gamma 1 against the expected 3.859 / 3.934 / 3.785, one
-  to three grains as the design's verdict sentence states (outside the
-  one-grain pin as written by 2.40 / 1.07 / 1.40 grains); the calibration
+  lever-arm factor the algebra's own walk to 0.01 at every ring
+  (COMPUTATION: 3.655 / 3.819 / 3.918 at gamma 1 against ALGEBRA.md's 3.652 /
+  3.821 / 3.918), 2.40 / 1.07 / 1.40 grains from the continuum formula's
+  pin 3.859 / 3.934 / 3.785, so what failed the grain is that pin, not the
+  engine's walk of the rule; the calibration
   -1.573 / -3.180 pixels against -1.600 / -3.000; the clock's word unmoved.
   The key off by default; admitting it to the law is the owner's later
   decision.

@@ -284,7 +284,7 @@ remains is the register's rule on a pushed row's momentum at d = 16384 (the
 wall's square over the working bound, whichever way its root is taken),
 which is the architect's and the owner's, not this branch's.
 
-## The run on the split ladder (2026-09-22, head 89f43572): every ring read; the verdict CLOSES on the deciding pin
+## The run on the split ladder (2026-09-22, head 89f43572): every ring read; the verdict DOES NOT CLOSE by the README's rule, the deciding pin inside
 
 The physics-rule reviewer's route (b), the model owner's last attempt on
 the light bending (the Boss, about 15:50Z): `nature_beam.split_ladder`
@@ -300,7 +300,7 @@ intervals, against the controls of the run before (unchanged), with the
 SAME pins; the run blocks under `runs_on_the_split_ladder_89f43572` of
 `expectations.json`, read by `tools/flow_link_readings.py`.
 
-| World | the mean radial shift, Links (DETECTOR) | the pin | arrival Nodes the map's | starts moved by 0 / 1 / 2 / 3 (the map's) | the delay (within 1) | `C_nodes` (COMPUTATION) | `C_ring` through the factor (COMPUTATION) against the expected, the grain; the residual in grains (the algebra's) |
+| World | the mean radial shift, Links (DETECTOR) | the pin | arrival Nodes the map's | starts moved by 0 / 1 / 2 / 3 (the map's) | the delay, intervals (DETECTOR, within 1) | `C_nodes` (COMPUTATION) | `C_ring` through the factor (COMPUTATION) against the expected, the grain; the residual in grains (the algebra's) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `ring_b6_g1` (the deciding pin) | **0.731** | 0.731 +- 0.025, inside | 40 of 40 | 15 / 20 / 2 / 3 (15 / 20 / 2 / 3) | 0.78 | 2.496, inside | 3.655 against 3.859 +- 0.085: -2.40 grains (-2.44), outside the one-grain pin by 0.119 |
 | `ring_b6_g0` | 0.128 | 0.128 +- 0.025, inside | 40 of 40 | 34 / 6 / 0 / 0 | 0.40 | 0.437, inside | 1.806 against 1.929: -1.45 (-1.46), outside by 0.038 |
@@ -316,19 +316,24 @@ every start is where the algebra's walk under **f**_D puts it, 168 of
 168; the clicks of a start land on one pixel.
 
 **The verdict, by the README's rule and the pins as written before the
-first run: CLOSES on the deciding pin.** The gamma 1 ring at b = 6 reads
-0.731 against 0.731 +- 0.025, and every ring's mean radial shift,
-tangential mean, delay and `C_nodes` are inside. `C_ring` through the
-stated lever-arm factor reads the algebra's number to 0.01 at every ring,
-so it stands where ALGEBRA.md put it: `2 c_f` within the finite path's
-factor and the shells' 0.990 to one to three grains (the design's verdict
-sentence, the reviewer's must-fix line of record 902), which is outside
-the strict one-grain pin of `expectations.json` at the three gamma 1 rings
-by 2.40 / 1.07 / 1.40 grains and inside at gamma 0 at b = 3 and 8. Not
-CLOSES bare: 3.655 / 3.819 / 3.918 against 4. The reading establishes that
-the engine walks the rule as the algebra walks it, integer for integer, at
-every start of the three rings; it establishes no physical law: `c_f = 2`
-is an input, `n S = d` a declaration, and 4 stays on the comparison side.
+first run: DOES NOT CLOSE.** The rule has three words and no fourth:
+`C_ring` through the stated lever-arm factor reads OUTSIDE the one-grain
+pin as written at four rings of six (2.40 / 1.07 / 1.40 grains at gamma 1,
+1.45 at b = 6 gamma 0), so the second clause's condition fails and the
+rule's own word is DOES NOT CLOSE; not CLOSES bare either (3.655 / 3.819 /
+3.918 against 4). Beside the word, the run's finding by kind: the deciding
+pin is inside (0.731 against 0.731 +- 0.025, DETECTOR); every arrival
+Node is the map's (168 of 168, DETECTOR); every ring's mean radial shift,
+tangential mean, delay and `C_nodes` are inside; and `C_ring` is the
+algebra's own walk to 0.01 at every ring (COMPUTATION: 3.655 / 3.819 /
+3.918 against ALGEBRA.md's 3.652 / 3.821 / 3.918, the pins file's own
+`c_ring` entry, the algebra's value "against" the continuum with no
+tolerance), so what failed the grain is the continuum formula's pin
+`2 c_f x 0.990 x L / sqrt(L^2 + b^2)`, not the engine's walk of the rule.
+The reading establishes that the engine walks the rule as the algebra
+walks it, integer for integer, at every start of the three rings; it
+establishes no physical law: `c_f = 2` is an input, `n S = d` a
+declaration, and 4 stays on the comparison side.
 
 **The state digest between the engines (the record, not a reading).**
 `ring_b6_g0`'s `state.json` digest moved from `11f1797bb2a5...` on the
