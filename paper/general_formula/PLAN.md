@@ -4759,3 +4759,30 @@ declared, the rotations' depth, the read-out characterization, the
 abstract's limitation); the figures' pages and captions checked one by
 one (the mechanism, the octahedron at 0.3 of the width, the two slits
 with the Mach-Zehnder, the pair, S(N)). 41 pages.
+
+## Applied (2026-09-22, the Boss's orders of 12:47Z and 12:54Z, records 962 and 964): three readings from their branch heads pending merge; rows 13 and 14 PENDING
+
+One commit, the three readings cited at their branch heads with the
+merge SHA to be swapped in when each lands: (1) the order channel
+(order-channel-run at 389dc5d10c83): Table 2 row 1c after 1b, the
+second party's serial correlation 15/16 under a = 0 and -1/16 under the
+period-3 cycle 0, 21, 42 (DETECTOR), the marginals 96/96, the algebra
+at 16 of 16 checks, nature 0, FAIL; the Bell section's plain statement
+and the discussion's positioning sentence cite the row. (2) The atom
+(atom-give-momentum at 686673f785f6; CAUSE.md on main at 8ee973d6, PR
+#867): row 6 by kind (C1 PASS, no escape in 7500 intervals, 23 quarter
+crossings; 12 to 7 Links; the period 1431 to 1040; C2, C3 FAIL as
+declared; the baseline's escape at 3407) and the paragraph (viii) of
+Section 9. (3) The Gleason bound (gleason-bound at 1f0ea47b417b):
+w* = 1/1516 on j = +-3 mod 8, about 0.02 on j = +-1 mod 8; the error
+bound A sqrt(2 R*) + A^2/2 replacing "no theorem is given"; the table
+click's zeros at N_phi = 8192 and none at N_phi = 64. Rows 13 (the
+bending's ring re-run, pin 0.731 +- 0.025 at b = 6, gamma = 1) and 14
+(Newton's D3 rows under the one constant, pins 384 and 768, against
+2.00 +- 0.18) PENDING their run of 2026-09-22, the ledger's bending and
+Newton rows keeping their words; the caption's counts updated; six
+bibitems (orderchannel, atomcentred, atomcause, gleasonbound, dyson1920,
+nist). Every new number a NUMBERS.md row by kind. 43 pages. Held next:
+the ring's SHA (row 13) and Newton's SHA (row 14), each folded on its
+head the same way; the merge SHAs swapped in when order-channel-run,
+atom-give-momentum, gleason-bound and PR #860 land.
