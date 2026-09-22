@@ -5142,3 +5142,25 @@ and the symbol list's `m` the mass; `\texttt{m}` in the tables is a
 family's name. None of those touched; no plain m of doubtful meaning. No
 number moved. The PDF compiled from the true source and read back. 52
 pages.
+
+## Applied (2026-09-22, the owner's word through the Boss's order of 23:00Z): the opening, the algebraic object first
+
+On `paper-opening` off main at 067b2472, one commit, words only. (a) A
+new first paragraph of the Introduction, "The algebra first", before
+"The paper in one page": the object (the integer group ring of the
+cyclic group of the phase grain on the cubic lattice whose symmetry is
+the cube's rotation group of order 24, Theorem 1), the six integer
+operations, what is exact as identities under declared tables (Theorems
+2 to 6, the books, Gauss's law, the pace), and what is reached from the
+same object under (A1) and (A2): Lorentz's factors' form, the
+equivalence principle, Einstein's step, and in a limit under a shell
+average Newton's inverse square; "reached from the algebra, not derived
+from nothing"; the law as built meets (A1) and not (A2); Table 2 row by
+row; the closing sentence, the owner's own word, that the algebra first
+and the comparison after is the order in which the model was found. (b)
+The abstract's first sentence turned to the object; the sentence traded
+is the third ("The rules are a cyclic group, a group ring, integer
+matrices and an evaluation at the roots of unity"), folded into the
+first; the abstract 246 words (mathematics counted one token each). No
+number moved, no claim changed, no row touched; "derived" nowhere. The
+PDF compiled from the true source and read back. 52 pages.

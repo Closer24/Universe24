@@ -3956,6 +3956,16 @@ CORRECTIONS = [
         "|z|^2 = \\frac{w^2}{m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
         "|z|^2 = \\frac{w^2}{\\mathtt m}\\cdot\\frac{C_{\\Nphi}[p]^2 + S_{\\Nphi}[p]^2}{65536}.",
     ),
+    (
+        "the Introduction's opening paragraph, the algebraic object first (the owner's word of 22:2xZ; the Boss's order of 23:00Z)",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The paper in one page.}",
+        "\\section{Introduction}\\label{sec:intro}\n\n\\paragraph{The algebra first.} This paper begins with one algebraic object and states what follows from it. The object is the integer group ring of a cyclic group, the phase grain $\\Nphi$, carried on a cubic lattice whose symmetry is the rotation group of the cube, of order $24$ (Theorem~\\ref{th:group}); the law is six integer operations on that ring, and every result the paper calls exact is an identity of it under declared tables (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction). From the same object, with two hypotheses on how a click reads it, (A1) and (A2), one chain reaches the form of Lorentz's factors, the equivalence principle and Einstein's step above the board, and, in a limit under a shell average, Newton's inverse square: reached from the algebra, not derived from nothing, and the law as built meets (A1) and not (A2), so what the runtime shows of that chain is read row by row in Table~\\ref{tab:nature}. That order, the algebra first and the comparison after, is the order in which the model was found.\n\n\\paragraph{The paper in one page.}",
+    ),
+    (
+        "the abstract's first sentence turned to the object, the third sentence (the rules are a cyclic group, a group ring, integer matrices and an evaluation) folded into it, the abstract at or under 250 words (the owner's word; the Boss's order of 23:00Z)",
+        "One update rule of bounded integers is applied at every Node of a cubic lattice, the GameBoard, at every interval: an accumulator with a rate and a wall per component, made of six integer operations. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. The rules are a cyclic group, a group ring, integer matrices and an evaluation at the roots of unity. Exact on the lattice:",
+        "The paper begins with one algebraic object: the integer group ring of a cyclic group, the phase grain, on a cubic lattice, the GameBoard, whose symmetry is the cube's rotation group of order $24$; one rule of six integer operations on that ring, bounded, acts at every Node and interval. Outside the lattice there are detectors and their clicks only; a record passes to a detector at one comparison, the click, the one non-local step and the only read-out. Exact on the lattice:",
+    ),
 ]
 
 
