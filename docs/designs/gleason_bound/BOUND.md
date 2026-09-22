@@ -62,7 +62,8 @@ count of W at the polariser, one click at a pixel of the two slits).
 | What weight of a mixture does the register exclude? | Malus at 22.5 degrees (219 of 256, DETECTOR) excludes every mixture of weight above **w* = 0.00066 = 1 / 1516** on the harmonics `j = +-3 mod 8` (the count falls to 218 above it; the margin-free bound, one whole cell, is 1 / 181 = 0.0055); Malus bounds **nothing** on `j = +-1 mod 8` (j = 7, 9, 15, 17, 23, 25, 31 read exactly as j = 1 at 22.5, 45 and 90 degrees); the two-slit bands exclude a weight above about **0.019** on that class (one click at the peak of 51, DETECTOR); section 3 (GAMEBOARD by formula) |
 | Does the bound reach the readings' cell? | At the polariser **yes, below it**: the cell is 1 / 256 = 0.0039 and w* = 0.00066, because a unit of weight moves the reading by 181 cells; at the two slits **no**: the bound is the bands' own cell (one click in 51) and rests on the pixels' margins, not read here |
 | The sentence for the paper | Section 4, in two forms |
-| Not proved | Section 5, one line |
+| The table click's zeros (the Boss's added item) | At N = 8192 **two rows of amount 1** at the phases 0 and 4097 read (0, 0) on the tables where the ideal `|ev(f)|^2 = 5.9 x 10^-7` (1952 distinct table pairs among 8192 phases; 64368 two-row zeros with amounts 1 to 4); at N = 64 **NONE FOUND** up to three rows at distinct phases with amounts 1 to 4; the converse (an ideal zero reading nonzero on the tables) **cannot exist**, by the tables' exact antisymmetry; section 5 (COMPUTATION) |
+| Not proved | Section 6, one line |
 
 ## 1. Hypothesis (a) as the theorem has it, and its failure on the referee's example
 
@@ -296,7 +297,75 @@ A / 2 per component, where hypothesis (a) fails on the built click
 (`f = 256 x^8 - 181 (1 + x^16)` reads 0, 196 and 25028 at three
 rotations against the exact 49)".
 
-## 5. What I did not prove
+## 5. The table click's zeros (the Boss's added item, 11:50Z; kind: COMPUTATION)
+
+The reader's point. The paper (Section 6, after the objects; the paper
+branch at 65674bcb, `main.tex` lines 733 to 735) says "ev is the identity
+on it: the GameBoard's cancel and the click's zero are one relation,
+exactly", where the click is the ideal evaluation `ev` on `Z[zeta_N]`.
+The reader says the TABLE click, `R(f) = X^2 + Y^2` with `(X, Y) = (sum_i
+a_i C[p_i], sum_i a_i S[p_i])` on the declared integer tables (the engine
+forms it with the amplitudes 32 x amount, `AMPLITUDE_SCALE` in
+`events/amplitude.py`; a common scale, the Boss's 512 included, changes no
+zero), has additional zeros: elements f nonzero in `Z[zeta_N]` whose table
+reading is exactly (0, 0). Searched by computation
+([zeros_map.py](zeros_map.py), its output [zeros_map.out](zeros_map.out)):
+every f with at most three rows at distinct phases and amounts 1 to 4, at
+every phase (the sign `p -> p + N/2` is exact on both sides and is used;
+the phase rotation is no symmetry of the table reading, section 1, and is
+not used to cut the search), at N = 64 and at N = 8192 (the Bell
+plateau's tables, `main.tex` line 888). Nothing here is a measurement.
+
+**The structure, before the search.** The table pointer is a Z-linear
+map of the group ring `Z[Z_N]` (rank N) onto a lattice of rank 2 in
+`Z^2`, so its kernel has rank N - 2; the cancel's kernel, the ideal `(1 +
+x^(N/2))` of the antipodal pairs, has rank N/2. The first contains the
+second (the converse below), so the table click's additional zeros are a
+lattice of rank N/2 - 2 inside `Z[zeta_N]` (rank N/2): none at N = 4, rank
+2 at N = 8, rank 30 of 32 at N = 64, rank 4094 of 4096 at N = 8192. Any
+three rows at any three distinct phases have a table zero with some
+integer amounts (three vectors of `Z^2` are Z-dependent; the referee's f
+is one at N = 64 with the amounts 256, 181, 181), while in `Z[zeta_N]`
+three rows at distinct phases are never dependent. What the search
+measures is how small the amounts of a zero get.
+
+**The search** (zeros_map.out):
+
+| N | distinct (C, S) pairs among the N phases | one row | two rows | three rows (gcd of the amounts 1) | the smallest example |
+| --- | --- | --- | --- | --- | --- |
+| 64 | 64 of 64 | none (`C^2 + S^2 >= 65448`) | none | none | **NONE FOUND** up to three rows at distinct phases with amounts 1 to 4 |
+| 8192 | 1952 of 8192 (6240 phases repeat an earlier pair) | none (`C^2 + S^2 >= 65192`) | 64368 unordered sets | 4971336 unordered sets; the smallest three rows of amount 1 at the phases 0, 2728 and 5460 (a third of the circle apart, 2730.67 steps), the ideal `|ev(f)|^2 = 3.136 x 10^-6` | two rows of amount 1 at the phases 0 and 4097 (or 0 and 4095): `f = 1 + x^4097 = 1 - x` in `Z[zeta]`, the ideal `|ev(f)|^2 = 4 sin^2(pi / 8192) = 5.883 x 10^-7` (the tables' scale as the unit), the table reading `(256, 0) + (-256, 0) = (0, 0)`, R = 0 |
+
+At N = 8192 the sine's step near the axis is `256 x 2 pi / 8192 = 0.196`
+per phase, so five consecutive phases round to the same table pair (`S[0]
+= S[1] = S[2] = 0`, `C = 256`), and the pair at 4097 is exactly the
+negative of the pair at 0: two rows a phase step past antipodal cancel
+exactly on the tables and not in the ideal. At N = 64 every phase has its
+own pair and its negative sits only at `p + 32`, so the smallest table
+zero needs amounts beyond 4 (the referee's 256, 181, 181 is one; the
+bound of the search is three rows and the amount 4, stated).
+
+**The converse.** An ideal zero whose table reading is not (0, 0) cannot
+exist: CONFIRMED. The kernel of `ev` on `Z[Z_N]`, N a power of two, is the
+ideal `(1 + x^(N/2))`, the antipodal pairs of equal amounts, and the
+tables are exactly antisymmetric, `C[p + N/2] = -C[p]`, `S[p + N/2] =
+-S[p]` (checked at every power of two from 4 to 65536, zeros_map.out's
+last line), so the Z-linear table reading kills every such pair; this
+holds whether the merge cancels before the tables or the tables see the
+pair, the two being one relation for ideal zeros, as the paper says. The
+relation is one-way: every ideal zero is a table zero, not the converse.
+
+**One line for the paper, in the paper's words** (after "one relation,
+exactly"): "The built click on the tables keeps that relation one way:
+every cancel reads (0, 0), and the tables read (0, 0) on more, the table
+pointer being a Z-linear map of `Z[Z_Nphi]` onto a lattice of rank 2, its
+kernel of rank `Nphi - 2` against the cancel's `Nphi / 2`; at `Nphi =
+8192` only 1952 of the 8192 table pairs are distinct and two rows of amount
+1 at the phases 0 and 4097 read (0, 0) where `|ev(f)|^2 = 4 sin^2(pi /
+8192) = 5.9 x 10^-7`; at `Nphi = 64` no zero exists with at most three rows
+of amounts up to 4 (a computation from the tables, not a run)."
+
+## 6. What I did not prove
 
 The two-slit threshold to better than one click at the peak (the
 registered pixels' margins inside their rungs were not read, so 0.019 is
@@ -304,7 +373,7 @@ where exclusion is certain, not where it begins), and any bound tighter
 than the margin-free 1 / 181 that does not rest on the tables' accident
 at the window 32.
 
-## 6. Links
+## 7. Links
 
 - The theorem and its hypotheses: `paper/general_formula/main.tex` lines
   912 to 975; the sentence: line 1004 on `main` at 30c84db7, line 805 on
@@ -321,4 +390,5 @@ at the window 32.
 - The classes of harmonics: [the Born note](../open_problems/born/NOTE.md)
   sections 2 and 4, [born_map.out](../open_problems/born/born_map.out).
 - The arithmetic of this note: [bound_map.py](bound_map.py),
-  [bound_map.out](bound_map.out).
+  [bound_map.out](bound_map.out); the zeros' search: [zeros_map.py](zeros_map.py),
+  [zeros_map.out](zeros_map.out).
