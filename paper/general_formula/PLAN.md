@@ -3445,10 +3445,13 @@ test, check.py, one commit, one push, the report.
    above is derived: W times c^4 is E^2 = E_0^2 + p^2 c^2, the gate
    E_0 / E' is 1 / gamma, the drive's fraction is the click's velocity,
    the two Doppler factors are the step above read at two detectors;
-   each named as what Einstein wrote and shown to be the image, which
-   exactly and which to second order and where the factor 3 enters
-   taken from part 6's merged text; never two formulas side by side,
-   never a meeting; Eq. 14 then "the Inside identity of the conversion,
+   each named as what Einstein wrote and shown to be the image to
+   second order (the click frame's section 7 at its merge: the walk's
+   invariant, the Planck map, E' = E / c^2, the 3 as 1 / c^2 = d on the
+   body diagonal, the corrections m^2 beta^2), with the caveat beside it
+   that the rows as built hop whole and lack (A2), so for the rows'
+   dynamics W stays the declared identity of record 270; never two
+   formulas side by side, never a meeting; Eq. 14 then "the Inside identity of the conversion,
    shown to second order", the rows still hopping whole beside it (the
    reading's identity, not yet the rows' dynamics), one ledger row
    "shown (second order)". Newton Outside after Section 4's ground
@@ -3629,12 +3632,30 @@ KNOWN and OURS; the paper's word.
 - The uncertainty bounds: ALGEBRA on Z_N under a HYPOTHESIS (the circle
   as position); known (Donoho-Stark, Maassen-Uffink); not new.
 - Young's spacing: RECOVERED in the fan's limit.
-- Eq. 14, W = E_0^2 + 3 p.p: DECLARED (record 270; the Minkowski norm
-  declared into the wall, the click frame's part 4). Known: E^2 = E_0^2
-  + p^2 c^2. Ours: the integer W compared and never rooted with the gate
-  E_0 / E'. Series S confirms the declaration, not nature. "Declared"
-  until part 6 derives it from the conversion on main; then "shown to
-  second order".
+- Eq. 14, W = E_0^2 + 3 p.p: two uses, two words (the Boss's word of
+  08:05Z on the click frame's section 7 at 1dd81fef, the reviewer
+  AGREED, yes to second order). As the conversion's identity under (A1)
+  and (A2): SHOWN to second order, no square declared in the chain: the
+  walk's exact invariant cos omega = cos m cos kappa gives omega^2 =
+  m^2 + kappa^2 - m^2 kappa^2 / 3 + O(6); the law's own Planck map (the
+  dictionary's identities, an input: E = h_q n / d = h_A f, omega =
+  2 pi n / (d N), p = hbar kappa per Link, E_0 = hbar m; the load
+  identity 3 h n = Q S d) gives E^2 = E_0^2 + c^2 p^2; the whole unit
+  E' = E / c^2 gives W = E'_0^2 + 3 p.p with 3 = 1 / c^2 = d exactly on
+  the body diagonal (2.954 / 2.971 / 3.000 by direction, the root's
+  rounding); the order: relative corrections m^2 beta^2 (m^2 beta^2 / 3
+  on W, / 6 on E' and r), exact in the continuum limit; Lorentz enters
+  only through (A1) and (A2). The inputs the audit names: (A1), (A2),
+  the walk's invariant, the dictionary (Planck, de Broglie, the load
+  identity), the tables' rounding. For the rows' dynamics: DECLARED
+  (record 270), because the rows as built hop whole and lack (A2). The
+  paper's word per use: "shown to second order (the conversion's
+  identity, section 7)" where the step above is read from clicks under
+  (A2); "declared (record 270)" where the rows' hop is meant; never
+  "derived". Known: E^2 = E_0^2 + p^2 c^2. Ours: the integer W compared
+  and never rooted, the gate E_0 / E', the factor 3 as 1 / c^2 = d, the
+  order named. Plan A's line stays "an Inside formula on the record";
+  plan B says the two words at their places.
 - Lorentz, the click theorem: ARRIVED AT from (A1) and the one line
   k_AB = k_BA, special relativity's two postulates in the click
   language (Einstein 1905; Alexandrov-Zeeman); not circular, no
