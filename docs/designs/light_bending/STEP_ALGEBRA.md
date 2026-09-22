@@ -40,7 +40,20 @@ exactly: the ratio of the gamma-1 to the gamma-0 deflection is
 `2.06 to 2.17` on the row's momentum (2.00 on the pixels at b = 6), the
 declared `c_f = 2` read back with the dwell's second-order term, never
 derived; the bending is the push's alone and the delay the wall's alone
-(section 6). The one-line question for the owner is in section 9.
+(section 6). **The ring of starts (section 9, the reviewer's third
+option on the owner's "one scatters detectors on Nodes")** takes the
+plane out: the orientation average over every Node at the impact
+distance b, on the same fan and the same M, reads `C_ring = 5.12` at
+b = 6 (5.44 at b = 3, 5.86 at b = 8) at gamma 1, flat in b within 15
+per cent (the `M / b` form recovered) but not 4 within the ring's grain
+(0.09 to 0.11); the factor left, 1.28 to 1.46, is the fan's L1 factor of
+the flow (the same crowd's shell mean `|V| r^2 / Q = 32.79` against the
+continuum's 23.08, `F_L1 = 1.421`), and against the lattice's own push
+constant the ring reads `3.60 / 3.83 / 4.12` at b = 6 / 3 / 8. So the
+registered geometry's failure is the plane's, what remains is a constant
+of the fan and not of b, and the world that decides is the registered
+box with a ring of lamps, its arrival Nodes pinned in section 9. The
+one-line question for the owner is in section 10.
 
 ## 1. The order
 
@@ -58,7 +71,10 @@ derived; the bending is the push's alone and the delay the wall's alone
 5. Simulate per b, read the arrival Node on the screen of Nodes and the
    click's age, compute `alpha b / (G M)` and the delay at the pin
    (sections 6 and 7), show the reason where it does not close (section 8).
-6. The verdict (section 9); what a run would add (section 10).
+6. Take the plane out: the ring of starts at the impact distance b, the
+   orientation average of the comb on the same fan and the same M, with
+   its arrival Nodes as the pins of the world that decides (section 9).
+7. The verdict (section 10); what a run would add (section 11).
 
 ## 2. The inputs table (every input with its kind and its source line, as record 817's table)
 
@@ -84,6 +100,7 @@ form; they appear in the comparison rows alone.
 | the label by Bresenham along `P = Q d content u_D + W`: among D and its fan neighbours the Link that keeps `|c + h x P|^2` smallest among those with `h . P > 0`, ties to D then the fan's order; `W += Q d content (u_D - u_D')` so P is conserved | key | `nature_beam.py:3886-3970` (`optical_turn`, verb 3); `nature_beam.py:895` (`fan_neighbours`) | transcribed |
 | the pair of a pushed row, `(S_1(P), T(P))` of P over its gcd, `T = isqrt(3 |P|^2 Q^2)` (the photon's rest term 0) | key | `nature_beam.py:3494-3560` (`momentum_pair`); `:3585` (`row_pairs`) | transcribed |
 | no push and no turn at an occupied Node | key | `nature_beam.py:3807` (`~occupied[store.node]`) | the lamp's own Node |
+| the rule at the mass's Node: the arriving row takes the mass's table entry for its family, and the registered mass declares none (`mass_g0.json`), so the family's default rule, `measure` for a paid family (the row is measured by the mass, the click; the engine has no other rule there) | law (the default table) | `world.py:855` (`default_rule`), `:868` (`default_table`); ENGINE.md :671-672 | matched in the map; no beam line reaches the mass's Node on the registered fan at b >= 3, so sections 5 to 7 never invoke it; section 8's dense-fan rows do |
 | the suspension pair `[n, d]` | world | `examples/events/optical/mass_g0.json` (`"suspension": [1, 16384]`); `optical/make_worlds.py:42` | `[1, 16384]` |
 | the width S | world | none declared in `examples/events/optical/*.json`: the default 1 (`world.py:29-34`) | S = 1 in the register; `S = 16384` under the pin |
 | gamma | world (a declared input of kind 2, record 826 (D)) | `optical/*_g0.json` `"optical": 0`, `*_g1.json` `"optical": 1` | 0 and 1 |
@@ -363,7 +380,13 @@ intervals). GAMEBOARD arithmetic of the lines:
 The lattice's sum is nearly flat in b (the 48 in-plane lines of the fan
 each cross the row's line once whatever b, the note's section 4) while
 the continuum's falls as `1 / b`: the row on this geometry reads the
-b-exponent 0, not 1, and C grows as b. This is the whole of the gap to 4
+b-exponent 0, not 1, and C grows as b. The reason in one sentence: the
+beam lies in the fan's symmetry plane z = 0, where the 48 in-plane lines
+are a two-dimensional fan of line density `1 / r`, so the transverse
+impulse summed along a straight path is independent of b (the exponent 0
+of a two-dimensional inverse-first-power field), and one Node off the
+plane the crossings are isolated Nodes (the table below, C 1.0 to 3.0).
+This is the whole of the gap to 4
 at gamma 1 (`14.71 / 4 = 3.68` against the flow ratio 3.34 at b = 6, the
 rest the dwell's `1 + c_f k` and the pixel's rounding).
 
@@ -377,16 +400,107 @@ no pin moved; the reason tested, not a new world proposed):
 | the beam two Nodes off the plane (z = 2) | 6 | -1, -1, -2, -1, -2 | 0.06115 | 5.72 |
 | the beam two Nodes off the plane (z = 2) | 8 | -1, -1, -2, 0, -1 | 0.04037 | 4.92 |
 | the fan at P = 8 (674 directions, q = 10784) | 6 | -7, -7, -9, -3, -13 | 0.34909 | 13.33 |
-| the fan at P = 10 (1250 directions, q = 20000) | 6 | -13, -2, -17, -3 (one line taken or out) | 0.52666 | 10.84 |
-| the fan at P = 12 (2114 directions, q = 33824) | 6 | -2, -3 (three lines taken or out) | 0.60412 | 7.36 |
+| the fan at P = 10 (1250 directions, q = 20000) | 6 | -13, -2, -17, -3 (one line measured by the mass or out of the box) | 0.52666 | 10.84 |
+| the fan at P = 12 (2114 directions, q = 33824) | 6 | -2, -3 (three lines measured by the mass or out of the box) | 0.60412 | 7.36 |
 
 One Node off the plane the row reads a third to a tenth of the in-plane
 sum and C falls to 1 to 3; a denser fan at the same M puts the row in the
-strong field (turns of 0.35 to 0.6 radian, captures) and does not give a
-limit. The reading of one row at P = 6 is the lines, not a field: the
-formula's `G M` is a shell mean that no Node of this box carries.
+strong field (turns of 0.35 to 0.6 radian; rows that reach the mass's
+Node) and does not give a limit. The dense-fan rows follow the map's
+rule at the mass's Node, which is the engine's default for a paid family
+arriving at a measured event without a table entry, `measure` (the
+inputs table): the row is measured by the mass and ends there; at the
+registered fan no beam line reaches that Node. The reading of one row at
+P = 6 is the lines, not a field: the formula's `G M` is a shell mean that
+no Node of this box carries.
 
-## 9. The verdict
+## 9. The ring of starts: the orientation average of the comb (the reviewer's third option; the owner's "one scatters detectors on Nodes")
+
+**The construction, on the same fan and the same M, no scaling.** One
+row of light on the heading `(1, 0, 0)` from every start on the ring of
+impact distance b: every Node `(y, z)` of the lamp's plane x = 2 with
+`|sqrt(y^2 + z^2) - b| <= 1 / 2` about the mass's line (16 starts at
+b = 3, 40 at b = 6, 48 at b = 8; the list in the .out, section 9), the
+whole screen read, every Node of it a detector. Per start the radial
+deflection toward the mass's line, from the momentum at the screen
+`tan alpha_r = -(P_y y + P_z z) / (P_x r)` with `r = sqrt(y^2 + z^2)`
+(GAMEBOARD, exact up to the root in r) and from the arrival Node its
+radial shift `-(dy y + dz z) / r` in Links (the detector's reading); the
+tangential component beside it as a check of the symmetry. The ring's
+mean is the orientation average of the comb, which is what the shell
+mean is, with no denser fan and no scaling of M. The coefficient
+`C_ring = mean(tan alpha_r x r) x 4 pi S / (3 q)` against 4 under the
+pin, and beside it the same against the lattice's own push constant:
+from the same crowd the shell mean of `|V| r^2 / Q` over r = 4 .. 14 is
+32.79 against the continuum's `q / (4 pi) = 23.08`, the fan's L1 factor
+`F_L1 = 1.421` (the fan's mean `S_1 / |D|` is 1.436; the one-wall note's
+section 5 found the same 32.79 against 23.08), so the push a body reads
+on this fan is `1.421 x q / (4 pi S r^2)`. The grain: one Node per start
+over the 26 Links, `1 / 26` radian per start, `0.5689 b` on C per start,
+divided by the ring's count on its mean. The step algebra's simulation
+of the board, not a run:
+
+| b | starts | gamma | the ring's mean `tan alpha_r` | `C_ring` against 4 (the continuum's `G M`) | `C_ring / F_L1` (the lattice's own push constant) | the mean radial shift of the arrival Node, Links | C from the arrival Nodes | the mean delay, intervals | the grain on `C_ring` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | 16 | 0 | 0.05826 | 2.605 | 1.834 | 0.996 | 1.700 | 0.19 | 0.107 |
+| 3 | 16 | 1 | 0.12143 | **5.442** | **3.830** | 2.091 | 3.568 | 0.12 | 0.107 |
+| 6 | 40 | 0 | 0.02915 | 2.599 | 1.829 | 0.451 | 1.541 | 0.55 | 0.085 |
+| 6 | 40 | 1 | 0.05719 | **5.116** | **3.600** | 0.974 | 3.323 | 0.25 | 0.085 |
+| 8 | 48 | 0 | 0.02449 | 2.905 | 2.045 | 0.409 | 1.864 | 0.35 | 0.095 |
+| 8 | 48 | 1 | 0.04949 | **5.859** | **4.123** | 0.854 | 3.889 | 0.60 | 0.095 |
+
+The tangential component averages to 0.00000 at every ring (the ring is
+symmetric under the fan's 48 signed axis permutations, and so is the
+crowd). The ratio gamma 1 / gamma 0 of the ring's mean is 2.09, 1.97
+and 2.02 at b = 3, 6, 8.
+
+**Read against the pins.** (i) The `M / b` form returns: `C_ring` is
+5.44, 5.12, 5.86 at b = 3, 6, 8, flat within 15 per cent where the
+in-plane row read 11.3, 14.7, 17.0 growing with b (section 7); the
+plane was the b-exponent's failure. (ii) Against the continuum's
+`G M = q / (4 pi S)` the ring does not read 4 within its grain: the
+number is 5.1 to 5.9 at gamma 1, 2.6 to 2.9 at gamma 0, above Einstein's
+4 and Newton's 2 by the factor 1.28 to 1.46. (iii) That factor is the
+fan's L1 factor of the flow, 1.421, a constant of the fan's Manhattan
+lines and not of b: against the lattice's own push constant, which a
+body's fall on this crowd reads, the ring reads 3.60, 3.83 and 4.12 at
+b = 6, 3 and 8 (Einstein's 4 within 0.17 at b = 3 and 0.12 at b = 8,
+within 0.40 at b = 6; the grain 0.09 to 0.11), and 1.83, 1.83, 2.05 at
+gamma 0 against Newton's 2. (iv) The screen's own reading, the arrival
+Node's radial shift, gives a smaller C (3.3 to 3.9 against the
+continuum's `G M`) than the momentum does, because the bend is spread
+along the whole path (the fan's lines cross the row from x = -26 to
++26) and the lever arm to the screen is shorter than 26 Links for the
+part of the bend made after the mass; a run reads the Nodes, so the pin
+of the ring world is the Nodes and their mean, not the momentum.
+
+**The verdict of this section.** The registered geometry's failure is
+the plane's, not the fan's: the orientation average removes the growth
+with b and brings the coefficient from 11 to 30 down to 5.1 to 5.9, and
+what remains is the fan's L1 factor of the flow, 1.42, the same constant
+the one-wall note found between the clock's word and the push's word on
+this fan. Against the continuum's `G M` the ring does not read 4 (the
+number is 5.12 at b = 6); against the law's own push constant on the
+same lines it reads 3.6 to 4.1, Einstein's 4 to within the tenth at two
+of the three rings and within 0.4 at b = 6. Whether the coefficient is
+to be read against the continuum's `q / (4 pi S)` or against the
+lattice's own flow is the owner's question of section 10, now with the
+plane out of it. **The world that decides**, one world, on the owner's
+word only: the registered box, fan, mass `2^16` and pair `[1, 16384]`
+with the width 16384 declared (the pin), the lamp replaced by a ring of
+lamps on the heading at every start listed in the .out (40 at b = 6),
+the screen as it is; its pins, from this section before any run
+(DETECTOR when run): per start the arrival Node of the .out (section 9,
+each `dy, dz`), the ring's mean radial shift `0.974 +- 0.025` Links at
+gamma 1 and `0.451 +- 0.025` at gamma 0 at b = 6 (one Node per start
+over 40 starts), the ring's mean delay `0.25` and `0.55` intervals
+within 1, the tangential mean 0 within a Node, the ratio of the two
+radial means 2.16 within the propagated grain; at b = 8 `0.854` and
+`0.409` Links over 48 starts. A world whose ring is a lamp emitting on
+many directions from one Node reads the same crowd but not the same
+starts, and needs its own pins.
+
+## 10. The verdict
 
 **CANNOT CLOSE.** The step algebra simulates the board exactly (P3 met)
 and gives, under the pin `n S = d` at `c_f = 2`, the coefficient
@@ -411,9 +525,14 @@ lines, where it is `2 c_f n S / d = 4` at the pin by construction (the
 input read back, the space part still an input), or against the
 continuum's `G M`, which needs one new world where a row reads the shell
 mean (the beam off the mass's plane at a denser fan with M scaled down
-by the fan's count, a new pin from this algebra before it runs)?**
+by the fan's count, a new pin from this algebra before it runs)?** With
+the plane taken out by the ring of section 9 the question sharpens: the
+ring reads 5.1 to 5.9 against the continuum's `G M` and 3.6 to 4.1
+against the lattice's own push constant, so the choice is which `G M`
+the comparison stands on, and the ring world of section 9 is the one
+world that reads it.
 
-## 10. What a run would add
+## 11. What a run would add
 
 One world at the pin on the registered geometry (`width 16384` beside
 `suspension [1, 16384]`, the same lamp, mass, fan and screen) would read
@@ -421,16 +540,17 @@ the light's clicks byte for byte as the registered worlds do (the width
 enters no rule of a light row, section 3 P1): it adds nothing to the
 light; it re-pins the lamp's clock and any body's fall in that world to
 `n S / d = 1` (II.10a), a re-read of the lamp's rate 0.918. The run that
-would decide the coefficient is the one of section 9's question, on the
-owner's word only: the beam off the mass's plane at a fan dense enough
-that the shell-mean identity holds at the beam's distance (the
-light-bending note's `P >> r`), with M scaled down by the fan's count so
-the turn stays below the fan's grain, its pins the arrival Nodes this
-algebra computes before the run, the reading the screen's clicks and
-ages (DETECTOR), the comparison C against 4 within the grain of P2. No
-such world is written here.
+would decide the coefficient is the ring world of section 9, on the
+owner's word only: the registered box with a ring of lamps at the impact
+distance b on the same fan and the same M, its pins the arrival Nodes
+this algebra computes before the run (section 9), the reading the
+screen's clicks and ages (DETECTOR), the comparison C_ring against 4
+within the ring's grain, once on the continuum's `G M` and once on the
+lattice's own push constant, both stated before the run. The denser fan
+off the plane with M scaled down (section 8) is the second world, not
+needed for the plane's question. No world file is written here.
 
-## 11. Links
+## 12. Links
 
 - [step_algebra_map.py](step_algebra_map.py), [step_algebra_map.out](step_algebra_map.out): the arithmetic of this file.
 - [examples/events/optical/README.md](../../../examples/events/optical/README.md): the registered worlds and their runs (DETECTOR).

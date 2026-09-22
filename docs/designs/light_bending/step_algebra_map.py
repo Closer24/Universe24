@@ -221,7 +221,11 @@ def walk(
     S_1(P') / S_1(P); (3) the label among D and its fan neighbours whose
     next Link keeps |c + h x P|^2 smallest, P conserved. The click: the
     arrival Node on the screen x = X_SCREEN and the row's age there; a row
-    that reaches the mass's Node is taken; one that leaves the box escapes.
+    that reaches the mass's Node is measured by the mass (the paid family's
+    default table rule `measure`, `world.default_rule` :855 and
+    `default_table` :868, ENGINE.md :671: the registered mass declares no
+    table; the engine pushes and turns nothing at that occupied Node); one
+    that leaves the box escapes through a face.
     `coefficient` overrides f = 1 + gamma on the wall (the wall unstretched
     at 0, a reading that would refute verb 1)."""
     n, d = PAIR
@@ -401,7 +405,7 @@ def main() -> None:
                     f"age {r['age']} ({r['age'] - c['age']:+d}), {r['made']} Links, tan = {fmt_fraction(r['tangent'], 5)}"
                 )
                 if "tangent" in r and "tangent" in c
-                else f"{BEAM[k]} -> {'TAKEN' if r.get('taken') else 'ESCAPED'} at {r['node']} (age {r['age']})"
+                else f"{BEAM[k]} -> {'MEASURED BY THE MASS' if r.get('taken') else 'ESCAPED'} at {r['node']} (age {r['age']})"
                 for k, (r, c) in enumerate(zip(rows, base, strict=True))
             )
             print(f"     gamma {gamma} (f = {1 + gamma}): {per_line}")
@@ -535,5 +539,124 @@ def main() -> None:
             )
 
 
+def ring_starts(b: int) -> list[tuple[int, int]]:
+    """The ring of impact distance b: every Node (y, z) of the screen's
+    plane with |sqrt(y^2 + z^2) - b| <= 1 / 2, in a fixed order."""
+    found = []
+    for y in range(-b - 1, b + 2):
+        for z in range(-b - 1, b + 2):
+            if abs(math.sqrt(y * y + z * z) - b) <= 0.5:
+                found.append((y, z))
+    found.sort()
+    return found
+
+
+def ring_section() -> None:
+    """Section 9 of STEP_ALGEBRA.md: the same fan and the same M, one row
+    of light on the heading from every start of the ring of impact
+    distance b, read at the whole screen; the mean over the ring of the
+    radial deflection (toward the mass's line) is the orientation average
+    of the comb. GAMEBOARD arithmetic, the step algebra's simulation of
+    the board, not a run."""
+    n, d = PAIR
+    fan = primitive_fan(FAN_BOUND)
+    q = len(fan) * 16
+    s_pin = Fraction(d, n)
+    gm = Fraction(q) / (4 * s_pin)  # G M with the pi kept aside
+    crowd = Crowd(fan, 16)
+    tables = {gamma: Table(fan, BEAM, gamma) for gamma in (0, 1)}
+    print()
+    print(
+        "9. THE RING OF STARTS (the orientation average of the comb): one row on the heading from every Node"
+    )
+    print(
+        "   (y, z) with |sqrt(y^2 + z^2) - b| <= 1/2, read at the whole screen; per start the radial deflection"
+    )
+    print(
+        "   toward the mass's line, tan alpha_r = -(P_y y + P_z z) / (P_x r) from the momentum and the radial"
+    )
+    print(
+        "   shift of the arrival Node; the ring's mean; C_ring = mean(tan alpha_r x r) x 4 pi S / (3 q) against 4"
+    )
+    # The fan's L1 factor of the flow: the shell mean of |V| r^2 / Q over
+    # r = 4 .. 14 against the continuum's q / (4 pi) (the one-wall note's
+    # section 5, 32.79 against 23.08), from the same crowd's lines.
+    shells = []
+    for r in range(4, 15):
+        nodes = [
+            (x, y, z)
+            for x in range(-15, 16)
+            for y in range(-15, 16)
+            for z in range(-15, 16)
+            if abs(math.sqrt(x * x + y * y + z * z) - r) < 0.5
+        ]
+        total = sum(
+            math.sqrt(sum(a * a for a in crowd.flow.get(node, [0, 0, 0]))) / 16 for node in nodes
+        )
+        shells.append(total / len(nodes) * r * r / Q)
+    shell_mean = sum(shells) / len(shells)
+    l1_factor = shell_mean / (len(fan) / (4 * math.pi))
+    manhattan_ratio = sum(sum(abs(a) for a in v) / math.sqrt(sum(a * a for a in v)) for v in fan) / len(
+        fan
+    )
+    print(
+        f"   the fan's L1 factor of the flow: the shell mean of |V| r^2 / Q over r = 4 .. 14 is "
+        f"{shell_mean:.2f} against the continuum's q / (4 pi) = {len(fan) / (4 * math.pi):.2f}: "
+        f"F_L1 = {l1_factor:.3f} (the fan's mean S_1 / |D| is {manhattan_ratio:.3f})"
+    )
+    for b in (3, 6, 8):
+        starts = ring_starts(b)
+        print(f"   b = {b}: {len(starts)} starts: {starts}")
+        for gamma in (0, 1):
+            table = tables[gamma]
+            rows = []
+            for y, z in starts:
+                base = walk(table, None, (1, 0, 0), y, z, gamma)
+                out = walk(table, crowd, (1, 0, 0), y, z, gamma)
+                r = math.sqrt(y * y + z * z)
+                if "tangent" not in out or "tangent" not in base:
+                    rows.append((y, z, r, None, None, None, out))
+                    continue
+                p = out["momentum"]
+                radial = Fraction(-(p[1] * y + p[2] * z), p[0])  # tan alpha_r times r
+                tangential = Fraction(-(p[1] * (-z) + p[2] * y), p[0])  # the component along (-z, y)
+                dy, dz = out["node"][1] - base["node"][1], out["node"][2] - base["node"][2]
+                node_radial = -(dy * y + dz * z) / r  # Links toward the line, from the arrival Node
+                delay = out["age"] - base["age"]
+                rows.append((y, z, r, radial, tangential, (dy, dz, node_radial, delay), out))
+            landed = [row for row in rows if row[3] is not None]
+            per_start = "; ".join(
+                f"({y:+d}, {z:+d}) r {r:.2f}: dy, dz = {t[0]:+d}, {t[1]:+d}, radial {t[2]:+.2f} Links, delay {t[3]:+d}, "
+                f"tan alpha_r {float(rad) / r:.5f}"
+                if rad is not None
+                else f"({y:+d}, {z:+d}): {'MEASURED AT THE MASS' if o.get('taken') else 'ESCAPED'} at {o['node']}"
+                for y, z, r, rad, _tan, t, o in rows
+            )
+            print(f"     gamma {gamma}: {per_start}")
+            if not landed:
+                continue
+            count = len(landed)
+            mean_radial_r = (
+                sum((row[3] for row in landed), Fraction(0)) / count
+            )  # mean of tan alpha_r x r
+            mean_tan = sum(float(row[3]) / row[2] for row in landed) / count
+            mean_tangential = sum(float(row[4]) / row[2] for row in landed) / count
+            mean_node = sum(row[5][2] for row in landed) / count
+            mean_delay = Fraction(sum(row[5][3] for row in landed), count)
+            c_ring = float(mean_radial_r / (3 * gm) * math.pi)
+            c_nodes = mean_node / 26 * b * 4 * math.pi * float(s_pin) / (3 * q)
+            grain = (1 / 26) / float(3 * gm / (math.pi * b))
+            print(
+                f"       the ring's mean over {count} starts: tan alpha_r {mean_tan:.5f} (the tangential component "
+                f"{mean_tangential:+.5f}), the radial shift of the arrival Node {mean_node:.3f} Links, the delay "
+                f"{fmt_fraction(mean_delay, 2)} intervals; C_ring = {c_ring:.3f} against 4 (from the arrival Nodes "
+                f"{c_nodes:.3f}); against the lattice's own push constant, C_ring / F_L1 = "
+                f"{c_ring / l1_factor:.3f}; the grain on C per start {grain:.2f}, on the ring's mean "
+                f"{grain / count:.3f}; "
+                f"Shapiro's delay {float((1 + gamma) * gm * 3 * math.sqrt(3) / math.pi * math.log(4 * 26 * 26 / (b * b))):.2f}"
+            )
+
+
 if __name__ == "__main__":
     main()
+    ring_section()
