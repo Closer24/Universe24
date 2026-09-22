@@ -8,12 +8,13 @@ bending's comparison has one ground; the ring world runs on it only after
 the physics-rule reviewer's gate and on the owner's go. A design only:
 this file, the map [flow_weight_map.py](flow_weight_map.py) with its
 output [flow_weight_map.out](flow_weight_map.out) (no engine import,
-nothing run on the engine), and one index row. Base commit
+nothing run on the engine; the Algebraist's step algebra reused by
+import, not copied), and one index row. Base commit
 `ea3609a887650a2a303d540443944f7f23d55c54` (origin/main); the step
-algebra cited is [STEP_ALGEBRA.md](https://github.com/Closer24/Universe24/blob/23ef9ce93721963098c45e0add3f846a7154a1fb/docs/designs/light_bending/STEP_ALGEBRA.md)
-sections 9 and 10 at `23ef9ce93721963098c45e0add3f846a7154a1fb` (branch
-light-bending-algebra, PR #821; the link is pinned to that commit and
-becomes `../light_bending/STEP_ALGEBRA.md` on main once merged).
+algebra cited is [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md)
+sections 9 and 10 at `23ef9ce93721963098c45e0add3f846a7154a1fb` (PR #821,
+merged into main at e9798aa8; the algebraic check under the rule is
+[ALGEBRA.md](ALGEBRA.md) beside this file).
 
 Every number below is GAMEBOARD, the step algebra's simulation of the
 board, never a measurement, unless marked DETECTOR (the register's own
@@ -473,8 +474,9 @@ added; it enters when the design is gated):
 
 ## 7. Links
 
-- [flow_weight_map.py](flow_weight_map.py), [flow_weight_map.out](flow_weight_map.out): the arithmetic of this file (no engine import).
-- [STEP_ALGEBRA.md](https://github.com/Closer24/Universe24/blob/23ef9ce93721963098c45e0add3f846a7154a1fb/docs/designs/light_bending/STEP_ALGEBRA.md) sections 9 and 10 at `23ef9ce9` (PR #821): the ring, `F_L1`, the two constants, the question.
+- [flow_weight_map.py](flow_weight_map.py), [flow_weight_map.out](flow_weight_map.out): the arithmetic of this file (no engine import; the Algebraist's [step_algebra_map.py](../light_bending/step_algebra_map.py) imported, its `walk`, `Table`, `Crowd` and `ring_starts` reused).
+- [ALGEBRA.md](ALGEBRA.md): the algebraic check under the rule, in the Algebraist's manner (the owner's word of record 888).
+- [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md) sections 9 and 10 at `23ef9ce9` (PR #821): the ring, `F_L1`, the two constants, the question.
 - [one_wall/NOTE.md](../one_wall/NOTE.md) section 5: the one constant, `32.79` against `23.08`.
 - [einstein_outside/DERIVATION.md](../einstein_outside/DERIVATION.md) II.10a and II.11: the pin `n S = d`, the bending and the delay under the key.
 - [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) 3.2 and 3.3: the shell mean and G's place.
