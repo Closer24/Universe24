@@ -124,6 +124,10 @@ def execute_nature_beam_run(
         # drive-b-v1 (2026-09-22): the world key `drive_b` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.drive_b else {"drive_b": True}),
+        # The row's flight in the age wall's set (optical-v1, 2026-09-21;
+        # the law's own since 2026-09-22): the world's gamma and the flight
+        # coefficient 1 + gamma, written for every world.
+        "optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient},
         # centred-step-v1 (2026-09-22): the world key `centred_step` as
         # declared, written only under the key (every other record byte for
         # byte).
@@ -131,13 +135,6 @@ def execute_nature_beam_run(
         # atom-level-v1 (2026-09-22): the world key `atom_level` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.atom_level else {"atom_level": True}),
-        # optical-v1 (2026-09-21): the key's gamma and the derived flight
-        # coefficient 1 + gamma, written only under the key.
-        **(
-            {}
-            if world.optical is None
-            else {"optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient}}
-        ),
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

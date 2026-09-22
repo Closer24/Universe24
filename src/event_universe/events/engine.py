@@ -671,9 +671,9 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
-            if self.world.optical is not None and self.world.drive_b and not entry.fixed:
+            if self.world.drive_b and not entry.fixed:
                 # Every family under one wall, step 3: a moving body's
-                # gravity charge under `optical` and `drive_b` is the pair
+                # gravity charge under `drive_b` is the pair
                 # (w, Q S), the rows' weight on the body's own momentum
                 # (`world.body_weight`; gravity's Lambda is Q S then).
                 entry.frame_charges[0] = body_weight(
@@ -870,24 +870,24 @@ class NatureBeamSimulation:
             # tested by division before they are formed (`drive_wall`).
             wall = drive_wall(entry.momentum, content, self.world.width, cap)
             rates = [p * LABEL_SCALE for p in entry.momentum]
-            if self.world.optical is not None:
-                # Every family under one wall, step 3 (2026-09-22,
-                # docs/designs/one_wall/BODY_DRIVE.md): the body's drive is
-                # a member of the age wall's set at the coefficient gamma,
-                # the space part (the clock's owed count carries the time
-                # part): the rates x d against the wall x (d + gamma n A),
-                # A the age moment the body's clock counted at its Node
-                # (`Measured.counted`, the crowd of other numbers there),
-                # the one wall function of the crowd (`core.integer.age_wall`).
-                coefficient = age_wall_coefficient(DRIVE_MEMBER, self.world.optical, True)
-                if coefficient:
-                    # At gamma 0 the member is declared at 0: unstretched,
-                    # the wall function not called (its coefficient is
-                    # positive), the drive as `drive-b-v1` has it.
-                    stretched_rate, wall = age_wall(
-                        1, wall, coefficient, entry.counted, self.world.suspension
-                    )
-                    rates = [rate * stretched_rate for rate in rates]
+            # Every family under one wall, step 3 (2026-09-22,
+            # docs/designs/one_wall/BODY_DRIVE.md; the law's own since the
+            # generic entry): the body's drive is a member of the age
+            # wall's set at the coefficient gamma, the space part (the
+            # clock's owed count carries the time part): the rates x d
+            # against the wall x (d + gamma n A), A the age moment the
+            # body's clock counted at its Node (`Measured.counted`, the
+            # crowd of other numbers there), the one wall function of the
+            # crowd (`core.integer.age_wall`).
+            coefficient = age_wall_coefficient(DRIVE_MEMBER, self.world.optical, True)
+            if coefficient:
+                # At gamma 0 the member is declared at 0: unstretched,
+                # the wall function not called (its coefficient is
+                # positive), the drive as `drive-b-v1` has it.
+                stretched_rate, wall = age_wall(
+                    1, wall, coefficient, entry.counted, self.world.suspension
+                )
+                rates = [rate * stretched_rate for rate in rates]
             for axis in range(3):
                 if rates[axis]:
                     bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "drive under drive-b-v1")
@@ -1764,15 +1764,30 @@ class NatureBeamSimulation:
         # A row's `acc_turn` is written in a world that declares
         # `massive_rows` alone (0 on every row without it).
         massive = self.world.massive_rows
+        denominator = self.world.suspension[1]
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
             families = entry["families"]
             assert isinstance(families, list)
-            for family, store in zip(self.families, self.stores, strict=True):
+            for f, (family, store) in enumerate(zip(self.families, self.stores, strict=True)):
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, handed, massive) for beam in store.rows(lo, hi)]
+                # A row's flight accumulator is written only where a crowd
+                # moved it off the table's own count at its age (the value
+                # the walk seeds from, `optical_walk_step`), so that every
+                # world in which no crowd acts keeps its state byte for byte
+                # (the generic entry of the bending, 2026-09-22).
+                flight = self.tables.family_flights[f]
+                made0, residue0 = flight.accumulator(store.direction[lo:hi], store.age[lo:hi])
+                memoryless = (
+                    ((store.made[lo:hi] == 0) & (store.residue[lo:hi] == 0))
+                    | ((store.made[lo:hi] == made0) & (store.residue[lo:hi] == residue0 * denominator))
+                ).tolist()
+                beams = [
+                    beam.record_line(vectors, handed, massive, memoryless=plain)
+                    for beam, plain in zip(store.rows(lo, hi), memoryless, strict=True)
+                ]
                 families.append({"family": family.name, "rays": beams})
             yield entry

@@ -257,10 +257,17 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did(tmp_path: Path, path: str, 
     assert world.massive_rows is False and MASSIVE_ROWS_RULE not in world.hypotheses
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(world, source, out, "test", cap)
     entry = next(
         e for e in json.loads(GATE_SET.read_text(encoding="utf-8"))["worlds"] if e["path"] == path
     )
+    if "refusal" in entry:
+        # The world refuses before its cap under the law as it stands (the
+        # gate set's `refusal`, the generic entry of the bending): the
+        # digests beside it are the base tree's before the entry.
+        with pytest.raises(OverflowError, match=entry["refusal"]["match"]):
+            execute_nature_beam_run(world, source, out, "test", cap)
+        return
+    execute_nature_beam_run(world, source, out, "test", cap)
     assert digests_of(out) == entry["digests"], path
     assert b'"acc_turn"' not in (out / "state.json").read_bytes()
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
