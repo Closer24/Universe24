@@ -189,9 +189,11 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md) rows 2 and 19).
 - **The age wall's set**: the declared members whose wall the crowd's age
   moment stretches, each with its coefficient, `measured.AGE_WALL_SET`
-  (`measured.py:345`): the body's clock (`owed`) at 1 on the law; under the
-  world key `optical` the row's flight at 1 + gamma (gamma the post-Newtonian
-  parameter, `FLIGHT_MEMBER`, `age_wall_set`, `measured.py:364-379`); under
+  (`measured.py:345`): the body's clock (`owed`) at 1 on the law; the row's
+  flight at 1 + gamma (gamma the post-Newtonian parameter, `FLIGHT_MEMBER`,
+  `age_wall_set`, `measured.py:364-379`) under the world key `optical` on
+  `main` at 8fa9e00b, and for every world once PR #855 merges (gamma the
+  key's value, 0 by default); under
   `optical` and `drive_b` together the body's drive at gamma; never the phase
   per age (`AGE_WALL_NEVER`, `measured.py:346`). A member joins by a declaration
   in the set and nothing else moving.

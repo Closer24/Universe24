@@ -21,7 +21,11 @@ The physical path (`nature_beam.py`, `meeting.py`, `engine.py`, `world.py`,
 bounded integers and nothing else (the model owner, records 181, 202 and
 929; every coupling of the atom worlds and the light worlds read against
 the six in [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md)), gated by
-`tests/test_integer_algebra.py` (the Register Architect's, record 920 (A)).
+`tests/test_integer_algebra.py` (the Register Architect's, record 920 (A));
+beneath it two integer roots are taken at run time, each declared by its
+design: the meeting's norm under the key `meeting` (`meeting.py:359-361`,
+BEAM_LAW note 35) and the pushed row's pair under the key `optical`
+(`nature_beam.py:3549`, EVERY_FAMILY.md; being replaced on PR #855).
 
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
