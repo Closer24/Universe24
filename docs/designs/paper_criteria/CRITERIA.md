@@ -279,6 +279,7 @@ per run, so none waits for the Boss's word.
   pins: q in [-0.25, +0.25] (the register's), H (t_0 + T_0) in [0.90,
   1.10]; the paper's criterion FAIL unless q <= -0.516; the expected
   reading -0.104 (the head's replay) within the grain 0.01, DETECTOR.
+- **(f) The reading at head (2026-09-22, the criteria runner; `origin/main` `4028b020`, the source sha256 `d537d4435b921895`; `tools/run_series.py --jobs 1`, `record/coasting_none` 400 intervals in 62.6 s, 326 MB, completed and conserved, the initialization `22bc71da034c1f64`, the digests state `3993941601dc`, audit `33cf0ac763ce`, events `0fa8cfa523de`; read by `tools/hubble_stars_readings.py` with `record/expectations.json`).** DETECTOR, the window [300, 400) in the detector's own clock (r = 1.0000): q = -0.104, H (t_0 + T_0) = 1.0232, rms 0.0019 in z; the reading's formula 72 of 72 within 2 percent, the luminosity 72 of 72 within 5 percent; 0 record checks failed, 150 readings inside, 0 outside. The pin met (-0.104 within 0.01; the register's brackets [-0.25, +0.25] and [0.90, 1.10] met); equal to the register's dated replay of 2026-09-22 and to the Replicator's reading at `6b707a5`, so PR #813 moved nothing here. **Verdict under the criterion: FAIL** (q = -0.104 against -0.527 +- 0.011; not below -0.516). The base `coasting_none` was run beside it (60.4 s, the digests state `1a385429c948`, audit `33cf0ac763ce`, events `f75ca18274d2`, equal to series S's OFF replay of 2026-09-21): NOT READABLE under the acoustic rule, as the register states; the reading of these worlds is the record world's.
 
 ### Row 4b. A moving lamp's redshift with the clock's factor, z = 0.2636
 
@@ -304,6 +305,7 @@ per run, so none waits for the Boss's word.
 - **(e) What the criterion needs.** The same re-run as row 3 (one run
   serves both). The pin: z of `s_mz2` = 0.2647 within the grain 0.003
   (the head's replay), DETECTOR; the criterion FAIL unless z >= 0.312.
+- **(f) The reading at head (the same run as row 3).** DETECTOR: `s_mz2`'s z = 0.2647 in the window [300, 400) (the record's k 0.0000, v / c 0.2659, the ratio 0.9990 inside; the luminosity 0.9865 inside), the pin 0.2647 within 0.003 met. **Verdict under the criterion: FAIL** (0.050 below nature's 0.315; not at or above 0.312).
 
 ### Row 5a. The anisotropy of c by direction, a BOUND on the grain
 
@@ -360,6 +362,7 @@ per run, so none waits for the Boss's word.
   `bond` clicks of content 2, the escaped 4, the mass 3673; B3 four
   clicks, the escaped 8, the ratio 2.0; the criterion's verdicts BOUND
   and FAIL unless the escaped contents move.
+- **(f) The reading at head (2026-09-22, the criteria runner; `origin/main` `4028b020`, the source sha256 `d537d4435b921895`; `tools/run_series.py --jobs 2`, 3000 intervals each, completed and conserved: `deuteron_bond` 98.0 s (the initialization `3de4370135634ee0`, the digests state `36d43a04f9ac`, audit `3243dd29965b`, events `46cd2ba58723`), `alpha_square_bond` 21.6 s (`2458489ca2a8494e`; `647f45e71e86` / `ba6e81715af5` / `c18da506c68e`), `proton_bond_lamp` 59.9 s (`1755092cf58eb185`; `5ac833225257` / `e994ab4c63af` / `a6df0ee9feb4`); read off `events.jsonl`, `run.json` and `state.json`, no rule replayed).** B1, DETECTOR: two `bond` clicks on the border `lifetime` at tick 19 at (8, 10, 10) and (13, 10, 10), each amount 2 and content 2, no other to 3000; the first contact of each body with `given` 2 and 0 on all 346 later hand-overs; the bodies' content 1835 and 1838, `held` (1834, 0, 1, 0) and (0, 1837, 1, 0), the mass read 3673 of 3677; the books' `bond` escaped 4 (GAMEBOARD, the books), 0.109 percent. B3, DETECTOR: four `bond` clicks at ticks 18, 18, 18, 19 at (8, 10, 10), (8, 11, 10), (13, 10, 10) and (11, 13, 10), each amount 2 and content 2; the escaped 8 (the books), 0.109 percent of 7354; the ratio to B1 2.0. The control `proton_bond_lamp`: no contact, no `bond` click, `held.bond` 2 (DETECTOR); its lamp's 2993 gathers read 2958 of content 8 and 35 of content 7 against the registered 2961 and 32 (DETECTOR; the control's reading moved by three gathers at head, no criterion of these rows). What moved in the lattice's clock (GAMEBOARD, the tick of a line): the first contacts at tick 17 (B1; registered 16, the pin "about tick 16" met) and the gives at 16, 16, 16, 17 (B3; registered 15, 15, 15, 16), the alpha's first step at 82 (registered 81), 62 step lines. Every pin of the rows met, nothing moved. **Verdicts under the criteria: 7a BOUND** (the give 4 of 3677, nature's 4.35 unreachable by a whole give), **7b FAIL** (2.0 against 12.72, the factor 6.4).
 
 ### Row 8a. The neutron's decay curve, 0.036 against 3.17
 
@@ -416,6 +419,7 @@ per run, so none waits for the Boss's word.
   minutes each (the records 180 to 208 MB). The detector reading behind
   the curve (a lamp at the shell) is NOT MADE: a world-file design of the
   physicist's, tier (c), not ordered here.
+- **(f) The reading at head (2026-09-22, the criteria runner; `origin/main` `4028b020`, the source sha256 `d537d4435b921895`; `tools/run_series.py --jobs 2 --ticks 1024`, the cap 1024: `j1_lattice` 206.5 s, 189 MB (the initialization `70afd0ac7cf56037`, the digests state `c6f9e3542a09`, audit `9a8126568046`, events `75b7e5372a87`), `j1_source` 224.6 s, 204 MB (`b1bdb15150e0` / `446427636161` / `2008b437cdb5`), completed and conserved; read by `tools/weak_readings.py`).** `j1_lattice`, DETECTOR: 64 of 64 neutrons transformed, every `become` line at its key on its own clock with the count read at the trigger 154476 .. 338172 within its pinned range (inside); the shell's 64 beta clicks, every content 3, the ages 17 .. 41 (inside); [GAMEBOARD, the lattice's clock, not counted]: the trigger ticks 602 .. 671, the width over the median 0.1111 in the betas' births and 0.0787 in the click ticks. `j1_source`, DETECTOR: 64 of 64, the counts 171027 .. 367454, one or more outside the pinned range of counts (as the register's replay of 2026-09-22 read it: the count at the trigger under the fan's dwells is not the dwell period's range), the 64 clicks of content 3 inside; GAMEBOARD the widths 0.1279 and 0.1147. The tool: 0 record checks failed, 5 readings inside, 1 outside, 6 lattice-clock lines not counted; every number equal to the register's replay of 2026-09-22, so PR #813 moved nothing here. **Verdict under the criterion: FAIL** (a step: every neutron at its key, the width 0 in its own clock; in the lattice's clock 0.08 to 0.13 of the median, the factor 25 to 40 below nature's 3.17 at the cap, 88 in the paper's registered run); the count of clicks changes nothing of it.
 
 ### Row 8b. The neutrino's passage through a second detector, 16 of 1024 with 0 behind
 
@@ -450,6 +454,7 @@ per run, so none waits for the Boss's word.
   `j2_filter` at head costs 5 s and rides with row 8a's batch as the
   head's confirmation. The pin: 16 of 1024, 0 behind, the far detector
   699 of 711, DETECTOR.
+- **(f) The reading at head (2026-09-22, the same batch: `j2_filter` 1037 intervals in 6.2 s, 62 MB, the digests state `ddec44874294`, audit `38ae53006d7b`, events `1c92c9c38177`; `tools/weak_readings.py`).** DETECTOR: the first reader 16 clicks of 1024 arrivals (1 / 64 exactly), the 127 readers behind it 0, the far detector 699 (711 reach it: GAMEBOARD, the flight rule); 3 readings inside, 0 outside; the pin met bit for bit. **Verdict under the criterion: FAIL** (0 against nature's 1).
 
 ### Row 8c. The heaviest neutrino mass state, a declared input refuted
 
@@ -572,6 +577,6 @@ session's scratchpad; the readings recorded in the rows below as they
 land, PASS or FAIL under the declared criterion, the register's entries
 given a dated line, no pin edited after a run, no prior reading deleted.
 
-## The readings at head (step 2, filled as the runs land)
+## The readings at head (step 2)
 
-(none yet)
+Recorded in each row's bullet (f) as the runs landed: rows 3 and 4b, 7a and 7b, 8a and 8b at 09:40Z to 09:44Z; row 2a below it when its run lands. Every number by kind; no pin edited after a run; the register's entries given a dated line (EXPERIMENTS.md, series G2, N and J and the L2b entry; the worlds' READMEs).
