@@ -5205,3 +5205,13 @@ clicks at a detector or a ratio of such counts; a reading of the board
 itself is a diagnostic and is compared with nothing (the reading rule
 below; Section 8; Table 2)". No number moved, no claim changed. The PDF
 compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's choice): the title from the group of order 24
+
+The owner chose candidate B of the four put to him: "Universe24:
+Physical Relations from the Group Ring of a Cyclic Group under the
+Octahedral Group of Order 24", in place of "Universe24: Physical
+Relations from a Common Discrete Update Rule". The lattice leaves the
+title and stays in the abstract as the way. A fourth commit on
+`paper-opening`; nothing else changed; the PDF compiled from the true
+source and read back. 52 pages.

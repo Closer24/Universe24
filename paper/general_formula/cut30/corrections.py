@@ -4021,6 +4021,11 @@ CORRECTIONS = [
         "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction).",
         "an identity of it under declared tables and world conditions (Theorems~\\ref{th:isometry} to~\\ref{th:bell}, the conservation books, Gauss's law, the pace of every direction). Every quantity compared with nature is a count between clicks at a detector or a ratio of such counts; a reading of the board itself is a diagnostic and is compared with nothing (the reading rule below; Section~\\ref{sec:checks}; Table~\\ref{tab:nature}).",
     ),
+    (
+        "the title from the group of order 24 (the owner's choice, candidate B, 2026-09-23 00:2xZ): the group ring of a cyclic group under the octahedral group of order 24",
+        "\\title{Universe24: Physical Relations from a Common Discrete Update Rule}",
+        "\\title{Universe24: Physical Relations from the Group Ring of a Cyclic Group under the Octahedral Group of Order 24}",
+    ),
 ]
 
 
