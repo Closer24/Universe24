@@ -299,6 +299,20 @@ push on a row with its energy as the weight (issue #605, record 421).
 
 The owner's word: "Always understand how each item affects as an information-transfer system, what the generic solution is and why it will work; short answers." Before the Boss brings the owner a question, gives a session an order, weighs a review finding or lists a decision, it states three short answers, one line each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows (the section above), never a patch beside it; (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; and, in every report that needs the owner's decision, (4) why do this at all: what the item buys the law or a measurement, and what stays unread or wrong if it is not done (the owner, 2026-09-21, record 533); and (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change (the owner, 2026-09-21, record 534); a rule kept in Git is kept because it was decided on evidence, and the report says whether the evidence in hand still supports it; and (6) the implementation: what the item changes in the tree (engine, register, documents), which identities and registrations it touches, the time it takes end to end (the build, the runs, the review), and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default (the owner, 2026-09-21, record 535). The answers go into the order or the question itself, so the session or the owner reads the reason with the ask. Changing a Highlights decision is an option, not a breach (the owner, 2026-09-21, record 536): when the evidence in hand no longer supports a decision of section 5.4, the report says so and proposes the new line; the change is made on the owner's word and recorded as a new decision line that names the one it supersedes, with the record. Every session reports to the Boss in the same six lines (skills/workflow.md, "The six lines of every report").
 
+### The paper is the one course (the owner, 2026-09-22, record 606)
+
+The owner's word: "From now on do only what the paper needs, nothing else;
+just close things; start from what the paper needs." From this word the
+Boss orders nothing that the thirty-page paper (records 573, 595, 605) does
+not need: the open items in flight are closed (reviewed, merged, their
+sessions archived) and no new item outside the paper starts, however small,
+until the owner lifts the word. What the paper needs is decided from the
+plan (paper/general_formula/PLAN.md, "The thirty-page plan"): the cut, its
+checks, the detector readings its pages 19 to 21 cite, the references and
+the reproduction appendix; every other proposal waits, written in one line
+in the log, not ordered. The owner's remaining points are listed to him
+ordered by the paper's need, each with the Boss's recommendation.
+
 ### The main course (the owner, 2026-09-21, record 176)
 
 Assign the formula before the run for a constant-rate world, and the limit's derivation beside the run for a state-dependent one (skills/workflow.md, "The main course"); assign every new rule first in its generic vector form (record 177).
