@@ -895,15 +895,15 @@ law's being the FAIL row of record 270. The last three rows are part
 
 | INSIDE (a GameBoard quantity, from the six verbs; its source) | OUTSIDE (a detector reading) | The conversion, and its order | Inverse | The registered reading on the Outside side (kind) |
 | --- | --- | --- | --- | --- |
-| the exact square `W = E'_0^2 + 3` **p** `.` **p** on the record and `E'` the whole root kept by comparisons (17.6 M3; 24.1 row 38); on the law no square, the wall `Q S M + p` linear (section 5) | the energy a click reads of the record's rows, `E_read = h f_read`; gamma; the rate `r = E'_0 / E'` (the identity) or `r = 1` (the law), read as a detector's own count per tick through the two lamps of section 4 | (A1), (A2) and the Planck map: `E'^2 - E'_0^2 = 3 p . p` is the walk's `omega^2 - kappa^2 = m^2` times `hbar^2` in the Beam Law's unit (part (6) (1)); `r = E'_0 / E' = sqrt(1 - beta^2)` exact on the identity's integers, `sqrt(1 - v^2) (1 - kappa^2 / 6)` in the group velocity: up to `m^2 v^2`, the identity's pace within `m^2 / 3` of the clicks' velocity (the group velocity); the law's `r = 1` rung 1 | `E' = E'_0 / r`; `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558; the design's `70.9 +- 1` and `125.2 +- 1`, the derived 70 and 124, 17.6 M2); r itself NOT READ as a measurement (section 4); J4's ratio 1 under the law pinned, not run |
+| the exact square `W = E'_0^2 + 3` **p** `.` **p** on the record and `E'` the whole root kept by comparisons (17.6 M3; 24.1 row 38); on the law no square, the wall `Q S M + p` linear (section 5) | the energy a click reads of the record's rows, `E_read = h f_read`; gamma; the rate `r = E'_0 / E'` (the identity) or `r = 1` (the law), read as a detector's own count per tick through the two lamps of section 4 | (A1), (A2) and the Planck map: `E'^2 - E'_0^2 = 3 p . p` is the walk's `omega^2 - kappa^2 = m^2` times `hbar^2` through the unit chain `E^2 = E_0^2 + c^2 p^2` (p per Link), `E' = E / c^2`, the 3 being `1 / c^2 = d` (part (6) (1) (c)); `r = E'_0 / E' = sqrt(1 - beta^2)` exact on the identity's integers, `sqrt(1 - v^2) (1 - kappa^2 / 6)` in the group velocity: up to `m^2 v^2`, the identity's pace within `m^2 / 3` of the clicks' velocity (the group velocity); the law's `r = 1` rung 1 | `E' = E'_0 / r`; `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558; the design's `70.9 +- 1` and `125.2 +- 1`, the derived 70 and 124, 17.6 M2); r itself NOT READ as a measurement (section 4); J4's ratio 1 under the law pinned, not run |
 | the pace `abs(p_a) / (Q S M + abs(p_a))` per axis (P9, 4.4) and the drive's schedule `by_drive(drive, p, D, at_most = 1)` (`step_axis`); under the identity `p / E'` Links per interval (17.6 M1) | the velocity `v`: Nodes apart over counts apart between two clicks of neighbouring detectors (section 1); `beta = sqrt 3 p / E'` in units of c | (A1): one Node per interval at most, the count's ratio the pace within `1 / T` of the count and `1 / T_D` of the pace; rung 1; the identity's `p / E'` is the walk's group velocity only up to the relative `m^2 / 3` | law: `p = E'_0 v / (1 - v)` exact; identity: as above | series S: beta 0.3040 at the star's declared momentum under the identity's pace, 0.2674 under the law's (GAMEBOARD, the drive's pace; the detector reads only `1 + z` below); D3's controls at their pace to the tick (DETECTOR, `x = 60 + r` on every click) |
-| the phase per age `n / d` turns per interval, the row's energy `E = h n / d` and its momentum `p` with `lambda = h / p` (6.4, 24.1 row 25, 23.2); the rest pair `E_0 = h n_0 / d_0` | the frequency a detector counts, `1 + z` (the inverse slope of the birth ordinal against the click's tick, series T's method): `k_BA = (1 + v) / r` for a lamp on the moving record, `k_AB = r / (1 - v)` for a lamp at rest counted by the moving record, the round trip `(1 + v) / (1 - v)` | (A1) and the count: the k-calculus of section 2, rung 1 within `1 / T`; the law `1 + v` and `1 / (1 - v)`, the identity `gamma (1 + beta)` and `sqrt((1 + beta) / (1 - beta))`; the round trip r-free under every r (section 0 (b)) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)`; r from `k_AB` and `k_BA` together, `k_BA / k_AB = (1 - v^2) / r^2` | NATURE 4b: `z = 0.2636` at beta 0.2674 under the law (DETECTOR, FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967, the pin `0.369 +- 0.003` (DETECTOR, PASS in its domain); `k_AB` NOT READ, the missing direction (section 4) |
+| the phase per age `n / d` steps of the circle N per interval, `omega = 2 pi n / (d N)`, the row's energy `E = h_q n / d = h_A f = hbar omega` with `hbar = h_A / (2 pi)` and its momentum `p` with `lambda = h_A / p` (6.4, 24.1 row 25, 23.2); the rest pair `E_0 = h_q n_0 / d_0` | the frequency a detector counts, `1 + z` (the inverse slope of the birth ordinal against the click's tick, series T's method): `k_BA = (1 + v) / r` for a lamp on the moving record, `k_AB = r / (1 - v)` for a lamp at rest counted by the moving record, the round trip `(1 + v) / (1 - v)` | (A1) and the count: the k-calculus of section 2, rung 1 within `1 / T`; the law `1 + v` and `1 / (1 - v)`, the identity `gamma (1 + beta)` and `sqrt((1 + beta) / (1 - beta))`; the round trip r-free under every r (section 0 (b)) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)`; r from `k_AB` and `k_BA` together, `k_BA / k_AB = (1 - v^2) / r^2` | NATURE 4b: `z = 0.2636` at beta 0.2674 under the law (DETECTOR, FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967, the pin `0.369 +- 0.003` (DETECTOR, PASS in its domain); `k_AB` NOT READ, the missing direction (section 4) |
 | the age wall: the crowd `a_tau` (the sum of amount times age of the rays at the Node, record 394) stretching the self-creation's wall at coefficient 1, `rate x d` against `wall x (d + a_tau n)` (`core.integer.age_wall`; `AGE_WALL_SET`), the rate `1 / (1 + a_tau n / d)` | the clock rate in a crowd read by a pulse and its return (record 768): the ratio of two lamps' `1 + z` at one detector, `(1 + k_2) / (1 + k_1)`, `k = a_tau n / d`; the detector's own `k_D` cancelling in the ratio | (A1) and the count: the owed intervals are counts the pulses carry; rung 1 within the count's grain | `k = (1 + z) / (1 + z_0) - 1` against a control lamp | series T: 2.6517 at 3 and 4.1500 at 6 Links, the ratio 1.907 against the pin `1.909 +- 0.05` (DETECTOR, the age word; NATURE 12); series X: the controls 1.0000 exactly (DETECTOR) |
-| the flight table `T_D = isqrt(3 abs(D)^2 Q^2)` per direction, the pace `N_l abs(D)_2 / T_D` (2.7, 13.2; rem:nodispersion) | the arrival count: the detector's own count at a row's arrival from L Links away (a detector with a body; a face set has no count of its own, record 768, and its tick is GAMEBOARD), `sqrt 3` intervals per Link within `1 / T_D`, and c itself as the one pace every family shares (`c = 1 / sqrt 3` Links per interval, input 9; `32 / 55` on a heading) | (A1): one Node per interval on the Manhattan lattice, the Euclidean pace its shell mean; rung 1 for the count (within one interval), rung 2 for the isotropy | `L` from the count and the pace, within one Link | series S: the products' face clicks at 369 and 345 (DETECTOR; the pins 367 and 345 within two ticks; the decay tick 70 and 124 derived back by the flight table); series K: the bending 0.000 (DETECTOR, the rows blind) |
+| the flight table `T_D = isqrt(3 abs(D)^2 Q^2)` per direction, the pace `N_l abs(D)_2 / T_D` (2.7, 13.2; rem:nodispersion) | the arrival count: the detector's own count at a row's arrival from L Links away (a detector with a body; a face set has no count of its own, record 768, and its tick is GAMEBOARD), `sqrt 3` intervals per Link within `1 / T_D`, and c itself as the one pace every family shares (`c = 1 / sqrt 3` Links per interval, input 9; `32 / 55` on a heading) | (A1): one Node per interval on the Manhattan lattice, the Euclidean pace its shell mean; rung 1 for the count (within one interval), rung 2 for the isotropy | `L` from the count and the pace, within one Link | series S: the products' face clicks at 369 and 345 (DETECTOR; the pins 367 and 345 within two ticks; the decay tick 70 and 124 derived back by the flight table); series K: the bending 0.000 (DETECTOR, the rows blind, under the law without the key; optical-v1's worlds read -1.79 to -4.36 pixels, the register's optical-v1 table) |
 | the click's bilinear form `f^T G f`, the one square the law forms, at the click alone over rows that have ended (6.5, 6.7; input 12) | the click's energy and the Born form: the count of clicks over many records at one Node, the probability `abs(sum of amount x exp(i phi))^2` normalised by the record's total, within `1 / (2 N)` (23.2) | (A2) at the click: the square of the summed amplitudes; rung 1 (the click's form) | none: the amount a and the phase f of one record never pass Outside singly | the two-slit fringes and Malus (24.3 row 4; DETECTOR); not a Lorentz line |
-| the crowd's spreading over the six Ports: K beams over a shell of `N(r)` Nodes, the presence `q tau_L / (4 pi r^2)` and the age moment `A = q tau_L / (4 pi c r)` in the shell mean (5.1; the paper's `eq:fields`; section 8 (M)) | the clock's field Outside: the ratio of two clocks' shifts at two distances (2.00 for the potential's form), and a shell's flat interior against its rising flux | (A1) and the count, on the age wall's row above; rung 2 (the shell mean, `N(r) -> 4 pi r^2`), the finite-r ripple MEASURED ONLY | `r` from the ratio of shifts, in the limit | series T: 1.907 (DETECTOR); series X: inside `k(2) / k(4) = 1.0029` against 1.003917 (flat, MET), the presence word 0.8400 (not flat), outside `k(12) / k(4) = 0.6285` against 0.618270 (DETECTOR) |
+| the crowd's spreading over the six Ports: K beams over a shell of `N(r)` Nodes, the presence `q tau_L / (4 pi r^2)` and the age moment `A = q tau_L / (4 pi c r)` in the shell mean (5.1; the paper's `eq:fields`; section 8 (M)) | the clock's field Outside: the ratio of two clocks' shifts at two distances (2.00 for the potential's form), and a shell's flat interior against its rising flux | (A1) and the count, on the age wall's row above; rung 2 (the shell mean, `N(r) -> 4 pi r^2`), the finite-r ripple MEASURED ONLY; the one Inside -> Outside constant joining this row to the fall's: `delta k = (n S / d) (g h / c^2)` (section 8 (e)), nature's iff `n S = d` | `r` from the ratio of shifts, in the limit | series T: 1.907 (DETECTOR); series X: inside `k(2) / k(4) = 1.0029` against 1.003917 (flat, MET), the presence word 0.8390 (not flat), outside `k(12) / k(4) = 0.6285` against 0.618270 (DETECTOR, host-tick readings; 0.9994 and 0.5134 in the detector's own clock, the convention the owner's) |
 | the push `p += -M_A V` from the arriving rays' label flow (`push_form`'s gravity column; 3.3) with the drive above, in the shell mean `<V> -> q N_l / (4 pi r^2)` | the fall: a lamp on the probe read at a line of one-Node detectors, the acceleration as the second difference of the clicks' x, `a = -G M_B / r^2`, `G = K eta / (4 pi N_w)`; the equivalence principle (the same clicks for four times the held mass) | (A1) and the count: the births' Nodes and ticks; the inverse square rung 2, the equivalence rung 1 (`M_A` cancels record by record) | `G M_B` from `a r^2` in the limit | series D3: 138 of 139 common birth ticks at the same Node with the held mass four times, `abs(dT) = 0` (DETECTOR); the inverse square's decisive reading NOT MADE; series C's `1 / r` on the plane GAMEBOARD |
-| the circular momentum under the push and the drive, `v^2 / r = G M_B / r^2` (24.1 row 58) | Kepler's period read at the detector line, `T = 2 pi r^(3/2) / sqrt(G M_B)` in space, `T ~ r` on the plane, `T(24) / T(12) = 2` (the `1 / r` force's scale symmetry) | (A1) and the count: the recurrence of the lamp's births at one Node; rung 2 (`v << c`, the shell mean), form B's `1 / (1 - v / c)` at first order | `G M_B` from `T` and `r` | series D3: `T(24) / T(12) = 1.997` in 1.82 to 2.18 (DETECTOR, inside; the loops not similar figures, not decisive); the periods 19 percent above their circles (DETECTOR, outside, the plane's grain) |
+| the circular momentum under the push and the drive, `v^2 / r = G M_B / r^2` (24.1 row 58) | Kepler's period read at the detector line, `T = 2 pi r^(3/2) / sqrt(G M_B)` in space, `T ~ r` on the plane, `T(24) / T(12) = 2` (the `1 / r` force's scale symmetry) | (A1) and the count: the recurrence of the lamp's births at one Node; rung 2 (`v << c`, the shell mean), `main`'s drive's `1 / (1 - v / c)` at first order (form B alike; form B on a branch) | `G M_B` from `T` and `r` | series D3: `T(24) / T(12) = 1.997` in 1.82 to 2.18 (DETECTOR, inside; the loops not similar figures, not decisive); the periods 19 percent above their circles (DETECTOR, outside, the plane's grain) |
 
 Two facts of the table for the owner. First, every Outside formula is a
 ratio or a difference of counts at a click, never the tick, so the whole
@@ -997,7 +997,14 @@ condition.
 (no horizon; 5.2). Outside, by N5: the ratio of two lamps' `1 + z` at
 one detector is the ratio of their rates, `(1 + k_2) / (1 + k_1)`,
 within the count's grain; the detector's own `k_D` divides both alike
-and cancels in the ratio (series X's note on record 569).
+and cancels in the ratio ONLY when the detector's crowd is the same in
+the two readings (series T: the crowds and the detector fixed, the lamp
+moved; series X's controls, no crowd). Where the crowd moves with the
+lamp (series X's shell at r = 2, 4 and 12) `k_D` differs by world
+(0.0945, 0.0927 and 0.1357 by the map's section E), the register's
+ratios are host-tick readings (record 569), and in the detector's own
+clock X's ratios are 0.9994 inside and 0.5134 outside; the convention
+is the owner's.
 
 (b) *The form of k about a source.* From N1, N4 and M: a row of age
 `r / c` dwells `tau_L` intervals per Link (`T_D / (N_l |D|)`, 1.72 on a
@@ -1006,7 +1013,12 @@ r is `q tau_L / (4 pi r^2)` and the age moment is the presence times the
 age, `A(r) = q tau_L / (4 pi c r)` (DERIVATIONS 5.1; the paper's
 `eq:fields`): the clock's word falls as `1 / r`, the retarded potential
 of the release, and obeys the wave equation with the release as its
-source, Poisson's in the static limit; rung 2. Two consequences that
+source, Poisson's in the static limit; rung 2, earned as LINEAR in the
+rows (the moments are sums over rows), while the source term is the
+EFFECTIVE release, the declared rate over `1 +` the source's own count
+(series X's fixed point: the shell's sources at 0.536 of the declared
+rate), so the equation is nonlinear in the declared rates. Two
+consequences that
 are Newton's theorems and not assumptions: outside a point source the
 ratio of two clocks' shifts at the distances 3 and 6 is `2.00` (the
 potential's form; the flux's would be 4.00 in the shift's ratio and
@@ -1027,16 +1039,18 @@ acceleration `push / (N_l N_w M_A)`, so
 c, with the ripple of M at finite r and the first-order inertia of the
 drive (`p = N_l N_w M v / (1 - v)`) beyond `v << c`. On a beam there is
 no inverse square (rung 3: `1 / r^0` along the beam). Nothing of A
-enters: the equivalence principle is rung 1, exact record by record
-(the push is `M_A` times the flow, the drive divides by `M_A`; 3.3's
-item 1).
+enters: the equivalence principle is rung 1, exact in the gravity
+column and the drive (`p = M_A sum V` exactly, `Lambda = 1`; the step's
+divisor scales with `M_A`, so the same whole parts and remainders at
+every `abs(p)`, not only at `abs(p) << Q S M_A`; 3.3's item 1).
 
 (d) *Kepler's third law.* From (c) and the drive at small p: a circular
 orbit has `v^2 / r = G M_B / r^2`, so `T = 2 pi r^(3/2) / sqrt(G M_B)`
 in space and `T = 2 pi r / v` with `v` fixed by the momentum on the
 plane, `T ~ r` (the `1 / r` force; DERIVATIONS 24.1 row 58, entry 58):
 rung 2, `v << c`, the period above the Newtonian by `1 / (1 - v / c)` at
-first order under form B's inertia. The ratio at two radii is a
+first order under `main`'s drive (form B alike; form B on a branch).
+The ratio at two radii is a
 theorem of the force's scale symmetry alone: a `1 / r` force is
 invariant under `r -> lambda r, t -> lambda t` at the same speed, so
 loops started with the same momentum at `r = 12` and `24` are similar
@@ -1046,18 +1060,32 @@ run, `2.00 +- 0.18`.
 
 (e) *The equivalence of the clock's slowing and the fall.* From (b) and
 (c): the clock reads the age moment A and the push reads the flow,
-which in the static limit is the gradient of the same field, `a = -(N_l
-c / tau_L) grad A` (the paper's "the two fields of one stream"): one
-crowd, two readings, the potential and its gradient, rung 2. The
-constant between them is the world's: the clock's shift between two
-heights h apart is `delta k = (n / d) delta A` and the fall's `g h =
-(N_l c / tau_L) delta A`, so `delta k = (n tau_L / (d N_l c)) g h`, where
-nature has `g h / c^2`; the law has the FORM of the equivalence (one
-field read twice) and its constant is the suspension pair `[n, d]` with
-the residence factor, a declared input, not `c^2` (NATURE row 12's
-note: the scale is the suspension pair's). Stated as a fact, not a
-failure: the paper's G likewise carries Newton's constant through
-`N_w`.
+which in the static limit is the gradient of the same field: the FLOW is
+`V = -(N_l c / tau_L) grad A` (5.1's relation, the paper's "the two
+fields of one stream"), and the acceleration is the push over the
+drive's divisor, `a = V / (N_l N_w) = -(c / (tau_L N_w)) grad A` (the
+first draft of this line wrote the flow's coefficient for the
+acceleration, a factor `N_l N_w` off by my count; withdrawn, the
+reviewer's correction). With `tau_L = 1 / c` exactly (`tau_L = T_D /
+(N_l abs(D))` and `c = N_l abs(D) / T_D`),
+
+    a = -(c^2 / N_w) grad A,
+
+one crowd, two readings, the potential and its gradient, rung 2. The
+constant between them: the clock's shift between two heights h apart is
+`delta k = (n / d) delta A` and the fall's `g h = (c^2 / N_w) delta A`,
+so
+
+    delta k = (n N_w / d) (g h / c^2) = (n S / d) (g h / c^2):
+
+NATURE'S FORM `g h / c^2` times the declared `n S / d`; the constant
+equals nature's if and only if `n S = d`, and the registered worlds
+(`suspension` `[1, 2^16]`, S = 1) have `n S / d = 2^-16`. So the law has
+the form of the equivalence (one field read twice) SHOWN, its constant
+a declared input (the suspension pair and the width), NEITHER for its
+value, and the condition `n S = d` is named here for the owner. Stated
+as a fact, not a failure: the paper's G likewise carries Newton's
+constant through `N_w`.
 
 **(3) For each formula: SHOWN, MEASURED ONLY, or NEITHER.** SHOWN: it
 comes out algebraically under the assumptions at the rung named.
@@ -1067,13 +1095,13 @@ NEITHER: no closed form and no reading. The register's rows by kind.
 | The formula Outside | Verdict | The one line that decides | The register (DETECTOR unless labelled) |
 | --- | --- | --- | --- |
 | the clock's rate `1 / (1 + k)`, `k = a_tau n / d` | SHOWN, rung 1 | N2 is the formula: the owed count's whole part of `a_tau n / d` per self-creation | series T: the age word's `1 + z` 2.6517 at 3 and 4.1500 at 6 Links from equal crowds (NATURE 12); series X: the controls 1.0000 exactly |
-| the `1 / r` form of k about a point source (the potential, not the flux) | SHOWN, rung 2 (the shell mean, with the ripple) | age times presence: `(r / c) x 1 / r^2` (N1, N4, M) | series T: the ratio of the two shifts 1.907 against the pin `1.909 +- 0.05`, the continuum's 2.00 outside it by the lattice's grain (PASS on the form; the presence word 1.000, FAIL); series X outside: `k(12) / k(4) = 0.6285` against the pin 0.618270 (MET), the continuum's 0.5 outside the tolerance by the grain |
-| the shell theorem's flat interior (Poisson's source term) | SHOWN, rung 2 | the `1 / r` weights of a shell sum to a constant inside, the `1 / r^2` weights do not (M on every source) | series X inside: the age word `k(2) / k(4) = 1.0029` against the pin `1.003917 +- 0.02` (MET, flat); the presence word 0.8400 against 0.839989 (MET, not flat: the FAIL the design expected) |
+| the `1 / r` form of k about a point source (the potential, not the flux) | SHOWN, rung 2 (the shell mean, with the ripple) | age times presence: `(r / c) x 1 / r^2` (N1, N4, M) | series T: the ratio of the two shifts 1.907 against the pin `1.909 +- 0.05`, the continuum's 2.00 outside it by the lattice's grain (PASS on the form; the presence word 1.000, FAIL); series X outside: `k(12) / k(4) = 0.6285` against the pin 0.618270 (MET; a host-tick reading, 0.5134 in the detector's own clock, the convention the owner's), the continuum's 0.5 outside the tolerance by the grain |
+| the shell theorem's flat interior (Poisson's source term) | SHOWN, rung 2 with the ripple (the lattice interior's own ripple `+- 2.4` percent by the map, r = 0 to 5, 5009 to 5246, larger than X's tolerance 0.02 and not read at two Nodes) | the `1 / r` weights of a shell sum to a constant inside, the `1 / r^2` weights do not (M on every source); the source term the effective release (the fixed point, 0.536 of the declared rate) | series X inside: the age word `k(2) / k(4) = 1.0029` against the pin `1.003917 +- 0.02` (MET, flat within the tolerance); the presence word 0.8390 against the pin 0.839989 (MET, not flat: the FAIL the design expected) |
 | the ripple of the shell mean at finite r (the departure from `1 / r` and `1 / r^2`) | MEASURED ONLY | `N(r)` is the lattice's count of Nodes on a shell, no closed form at finite r (Gauss's circle problem, an exponent bound and no formula) | series X's 0.6285 against the continuum's 0.5 and T's 1.907 against 2.00, the grain read; series E's shell means (GAMEBOARD, the probes: `k_a r = 36.1` within `+- 15` percent) |
 | the inverse square of the fall, `a = -G M_B / r^2` | SHOWN, rung 2; its decisive reading Outside NOT MADE | the push `-M_A <V>` with `<V> -> q N_l / (4 pi r^2)` (N3, M); on the plane `1 / r` | series D3 on the plane: the ratio `T(24) / T(12) = 1.997` (1.82 to 2.18) inside its bracket, consistent with `1 / r` and not decisive (the loops read are not similar figures: the radii 1.4 to 73.2 about 24.2 against 11.0 to 62.3 about 33.7, one recurrence each); the deciding reading (similar loops at a finer grain) not run; series C's `1 / r` on the plane and the exponent `r^-1.83` on the 2616-direction shell: GAMEBOARD, the probes' momenta (records 562, 564) |
-| the equivalence principle (the fall independent of `M_A`) | SHOWN, rung 1 | `M_A` multiplies the push and divides the drive, record by record (N3) | series D3: the held mass four times at `r = 24`, 138 of 139 common birth ticks at the same Node (the largest difference 1 Node), `|dT| = 0`, the same escape tick; 3.3's `push_m = m x push_1` for m = 1, 4, 16 (GAMEBOARD) |
+| the equivalence principle (the fall independent of `M_A`) | SHOWN, rung 1, exact in the gravity column and the drive | `p = M_A sum V` exactly (`Lambda = 1`) and the step's divisor scales with `M_A`: the same whole parts and remainders at every `abs(p)` (N3) | series D3: the held mass four times at `r = 24`, 138 of 139 common birth ticks at the same Node, one Node in one birth, cause not named (the lamp's two rows per birth cancel its recoil, `orbit_lamp/README.md`, so that is not it), `|dT| = 0`, the same escape tick; 3.3's `push_m = m x push_1` for m = 1, 4, 16 (GAMEBOARD) |
 | Kepler's third law, `T^2 ~ r^3` in space, `T ~ r` on the plane | SHOWN, rung 2 (`v << c`); the exponent in space NOT READ | the circular orbit under (c) and the drive; the ratio 2 at two radii the `1 / r` force's scale symmetry (entry 58) | series D3: 1.997 for `2.00 +- 0.18` (inside); the periods 19 percent above their circles alike (outside: the loops are not circles, the plane's grain), read as history; entry 58's host check in space `T(24) / T(12) = 2.8284 = 2^(3 / 2)` at S = 512 (GAMEBOARD, not after a detector) |
-| the equivalence of the clock's slowing and the fall (one field, the potential and its gradient) | SHOWN in form, rung 2; the constant a declared input | `a = -(N_l c / tau_L) grad A` in the static shell mean; `delta k = (n tau_L / (d N_l c)) g h` | series T and X read the potential's side, D3 the gradient's, on different worlds; no world reads both on one crowd: the one reading that would close the constant is NOT MADE |
+| the equivalence of the clock's slowing and the fall (one field, the potential and its gradient) | SHOWN in form, rung 2; the constant a declared input; NEITHER for its value | `a = -(c^2 / N_w) grad A` in the static shell mean (`tau_L = 1 / c`); `delta k = (n S / d) (g h / c^2)`, nature's form times the declared `n S / d`, equal to nature's iff `n S = d` (the registered worlds `2^-16`) | series T and X read the potential's side, D3 the gradient's, on different worlds; no world reads both on one crowd: the one reading that would close the constant is NOT MADE |
 | the post-Newtonian terms (the perihelion's `3 / 2` of the potential's square; the clock at second order `1 - k + k^2` against `1 - k - k^2 / 2`; a horizon) | NEITHER (a different law, stated) | the push is bilinear in the flow and the content, no `v^2 / c^2` and no `(G M / r c^2)^2` term (5.3); the clock never stops (5.2) | none Outside; series E's strong-field ratios (k = 2 to 9) GAMEBOARD |
 | the value of G (Newton's constant as a number) | NEITHER Outside | `G = K eta / (4 pi N_w)` names it from the world's inputs; no detector reading of G is registered (the paper: "G not read") | none |
 
@@ -1099,16 +1127,17 @@ interior, the inverse square of the fall, Kepler's third law and the `1
 / r` force's scale symmetry, and the equivalence of the clock's slowing
 and the fall as one field read twice (all in the shell mean, rung 2,
 `v << c`); and these SHOWN formulas are MEASURED where the register
-reads them: the potential's form (T, 1.907; X outside, 0.6285), the flat
+reads them: the potential's form (T, 1.907; X outside, 0.6285, a host-tick reading), the flat
 interior (X, 1.0029), the equivalence (D3, 138 of 139), the scale
 symmetry's ratio (D3, 1.997). MEASURED ONLY: the lattice's departure
 from the continuum at finite r (X's 0.6285 against 0.5, T's 1.907
 against 2.00, D3's periods 19 percent above their circles), which no
 closed form gives and the runs rise Outside. NEITHER: the inverse
 square's decisive reading after a detector (D3 consistent, not
-decisive, the similar loops not run), the constant of the equivalence
-and the value of G, and the post-Newtonian terms, which the law does not
-have. The one line: Newton's formulas are the shell mean of five rules
+decisive, the similar loops not run), the VALUE of the equivalence's
+constant (its form SHOWN, `(n S / d) (g h / c^2)`, nature's iff `n S =
+d`) and the value of G, and the post-Newtonian terms, which the law does
+not have. The one line: Newton's formulas are the shell mean of five rules
 the law already runs, so they are shown and not assumed; what the
 lattice adds at finite r is not a formula but a reading.
 
@@ -1120,10 +1149,12 @@ the gradient of the clock's field, all three the shell mean of the rules
 P9 and the age wall, exact in the limit of every direction and departing
 from it at finite radius by the lattice's count of Nodes on a shell,
 which has no closed form and is read (series T, X, D3). (ii) The
-equivalence principle is exact on the GameBoard, the content multiplying
-the push and dividing the drive, and it is measured after a detector
-(series D3, 138 of 139 births at the same Node with the held mass four
-times). (iii) What the model does not have it states: no term of the
+equivalence principle is exact on the GameBoard in the gravity column
+and the drive, the push `M_A` times the flow exactly and the step's
+divisor scaling with `M_A`, the same whole parts and remainders at every
+momentum, and it is measured after a detector (series D3, 138 of 139
+births at the same Node with the held mass four times, the one Node in
+one birth unexplained). (iii) What the model does not have it states: no term of the
 post-Newtonian order enters the push, the clock in a strong crowd reads
 `1 - k + k^2` and never stops, and the value of G is a world's inputs
 and is not read.
