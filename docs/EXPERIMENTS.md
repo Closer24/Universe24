@@ -1855,151 +1855,6 @@ states "exactly" and means integer equality at every tick.
   with an amount at it), `two_slits` and `one_slit` alike
   ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
 
-### A10 at a low rate, the single-click build-up (2026-09-20)
-
-- **Confronts.** The build-up of fringes one particle at a time (Merli
-  1976, Tonomura 1989, Grangier 1986: the contrast independent of the
-  intensity), against the physicist's entry 5 of the law's own
-  predictions (2026-09-20, Highlights 5.4: "the wave only in the
-  detector: fringes need two rays of one number in one interval, so a
-  screen counting single clicks shows the fan's spots, against the
-  single-particle build-up of fringes (Tonomura), the test being fringe
-  contrast against source rate") under the model owner's go of the same
-  day ("the two runs on the law's own predictions, ... the single-click
-  build-up of fringes (A10 at a low rate)") and the owner's decision on
-  issue #359 (step A yes, step B no: no memory in the detector; "if A10
-  at a low rate shows no build-up one click at a time, that is registered
-  as the law's limit (the wave in the crowd, not in the single event)").
-  A run under the [experimenter skill](../skills/experimenter/SKILL.md);
-  every number a detector reading (the screen's pixels).
-- **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/buildup/README.md#the-derivation-and-the-expectation-before-the-runs)).**
-  The registered A10 world at w = 27 under `wave`
-  ([A10](#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20))
-  with the lamps' `rate` 47 (the registered rate), 8 and 1 units per
-  interval, the opening's Nodes re-emitting n units on n consecutive
-  directions of the 47-fan per interval (`apportion_whole`), so the
-  screen receives about 6, 1 and 0.14 rays per pixel per interval (the interval count is the pixels' own clock: fixed detectors in no crowd at `suspension` 0, record 569; the clock audit of 2026-09-22); the
-  runs 420, 1200 and 7780 intervals so that the window from tick 260 (every
-  pixel has clicked by 235) holds the same 172 000 clicks. Derived: the
-  record of a `wave` pixel is the square of the pointer of the rays it
-  clicks in one interval, so the cross terms live only in the (pixel,
-  interval) cells with two or more rays: at the rate 47 every cell,
-  the lobe of A10 (the narrowing 1 - rms_R / rms_C of sin theta about
-  0.3); at the rate 1 almost none, R = I (the sum of every unit's own
-  square, through `coherent_pointer`), no lobe. Pinned: the narrowing at
-  least 0.2 at the rate 47; at the rate 1 the narrowing 0 +- 0.02 and
-  R / I at the record's peak pixel 1 +- 0.02; the rate 8 reported. Nature:
-  the narrowing 0.3 at every rate. Read beside: the FWHM of the record
-  and of the count (A10's reading), w x FWHM, the cells with two or more
-  rays and their share of the cells and of the clicks. Criteria
-  (completed, the books balanced) fail the tool; the readings are
-  registered inside or outside and never moved.
-- **Features.** The registered A10 world (the detector set, the
-  re-emission on a fan, the plane wave from a row of lamps, one-Node
-  `wave` pixels) at three lamp rates; the per-interval `record` and
-  `click` lines of `events.jsonl`.
-- **Run.** `examples/events/buildup/` (three worlds by `make_worlds.py`,
-  which calls the A10 generator and changes the rate, the ticks and the
-  model id, `w27_rate47`, `w27_rate8`, `w27_rate1`, the model ids
-  `rays-buildup-w27-rate<n>-v1`); `tools/run_series.py --jobs 3`;
-  `tools/buildup_readings.py` (the window sums per pixel, the incoherent
-  sum off `coherent_pointer`, the spread off `tools/heisenberg_readings.py`;
-  `tests/test_buildup_readings.py` pins it to the engine on a 14 x 5
-  plane at the rates 2 and 1: R / I = 2 and 1 exactly).
-- **Result (2026-09-20, measured against expected).** The worktree of
-  `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the Beam Law,
-  `beam-v1`), source fingerprint
-  `a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
-  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
-  completed (55, 39, 92 s) with the books balanced at every tick; 0
-  record checks failed, 2 readings inside, 1 outside, none moved. All
-  DETECTOR:
-
-  | World | rate | clicks | rays per pixel per interval | cells with 2+ rays (share of the cells, of the clicks) | record FWHM (count) | w x FWHM | record rms (count) | narrowing | R / I at the peak (at the centre y = 80) | R / I least .. greatest | Expected |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  | `w27_rate47` | 47 | 172753 | 6.67 | 25921 (1.000, 1.000) | 0.184 (0.904) | 4.98 | 0.236 (0.341) | 0.307 | 5.50 at y = 80 (5.50) | 0.03 .. 5.50 | narrowing >= 0.2: inside |
-  | `w27_rate8` | 8 | 171871 | 1.13 | 46174 (0.433, 0.648) | 0.075 (0.904) | 2.02 | 0.324 (0.341) | 0.052 | 2.86 at y = 80 (2.86) | 0.39 .. 2.86 | reported |
-  | `w27_rate1` | 1 | 171742 | 0.14 | 10560 (0.066, 0.123) | 0.278 (0.904) | 7.51 | 0.347 (0.341) | -0.017 | 1.20 at y = 58 (0.84) | 0.43 .. 1.20 | narrowing 0 +- 0.02: inside; R / I 1 +- 0.02: outside |
-
-  - The narrowing (the law 0.3 then 0; nature 0.3 at both): 0.307, 0.052,
-    -0.017 at the rates 47, 8, 1: inside at both ends; nature's 0.3 at
-    the lowest rate outside by 0.3. At the rate 1 the record's spread is
-    the count's: no lobe.
-  - R / I at the record's peak at the rate 1: 1.200 at y = 58, outside
-    1 +- 0.02. The peak is not the lobe's centre (y = 80 reads 0.843) but
-    the pixel of the most constructive coincidence of the synchronized
-    comb: the lamps are in step, the 27 opening Nodes re-emit in the same
-    interval on the same direction, and two directions released in
-    different intervals coincide at a pixel when their flight times differ
-    by the same amount, which the fan's 47-interval cycle produces for
-    some pairs (6.6 % of the cells, 12.3 % of the clicks); the cross terms
-    are in phase at some pixels and in antiphase at others (R / I from
-    0.43 to 1.20), their sum over the screen negative, a fixed pattern and
-    not a lobe. Registered outside as pinned.
-  - The count's FWHM 0.904 at every rate (the shadow, the control); the
-    record's 0.184 at the rate 47 (A10's 0.185, w x FWHM 4.98 against the
-    law's 4.09) and 0.278 at the rate 1, the half width of the comb's
-    spikes.
-- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
-  The build-up worlds under the record form: a lamp at the rate [r, 1]
-  births r records per interval at u, the count of births (the r of one
-  interval one step apart), so a pixel's `wave` record per interval is
-  the tables' pointer of rows one step apart and not of rows in phase:
-  on the reading tool's small world the coincidence ratio at the centre
-  is 1.9985 at the rate 2 and 0.9994 at the rate 1 in place of 2 and 1
-  (`tests/test_buildup_readings.py`); the three registered worlds
-  (`w27_rate1`, `w27_rate8`, `w27_rate47`) are heavy under the record
-  form (the cost above) and are not re-run here. The numbers above are
-  the crowd form's, kept as history; the record form's own build-up is
-  one click per record by the ladder (series L2 at a low rate).
-
-- **Verdict.** Fringes do not build up one click at a time in this law:
-  the lobe (the narrowing 0.31) exists at six rays per pixel per interval,
-  is a sixth of itself at about one, and is gone at 0.14, where nature
-  builds the same lobe click by click. The law's prediction held in its
-  substance (the wave is a reading of the crowd in one interval) and
-  missed one letter (the record at the lowest rate is the count plus the
-  rare coincidences of the synchronized comb, not the count exactly:
-  spikes, no lobe). The physicist's entry 5 is registered as measured, a
-  plain disagreement with nature and, by the owner's decision on #359,
-  the law's limit: the wave is in the crowd, not in the single event.
-  Nothing was tuned. What the law lacked: a single ray that carries
-  something of the wave (a spread at the Node, deleted on 2026-09-19) or
-  a memory between intervals in the detector (refused on 2026-09-20);
-  nature's single particle interferes with itself, this law's single
-  event does not. A follow-up without a change of law: the opening's
-  fans rotated Node by Node (breaking the comb's fixed coincidences) and
-  a rate of one ray on the whole screen per interval. The page of the
-  run is in the session's scratchpad, not published.
-
-- **Re-read under the `wave` threshold on the pointer's square
-  (2026-09-20, issue #359 step A; after the merge of the strong force's
-  commits).** All three worlds change: a pair of rays that meets a pixel
-  in antiphase within one interval passes (the pointer 0 below the
-  threshold 1) where it clicked with the record 0, and goes on; the
-  clicks in the window fall (172 753 -> 169 855, 171 871 -> 158 878,
-  171 742 -> 158 622), the cells with 2+ rays fall (the share 1.000,
-  0.433 -> 0.395, 0.066 -> 0.026), the record's FWHM, the product w x
-  FWHM and R / I at the peak are unchanged at every rate, and the count's
-  FWHM at the rates 8 and 1 reads 0.617 and 0.600 where it read 0.904
-  (the pairs that passed were the comb's own). Every verdict stands: the
-  narrowing 0.292 (was 0.307, >= 0.2: inside) at the rate 47, 0.050
-  (reported) at 8, -0.005 (was -0.017, 0 +- 0.02: inside) at 1, R / I at
-  the record's peak 1.200 at y = 58 (outside) at 1; 0 record checks
-  failed, 2 readings inside and 1 outside as before, none moved; source
-  fingerprint `0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`
-  ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)):
-
-  | World | clicks in the window | rays per pixel per interval | cells with a click | cells with 2+ rays (share) | clicks in such cells (share) | record FWHM (count FWHM) | w x record FWHM | record rms (count rms) | narrowing (expected) | R / I at the record's peak | R / I at y = 80 | R / I over the window |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  | `w27_rate47` old | 172753 | 6.665 | 25921 | 25921 (1.000) | 172753 (1.000) | 0.184 (0.904) | 4.98 | 0.236 (0.341) | 0.307 (>= 0.2: inside) | 5.498 at y = 80 | 5.498 | 0.034 .. 5.498 |
-  | `w27_rate47` new | 169855 | 6.553 | 25277 | 25277 (1.000) | 169855 (1.000) | 0.184 (0.904) | 4.98 | 0.237 (0.335) | 0.292 (inside) | 5.498 at y = 80 | 5.498 | 0.073 .. 5.498 |
-  | `w27_rate8` old | 171871 | 1.134 | 106737 | 46174 (0.433) | 111308 (0.648) | 0.075 (0.904) | 2.02 | 0.324 (0.341) | 0.052 (reported) | 2.862 at y = 80 | 2.862 | 0.393 .. 2.862 |
-  | `w27_rate8` new | 158878 | 1.049 | 99446 | 39263 (0.395) | 98695 (0.621) | 0.075 (0.617) | 2.02 | 0.326 (0.343) | 0.050 (reported) | 2.862 at y = 80 | 2.862 | 0.616 .. 2.862 |
-  | `w27_rate1` old | 171742 | 0.142 | 161182 | 10560 (0.066) | 21120 (0.123) | 0.278 (0.904) | 7.51 | 0.347 (0.341) | -0.017 (0 +- 0.02: inside) | 1.200 at y = 58 (1 +- 0.02: outside) | 0.843 | 0.429 .. 1.200 |
-  | `w27_rate1` new | 158622 | 0.131 | 154622 | 4000 (0.026) | 8000 (0.050) | 0.278 (0.600) | 7.51 | 0.347 (0.345) | -0.005 (inside) | 1.200 at y = 58 (outside) | 0.843 | 0.764 .. 1.333 |
-
 ### E, the clock's redshift in space under the age reading (2026-09-20)
 
 - **Confronts.** Whether a clock beside a mass in space slows as M / r
@@ -7904,6 +7759,39 @@ as history and not as evidence for the ray-event model. This register
 replaces them: an experiment exists as an entry here, runs once at one
 fingerprint under its pinned criterion, and is recorded in the validation
 log; no experiment directory, harness or example world is kept in the tree.
+
+### Deleted on 2026-09-22: the worlds and experiments the paper does not reach
+
+The model owner's word of 2026-09-22 (record 871 of the log of 2026-09-20:
+"remove worlds or experiments that are not in the paper"), the table
+[docs/designs/register_paper_sources/PLAN.md](designs/register_paper_sources/PLAN.md)
+(the rule of reach, what stays, what goes and why). The worlds, their tests,
+their tools and their designs are in the tree's history at the base commit
+59c6b811; the dated results stay in [the validation log](VALIDATION.md) as
+history. Deleted in the first commit:
+
+- `examples/events/two_stars/` (series O, two stars moving toward each other,
+  each the detector of the other; three worlds, design only, no registered
+  run; `docs/designs/two_stars/DESIGN.md`, `tests/test_two_stars.py`,
+  DERIVATIONS_BEAM 18.6's host script `series_o_identity.py`): named nowhere
+  in the paper.
+- `examples/events/masses/` (the cavity, two worlds written by hand for the
+  masses design of 2026-09-20, series M; `docs/designs/masses/`): the paper's
+  masses row rests on DERIVATIONS_BEAM 19.2 and 19.4, not on this design.
+- `examples/events/buildup/` (A10 at a low rate, three worlds;
+  `tools/buildup_readings.py`, `tests/test_buildup_readings.py`): superseded
+  by the one click of amplitude-v1; its entry is the heading below, kept for
+  the links of the validation log.
+
+### A10 at a low rate, the single-click build-up (2026-09-20)
+
+Deleted on 2026-09-22 (above). The build-up of fringes one particle at a
+time under the `wave` reading before the one click, three worlds at the
+source rates 47, 8 and 1 units per interval: the lobe of the coherent record
+a sixth of itself at about one ray per pixel per interval and gone at 0.14
+(the narrowing 0.292, 0.050 and -0.005 under the pointer's square; 2 inside,
+1 outside), the law's limit as registered on 2026-09-20 and not tuned; the
+runs and their rows are in [the validation log](VALIDATION.md#a10-at-a-low-rate-the-single-click-build-up-three-runs---2026-09-20).
 
 ## E. Demonstrations of events
 

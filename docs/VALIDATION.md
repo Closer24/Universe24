@@ -1037,7 +1037,7 @@ of 2026-09-20 on the physicist's entry 5 of the law's own predictions and
 the owner's decision on issue #359 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector));
 the readings registered in
 [A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20)
-and the worlds' [README](../examples/events/buildup/README.md).
+and the worlds' README (`examples/events/buildup/`, deleted on 2026-09-22 with the register entry, record 871; in the tree's history at 59c6b811).
 
 | Check | Result |
 | --- | --- |

@@ -247,3 +247,5 @@ What moves where, one line each:
 ## Done
 
 (One line per deletion commit, appended as the commits land: what was deleted, the commit's SHA, the check that was green.)
+
+1. Step 2 (1): `examples/events/two_stars/`, `masses/`, `buildup/` with `docs/designs/two_stars/`, `docs/designs/masses/`, `tests/test_two_stars.py`, `tests/test_buildup_readings.py`, `tools/buildup_readings.py` and DERIVATIONS_BEAM 18.6's host script `series_o_identity.py`; the register entry of A10 at a low rate moved to EXPERIMENTS.md section D (its heading kept for the validation log's links), the TEST_EXPECTATIONS section and the index rows removed, `tests/test_register_map.py` part (e) re-pointed to `orbit_lamp/make_worlds.py`, the links of VALIDATION.md, PREDICTIONS.md, FULL_PICTURE.md, DERIVATIONS_BEAM.md, `moving_detector/DESIGN.md` and `crowd_clock/DESIGN.md` made plain, one MIGRATION.md entry. Commit: this commit (its SHA in the next line). Check: `python tools/check.py --base origin/main`, see the commit message.

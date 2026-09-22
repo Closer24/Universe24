@@ -1,7 +1,8 @@
 # Series U, a lamp inside a crowd: the design, with the expectation pinned before any run
 
 The G2 experimenter, 2026-09-21, on the model owner's word after the
-two-stars run ([series O](../two_stars/DESIGN.md)). The owner (in
+two-stars run (series O, its design deleted on 2026-09-22 with its worlds,
+record 871). The owner (in
 conversation, translated): "this says something; it could explain something
 about distant galaxies and why they look as if at high speed", and then
 "check it yourself and report to the Boss". This document is the check's
@@ -28,8 +29,8 @@ Two things slow that count under the law as built:
 
 - **The lamp's motion.** A lamp receding at v births one record per
   interval of its own clock, and the reader meets them at the crossing of
-  world lines: 1 + z = 1 + v / c ([series O](../two_stars/DESIGN.md)
-  section 3, read 1.200 for 0.2 c). With v < c this never passes z = 1.
+  world lines: 1 + z = 1 + v / c (series O's design, section 3, read 1.200
+  for 0.2 c). With v < c this never passes z = 1.
 - **The lamp's crowd.** After each self-creation the lamp's clock owes
   k n / d intervals, k the presence of other numbers' rows at its Node. In a
   crowd (a "galaxy": the gravity rows of everything around it crossing its

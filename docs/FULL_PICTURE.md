@@ -92,7 +92,7 @@ c and the collision table:
 - **The collision table** permutes the single units in the Ports' slots
   plus the two rest slots: with six Ports, 8 slots, `3^8 = 6561` joint
   states in 5440 classes (BEAM_LAW section 4; the map
-  [designs/masses/ladder.out](designs/masses/ladder.out) A); with twelve
+  `designs/masses/ladder.out` A, deleted on 2026-09-22 with the masses design, record 871); with twelve
   Ports 14 slots and `3^14 = 4 782 969` states, with eight Ports 10 slots
   and `3^10 = 59 049`: the table's size is `3^(Ports + 2)`.
 - **The fan** is the set of primitive directions within the width P,

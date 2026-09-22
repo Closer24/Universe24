@@ -6,6 +6,24 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The register's sources are the paper's, on 2026-09-22 (deletions; no behaviour)
+
+The model owner's word of 2026-09-22 (record 871 of docs/LOG_2026-09-20.md:
+"remove worlds or experiments that are not in the paper; order the new code
+of the clicks; old code goes"), the table
+[docs/designs/register_paper_sources/PLAN.md](designs/register_paper_sources/PLAN.md).
+Deleted, with their tests, register rows and index rows, every kept world's
+record byte for byte as it was (the base commit 59c6b811 holds them):
+
+- `examples/events/two_stars/` (series O), `docs/designs/two_stars/`,
+  `tests/test_two_stars.py`, `docs/designs/derivations_beam/series_o_identity.py`
+  and its output; `tests/test_register_map.py` part (e) now regenerates
+  `orbit_lamp/make_worlds.py`'s register instead.
+- `examples/events/masses/` (the cavity, series M) and `docs/designs/masses/`.
+- `examples/events/buildup/` (A10 at a low rate), `tools/buildup_readings.py`,
+  `tests/test_buildup_readings.py`; the register entry is one line under
+  EXPERIMENTS.md section D.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,

@@ -372,24 +372,6 @@ the `wave` record narrows with w and the count does not; the product
 w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
 the smaller widths on the sparse fan.
 
-## The A10 low-rate run
-
-The folder [buildup/](buildup/README.md) holds the three worlds of A10 at
-a low rate, written by `buildup/make_worlds.py` from the A10 generator:
-the registered `w27_wave` world with the lamps' `rate` 47, 8 and 1 units
-per interval (about 6, 1 and 0.14 rays per pixel per interval at the
-screen) and the runs lengthened so that the late window holds the same
-172 000 clicks. `tools/buildup_readings.py` reads, per pixel over the
-window, the plain count, the coherent record and the incoherent sum of
-every unit's own square (the cross term between them), the narrowing of
-the record's spread against the count's, and the (pixel, interval) cells
-that held two or more rays; the register entry is
-[A10 at a low rate, the single-click build-up (2026-09-20)](../../docs/EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20):
-the lobe of the coherent record (the narrowing 0.31 at six rays per
-pixel per interval) is a sixth of itself at about one ray and gone at
-0.14, where nature builds the same fringes one click at a time; the
-law's limit, registered and not tuned.
-
 ## The light-beside-a-mass series
 
 The folder [lensing/](lensing/README.md) holds the four worlds of series
