@@ -216,9 +216,9 @@ verbs (skills/workflow.md, record 202); (2) the law's drive on `main`,
 the pace `v = p / (Q S M + p)` Links per interval (DERIVATIONS_BEAM 3.3
 and 4.4; the paper's P9, `abs(p_a) / (N_l N_w M + abs(p_a))` per axis),
 linear in p on both sides; (3) form B's directional drive
-(docs/designs/light_speed/FORM.md section 3.1; the path
-docs/designs/drive_b/DESIGN.md named in the order does not exist on
-`main`): the rate `abs(p)_1 Q` against the wall `Q^2 S M + abs(p)_1 T_h`,
+(docs/designs/light_speed/FORM.md section 3.1; the design
+docs/designs/drive_b/DESIGN.md named in the order is on the branch
+drive-b, 6e245ddd, not on `main`): the rate `abs(p)_1 Q` against the wall `Q^2 S M + abs(p)_1 T_h`,
 `T_h = isqrt(3 Q^2) = 110`, linear in the Manhattan momentum `abs(p)_1`;
 (4) the age wall's crowd, `a_tau`, entering every wall linearly
 (`core.integer.age_wall`); (5) stage 1's resident count, `r = 1 -
@@ -298,7 +298,15 @@ NO.** The one line that decides: every wall of the law is linear in
 B), so the record's own rate from the board's cost is `1 - beta` (first
 order, the two factors parting at first order) or 1 (no cost, the
 factors agreeing to first order only), and no square of the momentum is
-formed anywhere but at the click. What a cost would have to be for YES,
+formed in any wall of the drive on `main`. The exact claim, with its
+exceptions named: the law forms one square of a LENGTH at load, the
+flight table's resolution `T_D = isqrt(3 abs(D)^2 Q^2)` per direction
+(nature_beam.py, the table's construction; the pace's isotropy within
+`1 / T_D` that section 1 uses), and beside the law two keyed squares of
+the momentum exist: optical-v1's `T(P) = isqrt(3 abs(P)^2 Q^2)` on a
+pushed row (`momentum_pair`) and covariant-readings-v1's W; on `main`
+the drive's wall is linear and the only square in the law's own
+interval is the click's. What a cost would have to be for YES,
 as a question for the owner and not as a rule: the wall the drive reads
 would have to satisfy `E(p)^2 - E_0^2 = 3` **p** `.` **p** in the
 identity's units, i.e. be verb 2's quadratic form on (E_0, **p**) with
@@ -388,15 +396,23 @@ per interval for every family, no name read; vector, verbs 2 and 3 with
 rates at most bilinear; local, the row's own Node and its six
 neighbours, the storage per Node bounded by 6 N rows (one per direction
 and phase after the merge), fixed work per row, nothing kept beyond the
-rows present. What it would cost the registered pins: everything the
-flight's exactness pinned moves, since every beam spreads: series Q's
-face clicks (290 of 290 at the derived interval), L7's cone (the age 29
-on both rows), series C's "no dilution", L2's fringes (the fan's
-geometry replaced by the walk's own diffraction), the massive rows'
-bands of 23.3 (36.5, 60, 83.5, the turn `abs(p) N / h` replaced by the
-walk's group velocity), and the covariant identity's gate (its r would be
-the walk's, not a declared square); the two-slit and Bell clicks would
-keep their form (the click's evaluation is unchanged) with new numbers.
+rows present. What it would cost the registered pins: every pin that
+reads a row's position, presence or age at a Node moves, which is the
+whole register but the click's form. A beam that spreads changes the
+presence and the age moment at every Node, so every clock reading moves
+with it (the age wall's crowd at any detector or source: series T's
+1.907 and NATURE row 12's PASS; the crowd worlds U, V and X, the shell's
+5086 and its fixed point; G2's stars), and so does every tick derived
+from the flight table (`Flight.manhattan_steps`: series K's delays,
+D3's periods, series S's clicks 392, 369, 345); with them the flight's
+own pins (series Q's face clicks, 290 of 290 at the derived interval;
+L7's cone at the age 29; series C's "no dilution"; L2's fringes, the
+fan's geometry replaced by the walk's own diffraction; the massive rows'
+bands of 23.3, 36.5, 60, 83.5, the turn `abs(p) N / h` replaced by the
+walk's group velocity; the covariant identity's gate, its r the walk's
+and not a declared square). The two-slit and Bell clicks keep their
+FORM (the click's evaluation is unchanged) with new numbers, and
+nothing else does.
 It would be a hypothesis under its own identity beside the law, the
 pins rewritten before any run; not built here. The question: does the
 owner want the flight to be a split with phase at every Node?
@@ -468,9 +484,11 @@ recombination rule the existing merge. The three tests: generic (one
 table per interval for every family, no name); vector (verb 2 for the
 split's weights, verb 3 for the merge, no root); local (the row's own
 Node and its six neighbours, the storage bounded by 6 N rows per Node
-after the merge). The cost to the registered pins: every flight pin
-moves (the beams spread: series Q, L7, C, the massive rows' bands of
-23.3, the covariant gate's r); the Bell family is NOT untouched: the
+after the merge). The cost to the registered pins, as (4) states it:
+every pin that reads a row's position, presence or age at a Node moves,
+the whole register but the click's form (the flight's pins, every clock
+reading through the age wall's crowd, every tick derived from the flight
+table); the Bell family is NOT untouched: the
 pair's rows would spread on their way to the settings and the click's
 counts at the four settings would change, though the theorem's form
 (exact marginals, the rungs) stands and `S(N)` would be recomputed from
@@ -483,7 +501,10 @@ NO.** The hop is a pattern and the resident count is linear. The one
 line that decides: every hop of the law is `by_drive` with `at_most` 1
 on the whole record (`step_axis`, `walk_step`), the amount never splits
 between staying and hopping, so no staying amplitude interferes with a
-hopping one in flight, and the only square the law forms is at the
+hopping one in flight, and the only square the law forms in its own
+interval is at the click (the flight table's `T_D` is a square of a
+length taken once at load, section 5 (v); the keyed squares of the
+momentum are the hypotheses' beside the law, not the law's), at the
 click over rows that have ended.
 
 ## 7. Links
