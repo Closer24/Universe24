@@ -1,5 +1,7 @@
 # atom-give-v1: the give of content at the return, read off the body's action rows against their value at the last return, under its own identity, off by default
 
+Superseded as the rule to build by the owner's decision of record 910 (the give carries the body's momentum per unit of content, form (a) of record 903): the design of that form is [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) under the identity `atom-give-momentum-v1`; this file stays as the record of the give of content and its finding.
+
 The Atom Give Designer, 2026-09-22, on the model owner's decision in the
 Atom Algebraist's session ("Go with what you proposed. Is it valid only
 for the electron?", record 881 of [docs/LOG_2026-09-20.md](../../LOG_2026-09-20.md),
