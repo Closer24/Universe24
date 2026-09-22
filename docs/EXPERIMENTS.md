@@ -2358,6 +2358,77 @@ states "exactly" and means integer equality at every tick.
   outside over the four; the table with the forms and the detectors' own
   clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
 
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678 and 707 of docs/LOG_2026-09-20.md: the GameBoard
+  holds the clock of every experiment read through a detector, and a
+  detector's time is the clock of the Node it sits on, the interval count
+  less what the crowd at that Node owes through the age wall; the clock
+  audit's finding 4, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the four worlds on main's engine, the
+  age word of record 394, by `tools/run_series.py`, read by
+  `tools/hubble_readings.py` with its replay; every number DETECTOR unless
+  marked).** The pins restated BEFORE the numbers were read, from the
+  closed form: the detector at the centre sits in its six masses' crowd,
+  so its clock counts r_w self-creations per interval over a window (its
+  age from its state at the window's edges over the intervals between
+  them: a step of the replay, GAMEBOARD until the strict run with the
+  reader's own lamp, examples/events/reader_clock's form; over the whole
+  run its own state, age / (age + waited), DETECTOR), a phase step of
+  Delta t intervals is r_w Delta t of its counts, and 1 + z_d = r_w (1 +
+  z), tau the row's own clock (its age at the click) unchanged; (i) the
+  reading's formula (1 + z_d) = (1 + k)(1 + v / c) r_w within 2 % (the
+  same ratio, both sides in one clock); (ii) the throw's own form z_d =
+  (1 + v / c) r_w - 1, a source with v / c below 1 / r_w - 1 reading blue
+  (rms reported, no bracket: v / c declared is GAMEBOARD); (iii) the
+  linear law through the clock's own zero z_d(0) = r_w - 1, H_d = r_w H,
+  the Milne pin H_d t_0 = 1 within 10 % in the coasting worlds and H_d
+  t_0 < 1 in the pushing ones (the brackets of 2026-09-20, on the reading
+  in the detector's clock); (iv) the three forms 1 + z_d = r_w (1 +
+  form(H tau)), every rms r_w times the lattice's (the nearest form
+  unchanged), the coasting form's rms below 0.02; (v) q_eff,d = 2 ((q_eff
+  / 2 + 1) / r_w - 1). The reading in the lattice's clock (the tick count
+  of the `record` lines, every line of this entry until today) is printed
+  by the tool as [GAMEBOARD, the lattice's clock] and counted in no
+  criterion; the lines above stand as history with their kind.
+  The reading, the late window [300, 400): r_w = 0.7500 (`coasting_scalar`),
+  1.0000 (`coasting_age`), 0.3400 (`pushing_scalar`), 0.9600
+  (`pushing_age`) [GAMEBOARD, the replay's edges]; z_d(0) = r_w - 1 =
+  -0.250, 0, -0.660, -0.040; the sources reading blue 15, 0, 20 and 0 of
+  24 (the threshold v / c < 0.333, 0, 1.941, 0.042); H_d t_0 = 1.1770
+  (outside 1 +- 10 %; the lattice's clock 1.5693, outside), 1.0123
+  (inside; 1.0123, inside), 3.1243 (outside H t_0 < 1; 9.1890, outside),
+  1.0425 (outside; 1.0860, outside); the earlier windows [100, 200) and
+  [200, 300): r_w = 0.8600 and 0.8000, 1.0000 and 1.0000, 0.4200 and
+  0.4000, 0.9800 and 0.9700; H_d t_0 = 0.8898 and 1.0148 in
+  `coasting_scalar` (the lattice's 1.0346 and 1.2685: the first window
+  moves from inside to outside, the second from outside to inside),
+  0.8718 and 0.9667 in `coasting_age` (unchanged), 1.9708 and 2.8202 in
+  `pushing_scalar` (4.6923 and 7.0505; outside as before), 0.8280 and
+  0.9829 in `pushing_age` (0.8449 and 1.0133: the second window moves
+  from outside to inside on H t_0 < 1); the coasting form's rms and the
+  nearest form keep their verdicts in every window (an rms times r_w
+  crosses no bracket here); the reading's formula 288 of 288 inside 2 %;
+  0 record checks failed; 304 readings inside and 32 outside (the
+  lattice's clock on the same replay: 303 and 33, the line of record
+  394). The verdict: in its own clock the detector at the centre reads
+  the whole diagram blue-shifted by the crowd's well at its Node (the
+  slowest sources with a negative z_d wherever its clock runs below the
+  lattice's) and a Hubble rate r_w times the lattice's; the three
+  verdict words that move are the near fit's H t_0 in the two earlier
+  windows named above, and the registered late window keeps every
+  verdict word; the strict form (the reader's own lamp at the centre, its
+  births its own clock, the per-window rate then a detector reading) is
+  the re-run the audit lists as tier (c) 3. The presence word's rows
+  above (the fraction-free re-read of 2026-09-20; the detector's rates
+  0.8275, 0.9950, 0.2925 and 0.9800 over the run) restated by the same
+  form on the register's own numbers, GAMEBOARD arithmetic of the record
+  (main's engine no longer replays the presence word without a
+  declaration): H_d t_0 at t_0 = 350 reads 0.8415 (outside; 1.017 read
+  inside), 1.0119 (inside), 0.3873 (inside H t_0 < 1; 1.324 read outside)
+  and 1.0643 (outside; 1.086 outside); z_d(0) = -0.1725, -0.0050, -0.7075
+  and -0.0200, the sources reading blue 9, 0, 24 and 0 of 24 (v / c below
+  0.2085, 0.0050, 2.4188 and 0.0204); the reading's formula unchanged.
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
