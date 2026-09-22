@@ -300,3 +300,103 @@ on a diagonal heading is sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
 no circle exists under the drive `main` runs even with a continuous
 push. A circle at this grain is not what the law gives at S = 32, and
 no pin is moved to say otherwise.
+
+## The one-constant worlds (flow-link-v1, 2026-09-22): the pins before any run
+
+The owner's decision of 2026-09-22 (record 915 of
+[the log](../../../docs/LOG_2026-09-20.md), about 10:05Z): Newton's rows
+go on the one constant of gravity, the hypothesis flow-link-v1 of
+[the design](../../../docs/designs/flow_weight/DESIGN.md) (section 3 (c),
+the pins that move; section 6, the key) and
+[its algebra](../../../docs/designs/flow_weight/ALGEBRA.md) (section 5,
+Newton's rows by formula), in parallel with the ring world's run. Under
+the world key `flow_link` the arrival flow every reader sums carries per
+arriving row the flow label nearest `Q D / S_1` in place of the unit
+label, so every push is divided by its fan's mean of `S_1 / |D|`, the
+Nodes per Euclidean Link of a digital line; the age moment, the wall and
+the flight are untouched. The key is the Flow Link Builder's (one writer
+of the code); these four worlds and their pins are series D3's side of
+it, written by the generator before any run (`worlds(flow=True)`,
+`expectations(flow=True)`, `expectations_flow.json`), the registered
+five worlds and `expectations.json` untouched, byte for byte.
+
+| World | The source | r | `flow_link` | `held` m | K | p (label units) | Intervals |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `r12_flow` | M, the fan | 12 | true | 2^20 | 2^20 | 512 x (2^12 + 2^20) = 538 968 064 (n = 8) | 4000 |
+| `r24_flow` | the same | 24 | true | 2^20 | 2^20 | the same | 4000 |
+| `r12_flow_control` | none | 12 | true | 2^20 | 2^20 | as `r12_flow` | 4000 |
+| `r24_flow_control` | none | 24 | true | 2^20 | 2^20 | as `r24_flow` | 4000 |
+
+Each is the registered `r12`, `r24` or its control with two changes and
+no other: the key `flow_link: true`, and the probe's momentum at the
+whole n = 8 of the circle under the key (the model ids
+`rays-orbit-lamp-r12-flow-plane-v1` and so on). No equivalence world: the
+equivalence carries no constant and is closed by the registered run.
+
+**The derivation, the generator's own and not by hand.** The generator
+computes on its own fan of 120 the mean of `S_1 / |D|`, `F_plane =
+1.2871` (the design's number; `4 / pi = 1.2732` in the isotropic limit),
+and divides its circular balance by it: `A = q L C / (2 pi) = 1.9098`
+becomes `A / F_plane = 1.4838`, and `n^2 / (S + n) = A / F_plane` at S =
+32 has the real root `n = 7.672`. The generator takes the nearest whole,
+8, as it took 9 for the register's 8.83: the momentum is a whole count of
+label units per unit of content, `p = n Q M_total`, and the register
+declares the whole nearest the root. The design's `7.818` is the same
+formula on the declared whole 9's balance `81 / 41 = 1.976` in place of
+the real root's `1.910`; the two round to the same 8, and the design's
+`384 / 768` at 7.818 are the generator's `377 / 754` at the whole 8, which
+the design names in the same line. The band is the register's: the
+generator's own margin on a period is the continuum map's 9 percent, the
+one number, propagated to 0.18 on the ratio.
+
+**The pins (`expectations_flow.json`), GAMEBOARD by formula until the
+run; the clicks the measurement (DETECTOR); Newton's and Kepler's forms on
+the comparison side only (record 817):**
+
+- **The period** T = 2 pi r (S + n) / n at n = 8, the pace 8 / 40 =
+  0.2000 Links per interval: 377.0 at r = 12 and 754.0 at r = 24, each
+  within 9 percent (343 to 411; 686 to 822). DETECTOR: the recurrence of
+  the clicks' x across the centre column, read as in the registered run
+  (`tools/orbit_lamp_readings.py`, the same tool, the pins by
+  `--expectations`).
+- **The ratio** T(24) / T(12) = 2.00 +- 0.18, unchanged: the same fan at
+  both radii and the weight of a line a constant of the line, not of r,
+  so the factor cancels (754.0 / 377.0 = 2.000).
+- **The second difference**: omega^2 = (2 pi / T)^2 = 2.78e-4 and 6.94e-5
+  per interval^2 (the brackets from T's; the lag 12 and 24 births), the
+  acceleration a = omega^2 r = v^2 / r = 3.33e-3 and 1.67e-3 (3.3's
+  small-n limit with the constant C / F_plane = 0.777 in C's place:
+  3.86e-3 and 1.93e-3), the ratio 2.00.
+- **The amplitude**: r - 1 to r + 2, as registered.
+- **The controls**: every click at x = 60 + r; the escape through the
+  face +y at the 61st step of the pace 8 / 40, the tick 305 +- 6. A
+  world without a crowd reads nothing under the key (the design's section
+  3 (d)).
+- **Refuted if** T leaves its band, the ratio leaves 2.00 +- 0.18, or the
+  control moves under the key (a click off x = 60 + r, or the escape off
+  305 +- 6). A record check (completed, the books balanced at every tick)
+  fails the tool.
+- **Read beside the pins, not pinned.** The registered run at n = 9 read
+  its periods 19 percent above the circle's (407 and 813 against 343 and
+  687) with two causes named, the grain of the push and the per-axis
+  drive's anisotropy; both stand under the key, which changes the push's
+  constant and nothing of its grain. The pins here are the circle's by
+  the register's convention, and a reading outside its band is registered
+  with its cause and never moved. The byte identity of a flow control
+  with a keyless control at n = 8 is the design's by formula (section 3
+  (d)) and is not run here.
+
+**The world files.** `make_worlds.py` writes the four world files with
+the key beside the registered ones; they ship in the commit that runs
+them, after the key is on `main`, because the loader refuses a key it
+does not know (`beam-v1: the world has unknown keys: flow_link`, the
+validation gate over every shipped world) until the Flow Link Builder's
+merge. The pins ship first, here. Run and read, then:
+
+```bash
+PYTHONPATH=src python examples/events/orbit_lamp/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/orbit_lamp_flow \
+    examples/events/orbit_lamp/r*_flow*.json
+PYTHONPATH=src python tools/orbit_lamp_readings.py artifacts/orbit_lamp_flow \
+    --expectations examples/events/orbit_lamp/expectations_flow.json
+```

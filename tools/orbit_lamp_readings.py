@@ -491,10 +491,22 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
     print("across the worlds:")
     ratio_pin = pins["ratio"]
     assert isinstance(ratio_pin, dict)
-    t12, t24 = periods.get("r12"), periods.get("r24")
+    # The two worlds of the ratio: the registered `r12` and `r24`, or the
+    # names the pins carry (the one-constant worlds `r12_flow`, `r24_flow`).
+    near, far = ratio_pin.get("worlds", ("r12", "r24"))
+    t12, t24 = periods.get(near), periods.get(far)
     ratio = t24 / t12 if t12 and t24 else None
     verdicts.bracket("the ratio T(24) / T(12)", ratio, ratio_pin["bracket"])
-    equivalence = pins["equivalence"]
+    equivalence = pins.get("equivalence")
+    if equivalence is None:
+        # No equivalence world in this register (the one-constant worlds:
+        # the equivalence carries no constant and is closed by the
+        # registered run).
+        print(
+            f"{verdicts.failed_checks} record checks failed, {verdicts.inside} readings inside, "
+            f"{verdicts.outside} outside, none moved"
+        )
+        return 1 if verdicts.failed_checks else 0
     assert isinstance(equivalence, dict)
     first, second = equivalence["worlds"]
     if (

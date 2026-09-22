@@ -134,6 +134,28 @@ first run's pins (n = 10, the directional drive: T = 371 and 742) stay
 reproducible beside the shipped ones (the test pins both); the shipped
 `expectations.json` is the per-axis drive's at n = 9.
 
+The one-constant worlds (flow-link-v1, the owner's decision of 2026-09-22,
+record 915 of docs/LOG_2026-09-20.md; the design
+docs/designs/flow_weight/DESIGN.md section 3 (c) and ALGEBRA.md section 5):
+under the world key `flow_link` every push a reader sums is divided by its
+fan's mean of S_1 / |D|, the Nodes per Euclidean Link of a digital line,
+which on this fan of 120 is F_plane = 1.2871 (4 / pi in the isotropic
+limit), so the circular balance becomes n^2 / (S + n) = q L C / (2 pi
+F_plane): the real root 7.673 at S = 32, the nearest whole 8 (the design's
+7.818 divides the declared whole 9's balance 81 / 41 = 1.976 in place of
+the real root's 1.910; both round to 8, and the generator takes its own
+root, as it took 8.83 to 9). `worlds(flow=True)` writes `r12_flow`,
+`r24_flow`, `r12_flow_control` and `r24_flow_control`: the registered
+worlds with the key and the probe's momentum at the whole 8 (T = 2 pi r
+(S + n) / n = 377 and 754 at r = 12 and 24; 384 and 768 at the design's
+7.818), nothing else changed; `expectations(flow=True)` their pins
+(`expectations_flow.json`), the band the register's 9 percent, the ratio
+T(24) / T(12) = 2.00 +- 0.18 unchanged (the same fan and the same weight
+per line at both radii), the controls' escape at the 61st step of the
+pace 8 / 40. Every number a formula's (GAMEBOARD) until the run; the
+clicks the measurement (DETECTOR). No equivalence world under the key:
+the equivalence is closed by the registered run and carries no constant.
+
     python examples/events/orbit_lamp/make_worlds.py
 """
 
@@ -199,6 +221,12 @@ DIRECTIONAL_DRIVE = "directional"
 DRIVE = AXIS_DRIVE
 ORBIT_N = 9
 HISTORY_N = 10
+# flow-link-v1 (the module docstring): the world key, the names' suffix and
+# the whole n of the circle under the key (asserted against the generator's
+# own root by `expectations(flow=True)`).
+FLOW_KEY = "flow_link"
+FLOW_SUFFIX = "_flow"
+ORBIT_N_FLOW = 8
 T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
 # The tool's constant of the flow on the plane, flow x 2 pi r / q (series C).
 FLOW_CONSTANT = 1.0
@@ -239,6 +267,17 @@ EMISSION = len(FAN) * RATE
 LABEL_MAGNITUDE = sum(math.hypot(*unit_label((a, b, c))) / LABEL_SCALE for a, b, c in FAN) / len(FAN)
 # The circular condition's constant A = q L C / (2 pi) (DERIVATIONS_BEAM 3.3).
 CIRCLE_CONSTANT = EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi)
+# F_plane, the fan's mean of S_1 / |D| (the Nodes per Euclidean Link of the
+# digital line of D): the factor every push carries as the law is built and
+# loses under the key `flow_link` (DESIGN.md section 1.3; 1.2871 on this
+# fan, 4 / pi = 1.2732 in the isotropic limit).
+FLOW_INCIDENCE = sum(sum(abs(c) for c in v) / math.hypot(*v) for v in FAN) / len(FAN)
+
+
+def circle_constant(flow: bool = False) -> float:
+    """A, the circular condition's constant: q L C / (2 pi) as the law is
+    built, divided by F_plane under the key (ALGEBRA.md section 5)."""
+    return CIRCLE_CONSTANT / (FLOW_INCIDENCE if flow else 1.0)
 
 
 def pace(n: float, width: int, drive: str = DRIVE) -> float:
@@ -253,11 +292,12 @@ def pace(n: float, width: int, drive: str = DRIVE) -> float:
     raise ValueError(f"unknown drive {drive!r}")
 
 
-def orbit_momentum(width: int, drive: str = DRIVE) -> tuple[float, int]:
+def orbit_momentum(width: int, drive: str = DRIVE, flow: bool = False) -> tuple[float, int]:
     """The circular-orbit n per unit of content, n x pace(n) = A: the real
     root and the nearest whole (series D's derivation under the per-axis
-    drive, the orbit register's lamp worlds' under the directional one)."""
-    a = CIRCLE_CONSTANT
+    drive, the orbit register's lamp worlds' under the directional one; A
+    divided by F_plane under the key `flow_link`)."""
+    a = circle_constant(flow)
     if drive == AXIS_DRIVE:
         n = (a + math.sqrt(a * a + 4 * width * a)) / 2
     elif drive == DIRECTIONAL_DRIVE:
@@ -288,10 +328,26 @@ WORLDS: dict[str, dict[str, object]] = {
     "r12_control": {"radius": 12, "source": False},
     "r24_control": {"radius": 24, "source": False},
 }
+# The one-constant worlds: the registered `r12`, `r24` and their controls
+# under the key `flow_link`, the momentum at ORBIT_N_FLOW (the module
+# docstring); no equivalence world.
+WORLDS_FLOW: dict[str, dict[str, object]] = {
+    f"r12{FLOW_SUFFIX}": {"radius": 12, "source": True},
+    f"r24{FLOW_SUFFIX}": {"radius": 24, "source": True},
+    f"r12{FLOW_SUFFIX}_control": {"radius": 12, "source": False},
+    f"r24{FLOW_SUFFIX}_control": {"radius": 24, "source": False},
+}
 
 
-def world(name: str, n: int = ORBIT_N) -> Json:
-    keys = WORLDS[name]
+def declared_n(n: int | None, flow: bool) -> int:
+    """The declared whole n: the argument, else the register's 9 (the whole
+    8 under the key)."""
+    return n if n is not None else (ORBIT_N_FLOW if flow else ORBIT_N)
+
+
+def world(name: str, n: int | None = None, flow: bool = False) -> Json:
+    keys = (WORLDS_FLOW if flow else WORLDS)[name]
+    n = declared_n(n, flow)
     radius = int(keys["radius"])
     mass = held_mass(name)
     total = RESERVOIR + mass
@@ -361,6 +417,10 @@ def world(name: str, n: int = ORBIT_N) -> Json:
         "release": [1, RELEASE_D],
         "suspension": 0,
         "width": WIDTH,
+        # flow-link-v1: the key, true, on the one-constant worlds alone; the
+        # registered worlds carry no key and read as they did, byte for byte
+        # (DESIGN.md section 6).
+        **({FLOW_KEY: True} if flow else {}),
         "directions": [list(v) for v in DECLARED],
         "families": [
             {"name": PROBE_FAMILY, "quantum": 1},
@@ -372,30 +432,35 @@ def world(name: str, n: int = ORBIT_N) -> Json:
     }
 
 
-def worlds(n: int = ORBIT_N) -> dict[str, Json]:
+def worlds(n: int | None = None, flow: bool = False) -> dict[str, Json]:
+    """The registered five, or the four one-constant worlds (`flow`)."""
     return {
-        name: families_by_definition(world(name, n), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
-        for name in WORLDS
+        name: families_by_definition(world(name, n, flow), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        for name in (WORLDS_FLOW if flow else WORLDS)
     }
 
 
-def second_difference_lag(radius: int, n: int = ORBIT_N, drive: str = DRIVE) -> int:
+def second_difference_lag(radius: int, n: int | None = None, drive: str = DRIVE) -> int:
     """The lag of the second difference in birth intervals, about a quarter
     of the pinned period (the module docstring)."""
-    return max(1, round(period(radius, n, drive) / 4 / BIRTH_INTERVAL))
+    return max(1, round(period(radius, declared_n(n, False), drive) / 4 / BIRTH_INTERVAL))
 
 
-def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
+def expectations(n: int | None = None, drive: str = DRIVE, flow: bool = False) -> Json:
     """The pins before the runs (the module docstring) for the declared n
     under the named drive, every entry with its source in `derivations`
     (the owner's principle, record 205: a formula gives, a run proves).
     The shipped register is `expectations()`; `expectations(HISTORY_N,
-    DIRECTIONAL_DRIVE)` reproduces the first run's pins."""
-    real_n, whole_n = orbit_momentum(WIDTH, drive)
+    DIRECTIONAL_DRIVE)` reproduces the first run's pins;
+    `expectations(flow=True)` is the one-constant worlds' register
+    (`expectations_flow.json`), the balance divided by F_plane."""
+    n = declared_n(n, flow)
+    real_n, whole_n = orbit_momentum(WIDTH, drive, flow)
     assert whole_n == n, (whole_n, n)
     v = pace(n, WIDTH, drive)
+    flow_constant = FLOW_CONSTANT / (FLOW_INCIDENCE if flow else 1.0)
     small_n_limit = {
-        str(r): EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi * r * WIDTH) for r in RADII
+        str(r): EMISSION * LABEL_MAGNITUDE * flow_constant / (2 * math.pi * r * WIDTH) for r in RADII
     }
     if drive == AXIS_DRIVE:
         drive_note = (
@@ -408,6 +473,19 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
             "the directional drive (BEAM_LAW note 49, form B, not landed in the engine): the pace "
             "n Q / (Q S + n T_D) on a heading; the circle n x pace(n) = q L C / (2 pi), the real root "
             "9.63 at S = 32, declared the nearest whole 10 (the orbit register's lamp worlds)"
+        )
+    if flow:
+        drive_note = (
+            "flow-link-v1 (the world key `flow_link`, docs/designs/flow_weight/DESIGN.md section 3 (c), "
+            "ALGEBRA.md section 5; the owner's decision of 2026-09-22, record 915): every push divided by "
+            f"the fan's mean of S_1 / |D|, F_plane = {FLOW_INCIDENCE:.4f} on this fan of 120 (4 / pi in the "
+            "isotropic limit), so the circle is n^2 / (S + n) = q L C / (2 pi F_plane) under "
+            + drive_note
+            + f"; the real root {real_n:.3f}, declared the nearest whole {n} (the design's 7.818 divides "
+            "the whole 9's balance 81 / 41 in place of the real root's q L C / (2 pi); both round to 8); "
+            "the ratio T(24) / T(12) unchanged (the same fan and the same weight per line at both radii); "
+            "GAMEBOARD by formula until the run, the clicks the measurement (DETECTOR); Newton's and "
+            "Kepler's forms on the comparison side only (record 817)"
         )
     found: Json = {
         "format": EXPECTATIONS_FORMAT,
@@ -424,7 +502,14 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
             "acceleration": "a = omega^2 r = v^2 / r at the declared pace, and 3.3's small-n limit q L C / (2 pi r S) beside it (v = n / S there); the ratio a(12) / a(24) = 2.00 in both",
             "amplitude": "the clicks' (max x - min x) / 2 against r: the loop's extents (the orbit register's map, 24.0 to 25.9 and 12.0 to 13.0), r - 1 to r + 2",
             "equivalence": "DERIVATIONS_BEAM 3.3: nothing of the body enters the acceleration (the push scales with M_total and the step divides by it), so the 4 M_held world reads the same period within one birth interval and the same x on every common birth tick within one Node (record 594)",
-            "control": "declared: no source, no push; the probe walks +y at the pace and leaves through the face +y at its 61st step, (SIDE - c_y) / v intervals (the step from y = 120 to 121); every click at x = c_x + r",
+            "control": "declared: no source, no push; the probe walks +y at the pace and leaves through the face +y at its 61st step, (SIDE - c_y) / v intervals (the step from y = 120 to 121); every click at x = c_x + r"
+            + (
+                "; under the key a world without a crowd reads nothing (DESIGN.md section 3 (d)): a control "
+                "click off x = c_x + r, or an escape off its bracket, is the control moving under the key and "
+                "refutes"
+                if flow
+                else ""
+            ),
             "flight": "the row's age on the click is its flight from the birth's y to Y_D on the heading -y, c = Q / T_D = 32 / 55 Links per interval (DERIVATIONS_BEAM 2.1): the birth tick is the click's tick less its age",
         },
         "side": SIDE,
@@ -434,7 +519,7 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
         "fan_directions": len(FAN),
         "emission": EMISSION,
         "label_magnitude": LABEL_MAGNITUDE,
-        "flow_constant": FLOW_CONSTANT,
+        "flow_constant": flow_constant,
         "width": WIDTH,
         "drive": drive,
         "orbit_n_real": real_n,
@@ -443,7 +528,23 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
         "ratio": {"pin": RATIO_PIN, "bracket": [RATIO_PIN - RATIO_MARGIN, RATIO_PIN + RATIO_MARGIN]},
         "worlds": {},
     }
-    for name, keys in WORLDS.items():
+    if flow:
+        found["derivations"]["flow_link"] = (
+            "declared: the key `flow_link` true on the four worlds and on none of the registered ones; "
+            "the pins that move under it are the push's alone (the period, omega^2, the acceleration: by "
+            "1 / F_plane on the balance), the ratio, the amplitude's bracket and every clock and flight "
+            "reading unchanged (DESIGN.md section 3 (c) and (d)); refuted by T outside its bracket, the "
+            "ratio outside its bracket, or the control moving under the key"
+        )
+        found["derivations"]["flow_incidence"] = (
+            "the fan's mean of S_1 / |D| over the 120 directions, the Nodes per Euclidean Link of the "
+            "digital line of D (DESIGN.md section 1.3): the factor the push carries as the law is built and "
+            "loses under the key; series C's flow x 2 pi r / q = 1.00 per Node becomes 1 / F_plane"
+        )
+        found[FLOW_KEY] = True
+        found["flow_incidence"] = FLOW_INCIDENCE
+        found["ratio"]["worlds"] = [f"r12{FLOW_SUFFIX}", f"r24{FLOW_SUFFIX}"]
+    for name, keys in (WORLDS_FLOW if flow else WORLDS).items():
         radius = int(keys["radius"])
         entry: Json = {
             "radius": radius,
@@ -486,11 +587,12 @@ def expectations(n: int = ORBIT_N, drive: str = DRIVE) -> Json:
                 }
             )
         found["worlds"][name] = entry
-    found["equivalence"] = {
-        "worlds": ["r24", "r24_4m"],
-        "period_difference_bracket": BIRTH_INTERVAL,
-        "x_difference_bracket": 1,
-    }
+    if not flow:
+        found["equivalence"] = {
+            "worlds": ["r24", "r24_4m"],
+            "period_difference_bracket": BIRTH_INTERVAL,
+            "x_difference_bracket": 1,
+        }
     found["acceleration_ratio"] = {
         "pin": RATIO_PIN,
         "bracket": [RATIO_PIN - RATIO_MARGIN, RATIO_PIN + RATIO_MARGIN],
@@ -521,16 +623,29 @@ def main() -> None:
         f"the ratio T(24) / T(12) = {RATIO_PIN:.2f} +- {RATIO_MARGIN:.2f}; the controls' escape at about "
         f"{(SIDE - CENTRE[1]) / PACE:.0f}"
     )
-    for name, document in worlds().items():
-        path = HERE / f"{name}.json"
-        path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
-        print(path.relative_to(ROOT))
-    expected = expectations()
-    (HERE / "expectations.json").write_text(
-        json.dumps(carry_replicated(HERE / "expectations.json", expected), indent=1) + "\n",
-        encoding="utf-8",
+    real_flow, whole_flow = orbit_momentum(WIDTH, DRIVE, flow=True)
+    print(
+        f"flow-link-v1: F_plane = {FLOW_INCIDENCE:.4f} (4 / pi = {4 / math.pi:.4f}), the balance "
+        f"{circle_constant():.4f} / F_plane = {circle_constant(True):.4f}: n = {real_flow:.3f} -> "
+        f"{whole_flow}, the pace {pace(whole_flow, WIDTH):.4f}; "
+        + "; ".join(
+            f"r = {r}: T = {period(r, whole_flow):.1f} ({period(r, whole_flow) * (1 - PERIOD_MARGIN):.0f} "
+            f"to {period(r, whole_flow) * (1 + PERIOD_MARGIN):.0f})"
+            for r in RADII
+        )
+        + f"; the controls' escape at about {(SIDE - CENTRE[1]) / pace(whole_flow, WIDTH):.0f}"
     )
-    print((HERE / "expectations.json").relative_to(ROOT))
+    for flow, register in ((False, "expectations.json"), (True, "expectations_flow.json")):
+        for name, document in worlds(flow=flow).items():
+            path = HERE / f"{name}.json"
+            path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
+            print(path.relative_to(ROOT))
+        expected = expectations(flow=flow)
+        (HERE / register).write_text(
+            json.dumps(carry_replicated(HERE / register, expected), indent=1) + "\n",
+            encoding="utf-8",
+        )
+        print((HERE / register).relative_to(ROOT))
 
 
 if __name__ == "__main__":
