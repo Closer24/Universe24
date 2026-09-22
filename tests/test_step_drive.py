@@ -452,7 +452,7 @@ def test_the_bound_pair_under_a_suspension_holds():
     with pytest.raises(OverflowError, match="exceeds the working bound"):
         for _ in range(3001):
             simulation.step()
-    assert simulation.tick == 3
+    assert simulation.tick == 4  # the refused interval's tick
     # The bound pair on the nucleons, whose tables pass the light: the same
     # world without the lamps and the counters (the light takes no part in
     # the lines below; the families stay declared), 3000 intervals.
