@@ -344,17 +344,25 @@ times the mass. `tools/orbit_lamp_readings.py` reads the click lines alone
 ratio, the equivalence, the controls) and labels the probe's end state
 and the homes GAMEBOARD; the register entry is
 [D3, Newton after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#d3-newton-after-a-detector-2026-09-22):
-registered twice on 2026-09-22, no number moved: the first run at n = 10
-(its pins form B's pace, which the engine does not run: the cause read
-off the controls' pace and named, the rows kept as history) and the
-re-run at n = 9 on the owner's word (the per-axis drive's circle, series
-D's p = 576): the equivalence principle after a detector (to the Node
-on every click) and the controls' pace to the tick closed; the ratio of
-the two radii's recurrences 1.997 against 2.00 consistent with the 1 / r
-force's scale symmetry, from one recurrence per radius on loops that are
-not similar figures, not closed; a circle's period, amplitude and omega^2
-outside, the grain of the push and the per-axis drive's anisotropy both
-named, as series D registered the loops.
+registered three times on 2026-09-22, no number moved: the first run at
+n = 10 (its pins the line drive's pace, which the engine did not yet run:
+the cause read off the controls' pace and named, the rows kept as
+history), the re-run at n = 9 on the owner's word (the per-axis drive's
+circle, series D's p = 576; the reading the paper's D3 row rests on, read
+under the per-axis drive, since the flip the world key `per_axis_drive`):
+the equivalence principle after a detector (to the Node on every click)
+and the controls' pace to the tick closed; the ratio of the two radii's
+recurrences 1.997 against 2.00 consistent with the 1 / r force's scale
+symmetry, from one recurrence per radius on loops that are not similar
+figures, not closed; a circle's period, amplitude and omega^2 outside,
+the grain of the push and the per-axis drive's anisotropy both named, as
+series D registered the loops; and the re-run under the law's line drive
+at n = 10 (the shipped worlds and pins since the flip: the controls' pace
+to the tick standing; the equivalence outside after the closest passes,
+the reservoir's share of M_total named; the ratio 1.512 on loops the
+probe's contact with the detector line re-made; the period, amplitude
+and omega^2 outside, the line drive's own anisotropy named beside the
+grain).
 
 ## The Heisenberg run
 

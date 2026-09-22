@@ -33,6 +33,12 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   moving-body worlds of the register are re-pinned under the law series by
   series in the commits that follow (DEFAULT.md sections (b) and (c)); no
   paper row moves, each names the drive it was read under.
+- Series D3 re-pinned under the law (`examples/events/orbit_lamp/`): the
+  generator's circle under the line drive at n = 10 (the pace 640 / 3148,
+  T = 371 and 742, the escape 300) is the shipped register, the per-axis
+  re-run at n = 9 kept as history (`expectations(9, "axis")`), and the
+  five worlds run once more with their readings registered beside the two
+  earlier runs (`docs/EXPERIMENTS.md`, D3; `docs/VALIDATION.md`).
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 

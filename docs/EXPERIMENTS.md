@@ -7537,7 +7537,10 @@ sequential gates on an entangled record, the full register replay.
   engine does not run; the re-run at n = 9 on the owner's word of 01:42Z,
   series D's own p = 576, the circle of the per-axis drive of BEAM_LAW
   note 17: the pins below are the re-run's, the first run's T = 371 and
-  742 stand in its own rows as history), the lamp
+  742 stand in its own rows as history; since the flip of 2026-09-22 the
+  shipped `expectations.json` is the line drive's at n = 10, T = 371 and
+  742, the escape 300, and `expectations(9, "axis")` reproduces the
+  re-run's pins), the lamp
   of rate [1, 8] on +y and -y (the recoil cancelling by the pair), the
   detector line at y = 20 of 121 `wall` events read as the one-Node
   `wave` detectors `line_<x>` with `reads: "age"` for `probe` (every
@@ -7650,14 +7653,74 @@ sequential gates on an entangled record, the full register replay.
   0.2346 against the axis's 0.2195, 6.9 percent faster at 45 degrees:
   no circle exists under the drive `main` runs even with a continuous
   push). No pin moved.
-- **Status:** registered twice, none moved: the first run at n = 10 (3
-  inside, 13 outside, the cause the drive's pace) and the re-run at n = 9
-  (7 inside, 9 outside). Closed: the equivalence principle after a
-  detector and the controls' pace to the tick. The ratio 1.997 against
-  2.00: consistent, from one recurrence per radius on loops that are not
-  similar figures; the scale symmetry of the 1 / r force is the claim it
-  tests; not closed. A circle's period, amplitude and omega^2 outside:
-  the grain of the push and the per-axis drive's anisotropy, both named.
+- **Result of the re-run under the law's line drive, n = 10 (2026-09-22,
+  measured against the pins of `expectations.json`, committed at
+  `ec267fe` before the run; a new registration beside the two above, the
+  paper's D3 row resting on the per-axis re-run at n = 9).** The flip
+  (the model owner's word, record 972; [the design](designs/drive_b/DEFAULT.md),
+  step 2): the same five worlds at n = 10, the circle under the line
+  drive (the pace 640 / 3148 = 0.2033 on a heading). The checkout of
+  `drive-default` at `ec267fe`, source fingerprint `e67f6b9a5469d75d`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
+  completed in 10.8 to 26.7 s with the books balanced at every tick,
+  `run.json` carrying `"drive": "line"`; 0 record checks failed, 4
+  readings inside, 12 outside, none moved.
+
+  | World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | T (expected) | omega^2 (expected) | The probe's escape | Verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r12` | 245 | 25 .. 84 | 29.5 (11 .. 14) | 7.1 .. 59.5, 24.6 | 674 from 4 + 3 crossings (337 .. 404) | 5.86e-5 (2.42e-4 .. 3.47e-4) | `face:+y` at 2096 | outside, outside, outside |
+  | `r24` | 232 | 13 .. 119 | 53 (23 .. 26) | 2.8 .. 61.1, 32.4 | 1019 from 2 + 2 crossings (675 .. 808) | 2.89e-5 (6.04e-5 .. 8.67e-5) | `face:+x` at 1949 | outside, outside, outside |
+  | `r24_4m` | 222 | 14 .. 118 | 52 (23 .. 26) | 1.0 .. 64.0, 32.0 | 987 (675 .. 808) | 3.24e-5 | `face:+x` at 1896 | outside, outside, outside |
+  | `r12_control` | 37 | 72 .. 72 | 0 | 12.0 .. 61.2 (walking +y) | - | - | `face:+y` at 301 (294 .. 306) | x = 72 on every click: inside; the escape: inside |
+  | `r24_control` | 37 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | `face:+y` at 301 (294 .. 306) | x = 84 on every click: inside; the escape: inside |
+
+  Across the worlds: the ratio T(24) / T(12) = 1.512 (1.82 .. 2.18):
+  outside; the equivalence on T: 32 (0 .. 8): outside; the equivalence on
+  the clicks: 219 common birth ticks, 146 equal, the largest difference
+  22 Nodes (0 .. 1): outside (equal to the Node through the tick 1144,
+  the first 144 births; apart by one Node at 1160 and by 22 at 1784).
+  GAMEBOARD: homes 35, 30, 29, 5, 5; one `contact` line per source world,
+  the probe onto the detector line (the contact rule of 2026-09-20, the
+  wall's `measure` entry for `probe` taking the axis component: `r12` at
+  917 at x = 64, p_y = -252 640 524 taken; `r24` at 1400 at x = 17;
+  `r24_4m` at 1408 at x = 15), no click recording it. Standing: the
+  controls' pace to the tick (the face click at 301 against 300) and
+  their x. Not standing: the equivalence, closed at n = 9, reads outside
+  after the closest passes (2.8 and 1.0 Nodes from the source); the
+  cause named, not proved: the reservoir 2^12 is 0.4 percent of M_total
+  in `r24` and 0.1 percent in `r24_4m`, the push scales with M_held and
+  the wall with M_total, a 0.3 percent difference in the acceleration
+  under either drive, which the grain of the push at a close pass turns
+  into a different loop from the 145th birth on (at n = 9 the probe left
+  the plane at 1239 first); the deciding reading, a reservoir scaled with
+  the held mass, named and not run, not proposed. The ratio 1.512: loops
+  that are not similar figures, each re-made by the contact (the wall
+  took the whole p_y), so the 1 / r force's scale symmetry is not closed
+  and the n = 9 reading of 1.997 does not carry over. The periods (82 and
+  37 percent above their circles), amplitudes and omega^2 not read as
+  pinned. Causes named: the grain of the push, and the line drive's own
+  anisotropy of the opposite sign (the wall carries |p|_1 T_D: on a
+  diagonal heading 640 / (2048 + 1556) = 0.1776 against the axis's
+  0.2033, 12.6 percent slower at 45 degrees; the per-axis drive was 6.9
+  percent faster there). The detector line at y = 20 lies inside the
+  loops the law gives at S = 32 (the circle's lowest y 36): a reading of
+  the design, not of the law. No pin moved.
+- **Status:** registered three times, none moved: the first run at n = 10
+  (3 inside, 13 outside, the cause the drive's pace), the re-run at n = 9
+  under the per-axis drive (7 inside, 9 outside; the paper's D3 row, read
+  under the per-axis drive) and the re-run under the law's line drive at
+  n = 10 (4 inside, 12 outside). Closed at n = 9 under the per-axis
+  drive: the equivalence principle after a detector and the controls'
+  pace to the tick; under the line drive the controls' pace stands and
+  the equivalence reads outside after the closest passes, the reservoir's
+  share of M_total named as the cause. The ratio 1.997 against 2.00 at n
+  = 9: consistent, from one recurrence per radius on loops that are not
+  similar figures; 1.512 under the line drive on loops the contact
+  re-made; the scale symmetry of the 1 / r force is the claim it tests;
+  not closed. A circle's period, amplitude and omega^2 outside under
+  both drives: the grain of the push and each drive's own anisotropy
+  (6.9 percent faster on the diagonal per axis, 12.6 percent slower on
+  the line), all named.
 
 ## B. Proof for the paper
 

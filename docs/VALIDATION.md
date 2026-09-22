@@ -11,6 +11,26 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series D3 under the law's line drive: five runs at n = 10 on drive-default ec267fe - 2026-09-22
+
+The branch `drive-default` at `ec267fe` (the generator's pins under the
+line drive committed before the run, DEFAULT.md section (c)): the five
+worlds of `examples/events/orbit_lamp/` run through `tools/run_series.py
+--jobs 4` (Python 3.14.0rc2, numpy 2.5.3, headless; source fingerprint
+`e67f6b9a5469d75d`), every run completed at 4000 intervals with the books
+balanced at every tick, `run.json` carrying `"drive": "line"`; the digests
+(state, audit, events) `f9246d61f777`, `a9b7a6558894`, `a389fa9f2fdc`
+(`r12`), `abad1975b63d`, `b455040b33b4`, `51017b7f689f` (`r24`),
+`976cc8449f69`, `e4d5fe6d4762`, `0235dd02ef23` (`r24_4m`),
+`f7c89f2266e3`, `467d6e37fcaa`, `58d4c1b72ec0` (`r12_control`),
+`71ed70737f6c`, `467d6e37fcaa`, `f56c7ee96593` (`r24_control`); run times
+25.8, 26.7, 26.5, 11.5 and 10.8 s (host measurements). The readings by
+kind and their verdicts (4 inside, 12 outside, none moved) are in
+[the series' README](../examples/events/orbit_lamp/README.md#the-re-run-under-the-laws-line-drive-at-n--10-2026-09-22-measured-against-the-pins-of-expectationsjson-committed-at-ec267fe-before-the-run)
+and [the register](EXPERIMENTS.md#d3-newton-after-a-detector-2026-09-22).
+The per-axis re-run at n = 9 stays registered as the reading the paper's
+D3 row rests on, under the drive it names.
+
 ## The line drive the law's drive: the gate set replayed under the flip on main 6cfea3c6 - 2026-09-22
 
 The branch `drive-default` from main `6cfea3c6` (the model owner's word,

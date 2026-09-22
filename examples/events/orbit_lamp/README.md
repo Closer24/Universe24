@@ -310,3 +310,94 @@ on a diagonal heading is sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
 no circle exists under the drive `main` runs even with a continuous
 push. A circle at this grain is not what the law gives at S = 32, and
 no pin is moved to say otherwise.
+
+## The re-run under the law's line drive at n = 10 (2026-09-22, measured against the pins of `expectations.json`, committed at `ec267fe` before the run)
+
+The flip of 2026-09-22 (the model owner's word, record 972; [the
+design](../../../docs/designs/drive_b/DEFAULT.md), step 2): the same five
+worlds at n = 10, the circle under the line drive that is now the law's
+drive of a body (BEAM_LAW note 17 as amended; the pace 640 / 3148 = 0.2033
+on a heading), the generator's pins above committed before the run. The
+re-run is a new registration beside the two above, never a replacement:
+the paper's D3 row rests on the per-axis re-run at n = 9 and says so.
+
+Source fingerprint `e67f6b9a5469d75d` (the checkout of `drive-default` at
+`ec267fe`, package 0.3.1), Python 3.14.0rc2, numpy 2.5.3, headless, four
+cores, `tools/run_series.py --jobs 4`; every run completed at 4000
+intervals (25.8, 26.7, 26.5, 11.5, 10.8 s for `r12`, `r24`, `r24_4m`,
+`r12_control`, `r24_control`; a slower host than the two runs above) with
+the books balanced at every tick; the digests (state, audit, events):
+`f9246d61f777`, `a9b7a6558894`, `a389fa9f2fdc` (`r12`); `abad1975b63d`,
+`b455040b33b4`, `51017b7f689f` (`r24`); `976cc8449f69`, `e4d5fe6d4762`,
+`0235dd02ef23` (`r24_4m`); `f7c89f2266e3`, `467d6e37fcaa`,
+`58d4c1b72ec0` (`r12_control`); `71ed70737f6c`, `467d6e37fcaa`,
+`f56c7ee96593` (`r24_control`); `run.json` carries `"drive": "line"`.
+`tools/orbit_lamp_readings.py`: 0 record checks failed, 4 readings inside,
+12 outside, none moved.
+
+DETECTOR readings (the line's clicks: x, tick, age; the radius from x and
+the age; the escape the face's click of the probe):
+
+| World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | Crossings down, up; the spacings | T (expected) | omega^2 (expected) | a = omega^2 x amplitude | The probe's escape |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `r12` | 245 | 25 .. 84 | 29.5 (11 .. 14): outside | 7.1 .. 59.5, 24.6 | 4, 3; 480 .. 886 | 674 (337 .. 404): outside | 5.86e-5 (2.42e-4 .. 3.47e-4): outside | 1.73e-3 | `face:+y` at the tick 2096 |
+| `r24` | 232 | 13 .. 119 | 53 (23 .. 26): outside | 2.8 .. 61.1, 32.4 | 2, 2; 810 .. 1229 | 1019 (675 .. 808): outside | 2.89e-5 (6.04e-5 .. 8.67e-5): outside | 1.53e-3 | `face:+x` at the tick 1949 |
+| `r24_4m` | 222 | 14 .. 118 | 52 (23 .. 26): outside | 1.0 .. 64.0, 32.0 | 2, 2; 810 .. 1164 | 987 (675 .. 808): outside | 3.24e-5 (6.04e-5 .. 8.67e-5): outside | 1.68e-3 | `face:+x` at the tick 1896 |
+| `r12_control` | 37 | 72 .. 72 | 0 | 12.0 .. 61.2 (the probe walking +y) | - | - | - | - | `face:+y` at the tick 301 (294 .. 306): inside; every click at x = 72: inside |
+| `r24_control` | 37 | 84 .. 84 | 0 | 24.0 .. 64.6 | - | - | - | - | `face:+y` at the tick 301 (294 .. 306): inside; every click at x = 84: inside |
+
+Across the worlds: the ratio T(24) / T(12) = 1019 / 674 = 1.512 (1.82 ..
+2.18): outside; the equivalence on the period |T(`r24_4m`) - T(`r24`)| =
+32 (0 .. 8): outside; the equivalence on the clicks: 219 common birth
+ticks, 146 equal, the largest difference 22 Nodes (0 .. 1): outside (the
+two worlds agree to the Node on every common birth tick through 1144, the
+first 144 births, part by one Node at 1160 and by 22 at 1784). Every
+birth tick lies on the 8-interval grid (none read late). GAMEBOARD, a
+diagnostic: homes 35 (`r12`), 30, 29, 5, 5; the probe's contact with the
+detector line, one `contact` line in each source world (the contact rule
+of 2026-09-20, generic through the table: the occupant's entry for the
+body's family takes the axis component): `r12` at the tick 917 from (64,
+21) onto (64, 20), the wall's `measure` entry for `probe` taking p_y =
+-252 640 524 and the probe going on with p = (366 236 864, 0, 0); `r24` at
+1400 at x = 17, p_y = -656 713 714 taken; `r24_4m` at 1408 at x = 15, p_y
+= -2 086 494 034 taken; no click records it (a wall clicks a row's amount;
+the body's component taken is the host's line).
+
+**What is read and what is not, no number moved.** Standing under the
+line drive, DETECTOR: the controls' pace to the tick (the 61st step at
+296, the face click at 301 against the pin 300, inside: the line drive's
+pace on a heading is 640 / 3148 to the tick) and every control click at x
+= 60 + r. Not standing: the equivalence, closed at n = 9 under the
+per-axis drive (138 of 139 clicks to the Node, the same escape tick),
+reads outside here after the closest passes. The cause named, not proved:
+the reservoir R = 2^12 is 0.4 percent of M_total in `r24` and 0.1 percent
+in `r24_4m`, the fan pushes M_held and the wall divides by M_total (Q^2 S
+M_total + |p|_1 T_D), so the two worlds' accelerations differ by 0.3
+percent at every push, under either drive; at n = 9 the probe left the
+plane at 1239 with one Node of difference, and here the loops stay 1949
+and 1896 intervals, pass within 2.8 and 1.0 Nodes of the source, and the
+grain of the push at a close pass (one whole label of 64 on a line 6.4
+degrees from the next) turns the 0.3 percent into a different loop from
+the 145th birth on. The reading that would decide, named and not run,
+not proposed: a reservoir scaled with the held mass, so that nothing of
+the body enters the integers. The ratio 1.512, outside: the two loops
+are not similar figures (7.1 to 59.5 about 24.6 against 2.8 to 61.1
+about 32.4; `r12`'s loop reaches the detector line at 917 and `r24`'s
+the source's neighbourhood), each period a mean of spacings of a loop
+the contact re-made (the wall took the whole p_y at the contact, the
+push alone rebuilt it), so the scale symmetry of the 1 / r force is
+tested here on loops the grain and the line's contact break: not closed,
+and the n = 9 reading of 1.997 does not carry over. The periods (674
+against 371 and 1019 against 742, 82 and 37 percent above their
+circles), the amplitudes and omega^2 at a quarter period of a loop that
+is not a circle: not read as pinned, further out than at n = 9. Two
+causes named, as before: the grain of the push (series D's, above), and
+the line drive's own anisotropy, of the opposite sign to the per-axis
+drive's: the wall carries |p|_1 T_D, so on a diagonal heading the pace
+is |p| Q / (Q^2 S M + sqrt 2 |p| T_D) = 640 / (2048 + 1556) = 0.1776 at n
+= 10 against the axis's 0.2033, 12.6 percent slower at 45 degrees (the
+per-axis drive was 6.9 percent faster there); no circle exists at this
+grain under the line drive either, and the loop is slowest on its
+diagonals. The design's line at y = 20 lies inside the loops the law
+gives at S = 32 (the circle's lowest y was 36): the contact is a reading
+of the design, not of the law, and no pin is moved to say otherwise.
