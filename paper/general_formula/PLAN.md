@@ -3879,3 +3879,73 @@ written once in Section 2 before the six verbs' identities (section 8):
 the physical rules put into the cells and what each is as algebra, in
 the order of skills/paper-coordinator/SKILL.md's last section; about
 eight lines, counted in section 8's cost.
+
+### 8c. Outside, down to Inside, back Outside: the pattern of every phenomenon, and interference by formulas alone (the owner's word to the writer, 2026-09-22; for the Boss too)
+
+The owner: interference, one slit, two slits, all of it can be shown
+with formulas only. One begins Outside (the measurement), goes down to
+Inside to compute, and comes back Outside; every measurement is Outside,
+but to compute it one must enter Inside. So the paper shows what passes
+and what does not with formulas, and the register's readings are the
+check.
+
+The pattern, one paragraph per phenomenon in the reshaped Section 6 and
+Section 8: OUTSIDE (what a detector reads: a fringe, a dark port, a
+count) -> INSIDE (the rows, their phases, the merge, the evaluation) ->
+OUTSIDE (the click's counts over the births, compared with the reading).
+The worked example, interference, in the paper's own formulas:
+
+Two slits. Outside: a screen of pixels, each a detector; the reading is
+the count of clicks per pixel over W births. Inside: one record is born
+with two rows of amount 1, one per opening, m = 2 (Definition 2, B); each
+row's phase advances one turn per Link (F); at pixel x the two arrive
+with phases p_1(x), p_2(x), their difference Delta(x) the path
+difference times the turn; the merge (M) adds them as one element of
+Z[Z_N], and an equal pair with Delta = N / 2 cancels to no row
+(Definition 1); the click evaluates the sum at the root of unity and
+squares it (Definition 3): the offer at x is
+    R(x) = 512 ((C[p_1] + C[p_2])^2 + (S[p_1] + S[p_2])^2)
+         = 1024 (65536 + C[p_1] C[p_2] + S[p_1] S[p_2])   up to the tables' rounding,
+    i.e. R(x) proportional to 1 + cos Delta(x) = 2 cos^2 (Delta(x) / 2).
+Outside again: the ladder's rungs b_x = floor((2 N C_x + C_K) / (2 C_K))
+over the pixels, the click the pixel whose rung u falls under, and over
+N births with u uniform the count at x is b_x - b_(x-1), Born to 1 / N
+per cell (Theorem, Born's bound). What passes: the pixels with Delta near
+0, the rung wide. What does not pass: the pixels with Delta = N / 2, the
+rows cancelled, the offer 0, the rung of width 0, no click can land
+there. The fringe's period in pixels is the turn's and the geometry's
+(Young's spacing, recovered in the fan's limit); the visibility of two
+rows is K(Delta) / K(0) with K the Born kernel (the clause to restore in
+Section 6). The reading: series L2b, the bright pixels 19 to 51, the dark
+0 to 3, the visibility 0.966 in the clicks, the difference from 1 the
+fan's grain (row 2a); the formula gives the pattern, the run confirms it,
+the fan's grain is what the formula does not carry.
+
+One slit. Inside: one row per pixel reached, no pair, nothing cancels;
+R(x) = 1024 x 65536 at every pixel reached: Outside, a flat count within
+the fan's grain, everything passes, no dark pixel (the single opening's
+row 10, its run not made: the formula alone).
+
+Mach-Zehnder. Inside: the balanced splitter (1, 1) sends one row into
+two arms with m = 2, the mirrors turn by N / 4, the second splitter
+recombines: at one port the two phasors add, at the other they are N / 2
+apart and cancel; with the tables at N = 64 the offers are 1681 / 1682
+and 1 / 1682 (the rounding, not 1 and 0). Outside: the rungs give the
+bright port 64 of 64 clicks and the dark port 0 (row 2b, the visibility
+0.9988 of the offers): what passes and what does not, by formulas, the
+run the confirmation. The half turn and the quarter turn (0 / 64, 32 /
+32) follow by the same three lines.
+
+The same pattern, one paragraph each, for the pair (Outside: the CHSH
+counts; Inside: the joint weights J^2 of the two rotations; Outside: the
+rungs, S(N)), for Malus (the rotation table's 219 / 256 at 22.5
+degrees), for GHZ (the zeros of the joint weights), and for the clock
+in a crowd (Outside: the shift at two Nodes; Inside: the owed count and
+the age moment; Outside: the ratio 1.907 for 2.00, the fan's average).
+Each phenomenon then takes about six lines of formulas in place of a
+row of numbers, and Table 2's row becomes its confirmation (section 8).
+The cost joins section 8's count: about twenty lines for the four
+worked phenomena in place of the seven rows of Table 2 and Section 6's
+narrative on the two slits (the paragraph "Against the registered
+integers" and the L2b sentences, about twelve lines), net about eight,
+paid within section 8's plan.
