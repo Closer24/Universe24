@@ -2434,6 +2434,32 @@ CORRECTIONS = [
         "(row 3) (DETECTOR; read under the law before the generic entry of 2026-09-22, not readable under the law as it stands)",
         "(row 3) (DETECTOR; T's lamp read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
     ),
+    # The Boss's delta (09:10Z): the cuts (i) and (iii); not (ii).
+    (
+        "cut (i): Table 4's age-wall row, the short form",
+        "for the pin $0.9108$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+        "for the pin $0.9108$ (DETECTOR; T before the entry of 2026-09-22)",
+    ),
+    (
+        "cut (i): Table 4's spreading row, the short form",
+        "$1.0029$ for $1.0039$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+        "$1.0029$ for $1.0039$ (DETECTOR; T before the entry of 2026-09-22)",
+    ),
+    (
+        "cut (i): the families table's massive bodies, the short form",
+        "series G2's $z = 0.2636$ (DETECTOR; T read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+        "series G2's $z = 0.2636$ (DETECTOR; T before the entry of 2026-09-22)",
+    ),
+    (
+        "cut (i): the families table's sources, the short form",
+        "(row 3) (DETECTOR; T's lamp read before the generic entry of 2026-09-22, not readable under the law as it stands, being re-read in the weak field)",
+        "(row 3) (DETECTOR; T's lamp before the entry of 2026-09-22)",
+    ),
+    (
+        "cut (iii): the 24 transitions with the date once per group",
+        "\\paragraph{The transition from ordinary physics to modern algebra, dated.} {\\footnotesize The twenty-four steps of \\cite{history}, each a thing of physics becoming an object of the law: (1) 2026-09-17, the shared quantum resource deleted, locality without exception; (2) 09-17, the amplitude a phase and a conserved content, Born's rule a declared table; (3) 09-17, a force a catalog entry read at a meeting; (4) 09-18, the Born table computed from $\\Nphi$, a clock content, a Node its six Ports; (5) 09-19, the law of events, everything from vector operations; (6) 09-19, a quantum an integer row on the record, the collision a permutation, the click the one one-way border, an open face a detector; (7) 09-19, the tables from the keys, a detector's reading the moments of order $0$, $1$, $2$, the push one bilinear form, charge a rational per unit of content; (8) 09-19, $E = hf$ the cost of a release; (9) 09-20, a force a column with a sign and a lifetime, the coupling a signed inner product; (10) 09-20, two kinds of readings, an emitter in and a detector out; (11) 09-20, the masses and charges the initialisation, the compact quantised, the scale free; (12) 09-20, the amplitude law, a quantum a record, the click chosen by the wheel, the wave the histogram of clicks; (13) 09-20, every count an accumulator on its reader's own record; (14) 09-20 to 21, the Doppler the count of rows a mover crosses; (15) 09-20, the fan a width of the law, the exact phase at the click, the pins detector readings only; (16) 09-21, the whole law one vector operation, the six verbs, the three tests; (17) 09-21, the record an element of $\\Z[\\Z_{\\Nphi}]$, the weight one bilinear form, Born's rule the unique positive quadratic form, the complex numbers leave; (18) 09-21, the lattice the translation group, the $48$ with the hand, $c$ the norm of the flight operator; (19) 09-21, the readings by type, a formula gives and a run proves, the dictionary; (20) 09-21, the Lorentz factor a root refused as a seventh verb, the covariant readings kept beside the law; (21) 09-21 to 22, the clock's word the age moment, Newton and Poisson after a detector; (22) 09-22, a detector's clock a member of the age wall at coefficient $1$; (23) 09-22, the click theorem, a click the passage of information Node to Node, the click families' transformations the Lorentz group up to scale; (24) 09-22, the framing, Inside and Outside, matches nature and never is nature.}",
+        "\\paragraph{The transition from ordinary physics to modern algebra, dated.} {\\footnotesize The twenty-four steps of \\cite{history}, each a thing of physics becoming an object of the law. 2026-09-17: (1) the shared quantum resource deleted, locality without exception; (2) the amplitude a phase and a conserved content, Born's rule a declared table; (3) a force a catalog entry read at a meeting. 09-18: (4) the Born table computed from $\\Nphi$, a clock content, a Node its six Ports. 09-19: (5) the law of events, everything from vector operations; (6) a quantum an integer row on the record, the collision a permutation, the click the one one-way border, an open face a detector; (7) the tables from the keys, a detector's reading the moments of order $0$, $1$, $2$, the push one bilinear form, charge a rational per unit of content; (8) $E = hf$ the cost of a release. 09-20: (9) a force a column with a sign and a lifetime, the coupling a signed inner product; (10) two kinds of readings, an emitter in and a detector out; (11) the masses and charges the initialisation, the compact quantised, the scale free; (12) the amplitude law, a quantum a record, the click chosen by the wheel, the wave the histogram of clicks; (13) every count an accumulator on its reader's own record; (14, to 09-21) the Doppler the count of rows a mover crosses; (15) the fan a width of the law, the exact phase at the click, the pins detector readings only. 09-21: (16) the whole law one vector operation, the six verbs, the three tests; (17) the record an element of $\\Z[\\Z_{\\Nphi}]$, the weight one bilinear form, Born's rule the unique positive quadratic form, the complex numbers leave; (18) the lattice the translation group, the $48$ with the hand, $c$ the norm of the flight operator; (19) the readings by type, a formula gives and a run proves, the dictionary; (20) the Lorentz factor a root refused as a seventh verb, the covariant readings kept beside the law; (21, to 09-22) the clock's word the age moment, Newton and Poisson after a detector. 09-22: (22) a detector's clock a member of the age wall at coefficient $1$; (23) the click theorem, a click the passage of information Node to Node, the click families' transformations the Lorentz group up to scale; (24) the framing, Inside and Outside, matches nature and never is nature.}",
+    ),
 ]
 
 

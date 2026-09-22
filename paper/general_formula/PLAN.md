@@ -4183,3 +4183,13 @@ re-read in the weak field") where 1.907 is quoted elsewhere (Section
 5's opening, the chains paragraph, Table 4's two rows, item (v), the
 platform, the families table). The cuts (a) and (c) stand. The count:
 36 pages.
+
+## Applied (2026-09-22, the Boss's delta of 09:10Z, record 873): the cuts (i) and (iii); NUMBERS.md's series T rows marked
+
+The delta's part (1) and (2) were already at aec5c32f (the status word
+on series T only, with the weak-field words). Now: (i) the short form
+"(before the entry of 2026-09-22)" in Table 4's two rows and the
+families table's two rows, the full words kept in Section 5 and Table
+3's row 12, the medium form in the prose; (iii) the 24 transitions
+with the date once per group; not (ii). NUMBERS.md's rows 147, 157 and
+169 (series T) carry the status word. The count: 36 pages.
