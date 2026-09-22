@@ -3876,6 +3876,16 @@ CORRECTIONS = [
         "injective on $Q$ by Theorem~\\ref{th:isometry}; $R$ is injective",
         "injective on $Q$ by Theorem~\\ref{th:isometry} under the joint condition $B^{\\mathsf H} B = A I$; $R$ is injective",
     ),
+    (
+        "row 14's verdict cell, the reviewer's look X (PR #930): the FAIL against a confining push is the escape, the launch pace 0.34 c in the cell (DIAGNOSIS.md section 5)",
+        "FAIL as read under the one constant ($1.677$ against $2.00 \\pm 0.18$), the law's: no closed orbit on the plane, the face clicks the reading; the ratio not compared with nature",
+        "FAIL as read under the one constant ($1.677$ against $2.00 \\pm 0.18$), the law's at the launch pace $0.34\\,c$: the probes left a confining push and no loop closed, the face clicks the reading; the ratio not compared with nature",
+    ),
+    (
+        "row 14: the mean radii are CONVERSION (a length made from the clicks' places, DIAGNOSIS.md 3.3), not DETECTOR (look X, optional, taken)",
+        "their mean radii $24.3$ and $37.6$, DETECTOR, so",
+        "their mean radii $24.3$ and $37.6$, CONVERSION, so",
+    ),
 ]
 
 

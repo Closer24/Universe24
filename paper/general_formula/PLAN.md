@@ -5053,3 +5053,14 @@ verbatim. (5) Theorem 3 with the joint-table condition B^H B = A I and
 Appendix A's sentence with the zero-turn table as the witness (issue
 #557); the proof's line names the condition; no claim about the paper's
 worlds changes. No physics changed, no pin moved. 51 pages.
+
+## Applied (2026-09-22, the Boss's order of 19:20Z): the reviewer's look X of PR #930, one line and two words
+
+Row 14's verdict cell: the FAIL's ground named as the reviewer gave it,
+the law's at the launch pace 0.34 c, the probes left a confining push
+and no loop closed, the face clicks the reading; the ratio not compared
+with nature. The mean radii 24.3 and 37.6 labelled CONVERSION (a length
+made from the clicks' places, the diagnosis's 3.3), not DETECTOR; the
+ledger's page-count rows HOST from here on. Nothing else; the #891 merge
+SHA and the orbitread bibitem rename wait for the later one-line commit.
+No physics, no pin moved. 51 pages.
