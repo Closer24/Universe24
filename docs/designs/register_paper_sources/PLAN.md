@@ -238,6 +238,80 @@ What moves where, one line each:
 | `claude/paper-owner-review-five` at `0406382f3700469b5459b9494ce8396e568f8b20` (the paper) | `paper/general_formula/*` | nothing here touches `paper/` |
 | `light-bending-algebra` (PR #821) at `a7615254bb8fd5de4806980c5e7739f12a880b95`; `atom-algebra` (PR #823) at `c7ae2269b0a4e2763979519f7f25f063951f1e44` | `docs/README.md` (one index row each), their design directories | `docs/README.md` is edited here (index rows removed); the merge of either branch adds a row, no overlap in lines |
 
+## D2. Step 4: the six verbs named in the code (the owner's word, records 920 and 940; after PR #855 and PR #854 merge)
+
+The owner's word (2026-09-22, record 940, to this session): every algebraic
+operation at a Node by the rules of modern algebra, the clicks too, clear
+and simple in the code; the Boss's order (about 12:50Z): the plan written
+here now, the work after the merge SHAs of `generic-bending` (PR #855) and
+the flow-link ring (PR #854), about a day, no run, every registered digest
+the proof. The audit it rests on is [NODE_ALGEBRA.md](NODE_ALGEBRA.md).
+
+**The rule of the step.** No arithmetic changes: every integer the engine
+computes is computed by the same operations in the same order, so every
+registered digest (the gate set's `digests`, every `expectations.json`, the
+paper's pinning tests) is byte for byte the proof; the local integer
+operation contract and LOCALITY-1 untouched; no rule's identity renamed; a
+verb gets a name, a place and a docstring, nothing else.
+
+**D2.1 The six verbs as named primitives** (`core/integer.py`, the one place;
+their bulk numpy forms beside them in `events/verbs.py`, the same names,
+the same docstrings, one file):
+
+| Verb | The primitive today | Its name after | The bulk form today |
+| --- | --- | --- | --- |
+| (T) the translation of an accumulator by its rate | the `s + r` inside `by_drive` and `by_clock` | `translate(state, rate)` | `by_drive_rows`, `by_clock_rows` (`nature_beam.py:569-620`), the phase and age lines of `_walk` |
+| (D) the Euclidean division with the remainder kept, and the comparison | `by_drive`, `by_clock`, `apportion_whole`, the rungs `cell_of` | `divide(state, wall, at_most)` (the carry is the event), `compare(...)` for the ladders | the same bulk rows; `rungs`, `cell_of`, `node_choice` in `amplitude.py` |
+| (B) the bilinear form with a declared matrix | `signed_inner`, the moments' sums, `push_form` (`nature_beam.py:2932`), `Layer.gram_form` | `bilinear(matrix, vector)` | `read_arrivals`, `Moments`, `CrowdMoments`, `born_recoil` |
+| (G) the group-ring addition in Z[Z_N] | the merge's sum with the cancel (`_merge_rows`, `nature_beam.py:1377-1560`) | `ring_add(rows)` | the same |
+| (P) the permutation | the collision table's application (`_collide`), the gate (`apply_gate`), the arc permutation of the meeting, the apportioning's tie | `permute(table, state)` | the same |
+| (E) the evaluation of the tables at zeta_N and the norm | `circle_vectors`, `coherent_pointer`, `Layer.evaluate`, the face click's reading | `evaluate(phase)` and `norm(...)` (the one quadratic step) | `pointer_phases`, `Layer.cells` |
+
+**D2.2 Each step of the interval names its verbs.** The six step functions of
+`nature_beam()` (`_walk`, `_collide`, `_measure`, `_release`, `_border`,
+`_merge`) and the frame (`engine.py: _frame_all`, `_move`, `step`) get a
+first docstring line of the form "(T) then (D): ..." and call the named
+forms; the comment that names a verb today becomes the call.
+
+**D2.3 The click's plan split by verb.** `_family_plan` (587 lines) and
+`_apply_plan` (458 lines) become one function per verb, the bulk numpy kept
+and the order of the record lines kept: the window and the threshold (D,
+one function each), the parity filter on the hand (D), the push (B, through
+`push_form`), the share (D, `share_of`), the gate (P), the record lines apart
+from the arithmetic; `FamilyPlan` stays the plan's record. The ledger in
+`amplitude.py` is already by verb (`evaluate`, `gram_form`, `cells`, `rungs`,
+`cell_of`) and only gains the names.
+
+**D2.4 The predicate written as one.** `amplitude.common_denominator`'s
+perfect-square test becomes `is_square(n)` in `core/integer.py` (the root
+squared back and compared, as today), so no root stands in the click's
+path by name; `world._same_class` the same.
+
+**D2.5 The load-time roundings listed once, and the gate rule.** LAW.md
+section 6's list completed (`E'_D` of the flight triple, `E'` at load under
+`covariant_readings`, `T_HEADING`); the algebra gate's list of roots
+(`tests/test_integer_algebra.py`, ALLOWED_ROOTS) reduced to those functions
+plus the modules that carry a seventh-verb identity (`meeting.py` under its
+key; lorentz-v1 if built), so that a root anywhere else in `events/` fails.
+
+**D2.6 The pushed row's wall under the generic bending.** Not this step's:
+the physicist chooses in his fold of PR #855 between the table read (the
+flight table's `T_D` on the primitive direction nearest **P**) and the
+comparison ladder (`(R^2 + 3 |P|^2) Q^2` against `T^2` for the candidate T),
+the owner's word of record 920 (no root in a rule) and the Boss's routing
+(record 940); D2.5's gate rule is turned on after his fold lands, since the
+branch as it stands would fail it.
+
+**The order and the proof.** D2.1 and D2.4 first (the primitives and the
+predicate, `core/integer.py` and `events/verbs.py`, every consumer
+re-pointed; `check.py --base origin/main`, the gate set's digests), then
+D2.2 (docstrings and calls), then D2.3 (the click's plan, the largest
+diff, `tests/test_amplitude_click.py` part (d) and the paper's pinning
+tests the proof), then D2.5. One commit each, the six lines after each.
+The host estimate: about a day after the SHAs; no run; the danger: none
+to the physics (no arithmetic moves), the risk a wrong re-pointing, which
+the digests catch at the first check.
+
 ## E. What is deleted now, in order (step 2)
 
 1. Worlds and experiments: `two_stars/` (with `tests/test_two_stars.py`, `docs/designs/two_stars/`, the TEST_EXPECTATIONS section, the index rows, `test_register_map.py` re-pointed); `masses/` (with `docs/designs/masses/`); `buildup/` (with `tools/buildup_readings.py`, `tests/test_buildup_readings.py`); the EXPERIMENTS.md entry of A10 at a low rate moved to section D in one line; VALIDATION.md's links made plain.
