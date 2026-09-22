@@ -4250,3 +4250,16 @@ square's decisive reading (form B), the moving detector's one-way ratio
 and the velocity's quantum, all NOT MADE. The paper takes each new
 number by kind on the Boss's SHA, one commit per batch; a PASS or FAIL
 that changes under a stated criterion changes in the paper's words.
+
+## Applied (2026-09-22, the Boss's word of 09:35Z under record 852): the two condensations for the last page
+
+From the two places the Boss named and no other: (1) the platform's
+simulator road, the series named once each (L, Q, X, T; G, G2, S; D3),
+T's four worlds' status kept, no sentence of claim removed; (2) the
+frame paragraph's detector-clock sentences condensed to their claim,
+the click theorem's sentence and the owner's framing sentence kept word
+for word. No reading, kind, number, verdict, citation or claim removed;
+the seven confirmations and the GHZ clause as they are. The count:
+37 pages (the owner's words on his points 2 and 4 had added the
+click's two parts and the algebraic family at f7ac7856, one page's
+last lines, before this); stopped here as ordered.
