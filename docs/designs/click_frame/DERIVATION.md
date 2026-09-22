@@ -955,12 +955,12 @@ law's being the FAIL row of record 270. The last three rows are part
 | --- | --- | --- | --- | --- |
 | the exact square `W = E'_0^2 + 3` **p** `.` **p** on the record and `E'` the whole root kept by comparisons (17.6 M3; 24.1 row 38); on the law no square, the wall `Q S M + p` linear (section 5) | four Outside readings (the paper's "the step beneath and the step above"): (1) `E^2 = E_0^2 + p^2 c^2`, which is W times `c^4` in the whole unit (`E = c^2 E'`, exact on the identity's integers, the factor 3 entering as `1 / c^2` when p is counted per Link); (2) the gate `E'_0 / E'` as `1 / gamma`, the detector's own rate (exact on the identity's integers; the law's `r = 1`), read through the two lamps of section 4; (3) the drive's fraction `p / E'` as the click's velocity, Nodes apart over counts apart (to second order: within `m^2 / 3` of the walk's group velocity, the factor 3 in `beta = sqrt 3 p / E'`); (4) the two Doppler factors `k_BA = gamma (1 + beta)` and `k_AB = sqrt((1 + beta) / (1 - beta))`, the step above read at two detectors (exact in the k-calculus within `1 / T`; the law's `1 + v` and `1 / (1 - v)`); with them the energy a click reads of the record's rows, `E_read = h f_read = (1 + z) E_emit` | (A1), (A2) and the Planck map: `E'^2 - E'_0^2 = 3 p . p` is the walk's `omega^2 - kappa^2 = m^2` times `hbar^2` through the unit chain `E^2 = E_0^2 + c^2 p^2` (p per Link), `E' = E / c^2`, the 3 being `1 / c^2 = d` (part (6) (1) (c)); `r = E'_0 / E' = sqrt(1 - beta^2)` exact on the identity's integers, `sqrt(1 - v^2) (1 - kappa^2 / 6)` in the group velocity: up to `m^2 v^2`, the identity's pace within `m^2 / 3` of the clicks' velocity (the group velocity); the law's `r = 1` rung 1 | `E' = E'_0 / r`; `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558; the design's `70.9 +- 1` and `125.2 +- 1`, the derived 70 and 124, 17.6 M2); r itself NOT READ as a measurement (section 4); J4's ratio 1 under the law pinned, not run |
 | the pace `abs(p_a) / (Q S M + abs(p_a))` per axis (P9, 4.4) and the drive's schedule `by_drive(drive, p, D, at_most = 1)` (`step_axis`); under the identity `p / E'` Links per interval (17.6 M1) | the velocity `v`: Nodes apart over counts apart between two clicks of neighbouring detectors (section 1); `beta = sqrt 3 p / E'` in units of c | (A1): one Node per interval at most, the count's ratio the pace within `1 / T` of the count and `1 / T_D` of the pace; rung 1; the identity's `p / E'` is the walk's group velocity only up to the relative `m^2 / 3` | law: `p = E'_0 v / (1 - v)` exact; identity: as above | series S: beta 0.3040 at the star's declared momentum under the identity's pace, 0.2674 under the law's (GAMEBOARD, the drive's pace; the detector reads only `1 + z` below); D3's controls at their pace to the tick (DETECTOR, `x = 60 + r` on every click) |
-| the phase per age `n / d` steps of the circle N per interval, `omega = 2 pi n / (d N)`, the row's energy `E = h_q n / d = h_A f = hbar omega` with `hbar = h_A / (2 pi)` and its momentum `p` with `lambda = h_A / p` (6.4, 24.1 row 25, 23.2); the rest pair `E_0 = h_q n_0 / d_0` | the frequency a detector counts, `1 + z` (the inverse slope of the birth ordinal against the click's tick, series T's method): `k_BA = (1 + v) / r` for a lamp on the moving record, `k_AB = r / (1 - v)` for a lamp at rest counted by the moving record, the round trip `(1 + v) / (1 - v)` | (A1) and the count: the k-calculus of section 2, rung 1 within `1 / T`; the law `1 + v` and `1 / (1 - v)`, the identity `gamma (1 + beta)` and `sqrt((1 + beta) / (1 - beta))`; the round trip r-free under every r (section 0 (b)) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)`; r from `k_AB` and `k_BA` together, `k_BA / k_AB = (1 - v^2) / r^2` | NATURE 4b: `z = 0.2636` at beta 0.2674 under the law (DETECTOR, FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967, the pin `0.369 +- 0.003` (DETECTOR, PASS in its domain); `k_AB` NOT READ, the missing direction (section 4) |
+| the phase per age, the row's declared pair `[n_phi, d_phi]` in steps of the circle N per interval, `omega = 2 pi n_phi / (d_phi N)`; and, separately, the release's identity `E = h_q s` in the lamp's turn s on the K pair (6.4; the click's content `h_q s`), the two equal only by declaration and in no registered light world (content = K, s = 1 in every lamp entry on main); where they coincide `E = h_A f = hbar omega` with `hbar = h_A / (2 pi)`, the momentum `p` with `lambda = h_A / p` (24.1 row 25, 23.2); the rest pair `E_0 = h_q n_0 / d_0` by the same declaration | the frequency a detector counts, `1 + z` (the inverse slope of the birth ordinal against the click's tick, series T's method): `k_BA = (1 + v) / r` for a lamp on the moving record, `k_AB = r / (1 - v)` for a lamp at rest counted by the moving record, the round trip `(1 + v) / (1 - v)` | (A1) and the count: the k-calculus of section 2, rung 1 within `1 / T`; the law `1 + v` and `1 / (1 - v)`, the identity `gamma (1 + beta)` and `sqrt((1 + beta) / (1 - beta))`; the round trip r-free under every r (section 0 (b)) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)`; r from `k_AB` and `k_BA` together, `k_BA / k_AB = (1 - v^2) / r^2` | NATURE 4b: `z = 0.2636` at beta 0.2674 under the law (DETECTOR, FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967, the pin `0.369 +- 0.003` (DETECTOR, PASS in its domain); `k_AB` NOT READ, the missing direction (section 4) |
 | the age wall: the crowd `a_tau` (the sum of amount times age of the rays at the Node, record 394) stretching the self-creation's wall at coefficient 1, `rate x d` against `wall x (d + a_tau n)` (`core.integer.age_wall`; `AGE_WALL_SET`), the rate `1 / (1 + a_tau n / d)` | the clock rate in a crowd read by a pulse and its return (record 768): the ratio of two lamps' `1 + z` at one detector, `(1 + k_2) / (1 + k_1)`, `k = a_tau n / d`; the detector's own `k_D` cancelling in the ratio when the detector's crowd is the same in the two readings (series T); not in series X, whose ratios are host-tick readings | (A1) and the count: the owed intervals are counts the pulses carry; rung 1 within the count's grain | `k = (1 + z) / (1 + z_0) - 1` against a control lamp | series T: 2.6517 at 3 and 4.1500 at 6 Links, the ratio 1.907 against the pin `1.909 +- 0.05` (DETECTOR, the age word; NATURE 12); series X: the controls 1.0000 exactly (DETECTOR) |
 | the flight table `T_D = isqrt(3 abs(D)^2 Q^2)` per direction, the pace `N_l abs(D)_2 / T_D` (2.7, 13.2; rem:nodispersion) | the arrival count: the detector's own count at a row's arrival from L Links away (a detector with a body; a face set has no count of its own, record 768, and its tick is GAMEBOARD), `sqrt 3` intervals per Link within `1 / T_D`, and c itself as the one pace every family shares (`c = 1 / sqrt 3` Links per interval, input 9; `32 / 55` on a heading) | (A1): one Node per interval on the Manhattan lattice, the Euclidean pace its shell mean; rung 1 for the count (within one interval), rung 2 for the isotropy | `L` from the count and the pace, within one Link | series S: the products' face clicks at 369 and 345 (DETECTOR; the pins 367 and 345 within two ticks; the decay tick 70 and 124 derived back by the flight table); series K: the bending 0.000 (DETECTOR, the rows blind, under the law without the key; optical-v1's worlds read -1.79 to -4.36 pixels, the register's optical-v1 table) |
 | the click's bilinear form `f^T G f`, the one square the law forms, at the click alone over rows that have ended (6.5, 6.7; input 12) | the click's energy and the Born form: the count of clicks over many records at one Node, the probability `abs(sum of amount x exp(i phi))^2` normalised by the record's total, within `1 / (2 N)` (23.2) | (A2) at the click: the square of the summed amplitudes; rung 1 (the click's form) | none: the amount a and the phase f of one record never pass Outside singly | the two-slit fringes and Malus (24.3 row 4; DETECTOR); not a Lorentz line |
 | the crowd's spreading over the six Ports: K beams over a shell of `N(r)` Nodes, the presence `q tau_L / (4 pi r^2)` and the age moment `A = q tau_L / (4 pi c r)` in the shell mean (5.1; the paper's `eq:fields`; section 8 (M)) | the clock's field Outside: the ratio of two clocks' shifts at two distances (2.00 for the potential's form), and a shell's flat interior against its rising flux | (A1) and the count, on the age wall's row above; rung 2 (the shell mean, `N(r) -> 4 pi r^2`), the finite-r ripple MEASURED ONLY; the constant `delta k = (n S / d) (g h / c^2)` (section 8 (e)), the Outside image of the two Newton rows' Inside declarations n, S, d, equal to nature's iff `n S = d`, a condition on the declaration and not a meeting point | `r` from the ratio of shifts, in the limit | series T: 1.907 (DETECTOR); series X: inside `k(2) / k(4) = 1.0029` against 1.003917 (flat, MET; the lattice interior's own ripple `+- 2.4` percent by the map, larger than the tolerance 0.02), the presence word 0.8390 (not flat), outside `k(12) / k(4) = 0.6285` against 0.618270 (DETECTOR, host-tick readings; 0.9994 and 0.5134 in the detector's own clock, the convention the owner's) |
-| the push `p += -M_A V` from the arriving rays' label flow (`push_form`'s gravity column; 3.3) with the drive above, in the shell mean `<V> -> q N_l / (4 pi r^2)` | the fall: a lamp on the probe read at a line of one-Node detectors, the acceleration as the second difference of the clicks' x, `a = -G M_B / r^2`, `G = K eta / (4 pi N_w)`; the equivalence principle (the same clicks for four times the held mass) | (A1) and the count: the births' Nodes and ticks; the inverse square rung 2, the equivalence rung 1, exact in the gravity column and the drive (`p = M_A sum V` exactly, the step's divisor scaling with `M_A`, the same whole parts and remainders at every momentum) | `G M_B` from `a r^2` in the limit | series D3: 138 of 139 common birth ticks at the same Node with the held mass four times, one Node in one birth, cause not named (the lamp's recoil-cancelling pair is not it), `abs(dT) = 0` (DETECTOR); the inverse square's decisive reading NOT MADE; series C's `1 / r` on the plane GAMEBOARD |
+| the push `p += -M_A V` from the arriving rays' label flow (`push_form`'s gravity column; 3.3) with the drive above, in the shell mean `<V> -> q N_l / (4 pi r^2)` | the fall: a lamp on the probe read at a line of one-Node detectors, the acceleration as the second difference of the clicks' x, `a = -G M_B / r^2`, `G = K eta / (4 pi N_w)`; the equivalence principle (the same clicks for four times the held mass); the line's one-Node detectors carry no body, so they have no count of their own (record 768): the line's ticks are GAMEBOARD, and the acceleration as the second difference of the clicks' x over them is a GameBoard reading until a body detector counts, while the births' Nodes stay DETECTOR | (A1) and the count: the births' Nodes (DETECTOR) and the line's ticks (GAMEBOARD, no body at the line); the inverse square rung 2, the equivalence rung 1, exact in the gravity column and the drive (`p = M_A sum V` exactly, the step's divisor scaling with `M_A`, the same whole parts and remainders at every momentum) | `G M_B` from `a r^2` in the limit | series D3: 138 of 139 common birth ticks at the same Node with the held mass four times, one Node in one birth, cause not named (the lamp's recoil-cancelling pair is not it), `abs(dT) = 0` (DETECTOR); the inverse square's decisive reading NOT MADE; series C's `1 / r` on the plane GAMEBOARD |
 | the circular momentum under the push and the drive, `v^2 / r = G M_B / r^2` (24.1 row 58) | Kepler's period read at the detector line, `T = 2 pi r^(3/2) / sqrt(G M_B)` in space, `T ~ r` on the plane, `T(24) / T(12) = 2` (the `1 / r` force's scale symmetry) | (A1) and the count: the recurrence of the lamp's births at one Node; rung 2 (`v << c`, the shell mean), `main`'s drive's `1 / (1 - v / c)` at first order (form B alike; form B on a branch) | `G M_B` from `T` and `r` | series D3: `T(24) / T(12) = 1.997` in 1.82 to 2.18 (DETECTOR, inside; the loops not similar figures, not decisive); the periods 19 percent above their circles (DETECTOR, outside, the plane's grain) |
 
 Two facts of the table for the owner. First, every Outside formula is a
@@ -1272,13 +1272,13 @@ click), verbs 3 and 5 (the addition in `Z[Z_N]` and the evaluation at
 verb 4 (the permutation, at a collision, none in these worlds):
 
     hop:    acc_drive <- acc_drive + rate;   e <- sign(acc_drive) min(floor(abs(acc_drive) / wall), 1);   acc_drive <- acc_drive - e wall;   x <- x + e D_hat
-            a row:  rate = N_l abs(D)_1, wall = T_D   (the flight table, P9; c = N_l abs(D)_2 / T_D);   a body:  rate = abs(p_a), wall = N_l N_w M + abs(p_a) per axis  (the pace, P9)
-    phase:  f <- x^(phi(tau)) f,   phi(tau) = floor((tau + 1) n / d) - floor(tau n / d)   (the turn per interval of age; a row's E = h_q n / d)
+            a row:  rate = 2 S_1 N_l, wall = 2 T_D, the accumulator started at T_D (the half-wall start), so the Links by the age are m(tau) = floor((2 tau S_1 N_l + T_D) / (2 T_D)), S_1 = abs(D)_1   (the flight table, P9, walk_step; c = N_l abs(D)_2 / T_D);   a body:  rate = abs(p_a), wall = N_l N_w M + abs(p_a) per axis  (the pace, P9)
+    phase:  f <- x^(phi(tau)) f,   phi(tau) = floor((tau + 1) n / d) - floor(tau n / d)   (the turn per interval of age, the row's declared pair [n_phi, d_phi]; the release's identity is E = h_q s in the lamp's turn s on the K pair, 6.4, the click's content h_q s; the two equal only by declaration, in no registered light world: content = K, s = 1 in every lamp entry on main)
     push:   acc_push <- acc_push + M_A V_c;   p <- p + sign(acc_push) floor(abs(acc_push) / Lambda_c^2) (the gravity column: Lambda = 1, p <- p - M_A V exactly)
     crowd:  (rate, wall) of the owed count <- (rate d, wall (d + a_tau n)),   a_tau = sum over the rays present of amount x age   (the age wall, coefficient 1)
     split (A2, at a splitter or a setting):   f -> (a_i x^(t_i) f) on the output d_i,   A = sum a_i^2;   a setting: the label pair by U_s
     sum (rows at one Node):   f <- f + g in Z[Z_N], x^(N / 2) = -1 (the cancel)
-    click (a record whose rows have all ended):   R_k = abs(ev f_k)^2 per cell,   rung_k = floor((2 N C_k + C_K) / (2 C_K)),   the cell with rung_(k - 1) <= u < rung_k;   the record deleted
+    click (a record whose rows have all ended):   R_k = abs(ev f_k)^2 per cell,   rung_k = floor((2 W C_k + C_K) / (2 C_K)) with W the wheel's modulus (N under the wheel [1, N]; L2b's wheel is [2531, 4096]),   the cell with rung_(k - 1) <= u < rung_k;   the record deleted
     age:    tau <- tau + 1
 
 Every line is one of the six verbs on bounded integers, and `W = E'_0^2
@@ -1344,10 +1344,14 @@ times nothing by its tick, which is GAMEBOARD and never read (section
 1); what it times is a pulse and its return (record 768, the owner's
 definition of the clock), and the least such is one round trip to its
 neighbour: two intervals in the hop frame (one Node each way at c = 1),
-and on the Beam Law's lattice `2 T_D / (N_l abs(D)_1)` per Link in the
-mean, between 2 and 4 intervals on a heading by the flight
-accumulator's remainder (`T_h / N_l = 110 / 64 = 1.72` per Link), exactly
-2 on the body diagonal. (iii) A moving record hops one Node at most per
+and on the Beam Law's lattice exactly two intervals on every line as
+well, since a fresh row's first Link falls at its first interval by the
+half-wall start (`m(1) = floor((2 S_1 N_l + T_D) / (2 T_D)) = 1` on the
+heading, the face diagonal and the body diagonal at Q = 64, checked
+here); a single row's consecutive Links are spaced `T_D / (S_1 N_l)` in
+the mean, 1.72 on a heading (its Links at the intervals 1, 3, 5, 7, 8,
+10), 1.22 on a face diagonal, 1 on the body diagonal, so an earlier "2
+to 4 intervals" described one row's Links and not the pulse's return. (iii) A moving record hops one Node at most per
 interval (A1, the hop line of (I) with its cap 1), and between two hops
 its detector counts k intervals stretched by the crowd, so a velocity
 read by clicks is `1 / k` Nodes per count, a ratio of two integers (M3,
@@ -1387,8 +1391,10 @@ same Node, DETECTOR); series S's face clicks at 369 and 345 are single
 arrival ticks at a face set (DETECTOR), not a spacing; the muon's 70 and
 124 are the gate's own count at the 64th self-creation (GAMEBOARD, the
 `become` lines), not a click spacing; series W's first-click ages (815,
-876, 876, as the Boss cites them) are the click line's `age` field, the
-host's diagnostic record (record 398), GAMEBOARD, not a least spacing;
+876, 876; record 754) are the row's own age on its record read at the
+click, DETECTOR ("the row's age on its first click, 815, 876, 876
+exactly", the ticks 955, 1016, 1016 GAMEBOARD), a first-arrival age and
+not a least spacing;
 the least spacing of two clicks of one MOVING record at one detector
 (the count between a transponding record's re-emissions) is NOT READ,
 section 4's missing world.
@@ -1583,11 +1589,15 @@ computed from clicks by addition, subtraction and division of counts;
 (ii) every Inside quantity is an integer computed from the world file
 by the six verbs, so every relation among Inside quantities is an
 identity of Z; (iii) the map from (ii) to (i) is the composite of (2),
-whose first factor is a ring homomorphism and whose last is a ratio of
+whose first factor is a ring homomorphism at the exact root (on the
+engine within the tables' rounding) and whose last is a ratio of
 counts, so every identity of (ii) that survives the kernel of (2) (the
 cancel) and the invariances of R (the phase's origin and orientation)
 is carried to an identity of Q among the quantities of (i), exact up
-to the rung's grain `1 / N` and the accumulators' remainders `1 / T`;
+to three grains: the rung's `1 / N`, the accumulators' remainders `1 /
+T`, and the tables' rounding at the scale 256 (one part in 256 per row
+and larger near a cancel, the engine's evaluation Z-linear and not a
+homomorphism, section 9 (2) (a) and (b));
 (iv) the maps between two detector families that preserve the
 conversion form the Lorentz group up to scale (section 0), so the
 identities of (iii) are the same in every family up to that group; and
@@ -1607,8 +1617,9 @@ triple (the set, `n_D`, the cell), `n_D` an integer count that advances
 by one per interval and is stretched by the age wall's integer count;
 a velocity is Nodes apart over counts apart, a rate a ratio of two
 counts, a Doppler factor a ratio of counts over T, a probability a
-count of clicks over the record's total, an energy `h_q` times a
-counted `n / d`; no Outside quantity is anything else (the closing fact
+count of clicks over the record's total, an energy `h_q s`, the lamp's
+turn s counted at the click (the row's phase per age a separate
+declaration, 6.4); no Outside quantity is anything else (the closing fact
 of section 7's table), and Q is closed under these operations. (ii) is
 P1 to P4 with the six verbs: the state is bounded integers, the update
 is the six operations on them, and the world file supplies integers;
@@ -1616,14 +1627,16 @@ so any equation among Inside quantities (the invariant W, the walls,
 the age moment, the flow's shell mean at a fixed lattice) is a
 polynomial identity in Z, or a limit of such identities as the lattice
 grows (rung 2), never a fitted relation. (iii): `ev` is a ring
-homomorphism (section 9 (2) (a)), so an identity `P(f, g, ...) = 0` in
+homomorphism at the exact root, on the engine within the tables'
+rounding (section 9 (2) (a)), so an identity `P(f, g, ...) = 0` in
 `Z[Z_N]` holds in `Z[zeta_N]` after ev, and an identity in `Z[zeta_N]`
 that is invariant under `f -> x f` and `f -> f*` holds for R = `abs(ev
 f)^2` (section 9 (2) (b)); the rung carries R's ratios to counts within
 `1 / N` (section 9 (2) (c)); the schedule's side carries the drive's
 integers to Nodes apart over counts apart within `1 / T` (section 9 (2)
 (d)). Composing, an identity Inside becomes an identity among Outside's
-rationals up to the two grains, which is the only sense in which
+rationals up to the three grains (the rung's, the accumulators', the
+tables'), which is the only sense in which
 "exact" is ever claimed here (rung 1). (iv) is section 0's theorem (i)
 with M3. (v): by `th:gleason`, the hypotheses on the reading (the phase
 rotation, the balanced splitter's conservation, non-negativity, the
