@@ -17,6 +17,7 @@
  "suspension": 0,
  "width": 1048576,
  "clock_stamp": true,
+ "per_axis_drive": true,
  "families": [
   {
    "name": "post",

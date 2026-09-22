@@ -20,7 +20,12 @@ and the round trip). The lamp A at rest at x = 3 shines +x, one row per
 self-creation. The post R at rest at x = 1 re-emits the cart's pulses on +x
 (the transponder). Every world declares the key `clock_stamp` so that every
 line a measured event writes carries its own count (`clock`), and nothing
-of the tick is read by the tool.
+of the tick is read by the tool. Every world declares `per_axis_drive`,
+the per-axis drive of history its pins were derived under (the rule above;
+the law's drive is the line drive since 2026-09-22, the model owner's
+record 972, docs/designs/drive_b/DEFAULT.md, under which the cart's pace is
+p Q / (Q^2 S M + p T_D), no longer the exact 1 / k): the key is transient,
+removed when this series is re-pinned under the law.
 
 | World | k | the pace v | beta = v / c | the bar | the intervals |
 | --- | --- | --- | --- | --- | --- |
@@ -193,6 +198,8 @@ def world(name: str) -> Json:
         "suspension": 0,
         "width": WIDTH,
         "clock_stamp": True,
+        # The per-axis drive of history (the module docstring): transient.
+        "per_axis_drive": True,
         "families": [
             {"name": "post", "quantum": 1},
             {"name": "source", "quantum": 1},

@@ -89,7 +89,11 @@ def test_the_shipped_worlds_are_the_generators_and_the_pins_are_the_closed_forms
         loaded = load_world(path.read_bytes(), base_dir=path.parent, root=WORLDS.parent)
         world = loaded.world
         assert world.clock_stamp is True
-        assert world.hypotheses == ["amplitude-v1"]
+        # The per-axis drive of history, declared by every world of the series
+        # until it is re-pinned under the law's line drive (the generator's
+        # docstring; the model owner's record 972).
+        assert world.per_axis_drive is True
+        assert world.hypotheses == ["amplitude-v1", "per-axis-drive-v1"]
         carts = [entry for entry in world.measured if not entry.fixed]
         assert len(carts) == 1
         v = generator.WORLDS[name][0]

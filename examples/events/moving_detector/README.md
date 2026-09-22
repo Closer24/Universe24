@@ -39,7 +39,12 @@ c = 32 / 55 Nodes per interval on a heading (the flight table's pace). The
 cart's momentum is `Q S M / (k - 1)` (`3 Q S M / 4` for the pace 3 / 7), M
 the content the drive's wall reads (the held mass 2^22 plus the light 2^13),
 whole in every world. `capability_k5` is the smallest world of the design's
-step 4 (the lamp and the cart only).
+step 4 (the lamp and the cart only). Every world declares `per_axis_drive`
+since the merge of 2026-09-22 with the law's line drive (the model owner's
+record 972, [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md)): its
+momenta and pins are the per-axis drive's (`v = p / (Q S M + p)` exactly),
+the drive of history under which they were derived and read; the key is
+transient and goes when this series is re-pinned under the law.
 
 ## The pins, before any run (the design's section 5)
 
