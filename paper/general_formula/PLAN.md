@@ -2903,3 +2903,87 @@ the law's number, not a simulator measurement. Nothing of the board as
 a measurement anywhere (records 281, 562, 564, 575); the base is
 b684ba0b's text. Step 2, the cut, starts on this word.
 
+### 7. The sixth column, the derivation's ground: three rungs (the proposal of record 605; the mathematician's and the physicist's checks, records 607 and 609, AGREED with corrections; the Boss's word of 01:45Z)
+
+The five-step path gains a sixth column, the ground on which the
+derivation stands, so that "how much the law forces" is counted at
+three levels and never at one: rung 1, exact on the GameBoard (no limit,
+no average); rung 2, a limit of the grain taken on paper with its rate;
+rung 3, a limit under a spatial condition, an average that covers the
+shell, the condition part of the claim.
+
+The head rule (both checkers): a rung-3 claim is stated with its
+condition in the sentence and compared with nature only after a
+detector (record 575), never with a probe's reading; a detector reading
+never lifts a rung-3 claim to rung 1: what a detector run establishes is
+a sharper lattice-exact claim about the world at hand (rung 1 or 2
+arithmetic, pinned from the lattice's lines or the orbit's sweep,
+DETECTOR in its reading), whose agreement with the continuum's form
+within the named ripple is the evidence for rung 3 and never its proof.
+
+Rung 3's condition (the physicist): not "P >> r" alone but an average
+that covers the shell, in three admissible forms, each with its own
+error: (a) over the shell's Nodes, the shell mean, the ripple
+O(r^(theta - 1)) with theta <= 131/208 (3.2), at any declared fan; (b)
+over the directions at one Node, the dense fan K to infinity at fixed
+r, and then only for a fan declared in a ball |D| <= P (a cube's fan
+keeps a cubic anisotropy of 3^(3/2) in the limit); (c) over the path of
+a body that sweeps the fan's lines, one closed turn of an orbit, whose
+mean push per turn is the ring mean exactly, the only one of the three
+readable after a detector. For Poisson and the retarded potential (5.1)
+the same average plus the dwell direction-blind (T_D / (|D| Q) within
+the label's 1.35 percent). Newton's and Coulomb's inverse square,
+Poisson, the retarded potential (12.1 at first order, the fan's grain)
+and the retarded wave equation (5.1) are rung 3.
+
+The placements (both): (1) c: rung 1 holds the identity "the pace of a
+direction is Q |D| / T_D, isotropic within 1 / T_D" and the Manhattan
+bound S_1 Q <= T_D (13.2 (a), exact in integers); "c <= 1 / sqrt 3" is
+not exact on the board (the Euclidean pace is at or above 1 / sqrt 3 on
+282 of the 290 directions, 0.5818 on every heading, 0.5774 on the eight
+diagonals; record 262); the value c = 1 / sqrt 3 attained is rung 2;
+series Q's DETECTOR 0.5718 to 0.5893 is the reading of the
+whole-interval grain of arrival, a third thing, labelled so. (2) The
+books' conservation rung 1; the continuity equation splits: the lattice
+identity from the books rung 1 (25.4), its differential form rung 2.
+(3) Gauss's law of a free family's flux (3.1) rung 1 by name, under
+the declared world condition (a closed surface no periodic axis
+crosses, no absorber inside). (4) S(N): the exact rational at each N
+with the tables at N_t = 256 rung 1; 2 sqrt 2 rung 2. (5) Born: the
+bound itself (a cell within 1 / N, the cumulative within 1 / (2 N))
+exact for every N, rung 1; Born's rule as the equality of probability
+and weight its limit, rung 2. (6) Planck and de Broglie: identities
+under the declared dictionary, the dictionary an input (24.1 row 25):
+rung 1 as identities (Planck's E = h_q s exact at every birth, 6.4; de
+Broglie's circle exact to the floor per Link, 21.5 row 52); not rung 2.
+(7) The redshift row splits in three grounds: the clock's rate
+1 / (1 + a_tau) and its never reaching 0 at a finite count (no horizon;
+the second order 1 - k + k^2) exact on the state, rung 1; the 1 / r
+form of a_tau rung 3; the calibration a_tau = G M / (r c^2) an input of
+the dictionary (5.2), not an average; series T's row says "the form
+measured at a detector at two Nodes (1.907 against the lines' pin
+1.909, nature's 2.00 4.6 percent away), the continuum's 1 / r a rung-3
+limit", never "the 1 / r law measured". (8) Newton's row splits: the
+equivalence principle (push_m = m x push_1 record by record) and the
+third law at rest (exact to the apportioning's grain) rung 1; the
+inverse square rung 3. (9) "The second law as a count" worded as 14's:
+the entropy produced only at the click, the cancel and the leaks, a
+count of torus points; no second law claimed. (10) CLOSED items named
+with their rungs: the muon's decay tick (18.1 (a), rung 1 under
+covariant-readings-v1's identity); Newton's cooling within one birth's
+cost (25.9, rung 1, an exact bound); a body's dispersion (4.4, rung 1);
+the moving clock's rate 1 (4.3, rung 1); the Doppler on the axis by the
+crossing rule (2.2, 2.7: rung 1 for the count per Link with its
+boundary row, rung 2 for the ratio 1 +- v / c); Boltzmann's S = k log W
+(14, 16.1, rung 1); the Lienard-Wiechert retarded potential at first
+order (12.1, rung 3); the retarded wave equation (5.1, rung 3). The
+rest of rungs 1 and 2 as placed in record 605 (the marginals and
+no-signalling, the entropy identity, the 24 and the 48, the isometry
+and the bijection, the click's quadratic form under its two axioms,
+Tsirelson to 8 / N, Young's spacing). Detector readings today: none of
+rung 3's claims has one that lifts it; series T's is the only detector
+reading of a rung-3 form; Newton's and Poisson's runs enter pages 19 to
+21 as one row each only if they land before the cut's PR, else the rows
+say "not made". The owner's word of record 606 stands over all: only
+what the paper needs.
+
