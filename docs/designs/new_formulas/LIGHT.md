@@ -38,11 +38,10 @@ word for; seven of them already read on the register by a click (the
 row's own age, c per direction, the cone's front, the fringe's grain,
 Malus's rounding, the Bell plateau and its excess, the beam's
 non-dilution), four not yet read (the emitted comb, the Doppler
-quantum, the redshift's step, the bending's teeth under the key); one
-of the eleven matches nature by a registered reading (the one click per
-quantum, an exact form), two are refuted at the register's grain (c's
-anisotropy, Bell's excess at N = 256) and stand as bounds on the grain,
-and none is a claim about nature.
+quantum, the redshift's step, the bending's teeth under the key); two
+are refuted at the register's grain (c's anisotropy, Bell's excess at N
+= 256) and stand as bounds on the grain; none matches nature beyond its
+registered reading, and none is a claim about nature.
 
 ## 1. The eleven kept
 
@@ -63,12 +62,19 @@ and none is a claim about nature.
   (Reichenbach's epsilon; only the round trip is measurable), because a
   photon carries no clock and two clocks must be synchronised. Here the
   photon's row carries its own clock, the age, stamped on the click: the
-  one-way pace is a reading of ONE detector, no synchronisation, no
-  convention. A new observable.
+  flight count of the light itself, read at one click, is a new
+  observable (`tau_click`, the row moment of record 754, DETECTOR), and
+  it needs no synchronisation. The one-way PACE from it needs the lamp's
+  place as well, which one detector has only by a round trip (the radar,
+  whose halving is Einstein's 1905 definition and Bondi's convention) or
+  as a declared input (series Q's 33 Links are the world file's,
+  GAMEBOARD by declaration): the age is the new observable, and the pace
+  is the age with a place read Outside.
 - **(d) The click.** Any `measure` click of a light row on a record form
   world (the click line with `age`): series Q's 290 face clicks at the
-  derived age (DETECTOR, EXPERIMENTS lines 4547 to 4613), series T's age
-  172 for 100 Links (DETECTOR, lines 6737 to 6835). Read.
+  derived age (DETECTOR, EXPERIMENTS lines 4780 to 4846 at main
+  529b0d5f), the age read 172 for 100 Links (series T, line 7044; series
+  X, line 7179; `100 x 55 / 32 = 171.9`; DETECTOR). Read.
 - **(e) The order.** Exact within one interval at every grain (the
   ceiling of the last Link); no scale of nature's enters.
 - **(f) The three tests.** Generic (the age a column of every row);
@@ -127,20 +133,23 @@ and none is a claim about nature.
   click at the age 29, 17 Links on the axis (T = 110) and 24 Manhattan
   Links, 16.97 Euclidean, on the plane diagonal (T = 156), the same age
   within one percent of the Euclidean distance (DETECTOR, L7, EXPERIMENTS
-  line 4247). Read.
+  line 4453 at main 529b0d5f). Read.
 - **(e) The order.** One Link at every age; relative `1 / r`; at the
   register's r = 17, 6 percent; at `r = 10^12` Links, `10^-12`.
 - **(f) The three tests.** Passes (C2's operations).
 
-### C4. The fringe's grain: a click's probability is a multiple of `1 / W` within `1 / (2 N)` of Born
+### C4. The fringe's grain: a click's probability is a multiple of `1 / W` within `1 / (2 W)` of Born
 
 - **(a) The formula.** For a record's cells with the weights `W_k` and
   the total T, the count at the cell k over W births with the wheel
   uniform is
 
-      count_k = b_k - b_(k-1),   b_k = (2 W C_k + T) // (2 T),   |count_k / W - W_k / T| <= 1 / N   (the cumulative within 1 / (2 N)),
+      count_k = b_k - b_(k-1),   b_k = (2 W C_k + T) // (2 T),   |count_k / W - W_k / T| <= 1 / W   (the cumulative within 1 / (2 W)),
 
-  so a cell's probability is a multiple of `1 / W`, a cell of weight below
+  W the wheel's modulus (`amplitude.rungs`: the rungs on the wheel,
+  `steps = W`; N only under the wheel `[1, N]`; 4096 under L2b's `[2531,
+  4096]`), N entering the weights through the phases and not the rung; so
+  a cell's probability is a multiple of `1 / W`, a cell of weight below
   `T / (2 W)` clicks at most once per wheel, and a cell of weight exactly
   0 (the cancel) never; the dark fringe of two equal rows at `Delta = N /
   2` reads 0 exactly, every other dark fringe reads 0 or 1 per wheel.
@@ -150,15 +159,17 @@ and none is a claim about nature.
   275).
 - **(c) The continuum.** Born's probability is a real number and the
   fringe's minimum a real intensity. Here a rung: the probability is
-  quantized, and the departure from Born is bounded by `1 / (2 N)` in the
-  cumulative (DERIVATIONS_BEAM 6.2, lines 1402 to 1434, "Born as a
-  limit").
+  quantized, and the departure from Born is bounded by `1 / (2 W)` in the
+  cumulative, `1 / (2 N)` under the wheel `[1, N]` (DERIVATIONS_BEAM 6.2,
+  lines 1402 to 1434, "Born as a limit"; L2b's dark cells 0 to 3 over 4096
+  births are W's grain).
 - **(d) The click.** The screen's cells over W births: L2b's dark cells
   0 to 3 (the mean 0.68), `mz_345`'s 63 / 1 (the rung moved one u), the
   3 / 4 split's window on the power `[1.917, 2.012)` (NATURE 2c; DETECTOR).
   Read.
-- **(e) The order.** `7.8 x 10^-3` at N = 64, `1.2 x 10^-4` at 4096, `4.8 x
-  10^-7` at `N = 2^20`; Sinha's third-order test (`0.0064 +- 0.0119`) is
+- **(e) The order.** `7.8 x 10^-3` at `W = N = 64` under `[1, N]`, `2.4 x
+  10^-4` at `W = 4096` (L2b's wheel), `9.5 x 10^-7` at `W = 2^19`; Sinha's
+  third-order test (`0.0064 +- 0.0119`) is
   a different observable (24.3 row 20).
 - **(f) The three tests.** Passes (the comparison of two products; no
   division).
@@ -199,11 +210,14 @@ and none is a claim about nature.
 - **(c) The continuum.** Quantum theory: `S <= 2 sqrt 2` always, reached
   exactly; no finite-N term, no plateau, never above. Here the bound is
   reached as a limit, from below and from above, with an exact rational
-  at each N: a no-signalling box of the Popescu-Rohrlich kind at finite N
-  (24.3 rows 1 to 3).
-- **(d) The click.** The four coincidence cells at two places: 27 / 5 / 5
-  / 27 at N = 64 (DETECTOR, NATURE 1a PASS against Hensen), `2896 / 1024`
-  and `11584 / 4096` (`pair_n`). Read; REFUTED at N = 256 by Poh et al.
+  at each N: a no-signalling box at finite N, within `8 / N + 0.0444` of
+  `2 sqrt 2` with the marginals exactly `1 / 2` (`th:marginals`; 24.3
+  rows 1 to 3).
+- **(d) The click.** The four correlations at two places, `E x 64 = 44,
+  -44, 44, 44` at the labels (0, 8), (0, 24), (16, 8), (16, 24), `S = 176 /
+  64` (`pair.chsh.*.E`; DETECTOR, NATURE 1a PASS against Hensen; the
+  cells 27 / 5 / 5 / 27 being `bell_16_24`'s counts at one setting pair,
+  NATURE 2c's citation), `2896 / 1024` and `11584 / 4096` (`pair_n`). Read; REFUTED at N = 256 by Poh et al.
   (thirty standard errors), OPEN on the plateau (1.1 standard errors).
 - **(e) The order.** 0.078 at N = 64, `3 x 10^-4` on the plateau, `+1.9 x
   10^-4` above the bound at 16384; the precision test reads `2.82759 +-
@@ -213,20 +227,30 @@ and none is a claim about nature.
 
 ### C7. The emitted frequency is a two-tooth comb: a lamp cannot emit one frequency
 
-- **(a) The formula.** A lamp of content c at the clock pair `[n, d]`
-  gains at its k-th self-creation the turn
+- **(a) The formula.** A lamp of content c at the K pair `[n_K, d_K]`
+  (the lamp clock's rate, under the load identity `d h n_K = Q S d_K`,
+  `world.py` lines 487 to 492; 17.6 M7 and N5; not the phase per age `n /
+  d` of the notation above) gains at its k-th self-creation the turn
 
-      s_k = floor((k + 1) c n / d) - floor(k c n / d)  in  { floor(c n / d), floor(c n / d) + 1 },
+      s_k  in  { floor(c n_K / d_K), floor(c n_K / d_K) + 1 },
 
-  and pays `h_q s_k` per unit born: the quanta it emits carry one of TWO
-  contents, in the Bresenham pattern of the pair, with the mean `h_q c n
-  / d` and the two teeth `h_q` apart; a single content (one frequency)
-  only when `c n / d` is a whole number. In the conversion's units the
-  emitted line is two lines `h_q` apart, at `f_lamp = s_k / N` per
+  the whole part gained by an accumulator advancing at the rate `c n_K`
+  over `d_K` with its remainder kept, and pays `h_q s_k` per unit born:
+  the quanta it emits carry one of TWO contents, the two teeth `h_q`
+  apart; at a fixed content the pattern is the Bresenham sequence of the
+  pair with the mean `h_q c n_K / d_K` and the duty cycle the fractional
+  part of `c n_K / d_K`, and a single content (one frequency) only when
+  `c n_K / d_K` is a whole number. In the conversion's units the emitted
+  line is two lines `h_q` apart, at `f_lamp = s_k / N` per
   self-creation.
-- **(b) The Inside chain.** The clock's count `by_clock(k, c n, d)`
-  (`core/integer.py` line 60, the first difference of a floor, no
-  remainder kept); the cost `quantum x turn` at the birth
+- **(b) The Inside chain.** The turn on `main` is the counts table's
+  accumulator, `entry.counts.advance("turn", values=[content])`
+  (`engine.py` lines 698 to 706; the fraction-free law, the remainder
+  kept; `by_clock` of `core/integer.py` line 60 is its constant-rate
+  identity), at the rate `content x n_K` over `d_K`, the content the
+  frame's, which falls at every birth under `E = h f` (records 147 and
+  148), so the two teeth hold at every step and the Bresenham duty cycle
+  only while the content is fixed; the cost `quantum x turn` at the birth
   (`nature_beam.py` line 5748); the click's content line.
 - **(c) The continuum.** A monochromatic source emits one frequency, and
   Planck's `E = h f` gives one energy per photon at that frequency. Here
@@ -235,12 +259,13 @@ and none is a claim about nature.
   `{c n / d}` (the fractional part), which no continuum source has.
 - **(d) The click.** The content per click at a `measure` detector, its
   histogram over many births (DETECTOR: two values, their ratio the
-  fractional part of `c n / d`). NOT READ: in every registered light world
-  the lamp's content equals its K and `s = 1` (the reviewer's read of the
-  world files, record 823), one tooth; the two-tooth comb needs a lamp
-  declared with `c n / d` not whole, no run.
+  fractional part of `c n_K / d_K`). NOT READ: in every registered light
+  world the lamp's content equals its K with `n_K / d_K = 1 / K`, so `s =
+  1` (the reviewer's read of the world files, record 823), one tooth; the
+  two-tooth comb needs a lamp declared with `c n_K / d_K` not whole, no
+  run.
 - **(e) The order.** The teeth `h_q` apart, relative `1 / s`: 100 percent
-  at `s = 1`; at a lamp declared with `c n / d = 10^6` (a named scale)
+  at `s = 1`; at a lamp declared with `c n_K / d_K = 10^6` (a named scale)
   `10^-6`, the comb's two lines resolvable by any spectrometer whose
   resolving power exceeds `s`.
 - **(f) The three tests.** Passes (one count on the lamp's record).
@@ -275,8 +300,11 @@ and none is a claim about nature.
 ### C9. The redshift through a crowd is a step function of the integer age moment
 
 - **(a) The formula.** A lamp in the crowd whose age moment is the integer
-  `a_tau` (the sum over the rays at its Node of amount times age) owes
-  `floor(a_tau n / d)` intervals after each self-creation, so a detector
+  `a_tau` (the sum over the rays at its Node of amount times age) owes,
+  under `count_owed`'s accumulator (`engine.py` line 154), `floor(k)` or
+  `floor(k) + 1` intervals after each self-creation with the weight the
+  fractional part of `k = a_tau n / d`, the mean `a_tau n / d`, so a
+  detector
   at rest at an empty Node reads
 
       1 + z = 1 + a_tau n / d   exactly as a rational, with the owed count's whole part per birth,   the steps n / d = 2^-16 on the register ([1, 65536]),
@@ -306,10 +334,16 @@ and none is a claim about nature.
 - **(a) The formula.** A lamp releasing q rows per count on a fan of K
   directions gives a detector of ONE Node the click rate
 
-      rate(Node) = q  if the Node lies on one of the K digital lines,  0 otherwise;   the shell mean  q K / N(r) -> q K / (4 pi r^2),   N(r) = 4 pi r^2 + O(r^theta), theta <= 131 / 208,
+      rate(Node) = q  if the Node lies on one of the K digital lines,  0 otherwise;   the shell mean  q K / N(r) -> q K / (4 pi r^2)  in space,  q K / (2 pi r)  on the plane,
 
   the inverse square being the density of lines over the shell with the
-  ripple of the lattice's count of Nodes on it.
+  ripple of the lattice's count of Nodes on it, whose exponent is the
+  dimension's: on the plane `N(r) = 2 pi r + O(r^theta)`, `theta <= 131 /
+  208` (Gauss's circle problem, Huxley 2003; series C's); in space the
+  ball's lattice-point error is `O(r^(21 / 16))` (Heath-Brown 1999) and a
+  Euclidean shell's own Node count `r_3(r^2)` is an arithmetic function
+  with no such bound (zero whenever `r^2 = 4^a (8 b + 7)`), so the shell
+  mean in space is stated on a thick shell or on the Manhattan shell.
 - **(b) The Inside chain.** The fan's split (K rows, one per direction);
   the walk on each line (a beam does not dilute, DERIVATIONS_BEAM 3.2,
   lines 874 to 937); the click at the Node.
@@ -327,8 +361,9 @@ and none is a claim about nature.
   inverse square of light after a detector NOT MADE; series C's `count x
   r / q` GAMEBOARD, not compared.
 - **(e) The order.** Per Node the full effect (q or 0); the ripple of the
-  shell mean `r^(theta - 1)`, 0.3 at r = 20 on the plane (series C's
-  `N(16) = N(20)`), `10^-4` at `r = 10^10`.
+  shell mean `r^(theta - 1)` on the plane, 0.3 at r = 20 (series C's
+  `N(16) = N(20)`), `10^-4` at `r = 10^10`; in space `r^(21 / 16 - 2)` on
+  a thick shell.
 - **(f) The three tests.** Passes.
 
 ### C11. The bending's teeth under the key `optical` (stated as the key's, NOT COMPARED)
@@ -349,7 +384,7 @@ and none is a claim about nature.
   gamma` back.
 - **(d) The click.** The screen's centroid shifts `-1.993 / -3.989` pixels
   at gamma 0 / 1, the far worlds `-3.403 / +4.33` inside their pins
-  (DETECTOR; EXPERIMENTS lines 6972 to 7165); NOT COMPARED with nature
+  (DETECTOR; EXPERIMENTS lines 7205 to 7398 at main 529b0d5f); NOT COMPARED with nature
   (gamma an input). The key's, not the law's; the Einstein Mathematician's
   boundary.
 - **(e) The order.** The tooth 2.39 degrees at series K's fan, `10^4`
@@ -403,9 +438,9 @@ and none is a claim about nature.
 | C1 the row's own age | a photon carries no clock in the continuum | series Q (290 of 290 at the derived age), T (172) | DETECTOR; exact |
 | C2 c per direction | c is one number | Q's classes 0.5893 / 0.5819 / 0.5774 | DETECTOR; NATURE 5a a BOUND on Q (FAIL at Q = 64) |
 | C3 the staircase front | the front is a sphere | the cone 17 / 24 at age 29 | DETECTOR (L7) |
-| C4 the fringe's grain | Born is a real number | L2b's dark cells 0 to 3, mz_345 63 / 1, the 3 / 4 window | DETECTOR; within 1 / (2 N) |
+| C4 the fringe's grain | Born is a real number | L2b's dark cells 0 to 3, mz_345 63 / 1, the 3 / 4 window | DETECTOR; within 1 / (2 W) |
 | C5 Malus rounded | cos^2 exact | 219 / 256, 187 / 256 | DETECTOR; OPEN at 10^-3 |
-| C6 Bell at finite N | S <= 2 sqrt 2 exactly | 176 / 64, 181 / 64, 5793 / 2048 | DETECTOR; PASS (Hensen), REFUTED at N = 256 (Poh), OPEN on the plateau |
+| C6 Bell at finite N | S <= 2 sqrt 2 exactly | E x 64 = 44, -44, 44, 44 and S = 176 / 64; 181 / 64; 5793 / 2048 | DETECTOR; PASS (Hensen), REFUTED at N = 256 (Poh), OPEN on the plateau |
 | C7 the two-tooth comb | one frequency per source | the content per click's histogram | NOT READ (s = 1 in every registered lamp) |
 | C8 the Doppler quantum | a real ratio | the crossing counts 45 / 58 / 19 / 38, 183, 311 | DETECTOR as counts; the comb NOT READ |
 | C9 the redshift's step | a continuous potential | T's 2.6517 / 4.1500; the well 15 and 20 of 24 | DETECTOR; the step NOT READ |
