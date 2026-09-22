@@ -3006,6 +3006,12 @@ CORRECTIONS = [
         "\\bibitem{ringmean} The ring mean and the orbit's mean over one turn: the proof and the bound,",
         "\\bibitem{criteria} The criteria of the confrontation table, row by row, with the re-runs at head, \\texttt{docs/designs/paper\\_criteria/CRITERIA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at f5fe8004 (PR \\#851, merged). \\bibitem{jacques2005} V. Jacques, E Wu, T. Toury, F. Treussart, A. Aspect, P. Grangier and J.-F. Roch, Eur. Phys. J. D 35, 561 (2005); the visibility figure to be verified against the source. \\bibitem{ringmean} The ring mean and the orbit's mean over one turn: the proof and the bound,",
     ),
+    # The beam-and-wave sentence as the chief physicist worded it (records 173 and 188; amplitude.py's gram_form): the quadratic form of the phase counts, a phased sum at the roots of unity.
+    (
+        "the beam-and-wave sentence in the chief physicist's words (the Boss's order of 11:54Z)",
+        "So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the squared sum of the rows' amplitudes (Definition~\\ref{def:click}), which adds and cancels as amplitudes do, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
+        "So a thing propagates Inside as a beam, rows on digital lines at one Link per interval, and shows Outside as a wave: what a detector reads is the click's weight, the quadratic form of the rows' phase counts (Definition~\\ref{def:click}'s $X^2 + Y^2$, the same integer as the square of a phased sum), which adds and cancels as a phased sum at the roots of unity does, so Young's bands and the Mach-Zehnder's ports are the beam's rows read at the click and nothing else (Section~\\ref{sec:measurement}); the wave is the read-out of the beam, not a second thing on the board.",
+    ),
 ]
 
 

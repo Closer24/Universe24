@@ -4624,3 +4624,15 @@ counterpart in the wheel, the reading that would test it; the criteria
 file cited in Appendix C and the caption at its merge SHA; two
 references added (criteria, jacques2005). No number, verdict or
 citation invented. 39 pages.
+
+## Applied (2026-09-22, the chief physicist's verdict, the Boss's order of 11:54Z): the beam-and-wave sentence in his words
+
+RIGHT WITH ONE CHANGE: the law as built forms no amplitude per row and
+squares nothing as a step of its own (records 173 and 188; amplitude.py's
+gram_form, f^T G f with the declared Gram matrix); Definition 3's X and
+Y are the paper's writing of that integer. So "the squared sum of the
+rows' amplitudes" became "the quadratic form of the rows' phase counts
+(Definition 3's X^2 + Y^2, the same integer as the square of a phased
+sum)" and "as amplitudes do" became "as a phased sum at the roots of
+unity does" ((A2) not built). His caution, no change: "shows Outside as
+a wave" is right for the count over many clicks; one click is one Node.
