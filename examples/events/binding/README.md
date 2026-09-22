@@ -134,3 +134,7 @@ its I7 lamp turns by its accumulator, 3000 births as before, the set's
 2993 gathers with 2958 of content 8 and 35 of content 7 (2961 and 32),
 no contact, no `bond` row or click, `held.bond` 2, no step; B1 and B3
 are identical. The verdict stands ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## Re-run at head (2026-09-22)
+
+The criteria runner re-ran the three worlds at `origin/main` `4028b020` for the paper's Table 3 rows 7a and 7b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): B1 two `bond` clicks at tick 19 of content 2, the escaped 4, the mass read 3673; B3 four clicks, the escaped 8, the ratio 2.0 (DETECTOR, every pin met); the first contacts one interval later than in 2026-09-20 (B1 at tick 17; B3's gives at 16, 16, 16, 17; GAMEBOARD, the tick of a line); B2's lamp 2958 gathers of content 8 and 35 of 7 (registered 2961 and 32); the register's entry carries the dated line.

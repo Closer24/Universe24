@@ -633,3 +633,7 @@ and writes the pages beside itself:
 
 Every number on a page is the run's or the register's, and the page names
 its source; the runs stay outside the tree.
+
+## Re-run at head (2026-09-22)
+
+The criteria runner re-ran `slits_huygens` at `origin/main` `4028b020` for the paper's Table 3 row 2a against the pin derived for this world's own fan before the run ([docs/designs/paper_criteria/slits_huygens_pin.py](../../../docs/designs/paper_criteria/slits_huygens_pin.py), the register's algebra on the world's fan and weights): the gathers of the records 1 to 4096 equal to the pin bit for bit (wall 882, screen 1711 on 107 pixels, faces 1503, the visibility 0.9659, DETECTOR); the register's L2b entry carries the dated line.
