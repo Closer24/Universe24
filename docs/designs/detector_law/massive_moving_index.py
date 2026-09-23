@@ -8,16 +8,22 @@ the first-difference form (section 7). Light: a sine train of frequency omega fr
 source; the transmitted phase at a probe downstream, against the same train without
 the block, gives the block's phase delay dphi (rung 2, the phase read by projection on
 the window). At rest: n(omega) = 1 + dphi / (k s), k = omega / c. In motion at one Link
-every K = 3 intervals (beta_c = c / 3 ... the pace 1 / 3 Links per interval, beta = 1 /
-(3 c) = 0.577 of c, gamma_m = 1.2247), the block's cells, its pair region and its
-massive rows translate together by the step verb; light meets the block head-on (the
-block toward the source) or from behind (the block away). The covariant expectation,
+every K = 3 intervals (the pace 1 / 3 Links per interval, beta = 0.577 of c, gamma_m =
+1.2247), the step verb translates the block's CELLS and its pair region only; the
+massive rows stay on their Nodes and follow by the rule (the design's reading, Reviewer
+3's MUST on 7a82c155, record 1431: a carried record is a hop, not the design); on a hop
+interval the coupling's first difference is taken along the cell's path (the cell's
+Node now less the cell's previous Node before, a neighbour's row, local); G g is carried
+as G g x [K^2, K^2 - 3] = G g gamma_m^2 (the drive's rational pair), and the unchanged
+G g is printed beside it for the record. Light meets the block head-on (the block toward
+the source) or from behind (the block away). The covariant expectation,
 from the phase's invariance: the lab delay equals the delay in the block's frame,
 (n(omega') - 1) omega' gamma_m s / c, with omega' = gamma_m omega (1 +- beta) the
 light's frequency in the block's frame and n(omega') the RESTING block's index read on
 this same chain at omega' (so no formula is trusted, only the chain's own rest
-readings). Two couplings: the declared G g carried unchanged, and G g carried as G g x
-[K^2, K^2 - 3] = G g gamma_m^2 (the drive's rational pair, no root).
+readings). A first version of this script (7a82c155) carried the massive rows with the cells and
+read 0.47 and 0.63 of the covariant delay head-on: the reading of a carried record, not
+of the design; superseded by this one.
 
     PYTHONPATH=src python docs/designs/detector_law/massive_moving_index.py
 """
@@ -48,6 +54,7 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
     out = np.zeros(steps)
     acc = 0
     for t in range(steps):
+        hop = False
         if s > 0 and direction != 0 and t >= t_move:
             acc += 1
             if acc == K:
@@ -57,13 +64,15 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
                 r[lo : lo + s] = ratio_in
                 coupled = np.zeros(n, bool)
                 coupled[lo : lo + s] = True
-                am = np.roll(am, direction)
-                am_b = np.roll(am_b, direction)
+                hop = True  # the cells and the pair region moved; the rows stay on their Nodes
         al[source] = np.sin(omega * t)
+        # the coupling's first difference along the cell's path: on a hop interval the cell now at x was at x - direction
+        al_prev = np.roll(al_b, direction) if hop else al_b
         s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
-        am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al - al_b), 0.0)
+        am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al - al_prev), 0.0)
         s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
-        al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am_n - am), 0.0)
+        am_now_prev = np.roll(am, direction) if hop else am
+        al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am_n - am_now_prev), 0.0)
         al_n[0] = al_n[-1] = 0.0
         am_b, am = am, am_n
         al_b, al = al, al_n

@@ -428,8 +428,14 @@ field (DESIGN.md 5.1 (a)) at every outer Port of the block, summed into
 face's cell adds its Port's stress to the block's integer as a detector
 set's cells add to one pointer today). The step: the accumulator per axis
 against 3 Q S M x 56 d with M the block's content, the remainder kept; the
-whole block steps one Link together (its cells, its pair region and its
-record's rows translate by verb T). The bound |**v**| < c_m on the vector
+block's CELLS and its pair region step one Link together by verb T; the
+massive record's rows STAY on their Nodes and follow the moving well by the
+rule (Reviewer 3's line on 7a82c155, record 1431: a carried record would be a
+hop of the record, the mathematician's 5.4 (iv), not the design; section 8's
+own script reproduces Lorentz by stepping the well only); on a hop interval
+the coupling's first difference of section 7 is taken along the cell's path
+(the cell's Node now less the cell's previous Node before, a neighbour's row,
+local), and G g is carried as [K^2, K^2 - 3] (section 7). The bound |**v**| < c_m on the vector
 (the record's own pace, section 2), a crossing the world's stop with a
 diagnostic (DESIGN.md 1.2 (c)). What the block feels: light's stress at
 its outer Ports; what it does to light: section 7.
@@ -528,28 +534,37 @@ BY DELEGATION (the owner's word of about 13:55Z, "close it among
 yourselves, and let me know", read by the Boss at 14:25Z as a delegation,
 reversible on his word): (b), the pair `[K^2, K^2 - 3]` formed by verb D on
 integers the stepping cell has, nothing new declared in motion. THE CHAIN
-CHECK, made (COMPUTATION, `massive_moving_index.py`: a block of 24 cells,
-the medium's pair [156, 157], the well mu^2 / 2, G g = 0.005 for a weak
-index n = 1.236 at rest; light at omega = 0.035 through the block stepped
-at K = 3, the cells, the pair region and the massive rows translated
-together by the step verb; the lab phase delay read at a probe against the
-same train without the block, in a steady window; the covariant
-expectation from the phase's invariance, (n(omega') - 1) omega' gamma_m s /
-c with omega' the light's frequency in the block's frame and n(omega')
-the RESTING block's own reading at that frequency): head-on, the lab delay
-is 0.471 of the covariant expectation with G g unchanged and 0.632 with G
-g x [K^2, K^2 - 3]; from behind, 0.486 and 0.825 (the block-frame
-wavelength 200 Links there, the reading +- 0.04 rad). So NEITHER
-declaration makes the stepped block a covariant dielectric: the
-compensation moves the delay toward the covariant value and does not reach
-it; between its steps the block is a slab at rest answering at the lab
-frequency, and the step translates the pattern, which is not a boost. The
-index in motion is therefore a COMPUTATION of the stepped rule per world
-and a PREDICTION of the model as built (the stepped cells' mark, beside
-the clock's residual of section 8), stated so, and the delegated (b)
-stands as the drive's pair carried, with the chain's numbers as its
-reading; nature's row is Fizeau's drag (light in a moving medium, first
-order in beta at large K), NOT computed here (section 12).
+CHECK, made in the design's reading (COMPUTATION, `massive_moving_index.py`;
+Reviewer 3's MUST on 7a82c155, record 1431: the step translates the cells
+and the pair region only, the massive rows stay on their Nodes and follow
+by the rule, the coupling's first difference on a hop interval taken along
+the cell's path; a first version that carried the rows with the cells read
+0.47 and 0.63 of the covariant delay and is superseded, a hop of the record
+and not the design): a block of 24 cells, the medium's pair [156, 157], the
+well mu^2 / 2, G g = 0.005 for a weak index n = 1.236 at rest; light at
+omega = 0.035 through the block stepped at K = 3; the lab phase delay read
+at a probe against the same train without the block, in a steady window;
+the covariant expectation from the phase's invariance, (n(omega') - 1)
+omega' gamma_m s / c, with omega' the light's frequency in the block's frame
+and n(omega') the RESTING block's own reading at that frequency. HEAD-ON
+(steady to 0.001 rad): the lab delay is 0.792 of the covariant value with
+G g unchanged, and 1.071 with G g x [K^2, K^2 - 3], but there the
+transmitted amplitude is 1.70 of the incident (a GAIN: the compensated
+coupling on the hop intervals pumps light, not a passive index; with G g
+unchanged the amplitude is 1.02). FROM BEHIND the window is not steady
+(the block-frame wavelength 200 Links beats across it; the reading +- 0.1
+rad on 0.23) and is not a number. So, in the design's reading, the moving
+block is 21 percent short of the covariant dielectric with the coupling
+unchanged, and the drive's pair overshoots with a gain that is a flag, not
+a fix: the covariant slab is NOT yet reached by either, closer than the
+carried record was; the index in motion stays a COMPUTATION of the stepped
+rule per world and a PREDICTION of the model as built (the stepped cells'
+mark, beside the clock's residual of section 8), the delegated (b) standing
+as the drive's pair carried with the chain's numbers as its reading and the
+gain named; what remains: the receding case on a longer chain, and the
+gain's energy account under the hop; nature's row is Fizeau's drag (light in
+a moving medium, first order in beta at large K), NOT computed here
+(section 12).
 
 **The sink, a SEPARATE declaration of the worlds that absorb, not a
 condition of the click** (Reviewer 3's MUST 3, answered by the owner's word
@@ -663,10 +678,11 @@ prediction:
 | 4b | the boosted block's emission read by a block at rest: 1 + z = gamma_m (1 + beta_c) receding, the character's frequency gamma_m omega_0 shifted by the medium's Doppler | the residual |
 | (g) the block at rest | its self-click its own mode, N_b(pair, s), no return and no timer; decaying in tau (section 7) unless re-excited; the clock sentence of DESIGN.md section 8 not needed for it | exact to the residual |
 | the index block | n from g, G, the pair and omega: n^2 = 1 + G g / (omega_0^2 - omega^2); the Fresnel step ((n - 1) / (n + 1))^2; the chain's 1.034, 1.083, 1.159 against 1.043, 1.104, 1.200 | the chain's 0.8 to 3.4 percent below the closed form at s = 12 (the faces' steps) |
-| the index block IN MOTION (a prediction of the model as built) | the stepped block's lab phase delay at K = 3 is 0.47 (G g unchanged) and 0.63 (G g gamma_m^2) of the covariant slab's head-on, 0.49 and 0.83 from behind (section 7, `massive_moving_index.py`); not covariant under either declaration; nature's row Fizeau's drag at first order in beta, not computed | the chain's +- 0.04 rad; Fizeau pending |
+| the index block IN MOTION (a prediction of the model as built) | in the design's reading (the rows stay, the well steps; section 7, `massive_moving_index.py`): the stepped block's lab phase delay at K = 3 head-on is 0.79 of the covariant slab's with G g unchanged, and 1.07 with the drive's pair [K^2, K^2 - 3] but with a transmitted amplitude 1.70 (a gain, a flag); from behind not steady at this chain, no number; the covariant slab not yet reached by either; nature's row Fizeau's drag at first order in beta, not computed | the chain's +- 0.001 rad head-on; the receding case pending; Fizeau pending |
 | the rest cavity (form (I)) | section 4's table: 0.2417 at s = 12 on a cube; the quadrature with the pair | the lattice's residual |
-| NATURE, the two-pace world (the owner's word of about 14:50Z: the two predictions checked against nature BEFORE any build) | the design predicts a massive record's limiting pace c_m = c sqrt(cos omega_0), the deficit omega_0^2 / 4 in c; nature bounds a massive particle's limiting pace against light's at about 10^-15 (electrons, the Crab's synchrotron) to 10^-23 (protons, no vacuum Cherenkov in cosmic rays; Coleman and Glashow 1999 and later), so the law in this form REQUIRES omega_0 < 10^-7, N_0 > 10^8 intervals; with the interval at the Planck scale the electron's omega_0 is about 10^-22 and the deficit 10^-44: not refuted, not measurable, a consistency requirement; the board's N_0 = 50 is a coarse world and its 0.4 percent is the lattice's, never compared with nature | NATURE (the sources to be verified before the row is pinned); CONVERSION for the interval |
-| NATURE, the band's second term | the design predicts a BOUND object's clock in motion reads (1 / gamma_m)(1 - eps (gamma_m^2 - 1) / 2), eps its binding depth; a free massive packet has eps = 0 (the muon, row 4a, exactly 1 / gamma_m). Under the HYPOTHESIS that a real clock's eps is its binding energy over its rest energy (not derived in this design, whose objects are declared cubes): an electronic transition of a stored ion (Ives and Stilwell with Li+ at 0.34 c, Botermann and others 2014, the deviation bounded at about 2 x 10^-9) has eps about 10^-9, the predicted deviation about 10^-10, below the bound; a nuclear transition on a rotor (the Moessbauer rotor, Kuendig 1963, Fe-57) has eps about 0.9 percent and the design predicts the shift 1 + eps times Einstein's, 1.009, against the measured ratio 1.0065 +- 0.011: consistent, at the edge of the precision, the one place nature can decide with a sharper rotor | NATURE (the sources and numbers to be verified before the row is pinned; the eps mapping a named hypothesis) |
+| NATURE, the two-pace world (the owner's word of about 14:50Z, "verify before implementing", record 1424; the sources resolved by the Source Verifier, `docs/designs/detector_law/NATURE_SOURCES_MASSIVE.md` on `nature-sources-massive` at c396a65b, every published number a search excerpt, "(snippet)", to be read once in the paper before final) | the design predicts a massive record's limiting pace c_m = c sqrt(cos omega_0), the deficit omega_0^2 / 4 in c: 3.9 x 10^-3 at N_0 = 50 (COMPUTATION). Nature, the SUBLUMINAL side (the design's): the electron's maximal pace below light's by less than 6 x 10^-20 on the Crab-to-Earth combination and 2 x 10^-14 on every coefficient (Altschul 2006, the Crab's synchrotron; NATURE (snippet)); the 1.3 x 10^-15 recalled earlier is the superluminal side (Stecker and Glashow 2001) and not this row's; the proton's 10^-23 NOT FOUND as published, dropped; Coleman and Glashow 1999 resolved, its own numbers not reached. So the law in this form REQUIRES omega_0 <= 2.8 x 10^-7, N_0 >= 2.2 x 10^7 intervals (COMPUTATION): NOT COMPARED until the conversion between the board's interval and nature's electron rest period is written (STATUS_RULES step 2); a CONSISTENCY REQUIREMENT on that conversion, never a pin at N_0 = 50, whose 0.4 percent is the lattice's | NOT COMPARED (a consistency requirement on the conversion) |
+| NATURE, the band's second term (the same word; the same page at c396a65b) | the design predicts a BOUND object's clock in motion reads (1 / gamma_m)(1 - eps (gamma_m^2 - 1) / 2), eps its binding depth; a free massive packet has eps = 0 (the muon, row 4a, exactly 1 / gamma_m). Under the NAMED HYPOTHESIS that a real clock's eps is its binding energy over its rest energy (not derived in this design, whose objects are declared cubes): (B) the stored Li+ clock, Botermann and others 2014: beta = 0.338 and the bound +-2.3 x 10^-9 on gamma sqrt(1 - beta^2) = 1, SAME (NATURE (snippet)); eps = 2.2604 eV / 6534.9 MeV = 3.46 x 10^-10 (COMPUTATION from the 548.5 nm line and the 7Li mass; the 10^-9 recalled earlier DIFFERS by a factor 2.9); the second term 2.2 x 10^-11, one hundredth of the bound: BELOW MEASURABILITY, a BOUND row, consistent. (C) the Moessbauer rotor, Kuendig 1963: the ratio to Einstein's shift 1.0065 +- 0.011, SAME (NATURE (snippet)); Fe-57's binding 8.8 MeV per nucleon over the nucleon's rest energy, eps about 0.94 percent (RECALLED, not reached from the page; a standard table to cite before final); the design's 1 + eps = 1.0094, at 0.26 sigma: a BOUND, not a test; the later rotor re-analyses (Kholmetskii and Yarman 2008 to 2016, an excess k = 0.60 to 0.69; Corda 2015; Friedman 2016) CONTESTED, none decided: the design's 0.94 percent is 9 to 15 sigma below their excess, a fact and no verdict | BOUND rows: (B) 2.2 x 10^-11 against 2.3 x 10^-9; (C) 0.26 sigma against 1.1 percent; the eps mapping a named hypothesis |
+| the atom's levels (the owner's question of record 1430: what is an atom, what is an electron, in the algebra) | an ELECTRON is the free massive quantum of the design (form (II), section 4): a free packet of the massive kind, its rest mass the kind's pair, its clock omega_0, exactly 1 / gamma_m in motion to second order, clicking only at a body's cells. An ATOM is a well of the pair (the nucleus: declared cells with the lowered pair) with the massive record bound in it; its levels the well's bound modes; its lines the modes' frequency differences read by light through the coupling of section 7. COMPUTED (`massive_well_spectrum.py`, a 64^3 periodic box, mu = 0.15, the inside's gap reduced and never reversed): a cube of side 20 at full depth holds one deep mode (eps 0.45) and a pair at the threshold; a sphere of radius 10 one mode; a Coulomb-like profile g(r) = mu^2 min(1, r_0 / r) holds six bound modes at r_0 = 6 with eps ratios 1, 0.40, 0.32 (x2), 0.155 (x2) and eight at r_0 = 12 with 1, 0.64 (x2), 0.51, 0.42, 0.32, 0.25, 0.21: no 1 / n^2 ladder (Balmer's 1, 0.250, 0.111) and not the old 27 / 20, because the well is capped at the medium's gap, the binding is deep (eps 0.4 to 0.7, far from the weak-binding ladder) and the grain is coarse (c / omega_0 = 3.85 Links); THE SCALE CONDITION: nature's hydrogen has the Bohr radius 137 c / omega_0 = 527 Links at this mu, a board of thousands a side, not affordable, as the old atom design said. NOT COMPARED; the ladder a PREDICTION of the model as built for a declared well shape; the old atom algebra (docs/designs/atom_algebra, atom_levels) history under the new kind | NOT COMPARED (the scale condition); the well's shape a DECLARATION |
 | the board's faces | an object nearer a non-periodic face than its mode's extent reads a raised clock (the tail cut, the cavity's creeping in); the margin rule of section 11 a load-time check, the faces periodic by default for the massive record; no pin of the object | the extent from the pair and the side (COMPUTATION); the faces a DECLARATION |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
 | 12, 13 | not derived in this design (the coupling gives an index at declared cells, nothing about a crowd's field); 2.00 and 1 + gamma_PPN stay under the ray law's history | as registered |
@@ -804,7 +820,9 @@ the window, light's norm bound), `massive_block_clock_motion.py` (section 8),
 the margin rule's numbers, with the HOST cost), `massive_light_clock_relay.py`
 (section 9 row (d), the two-object light clock on a chain: the rung-crossing
 time, N_0 against 2 L / c, the mirror variant), `massive_moving_index.py`
-(section 7, the moving block's index against the resting one).
+(section 7, the moving block's index against the resting one),
+`massive_well_spectrum.py` (section 9, the atom's levels as the well's bound
+modes, three shapes, against Balmer).
 Run each as its docstring says; the numbers in this document are theirs.
 
 **Not computed here, and said so:** Fizeau's drag (the stepped block's
