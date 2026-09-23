@@ -7,10 +7,16 @@ at `f023770c1111134b83ecd2581091e70433f16ed8` carries the log to record
 six rows whose status in the tally by status of
 [NATURE.md](../../NATURE.md) is "disagrees, with the number" (1c, 6, 7b,
 8a, 8b, 13), understand why each disagrees and whether the experiment
-behind it did something wrong. Docs only; nothing recomputed for nature;
+behind it did something wrong; extended by the Boss's word of 03:22Z
+(the physics-rule reviewer's reading 4, record 1224, on the owner's
+principle of record 1216, pending the owner's word; both cited from the
+Boss's message, neither on `origin/main` at `688a93d3`): rows 4a, 4b and
+5b enter as one finding read thrice, row 6's ratio leaves to "not
+predicted", and 6b, the atom's stability, enters in its place; nine rows
+in all (1c, 4a, 4b, 5b, 6b, 7b, 8a, 8b, 13). Docs only; nothing recomputed for nature;
 no cell of NATURE.md or of the paper moved; no pin moved; no world file
-changed; one cheap re-run at head, named in writing in section 6 of row 13
-before it was made, its results labelled by kind in section 8.
+changed; one cheap re-run at head, named in writing in section 7 of row 13
+before it was made, its results labelled by kind in section 9.
 
 **The documents read, with the branch and the head of each.**
 [NATURE.md](../../NATURE.md) (main, the rows and both tally blocks); the
@@ -69,11 +75,14 @@ neither, with what is missing to decide.
 | Row | Verdict | In one line |
 | --- | --- | --- |
 | 1c | UNDERSTOOD | Bob's outcome order is the wheel's square wave (u = ordinal mod 64, Alice + for u < 32), whose cyclic lag-1 autocorrelation is 1 - 4 / 64 = 15 / 16 exactly; a counter is not a draw (P4), and no rule of the six closes it. Nature's 0 has no measurement cited in any of the documents (a statement of the outcome order's randomness). |
-| 6 | UNDERSTOOD | the loop opens by the drive's step (the Node lagging the accumulated motion half a Link per axis, the push read there turned along the motion), read by algebra and confirmed by the centred step under its key; and no rule of the six selects a row between two closures, so no line is read. The count 3407 is the count at which the widening loop reaches the box's face at 26 Links: the border's number; the widening is the finding. |
+| 4a | UNDERSTOOD | a body's own count per tick is r = 1 at every speed (a hop costs the clock nothing; no verb carries gamma into a counter), so the `become` at 64 fires at 64 self-creations at any momentum and the ratio is 1, read at a click at head's source (RUN_4AB.md 6.2: the decay's count read back 64 at p = 3640 and 12 856); nature's 29.33 needs a momentum at which the drive saturates, outside what any run reads right. |
+| 4b | UNDERSTOOD | a rest detector counts what it meets: 1 + z = (1 + v) / r = 1 + v at r = 1, seventeen grains below gamma (1 + beta); read at head in the detector's own clock (r = 1.0000, the stamp check 0 of 13 564 lines differing); the star's own clock is the instrument the arrangement does not read. |
+| 5b | UNDERSTOOD, as a pin | a bond's exchange is retarded at c in the lattice's frame with nothing to contract, so the round trips are gamma^2 along and gamma across, the arms apart by beta^2 / 2 in the continuum; a COMPUTATION on the flight table, the pair in motion NOT RUN, no detector reads the arms; nature's side a bound. |
+| 6b | UNDERSTOOD | the loop opens by the drive's step (the Node lagging the accumulated motion half a Link per axis, the push read there turned along the motion), read by algebra and confirmed by the centred step under its key; and no rule of the six selects a row between two closures, so no line is read. The count 3407 is the count at which the widening loop reaches the box's face at 26 Links: the border's number; the widening is the finding. |
 | 7b | UNDERSTOOD | the give is once per body, so the border's clicks count the bodies (4 against 2) whatever the give's value; the ratio 2.0 is a constant of the rule. |
 | 8a | UNDERSTOOD, with the kind of the compared number in dispute among the documents (stated in its section, not chosen here) | a `become` at a declared count of the body's own clock is a step at any count; the only spread the law gives is the crowd's, bounded by its range, an order below 3.17. The documents differ on whether the row's number is the width 0 (the bodies' own clocks, DETECTOR by the tally and the paper) or 0.036 (the lattice's clock, GAMEBOARD by CRITERIA.md and KIND_AUDIT.md, the number in NATURE.md's row cell). |
 | 8b | UNDERSTOOD | a window admits w / N of a stride coprime to N and empties that class; an identical reader behind reads the emptied class, 0; under `massive_rows` the readers become all-or-nothing gates per Node and read 0 and 0; the re-emitter arrangement's 1.000 is a declared arrangement's, as RUN_8BC.md says. The three runs of RUN_8BC.md are at the head's own source (the fingerprint of `f023770c` equals theirs). |
-| 13 | SUSPECT, confirmed by the check of section 8 | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check, one run of `optical/control_g0` and `mass_g0` at head against the register's pin, read -1.993 pixel at head (section 8): the printed number is an n = 0 world's, the law's own number on a coupled world the time part, the ratio 1 against nature's 2. |
+| 13 | SUSPECT, confirmed by the check of section 9 | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check, one run of `optical/control_g0` and `mass_g0` at head against the register's pin, read -1.993 pixel at head (section 9): the printed number is an n = 0 world's, the law's own number on a coupled world the time part, the ratio 1 against nature's 2. |
 
 **The engine since the runs, once for every row.** The commits on
 `origin/main` since the criteria runner's head `4028b020` (2026-09-22,
@@ -202,17 +211,361 @@ source for 0 (a published test of a Bell experiment's outcome sequence)
 or marking it a statement of quantum theory rather than a measurement,
 0 HOST.
 
-## 2. Row 6: the atom's loop opening and Balmer's ratio
+## 2. Rows 4a, 4b and 5b: one finding read thrice (the moving thing's clock, the moving lamp's redshift, the arms' round trips)
 
-**(1) Nature's number and its source.** Balmer's nu(H beta) / nu(H
+Added on the Boss's word of 2026-09-23, 03:22Z (the physics-rule
+reviewer's reading 4, record 1224, on the model owner's principle of
+record 1216, pending the owner's word; neither record is on `origin/main`
+at `688a93d3`, whose log ends at 1213, so both are cited from the Boss's
+message): 4a, 4b and 5b enter the disagreeing rows as one finding read
+thrice. The cause paragraph is shared (2.1); the experiment check is one
+per row (2.2 to 2.4).
+
+### 2.1 The cause as understood today, for the three
+
+WHAT_IS_MISSING.md sections 1.4 (rows 4a and 4b: the word DECLARATION,
+the key `covariant_readings`; mode C, audited A; measured inside the
+board YES in both) and 1.5 (row 5b: the word RULE, a contraction; modes A
+and C; measured inside the board YES, wholly) and KIND_AUDIT.md's rows 4a
+(the pin COMPUTATION, the face clicks DETECTOR BORDER under the key;
+missing (i), a moving body's clock read at a detector), 4b (DETECTOR
+CROWD; missing (i), the moving detector or clock) and 5b (COMPUTATION, no
+detector reading; missing (i) the pair in motion not built and (ii)
+nature's number a bound). The one finding: no verb of the six makes a
+count depend on the momentum, and nothing contracts. A body's clock is
+the count of its self-creations, advanced at every interval in which it
+owes nothing, so a hop costs the clock nothing and a moving body's own
+count per tick is r = 1 at every speed (the click frame section 5 (ii);
+DERIVATIONS_BEAM 4.3); a rest detector counts what it meets, so a lamp
+receding at v reads 1 + z = (1 + v) / r = 1 + v exactly, first order
+right and the second order v^2 / 2 absent (DERIVATIONS_BEAM 2.2, the
+encounter count exact over whole Links); the two one-way factors of the
+click theorem then stand apart, k_BA / k_AB = 1 - v^2, where Lorentz's
+group needs them equal; and a bond's exchange in flight is retarded at c
+in the lattice's frame with nothing to contract (the bond a whole Link,
+12.1), so its round trips are gamma^2 along the motion and gamma across,
+the ether light clock (12.3). The three rows read that one rate three
+ways: 4a as a ratio of counts (1 against 29.33), 4b as a redshift (1 + v
+against gamma (1 + v)), 5b as two round trips (gamma^2 and gamma against
+the null). Beside the law, as a declared hypothesis and never counted as
+the law's: covariant-readings-v1 (the key `covariant_readings`, admitted
+by the owner, record 1134 (a)) declares the one rate r = 1 / gamma on a
+record's drive and clock together, within the domain gamma <= 2 on a
+heading, and there reads 4b's pin (0.3674 for 0.369 +- 0.003) and 4a's
+form (70 / 64 and 124 / 64 against 1.1074 and 1.9558), the one rate
+confirmed on the k-ladder from stamped counts (RUN_4AB.md 6.3); nature's
+29.33 lies outside that domain under either drive, a factor 14.8 short at
+the cap (RUN_4AB.md 2.3); and the identity slows the count isotropically,
+which changes the ratio of 5b's arms not at all (REVIEW_3 section 9). A
+contraction would be a root of the state at run time, the seventh verb,
+which fails the vector test (12.3 "The root"; WHAT_IS_MISSING.md 1.5).
+
+### 2.2 Row 4a: the muon's lifetime in flight
+
+**(1) Nature's number and its source.** gamma = 29.33 at the CERN storage
+ring, the dilation confirmed as gamma to a fractional error of about
+2 x 10^-3 at 95 percent confidence (Bailey et al. 1977, Nature 268, 301;
+NATURE.md's row 4a: "the brief's 0.1 percent; to verify against the
+source").
+
+**(2) The law's own number.** The ratio 1 of the lifetime in flight to
+the lifetime at rest. Its kinds, by the documents: NATURE.md's row cell, a
+pin, "no world file, not run" (series J4 as HYPOTHESES 21 and
+light_speed/FORM.md section 4 define it: the `become` at 64 turns at
+every speed; lorentz-v1's 71 and 126 at 0.43 and 0.86 of c under form B);
+the paper's cell, "the `become` at the count 64 at every speed (a body's
+own record, DETECTOR; its interval GAMEBOARD)" with the products' face
+clicks DETECTOR; KIND_AUDIT.md, the `become` lines BODY by 5.4's letter
+and GAMEBOARD as NATURE.md labels them: the same line is GAMEBOARD in
+NATURE.md and DETECTOR in the paper, a label difference across the
+documents (the same one as row 8a's, section 5 (2)). At head the ratio 1
+is read at a click: RUN_4AB.md section 6.2 (2026-09-23, source sha256
+`5166dbe90169655d`, the fingerprint of `f023770c`, section 0): the law's
+J4 worlds `j4_muon_3640_law` and `j4_muon_12856_law` (the muon of content
+13 248 at p = 3640 and 12 856 on a bar, beta 0.43 and 0.86 by the drive's
+pace; the world key `clock_stamp` alone, no identity) read the products'
+click at the detector body at x = 200 at its own count n_D = 368 and 337
+(DETECTOR), the row's age on the click line 304 and 273 (DETECTOR, equal
+to the flight table's a(200 - x_d)), the decay's count read back n_D
+less the age = 64 in both, the ratio 64 / 64 = 1.0000 (CONVERSION on two
+detector readings); the rest world 390, the decay 64. Under the identity
+beside it, 367 and 344, the decay read back 70 and 124. The tool:
+`run_4ab_readings.py` (its output and its blocks with the digests beside
+RUN_4AB.md), the worlds under `docs/designs/fail_rows/worlds/`. The code
+lines: the `become` at the self-creation whose clock reaches the declared
+count (BEAM_LAW note 36 (iii)); the count advancing at every
+self-creation (engine.py line 706); the click the `measure` rule (5677,
+5536) with the count stamped under `clock_stamp` (POSTULATES.md section
+10). **What the J4 of the register's row would read, since it is not
+made** (the Boss's question): the same closed form (RUN_4AB.md 3.3), the
+products' click at n_D = 64 + a(200 - x_d) with x_d the Node of the 64th
+self-creation, the decay's count read back n_D less the row's age = 64
+at any momentum, the ratio 1 (COMPUTATION); at nature's gamma the
+momentum is p / m = 16.93, where the drive gains 16.93 Links per
+self-creation and steps at most one (`by_drive` with `at_most` 1, either
+drive), so the body would read a pace saturated at one Link per
+self-creation, beyond c, which the identity refuses at load and the law
+does not read right either: the click at 29.33 is not an arrangement the
+drive as built can make honest, and nature's 29.33 needs the decay read
+back at 64 x 29.33 = 1877 counts, which no rule of the six gives.
+
+**(4) The experiment, item by item** (the cause being 2.1).
+
+- *The pins before the run.* RUN_4AB.md section 3.3 at `96a8552d`
+  before STEP 2 (the click's count per world +- 2, the ratio 1 for the
+  law's worlds, 70 / 64 and 124 / 64 for the identity's); series S's
+  `expectations.json` before 2026-09-21. Every click at its integer.
+- *The falsifiers and controls.* "A click off its pin by more than two
+  counts under either key refutes the flight-table derivation or the
+  drive's whole steps": none fired (all six at their integers). The
+  control: the rest world under the key and under the law, 390 in both,
+  the audit digests equal (the key at rest moves nothing). In series S
+  (2026-09-21) one reading was counted outside, the 12 856 muon's
+  `become` at 124 against the continuum's 125.2 +- 1, inside the
+  design's own integer pin 124 (REVIEW_3 must-fix 3, a relabel, nothing
+  moved): the discrete cadence 64 + floor(63 (E' - E'_0) / E'_0), one
+  gamma - 1 below the continuum. At p = 3640 the law's and the identity's
+  clicks lie one count apart, within the tolerance, so that world
+  decides nothing between them (said before the run); at 12 856 seven.
+- *The books.* Every run completed with the books balanced at every
+  tick; 0 record checks failed.
+- *The clock of the reading.* The detector body's own count under
+  `clock_stamp` (records 678, 707, 709 applied: the detector's time the
+  clock of the Node it sits on); the worlds declare `suspension` 0 (read
+  from the files), so the detector's count equals the tick, as the rest
+  world's 390 confirms. The muon's own count is 64 at every speed, by
+  the rule; its tick (64, 70, 124) is GAMEBOARD, printed.
+- *The fan's comb.* None: a bar on one heading, the products on +x.
+- *The kind of every input.* Declared: Q = 64, S = 1, the muon's content
+  13 248 (E'_0 = Q S M), the momenta 0, 3640 and 12 856 on the axis, the
+  `become` at 64 into the products, the bar to x = 200 with the detector
+  body there, K = 2^20, N = 64, `suspension` 0, `clock_stamp` true; the
+  identity's `c2` [1, 3] and grain 1 in the key worlds. Nothing fitted.
+- *The engine since the run, and a repeat at head.* Run on 2026-09-23 at
+  the head's own source (`5166dbe9`, section 0): at head. The register's
+  row cites no run for the law (a pin); the paper's cell cites RUN_4AB.
+  CRITERIA.md has no row 4a.
+- *The arrangement.* The ratio 1 is the `become`'s rule (a declared
+  count of the body's own clock) read through a click; the product's
+  click carries its own age, so the decay's count needs no Node computed
+  and no flight assumed. Nothing in the bar produces the ratio 1 without
+  the law, and nothing in it could produce 29.33: at nature's momentum
+  the drive saturates (above). Sound for the claim at the momenta run;
+  nature's momentum is outside what the drive reads right, a second
+  declaration of the domain (RUN_4AB.md 2.3), not a flaw of this run.
+
+**(5) The verdict.** UNDERSTOOD.
+
+**(6) The cheapest next check.** None for the number (the ratio 1 read at
+a click at head, and the closed form at any momentum); the row's label
+line, the `become` line's kind made one across NATURE.md and the paper
+(docs, 0 HOST).
+
+### 2.3 Row 4b: the moving lamp's redshift
+
+**(1) Nature's number and its source.** 1 + z = gamma (1 + beta) along
+the motion: z = 0.315 at beta = 0.2674 (gamma = 1.0378); the
+time-dilation factor confirmed to 2.3 x 10^-9 at beta = 0.338 (Botermann
+et al. 2014, Phys. Rev. Lett. 113, 120405, "to verify against the
+source"); the classic Ives and Stilwell 1938 (NATURE.md's row 4b).
+
+**(2) The law's own number.** z = 0.2636 registered and 0.2647 at head,
+the star `s_mz2` (rank 2 on -z, beta = 0.2674, the momentum
+51 901 289 008 505) of `hubble_stars/record/coasting_none.json` (the
+record click; the base `coasting_none` reads the same clicks), its z from
+the rate at which the pointer of the centre detector's `record` lines
+turns over the window [300, 400). Kind: DETECTOR, CROWD (the centre
+`wave` set's `record` lines with `reads: "age"`); the time axis: the
+registered run's was the host's interval (record 768, GAMEBOARD), the
+re-run at `4028b020` reads it in the detector's own clock, r = 1.0000 (no
+crowd at the centre), equal to the host's interval to the integer
+(CRITERIA.md row 4b (f); the paper's cell says so; KIND_AUDIT.md's row
+4b, written at `863cf5fd`, still holds the reading NOT YET under R2 by the
+paper's older label: a label difference between the documents that
+RUN_4AB.md's stamp check settles by a click, below). The runs: registered
+2026-09-20 (main `f3a41f28`, fingerprint `acf789fe`); 0.2647 by the
+Replicator at `6b707a5` (record 408, the crossing rule moved it), by the
+register's replay of 2026-09-22 (`8cdba4fb`, in the detector's clock) and
+by the criteria runner at `4028b020` (`record/coasting_none` 400
+intervals in 62.6 s, 326 MB, HOST; the digests state `3993941601dc`,
+audit `33cf0ac763ce`, events `0fa8cfa523de`; 150 readings inside, 0
+outside). The tool: `tools/hubble_stars_readings.py` with
+`record/expectations.json`. Under the key beside it: 0.3674 (series S,
+2026-09-21; RUN_4AB.md 6.1 at head's source under `clock_stamp`, in the
+centre's own count, the stamp check 13 564 lines and 0 differing). The
+code lines: the record lines of a `wave` set under `reads: "age"` (the
+`measure` rule, 5677, 5536); the lamp's births at its own count.
+
+**(4) The experiment, item by item** (the cause being 2.1).
+
+- *The pins before the run.* G2's `record/expectations.json` (z per
+  star within 0.003; the reading's formula and the luminosity per star);
+  CRITERIA.md row 4b (e) before (f): z of `s_mz2` = 0.2647 within 0.003;
+  RUN_4AB.md 3.1 for the key's world (0.369 +- 0.003). All met.
+- *The falsifiers and controls.* "What would refute the FAIL: z >= 0.312
+  at head": not read. The controls: the reading's formula 72 of 72 stars
+  within 2 percent and the luminosity 72 of 72 within 5 percent; the
+  base `coasting_none` run beside (its digests equal to series S's OFF
+  replay of 2026-09-21), NOT READABLE under the acoustic rule, the record
+  world's reading the row's. The law's ideal at r = 1 is z = 0.2674 and
+  the reading lies 0.0038 and 0.0027 below it, a grain (the star's pace
+  on the lattice) and not a rate: named in NATURE.md's note, no
+  falsifier.
+- *The books.* Completed and conserved.
+- *The clock of the reading.* Settled at head: the detector's own count
+  equals the tick at `suspension` 0 with no crowd at the centre (r =
+  1.0000, CRITERIA.md (f); RUN_4AB.md 6.1's stamp, 0 of 13 564 lines
+  differing), so the registered GAMEBOARD time base and the detector's
+  own clock give the same z to the integer; records 678, 707 and 709
+  applied and read. The star's own clock is not read by any detector in
+  the arrangement (its rate 1 is the rule's), which is the missing
+  instrument (i).
+- *The fan's comb.* The star is on the -z axis, a heading; the encounter
+  count on a heading is exact over whole Links (183 = 128 + 55 at k = 4,
+  DERIVATIONS_BEAM 2.2); no fan is averaged. The 24 stars on the six
+  axes are the comb by construction, six directions, each read alone.
+- *The kind of every input.* Declared: the 24 stars' momenta at their
+  fractions of c on the six axes, K = 4 198 400 (not under the one set),
+  N = 64, the 301^3 open cube, the centre detector's window [300, 400),
+  `suspension` 0. Nothing fitted.
+- *The engine since the run, and a repeat at head.* The law's world at
+  `4028b020` (before PR #855, #834 and the split ladder); at `suspension`
+  0 nothing since moves it (the price's rule; `coasting_none` in its
+  table as byte identical); the key's world with the stamp ran on
+  2026-09-23 at the head's source and its books' digest equals series
+  S's registered one. The law's world was not re-run after `4028b020`.
+- *The arrangement.* A rest detector at the centre of an open cube
+  counts the light of a lamp receding on a heading at rate 1: the count
+  ratio 1 + v is what a rest detector meets from such a lamp, by the
+  lamp's rule and the flight's, and nothing else in the arrangement
+  moves it; the stars leave the centre's neighbourhood, so no crowd
+  stretches the detector's count (read: r = 1.0000). Sound for the
+  claim; the star's clock is the instrument nature's arrangement has and
+  this one does not read.
+
+**(5) The verdict.** UNDERSTOOD.
+
+**(6) The cheapest next check.** None for the number (the pin met at
+`4028b020` and nothing since moves an n = 0 world); KIND_AUDIT.md's row 4b
+line brought to the stamp check's result (docs, 0 HOST).
+
+### 2.4 Row 5b: the arms' anisotropy of a moving laboratory
+
+**(1) Nature's number and its source.** The null: delta c / c below
+about 10^-17 (Herrmann et al. 2009, Phys. Rev. D 80, 105011) and
+9.2 +- 10.7 x 10^-19 (Nagel et al. 2015, Nature Communications 6, 8174),
+both "to verify against the source"; the first null Michelson and Morley
+1887, Am. J. Sci. 34, 333, at the Earth's beta = 10^-4 (NATURE.md's rows
+5a and 5b). Nature's number is a bound (KIND_AUDIT.md's kind (ii)); the
+comparison is the law's number against it.
+
+**(2) The law's own number.** The round trips of a bond's exchange in a
+moving pair: gamma^2 along the motion and gamma across in the continuum
+(DERIVATIONS_BEAM 12.3), the arms apart by gamma - 1 = beta^2 / 2 = 5 x
+10^-9 at beta = 10^-4, eight to nine orders above the bound (twelve at
+the cosmic background's 7.6 x 10^-7); on the register's flight table
+1.375 along and 1.140 across at beta = 0.4297 (k = 4), 1.175 and 1.052 at
+k = 8. Kind: COMPUTATION, a pin, the host script of DERIVATIONS_BEAM 12.3
+on the flight table (Q = 64, T_D = 110), no run; the pair in motion of
+12.4 (the geometry of `deuteron_1_kick` under form B and the aberration
+rule, 200 intervals; the pins 304, 116 and 157 rows received per cycle at
+k = 4, 536, 328 and 347 at k = 8, the round trip 1.375 and 1.175 times
+the rest value) NOT RUN; no detector reads the arms. **What its click
+would be:** two rest detectors as the arm's ends on a moving bound pair,
+each counting the exchange's return in its own count under `clock_stamp`
+(WHAT_IS_MISSING.md 1.5, the mode-A fix); the along count and the across
+count in the mover's own count, gamma^2 and gamma under the law on the
+tick, gamma and 1 under the identity's r = 1 / gamma, apart by gamma
+either way. Beside it, read: the r-free round trip of a light row between
+a rest lamp and a moving body on the k-ladder, (1 + beta) / (1 - beta)
+under the law and under the identity alike to the lattice's remainder
+(RUN_4AB.md 6.3, DETECTOR), the radar ratio and not an arm's round trip,
+the New Rows Scout's beside-row for this finding (record 1173).
+
+**(4) The experiment, item by item** (the cause being 2.1).
+
+- *The pins before the run.* Written: 12.4's counts per cycle at k = 4
+  and 8 (integers of the flight table, no tolerance; the continuum
+  comparisons with the flight's 1.35 percent on c) and what refutes 12.2,
+  12.3 and 12.1's continuum, one line each. The run not made, so no pin
+  met or missed.
+- *The falsifiers and controls.* None could fire: no run. What would
+  refute the pin is written (a forward count other than 304 at k = 4, a
+  backward other than 116, a transverse other than 157, a body's tick
+  count other than 4 per cycle).
+- *The books.* None (no run).
+- *The clock of the reading.* The pin's round trips are in the tick;
+  under the identity's own count they read gamma and 1 (WHAT_IS_MISSING.md
+  1.5): the choice of clock moves both arms by the same r and leaves
+  their ratio gamma. Records 678, 707 and 709 would apply to the click
+  that is not made (the two rest detectors' own counts).
+- *The fan's comb.* Present in the lattice's numbers: the transverse
+  row's direction (beta, sqrt(1 - beta^2)) is held by the flight table's
+  root taken once at load, and the whole-Link steps and the first-Link
+  rule put the lattice's 1.375 and 1.140 at k = 4 farther from the
+  continuum's 1.226 and 1.107 than gamma itself (12.3); the aberration
+  moves the transverse period away from gamma at one Link. So the number
+  at d = 1 Link is the comb's; the number compared with nature (beta^2 /
+  2 at 10^-4) is the continuum's limit, which is where nature's arms of
+  10^7 wavelengths are. The finite-d run would read the lattice's size
+  of the anisotropy, not remove it (WHAT_IS_MISSING.md 1.5).
+- *The kind of every input.* Declared: the flight table at Q = 64 (T_D =
+  110 on a heading), v = 1 / k at k = 4 and 8, the bond of one Link, the
+  crossing rule and form B (the key `drive_b`, built, off by default),
+  the aberration rule of 12.2 (one of the six by 12.5 (iv); whether it is
+  built under a key is not stated in the documents read here). Nothing
+  fitted.
+- *The engine since the run, and a repeat at head.* Nothing to repeat:
+  the pin depends on the flight table alone, unchanged (Q = 64, T_D =
+  110); the pair in motion is not run at any head.
+- *The arrangement.* There is none; the row is a pin on the exchange's
+  transit times, and the "arm" is a bond of one Link. Nothing can produce
+  the number without the law, and nothing can test it until the pair in
+  motion, or the two rest detectors, is run. The row's own disagreement
+  (gamma - 1 not 0) is the continuum's and follows from the structure
+  (no contraction); its lattice number at d = 1 is the comb's.
+
+**(5) The verdict.** UNDERSTOOD, as a pin: the disagreement follows from
+the law's structure at the continuum limit, and no experiment exists to
+have erred; the row's status rests on a COMPUTATION and nature's side on
+a bound, both said in the cell.
+
+**(6) The cheapest next check.** The pair in motion of 12.4 at k = 4
+through the shipped runner (200 intervals on `deuteron_1_kick`'s
+geometry under `drive_b`; if the aberration rule is built under a key,
+with it, else the "as built" column of 12.4's table: 188, 228, 152), read
+against the pinned counts per cycle; seconds to a minute HOST once the
+world is declared; it reads the anisotropy's lattice size and moves no
+verdict.
+
+## 3. Row 6b: the atom's stability (the electron escapes at 3407); row 6's ratio a note, not predicted
+
+Renamed on the Boss's word of 2026-09-23, 03:22Z (the reviewer's reading
+4, record 1224, pending the owner's word): row 6's ratio, Balmer's 27 /
+20, leaves the disagreeing rows for "not predicted" (no click of a line,
+no rule of the six quantises a loop), and the atom's stability enters as
+a disagreement of its own, 6b. This section is 6b's; the ratio is kept as
+the note at its end.
+
+**(1) Nature's number and its source.** Nature's hydrogen does not
+ionise: the ground state's electron stays bound, no escape (the thing
+compared with, as the Boss's message states it; no published number is
+cited for it in the documents read here, the fact being qualitative, a
+stable atom). Beside it, for the note only: Balmer's nu(H beta) / nu(H
 alpha) = 27 / 20 = 1.35 exactly (the formula); 1.3500 from the measured
 wavelengths 656.279 nm and 486.135 nm (NIST Atomic Spectra Database,
 Kramida et al., "to verify at the fifth digit"; NATURE.md's row 6 and its
-"Values marked" section, where Balmer's 27 / 20 is listed among the
-values known to the precision stated).
+"Values marked" section).
 
 **(2) The law's own number.** The electron escapes at the count 3407
-(intervals) and no line is read. Kind: DETECTOR, BORDER: the `click` line
+(intervals): the loop widens every quarter turn and leaves the board;
+under the key `centred_step` beside it, the control of the cause, no
+escape in 7500 intervals (RUN_CENTRED.md: 23 axis crossings, five returns
+to the +x axis, C1 PASS; the loop tightening from 12 to 7 Links with the
+period falling from 1431 to 1040, C2 and C3 FAIL as declared; the world
+`hydrogen_r12_centred.json`, the registered world plus the key, run at
+`6b958b95` before PR #855, the pins from the kick map before the run,
+none moved). Kind: DETECTOR, BORDER: the `click` line
 with `measured` 2 on `face:+y` at (29, 52), the electron's escape by its
 step (RUN.md section 2's table, section 4). The run: the Atom Baseline
 Runner, 2026-09-22 at about 09:25Z, the branch's first commit `0ee54703`
@@ -312,7 +665,17 @@ and not read; and no lattice we can run holds the scale (record 997).
   340 paired); the proton's `read` lines are its own record. Sound for
   the claim; the count is the box's.
 
-**(5) The verdict.** UNDERSTOOD.
+**(5) The verdict.** UNDERSTOOD (6b).
+
+**The note on row 6's ratio, not predicted.** Balmer's 27 / 20 is compared
+with no click: no rule of the six selects a row between two closures
+(atom_algebra/ALGEBRA.md section 6), the levels' ladder (j / i)^2 and the
+virial form's 27 / 20 are conjectured in the shell mean's limit
+(LEVELS.md 2 (b)), and no lattice we can run holds the scale (record 997);
+the missing piece is a rule under its own identity (atom-give-v1 /
+atom-level-v1, WHAT_IS_MISSING.md 1.6) and a click definition of a line
+(KIND_AUDIT.md's kind (iii)). The audit of the run above bears on 6b, not
+on the ratio, which no run of the law as built can read.
 
 **(6) The cheapest next check.** `hydrogen_r12.json` at head `f023770c`
 (71 s HOST, 369 MB of records) read by `baseline_readings.py`, expecting
@@ -320,7 +683,7 @@ the crossings 13, 13, 17, 26 and the escape at 3407 byte for byte (the
 price's rule at n = 0, not yet verified on this world); no verdict can
 move.
 
-## 3. Row 7b: the alpha's binding over the deuteron's
+## 4. Row 7b: the alpha's binding over the deuteron's
 
 **(1) Nature's number and its source.** 28.296 MeV / 2.2246 MeV = 12.72
 (AME2020, the same source as row 7a; NATURE.md's row 7b; among the values
@@ -414,7 +777,7 @@ and 7b's number is the same in both.
 any count); if wanted, `deuteron_bond` and `alpha_square_bond` at head
 `f023770c`, about 2 minutes HOST, expecting the same 2 and 4 clicks.
 
-## 4. Row 8a: the neutron's decay curve
+## 5. Row 8a: the neutron's decay curve
 
 **(1) Nature's number and its source.** ln 9 / ln 2 = 3.17, the
 10th-to-90th-percentile width of the decay times over their median for a
@@ -560,7 +923,7 @@ form of the measurement asks, the expectation the tick's width within
 2^-20 of itself; and the moved `become` ticks under the generic entry
 recorded beside it.
 
-## 5. Row 8b: the neutrino's passage through a second detector
+## 6. Row 8b: the neutrino's passage through a second detector
 
 **(1) Nature's number and its source.** About 1: two identical detectors
 in line read the same count, since a MeV neutrino's cross-section of order
@@ -674,7 +1037,7 @@ row stays FAIL for the law as built by the law's design of the path phase
 detectors in line (docs, 0 HOST); the number itself needs no run (exact at
 any count, at head's engine already).
 
-## 6. Row 13: the bending of light
+## 7. Row 13: the bending of light
 
 **(1) Nature's number and its source.** 1.75 arcseconds at the Sun's
 limb, the full deflection over the time part's 0.87: 1 + gamma = 2
@@ -857,25 +1220,28 @@ bends light by the time part and row 13's own number is "the ratio 1
 against 1 + gamma = 2", not "0.000 against 1.75", and the 0.000 is the
 n = 0 world's, which the tally and the paper should say beside it. If the
 run reads 0.000 or refuses, the entry does not act at gamma 0 on this
-world and the printed number stands. Made below, section 8, within the
+world and the printed number stands. Made below, section 9, within the
 order's bound.
 
-**(6) The cheapest next check.** The run of (5), made in section 8, which confirmed the suspect; after it, a docs line: the tally's and the paper's row 13 cell restated with the law's own number on a coupled world (the time part, -1.993 pixel at gamma 0 against -3.989 at gamma 1, the ratio 1 against nature's 2) and series K's 0.000 named as the n = 0 worlds' reading beside it; 0 HOST.
+**(6) The cheapest next check.** The run of (5), made in section 9, which confirmed the suspect; after it, a docs line: the tally's and the paper's row 13 cell restated with the law's own number on a coupled world (the time part, -1.993 pixel at gamma 0 against -3.989 at gamma 1, the ratio 1 against nature's 2) and series K's 0.000 named as the n = 0 worlds' reading beside it; 0 HOST.
 
-## 7. The summary of the six
+## 8. The summary of the nine
 
 | Row | Nature's number (the source) | The law's number | The kind (the form) | The verdict | The cheapest check |
 | --- | --- | --- | --- | --- | --- |
 | 1c | 0, Bob's serial correlation at lag 1 under Alice's settings (no measurement cited; quantum theory's statement) | 15 / 16 under a = 0, -1 / 16 under the cycle; the marginals 96 / 96 (the order channel's run, 2026-09-22, source `d537d443`) | DETECTOR (RECORD, the gathers' order) | UNDERSTOOD | the writer's line naming nature's source or marking it a theorem; 0 HOST |
-| 6 | Balmer's 27 / 20 = 1.35 (NIST; the formula exact) | the electron escapes at 3407, no line read (the atom baseline, 2026-09-22, `af39be60`); the count the box's, the widening the finding | DETECTOR (BORDER, the face click; the count the tick at n = 0) | UNDERSTOOD | `hydrogen_r12.json` at head, 71 s HOST, the same crossings and escape expected |
+| 4a | gamma = 29.33 (Bailey et al. 1977) | the ratio 1: the decay's count read back 64 at the products' click, at p = 3640 and 12 856 under the law (RUN_4AB.md 6.2 at head's source `5166dbe9`); the register's J4 pin not run, its click the same closed form | DETECTOR (the product's click and its age; the `become` line BODY, labelled GAMEBOARD in NATURE.md and DETECTOR in the paper) | UNDERSTOOD | none for the number; the `become` line's label made one; 0 HOST |
+| 4b | z = 0.315 at beta = 0.2674 (Botermann et al. 2014; Ives and Stilwell 1938) | z = 0.2636 registered, 0.2647 at `4028b020` in the detector's own clock (series G2, `s_mz2`); under the key 0.3674 beside it | DETECTOR (CROWD, the centre's record lines; the clock settled by the stamp check) | UNDERSTOOD | none for the number; KIND_AUDIT.md's row 4b line brought to the stamp check; 0 HOST |
+| 5b | the null, below 10^-17 (Herrmann 2009, Nagel 2015; Michelson and Morley 1887), a bound | the arms apart by gamma - 1 = beta^2 / 2 = 5 x 10^-9 at beta = 10^-4; 1.375 and 1.140 at k = 4 on the flight table (DERIVATIONS_BEAM 12.3); the pair in motion of 12.4 NOT RUN | COMPUTATION (a pin; no detector reading) | UNDERSTOOD, as a pin | the pair in motion at k = 4 against 12.4's counts per cycle, about a minute HOST once declared; no verdict moves |
+| 6b (row 6's ratio a note, not predicted) | nature's hydrogen does not ionise (no escape; no source cited) | the electron escapes at 3407, the loop widening every quarter turn (the atom baseline, 2026-09-22, `af39be60`); under `centred_step` no escape in 7500, C1 PASS (the control of the cause); the count the box's, the widening the finding | DETECTOR (BORDER, the face click; the count the tick at n = 0) | UNDERSTOOD | `hydrogen_r12.json` at head, 71 s HOST, the same crossings and escape expected |
 | 7b | 12.72 (AME2020) | 2.0, four border clicks against two (series N, re-run at `4028b020`) | DETECTOR (BORDER); the escaped content GAMEBOARD | UNDERSTOOD | none needed; the two worlds at head, about 2 minutes HOST, if wanted |
 | 8a | 3.17, ln 9 / ln 2 (an identity of the exponential; Gonzalez et al. 2021 for the form) | the documents differ: 0.036 (NATURE.md's row cell) against 0 (the tally, the paper); 0.08 to 0.13 at `4028b020`, the cap 1024; the J1 `become` blocks move under the generic entry at head, unread for the row | DETECTOR (BODY, the `become` lines; CROWD, the shell's 64 clicks) for the step; GAMEBOARD (the lattice's clock) for the width; the label in dispute (KIND_AUDIT.md, the reviewer's to settle) | UNDERSTOOD, the kind of the number in dispute among the documents, stated and not chosen | `j1_lattice` with `clock_stamp` true at head, about 3.5 minutes HOST, the width in the shell's own count |
 | 8b | about 1 (an order-of-magnitude estimate from Formaggio and Zeller 2012; no measurement of two detectors in line cited) | 16 of 1024 and 0 behind, the far detector 699 of 711 (series J2, re-run at `4028b020`); under `massive_rows` 0, 0, the whole beam at x = 14; with a re-emitter 16, 16, 1.000, 683 (RUN_8BC.md at head's source `5166dbe9`) | DETECTOR (CROWD, the readers' own lines) | UNDERSTOOD | a named source for nature's ratio; 0 HOST |
-| 13 | 1 + gamma = 2, 1.75 arcseconds at the Sun's limb (Dyson 1920; the VLBI gamma) | the documents differ: 0.000 pixel (series K at `suspension` 0, 2026-09-20; the tally, the paper) against the time part, -1.993 pixel at gamma 0 in `optical/mass_g0` at [1, 16384] (2026-09-22, before PR #855's merge; WHAT_IS_MISSING.md 1.12's "0.87 arcseconds") | DETECTOR (CROWD, the screen's centroid); the ratio 2.00 and the ring's 0.731 DETECTOR readings of a declared input | SUSPECT, confirmed by the check: the printed number is an n = 0 world's, the coupling declared away; at head a coupled world reads the time part | made (section 8): `optical/control_g0` and `mass_g0` at head, 12 s and 25 s HOST, the pin -1.93 +- 0.5 met at -1.993; next, a docs line restating the row's own number, 0 HOST |
+| 13 | 1 + gamma = 2, 1.75 arcseconds at the Sun's limb (Dyson 1920; the VLBI gamma) | the documents differ: 0.000 pixel (series K at `suspension` 0, 2026-09-20; the tally, the paper) against the time part, -1.993 pixel at gamma 0 in `optical/mass_g0` at [1, 16384] (2026-09-22, before PR #855's merge; WHAT_IS_MISSING.md 1.12's "0.87 arcseconds") | DETECTOR (CROWD, the screen's centroid); the ratio 2.00 and the ring's 0.731 DETECTOR readings of a declared input | SUSPECT, confirmed by the check: the printed number is an n = 0 world's, the coupling declared away; at head a coupled world reads the time part | made (section 9): `optical/control_g0` and `mass_g0` at head, 12 s and 25 s HOST, the pin -1.93 +- 0.5 met at -1.993; next, a docs line restating the row's own number, 0 HOST |
 
-## 8. The one cheap re-run at head: row 13's suspect tested
+## 9. The one cheap re-run at head: row 13's suspect tested
 
-Written after the run, against the pin of section 6 (5) as written before
+Written after the run, against the pin of section 7 (5) as written before
 it (committed at `e98c44d2` before the run); no pin moved; the world files
 unchanged (their sha256 `309dd2daa375f68a` for `mass_g0.json` and
 `354de8167ab5f43a` for `control_g0.json`, the register's files as shipped);
@@ -895,7 +1261,7 @@ state `438e1e268ded` / audit `e3d621218449` / events `3f0844aae6f4`
 (`mass_g0`). Read by `tools/lensing_readings.py --no-replay` (the window
 [110, 400]); 0 record checks failed.
 
-| The reading | Kind | Read at head | The pin (section 6 (5), from `optical/expectations.json`) | Verdict |
+| The reading | Kind | Read at head | The pin (section 7 (5), from `optical/expectations.json`) | Verdict |
 | --- | --- | --- | --- | --- |
 | the control's centroid, y and z | DETECTOR (CROWD, the screen's pixels' clicks) | 26.000, 20.000; 1455 clicks in the window | 26.000 | PASS |
 | `mass_g0`'s centroid shift in y against the control | DETECTOR | -1.993 pixel (the centroid 24.007); 1347 clicks | -1.93 +- 0.5 pixel; the register's reading of 2026-09-22 -1.993 | PASS, and equal to the register's reading to the last digit |
@@ -905,7 +1271,7 @@ state `438e1e268ded` / audit `e3d621218449` / events `3f0844aae6f4`
 | the tool's own series K verdicts ("centroid y outside; delay outside; count outside; phase rate outside") | the tool's brackets for series K (0 within 0.5 pixel), not this row's pin; the phase rate 0.000 against the turn 8 read alike in the control and the mass world | printed as read | none of this row's | reported, no pin |
 | the crowd at b = 6 | GAMEBOARD (a host computation, the tool's label) | presence 17.63 rows per Node, the age moment 181.8 (the optical register's 181.8) | none | a diagnostic |
 
-**What the check settles.** The suspect of section 6 (5) is confirmed:
+**What the check settles.** The suspect of section 7 (5) is confirmed:
 the law as built at head, on a world at a pair with n > 0 under the
 default gamma_PPN = 0, bends a light row past a held mass by the time
 part, -1.993 pixel at b = 6 and M = 2^16 (DETECTOR), half of the
@@ -924,7 +1290,7 @@ is which number the row should print as the law's, which is the Register
 Architect's and the writer's to restate on the Boss's routing, nothing of
 it moved here. The reading is at the register's grain (the pixel 0.5, the
 interval 1) and on the fan's comb like every reading of this geometry
-(section 6 (4)); the ratio of the two gammas cancels the comb, the
+(section 7 (4)); the ratio of the two gammas cancels the comb, the
 absolute shift does not.
 
 **The verdict of row 13 after the check.** SUSPECT, confirmed by the
@@ -932,11 +1298,12 @@ check: the printed number is not the law's at head on a coupled world;
 the row's own number is the time part, read at head (DETECTOR, this
 section), and the cheapest next step is a docs line, not a run.
 
-## 9. Links
+## 10. Links
 
 - [NATURE.md](../../NATURE.md), the rows and the tally by status (2026-09-23).
-- [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) sections 1.2, 1.6, 1.7, 1.8, 1.9, 1.12 and 3.
-- `docs/designs/fail_rows/KIND_AUDIT.md` on `kind-audit` (PR #990), the rows 1c, 6, 7b, 8a, 8b, 13 and its section 2.
+- [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) sections 1.2, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.12 and 3.
+- [RUN_4AB.md](RUN_4AB.md) sections 2.3, 3.3, 6.1, 6.2, 6.3 and 6.4; the series S register ([covariant](../../../examples/events/covariant/README.md)) and G2's ([hubble_stars](../../../examples/events/hubble_stars/README.md)); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md) sections 2.2, 4.3, 12.3, 12.4 and 12.5.
+- `docs/designs/fail_rows/KIND_AUDIT.md` on `kind-audit` (PR #990), the rows 1c, 4a, 4b, 5b, 6, 7b, 8a, 8b, 13 and its section 2.
 - [CRITERIA.md](../paper_criteria/CRITERIA.md) rows 7a and 7b, 8a, 8b, and item (a).
 - [RUN_8BC.md](RUN_8BC.md) sections 0, 5 and 6.3; `RUN_13_2A.md` on `fail-run-13-2a` sections 0, 3 and 9; `RUN_14.md` on `fail-run-14` sections 0 and 9.
 - [The order channel](../order_channel/RUN.md) and [its pins](../order_channel/PINS.md); [the atom's baseline](../atom_baseline/RUN.md), [its cause](../atom_give/CAUSE.md), [the centred step's run](../atom_give/RUN_CENTRED.md).
