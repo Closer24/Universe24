@@ -1156,6 +1156,31 @@ board's two-block world reads it.
    reading is labelled "(layer)" beside its 3-D pin, never in its place.
    The builder needs nothing new: the family's `faces` key already
    declares a periodic axis of extent 1.
+   THE READER OF RECORD AND THE SEED (the Boss's question of 19:56Z on
+   the builder's exploratory layer world; the physicist's word before any
+   layer pin world runs): the reader of record of every clock row is THE
+   CLICKS, the count between clicks on the block's own record over the
+   hold (DETECTOR; the owner's law: only a detector's click is a
+   measurement), its pin the mode's period on the world's own board at
+   rest and the one formula's number in motion, the count's grain the
+   hold over the period and the clicks' own spectrum the finer
+   COMPUTATION on the click times; the spectral peak of the summed record
+   a GAMEBOARD diagnostic beside, never the pin. Under the flat seed on
+   the cells the clicks of a WIDE mode beat (the exploratory layer world:
+   39.26 against the period 42.4; the scratch of the world's own layer
+   reproduces it, 39.29 against 42.36), because the flat seed on 14 cells
+   overlaps a mode of extent 34 Links poorly and the rest goes to the
+   medium's free modes, which on a periodic layer never leave. So the pin
+   worlds (the layer's and the 3-D (ii-c)) DECLARE THE SEED AS THE BOUND
+   MODE'S INTEGER PROFILE over two extents: the margin module's mode at
+   load, rounded to integers on a declared radius s / 2 + 2 / kappa, the
+   same profile at both levels (a standing start, no phase needed), a
+   declaration of the world's initial state of kind 2; with it the
+   scratch's clicks read the mode (42.36, the ratio 1.0001 to the period).
+   The (i-a) and (i-b) worlds keep the flat seed (their modes sit inside
+   the cells, the clicks read to 0.03 percent). The world keys: `seed`
+   with the value `"mode"` in place of an integer, admitted only under
+   `margin`, the profile printed at load (GAMEBOARD).
    THE FIVE CUTS (the owner's approval of the physicist's five lines,
    the Boss's word of 17:10Z, yes to all with one condition): (1) ONE
    MASS for the first table, mu = 0.15; the mu = 0.05 worlds deferred to
