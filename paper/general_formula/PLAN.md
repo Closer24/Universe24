@@ -5277,3 +5277,23 @@ untouched. 248 words (mathematics one token each). Accepted usage:
 abstracts use for Newton's, Lorentz's and Einstein's laws; "derived
 from" without a qualifier is what desk rejections cite. The PDF from
 the true source, read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 01:30Z): the abstract for a reader of quantum mechanics
+
+A second commit on `paper-abstract-names`, the abstract only. The
+bridge is the postulate P1 (bounded integers; the phase on the circle
+Z_N): "the phase discrete in N steps" in the first sentence in place of
+"the phase grain"; after the Outside sentence: "An amplitude is an
+integer sum of N-th roots of unity and the Born rule its square at the
+click, under one axiom of the apparatus; interference, marginals and
+CHSH are then exact rationals of N." Paid for inside the abstract: the
+click's weight and the pair's marginals moved into that sentence out of
+the exact-results sentence; "Born's rule" and "Young's spacing" out of
+the recovered list (the Born rule and interference now stated as
+exact); "of the axes", "coefficient", "CHSH" before "value", "Recovered
+in limits", "their clicks" to "clicks", "passes to a detector" to
+"ends", "It has" dropped before "no relativistic dynamics". Newton,
+Lorentz, Einstein, the owner's central sentence, the tally, the
+conjectures and the two limitations kept. 250 words (mathematics one
+token each), the journal's limit. The PDF from the true source, read
+back. 52 pages.
