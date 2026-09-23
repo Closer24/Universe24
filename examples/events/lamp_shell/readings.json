@@ -1,0 +1,6851 @@
+{
+ "format": "lamp-shell-readings-v1",
+ "window": [
+  200,
+  1200
+ ],
+ "worlds": {
+  "shell_b6_g1": {
+   "verdicts": {
+    "k_shell": {
+     "kind": "COMPUTATION on the DETECTOR readings",
+     "value": 0.011209652628748462,
+     "pinned": 0.011202256944444445,
+     "bracket": [
+      0.010819142821857426,
+      0.011585371067031464
+     ],
+     "verdict": "PASS",
+     "lamps": 450
+    },
+    "k_plane": {
+     "kind": "COMPUTATION on the DETECTOR readings",
+     "value": 0.02286103539708151,
+     "pinned": 0.0228515625,
+     "bracket": [
+      0.0228115625,
+      0.022891562499999997
+     ],
+     "verdict": "PASS",
+     "lamps": 40
+    },
+    "ratio": {
+     "kind": "COMPUTATION on two DETECTOR readings",
+     "value": 2.50814057728064,
+     "through_lever_arm": 3.672240962343543,
+     "pinned": 2.5097964414508387,
+     "bracket": [
+      2.423962089828033,
+      2.5956307930736444
+     ],
+     "verdict": "PASS"
+    },
+    "lamps_off_their_pin": {
+     "kind": "DETECTOR",
+     "count": 9,
+     "of": 450,
+     "verdict": "FAIL"
+    },
+    "lamps_off_their_pin_by_own_births": {
+     "kind": "DETECTOR (the lamp's own record), beside the declared click reading, no pin",
+     "count": 24,
+     "of": 450
+    },
+    "controls_off_1": {
+     "kind": "DETECTOR",
+     "count": 0,
+     "of": 450,
+     "verdict": "PASS"
+    },
+    "lamps_missing": 0
+   },
+   "lamps": {
+    "0": {
+     "node": [
+      -6,
+      -2,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.010771579903834816,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "1": {
+     "node": [
+      -6,
+      -2,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.03319987612176045,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "2": {
+     "node": [
+      -6,
+      -2,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.010771579903834816,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "3": {
+     "node": [
+      -6,
+      -1,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "4": {
+     "node": [
+      -6,
+      -1,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.00977328093705454,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "5": {
+     "node": [
+      -6,
+      -1,
+      0
+     ],
+     "clicks": 971,
+     "k": 0.030266092592035942,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "6": {
+     "node": [
+      -6,
+      -1,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.00977328093705454,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "7": {
+     "node": [
+      -6,
+      -1,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "8": {
+     "node": [
+      -6,
+      0,
+      -2
+     ],
+     "clicks": 968,
+     "k": 0.03319987612176045,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "9": {
+     "node": [
+      -6,
+      0,
+      -1
+     ],
+     "clicks": 971,
+     "k": 0.030266092592035942,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "10": {
+     "node": [
+      -6,
+      0,
+      0
+     ],
+     "clicks": 979,
+     "k": 0.02046712427241748,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "11": {
+     "node": [
+      -6,
+      0,
+      1
+     ],
+     "clicks": 971,
+     "k": 0.030266092592035942,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "12": {
+     "node": [
+      -6,
+      0,
+      2
+     ],
+     "clicks": 968,
+     "k": 0.03319987612176045,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "13": {
+     "node": [
+      -6,
+      1,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "14": {
+     "node": [
+      -6,
+      1,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.00977328093705454,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "15": {
+     "node": [
+      -6,
+      1,
+      0
+     ],
+     "clicks": 971,
+     "k": 0.030266092592035942,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "16": {
+     "node": [
+      -6,
+      1,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.00977328093705454,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "17": {
+     "node": [
+      -6,
+      1,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "18": {
+     "node": [
+      -6,
+      2,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.010771579903834816,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "19": {
+     "node": [
+      -6,
+      2,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.03319987612176045,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "20": {
+     "node": [
+      -6,
+      2,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.010771579903834816,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "21": {
+     "node": [
+      -5,
+      -4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "22": {
+     "node": [
+      -5,
+      -4,
+      0
+     ],
+     "clicks": 979,
+     "k": 0.021523409712700392,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "23": {
+     "node": [
+      -5,
+      -4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "24": {
+     "node": [
+      -5,
+      -3,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021463733898922976,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "25": {
+     "node": [
+      -5,
+      -3,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "26": {
+     "node": [
+      -5,
+      -3,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01950352902349972,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "27": {
+     "node": [
+      -5,
+      -3,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "28": {
+     "node": [
+      -5,
+      -3,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021463733898922976,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "29": {
+     "node": [
+      -5,
+      -2,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010768687547852096,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "30": {
+     "node": [
+      -5,
+      -2,
+      -2
+     ],
+     "clicks": 973,
+     "k": 0.02832002077722584,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "31": {
+     "node": [
+      -5,
+      -2,
+      2
+     ],
+     "clicks": 973,
+     "k": 0.02832002077722584,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "32": {
+     "node": [
+      -5,
+      -2,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010768687547852096,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "33": {
+     "node": [
+      -5,
+      -1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "34": {
+     "node": [
+      -5,
+      -1,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "35": {
+     "node": [
+      -5,
+      -1,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "36": {
+     "node": [
+      -5,
+      -1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "37": {
+     "node": [
+      -5,
+      0,
+      -4
+     ],
+     "clicks": 979,
+     "k": 0.021523409712700392,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "38": {
+     "node": [
+      -5,
+      0,
+      -3
+     ],
+     "clicks": 981,
+     "k": 0.01950352902349972,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "39": {
+     "node": [
+      -5,
+      0,
+      3
+     ],
+     "clicks": 981,
+     "k": 0.01950352902349972,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "40": {
+     "node": [
+      -5,
+      0,
+      4
+     ],
+     "clicks": 979,
+     "k": 0.021512783522902756,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "41": {
+     "node": [
+      -5,
+      1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "42": {
+     "node": [
+      -5,
+      1,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "43": {
+     "node": [
+      -5,
+      1,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "44": {
+     "node": [
+      -5,
+      1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "45": {
+     "node": [
+      -5,
+      2,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010768687547852096,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "46": {
+     "node": [
+      -5,
+      2,
+      -2
+     ],
+     "clicks": 973,
+     "k": 0.02832002077722584,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "47": {
+     "node": [
+      -5,
+      2,
+      2
+     ],
+     "clicks": 973,
+     "k": 0.02832002077722584,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "48": {
+     "node": [
+      -5,
+      2,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010768687547852096,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "49": {
+     "node": [
+      -5,
+      3,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021463733898922976,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "50": {
+     "node": [
+      -5,
+      3,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "51": {
+     "node": [
+      -5,
+      3,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01950352902349972,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "52": {
+     "node": [
+      -5,
+      3,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.009767588232585389,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "53": {
+     "node": [
+      -5,
+      3,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021463733898922976,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "54": {
+     "node": [
+      -5,
+      4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "55": {
+     "node": [
+      -5,
+      4,
+      0
+     ],
+     "clicks": 979,
+     "k": 0.021512783522902756,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "56": {
+     "node": [
+      -5,
+      4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "57": {
+     "node": [
+      -4,
+      -5,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "58": {
+     "node": [
+      -4,
+      -5,
+      0
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "59": {
+     "node": [
+      -4,
+      -5,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "60": {
+     "node": [
+      -4,
+      -4,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010765248974367259,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "61": {
+     "node": [
+      -4,
+      -4,
+      -2
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "62": {
+     "node": [
+      -4,
+      -4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "63": {
+     "node": [
+      -4,
+      -4,
+      0
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "64": {
+     "node": [
+      -4,
+      -4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "65": {
+     "node": [
+      -4,
+      -4,
+      2
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "66": {
+     "node": [
+      -4,
+      -4,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010765248974367259,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "67": {
+     "node": [
+      -4,
+      -3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "68": {
+     "node": [
+      -4,
+      -3,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "69": {
+     "node": [
+      -4,
+      -3,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "70": {
+     "node": [
+      -4,
+      -3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "71": {
+     "node": [
+      -4,
+      -2,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "72": {
+     "node": [
+      -4,
+      -2,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "73": {
+     "node": [
+      -4,
+      -1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "74": {
+     "node": [
+      -4,
+      -1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "75": {
+     "node": [
+      -4,
+      -1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "76": {
+     "node": [
+      -4,
+      -1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "77": {
+     "node": [
+      -4,
+      0,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "78": {
+     "node": [
+      -4,
+      0,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "79": {
+     "node": [
+      -4,
+      0,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "80": {
+     "node": [
+      -4,
+      0,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "81": {
+     "node": [
+      -4,
+      1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "82": {
+     "node": [
+      -4,
+      1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "83": {
+     "node": [
+      -4,
+      1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "84": {
+     "node": [
+      -4,
+      1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "85": {
+     "node": [
+      -4,
+      2,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "86": {
+     "node": [
+      -4,
+      2,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "87": {
+     "node": [
+      -4,
+      3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "88": {
+     "node": [
+      -4,
+      3,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "89": {
+     "node": [
+      -4,
+      3,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "90": {
+     "node": [
+      -4,
+      3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "91": {
+     "node": [
+      -4,
+      4,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010765248974367259,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "92": {
+     "node": [
+      -4,
+      4,
+      -2
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "93": {
+     "node": [
+      -4,
+      4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "94": {
+     "node": [
+      -4,
+      4,
+      0
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "95": {
+     "node": [
+      -4,
+      4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "96": {
+     "node": [
+      -4,
+      4,
+      2
+     ],
+     "clicks": 990,
+     "k": 0.00976140043758189,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "97": {
+     "node": [
+      -4,
+      4,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010765248974367259,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "98": {
+     "node": [
+      -4,
+      5,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "99": {
+     "node": [
+      -4,
+      5,
+      0
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "100": {
+     "node": [
+      -4,
+      5,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "101": {
+     "node": [
+      -3,
+      -5,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "102": {
+     "node": [
+      -3,
+      -5,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "103": {
+     "node": [
+      -3,
+      -5,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "104": {
+     "node": [
+      -3,
+      -5,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "105": {
+     "node": [
+      -3,
+      -5,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "106": {
+     "node": [
+      -3,
+      -4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "107": {
+     "node": [
+      -3,
+      -4,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "108": {
+     "node": [
+      -3,
+      -4,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "109": {
+     "node": [
+      -3,
+      -4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "110": {
+     "node": [
+      -3,
+      -3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "111": {
+     "node": [
+      -3,
+      -3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "112": {
+     "node": [
+      -3,
+      -2,
+      -5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "113": {
+     "node": [
+      -3,
+      -2,
+      5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "114": {
+     "node": [
+      -3,
+      -1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "115": {
+     "node": [
+      -3,
+      -1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "116": {
+     "node": [
+      -3,
+      0,
+      -5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "117": {
+     "node": [
+      -3,
+      0,
+      5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "118": {
+     "node": [
+      -3,
+      1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "119": {
+     "node": [
+      -3,
+      1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "120": {
+     "node": [
+      -3,
+      2,
+      -5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "121": {
+     "node": [
+      -3,
+      2,
+      5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "122": {
+     "node": [
+      -3,
+      3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "123": {
+     "node": [
+      -3,
+      3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "124": {
+     "node": [
+      -3,
+      4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "125": {
+     "node": [
+      -3,
+      4,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "126": {
+     "node": [
+      -3,
+      4,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "127": {
+     "node": [
+      -3,
+      4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "128": {
+     "node": [
+      -3,
+      5,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "129": {
+     "node": [
+      -3,
+      5,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "130": {
+     "node": [
+      -3,
+      5,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "131": {
+     "node": [
+      -3,
+      5,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "132": {
+     "node": [
+      -3,
+      5,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "133": {
+     "node": [
+      -2,
+      -6,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "134": {
+     "node": [
+      -2,
+      -6,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "135": {
+     "node": [
+      -2,
+      -6,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "136": {
+     "node": [
+      -2,
+      -5,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "137": {
+     "node": [
+      -2,
+      -5,
+      -2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "138": {
+     "node": [
+      -2,
+      -5,
+      2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "139": {
+     "node": [
+      -2,
+      -5,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "140": {
+     "node": [
+      -2,
+      -4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "141": {
+     "node": [
+      -2,
+      -4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "142": {
+     "node": [
+      -2,
+      -3,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "143": {
+     "node": [
+      -2,
+      -3,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "144": {
+     "node": [
+      -2,
+      -2,
+      -5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "145": {
+     "node": [
+      -2,
+      -2,
+      5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "146": {
+     "node": [
+      -2,
+      -1,
+      -6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "147": {
+     "node": [
+      -2,
+      -1,
+      6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "148": {
+     "node": [
+      -2,
+      0,
+      -6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "149": {
+     "node": [
+      -2,
+      0,
+      6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "150": {
+     "node": [
+      -2,
+      1,
+      -6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "151": {
+     "node": [
+      -2,
+      1,
+      6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "152": {
+     "node": [
+      -2,
+      2,
+      -5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "153": {
+     "node": [
+      -2,
+      2,
+      5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "154": {
+     "node": [
+      -2,
+      3,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "155": {
+     "node": [
+      -2,
+      3,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "156": {
+     "node": [
+      -2,
+      4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "157": {
+     "node": [
+      -2,
+      4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "158": {
+     "node": [
+      -2,
+      5,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "159": {
+     "node": [
+      -2,
+      5,
+      -2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "160": {
+     "node": [
+      -2,
+      5,
+      2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "161": {
+     "node": [
+      -2,
+      5,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "162": {
+     "node": [
+      -2,
+      6,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "163": {
+     "node": [
+      -2,
+      6,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "164": {
+     "node": [
+      -2,
+      6,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "165": {
+     "node": [
+      -1,
+      -6,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "166": {
+     "node": [
+      -1,
+      -6,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "167": {
+     "node": [
+      -1,
+      -6,
+      0
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "168": {
+     "node": [
+      -1,
+      -6,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "169": {
+     "node": [
+      -1,
+      -6,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "170": {
+     "node": [
+      -1,
+      -5,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "171": {
+     "node": [
+      -1,
+      -5,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "172": {
+     "node": [
+      -1,
+      -5,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "173": {
+     "node": [
+      -1,
+      -5,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "174": {
+     "node": [
+      -1,
+      -4,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "175": {
+     "node": [
+      -1,
+      -4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "176": {
+     "node": [
+      -1,
+      -4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "177": {
+     "node": [
+      -1,
+      -4,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "178": {
+     "node": [
+      -1,
+      -3,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "179": {
+     "node": [
+      -1,
+      -3,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "180": {
+     "node": [
+      -1,
+      -2,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "181": {
+     "node": [
+      -1,
+      -2,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "182": {
+     "node": [
+      -1,
+      -1,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "183": {
+     "node": [
+      -1,
+      -1,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "184": {
+     "node": [
+      -1,
+      0,
+      -6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "185": {
+     "node": [
+      -1,
+      0,
+      6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "186": {
+     "node": [
+      -1,
+      1,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "187": {
+     "node": [
+      -1,
+      1,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "188": {
+     "node": [
+      -1,
+      2,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "189": {
+     "node": [
+      -1,
+      2,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "190": {
+     "node": [
+      -1,
+      3,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "191": {
+     "node": [
+      -1,
+      3,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "192": {
+     "node": [
+      -1,
+      4,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "193": {
+     "node": [
+      -1,
+      4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "194": {
+     "node": [
+      -1,
+      4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "195": {
+     "node": [
+      -1,
+      4,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "196": {
+     "node": [
+      -1,
+      5,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "197": {
+     "node": [
+      -1,
+      5,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "198": {
+     "node": [
+      -1,
+      5,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "199": {
+     "node": [
+      -1,
+      5,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "200": {
+     "node": [
+      -1,
+      6,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "201": {
+     "node": [
+      -1,
+      6,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "202": {
+     "node": [
+      -1,
+      6,
+      0
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "203": {
+     "node": [
+      -1,
+      6,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "204": {
+     "node": [
+      -1,
+      6,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "205": {
+     "node": [
+      0,
+      -6,
+      -2
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "206": {
+     "node": [
+      0,
+      -6,
+      -1
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "207": {
+     "node": [
+      0,
+      -6,
+      0
+     ],
+     "clicks": 980,
+     "k": 0.020519645469237346,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "208": {
+     "node": [
+      0,
+      -6,
+      1
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "209": {
+     "node": [
+      0,
+      -6,
+      2
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "210": {
+     "node": [
+      0,
+      -5,
+      -4
+     ],
+     "clicks": 979,
+     "k": 0.021567715088676165,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "211": {
+     "node": [
+      0,
+      -5,
+      -3
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "212": {
+     "node": [
+      0,
+      -5,
+      3
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "213": {
+     "node": [
+      0,
+      -5,
+      4
+     ],
+     "clicks": 979,
+     "k": 0.021567715088676165,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "214": {
+     "node": [
+      0,
+      -4,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "215": {
+     "node": [
+      0,
+      -4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "216": {
+     "node": [
+      0,
+      -4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "217": {
+     "node": [
+      0,
+      -4,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "218": {
+     "node": [
+      0,
+      -3,
+      -5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "219": {
+     "node": [
+      0,
+      -3,
+      5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "220": {
+     "node": [
+      0,
+      -2,
+      -6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "221": {
+     "node": [
+      0,
+      -2,
+      6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "222": {
+     "node": [
+      0,
+      -1,
+      -6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "223": {
+     "node": [
+      0,
+      -1,
+      6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "224": {
+     "node": [
+      0,
+      0,
+      -6
+     ],
+     "clicks": 980,
+     "k": 0.020519645469237346,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "225": {
+     "node": [
+      0,
+      0,
+      6
+     ],
+     "clicks": 980,
+     "k": 0.020519645469237346,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "226": {
+     "node": [
+      0,
+      1,
+      -6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "227": {
+     "node": [
+      0,
+      1,
+      6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "228": {
+     "node": [
+      0,
+      2,
+      -6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "229": {
+     "node": [
+      0,
+      2,
+      6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "230": {
+     "node": [
+      0,
+      3,
+      -5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "231": {
+     "node": [
+      0,
+      3,
+      5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "232": {
+     "node": [
+      0,
+      4,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "233": {
+     "node": [
+      0,
+      4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "234": {
+     "node": [
+      0,
+      4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "235": {
+     "node": [
+      0,
+      4,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "236": {
+     "node": [
+      0,
+      5,
+      -4
+     ],
+     "clicks": 979,
+     "k": 0.021567715088676165,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "237": {
+     "node": [
+      0,
+      5,
+      -3
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "238": {
+     "node": [
+      0,
+      5,
+      3
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "239": {
+     "node": [
+      0,
+      5,
+      4
+     ],
+     "clicks": 979,
+     "k": 0.021567715088676165,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "240": {
+     "node": [
+      0,
+      6,
+      -2
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "241": {
+     "node": [
+      0,
+      6,
+      -1
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "242": {
+     "node": [
+      0,
+      6,
+      0
+     ],
+     "clicks": 980,
+     "k": 0.020519645469237346,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "243": {
+     "node": [
+      0,
+      6,
+      1
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "244": {
+     "node": [
+      0,
+      6,
+      2
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "245": {
+     "node": [
+      1,
+      -6,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "246": {
+     "node": [
+      1,
+      -6,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "247": {
+     "node": [
+      1,
+      -6,
+      0
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "248": {
+     "node": [
+      1,
+      -6,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "249": {
+     "node": [
+      1,
+      -6,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "250": {
+     "node": [
+      1,
+      -5,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "251": {
+     "node": [
+      1,
+      -5,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "252": {
+     "node": [
+      1,
+      -5,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "253": {
+     "node": [
+      1,
+      -5,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "254": {
+     "node": [
+      1,
+      -4,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "255": {
+     "node": [
+      1,
+      -4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "256": {
+     "node": [
+      1,
+      -4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "257": {
+     "node": [
+      1,
+      -4,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "258": {
+     "node": [
+      1,
+      -3,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "259": {
+     "node": [
+      1,
+      -3,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "260": {
+     "node": [
+      1,
+      -2,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "261": {
+     "node": [
+      1,
+      -2,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "262": {
+     "node": [
+      1,
+      -1,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "263": {
+     "node": [
+      1,
+      -1,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "264": {
+     "node": [
+      1,
+      0,
+      -6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "265": {
+     "node": [
+      1,
+      0,
+      6
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "266": {
+     "node": [
+      1,
+      1,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "267": {
+     "node": [
+      1,
+      1,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "268": {
+     "node": [
+      1,
+      2,
+      -6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "269": {
+     "node": [
+      1,
+      2,
+      6
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "270": {
+     "node": [
+      1,
+      3,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "271": {
+     "node": [
+      1,
+      3,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "272": {
+     "node": [
+      1,
+      4,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "273": {
+     "node": [
+      1,
+      4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "274": {
+     "node": [
+      1,
+      4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "275": {
+     "node": [
+      1,
+      4,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "276": {
+     "node": [
+      1,
+      5,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "277": {
+     "node": [
+      1,
+      5,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "278": {
+     "node": [
+      1,
+      5,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "279": {
+     "node": [
+      1,
+      5,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "280": {
+     "node": [
+      1,
+      6,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "281": {
+     "node": [
+      1,
+      6,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "282": {
+     "node": [
+      1,
+      6,
+      0
+     ],
+     "clicks": 970,
+     "k": 0.030253718983136002,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "283": {
+     "node": [
+      1,
+      6,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "284": {
+     "node": [
+      1,
+      6,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "285": {
+     "node": [
+      2,
+      -6,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "286": {
+     "node": [
+      2,
+      -6,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "287": {
+     "node": [
+      2,
+      -6,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "288": {
+     "node": [
+      2,
+      -5,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "289": {
+     "node": [
+      2,
+      -5,
+      -2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "290": {
+     "node": [
+      2,
+      -5,
+      2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "291": {
+     "node": [
+      2,
+      -5,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "292": {
+     "node": [
+      2,
+      -4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "293": {
+     "node": [
+      2,
+      -4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "294": {
+     "node": [
+      2,
+      -3,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "295": {
+     "node": [
+      2,
+      -3,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "296": {
+     "node": [
+      2,
+      -2,
+      -5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "297": {
+     "node": [
+      2,
+      -2,
+      5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "298": {
+     "node": [
+      2,
+      -1,
+      -6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "299": {
+     "node": [
+      2,
+      -1,
+      6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "300": {
+     "node": [
+      2,
+      0,
+      -6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "301": {
+     "node": [
+      2,
+      0,
+      6
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "302": {
+     "node": [
+      2,
+      1,
+      -6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "303": {
+     "node": [
+      2,
+      1,
+      6
+     ],
+     "clicks": 989,
+     "k": 0.010776532869869015,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "304": {
+     "node": [
+      2,
+      2,
+      -5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "305": {
+     "node": [
+      2,
+      2,
+      5
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "306": {
+     "node": [
+      2,
+      3,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "307": {
+     "node": [
+      2,
+      3,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "308": {
+     "node": [
+      2,
+      4,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "309": {
+     "node": [
+      2,
+      4,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.00979431863614777,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "310": {
+     "node": [
+      2,
+      5,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "311": {
+     "node": [
+      2,
+      5,
+      -2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "312": {
+     "node": [
+      2,
+      5,
+      2
+     ],
+     "clicks": 972,
+     "k": 0.028314734159897048,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "313": {
+     "node": [
+      2,
+      5,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010777463873106186,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "314": {
+     "node": [
+      2,
+      6,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "315": {
+     "node": [
+      2,
+      6,
+      0
+     ],
+     "clicks": 968,
+     "k": 0.033212468414509866,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "316": {
+     "node": [
+      2,
+      6,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.01077706664526823,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "317": {
+     "node": [
+      3,
+      -5,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "318": {
+     "node": [
+      3,
+      -5,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "319": {
+     "node": [
+      3,
+      -5,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "320": {
+     "node": [
+      3,
+      -5,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "321": {
+     "node": [
+      3,
+      -5,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "322": {
+     "node": [
+      3,
+      -4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "323": {
+     "node": [
+      3,
+      -4,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "324": {
+     "node": [
+      3,
+      -4,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "325": {
+     "node": [
+      3,
+      -4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "326": {
+     "node": [
+      3,
+      -3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "327": {
+     "node": [
+      3,
+      -3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "328": {
+     "node": [
+      3,
+      -2,
+      -5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "329": {
+     "node": [
+      3,
+      -2,
+      5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "330": {
+     "node": [
+      3,
+      -1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "331": {
+     "node": [
+      3,
+      -1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "332": {
+     "node": [
+      3,
+      0,
+      -5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "333": {
+     "node": [
+      3,
+      0,
+      5
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "334": {
+     "node": [
+      3,
+      1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "335": {
+     "node": [
+      3,
+      1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "336": {
+     "node": [
+      3,
+      2,
+      -5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "337": {
+     "node": [
+      3,
+      2,
+      5
+     ],
+     "clicks": 979,
+     "k": 0.021507328352260435,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "338": {
+     "node": [
+      3,
+      3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "339": {
+     "node": [
+      3,
+      3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "340": {
+     "node": [
+      3,
+      4,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "341": {
+     "node": [
+      3,
+      4,
+      -3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "342": {
+     "node": [
+      3,
+      4,
+      3
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "343": {
+     "node": [
+      3,
+      4,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "344": {
+     "node": [
+      3,
+      5,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "345": {
+     "node": [
+      3,
+      5,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "346": {
+     "node": [
+      3,
+      5,
+      0
+     ],
+     "clicks": 981,
+     "k": 0.01951269063150507,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "347": {
+     "node": [
+      3,
+      5,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.0097970410978927,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "348": {
+     "node": [
+      3,
+      5,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021505960087762954,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "349": {
+     "node": [
+      4,
+      -5,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "350": {
+     "node": [
+      4,
+      -5,
+      0
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "351": {
+     "node": [
+      4,
+      -5,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "352": {
+     "node": [
+      4,
+      -4,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010772821253260734,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "353": {
+     "node": [
+      4,
+      -4,
+      -2
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "354": {
+     "node": [
+      4,
+      -4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "355": {
+     "node": [
+      4,
+      -4,
+      0
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "356": {
+     "node": [
+      4,
+      -4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "357": {
+     "node": [
+      4,
+      -4,
+      2
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "358": {
+     "node": [
+      4,
+      -4,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010772821253260734,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "359": {
+     "node": [
+      4,
+      -3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "360": {
+     "node": [
+      4,
+      -3,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009775941635625118,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "361": {
+     "node": [
+      4,
+      -3,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009775941635625118,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "362": {
+     "node": [
+      4,
+      -3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "363": {
+     "node": [
+      4,
+      -2,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "364": {
+     "node": [
+      4,
+      -2,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "365": {
+     "node": [
+      4,
+      -1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "366": {
+     "node": [
+      4,
+      -1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "367": {
+     "node": [
+      4,
+      -1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "368": {
+     "node": [
+      4,
+      -1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "369": {
+     "node": [
+      4,
+      0,
+      -5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "370": {
+     "node": [
+      4,
+      0,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "371": {
+     "node": [
+      4,
+      0,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "372": {
+     "node": [
+      4,
+      0,
+      5
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "373": {
+     "node": [
+      4,
+      1,
+      -5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "374": {
+     "node": [
+      4,
+      1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "375": {
+     "node": [
+      4,
+      1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "376": {
+     "node": [
+      4,
+      1,
+      5
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "377": {
+     "node": [
+      4,
+      2,
+      -4
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "378": {
+     "node": [
+      4,
+      2,
+      4
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "379": {
+     "node": [
+      4,
+      3,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "380": {
+     "node": [
+      4,
+      3,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009775941635625118,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "381": {
+     "node": [
+      4,
+      3,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009775941635625118,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "382": {
+     "node": [
+      4,
+      3,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "383": {
+     "node": [
+      4,
+      4,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010772821253260734,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "384": {
+     "node": [
+      4,
+      4,
+      -2
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "385": {
+     "node": [
+      4,
+      4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "386": {
+     "node": [
+      4,
+      4,
+      0
+     ],
+     "clicks": 990,
+     "k": 0.009787388667322539,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "387": {
+     "node": [
+      4,
+      4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "388": {
+     "node": [
+      4,
+      4,
+      2
+     ],
+     "clicks": 990,
+     "k": 0.009778478567723736,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "389": {
+     "node": [
+      4,
+      4,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010772821253260734,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "390": {
+     "node": [
+      4,
+      5,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "391": {
+     "node": [
+      4,
+      5,
+      0
+     ],
+     "clicks": 989,
+     "k": 0.010777848687277158,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "392": {
+     "node": [
+      4,
+      5,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "393": {
+     "node": [
+      5,
+      -4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "394": {
+     "node": [
+      5,
+      -4,
+      0
+     ],
+     "clicks": 979,
+     "k": 0.021545275183841417,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "395": {
+     "node": [
+      5,
+      -4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "396": {
+     "node": [
+      5,
+      -3,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021485346164029417,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "397": {
+     "node": [
+      5,
+      -3,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "398": {
+     "node": [
+      5,
+      -3,
+      0
+     ],
+     "clicks": 980,
+     "k": 0.019497571703863903,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "399": {
+     "node": [
+      5,
+      -3,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "400": {
+     "node": [
+      5,
+      -3,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021485346164029417,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "401": {
+     "node": [
+      5,
+      -2,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010774894300009219,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "402": {
+     "node": [
+      5,
+      -2,
+      -2
+     ],
+     "clicks": 973,
+     "k": 0.02832490044687419,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "403": {
+     "node": [
+      5,
+      -2,
+      2
+     ],
+     "clicks": 973,
+     "k": 0.02832490044687419,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "404": {
+     "node": [
+      5,
+      -2,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010774894300009219,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "405": {
+     "node": [
+      5,
+      -1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "406": {
+     "node": [
+      5,
+      -1,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "407": {
+     "node": [
+      5,
+      -1,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "408": {
+     "node": [
+      5,
+      -1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "409": {
+     "node": [
+      5,
+      0,
+      -4
+     ],
+     "clicks": 979,
+     "k": 0.021545275183841417,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "410": {
+     "node": [
+      5,
+      0,
+      -3
+     ],
+     "clicks": 980,
+     "k": 0.019497571703863903,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "411": {
+     "node": [
+      5,
+      0,
+      3
+     ],
+     "clicks": 980,
+     "k": 0.019497571703863903,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "412": {
+     "node": [
+      5,
+      0,
+      4
+     ],
+     "clicks": 979,
+     "k": 0.021545275183841417,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "413": {
+     "node": [
+      5,
+      1,
+      -4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "414": {
+     "node": [
+      5,
+      1,
+      -3
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "415": {
+     "node": [
+      5,
+      1,
+      3
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "416": {
+     "node": [
+      5,
+      1,
+      4
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "417": {
+     "node": [
+      5,
+      2,
+      -3
+     ],
+     "clicks": 989,
+     "k": 0.010774894300009219,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "418": {
+     "node": [
+      5,
+      2,
+      -2
+     ],
+     "clicks": 973,
+     "k": 0.02832490044687419,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "419": {
+     "node": [
+      5,
+      2,
+      2
+     ],
+     "clicks": 973,
+     "k": 0.02832490044687419,
+     "k_from_own_births": 0.028323936487492984,
+     "pinned": 0.0283203125,
+     "age_moment_pinned": 464,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "420": {
+     "node": [
+      5,
+      2,
+      3
+     ],
+     "clicks": 989,
+     "k": 0.010774894300009219,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "421": {
+     "node": [
+      5,
+      3,
+      -2
+     ],
+     "clicks": 979,
+     "k": 0.021485346164029417,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "422": {
+     "node": [
+      5,
+      3,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "423": {
+     "node": [
+      5,
+      3,
+      0
+     ],
+     "clicks": 980,
+     "k": 0.019497571703863903,
+     "k_from_own_births": 0.019540696656499934,
+     "pinned": 0.01953125,
+     "age_moment_pinned": 320,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "424": {
+     "node": [
+      5,
+      3,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.009780891735215125,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "425": {
+     "node": [
+      5,
+      3,
+      2
+     ],
+     "clicks": 979,
+     "k": 0.021485346164029417,
+     "k_from_own_births": 0.021442760175520492,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "426": {
+     "node": [
+      5,
+      4,
+      -1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "427": {
+     "node": [
+      5,
+      4,
+      0
+     ],
+     "clicks": 979,
+     "k": 0.021545275183841417,
+     "k_from_own_births": 0.02150790619219567,
+     "pinned": 0.021484375,
+     "age_moment_pinned": 352,
+     "inside": false,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "428": {
+     "node": [
+      5,
+      4,
+      1
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "429": {
+     "node": [
+      6,
+      -2,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.0107764211493655,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "430": {
+     "node": [
+      6,
+      -2,
+      0
+     ],
+     "clicks": 967,
+     "k": 0.033183744707197205,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "431": {
+     "node": [
+      6,
+      -2,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.0107764211493655,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "432": {
+     "node": [
+      6,
+      -1,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "433": {
+     "node": [
+      6,
+      -1,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.00978534678337728,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "434": {
+     "node": [
+      6,
+      -1,
+      0
+     ],
+     "clicks": 971,
+     "k": 0.03025457979524604,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "435": {
+     "node": [
+      6,
+      -1,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.00978534678337728,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "436": {
+     "node": [
+      6,
+      -1,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "437": {
+     "node": [
+      6,
+      0,
+      -2
+     ],
+     "clicks": 967,
+     "k": 0.033183744707197205,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "438": {
+     "node": [
+      6,
+      0,
+      -1
+     ],
+     "clicks": 971,
+     "k": 0.03025457979524604,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "439": {
+     "node": [
+      6,
+      0,
+      0
+     ],
+     "clicks": 980,
+     "k": 0.020480638066107115,
+     "k_from_own_births": 0.020497618125811634,
+     "pinned": 0.0205078125,
+     "age_moment_pinned": 336,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "440": {
+     "node": [
+      6,
+      0,
+      1
+     ],
+     "clicks": 971,
+     "k": 0.03025457979524604,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "441": {
+     "node": [
+      6,
+      0,
+      2
+     ],
+     "clicks": 967,
+     "k": 0.033183744707197205,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "442": {
+     "node": [
+      6,
+      1,
+      -2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "443": {
+     "node": [
+      6,
+      1,
+      -1
+     ],
+     "clicks": 990,
+     "k": 0.00978534678337728,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "444": {
+     "node": [
+      6,
+      1,
+      0
+     ],
+     "clicks": 971,
+     "k": 0.03025457979524604,
+     "k_from_own_births": 0.030254252010628147,
+     "pinned": 0.0302734375,
+     "age_moment_pinned": 496,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "445": {
+     "node": [
+      6,
+      1,
+      1
+     ],
+     "clicks": 990,
+     "k": 0.00978534678337728,
+     "k_from_own_births": 0.00978534678337728,
+     "pinned": 0.009765625,
+     "age_moment_pinned": 160,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "446": {
+     "node": [
+      6,
+      1,
+      2
+     ],
+     "clicks": 1000,
+     "k": 0.0,
+     "k_from_own_births": 0.0,
+     "pinned": 0.0,
+     "age_moment_pinned": 0,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "447": {
+     "node": [
+      6,
+      2,
+      -1
+     ],
+     "clicks": 989,
+     "k": 0.0107764211493655,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "448": {
+     "node": [
+      6,
+      2,
+      0
+     ],
+     "clicks": 967,
+     "k": 0.033183744707197205,
+     "k_from_own_births": 0.03319008271987012,
+     "pinned": 0.033203125,
+     "age_moment_pinned": 544,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    },
+    "449": {
+     "node": [
+      6,
+      2,
+      1
+     ],
+     "clicks": 989,
+     "k": 0.0107764211493655,
+     "k_from_own_births": 0.010718807321765,
+     "pinned": 0.0107421875,
+     "age_moment_pinned": 176,
+     "inside": true,
+     "control_k": 0.0,
+     "control_inside": true
+    }
+   }
+  }
+ },
+ "host": {
+  "kind": "HOST",
+  "summary": [
+   {
+    "world": "shell_b6_g1",
+    "path": "examples/events/lamp_shell/shell_b6_g1.json",
+    "exit_code": 0,
+    "status": "completed",
+    "ticks": 1200,
+    "runner_seconds": 496.154,
+    "wall_seconds": 510.17,
+    "peak_rss_mb": 1907.7,
+    "state_sha256": "81a1caaad1f6466a51896486a1709bec8c19bf5d7fedfe2bee2f426a75b6380e",
+    "state_bytes": 19627759,
+    "audit_sha256": "7e87ba384117337aeb2fc7c03c0a4f4ceea4a450cf8fab33cadbe59507ce218c",
+    "events_sha256": "27059403ac50731020fe88aa0974e92c57407ba4a4c07214714d8e9a6988fd21",
+    "conserved": true
+   },
+   {
+    "world": "shell_b6_control_g1",
+    "path": "examples/events/lamp_shell/shell_b6_control_g1.json",
+    "exit_code": 0,
+    "status": "completed",
+    "ticks": 1200,
+    "runner_seconds": 299.593,
+    "wall_seconds": 315.414,
+    "peak_rss_mb": 1920.8,
+    "state_sha256": "425631a6b8545f2c891de4db82842840c193e8f30406d43d9a8fe4edc15f3e01",
+    "state_bytes": 11513681,
+    "audit_sha256": "c2c43cd7234db3cb82d7b4ff0a5f8fbc79013a322d4d554cd423aed589fb5d69",
+    "events_sha256": "455d31c0e564c83324bda3dff32723179cb35a2736ea6fa1d3d043fc7b7f0261",
+    "conserved": true
+   }
+  ]
+ }
+}

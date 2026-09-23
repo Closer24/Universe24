@@ -172,6 +172,13 @@ def test_the_key_absent_reads_byte_for_byte_as_main(tmp_path):
         document = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(document, dict) or "format" in document or path.parent == FLOW_LINK_WORLDS:
             continue
+        if path.parent.name == "lamp_shell":
+            # Row 13's k_a(b) lamp shell (`lamp_shell/*.json`): the ring
+            # world's construction under the key, declared by design beside
+            # the registered ring worlds on the Boss's GO of 2026-09-23 on
+            # the physics-rule reviewer's read (docs/designs/fail_rows/
+            # RUN_13_2A.md section 2 (a); `lamp_shell/README.md`).
+            continue
         if path.parent.name == "orbit_lamp" and ("_flow" in path.stem or "_k17" in path.stem):
             # Series D3's one-constant worlds (`orbit_lamp/r*_flow*.json`):
             # the key by the owner's decision of record 915, declared by
