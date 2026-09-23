@@ -55,7 +55,10 @@ line (off both: the straight-path form and the read k_a(b), not the
 count); the cause by the primitive, a GAMEBOARD diagnostic: the crowd's
 age moment along the row's line and at the two clocks is the comb of the
 Manhattan fan, 2 to 35 times the isotropic shell mean the conditional
-pins assumed. No pin moved.
+pins assumed. No pin moved. The check of RUN_14.md section 10 (the same
+kernels on the crowd replayed along the row's own line) reproduces the
+read advance to 2 per cent and the centroids to 6 and 10 per cent: the
+forms hold at the comb; no pin.
 
     PYTHONPATH=src python examples/events/newton_side/make_worlds.py
     PYTHONPATH=src python tools/run_series.py examples/events/newton_side --output artifacts/newton_side
