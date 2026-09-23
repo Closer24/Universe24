@@ -442,9 +442,12 @@ its pin is reported with its numbers and never moved.
 
 The windows: the one-way factors from the cart's count 60 to its last
 click of A's rows (and R's lines over the same ordinals); the round trip
-from the cart's count 100 to its last return. The band: 2 / W over a
-window of W counts apart (PREREGISTRATION_V2 section 5, g = 1 for a
-whole-k reading). [Read after the run, the pin untouched: this is
+from the cart's count 100 to its last return. The band as pinned: 2 / W over
+a window of W counts apart (version 1's, DESIGN.md section 5; misquoted
+here as PREREGISTRATION_V2's, whose rule is 2 g / (ordinals apart)); the
+band the lattice guarantees a hopping reader is the staircase remainder
+of section 6, one hop plus one dwell per end in the reader's counts.
+[Read after the run, the pin untouched: this is
 version 1's band (DESIGN.md section 5, one count's remainder per end,
 written for the hop frame); PREREGISTRATION_V2 section 5 states the band
 in force as 2 g / (the ordinals apart), a round trip counting +2 counts,
