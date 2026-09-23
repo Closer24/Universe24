@@ -44,6 +44,19 @@ a GAMEBOARD diagnostic (the tick), labelled; only the first is compared
 with a pin. A control off 979, or two control clicks differing, refutes
 the rung and stops the run (RUN_14.md section 3).
 
+Read on 2026-09-23 on the Boss's GO (RUN_14.md section 9): the control
+PASSES every pin (979 on the first click and 980 on every later one, the
+arrival Node the line's end, no face click, the count ratio 1.000: the
+rung k = 19 whole on the board); the mass and light worlds FAIL every
+conditional pin by 2.5 to 4 (the advance -115 counts against -40.5, the
+centroid 11.0 pixels against 4.39, the light row's 18.9 against 4.63 and
+5.47, its delay +21 against +3.0), the deciding pin's answer its fourth
+line (off both: the straight-path form and the read k_a(b), not the
+count); the cause by the primitive, a GAMEBOARD diagnostic: the crowd's
+age moment along the row's line and at the two clocks is the comb of the
+Manhattan fan, 2 to 35 times the isotropic shell mean the conditional
+pins assumed. No pin moved.
+
     PYTHONPATH=src python examples/events/newton_side/make_worlds.py
     PYTHONPATH=src python tools/run_series.py examples/events/newton_side --output artifacts/newton_side
     PYTHONPATH=src python tools/newton_side_readings.py artifacts/newton_side

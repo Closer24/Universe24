@@ -122,7 +122,20 @@ name of the ratio of two count ratios, 0.0912 on the rung.
    numbers (the width 404, the launch momentum 4 x 404 x M) in
    `examples/events/orbit_lamp/make_worlds.py` writing the k17 pair and
    its controls, the registered worlds untouched. No engine line.
-5. **Open, the owner's or the reviewer's** (section 8): the deciding pin
+5. **Step 2, run on the GO of 2026-09-23** (section 9): the control
+   PASSES every pin (979 then 980 on every click, the line's end, no
+   face click, the ratio 1.000: the rung whole on the board); the mass
+   and light worlds FAIL every conditional pin by 2.5 to 4 (the advance
+   -115 against -40.5, the centroid 11.0 against 4.39, the light row's
+   18.9 against 4.63 and 5.47, its delay +21 against +3.0), the deciding
+   pin answering with its fourth line; the cause by the primitive, read
+   as a GAMEBOARD diagnostic and never pinned: the crowd's age moment
+   along the row's line and at the two clocks is the comb of the
+   Manhattan fan, densest near the mass's x axis where the line's ends
+   and both clocks sit, 2 to 35 times the isotropic shell mean the
+   conditional pins assumed. No pin moved; Newton's advance and bending
+   stay unread at the shell mean's value.
+6. **Open, the owner's or the reviewer's** (section 8): the deciding pin
    is the light row's, a run on the go; the word "a read at a body is a
    click" is not needed by Side A (the row's push reads the arrivals at
    its Node as coded, whichever way the word goes); k_a(b) at 2^10 is a
@@ -545,11 +558,182 @@ re-derived from the line drive's wall before any pin.
 - The value of G and the condition n S = d: declarations; the side
   carries n S / d = 1 / 4096 in front of every form.
 
-## 9. Step 2: the readings (after the owner's go)
+## 9. Step 2: the readings (2026-09-23, on the Boss's GO of 01:30Z, the reviewer's three lines folded first)
 
-Not run. This section is written after the go, by kind, PASS or FAIL
-against section 2's pins, with the deciding pin's answer as one of the
-four lines of section 3, the head SHA and the HOST times.
+The three runs, headless, the control first, through `tools/run_series.py`
+(the runner's record; `artifacts/newton_side/`, under the 24-hour
+retention): every world completed its 1400 intervals with the books
+balanced at every tick; no click of the lamp's family on any face; every
+number below a DETECTOR reading off the receivers' click lines, a
+COMPUTATION on them, a GAMEBOARD diagnostic labelled so, or a HOST time;
+no pin moved after the run; every FAIL written as FAIL with its cause by
+the primitive.
+
+| World | HOST | Digests (state, ledger, events) | The receivers that clicked |
+| --- | --- | --- | --- |
+| `control` | 78.8 s | 22fdb6c655bd, b7c6c3a77211, e08a77b4bf48 | (54, 26, 20) alone, 420 clicks |
+| `mass` | 117.5 s | a5568f812dfe, 7b9ff2da5331, 6d4c87ba1a13 | (54, 15, 20) 490, (54, 16, 20) 22, (54, 14, 20) 18, (54, 17, 20) 5, (54, 13, 20) 1 |
+| `light` | 139.2 s | bf5f5fb00ab6, e568c6ae5e08, 753d02881330 | (54, 7, 20) 716, (54, 8, 20) 257, (54, 6, 20) 109, (54, 9, 20) 7, (54, 5, 20) 1 |
+
+### 9.1 The verdicts against section 2's pins
+
+| The reading | The control (DETECTOR) | The mass world (DETECTOR) | The light world (DETECTOR) |
+| --- | --- | --- | --- |
+| the arrival count T = n_B - ordinal | 979 on the first click, 980 on every later one (420 clicks, least 980, greatest 980, spread 0.05); mean 980.0 against 979 +- 1: **PASS**; every click after the first alike: **PASS** (the rung whole, the birth's convention as step 6 says) | mean 864.7 over 525 clicks in the window, the first ordinal's 963, least 844, greatest 965, spread 19.2; the advance against the control's read mean -115.3 counts (the ratio -0.118) against -40.5 +- 3.5: **FAIL** (2.85 times the pin); earlier than the control: **PASS** (a fall, not the wall alone) | mean 111.1 over 1089 clicks, the first ordinal's 113, least 20, greatest 310, spread 79.2; the read delay against the heading's 89 + 1: +21.1 against +3.0 +- 1: **FAIL**; the reading is not a flight count at all but the difference of two clocks' rates (9.2 below) |
+| the pace over the window | 52 / 980 = 0.05306 against 1 / 19 = 0.05263 within 2 / W = 0.00204: **PASS** | 0.0601 (reported, not pinned: the push's radial part and the comb) | 0.468 (reported) |
+| the arrival Node | the centroid (26.000, 20.000), the line's end exactly: **PASS** | 11.01 pixels toward the mass against 4.39 +- 0.5 (4.46 under the crossing count): **FAIL** (2.5 times the pin) | 18.85 pixels toward the mass against 4.63 +- 0.5 (the arrivals count) and against 5.47 +- 0.5 (the crossing count): **FAIL** both; the deciding pin's answer, the fourth line of section 3: off both, the straight-path form or the read k_a(b) is refuted, not the count (9.2 says which) |
+| no click on a face | none: **PASS** | none: **PASS** | none: **PASS** |
+| the count ratio of consecutive clicks at one receiver | 1.0000 over 418 counts, every pair 1.000: **PASS** | 0.852 over 444 counts at (54, 15, 20), the pairs from -14 to 23: **FAIL** against 1.000 +- 0.01; not the clocks' (the receiver's count behind the tick 5.4 on average, the lamp's ordinals behind it 5 over the run) but the scatter of the arrival counts themselves (844 to 965) at a receiver whose ordinals are not consecutive (four receivers share the clicks): the grain of the crowd, 9.2 | 0.923 over 982 counts at (54, 7, 20), the pairs 0 to 3: **FAIL** against 1.000 +- 0.01; the two clocks' rates: the lamp's ordinals behind the tick by 207 at the end (0.15 per interval), the receiver at (54, 7, 20) by 286 (0.21 per interval) |
+| the line of T against the ordinal (COMPUTATION) | the intercept 980.0, the slope 0.00000 | the intercept 883.0, the slope -0.067 per ordinal (the early ordinals' higher counts and the scatter, not a rate) | the intercept 108.3, the slope +0.005 (the receivers in no crowd at (54, 6, 20) and (54, 8, 20), owed 0, read T = 198 to 281, the lamp's lag alone, while (54, 7, 20) reads T falling from 113 to 21 through the window) |
+| the tick (GAMEBOARD) | the first click's tick 980; the receiver's count behind the tick 0.00 | the first click's tick 847; the receiver's count behind the tick 5.4 on average | the first click's tick 114; the receiver's count behind the tick 100 on average |
+
+The tool's verdict line: 0 record checks failed; 9 readings inside, 7
+outside, none moved. The control PASSES every pin: the rung k = 19 is
+whole on the board (979 then 980 on every click, one Node per 19 counts,
+the arrival Node the line's end), which is the run's own confirmation of
+steps 2 to 7. The two conditional worlds FAIL every conditional pin by a
+factor of 2.5 to 4, and the deciding pin answers with its fourth line.
+
+### 9.2 The cause by the primitive (one GAMEBOARD diagnostic, never pinned)
+
+The conditional pins all hang on one input, the crowd's stretch along
+the row's path and at the two clocks taken as the shell mean k_a(x) =
+k_a(b) b / r (the design's rung 2, which it marks "a GAMEBOARD limit and
+not an input"; the click reading that replaces it, a lamp at b against a
+control by series T's method, was not among the three worlds). The
+primitive the wall and the push read is the crowd's age moment a_tau at
+the Node the row is at, and the primitive the two clocks read is a_tau
+at their own Nodes. Both worlds replayed through the API for 300
+intervals, a_tau averaged over the intervals 201 to 300 (the crowd steady
+from about the 60th interval: 3523 to 3575 rows of `m` in flight through
+the mass world's run), against the shell mean d k_a(b) b / r:
+
+| Node (x, y, z) | r from the mass | `mass`: a_tau read, shell mean, ratio | `light`: a_tau read, shell mean, ratio |
+| --- | --- | --- | --- |
+| (2, 26, 20), the lamp | 26.7 | 12.0, 0.64, 18.7 | 736, 41.0, 18.0 |
+| (6, 26, 20) | 22.8 | 20.2, 0.75, 27.0 | 640, 48.0, 13.3 |
+| (10, 26, 20) | 19.0 | 26.2, 0.90, 29.1 | 528, 57.6, 9.2 |
+| (14, 26, 20) | 15.2 | 0.0, 1.12, 0.0 | 0, 71.8, 0.0 |
+| (18, 26, 20) | 11.7 | 8.7, 1.47, 5.9 | 320, 93.8, 3.4 |
+| (22, 26, 20) | 8.5 | 3.8, 2.01, 1.9 | 240, 128.9, 1.9 |
+| (26, 26, 20) and (30, 26, 20) | 6.3 | 8.5, 2.70, 3.1 | 544, 172.9, 3.1 |
+| (28, 26, 20), above the mass, b = 6 | 6.0 | 5.2, 2.85, 1.8 | 336, 182.3, 1.8 |
+| (34, 26, 20) | 8.5 | 3.8, 2.01, 1.9 | 240, 128.9, 1.9 |
+| (38, 26, 20) | 11.7 | 5.0, 1.47, 3.4 | 320, 93.8, 3.4 |
+| (42, 26, 20) | 15.2 | 0.0, 1.12, 0.0 | 0, 71.8, 0.0 |
+| (46, 26, 20) | 19.0 | 8.2, 0.90, 9.2 | 528, 57.6, 9.2 |
+| (50, 26, 20) | 22.8 | 10.0, 0.75, 13.3 | 640, 48.0, 13.3 |
+| (54, 26, 20), the control's receiver | 26.7 | 22.8, 0.64, 35.5 | 736, 41.0, 18.0 |
+| (54, 15, 20), the mass world's receiver | 26.5 | 22.8, 0.65, 35.2 (the clock's k = 0.0056 per interval) | 736, 41.3, 17.8 |
+| (54, 7, 20), the light world's receiver | 29.1 | 12.5, 0.59, 21.3 | 1152, 37.6, 30.6 (the clock's k = 0.28 per interval) |
+
+The mean ratio along the line is 12.7 in the mass world and 8.2 in the
+light world; 1.8 to 3.1 within 6 Links of the mass's plane, where the
+advance's and the bending's kernels weigh most, and 9 to 35 at the ends,
+where the two clocks sit. So by the primitive: **the crowd of a fan
+bounded in Manhattan length is not isotropic**; the 290 directions of
+series E's fan are densest in angle near the axes (the Manhattan ball is
+an octahedron), and the row's straight line at b = 6 runs parallel to the
+mass's x axis, 13 degrees off it at its ends, where the age moment is
+tens of times the isotropic shell mean, and 1.8 to 3 times above the
+mass; the comb's teeth (the zeros at x = 14 and 42, the peaks at the
+ends) are the fan's digital lines (COMB_NOTE: "the field at a Node a
+comb, the ring the instrument"; the light bending note's "the beam's
+plane is the fan's comb: 3.5 times the shell-mean pins"). What follows,
+reading by reading:
+
+- The advance (2.85 times the pin) and the massive bending (2.5 times):
+  the path integrals of k_a(x) with the kernels cos(theta) / r^2 and
+  sin(theta) / r^2 over a comb whose teeth near the mass are 1.9 to 3.1
+  times the shell mean; the factor read is the comb's, not the count's
+  (the two counts differ by 0.07 pixel on the massive row, section 2).
+  The straight-path condition k_a(b) << v^2 / c^2 is also weaker than
+  the design's 8 per cent: at the read k_a it is about 0.2, and the
+  first-order margin no longer covers the second order.
+- The light row's centroid (4.1 times the pin, alpha read 0.72 radians):
+  the same comb at the held mass 2^16, where the deflection is beyond
+  alpha << 1 (the straight-path form's own condition), so the fourth
+  line: the straight-path form and the read k_a(b) are refuted together,
+  the count not separated at this grain; a lever arm of 0.8 pixel cannot
+  be read on a centroid moved 18.9 pixels by a comb.
+- The light row's delay (+21 against +3.0): the two clocks' rates are
+  not the pin's 0.990 but 0.85 (the lamp, k = 0.15 to 0.18 per interval)
+  and 0.79 (the receiver at (54, 7, 20), k = 0.21 to 0.28), so T = n_B -
+  ordinal is the difference of two clocks running 7 per cent apart and
+  falls by 0.09 per ordinal through the window; the receivers off the
+  comb's teeth ((54, 6, 20) and (54, 8, 20), owed 0) read the lamp's lag
+  alone (198 to 281). Einstein's step in the middle, the count ratio in
+  a crowd, is what the light world reads: the ratio 0.923, DETECTOR, is
+  the two clocks' k_A and k_B at their Nodes, by the comb.
+- The mass world's count ratio 0.852 and its spread of 19 counts: the
+  held mass at 2^10 releases one row per direction per four
+  self-creations, so the crowd on the line pulses with the period 4 and
+  a row born at one phase of the pulse crosses different teeth than a
+  row born at the next; the scatter 844 to 965 is that grain, the
+  design's own caution ("the crowd's shell is every four intervals and
+  its grain is larger than the design's at 2^16"), forty times the 3.5
+  the first-order margin allowed.
+
+What this run decided and did not: the rung is whole and the arrival
+click reads the flight's count exactly (the control, PASS, the run's
+confirmation of the click algebra's steps 2 to 7); the massive row falls
+(earlier than the control, PASS) and is bent toward the mass with the
+sign of gravity; the size of both is the comb's and not the shell
+mean's, so the conditional pins FAIL as written and Newton's advance and
+bending remain UNREAD at the shell mean's value; the deciding pin does
+not decide the count on this line. Nothing moved; the pins stand as
+written for a world whose crowd is read by a click (the lamp at b) or
+whose line does not run along the fan's densest angle; which world, if
+any, is the owner's word and the physicist's design, not this file's.
+
+### 9.3 The tool's output, verbatim (the record of the run)
+
+```
+control (artifacts/newton_side/control/run): 1400 intervals, HOST 78.8 s; the hypotheses ['bohr-v1', 'amplitude-v1', 'massive-rows-v1']
+  record check passed: completed
+  record check passed: the books balanced at every tick
+  COMPUTATION the control's arrival count derived before the read: 979 (the massive triple (M_row 21, S 1, p 71) at 52 Links); the window opens at the receiver count 919
+  DETECTOR clicks of `matter` at the receivers in the window: 420 on 1 receiver(s) (420 over the run); the arrival count (clock less the ordinal): mean 980.00, the first ordinal's 979, then least 980, greatest 980, spread 0.05; the pace 52 Links over that count 0.05306 (the band 2 / W = 0.00204); the centroid y 26.000 z 20.000; the faces' clicks of the family none
+  COMPUTATION the line of the arrival counts against the ordinals over the window: the intercept 980.00 (the flight's count where both clocks were 0), the slope 0.00000 per ordinal (the receiver's rate less the lamp's: the count ratio in the crowd, Einstein's step)
+  DETECTOR the count ratio of consecutive clicks at receiver 1088 (counts apart over ordinals apart, 418 counts): 1.0000; the consecutive pairs from 1.000 to 1.000
+  GAMEBOARD the first click's tick 980; the receiver's count behind the tick 0.00 on average (what it owes the crowd; a diagnostic, never pinned)
+  PASS the arrival count (DETECTOR): 979.998 against the pin 979 +- 1 (the birth's convention, one count)
+  PASS every click after the first the same count (the rung whole): the first ordinal's 979, then least 980, greatest 980
+  PASS the pace over the window (DETECTOR) against 1 / 19: 0.053 against the pin 0.0526316 +- 0.00204082 (the one band rule)
+  PASS the arrival Node the line's end (the centroid on the lamp's y and z): centroid (26.000, 20.000) against the lamp's (26, 20)
+  PASS no click of the family on a face: none
+  PASS the count ratio of consecutive clicks (DETECTOR): 1.000 against the pin 1 +- 0.01
+mass (artifacts/newton_side/mass/run): 1400 intervals, HOST 117.5 s; the hypotheses ['bohr-v1', 'amplitude-v1', 'massive-rows-v1']
+  record check passed: completed
+  record check passed: the books balanced at every tick
+  COMPUTATION the control's arrival count derived before the read: 979 (the massive triple (M_row 21, S 1, p 71) at 52 Links); the window opens at the receiver count 919
+  DETECTOR clicks of `matter` at the receivers in the window: 525 on 4 receiver(s) (536 over the run); the arrival count (clock less the ordinal): mean 864.66, the first ordinal's 963, then least 844, greatest 965, spread 19.16; the pace 52 Links over that count 0.06014 (the band 2 / W = 0.00231); the centroid y 14.994 z 20.000; the faces' clicks of the family none
+  COMPUTATION the line of the arrival counts against the ordinals over the window: the intercept 882.96 (the flight's count where both clocks were 0), the slope -0.06736 per ordinal (the receiver's rate less the lamp's: the count ratio in the crowd, Einstein's step)
+  DETECTOR the count ratio of consecutive clicks at receiver 638 (counts apart over ordinals apart, 444 counts): 0.8522; the consecutive pairs from -14.000 to 23.000
+  GAMEBOARD the first click's tick 847; the receiver's count behind the tick 5.43 on average (what it owes the crowd; a diagnostic, never pinned)
+  COMPUTATION the arrival count less the control's (the control's read mean 980.00): -115.34 counts (the ratio -0.1177); the centroid's shift toward the mass 11.01 pixels against the control's read centroid
+  FAIL the advance, the arrival count less the control's (DETECTOR), conditional on k_a(b): -115.342 against the pin -40.5 +- 3.5 (the wall 0.68, the push -41.19; the count itself 864.66)
+  PASS the mass world earlier than the control (a fall, not the wall alone): -115.34 counts
+  FAIL the centroid toward the mass (DETECTOR), conditional on k_a(b): 11.006 against the pin 4.39 +- 0.5 (4.46 under the crossing count: not separable on the massive row)
+  FAIL the count ratio of consecutive clicks (DETECTOR): 0.852 against the pin 1 +- 0.01
+  PASS no click of the family on a face: none
+light (artifacts/newton_side/light/run): 1400 intervals, HOST 139.2 s; the hypotheses ['bohr-v1', 'amplitude-v1', 'massive-rows-v1']
+  record check passed: completed
+  record check passed: the books balanced at every tick
+  COMPUTATION the control's arrival count derived before the read: 89 (the flight table on the heading at 52 Links); the window opens at the receiver count 110
+  DETECTOR clicks of `light` at the receivers in the window: 1089 on 5 receiver(s) (1090 over the run); the arrival count (clock less the ordinal): mean 111.14, the first ordinal's 113, then least 20, greatest 310, spread 79.22; the pace 52 Links over that count 0.46786 (the band 2 / W = 0.01799); the centroid y 7.147 z 20.000; the faces' clicks of the family none
+  COMPUTATION the line of the arrival counts against the ordinals over the window: the intercept 108.27 (the flight's count where both clocks were 0), the slope 0.00525 per ordinal (the receiver's rate less the lamp's: the count ratio in the crowd, Einstein's step)
+  DETECTOR the count ratio of consecutive clicks at receiver 310 (counts apart over ordinals apart, 982 counts): 0.9229; the consecutive pairs from 0.000 to 3.000
+  GAMEBOARD the first click's tick 114; the receiver's count behind the tick 100.24 on average (what it owes the crowd; a diagnostic, never pinned)
+  COMPUTATION the arrival count less the control's (the derived 89 plus the birth's convention's one count (no control run of this family read)): 21.14 counts (the ratio 0.2349); the centroid's shift toward the mass 18.85 pixels against the control's read centroid
+  FAIL the light row's arrival count less its control (DETECTOR): the read delay, no advance: 21.144 against the pin 3 +- 1 (the wall's 3.96 less the two clocks' stretch at 0.9901 of the tick; a light row sped up refutes)
+  FAIL the lever-arm centroid toward the mass (DETECTOR) under the arrivals count: 18.853 against the pin 4.63 +- 0.5
+  FAIL the lever-arm centroid toward the mass (DETECTOR) under the crossing count: 18.853 against the pin 5.47 +- 0.5
+  the deciding pin's answer: off both: the straight-path form or the read k_a(b) is refuted, not the count
+  FAIL the count ratio of consecutive clicks (DETECTOR): 0.923 against the pin 1 +- 0.01
+  PASS no click of the family on a face: none
+0 record check(s) failed; 9 reading(s) inside, 7 outside, none moved
+```
 
 ## 10. Links
 
