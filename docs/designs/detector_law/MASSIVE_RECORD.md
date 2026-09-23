@@ -675,10 +675,14 @@ board's two-block world reads it.
    the step of the whole block by verb T; the coupling of section 7 at its
    cells, one g with G; the click of section 6 at W; the sink as the owner
    words it.
-3. The check worlds, in order: (i) ONE BLOCK AT REST, its mode's frequency
-   and extent against section 4 (C6's eigenvalue, the threshold table);
-   (ii) the block pushed to k = 3, its clock against section 8's one formula
-   (the well regime 0.8065, the cavity regime 0.7128 at mu = 0.05); (iii) the
+3. The check worlds, in order (which is which per item 4: a CONTROL world
+   at one extent of margin, a PIN world of five at two, a PREDICTION world
+   the block form's residual): (i) ONE BLOCK AT REST, its mode's frequency
+   and extent against section 4 (C6's eigenvalue, the threshold table): a
+   control; (ii) the block pushed to k = 3, its clock against section 8's
+   one formula: at the four smallest binding sides a PIN world of five (1
+   and 1 to the residual under one percent), at s = 20 and 28, mu = 0.15,
+   the PREDICTION world (the residual 11 and 5.5 percent); (iii) the
    rest cavity of form (I) against section 4's table, and moved, against
    gamma_m^2 (the control); (iv) the light clock on two blocks at rest (row
    (d): 2 L / c + 2 tau_g) and in motion (rows (e), (f): 1 and 1 with the
@@ -700,10 +704,15 @@ board's two-block world reads it.
    own (the torus of ALGEBRA.md 1.6), and a wall or a sponge at a face is a
    declared deviation per world (the owner's word of record 1421). So the owner's reading is
    right: an object at the edge is not held as itself. THE MARGIN RULE, a
-   load-time check like MUST I's floor: the object's cells at least one
-   extent from any non-periodic face, and the board's side per axis at
-   least the object's side plus two extents when that axis is periodic;
-   the extent printed from the pair and the side before the world runs.
+   load-time check like MUST I's floor (Reviewer 3's two lines of his gate
+   of 643a1c93, 14:31Z, carried into the build's world section): a hard
+   face at distance d shifts the bound mode by about eps e^(-2 kappa d), so
+   ONE extent (e^-2, 13 percent of eps, a third of five's band at eps =
+   0.1) is enough for a CONTROL world and a PIN world needs TWO extents
+   from any non-periodic face; the board's side per axis at least the
+   object's side plus two extents (a control) or four extents (a pin) when
+   that axis is periodic; the extent printed from the pair and the side
+   before the world runs.
    The massive record kind's faces PERIODIC by default (the medium
    continuous, nothing to declare) with the margin; light's faces per the
    experiment as today (the sponge for the detector worlds, periodic where
@@ -713,28 +722,35 @@ board's two-block world reads it.
 
    | mu | s | g | omega_b | eps | the extent 1 / kappa (Links) | the side by the rule s + 2 / kappa |
    | --- | --- | --- | --- | --- | --- | --- |
-   | 0.15 | 10 | mu^2 | 0.1488 | 0.007 | 45 (the box's wrap: unbounded on the infinite board, the smallest binding side) | (not a check world) |
-   | 0.15 | 14 | mu^2 / 2 | 0.1488 | 0.006 | 48 (the same) | (not a check world) |
+   | 0.15 | 10 | mu^2 | 0.1488 | 0.007 | 45 (weakly bound, the extent beyond the box; the smallest binding side, g above g_c by 2 percent) | a PIN world of five at s + 4 / kappa, about 190 |
+   | 0.15 | 14 | mu^2 / 2 | 0.1488 | 0.006 | 48 (the same, g above g_c by 0.1 percent) | a PIN world of five, about 205 |
    | 0.15 | 20 | mu^2 | 0.1107 | 0.451 | 5.7 | 31 |
    | 0.15 | 28 | mu^2 / 2 | 0.1318 | 0.220 | 8.2 | 44 |
-   | 0.05 | 30 | mu^2 | 0.0491 | 0.036 | 61 (the box's wrap: unbounded on the infinite board) | (not a check world) |
-   | 0.05 | 42 | mu^2 / 2 | 0.0491 | 0.035 | 62 (the same) | (not a check world) |
+   | 0.05 | 30 | mu^2 | 0.0491 | 0.036 | 61 (weakly bound, the extent beyond the box; g above g_c by 3 percent) | a PIN world of five, about 275 |
+   | 0.05 | 42 | mu^2 / 2 | 0.0491 | 0.035 | 62 (the same, g above g_c by 1 percent) | a PIN world of five, about 290 |
    | 0.05 | 60 | mu^2 | 0.0368 | 0.458 | 17 | 94 |
 
-   At the SMALLEST binding side the mode's extent is unbounded (the
-   threshold), so a check world takes a side above it. The first check
-   worlds: the rest cube at mu = 0.15, s = 20 (eps 0.45, the cavity-leaning
-   control) and s = 28 at half depth (eps 0.22), on a periodic 48^3 board
-   (110,592 Nodes; HOST 0.005 s per interval, a rest world of three periods
-   a second); the well-regime clock check needs eps about 0.1, the extent
-   c / (mu sqrt 0.1) = 1.83 / mu: 12 Links at mu = 0.15 (a side giving eps
-   0.1 between s = 14 and 20 at full depth; the board 64^3, HOST 0.010 s per
-   interval, the moving cube at k = 3 over its ramp and hold, 9500
-   intervals, 2 minutes) and 37 Links at mu = 0.05 (s about 36 to 40 at
-   full depth; the board 128^3, HOST 0.079 s per interval, the moving world
-   12 minutes); the moving cube's axis periodic, so the travel wraps and
-   the side needs only s plus two extents. The HOST figures are numpy on
-   this machine; the engine's integer form is its own cost.
+   WHICH WORLD IS WHICH (Reviewer 3's line): the four smallest binding
+   sides are the DEEPEST well-regime clocks (eps 0.006 to 0.036, the
+   residual eps (gamma_m^2 - 1) / 2 under one percent at k = 3) and so the
+   best PIN worlds of five's 1 and 1, if a board of s + 4 / kappa is
+   afforded (about 200 a side at mu = 0.15, s = 14: 8 million Nodes, HOST
+   about 0.3 s per interval, a moving world under an hour); the s = 20 and
+   s = 28 worlds at mu = 0.15 (eps 0.45 and 0.22: the residual 11 and 5.5
+   percent at k = 3) are the worlds of the PREDICTION (the block form's
+   residual, section 8's second term), not of five's pin, on a periodic
+   48^3 board (110,592 Nodes; HOST 0.005 s per interval, a rest world of
+   three periods a second, the moving world two minutes); the rest cube at
+   mu = 0.15, s = 20 at full depth is also the cavity-leaning CONTROL. A
+   well-regime clock at eps about 0.1 has the extent c / (mu sqrt 0.1) =
+   1.83 / mu: 12 Links at mu = 0.15 (a side between 14 and 20 at full
+   depth; a pin board of 64^3 at two extents, HOST 0.010 s per interval,
+   the moving cube at k = 3 over its ramp and hold, 9500 intervals, 2
+   minutes) and 37 Links at mu = 0.05 (s about 36 to 40 at full depth; the
+   board 128^3 at two extents, HOST 0.079 s per interval, the moving world
+   12 minutes); the moving cube's axis periodic, the travel wraps. The
+   HOST figures are numpy on this machine; the engine's integer form is
+   its own cost.
 5. The key `massive-record-v1` OFF by default; the build only on Reviewer
    3's gate of this draft's SHA, the Algebra Mathematician's chapter, and
    the owner's second word through the Boss (with his two words of section
