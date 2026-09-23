@@ -210,7 +210,7 @@ MUST F, one declared kind):
 | Parameter | What it is under the rule | Kind |
 | --- | --- | --- |
 | mass | the object's content M (`amount`, `held`), what its record hands over at a click | a declaration |
-| frequency | its clock, the family's pair [n, d] on the circle of N steps, the record's period | a declaration |
+| frequency | its REST clock, the family's pair [n, d] on the circle of N steps, the record's period: the initial condition of its record; in motion, under the clock sentence (section 8, the owner's word of 11:03Z), no declared clock: its insert follows the receive of its own record and its clock is the cycle of its own bound record read in its own count; the declared period is bounded below by the load-time checks of 1.2 | a declaration (the rest value); the motion's clock the Inside's |
 | phase | the phase at which its train starts, the clock's zero (3 N / 4, the cosine 0 and rising) | a declaration |
 | place | its Nodes on the GameBoard; a body of one Node or a line or a wall of Nodes | a declaration |
 | step | one of the six directions and the declared cadence k, intervals per Link (k = 0 at rest); a step is one Link, never a diagonal; the first rung of the object's own record at the next Node is the step's accompanying click, not its cause (a one-Node object's six neighbours cross 1 / W within an interval of the insert, so the rung alone sets no pace; Reviewer 3, MUST F); five is read with the declared pace, the dilation 8b's to derive, never the step's | a declaration |
@@ -243,6 +243,39 @@ place where the law does not yet do what the owner says. N_s is the
 object's declared integer (kind 1) with its default named in the world
 file's definition of the one kind; the build's "grace" of two periods
 at f4a3971a is a module constant to become that declaration.
+
+1.2 **The load-time checks on the declared period and the declared
+cadence** (the model owner's word of 11:12Z through the Boss: "the
+declared clock N has a limit too: it cannot exceed the speed of light,
+so not every N may be declared"; the Boss's reading entered as declared
+checks, Reviewer 3 to gate; every number a COMPUTATION; where my
+arithmetic differs from the Boss's it is named):
+
+- (a) The hard floor from c: nothing changes faster than one interval,
+  and the wave crosses a Link in sqrt 3 intervals (the pair [1, 3]), so
+  a declared period of N intervals is a wavelength N / sqrt 3 Links and
+  below two intervals there is no wave: **N >= 2**, refused below (the
+  Nyquist period of the lattice's clock; at N = 2 the checkerboard mode
+  of 2.1, carried at a constant amplitude and nothing else).
+- (b) The design's honest floor, already the design's: the wavelength
+  at least 12 Links (6.1, 8c), so **N >= 21 intervals at rest** (12
+  sqrt 3 = 20.8); for a moving object MUST I's floor lambda_0 (1 -
+  beta_c) >= 12 gives **N >= 50 at k = 3** (28.4 sqrt 3 = 49.2), **37 at
+  k = 4** (21.2 sqrt 3 = 36.7), **30 at k = 6** (16.9 sqrt 3 = 29.3);
+  the same arithmetic as the Boss's.
+- (c) The same bound on the motion: the cadence k of 5.1 (a) (one Link
+  per k intervals) must satisfy **k >= 2**, since k = 1 is one Link per
+  interval, above c (beta_c = sqrt 3 / k: 0.866 at k = 2, 0.577 at k =
+  3, 1.732 at k = 1); the push-to-cadence rule REFUSES a push that
+  would take an object's accumulator past one Link in fewer than two
+  intervals: the momentum is kept (the remainder with it), the cadence
+  is clamped at 2, and the refusal is recorded as an event on the
+  object's click line, never a silent clamp; the declaration of 5.1 (a)
+  says so. One difference from the Boss's line, named: k >= 2 still
+  allows beta_c = 0.866, and the bound the wave itself sets on a source
+  is MUST I's floor (b), which at k = 2 needs N >= 155 (lambda_0 (1 -
+  0.866) >= 12: lambda_0 >= 89.6 Links); so (c) is the hard bound and
+  (b) the honest one, both checked.
 
 What is refused with the one kind, by the Algebra Auditor's rows
 (ALGEBRA_AUDIT.md at c848aad0 on `algebra-inside-outside`): a record
@@ -717,7 +750,11 @@ comparison, with declared integers h, n, d, Q, S, M and the pair [97,
 momenta on the object's vector, and D, the one division with the
 remainder kept, then a comparison; no root, no float); local (the
 click at the object's own Node and the Port it came by; nothing read
-beyond its own Node and its six Ports). What it can move: five's first
+beyond its own Node and its six Ports). The rule decides HOW the pair
+reaches beta, not WHICH member of 8b's family it ends in: that is the
+law of the object's frequency (section 8, the clock sentence and its
+completion). The rule refuses a push below the cadence k = 2 (1.2 (c)),
+the refusal an event. What it can move: five's first
 outcome (a pair that does not settle drifts by this rule alone: the
 radiation pressure of the partner's record is always away from it, so
 without (b) the pair separates, a prediction stated before the run);
@@ -781,7 +818,10 @@ root, within int64 at A = 2^20 and trains to 2^11 intervals), one
 remainder, six reads and one division per interval; the host's cost per
 record is its rows' count (section 7).
 
-## 6. The pins before any build (COMPUTATION; `detector_law_pins.py`, `detector_law_pins.out`)
+## 6. The experiments with a foreign object: the pins before any build (COMPUTATION; `detector_law_pins.py`, `detector_law_pins.out`)
+
+The name is the model owner's (11:12Z, through the Boss): from today, everywhere, "the experiments with a foreign object": a foreign object can be anything (a detector, a clock, a mirror, a sponge, the air, a polariser), one definition with the same parameters (1.1), and the experiments with it go on; no other noun for the thing on the board that the Inside did not make. The light clock (6.4, 6.5), the wall of row 10 (6.1), the polariser (6.3), the air (6.7) are all experiments with a foreign object.
+
 
 6.0 **What the script is and assumes.** The rule of section 2 on a 2D
 z-periodic board in int64 with the remainder kept, exactly the engine's
@@ -959,7 +999,7 @@ verb after all and the owner's "W and not P" is answered "P is needed";
 if it reads -3.99 at gamma 1, the wall alone carries both parts and no
 push is needed on a splitting record. Named, not promised.
 
-6.7 **The air as foreign objects: the coefficient form at a declared
+6.7 **The air as a foreign object (an experiment with a foreign object): the coefficient form at a declared
 index** (the owner's "the air modelled as foreign objects with air's
 parameters, with a convergence experiment"; Reviewer 3's correction of
 09:33Z: nature's air moves no pin; the experiment tests the coefficient
@@ -1209,7 +1249,9 @@ Under the rule, one paragraph per sentence of his:
   H): its rows leave and do not come back. So the rest cycle of a lone
   object is its declared period (1.1, N_s the whole of it), the Inside
   adding nothing to it in open space; and everything the Inside adds to
-  a body's cycle when it is not alone is the physics of this row: a
+  a body's cycle when it is not alone is the physics of this row (the
+  clock sentence below says what the object's clock IS when it is not
+  alone): a
   crowd around it (the coefficient of 4.1, its period stretched by
   (d + f n A) / d, row 12's ratio), a partner bound to it (8b, the
   standing pattern between them, the separation and the cycle from the
@@ -1229,6 +1271,73 @@ Under the rule, one paragraph per sentence of his:
   afterglow), so "no return" is a statement about three dimensions, and
   the pilot's worlds must not read a self-click from the tail (N_s
   declared above the tail's crossing time, section 5).
+- **The clock sentence, the owner's, entered on his word** (2026-09-23,
+  11:03Z, Hebrew, voice, through the Boss: "the clock sentence, all the
+  things we discussed until now, all of it into the Highlights file
+  immediately"; a DECLARATION of the design under its identity
+  `bound-clock-v1`, the law itself unchanged until Highlights carries
+  it; record 1352 his words): **the object's declaration (its frequency,
+  its period) is its REST value only; in motion the object has no
+  declared clock: its insert follows the receive of its own record, and
+  its clock is the cycle of its own bound record, read in its own
+  count.** Under the rule: an object inserts its train at its declared
+  rest frequency f_0 at its birth; thereafter it inserts again when it
+  receives its own record (the receive at its own Nodes after the closed
+  count N_s, at the declared rung, section 5), and its count advances by
+  one per insert-and-receive; its period is whatever the Inside returns:
+  2 L / c for a pair at rest at L, and in motion the cycle of the bound
+  pair by 8b. It replaces "in motion the declared period" wherever it
+  stood (1.1's frequency row; this section); a lone object at rest keeps
+  its declared period by 1.1's declaration (the self-click fired by the
+  period, above), outside this sentence. The three tests: generic (one
+  primitive, the insert triggered by the receive of the object's own
+  record; no family name, no kind; f_0 a declared integer pair as the
+  initial condition); vector (a comparison of the record's identity at
+  the rung with the object's own, then the insert as today; no
+  arithmetic beyond the rule's, no root, no float); local (the object's
+  own Nodes and its Ports; the record's identity on its row; the six
+  neighbours through the rule). A declared factor f_0 / gamma stays a
+  hypothesis under its own identity, not the design's.
+
+  Reviewer 3's line beneath it (his push balance on the continuum pace,
+  a COMPUTATION, PUSH_BALANCE.md on his branch when it lands, cited by
+  its SHA then): the sentence passes the three tests as a sentence, but
+  as written it makes the object a RELAY (it re-inserts what it
+  receives at a shifted phase), and a pure relay is never bound:
+  radiation pressure only, away from the partner at every separation;
+  an object WITH a natural frequency (a resonance, the reactive part set
+  by the declared phase, the dipole form of 5.1 (b)) is bound by the
+  coupled-oscillator force, with equilibria at L = m lambda_0 / 2,
+  alternately stable and unstable, the count m an initial condition. In
+  motion the standing condition is degenerate in L, and the member of
+  8b's family is selected by the LAW OF THE OBJECT'S FREQUENCY, so the
+  sentence needs ONE LINE on the object's natural frequency in motion,
+  with two lawful completions, the owner's word on them pending (the
+  Boss's recommendation: (A) tonight, (B) decided tomorrow with
+  tonight's numbers): **(A)** "the rest value stays the object's
+  resonance in motion, ticking in the lattice's intervals": buildable
+  now; the bound pair at the retarded pattern's nodes, L_along = L_0 /
+  gamma_m^2 and L_across = L_0 / gamma_m (0.667 and 0.816 at k = 3), the
+  cycle N_0, 8b's fixed point derived, the lab's dilation 1 against
+  gamma_m, a FAIL by design, honest; the form the reduced run tests
+  tonight. **(B)** "the object's resonance is itself a bound cycle of
+  the Inside, so that it transforms as the pair does": the covariant
+  object, the boost of the rest pair an exact solution of the wave
+  equation, L_along = L_0 / gamma_m, f = f_0 / gamma_m, the cycle gamma_m
+  N_0, Lorentz's member, five and the lab's dilation PASS by the wave
+  equation's covariance; every foreign object a composite of the law,
+  the atom's route, a program and not a sentence; the direction the
+  owner's words point to. The sentence read literally as a relay (no
+  clock in motion, the inserted train continuing the received one)
+  gives no binding, and a pair carried rigidly to beta ends at f = f_0
+  / gamma_m^2, L_along = L_0, L_across = gamma_m L_0, the cycle gamma_m^2
+  N_0 in both arms: five's ratios 1.50 and 1.50 at k = 3, a FAIL of five
+  and of the lab row. The quantity that breaks the degeneracy and must
+  be read: the pair's oscillation frequency in the lattice's intervals
+  (the zero crossings of the wave between the objects) after the rest
+  pair is pushed to beta, beside the separation: f / f_0 = 1, 0.816,
+  0.667 names the member. Nothing beyond the sentence and this line
+  enters.
 - **In motion it pops up at the next Node**: the object steps to the
   neighbouring Node, one of six, never a diagonal, at its declared
   cadence k, and the first rung of its own record at that Node is the
