@@ -50,7 +50,12 @@ def build() -> str:
     s = corrections.apply(s)
     s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
     body = s[: s.index("\\begin{thebibliography}")]
-    cited = {k.strip() for m in re.finditer(r"\\cite\{([^}]*)\}", body) for k in m.group(1).split(",")}
+    # A citation with an optional argument, \cite[section 10]{key}, counts too.
+    cited = {
+        k.strip()
+        for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", body)
+        for k in m.group(1).split(",")
+    }
     bib = s[s.index("\\begin{thebibliography}") :]
     items = re.split(r"(?=\\bibitem\{)", bib)
     head, kept = items[0], []

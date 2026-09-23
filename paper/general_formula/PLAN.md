@@ -6207,3 +6207,52 @@ follows, per the Boss's order.
   not converge was not put in; the road is Section 6.
 - The route section's opening join says the two tables come first.
 56 pages, 90 references (NUMBERS.md).
+
+## Applied (2026-09-23, the Boss's order of 01:05Z, step 2, commit 4): the click subsections
+
+Section 3 (from click to click) opens with three passages, through
+corrections (the chain's cut now starts at the first heading):
+- "The steps between two clicks", the owner's record 1129 stated
+  exactly: six numbered steps, each with its kind; step (3) the click
+  an action of the law in POSTULATES.md section 10's wording at
+  536edefb (the record ends at the detector, its content moves into
+  the detector's own record, the click stamped with the detector's own
+  count, the flight of every other row untouched, no back-action),
+  cited at the postulates file's existing reference; the closing lines
+  (step (6) the only place a formula meets a measurement; anything read
+  from the board a diagnostic; the failures named by the step their
+  reading broke, Section 7).
+- "Locality and discreteness Outside, two theorems beside P11":
+  Theorem 2 (Locality Outside) and Theorem 3 (Discreteness Outside),
+  the plan's one-line statements written out from ALGEBRA.md 3.4 (the
+  click frame's section 0 and closing theorem; Einstein Outside's
+  Theorem 3, both cited); the line after them that what is more than
+  (A1), the apparatus itself inside the law, is an assumption or a
+  programme, marked so and not used. The later theorems renumber
+  (NUMBERS.md); every citation by \ref.
+- "The one fact and its two faces", the owner's record 1141: the one
+  read-out; the first face the uncertainty relation (the support bound
+  with its equality cases at N = 64, Weyl's relation, Kennard's form as
+  the limit, the entropic bound as the click's identity; the
+  identification of the circle as position kept as the hypothesis the
+  measurement section names); the second face the pair (the record of
+  rank 2, entangled by construction, the arms local, the one gather,
+  E(a, b), the marginals, S at N = 64 and on the plateau, Tsirelson's
+  bound, Fine's theorem); what links them; "not proven, and said so"
+  (the derivation's 22.3). The standard names are the things compared
+  with. Fine 1982 a new reference.
+- The reading rule's paragraph (Introduction) reworded as record 1139
+  says: "Only a detector's click is a measurement, and a click is an
+  action of the law on the state, the one step that deletes Inside and
+  the one row that Outside gains".
+- Row 1a's cell and the uncertainty paragraph of Section 4.4 each cite
+  the click frame's section 10 and point to the one fact. The plan's
+  "row 10" (the uncertainty row of the register) is not a row of the
+  paper's table, so the citation went to the paragraph that carries the
+  reading.
+- The assembler's citation regex now accepts an optional argument, so
+  \cite[section 10]{postulates} keeps its entry (the first build dropped
+  it and the PDF showed an undefined citation, caught on the read-back;
+  a second, duplicate entry of my own was then removed in favour of the
+  existing one).
+58 pages, 92 references (NUMBERS.md).
