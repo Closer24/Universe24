@@ -762,3 +762,257 @@ thirty cycles; the readings f / f_0 (1.000 names (A), 0.816 Lorentz,
 Lorentz, no equilibrium for the relay), the settling band in motion +-
 lambda_0 (1 - beta_c) / 4. Every number COMPUTATION; no pin moved by
 this file; the declarations the design's and the owner's.
+
+## 11. Direction (ii), designed to its ends: a second, massive record kind under the discrete Klein-Gordon rule, beside massless light
+
+Written on the model owner's word of 12:15Z (record 1381: direction
+(ii), "to design and to close ALL its ends, including the algebra that
+follows from our own formulas, to see that it closes"; the Boss's order
+of 12:18Z). This section widens 8.7 and is written for a reader with
+the design's formulas only: every step is shown. Kinds: the rule and
+the couplings are DECLARATION candidates for the owner's second word;
+every number is a COMPUTATION (the closed forms, and the scratch
+scripts `check_massive_well.py` and `check_kg_board.py` of the
+reviewer's scratchpad, seconds, floats); nothing enters the law by
+this section. Light stays the massless record of DESIGN.md section 2
+and every light pin stays as declared.
+
+**11.1 The rule and its integer form.** The design's wave rule at a
+free Node (DESIGN.md section 2), with S_6 the sum of the six
+neighbours' present records, is
+
+    3 a_next + r' = S_6 - 3 a_before + r,
+
+that is, a_next - 2 a_now + a_before = (1 / 3)(S_6 - 6 a_now), the
+leapfrog form of d^2 a / dt^2 = c^2 (Laplacian of a) at c^2 = 1 / 3.
+The massive record kind keeps the same rule with ONE self term, a
+declared pair [p, q] on the Node's own present record, subtracted:
+
+    3 a_next + r' = S_6 - 3 a_before + r - (3 p / q) a_now,
+
+the leapfrog form of d^2 a / dt^2 = c^2 (Laplacian of a) - mu^2 a with
+mu^2 = p / q (the discrete Klein-Gordon rule; the check: divide by 3
+and compare the two forms term by term). In integers the whole is
+scaled by q so that the one division is exact with its remainder
+kept, as the coefficient form of DESIGN.md 4.1 divides by 3 den:
+
+    3 q a_next + r' = q S_6 - 3 q a_before - 3 p a_now + r,     r' in [0, 3 q),
+
+the remainder r' of the Euclidean division by 3 q carried to the next
+interval exactly as r is in the wave rule. A foreign object of this
+kind is a Node (or a set of Nodes) whose self pair is its own, [p', q]
+with p' < p on the same denominator: the well's strength is
+
+    g = (p - p') / q > 0     (a locally lighter Node),
+
+the object's one declared parameter beside its place. Verbs: the sum
+of the six (one verb), a multiply by a declared pair, a subtract on
+the own record, the division with the remainder kept; no root, no
+float, no seventh verb (the owner's rule of record 642). The three
+tests as a rule: generic (one primitive with the declared integers p,
+q, p'; no family name, no kind), vector (the verbs above on the state
+vector), local (the self term reads a_now at the Node itself, the rest
+its six neighbours; nothing else). The Boss's coefficient of 11:58Z
+is right; the one correction is the division by 3 q rather than by 3.
+
+**11.2 What follows at rest, from the pair and the well alone.** On
+the chain (the y and z neighbours equal to the row itself, S_6 = a_E +
+a_W + 4 a_now) look for a mode localized at the object's Node j = 0,
+
+    a_j(t) = A e^(-kappa |j|) cos(omega t).
+
+Away from the Node the rule gives, with cos(omega t) common to every
+term, 4 sin^2(omega / 2) = mu^2 - (2 / 3)(cosh kappa - 1) (insert the
+mode into a_next - 2 a_now + a_before = (1 / 3)(a_E + a_W - 2 a_now) -
+mu^2 a_now, and use e^kappa + e^-kappa = 2 cosh kappa). At the Node
+itself both neighbours are e^-kappa A, so 4 sin^2(omega / 2) = mu^2 - g
+- (2 / 3)(e^-kappa - 1). Equating the two:
+
+    (2 / 3)(cosh kappa - e^-kappa) = g,   that is   sinh kappa = 3 g / 2,
+
+which has exactly one root kappa > 0 for every g > 0: on the chain
+every well binds one mode. Its frequency and extent:
+
+    4 sin^2(omega_b / 2) = mu^2 - (2 / 3)(cosh kappa - 1),     the extent 1 / kappa Links,
+
+and for a small well (kappa small) these are the continuum's
+omega_b^2 = mu^2 - 3 g^2 / 4 and 1 / kappa = 2 / (3 g) (expand sinh
+and cosh to second order). The mode is bound and not growing when
+omega_b is real, that is (2 / 3)(cosh kappa - 1) < mu^2, for a small
+well g < 2 mu / sqrt 3. Its period in intervals is N_b = 2 pi /
+omega_b, ABOVE the gap's period 2 pi / mu and so above the floor N >=
+21 (DESIGN.md 1.2) whenever mu <= 0.3; the mode lies below the band
+(the massive band starts at omega = mu) and cannot radiate into it: a
+true bound state. Numbers at mu = 0.05 (COMPUTATION, the exact lattice
+forms above against the continuum and against the chain script's
+zero-crossing reading):
+
+| eps = 3 g^2 / (4 mu^2) | g | kappa (exact; continuum) | the extent, Links | the period N_b (exact; continuum; read on the chain) |
+| --- | --- | --- | --- | --- |
+| 0.04 | 0.0115 | 0.01732; 0.01732 | 58 | 128.24; 128.25; 128.2 |
+| 0.10 | 0.0183 | 0.02738; 0.02739 | 37 | 132.45; 132.46; 132.4 |
+| 0.25 | 0.0289 | 0.04329; 0.04330 | 23 | 145.08; 145.10; 145.0 |
+
+The owner's "how many cells": the object is the well's Nodes plus the
+mode's extent 1 / kappa around them, derived and not declared; a
+one-Node well on the chain holds a mode of 23 to 58 Links at these
+strengths.
+
+**11.3 The integers stay bounded.** The massive rule's dispersion on
+the chain is 4 sin^2(omega / 2) = (4 / 3) sin^2(k / 2) + mu^2 (insert a
+plane wave), real for every k when (4 / 3) + mu^2 <= 4, that is mu^2 <=
+8 / 3: no growing mode of the free rule. The conserved energy is the
+design's E (DESIGN.md section 2, the leapfrog energy 3 (sum of the
+motions squared) + (sum over Links of the strain now times the strain
+before)) with one term added,
+
+    E_m = E + 3 mu^2 (sum over Nodes of a_now a_before) - 3 g (a_now a_before at the well's Node),
+
+conserved by the same telescoping that conserves E (for one Node the
+identity (a_next - a_now)^2 + K a_next a_now - (a_now - a_before)^2 - K
+a_now a_before = (a_next - a_before)(a_next - 2 a_now + a_before + K
+a_now) shows that the product form is what the leapfrog conserves);
+the mode's amplitude is therefore bounded by its energy at birth, the
+remainder's drift is the wave rule's, and the scale q multiplies every
+intermediate (q S_6 at the amplitude 2^20 and q = 3600 is 2.3 x 10^10,
+inside int64 with room to q about 2^30; mu = 1 / 60 is [1, 3600]).
+
+**11.4 The Lorentz member, from the rule's own covariance.** Four
+steps. (a) On the continuum pace the operator d^2 / dt^2 - c^2 d^2 /
+dx^2 + mu^2 is invariant under the boost x' = gamma_m (x - v t), t' =
+gamma_m (t - v x / c^2) (a direct substitution; the self term mu^2 a is
+a scalar and needs no transformation). (b) A well of strength g at the
+moving Node is, on the continuum pace, the term g delta(x - v t) a; in
+the well's rest frame delta(x - v t) = delta(x' / gamma_m) = gamma_m
+delta(x'), so the moving well of strength g is a RESTING well of
+strength gamma_m g. (c) The resting well's bound mode has omega' =
+sqrt(mu^2 - 3 gamma_m^2 g^2 / 4) by 11.2 and oscillates as cos(omega'
+t'); at the well x' = 0 the rest time is t' = t / gamma_m, so the
+oscillation read at the moving well in lab intervals has omega =
+omega' / gamma_m. (d) Divide by the rest value:
+
+    f / f_0 = (1 / gamma_m) sqrt((1 - gamma_m^2 eps) / (1 - eps)),     eps = 3 g^2 / (4 mu^2),
+
+Lorentz's member 1 / gamma_m as eps -> 0, the deviation eps (gamma_m^2 -
+1) / 2 to first order, eps / 4 at k = 3 (gamma_m^2 - 1 = 1 / 2). The
+lattice keeps this because the mode's extent is many Links (the
+dispersion error at the mode's wave numbers is of order kappa^2 / 12,
+below 10^-3 at kappa = 0.04) and the well hops one Node per k
+intervals, many times per period (the mode follows adiabatically).
+The chain script (mu = 0.05, the well pushed from rest to k = 3 by the
+accumulator of DESIGN.md 5.1 (a) over 6000 intervals, the frequency
+read at the well's own Node by zero crossings over 3000 intervals)
+reads 0.8077, 0.7936, 0.7460 at eps = 0.04, 0.10, 0.25 against the
+closed form's 0.8079, 0.7935, 0.7454; Lorentz's 0.8165, the relay's
+0.6667. Within five's band +- 0.03 for eps <= 0.1. Every step above
+uses the design's formulas and the boost only; nothing declared but
+the pair and the well.
+
+**11.5 The self-click.** The mode's record at the object's Node
+oscillates at omega_b: its motion crosses the rung 1 / W every period
+without any partner, so 1.1's existence condition (an object always
+produces clicks) is met by the object's own mode, and the lone
+object's exception of DESIGN.md section 8 is not needed. One
+declaration this needs, named: the object's own massive record is
+READ at its Node (the count of its zero crossings) and never TAKEN by
+it (no damping pair on its own mode), else the clock consumes itself;
+the take of section 5 stays light's.
+
+**11.6 The board.** Three dimensions differ from the chain in one
+thing: a single Node's well binds a mode only above a threshold. For a
+mode below the gap write s = mu^2 - 4 sin^2(omega_b / 2) > 0; the
+mode's equation is (s - (1 / 3) Laplacian) a = g delta a, whose
+localized solution exists when g G_00(s) = 1 with G_00 the lattice
+Green's function of the simple cubic six-neighbour rule, G_00(s) =
+the average over the Brillouin zone of 1 / (s + (2 / 3)(3 - cos k_x -
+cos k_y - cos k_z)); at the gap's edge s -> 0 this is (3 / 2) W_3 with
+W_3 = 0.505462 the Watson integral of the simple cubic lattice, so
+
+    g_c = 1 / ((3 / 2) W_3) = 1.319 per interval squared     (the numeric quadrature on a 240^3 grid: 1.322),
+
+independent of mu. Above it the binding grows fast: at mu = 0.05, g =
+1.35 gives a lawful mode (period 229 intervals, extent 14 Links) and g
+= 1.40 already s > mu^2, omega_b^2 < 0, a growing mode: the lawful
+window for a one-Node well on the board is about 3 percent wide and
+needs a self term p' / q = mu^2 - g of about -1.32, a strongly
+anti-restoring Node. The lawful object on the board is therefore
+EXTENDED: a ball of Nodes with the self term reduced (not reversed),
+bound when g R^2 >= pi^2 c^2 / 4 = 0.822 (the spherical well on the
+continuum pace, c^2 = 1 / 3), so with g <= mu^2 = 0.0025 a radius R >=
+18 Links (the lattice's correction to this radius not computed; a
+scratch board of 60^3 Nodes for a few thousand intervals, minutes,
+would give it). "How many cells" on the board is then thousands, the
+mass an extended object, as the owner's record 1371 says for another
+reason. The dispersion cost of the gap falls on the MASSIVE record's
+own waves only (their group pace below c, their band from mu up): it is
+irrelevant to light under (ii), which keeps the massless rule and its
+pins.
+
+**11.7 The coupling to light.** The presence of the massive record at
+a Node does not by itself act on light's record (two records, two
+rules, no shared term): (ii) needs its couplings DECLARED, three
+lines, each within the six verbs. (a) What light sees: the object's
+Nodes carry the index pair of DESIGN.md 5.1 (b) for light's record (or
+the mirror q = 0, or the take), declared on the well's Nodes, so the
+object is a scatterer, a mirror or a detector for light as any
+foreign object is; and, for a light SOURCE, a linear source term:
+light's record at the object's Node receives + [s_n, s_d] x a_m (the
+massive amplitude there) per interval, so light is emitted at the
+mode's frequency omega_b with the mode's phase; the object's light is
+its own clock's. (b) What the object feels: light's stress at its
+Ports pushes its momentum P by 5.1 (a) (the total field of LIGHT's
+records less nothing, since the massive mode is not light), and light's
+arrival may drive the massive record by the same pair [s_n, s_d]
+(the symmetric coupling; then the total energy E_light + E_m - 3 (s_n /
+s_d) (sum over the object's Nodes of a_light a_m) is the conserved
+quantity, by the same product-form identity as 11.3). (c) The click:
+light's record ends at the detector's Port (the take of section 5, on
+light's record), and the detector's own record that changes is the
+massive object's: its momentum P (the push) and its count; its mode's
+amplitude is not fed by the take (a declaration, else a click detunes
+the clock). What the light clock built on two such objects reads: at
+rest, each object emits light at omega_b in phase with its mode; two
+objects whose modes are in phase (the bonding configuration) are two
+in-phase coherent emitters and are bound by section 10's force at L =
+(m' + 3 / 4) lambda_b (lambda_b = N_b c, 74 Links at N_b = 128), the
+evanescent attraction of their modes (11.2, e^(-kappa L), 0.09 at L =
+88 for the extent 37) a small inward shift of that point; the pins at
+rest are light's as declared, (d) 208 / 207 / 207 in intervals and,
+in the object's own count, 2 L / (c N_b) periods. In motion the boost
+of this rest solution is again a solution (11.4 for the modes,
+section 4 for light): the modes at omega_b / gamma_m with the
+simultaneity phase between them, light emitted at that frequency, the
+separation L_0 / gamma_m an exact root (section 10.2), the light round
+trip gamma_m N_0 lab intervals and gamma_m N_b per mode period, so the
+clock reads 1 and 1 in its own count and the lab's row reads gamma_m:
+Lorentz's member from the rule and the couplings, no declared factor.
+The one caveat: the objects' light must be sourced by the mode (line
+(a)); a declared light clock f_0 on a massive object is (A) again.
+
+**11.8 The price list.** (i) The gap in light's record: every light
+pin moves by mu^2 / (2 c^2 k^2) (one percent at lambda_0 = 32 for mu =
+0.0162), and the lawful clock is slower than the gap, about 390
+intervals at that mu; PINS (d) moves by two intervals at its band's
+edge. (ii) Light untouched, every light pin as declared; the costs (i)
+does not have: a second rule at every Node (the massive record's
+a_now, a_before and remainder beside light's: the memory and the work
+per interval doubled, the host's cost, not the model's local cost,
+which stays fixed per Node), the three coupling declarations of 11.7,
+and the object's birth as its mode (an initial condition, the mode's
+profile at its Nodes, or a kick and a settling time before any
+reading).
+
+**11.9 What the design does not yet have, named, and the first
+checks.** Formulas to add before any build: the integer form of the
+source term [s_n, s_d] (11.7 (a)) and its energy identity; the rule
+for which Nodes are the object's when the mode is extended (a rung on
+the massive amplitude, declared); the board's radius R for the ball
+(11.6, a scratch board); the massive pair's own attraction and its
+shift of the light binding's point (a closed form from 11.2 and
+section 10, not done). The first checks, each in seconds on the chain
+before any coupling: the mode's period against 11.2's exact form (done
+above, 0.1 percent), its member at k = 3 against 11.4 (done, 0.1
+percent), then one object emitting light from its mode (11.7 (a)) and
+its light's frequency read at rest and at k = 3 against omega_b and
+omega_b / gamma_m, then the pair. Each a COMPUTATION; the owner's
+second word before any of it enters the design's world files.
