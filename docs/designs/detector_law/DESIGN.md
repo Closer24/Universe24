@@ -214,6 +214,7 @@ MUST F, one declared kind):
 | phase | the phase at which its train starts, the clock's zero (3 N / 4, the cosine 0 and rising) | a declaration |
 | place | its Nodes on the GameBoard; a body of one Node or a line or a wall of Nodes | a declaration |
 | step | one of the six directions and the declared cadence k, intervals per Link (k = 0 at rest); a step is one Link, never a diagonal; the first rung of the object's own record at the next Node is the step's accompanying click, not its cause (a one-Node object's six neighbours cross 1 / W within an interval of the insert, so the rung alone sets no pace; Reviewer 3, MUST F); five is read with the declared pace, the dilation 8b's to derive, never the step's | a declaration |
+| momentum | the integer **P** on the object, one component per axis with its remainder, changed only by the clicks it receives (h times the arriving wave number per click, 5.1 (a)); its initial value 3 Q S M v_0 from the declared step; a free object's cadence is read from it (5.1) | a declaration of the design (5.1), not of the law |
 | re-emission | the pair p = [p_n, p_d] of what its Nodes re-emit of what the rule gives them, or a TABLE (a partial re-emission with a phase: the polariser's rotation, a splitter, a trap), the fourth value of the parameter (section 5, the receiver forms) | a declaration |
 | train | the length of one insert in periods of its clock (the record's coherence, 4.5) | a declaration |
 | sensitivity | the rungs of the wheel one click needs, 1 (the first rung, the counting form) or 2 (the owner's "check 2 against 1", a computation pending) | a declaration |
@@ -679,6 +680,94 @@ at a Node exactly as it reads them from rows today: the amount of a
 record at a Node is its offer's share of its norm, a rational the crowd's
 moments take in the unit (a declared rounding at load, the grain); the
 push on a massive record's rows is the stretched pace of 4.1.
+
+**5.1 Two declarations of the design, not of the law** (the Boss's GO of
+10:50Z; Reviewer 3's lines of 10:29Z and 10:55Z on what each must say;
+the law changes only on the owner's word). Each through the three
+tests; each with the pins it touches named; no pin moves.
+
+**(a) The push-to-cadence rule.** Where the momentum lives: on the
+object, as a declared integer per axis, P_i (i one of x, y, z), with a
+remainder per axis, changed only by the clicks the object receives and
+by nothing else (no field, no force at a distance). What a click adds:
+the record's momentum h times its wave number, with the sign of the
+Port it arrived by (one of six): a record with the clock [n, d] has the
+wave number (n / d) / c phase steps per Link, so in the unit "h times
+one phase step per Link" a click adds u_i x (n / d) x sqrt 3 along the
+Port's axis, u_i = +1 or -1; sqrt 3 is the declared pair [97, 56]
+(right to 0.01 percent), and the momentum is kept as the integer P_i
+= 56 d p_i (the family's d; several families of light in one world
+need the declared common denominator), so that a click adds exactly
+u_i x 97 n, no division at the click. The cadence: a body of content M
+has the rest energy E'_0 = Q S M (the flight table's units, where
+light's energy is h n / d per interval) and, at the pace v Links per
+interval, the momentum E'_0 v / c^2 = 3 Q S M v; so v_i = p_i / (3 Q S
+M), and the step is taken exactly in the integers with the remainder
+kept: per interval the accumulator A_i += |P_i|; when A_i >= 3 Q S M x
+56 d the object steps one Link along axis i in the sign of P_i and A_i
+-= 3 Q S M x 56 d. That is k_i = (3 Q S M x 56 d) // |P_i| intervals per
+Link with the remainder kept on the object as the rule keeps r
+(Reviewer 3: else the pace is biased by up to one Link in M); at rest
+P_i = 0 and the object does not step; the declared step of 1.1 is the
+initial P_i = 3 Q S M v_0 x 56 d. A body's own insert is symmetric in
+its six Ports and adds nothing to P. The three tests: generic (one
+primitive, the sum of the arriving clicks' wave numbers and one
+comparison, with declared integers h, n, d, Q, S, M and the pair [97,
+56]; no family name, no kind); vector (verbs G, the sum of the clicks'
+momenta on the object's vector, and D, the one division with the
+remainder kept, then a comparison; no root, no float); local (the
+click at the object's own Node and the Port it came by; nothing read
+beyond its own Node and its six Ports). What it can move: five's first
+outcome (a pair that does not settle drifts by this rule alone: the
+radiation pressure of the partner's record is always away from it, so
+without (b) the pair separates, a prediction stated before the run);
+the pins it touches: (e), (f), 5b, 4a and 4b through 8b's member;
+none moves.
+
+**(b) The phased partial re-emission, the table's first member.** The
+fourth value of the re-emission parameter (1.1) is a TABLE; its first
+member, the one that can bind, is the index scatterer: the object's
+Node (or its w Nodes) runs the rule with the declared pair q = [num,
+den] on the six-neighbour term (4.1's form), the index n_o = sqrt(den /
+num) declared by the pair. What it re-emits: a thin scatterer (w Nodes,
+w much less than the wavelength) reflects the amplitude (n_o^2 - 1) pi
+w / lambda with the phase +- pi / 2 by the sign of n_o - 1 (the dipole's
+phase: the polarisability alpha proportional to n_o^2 - 1), and a thick
+one ((n_o - 1) / (n_o + 1))^2 of the motion (the Fresnel limit, 6.7:
+1 / 9 at n_o = 2 read by the script); an object with n_o > 1 in a
+standing pattern is pushed toward the antinodes and one with n_o < 1
+toward the nodes (the gradient force, Re alpha times the gradient of
+the intensity), which is the restoring force a pure receiver lacks (8b
+(i)) and the trap of an optical lattice. What it does to the other
+forms: the mirror is the limit q = 0 with its second declaration (held
+at 0, the drift term absent, section 5); the sponge is untouched (a
+ramp of the damping pair, not of the index; an object may declare
+both, an index and a damping); the polariser's rotation is the table's
+second member, a phase on the wheel applied to the record's phase read
+from (a_now, a_before), declared separately and not needed for the free
+pair. The three tests: generic (the pair per object, no family name;
+the same verb T and D as 4.1); vector (verb T with the pair on the
+six-neighbour term, D with the remainder kept: the rule's own step at
+the object's Node); local (the object's own Node and its six
+neighbours). What it can move: five's settling and where it settles
+(the antinodes for n_o > 1, the fixed points of 8b (iv) at whole
+numbers of the pattern's spacing); with (a) it decides the first
+outcome against the other two; it does not by itself decide between
+8b's member and Lorentz's, which is the clock's (8b (v-bis): the
+declared clock f_0 in the reduced run, the owner's candidate sentence
+prepared beside this section and not applied before his word); the
+pins it touches: (e), (f), 2b (the splitter is this member), 1a, 1d and
+9 (the second member); none moves.
+
+**What the reduced free-pair run reads with (a) and (b)** (8b (vii);
+the pins script's section I, prepared and not run before Reviewer 3's
+gate of this section and the owner's ear): two objects on the chain,
+each an index scatterer of one Node at a declared n_o, each inserting
+its own train at the declared clock f_0 (the first variant) or upon its
+receive (the owner's candidate, the second variant), each pushed by the
+clicks by (a); the separation and the cycle in the object's own count
+after a declared number of intervals, against the three outcomes named
+in 8b (vii).
 
 **The detector's own count and the birth stamp.** The click line carries
 the detector's count (`clock_stamp`) and the record's birth stamp; a
