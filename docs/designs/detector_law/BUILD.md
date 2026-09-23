@@ -127,6 +127,13 @@ FINDING (the last rows), reported and not written as a component.
 - `massive_record`: true or false, false by default; any other type refused.
   Under it the loader admits the family keys `pair` and `faces` and the
   block keys below; without it each is refused as unknown.
+- The amplitude bound A = 2^40 of a record's row (MUST 3, Reviewer 3): the
+  rule's total at a Node, num x 6 x A + 3 x den x (A + 1), and for a
+  block's rows the same with the coupling's denominator g_d folded into
+  the wall, must stay below 2^63 for every declared pair, checked at load
+  and refused naming the bound and the pair (the rows' amplitudes stay at
+  the seed's order 2^20; the pointers alone square them, as Python
+  integers).
 - A family with `pair` `[num, den]`: two integers from 1, `den > num`
   (light's kind declares none and reads `[1, 1]`); such a family is the
   massive kind and needs no `phase_per_link` (its clock is its gap; the
@@ -224,7 +231,7 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
 | (iv-a) `two_bodies.json`: the light clock on two bodies at rest, the design's chain (1400 x 1 x 1, y and z periodic, x open for light; the massive kind `[156, 157]`, its faces open on x, the wells `[314, 315]` of s = 12 at x = 500 and at L = 60 between the facing cells; A seeded at 2^20, B seeded 0; both `coupling` G `[1, 1]`, g `[1, 5]` (0.2); W 64; A `emits` light, B `emits` light; 700 intervals); and the same world without B (`two_bodies_alone.json`) | PIN of row (d) per declaration (the script's number) | as stated; A holds light content for its births | `massive_light_clock_relay.py` under the engine's seed (a flat A_0 on the emitter's cells at both levels; 5735ace, 39603502): N_0 = 235 at G g = 0.2 and 310 at G g = 0.05 (the receiver's rung crossed 11 and 13 intervals after the front), 247 with an (M) mirror partner; the design's 258 under the eigenvector seed is history; the register's 206 +- 2 NOT MET by two bodies (the design's line); section 10 (h) | GAMEBOARD: the received part by the subtraction of the two runs' block lines (FINDING 3); DETECTOR: A's click on B's emitted record (its `gather` line's `click` and `clock`), stated beside the script's 235 and never equated with it; B's first rung on A's record against the script's 11 |
 | (iv-c) the two-arm relay after (iv): the CONTROL world at k = 3 with declared rigid arms (expected the theorem's gamma_m ratio between the arms times the ring-ups' ratio) and five's PIN world at k = 4 with the arms held by light's force at section 10's equilibrium and pushed over the morning's ramp, each declared as which it is in the world file (Reviewer 3 AGREED, the Boss's 15:40Z; the physicist's declarations in section 11 at 5735ace) | CONTROL; PIN | as section 11 declares | the physicist's numbers per world | DETECTOR: the arms' counts; GAMEBOARD: the pump's signature |
 | (iv-b) `take_world.json`: the take world beside it, an (M) mirror (a block of the light family with `pair` `[21, 22]`, the gap 0.3: cos 0.3 = 0.9553, 21 / 22 = 0.9545) at L = 60 from a detector declared `absorbing` with a lamp (the register's light clock of DESIGN.md 6.4 under the rule) | the register's 206 +- 2 reproduced | the first build's chain of `tests/test_detector_law.py` with the mirror block in place of the far receiver | DESIGN.md 6.8 as computed: the first rung on the Port's motion 207 to 208 at 12 to 24 Links (the pin (d) 206 +- 2 as declared, inside at its edge); `massive_light_clock_relay.out` for the mirror with a body: N_0 = 238 and 236 (a body's counting form, not the take's) | DETECTOR: the lamp's click on its returned record (the `gather` line's `click` less `birth`) |
-| (v) `index.json` (three worlds at g = 1 / 50, 1 / 20, 1 / 10): a chain 1400 x 1 x 1, x open (light's faces receive), the massive kind `[7, 8]` (omega_0 = 0.50536; below the honest floor N >= 21, named: a check of the coupling's algebra, `massive_dielectric_index.py`'s own choice omega_0 = 0.5), a block of side 12 at x = 900 with `seed` 0 and G `[1, 1]`, a CAVITY with the kind's own pair (the script's oscillator is held at 0 outside its cells at omega_0: a finding of step 5), the light clock `[153, 100]` on N = 64 (omega = 0.150214, lambda 24.2 Links), a lamp at x = 600, a probe at x = 1100; `index_reference.json` without the block | CONTROL of the coupling | `faces` of the massive kind open on x | the closed form `n^2 = 1 + G g / (omega_0^2 - omega^2)` with the declared integers: n = 1.0420, 1.1021, 1.1954 (the design's 1.0430, 1.1044, 1.1998 at its omega_0 = 0.5000); the design's chain read 1.034, 1.083, 1.159, 0.8 to 3.4 percent below the closed form (the faces' steps), named beside | GAMEBOARD: light's transmitted phase delay at the probe over 12 cells against the reference |
+| (v) `index.json` (three worlds at g = 1 / 50, 1 / 20, 1 / 10): a chain 1400 x 1 x 1, x open (light's faces receive), the massive kind `[7, 8]` (omega_0 = 0.50536; below the honest floor N >= 21, named: a check of the coupling's algebra, `massive_dielectric_index.py`'s own choice omega_0 = 0.5), a block of side 12 at x = 900 with `seed` 0 and G `[1, 1]`, a CAVITY with the kind's own pair (the script's oscillator is held at 0 outside its cells at omega_0: a finding of step 5), the light clock `[153, 100]` on N = 64 (omega = 0.150214, lambda 24.2 Links), a lamp at x = 600, a probe at x = 1100; `index_reference.json` without the block | CONTROL of the coupling | `faces` of the massive kind open on x | the closed form `n^2 = 1 + G g / (omega_0^2 - omega^2)` with the declared integers: n = 1.0420, 1.1021, 1.1954 (the design's 1.0430, 1.1044, 1.1998 at its omega_0 = 0.5000); the design's chain read 1.034, 1.083, 1.159, 0.8 to 3.4 percent below the closed form (the faces' steps), named beside. EXPLORATORY, the 4 percent gap (the Boss's 18:08Z): the engine reads the excess n - 1 at 0.871, 0.868, 0.870 of the closed form's at the three couplings, the physicist's float scratch of the same exact form 0.830 at s = 12; the gap is NOT the window's or the probe's (the engine's window and probe are the script's, [1000, 1800] at x = 1100 from the lamp at 600; over the windows [1000, 1400], [1400, 1800] and [1200, 1600] the ratio moves by 0.5 percent at most, 0.866 to 0.874) and not the lamp's train (a train of 64 periods, the transmitted amplitude 0.989 to 0.994 of the reference over every window); what differs from the script is the SOURCE (the engine's lamp a driven Node emitting a record with a train, phase 0 at its Node, the script's a hard sine written every interval) and the integer rows (the remainders' grain at the amplitude 2^20, below 10^-6 of the rows); the candidate left is the source's form at the block's faces, to be read against the mode sum the physicist writes as (v)'s CONTROL. The pin stays the closed form | GAMEBOARD: light's transmitted phase delay at the probe over 12 cells against the reference |
 | (v-m) `index_moving.json`: the moving index, the design's chain (2200 x 1 x 1, the source at 300, the probe at 1500, s = 24, `[156, 157]`, the well `[314, 315]`, g `[1, 200]`, G `[1, 1]`, light at omega = 0.035, the block at K = 3 toward the source from x = 1300 and away from x = 700, the window [3400, 4300]) | PREDICTION of the model as built | as stated; `momentum` `[Q S M / 1, 0, 0]` for K = 3, no ramp (the script steps from t = 2600 at once) | `massive_moving_index.out` at 696bab86, the same-Node form (the rows re-forming, the design's reading): the stepped well reads 0.40 (G g unchanged) and 0.50 (the drive's pair) of the covariant dielectric's phase delay head-on at K = 3, and 4.3 and 6.8 times it from behind; the engine carries the drive's pair, so its pins are the ratios 0.500 head-on on this chain and, from behind, 2.569 on this chain of 2200 (the window's halves unequal there, the script's own lines) and 6.74 on the design's longer chain of 4000 (the source at 300, the probe at 2500, the block from 1500, the window [5000, 6000]: the Boss's 6.8), a PREDICTION of the model as built, never Fizeau's; one more world at K = 4 (the momentum 48; K = 5 is no integer of the drive), no number declared for it; the block's drive begins at interval 2600 by the block key `start` (the pushing agent's declaration, as the script steps it); the engine's own ratios reported against these, never adjusted | GAMEBOARD: the lab phase delay at the probe; for every moving world the two readings of the pump's signature (section 4, step 7) |
 
 ## 6. The tests (`tests/test_massive_record.py`), one behaviour each, with the inputs and the expected integers written here before the code, and an edge case
@@ -376,6 +383,29 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
   the sums of light's total field over the residue classes of x modulo 3
   formed from the rows. The edge cases: an axis not x, y or z refused; the
   key refused without `massive_record`.
+- (u) MUST 2 (Reviewer 3, the Boss's 16:42Z): a planted massive record
+  with zero motion after its train plus two intervals does not complete
+  (`_complete` False for a massive kind); a light record with the same
+  rows does.
+- (v) MUST 3: the load bound of a pair, num x 6 x A + 3 x den x (A + 1)
+  below 2^63 at the amplitude bound A = 2^40 (section 3): `[2^20, 2^20 +
+  1]` refused naming the bound and the pair, `[800, 809]` admitted; a
+  block's pair with its g_d folded into the wall checked with that scale
+  (`[800, 800]` at g = `[1, 2^20]` refused, at `[1, 20]` admitted).
+- (w) MUST 1's test: on the chain 6 x 1 x 1 at `[2, 3]` (y and z folded,
+  each read twice as the Node itself) the form I as the books read it
+  changes by the remainders' term EXACTLY on every one of 60 intervals
+  from random rows, num (I(t) - I(t - 1)) = L SUM (a_next - a_before)(r -
+  r'), on an open and on a periodic x.
+- (x) Reviewer 3's layer line (18:12Z): on a periodic 256 x 256 x 1 layer
+  the margin module's operator keeps the folded axis's two self-reads, so
+  the item 7 row mu = 0.15, s = 14, g = mu^2 / 4 (the kind `[3200,
+  3236]`, the well `[3200, 3227]`) reads omega_b 0.14846 within 0.0002 and
+  the extent 36.2 within 1 Link (`massive_layer_pins.out`), the rule
+  comparing x and y alone.
+- (g), continued: the identity asserted at G = `[2, 3]` as well as
+  `[1, 1]` (alpha carrying G_d / G_n, light's wall 3 G_d: the scale 3 L
+  g_d G_n, Reviewer 3's token).
 
 ## 7. The HOST estimate (this machine, numpy int64; the engine's cost, measured at step 5)
 

@@ -755,6 +755,14 @@ DETECTOR_LAW_RULE = "detector-law-v1"
 # `massive_record: true`; absent, every world reads as it did, byte for
 # byte.
 MASSIVE_RECORD_RULE = "massive-record-v1"
+# The amplitude bound A of a record's row under the massive record kind
+# (Reviewer 3's MUST 3 on step 2; BUILD.md section 3): the rule's total at a
+# Node, num x 6 x A + 3 x den x (A + 1), must stay below 2^63 for every
+# declared pair, checked at load; A = 2^40 (a seed of 2^20 squared by
+# nothing: the rows' amplitudes stay at the seed's order, the pointers
+# alone square them, as Python integers).
+AMPLITUDE_BOUND = 1 << 40
+TOTAL_BOUND = 1 << 63
 # Light's kind: the pair [1, 1] on the six-neighbour term, the value every
 # family without a declared pair reads (no branch on a name).
 LIGHT_PAIR = (1, 1)
@@ -2032,6 +2040,21 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
+def _pair_bound(numerator: int, denominator: int, label: str, scale: int = 1) -> None:
+    """The load bound of a pair (Reviewer 3's MUST 3): the rule's total at a
+    Node under the amplitude bound A, num x scale x 6 x A + 3 x den x scale
+    x (A + 1), below 2^63 (the coupling's folded denominator as `scale`);
+    refused otherwise naming the bound and the pair."""
+    total = numerator * scale * 6 * AMPLITUDE_BOUND + 3 * denominator * scale * (AMPLITUDE_BOUND + 1)
+    if total >= TOTAL_BOUND:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
+            + (f" with the coupling's denominator {scale}" if scale != 1 else "")
+            + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = 2^40 "
+            f"is {total}, not below 2^63 (the bound of the rows' int64)"
+        )
+
+
 def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tuple[int, int]:
     """The family key `pair` (`massive-record-v1`): [num, den], two integers
     from 1 with den >= num (den > num a massive kind, den = num light's
@@ -2051,6 +2074,7 @@ def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tupl
         raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the kind's pair")
     numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
     denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
+    _pair_bound(numerator, denominator, label)
     if denominator < numerator:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
@@ -3168,6 +3192,9 @@ def _block(
                 "coupling of MASSIVE_RECORD.md section 7)"
             )
         receive = _ratio(coupling["g"], f"{label}.coupling.g", zero=True)
+        # the block's rows divide by 3 den g_d (the coupling folded into the
+        # one division): the load bound of MUST 3 with that scale
+        _pair_bound(pair[0], pair[1], label, receive[1])
         source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
     wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
     seed = BLOCK_SEED if "seed" not in obj else _integer(obj["seed"], f"{label}.seed", 0)

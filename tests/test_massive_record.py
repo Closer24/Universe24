@@ -552,15 +552,17 @@ def light_packet(shape: tuple[int, ...], amplitude: int = 1 << 16) -> tuple[np.n
     return np.rint(now).astype(np.int64).reshape(shape), np.rint(before).astype(np.int64).reshape(shape)
 
 
-def coupled_invariant(g: list[int]) -> tuple[int, Fraction, Fraction, bool]:
+def coupled_invariant(g: list[int], G: list[int] | None = None) -> tuple[int, Fraction, Fraction, bool]:
     """The chain of (g) stepped 400 intervals with the identity of section 7 asserted on each:
     returns the count of intervals with a nonzero cross term, light's form at the start and at
-    the end, and whether the response's rows stayed 0."""
+    the end, and whether the response's rows stayed 0. G other than [1, 1] puts G_n in alpha's
+    denominator and G_d in light's wall (the scale 3 L g_d G_n, Reviewer 3's token)."""
+    G = G or [1, 1]
     block: dict = {
         "position": [200, 0, 0],
         "side": 12,
         "pair": [314, 315],
-        "coupling": {"G": [1, 1], "g": g},
+        "coupling": {"G": G, "g": g},
     }
     document = block_world([400, 1, 1], PERIODIC_CHAIN, [156, 157], [block], ticks=500)
     document["age_bound"] = 100000
@@ -574,6 +576,8 @@ def coupled_invariant(g: list[int]) -> tuple[int, Fraction, Fraction, bool]:
     light = planted(simulation, 0, now, before, np.zeros(shape, dtype=np.int64))
     simulation.records[light.identity] = light
     g_n, g_d = g
+    G_n, G_d = G
+    assert simulation.light_scale == G_d
     num_m = simulation.kind_num[1].ravel().tolist()
     den_m = simulation.kind_den[1].ravel().tolist()
     weight_m = np.array([Fraction(d, n) for n, d in zip(num_m, den_m, strict=True)], dtype=object)
@@ -581,7 +585,7 @@ def coupled_invariant(g: list[int]) -> tuple[int, Fraction, Fraction, bool]:
     inverse_walls = np.array([Fraction(1, 3 * n * g_d) for n in num_m], dtype=object).reshape(shape)
     weight_l = np.full(shape, Fraction(1), dtype=object)
     cells = block_live.mask
-    alpha = Fraction(g_n, g_d) * Fraction(315, 314)
+    alpha = Fraction(g_n, g_d) * Fraction(315, 314) * Fraction(G_d, G_n)
 
     def invariant(response: LiveRecord | None) -> Fraction:
         x_n, x, _ = rows(response, shape)
@@ -603,7 +607,7 @@ def coupled_invariant(g: list[int]) -> tuple[int, Fraction, Fraction, bool]:
         x_n, _, r_m2 = rows(response, shape)
         y_n, _, r_l2 = rows(light, shape)
         silent = silent and (response is None or not np.any(response.now))
-        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - r_l2))), 3)
+        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - r_l2))), 3 * G_d)
         if g_n == 0:
             # light's own identity, the form I with the remainders' term (section 3)
             assert (
@@ -635,8 +639,8 @@ def test_g_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
     and light's form its own identity, I_l(t) - I_l(t - 1) = SUM (y_next - y_before)(r - r') / 3."""
     crosses, first, last, silent = coupled_invariant([0, 1])
     assert silent
-    for g in ([1, 20], [1, 5]):
-        crosses, first, last, silent = coupled_invariant(g)
+    for g, G in (([1, 20], None), ([1, 5], None), ([1, 20], [2, 3])):
+        crosses, first, last, silent = coupled_invariant(g, G)
         assert crosses > 0
         assert not silent
         assert abs(last - first) > Fraction(1, 10) * abs(first)
@@ -1003,3 +1007,102 @@ def test_t_the_mode_line_sums_lights_field_by_residue_class():
     unkeyed["measured"] = []
     with pytest.raises(ValueError, match="mode_axis"):
         parse_nature_beam_world(unkeyed)
+
+
+# Reviewer 3's three MUSTs on step 2 (the Boss's 16:42Z) and his layer line (18:12Z)
+
+
+def test_u_a_massive_record_never_completes_nor_clicks_as_escaped():
+    """MUST 2: a massive record with zero motion after its train plus two intervals (a planted
+    static level) does not complete; a light record with the same rows does. The block's own
+    record and its responses are read by the block's clock and taken by nothing."""
+    world = parse_nature_beam_world(
+        massive_world([6, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3], {"x": "open"})
+    )
+    simulation = DetectorLawSimulation(world)
+    level = np.full((6, 1, 1), 5, dtype=np.int64)
+    massive = planted(simulation, 1, level, level, np.zeros((6, 1, 1), dtype=np.int64))
+    light = planted(simulation, 0, level, level, np.zeros((6, 1, 1), dtype=np.int64))
+    assert simulation._complete(light)
+    assert not simulation._complete(massive)
+
+
+def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
+    """MUST 3: a kind's pair whose rule total at the amplitude bound A = 2^40 reaches 2^63 is
+    refused at load naming the bound and the pair ([2^20, 2^20 + 1]: 6 x 2^60 + ... above
+    2^63); [800, 809] is admitted; a block's pair with its g_d folded into the wall is checked
+    with that scale ([800, 800] with g = [1, 2^20] refused, with g = [1, 20] admitted)."""
+    big = 1 << 20
+    document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
+    document["age_bound"] = 100
+    with pytest.raises(ValueError, match=r"num x 6 x A \+ 3 x den x \(A \+ 1\).*not below 2\^63"):
+        parse_nature_beam_world(document)
+    with pytest.raises(ValueError, match=r"\[1048576, 1048577\]"):
+        parse_nature_beam_world(document)
+    for g, admitted in (([1, big], False), ([1, 20], True)):
+        world = block_world(
+            [24, 24, 24],
+            PERIODIC,
+            [800, 809],
+            [
+                {
+                    "position": [10, 10, 10],
+                    "side": 3,
+                    "pair": [800, 800],
+                    "coupling": {"G": [1, 1], "g": g},
+                }
+            ],
+        )
+        world["age_bound"] = 100
+        if admitted:
+            parse_nature_beam_world(world)
+        else:
+            with pytest.raises(ValueError, match="with the coupling's denominator 1048576"):
+                parse_nature_beam_world(world)
+
+
+def test_w_the_form_on_a_chain_is_exact_with_the_remainders_term():
+    """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on
+    each) at the pair [2, 3], open on x, the form I of section 3 as the books read it
+    (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the
+    remainders' term exactly on every interval: num x (I(t) - I(t - 1)) = L x SUM_i (a_next
+    - a_before)_i (r - r')_i, integers, no tolerance, 60 intervals from random rows; the
+    same on a periodic x."""
+    for boundary, faces in ((CHAIN, {"x": "open"}), (PERIODIC_CHAIN, None)):
+        document = massive_world([6, 1, 1], boundary, [2, 3], faces)
+        document["age_bound"] = 1000
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        rng = np.random.default_rng(7)
+        now = rng.integers(-50, 51, size=(6, 1, 1)).astype(np.int64)
+        before = rng.integers(-50, 51, size=(6, 1, 1)).astype(np.int64)
+        live = planted(simulation, 1, now, before, np.zeros((6, 1, 1), dtype=np.int64))
+        previous = simulation.record_form(live)
+        for _ in range(60):
+            a_before = live.before.astype(object)
+            r = live.remainder.astype(object)
+            simulation._advance(live)
+            current = simulation.record_form(live)
+            remainders = int(
+                np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
+            )
+            assert 2 * (current - previous) == 2 * remainders, boundary
+            previous = current
+
+
+def test_x_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
+    """Reviewer 3's line (18:12Z): on a periodic 256 x 256 x 1 layer the mode's operator keeps
+    the folded axis's two self-reads (S_4 + 2 a_now), so the layer row of MASSIVE_RECORD.md
+    section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4: the kind [3200, 3236], the well
+    [3200, 3227]) reads omega_b 0.14846 within 0.0002 and the extent 36.2 within 1 Link
+    (`massive_layer_pins.out`), and the rule compares x and y only (z folded)."""
+    document = block_world(
+        [256, 256, 1],
+        PERIODIC,
+        [3200, 3236],
+        [{"position": [121, 121, 0], "side": 14, "pair": [3200, 3227], "margin": "control"}],
+    )
+    document["age_bound"] = 100000
+    reading = check_margins(parse_nature_beam_world(document))[0]
+    assert abs(reading.omega_b - 0.14846) < 0.0002
+    assert abs(reading.extent - 36.2) < 1.0
+    assert [axis for axis, _, _, _ in reading.axes] == ["x", "y"]

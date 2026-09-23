@@ -97,6 +97,7 @@ def clock(name: str, window: tuple[int, int]) -> dict[str, float]:
         return {}
     counts = [line["clock"] for line in block]
     sums = np.array([float(line["sum"]) for line in block])
+    centres = np.array([float(line.get("centre", 0)) for line in block])
     count = counts[-1] - counts[0]
     span = block[-1]["tick"] - block[0]["tick"]
     reading = {
@@ -107,6 +108,7 @@ def clock(name: str, window: tuple[int, int]) -> dict[str, float]:
         if len(clicks) > 1
         else math.nan,
         "spectral_peak_omega": spectral_peak(sums),
+        "centre_peak_omega": spectral_peak(centres) if np.any(centres) else math.nan,
         "steps": block[-1].get("steps", 0),
     }
     return reading

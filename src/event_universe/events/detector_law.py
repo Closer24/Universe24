@@ -670,10 +670,19 @@ class DetectorLawSimulation:
         count with its own count (the self-click of row (g)); a new cycle
         births its emission at the next interval."""
         total = 0
+        # the co-moving centre cell (the design's reading of the clock in
+        # motion, MASSIVE_RECORD.md section 8: "the clock read at the
+        # co-moving centre"): the total record's value there, on the line
+        centre = tuple(
+            (block.corner[axis] + block.definition.side // 2) % self.shape[axis] for axis in range(3)
+        )
+        at_centre = 0
         if block.own is not None:
             total += int(np.sum(block.own.now[block.mask]))
+            at_centre += int(block.own.now[centre])
         for response in block.responses.values():
             total += int(np.sum(response.now[block.mask]))
+            at_centre += int(response.now[centre])
         if block.previous_sum <= 0 < total:
             block.count += 1
             block.new_cycle = True
@@ -699,6 +708,7 @@ class DetectorLawSimulation:
                     "measured": block.number,
                     "corner": list(block.corner),
                     "sum": total,
+                    "centre": at_centre,
                     "clock": block.count,
                     "steps": block.stepped,
                 }
@@ -1070,6 +1080,11 @@ class DetectorLawSimulation:
         rule's own terms; a static level moves nothing) is below one rung of
         what the receivers hold."""
         if live.sourcing or live.age <= live.train:
+            return False
+        # A massive record never completes and is never clicked as escaped
+        # (Reviewer 3's MUST 2 on step 2): its rows are the block's own,
+        # read by the block's clock, taken by nothing.
+        if self.families[live.family].massive_kind:
             return False
         motion = (live.now - live.before).astype(object)
         energy = int(np.sum(motion * motion))
