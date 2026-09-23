@@ -43,7 +43,7 @@ GAMMA2 = K * K / (K * K - 3)  # the drive's rational gamma_m^2 = 1.5
 GAMMA = np.sqrt(GAMMA2)
 
 
-COUPLING = "adjoint"  # "adjoint": the adjoint pair along the path on a hop (Reviewer 3's MUST on 4f74bf2a); "same_node": the same-Node differences, light first
+COUPLING = "adjoint_r3"  # "adjoint_r3": Reviewer 3's co-moving pair (the massive step first); "adjoint": the roles swapped, light first; "same_node": the same-Node differences, light first
 
 
 def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, direction, t_move, gain):
@@ -81,16 +81,29 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
             moving and t + 1 >= t_move and acc == K - 1
         )  # the cells move at the start of the next interval
         al[source] = np.sin(omega * t)
-        path = COUPLING == "adjoint"
-        # light's step first: the source term the backward difference of the massive levels, along the path on a hop
-        am_prev = np.roll(am_b, direction) if (hop_now and path) else am_b
-        s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
-        al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am - am_prev), 0.0)
-        al_n[0] = al_n[-1] = 0.0
-        # the massive step: the receive the forward difference of light, along the path on the interval before a hop
-        al_fwd = np.roll(al_n, -direction) if (hop_next and path) else al_n
-        s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
-        am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al_fwd - al), 0.0)
+        if COUPLING == "adjoint_r3":
+            # Reviewer 3's operands in the script's own convention (the Boss's 15:56Z): the MASSIVE step first; the
+            # receive on a hop interval is light's now here less light's BEFORE at the previous Node; the source on the
+            # interval BEFORE a hop is the massive NEXT at the cell's next Node (x + direction) less the massive now here;
+            # the same-Node differences on every other interval. The Lagrangian -G SUM a_l(x_t, t) [a_m(x_{t+1}, t+1) - a_m(x_t, t)].
+            al_prev = np.roll(al_b, direction) if hop_now else al_b
+            s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
+            am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al - al_prev), 0.0)
+            am_n_fwd = np.roll(am_n, -direction) if hop_next else am_n
+            s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
+            al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am_n_fwd - am), 0.0)
+            al_n[0] = al_n[-1] = 0.0
+        else:
+            path = COUPLING == "adjoint"
+            # light's step first: the source term the backward difference of the massive levels, along the path on a hop
+            am_prev = np.roll(am_b, direction) if (hop_now and path) else am_b
+            s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
+            al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am - am_prev), 0.0)
+            al_n[0] = al_n[-1] = 0.0
+            # the massive step: the receive the forward difference of light, along the path on the interval before a hop
+            al_fwd = np.roll(al_n, -direction) if (hop_next and path) else al_n
+            s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
+            am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al_fwd - al), 0.0)
         am_b, am = am, am_n
         al_b, al = al, al_n
         out[t] = al[probe]
@@ -222,9 +235,18 @@ def receding_long():
 
 
 if __name__ == "__main__":
+    COUPLING = "adjoint_r3"
     print(
-        "=== the ADJOINT pair on a hop (light's step first; the source the backward difference along the path,"
-        " the receive the forward difference along the path)"
+        "=== Reviewer 3's adjoint co-moving pair in the script's own convention (the massive step first; the receive on a hop"
+        " light's now here less light's before at the previous Node; the source before a hop the massive next at the next Node"
+        " less the massive now here)"
+    )
+    main()
+    receding_long()
+    COUPLING = "adjoint"
+    print(
+        "\n=== the pair with the roles swapped (light's step first; the source the backward difference along the path on the hop,"
+        " the receive the forward difference along the path before the hop), the earlier reading"
     )
     main()
     receding_long()

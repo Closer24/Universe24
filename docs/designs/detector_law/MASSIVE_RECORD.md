@@ -555,8 +555,16 @@ is UNSTABLE, and so is the ADJOINT PAIR he then prescribed (his line on
 backward difference of the massive levels along the path on the hop
 interval, the receive the forward difference of light along the path on
 the interval before the hop), implemented as stated in the script and
-printed beside the same-Node form: it pumps more slowly than the
-both-backward form (light's E +17 to +9 x 10^4 per interval in the 4400-step
+printed beside the same-Node form, and then his operands EXACTLY as he
+restated them in the script's own convention (the Boss's 15:56Z: the
+massive step first; the receive on a hop light's now here less light's
+before at the previous Node; the source on the interval before a hop the
+massive next at the cell's next Node less the massive now here; the
+Lagrangian -G SUM a_l(x_t, t) [a_m(x_{t+1}, t+1) - a_m(x_t, t)]), which
+pump too (his operands: light's E +6 to +4 x 10^4 per interval in the
+4400-step windows, +10^8 to +2.5 x 10^14 on the longer chain, the amplitude
+3 x 10^4 by 3000 intervals of motion; the roles-swapped pair the same to a
+factor): each pumps more slowly than the both-backward form (light's E +17 to +9 x 10^4 per interval in the 4400-step
 windows, unbounded on the longer chain, the amplitude 7 x 10^4 by 3000
 intervals of motion) and its head-on readings before the pump dominates
 are 0.79 and 1.07, the both-backward form's; the same-Node pair conserves.
