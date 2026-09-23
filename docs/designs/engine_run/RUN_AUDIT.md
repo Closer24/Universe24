@@ -260,7 +260,147 @@ builds no fix and touches no engine line; the branches `event-split`,
 `register-paper-sources` and `highlights-one-version` are untouched. The
 build of any fix follows the Boss's GO after the physicist's read.
 
-## 5. Links
+## 5. The machine for the full re-run (item (7) of the order; the owner's word of 05:55Z, record 1288)
+
+Every experiment is re-run under the corrected engine after the split's
+build, on strong machines if needed. This section counts the worlds from
+the register, states the engine's process model from the code, measures
+what can be measured (HOST) and estimates the rest (COMPUTATION from the
+design's multiplicity, section 3), and from these names the machine.
+
+**The worlds to re-run (the list's source: the register's world files).**
+Under `examples/events/` at main 412b81f1 there are 341 world files (a
+JSON object with `shape` and `measured`; the registers, readings and
+generators excluded), 465924 registered intervals in all; 230 carry a
+lamp (recorded rows, the split's subject) and 111 carry none (the
+bodies' and the crowds' worlds, which do not split). PR #860 (the paper's
+sources, `docs/designs/register_paper_sources/PLAN.md`) deletes 48 of
+them (two_stars 3, masses 2, buildup 3, gallery 5, hand 4, catalog 4,
+crowd_clock 8, cluster_clock 2, reader_clock 5, hubble_stars' gravity and
+double worlds with their record copies 12), leaving 293. Beside them the
+fail_rows worlds (`docs/designs/fail_rows/worlds/`, 11: the cart at k = 3
+and 5 under the law and the key, the six J4 muon worlds,
+`coasting_none_covariant_stamp` on the 27.3 M Node board) and the new_rows
+worlds (`docs/designs/new_rows/worlds/`, 11: Malus at s = 16, 40, 48; the
+Sagnac worlds at k = 3, 5, 9, 17 in two arrangements): 315 worlds after
+PR #860, 363 before it. The gate set (`examples/events/gate_set.json`)
+lists 18 at main (15 after PR #860). By series (the count, the largest
+board, the registered intervals; the recorded ones marked): amplitude 73
+(7260 Nodes, 141012 intervals; 72 recorded, the bell worlds on 21 Nodes
+among them), optical 33 (95817; 18 recorded), coupling 21 (bodies),
+bell 19 (21 Nodes), hubble_stars 18 (27270901; recorded), orbit_lamp 13
+(14641; recorded), flow_link 13 (95817; recorded), weak 11 (68921;
+bodies), lensing 9 (176505; recorded), shell_clock 9 (27450; recorded),
+heisenberg 8 (19320; recorded), nucleus 8, orbit 8, quarks 7, bohr 7
+(226981; bodies), atoms 6 (166375), drive_b 6, moving_detector 6
+(recorded), covariant 4 (27270901), hubble 4 (27270901), clock_word 4
+(recorded), newton_side 3 (95817; recorded), massive_rows 3 (recorded),
+binding 3, redshift 2, lamp_shell 2 (recorded), c_measured 1
+(274625; recorded), and the single worlds at the top of the folder.
+
+**The engine's process model (the code).** One Python process per world:
+`tools/run_series.py` starts each world as a child (`subprocess.Popen`,
+line 151), at most `--jobs` at once (the machine's cores by default),
+with `--wall-seconds` (a run killed past the wall clock and reported not
+completed), `--memory-mb` (each run's address space bounded by RLIMIT_AS
+and a stopped run reported), `--list examples/events/gate_set.json`
+(the listed worlds at their listed ticks), `--fast`, and `--compare` (an
+earlier summary against this one, exit 1 on a changed digest). Within
+one run the interval is one thread of numpy integer arithmetic (numpy's
+integer kernels take no BLAS threads), plus the engine's pool of 4 gather
+threads on a store of 65536 rows and more (`_GATHER_THREADS`,
+`_GATHER_ROWS`, `nature_beam.py:1389-1390`; the merge's Node-aligned
+slabs 2182-2215): a light world above that size uses up to four cores
+in its gathers and merges (the two slits' profile shows the pool's
+`result_iterator` at 41 s of 212, HOST), a small world one core. Memory:
+the stores at 208 bytes per row (26 int64 columns) plus the temporaries
+of a re-ordering (an int64 `argsort` and a copy of the 26 columns, about
+three times the store while a sort runs), the crowd's keys and moments
+(a few ints per occupied Node), the layer's live records (Python dicts
+per (Node, label, phase) key of each open record), the record stream's
+1 MiB buffer, the books of every tick in the audit (`run.py:67-68`), and
+the state snapshot streamed at the end. Measured peak RSS (HOST, one
+process per world, 300 intervals): the orbit 55 MB (1.1 x 10^3 rows),
+light beside a mass 78 MB (1.3 x 10^4 rows), the two slits 369 MB
+(2.6 x 10^5 rows at most; the store itself 54 MB, the rest the sort's
+temporaries, the layer's live records and the interpreter): about 1.4 KB
+of peak memory per live row on the light world, seven times the store's
+208 bytes, the ratio the estimates below use.
+
+**Today's wall time (HOST rates x the registered intervals; cProfile's
+overhead is in the rates, 20 to 30 percent).** The two slits: 4300
+intervals at 0.7 to 1.0 s, 50 to 70 minutes; light beside a mass: 400 at
+0.1 s, 40 s (the register's own time for `mass_g0` without cProfile
+23.5 s, `DISAGREES.md` section 9); the orbit: 4000 at 6 ms, 25 s; the
+largest boards (27.3 M Nodes): the register's 43 s for 400 intervals of
+`coasting_none_covariant_stamp` (`RUN_4AB.md` section 2), of which the
+dense per-Node array of the frame (finding 2) is the bulk at about 0.1 s
+per interval. The whole register serially is of the order of hours of one
+core today; the two heaviest worlds are the two slits above and row 10's
+`w27_beam` (whose record reached 6.8 GB at interval 3664 without
+completing, `DESIGN.md` section 9).
+
+**Under the split (COMPUTATION, section 3; the split's own release step
+not yet built, its cost not measured).** The 230 recorded worlds grow:
+a light world's live rows reach 10^6 to 10^8 (the two slits: at most
+1.39 x 10^6 per record after the merge, a record born per interval, a
+flight of 60 to 180 intervals). At today's 3 to 8 microseconds per live
+row per interval (the profile's rate) a store of 10^7 rows costs 30 to
+80 s per interval, 36 to 96 hours for the two slits' 4300 intervals in
+the present structures; with the top fixes of section 4 (the Python
+loops vectorised, one re-ordering per interval, the crowd built once)
+the rate falls toward 1 microsecond per row, 10 s per interval, about 12
+hours per such world; the bodies' and crowds' worlds (111) are unchanged.
+Peak memory at the measured 1.4 KB per live row: 10^6 rows 1.4 GB,
+10^7 rows 14 GB, 10^8 rows 140 GB (beyond one process on a common host:
+the grain and the merge decide where between 10^6 and 10^8 a world lands,
+section 3; the store alone is 208 bytes per row, and the ratio falls if
+the layer's dicts and the sort's temporaries are trimmed). The record on disk: the per-row `click` lines
+at about 355 bytes per ending row per interval are the record's bulk
+today (96 to 98 percent of the lines, 0.63 MB per interval on the two
+slits, 2.7 GB per registered run at today's rows) and grow with the
+rows under the split (10^5 rows ending per interval would be 35 MB per
+interval, 150 GB per world), so the per-row lines written on request
+(the Record Trimmer's option) is a condition of the re-run, not a
+saving; without them a world's record is its set `record` lines, its
+births and gathers, of the order of 10 to 100 MB, plus the state
+snapshot at 208 bytes per live row at the end (2 GB at 10^7 rows).
+
+**The machine for one day (an estimate; the assumptions named).** With
+(a) the three top fixes of section 4 built and proved, (b) the per-row
+click lines off by default, (c) the light worlds landing at 10^6 to 10^7
+live rows: about 100 heavy worlds (the recorded worlds on boards of 7260
+Nodes and more: the screen worlds of amplitude, heisenberg,
+massive_rows, optical, lensing, flow_link, newton_side, lamp_shell,
+shell_clock, orbit_lamp, hubble_stars) at 4 to 12 hours each, and the
+other 215 in minutes each. One world per process, N at once: 100 worlds
+x 8 hours / 24 hours is 33 processes busy through the day, so 48 to 64
+cores (each heavy world also takes up to 4 threads in its gathers), 16 GB
+per heavy process at 10^7 live rows (1.4 KB per row measured, section 2)
+bounded by `--memory-mb` (a run past the bound is reported, not lost),
+1 TB of memory for 64 at once (512 GB for 32 at once and two days), and
+2 TB of disk for the records and the snapshots (the record grows to tens
+of GB per world if the per-row lines stay on). A world that lands at
+10^8 rows needs 140 GB by itself and is a run on its own machine or a
+run that waits on the grain's word. Without the fixes the same machine takes about a week, or the day
+needs of the order of 300 cores and the memory to match; a second
+machine halves either. The runner's form, the existing one (HOST):
+
+    PYTHONPATH=src python tools/run_series.py --jobs 48 --out runs/rerun \
+        --wall-seconds 86400 --memory-mb 12000 <the world files>
+
+with the world list taken from the register (the 315 files above; the
+gate set by `--list examples/events/gate_set.json`), every world in its
+own process, `summary.json` per batch and `--compare` against the base
+run for the digests; the batch of the small worlds first, the heavy ones
+after, so that the cores stay full. The numbers measured here are the
+HOST profiles of section 2 and the peak RSS above; the rows under the
+split, the seconds per interval at those rows, and the disk under the
+split are estimates from the design's multiplicity and the measured
+rates, to be measured at the build's first run on one world before the
+machine is ordered.
+
+## 6. Links
 
 - `tools/profile_run.py`: the HOST profiler of section 2.
 - `docs/designs/event_split/DESIGN.md` and `CORRECTIONS.md` (the branch
