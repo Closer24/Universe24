@@ -73,7 +73,7 @@ neither, with what is missing to decide.
 | 7b | UNDERSTOOD | the give is once per body, so the border's clicks count the bodies (4 against 2) whatever the give's value; the ratio 2.0 is a constant of the rule. |
 | 8a | UNDERSTOOD, with the kind of the compared number in dispute among the documents (stated in its section, not chosen here) | a `become` at a declared count of the body's own clock is a step at any count; the only spread the law gives is the crowd's, bounded by its range, an order below 3.17. The documents differ on whether the row's number is the width 0 (the bodies' own clocks, DETECTOR by the tally and the paper) or 0.036 (the lattice's clock, GAMEBOARD by CRITERIA.md and KIND_AUDIT.md, the number in NATURE.md's row cell). |
 | 8b | UNDERSTOOD | a window admits w / N of a stride coprime to N and empties that class; an identical reader behind reads the emptied class, 0; under `massive_rows` the readers become all-or-nothing gates per Node and read 0 and 0; the re-emitter arrangement's 1.000 is a declared arrangement's, as RUN_8BC.md says. The three runs of RUN_8BC.md are at the head's own source (the fingerprint of `f023770c` equals theirs). |
-| 13 | SUSPECT | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check is one run of `optical/control_g0` and `mass_g0` at head against the register's pin (section 8). |
+| 13 | SUSPECT, confirmed by the check of section 8 | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check, one run of `optical/control_g0` and `mass_g0` at head against the register's pin, read -1.993 pixel at head (section 8): the printed number is an n = 0 world's, the law's own number on a coupled world the time part, the ratio 1 against nature's 2. |
 
 **The engine since the runs, once for every row.** The commits on
 `origin/main` since the criteria runner's head `4028b020` (2026-09-22,
@@ -860,7 +860,7 @@ run reads 0.000 or refuses, the entry does not act at gamma 0 on this
 world and the printed number stands. Made below, section 8, within the
 order's bound.
 
-**(6) The cheapest next check.** The run of (5), made in section 8.
+**(6) The cheapest next check.** The run of (5), made in section 8, which confirmed the suspect; after it, a docs line: the tally's and the paper's row 13 cell restated with the law's own number on a coupled world (the time part, -1.993 pixel at gamma 0 against -3.989 at gamma 1, the ratio 1 against nature's 2) and series K's 0.000 named as the n = 0 worlds' reading beside it; 0 HOST.
 
 ## 7. The summary of the six
 
@@ -871,10 +871,75 @@ order's bound.
 | 7b | 12.72 (AME2020) | 2.0, four border clicks against two (series N, re-run at `4028b020`) | DETECTOR (BORDER); the escaped content GAMEBOARD | UNDERSTOOD | none needed; the two worlds at head, about 2 minutes HOST, if wanted |
 | 8a | 3.17, ln 9 / ln 2 (an identity of the exponential; Gonzalez et al. 2021 for the form) | the documents differ: 0.036 (NATURE.md's row cell) against 0 (the tally, the paper); 0.08 to 0.13 at `4028b020`, the cap 1024; the J1 `become` blocks move under the generic entry at head, unread for the row | DETECTOR (BODY, the `become` lines; CROWD, the shell's 64 clicks) for the step; GAMEBOARD (the lattice's clock) for the width; the label in dispute (KIND_AUDIT.md, the reviewer's to settle) | UNDERSTOOD, the kind of the number in dispute among the documents, stated and not chosen | `j1_lattice` with `clock_stamp` true at head, about 3.5 minutes HOST, the width in the shell's own count |
 | 8b | about 1 (an order-of-magnitude estimate from Formaggio and Zeller 2012; no measurement of two detectors in line cited) | 16 of 1024 and 0 behind, the far detector 699 of 711 (series J2, re-run at `4028b020`); under `massive_rows` 0, 0, the whole beam at x = 14; with a re-emitter 16, 16, 1.000, 683 (RUN_8BC.md at head's source `5166dbe9`) | DETECTOR (CROWD, the readers' own lines) | UNDERSTOOD | a named source for nature's ratio; 0 HOST |
-| 13 | 1 + gamma = 2, 1.75 arcseconds at the Sun's limb (Dyson 1920; the VLBI gamma) | the documents differ: 0.000 pixel (series K at `suspension` 0, 2026-09-20; the tally, the paper) against the time part, -1.993 pixel at gamma 0 in `optical/mass_g0` at [1, 16384] (2026-09-22, before PR #855's merge; WHAT_IS_MISSING.md 1.12's "0.87 arcseconds") | DETECTOR (CROWD, the screen's centroid); the ratio 2.00 and the ring's 0.731 DETECTOR readings of a declared input | SUSPECT: the printed number is an n = 0 world's, the coupling declared away | `optical/control_g0` and `mass_g0` at head against the pin -1.93 +- 0.5 pixel; HOST minutes; made in section 8 |
+| 13 | 1 + gamma = 2, 1.75 arcseconds at the Sun's limb (Dyson 1920; the VLBI gamma) | the documents differ: 0.000 pixel (series K at `suspension` 0, 2026-09-20; the tally, the paper) against the time part, -1.993 pixel at gamma 0 in `optical/mass_g0` at [1, 16384] (2026-09-22, before PR #855's merge; WHAT_IS_MISSING.md 1.12's "0.87 arcseconds") | DETECTOR (CROWD, the screen's centroid); the ratio 2.00 and the ring's 0.731 DETECTOR readings of a declared input | SUSPECT, confirmed by the check: the printed number is an n = 0 world's, the coupling declared away; at head a coupled world reads the time part | made (section 8): `optical/control_g0` and `mass_g0` at head, 12 s and 25 s HOST, the pin -1.93 +- 0.5 met at -1.993; next, a docs line restating the row's own number, 0 HOST |
 
 ## 8. The one cheap re-run at head: row 13's suspect tested
 
 Written after the run, against the pin of section 6 (5) as written before
-it; no pin moved; the world files unchanged; the outputs in the session's
-scratchpad under the retention policy, the readings kept here.
+it (committed at `e98c44d2` before the run); no pin moved; the world files
+unchanged (their sha256 `309dd2daa375f68a` for `mass_g0.json` and
+`354de8167ab5f43a` for `control_g0.json`, the register's files as shipped);
+the outputs in the session's scratchpad under the retention policy, the
+readings kept here.
+
+**The run.** Head `e98c44d2` (this branch's first commit on `f023770c`,
+docs only; the runs' `run.json` carry the source sha256
+`5166dbe90169655d`, the head's fingerprint of section 0), 2026-09-23
+03:07Z, `tools/run_series.py --jobs 2 --wall-seconds 600` on
+`examples/events/optical/control_g0.json` and `mass_g0.json`, 400
+intervals each, headless, Python 3.14.0rc2: both completed and conserved
+at every tick; HOST 11.2 s of the runner and 12.3 s wall, 98 MB
+(`control_g0`), 23.5 s and 24.7 s wall, 104 MB (`mass_g0`); the digests
+state `438e1e268ded` / audit `e3d621218449` / events `3f0844aae6f4`
+(`control_g0`) and `e56b56087c83` / `22117d1167a2` / `8566749111e1`
+(`mass_g0`). Read by `tools/lensing_readings.py --no-replay` (the window
+[110, 400]); 0 record checks failed.
+
+| The reading | Kind | Read at head | The pin (section 6 (5), from `optical/expectations.json`) | Verdict |
+| --- | --- | --- | --- | --- |
+| the control's centroid, y and z | DETECTOR (CROWD, the screen's pixels' clicks) | 26.000, 20.000; 1455 clicks in the window | 26.000 | PASS |
+| `mass_g0`'s centroid shift in y against the control | DETECTOR | -1.993 pixel (the centroid 24.007); 1347 clicks | -1.93 +- 0.5 pixel; the register's reading of 2026-09-22 -1.993 | PASS, and equal to the register's reading to the last digit |
+| `mass_g0`'s centroid shift in z | DETECTOR | 0.000 | 0 +- 0.5 | PASS |
+| the delay, the mean age of the clicks against the control's | DETECTOR (the row's own count) | +2.95 intervals (92.35 against 89.40) | 2.68 +- 1 (the register's reading 2.95) | PASS, equal to the register's |
+| the count ratio; the light the mass took; the light on the faces | DETECTOR | 0.9258; 0; 0 | the register's 0.9258; 0; 0 | equal |
+| the tool's own series K verdicts ("centroid y outside; delay outside; count outside; phase rate outside") | the tool's brackets for series K (0 within 0.5 pixel), not this row's pin; the phase rate 0.000 against the turn 8 read alike in the control and the mass world | printed as read | none of this row's | reported, no pin |
+| the crowd at b = 6 | GAMEBOARD (a host computation, the tool's label) | presence 17.63 rows per Node, the age moment 181.8 (the optical register's 181.8) | none | a diagnostic |
+
+**What the check settles.** The suspect of section 6 (5) is confirmed:
+the law as built at head, on a world at a pair with n > 0 under the
+default gamma_PPN = 0, bends a light row past a held mass by the time
+part, -1.993 pixel at b = 6 and M = 2^16 (DETECTOR), half of the
+declared gamma_PPN = 1 world's -3.989 (the register), and delays it by
+2.95 intervals; series K's 0.000 pixel is the reading of worlds that
+declare `suspension` 0, at which the law's coupling of a row to the crowd
+is zero by declaration, and it stands at head only for those worlds. So
+the number printed as "the law as built" in the tally by status and in
+the paper's cell is an n = 0 world's, and the law's own number for row
+13 on a coupled world is the time part alone: the ratio 1 against
+nature's 1 + gamma = 2 (the deflection half of nature's; nature's 1.75
+arcseconds is the declared coefficient's value at the Sun's limb, on the
+comparison side). The disagreement with nature is understood either way
+(gamma_PPN an input; the space part no verb reads); what the check moves
+is which number the row should print as the law's, which is the Register
+Architect's and the writer's to restate on the Boss's routing, nothing of
+it moved here. The reading is at the register's grain (the pixel 0.5, the
+interval 1) and on the fan's comb like every reading of this geometry
+(section 6 (4)); the ratio of the two gammas cancels the comb, the
+absolute shift does not.
+
+**The verdict of row 13 after the check.** SUSPECT, confirmed by the
+check: the printed number is not the law's at head on a coupled world;
+the row's own number is the time part, read at head (DETECTOR, this
+section), and the cheapest next step is a docs line, not a run.
+
+## 9. Links
+
+- [NATURE.md](../../NATURE.md), the rows and the tally by status (2026-09-23).
+- [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) sections 1.2, 1.6, 1.7, 1.8, 1.9, 1.12 and 3.
+- `docs/designs/fail_rows/KIND_AUDIT.md` on `kind-audit` (PR #990), the rows 1c, 6, 7b, 8a, 8b, 13 and its section 2.
+- [CRITERIA.md](../paper_criteria/CRITERIA.md) rows 7a and 7b, 8a, 8b, and item (a).
+- [RUN_8BC.md](RUN_8BC.md) sections 0, 5 and 6.3; `RUN_13_2A.md` on `fail-run-13-2a` sections 0, 3 and 9; `RUN_14.md` on `fail-run-14` sections 0 and 9.
+- [The order channel](../order_channel/RUN.md) and [its pins](../order_channel/PINS.md); [the atom's baseline](../atom_baseline/RUN.md), [its cause](../atom_give/CAUSE.md), [the centred step's run](../atom_give/RUN_CENTRED.md).
+- [The price of the generic entry](../one_wall/GENERIC_BENDING_PRICE.md); `examples/events/gate_set.json`; the registers of [lensing](../../../examples/events/lensing/README.md), [optical](../../../examples/events/optical/README.md), [binding](../../../examples/events/binding/README.md), [weak](../../../examples/events/weak/README.md) and [atoms](../../../examples/events/atoms/README.md).
+- [POSTULATES.md section 10](../../../POSTULATES.md); the paper's `tab:nature` on `paper-algebra-first`.
+- The log: records 281, 678, 707, 709, 941, 955, 1129, 1134, 1139, 1164, 1166, 1173 (on main); 1207 (the order's citation, not yet on main).
