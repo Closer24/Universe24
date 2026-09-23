@@ -15,11 +15,11 @@ mu | s | g | layer n | omega_b | omega_0 | eps | kappa | extent 1/kappa | extent
 
 HOST: one interval of the two rules on an n x n x 1 layer (numpy, this machine):
   n = 128 (16,384 Nodes): 0.26 ms per interval; a moving world of 9500 intervals 2 s
-  n = 200 (40,000 Nodes): 0.94 ms per interval; a moving world of 9500 intervals 9 s
-  n = 300 (90,000 Nodes): 2.68 ms per interval; a moving world of 9500 intervals 25 s
+  n = 200 (40,000 Nodes): 0.80 ms per interval; a moving world of 9500 intervals 8 s
+  n = 300 (90,000 Nodes): 2.22 ms per interval; a moving world of 9500 intervals 21 s
 
 the block's clock in motion ON THE LAYER at k = 3 (ramp 1500, hold 8000), against the one formula:
 mu | s | g | layer n | omega_b | eps | f/f0 read | 1/gamma_m | first order 1/gamma_m (1 - residual) | the one formula (the well of width gamma s along x) | residual | s
-0.15 | 10 | 0.02250 | 200 | 0.13283 | 0.2085 | 0.7832 | 0.8165 | 0.7739 | 0.7880 | 0.0521 | 3
-0.15 | 14 | 0.00562 | 200 | 0.14844 | 0.0115 | 0.8113 | 0.8165 | 0.8142 | 0.8141 | 0.0029 | 3
-0.15 | 20 | 0.02250 | 64 | 0.09097 | 0.6288 | 0.7635 | 0.8165 | 0.6882 | 0.7691 | 0.1572 | 0
+0.15 | 10 | 0.02250 | 200 | 0.13283 | 0.2085 | 0.7832 | 0.8165 | 0.7739 | 0.7848 | 0.0521 | 3
+0.15 | 14 | 0.00562 | 200 | 0.14844 | 0.0115 | 0.8113 | 0.8165 | 0.8142 | 0.8132 | 0.0029 | 3
+0.15 | 20 | 0.02250 | 64 | 0.09097 | 0.6288 | 0.7635 | 0.8165 | 0.6882 | 0.7643 | 0.1572 | 0

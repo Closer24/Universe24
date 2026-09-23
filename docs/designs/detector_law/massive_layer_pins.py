@@ -43,9 +43,13 @@ def layer_mode(n, s, mu, g, sx=None):
     """The lowest mode of a well of s cells across (and sx along x, s by default) on the layer."""
     sx = s if sx is None else sx
     L = layer_reads(n)
-    x = np.arange(n) - (n - 1) / 2
-    X, Y = np.meshgrid(x, x, indexing="ij")
-    inside = ((np.abs(X) < sx / 2) & (np.abs(Y) < s / 2)).ravel()
+    idx = np.arange(n)
+    # exactly sx cells along x and s across, as index ranges (a half-width test on an even
+    # board folds an odd width onto the even one below it)
+    ax = (idx >= (n - sx) // 2) & (idx < (n - sx) // 2 + sx)
+    ac = (idx >= (n - s) // 2) & (idx < (n - s) // 2 + s)
+    X, Y = np.meshgrid(ax, ac, indexing="ij")
+    inside = (X & Y).ravel()
     D_out = 1 + mu**2 / 2
     D = np.where(inside, 1 + (mu**2 - g) / 2, D_out)
     d = 1 / np.sqrt(D)
@@ -58,7 +62,7 @@ def layer_mode(n, s, mu, g, sx=None):
     kappa = np.arccosh(ck) if ck > 1 else 0.0
     v = np.abs(vec[:, 0]).reshape(n, n)
     c = n // 2
-    face = int(np.ceil((n - 1) / 2 + sx / 2))
+    face = (n - sx) // 2 + sx  # the first Node outside the well along +x
     line = v[face:, c] / v[face, c]
     over = np.where(line < np.e**-1)[0]
     extent_read = float(over[0]) if len(over) else float("nan")
