@@ -197,6 +197,55 @@ wall's Nodes are detectors that click and end the record there); a
 amplitude on the board is a row of some record, born at a lamp, ended at
 a click; the board holds records and nothing else).
 
+1.1 **The foreign object, in the owner's words (10:05Z to 10:20Z, to
+the chief physicist).** "There is no such thing as a detector and an
+emitter; each is both: a foreign object with known parameters (mass,
+frequency, phase, place, a step in one of six directions, re-emission)."
+"A foreign object always self-clicks; otherwise it does not exist
+there." "The click is a local action of a Node on itself which produces
+the amplitudes." "You cannot go diagonally." One kind, then, declared
+Outside per object, with these parameters and no others (Reviewer 3's
+MUST F, one declared kind):
+
+| Parameter | What it is under the rule | Kind |
+| --- | --- | --- |
+| mass | the object's content M (`amount`, `held`), what its record hands over at a click | a declaration |
+| frequency | its clock, the family's pair [n, d] on the circle of N steps, the record's period | a declaration |
+| phase | the phase at which its train starts, the clock's zero (3 N / 4, the cosine 0 and rising) | a declaration |
+| place | its Nodes on the GameBoard; a body of one Node or a line or a wall of Nodes | a declaration |
+| step | one of the six directions and the count k of intervals per Link; a step is one Link, never a diagonal; k = 0 at rest | a declaration |
+| re-emission | the pair p = [p_n, p_d] of what its Nodes re-emit of what the rule gives them (section 5, the three receiver forms; the mirror and the sponge) | a declaration |
+| train | the length of one insert in periods of its clock (the record's coherence, 4.5) | a declaration |
+| sensitivity | the rungs of the wheel one click needs, 1 (the first rung, the counting form) or 2 (the owner's "check 2 against 1", a computation pending) | a declaration |
+| the cycle's closed count N_s | the intervals after its last insert during which it does not receive its own record (the cycle sentence, section 5) | a declaration |
+
+Everything else the object has is read, not declared: its own count on
+every click line (`clock_stamp`), its cycle (the count from an insert to
+the receive of the same record), the direction of what arrives (the
+gradient of the arriving offer's phase across its Nodes). The
+self-click is the existence condition: every foreign object holds its
+own record (its body's record at its period, section 8), inserts it and
+receives it at its own Nodes each cycle, and an object whose own record
+never returns its first rung at its Nodes is not on the board (its
+declaration is refused at load when its Nodes cannot receive, and its
+books show the record escaped when it leaves by a face). Under the rule
+a one-Node object at rest in open space has no return (Reviewer 3's
+MUST H: the wave spreads and does not come back), so its self-click at
+rest is its declared period (its cycle N_s with no receive from the
+Inside), the light clock's return (a body and a receiver body at L) is
+a two-body cycle, and section 8 is to be rewritten in the owner's words
+on that basis (the pass, item H; not done in this commit).
+
+What is refused with the one kind, by the Algebra Auditor's rows
+(ALGEBRA_AUDIT.md at c848aad0 on `algebra-inside-outside`): a record
+`in_transit` between two objects without rows on the board (there is no
+Outside passage: the mass moves only through the Inside, as rows); a
+face that is neither a declared wall nor periodic; a "become" of an
+object triggered by anything but its own cycle; a moving object's step
+by anything but the first rung of its own record at the next Node, one
+of six. Each refusal is a load-time check of the world under the key
+(section 11, step 1).
+
 ## 2. The rule, in integers, and its three tests
 
 **The rule.** The world's pair `c2 = [1, 3]` (the exact square
@@ -254,6 +303,62 @@ script drives an opening's Nodes.
   detector's sum the detector's own record's (a measured event's book, as
   today's pointer per set). PASS.
 
+2.1 **The norm the rungs divide is the rule's conserved form, not the
+sum of the squares** (Reviewer 3's MUST A). Written with the middle
+term, the rule is `a_next - 2 a_now + a_before = (1 / 3) (a_E + .. + a_D
+- 6 a_now)`, the leapfrog of the wave equation at c^2 = 1 / 3. The
+leapfrog conserves exactly (before the remainder) one quadratic form of
+the two amplitudes, the discrete energy
+
+    E = 3 SUM over Nodes (a_now - a_before)^2
+        + SUM over Links (a_now(x) - a_now(y)) (a_before(x) - a_before(y))
+
+in the amplitude unit squared (the factor 6 chosen so that E is an
+integer), the first sum the MOTION of the rows (each Node's change in
+one interval), the second the STRAIN across the Links (the product of
+the differences on a Link now and one interval ago). With the remainder
+kept (verb D) E is conserved to the grain of the remainder, one unit
+per Node per interval at most (COMPUTATION: a drift of 2 x 10^-4 of E
+over 200 intervals on a 24 x 24 periodic layer of random rows, exact in
+the rational form), and this is what the books read; the
+form is positive when c^2 < 1 / 3 in three dimensions and it is
+positive-semidefinite exactly at the pair [1, 3]: the mode it does not
+bound is the checkerboard (the six neighbours the sign opposite of the
+Node, the zone's corner), which the rule holds at a constant amplitude
+without growth; in the z-periodic one-layer worlds of the pins script
+the bound is strict (four neighbours). The record's norm, what the rungs
+of the wheel W divide, is its E at the end of its insert (the train's
+motion and strain, an integer of the lamp's declaration), and the
+click's first rung is 1 / W of it.
+
+Why `a^2` fails, in a paragraph: the sum of the squares of the
+amplitudes is not conserved by the rule. A static level on the board
+(every row of the record at the same amplitude, a_now = a_before) is an
+exact solution of the six-neighbour rule with E = 0: it has a^2 at
+every Node and does nothing, carries nothing and clicks nowhere; a
+receiver that summed a^2 would count it, and the pins script's first
+runs did (the level left behind by a train starting on a step, the
+build's first chain: the sum never decayed and no record completed).
+A travelling train's SUM a^2 also oscillates within each period between
+the motion and the strain (the two sums of E exchange their content
+every half period, as a pendulum's), so a rung crossed by a^2 at one
+interval is uncrossed at the next, and the click's time by a^2 is not
+the front's arrival but a beat of the train against the wheel. E has
+neither defect: the static level is zero in it, and a travelling train
+carries a constant E whose motion part is what a receiver's Port can
+take in an interval (section 5: the offer is the Port's motion). The
+build measured the difference on the chain: with a^2 no completion; with
+the motion the click at the front's first rung and the books balanced.
+
+The one non-local step, named (the Algebra Auditor's row "LOCAL EXCEPT
+the completion of a record", ALGEBRA_AUDIT.md at c848aad0): the record
+completes when its offer has been exhausted into receivers or has left
+the board, and only the host knows the sum over the board of the
+record's remaining motion; every Node's step, every Port's take and
+every first rung is local. That step is the amplitude law's own
+(event_split DESIGN.md section 4, the exhaustion), unchanged, and it is
+the host's cost of section 7, not a physical dependency of any Node.
+
 ## 3. The new things of 2026-09-23 that the design carries
 
 - **The detector's own count on every click line** (`clock_stamp`, the
@@ -288,16 +393,30 @@ gradient of the arriving offer's phase across the detector's Nodes (the
 momentum the click hands over, section 5), never a thing carried by a
 row. The one-wall function (`age_wall`, f = 1 + gamma) and the push
 (`optical_turn`) act today on a row's flight and label; under the rule
-they act on the pace at a Node: the crowd's age moment A at a Node
-stretches the local clock of every row there (the rule's step taken at
-the stretched rate, d against d + f n A, the same coefficient), which
-bends a train's front the way a refractive index does; whether the
-push's second half (the flow **V** on the turn) is then still a separate
-verb or is contained in the stretched pace is the design's first open
-computation (section 6.6: row 13's bend), stated here as open, not
-decided: the owner's "W and not P" of 07:00Z reads under this rule as "the
-wall alone; no second push on a splitting row", exactly the question
-Form W of CORRECTIONS.md M9 asked, now with a rule that splits.
+there is one place for the wall and it is a coefficient on the rule
+(Reviewer 3's MUST E, the coefficient form): at a Node whose crowd has
+the age moment A, the six-neighbour term is taken with the pair
+
+    q = [d^2, (d + f n A)^2],   the step
+
+    3 (d + f n A)^2 a_next + r' = d^2 (a_E + .. + a_D)
+        + 6 ((d + f n A)^2 - d^2) a_now - 3 (d + f n A)^2 a_before + r,
+        0 <= r' < 3 (d + f n A)^2
+
+(verb T with the pair, then D with the remainder kept; the middle term
+returns so that the row stays continuous, and at A = 0 the pair is
+[1, 1] and the rule of section 2 returns unchanged). That is the rule's
+step taken at the stretched rate d against d + f n A, the same
+coefficient as the one wall, and it makes the crowd a medium of index
+n_c = (d + f n A) / d for a splitting record: the train's front bends
+toward the slow side (the time part of the bend, the phase), and a
+gradient of the index across a packet is a force on it (the push), both
+from the one coefficient, no second verb. On that reading the owner's
+"W and not P" of 07:00Z holds under the rule: the wall alone carries
+both parts of the bending, and Form W of CORRECTIONS.md M9 is answered
+by the coefficient. What decides it is the computation of 6.6 on row
+13's worlds (the bend -3.989 at gamma 1 from the coefficient alone, or
+only the time part's -1.993); it is named there and not run.
 
 4.2 **The split only at declared apparatus** (the lamp's fan of
 directions with turns, the opening's fan table with angle weights, the
@@ -396,6 +515,67 @@ first rung (s_D = 1 / W), the front of the arriving offer, not its
 centre: section 6 (D) reads the detector at rest by this rule and finds
 N_0 = 206 at every wavelength tried, the ray law's pin.
 
+**The cycle sentence** (the owner, 10:12Z: "the detector's cycle time
+is the time from its insert to its receive through the Inside";
+Reviewer 3's MUST B, closed by this sentence only). A foreign object in
+one interval either inserts or receives, never both: for the length of
+its train it inserts its record at its Nodes and its Ports take nothing
+of that record; for N_s declared intervals after the last insert its
+Ports still take nothing of that record (the tail leaving its own Nodes
+is not an arrival, and a Port that booked it would click the object on
+its own emission); from then on its Ports take, and the record's first
+rung at the object's Nodes is its receive. Its cycle is the count of
+intervals from the first insert to that receive, read on the click line
+as the detector's own count less the birth stamp; the next insert
+starts a new cycle. N_s is the object's declaration (1.1; the build's
+"grace" of two periods is one value of it), not a constant of the law,
+and it is refused when smaller than the train's own leaving time at the
+object's pace. The three tests: generic (one declared integer per
+object, no family name, no kind); vector (a comparison of the record's
+age, the row's own counter, against the train's length plus N_s, no
+arithmetic on the state vector); local (the object's own record's age
+at its own Nodes; nothing kept at a Node beyond the record's row and
+its age, which the record already carries).
+
+**The three receiver forms** (Reviewer 3's MUST C and the correction of
+09:33Z: zero re-emission is a mirror, not an absorber). What a wall,
+a screen, a body or a face DOES to the record's row at its Nodes is one
+of three declared forms, and the world file names the form per object
+(its re-emission parameter, 1.1):
+
+- **The mirror**: the Node's row is held at 0 (or, in the coefficient
+  form of 4.1, the six-neighbour term's coefficient q is 0: a body of
+  infinite mass, the index infinite, the boundary's Fresnel step
+  ((n - 1) / (n + 1))^2 equal to 1). The wave returns with its sign
+  reversed; nothing is booked. The pins script's "zero wall" is this
+  form (6.1: 0.842 at 24 Links, Rayleigh-Sommerfeld's first-kind sum,
+  which is the wave's own sum through an opening in a mirror), and the
+  build's chain measured 30 percent of a packet's motion returned by
+  it. A large mass declared as a wall is therefore derived, not a
+  fourth form: it is the mirror by the coefficient of 4.1.
+- **The sponge**: a graded run of the object's Nodes, about a wavelength
+  deep, whose rows take the rule's step and then re-emit the pair p of
+  it (verb T, the pair per depth declared, p rising from near 1 at the
+  face to 0 at the back), the part not re-emitted booked to the object
+  as absorbed (the offer), so that at every Node the step in the index
+  is small and the Fresnel reflection at the face is the product of many
+  small steps. The pins script's "lossy 6-Node body" is this form (6.1:
+  0.814 to 0.857; the reflection it did not remove is the difference
+  from the mirror's sum). A wall that reads (a screen, a wall Node
+  whose set is read) is a sponge whose absorbed offer is booked to its
+  set; a wall that does not read is the same sponge with nothing read.
+- **The Port's take**: one amplitude per Port facing a free Node,
+  following the wave one way, g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t))
+  with the declared pair k = [-15, 56], the build's choice (section 11),
+  0.07 percent reflected on the chain. It is a one-Node sponge in effect
+  and cheaper by a wavelength of Nodes per wall; it is the design
+  decision put to Reviewer 3 whether the engine carries it beside the
+  two forms above or the sponge alone.
+
+A face of the board is one of the three forms too, declared: an open
+face is a sponge that does not read (its absorbed offer booked as
+escaped), a closed face is a mirror, and a periodic world has none.
+
 **The content and the books.** The record's content is one quantum h,
 one entry in the record's ledger from the birth (the lamp pays h at the
 birth as today, `cost = quantum x turn`, the turn 1) to the click (the
@@ -482,6 +662,21 @@ pins is re-declared by this design. The near-field half (the Fresnel
 number 1.45) is inside the band with either wall. The
 pixel-to-pixel roughness near the peak 0.02 to 0.001: a bell, no speckle
 (the coin's 0.8 to 1.0).
+
+**The datums' kinds, before the pins.** Rayleigh-Sommerfeld's sum and
+Fraunhofer's sinc are COMPUTATIONS of wave optics (the exact sum
+through an opening in a mirror; its far-field limit), not readings of
+nature: a pin against them is a check of the rule against the wave
+law, and it says nothing about nature until a nature row is named. A
+nature row for a single opening needs a named measurement with its
+medium and its polarisation (the obliquity of the first-kind sum is the
+polarisation's); none is at hand for a slit two or eight wavelengths
+wide, and the register's row 10 carries none either. The recommendation
+for the pins table (the pass, item G): a nature row at w = 4 lambda and
+L = 100 lambda, where the far field is reached and a slit measurement
+can be named, with the medium and polarisation columns filled; until
+then (a), (b) and (c) below stand as COMPUTATION checks, so labelled
+in the table.
 
 **THE PINS AS DECLARED, on the owner's word of 10:05Z** ("declare the pin
 again, because we are now in the right place"; his word to the chief
@@ -690,9 +885,11 @@ against RUN_AUDIT.md. The owner reads sections 0, 1, 5 and 8 first.
 5. The price: the wavelength 12 Links or more, the light worlds scaled
    by 2.6 or more in length, hours per world, a train declared on the
    lamp.
-6. Nothing built yet; the owner's GO given at 09:03Z; the build after
-   Reviewer 3's gate and after the owner's word on the far-field pin of
-   6.1, by the specification of section 11; the massive form folds in as
+6. The build's first step exists on `detector-law-build` (f4a3971a, a
+   chain click with balanced books) and holds there by the Boss's order
+   of 10:08Z until Reviewer 3's re-gate of this pass and the pins pass
+   against nature in the script; its four choices are section 11's, put
+   to the reviewer as design decisions; the massive form folds in as
    section 8.
 
 ## 11. The build's specification (docs; the engine work starts on Reviewer 3's gate)
@@ -709,9 +906,16 @@ order the engine takes them each interval, each with its gate:
    columns unused under the rule); the record's ledger (its content h,
    its birth stamp, its lamp's number and ordinal, its train's length and
    phase) as today's record identity. Gate: the loader accepts the four
-   pilot worlds scaled (section 7) and refuses a world that declares a
-   fan, a `turns` list or `sensitivity` under the hypothesis, naming the
-   rule.
+   pilot worlds scaled (section 7) and refuses, naming the rule, a world
+   that declares under the key a lamp's `turns` (the fan's phases), a
+   measured event's `splits` or fan, a paid family without the pair form
+   of its clock (the build's three refusals at f4a3971a), and, by the
+   Algebra Auditor's rows (1.1): a record `in_transit` without rows on
+   the board, a face that is neither a declared wall nor periodic, a
+   "become" triggered by anything but the object's own cycle, a moving
+   object's step by anything but the first rung at the next Node in one
+   of six directions, and an object's N_s smaller than its train's
+   leaving time.
 2. **The source.** At each of the lamp's Nodes, for each live record of
    the lamp, `a_now := A cos(2 pi t n / (d N))` on the wheel (the cosine
    a table of N entries at load, the rate's whole part by `by_clock`),
