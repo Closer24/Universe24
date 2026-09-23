@@ -152,9 +152,8 @@ stays listed so that its pins are on record. Two more of his decisions
 by the same word: a sensitivity per (detector, family) is a declared
 input of kind 2 (the cross-section; row 8b's condition in section 3);
 and the crowd's flow turning a row of no content (row 13's second half)
-is NOT decided as a law by it: the chief physicist has no verified form
-for it and names it a hypothesis for its own identity after the split's
-runs (M9).
+is built with the split on his later word of 06:12Z, under the identity
+`energy-weight-v1`, revertible by its key (M9).
 
 ### M3. Readings by the host's tick where the law has no external clock
 
@@ -263,20 +262,44 @@ entry on the gap); a lamp's fan stays (the owner: "a ray splits
 according to the laws it has"; an emitter is an apparatus). Three tests:
 the world file's, none of the law.
 
-### M9. The space part of the bending on a row of no content: a hypothesis, not a correction
+### M9. The space part of the bending on a row of no content: built with the split, on the owner's word, revertible by its key
 
 Series K reads 0.000 pixel for light beside a mass because the space
-part of the generic entry (`optical_turn`, the momentum accumulator
-translated by the crowd's flow with the weight content x w) is 0 on a
-row of no content (M5). Under the split the time part alone bends the
-wave (section 3, row 13, the first 1 of 1 + gamma). The second 1 would
-need the flow to act on a row of no content by its energy (its phase
-rate, E = h f) rather than by its content, a rule the chief physicist
-has not verified and does not put in the law by this design: it is a
-hypothesis under its own identity, with its three tests and its pin,
-after the split's runs; the owner's word of 05:52Z ("I agree with you on
-everything") is read here as agreeing to that order, not as entering
-the rule.
+part of the generic entry (`optical_turn`, `nature_beam.py` 3961 to
+3968: the momentum accumulator **W** translated by the crowd's flow with
+the weight content x w, "0 on a free family's row, which therefore never
+turns") has nothing to act on for a row of no content. Under the split
+the time part alone bends the wave (section 3, row 13, the first 1 of
+1 + gamma). The owner's word of about 06:12Z (Hebrew, by voice: "is it
+not better to add the second half and see how everything behaves, and
+if it does not behave well, to go back, because it sounds as if it must
+be done"): the second half is built with the split and run, and
+reverted if it behaves badly.
+
+The generic form, one primitive: the weight of the space part is the
+row's energy in content units, for every family alike. For a paid family
+it is the content, as today; for a free family it is the content the
+load-time identity assigns to its phase rate, 3 h n_K = Q S_w d_K
+(ALGEBRA 5.3: E_0 = h f_0 and E_0 = m_i c^2 tied at load), so a free
+family of phase rate n / d carries the equivalent content M_eq = 3 h n /
+(Q S_w d) per unit, formed at load as a rational pair (a declared
+rounding at load, lawful under record 155 (6); no root, no run-time
+division), and the row's whole momentum is **P** = Q d M_eq **u**_D +
+**W** as a body's is; E = h f is then one sentence for both. Three
+tests: generic PASS (one weight per family from the table, no branch
+on a name; the paid family's weight unchanged); vector PASS ((T) on
+**W**, the same verb as today); local PASS (the crowd's flow at the
+row's Node). The identity `energy-weight-v1` names it; its key is ON by
+default in the split's build on the owner's word and turns it off for
+the revert. Pin before the run (`split_pins.py`): series K's ring shift
+and the ratio 2.00 (1 + gamma at gamma = 1) from the Fermat integral of
+the time part plus the turn of the space part on the world's crowd. What
+it can move besides row 13: every registered world whose light crosses a
+crowd (G2's Hubble light through the stars' crowd, rows 3 and 4b; the
+clock-word and shell worlds), where the flow is not zero; worlds without
+a crowd (the pair, Malus, the two slits, the single opening, the light
+clock) are bit-identical, the flow being zero there. Its falsifier: row
+13 off 2.00 by more than the ring's pixel, or a crowd-free world moved.
 
 ### M8. A row of no content does not split at head, and a body is a quantum: what the design leaves for the massive form
 
@@ -358,8 +381,8 @@ the split's paths); the deflection is the integral of the transverse
 gradient of the delay along the path, evaluated on series K's crowd
 (`examples/events/lensing/`) by the flight table's own stretched walls;
 its number is written by `split_pins.py` before the run and compared
-with the time part's 1 of 1 + gamma; the space part's 1 (gamma = 1) is
-not the split's (M5).
+with the time part's 1 of 1 + gamma; with M9's weight the space part's 1
+is added and the ring's ratio 2.00 is the pin.
 
 ## 3. THE TABLE'S CONVERGENCE, row by row, declared before any run
 
@@ -401,7 +424,7 @@ expected to agree), STAY (the status as it is, with the reason), MOVE
 | 10 the single opening | NOT YET (the fan's 0.925 and 0.879 the old law's, history) | PASS expected: inside 0.92 +- 0.03 and 0.886 +- 0.03; the number moves from the fan's | The Fourier width of the aperture under the split (DESIGN.md section 7); refuted below 0.85 |
 | 11a, 11b, 11c the far lamp | not predicted; PASS by a pin; not predicted | STAY | The growing wall a hypothesis not built |
 | 12 the clock's field | HISTORY | STAY | Superseded |
-| 13 the bending of light | disagrees, 0.000 pixel | MOVE to the time part's deflection, 1 of 1 + gamma, by the split alone (the pin of section 2); the second 1 stays a missing rule unless gamma is declared (an input read back) or the crowd's flow turns a row of no content (an item for the owner) | At head a ray on a digital line cannot turn, only its age changes; under the split the front tilts by the gradient of the delay (Fermat), the wave's own bending; the space part's weight content x w is 0 on light (M5) |
+| 13 the bending of light | disagrees, 0.000 pixel | MOVE to 1 of 1 + gamma by the split alone (the time part), and to 2.00 with the space part on a row of no content built beside it (M9, energy-weight-v1, on the owner's word; the pin of section 2; reverted if it behaves badly) | At head a ray on a digital line cannot turn, only its age changes; under the split the front tilts by the gradient of the delay (Fermat), the wave's own bending; the space part's weight content x w is 0 on light (M5) |
 | 14 Newton after a detector | NOT YET READ | STAY until the arrival click (RUN_14) and the massive form | Bodies; M3 item 6 restates the period in counts |
 
 **What we say passes must pass with the new detectors.** The rows that
@@ -412,8 +435,8 @@ the light clock's return count. Under the detector's own count (M3)
 none of them moves. The rows where the understanding is not yet
 reached, said plainly: 1c (the click's order), 4a, 4b, 5b and R2 (the
 factor gamma on a body's own count), 6, 8a and 14 (the massive form),
-7b (the binding's growth), 8b (the sensitivity per family), 13's second
-half (the space part on light), 3 and 11 (a brightness click and the
+7b (the binding's growth), 8b (the sensitivity per family), 3 and 11
+(13's second half is built beside the split, M9) (a brightness click and the
 wall's growth). The split and the new readings move 10 into its band,
 13 to its first half, 2a to the aperture's own pin, and 8b conditionally;
 they leave the bodies' rows where they are, by design (M8).
