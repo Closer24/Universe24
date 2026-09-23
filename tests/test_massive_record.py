@@ -15,7 +15,12 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from event_universe.diagnostics.massive_record_margin import block_margin, check_margins
+from event_universe.diagnostics.massive_record_margin import (
+    block_margin,
+    bound_mode,
+    check_margins,
+    profile_check,
+)
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import LIGHT_PAIR, MASSIVE_RECORD_RULE, parse_nature_beam_world
 from tests.test_detector_law import chain_world
@@ -1106,3 +1111,46 @@ def test_x_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
     assert abs(reading.omega_b - 0.14846) < 0.0002
     assert abs(reading.extent - 36.2) < 1.0
     assert [axis for axis, _, _, _ in reading.axes] == ["x", "y"]
+
+
+def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
+    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the
+    reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at
+    g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a
+    beat (the mean interval 39.3 against the mode's period 42.32), seeded with the module's mode
+    as integers at 2^20 over the whole layer (the generator's integers in the world file, the
+    same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within
+    0.5 percent of 2 pi / omega_b; the load-time check of the profile against the module's mode
+    reads 0 units. The edge cases: a profile without `margin` refused; a profile of the wrong
+    length refused; an all-zero profile refused."""
+    block = {"position": [57, 57, 0], "side": 14, "pair": [3200, 3227], "margin": "control"}
+    document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
+    document["age_bound"] = 100000
+    world = parse_nature_beam_world(document)
+    reading = block_margin(world, 0)
+    period = 2 * np.pi / reading.omega_b
+    mode = bound_mode(world, 0)
+    profile = np.rint(mode * (1 << 20)).astype(np.int64)
+    seeded = dict(document)
+    seeded["measured"] = [dict(document["measured"][0], seed=[int(v) for v in profile.ravel()])]
+    world = parse_nature_beam_world(seeded)
+    assert profile_check(world, 0) == (0, 1 << 20)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    assert np.array_equal(simulation.blocks[0].own.now, profile)
+    for _ in range(1500):
+        simulation.step()
+    clicks = [line["tick"] for line in lines if line["event"] == "click" and line["tick"] >= 200]
+    mean = (clicks[-1] - clicks[0]) / (len(clicks) - 1)
+    assert abs(mean - period) < 0.005 * period, (mean, period)
+    for bad, match in (
+        ({"seed": [1] * (128 * 128)}, "admitted only with margin"),
+        ({"seed": [1, 2, 3], "margin": "control"}, "must be 16384 integers"),
+        ({"seed": [0] * (128 * 128), "margin": "control"}, "must not be all zero"),
+    ):
+        entry = {k: v for k, v in document["measured"][0].items() if k != "margin"}
+        entry.update(bad)
+        refused = dict(document)
+        refused["measured"] = [entry]
+        with pytest.raises(ValueError, match=match):
+            parse_nature_beam_world(refused)

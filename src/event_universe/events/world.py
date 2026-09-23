@@ -1250,6 +1250,9 @@ class BlockDefinition:
     source: tuple[int, int] = (0, 1)
     wheel: int | None = None
     seed: int = BLOCK_SEED
+    # the bound mode's integer profile over the whole board (x-major, one per
+    # Node) when the seed is declared so; None for a flat seed
+    profile: tuple[int, ...] | None = None
     absorbing: bool = False
     cavity: bool = False
     ramp: int = 0
@@ -3116,6 +3119,7 @@ def _block(
     massive_record: bool,
     lamp_declared: bool,
     span: tuple[int, int, int],
+    shape: Address3,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -3197,7 +3201,30 @@ def _block(
         _pair_bound(pair[0], pair[1], label, receive[1])
         source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
     wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
-    seed = BLOCK_SEED if "seed" not in obj else _integer(obj["seed"], f"{label}.seed", 0)
+    seed = BLOCK_SEED
+    profile: tuple[int, ...] | None = None
+    if "seed" in obj and isinstance(obj["seed"], list):
+        # The bound mode's integer profile over the whole board (MASSIVE_RECORD.md
+        # section 11 item 7: the pin worlds' seed, the generator's integers, the
+        # same at both levels; admitted with `margin` declared): a flat list of
+        # integers in x-major order, one per Node.
+        if "margin" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.seed as a profile is admitted only with margin declared"
+            )
+        values = obj["seed"]
+        count = int(shape[0]) * int(shape[1]) * int(shape[2])
+        if len(values) != count or any(type(value) is not int for value in values):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.seed as a profile must be {count} integers, one per Node of the "
+                "board in x-major order"
+            )
+        profile = tuple(int(value) for value in values)
+        if not any(profile):
+            raise ValueError(f"{BEAM_LAW}: {label}.seed as a profile must not be all zero")
+        seed = max(abs(value) for value in profile)
+    elif "seed" in obj:
+        seed = _integer(obj["seed"], f"{label}.seed", 0)
     absorbing = obj.get("absorbing", False)
     if type(absorbing) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
@@ -3241,6 +3268,7 @@ def _block(
         source=source,
         wheel=wheel,
         seed=seed,
+        profile=profile,
         absorbing=absorbing,
         cavity=cavity,
         ramp=ramp,
@@ -3526,6 +3554,7 @@ def _measured(
             massive_record,
             lamp is not None,
             span,
+            shape,
         )
         found.append(
             MeasuredDefinition(

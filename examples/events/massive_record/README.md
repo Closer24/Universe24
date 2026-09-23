@@ -52,12 +52,26 @@ from the script's own numbers by the wrapped wave and was not kept).
 | `index_moving_k3_toward.json`, `index_moving_k3_away.json`, the same at k = 4 (v-m), with `index_moving_rest_*.json` and `index_moving_reference_*.json` | the moving index on the design's chain of 2200: the source at 300 (a train of 200 periods), the probe at 1500, s = 24 with the well `[314, 315]` on the kind `[156, 157]`, g `[1, 200]`, G `[1, 1]`, light at omega 0.035 (`[3565, 10000]`), the block stepping from interval 2600 (`start`) toward the source from x = 1300 or away from x = 700; the block at rest at x = 1100 at omega and at each K's block-frame frequencies omega' = gamma_m omega (1 +- beta) with a reference at each clock | PREDICTION of the model as built | the same-Node ratios of the delay to the covariant expectation (n(omega') - 1) omega' gamma_m s / c on this chain (`massive_moving_index.out` at the design's head, the drive's pair carried): head-on 0.500, from behind 2.569 (the window's halves unequal there); at K = 4 no number (read beside K = 3) | GAMEBOARD: light's phase at the probe by projection on the window [3400, 4300] against the reference, the covariant expectation formed from the engine's own rest reading at omega'; the window's two halves; the pump's signature over the window |
 | `index_moving_long_k3_away.json`, `index_moving_long_k4_away.json`, with their rest and reference worlds | the design's receding case on the longer chain of 4000: the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]; the rest world at omega' away at x = 2100 | PREDICTION | the design's pin from behind (the Boss's 16:13Z): 6.74 with the drive's pair (4.28 with G g unchanged) | the same readings on the window [5000, 6000] |
 
+| `layer_pin_rest_14.json` (i-L), `layer_pin_k3_14.json` (ii-L) | the layer pin world of MASSIVE_RECORD.md section 11 item 7: a periodic 200 x 200 x 1 layer, the kind `[3200, 3236]` (mu = 0.15), the block s = 14 at the well `[3200, 3227]` (g = mu^2 / 4), `margin` "pin" (s + 4 extents = 159 < 200); the `seed` the BOUND MODE'S INTEGER PROFILE at 2^20 over the whole layer (the generator's integers in the file, the same at both levels: the reader of record is the clicks, which a flat seed makes beat on this wide mode); at rest 3500 intervals, and pushed to k = 3 over the ramp 1500 and the hold 8000 with `mode_axis` x | PIN (layer) | the mode's period 42.33 at rest (omega_b 0.14844); in motion the one formula at the exact cone 0.8116 (the second order 0.8108 and light's 0.8132 the CONTROLS; the script's own layer reading 0.8113) | DETECTOR: the clicks over the hold, the reader of record; GAMEBOARD: the summed record's and the centre cell's peaks beside |
+
+The pins' gamma: `pins.py` takes the exact cone of the massive kind's band,
+c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2 (MASSIVE_RECORD.md section 8
+at the design's 14e3657e), for the moving worlds' pins, with the second order
+(c_m) and light's gamma beside as CONTROLS; `expectations.json` was regenerated
+so before any pinned run and after the exploratory readings of BUILD_READINGS.md,
+which stay beside the numbers they were read against.
+
+The folders `EXPLORATORY_layer_rest_14/` and `EXPLORATORY_layer_k3_14/` hold
+copies of two exploratory runs (the events, the run's record without its audit,
+the world file; no per-Node state) for the visualizer; EXPLORATORY, not
+registered, their numbers in BUILD_READINGS.md's exploration log only.
+
 The worlds NOT here: (i-c) and (ii-c), the four smallest binding sides as PIN
 worlds of five (191^3 to 288^3 boards, hours each: the Boss's word on the
 HOST cost, BUILD.md section 7); (iv), the light clock on two bodies and the
 take world (after this series, per the order); the two-arm relay and light's
 push on the block (MASSIVE_RECORD.md section 11 item 3 (b), a step after
-(iv)); the layer worlds of item 7 (on the Boss's word).
+(iv)); the layer worlds of item 7 beyond its first row (on the Boss's word), and every pinned RUN, which waits on the owner's word and the Boss's GO.
 
 Run from the repository root (the worlds, then the pins, then each world
 headless, then the readings):

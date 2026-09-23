@@ -75,9 +75,20 @@ def load(name: str):
     return parse_nature_beam_world(json.loads((HERE / f"{name}.json").read_text(encoding="utf-8")))
 
 
-def gamma_of(k: int) -> tuple[float, float]:
-    """beta_c and gamma_m of a drive of one Link every k intervals on the lattice, c = 1 / sqrt 3."""
-    beta = (1.0 / k) / C
+def gamma_of(k: int, omega_0: float | None = None, cone: str = "exact") -> tuple[float, float]:
+    """beta and gamma_m of a drive of one Link every k intervals: at the massive kind's EXACT
+    CONE c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2 (MASSIVE_RECORD.md section 8 at the
+    design's 14e3657e, the pin's gamma), at its second order c_m^2 = cos omega_0 c^2 (`cone`
+    "second"), or at light's c = 1 / sqrt 3 (`cone` "light"); the two others are the design's
+    CONTROLS beside the pin."""
+    pace = 1.0 / k
+    if omega_0 is None or cone == "light":
+        c_cone = C
+    elif cone == "second":
+        c_cone = C * math.sqrt(math.cos(omega_0))
+    else:
+        c_cone = C * math.sqrt(math.cos(omega_0) * omega_0 / math.sin(omega_0))
+    beta = pace / c_cone
     return beta, 1.0 / math.sqrt(1.0 - beta * beta)
 
 
@@ -103,16 +114,18 @@ def rectangular_mode(world, number: int, width: int) -> float:
     return math.acos(max(-1.0, min(1.0, lambda_max / 2.0)))
 
 
-def one_formula(world, number: int, k: int) -> dict[str, float]:
-    """Section 8's one formula on the world's own box (`massive_moving_pins.py`)."""
+def one_formula(world, number: int, k: int, cone: str = "exact") -> dict[str, float]:
+    """Section 8's one formula on the world's own box (`massive_moving_pins.py`) with gamma at
+    the named cone (the exact cone the pin; the second order and light's the controls)."""
     reading = block_margin(world, number)
-    _, gamma = gamma_of(k)
+    _, gamma = gamma_of(k, reading.omega_0, cone)
     width = gamma * reading.side
     low, high = int(math.floor(width)), int(math.ceil(width))
     omega_low = rectangular_mode(world, number, low)
     omega_high = rectangular_mode(world, number, high) if high != low else omega_low
     omega_wide = omega_low + (omega_high - omega_low) * (width - low)
     return {
+        "cone": cone,
         "omega_b_rest": reading.omega_b,
         "eps": reading.eps,
         "extent": reading.extent,
@@ -166,17 +179,64 @@ def main() -> None:
             },
         }
     # (ii) pushed to k = 3, PREDICTION
-    for name, design in (("moving_20", (0.7831, 0.7245)), ("moving_28", (0.8048, 0.7712))):
+    for name, design in (
+        ("moving_20", (0.7814, 0.7805, 0.7831)),
+        ("moving_28", (0.8032, 0.8024, 0.8048)),
+    ):
         world = load(name)
-        formula = one_formula(world, 0, 3)
+        formula = one_formula(world, 0, 3, "exact")
         worlds[name] = {
             "kind": "PREDICTION",
-            "reads": "the block's count per interval over the hold (intervals 1500 to 9500) against the rest world's rate, f / f_0 (GAMEBOARD); the spectral peak of the record's sum over the hold; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
+            "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
             "pin": formula,
+            "controls": {
+                "second_order_c_m": one_formula(world, 0, 3, "second"),
+                "light_c": one_formula(world, 0, 3, "light"),
+            },
             "design": {
-                "pin_f_over_f0": design[0],
-                "first_order": design[1],
-                "source": "massive_moving_pins.out (section 8's one formula on the same 64^3 box)",
+                "pin_f_over_f0_exact_cone": design[0],
+                "control_second_order": design[1],
+                "control_light": design[2],
+                "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers",
+            },
+        }
+    # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4
+    # on a periodic 200^2 layer, the seed the bound mode's integer profile): the rest world's
+    # pin the mode's period, the moving world's the one formula at the exact cone
+    if (HERE / "layer_pin_rest_14.json").exists():
+        world = load("layer_pin_rest_14")
+        reading = block_margin(world, 0)
+        worlds["layer_pin_rest_14"] = {
+            "kind": "PIN (layer)",
+            "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over [200, 3500] against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
+            "pin": {
+                "omega_b": reading.omega_b,
+                "period_intervals": 2.0 * math.pi / reading.omega_b,
+                "eps": reading.eps,
+                "extent": reading.extent,
+                "seed": "the bound mode's integer profile at 2^20 over the whole layer, the same at both levels (the generator's integers in the world file; the load-time check against the module's mode printed)",
+            },
+            "design": {
+                "omega_b": 0.14846,
+                "extent": 36.2,
+                "source": "massive_layer_pins.out (a 256^2 layer)",
+            },
+        }
+        world = load("layer_pin_k3_14")
+        worlds["layer_pin_k3_14"] = {
+            "kind": "PIN (layer)",
+            "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [1500, 9500] against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+            "pin": one_formula(world, 0, 3, "exact"),
+            "controls": {
+                "second_order_c_m": one_formula(world, 0, 3, "second"),
+                "light_c": one_formula(world, 0, 3, "light"),
+            },
+            "design": {
+                "pin_f_over_f0_exact_cone": 0.8116,
+                "control_second_order": 0.8108,
+                "control_light": 0.8132,
+                "script_layer_reading": 0.8113,
+                "source": "MASSIVE_RECORD.md section 11 item 7 and SCHEDULE.md row 4a (the exact cone; the second order and light's beside; massive_layer_pins.out the script's own reading)",
             },
         }
     # (iii) the cavity, CONTROL
@@ -198,13 +258,13 @@ def main() -> None:
             "source": "MASSIVE_RECORD.md section 4's table, the quadrature 0.19515 to the lattice's residual",
         },
     }
-    _, gamma3 = gamma_of(3)
+    _, gamma3 = gamma_of(3, math.acos(num / den), "exact")
     worlds["cavity_24_moving"] = {
         "kind": "CONTROL",
         "reads": "the cavity's count per interval over the hold against the rest cavity's rate (GAMEBOARD); the pump's signature (0, no light declared)",
         "pin": {
             "f_over_f0": 1.0 / (gamma3 * gamma3),
-            "form": "1 / gamma_m^2, section 8's cavity limit (the medium's clock)",
+            "form": "1 / gamma_m^2 at the exact cone, section 8's cavity limit (the medium's clock); as built the moving cavity is a hard mirror stepping (BUILD_READINGS.md), its number never read against this until the physicist redeclares it",
         },
         "design": {"f_over_f0": 0.6667, "source": "massive_block_clock_motion.out"},
     }

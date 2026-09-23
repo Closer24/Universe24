@@ -170,39 +170,109 @@ def largest_eigenvalue(
     """The largest eigenvalue of A = D^-1/2 (S_6 / 3) D^-1/2 (D = `ratio`,
     den / num per Node) by the three-term Lanczos recurrence started from
     `seed`, the largest Ritz value converged to RITZ_TOLERANCE."""
+    ritz, iterations, _ = lanczos(ratio, wrap, seed, vector=False)
+    return ritz, iterations
+
+
+def lanczos(
+    ratio: np.ndarray, wrap: tuple[bool, bool, bool], seed: np.ndarray, vector: bool
+) -> tuple[float, int, np.ndarray | None]:
+    """The three-term Lanczos recurrence on A = D^-1/2 (S_6 / 3) D^-1/2 from
+    `seed`: the largest Ritz value, the iterations, and with `vector` the
+    Ritz vector of the mode (the bound mode's shape, D^-1/2 undone) by a
+    second pass of the same recurrence accumulating the tridiagonal's
+    eigenvector over the Lanczos basis (nothing of the basis is stored:
+    the pass is deterministic and the memory one vector)."""
     scale = 1.0 / np.sqrt(ratio)
 
-    def apply(vector: np.ndarray) -> np.ndarray:
-        result: np.ndarray = scale * six_neighbours(scale * vector, wrap) / 3.0
+    def apply(vector_in: np.ndarray) -> np.ndarray:
+        result: np.ndarray = scale * six_neighbours(scale * vector_in, wrap) / 3.0
         return result
 
-    q = seed.astype(np.float64)
-    q /= np.linalg.norm(q)
-    previous = np.zeros_like(q)
-    beta = 0.0
-    alphas: list[float] = []
-    betas: list[float] = []
-    ritz_before = None
-    for iteration in range(1, MOST_ITERATIONS + 1):
-        w = apply(q) - beta * previous
-        alpha = float(np.vdot(q, w))
-        w -= alpha * q
-        alphas.append(alpha)
-        beta = float(np.linalg.norm(w))
-        if iteration >= 3:
-            tridiagonal = np.diag(alphas) + np.diag(betas, 1) + np.diag(betas, -1)
-            ritz = float(np.linalg.eigvalsh(tridiagonal)[-1])
-            if ritz_before is not None and abs(ritz - ritz_before) < RITZ_TOLERANCE:
-                return ritz, iteration
-            ritz_before = ritz
-        if beta < 1e-14:
-            break
-        betas.append(beta)
-        previous, q = q, w / beta
-    tridiagonal = (
-        np.diag(alphas) + np.diag(betas[: len(alphas) - 1], 1) + np.diag(betas[: len(alphas) - 1], -1)
-    )
-    return float(np.linalg.eigvalsh(tridiagonal)[-1]), len(alphas)
+    def recurrence(weights: np.ndarray | None) -> tuple[list[float], list[float], np.ndarray | None]:
+        q = seed.astype(np.float64)
+        q /= np.linalg.norm(q)
+        previous = np.zeros_like(q)
+        beta = 0.0
+        alphas: list[float] = []
+        betas: list[float] = []
+        ritz_before = None
+        total = np.zeros_like(q) if weights is not None else None
+        for iteration in range(1, MOST_ITERATIONS + 1):
+            if total is not None and weights is not None:
+                if iteration > len(weights):
+                    break
+                total += weights[iteration - 1] * q
+            w = apply(q) - beta * previous
+            alpha = float(np.vdot(q, w))
+            w -= alpha * q
+            alphas.append(alpha)
+            beta = float(np.linalg.norm(w))
+            if weights is None and iteration >= 3:
+                tridiagonal = np.diag(alphas) + np.diag(betas, 1) + np.diag(betas, -1)
+                ritz = float(np.linalg.eigvalsh(tridiagonal)[-1])
+                if ritz_before is not None and abs(ritz - ritz_before) < RITZ_TOLERANCE:
+                    break
+                ritz_before = ritz
+            if beta < 1e-14:
+                break
+            betas.append(beta)
+            previous, q = q, w / beta
+        return alphas, betas, total
+
+    alphas, betas, _ = recurrence(None)
+    count = len(alphas)
+    tridiagonal = np.diag(alphas) + np.diag(betas[: count - 1], 1) + np.diag(betas[: count - 1], -1)
+    values, vectors = np.linalg.eigh(tridiagonal)
+    ritz = float(values[-1])
+    if not vector:
+        return ritz, count, None
+    _, _, total = recurrence(vectors[:, -1])
+    assert total is not None
+    # the mode of the rule's operator itself: A's vector scaled by D^-1/2
+    mode: np.ndarray = scale * total
+    mode /= np.max(np.abs(mode))
+    if mode[np.unravel_index(int(np.argmax(np.abs(mode))), mode.shape)] < 0:
+        mode = -mode
+    return ritz, count, mode
+
+
+def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
+    """The bound mode's shape of a block on the world's own board (the
+    margin module's Lanczos vector, its largest entry 1), over the whole
+    board: the seed a pin world declares as integers at its amplitude
+    (MASSIVE_RECORD.md section 11 item 7, the reader of record and the
+    seed; a HOST computation of the generator, never of the engine's run)."""
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+    family = world.families[entry.family]
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    wrap = world.kind_periodic(entry.family)
+    corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+    cells = block_cells(shape, corner, definition.side, wrap)
+    ratio = np.where(cells, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
+    seed = np.where(cells, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
+    _, _, mode = lanczos(ratio, wrap, seed, vector=True)
+    assert mode is not None
+    return mode
+
+
+def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None:
+    """The GAMEBOARD check at load of a block seeded with an integer
+    profile: the largest deviation, in units, of the file's integers from
+    the module's mode at the file's amplitude, with that amplitude; None
+    for a flat seed (a comparison printed, never read by the state)."""
+    definition = world.measured[number].block
+    if definition is None or definition.profile is None:
+        return None
+    profile = np.array(definition.profile, dtype=np.int64).reshape(world.shape)
+    amplitude = int(np.max(np.abs(profile)))
+    mode = bound_mode(world, number)
+    expected = np.rint(mode * amplitude).astype(np.int64)
+    deviation = int(np.max(np.abs(expected - profile)))
+    return deviation, amplitude
 
 
 def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:

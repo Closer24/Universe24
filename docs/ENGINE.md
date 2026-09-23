@@ -998,7 +998,12 @@ first difference both ways on the same Node, each rational folded into
 the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
 the least common multiple of the blocks' `G_d`; `[0, 1]` each by default), its `wheel` (the
 first rung's W, the world's by default), its `seed` (its own record's
-amplitude on its cells at interval 0, 2^20 by default, 0 silent),
+amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
+`margin` declared, a list of one integer per Node of the board in x-major
+order, the bound mode's integer profile the generator writes into the file
+at the world's amplitude, the record seeded so over the whole board at both
+levels, a standing start on the mode, the load-time check against the margin
+module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7),
 `absorbing` (the take on light's row at its cells, false by default: a clock
 body takes nothing), `cavity` (its own record held at 0 outside its
 cells), `ramp` (the momentum reached from 0 over that many intervals, the

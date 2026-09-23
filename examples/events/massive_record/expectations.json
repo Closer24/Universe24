@@ -8,16 +8,16 @@
    "out": "1aa3c695d34b93429ea1a96cf45f5377083403fc"
   },
   "massive_moving_pins": {
-   "py": "2efe849174281cf8da1e4cc17b98d3b5c675ccda",
-   "out": "b437573f484b414a8f94b0336bf7206481aac73c"
+   "py": "7f8d11a1bb3c95698a41446616e6497369f70394",
+   "out": "74edc8be8e0ae98fa88ee8b07046117438e92d62"
   },
   "massive_block_clock_motion": {
    "py": "ae861c7d2a7c7617be00362a22d5120cf68e0dac",
    "out": "a445434e7922c743dbf3c8c9f04d94fbd8296b59"
   },
   "massive_dielectric_index": {
-   "py": "b05b6d535da325977898e2a3ec8b36ba529a2e8d",
-   "out": "c1e76c294461753f5cd7f943b8efdc03a9f7e6a6"
+   "py": "3d5d37c9dff4688b81a8cbeb4c06fd090ae1c359",
+   "out": "c96af1cbec8a6071f318e84e251397072e9d4788"
   },
   "massive_moving_index": {
    "py": "ffd4025ed3496f0863a2da5b5228a5be7cca28f2",
@@ -32,8 +32,8 @@
    "out": "c847a478b6a815c678d3822ee4e43d1f1e7789a3"
   },
   "massive_layer_pins": {
-   "py": "efcd987b706087c06552918390087a22a06ba4e1",
-   "out": "cf5879e1834c9c62ad9462fd8b9583a95c3a15aa"
+   "py": "a5c11a4173aac4e1e5187082c549d3d5aa0f7e15",
+   "out": "c57cd6efe8eb5ce58fa85119179ea73cdfa0025a"
   }
  },
  "worlds": {
@@ -41,11 +41,11 @@
    "kind": "CONTROL",
    "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
    "pin": {
-    "omega_b": 0.11046047360491347,
-    "period_intervals": 56.88175237825614,
-    "count_over_run": 52.74099117148143,
-    "eps": 0.4526275589991724,
-    "extent": 5.7312511712509355
+    "omega_b": 0.1104604736049155,
+    "period_intervals": 56.881752378255094,
+    "count_over_run": 52.7409911714824,
+    "eps": 0.4526275589991522,
+    "extent": 5.731251171251019
    },
    "design": {
     "omega_b": 0.11066,
@@ -58,11 +58,11 @@
    "kind": "CONTROL",
    "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
    "pin": {
-    "omega_b": 0.13053196656468333,
-    "period_intervals": 48.135222907762135,
-    "count_over_run": 62.324423130826084,
-    "eps": 0.2356313120801392,
-    "extent": 7.940124472378501
+    "omega_b": 0.13053196656467222,
+    "period_intervals": 48.135222907766234,
+    "count_over_run": 62.32442313082078,
+    "eps": 0.23563131208026922,
+    "extent": 7.940124472376284
    },
    "design": {
     "omega_b": 0.13184,
@@ -73,44 +73,172 @@
   },
   "moving_20": {
    "kind": "PREDICTION",
-   "reads": "the block's count per interval over the hold (intervals 1500 to 9500) against the rest world's rate, f / f_0 (GAMEBOARD); the spectral peak of the record's sum over the hold; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
    "pin": {
-    "omega_b_rest": 0.1106497538578998,
-    "eps": 0.4507500446491155,
-    "extent": 5.74315486596445,
-    "gamma_m": 1.224744871391589,
-    "width": 24.49489742783178,
-    "omega_b_low": 0.10654150654449689,
-    "omega_b_high": 0.1057078283580204,
-    "omega_b_wide": 0.1061289213543702,
-    "pin_f_over_f0": 0.7831368656696219,
-    "first_order": 0.7244876133504705
+    "cone": "exact",
+    "omega_b_rest": 0.11064975385789276,
+    "eps": 0.45075004464918544,
+    "extent": 5.743154865964032,
+    "gamma_m": 1.2270468882341616,
+    "width": 24.540937764683232,
+    "omega_b_low": 0.1065415065445136,
+    "omega_b_high": 0.10570782835801514,
+    "omega_b_wide": 0.10609053852984394,
+    "pin_f_over_f0": 0.78138495216047,
+    "first_order": 0.7220917683340702
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.11064975385789276,
+     "eps": 0.45075004464918544,
+     "extent": 5.743154865964032,
+     "gamma_m": 1.2282040666825125,
+     "width": 24.56408133365025,
+     "omega_b_low": 0.1065415065445136,
+     "omega_b_high": 0.10570782835801514,
+     "omega_b_wide": 0.10607124424123843,
+     "pin_f_over_f0": 0.7805067801319667,
+     "first_order": 0.7208900817763196
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.11064975385789276,
+     "eps": 0.45075004464918544,
+     "extent": 5.743154865964032,
+     "gamma_m": 1.224744871391589,
+     "width": 24.49489742783178,
+     "omega_b_low": 0.1065415065445136,
+     "omega_b_high": 0.10570782835801514,
+     "omega_b_wide": 0.10612892135437604,
+     "pin_f_over_f0": 0.783136865669715,
+     "first_order": 0.7244876133504563
+    }
    },
    "design": {
-    "pin_f_over_f0": 0.7831,
-    "first_order": 0.7245,
-    "source": "massive_moving_pins.out (section 8's one formula on the same 64^3 box)"
+    "pin_f_over_f0_exact_cone": 0.7814,
+    "control_second_order": 0.7805,
+    "control_light": 0.7831,
+    "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
    }
   },
   "moving_28": {
    "kind": "PREDICTION",
-   "reads": "the block's count per interval over the hold (intervals 1500 to 9500) against the rest world's rate, f / f_0 (GAMEBOARD); the spectral peak of the record's sum over the hold; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
    "pin": {
-    "omega_b_rest": 0.1317010607073737,
-    "eps": 0.22187804112517773,
-    "extent": 8.18230135609022,
-    "gamma_m": 1.224744871391589,
-    "width": 34.29285639896449,
-    "omega_b_low": 0.12988208738273127,
-    "omega_b_high": 0.1296371049605956,
-    "omega_b_wide": 0.12981034271277503,
-    "pin_f_over_f0": 0.804774847102678,
-    "first_order": 0.7712059154373139
+    "cone": "exact",
+    "omega_b_rest": 0.13170106070737034,
+    "eps": 0.22187804112521747,
+    "extent": 8.182301356089491,
+    "gamma_m": 1.2270468882341616,
+    "width": 34.35731287055653,
+    "omega_b_low": 0.12988208738274756,
+    "omega_b_high": 0.12963710496059389,
+    "omega_b_wide": 0.12979455201025195,
+    "pin_f_over_f0": 0.8031673263650363,
+    "first_order": 0.769248796948044
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.13170106070737034,
+     "eps": 0.22187804112521747,
+     "extent": 8.182301356089491,
+     "gamma_m": 1.2282040666825125,
+     "width": 34.38971386711035,
+     "omega_b_low": 0.12988208738274756,
+     "omega_b_high": 0.12963710496059389,
+     "omega_b_wide": 0.12978661433563599,
+     "pin_f_over_f0": 0.8023615333052394,
+     "first_order": 0.7682674013829093
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.13170106070737034,
+     "eps": 0.22187804112521747,
+     "extent": 8.182301356089491,
+     "gamma_m": 1.224744871391589,
+     "width": 34.29285639896449,
+     "omega_b_low": 0.12988208738274756,
+     "omega_b_high": 0.12963710496059389,
+     "omega_b_wide": 0.12981034271278605,
+     "pin_f_over_f0": 0.8047748471027668,
+     "first_order": 0.7712059154373058
+    }
    },
    "design": {
-    "pin_f_over_f0": 0.8048,
-    "first_order": 0.7712,
-    "source": "massive_moving_pins.out (section 8's one formula on the same 64^3 box)"
+    "pin_f_over_f0_exact_cone": 0.8032,
+    "control_second_order": 0.8024,
+    "control_light": 0.8048,
+    "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
+   }
+  },
+  "layer_pin_rest_14": {
+   "kind": "PIN (layer)",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over [200, 3500] against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
+   "pin": {
+    "omega_b": 0.14844325144589593,
+    "period_intervals": 42.32718729870761,
+    "eps": 0.011469570024609022,
+    "extent": 35.973922117127486,
+    "seed": "the bound mode's integer profile at 2^20 over the whole layer, the same at both levels (the generator's integers in the world file; the load-time check against the module's mode printed)"
+   },
+   "design": {
+    "omega_b": 0.14846,
+    "extent": 36.2,
+    "source": "massive_layer_pins.out (a 256^2 layer)"
+   }
+  },
+  "layer_pin_k3_14": {
+   "kind": "PIN (layer)",
+   "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [1500, 9500] against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+   "pin": {
+    "cone": "exact",
+    "omega_b_rest": 0.14844325144589593,
+    "eps": 0.011469570024609022,
+    "extent": 35.973922117127486,
+    "gamma_m": 1.2270468882341616,
+    "width": 17.178656435278263,
+    "omega_b_low": 0.14787074161391708,
+    "omega_b_high": 0.14767166882370833,
+    "omega_b_wide": 0.14783517597885748,
+    "pin_f_over_f0": 0.8116264014517258,
+    "first_order": 0.8126015798989513
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.14844325144589593,
+     "eps": 0.011469570024609022,
+     "extent": 35.973922117127486,
+     "gamma_m": 1.2282040666825125,
+     "width": 17.194856933555176,
+     "omega_b_low": 0.14787074161391708,
+     "omega_b_high": 0.14767166882370833,
+     "omega_b_wide": 0.14783195090046272,
+     "pin_f_over_f0": 0.8108440212202532,
+     "first_order": 0.8118227040402022
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.14844325144589593,
+     "eps": 0.011469570024609022,
+     "extent": 35.973922117127486,
+     "gamma_m": 1.224744871391589,
+     "width": 17.146428199482244,
+     "omega_b_low": 0.14787074161391708,
+     "omega_b_high": 0.14767166882370833,
+     "omega_b_wide": 0.14784159174368092,
+     "pin_f_over_f0": 0.8131872146550558,
+     "first_order": 0.8141553647502751
+    }
+   },
+   "design": {
+    "pin_f_over_f0_exact_cone": 0.8116,
+    "control_second_order": 0.8108,
+    "control_light": 0.8132,
+    "script_layer_reading": 0.8113,
+    "source": "MASSIVE_RECORD.md section 11 item 7 and SCHEDULE.md row 4a (the exact cone; the second order and light's beside; massive_layer_pins.out the script's own reading)"
    }
   },
   "cavity_24": {
@@ -131,8 +259,8 @@
    "kind": "CONTROL",
    "reads": "the cavity's count per interval over the hold against the rest cavity's rate (GAMEBOARD); the pump's signature (0, no light declared)",
    "pin": {
-    "f_over_f0": 0.6666666666666667,
-    "form": "1 / gamma_m^2, section 8's cavity limit (the medium's clock)"
+    "f_over_f0": 0.6641675962011331,
+    "form": "1 / gamma_m^2 at the exact cone, section 8's cavity limit (the medium's clock); as built the moving cavity is a hard mirror stepping (BUILD_READINGS.md), its number never read against this until the physicist redeclares it"
    },
    "design": {
     "f_over_f0": 0.6667,

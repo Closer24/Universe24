@@ -148,7 +148,13 @@ FINDING (the last rows), reported and not written as a component.
   family: the (M) wall), `amount` (its content M), `momentum`, and the
   block keys: `side` (required), `pair` (required), `coupling` (`{"G":
   [n, d], "g": [n, d]}`, `[0, 1]` each by default), `wheel` (the world's
-  wheel by default), `seed` (2^20 by default; 0 admitted), `absorbing`
+  wheel by default), `seed` (2^20 by default; 0 admitted; or, with `margin`
+  declared, a list of one integer per Node of the board in x-major order,
+  the bound mode's integer profile the generator writes into the file at
+  the world's amplitude, the same at both levels: the pin worlds' seed of
+  MASSIVE_RECORD.md section 11 item 7, the load-time check against the
+  margin module's mode printed as GAMEBOARD; a profile without `margin`,
+  of the wrong length or all zero refused), `absorbing`
   (false), `cavity` (false), `ramp` (0), `margin` (`"pin"`), `emits`
   (absent). Refused: `span` other than `[1, 1, 1]` with `side`; a `lamp`
   on a block; a momentum past the pace bound; `coupling`, `seed`, `emits`,
@@ -406,6 +412,15 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
 - (g), continued: the identity asserted at G = `[2, 3]` as well as
   `[1, 1]` (alpha carrying G_d / G_n, light's wall 3 G_d: the scale 3 L
   g_d G_n, Reviewer 3's token).
+- (y) The seed as the bound mode's integer profile (MASSIVE_RECORD.md
+  section 11 item 7, the reader of record and the seed): on the 128^2
+  layer of the exploratory world the flat-seeded block's clicks beat
+  (39.3 against the period 42.32) and the mode-seeded block's (the margin
+  module's mode as integers at 2^20 over the whole layer, the same at
+  both levels) read the period within 0.5 percent over [200, 1500]; the
+  load-time check of the file's integers against the module's mode reads
+  0 units. The edge cases: a profile without `margin`, of the wrong
+  length, or all zero, each refused naming the key.
 
 ## 7. The HOST estimate (this machine, numpy int64; the engine's cost, measured at step 5)
 

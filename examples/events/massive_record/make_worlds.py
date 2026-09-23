@@ -55,6 +55,15 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   the probe at 2500, the block from x = 1500 from interval 2600, the window
   [5000, 6000]; the rest world at omega' away at x = 2100).
 
+- (i-L) `layer_pin_rest_14.json`, (ii-L) `layer_pin_k3_14.json`: the layer pin world
+  of MASSIVE_RECORD.md section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4 on a
+  periodic 200 x 200 x 1 layer, `margin` "pin"), the seed the bound mode's integer
+  profile at 2^20 over the whole layer (the generator's integers in the file, the
+  same at both levels: the reader of record is the clicks, which a flat seed makes
+  beat on a wide mode); at rest and pushed to k = 3 over the ramp 1500 and the hold
+  8000: PIN worlds (layer), the pin the mode's period and the one formula at the
+  exact cone.
+
 Run from the repository root:
 
     PYTHONPATH=src python examples/events/massive_record/make_worlds.py
@@ -64,6 +73,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
+import numpy as np
 
 HERE = Path(__file__).resolve().parent
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -375,7 +386,42 @@ def worlds() -> dict[str, dict]:
             probes=[[2500, 0, 0]],
             mode_axis="x",
         )
+    # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4:
+    # the kind [3200, 3236], the well [3200, 3227]) on a periodic 200 x 200 x 1 layer (the pin
+    # margin s + 4 extents = 159 < 200), the seed the BOUND MODE'S INTEGER PROFILE at 2^20 over
+    # the whole layer (the generator computes the module's mode and writes the integers into
+    # the world file; the engine reads integers; the load-time check prints the deviation): at
+    # rest 3500 intervals, and pushed to k = 3 over the ramp 1500 and the hold 8000.
+    block = {"position": [93, 93, 0], "side": 14, "pair": [3200, 3227], "margin": "pin"}
+    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 3500)
+    profile = mode_profile(rest, 0)
+    rest["measured"][0]["seed"] = profile
+    out["layer_pin_rest_14"] = rest
+    moving = world(
+        "layer-pin-k3-14",
+        "PIN",
+        [200, 200, 1],
+        PERIODIC,
+        [3200, 3236],
+        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
+        9500,
+        mode_axis="x",
+    )
+    moving["measured"][0]["seed"] = profile
+    out["layer_pin_k3_14"] = moving
     return out
+
+
+def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[int]:
+    """The bound mode's integer profile of a block over the whole board (the margin module's
+    Lanczos vector at load, rounded at the amplitude), the pin worlds' seed of MASSIVE_RECORD.md
+    section 11 item 7: a HOST computation of the generator, written into the world file so that
+    the run's record follows from the file and the engine alone."""
+    from event_universe.diagnostics.massive_record_margin import bound_mode
+    from event_universe.events.world import parse_nature_beam_world
+
+    mode = bound_mode(parse_nature_beam_world(document), number)
+    return [int(value) for value in np.rint(mode * amplitude).astype(np.int64).ravel()]
 
 
 def main() -> None:

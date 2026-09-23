@@ -25,7 +25,7 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.diagnostics.massive_record_margin import check_margins
+from event_universe.diagnostics.massive_record_margin import check_margins, profile_check
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import BEAM_LAW, NatureBeamWorld
@@ -62,6 +62,15 @@ def execute_nature_beam_run(
     for reading in margins:
         for line in reading.lines():
             print(line)
+        # a block seeded with an integer profile: the GAMEBOARD check that the
+        # file's integers are the module's mode at the file's amplitude (a
+        # comparison printed; no float enters the run's record)
+        check = profile_check(world, reading.number)
+        if check is not None:
+            print(
+                f"seed (GAMEBOARD): block {reading.number}: the declared profile against the margin "
+                f"module's mode at the amplitude {check[1]}: the largest deviation {check[0]} units"
+            )
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
     measured_content: list[list[int]] = []

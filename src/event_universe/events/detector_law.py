@@ -335,8 +335,16 @@ class DetectorLawSimulation:
             self._write_pair(block)
             if definition.seed > 0:
                 own_record = self._massive_record(number * (1 << 32), number, entry.family)
-                own_record.now[mask] = definition.seed
-                own_record.before[mask] = definition.seed
+                if definition.profile is not None:
+                    # the declared integer profile over the whole board at both
+                    # levels (a standing start on the bound mode: MASSIVE_RECORD.md
+                    # section 11 item 7), the world file's integers and nothing else
+                    profile = np.array(definition.profile, dtype=np.int64).reshape(self.shape)
+                    own_record.now[:] = profile
+                    own_record.before[:] = profile
+                else:
+                    own_record.now[mask] = definition.seed
+                    own_record.before[mask] = definition.seed
                 block.own = own_record
                 self.records[own_record.identity] = own_record
                 block.previous_sum = int(np.sum(own_record.now[mask]))
