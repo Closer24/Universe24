@@ -6004,3 +6004,28 @@ verified at the abstract's level, 0.94 (Jacques et al. 2005), the
 law's 0.966 above it, a bound met and not a number matched; row 13's
 continuum coefficient read on the lattice only within the fan's comb
 (10 to 20 percent), so "matches 1.75 in the limit" is not written.
+
+### Addendum to step 1 (2026-09-23, the Boss's word of 01:05Z): two verdicts and the owner's decision on the weight pair
+
+- Row 2a: an honest bound met under the paper's own caption criterion
+  ("where the model's value lies above the apparatus-limited
+  measurement (a bound met)", the criterion row 2b passes by): 0.966 in
+  the clicks against the biprism's 0.94; two caveats in the cell (the
+  figure at the abstract's level, the body unread; the central fringe's
+  visibility against the pattern's). The verdict word: "BOUND MET (a
+  bound, not a match)" in the reordered paper, with the caveats; NOT
+  COMPARED only if the body is required, and the plan does not require
+  it since 2b passes by the same criterion (RUN_13_2A, the reviewer's
+  gate of 00:44Z).
+- Row 13 under gamma_PPN = 1: the coefficient 2(1 + gamma_PPN) is a
+  declared input equal to nature's, read within the fan's comb (the
+  mean over rings within 9 percent, single rings up to 23 percent off),
+  never within the grain; not a pass against nature, the coefficient
+  being the input; the law's own row, 0.000, FAIL (series K).
+- Row 8b's run merged (RUN_8BC.md, PR #975, 907f339d): FAIL by the
+  law's design of the path phase, the beat h/p = 4.65 Links read at a
+  click; its step 3 (the re-emitter world) ordered, pins first.
+- The owner's decision on the weight pair (record 1150, B): the paper
+  states the weight rule once, as a declaration by gamma_PPN; rows 13
+  and 14 read "under the declaration"; no per-test choice, and the
+  options A, B, C are not in the paper.
