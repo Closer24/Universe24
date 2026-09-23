@@ -1,0 +1,13 @@
+row 2a, the fan's grain share, COMPUTATION (the pin machinery of slits_huygens_pin.py on the registered world with the openings' fan alone replaced; no run). The criterion: the clicks' visibility (mean bright - mean dark) / (mean bright + mean dark) over the two-source cosine's bright pixels [35, 36, 37, 38, 59, 60, 61, 82, 83, 84, 85] and dark pixels [13, 14, 15, 16, 17, 18, 19, 20, 48, 49, 50, 70, 71, 72, 100, 101, 102, 103, 104, 105, 106, 107]; nature 0.98, the ideal 1.
+the fan's angular range: |b| <= 13 a, +- 85.6 degrees; the registered fan's smallest angle off the axis atan(1 / 47) = 1.22 degrees, the pixel at the screen's distance 44 Links 1.30 degrees
+
+fan | directions | norm A | A^2 within 2^62 - 1 (loadable weighted) | wall / screen / faces of 4096 | dark mean | bright mean | VISIBILITY of the clicks | the weights' visibility | Pearson(counts, cosine)
+registered: width 48, weighted by angle | 1327 | 714364777 | True | 882 / 1711 / 1503 | 0.68 | 39.27 | 0.9659 | 0.9663 | 0.891
+weighted by angle, width 110 | 6907 | 157043967 | True | 240 / 2030 / 1826 | 0.86 | 48.09 | 0.9647 | 0.9685 | 0.914
+weighted by angle, width 220 | 27351 | 43426042 | True | 71 / 2118 / 1907 | 0.82 | 50.36 | 0.9680 | 0.9693 | 0.920
+selected one per 0.25 deg, width 48, unweighted | 641 | 641 | True | 1070 / 1580 / 1446 | 0.86 | 39.00 | 0.9567 | 0.9519 | 0.859
+selected one per 0.25 deg, width 330, unweighted | 686 | 686 | True | 1070 / 1591 / 1435 | 0.59 | 38.91 | 0.9701 | 0.9650 | 0.917
+selected one per 0.15 deg, width 330, unweighted | 1142 | 1142 | True | 713 / 1782 / 1601 | 0.73 | 41.36 | 0.9654 | 0.9678 | 0.914
+
+the registered fan reproduces the registered run (wall 882, screen 1711, faces 1503, the visibility 0.9659): True
+the largest visibility among the fans tried 0.9701; the registered 0.9659; nature 0.98; the ideal 1. The fan-grain share of the shortfall 1 - 0.9659 = 0.0341: at most 0.0042 by the fans tried, 12% of it.
