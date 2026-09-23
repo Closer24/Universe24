@@ -31,9 +31,9 @@ calls it Table 2; it is the one table with the label `tab:nature`);
 [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) (main; the copy on
 `paper-algebra-first` differs only in the canonical-statement line and
 row 4a's domain sentence, neither among the six);
-[KIND_AUDIT.md](KIND_AUDIT.md) (on main since `46c27396`, PR #990
-merged; read on `kind-audit` at `84200762` before the merge, the same
-text); [RUN_8BC.md](RUN_8BC.md) (main);
+`docs/designs/fail_rows/KIND_AUDIT.md` (on main since `46c27396`, PR #990
+merged, the path there; not a link here because this branch's base
+`f023770c` predates the merge and the navigation gate checks the tree); [RUN_8BC.md](RUN_8BC.md) (main);
 `docs/designs/fail_rows/RUN_13_2A.md` on `fail-run-13-2a` at
 `12a347f2c5b05e095691a45c9174bf06dd4e84a4`; `docs/designs/fail_rows/RUN_14.md`
 on `fail-run-14` at `f30f2b0a87b63b6475bd023a327de8a951e4ee8b`;
