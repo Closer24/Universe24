@@ -1,0 +1,22 @@
+THE PINS OF PINS.md, BEFORE ANY RUN (COMPUTATION unless labelled; the worlds validated at load, none run)
+
+Worlds validated at load: sagnac_k3 (beam-new-rows-sagnac-k3-v1), sagnac_k5 (beam-new-rows-sagnac-k5-v1), sagnac_k9 (beam-new-rows-sagnac-k9-v1), sagnac_k17 (beam-new-rows-sagnac-k17-v1), malus_s16 (beam-new-rows-malus-s16-v1), malus_s40 (beam-new-rows-malus-s40-v1), malus_s48 (beam-new-rows-malus-s48-v1)
+
+R1 the marginals (registered, DETECTOR): pair.marginal = 32 of 64 at every setting; from the cells: 0_8: first + 32, second + 32; 0_24: first + 32, second + 32; 16_8: first + 32, second + 32; 16_24: first + 32, second + 32
+
+R2 the Sagnac ratio on the periodic bar of 240 Nodes, c = 32/55 on the heading:
+  k = 3: beta = 55/96 = 0.57292; the returns t_+ = 39600/41 = 965.85, t_- = 39600/151 = 262.25 intervals; 534 ordinals with both returns inside 1500; the band on the ratio 0.0077 (the remainder 4.719 counts per end)
+  k = 5: beta = 11/32 = 0.34375; the returns t_+ = 4400/7 = 628.57, t_- = 13200/43 = 306.98 intervals; 871 ordinals with both returns inside 1500; the band on the ratio 0.0144 (the remainder 6.719 counts per end)
+  k = 9: beta = 55/288 = 0.19097; the returns t_+ = 118800/233 = 509.87, t_- = 118800/343 = 346.36 intervals; 990 ordinals with both returns inside 1500; the band on the ratio 0.0250 (the remainder 10.719 counts per end)
+  k = 17: beta = 55/544 = 0.10110; the returns t_+ = 74800/163 = 458.90, t_- = 224400/599 = 374.62 intervals; 1041 ordinals with both returns inside 1500; the band on the ratio 0.0449 (the remainder 18.719 counts per end)
+
+R3 Malus at the new settings (N = 256, W = 256; the half-angle tables of 512):
+  s = 16 (11.250 degrees): C' = 251, S' = 50, rungs [0, 246, 256], the counts 0+ 246, 0- 10: the pass 246 of 256 = 0.96094 against cos^2 = 0.96194 (x 256 = 246.26), the departure -0.00100
+  s = 40 (28.125 degrees): C' = 226, S' = 121, rungs [0, 199, 256], the counts 0+ 199, 0- 57: the pass 199 of 256 = 0.77734 against cos^2 = 0.77779 (x 256 = 199.11), the departure -0.00044
+  s = 48 (33.750 degrees): C' = 213, S' = 142, rungs [0, 177, 256], the counts 0+ 177, 0- 79: the pass 177 of 256 = 0.69141 against cos^2 = 0.69134 (x 256 = 176.98), the departure +0.00006
+
+R4 the round trip (registered by RUN_4AB 6.3, DETECTOR):
+  cart_k3_law: read 3.70833 over 445 counts (120 returns) against the pin 3.68293 (151/41); +3.05 counts off, the remainder 8.44 per end; FAIL against the band as pinned, PASS against the preregistration's band
+  cart_k5_law: read 2.05372 over 497 counts (241 returns) against the pin 2.04762 (43/21); +1.48 counts off, the remainder 10.44 per end; FAIL against the band as pinned, PASS against the preregistration's band
+  cart_k3_key: read 4.77419 over 296 counts (62 returns) against the pin 4.70819 (None); +4.09 counts off, the remainder 6.35 per end; FAIL against the band as pinned, FAIL against the preregistration's band
+  cart_k5_key: read 2.30769 over 450 counts (195 returns) against the pin 2.30201 (None); +1.11 counts off, the remainder 9.07 per end; FAIL against the band as pinned, PASS against the preregistration's band
