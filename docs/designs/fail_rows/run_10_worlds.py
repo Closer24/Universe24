@@ -75,8 +75,8 @@ FAN_WIDTH = 330  # the world key `direction_bound`: a + |b| <= 330
 FAN_HALF_ANGLE = 45.0
 FAN_GRAIN_DEGREES = 0.15  # 22.2's premise: record 155's spacing 0.0026 in s
 WORLDS: dict[str, dict[str, object]] = {
-    "opening_w27": {"w": 27, "rate": [1, 2], "ticks": 8500},
-    "opening_w9": {"w": 9, "rate": [1, 1], "ticks": 4400},
+    "opening_w27": {"w": 27, "rate": [1, 2], "ticks": 8800},
+    "opening_w9": {"w": 9, "rate": [1, 1], "ticks": 4700},
 }
 Vector = tuple[int, int]
 

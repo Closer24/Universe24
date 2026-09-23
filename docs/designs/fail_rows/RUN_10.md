@@ -86,11 +86,30 @@ opening. The worlds therefore declare the fan of width 330 (the world key
 spacing of 22.2's own premise (record 155's fan by angle, 0.0026 in s):
 the grain 0.126 .. 0.174 degrees everywhere, 0.0030 in s at the axis, a
 third of the pixel's 0.0093. The products of every fan tried are in
-section 3 (the sensitivity to the grain among the fans without a hole,
-0.916 to 0.925 at w = 27, is inside the band's width): the fan is chosen
-by the premise, the pin is 22.2's as written, and the run confirms the
-integers of the chosen fan or refutes the chain. No number moves after a
-run.
+section 3 (the product among the fans without a hole moves from 0.877 to
+0.925 at w = 27 with the grain: the fans at 0.25 degree below the band,
+the fans at 0.15 degree 0.916 to 0.925 inside it, a spread the size of
+the band's width): the fan is chosen by the premise, the pin is 22.2's as
+written, and the run confirms the integers of the chosen fan or refutes
+the chain. No number moves after a run.
+
+**The row's word, declared by the physics-rule reviewer before the run
+(the gate of 2026-09-23 on this file at f8791203, GO subject to this
+line), verbatim so that nothing moves after it:** "P1 and P3 bit for bit
+is the chain CONFIRMED (not a pass against nature); against nature the
+compared number is 22.2's near-field pin at each Fresnel number (0.92 +-
+0.03 at w = 27, 0.886 +- 0.03 at w = 9; nature's 0.886 the far-field
+constant the products fall toward); P2 inside its band AND P4 inside its
+band AND P4 nearer 0.886 than P2 is the row's agrees: matches nature
+within 22.2's band under the one click, the fan 22.2's premise (0.15
+degree), the crowd form's 1.08 history; either outside its band is
+disagrees with the number; below 0.85 is 22.2 refuted by its own words."
+The status words are those of record 1166 (agrees / disagrees); "matches
+nature", never "is nature". The reviewer's HOST note, taken: the ticks
+are declared 8800 (w = 27) and 4700 (w = 9), so that the 4096th record,
+born by the tick 8194 or 4097 and complete within about 260 intervals,
+has a margin of about 340 intervals; no pin depends on the tick (the
+worlds' sha changes, the pins do not).
 
 ## 1. The steps between clicks
 
@@ -136,12 +155,13 @@ engine's digital line and flight table reproduced the registered runs of
    (w units per record) skips one tick near the start, as RUN_8BC read it
    (section 5 there: the count of the first tick has no remainder to
    carry); the deficit over the run, about w x (records)^2 / 2 against K,
-   is 4.9 x 10^8 (w = 27, 8500 intervals) and 8.7 x 10^7 (w = 9), below
+   is 5.2 x 10^8 (w = 27, 8800 intervals) and 9.9 x 10^7 (w = 9), below
    K = 1.07 x 10^9: no other tick is skipped. The births by ordinal, the
-   only count the pin uses: 4249 records in 8500 intervals at [1, 2], 4399
-   in 4400 at [1, 1]; the records 1 to 4096 (one turn of the wheel) are
-   the pin's, the 4096th born by the tick 8193 (w = 27) or 4097 (w = 9)
-   and complete within about 260 intervals (step 7), inside the run.
+   only count the pin uses: 4399 records in 8800 intervals at [1, 2], 4699
+   in 4700 at [1, 1]; the records 1 to 4096 (one turn of the wheel) are
+   the pin's, the 4096th born by the tick 8194 (w = 27) or 4097 (w = 9)
+   and complete within about 260 intervals (step 7), inside the run with
+   a margin of about 340 intervals (the reviewer's HOST note).
 4. **computation: the birth.** The record's identity is the lamp's number
    x 2^32 + the birth's ordinal (`record_identity` :2530); u = ordinal x
    2531 mod 4096 (`birth_coordinate` :714, "u = ordinal x r mod W, the
@@ -259,7 +279,7 @@ only:
 | --- | --- | --- | --- |
 | `model_id` | `beam-row10-opening-w27-v1` | `beam-row10-opening-w9-v1` | worlds of this design, not of the register |
 | `shape`, `boundary`, `K`, `N`, `release`, `suspension` | [120, 161, 1], z periodic, 2^30, 64, [1, 128], 0 | the same | the register's A10 plane and clock, as `w27_wave` declares them |
-| `ticks` | 8500 | 4400 | the records 1 to 4096 born by the tick 8193 (the rate [1, 2]) or 4097 ([1, 1]) and complete within about 260 intervals (section 1 step 7) |
+| `ticks` | 8800 | 4700 | the records 1 to 4096 born by the tick 8194 (the rate [1, 2]) or 4097 ([1, 1]) and complete within about 260 intervals (section 1 step 7), a margin of about 340 intervals |
 | `direction_bound` | 330 | 330 | the fan's width (section 0: the hole at the axis of a width-48 fan); an existing key, 64 by default, at most 4096 |
 | `directions` | 620 vectors: the fan's 600 off-axis directions and the 20 lamp directions not among them | 604: the fan's 600 and 4 | every vector a lamp or an opening names, once; (1, 0, 0) is a heading of the table already |
 | `families` | inline: `light` quantum 1 `phase_per_link` [8591334592, 1073741824]; `wall` quantum 1 | the same | `entities/families.json` declares `light` with these keys; the entity file is outside this folder's reach at load, as `j2_massive.json` declares its families |
@@ -332,7 +352,7 @@ deterministic on the same 4096 u):
 | P3 | w = 9: the counts per pixel as printed there, bit for bit; screen 4026 on 127 pixels, faces 70 (35, 35); the peak at y = 75 with 77 | DETECTOR | the same ladder on the w = 9 record |
 | P4 | w = 9: w x FWHM / lambda = 0.879 | COMPUTATION on P3 | the crossings at s = -0.2277 and +0.2269, FWHM 0.4546, x 9 / 4.6538; 22.2's pin 0.886 +- 0.03: inside; the Euclidean sum 0.891, the far field 0.891 |
 | P5 | the books balanced at every completed tick | GAMEBOARD (`run.json`, `conserved_at_every_completed_tick`) | the ledger |
-| P6 | the record's lines: per record one `birth` (`units` w, `multiplicity` w), w `rerelease` lines at the ages 10 .. 25 after the birth, w `split` lines (`born` 601, `multiplicity` 16227 or 5409, `rebirth` false), one `gather` with `chosen` one set; 4249 births in 8500 intervals at w = 27, 4399 in 4400 at w = 9 | GAMEBOARD (a diagnostic of the chain, never compared with nature) | section 1 steps 3, 4, 6, 9 |
+| P6 | the record's lines: per record one `birth` (`units` w, `multiplicity` w), w `rerelease` lines at the ages 10 .. 25 after the birth, w `split` lines (`born` 601, `multiplicity` 16227 or 5409, `rebirth` false), one `gather` with `chosen` one set; 4399 births in 8800 intervals at w = 27, 4699 in 4700 at w = 9 | GAMEBOARD (a diagnostic of the chain, never compared with nature) | section 1 steps 3, 4, 6, 9 |
 
 PASS / FAIL for the run against the pins: PASS if every count of P1 and
 P3 equals the printed integer and P5 holds; a differing count refutes the
@@ -358,10 +378,11 @@ clicks over 4096 records):
 | 220, 0.15 deg, 601 | 0.916 | 0.872 | 22.2's spacing; the grain 0.038 .. 0.262 degrees |
 | 330, 0.15 deg, 601 (declared) | 0.925 | 0.879 | 22.2's spacing at a uniform grain, 0.126 .. 0.174 degrees |
 
-Among the fans without a hole the product at w = 27 moves between 0.877
-and 0.925 with the grain, the band's width: the reading of row 10 under
-the one click is of the opening AND of the fan's grain at the level of
-+- 0.03, which is what 22.2's band says. The declared fan is the one that
+Among the fans without a hole the product at w = 27 moves from 0.877 to
+0.925 with the grain (the fans at 0.25 degree below the band, the fans at
+0.15 degree 0.916 to 0.925 inside it), a spread the size of the band's
+width: the reading of row 10 under the one click is of the opening AND of
+the fan's grain at the level of +- 0.03, which is what 22.2's band says. The declared fan is the one that
 meets the pin's premise (the spacing 0.0026 in s) at a uniform grain; the
 pin is not chosen by the number. The reviewer may prefer another fan of
 this table before the run; after it none moves.
@@ -382,10 +403,10 @@ HOST, scaled from the registered `slits_huygens` run (4300 intervals in
 records in flight: about 1.2 microseconds per row-interval). At w = 27:
 16227 rows per record, a record complete within about 260 intervals, about
 130 records in flight at the rate [1, 2]: about 2.1 million rows on the
-GameBoard per interval, about 2.5 s per interval, 8500 intervals: about 6
+GameBoard per interval, about 2.5 s per interval, 8800 intervals: about 6
 h on one core, a few hundred MB for the row store. At w = 9: 5409 rows per
 record, about 260 in flight at [1, 1]: 1.4 million rows, about 1.7 s per
-interval, 4400 intervals: about 2 h. The two in parallel on two cores:
+interval, 4700 intervals: about 2 h. The two in parallel on two cores:
 about 6 h wall; in series about 8 h. These are estimates from one
 registered rate; the walk's cost per row at ten times the store may
 differ, and a run may be stopped and restarted from nothing (no pin
