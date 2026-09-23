@@ -14,13 +14,15 @@ parameters, and from it the light clock's tick Outside along the motion
 and across it, with the crowd's terms hop by hop (section 2); the owner's
 point as one return condition (section 3); the table for k = 3, 5, 9, 17
 and L = 20, 60, 120 (section 4); which pins become closed forms and which
-need the run (section 5); the three tests (section 6). Nothing enters the
+need the run (section 5); the convergence, Newton at the zeroth order
+and Einstein's forms at the second, from the board to above the board
+(section 6); the three tests (section 7). Nothing enters the
 law: no key, no identity, no verb. Einstein's forms appear only as the
 thing compared with. The Light Clock Runner's file
 `LIGHT_CLOCK.md` (branch light-clock, beside this file once merged) holds
 the light clock's pins and worlds; this file moves none of them. The
 Sagnac transponder file `PINS_R2.md` (branch new-rows-r2, the New Rows
-Scout's, PR pending) is cited as the arrangement of the mirror body E;
+Scout's, PR pending) is cited as the arrangement of the receiver body E;
 neither is linked until it is on main.
 
 Notation, as in [PINS.md](PINS.md) and [ALGEBRA.md](../../ALGEBRA.md):
@@ -41,7 +43,7 @@ period and c_D = Q abs(D)_2 / T_D its Euclidean pace (ALGEBRA 4.2); k the
 whole number of intervals per hop of the moving body, v = 1 / k its pace
 in Links per interval; beta = v / c = 55 / (32 k) the speed as a
 fraction of c; gamma = 1 / sqrt(1 - beta^2) the Lorentz factor, only as
-the thing compared with; L the mirror's distance in Links; M a body's
+the thing compared with; L the receiver's distance in Links; M a body's
 content, S the push's width, **p** its momentum, p = Q S M / (k - 1) on
 one axis (the moving-detector worlds' rung); [n, d] the world's
 `suspension` pair; A the age moment (the sum of amount x age) of the rows
@@ -104,6 +106,17 @@ transponder body E that re-stamps it with its own number, as
 `PINS_R2.md` arranges; a detector reads every number but its
 own).
 
+**Times are atomic** (the owner, record 1234): every time in a pin is a
+whole number of the detector's own ticks, the difference of two stamped
+counts on two click lines, n_1 - n_0, an integer per ordinal (DETECTOR).
+The closed forms below are the means of those integers over a window of
+ordinals, exact in the mean with the remainder bounded (the accumulators'
+carries, ALGEBRA 4.1); per ordinal the whole count lies between the
+floor of the closed form and its ceiling plus the band, and the mean
+over the window is the fraction the pin states. An interval count T in
+this file is the host's tick, GAMEBOARD, a diagnostic that the
+detector's own count floor(r_D T) converts, never a number compared.
+
 ## 2. The derivation
 
 ### 2.1 The detector's count per engine interval
@@ -156,9 +169,12 @@ packet's pace, are all the light clock needs.
 ### 2.2 The light clock along the motion, hop by hop
 
 The arrangement: the detector D (a body of content M, its lamp on +x, its
-table `measure`) and a mirror E, a transponder body (`rerelease` on -x;
+table `measure`) and a receiver E, a body of its own number that clicks
+the packet and re-emits it on its declared direction (`rerelease` on -x;
 PINS_R2's body E in front instead of behind) at L Links ahead on the
-bar. Every interval count below is GAMEBOARD arithmetic; the count the
+bar. There is no mirror on the board (the owner, record 1234): the far
+end of every light clock here is this receiver, and its one count enters
+the closed forms. Every interval count below is GAMEBOARD arithmetic; the count the
 detector reads is r_D times it, DETECTOR.
 
 1. The birth (GAMEBOARD): at D's self-creation of count n_0 the packet is
@@ -170,12 +186,13 @@ detector reads is r_D times it, DETECTOR.
    t_out = L / (c - v) = 55 k L / (32 k - 55), exact in the mean, the
    remainder below one hop of E (k intervals) plus one Link of the
    packet (55 / 32 intervals). The factor 1 / (1 - beta) is the packet's
-   gain c - v per interval on a receding mirror: the one-way factor k_AB
+   gain c - v per interval on a receding receiver: the one-way factor k_AB
    of the click theorem at r = 1.
 3. The dwell at E (GAMEBOARD): E takes the packet into its pending rows
    (`nature_beam.py` :5216) and re-emits it at its next self-creation
    (:5967) on -x under its own number: delta_E intervals, 0 <= delta_E <
-   1 + k_mirror, PINS_R2's pin takes 1 count (its section 2 step 8).
+   1 + k_receiver; PINS_R2's pin takes 1 count, t_+ = L / (c - v) + 1
+   (its section 2 step 8): the receiver's one count.
 4. The back leg (COMPUTATION): the packet closes on the approaching D at
    c + v: t_back = L / (c + v) = 55 k L / (32 k + 55); the factor 1 /
    (1 + beta) is 1 / k_BA at r = 1.
@@ -197,6 +214,21 @@ COMPUTATION:
 
     = gamma^2 = 1024 k^2 / (1024 k^2 - 3025) at r_D = r_0 = 1 and delta_E's share dropped (it falls as 1 / L; at L = 20, k = 3 and delta_E = 1 it is 0.0048 of the ratio, at L = 120 0.0008).
 
+**The receiver's one count does not cancel in the ratio** (the owner,
+record 1234). With delta_E = 1, the count R2 pins, at r_D = r_0 = 1:
+
+    (N_par + 1) / (N_0 + 1) = (T_0 gamma^2 + 1) / (T_0 + 1) = 1 + beta^2 gamma^2 T_0 / (T_0 + 1),   T_0 = 55 L / 16,
+
+so at order v^0 it cancels (both ratios 1 at v = 0), at order v^2 it
+does not: the coefficient of beta^2 is T_0 / (T_0 + 1) in place of 1
+(275 / 279 at L = 20, 825 / 829 at L = 60, 825 / 827 at L = 120), the
+change -beta^2 gamma^2 / (T_0 + 1), of order v^2 and of order 1 / L,
+negative; across the same with gamma_x = T_D / (T_h d_y) in gamma^2's
+place, (N_perp + 1) / (N_0 + 1) = 1 + (gamma_x - 1) T_0 / (T_0 + 1). In
+a crowd the receiver's count is one self-creation of E, 1 + k_m
+intervals, and the same form holds with it. The exact fractions are the
+third table of section 4.
+
 Where the gamma squared comes from, hop by hop: one gamma from the two
 legs' sum (1 / (1 - beta) + 1 / (1 + beta)) / 2 = gamma^2 with the
 length L uncontracted, which Einstein's form compares with by the
@@ -211,7 +243,7 @@ law as built, and neither enters here.
 
 ### 2.3 The light clock across the motion
 
-Across, the packet must reach a mirror that moves with D, so its heading
+Across, the packet must reach a receiver that moves with D, so its heading
 needs the x-pace v exactly: a direction D_f = (d_x, d_y, 0) of the fan
 with Q d_x / T_D = 1 / k, that is k Q d_x = isqrt(3 Q^2 (d_x^2 +
 d_y^2)), a Diophantine condition on the fan (no root at run time: the
@@ -260,7 +292,7 @@ Node does not click; section 5.
 Three crowd terms: k_b = A_b n / d at the bodies' Nodes (D and its
 co-moving E share it, else they drift apart and the clock is not rigid;
 PINS_R2's E and D have identical accumulators), k_p = A_p n / d along
-the path, k_m the mirror's own when it is at rest apart from D. They
+the path, k_m the receiver's own when it is at rest apart from D. They
 enter through the three paces of section 2.1:
 
     v_eff = v / (1 + k_b),   c_eff = c / (1 + c_f k_p),   r_D = 1 / (1 + k_b),   delta_E < 1 + k_m,
@@ -287,7 +319,7 @@ beta^2; there is no term of order v (the two legs' first orders cancel
 as in the Sagnac sum). (v) The dwell delta_E lowers the ratio along by
 (1 - 1 / gamma^2) delta_E / T_0 = beta^2 delta_E c / (2 L) + O(beta^4),
 order beta^2 / L, negative, and by half that across; it grows with k_m
-(the mirror's own crowd) as delta_E < 1 + k_m. (vi) The held mass M
+(the receiver's own crowd) as delta_E < 1 + k_m. (vi) The held mass M
 enters no ratio: it sets p = Q S M / (k - 1) for the declared k and it is
 the crowd of no reader at D's own Node (its mass rows carry D's number).
 Every statement of this section is COMPUTATION; the numbers of section
@@ -331,19 +363,56 @@ GameBoard place, read by nothing), nor a return to the detector's number
 (the own number comes `home`, :4642-4694, unstamped; the click is E's
 number at D's set).
 
-**The mirror at rest on the bar against the co-moving mirror.** With E at
+**Is our mass and the mass of the Inside the same mass? "We are in the
+store"** (the owner, record 1234). The one quantity Inside is `content`,
+the integer M in the family's units, the mass (TERMINOLOGY, Content): on
+a row it is the store's column `content` per unit beside `amount`, the
+number of identical units, the carried content amount x content
+(`nature_beam.py` :2004-2005; a free family's row carries content 0); on
+a body it is `entry.held[family]`, summed as `entry.content`
+(`measured.py` :706-708), the M the drive's wall Q S M reads (`world.py`
+:472) and the M the mass rows it releases draw down (the release
+`by_drive(acc, held x n, d)`, `nature_beam.py` :5788-5811); the books'
+content line balances both, on the bodies and in transit, at every
+interval (GAMEBOARD, TERMINOLOGY, Books). So "our mass", the moving
+detector's held M (the cart's 2^22 units of the free family `mass` plus
+its 2^13 units of light of its own paid family, `make_worlds.py` :64-69,
+:153), and "the mass of the Inside" are one integer in one column: a
+body's held mass IS the content of its own record, kept in the same
+ledger as every row's, and there is no second mass. The Outside knows
+it only when a click reads a record: a row of a family without the flag
+`massive` places its units, content and label where it ends, the pair
+(f_F, q_F) = (1, 0), and its content joins the detector's held at the
+click (`entry.held[family] += group_content - waiting_content`,
+`nature_beam.py` :5496-5498); a massive family places nothing at the
+arrival and its quantum M at the record's completion, the pair (0, M)
+(`FamilyFlight.placed` and `quantum`, :1019-1050; `_place_completion`
+:6616); the click line's `content` is the only content Outside.
+The light packet is a row of the cart's own paid family (`cart`,
+quantum 1, `make_worlds.py` :199), one unit of content 1, no flag
+`massive`: it carries one unit of the lamp's light, which the receiver
+gains at its click and spends again at the re-emission, and it never
+carries the held mass, which stays on the record. In the owner's
+picture, then, "the mass returns to the detector" means the detector's
+own record, its held content and its Nodes, staying with it as it moves
+(`engine.py` :1009-1011), so that the packet's Node meets the record's
+set; it does not mean the packet's content coming back (one unit of
+light returns under E's number, no mass rides the packet). No new rule,
+no new noun.
+
+**The receiver at rest on the bar against the co-moving receiver.** With E at
 rest at L ahead of the emission Node the out leg is L / c and the back
 leg L (1 - beta) / (c + v): T = 2 L / (c + v), the ratio 1 / (1 + beta)
 = 32 k / (32 k + 55), first order in v, Doppler's form and not
 Einstein's; with E at rest L behind, 2 L / (c - v) and 1 / (1 - beta);
-the two together (a mirror fore and one aft, both at rest, PINS_R2's
+the two together (a receiver fore and one aft, both at rest, PINS_R2's
 arrangement turned outward) sum to 4 L c / (c^2 - v^2) = 2 T_0 gamma^2,
 the along clock's gamma squared again, and differ by 2 T_0 beta gamma^2,
 the Sagnac difference of PINS_R2 (its ratio beta, r-free). Across, a
-mirror at rest on the bar returns the packet to the emission Node; the
+receiver at rest on the bar returns the packet to the emission Node; the
 mass has moved 2 L / (c k) Links from it and the packet misses the
 detector's set (no click, the clock does not close), which is the
-owner's point in one line: only a mirror that moves with the held mass
+owner's point in one line: only a receiver that moves with the held mass
 (E as PINS_R2's body, the same accumulators) brings the packet back to
 where the mass is now, and only then do the closed forms of 2.2 and 2.3
 hold.
@@ -351,7 +420,7 @@ hold.
 ## 4. The table (COMPUTATION, no run; every number an exact fraction and its decimal)
 
 c = 32 / 55 on a heading, v = 1 / k, beta = 55 / (32 k), the co-moving
-mirror E at L Links; the dwell delta_E dropped from N_0, N_par and N_perp
+receiver E at L Links; the dwell delta_E dropped from N_0, N_par and N_perp
 alike (add delta_E to each, 0 to 1 + k_m intervals, PINS_R2's pin 1
 count; its share of the ratios in 2.4 (v)); the across counts on the
 direction D_f of section 2.3, where L is a multiple of d_y for the exact
@@ -411,6 +480,30 @@ pin) beside the exact ratio along:
 | 17 | 60 | 6758400/86833 = 77.83216 | 56533423513600/725293118507 = 77.94562 | 2179051297921/2175879355521 = 1.00146 | 1.00146 | 56320/1476161 = 0.03815 | 1.00073 |
 | 17 | 120 | 13516800/86833 = 155.66432 | 113066847027200/725293118507 = 155.89124 | 2179051297921/2175879355521 = 1.00146 | 1.00146 | 56320/1476161 = 0.03815 | 1.00073 |
 
+**With the receiver's one count** (delta_E = 1 as R2 pins it, no crowd;
+the ratios then depend on L, and the whole count per ordinal is the
+integer nearest the mean within the band, section 1):
+
+| k | L | (N_par + 1) / (N_0 + 1) | gamma^2 | (N_perp + 1) / (N_0 + 1) | N_perp / N_0 | T_0 / (T_0 + 1) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | 20 | 2559164/1727289 = 1.48161 | 1.48861 | 11332/9207 = 1.23080 | 1.23416 | 275/279 = 0.98566 |
+| 3 | 60 | 7627964/5132339 = 1.48625 | 1.48861 | 11244/9119 = 1.23303 | 1.23416 | 825/829 = 0.99517 |
+| 3 | 120 | 7615582/5119957 = 1.48743 | 1.48861 | 11222/9097 = 1.23359 | 1.23416 | 825/827 = 0.99758 |
+| 5 | 20 | 285212/251937 = 1.13208 | 1.13400 | 3892/3627 = 1.07306 | 1.07413 | 275/279 = 0.98566 |
+| 5 | 60 | 282804/249529 = 1.13335 | 1.13400 | 11572/10777 = 1.07377 | 1.07413 | 825/829 = 0.99517 |
+| 5 | 120 | 282202/248927 = 1.13367 | 1.13400 | 11546/10751 = 1.07395 | 1.07413 | 825/827 = 0.99758 |
+| 9 | 20 | 23129276/22297401 = 1.03731 | 1.03785 | 81052/78957 = 1.02653 | 1.02692 | 275/279 = 0.98566 |
+| 9 | 60 | 68748476/66252851 = 1.03767 | 1.03785 | 240892/234607 = 1.02679 | 1.02692 | 825/829 = 0.99517 |
+| 9 | 120 | 68588638/66093013 = 1.03776 | 1.03785 | 240326/234041 = 1.02685 | 1.02692 | 825/827 = 0.99758 |
+| 17 | 20 | 82554044/81722169 = 1.01018 | 1.01033 | 198652/196137 = 1.01282 | 1.01301 | 275/279 = 0.98566 |
+| 17 | 60 | 81772948/80941073 = 1.01028 | 1.01033 | 590332/582787 = 1.01295 | 1.01301 | 825/829 = 0.99517 |
+| 17 | 120 | 81577674/80745799 = 1.01030 | 1.01033 | 588926/581381 = 1.01298 | 1.01301 | 825/827 = 0.99758 |
+
+The receiver's count pulls every ratio toward 1 by the factor T_0 / (T_0
++ 1) on its excess, 1.4 percent of the excess at L = 20 and 0.24 percent
+at L = 120: it does not cancel, and a pin that drops it is off by that
+share.
+
 Read: the crowd at the bodies' Nodes cuts every count by 1 + k_b =
 2.650 (the age word's pin for series U at 3 Links, 1 + z = 2.650,
 clock_age NOTE section 6, is this same 1 + k_b read as a rate) and cuts the ratios' excess over
@@ -431,11 +524,11 @@ per re-emission):
 
 1. The resting clock N_0 = 2 L / c + delta_E = 55 L / 16 + delta_E, at
    any suspension divided by 1 + k_b.
-2. The along clock with a co-moving mirror, N_par = 2 L c / (c^2 - v^2) +
+2. The along clock with a co-moving receiver, N_par = 2 L c / (c^2 - v^2) +
    delta_E = 3520 k^2 L / (1024 k^2 - 3025) + delta_E, and its ratio
    gamma^2 = 1024 k^2 / (1024 k^2 - 3025) exactly (section 4), the dwell's
    share as written; with the crowd's three terms as in 2.4.
-3. The along clock with a mirror at rest, fore 2 L / (c + v) and aft 2 L
+3. The along clock with a receiver at rest, fore 2 L / (c + v) and aft 2 L
    / (c - v), the ratios 1 / (1 + beta) and 1 / (1 - beta), their sum 2
    T_0 gamma^2 and their difference the Sagnac's (PINS_R2's pin stands
    beside it, not moved).
@@ -483,7 +576,129 @@ own isqrt; the table of 2.3 is read off it, and every fraction of
 section 4 is formed from these integers and the closed forms by exact
 arithmetic.
 
-## 6. The three tests, on every rule used; nothing enters the law
+## 6. The convergence: Newton at low speed, Einstein's forms at the second order, from the board to above the board
+
+The owner's word (record 1235, as the Boss relayed it): the algebra of
+the tick at low speeds gives Newton, at higher speeds Einstein, and this
+must converge in the formulas; how does one derive, by the tick,
+Einstein from the board to above the board. Newton's and Einstein's
+forms below are the things compared with, never the law's.
+
+**(a) The expansion in v.** The tick Outside is the exact function of
+the tick Inside and v = 1 / k of section 2: r_D = 1 / (1 + k_b) counts
+per interval, and for the light clock's return N = r_D T with T the
+closed forms of 2.2 and 2.3. In the continuum limit of the fan (c
+isotropic, c_D -> c, the anisotropy c / c_D -> 1 within 1 / T_D; ALGEBRA
+4.2) the ratios expand in beta = v / c as, with the receiver's count
+dropped (its factor T_0 / (T_0 + 1) on every beta term, section 2.2):
+
+| The quantity, in the detector's own count | The law as built, exact | at order v^0 | at order v^2 | at order v^4 | Einstein's form (compared with) | its v^2 | its v^4 | Newton's (compared with) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| The moving detector's own count per resting count (the click theorem's r) | r = 1 (r_D / r_0 at equal crowds) | 1 | 0 | 0 | 1 / gamma = 1 - beta^2 / 2 - beta^4 / 8 | -1/2 | -1/8 | 1 |
+| N_par / N_0, the path along | gamma^2 = 1 / (1 - beta_eff^2) | 1 | +1 | +1 | 1 (its own time; the ground reads gamma: +1/2, +3/8) | 0 | 0 | 1 |
+| N_perp / N_0, the path across | gamma = 1 / sqrt(1 - beta_eff^2) | 1 | +1/2 | +3/8 | 1 (the ground reads gamma) | 0 | 0 | 1 |
+| N_par / N_perp, the quotient in the detector's own count | gamma | 1 | +1/2 | +3/8 | 1 (Michelson and Morley's null) | 0 | 0 | 1 |
+
+with beta_eff = beta (1 + c_f k_p) / (1 + k_b) carrying the crowd's term
+separately: the coefficient at v^2 is multiplied by ((1 + c_f k_p) / (1
++ k_b))^2 and at v^4 by its square (no crowd: 1). The zeroth order is
+Newton's, every ratio 1, absolute time: the tick Outside equals the tick
+Inside times r_D whatever the motion, and the light clock's period is 2
+L / c whatever the motion. The second order is where Einstein's forms
+live, and it is there, at order v^2 and not later, that the law as
+built departs from Einstein's form: by the term +beta^2 along and
++beta^2 / 2 across in the detector's own count, which is exactly the
+count's missing rate (the law's r = 1 against 1 / gamma, the click
+theorem's one free number: DERIVATION.md sections 2 and 3) and, along,
+the uncontracted length (ALGEBRA 5.1, L_D / L_0 = r_D). The click
+theorem's correction of relative order m^2 v^2 / 6 is NOT this
+departure: it is what would remain of Einstein's form under the
+hypothesis (A2) once the line k_AB = k_BA is imposed, an amplitude's
+correction beyond the law as built, which has no such line; the law's
+departure is the whole beta^2 term. The v^4 coefficients follow the
+same two roots: along 1 = gamma^2's, across 3 / 8 = gamma's. On the
+lattice one factor stands outside the expansion: the comb's c / c_D =
+1.0077 on the across path, of order v^0, an anisotropy of the fan and
+not a term in v (section 2.3).
+
+**(b) The convergence in numbers.** The exact fractions beside gamma
+and gamma^2 as k grows (COMPUTATION; the across fraction on the
+direction D_f of section 2.3, extended by the same search to k = 33, D_f
+= (38, 723, 0), T_D = 80256, and k = 65, D_f = (138, 5177, 0), T_D =
+574080):
+
+| k | beta = 55 / (32 k) | N_par / N_0 exact | 1 + beta^2 | gamma^2 | N_perp / N_0 exact | c / c_D | gamma_D | gamma | 1 + beta^2 / 2 | N_par / N_perp exact | gamma |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | 55/96 = 0.57292 | 9216/6191 = 1.48861 | 1.328234 | 1.488613 | 448/363 = 1.23416 | 1.007704 | 1.224724 | 1.220087 | 1.164117 | 52272/43337 = 1.20617 | 1.220087 |
+| 5 | 11/32 = 0.34375 | 1024/903 = 1.13400 | 1.118164 | 1.133998 | 768/715 = 1.07413 | 1.007634 | 1.065988 | 1.064893 | 1.059082 | 2860/2709 = 1.05574 | 1.064893 |
+| 9 | 55/288 = 0.19097 | 82944/79919 = 1.03785 | 1.036470 | 1.037851 | 15984/15565 = 1.02692 | 1.007724 | 1.019049 | 1.018750 | 1.018235 | 2988480/2957003 = 1.01064 | 1.018750 |
+| 17 | 55/544 = 0.10110 | 295936/292911 = 1.01033 | 1.010222 | 1.010327 | 39168/38665 = 1.01301 | 1.007738 | 1.005231 | 1.005150 | 1.005111 | 2629220/2636199 = 0.99735 | 1.005150 |
+| 33 | 5/96 = 0.05208 | 9216/9191 = 1.00272 | 1.002713 | 1.002720 | 1216/1205 = 1.00913 | 1.007738 | 1.001380 | 1.001359 | 1.001356 | 173520/174629 = 0.99365 | 1.001359 |
+| 65 | 11/416 = 0.02644 | 173056/172935 = 1.00070 | 1.000699 | 1.000700 | 57408/56947 = 1.00810 | 1.007737 | 1.000355 | 1.000350 | 1.000350 | 11844976/11932515 = 0.99266 | 1.000350 |
+
+Read: the along ratio is gamma^2 exactly at every k (the fraction is
+gamma^2), and gamma^2 approaches 1 + beta^2, Newton's 1 plus the second
+order, as k grows (k = 3: 1.489 against 1.328; k = 65: 1.000700 against
+1.000699): the approach of Einstein's second order to Newton's zeroth,
+in the law's own fractions. The across ratio approaches not 1 but c /
+c_D = 1.0077: at k >= 9 the lattice's anisotropy is the whole excess
+(k = 65: 1.00810 against gamma 1.00035), and the quotient N_par / N_perp
+falls below 1 from k = 17 on for the same reason (0.9927 at k = 65
+against Einstein's 1 and the law's continuum gamma 1.00035). Divided
+by c / c_D the across fraction is gamma_D to six digits at every k, so
+the convergence across is Einstein's gamma once the fan's grain is
+declared out, and the comb otherwise; the resting clock read on the
+same direction class removes it (section 2.3).
+
+**(c) The chain in one paragraph, from the board to above the board.**
+Inside (GAMEBOARD): the packet hops at c on the board, m_D(tau) =
+floor((2 tau S_1 Q + T_D) / (2 T_D)) Links by its age (`nature_beam.py`
+:829-831, the carry :3882), and the body hops one Link per k
+self-creations by its drive (`engine.py` :917-920, the wall `world.py`
+:472), its held content on its record moving with it (:1009-1011). The
+first arrow, one declared step: the detector's count under the age wall,
+`entry.age += 1` where nothing is owed and one interval paid per owed
+count (`engine.py` :699-706, :735-743), r_D = d / (d + A n), the same
+primitive for the resting and the moving body, no rate from outside.
+The second arrow, one declared step: the return of the detector's own
+packet to its held mass, the click of the re-stamped row at the
+detector's set as it stands now (`nature_beam.py` :3318-3323, the click
+:5533-5572, the stamp :5549-5550), n_1 - n_0 a whole number of the
+detector's own ticks (Outside, DETECTOR). From these two arrows the
+closed forms of section 2 follow by arithmetic alone: T_par = 2 L c /
+(c^2 - v^2) + delta_E, T_perp = 2 L T_D / (Q d_y) + delta_E, N = r_D T,
+and their ratios gamma^2, (c / c_D) gamma_D and gamma; their expansion
+in v is Newton's at the zeroth order and Einstein's forms at the second,
+with the law's coefficients of table (a) against Einstein's as the
+things compared with. Nothing above the board is added: no rate, no
+metric, no c^2 as an input; every arrow is a code line of the law as
+built, and Einstein's form is reached in the comparison, not derived
+from nothing (record 1097's words).
+
+**(d) What was done once already, cited and not repeated.** The click
+theorem ([DERIVATION.md](../click_frame/DERIVATION.md) sections 0 to 3):
+the conversion from the lattice's momentum to motion read by clicks is
+Lorentz up to corrections of relative order m^2 v^2 / 6 under (A2),
+exact in the continuum limit, given the line k_AB = k_BA, and the law
+as built has r = 1 with the two one-way factors 1 / (1 - v) and 1 + v.
+[Einstein Outside](../einstein_outside/DERIVATION.md) section IV: SR
+PARTLY (every r-free ratio of one detector's counts is Lorentz's on the
+law; every scaled formula is the one unknown r, fixed at 1 by the law),
+GR PARTLY at first order (the clock in a crowd the image of the age
+wall). [Newton from the clicks](../newton_clicks/NEWTON_FROM_CLICKS.md)
+section 0: Newton's form shown exactly in the algebra of the clicks with
+no expansion in the velocity, its scale the click theorem's r. This tick
+algebra agrees with all three where they meet (r = 1 on the law, the
+ratios r-free or carrying r alone, the crowd's clock the age wall's
+image) and adds what they did not carry: the crowd's three terms as
+exact factors on beta^2 with their signs and their cancellation when
+uniform, the receiver's one count as a non-cancelling term of order
+beta^2 / L, the across clock's exact lattice direction and the comb's
+factor c / c_D that dominates it at k >= 9, and the atomic tick (every
+pin a whole number of the detector's own ticks, the closed form its
+mean).
+
+## 7. The three tests, on every rule used; nothing enters the law
 
 No rule is added: every step above is a reading of rules already in the
 law (the self-creation under the age wall, the flight's carry, the
@@ -507,15 +722,15 @@ Stated again, one line each, for the rules this algebra reads:
 - The across direction D_f: a declaration of the fan (the world's
   `directions`), not a rule; its isqrt is taken at load as every T_D is.
 
-The closed forms of sections 2 to 4 are COMPUTATION, the law's own
-numbers before any run; gamma, gamma^2 and Einstein's ratio 1 are NATURE's
-forms, the things compared with; a run that reads the clicks would show
+The closed forms of sections 2 to 6 are COMPUTATION, the law's own
+numbers before any run; gamma, gamma^2, Einstein's ratio 1 and Newton's
+absolute time are NATURE's forms, the things compared with; a run that reads the clicks would show
 whether the law as built matches nature here (it is expected not to,
 gamma^2 and (c / c_D) gamma against 1), and nothing in this file says
 that it is nature. The light clock's pins are the Light Clock Runner's
 (`LIGHT_CLOCK.md`); this file moves none and adds none.
 
-## 7. Links
+## 8. Links
 
 - `PINS_R2.md` (the transponder E, the closed forms t_- and
   t_+, the band, the style of the pins); [PINS.md](PINS.md) section 2 and
@@ -533,5 +748,9 @@ that it is nature. The light clock's pins are the Light Clock Runner's
   `suspension`, `age_bound`; what comes home); [BEAM_LAW.md](../../BEAM_LAW.md)
   section 3 (the interval's six steps); [TERMINOLOGY.md](../../TERMINOLOGY.md)
   (Inside and Outside; a detector's clock).
+- [Einstein Outside](../einstein_outside/DERIVATION.md) section IV;
+  [Newton from the clicks](../newton_clicks/NEWTON_FROM_CLICKS.md)
+  section 0 (cited in section 6 (d), not repeated).
 - Highlights 5.4, the lines of records 678, 709, 768, 1139, 1196, 1201,
-  1216 and 1217; the owner's word of record 1232 as the Boss relayed it.
+  1216 and 1217; the owner's words of records 1232, 1234 and 1235 as the
+  Boss relayed them.
