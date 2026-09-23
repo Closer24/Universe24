@@ -236,7 +236,7 @@ def test_the_birth_line_carries_the_emitters_count_and_without_the_key_the_recor
     assert loaded.world.clock_stamp is False
     out = tmp_path / "unkeyed"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", 60)
+    execute_nature_beam_run(loaded.world, source, out, "test", 60, keep_row_clicks=True)
     written = (out / "events.jsonl").read_bytes()
     assert all("clock" not in json.loads(line) for line in written.splitlines())
     assert hashlib.sha256(written).hexdigest() == UNKEYED_EVENTS_SHA256
