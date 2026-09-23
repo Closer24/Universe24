@@ -386,6 +386,55 @@ def section_d(wavelength: float, arm: int = 60, periods: int = 2) -> dict:
     return {"n0": n0}
 
 
+def section_e(wavelength: float, arm: int = 60, k: int = 3, periods: int = 2) -> dict:
+    """The moving detector along its motion (the light clock's par world at k = 3): the detector's
+    body and its mirror advance one Node every k intervals along +x (the drive's pace 1 / k Links
+    per interval, beta = 1 / (k c) = 0.577 at k = 3); the record's train is emitted from the body's
+    Node as it moves and the return is read at the body's Node where it is now, by the first rung of
+    the returning offer (COMPUTATION), against the ray law's whole-tick pin N_par = 307 +- 10 at
+    k = 3 and the classical medium clock's 2 L gamma^2 / c = 309.6."""
+    period = wavelength / C
+    train = int(round(periods * period))
+    end = int(4.0 * arm / C) + train
+    length = arm + end // k + 8
+    now = np.zeros(length, dtype=np.int64)
+    before = np.zeros(length, dtype=np.int64)
+    remainder = np.zeros(length, dtype=np.int64)
+    arrivals = []
+    t0 = time.time()
+    for t in range(end):
+        body = 1 + t // k
+        mirror = body + arm + 1
+        if t < train:
+            now[body] = int(round(SCALE * math.cos(2 * math.pi * t / period)))
+        total = np.zeros_like(now)
+        total[1:] += now[:-1]
+        total[:-1] += now[1:]
+        total += 4 * now - 3 * before + remainder
+        nxt = np.floor_divide(total, 3)
+        remainder = total - 3 * nxt
+        nxt[mirror:] = 0
+        nxt[:body] = 0  # the body's own Node the last free one behind the train; nothing behind it
+        before, now = now, nxt
+        body_next = 1 + (t + 1) // k
+        arrivals.append(float(now[body_next]) ** 2)
+    rate = np.array(arrivals)
+    lo = train + int(period)
+    window = rate[lo:]
+    cumulative = np.cumsum(window)
+    first = lo + int(np.searchsorted(cumulative, cumulative[-1] / 4096)) if cumulative[-1] else -1
+    beta = 1 / (k * C)
+    gamma2 = 1 / (1 - beta * beta)
+    print(
+        f"\nE. THE MOVING DETECTOR along its motion, the arm {arm} Links, k = {k} (beta = {beta:.4f}), lambda = {wavelength:.3f},"
+        f" the train {train} intervals ({periods} periods): the counting trigger's first rung of the returning offer at the body's"
+        f" Node at the interval N_par = {first} (COMPUTATION; the ray law's whole-tick pin 307 +- 10 at k = 3; the classical"
+        f" medium clock's 2 L gamma^2 / c = {2 * arm * gamma2 / C:.1f}; the ratio to the resting 206: {first / 206:.4f}, the pin's 307 / 206"
+        f" = 1.4903, gamma^2 = {gamma2:.4f}); {time.time() - t0:.1f} s HOST"
+    )
+    return {"n_par": first}
+
+
 PERIODS = 32  # the record's emission train in periods of its clock (the lamp's declaration, kind 1)
 
 
@@ -404,6 +453,7 @@ def main() -> None:
         section_b(wavelength, 9, train, wall="lossy")
         section_c(wavelength, train)
         section_d(wavelength)
+        section_e(wavelength)
 
 
 if __name__ == "__main__":

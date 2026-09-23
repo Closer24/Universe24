@@ -37,6 +37,15 @@ To the chief physicist, 07:50Z to 08:20Z, in order:
    does it through the Inside, and this has a time. And that is also the
    detector's cycle time."
 
+6. (09:03Z, on the design at 489fed62) "GO. Note that the slit and such
+   are not in the Inside, they are in the Outside, right?" Confirmed: the
+   slit's wall, the polariser, the screen and the lamp are declared things
+   that read or emit, detectors, the Outside; only the free Nodes and the
+   record's rows on them are the Inside; the opening itself is the absence
+   of a wall, free Nodes, the Inside. His GO is the GO to build under the
+   Boss's bounds (Reviewer 3's gate first; his word on the far-field pin
+   of 6.1).
+
 To the Boss, 07:49Z to 08:00Z (the Boss's rendering, records of
 docs/LOG_2026-09-20.md after 1314): "Everything you are talking about are
 things that happen in the Outside, above the board. They do not happen
@@ -111,6 +120,13 @@ emits (its record's rows spread through the Inside), and the record
 clicks at the next Node, or at the same Node (a detector at rest); the
 mass moves only through the Inside, in the record's rows, and appears
 Outside only at the click.
+
+In his words (statement 6): everything declared, the slit's wall, the
+polariser, the screen, the lamp, the mirror as a receiver body, is the
+Outside, a thing that reads or emits; the Inside is only the free Nodes
+and the record's rows on them. The far-field question of 6.1 is
+therefore a question of how a wall is declared (an Outside thing), not
+of the rule.
 
 What is NOT in the picture: a line on the lattice between an emitter and
 a detector (the row's label **u**, its flight residue, its Bresenham
@@ -438,12 +454,27 @@ front speed), which is why the reading does not move with lambda.
 
 6.5 **The moving detector** (the light clock in motion, N_par and N_perp;
 row 4a; docs/designs/moving_detector): the same chain with the detector's
-body moved by its drive one Node per k intervals; the pin the branch's
-whole-tick pins (307 at k = 3 along, 254 to 255 across); the script does
-not run it yet; it is the second computation after 6.1, and the one where
-the owner's statement 5 is read as a derivation to attempt (a record that
-must click at the NEXT Node accumulates its first rung later), not
-claimed.
+body and its mirror moved one Node every k intervals along +x (k = 3,
+beta = 0.577), the train emitted from the body's Node as it moves, the
+return read at the body's Node where it is now by the first rung
+(section E of the script). At lambda = 24 Links it reads N_par = 303
+against the branch's whole-tick pin 307 +- 10 (INSIDE) and the classical
+medium clock's 2 L gamma^2 / c = 311.8; the ratio N_par / N_0 = 303 /
+206 = 1.471 against gamma^2 = 1.5 and the pin's 1.490: the rule reads
+the lattice as a medium, as the ray law does, so row 4a's registered
+FAIL against Einstein's 1 (the proper time) stands under the rule as
+read in the lattice's intervals, and the detector's own count remains the
+only place the dilation can be read (the moving detector's design). At
+lambda = 12 and 16 Links the reading (62 and 86) is not a return at all:
+the two-period train's slow components (the lattice's modes near the
+zone's edge, whose group pace is small) linger behind the front and the
+body moving at a third of a Link per interval overtakes them, so the
+first rung fires on the train's own tail; a longer train or a wavelength
+of 24 Links or more is needed for a moving body, a price of section 7,
+named. The across arm (N_perp) is not computed. The owner's statement 5
+as a derivation (a record that must click at the NEXT Node accumulates
+its first rung later) is not attempted here: the lattice's medium clock
+is what the rule reads; the dilation is the detector's own count's.
 
 6.6 **Row 13, the bend at a crowd** (-1.993 pixel at gamma 0, -3.989 at
 gamma 1, the run of record 1216): under the rule the crowd's age moment
@@ -555,10 +586,66 @@ against RUN_AUDIT.md. The owner reads sections 0, 1, 5 and 8 first.
    pin stands, or a pin to re-declare against a measurement or the
    wave's own sum, the owner's call; the two slits at 0.958 by the
    train's coherence, 0.98 reachable by the train; the detector at rest
-   206.0 by the first-rung click at every wavelength, the pin's number.
+   206.0 by the first-rung click at every wavelength, the pin's number;
+   the moving detector along its motion 303 at 24 Links against the pin
+   307 +- 10, the lattice read as a medium, row 4a's FAIL unchanged.
 5. The price: the wavelength 12 Links or more, the light worlds scaled
    by 2.6 or more in length, hours per world, a train declared on the
    lamp.
-6. Nothing built; the build on the owner's GO after Reviewer 3's gate
-   and after his word on the far-field pin of 6.1; the massive form
-   folds in as section 8.
+6. Nothing built yet; the owner's GO given at 09:03Z; the build after
+   Reviewer 3's gate and after the owner's word on the far-field pin of
+   6.1, by the specification of section 11; the massive form folds in as
+   section 8.
+
+## 11. The build's specification (docs; the engine work starts on Reviewer 3's gate)
+
+The build is one hypothesis identity, `detector-law-v1`, selected by the
+world file (`law: "beam"`, the hypothesis named), beside the ray law as
+built, which stays the default until the register is re-run under the
+rule; no world of the register changes until then. Its steps, in the
+order the engine takes them each interval, each with its gate:
+
+1. **The store's form.** A record's rows are `(record, node, a_now,
+   a_before, r)` in int64 columns per family (the same `stores` the
+   engine keeps, with the direction, amount, multiplicity, phase and age
+   columns unused under the rule); the record's ledger (its content h,
+   its birth stamp, its lamp's number and ordinal, its train's length and
+   phase) as today's record identity. Gate: the loader accepts the four
+   pilot worlds scaled (section 7) and refuses a world that declares a
+   fan, a `turns` list or `sensitivity` under the hypothesis, naming the
+   rule.
+2. **The source.** At each of the lamp's Nodes, for each live record of
+   the lamp, `a_now := A cos(2 pi t n / (d N))` on the wheel (the cosine
+   a table of N entries at load, the rate's whole part by `by_clock`),
+   for the train's length; the lamp pays h at the birth (as today, the
+   turn 1). Gate: the birth line as today with the birth stamp; the
+   lamp's count `held // h`.
+3. **The rule.** One vectorised step per family per interval: gather the
+   six neighbours' `a_now` per row (rows absent at a neighbour read 0;
+   new rows created at neighbours the record reaches, the front), form
+   `total`, the Euclidean division by 3, the remainder kept, the absorbing
+   Nodes (detectors) as section 5. Gate: the pins script's numbers of
+   section 6 reproduced bit for bit by the engine on the same scaled
+   worlds (the script is the engine's oracle: the same integers).
+4. **The detectors.** Per detector set, the pointer accumulates the
+   arriving offer `a_now^2` at its Nodes per record; the click by the
+   first rung at s_D = 1 / W (`amplitude.rungs`, `cell_of`); the
+   completion by exhaustion or the faces; the click line with
+   `clock_stamp` and the birth stamp; the record's rows removed. Gate:
+   one click per record; the books balanced at every completed tick;
+   the stamp on every click line.
+5. **The crowd and the wall** (4.1): the age moment at a Node stretches
+   the rule's step there by d against d + f n A (the one wall); no push
+   on a record's rows. Gate: row 13's pin worlds scaled, the bend read
+   against 6.6 before the register's re-run.
+6. **The host's cost.** The rows per record bounded by the world's
+   Nodes; the records alive bounded by the train and the completion;
+   the memory and the time per interval reported as HOST beside the
+   run's record (RUN_AUDIT.md's form).
+
+The gate set before any reading is called a result: the four pilot
+worlds under the rule at 12 Links (the single opening at both Fresnel
+numbers, the two slits, Malus, the light clock at rest) against section
+6's numbers bit for bit, then the reviewer's gates of section 9, then
+the pilot's readings against nature by kind, then the register's re-run
+on the Boss's second GO.
