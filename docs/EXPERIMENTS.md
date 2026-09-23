@@ -6823,7 +6823,8 @@ sequential gates on an entangled record, the full register replay.
 - **Features.** The clock's count per table entry (`count_component`,
   `counts_age` in `nature_beam`), the free family's release on every
   direction of the fan, the lamp's births as the clock's record, the
-  record form's click line with `age`; `examples/events/clock_word/read_runs.py`;
+  record form's click line with `age`; `examples/events/clock_word/read_runs.py`
+  (since 2026-09-23 `tools/click_readings/clock_word.py`);
   `tests/test_clock_word.py` (the shipped worlds the generator's and run
   balanced; the lamp's count under each word at each distance and the
   first counting tick; the algebra of the pin), the template

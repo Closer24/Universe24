@@ -86,7 +86,7 @@ The readings' package completed for every tool no branch in flight touches
 -> `tools/click_readings/lensing.py`, `tools/drive_b_readings.py` -> `drive_b.py`,
 `examples/events/shell_clock/read_runs.py` -> `shell_clock.py`; `tools/optical_readings.py`
 (a GAMEBOARD diagnostic of the optical pin worlds, never a detector reading)
-deleted. `examples/events/clock_word/read_runs.py` waits on `generic-bending`
+deleted. `examples/events/clock_word/read_runs.py` waited on `generic-bending` (moved to `tools/click_readings/clock_word.py` on 2026-09-23)
 (its test is that branch's), the cart's tool on `moving-detector-build`.
 
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)

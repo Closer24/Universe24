@@ -11,7 +11,7 @@ under beam-v1 as declared (no change under `src/`), and read them. The
 register's entry is [docs/EXPERIMENTS.md, "T, the clock's word"](../../../docs/EXPERIMENTS.md#t-the-clocks-word-2026-09-21);
 the expectations with the `derivations` map are `expectations.json`
 (written by `make_worlds.py`; the `replicated` map absent: measured once,
-awaiting replication); the readings tool is `read_runs.py`.
+awaiting replication); the readings tool is `tools/click_readings/clock_word.py` (until 2026-09-23 `read_runs.py` beside the worlds).
 
 ## The question
 
@@ -45,7 +45,7 @@ Links and 121 x 15 x 15 at 6; 500 intervals.
 ```bash
 PYTHONPATH=src python examples/events/clock_word/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/clock_word examples/events/clock_word/presence_3.json examples/events/clock_word/presence_6.json examples/events/clock_word/age_3.json examples/events/clock_word/age_6.json
-PYTHONPATH=src python examples/events/clock_word/read_runs.py artifacts/clock_word
+PYTHONPATH=src python tools/click_readings/clock_word.py artifacts/clock_word
 ```
 
 **Measured (2026-09-21, one run, `readings.json` beside the worlds; measured

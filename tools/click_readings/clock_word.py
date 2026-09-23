@@ -2,7 +2,7 @@
 and write `readings.json` beside them (the measured block the register's
 entry quotes; no number typed by hand).
 
-    PYTHONPATH=src python examples/events/clock_word/read_runs.py <runs dir>
+    PYTHONPATH=src python tools/click_readings/clock_word.py <runs dir>
 
 Per world: DETECTOR, the lamp's light at x = 110: 1 + z the inverse slope
 of the birth ordinal (`record & 0xFFFFFFFF`) against the click's tick in
@@ -25,8 +25,10 @@ import json
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
+ROOT = Path(__file__).resolve().parents[2]
+# The worlds and the register of series T (the tool moved here from
+# examples/events/clock_word/read_runs.py on 2026-09-23, PLAN.md section D).
+WORLDS = ROOT / "examples" / "events" / "clock_word"
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.events import NatureBeamSimulation  # noqa: E402
@@ -100,14 +102,14 @@ def read_world(runs: Path, name: str, pinned: dict, expected: dict) -> dict[str,
         "clicks": len(clicks),
         "ordinals_missing": (max(ordinals) - len(ordinals)) if ordinals else None,
         "first_missing_birth_after_the_rows": missing[0] if missing else None,
-        "replay": replay_first_count(HERE / f"{name}.json"),
+        "replay": replay_first_count(WORLDS / f"{name}.json"),
         "verdict": verdict,
     }
 
 
 def main() -> None:
     runs = Path(sys.argv[1])
-    expected = json.loads((HERE / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     summary = json.loads((runs / "summary.json").read_text(encoding="utf-8"))
     readings: dict[str, object] = {"format": "clock-word-readings-v1", "worlds": {}, "ratios": {}}
     for name, pinned in expected["worlds"].items():

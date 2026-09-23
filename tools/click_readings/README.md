@@ -38,13 +38,13 @@ script with `PYTHONPATH=src python tools/click_readings/<module>.py ...`
 | `lensing.py` | K, light beside a mass (and the optical pin worlds under the key) | `tests/test_lensing_readings.py` |
 | `drive_b.py` | the directional drive of a body, drive-b-v1 | `tests/test_drive_b.py` |
 | `shell_clock.py` | X, Poisson after a detector | `tests/test_shell_clock.py` |
+| `clock_word.py` | T, the clock's word (the presence or the age moment) | none: no test loads it; `tests/test_clock_word.py` reads the worlds and the register (moved here on 2026-09-23 from `examples/events/clock_word/read_runs.py`) |
 | `flow_link.py` | the ring worlds of flow-link-v1 (the world key `flow_link`) | none: no test loads it; `tests/test_flow_link.py` reads the worlds and the register, not the tool (moved here on 2026-09-23 from `tools/flow_link_readings.py`, PR #855's) |
 
-Still outside the package until the branches that touch them merge (PLAN.md
-section D): `examples/events/clock_word/read_runs.py` (T, its test a file of
-`generic-bending`) and the cart's `tools/moving_detector_readings.py` (a file
-of `moving-detector-build`). `tools/amplitude_path.py` stays at its
-path because the paper's RECORD.md cites it there.
+Still outside the package: the cart's `tools/moving_detector_readings.py` (a
+file of `moving-detector-build`, PR #834, held; PLAN.md section D).
+`tools/amplitude_path.py` stays at its path because the paper's RECORD.md
+cites it there.
 
 ## The clicks' certificate (the Boss's order of 2026-09-22 on the owner's word, record 920)
 
@@ -84,7 +84,7 @@ record; no tool runs a rule of the law or reads a Node during a run.
 | `tools/amplitude_path.py` (L) | run.json, events.jsonl | a JSON list of the clicks (the replay's report, no pin) | none | none: the layer's replay through `events/amplitude.py`, integers |
 | `lensing.py` (K) | run.json, events.jsonl, initialization.json | the register's block under `--register` | the deflection in pixels and the delay in intervals as ratios, display | `slope` (the beam's centroid line), `verdict` |
 | `drive_b.py` (drive-b-v1) | run.json, events.jsonl, state.json | the register's run block under `--register` | the pace as a ratio, display | none |
-| `examples/events/clock_word/read_runs.py` (T) | events.jsonl | `readings.json` beside the worlds (the readings, no pin) | k and 1 + z as ratios of counts, display | `slope` (the clock's field over distance) |
+| `clock_word.py` (T) | events.jsonl | `readings.json` beside the worlds (the readings, no pin) | k and 1 + z as ratios of counts, display | `slope` (the clock's field over distance) |
 | `shell_clock.py` (X) | events.jsonl, state.json | `readings.json` beside the worlds | k(r) as ratios, display | `slope` |
 | `flow_link.py` (flow-link-v1) | run.json, events.jsonl, state.json (its digest), log.txt | the register's `runs` blocks under `--register` (the source sha256, the digests, the readings, the verdicts; the pins untouched) | the arrival's mean shift and delay as ratios of counts, the radial and tangential shifts, rounded for display | `sd_radial` (a standard deviation over the starts, `math.sqrt`); the COMPUTATION lines C_nodes and C_ring (the Nodes' conversion and the lever-arm factor of the pin, floating point, labelled COMPUTATION) |
 
