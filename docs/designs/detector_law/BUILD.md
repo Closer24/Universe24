@@ -601,3 +601,35 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
 - (q) The block key `start` (the interval the drive begins, the ramp
   counted from it) and the world key `mode_axis` with the `mode` line are
   the two additions of step 5, each a declaration; tests (s) and (t).
+
+## 11. The quantum rows' three components (build 2, the Boss's order of 2026-09-23 22:25Z; `detector-law-build-2`; `tests/test_detector_law_tables.py`)
+
+The three components the six quantum rows lack in the engine (the
+declarations page `declarations/DECLARATIONS.md`, "what the engine
+lacks"; PLAN.md 3.1 item 7), each a generic component under the local
+integer operation contract (ARCHITECTURE.md): world-defined, no branch on
+a physical name, integer intermediates, fixed local work for fixed N,
+with one test (the inputs, the expected integers, an edge case).
+
+| Component | The declaration it is built against | Where | The verbs and the integers | The test |
+| --- | --- | --- | --- | --- |
+| 1. The phase reading of a record at a table Node | DECLARATIONS.md's head: the angle phi on Z_N nearest to the pair (a_before, a_now) = A (cos(phi - k), cos phi) at the record's clock [n, d] (k the clock's whole step of the interval, floor(n / d) or one more), read by the phase table at load (cos x 256, `core.phase.phase_cosines`), the nearest entry by an integer comparison, no root and no float at run time; the amplitude A the third input the declaration names (the lamp's UNIT on a bar; a table's peak register where the wave spreads) | `core.phase.nearest_phase(before, now, amplitude, clock, N)` -> (phi, residual) or None for the zero pair; `DetectorLawSimulation.read_phase(record, node, amplitude)` | the residual abs(256 now - A C[phi]) + abs(256 before - A C[phi - k]) minimised over 2 N entries (verbs B and the comparison of D), the residual the reading's grain (0 for a pair the clock drove) | (a): N = 64 with [77, 25] and [1, 1] exact at every age at two amplitudes; N = 128 exact 16 units from the extrema; N = 2048 with [3, 1] within one step 32 units from them; the chain world's reading advancing by the clock's step; the zero pair None; a zero circle, clock or amplitude refused |
+
+FINDING of build 2 (component 1), for the physicist through the Boss: the
+reading's grain is the phase table's scale 1 / 256, not 1 / N. Where the
+clock's step k moves the cosine by less than one table unit (256 x 2 pi
+k / N x abs(sin) below 1: near the zero crossings for N above about
+1600 k, and in the flat runs at the extrema on every circle above 64)
+consecutive entries repeat and one pair (a_before, a_now) recurs at
+several phases of the wave, so the nearest entry is a tie and the
+reading is off by the tie's span: at N = 2048 with the clock [1, 1] one
+third of the driven pairs read wrong, some by a half turn (the other zero
+crossing); with [3, 1] the reading is within one step 32 units from the
+extrema and off by up to 253 steps near them; at N = 256 with [1, 1]
+16 of 512 pairs read wrong by up to 7 steps at the extrema; at N = 64
+every pair reads exactly. The Bell row (1a) declares N = 2048 with the
+wheel [1, N]: its clock's pair must give the reading a step of at least
+3 per interval, or the row's table needs a finer scale than the law's
+immutable 1 / 256 (a declaration outside this build), or the rotation
+reads the phase only where the levels are away from the extrema; the
+physicist's line, not the builder's.

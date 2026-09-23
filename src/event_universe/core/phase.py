@@ -159,3 +159,43 @@ class PhaseCircle:
 def phase_circle(phase_steps: int) -> PhaseCircle:
     """The circle of N steps with its tables, cached per N."""
     return PhaseCircle(phase_steps, phase_cosines(phase_steps), phase_sines(phase_steps))
+
+
+def nearest_phase(
+    before: int, now: int, amplitude: int, clock: tuple[int, int], phase_steps: int
+) -> tuple[int, int] | None:
+    """The phase reading of a record at a Node (detector-law-v1, the TABLE
+    form; docs/designs/detector_law/declarations/DECLARATIONS.md, the head):
+    the angle phi on the circle Z_N nearest to the pair of levels
+    (a_before, a_now) = A (cos(phi - k), cos phi) at the record's clock
+    [n, d] (n / d steps of Z_N per interval; k the clock's whole step of
+    the interval, floor(n / d) or one more as the clock's floor advances)
+    and at the record's amplitude A (the third input the declaration
+    names: the levels are A x C[phi] / 256 with C the phase table at load,
+    so that the two phases sharing one direction of the pair, a small pair
+    at a zero crossing and a large one at the peak, are told apart by A),
+    read by the table: phi and k the entries minimising the integer
+    residual abs(256 now - A C[phi]) + abs(256 before - A C[phi - k]), an
+    integer comparison over 2 N entries, no root and no float. Returns
+    (phi, the residual), the residual the reading's grain (0 for a pair the
+    clock drove at that amplitude: the phase read back exactly), or None
+    for the zero pair (no record at the Node)."""
+    if before == 0 and now == 0:
+        return None
+    if phase_steps <= 0 or clock[0] <= 0 or clock[1] <= 0 or amplitude <= 0:
+        raise ValueError("nearest_phase needs a positive circle, clock and amplitude")
+    table = phase_cosines(phase_steps)
+    whole = clock[0] // clock[1]
+    steps = (whole % phase_steps, (whole + 1) % phase_steps)
+    scaled_now = checked_work(PHASE_COSINE_SCALE * now)
+    scaled_before = checked_work(PHASE_COSINE_SCALE * before)
+    best: tuple[int, int] | None = None
+    for phi in range(phase_steps):
+        residual_now = abs(scaled_now - checked_work(amplitude * table[phi]))
+        for step in steps:
+            residual = residual_now + abs(
+                scaled_before - checked_work(amplitude * table[(phi - step) % phase_steps])
+            )
+            if best is None or residual < best[1]:
+                best = (phi, residual)
+    return best

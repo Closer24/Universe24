@@ -66,7 +66,7 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.integer import by_drive
-from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines
+from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines
 from event_universe.events.amplitude import cell_of, rungs
 from event_universe.events.world import (
     AXES,
@@ -1271,6 +1271,29 @@ class DetectorLawSimulation:
             self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     # The readings
+
+    def read_phase(
+        self, live: LiveRecord, node: tuple[int, int, int], amplitude: int | None = None
+    ) -> tuple[int, int] | None:
+        """The phase reading of a record at a Node (the TABLE form's input,
+        DECLARATIONS.md's head): the angle on the world's circle nearest
+        to the pair (a_before, a_now) at the Node at the record's clock and
+        amplitude, with the reading's residual (`core.phase.nearest_phase`);
+        the amplitude the lamp's unit by default (the level the clock drives,
+        UNIT: exact on a bar, where the train keeps its amplitude), or the
+        amplitude the reader declares (a table Node's peak register on a
+        board where the wave spreads); None where the record has no level
+        at the Node. A massive record has no clock on the circle and is not
+        read."""
+        if self.families[live.family].massive_kind:
+            return None
+        return nearest_phase(
+            int(live.before[node]),
+            int(live.now[node]),
+            UNIT if amplitude is None else amplitude,
+            (live.period_numerator, live.period_denominator),
+            self.world.phase_steps,
+        )
 
     def books(self, recount: bool = False) -> dict[str, object]:
         families: dict[str, object] = {}
