@@ -574,10 +574,28 @@ chain (the transmitted amplitude 5 x 10^10 by 3000 intervals of motion),
 while the hopping well alone, without light, is bounded (a scratch check
 of both the (B) form and the chain H form); the SAME-NODE first difference
 on every interval (the hop changing only the cells' set and the pair
-region) conserves the combination to 10^-5 per interval, as at rest. So the
-path forms as tried are conservation breaches and are withdrawn; the
-same-Node form is the coupling in motion in this design until Reviewer 3
-names a conserving path form and it is checked the same way. SECOND FINDING, in the stable form: HEAD-ON the lab
+region) conserves the combination to 10^-5 per interval, as at rest. CLOSED by
+Reviewer 3's read of the three forms (the Boss's 16:12Z, records 1444 and
+1445): the roles-swapped pair is the adjoint pair of the mirror discrete
+Lagrangian, as valid as his, both symplectic, both pump; the pumping is not
+a conservation breach but a PARAMETRIC RESONANCE of the hop with light's
+band (the hop a pump at (omega, k) = (2 pi / K, 2 pi / K) feeding pairs of
+light modes with omega_1 + omega_2 = 2 pi / K and k_1 + k_2 = 2 pi / K mod
+2 pi; on the chain at c^2 = 1 / 3 such pairs exist for every K >= 4 and at
+K = 3 the resonance is degenerate and exact, the mode k = 2 pi / 3 at omega
+= pi / 3); no conserving co-moving pair exists on a hop; his MUST
+withdrawn. His sentence, verbatim: "The coupling's first differences are
+the same-Node differences on every interval, light's step first; the hop
+moves the cells' set and the pair region only. A co-moving difference
+along the path would be the continuum's covariant coupling, but on the
+lattice every hop-modulated coupling is pumped parametrically by the hop's
+pair resonance with light's band (exact at K = 3: the mode k = 2 pi / 3 at
+omega = pi / 3), the along-path forms strongly and the same-Node form
+through its boundary cell alone (10^-4 per interval); so the index in
+motion is the same-Node form's, a COMPUTATION of the model as built and a
+PREDICTION (0.40 and 0.50 of the covariant slab's delay head-on at K = 3,
+4.3 and 6.8 times it from behind), not Fizeau's drag, which the design does
+not reach." SECOND FINDING, in the stable form: HEAD-ON the lab
 delay is 0.40 of the covariant value with G g unchanged and 0.50 with G g x
 [K^2, K^2 - 3]; FROM BEHIND (the longer chain, the window after the
 block-frame period settles) 4.3 and 6.8 times the covariant value (the
@@ -834,7 +852,11 @@ board's two-block world reads it.
    board 128^3 at two extents, HOST 0.079 s per interval, the moving world
    12 minutes); the moving cube's axis periodic, the travel wraps. The
    HOST figures are numpy on this machine; the engine's integer form is
-   its own cost.
+   its own cost. The MOVING worlds print light's energy drift and the
+   content of the mode k = 2 pi / 3 as GAMEBOARD readings (the hop pump's
+   signature, section 7); the moving-index world is read at K = 4 or 5
+   beside K = 3, to say how much of the same-Node numbers is the degenerate
+   resonance's (Reviewer 3's two lines, 16:12Z).
 5. The key `massive-record-v1` OFF by default; the build only on Reviewer
    3's gate of this draft's SHA, the Algebra Mathematician's chapter, and
    the owner's second word through the Boss (with his two words of section
@@ -994,18 +1016,26 @@ not as a formula.
   takes the half-steps in the opposite order (the massive first), and the
   hop schedule is reversed with the drive's accumulator, itself an integer
   map with an exact inverse. Reversible; not symmetric in order.
-- **(d) The click** is the one deletion (ALGEBRA.md 3.1): the record's rows
-  are removed at the detector's cells, its content handed over, the
-  detector's count advanced by one; the counts form a free abelian monoid,
-  not a group, and no step of the board un-deletes a row: the run with a
-  click at interval 300 reversed by the exact inverse deviates by 40092,
-  the deleted rows' amplitude. THE ARROW OF TIME IS BORN AT THE CLICK and
-  nowhere in the rule: (a) to (c) hold.
+- **(d) The click** is the one deletion OF THE LAW (ALGEBRA.md 3.1): the
+  record's rows are removed at the detector's cells, its content handed
+  over, the detector's count advanced by one; beside it the TAKE (section
+  7, the worlds' declaration for the absorbing objects, record 1421) is the
+  second one-way step, a declaration and not the law's; the counts form a
+  free abelian monoid, not a group, which is an ORDER, not a loss; no step
+  of the board un-deletes a row: the run with a click at interval 300
+  reversed by the exact inverse deviates by 40092, the deleted rows'
+  amplitude. THE ARROW OF TIME IS BORN AT THE CLICK (and at a declared
+  take) and nowhere in the rule: (a) to (c) hold.
 - **(e) The world that shows it** (a CHECK, never a pin against nature): a
   train on a chain or a layer with no detector declared, N intervals
-  forward under the engine, N intervals under the exact inverse (a host
-  step, the ceiling division), the board back to its first rows bit for
-  bit and the books' E equal; the same world with a detector declared,
+  forward under the engine, N intervals under the exact inverse, which is
+  verb D with the CEILING in place of the floor, a declared variant of the
+  one division (the remainder's convention flipped), so the reversed check
+  world is lawful under that variant and needs no seventh verb; under
+  reversal the coupling's two first differences change sign together, (g,
+  G) -> (-g, -G), the product G g and the dielectric unchanged, which the
+  half-step inversion of (c) realizes; the board back to its first rows bit
+  for bit and the books' E equal; the same world with a detector declared,
   which does not return, by the deleted rows exactly; and the same world
   reversed by the engine's own formula, which returns only to the
   remainders' grain.
