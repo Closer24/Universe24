@@ -59,7 +59,7 @@ def load_generator():
 def run_lines(document: dict, ticks: int) -> tuple[list[dict], NatureBeamSimulation]:
     world = load_world(json.dumps(document).encode("utf-8"), base_dir=WORLDS, root=WORLDS.parent).world
     lines: list[dict] = []
-    simulation = NatureBeamSimulation(world, observer=lines.append)
+    simulation = NatureBeamSimulation(world, observer=lines.append, keep_row_clicks=True)
     for _ in range(ticks):
         simulation.step()
     assert simulation.books()["balanced"]

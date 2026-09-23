@@ -151,7 +151,7 @@ def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
         None,
     )
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parsed, records.append)
+    simulation = NatureBeamSimulation(parsed, records.append, keep_row_clicks=True)
     entry = simulation.measured[2]
     for _ in range(7):
         simulation.step()
@@ -183,7 +183,9 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     complement = counter(11, {"light": {"rule": "measure", "phase_window": 8}})
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([12, 1, 1], [lamp(), gate, complement], K_B)), records.append
+        parse_nature_beam_world(world([12, 1, 1], [lamp(), gate, complement], K_B)),
+        records.append,
+        keep_row_clicks=True,
     )
     source, near, far = simulation.measured[1], simulation.measured[2], simulation.measured[3]
     # The lamp (content K + 2, paying 1 per release) turns by its exact
@@ -229,7 +231,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     )
     assert parsed.measured[0].lamp is not None and parsed.measured[0].lamp.window == 8
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parsed, records.append)
+    simulation = NatureBeamSimulation(parsed, records.append, keep_row_clicks=True)
     source, gate, light = simulation.measured[1], simulation.measured[2], simulation.stores[LIGHT]
     assert source.lamp_window == 8
     births = 0

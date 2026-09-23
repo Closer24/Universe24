@@ -180,7 +180,9 @@ def test_the_register_is_the_closed_form(world: dict, register: dict) -> None:
 
 def observed(world: dict) -> tuple[list[dict], dict]:
     lines: list[dict] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"])):
         simulation.step()
     return lines, simulation.books()
@@ -222,7 +224,7 @@ def test_every_escape_click_is_the_derived_tick(world: dict, register: dict) -> 
 
 def test_the_readings_tool_reads_the_record(tmp_path: Path, register: dict) -> None:
     tool = load("c_measured_readings", ROOT / "tools" / "click_readings" / "c_measured.py")
-    run = run_initialization(WORLD, tmp_path / "run").parent
+    run = run_initialization(WORLD, tmp_path / "run", keep_row_clicks=True).parent
     reading = tool.read_run(run, register)
     assert reading.status == "completed" and reading.balanced
     assert reading.births == [register["birth_tick"]] * register["births"]

@@ -204,7 +204,7 @@ def probe_clicks(folder: Path, world: World, limit: int) -> None:
     clicks: dict[tuple[int, str], list[dict[str, Any]]] = collections.defaultdict(list)
     records: dict[tuple[int, str], dict[str, Any]] = {}
     gathers: dict[int, dict[str, Any]] = {}
-    # A record written under --omit-row-clicks holds no per-row click line:
+    # A record written without --keep-row-clicks holds no per-row click line:
     # the probe says so instead of reading zero (`--no-clicks` skips check 2).
     refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:

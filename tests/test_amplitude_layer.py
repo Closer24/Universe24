@@ -176,7 +176,9 @@ def run_world(world: dict[str, object], ticks: int | None = None) -> NatureBeamS
 
 def observed(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"])):  # type: ignore[call-overload]
         simulation.step()
     return simulation, lines
@@ -376,7 +378,12 @@ def test_the_register_replays_through_the_reading_tool(tmp_path: Path):
         out = tmp_path / name
         out.mkdir()
         execute_nature_beam_run(
-            parse_nature_beam_world(world), json.dumps(world).encode(), out, "test", 30
+            parse_nature_beam_world(world),
+            json.dumps(world).encode(),
+            out,
+            "test",
+            30,
+            keep_row_clicks=True,
         )
         record = json.loads((out / "run.json").read_text("utf-8"))
         layer, gathers = tool.replay(out)

@@ -258,7 +258,9 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
             beams.append(arrival(1, number=3, phase=phases[1], direction=[-1, 0, 0]))
         records: list[dict[str, object]] = []
         simulation = NatureBeamSimulation(
-            parse_nature_beam_world(world([counter, SOURCE, other], beams, 1)), records.append
+            parse_nature_beam_world(world([counter, SOURCE, other], beams, 1)),
+            records.append,
+            keep_row_clicks=True,
         )
         entry = simulation.measured[1]
         simulation.step()
@@ -291,7 +293,9 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     }
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([receiver, SOURCE], [arrival(1)], 3)), records.append
+        parse_nature_beam_world(world([receiver, SOURCE], [arrival(1)], 3)),
+        records.append,
+        keep_row_clicks=True,
     )
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert entry.detector == 0 and entry.threshold == 3
@@ -306,7 +310,9 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
 
     records.clear()
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([receiver, SOURCE], [arrival(3)], 3)), records.append
+        parse_nature_beam_world(world([receiver, SOURCE], [arrival(3)], 3)),
+        records.append,
+        keep_row_clicks=True,
     )
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
@@ -347,7 +353,9 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
 
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([emitter, SOURCE], [arrival(3, phase=20)], 3)), records.append
+        parse_nature_beam_world(world([emitter, SOURCE], [arrival(3, phase=20)], 3)),
+        records.append,
+        keep_row_clicks=True,
     )
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
@@ -486,7 +494,9 @@ def test_the_record_is_exact_and_never_refused():
     ):
         records: list[dict[str, object]] = []
         simulation = NatureBeamSimulation(
-            parse_nature_beam_world(world([counter, SOURCE, other], beams, 1)), records.append
+            parse_nature_beam_world(world([counter, SOURCE, other], beams, 1)),
+            records.append,
+            keep_row_clicks=True,
         )
         simulation.step()
         assert simulation.books()["balanced"], beams
@@ -509,6 +519,7 @@ def test_the_record_is_exact_and_never_refused():
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world([counter, SOURCE, other], [arrival(1 << 18), later], 1)),
         records.append,
+        keep_row_clicks=True,
     )
     for _ in range(3):
         simulation.step()
@@ -529,7 +540,9 @@ def test_the_record_is_exact_and_never_refused():
     }
     records = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([counter, SOURCE, other], [off], 1)), records.append
+        parse_nature_beam_world(world([counter, SOURCE, other], [off], 1)),
+        records.append,
+        keep_row_clicks=True,
     )
     simulation.step()
     assert simulation.books()["balanced"]
@@ -583,7 +596,9 @@ def test_a_detector_is_a_set_of_nodes_with_one_record():
     for reached in range(3):
         records: list[dict[str, object]] = []
         simulation = NatureBeamSimulation(
-            parse_nature_beam_world(set_world([at_node(SET_NODES[reached], phase=0)])), records.append
+            parse_nature_beam_world(set_world([at_node(SET_NODES[reached], phase=0)])),
+            records.append,
+            keep_row_clicks=True,
         )
         simulation.step()
         assert simulation.books()["balanced"], reached
@@ -604,7 +619,9 @@ def test_a_detector_is_a_set_of_nodes_with_one_record():
     # The threshold on the amount summed over the set.
     records = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(set_world([at_node(SET_NODES[0])], 2)), records.append
+        parse_nature_beam_world(set_world([at_node(SET_NODES[0])], 2)),
+        records.append,
+        keep_row_clicks=True,
     )
     simulation.step()
     assert simulation.books()["balanced"]
@@ -612,7 +629,9 @@ def test_a_detector_is_a_set_of_nodes_with_one_record():
     assert simulation.detectors()[0]["families"]["light"]["record"] == 0
     records = []
     two = [at_node(SET_NODES[0], number=4), at_node(SET_NODES[2], number=5, direction=[-1, 0, 0])]
-    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(two, 2)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(set_world(two, 2)), records.append, keep_row_clicks=True
+    )
     simulation.step()
     assert simulation.books()["balanced"]
     assert [r["event"] for r in records] == ["click", "click", "record"]
@@ -628,7 +647,7 @@ def test_a_detector_is_a_set_of_nodes_with_one_record():
         records = []
         table = {"light": {"rule": "measure", "phase_window": setting}}
         simulation = NatureBeamSimulation(
-            parse_nature_beam_world(set_world(quarter, 1, table)), records.append
+            parse_nature_beam_world(set_world(quarter, 1, table)), records.append, keep_row_clicks=True
         )
         simulation.step()
         assert simulation.books()["balanced"], setting
@@ -650,7 +669,9 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     }
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([counter, SOURCE], [arrival(1, phase=40)], 1)), records.append
+        parse_nature_beam_world(world([counter, SOURCE], [arrival(1, phase=40)], 1)),
+        records.append,
+        keep_row_clicks=True,
     )
     entry = simulation.measured[1]
     assert entry.phase == 0
@@ -735,7 +756,9 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
             reading="beam",
         )
         records: list[dict[str, object]] = []
-        simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(document), records.append, keep_row_clicks=True
+        )
         simulation.step()
         assert simulation.books()["balanced"]
         return simulation, records
@@ -842,6 +865,7 @@ def test_the_wave_threshold_reads_the_pointers_square():
                 world([measured, SOURCE, other, third_source], beams, threshold, reading=reading)
             ),
             records.append,
+            keep_row_clicks=True,
         )
         entry = simulation.measured[1]
         simulation.step()
@@ -892,6 +916,7 @@ def test_the_pointer_gate_is_the_clicks_and_a_read_keeps_the_amount_gate():
         simulation = NatureBeamSimulation(
             parse_nature_beam_world(world([reader, far], beams, threshold, reading=reading)),
             records.append,
+            keep_row_clicks=True,
         )
         entry = simulation.measured[1]
         simulation.step()

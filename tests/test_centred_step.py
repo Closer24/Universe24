@@ -100,7 +100,9 @@ def box_world(
 
 def run_in_process(document: dict[str, object], ticks: int):
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), observer=events.append, keep_row_clicks=True
+    )
     for _ in range(ticks):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -154,7 +156,7 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     loaded = load_world(source, base_dir=path.parent, root=EXAMPLES)
     out = tmp_path / "gate"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"])
+    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"], keep_row_clicks=True)
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "centred_step" not in record
@@ -264,7 +266,7 @@ def test_the_record_carries_the_key_only_under_it(tmp_path):
     loaded = load_world(source, base_dir=tmp_path, root=tmp_path)
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", 40)
+    execute_nature_beam_run(loaded.world, source, out, "test", 40, keep_row_clicks=True)
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["centred_step"] is True
     assert CENTRED_STEP_RULE in record["hypotheses"]

@@ -38,17 +38,18 @@ def execute_nature_beam_run(
     count: int,
     *,
     initialization_record: dict[str, object] | None = None,
-    omit_row_clicks: bool = False,
+    keep_row_clicks: bool = False,
 ) -> Path:
     """Run `count` intervals of the world into the empty directory `output`;
     returns the path of `run.json`. A failing interval is recorded and raised.
     Optional initialization provenance is copied for output only, never physics.
-    `omit_row_clicks` (the runner's `--omit-row-clicks`, off by default) leaves
-    the per-row `click` lines of the measured events out of `events.jsonl`,
-    a GameBoard diagnostic that is most of a long run's record by bytes, and
-    writes `omit_row_clicks` true into `run.json` so a reader knows the record
-    is trimmed; every other line, and every file of a run without the option,
-    is byte for byte as it was.
+    By default (the model owner, 2026-09-23, record 1296 of
+    docs/LOG_2026-09-20.md) the per-row `click` lines of the measured events,
+    a GameBoard diagnostic that is most of a long run's record by bytes, are
+    left out of `events.jsonl` and `run.json` carries `omit_row_clicks` true
+    so a reader knows the record is trimmed; `keep_row_clicks` (the runner's
+    `--keep-row-clicks`) writes them and no such field, the record as it was
+    before the option, byte for byte. Every other line is written either way.
     """
     initialization_metadata = copy.deepcopy(initialization_record)
     (output / "initialization.json").write_bytes(source)
@@ -67,7 +68,7 @@ def execute_nature_beam_run(
             """Write one event line to `events.jsonl`."""
             stream.write(json.dumps(event) + "\n")
 
-        simulation = NatureBeamSimulation(world, observer=record, omit_row_clicks=omit_row_clicks)
+        simulation = NatureBeamSimulation(world, observer=record, keep_row_clicks=keep_row_clicks)
         try:
             for _ in range(count):
                 simulation.step()
@@ -120,12 +121,13 @@ def execute_nature_beam_run(
         # as declared, written only when true; a record field, no
         # hypothesis (every other record byte for byte as it was).
         **({"clock_stamp": True} if world.clock_stamp else {}),
-        # The host's record switch (2026-09-23, `--omit-row-clicks`): written
-        # only when the per-row click lines were left out of `events.jsonl`,
-        # so that a reader of those lines knows the record is trimmed; a
-        # host field, no hypothesis, no key of the world (every other record
-        # byte for byte as it was).
-        **({"omit_row_clicks": True} if omit_row_clicks else {}),
+        # The host's record switch (2026-09-23): written on every record
+        # whose per-row click lines were left out of `events.jsonl` (the
+        # default), so that a reader of those lines knows the record is
+        # trimmed, and absent under `--keep-row-clicks`; a host field, no
+        # hypothesis, no key of the world (a kept record byte for byte as
+        # it was before the option).
+        **({"omit_row_clicks": True} if not keep_row_clicks else {}),
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).

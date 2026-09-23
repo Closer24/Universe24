@@ -106,7 +106,9 @@ def run(
     world: dict[str, object], ticks: int | None = None
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"]) if ticks is None else ticks):  # type: ignore[call-overload]
         simulation.step()
     return simulation, lines
@@ -160,7 +162,9 @@ def test_the_hadamard_and_the_cnot_on_the_game_board():
     """(a)."""
     world = GENERATOR.cnot_pair("probe", 0, 8)
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     gate_line = None
     while gate_line is None:
         simulation.step()
@@ -206,7 +210,9 @@ def test_cnot_twice_is_the_identity():
     """(c)."""
     world = GENERATOR.gate_worlds()["cnot_twice"]
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     second = None
     while second is None:
         simulation.step()

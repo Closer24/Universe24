@@ -50,13 +50,16 @@ exits 1 as for any world not completed, and `--compare` reports the status.
     PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/gate/head \\
         --wall-seconds 600 --memory-mb 4096 --list examples/events/gate_set.json
 
-`--omit-row-clicks` passes the runner's option of the same name to every
-child: the record `events.jsonl` without the per-row `click` lines of the
+`--keep-row-clicks` passes the runner's option of the same name to every
+child: the record `events.jsonl` with the per-row `click` lines of the
 measured events (a GameBoard diagnostic, most of a long run's bytes; the
-detector's reading is the `record` and `gather` lines, kept), and `run.json`
-marked `omit_row_clicks` true. Off by default: the record as it was, so the
-`events_sha256` of a trimmed run differs from the registered digest by the
-omitted lines alone.
+detector's reading is the `record` and `gather` lines, written either way),
+the record as it was before the option, and `run.json` without
+`omit_row_clicks`. Off by default (the model owner, 2026-09-23, record 1296
+of docs/LOG_2026-09-20.md): the lines are left out and `run.json` carries
+`omit_row_clicks` true, so the `events_sha256` of a default run differs from
+a digest registered with the lines by the omitted lines alone; the gate
+set's digests (`gate_set.json`) are replayed under the option.
 """
 
 from __future__ import annotations
@@ -138,14 +141,14 @@ def run_one(
     environment: dict[str, str],
     wall_seconds: float | None = None,
     memory_mb: int | None = None,
-    omit_row_clicks: bool = False,
+    keep_row_clicks: bool = False,
 ) -> dict[str, object]:
     """One world in its own process; returns its row of the summary. Under
     `wall_seconds` the child is killed past that wall clock; under `memory_mb`
     it bounds its own address space at that many MB. A run a guard stopped is
     reported `not completed: wall N s` or `not completed: memory M MB`.
-    `omit_row_clicks` passes the runner's `--omit-row-clicks` to the child
-    (the record without its per-row click lines; off by default)."""
+    `keep_row_clicks` passes the runner's `--keep-row-clicks` to the child
+    (the record with its per-row click lines; off by default)."""
     directory.mkdir(parents=True, exist_ok=True)
     run_dir = directory / "run"
     if memory_mb is None:
@@ -155,8 +158,8 @@ def run_one(
     command += ["--init", str(world), "--output", str(run_dir)]
     if ticks is not None:
         command += ["--ticks", str(ticks)]
-    if omit_row_clicks:
-        command.append("--omit-row-clicks")
+    if keep_row_clicks:
+        command.append("--keep-row-clicks")
     started = time.perf_counter()
     with (directory / "log.txt").open("w", encoding="utf-8") as log:
         log.write(" ".join(command) + "\n")
@@ -270,14 +273,14 @@ def run_series(
     durations: dict[Path, int] | None = None,
     wall_seconds: float | None = None,
     memory_mb: int | None = None,
-    omit_row_clicks: bool = False,
+    keep_row_clicks: bool = False,
 ) -> list[dict[str, object]]:
     """Every world in its own process, at most `jobs` at once; the rows of the
     summary in the order of `worlds`, written beside the runs. `ticks` overrides
     every world's duration; otherwise a world listed in `durations` runs for
     that many intervals and the others for their declared `ticks`. The guards
     `wall_seconds` and `memory_mb` are those of `run_one`, off when None;
-    `omit_row_clicks` is passed to every child (`run_one`), off by default."""
+    `keep_row_clicks` is passed to every child (`run_one`), off by default."""
     names = [world.stem for world in worlds]
     if len(set(names)) != len(names):
         raise ValueError("two worlds of a series must not share a name")
@@ -314,7 +317,7 @@ def run_series(
                     environment=environment,
                     wall_seconds=wall_seconds,
                     memory_mb=memory_mb,
-                    omit_row_clicks=omit_row_clicks,
+                    keep_row_clicks=keep_row_clicks,
                 ),
                 worlds,
             )
@@ -373,9 +376,9 @@ def main() -> None:
         help="Bound each run's address space (RLIMIT_AS) at this many MB and report a run it stops (default: no limit)",
     )
     parser.add_argument(
-        "--omit-row-clicks",
+        "--keep-row-clicks",
         action="store_true",
-        help="Run every world with the runner's --omit-row-clicks: the record without its per-row click lines, run.json marked omit_row_clicks (default: the whole record)",
+        help="Run every world with the runner's --keep-row-clicks: the record with its per-row click lines, as registered (default: the lines left out, run.json marked omit_row_clicks)",
     )
     args = parser.parse_args()
     if args.fast and args.list is None:
@@ -397,7 +400,7 @@ def main() -> None:
             durations=durations,
             wall_seconds=args.wall_seconds,
             memory_mb=args.memory_mb,
-            omit_row_clicks=args.omit_row_clicks,
+            keep_row_clicks=args.keep_row_clicks,
         )
     except ValueError as error:
         parser.exit(1, f"Series refused: {error}\n")

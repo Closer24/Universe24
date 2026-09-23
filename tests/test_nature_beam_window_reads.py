@@ -111,7 +111,9 @@ def run(
     document: dict[str, object], intervals: int
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     for _ in range(intervals):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick

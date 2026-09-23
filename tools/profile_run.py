@@ -48,7 +48,8 @@ def profile_world(path: Path, intervals: int) -> dict[str, object]:
         kind = str(event.get("event", "?"))
         counter["kinds"][kind] = counter["kinds"].get(kind, 0) + 1
 
-    simulation = NatureBeamSimulation(world, observer=observer)
+    # The whole record, the per-row click lines counted among the kinds.
+    simulation = NatureBeamSimulation(world, observer=observer, keep_row_clicks=True)
     per_interval: list[dict[str, float]] = []
     profiler = cProfile.Profile()
     ticks = min(intervals, world.ticks) if world.ticks else intervals
@@ -121,7 +122,8 @@ def profile_world(path: Path, intervals: int) -> dict[str, object]:
 
 def is_row_click(event: dict[str, object]) -> bool:
     """The measure rule's per-row `click` line (`_apply_plan`): the one kind
-    the runner's `--omit-row-clicks` (PR #1026) leaves out. It carries a
+    the runner leaves out by default (`--keep-row-clicks` keeps it, PR
+    #1026). It carries a
     `reading` and a `push`; the face, border and body click lines carry a
     `momentum` and no `reading`."""
     return event.get("event") == "click" and "reading" in event
@@ -132,8 +134,9 @@ def measure_writer(path: Path, intervals: int, mode: str, out: Path) -> dict[str
     runner's own loop replicated (`run.py`: a record line per event into
     `events.jsonl` through a 1 MiB buffer, the books per interval kept for
     the audit, `state.json` streamed and `run.json` dumped at the end).
-    `mode` is "on" (every line, today's default), "off" (the per-row click
-    lines dropped by the same guard as `--omit-row-clicks`) or "memory"
+    `mode` is "on" (every line, the record under `--keep-row-clicks`), "off"
+    (the per-row click lines dropped by this tool's own guard, the runner's
+    default) or "memory"
     (every line held in memory and written once at the end). The files go
     under `out` and are deleted after the measurement; no reading is taken."""
     loaded = load_world(path.read_bytes(), base_dir=path.parent)
@@ -161,7 +164,8 @@ def measure_writer(path: Path, intervals: int, mode: str, out: Path) -> dict[str
             stream.write(line)
             timing["write"] += time.perf_counter() - t1
 
-    simulation = NatureBeamSimulation(world, observer=record)
+    # Every line reaches `record`; `mode` alone decides what is dropped.
+    simulation = NatureBeamSimulation(world, observer=record, keep_row_clicks=True)
     audit: list[dict[str, object]] = []
     refusal: str | None = None
     ticks = min(intervals, world.ticks) if world.ticks else intervals

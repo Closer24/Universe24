@@ -135,7 +135,8 @@ def run_world(name: str, runs: Path) -> tuple[dict[str, Any], list[dict[str, Any
     world_path = WORLDS / f"{name}.json"
     run_dir = runs / name
     if not (run_dir / "run.json").exists():
-        run_initialization(world_path, run_dir)
+        # The pages read the per-row click lines: the whole record.
+        run_initialization(world_path, run_dir, keep_row_clicks=True)
     run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
     if run["status"] != "completed" or not run["conserved_at_every_completed_tick"]:
         raise ValueError(f"{name}: the run is not completed and conserved")
@@ -158,7 +159,7 @@ def replay(trace: Trace, family_name: str, ticks: list[int]) -> None:
     world = load_world(document, base_dir=trace.world_path.parent).world
     family = [f.name for f in world.families].index(family_name)
     events: list[dict[str, Any]] = []
-    simulation = NatureBeamSimulation(world, observer=events.append)
+    simulation = NatureBeamSimulation(world, observer=events.append, keep_row_clicks=True)
     layer: Layer = simulation.layer
     trace.directions = [(int(d[0]), int(d[1]), int(d[2])) for d in world.directions]
     trace.shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))

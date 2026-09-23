@@ -283,7 +283,7 @@ def test_a_slowed_detector_clicks_on_the_same_ticks(tmp_path):
         path.write_text(json.dumps(world(crowd)), encoding="utf-8")
         loaded = load_world(path.read_bytes(), base_dir=path.parent, root=path.parent)
         lines: list[dict] = []
-        sim = NatureBeamSimulation(loaded.world, observer=lines.append)
+        sim = NatureBeamSimulation(loaded.world, observer=lines.append, keep_row_clicks=True)
         for _ in range(80):
             sim.step()
         ticks[crowd] = sorted(

@@ -161,7 +161,9 @@ def run_in_process(document: dict[str, object], ticks: int):
     """The events and the simulation of a world stepped in process, the books
     checked at every tick."""
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), observer=events.append, keep_row_clicks=True
+    )
     for _ in range(ticks):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -197,7 +199,7 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     loaded = load_world(source, base_dir=path.parent, root=EXAMPLES)
     out = tmp_path / "gate"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"])
+    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"], keep_row_clicks=True)
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "covariant_readings" not in record
@@ -261,7 +263,9 @@ def test_the_integer_forms_follow_the_host_computation_on_a_thrown_body(tmp_path
     # Through the runner: the record carries the report and the identity.
     out = tmp_path / "bar"
     out.mkdir()
-    execute_nature_beam_run(world, json.dumps(document).encode("utf-8"), out, "test", 60)
+    execute_nature_beam_run(
+        world, json.dumps(document).encode("utf-8"), out, "test", 60, keep_row_clicks=True
+    )
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["hypotheses"] == [COVARIANT_READINGS_RULE]
     assert record["covariant_readings"]["c2"] == [1, 3] and record["covariant_readings"]["grain"] == 1
@@ -571,7 +575,9 @@ def test_the_registered_j4_runs_replay_bit_exact(tmp_path, name):
     loaded = load_world(source, base_dir=WORLDS, root=EXAMPLES)
     out = tmp_path / name
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", registered["completed_ticks"])
+    execute_nature_beam_run(
+        loaded.world, source, out, "test", registered["completed_ticks"], keep_row_clicks=True
+    )
     assert digests(out) == {k: registered[k] for k in ("state_sha256", "audit_sha256", "events_sha256")}
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["hypotheses"] == registered["hypotheses"] == ["weak-v1", COVARIANT_READINGS_RULE]
@@ -605,7 +611,9 @@ def test_the_registered_coasting_run_replays_bit_exact_at_its_cap(tmp_path):
     loaded = load_world(source, base_dir=WORLDS, root=EXAMPLES)
     out = tmp_path / "coasting"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", registered["completed_ticks"])
+    execute_nature_beam_run(
+        loaded.world, source, out, "test", registered["completed_ticks"], keep_row_clicks=True
+    )
     assert digests(out) == {k: registered[k] for k in ("state_sha256", "audit_sha256", "events_sha256")}
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["hypotheses"] == ["amplitude-v1", COVARIANT_READINGS_RULE]

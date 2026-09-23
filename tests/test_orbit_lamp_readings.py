@@ -286,6 +286,7 @@ def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path, capsys)
         folder,
         "test",
         TINY_TICKS,
+        keep_row_clicks=True,
     )
     # The flight of 6 Links on a heading off the flight table: the least
     # age with m(age) >= 6, and the same by the table's closed form.

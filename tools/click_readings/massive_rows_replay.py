@@ -39,7 +39,10 @@ def replay(births: int) -> dict[str, object]:
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "run"
         out.mkdir()
-        execute_nature_beam_run(loaded.world, source, out, "register", loaded.world.ticks)
+        # The registered digests are of the whole record (`--keep-row-clicks`).
+        execute_nature_beam_run(
+            loaded.world, source, out, "register", loaded.world.ticks, keep_row_clicks=True
+        )
         record = json.loads((out / "run.json").read_text(encoding="utf-8"))
         digests = {
             "state_sha256": hashlib.sha256((out / "state.json").read_bytes()).hexdigest(),

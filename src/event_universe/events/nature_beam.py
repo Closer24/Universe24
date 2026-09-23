@@ -3169,11 +3169,13 @@ class Interval:
     # optical-v1: the crowd's moments at every Node with a row, read once
     # before step 1 (None without the key).
     crowd: CrowdMoments | None = None
-    # The host's record switch (2026-09-23, the runner's `--omit-row-clicks`):
+    # The host's record switch (2026-09-23, the runner's `--keep-row-clicks`):
     # False omits the per-row `click` lines the measure rule writes for a
     # measured event's clicked rows (`_apply_plan`), a GameBoard diagnostic
     # of the record and nothing of the law; every other line is written as
-    # it is. True by default: the record as it was, byte for byte.
+    # it is. True here by default (the frame of a bare `nature_beam` call
+    # is the whole record); the engine passes the simulation's switch,
+    # False unless the record keeps the lines.
     row_clicks: bool = True
 
 
@@ -5550,9 +5552,9 @@ def _apply_plan(
             # The per-row click lines, one per clicked row: a GameBoard
             # diagnostic of the record (the detector's reading of the row
             # is the set's `record` line and, in a recorded world, the
-            # gather), omitted under the host's switch `--omit-row-clicks`
-            # (`frame.row_clicks` False); the click itself above is the
-            # law's and never omitted.
+            # gather), left out of the record by default (`frame.row_clicks`
+            # False; the runner's `--keep-row-clicks` keeps them); the click
+            # itself above is the law's and never omitted.
             if record is not None and frame.row_clicks:
                 for k in range(k0, k1):
                     click_line: dict[str, object] = {

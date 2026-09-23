@@ -125,7 +125,9 @@ def run(
     document: dict[str, object], ticks: int
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]], list[list[int]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     lines: list[list[int]] = []
     for tick in range(1, ticks + 1):
         simulation.step()
@@ -228,7 +230,9 @@ def test_the_refusals_and_the_record(tmp_path):
     assert parsed.families[BETA].values == ((1, 1), (0, 1)) and parsed.hypotheses == []
     path = tmp_path / "world.json"
     path.write_text(json.dumps(world([PROTON, ABSORBER], ticks=6)), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["status"] == "completed" and record["hypotheses"] == []
     assert record["families"][BETA]["charge"] == [-1, 1]
     assert record["families"][BETA]["columns"][1] == {"name": "charge", "value": [0, 1], "sign": 1}

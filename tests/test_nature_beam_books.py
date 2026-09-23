@@ -109,7 +109,9 @@ def current_lines(books: dict[str, object]) -> dict[str, list[int]]:
 
 def test_the_running_lines_equal_the_recount_at_every_interval():
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world_of_every_way()), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world_of_every_way()), records.append, keep_row_clicks=True
+    )
     assert current_lines(simulation.books()) == simulation.recount()
     moved = False
     for tick in range(1, TICKS + 1):

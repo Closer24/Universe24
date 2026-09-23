@@ -142,7 +142,9 @@ def bar(width: int | None, clock: int = 4096, setting: int = 0, beam: bool = Fal
 
 def arrivals(document: dict[str, object]) -> tuple[NatureBeamSimulation, list[tuple[int, int, str]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     for _ in range(TICKS):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -242,7 +244,9 @@ def pair_world(width: int | None, phases: tuple[int, int]) -> dict[str, object]:
 def outcome(width: int | None, phases: tuple[int, int]) -> tuple[int, int]:
     """(the clicks, the cancelled passes) of the two rays at the counter."""
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(pair_world(width, phases)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(pair_world(width, phases)), records.append, keep_row_clicks=True
+    )
     simulation.step()
     assert simulation.books()["balanced"]
     clicks = sum(1 for r in records if r["event"] == "click" and r["measured"] == 2)

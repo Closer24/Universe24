@@ -12,10 +12,12 @@ visualization switch, no observer and one worker.
 
 import argparse
 import hashlib
+import sys
 from pathlib import Path
 
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+from event_universe.trimmed_record import row_clicks_note, world_needs_row_clicks
 from event_universe.world_loading import load_world
 
 
@@ -35,18 +37,25 @@ def run_initialization(
     output: Path,
     *,
     ticks: int | None = None,
-    omit_row_clicks: bool = False,
+    keep_row_clicks: bool = False,
 ) -> Path:
     """Run the world at `initialization` into the empty directory `output` and
     return the path of its `run.json`; `ticks` overrides the world's own;
-    `omit_row_clicks` leaves the per-row click lines of the measured events
-    out of the record (`execute_nature_beam_run`), off by default."""
+    `keep_row_clicks` (the command line's `--keep-row-clicks`, off by
+    default) keeps the per-row click lines of the measured events in the
+    record (`execute_nature_beam_run`). Without it, a world that declares a
+    detector set, a measured event with a `measure`, `read` or `pass` entry
+    or a window (`world_needs_row_clicks`) is announced by one line on
+    stderr naming the option and the readers that need the lines
+    (`row_clicks_note`); the run goes on."""
     source = initialization.read_bytes()
     loaded = load_world(source, base_dir=initialization.parent)
     world = loaded.world
     count = world.ticks if ticks is None else ticks
     if type(count) is not int or count < 0:
         raise ValueError("ticks must be nonnegative")
+    if not keep_row_clicks and world_needs_row_clicks(world):
+        print(row_clicks_note(initialization), file=sys.stderr)
     _prepare_output(initialization, output)
     with ArtifactLease(output.parent, [output.resolve()]):
         initialization_record: dict[str, object] | None = None
@@ -69,7 +78,7 @@ def run_initialization(
             source_fingerprint(),
             count,
             initialization_record=initialization_record,
-            omit_row_clicks=omit_row_clicks,
+            keep_row_clicks=keep_row_clicks,
         )
 
 
@@ -91,18 +100,19 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
     parser.add_argument(
-        "--omit-row-clicks",
+        "--keep-row-clicks",
         action="store_true",
         help=(
-            "Leave the per-row click lines of the measured events out of events.jsonl "
-            "(a GameBoard diagnostic, most of a long record's bytes) and mark run.json "
-            "omit_row_clicks; off by default, every other line as it is"
+            "Keep the per-row click lines of the measured events in events.jsonl "
+            "(a GameBoard diagnostic, most of a long record's bytes; the readers of "
+            "those lines need them). Off by default: the lines are left out and "
+            "run.json carries omit_row_clicks true; every other line as it is"
         ),
     )
     args = parser.parse_args()
     try:
         artifact = run_initialization(
-            args.init, args.output, ticks=args.ticks, omit_row_clicks=args.omit_row_clicks
+            args.init, args.output, ticks=args.ticks, keep_row_clicks=args.keep_row_clicks
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")
