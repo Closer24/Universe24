@@ -168,7 +168,41 @@ what he does not approve is set aside by name and its pinned row waits.
    9, Malus's settings, 2b); the splitter's table and the receiver block
    declared.
 
-### 3.2 The order of the pinned runs (the physicist's proposal, taken)
+### 3.2 The paper's list, closed from the CLOSED rows (the owner's rule of 21:35Z, record 1506; the physicist's `ALGEBRAIC_CLOSURE.md`)
+
+Only what is closed in the algebra enters the list: the objects declared
+in the one form, the number computed from the algebra before the run by a
+script, the board a chain, a layer or a box of at most 128^3, the run
+minutes. THE LIST UNDER THE LAW, 17 rows: quantum, (K) known formulas: 1a,
+1b, 1d (and 1c on its declaration), 2a, 2b, 2c, 9 with Malus's three
+settings, 10 (a) and 10 (b); quantum, prediction only: the atom's lines at
+the COUPLED modes; classical and relativity, (K): 4a, 4b (the pushed
+block, its pin per world by the one formula with the free limit beside),
+4c (the hop's sidebands named beside), 5a, R2 (pushed blocks), the light
+clock of two bodies ((K) in 2 L / c, the light-detector reader), the index
+at rest (a CONTROL, the 4 percent open in size); classical, prediction
+only: the index in motion (Fizeau the declared non-match), (ii-a) and
+(ii-b) beside 4a, the bound clock's second term; BOUNDS, no run: A and B.
+UNDER THE HYPOTHESIS `pair-field-v1`, after the current pins and only on
+the owner's word on the hypothesis: 12 (Newton's potential, the clock in a
+field), the DELAY in place of 13's bending (Shapiro's form, the same
+1 + gamma, one declared input), NEWTON'S FALL in place of 14's orbit (a
+free massive packet released at r and at 2 r from a source block, the
+acceleration ratio 4.00 by the arrival clicks; a 96^3 box, minutes;
+prediction only at the declared kappa); "Newton we surely want" is met by
+the fall and the potential. REPLACED: 6 by the atom's lines, 13 by the
+delay, 14 by the fall. DROPPED, out of the list, "not predicted" stays:
+R5 (its take undeclared; one day's page if the owner wants it), R6, 5b
+(kept as the prediction page of the light-bound arms), 3 and 11 (the far
+lamp), 7a and 7b, 8a to 8c. Every prediction-only row is marked (P) in the
+paper's table and the paper says that a prediction is not a pass. The
+world's papers are read for each closed row (`PUBLISHED_FORMS.md`, the
+Published Forms Reader, tonight): how the experiment is best done to show
+the connection of the physics, and the arrangement of our objects that
+matches its published form; a change of a world is a proposal to the
+physicist and the owner, never made on that page.
+
+### 3.3 The order of the pinned runs (the physicist's proposal, taken; the list of 3.2)
 
 1. The light (K) rows first, cheap, the clicks' controls of the engine
    against the algebra: 2a (the visibility 0.99 at 128 periods), 2c (the
@@ -177,35 +211,43 @@ what he does not approve is set aside by name and its pinned row waits.
    (0.886); 10 (a) (0.842) after STEP 3's (M) block.
 2. The massive (K) rows: 4a the layer pin world (200^2, s = 14, mu = 0.15,
    the mode seed, ramp 1500, hold 8000: 0.8116 at c_eff, 0.8108 and 0.8132
-   beside as CONTROLS); 4b on the chain of 1400 (1.9355 at c_eff; 1.9373
-   and 1.9319 beside) after the physicist's line; 4c (3.732); R2 (0.5774).
-3. The (P) rows: (ii-a), (ii-b) on 64^3 (0.7814, 0.8032; the controls
-   beside); the deep well in motion on 128^2 (0.7531); the light clock of
-   two bodies at its declared coupling (N_0 = 2 L / c + the two ring-ups;
-   the take world 206 +- 2 beside); (v-m) on its declared geometry; 5b (1
-   and 1 within 0.03 plus the second term) after the push step (the wall
-   3 Q S M x 56 d); A and B as bounds, no run.
+   beside as CONTROLS); 4b on the chain of 1400 (the pin per world by the
+   one formula, the free limit 1.9355 beside) after the physicist's morning
+   declaration; 4c (3.732, the sidebands named); R2 (0.5774).
+3. The prediction rows: (ii-a), (ii-b) on 64^3 (0.7814, 0.8032; the
+   controls beside); the deep well in motion on 128^2 (0.7531, a control);
+   the light clock of two bodies under its declaration (N_0 = 2 L / c + the
+   ring-ups at the declared L and coupling; the take world 206 +- 2 beside)
+   after the (M) block; (v-m) on its declared geometry; A and B as bounds,
+   no run.
 4. The table rows after the phase-reading component: 1a (181 / 64 = 2.828
-   at N = 2048 recomputed on the declared table), 1b (2), 1d (0), 9 (128 of
-   256), Malus's three settings (their counts of 256), 2b (1.00 - 0.02);
-   R5 and R6 after their declarations.
+   at N = 2048 recomputed on the declared table), 1b (2), 1d (0), 1c on its
+   declaration, 9 (128 of 256), Malus's three settings (their counts of
+   256), 2b (1.00 - 0.02).
 5. At the end, one 3-D world per PIN row for the paper's table, on the
-   Boss's word per world: 4a on 191^3 first (one to two hours), then each
-   PIN row's 3-D world.
+   Boss's word per world, its seed as the physicist declares (the 48-fold
+   sidecar outside the repository with its SHA in the world file, or a
+   well whose mode sits inside the cells): 4a on 191^3 first (one to two
+   hours), then each PIN row's 3-D world.
+6. After the current pins, on the owner's word on the hypothesis: the
+   pair-field engine lines (three, off by default under `pair-field-v1`),
+   the exploratory field world (e6), then 12, the delay and Newton's fall
+   with their pins by `pair_field_pins.py` before the runs, Reviewer 3's
+   read of each declaration.
 
 Each row: the pin regenerated from its declaration before its run, one run,
 one reading by the reader of record, one line on the pinned page (the
 exploration page's successor), then `docs/NATURE.md` after Reviewer 3's
 read; a row that misses is written as a miss; no pin moved after a reading.
 
-### 3.3 The day, compressed to tomorrow
+### 3.4 The day, compressed to tomorrow
 
 | When | What |
 | --- | --- |
 | Tonight, the 23rd, to about 02:00Z | PR #1056 merged; the seed build (one commit, Reviewer 3's read, merged); e2, e3, e4 run and read beside; chapter 8 and PAIR_FIELD.md merged; COVERAGE.md read; the phase-reading component if the night allows, else the morning |
-| The morning of the 24th, from the owner's word | the owner reads EXPLORATION.md, this page and COVERAGE.md; approves the list one word per item; the physicist's three lines; the GO; tier 3 steps 1 to 3 run, four worlds at once, about two hours HOST on one container; the readings by kind on the pinned page; Reviewer 3 reads each head once |
-| The afternoon of the 24th | the table rows (step 4) after the phase-reading component; 10 (a) after the (M) block; the 3-D worlds start, 4a on 191^3 first |
-| The 25th | the remaining 3-D worlds; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the pair-field rows after, never in their place |
+| The morning of the 24th, from the owner's word | the owner reads EXPLORATION.md, this page and COVERAGE.md; approves the list one word per item; the physicist's three lines; the GO; tier 3 steps 1 to 3 of section 3.3 run, four worlds at once, about two hours HOST on one container; the readings by kind on the pinned page; Reviewer 3 reads each head once |
+| The afternoon of the 24th | the table rows (step 4) after the phase-reading component; 10 (a) and the light clock after the (M) block; the 3-D worlds start, 4a on 191^3 first |
+| The 25th | the remaining 3-D worlds; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the pair-field rows (12, the delay, Newton's fall) after, on the owner's word on the hypothesis, never in their place |
 
 The days read the order forward and are not a promise; each GO is the
 owner's morning word and then the Boss's word per world.
@@ -220,20 +262,22 @@ owner's morning word and then the Boss's word per world.
 4. Merge PR #1061 (chapter 8) and PR #1062 (the hypothesis page) on
    Reviewer 3's words and green; fix the Highlights line of record 1407 and
    POSTULATES.md 26.4's pointer to chapter 8 (tonight).
-5. Read COVERAGE.md when it lands; open its PR; carry its judgement to the
-   owner's six lines (tonight).
+5. COVERAGE.md read and merged (940cd1ac); PUBLISHED_FORMS.md read when it
+   lands, its PR opened, its proposals to the physicist and the owner
+   (tonight); the paper's list closed from the CLOSED rows (section 3.2).
 6. Write the owner's six lines for the morning: the gate kept; the readings
    by kind with the list to approve; the gamma by derivation with the three
    numbers; the (v) factor; the cavity a non-object and the deep well; what
    is missing before the pins (this page's 3.1).
 7. Receive and record the physicist's three lines and the receding script's
    number (the morning); confirm `pins.py` at the exact cone.
-8. The GO per world in the order of 3.2; record every reading; Reviewer 3's
+8. The GO per world in the order of 3.3; record every reading; Reviewer 3's
    read per head; the pinned page's PR and its merge; `docs/NATURE.md`'s
    rows on the merge SHAs.
 9. The 3-D worlds, one per PIN row, started early and in parallel.
 10. The paper's writer released on the merged pinned rows, on the owner's
-    word.
+    word; the pair-field build (three engine lines, off by default) ordered
+    after the current pins on his word on the hypothesis.
 
 ## 5. The time economy (what can be shortened, as the physicist vouches)
 
