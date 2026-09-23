@@ -1127,7 +1127,8 @@ by the pushes, the turns and the escapes; absent (every f_F 1) the lines
 are zero and not written.
 In a recorded world the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
-record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
+record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`, and
+`clock` under the world key `clock_stamp`, the emitter's own count), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
 `multiplicity`, `u`, `share` (the row's push on a body) and `age` where
 the row is a record's (`rows` on a group
@@ -1159,6 +1160,50 @@ host's work and memory per interval follow the open records, not every
 record born.
 `tools/amplitude_path.py` replays a run's register through the layer and
 checks it against `world`. `tools/run_series.py` runs these worlds as any.
+
+**The trimmed record** (2026-09-23, the host's default; no key of the
+world, the record's verbosity being the host's and not the law's). In a
+long run of a detector world the per-row `click` lines of the measured
+events, one per clicked row (the lines the measure rule writes, about 355
+bytes each), are nearly the whole of `events.jsonl` by count and by bytes
+(a row 10 run of docs/designs/fail_rows at w = 9: 97 percent of the lines
+and 98 percent of the 7.4 GB); the detector's reading of those rows is the
+set's `record` line per interval and, in a recorded world, the `gather`
+line per record, and the per-row lines are a GameBoard diagnostic. By the
+model owner's word (2026-09-23, record 1296 of docs/LOG_2026-09-20.md: "if
+we record the click, we do not need it for the experiment... only if you
+need to keep the click, keep it") the runner leaves those lines out by
+default and writes `omit_row_clicks` true into `run.json` on every such
+record, so that a reader knows the record is trimmed; the option
+`--keep-row-clicks` (`python -m event_universe` and `tools/run_series.py`,
+which passes it to every child; `run_initialization(...,
+keep_row_clicks=True)` and `execute_nature_beam_run(...,
+keep_row_clicks=True)`; `NatureBeamSimulation(world, observer,
+keep_row_clicks=True)` keeps its in-process observer whole) writes them
+and no such field, the record as it was before the option, byte for byte.
+Every other line (the face and border clicks, the `gather`, `record`,
+`birth`, `split`, `cancel`, `read`, `pass`, `rerelease`, `step`,
+`contact`, `home`, `become` and `energy` lines, the stamps) is written
+either way, in order, and `state.json` and the books are the same. Every
+registered digest is of the whole record: the digest tests, the register's
+replayers and the gate replay keep the lines explicitly, so the three
+digests per world of `gate_set.json` replay byte for byte under the
+option (`tests/test_record_trim.py`, `tests/test_amplitude_click.py`);
+a default record's `events_sha256` differs by the omitted lines alone. At
+the start of a default run of a world whose rows can click (a detector
+set, or a measured event with a `measure`, `read` or `pass` entry or a
+window; the parser's default table makes every world with a measured
+event one) the runner prints one line to stderr naming the world file,
+`--keep-row-clicks` and the readers that need the lines, and runs on. A
+reading tool that reads the per-row click lines
+(`tools/click_readings/hubble.py`, `tools/click_readings/weak.py`,
+`tools/moving_detector_readings.py` and the others that call
+`event_universe.trimmed_record.refuse_trimmed_record`) stops on a trimmed
+record with a plain sentence naming the option to re-run with instead of
+reading zero; a record older than the field, written whole, is read as
+before; the readers of the `gather` and `record` lines
+(`tools/click_readings/covariant.py`, `tools/click_readings/quarks.py`)
+read a trimmed record as any.
 
 ### The detector's readings by type
 
@@ -1194,7 +1239,7 @@ that action measures; the host's readings of the board only read
 | the age of a row | scalar | `age` on the `click` line of a record's row; the age moment `reading` when the entry reads `age` (sum amount x age) | intervals (the moment: units x intervals) | detector (read whole only by a measured event) |
 | the content | scalar M | `content` on a `click`, `read`, `home` or `rerelease` line (amount x content per unit); `content` and `held` of a measured event's state; `content` and `measured_content` on a face | units of content | detector |
 | the clock of a measured event | scalars | `age` (its intervals), `phase_steps` (its turns), `owed` (the count owed in a crowd), `waited`, `steps` of its state | intervals, steps, units | detector |
-| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines and its face click): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
+| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines, its face click and, the fifth line stamped, the `birth` line of its lamp, the emitter's own count at the birth, what the light clock's N(j) = clock(return) - clock(birth) of one ordinal subtracts): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
 | the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rows that arrived) or `here` (the rows that did not step) | units of amount | detector |
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |

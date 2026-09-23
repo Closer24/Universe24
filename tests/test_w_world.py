@@ -143,7 +143,9 @@ def run(
     document: dict[str, object], ticks: int
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]], list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     books: list[dict[str, object]] = []
     for tick in range(1, ticks + 1):
         simulation.step()
@@ -217,7 +219,9 @@ def test_the_exchange_at_one_link(tmp_path):
     assert simulation.ledger.lifetime_amount[W_] == 0 and simulation.ledger.escaped_amount(W_) == 0
     path = tmp_path / "world.json"
     path.write_text(json.dumps(document), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["status"] == "completed" and record["hypotheses"] == [COLUMNS_RULE, WEAK_RULE]
     assert record["conserved_at_every_completed_tick"]
     states = {int(s["number"]): s for s in record["measured"]}

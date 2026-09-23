@@ -140,7 +140,7 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     world = load_world(source, base_dir=path.parent, root=EXAMPLES)
     out = tmp_path / "gate"
     out.mkdir()
-    execute_nature_beam_run(world.world, source, out, "test", entry["cap"])
+    execute_nature_beam_run(world.world, source, out, "test", entry["cap"], keep_row_clicks=True)
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "atom_level" not in record
@@ -188,7 +188,7 @@ def test_the_first_return_on_the_engine_sets_the_level_and_releases_nothing():
     """(c)."""
     world = loaded().world
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(world, observer=events.append)
+    simulation = NatureBeamSimulation(world, observer=events.append, keep_row_clicks=True)
     for _ in range(300):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -213,7 +213,7 @@ def test_the_release_births_the_rows_with_their_rate_and_the_faces_read_the_plan
     """(d)."""
     world = loaded().world
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(world, observer=events.append)
+    simulation = NatureBeamSimulation(world, observer=events.append, keep_row_clicks=True)
     electron = the_electron(simulation)
     light = next(index for index, family in enumerate(world.families) if family.name == "light")
     rise = 3

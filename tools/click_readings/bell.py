@@ -45,6 +45,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
 from event_universe.world_loading import world_of_run  # noqa: E402
 
 N = 64
@@ -112,6 +113,7 @@ class Run:
 def load(folder: Path) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     world = world_of_run(folder)
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     return record, world, events

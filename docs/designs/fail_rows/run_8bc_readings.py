@@ -24,6 +24,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.events.nature_beam import by_drive_rows
+from event_universe.trimmed_record import refuse_trimmed_record
 
 # The pins of section 3, reading A, as written before the run.
 PINS = {
@@ -44,6 +45,7 @@ def main(folder: Path) -> None:
     births: list[dict[str, object]] = []
     passes: dict[int, list[dict[str, object]]] = collections.defaultdict(list)
     clicks: dict[int, list[dict[str, object]]] = collections.defaultdict(list)
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
             event = json.loads(text)

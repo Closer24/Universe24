@@ -184,7 +184,9 @@ def run(
     document: dict[str, object], ticks: int
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]], list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     books: list[dict[str, object]] = []
     for tick in range(1, ticks + 1):
         simulation.step()
@@ -266,7 +268,9 @@ def test_the_clock_trigger_transforms_the_event_and_throws_its_products(tmp_path
     # The record of a run.
     path = tmp_path / "world.json"
     path.write_text(json.dumps(world([neutron()], ticks=8)), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["status"] == "completed" and record["hypotheses"] == [WEAK_RULE]
     assert record["numbers"]["1"]["become"] == {
         "at": 3,

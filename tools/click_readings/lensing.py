@@ -99,6 +99,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, REST_DIRECTIONS
+from event_universe.trimmed_record import refuse_trimmed_record
 from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-lensing-"
@@ -327,6 +328,7 @@ def read_run(folder: Path, *, replay: bool = True, window_start: int = WINDOW_ST
     # age moment (counted once per group) and the phase offset (read only
     # off a group of one row, whose age is its reading over its amount).
     groups: dict[tuple[int, str, int], list[tuple[int, int, int]]] = {}
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"screen_' not in line:

@@ -219,7 +219,12 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
         output = tmp_path / f"a{a}_b{b}"
         output.mkdir()
         execute_nature_beam_run(
-            parse_nature_beam_world(document), source, output, "test", int(document["ticks"])
+            parse_nature_beam_world(document),
+            source,
+            output,
+            "test",
+            int(document["ticks"]),
+            keep_row_clicks=True,
         )
     # The pair lamp's rows are records with the path phase 0 and the
     # counters' windows read the path phase, so every pair of a world lands
@@ -371,7 +376,9 @@ def test_two_contents_is_not_refused_and_its_face_records_are_exact():
     assert registered["format"] == "root-worlds-expectations-v1"
     expected = registered["two_contents"]
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     cosines, sines = phase_cosines(document["N"]), phase_sines(document["N"])
     before: dict[str, int] = {}
     faces: dict[str, int] = {}

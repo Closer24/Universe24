@@ -56,6 +56,7 @@ from typing import Any
 from event_universe.core.integer import by_clock
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events.amplitude import cell_of, rungs
+from event_universe.trimmed_record import refuse_trimmed_record
 
 Q = 64  # the label's scale, the flight table's
 SCALE = 32  # AMPLITUDE_SCALE, the click's unit
@@ -203,6 +204,9 @@ def probe_clicks(folder: Path, world: World, limit: int) -> None:
     clicks: dict[tuple[int, str], list[dict[str, Any]]] = collections.defaultdict(list)
     records: dict[tuple[int, str], dict[str, Any]] = {}
     gathers: dict[int, dict[str, Any]] = {}
+    # A record written without --keep-row-clicks holds no per-row click line:
+    # the probe says so instead of reading zero (`--no-clicks` skips check 2).
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if not line.endswith("\n"):

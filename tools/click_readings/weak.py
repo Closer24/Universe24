@@ -95,6 +95,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.events.nature_beam import direction_flight
+from event_universe.trimmed_record import refuse_trimmed_record
 from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "beam-weak-"
@@ -269,6 +270,7 @@ def read_run(folder: Path) -> Reading:
                 str(name): int(found["clicks"]) for name, found in detector["families"].items()
             }
     shell = {str(d["name"]) for d in world.get("detectors", [])}
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
             if (

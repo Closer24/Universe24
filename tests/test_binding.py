@@ -148,7 +148,9 @@ MINUS_X = 3
 
 def run(document: dict[str, object], ticks: int) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     for tick in range(1, ticks + 1):
         simulation.step()
         books = simulation.books(recount=True)
@@ -187,7 +189,7 @@ def test_the_give_at_the_first_hand_over_of_the_pair():
     world = parse_nature_beam_world(bonded_pair())
     assert world.binding is True and world.hypotheses == [COLUMNS_RULE, BINDING_RULE]
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(world, records.append)
+    simulation = NatureBeamSimulation(world, records.append, keep_row_clicks=True)
     p1, p2 = simulation.measured[1], simulation.measured[2]
     assert p1.content == 7 and p1.held == [4, 1, 2] and p2.held == [4, 1, 0]
     assert simulation.headings[(0, -1)] == MINUS_X
@@ -432,7 +434,7 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
     world = parse_nature_beam_world(taking_world())
     assert world.binding is False and world.hypotheses == [COLUMNS_RULE]
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(world, records.append)
+    simulation = NatureBeamSimulation(world, records.append, keep_row_clicks=True)
     body = simulation.measured[1]
     assert simulation.binding is False and simulation.hypotheses == [COLUMNS_RULE]
     for tick in range(1, 8):
@@ -474,7 +476,9 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
     # The runner's record carries the identity from the fact of the run.
     path = tmp_path / "world.json"
     path.write_text(json.dumps(taking_world()), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["status"] == "completed" and record["hypotheses"] == [COLUMNS_RULE, BINDING_RULE]
     lines = [
         json.loads(line)

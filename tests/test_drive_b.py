@@ -143,7 +143,9 @@ def box_world(
 
 def run_in_process(document: dict[str, object], ticks: int):
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), observer=events.append, keep_row_clicks=True
+    )
     for _ in range(ticks):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -229,7 +231,7 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
     loaded = load_world(source, base_dir=path.parent, root=EXAMPLES)
     out = tmp_path / "gate"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"])
+    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"], keep_row_clicks=True)
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "drive_b" not in record
@@ -369,7 +371,9 @@ def test_the_reviewers_pin_1_the_wandering_direction():
     """(d) (1)."""
     world = box_world([6000, 0, 0], periodic=True, ticks=1000)
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=events.append, keep_row_clicks=True
+    )
     entry = simulation.measured[1]
     replay = Replay(64, 1)
     wall = replay.wall(CYCLE[0])
@@ -396,7 +400,9 @@ def test_the_reviewers_pin_2_the_hand_over_transient():
     """(d) (2)."""
     world = box_world([6000, 0, 0], periodic=True, ticks=160)
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=events.append, keep_row_clicks=True
+    )
     entry = simulation.measured[1]
     for _ in range(50):
         simulation.step()
@@ -420,7 +426,9 @@ def test_the_edges_of_the_rule():
     # p = 0 never steps and leaves the accumulators.
     world = box_world([6000, 3000, 0], periodic=True, ticks=100)
     events: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=events.append, keep_row_clicks=True
+    )
     entry = simulation.measured[1]
     replay = Replay(64, 1)
     for _ in range(10):
@@ -442,7 +450,9 @@ def test_the_edges_of_the_rule():
     # The reversal cancels first.
     world = box_world([6000, 0, 0], periodic=True, ticks=100)
     events = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=events.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=events.append, keep_row_clicks=True
+    )
     entry = simulation.measured[1]
     replay = Replay(64, 1)
     for _ in range(30):

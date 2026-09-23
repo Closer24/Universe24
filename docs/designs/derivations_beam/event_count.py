@@ -44,7 +44,8 @@ def run(name: str, relative: str):
     loaded = load_world(path.read_bytes(), base_dir=path.parent)
     world = loaded.world
     events: list[dict] = []
-    sim = NatureBeamSimulation(world, observer=events.append)
+    # The count is of every line, the per-row clicks among them.
+    sim = NatureBeamSimulation(world, observer=events.append, keep_row_clicks=True)
     flight = sim.tables.flight
     totals: Counter = Counter()
     active_sum = 0

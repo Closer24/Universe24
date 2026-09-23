@@ -56,6 +56,7 @@ import numpy as np
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET
+from event_universe.trimmed_record import refuse_trimmed_record
 from event_universe.world_loading import world_of_run
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -275,6 +276,7 @@ def read_run(folder: Path) -> Reading:
     else:
         reading.control_count = light_arrival_count(links)
         reading.control_source = f"the flight table on the heading at {links} Links"
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         lines = [text for text in stream if '"click"' in text]
     reading.clicks = clicks_of(lines, set(receivers), lamp_family.name)

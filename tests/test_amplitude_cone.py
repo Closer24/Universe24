@@ -46,7 +46,9 @@ N = 64
 def observed(name: str) -> list[dict[str, object]]:
     world = json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8"))
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"])):  # type: ignore[call-overload]
         simulation.step()
     return lines

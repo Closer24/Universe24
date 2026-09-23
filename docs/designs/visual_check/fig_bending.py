@@ -29,6 +29,8 @@ from common import (
     save,
 )
 
+from event_universe.trimmed_record import refuse_trimmed_record
+
 WORLDS = ("control", "mass", "heavy", "near")
 
 
@@ -50,6 +52,7 @@ def main() -> None:
         lamp = lamp_node(folder)
         counts: Counter = Counter()
         ages: list[int] = []
+        refuse_trimmed_record(folder)
         for line in events(folder, {"click"}):
             detector = line.get("detector") or ""
             if detector.startswith("screen_") and line.get("family") == "light":

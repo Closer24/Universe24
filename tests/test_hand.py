@@ -147,7 +147,9 @@ AMPLITUDE = load("amplitude_make_worlds", ROOT / "examples" / "events" / "amplit
 
 def run(document: Json, ticks: int | None = None) -> tuple[NatureBeamSimulation, list[Json], list[Json]]:
     records: list[Json] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     books: list[Json] = []
     for tick in range(1, (ticks if ticks is not None else int(document["ticks"])) + 1):  # type: ignore[call-overload]
         simulation.step()
@@ -237,7 +239,9 @@ def test_a_row_keeps_its_hand_through_every_re_creation():
         if "lamp" in entry:
             entry["lamp"]["hand"] = -1
     records = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(pair), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(pair), records.append, keep_row_clicks=True
+    )
     for _ in range(40):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -733,7 +737,7 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
     parsed = load_world(path.read_bytes(), base_dir=path.parent).world
     assert not parsed.handed and HAND_RULE not in parsed.hypotheses
     records: list[Json] = []
-    simulation = NatureBeamSimulation(parsed, records.append)
+    simulation = NatureBeamSimulation(parsed, records.append, keep_row_clicks=True)
     books: list[Json] = []
     for _ in range(16):
         simulation.step()
@@ -741,7 +745,9 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
         assert books[-1]["balanced"]
     assert all("hand" not in r for r in records)
     assert all("left" not in measured_line(b, "w") for b in books)
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert all("hand" not in family for family in record["families"])
     assert all("axis" not in number for number in record["numbers"].values())
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
@@ -856,7 +862,9 @@ def test_the_bell_pair_with_the_hand_as_the_labels_meaning():
     for a, b in AMPLITUDE.CHSH:
         world = labelled(f"bell_{a}_{b}", a, b)
         records: list[Json] = []
-        simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(world), records.append, keep_row_clicks=True
+        )
         for _ in range(int(world["ticks"])):  # type: ignore[call-overload]
             simulation.step()
             assert simulation.stores[0].size == 0 or set(simulation.stores[0].hand.tolist()) == {0}
@@ -931,7 +939,9 @@ def test_the_parity_filter_on_a_label_hand_family_reads_the_label():
     """(g), the which-path click on the label."""
     world = filtered_pair(rotations=False)
     records: list[Json] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), records.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"])):  # type: ignore[call-overload]
         simulation.step()
         assert simulation.books()["balanced"]

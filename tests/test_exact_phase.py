@@ -91,7 +91,9 @@ def world(
 
 def lines_of(declared: dict[str, object]) -> list[dict[str, object]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(declared), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(declared), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(declared["ticks"])):  # type: ignore[call-overload]
         simulation.step()
     return lines

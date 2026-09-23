@@ -108,7 +108,9 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path, monkeypatch):
     world = parse_nature_beam_world(document)
     folder = tmp_path / "coasting_scalar"
     folder.mkdir()
-    execute_nature_beam_run(world, json.dumps(document).encode("utf-8"), folder, "test", TICKS)
+    execute_nature_beam_run(
+        world, json.dumps(document).encode("utf-8"), folder, "test", TICKS, keep_row_clicks=True
+    )
     run = TOOL.read_run(folder)
     assert (run.crowd, run.clock, run.rho, run.modulus) == ("coasting", "scalar", 1.0, 64)
     assert run.c == 32 / 55

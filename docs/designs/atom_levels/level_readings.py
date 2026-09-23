@@ -41,6 +41,10 @@ import math
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 BASELINE = HERE.parent / "atom_baseline" / "baseline_readings.py"
 DETECTOR = "DETECTOR"
@@ -97,6 +101,7 @@ def level_lines(folder: Path) -> tuple[list[dict[str, object]], list[dict[str, o
     """The `level` lines (GAMEBOARD) and the `light` clicks (DETECTOR)."""
     levels: list[dict[str, object]] = []
     lights: list[dict[str, object]] = []
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"level"' in line:
