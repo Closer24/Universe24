@@ -70,7 +70,10 @@ scale in 5.2, the wavelength in 5.7) and K (the kernel K(Delta) of
 Theorem 4 in 4.8, the hypothesis (K) of chapter 5, the number of
 directions of the fan in 5.6 and 5.7); omega and kappa are the walk's
 angles in chapter 5 and, once, a root of unity (4.11) and a force
-constant (5.8), named there.
+constant (5.8), named there; and three letters carry a second meaning
+beside their first, named there too: a, plain, the acceleration (5.4)
+beside **a** the flow vector; K the kinetic reading in E_j = K + q A
+(5.8); s the lamp's turn (5.7) beside s the state's component.
 
 ---
 
@@ -1087,7 +1090,7 @@ from omega^2 = m^2 + kappa^2 - m^2 kappa^2 / 3 + O(6): a correction of
 relative order m^2 v^2 / 6 (the three wordings of the sources, m^2 v^2
 / 6, kappa^2 / 6 and "up to m^2 v^2", are one order; the sign depends
 on which velocity is named, above sqrt(1 - beta^2) against the
-identity's beta, below sqrt(1 - v_g^2) against the group velocity v_g
+identity's beta (beta = v / c, the pace over c), below sqrt(1 - v_g^2) against the group velocity v_g
 the clicks read, the click frame :877-885);
 beyond second order in the angles the covariance fails, and in three
 dimensions the board differs from the world from the fourth order on
@@ -1714,9 +1717,17 @@ gamma: gate (A), the owner's as stated, T'_n = ceil(n sqrt(W) / m);
 gate (B), the same comparison at the whole-root gate's origin, strict,
 T''_n = 1 + floor((n - 1) sqrt(W) / m), which equals the whole-root
 gate's T_n = 1 + floor((n - 1) E' / m) unless a multiple of m lies in
-between; (A) later than (B) by 0 to 3 intervals on the domain (exactly
-1 at gamma = 2); sqrt(W) is never formed, it only names the value the
-comparison decides; the exact root-free form with one division is T_n =
+between; (B) later than the whole-root gate by 0 or 1 for n <= m + 1,
+equal to it when W is a perfect square (p = 0, and gamma = 2 exactly,
+where both give T_n = 2 n - 1); (A) later than the whole-root gate by 0
+at p = 0, exactly 1 at gamma = 2, at most 3 on the domain (attained at
+m = 16, 64, 100 and 128 for n near m); (A) >= (B) always, since
+ceil(n x) >= 1 + floor((n - 1) x) for x >= 1, and by the mathematics
+reader's enumeration over every W of the domain at m = 16 and 64, n <=
+m + 1 (COMPUTATION, his read of 2026-09-23, record 1167 of
+docs/LOG_2026-09-20.md), (A) is later than (B) by 0 to 2, exactly 1 at
+gamma = 2 where T'_n = 2 n and T''_n = T_n = 2 n - 1; sqrt(W) is never
+formed, it only names the value the comparison decides; the exact root-free form with one division is T_n =
 min {t : ceil(t m / (n - 1))^2 > W} (DERIVATIONS_BEAM 17.7,
 :5196-5204); MET in its
 domain (series S: the muon's products' face clicks at 392, 369 and
@@ -1762,16 +1773,13 @@ pins by the algebra before any run. A DECLARATION: a world integer or a
 world key, named, with what each option gives. A RULE: nothing in the
 six verbs and the declared tables gives the row's number; what a rule
 would have to do is stated under its own identity, outside the law,
-with the three tests and whether it can pass them; a RULE that cannot
-pass the three tests is still written as a RULE, and the row then stays
-FAIL under the law as it stands. NOTHING: no reading, no declaration
+with the three tests (generic, vector, local) and whether it can pass
+them; a RULE that cannot pass the three tests is still written as a
+RULE, so that the Boss sees what nature asks of the law, and the row
+then stays FAIL under the law as it stands. NOTHING: no reading, no declaration
 and no rule of any kind, inside or outside the six verbs, moves the
 row: it is the law's own exact result and nature refutes the law there.
-The RULE's sentence in the file's words: "with the three tests
-(generic, vector, local) and whether it can pass them; a RULE that
-cannot pass the three tests is still written as a RULE, so that the
-Boss sees what nature asks of the law, and the row then stays FAIL
-under the law as it stands." The counts: READING 1 (row 14); DECLARATION 6 (rows 2a, 4a, 4b, 8b, 8c,
+The counts: READING 1 (row 14); DECLARATION 6 (rows 2a, 4a, 4b, 8b, 8c,
 13); RULE 8 (rows 1c, 3, 5b, 6, 7b, 8a, 11a, 11c); NOTHING 1 (row 1b).
 Sixteen rows: the twelve FAIL rows of the paper's confrontation table
 and the four that fail by their pins and stand outside the table (4a,
