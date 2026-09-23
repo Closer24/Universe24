@@ -19,7 +19,7 @@ the output.
 # exactly once in the text, the end after the start.
 BLOCKS = {
     "words": (
-        "\\paragraph{The words of this paper.}",
+        "\\paragraph{The definitions, in order.}",
         "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.55\\linewidth]{figures/lattice.pdf}",
     ),
     "simulator_led": (

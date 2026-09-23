@@ -6106,3 +6106,60 @@ changed. 53 pages (NUMBERS.md). Not in this commit: the six operations
 as maps (commit 2), the route chapter's tables and the postulates'
 names (3), the click subsections (4), the failures-by-cause table (5),
 the cuts and the length (the owner's word).
+
+## Applied (2026-09-23, the Boss's order of 01:05Z, step 2, commit 2): the six operations as maps on Z[Z_N] in symbols, and the definitions in order with the names
+
+Two passages, both in Section 2, through corrections:
+
+- "The definitions, in order." at the head of Section 2, before "The
+  words of this paper" (the reorder's first block now starts at this
+  heading): five items, each one line of mathematics before its words,
+  the owner's seventh word. (1) The GameBoard: Z^3, the six Ports P
+  with the involution e -> -e, one Link per interval. (2) The group of
+  order 24: G_48 the bijections of P with g(-e) = -g(e), the 48 signed
+  permutations; det a homomorphism onto {+1, -1}; G_24 = ker det, the
+  rotations, index 2, "the group of order 24, the name used
+  throughout"; the isomorphism to the symmetric group is stated in
+  Theorem 1 alone, the list points to it and does not repeat S_4 (the
+  proof in Appendix A restates it as the proof must). The hand h ->
+  det(g) h tells the cosets. (3) Z_N = Z/NZ and Z[Z_N] = {sum f_p x^p},
+  the addition by components, x^p x^q = x^{p+q}; the record's rows one
+  element (the objects; Definition 1). (4) The six operations as maps,
+  one symbol each, (T) (B) (G) (P) (E) (D). (5) The click, ev(f) with
+  its norm, the one read-out (Definition 3); the Outside, the counts
+  between clicks and their ratios (Section 3).
+- "The six operations as maps, in symbols." between Definition 2 (the
+  update rules) and Definition 3 (the click), about a page, the
+  statements of docs/ALGEBRA.md chapter 2 on algebra-one at 93033d54
+  (the mathematics reader's sound chapter), condensed, with the letters
+  of the derivation record: (T) s -> s + r, the closed form floor(s_0 +
+  rt), the flight's m_D(tau) and tau_k, the phase's turn, the
+  translation group of the box; (B) u^T C v, the push, the split and
+  the rotation, the click's weight f^T G f with G = E^T E; (G) f + g
+  in Z[Z_N], the cancel as the quotient by (x^{N/2} + 1), Z[zeta_N] for
+  N a power of two, the pair's product; (P) the collision, the gate,
+  the apportioning's tie, never of contents; (E) ev a surjective ring
+  homomorphism with kernel (x^{N/2} + 1), the first isomorphism theorem
+  exact, a *-homomorphism carrying f*f to |ev f|^2; the built tables
+  E a Z-linear map to Z^2, not a ring homomorphism (the two pointers
+  at N = 64, COMPUTATION, NUMBERS.md), the exact map the algebra and
+  the tables the declared rounding (P7); (D) the signed truncating
+  division with the remainder kept, the Euclidean division on an
+  unsigned count, the comparison part of the map (the ladder's cell,
+  a key, a window, a threshold). The closing lines: the order of the
+  six at one interval, Eq. (1) their composition; what is not one of
+  the six (a run-time root: the pair under the key optical, a later
+  rule; Lorentz's factor on a body's own counter; a rounded constant
+  beyond the tables at load; a float, a true division, a draw). The
+  meeting's norm under its key, in ALGEBRA.md's list, is not named:
+  the paper names no meeting rule.
+- The letters (T) (B) (G) (P) (E) (D) are new to the paper; the
+  Introduction's list of the six in words and "The map" paragraph's
+  numbered list stay as they are (the cuts are the owner's word).
+- Straight double quotes in the two passages were replaced by TeX's
+  quote pairs after the first read-back showed a wrong opening mark.
+- The maps paragraph cites the algebra document (a new reference,
+  docs/ALGEBRA.md on the branch algebra-one at 93033d54, its merge
+  pending at submission) beside the derivation record.
+54 pages (NUMBERS.md). The mathematician's check of the two passages
+follows, per the Boss's order.
