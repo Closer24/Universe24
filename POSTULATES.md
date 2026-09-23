@@ -524,22 +524,25 @@ point 17; what fixes G stays hypothesis 16's question.) (Superseded on 2026-09-2
 
 ## 10. Measurement and display are outside the physics
 
-Addition (the model owner, 2026-09-23, record 1139, the Boss's translation: "the detector does not
-only read; when it reads it performs an action; it must perform an action
-in the reading, and that is the whole point; that is what explains that a
-detector changes the outcome; we know this, it is a clear assumption from
-experiments"): the title and the first paragraph below are read as follows.
-Displays and the host's diagnostics are outside the physics and only read.
-A measurement is a detector's click, an action of the law: the absorption
-of the record at the mark, its content into the detector's record, the
-detector's count advanced (written as `clock` under the world key
-`clock_stamp`); it is the one interaction that is a measurement. A detector
-changes what it reads, as experiment shows (the two-slit and the which-path
-readings, the paper's row 2a, and the Bell rows), and the law carries that
-as the click's rule; nothing else measures. In the code the click is the
-`measure` rule of step 4, `nature_beam._measure` (nature_beam.py line 5677;
-the `click` line written at line 5536 with the units, the content and the
-label moved into the measured event's record), the record's completion
+Addition (the model owner, 2026-09-23, record 1139, the Boss's translation:
+"the detector does not only read; when it reads it performs an action; it
+must perform an action in the reading, and that is the whole point; that is
+what explains that a detector changes the outcome; we know this, it is a
+clear assumption from experiments"): the title and the first paragraph below
+are read as follows. Displays and the host's diagnostics are outside the
+physics and only read. A measurement is a detector's click, an action of the
+law: the absorption of the record at the mark, its content into the
+detector's record, the click stamped with the detector's own count (`clock`
+under the world key `clock_stamp`; the count itself advances at every
+self-creation, engine.py line 706, click or none); it is the one interaction
+that is a measurement. A detector changes what it reads, as nature's
+which-path experiments show (the thing compared with); the law carries that
+as the click's rule and no more: the record ends at the detector, its
+content moves, the flight of every other row is untouched (no back-action);
+nothing else measures. In the code the click is the `measure` rule of step
+4, `nature_beam._measure` (nature_beam.py line 5677; the `click` line
+written at line 5536 with the units, the content and the label moved into
+the measured event's record), the record's completion
 `nature_beam.gather_records` (line 6537), and the detector's own count
 `entry.age += 1` in `engine._frame_all` (engine.py line 706). The sentence
 "measurement means diagnostics, not a quantum interaction" in the first
