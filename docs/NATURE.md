@@ -635,10 +635,17 @@ carry two kinds):
 - (3) no click definition yet for the quantity: a position, a brightness,
   a period.
 
-Of the 12 observables the law as built predicts, 5 agree within tolerance
-(1a, 2b, 9; the bounds 5a and 7a as bounds met), 7 disagree (rows 1c, 6,
-7b, 8a, 8b, 13, 14), and 8 are not predicted by construction (rows 2a, 3,
-4a, 4b, 5b, 8c, 11a, 11c), each needing one of three pieces: a moving
+The reviewer's rule (PR #979, 2026-09-23): a status is given only to a
+measurement (a click's number with its kind); a number whose kind is
+GAMEBOARD or a pin before its run waits outside the count with its run
+named; the bracket of what is missing is printed on the not-predicted
+lines alone and names the row's own missing piece.
+
+Of the 11 observables the law as built predicts (12 once RUN_14 is read),
+5 agree within tolerance (1a, 2b, 9; the bounds 5a and 7a as bounds met),
+6 disagree (rows 1c, 6, 7b, 8a, 8b, 13; 14 after its read), and 8 are not
+predicted by construction (rows 2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each
+needing one of three pieces: a moving
 thing's rate and contraction (4a, 4b, 5b), a term of the crowd's history
 (3, 11a, 11c), a declared input made a reading (2a, 8c).
 
@@ -647,7 +654,7 @@ thing's rate and contraction (4a, 4b, 5b), a term of the crowd's history
 | 1a | agrees | S = 2.75 (DETECTOR: the record's one gather over 64 births, the cells 27, 5, 5, 27) | 2.42 +- 0.20 | matches nature within 1.65 standard errors; 0.078 below the quantum bound |
 | 1b | a control (marked 2026-09-23) | S = 2 exactly (DETECTOR: the counters' clicks of the window form) | 2.42 +- 0.20 | a theorem of every local read-out, not counted; the law's row is 1a |
 | 1c | disagrees | not a row of this table ([WHAT_IS_MISSING.md section 1.2](designs/fail_rows/WHAT_IS_MISSING.md#12-row-1c-the-order-channel)): 15 / 16 under a = 0 and -1 / 16 under the cycle, the second party's serial correlation at lag 1 (DETECTOR, met 16 of 16 against the algebra) | 0 | 15 / 16 against 0; the wheel a counter, the order deterministic |
-| 2a | not predicted | the visibility 0.966 in the clicks of `slits_huygens` (DETECTOR; the pin 0.9659 COMPUTATION, met bit for bit) | 0.98 (a Mach-Zehnder source; the two-slit figure unverified) | a declared fan width P (an input of kind 2); NOT COMPARED until the two-slit figure is verified [kind (2): nature's number here is not one measurement of the two-slit visibility, the figure unverified] |
+| 2a | not predicted | the visibility 0.966 in the clicks of `slits_huygens` (DETECTOR; the pin 0.9659 COMPUTATION, met bit for bit) | 0.98 (a Mach-Zehnder source; the two-slit figure unverified) | a declared fan width P (an input of the third structure line; kind 2 in the inputs table of record 817); NOT COMPARED until the two-slit figure is verified [kind (2): the 0.98 a Mach-Zehnder's figure, not one measurement of the two-slit visibility] |
 | 2b | agrees | the clicks 64 / 0 over 64 births, the visibility 1.000 (DETECTOR; the offers 0.9988 GAMEBOARD, a diagnostic) | 98 percent | matches nature above the measured 0.98 |
 | 2c | NOT COMPARED | the power window [1.917, 2.012) (COMPUTATION from the click cells 63 / 1 and 27, 5, 5, 27, DETECTOR) | kappa = 0.0064 +- 0.0119 | kappa not computed; keeps its word |
 | 3 | not predicted | q = -0.108 (DETECTOR: the pointer's z per tick of an open-face detector, the tick GAMEBOARD); the law's own crowd q = +0.922 (DETECTOR, the record form) | -0.53 +- 0.01, a fitted parameter of the cosmological model, not one measurement | no term of the crowd's history; the sign the law's own crowd gives is the wrong one (a deceleration) [kinds (1) and (2): the crowd's history missing; nature's q_0 a fitted parameter] |
@@ -658,7 +665,7 @@ thing's rate and contraction (4a, 4b, 5b), a term of the crowd's history
 | 6 | disagrees (the paper's row (Table 2); the register's cell above still reads NOT YET, to be re-read on its own order) | the electron escapes at 3407 intervals (DETECTOR, series H's world, the runs of 2026-09-22); no line read | Balmer's 27 / 20 = 1.35 | the loop opens, no line to compare ([WHAT_IS_MISSING.md section 1.6](designs/fail_rows/WHAT_IS_MISSING.md#16-row-6-the-atoms-loop-opening-and-balmers-ratio)) |
 | 7a | agrees (a bound met) | the escaped content 4 of 3677 = 0.109 percent (DETECTOR, the border's `bond` clicks) | 0.1185 percent | a bound on the declared give (nature's 4.35 units between the whole gives 4 and 5), met as a bound |
 | 7b | disagrees | the ratio 2.0 (DETECTOR: four border clicks against two, the escaped 8 against 4) | 12.72 | 2.0 against 12.72, a factor 6.4 |
-| 8a | disagrees | the width 0 (DETECTOR: 64 clicks of content 3, each at its own clock's count); 0.036 in the lattice's clock (GAMEBOARD) | ln 9 / ln 2 = 3.17 | 0 against 3.17, a step where nature has an exponential; the width in the lattice's clock (0.036, GAMEBOARD) for the crowd [kind (1): the crowd's history] |
+| 8a | disagrees | the width 0 (DETECTOR: 64 clicks of content 3, each at its own clock's count); 0.036 in the lattice's clock (GAMEBOARD) | ln 9 / ln 2 = 3.17 | 0 against 3.17, a step where nature has an exponential (the missing rule a decay fired by a met row of a declared bath, WHAT_IS_MISSING.md 1.8, none of the three pieces); the width in the lattice's clock 0.036 GAMEBOARD, the crowd's spread, a diagnostic |
 | 8b | disagrees | 16 of 1024 at the first reader and 0 behind it (DETECTOR, series J2) | about 1 | 16 and 0 behind against about 1: a filter set by the window's residue, not an attenuation by depth |
 | 8c | not predicted | the `nu` family's content 0, every click of `nu` carrying it (DETECTOR, series J2's 16 first clicks; the content an input of the family table) | at least 9.8 x 10^-8 of the electron's, a bound from the oscillations' squared mass differences and not one measurement | a declared content; the oscillation, a family turning into another in flight, not modelled [kind (2): nature's number a bound] |
 | 9 | agrees | 128 / 256 at 45 degrees, 0 / 256 crossed, 64 / 256 with the third between; 219 / 256 at 22.5 degrees (DETECTOR) | 1 / 2, 0, 1 / 4; cos^2 22.5 degrees = 0.85355 | matches nature exactly at 45 and 90 degrees; +0.0019 the tables' rounding at 22.5 |
@@ -667,8 +674,8 @@ thing's rate and contraction (4a, 4b, 5b), a term of the crowd's history
 | 11b | PASS by a pin | b = 1 (COMPUTATION, the pin: 400 rows over 1452 intervals at 300 Links, the factor 3.639 against 3.629) | 0.97 +- 0.10 | its run needs expansion-v1; keeps its word |
 | 11c | not predicted | n = 1 (COMPUTATION, the pin of `far_lamp_map.out` section 4 (b)) | 4 (2.3 to 3.1 before correction), an exponent fitted to the sources and not one measurement | no term of the crowd's history; a ruler that grows with the redshift is no verb on the state [kinds (1) and (2): the crowd's history; Tolman's exponent a fitted parameter] |
 | 12 | HISTORY | the ratio 1.907 under the age word and 1.000 under the presence word (DETECTOR: the `1 + z` of the lamp's light at x = 110; the tick GAMEBOARD as the time base) | 2.00 | keeps its word (records 394 and 941) |
-| 13 | disagrees (the paper's row (Table 2); the register's cell above still reads NOT COMPARED, to be re-read on its own order) | the law as built 0.000 pixel (DETECTOR, series K); beside it, at the declared gamma_PPN = 1, the ring's mean radial shift 0.731 (DETECTOR) and the pin worlds' ratio 2.00 (DETECTOR), an input of kind 2 read back | 1.75 arcsec at the Sun's limb, 1 + gamma = 2 | 0.000 against the bending; the 2 is declared; for the ring's position [kind (3): no click definition of a position yet] ([WHAT_IS_MISSING.md section 1.12](designs/fail_rows/WHAT_IS_MISSING.md#112-row-13-the-bending-of-light)) |
-| 14 | disagrees (once RUN_14 is read) | not a row of this table ([WHAT_IS_MISSING.md section 1.13](designs/fail_rows/WHAT_IS_MISSING.md#113-row-14-newtons-periods)): T(24) / T(12) = 1.677 under the one constant and 1.512 under the line drive (COMPUTATION from two means of unclosed loops; the clicks DETECTOR, the escapes at 1208 and 2452) | the pin 2.00 +- 0.18 (nature's 2^(3/2) not compared) | 1.677 and 1.512 against 2.00 +- 0.18; RUN_14's read pending [kind (3): no click definition of a period yet] |
+| 13 | disagrees (the paper's row (Table 2); the register's cell above still reads NOT COMPARED, to be re-read on its own order) | the law as built 0.000 pixel (DETECTOR, series K); beside it, at the declared gamma_PPN = 1, the ring's mean radial shift 0.731 (DETECTOR) and the pin worlds' ratio 2.00 (DETECTOR), an input of kind 2 read back | 1.75 arcsec at the Sun's limb, 1 + gamma = 2 | 0.000 against the bending; the ring's shift 0.731 and the ratio 2.00 beside it read the declared gamma_PPN = 1 back (DETECTOR readings of a declared input, the third structure line) ([WHAT_IS_MISSING.md section 1.12](designs/fail_rows/WHAT_IS_MISSING.md#112-row-13-the-bending-of-light)) |
+| 14 | not yet read (RUN_14 pending, outside the count until its pins are read; the paper's row FAIL (Table 2) by the D3 periods) | not a row of this table ([WHAT_IS_MISSING.md section 1.13](designs/fail_rows/WHAT_IS_MISSING.md#113-row-14-newtons-periods)): T(24) / T(12) = 1.677 under the one constant and 1.512 under the line drive (COMPUTATION from two means of unclosed loops; the clicks DETECTOR, the escapes at 1208 and 2452) | the pin 2.00 +- 0.18 (nature's 2^(3/2) not compared) | 1.677 and 1.512 against 2.00 +- 0.18, a COMPUTATION on the host's tick of unclosed loops (WHAT_IS_MISSING.md 1.13: the reading missing, the moving detector's arrival click of RUN_14; a period is not yet a click). RUN_14 step 2 (PR #987): the chain's control PASS on every pin; the shell-mean pins of the mass and light worlds not readable on the fan's comb (a GAMEBOARD diagnostic); nature's period still not compared |
 
 ### The tally as written on 2026-09-21 (at the base 88d843ef; history, nothing deleted)
 
