@@ -23,7 +23,7 @@ this file holds the entries added after them.
 ## 24. A lamp's line is doubled by the clock's floor, unless K divides its content
 
 - **Statement (the mathematician, 2026-09-20, from the masses design,
-  [DESIGN.md section 0](designs/masses/DESIGN.md); registered on the model
+  `docs/designs/masses/DESIGN.md` section 0, deleted on 2026-09-22 with its cavity worlds (record 871; in the tree's history at 59c6b811); registered on the model
   owner's word, "write the two sentences in PREDICTIONS").** A lamp of
   content M releases at every self-creation whose turn s =
   `by_clock(age, M, K)` is above 0, and every unit it releases carries the
@@ -39,7 +39,7 @@ this file holds the entries added after them.
   `content` of the gathers of a `sum` set receiving the lamp's light (one
   click per birth); without the key the `content` of the `click` records of
   a measured event that measures it. Measured on the cavity worlds of
-  [`examples/events/masses/`](../examples/events/masses/README.md)
+  `examples/events/masses/` (deleted on 2026-09-22, record 871)
   (`designs/masses/cavity_click.out`, 2026-09-20): at the end of the
   unequal world the lamp of content 20806 (M / K = 5.08 at K = 4096) is read
   as 5 and 6, the lamp of content 20035 (4.89) as 4 and 5; in the equal

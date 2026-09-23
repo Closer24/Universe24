@@ -54,7 +54,7 @@ age 13, at 9 Links at 15.
     passed at tick 9 and clicked on the border `lifetime` in the same
     interval with `hand` +1, the proton untransformed (`became` 0, its
     family `p`);
-(d) the parity test on the worlds of series P (`examples/events/hand/`,
+(d) the parity test on the worlds of series P (`tests/support/hand_worlds.py`,
     `w_hand`, `w_two_sides`, `wu` and `nu_hand` at 60 intervals), the
     design's 1.3: under a signed axis permutation g every polar thing
     (positions, directions, momenta) goes by g, the `axis` as an axial
@@ -141,7 +141,7 @@ def load(name: str, path: Path):
     return module
 
 
-HAND = load("hand_make_worlds", ROOT / "examples" / "events" / "hand" / "make_worlds.py")
+HAND = load("hand_worlds", ROOT / "tests" / "support" / "hand_worlds.py")
 AMPLITUDE = load("amplitude_make_worlds", ROOT / "examples" / "events" / "amplitude" / "make_worlds.py")
 
 

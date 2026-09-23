@@ -5618,10 +5618,9 @@ N2 (the domain `abs(p)_1 <= Q S M`: both momenta inside, at 0.13 and
 0.30 of it), N4 (the lamp's count per self-creation: a moving lamp
 emits per proper time), M3 (`c^2 = [1, 3]`; the rows on a heading at
 `c_h = 32 / 55`). The host script
-[series_o_identity.py](designs/derivations_beam/series_o_identity.py)
-with its output
-[series_o_identity.out](designs/derivations_beam/series_o_identity.out)
-makes every number below from the world files, exact rationals; no run.
+`series_o_identity.py` with its output `series_o_identity.out` (deleted on
+2026-09-22 with series O's worlds, record 871; in the tree's history at
+59c6b811) made every number below from the world files, exact rationals; no run.
 
 **(a) The pace of the declared momenta changes under the identity.**
 `p c^2 / E` against the law's `p / (Q S M + p)`: the symmetric stars at

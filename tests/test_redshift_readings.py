@@ -1,4 +1,4 @@
-"""The redshift readings tool (series E, `tools/redshift_readings.py`)
+"""The redshift readings tool (series E, `tools/click_readings/redshift.py`)
 under the rule of records 562 and 564 (the model owner, 2026-09-22; the
 audit of record 567): the window's k x r^p and the redshift ratio come
 from the world replayed through the API, so the tool prints them as
@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "redshift_readings_tool", ROOT / "tools" / "redshift_readings.py"
+    "redshift_readings_tool", ROOT / "tools" / "click_readings" / "redshift.py"
 )
 assert SPEC is not None and SPEC.loader is not None
 TOOL = importlib.util.module_from_spec(SPEC)

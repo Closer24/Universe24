@@ -112,33 +112,6 @@ are preserved. See [output retention](docs/RETENTION.md) for ownership and
 interrupted runs. The reported `elapsed_seconds` includes world construction,
 the intervals, per-tick accounting, event writing and the final snapshot.
 
-## Simulation configuration UI
-
-Start the local workspace with the same installed Python environment:
-
-```bash
-python -m event_universe.ui
-```
-
-Open the printed local URL, normally `http://127.0.0.1:8765`. Choose a world of
-`examples/events/` as a template, edit its JSON, **Check** it, and **Run**.
-Each run reads a saved snapshot of the draft and runs headless in another
-process; the workspace stays responsive. The result shows the record (the
-law, the completed ticks, the books) and links to the input, state and events. Use `--configs` to select your own
-template folder, or `--port 0` to choose an available port. See the
-[workspace guide](docs/WORKSPACE.md) for drafts, files and interruption.
-
-The running workspace cleans expired outputs periodically and removes expired
-result links. CLI runs also check for expired output at startup. To keep cleanup
-running while both are idle, use a watcher or schedule the cleanup command:
-
-```bash
-python -m event_universe.retention --root artifacts --root runs --watch
-```
-
-Use `--dry-run` to inspect candidates without deletion. A stopped watcher or an
-offline computer catches up on the next cleanup; see [retention](docs/RETENTION.md).
-
 ## Check the project with one command
 
 ```bash
@@ -170,12 +143,12 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
 | `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
 | `src/event_universe/snapshot_writer.py` | `state.json` written Node by Node, byte for byte the snapshot's JSON |
-| `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `src/event_universe/diagnostics/numeric_audit.py` | The two static audits: `core/` holds integer arithmetic only, `events/` integer numpy and nothing that leaves the integers |
 | `src/event_universe/diagnostics/shell_readings.py` | The shell means of the engine's readings, a read-only host diagnostic in floating point |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end; `--wall-seconds` and `--memory-mb` stop a run past the host's budget and report it not completed |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
+| `tools/click_readings/` | The readings of the register's series from a run's record, one module per series: the clicks alone (DETECTOR) with the GameBoard's lines labelled (GAMEBOARD); nothing here runs a rule |
 | `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
 | `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
@@ -197,13 +170,6 @@ active contracts, explicit experiments and revision-specific evidence.
 - Read-only measurements and visualization.
 - Named hypotheses and independent tests; no claim that a successful run proves
   gravity, waves, energy conservation or other emergent physics.
-
-## Standalone generic vector lab
-
-The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
-configured N-to-M node reactions, bounded rational vector arithmetic and exact
-conservation tests. It is an independent experiment, not the active simulator.
-Run `python -m tools.generic_vector_lab.run_demo` from this repository.
 
 ## License and citation
 

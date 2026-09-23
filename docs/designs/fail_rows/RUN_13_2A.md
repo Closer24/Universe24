@@ -290,7 +290,7 @@ The reading, DETECTOR: per lamp, the click lines of the detector its
 rows reach (a face's `click` lines, `detector` the face's name, or the
 screen pixel's), the birth ordinal (`record & 0xFFFFFFFF`) against the
 click's tick over the window [200, 1200), 1 + k_i the inverse slope
-(series T's reading, `examples/events/shell_clock/read_runs.py` applied
+(series T's reading, `tools/click_readings/shell_clock.py` applied
 per lamp, the one tool line changed being the detector's selection);
 the control's 1 + k_i = 1.0000 exactly per lamp. The computations on
 them: k_a(6) = the mean of k_i over the 450 lamps; the plane ring's
@@ -656,7 +656,7 @@ paper from this file; the writer words the row on the Boss's routing.
 - [NEWTON_ON_THE_SIDE.md](../newton_clicks/NEWTON_ON_THE_SIDE.md) section 1 step 1 and 3 (d); [NEWTON_FROM_CLICKS.md](../newton_clicks/NEWTON_FROM_CLICKS.md) section 3.
 - [The lamp shell's register](../../../examples/events/lamp_shell/README.md), its [expectations](../../../examples/events/lamp_shell/expectations.json) and [readings](../../../examples/events/lamp_shell/readings.json) (STEP 2).
 - [The ring worlds' register](../../../examples/events/flow_link/README.md) and [expectations.json](../../../examples/events/flow_link/expectations.json); [series K](../../../examples/events/lensing/README.md) (the age moment 11.4 at b = 6); [the optical worlds](../../../examples/events/optical/README.md) (the age moment 181.8 at b = 6, M = 2^16).
-- [Series X, Poisson after a detector](../../EXPERIMENTS.md) and [shell_clock/read_runs.py](../../../examples/events/shell_clock/read_runs.py) (series T's reading of a clock from click lines).
+- [Series X, Poisson after a detector](../../EXPERIMENTS.md) and [click_readings/shell_clock.py](../../../tools/click_readings/shell_clock.py) (series T's reading of a clock from click lines).
 - [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
 - [The paper](../../../paper/general_formula/main.tex), Table 2 rows 13 and 2a.
 - [The log](../../LOG_2026-09-20.md): records 160, 826, 915, 920, 941, 1100, 1126, 1128.

@@ -1,5 +1,5 @@
 """The reader of the Bell run with the choosers on the GameBoard reads the
-engine (`tools/bell_choosers.py`; the experimenter's rule, 2026-09-20): on
+engine (`tools/click_readings/bell_choosers.py`; the experimenter's rule, 2026-09-20): on
 a minimal case run through the runner, every reading of the tool equals the
 engine's own function, and nothing of the registered worlds' numbers is
 pinned. The case: the design of `examples/events/bell/make_chooser_worlds.py`
@@ -66,7 +66,7 @@ def make_worlds():
 
 
 def tool():
-    return load_script("bell_choosers", ROOT / "tools" / "bell_choosers.py")
+    return load_script("bell_choosers", ROOT / "tools" / "click_readings" / "bell_choosers.py")
 
 
 def fixed_world(written: bool) -> dict[str, object]:

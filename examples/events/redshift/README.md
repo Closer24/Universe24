@@ -135,10 +135,10 @@ Run them in parallel and read the records:
 
 ```bash
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/redshift examples/events/redshift/scalar.json examples/events/redshift/age.json
-PYTHONPATH=src python tools/redshift_readings.py artifacts/redshift
+PYTHONPATH=src python tools/click_readings/redshift.py artifacts/redshift
 ```
 
-`tools/redshift_readings.py` prints the record checks, the shell means per
+`tools/click_readings/redshift.py` prints the record checks, the shell means per
 radius with k x r^2 and k x r against their expectation, the single probes
 on the axis and the diagonals, and the redshift ratios of the age clocks.
 
@@ -240,7 +240,7 @@ their records still the presence) now count the age moment at
 `suspension` [1, 1], twice the `age` world's count at [1, 2] for the same
 rays; the `age` world is byte-identical (record 409). Both run again on the
 head of branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 300
-intervals) and read by `tools/redshift_readings.py`, whose power of r is
+intervals) and read by `tools/click_readings/redshift.py`, whose power of r is
 now 1 for both worlds (k x r the expected constant; k x r^2 for the
 `scalar` world until the word). GameBoard readings, the shell means of the
 owed count per self-creation in the window 100 to 300, the registered

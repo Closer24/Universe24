@@ -1,6 +1,6 @@
 """The Hubble readings tool reads the engine's own functions (the
 experimenter skill: a readings tool reads the engine, never replays a rule
-of it). Each reading of `tools/hubble_readings.py` is checked against the
+of it). Each reading of `tools/click_readings/hubble.py` is checked against the
 engine on a minimal GameBoard; the expected values of docs/TEST_EXPECTATIONS.md
 ("The tools read the engine"), written down first:
 
@@ -47,7 +47,7 @@ from event_universe.events.world import HEADING_OFFSET, Q
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "hubble_readings_tool", ROOT / "tools" / "hubble_readings.py"
+    "hubble_readings_tool", ROOT / "tools" / "click_readings" / "hubble.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["hubble_readings_tool"] = TOOL

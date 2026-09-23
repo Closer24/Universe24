@@ -15,12 +15,12 @@ read after a detector at both of its sides.
 The register's entry is [docs/EXPERIMENTS.md, "X, Poisson after a
 detector"](../../../docs/EXPERIMENTS.md#x-poisson-after-a-detector-2026-09-22);
 the pins with their `derivations` map are `expectations.json` (written by
-`make_worlds.py` before any run); the readings tool is `read_runs.py`.
+`make_worlds.py` before any run); the readings tool is `tools/click_readings/shell_clock.py`.
 
 ## The kind of every reading
 
 Every number of this series is a DETECTOR reading, and the tool opens
-nothing else: `read_runs.py` reads the `click` lines of the detector in
+nothing else: `tools/click_readings/shell_clock.py` reads the `click` lines of the detector in
 `events.jsonl` and no other line, no store, no `state.json`, no replay of a
 world (the owner's word of 2026-09-22, records 562 and 564: no experiment
 reads the GameBoard; a GameBoard reading serves diagnostics and bug fixing
@@ -123,7 +123,7 @@ release: a common factor cancels in them exactly.
 PYTHONPATH=src python examples/events/shell_clock/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 1 --out artifacts/shell_clock/<world> \
     examples/events/shell_clock/<world>.json     # one world at a time: see the host's cost
-PYTHONPATH=src python examples/events/shell_clock/read_runs.py artifacts/shell_clock
+PYTHONPATH=src python tools/click_readings/shell_clock.py artifacts/shell_clock
 ```
 
 A shell world writes about 24 MB of record per interval (450 sources on the
@@ -136,7 +136,7 @@ register carries, as the [retention policy](../../../docs/RETENTION.md) has
 it for every run's evidence.
 
 **Measured (2026-09-22, one run each, `readings.json` beside the worlds,
-written by `read_runs.py` from the detector's click lines alone; measured
+written by `tools/click_readings/shell_clock.py` from the detector's click lines alone; measured
 once, awaiting replication).** DETECTOR, `1 + z` in the windows 200 to 350
 and 350 to 500: the age word 1.9056 / 1.9176 at r = 2 (k read 0.9116, the
 pin 0.914351), 1.9061 / 1.9118 at r = 4 (0.9089, the pin 0.910783), 1.5782 /

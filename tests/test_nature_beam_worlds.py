@@ -23,7 +23,7 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
     openings reach (the design pinned 0.9 for a fan of 203 directions; rays
     measured 0.893 with the 91 of this world), and the correlation at the
     periods 4 and 16 is below 0.5;
-(b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/bell_chsh.py`):
+(b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/click_readings/bell.py`):
     S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
     exact, 0 criteria failed; the registered plus offset derived from the
     flight table (the tick of the first birth plus the age at which a
@@ -212,7 +212,7 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
     make_worlds = load_script(
         "bell_make_worlds", ROOT / "examples" / "events" / "bell" / "make_worlds.py"
     )
-    bell = load_script("bell_chsh", ROOT / "tools" / "bell_chsh.py")
+    bell = load_script("bell_chsh", ROOT / "tools" / "click_readings" / "bell.py")
     for a, b in make_worlds.SETTINGS:
         document = make_worlds.world(a, b)
         source = json.dumps(document).encode("utf-8")

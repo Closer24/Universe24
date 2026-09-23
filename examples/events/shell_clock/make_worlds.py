@@ -98,7 +98,10 @@ def _module(folder: str, name: str):
 
 T = _module("clock_word", "clock_word_make_worlds")
 E = _module("redshift", "redshift_make_worlds")
-P = T.P
+# Series U's constants (the wheel, the lamp's reservoir and rate, the
+# release and suspension pairs) live in series T's generator since the
+# crowd_clock generator was deleted on 2026-09-23 (record 871).
+P = T
 C = T.C
 # The fan of 290 (series E's: every primitive direction with
 # 0 < |a| + |b| + |c| <= 6) on which every source of the shell releases.

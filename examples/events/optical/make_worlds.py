@@ -288,7 +288,7 @@ def world(name: str, gamma: int) -> Json:
 RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
     "branch": "optical-every-family",
     "after": "the composition of optical-v1 with the massive rows (EVERY_FAMILY.md), the weight per unit 221 on the photon at gamma 1",
-    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
+    "read_by": "tools/click_readings/lensing.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
     "worlds": {
         "mass_g1": {
             "shift": -3.989,
@@ -377,7 +377,7 @@ RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
 RUN_2026_09_22_FAST: dict[str, object] = {
     "branch": "optical-every-family",
     "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
-    "read_by": "tools/lensing_readings.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
+    "read_by": "tools/click_readings/lensing.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
     "worlds": {
         "fast_g0": {
             "shift": -3.000,
@@ -810,7 +810,7 @@ def expectations() -> Json:
 # record 483 (the rule and the pins unchanged).
 RUN_2026_09_21: dict[str, object] = {
     "branch": "optical-v1",
-    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "read_by": "tools/click_readings/lensing.py --no-replay (DETECTOR); tools/optical_readings.py, deleted 2026-09-22 (GAMEBOARD)",
     "worlds": {
         "mass_g0": {"shift": -1.607, "delay": 2.89, "clicks": 1396, "taken_by_the_mass": 0},
         "mass_g1": {"shift": -3.812, "delay": 5.87, "clicks": 1385, "taken_by_the_mass": 0},
@@ -846,7 +846,7 @@ RUN_2026_09_21: dict[str, object] = {
 RUN_2026_09_21_M1: dict[str, object] = {
     "branch": "optical-v1",
     "after": "M1 of docs/designs/optical_v1/REVIEW_408CF719.md (records 494 and 496)",
-    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "read_by": "tools/click_readings/lensing.py --no-replay (DETECTOR); tools/optical_readings.py, deleted 2026-09-22 (GAMEBOARD)",
     "worlds": {
         "mass_g0": {
             "shift": -1.622,
@@ -913,7 +913,7 @@ RUN_2026_09_21_M1: dict[str, object] = {
 RUN_2026_09_22_BRESENHAM: dict[str, object] = {
     "branch": "optical-v1-bresenham",
     "after": "record 536 (verb 3 by Bresenham) and the chief physicist's word on the pace",
-    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "read_by": "tools/click_readings/lensing.py --no-replay (DETECTOR); tools/optical_readings.py, deleted 2026-09-22 (GAMEBOARD)",
     "worlds": {
         "mass_g0": {
             "shift": -1.993,
@@ -980,7 +980,7 @@ RUN_2026_09_22_BRESENHAM: dict[str, object] = {
 RUN_2026_09_22_FAR: dict[str, object] = {
     "branch": "optical-v1-bresenham",
     "after": "the merge of main's far worlds (PR #689) onto verb 3's Bresenham form with the momentum's pace",
-    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "read_by": "tools/click_readings/lensing.py --no-replay (DETECTOR); tools/optical_readings.py, deleted 2026-09-22 (GAMEBOARD)",
     "worlds": {
         "far_g0": {
             "shift": -1.773,

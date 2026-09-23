@@ -1,5 +1,5 @@
 """The Heisenberg readings tool reads the engine's own functions (Highlights
-5.4, the architecture review of 2026-09-20: `tools/heisenberg_readings.py`
+5.4, the architecture review of 2026-09-20: `tools/click_readings/heisenberg.py`
 now reads the lamp's turn off `engine.by_clock` and the world's keys through
 `parse_nature_beam_world`; the records are the run's `DetectorSet` records). The
 tool's reading of a run is checked against the engine on a minimal GameBoard;
@@ -35,7 +35,7 @@ from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "heisenberg_readings_tool", ROOT / "tools" / "heisenberg_readings.py"
+    "heisenberg_readings_tool", ROOT / "tools" / "click_readings" / "heisenberg.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["heisenberg_readings_tool"] = TOOL
