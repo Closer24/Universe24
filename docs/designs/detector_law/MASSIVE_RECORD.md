@@ -995,6 +995,11 @@ board's two-block world reads it.
    is one scalar record, one cycle of omega_0 per rest period; the half
    would tighten the bound by the factor 2, said in row A.
 
+   The whole nature table in this form, every row with the light rows and
+   the new rows, is `SCHEDULE.md` beside this design (the owner's word of
+   16:55Z, everything anew on the new engine); this item stays the massive
+   rows' detail.
+
    | The experiment (the row) | The world that reads it | The pin before the run, or the kind | The board; HOST | The earliest day |
    | --- | --- | --- | --- | --- |
    | The block's own clock at rest (world (i), the control of section 4's threshold table) | (i-a) `rest_20.json`, (i-b) `rest_28.json` | CONTROL: omega_b 0.11066 and 0.13184, the extent 5.7 and 8.2 Links (`massive_board_margin.out`) | 48^3 periodic, 3000 intervals; under a minute each | 2026-09-24, once STEPS 3 to 5 are pushed (the rule of STEP 2 alone reads no block) |
