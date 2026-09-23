@@ -1,16 +1,17 @@
 # The six rows that disagree, with the number: why each disagrees, and whether the experiment behind it was sound (the Disagreement Auditor, 2026-09-23)
 
 The order (the Boss, 2026-09-23, on the model owner's word of 02:47Z,
-record 1207 of `docs/LOG_2026-09-20.md` as the order quotes it; `origin/main`
-at `f023770c1111134b83ecd2581091e70433f16ed8` carries the log to record
-1199, so the record itself is cited from the order and not read): for the
+record 1207 of `docs/LOG_2026-09-20.md`; the branch's base `origin/main`
+at `f023770c1111134b83ecd2581091e70433f16ed8` carried the log to record
+1199, and the record is read on `origin/main` at `89d0d3ba`): for the
 six rows whose status in the tally by status of
 [NATURE.md](../../NATURE.md) is "disagrees, with the number" (1c, 6, 7b,
 8a, 8b, 13), understand why each disagrees and whether the experiment
 behind it did something wrong; extended by the Boss's word of 03:22Z
 (the physics-rule reviewer's reading 4, record 1224, on the owner's
-principle of record 1216, pending the owner's word; both cited from the
-Boss's message, neither on `origin/main` at `688a93d3`): rows 4a, 4b and
+principle of record 1216, pending the owner's word on the count; both
+read on `origin/main` since PRs #999 and #1000, `1aaf7703` and
+`c84bd929`): rows 4a, 4b and
 5b enter as one finding read thrice, row 6's ratio leaves to "not
 predicted", and 6b, the atom's stability, enters in its place; nine rows
 in all (1c, 4a, 4b, 5b, 6b, 7b, 8a, 8b, 13). Docs only; nothing recomputed for nature;
@@ -30,9 +31,9 @@ calls it Table 2; it is the one table with the label `tab:nature`);
 [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) (main; the copy on
 `paper-algebra-first` differs only in the canonical-statement line and
 row 4a's domain sentence, neither among the six);
-`docs/designs/fail_rows/KIND_AUDIT.md` on `kind-audit` at
-`842007620e32ed970e66bb67b117b1351e8907a5` (PR #990, not on main; linked
-here by its path once it merges); [RUN_8BC.md](RUN_8BC.md) (main);
+[KIND_AUDIT.md](KIND_AUDIT.md) (on main since `46c27396`, PR #990
+merged; read on `kind-audit` at `84200762` before the merge, the same
+text); [RUN_8BC.md](RUN_8BC.md) (main);
 `docs/designs/fail_rows/RUN_13_2A.md` on `fail-run-13-2a` at
 `12a347f2c5b05e095691a45c9174bf06dd4e84a4`; `docs/designs/fail_rows/RUN_14.md`
 on `fail-run-14` at `f30f2b0a87b63b6475bd023a327de8a951e4ee8b`;
@@ -80,9 +81,9 @@ neither, with what is missing to decide.
 | 5b | UNDERSTOOD, as a pin | a bond's exchange is retarded at c in the lattice's frame with nothing to contract, so the round trips are gamma^2 along and gamma across, the arms apart by beta^2 / 2 in the continuum; a COMPUTATION on the flight table, the pair in motion NOT RUN, no detector reads the arms; nature's side a bound. |
 | 6b | UNDERSTOOD | the loop opens by the drive's step (the Node lagging the accumulated motion half a Link per axis, the push read there turned along the motion), read by algebra and confirmed by the centred step under its key; and no rule of the six selects a row between two closures, so no line is read. The count 3407 is the count at which the widening loop reaches the box's face at 26 Links: the border's number; the widening is the finding. |
 | 7b | UNDERSTOOD | the give is once per body, so the border's clicks count the bodies (4 against 2) whatever the give's value; the ratio 2.0 is a constant of the rule. |
-| 8a | UNDERSTOOD, with the kind of the compared number in dispute among the documents (stated in its section, not chosen here) | a `become` at a declared count of the body's own clock is a step at any count; the only spread the law gives is the crowd's, bounded by its range, an order below 3.17. The documents differ on whether the row's number is the width 0 (the bodies' own clocks, DETECTOR by the tally and the paper) or 0.036 (the lattice's clock, GAMEBOARD by CRITERIA.md and KIND_AUDIT.md, the number in NATURE.md's row cell). |
+| 8a | UNDERSTOOD | a `become` at a declared count of the body's own clock is a step at any count; the only spread the law gives is the crowd's, bounded by its range, an order below 3.17. The kinds settled on main (record 1196; the Highlights line under record 1200): the width 0 DETECTOR (the `become` lines of the neutrons' own records), the 0.036 GAMEBOARD (the click ticks in the lattice's clock); NATURE.md's row cell moved to that form at `4c542d7b` (PR #995). The reading NOT MADE, named under record 1216: the shell detector's own count under `clock_stamp`, expected at the tick's width within 2^-20, about 0.08 to 0.13, a factor 25 to 40 from 3.17: disagrees under either number. |
 | 8b | UNDERSTOOD | a window admits w / N of a stride coprime to N and empties that class; an identical reader behind reads the emptied class, 0; under `massive_rows` the readers become all-or-nothing gates per Node and read 0 and 0; the re-emitter arrangement's 1.000 is a declared arrangement's, as RUN_8BC.md says. The three runs of RUN_8BC.md are at the head's own source (the fingerprint of `f023770c` equals theirs). |
-| 13 | SUSPECT, confirmed by the check of section 9 | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check, one run of `optical/control_g0` and `mass_g0` at head against the register's pin, read -1.993 pixel at head (section 9): the printed number is an n = 0 world's, the law's own number on a coupled world the time part, the ratio 1 against nature's 2. |
+| 13 | SUSPECT, confirmed by the check of section 9 | the printed "law as built 0.000 pixel" is the reading of series K's worlds, which declare `suspension` 0, the pair at which the crowd's stretch and push of a row are 0 by declaration; the law as built at head (the generic entry, on for every world since 2026-09-22 at gamma_PPN = 0 by default; `mass_g0` declares `optical` 0, equal to the default) reads the crowd on any world with n > 0, and the optical worlds at [1, 16384] read -1.993 pixel at gamma 0 (DETECTOR, 2026-09-22, not asserted at head). WHAT_IS_MISSING.md 1.12 says the law's own row is the time part (0.87 arcseconds); the tally and the paper say 0.000. The check, one run of `optical/control_g0` and `mass_g0` at head against the register's pin, read -1.993 pixel at head (section 9; `mass_g0` declares `optical` 0, equal to the default): the printed number is an n = 0 world's, the law's own number on a coupled world the time part, the ratio 1 against nature's 2, a COMPUTATION on two DETECTOR shifts (-1.993 at `optical` 0, -3.989 at `optical` 1) through the register's declared weight rule (the weight (1 + gamma) content x e_D, the 1 the time part), the comparison with 1.75 arcseconds through that conversion (record 1216). |
 
 **The engine since the runs, once for every row.** The commits on
 `origin/main` since the criteria runner's head `4028b020` (2026-09-22,
@@ -215,9 +216,9 @@ or marking it a statement of quantum theory rather than a measurement,
 
 Added on the Boss's word of 2026-09-23, 03:22Z (the physics-rule
 reviewer's reading 4, record 1224, on the model owner's principle of
-record 1216, pending the owner's word; neither record is on `origin/main`
-at `688a93d3`, whose log ends at 1213, so both are cited from the Boss's
-message): 4a, 4b and 5b enter the disagreeing rows as one finding read
+record 1216, pending the owner's word on the count; both records on
+`origin/main` since PRs #999 and #1000, read there): 4a, 4b and 5b enter
+the disagreeing rows as one finding read
 thrice. The cause paragraph is shared (2.1); the experiment check is one
 per row (2.2 to 2.4).
 
@@ -549,9 +550,9 @@ the note at its end.
 
 **(1) Nature's number and its source.** Nature's hydrogen does not
 ionise: the ground state's electron stays bound, no escape (the thing
-compared with, as the Boss's message states it; no published number is
-cited for it in the documents read here, the fact being qualitative, a
-stable atom). Beside it, for the note only: Balmer's nu(H beta) / nu(H
+compared with, "where nature's hydrogen does not ionise, a bound", record
+1224; no published number is cited for it in the documents read here, the
+fact being qualitative, a stable atom). Beside it, for the note only: Balmer's nu(H beta) / nu(H
 alpha) = 27 / 20 = 1.35 exactly (the formula); 1.3500 from the measured
 wavelengths 656.279 nm and 486.135 nm (NIST Atomic Spectra Database,
 Kramida et al., "to verify at the fifth digit"; NATURE.md's row 6 and its
@@ -787,12 +788,24 @@ et al. 2021, Phys. Rev. Lett. 127, 162501 (tau_n = 877.75 +- 0.28 s, "to
 verify against the source"; the identity itself among the values known,
 NATURE.md's "Values marked" section).
 
-**(2) The law's own number. The documents differ on it, and this file
-does not choose.**
+**(2) The law's own number, settled on main: the width 0 is DETECTOR and
+the 0.036 is GAMEBOARD.** The kinds: the width 0 is read off the `become`
+lines of the neutrons' own records, DETECTOR (ENGINE.md's readings by
+type; Highlights kind 9); the 0.036 is the width over the median of the
+click ticks, the tick of a line being the record's ordering, GAMEBOARD.
+The documents, as they stood and as they stand:
 
-- NATURE.md's row cell (the rows table): the width over the median of
-  the click ticks, 0.036 (`j1_lattice`, the median 549) and 0.038
-  (`j1_source`), "FAIL: 0.036 against 3.17, a factor 88".
+- NATURE.md's row cell (the rows table) at this file's base `f023770c`
+  read the width over the median of the click ticks, 0.036 (`j1_lattice`,
+  the median 549) and 0.038 (`j1_source`), "FAIL: 0.036 against 3.17, a
+  factor 88"; the cell moved on main at `4c542d7b` (PR #995,
+  `nature-fold-2`, 2026-09-23, the fold of record 1196) and reads
+  "disagrees: a step, the width 0 in each neutron's own clock against
+  nature's 3.17 (DETECTOR, the 64 clicks of content 3); the width over
+  the median in the lattice's clock 0.036 (0.08 to 0.13 at head)
+  GAMEBOARD, a diagnostic beside it, in no verdict", the cell before
+  2026-09-23 kept beside it as history; the tally, the paper's
+  `tab:nature` and its Table 6 print the same since that fold.
 - CRITERIA.md row 8a (a), (d), (f): that width is GAMEBOARD, the
   lattice's clock, since the physics-rule reviewer's correction on PR
   #777 (2026-09-22), "counted in no criterion"; the DETECTOR readings are
@@ -808,11 +821,14 @@ does not choose.**
   that number under R2 (the factor 88 a board reading kept as history);
   the paper's form keeps FAIL under R1; "record 1166 places 8a's width
   under disagrees; by R2 the width waits on the reading behind it, the
-  reviewer's to settle". And one more difference of label across the
-  register: the "width 0" rests on the neutrons' `become` lines, a body's
-  own record (BODY in KIND_AUDIT.md's forms), which NATURE.md labels
-  GAMEBOARD in row 4a ("the muon's `become` at 64, GAMEBOARD, a body's
-  own record") and DETECTOR here.
+  reviewer's to settle": settled by the reviewer's read of the audit,
+  record 1196 (8a disagrees on the step; the width GAMEBOARD), and by the
+  Highlights line under record 1200 (the time axis and the kind of a
+  reading). One label difference stays in another row's cell: the
+  `become` line, a body's own record and DETECTOR by ENGINE.md's readings
+  by type (BODY in KIND_AUDIT.md's forms), is labelled GAMEBOARD in
+  NATURE.md's row 4a ("the muon's `become` at 64, GAMEBOARD, a body's own
+  record"); not 8a's question.
 
 The runs: registered 2026-09-20 (the transformation's fingerprint
 `071197bc5d0f`), re-pinned 2026-09-21, replicated bit-exact at `6b707a5`
@@ -875,8 +891,14 @@ it (CRITERIA.md 8a (c)).
   tick by n A / d per interval, negligible against a spread of 0.08 to
   0.13 of the median, so the detector reading NOT MADE would read the
   tick's width within its grain, and FAIL by a factor 25 to 40 as the
-  GAMEBOARD number does. The verdict does not turn on the label; the
-  label is the reviewer's to settle, as KIND_AUDIT.md says.
+  GAMEBOARD number does. The verdict does not turn on the label, which
+  is settled (record 1196; the Highlights line under record 1200). What
+  is missing under record 1216, named: the laboratory clock's
+  counterpart, the shell detector's own count under `clock_stamp` (the
+  shell is 4170 fixed bodies, one `beam` reading set; their click lines
+  carry `clock` under the key), NOT MADE; its expectation the tick's
+  width within 2^-20 at [1, 2^20], about 0.08 to 0.13, a factor 25 to 40
+  from 3.17: disagrees under either number.
 - *The fan's comb.* `j1_source` reads under a fan ("the fan's dwells"),
   and its count-range pin failed on that account (above); `j1_lattice`'s
   spread is the line-mates' rows at 4, 8 and 12 Links, a comb of three
@@ -907,12 +929,13 @@ it (CRITERIA.md 8a (c)).
   no border enters; the clicks' ages 17 to 41 are the flight. Nothing in
   the arrangement makes the step; the rule does. Sound for the claim.
 
-**(5) The verdict.** UNDERSTOOD for the disagreement (a step against an
-exponential, under every kind of the compared number); the kind and the
-value printed as the row's number differ among NATURE.md's row cell
-(0.036, a factor 88), CRITERIA.md and KIND_AUDIT.md (GAMEBOARD, waiting
-on the reading NOT MADE), and the tally and the paper (0, DETECTOR), and
-this file states the difference and does not choose.
+**(5) The verdict.** UNDERSTOOD, with the kinds as settled on main (the
+width 0 DETECTOR, the `become` lines of the neutrons' own records; the
+0.036 GAMEBOARD, the click ticks in the lattice's clock; record 1196 and
+the Highlights line under record 1200) and the reading NOT MADE named
+with its expectation: the shell detector's own count under `clock_stamp`,
+the tick's width within 2^-20, about 0.08 to 0.13, a factor 25 to 40
+from 3.17; a step against an exponential under either number.
 
 **(6) The cheapest next check.** `j1_lattice.json` copied with the world
 key `clock_stamp` true and nothing else changed, run at head to the cap
@@ -1203,7 +1226,8 @@ declared coefficient's value at the Sun's limb, on the comparison side.
 **(5) The verdict.** SUSPECT. The named flaw: the number printed as "the
 law as built" is the reading of a world whose declared pair n = 0 turns
 off the very coupling the row tests; the law as built at head (the
-generic entry, on for every world at gamma_PPN = 0 by default) reads the
+generic entry, on for every world at gamma_PPN = 0 by default; `mass_g0`
+declares `optical` 0, equal to the default) reads the
 crowd on any world with n > 0, and the register's only such reading at
 gamma 0 (-1.993 pixel, the time part, half of gamma 1's) is on a branch
 before the entry's merge and is asserted by no test at head. The one
@@ -1223,7 +1247,7 @@ run reads 0.000 or refuses, the entry does not act at gamma 0 on this
 world and the printed number stands. Made below, section 9, within the
 order's bound.
 
-**(6) The cheapest next check.** The run of (5), made in section 9, which confirmed the suspect; after it, a docs line: the tally's and the paper's row 13 cell restated with the law's own number on a coupled world (the time part, -1.993 pixel at gamma 0 against -3.989 at gamma 1, the ratio 1 against nature's 2) and series K's 0.000 named as the n = 0 worlds' reading beside it; 0 HOST.
+**(6) The cheapest next check.** The run of (5), made in section 9, which confirmed the suspect; after it, a docs line: the tally's and the paper's row 13 cell restated with the law's own number on a coupled world (the time part, -1.993 pixel at `optical` 0 against -3.989 at `optical` 1, the ratio 1 against nature's 2, COMPUTATION on two DETECTOR shifts through the register's declared weight rule, the comparison with 1.75 arcseconds through that conversion, record 1216) and series K's 0.000 named as the n = 0 worlds' reading beside it; 0 HOST.
 
 ## 8. The summary of the nine
 
@@ -1235,7 +1259,7 @@ order's bound.
 | 5b | the null, below 10^-17 (Herrmann 2009, Nagel 2015; Michelson and Morley 1887), a bound | the arms apart by gamma - 1 = beta^2 / 2 = 5 x 10^-9 at beta = 10^-4; 1.375 and 1.140 at k = 4 on the flight table (DERIVATIONS_BEAM 12.3); the pair in motion of 12.4 NOT RUN | COMPUTATION (a pin; no detector reading) | UNDERSTOOD, as a pin | the pair in motion at k = 4 against 12.4's counts per cycle, about a minute HOST once declared; no verdict moves |
 | 6b (row 6's ratio a note, not predicted) | nature's hydrogen does not ionise (no escape; no source cited) | the electron escapes at 3407, the loop widening every quarter turn (the atom baseline, 2026-09-22, `af39be60`); under `centred_step` no escape in 7500, C1 PASS (the control of the cause); the count the box's, the widening the finding | DETECTOR (BORDER, the face click; the count the tick at n = 0) | UNDERSTOOD | `hydrogen_r12.json` at head, 71 s HOST, the same crossings and escape expected |
 | 7b | 12.72 (AME2020) | 2.0, four border clicks against two (series N, re-run at `4028b020`) | DETECTOR (BORDER); the escaped content GAMEBOARD | UNDERSTOOD | none needed; the two worlds at head, about 2 minutes HOST, if wanted |
-| 8a | 3.17, ln 9 / ln 2 (an identity of the exponential; Gonzalez et al. 2021 for the form) | the documents differ: 0.036 (NATURE.md's row cell) against 0 (the tally, the paper); 0.08 to 0.13 at `4028b020`, the cap 1024; the J1 `become` blocks move under the generic entry at head, unread for the row | DETECTOR (BODY, the `become` lines; CROWD, the shell's 64 clicks) for the step; GAMEBOARD (the lattice's clock) for the width; the label in dispute (KIND_AUDIT.md, the reviewer's to settle) | UNDERSTOOD, the kind of the number in dispute among the documents, stated and not chosen | `j1_lattice` with `clock_stamp` true at head, about 3.5 minutes HOST, the width in the shell's own count |
+| 8a | 3.17, ln 9 / ln 2 (an identity of the exponential; Gonzalez et al. 2021 for the form) | the width 0 (a step; NATURE.md's row cell at the base read 0.036, moved to the step at `4c542d7b`, PR #995); the width in the lattice's clock 0.036, 0.08 to 0.13 at `4028b020` at the cap 1024, beside it; the J1 `become` blocks move under the generic entry at head, unread for the row | DETECTOR (the `become` lines of the neutrons' own records; the shell's 64 clicks) for the step; GAMEBOARD (the click ticks in the lattice's clock) for the width, settled by record 1196; the shell's own count under `clock_stamp` NOT MADE, expected about 0.08 to 0.13 | UNDERSTOOD, the kinds as settled on main, the reading NOT MADE named with its expectation | `j1_lattice` with `clock_stamp` true at head, about 3.5 minutes HOST, the width in the shell's own count |
 | 8b | about 1 (an order-of-magnitude estimate from Formaggio and Zeller 2012; no measurement of two detectors in line cited) | 16 of 1024 and 0 behind, the far detector 699 of 711 (series J2, re-run at `4028b020`); under `massive_rows` 0, 0, the whole beam at x = 14; with a re-emitter 16, 16, 1.000, 683 (RUN_8BC.md at head's source `5166dbe9`) | DETECTOR (CROWD, the readers' own lines) | UNDERSTOOD | a named source for nature's ratio; 0 HOST |
 | 13 | 1 + gamma = 2, 1.75 arcseconds at the Sun's limb (Dyson 1920; the VLBI gamma) | the documents differ: 0.000 pixel (series K at `suspension` 0, 2026-09-20; the tally, the paper) against the time part, -1.993 pixel at gamma 0 in `optical/mass_g0` at [1, 16384] (2026-09-22, before PR #855's merge; WHAT_IS_MISSING.md 1.12's "0.87 arcseconds") | DETECTOR (CROWD, the screen's centroid); the ratio 2.00 and the ring's 0.731 DETECTOR readings of a declared input | SUSPECT, confirmed by the check: the printed number is an n = 0 world's, the coupling declared away; at head a coupled world reads the time part | made (section 9): `optical/control_g0` and `mass_g0` at head, 12 s and 25 s HOST, the pin -1.93 +- 0.5 met at -1.993; next, a docs line restating the row's own number, 0 HOST |
 
@@ -1282,9 +1306,14 @@ is zero by declaration, and it stands at head only for those worlds. So
 the number printed as "the law as built" in the tally by status and in
 the paper's cell is an n = 0 world's, and the law's own number for row
 13 on a coupled world is the time part alone: the ratio 1 against
-nature's 1 + gamma = 2 (the deflection half of nature's; nature's 1.75
-arcseconds is the declared coefficient's value at the Sun's limb, on the
-comparison side). The disagreement with nature is understood either way
+nature's 1 + gamma = 2, its kind COMPUTATION on two DETECTOR shifts
+(`mass_g0`'s -1.993 at `optical` 0, `mass_g1`'s -3.989 at `optical` 1,
+the register's) through the register's declared weight rule (the weight
+(1 + gamma) content x e_D, the 1 the time part), and the comparison with
+nature's 1.75 arcseconds through that conversion (record 1216: a board
+number meets a detector's only through a written conversion), the
+deflection half of nature's and 1.75 arcseconds the declared
+coefficient's value at the Sun's limb, on the comparison side. The disagreement with nature is understood either way
 (gamma_PPN an input; the space part no verb reads); what the check moves
 is which number the row should print as the law's, which is the Register
 Architect's and the writer's to restate on the Boss's routing, nothing of
@@ -1309,4 +1338,4 @@ section), and the cheapest next step is a docs line, not a run.
 - [The order channel](../order_channel/RUN.md) and [its pins](../order_channel/PINS.md); [the atom's baseline](../atom_baseline/RUN.md), [its cause](../atom_give/CAUSE.md), [the centred step's run](../atom_give/RUN_CENTRED.md).
 - [The price of the generic entry](../one_wall/GENERIC_BENDING_PRICE.md); `examples/events/gate_set.json`; the registers of [lensing](../../../examples/events/lensing/README.md), [optical](../../../examples/events/optical/README.md), [binding](../../../examples/events/binding/README.md), [weak](../../../examples/events/weak/README.md) and [atoms](../../../examples/events/atoms/README.md).
 - [POSTULATES.md section 10](../../../POSTULATES.md); the paper's `tab:nature` on `paper-algebra-first`.
-- The log: records 281, 678, 707, 709, 941, 955, 1129, 1134, 1139, 1164, 1166, 1173 (on main); 1207 (the order's citation, not yet on main).
+- The log: records 281, 678, 707, 709, 941, 955, 1129, 1134, 1139, 1164, 1166, 1173, 1196, 1200, 1207, 1216 and 1224 (all on `origin/main` at `89d0d3ba`).
