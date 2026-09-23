@@ -110,15 +110,21 @@ from the pin.**
    labels ±64 on y or z, one Link off the axis at the escape ((y, z) =
    (0, 1), (2, 1), (1, 0), (1, 2)), at every age from 11 to 614 intervals
    and at no one displacement from the birth Node (128 distinct values of
-   240 at k = 5): not the loop's antipode. Which rule of the interval puts
-   a record's row on a y or z heading is the reviewer's to name from the
-   code: the candidates the record allows are the re-creation of a `home`
-   row on the event's directions (the leftover's direction) and the
-   meeting of the two rows of one record in flight (the merge of one
-   record at one Node, ALGEBRA.md 4.7); at k = 17, where only 119 rows
-   came home, the escapes cluster at the ages 162 to 250 about the
-   antipode's 207, and at k = 5, where 691 came home, they spread from 11
-   to 614. The scout does not decide it here. What it means for R2: two
+   240 at k = 5): not the loop's antipode. The rule, named by the physics-rule
+   reviewer on this record (2026-09-23): THE COLLISION, item 3 of the
+   interval (`nature_beam.py` :35-40; `_collide` :3464, applied at :3436
+   every interval; `collision_table` :1293; `class_key` :1279): at every
+   Node of free space, per (number, content) class, the single units in
+   the eight slots are permuted by the cyclic shift inside their class,
+   and two single rows of one class with opposite headings sum to zero,
+   so the class (+x, -x) is turned onto (+y, -y) or (+z, -z); the cart's
+   +x pulse of one ordinal meets its -x pulse of another at a free Node at
+   almost every interval, which is why the escapes carry [0, ±64, 0] and
+   [0, 0, ±64], leave one Link off the axis, at every age and 128
+   displacements, and why the turned share falls as k rises. Not the
+   `home` re-creation (re-created on ±x only) and not a meeting of one
+   record's rows (ALGEBRA.md 4.7 is the injectivity theorem, no turning
+   rule). What it means for R2: two
    rows of one record on one loop, born at one Node in opposite
    directions, is not an arrangement the law as built carries around the
    loop.
@@ -137,8 +143,11 @@ disagrees with the pin) and not a PASS; the row does not enter the
 register from these runs. The Boss's rule for a world that must change
 applies: stop and report before running.
 
-**The arrangement that would read it (a proposal for the Boss's word and
-the reviewer's read; not written, not run, no pin written).** Every part
+**The arrangement that would read it, as first proposed (superseded by the
+reviewer's ruling: two records of the cart's number are ONE class, so the
+two pulses need two numbers; the arrangement that stands is
+[PINS_R2.md](PINS_R2.md), one world of two bodies, its pins written and
+its worlds validated at load, not run).** Every part
 under existing keys: (a) `age_bound` declared 1500 (the run's length);
 (b) the returns through transponders, as RUN_4AB reads the round trip: a
 post P_b one Node behind the cart and a post P_a one Node ahead, bodies of

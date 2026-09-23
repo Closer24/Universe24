@@ -1,0 +1,220 @@
+{
+  "format": "new-rows-r2-pins-v1",
+  "worlds_validated_at_load": {
+    "sagnac2_k3": "beam-new-rows-sagnac2-k3-v1",
+    "sagnac2_k5": "beam-new-rows-sagnac2-k5-v1",
+    "sagnac2_k9": "beam-new-rows-sagnac2-k9-v1",
+    "sagnac2_k17": "beam-new-rows-sagnac2-k17-v1"
+  },
+  "held_mass": "kept as registered (the cart's M = 4194304 + 8192, K = 4202496); the mass rows a class of their own (amount 64, a crowd slot, never a single), colliding with nothing of content 1",
+  "R2": {
+    "sagnac2_k3": {
+      "k": 3,
+      "momentum": 141012366262272,
+      "pace_links_per_interval": "1/3",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/96",
+        "value": 0.5729166666666666
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_direct_from_E": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "39435/151",
+          "value": 261.158940397351
+        },
+        "plus_x_via_E": {
+          "form": "L / (c - v) + 1",
+          "exact": "39641/41",
+          "value": 966.8536585365854
+        },
+        "ordinals_with_both_returns_inside_the_run": 533
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_0 the birth line's clock at the cart, n_- the click of E's -x pulse (number E, the record E's ordinal), n_+ the click of the cart's +x pulse back from E (number E, the record the cart's ordinal); the mean over the window",
+        "pin": {
+          "exact": "2184478/3801313",
+          "value": 0.5746640700200167
+        },
+        "beta": {
+          "exact": "55/96",
+          "value": 0.5729166666666666
+        },
+        "pin_less_beta": 0.0017474033533501012,
+        "reads": "v / c plus the one asymmetric constant of E's dwell, r-free (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "151/32",
+          "value": 4.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "167/16",
+          "value": 10.4375
+        },
+        "on_the_ratio": 0.01234209650060387,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at the direct click; twice it plus E's one count at the re-emitted return; over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k5": {
+      "k": 5,
+      "momentum": 70506183131136,
+      "pace_links_per_interval": "1/5",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "11/32",
+        "value": 0.34375
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_direct_from_E": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "13145/43",
+          "value": 305.69767441860466
+        },
+        "plus_x_via_E": {
+          "form": "L / (c - v) + 1",
+          "exact": "4407/7",
+          "value": 629.5714285714286
+        },
+        "ordinals_with_both_returns_inside_the_run": 870
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_0 the birth line's clock at the cart, n_- the click of E's -x pulse (number E, the record E's ordinal), n_+ the click of the cart's +x pulse back from E (number E, the record the cart's ordinal); the mean over the window",
+        "pin": {
+          "exact": "48743/140758",
+          "value": 0.34628937609230026
+        },
+        "beta": {
+          "exact": "11/32",
+          "value": 0.34375
+        },
+        "pin_less_beta": 0.00253937609230026,
+        "reads": "v / c plus the one asymmetric constant of E's dwell, r-free (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "215/32",
+          "value": 6.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "231/16",
+          "value": 14.4375
+        },
+        "on_the_ratio": 0.02262049492746416,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at the direct click; twice it plus E's one count at the re-emitted return; over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k9": {
+      "k": 9,
+      "momentum": 35253091565568,
+      "pace_links_per_interval": "1/9",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/288",
+        "value": 0.1909722222222222
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_direct_from_E": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "118305/343",
+          "value": 344.91253644314867
+        },
+        "plus_x_via_E": {
+          "form": "L / (c - v) + 1",
+          "exact": "119033/233",
+          "value": 510.87124463519314
+        },
+        "ordinals_with_both_returns_inside_the_run": 989
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_0 the birth line's clock at the cart, n_- the click of E's -x pulse (number E, the record E's ordinal), n_+ the click of the cart's +x pulse back from E (number E, the record the cart's ordinal); the mean over the window",
+        "pin": {
+          "exact": "6631627/34196692",
+          "value": 0.19392597974096443
+        },
+        "beta": {
+          "exact": "55/288",
+          "value": 0.1909722222222222
+        },
+        "pin_less_beta": 0.0029537575187421963,
+        "reads": "v / c plus the one asymmetric constant of E's dwell, r-free (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "343/32",
+          "value": 10.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "359/16",
+          "value": 22.4375
+        },
+        "on_the_ratio": 0.03874372327811708,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at the direct click; twice it plus E's one count at the re-emitted return; over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k17": {
+      "k": 17,
+      "momentum": 17626545782784,
+      "pace_links_per_interval": "1/17",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/544",
+        "value": 0.10110294117647059
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_direct_from_E": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "223465/599",
+          "value": 373.0634390651085
+        },
+        "plus_x_via_E": {
+          "form": "L / (c - v) + 1",
+          "exact": "74963/163",
+          "value": 459.8957055214724
+        },
+        "ordinals_with_both_returns_inside_the_run": 1040
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_0 the birth line's clock at the cart, n_- the click of E's -x pulse (number E, the record E's ordinal), n_+ the click of the cart's +x pulse back from E (number E, the record the cart's ordinal); the mean over the window",
+        "pin": {
+          "exact": "4239021/40663816",
+          "value": 0.10424552875214663
+        },
+        "beta": {
+          "exact": "55/544",
+          "value": 0.10110294117647059
+        },
+        "pin_less_beta": 0.0031425875756760377,
+        "reads": "v / c plus the one asymmetric constant of E's dwell, r-free (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "599/32",
+          "value": 18.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "615/16",
+          "value": 38.4375
+        },
+        "on_the_ratio": 0.06861831143995438,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at the direct click; twice it plus E's one count at the re-emitted return; over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    }
+  }
+}
