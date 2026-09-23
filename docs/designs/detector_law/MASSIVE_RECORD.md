@@ -862,6 +862,67 @@ board's two-block world reads it.
    the owner's second word through the Boss (with his two words of section
    7: the index in motion, the sink); the engine's numbers reported against
    the algebra's, never the algebra moved to the engine's.
+6. **The schedule of the pins (the Boss's order of 16:16Z on the owner's
+   question of record 1447, "when will we see whether the physics
+   matches"; the pins table of record 1338 in its schedule form).** One
+   row per experiment the new engine reads, with the world that reads it
+   (BUILD.md section 5 on `detector-law-build`, its STEP 2 pushed at
+   9a273e891d7610bad5eda83192cd7eae500cece0, 16:07Z today), the pin
+   declared before the run or the row's kind, the board and the HOST time
+   (BUILD.md section 7, this machine, numpy int64; the engine's integer
+   form is measured at STEP 5), and the earliest day under the builder's
+   order (STEP 3 the block, the coupling, the click and the take, tests
+   (e) to (l); STEP 4 the faces, the cavity and the margin module; STEP 5
+   the series and its runs; one pushed commit per step on the Boss's
+   word, each gated). The days are the builder's order read forward, not
+   a promise: a step that fails its gate moves every row after it.
+
+   | The experiment (the row) | The world that reads it | The pin before the run, or the kind | The board; HOST | The earliest day |
+   | --- | --- | --- | --- | --- |
+   | The block's own clock at rest (world (i), the control of section 4's threshold table) | (i-a) `rest_20.json`, (i-b) `rest_28.json` | CONTROL: omega_b 0.11066 and 0.13184, the extent 5.7 and 8.2 Links (`massive_board_margin.out`) | 48^3 periodic, 3000 intervals; under a minute each | 2026-09-24, once STEPS 3 to 5 are pushed (the rule of STEP 2 alone reads no block) |
+   | Row 4a, the muon's form: the moving block's clock 1 / gamma_m to the band's second term (the FIRST nature-shaped reading, the number the lattice's) | (ii-a) `moving_20.json`, (ii-b) `moving_28.json` | PREDICTION (the block form's residual): the one formula of section 8, about 0.724 and 0.771 at first order against 1 / gamma_m = 0.8165 (eps 0.45 and 0.22) | 64^3 periodic, 9500 intervals; 2 minutes each | 2026-09-24, after (i) |
+   | Row 4a as five's pin: 1 / gamma_m within one percent (the residual 0.0009 to 0.0045) | (ii-c), the four smallest binding sides pushed to k = 3 | PIN: 0.8165 +- 0.01; at rest first, (i-c): omega_b 0.14876, 0.14882, 0.04907, 0.04908 | 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per interval; a rest world one to three hours, a moving world one to two hours, four of each | 2026-09-25 (the rest worlds after (i-a) and (i-b) read and the Boss's word on the HOST cost, the moving ones after them); not the morning of the 24th |
+   | Five's 1 and 1, N_par / N_perp between two arms in motion (rows (e), (f); row 5b of the table) | the two-arm relay (b) of item 3: light-bound arms at section 10's equilibrium, pushed by the stress of section 5, at k = 4; its CONTROL (a), declared rigid arms at k = 3 | PIN: 1 and 1 within +- 0.03 plus eps (gamma_m^2 - 1) / 2; the control the theorem's gamma_m ratio times the ring-ups' ratio | a layer of two arms of L about 60 with the margin, about 200 x 200 x (s + 4 / kappa); an hour a world by the pin worlds' rate | NOT IN BUILD.md section 5: the push of light on the block (section 5's stress) is not an item of STEPS 3 to 5; a world to add on the Boss's word after (iv) reads, 2026-09-26 at the earliest |
+   | Row 4b, the moving lamp's redshift: 1 + z = gamma_m (1 + beta_c), the character's frequency shifted by the medium's Doppler | the boosted block's emission read by a block at rest: (ii-a) with a receiver block and light through the coupling, a world beside (iv-a) | COMPUTATION per declaration (section 9's row 4b); nature's 1.315 at beta = 0.2674 NOT COMPARED until the conversion of the pace | as (iv-a) on a chain, seconds; on a 64^3 board 2 minutes | 2026-09-25, after (iv-a) |
+   | The rest cavity of form (I) and the cavity moved (the control of the medium's clock) | (iii-a) `cavity_24.json`, (iii-b) `cavity_24_moving.json` | CONTROL: omega 0.19503 (N = 32.2); moved 1 / gamma_m^2 = 0.6667 | 48^3 periodic; under a minute, 2 minutes | 2026-09-24, with (i) and (ii) |
+   | The light clock of two bodies at rest (row (d); the builder's question (h) on the seed) | (iv-a) `two_bodies.json` and `two_bodies_alone.json` | PIN per declaration: N_0 = 2 L / c + the two ring-ups, the script's number under the world's seed (258 at the exact mode, 235 under the engine's flat seed at G g = 0.2) | a chain 1400 x 1 x 1, 700 intervals; seconds | 2026-09-24 or 25, after STEP 3's coupling and emission and STEP 5's runner |
+   | The take world beside it: the register's light clock, an (M) mirror and an absorbing detector | (iv-b) `take_world.json` | 206 +- 2 reproduced (the first build's pin, DESIGN.md 6.8) | a chain; seconds | with (iv-a) |
+   | The index block at rest (the coupling's control) | (v) `index.json` at three couplings and `index_reference.json` | CONTROL: n = 1.0420, 1.1021, 1.1954 by the closed form; the chain's 1.034, 1.083, 1.159 the lattice's band | a chain 1400 x 1 x 1; seconds to a minute | 2026-09-24, with (i) |
+   | The index block in motion (a prediction of the model as built) | (v-m) `index_moving.json` at K = 3, and at K = 4 or 5 beside it (item 4's last sentence) | PREDICTION: +0.5103 rad head-on, +0.1864 from behind, +- 0.04 (`massive_moving_index.out`, the drive's pair); the pump's GAMEBOARD readings printed | a chain 2200 x 1 x 1, 4400 intervals; a minute | 2026-09-24 or 25, after STEP 3's index in motion |
+   | Fizeau's drag (nature's row of the index in motion) | none: a DECLARED NON-MATCH (BUILD.md section 8; section 9's row: not covariant under either declaration, first order in beta not computed) | NOT COMPARED; the (v-m) numbers are the model's own | no world | no day; a row of the record, not of the schedule |
+   | The two-pace world (NATURE row of section 9: c_m = c sqrt(cos omega_0)) | none: the deficit omega_0^2 / 4 is read on every massive world as a GAMEBOARD number (the group pace of the block line against c) | NOT COMPARED: a consistency requirement on the interval-to-rest-period conversion, N_0 >= 2.2 x 10^7 against Altschul 2006's bound (snippet) | (i) and (ii) print it at N_0 = 42 to 128; nothing to run | the number on the 24th with (ii); the comparison waits on the conversion, no day |
+   | The bound clock's second term (NATURE row of section 9: Li+ 2014, the rotor 1963; the row the Boss named "R2" is taken as this one, no row of PINS.md, DESIGN.md or BUILD.md carries that name) | none: the term eps (gamma_m^2 - 1) / 2 is what (ii-a), (ii-b) and (ii-c) read at their own eps | BOUND: 2.2 x 10^-11 against 2.3 x 10^-9 (Li+); 0.26 sigma (the rotor); the eps mapping a named hypothesis | the (ii) worlds; nothing more to run | the term's form read on the 24th and 25th at eps 0.007 to 0.45; nature's rows stay BOUND, no day |
+   | Row 6, the atom's levels (the owner's question of record 1430) | none of this build; `massive_well_spectrum.py` the computation (a cube, a sphere, a Coulomb-like well at mu = 0.15) | NOT COMPARED: the scale condition (the Bohr radius 527 Links at this mu); no Balmer ladder expected at these depths | a 64^3 box in the script; a world of thousands a side not affordable | no day; the levels of a declared well a PREDICTION if the Boss orders that world (minutes on 64^3) |
+   | Rows 1a, 1b, 1d (Bell, the CHSH sum, the no-signalling marginals) | light's rows: DESIGN.md's declared tables and PINS.md's scripts, the first build's worlds; a scalar record has no polarisation (section 9) | as PINS.md declares them (S = 2.75 in the unit 64 DETECTOR; 2 a control; 0) | the first build's boards | the first build's schedule, not this build's; unchanged by the massive kind |
+   | Row 9, Malus at 45 degrees | the same: the polariser a foreign object with its table, outside this design | 128 of 256 (COMPUTATION on the table) once the phase reading is declared | the first build's | the same |
+   | Row 2a, the two-slit visibility of one quantum at a time (with 2b, 2c) | light's rows, DESIGN.md 6.2's worlds | the visibility at or above the train's coherence value (0.99 at 128 periods); 1.00 - 0.02; the exponent 2 | the first build's | the same |
+   | Row 10, the single-opening spread, its two halves: (a) the wave's own sum through an opening in a mirror; (b) the far field | light's row, DESIGN.md's world of the opening in an (M) mirror (the mirror now a block of light's kind with the pair `[21, 22]`, the take world's form) | (a) 0.842 at w = 2 lambda, F = 0.16; (b) 0.886 far-field, reached only at F <= the record's | the first build's boards; the mirror block seconds on a layer | (b) the first build's; (a) with the mirror block of (iv-b), 2026-09-25 |
+   | Row 5a, the anisotropy of c by direction | light's row, DESIGN.md 6.0 A | within 0.8, 0.4, 0.2 percent at 12, 16, 24 Links (COMPUTATION) | the first build's | the same |
+   | Row 4c, the round-trip Doppler off a receding transponder | (iv-a)'s form with B stepped away | (1 + beta_c) / (1 - beta_c) exactly (COMPUTATION) | a chain; seconds | 2026-09-25, after (iv-a) |
+   | Rows 3, 11a, 11b, 11c, the far lamp under the growing wall; row 12, the clock's field at two distances; row 13, the bending of light, 1 + gamma_PPN | NOT DERIVED in this design (section 9: the coupling gives an index at declared cells, nothing about a crowd's field); the ray law's crowd rows stay HISTORY | q_0 = -0.53 +- 0.01, b = 0.97, Tolman's 4; 2.00; 1.99992 +- 0.00012 as registered, none computed by this kind | no world of this build | no day under this kind; a gravity-index hypothesis (section 7) would be its own identity |
+   | Rows 7a, 7b, the deuteron's and the alpha's binding; rows 8a, 8b, 8c, the neutron's decay, the neutrino's passage and mass; row 14, the 1 / r form's period ratio | NOT PREDICTED: the well of the pair binds a record, not a nucleus; no self-click lifetime derived; no 1 / r form | as registered in PINS.md | no world | no day |
+
+   THE BOSS'S ESTIMATE, CORRECTED: the first nature-shaped reading of the
+   new kind is row 4a's form, 1 / gamma_m to the block form's residual, on
+   the 64^3 PREDICTION worlds (ii-a) and (ii-b) in minutes, and on the
+   pin worlds (ii-c) within one percent in hours; the earliest day for the
+   64^3 worlds is the 24th, if STEPS 3, 4 and 5 are all pushed and gated
+   by midday (STEP 3 is the largest step: the block, the coupling both
+   ways, the emission, the click, the take, the index in motion and eight
+   tests), and for the pin worlds the 25th (one to three hours per rest
+   world, one to two per moving world, eight worlds, after the Boss's
+   word on the cost). Five's 1 and 1 is not row 4a: it is the two-arm
+   relay (b), which needs light's push on the block (section 5's stress
+   through section 10's force), an item BUILD.md does not carry; on the
+   Boss's word it is the 26th at the earliest, after (iv) reads. The
+   table of 12 is not re-read whole by this kind: the light rows (1, 2, 5a,
+   9, 10) stay the first build's, read on its schedule and unchanged by
+   the massive kind; rows 4a, 4b, 4c, 5b and 10 (a) are this kind's, in
+   the days above; rows 3, 6, 7, 8, 11, 12, 13, 14 are NOT COMPARED, NOT
+   DERIVED or NOT PREDICTED under it and no day is named for them. The
+   two NATURE rows of section 9 are BOUND and NOT COMPARED before any
+   run, and no world reads them (BUILD.md section 8).
+
 
 ## 12. The three tests per sentence; the scripts; what is not computed
 
