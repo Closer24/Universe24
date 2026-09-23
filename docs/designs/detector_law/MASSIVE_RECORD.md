@@ -8,8 +8,8 @@ and the gate of this design is Reviewer 3's `PUSH_BALANCE.md`
 (docs/designs/detector_law/ on `push-balance-r3`, PR #1043): its sections 10
 and 11 at 6d7a03b5, 60509e9a and d9227352, its section 12 at bb43ef41 and
 f5752667, its 12.5 at 198a9bfe and its 12.6 at f089736f, and its 12.7 (his gate of
-7022428c, AGREED WITH SIX MUSTS, the Boss's relay of 14:33Z; on
-`push-balance-r3`, PR #1043, its SHA cited when it lands); cited by those
+7022428c, AGREED WITH SIX MUSTS, at 03a2ba665b6df033ee5d14452ff96a4a6bb6b1a8
+on `push-balance-r3`, PR #1043); cited by those
 SHAs, never rewritten. The six MUSTs are folded below (sections 1, 4, 7, 9,
 10, 13 and `massive_c_derivation.py`). Every number here is a COMPUTATION from the rule, written
 before the board runs it, and printed by a script beside this document (the
@@ -456,15 +456,15 @@ written for the record and the algebra file), and it needs NO SINK: the verbs ar
 passes on, and the click is the crossing. The whole detector law of today
 (the two slits, Malus, Bell) reads so.
 
-**POSTULATES.md section 10, two readings, decided by the owner.**
-POSTULATES 10 says "the record ends at the detector". Reading (a): it
-stands BESIDE the click above as the statement of the worlds that absorb
-(a screen that must not re-emit, a sponge), where the sink of section 7 is
-declared, and a detector that lets light pass (a window with a clock) is
-lawful too, its click the crossing alone. Reading (b): it is AMENDED to
-"the record is read at the detector, and ends there only where a sink is
-declared". Both are stated; nothing is decided here; the Boss asks the
-owner.
+**POSTULATES.md section 10, settled by the owner's word** (14:33Z, record
+1421: "all the postulates must be changed so that they agree with the
+algebra; what does not agree there is settled by the algebra"). The
+postulate follows the algebra: a record is READ at a detector by E in the
+detector's own clock (the click), and a light record ENDS only where a take
+is declared (the absorbing worlds of section 7; a clock body takes nothing).
+POSTULATES.md section 10 is being rewritten to this on the branch
+`postulates-by-algebra` (the whole file brought to ALGEBRA.md, Reviewer 3
+gating); this design cites the record and does not edit the postulate.
 
 ## 7. The coupling between the two record kinds: the dielectric, one declared g with G
 
@@ -527,9 +527,29 @@ COMPUTATION from the drive's count K, which the stepping cell has. TAKEN
 BY DELEGATION (the owner's word of about 13:55Z, "close it among
 yourselves, and let me know", read by the Boss at 14:25Z as a delegation,
 reversible on his word): (b), the pair `[K^2, K^2 - 3]` formed by verb D on
-integers the stepping cell has, nothing new declared in motion; the moving
-block's index against the resting one is a chain check of a minute, made
-after the gate as a check of the algebra.
+integers the stepping cell has, nothing new declared in motion. THE CHAIN
+CHECK, made (COMPUTATION, `massive_moving_index.py`: a block of 24 cells,
+the medium's pair [156, 157], the well mu^2 / 2, G g = 0.005 for a weak
+index n = 1.236 at rest; light at omega = 0.035 through the block stepped
+at K = 3, the cells, the pair region and the massive rows translated
+together by the step verb; the lab phase delay read at a probe against the
+same train without the block, in a steady window; the covariant
+expectation from the phase's invariance, (n(omega') - 1) omega' gamma_m s /
+c with omega' the light's frequency in the block's frame and n(omega')
+the RESTING block's own reading at that frequency): head-on, the lab delay
+is 0.471 of the covariant expectation with G g unchanged and 0.632 with G
+g x [K^2, K^2 - 3]; from behind, 0.486 and 0.825 (the block-frame
+wavelength 200 Links there, the reading +- 0.04 rad). So NEITHER
+declaration makes the stepped block a covariant dielectric: the
+compensation moves the delay toward the covariant value and does not reach
+it; between its steps the block is a slab at rest answering at the lab
+frequency, and the step translates the pattern, which is not a boost. The
+index in motion is therefore a COMPUTATION of the stepped rule per world
+and a PREDICTION of the model as built (the stepped cells' mark, beside
+the clock's residual of section 8), stated so, and the delegated (b)
+stands as the drive's pair carried, with the chain's numbers as its
+reading; nature's row is Fizeau's drag (light in a moving medium, first
+order in beta at large K), NOT computed here (section 12).
 
 **The sink, a SEPARATE declaration of the worlds that absorb, not a
 condition of the click** (Reviewer 3's MUST 3, answered by the owner's word
@@ -636,14 +656,17 @@ prediction:
 
 | Row | The consequence of the algebra | The band |
 | --- | --- | --- |
-| (d) at rest | N_0 = 2 L / c + 2 tau_g - delta_rung in the lattice's intervals: 2 L / c = 207.85 at L = 60, tau_g >= 0 the driven mode's response lag, delta_rung the rung's crossing on the pulse's rising edge BEFORE the round trip (the register's 206.0 is that crossing, so no tau_g >= 0 alone gives it); the budget 206 +- 2 allows 2 tau_g - delta_rung <= 0.15; the driven mode's rung-crossing time from g, G, W and the arriving amplitude is a PENDING COMPUTATION (a resonantly driven mode builds over its ring-up time), and the budget is NOT said met; in the block's own count N_0 / N_b(pair, s) | the rung's grain, the lattice's residual; the budget pending |
+| (d) at rest | COMPUTED (`massive_light_clock_relay.py`, a chain: the medium's pair [156, 157], lambda_0 = 32, two objects of 12 cells with the well mu^2 / 2, L = 60 between the facing cells, A_0 = 2^20, W = 64, G = 1): the receiver's driven record crosses the rung 1 / W of the train's norm delta_rung = 46, 25, 22, 20 intervals after the front at g = 0.02, 0.05, 0.1, 0.2 (the ring-up), and the emitter's RECEIVED part (its record with the partner less its record alone) crosses at N_0 = 527, 324, 305, 258 intervals against 2 L / c = 207.85; with the partner an (M) MIRROR (the pair on light's record at its cells, the gap 0.3) N_0 = 238 and 236 at g = 0.05 and 0.2. The register's 206 +- 2 is NOT MET by any of these declarations: the register's 206 was the Port's take on the ARRIVING light (an immediate rung), the design's counting form is the object's OWN record's motion, which builds over its ring-up; so the light clock of two bodies reads N_0 = 2 L / c + the two ring-ups, a COMPUTATION per declaration (its cycle set by the coupling, as the relay of DESIGN.md 8's record), never 206; the register's numbers belong to the world of an (M) mirror and a detector declared ABSORBING with the take on the arriving light (section 7), which the design keeps as that world. The emitter's own mode e-folds in 0.8 to 3.0 periods at these couplings (G g = 0.02 to 0.2): a clock body wants a weak coupling, which lengthens the ring-up as g^(-2/3): the trade-off is the design's, printed per world | the rung's grain; N_0 the script's number per declaration; 206 the take-world's |
 | (e), (f) in motion at k = 3 | the blocks' own count per cycle in both arms: N_par / N_perp = 1 and 1, within +- 0.03 (Reviewer 3's third line), plus the band's second term eps (gamma_m^2 - 1) / 2 for eps <= 0.1 (at most 0.025 at k = 3); the cycle in the lattice's intervals gamma_m N_0 along and across | +- 0.03 plus eps (gamma_m^2 - 1) / 2; the two-pace prediction 0.2 percent at N_0 = 50 |
 | the lab's row | the moving block's clock read by a resting one: 1 / gamma_m in the well regime, to the second term; 1 / gamma_m^2 for form (I) moved (the control) | eps (gamma_m^2 - 1) / 2; the residual |
 | 4a | the block's own clock slow by 1 / gamma_m in the lattice's intervals: the muon's row PASS in form, the number gamma_m at the world's beta_c (gamma at beta_m = beta_c c / c_m to second order) | the second term; 0.2 percent at N_0 = 50 |
 | 4b | the boosted block's emission read by a block at rest: 1 + z = gamma_m (1 + beta_c) receding, the character's frequency gamma_m omega_0 shifted by the medium's Doppler | the residual |
 | (g) the block at rest | its self-click its own mode, N_b(pair, s), no return and no timer; decaying in tau (section 7) unless re-excited; the clock sentence of DESIGN.md section 8 not needed for it | exact to the residual |
 | the index block | n from g, G, the pair and omega: n^2 = 1 + G g / (omega_0^2 - omega^2); the Fresnel step ((n - 1) / (n + 1))^2; the chain's 1.034, 1.083, 1.159 against 1.043, 1.104, 1.200 | the chain's 0.8 to 3.4 percent below the closed form at s = 12 (the faces' steps) |
+| the index block IN MOTION (a prediction of the model as built) | the stepped block's lab phase delay at K = 3 is 0.47 (G g unchanged) and 0.63 (G g gamma_m^2) of the covariant slab's head-on, 0.49 and 0.83 from behind (section 7, `massive_moving_index.py`); not covariant under either declaration; nature's row Fizeau's drag at first order in beta, not computed | the chain's +- 0.04 rad; Fizeau pending |
 | the rest cavity (form (I)) | section 4's table: 0.2417 at s = 12 on a cube; the quadrature with the pair | the lattice's residual |
+| NATURE, the two-pace world (the owner's word of about 14:50Z: the two predictions checked against nature BEFORE any build) | the design predicts a massive record's limiting pace c_m = c sqrt(cos omega_0), the deficit omega_0^2 / 4 in c; nature bounds a massive particle's limiting pace against light's at about 10^-15 (electrons, the Crab's synchrotron) to 10^-23 (protons, no vacuum Cherenkov in cosmic rays; Coleman and Glashow 1999 and later), so the law in this form REQUIRES omega_0 < 10^-7, N_0 > 10^8 intervals; with the interval at the Planck scale the electron's omega_0 is about 10^-22 and the deficit 10^-44: not refuted, not measurable, a consistency requirement; the board's N_0 = 50 is a coarse world and its 0.4 percent is the lattice's, never compared with nature | NATURE (the sources to be verified before the row is pinned); CONVERSION for the interval |
+| NATURE, the band's second term | the design predicts a BOUND object's clock in motion reads (1 / gamma_m)(1 - eps (gamma_m^2 - 1) / 2), eps its binding depth; a free massive packet has eps = 0 (the muon, row 4a, exactly 1 / gamma_m). Under the HYPOTHESIS that a real clock's eps is its binding energy over its rest energy (not derived in this design, whose objects are declared cubes): an electronic transition of a stored ion (Ives and Stilwell with Li+ at 0.34 c, Botermann and others 2014, the deviation bounded at about 2 x 10^-9) has eps about 10^-9, the predicted deviation about 10^-10, below the bound; a nuclear transition on a rotor (the Moessbauer rotor, Kuendig 1963, Fe-57) has eps about 0.9 percent and the design predicts the shift 1 + eps times Einstein's, 1.009, against the measured ratio 1.0065 +- 0.011: consistent, at the edge of the precision, the one place nature can decide with a sharper rotor | NATURE (the sources and numbers to be verified before the row is pinned; the eps mapping a named hypothesis) |
 | the board's faces | an object nearer a non-periodic face than its mode's extent reads a raised clock (the tail cut, the cavity's creeping in); the margin rule of section 11 a load-time check, the faces periodic by default for the massive record; no pin of the object | the extent from the pair and the side (COMPUTATION); the faces a DECLARATION |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
 | 12, 13 | not derived in this design (the coupling gives an index at declared cells, nothing about a crowd's field); 2.00 and 1 + gamma_PPN stay under the ray law's history | as registered |
@@ -673,15 +696,22 @@ board's two-block world reads it.
    the step of the whole block by verb T; the coupling of section 7 at its
    cells, one g with G; the click of section 6 at W; the sink as the owner
    words it.
-3. The check worlds, in order: (i) ONE BLOCK AT REST, its mode's frequency
-   and extent against section 4 (C6's eigenvalue, the threshold table);
-   (ii) the block pushed to k = 3, its clock against section 8's one formula
-   (the well regime 0.8065, the cavity regime 0.7128 at mu = 0.05); (iii) the
+3. The check worlds, in order (which is which per item 4: a CONTROL world
+   at one extent of margin, a PIN world of five at two, a PREDICTION world
+   the block form's residual): (i) ONE BLOCK AT REST, its mode's frequency
+   and extent against section 4 (C6's eigenvalue, the threshold table): a
+   control; (ii) the block pushed to k = 3, its clock against section 8's
+   one formula: at the four smallest binding sides a PIN world of five (1
+   and 1 to the residual under one percent), at s = 20 and 28, mu = 0.15,
+   the PREDICTION world (the residual 11 and 5.5 percent); (iii) the
    rest cavity of form (I) against section 4's table, and moved, against
    gamma_m^2 (the control); (iv) the light clock on two blocks at rest (row
-   (d): 2 L / c + 2 tau_g) and in motion (rows (e), (f): 1 and 1 with the
-   second term), the light emitted through the source term of section 7,
-   decaying in tau; (v) the index block (n from g, G). Nothing found,
+   (d): N_0 = 2 L / c + the two ring-ups, the script's number for the
+   world's declaration, 258 at G g = 0.2 on the chain) and in motion (rows
+   (e), (f): 1 and 1 with the second term), the light emitted through the
+   source term of section 7, decaying in tau; and the TAKE WORLD beside it
+   (an (M) mirror and a detector declared absorbing, the take on the
+   arriving light) as the register's 206 +- 2 reproduced; (v) the index block (n from g, G). Nothing found,
    everything checked.
 4. **The board's faces and the margin rule** (the owner's question of
    14:12Z; COMPUTATION for the extents, `massive_board_margin.py`;
@@ -694,12 +724,19 @@ board's two-block world reads it.
    clock creeps in); a PERIODIC face wraps the tail onto the object's
    other side (a periodic image, small once the board exceeds a few
    extents); an OPEN board does not exist on the lattice (every world has
-   faces: declared walls, sponges or periodic). So the owner's reading is
+   faces: declared walls, sponges or periodic); PERIODIC is the algebra's
+   own (the torus of ALGEBRA.md 1.6), and a wall or a sponge at a face is a
+   declared deviation per world (the owner's word of record 1421). So the owner's reading is
    right: an object at the edge is not held as itself. THE MARGIN RULE, a
-   load-time check like MUST I's floor: the object's cells at least one
-   extent from any non-periodic face, and the board's side per axis at
-   least the object's side plus two extents when that axis is periodic;
-   the extent printed from the pair and the side before the world runs.
+   load-time check like MUST I's floor (Reviewer 3's two lines of his gate
+   of 643a1c93, 14:31Z, carried into the build's world section): a hard
+   face at distance d shifts the bound mode by about eps e^(-2 kappa d), so
+   ONE extent (e^-2, 13 percent of eps, a third of five's band at eps =
+   0.1) is enough for a CONTROL world and a PIN world needs TWO extents
+   from any non-periodic face; the board's side per axis at least the
+   object's side plus two extents (a control) or four extents (a pin) when
+   that axis is periodic; the extent printed from the pair and the side
+   before the world runs.
    The massive record kind's faces PERIODIC by default (the medium
    continuous, nothing to declare) with the margin; light's faces per the
    experiment as today (the sponge for the detector worlds, periodic where
@@ -709,28 +746,35 @@ board's two-block world reads it.
 
    | mu | s | g | omega_b | eps | the extent 1 / kappa (Links) | the side by the rule s + 2 / kappa |
    | --- | --- | --- | --- | --- | --- | --- |
-   | 0.15 | 10 | mu^2 | 0.1488 | 0.007 | 45 (the box's wrap: unbounded on the infinite board, the smallest binding side) | (not a check world) |
-   | 0.15 | 14 | mu^2 / 2 | 0.1488 | 0.006 | 48 (the same) | (not a check world) |
+   | 0.15 | 10 | mu^2 | 0.1488 | 0.007 | 45 (weakly bound, the extent beyond the box; the smallest binding side, g above g_c by 2 percent) | a PIN world of five at s + 4 / kappa, about 190 |
+   | 0.15 | 14 | mu^2 / 2 | 0.1488 | 0.006 | 48 (the same, g above g_c by 0.1 percent) | a PIN world of five, about 205 |
    | 0.15 | 20 | mu^2 | 0.1107 | 0.451 | 5.7 | 31 |
    | 0.15 | 28 | mu^2 / 2 | 0.1318 | 0.220 | 8.2 | 44 |
-   | 0.05 | 30 | mu^2 | 0.0491 | 0.036 | 61 (the box's wrap: unbounded on the infinite board) | (not a check world) |
-   | 0.05 | 42 | mu^2 / 2 | 0.0491 | 0.035 | 62 (the same) | (not a check world) |
+   | 0.05 | 30 | mu^2 | 0.0491 | 0.036 | 61 (weakly bound, the extent beyond the box; g above g_c by 3 percent) | a PIN world of five, about 275 |
+   | 0.05 | 42 | mu^2 / 2 | 0.0491 | 0.035 | 62 (the same, g above g_c by 1 percent) | a PIN world of five, about 290 |
    | 0.05 | 60 | mu^2 | 0.0368 | 0.458 | 17 | 94 |
 
-   At the SMALLEST binding side the mode's extent is unbounded (the
-   threshold), so a check world takes a side above it. The first check
-   worlds: the rest cube at mu = 0.15, s = 20 (eps 0.45, the cavity-leaning
-   control) and s = 28 at half depth (eps 0.22), on a periodic 48^3 board
-   (110,592 Nodes; HOST 0.005 s per interval, a rest world of three periods
-   a second); the well-regime clock check needs eps about 0.1, the extent
-   c / (mu sqrt 0.1) = 1.83 / mu: 12 Links at mu = 0.15 (a side giving eps
-   0.1 between s = 14 and 20 at full depth; the board 64^3, HOST 0.010 s per
-   interval, the moving cube at k = 3 over its ramp and hold, 9500
-   intervals, 2 minutes) and 37 Links at mu = 0.05 (s about 36 to 40 at
-   full depth; the board 128^3, HOST 0.079 s per interval, the moving world
-   12 minutes); the moving cube's axis periodic, so the travel wraps and
-   the side needs only s plus two extents. The HOST figures are numpy on
-   this machine; the engine's integer form is its own cost.
+   WHICH WORLD IS WHICH (Reviewer 3's line): the four smallest binding
+   sides are the DEEPEST well-regime clocks (eps 0.006 to 0.036, the
+   residual eps (gamma_m^2 - 1) / 2 under one percent at k = 3) and so the
+   best PIN worlds of five's 1 and 1, if a board of s + 4 / kappa is
+   afforded (about 200 a side at mu = 0.15, s = 14: 8 million Nodes, HOST
+   about 0.3 s per interval, a moving world under an hour); the s = 20 and
+   s = 28 worlds at mu = 0.15 (eps 0.45 and 0.22: the residual 11 and 5.5
+   percent at k = 3) are the worlds of the PREDICTION (the block form's
+   residual, section 8's second term), not of five's pin, on a periodic
+   48^3 board (110,592 Nodes; HOST 0.005 s per interval, a rest world of
+   three periods a second, the moving world two minutes); the rest cube at
+   mu = 0.15, s = 20 at full depth is also the cavity-leaning CONTROL. A
+   well-regime clock at eps about 0.1 has the extent c / (mu sqrt 0.1) =
+   1.83 / mu: 12 Links at mu = 0.15 (a side between 14 and 20 at full
+   depth; a pin board of 64^3 at two extents, HOST 0.010 s per interval,
+   the moving cube at k = 3 over its ramp and hold, 9500 intervals, 2
+   minutes) and 37 Links at mu = 0.05 (s about 36 to 40 at full depth; the
+   board 128^3 at two extents, HOST 0.079 s per interval, the moving world
+   12 minutes); the moving cube's axis periodic, the travel wraps. The
+   HOST figures are numpy on this machine; the engine's integer form is
+   its own cost.
 5. The key `massive-record-v1` OFF by default; the build only on Reviewer
    3's gate of this draft's SHA, the Algebra Mathematician's chapter, and
    the owner's second word through the Boss (with his two words of section
@@ -757,14 +801,16 @@ COMPUTATION only, no engine run:** `massive_c_derivation.py` (section 1.1),
 negative result), `massive_cube_threshold.py` (section 4, the exact table,
 the window, light's norm bound), `massive_block_clock_motion.py` (section 8),
 `massive_board_margin.py` (section 11, the mode's extent in the medium and
-the margin rule's numbers, with the HOST cost).
+the margin rule's numbers, with the HOST cost), `massive_light_clock_relay.py`
+(section 9 row (d), the two-object light clock on a chain: the rung-crossing
+time, N_0 against 2 L / c, the mirror variant), `massive_moving_index.py`
+(section 7, the moving block's index against the resting one).
 Run each as its docstring says; the numbers in this document are theirs.
 
-**Not computed here, and said so:** the driven mode's rung-crossing time
-delta_rung and its lag tau_g from g, G, W and the arriving amplitude (row
-(d)'s budget, PENDING COMPUTATION); the moving block's index against the
-resting one (a chain check of a minute, after the owner's word on the index
-in motion); the click's completion under the sink (after his word); the
+**Not computed here, and said so:** Fizeau's drag (the stepped block's
+index at first order in beta, large K, against nature's 1 - 1 / n^2; the
+chain at K = 3 is far from that regime); the click's completion under the
+take where a world declares it; the
 cube's threshold under a light-shaped well (the peak capped at mu^2, the
 mean depth mu^2 / 8: none found to side 44, the side needed about 100, a
 scratch box, HISTORY); g against any nature row (rows 12 and 13 need a
@@ -823,10 +869,10 @@ Reviewer 3's sections 10, 11 and 12 where they exceed this document):
   object's own motion across its cells.
 - The light clock at rest on two objects: A's mode drives light, light
   reaches B at L / c, B's mode is driven and drives light back, A's mode
-  receives at 2 L / c plus the modes' response lags, less the rung's
-  crossing on the rising edge: N_0 = 2 L / c + 2 tau_g - delta_rung (row (d)
-  of section 9; 2 L / c = 207.85 at L = 60 and the register's 206.0 the
-  crossing before the round trip; the budget a pending computation).
+  receives at 2 L / c plus the two ring-ups: N_0 = 258 to 527 intervals on
+  the chain at G g = 0.2 to 0.02 against 2 L / c = 207.85 (row (d) of
+  section 9, computed); the register's 206 is the take-world's (an (M)
+  mirror and an absorbing detector), not two bodies'.
 - The light clock in motion: section 8's one formula, the well regime: 1
   and 1 in the objects' own counts to the second term, gamma_m N_0 in the
   lattice's intervals.
