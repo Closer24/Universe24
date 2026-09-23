@@ -6099,6 +6099,7 @@ def _release_family(
                             "arms": arms,
                             "units": quanta,
                             "multiplicity": paths * norm,
+                            **({"clock": entry.age} if frame.world.clock_stamp else {}),
                         }
                     )
                 for way, (direction, lamp_turn) in enumerate(

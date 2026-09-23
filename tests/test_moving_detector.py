@@ -26,11 +26,20 @@ tick by the owed count in a crowd.
     under the law as it stands the crowd's push at d = 64 turns every light
     row off the three-Node bar before it reaches the cart, no click and no
     crowd at the cart's Node, so the edge is read at the weak-field pair.)
+(e) The birth stamp (the light clock's gate 1, 2026-09-23): under the key
+    every `birth` line carries `clock`, the emitting measured event's own
+    count at that interval (its `age`, the same field as on its clicks; in
+    no crowd the interval), so N(j) = clock(return) - clock(birth) of one
+    ordinal is read off the record; the edge is a body's first birth, the
+    count 1 (the lamp births at its first self-creation, after the count).
+    Without the key no birth line carries it and the record at 60 intervals
+    is byte identical to the record before the field (its sha256 pinned).
 """
 
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import sys
@@ -40,11 +49,16 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import NatureBeamSimulation
+from event_universe.events.run import execute_nature_beam_run
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "moving_detector"
 ORDINAL_MASK = (1 << 32) - 1
+# The sha256 of `events.jsonl` the capability world without `clock_stamp`
+# wrote at 60 intervals through `execute_nature_beam_run` on origin/main
+# 5783325353789c2167398486e2c7428f4f5fb62b, before the birth line's stamp.
+UNKEYED_EVENTS_SHA256 = "1d6c3008871e4555fc298236668d208d51e7062d9a19b6fc6d4abcca616419e5"
 
 
 def load_generator():
@@ -121,16 +135,17 @@ def test_the_clock_stamp_on_the_moving_cart_in_no_crowd():
     """(b)."""
     document = json.loads((WORLDS / "capability_k5.json").read_text(encoding="utf-8"))
     lines, simulation = run_lines(document, 120)
-    # The lines a measured event writes at its table and its face: the birth
-    # line carries the lamp's ordinal, its own count already, and no field.
+    # The lines a measured event writes at its table, its face and its lamp
+    # (the birth line since the light clock's gate 1, (e)).
     stamped = [
         line
         for line in lines
-        if line.get("measured") is not None and line["event"] in ("click", "read", "rerelease", "become")
+        if line.get("measured") is not None
+        and line["event"] in ("click", "read", "rerelease", "become", "birth")
     ]
     assert stamped and all("clock" in line for line in stamped)
     assert all("clock" not in line for line in lines if line.get("measured") is None)
-    assert all("clock" not in line for line in lines if line["event"] in ("birth", "record", "split"))
+    assert all("clock" not in line for line in lines if line["event"] in ("record", "split"))
     cart = next(number for number, entry in simulation.measured.items() if not entry.fixed)
     clicks = [line for line in lines if line["event"] == "click" and line.get("measured") == cart]
     assert len(clicks) > 40
@@ -184,3 +199,44 @@ def test_the_count_falls_behind_the_tick_by_the_owed_count_in_a_crowd():
     entry = simulation.measured[cart]
     assert entry.owed > 0 and entry.age < 120
     assert last["clock"] <= entry.age
+
+
+def test_the_birth_line_carries_the_emitters_count_and_without_the_key_the_record_stands(tmp_path):
+    """(e)."""
+    document = json.loads((WORLDS / "capability_k5.json").read_text(encoding="utf-8"))
+    lines, simulation = run_lines(document, 120)
+    births = [line for line in lines if line["event"] == "birth"]
+    assert births and all("clock" in line for line in births)
+    # The field is the emitter's own count at that interval: on a fixed lamp
+    # and on the moving cart in no crowd, the interval; the emitter's `age`
+    # at the end equals the last count it stamped.
+    assert all(line["clock"] == line["tick"] for line in births)
+    emitters = {line["measured"] for line in births}
+    assert len(emitters) == 2
+    for number in emitters:
+        own = [line for line in births if line["measured"] == number]
+        assert own[-1]["clock"] == simulation.measured[number].age == 120
+        # The edge: the first birth of a body carries the count 1, the lamp
+        # birthing at its first self-creation, after the count (never 0).
+        assert own[0]["clock"] == 1 and own[0]["tick"] == 1
+        assert own[0]["record"] & ORDINAL_MASK == 1
+        assert min(line["clock"] for line in own) == 1
+    # The light clock's observable off the record: N(j) = clock(return) -
+    # clock(birth) of one ordinal, the return click naming the record born.
+    born_at = {line["record"]: line["clock"] for line in births}
+    cart = next(number for number, entry in simulation.measured.items() if not entry.fixed)
+    clicks = [line for line in lines if line["event"] == "click" and line.get("measured") == cart]
+    flights = [line["clock"] - born_at[line["record"]] for line in clicks if line["record"] in born_at]
+    assert flights and all(flight > 0 for flight in flights)
+    # The key off: no birth line carries the field, and the run's record at
+    # 60 intervals is byte for byte the record before the field.
+    unkeyed = {key: value for key, value in document.items() if key != "clock_stamp"}
+    source = json.dumps(unkeyed).encode("utf-8")
+    loaded = load_world(source, base_dir=WORLDS, root=WORLDS.parent)
+    assert loaded.world.clock_stamp is False
+    out = tmp_path / "unkeyed"
+    out.mkdir()
+    execute_nature_beam_run(loaded.world, source, out, "test", 60)
+    written = (out / "events.jsonl").read_bytes()
+    assert all("clock" not in json.loads(line) for line in written.splitlines())
+    assert hashlib.sha256(written).hexdigest() == UNKEYED_EVENTS_SHA256
