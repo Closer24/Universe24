@@ -155,6 +155,17 @@ computed after that reading, stand beside it as labelled CONTROLS, never
 the pin
 (MASSIVE_RECORD.md section 11 item 6, the index row; the Boss's 18:08Z).
 
+The moved cavity (iii-b) is NOT a world of this schedule (Reviewer 3 and
+the physicist, 19:50Z): as built, the cavity's zero faces are imposed
+every interval, so in motion each hop deletes the row it leaves, a take
+per hop, not a bijection of the Inside; its exploratory 1.17 of the rest
+rate stays written as the moving wall's number and is never read against
+1 / gamma_m^2 = 0.664; the cavity form (I) is a rest control only ((iii-a),
+read to 0.15 percent). The cavity control in motion is the DEEP WELL,
+side 40 at full depth on a 128^2 layer (binding 0.87), its pin the one
+formula's 0.7531 at the exact cone, computed before any run
+(MASSIVE_RECORD.md section 11 items 3 and 6).
+
 ## The counts, by kind
 
 | Kind | Rows |
