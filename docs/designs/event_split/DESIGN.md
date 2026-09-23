@@ -19,21 +19,21 @@ Reviewer 3 reads it, the owner reads it, and the build is a new session on
 the Boss's GO; no engine line before. This file changes no engine line,
 no key, no registered world and no document of the law.
 
-The merge, an open question of the owner's, not resolved here. The
-owner's word of 04:29Z (record 1262): amplitudes are never added on the
-GameBoard; two possibilities meeting in a Node keep their own phases;
-interference exists only in the click's sum. The code as built sums
-identical rows of one record at one Node (the merge, verb (G),
-[ALGEBRA.md 2.3](../../ALGEBRA.md#23-g-the-group-ring-addition-the-merge-and-the-cancel))
-and cancels an antipodal pair; a row of another phase is not touched.
-The Boss put the contradiction to him; this design carries both forms
-([CORRECTIONS.md](CORRECTIONS.md) M6: keep, or the code's merge) with
-what each does to the pins (the same pointers, one threshold count
-apart). What the law as built lacks in either form is the split: a row
-splits only where an apparatus declares it (a lamp's fan at the birth, a
-`rerelease` entry's directions) and walks its one digital line
-everywhere else. The mistakes and the solutions, the verification plan
-and the table's convergence are in CORRECTIONS.md beside this file.
+The merge, decided by the owner (record 1282, 05:24Z, the Boss's
+rendering): "I think the logic, in order to keep all the laws, is that
+the amplitudes add at the Node, right? What comes from the six
+neighbours, they add, and the event propagates." So the merge as built
+(verb (G), [ALGEBRA.md 2.3](../../ALGEBRA.md#23-g-the-group-ring-addition-the-merge-and-the-cancel):
+identical rows of one record at one Node summed, an antipodal pair
+cancelled) is the law, and this design carries the one form: the sum at
+the Node, the split at the next Node, the pattern read at the click from
+the summed amplitude. The chief physicist's earlier words to the owner
+("the amplitudes never add on the GameBoard") are superseded by this. What
+the law as built lacks is the split: a row splits only where an
+apparatus declares it (a lamp's fan at the birth, a `rerelease` entry's
+directions) and walks its one digital line everywhere else. The
+mistakes and the solutions, the verification plan and the table's
+convergence are in [CORRECTIONS.md](CORRECTIONS.md) beside this file.
 
 Every number below is labelled COMPUTATION (a closed form of the algebra
 or of a registered reading) or HOST (a cost of the machine); no run was
@@ -58,7 +58,7 @@ place of the one Node of a fan's crossing). Entry by entry:
 | The click theorem and the click frame (5.1; 3.1) | UNCHANGED | The theorem reads counts of clicks Outside; the split is Inside. A click is one action that ends the record (3.1) and this design keeps it so: the record's rows on the GameBoard are the futures, the click is the one that happened (section 4). |
 | The tick algebra r_D (3.1, 3.3) | UNCHANGED | The detector's own count n_D and its ratios read the arrivals; what arrives is a row, split or not. |
 | The collision table and the push (2.4, 2.2) | UNCHANGED, and NOT APPLIED to a row of content until section 8's line is written | The split is defined for a row of no content (light) in this design; a row that meets matter does not pass (the owner's word): it clicks or pushes, as the contact rule and the push have it now; a body's row does not split under this design (section 8, the bodies' rows untouched). |
-| The merge and the cancel (2.3) | UNCHANGED as a verb; its place CHANGED; whether it acts on the GameBoard at all is the owner's open question (CORRECTIONS.md M6) | Today the merge acts where rows of one record become identical (a fan's crossing, a wall's Node); under the split it acts at every Node at every interval, and the field per Node is its image: the group-ring element f_x of the record's rows at x, the wave. |
+| The merge and the cancel (2.3) | UNCHANGED as a verb, the owner's word of record 1282 (the amplitudes add at the Node); its place CHANGED | Today the merge acts where rows of one record become identical (a fan's crossing, a wall's Node); under the split it acts at every Node at every interval, and the field per Node is its image: the group-ring element f_x of the record's rows at x, the wave. |
 | The identity W = E'_0^2 + 3 **p** . **p** (2.11, 5.3; the step's invariant under covariant-readings-v1, the massive row's pace under massive-rows-v1; the 3 the flight's constant 1 / c^2) | UNCHANGED (verified again on the owner's word of 2026-09-23) | The identity is per row, on the row's own momentum label **p** and its rest energy E'_0 = Q S_w M; the split copies the state vector (x, D, **p**, tau, f) to each copy whole and shares only the weight (the amount w a_i, the multiplicity m A), so W is the same integer on every copy; no momentum is summed across copies (the merge (G) sums amounts of rows identical in **p**); the click delivers one row's **p** with the record as it is (POSTULATES 26.2), so W at the click is a row's W. On a row of no content E'_0 = 0 and W = 3 **p** . **p** with **p** the label. The one condition: the 3 is 1 / c^2 with c = 1 / sqrt 3 by the flight table, kept under pace (A); under pace (B) the front's pace is not c by direction and the 3 is not the front's constant (one more reason for (A)). A body's record is not split at all (section 8), so its W and its whole root E' = isqrt(W) by comparisons are untouched, bit for bit. The ray splits; it does not spread: every copy is a whole row with a whole **p**, never a fraction of a momentum. |
 | The exact identities (4) | UNCHANGED | None of them reads where a split happens; the ones that read the fan (the two-slit and single-opening sums) are re-derived in section 7 with the split's own paths. |
 | The reading rule and the kinds (3.2) | UNCHANGED | A DETECTOR number is a click; a GAMEBOARD number is a diagnostic; the split adds no kind. |

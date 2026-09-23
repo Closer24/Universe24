@@ -224,38 +224,23 @@ code; a mistake of the law's text, corrected in BEAM_LAW note 35 (branch
 light is not turned by the space part at head (series K's 0.000), and
 under the split the time part alone bends the wave.
 
-### M6. Amplitudes added on the GameBoard: the open question
+### M6. Amplitudes added on the GameBoard: decided, the code's merge is the law
 
-The owner (record 1262, 04:29Z): "amplitudes are never added on the
-board; two possibilities meeting in a Node keep their own phases;
+The owner's word of 04:29Z (record 1262): "amplitudes are never added on
+the board; two possibilities meeting in a Node keep their own phases;
 interference exists only in the click's sum", which the chief physicist
-confirmed to him then. The code: `_merge_rows` (`nature_beam.py` 1473;
+confirmed to him then; the code: `_merge_rows` (`nature_beam.py` 1473;
 the identity fields 1610) sums the amounts of rows identical in every
-identity field with the phase read modulo N / 2 (the same Node,
-direction, age, record, branch, multiplicity, hand, flight accumulator,
-pushes and turn), and cancels an antipodal pair; a row of another phase
-is not touched. The Boss put the contradiction to the owner (05:14Z);
-until his answer this file carries both forms and resolves nothing:
-
-- **Form K (keep):** no addition on the board; identical rows stay as
-  separate rows; every sum is the click's. The pins of the pair world,
-  Malus, the two slits and the single opening are identical to form G's
-  bit for bit in every pointer (a merged row and its parts contribute the
-  same pointer to every set they reach, since they are identical in
-  everything the click reads), and differ in one place only: a
-  detector's `threshold` on the AMOUNT summed over the set (`nature_beam.py`
-  4551 to 4558) counts an antipodal pair as 2 units under K and 0 under
-  G. The HOST pays the rows K keeps (under the split, the paths of one
-  record at one Node and phase, up to K^tau before the grain).
-- **Form G (the code):** the merge and the cancel as built, the
-  group-ring addition (G) of ALGEBRA 2.3, named in the Highlights' six
-  verbs (record 181). The same pointers; the fewer rows.
-
-Three tests: both PASS all three (K is the absence of a verb; G is (G)
-on the row's own Node). What the owner's word decides is whether (G)
-acts on the board or only at the click; the design's builds (i) and (ii)
-of DESIGN.md are written for G and hold for K with the field of build
-(i) read as "the rows at x, summed by the reader".
+identity field with the phase read modulo N / 2 and cancels an antipodal
+pair, a row of another phase untouched. The Boss put the two to him, and
+his word of 05:24Z (record 1282) decides it: "I think the logic, in
+order to keep all the laws, is that the amplitudes add at the Node,
+right? What comes from the six neighbours, they add, and the event
+propagates." So the merge (verb (G)) at the Node is the law and the
+mistake was the chief physicist's sentence, not the code: the one form
+is the sum at the Node, the split at the next Node, the pattern read at
+the click from the summed amplitude. Three tests: (G) on the row's own
+Node, generic, vector and local PASS as it is.
 
 ### M7. The openings' declared fans, redundant under the split
 
@@ -336,11 +321,7 @@ the same crowd.
 **M5, the meeting.** Done (note 35); the test is the existing
 `test_optical.py` on the default.
 
-**M6, the merge question.** One test with the build: the same world run
-with the merge and with the rows kept (a test switch, not a key) gives
-identical `gather` lines (`chosen`, `u`, `total`) and differs only in a
-`threshold` count where an antipodal pair meets a threshold above 0; the
-owner's word then picks the form and the switch is deleted.
+**M6, the merge.** Decided; the existing merge tests stand (`tests/test_amplitude_split.py`, the split and merge as inverses).
 
 **M7, the fans.** The two worlds load without the openings' entries; the
 opening's Nodes carry none.
