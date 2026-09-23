@@ -2201,7 +2201,7 @@ order omega_0^2; (i) is the second-order expansion in omega and **k**
 jointly, (ii) the second-order expansion in **k** alone, and the named
 cone of the massive kind is (ii) (MASSIVE_RECORD.md section 8, decided
 by derivation before any pinned run; the k^4 terms of light's own band
-remain the lattice's residual). For every 48-invariant rule of range 1
+remain the GameBoard's residual, said once here for the band's k^4 terms). For every 48-invariant rule of range 1
 with a gap the design states c_m^2 / c^2 <= cos^2(omega_0 / 2), no such
 rule giving a massive record light's c in three dimensions (COMPUTED,
 NOT PROVED: `massive_corner_stability.py`; a proof for every rule would
@@ -2218,7 +2218,7 @@ its own band and no other, and the boost of a resting solution under
 the symmetry of that equation is the Lorentz boost at c_eff, in whose
 frame the declared cells of width s are gamma_m s wide and the phase
 turns at omega_b / gamma_m; light enters only through the coupling
-(8.5), which does not carry the well. On the lattice a block stepped
+(8.5), which does not carry the well. On the GameBoard a block stepped
 one Link per K intervals has beta_c = sqrt 3 / K, so light's factor
 squared is the rational pair gamma(c)^2 = K^2 / (K^2 - 3) (PROVED HERE:
 1 / (1 - 3 / K^2)), the pair [K^2, K^2 - 3] the design carries into the
@@ -2411,7 +2411,7 @@ board, a COMPUTATION per world before its run. The design derives it as
 the boost of the continuum operator of the band's bottom (8.1 (ii)): the
 declared cells widen in the block's frame and never contract, nothing
 is declared in motion, and Lorentz is reached as a relation on the
-characters (no boost among the 48, chapter 1.2's row). On the lattice
+characters (no boost among the 48, chapter 1.2's row). On the GameBoard
 the formula is COMPUTED, NOT PROVED (`massive_block_clock_motion.py` on
 a chain, `massive_layer_pins.py` on a layer, both the design's own
 scratch, to 0.01 percent for s >= 12 and 0.15 percent on the layer; the
@@ -2434,9 +2434,9 @@ carried cells' mark on a bound clock, prediction 2 of 8.9; exactly
 Lorentz only with the well's strength carried as g_w / gamma_m, a root
 the algebra does not have, so the residual stays. The boost of a rest
 state at omega_0 to the pace v is the character with the carrier k =
-gamma_m omega_0 v / c_m^2, its frequency gamma_m omega_0 and its
+gamma_m omega_0 v / c_eff^2, its frequency gamma_m omega_0 and its
 internal phase omega_0 / gamma_m: the free massive packet's clock slows
-by 1 / gamma_m and the packet contracts by 1 / gamma_m on the lattice's
+by 1 / gamma_m and the packet contracts by 1 / gamma_m on the GameBoard's
 own surface (CARRIED: section 8, "the characters themselves", to 0.1
 percent at k <= 0.3 per Link, COMPUTATION). The three tests: the motion
 is a derivation and adds no sentence to the rule; nothing to test
@@ -2567,7 +2567,7 @@ omega^2), the classical dielectric as the thing compared with (n plain
 the index, apart from the suspension pair's n of the head): Maxwell's
 dielectric on the potentials, the record the potential, the field its
 first time difference, the polarisation's current the massive record's.
-A proof on the lattice would take the coupled scheme's characters on a
+A proof on the GameBoard would take the coupled scheme's characters on a
 board coupled at every Node and read the product of the two bands; on a
 block of s cells the response is the block's own mode sum and not the
 infinite medium's, the design's CONTROL beside its pin (section 11 item
@@ -2867,14 +2867,14 @@ from another) (SCHEDULE.md, NOT PREDICTED and NOT COMPARED).
 | the rule with the pair on the six reads (8.1) | one primitive, one pair, light a value | (B), (T), (D) | the row and its six reads | the band PROVED HERE; the two paces PROVED HERE at the band's bottom; the range-1 bound COMPUTED, NOT PROVED |
 | the conserved form I (8.2) | one form for every pair | a bilinear form of the two levels | the reads' sum | PROVED HERE on every board, with the remainders' identity |
 | the well of the pair on declared cells (8.3) | a per-Node pair, world data | the same verbs | the same | the threshold and the tail COMPUTED, NOT PROVED; light's norm bound PROVED HERE |
-| the motion (8.4) | a derivation, no sentence added | none needed | none needed | the one formula CARRIED (the continuum's boost), on the lattice COMPUTED, NOT PROVED; its two limits PROVED HERE |
+| the motion (8.4) | a derivation, no sentence added | none needed | none needed | the one formula CARRIED (the continuum's boost), on the GameBoard COMPUTED, NOT PROVED; its two limits PROVED HERE |
 | the coupling, first difference both ways, in the one division (8.5) | one g with G, no family name | (B) linear in the other's two columns; one (D) per row | the cell's two records | the Euler-Lagrange scheme PROVED HERE; J and its remainder identity PROVED HERE; the index and the pump COMPUTED, NOT PROVED |
 | the click across the cells at W (8.6) | the rung on the norm | (E), the bilinear form, (D)'s comparison | the body's own record across its cells; the completion the host's | the click's definition CARRIED (the owner's word) |
 | the take (8.6) | a declaration of the absorbing world | (D) or the take's pair | the object's own cells | a declaration, no identity |
 | the seed (8.7) | a declaration of the initial state | none | none | the standing start PROVED HERE |
 | the direction of time (8.8) | the same rule | (D) with the ceiling, a declared variant | the same reads | the bijection CARRIED (the design's proof), its inverse exact |
 | the block's momentum, step and push (8.11) | one primitive, the stress at the outer Ports and one comparison, the declared integers Q, S, M and the take's scale 56 d; the tie declared per block | (G) the stresses summed into the block's vector, (D) with the remainder kept, (T) the step, then comparisons | the block's own outer Ports and the free Nodes beyond them; per block under the declared tie | the cadence and the bound PROVED HERE as identities of the accumulator; the stress as the wave's momentum flux CARRIED, a declaration of the design and not of the law |
-| the force between two blocks through light (8.11) | the same push read on two blocks | the same verbs | the same | the closed form CARRIED (Reviewer 3's, the continuum's coupled emitters); on the lattice COMPUTED, NOT PROVED |
+| the force between two blocks through light (8.11) | the same push read on two blocks | the same verbs | the same | the closed form CARRIED (Reviewer 3's, the continuum's coupled emitters); on the GameBoard COMPUTED, NOT PROVED |
 
 The design's scripts, each printing its record beside
 MASSIVE_RECORD.md and none an engine run: `massive_c_derivation.py`
@@ -3014,11 +3014,11 @@ at (m' + 1 / 4) lambda_0, 72; COMPUTATION), NOT L = m lambda_0 / 2,
 which are the force's extrema: L_0 = 80 = 5 lambda_0 / 2 is the
 maximal repulsion and never an equilibrium (Reviewer 3's MUST (i)). In
 motion the stable point continued from the rest point by a slow ramp
-is L* = L_0 (1 - beta_c) for a pair of emitters at the lattice-time
+is L* = L_0 (1 - beta_c) for a pair of emitters at the GameBoard's interval
 frequency, and L_0 / gamma_m for the covariant pair (PUSH_BALANCE.md
 10.2, COMPUTATION); the two-arm world of 8.9's row 5 holds its arms at
 this equilibrium by light's force alone and no rigid rod, prediction 5.
-On the lattice the closed form is COMPUTED, NOT PROVED (the chain
+On the GameBoard the closed form is COMPUTED, NOT PROVED (the chain
 within 3 percent at rest at every L from 72 to 92 and in sign and
 spacing at K = 3, `check_pair_motion.py` in Reviewer 3's scratchpad; a
 proof for every N and every board would take the stress of the
