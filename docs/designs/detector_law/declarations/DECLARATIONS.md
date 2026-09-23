@@ -463,3 +463,54 @@ against the script's number on the same geometry within +- 0.04 rad and
 +- 10 percent of the rate; Fizeau's drag stays the declared non-match.
 Nothing of the pin's form moves: the row was never pinned to a number of
 nature.
+
+## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-24, 01:10Z, the owner's word and the Boss's decision of 23:32Z; `matter_wave_pins.py`)
+
+1. The objects: a 128 x 128 x 1 periodic layer; the MATTER family [800,
+   809] (mu = 0.15, omega_0 = 0.14930) with a LAMP of that family (the
+   same lamp verb as light's, a seeded train with a phase per Link under
+   the family's own pair; the builder checks that the verb accepts the
+   matter family, else adds the one generic line) at x = 20, y = 64,
+   sending a train at the declared omega toward +x; a MIRROR LINE at x =
+   40 (a zero line for the matter kind, as row 2a's mirror line for light)
+   with two openings of width 1 at y = 48 and y = 80 (d = 32); a SCREEN of
+   detectors of the ray law on the matter record at x = 104 (L = 64 from
+   the openings), one per Node over y in [4, 124], each with the click at
+   W = 64. No light in this world.
+2. The declared integers: the pair; omega = 0.33408 (lambda_dB = 12.000
+   Links exactly, k = 0.52360 = 2 pi / 12; a second world at omega =
+   0.26995, lambda_dB = 16, beside); the train 60 periods; d = 32, L = 64,
+   W = 64; the hold 2000.
+3. The verbs: the massive rule (the pair on the six-neighbour term); the
+   lamp; the zero line; the click at W.
+4. The pins (COMPUTATION, `matter_wave_pins.py`): M1, DE BROGLIE (K): the
+   screen's click maxima at y = 64 and y = 64 +- 26 for lambda_dB = 12
+   (the two-source sum on the layer with the band's k, exact, no far-field
+   step; the far-field lambda L / d = 24 is not the pin), y = 64 +- 37 for
+   lambda_dB = 16; the band one Node; nature's row: electron and neutron
+   two-slit interference at lambda L / d (Joensson 1961, Tonomura 1989;
+   RECALLED until the Source Verifier). M2, THE ENERGY OF A MOVING MASS
+   (K in the form): the front's first click at the screen's centre arrives
+   L / v_g = 127.3 intervals after the train reaches the openings, with
+   v_g = 0.50264 Link per interval from the band at that k (135.3 and
+   0.47300 at lambda_dB = 16); the band's relation between the fringes'
+   k and the front's v_g is the energy-momentum relation of a moving mass
+   read in the clicks (nature: the relativistic dispersion of electrons,
+   Bertozzi 1964; RECALLED); at these wavelengths the kind is
+   RELATIVISTIC (k lambda_C = 2.0, lambda_C = 3.87 Links), so m = k / v_g
+   reads 1.0417, the moving mass, not the rest mass 3 tan omega_0 =
+   0.45126, which is the k -> 0 limit of the same band and the identity
+   omega_0 = m c^2 with c^2 = 1 / 3 (a DERIVATION from the one band: the
+   rest clock's frequency is the rest inertia times c^2); the GameBoard's
+   own correction to that identity at finite mass, omega_0 / (m c^2) =
+   omega_0 / tan omega_0 = 0.99256 at mu = 0.15, is a (P), read only by a
+   world whose lambda_dB is far above lambda_C (about 40 Links, a 256^2
+   layer; not in the paper's list). Nature's rest-mass row (the Compton
+   clock, atom interferometry 2013; RECALLED) is matched in form by the
+   derivation, not by a reading of this world.
+5. The readings: DETECTOR the screen's click counts per Node (the maxima)
+   and the first click's interval at the centre; GAMEBOARD the matter
+   amplitude along the screen; COMPUTATION the pins.
+6. The identity: `detector-law-v1` with `massive-record-v1`. The honest
+   limits: no two-quantum effect (bunching), no spin, no fine structure
+   are in the law, and none is claimed.
