@@ -1084,7 +1084,7 @@ board's two-block world reads it.
    | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8132 (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8165); the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z); the hold 8000 | 6 s |
    | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent): the pin the one formula's number at pin time on this layer; the hold 8000 | 12 s |
    | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | DEFERRED to the second paper (the Boss's word of 17:10Z on the owner's approval: one mass, mu = 0.15, for the first table); declared, not deleted; a PIN world at mu = 0.05 (residual 0.3 percent) when run, the hold 8000 | about 1 min |
-   | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent); the hold 2000 | 2 s |
+   | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent); the hold 8000 (Reviewer 3's token, 17:16Z: at 2000 the peak's grain is about 2.5 percent, the size of this world's own residual) | 6 s |
    | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent): the pin the formula's 0.7848; the scratch reading 0.7832 a CONTROL; the hold 2000 | 1 s |
    | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7643; the scratch reading 0.7635; the hold 2000 | 1 s |
 
@@ -1102,9 +1102,11 @@ board's two-block world reads it.
    MASS for the first table, mu = 0.15; the mu = 0.05 worlds deferred to
    the second paper, written as deferred above, not deleted. (2) THE HOLD
    per world, written in the row before the run: 2000 intervals for a
-   PREDICTION or CONTROL world (a residual of 2.5 to 16 percent needs no
-   finer peak), 8000 for a PIN world of the 0.3 percent residual (the
-   peak's grain); the ramp 1500 kept for adiabaticity. (3) THE WORLDS IN
+   PREDICTION or CONTROL world whose residual is 5 percent or more (the
+   5.2 and 16 percent worlds), 8000 for a PIN world of the 0.3 percent
+   residual and for the eps 0.1 PREDICTION world, whose 2.5 percent
+   residual is the size of the peak's grain at 2000 (Reviewer 3's token);
+   the ramp 1500 kept for adiabaticity. (3) THE WORLDS IN
    PARALLEL, four at once, a HOST matter; each world's own run.json and
    record unchanged. (4) THE TWO-ARM RELAY: five's PIN world (b) runs
    first; its CONTROL (a), declared rigid arms, RUNS ON A MISMATCH OF (b)
