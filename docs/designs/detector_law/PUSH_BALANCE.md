@@ -120,11 +120,15 @@ equilibrium; the paragraphs above this correction stand for it. Read with the tw
 separate fields and the stress summed per field, the chain gives 0.000
 at every L: the cross term is gone and only the scatterer's own
 reflection pushes, always apart (2 R A^2, R = 0.086 for a thin
-scatterer at n_o = 2). That is the chief physicist's finding 2 of
-11:25Z (the pair separating at rest on the chain under DESIGN.md 5.1
-(a) and (b) as declared: the records pushed per field, and 2-period
-trains of 110 intervals that never overlap the partner's arrival at L /
-c = 139), not a missing resonance. Section 2's force and section 5's
+scatterer at n_o = 2). The chief physicist's finding 2 of 11:25Z
+(the pair separating at rest on the chain under DESIGN.md 5.1 (a) and
+(b) as declared) had two causes, both in the closed form and neither a
+missing resonance: in-phase clocks at L_0 = 80 = 2.52 lambda_0 sit at
+the maximal repulsion, and 2-period trains of 110 intervals never
+overlap the partner's arrival at L / c = 139. (The first version of
+this sentence named the push per field as a third cause; his section
+already pushed by the total field, the two records kept separate only
+for the own-record reading, so that cause is withdrawn, 12:22Z.) Section 2's force and section 5's
 case (ii) are read with this correction. COMPUTATION.
 
 ## 2. The coupled-oscillator force: an object with a resonance is bound at every half wavelength
@@ -720,19 +724,20 @@ separation for pi, never a restoring force. Section 1's first
 correction ("the relay binds at its parity") is withdrawn; its first
 statement ("a relay pair is not bound") stands with the reason
 corrected: not the absence of a cross term, but the absence of its
-L-dependence. The chief physicist's finding 2 (11:25Z) was therefore
-two things at once: the push per field (no cross term) and, for the
-owner's candidate, a relay.
+L-dependence. The chief physicist's finding 2 (11:25Z) was therefore,
+for the owner's candidate, a relay, and for (A) the parity and the
+trains (section 1's correction); his push was the total field's
+throughout.
 
-**10.4 The tearing.** With the push per field (the physicist's section
-at 11:52Z) the only force in motion is the scatterer's asymmetric
-radiation pressure, 2 R (k_f^2 - k_b^2) T_0 forward on the leading
-object (R = 0.086 for the thin scatterer at n_o = 2; k_f^2 - k_b^2 = 4
-beta_c gamma_m^4 = 5.2 at k = 3), a runaway that grows with beta_c and
-showed itself at v = 0.27. Under the total-field push the binding of
-10.2, 12 T_0 at k = 3, stands against a tearing term of 0.9 T_0: there
-is no beta_c below 1 at which a thin scatterer's pressure beats the
-coherent binding, and k = 3 is above no threshold.
+**10.4 The tearing.** The scatterer's asymmetric radiation pressure
+in motion is 2 R (k_f^2 - k_b^2) T_0 forward on the leading object (R
+= 0.086 for the thin scatterer at n_o = 2; k_f^2 - k_b^2 = 4 beta_c
+gamma_m^4 = 5.2 at k = 3), 0.9 T_0, against the coherent binding's 2
+(k_f^2 + k_b^2) T_0 = 12 T_0 at k = 3: there is no beta_c below 1 at
+which a thin scatterer's pressure beats the coherent binding, and k = 3
+is above no threshold of the FORCE. The physicist's "breaks above v =
+0.27" (12:22Z, under the total-field push, E'_0 = 300, a ramp of ten
+to thirty cycles) is not the force's limit but the ramp's: 10.7.
 
 **10.5 The recoil.** An emitter at the lattice-time frequency f_0
 radiates asymmetrically in motion and is braked by its own emission,
@@ -755,13 +760,50 @@ word on which the design keeps.
 (m = 5.5 at lambda_0 = 32), or antiphase at 72, or the clock N = 50
 (lambda_0 = 28.87, MUST I's floor at k = 3 exactly) in phase at 79.4;
 never L_0 = 80 and never a quarter period; the total-field push less
-the own record; continuous emission; the rest control showing the pair
-holding at the declared phase before any push; the ramp over ten to
-thirty cycles; the readings f / f_0 (1.000 names (A), 0.816 Lorentz,
+the own record (10.5, 10.7: with the own record in the push the brake
+is 3.8 percent of the pace per cycle at E'_0 = 300 and 38 percent at
+30); continuous emission; the rest control showing the pair holding at
+the declared phase before any push; light objects and a slow ramp
+(10.7: E'_0 = 30 to 100 trains and a ramp of at least 20 to 30 cycles,
+so that the pair follows its well); the readings f / f_0 (1.000 names (A), 0.816 Lorentz,
 0.667 the relay) and L_along / L_0 (0.423 for (A) at k = 3, 0.816 for
 Lorentz, no equilibrium for the relay), the settling band in motion +-
 lambda_0 (1 - beta_c) / 4. Every number COMPUTATION; no pin moved by
 this file; the declarations the design's and the owner's.
+
+**10.7 The ramp's adiabaticity: why a pushed pair falls out of its
+well, and what the run must declare.** The stable separation moves as
+the pace grows, L* = L_0 (1 - beta_c) (10.2), a sweep of 50 Links = 7.5
+well spacings at k = 3 and 25 Links = 2.2 spacings at k = 6, and the
+pair follows its well only if the well moves slowly against the pair's
+own oscillation in it. The well's curvature at the leading object is
+F' = 2 k_f^3 k_0 T_0 per Link (the derivative of 10.1's second term);
+the pair's mass in these units is M = E'_0 / c^2 with E'_0 = n trains
+x 110 intervals x 2 T_0 c (the flux both ways), so the oscillation in
+the well has the period T_osc = 2 pi sqrt((M / 2) / F'): 207, 379, 656,
+1198 intervals at E'_0 = 30, 100, 300, 1000 trains at k = 3 (453, 827,
+1432, 2615 at k = 6). Over a ramp of T_ramp intervals the well moves
+L_0 beta_c T_osc / T_ramp Links per oscillation; adiabatic when that is
+under a third of the spacing (2.2 Links at k = 3, 3.8 at k = 6). At E'_0
+= 300 and a ramp of ten cycles (2770 intervals) the well moves 11.9
+Links per oscillation at k = 3 and 13.0 at k = 6, two spacings: the
+pair cannot follow, falls out of its well and reads as "breaks" or
+"drifts", exactly the physicist's 12:22Z readings (v = 0.27 at k = 3;
+80 to 95 at k = 6); at E'_0 = 1000 it is worse (21.8 Links). The ramp
+needed: about 17, 31, 53, 97 cycles at E'_0 = 30, 100, 300, 1000 at k =
+3 (11, 20, 35, 63 at k = 6). Against this stands the own recoil (10.5),
+which with the own record in the push brakes the pace by 38, 11, 3.8
+and 1.1 percent per cycle at those masses: the light objects that
+follow the well are the ones the recoil stops, and the heavy ones that
+coast cannot follow. The two together leave no regime under the push
+as implemented; with the push declared as the total field LESS the
+own record (10.5) the brake is gone and the run is E'_0 = 30 to 100
+trains with a ramp of 20 to 30 cycles, reading after the ramp. Named
+before the run as its outcomes, by kind: "falls out of its well during
+the ramp" reads the ramp (COMPUTATION above, a control), "slows" reads
+the push's form (the own record in it), and only a pair that follows
+its well reads the member: f / f_0 = 1.000 with L_along / L_0 = 1 -
+beta_c for (A). COMPUTATION; the declarations the design's.
 
 ## 11. Direction (ii), designed to its ends: a second, massive record kind under the discrete Klein-Gordon rule, beside massless light
 
