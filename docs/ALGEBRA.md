@@ -64,7 +64,13 @@ is the hop's whole number, so the crowd's stretch carries its
 subscript); gamma_PPN the world key `optical`'s declared strength;
 c_f = 1 + gamma_PPN the flight's coefficient in the age wall's set; u
 the birth wheel's value written on a record; (A1), (A2), (A3) the
-hypotheses of chapter 5, defined at its head.
+hypotheses of chapter 5, defined at its head. Two letters are reused
+and named at each use: lambda (the boost's dilation in 5.1, the radar's
+scale in 5.2, the wavelength in 5.7) and K (the kernel K(Delta) of
+Theorem 4 in 4.8, the hypothesis (K) of chapter 5, the number of
+directions of the fan in 5.6 and 5.7); omega and kappa are the walk's
+angles in chapter 5 and, once, a root of unity (4.11) and a force
+constant (5.8), named there.
 
 ---
 
@@ -90,7 +96,9 @@ group of order 24 is the part under which the hand is kept as well.
 
 *(Carried over verbatim from `docs/GROUP_STRUCTURE.md` sections 1 to 6, the chief
 physicist, 2026-09-23; the section numbers inside the text, "section 8" and
-the like, are that page's own and point into it.)*
+the like, are that page's own and point into it; the vectors written
+bold uppercase in its dictionary's force row, **V** and **W**, are that
+page's and stay as the chief physicist's to fix.)*
 
 ### 1.1 The definitions, in symbols
 
@@ -341,10 +349,16 @@ section 0, Eq. (1); the code `core.integer.by_drive`):
 
 Each component of the state is a bounded integer accumulator with a
 declared rate and a declared wall: it is translated by its rate,
-counted in walls (capped at a = 1 for the drive, uncapped elsewhere,
-a = 0 meaning the whole part), and reduced by the walls it holds; every
-wall counted is an event (a Link crossed, a phase step taken, a count
-completed, a birth, a push) and nothing else happens. The rates and
+counted in walls (capped at a = 1 for the drive; uncapped elsewhere,
+where the cap a is absent and e is the whole part floor(abs(s) / d)
+with the sign; the code's `at_most = 0` means no cap), and reduced by
+the walls it holds; every wall counted is an event (a Link crossed, a
+phase step taken, a count completed, a birth, a push) and nothing else
+happens. The one declared variant of the count is `centred`
+(centred-step-v1, the world key `centred_step`, which chapter 6's row 6
+cites): the count is the nearest whole number the accumulator holds,
+(abs(s) + d // 2) // d with the sign, the accumulator then in
+[-(d - d // 2), d // 2). The rates and
 walls are made of six integer operations and nothing else, the six
 verbs of [Highlights 5.4](HIGHLIGHTS.md) (records 181 and 202): (T) the
 translation, (B) the bilinear form with a declared matrix, (G) the
@@ -705,7 +719,7 @@ counts, never a real number, with the velocity quantum
 and (iv) c Outside is one Link per the least count, the bound of (iii)
 at k = 1, Einstein's second postulate in the click language; the
 Outside step of a transponding record in these quanta is place_(j+1) -
-place_j = e_j **D**_hat with e_j in {0, 1} and count_(j+1) - count_j = 1
+place_j = e_j **d**_hat (the unit vector of the direction D) with e_j in {0, 1} and count_(j+1) - count_j = 1
 + owed_j in the detector's own count; read at a distance the count
 between two clicks is multiplied by the factors of 3.3, with r the one
 quantity of the step above that (A1) leaves free: r = 1 on the law,
@@ -807,10 +821,12 @@ every direction).
 - **4.2 The pace of every direction and its bound.** A row advances
   c_D = Q abs(D)_2 / T_D Links per interval on its direction, T_D =
   isqrt(3 abs(D)_2^2 Q^2); 32 / 55 on a heading (T = isqrt(3 Q^2) = 110
-  at Q = 64); c <= 1 / sqrt 3 by Cauchy-Schwarz (S_1 Q <= T_D, equality
-  on the diagonals): c is the operator norm of the flight, the same
-  Euclidean pace in every direction within 1 / T_D (the Manhattan
-  bound), rung 1 in the count and rung 2 in the isotropy; read Outside
+  at Q = 64); S_1 Q <= T_D by Cauchy-Schwarz (the Manhattan bound, at most
+  one Link per interval, equality on the body diagonals); an isotropic
+  pace under it is at most the slowest line's, 1 / sqrt 3, the flight
+  operator's norm (rung 2); on the table c_D = Q abs(D)_2 / T_D lies
+  within 1 / T_D above 1 / sqrt 3, equal to it on the body diagonals,
+  since the isqrt rounds the wall down (rung 1); read Outside
   as the arrival count over the Euclidean distance, c_D = j abs(D)_2 /
   ceil((2 j S_1 - 1) T_D / (2 S_1 Q)) -> Q abs(D)_2 / T_D as j grows,
   or by a pulse and its return; the anisotropy 1 / c_D^2 = 2.954, 2.971,
@@ -826,8 +842,8 @@ every direction).
   and the third law holds message by message; from the books, n(x, t +
   1) - n(x, t) = - sum over a of [J_a(x, t) - J_a(x - e_a, t)] + b(x, t)
   - q(x, t), the discrete continuity equation, an identity of the
-  ledger in integers with no remainder, its continuum error term of
-  third order. DERIVATIONS_BEAM 9.1 (I5) and 25.4; the paper's section
+  ledger in integers with no remainder, its continuum form second order
+  in the Link over the coarse cell (DERIVATIONS_BEAM 25.4 (3)). DERIVATIONS_BEAM 9.1 (I5) and 25.4; the paper's section
   2, "The GameBoard as a system of information transfer".
 - **4.4 Gauss's law of a free family's flux.** A row released inside a
   closed surface crosses it once and never returns (the walk a
@@ -877,7 +893,8 @@ every direction).
 - **4.8 Theorem 4 (the quadratic read-out on the phase lattice, a
   lattice Gleason).** Under (a) the phase rotation changes no weight,
   R(x f) = R(f); (b) the balanced splitter conserves for every two
-  inputs, R(x^(N/4) f + g) + R(f + x^(N/4) g) = A_2 (R(f) + R(g)); (c)
+  inputs f, g in Z[zeta_N] (the rows after the cancel, 2.3),
+  R(x^(N/4) f + g) + R(f + x^(N/4) g) = A_2 (R(f) + R(g)); (c)
   R(f) >= 0; (d) R(0) = 0; (e) R not identically zero; with N a power
   of two, N >= 4: A_2 = 2 and
 
@@ -886,7 +903,8 @@ every direction).
   the sigma_j the Galois conjugates of ev, sigma_1 = ev; every such R
   is a positive quadratic form on the lattice, homogeneous, R(a f) =
   a^2 R(f); two rows a x^p and b x^(p + Delta) at one Node read R =
-  C_Sigma (a^2 + b^2) + 2 a b K(Delta) with K(0) = C_Sigma, K(N / 4) = 0,
+  C_Sigma (a^2 + b^2) + 2 a b K(Delta) with C_Sigma = sum over j of c_j,
+  K(Delta) = sum over j of c_j cos(2 pi j Delta / N), K(0) = C_Sigma, K(N / 4) = 0,
   K(N / 2) = -C_Sigma; Born's form abs(ev f)^2 is c_1 = 1 and the other
   c_j = 0 (P10, the one imported constant); the built click's f^T **G**
   f with **G** = **E**^T **E** is its fundamental to the tables'
@@ -900,7 +918,8 @@ every direction).
   l of U_a[o_A][l] U_b[o_B][l] and R = J^2: the first party's outcome is
   + exactly for u < N / 2 and - for u >= N / 2, for every (a, b) and
   every N; the second party's count of + is exactly N / 2 for every (a,
-  b) unless 2 N R(+, +) / C_K is an odd integer (a tie of the rung), and
+  b) unless 2 N R(+, +) / C_K, C_K the record's total weight 2 n_a n_b,
+  is an odd integer (a tie of the rung), and
   then N / 2 + 1; no tie occurs at the twelve grains from 8 to 1024 nor
   at the CHSH labels for any multiple of 8 up to 4096 (COMPUTATION);
   the marginals are no-signalling exactly, and the order signals
@@ -937,12 +956,13 @@ every direction).
   bits read + bits erased = log2 N per record; on the phase circle abs(supp
   f) x abs(supp f_hat) >= N (the Fourier transform's, Donoho and Stark;
   equality at a comb of every eighth phase at N = 64) and the Weyl
-  relation V U = omega U V for the shift and the multiplication by
-  omega^y. DERIVATIONS_BEAM 6.4, 6.1, 14 and 22.1; Light Outside II.2.
+  relation V U = omega U V, omega here a primitive N-th root of unity,
+  for the shift U by one phase and the multiplication V by omega^y. DERIVATIONS_BEAM 6.4, 6.1, 14 and 22.1; Light Outside II.2.
 - **4.12 The click's indivisibility, and Malus.** One click per record,
   never two: the ladder chooses one cell and deletes the offers, P(D1
   and D2 in one record) = 0 exactly (the cancel exact; mz_equal 64 / 0,
-  DETECTOR); Malus, P(pass) = cos^2 theta on the rotated label's Gram
+  DETECTOR); Malus, P(pass) = cos^2 theta, theta the polariser's angle against
+  the label, on the rotated label's Gram
   form within the tables' rounding (+0.0019 at 22.5 degrees, below 1 /
   256; 128 of 256 at 45 degrees, DETECTOR, series A12). Light Outside
   II.7 and II.9.
@@ -1024,8 +1044,8 @@ the Lorentz group up to scale: in one dimension the maps (u, w) -> (k u,
 w / k) on the light-cone coordinates u = t - x, w = t + x, the boosts
 with the invariant u w = t^2 - x^2, whose parameter is the one-way
 factor k = sqrt(k_AB k_BA) = sqrt((1 + v) / (1 - v)) for every r (the
-round trip reads nothing of r) and whose dilation lambda = sqrt(k_AB / k_BA) = r / sqrt(1 - v^2)
-carries r alone; the axiom that fixes lambda = 1 is the equality of the two one-way factors,
+round trip reads nothing of r) and whose dilation lambda (the boost's
+scale) = sqrt(k_AB / k_BA) = r / sqrt(1 - v^2) carries r alone; the axiom that fixes lambda = 1 is the equality of the two one-way factors,
 k_AB = k_BA, that is r / (1 - v) = (1 + v) / r, r^2 = 1 - v^2, by one
 multiplication (the relativity principle for the two directions); then
 v = (k^2 - 1) / (k^2 + 1), gamma = (k + 1 / k) / 2, the boost's own clock
@@ -1039,8 +1059,9 @@ inverse of a map such as (2, 1) is not Z-linear; over Q, under the
 axiom, G is the boosts with rational k, dense in SO(1, 1), the Lorentz
 group up to scale its closure. (ii) With (A2) the group acts on the
 amplitudes as the covariance of the discrete-time Dirac walk: the boost
-carries the walk's dispersion cos omega = cos m cos kappa to itself to
-second order (omega^2 - kappa^2 = m^2 + O(4)), so it fixes the
+carries the walk's dispersion cos omega = cos m cos kappa (omega the
+walk's frequency angle per interval, kappa its wave-number angle per
+Node, m the mass angle) to itself to second order (omega^2 - kappa^2 = m^2 + O(4)), so it fixes the
 detector's own rate at
 
     r = m / omega = sqrt(1 - v^2) (1 - kappa^2 / 6 + O(4)),   kappa^2 = m^2 v^2 / (1 - v^2),
@@ -1079,7 +1100,7 @@ dilation, r = sqrt((1 - v^2) k_GR / k_RG) from the two one-way factors
 read at one ground detector (DETECTOR; SHOWN in r; MET under the
 identity, series S; FAIL on the law, row 4a); the one-way Doppler 1 + z
 = k_RG = (1 + v) / r, on the law 1 + v, under the identity gamma (1 +
-beta), under the line sqrt((1 + v) / (1 - v)) (SHOWN in r; FAIL on the
+beta) with beta = v / c, under the line sqrt((1 + v) / (1 - v)) (SHOWN in r; FAIL on the
 law, row 4b's 0.2636 against 0.315 at beta 0.2674, DETECTOR; MET under
 the identity, 0.3674 for 0.369 +- 0.003, series S, DETECTOR); the
 transverse factor 1 / r_X (SHOWN, rung 2; FAIL on the law, 1 against
@@ -1106,7 +1127,7 @@ rate r_D, a reflection at the lattice Node X at the tick t_1 reads
     x_D = r_D (X - v t_1) / (1 - v^2),   t_D = r_D (t_1 - v X) / (1 - v^2),   (t_D, x_D) = lambda x Lorentz_v (t_1, X),   lambda = r_D gamma,
 
 the moving detector's radar coordinates Lorentz's up to the one scale
-r_D (SHOWN, rung 1; NOT READ: no moving radar detector registered).
+r_D (lambda here the radar's scale) (SHOWN, rung 1; NOT READ: no moving radar detector registered).
 The rows that need the definition: the boost's form as a map of
 coordinates and the two readings of a length at equal t; the rows that
 are convention-free are the round trips and the ratios of half round
@@ -1116,7 +1137,9 @@ trips (5.1's r-free lines). Source: Einstein Outside Theorem 2, lines
 ### 5.3 The energy-momentum relation, and the identity's exact square
 
 **Hypotheses:** (A1), (A2) and the law's own Planck map (E = hbar omega,
-p = hbar kappa, E_0 = hbar m, the angles in steps of the circle) for
+p = hbar kappa, E_0 = hbar m, hbar the reduced action h / 2 pi, omega
+and kappa the walk's frequency and wave-number angles in steps of the
+circle) for
 the relation; on the tree, the identity covariant-readings-v1 for the
 square. Under (A1) and (A2) the walk's cos omega = cos m cos kappa gives
 omega^2 - kappa^2 = m^2 to second order and, through the Planck map,
@@ -1159,8 +1182,8 @@ formula, both stated). Source: the click frame section 7 (1) (b) to
 
 **Hypotheses:** (W1), (W2), (M); (A1) and (A3) for the accelerated
 detector. **The fall independent of the content, exact:** the push p_a(t
-+ 1) - p_a(t) = -M_A V_a(t) in the gravity column (Lambda = 1, p = M_A
-sum V exactly) and the drive dividing by M_A (the step's divisor scales
++ 1) - p_a(t) = -M_A V_a(t) in the gravity column (Lambda = 1, Lambda the column's declared
+bound, the drive's coefficient; p = M_A sum V exactly) and the drive dividing by M_A (the step's divisor scales
 with M_A, so the same whole parts and remainders at every abs(p), not
 only at abs(p) << Q S_w M_A): the equivalence principle is rung 1 for
 bodies (SHOWN; MET: series D3, the held mass four times at r = 24, 138
@@ -1190,8 +1213,9 @@ DETECTOR, a host-tick reading by the owner's convention). **The
 equivalence of the clock's slowing and the fall, one field read twice**
 (the click frame section 8 (2) (e); Einstein Outside II.10, II.10a;
 Newton from the clicks 1.3): in the static shell mean the flow is the
-gradient of the age moment, **V** = -(Q c / tau_L) grad A, and the
-acceleration a = -(c^2 / S_w) grad A (tau_L = 1 / c exactly); between
+gradient of the age moment, **a** = -(Q c / tau_L) grad A (**a** the
+label flow vector of 2.2; tau_L the flight's intervals per Link, 1 / c
+exactly), and the acceleration a = -(c^2 / S_w) grad A; between
 two heights Y apart the clock's shift is delta k = (n / d) delta A and
 the fall's g Y = (c^2 / S_w) delta A, so
 
@@ -1265,7 +1289,7 @@ under a shell average"), is superseded on the v << c clause and kept as
 its record; the shell mean it names is the one limit both wordings
 take. **Hypotheses:** (A1); (W1) to (W5); (M) where named; the world
 file's detectors, lamps and declared integers (the fan, S_w, n / d, the
-contents, eta); no (A2). **(a) The clicks, the primitive.** A detector
+contents, eta the suspension ratio n / d); no (A2). **(a) The clicks, the primitive.** A detector
 is a body with its own count n_D, one accumulator advanced by one per
 interval and stretched by the age wall at coefficient 1; a click is the
 arrival at D of a packet another detector released, the triple (the
@@ -1362,8 +1386,8 @@ T^2 proportional to r^3, the exponent NOT READ. **(f) The third law at
 rest.** For a paid message the label leaves its emitter at birth (the
 recoil) and enters its reader at the click, so the third law holds
 message by message (rung 1); for a free message the release costs no
-recoil and the third law is a symmetry between two readers, M_A **V**_B
-= M_B **V**_A, exact only while both read the same number of each
+recoil and the third law is a symmetry between two readers, M_A **a**_B
+= M_B **a**_A (**a** the flow each reads), exact only while both read the same number of each
 other's messages; at rest the two counts are equal by the crossing
 rule; in motion they differ by (1 + u_A / c) against (1 + u_B / c), so
 the free force's third law is a rest theorem, NOT SHOWN in motion; the
@@ -1389,7 +1413,8 @@ click frame section 8; DERIVATIONS_BEAM 3.3, 9.1 (I5), 17.2.
 **Hypotheses:** (A1), (A3), (L1) to (L9), the conversion; each row's
 own. The pace of light: chapter 4.2 (SHOWN; MET, series Q and T; FAIL
 against nature's isotropy bound at the grain, row 5a, a BOUND on Q).
-E = h f at a click: the content of one click E_B = h_q s = h f_A,
+E = h f at a click: the content of one click E_B = h_q s = h f_A (h_q
+the family's quantum, the action per unit born; s the lamp's turn),
 DECLARED at the release and RECOVERED at the click as the content
 carried whole (rung 1); the frequency B counts f_B = f_A k_AB; lambda_B
 = c_D N d / n = h / p FOLLOWS under the calibration h_A = h_q N, read
@@ -1411,7 +1436,10 @@ W births,
 
     C(y) / W = (2 + 2 cos(2 pi (L_1(y) - L_2(y)) / lambda)) / Z + O(1 / (2 N)) + O(1 / W),   lambda = c N d / n Links,
 
-bright where L_1 - L_2 = +- j lambda, Young's lambda D / s paraxial
+bright where L_1 - L_2 = +- j lambda (Z the record's total, the
+formula's normaliser; lambda here the wavelength in Links), Young's
+lambda L_s / s paraxial (L_s the slit-to-screen distance and s the
+slit spacing, the letter D being the direction)
 (SHOWN, rung 2 on the fan, Born rung 1 within 1 / (2 N); the bands'
 centres 23.5 apart for 23.3, MET; the visibility 0.966 against 0.98,
 FAIL by the fan's grain, row 2a). The click's indivisibility and Malus:
@@ -1431,7 +1459,8 @@ and read after the flight time tau,
 
     1 + z_d(tau) = r_B (1 + k_A(tau)) (1 + v(tau) / c) = g(tau) (1 + z_throw(tau)),   g(tau) = (1 + k_A(tau)) / (1 + k_B),
 
-and with g(x) = 1 + g_1 x + g_2 x^2 + ..., x = H tau, the deceleration
+and with g(x) = 1 + g_1 x + g_2 x^2 + ..., x = H tau, H the throw's
+rate (Hubble's constant as the thing compared with), the deceleration
 parameter a reader fits is q_eff = 2 [(1 + g_1 + g_2) / (1 + g_1)^2 - 1],
 q_eff = -2 g_1 / (1 + g_1) when g_2 = 0: any stretch of the emitters'
 clocks relative to the detector's growing linearly with the flight time
@@ -1473,7 +1502,8 @@ becomes in the limit, compared with and not put in (the digital
 circle's sum 2.041, 2.011, 2.003, 2.000 x pi p r at r = 8, 16, 64, 256,
 GAMEBOARD). **The ladder, in the shell mean (rung 2).** For any closed
 loop of the inverse-square limit the line integral of **p** is 2 pi
-sqrt(kappa m_i a), a the loop's semi-major axis, so the closure fixes a
+sqrt(kappa m_i a), kappa here the force constant of the limit and a
+the loop's semi-major axis, so the closure fixes a
 and not the shape,
 
     a_j = j^2 h^2 / (4 pi^2 kappa m_i),   a_j / a_i = (j / i)^2   exactly in the limit;   T_j / T_i = (j / i)^3,
@@ -1511,8 +1541,9 @@ abs(p'_a) - 1 / abs(p_a)), an exact rational of the declared integers
 body on the closed circle j is carried by one click of any label to a
 loop of semi-major axis a' >= r_j / 2, so the closed loop i is one click
 away from the closed circle j only if 2 i^2 >= j^2; the pairs one click
-reaches from a circle are (4, 3), (5, 4), (6, 5) and from j = 3 none
-below; Balmer's i = 2 from j = 4 (2 x 2^2 = 8 < 16) and Lyman's i = 1
+reaches from a circle j <= 6 are (4, 3), (5, 4), (6, 5) and from j = 3
+none below (from j = 7 on, (7, 5), (7, 6), (8, 6), ... by the same
+condition); Balmer's i = 2 from j = 4 (2 x 2^2 = 8 < 16) and Lyman's i = 1
 from any j >= 2 are not reachable by one click. **A release unbinds:**
 dE / dM < 0, losing content raises the loop's constant and the body
 unbinds (charge is per unit of content). **What no rule does:** the row
@@ -1553,14 +1584,16 @@ this is the declaration P9, not a theorem of the six verbs (chapter
 4.14). **The step rule under the key, three verbs, all integers** (the
 state of a row of light: its Node, its direction D, the count `made`,
 the residue s of the flight's accumulator, the age; the push
-accumulator **W**, the error accumulator **c**):
+accumulator **w**, the error accumulator **c**; **p** its momentum label
+and **a** the arrival flow, all vectors bold lowercase here where the
+step algebra writes them uppercase):
 
-    the walk:   A = the crowd's age moment at the row's Node;  s += r_0 d;  if s >= w_0 (d + c_f n A): s -= w_0 (d + c_f n A), the Link h = line_D[made mod S_1], made += 1, the Node moves by h
-    the push:   at a free Node, **V** = the arrival flow there;  **W** -= n x weight_D x **V**;  s = s x S_1(P') // S_1(P)
-    the label:  **P** = Q d **u**_D + **W**; among D and its neighbours the h with h . **P** > 0 that keeps abs(**c** + h x **P**)^2 smallest; if D' differs, **W** += Q d (**u**_D - **u**_D'), D = D'
+    the walk:   A = the crowd's age moment at the row's Node;  (r_0, w_0) = (2 S_1 Q, 2 T_D) on a row never pushed, else (2 S_1(**p**) Q, 2 T(**p**)), the walk's rate and wall;  s += r_0 d;  if s >= w_0 (d + c_f n A): s -= w_0 (d + c_f n A), the Link h = line_D[made mod S_1], made += 1, the Node moves by h
+    the push:   at a free Node, **a** = the arrival flow there;  **w** -= n x weight_D x **a**;  s = s x S_1(**p**') // S_1(**p**)
+    the label:  **p** = Q d **u**_D + **w**; among D and its neighbours the h with h . **p** > 0 that keeps abs(**c** + h x **p**)^2 smallest; if D' differs, **w** += Q d (**u**_D - **u**_D'), D = D'
 
 with the crowd from the same flight rule, A(r) = scale x sum over the
-lines D through r of the sum of the ages present and **V**(r) = scale x
+lines D through r of the sum of the ages present and **a**(r) = scale x
 sum of **u**_D (the weighted **f**_D under flow-link-v1, the integer
 vector nearest Q D / S_1), constant in time once the oldest row that
 reaches r has been born; the engine walks it as the algebra does to
@@ -1608,7 +1641,8 @@ expected 2 c_f x 0.990 x L / sqrt(L^2 + b^2) (the shells' 0.990 and the
 finite path's factor), within one to three grains of the ring
 (COMPUTATION, the step algebra's simulation of the board, not a run;
 the law as built 5.12 / 5.44 / 5.86, the push's constant F_L1 = 1.421
-times the clock's, which flow-link-v1 makes one, 0.990 against 0.993);
+times the clock's (F_L1 the fan's L1 factor, the mean of S_1 / abs(D)_2
+over its lines), which flow-link-v1 makes one, 0.990 against 0.993);
 the in-plane coefficient 11.69 at b = 6 (14.71 as built) is the plane's
 comb and no constant; the ring's mean radial shift 0.731 against 0.731
 +- 0.025 at gamma_PPN = 1 (DETECTOR); the verdicts CANNOT CLOSE on the
@@ -1627,10 +1661,14 @@ them; none is the law. **covariant-readings-v1** (the world key
 square W = E'_0^2 + 3 **p** . **p** kept on the record, E' its whole
 root by comparisons, the rate r = E'_0 / E' exact on the identity's
 integers in no crowd, the gate E'_0 / E' = 1 / gamma in its domain gamma
-<= 2 (abs(**p**)_1 <= E'_0), and the root-free gate the owner named,
+<= 2 (the enumeration's domain abs(**p**)_1 <= E'_0), and the root-free gate the owner named,
 the n-th self-creation allowed when t^2 m^2 >= n^2 W, a comparison of
 two integer products (verbs (T), (B), (D)), t / n >= sqrt(W) / m =
-gamma, its closed form T_n = 1 + floor((n - 1) E' / m); MET in its
+gamma, T'_n = ceil(n sqrt(W) / m), later than the whole-root gate's
+T_n = 1 + floor((n - 1) E' / m) by 0 to 3 intervals on the domain
+(exactly 1 at gamma = 2); the exact root-free form with one division
+is T_n = min {t : ceil(t m / (n - 1))^2 > W} (DERIVATIONS_BEAM 17.7);
+MET in its
 domain (series S: the muon's products' face clicks at 369 and 345, z =
 0.3674 for 0.369 +- 0.003, DETECTOR; the self-creations 70 and 124,
 GAMEBOARD), beside the law's FAIL rows 4a and 4b; one sixth of the
@@ -1724,7 +1762,7 @@ grain or a theorem is what nature refutes.
 | 6 the atom's loop opening | the electron escapes at 3407 intervals (DETECTOR, series H); under `centred_step` the loop stays, C1 PASS, C2 and C3 FAIL as declared (DETECTOR); no line read; nature Balmer's 27 / 20 | SHOWN: a closed loop is an integer congruence of the action row; the one-click reach 2 i^2 >= j^2 and that a release unbinds (chapter 5.8); SHOWN IN FORM: the ladder (j / i)^2 and (j / i)^3 in the shell mean, 27 / 20 under the virial form in the limit; NOT SHOWN: the transition, any rule that selects the row | RULE: atom-give-v1 / atom-level-v1, the give at the closure with its amount read off the action rows, under its own identity; generic, vector and local PASS in the mathematician's judgement, the reviewer's read decides; no lattice we can run holds the scale, so the row stays FAIL by any run and the ladder a conjecture | F and E; YES in part (the loop's radius and period off the body's own record; the escape and the quarter crossings clicks) |
 | 7b the strong ratio | 2.0, the border's four clicks against two (DETECTOR, series N); nature 12.72 | SHOWN: the give once per body, held // h units at a contact, so the alpha gives 8 against the deuteron's 4 whatever the partners; the ratio a constant of the rule, blind to the give's value | RULE: a give that grows with the bonds a body makes; a bilinear form on the partners' rows passes the three tests in form; per partner 6, per partner squared 18 (COMPUTATION); nature's 12.72 the partners' count to the power 1.68, reachable only by a declared integer per shape, a fit | E; NO (the border clicks; the books a check) |
 | 8a the neutron's step | every neutron at its key on its own clock, the width 0 (DETECTOR, 64 clicks of content 3); in the lattice's clock 0.036 registered, 0.08 to 0.13 at head (GAMEBOARD); nature's exponential, width over median ln 9 / ln 2 = 3.17 | SHOWN: the `become` at a declared count is a step in each body's own clock at any count; the spread in the tick is the crowd's spread of 1 + k_crowd over the 64 Nodes, bounded by the crowd's range | RULE: decay-by-crowd-v1, the `become` fired by a met row of a declared family instead of by a count, so the waiting time is the arrivals' inter-arrival distribution, exponential only where the declared bath's arrivals approach a Poisson comb (COMPUTATION from the declaration); generic, vector ((E) and (D)) and local in form; a re-run reads the crowd's spread alone and cannot reach 3.17 | E, audited A; YES for the paper's number (the width over the median in the lattice's clock) |
-| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty; the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with 8c); content 0, no turn: 0 behind, as read; content 1 under massive-rows-v1 (the row turning its phase per Link by abs(p_a) N / h steps over the action h): each reader admits a class shifted by the turn per Link and the window empties a class, 16 rows per class over 1024 births, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION), the far detector 1024 less 16 per class covered; 0 behind again when the shift per Link is 0 mod N (p = 2^12 with h a power of two) | D; NO (the readers' own records) |
+| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty; the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with 8c); content 0, no turn: 0 behind, as read; content 1 under massive-rows-v1 (the row turning its phase per Link by abs(p_a) N / h steps over the action h): each reader admits a class shifted by the turn per Link and the window empties a class, 16 rows per class over 1024 births, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION), the far detector 1024 less 16 per class covered; 0 behind again when the shift per Link is 0 mod N (p = 2^12 with h a power of two dividing p) | D; NO (the readers' own records) |
 | 8c the massless neutrino | the `nu` family with no content, an input; nature's heaviest state above 9.8 x 10^-8 of the electron's | SHOWN: a family's content is a declared integer of the family table | DECLARATION: the `nu` family's quantum 1 under `massive_rows`; 0 refuted; 1 puts the electron's declared content at 1.02 x 10^7 units or more (COMPUTATION on the comparison side), inside the working bound at S_w = 1 | D; NO (an input) |
 | 11a the far lamp's brightness | the pin q_eff = +1 (COMPUTATION; the run not made, expansion-v1 not built); nature -0.53 | SHOWN IN FORM: the click count falls as 1 / (1 + z) and the content per click stays the birth's, one factor where nature's flux has two (chapter 5.7) | RULE: a click whose read energy follows the row's frequency in flight ("not one of the six"); in form the massive row's phase turn per Link read as h f at the detector (a key and a reading), which gives q_eff = 0, Milne's, and then row 3's RULE remains | D and A; YES (no click made; the chain's inverse square the shell mean) |
 | 11c Tolman's test | the pin n = 1 in (1 + z)^-n (COMPUTATION); nature 4 | SHOWN IN FORM: the Nodes and the fan's lines fixed under the wall, a ruler of l Nodes at d subtends l / d; the flux one power of 1 + z | RULE: the same as 11a for one power (n = 2 at most), and for the other two an angular size that grows with the redshift, a board whose Links stretch, no verb on the state vector: it fails the vector test and the local test; not reachable inside the six verbs | D and A; YES (the ruler's size the board's Nodes) |
