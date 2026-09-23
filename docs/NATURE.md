@@ -547,6 +547,49 @@ two radii), awaits its run and is not yet registered.
 
 ## The tally
 
+The count of 2026-09-23, the paper's: the register read at its head, the
+rows above as they stand, the read of
+[WHAT_IS_MISSING.md](designs/fail_rows/WHAT_IS_MISSING.md) section 0 and the
+owner's words of records 941 and 955 (the model owner's plan for more rows
+passing; the reconciler's read of 2026-09-23, 01:07Z).
+
+| Verdict | Rows |
+| --- | --- |
+| PASS (3) | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, the clicks 64 / 0 over 64 births, the visibility in the clicks 1.000), 9 (Malus, 128 / 256, 0 and 64 / 256 exact at 45 and 90 degrees; 219 / 256 and 187 / 256 at 22.5 degrees, the tables' rounding) |
+| FAIL, in the table (12) | 1b (the window form, S = 2; a control, the local read-out's bound), 1c (the order channel: 15 / 16 under a = 0 and -1 / 16 under the cycle against nature's 0, DETECTOR; a row of the paper's register, WHAT_IS_MISSING.md section 1.2, not yet a row above), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4b (the moving lamp, 0.052 in z), 6 (Bohr's ratio: the electron escapes at 3407 intervals, DETECTOR, the runs of 2026-09-22; no line to read), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 13 (the bending of light: the law as built 0.000 pixel, series K, DETECTOR; the generic entry a key, gamma an input), 14 (Newton's periods: T(24) / T(12) = 1.677 under the one constant and 1.512 under the line drive against the pin 2.00 +- 0.18; a row of the paper's register, WHAT_IS_MISSING.md section 1.13, not yet a row above) |
+| FAIL, by their pins outside the table (4; no run) | 4a (the muon, a factor 29.33), 5b (the frame, eight to twelve orders), 11a (the far lamp's brightness, q_eff = +1 against -0.53), 11c (the surface brightness, one power of 1 + z against four) |
+| BOUND (2) | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
+| NOT COMPARED (1) | 2c (the power of the click: the window [1.917, 2.012) is an implementation gate, kappa not computed) |
+| HISTORY (1) | 12 (the presence word, superseded by the age word; the age word's 1.907 against 2.00 not counted as a pass: record 394 made the age word the law's default, record 941 made the row history) |
+| Not counted | 10 (NOT YET: the record form's `w27_beam` did not complete), 11b (PASS by a pin whose run needs expansion-v1, not built; the paper counts only rows read after a detector) |
+
+The rows that moved between the block of 2026-09-21 (below, kept as
+history) and this count, one line each with its record:
+
+- 12: PASS under the age word then; HISTORY now (record 394, the age word
+  the default; record 941, the row history).
+- 11b: PASS by its pin then; not counted now (the paper counts only rows
+  read after a detector; expansion-v1 not built; record 955).
+- 6: NOT YET then; FAIL now (the runs of 2026-09-22, the escape at 3407
+  intervals, DETECTOR; WHAT_IS_MISSING.md section 1.6).
+- 13: NOT COMPARED then; FAIL for the law as built now (0.000 pixel,
+  series K, DETECTOR; the generic entry a key; WHAT_IS_MISSING.md
+  section 1.12).
+- 1c and 14: added after the base 88d843ef (records 941 and 955;
+  WHAT_IS_MISSING.md sections 1.2 and 1.13); their rows above are not yet
+  written.
+- 10: NOT YET then and now; not counted.
+
+The sums: PASS 3, FAIL 12 in the table and 4 by their pins, BOUND 2, NOT
+COMPARED 1, HISTORY 1, not counted 2. The block of 2026-09-21 read PASS 5 /
+FAIL 13 / BOUND 2 / NOT YET 2 / NOT COMPARED 2.
+
+### The tally as written on 2026-09-21 (at the base 88d843ef; history, nothing deleted)
+
+Written at the base 88d843ef on 2026-09-21 and not re-dated until
+2026-09-23; the cells of rows 1b and 12 in it carry the marks of the
+first commit of that day. Kept as it was.
+
 | Verdict | Rows |
 | --- | --- |
 | PASS | 12 under the age word (the clock's field 1.907 against the potential's 2.00), 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, the clicks 64 / 0 over 64 births, the visibility in the clicks 1.000; the offers' 0.9988 beside it, the apparatus layer's number, a diagnostic), 9 (Malus, 128 / 256, 0 and 64 / 256 exact at 45 and 90 degrees; 219 / 256 and 187 / 256 at 22.5 degrees, the tables' rounding), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
