@@ -26,6 +26,13 @@ then
     PYTHONPATH=src python tools/algebra_visualizer/render.py RUNS_DIR                       # headless
     PYTHONPATH=src python tools/algebra_visualizer/render.py RUNS_DIR --render OUT.html     # the page
 
+**Where the page is.** No page is committed (CONTRIBUTING.md keeps generated
+outputs outside source commits). The page of 2026-09-23, made from the two
+registered runs at the engine's fingerprint `e3270d0109` (`run.json`'s
+`source_sha256`), is published for the model owner as one private page,
+https://claude.ai/artifact/Nwr2XSwVxkSUFKGmm7qBQa (private; the owner shares
+it from the page). Every number on it names its kind and its source line.
+
 A missing run folder is refused with the line above; the tool never runs
 the engine and imports nothing of `event_universe` (the test
 `tests/test_algebra_visualizer.py` asserts it). The page test runs under
