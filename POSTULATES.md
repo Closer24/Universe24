@@ -1596,8 +1596,7 @@ first, the Boss's reading after it where one is given and marked as his,
 and the citations last. The records are in
 [docs/LOG_2026-09-20.md](docs/LOG_2026-09-20.md) and their decisions in
 [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); records 1242 to
-1244 are on main since PR #1011 and are cited by number; record 1245 is
-cited from the Boss's order until its records PR lands. Where
+1245 are cited by number. Where
 [section 10](#10-measurement-and-display-are-outside-the-physics)
 or sections [23](#23-the-ray-event-model),
 [24](#24-everything-is-information-transfer-a-return-is-the-inverse-split-at-the-event)
@@ -1616,15 +1615,16 @@ rule for both; there is no second clock and no rate from outside. The
 code's fact beside the owner's premise: the count needs a body, a measured
 event (an open face has no clock of its own, docs/TERMINOLOGY.md, "A
 detector's clock"), and the tick algebra finds the count's rate independent
-of the held mass (PR #1008). Records 678, 709, 1217, 1226, 1227, 1232 and
-1234; section 10 (the click stamped with the detector's own count);
+of the held mass (docs/designs/new_rows/TICK_ALGEBRA.md, records 1248 and
+1257). Records 678, 709, 1217, 1226, 1227, 1232 and 1234; section 10 (the click stamped with the detector's own count);
 docs/TERMINOLOGY.md, "A detector's clock".
 
 **26.2 What passes from the Inside to the Outside.** The owner: from the
 Inside to the Outside the mass passes as it is: the row's record's content
 in the family's units (docs/TERMINOLOGY.md, "Content": content on a body or
-a row, the mass). By the code (the Tick Algebraist's paragraph, PR #1008,
-confirmed by the code): the mass is one integer in one column, `content`,
+a row, the mass). By the code (the Tick Algebraist's paragraph,
+docs/designs/new_rows/TICK_ALGEBRA.md, records 1248 and 1257, confirmed by
+the code): the mass is one integer in one column, `content`,
 in the family's units; a light packet carries the content of its own paid
 family and never the emitter's held mass, which does not pass. What arrives
 with a record and is read as it is: its content (the mass), its amount, its
@@ -1654,8 +1654,9 @@ the Inside is something we reach only by clicks. The Outside is the possibility 
 the actions coming in from the Inside: one realized possibility at a given
 count of a detector, not always all the places; the Inside carries all the
 possibilities that can be. The Boss's precision, marked as his: the Inside
-is one deterministic state with many rows; there is no draw at a Node (the
-paper's P4; section 25, "The mark": there is no lottery); the fan carries
+is one deterministic state with many rows; there is no draw at a Node
+(section 25, "The mark": there is no lottery; nothing at a Node, Highlights
+item 2, record 155; the paper's P4 as a cross-reference); the fan carries
 every declared direction; "all the possibilities" are the rows that could
 click, and the Outside is the subset that clicked. Record 1201 (no passage
 Outside without a packet Inside); section 23 (every trajectory an
@@ -1686,8 +1687,9 @@ its rows hop whole and on the board no clock slows by motion
 and 749), and the tick algebra finds that the law as built departs from
 Einstein's form at order v^2 by the whole beta^2 term (beta the velocity
 in units of c; the count rate 1 against 1 / gamma, gamma the Lorentz
-factor), not by the theorem's residual (PR #1008). Whether the law as
-built matches Einstein's forms is what the light clock reads, its pins
+factor), not by the theorem's residual (docs/designs/new_rows/TICK_ALGEBRA.md,
+records 1248 and 1257). Whether the law as built matches Einstein's forms
+is what the light clock reads, its pins
 pending (records 1226 to 1235); until it passes, this postulate states the
 comparison and no derivation. Einstein's forms are the thing compared
 with: the law's result matches nature and is never said to be nature;
@@ -1718,8 +1720,11 @@ that form under A1 and A2 together, the law as built meets A1 and not A2,
 and no derivation is claimed for the law as built until the light clock
 passes. The light clock tests both at once: if it reads gamma squared and
 gamma (gamma the Lorentz factor) where Einstein's forms read 1 and 1, the
-passage from 3 to 2 fails in its present form and postulate 26.6 is
-removed under 26.7. Level 3 reaches level 1 only by clicks (26.4); nothing
+claim that level 3 gives level 2's form, the double test's first half,
+fails in its present form; 26.6, which states a comparison and claims no
+derivation, then stands as a disagreement in the comparison table, and
+26.7 is not invoked against it. Level 3 reaches level 1 only by clicks
+(26.4); nothing
 of level 1 is read from level 3 directly. Records 1216, 1220 (the three
 levels named first there), 1243 and 1245;
 [docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame).
