@@ -13,8 +13,10 @@ before the board runs it, and printed by a script beside this document (the
 list in section 12); the board, when it runs, checks the algebra, never the
 reverse. The third draft replaces the first two whole: the massive rule is
 the stable form (section 1), the pace c is derived (1.1), the object is the
-well of the pair on declared cells (4), the coupling is the dielectric
-(7), the motion is one statement (8), and the pins are one table (9).
+well of the pair on declared cells in the massive medium (4), the click is light
+passing through a body with a clock (6), the coupling is the dielectric
+(7), the motion is one statement (8), the pins are one table (9), and the
+board's faces have a margin rule (11).
 
 ## 0. The owner's law and words
 
@@ -46,6 +48,21 @@ well of the pair on declared cells (4), the coupling is the dielectric
 - (about 13:40Z) "Is everything clear from here: to take the algebra to the
   board and to prove that the physics stands in reality?" Yes: this draft,
   then the build on his word, then runs against DETECTOR pins only.
+- (14:08Z, record 1414, on the click) "The click is in the Outside, and
+  light definitely produces it. The click is the evaluation E of the
+  record's time series on the foreign object's cells at the declared wheel
+  W. The whole detector law of today is built on this: the two slits,
+  Malus, Bell, all clicks of light. And how does light click without being
+  bound: through the coupling. Light drives the foreign object's record at
+  the cell (the receive, a_m += g a_l), the object's record crosses the
+  rung 1 / W in its own clock, and that is the click. Light does not need
+  to stay in order to be read. It needs only to pass through a body that
+  has a clock." (Sections 6 and 7: the click needs no sink.)
+- (14:12Z, on the board's faces) "Check whether I understood that a foreign
+  object cannot now be placed at the edge of the board because it will not
+  be held there; check only that, and how it is most convenient to solve
+  it: a closed board, an open board as we use, or periodic as we do in Z."
+  (Section 11: the margin rule.)
 
 ## 1. The one rule, in the stable form: the pair on the six-neighbour term
 
@@ -78,6 +95,16 @@ a_now`, which restores the zero mode (the same pace, no gap: an index); the
 massive record is the same pair WITHOUT it (a gap: a mass). The
 compensation is exactly the difference between an index and a mass, and no
 third form exists in range 1.
+
+**Three derivations, one rule.** The Algebra Mathematician's chapter,
+written from ALGEBRA.md alone (`docs/ALGEBRA_MASSIVE_RECORD.md` on
+`algebra-massive-record` at 4d2f7289), finds the compensated self term
+unbounded on every three-dimensional periodic world for every p >= 1 (his
+4.5) and proposes the self term on the MEAN of the record to come and the
+record before, `3 (2 q + p) (a_next + a_before) + r' = 2 q SUM6 + r` (his
+4.6, with its energy positive semidefinite for every shape and every
+pair): the rule above with `[num, den] = [2 q, 2 q + p]`, Reviewer 3's form
+(B), and this design's stable form, reached three ways.
 
 **The algebraic placement of the Inside** (the owner's 14:30Z question: how
 does the algebra see the ray that splits by itself). A record on the board
@@ -333,6 +360,38 @@ a side above the threshold.
 The owner's "N derives how many cells" holds as: the side is declared, and
 the mode's extent, frequency and regime follow from the pair and the side.
 
+**The medium: what the design carries, and the alternative, with the price
+of each** (the Boss's structural question of 14:15Z; the owner to be told).
+This design carries the massive record kind as a RULE ON EVERY NODE of the
+board: the world declares the background pair `[num, den]` (the medium's
+gap mu, world data like the phase circle's N), the object's cells carry the
+LOWERED pair (the well) as one extra declaration at the cells (the owner's
+record 1385 met: the object's Nodes carry one extra declared pair, on top
+of the world's), and the coupling g, G of section 7 lives on the object's
+cells only, so the medium away from objects is invisible to light. Then
+the object's mode is BOUND below the medium's gap with its tail in the
+medium, the well regime exists, and the clock in motion is section 8's.
+What it costs: (i) a background pair declared per world; (ii) a free
+massive packet away from any object exists as the medium's own free record
+(form (II): covariant, spreading, its pace c_m; a massive quantum without
+a declared object, which clicks only by reaching a body's cells, where it
+merges with the body's record by verb G, the same kind; named, not
+carried); (iii) a two-pace world (section 2). In the pins: five's 1 and 1
+to the band's second term; the lifetime the radiative tau of section 7;
+the index from g, G. THE ALTERNATIVE (the Algebra Mathematician's chapter,
+section 5): the pair only at the object's cells, a MASSLESS SURROUND. Then
+no mode is bound: a frequency below the massive edge is an outgoing wave
+outside, so the lowest mode LEAKS into light's band, `omega_1^2 = p / q +
+pi^2 / s^2` (a cube, the first Dirichlet mode, the zero one Link outside),
+with the quality `Q = 0.13 (mu s)^3` per axis: a 12-cube at mu = 0.05 rings
+0.03 of a period (no clock), a 30-cube at mu = 0.15 about twelve periods;
+no well regime exists (there is no medium to hold a tail), and the clock in
+motion is the cavity's, the medium's 1 / gamma_m^2, so five's 1 and 1 is
+lost in form and the lifetime is Q periods. The alternative keeps the
+world free of a background pair and of free massive packets; it gives no
+Lorentz clock to any object. The design takes the first; the Boss carries
+the difference to the owner with these four answers.
+
 ## 5. The block's momentum, step and push
 
 One integer per axis for the whole block, **P**, with its remainder (the
@@ -349,25 +408,35 @@ record's rows translate by verb T). The bound |**v**| < c_m on the vector
 diagnostic (DESIGN.md 1.2 (c)). What the block feels: light's stress at
 its outer Ports; what it does to light: section 7.
 
-## 6. The click of a block: a body's event, in the body's own clock
+## 6. The click of a block: light passing through a body that has a clock (the owner's word, record 1414)
 
-A click is ALWAYS the body's event, in the body's own clock (the owner's
-words: the Outside has no board, only clicks through a foreign object;
-every instrument is a foreign object, always self-clicking). Light's
-record has no click of its own: nothing is kept at a free Node beyond the
-events there, no rung, no wheel; light alone, without a body, produces
-nothing Outside. **Light never clicks; light is read: it moves the body's
-record, and the body clicks.** The mechanism: light arriving at the block's
-cells drives the block's record through the coupling of section 7; the
-block's pointer accumulates its own record's motion across all its cells
-(the owner's "the click in the Outside is read across its cells"); the
-click when that motion crosses the declared rung of the declared wheel W
-(the counting form, DESIGN.md section 5); the click line with the block's
-own count (its mode's cycles, section 4) and the light record's birth
-stamp. The evaluation E of the block's element of Z[Z_N] across R, as every
-click. Its completion needs the sink of section 7 (Reviewer 3's MUST 3): the
-verbs are lossless, so a reading of light passing and resonating is not
-yet POSTULATES 10's action (the record ends at the detector).
+The click is in the Outside, and light produces it, through a body: the
+click is the evaluation E of the object's own record on its cells at the
+declared wheel W (the owner's 14:08Z). Light arriving at the block's cells
+drives the block's record through the receive of section 7 (the owner's
+`a_m += g a_l`, in the stable form the first difference of light's row);
+the block's pointer accumulates its own record's motion across all its
+cells (the owner's "the click in the Outside is read across its cells");
+the click when that motion crosses the declared rung of the declared wheel
+W in the block's OWN clock (the counting form, DESIGN.md section 5); the
+click line with the block's own count (its mode's cycles, section 4) and
+the light record's birth stamp. **Light does not need to stay in order to
+be read; it needs only to pass through a body that has a clock.** A click
+is therefore always a body's event in the body's clock (light's record has
+no rung and no wheel of its own; light alone, without a body, produces
+nothing Outside), and it needs NO SINK: the verbs are lossless, light
+passes on, and the click is the crossing. The whole detector law of today
+(the two slits, Malus, Bell) reads so.
+
+**POSTULATES.md section 10, two readings, decided by the owner.**
+POSTULATES 10 says "the record ends at the detector". Reading (a): it
+stands BESIDE the click above as the statement of the worlds that absorb
+(a screen that must not re-emit, a sponge), where the sink of section 7 is
+declared, and a detector that lets light pass (a window with a clock) is
+lawful too, its click the crossing alone. Reading (b): it is AMENDED to
+"the record is read at the detector, and ends there only where a sink is
+declared". Both are stated; nothing is decided here; the Boss asks the
+owner.
 
 ## 7. The coupling between the two record kinds: the dielectric, one declared g with G
 
@@ -381,7 +450,10 @@ both ways:
     light's row gains      -G (a_m,now - a_m,before)    (the block's current is light's source),
 
 both local to the cell, the order of the two steps within the interval the
-engine's. The dispersion `(c^2 k^2 - omega^2) (omega_0^2 - omega^2) = G g
+engine's. The owner's `a_m += g a_l` (record 1414) is the receive's
+MEANING, light drives the object's record; the first-difference form is
+its stable writing, since the amplitude form is the tachyon of Reviewer
+3's 12.5 (a) (below). The dispersion `(c^2 k^2 - omega^2) (omega_0^2 - omega^2) = G g
 omega^2`: both roots real and non-negative for every k and G g > 0, stable
 at every strength; the index `n^2 = 1 + G g / (omega_0^2 - omega^2)`, the
 classical dielectric (the chain read 1.034, 1.083, 1.159 against the
@@ -428,17 +500,18 @@ cell has. The Boss carries it to the owner; the moving block's index
 against the resting one is a chain check of a minute, to be made when the
 owner's word is given.
 
-**The sink, the OWNER'S WORD** (Reviewer 3's MUST 3): the completion of a
-click (the record ends at the detector, POSTULATES 10) needs a loss the
-verbs do not have. Two forms, each with its kind: (a) the TAKE, the damping
-pair on light's row at the object's cells (DESIGN.md section 5's Port's
-take, a DECLARATION of the world: the cells absorb what they read); (b) a
-declared DAMPING on the mode (the block's record loses a declared fraction
-per interval, the radiative decay above made irreversible: a DECLARATION
-of the object). Either is a declaration; the Boss carries the choice to the
-owner. Until it is given, the click of section 6 is a reading of light
-passing and resonating, and the count of clicks is the count of crossings,
-which the pins already compare.
+**The sink, a SEPARATE declaration of the worlds that absorb, not a
+condition of the click** (Reviewer 3's MUST 3, answered by the owner's word
+of 14:08Z: the click is the crossing, light passes on). Where a world must
+absorb (a screen that must not re-emit, a sponge, a wall that eats), it
+declares a loss the verbs do not have, with its kind: (a) the TAKE, the
+damping pair on light's row at the object's cells (DESIGN.md section 5's
+Port's take; a DECLARATION of the world: the cells absorb what they read),
+or (b) a declared DAMPING on the mode (the block's record loses a declared
+fraction per interval; a DECLARATION of the object, which also stops its
+clock). The design's default for a detector that reads is NO sink (the
+click alone) and for a screen the take (a); whether POSTULATES 10 stands
+beside this or is amended is the owner's word (section 6).
 
 **One coupling, not two** (Reviewer 3's MUST 4): with this linear coupling
 present the second draft's pace coupling (the one-wall pair through the
@@ -534,6 +607,7 @@ prediction:
 | (g) the block at rest | its self-click its own mode, N_b(pair, s), no return and no timer; decaying in tau (section 7) unless re-excited; the clock sentence of DESIGN.md section 8 not needed for it | exact to the residual |
 | the index block | n from g, G, the pair and omega: n^2 = 1 + G g / (omega_0^2 - omega^2); the Fresnel step ((n - 1) / (n + 1))^2; the chain's 1.034, 1.083, 1.159 against 1.043, 1.104, 1.200 | the chain's 0.8 to 3.4 percent below the closed form at s = 12 (the faces' steps) |
 | the rest cavity (form (I)) | section 4's table: 0.2417 at s = 12 on a cube; the quadrature with the pair | the lattice's residual |
+| the board's faces | an object nearer a non-periodic face than its mode's extent reads a raised clock (the tail cut, the cavity's creeping in); the margin rule of section 11 a load-time check, the faces periodic by default for the massive record; no pin of the object | the extent from the pair and the side (COMPUTATION); the faces a DECLARATION |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
 | 12, 13 | the coefficient at a crowd from its massive records' index by section 7's g; 2.00 and 1 + gamma_PPN to compute from g, G and the pairs | the residual |
 
@@ -566,7 +640,55 @@ board's two-block world reads it.
    second term), the light emitted through the source term of section 7,
    decaying in tau; (v) the index block (n from g, G). Nothing found,
    everything checked.
-4. The key `massive-record-v1` OFF by default; the build only on Reviewer
+4. **The board's faces and the margin rule** (the owner's question of
+   14:12Z; COMPUTATION for the extents, `massive_board_margin.py`;
+   DECLARATION for the faces). The object's mode extends beyond its cells
+   into the medium with the tail exp(-kappa x), cosh kappa = 3 D_out cos
+   omega_b - 2, the extent 1 / kappa = c / (mu sqrt(eps)) Links in the
+   continuum (eps the binding depth): a face nearer than the extent
+   changes the clock. A ZERO face (a declared wall for the massive record)
+   cuts the tail and raises the mode toward the cavity's (the medium's
+   clock creeps in); a PERIODIC face wraps the tail onto the object's
+   other side (a periodic image, small once the board exceeds a few
+   extents); an OPEN board does not exist on the lattice (every world has
+   faces: declared walls, sponges or periodic). So the owner's reading is
+   right: an object at the edge is not held as itself. THE MARGIN RULE, a
+   load-time check like MUST I's floor: the object's cells at least one
+   extent from any non-periodic face, and the board's side per axis at
+   least the object's side plus two extents when that axis is periodic;
+   the extent printed from the pair and the side before the world runs.
+   The massive record kind's faces PERIODIC by default (the medium
+   continuous, nothing to declare) with the margin; light's faces per the
+   experiment as today (the sponge for the detector worlds, periodic where
+   the clock's light must not be eaten); the background pair's faces the
+   same periodic ones. The numbers (a periodic box of 96^3 for mu = 0.15,
+   128^3 for mu = 0.05):
+
+   | mu | s | g | omega_b | eps | the extent 1 / kappa (Links) | the side by the rule s + 2 / kappa |
+   | --- | --- | --- | --- | --- | --- | --- |
+   | 0.15 | 10 | mu^2 | 0.1488 | 0.007 | 45 (the box's wrap: unbounded on the infinite board, the smallest binding side) | (not a check world) |
+   | 0.15 | 14 | mu^2 / 2 | 0.1488 | 0.006 | 48 (the same) | (not a check world) |
+   | 0.15 | 20 | mu^2 | 0.1107 | 0.451 | 5.7 | 31 |
+   | 0.15 | 28 | mu^2 / 2 | 0.1318 | 0.220 | 8.2 | 44 |
+   | 0.05 | 30 | mu^2 | 0.0491 | 0.036 | 61 (the box's wrap: unbounded on the infinite board) | (not a check world) |
+   | 0.05 | 42 | mu^2 / 2 | 0.0491 | 0.035 | 62 (the same) | (not a check world) |
+   | 0.05 | 60 | mu^2 | 0.0368 | 0.458 | 17 | 94 |
+
+   At the SMALLEST binding side the mode's extent is unbounded (the
+   threshold), so a check world takes a side above it. The first check
+   worlds: the rest cube at mu = 0.15, s = 20 (eps 0.45, the cavity-leaning
+   control) and s = 28 at half depth (eps 0.22), on a periodic 48^3 board
+   (110,592 Nodes; HOST 0.005 s per interval, a rest world of three periods
+   a second); the well-regime clock check needs eps about 0.1, the extent
+   c / (mu sqrt 0.1) = 1.83 / mu: 12 Links at mu = 0.15 (a side giving eps
+   0.1 between s = 14 and 20 at full depth; the board 64^3, HOST 0.010 s per
+   interval, the moving cube at k = 3 over its ramp and hold, 9500
+   intervals, 2 minutes) and 37 Links at mu = 0.05 (s about 36 to 40 at
+   full depth; the board 128^3, HOST 0.079 s per interval, the moving world
+   12 minutes); the moving cube's axis periodic, so the travel wraps and
+   the side needs only s plus two extents. The HOST figures are numpy on
+   this machine; the engine's integer form is its own cost.
+5. The key `massive-record-v1` OFF by default; the build only on Reviewer
    3's gate of this draft's SHA, the Algebra Mathematician's chapter, and
    the owner's second word through the Boss (with his two words of section
    7: the index in motion, the sink); the engine's numbers reported against
@@ -582,7 +704,7 @@ board's two-block world reads it.
 | the block's momentum and step (5) | PASS (the tie declared) | PASS (G, D, T) | PASS (the block's own Ports) |
 | the click across the cells (6) | PASS | PASS (E) | PASS (the block's pointer) |
 | the dielectric coupling, first difference both ways (7) | PASS (one g with G) | PASS (B, linear in the other's two columns) | PASS |
-| the sink (7), either form | a DECLARATION, the owner's word | (D) or the take | PASS |
+| the sink (7), either form, only where a world absorbs | a DECLARATION of that world | (D) or the take | PASS |
 | the motion (8) | a derivation, no sentence added | none needed | none needed |
 
 **The scripts beside this document, each printing its record (`.out`),
@@ -590,7 +712,9 @@ COMPUTATION only, no engine run:** `massive_c_derivation.py` (section 1.1),
 `massive_corner_stability.py` (sections 2 and 3), `massive_dielectric_index.py`
 (section 7), `massive_light_self_trapping.py` (section 4 (III), the
 negative result), `massive_cube_threshold.py` (section 4, the exact table,
-the window, light's norm bound), `massive_block_clock_motion.py` (section 8).
+the window, light's norm bound), `massive_block_clock_motion.py` (section 8),
+`massive_board_margin.py` (section 11, the mode's extent in the medium and
+the margin rule's numbers, with the HOST cost).
 Run each as its docstring says; the numbers in this document are theirs.
 
 **Not computed here, and said so:** the moving block's index against the
@@ -627,13 +751,13 @@ light record reaching a cell of R meets the object through exactly these:
 | --- | --- | --- | --- | --- |
 | INSERTS light and RECEIVES light (the lamp, the detector: the same thing) | (B) the bilinear form with a declared matrix, chapter 2.2: at a cell the massive row gains g (a_l,now - a_l,before) and light's row gains -G (a_m,now - a_m,before), the first difference both ways (section 7): the insert is the block's current as light's source at its own mode, no train declared; the receive is light's field driving the block's record | g, G (one product G g sets the index; one ratio G / g the conserved energy's weight) | generic, vector, local (section 7) | at rest yes; in motion the owner's word (the drive's pair [K^2, K^2 - 3] or a declaration) |
 | SCATTERS, REFLECTS, BINDS (the index, the mirror's limit, the wall, the air; the force between two objects) | the same entry: the index n^2 = 1 + G g / (omega_0^2 - omega^2) from the coupling's dispersion; the mirror the strong-coupling limit; the force of section 10 | none beyond g, G (kappa withdrawn, MUST 4) | as section 7 | as above |
-| CLICKS (the reading in the Outside) | (E) the evaluation, chapter 2.5: the object's record is one element of Z[Z_N] across R; the click when the object's own motion, driven by light and summed across its cells into its pointer, crosses the declared rung of the declared wheel W; the click line with the object's own count (its mode's cycles) and the light record's birth stamp; the completion by the sink (the owner's word) | W, the sensitivity; the sink's pair | as DESIGN.md section 5 | the reading, after the last group operation |
+| CLICKS (the reading in the Outside) | (E) the evaluation, chapter 2.5: the object's record is one element of Z[Z_N] across R; the click when the object's own motion, driven by light and summed across its cells into its pointer, crosses the declared rung of the declared wheel W in the object's own clock; light passes on, no sink needed (the owner's word, record 1414); the click line with the object's own count (its mode's cycles) and the light record's birth stamp | W, the sensitivity | as DESIGN.md section 5 | the reading, after the last group operation |
 | MOVES (the step; the momentum) | (T) the drive with the accumulator and the remainder, chapter 2.1; the momentum changed by the stress of the total field at the object's outer Ports, section 5 | Q S M x 56 d; the tie | as section 5 | yes: the stress the field's own |
 
 Nothing else connects the object to the board: no declared train (derived
 as the decaying emission, section 7), no grace, no fan, no one-way take
-beyond the sink, no timer, no clock sentence for the object (its clock is
-its mode); the receiver forms of DESIGN.md section 5 (the mirror, the
+(the sink a separate declaration of the worlds that absorb, section 7),
+no timer, no clock sentence for the object (its clock is its mode); the receiver forms of DESIGN.md section 5 (the mirror, the
 sponge, the Port's take) are values of these verbs (section 7).
 
 **What the algebra then gives for the Outside's readings, derived before
