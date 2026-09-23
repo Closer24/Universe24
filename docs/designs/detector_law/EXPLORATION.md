@@ -22,8 +22,9 @@ pair per record kind, the block with its well, the coupling both ways in
 the one division, the click of a body at W, the take, the faces and the
 margin rule) and the ray law's first build; the readings are the builder's
 STEP 5 report 1 of 17:56Z (the Boss's 18:00Z) and his first (v-m) run.
-The moving worlds' readings are marked PENDING where they have not
-reached this page; the page is updated when they land.
+The builder's STEP 5 report 2 (19:38Z, his head 33d3c3c9, the series and
+BUILD_READINGS.md by kind) carries the moving worlds; the layer worlds and
+the atom world are marked PENDING where they have not reached this page.
 
 ## 1. What came out of the algebra in the clicks, and how close
 
@@ -33,9 +34,9 @@ reached this page; the page is updated when they land.
 | The same at side 28, half depth | omega_b = 0.13053, the period 48.14 | 48.140 | 0.01 percent | (K) CONTROL |
 | The rest cavity of form (I), side 24 | the separable form on the lattice, omega = 0.19485, the period 32.25 | 32.244 | 0.15 percent, the lattice's residual | (K) CONTROL |
 | Light slowed in matter: the index block at rest on a chain of 1400, at three couplings | the closed form n^2 = 1 + G g / (omega_0^2 - omega^2): n = 1.0421, 1.1022, 1.1956 (the declared PIN, unchanged) | n read 1.0366, 1.0887, 1.1702 (GAMEBOARD: the light amplitude's phase at a probe) | the excess n - 1 at 0.87 of the form's, ONE factor at all three couplings | (K) CONTROL of the coupling: the linearity in G g and the omega_0 dependence pass; the factor 0.87 is explained in kind and open in size (section 2) |
-| The index block IN MOTION at K = 3 (a prediction with no known formula: the same-Node coupling's own number, not Fizeau's drag) | head-on 0.500 of the covariant slab's delay; from behind 2.569 (the 2200-chain's own script number) | head-on 0.498; from behind 2.451 (the builder's first run, before the faces as declared; re-run PENDING) | 0.4 percent head-on; 5 percent from behind, to re-read | (P) PREDICTION, its number here a CONTROL OF THE IMPLEMENTATION against the design's own scratch of the same scheme (the +- 0.04 rad falsifier is that check); the prediction itself stays untested against nature by design (Fizeau a declared non-match) |
-| The moving body's clock: the block pushed to k = 3 on the 64^3 boxes (side 20 and 28) and on the layer pin world (side 14, a quarter depth) | the one formula f / f_0 = omega_b(gamma_m s) / (gamma_m omega_b(s)) with gamma_m at the massive kind's own exact cone c_eff (1 / gamma_m = 0.8150): 0.7814 and 0.8032 on the two boxes, 0.8116 on the layer pin world (its own scratch reads 0.8113); the second-order c_m (0.8142) and light's gamma(c) (0.8165) beside as CONTROLS | PENDING (the builder's moving worlds (ii-a), (ii-b), (iii-b) and the exploratory layer worlds running at 18:00Z) | PENDING | (K) the muon's form 1 / gamma_m, with (P) the second term of a bound clock beside |
-| The rest cavity moved | 1 / gamma_m^2 = 0.6642 at c_eff (0.6626 at c_m, 0.6667 at c) | PENDING ((iii-b)) | PENDING | (K) CONTROL of the medium's clock |
+| The index block IN MOTION at K = 3 (a prediction with no known formula: the same-Node coupling's own number, not Fizeau's drag) | head-on 0.500 of the covariant slab's delay; from behind 2.569 (the 2200-chain's own script number) | with light's faces open on x as declared and the covariant expectation from the engine's own rest worlds (n 1.2358, 1.2346, 1.2429 against the script's 1.2362, 1.2345, 1.2449): head-on at K = 3 the ratio 0.498 (the halves 0.394 and 0.410), at K = 4 0.510; from behind on the chain of 2200, the window [3400, 4300]: 2.451 (the halves 0.152 and 1.015 against the script's 0.227 and 0.973; the amplitude 1.38 of the reference, light gains through the receding block), at K = 4 1.179; on the chain of 4000, the window [5000, 6000]: 3.58 against the script's 6.74, because the reflection from the face at x = 0 reaches the probe at about 4850 and the script's chain wraps by np.roll (the first half 1.561 rad at the script's 1.524, the second 0.093); the pump's signature 10^-5 to 10^-4 of light's form per interval (GAMEBOARD, the size section 7 predicted) | head-on 0.4 percent; from behind on the 2200 chain 5 percent (the first half's transient); on the 4000 chain the window sits after the face's reflection and does not read the script's geometry (section 2) | (P) PREDICTION, its number here a CONTROL OF THE IMPLEMENTATION against the design's own scratch of the same scheme (the +- 0.04 rad falsifier is that check); the prediction itself stays untested against nature by design (Fizeau a declared non-match) |
+| The moving body's clock: the block pushed to k = 3 on the 64^3 boxes (side 20 and 28) and on the layer pin world (side 14, a quarter depth) | the one formula f / f_0 = omega_b(gamma_m s) / (gamma_m omega_b(s)) with gamma_m at the massive kind's own exact cone c_eff (1 / gamma_m = 0.8150): 0.7814 and 0.8032 on the two boxes, 0.8116 on the layer pin world (its own scratch reads 0.8113); the second-order c_m (0.8142) and light's gamma(c) (0.8165) beside as CONTROLS | the builder's STEP 5 report 2 (19:38Z, his head 33d3c3c9), EXPLORATORY, three readings per world named by kind: (ii-a) side 20: 0.7833 by the spectral peak of the record's sum (GAMEBOARD), 0.7826 by the clicks' mean interval (DETECTOR), 0.7915 by the count, 111 clicks over 8000 intervals (DETECTOR, the coarsest); (ii-b) side 28: 0.8055 by the peak, 0.8099 by the clicks, 0.8134 by the count; the pump's readings 0; the layer pin world's own reading not yet in his report | (ii-a) the peak 0.7833 against the one formula's 0.7814 at the exact cone (+0.24 percent), 0.7805 at c_m (+0.36), 0.7831 at light's c (+0.03); (ii-b) 0.8055 against 0.8032 (+0.29), 0.8024 (+0.39), 0.8048 (+0.09); the band 0.3 percent. THE FULL ONE FORMULA came out of the engine within the band on both worlds; the FIRST-ORDER form (0.7245, 0.7712) is 7.5 and 4.3 percent away: the block form's residual is read in full, as the design said. THE HONEST LINE ON THE THREE GAMMAS: this world does NOT tell them apart: the three formula numbers lie 0.1 to 0.3 percent apart while one world's three readings (the peak, the clicks, the count) spread over 1.1 percent, and the peak sits nearest light's gamma and 0.24 to 0.29 percent above the named exact cone, at the band's edge; no verdict, no pin moved; the world that separates them is the deferred mu = 0.3 layer (section 2) | (K) the muon's form 1 / gamma_m: the full formula came out; (P) the second term of a bound clock read in full (the first-order form did not come out) |
+| The rest cavity moved ((iii-b), the engine's cavity pushed to k = 3) | the design's cavity limit 1 / gamma_m^2 = 0.6642 (the second draft's theorem for a declared rigid region carried in motion) | the count rate over the hold 1.17 of the rest rate by the clicks (27.50 against 32.24 intervals), 1.38 by the peak; the summed record grows over the hold, 1.5 x 10^10 against 2 x 10^9 at rest (EXPLORATORY, GAMEBOARD and DETECTOR) | NOT BESIDE: the reading is above 1, the theorem's number below 1 | the engine's moving hard cavity is a NAMED NON-OBJECT (section 2): a region held at 0 outside its cells and re-imposed every interval is, in motion, a hard mirror stepping through the medium, cutting the row it leaves and exposing a fresh zero cell each hop, a pump (the hop's parametric pump of section 7, here on the massive record itself); the theorem's object was a rigid region CARRIED, which the engine does not have, and the design's chain check of the cavity limit was a DEEP WELL (side 48), a different object. Re-declared: the moving cavity control is the deep well in motion (side 40 at full depth on a 128^2 layer, binding 0.87; its pin the one formula's 0.7531 at the exact cone, COMPUTATION now, before any run; neither 1 / gamma nor 1 / gamma^2: the well's formula saturates near 0.75 at these depths on the layer); the hard cavity moved stays out of the schedule |
 | The small "atom": a well of side 20 on a 64^2 layer, its lines read in light through the coupling | three bound modes, 0.09097 and a pair at 0.13800; the lines expected AT THE MODES' OWN FREQUENCIES (a linear scalar coupling), not at their difference 0.047 | PENDING (the builder's exploratory atom world, sent 17:22Z) | PENDING | (P) PREDICTION: discrete lines from the algebra; no Balmer-type ladder of differences at this scale, said before the run |
 
 The reading of the first four rows in one sentence: the generic engine per
@@ -59,9 +60,34 @@ head-on to half a percent.
   same form) is the builder's to name before the pinned (v) run. The
   closed form stays the pin, as declared; the mode sum stands beside it as
   a labelled control (MASSIVE_RECORD.md section 11 item 6).
-- **The index in motion from behind**, 2.451 against 2.569, 5 percent: the
-  builder's first run was before the faces as declared; the re-run is
-  PENDING and reads with them.
+- **The index in motion from behind.** On the chain of 2200 the re-run
+  with the faces as declared reads 2.451 against the script's 2.569 (5
+  percent, the first half's transient 0.152 against 0.227, the second half
+  1.015 against 0.973); on the chain of 4000 the script's window [5000,
+  6000] sits after the reflection from the face at x = 0 reaches the probe
+  (about 4850), while the script's chain wraps periodically with a hard
+  source, so the two geometries differ and the engine's 3.58 is not the
+  script's 6.74. THE GEOMETRY DECLARED for the pinned receding (v-m), in
+  MASSIVE_RECORD.md section 11 item 6: the chain of 4000 with light's
+  open faces as the engine has them and the reading window [3400, 4800],
+  ending before the face's reflection reaches the probe; the pin is the
+  script's number on THAT geometry (the script re-run with the engine's
+  open face in place of its wrap, the same window), computed at pin time
+  before the run; until then the row stays as declared with the face named
+  beside. The pump's signature, 10^-5 to 10^-4 per interval, is the size
+  section 7 predicted for the same-Node coupling (a GAMEBOARD reading).
+- **The moving hard cavity, (iii-b).** Not beside its number and not an
+  object: a region held at 0 and re-imposed every interval is a stepping
+  mirror that pumps the record it cuts (1.17 to 1.38 of its rest rate,
+  the summed record growing sevenfold over the hold); the second draft's
+  theorem (1 / gamma_m^2) spoke of a rigid region carried, which the
+  engine does not have, and the design's own check of that limit ran on a
+  deep well. So: the hard cavity in motion is a NAMED NON-OBJECT, out of
+  the schedule; the cavity control in motion is re-declared as the deep
+  well (side 40 at full depth on a 128^2 layer, binding 0.87), its pin the
+  one formula's 0.7531 at the exact cone, computed before any run; the
+  rest cavity (iii-a) stays a control at rest, where it read to 0.15
+  percent.
 - **The one formula's gamma.** Reviewer 3 found, and the derivation
   confirms (MASSIVE_RECORD.md section 8, CONFIRMED at 18:26Z, its exact
   form on his token of 19:20Z), that the moving clock's gamma is the
@@ -91,10 +117,9 @@ head-on to half a percent.
 
 ## 3. What must be done before the pins
 
-1. The moving readings (the builder's (ii-a), (ii-b), (iii-b), the (v-m)
-   re-run, the layer worlds, the atom world) read beside the algebra's
-   numbers on this page: the moving body's clock at 1 / gamma_m is the
-   first nature-shaped thing and is not yet read.
+1. The readings still owed: the exploratory layer worlds (the block at
+   rest and at k = 3 on the layer, the atom world); the (ii) worlds and
+   (v-m) are read above.
 2. The builder's accounting of the index block's 4 percent (his reading's
    window and probe against the script's, or the remainders), and his
    answer on the wall convention (3 Q S M x 56 d), both before any pinned
@@ -112,8 +137,13 @@ head-on to half a percent.
 ## 4. The one sentence
 
 The engine is generic per the algebra: three known-formula rows came out
-of the algebra in the clicks to a tenth of a percent and one prediction
-with no known formula to half a percent; what is open is a size on the
-index block, explained in kind and owed in accounting, and the moving
-clocks, whose readings are pending; nothing is compared with nature until
-the pinned runs, on the owner's word.
+of the algebra in the clicks to a tenth of a percent, the moving body's
+clock came out by the FULL one formula within its band on two worlds (the
+muon's form 1 / gamma_m with the bound clock's second term read in full,
+the first-order form 4 to 7 percent off), and the index in motion
+reproduced the design's own computation head-on to half a percent; what
+is open is a size on the index block (explained in kind, owed in
+accounting), the receding index's geometry (declared now), and the moving
+hard cavity, which is not an object and is replaced by the deep well;
+this world does not tell the three gammas apart; nothing is compared with
+nature until the pinned runs, on the owner's word.
