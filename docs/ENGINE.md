@@ -1160,6 +1160,35 @@ record born.
 `tools/amplitude_path.py` replays a run's register through the layer and
 checks it against `world`. `tools/run_series.py` runs these worlds as any.
 
+**The trimmed record** (2026-09-23, a host option; no key of the world, the
+record's verbosity being the host's and not the law's). In a long run of a
+detector world the per-row `click` lines of the measured events, one per
+clicked row (the lines the measure rule writes, about 355 bytes each), are
+nearly the whole of `events.jsonl` by count and by bytes (a row 10 run of
+docs/designs/fail_rows at w = 9: 97 percent of the lines and 98 percent of
+the 7.4 GB); the detector's reading of those rows is the set's `record`
+line per interval and, in a recorded world, the `gather` line per record,
+and the per-row lines are a GameBoard diagnostic. The runner's option
+`--omit-row-clicks` (`python -m event_universe` and `tools/run_series.py`,
+which passes it to every child; `run_initialization(...,
+omit_row_clicks=True)`; `NatureBeamSimulation(world, observer,
+omit_row_clicks=True)`) leaves those lines out and writes `omit_row_clicks`
+true into `run.json` (written only then), so that a reader knows the
+record is trimmed; every other line (the face and border clicks, the
+`gather`, `record`, `birth`, `split`, `cancel`, `read`, `pass`,
+`rerelease`, `step`, `contact`, `home`, `become` and `energy` lines, the
+stamps) is written as it is, in order, and `state.json` and the books are
+the same. Off by default: without the option every file of a run is byte
+for byte as it was, and every registered digest stands
+(`tests/test_record_trim.py`). A reading tool that reads the per-row click
+lines (`tools/hubble_readings.py`, `tools/weak_readings.py`,
+`tools/moving_detector_readings.py` and the others that call
+`event_universe.trimmed_record.refuse_trimmed_record`) stops on a trimmed
+record with a plain sentence instead of reading zero; the readers of the
+`gather` and `record` lines (`tools/covariant_readings.py`,
+`tools/quarks_readings.py`, the gallery's gather pages) read a trimmed
+record as any.
+
 ### The detector's readings by type
 
 The model owner, 2026-09-21 (record 205): "after the detector, name the
