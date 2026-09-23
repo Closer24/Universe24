@@ -1172,22 +1172,39 @@ board's two-block world reads it.
    overlaps a mode of extent 34 Links poorly and the rest goes to the
    medium's free modes, which on a periodic layer never leave. So the pin
    worlds (the layer's and the 3-D (ii-c)) DECLARE THE SEED AS THE BOUND
-   MODE'S INTEGER PROFILE over two extents: the margin module's mode at
-   load, rounded to integers on a declared radius s / 2 + 2 / kappa, the
-   same profile at both levels (a standing start, no phase needed), a
-   declaration of the world's initial state of kind 2; with it the
-   scratch's clicks read the mode (42.36, the ratio 1.0001 to the period).
+   MODE'S INTEGER PROFILE: the margin module's mode, rounded to integers
+   at the world's amplitude OVER THE WHOLE BOARD (no radius: Reviewer 3's
+   line of 20:10Z, cutting the profile at two extents leaves a step of
+   e^-2 of the tail that seeds the free modes again at the percent level;
+   the exploratory scratch's radius 79 exceeded the 128^2 layer's
+   half-width and so seeded the whole layer, which is why it read 1.0001;
+   the margin rule is untouched, it concerns the mode's extent against the
+   faces, not the seed's support), the same profile at both levels (a
+   standing start, exact: the mode's two-column states are phi (cos(theta
+   - omega_b), cos theta) and (phi, phi) is the state at theta = omega_b /
+   2, so the standing start excites the bound mode alone, to the integer
+   rounding 2^-20 of the mode and the remainders' grain), a declaration of
+   the world's initial state of kind 2; with it the scratch's clicks read
+   the mode (42.36, the ratio 1.0001 to the period).
    The (i-a) and (i-b) worlds keep the flat seed (their modes sit inside
-   the cells, the clicks read to 0.03 percent). The world keys: `seed`
-   with the value `"mode"` in place of an integer, admitted only under
-   `margin`, the profile printed at load (GAMEBOARD). THE FOUR LINES OF
+   the cells, the clicks read to 0.03 percent). REPRODUCIBILITY (Reviewer
+   3's MUST for the pin worlds' declaration, 20:10Z): a run's record must
+   follow from the world file and the engine alone, byte for byte, and a
+   float Lanczos at load is iterative and not bit-identical across hosts;
+   so the GENERATOR (`make_worlds.py`) computes the mode and writes the
+   profile's INTEGERS into the world file (or a sidecar the world file
+   names by blob SHA), and the engine reads integers under `seed`; the
+   value `"mode"` lives in the generator, not in the engine; the profile
+   printed at load from the margin module is the GAMEBOARD check that the
+   file's integers are the module's mode; the one form's own rule: the
+   world file's data, nothing the declaration does not name. THE FOUR LINES OF
    THE DECLARATION (Reviewer 3's line of 19:55Z through the Boss, agreed;
    the same seed he proposes, the margin module's Lanczos vector written
    as integers at the world's amplitude): (1) the reader of record of
    every pin row is the CLICKS at W on the block's own record; (2) the
-   seed is the bound mode's shape from the margin module at load, as
-   integers at the world's amplitude, on the radius s / 2 + 2 / kappa, the
-   same at both levels; (3) the click's record is the block's cells' SUM
+   seed is the bound mode's shape as the margin module computes it, as
+   integers at the world's amplitude over the whole board, written into
+   the world file by the generator, the same at both levels; (3) the click's record is the block's cells' SUM
    as built (BUILD.md section 10 (c)), the centre cell's clicks a
    diagnostic beside (less exposed to the medium's modes at the edges);
    (4) the window is the hold, after the ramp. THE RULE: a row whose

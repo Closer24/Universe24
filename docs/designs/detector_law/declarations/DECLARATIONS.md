@@ -293,9 +293,11 @@ The clicks at W on the block's own record (the cells' sum as built, the
 window the hold after the ramp) are the reader of record of every row
 that reads a clock; the spectral peak of the summed record is a GAMEBOARD
 diagnostic beside, never the pin. A pin world's seed is the bound mode's
-shape from the margin module at load, as integers at the world's
-amplitude on the radius s / 2 + 2 / kappa, the same at both levels (a
-declaration of kind 2); a row whose clicks beat is a diagnostic until they
+shape as the margin module computes it, as integers at the world's
+amplitude over the whole board, the same at both levels (a declaration
+of kind 2), written into the world file by the generator so that the run
+follows from the world file and the engine alone, byte for byte (the
+profile printed at load the GAMEBOARD check); a row whose clicks beat is a diagnostic until they
 read the mode (MASSIVE_RECORD.md section 11 item 7). Section 4 above (row
 4b) reads B's clicks so.
 
