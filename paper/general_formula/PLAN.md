@@ -5297,3 +5297,24 @@ Lorentz, Einstein, the owner's central sentence, the tally, the
 conjectures and the two limitations kept. 250 words (mathematics one
 token each), the journal's limit. The PDF from the true source, read
 back. 52 pages.
+
+## Applied (2026-09-23, the reviewer's read AD through the Boss's order of 02:00Z): two word changes in the abstract
+
+A third commit on `paper-abstract-names`, the abstract only. (a) The
+Lorentz sentence: "Under two named hypotheses on the click, Lorentz's
+factors and Einstein's step are reached, the equivalence principle
+under the first alone, not derived from nothing; the law as built
+meets the first only." (the equivalence principle needs (A1) and the
+law as built, not (A2); a reader took the old order as needing (A2)).
+(b) The close with the law as its subject: "The law as built has no
+relativistic dynamics; its sequential wheel signals in a pair's order,
+not its counts." The eight words these cost, traded inside the
+abstract, none in the owner's central sentence and no name: "begins
+with" to "has"; "discrete in N steps" to "discrete, N steps"; "on that
+ring" to "on it"; "and the Born rule" to ", the Born rule" and "then"
+dropped; "the pace of every direction, and" to "every direction's
+pace,"; "the measured value" to "the measurement". The optional
+condition after the CHSH value ("a prediction once the wheel meets
+no-signalling in the order") not added: no words left under 250. 250
+words (mathematics one token each). The PDF from the true source, read
+back. 52 pages.
