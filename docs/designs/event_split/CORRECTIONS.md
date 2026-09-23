@@ -453,12 +453,29 @@ either; both stated here so that the choice is his):
   the entity.
 - Reviewer 3's tie: the label lowered to the clock. The lamp's label
   |**u**| = 14 so that e_D = isqrt(3 x 14 x 14) = 24 exactly = 3 h n / d
-  at h = 1 and the registered rate, the wavelength KEPT at 4.654 Links.
-  What it moves: the push weight 111 to 24, row 13's -1.93 and -3.86
-  pixels to -0.42 and -0.84 (as computed above); light's flow label
-  scaled by 14 / 64 wherever light is a crowd's SOURCE; `family_flight`
-  extended to a non-massive family with its own label scale (a
-  declaration of kind 1, ALGEBRA 5.3); rows 2a and 10 unmoved.
+  at h = 1, the pair re-registered exactly as [8, 1] (the registered
+  8591334592 / 2^30 = 8.0013 is 8 to 0.02 percent; lambda 4.6538 to
+  4.6545 Links, no pin moves). What it moves (Reviewer 3's read of
+  bb854e6e, corrected here): ROW 13 IS KEPT, not moved: the turn
+  translates **W** by n x (content x w) x **V** and the row's line is
+  **P** = Q d content **u**_D + **W** (`optical_turn`), so the bend's
+  angle goes as w / |**u**_D| = isqrt(3 |u|^2) / |u|, 1.7188 at 64 and
+  1.7143 at 14, the run's -1.993 becoming -1.988 (0.3 percent); the
+  -0.42 and -0.84 above belong to the SENTENCE WITHOUT A TIE (the
+  weight 24 on the label 64), and under either tie the sentence changes
+  no push. Light's flow label scaled by 14 / 64 wherever light is a
+  crowd's SOURCE (the flow content x amount, `push_form`); the weight 24
+  on the headings, 25 on some fan directions as 110 and 111 today. Its
+  cost, an engine change of two places: the loader refuses
+  `momentum_magnitude` on a non-massive family (world.py, the lamp's
+  keys) and `family_flight` takes a non-massive family's numbers by
+  value; the extension scales the labels alone (`scaled_label`,
+  `flow_label`), never the flight numbers, under the gate set's bit
+  identity; and the label's grain at 14 is coarse: about 88 integer
+  directions on the circle against 402 at 64, a fan direction such as
+  (2, 1, 0) rounding to (13, 6), 1.8 degrees off, its weight ratio 3
+  percent off, exact on the headings where row 13 runs. Rows 2a and 10
+  unmoved.
 
 A fact of the record that both ties must face (found 2026-09-23 07:45Z
 in the loader, world.py about line 604, DERIVATIONS_BEAM 17.6 N5): the
@@ -470,20 +487,59 @@ pilot world does), and it differs from the sentence's form on the
 headings (3 h n / d = e_D = isqrt(3 u . u), 110.85 at |**u**| = Q) by
 exactly sqrt 3: N5 wants h n / d = Q S / 3 = 21.33, the sentence wants
 h n / d = 110 / 3 = 36.67. Neither is on the law today (ALGEBRA 5.3,
-"the content and the phase rate untied on main"); the physicist's tie is
-off N5 by sqrt 3 and the loader prints that gap as its diagnostic line;
-Reviewer 3's tie is off it by the same factor in the other direction.
-The sentence of record 1297 chooses the energy on the headings, the
-push's weight; the sqrt 3 is stated so that the choice is the owner's.
+"the content and the phase rate untied on main"). The physicist's tie
+is off N5 by sqrt 3 and the loader prints that gap as its diagnostic
+line (under the covariant-readings key, which no pilot world declares;
+world.py, the gap d h n - Q S d_K with S the world's width, 1 on every
+light world). Reviewer 3's tie leaves (h, n, d) as registered, so
+under it N5's gap is today's: 3 h n / d = 24.004 against 64, a factor
+8 / 3 below (Reviewer 3's correction of my "the same factor in the
+other direction", struck). N5 is therefore a THIRD identity, stronger
+than the sentence: it sets M_eq = 1 for every paid family (a quantum's
+clock energy equal to one content unit's rest energy Q S), met by
+neither tie and by no registered light; the owner's M_eq = 0.375 is the
+measure of its failure; it does not bind the choice; and the owner's
+own formula of record 1297, 3 h n = Q S_w d, is N5's form, not the
+sentence's on the headings.
 
-The Boss recommends the physicist's tie to the owner, since it keeps the
-measured deflection (row 13) and moves only a wavelength the scripts
-re-pin; the chief physicist agrees, with the cost named: row 2a's
-expected visibility falls to 0.914 at the tied family, further from
-nature, and the openings' exact sums are re-derived only after their
-worlds are regenerated. The owner's "bug" of record 1267 is, by the pins
-of M11, not a bug in free space; the Highlights say so plainly in the
-rewritten line (the Boss's).
+**Reviewer 3's code point against the physicist's tie, AGREED (his read
+of bb854e6e; verified in the code by the chief physicist, 2026-09-23
+08:10Z).** A born row's content is quantum x turn (nature_beam.py, the
+lamp's birth: `cost = definition.quantum * turn`, the born tuple's
+content field), so at h = 5 every light row carries content 5, the
+code weighs it at content x e_D = 550 and labels it at content x amount
+x **u**_D = 320 (`momentum_labels`), against the clock's 3 h n / d =
+110 per row: the same factor 5 on both sides, h DROPS OUT of the tie.
+The code's per-row energy h x e_D against the clock's 3 h n / d ties at
+3 n / d = e_D whatever h: at the label 64 that is n / d = 110 / 3,
+lambda 1.02 Links, the aliased wavelength; at the registered rate it is
+the label 14. So E = h f = p c in the integers is met only by Reviewer
+3's tie. The physicist's tie also scales light's flow by 5 wherever
+light is a crowd's source (the flow content x amount) and the lamp's
+births by 1 / 5 (the count `held // (cost x quanta)`), both unstated in
+the bullet above, and moves row 2a from 0.966 to 0.914 by its own
+script. Withdrawn as the recommendation. The recommendation is now
+Reviewer 3's form, with the grain cost named above, IF a tie is built on
+the row form at all.
+
+The base number of row 13 to scale: the run's DETECTOR reading at head,
+-1.993 pixel at gamma 0 and -3.989 at gamma 1 (NATURE row 13, the run
+of record 1216); the -1.93 and -3.86 above are the light_bending_map's
+COMPUTATION on the same worlds before that run (light_bending_map.out,
+NOTE.md row [1, 16384]), history, kept here as they were written.
+
+What a run must settle, by Reviewer 3: under his tie nothing in the
+pilot moves (its four worlds have no crowd and no light as a crowd's
+source); the one check a re-run of the row-13 pin world at the label
+14 for the 0.3 percent, minutes, after the two loader lines. Under the
+owner's meaning of 07:49Z (the split inside the board, every Node a
+detector, the field form of DESIGN.md build (i)), the label is not
+stored at all (the six neighbours carry the direction) and the clock's
+rate is the wave's frequency, so the tie's question changes its terms:
+it is decided later, on the new form's numbers, and NEITHER TIE IS
+BUILT NOW (the chief physicist's answer to the Boss, 08:10Z). The
+owner's "bug" of record 1267 is, by the pins of M11, not a bug in free
+space; the Highlights say so plainly in the rewritten line (the Boss's).
 
 **Form W or Form P: is it derived from the law? (the owner's question of
 06:39Z, record 1301; the Boss's answer corrected where it is wrong).**
