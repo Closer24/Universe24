@@ -412,6 +412,11 @@ WORLD_KEYS = {
     # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
     # by default (`DETECTOR_LAW_RULE`; docs/designs/detector_law/DESIGN.md).
     "detector_law",
+    # massive-record-v1 (2026-09-23): the massive record kind beside light
+    # under the local detector law, a boolean, false by default
+    # (`MASSIVE_RECORD_RULE`; docs/designs/detector_law/MASSIVE_RECORD.md,
+    # the build's plan BUILD.md).
+    "massive_record",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -729,6 +734,19 @@ BINDING_RULE = "binding-v1"
 # through a detector. The record carries it when the world declares
 # `detector_law: true`; absent, the ray law as built runs unchanged.
 DETECTOR_LAW_RULE = "detector-law-v1"
+# The identity of the massive record kind (the chief physicist's design of
+# 2026-09-23, docs/designs/detector_law/MASSIVE_RECORD.md, on the model
+# owner's words of records 1381 to 1425): a second record kind beside light
+# under the local detector law, its rule the same six-neighbour step with
+# a declared pair [num, den] on the six-neighbour term (a gap, its rest
+# mass); a family declares the kind by the key `pair`, its faces by
+# `faces`. The record carries the identity when the world declares
+# `massive_record: true`; absent, every world reads as it did, byte for
+# byte.
+MASSIVE_RECORD_RULE = "massive-record-v1"
+# Light's kind: the pair [1, 1] on the six-neighbour term, the value every
+# family without a declared pair reads (no branch on a name).
+LIGHT_PAIR = (1, 1)
 # The identity of the massive rows (`massive-rows-v1`; the model owner's yes
 # of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
 # design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
@@ -772,6 +790,11 @@ FAMILY_KEYS = {
     "phase_per_link",
     "hand",
     "massive",
+    # massive-record-v1: the kind's pair [num, den] on the six-neighbour
+    # term and its faces per axis (periodic by default: the torus's),
+    # admitted under the world key `massive_record` alone.
+    "pair",
+    "faces",
 }
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
@@ -963,6 +986,26 @@ class FamilyDefinition:
     # quantum at the record's completion. False for every family until then.
     massive: bool = False
     momentum_magnitude: int = 0
+    # The record kind's pair [num, den] on the six-neighbour term of the
+    # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
+    # section 1): light's kind is the value (1, 1) (every family without
+    # the key `pair`); a massive kind declares den > num, its rest
+    # frequency cos omega_0 = num / den. Admitted under the world key
+    # `massive_record` alone.
+    pair: tuple[int, int] = LIGHT_PAIR
+    # The kind's faces per axis (x, y, z), True where the kind's rows wrap:
+    # None for light's kind (the world's `boundary` as today); a massive
+    # kind's own declaration `faces`, every axis periodic by default (the
+    # torus is the algebra's own, ALGEBRA.md 1.6; an open face a declared
+    # deviation: a zero face for the massive record, MASSIVE_RECORD.md
+    # section 11 item 4).
+    faces: tuple[bool, bool, bool] | None = None
+
+    @property
+    def massive_kind(self) -> bool:
+        """A family of the massive record kind: its pair has den > num (a
+        gap); light's kind reads den = num."""
+        return self.pair[1] > self.pair[0]
 
     @property
     def declared_phase_per_link(self) -> int | list[int]:
@@ -1330,6 +1373,10 @@ class NatureBeamWorld:
     # event with a fan table (instruments of the ray law), and needs the pair
     # form of the clock on every paid family.
     detector_law: bool = False
+    # massive-record-v1 (2026-09-23): the massive record kind beside light
+    # under the local detector law, false by default; under it a family may
+    # declare its `pair` and `faces` (`MASSIVE_RECORD_RULE`).
+    massive_record: bool = False
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -1511,6 +1558,8 @@ class NatureBeamWorld:
             found.append(ATOM_LEVEL_RULE)
         if self.detector_law:
             found.append(DETECTOR_LAW_RULE)
+        if self.massive_record:
+            found.append(MASSIVE_RECORD_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -1530,6 +1579,13 @@ class NatureBeamWorld:
             for entry in self.measured
             for family, content in enumerate(entry.held)
         )
+
+    def kind_periodic(self, family: int) -> tuple[bool, bool, bool]:
+        """The faces a family's rows read, per axis: a massive kind's own
+        `faces` (periodic by default), light's kind the world's `boundary`
+        (`massive-record-v1`; every family reads the world's without the key)."""
+        faces = self.families[family].faces
+        return self.periodic if faces is None else faces
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
@@ -1895,12 +1951,79 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
+def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tuple[int, int]:
+    """The family key `pair` (`massive-record-v1`): [num, den], two integers
+    from 1 with den >= num (den > num a massive kind, den = num light's
+    kind written out); refused without the world key `massive_record`, and
+    with `phase_per_link` on a massive kind (its clock is its gap, not a
+    declared rate) or with the massive rows' flag `massive` (one massive
+    form per family)."""
+    if "pair" not in obj:
+        return LIGHT_PAIR
+    if not massive_record:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair is refused without the world key `massive_record` "
+            f"(the identity {MASSIVE_RECORD_RULE} beside the law, absent by default)"
+        )
+    value = obj["pair"]
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the kind's pair")
+    numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
+    denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
+    if denominator < numerator:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
+            "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
+        )
+    if denominator > numerator:
+        if "phase_per_link" in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair with phase_per_link: a massive kind's clock is its gap "
+                "(cos omega_0 = num / den), never a declared rate"
+            )
+        if obj.get("massive"):
+            raise ValueError(
+                f"{BEAM_LAW}: {label} declares both `pair` (massive-record-v1) and `massive` "
+                "(massive-rows-v1): one massive form per family"
+            )
+    return numerator, denominator
+
+
+def _kind_faces(
+    obj: dict[str, object], label: str, pair: tuple[int, int]
+) -> tuple[bool, bool, bool] | None:
+    """The family key `faces` (`massive-record-v1`): an object of `x`, `y`,
+    `z` to `"periodic"` or `"open"`, the missing axes periodic; only on a
+    massive kind (light's faces are the world's `boundary`); None for
+    light's kind, every axis periodic for a massive kind without the key."""
+    if pair[1] == pair[0]:
+        if "faces" in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.faces is refused on light's kind (its faces are the world's "
+                "`boundary`); a massive kind (den > num) declares its own"
+            )
+        return None
+    value = obj.get("faces", {})
+    if (
+        not isinstance(value, dict)
+        or not set(value) <= set(AXES)
+        or not all(item in BOUNDARIES for item in value.values())
+    ):
+        raise ValueError(
+            f'{BEAM_LAW}: {label}.faces must be an object of "x", "y", "z" to "periodic" or "open" '
+            "(every axis periodic by default: the torus is the algebra's own)"
+        )
+    wraps = tuple(value.get(axis, BOUNDARIES[1]) == BOUNDARIES[1] for axis in AXES)
+    return wraps[0], wraps[1], wraps[2]
+
+
 def _families(
     value: object,
     phase_steps: int,
     age_bound: int = AMOUNT_BOUND,
     massive_rows: bool = False,
     action: int | None = None,
+    massive_record: bool = False,
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -1985,6 +2108,8 @@ def _families(
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
+        pair = _kind_pair(obj, f"families[{index}]", massive_record)
+        faces = _kind_faces(obj, f"families[{index}]", pair)
         found.append(
             FamilyDefinition(
                 name,
@@ -1996,6 +2121,8 @@ def _families(
                 phase_per_age=per_age,
                 hand=hand,
                 massive=massive,
+                pair=pair,
+                faces=faces,
             )
         )
         declared.append(columns)
@@ -2024,6 +2151,8 @@ def _families(
             family.phase_per_age,
             family.hand,
             family.massive,
+            pair=family.pair,
+            faces=family.faces,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -3335,10 +3464,19 @@ def _detector_law_load_checks(
                 f"refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is no fan)"
             )
     for index, family in enumerate(families):
-        if family.quantum != FREE_QUANTUM and family.phase_per_age is None:
+        # A massive kind (massive-record-v1) has no declared clock: its
+        # clock is its gap; every other paid family declares the pair form.
+        if family.quantum != FREE_QUANTUM and family.phase_per_age is None and not family.massive_kind:
             raise ValueError(
                 f"{BEAM_LAW}: families[{index}] needs the pair form of phase_per_link under "
                 f"{DETECTOR_LAW_RULE} (the family's clock)"
+            )
+    for number, entry in enumerate(measured):
+        if entry.lamp is not None and families[entry.family].massive_kind:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].lamp on the massive kind "
+                f"{families[entry.family].name!r} is refused under {MASSIVE_RECORD_RULE}: a massive "
+                "record is a block's own record or a block's response, born of no lamp"
             )
 
 
@@ -4122,6 +4260,19 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE}, off by default)"
         )
+    # massive-record-v1: true or false, false by default; a kind's pair and
+    # faces are admitted under it alone, and it needs the local detector law
+    # (the kind's rule is that law's six-neighbour step).
+    massive_record = obj.get("massive_record", False)
+    if type(massive_record) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: massive_record must be true or false ({MASSIVE_RECORD_RULE}, off by default)"
+        )
+    if massive_record and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
+            "kind of the local detector law; the ray law has no record's rows at Nodes)"
+        )
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -4138,7 +4289,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
             f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
         )
-    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action)
+    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action, massive_record)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -4259,6 +4410,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         clock_stamp=clock_stamp,
         atom_level=atom_level,
         detector_law=detector_law,
+        massive_record=massive_record,
     )
     if detector_law:
         _detector_law_load_checks(measured, families)

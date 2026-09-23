@@ -109,7 +109,7 @@ FINDING (the last rows), reported and not written as a component.
 | --- | --- | --- | --- | --- |
 | 1. The rule with a pair per record KIND on the six-neighbour term (section 1): `3 den a_next + r' = num S_6 - 3 den a_before + r`, `0 <= r' < 3 den` | `_advance` takes the kind's pair as two dense int64 arrays over the board, `num_at` and `den_at` (formed once at load from the family's pair and the blocks' pairs on their cells; translated with a block's step); light's kind is the value `[1, 1]`, under which the step is today's bit for bit | the family key `pair` `[num, den]` (light: absent, the value `[1, 1]`; a massive kind: `den > num`; refused without `massive_record`) | G, then D (by `3 den`, the remainder kept in `[0, 3 den)`), then T | (a), (b), (c) of section 6 |
 | 1. The rule runs at every Node the kind's rows reach | the record's rows are dense arrays over the board (the first build's form); a massive record spreads as light's does | none | as above | (a), (b) |
-| 1. The conserved form I read by the books, GAMEBOARD (section 3) | `record_form(live)`: `3 L den_x (a_now^2 + a_before^2)` summed over the Nodes less `L num_x (a_now,i a_before,j + a_now,j a_before,i)` summed over the Links, exact Python integers, L the least common multiple of the distinct numerators over the numerator per Node (one integer form for a well with another numerator; L = 1 at one numerator, section 3's line); per family in `books()` under `form` only under the key | none | B, G | (d) |
+| 1. The conserved form I read by the books, GAMEBOARD (section 3) | `record_form(live)`: the rule's invariant a_next . D a_next + a_now . D a_now - a_next . (S_6 / 3) a_now with D_x = den_x / num_x, scaled by 3 L to integers: `3 den_x (L / num_x) (a_now^2 + a_before^2)` summed over the Nodes less `L (a_now,i a_before,j + a_now,j a_before,i)` summed over the Links, L the least common multiple of the distinct numerators (at one numerator L = num and the form is section 3's line); per family in `books()` under `form` only under the key | none | B, G | (d) |
 | 2. The foreign object: a declared set of cells R, a cube of side s at a position, a G_48-set (section 4) | `Block`: R the cube `position + [0, s)^3` cut to the board (the lower corner at `position`, as `_span_nodes` places a body today); the block's pair written into the pair arrays on R; every block a measured event of the massive kind (or, for the (M) wall, of the light family) with these keys | `side`, `pair` (the well: `num' / den' > num / den` on the massive kind, refused otherwise; the reversed window `num' > den'` admitted as section 4 allows, named in the record; on the light family a gap, `den' > num'`, the mirror) | none (a declaration, kind 1) | (e) |
 | 2. One momentum integer per axis with its remainder, a declared tie; the step of the whole block by verb T (section 5) | `Block.step`: per axis the accumulator gains P_a per interval against the wall `3 Q S M` (the pace v_a = P_a / (3 Q S M), DESIGN.md 5.1 (a); k = 3 is P = Q S M on one axis), at most one Link per interval, the remainder kept, the sign of P_a the side; the whole block steps together: its cells and its pair region translate by T; the record's rows are NOT carried: they live on the Nodes and re-form behind the stepped cells by the rule (PUSH_BALANCE.md 12.7 (d); section 8's chain; section 10 (a)); the bound `3 (P . P) < (3 Q S M)^2` checked at load and at every change, a crossing the world's stop with a diagnostic (no clamp); the tie: x before y before z, a coincident second Link in one interval lost to the earlier axis as the frame loses it today | `momentum` (the existing key); `ramp` (an integer of intervals, 0 by default: the momentum reached from 0 by the whole part `P x t // ramp` over the ramp; the pushing agent's declaration, the design's own chain device, section 10 (e)) | T, D, the comparison | (f) |
 | 2. The coupling at its cells only: the dielectric in the first-difference form both ways, one declared g with G (section 7) | at a block's cells a light record k reaching the block owns a RESPONSE record r_k of the block's massive kind (dense arrays; the massive rule at every Node they reach); per interval at the cells the massive row gains `g (a_l,now - a_l,before)` and light's row gains `-G (r_now - r_before)`, each rational applied by D with its remainder kept on the row; the order within the interval: light's step, the massive step, then the two entries, both reading the two records' columns of the interval that ended; the block's total record at a Node is the sum (G) of its own record and the responses; the block's own record is driven by the light records the block itself emitted (below) and by no other | `coupling` `{"G": [n, d], "g": [n, d]}` (both `[0, 1]` by default: a block that neither drives nor is driven) | B then D | (g) |
@@ -237,14 +237,19 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
   the quotient and the remainder equal to the existing test's, and the
   chain world's digests of section 1 unchanged with the key declared on a
   world that has no massive family.
-- (d) The conserved form I on a periodic 6^3 board at `[128, 129]` and at
-  the checkerboard seed of `massive_corner_stability.py` (a smooth 2^20
-  cosine plus one unit of checkerboard): I at interval 0 computed by the
-  test from the definition; over 200 intervals abs(I(t) - I(0)) below
-  10^-3 I(0) (the design's chain read 2 x 10^-4 over 200 intervals), and
-  the peak amplitude bounded (below 2 x 2^20). The edge case: `[1, 1]` on
-  the same seed grows linearly (the semidefinite corner, DESIGN.md 2.1),
-  named and allowed.
+- (d) The conserved form I on a periodic 6^3 board at `[128, 129]` and
+  at `[1600, 1618]` with the checkerboard seed of
+  `massive_corner_stability.py` (a smooth 2^20 cosine plus one unit of
+  checkerboard): I at interval 0 computed by the test from the definition;
+  over 200 intervals abs(I(t) - I(0)) below 10^-3 I(0) at every interval
+  (the design's chain read 2 x 10^-4; the engine's step 2 read 3 x 10^-6),
+  the peak amplitude below 2 x 2^20 and the checkerboard component below
+  40 units (measured 11 and 18). The edge case as first written (light's pair growing on this
+  seed) was WRONG and is corrected before the code: the seed's
+  checkerboard carries no velocity (now = -before on it), so at the double
+  root light's alternation is stationary, the component one unit at every
+  interval; the growing form is the withdrawn self-term form (A), not
+  built. The books read `form` under the key.
 - (e) A block of side 3 at (2, 2, 2) on an open 8^3 board of the kind
   `[800, 809]` with the well `[800, 800]`: the pair arrays read 809 on
   every Node but the 27 cells, 800 there, num 800 everywhere; the cells'

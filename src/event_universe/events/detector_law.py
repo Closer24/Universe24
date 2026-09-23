@@ -40,12 +40,28 @@ handed to the measured event at the chosen Node (or booked as escaped at a
 face or a set without a body), and the record's rows removed. The books
 balance as today: held content initial + measured == current + spent +
 escaped; transit released == current + absorbed + escaped.
+
+The massive record kind (`massive-record-v1`, MASSIVE_RECORD.md section 1,
+the world key `massive_record`, off by default): the same step with a
+declared pair `[num, den]` on the six-neighbour term per record KIND (the
+family's `pair`; light's kind the value `[1, 1]`),
+
+    3 den a_next + r' = num (a_E + .. + a_D) - 3 den a_before + r,  0 <= r' < 3 den
+
+(verb G, then D by 3 den with the remainder kept, then T), the pair two
+dense arrays over the board per family (`kind_num`, `kind_den`; a block's
+cells carry a lowered pair there, the build's step 3), the kind's own faces
+(`faces`: periodic by default, an open face a zero face) and the conserved
+form I of section 3 read by the books as a GAMEBOARD diagnostic
+(`record_form`). Without the key every world reads as it did, byte for
+byte (`tests/test_massive_record.py`).
 """
 
 from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
+from math import gcd
 
 import numpy as np
 
@@ -207,6 +223,21 @@ class DetectorLawSimulation:
                 view[free] = cell
                 mask[:] = True
         self.records: dict[int, LiveRecord] = {}
+        # The record kinds (massive-record-v1): per family the pair on the
+        # six-neighbour term as two dense int64 arrays over the board
+        # (light's kind the value [1, 1] everywhere; a massive kind its
+        # declared pair; a block's cells a lowered pair there, the build's
+        # step 3) and the faces its rows read (the kind's `faces` for a
+        # massive kind, the world's `boundary` for light's).
+        self.kind_num: list[np.ndarray] = [
+            np.full(self.shape, family.pair[0], dtype=np.int64) for family in world.families
+        ]
+        self.kind_den: list[np.ndarray] = [
+            np.full(self.shape, family.pair[1], dtype=np.int64) for family in world.families
+        ]
+        self.kind_wrap: list[tuple[bool, bool, bool]] = [
+            world.kind_periodic(index) for index in range(len(world.families))
+        ]
         self.wheel = max(
             (entry.lamp.wheel[1] for entry in world.measured if entry.lamp is not None), default=1
         )
@@ -388,10 +419,19 @@ class DetectorLawSimulation:
 
     # The rule
 
-    def _shift(self, a: np.ndarray, axis: int, sign: int, fill: int | bool = 0) -> np.ndarray:
+    def _shift(
+        self,
+        a: np.ndarray,
+        axis: int,
+        sign: int,
+        fill: int | bool = 0,
+        wrap: tuple[bool, bool, bool] | None = None,
+    ) -> np.ndarray:
         """The neighbour on the side `sign` of `axis`: the wrap on a periodic
-        axis, `fill` beyond an open face."""
-        if self.world.periodic[axis]:
+        axis, `fill` beyond an open face; `wrap` the faces read (the world's
+        `boundary` by default; a massive kind's own `faces`)."""
+        periodic = self.world.periodic if wrap is None else wrap
+        if periodic[axis]:
             return np.roll(a, sign, axis=axis)
         out = np.full_like(a, fill)
         lower = [slice(None)] * 3
@@ -406,12 +446,18 @@ class DetectorLawSimulation:
         return out
 
     def _neighbours(
-        self, a: np.ndarray, ports: list[np.ndarray] | None = None, driven: np.ndarray | None = None
+        self,
+        a: np.ndarray,
+        ports: list[np.ndarray] | None = None,
+        driven: np.ndarray | None = None,
+        wrap: tuple[bool, bool, bool] | None = None,
     ) -> np.ndarray:
-        """The sum of the six neighbours' amplitudes at every Node: the wrap on
-        a periodic axis, 0 beyond an open face, the row itself on an axis of
+        """The sum of the six neighbours' amplitudes at every Node (verb G):
+        the wrap on a periodic axis, 0 beyond an open face (light's sponge
+        face or a massive kind's zero face), the row itself on an axis of
         one layer; a receiver neighbour read through its Port's amplitude
-        (`ports`, one per take mask) where one is given."""
+        (`ports`, one per take mask) where one is given; `wrap` the kind's
+        faces (the world's by default)."""
         total = np.zeros_like(a)
         for axis in range(3):
             if self.shape[axis] == 1:
@@ -427,7 +473,7 @@ class DetectorLawSimulation:
                         if mask_axis == axis and mask_sign == -sign:
                             read = mask if driven is None else (mask & ~driven)
                             source = np.where(read, ports[index], source)
-                total += self._shift(source, axis, sign)
+                total += self._shift(source, axis, sign, wrap=wrap)
         return total
 
     def _advance(self, live: LiveRecord) -> None:
@@ -438,11 +484,32 @@ class DetectorLawSimulation:
         # lamp is not an arrival.
         grace = live.train + 2 * live.period
         driven = live.driven if live.age < grace else None
-        total = self._neighbours(live.now, live.ports, driven)
-        total -= 3 * live.before
+        # The take (the receivers' Ports, the faces' sponge) reads light's
+        # kind alone: a massive record (den > num) is taken by nothing and
+        # reads no Port, its faces its own (massive-record-v1; DESIGN.md
+        # section 5, MASSIVE_RECORD.md section 7: no take for a clock body,
+        # the sink a declaration on light's row).
+        taken = not self.families[live.family].massive_kind
+        # The rule with the kind's pair on the six-neighbour term
+        # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
+        # neighbours, then D by 3 den with the remainder kept, then T; at
+        # light's pair [1, 1] the first build's integers bit for bit.
+        num = self.kind_num[live.family]
+        den = self.kind_den[live.family]
+        wall = 3 * den
+        neighbours = self._neighbours(
+            live.now, live.ports if taken else None, driven, self.kind_wrap[live.family]
+        )
+        total = num * neighbours
+        total -= wall * live.before
         total += live.remainder
-        nxt = np.floor_divide(total, 3)
-        live.remainder = total - 3 * nxt
+        nxt = np.floor_divide(total, wall)
+        live.remainder = total - wall * nxt
+        if not taken:
+            live.before = live.now
+            live.now = nxt
+            live.age += 1
+            return
         nxt[self.absorbing] = 0
         # The receivers: each Port facing a free Node follows the wave entering
         # by it one way (the take, no reflection); the offer booked to the cell
@@ -483,6 +550,55 @@ class DetectorLawSimulation:
         live.now = nxt
         self._drive(live)
         live.age += 1
+
+    def record_form(self, live: LiveRecord) -> int:
+        """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
+        GAMEBOARD diagnostic read by the books): the invariant of the rule
+        written as a_next + a_before = D^-1 (S_6 / 3) with D_x = den_x /
+        num_x, I = a_next . D a_next + a_now . D a_now - a_next . (S_6 / 3)
+        a_now, scaled by 3 L to integers: 3 den_x (L / num_x) (a_now^2 +
+        a_before^2) summed over the Nodes less L (a_now,i a_before,j +
+        a_now,j a_before,i) summed over the Links, L the least common
+        multiple of the distinct numerators (at one numerator L = num and
+        the form is section 3's line, 3 den (a^2 + b^2) less num over the
+        Links). Verb B with the declared matrix and G; conserved by the
+        rule up to the remainders' bounded jitter; positive definite for
+        den > num."""
+        num = self.kind_num[live.family]
+        den = self.kind_den[live.family]
+        distinct = [int(value) for value in np.unique(num)]
+        common = 1
+        for value in distinct:
+            common = common * value // gcd(common, value)
+        scale = np.floor_divide(common, num)
+        now = live.now.astype(object)
+        before = live.before.astype(object)
+        weight = (3 * den * scale).astype(object)
+        squares = int(np.sum(weight * (now * now + before * before)))
+        links = 0
+        wrap = self.kind_wrap[live.family]
+        link_weight = common
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            # Each Link once: the Node and its neighbour on the + side (the
+            # wrap on a periodic axis closes the last Link, an open face
+            # has none).
+            if wrap[axis]:
+                now_next = np.roll(now, -1, axis=axis)
+                before_next = np.roll(before, -1, axis=axis)
+                links += int(np.sum(link_weight * (now * before_next + now_next * before)))
+            else:
+                lower = [slice(None)] * 3
+                upper = [slice(None)] * 3
+                lower[axis] = slice(None, -1)
+                upper[axis] = slice(1, None)
+                a_now = now[tuple(lower)]
+                a_before = before[tuple(lower)]
+                b_now = now[tuple(upper)]
+                b_before = before[tuple(upper)]
+                links += int(np.sum(link_weight * (a_now * b_before + b_now * a_before)))
+        return squares - links
 
     def _complete(self, live: LiveRecord) -> bool:
         """The record completes when its train has ended and the motion left on
@@ -607,7 +723,15 @@ class DetectorLawSimulation:
                 transit["current"] + transit["absorbed"] + transit["escaped"]
             )
             balanced = balanced and bool(measured["balanced"]) and bool(transit["balanced"])
-            families[family.name] = {"measured": measured, "transit": transit}
+            lines: dict[str, object] = {"measured": measured, "transit": transit}
+            if self.world.massive_record:
+                # The conserved form I summed over the family's live records
+                # (massive-record-v1): a GAMEBOARD diagnostic, written under
+                # the key alone.
+                lines["form"] = sum(
+                    self.record_form(live) for live in self.records.values() if live.family == index
+                )
+            families[family.name] = lines
         return {
             "tick": self.tick,
             "families": families,
@@ -669,6 +793,7 @@ class DetectorLawSimulation:
                     "norm": live.norm,
                     "absorbed": live.absorbed,
                     "pointers": dict(zip(self.cell_names, live.pointers, strict=True)),
+                    **({"form": self.record_form(live)} if self.world.massive_record else {}),
                 }
                 for live in self.records.values()
             ],

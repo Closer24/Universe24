@@ -120,6 +120,10 @@ def execute_nature_beam_run(
         # as declared, written only when true; a record field, no
         # hypothesis (every other record byte for byte as it was).
         **({"clock_stamp": True} if world.clock_stamp else {}),
+        # massive-record-v1 (2026-09-23): the world key `massive_record` as
+        # declared, written only under the key (every other record byte for
+        # byte); `massive-record-v1` under `hypotheses` when it is true.
+        **({"massive_record": True} if world.massive_record else {}),
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
@@ -181,8 +185,25 @@ def execute_nature_beam_run(
                     if world.massive_rows
                     else {}
                 ),
+                # The record kind's pair on the six-neighbour term and its
+                # faces (`massive-record-v1`), written only in a world that
+                # declares `massive_record` (light's kind [1, 1] and the
+                # world's faces where the family declares none).
+                **(
+                    {
+                        "pair": list(family.pair),
+                        "faces": {
+                            axis: "periodic" if wraps else "open"
+                            for axis, wraps in zip(
+                                ("x", "y", "z"), world.kind_periodic(index), strict=True
+                            )
+                        },
+                    }
+                    if world.massive_record
+                    else {}
+                ),
             }
-            for family in world.families
+            for index, family in enumerate(world.families)
         ],
         "numbers": {
             str(index + 1): {
