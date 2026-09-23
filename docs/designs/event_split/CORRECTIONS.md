@@ -141,12 +141,20 @@ world's sets take the whole front; a world with open faces (row 10's
 worlds, 0.011 of the front on the faces) needs the faces to be sets
 that offer, else Q never fires there.
 
-**The recommendation, beside the owner's two.** S2 with s_D = 1 / W by
-default (the wheel's own grain) and declarable per detector: it is the
-grain the owner accepted as bookkeeping, it reads Born over the whole
-front, it keeps the click mechanism and the ladder unchanged, and it
-gives Q as its special case. The choice is the owner's; S1 is what the
-code forbids and is listed only so that its pins are on record.
+**Decided.** The chief physicist's recommendation was S2 with s_D = 1 / W
+by default (the wheel's own grain) and declarable per detector: the
+grain the owner accepted as bookkeeping, Born over the whole front, the
+click mechanism and the ladder unchanged, Q its special case. The
+owner's word of about 05:52Z ("confirm to him that I agree with you,
+what you think today is right; I agree with you on everything") makes
+it his decision: the trigger is S2; S1 is what the code forbids and
+stays listed so that its pins are on record. Two more of his decisions
+by the same word: a sensitivity per (detector, family) is a declared
+input of kind 2 (the cross-section; row 8b's condition in section 3);
+and the crowd's flow turning a row of no content (row 13's second half)
+is NOT decided as a law by it: the chief physicist has no verified form
+for it and names it a hypothesis for its own identity after the split's
+runs (M9).
 
 ### M3. Readings by the host's tick where the law has no external clock
 
@@ -254,6 +262,21 @@ removed from those worlds at the re-registration (a wall with a gap, no
 entry on the gap); a lamp's fan stays (the owner: "a ray splits
 according to the laws it has"; an emitter is an apparatus). Three tests:
 the world file's, none of the law.
+
+### M9. The space part of the bending on a row of no content: a hypothesis, not a correction
+
+Series K reads 0.000 pixel for light beside a mass because the space
+part of the generic entry (`optical_turn`, the momentum accumulator
+translated by the crowd's flow with the weight content x w) is 0 on a
+row of no content (M5). Under the split the time part alone bends the
+wave (section 3, row 13, the first 1 of 1 + gamma). The second 1 would
+need the flow to act on a row of no content by its energy (its phase
+rate, E = h f) rather than by its content, a rule the chief physicist
+has not verified and does not put in the law by this design: it is a
+hypothesis under its own identity, with its three tests and its pin,
+after the split's runs; the owner's word of 05:52Z ("I agree with you on
+everything") is read here as agreeing to that order, not as entering
+the rule.
 
 ### M8. A row of no content does not split at head, and a body is a quantum: what the design leaves for the massive form
 

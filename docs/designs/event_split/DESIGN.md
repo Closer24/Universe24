@@ -52,7 +52,7 @@ place of the one Node of a fan's crossing). Entry by entry:
 | --- | --- | --- |
 | The six verbs and no seventh (2.1 to 2.7) | UNCHANGED | The split is (G) run backward at the Node, the amplitude copied to K rows with the multiplicity times K (amplitude-v1 section 2.1, the same table rule with the Node's own outputs in place of the entry's); its merge is (G); the phase turned per Link is (T); the walk is (T) and (D) on the flight accumulator; the click is (E) and (D). No root, no float, no draw; the seventh verb is not needed (section 5, the weights). |
 | The group of order 24 (1.3, 7) | UNCHANGED | The split's outputs are the six Ports (build (i)) or the fan (build (ii)), both sets carried to themselves by the 48 and by the 24 of hand +1; equal weights are invariant; a split by angle (section 5) declares its weights on the fan as the direction table declares the fan, invariant by construction. |
-| The flight table and c = 1 / sqrt 3 (2.1, 4.2) | UNCHANGED under the pace choice "digital line" (section 5, the recommended one); CHANGED at the front under "hopping" | A row keeps its direction D and its accumulator against the wall 2 T_D; a copy born at the split starts its own line at the half-wall as a fresh row does. Under the six-Port hop a row's direction is an axis and the front is the L1 ball (pace 1 Link per interval on an axis, 1 / sqrt 3 on the diagonal): row 5a's 0.5774 to 0.5818 (COMPUTATION on the flight table) would not hold at the front. |
+| The flight table and c = 1 / sqrt 3 (2.1, 4.2) | UNCHANGED (the pace decided: the digital lines kept, section 5); it would have CHANGED at the front under the hop not taken | A row keeps its direction D and its accumulator against the wall 2 T_D; a copy born at the split starts its own line at the half-wall as a fresh row does. Under the six-Port hop a row's direction is an axis and the front is the L1 ball (pace 1 Link per interval on an axis, 1 / sqrt 3 on the diagonal): row 5a's 0.5774 to 0.5818 (COMPUTATION on the flight table) would not hold at the front. |
 | The pair form and the phase (3.6) | UNCHANGED | The split copies the record, the branch and the label pair whole; each arm's rows carry one phase each; at the setting the rotation **U**_s acts on the labels, the phase a common factor of the arm's element; the joint pointer J and the cells' weights R = J^2 are unchanged as ratios (section 7, the pin). |
 | The record form, the multiplicity and the one click by the ladder (amplitude-v1 sections 1, 3.3; ALGEBRA 2.5, 2.6) | UNCHANGED in the ladder; CHANGED in the multiplicity's growth | `rungs` and `cell_of` read the cells' weights as pairs (numerator, multiplicity) over the common denominator; the same code reads the split's offers. The multiplicity of a row after k splits is m_0 K^k (the record form, build (ii)); its bound is the cutoff of section 3. |
 | The click theorem and the click frame (5.1; 3.1) | UNCHANGED | The theorem reads counts of clicks Outside; the split is Inside. A click is one action that ends the record (3.1) and this design keeps it so: the record's rows on the GameBoard are the futures, the click is the one that happened (section 4). |
@@ -66,7 +66,7 @@ place of the one Node of a fan's crossing). Entry by entry:
 The owner's question "does the algebra survive the split" is answered
 above: yes, every entry; the split is one more place where two verbs
 already in the law act ((G) backward at the Node, (G) forward at the
-merge), and the design's open choices (section 5) are values of the
+merge), and the design's decided choices (section 5) are values of the
 weights and the pace, not new verbs.
 
 ## 2. THE NAME AND THE STATUS
@@ -193,27 +193,23 @@ removed by the owner's word: under the split the record never completes
 on the GameBoard (its rows are all the futures; on a periodic axis they
 never end), and the record ends only at the click.
 
-**The click's trigger, bounded by the owner's word.** The owner's word
-of 05:02Z (record 1276 by the Boss's word): the trigger is the detector's
-SENSITIVITY (a declared threshold on what of the quantum has arrived at
-its set) or a SINGLE-QUANTUM reading (the detector clicks when one whole
-quantum's share is at its set); no third option unless the code forces
-one. The two options, each in the form the code can build, with the
-three tests and what each does to the pins, are [CORRECTIONS.md](CORRECTIONS.md)
-M2; in short: the ladder gives Born only over the record's whole front,
-so a first-crossing reading of the sensitivity truncates the front (the
-pins broken: the fringe and the spread narrowed, the pair's gather
-lost), and the sensitivity in the form the code allows is the counting
-rule, a set whose accumulated offer is below s_D takes no rung, a branch
-below s_D is no longer counted, and the record clicks when no counted
-future is in flight; the single-quantum reading is the same condition
-with the detectors the only sets. The grain (record 1263, the owner's
-bookkeeping: a branch below one unit no longer counted) is what makes
-the counted futures finite and is not the trigger; with s_D = 1 / W it is
-the sensitivity's default. The chief physicist's recommendation, beside
-the owner's two: the sensitivity in the counting form, s_D = 1 / W by
-default and declarable per detector, the single-quantum reading its
-special case. The choice is his.
+**The click's trigger, decided by the owner.** The owner's word of
+05:02Z (record 1276 by the Boss's word) bounded it to two options, the
+detector's SENSITIVITY or a SINGLE-QUANTUM reading; his word of about
+05:52Z (Hebrew, by voice, through the chief physicist: "confirm to him
+that I agree with you, what you think today is right; I agree with you
+on everything") adopts the chief physicist's recommendation as his
+decision: the trigger is the detector's sensitivity in its counting
+form, a set whose accumulated offer is below its declared sensitivity
+s_D takes no rung, a branch below s_D is no longer counted, and the
+record clicks when no counted future is in flight; s_D = 1 / W by
+default (the wheel's own grain, record 1263's bookkeeping) and
+declarable per detector; the single-quantum reading is its special case
+with the detectors the only sets. A first crossing of the sensitivity is
+not a trigger (it truncates the front, breaks the fringe and the
+uncertainty relation, and loses the pair's gather). The two options in
+the form the code can build, with the three tests and the pins, are
+[CORRECTIONS.md](CORRECTIONS.md) M2.
 
 **Where the trigger comes from, the GameBoard or the detector (the
 owner's question of 2026-09-23).** The click is the detector's action:
@@ -279,35 +275,39 @@ so 2^30 / 8321 = 1.29 x 10^5 units per Node at tau = 64 (COMPUTATION), far
 above one unit; the grain bites where the wave is thin, its shadow and
 its far sidelobes.
 
-## 5. THE OPEN CHOICES: THE WEIGHTS AND THE PACE
+## 5. THE WEIGHTS AND THE PACE, decided by the owner
 
-**The weights.** (1) Equal over the outputs, a_i = 1: the split is the
-Node's own and carries no direction of its own; recommended, because it
-declares nothing. (2) By angle: a_i declared per output as a function of
-the angle between D and D_i (a table at load, an input of kind 1, as the
-direction table is), the forward outputs heavier; it is the obliquity
-factor of Huygens (1 + cos) / 2 and would remove the backward wave that
-(1) sends; it costs a table. The choice is the owner's; the pins of
-section 7 are written under (1) and the difference under (2) is a
-backward-wave term the detectors behind the lamp would read.
+Both were the owner's open choices with the chief physicist's
+recommendation; his word of about 05:52Z ("I agree with you on
+everything, what you think today is right") makes the recommendations
+his decisions.
 
-**The pace.** (A) The digital line kept: a row keeps its direction D and
+**The weights: equal over the outputs, a_i = 1.** The split is the
+Node's own and carries no direction of its own; it declares nothing. The
+alternative not taken: weights by angle (a table at load, an input of
+kind 1, Huygens' obliquity (1 + cos) / 2, which would remove the
+backward wave); the pins of section 7 are written under equal weights,
+and the backward wave they send is what the detectors behind the lamp
+read.
+
+**The pace: the digital lines kept.** A row keeps its direction D and
 the flight table; the copies take the other directions of the fan at x,
-each on its own line. c = 1 / sqrt 3 to 0.8 percent by direction (row 5a,
-COMPUTATION on the flight table) holds for every row, and the isotropy at
-the wavelength is the fan's grain: at lambda = 4.6538 Links (row 10's
-light, N d / n x c, COMPUTATION) the fan of 601 directions has a grain of
-0.15 degrees, far below the pattern's width. (B) The nearest-neighbour
-hop: a row's direction is one of the six Ports, the split sends one copy
-per Port, the front is the L1 ball (section 1); the wave's phase pace is
-then the cubic hop's dispersion, isotropic to the order (2 pi / lambda)^2
-in Links, which at lambda = 4.6538 Links is (1.35)^2 = 1.82, not small: a
-several-percent anisotropy of the pace at the registered wavelength, and
-row 5a's reading changes at the front. Recommended: (A), because the
-flight table is the law's pace and 5a, 10 and 2a are pinned on it; (B) is
-the cheaper build (K = 6) and the choice of a world with lambda above
-about 30 Links. The owner chooses; the build carries the one chosen, the
-fan or the six Ports being the split's declared outputs either way.
+each on its own line. c = 1 / sqrt 3 to 0.8 percent by direction (row
+5a, COMPUTATION on the flight table) holds for every row; the isotropy
+at the wavelength is the fan's grain (at lambda = 4.6538 Links, row 10's
+light, the fan of 601 directions has a grain of 0.15 degrees, far below
+the pattern's width); the 3 of W = E'_0^2 + 3 **p** . **p** is 1 / c^2
+by this table (section 1). The alternative not taken: the
+nearest-neighbour hop (a row's direction one of the six Ports, the front
+the L1 ball, the wave's pace the cubic hop's dispersion, isotropic to
+the order (2 pi / lambda)^2 in Links, which at lambda = 4.6538 Links is
+1.82, a several-percent anisotropy at the registered wavelength, row
+5a's reading changed at the front); it is the cheaper build (K = 6) and
+would fit a world with lambda above about 30 Links only. The fan is the
+split's declared outputs: the direction table's fan at every Node (an
+input of kind 1, as the direction table is), row 10's 601 within 45
+degrees being that world's; the full sphere's fan for a world that
+declares it.
 
 ## 6. THE THREE TESTS, PER BUILD
 
@@ -341,7 +341,8 @@ Build (ii), the local split rule in the record form:
    is bounded by section 3.2 and labelled HOST.
 
 Verdict: build (ii) enters the law; build (i) is its description, the
-field the merge leaves, and the form the paper writes.
+field the merge leaves, and the form the paper writes. The weights and
+the pace are decided (section 5): equal weights, the digital lines.
 
 ## 7. THE PINS BY THE ALGEBRA, BEFORE ANY RUN
 
