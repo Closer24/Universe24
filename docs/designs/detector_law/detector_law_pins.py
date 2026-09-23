@@ -68,6 +68,10 @@ class Board:
         self.before = np.zeros((width, height), dtype=np.int64)
         self.remainder = np.zeros((width, height), dtype=np.int64)
         self.absorbing = np.zeros((width, height), dtype=bool)
+        # The coefficient pair q = [num, den] on the six-neighbour term (DESIGN.md 4.1): [1, 1] at a
+        # free Node; [d^2, (d + f n A)^2] where foreign objects stand; the index (d + f n A) / d.
+        self.num = np.ones((width, height), dtype=np.int64)
+        self.den = np.ones((width, height), dtype=np.int64)
 
     damped: np.ndarray | None = None  # the Nodes of a lossy body (a wall that takes the offer), or None
 
@@ -79,10 +83,12 @@ class Board:
         total[:, 1:] += a[:, :-1]
         total[:, :-1] += a[:, 1:]
         total += 2 * a  # the two z-neighbours of a one-layer world are the row itself
-        total -= 3 * self.before
+        # 3 den a_next + r' = num (the six-neighbour sum) + 6 (den - num) a_now - 3 den a_before + r
+        total = self.num * total + 6 * (self.den - self.num) * a - 3 * self.den * self.before
         total += self.remainder
-        nxt = np.floor_divide(total, 3)
-        self.remainder = total - 3 * nxt
+        divisor = 3 * self.den
+        nxt = np.floor_divide(total, divisor)
+        self.remainder = total - divisor * nxt
         nxt[self.absorbing] = 0
         if self.damped is not None:
             # The lossy body: a Node of the wall keeps three quarters of what it would emit (the
@@ -255,7 +261,7 @@ def section_b(wavelength: float, w0: int, train: int, wall: str = "zero") -> dic
     return {"w": w, "product": product, "reference": ref_product, "inside": inside}
 
 
-def section_c(wavelength: float, train: int) -> dict:
+def section_c(wavelength: float, train: int, index: int = 1) -> dict:
     scale = wavelength / REGISTERED_LAMBDA
     period = wavelength / C
     separation = int(round(10 * scale))
@@ -271,6 +277,10 @@ def section_c(wavelength: float, train: int) -> dict:
     board = Board(width, height + 2 * margin)
     wall_x = 2
     board.absorbing[wall_x, :] = True
+    if index > 1:
+        # The region behind the wall filled with foreign objects at the declared index (6.7):
+        # the pair [1, index^2] on every Node past the wall's line, the wall's line itself free.
+        board.den[wall_x + 1 :, :] = index * index
     nodes = []
     for sy in (centre - separation // 2, centre + separation // 2):
         for i in range(slit):
@@ -310,6 +320,47 @@ def section_c(wavelength: float, train: int) -> dict:
             cosine[abs(ys - centre) < 3.2 * wavelength * distance / separation],
         )[0, 1]
     )
+    if index > 1:
+        # The fringe spacing read from the offer's peaks within the central fringes (6.7's pin:
+        # lambda L / (n d) +- 3 percent), the peaks the local maxima above half the central peak.
+        half = 0.5 * float(offer[centre])
+        peaks = [
+            y
+            for y in range(2, height - 2)
+            if offer[y] > half
+            and offer[y] >= offer[y - 1]
+            and offer[y] > offer[y + 1]
+            and abs(y - centre) < 2.5 * wavelength * distance / (index * separation)
+        ]
+        spacing = float(np.mean(np.diff(peaks))) if len(peaks) > 2 else float("nan")
+        expected = wavelength * distance / (index * separation)
+        # The exact two-source geometry at lambda / n (this world is not paraxial: the screen
+        # subtends 2 x 15 degrees at the slits): the peaks where the path difference is a whole
+        # number of the wavelength inside, read AFTER the run beside the paraxial pin, labelled so.
+        inner = wavelength / index
+        exact = [
+            y
+            for y in range(1, height - 1)
+            if abs(y - centre) < 2.5 * wavelength * distance / (index * separation)
+            for j in [round((r1[y] - r2[y]) / inner)]
+            if abs((r1[y] - r2[y]) / inner - j) < abs((r1[y - 1] - r2[y - 1]) / inner - j)
+            and abs((r1[y] - r2[y]) / inner - j) <= abs((r1[y + 1] - r2[y + 1]) / inner - j)
+        ]
+        exact_spacing = float(np.mean(np.diff(exact))) if len(exact) > 2 else float("nan")
+        print(
+            f"\nH. THE TWO SLITS AT lambda / n behind a boundary of index {index} (the pair [1, {index * index}] on every Node past"
+            f" the wall, 6.7): the separation {separation}, L = {distance}, lambda_0 = {wavelength:.3f}, the train {train}, {end}"
+            f" intervals, {time.time() - t0:.1f} s HOST"
+        )
+        print(
+            f"   the rule's reading (COMPUTATION on the accumulated offer's {len(peaks)} peaks at {peaks}): the mean fringe spacing"
+            f" {spacing:.2f} pixels; the pin as declared, the paraxial lambda_0 L / (n d) = {expected:.2f} +- 3 percent:"
+            f" {'INSIDE' if abs(spacing / expected - 1) <= 0.03 else 'OUTSIDE'} ({(spacing / expected - 1) * 100:+.1f} percent);"
+            f" read after the run, the exact two-source peaks at lambda_0 / n for this non-paraxial screen {exact}, their mean"
+            f" spacing {exact_spacing:.2f} ({(spacing / exact_spacing - 1) * 100:+.1f} percent from the rule's); the paraxial"
+            f" spacing without the index {wavelength * distance / separation:.2f}"
+        )
+        return {"spacing": spacing, "expected": expected}
     print(
         f"\nC. THE TWO SLITS scaled by {scale:.3f}: the separation {separation}, each slit {slit} Node(s), L = {distance}, lambda ="
         f" {wavelength:.3f}, the fringe spacing lambda L / d = {wavelength * distance / separation:.1f} pixels, the train {train},"
@@ -435,11 +486,199 @@ def section_e(wavelength: float, arm: int = 60, k: int = 3, periods: int = 2) ->
     return {"n_par": first}
 
 
+def chain_step(
+    now: np.ndarray, before: np.ndarray, remainder: np.ndarray, num: np.ndarray, den: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """One interval of the rule on the one-dimensional chain (y and z periodic of one layer, so
+    the six-neighbour sum is a_E + a_W + 4 a_now) with the coefficient pair per Node (4.1):
+    3 den a_next + r' = num (a_E + a_W + 4 a_now) + 6 (den - num) a_now - 3 den a_before + r."""
+    total = np.zeros_like(now)
+    total[1:] += now[:-1]
+    total[:-1] += now[1:]
+    total += 4 * now
+    total = num * total + 6 * (den - num) * now - 3 * den * before + remainder
+    divisor = 3 * den
+    nxt = np.floor_divide(total, divisor)
+    return nxt, total - divisor * nxt
+
+
+def zero_train(period: float, periods: int) -> int:
+    """The train's length in intervals so that it begins and ends at the clock's zero (the
+    build's choice, DESIGN.md 11): a sine from t = 0, stopped at the interval nearest to the
+    zero crossing after `periods` periods (the residual step at most sin(pi / period) of the
+    amplitude, named in the readings)."""
+    return int(round(periods * period))
+
+
+def drive_value(t: int, period: float, train: int) -> int:
+    """The source's amplitude at interval t: a sine (the phase 3 N / 4 at t = 0, rising) for the
+    train, 0 after it."""
+    if t < train:
+        return int(round(SCALE * math.sin(2 * math.pi * t / period)))
+    return 0
+
+
+def section_f(wavelength: float, arm: int = 60, periods: int = 2, grace_periods: int = 2) -> dict:
+    """The sensitivity 2 against 1 (6.8) on the light clock's chain of section D, with the build's
+    source (the train begins and ends at the clock's zero) and the build's grace (the body's own
+    Node reads its record only `grace_periods` periods after the train): the returning offer's
+    rung crossings at 1 / 4096 (the first rung) and 2 / 4096 (the second), read on a^2 as section
+    D reads it and on the Port's motion (a_now - a_before)^2 (MUST A's form, the offer the engine
+    books); the pin: the second rung later than the first by 2 to 6 intervals at 12 Links."""
+    period = wavelength / C
+    train = zero_train(period, periods)
+    length = arm + 4
+    now = np.zeros(length, dtype=np.int64)
+    before = np.zeros(length, dtype=np.int64)
+    remainder = np.zeros(length, dtype=np.int64)
+    num = np.ones(length, dtype=np.int64)
+    den = np.ones(length, dtype=np.int64)
+    x0 = 1
+    mirror_x = x0 + arm + 1
+    end = int(3.2 * arm / C) + train
+    square, motion = [], []
+    for t in range(end):
+        if t < train:
+            now[x0] = drive_value(t, period, train)
+        nxt, remainder = chain_step(now, before, remainder, num, den)
+        nxt[mirror_x:] = 0
+        nxt[0] = 0
+        motion.append(float(nxt[x0] - now[x0]) ** 2)
+        before, now = now, nxt
+        square.append(float(now[x0]) ** 2)
+    lo = train + int(grace_periods * period)
+    hi = min(end, int(3 * arm / C) + train)
+    ts = np.arange(lo, hi)
+    readings = {}
+    for name, series in (("a^2", square), ("the motion", motion)):
+        window = np.array(series)[lo:hi]
+        cumulative = np.cumsum(window)
+        readings[name] = {
+            rung: int(ts[int(np.searchsorted(cumulative, fraction * cumulative[-1]))]) - train / 2
+            for rung, fraction in (("1 / 4096", 1 / 4096), ("2 / 4096", 2 / 4096), ("1 / 16", 1 / 16))
+        }
+    later = readings["the motion"]["2 / 4096"] - readings["the motion"]["1 / 4096"]
+    # The first rung is the front's arrival, read from the birth (the train's start), as 6.4 reads
+    # section D's 206.0: the crossing less the train's centre plus the train's centre.
+    first = readings["the motion"]["1 / 4096"] + train / 2
+    residual = abs(math.sin(2 * math.pi * train / period))
+    print(
+        f"\nF. THE SENSITIVITY 2 AGAINST 1 on the light clock's chain, the arm {arm} Links, lambda = {wavelength:.3f}, the train"
+        f" {train} intervals ({periods} periods from the clock's zero, the residual step {residual:.2f} of the amplitude), the"
+        f" grace {grace_periods} periods, the click less the train's centre (COMPUTATION): on a^2:"
+        f" {', '.join(f'{k}: {v:.1f}' for k, v in readings['a^2'].items())}; on the Port's motion (a_now - a_before)^2, the offer the"
+        f" engine books: {', '.join(f'{k}: {v:.1f}' for k, v in readings['the motion'].items())}; the second rung later than the"
+        f" first by {later:.1f} intervals on the motion (the pin 2 to 6 at 12 Links: {'INSIDE' if 2 <= later <= 6 else 'OUTSIDE'});"
+        f" the pin (d) 206 +- 2 at the first rung on the motion from the birth: {'INSIDE' if 204 <= first <= 208 else 'OUTSIDE'} ({first:.1f}; on a^2 {readings['a^2']['1 / 4096'] + train / 2:.1f})"
+    )
+    return readings
+
+
+def section_g(wavelength: float, index: int = 2, periods: int = 2, grace_periods: int = 2) -> dict:
+    """The boundary at a declared index (6.7, the air as foreign objects): a train of `periods`
+    periods from the clock's zero sent along a chain toward a region of the pair [64, 64 index^2]
+    beginning 61 Links away (the sharp boundary), and toward the same region entered through a
+    ramp of the pair over one wavelength of Nodes (the graded boundary; the pair [64, round(64
+    n(x)^2)] with n rising linearly from 1 to index, the base 64 = d^2 at d = 8 so that the ramp
+    is smooth in whole numbers; the free Nodes carry [64, 64], the rule of section 2 to the
+    remainder's grain); the reflected motion over the incident motion at a probe Node 30 Links
+    in front of the boundary, the incident window the train's passage plus the grace, the
+    reflected window from the reflection's earliest return (COMPUTATION); the wavelength inside
+    by the zero crossings of the train once it is wholly in the region. The pins: 1 / 9 +- 0.010
+    sharp, below 0.010 graded, lambda / index +- 1 Link inside. The lattice's floor applies
+    inside: lambda / index >= 12 Links (6.1), so the experiment runs at lambda_0 >= 24 at n = 2."""
+    period = wavelength / C
+    train = zero_train(period, periods)
+    grace = int(grace_periods * period)
+    probe = int(2 * wavelength) + 10
+    boundary = (
+        probe + int(4 * wavelength) + 10
+    )  # the round trip probe-boundary-probe longer than the train and its grace
+    depth = int(round(wavelength))
+    base = 64
+    length = boundary + int(12 * wavelength) + 4
+    arrive_probe = int(probe / C)
+    incident_hi = arrive_probe + train + grace
+    back_probe = int((2 * boundary - probe) / C)
+    reflected_hi = back_probe + train + grace
+    snapshot_t = int(boundary / C) + train // 2 + int(4 * wavelength / (C / index))
+    end = max(reflected_hi, snapshot_t) + 2
+    assert incident_hi < back_probe - int(period), "the windows overlap"
+    results: dict[str, float] = {}
+    for form in ("sharp", "graded"):
+        now = np.zeros(length, dtype=np.int64)
+        before = np.zeros(length, dtype=np.int64)
+        remainder = np.zeros(length, dtype=np.int64)
+        num = np.full(length, base, dtype=np.int64)
+        den = np.full(length, base, dtype=np.int64)
+        if form == "graded":
+            for i in range(depth):
+                n_here = 1 + (index - 1) * (i + 1) / depth
+                den[boundary - depth + 1 + i] = int(round(base * n_here * n_here))
+        den[boundary:] = base * index * index
+        incident, reflected = 0.0, 0.0
+        inside_spacing = float("nan")
+        for t in range(end):
+            if t < train:
+                now[1] = drive_value(t, period, train)
+            nxt, remainder = chain_step(now, before, remainder, num, den)
+            nxt[0] = 0
+            nxt[-1] = 0
+            step_motion = float(nxt[probe] - now[probe]) ** 2
+            if arrive_probe - int(period) <= t < incident_hi:
+                incident += step_motion
+            elif back_probe - int(period) <= t < reflected_hi:
+                reflected += step_motion
+            before, now = now, nxt
+            if t == snapshot_t and form == "sharp":
+                inside = now[boundary + depth : boundary + 8 * depth]
+                # the zero crossings between the train's own lobes (runs of one sign whose peak
+                # is at least a third of the train's peak); the dispersion's precursor and the
+                # remainders' grain do not count
+                peak = int(np.max(np.abs(inside)))
+                lobes: list[tuple[int, int, int]] = []  # (start, end, sign)
+                start = 0
+                for i in range(1, len(inside) + 1):
+                    if i == len(inside) or np.sign(inside[i]) != np.sign(inside[start]):
+                        if (
+                            np.sign(inside[start]) != 0
+                            and int(np.max(np.abs(inside[start:i]))) * 3 >= peak
+                        ):
+                            lobes.append((start, i, int(np.sign(inside[start]))))
+                        start = i
+                idx = [
+                    (lobes[j - 1][1] + lobes[j][0]) / 2
+                    for j in range(1, len(lobes))
+                    if lobes[j][2] != lobes[j - 1][2] and lobes[j][0] - lobes[j - 1][1] <= 3
+                ]
+                if len(idx) > 2:
+                    inside_spacing = 2 * float(np.mean(np.diff(idx)))
+        results[form] = reflected / incident if incident else float("nan")
+        if form == "sharp":
+            results["inside"] = inside_spacing
+    fresnel = ((index - 1) / (index + 1)) ** 2
+    print(
+        f"\nG. THE BOUNDARY AT THE DECLARED INDEX {index} (the pair [{base}, {base * index * index}] past {boundary} Links; the"
+        f" probe at {probe}; lambda_0 = {wavelength:.3f}, inside {wavelength / index:.1f}; the train {train} intervals from the"
+        f" clock's zero; the grace {grace_periods} periods), COMPUTATION: the reflected motion over the incident at the sharp"
+        f" boundary {results['sharp']:.4f} (the pin ((n - 1) / (n + 1))^2 = {fresnel:.4f} +- 0.010:"
+        f" {'INSIDE' if abs(results['sharp'] - fresnel) <= 0.010 else 'OUTSIDE'}); at the graded boundary ({depth} Nodes)"
+        f" {results['graded']:.4f} (the pin below 0.010: {'INSIDE' if results['graded'] < 0.010 else 'OUTSIDE'}); the wavelength"
+        f" inside by the zero crossings {results['inside']:.2f} Links (the pin lambda_0 / n = {wavelength / index:.2f} +- 1:"
+        f" {'INSIDE' if abs(results['inside'] - wavelength / index) <= 1 else 'OUTSIDE'})"
+    )
+    return results
+
+
 PERIODS = 32  # the record's emission train in periods of its clock (the lamp's declaration, kind 1)
 
 
 def main() -> None:
-    wavelengths = [float(a) for a in sys.argv[1:]] or [8.0, 12.0, 16.0]
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    only = {
+        a[2:].upper() for a in sys.argv[1:] if a.startswith("--")
+    }  # e.g. --f --g --h: those sections only
+    wavelengths = [float(a) for a in args] or [8.0, 12.0, 16.0]
     print(
         "THE LOCAL DETECTOR LAW, the pins before any build (COMPUTATION, the rule run offline in its own integers; no engine run);"
         f" the amplitude unit {SCALE}, the train {PERIODS} periods of the record's clock, c = 1 / sqrt 3 = {C:.5f} Links per interval"
@@ -447,13 +686,26 @@ def main() -> None:
     for wavelength in wavelengths:
         train = int(round(PERIODS * wavelength / C))
         print(f"\n===== lambda = {wavelength:.3f} Links, the train {train} intervals =====")
-        section_a(wavelength / C)
-        for w0 in (27, 9):
-            section_b(wavelength, w0, train)
-        section_b(wavelength, 9, train, wall="lossy")
-        section_c(wavelength, train)
-        section_d(wavelength)
-        section_e(wavelength)
+        if not only:
+            section_a(wavelength / C)
+            for w0 in (27, 9):
+                section_b(wavelength, w0, train)
+            section_b(wavelength, 9, train, wall="lossy")
+            section_c(wavelength, train)
+            section_d(wavelength)
+            section_e(wavelength)
+        if not only or "F" in only:
+            section_f(wavelength)
+        if wavelength / 2 < 12:
+            print(
+                f"\nG, H. THE BOUNDARY AT THE DECLARED INDEX 2 not run at lambda_0 = {wavelength:.3f}: the wavelength inside,"
+                f" {wavelength / 2:.1f} Links, is below the lattice's floor of 12 (6.1, 8c); run at lambda_0 >= 24"
+            )
+        else:
+            if not only or "G" in only:
+                section_g(wavelength)
+            if not only or "H" in only:
+                section_c(wavelength, train, index=2)
 
 
 if __name__ == "__main__":

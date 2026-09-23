@@ -822,6 +822,48 @@ air: at air's n = 1.000 27 every number above is inside its band's
 hundredth, which is the sensitivity check the medium column of PINS.md
 records, and no pin of the register moves for it.
 
+**6.7 as computed** (`detector_law_pins.py`, sections G and H;
+`detector_law_pins.out` at 24 Links and `detector_law_pins_index.out`
+at 24, 32 and 48 Links; COMPUTATION; the source the build's, a sine
+from the clock's zero, the grace two periods; the coefficient pair [64,
+256] past the boundary, the free Nodes [64, 64], the rule of section 2
+to the remainder's grain). The floor first: the wavelength inside must
+be 12 Links or more (8c), so at n_c = 2 the experiment runs at lambda_0
+= 24 Links or more; 12 and 16 are not run, and the script says so.
+
+- **The wavelength inside**: 11.00, 15.00, 24.00 Links at lambda_0 =
+  24, 32, 48 (the pin lambda_0 / 2 +- 1: INSIDE at all three; the zero
+  crossings between the train's own lobes, the dispersion's precursor
+  excluded).
+- **The Fresnel step at the sharp boundary**: the reflected motion over
+  the incident 0.1307, 0.1243, 0.1186 at 24, 32, 48 Links, converging
+  on 1 / 9 = 0.1111 as the wavelength grows (the residual 0.020, 0.013,
+  0.008; the pin +- 0.010: OUTSIDE at 24 and 32, INSIDE at 48). The
+  convergence experiment reads as the owner asked: the coefficient form
+  gives the wave law's step in the limit, and the lattice's residual
+  at a given wavelength is what it costs, named.
+- **The graded boundary** (the pair ramped over one wavelength of
+  Nodes): 0.0052, 0.0049, 0.0037 (the pin below 0.010: INSIDE at all
+  three).
+- **The two slits at lambda_0 / n_c** (section H, 24 Links, the world
+  of 6.2 with the region past the wall at the pair [1, 4]): five peaks
+  at the pixels 193, 257, 312, 367, 431; their mean spacing 59.50. The
+  pin as declared, the paraxial lambda_0 L / (n_c d) = 52.38 +- 3
+  percent: OUTSIDE, by 13.6 percent, and the fault is the pin's
+  statement, not the rule's reading: 6.2's screen subtends 2 x 15
+  degrees at the slits and is not paraxial, which the pin's formula
+  assumed; the exact two-source peaks at the wavelength inside for this
+  screen, computed AFTER the run and labelled so, are 193, 258, 312,
+  366, 431 (the mean spacing 59.50): the rule's peaks to the pixel; at
+  32 Links the rule's peaks 255, 342, 416, 490, 577 (the mean spacing
+  80.50) against the exact 254, 342, 416, 490, 578 (81.00), -0.6
+  percent; at 48 Links the rule's 384, 514, 624, 733, 863 (119.75)
+  against the exact 381, 513, 624, 735, 867 (121.50), -1.4 percent,
+  the outer peaks pulled inward by the train's finite length at the
+  screen's edge, named. The pin is not moved; the row in PINS.md
+  carries both numbers with the fault named, and the exact form is the
+  pin's statement for any re-run.
+
 6.8 **The sensitivity 2 against 1** (the owner's "check the sensitivity
 2 versus 1"; 1.1's parameter; PINS.md row (i)). The sensitivity is the
 rung of the wheel at which the receive counts: 1 (the first rung, the
@@ -838,6 +880,22 @@ of a^2 (the receiver's offer of section 5); the pin (d) 206 +- 2 is
 declared for the first rung on the offer the engine books, so a
 first-rung reading on the motion outside 204 .. 208 is a finding to
 report, not a number to choose between.
+
+**6.8 as computed** (section F of the script, the chain of 6.4 with the
+build's source and grace; COMPUTATION): the first rung on the Port's
+motion reads 208.0, 207.0, 207.0 from the birth at 12, 16, 24 Links
+(on a^2: 208.0 at all three): the pin (d) 206 +- 2 INSIDE at all three,
+on the offer the engine books. The second rung follows the first by
+**1.0 interval** at every wavelength, on the motion and on a^2 alike:
+the pin's band (2 to 6, my estimate from 6.4's crossings at 1 / 4096
+and 1 / 16) was too high; the front rises faster than that estimate.
+The reading is stated against the pin as OUTSIDE and the pin is not
+moved; what it says to the owner's question is plain: the sensitivity
+2 against 1 moves the cycle by one interval in about 206 (half a
+percent), inside (d)'s band, and moves no bell (the rung sets the
+click's time, not its pixel). The choice between 1 and 2 is a
+declaration of the object (1.1), and the register's clocks are read
+at 1.
 
 ## 7. The price
 
