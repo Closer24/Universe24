@@ -136,8 +136,12 @@ def moving_on_layer(n, s, mu, g, k=3, ramp=1500, hold=8000):
     # the one formula's gamma is the massive kind's own, at c_m = c sqrt(cos omega_0) (Reviewer 3's
     # MUST on PR #1053, decided by derivation in MASSIVE_RECORD.md section 8); gamma(c) a CONTROL beside
     cos_omega_0 = 1 / (1 + mu**2 / 2)
-    gamma_c = 1 / np.sqrt(1 - beta**2)
-    gamma = 1 / np.sqrt(1 - beta**2 / cos_omega_0)
+    omega_0 = np.arccos(cos_omega_0)
+    gamma_c = 1 / np.sqrt(1 - beta**2)  # light's, a CONTROL
+    gamma_m = 1 / np.sqrt(1 - beta**2 / cos_omega_0)  # the second-order cone, a CONTROL
+    # the named gamma at the exact cone of the band's bottom, c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2
+    # (Reviewer 3's token on 26674947, the exact form of the same derivation)
+    gamma = 1 / np.sqrt(1 - beta**2 / (cos_omega_0 * omega_0 / np.sin(omega_0)))
     residual = eps * (gamma**2 - 1) / 2
     # the one formula of section 8: the moving block a resting well of width gamma s ALONG x
     # (s across), its phase read at 1 / gamma; the non-integer width interpolated
@@ -147,11 +151,15 @@ def moving_on_layer(n, s, mu, g, k=3, ramp=1500, hold=8000):
     ob_hi = layer_mode(n, s, mu, g, sx=hi)[0] if hi != lo else ob_lo
     ob_w = ob_lo + (ob_hi - ob_lo) * (w - lo)
     formula = ob_w / (gamma * omega_b)
-    wc = gamma_c * s
-    lo_c, hi_c = int(np.floor(wc)), int(np.ceil(wc))
-    ob_lo_c = layer_mode(n, s, mu, g, sx=lo_c)[0]
-    ob_hi_c = layer_mode(n, s, mu, g, sx=hi_c)[0] if hi_c != lo_c else ob_lo_c
-    control = (ob_lo_c + (ob_hi_c - ob_lo_c) * (wc - lo_c)) / (gamma_c * omega_b)
+
+    def control_with(gamma_x):
+        wc = gamma_x * s
+        lo_c, hi_c = int(np.floor(wc)), int(np.ceil(wc))
+        ob_lo_c = layer_mode(n, s, mu, g, sx=lo_c)[0]
+        ob_hi_c = layer_mode(n, s, mu, g, sx=hi_c)[0] if hi_c != lo_c else ob_lo_c
+        return (ob_lo_c + (ob_hi_c - ob_lo_c) * (wc - lo_c)) / (gamma_x * omega_b)
+
+    control = (control_with(gamma_m), control_with(gamma_c))
     return (
         omega_b,
         eps,
@@ -203,12 +211,12 @@ print(
     "\nthe block's clock in motion ON THE LAYER at k = 3 (ramp 1500, hold 8000), against the one formula:"
 )
 print(
-    "mu | s | g | layer n | omega_b | eps | f/f0 read | 1/gamma_m (gamma at c_m) | first order 1/gamma_m (1 - residual)"
-    " | the one formula (the well of width gamma_m s along x, gamma at c_m) | residual | s | the control (gamma at c)"
+    "mu | s | g | layer n | omega_b | eps | f/f0 read | 1/gamma (gamma at c_eff) | first order 1/gamma_m (1 - residual)"
+    " | the one formula (the well of width gamma s along x, gamma at c_eff) | residual | s | the controls (gamma at c_m, at c)"
 )
 for mu, s, g, n in ((0.15, 10, 0.15**2, 200), (0.15, 14, 0.15**2 / 4, 200), (0.15, 20, 0.15**2, 64)):
     ob, eps, ratio, inv_g, first, formula, res, dt, control = moving_on_layer(n, s, mu, g)
     print(
         f"{mu} | {s} | {g:.5f} | {n} | {ob:.5f} | {eps:.4f} | {ratio:.4f} | {inv_g:.4f} | {first:.4f}"
-        f" | {formula:.4f} | {res:.4f} | {dt:.0f} | the CONTROL with gamma(c): {control:.4f}"
+        f" | {formula:.4f} | {res:.4f} | {dt:.0f} | the CONTROLS: with gamma(c_m) {control[0]:.4f}, with gamma(c) {control[1]:.4f}"
     )

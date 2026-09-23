@@ -49,8 +49,8 @@ the design reaches but nature's number or scale does not), NOT PREDICTED
 | 2b, the Mach-Zehnder visibility | two free corridors between mirror receivers with a splitter table at each end | PINS.md 2b; the splitter's table a DECLARATION TO WRITE | (K) PIN: 1.00 - 0.02 (the dark port 0 of 64 at 128 periods) | a layer | seconds | 2026-09-26, after the splitter's table | 1.000, 64 / 0 (HISTORY) |
 | 2c, Born's exponent (the Sorkin parameter) | the three-opening world after 6.1 | PINS.md 2c | (K) PIN: the exponent 2 exactly (the click a quadratic form, 2.1); the three-opening sum 0 to the remainder's grain; nature 0.0064 +- 0.0119 (Sinha 2010) | a layer | seconds | 2026-09-25 | the power pinned to [1.917, 2.489) (HISTORY) |
 | 3, the deceleration parameter q | none: the far lamp under a crowd's index is not derived under the new law (MASSIVE_RECORD.md section 9, rows 12 and 13; a gravity-index hypothesis would be its own identity) | none | NOT PREDICTED (what is missing: a crowd's field from the rule) | none | none | none | "not predicted" (HISTORY) |
-| 4a, the muon's lifetime in flight | the moving block: (ii-a), (ii-b) on 64^3; (ii-c) the 3-D pin worlds; the layer pin worlds of item 7 | MASSIVE_RECORD.md sections 5, 8, 11; BUILD.md section 5 | (K) PIN (the layer, mu = 0.15, s = 14, g = mu^2 / 4): 0.8108 by the one formula with gamma_m AT c_m (1.22820; MASSIVE_RECORD.md section 8, decided by derivation), against 1 / gamma_m = 0.8142 to the residual 0.3 percent; the same formula with light's gamma(c) gives 0.8132 against 0.8165, a labelled CONTROL beside (the two 0.28 percent apart, the band's size: the pin names its gamma); (P) PREDICTION (ii-a) 0.7805, (ii-b) 0.8024 with gamma at c_m (0.7831, 0.8048 with gamma(c), CONTROLS beside; the block form's residual, the second term of the band, no known formula); nature's form 1 / gamma (Bailey 1977, gamma 29.33 at its own beta) matched in form at the world's beta_c | a 200^2 layer; 64^3; one 3-D pin world at the end (191^3) | 6 s; 2 min; one to two hours | 2026-09-24 (the layer and 64^3); the 3-D world the 25th or later | "1 against 29.33, FAIL" (HISTORY) |
-| 4b, the redshift of a moving lamp | the boosted block's emission through the coupling read by a block at rest, a chain beside (iv-a) | MASSIVE_RECORD.md section 9 row 4b; the world's declaration in BUILD.md section 5 TO WRITE (a receiver block) | (K) PIN: 1 + z = gamma_m (1 + beta_c) = 1.9373 at k = 3 receding, gamma_m at c_m (MASSIVE_RECORD.md section 8; the character's frequency gamma_m omega_0 shifted by the medium's Doppler; COMPUTATION), the lattice's band; 1.9319 with gamma(c) a labelled CONTROL beside; nature's form gamma (1 + beta) (Botermann 2014; Ives and Stilwell 1938) matched in form | a chain of 1400 | seconds | 2026-09-25, after (iv-a) | "0.2636 against 0.315, FAIL" (HISTORY) |
+| 4a, the muon's lifetime in flight | the moving block: (ii-a), (ii-b) on 64^3; (ii-c) the 3-D pin worlds; the layer pin worlds of item 7 | MASSIVE_RECORD.md sections 5, 8, 11; BUILD.md section 5 | THE READER OF RECORD: the clicks (the count between clicks on the block's own record over the hold, DETECTOR), the world seeded with the bound mode's integer profile over two extents so that the clicks read the mode (MASSIVE_RECORD.md section 11 item 7; under the flat seed the clicks of a wide mode beat, 39.3 against 42.4); the spectral peak a GAMEBOARD diagnostic beside; the click's record the cells' sum, the window the hold; a row whose clicks beat is a diagnostic until they read the mode (a longer ramp), never pinned by the peak. (K) PIN (the layer, mu = 0.15, s = 14, g = mu^2 / 4): 0.8116 by the one formula with gamma_m at the exact cone c_eff (1.22705; MASSIVE_RECORD.md section 8, decided by derivation, its exact form on Reviewer 3's token), against 1 / gamma_m = 0.8150 to the residual 0.3 percent; the same formula with the second-order c_m gives 0.8108 (against 0.8142) and with light's gamma(c) 0.8132 (against 0.8165), labelled CONTROLS beside (all within the band: the pin names its gamma); (P) PREDICTION (ii-a) 0.7814, (ii-b) 0.8032 with gamma at c_eff (0.7805, 0.8024 at c_m; 0.7831, 0.8048 at c, CONTROLS beside; the block form's residual, the second term of the band, no known formula); nature's form 1 / gamma (Bailey 1977, gamma 29.33 at its own beta) matched in form at the world's beta_c | a 200^2 layer; 64^3; one 3-D pin world at the end (191^3) | 6 s; 2 min; one to two hours | 2026-09-24 (the layer and 64^3); the 3-D world the 25th or later | "1 against 29.33, FAIL" (HISTORY) |
+| 4b, the redshift of a moving lamp | the boosted block's emission through the coupling read by a block at rest, a chain beside (iv-a) | MASSIVE_RECORD.md section 9 row 4b; the world's declaration in BUILD.md section 5 TO WRITE (a receiver block) | (K) PIN: 1 + z = gamma_m (1 + beta_c) = 1.9355 at k = 3 receding, gamma_m at the exact cone c_eff (MASSIVE_RECORD.md section 8; the character's frequency gamma_m omega_0 shifted by the medium's Doppler; COMPUTATION), the lattice's band; 1.9373 at c_m and 1.9319 at c labelled CONTROLS beside; nature's form gamma (1 + beta) (Botermann 2014; Ives and Stilwell 1938) matched in form | a chain of 1400 | seconds | 2026-09-25, after (iv-a) | "0.2636 against 0.315, FAIL" (HISTORY) |
 | 4c, the round-trip Doppler off a receding transponder | (iv-a)'s form with B stepped away; also the cart worlds of `examples/events/moving_detector/` re-declared under the rule | MASSIVE_RECORD.md section 9; moving_detector/README.md | (K) PIN: (1 + beta_c) / (1 - beta_c) = 3.732 at k = 3 exactly (COMPUTATION, r-free); nature the two-way form of every radar (FORM) | a chain | seconds | 2026-09-25 | "the cart's counts" (a FORM row, HISTORY) |
 | 5a, the anisotropy of c by direction | DESIGN.md 6.0 A: the fan of directions under the rule at 12, 16, 24 Links | DESIGN.md 6.0 A; PINS.md 5a | (K) PIN: the pace by direction within 0.8, 0.4, 0.2 percent of c at 12, 16, 24 Links, falling as the inverse square of the wavelength (COMPUTATION); nature below 10^-17 (Herrmann 2009) a bound met at the lattice's grain | a layer | seconds | 2026-09-25 | 0.5774 to 0.5818 (HISTORY) |
 | 5b, the anisotropy between two arms in motion | the two-arm relay (b): light-bound arms at section 10's equilibrium, pushed by light's stress, at k = 4; its CONTROL (a) only if (b) does not match | MASSIVE_RECORD.md sections 5, 10, 11 item 3; the push's step ordered after (iv) (the Boss, 16:33Z) | (K) PIN in the number, (P) in the mechanism (the arms held by light's force, no rigid rod): N_par / N_perp = 1 and 1 within +- 0.03 plus eps (gamma_m^2 - 1) / 2; nature below 10^-17 (Michelson and Morley 1887 the original) | a layer of two arms, about 200 x 200 x 1 | a minute | 2026-09-26, after the push is built | "gamma^2 along and gamma across, FAIL" (HISTORY) |
@@ -95,13 +95,24 @@ clause:
    falsified by a massive front faster than c_m on its world beyond the
    band, or in nature by an electron pace bound tighter than the deficit
    at the declared scale (row A, a BOUND on the one scale today). ITS
-   SECOND FACE (Reviewer 3's MUST on PR #1053, decided by derivation in
-   MASSIVE_RECORD.md section 8): a bound clock dilates by gamma at c_m,
-   the massive kind's own cone, slower than light's gamma by beta^2
-   gamma^2 omega_0^2 / 4 (0.28 percent at k = 3, mu = 0.15; about 10^-14
-   at nature's omega_0 of row A); falsified on a pin world by the one
-   formula reading gamma(c)'s number and not gamma(c_m)'s beyond the 0.3
-   percent band (both numbers in row 4a, the named one the pin).
+   SECOND FACE (Reviewer 3's MUST on PR #1053 and his token of 19:20Z,
+   decided by derivation in MASSIVE_RECORD.md section 8, the exact form):
+   a bound clock dilates by gamma at the massive kind's own cone c_eff^2
+   = cos omega_0 (omega_0 / sin omega_0) c^2, slower than light's gamma
+   by about beta^2 gamma^2 omega_0^2 / 4 to second order (0.19 percent
+   at k = 3, mu = 0.15 in the exact form; about 10^-14 at nature's
+   omega_0 of row A); falsified on a pin world by the one formula reading
+   gamma(c)'s number and not gamma(c_eff)'s beyond the 0.3 percent band
+   (the three numbers in row 4a, the named one the pin, gamma(c_m) and
+   gamma(c) the controls). THE WORLD
+   THAT SEPARATES THE TWO GAMMAS, DEFERRED (Reviewer 3's clause, 18:30Z;
+   no run, no pin moved, the owner's word): mu = 0.3 at k = 3 on a 128^2
+   layer, the square well of side 10 at g = mu^2 / 8 (omega_b 0.29372,
+   eps 0.0055, the extent 26, the residual 0.15 percent), declared with
+   the exact cone: 1 / gamma at c_eff 0.8104 against 0.8165 at c (0.76
+   percent apart, five bands) and against the second-order c_m's 0.8073
+   (0.38 percent); its rest period 21.3 intervals at the honest floor of
+   21, named.
 2. The bound clock's second term: a bound body's moving clock reads (1 /
    gamma_m)(1 - eps (gamma_m^2 - 1) / 2), a free packet exactly 1 /
    gamma_m (section 8); falsified by a pin world's ratio off the one
@@ -143,6 +154,17 @@ and the transmission scratch of the engine's form (0.830, 0.884), both
 computed after that reading, stand beside it as labelled CONTROLS, never
 the pin
 (MASSIVE_RECORD.md section 11 item 6, the index row; the Boss's 18:08Z).
+
+The moved cavity (iii-b) is NOT a world of this schedule (Reviewer 3 and
+the physicist, 19:50Z): as built, the cavity's zero faces are imposed
+every interval, so in motion each hop deletes the row it leaves, a take
+per hop, not a bijection of the Inside; its exploratory 1.17 of the rest
+rate stays written as the moving wall's number and is never read against
+1 / gamma_m^2 = 0.664; the cavity form (I) is a rest control only ((iii-a),
+read to 0.15 percent). The cavity control in motion is the DEEP WELL,
+side 40 at full depth on a 128^2 layer (binding 0.87), its pin the one
+formula's 0.7531 at the exact cone, computed before any run
+(MASSIVE_RECORD.md section 11 items 3 and 6).
 
 ## The counts, by kind
 
