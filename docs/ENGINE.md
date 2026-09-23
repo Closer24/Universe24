@@ -981,6 +981,60 @@ momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-an
 `event_universe.configuration_validation` reports a world of the law as
 kind `beam`.
 
+**The massive record kind** (`massive-record-v1`, 2026-09-23, the world
+key `massive_record`, false by default, needing `detector_law: true`;
+docs/designs/detector_law/MASSIVE_RECORD.md, the build's plan BUILD.md):
+under it a family declares its `pair` `[num, den]` on the six-neighbour
+term of the local detector law's rule (den > num a massive kind, its rest
+frequency the gap cos omega_0 = num / den, no `phase_per_link` and no lamp
+on it; every family without the key reads light's `[1, 1]`) and its
+`faces` (the kind's own faces per axis, periodic by default, an open face a
+zero face; light's faces the world's `boundary`); a measured event with
+`side` is a BLOCK, the foreign object: its cells the cube of `side` at its
+`position` (the lower corner), its `pair` at the cells (a well of the
+massive kind's pair, or a gap on light's kind, the (M) wall), its
+`coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
+first difference both ways on the same Node, each rational folded into
+the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
+the least common multiple of the blocks' `G_d`; `[0, 1]` each by default), its `wheel` (the
+first rung's W, the world's by default), its `seed` (its own record's
+amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
+`margin` declared, a list of one integer per Node of the board in x-major
+order, the bound mode's integer profile the generator writes into the file
+at the world's amplitude, the record seeded so over the whole board at both
+levels, a standing start on the mode, the load-time check against the margin
+module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7),
+`absorbing` (the take on light's row at its cells, false by default: a clock
+body takes nothing), `cavity` (its own record held at 0 outside its
+cells), `ramp` (the momentum reached from 0 over that many intervals, the
+pushing agent's declaration), `start` (the interval its drive begins, 0 by
+default, the ramp counted from it: the same agent's declaration), `margin` (`"pin"` or `"control"`, the margin
+rule's kind of world) and `emits` (the light family its record sources,
+one record per cycle of its clock, paid from its `held`); `probes` a list
+of Nodes whose light amplitude the record writes per interval; `mode_axis`
+(`"x"`, `"y"` or `"z"`) the axis along which the record writes a `mode`
+line per interval, the three sums of light's total field over the Nodes of
+each residue class of that coordinate modulo 3 (the content of the mode
+k = 2 pi / 3, the hop pump's signature of MASSIVE_RECORD.md section 7, a
+GAMEBOARD reading; the reading tool forms abs(S_0 + w S_1 + w^2 S_2)^2 with
+w the cube root of unity). The record
+under the key: `massive_record`, per family `pair` and `faces`, and
+`margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
+11 item 4: a load-time check made before the world runs by
+`diagnostics/massive_record_margin`, the block's bound mode by a Lanczos
+iteration on the world's own board, its extent in the medium and the
+margin per axis, two extents for a `"pin"` world and one for a
+`"control"`, a declaration below the margin refusing the run; a HOST
+computation of the declaration, printed and recorded, never read by the
+state; a cavity is skipped, and so is a folded axis, a periodic extent
+below the block's side, a layer's or a chain's) in `run.json`; the books' `form` per family (the conserved form I of section
+3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
+own record (`clock` its count), a `block` line per interval (its record's
+sum across its cells, its corner, its count, its steps), a `probe` line
+per interval and the emitted records' `birth` lines; in `state.json` the
+`blocks` with the rows of each block's own record. Without the key every
+record is byte for byte as it was (`tests/test_massive_record.py`).
+
 **The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,

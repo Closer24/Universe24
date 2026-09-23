@@ -16,7 +16,11 @@ and the list of the places where two sources stated one rule
 differently are [docs/designs/algebra_one/PLAN.md](designs/algebra_one/PLAN.md);
 this file proves nothing anew: each statement carries the link to its
 proof in its owning file, and no formula is stated that a source does
-not state.
+not state. Chapter 8, added on the owner's word of 20:24Z (record
+1489), carries the massive record kind from its design pages into this
+file and is the one chapter that writes proofs of its own, each marked
+PROVED HERE, beside the design's proofs (CARRIED) and computations
+(COMPUTED, NOT PROVED).
 
 **The rules this file obeys.** Every symbol is named in English at its
 first use; a scalar plain, a vector bold lowercase (**p**), a matrix or
@@ -73,7 +77,11 @@ angles in chapter 5 and, once, a root of unity (4.11) and a force
 constant (5.8), named there; and three letters carry a second meaning
 beside their first, named there too: a, plain, the acceleration (5.4)
 beside **a** the flow vector; K the kinetic reading in E_j = K + q A
-(5.8); s the lamp's turn (5.7) beside s the state's component.
+(5.8); s the lamp's turn (5.7) beside s the state's component. Chapter 8
+names its own symbols at its head (the two levels of a row, the pair
+[num, den], the pitch omega_0, the coupling pairs g and G, the block's
+cells R and the rest), each apart from the head's where a letter is
+reused.
 
 ---
 
@@ -589,7 +597,11 @@ push, the crowd, the split, the sum, the click and the age, each one of
 the six on bounded integers; the identity W = E'_0^2 + 3 **p** . **p**
 (chapter 5.3) is not a line of the step but the step's invariant under
 covariant-readings-v1. Source: the click frame section 9 (I), lines
-1261-1290.
+1261-1290. Under the massive record kind of chapter 8 a record's row at
+a Node is its two levels with the remainder, (a_now, a_before, r), and
+one interval is 8.1's map with 8.5's coupling and 8.6's click; the
+lines of this section are the rows that hop, the engine as built before
+2026-09-23, kept as their record.
 
 ---
 
@@ -2018,3 +2030,1002 @@ the detector at the place, locality Outside.
 writer's summary of the owner's sentence): the
 GameBoard showed that everything converges to this group and this ring,
 and what did not converge was not put in.
+
+---
+
+## 8. The massive record kind: the pair per kind, the block, the coupling, the click, the seed, the direction of time
+
+The model owner's word of 2026-09-23, 20:24Z, through the chief
+physicist (record 1489 of [LOG_2026-09-20.md](LOG_2026-09-20.md), the
+Boss's line in Highlights 5.4): the project must be rebuildable from
+HIGHLIGHTS.md and this file alone; every design page, schedule and
+reading is history under them; what is not in one of the two files is
+not part of the law or the method. This chapter carries the law of the
+massive record kind from its design pages on main (`50d4980a`) into
+this file, in this file's own language: the objects, the six verbs, the
+identities, each identity with its proof here or the exact place where
+the design proves it. The sources, each the record of its day and none
+a second statement: the chief physicist's third draft
+[designs/detector_law/MASSIVE_RECORD.md](designs/detector_law/MASSIVE_RECORD.md)
+(sections 1, 2, 3, 4, 6, 7, 8, 11 item 7 and 14), the schedule
+[designs/detector_law/SCHEDULE.md](designs/detector_law/SCHEDULE.md),
+the declarations
+[designs/detector_law/declarations/DECLARATIONS.md](designs/detector_law/declarations/DECLARATIONS.md),
+the massless kind's design
+[designs/detector_law/DESIGN.md](designs/detector_law/DESIGN.md)
+(sections 2 and 5, the rule and the counting form) and
+[POSTULATES.md](../POSTULATES.md) section 10. The rules this chapter
+obeys, beside the head's: integers only inside a rule, no root and no
+float; a real number appears only as a declared pin or a computed
+consequence and is labelled so (COMPUTATION or DECLARATION); no result
+of any run enters (the chapter is the algebra before any run, the
+exploration page and the build's readings being history beside it);
+nothing is stated that a design page on main does not state, and each
+statement carries one of three marks: PROVED HERE (a proof for every N
+and every board written in this chapter, this chapter's own), CARRIED
+(the design's proof, cited by file and section), or COMPUTED, NOT
+PROVED (the design's closed form or script, with what a proof for every
+N and every board would need). The three tests of every rule (2.8) are
+stated per rule in this file's words: generic, vector, local. Every
+result matches nature or does not; none is how nature is.
+
+**The symbols of this chapter, named once.** a_now, a_before and a_next
+a record's level at a Node now, one interval ago and one interval on,
+integers at the amplitude unit declared at load; r and r' the remainder
+kept on the row before and after the interval; S_6 = a_E + a_W + a_N +
+a_S + a_U + a_D the sum of the six reads of the record's a_now (the
+neighbour across a Link; the Node itself on a folded axis of extent 1;
+0 beyond an open face); [num, den] a record kind's declared pair, num
+and den whole, 0 < num <= den; omega the frequency angle per interval
+and **k** the wave vector, angles k_x, k_y, k_z per Link, k its
+Euclidean length, a character (omega, **k**) a plane wave of the
+torus's translations (1.6) and the time translation; omega_0 the pitch
+of a kind, the gap of its band at **k** = 0, cos omega_0 = num / den,
+and N_0 = 2 pi / omega_0 its rest period in intervals; omega_l(k)
+light's band at the same **k**; c = 1 / sqrt 3 Links per interval the
+pace of light (4.2), c_m and c_eff two paces of the massive kind
+defined in 8.1, gamma_m = 1 / sqrt(1 - v^2 / c_eff^2) the one formula's
+Lorentz factor, beta_c = v / c a pace as a fraction of c, and K the
+drive's whole count of intervals per hop, v = 1 / K (K plain, the
+drive's count, apart from the row kind (K) in parentheses of 8.9); I
+the conserved quadratic form of a kind, **A** the read matrix (six
+entries +1 per row, symmetric), **D** the diagonal matrix of the
+per-Node weights D_i = den_i / num_i (the design writes it **W**),
+**M** = **D**^-1 **A** / 3 the rule's matrix; R a block's cells, a
+finite G_48-set of Nodes, s its side; mu the medium's pitch (its
+omega_0), g_w = 2 (num' / den' - num / den) the well's depth to first
+order (the design writes it g, the letter this chapter keeps for the
+coupling), omega_b the bound mode's frequency, eps = 1 - omega_b^2 /
+mu^2 its binding depth, kappa the mode's tail per Link (kappa here the
+tail's decay, apart from the walk's angle of chapter 5); W a click's
+declared wheel and 1 / W its first rung; g = [g_n, g_d] and G = [G_n,
+G_d] the two coupling pairs at a block's cells (G plain the source's
+pair, never the Gram matrix **G** of 2.5; the product G g one number
+and the ratio G / g another), **P**_R the projector onto the cells (1
+on R, 0 elsewhere; bold, an operator, apart from the verb (P)), alpha =
+g D_in / G with D_in the weight on the cells, and J the coupled
+scheme's exact invariant (J plain, apart from the joint pointer J(o_A,
+o_B) of 3.6); ev the evaluation Z[Z_N] -> Z[zeta_N] of 2.5, used as
+named there.
+
+### 8.1 The rule with a pair per record kind; the band; the pitch; the two paces; the one formula's gamma
+
+**The rule** (CARRIED: MASSIVE_RECORD.md section 1, form (B) of
+Reviewer 3's 12.6 (c); at [1, 1] DESIGN.md section 2 bit for bit). At
+every Node a record's row (a_now, a_before, r) is mapped, once per
+interval, by
+
+    3 den a_next + r' = num S_6 - 3 den a_before + r,        0 <= r' < 3 den,
+
+then a_before <- a_now, a_now <- a_next, r <- r'. Light is the value
+[1, 1]: 3 a_next + r' = S_6 - 3 a_before + r, 0 <= r' < 3. A massive
+kind is a value den > num; nothing else names the mass. The verbs: (B)
+one entry, num, of the declared matrix on the six reads and one entry,
+-3 den, on the own row's past, the rate a bilinear form of the
+neighbourhood's state (2.2); (T) the accumulator translated by that
+rate (2.1); (D) the division by the wall 3 den with the remainder kept
+on the row (2.6). The compensated form with a self term, `3 q (a_next +
+a_before) = q S_6 - 3 p a_now`, is not the law: its checkerboard
+character lies below the band's bottom in three dimensions for every p
+> 0 (8.1, the band; MASSIVE_RECORD.md section 3, WITHDRAWN); its pair
+maps onto this rule's by den / num = 1 + p / (2 q) to second order.
+The three tests: generic, one primitive with one declared pair and no
+family name, light the value num = den, the engine branching on no
+name; vector, (B), (T), (D) on the row, no root, no float, the
+amplitude unit declared at load; local, the record's own row and its
+six reads, nothing kept at a Node beyond the row and its remainder. All
+three held (MASSIVE_RECORD.md section 1 and section 12's table).
+
+**The band, PROVED HERE.** Drop the remainder (its exact accounting is
+8.2) and read the rule on a character a(x, t) = cos(omega t - **k** .
+**x**) of a periodic board: a_next + a_before = 2 cos omega a_now and
+S_6 = 2 (cos k_x + cos k_y + cos k_z) a_now, so the rule holds on the
+character exactly when
+
+    2 cos omega = (2 num / (3 den)) (cos k_x + cos k_y + cos k_z),
+
+the design's dispersion surface (MASSIVE_RECORD.md section 2). Since
+abs(cos k_x + cos k_y + cos k_z) <= 3, abs(cos omega) <= num / den <=
+1: every character has a real omega for every **k** and every pair
+with den >= num, the checkerboard corner (**k** = (pi, pi, pi), cos
+omega = -num / den) included; the band is [-num / den, num / den] in
+cos omega. With light's band cos omega_l(k) = (cos k_x + cos k_y + cos
+k_z) / 3 at the same **k**, the same line reads
+
+    cos omega = cos omega_0 cos omega_l(k),        cos omega_0 = num / den,
+
+the massive band as light's band times the pitch's cosine (MASSIVE_RECORD.md
+section 8, "the massive band"). At **k** = 0 the gap: cos omega_0 = num /
+den, the rest frequency omega_0, the rest period N_0 = 2 pi / omega_0
+intervals, the rest energy h omega_0 (h the action, the head; de
+Broglie's internal clock as the thing compared with); light has omega_0
+= 0, a zero mode that is a level and not a clock. The exact relativistic
+form (PROVED HERE, one substitution): with cos k_i = 1 - 2 sin^2(k_i /
+2) and 2 - 2 cos omega = 4 sin^2(omega / 2),
+
+    4 sin^2(omega / 2) = 2 (1 - num / den) + (num / den) (4 / 3) (sin^2(k_x / 2) + sin^2(k_y / 2) + sin^2(k_z / 2)),
+
+light's form (num = den) with the pace squared scaled by num / den, the
+design's 12.6 (d). The band is an identity of the linear recurrence on
+a periodic board for every N and every extent; on a board with an open
+face the characters are not eigenvectors and the statement is the
+periodic board's.
+
+**The two paces, and the exact cone (PROVED HERE as the expansion at
+the band's bottom; the design's section 8, its exact form on Reviewer
+3's token).** Near **k** = 0 light's band is cos omega_l = 1 - k^2 / 6
++ O(k^4), so omega_l^2 = k^2 / 3 + O(k^4) = c^2 k^2 + O(k^4), the pace
+c = 1 / sqrt 3 of 4.2 reached once more. (i) To second order in omega
+and **k** together, 2 - 2 cos omega = 2 (1 - cos omega_0) + cos omega_0
+c^2 k^2 + O(4): omega^2 = omega_0'^2 + c_m^2 k^2 with omega_0'^2 = 2 (1
+- cos omega_0) and
+
+    c_m^2 = cos omega_0 c^2,        c_m = c sqrt(cos omega_0) = c (1 - omega_0^2 / 4 + O(omega_0^4)),
+
+the Klein-Gordon dispersion whose cone is c_m and not c: a massive
+record's limiting pace is below light's by the deficit omega_0^2 / 4 in
+c (COMPUTATION: 0.39 percent at N_0 = 50, 3.0 percent at N_0 = 18;
+MASSIVE_RECORD.md section 2), the same c in the limit num / den -> 1.
+(ii) With no truncation in omega_0: write omega = omega_0 + delta at
+the band's bottom; cos(omega_0 + delta) = cos omega_0 - sin omega_0
+delta + O(delta^2) and cos omega_l = 1 - omega_l^2 / 2 + O(omega_l^4),
+so sin omega_0 delta = cos omega_0 omega_l^2 / 2 and omega^2 = omega_0^2
++ 2 omega_0 delta + O(delta^2) gives
+
+    omega^2 = omega_0^2 + c_eff^2 k^2 + O(k^4),        c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2,
+
+the exact cone of the band's bottom; c_eff^2 / c_m^2 = omega_0 / sin
+omega_0 = 1 + omega_0^2 / 6 + O(omega_0^4) exactly (COMPUTATION: 1.0037
+at mu = 0.15). The two agree at leading order in omega_0 and differ at
+order omega_0^2; (i) is the second-order expansion in omega and **k**
+jointly, (ii) the second-order expansion in **k** alone, and the named
+cone of the massive kind is (ii) (MASSIVE_RECORD.md section 8, decided
+by derivation before any pinned run; the k^4 terms of light's own band
+remain the GameBoard's residual, said once here for the band's k^4 terms). For every 48-invariant rule of range 1
+with a gap the design states c_m^2 / c^2 <= cos^2(omega_0 / 2), no such
+rule giving a massive record light's c in three dimensions (COMPUTED,
+NOT PROVED: `massive_corner_stability.py`; a proof for every rule would
+enumerate the two-coefficient family of 1.1's derivation, `a_next +
+a_before = w S_6 + s a_now`, and bound its pace at the band's bottom
+against its corner's stability). The two-pace world is prediction 1 of
+8.9.
+
+**The one formula's gamma (CARRIED: MASSIVE_RECORD.md section 8).** A
+block's moving clock is compared with Lorentz's through the factor of
+the massive kind's own cone, gamma_m = 1 / sqrt(1 - v^2 / c_eff^2), and
+not light's gamma at c: the record in the well obeys the equation of
+its own band and no other, and the boost of a resting solution under
+the symmetry of that equation is the Lorentz boost at c_eff, in whose
+frame the declared cells of width s are gamma_m s wide and the phase
+turns at omega_b / gamma_m; light enters only through the coupling
+(8.5), which does not carry the well. On the GameBoard a block stepped
+one Link per K intervals has beta_c = sqrt 3 / K, so light's factor
+squared is the rational pair gamma(c)^2 = K^2 / (K^2 - 3) (PROVED HERE:
+1 / (1 - 3 / K^2)), the pair [K^2, K^2 - 3] the design carries into the
+coupling in motion (8.5; 3 / 2 at K = 3); gamma_m at c_eff is a real
+number computed from the pair and K, never formed inside a rule
+(COMPUTATION at K = 3, mu = 0.15: gamma(c_eff) = 1.22705, gamma(c_m) =
+1.22820, gamma(c) = 1.22474, the last two the CONTROLS the pins carry
+beside the named one, 0.09 and 0.19 percent from it; MASSIVE_RECORD.md
+section 8). The same gamma_m carries row 4b's 1 + z = gamma_m (1 +
+beta_c) (COMPUTATION: 1.9355 at k = 3, mu = 0.15; 1.9373 at c_m and
+1.9319 at c beside) and the second term of 8.4.
+
+### 8.2 The conserved form I on any extents, and the remainders' exact identity
+
+**The form, PROVED HERE for every board.** Let **A** be the read matrix
+of the board (A_ij the number of reads of j among the six reads of i:
+the neighbour across a Link once, the Node itself once per folded
+direction, nothing beyond an open face); it is symmetric, because i
+reads j in the direction d exactly when j reads i in -d, and every row
+sums to at most 6. Let **D** = diag(D_i), D_i = den_i / num_i >= 1 per
+Node (one pair on the whole board, or a well of 8.3), and **M** =
+**D**^-1 **A** / 3. Without the remainder the rule of 8.1 is a_next +
+a_before = **M** a_now, and the form
+
+    I(a_next, a_now) = a_next . **D** a_next + a_now . **D** a_now - a_next . **D** **M** a_now
+                     = SUM_i D_i (a_next,i^2 + a_now,i^2) - (1 / 3) SUM_i SUM_d a_next,i a_now,n_d(i)
+
+is conserved, the second sum over the six directed reads n_d(i) of
+every Node (the Link sum a_next,i a_now,j + a_next,j a_now,i when every
+extent exceeds 2, the self-reads otherwise). Proof: **D** **M** = **A**
+/ 3 is symmetric. Let the next level be a' = **M** a_next - a_now. Then
+I(a', a_next) - I(a_next, a_now) = a' . **D** a' - a_now . **D** a_now -
+a' . **D** **M** a_next + a_next . **D** **M** a_now, and since **D**
+**M** a_next = **D** a' + **D** a_now the third term is -a' . **D** a' -
+a' . **D** a_now, while the fourth, by the symmetry of **D** **M**, is
+(**D** **M** a_next) . a_now = a' . **D** a_now + a_now . **D** a_now;
+the sum is 0. Nothing but the symmetry of **D** **M** is used, so the
+identity holds on every extent and every face. In the engine's units
+(times 3 num for one pair): 3 den (a_next^2 + a_now^2) summed over the
+Nodes less num (a_next,i a_now,j + a_next,j a_now,i) summed over the
+reads, the design's integer line (MASSIVE_RECORD.md section 3; the
+design's one-line form writes the read sum with the weight one where
+this chapter writes 1 / 3 beside the Node weight den_i / num_i, and the
+design's integer line, 3 den per Node against num per read, is this
+chapter's form times 3 num; the integer line is the one in force).
+
+**Positive definite exactly when den > num, PROVED HERE for every
+board.** In the basis where **D**^1/2 **M** **D**^-1/2 = **D**^-1/2 **A**
+**D**^-1/2 / 3 is symmetric, I is the quadratic form of the block
+matrix [[**1**, -**N** / 2], [-**N** / 2, **1**]] on (**D**^1/2 a_next,
+**D**^1/2 a_now), **N** that symmetric matrix; on an eigenvector of
+**N** with the eigenvalue lambda the block is [[1, -lambda / 2],
+[-lambda / 2, 1]], positive definite exactly when abs(lambda) < 2. By
+Gershgorin every eigenvalue of **A** has abs(lambda) <= 6 (each row: at
+most six entries, each 1), and **D**^-1/2 **A** **D**^-1/2 / 3 has
+abs(lambda) <= 6 / (3 min_i D_i) = 2 max_i (num_i / den_i) < 2 whenever every
+Node's den_i > num_i; so I is positive definite for every massive pair
+on every board, and at light's pair, den = num, it is semidefinite,
+the checkerboard and the zero mode its null directions (DESIGN.md 2.1,
+the design's own statement of the light case; 12.6 (c) for the massive
+one). A well of 8.3 is a per-Node **D**, and the same proof gives the
+same verdict while every cell's den'_i > num'_i; the design states the
+condition as "positive definite while the mode's 2 cos omega_b < 2",
+the same condition read on the mode.
+
+**The remainders' exact identity, PROVED HERE for every board.** In the
+engine's integers the level is a_next = **M** a_now - a_before + e with
+e_i = (r_i - r'_i) / (3 den_i) (divide the rule of 8.1 by 3 den_i).
+Repeat the three lines above with a' = **M** a_next - a_now + e: the
+third term gains -a' . **D** e and the fourth gains -e . **D** a_now, so
+
+    I(t) - I(t - 1) = SUM_i D_i e_i (a_next,i - a_before,i) = SUM_i (a_next,i - a_before,i) (r_i - r'_i) / (3 num_i),
+
+and times 3 num for one pair, I(t) - I(t - 1) = SUM_i (a_next,i -
+a_before,i) (r_i - r'_i): the design's identity (MASSIVE_RECORD.md
+section 3, "EXACT"; its script `massive_conserved_form.py` reads the
+residual 0 on a 6 x 6 x 1 periodic board, a chain of 40 and a 6^3 box,
+COMPUTATION, which this proof makes a theorem). The remainders' term is
+computed from the state the engine holds, so the books assert an
+integer identity and no tolerance; it is bounded by 3 den times the
+motion, the design's "bounded jitter". The norm the click's rungs
+divide is I (8.6): a static level (a_now = a_before everywhere) has I =
+0 and clicks nowhere, which the sum of the squares would count
+(DESIGN.md 2.1, the reason).
+
+**Lemma (the layer against the 3-D board), PROVED HERE.** In the
+physicist's words (the Boss's addition of 20:33Z; the decision the
+owner's word of record 1454, [Highlights 5.4](HIGHLIGHTS.md), the pin
+worlds on a one-layer board provided the algebra holds there): a layer
+is the same rule with an axis of extent 1, on which the Node reads
+itself twice (a_U = a_D = a_now, DESIGN.md section 2; the six reads S_4
++ 2 a_now); the conserved form I holds exactly there with the
+remainders' term; so a layer and a 3-D board differ only in geometry
+(the mode's extent, the band's corner, the cube's threshold, isotropy
+under the 48), never in the rule; hence one 3-D world per pin row at
+the end, the layer's reading labelled beside. Proof: on an axis of
+extent 1 the read matrix **A** has A_ii = 2 for that axis's two reads
+(one per Port, +U and -U both landing on i) beside the other axes'
+reads; it is still symmetric (a self-read is its own converse) and its
+rows still sum to at most 6, so the two proofs above hold word for
+word: I is conserved (only the symmetry of **D** **M** was used),
+positive definite for den > num (only the Gershgorin bound was used),
+and the remainders' identity is the same three lines. On the layer
+the band of 8.1 reads 2 cos omega = (2 num / (3 den)) (cos k_x + cos
+k_y + 1), the folded axis contributing its cos 0 = 1, so the corner
+sits at 2 cos omega = -2 num / (3 den) and not at -2 num / den, which
+is why a layer is blind to the 3-D corner (MASSIVE_RECORD.md section
+3); the rule is one and the same. The design's identity for I on any
+extents including 1 is its section 3 (the builder's finding, the
+directed reads), and its script `massive_conserved_form.py` reads the
+residual 0 on a 6 x 6 x 1 periodic board (COMPUTATION), the check of
+this proof; a chain is the same lemma with two axes of extent 1 (four
+self-reads, the six reads S_2 + 4 a_now).
+
+### 8.3 The block: the well of the pair on declared cells, its clock the bound mode
+
+**The object (CARRIED: MASSIVE_RECORD.md sections 1 and 4).** A foreign
+object is no new group object and no new verb: (i) a finite set R of
+Nodes, a G_48-set (a cube the 48's own shape; a square on a layer the
+stabiliser of the layer's normal), DECLARED as world data like a wall's
+placement (kind 1); (ii) the rule of 8.1 on R with a LOWERED pair
+[num', den'], num' / den' > num / den, a well of the pair in the
+medium whose pair [num, den] is the kind's own declaration (the
+medium's pitch mu); (iii) its clock the bound mode of the map in that
+well, omega_b a character of the time translation at **k** = 0, one
+element of Z[Z_N] carried by all the cells in step (the phase of a row
+read from its two levels (a_before, a_now) as the nearest angle on Z_N
+at the record's clock by the phase table at load, DECLARATIONS.md's
+head, an integer comparison and no root at run time); (iv) its motion
+the characters (omega, **k**) of 8.1's surface; (v) its momentum the
+existing **p** in Z^3 and its step the existing verb (T), one integer
+per axis for the whole block with its remainder, a declared tie, and
+its push the stress of light's field at its outer Ports (8.11); (vi)
+its click the evaluation across R (8.6). The whole difference between light and a foreign object
+in the algebra is a gap. The cells' declaration is lawful world data, a
+scalar on Nodes on which the 48 act trivially, carried by the step verb
+like a wall's placement; nothing is declared in motion (the mode's
+extent, frequency and regime follow from the pair and the side).
+
+**The two regimes (CARRIED: section 4).** By the side s against the
+one-Node extent 2 / (3 g_w): the WELL regime, s small, the mode
+extending far beyond the cells, its frequency near the gap's, eps small,
+its clock in motion Lorentz's to first order (8.4); the CAVITY regime,
+s comparable or larger, the mode inside the cells, its clock in motion
+the medium's (8.4). The tail outside the cells falls as exp(-kappa x)
+with cosh kappa = 3 D_out cos omega_b - 2 on a chain, D_out = 1 + mu^2 /
+2, the extent 1 / kappa = c / (mu sqrt eps) Links in the continuum
+(COMPUTED, NOT PROVED: `massive_board_margin.py`; a proof would solve
+the rule's recurrence outside the well on a chain, where the cosh line
+is the character of a decaying exponential in the same substitution as
+8.1's band, and bound the three-dimensional tail by it).
+
+**The cube's threshold (COMPUTED, NOT PROVED: `massive_cube_threshold.py`).**
+On the infinite board a mode binds in a cube of side s exactly when g_w
+exceeds g_c(s) = D_out / Lambda(s), Lambda(s) the largest eigenvalue of
+the massless lattice Green's function restricted to the cube, with g_c(s)
+s^2 -> 2.190 (converged to 0.1 percent by s = 20; G_0(0) = 0.758193,
+Watson's integral, the check); a proof for every s would bound Lambda(s)
+s^2 from both sides by the Green's function's asymptotics. The
+reversed-mass window and the smallest binding sides per mu are the
+design's table (section 4), computed. On a layer a square well binds at
+every depth, so eps at the same s and g_w is deeper than the cube's
+(section 11 item 7, computed).
+
+**Light cannot be a body (PROVED HERE, the design's norm bound made a
+one-line proof).** An index for light is the pair on light's record at
+the cells, D_i >= 1 inside and 1 outside (the design's (M) form): the
+operator **D**^-1/2 (**A** / 3) **D**^-1/2 has norm at most
+norm(**D**^-1/2)^2 norm(**A**) / 3 <= 1 x 6 / 3 = 2, so no eigenvalue
+lies beyond the massless band's top, no bound mode exists, and no lump
+of light holds itself: an exact never in every dimension (MASSIVE_RECORD.md
+section 4 (III), "light cannot be a body", the owner's sentence; the
+design's self-trapping search on the chain, `massive_light_self_trapping.py`,
+a COMPUTATION beside this proof). What holds a block's cells together
+is the declaration of R or the tie of (v); the massive record's mode
+inside R is then a computation.
+
+### 8.4 The motion: one statement, and its two limits
+
+**The one formula (CARRIED: MASSIVE_RECORD.md section 8).** The moving
+block is a resting block of width gamma_m s along its motion with the
+same well, read at 1 / gamma_m:
+
+    f / f_0 = omega_b(gamma_m s, g_w) / (gamma_m omega_b(s, g_w)),        gamma_m = 1 / sqrt(1 - v^2 / c_eff^2),
+
+f_0 the rest clock's frequency and f the moving one's, both read as a
+count between clicks on the block's own record (8.7); omega_b(s, g_w)
+the lowest mode of the well of side s and depth g_w on the world's own
+board, a COMPUTATION per world before its run. The design derives it as
+the boost of the continuum operator of the band's bottom (8.1 (ii)): the
+declared cells widen in the block's frame and never contract, nothing
+is declared in motion, and Lorentz is reached as a relation on the
+characters (no boost among the 48, chapter 1.2's row). On the GameBoard
+the formula is COMPUTED, NOT PROVED (`massive_block_clock_motion.py` on
+a chain, `massive_layer_pins.py` on a layer, both the design's own
+scratch, to 0.01 percent for s >= 12 and 0.15 percent on the layer; the
+rest mode stepped at K = 3 after a ramp); a proof for every N and every
+board would show that the stepped well's rule, a_next + a_before =
+**M**(t) a_now with the cells moved one Link every K intervals, has a
+quasi-periodic solution whose clock at the co-moving centre is the
+boosted mode's to the order of the hop's grain, which no line of the
+design writes. Its two limits are identities of the formula itself
+(PROVED HERE, given the formula): in the WELL limit omega_b does not
+depend on s, so f / f_0 -> 1 / gamma_m, Lorentz's clock as the thing
+compared with; in the CAVITY limit omega_b is proportional to 1 / s, so
+f / f_0 -> 1 / gamma_m^2, the medium's clock, the earlier theorem for a
+rigid region carried, true exactly in this regime. Between them the
+first-order deviation in the well regime is eps (gamma_m^2 - 1) / 2
+below 1 / gamma_m (CARRIED: the design's closed form (1 / gamma_m)
+sqrt((1 - gamma_m^2 eps) / (1 - eps)), whose first order in eps is 1 -
+eps (gamma_m^2 - 1) / 2, PROVED HERE by expanding the root): the
+carried cells' mark on a bound clock, prediction 2 of 8.9; exactly
+Lorentz only with the well's strength carried as g_w / gamma_m, a root
+the algebra does not have, so the residual stays. The boost of a rest
+state at omega_0 to the pace v is the character with the carrier k =
+gamma_m omega_0 v / c_eff^2, its frequency gamma_m omega_0 and its
+internal phase omega_0 / gamma_m: the free massive packet's clock slows
+by 1 / gamma_m and the packet contracts by 1 / gamma_m on the GameBoard's
+own surface (CARRIED: section 8, "the characters themselves", to 0.1
+percent at k <= 0.3 per Link, COMPUTATION). The three tests: the motion
+is a derivation and adds no sentence to the rule; nothing to test
+beyond 8.1's (MASSIVE_RECORD.md section 12's table).
+
+### 8.5 The coupling between the two kinds: the Euler-Lagrange scheme of a two-point Lagrangian, its exact invariant J with the cross term, the one division
+
+**The form (CARRIED: MASSIVE_RECORD.md section 7).** At a cell of R the
+two records' rows are coupled by one entry of verb (B)'s declared matrix
+over the OTHER record's two columns, the first difference both ways:
+
+    the massive row gains    g (a_l,now - a_l,before)      (the receive: light's field drives the block's record),
+    light's row gains       -G (a_m,next - a_m,now)        (the source: the block's current is light's source at its cells),
+
+both local to the cell, in the engine's columns in this order (the
+design's (B)): first the massive step reads its own row and light's
+a_now - a_before as they stand before light's step of this interval and
+writes a_m,next; then light's step reads its own row and the massive
+a_next - a_now just written; then both records shift. The owner's `a_m
++= g a_l` (record 1414) is the receive's meaning; the first-difference
+form is its stable writing. The amplitude form (light's row gaining g
+a_m) is withdrawn as tachyonic: the coupled mass matrix at **k** = 0,
+[[0, -g], [-g, omega_0^2]], has determinant -g^2 < 0 and so one
+negative eigenvalue (PROVED HERE, the determinant), and a block of side
+s carries a growing mode once s > pi c omega_0 / g (COMPUTATION, the
+design's). The block emits at its mode through the same entry, a lamp
+at its own rest frequency with no train declared, and its mode radiates
+and decays with a lifetime falling as 1 / g^2 (COMPUTED, NOT PROVED:
+Reviewer 3's chain, 320 periods at g = 0.002 and 76 at 0.005; a proof
+would compute the mode's radiative width from the coupled dispersion
+below). The three tests: generic, one matrix entry, no family name, the
+same for every pair; vector, (B) linear in the other record's two
+columns, no root, no float; local, the cell's own two records. All three
+held (section 7).
+
+**The scheme is the Euler-Lagrange scheme of a two-point Lagrangian
+(PROVED HERE; the design states it, MASSIVE_RECORD.md section 7, "THE
+EXACT INVARIANT").** With **D** the diagonal of den / num and **A** / 3
+the six reads over 3, let
+
+    L(t) = -a_m,t . **D** a_m,t+1 + a_m,t . (**A** / 3) a_m,t / 2 + alpha (-a_l,t . a_l,t+1 + a_l,t . (**A** / 3) a_l,t / 2) + g a_m,t+1 . **D** **P**_R (a_l,t+1 - a_l,t),
+
+alpha = g D_in / G, one number because the block declares one pair on
+its coupled cells (**P**_R **D** = D_in **P**_R). The discrete
+Euler-Lagrange equation of a_m,t (the derivative of L(t - 1) + L(t) set
+to zero) is -**D** a_m,t-1 + g **D** **P**_R (a_l,t - a_l,t-1) - **D**
+a_m,t+1 + (**A** / 3) a_m,t = 0, that is a_m,t+1 + a_m,t-1 = **M** a_m,t
++ g **P**_R (a_l,t - a_l,t-1), the massive step with light's backward
+difference; the equation of a_l,t is -alpha a_l,t-1 + g **P**_R **D**
+a_m,t - g **P**_R **D** a_m,t+1 - alpha a_l,t+1 + alpha (**A** / 3)
+a_l,t = 0, that is a_l,t+1 + a_l,t-1 = (**A** / 3) a_l,t - (g D_in /
+alpha) **P**_R (a_m,t+1 - a_m,t) = (**A** / 3) a_l,t - G **P**_R
+(a_m,t+1 - a_m,t), light's step with the massive forward difference:
+the scheme of the design's (B) line for line. Being variational and
+linear it is symplectic, and a symplectic linear map has an exact
+quadratic invariant.
+
+**The invariant J, PROVED HERE for every board (the design computes
+it exact to 10^-12 on a chain, `massive_conserved_form.py`).** Let I_m
+be 8.2's form of the massive record with the weights **D** and I_l
+light's with the weight 1, and
+
+    J = I_m + alpha I_l + g SUM over the cells i of D_i (a_m,t+1 - a_m,t)_i (a_l,t+1 - a_l,t)_i,
+
+the cross term of the two first differences on the cells. Proof: the
+massive step is a_next = **M** a_now - a_before + e_m with e_m = g
+**P**_R (a_l,now - a_l,before), so by 8.2's identity I_m(t) - I_m(t -
+1) = SUM_i D_i e_m,i (a_m,next - a_m,before)_i = g D_in SUM over the
+cells of (a_l,now - a_l,before)(a_m,next - a_m,before); light's step is
+a_next = (**A** / 3) a_now - a_before + e_l with e_l = -G **P**_R
+(a_m,next - a_m,now), so alpha (I_l(t) - I_l(t - 1)) = -alpha G SUM
+over the cells of (a_m,next - a_m,now)(a_l,next - a_l,before) = -g D_in
+SUM over the cells of (a_m,next - a_m,now)(a_l,next - a_l,before). Write
+per cell X = a_m,next - a_m,now, Y = a_m,now - a_m,before, U = a_l,next -
+a_l,now, V = a_l,now - a_l,before; the cross term's change is g D_in
+(X U - Y V), and the whole change of J per cell is g D_in [V (X + Y) -
+X (U + V) + X U - Y V] = 0. So J is conserved exactly, before the
+remainders, on every board and every extent, for every pair and every
+coupling; it is the invariant of THIS column order and of no other (the
+mirror scheme, light's step first with the massive backward difference,
+conserves its own J with the cross term on its own columns, by the same
+lines). In the design's E units (E = 3 I) J is E_l + (G num_in / (g
+den_in)) E_m + 3 G SUM over the cells of (a_m,t+1 - a_m,t)(a_l,t+1 -
+a_l,t): the continuum's combination E_light + (G / g) I_m PLUS the
+cross term of the two first differences on the cells, which is what
+oscillates (up to 1.4 percent of J at G g = 0.05 on the design's chain,
+COMPUTATION) and is a GAMEBOARD reading of the coupling's grain, not
+energy lost. A coupling taken along the cell's path on a hop interval
+(the co-moving difference) has no conserving pair: every hop-modulated
+coupling is pumped parametrically by the hop's pair resonance with
+light's band, exact and degenerate at K = 3 (the mode k = 2 pi / 3 at
+omega = pi / 3); so the coupling in motion is the same-Node form's and
+the hop moves the cells' set and the pair region only (CARRIED:
+Reviewer 3's sentence in section 7; the pump COMPUTED, NOT PROVED,
+`massive_moving_index.py`; a proof would write the hop as a periodic
+modulation of the coupled operator at (omega, k) = (2 pi / K, 2 pi / K)
+and show the pair condition omega_1 + omega_2 = 2 pi / K, k_1 + k_2 = 2
+pi / K mod 2 pi has solutions on light's band for every K >= 4 and a
+degenerate one at K = 3; prediction 4 of 8.9).
+
+**The one division (CARRIED: section 7 (A)); its remainder identity
+PROVED HERE.** The coupling is folded into the rule's one division, one
+(D) per row per interval and no second (D) for g or G: with g = [g_n,
+g_d], G = [G_n, G_d] and P = 1 on the cells, 0 elsewhere,
+
+    the massive row:   3 den g_d a_next + r' = num g_d S_6 - 3 den g_d a_before + 3 den g_n P (a_l,now - a_l,before) + r,     0 <= r' < 3 den g_d,
+    light's row:       3 G_d a_next + r'    = G_d S_6 - 3 G_d a_before - 3 G_n P (a_m,next - a_m,now) + r,                  0 <= r' < 3 G_d,
+
+the walls 3 den g_d and 3 G_d. Dividing, e_m gains (r - r') / (3 den
+g_d) per Node and e_l gains (r - r') / (3 G_d), and the three lines of
+8.2 give
+
+    J(t) - J(t - 1) = SUM_i (a_m,next - a_m,before)_i (r - r')_i / (3 num_i g_d) + alpha SUM_i (a_l,next - a_l,before)_i (r - r')_i / (3 G_d),
+
+exact in integers on every board (the design checks it in exact
+rationals on a chain, residual 0, `massive_conserved_form.py` part 3);
+the engine's test asserts this identity, scaled to integers by the
+common 3 L g_d G_n (L the least common multiple of the numerators where
+the well has its own; G_d cancels against light's wall and is not in
+the scale), and no tolerance.
+
+**The index (COMPUTED, NOT PROVED: `massive_dielectric_index.py`).** In
+the continuum of the coupled scheme the dispersion is (c^2 k^2 -
+omega^2)(omega_0^2 - omega^2) = G g omega^2, both roots real and
+non-negative for every k and G g > 0 (stable at every strength), and
+the index of the block's cells for light is n^2 = 1 + G g / (omega_0^2 -
+omega^2), the classical dielectric as the thing compared with (n plain
+the index, apart from the suspension pair's n of the head): Maxwell's
+dielectric on the potentials, the record the potential, the field its
+first time difference, the polarisation's current the massive record's.
+A proof on the GameBoard would take the coupled scheme's characters on a
+board coupled at every Node and read the product of the two bands; on a
+block of s cells the response is the block's own mode sum and not the
+infinite medium's, the design's CONTROL beside its pin (section 11 item
+6, the index row). The mirror is the strong-coupling limit, the Fresnel
+step ((n - 1) / (n + 1))^2, the sponge a declared damping; one declared
+g with G per object and no second coupling (the pace coupling
+withdrawn). In motion the co-moving first difference at a carried cell
+is short by 1 / gamma_m^2 unless the product G g is carried as G g x
+[K^2, K^2 - 3] (8.1, the rational pair), a COMPUTATION from the drive's
+count the stepping cell has and nothing new declared in motion (the
+owner's delegation, section 7); its reading is prediction 3 of 8.9,
+which the design states is not covariant under either declaration and
+not Fizeau's drag. Gravity as an index of the crowd's massive records
+is a hypothesis outside the law under its own name,
+`gravity-index-hypothesis`, with no number (section 7's last line).
+
+### 8.6 The click of a body at W, and the take
+
+**The click (CARRIED: MASSIVE_RECORD.md section 6; the owner's word of
+record 1414; POSTULATES.md section 10 as settled by record 1421).** The
+click is in the Outside, and light produces it, through a body: the
+click is the evaluation (E) of the body's own record on its cells at
+the declared wheel W. Light arriving at the block's cells drives the
+block's record through the receive of 8.5; the block's pointer
+accumulates its own record's motion across all its cells, in I's units
+(DESIGN.md 2.1, the Port's factor: the pointer books in the units of the
+conserved form, the design's counting form); the click is the
+comparison W x (the pointer) >= (the record's norm), integers both, the
+crossing of the first rung 1 / W of the norm in the block's OWN clock
+(the counting form, DESIGN.md section 5; the norm the record's I at the
+end of its insert); the click line carries the block's own count (its
+mode's cycles, 8.3) and the light record's birth stamp. Light does not
+need to stay in order to be read; it needs only to pass through a body
+that has a clock. A click is a body's event in the body's clock: light
+never clicks; light is read: it moves the body's record, and the body
+clicks; a free Node has no rung, no count and no reading; the verbs are
+lossless, light passes on, and the click needs no sink. In this file's
+words: the body's record across R is one element of Z[Z_N] (8.3 (iii)),
+the click is ev of 2.5 applied to it against the declared rung, the
+weight the bilinear form (2.2) on that element, the record ending at the
+detector and the detector's own record changing (3.1, the click as an
+action; POSTULATES.md section 10, the addition of record 1421: a record
+is read at a detector by the evaluation in the detector's own clock, the
+click stamped with the detector's own count n_D). The three tests:
+generic, one primitive, the rung on the pointer's norm, no family name;
+vector, (E) the evaluation, the norm a bilinear form, then the
+comparison of (D) on the wheel; local, the body's own record across its
+own cells, with the one non-local step named as before, the completion
+of a record (its offer exhausted into receivers or gone off the board)
+the host's reading and not a dependency of any Node (DESIGN.md 2.1's
+last paragraph; 3.1). All three held (MASSIVE_RECORD.md section 12's
+table).
+
+**The take, a separate declaration of the worlds that absorb, not a
+condition of the click (CARRIED: section 7, "the sink"; POSTULATES.md
+section 10).** Where a world must absorb (a screen that must not
+re-emit, a sponge, a wall that eats) it declares a loss the verbs do not
+have: the TAKE, a damping pair on light's row at the cells of an object
+declared ABSORBING, so that the record ends there (POSTULATES.md section
+10 as written: a light record ends only where a take is declared), and
+NO take for a clock body read many times (a clock body takes nothing;
+the record passes on and is read again). The take is a declaration of
+the world and a second one-way step beside the click (8.8); it is not
+the law's. What is a measurement stays 3.2's sentence: a detector's
+click, a count between clicks on the detector's own record, a ratio of
+such counts; a reading of the board is a diagnostic.
+
+### 8.7 The seed: the bound mode's integer profile over the whole board, the engine reading integers, the clicks the reader of record
+
+**The declaration (CARRIED: MASSIVE_RECORD.md section 11 item 7;
+DECLARATIONS.md, "The reader of record of every clock row"; SCHEDULE.md
+row 4a).** A pin world of a clock row declares its initial state as the
+bound mode's integer profile: the mode as the margin module computes
+it, rounded to integers at the world's amplitude OVER THE WHOLE BOARD
+(no radius: a cut at two extents leaves a step of e^-2 of the tail that
+seeds the medium's free modes again, which on a periodic board never
+leave), the same profile at both levels, a declaration of kind 2 (the
+initial state, one of the four declared inputs of Highlights 5.4). The
+standing start is exact (PROVED HERE, one line): the mode's two-column
+state is phi (cos(theta - omega_b), cos theta), phi its profile and
+theta its phase, and at theta = omega_b / 2 both columns equal phi
+cos(omega_b / 2), so the state (phi, phi) is the mode's own at that
+phase up to a common factor, and the standing start excites the bound
+mode alone, to the integer rounding of the profile and the remainders'
+grain. Under a flat seed on the cells a WIDE mode's clicks beat, because
+the flat seed overlaps the mode poorly and the rest goes to the medium's
+free modes (the design's scratch; its numbers exploratory and not
+carried here). Reproducibility: a run's record must follow from the
+world file and the engine alone, byte for byte, and a float Lanczos at
+load is iterative and not bit-identical across hosts; so the GENERATOR
+computes the mode and writes the profile's INTEGERS into the world file
+(or a sidecar the world file names by blob SHA), the engine reads
+integers under `seed`, the value `mode` lives in the generator and not
+in the engine, and the profile printed at load from the margin module is
+the GAMEBOARD check that the file's integers are the module's mode: the
+world file's data, nothing the declaration does not name.
+
+**The reader of record.** The reader of record of every row that reads a
+clock is THE CLICKS: the count between clicks at W on the block's own
+record over the hold after the ramp (DETECTOR; the click's record the
+block's cells' sum as built, the centre cell's clicks a diagnostic
+beside), its pin the mode's period on the world's own board at rest and
+the one formula's number of 8.4 in motion, the count's grain the hold
+over the period, the clicks' own spectrum the finer COMPUTATION on the
+click times; the spectral peak of the summed record is a GAMEBOARD
+diagnostic beside, never the pin. A row whose clicks still beat (the
+ramp radiates into the medium in motion) is a diagnostic until they read
+the mode; the pin world then takes a longer ramp before its run, and the
+spectral peak never stands in for the clicks. The three tests: the seed
+is a declaration of the world's initial state and no rule; the reader is
+3.2's reading rule and adds nothing to it.
+
+### 8.8 The direction of time: the Inside a bijection, the click the one deletion, the transform ev between the Inside and the click board
+
+**The Inside is a bijection (CARRIED: MASSIVE_RECORD.md section 14 (a)
+and (b), the design's three-line proof, written here for the wall d =
+3 den, light's d = 3).** Given the neighbours' reads S_6, the step
+(a_before, r) -> (a_next, r') of one row is a bijection of Z x {0, ...,
+d - 1} onto itself: (a_before, r) -> n = num S_6 - d a_before + r is a
+bijection of Z x {0, ..., d - 1} onto Z (each integer once, the Euclidean
+division's uniqueness); n -> (floor(n / d), n mod d) = (a_next, r') is a
+bijection of Z onto Z x {0, ..., d - 1}; so the step is a bijection and
+its inverse is exact: n = d a_next + r', m = num S_6 - n = d a_before -
+r has one solution with 0 <= r < d, a_before = ceil(m / d), r = d
+a_before - m. Nothing is lost in the remainder: the Inside is reversible
+to the bit, for every N and every board, since the neighbours' reads
+are the state's own. It is not symmetric in FORM: the inverse rounds up
+where the rule rounds down and the remainder lives on the later level,
+so the same formula run backward (the swap with the floor kept) is a
+different map, off by the remainders' grain (a random walk of one unit
+per Node per interval; the design's chain deviates by 29 and 365 of an
+amplitude 957234 after 600 intervals, COMPUTATION, `massive_time_reversal.py`);
+the rule carries an arrow in its bookkeeping and none in its
+information. The exact inverse is verb (D) with the ceiling in place of
+the floor, a declared variant of the one division (the remainder's
+convention flipped), lawful under that variant and needing no seventh
+verb. The coupling in motion (8.5's column order): each half-step is
+invertible given the other record's levels (a triangular map), so the
+pair of steps is a bijection, the reversed run taking the half-steps in
+the opposite order with (g, G) -> (-g, -G), the product G g and the
+dielectric unchanged, and the hop schedule reversed with the drive's
+accumulator, itself an integer map with an exact inverse: reversible,
+not symmetric in order (CARRIED: section 14 (c)). This restates for the
+algebraic rule POSTULATES.md's line that the interval is a bijection on
+a GameBoard without a measured event and the click the one one-way
+border (its head; 4.7, Theorem 3, said it for the rows that hop).
+
+**The click is the one deletion; ev is the transform between the Inside
+and the click board.** The click (8.6) removes the record's rows at the
+detector's cells, hands its content over and advances the detector's
+count by one: the one deletion OF THE LAW (3.1); the take (8.6) is the
+second one-way step, a declaration and not the law's. The counts form a
+free abelian monoid and not a group (3.1), which is an ORDER and not a
+loss; no step of the board un-deletes a row (the design's run with a
+click reversed by the exact inverse deviates by the deleted rows'
+amplitude exactly, COMPUTATION). In this file's map: the transform from
+the Inside to the click board is the conversion of 3.5, rung o chi_1 of
+f* f o ev, the evaluation ev of 2.5 on the body's element of Z[Z_N]
+followed by the quadratic weight and the rung; ev is a ring
+homomorphism with a kernel (the cancel), the weight is quadratic and the
+rung a threshold, so the transform is many-to-one at every step and has
+no inverse, while every Inside step has one. THE ARROW OF TIME IS BORN
+AT THE CLICK (and at a declared take) and nowhere in the rule: a bijection
+on the Inside, ev and the rung on the way out (MASSIVE_RECORD.md section
+14 (d); prediction 7 of 8.9). The world that shows it is a CHECK and
+never a pin against nature: a train with no detector declared, N
+intervals forward under the engine and N under the exact inverse, back
+to its first rows bit for bit with the books' E equal; the same world
+with a detector declared, which does not return, by the deleted rows
+exactly (section 14 (e)).
+
+### 8.9 The two kinds of rows, (K) a known formula and (P) a prediction; the eight predictions with their falsifiers, declared before any run
+
+**The two kinds (CARRIED: SCHEDULE.md, "The two kinds of rows"; the
+owner's word of about 17:25Z, record 1466).** When the algebra reaches a
+KNOWN formula in the clicks, the engine reaching it is the control of
+the engine against the algebra; the beautiful thing is to reach what has
+NO known formula, predict it from the algebra and then run it; what is
+measured in the world is measured in the world of clicks, not on the
+board. Every pin row carries (K), a known-formula row (the algebra's
+identity a textbook formula as the thing compared with), or (P), a
+prediction row (a number the algebra gives and no known formula gives).
+Every number below is a COMPUTATION from this chapter's forms, declared
+before any run, and no run's reading stands beside it here.
+
+**The (K) rows of the massive kind, one line each** (SCHEDULE.md's
+table; the kinematic numbers at K = 3: beta_c = 1 / sqrt 3 = 0.57735,
+gamma(c) = sqrt(3 / 2) = 1.22474, COMPUTATION): row 4a, the muon's
+form, the moving block's clock 1 / gamma_m to the band's second term
+(8.4), the layer pin world's number 0.8116 by the one formula with
+gamma_m at c_eff (the layer mu = 0.15, s = 14, g_w = mu^2 / 4; against
+1 / gamma_m = 0.8150 to the residual 0.3 percent; 0.8108 at c_m and
+0.8132 at c the CONTROLS beside; nature's form 1 / gamma, Bailey 1977,
+matched in form at the world's beta_c); row 4b, the moving lamp's
+redshift, 1 + z = gamma_m (1 + beta_c) = 1.9355 at K = 3 receding (8.1;
+nature's form gamma (1 + beta), Ives and Stilwell 1938, Botermann
+2014); row 4c, the round-trip Doppler off a receding transponder, (1 +
+beta_c) / (1 - beta_c) = 3.732 at K = 3, r-free (5.1); row 5b, five's 1
+and 1 between two arms in motion, N_par / N_perp = 1 and 1 within +-
+0.03 plus eps (gamma_m^2 - 1) / 2, (K) in the number and (P) in the
+mechanism (the arms held by light's force, no rigid rod); R2, the Sagnac
+ratio, beta = v_c / c = 0.5774 at K = 3 exactly, a count between clicks
+independent of the clock's factor; the light clock of two bodies, N_0 =
+2 L / c + the two ring-ups, (K) in 2 L / c and (P) in the ring-ups. The
+index block at rest is a CONTROL of the coupling and no nature row: its
+pin the closed form of 8.5, the cavity's own mode sum a labelled control
+beside it, never the pin.
+
+**The eight (P) rows, each with its falsifier in one clause (CARRIED:
+SCHEDULE.md's list; DECLARATIONS.md):**
+
+1. The two-pace world: a massive record's limiting pace c_m = c
+   sqrt(cos omega_0), the deficit omega_0^2 / 4 (8.1 (i)); falsified by
+   a massive front faster than c_m on its world beyond the band, or in
+   nature by an electron pace bound tighter than the deficit at the
+   declared scale (SCHEDULE.md row A: a BOUND on the one scale, one
+   interval at most 3.6 x 10^-28 s from the published 2 x 10^-14, the
+   Planck time admitted sixteen orders below, COMPUTATION on a NATURE
+   number, the scale the owner's declaration and no formula). Its second
+   face: a bound clock dilates by gamma at the massive kind's own cone
+   c_eff (8.1 (ii)), slower than light's gamma by about beta^2 gamma^2
+   omega_0^2 / 4 to second order (0.19 percent at K = 3, mu = 0.15;
+   about 10^-14 at nature's omega_0 of row A); falsified on a pin world
+   by the one formula reading gamma(c)'s number and not gamma(c_eff)'s
+   beyond the 0.3 percent band. The world that separates the two gammas
+   (mu = 0.3 at K = 3 on a 128^2 layer, the square well of side 10 at
+   g_w = mu^2 / 8: 1 / gamma at c_eff 0.8104 against 0.8165 at c, five
+   bands apart, COMPUTATION) is declared and DEFERRED, no run and no pin
+   moved, on the owner's word.
+2. The bound clock's second term: a bound body's moving clock reads (1 /
+   gamma_m)(1 - eps (gamma_m^2 - 1) / 2) and a free packet exactly 1 /
+   gamma_m (8.4); falsified by a pin world's ratio off the one formula
+   beyond the band, or in nature by a bound clock dilated exactly as a
+   free one below the term under the eps mapping (SCHEDULE.md row B, a
+   BOUND: the stored Li+ clock 2.2 x 10^-11 against its bound 2.3 x
+   10^-9; the rotor 0.26 sigma; the eps mapping, a real clock's binding
+   energy over its rest energy, a named hypothesis and not derived).
+3. The index in motion: the moving block's lab delay head-on at K = 3
+   is 0.50 of the covariant slab's under the same-Node coupling with the
+   drive's pair (8.5; the design's script number +0.5103 rad, the
+   falsifier +- 0.04 rad); the receding number is the script's on the
+   DECLARED geometry of MASSIVE_RECORD.md section 11 item 6 (the chain
+   of 4000 with light's open faces as the engine has them and the
+   reading window [3400, 4800], closed before the face's reflection
+   reaches the probe), computed at pin time before the run, and not the
+   periodic-wrap chain's 6.8 times the covariant value (a number of the
+   script's own wrapped geometry, section 7, read against no open
+   face); against nature the DECLARED NON-MATCH with Fizeau's drag
+   (first order in beta at large K, not computed), a prediction doing
+   its job, written before the run.
+4. The hop's parametric pump: a block stepping at K = 3 through light
+   feeds the mode k = 2 pi / 3 at omega = pi / 3 through its boundary
+   cell, 10^-4 of light's energy per interval (8.5); falsified by no
+   growth at that mode in the moving worlds' GAMEBOARD readings, or by
+   growth of the same size at K = 4 or 5 (then not the degenerate
+   resonance).
+5. Five's 1 and 1 from arms held by light alone: the force between two
+   blocks through light is 2 A^2 cos(k_0 L) toward the partner, its
+   equilibria the zeros of cos(k_0 L), L = (2 m + 1) lambda_0 / 4,
+   alternately stable and unstable by the clocks' relative phase (8.11,
+   the force between two blocks through light; A the emitters'
+   amplitude set by g and G, k_0 the mode's wave number, lambda_0 its
+   wavelength, m whole); falsified in the two-arm world by
+   N_par / N_perp off 1 beyond 0.03 plus the second term.
+6. The atom's lines at the modes' own frequencies, not at their
+   difference (a linear scalar coupling: an atom a well of the pair, its
+   levels the well's bound modes, its lines the modes' frequencies read
+   by light through 8.5; the levels of a declared well a PREDICTION, no
+   1 / n^2 ladder expected at the affordable depths and grain, the Bohr
+   radius at mu = 0.15 being 527 Links, NOT COMPARED; MASSIVE_RECORD.md
+   section 9, the atom's row, COMPUTATION, `massive_well_spectrum.py`);
+   falsified by a line at the modes' difference in the probe's spectrum,
+   which would need a nonlinear coupling outside the design.
+7. The click's arrow of time (8.8): the Inside reversible bit for bit,
+   the click the one deletion; falsified by an Inside step without an
+   exact inverse, or by a click recoverable from the Outside.
+8. The light clock of two bodies: N_0 = 2 L / c plus the two ring-ups,
+   never the register's 206 in a body's counting form (the register's
+   206 the take world's, an (M) mirror and a detector declared absorbing,
+   which the design keeps as that world; MASSIVE_RECORD.md section 9 row
+   (d), COMPUTATION per declaration); falsified by the two-body world
+   reading 206 +- 2 with the body's count.
+
+The rows this kind does not reach are named and not filled: the crowd's
+field (rows 3, 11, 12, 13, 14: the coupling gives an index at declared
+cells and nothing about a crowd's field, the ray law's numbers there
+history), the nucleus and a decay (rows 7 and 8: the well binds a record,
+not a nucleus; no lifetime derived), the polariser (a scalar record has
+no polarisation; Malus and Bell stay under light's declared tables), and
+a mass ratio between two kinds (each kind's pair declared, none derived
+from another) (SCHEDULE.md, NOT PREDICTED and NOT COMPARED).
+
+### 8.10 The three tests per rule, the scripts, and what is computed and not proved
+
+| Rule | Generic | Vector | Local | Its identity's mark |
+| --- | --- | --- | --- | --- |
+| the rule with the pair on the six reads (8.1) | one primitive, one pair, light a value | (B), (T), (D) | the row and its six reads | the band PROVED HERE; the two paces PROVED HERE at the band's bottom; the range-1 bound COMPUTED, NOT PROVED |
+| the conserved form I (8.2) | one form for every pair | a bilinear form of the two levels | the reads' sum | PROVED HERE on every board, with the remainders' identity |
+| the well of the pair on declared cells (8.3) | a per-Node pair, world data | the same verbs | the same | the threshold and the tail COMPUTED, NOT PROVED; light's norm bound PROVED HERE |
+| the motion (8.4) | a derivation, no sentence added | none needed | none needed | the one formula CARRIED (the continuum's boost), on the GameBoard COMPUTED, NOT PROVED; its two limits PROVED HERE |
+| the coupling, first difference both ways, in the one division (8.5) | one g with G, no family name | (B) linear in the other's two columns; one (D) per row | the cell's two records | the Euler-Lagrange scheme PROVED HERE; J and its remainder identity PROVED HERE; the index and the pump COMPUTED, NOT PROVED |
+| the click across the cells at W (8.6) | the rung on the norm | (E), the bilinear form, (D)'s comparison | the body's own record across its cells; the completion the host's | the click's definition CARRIED (the owner's word) |
+| the take (8.6) | a declaration of the absorbing world | (D) or the take's pair | the object's own cells | a declaration, no identity |
+| the seed (8.7) | a declaration of the initial state | none | none | the standing start PROVED HERE |
+| the direction of time (8.8) | the same rule | (D) with the ceiling, a declared variant | the same reads | the bijection CARRIED (the design's proof), its inverse exact |
+| the block's momentum, step and push (8.11) | one primitive, the stress at the outer Ports and one comparison, the declared integers Q, S, M and the take's scale 56 d; the tie declared per block | (G) the stresses summed into the block's vector, (D) with the remainder kept, (T) the step, then comparisons | the block's own outer Ports and the free Nodes beyond them; per block under the declared tie | the cadence and the bound PROVED HERE as identities of the accumulator; the stress as the wave's momentum flux CARRIED, a declaration of the design and not of the law |
+| the force between two blocks through light (8.11) | the same push read on two blocks | the same verbs | the same | the closed form CARRIED (Reviewer 3's, the continuum's coupled emitters); on the GameBoard COMPUTED, NOT PROVED |
+
+The design's scripts, each printing its record beside
+MASSIVE_RECORD.md and none an engine run: `massive_c_derivation.py`
+(the pace from three inputs, 1.1 of the design), `massive_corner_stability.py`
+(the band and the corner), `massive_conserved_form.py` (I and J with
+their remainders' terms), `massive_cube_threshold.py`, `massive_board_margin.py`,
+`massive_dielectric_index.py`, `massive_light_self_trapping.py`,
+`massive_block_clock_motion.py`, `massive_layer_pins.py`, `massive_moving_pins.py`,
+`massive_light_clock_relay.py`, `massive_moving_index.py`,
+`massive_well_spectrum.py`, `massive_time_reversal.py`. What is computed
+and not proved is marked so above, each with what a proof for every N
+and every board would need; what the design does not compute it says
+(section 12 of the design: Fizeau's drag, the click's completion under
+the take, the threshold under a light-shaped well, g against any nature
+row, form (C) beyond its name), and this chapter does not fill it. The
+block's momentum, step and push and the force between two blocks
+through light are 8.11. Where this chapter and a design page differ in a letter or a
+factor, the design's integer lines are in force and this chapter says
+where it differs (8.2, the read sum's weight); no rule, no number and no
+reading is new here.
+
+### 8.11 The block's momentum, step and push, and the force between two blocks through light
+
+**Where the momentum lives (CARRIED: MASSIVE_RECORD.md section 5;
+DESIGN.md 5.1 (a), a declaration of the design and not of the law).**
+One integer per axis for the whole block, **P** = (P_x, P_y, P_z) in Z^3
+with a remainder per axis, the existing momentum of a body (chapter
+1.2's row, 2.1's drive), on the block and nowhere else; changed by
+nothing but light's field at the block's own outer Ports. Per block one
+integer for many cells is not one cell's reading, so the block's
+momentum is a DECLARED TIE (Reviewer 3's C11): per cell the same rule is
+local and lawful, one integer per cell pushed by the stress at its own
+Ports; the block declares that its cells share one. The block's own
+massive record is the block: the massive kind's rows do not push (a
+self-force excluded), and a massive-to-massive force between blocks is
+not in the law; the force between blocks is through light (below).
+
+**The step (CARRIED; the cadence PROVED HERE as an identity of the
+accumulator).** Per interval the accumulator of the axis i gains
+abs(P_i) against the wall 3 Q S M x 56 d (Q the label's scale, S the
+width and M the block's content, the head's letters; 56 d the take's
+pair scale, which enters only with light's push, the engine keeping the
+wall at 3 Q S M until the push step and rescaling the world files' P in
+the same commit, the builder's answer accepted in section 5 (e)); when
+the accumulator reaches the wall the block steps one Link along the
+axis in the sign of P_i and the wall is subtracted, the remainder kept
+on the block as the rule keeps r: verb (T) then (D), the count of 2.6.
+The cadence is the accumulator's closed form of 4.1: after t intervals
+the Links stepped on the axis are floor((A_0 + t abs(P_i)) / (3 Q S M
+x 56 d)), A_0 the accumulator's start, so the pace is v_i = P_i / (3 Q S
+M x 56 d) Links per interval exactly in the mean, one Link every K =
+(3 Q S M x 56 d) // abs(P_i) intervals with the remainder kept, and the
+declared step of a world is its initial P_i = 3 Q S M v_0 x 56 d; the
+rest energy E'_0 = Q S M and the momentum 3 Q S M v = E'_0 v / c^2 with
+c^2 = 1 / 3, the head's units. What steps: the block's CELLS and its
+pair region, one Link together by verb (T); the massive record's rows
+STAY on their Nodes and follow the moving well by the rule of 8.1 (a
+carried record would be a hop of the record, not the design; 8.4's
+formula is the stepped well's); the coupling's first differences stay
+the same-Node differences of 8.5 on every interval, and G g is carried
+as [K^2, K^2 - 3] (8.1, 8.5). The bound (PROVED HERE, one line): abs(**v**)
+< c is the integer comparison 3 (**P** . **P**) < (3 Q S M x 56
+d)^2, since abs(**v**)^2 = **P** . **P** / (3 Q S M x 56 d)^2 and c^2 =
+1 / 3; no root; checked at the initial **P** and at every change, a
+change that would cross it the WORLD'S STOP with a diagnostic naming the
+click and the block, never a clamp (a per-axis "K >= 2" is its one-axis
+shadow and not the bound: three axes at K = 2 give abs(**v**) = 0.866
+Links per interval, beta_c = 1.5; DESIGN.md 1.2 (c)); the record's own
+bound is c_m (8.1), tighter than c by the deficit, and the pin worlds
+step at K = 3 and 4, well inside both. MUST I's floor, lambda_0 (1 -
+beta_c) >= 12 Links with beta_c = sqrt 3 abs(**P**) / (3 Q S M x 56 d),
+is the second load-time check, at the initial **P** and at every change
+(Highlights 5.4, the owner's word of record 1363: not every N may be
+declared).
+
+**The push (CARRIED: MASSIVE_RECORD.md section 5 (a) to (d); DESIGN.md
+5.1 (a)).** (a) Which records push: the stress of the LIGHT kind's total
+field (all light records superposed, the block's own emission included:
+its recoil kept, physics and not a defect) at the free Node beyond each
+OUTER Port of the block (a Port from a cell of R to a Node not in R; 6
+s^2 on a cube). (b) The integer: at the free Node beyond a Port of the
+axis i the stress T_ii = 3 (motion)^2 + (the strain along i)^2 in the
+rule's own differences, the terms of the conserved form (DESIGN.md 2.1:
+the motion a Node's change in one interval, the strain the difference
+across the Link), an integer (times 4 as the pins script computes it);
+P_i changes by T_ii at the Ports behind less T_ii at the Ports ahead,
+summed over the block's outer Ports of the axis i (verb (G) into the
+block's vector), then (D) against the wall 3 Q S M x 56 d with the
+remainder kept, then the comparisons above: what the wave loses at the
+block the block gains; no new integer, no new verb. That T_ii is the
+wave's momentum flux is the design's identification, a declaration of
+the design (DESIGN.md 5.1 (a): "a declaration of the design, not of
+the law"), stated here as such and not proved: a proof would take the
+rule's conserved form on a travelling character and show its Port
+balance equals the change of **P** per interval to the remainders'
+grain. The click form first written, h times the wave number per click,
+is withdrawn as the push and kept as the READING: the clicks read the
+momentum the block has, they do not make it. (c) The ramp and the push
+together: `ramp` stays the pushing agent's declaration for the pin
+worlds (the design's chain device); in the two-arm world the momentum
+changes by (b) alone, the arms held at the equilibrium below and no
+ramp; a world declares one of the two, never both on one block. (d) The
+reading: the stress sum per interval per block is a GAMEBOARD reading
+(the force, against the closed form below); the block's pace is read by
+its clicks (the count between clicks on its own record and the Nodes of
+its clicks, DETECTOR; 3.2, 8.7). The three tests: generic, one
+primitive, the stress at the six Ports and one comparison, with the
+declared integers Q, S, M and the take's scale 56 d, no family name and
+no kind; vector, (G) the stresses summed into the block's vector, (D)
+the one division with the remainder kept, (T) the step, then
+comparisons, no root and no float; local, the block's own outer Ports
+and the free Nodes beyond them, nothing further; per block local under
+the declared tie, per cell local outright. All three held (DESIGN.md
+5.1 (a); MASSIVE_RECORD.md section 12's row "the block's momentum and
+step").
+
+**The force between two blocks through light (CARRIED: MASSIVE_RECORD.md
+section 10; Reviewer 3's closed form in
+[designs/detector_law/PUSH_BALANCE.md](designs/detector_law/PUSH_BALANCE.md)
+section 10.1, the coupled-oscillator force between two emitters at
+their own frequency, a COMPUTATION on a chain in floats).** Two blocks
+of the design at L Links face to face, each emitting at its mode
+through 8.5's source term and each pushed by the total field's stress
+at its outer Ports: the force on block 1 is 2 A^2 cos(k_0 L) toward
+the partner, A the emitters' amplitude set by g and G, k_0 the mode's
+wave number and lambda_0 = 2 pi / k_0 its wavelength in Links (with
+each block's own recoil beside it, the closed forms F_1 = (k_b^2 -
+k_f^2) T_0 + 2 k_b^2 T_0 cos(k_b k_0 L - delta) and F_2 = (k_b^2 -
+k_f^2) T_0 - 2 k_f^2 T_0 cos(k_f k_0 L + delta) at the pace beta_c, k_f
+= 1 / (1 - beta_c), k_b = 1 / (1 + beta_c), T_0 one emitter's
+travelling-wave stress at rest and delta the declared relative phase;
+at rest F_2 - F_1 = -4 T_0 cos(k_0 L) cos delta). Its EQUILIBRIA are
+the zeros of cos(k_0 L), L = (2 m + 1) lambda_0 / 4, m whole,
+alternately stable and unstable by the clocks' relative phase (in phase
+stable at (m' + 3 / 4) lambda_0, 88 Links at lambda_0 = 32; antiphase
+at (m' + 1 / 4) lambda_0, 72; COMPUTATION), NOT L = m lambda_0 / 2,
+which are the force's extrema: L_0 = 80 = 5 lambda_0 / 2 is the
+maximal repulsion and never an equilibrium (Reviewer 3's MUST (i)). In
+motion the stable point continued from the rest point by a slow ramp
+is L* = L_0 (1 - beta_c) for a pair of emitters at the GameBoard's interval
+frequency, and L_0 / gamma_m for the covariant pair (PUSH_BALANCE.md
+10.2, COMPUTATION); the two-arm world of 8.9's row 5 holds its arms at
+this equilibrium by light's force alone and no rigid rod, prediction 5.
+On the GameBoard the closed form is COMPUTED, NOT PROVED (the chain
+within 3 percent at rest at every L from 72 to 92 and in sign and
+spacing at K = 3, `check_pair_motion.py` in Reviewer 3's scratchpad; a
+proof for every N and every board would take the stress of the
+superposition of the two blocks' travelling trains at the Ports from
+the rule's differences on a character and compute the cross term
+exactly, with the counter-propagating pair's cross term vanishing under
+c^2 = 1 / 3 as the design states, 3 omega_1 omega_2 - k_1 k_2 = 0). A
+consequence of the algebra written before any board run; the board's
+two-block world reads it; the force is the push of light at the Ports
+and nothing beside it (no 1 / r form: 8.9's rows not reached).
