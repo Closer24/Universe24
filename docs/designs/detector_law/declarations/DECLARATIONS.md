@@ -415,21 +415,32 @@ omega_b) of its own well, printed by the pins script before the run.
    G = [1, 1], g = [1, 50000], W = 64, the flat seed; the MIRROR B is the
    chain's open face at x = 672, sixty Links from A's face at x = 612 (no
    block, no (M) block needed); a DETECTOR of the ray law on the light
-   record at A's face cell x = 612 (the click at W). The other end at
-   x = 0 is 600 Links away, so its reflection returns to the detector
+   record at A's face cell x = 612 (the click at W = 10000, item 4; a
+   second detector there at W = 64 beside, for the precursor). The other
+   end at x = 0 is 600 Links away, so its reflection returns to the detector
    only after 2080 intervals: the window [0, 2000].
 2. The declared integers: the pairs, s = 12, G, g, W, L = 60 face to face,
    the hold 2000.
 3. The verbs: the massive rule with the coupling; the source term; the
    zero face; the click at W on the light record.
-4. The pin (COMPUTATION): the return's front reaches the detector 2 L / c
-   = 207.85 intervals after the emission's front leaves it: the interval
-   between the detector's first click (the outgoing front) and the first
-   click of the returned train, (K) in 2 L / c with the band +- 3 intervals
-   (the front's rise to the rung, the (P) part, its number by the linear
-   map before the run, the morning's line); A's own clock over the window
-   (the clicks on A's record) within 0.3 percent of its rest mode (the
-   damping 6.7 x 10^-5 per interval, the amplitude 0.87 at 2000).
+4. The pin (COMPUTATION, the linear coupled map on the open chain of 673
+   against a chain of 3000 with no return in the window, the scratch of
+   01:30Z, to be printed by `coupled_mode_pins.py`'s next record): the
+   return's front reaches the detector 2 L / c = 207.85 intervals after the
+   emission's front leaves it: the interval between the detector's first
+   click (the outgoing front) and the first click of the returned wave,
+   (K) in 2 L / c, the band +- 2 intervals, AT THE DECLARED RUNG W = 10000
+   of the face detector. The rung is declared so high because of the
+   PRECURSOR: the stencil's front runs one Link per interval with an
+   amplitude of 10^-5 of the wave (a_next reads the two neighbours), so at
+   W = 64 the returned wave clicks at 196 intervals, eleven early, while at
+   W = 10^4 it clicks at 207 (above 10^3 at 202, above 10^5 at 212; the
+   outgoing wave at the face is 1.8 x 10^6 in the engine's units at the
+   seed 2^20, so W = 10^4 is crossed by the wave and not by its precursor);
+   the precursor's early click at a low rung is the GameBoard's own (P),
+   readable beside at a second detector with W = 64. A's own clock over
+   the window (the clicks on A's record) within 0.3 percent of its rest
+   mode (the damping 6.7 x 10^-5 per interval, the amplitude 0.87 at 2000).
 5. The readings: DETECTOR the light detector's clicks at x = 612 and A's
    own clicks; GAMEBOARD the light amplitude at the face; COMPUTATION the
    pin. The tension named (Reviewer 3's read, the Boss's 21:22Z): on A's
