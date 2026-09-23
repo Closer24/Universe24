@@ -350,4 +350,25 @@ def reorder(s: str) -> str:
         s = _replace_once(s, heading, heading.replace("\\section", "\\subsection"), "demotion")
     for old, new in REFS:
         s = _replace_once(s, old, new, "a reference whose target moved")
-    return s
+    return move_register_table(s)
+
+
+REGISTER_START = (
+    "{\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\begin{longtable}{L{0.3in}L{2.0in}L{1.5in}L{2.2in}}"
+)
+REGISTER_END = "\\end{longtable}}"
+REGISTER_HEADING = "\\section{The confrontation register, the full record}\\label{app:register}\n\n"
+
+
+def move_register_table(s: str) -> str:
+    """The full confrontation register (tab:nature) becomes an appendix, the
+    one-page summary staying in Part 7 (the Boss's order of 2026-09-23,
+    02:53Z, on the owner's word of record 1207): the table is cut from its
+    start marker to the first table end after it and placed, whole, under its
+    own appendix heading before the check of the roads."""
+    i = _once(s, REGISTER_START, "the register table (start)")
+    j = s.index(REGISTER_END, i) + len(REGISTER_END)
+    table, s = s[i:j], s[:i] + s[j:]
+    return _replace_once(
+        s, ROADS_HEADING, REGISTER_HEADING + table + "\n\n" + ROADS_HEADING, "the register's appendix"
+    )

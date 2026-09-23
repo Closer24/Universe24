@@ -6496,3 +6496,37 @@ the two placements are the owner's word of 2026-09-23 after the kind
 audit, nothing else moved. The abstract's short form unchanged from
 commit 10 (ten predicted, four agree, six disagree, eight not
 predicted), 249 words. 62 pages, 102 references.
+
+## Applied (2026-09-23, the Boss's order of 02:53Z on the owner's word of record 1207, the six findings on the table against the conventions of papers): commit 12 on the branch paper-summary-table, off paper-algebra-first's head 4c4cd42d
+
+- Part 7 gets the comparison in one page: Table 6 "The comparison with
+  nature in one page", one line per observable in the count (eighteen
+  rows: four agree, six disagree, eight not predicted), the columns
+  observable; nature's value with its source, "unverified" where the
+  register has not checked the figure against the source (twelve
+  rows); the law's own value with its kind; the distance in units of
+  the source's standard uncertainty where one is stated (1a, 3, 11a;
+  a factor where the number is a factor, 7b and 4a; a dash with the
+  table's note otherwise); the status in one vocabulary. Table 7 "The
+  rows that keep their earlier words" beneath it (1b a control, 2a and
+  2c NOT COMPARED, 10 NOT YET, 11b a pin, 12 history, 14 not yet read
+  against nature); the register's rows 1d and 4c the Boss named are not
+  in docs/NATURE.md on main, so no line for them.
+- The full record (the former Table 6, now Table 8) becomes Appendix D,
+  "The confrontation register, the full record", unchanged in content,
+  its caption with a one-line legend of the kinds; the reorder module
+  moves it (move_register_table) and the generator's test holds the
+  order (the summary in Part 7, the full record after its appendix
+  heading). The check of the roads is Appendix E. About two pages
+  moved, none cut; the count sentence unchanged in its five places.
+- The reviewer's open SHOULD: the full record's caption names row 12's
+  history clause once.
+- At submission every citation of a branch head ("its merge pending":
+  RUN_14 on fail-run-14, the kind audit on kind-audit, and any later
+  one) is replaced by the archived record, one DOI, and none remains;
+  the same for the commit SHAs of the live tree named in the
+  references.
+- Not in this commit: the three-levels paragraph (the owner's question,
+  Einstein's four sources), which enters only on the owner's own go as
+  a separate commit in the place proposed.
+63 pages, 102 references, the abstract 249 words.

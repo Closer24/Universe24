@@ -94,6 +94,10 @@ def _check_reorder(module) -> None:
         for old, new in reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]:
             body = body.replace(old, new)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
+    assert main.index("\\label{app:register}") < main.index("\\caption{\\label{tab:nature}"), (
+        "the full register stands in its appendix, after the summary"
+    )
+    assert main.index("\\label{tab:summary}") < main.index("\\label{app:register}")
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
