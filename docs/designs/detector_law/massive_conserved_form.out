@@ -1,0 +1,7 @@
+(1) the form with the remainders' term, exact in integers (worst residual, must be 0):
+    extents (6, 6, 1), pair (156, 157): residual 0
+    extents (40, 1, 1), pair (2, 3): residual 0
+    extents (6, 6, 6), pair (800, 809): residual 0
+(2) the coupled scheme on the chain, 600 intervals, G = 1 (peak-to-peak drift over |J|):
+    g = 0.05: I_m + alpha I_l drifts 1.93e-02; J exact to 1.4e-12; the cross term up to 1.37e-02 of J
+    g = 0.20: I_m + alpha I_l drifts 1.63e-02; J exact to 8.8e-13; the cross term up to 8.92e-03 of J

@@ -251,6 +251,31 @@ Node, positive definite while the mode's `2 cos omega_b < 2`. The norm the
 rungs divide is I; the Port's factor of DESIGN.md 2.1 applies with the
 pair's share named. The second draft's E_m is replaced by I.
 
+**The form on a board of any extents, in one line (the builder's first
+finding on STEP 2, 9a273e89, through the Boss, 16:21Z; COMPUTATION,
+`massive_conserved_form.py`):** `I = SUM_i (den_i / num_i) (a_next,i^2 +
+a_now,i^2) - SUM_i SUM_d a_next,i a_now,n_d(i)`, the second sum over the
+SIX DIRECTED READS of the rule at every Node, `n_d(i)` the Node the rule
+reads in direction d: the neighbour across a Link, the Node ITSELF on an
+axis of extent 1 (a_U = a_D = a_now, DESIGN.md section 2: two self-reads
+per such axis, the chain operator's diagonal 4 / 3), the same Node twice
+on a periodic axis of extent 2, and nothing beyond an open face. The
+directed sum equals the Link sum `a_next,i a_now,j + a_next,j a_now,i`
+when every extent exceeds 2 and carries the self-reads otherwise; it is
+symmetric because the read relation is (i reads j in d exactly when j
+reads i in -d), which the conservation needs. The Node weight is den_i /
+num_i and the LINK WEIGHT IS ONE (the builder's "L alone"; `L num_x` would
+be wrong under a per-Node pair); the integer line above, `3 den` per Node
+against `num` per read, is this form times `3 num` for one pair. In the
+engine's integers with the remainder carried, `3 den a_next + r' = num
+S_6 - 3 den a_before + r`, the identity is EXACT: `I(t) - I(t - 1) =
+SUM_i (a_next,i - a_before,i) (r_i - r'_i)` (times the same `3 num`), the
+remainders' term computed from the state the engine holds, so the books'
+test asserts an integer identity and not a tolerance (residual 0 on a 6 x
+6 x 1 periodic board at [156, 157], a chain of 40 at [2, 3] and a 6^3 box
+at [800, 809], 60 intervals each, the script); "the remainders' bounded
+jitter" above is this term, bounded by `3 den` times the motion.
+
 **The contradiction the second draft carried, and its correction.** The
 self-term form (A), `3 q (a_next + a_before) = q SUM6 - 3 p a_now` (the
 second draft's section 1, Reviewer 3's 8.7, 11.1 and C2), has at the
@@ -548,6 +573,35 @@ from the phase's invariance, (n(omega') - 1) omega' gamma_m s / c, with
 n(omega') the RESTING block's own reading at the block-frame frequency; the
 energy account printed (light's E on the chain beyond the source's feed,
 the massive E, and their conserved combination E_light + (G / g) E_m).
+THE EXACT INVARIANT OF THE COUPLED SCHEME (the builder's second finding on
+STEP 2 through the Boss, 16:21Z: on a float scratch the combination
+`E_light + (G / g) I_m` carries an oscillating cross term of 1.3 to 1.6
+percent; COMPUTATION, `massive_conserved_form.py`): the design's
+same-Node scheme (the relay script's, `massive_light_clock_relay.py`: the
+massive step with light's backward difference `g (a_l,now - a_l,before)`,
+then light's step with the massive forward difference `-G (a_m,next -
+a_m,now)`, on the coupled cells) is the Euler-Lagrange scheme of the
+two-point Lagrangian `L = -a_m,t . W a_m,t+1 + a_m,t . K a_m,t / 2 + alpha
+(-a_l,t . a_l,t+1 + a_l,t . K a_l,t / 2) + g a_m,t+1 . W P (a_l,t+1 -
+a_l,t)`, with **W** the diagonal den / num, **K** the six reads over 3,
+**P** the cells' projector and `alpha = g W_in / G` (one number because
+the block declares ONE pair on its cells; the mirror scheme, light's step
+first with the massive backward difference, the adjoint Lagrangian of the
+same family as Reviewer 3's line of 15:39Z on the hop, here at rest on
+the same Node and conserving). Being variational and linear it is
+symplectic, and the linear map's form `z . J Phi z` is its EXACT quadratic
+invariant: `J = I_m + alpha I_l + g SUM_cells W_i (a_m,t+1 - a_m,t)
+(a_l,t+1 - a_l,t)`, in the design's E units (E = 3 I) `E_l + (G num_in /
+(g den_in)) E_m + 3 G SUM_cells (a_m,t+1 - a_m,t) (a_l,t+1 - a_l,t)`: the
+continuum's combination PLUS the cross term of the two first differences
+on the cells, which is what oscillates (up to 1.4 percent of J at G g =
+0.05 and 0.9 percent at 0.2 on the chain, 600 intervals; the combination
+without it drifts by 1.9 and 1.6 percent peak to peak while J holds to
+10^-12). So the engine's test (g) asserts J, an exact identity, with the
+remainders' term of section 3 added per record where the engine divides
+(`3 num`-scaled: each record's `SUM_i (a_next,i - a_before,i) (r_i -
+r'_i)` in its own units), and not a 3 percent tolerance; the cross term
+is a GAMEBOARD reading of the coupling's grain, not energy lost.
 FIRST FINDING: the coupling's first difference taken ALONG THE CELL'S PATH
 on a hop interval (Reviewer 3's (b), the backward difference in both rows)
 is UNSTABLE, and so is the ADJOINT PAIR he then prescribed (his line on
@@ -949,7 +1003,8 @@ the margin rule's numbers, with the HOST cost), `massive_light_clock_relay.py`
 time, N_0 against 2 L / c, the mirror variant), `massive_moving_index.py`
 (section 7, the moving block's index against the resting one), and
 `massive_well_spectrum.py` (section 9: the atom's levels as the well's bound modes, three shapes, against Balmer),
-`massive_time_reversal.py` (section 14: the rules' exact inverse in integers, the same formula backward, the click).
+`massive_time_reversal.py` (section 14: the rules' exact inverse in integers, the same formula backward, the click),
+`massive_conserved_form.py` (sections 3 and 7: the form on any extents with the remainders' term, exact in integers; the coupled scheme's exact invariant with its cross term).
 Run each as its docstring says; the numbers in this document are theirs.
 
 **Not computed here, and said so:** Fizeau's drag (the stepped block's
