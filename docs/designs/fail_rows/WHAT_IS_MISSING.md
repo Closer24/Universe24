@@ -362,11 +362,10 @@ moving body's own count (the drive reads 1 - v, the clock 1 / (1 + k),
 two rates for one record)"). The options: off, the law's rows stand,
 4a FAIL by 29.33 and 4b by seventeen grains; on, 4b's pin met (series
 S, DETECTOR) and 4a's gamma form reached at gamma <= 2, with the row's
-29.33 outside the identity's domain |**p**|_1 <= Q S_w M until form B
-(the line drive, on main under the key `drive_b` by PR #813, off by
-default there; its flip to the law's default decided by record 972 and,
-at this file's base, on the branch `drive-default`, PR #907) lifts the cap: a second declaration, the domain,
-which the Boss reads on the tree. The admission is the owner's word
+29.33 outside the identity's domain |**p**|_1 <= Q S_w M under either
+drive (the cap is the drive's saturation at one Link per self-creation,
+kept word for word in `world._covariant` on PR #907; RUN_4AB.md 2.3),
+lifted only by a second declaration of the domain, the owner's word. The admission is the owner's word
 (record 1053 (a)). The DECLARATION here is a key to a hypothesis,
 covariant-readings-v1, its three tests REVIEW_3's and its admission the
 owner's: the word rests on the key's existence, not on a world integer.

@@ -1,4 +1,4 @@
-# Rows 4a and 4b turned by the algebra: the steps between click and click, the worlds, the pins before any run, the cost (the FAIL Runner A, 2026-09-23)
+# Rows 4a and 4b turned by the algebra: the steps between click and click, the worlds, the pins before any run, the cost, and the readings (the FAIL Runner A, 2026-09-23)
 
 The order (the Boss, 2026-09-23, on the model owner's word of records 1128
 and 1129 of `docs/LOG_2026-09-20.md`, on the branch
@@ -9,11 +9,13 @@ run's steps are exactly the steps between click and click; the runs in
 parallel. This file is STEP 1 for rows 4a (the unslowed clock) and 4b (the
 moving lamp's redshift): the chain of the reading as the algebra states
 it, the worlds, the pins by kind with the arithmetic shown, the cost and
-the commands. No run has been made; STEP 2 (the runs and the readings,
-PASS or FAIL against the pins below, under the hypothesis named) follows
-the physics-rule reviewer's read of this chain and the Boss's GO. Base
+the commands (STEP 1, sections 1 to 5, written before any run at 96a8552d);
+then, on the physics-rule reviewer's read and the Boss's GO (record 1129's
+gate), the runs and the readings by kind, PASS or FAIL against the pins,
+under the hypothesis named (STEP 2, section 6; no pin moved). Base
 commit `e404baa` (`origin/main`, "Merge pull request #965"), branch
-`fail-run-4ab`. No law change, no engine line, no default changed: every
+`fail-run-4ab`; `origin/main` at 5c15472 merged before the runs (the
+engine unchanged between the two). No law change, no engine line, no default changed: every
 world below is declared under the existing world keys `clock_stamp`
 (PR #834, on main since ee3d34f6; a record field, no rule) and
 `covariant_readings` (the hypothesis `covariant-readings-v1`,
@@ -21,11 +23,10 @@ DERIVATIONS_BEAM 17.6, HYPOTHESES 25; a key off by default), and is
 labelled as the hypothesis it declares. Nothing enters the paper from
 here; the writer takes merged readings only.
 
-What this file rests on: `docs/designs/fail_rows/WHAT_IS_MISSING.md`
-([PR #964](https://github.com/Closer24/Universe24/pull/964), branch
-fail-rows at 2252bbdf with the reviewer's read AE folded; not on `main`
-at this base, so it is named here and not linked) section 1.4 (rows 4a
-and 4b: a DECLARATION, the key `covariant_readings`, the identity's one
+What this file rests on: [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md)
+(PR #964, merged to `main` after this file's base; its section 1.4's
+domain sentence amended on the Boss's order with STEP 2) section 1.4
+(rows 4a and 4b: a DECLARATION, the key `covariant_readings`, the identity's one
 rate r = 1 / gamma on one record, mode C; the missing direction k_AB,
 section 1.4 (e)), the click frame
 ([click_frame/DERIVATION.md](../click_frame/DERIVATION.md): the click
@@ -443,7 +444,12 @@ The windows: the one-way factors from the cart's count 60 to its last
 click of A's rows (and R's lines over the same ordinals); the round trip
 from the cart's count 100 to its last return. The band: 2 / W over a
 window of W counts apart (PREREGISTRATION_V2 section 5, g = 1 for a
-whole-k reading). The arithmetic (c = 32 / 55; the identity's E' at the
+whole-k reading). [Read after the run, the pin untouched: this is
+version 1's band (DESIGN.md section 5, one count's remainder per end,
+written for the hop frame); PREREGISTRATION_V2 section 5 states the band
+in force as 2 g / (the ordinals apart), a round trip counting +2 counts,
+which is W / (ordinals apart) = R times wider; section 6 reads every
+ratio against both and names the lattice's own remainder.] The arithmetic (c = 32 / 55; the identity's E' at the
 grain 2^18, m / g = 1 075 838 976):
 
 | World | r | pace, beta (heading) | k_AB = r / (1 - beta) | k_BA = (1 + beta) / r | the ratio k_BA / k_AB | the round trip | the comparison |
@@ -565,6 +571,8 @@ off: `by_line` against Q^2 S M fires at the same self-creations as
   a(s)) or one interval later: the register's tolerance of two counts on
   the click covers it; the reader prints the row's `age` beside n_D so
   the difference, if any, is read as a constant of the arrangement.
+  [Answered by the run, section 6.2: at the interval it lands, the row's
+  age on the line equal to a(s) in all six worlds.]
 - The identity's ratio on the k-ladder against the heading's c: the run
   reads the flight table's 32 / 55, so 1.0115 and 1.0029 are the pins and
   1 is the identity's own limit; a reading at 1 within the band at k = 3
@@ -576,11 +584,174 @@ off: `by_line` against Q^2 S M fires at the same self-creations as
   with the drive's saturation) is wanted: the owner's word, after the
   ladder is read.
 
-## 6. Links
+## 6. The readings (STEP 2, 2026-09-23, on the Boss's GO of 00:50Z)
 
-`docs/designs/fail_rows/WHAT_IS_MISSING.md`
-([PR #964](https://github.com/Closer24/Universe24/pull/964), branch
-fail-rows); [the click frame](../click_frame/DERIVATION.md); [REVIEW_3 of the
+The eleven worlds run once through `tools/run_series.py --jobs 4`
+(headless, one process per world, the engine untouched, `origin/main`
+5c15472 merged into the branch first, `src/` and `tools/` unchanged
+between e404baa and 5c15472 so every pin stands as written), the source
+fingerprint `5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4`,
+the project's Python 3.14.0rc2 and numpy 2.5.3. Every run completed with
+the books balanced at every tick (0 record checks failed). The readings
+by `run_4ab_readings.py` (its print `run_4ab_readings.out`, its blocks
+with the digests `run_4ab_readings.json`, beside this file) and, for 4b's
+z, `tools/covariant_readings.py`; the pins of section 3 untouched; a
+reading outside its pin written as FAIL with its numbers and its cause.
+The reviewer's warning (Runner B: a lamp holding exactly K bears no row
+at its second self-creation) checked: no lamp here holds K (the cart
+worlds' lamps 8192 units against K = 4 202 496; the stars 4096 against
+4 198 400; the muon no lamp), and the lamp's ordinals at the cart's
+consecutive clicks advance by 1 at every click in all four cart worlds
+(173, 226, 334 and 364 clicks; no gap of 2).
+
+HOST: the coasting world 49.1 s, the cart worlds 2.9 to 3.2 s, the J4
+worlds 0.34 to 0.53 s; 66 s of runner time in all, about one minute of
+wall clock.
+
+### 6.1 4b: z = 0.3674, PASS under the hypothesis; the stamp check PASS
+
+| Reading | Kind | Read | The pin | Verdict |
+| --- | --- | --- | --- | --- |
+| `s_mz2`'s 1 + z from the centre's pointer over [300, 400), in the centre's own count | DETECTOR | z = 0.3674 | [0.366, 0.372] about 0.369 (the centres 0.3687 and 0.3663) | PASS |
+| the stamp: `clock` against the line's tick on every stamped line of the centre's measured event | DETECTOR | 13 564 stamped lines, 0 differing, 394 intervals with a click | equal on every line (r_A = 1 at `suspension` 0) | PASS |
+| the books | GAMEBOARD (the check) | balanced at every tick; the audit digest `9f8d91e1b85d...` equal to the registered run's (`examples/events/covariant/expectations.json`, `runs`): the books byte for byte with series S, the state and events digests moved by the stamp field alone | the register's | agrees |
+| E' / g at load; the pace over the late window; the invariant; the intervals owed | GAMEBOARD, printed, not counted | 1 128 171 883 over 1 074 790 400 (gamma 1.04967); 0.1800 (18 steps in 100); 9567 energy lines, 0 failures; `s_mz2` owed 18 of 400 | as registered | agrees |
+
+The row: z = 0.3674 read at a click over the detector's own count, the
+same number series S read over the tick, as the algebra said it must be
+(r_A = 1, section 1.1 (7)); PASS under `covariant-readings-v1` within its
+domain; the paper's row 4b stays FAIL for the law as it stands (0.2647
+at head against nature's 0.315). Mode A audited by the stamp; the lack
+was mode C, read below.
+
+### 6.2 4a: the six clicks at their integers; gamma's form within the domain
+
+| World | the `become` line (GAMEBOARD, printed) | the beta click at x = 200: the detector's own count n_D (DETECTOR) | the pin | the row's own age on the line (DETECTOR; the pin's a(s)) | the decay's count read back, n_D less the age; the ratio over 64 (CONVERSION) | gamma, the thing compared with | Verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `j4_muon_rest_key` | tick 64 at x = 10, the count 64 | 390 | 390 +- 2 | 326 (326) | 64; 1.0000 | 1 | PASS |
+| `j4_muon_rest_law` | tick 64 at x = 10, the count 64 | 390 | 390 +- 2 | 326 (326) | 64; 1.0000 | 1 | PASS (the control: the key at rest moves nothing; the audit digests of the two rest runs equal, `297db4694e69...`) |
+| `j4_muon_3640_key` | tick 70 at x = 27, the count 64 | 367 | 367 +- 2 | 297 (297) | 70; 1.0938 | 1.1074 | PASS |
+| `j4_muon_3640_law` | tick 64 at x = 23, the count 64 | 368 | 368 +- 2 | 304 (304) | 64; 1.0000 | 1 (the law) | PASS |
+| `j4_muon_12856_key` | tick 124 at x = 72, the count 64 | 344 | 344 +- 2 | 220 (220) | 124; 1.9375 | 1.9558 | PASS |
+| `j4_muon_12856_law` | tick 64 at x = 41, the count 64 | 337 | 337 +- 2 | 273 (273) | 64; 1.0000 | 1 (the law) | PASS |
+
+Every click at the closed form's integer exactly, the row's age on the
+click line equal to the flight table's a(200 - x_d) in every world
+(section 5's first question answered: the click is written at the
+interval the row lands), and the decay's count read back from the click
+(n_D less the row's age, two detector readings) equal to the identity's
+cadence 70 and 124 and to the law's 64 with no Node computed. So: under
+`covariant-readings-v1` the ratio 70 / 64 = 1.0938 and 124 / 64 = 1.9375
+against gamma's 1.1074 and 1.9558, gamma's form on the identity's
+integers to (gamma - 1) / 64, PASS in form within the domain gamma <= 2;
+under the law the ratio 1 at both momenta, the row's FAIL read at a
+click (at 3640 the two clicks one count apart, as said before the run;
+at 12 856 seven). Against nature's 29.33: outside the domain (section
+2.3), a factor 14.8 short at the cap; the row of Table 2 stays FAIL for
+the law, with the identity's reading beside it. GAMEBOARD, printed: the
+muon's `become` at the ticks 64, 70, 124 (its own count 64 on every
+line), the step gaps (the identity's 3640 body hopping every 3 to 5
+intervals, the law's every 4 to 5), the 12 856 body's 61 intervals owed
+(its final age 359 of 420), the `energy` lines 420 per key world.
+
+### 6.3 The k-ladder: the ratio where the algebra put it; the one-way factors inside the lattice's own remainder, eleven FAILs against the band as pinned
+
+The read values (DETECTOR each; the ratio COMPUTATION), the pin, the
+counts by which the window's span misses the closed form's span, the
+meeting's remainder per end (one hop 1 / v plus one dwell 55 / 32
+intervals, in the reader's counts: COMPUTATION), and the verdict against
+the band as pinned (2 / W, section 3.2) and beside it against the band
+PREREGISTRATION_V2 section 5 states (2 g / the ordinals apart; a round
+trip +2 counts):
+
+| World | Reading | Read over W counts | The pin | Counts off, the remainder per end | Against 2 / W (the pin) | Against V2's band |
+| --- | --- | --- | --- | --- | --- | --- |
+| `cart_k3_law` | k_AB | 2.34956 over 531 (227 clicks) | 96 / 41 = 2.34146 | +1.8 over 226 ordinals; 4.7 | FAIL (band 0.0038) | PASS (0.0089) |
+| | k_BA | 1.57143 over 539 (360 lines) | 151 / 96 = 1.57292 | -0.5 over 343; 2.7 | PASS | PASS |
+| | k_BA / k_AB | 0.66882 | 6191 / 9216 = 0.67177; the comparison 1 | | PASS; against 1 FAIL (33 percent below) | |
+| | the round trip | 3.70833 over 445 (121 returns) | 151 / 41 = 3.68293 | +3.0 over 120; 8.4 | FAIL (0.0045) | PASS (0.033) |
+| `cart_k3_key` | k_AB | 2.17341 over 376 (174 clicks; the cart left the bar at about 582) | 2.15749 | +2.8 over 173; 3.3 | FAIL (0.0053) | FAIL (0.0116, off by 0.0159) |
+| | k_BA | 2.17814 over 538 (260 lines) | 2.18225 | -1.0 over 247; 3.0 | FAIL (0.0037, off by 0.0041) | PASS (0.0081) |
+| | k_BA / k_AB | 1.00218 | 1.01147 on the heading (1 on c^2 = 1 / 3); the comparison 1 | | FAIL against the pin (off by 0.0093); against 1 PASS (off by 0.0022) | |
+| | the round trip | 4.77419 over 296 (63 returns) | 4.70819 | +4.1 over 62; 6.4 | FAIL (0.0068) | FAIL (0.0645, off by 0.0660) |
+| `cart_k5_law` | k_AB | 1.51977 over 538 (365 clicks) | 32 / 21 = 1.52381 | -1.4 over 354; 6.7 | FAIL (0.0037, off by 0.0040) | PASS (0.0057) |
+| | k_BA | 1.34328 over 540 (422 lines) | 43 / 32 = 1.34375 | -0.2 over 402; 2.7 | PASS | PASS |
+| | k_BA / k_AB | 0.88387 | 903 / 1024 = 0.88184; the comparison 1 | | PASS; against 1 FAIL (12 percent below) | |
+| | the round trip | 2.05372 over 497 (244 returns) | 43 / 21 = 2.04762 | +1.5 over 242; 10.4 | FAIL (0.0040, off by 0.0061) | PASS (0.0165) |
+| `cart_k5_key` | k_AB | 1.50926 over 489 (335 clicks) | 1.51507 | -1.9 over 324; 5.6 | FAIL (0.0041, off by 0.0058) | PASS (0.0062) |
+| | k_BA | 1.51549 over 538 (374 lines) | 1.51941 | -1.4 over 355; 2.8 | FAIL (0.0037, off by 0.0039) | PASS (0.0056) |
+| | k_BA / k_AB | 1.00413 | 1.00287 on the heading (1 on c^2 = 1 / 3); the comparison 1 | | PASS; against 1 FAIL by 0.00004 beyond the band 0.00409 | |
+| | the round trip | 2.30769 over 450 (197 returns) | 2.30201 | +1.1 over 195; 9.1 | FAIL (0.0044, off by 0.0057) | PASS (0.0205) |
+
+**The cause of every FAIL against the band as pinned, by the primitive.**
+The band 2 / W is version 1's: one count's remainder at each end of the
+window, written for the hop frame where a light row moves one Node per
+interval. On the Beam Law's lattice a lamp's row meets a hopping body
+where two staircases cross: the row's digital line (one Link per 55 / 32
+intervals, its remainder below one dwell) and the body's hops (one Link
+per 1 / v intervals, its remainder below one hop), so the click of a
+row on a moving body lands within one hop plus one dwell of the
+continuum's meeting, at each end of the window; a return adds the birth's
+count and the post's next self-creation. Every miss in the table (0.2 to
+4.1 counts) lies inside that remainder (2.7 to 10.4 counts per end): the
+FAILs are the band's, not a rate's, and no reading refutes the closed
+forms of section 1.2. Under the band the preregistration states, nine of
+the eleven pass; the two that do not (`cart_k3_key`'s k_AB by 0.004 over
+its band and its round trip by 0.002) are inside the meeting's remainder
+too (2.8 of 3.3 counts; 4.1 of 6.4). No pin is moved: the verdicts of
+record are the left column, the cause is this paragraph.
+
+**The one rate, read.** The ratio k_BA / k_AB, the deciding reading of
+mode C: under the law 0.66882 and 0.88387 against 1 - beta^2 = 0.67177
+and 0.88184, PASS inside the band as pinned at both rungs, and FAIL
+against the comparison 1 by 33 and 12 percent: the law's clicks carry r =
+1 exactly as the click frame's section 3 says, and the row's FAIL against
+Lorentz's line is read from clicks alone. Under the identity 1.00218 and
+1.00413: within 0.4 percent of 1 at both rungs, the two directions alike;
+against the heading's pin (1.01147, 1.00287) FAIL at k = 3 (off by 0.009)
+and PASS at k = 5; against 1 PASS at k = 3 and FAIL at k = 5 by 0.00004
+beyond the band. What this says, plainly: the identity's rate r = 1 /
+gamma is the clicks' own and not a rule beside them (the DECLARATION of
+WHAT_IS_MISSING 1.4 decided from the clicks within the domain: the one
+rate PASS), the law's r = 1 is read the same way (the ratio 1 - beta^2 to
+0.3 percent), and the 0.9 percent by which the heading's c = 32 / 55
+stands off the identity's 1 / sqrt 3 (1.0115 against 1 at k = 3) is not
+resolved by these windows, whose one-way remainders (up to 0.016 on k_AB)
+are larger than it; resolving it needs a window about ten times longer
+(a bar of some 2400 Links) and is not this run's question. The round
+trips read (1 + beta) / (1 - beta) under both, r-free, to their
+remainder: the two one-way factors were read on one world. The least
+step holds in all four worlds (the Node's change at most one per count;
+the changes 0 and 1 in the k = 5 worlds and the law's k = 3, up to 3 in
+the identity's k = 3 world whose clicks come 2.17 counts apart against
+hops every 2.64 intervals, 2.0 counts). The radar velocity NOT READ.
+
+### 6.4 The verdicts, one line per row
+
+- **4b, the moving lamp's redshift.** Under `covariant-readings-v1`
+  within its domain: z = 0.3674 in [0.366, 0.372], read at a click over
+  the detector's own count: PASS (matches nature's gamma (1 + beta) at the
+  identity's own beta). The law as it stands: FAIL as registered (0.2647
+  against 0.315), the row of Table 2 unchanged.
+- **4a, the unslowed clock.** Under the identity within its domain: the
+  products' clicks at 367 and 344 (the pins exactly), the ratio 70 / 64
+  and 124 / 64 against gamma 1.1074 and 1.9558: gamma's form PASS in form
+  at gamma <= 2. The law: 368 and 337, the ratio 1: FAIL. Nature's 29.33:
+  outside the identity's domain under either drive (section 2.3), a
+  factor 14.8 short at the cap; the row of Table 2 stays FAIL.
+- **The missing direction k_AB and the one rate.** Read on the k-ladder
+  from stamped counts alone: the law's k_BA / k_AB at 1 - beta^2 (0.669,
+  0.884: PASS on the law's pins, FAIL against 1), the identity's at 1
+  within 0.4 percent (1.002, 1.004): the one rate r = sqrt(1 - v^2) is
+  the clicks' own under the key (PASS), r = 1 under the law (the click
+  frame's line read). The one-way factors and the round trips inside the
+  lattice's meeting remainder, eleven FAILs against the version-1 band
+  as pinned, nine of them PASS under the preregistration's band; no pin
+  moved.
+
+## 7. Links
+
+[WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) (PR #964); [the click frame](../click_frame/DERIVATION.md); [REVIEW_3 of the
 covariant readings](../covariant_readings/REVIEW_3.md); [the moving
 detector's design](../moving_detector/DESIGN.md) and
 [preregistration, version 2](../moving_detector/PREREGISTRATION_V2.md);
