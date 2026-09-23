@@ -252,31 +252,30 @@ so not every N may be declared"; the Boss's reading entered as declared
 checks, Reviewer 3 to gate; every number a COMPUTATION; where my
 arithmetic differs from the Boss's it is named):
 
-- (a) The hard floor from c: nothing changes faster than one interval,
-  and the wave crosses a Link in sqrt 3 intervals (the pair [1, 3]), so
-  a declared period of N intervals is a wavelength N / sqrt 3 Links and
-  below two intervals there is no wave: **N >= 2**, refused below (the
-  Nyquist period of the lattice's clock; at N = 2 the checkerboard mode
-  of 2.1, carried at a constant amplitude and nothing else).
+- (a) The hard floor from c, corrected by Reviewer 3's gate of 075636f1:
+  the lattice's band has a top at the period 5.10 intervals (omega_max =
+  2 arcsin(1 / sqrt 3)); a source faster than that drives no wave, and
+  at N = 2 the checkerboard grows linearly (the double root -1, 2.1), so
+  the check reads **N >= 6** (COMPUTATION, the band's top), refused
+  below; "N >= 2" (the Boss's first reading) was the interval's own
+  floor, not the wave's.
 - (b) The design's honest floor, already the design's: the wavelength
   at least 12 Links (6.1, 8c), so **N >= 21 intervals at rest** (12
   sqrt 3 = 20.8); for a moving object MUST I's floor lambda_0 (1 -
   beta_c) >= 12 gives **N >= 50 at k = 3** (28.4 sqrt 3 = 49.2), **37 at
   k = 4** (21.2 sqrt 3 = 36.7), **30 at k = 6** (16.9 sqrt 3 = 29.3);
   the same arithmetic as the Boss's.
-- (c) The same bound on the motion: the cadence k of 5.1 (a) (one Link
-  per k intervals) must satisfy **k >= 2**, since k = 1 is one Link per
-  interval, above c (beta_c = sqrt 3 / k: 0.866 at k = 2, 0.577 at k =
-  3, 1.732 at k = 1); the push-to-cadence rule REFUSES a push that
-  would take an object's accumulator past one Link in fewer than two
-  intervals: the momentum is kept (the remainder with it), the cadence
-  is clamped at 2, and the refusal is recorded as an event on the
-  object's click line, never a silent clamp; the declaration of 5.1 (a)
-  says so. One difference from the Boss's line, named: k >= 2 still
-  allows beta_c = 0.866, and the bound the wave itself sets on a source
-  is MUST I's floor (b), which at k = 2 needs N >= 155 (lambda_0 (1 -
-  0.866) >= 12: lambda_0 >= 89.6 Links); so (c) is the hard bound and
-  (b) the honest one, both checked.
+- (c) The same bound on the motion, on the VECTOR (Reviewer 3's MUST on
+  075636f1): the check is 3 (P . P) < (3 Q S M x 56 d)^2, |v| < c with no
+  root, checked at the initial P and at every change (5.1 (a)); a
+  cadence bound per axis, "k >= 2", is its one-axis shadow and does not
+  keep the object below c (three axes at k = 2 give |v| = 0.866 Links
+  per interval, beta_c = 1.5). A change that would cross the bound is
+  not clamped (a clamp with the momentum kept and growing breaks p = 3 Q
+  S M v): the lawful refusal is the WORLD'S STOP with a diagnostic
+  naming the click and the object, recorded, never a clamp. MUST I's
+  floor (b) is checked at every click as well (N >= 155 at k = 2:
+  lambda_0 (1 - 0.866) >= 12, lambda_0 >= 89.6 Links).
 
 What is refused with the one kind, by the Algebra Auditor's rows
 (ALGEBRA_AUDIT.md at c848aad0 on `algebra-inside-outside`): a record
@@ -754,10 +753,8 @@ object's own symmetric insert adds nothing to P). TWO CHECKS, declared:
 |v| < c on the vector, no root, as the integer comparison 3 (P . P) <
 (3 Q S M x 56 d)^2, checked at the initial P and at every change; a
 change that would cross it stops the world with a diagnostic, never a
-silent clamp (1.2 (c)'s k >= 2 is the whole-cadence reading of it: v =
-1 / 2 is the largest pace whose cadence is a whole number of intervals
-at or above 2, while the vector bound allows up to c, the difference
-named); and MUST I's floor lambda_0 (1 - beta_c) >= 12 with beta_c =
+silent clamp (a per-axis "k >= 2" is its one-axis shadow, 1.2 (c), not the
+bound); and MUST I's floor lambda_0 (1 - beta_c) >= 12 with beta_c =
 sqrt 3 |P| / (3 Q S M x 56 d), checked at the initial P and at every
 change. The three tests: generic (one primitive, the stress at the six
 Ports and one comparison, with declared integers Q, S, M and the pair
@@ -844,7 +841,7 @@ GAMEBOARD reading, since the rung at W = 64 jitters by 6 percent, above
 five's band) beside the click (which keeps the outcome: settles or
 separates); the pair's frequency in the lattice's intervals between the
 objects (the reading that names the member: f / f_0 = 1.000 for (A)
-with L_along / L_0 = 0.667; 0.667 with 1.000 for the relay; 0.816 with
+with L_along / L_0 = 0.667; 0.667 with L_along / L_0 = 1.0 and the cycle 1.50 N_0 for the relay, which binds too at its own parity; 0.816 with
 0.816 for Lorentz; PUSH_BALANCE.md section 6 at d69c87a9). The settling
 criterion, declared: a bounded oscillation of L about an equilibrium
 within +- lambda_0 / 4 over the last twenty cycles with no monotone
@@ -1350,9 +1347,34 @@ Under the rule, one paragraph per sentence of his:
   one per insert-and-receive; its period is whatever the Inside returns:
   2 L / c for a pair at rest at L, and in motion the cycle of the bound
   pair by 8b. It replaces "in motion the declared period" wherever it
-  stood (1.1's frequency row; this section); a lone object at rest keeps
-  its declared period by 1.1's declaration (the self-click fired by the
-  period, above), outside this sentence. The three tests: generic (one
+  stood (1.1's frequency row; this section). WHICH FORM IS DECLARED
+  (Reviewer 3's line (i) on 075636f1): a local object cannot know
+  whether a partner exists, so "a lone object keeps its declared period,
+  outside this sentence" would be a second rule keyed on what the object
+  cannot read; the local alternative is one sentence with a timer (the
+  insert at the receive, or at the declared period if nothing has
+  returned), but the timer decides the run (at N_0 = 55 against a return
+  at 277 the period always fires first and the sentence is never
+  reached: variant (A) by construction). The design declares THE
+  SENTENCE, without a timer: the insert only on the receive of the
+  object's own record. By kind: a declaration of the design. Why: the
+  owner's words of 12:10Z to the chief physicist (his reading of record
+  1370, confirmed to him in his terms): a foreign object is not one
+  Node but a set of the board's own cells, and its record runs among
+  its cells by the same local rule, so at rest its own record RETURNS
+  to it through its own cells and the sentence alone fires its
+  self-click; its rest frequency is what that inner cycle produces, a
+  COMPUTATION from its extent (N = 2 s / c for a record crossing s
+  Links), not a declared number, and the click in the Outside is read
+  across its cells. Under that form no lone object is ever without a
+  return, and no timer and no second rule are needed. The one-Node
+  objects of the pilot's worlds and of the reduced run have no such
+  inner return; for them the declared rest period of 1.1 is variant
+  (A)'s declaration and is named so where it is used, never the
+  sentence's. What holds the object's cells together (declared rigid,
+  kind 1, or bound to each other through the Inside) is the same
+  question the reduced run asks of the pair, at the cells' scale; the
+  owner's word on closing his form of (B) is pending. The three tests: generic (one
   primitive, the insert triggered by the receive of the object's own
   record; no family name, no kind; f_0 a declared integer pair as the
   initial condition); vector (a comparison of the record's identity at
@@ -1418,10 +1440,19 @@ Under the rule, one paragraph per sentence of his:
   cycle, so a pair at L_0 = 80, m = 5, is already such an object with
   its two ends 80 Links apart. The sentence read literally as a relay (no
   clock in motion, the inserted train continuing the received one)
-  gives no binding, and a pair carried rigidly to beta ends at f = f_0
-  / gamma_m^2, L_along = L_0, L_across = gamma_m L_0, the cycle gamma_m^2
+  BINDS at its own parity when the trains overlap (Reviewer 3's
+  correction of 12:05Z by his own closed form: a resonance is not needed
+  for the binding, the frequency law still selects the member); carried
+  rigidly to beta its frequency ends at f = f_0 / gamma_m^2 (the Doppler
+  integral), L_along = L_0, L_across = gamma_m L_0, the cycle gamma_m^2
   N_0 in both arms: five's ratios 1.50 and 1.50 at k = 3, a FAIL of five
-  and of the lab row. The quantity that breaks the degeneracy and must
+  and of the lab row. Two quantities under the sentence, named
+  (Reviewer 3's line (ii)): the COUNT's cycle (the count advances per
+  insert-and-receive: 277 at rest for the light clock, in the lattice's
+  intervals) and the WAVE's frequency (the train's f_0 as the initial
+  condition, then whatever the Inside does to it); PINS.md says which
+  each row reads: the lab row the count's cycle, the member the wave's
+  frequency. The quantity that breaks the degeneracy and must
   be read: the pair's oscillation frequency in the lattice's intervals
   (the zero crossings of the wave between the objects) after the rest
   pair is pushed to beta, beside the separation: f / f_0 = 1, 0.816,
