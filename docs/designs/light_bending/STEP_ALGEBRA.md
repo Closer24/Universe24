@@ -1,5 +1,7 @@
 # The step algebra of light bending: the walk of a light row past a held mass, simulated by the law's integer steps, read at a screen of Nodes (the Bending Algebraist, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.9; this file is kept as the record of 2026-09-22.
+
 The owner's order (2026-09-22, translated, as the Boss relayed it at
 about 07:47Z): "Try algebra, and if it does not work come back to me. An
 algebra of steps can simulate a board. For these checks one scatters

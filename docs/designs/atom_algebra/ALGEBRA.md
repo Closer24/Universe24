@@ -1,5 +1,7 @@
 # The atom's algebra: two closing radii as a ratio of counts at a detector, and the click that moves a row between them (the owner's YES of 2026-09-22, records 822, 826 (H) and (I), 844)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.8; this file is kept as the record of 2026-09-22.
+
 The Atom Algebraist, 2026-09-22, on the Boss's bounded order of about
 08:05Z: ninety minutes, docs only, no engine run, no code change, no pin
 moved. The question: the atom's two closing radii as a ratio of counts at

@@ -1,5 +1,7 @@
 # hand-v1, the hand on the message: the integer form and bounds (read-only, the mathematician, 2026-09-20)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 1.1 (the hand as the pseudoscalar); this file is kept as the record of 2026-09-20.
+
 On the Boss's assignment under the owner's decision of the day ([record 119](../../LOG_2026-09-20.md),
 "go on everything, in parallel, as generic as possible, on the information
 problems": item 4, hand-v1, a hand on the message, an axial record and a
