@@ -447,6 +447,80 @@ the light clock); the run decides between (A) and the relay, nothing
 decides (C) but the owner's word on the gap. Lorentz's member "matches
 nature", never "is nature".
 
+**8.7 The gap's algebraic name and its integer form; the price of its
+two placements** (the model owner's question of 11:56Z, record 1375,
+through the Boss). The gapped rule of 8.3 (ii) is the discrete
+Klein-Gordon rule: the wave rule with ONE self term, a declared pair
+[p, q] on the Node's own present record, subtracted, mu^2 = p / q. On
+the continuum pace it is d^2 a / dt^2 = c^2 (Laplacian of a) - mu^2 a;
+on the lattice, with the six-neighbour sum S_6 and the remainder kept,
+
+    3 a_next + r' = S_6 - 3 a_before + r - (3 p / q) a_now,
+
+and in integers, the whole scaled by q so that the division is exact
+with its remainder (as the coefficient form of 4.1 divides by 3 den),
+
+    3 q a_next + r' = q S_6 - 3 q a_before - 3 p a_now + r,     r' in [0, 3 q),
+
+the Boss's coefficient right, the division by 3 q rather than 3 the one
+correction. It uses the six verbs only: the sum of the six, a multiply
+by a declared pair, a subtract on the own record, the division with the
+remainder kept; no seventh verb (the owner's rule of record 642). The
+three tests as a rule: generic (one primitive with the declared
+integers p, q; no family name, no kind), vector (the verbs above on the
+state vector; no root, no float), local (the self term reads a_now at
+the Node itself; the rest the six neighbours). A foreign object under
+it is a Node with its OWN self pair [p', q'] in place of [p, q], the
+well's strength g = p / q - p' / q' > 0 (a locally lighter Node), the
+object's one declared parameter. What then follows by itself, on the
+continuum pace with c^2 = 1 / 3: the bound mode omega_b^2 = mu^2 - 3
+g^2 / 4 (real, that is bound and not growing, for g < 2 mu / sqrt 3),
+its extent 2 / (3 g) Links, its rest period 2 pi / omega_b, the
+Lorentz member of 8.3 (ii) by the rule's covariance (the KG operator
+is invariant under the boost with c; the self term is a scalar), and
+the bound pair's evanescent binding of 8.4. The integers stay bounded
+as the massless rule's do: the dispersion 4 sin^2 (omega / 2) = (4 / 3)
+sin^2 (k / 2) + mu^2 is stable for mu^2 <= 8 / 3, the conserved energy
+is E of DESIGN.md section 2 with the term 3 mu^2 (sum of a_now
+a_before) added, and the remainder's drift is the same as the wave
+rule's; the scale q multiplies every intermediate (q S_6 at A = 2^20 and
+q = 3600 is 2.3 x 10^10, inside int64 with room to q about 2^30). On
+the lattice the closed forms hold for an extent well above one Link
+(the chain's 0.1 percent at 23 to 58 Links, 8.3); the three-dimensional
+GameBoard adds a threshold on g for one Node (the lattice Green's
+function is finite at the gap's edge; not computed here); the chain
+has none.
+
+The two placements, priced for the owner's choice. (i) The gap in
+light's own record, one kind: every light pin moves by the pace shift
+mu^2 / (2 c^2 k^2), and the clock it allows is SLOWER than the gap
+(omega_b < mu): at one percent on light at lambda_0 = 32 Links (c^2 k^2
+= 0.0131), mu = 0.0162 and the gap's period is 388 intervals, so the
+fastest clock is about 390 intervals and the run's forty cycles are
+about 16,000 intervals; at lambda_0 = 48 the same mu shifts light by
+2.25 percent; the flight table of the ray law (T_D = isqrt(3 |D|^2
+Q^2), massless) and PINS (d) move by the same one percent (2 intervals
+on 207, at the band's edge); every other row's band is wider than the
+shift. (ii) A second, massive record kind beside the massless one: light
+untouched, every light pin as declared; the price is two declarations
+that the presence of the massive record does NOT supply by itself: (a)
+what light sees, the index pair of 5.1 (b) on light's record at the
+Nodes where the massive mode stands (its extent, 37 Links at eps =
+0.10, a slab, not one Node; a rung on the mode's amplitude declaring
+which Nodes), and (b) what the object feels, the push of light's stress
+at those Nodes on the massive record's momentum (5.1 (a)'s form on the
+mode). Neither coupling is in the rules of the two records; both are
+the design's, and (b) is where the light clock's binding (section 1's
+correction) would act on a (C) object. The Boss's recommendation of
+(ii) as the direction to design under its own key: I recommend the
+same, for the one reason that it keeps light and its pins whole; and
+its first check is on the chain, in seconds, before any coupling: the
+resting mode's period against 2 pi / omega_b and its member at k = 3
+against 8.3's closed form, then the two couplings declared and gated.
+Nothing here enters the law; the owner's word twice, on the gap and on
+the placement. COMPUTATION for the numbers, DECLARATION candidates for
+the rule and the couplings.
+
 ## 9. The model owner's form of (B): the object as the set of Nodes at which its own record is identical
 
 Written on the Boss's orders of 11:40Z and 11:46Z (the owner's records
