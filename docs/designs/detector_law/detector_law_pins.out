@@ -1,0 +1,58 @@
+THE LOCAL DETECTOR LAW, the pins before any build (COMPUTATION, the rule run offline in its own integers; no engine run); the amplitude unit 1048576, the train 32 periods of the record's clock, c = 1 / sqrt 3 = 0.57735 Links per interval
+
+===== lambda = 12.000 Links, the train 665 intervals =====
+
+A. THE RULE'S PACE ON THE LATTICE at T = 20.785 intervals (lambda = c T = 12.000 Links), COMPUTATION:
+   along the axis (1, 0): k = 0.52771 per Link, the phase pace omega / k = 0.57285 Links per interval, c = 0.57735, the ratio 0.99221
+   along the diagonal (1, 1): k = 0.52461 per Link, the phase pace omega / k = 0.57624 Links per interval, c = 0.57735, the ratio 0.99807
+
+B. THE SINGLE OPENING w0 = 27 scaled by 2.579: w = 70 Nodes, L = 278 Links, lambda = 12.000 Links (T = 20.785 intervals), the Fresnel number 1.469, the train 665 intervals, the screen 415 pixels, 1287 intervals, 8.1 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.0828 and 0.0793, FWHM(sin theta) = 0.1621, w x FWHM / lambda = 0.946; the Euclidean exact sum at the same geometry 0.917 isotropic (the pilot's 0.916) and 0.917 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.92 +- 0.03: inside; the refuting bound 0.85: above
+   the peak at y = 206 (centre 207); the pixel-to-pixel roughness near the peak 0.0208
+
+B. THE SINGLE OPENING w0 = 9 scaled by 2.579: w = 23 Nodes, L = 278 Links, lambda = 12.000 Links (T = 20.785 intervals), the Fresnel number 0.159, the train 665 intervals, the screen 415 pixels, 1287 intervals, 7.9 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.2275 and 0.2275, FWHM(sin theta) = 0.4551, w x FWHM / lambda = 0.872; the Euclidean exact sum at the same geometry 0.872 isotropic (the pilot's 0.891) and 0.842 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.886 +- 0.03: inside; the refuting bound 0.85: above
+   the peak at y = 207 (centre 207); the pixel-to-pixel roughness near the peak 0.0031
+
+C. THE TWO SLITS scaled by 2.579: the separation 26, each slit 3 Node(s), L = 113, lambda = 12.000, the fringe spacing lambda L / d = 52.2 pixels, the train 665, 1021 intervals, 3.5 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer): the visibility over the cosine's bright (19) and dark (38) pixels 0.9588 (the registered ray law's 0.966 at the fan's grain; nature's 0.98; the ideal 1); Pearson with the two-source cosine over the central fringes 0.932
+
+D. THE DETECTOR AT REST (the light clock's chain), the arm 60 Links, lambda = 12.000, the train 42 intervals (2 periods): the returning offer's centre at the interval 243.9, less the train's centre 21.0: N_0 = 222.9 intervals (COMPUTATION; the ray law's pin 206 +- 2 at L = 60; the continuum's 2 L / c = 207.8; the chain's group pace at this clock 0.5638 Links per interval, 2 L / v_g = 212.8); the counting trigger's click at the rung crossings of the returning offer, less the train's centre: 1 / 4096: 185.0, 1 / 16: 201.0, 1 / 2: 218.0; the mirror's zero Node one Link beyond the arm; 0.0 s HOST
+
+===== lambda = 16.000 Links, the train 887 intervals =====
+
+A. THE RULE'S PACE ON THE LATTICE at T = 27.713 intervals (lambda = c T = 16.000 Links), COMPUTATION:
+   along the axis (1, 0): k = 0.39441 per Link, the phase pace omega / k = 0.57485 Links per interval, c = 0.57735, the ratio 0.99566
+   along the diagonal (1, 1): k = 0.39312 per Link, the phase pace omega / k = 0.57673 Links per interval, c = 0.57735, the ratio 0.99892
+
+B. THE SINGLE OPENING w0 = 27 scaled by 3.438: w = 93 Nodes, L = 371 Links, lambda = 16.000 Links (T = 27.713 intervals), the Fresnel number 1.457, the train 887 intervals, the screen 555 pixels, 1718 intervals, 17.6 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.0800 and 0.0800, FWHM(sin theta) = 0.1601, w x FWHM / lambda = 0.930; the Euclidean exact sum at the same geometry 0.916 isotropic (the pilot's 0.916) and 0.916 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.92 +- 0.03: inside; the refuting bound 0.85: above
+   the peak at y = 277 (centre 277); the pixel-to-pixel roughness near the peak 0.0132
+
+B. THE SINGLE OPENING w0 = 9 scaled by 3.438: w = 31 Nodes, L = 371 Links, lambda = 16.000 Links (T = 27.713 intervals), the Fresnel number 0.162, the train 887 intervals, the screen 555 pixels, 1718 intervals, 15.8 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.2208 and 0.2208, FWHM(sin theta) = 0.4416, w x FWHM / lambda = 0.856; the Euclidean exact sum at the same geometry 0.872 isotropic (the pilot's 0.891) and 0.843 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.886 +- 0.03: OUTSIDE; the refuting bound 0.85: above
+   the peak at y = 277 (centre 277); the pixel-to-pixel roughness near the peak 0.0019
+
+C. THE TWO SLITS scaled by 3.438: the separation 34, each slit 3 Node(s), L = 151, lambda = 16.000, the fringe spacing lambda L / d = 71.1 pixels, the train 887, 1361 intervals, 7.8 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer): the visibility over the cosine's bright (29) and dark (56) pixels 0.9576 (the registered ray law's 0.966 at the fan's grain; nature's 0.98; the ideal 1); Pearson with the two-source cosine over the central fringes 0.944
+
+D. THE DETECTOR AT REST (the light clock's chain), the arm 60 Links, lambda = 16.000, the train 55 intervals (2 periods): the returning offer's centre at the interval 248.4, less the train's centre 27.5: N_0 = 220.9 intervals (COMPUTATION; the ray law's pin 206 +- 2 at L = 60; the continuum's 2 L / c = 207.8; the chain's group pace at this clock 0.5698 Links per interval, 2 L / v_g = 210.6); the counting trigger's click at the rung crossings of the returning offer, less the train's centre: 1 / 4096: 178.5, 1 / 16: 193.5, 1 / 2: 218.5; the mirror's zero Node one Link beyond the arm; 0.0 s HOST
+
+===== lambda = 24.000 Links, the train 1330 intervals =====
+
+A. THE RULE'S PACE ON THE LATTICE at T = 41.569 intervals (lambda = c T = 24.000 Links), COMPUTATION:
+   along the axis (1, 0): k = 0.26230 per Link, the phase pace omega / k = 0.57624 Links per interval, c = 0.57735, the ratio 0.99809
+   along the diagonal (1, 1): k = 0.26192 per Link, the phase pace omega / k = 0.57707 Links per interval, c = 0.57735, the ratio 0.99952
+
+B. THE SINGLE OPENING w0 = 27 scaled by 5.157: w = 139 Nodes, L = 557 Links, lambda = 24.000 Links (T = 41.569 intervals), the Fresnel number 1.445, the train 1330 intervals, the screen 831 pixels, 2576 intervals, 68.8 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.0794 and 0.0794, FWHM(sin theta) = 0.1589, w x FWHM / lambda = 0.920; the Euclidean exact sum at the same geometry 0.916 isotropic (the pilot's 0.916) and 0.916 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.92 +- 0.03: inside; the refuting bound 0.85: above
+   the peak at y = 415 (centre 415); the pixel-to-pixel roughness near the peak 0.0064
+
+B. THE SINGLE OPENING w0 = 9 scaled by 5.157: w = 46 Nodes, L = 557 Links, lambda = 24.000 Links (T = 41.569 intervals), the Fresnel number 0.158, the train 1330 intervals, the screen 831 pixels, 2576 intervals, 63.2 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer per pixel): the half-maximum crossings at s = -0.2205 and 0.2189, FWHM(sin theta) = 0.4394, w x FWHM / lambda = 0.842; the Euclidean exact sum at the same geometry 0.871 isotropic (the pilot's 0.891) and 0.842 with the obliquity cos theta (Rayleigh-Sommerfeld, a hard screen); 22.2's band 0.886 +- 0.03: OUTSIDE; the refuting bound 0.85: BELOW
+   the peak at y = 414 (centre 415); the pixel-to-pixel roughness near the peak 0.0009
+
+C. THE TWO SLITS scaled by 5.157: the separation 52, each slit 5 Node(s), L = 227, lambda = 24.000, the fringe spacing lambda L / d = 104.8 pixels, the train 1330, 2041 intervals, 26.5 s HOST
+   the rule's reading (COMPUTATION on the accumulated offer): the visibility over the cosine's bright (41) and dark (80) pixels 0.9575 (the registered ray law's 0.966 at the fan's grain; nature's 0.98; the ideal 1); Pearson with the two-source cosine over the central fringes 0.927
+
+D. THE DETECTOR AT REST (the light clock's chain), the arm 60 Links, lambda = 24.000, the train 83 intervals (2 periods): the returning offer's centre at the interval 262.2, less the train's centre 41.5: N_0 = 220.7 intervals (COMPUTATION; the ray law's pin 206 +- 2 at L = 60; the continuum's 2 L / c = 207.8; the chain's group pace at this clock 0.5740 Links per interval, 2 L / v_g = 209.0); the counting trigger's click at the rung crossings of the returning offer, less the train's centre: 1 / 4096: 164.5, 1 / 16: 179.5, 1 / 2: 219.5; the mirror's zero Node one Link beyond the arm; 0.0 s HOST

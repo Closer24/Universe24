@@ -1,0 +1,553 @@
+# The local detector law: the ray splits at every free Node inside the board, and nothing passes outside except through a detector (the chief physicist's design on the model owner's words of 2026-09-23, docs and pins only, no engine line)
+
+The model owner's order through the Boss (2026-09-23, about 08:00Z):
+"There is no field. Ask the physicist for the new design with the new
+things that fixes the bugs you made." This document is that design, in
+his terms. It replaces nothing yet: the engine at head is the ray law as
+built (the pilot under (b), `docs/designs/event_split/PILOT.md`, measures
+it as the baseline); the coin form of `docs/designs/event_split/DESIGN.md`
+section 3.2 stays refuted (CORRECTIONS.md M11); this design is built
+only on the owner's GO after Reviewer 3's gate and after its pins pass.
+Every number below is a COMPUTATION of the script beside this file,
+`detector_law_pins.py` (its output `detector_law_pins.out`), or a
+declared integer; no engine ran; no pin of the register moves.
+
+## 0. The owner's statements, verbatim (Hebrew, rendered), the terms as he corrected them
+
+To the chief physicist, 07:50Z to 08:20Z, in order:
+
+1. "Let us be precise on terms: we have Outside and Inside. The Inside is
+   a ray that splits at every free Node and holds the amplitudes, right?"
+2. "You cannot go between apparatus and apparatus. You cannot jump in the
+   Outside. To go you must pass through a detector; it is a local law; you
+   must jump to a Node through a detector. What you describe is in fact a
+   moving detector. Did you understand the bug?"
+3. "Confirm one critical thing: in the Inside the ray splits at every free
+   Node and holds amplitudes; in the Outside, that is the detectors'
+   world; there are no jumps between detectors; it is a detector that
+   passes, a moving detector in fact, that transfers mass."
+4. "Do not call it the board [in the Outside], because the board is the
+   Inside; the board is not the Outside. In the Outside there is no board:
+   it is clicks passing from Node to Node. And you cannot pass from Node
+   to Node [except through a detector], exactly as you said."
+5. "The detector transfers mass through the Inside. It does not transfer
+   mass in the Outside; it transfers mass only through the Inside, and it
+   pops up at the next Node, or it can also pop up at the same Node. If it
+   pops up at the same Node, that is in fact a detector at rest. But it
+   does it through the Inside, and this has a time. And that is also the
+   detector's cycle time."
+
+To the Boss, 07:49Z to 08:00Z (the Boss's rendering, records of
+docs/LOG_2026-09-20.md after 1314): "Everything you are talking about are
+things that happen in the Outside, above the board. They do not happen
+inside the board. I meant that the ray splits inside the board, not above
+the board." / "There is no such thing as a local lattice line, because in
+the Outside you can only go through a moving detector. You cannot pass
+between a detector and an emitter on a line on the lattice; there is no
+such thing. It is only a moving detector. In the Inside it is a ray that
+splits at every free point and holds the amplitudes if it arrived through
+a detector." / "There is no field."
+
+The terms, as he fixed them (POSTULATES.md section 26; docs/TERMINOLOGY.md
+"Inside and Outside", record 768): **the Inside is the board itself**, the
+Nodes and the Links, where the ray splits at every free Node and holds
+its amplitudes, where no one measures; **the Outside has no board**, only
+clicks, one click and then the next, and a passage from Node to Node in
+the Outside happens only through a detector, at rest (the same Node) or
+moving (the next Node), which transfers the mass through the Inside and
+whose cycle time is the time that transfer takes. The records the Boss
+names: 1046 (a moving detector as it should be, with mass; Newton from
+the algebra of the clicks), 1139 (a detector performs an action when it
+reads), 1227 (the pulse goes inside, hits and returns; a tick is the
+packet returning to the same place), 1242 (nature's atomic clock is a
+detector that reads a click and waits for the next), 1282 (the
+amplitudes add at the Node, what comes from the six neighbours adds and
+the event propagates), 1288 (the trigger, the weights and the pace as the
+physicist's recommendations), 1293 (the external things with their own
+clocks; a pilot of known worlds first).
+
+## 1. The picture
+
+A **record** is one quantum's story from its birth at a lamp to its
+click at a detector (the amplitude law, `examples/events/amplitude/README.md`;
+one click per record at completion). In the law as built the record is a
+set of **rows on digital lines**: each row carries a direction label,
+an amount, a multiplicity, a phase and an age, walks its Bresenham line
+Link by Link at the flight table's pace, and splits only where a
+declared thing stands (the lamp's fan, an opening's fan table, a
+polariser's half-angle table). Between two declared things the row's
+line is known in advance: that is the bug the owner names (his statements
+2 and 4): the row passes the Nodes on its way without anything happening
+to it there, a passage "above the board".
+
+Under the local detector law the record is instead a set of **rows at
+Nodes**: at every Node the record has reached there is one row of the
+record, holding the record's amplitude at that Node now and one interval
+ago (two integers on the wheel) and a remainder. Every interval every
+such row does one thing, the same at every Node of the board: it
+re-emits to its six neighbours what arrived from them, less what it
+emitted the interval before (section 2). That is "the ray splits at
+every free Node and holds the amplitudes": the split is the emission to
+the six neighbours; the holding is the row's two integers for the one
+interval they take to be re-emitted. Where two emissions meet at a Node
+they add with their sign (the merge, verb G; the owner's decision of
+record 1282: "what comes from the six neighbours adds and the event
+propagates"). Nothing is stored at a Node beyond the record's own row
+there; no direction, no line, no error accumulator; the direction of the
+record's motion is what the six neighbours carry between them.
+
+A **detector** is a Node whose row does one more thing: it keeps a sum
+across intervals of the offer that arrives at it (the record's amplitude
+squared, section 5), and when that sum crosses the rung of the record's
+wheel the record clicks there. Only a detector keeps a sum across
+intervals; a free Node keeps nothing across intervals but its own row's
+two integers and remainder. The click is the record's end: its content
+(one quantum) is handed to the detector, every row of the record on the
+board is removed, and the click line is written with the detector's own
+count (`clock_stamp`) and the record's birth stamp. That is the Outside:
+the click, and then the next click. The moving detector of the owner's
+statement 3 is this rule seen from the Outside: a detector at one Node
+emits (its record's rows spread through the Inside), and the record
+clicks at the next Node, or at the same Node (a detector at rest); the
+mass moves only through the Inside, in the record's rows, and appears
+Outside only at the click.
+
+What is NOT in the picture: a line on the lattice between an emitter and
+a detector (the row's label **u**, its flight residue, its Bresenham
+error accumulator **c**: gone from the free Node); a declared fan at an
+opening (the opening is a hole in a wall: its Nodes are free Nodes, the
+wall's Nodes are detectors that click and end the record there); a
+"field" as a thing of the board beside the records (there is none: every
+amplitude on the board is a row of some record, born at a lamp, ended at
+a click; the board holds records and nothing else).
+
+## 2. The rule, in integers, and its three tests
+
+**The rule.** The world's pair `c2 = [1, 3]` (the exact square
+`W = E'_0^2 + 3 p . p`, DERIVATIONS_BEAM 17.6; the pace c = 1 / sqrt 3
+Links per interval) is the only constant. A record's row at a Node holds
+`a_now`, `a_before` (integers on the record's wheel, the amplitude unit
+2^20 in the pins script) and `r` (0, 1 or 2). Every interval, at every
+Node with a row of the record:
+
+    3 a_next + r' = (a_E + a_W + a_N + a_S + a_U + a_D) - 3 a_before + r,   0 <= r' < 3
+
+where `a_E .. a_D` are the record's `a_now` at the six neighbouring
+Nodes (0 where the record has no row yet; a world periodic in z of one
+layer takes `a_U = a_D = a_now`); then `a_before := a_now`,
+`a_now := a_next`, `r := r'`. In words: the Node re-emits the sum of
+what its six neighbours held, less three times what it held the
+interval before, and keeps the division's remainder on the row. The
+subtraction is what makes the amplitudes cancel: without it the rule is
+the copy rule of CORRECTIONS.md M10 (a Node copies what arrives), a
+diffusion whose norm explodes and whose front has no phase; with it a
+Node that emitted last interval takes back what it emitted, so that only
+the difference travels, and a train of the record's clock moves at c on
+the lattice with the phase it was born with (section 6, A: the pace by
+direction 0.992 to 0.999 of c at lambda >= 12 Links). In three
+dimensions with the pair [1, 3] the middle term is exactly zero (the
+continuum's 2 - 6 c^2), so the rule has no coefficient but 3.
+
+**The source.** A lamp is a measured event with a body (as today); a
+birth is the record's row created at the lamp's Node with `a_now = A`
+and thereafter driven by the record's clock for the record's train:
+`a_now(t) = A cos(2 pi t n / (d N))` at the lamp's Node for `T_train`
+intervals, the clock the family's pair `phase_per_link` [n, d] on the
+circle of N steps as declared today, the train's length in periods a
+declaration of the lamp (kind 1, section 4.5: the record's coherence).
+The lamp's `turns` per direction (the fan's phases) have no meaning here
+and go; a lamp that must emit in a direction (a beam) is a lamp whose
+body is a line of Nodes driven in phase (a plane source), as the pins
+script drives an opening's Nodes.
+
+**The three tests** (skills/workflow.md, "The three tests of every rule"):
+
+- Generic: one primitive (the six-neighbour sum less three times the
+  row's past, the pair [1, 3]), no family name, no kind; a family's clock
+  [n, d] and quantum h enter only at the source and at the click; a
+  massive family is the same rule read at its own period (section 8);
+  the engine branches on no name. PASS.
+- Vector: two of the six verbs, the group-ring addition over the six
+  neighbours (G) and the Euclidean division by 3 with the remainder kept
+  (D); no root, no float, no rounding beyond D, the amplitude unit and
+  the wheel declared at load. PASS.
+- Local: the rule reads the record's own row at the Node and at the six
+  neighbours (LOCALITY-1), fixed work and storage per Node per record for
+  a fixed K (three integers and six reads), nothing kept at a Node beyond
+  the record's own row (the remainder is the row's, not the Node's), the
+  detector's sum the detector's own record's (a measured event's book, as
+  today's pointer per set). PASS.
+
+## 3. The new things of 2026-09-23 that the design carries
+
+- **The detector's own count on every click line** (`clock_stamp`, the
+  key of PR #834, on main): unchanged; the click line carries the
+  detector's count at the click.
+- **The birth stamp** (`origin/birth-stamp` 90ab27fc, the light clock's
+  gate 1): the birth line carries the lamp's count; a record's cycle
+  (section 8) is read from the birth stamp to the click's clock.
+- **The trigger in the counting form** (record 1288; DESIGN.md section 4
+  of event_split): a detector's cell accumulates the record's offer; the
+  click when the accumulation crosses the rung on the wheel W = 4096 at
+  the sensitivity s_D = 1 / W; no sensitivity key (the default, and no
+  other value, section 4.3).
+- **Equal weights and the merge** (records 1282 and 1288): the six
+  neighbours weigh equally in the sum; amplitudes meeting at a Node add
+  with their sign. The rule is the merge.
+- **Inside and Outside** (POSTULATES.md section 26): the rule is the
+  Inside; the click line is the Outside; nothing else crosses.
+- **The three tests** (section 2) and **the pins before any run**
+  (section 6).
+
+## 4. The bugs we made, each named, and what replaces it
+
+4.1 **The row on a digital line as the primitive** (the label **u**, the
+flight table T_D, the Bresenham line, the error accumulator **c**;
+BEAM_LAW.md, `nature_beam.py` the walk). Replaced by the rule of
+section 2 at every free Node; the record's rows are at Nodes, not on
+lines. What is still needed and why: the flight table's pace c = 1 /
+sqrt 3 survives as the pair [1, 3] inside the rule (the only constant);
+the direction label survives only as a READING at a detector, the
+gradient of the arriving offer's phase across the detector's Nodes (the
+momentum the click hands over, section 5), never as a thing carried by a
+row. The one-wall function (`age_wall`, f = 1 + gamma) and the push
+(`optical_turn`) act today on a row's flight and label; under the rule
+they act on the pace at a Node: the crowd's age moment A at a Node
+stretches the local clock of every row there (the rule's step taken at
+the stretched rate, d against d + f n A, the same coefficient), which
+bends a train's front the way a refractive index does; whether the
+push's second half (the flow **V** on the turn) is then still a separate
+verb or is contained in the stretched pace is the design's first open
+computation (section 6.6: row 13's bend), stated here as open, not
+decided: the owner's "W and not P" of 07:00Z reads under this rule as "the
+wall alone; no second push on a splitting row", exactly the question
+Form W of CORRECTIONS.md M9 asked, now with a rule that splits.
+
+4.2 **The split only at declared apparatus** (the lamp's fan of
+directions with turns, the opening's fan table with angle weights, the
+polariser's half-angle tables, the mirror's rerelease): instruments above
+the board. Replaced: the lamp's fan by the source's train (section 2);
+the opening's fan by nothing (an opening is a hole; the wall's Nodes are
+detectors that end the record); the mirror by a receiver body's
+re-emission (CORRECTIONS.md M4, the owner's "the receiver body never a
+mirror", record 1227) driven by the record's clock at the arrival's
+phase. Still needed, shown: the polariser's half-angle tables are a
+DETECTOR's rule (what a polariser does to the record it reads: a click
+into its own family's label with the table's weight, a re-emission with
+the table's rotation), not a free Node's, and stay as declared on the
+measured event (Malus, section 6.3).
+
+4.3 **The sensitivity key** (`sensitivity` on a detectors entry,
+event_split DESIGN.md section 4): gone; the counting form at s_D = 1 / W
+is the only trigger; a detector that is less sensitive is a detector
+with a larger body (more Nodes summing) or a coarser wheel, both
+declared things, not a key.
+
+4.4 **The coin** (a copy rule at a free Node, M10): a diffusion in the
+copy form, speckle in the unitary form, refuted by its pins (M11). What
+cancels in the new rule: the subtraction of the row's own last emission
+(section 2). At which wavelength the lattice carries the bells: section
+6 (B): at lambda = 12 Links the single opening at the Fresnel number 1.45
+reads 0.946 against the exact sum 0.917 (inside 22.2's band), at 16 Links
+0.930, at 24 Links 0.920; the pixel-to-pixel roughness 0.02, 0.013,
+0.006 (no speckle); the dispersion stated in section 6 (A): the phase
+pace by direction within 0.8 percent of c at 12 Links, 0.4 at 16, 0.2 at
+24; the registered 4.654 Links is not carried (section 7).
+
+4.5 **The two energies of light untied** (CORRECTIONS.md M9: the label's
+e_D = 111 against the clock's 3 h n / d = 24; Reviewer 3's code point of
+07:52Z that a born row's content is quantum x turn, so the quantum drops
+out of any tie on the row form). Under the rule there is no label stored
+and no row energy on the headings: a record has ONE energy, its content
+(the quantum h handed at the click, `E = h f` at the click as ALGEBRA
+4.11 already reads it) and ONE clock (the source's train at [n, d]); the
+push's weight of a light record at a crowd (section 4.1) is its content
+h, the generic weight the owner's sentence of record 1297 asks for ("the
+row's energy in content units", the same for every family), with M_eq =
+1 by construction, which is N5's identity `3 h n = Q S d` read as a
+DEFINITION of the family's clock in content units rather than as a
+balance to be met. So the tie's question is answered inside the design
+with no integer to choose: the momentum a click hands over is read from
+the arriving offer's phase gradient (section 5) and is `h` times the
+wave number by the rule's own dispersion, E = h f = p c to the lattice's
+dispersion (0.2 to 0.8 percent), no label to lower and no quantum to
+raise. Reviewer 3's label 14 and the physicist's h = 5 are both ties of
+the row form and do not apply here.
+
+4.6 **The reader's script modelling the apparatus split differently from
+the engine** (CORRECTIONS.md M11 item 1, section V of split_pins.py: a
+turned row's residue). Under the rule there is no residue and no turned
+row; the pins script runs the same integers the engine would run
+(section 6), so a reading of the script IS a reading of the rule; what
+the script still assumes above the rule is named in section 6.0.
+
+## 5. The click and the books
+
+**The offer.** At every Node, every interval, the record's row has an
+offer, `a_now^2` (in the amplitude unit squared). A free Node does
+nothing with it. A detector (a measured event with a body, as today: a
+screen pixel, a wall Node, a face, a polariser) adds the offer arriving
+at each of its Nodes to the record's pointer for that detector's set
+(the pointer per set of the amplitude law, `amplitude.rungs` and
+`cell_of`), the same number at every Node whether or not anyone reads it
+(the owner's statement 5: a detector is a Node whose count is read
+Outside).
+
+**The trigger.** The counting form (record 1288): the record's total
+offer is its norm (the birth's A^2 times the train's length, in the
+unit); the rungs on the wheel W = 4096 divide it; the record completes
+when its offer has been exhausted into detectors (the sum of the
+pointers reaches the norm less the grain, the exhaustion of event_split
+DESIGN.md section 4, the click's one non-local step, the host's, as
+today) or when its train and its rows have left the board (the faces
+absorb); at completion the click's cell is chosen by `cell_of` over the
+pointers, one click per record, as today. The click's TIME under this
+form is the interval at which the pointer of the chosen cell crossed its
+first rung (s_D = 1 / W), the front of the arriving offer, not its
+centre: section 6 (D) reads the detector at rest by this rule and finds
+N_0 = 206 at every wavelength tried, the ray law's pin.
+
+**The content and the books.** The record's content is one quantum h,
+one entry in the record's ledger from the birth (the lamp pays h at the
+birth as today, `cost = quantum x turn`, the turn 1) to the click (the
+detector receives h); it is never at a Node and never split: the
+amplitudes are the record's bookkeeping numbers (the shares of ONE
+quantum's arrival), not content. The books balance as today: content in
+transit until the click, then measured (`measured_content`,
+`transit_content`); the rows on the board at the click are removed
+(their amplitudes are not content and are not booked). The collision
+rule (the meeting, M5) reads the crowd's moments from the records' rows
+at a Node exactly as it reads them from rows today: the amount of a
+record at a Node is its offer's share of its norm, a rational the crowd's
+moments take in the unit (a declared rounding at load, the grain); the
+push on a massive record's rows is the stretched pace of 4.1.
+
+**The detector's own count and the birth stamp.** The click line carries
+the detector's count (`clock_stamp`) and the record's birth stamp; a
+record's cycle (section 8) is their difference in the detector's own
+count when the detector is the emitter (a detector at rest or moving,
+the owner's statement 5).
+
+**Bounded integers, fixed local work.** Per record per Node: two
+amplitudes (at most A x the train's length, the birth norm's square
+root, within int64 at A = 2^20 and trains to 2^11 intervals), one
+remainder, six reads and one division per interval; the host's cost per
+record is its rows' count (section 7).
+
+## 6. The pins before any build (COMPUTATION; `detector_law_pins.py`, `detector_law_pins.out`)
+
+6.0 **What the script is and assumes.** The rule of section 2 on a 2D
+z-periodic board in int64 with the remainder kept, exactly the engine's
+integers; the source a line of Nodes driven by the record's clock for a
+train of 32 periods (the coherence, a lamp's declaration); the wall's
+Nodes hold amplitude 0 (a Node that clicks takes the amplitude: in the
+script that is a reflecting wall, in the engine an absorbing one; the
+difference is the first computation still to make, 6.1); the reading at
+the screen the accumulated offer per pixel over the window from the
+train's first arrival until the train has passed the farthest pixel, with
+the far edges beyond that window's light cone (nothing reflected enters
+the reading); the clicks of 4096 births fall in proportion to the
+accumulated offer under the counting trigger, so the offer per pixel IS
+the pattern of the clicks. The pilot's worlds are scaled by lambda /
+4.654 in every length (w, L, the screen's height), which keeps each
+world's Fresnel number and its angular bell. The falsifier of every pin
+is the band it is read against.
+
+6.1 **The single opening** (row 10; RUN_10.md; 22.2's bands): at the
+Fresnel number 1.45 (the w = 27 world: w = 70, 93, 139 Nodes at L = 278,
+371, 557 Links for lambda = 12, 16, 24) the rule reads w x FWHM / lambda
+= 0.946, 0.930, 0.920 against the Euclidean exact sum at the same
+geometry 0.917, 0.916, 0.916 (isotropic emitters, the pilot's pin's
+form, and with the obliquity cos theta alike: at this Fresnel number the
+two agree) and 22.2's band 0.92 +- 0.03: INSIDE at all three, converging
+on the exact sum as lambda grows (the residual 3, 1.5, 0.4 percent, the
+lattice's). At the Fresnel number 0.16 (the w = 9 world: w = 23, 31, 46
+Nodes) the rule reads 0.872, 0.856, 0.842 against the isotropic exact
+sum 0.872 and the obliquity sum 0.842 (Rayleigh-Sommerfeld's first
+solution, an aperture in a screen of amplitude 0): the rule converges on
+the OBLIQUITY sum as lambda grows, which is what a wave through a hard
+screen does; 22.2's band 0.886 +- 0.03: inside at 12 Links, at its edge
+at 16, OUTSIDE at 24 (0.842, below the refuting bound 0.85). The pin as
+declared: the rule's far-field bell must read inside 22.2's band with
+the ENGINE's wall (a wall that clicks absorbs the amplitude; an
+absorbing screen carries Kirchhoff's obliquity (1 + cos theta) / 2, whose
+sum at this geometry lies between 0.842 and 0.872), a computation the
+script does not yet make (its wall reflects): the first thing to compute
+before the build, named, not promised; if the absorbing wall also reads
+below 0.856, the far-field single slit is a MISS of the rule against
+22.2 and the design returns here. The pixel-to-pixel roughness near the
+peak 0.02 to 0.001: a bell, no speckle (the coin's 0.8 to 1.0).
+
+6.2 **The two slits** (row 2a; the registered 0.966 in the clicks at
+the fan's grain; nature's 0.98, Grangier, Roger and Aspect 1986 as the
+lower bound; the ideal 1): the visibility over the two-source cosine's
+bright and dark pixels 0.9588, 0.9576, 0.9575 at lambda = 12, 16, 24 with
+the train 32 periods (0.845, 0.759, 0.691 with the train 8 periods, the
+first run of the script): the number is set by the record's TRAIN, the
+coherence length c x train against the path difference at the outer
+fringes (3 lambda at the third fringe: a rectangular train of 32 periods
+loses a tenth there), not by the lattice: nature's 0.98 needs a train of
+about 128 periods (the path difference a fortieth of the coherence), a
+declared integer of the lamp. The pin as declared: at the train the lamp
+declares, the visibility over the same pixels must read at or above the
+value the train's coherence gives, 0.96 at 32 periods, 0.99 at 128; the
+falsifier a reading below 0.95 at 32 periods, or a reading that does not
+rise with the train. This is the first row the rule could PASS against
+nature: the fan's grain, the cause of the registered FAIL, has no
+counterpart here.
+
+6.3 **Malus** (the registered 128 and 128 at 45 degrees; nature's cos^2):
+the polariser is a detector with the half-angle tables (4.2); under the
+rule the record's train arrives along the 7-Node line and the polariser
+reads it as today; the pin 128 and 128 stands unchanged and is not the
+rule's to move; the script does not run it (a one-line world reads the
+tables, not the rule). Bell's S on the re-arranged bars (CORRECTIONS.md
+section 7's re-arrangement): a pair record is two records with one
+birth stamp and opposite trains; the bars are polarisers; the pin is the
+tables' S as registered; the rule's part is only that both trains reach
+their bars, a computation to add after 6.1.
+
+6.4 **The detector at rest** (the light clock's N_0 = 206 +- 2 at L = 60,
+light_clock_pins.out on `origin/light-clock`; the owner's statement 5):
+the light clock's world is a chain (320 x 3 x 3, periodic in y and z),
+so the rule is the one-dimensional chain 3 a_next + r' = a_E + a_W + 4 a
+- 3 a_before + r. A train of 2 periods sent from the detector's Node to
+a mirror 60 Links away and back: the returning offer's centre reads N_0 =
+223, 221, 221 at lambda = 12, 16, 24 (the packet's centre; the chain's
+group pace at these clocks 0.564, 0.570, 0.574 against c = 0.577, so
+2 L / v_g = 213, 211, 209, the rest the short train's spread); but the
+counting trigger clicks at the FIRST rung of the returning offer (section
+5), the front, and that reads 185.0 + 21, 178.5 + 27.5, 164.5 + 41.5 =
+**206.0 at every wavelength**, the ray law's pin exactly, the emission's
+click at the train's start. The pin as declared: N_0 = 206 +- 2 by the
+first-rung click; the falsifier a first-rung reading outside 204 .. 208
+at the lamp's declared train, or a dependence on the train's length
+beyond the band. Reviewer 3 is asked to check that the front's pace on
+the chain is c independent of the clock (a precursor at the lattice's
+front speed), which is why the reading does not move with lambda.
+
+6.5 **The moving detector** (the light clock in motion, N_par and N_perp;
+row 4a; docs/designs/moving_detector): the same chain with the detector's
+body moved by its drive one Node per k intervals; the pin the branch's
+whole-tick pins (307 at k = 3 along, 254 to 255 across); the script does
+not run it yet; it is the second computation after 6.1, and the one where
+the owner's statement 5 is read as a derivation to attempt (a record that
+must click at the NEXT Node accumulates its first rung later), not
+claimed.
+
+6.6 **Row 13, the bend at a crowd** (-1.993 pixel at gamma 0, -3.989 at
+gamma 1, the run of record 1216): under the rule the crowd's age moment
+stretches the pace at the Nodes it fills (4.1); the train's front bends
+toward the slow side by the wall's coefficient alone; the pin is the
+time part's -1.993 at gamma 0 and 1 + gamma times it at gamma 1 if the
+stretched pace carries both parts, the design's open computation on the
+pin worlds (`examples/events/optical/`) scaled to the lattice's
+wavelength; the script does not run it yet. If the bend reads the time
+part alone (about -2.0 at gamma 1 too), the second half is a separate
+verb after all and the owner's "W and not P" is answered "P is needed";
+if it reads -3.99 at gamma 1, the wall alone carries both parts and no
+push is needed on a splitting record. Named, not promised.
+
+## 7. The price
+
+- **The wavelength.** The lattice carries the bells at lambda >= 12
+  Links (6.1); the registered 4.654 Links is not carried (the coin's
+  speckle of M11 is the ray law's wavelength on a lattice). The family's
+  clock becomes [n, d] with the period 12 sqrt 3 = 20.8 intervals or
+  longer (the rate n / d = 64 / 20.8 = 3.08 steps per interval at N =
+  64, against the registered 8.0).
+- **The worlds' scale.** Every length of a light world scales by lambda
+  / 4.654: at 12 Links by 2.58 (the single opening 120 x 161 becomes
+  about 310 x 415 in the pins' geometry, 6.7 times the Nodes; the two
+  slits 60 x 121 becomes 155 x 312), at 16 Links by 3.44 (12 times the
+  Nodes). The register's light worlds are re-declared at the scale, the
+  bodies' worlds unchanged in geometry.
+- **The host's cost.** A record's rows are the Nodes its train has
+  reached: in 2D at 12 Links about 3 x 10^4 to 1.3 x 10^5 Nodes per record,
+  three int64 each (0.7 to 3 MB); records alive at once about 2.6 x 260
+  = 700 (one birth per interval, a record complete in about 2.6 x 260
+  intervals), 0.5 to 2 GB per world; the work per interval the
+  six-neighbour sum over the live rows, vectorised, 0.5 to 3 s per
+  interval; the intervals 2.6 x 4700 to 8800: the single opening about 3
+  to 8 hours per world on this machine (the pilot's 2.7 hours for w = 9
+  today), the two slits about 1 to 2 hours, Malus minutes, the light
+  clock minutes. The pins script itself: 8 s per opening world at 12
+  Links, 70 s at 24 (HOST).
+- **The clock.** The wheel W = 4096 unchanged; the record's train a new
+  declared integer of the lamp (32 periods for the bells, 128 for the
+  two slits at 0.99); the lattice's pace by direction within 0.8 percent
+  of c at 12 Links (6.0 A), the price paid in the far-field bells and in
+  the moving clocks' pins, to be read against their bands.
+- **The register's re-run.** After the build and the pilot's four worlds
+  under the rule: every light world at the new scale, the bodies' worlds
+  under the same rule at their periods (section 8), once, on the Boss's
+  second GO, the readings on the detector's own count.
+
+## 8. The massive row: the same rule read at a body's period
+
+The owner's statement 5 makes the body's record the same thing as
+light's: a detector at rest is a record that pops up at the same Node
+each cycle, a moving one at the next Node; the mass moves only through
+the Inside; the cycle time is the detector's. Under the rule a massive
+family's record is born at its body's Node with its own clock (the
+rest frequency, E'_0 = Q S M in the units of the flight table, the
+family's [n, d]) and a train of its own period; it spreads by the same
+rule; it clicks, by the counting trigger, at the Node where its offer
+first crosses the rung: at rest that is its own Node (the return of
+record 1227), and the click is the body's SELF-CREATION (the count per
+self-creation of the light clock's algebra, TICK_ALGEBRA.md), the
+detector's own count advancing by one; the body's held content (its
+mass) is handed to itself; the next cycle starts. In motion (a drive,
+the momentum label of the massive form) the record's train is emitted
+with the phase gradient of its momentum and the first rung crosses at the
+NEXT Node later than at rest by the rule's own dispersion: that is the
+computation of 6.5, the candidate for gamma from the rule, attempted
+there and not claimed here. The massive form's separate design (the
+Boss's item 5 of 07:19Z: a body's own count as the whole part of its
+record's phase, the lifetime a share per self-creation, the three keys
+retired) folds into this section: the body's own count IS its clicks;
+the lifetime is the number of cycles the record's ledger allows; the
+keys of the massive form (`massive_rows`, `massive`, `momentum_magnitude`)
+become the family's clock and the lamp's train. Whether a massive record
+splits the same way: yes, by construction, the rule has no family name;
+what differs is the clock and the content it hands over, values not
+branches (the generic test).
+
+## 9. The three tests of the whole, and what the reviewer must gate
+
+Generic PASS, vector PASS, local PASS by section 2; the click's one
+non-local step (the exhaustion, the host's) as today, named. Reviewer 3
+is asked to gate: (i) the wall's boundary in 6.1 (absorbing against
+reflecting) and its far-field number; (ii) the front's pace on the
+chain in 6.4; (iii) the dispersion's effect on the moving clocks in 6.5
+before any claim of gamma; (iv) whether the stretched pace of 4.1 is
+the one wall of NOTE.md or a second thing; (v) the host's cost of 7
+against RUN_AUDIT.md. The owner reads sections 0, 1, 5 and 8 first.
+
+## 10. Six lines
+
+1. The law he means: the ray splits at every free Node inside the board
+   and holds its amplitudes; outside there is no board, only clicks, and
+   a passage from Node to Node only through a detector, at rest or
+   moving, which carries the mass through the Inside in its cycle time.
+2. The rule: at every Node the record re-emits to its six neighbours the
+   sum of what they held less three times what it held before, the
+   remainder kept; the pair [1, 3] its only constant; verbs G and D;
+   generic, vector and local.
+3. What it fixes: the line on the lattice, the declared fans, the
+   sensitivity key, the coin, the two energies of light (one energy, one
+   clock, E = h f = p c by the rule's own dispersion), the script's
+   residue.
+4. The pins, computed: the single opening at the Fresnel number 1.45
+   inside 22.2's band at 12, 16 and 24 Links; at 0.16 the rule converges
+   on the hard screen's obliquity and misses the band at 24 Links, the
+   engine's absorbing wall the first computation still to make; the two
+   slits at 0.958 by the train's coherence, 0.98 reachable by the train;
+   the detector at rest 206.0 by the first-rung click at every
+   wavelength, the pin's number.
+5. The price: the wavelength 12 Links or more, the light worlds scaled
+   by 2.6 or more in length, hours per world, a train declared on the
+   lamp.
+6. Nothing built; the build on the owner's GO after Reviewer 3's gate
+   and after 6.1's absorbing wall reads inside the band; the massive
+   form folds in as section 8.
