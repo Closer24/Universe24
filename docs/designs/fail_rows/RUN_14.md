@@ -135,7 +135,20 @@ name of the ratio of two count ratios, 0.0912 on the rung.
    and both clocks sit, 2 to 35 times the isotropic shell mean the
    conditional pins assumed. No pin moved; Newton's advance and bending
    stay unread at the shell mean's value.
-6. **Open, the owner's or the reviewer's** (section 8): the deciding pin
+6. **The check of section 10** (the reviewer's reading (1), a
+   COMPUTATION labelled a CHECK, no pin): the same kernels the engine
+   runs, on the crowd replayed Node by Node along the line the row
+   walks, reproduce the read advance to 2 per cent (-113.0 against
+   -115.3), the massive centroid to 6 per cent (11.6 against 11.0), the
+   light centroid to 10 per cent (16.9 against 18.9) and the engine's own
+   flights in ticks to 1 to 2 per cent: the push's and the wall's forms
+   hold at the comb, Newton's form in the crowd the world has; the
+   straight-path form (the crowd integrated along y = 26 while the row
+   leaves the line by 11 and 19 Nodes) is the second cause, 24 per cent
+   on the advance beyond the comb's factor. The comb pin's band (10.4):
+   the readings inside, the massive ones well inside, the light row's at
+   the edge; row 14's word NOT YET READ AGAINST NATURE.
+7. **Open, the owner's or the reviewer's** (section 8): the deciding pin
    is the light row's, a run on the go; the word "a read at a body is a
    click" is not needed by Side A (the row's push reads the arrivals at
    its Node as coded, whichever way the word goes); k_a(b) at 2^10 is a
@@ -735,7 +748,197 @@ light (artifacts/newton_side/light/run): 1400 intervals, HOST 139.2 s; the hypot
 0 record check(s) failed; 9 reading(s) inside, 7 outside, none moved
 ```
 
-## 10. Links
+## 10. A CHECK, not a pin: the advance and the two centroids by the same kernels on the replayed crowd along the row's line (the reviewer's reading (1), 2026-09-23)
+
+Ordered by the Boss on the reviewer's agreement to section 9 (the
+comb the cause, the rung confirmed, the form unread): the advance and
+the two centroids re-derived by the engine's own kernels on the REPLAYED
+crowd along the line, against the read -115.3 counts, 11.0 and 18.85
+pixels; agreement within the grain confirms the push's and the wall's
+forms at the comb (Newton's form in the crowd the world has),
+disagreement names a second cause. A COMPUTATION labelled a CHECK: no
+world, no key, no run of a pin, no pin moved. The script and its output
+are beside this file: [run_14_check.py](run_14_check.py),
+[run_14_check.out](run_14_check.out), the two JSON records
+`run_14_check_mass.json` and `run_14_check_light.json`. Written on
+`main` at bf8330f1 (PR #987 merged), the reviewer's reading (1) as the
+Boss ordered it at 03:36Z.
+
+### 10.1 The method: the kernels, named with their code lines, and the inputs by kind
+
+The two numbers the law reads at a Node the row is at, captured from
+inside the engine's own interval (a wrapper around `optical_turn` that
+records and then calls it; nothing of the engine changed) at every Node
+of the band y = 4 to 27, z = 20, x = 2 to 54, for 1000 intervals of the
+`mass` and `light` worlds, the means over the intervals 101 to 1000 (the
+crowd steady from about the 60th interval): **GAMEBOARD, the input, never
+pinned.**
+
+- a_tau(x, y), the crowd's age moment the wall reads: `CrowdMoments.age_moment`
+  (`src/event_universe/events/nature_beam.py`, the class at line 3172;
+  the rows of other numbers present at the end of the interval before),
+  read by `optical_walk_step` (line 3841) through `optical_rate_and_wall`
+  (line 3809) and the one wall function `core.integer.age_wall` (line
+  175): the rate times d against the wall times (d + c_f n a_tau).
+- **V**(x, y), the arrival flow the push reads: `CrowdMoments.arrival_flow`
+  (line 3250: the sum of amount times the unit label over the rows that
+  arrived at the Node in this interval, less the reader's own number's),
+  read by `optical_turn` (line 3953): **W** -= n weight **V** per
+  interval, the weight content x (E'_D^2 + 3 gamma_PPN p_D . p_D) //
+  E'_D per unit (`unit_weights`, line 3770; 21 x 1360 = 28560 on the
+  massive row, 1 x 221 on the light row).
+- The pace of a pushed row, its momentum's pair (`momentum_pair`, line
+  3697): the counts per Manhattan Link T / (S_1 Q) = sqrt(R^2 + 3
+  abs(**P**)^2) / abs(**P**)_1 with **P** = Q d content **p**_D + **W**
+  and R = Q d content E'_0; the line walked **P**'s by Bresenham (the
+  same function's docstring; the label chosen among the fan's neighbours
+  by the error accumulator **c**).
+
+The kernel (COMPUTATION at rung 1, the design's forms of
+NEWTON_FROM_CLICKS 3 (b) to (d) with the replayed means in place of the
+shell mean): the row advances 52 steps in x from the lamp's Node to the
+plane; a step in x costs abs(**P**)_1 / P_x Manhattan Links on **P**'s
+line, so its dwell is d(x) = (E'(**P**) / P_x) (1 + c_f (n / d) a_tau)
+counts, E'(**P**) = sqrt(R^2 + 3 abs(**P**)^2); at every free Node (the
+lamp's and the receivers' Nodes excluded, as `optical_turn` excludes a
+Node with a measured event) the push **W** -= n weight **V** acts once
+per interval of the dwell; the transverse displacement grows by P_y /
+P_x per step. The advance is the sum of the dwells less the unpushed 52
+E'(**P**_0) / P_0; the centroid toward the mass is minus the
+displacement in y at the plane. The crowd is read in two ways: on the
+STRAIGHT line y = 26 (the design's straight-path form, rung 2's
+geometry with rung 1's crowd) and on the BENT line, the Node (x,
+round(y)) the kernel's own displacement puts the row at.
+
+Beside the kernel, the engine's own rows of the lamp's family in the
+same replay (**GAMEBOARD**, the store): per x their mean y, the mean of
+their push accumulator (W_x, W_y) over the label's momentum P_0 =
+390856704 (16777216 for the light row), and their mean age at the plane
+x = 54, the flight's count in ticks, the direct comparison of the
+kernel's momentum profile and pace with what the engine did, apart from
+the clicks (which add the two clocks' rates, 9.2).
+
+### 10.2 The three numbers, with their kinds, and the comparison
+
+| The number | The kernel on the straight line (COMPUTATION, CHECK) | The kernel on the bent line (COMPUTATION, CHECK) | The read (DETECTOR, section 9) | The engine's rows (GAMEBOARD) | Bent against read |
+| --- | --- | --- | --- | --- | --- |
+| the massive row's advance, counts | -140.0 (the wall alone +5.4, the push -145.5) | -113.0 (the wall alone +8.2, the push -121.3) | -115.3 | the rows' age at the plane 885.6 ticks against the kernel's 875.4 on the bent line and the unpushed 988.4 (1.2 per cent) | 0.98 |
+| the massive row's centroid, pixels toward the mass | 10.24 | 11.64 | 11.01 | the rows' mean y at the plane 15.02 (10.98 pixels) | 1.06 |
+| the light row's centroid, pixels toward the mass | 16.03 | 16.90 | 18.85 | the rows' mean y at the plane 7.16 (18.84 pixels) | 0.90 |
+| the light row's flight in ticks (no pin; the read T is the two clocks', 9.2) | 119.1 (the wall +21.4, the push +7.7) | 118.7 (the wall +20.3, the push +8.3) | not readable from T (+21.1 the clocks' difference) | the rows' age at the plane 120.7 ticks; the unpushed 90.1 | 0.98 against the rows' age |
+
+The momentum profile, the kernel on the bent line against the engine's
+rows (both over P_0; the engine's W_y jumps at the label's turns, where
+**P** is conserved and **W** is not, so only W_x is compared):
+
+| x | the engine's rows' mean y | the engine's W_x / P_0 | the kernel's P_x / P_0 - 1 (bent) | the kernel's y |
+| --- | --- | --- | --- | --- |
+| 10 | 26.00 | +0.124 | +0.143 | 26 |
+| 18 | 26.00 | +0.207 | +0.227 | 26 |
+| 26 | 25.00 | +0.333 | +0.338 | 25 |
+| 34 | 23.00 | +0.261 | +0.228 | 23 |
+| 42 | 19.99 | +0.100 | +0.036 | 20 |
+| 50 | 16.59 | +0.081 | +0.015 | 16 |
+
+The light world's profile the same in shape (the engine's W_x / P_0
+rising to +0.60 at x = 26 and falling to -0.16 at the plane; the
+kernel's P_x / P_0 to 1.51 at x = 26), its rows leaving the line by 19
+Nodes.
+
+### 10.3 The grain
+
+- The mean-field walk against the pulsed crowd: the held mass at 2^10
+  releases one row per direction per four self-creations, so a_tau and
+  **V** at a Node pulse with the period 4 (their spread over the
+  intervals of the order of their mean, 9.2's table); the row's dwell of
+  19 counts per Node averages about five pulses, the read advance's
+  spread of 19 counts over the clicks (9.1) is that grain; the check's
+  agreement to 2 per cent is inside it.
+- The bent line at whole Nodes: the kernel reads the crowd at (x,
+  round(y)) while the engine's rows sit at y = 26, 25, 24, 23, 21.5, 20,
+  18.4, 16.6, 15 (their mean), a comb whose teeth change from one Node
+  to the next (the zeros at x = 14 and 42 on y = 26); the difference
+  between the two readings of the crowd is the straight line's -140
+  against the bent line's -113, the second cause of section 10.4.
+- The push's x-profile agrees within the momentum's own grain near the
+  ends (the engine's W_x / P_0 +0.08 at x = 50 against the kernel's
+  +0.015: the engine's rows, further from the line, meet the far comb's
+  +x flow less); the profile's rise to +0.33 at the mass's plane agrees
+  to 2 per cent.
+- The light row: the deflection 0.72 radians is far beyond the
+  straight-path form's alpha << 1, and the row's label turns through
+  the fan's coarse directions ((5, -1, 0) to (1, -1, 0)); the kernel's
+  10 per cent on its centroid is that coarseness; its flight in ticks
+  agrees to 2 per cent with the rows' own age at the plane.
+
+### 10.4 The comb pin, its band, and the verdict in one sentence
+
+The comb pin (the Boss's order of 03:36Z, record 1188: the law's own
+pin for the mass and light worlds computed on the comb the worlds
+declare, the path integral of the primitive a_tau and of the flow
+**V** over the fan as declared, before any comparison; a CHECK, a
+COMPUTATION, not a pin of the register): the kernel on the bent line,
+the advance -113.0 counts, the massive centroid 11.6 pixels, the light
+centroid 16.9 pixels (the light row's flight in ticks, 118.7 against the
+engine's rows' age 120.7, is a GAMEBOARD comparison and stays in 10.2 as
+a diagnostic; by Highlights 5.4 kind 9 it is never the ground of a
+verdict). Its band: on the advance +- 19 counts, which is the read's own
+spread over the clicks (9.1, a DETECTOR spread, 844 to 965 over 525
+clicks, the crowd's period-4 pulse over the dwell) and not a number
+derived from the check's grain (an estimate from a_tau's spread over the
+about 40 pushed Nodes of the walk gives about 9 to 10 counts; the
+verdict does not turn on it, the advance being 2.3 counts from the pin);
+on a centroid one Link (the error bound of the Bresenham line about
+**P**, `optical_turn`'s docstring) plus the whole-Node reading of the
+comb, one Link, two pixels in all. The band and the comparison are one
+commit, so "declared before the comparison" is not shown by the history;
+for a CHECK that is acceptable and is said here.
+
+| The comb pin (COMPUTATION) | Its band | The read (DETECTOR) | Inside |
+| --- | --- | --- | --- |
+| the advance -113.0 counts | +- 19 (the read's spread) | -115.3 | yes (2.3 counts) |
+| the massive centroid 11.6 pixels | +- 2 | 11.0 | yes (0.6 pixel) |
+| the light centroid 16.9 pixels | +- 2 | 18.85 | yes, at the band's edge (1.95 pixels) |
+
+**The verdict in one sentence:** the run's readings of section 9 lie
+within the comb pin's band, the massive row's advance and centroid well
+inside and the light row's centroid at the band's edge (the
+light row passes within 4.5 Links of the mass, where the comb's teeth
+change from one Node to the next and the kernel reads them at whole
+Nodes; its momentum profile is 15 per cent under the engine's at the
+mass's plane), so the push's and the wall's forms hold at the comb and
+Newton's form is what the law does in the crowd this world has; and
+row 14's word stays NOT YET READ AGAINST NATURE (the rung confirmed,
+the form confirmed on the comb, the form against a 1 / r crowd unread),
+unless the owner says otherwise.
+
+### 10.5 What it does and does not show
+
+It shows that the push's and the wall's forms hold at the comb: with the
+crowd the world has, read Node by Node along the line the row actually
+walks, the same kernels the engine runs (the push by the arrival flow
+at the weight (E'_D^2 + 3 gamma_PPN p_D . p_D) // E'_D, the wall by the
+age moment at c_f = 2, the pace the momentum's pair) reproduce the read
+advance to 2 per cent, the read massive centroid to 6 per cent, the
+light centroid to 10 per cent and the engine's own flights in ticks to
+1 to 2 per cent; and that the straight-path form is the second cause of
+what section 9's pins missed beyond the comb: the row leaves the
+straight line by 11 and 19 Nodes into a crowd that differs from one
+Node to the next, so a form that integrates the crowd along y = 26 is
+off by 24 per cent on the advance even with the replayed crowd. So
+Newton's form in the crowd the world has, the fall and the bending by
+the crowd's flow and age moment where the row is, is what the engine
+did and what the click read; the row falls as a slow particle in THAT
+crowd. It does not read Newton against nature: the crowd is the fan's
+comb, not a 1 / r potential (9.2), the inputs of the check are the
+host's view of the board (GAMEBOARD) and not clicks, and no number here
+is a pin or moves one. The reading that reads the form against nature
+(the fan declared uniform in angle at a grain finer than the line's
+Nodes, or the crowd read by a lamp at b against a control with the two
+clocks on Nodes of equal a_tau) is the physicist's design on the
+owner's word.
+
+## 11. Links
 
 - [NEWTON_ON_THE_SIDE.md](../newton_clicks/NEWTON_ON_THE_SIDE.md)
   (sections 0, 1, 3, 4.1, 4.3, 5 and 6) and
@@ -757,6 +960,7 @@ light (artifacts/newton_side/light/run): 1400 intervals, HOST 139.2 s; the hypot
 - The worlds [examples/events/newton_side/](../../../examples/events/newton_side/README.md);
   the tool `tools/newton_side_readings.py`; the test
   `tests/test_newton_side_readings.py`; Side B's generator
-  `examples/events/orbit_lamp/make_worlds.py`.
+  `examples/events/orbit_lamp/make_worlds.py`; the check of section 10,
+  [run_14_check.py](run_14_check.py) and [run_14_check.out](run_14_check.out).
 - The log: records 768, 1043, 1044, 1046, 1047, 1050, 1053, 1095, 1098,
   1113, 1117, 1122 and 1128.
