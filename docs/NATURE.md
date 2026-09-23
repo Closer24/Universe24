@@ -641,6 +641,18 @@ GAMEBOARD or a pin before its run waits outside the count with its run
 named; the bracket of what is missing is printed on the not-predicted
 lines alone and names the row's own missing piece.
 
+The reviewer's principle, as the register's finding and not a decision
+(the owner's word on a Highlights line pending): four rows (6, 10, 13,
+14) read one thing: a fan bounded in Manhattan length is not a fan of
+every direction (its angular density is the octahedron's, the axes 2.8
+times denser in angle than the face diagonals, 5.2 times than the body
+diagonals; its nearest direction to an axis at width P is atan(1 / (P -
+1))); a pin may take the isotropic shell mean only where the fan is
+declared uniform in angle at a grain finer than the reading or where a
+click read the crowd; otherwise the law's number for that world is the
+integral on the comb, computed before the run (the reviewer's read of
+RUN_14, 2026-09-23).
+
 Of the 11 observables the law as built predicts (12 once RUN_14 is read),
 5 agree within tolerance (1a, 2b, 9; the bounds 5a and 7a as bounds met),
 6 disagree (rows 1c, 6, 7b, 8a, 8b, 13; 14 after its read), and 8 are not
@@ -675,7 +687,7 @@ thing's rate and contraction (4a, 4b, 5b), a term of the crowd's history
 | 11c | not predicted | n = 1 (COMPUTATION, the pin of `far_lamp_map.out` section 4 (b)) | 4 (2.3 to 3.1 before correction), an exponent fitted to the sources and not one measurement | no term of the crowd's history; a ruler that grows with the redshift is no verb on the state [kinds (1) and (2): the crowd's history; Tolman's exponent a fitted parameter] |
 | 12 | HISTORY | the ratio 1.907 under the age word and 1.000 under the presence word (DETECTOR: the `1 + z` of the lamp's light at x = 110; the tick GAMEBOARD as the time base) | 2.00 | keeps its word (records 394 and 941) |
 | 13 | disagrees (the paper's row (Table 2); the register's cell above still reads NOT COMPARED, to be re-read on its own order) | the law as built 0.000 pixel (DETECTOR, series K); beside it, at the declared gamma_PPN = 1, the ring's mean radial shift 0.731 (DETECTOR) and the pin worlds' ratio 2.00 (DETECTOR), an input of kind 2 read back | 1.75 arcsec at the Sun's limb, 1 + gamma = 2 | 0.000 against the bending; the ring's shift 0.731 and the ratio 2.00 beside it read the declared gamma_PPN = 1 back (DETECTOR readings of a declared input, the third structure line) ([WHAT_IS_MISSING.md section 1.12](designs/fail_rows/WHAT_IS_MISSING.md#112-row-13-the-bending-of-light)) |
-| 14 | not yet read (RUN_14 pending, outside the count until its pins are read; the paper's row FAIL (Table 2) by the D3 periods) | not a row of this table ([WHAT_IS_MISSING.md section 1.13](designs/fail_rows/WHAT_IS_MISSING.md#113-row-14-newtons-periods)): T(24) / T(12) = 1.677 under the one constant and 1.512 under the line drive (COMPUTATION from two means of unclosed loops; the clicks DETECTOR, the escapes at 1208 and 2452) | the pin 2.00 +- 0.18 (nature's 2^(3/2) not compared) | 1.677 and 1.512 against 2.00 +- 0.18, a COMPUTATION on the host's tick of unclosed loops (WHAT_IS_MISSING.md 1.13: the reading missing, the moving detector's arrival click of RUN_14; a period is not yet a click). RUN_14 step 2 (PR #987): the chain's control PASS on every pin; the shell-mean pins of the mass and light worlds not readable on the fan's comb (a GAMEBOARD diagnostic); nature's period still not compared |
+| 14 | NOT YET READ against nature (RUN_14, 2026-09-23): the click algebra's rung confirmed by the control (979 then 980, DETECTOR); the conditional pins, the law's shell-mean form on an input no click read, FAIL on this fan by the comb (2.5 to 4 times, DETECTOR against a conditional pin); nature's period not compared; the paper's row FAIL (Table 2) by the D3 periods | not a row of this table ([WHAT_IS_MISSING.md section 1.13](designs/fail_rows/WHAT_IS_MISSING.md#113-row-14-newtons-periods)): T(24) / T(12) = 1.677 under the one constant and 1.512 under the line drive (COMPUTATION from two means of unclosed loops; the clicks DETECTOR, the escapes at 1208 and 2452) | the pin 2.00 +- 0.18 (nature's 2^(3/2) not compared) | 1.677 and 1.512 against 2.00 +- 0.18, a COMPUTATION on the host's tick of unclosed loops (WHAT_IS_MISSING.md 1.13: the reading missing, the moving detector's arrival click of RUN_14; a period is not yet a click) |
 
 ### The tally as written on 2026-09-21 (at the base 88d843ef; history, nothing deleted)
 
