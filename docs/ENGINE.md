@@ -994,7 +994,9 @@ zero face; light's faces the world's `boundary`); a measured event with
 `position` (the lower corner), its `pair` at the cells (a well of the
 massive kind's pair, or a gap on light's kind, the (M) wall), its
 `coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
-first difference both ways, `[0, 1]` each by default), its `wheel` (the
+first difference both ways on the same Node, each rational folded into
+the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
+the least common multiple of the blocks' `G_d`; `[0, 1]` each by default), its `wheel` (the
 first rung's W, the world's by default), its `seed` (its own record's
 amplitude on its cells at interval 0, 2^20 by default, 0 silent),
 `absorbing` (the take on light's row at its cells, false by default: a clock

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from math import gcd
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -511,59 +511,133 @@ def coupled_chain(
     )
 
 
-def light_energy(simulation: DetectorLawSimulation, live: LiveRecord) -> int:
-    return simulation.record_form(live)
+PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
-def test_g_the_coupling_both_ways_and_its_energy():
-    """BUILD.md (g): on the chain the light record and the block's response to it: with g = 0
-    E_light is the rule's own invariant (constant to the remainders' jitter after the train);
-    with g = 1 / 20 and G = 1 the sum E_light + (G / g) I_response over the window after the
-    train holds within 3 percent of its mean (the discrete scheme's first differences carry
-    an oscillating cross term of order g, a finding of the build, BUILD.md section 10 (j))
-    while E_light alone, read before the train reaches the block and at the end, moves by more
-    than 10 percent (the energy exchanged with the response)."""
-    for g, bound, moved in (([0, 1], 10**-4, 0.0), ([1, 20], 0.03, 0.1)):
-        world = parse_nature_beam_world(coupled_chain(g))
-        simulation = DetectorLawSimulation(world)
-        block = simulation.blocks[0]
-        totals: list[int] = []
-        lights: list[int] = []
-        record: LiveRecord | None = None
-        before_block = 0
-        for _ in range(600):
-            simulation.step()
-            if simulation.tick == 5:
-                record = next(live for live in simulation.records.values() if live.family == 0)
-            if simulation.tick < 5:
-                continue
-            assert record is not None and record.identity in simulation.records
-            if simulation.tick == 300:
-                # the train's front reaches the block at about 40 + 160 / c = 317
-                before_block = light_energy(simulation, record)
-            if simulation.tick >= 400:
-                light = light_energy(simulation, record)
-                response = block.responses.get(record.identity)
-                massive = 0 if response is None else simulation.record_form(response)
-                # (G / g) I_response with G = [1, 1], g = [gn, gd]: gd / gn times I; I in the
-                # units 3 L (L = lcm of the numerators 156 and 314) against light's 3
-                if g[0]:
-                    total = light * 156 * 314 // gcd(156, 314) + massive * g[1] // g[0]
-                else:
-                    total = light
-                totals.append(total)
-                lights.append(light)
-        assert len(totals) > 200, len(totals)
-        mean = sum(totals) // len(totals)
-        assert max(abs(value - mean) for value in totals) <= bound * mean + 1
-        if moved:
-            assert abs(lights[-1] - before_block) > moved * before_block
-            assert block.responses, "the block's response exists"
-        else:
-            assert abs(lights[-1] - before_block) <= bound * before_block + 1
-            assert not block.responses or all(
-                not np.any(response.now) for response in block.responses.values()
+def six_reads(row: np.ndarray) -> np.ndarray:
+    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the
+    Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
+    total = np.zeros(row.shape, dtype=object)
+    for axis in range(3):
+        for shift in (1, -1):
+            total = total + np.roll(row, shift, axis=axis)
+    return total
+
+
+def conserved_form(a_next: np.ndarray, a_now: np.ndarray, weight: np.ndarray) -> Fraction:
+    """The form I of section 3 with a Node weight den / num and the Link weight one:
+    SUM_i w_i (a_next^2 + a_now^2) - SUM_i a_next,i S_6(a_now)_i / 3."""
+    nodes = np.sum(weight * (a_next * a_next + a_now * a_now))
+    links = np.sum(a_next * six_reads(a_now))
+    return Fraction(nodes) - Fraction(links, 3)
+
+
+def rows(live: LiveRecord | None, shape: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """A record's three columns as exact integers (zeros for a record not yet formed)."""
+    if live is None:
+        zero = np.zeros(shape, dtype=object)
+        return zero, zero, zero
+    return live.now.astype(object), live.before.astype(object), live.remainder.astype(object)
+
+
+def light_packet(shape: tuple[int, ...], amplitude: int = 1 << 16) -> tuple[np.ndarray, np.ndarray]:
+    """A wave packet of light on the chain, moving +x at c = 1 / sqrt(3): the two columns
+    of MASSIVE_RECORD.md's script `massive_conserved_form.py` at integer amplitude."""
+    x = np.arange(shape[0], dtype=np.float64)
+    step = 1.0 / np.sqrt(3.0)
+    now = amplitude * np.exp(-((x - 100) ** 2) / 200.0) * np.cos(0.2 * (x - 100))
+    before = amplitude * np.exp(-((x - 100 + step) ** 2) / 200.0) * np.cos(0.2 * (x - 100 + step))
+    return np.rint(now).astype(np.int64).reshape(shape), np.rint(before).astype(np.int64).reshape(shape)
+
+
+def coupled_invariant(g: list[int]) -> tuple[int, Fraction, Fraction, bool]:
+    """The chain of (g) stepped 400 intervals with the identity of section 7 asserted on each:
+    returns the count of intervals with a nonzero cross term, light's form at the start and at
+    the end, and whether the response's rows stayed 0."""
+    block: dict = {
+        "position": [200, 0, 0],
+        "side": 12,
+        "pair": [314, 315],
+        "coupling": {"G": [1, 1], "g": g},
+    }
+    document = block_world([400, 1, 1], PERIODIC_CHAIN, [156, 157], [block], ticks=500)
+    document["age_bound"] = 100000
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    # the test's device: the completion's wheel raised so the packet lives the 400
+    # intervals (a lamp's record clicks at the block at its rung, test (i))
+    simulation.wheel = 1 << 20
+    block_live = simulation.blocks[0]
+    shape = simulation.shape
+    now, before = light_packet(shape)
+    light = planted(simulation, 0, now, before, np.zeros(shape, dtype=np.int64))
+    simulation.records[light.identity] = light
+    g_n, g_d = g
+    num_m = simulation.kind_num[1].ravel().tolist()
+    den_m = simulation.kind_den[1].ravel().tolist()
+    weight_m = np.array([Fraction(d, n) for n, d in zip(num_m, den_m, strict=True)], dtype=object)
+    weight_m = weight_m.reshape(shape)
+    inverse_walls = np.array([Fraction(1, 3 * n * g_d) for n in num_m], dtype=object).reshape(shape)
+    weight_l = np.full(shape, Fraction(1), dtype=object)
+    cells = block_live.mask
+    alpha = Fraction(g_n, g_d) * Fraction(315, 314)
+
+    def invariant(response: LiveRecord | None) -> Fraction:
+        x_n, x, _ = rows(response, shape)
+        y_n, y, _ = rows(light, shape)
+        cross = Fraction(g_n, g_d) * np.sum((weight_m * (x_n - x) * (y_n - y))[cells])
+        return conserved_form(x_n, x, weight_m) + alpha * conserved_form(y_n, y, weight_l) + cross
+
+    previous = invariant(None)
+    crosses = 0
+    silent = True
+    first_light = conserved_form(*rows(light, shape)[:2], weight_l)
+    for _ in range(400):
+        response = block_live.responses.get(light.identity)
+        x_n0, x_b, r_m = rows(response, shape)
+        y_n0, y_b, r_l = rows(light, shape)
+        simulation.step()
+        assert light.identity in simulation.records
+        response = block_live.responses.get(light.identity)
+        x_n, _, r_m2 = rows(response, shape)
+        y_n, _, r_l2 = rows(light, shape)
+        silent = silent and (response is None or not np.any(response.now))
+        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - r_l2))), 3)
+        if g_n == 0:
+            # light's own identity, the form I with the remainders' term (section 3)
+            assert (
+                conserved_form(y_n, y_n0, weight_l) - conserved_form(y_n0, y_b, weight_l)
+                == light_remainders
             )
+            continue
+        current = invariant(response)
+        massive_term = np.sum((x_n - x_b) * (r_m - r_m2) * inverse_walls)
+        assert current - previous == massive_term + alpha * light_remainders, simulation.tick
+        previous = current
+        if np.any(((x_n - x_n0) * (y_n - y_n0))[cells]):
+            crosses += 1
+    last_light = conserved_form(*rows(light, shape)[:2], weight_l)
+    return crosses, first_light, last_light, silent
+
+
+def test_g_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
+    """BUILD.md (g), MASSIVE_RECORD.md section 7 (MUSTs A and B): on a periodic chain of 400
+    Nodes (the kind [156, 157], a block of side 12 with the well [314, 315] at x = 200, G [1, 1])
+    a planted light packet and the block's response to it, 400 intervals: at g = 1 / 20 and at
+    g = 1 / 5 the identity J(t) - J(t - 1) = SUM_i (x_next - x_before)_i (r - r')_i / (3 num_i
+    g_d) + alpha SUM_i (y_next - y_before)_i (r - r')_i / (3 G_d) holds EXACTLY on every
+    interval (J = I_m + alpha I_l + (g_n / g_d) SUM_cells w_i dx_i dy_i, alpha = g W_in / G, the
+    forms in exact rationals; the remainders' term of each row with its own folded wall the
+    whole correction, no tolerance), the cross term nonzero on some interval (the coupling's
+    grain, a GAMEBOARD reading), and light's own form moved by more than 10 percent between
+    the packet's arrival and the end. The edge case: g = [0, 1] leaves the response's rows 0
+    and light's form its own identity, I_l(t) - I_l(t - 1) = SUM (y_next - y_before)(r - r') / 3."""
+    crosses, first, last, silent = coupled_invariant([0, 1])
+    assert silent
+    for g in ([1, 20], [1, 5]):
+        crosses, first, last, silent = coupled_invariant(g)
+        assert crosses > 0
+        assert not silent
+        assert abs(last - first) > Fraction(1, 10) * abs(first)
 
 
 def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():

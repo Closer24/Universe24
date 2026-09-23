@@ -117,13 +117,12 @@ class LiveRecord:
     driven: np.ndarray | None = None
     # massive-record-v1: the emitter's number for a record a block emitted
     # (None for a lamp's record), whether the block is still sourcing it
-    # (the current cycle's record), the remainder of the receive's division
-    # (a response record, the rational g) and of the source's per block (a
-    # light record, the rational G), each kept on the row (verb D).
+    # (the current cycle's record), and the coupling's denominator folded
+    # into the row's wall (MASSIVE_RECORD.md section 7, MUST A: one D per
+    # row per interval; the wall 3 den x scale, the remainder in [0, wall)).
     emitter: int | None = None
     sourcing: bool = False
-    receive_remainder: np.ndarray | None = None
-    source_remainder: dict[int, np.ndarray] = field(default_factory=dict)
+    scale: int = 1
     # The Ports' first differences summed (a taken record): what an absorbing
     # block's cells read of light, the field its coupling receives.
     port_motion: np.ndarray | None = None
@@ -336,6 +335,15 @@ class DetectorLawSimulation:
                 self.records[own_record.identity] = own_record
                 block.previous_sum = int(np.sum(own_record.now[mask]))
             self.blocks.append(block)
+        # Light's wall under the coupling (MASSIVE_RECORD.md section 7, MUST
+        # A): 3 L with L the least common multiple of the blocks' source
+        # denominators G_d, one number for the kind (1 without a block: the
+        # first build's rows bit for bit), so that every light row divides
+        # once per interval; a block's source term is scaled by L / G_d.
+        self.light_scale = 1
+        for block in self.blocks:
+            denominator = block.definition.source[1]
+            self.light_scale = self.light_scale * denominator // gcd(self.light_scale, denominator)
         # The blocks' cells: an absorbing block's cells take light's rows (the
         # first build's receivers); a clock body's cells and a wall's are
         # free Nodes for light with the pair and the coupling alone, so its
@@ -436,7 +444,6 @@ class DetectorLawSimulation:
             np.zeros(self.shape, dtype=np.int64),
             pointers=[0] * len(self.cell_names),
             first_rung=[None] * len(self.cell_names),
-            receive_remainder=np.zeros(self.shape, dtype=np.int64),
         )
 
     def _momentum_now(self, block: Block) -> list[int]:
@@ -528,47 +535,45 @@ class DetectorLawSimulation:
         return difference
 
     def _coupled_term(
-        self,
-        target: LiveRecord,
-        delta: np.ndarray,
-        mask: np.ndarray,
-        coefficient: tuple[int, int],
-        remainder: np.ndarray,
+        self, target: LiveRecord, delta: np.ndarray, mask: np.ndarray, numerator: int
     ) -> np.ndarray:
-        """One entry of the coupling (verb B, then D): the term added to the
-        target's total at the cells, wall x n x delta over d, the division's
-        remainder kept on the row in [0, d)."""
-        numerator, denominator = coefficient
-        wall = 3 * self.kind_den[target.family]
-        gained = np.where(mask, wall * numerator * delta + remainder, 0)
-        term = np.floor_divide(gained, denominator)
-        remainder[mask] = (gained - denominator * term)[mask]
-        return np.where(mask, term, 0)
+        """One entry of the coupling (verb B): the term added to the target's
+        total at the cells, 3 den x numerator x delta, the coupling's
+        denominator folded into the row's wall (MASSIVE_RECORD.md section 7,
+        MUST A: one D per row per interval, no second division; the row's
+        `scale` carries the denominator, `_advance` divides once)."""
+        term: np.ndarray = np.where(mask, 3 * self.kind_den[target.family] * numerator * delta, 0)
+        return term
+
+    def receive_scale(self, block: Block) -> int:
+        """The wall's factor of a block's massive rows: g's denominator times
+        the drive's pair's (the index in motion), the one division's wall
+        3 den g_d x pair_d."""
+        return block.definition.receive[1] * self.motion_pair(block)[1]
 
     def _receive(self, block: Block, response: LiveRecord, light: LiveRecord) -> np.ndarray:
         """The receive: the block's massive row gains g times light's first
         difference at its cells (an absorbing block reads its Ports' motion,
-        the field its cells read); in motion g carried as the drive's pair."""
+        the field its cells read); in motion g carried as the drive's pair;
+        the term 3 den g_n pair_n x delta against the wall 3 den g_d pair_d."""
         if block.definition.absorbing:
             delta = light.port_motion if light.port_motion is not None else np.zeros_like(light.now)
         else:
             delta = self._difference(light, block)
-        g_numerator, g_denominator = block.definition.receive
-        pair_numerator, pair_denominator = self.motion_pair(block)
-        coefficient = (g_numerator * pair_numerator, g_denominator * pair_denominator)
-        assert response.receive_remainder is not None
-        return self._coupled_term(response, delta, block.mask, coefficient, response.receive_remainder)
+        return self._coupled_term(
+            response, delta, block.mask, block.definition.receive[0] * self.motion_pair(block)[0]
+        )
 
     def _source(self, block: Block, massive: LiveRecord, light: LiveRecord) -> np.ndarray:
         """The source term (the same entry): light's row gains -G times the
-        massive record's current at the block's cells."""
+        massive record's current at the block's cells, the term
+        -3 G_n (L / G_d) x delta against light's wall 3 L (L the least common
+        multiple of the blocks' G_d, `light_scale`)."""
         delta = self._difference(massive, block)
         numerator, denominator = block.definition.source
-        remainder = light.source_remainder.get(block.number)
-        if remainder is None:
-            remainder = np.zeros(self.shape, dtype=np.int64)
-            light.source_remainder[block.number] = remainder
-        return self._coupled_term(light, delta, block.mask, (-numerator, denominator), remainder)
+        return self._coupled_term(
+            light, delta, block.mask, -numerator * (self.light_scale // denominator)
+        )
 
     def _block_births(self) -> None:
         """A block that emits births one light record at each new cycle of its
@@ -909,7 +914,7 @@ class DetectorLawSimulation:
                 total += self._shift(source, axis, sign, wrap=wrap)
         return total
 
-    def _advance(self, live: LiveRecord, extra: np.ndarray | None = None) -> None:
+    def _advance(self, live: LiveRecord, extra: np.ndarray | None = None, scale: int = 1) -> None:
         # The inserter's own Nodes are driven for the train and read their own
         # record only after its tail has left them (two periods after the
         # train; the first build's grace, DESIGN.md section 11): a receiver's
@@ -929,17 +934,25 @@ class DetectorLawSimulation:
         # light's pair [1, 1] the first build's integers bit for bit.
         num = self.kind_num[live.family]
         den = self.kind_den[live.family]
-        wall = 3 * den
+        # The coupling's denominator folded into the wall (MASSIVE_RECORD.md
+        # section 7, MUST A): the wall 3 den x scale, the six-neighbour term
+        # num x scale x S_6, the coupling's term 3 den x numerator x delta,
+        # one division; a scale that changes (the drive's pair under a
+        # ramp) rescales the remainder to the new wall, r x new // old.
+        if live.scale != scale:
+            live.remainder = live.remainder * scale // live.scale
+            live.scale = scale
+        wall = 3 * den * scale
         neighbours = self._neighbours(
             live.now, live.ports if taken else None, driven, self.kind_wrap[live.family]
         )
-        total = num * neighbours
+        total = num * scale * neighbours
         total -= wall * live.before
         total += live.remainder
         if extra is not None:
             # The coupling's term (massive-record-v1, section 7): one entry
             # of the declared matrix over the other record's two columns at
-            # a block's cells, already divided with its remainder kept.
+            # a block's cells, undivided, the wall its divisor.
             total += extra
         nxt = np.floor_divide(total, wall)
         live.remainder = total - wall * nxt
@@ -1156,7 +1169,7 @@ class DetectorLawSimulation:
                 light = self.records.get(identity)
                 if light is not None:
                     extra += self._receive(block, block.own, light)
-            self._advance(block.own, extra)
+            self._advance(block.own, extra, self.receive_scale(block))
             if block.definition.cavity:
                 block.own.now[~block.mask] = 0
                 block.own.remainder[~block.mask] = 0
@@ -1172,7 +1185,7 @@ class DetectorLawSimulation:
                     if block.current == identity and block.own is not None and sources is not None:
                         term = self._source(block, block.own, live)
                         sources += term
-                        added = np.floor_divide(term, 3 * self.kind_den[live.family])
+                        added = np.floor_divide(term, 3 * self.kind_den[live.family] * self.light_scale)
                         live.norm += int(np.sum(added.astype(object) * added.astype(object)))
                     continue
                 if block.definition.receive == (0, 1) and block.definition.source == (0, 1):
@@ -1184,11 +1197,11 @@ class DetectorLawSimulation:
                         block.number * (1 << 32) + (1 << 31) + block.answered, block.number, block.family
                     )
                     block.responses[identity] = response
-                self._advance(response, self._receive(block, response, live))
+                self._advance(response, self._receive(block, response, live), self.receive_scale(block))
                 self._book_response(block, response, live)
                 if sources is not None:
                     sources += self._source(block, response, live)
-            self._advance(live, sources)
+            self._advance(live, sources, self.light_scale)
         for block in self.blocks:
             self._block_clock(block)
         for identity in list(self.records):

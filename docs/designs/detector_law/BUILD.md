@@ -112,7 +112,7 @@ FINDING (the last rows), reported and not written as a component.
 | 1. The conserved form I read by the books, GAMEBOARD (section 3) | `record_form(live)`: the rule's invariant a_next . D a_next + a_now . D a_now - a_next . (S_6 / 3) a_now with D_x = den_x / num_x, scaled by 3 L to integers: `3 den_x (L / num_x) (a_now^2 + a_before^2)` summed over the Nodes less `L (a_now,i a_before,j + a_now,j a_before,i)` summed over the Links, L the least common multiple of the distinct numerators (at one numerator L = num and the form is section 3's line); per family in `books()` under `form` only under the key | none | B, G | (d) |
 | 2. The foreign object: a declared set of cells R, a cube of side s at a position, a G_48-set (section 4) | `Block`: R the cube `position + [0, s)^3` cut to the board (the lower corner at `position`, as `_span_nodes` places a body today); the block's pair written into the pair arrays on R; every block a measured event of the massive kind (or, for the (M) wall, of the light family) with these keys | `side`, `pair` (the well: `num' / den' > num / den` on the massive kind, refused otherwise; the reversed window `num' > den'` admitted as section 4 allows, named in the record; on the light family a gap, `den' > num'`, the mirror) | none (a declaration, kind 1) | (e) |
 | 2. One momentum integer per axis with its remainder, a declared tie; the step of the whole block by verb T (section 5) | `Block.step`: per axis the accumulator gains P_a per interval against the wall `3 Q S M` (the pace v_a = P_a / (3 Q S M), DESIGN.md 5.1 (a); k = 3 is P = Q S M on one axis), at most one Link per interval, the remainder kept, the sign of P_a the side; the whole block steps together: its cells and its pair region translate by T; the record's rows are NOT carried: they live on the Nodes and re-form behind the stepped cells by the rule (PUSH_BALANCE.md 12.7 (d); section 8's chain; section 10 (a)); the bound `3 (P . P) < (3 Q S M)^2` checked at load and at every change, a crossing the world's stop with a diagnostic (no clamp); the tie: x before y before z, a coincident second Link in one interval lost to the earlier axis as the frame loses it today | `momentum` (the existing key); `ramp` (an integer of intervals, 0 by default: the momentum reached from 0 by the whole part `P x t // ramp` over the ramp; the pushing agent's declaration, the design's own chain device, section 10 (e)) | T, D, the comparison | (f) |
-| 2. The coupling at its cells only: the dielectric in the first-difference form both ways, one declared g with G (section 7) | at a block's cells a light record k reaching the block owns a RESPONSE record r_k of the block's massive kind (dense arrays; the massive rule at every Node they reach); per interval at the cells the massive row gains `g (a_l,now - a_l,before)` and light's row gains `-G (r_now - r_before)`, each rational applied by D with its remainder kept on the row; the order within the interval: light's step, the massive step, then the two entries, both reading the two records' columns of the interval that ended; the block's total record at a Node is the sum (G) of its own record and the responses; the block's own record is driven by the light records the block itself emitted (below) and by no other | `coupling` `{"G": [n, d], "g": [n, d]}` (both `[0, 1]` by default: a block that neither drives nor is driven) | B then D | (g) |
+| 2. The coupling at its cells only: the dielectric in the first-difference form both ways, one declared g with G (section 7) | at a block's cells a light record k reaching the block owns a RESPONSE record r_k of the block's massive kind (dense arrays; the massive rule at every Node they reach); per interval at the cells the massive row gains `g (a_l,now - a_l,before)` and light's row gains `-G (r_next - r_now)`, each rational FOLDED into the row's one division (section 7, MUST A at 4ef195a: the massive wall `3 den g_d` with the term `3 den g_n P delta`, light's wall `3 L` with the term `-3 G_n (L / G_d) P delta`, L the least common multiple of the blocks' G_d, one D per row per interval, the remainder in [0, wall); in motion g's denominator times the drive's pair's, the remainder rescaled `r x new // old` when a ramp changes it); the order within the interval (MUST B): the massive step reading light's `a_now - a_before` as they stand, then light's step reading the massive `a_next - a_now` just written, then both shift; the block's total record at a Node is the sum (G) of its own record and the responses; the block's own record is driven by the light records the block itself emitted (below) and by no other | `coupling` `{"G": [n, d], "g": [n, d]}` (both `[0, 1]` by default: a block that neither drives nor is driven) | B then D | (g) |
 | 2. The source term the current entry (section 7): the block emits at its mode | a block that declares `emits` births one light record per cycle of its own clock, paying the light family's quantum h from its held content as a lamp does; the record's rows at the cells gain `-G (m_now - m_before)` of the block's OWN record during that cycle (the same entry); the block's own record gains `+g` of every light record it emitted (its own light's field, the radiation reaction); no train declared: the record ends as every record ends; its norm the sum over the cycle and the cells of the sourced amount squared (the first build's form of a lamp's norm) | `emits` (a light family's name; absent, no emission; refused unless the block holds that family) | B then D; the birth as the lamp's (T) | (h) |
 | 2. The click of section 6: the evaluation E of the object's own record across R at the declared wheel W in the object's own count | the block's cell `measured:<number>`; per light record k the block's pointer accumulates the response's motion across R, `sum over R of (r_now - r_before)^2` per interval, the first build's raw units (section 10 (d)); the FIRST RUNG when `pointer x W >= norm_k`, the interval and the block's own count stamped on the click; the cell chosen at the record's completion by `cell_of` over the cells' pointers as today; the block's OWN COUNT its clock: one count per cycle of its total record summed across R (the sum's crossing from at most 0 to above 0), a `click` line per cycle of its own (the self-click of row (g)); the `gather` line of a light record clicked at the block carries `clock`, the block's count | `wheel` W on the block (the world's wheel by default); `seed` (an integer from 0; the amplitude unit 2^20 by default; 0 a block whose own record is silent) | E, D, G | (i), (j) |
 | 2. The take on light's row only for an object declared ABSORBING (the existing Port's take, DESIGN.md section 5); no take for a clock body | an absorbing block's cells join the `absorbing` mask (the first build's receivers: light's amplitude taken at the cells, the one-way Port take with the pair `[-15, 56]`, the offer the Ports' motion booked to the block's cell); a clock body takes nothing: light's rows pass through its cells with the coupling alone; an absorbing block's coupling reads the Ports' amplitudes (the field the cells read) and emits nothing (its light rows are taken) | `absorbing` (false by default) | the take's T and D as built | (k) |
@@ -276,14 +276,22 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
   (3 P . P = 112896 >= 192^2 = 36864) is refused at load naming the bound;
   P = [64, 64, 64] (3 x 12288 = 36864, not below 36864) refused too; P =
   [64, 64, 0] admitted (24576 < 36864).
-- (g) The coupling both ways on a chain of 400 Nodes (the kind `[156,
-  157]`, a block of side 12 with the well `[314, 315]`, G = `[1, 1]`, g =
-  `[1, 20]`), a light train of 4 periods at the clock `[1, 5]` on N = 64
-  (omega = 0.196) from a lamp at x = 40: E_light + 20 I_m (the pair G / g
-  = 20 / 1) constant to within 10^-3 of its value at the train's end over
-  400 intervals, while E_light alone falls by more than 1 percent (the
-  energy moved into the response). The edge case: g = `[0, 1]` leaves
-  E_light constant and I_m = 0.
+- (g) The coupling both ways on a periodic chain of 400 Nodes (the kind
+  `[156, 157]`, a block of side 12 with the well `[314, 315]` at x = 200,
+  G = `[1, 1]`, g = `[1, 20]` and `[1, 5]`), a planted light packet (the
+  design's script's, amplitude 2^16) and the block's response to it over
+  400 intervals: the EXACT identity of section 7 (MUSTs A and B at
+  4ef195a) on every interval, `J(t) - J(t - 1) = SUM_i (x_next -
+  x_before)_i (r - r')_i / (3 num_i g_d) + alpha SUM_i (y_next -
+  y_before)_i (r - r')_i / (3 G_d)` with `J = I_m + alpha I_l + (g_n /
+  g_d) SUM_cells w_i dx_i dy_i`, `alpha = g W_in / G`, the forms in exact
+  rationals, no tolerance; the cross term nonzero on some interval; light's
+  own form moved by more than 10 percent between the packet's arrival and
+  the end. The edge case: g = `[0, 1]` leaves the response's rows 0 and
+  light's form its own identity `I_l(t) - I_l(t - 1) = SUM (y_next -
+  y_before) (r - r') / 3`. (As first written the test asserted the
+  continuum's sum within 3 percent; the design's J replaced it, section 10
+  (j).)
 - (h) A seeded block (seed 2^20, the kind `[156, 157]`, the well `[314,
   315]`, G `[1, 1]`, g `[1, 500]`) that `emits` light holding 3 units of the
   light family (quantum 1): three births, one at each of the first three
@@ -464,16 +472,27 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
 - (i) A block of the light family with a pair (the (M) wall) shares the
   block's component with no clock and no coupling; its keys are refused
   so that a wall declares nothing a wall has not.
-- (j) FINDING of step 3: the coupled energy E_light + (G / g) I_m is the
-  continuum's invariant (section 7, "gyroscopic"); under the discrete
-  first-difference scheme the design's own scripts use (the massive step
-  with light's backward difference, light's step with the massive record's
-  forward difference) the sum carries an oscillating cross term: a float
-  scratch of the design's chain read a spread of 1.3 to 1.6 percent of the
-  total over 580 intervals at G g = 0.05 and 0.2, and the engine's integer
-  form the same order (test (g) asserts 3 percent, with the finding named).
-  The exact discrete invariant of the scheme is the design's to state; the
-  engine reports its own conservation beside the continuum's claim.
+- (j) FINDING of step 3, ANSWERED by the design (4ef195a section 7,
+  `massive_conserved_form.py`; Reviewer 3's MUSTs A and B through the Boss,
+  17:00Z): the coupled energy E_light + (G / g) I_m is the continuum's
+  invariant; the discrete same-Node scheme is symplectic and its EXACT
+  quadratic invariant is J = I_m + alpha I_l + g SUM_cells W_i dx_i dy_i,
+  the continuum's sum plus the cross term of the two first differences on
+  the cells (the 1.3 to 1.6 percent the float scratch read). BUILT to the
+  two sentences: (A) the coupling folded into the rule's one division (the
+  massive wall `3 den g_d`, light's `3 L`; `_coupled_term` adds the
+  undivided term, `_advance` divides once, the row's `scale` the folded
+  denominator), so the remainders' term per row is the whole correction;
+  (B) the columns as section 7 states them (the massive step first reading
+  light's `a_now - a_before`, light's step reading the massive `a_next -
+  a_now` just written). Test (g) asserts the identity exactly. One default
+  of the build, named: light's wall is `3 L` for EVERY light row while a
+  block is on the board (L the least common multiple of the blocks' G_d,
+  one number for the kind; the rows' values unchanged, the remainders
+  scaled by L), and a massive row's `3 den g_d pair_d` with the drive's
+  pair; when a ramp changes the pair the remainder is rescaled to the new
+  wall (`r x new // old`, verbs G and D), the identity exact on every
+  interval of a constant wall.
 - (k) FINDING of step 2, corrected in step 3: the form I written at step 2
   skipped an axis of extent 1 in its Link sum; on a one-layer board the
   rule reads the row itself as its two neighbours on that axis (DESIGN.md
