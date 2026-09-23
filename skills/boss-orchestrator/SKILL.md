@@ -307,6 +307,17 @@ The owner's word: "Always understand how each item affects as an information-tra
 
 The owner's word: "When you turn to me with something that needs me, tell me what the generic law is, why I am needed, what you recommend, and what we get out of it." Every item put to the owner carries these four, one line each, before the ask: (1) the generic law as it stands (the primitive, its integers, the code line); (2) why his word is needed (a law change, a declaration outside the six verbs, a choice among forms, a pin); (3) the Boss's recommendation, one; (4) what the decision buys (a measurement read, a law line closed, a run saved). This is the short form of the six answers above; nothing is put to him without it, and an item that needs nothing from him is not put to him as a question.
 
+### Short (the owner, 2026-09-23, record 1425)
+
+The owner's word: "shorten all your conversations and the physicist's;
+everything is being shortened; your work is basically from the postulates
+and what we closed in the algebra." Every report to the owner and every
+exchange between the Boss and a session is three to six SHORT lines, one
+clause each: cite the record and the SHA instead of restating content;
+never recap what the reader wrote; give a number only when it changes what
+the reader does; the four answers stay, one clause each. The log record
+keeps the full text; the message does not.
+
 ### Every agent closes its own tasks (the owner, 2026-09-22, record 622)
 
 The owner's word: "Every agent closes its own tasks by itself and reports
