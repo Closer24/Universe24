@@ -101,7 +101,13 @@ clause:
    gamma^2 omega_0^2 / 4 (0.28 percent at k = 3, mu = 0.15; about 10^-14
    at nature's omega_0 of row A); falsified on a pin world by the one
    formula reading gamma(c)'s number and not gamma(c_m)'s beyond the 0.3
-   percent band (both numbers in row 4a, the named one the pin).
+   percent band (both numbers in row 4a, the named one the pin). THE WORLD
+   THAT SEPARATES THE TWO GAMMAS, DEFERRED (Reviewer 3's clause, 18:30Z;
+   no run, no pin moved, the owner's word): mu = 0.3 at k = 3 on a 128^2
+   layer, the square well of side 10 at g = mu^2 / 8 (omega_b 0.29372,
+   eps 0.0055, the extent 26, the residual 0.15 percent): 1 / gamma at c_m
+   0.8073 against 0.8165 at c, 1.14 percent apart, eight times the band;
+   its rest period 21.3 intervals at the honest floor of 21, named.
 2. The bound clock's second term: a bound body's moving clock reads (1 /
    gamma_m)(1 - eps (gamma_m^2 - 1) / 2), a free packet exactly 1 /
    gamma_m (section 8); falsified by a pin world's ratio off the one
