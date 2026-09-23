@@ -195,11 +195,12 @@ never end), and the record ends only at the click.
 
 **The click's trigger, decided by the owner.** The owner's word of
 05:02Z (record 1276 by the Boss's word) bounded it to two options, the
-detector's SENSITIVITY or a SINGLE-QUANTUM reading; his word of about
-05:52Z (Hebrew, by voice, through the chief physicist: "confirm to him
-that I agree with you, what you think today is right; I agree with you
-on everything") adopts the chief physicist's recommendation as his
-decision: the trigger is the detector's sensitivity in its counting
+detector's SENSITIVITY or a SINGLE-QUANTUM reading; his word of 05:55Z
+to the Boss (record 1288, Hebrew, by voice, the Boss's rendering: "I
+think that all the experiments must be re-run with the new engine after
+the fix. As the physicist's recommendations."), after his word to the
+chief physicist of about 05:52Z ("I agree with you on everything"),
+makes the chief physicist's recommendation his decision: the trigger is the detector's sensitivity in its counting
 form, a set whose accumulated offer is below its declared sensitivity
 s_D takes no rung, a branch below s_D is no longer counted, and the
 record clicks when no counted future is in flight; s_D = 1 / W by
@@ -277,10 +278,11 @@ its far sidelobes.
 
 ## 5. THE WEIGHTS AND THE PACE, decided by the owner
 
-Both were the owner's open choices with the chief physicist's
-recommendation; his word of about 05:52Z ("I agree with you on
-everything, what you think today is right") makes the recommendations
-his decisions.
+Both were the owner's choices with the chief physicist's recommendation;
+his word of 05:55Z to the Boss (record 1288: "As the physicist's
+recommendations"), after his word to the chief physicist of about
+05:52Z ("I agree with you on everything"), makes the recommendations his
+decisions, one version.
 
 **The weights: equal over the outputs, a_i = 1.** The split is the
 Node's own and carries no direction of its own; it declares nothing. The

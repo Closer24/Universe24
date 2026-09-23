@@ -145,9 +145,11 @@ that offer, else Q never fires there.
 by default (the wheel's own grain) and declarable per detector: the
 grain the owner accepted as bookkeeping, Born over the whole front, the
 click mechanism and the ladder unchanged, Q its special case. The
-owner's word of about 05:52Z ("confirm to him that I agree with you,
-what you think today is right; I agree with you on everything") makes
-it his decision: the trigger is S2; S1 is what the code forbids and
+owner's word of 05:55Z to the Boss (record 1288, Hebrew, by voice, the
+Boss's rendering: "I think that all the experiments must be re-run with
+the new engine after the fix. As the physicist's recommendations."),
+after his word to the chief physicist of about 05:52Z ("I agree with you
+on everything"), makes it his decision: the trigger is S2; S1 is what the code forbids and
 stays listed so that its pins are on record. Two more of his decisions
 by the same word: a sensitivity per (detector, family) is a declared
 input of kind 2 (the cross-section; row 8b's condition in section 3);
@@ -314,11 +316,18 @@ and 14 need (section 3).
 
 ## 2. THE VERIFICATION PLAN, per solution, before any row is read
 
-Nothing registered moves before its re-pin; every old reading is
-history in the log, labelled the old law's. The order: the build of M1
-and M2 with their tests, the gate set re-pinned, then the rows of the
-record form re-run BESIDE and compared with the pins, then M3's
-readings, then the bodies' rows after the massive form.
+The owner's rule (record 1288, 05:55Z): every experiment is re-run
+under the corrected engine after the build; every reading of the engine
+without the split is history; no old reading stands as the law's. So:
+nothing registered moves before its re-pin, and every old reading is
+history in the log, labelled the old law's. The order: the build of M1,
+M2 and M9 with their tests; the gate set re-pinned; then every
+registered world re-run BESIDE its old reading (the rows of the record
+form first, compared with the pins of this section; then the rest,
+including the bodies' worlds, whose numbers are expected unchanged
+until the massive form and whose re-run under the corrected engine is
+the check of that expectation); then M3's readings on the detector's
+own count; the old readings history.
 
 **M1, the split.** (a) Pins by the algebra before the run: DESIGN.md
 section 7 (the pair world 27, 5, 5, 27 and S = 2.75; Malus 1 / 2; the
@@ -390,15 +399,14 @@ The rows are the rules page's (`STATUS_RULES.md` on branch status-rules,
 PR #1013; the count on both voices as the Boss gave it: thirteen
 predicted, three agree, ten disagree, six not predicted) and NATURE.md's
 status column at d2982954. "The corrected law" is the law as built plus
-M1 (the split, default on, rows of no content), M2 (the trigger in the
-S2 or Q form), M3 (the readings on the detector's own count), M4 and M7;
+M1 (the split, default on, rows of no content), M2 (the trigger, S2 as decided), M3 (the readings on the detector's own count), M4 and M7;
 the bodies untouched (M8). Expected: PASS (agrees, or a NOT YET row
 expected to agree), STAY (the status as it is, with the reason), MOVE
 (the number moves, to what).
 
 | Row | Status today | Under the corrected law | Reason, one line |
 | --- | --- | --- | --- |
-| 1a CHSH | agrees, S = 2.75 | PASS, unchanged | The cells' ratios are the labels' rotation; the arm's phase a common factor; the gather reads both arms (M2's S2 or Q); no time is read |
+| 1a CHSH | agrees, S = 2.75 | PASS, unchanged | The cells' ratios are the labels' rotation; the arm's phase a common factor; the gather reads both arms (M2's S2, decided); no time is read |
 | 1b the window form | a control | STAY | A theorem of every local read-out |
 | 1c the order channel | disagrees, 15 / 16 against 0 | STAY disagrees | The serial correlation is the wheel's order on the birth count u, which the split does not touch; the understanding is not reached here: nature's 0 needs a click whose cell is not a function of the birth ordinal, which the law has not (no draw at a Node) |
 | 1d no-signalling | agrees, a check | STAY | A theorem of the rotation |
@@ -410,7 +418,7 @@ expected to agree), STAY (the status as it is, with the reason), MOVE
 | 4b the Doppler with gamma | not predicted, z = 0.2636 | STAY not predicted | The same missing factor gamma; the detector's own count already the reading at head |
 | 4c the transponder | FORM row | STAY outside | No nature number |
 | R2 Sagnac, R4 | beside 4a, 4b, 5b | STAY | The cart's count reads as a resting detector's at the same crowd (M3), no gamma |
-| 5a c by direction | agrees (a bound met), 0.5774 to 0.5818 | PASS under pace (A); MOVE under pace (B) to the L1 front, the bound failed at the front | The flight table is the law's pace; the light clock world (M3 item 5) reads it as the detector's count, the return count from the flight table |
+| 5a c by direction | agrees (a bound met), 0.5774 to 0.5818 | PASS (the pace decided: the digital lines kept) | The flight table is the law's pace; the light clock world (M3 item 5) reads it as the detector's count, the return count from the flight table |
 | 5b the two arms in motion | not predicted, beta^2 / 2 | STAY not predicted | Nothing contracts; a bodies' row |
 | 6 Bohr's ratio | disagrees (the electron escapes) | STAY until the massive form | The atom is bodies; the electron's futures around the nucleus are what the massive form must give (M8) |
 | 6b the atom's stability | predicted, the escape | STAY | The same |
