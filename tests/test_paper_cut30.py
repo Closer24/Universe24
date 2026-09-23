@@ -104,12 +104,24 @@ def _check_reorder(module) -> None:
             i = body.index(supplement_module.HANDWORKED_START)
             j = body.index(supplement_module.CODE_HEADING)
             body = body[:i] + supplement_module.POINTERS["handworked"] + body[j:]
+        # the conversion table, the ledger and the families table went to the Supplementary Material (S7 to S9)
+        for label, table in (
+            (supplement_module.CONVERSION_LABEL, "S7"),
+            (supplement_module.LEDGER_LABEL, "S8"),
+            (supplement_module.FAMILIES_LABEL, "S9"),
+        ):
+            if label in body:
+                _, body = supplement_module.cut_table(body, label, table)
         rewrites = reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]
         for old, new in rewrites + supplement_module.REFERENCES:
             body = body.replace(old, new)
+        if not body.strip():
+            continue  # the block was one table, now whole in the supplement (checked below)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
     supplement = SUPPLEMENT_TEX.read_text(encoding="utf-8")
     assert "\\label{tab:summary}" in main and "\\label{tab:nature}" not in main
+    for label in ("tab:conversion", "tab:ledger", "tab:families"):
+        assert f"\\label{{{label}}}" not in main and supplement.count(f"\\label{{{label}}}") == 1
     assert supplement.index("\\label{app:register}") < supplement.index(
         "\\caption{\\label{tab:nature}"
     ), "the full register opens the Supplementary Material"

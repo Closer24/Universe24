@@ -4,10 +4,13 @@ document, the records that a reader needs only to reproduce or to audit in a
 supplement generated from the same source).
 
 `split(s)` takes the reordered manuscript text (before the references are
-filtered) and returns `(paper, supplement_body)`: the six blocks below are
-cut whole from the paper, each replaced by a one-line pointer, and the
-paper's references to them are rewritten to the supplement's numbers, S1 to
-S6 for its sections and S1 to S3 for its tables. The supplement resolves
+filtered) and returns `(paper, supplement_body)`: the nine blocks below are
+cut whole from the paper, each replaced by a one-line pointer or by the
+sentence that introduced it, and the paper's references to them are
+rewritten to the supplement's numbers, S1 to S9 for its sections and S1 to
+S6 for its tables (S7 to S9, the conversion table, the forcing ledger and
+the families table, the owner's "go" of 2026-09-23 on the second part of
+the cut to 48 pages). The supplement resolves
 its own references to the paper's labels through the `xr` package, so it is
 compiled after the paper in the same directory. Nothing is rewritten beyond
 the pointers; every block stands verbatim in the supplement.
@@ -25,6 +28,10 @@ LONGTABLE_END = "\\end{longtable}}"
 CONFIRMATIONS_START = "\\paragraph{The seven confirmations.}"
 HANDWORKED_START = "\\paragraph{A hand-worked update.}"
 CODE_HEADING = "\\paragraph{The code implements the law.}"
+TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
+CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
+LEDGER_LABEL = "\\caption{\\label{tab:ledger}"
+FAMILIES_LABEL = "\\caption{\\label{tab:families}"
 
 SUPPLEMENT = "the Supplementary Material"
 
@@ -49,7 +56,22 @@ POINTERS = {
 
 # The paper's references to what moved, rewritten to the supplement's numbers.
 REFERENCES = [
-    ("Tables~\\ref{tab:conversion} and~\\ref{tab:nature}", "Table~\\ref{tab:conversion} and Table~S1"),
+    ("Tables~\\ref{tab:conversion} and~\\ref{tab:nature}", "Tables~S1 and~S4"),
+    (
+        "Table~\\ref{tab:conversion} names, row by row,",
+        "Table~S4 of " + SUPPLEMENT + " names, row by row,",
+    ),
+    ("Table~\\ref{tab:conversion}", "Table~S4"),
+    (
+        "Table~\\ref{tab:ledger} is the paper's spine:",
+        "Table~S5 of " + SUPPLEMENT + " is the paper's spine:",
+    ),
+    ("Table~\\ref{tab:ledger}", "Table~S5"),
+    (
+        "Table~\\ref{tab:families} (below) lists",
+        "Table~S6 of " + SUPPLEMENT + " lists",
+    ),
+    ("Table~\\ref{tab:families}", "Table~S6"),
     ("Table~\\ref{tab:nature}", "Table~S1"),
     ("Table~\\ref{tab:roads}", "Table~S2"),
     ("Appendix~\\ref{app:register}", SUPPLEMENT + ", S1"),
@@ -77,6 +99,14 @@ def _cut_between(s: str, start: str, end: str, name: str) -> tuple[str, str]:
     return s[i:j], s[:i] + s[j:]
 
 
+def cut_table(s: str, label: str, name: str) -> tuple[str, str]:
+    """Cut one longtable whole, from its size group to the group's end."""
+    i = _once(s, label, name)
+    start = s.rindex(TABLE_START, 0, i)
+    end = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
+    return s[start:end], s[:start] + s[end:]
+
+
 def split(s: str) -> tuple[str, str]:
     """(the paper without the six blocks, the supplement's body of six sections)."""
     # S1 the full record and S2 the check of the roads: the two last appendices.
@@ -96,6 +126,11 @@ def split(s: str) -> tuple[str, str]:
     # S6 the hand-worked update and the code.
     handworked, s = _cut_between(s, HANDWORKED_START, CODE_HEADING, "S6, the hand-worked update")
     s = s.replace(CODE_HEADING, POINTERS["handworked"] + CODE_HEADING, 1)
+    # S7 the conversion table and S8 the forcing ledger, each left in the
+    # paper as the sentence that introduced it, now naming the supplement.
+    conversion, s = cut_table(s, CONVERSION_LABEL, "S7, the conversion table")
+    ledger, s = cut_table(s, LEDGER_LABEL, "S8, the ledger")
+    families, s = cut_table(s, FAMILIES_LABEL, "S9, the families")
     for old, new in REFERENCES:
         if old not in s:
             raise ValueError(f"supplement: the paper's reference {old!r} is not there to rewrite")
@@ -113,6 +148,21 @@ def split(s: str) -> tuple[str, str]:
         + proofs_body
         + "\n\\section{A hand-worked update, and the code}\\label{supp:handworked}\n\n"
         + handworked
+        + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{supp:conversion}\n\n"
+        + "Table~\\ref{tab:conversion}: each Inside formula with the family and the "
+        + "attributes it reads, the conversion with its order, the Outside formula and the register's reading "
+        + "(the paper's Section~\\ref{sec:click}).\n\n"
+        + conversion
+        + "\n\n\\section{The forcing ledger}\\label{supp:ledger}\n\n"
+        + "Table~\\ref{tab:ledger}: for every result, the rules of Eq.~\\eqref{eq:map} it "
+        + "starts from, the assumptions added beside them with their kind, the freedom left and the ground of "
+        + "the derivation (the paper's Section~\\ref{sec:gameboard}).\n\n"
+        + ledger
+        + "\n\n\\section{The families as declared integers}\\label{supp:families}\n\n"
+        + "Table~\\ref{tab:families}: every family of the register with its declared integers, its object, "
+        + "when it entered, the verbs that act on it and the click that reads it "
+        + "(the paper's Section~\\ref{sec:algebra}).\n\n"
+        + families
     )
     # The supplement's references to the paper's labels carry the prefix that
     # xr-hyper imports them under (main-), so that the paper's citation labels

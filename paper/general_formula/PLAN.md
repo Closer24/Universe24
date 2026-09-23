@@ -6573,3 +6573,16 @@ with nine lines on the last, so 52 full pages; the remaining four to
 conversion table (Table 2, about two pages) to the supplement as S7,
 and the ledger (Table 3) or the families table as the next, moved
 whole, none cut.
+
+## Applied (2026-09-23, the owner's "go"): commit 15 on paper-summary-table, three tables to the supplement, 48 pages
+
+The owner's "go" on the second part: the conversion table (S7, Table
+S4), the forcing ledger (S8, Table S5) and the families table (S9,
+Table S6) moved whole to the Supplementary Material by
+cut30/supplement.py, none cut, nothing rewritten beyond the sentence
+that introduced each (which now names the supplement) and the paper's
+references (Table S4, S5, S6). The supplement's own section opens each
+with one line naming the paper's section it serves. The paper 48
+pages exactly, the owner's number; the supplement 17. Held by the
+same test: each table stands once in the supplement and not in the
+paper; the families block, one table, is checked there.
