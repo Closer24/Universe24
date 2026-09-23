@@ -1,18 +1,28 @@
 """COMPUTATION (not an engine run): the pins of the two matter-wave rows (DECLARATIONS.md
-section 12; SCHEDULE.md rows M1 and M2), on the model owner's word of 2026-09-24 and the
-Boss's decision of 23:32Z: a lamp of the MATTER family (the kind [800, 809], mu = 0.15)
-sends a train at a declared omega above omega_0 through two openings in a mirror line on
-a 128^2 layer; the screen's clicks fringe, and the front's arrival gives the group pace.
+section 12; SCHEDULE.md rows M1 and M2), on the model owner's word of 2026-09-23 and the
+Boss's decision of 23:32Z, with Reviewer 3's read of 00:05Z folded: a lamp of the MATTER
+family (the kind [800, 809], mu = 0.15) at x = 20 on a 128 x 128 x 1 layer, x open (zero
+faces), sends a stock of records, each a train at the declared omega above omega_0,
+through two openings in a mirror line at x = 40; the screen at x = 104 clicks once per
+record.
 
-The band (ALGEBRA.md 8.1): cos omega = cos omega_0 cos omega_l(k), along an axis
-cos omega_l(k) = (cos k + 2) / 3. Printed:
-  (a) DE BROGLIE (K): for the declared omega the wavenumber k, lambda_dB = 2 pi / k, and
-      the screen's maxima on the declared geometry by the two-source sum with this k
-      (exact, no far-field step): the fringe spacing;
-  (b) E = m c^2 (K in the form, P in the correction): the group pace v_g = d omega / dk at
-      that k, the inertia m = k / v_g, the small-mass limit m -> 3 tan omega_0, and
-      omega_0 / (m c^2) with c^2 = 1 / 3: exactly omega_0 / tan omega_0 in the limit,
-      the GameBoard's own correction to E = m c^2 at finite mass.
+The band (ALGEBRA.md 8.1): cos omega = cos omega_0 cos omega_l(k), along a direction
+(cos theta, sin theta) in the plane cos omega_l(k) = (cos(k cos theta) + cos(k sin theta)
++ 1) / 3. Printed:
+  (a) DE BROGLIE (K): for the declared omega the wavenumber k on the axis, lambda_dB = 2 pi
+      / k, and the screen's maxima on the declared geometry by the two-source sum with the
+      band's k PER RAY DIRECTION (the anisotropy of the band, Reviewer 3's line D; the
+      one-k sum beside), exact, no far-field step; the expected counts per Node at the
+      declared stock of records and the statistic that puts the side maximum at its Node
+      (Reviewer 3's MUST B);
+  (b) THE ENERGY OF A MOVING MASS (K in the form): the group pace v_g = d omega / dk at
+      that k on the axis, the direct front's transit from the lamp to the screen's centre,
+      and its FIRST CLICK by the linear map of the massive rule on a chain (a switched-on
+      train, the rung at a fraction of the steady amplitude; Reviewer 3's MUST C); the
+      inertia m = k / v_g as the band's number in the form of a moving mass (not nature's
+      gamma m at this k); the rest limit m -> 3 tan omega_0 and the identity m c_eff^2 =
+      omega_0 EXACTLY at the kind's own cone (E = m c^2 a derivation; the ratio omega_0 /
+      (m c^2) = c_eff^2 / c^2 is row A's two-pace ratio, no new prediction; line E).
 
     PYTHONPATH=src python docs/designs/detector_law/matter_wave_pins.py
 """
@@ -24,65 +34,128 @@ import numpy as np
 NUM, DEN = 800, 809
 OMEGA_0 = math.acos(NUM / DEN)
 C2 = 1 / 3
+C = math.sqrt(C2)
 
 
-def omega_of_k(k):
-    return math.acos((NUM / DEN) * (math.cos(k) + 2) / 3)
+def omega_of_k(k, theta=0.0):
+    cx, sy = math.cos(theta), math.sin(theta)
+    return math.acos((NUM / DEN) * (math.cos(k * cx) + math.cos(k * sy) + 1) / 3)
 
 
-def k_of_omega(omega, lo=1e-6, hi=math.pi - 1e-6):
+def k_of_omega(omega, theta=0.0, lo=1e-6, hi=math.pi - 1e-6):
     for _ in range(200):
         mid = (lo + hi) / 2
-        if omega_of_k(mid) < omega:
+        if omega_of_k(mid, theta) < omega:
             lo = mid
         else:
             hi = mid
     return (lo + hi) / 2
 
 
-def group_pace(k, h=1e-6):
-    return (omega_of_k(k + h) - omega_of_k(k - h)) / (2 * h)
+def group_pace(k, theta=0.0, h=1e-6):
+    return (omega_of_k(k + h, theta) - omega_of_k(k - h, theta)) / (2 * h)
 
 
-def screen_pattern(k, d, length, half_width):
-    """The two-source sum on the screen at distance `length` from the openings separated by
-    `d` (the openings at y = +- d / 2), |e^{i k r1} / sqrt r1 + e^{i k r2} / sqrt r2|^2 on
-    the layer (a line source's fall-off), sampled at every screen Node."""
+def screen_pattern(omega, d, length, half_width, per_direction):
+    """The two-source sum on the screen at distance `length` from the openings at y = +-
+    d / 2: |e^{i k1 r1} / sqrt r1 + e^{i k2 r2} / sqrt r2|^2 per screen Node, k_i the band's
+    wavenumber at omega along each ray (per_direction) or the axis's k for both."""
     ys = np.arange(-half_width, half_width + 1)
-    r1 = np.hypot(length, ys - d / 2)
-    r2 = np.hypot(length, ys + d / 2)
-    amp = np.exp(1j * k * r1) / np.sqrt(r1) + np.exp(1j * k * r2) / np.sqrt(r2)
+    k_axis = k_of_omega(omega)
+    amp = np.zeros(len(ys), complex)
+    for y0 in (d / 2, -d / 2):
+        dy = ys - y0
+        r = np.hypot(length, dy)
+        if per_direction:
+            ks = np.array([k_of_omega(omega, math.atan2(abs(v), length)) for v in dy])
+        else:
+            ks = np.full(len(ys), k_axis)
+        amp += np.exp(1j * ks * r) / np.sqrt(r)
     return ys, np.abs(amp) ** 2
+
+
+def maxima_of(ys, pat):
+    return [int(ys[i]) for i in range(1, len(ys) - 1) if pat[i] > pat[i - 1] and pat[i] >= pat[i + 1]]
+
+
+def chain_front(omega, x_source, x_probe, n=400, steps=400):
+    """The massive rule on an open chain with a hard source sin(omega t) switched on at
+    t = 0 at x_source: the record at x_probe over time (the front's rise)."""
+    a_now = np.zeros(n)
+    a_bef = np.zeros(n)
+    ratio = NUM / DEN
+    out = np.empty(steps)
+    for t in range(steps):
+        a_now[x_source] = math.sin(omega * t)
+        s6 = np.zeros(n)
+        s6[1:-1] = a_now[:-2] + a_now[2:] + 4 * a_now[1:-1]
+        a_next = ratio * s6 / 3 - a_bef
+        a_next[0] = 0.0
+        a_next[-1] = 0.0
+        a_bef, a_now = a_now, a_next
+        out[t] = a_now[x_probe]
+    return out
 
 
 if __name__ == "__main__":
     print(
-        f"the matter family [{NUM}, {DEN}]: omega_0 = {OMEGA_0:.5f}; the small-mass limit m = 3 tan omega_0 = {3 * math.tan(OMEGA_0):.5f}"
+        f"the matter family [{NUM}, {DEN}]: omega_0 = {OMEGA_0:.5f}; the rest limit m = 3 tan omega_0 = {3 * math.tan(OMEGA_0):.5f};"
+        f" c_eff^2 / c^2 = cos omega_0 (omega_0 / sin omega_0) = {(NUM / DEN) * OMEGA_0 / math.sin(OMEGA_0):.5f} = omega_0 / tan omega_0"
+        f" (row A's two-pace ratio); m c_eff^2 = {3 * math.tan(OMEGA_0) * (NUM / DEN) * OMEGA_0 / math.sin(OMEGA_0) * C2:.5f} = omega_0 exactly"
     )
     d, length, half_width = 32, 64, 60
+    x_lamp, x_openings, x_screen = 20, 40, 104
+    stock = 4096
     for lam in (12.0, 16.0):
         k = 2 * math.pi / lam
         omega = omega_of_k(k)
-        k_back = k_of_omega(omega)
+        k_diag = k_of_omega(omega, math.pi / 4)
         vg = group_pace(k)
         m = k / vg
-        ys, pat = screen_pattern(k, d, length, half_width)
-        maxima = [
-            int(ys[i]) for i in range(1, len(ys) - 1) if pat[i] > pat[i - 1] and pat[i] >= pat[i + 1]
-        ]
-        spacing = np.diff(maxima)
+        ys, pat1 = screen_pattern(omega, d, length, half_width, per_direction=False)
+        _, pat = screen_pattern(omega, d, length, half_width, per_direction=True)
+        max1, maxd = maxima_of(ys, pat1), maxima_of(ys, pat)
+        w = pat / pat.sum()
+        counts = stock * w
+        i26 = int(np.argmax(pat[ys > 5]) + np.sum(ys <= 5))
+        side = int(ys[i26])
+        nb = counts[i26] - max(counts[i26 - 1], counts[i26 + 1])
+        sigma = math.sqrt(counts[i26] + max(counts[i26 - 1], counts[i26 + 1]))
+        # the side lobe's centroid: the statistic of the counts that locates the maximum between Nodes
+        lo_y, hi_y = int(round(0.5 * side)), int(round(1.5 * side))
+        lobe = (ys >= lo_y) & (ys <= hi_y)
+        w_lobe = w[lobe] / w[lobe].sum()
+        y_c = float(np.sum(ys[lobe] * w_lobe))
+        n_lobe = stock * w[lobe].sum()
+        sd_c = math.sqrt(float(np.sum((ys[lobe] - y_c) ** 2 * w_lobe)) / n_lobe)
         print(
-            f"(a) DE BROGLIE at the declared omega = {omega:.5f} (the period {2 * math.pi / omega:.2f} intervals):"
-            f" k = {k_back:.5f} per Link, lambda_dB = {2 * math.pi / k_back:.3f} Links; the screen at L = {length} with the"
-            f" openings d = {d} apart: the maxima at y = {maxima}, the spacings {list(spacing)} Links (the far-field"
-            f" lambda L / d = {lam * length / d:.1f}); THE PIN the maxima's positions, the band one Node"
+            f"(a) DE BROGLIE at the declared omega = {omega:.5f} (the period {2 * math.pi / omega:.2f} intervals): k = {k:.5f}"
+            f" per Link on the axis (lambda_dB = {lam:.3f} Links), {k_diag:.5f} on the plane's diagonal (the band's anisotropy"
+            f" {100 * (k_diag / k - 1):+.2f} percent at fixed omega); the screen at L = {length} with the openings d = {d}"
+            f" apart: the maxima at y = {maxd} with the band's k per ray direction (THE PIN; with one k for both rays {max1});"
+            f" the far-field lambda L / d = {lam * length / d:.1f} is not the pin"
         )
         print(
-            f"(b) E = m c^2 at that k: v_g = {vg:.5f} Link per interval (the front's arrival over L = {length}: {length / vg:.1f}"
-            f" intervals), m = k / v_g = {m:.5f}; omega_0 / (m c^2) = {OMEGA_0 / (m * C2):.5f} (the small-mass limit"
-            f" omega_0 / tan omega_0 = {OMEGA_0 / math.tan(OMEGA_0):.5f}; E = m c^2 exactly would read 1)"
+            f"    the counts at the stock of {stock} records (one click per record on the screen's {len(ys)} Nodes):"
+            f" the centre {counts[ys == 0][0]:.0f}, the side maximum at y = {side}: {counts[i26]:.0f} against its higher"
+            f" neighbour {max(counts[i26 - 1], counts[i26 + 1]):.0f} (the difference {nb:.0f}, {nb / sigma:.1f} Poisson sigmas:"
+            f" the maximum falls between two Nodes, so the Node of the peak is not the statistic); THE PIN'S STATISTIC is the"
+            f" side lobe's count centroid over y in [{lo_y}, {hi_y}]: {y_c:.2f} with the Poisson sd {sd_c:.2f} at this stock"
+            f" ({n_lobe:.0f} clicks in the lobe), so the band of one Node is a {1 / sd_c:.1f}-sigma statistic"
+        )
+        front = chain_front(omega, x_lamp, x_screen)
+        steady = np.abs(front[300:]).max()
+        crossings = {f: int(np.argmax(np.abs(front) > f * steady)) for f in (1e-3, 1e-2, 1e-1, 0.5)}
+        transit = (x_screen - x_lamp) / vg
+        print(
+            f"(b) E OF A MOVING MASS at that k: v_g = {vg:.5f} Link per interval on the axis; the direct front's transit from"
+            f" the lamp's birth at x = {x_lamp} to the centre at x = {x_screen} is {transit:.1f} intervals by the group pace;"
+            f" the FIRST CLICK by the chain map (the rung at a fraction of the steady amplitude): {crossings} (THE PIN at the"
+            f" fraction 0.1: {crossings[0.1]}, the band from the fraction 0.01 to 0.5: [{crossings[0.01]}, {crossings[0.5]}]);"
+            f" m = k / v_g = {m:.5f}, the band's number in the form of a moving mass (the continuum's omega / c_m^2 ="
+            f" {omega / ((NUM / DEN) * C2):.4f} at this k, not nature's gamma m)"
         )
     print(
-        "    the form (K): omega_0 = m c^2 with c^2 = 1 / 3 in the small-mass limit, from the one band;"
-        " the correction omega_0 / tan omega_0 - 1 = -0.74 percent at mu = 0.15 is the GameBoard's (P)."
+        "    the form (K): omega_0 = m c_eff^2 exactly at the kind's own cone (m = 3 tan omega_0), E = m c^2 a derivation;"
+        " omega_0 / (m c^2) = c_eff^2 / c^2 is row A's two-pace ratio, already on the schedule: no new prediction here."
     )

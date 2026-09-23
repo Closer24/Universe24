@@ -492,53 +492,80 @@ non-match.
 Nothing of the pin's form moves: the row was never pinned to a number of
 nature.
 
-## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-23, 23:30Z, the owner's word and the Boss's decision of 23:32Z; `matter_wave_pins.py`)
+## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-23, 23:30Z, the owner's word and the Boss's decision of 23:32Z; the second draft 2026-09-24, 00:15Z, on Reviewer 3's read of 00:05Z; `matter_wave_pins.py`)
 
-1. The objects: a 128 x 128 x 1 periodic layer; the MATTER family [800,
-   809] (mu = 0.15, omega_0 = 0.14930) with a LAMP of that family (the
-   same lamp verb as light's, a seeded train with a phase per Link under
-   the family's own pair; the builder checks that the verb accepts the
-   matter family, else adds the one generic line) at x = 20, y = 64,
-   sending a train at the declared omega toward +x; a MIRROR LINE at x =
-   40 (a zero line for the matter kind, as row 2a's mirror line for light)
-   with two openings of width 1 at y = 48 and y = 80 (d = 32); a SCREEN of
-   detectors of the ray law on the matter record at x = 104 (L = 64 from
-   the openings), one per Node over y in [4, 124], each with the click at
-   W = 64. No light in this world.
+1. The objects: a 128 x 128 x 1 layer, y periodic, X OPEN for the matter
+   kind (zero faces at x = 0 and x = 127; the massive kind has no sponge,
+   a zero face is a mirror: Reviewer 3's MUST A); the MATTER family [800,
+   809] (mu = 0.15, omega_0 = 0.14930) with a LAMP of that family (the same
+   lamp verb as light's, a seeded train with a phase per Link under the
+   family's own pair; the builder checks that the verb accepts the matter
+   family, else adds the one generic line) at x = 20, y = 64, sending its
+   records toward +x; a MIRROR LINE at x = 40 (a zero line for the matter
+   kind, as row 2a's mirror line for light) with two openings of width 1
+   at y = 48 and y = 80 (d = 32); a SCREEN of detectors of the ray law on
+   the matter record at x = 104 (L = 64 from the openings), one per Node
+   over y in [4, 124], each with its click. No light in this world. THE
+   SECOND PASS, named: the mirror line reflects the train back toward -x;
+   it reflects again off the zero face at x = 0 and passes the openings
+   80 Links later (159 intervals at v_g = 0.503), coherent at the same k,
+   so the maxima are unchanged and the first click at the centre is the
+   direct front's; no wrap reaches the screen's back.
 2. The declared integers: the pair; omega = 0.33408 (lambda_dB = 12.000
-   Links exactly, k = 0.52360 = 2 pi / 12; a second world at omega =
-   0.26995, lambda_dB = 16, beside); the train 60 periods; d = 32, L = 64,
-   W = 64; the hold 2000.
+   Links exactly on the axis, k = 0.52360 = 2 pi / 12; a second world at
+   omega = 0.26995, lambda_dB = 16, beside); THE STOCK 4096 records at the
+   cadence of one record every 4 intervals, each a train of 60 periods
+   (Reviewer 3's MUST B: a click is one per record, DESIGN.md section 5, so
+   the maxima are counts over the stock); d = 32, L = 64; the hold 18000
+   (the stock's 16384 intervals, the transit and the last train); the
+   screen's rung W at one tenth of the steady amplitude at its Node (item
+   4). Row 2a's world declares its stock the same way.
 3. The verbs: the massive rule (the pair on the six-neighbour term); the
-   lamp; the zero line; the click at W.
-4. The pins (COMPUTATION, `matter_wave_pins.py`): M1, DE BROGLIE (K): the
-   screen's click maxima at y = 64 and y = 64 +- 26 for lambda_dB = 12
-   (the two-source sum on the layer with the band's k, exact, no far-field
-   step; the far-field lambda L / d = 24 is not the pin), y = 64 +- 37 for
-   lambda_dB = 16; the band one Node; nature's row: electron and neutron
+   lamp; the zero line and the zero faces; the click at W, one per record.
+4. The pins (COMPUTATION, `matter_wave_pins.py`, the second draft): M1, DE
+   BROGLIE (K): the screen's maxima at y = 64 and y = 64 +- 27 for
+   lambda_dB = 12 by the two-source sum on the layer with the band's k PER
+   RAY DIRECTION (the band's anisotropy at fixed omega, k on the plane's
+   diagonal 0.58 percent below the axis's, moves the side maximum from
+   26.5 to about 27.1: Reviewer 3's line D; the one-k sum's 26 beside),
+   exact, no far-field step (the far-field lambda L / d = 24 is not the
+   pin); the maximum falls between two Nodes, so THE PIN'S STATISTIC is
+   the side lobe's count centroid over y in [64 + 14, 64 + 40]: 64 + 27.79
+   with the Poisson sd 0.16 at the stock (about 1200 clicks in the lobe),
+   the band one Node a 6-sigma statistic; the expected counts per Node at
+   the stock (the centre 84, the side maximum 78) printed; for lambda_dB =
+   16 the centroid 64 + 39.23, sd 0.23. Nature's row: electron and neutron
    two-slit interference at lambda L / d (Joensson 1961, Tonomura 1989;
-   RECALLED until the Source Verifier). M2, THE ENERGY OF A MOVING MASS
-   (K in the form): the front's first click at the screen's centre arrives
-   L / v_g = 127.3 intervals after the train reaches the openings, with
-   v_g = 0.50264 Link per interval from the band at that k (135.3 and
-   0.47300 at lambda_dB = 16); the band's relation between the fringes'
-   k and the front's v_g is the energy-momentum relation of a moving mass
-   read in the clicks (nature: the relativistic dispersion of electrons,
-   Bertozzi 1964; RECALLED); at these wavelengths the kind is
-   RELATIVISTIC (k lambda_C = 2.0, lambda_C = 3.87 Links), so m = k / v_g
-   reads 1.0417, the moving mass, not the rest mass 3 tan omega_0 =
-   0.45126, which is the k -> 0 limit of the same band and the identity
-   omega_0 = m c^2 with c^2 = 1 / 3 (a DERIVATION from the one band: the
-   rest clock's frequency is the rest inertia times c^2); the GameBoard's
-   own correction to that identity at finite mass, omega_0 / (m c^2) =
-   omega_0 / tan omega_0 = 0.99256 at mu = 0.15, is a (P), read only by a
-   world whose lambda_dB is far above lambda_C (about 40 Links, a 256^2
-   layer; not in the paper's list). Nature's rest-mass row (the Compton
-   clock, atom interferometry 2013; RECALLED) is matched in form by the
-   derivation, not by a reading of this world.
-5. The readings: DETECTOR the screen's click counts per Node (the maxima)
-   and the first click's interval at the centre; GAMEBOARD the matter
-   amplitude along the screen; COMPUTATION the pins.
+   RECALLED until the Source Verifier). M2, THE ENERGY OF A MOVING MASS (K
+   in the form): the reader counts from the lamp's birth stamp; the direct
+   front from x = 20 reaches the screen's centre at x = 104 after 84 / v_g
+   = 167.1 intervals by the group pace (v_g = 0.50264 on the axis), and its
+   FIRST CLICK by the linear map of the massive rule on a chain (a
+   switched-on train at this omega, the record at 84 Links; Reviewer 3's
+   MUST C) crosses one tenth of the steady amplitude at 157 intervals,
+   with the band [148, 171] from the fractions 0.01 to 0.5 (the front of a
+   switched-on train spreads, and the band's fastest group runs ahead of
+   the carrier): THE PIN 157 at the declared rung, the band +- 12; 167.1
+   beside as the (K) form; for lambda_dB = 16: 158, [148, 183], 177.6
+   beside. The band's relation between the fringes' k and the front's v_g
+   is the energy-momentum relation of a moving mass read in the clicks
+   (nature: the relativistic dispersion of electrons, Bertozzi 1964;
+   RECALLED); at these wavelengths the kind is RELATIVISTIC (k lambda_C =
+   2.0, lambda_C = 3.87 Links), so m = k / v_g = 1.0417 is the band's
+   number in the form of a moving mass (2.8 percent above the continuum's
+   omega / c_m^2 = 1.013 at this k), not nature's gamma m; the rest mass
+   3 tan omega_0 = 0.45126 is the k -> 0 limit of the same band, and at the
+   kind's own cone m c_eff^2 = omega_0 EXACTLY: E = m c^2 is a DERIVATION
+   from the one band (the rest clock's frequency is the rest inertia
+   times the cone's pace squared), matched in form to the Compton clock
+   (atom interferometry 2013; RECALLED). The ratio omega_0 / (m c^2) =
+   omega_0 / tan omega_0 = c_eff^2 / c^2 = 0.99256 is row A's two-pace
+   ratio, already on the schedule: no new prediction here (Reviewer 3's
+   line E; the first draft's "(P) correction" withdrawn).
+5. The readings: DETECTOR the screen's click counts per Node (the lobe's
+   centroid) and the first click's interval at the centre from the lamp's
+   birth stamp; GAMEBOARD the matter amplitude along the screen;
+   COMPUTATION the pins.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The honest
    limits: no two-quantum effect (bunching), no spin, no fine structure
    are in the law, and none is claimed.
