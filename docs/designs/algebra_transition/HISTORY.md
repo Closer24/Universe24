@@ -1,5 +1,7 @@
 # The transition from ordinary physics to modern algebra: a dated, cited history of every point where a thing of physics became an object of the algebra
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 7 (the steps) and 2.10 (the quantities); this file is kept as the record of 2026-09-22.
+
 The Transition Historian, 2026-09-22, on the model owner's order of that
 day (about 06:10Z, by voice, relayed by the Boss): "This is the basis of
 the paper. What we must explain in the paper is how we got from ordinary

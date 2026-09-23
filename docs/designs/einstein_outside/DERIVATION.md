@@ -1,5 +1,7 @@
 # Einstein Outside: the step beneath the board, the step above it, and the map between them; every formula of the special and the general theory brought from inside the GameBoard to above it with the transformation of a named detector at a named place (the owner's order, 2026-09-22, about 05:55Z, and his six clauses of 06:00Z to 07:20Z, as the Boss relayed them)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.1 to 5.5; this file is kept as the record of 2026-09-22.
+
 The Einstein Mathematician, 2026-09-22, on the Boss's order of about
 05:55Z and the owner's clauses that followed it: a derivation on paper,
 docs only, no code, no world file, no run; every number a closed form or
