@@ -409,6 +409,25 @@ WORLD_KEYS = {
     "meeting",
     "massive_rows",
     "clock_stamp",
+    # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
+    # by default (`DETECTOR_LAW_RULE`; docs/designs/detector_law/DESIGN.md).
+    "detector_law",
+    # massive-record-v1 (2026-09-23): the massive record kind beside light
+    # under the local detector law, a boolean, false by default
+    # (`MASSIVE_RECORD_RULE`; docs/designs/detector_law/MASSIVE_RECORD.md,
+    # the build's plan BUILD.md).
+    "massive_record",
+    # massive-record-v1: `probes`, declared Nodes whose light amplitude the
+    # record writes per interval (a GAMEBOARD reading of the rows), a list
+    # of Nodes, admitted under `massive_record` alone.
+    "probes",
+    # massive-record-v1: `mode_axis`, the axis ("x", "y" or "z") along which
+    # the record writes the `mode` line per interval (the three sums of
+    # light's total field over the Nodes of each residue class of that
+    # coordinate modulo 3, the content of the mode k = 2 pi / 3, a GAMEBOARD
+    # reading of the hop pump's signature, MASSIVE_RECORD.md section 7),
+    # absent by default, admitted under `massive_record` alone.
+    "mode_axis",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -720,6 +739,33 @@ NO_HAND = 0
 # engine's fact); no registered world does either, and every world without
 # one reads as it did, byte for byte.
 BINDING_RULE = "binding-v1"
+# The identity of the local detector law (the model owner's words of
+# 2026-09-23, docs/designs/detector_law/DESIGN.md): the ray splits at every
+# free Node inside the board and holds its amplitudes; outside only clicks
+# through a detector. The record carries it when the world declares
+# `detector_law: true`; absent, the ray law as built runs unchanged.
+DETECTOR_LAW_RULE = "detector-law-v1"
+# The identity of the massive record kind (the chief physicist's design of
+# 2026-09-23, docs/designs/detector_law/MASSIVE_RECORD.md, on the model
+# owner's words of records 1381 to 1425): a second record kind beside light
+# under the local detector law, its rule the same six-neighbour step with
+# a declared pair [num, den] on the six-neighbour term (a gap, its rest
+# mass); a family declares the kind by the key `pair`, its faces by
+# `faces`. The record carries the identity when the world declares
+# `massive_record: true`; absent, every world reads as it did, byte for
+# byte.
+MASSIVE_RECORD_RULE = "massive-record-v1"
+# The amplitude bound A of a record's row under the massive record kind
+# (Reviewer 3's MUST 3 on step 2; BUILD.md section 3): the rule's total at a
+# Node, num x 6 x A + 3 x den x (A + 1), must stay below 2^63 for every
+# declared pair, checked at load; A = 2^40 (a seed of 2^20 squared by
+# nothing: the rows' amplitudes stay at the seed's order, the pointers
+# alone square them, as Python integers).
+AMPLITUDE_BOUND = 1 << 40
+TOTAL_BOUND = 1 << 63
+# Light's kind: the pair [1, 1] on the six-neighbour term, the value every
+# family without a declared pair reads (no branch on a name).
+LIGHT_PAIR = (1, 1)
 # The identity of the massive rows (`massive-rows-v1`; the model owner's yes
 # of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
 # design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
@@ -763,6 +809,11 @@ FAMILY_KEYS = {
     "phase_per_link",
     "hand",
     "massive",
+    # massive-record-v1: the kind's pair [num, den] on the six-neighbour
+    # term and its faces per axis (periodic by default: the torus's),
+    # admitted under the world key `massive_record` alone.
+    "pair",
+    "faces",
 }
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
@@ -776,6 +827,30 @@ KIND_KEY = "kind"
 CHARGE_KEY = "charge"
 # The charge per unit of content of a family with none: 0 as the pair [0, 1].
 NO_CHARGE = (0, 1)
+# The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
+# the build's plan BUILD.md section 3): admitted on a measured event that
+# declares `side`, under the world key `massive_record` alone.
+BLOCK_KEYS = {
+    "side",
+    "pair",
+    "coupling",
+    "wheel",
+    "seed",
+    "absorbing",
+    "cavity",
+    "ramp",
+    "start",
+    "margin",
+    "emits",
+}
+# The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
+# Reviewer 3's two lines): a pin world's cells two extents from a
+# non-periodic face and a periodic side of s + 4 extents; a control world's
+# one extent and s + 2 extents.
+MARGIN_KINDS = ("pin", "control")
+# The block's own record's seed by default: the amplitude unit 2^20 of the
+# local detector law (`detector_law.UNIT`), a declared integer.
+BLOCK_SEED = 1 << 20
 MEASURED_KEYS = {
     "position",
     "family",
@@ -789,6 +864,7 @@ MEASURED_KEYS = {
     "level",
     "directions",
     "table",
+    *BLOCK_KEYS,
     "lamp",
     "become",
     # The axial record (`hand-v1`): one of the six headings, the axis the
@@ -801,6 +877,9 @@ MEASURED_KEYS = {
 LAMP_KEYS = {
     "rate",
     "wheel",
+    # detector-law-v1: the record's train in periods of its clock (the
+    # record's coherence), a declaration of the lamp, absent by default.
+    "train",
     "directions",
     "phase_window",
     "phase_width",
@@ -951,6 +1030,26 @@ class FamilyDefinition:
     # quantum at the record's completion. False for every family until then.
     massive: bool = False
     momentum_magnitude: int = 0
+    # The record kind's pair [num, den] on the six-neighbour term of the
+    # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
+    # section 1): light's kind is the value (1, 1) (every family without
+    # the key `pair`); a massive kind declares den > num, its rest
+    # frequency cos omega_0 = num / den. Admitted under the world key
+    # `massive_record` alone.
+    pair: tuple[int, int] = LIGHT_PAIR
+    # The kind's faces per axis (x, y, z), True where the kind's rows wrap:
+    # None for light's kind (the world's `boundary` as today); a massive
+    # kind's own declaration `faces`, every axis periodic by default (the
+    # torus is the algebra's own, ALGEBRA.md 1.6; an open face a declared
+    # deviation: a zero face for the massive record, MASSIVE_RECORD.md
+    # section 11 item 4).
+    faces: tuple[bool, bool, bool] | None = None
+
+    @property
+    def massive_kind(self) -> bool:
+        """A family of the massive record kind: its pair has den > num (a
+        gap); light's kind reads den = num."""
+        return self.pair[1] > self.pair[0]
 
     @property
     def declared_phase_per_link(self) -> int | list[int]:
@@ -1087,6 +1186,9 @@ class LampDefinition:
     # `momentum` on a measured event is a vector): required on a lamp of a
     # massive family, refused on any other lamp; None without.
     momentum_magnitude: int | None = None
+    # detector-law-v1: the record's train in periods of the family's clock,
+    # None without (the law's default then).
+    train: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1117,6 +1219,46 @@ class LevelDeclaration:
     pair: tuple[int, int]
     axis: int
     sign: int
+
+
+@dataclass(frozen=True)
+class BlockDefinition:
+    """A block, the foreign object of the massive record kind
+    (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its cells R
+    the cube of `side` with its lower corner at the measured event's
+    `position`, cut to the board on an open axis and wrapped on a periodic
+    one; its `pair` on the six-neighbour term at its cells (a WELL of the
+    massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
+    the (M) wall); the dielectric coupling of section 7 in the
+    first-difference form both ways, `receive` the rational g the block's
+    massive row gains times light's first difference and `source` the
+    rational G light's row gains, negated, times the massive current; the
+    wheel W of its first rung (None: the world's); the `seed` of its own
+    record on its cells at interval 0 (0: silent); `absorbing` (the take on
+    light's row at its cells, DESIGN.md section 5; a clock body takes
+    nothing); `cavity` (form (I): its own record held at 0 outside its
+    cells); `ramp` (the pushing agent's declaration: its momentum reached
+    from 0 over that many intervals); `start` (the same agent's: the
+    interval its drive begins, 0 by default, the ramp counted from it);
+    `margin` (the margin rule's kind of
+    world); `emits` (the light family its own record sources, one record
+    per cycle of its clock, paid from its held content)."""
+
+    side: int
+    pair: tuple[int, int]
+    receive: tuple[int, int] = (0, 1)
+    source: tuple[int, int] = (0, 1)
+    wheel: int | None = None
+    seed: int = BLOCK_SEED
+    # the bound mode's integer profile over the whole board (x-major, one per
+    # Node) when the seed is declared so; None for a flat seed
+    profile: tuple[int, ...] | None = None
+    absorbing: bool = False
+    cavity: bool = False
+    ramp: int = 0
+    start: int = 0
+    margin: str = MARGIN_KINDS[0]
+    emits: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1194,6 +1336,10 @@ class MeasuredDefinition:
     energy: int | None = None
     # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
     level: LevelDeclaration | None = None
+    # The block (massive-record-v1): the measured event's cells, pair,
+    # coupling, wheel, seed and the rest, or None (a body of one Node or a
+    # span as before).
+    block: BlockDefinition | None = None
 
     def __post_init__(self) -> None:
         if not self.hands:
@@ -1310,6 +1456,19 @@ class NatureBeamWorld:
     # line a measured event writes carries `clock`, its own count of
     # self-creations; a record field, no physics, no hypothesis.
     clock_stamp: bool = False
+    # detector-law-v1 (2026-09-23): the local detector law selected, false by
+    # default; under it the loader refuses a lamp with turns and a measured
+    # event with a fan table (instruments of the ray law), and needs the pair
+    # form of the clock on every paid family.
+    detector_law: bool = False
+    # massive-record-v1 (2026-09-23): the massive record kind beside light
+    # under the local detector law, false by default; under it a family may
+    # declare its `pair` and `faces` (`MASSIVE_RECORD_RULE`).
+    massive_record: bool = False
+    # massive-record-v1: the probes, Nodes whose light amplitude is written
+    # per interval (GAMEBOARD), empty by default.
+    probes: tuple[Address3, ...] = ()
+    mode_axis: int | None = None
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -1489,6 +1648,10 @@ class NatureBeamWorld:
             found.append(CENTRED_STEP_RULE)
         if self.atom_level:
             found.append(ATOM_LEVEL_RULE)
+        if self.detector_law:
+            found.append(DETECTOR_LAW_RULE)
+        if self.massive_record:
+            found.append(MASSIVE_RECORD_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -1508,6 +1671,13 @@ class NatureBeamWorld:
             for entry in self.measured
             for family, content in enumerate(entry.held)
         )
+
+    def kind_periodic(self, family: int) -> tuple[bool, bool, bool]:
+        """The faces a family's rows read, per axis: a massive kind's own
+        `faces` (periodic by default), light's kind the world's `boundary`
+        (`massive-record-v1`; every family reads the world's without the key)."""
+        faces = self.families[family].faces
+        return self.periodic if faces is None else faces
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
@@ -1873,12 +2043,95 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
+def _pair_bound(numerator: int, denominator: int, label: str, scale: int = 1) -> None:
+    """The load bound of a pair (Reviewer 3's MUST 3): the rule's total at a
+    Node under the amplitude bound A, num x scale x 6 x A + 3 x den x scale
+    x (A + 1), below 2^63 (the coupling's folded denominator as `scale`);
+    refused otherwise naming the bound and the pair."""
+    total = numerator * scale * 6 * AMPLITUDE_BOUND + 3 * denominator * scale * (AMPLITUDE_BOUND + 1)
+    if total >= TOTAL_BOUND:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
+            + (f" with the coupling's denominator {scale}" if scale != 1 else "")
+            + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = 2^40 "
+            f"is {total}, not below 2^63 (the bound of the rows' int64)"
+        )
+
+
+def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tuple[int, int]:
+    """The family key `pair` (`massive-record-v1`): [num, den], two integers
+    from 1 with den >= num (den > num a massive kind, den = num light's
+    kind written out); refused without the world key `massive_record`, and
+    with `phase_per_link` on a massive kind (its clock is its gap, not a
+    declared rate) or with the massive rows' flag `massive` (one massive
+    form per family)."""
+    if "pair" not in obj:
+        return LIGHT_PAIR
+    if not massive_record:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair is refused without the world key `massive_record` "
+            f"(the identity {MASSIVE_RECORD_RULE} beside the law, absent by default)"
+        )
+    value = obj["pair"]
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the kind's pair")
+    numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
+    denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
+    _pair_bound(numerator, denominator, label)
+    if denominator < numerator:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
+            "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
+        )
+    if denominator > numerator:
+        if "phase_per_link" in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair with phase_per_link: a massive kind's clock is its gap "
+                "(cos omega_0 = num / den), never a declared rate"
+            )
+        if obj.get("massive"):
+            raise ValueError(
+                f"{BEAM_LAW}: {label} declares both `pair` (massive-record-v1) and `massive` "
+                "(massive-rows-v1): one massive form per family"
+            )
+    return numerator, denominator
+
+
+def _kind_faces(
+    obj: dict[str, object], label: str, pair: tuple[int, int]
+) -> tuple[bool, bool, bool] | None:
+    """The family key `faces` (`massive-record-v1`): an object of `x`, `y`,
+    `z` to `"periodic"` or `"open"`, the missing axes periodic; only on a
+    massive kind (light's faces are the world's `boundary`); None for
+    light's kind, every axis periodic for a massive kind without the key."""
+    if pair[1] == pair[0]:
+        if "faces" in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.faces is refused on light's kind (its faces are the world's "
+                "`boundary`); a massive kind (den > num) declares its own"
+            )
+        return None
+    value = obj.get("faces", {})
+    if (
+        not isinstance(value, dict)
+        or not set(value) <= set(AXES)
+        or not all(item in BOUNDARIES for item in value.values())
+    ):
+        raise ValueError(
+            f'{BEAM_LAW}: {label}.faces must be an object of "x", "y", "z" to "periodic" or "open" '
+            "(every axis periodic by default: the torus is the algebra's own)"
+        )
+    wraps = tuple(value.get(axis, BOUNDARIES[1]) == BOUNDARIES[1] for axis in AXES)
+    return wraps[0], wraps[1], wraps[2]
+
+
 def _families(
     value: object,
     phase_steps: int,
     age_bound: int = AMOUNT_BOUND,
     massive_rows: bool = False,
     action: int | None = None,
+    massive_record: bool = False,
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -1963,6 +2216,8 @@ def _families(
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
+        pair = _kind_pair(obj, f"families[{index}]", massive_record)
+        faces = _kind_faces(obj, f"families[{index}]", pair)
         found.append(
             FamilyDefinition(
                 name,
@@ -1974,6 +2229,8 @@ def _families(
                 phase_per_age=per_age,
                 hand=hand,
                 massive=massive,
+                pair=pair,
+                faces=faces,
             )
         )
         declared.append(columns)
@@ -2002,6 +2259,8 @@ def _families(
             family.phase_per_age,
             family.hand,
             family.massive,
+            pair=family.pair,
+            faces=family.faces,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -2301,6 +2560,7 @@ def _lamp(
         hand=hand,
         label_hands=label_hands,
         momentum_magnitude=momentum_magnitude,
+        train=None if "train" not in obj else _integer(obj["train"], f"{label}.train", 1),
     )
 
 
@@ -2846,6 +3106,178 @@ def _atom_levels(
     return tuple(found)
 
 
+def _block(
+    obj: dict[str, object],
+    label: str,
+    family: FamilyDefinition,
+    families: tuple[FamilyDefinition, ...],
+    names: dict[str, int],
+    held: list[int],
+    momentum: tuple[int, ...],
+    amount: int,
+    width: int,
+    massive_record: bool,
+    lamp_declared: bool,
+    span: tuple[int, int, int],
+    shape: Address3,
+) -> BlockDefinition | None:
+    """The block's keys on a measured event (`massive-record-v1`), each named
+    in its refusal: `side` makes a block; every other block key without
+    `side` is refused; a block needs the world key `massive_record`, no lamp
+    and no span; its `pair` is a well on the massive kind (num' / den' >
+    num / den) or a gap on light's kind (den' > num', the (M) wall, which
+    declares no clock, coupling, seed, cavity, margin or wheel); `emits`
+    names a held light family and is refused on an absorbing block; the
+    momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
+    declared = [key for key in BLOCK_KEYS if key in obj]
+    if "side" not in obj:
+        if declared:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{declared[0]} belongs to a block (a measured event that "
+                "declares `side`, massive-record-v1)"
+            )
+        return None
+    if not massive_record:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.side is refused without the world key `massive_record` "
+            f"(the identity {MASSIVE_RECORD_RULE} beside the law, absent by default)"
+        )
+    if lamp_declared:
+        raise ValueError(f"{BEAM_LAW}: {label}: a block declares no lamp (its record is its own)")
+    if span != ONE_NODE:
+        raise ValueError(f"{BEAM_LAW}: {label}: a block declares `side`, never `span`")
+    side = _integer(obj["side"], f"{label}.side", 1)
+    if "pair" not in obj:
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: pair (the block's pair at its cells)")
+    value = obj["pair"]
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the pair at the cells")
+    pair = (
+        _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE),
+        _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
+    )
+    kind = family.pair
+    cavity = obj.get("cavity", False)
+    if type(cavity) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
+    if family.massive_kind:
+        # A well lowers the pair; a cavity (form (I), the faces the mirror)
+        # may carry the kind's own pair, its record bound by the faces.
+        if pair[0] * kind[1] < pair[1] * kind[0] or (
+            pair[0] * kind[1] == pair[1] * kind[0] and not cavity
+        ):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is no well of the kind's pair "
+                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (num' / den' > "
+                "num / den; MASSIVE_RECORD.md section 4)"
+            )
+    else:
+        if pair[1] <= pair[0]:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the "
+                "(M) wall declares den > num (a lump in the massless surround, "
+                "MASSIVE_RECORD.md section 4)"
+            )
+        clock_keys = [
+            key for key in ("coupling", "seed", "emits", "cavity", "margin", "wheel") if key in obj
+        ]
+        if clock_keys:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
+                "(M) wall has no clock and no coupling)"
+            )
+    receive = (0, 1)
+    source = (0, 1)
+    if "coupling" in obj:
+        coupling = obj["coupling"]
+        if not isinstance(coupling, dict) or set(coupling) != {"G", "g"}:
+            raise ValueError(
+                f'{BEAM_LAW}: {label}.coupling must be {{"G": [n, d], "g": [n, d]}} (the dielectric '
+                "coupling of MASSIVE_RECORD.md section 7)"
+            )
+        receive = _ratio(coupling["g"], f"{label}.coupling.g", zero=True)
+        # the block's rows divide by 3 den g_d (the coupling folded into the
+        # one division): the load bound of MUST 3 with that scale
+        _pair_bound(pair[0], pair[1], label, receive[1])
+        source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
+    wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
+    seed = BLOCK_SEED
+    profile: tuple[int, ...] | None = None
+    if "seed" in obj and isinstance(obj["seed"], list):
+        # The bound mode's integer profile over the whole board (MASSIVE_RECORD.md
+        # section 11 item 7: the pin worlds' seed, the generator's integers, the
+        # same at both levels; admitted with `margin` declared): a flat list of
+        # integers in x-major order, one per Node.
+        if "margin" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.seed as a profile is admitted only with margin declared"
+            )
+        values = obj["seed"]
+        count = int(shape[0]) * int(shape[1]) * int(shape[2])
+        if len(values) != count or any(type(value) is not int for value in values):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.seed as a profile must be {count} integers, one per Node of the "
+                "board in x-major order"
+            )
+        profile = tuple(int(value) for value in values)
+        if not any(profile):
+            raise ValueError(f"{BEAM_LAW}: {label}.seed as a profile must not be all zero")
+        seed = max(abs(value) for value in profile)
+    elif "seed" in obj:
+        seed = _integer(obj["seed"], f"{label}.seed", 0)
+    absorbing = obj.get("absorbing", False)
+    if type(absorbing) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
+    ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
+    start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
+    margin = obj.get("margin", MARGIN_KINDS[0])
+    if margin not in MARGIN_KINDS:
+        raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
+    emits: int | None = None
+    if "emits" in obj:
+        name = obj["emits"]
+        if not isinstance(name, str) or name not in names:
+            raise ValueError(f"{BEAM_LAW}: {label}.emits names an unknown family")
+        emits = names[name]
+        emitted = families[emits]
+        if emitted.free or emitted.massive_kind or emitted.phase_per_age is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emits {name!r}: a block emits a paid family of light's kind "
+                "with the pair form of its clock"
+            )
+        if held[emits] < emitted.quantum:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emits {name!r} but the block holds none of it (`held`): a "
+                "birth pays the family's quantum"
+            )
+        if absorbing:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: an absorbing block emits nothing (its light rows are "
+                "taken); `emits` with `absorbing` is refused"
+            )
+    wall = 3 * LABEL_SCALE * width * amount
+    if 3 * sum(component * component for component in momentum) >= wall * wall:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
+            f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
+        )
+    return BlockDefinition(
+        side,
+        pair,
+        receive=receive,
+        source=source,
+        wheel=wheel,
+        seed=seed,
+        profile=profile,
+        absorbing=absorbing,
+        cavity=cavity,
+        ramp=ramp,
+        start=start,
+        margin=str(margin),
+        emits=emits,
+    )
+
+
 def _measured(
     value: object,
     shape: Address3,
@@ -2857,6 +3289,8 @@ def _measured(
     table: tuple[Vector, ...],
     ticks: int,
     action: int | None,
+    massive_record: bool = False,
+    width: int = 1,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -3107,6 +3541,21 @@ def _measured(
                 family_hand=families[family].hand,
                 massive=families[family].massive,
             )
+        block = _block(
+            obj,
+            label,
+            families[family],
+            families,
+            names,
+            held,
+            momentum,
+            amount,
+            width,
+            massive_record,
+            lamp is not None,
+            span,
+            shape,
+        )
         found.append(
             MeasuredDefinition(
                 position,
@@ -3135,6 +3584,7 @@ def _measured(
                 axis=axis,
                 hands=tuple(hands),
                 energy=energy,
+                block=block,
             )
         )
     return tuple(found)
@@ -3290,6 +3740,42 @@ def covariant_square(
                 f"grain {grain} (a larger grain)"
             )
     return square
+
+
+def _detector_law_load_checks(
+    measured: tuple[MeasuredDefinition, ...], families: tuple[FamilyDefinition, ...]
+) -> None:
+    """Under `detector_law` (detector-law-v1) the instruments of the ray law
+    are refused, naming the rule: a lamp's `turns` (a fan of directions
+    with phases; the lamp inserts at its Nodes by its clock), a measured
+    event's fan `table` (an opening is free Nodes); and every paid family
+    needs the pair form of `phase_per_link`, its clock."""
+    for number, entry in enumerate(measured):
+        if entry.lamp is not None and any(entry.lamp.turns):
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].lamp.turns is refused under {DETECTOR_LAW_RULE} "
+                "(a lamp inserts at its Nodes by its clock; there is no fan)"
+            )
+        if any(split is not None for split in entry.splits):
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}] declares a fan (a rerelease split with weights), "
+                f"refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is no fan)"
+            )
+    for index, family in enumerate(families):
+        # A massive kind (massive-record-v1) has no declared clock: its
+        # clock is its gap; every other paid family declares the pair form.
+        if family.quantum != FREE_QUANTUM and family.phase_per_age is None and not family.massive_kind:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}] needs the pair form of phase_per_link under "
+                f"{DETECTOR_LAW_RULE} (the family's clock)"
+            )
+    for number, entry in enumerate(measured):
+        if entry.lamp is not None and families[entry.family].massive_kind:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].lamp on the massive kind "
+                f"{families[entry.family].name!r} is refused under {MASSIVE_RECORD_RULE}: a massive "
+                "record is a block's own record or a block's response, born of no lamp"
+            )
 
 
 def _record_load_checks(
@@ -4067,6 +4553,38 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     clock_stamp = obj.get("clock_stamp", False)
     if type(clock_stamp) is not bool:
         raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
+    detector_law = obj.get("detector_law", False)
+    if type(detector_law) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE}, off by default)"
+        )
+    # massive-record-v1: true or false, false by default; a kind's pair and
+    # faces are admitted under it alone, and it needs the local detector law
+    # (the kind's rule is that law's six-neighbour step).
+    massive_record = obj.get("massive_record", False)
+    if type(massive_record) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: massive_record must be true or false ({MASSIVE_RECORD_RULE}, off by default)"
+        )
+    if massive_record and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
+            "kind of the local detector law; the ray law has no record's rows at Nodes)"
+        )
+    mode_axis: int | None = None
+    if "mode_axis" in obj:
+        if not massive_record:
+            raise ValueError(f"{BEAM_LAW}: mode_axis is refused without the world key `massive_record`")
+        if obj["mode_axis"] not in AXES:
+            raise ValueError(f"{BEAM_LAW}: mode_axis must be one of {list(AXES)}")
+        mode_axis = AXES.index(obj["mode_axis"])
+    probes: tuple[Address3, ...] = ()
+    if "probes" in obj:
+        if not massive_record:
+            raise ValueError(f"{BEAM_LAW}: probes is refused without the world key `massive_record`")
+        if not isinstance(obj["probes"], list):
+            raise ValueError(f"{BEAM_LAW}: probes must be a list of Nodes")
+        probes = tuple(_address(item, "probes", shape) for item in obj["probes"])
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -4083,7 +4601,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
             f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
         )
-    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action)
+    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action, massive_record)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -4110,6 +4628,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         table,
         ticks,
         action,
+        massive_record,
+        width,
     )
     _column_budget(families, measured, release)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -4203,7 +4723,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         centred_step=centred_step,
         clock_stamp=clock_stamp,
         atom_level=atom_level,
+        detector_law=detector_law,
+        massive_record=massive_record,
+        probes=probes,
+        mode_axis=mode_axis,
     )
+    if detector_law:
+        _detector_law_load_checks(measured, families)
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),

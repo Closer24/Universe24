@@ -1,0 +1,433 @@
+{
+ "format": "massive-record-expectations-v1",
+ "identity": "massive-record-v1",
+ "design": "docs/designs/detector_law/MASSIVE_RECORD.md sections 4, 8, 11 and the build's plan BUILD.md section 5; every number written before its world runs and never moved after",
+ "scripts": {
+  "massive_board_margin": {
+   "py": "dca4f940c35c4be995cfc68e944c3d702746cc81",
+   "out": "1aa3c695d34b93429ea1a96cf45f5377083403fc"
+  },
+  "massive_moving_pins": {
+   "py": "7f8d11a1bb3c95698a41446616e6497369f70394",
+   "out": "74edc8be8e0ae98fa88ee8b07046117438e92d62"
+  },
+  "massive_block_clock_motion": {
+   "py": "ae861c7d2a7c7617be00362a22d5120cf68e0dac",
+   "out": "a445434e7922c743dbf3c8c9f04d94fbd8296b59"
+  },
+  "massive_dielectric_index": {
+   "py": "3d5d37c9dff4688b81a8cbeb4c06fd090ae1c359",
+   "out": "c96af1cbec8a6071f318e84e251397072e9d4788"
+  },
+  "massive_moving_index": {
+   "py": "ffd4025ed3496f0863a2da5b5228a5be7cca28f2",
+   "out": "73829b1918a2cb02905fad9ae6d16d8c864b32cc"
+  },
+  "massive_light_clock_relay": {
+   "py": "5dafc33d468f1779f49d0aad45514e98ebb43b75",
+   "out": "c7195cf0a8c8695c98503474132886e068f64729"
+  },
+  "massive_conserved_form": {
+   "py": "97962b5eb40d50748636d033e011256db4259de3",
+   "out": "c847a478b6a815c678d3822ee4e43d1f1e7789a3"
+  },
+  "massive_layer_pins": {
+   "py": "a5c11a4173aac4e1e5187082c549d3d5aa0f7e15",
+   "out": "c57cd6efe8eb5ce58fa85119179ea73cdfa0025a"
+  }
+ },
+ "worlds": {
+  "rest_20": {
+   "kind": "CONTROL",
+   "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
+   "pin": {
+    "omega_b": 0.1104604736049155,
+    "period_intervals": 56.881752378255094,
+    "count_over_run": 52.7409911714824,
+    "eps": 0.4526275589991522,
+    "extent": 5.731251171251019
+   },
+   "design": {
+    "omega_b": 0.11066,
+    "extent": 5.7,
+    "eps": 0.451,
+    "source": "massive_board_margin.out on a 96^3 box; the world's own 48^3 number is the pin (the periodic image's shift)"
+   }
+  },
+  "rest_28": {
+   "kind": "CONTROL",
+   "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
+   "pin": {
+    "omega_b": 0.13053196656467222,
+    "period_intervals": 48.135222907766234,
+    "count_over_run": 62.32442313082078,
+    "eps": 0.23563131208026922,
+    "extent": 7.940124472376284
+   },
+   "design": {
+    "omega_b": 0.13184,
+    "extent": 8.2,
+    "eps": 0.22,
+    "source": "massive_board_margin.out on a 96^3 box; the world's own 48^3 number is the pin (the periodic image's shift)"
+   }
+  },
+  "moving_20": {
+   "kind": "PREDICTION",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
+   "pin": {
+    "cone": "exact",
+    "omega_b_rest": 0.11064975385789276,
+    "eps": 0.45075004464918544,
+    "extent": 5.743154865964032,
+    "gamma_m": 1.2270468882341616,
+    "width": 24.540937764683232,
+    "omega_b_low": 0.1065415065445136,
+    "omega_b_high": 0.10570782835801514,
+    "omega_b_wide": 0.10609053852984394,
+    "pin_f_over_f0": 0.78138495216047,
+    "first_order": 0.7220917683340702
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.11064975385789276,
+     "eps": 0.45075004464918544,
+     "extent": 5.743154865964032,
+     "gamma_m": 1.2282040666825125,
+     "width": 24.56408133365025,
+     "omega_b_low": 0.1065415065445136,
+     "omega_b_high": 0.10570782835801514,
+     "omega_b_wide": 0.10607124424123843,
+     "pin_f_over_f0": 0.7805067801319667,
+     "first_order": 0.7208900817763196
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.11064975385789276,
+     "eps": 0.45075004464918544,
+     "extent": 5.743154865964032,
+     "gamma_m": 1.224744871391589,
+     "width": 24.49489742783178,
+     "omega_b_low": 0.1065415065445136,
+     "omega_b_high": 0.10570782835801514,
+     "omega_b_wide": 0.10612892135437604,
+     "pin_f_over_f0": 0.783136865669715,
+     "first_order": 0.7244876133504563
+    }
+   },
+   "design": {
+    "pin_f_over_f0_exact_cone": 0.7814,
+    "control_second_order": 0.7805,
+    "control_light": 0.7831,
+    "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
+   }
+  },
+  "moving_28": {
+   "kind": "PREDICTION",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
+   "pin": {
+    "cone": "exact",
+    "omega_b_rest": 0.13170106070737034,
+    "eps": 0.22187804112521747,
+    "extent": 8.182301356089491,
+    "gamma_m": 1.2270468882341616,
+    "width": 34.35731287055653,
+    "omega_b_low": 0.12988208738274756,
+    "omega_b_high": 0.12963710496059389,
+    "omega_b_wide": 0.12979455201025195,
+    "pin_f_over_f0": 0.8031673263650363,
+    "first_order": 0.769248796948044
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.13170106070737034,
+     "eps": 0.22187804112521747,
+     "extent": 8.182301356089491,
+     "gamma_m": 1.2282040666825125,
+     "width": 34.38971386711035,
+     "omega_b_low": 0.12988208738274756,
+     "omega_b_high": 0.12963710496059389,
+     "omega_b_wide": 0.12978661433563599,
+     "pin_f_over_f0": 0.8023615333052394,
+     "first_order": 0.7682674013829093
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.13170106070737034,
+     "eps": 0.22187804112521747,
+     "extent": 8.182301356089491,
+     "gamma_m": 1.224744871391589,
+     "width": 34.29285639896449,
+     "omega_b_low": 0.12988208738274756,
+     "omega_b_high": 0.12963710496059389,
+     "omega_b_wide": 0.12981034271278605,
+     "pin_f_over_f0": 0.8047748471027668,
+     "first_order": 0.7712059154373058
+    }
+   },
+   "design": {
+    "pin_f_over_f0_exact_cone": 0.8032,
+    "control_second_order": 0.8024,
+    "control_light": 0.8048,
+    "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
+   }
+  },
+  "layer_pin_rest_14": {
+   "kind": "PIN (layer)",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over [200, 3500] against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
+   "pin": {
+    "omega_b": 0.14844325144589593,
+    "period_intervals": 42.32718729870761,
+    "eps": 0.011469570024609022,
+    "extent": 35.973922117127486,
+    "seed": "the bound mode's integer profile at 2^20 over the whole layer, the same at both levels (the generator's integers in the world file; the load-time check against the module's mode printed)"
+   },
+   "design": {
+    "omega_b": 0.14846,
+    "extent": 36.2,
+    "source": "massive_layer_pins.out (a 256^2 layer)"
+   }
+  },
+  "layer_pin_k3_14": {
+   "kind": "PIN (layer)",
+   "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [1500, 9500] against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+   "pin": {
+    "cone": "exact",
+    "omega_b_rest": 0.14844325144589593,
+    "eps": 0.011469570024609022,
+    "extent": 35.973922117127486,
+    "gamma_m": 1.2270468882341616,
+    "width": 17.178656435278263,
+    "omega_b_low": 0.14787074161391708,
+    "omega_b_high": 0.14767166882370833,
+    "omega_b_wide": 0.14783517597885748,
+    "pin_f_over_f0": 0.8116264014517258,
+    "first_order": 0.8126015798989513
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.14844325144589593,
+     "eps": 0.011469570024609022,
+     "extent": 35.973922117127486,
+     "gamma_m": 1.2282040666825125,
+     "width": 17.194856933555176,
+     "omega_b_low": 0.14787074161391708,
+     "omega_b_high": 0.14767166882370833,
+     "omega_b_wide": 0.14783195090046272,
+     "pin_f_over_f0": 0.8108440212202532,
+     "first_order": 0.8118227040402022
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.14844325144589593,
+     "eps": 0.011469570024609022,
+     "extent": 35.973922117127486,
+     "gamma_m": 1.224744871391589,
+     "width": 17.146428199482244,
+     "omega_b_low": 0.14787074161391708,
+     "omega_b_high": 0.14767166882370833,
+     "omega_b_wide": 0.14784159174368092,
+     "pin_f_over_f0": 0.8131872146550558,
+     "first_order": 0.8141553647502751
+    }
+   },
+   "design": {
+    "pin_f_over_f0_exact_cone": 0.8116,
+    "control_second_order": 0.8108,
+    "control_light": 0.8132,
+    "script_layer_reading": 0.8113,
+    "source": "MASSIVE_RECORD.md section 11 item 7 and SCHEDULE.md row 4a (the exact cone; the second order and light's beside; massive_layer_pins.out the script's own reading)"
+   }
+  },
+  "cavity_24": {
+   "kind": "CONTROL",
+   "reads": "the cavity's count over the run and its spectral peak (GAMEBOARD) against the separable form",
+   "pin": {
+    "omega": 0.19484558374587285,
+    "period_intervals": 32.24699880996238,
+    "count_over_run": 93.03191337834457,
+    "form": "cos omega = (num / den) cos(pi / (s + 1)) with the pair [800, 809] and s = 24"
+   },
+   "design": {
+    "omega": 0.19503,
+    "source": "MASSIVE_RECORD.md section 4's table, the quadrature 0.19515 to the lattice's residual"
+   }
+  },
+  "cavity_24_moving": {
+   "kind": "CONTROL",
+   "reads": "the cavity's count per interval over the hold against the rest cavity's rate (GAMEBOARD); the pump's signature (0, no light declared)",
+   "pin": {
+    "f_over_f0": 0.6641675962011331,
+    "form": "1 / gamma_m^2 at the exact cone, section 8's cavity limit (the medium's clock); as built the moving cavity is a hard mirror stepping (BUILD_READINGS.md), its number never read against this until the physicist redeclares it"
+   },
+   "design": {
+    "f_over_f0": 0.6667,
+    "source": "massive_block_clock_motion.out"
+   }
+  },
+  "index_50": {
+   "kind": "CONTROL",
+   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "pin": {
+    "omega": 0.150207398749762,
+    "omega_0": 0.5053605102841573,
+    "n": 1.0420655913084853,
+    "delay_rad": 0.1313288667453877,
+    "form": "n^2 = 1 + G g / (omega_0^2 - omega^2) at G = 1, omega_0 = acos(7 / 8), omega = 2 pi (153 / 100) / 64"
+   },
+   "design": {
+    "n": 1.043,
+    "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
+   }
+  },
+  "index_20": {
+   "kind": "CONTROL",
+   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "pin": {
+    "omega": 0.150207398749762,
+    "omega_0": 0.5053605102841573,
+    "n": 1.102157766144556,
+    "delay_rad": 0.3189367661235897,
+    "form": "n^2 = 1 + G g / (omega_0^2 - omega^2) at G = 1, omega_0 = acos(7 / 8), omega = 2 pi (153 / 100) / 64"
+   },
+   "design": {
+    "n": 1.1044,
+    "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
+   }
+  },
+  "index_10": {
+   "kind": "CONTROL",
+   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "pin": {
+    "omega": 0.150207398749762,
+    "omega_0": 0.5053605102841573,
+    "n": 1.1956184520763786,
+    "delay_rad": 0.6107212290748325,
+    "form": "n^2 = 1 + G g / (omega_0^2 - omega^2) at G = 1, omega_0 = acos(7 / 8), omega = 2 pi (153 / 100) / 64"
+   },
+   "design": {
+    "n": 1.1998,
+    "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
+   }
+  },
+  "index_moving_k3_toward": {
+   "kind": "PREDICTION",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k3_toward against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "pin": {
+    "k": 3,
+    "beta_c": 0.5773502691896256,
+    "gamma_m": 1.224744871391589,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.0676134664714013,
+    "drive_pair": [
+     9,
+     6
+    ],
+    "ratio_read_over_expected": 0.5
+   },
+   "design": {
+    "ratio_drive_pair": 0.5,
+    "ratio_G_g_unchanged": 0.399,
+    "source": "massive_moving_index.out at the design's head (the same-Node form on the chain of 2200, the rows re-forming); the engine carries the drive's pair, so the pin is the drive-pair ratio; a PREDICTION of the model as built, never Fizeau's"
+   }
+  },
+  "index_moving_k3_away": {
+   "kind": "PREDICTION",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k3_away against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "pin": {
+    "k": 3,
+    "beta_c": 0.5773502691896256,
+    "gamma_m": 1.224744871391589,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.018116973738480778,
+    "drive_pair": [
+     9,
+     6
+    ],
+    "ratio_read_over_expected": 2.569
+   },
+   "design": {
+    "ratio_drive_pair": 2.569,
+    "ratio_G_g_unchanged": 1.582,
+    "source": "massive_moving_index.out at the design's head (the same-Node form on the chain of 2200, the rows re-forming); the engine carries the drive's pair, so the pin is the drive-pair ratio; a PREDICTION of the model as built, never Fizeau's"
+   }
+  },
+  "index_moving_long_k3_away": {
+   "kind": "PREDICTION",
+   "reads": "the receding case on the longer chain (n = 4000, the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]): the ratio of the delay to the covariant expectation with n(omega') from index_moving_long_rest_k3_away against its reference; the pump's signature over the window",
+   "pin": {
+    "k": 3,
+    "beta_c": 0.5773502691896256,
+    "gamma_m": 1.224744871391589,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.018116973738480778,
+    "drive_pair": [
+     9,
+     6
+    ],
+    "ratio_read_over_expected": 6.74
+   },
+   "design": {
+    "ratio_drive_pair": 6.74,
+    "ratio_G_g_unchanged": 4.277,
+    "source": "massive_moving_index.out at the design's head, the receding case on the longer chain (the same-Node form; the Boss's 16:13Z: 4.3 and 6.8 from behind); the engine carries the drive's pair, so the pin is 6.74"
+   }
+  },
+  "index_moving_k4_toward": {
+   "kind": "PREDICTION",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k4_toward against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "pin": {
+    "k": 4,
+    "beta_c": 0.43301270189221924,
+    "gamma_m": 1.109400392450458,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.05564136602835958,
+    "drive_pair": [
+     16,
+     13
+    ]
+   },
+   "design": {
+    "source": "no number declared at K = 4 (MASSIVE_RECORD.md section 11 item 4: read beside K = 3 to say how much of the same-Node numbers is the degenerate resonance's, exact at K = 3)"
+   }
+  },
+  "index_moving_k4_away": {
+   "kind": "PREDICTION",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k4_away against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "pin": {
+    "k": 4,
+    "beta_c": 0.43301270189221924,
+    "gamma_m": 1.109400392450458,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.022015120833045115,
+    "drive_pair": [
+     16,
+     13
+    ]
+   },
+   "design": {
+    "source": "no number declared at K = 4 (MASSIVE_RECORD.md section 11 item 4: read beside K = 3 to say how much of the same-Node numbers is the degenerate resonance's, exact at K = 3)"
+   }
+  },
+  "index_moving_long_k4_away": {
+   "kind": "PREDICTION",
+   "reads": "the receding case on the longer chain (n = 4000, the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]): the ratio of the delay to the covariant expectation with n(omega') from index_moving_long_rest_k4_away against its reference; the pump's signature over the window",
+   "pin": {
+    "k": 4,
+    "beta_c": 0.43301270189221924,
+    "gamma_m": 1.109400392450458,
+    "omega": 0.034999305656398784,
+    "omega_prime": 0.022015120833045115,
+    "drive_pair": [
+     16,
+     13
+    ]
+   },
+   "design": {
+    "source": "no number declared at K = 4 (read beside K = 3)"
+   }
+  }
+ }
+}

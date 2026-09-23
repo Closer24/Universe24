@@ -1,0 +1,70 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-rest-28-v1",
+ "shape": [
+  48,
+  48,
+  48
+ ],
+ "boundary": {
+  "x": "periodic",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 3000,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "directions": [],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    77,
+    25
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    1600,
+    1618
+   ]
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    10,
+    10,
+    10
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 28,
+   "pair": [
+    1600,
+    1609
+   ],
+   "margin": "control"
+  }
+ ],
+ "detectors": []
+}
