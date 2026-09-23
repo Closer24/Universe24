@@ -6827,7 +6827,7 @@ sequential gates on an entangled record, the full register replay.
   `tests/test_clock_word.py` (the shipped worlds the generator's and run
   balanced; the lamp's count under each word at each distance and the
   first counting tick; the algebra of the pin), the template
-  `tests/test_crowd_clock.py`.
+  `tests/test_crowd_clock.py` (deleted on 2026-09-23 with series U).
 - **Run (2026-09-21, `tools/run_series.py --jobs 2` on main 583bf0e, headless,
   500 intervals each, the four worlds completed and conserved at every tick;
   the readings by `examples/events/clock_word/read_runs.py`, shipped as
@@ -7738,6 +7738,22 @@ a sixth of itself at about one ray per pixel per interval and gone at 0.14
 (the narrowing 0.292, 0.050 and -0.005 under the pointer's square; 2 inside,
 1 outside), the law's limit as registered on 2026-09-20 and not tuned; the
 runs and their rows are in [the validation log](VALIDATION.md#a10-at-a-low-rate-the-single-click-build-up-three-runs---2026-09-20).
+
+### Deleted on 2026-09-23, after the generic entry of the bending merged: the crowd worlds of series U, V and the reader
+
+The rows of PLAN.md that waited on the merge SHA of `generic-bending`
+(PR #855; its entry and the split ladder are in the CHANGELOG under
+2026-09-22): `examples/events/crowd_clock/` (series U, a lamp inside a
+crowd, eight worlds), `examples/events/cluster_clock/` (series V, a cluster
+of crowds, two) and `examples/events/reader_clock/` (a reader inside a
+crowd, five), with their generators, registers and READMEs, the designs
+`docs/designs/crowd_clock/DESIGN.md`, `cluster_clock/DESIGN.md` and
+`reader_clock/DESIGN.md`, and `tests/test_crowd_clock.py`,
+`test_cluster_clock.py`, `test_reader_clock.py`. The paper cites no number
+of theirs (record 868); their runs of 2026-09-21 and their readings under
+the generic entry and the split ladder stay in the CHANGELOG and the logs.
+Series T (the clock's word, above) keeps its four worlds; its generator
+carries the geometry's constants it took from series U's.
 
 ### Deleted on 2026-09-22, the owner's word of record 894: the gallery, hand and catalog worlds
 

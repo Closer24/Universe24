@@ -109,7 +109,7 @@ declared input ([FULL_PICTURE.md](FULL_PICTURE.md) section 1;
 | space, distance | Nodes and Links; a distance a count of Links, a radius from a click by the flight table (a CONVERSION) | [TERMINOLOGY.md](TERMINOLOGY.md) |
 | light and matter | rows of a paid family (quantum at least 1, the content per row quantum x turn) and a free family's rows with bodies (quantum 0); "rows and bodies, not light and matter" | [BEAM_LAW.md](BEAM_LAW.md) section 2 (`families`); [FULL_PICTURE.md](FULL_PICTURE.md) |
 | phase, interference, probability | a row's phase in Z_N; a record's element of Z[Z_N]; interference the merge with the cancel; the probability weight of a click the norm \|z\|^2 of the evaluation (E), the amplitude law | [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); [DERIVATIONS_BEAM.md](DERIVATIONS_BEAM.md) section 1 (G), (E) |
-| spin, polarisation | the hand h in {-1, 0, +1}, a pseudoscalar under the 48 (h -> det(g) h); a body's axis an axial vector | [designs/hand/FORM.md](designs/hand/FORM.md); BEAM_LAW note 39 |
+| spin, polarisation | the hand h in {-1, 0, +1}, a pseudoscalar under the 48 (h -> det(g) h); a body's axis an axial vector | `docs/designs/hand/FORM.md` (deleted on 2026-09-22 with the hand worlds, record 894; in the tree at 59c6b811); BEAM_LAW note 39 |
 | isotropy, the symmetry of the law | the 48: every operation commutes with G_48 (section 1); the law's constants are invariants of O_h (k^2 the one quadratic invariant; two quartic ones, the anisotropy at order k^4) | [DERIVATIONS.md](DERIVATIONS.md); [designs/fraction_free/FORM.md](designs/fraction_free/FORM.md) |
 | Lorentz, Einstein, Newton | not in the group: no boost is among the 48; their forms are reached Outside as relations among counts between clicks (the one-way factors, the round trip, the radar; the ring mean of the push), the algebra first and the comparison after | [designs/click_frame/DERIVATION.md](designs/click_frame/DERIVATION.md); [designs/ring_mean/PROOF.md](designs/ring_mean/PROOF.md); [HIGHLIGHTS.md](HIGHLIGHTS.md) 5.4 |
 | a measurement | a click at a detector; a count between clicks on the detector's own record; a ratio of such counts (the reading rule, section 8); a reading of the board a diagnostic | [ENGINE.md](ENGINE.md), the readings by type; record 281 |
@@ -287,7 +287,7 @@ collision's Port order, [TERMINOLOGY.md](TERMINOLOGY.md) "The cube
 group"; [designs/fraction_free/FORM.md](designs/fraction_free/FORM.md)
 "Covariance under the 48"); they act trivially on every content (a
 content is a scalar); on the hand they act by the determinant alone
-([designs/hand/FORM.md](designs/hand/FORM.md)). The group of order 24 is
+(`docs/designs/hand/FORM.md` (deleted on 2026-09-22 with the hand worlds, record 894; in the tree at 59c6b811)). The group of order 24 is
 the subgroup that fixes every pseudoscalar.
 
 | Object | Operation | What the 48 do | What the group of order 24 does |
@@ -310,7 +310,7 @@ the subgroup that fixes every pseudoscalar.
 | the translation group of the torus | [FULL_PICTURE.md](FULL_PICTURE.md) section 1, choice 3; [ENGINE.md](ENGINE.md) | `core/game_board.py` (the GameBoard's shape and boundary) | `tests/test_locality.py` |
 | the collision as a group action | BEAM_LAW section 4 and note 42 | `nature_beam.py` (`CollisionTable`) | `tests/test_group_structure.py` (c); `tests/test_nature_beam_collision.py` (b) |
 | the six operations and the evaluation at the click | [DERIVATIONS_BEAM.md](DERIVATIONS_BEAM.md) section 1; [designs/vector_form/LAW.md](designs/vector_form/LAW.md) | `nature_beam.py`, `measured.py`, `core/integer.py` | `tests/test_fraction_free.py`, `tests/test_amplitude_click.py` |
-| the action of the 48 on the hand | [designs/hand/FORM.md](designs/hand/FORM.md) sections 2 and 3 (`hand_map.out`) | `nature_beam.py` (`become`'s right-hand rule) | `tests/test_hand.py` |
+| the action of the 48 on the hand | `docs/designs/hand/FORM.md` (deleted on 2026-09-22 with the hand worlds, record 894; in the tree at 59c6b811) sections 2 and 3 (`hand_map.out`) | `nature_beam.py` (`become`'s right-hand rule) | `tests/test_hand.py` |
 | the covariance of every rule under the 48, the two ties | [TERMINOLOGY.md](TERMINOLOGY.md) "The cube group"; [designs/fraction_free/FORM.md](designs/fraction_free/FORM.md) | the flight table (`direction_flight`), `unit_label` | `tests/test_nature_beam_label.py` (a), `tests/test_nature_beam_readings.py` |
 
 ## 11. Every file in which 24 or 48 names a group: the wording found, and whether it agrees

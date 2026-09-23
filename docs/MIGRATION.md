@@ -23,6 +23,15 @@ record byte for byte as it was (the base commit 59c6b811 holds them):
 - `examples/events/buildup/` (A10 at a low rate), `tools/buildup_readings.py`,
   `tests/test_buildup_readings.py`; the register entry is one line under
   EXPERIMENTS.md section D.
+- On 2026-09-23, after the generic entry of the bending merged (PR #855):
+  `examples/events/crowd_clock/` (series U, eight worlds),
+  `examples/events/cluster_clock/` (series V, two), `examples/events/reader_clock/`
+  (the reader inside a crowd, five) with `docs/designs/crowd_clock/DESIGN.md`,
+  `cluster_clock/DESIGN.md`, `reader_clock/DESIGN.md` and
+  `tests/test_crowd_clock.py`, `test_cluster_clock.py`, `test_reader_clock.py`;
+  the paper cites none of their numbers (records 868 and 871). Series T's
+  generator (`clock_word/make_worlds.py`) carries the geometry's constants it
+  took from series U's; its four worlds are byte for byte as they were.
 
 Old code nothing left reaches (the second commit): `tools/derivations_round7.py`
 and `derivations_round8.py` (the scratch of DERIVATIONS.md rounds 7 and 8, the law
@@ -221,8 +230,8 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   (the still readings at the age word's derived pins, 5.5 times the
   presence word's k; the moving worlds' emulated crowds declared for the
   presence word's k, a research reading until re-declared; the READMEs of
-  [U](../examples/events/crowd_clock/README.md), [V](../examples/events/cluster_clock/README.md)
-  and [S](../examples/events/reader_clock/README.md), the age word's pins
+  U (`examples/events/crowd_clock/`), V (`examples/events/cluster_clock/`)
+  and S (`examples/events/reader_clock/`; the three deleted on 2026-09-23), the age word's pins
   in each register's block `clock_age_v1`), the catalog's `clock_near_mass`
   and `neutron_star` (the README (`examples/events/catalog/`, deleted on 2026-09-22, record 894)).
   The readings tools amended with the word: `tools/coupling_readings.py`

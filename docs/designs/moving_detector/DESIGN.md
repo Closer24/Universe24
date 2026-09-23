@@ -420,7 +420,7 @@ Lorentz line declared, no r declared, no fit.
   passage of clicks.
 - Series O, two stars (`docs/designs/two_stars/DESIGN.md`, deleted on
   2026-09-22 with its worlds, record 871; in the tree's history at 59c6b811) and
-  [series S, the reader's clock](../reader_clock/DESIGN.md): the templates
+  series S, the reader's clock (its design deleted on 2026-09-23): the templates
   of the star as a detector and of the reader's own lamp.
 - [ENGINE.md](../../ENGINE.md): the measured event's rules (`measure`,
   `rerelease`), the record's ordinal, the clock of a measured event.
