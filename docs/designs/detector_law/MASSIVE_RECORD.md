@@ -642,8 +642,11 @@ with its own wall, is the WHOLE correction: `J(t) - J(t - 1) = SUM_i
 (a_l,next - a_l,before)_i (r - r')_i / (3 G_d)`, EXACT (checked in exact
 rationals on a chain at g = 1 / 20 and 1 / 5, the residual 0,
 `massive_conserved_form.py` part 3); test (g) asserts this identity in
-integers (J and both terms scaled by the common `3 num g_d G_d`), no
-tolerance. (B) THE SCHEME IN THE ENGINE'S COLUMNS: at each interval,
+integers (J and both terms scaled by the common `3 L g_d G_n`, L the
+least common multiple of the numerators where the well has its own;
+Reviewer 3's token of 17:12Z: alpha puts G_n in the denominator and G_d
+cancels against light's wall, so G_d is not in the scale; at G = [1, 1]
+the two agree), no tolerance. (B) THE SCHEME IN THE ENGINE'S COLUMNS: at each interval,
 first the massive record's step reads ITS OWN `a_now`, `a_before` and
 `r` and LIGHT'S `a_now - a_before` AS THEY STAND BEFORE LIGHT'S STEP OF
 THIS INTERVAL, writing the massive `a_next` and `r'`; then light's step
@@ -1078,12 +1081,12 @@ board's two-block world reads it.
 
    | mu | s | g | omega_b | eps | the extent 1 / kappa | the side s + 4 / kappa | the world's kind | HOST, a moving world of 9500 intervals |
    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8132 (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8165); the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z) | 6 s |
-   | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent): the pin the one formula's number at pin time on this layer | 12 s |
-   | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | a PIN world at mu = 0.05 (residual 0.3 percent): the pin the one formula's number at pin time | about 1 min |
-   | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent) | 2 s |
-   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent): the pin the formula's 0.7848; the scratch reading 0.7832 a CONTROL | 1 s |
-   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7643; the scratch reading 0.7635 | 1 s |
+   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8132 (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8165); the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z); the hold 8000 | 6 s |
+   | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent): the pin the one formula's number at pin time on this layer; the hold 8000 | 12 s |
+   | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | DEFERRED to the second paper (the Boss's word of 17:10Z on the owner's approval: one mass, mu = 0.15, for the first table); declared, not deleted; a PIN world at mu = 0.05 (residual 0.3 percent) when run, the hold 8000 | about 1 min |
+   | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent); the hold 2000 | 2 s |
+   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent): the pin the formula's 0.7848; the scratch reading 0.7832 a CONTROL; the hold 2000 | 1 s |
+   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7643; the scratch reading 0.7635; the hold 2000 | 1 s |
 
    So on the layer the whole of (i) to (iii) reads in seconds and the
    pin worlds of five's residual in under a minute, all on the 24th with
@@ -1094,6 +1097,25 @@ board's two-block world reads it.
    reading is labelled "(layer)" beside its 3-D pin, never in its place.
    The builder needs nothing new: the family's `faces` key already
    declares a periodic axis of extent 1.
+   THE FIVE CUTS (the owner's approval of the physicist's five lines,
+   the Boss's word of 17:10Z, yes to all with one condition): (1) ONE
+   MASS for the first table, mu = 0.15; the mu = 0.05 worlds deferred to
+   the second paper, written as deferred above, not deleted. (2) THE HOLD
+   per world, written in the row before the run: 2000 intervals for a
+   PREDICTION or CONTROL world (a residual of 2.5 to 16 percent needs no
+   finer peak), 8000 for a PIN world of the 0.3 percent residual (the
+   peak's grain); the ramp 1500 kept for adiabaticity. (3) THE WORLDS IN
+   PARALLEL, four at once, a HOST matter; each world's own run.json and
+   record unchanged. (4) THE TWO-ARM RELAY: five's PIN world (b) runs
+   first; its CONTROL (a), declared rigid arms, RUNS ON A MISMATCH OF (b)
+   only; both stay declared in item 3, which is which. (5) THE ENGINE'S
+   OWN COST measured first, STEP 5's first act: one interval on a 200^2
+   layer, a HOST number; if the integer form is far slower than the
+   scratch's 0.65 ms the builder vectorises the massive step, under the
+   CONDITION that the results are byte identical (the same integers, the
+   same remainders, the same clicks) on the check worlds, asserted by a
+   test before any pin world runs: a vectorisation that changes one
+   integer is not a speedup, it is a different rule.
 
 ## 12. The three tests per sentence; the scripts; what is not computed
 
