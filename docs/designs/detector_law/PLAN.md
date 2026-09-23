@@ -204,7 +204,15 @@ world's papers are read for each closed row (`PUBLISHED_FORMS.md`, the
 Published Forms Reader, tonight): how the experiment is best done to show
 the connection of the physics, and the arrangement of our objects that
 matches its published form; a change of a world is a proposal to the
-physicist and the owner, never made on that page.
+physicist and the owner, never made on that page. The page landed
+(published-forms 323205b5): eleven rows whose best published match takes a
+different world than the schedule's (among them 4b's two-reader form, ahead
+and behind the same pushed emitter, whose product would separate the two
+gammas at 0.4 percent; 2b's path-difference scan; 2c's eight masks; 5a's
+resonator; the light clock's ranging slope; the index's dispersion curve)
+and the prediction-only rows with the paper that would test each; every
+one a proposal for the physicist's morning line and the owner's word, the
+schedule's worlds standing until then.
 
 ### 3.3 The order of the pinned runs (the physicist's proposal, taken; the list of 3.2)
 
