@@ -6029,3 +6029,80 @@ continuum coefficient read on the lattice only within the fan's comb
   states the weight rule once, as a declaration by gamma_PPN; rows 13
   and 14 read "under the declaration"; no per-test choice, and the
   options A, B, C are not in the paper.
+
+## Applied (2026-09-23, the Boss's order of 01:05Z, step 2, commit 1): the reordering into the six heads, nothing cut, nothing rewritten beyond the joins
+
+The generator gained one step, `cut30/reorder.py`, applied after the
+corrections: every block is matched exactly once by its heading or
+label, cut whole and placed whole; the tests hold each block verbatim
+and once in main.tex, every label defined once, every reference
+resolved, and every moved reference in its new place.
+
+The order now (the owner's approval of the six heads):
+
+1. Introduction: as before, less "The words of this paper" (to
+   Section 2) and "How the simulator led to the results" (to Section
+   6); in the latter's place one pointer paragraph, "Where the object
+   came from", to Sections 6 and 5.
+2. The algebra: the group, the ring and the families (`sec:algebra`):
+   the opening join; "The words of this paper"; "The six Ports, the
+   group and the front" with Theorem 1 and its proof reference (from
+   the geometry section); "The objects" (from the quadratic form's
+   part); Definitions 1 to 3 (row and record, the update rules, the
+   click), the host's layer paragraph, Lemma 1 and the "three things
+   put in" paragraph (from the measurement section); the families'
+   sentences of the law section's first paragraph under the new
+   heading "The families as declared integers" (its "(Appendix D)"
+   now "(below)"); the families table, Table 1, brought forward whole
+   from Appendix D.
+3. From click to click (`sec:click`): the opening join; "Inside and
+   Outside, and how a click arrives at Lorentz"; "The step beneath and
+   the step above", "The smallest thing above", "Newton from the small
+   step"; "From an Inside formula to an Outside formula, family by
+   family" with the conversion table (Table 2) and "What the Inside
+   step gives Outside that the continuum cannot state"; "The limits,
+   and what does not return" with Eq. W (all from the discussion).
+4. From the algebra, the physics (`sec:physics`): the opening join;
+   "What is proved" (from the discussion); then, demoted to
+   subsections with their labels, 4.1 Geometry and symmetries (with a
+   pointer to Theorem 1), 4.2 Conservation, the flux and the forces,
+   4.3 The delay field, 4.4 Measurement and the quadratic form (with a
+   pointer to Definitions 1 to 3 and, where "The objects" stood, to
+   Section 2), 4.5 Bell and CHSH.
+5. The GameBoard: the way the algebra is computed with
+   (`sec:gameboard`): the opening join; 5.1 The law and its
+   implementation (the whole law section, its first paragraph "The
+   GameBoard as a system of information transfer" kept, the road
+   paragraph and the families' sentences out of it; "The code
+   implements the law" from the checks section placed before "When the
+   transition was made" and the forcing ledger, Table 3).
+6. How the algebra was reached: from the GameBoard to the group
+   (`sec:route`): the opening join; "How the simulator led to the
+   results"; "The road from the cells to the algebra"; "The transition
+   from ordinary physics to modern algebra, dated" (from Appendix C);
+   "The platform" and "The road to each" (from the discussion).
+7. The comparison with nature, and the failures by cause
+   (`sec:comparison`): the opening join; 7.1 The simulator's checks and
+   the comparison with nature (`sec:checks`, less the code paragraph;
+   the confrontation register Table 4); 7.2 Discussion and conclusions
+   (`sec:discussion`: a pointer line, then "What the law names and has
+   not computed").
+Declarations, references, Appendices A to C as before (C less the dated
+paragraph); Appendix D now "The check of the roads" (its label kept,
+the roads table).
+
+The joins, all the new text: seven section headings and their opening
+sentences (one to three each), five pointer lines, one paragraph
+heading. Fifteen cross-references whose targets moved follow them
+(`reorder.REFS`): nine that pointed at the discussion (the click
+theorem, the second-order W, the lattice's corrections, the detector in
+motion, the bending under the key, the hypotheses on the tree, the
+platform, the tally, the centred step) now point at Sections 3, 4 or
+"below"; five that pointed at the measurement section for the
+definitions' objects (n/d, the rungs, the rotation matrix, the ladder's
+K, the tables' zeros) now point at Section 2; the ledger's row on the
+group points at Section 2. No sentence of physics, number or verdict
+changed. 53 pages (NUMBERS.md). Not in this commit: the six operations
+as maps (commit 2), the route chapter's tables and the postulates'
+names (3), the click subsections (4), the failures-by-cause table (5),
+the cuts and the length (the owner's word).

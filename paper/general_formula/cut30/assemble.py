@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import corrections  # noqa: E402  (the path above)
+import reorder  # noqa: E402
 
 HEADER = """% The paper on the general formula, the thirty-page form (the owner's instruction
 % of 2026-09-22, record 573, and his guiding statement: only the closed results,
@@ -28,7 +29,8 @@ HEADER = """% The paper on the general formula, the thirty-page form (the owner'
 % Every formula is the derivation's (docs/DERIVATIONS_BEAM.md) with its section;
 % every check a detector reading of the experiments register
 % (docs/EXPERIMENTS.md); NUMBERS.md maps each number to its source. The long
-% form is at c15c1174, the forty-page cut at b0d1ebf7.
+% form is at c15c1174, the forty-page cut at b0d1ebf7. The sections stand in
+% the six heads' order (cut30/reorder.py; the owner's approval of 2026-09-23).
 """
 
 
@@ -46,6 +48,7 @@ def build() -> str:
         .replace("Part~I", "Section~\\ref{sec:law}")
     )
     s = corrections.apply(s)
+    s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
     body = s[: s.index("\\begin{thebibliography}")]
     cited = {k.strip() for m in re.finditer(r"\\cite\{([^}]*)\}", body) for k in m.group(1).split(",")}
     bib = s[s.index("\\begin{thebibliography}") :]
