@@ -950,6 +950,23 @@ order; the board checks, the algebra leads.
 
 ## 14. The direction of time: in the Inside and at the click (the owner's question of record 1439; COMPUTATION, `massive_time_reversal.py`)
 
+**The convention it continues** (the owner's word of record 1442: "this is
+part of our conventions on the GameBoard in the Inside, symmetric in time,
+no?"): POSTULATES.md's head paragraph on main (f3b322d0, lines 66 to 72),
+"under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection on a
+GameBoard without a measured event and the click is the one one-way border"
+(and "does not claim that a world with clicks is reversible"). This section
+is that theorem restated for the algebraic rule: the interval is a bijection
+of the board's whole state (the rows with their remainders, the pairs, the
+drive's accumulators) when no click occurs, exactly, in the integers, and
+the click is the one one-way step. In one sentence on the remainders: the
+bookkeeping keeps the bijection EXACT, not only the amplitudes': given the
+state at two intervals (a_now, a_before, r) the backward step is determined
+uniquely (the ceiling division of (a) below), so nothing is lost in the
+remainder; what the remainder adds is only the ARROW OF FORM, the floor
+forward and the ceiling backward, "symmetric in time" as a bijection and
+not as a formula.
+
 - **(a) The light rule** `3 a_next + r' = S_6 - 3 a_before + r`, `0 <= r' < 3`.
   Under the swap `(a_next, r') <-> (a_before, r)` the EQUATION is unchanged.
   The RECURRENCE is a bijection of the row's state given the neighbours, in
