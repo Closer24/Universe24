@@ -7,8 +7,11 @@ light, unchanged) and [PINS.md](PINS.md). The algebra of the push, the boost
 and the gate of this design is Reviewer 3's `PUSH_BALANCE.md`
 (docs/designs/detector_law/ on `push-balance-r3`, PR #1043): its sections 10
 and 11 at 6d7a03b5, 60509e9a and d9227352, its section 12 at bb43ef41 and
-f5752667, its 12.5 at 198a9bfe and its 12.6 at f089736f; cited by those SHAs,
-never rewritten. Every number here is a COMPUTATION from the rule, written
+f5752667, its 12.5 at 198a9bfe and its 12.6 at f089736f, and its 12.7 (his gate of
+7022428c, AGREED WITH SIX MUSTS, the Boss's relay of 14:33Z; on
+`push-balance-r3`, PR #1043, its SHA cited when it lands); cited by those
+SHAs, never rewritten. The six MUSTs are folded below (sections 1, 4, 7, 9,
+10, 13 and `massive_c_derivation.py`). Every number here is a COMPUTATION from the rule, written
 before the board runs it, and printed by a script beside this document (the
 list in section 12); the board, when it runs, checks the algebra, never the
 reverse. The third draft replaces the first two whole: the massive rule is
@@ -93,8 +96,9 @@ h omega_0. The second draft's self pair `[p, q]` maps to it as `den / num =
 DESIGN.md 5.1 (b) is this same pair WITH the compensation `6 (den - num)
 a_now`, which restores the zero mode (the same pace, no gap: an index); the
 massive record is the same pair WITHOUT it (a gap: a mass). The
-compensation is exactly the difference between an index and a mass, and no
-third form exists in range 1.
+compensation is exactly the difference between an index and a mass; (B) is
+the ONE-PAIR form (the edge form (C) of section 2 is the two-coefficient
+one, named and not carried).
 
 **Three derivations, one rule.** The Algebra Mathematician's chapter,
 written from ALGEBRA.md alone (`docs/ALGEBRA_MASSIVE_RECORD.md` on
@@ -104,7 +108,10 @@ unbounded on every three-dimensional periodic world for every p >= 1 (his
 record before, `3 (2 q + p) (a_next + a_before) + r' = 2 q SUM6 + r` (his
 4.6, with its energy positive semidefinite for every shape and every
 pair): the rule above with `[num, den] = [2 q, 2 q + p]`, Reviewer 3's form
-(B), and this design's stable form, reached three ways.
+(B), and this design's stable form, reached three ways. (His one-Node
+threshold 2 / (3 W_S) = 0.4397 carries a factor 3 from the Green's
+function's normalisation; the threshold is 1.319, this design's 1.3206 in
+section 4; none of his conclusions moves. His to fix, in his file.)
 
 **The algebraic placement of the Inside** (the owner's 14:30Z question: how
 does the algebra see the ray that splits by itself). A record on the board
@@ -264,12 +271,15 @@ the map `g = 2 (num' / den' - num / den)` carries them into form (B) to
 
 ## 4. The foreign object as a block: the well of the pair on declared cells
 
-The object is a block R of side s (a square on a layer, a cube on the
-board), DECLARED as world data like a wall's placement (the owner's cube;
-Reviewer 3's C4 and 12.5 (c)), every cell of R carrying a pair `[num',
-den']` with `num' / den' > num / den` (the gap lowered inside: a WELL of the
-pair; `g = 2 (num' / den' - num / den)` its depth to first order, mu^2 =
-omega_0^2 the outside's gap). The object's record is the bound mode of the
+The massive record kind's rule runs at EVERY Node its rows reach (rows
+created as the record spreads, as light's), with the background pair
+`[num, den]` the KIND's declaration in the world file (its rest mass, the
+medium's gap mu, as light's family has its clock). The object is a block R
+of side s (a square on a layer, a cube on the board), DECLARED as world
+data like a wall's placement (the owner's cube; Reviewer 3's C4 and 12.5
+(c)), every cell of R carrying a LOWERED pair `[num', den']` with `num' /
+den' > num / den` (a WELL of the pair in that medium; `g = 2 (num' / den' -
+num / den)` its depth to first order, mu^2 = omega_0^2 the outside's gap). The object's record is the bound mode of the
 map in that well; ITS CLOCK IS THE MODE (omega_b, a character at k = 0;
 the owner's 12:10Z); its extent is the mode's, a COMPUTATION from the
 pair and the side, never a declaration in motion (the owner's 13:05Z).
@@ -341,9 +351,13 @@ a side above the threshold.
   Form (I) is the CONTROL: a rest world's check of a confined record's
   clock, and, moved, the world that reads gamma_m^2 (the cavity regime's
   limit, section 8). It is never the object's definition.
-- **(II) The free massive packet**, no well: covariant, and it SPREADS
-  (tau = 6 sigma^2 omega_0: 54 intervals at s = 12 and [1, 16]; 907 at s =
-  24 and [1, 1]); named, not carried.
+- **(II) The free massive packet**, no well: a PHYSICAL THING of the
+  design, the medium's free massive quantum, a matter wave at group pace
+  below c_m with its own clock omega_0, covariant, and it SPREADS (tau = 6
+  sigma^2 omega_0: 54 intervals at s = 12 and [1, 16]; 907 at s = 24 and
+  [1, 1]); carried by the rule wherever its rows reach; it clicks only by
+  reaching a body's cells (verb G, the same kind); not an object, and no
+  world of section 11 is built on it.
 - **(III) The bound state of the coupled records** (the second draft's
   self-consistent pair): DROPPED. Light has no gap, so an index lump binds
   no light: with D >= 1 inside and D = 1 outside the operator's norm is
@@ -373,10 +387,9 @@ the object's mode is BOUND below the medium's gap with its tail in the
 medium, the well regime exists, and the clock in motion is section 8's.
 What it costs: (i) a background pair declared per world; (ii) a free
 massive packet away from any object exists as the medium's own free record
-(form (II): covariant, spreading, its pace c_m; a massive quantum without
-a declared object, which clicks only by reaching a body's cells, where it
-merges with the body's record by verb G, the same kind; named, not
-carried); (iii) a two-pace world (section 2). In the pins: five's 1 and 1
+(form (II): a physical thing of the design, a free massive quantum,
+covariant, spreading, its pace c_m; it clicks only by reaching a body's
+cells, where it merges with the body's record by verb G, the same kind); (iii) a two-pace world (section 2). In the pins: five's 1 and 1
 to the band's second term; the lifetime the radiative tau of section 7;
 the index from g, G. THE ALTERNATIVE (the Algebra Mathematician's chapter,
 section 5): the pair only at the object's cells, a MASSLESS SURROUND. Then
@@ -390,7 +403,20 @@ motion is the cavity's, the medium's 1 / gamma_m^2, so five's 1 and 1 is
 lost in form and the lifetime is Q periods. The alternative keeps the
 world free of a background pair and of free massive packets; it gives no
 Lorentz clock to any object. The design takes the first; the Boss carries
-the difference to the owner with these four answers.
+the difference to the owner with these four answers. In Reviewer 3's
+letters (his line of 14:08Z through the Boss): (W), the pair uncompensated
+on the SECOND record kind, whose rule runs at every Node its rows reach
+(rows created as the record spreads, as light's), its background pair the
+kind's own declaration in the world file (its rest mass, as light's family
+has its clock), the object a region of lowered pair at declared cells, a
+clock that persists, a free massive packet a matter wave at group pace
+below c with its own clock; and (M), the pair at the cells on LIGHT's
+record in a massless surround: no bound mode and no clock (the resonance
+above), but a MIRROR for light below mu, evanescent inside: the WALL the
+design wanted, derived from the pair. CONFIRMED here as the design's
+reading: the owner's cube that produces clicks is (W); (M) is the wall for
+light (DESIGN.md section 5's mirror, now a value of the pair); the margin
+rule of section 11 reads under (W).
 
 ## 5. The block's momentum, step and push
 
@@ -422,9 +448,11 @@ W in the block's OWN clock (the counting form, DESIGN.md section 5); the
 click line with the block's own count (its mode's cycles, section 4) and
 the light record's birth stamp. **Light does not need to stay in order to
 be read; it needs only to pass through a body that has a clock.** A click
-is therefore always a body's event in the body's clock (light's record has
-no rung and no wheel of its own; light alone, without a body, produces
-nothing Outside), and it needs NO SINK: the verbs are lossless, light
+is therefore always a body's event in the body's clock: light never
+clicks; light is read: it moves the body's record, and the body clicks
+(the same statement said from the free Node's side, which has no rung, no
+count and no reading; the owner's sentence of record 1414 above is the one
+written for the record and the algebra file), and it needs NO SINK: the verbs are lossless, light
 passes on, and the click is the crossing. The whole detector law of today
 (the two slits, Malus, Bell) reads so.
 
@@ -493,12 +521,15 @@ gamma_m, so the moving block reads in its own frame `n^2 - 1 = (G g /
 gamma_m^2) / (omega_0^2 - omega'^2)`, short by 1 - beta_c^2 (a third at k =
 3), UNLESS the declared product G g is carried as `G g x [K^2, K^2 - 3]`
 (gamma_m^2 = K^2 / (K^2 - 3) at the drive's k = K, a rational pair from the
-drive's own declared count, no root). Two readings, both stated, neither
-chosen here: (a) that pair is a DECLARATION boosted (a world key carried
-in motion); (b) it is a COMPUTATION from the drive's count K, which the
-cell has. The Boss carries it to the owner; the moving block's index
-against the resting one is a chain check of a minute, to be made when the
-owner's word is given.
+drive's own declared count, no root). Two readings: (a) that pair is a
+DECLARATION boosted (a world key carried in motion); (b) it is a
+COMPUTATION from the drive's count K, which the stepping cell has. TAKEN
+BY DELEGATION (the owner's word of about 13:55Z, "close it among
+yourselves, and let me know", read by the Boss at 14:25Z as a delegation,
+reversible on his word): (b), the pair `[K^2, K^2 - 3]` formed by verb D on
+integers the stepping cell has, nothing new declared in motion; the moving
+block's index against the resting one is a chain check of a minute, made
+after the gate as a check of the algebra.
 
 **The sink, a SEPARATE declaration of the worlds that absorb, not a
 condition of the click** (Reviewer 3's MUST 3, answered by the owner's word
@@ -509,9 +540,12 @@ damping pair on light's row at the object's cells (DESIGN.md section 5's
 Port's take; a DECLARATION of the world: the cells absorb what they read),
 or (b) a declared DAMPING on the mode (the block's record loses a declared
 fraction per interval; a DECLARATION of the object, which also stops its
-clock). The design's default for a detector that reads is NO sink (the
-click alone) and for a screen the take (a); whether POSTULATES 10 stands
-beside this or is amended is the owner's word (section 6).
+clock). TAKEN BY DELEGATION (the same word of the owner, the Boss's reading of
+14:25Z, reversible on his word): the TAKE (a) on light's row at the cells
+of the objects declared ABSORBING (a screen, a sponge: the record ends
+there, POSTULATES 10 as written), and NO take for a clock body read many
+times (the owner's 14:08Z: light need not stay); not a damping on the mode.
+The two readings of POSTULATES 10 in section 6 stay stated for the record.
 
 **One coupling, not two** (Reviewer 3's MUST 4): with this linear coupling
 present the second draft's pace coupling (the one-wall pair through the
@@ -520,9 +554,12 @@ a medium): ONE declared g (with G) per object, kappa withdrawn. The
 receiver forms of DESIGN.md section 5 become values of it: the mirror the
 strong-coupling limit (the index large, the Fresnel step to 1), the sponge
 the declared damping (the sink (b)), the take the sink (a). What light sees
-at a crowd (rows 12 and 13) is the index of its massive records by this g:
-2.00 and 1 + gamma_PPN a consequence to compute from g, G and the pairs,
-not to find.
+at a crowd (rows 12 and 13, the deflection and the delay) is NOT derived in
+this design: the coupling gives an index at declared cells and nothing
+about a crowd's field; the rows keep the ray law's history (2.00 and 1 +
+gamma_PPN there). "Gravity as an index of the crowd's massive records" is
+a hypothesis outside the law, under its own name `gravity-index-hypothesis`,
+with no number here (Reviewer 3's MUST (iii)).
 
 ## 8. The motion: one statement (COMPUTATION, `massive_block_clock_motion.py`)
 
@@ -599,7 +636,7 @@ prediction:
 
 | Row | The consequence of the algebra | The band |
 | --- | --- | --- |
-| (d) at rest | N_0 = 2 L / c + 2 tau_g (the modes' response lags, from g) in the lattice's intervals, the register's 206 at L = 60 the stiff-coupling limit; in the block's own count N_0 / N_b(pair, s) | the rung's grain, the lattice's residual |
+| (d) at rest | N_0 = 2 L / c + 2 tau_g - delta_rung in the lattice's intervals: 2 L / c = 207.85 at L = 60, tau_g >= 0 the driven mode's response lag, delta_rung the rung's crossing on the pulse's rising edge BEFORE the round trip (the register's 206.0 is that crossing, so no tau_g >= 0 alone gives it); the budget 206 +- 2 allows 2 tau_g - delta_rung <= 0.15; the driven mode's rung-crossing time from g, G, W and the arriving amplitude is a PENDING COMPUTATION (a resonantly driven mode builds over its ring-up time), and the budget is NOT said met; in the block's own count N_0 / N_b(pair, s) | the rung's grain, the lattice's residual; the budget pending |
 | (e), (f) in motion at k = 3 | the blocks' own count per cycle in both arms: N_par / N_perp = 1 and 1, within +- 0.03 (Reviewer 3's third line), plus the band's second term eps (gamma_m^2 - 1) / 2 for eps <= 0.1 (at most 0.025 at k = 3); the cycle in the lattice's intervals gamma_m N_0 along and across | +- 0.03 plus eps (gamma_m^2 - 1) / 2; the two-pace prediction 0.2 percent at N_0 = 50 |
 | the lab's row | the moving block's clock read by a resting one: 1 / gamma_m in the well regime, to the second term; 1 / gamma_m^2 for form (I) moved (the control) | eps (gamma_m^2 - 1) / 2; the residual |
 | 4a | the block's own clock slow by 1 / gamma_m in the lattice's intervals: the muon's row PASS in form, the number gamma_m at the world's beta_c (gamma at beta_m = beta_c c / c_m to second order) | the second term; 0.2 percent at N_0 = 50 |
@@ -609,14 +646,20 @@ prediction:
 | the rest cavity (form (I)) | section 4's table: 0.2417 at s = 12 on a cube; the quadrature with the pair | the lattice's residual |
 | the board's faces | an object nearer a non-periodic face than its mode's extent reads a raised clock (the tail cut, the cavity's creeping in); the margin rule of section 11 a load-time check, the faces periodic by default for the massive record; no pin of the object | the extent from the pair and the side (COMPUTATION); the faces a DECLARATION |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
-| 12, 13 | the coefficient at a crowd from its massive records' index by section 7's g; 2.00 and 1 + gamma_PPN to compute from g, G and the pairs | the residual |
+| 12, 13 | not derived in this design (the coupling gives an index at declared cells, nothing about a crowd's field); 2.00 and 1 + gamma_PPN stay under the ray law's history | as registered |
+| Malus, Bell | outside this design: a scalar record has no polarisation; the polariser needs a Vector record or two records | as DESIGN.md's declared tables |
 
 ## 10. The force between two blocks through light
 
 Reviewer 3's closed form (PUSH_BALANCE.md section 10, the coupled-oscillator
 force between two emitters at their own frequency): the force on block 1 is
-2 A^2 cos(k L) toward the partner, the equilibria at L = m lambda_0 / 2
-alternately stable and unstable by the clocks' relative phase; with the
+2 A^2 cos(k_0 L) toward the partner; its EQUILIBRIA are the
+zeros of cos(k_0 L), L = (2 m + 1) lambda_0 / 4, alternately stable and
+unstable by the clocks' relative phase (in phase stable at (m' + 3 / 4)
+lambda_0, 88 Links at lambda_0 = 32; antiphase at (m' + 1 / 4) lambda_0,
+72), NOT L = m lambda_0 / 2, which are the force's extrema: L_0 = 80 = 5
+lambda_0 / 2 is the maximal repulsion and never an equilibrium (Reviewer
+3's sections 1 and 10, his MUST (i)); with the
 coupling of section 7 the emitters are the blocks' modes and A is set by g
 and G. A consequence of the algebra, written before any board run; the
 board's two-block world reads it.
@@ -717,7 +760,9 @@ the window, light's norm bound), `massive_block_clock_motion.py` (section 8),
 the margin rule's numbers, with the HOST cost).
 Run each as its docstring says; the numbers in this document are theirs.
 
-**Not computed here, and said so:** the moving block's index against the
+**Not computed here, and said so:** the driven mode's rung-crossing time
+delta_rung and its lag tau_g from g, G, W and the arriving amplitude (row
+(d)'s budget, PENDING COMPUTATION); the moving block's index against the
 resting one (a chain check of a minute, after the owner's word on the index
 in motion); the click's completion under the sink (after his word); the
 cube's threshold under a light-shaped well (the peak capped at mu^2, the
@@ -778,17 +823,19 @@ Reviewer 3's sections 10, 11 and 12 where they exceed this document):
   object's own motion across its cells.
 - The light clock at rest on two objects: A's mode drives light, light
   reaches B at L / c, B's mode is driven and drives light back, A's mode
-  receives at 2 L / c plus the modes' response lags: N_0 = 2 L / c + 2
-  tau_g; the register's 206 at L = 60 with the massless lamp's hard onset
-  the limit of a stiff coupling.
+  receives at 2 L / c plus the modes' response lags, less the rung's
+  crossing on the rising edge: N_0 = 2 L / c + 2 tau_g - delta_rung (row (d)
+  of section 9; 2 L / c = 207.85 at L = 60 and the register's 206.0 the
+  crossing before the round trip; the budget a pending computation).
 - The light clock in motion: section 8's one formula, the well regime: 1
   and 1 in the objects' own counts to the second term, gamma_m N_0 in the
   lattice's intervals.
-- The polariser and the tables: the second member of the re-emission table
-  (a phase on the wheel) is the object's mode's phase relative to the
-  arriving light's, set by the mode's response (the resonance's
-  quadrature), a COMPUTATION; Malus and Bell as consequences of the
-  coupling's phase, to be derived before any run, never found.
+- The polariser and the tables: OUTSIDE THIS DESIGN. A scalar record has
+  no polarisation; a polariser needs a Vector record or two records, which
+  this design does not have; Malus and Bell stay under DESIGN.md's declared
+  tables (Reviewer 3's MUST (iv)). What the coupling does give is the mode's
+  phase relative to the arriving light's (the resonance's quadrature), a
+  COMPUTATION, and no table.
 
 **What the engine implements, from this section, in order**: section 11's
 order; the board checks, the algebra leads.

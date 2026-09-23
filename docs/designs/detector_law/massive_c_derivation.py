@@ -59,23 +59,24 @@ for w in (0.3, 1 / 3, 0.34):
         f"{' ; double root at -2: the checkerboard secular mode' if abs(val + 2) < 1e-12 else ''}"
     )
 
-# (5) the same c for the massive kind: 3 q (a_next + a_before) + 3 p a_now = q SUM6
-#     -> w = 1/3, s = -p/q ; omega0 from cos omega0 = 1 - p/(2 q); omega^2 - omega0^2 ~ k^2/3 near 0
+# (5) the massive kind under form (B), the pair on the six-neighbour term alone (MASSIVE_RECORD.md
+#     section 1): 2 cos omega = (2 num / (3 den)) SUM cos k_i, the gap cos omega_0 = num / den; near k = 0
+#     omega^2 - omega_0^2 ~ c_m^2 k^2 with c_m^2 = (num / den) c^2; the group pace over the zone at most c_m
 c = 1 / np.sqrt(3)
-for p, q in ((1, 50), (1, 8), (1, 1), (2, 1)):
-    w, s = 1 / 3, -p / q
+for num, den in ((128, 129), (32, 33), (8, 9), (2, 3)):
+    w, s = num / (3 * den), 0.0
     om0 = omega(np.zeros(3), w, s).real
+    cm = c * np.sqrt(num / den)
     print(
-        f"[p,q]=[{p},{q}]: omega0 = {om0:.5f} (arccos(1 - p/2q) = {np.arccos(1 - p / (2 * q)):.5f})",
+        f"[num,den]=[{num},{den}]: omega0 = {om0:.5f} (arccos(num/den) = {np.arccos(num / den):.5f})",
         end="",
     )
     eps = 1e-2
     om = omega(eps * np.array([1, 0, 0.0]), w, s).real
     print(
-        f"; (omega^2 - omega0^2)/k^2 at k=0.01 = {(om**2 - om0**2) / eps**2:.5f} (c^2 = 1/3 = 0.33333)",
+        f"; (omega^2 - omega0^2)/k^2 at k=0.01 = {(om**2 - om0**2) / eps**2:.5f} (c_m^2 = (num/den)/3 = {cm**2:.5f})",
         end="",
     )
-    # the group pace |grad omega| over the whole zone: never above c
     ks = np.linspace(-np.pi, np.pi, 61)
     K = np.array(list(itertools.product(ks, ks, ks)))
     h = 1e-5
@@ -85,7 +86,7 @@ for p, q in ((1, 50), (1, 8), (1, 1), (2, 1)):
         dk[ax] = h
         grads.append((omega(K + dk, w, s).real - omega(K - dk, w, s).real) / (2 * h))
     g = np.linalg.norm(np.array(grads), axis=0)
-    print(f"; max group pace over the zone {g.max():.5f} < c = {c:.5f}: {g.max() < c + 1e-9}")
+    print(f"; max group pace over the zone {g.max():.5f} <= c_m = {cm:.5f}: {g.max() <= cm + 1e-9}")
 
 # light itself: the group pace over the zone, its maximum and where
 w, s = 1 / 3, 0.0
