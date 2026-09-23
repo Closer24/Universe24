@@ -1,0 +1,57 @@
+G_0(0) = 0.758197 against W_3 / 2 = 0.758193; G_0(1,0,0) = 0.258192 (the identity (2 - L/3) G = delta at 0: 2 G(0) - 2 G(1) = 1.000009); table in 1 s
+s | Lambda(s) | g_c(s) at mu = 0.05 | g_c s^2 | the sphere's pi^2 c^2 / (s/2)^2 = 3.290 / s^2 -> g s^2
+ 1 |    0.7582 | 1.32057 | 1.321 | 3.290
+ 2 |    2.1602 | 0.46349 | 1.854 | 3.290
+ 3 |    4.4598 | 0.22450 | 2.021 | 3.290
+ 4 |    7.6670 | 0.13059 | 2.089 | 3.290
+ 5 |   11.7854 | 0.08496 | 2.124 | 3.290
+ 6 |   16.8167 | 0.05954 | 2.143 | 3.290
+ 7 |   22.7616 | 0.04399 | 2.155 | 3.290
+ 8 |   29.6203 | 0.03380 | 2.163 | 3.290
+ 9 |   37.3930 | 0.02678 | 2.169 | 3.290
+10 |   46.0798 | 0.02173 | 2.173 | 3.290
+11 |   55.6809 | 0.01798 | 2.176 | 3.290
+12 |   66.1962 | 0.01513 | 2.178 | 3.290
+13 |   77.6258 | 0.01290 | 2.180 | 3.290
+14 |   89.9697 | 0.01113 | 2.181 | 3.290
+15 |  103.2279 | 0.00970 | 2.182 | 3.290
+16 |  117.4004 | 0.00853 | 2.183 | 3.290
+17 |  132.4872 | 0.00756 | 2.184 | 3.290
+18 |  148.4883 | 0.00674 | 2.185 | 3.290
+19 |  165.4038 | 0.00605 | 2.185 | 3.290
+20 |  183.2336 | 0.00546 | 2.186 | 3.290
+21 |  201.9777 | 0.00496 | 2.186 | 3.290
+22 |  221.6361 | 0.00452 | 2.186 | 3.290
+23 |  242.2089 | 0.00413 | 2.187 | 3.290
+24 |  263.6961 | 0.00380 | 2.187 | 3.290
+26 |  309.4133 | 0.00324 | 2.188 | 3.290
+28 |  358.7879 | 0.00279 | 2.188 | 3.290
+30 |  411.8199 | 0.00243 | 2.188 | 3.290
+32 |  468.5093 | 0.00214 | 2.188 | 3.290
+34 |  528.8560 | 0.00189 | 2.189 | 3.290
+36 |  592.8601 | 0.00169 | 2.189 | 3.290
+38 |  660.5215 | 0.00152 | 2.189 | 3.290
+40 |  731.8403 | 0.00137 | 2.189 | 3.290
+42 |  806.8165 | 0.00124 | 2.189 | 3.290
+44 |  885.4500 | 0.00113 | 2.189 | 3.290
+46 |  967.7409 | 0.00103 | 2.189 | 3.290
+48 | 1053.6892 | 0.00095 | 2.189 | 3.290
+50 | 1143.2949 | 0.00088 | 2.189 | 3.290
+52 | 1236.5579 | 0.00081 | 2.189 | 3.290
+54 | 1333.4783 | 0.00075 | 2.189 | 3.290
+56 | 1434.0560 | 0.00070 | 2.190 | 3.290
+58 | 1538.2911 | 0.00065 | 2.190 | 3.290
+60 | 1646.1836 | 0.00061 | 2.190 | 3.290
+(the table took 19 s)
+
+Reviewer 3's one-Node well (11.6): g_c = 1.319; this table's g_c(1) = D_out / G_0(0) = 1.3206 = D_out x 2 / W_3 (1.3189): the same number
+mu = 0.05: g = mu^2 / 2 = 0.00125: the smallest side that binds on the infinite board: s = 42 (g_c(42) = 0.00124; the previous side 0.00137); the sphere's side 2 sqrt(0.8225/g) = 51.3
+mu = 0.05: g = mu^2 = 0.00250: the smallest side that binds on the infinite board: s = 30 (g_c(30) = 0.00243; the previous side 0.00279); the sphere's side 2 sqrt(0.8225/g) = 36.3
+mu = 0.15: g = mu^2 / 2 = 0.01125: the smallest side that binds on the infinite board: s = 14 (g_c(14) = 0.01124; the previous side 0.01303); the sphere's side 2 sqrt(0.8225/g) = 17.1
+mu = 0.15: g = mu^2 = 0.02250: the smallest side that binds on the infinite board: s = 10 (g_c(10) = 0.02195; the previous side 0.02704); the sphere's side 2 sqrt(0.8225/g) = 12.1
+
+the reversed-mass window of a 12-cube at mu = 0.05: bound for g > 0.01513 (mu_in^2 = mu^2 - g = -0.01263, reversed), growth for g > 0.01761 (the mode's omega_0 -> 0; the corner leaves the band at the same g by S L S = -L); the window's width 0.00248 = mu^2 (1 - 1/(2 Lambda)) = 0.00248
+a scratch box scaling (zero faces, boxes to 96^3, HISTORY) read side 36 near threshold and 44 bound at g = mu^2 = 0.0025; this exact table gives g_c(36) = 0.00169 and g_c(44) = 0.00113: side 36 IS bound, weakly, and the box's confinement hid it; the box is superseded by this table
+the cube's constant: g_c(s) s^2 -> 2.190 (the sphere with R = s/2 gives 3.290, the equal-volume sphere 2.14)
+
+LIGHT in an index lump (n^2 = 2 in a 12-cube, a 32^3 box): lambda_max = 1.977985 against the continuum's top 2: bound = False; the norm bound is exact
