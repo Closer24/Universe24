@@ -6554,3 +6554,22 @@ supplement 13. The remaining five pages to 48 are commit 14: the
 prose cuts of the owner's fifth word (about two to three pages) and,
 for his word, two more pages from the ledger, the conversion table or
 the families table moved to the supplement, none cut.
+
+## Applied (2026-09-23, the owner's word "48 pages"): commit 14 on paper-summary-table, the prose cuts
+
+The first part of the owner's fifth word (the repetitions), started on
+my word as told to the Boss. Three repetitions cut, 408 words, nothing
+physical and no claim: the one-page paragraph's first part, the list
+of what is exact, recovered and not forced, which `What is proved'
+(Section 4) carries in full, replaced by two sentences and a pointer;
+the platform's list of series and detectors, which Table 2 carries,
+replaced by one clause pointing there (the time-base sentence of rows
+3, 4b and 12 kept whole); the prediction paragraph's list of the rows
+that disagree and of the rows not predicted, which Table 6 carries
+row by row, replaced by the pointer, the words on 1b and 14 kept.
+The count sentence stands in every place it stood. The paper 53 pages
+with nine lines on the last, so 52 full pages; the remaining four to
+48 are the second part, for the Boss's or the owner's word: the
+conversion table (Table 2, about two pages) to the supplement as S7,
+and the ledger (Table 3) or the families table as the next, moved
+whole, none cut.
