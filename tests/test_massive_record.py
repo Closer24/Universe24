@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from math import gcd
 
 import numpy as np
 import pytest
@@ -316,3 +317,453 @@ def test_r_the_records_keys_under_the_key_and_none_without_it():
     assert MASSIVE_RECORD_RULE not in plain.hypotheses
     assert plain.families[0].faces is None
     assert "form" not in DetectorLawSimulation(plain).books()["families"]["light"]
+
+
+# The block (STEP 3 of the build: BUILD.md section 6, (e) to (l))
+
+
+def block_world(
+    shape: list[int],
+    boundary: object,
+    kind: list[int],
+    blocks: list[dict],
+    light_lamp: dict | None = None,
+    ticks: int = 100,
+    faces: dict[str, str] | None = None,
+) -> dict:
+    """A world of the massive kind `matter` with blocks (measured events of `matter` with
+    `side`), a light family with the chain test's clock [77, 25] (the period 20.8 intervals,
+    lambda 12 Links), and optionally a lamp of light at a Node."""
+    matter: dict = {"name": "matter", "quantum": 1, "pair": kind}
+    if faces is not None:
+        matter["faces"] = faces
+    measured: list[dict] = []
+    if light_lamp is not None:
+        measured.append(light_lamp)
+    for block in blocks:
+        entry = {
+            "position": block["position"],
+            "family": "matter",
+            "amount": block.get("amount", 1),
+            "phase": 0,
+            "momentum": block.get("momentum", [0, 0, 0]),
+            "fixed": True,
+            "side": block["side"],
+            "pair": block["pair"],
+        }
+        for key in (
+            "coupling",
+            "wheel",
+            "seed",
+            "absorbing",
+            "cavity",
+            "ramp",
+            "margin",
+            "emits",
+            "held",
+        ):
+            if key in block:
+                entry[key] = block[key]
+        measured.append(entry)
+    return {
+        "law": "beam",
+        "model_id": "beam-massive-record-block-v1",
+        "shape": shape,
+        "boundary": boundary,
+        "ticks": ticks,
+        "K": 1073741824,
+        "N": 64,
+        "release": [1, 128],
+        "suspension": 0,
+        "clock_stamp": True,
+        "detector_law": True,
+        "massive_record": True,
+        "directions": [],
+        "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
+        "measured": measured,
+        "detectors": [],
+    }
+
+
+def lamp_at(x: int, amount: int = 1, train: int = 4) -> dict:
+    return {
+        "position": [x, 0, 0],
+        "family": "light",
+        "amount": amount,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[1, 0, 0]],
+        "lamp": {"rate": [1, 1], "wheel": [2531, 4096], "directions": [[1, 0, 0]], "train": train},
+    }
+
+
+CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
+
+
+def test_e_the_blocks_cells_and_its_pair_on_them():
+    """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809]
+    with the well [800, 800]: den reads 809 on every Node but the 27 cells, 800 there, num 800
+    everywhere; the cells are the cube. The edge case: a pair that is no well is refused."""
+    world = parse_nature_beam_world(
+        block_world(
+            [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
+        )
+    )
+    simulation = DetectorLawSimulation(world)
+    block = simulation.blocks[0]
+    assert int(block.mask.sum()) == 27
+    assert block.mask[2:5, 2:5, 2:5].all()
+    den = simulation.kind_den[1]
+    assert np.all(simulation.kind_num[1] == 800)
+    assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
+    assert block.own is not None and int(block.own.now[3, 3, 3]) == UNIT
+    with pytest.raises(ValueError, match="no well of the kind's pair"):
+        parse_nature_beam_world(
+            block_world(
+                [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 810]}]
+            )
+        )
+
+
+def test_f_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
+    """BUILD.md (f): a block of content 1 with P = 64 on x (the wall 3 Q S M = 192) steps at the
+    intervals 3, 6, 9 with the remainder 0; with P = 70 at 3, 6, 9 with the remainders 18, 36,
+    54 and at 11 with the remainder 2; the cells and the pair arrays move, the record's rows
+    stay. The edge case: P = [112, 112, 112] and [64, 64, 64] refused by the pace bound,
+    [64, 64, 0] admitted."""
+    for momentum, ticks_and_remainders in (
+        ([64, 0, 0], [(3, 0), (6, 0), (9, 0), (12, 0)]),
+        ([70, 0, 0], [(3, 18), (6, 36), (9, 54), (11, 2)]),
+    ):
+        world = parse_nature_beam_world(
+            block_world(
+                [24, 1, 1],
+                CHAIN,
+                [800, 809],
+                [
+                    {
+                        "position": [4, 0, 0],
+                        "side": 3,
+                        "pair": [800, 800],
+                        "momentum": momentum,
+                        "seed": 5,
+                    }
+                ],
+                faces={"x": "open"},
+            )
+        )
+        simulation = DetectorLawSimulation(world)
+        block = simulation.blocks[0]
+        assert block.wall == 192
+        steps = []
+        for _ in range(12):
+            simulation.step()
+            if block.hop != (0, 0, 0):
+                steps.append((simulation.tick, block.drive[0]))
+        assert steps == ticks_and_remainders
+        corner = 4 + len(steps)
+        assert block.corner == [corner, 0, 0]
+        assert block.mask[corner : corner + 3, 0, 0].all() and not block.mask[4, 0, 0]
+        assert np.all(simulation.kind_den[1][corner : corner + 3, 0, 0] == 800)
+        assert int(simulation.kind_den[1][4, 0, 0]) == 809
+    # the rows stayed: the seeded record's rows are still centred on the old cells
+    assert block.own is not None
+    rows = block.own.now[:, 0, 0]
+    assert abs(rows[4:7]).sum() > abs(rows[corner + 3 : corner + 6]).sum()
+    for bad in ([112, 112, 112], [64, 64, 64]):
+        with pytest.raises(ValueError, match="pace bound"):
+            parse_nature_beam_world(
+                block_world(
+                    [24, 1, 1],
+                    CHAIN,
+                    [800, 809],
+                    [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": bad}],
+                )
+            )
+    parse_nature_beam_world(
+        block_world(
+            [24, 1, 1],
+            CHAIN,
+            [800, 809],
+            [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": [64, 64, 0]}],
+        )
+    )
+
+
+def coupled_chain(
+    g: list[int], absorbing: bool = False, wheel: int | None = None, seed: int = 0
+) -> dict:
+    """The chain of (g): 400 Nodes, the kind [156, 157], a block of side 12 with the well
+    [314, 315] at x = 200, G [1, 1], the lamp at x = 40 with a train of 4 periods."""
+    block: dict = {
+        "position": [200, 0, 0],
+        "side": 12,
+        "pair": [314, 315],
+        "coupling": {"G": [1, 1], "g": g},
+        "seed": seed,
+        "absorbing": absorbing,
+    }
+    if wheel is not None:
+        block["wheel"] = wheel
+    return block_world(
+        [400, 1, 1], CHAIN, [156, 157], [block], lamp_at(40), ticks=700, faces={"x": "open"}
+    )
+
+
+def light_energy(simulation: DetectorLawSimulation, live: LiveRecord) -> int:
+    return simulation.record_form(live)
+
+
+def test_g_the_coupling_both_ways_and_its_energy():
+    """BUILD.md (g): on the chain the light record and the block's response to it: with g = 0
+    E_light is the rule's own invariant (constant to the remainders' jitter after the train);
+    with g = 1 / 20 and G = 1 the sum E_light + (G / g) I_response over the window after the
+    train holds within 3 percent of its mean (the discrete scheme's first differences carry
+    an oscillating cross term of order g, a finding of the build, BUILD.md section 10 (j))
+    while E_light alone, read before the train reaches the block and at the end, moves by more
+    than 10 percent (the energy exchanged with the response)."""
+    for g, bound, moved in (([0, 1], 10**-4, 0.0), ([1, 20], 0.03, 0.1)):
+        world = parse_nature_beam_world(coupled_chain(g))
+        simulation = DetectorLawSimulation(world)
+        block = simulation.blocks[0]
+        totals: list[int] = []
+        lights: list[int] = []
+        record: LiveRecord | None = None
+        before_block = 0
+        for _ in range(600):
+            simulation.step()
+            if simulation.tick == 5:
+                record = next(live for live in simulation.records.values() if live.family == 0)
+            if simulation.tick < 5:
+                continue
+            assert record is not None and record.identity in simulation.records
+            if simulation.tick == 300:
+                # the train's front reaches the block at about 40 + 160 / c = 317
+                before_block = light_energy(simulation, record)
+            if simulation.tick >= 400:
+                light = light_energy(simulation, record)
+                response = block.responses.get(record.identity)
+                massive = 0 if response is None else simulation.record_form(response)
+                # (G / g) I_response with G = [1, 1], g = [gn, gd]: gd / gn times I; I in the
+                # units 3 L (L = lcm of the numerators 156 and 314) against light's 3
+                if g[0]:
+                    total = light * 156 * 314 // gcd(156, 314) + massive * g[1] // g[0]
+                else:
+                    total = light
+                totals.append(total)
+                lights.append(light)
+        assert len(totals) > 200, len(totals)
+        mean = sum(totals) // len(totals)
+        assert max(abs(value - mean) for value in totals) <= bound * mean + 1
+        if moved:
+            assert abs(lights[-1] - before_block) > moved * before_block
+            assert block.responses, "the block's response exists"
+        else:
+            assert abs(lights[-1] - before_block) <= bound * before_block + 1
+            assert not block.responses or all(
+                not np.any(response.now) for response in block.responses.values()
+            )
+
+
+def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():
+    """BUILD.md (h): a seeded block (the kind [156, 157], the well [314, 315], G [1, 1], g
+    [1, 500]: at G g = 0.2 the emitted light's back-drive breaks the mode's cycles within one
+    period on the chain, so the weak coupling keeps them) that emits light holding 3 units of
+    it: three births, one at each of its first three cycles (its mode's period about 60
+    intervals: the clicks at 45, 107, 167, 227, 287), each paying 1, the books balanced at every
+    tick; the fourth and fifth cycles birth nothing. The edge case: `emits` without held content of that family is
+    refused at load."""
+    block = {
+        "position": [100, 0, 0],
+        "side": 12,
+        "pair": [314, 315],
+        "coupling": {"G": [1, 1], "g": [1, 500]},
+        "emits": "light",
+        "held": {"light": 3},
+    }
+    world = parse_nature_beam_world(
+        block_world([240, 1, 1], CHAIN, [156, 157], [block], ticks=300, faces={"x": "open"})
+    )
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    for _ in range(300):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+    births = [line for line in lines if line["event"] == "birth"]
+    cycles = [line for line in lines if line["event"] == "click"]
+    assert len(cycles) >= 4
+    assert len(births) == 3
+    assert [line["cycle"] for line in births] == [1, 2, 3]
+    assert simulation.held[0][0] == 0
+    assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
+    unheld = dict(block)
+    del unheld["held"]
+    with pytest.raises(ValueError, match="holds none of it"):
+        parse_nature_beam_world(block_world([240, 1, 1], CHAIN, [156, 157], [unheld]))
+
+
+def test_i_the_click_at_the_wheel_stamped_with_the_blocks_count():
+    """BUILD.md (i): on the coupled chain with W = 64 the block's first rung on the lamp's
+    record is crossed between 10 and 60 intervals after the train's front reaches its near
+    face (about 40 + 160 / c = 317), the crossing stamped with the block's count; a gather
+    line whose chosen cell is the block carries `clock` equal to that count. The edge case:
+    W = 4096 (the rung 1 / 4096 of the norm) crosses no later than W = 64 and after the first
+    motion (the edge case as first written, W = 1 stamping the first motion, read the wheel
+    backwards: W = 1 is the whole norm)."""
+    for wheel, window in ((64, (10, 60)), (4096, (1, 60))):
+        world = parse_nature_beam_world(coupled_chain([1, 10], wheel=wheel))
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        block = simulation.blocks[0]
+        record = None
+        first_motion = None
+        rung = None
+        for _ in range(700):
+            simulation.step()
+            if simulation.tick == 5:
+                record = next(live for live in simulation.records.values() if live.family == 0)
+            if record is None or record.identity not in simulation.records:
+                continue
+            response = block.responses.get(record.identity)
+            if response is not None and first_motion is None and np.any(response.now[block.mask]):
+                first_motion = simulation.tick
+            if rung is None and record.first_rung[block.cell] is not None:
+                rung = record.first_rung[block.cell]
+                assert (record.identity, block.cell) in simulation.rung_counts
+                assert simulation.rung_counts[(record.identity, block.cell)] == block.count
+        assert first_motion is not None and rung is not None
+        assert window[0] <= rung - first_motion <= window[1], (rung, first_motion)
+        if wheel == 64:
+            coarse = rung
+        else:
+            assert rung <= coarse
+        for gather in (line for line in lines if line["event"] == "gather"):
+            chosen = gather["chosen"]
+            if chosen is not None and chosen[0][0] == "measured:1":
+                assert gather["clock"] <= block.count
+
+
+def test_j_a_seeded_block_at_rest_counts_its_cycles():
+    """BUILD.md (j): a seeded block (the kind [800, 809], the well [800, 800], s = 10) on a
+    periodic 32^3 board, no light: over 500 intervals its count equals the upward zero crossings
+    of its summed record on the `block` lines, one `click` line per count, the mean period
+    between 30 and 80 intervals. The edge case: seed 0 counts nothing."""
+    for seed, expected_counts in ((UNIT, None), (0, 0)):
+        document = block_world(
+            [32, 32, 32],
+            {"x": "periodic", "y": "periodic", "z": "periodic"},
+            [800, 809],
+            [
+                {
+                    "position": [11, 11, 11],
+                    "side": 10,
+                    "pair": [800, 800],
+                    "seed": seed,
+                    "margin": "control",
+                }
+            ],
+            ticks=500,
+        )
+        document["age_bound"] = 100000
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        for _ in range(500):
+            simulation.step()
+        block = simulation.blocks[0]
+        sums = [line["sum"] for line in lines if line["event"] == "block"]
+        crossings = sum(1 for a, b in zip(sums, sums[1:], strict=False) if a <= 0 < b)
+        clicks = [line for line in lines if line["event"] == "click"]
+        if expected_counts is None:
+            assert block.count == crossings == len(clicks) >= 6
+            assert 30 <= 500 / block.count <= 80
+            assert [line["clock"] for line in clicks] == list(range(1, block.count + 1))
+        else:
+            assert block.count == 0 and not clicks
+
+
+def test_k_the_take_only_for_an_absorbing_block():
+    """BUILD.md (k): the coupled chain with the block declared absorbing: light's row at every
+    cell is 0 after every step, the Ports book an offer into the block's cell and the record
+    clicks at the block with `clock` the block's count; with the block a clock body light's
+    row at the cells is nonzero after the front and the record's far face reads it. The edge
+    case: `absorbing` with `emits` is refused at load."""
+    for absorbing in (True, False):
+        world = parse_nature_beam_world(coupled_chain([1, 10], absorbing=absorbing, seed=UNIT))
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        block = simulation.blocks[0]
+        record = None
+        seen_at_cells = False
+        for _ in range(1200):
+            simulation.step()
+            if simulation.tick == 5:
+                record = next(live for live in simulation.records.values() if live.family == 0)
+            if record is not None and record.identity in simulation.records:
+                at_cells = record.now[block.mask]
+                if absorbing:
+                    assert not np.any(at_cells)
+                elif np.any(at_cells):
+                    seen_at_cells = True
+        gathers = [
+            line for line in lines if line["event"] == "gather" and line["record"] == record.identity
+        ]
+        assert len(gathers) == 1
+        chosen = gathers[0]["chosen"]
+        face = simulation.cell_names.index("face:+x")
+        if absorbing:
+            # the block took the train: nothing reached the far face; its Ports
+            # booked the offer; a click at the block carries the block's count
+            # (on a chain the lamp's own cell may win the ladder, the afterglow
+            # of one dimension, the first build's)
+            assert record.pointers[block.cell] > 0 and record.pointers[face] == 0
+            if chosen is not None and chosen[0][0] == "measured:1":
+                assert gathers[0]["clock"] <= block.count
+        else:
+            assert seen_at_cells
+            assert record.pointers[face] > 0
+    with pytest.raises(ValueError, match="absorbing block emits nothing"):
+        parse_nature_beam_world(
+            block_world(
+                [240, 1, 1],
+                CHAIN,
+                [156, 157],
+                [
+                    {
+                        "position": [100, 0, 0],
+                        "side": 12,
+                        "pair": [314, 315],
+                        "absorbing": True,
+                        "emits": "light",
+                        "held": {"light": 3},
+                    }
+                ],
+            )
+        )
+
+
+def test_l_the_index_in_motion_is_the_drives_pair():
+    """BUILD.md (l): a block of content 1 with P = 64 on x (K = 3) carries g as [3, 2] (the
+    pair [K^2, K^2 - 3] = [9, 6] reduced); at rest [1, 1]; with P = [64, 64, 0] the pair
+    [36864, 12288] = [3, 1]. The edge case: K = 1 (P = 192) is refused by the pace bound."""
+    for momentum, expected in (([64, 0, 0], (3, 2)), ([0, 0, 0], (1, 1)), ([64, 64, 0], (3, 1))):
+        world = parse_nature_beam_world(
+            block_world(
+                [24, 1, 1],
+                CHAIN,
+                [800, 809],
+                [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": momentum}],
+            )
+        )
+        simulation = DetectorLawSimulation(world)
+        assert simulation.motion_pair(simulation.blocks[0]) == expected
+    with pytest.raises(ValueError, match="pace bound"):
+        parse_nature_beam_world(
+            block_world(
+                [24, 1, 1],
+                CHAIN,
+                [800, 809],
+                [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": [192, 0, 0]}],
+            )
+        )

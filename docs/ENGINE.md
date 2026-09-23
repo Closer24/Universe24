@@ -981,6 +981,38 @@ momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-an
 `event_universe.configuration_validation` reports a world of the law as
 kind `beam`.
 
+**The massive record kind** (`massive-record-v1`, 2026-09-23, the world
+key `massive_record`, false by default, needing `detector_law: true`;
+docs/designs/detector_law/MASSIVE_RECORD.md, the build's plan BUILD.md):
+under it a family declares its `pair` `[num, den]` on the six-neighbour
+term of the local detector law's rule (den > num a massive kind, its rest
+frequency the gap cos omega_0 = num / den, no `phase_per_link` and no lamp
+on it; every family without the key reads light's `[1, 1]`) and its
+`faces` (the kind's own faces per axis, periodic by default, an open face a
+zero face; light's faces the world's `boundary`); a measured event with
+`side` is a BLOCK, the foreign object: its cells the cube of `side` at its
+`position` (the lower corner), its `pair` at the cells (a well of the
+massive kind's pair, or a gap on light's kind, the (M) wall), its
+`coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
+first difference both ways, `[0, 1]` each by default), its `wheel` (the
+first rung's W, the world's by default), its `seed` (its own record's
+amplitude on its cells at interval 0, 2^20 by default, 0 silent),
+`absorbing` (the take on light's row at its cells, false by default: a clock
+body takes nothing), `cavity` (its own record held at 0 outside its
+cells), `ramp` (the momentum reached from 0 over that many intervals, the
+pushing agent's declaration), `margin` (`"pin"` or `"control"`, the margin
+rule's kind of world) and `emits` (the light family its record sources,
+one record per cycle of its clock, paid from its `held`); `probes` a list
+of Nodes whose light amplitude the record writes per interval. The record
+under the key: `massive_record` and per family `pair` and `faces` in
+`run.json`; the books' `form` per family (the conserved form I of section
+3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
+own record (`clock` its count), a `block` line per interval (its record's
+sum across its cells, its corner, its count, its steps), a `probe` line
+per interval and the emitted records' `birth` lines; in `state.json` the
+`blocks` with the rows of each block's own record. Without the key every
+record is byte for byte as it was (`tests/test_massive_record.py`).
+
 **The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,

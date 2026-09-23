@@ -417,6 +417,10 @@ WORLD_KEYS = {
     # (`MASSIVE_RECORD_RULE`; docs/designs/detector_law/MASSIVE_RECORD.md,
     # the build's plan BUILD.md).
     "massive_record",
+    # massive-record-v1: `probes`, declared Nodes whose light amplitude the
+    # record writes per interval (a GAMEBOARD reading of the rows), a list
+    # of Nodes, admitted under `massive_record` alone.
+    "probes",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -808,6 +812,29 @@ KIND_KEY = "kind"
 CHARGE_KEY = "charge"
 # The charge per unit of content of a family with none: 0 as the pair [0, 1].
 NO_CHARGE = (0, 1)
+# The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
+# the build's plan BUILD.md section 3): admitted on a measured event that
+# declares `side`, under the world key `massive_record` alone.
+BLOCK_KEYS = {
+    "side",
+    "pair",
+    "coupling",
+    "wheel",
+    "seed",
+    "absorbing",
+    "cavity",
+    "ramp",
+    "margin",
+    "emits",
+}
+# The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
+# Reviewer 3's two lines): a pin world's cells two extents from a
+# non-periodic face and a periodic side of s + 4 extents; a control world's
+# one extent and s + 2 extents.
+MARGIN_KINDS = ("pin", "control")
+# The block's own record's seed by default: the amplitude unit 2^20 of the
+# local detector law (`detector_law.UNIT`), a declared integer.
+BLOCK_SEED = 1 << 20
 MEASURED_KEYS = {
     "position",
     "family",
@@ -821,6 +848,7 @@ MEASURED_KEYS = {
     "level",
     "directions",
     "table",
+    *BLOCK_KEYS,
     "lamp",
     "become",
     # The axial record (`hand-v1`): one of the six headings, the axis the
@@ -1178,6 +1206,40 @@ class LevelDeclaration:
 
 
 @dataclass(frozen=True)
+class BlockDefinition:
+    """A block, the foreign object of the massive record kind
+    (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its cells R
+    the cube of `side` with its lower corner at the measured event's
+    `position`, cut to the board on an open axis and wrapped on a periodic
+    one; its `pair` on the six-neighbour term at its cells (a WELL of the
+    massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
+    the (M) wall); the dielectric coupling of section 7 in the
+    first-difference form both ways, `receive` the rational g the block's
+    massive row gains times light's first difference and `source` the
+    rational G light's row gains, negated, times the massive current; the
+    wheel W of its first rung (None: the world's); the `seed` of its own
+    record on its cells at interval 0 (0: silent); `absorbing` (the take on
+    light's row at its cells, DESIGN.md section 5; a clock body takes
+    nothing); `cavity` (form (I): its own record held at 0 outside its
+    cells); `ramp` (the pushing agent's declaration: its momentum reached
+    from 0 over that many intervals); `margin` (the margin rule's kind of
+    world); `emits` (the light family its own record sources, one record
+    per cycle of its clock, paid from its held content)."""
+
+    side: int
+    pair: tuple[int, int]
+    receive: tuple[int, int] = (0, 1)
+    source: tuple[int, int] = (0, 1)
+    wheel: int | None = None
+    seed: int = BLOCK_SEED
+    absorbing: bool = False
+    cavity: bool = False
+    ramp: int = 0
+    margin: str = MARGIN_KINDS[0]
+    emits: int | None = None
+
+
+@dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
     phase, its momentum, whether it is held in place, the directions it
@@ -1252,6 +1314,10 @@ class MeasuredDefinition:
     energy: int | None = None
     # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
     level: LevelDeclaration | None = None
+    # The block (massive-record-v1): the measured event's cells, pair,
+    # coupling, wheel, seed and the rest, or None (a body of one Node or a
+    # span as before).
+    block: BlockDefinition | None = None
 
     def __post_init__(self) -> None:
         if not self.hands:
@@ -1377,6 +1443,9 @@ class NatureBeamWorld:
     # under the local detector law, false by default; under it a family may
     # declare its `pair` and `faces` (`MASSIVE_RECORD_RULE`).
     massive_record: bool = False
+    # massive-record-v1: the probes, Nodes whose light amplitude is written
+    # per interval (GAMEBOARD), empty by default.
+    probes: tuple[Address3, ...] = ()
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2998,6 +3067,144 @@ def _atom_levels(
     return tuple(found)
 
 
+def _block(
+    obj: dict[str, object],
+    label: str,
+    family: FamilyDefinition,
+    families: tuple[FamilyDefinition, ...],
+    names: dict[str, int],
+    held: list[int],
+    momentum: tuple[int, ...],
+    amount: int,
+    width: int,
+    massive_record: bool,
+    lamp_declared: bool,
+    span: tuple[int, int, int],
+) -> BlockDefinition | None:
+    """The block's keys on a measured event (`massive-record-v1`), each named
+    in its refusal: `side` makes a block; every other block key without
+    `side` is refused; a block needs the world key `massive_record`, no lamp
+    and no span; its `pair` is a well on the massive kind (num' / den' >
+    num / den) or a gap on light's kind (den' > num', the (M) wall, which
+    declares no clock, coupling, seed, cavity, margin or wheel); `emits`
+    names a held light family and is refused on an absorbing block; the
+    momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
+    declared = [key for key in BLOCK_KEYS if key in obj]
+    if "side" not in obj:
+        if declared:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{declared[0]} belongs to a block (a measured event that "
+                "declares `side`, massive-record-v1)"
+            )
+        return None
+    if not massive_record:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.side is refused without the world key `massive_record` "
+            f"(the identity {MASSIVE_RECORD_RULE} beside the law, absent by default)"
+        )
+    if lamp_declared:
+        raise ValueError(f"{BEAM_LAW}: {label}: a block declares no lamp (its record is its own)")
+    if span != ONE_NODE:
+        raise ValueError(f"{BEAM_LAW}: {label}: a block declares `side`, never `span`")
+    side = _integer(obj["side"], f"{label}.side", 1)
+    if "pair" not in obj:
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: pair (the block's pair at its cells)")
+    value = obj["pair"]
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the pair at the cells")
+    pair = (
+        _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE),
+        _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
+    )
+    kind = family.pair
+    if family.massive_kind:
+        if pair[0] * kind[1] <= pair[1] * kind[0]:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is no well of the kind's pair "
+                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (num' / den' > "
+                "num / den; MASSIVE_RECORD.md section 4)"
+            )
+    else:
+        if pair[1] <= pair[0]:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the "
+                "(M) wall declares den > num (a lump in the massless surround, "
+                "MASSIVE_RECORD.md section 4)"
+            )
+        clock_keys = [
+            key for key in ("coupling", "seed", "emits", "cavity", "margin", "wheel") if key in obj
+        ]
+        if clock_keys:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
+                "(M) wall has no clock and no coupling)"
+            )
+    receive = (0, 1)
+    source = (0, 1)
+    if "coupling" in obj:
+        coupling = obj["coupling"]
+        if not isinstance(coupling, dict) or set(coupling) != {"G", "g"}:
+            raise ValueError(
+                f'{BEAM_LAW}: {label}.coupling must be {{"G": [n, d], "g": [n, d]}} (the dielectric '
+                "coupling of MASSIVE_RECORD.md section 7)"
+            )
+        receive = _ratio(coupling["g"], f"{label}.coupling.g", zero=True)
+        source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
+    wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
+    seed = BLOCK_SEED if "seed" not in obj else _integer(obj["seed"], f"{label}.seed", 0)
+    absorbing = obj.get("absorbing", False)
+    if type(absorbing) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
+    cavity = obj.get("cavity", False)
+    if type(cavity) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
+    ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
+    margin = obj.get("margin", MARGIN_KINDS[0])
+    if margin not in MARGIN_KINDS:
+        raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
+    emits: int | None = None
+    if "emits" in obj:
+        name = obj["emits"]
+        if not isinstance(name, str) or name not in names:
+            raise ValueError(f"{BEAM_LAW}: {label}.emits names an unknown family")
+        emits = names[name]
+        emitted = families[emits]
+        if emitted.free or emitted.massive_kind or emitted.phase_per_age is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emits {name!r}: a block emits a paid family of light's kind "
+                "with the pair form of its clock"
+            )
+        if held[emits] < emitted.quantum:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emits {name!r} but the block holds none of it (`held`): a "
+                "birth pays the family's quantum"
+            )
+        if absorbing:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: an absorbing block emits nothing (its light rows are "
+                "taken); `emits` with `absorbing` is refused"
+            )
+    wall = 3 * LABEL_SCALE * width * amount
+    if 3 * sum(component * component for component in momentum) >= wall * wall:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
+            f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
+        )
+    return BlockDefinition(
+        side,
+        pair,
+        receive=receive,
+        source=source,
+        wheel=wheel,
+        seed=seed,
+        absorbing=absorbing,
+        cavity=cavity,
+        ramp=ramp,
+        margin=str(margin),
+        emits=emits,
+    )
+
+
 def _measured(
     value: object,
     shape: Address3,
@@ -3009,6 +3216,8 @@ def _measured(
     table: tuple[Vector, ...],
     ticks: int,
     action: int | None,
+    massive_record: bool = False,
+    width: int = 1,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -3259,6 +3468,20 @@ def _measured(
                 family_hand=families[family].hand,
                 massive=families[family].massive,
             )
+        block = _block(
+            obj,
+            label,
+            families[family],
+            families,
+            names,
+            held,
+            momentum,
+            amount,
+            width,
+            massive_record,
+            lamp is not None,
+            span,
+        )
         found.append(
             MeasuredDefinition(
                 position,
@@ -3287,6 +3510,7 @@ def _measured(
                 axis=axis,
                 hands=tuple(hands),
                 energy=energy,
+                block=block,
             )
         )
     return tuple(found)
@@ -4273,6 +4497,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
             "kind of the local detector law; the ray law has no record's rows at Nodes)"
         )
+    probes: tuple[Address3, ...] = ()
+    if "probes" in obj:
+        if not massive_record:
+            raise ValueError(f"{BEAM_LAW}: probes is refused without the world key `massive_record`")
+        if not isinstance(obj["probes"], list):
+            raise ValueError(f"{BEAM_LAW}: probes must be a list of Nodes")
+        probes = tuple(_address(item, "probes", shape) for item in obj["probes"])
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -4316,6 +4547,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         table,
         ticks,
         action,
+        massive_record,
+        width,
     )
     _column_budget(families, measured, release)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -4411,6 +4644,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         atom_level=atom_level,
         detector_law=detector_law,
         massive_record=massive_record,
+        probes=probes,
     )
     if detector_law:
         _detector_law_load_checks(measured, families)

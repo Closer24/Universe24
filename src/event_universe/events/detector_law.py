@@ -65,9 +65,10 @@ from math import gcd
 
 import numpy as np
 
+from event_universe.core.integer import by_drive
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines
 from event_universe.events.amplitude import cell_of, rungs
-from event_universe.events.world import BEAM_LAW, NatureBeamWorld
+from event_universe.events.world import BEAM_LAW, LABEL_SCALE, BlockDefinition, NatureBeamWorld
 
 Record = Callable[[dict[str, object]], None]
 
@@ -114,6 +115,50 @@ class LiveRecord:
     first_rung: list[int | None] = field(default_factory=list)
     ports: list[np.ndarray] = field(default_factory=list)
     driven: np.ndarray | None = None
+    # massive-record-v1: the emitter's number for a record a block emitted
+    # (None for a lamp's record), whether the block is still sourcing it
+    # (the current cycle's record), the remainder of the receive's division
+    # (a response record, the rational g) and of the source's per block (a
+    # light record, the rational G), each kept on the row (verb D).
+    emitter: int | None = None
+    sourcing: bool = False
+    receive_remainder: np.ndarray | None = None
+    source_remainder: dict[int, np.ndarray] = field(default_factory=dict)
+    # The Ports' first differences summed (a taken record): what an absorbing
+    # block's cells read of light, the field its coupling receives.
+    port_motion: np.ndarray | None = None
+
+
+@dataclass
+class Block:
+    """A block on the board (massive-record-v1, MASSIVE_RECORD.md sections 4
+    to 7; BUILD.md section 2): its cells R (the mask over the board, the
+    cube of `side` at `corner`), its own massive record (the seed on its
+    cells), its responses (one massive record per light record reaching
+    it), the light records it emitted, its clock (its record's cycles
+    across R), its momentum per axis with the drive's accumulators against
+    the wall 3 Q S M, and its cell in the simulation's cells."""
+
+    number: int
+    family: int
+    definition: BlockDefinition
+    corner: list[int]
+    mask: np.ndarray
+    cell: int
+    wall: int
+    momentum: list[int]
+    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    count: int = 0
+    previous_sum: int = 0
+    own: LiveRecord | None = None
+    responses: dict[int, LiveRecord] = field(default_factory=dict)
+    emitted: list[int] = field(default_factory=list)
+    current: int | None = None
+    births: int = 0
+    hop: tuple[int, int, int] = (0, 0, 0)
+    new_cycle: bool = False
+    stepped: int = 0
+    answered: int = 0
 
 
 @dataclass
@@ -223,6 +268,10 @@ class DetectorLawSimulation:
                 view[free] = cell
                 mask[:] = True
         self.records: dict[int, LiveRecord] = {}
+        self.blocks: list[Block] = []
+        # The block's count at a light record's first rung at its cell
+        # (the click's `clock`, the body's event in the body's own clock).
+        self.rung_counts: dict[tuple[int, int], int] = {}
         # The record kinds (massive-record-v1): per family the pair on the
         # six-neighbour term as two dense int64 arrays over the board
         # (light's kind the value [1, 1] everywhere; a massive kind its
@@ -258,6 +307,59 @@ class DetectorLawSimulation:
         self.take_count = np.zeros(self.shape, dtype=np.int64)
         for _, _, mask in self.take_masks:
             self.take_count += mask
+        # The blocks (massive-record-v1): every measured event with a block,
+        # its cells written into its kind's pair arrays, its own record
+        # seeded on its cells, its momentum and the drive's wall 3 Q S M.
+        for number, entry in enumerate(world.measured):
+            if entry.block is None:
+                continue
+            definition = entry.block
+            corner = [int(entry.position[axis]) for axis in range(3)]
+            mask = self._cube(corner, definition.side, entry.family)
+            wall = 3 * LABEL_SCALE * world.width * entry.amount
+            block = Block(
+                number,
+                entry.family,
+                definition,
+                corner,
+                mask,
+                int(self.cell_index[tuple(entry.position)]),
+                wall,
+                [int(component) for component in entry.momentum],
+            )
+            self._write_pair(block)
+            if definition.seed > 0:
+                own_record = self._massive_record(number * (1 << 32), number, entry.family)
+                own_record.now[mask] = definition.seed
+                own_record.before[mask] = definition.seed
+                block.own = own_record
+                self.records[own_record.identity] = own_record
+                block.previous_sum = int(np.sum(own_record.now[mask]))
+            self.blocks.append(block)
+        # The blocks' cells: an absorbing block's cells take light's rows (the
+        # first build's receivers); a clock body's cells and a wall's are
+        # free Nodes for light with the pair and the coupling alone, so its
+        # own cell (set by the measured event's Node above) is cleared from
+        # the absorbing mask and the take masks are formed again.
+        if self.blocks:
+            for block in self.blocks:
+                for node in zip(*np.nonzero(block.mask), strict=True):
+                    address = (int(node[0]), int(node[1]), int(node[2]))
+                    self.cell_index[address] = block.cell
+                    self.absorbing[address] = block.definition.absorbing
+            self.take_masks = []
+            free = ~self.absorbing
+            for axis in range(3):
+                if self.shape[axis] == 1:
+                    continue
+                for sign in (1, -1):
+                    neighbour_free = self._shift(free, axis, sign, fill=False)
+                    mask = self.absorbing & neighbour_free
+                    if mask.any():
+                        self.take_masks.append((axis, sign, mask))
+            self.take_count = np.zeros(self.shape, dtype=np.int64)
+            for _, _, mask in self.take_masks:
+                self.take_count += mask
 
     def _cell(self, name: str, measured: int | None, face: bool) -> int:
         self.cell_names.append(name)
@@ -276,6 +378,337 @@ class DetectorLawSimulation:
                     if all(0 <= node[a] < self.shape[a] for a in range(3)):
                         found.append(node)
         return found
+
+    # The blocks (massive-record-v1)
+
+    def _cube(self, corner: list[int], side: int, family: int) -> np.ndarray:
+        """The cells R of a block: the cube of `side` from its lower corner,
+        wrapped on an axis the kind's faces make periodic, cut on an open
+        one (a G_48-set of Nodes, world data)."""
+        mask = np.zeros(self.shape, dtype=bool)
+        wrap = self.kind_wrap[family]
+        ranges = []
+        for axis in range(3):
+            extent = self.shape[axis]
+            indices = [corner[axis] + offset for offset in range(side)]
+            if wrap[axis]:
+                indices = [index % extent for index in indices]
+            else:
+                indices = [index for index in indices if 0 <= index < extent]
+            ranges.append(sorted(set(indices)))
+        if all(ranges):
+            mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
+        return mask
+
+    def _write_pair(self, block: Block) -> None:
+        """The block's pair written on its cells into its kind's arrays; the
+        kind's own pair elsewhere on the Nodes the block left."""
+        family = self.families[block.family]
+        num = self.kind_num[block.family]
+        num[~block.mask] = family.pair[0]
+        den_all = self.kind_den[block.family]
+        den_all[~block.mask] = family.pair[1]
+        den = self.kind_den[block.family]
+        num[block.mask] = block.definition.pair[0]
+        den[block.mask] = block.definition.pair[1]
+        for other in self.blocks:
+            if other is not block and other.family == block.family:
+                num[other.mask & ~block.mask] = other.definition.pair[0]
+                den[other.mask & ~block.mask] = other.definition.pair[1]
+
+    def _massive_record(self, identity: int, number: int, family: int) -> LiveRecord:
+        """A record of the massive kind on the board: a block's own record or
+        its response to a light record; no train, no clock, no Ports."""
+        return LiveRecord(
+            identity,
+            number,
+            family,
+            0,
+            0,
+            self.tick,
+            0,
+            1,
+            1,
+            0,
+            1,
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            pointers=[0] * len(self.cell_names),
+            first_rung=[None] * len(self.cell_names),
+            receive_remainder=np.zeros(self.shape, dtype=np.int64),
+        )
+
+    def _momentum_now(self, block: Block) -> list[int]:
+        """The block's momentum at this interval: the declared P, or under a
+        ramp the whole part P x t // ramp until the ramp ends (the pushing
+        agent's declaration)."""
+        ramp = block.definition.ramp
+        if ramp <= 0 or self.tick >= ramp:
+            return list(block.momentum)
+        return [component * self.tick // ramp for component in block.momentum]
+
+    def motion_pair(self, block: Block) -> tuple[int, int]:
+        """The index in motion (MASSIVE_RECORD.md section 7, record 1418): the
+        coupling's g carried as [W_d^2, W_d^2 - 3 P . P] with W_d the drive's
+        wall 3 Q S M and P the block's momentum, integers the stepping cell
+        has (on one axis with K = W_d / abs(P_a) whole, [K^2, K^2 - 3]);
+        [1, 1] at rest; reduced by the gcd."""
+        momentum = self._momentum_now(block)
+        square = block.wall * block.wall
+        numerator = square
+        denominator = square - 3 * sum(component * component for component in momentum)
+        common = gcd(numerator, denominator)
+        return numerator // common, denominator // common
+
+    def _move_block(self, block: Block) -> None:
+        """The block's step (MASSIVE_RECORD.md section 5): per axis the
+        accumulator gains the momentum's component against the wall 3 Q S M
+        (verb T, then D with the remainder kept, at most one Link per
+        interval, `core.integer.by_drive`), x before y before z, a second
+        Link in one interval lost to the earlier axis (its wall subtracted,
+        the frame's tie); the cells and the pair region translate by T; the
+        records' rows stay on their Nodes (12.7 (d))."""
+        momentum = self._momentum_now(block)
+        hop = [0, 0, 0]
+        stepped = False
+        for axis in range(3):
+            count, block.drive[axis] = by_drive(block.drive[axis], momentum[axis], block.wall, at_most=1)
+            if count and not stepped:
+                hop[axis] = count
+                stepped = True
+        block.hop = (hop[0], hop[1], hop[2])
+        if not stepped:
+            return
+        for axis in range(3):
+            if hop[axis]:
+                block.corner[axis] += hop[axis]
+                if self.kind_wrap[block.family][axis]:
+                    block.corner[axis] %= self.shape[axis]
+        old_mask = block.mask
+        block.mask = self._cube(block.corner, block.definition.side, block.family)
+        self._write_pair(block)
+        block.stepped += 1
+        # The block's cell follows its cells: an absorbing block's take masks
+        # move with it; a clock body's cells stay free Nodes.
+        for node in zip(*np.nonzero(old_mask & ~block.mask), strict=True):
+            address = (int(node[0]), int(node[1]), int(node[2]))
+            self.cell_index[address] = -1
+            self.absorbing[address] = False
+        for node in zip(*np.nonzero(block.mask), strict=True):
+            address = (int(node[0]), int(node[1]), int(node[2]))
+            self.cell_index[address] = block.cell
+            self.absorbing[address] = block.definition.absorbing
+        if block.definition.absorbing:
+            self.take_masks = []
+            free = ~self.absorbing
+            for axis in range(3):
+                if self.shape[axis] == 1:
+                    continue
+                for sign in (1, -1):
+                    neighbour_free = self._shift(free, axis, sign, fill=False)
+                    mask = self.absorbing & neighbour_free
+                    if mask.any():
+                        self.take_masks.append((axis, sign, mask))
+            for live in self.records.values():
+                if live.ports and len(live.ports) != len(self.take_masks):
+                    live.ports = [np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks]
+
+    def _difference(self, live: LiveRecord, block: Block) -> np.ndarray:
+        """The first difference of a record's row the coupling reads at the
+        block's cells: the SAME-NODE difference, now less before at the
+        Node, on every interval, a hop interval included (the design's word
+        of records 1444 and 1445: the hop moves the cells' set and the pair
+        region only, the rows stay and re-form by the rule; an along-path
+        difference is pumped parametrically by the hop's pair resonance with
+        light's band and is not built). The block's hop is kept on the block
+        for the record and read by nothing here."""
+        _ = block
+        difference: np.ndarray = live.now - live.before
+        return difference
+
+    def _coupled_term(
+        self,
+        target: LiveRecord,
+        delta: np.ndarray,
+        mask: np.ndarray,
+        coefficient: tuple[int, int],
+        remainder: np.ndarray,
+    ) -> np.ndarray:
+        """One entry of the coupling (verb B, then D): the term added to the
+        target's total at the cells, wall x n x delta over d, the division's
+        remainder kept on the row in [0, d)."""
+        numerator, denominator = coefficient
+        wall = 3 * self.kind_den[target.family]
+        gained = np.where(mask, wall * numerator * delta + remainder, 0)
+        term = np.floor_divide(gained, denominator)
+        remainder[mask] = (gained - denominator * term)[mask]
+        return np.where(mask, term, 0)
+
+    def _receive(self, block: Block, response: LiveRecord, light: LiveRecord) -> np.ndarray:
+        """The receive: the block's massive row gains g times light's first
+        difference at its cells (an absorbing block reads its Ports' motion,
+        the field its cells read); in motion g carried as the drive's pair."""
+        if block.definition.absorbing:
+            delta = light.port_motion if light.port_motion is not None else np.zeros_like(light.now)
+        else:
+            delta = self._difference(light, block)
+        g_numerator, g_denominator = block.definition.receive
+        pair_numerator, pair_denominator = self.motion_pair(block)
+        coefficient = (g_numerator * pair_numerator, g_denominator * pair_denominator)
+        assert response.receive_remainder is not None
+        return self._coupled_term(response, delta, block.mask, coefficient, response.receive_remainder)
+
+    def _source(self, block: Block, massive: LiveRecord, light: LiveRecord) -> np.ndarray:
+        """The source term (the same entry): light's row gains -G times the
+        massive record's current at the block's cells."""
+        delta = self._difference(massive, block)
+        numerator, denominator = block.definition.source
+        remainder = light.source_remainder.get(block.number)
+        if remainder is None:
+            remainder = np.zeros(self.shape, dtype=np.int64)
+            light.source_remainder[block.number] = remainder
+        return self._coupled_term(light, delta, block.mask, (-numerator, denominator), remainder)
+
+    def _block_births(self) -> None:
+        """A block that emits births one light record at each new cycle of its
+        clock, paying the family's quantum from its held content (as a lamp
+        does); the record's rows are sourced by the block's own current at
+        its cells while the cycle lasts."""
+        world = self.world
+        for block in self.blocks:
+            if not block.new_cycle:
+                continue
+            block.new_cycle = False
+            family = block.definition.emits
+            if family is None or block.own is None:
+                continue
+            cost = self.families[family].quantum
+            if self.held[block.number][family] < cost:
+                continue
+            block.births += 1
+            identity = block.number * (1 << 32) + block.births
+            self.held[block.number][family] -= cost
+            self.ledger.held_spent[family] += cost
+            self.ledger.transit_released[family] += cost
+            definition = self.families[family]
+            assert definition.phase_per_age is not None
+            numerator, denominator = definition.phase_per_age
+            # No train and no grace: the block's cells are no lamp's Nodes
+            # (the record is sourced at the cells by the block's current,
+            # not driven), so the record's period and train are 0 and its
+            # completion waits on the cycle's end (`sourcing`).
+            live = LiveRecord(
+                identity,
+                block.number,
+                family,
+                0,
+                block.births,
+                self.tick,
+                cost,
+                numerator,
+                denominator,
+                0,
+                0,
+                np.zeros(self.shape, dtype=np.int64),
+                np.zeros(self.shape, dtype=np.int64),
+                np.zeros(self.shape, dtype=np.int64),
+                pointers=[0] * len(self.cell_names),
+                first_rung=[None] * len(self.cell_names),
+                ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
+                emitter=block.number,
+                sourcing=True,
+            )
+            live.driven = np.zeros(self.shape, dtype=bool)
+            if block.current is not None and block.current in self.records:
+                previous = self.records[block.current]
+                previous.sourcing = False
+                previous.train = previous.age
+            block.current = identity
+            block.emitted.append(identity)
+            self.records[identity] = live
+            self.layer.born += 1
+            if self.record is not None:
+                self.record(
+                    {
+                        "event": "birth",
+                        "tick": self.tick,
+                        "node": list(block.corner),
+                        "measured": block.number,
+                        "family": definition.name,
+                        "record": identity,
+                        "u": 0,
+                        "labels": [[0, 1]],
+                        "arms": 1,
+                        "units": 1,
+                        "multiplicity": 1,
+                        "train": 0,
+                        "cycle": block.count,
+                        **({"clock": block.count} if world.clock_stamp else {}),
+                    }
+                )
+
+    def _block_clock(self, block: Block) -> None:
+        """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
+        record summed across its cells (G over R: its own record and the
+        responses light drives), one count per cycle (the sum's crossing
+        from at most 0 to above 0, verb D's comparison), a `click` line per
+        count with its own count (the self-click of row (g)); a new cycle
+        births its emission at the next interval."""
+        total = 0
+        if block.own is not None:
+            total += int(np.sum(block.own.now[block.mask]))
+        for response in block.responses.values():
+            total += int(np.sum(response.now[block.mask]))
+        if block.previous_sum <= 0 < total:
+            block.count += 1
+            block.new_cycle = True
+            if self.record is not None:
+                self.record(
+                    {
+                        "event": "click",
+                        "tick": self.tick,
+                        "node": list(block.corner),
+                        "measured": block.number,
+                        "family": self.families[block.family].name,
+                        "record": None if block.own is None else block.own.identity,
+                        "cycle": block.count,
+                        "clock": block.count,
+                    }
+                )
+        block.previous_sum = total
+        if self.record is not None:
+            self.record(
+                {
+                    "event": "block",
+                    "tick": self.tick,
+                    "measured": block.number,
+                    "corner": list(block.corner),
+                    "sum": total,
+                    "clock": block.count,
+                    "steps": block.stepped,
+                }
+            )
+
+    def _book_response(self, block: Block, response: LiveRecord, light: LiveRecord) -> None:
+        """The click's pointer at a clock body: the response's motion across
+        the cells (the evaluation E of the object's record across R) added
+        to the light record's pointer for the block's cell, the first rung
+        at 1 / W of the record's norm stamped with the block's count; an
+        absorbing block books its Ports' offer as built and nothing here."""
+        if block.definition.absorbing:
+            return
+        motion = (response.now - response.before).astype(object)
+        value = int(np.sum(np.where(block.mask, motion * motion, 0)))
+        if value == 0:
+            return
+        cell = block.cell
+        light.pointers[cell] += value
+        light.absorbed += value
+        wheel = block.definition.wheel if block.definition.wheel is not None else self.wheel
+        if light.first_rung[cell] is None and light.pointers[cell] * wheel >= light.norm:
+            light.first_rung[cell] = self.tick
+            self.rung_counts[(light.identity, cell)] = block.count
 
     # The source
 
@@ -476,7 +909,7 @@ class DetectorLawSimulation:
                 total += self._shift(source, axis, sign, wrap=wrap)
         return total
 
-    def _advance(self, live: LiveRecord) -> None:
+    def _advance(self, live: LiveRecord, extra: np.ndarray | None = None) -> None:
         # The inserter's own Nodes are driven for the train and read their own
         # record only after its tail has left them (two periods after the
         # train; the first build's grace, DESIGN.md section 11): a receiver's
@@ -503,6 +936,11 @@ class DetectorLawSimulation:
         total = num * neighbours
         total -= wall * live.before
         total += live.remainder
+        if extra is not None:
+            # The coupling's term (massive-record-v1, section 7): one entry
+            # of the declared matrix over the other record's two columns at
+            # a block's cells, already divided with its remainder kept.
+            total += extra
         nxt = np.floor_divide(total, wall)
         live.remainder = total - wall * nxt
         if not taken:
@@ -511,6 +949,7 @@ class DetectorLawSimulation:
             live.age += 1
             return
         nxt[self.absorbing] = 0
+        port_motion = np.zeros(self.shape, dtype=np.int64) if self.blocks else None
         # The receivers: each Port facing a free Node follows the wave entering
         # by it one way (the take, no reflection); the offer booked to the cell
         # is the sum over the Ports of the squared Port amplitudes. The
@@ -532,6 +971,9 @@ class DetectorLawSimulation:
             motion = ghost - live.ports[index]
             live.ports[index] = ghost
             offer += motion * motion
+            if port_motion is not None:
+                port_motion += motion
+        live.port_motion = port_motion
         live.before = live.now
         offer = offer[self.absorbing]
         cells = self.cell_index[self.absorbing]
@@ -579,12 +1021,12 @@ class DetectorLawSimulation:
         wrap = self.kind_wrap[live.family]
         link_weight = common
         for axis in range(3):
-            if self.shape[axis] == 1:
-                continue
             # Each Link once: the Node and its neighbour on the + side (the
             # wrap on a periodic axis closes the last Link, an open face
-            # has none).
-            if wrap[axis]:
+            # has none); an axis of one layer reads the row itself as its
+            # two neighbours (DESIGN.md section 2), two self-Links the form
+            # carries (the roll on a length-one axis is the identity).
+            if wrap[axis] or self.shape[axis] == 1:
                 now_next = np.roll(now, -1, axis=axis)
                 before_next = np.roll(before, -1, axis=axis)
                 links += int(np.sum(link_weight * (now * before_next + now_next * before)))
@@ -605,7 +1047,7 @@ class DetectorLawSimulation:
         the board (the squared steps of every row, the wave's energy in the
         rule's own terms; a static level moves nothing) is below one rung of
         what the receivers hold."""
-        if live.age <= live.train:
+        if live.sourcing or live.age <= live.train:
             return False
         motion = (live.now - live.before).astype(object)
         energy = int(np.sum(motion * motion))
@@ -669,7 +1111,12 @@ class DetectorLawSimulation:
             **(
                 {
                     "clock": (
-                        live.first_rung[chosen]
+                        # A block's cell: the block's own count at the first
+                        # rung (the body's event in the body's own clock);
+                        # a receiver as built: its count is the interval.
+                        self.rung_counts[(live.identity, chosen)]
+                        if chosen is not None and (live.identity, chosen) in self.rung_counts
+                        else live.first_rung[chosen]
                         if chosen is not None and live.first_rung[chosen] is not None
                         else self.tick
                     )
@@ -678,6 +1125,14 @@ class DetectorLawSimulation:
                 else {}
             ),
         }
+        for block in self.blocks:
+            block.responses.pop(live.identity, None)
+            if live.identity in block.emitted:
+                block.emitted.remove(live.identity)
+            if block.current == live.identity:
+                block.current = None
+        for key in [key for key in self.rung_counts if key[0] == live.identity]:
+            del self.rung_counts[key]
         self.layer.gathers.append(gather)
         if self.record is not None:
             self.record(gather)
@@ -685,12 +1140,73 @@ class DetectorLawSimulation:
     def step(self) -> None:
         self.tick += 1
         self._births()
+        self._block_births()
+        for block in self.blocks:
+            self._move_block(block)
+        # The massive records first (each block's own record driven by its
+        # emitted light's first differences, the responses by their light
+        # record's), then the light records with the source terms (the
+        # massive currents just formed): the order of the interval,
+        # MASSIVE_RECORD.md section 7 (the massive step first).
+        for block in self.blocks:
+            if block.own is None:
+                continue
+            extra = np.zeros(self.shape, dtype=np.int64)
+            for identity in block.emitted:
+                light = self.records.get(identity)
+                if light is not None:
+                    extra += self._receive(block, block.own, light)
+            self._advance(block.own, extra)
+            if block.definition.cavity:
+                block.own.now[~block.mask] = 0
+                block.own.remainder[~block.mask] = 0
         for identity in list(self.records):
             live = self.records[identity]
-            self._advance(live)
+            if self.families[live.family].massive_kind:
+                continue
+            sources: np.ndarray | None = None
+            if self.blocks:
+                sources = np.zeros(self.shape, dtype=np.int64)
+            for block in self.blocks:
+                if live.emitter == block.number:
+                    if block.current == identity and block.own is not None and sources is not None:
+                        term = self._source(block, block.own, live)
+                        sources += term
+                        added = np.floor_divide(term, 3 * self.kind_den[live.family])
+                        live.norm += int(np.sum(added.astype(object) * added.astype(object)))
+                    continue
+                if block.definition.receive == (0, 1) and block.definition.source == (0, 1):
+                    continue
+                response = block.responses.get(identity)
+                if response is None:
+                    block.answered += 1
+                    response = self._massive_record(
+                        block.number * (1 << 32) + (1 << 31) + block.answered, block.number, block.family
+                    )
+                    block.responses[identity] = response
+                self._advance(response, self._receive(block, response, live))
+                self._book_response(block, response, live)
+                if sources is not None:
+                    sources += self._source(block, response, live)
+            self._advance(live, sources)
+        for block in self.blocks:
+            self._block_clock(block)
+        for identity in list(self.records):
+            live = self.records[identity]
+            if self.families[live.family].massive_kind:
+                continue
             if self._complete(live):
                 self._click(live)
                 del self.records[identity]
+        if self.world.probes and self.record is not None:
+            values = []
+            for probe in self.world.probes:
+                value = 0
+                for live in self.records.values():
+                    if not self.families[live.family].massive_kind:
+                        value += int(live.now[probe])
+                values.append(value)
+            self.record({"event": "probe", "tick": self.tick, "values": values})
 
     # The readings
 
@@ -730,6 +1246,11 @@ class DetectorLawSimulation:
                 # the key alone.
                 lines["form"] = sum(
                     self.record_form(live) for live in self.records.values() if live.family == index
+                ) + sum(
+                    self.record_form(response)
+                    for block in self.blocks
+                    for response in block.responses.values()
+                    if response.family == index
                 )
             families[family.name] = lines
         return {
@@ -778,6 +1299,31 @@ class DetectorLawSimulation:
         yield "law", DETECTOR_LAW_RULE
         yield "tick", self.tick
         yield "measured", self.contents()
+        if self.world.massive_record:
+            # The blocks (massive-record-v1): the corner, the count, the
+            # momentum's accumulators, the steps, and the rows of the block's
+            # own record (its amplitude now over the board, GAMEBOARD: the
+            # mode's extent is read from them).
+            yield (
+                "blocks",
+                [
+                    {
+                        "measured": block.number,
+                        "family": self.families[block.family].name,
+                        "corner": list(block.corner),
+                        "side": block.definition.side,
+                        "clock": block.count,
+                        "steps": block.stepped,
+                        "drive": list(block.drive),
+                        "momentum": list(block.momentum),
+                        "responses": len(block.responses),
+                        "emitted": list(block.emitted),
+                        "rows": None if block.own is None else block.own.now.ravel().tolist(),
+                        "form": None if block.own is None else self.record_form(block.own),
+                    }
+                    for block in self.blocks
+                ],
+            )
         yield (
             "records",
             [
