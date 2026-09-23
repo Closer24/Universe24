@@ -75,7 +75,13 @@ arithmetic the Boss ordered, and are NOT what this run reads: the wheel's
 are reading A; the difference between A and B is on record before the run,
 and the physics-rule reviewer decides whether the run is worth its seconds
 or the row's word moves from DECLARATION to a READING the click does not
-make.
+make. The reviewer's word (2026-09-23, the gate of record 1129, GO subject
+to two lines): the run is worth its seconds as the first click reading of a
+massive row's turn per Link (A3, the beat at h / p = 4.65 Links); the row
+8b stays FAIL under the declaration by the law's design of the path phase
+(BEAM_LAW stage (vii) step 2), its word a READING under existing keys (the
+re-emitter arrangement of section 3) beside the DECLARATION, and a window
+on a record's raw phase a RULE outside the law, not needed.
 
 ## 1. The steps between clicks
 
@@ -109,8 +115,8 @@ integers, exact). Every code line is the head of `origin/main` at
    55 / 4 = 13.75 steps, not 0 mod 64: the edge case p = 2^12 with h a
    power of two (256 steps per Link, 0 mod 64, every reader at the first's
    class) is named and avoided.
-3. **click (the lamp's clock) and computation: one record per interval, u
-   by the wheel.** The lamp's turn is the count row `Count("turn",
+3. **the lamp's count (GAMEBOARD; nothing pinned from it) and computation:
+   one record per interval, u by the wheel.** The lamp's turn is the count row `Count("turn",
    "content", 0, 0, turn_rate[0], turn_rate[1])` (`measured.py` :429):
    `by_clock` over its held content at the rate [1, K]; at held K it is 1
    at every self-creation (`nature_beam.py` :6002, `cost =
@@ -256,11 +262,18 @@ u = -floor(55 x / 4) mod 64 whole if no reader before it took that class:
 
 Under reading B the second reader over the first would match nature's about
 1 and the far detector 0 would not match a beam that passes: the row would
-turn on the ratio and fail on the depth. Reading B is readable by no world
-under the keys as they stand: a massive row is a record's row and the
-window reads its path phase. That sentence is the finding of this file
-for the reviewer; it moves no number of section 1.9 and no word of the
-law.
+turn on the ratio and fail on the depth. No window reads the raw phase of a
+record's row under the keys as they stand (the birth column on every lamp's
+row, the window subtracting it; the lamp's `turns` a constant per
+direction). Reading B's class filter is reachable by one more click: a
+re-emitter between the lamp and the readers, whose rebirth keeps the
+running phase and writes a new u from its own wheel (`nature_beam.py`
+:5847-5872), declared with the wheel [2, 64] against the lamp's [1, 64] so
+that the path phase behind it is -j mod 64 over the births; that world is
+STEP 3 if ordered, its pins B1 to B4 with the re-emitter's clicks counted,
+validated at load before any pin (the physics-rule reviewer's line (i) of
+2026-09-23). That is the finding of this file; it moves no number of
+section 1.9 and no word of the law.
 
 **The FAIL conditions of the run** (against the pins A): a click at x = 8
 or x = 9 (the path phase read as the raw phase, or the turn not the plane
