@@ -1,6 +1,6 @@
 """The coupling readings tool reads the engine's own functions (Highlights
 5.4, the architecture review of 2026-09-20: the tools replayed three rules
-of the engine, a second owner; `tools/coupling_readings.py` now reads
+of the engine, a second owner; `tools/click_readings/coupling.py` now reads
 `engine.by_clock`, `nature_beam.direction_flight` with its `manhattan_steps`,
 `nature_beam.unit_label`, `world.LABEL_SCALE` and the parsed world). Each
 reading of the tool is checked against the engine on a minimal GameBoard; the
@@ -43,7 +43,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "coupling_readings_tool", ROOT / "tools" / "coupling_readings.py"
+    "coupling_readings_tool", ROOT / "tools" / "click_readings" / "coupling.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["coupling_readings_tool"] = TOOL

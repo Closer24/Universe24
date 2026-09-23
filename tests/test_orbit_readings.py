@@ -1,5 +1,5 @@
 """The orbit readings tool reads the engine's own functions (Highlights 5.4,
-the architecture review of 2026-09-20: `tools/orbit_readings.py` now reads
+the architecture review of 2026-09-20: `tools/click_readings/orbit.py` now reads
 the fan's labels off `nature_beam.direction_flight`, the release off
 `engine.by_clock` and the world's keys through `parse_nature_beam_world`). Each
 reading of the tool is checked against the engine on a minimal GameBoard; the
@@ -65,7 +65,7 @@ from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "orbit_readings_tool", ROOT / "tools" / "orbit_readings.py"
+    "orbit_readings_tool", ROOT / "tools" / "click_readings" / "orbit.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["orbit_readings_tool"] = TOOL

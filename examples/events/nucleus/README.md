@@ -85,7 +85,7 @@ lifetimes across three fans and two orientations).
 ```bash
 python examples/events/nucleus/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/nucleus examples/events/nucleus/*.json
-PYTHONPATH=src python tools/nucleus_readings.py artifacts/nucleus
+PYTHONPATH=src python tools/click_readings/nucleus.py artifacts/nucleus
 ```
 
 Each run takes 4 to 90 s (the bound worlds keep their 290 x 2 rows per
@@ -95,7 +95,7 @@ per bound world.
 
 ## What was measured (2026-09-20)
 
-`tools/nucleus_readings.py`: 0 record checks failed, 29 readings inside, 1
+`tools/click_readings/nucleus.py`: 0 record checks failed, 29 readings inside, 1
 outside, nothing moved (the numbers in the register entry). The deuteron
 at one Link reads the designed 310 967 280 640 per interval on each body
 and never steps in 3000 intervals, its labels handed to the other body at

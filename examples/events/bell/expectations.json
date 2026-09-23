@@ -1,6 +1,6 @@
 {
  "format": "bell-expectations-v1",
- "reference": "the ten A2 worlds of make_worlds.py run at their ticks and read by tools/bell_chsh.py under the one click (stage (vii) step 4) and the fraction-free law of 2026-09-20; the register tests/test_nature_beam_worlds.py (b) reads since 2026-09-21 (before, the test's own literals). Until the one click the triangle read 0 failed, the CHSH sum 2, the primed sum 3/2, E(0, 16) = 0.",
+ "reference": "the ten A2 worlds of make_worlds.py run at their ticks and read by tools/bell_chsh.py (moved to tools/click_readings/bell.py on 2026-09-22) under the one click (stage (vii) step 4) and the fraction-free law of 2026-09-20; the register tests/test_nature_beam_worlds.py (b) reads since 2026-09-21 (before, the test's own literals). Until the one click the triangle read 0 failed, the CHSH sum 2, the primed sum 3/2, E(0, 16) = 0.",
  "criteria": 350,
  "failed": 115,
  "tool_exit": 1,
@@ -18,7 +18,7 @@
   "0_16": 1
  },
  "derivations": {
-  "criteria": "measured (the tool's criteria of the crowd form, tools/bell_chsh.py)",
+  "criteria": "measured (the tool's criteria of the crowd form, tools/bell_chsh.py, moved to tools/click_readings/bell.py on 2026-09-22)",
   "failed": "measured (under the one click every pair lands in one cell and the minus counters are silent, so 115 of the crowd form's criteria fail)",
   "tool_exit": "measured (nonzero when a criterion fails)",
   "offsets_0_0": "DERIVATIONS_BEAM 11.1: the plus offset is 1 + tau_8, the age at which a heading row has walked the 8 Links from the lamp to a plus counter, tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)) = 13; the minus counters 0 (no click); derived from the flight table and compared by tests/test_nature_beam_worlds.py (b)",

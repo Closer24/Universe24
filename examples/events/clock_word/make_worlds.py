@@ -15,8 +15,9 @@ pin that decides on the GameBoard: two crowds of the same release F at
 different distances are the same push, and only the age clock reads the
 distance.
 
-The worlds, in series U's geometry (`../crowd_clock/make_worlds.py`, the
-one copy of the fan, the speeds and the pinned k): the lamp `s_px1` at rest
+The worlds, in series U's geometry (once `../crowd_clock/make_worlds.py`'s,
+the fan, the speeds and the pinned k; that generator and its worlds deleted
+on 2026-09-23, record 871, the constants carried here): the lamp `s_px1` at rest
 at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
 [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z, each
 releasing F = 4915 units per interval on series U's fan of nine toward the
@@ -32,30 +33,40 @@ age word, series E's precedent, the law's default since clock-age-v1); the bar 1
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import sys
 from pathlib import Path
+
+import numpy as np
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
+from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
+from event_universe.events.world import HEADING_OFFSET, LAW_VALUE  # noqa: E402
 from event_universe.register_map import carry_replicated  # noqa: E402
 
+# Series U's geometry, once its generator's (`crowd_clock/make_worlds.py`,
+# deleted on 2026-09-23 with its worlds, record 871): the wheel, the lamp's
+# reservoir and rate, the release and suspension pairs, the window's width.
+N = 64
+WIDTH = 1 << 20
+LIGHT = 1 << 20
+LAMP_RATE = [1, 1]
+RELEASE = [1, 1 << 16]
+SUSPENSION = [1, 1 << 16]
 
-def _crowd_clock():
-    """Series U's generator, the one copy of the fan and the speeds."""
-    path = HERE.parent / "crowd_clock" / "make_worlds.py"
-    spec = importlib.util.spec_from_file_location("crowd_clock_make_worlds", path)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules.setdefault("crowd_clock_make_worlds", module)
-    spec.loader.exec_module(module)
-    return module
+
+def beam_speed() -> float:
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    heading = np.array([HEADING_OFFSET])
+    period = int(table.period[HEADING_OFFSET])
+    return int(table.manhattan_steps(heading, np.array([period]))[0]) / period
 
 
-P = _crowd_clock()
-C = P.C
+C = beam_speed()
 LENGTH = 121
 LAMP_X, DETECTOR_X = 10, 110
 FLUX = 4915
@@ -112,10 +123,10 @@ def world(name: str, word: str, distance: int, side: int) -> Json:
     lamp: Json = {
         "position": [LAMP_X, centre, centre],
         "family": "s_px1",
-        "amount": P.LIGHT,
+        "amount": LIGHT,
         "phase": 0,
         "fixed": True,
-        "lamp": {"rate": P.LAMP_RATE, "wheel": [1, P.N], "directions": [[1, 0, 0]]},
+        "lamp": {"rate": LAMP_RATE, "wheel": [1, N], "directions": [[1, 0, 0]]},
         "table": {"mass": mass_entry},
     }
     sources: list[Json] = []
@@ -126,7 +137,7 @@ def world(name: str, word: str, distance: int, side: int) -> Json:
             {
                 "position": position,
                 "family": "mass",
-                "amount": FLUX * P.RELEASE[1] // P.RELEASE[0],
+                "amount": FLUX * RELEASE[1] // RELEASE[0],
                 "fixed": True,
                 "directions": fan(axis, distance),
                 "table": {"s_px1": {"rule": "pass"}},
@@ -140,17 +151,17 @@ def world(name: str, word: str, distance: int, side: int) -> Json:
         "table": {"s_px1": {"rule": "measure", "reads": "age"}},
     }
     return {
-        "law": P.LAW_VALUE,
+        "law": LAW_VALUE,
         "model_id": f"rays-clock-word-{name.replace('_', '-')}-v1",
         "shape": [LENGTH, side, side],
         "boundary": "open",
         "directions": declared_directions(distance),
         "ticks": TICKS,
-        "K": P.LIGHT,
-        "N": P.N,
-        "release": P.RELEASE,
-        "suspension": P.SUSPENSION,
-        "width": P.WIDTH,
+        "K": LIGHT,
+        "N": N,
+        "release": RELEASE,
+        "suspension": SUSPENSION,
+        "width": WIDTH,
         "families": [
             {"name": "detector", "quantum": 1},
             {"name": "mass", "quantum": 0, "charge": 0, "phase": False},
@@ -166,7 +177,7 @@ def worlds() -> dict[str, Json]:
 
 def pinned_k(word: str, distance: int) -> float:
     per_f = PRESENCE_PER_F[distance] if word == "presence" else AGE_MOMENT_PER_F[distance]
-    return per_f * FLUX * P.SUSPENSION[0] / P.SUSPENSION[1]
+    return per_f * FLUX * SUSPENSION[0] / SUSPENSION[1]
 
 
 def expectations() -> Json:

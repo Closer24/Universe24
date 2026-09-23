@@ -6,6 +6,89 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The register's sources are the paper's, on 2026-09-22 (deletions; no behaviour)
+
+The model owner's word of 2026-09-22 (record 871 of docs/LOG_2026-09-20.md:
+"remove worlds or experiments that are not in the paper; order the new code
+of the clicks; old code goes"), the table
+[docs/designs/register_paper_sources/PLAN.md](designs/register_paper_sources/PLAN.md).
+Deleted, with their tests, register rows and index rows, every kept world's
+record byte for byte as it was (the base commit 59c6b811 holds them):
+
+- `examples/events/two_stars/` (series O), `docs/designs/two_stars/`,
+  `tests/test_two_stars.py`, `docs/designs/derivations_beam/series_o_identity.py`
+  and its output; `tests/test_register_map.py` part (e) now regenerates
+  `orbit_lamp/make_worlds.py`'s register instead.
+- `examples/events/masses/` (the cavity, series M) and `docs/designs/masses/`.
+- `examples/events/buildup/` (A10 at a low rate), `tools/buildup_readings.py`,
+  `tests/test_buildup_readings.py`; the register entry is one line under
+  EXPERIMENTS.md section D.
+- On 2026-09-23, after the generic entry of the bending merged (PR #855):
+  `examples/events/crowd_clock/` (series U, eight worlds),
+  `examples/events/cluster_clock/` (series V, two), `examples/events/reader_clock/`
+  (the reader inside a crowd, five) with `docs/designs/crowd_clock/DESIGN.md`,
+  `cluster_clock/DESIGN.md`, `reader_clock/DESIGN.md` and
+  `tests/test_crowd_clock.py`, `test_cluster_clock.py`, `test_reader_clock.py`;
+  the paper cites none of their numbers (records 868 and 871). Series T's
+  generator (`clock_word/make_worlds.py`) carries the geometry's constants it
+  took from series U's; its four worlds are byte for byte as they were.
+- On 2026-09-23, the same row: `examples/events/hubble_stars/{gravity,double}_{age,none,scalar}.json`
+  and their `record/` copies (G2's six crowd worlds; the paper's G2 rows rest
+  on `coasting_none`); the generator writes the coasting worlds
+  (`SHIPPED_CROWDS`) and still derives every crowd's block, so both registers
+  are byte for byte as they were (the blocks history, record 865).
+
+Old code nothing left reaches (the second commit): `tools/derivations_round7.py`
+and `derivations_round8.py` (the scratch of DERIVATIONS.md rounds 7 and 8, the law
+of the shadow of 2026-09-18; the paper cites DERIVATIONS_BEAM.md, never these);
+`tools/generic_vector_lab/` (the opt-in vector lab beside the engine, nothing in
+the law reads it); `src/event_universe/ui.py` with `ui_assets/`, `docs/WORKSPACE.md`
+and the script `event-universe-ui` (the local configuration workspace; the runner
+and `tools/run_series.py` are the only paths a world takes; `retention.py` keeps
+the companion-lease mechanism the workspace used, with its tests);
+`docs/designs/doppler_v1/` and `docs/designs/push_relative_speed/` (the reviews and
+forms of the key `doppler`, deleted on 2026-09-20 when the crossing rule gave the
+Doppler; their verdicts are in the log and Highlights 5.4). No key, hypothesis or
+rule of the engine moves; TERMINOLOGY.md's retired rows stay as history.
+
+The readings of a click under one boundary (the third commit): the package
+`tools/click_readings/` ([its README](../tools/click_readings/README.md)) holds the
+readings tools, one module per series, renamed by the series' subject and moved
+byte for byte but for their root path: `tools/bell_chsh.py` -> `bell.py`,
+`tools/bell_choosers.py` -> `bell_choosers.py`, `tools/<series>_readings.py` ->
+`<series>.py` for bohr, c_measured, coupling, covariant, heisenberg, hubble,
+hubble_stars, nucleus, orbit, orbit_lamp, quarks, redshift and weak,
+`examples/events/massive_rows/read_run.py` -> `massive_rows.py`,
+`examples/events/massive_rows/replay_register.py` -> `massive_rows_replay.py`,
+`examples/events/quarks/replay_register.py` -> `quarks_replay.py`. The tests load
+them by the new path; the usage lines of the worlds' READMEs, EXPERIMENTS.md,
+TEST_EXPECTATIONS.md, BEAM_LAW.md and ENGINE.md name the new path; the JSON
+registers, the generators and the dated evidence keep the old names as history.
+No arithmetic moved between modules (the tools' helpers differ but for four
+trivial pairs, so no shared module was made); every reading and every register
+byte identical. `tools/amplitude_path.py` stays: the paper cites it at that path.
+
+The owner's strike of record 894 (the fourth commit): `examples/events/gallery/`
+(five demonstration worlds) with `tools/gallery_pages.py`, `docs/pages/gallery/`
+and `tests/test_gallery_pages.py`; `examples/events/hand/` (series P, four
+worlds) with `docs/designs/hand/`, the generator moved to
+`tests/support/hand_worlds.py` so that `tests/test_hand.py` keeps building the
+rule's worlds (hand-v1 stays in the law, read by series J2); and
+`examples/events/catalog/` (four placements) with `tests/test_entity_catalog.py`
+(the catalog's document stays). The gate set loses three rows (fourteen
+worlds; the lines they covered named in its description); the two catalog rows
+leave `tests/test_amplitude_layer.py`'s list of the design's test 7. The register
+entries of series P and the gallery are one line each under EXPERIMENTS.md
+section D with their headings kept. No physical behavior changed.
+
+The readings' package completed for every tool no branch in flight touches
+(the Boss, record 932: the cart does not block): `tools/lensing_readings.py`
+-> `tools/click_readings/lensing.py`, `tools/drive_b_readings.py` -> `drive_b.py`,
+`examples/events/shell_clock/read_runs.py` -> `shell_clock.py`; `tools/optical_readings.py`
+(a GAMEBOARD diagnostic of the optical pin worlds, never a detector reading)
+deleted. `examples/events/clock_word/read_runs.py` waited on `generic-bending` (moved to `tools/click_readings/clock_word.py` on 2026-09-23)
+(its test is that branch's), the cart's tool on `moving-detector-build`.
+
 ## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
 
 The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,
@@ -152,10 +235,10 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   (the still readings at the age word's derived pins, 5.5 times the
   presence word's k; the moving worlds' emulated crowds declared for the
   presence word's k, a research reading until re-declared; the READMEs of
-  [U](../examples/events/crowd_clock/README.md), [V](../examples/events/cluster_clock/README.md)
-  and [S](../examples/events/reader_clock/README.md), the age word's pins
+  U (`examples/events/crowd_clock/`), V (`examples/events/cluster_clock/`)
+  and S (`examples/events/reader_clock/`; the three deleted on 2026-09-23), the age word's pins
   in each register's block `clock_age_v1`), the catalog's `clock_near_mass`
-  and `neutron_star` ([the README](../examples/events/catalog/README.md)).
+  and `neutron_star` (the README (`examples/events/catalog/`, deleted on 2026-09-22, record 894)).
   The readings tools amended with the word: `tools/coupling_readings.py`
   (item 6 replays the age moment; the ring keys follow the diagnostic's
   `arrived`), `tools/redshift_readings.py` (k x r for both worlds),

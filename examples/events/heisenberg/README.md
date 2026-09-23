@@ -4,7 +4,7 @@ Eight worlds of the Beam Law written by `make_worlds.py`, the width
 w of one opening (1, 3, 9, 27 Nodes) and the detectors' `reading` (`wave`,
 `beam`) the only differences between the files; the register entry is
 [A10, the width of an opening and the spread behind it, under the Beam Law](../../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
-and the readings tool `tools/heisenberg_readings.py`. The model owner asked
+and the readings tool `tools/click_readings/heisenberg.py`. The model owner asked
 for it on 2026-09-19 as the test of the detector's sensitivity ([Highlights
 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector): a detector is a set of
 Nodes with one record; the declared width is the position's uncertainty).
@@ -163,7 +163,7 @@ What the runs read, line by line:
   four rays per pixel per interval).
 - **Fingerprints**: `initialization_sha256` `307ccd7a3242...` (`w1_wave`),
   `6e9a551d2a12...` (`w27_wave`), `2fd0a3bab10d...` (`w27_beam`);
-  `tools/heisenberg_readings.py`: 16 record checks passed, 0 failed.
+  `tools/click_readings/heisenberg.py`: 16 record checks passed, 0 failed.
 
 **Verdict.** The `wave` record narrows with the width of the opening and
 the count does not, as the Beam Law says (the interference is a
@@ -185,5 +185,5 @@ Run the worlds:
 ```bash
 python examples/events/heisenberg/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/heisenberg examples/events/heisenberg/*.json
-PYTHONPATH=src python tools/heisenberg_readings.py artifacts/heisenberg --profiles
+PYTHONPATH=src python tools/click_readings/heisenberg.py artifacts/heisenberg --profiles
 ```

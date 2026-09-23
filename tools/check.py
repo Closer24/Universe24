@@ -32,7 +32,7 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # test that reads the pin, the byte-identity digests and the replay.
     "examples/events/massive_rows/expectations.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/make_worlds.py": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/replay_register.py": ("tests/test_massive_rows.py",),
+    "tools/click_readings/massive_rows_replay.py": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),
@@ -62,7 +62,6 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # 2026-09-20: every test that loads a shipped world depends on it.
     "examples/events/entities/families.json": (
         "tests/test_entity_definitions.py",
-        "tests/test_entity_catalog.py",
         "tests/test_configuration_validation.py",
         "tests/test_nature_beam_worlds.py",
         "tests/test_bell_choosers.py",
@@ -223,9 +222,11 @@ def select(changed, sources):
         tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
             tests.add("tests/test_architecture.py")
+            # The algebra gate reads the physical modules by their path.
+            tests.add("tests/test_integer_algebra.py")
         # A world, an asset or a tool is a runtime dependency of the tests
         # that name its file (a tool is loaded by its path, never imported).
-        if path.startswith(("examples/", "src/event_universe/ui_assets/", "tools/")):
+        if path.startswith(("examples/", "tools/")):
             tests.update(
                 p
                 for p, text in sources.items()

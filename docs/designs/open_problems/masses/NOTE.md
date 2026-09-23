@@ -189,7 +189,7 @@ nature's across the table.
 
 ## 8. Links
 
-[The masses design](../../masses/DESIGN.md) (sections 2, 3 and 7);
+The masses design (`docs/designs/masses/DESIGN.md`, sections 2, 3 and 7; deleted on 2026-09-22 with its cavity worlds, record 871; in the tree's history at 59c6b811);
 [binding-v1's design](../../binding_v1/DESIGN.md);
 [DERIVATIONS_BEAM 16.2](../../../DERIVATIONS_BEAM.md#162-the-minimal-mass-a-theorem-of-the-law-and-what-follows-from-it),
 [18.3](../../../DERIVATIONS_BEAM.md#183-the-strong-ratio-row-7b-the-give-per-contact-pair-in-form-and-in-number),

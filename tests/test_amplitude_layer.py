@@ -58,7 +58,7 @@ layer"), written down before the first run:
     rung here;
     the design's "wall 3/5, screen 2/5" is not this geometry's reading:
     the freed fans reach the open faces in y;
-(e) the design's test 7, the gate set: the seventeen registered worlds
+(e) the design's test 7, the gate set: the fifteen registered worlds (seventeen until the two catalog worlds' deletion on 2026-09-22, record 894)
     listed in GATE_SET parse without the key (`amplitude` false, no
     `amplitude-v1` identity), the byte-identity of their replays being the
     evidence of docs/VALIDATION.md;
@@ -160,8 +160,6 @@ GATE_SET = {
     "bohr/r2.json": "action (the turn by momentum)",
     "hubble/coasting_age.json": "read, measure, pass with reads",
     "coupling/7_pp.json": "free families alone, z periodic",
-    "catalog/lamp_mirror_screen.json": "rerelease with phase_window, a lamp",
-    "catalog/sun_planet.json": "rerelease with a free crowd",
     "heisenberg/w3_beam.json": "the beam reading on a rerelease world",
     "one_content.json": "one free family, open faces",
     "redshift/age.json": "pass with reads on a free family",
@@ -362,7 +360,7 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
 
 def test_the_gate_set_parses_with_the_key_deleted():
     """(e)."""
-    assert len(GATE_SET) == 17
+    assert len(GATE_SET) == 15
     for name in GATE_SET:
         path = ROOT / "examples" / "events" / name
         world = load_world(path.read_bytes(), base_dir=path.parent).world

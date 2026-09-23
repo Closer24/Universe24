@@ -532,7 +532,7 @@ roles, as they run today, one writer per document:
 | The derivation mathematician | DERIVATIONS_BEAM (every formula as a limit of one rule; the map 21.2 with its status, order and error term) | the designs, the law's text |
 | The architect | BEAM_LAW's text, the genericity probe, the host-only unifications | the derivations, the designs |
 | The paper coordinator | the manuscript, with its referee ([paper-coordinator](paper-coordinator/SKILL.md)) | the tree's documents; it reports what reaches the tree with its status |
-| The Visualiser | the gallery pages under `docs/pages/` | any number of the register |
+| The Visualiser | no page (the gallery pages under `docs/pages/` were deleted on 2026-09-22, the owner's word of record 894; the Visual Checker's design folder `docs/designs/visual_check/` when it lands) | any number of the register |
 | The physics-rule reviewer, the implementers, the experimenter | one bounded assignment each, as agents of the Boss: a review file, a branch, a registered run | the shared documents beyond their assignment |
 
 The order and the report (the owner's rules of the day, in one place):

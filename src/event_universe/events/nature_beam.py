@@ -464,10 +464,11 @@ def moment_table(
     the table is Python integers (the dtype `object`; the one use is the
     pointer of a detector set, a report of the host that is never refused,
     where the register would not hold the table): the same table."""
-    dtype = object if exact else np.int64
     if exact:
-        v, a = v.astype(dtype), a.astype(dtype)
-    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=dtype)
+        v, a = v.astype(object), a.astype(object)
+        table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=object)
+    else:
+        table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
     table[:, 0] = a * v.any(axis=1)
     table[:, 1] = a - table[:, 0]
     table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
@@ -475,7 +476,8 @@ def moment_table(
     if ages is None:
         table[:, AGE_COLUMN:] = 0
     else:
-        weighted = a * np.asarray(ages).reshape(-1).astype(dtype)
+        age_column = np.asarray(ages).reshape(-1)
+        weighted = a * (age_column.astype(object) if exact else age_column.astype(np.int64))
         table[:, AGE_COLUMN] = weighted * v.any(axis=1)
         table[:, AGE_COLUMN + 1] = weighted - table[:, AGE_COLUMN]
     return table

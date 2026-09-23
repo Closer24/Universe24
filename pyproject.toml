@@ -19,7 +19,6 @@ dev = ["pytest>=8,<10", "pytest-xdist>=3,<4", "ruff>=0.16,<0.17", "mypy>=2.3,<3"
 
 [project.scripts]
 event-universe = "event_universe.runner:main"
-event-universe-ui = "event_universe.ui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -27,8 +26,6 @@ where = ["src"]
 [tool.setuptools]
 package-dir = {"" = "src"}
 
-[tool.setuptools.package-data]
-event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 
 [tool.setuptools.data-files]
 "share/event-universe/examples" = ["examples/events/*.json"]

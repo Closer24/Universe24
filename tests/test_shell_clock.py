@@ -80,7 +80,7 @@ def generator():
 
 
 def reader():
-    return load("shell_clock_read_runs", WORLDS / "read_runs.py")
+    return load("shell_clock_readings", ROOT / "tools" / "click_readings" / "shell_clock.py")
 
 
 def simulation(name: str) -> NatureBeamSimulation:

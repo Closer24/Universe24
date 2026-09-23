@@ -13,7 +13,7 @@ control (no mass) at each gamma for the readings tool. The worlds are
 written by `make_worlds.py` from series K's generator (the one copy of the
 fan, the beam and the screen), the pins before any run in
 `expectations.json` (the one-wall note's section 6, from the lattice's
-lines), the readings by `tools/lensing_readings.py` against each folder's
+lines), the readings by `tools/click_readings/lensing.py` against each folder's
 control.
 
 The key reads the crowd twice, both at the row's own Node and less its
@@ -109,10 +109,10 @@ not the wall. The worlds are NOT RUN before that head stands (record
 python examples/events/optical/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g0 examples/events/optical/control_g0.json examples/events/optical/mass_g0.json examples/events/optical/near_g0.json
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g1 examples/events/optical/control_g1.json examples/events/optical/mass_g1.json examples/events/optical/near_g1.json
-PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g0 --no-replay
-PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g1 --no-replay
+PYTHONPATH=src python tools/click_readings/lensing.py artifacts/optical_g0 --no-replay
+PYTHONPATH=src python tools/click_readings/lensing.py artifacts/optical_g1 --no-replay
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/matter_g0 examples/events/optical/matter_control_g0.json examples/events/optical/matter_g0.json
-PYTHONPATH=src python tools/lensing_readings.py artifacts/matter_g0 --no-replay --window-start 500 --register examples/events/optical/expectations.json   # likewise matter_g1 and matter2_g0; the verdicts against the matter block's pins
+PYTHONPATH=src python tools/click_readings/lensing.py artifacts/matter_g0 --no-replay --window-start 500 --register examples/events/optical/expectations.json   # likewise matter_g1 and matter2_g0; the verdicts against the matter block's pins
 ```
 
 `tests/test_optical.py` pins the rule (the wall, the push and the turn,
@@ -186,7 +186,7 @@ fan is not the answer (the error still grows with the Links, at eight times
 the host cost).
 
 **The bounded diagnostic** (the physicist's, record 483; GAMEBOARD, never a
-detector reading; `tools/optical_readings.py` on the runs' `state.json`,
+detector reading; `tools/optical_readings.py` (deleted on 2026-09-22 with the owner's word of record 871, a GAMEBOARD diagnostic never a detector reading) on the runs' `state.json`,
 the light rows at x >= 40 in the final state, **P** = Q d content **u**_D +
 **W** off the row's label and its `push`): the mean transverse angle of
 **P** about +x, negative toward the mass, `mass` -4.181 degrees at f = 1
@@ -250,7 +250,7 @@ directions' 582, against 415, 1.4 directions, under the T ratio; the
 pixel's move is a capture count. No pin was changed and no second rule
 entered; the reading is recorded as it is.
 
-The bounded diagnostic re-read (GAMEBOARD, `tools/optical_readings.py`,
+The bounded diagnostic re-read (GAMEBOARD, `tools/optical_readings.py`, deleted on 2026-09-22,
 the first run's value as "was"): the mean transverse angle of **P**
 `mass` -4.203 / -8.976 degrees (was -4.181 / -8.680; the ratio 2.136, was
 2.076), `near` -6.993 / -8.277 (was -6.854 / -11.955; the ratio 1.184,
@@ -384,7 +384,7 @@ intervals EARLIER than the control for the first draft's delay of
 reviewer's MUST-FIX 1 on the note, read in the engine). The map was
 rewritten and b moved to 10; the b = 6 worlds are not registered.
 
-The run at b = 10 (DETECTOR, `tools/lensing_readings.py --no-replay
+The run at b = 10 (DETECTOR, `tools/click_readings/lensing.py --no-replay
 --window-start 500` against each folder's control, 1000 intervals, 55 s
 per control and 110 s per mass world; with `--register
 expectations.json` the tool's verdict is against the matter block's pins,
@@ -438,7 +438,7 @@ screen, the light worlds' mass 2^16 and fan, the pair [1, 16384], `width`
 16384, one free body `probe` of content 64 (Q S M = 2^26) at (2, 20 + b,
 20) with the momentum (2^26, 0, 0) (E' = 2^27, the Lorentz factor 2, v^2
 = 3/4, the pace 0.368), 300 intervals; the click on `face:+x` (its tick
-and the Node it left from) the reading, `tools/drive_b_readings.py
+and the Node it left from) the reading, `tools/click_readings/drive_b.py
 --expectations body_expectations.json`. The pins from the map's body
 walk (`every_family_map.py`, `body_walk`), committed before the run
 (65939b8f): the table of the note's section 4.
@@ -460,7 +460,7 @@ sign as the slow rows' (EVERY_FAMILY.md 5b). The one interval of gamma
 detector and in the walk. The worlds regenerated with the mass 2^16
 (the generator's `MASS_FACTOR`), the pins untouched, and run again
 (`tools/run_series.py --jobs 2`, 300 intervals, 11 s per mass world;
-`tools/drive_b_readings.py --expectations body_expectations.json
+`tools/click_readings/drive_b.py --expectations body_expectations.json
 --register`, the run blocks in the register):
 
 | World | the click, DETECTOR: tick; the Node's y | the pin (tick +- 1; y) | inside | the drive unstretched | the charge (M, 1) |
@@ -511,7 +511,7 @@ the wall unstretched -0.66 / -0.80, the weight blind to the speed -6.40.
 
 The fast worlds, run after the pins' commit (22064bc3; DETECTOR,
 `tools/run_series.py --jobs 2`, 400 intervals, the window from 200,
-`tools/lensing_readings.py --no-replay --window-start 200 --register
+`tools/click_readings/lensing.py --no-replay --window-start 200 --register
 expectations.json`, the verdicts the tool's against the pins):
 
 | World | f | clicks (control 1005) | centroid y, shift (pin, bracket 0.5) | mean age, arrival (pin, bracket 1) | width rms y, delta | count ratio | first click (control 121) | inside |

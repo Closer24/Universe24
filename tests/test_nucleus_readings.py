@@ -1,6 +1,6 @@
 """The nucleus readings tool reads the runner's record and nothing else
 (the experimenter's rule, 2026-09-20: a readings tool never replays a rule
-of the engine; `tools/nucleus_readings.py` reads the bodies' `read`,
+of the engine; `tools/click_readings/nucleus.py` reads the bodies' `read`,
 `contact`, `step` and `click` records off `events.jsonl` and the run off
 `run.json`). One fast case pins the tool to the engine's record: the
 design's pair on the six headings (`tests/test_contact.py` (a); the
@@ -35,7 +35,7 @@ from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "nucleus_readings_tool", ROOT / "tools" / "nucleus_readings.py"
+    "nucleus_readings_tool", ROOT / "tools" / "click_readings" / "nucleus.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["nucleus_readings_tool"] = TOOL

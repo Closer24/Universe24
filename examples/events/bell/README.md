@@ -101,10 +101,10 @@ python examples/events/bell/make_worlds.py   # rewrites the ten worlds, unchange
 for s in a0_b8 a0_b24 a16_b8 a16_b24 a0_b0 a0_b32 a0_b16 a0_b12 a4_b8 a4_b12; do
   python -m event_universe --init examples/events/bell/$s.json --output artifacts/bell/$s
 done
-python tools/bell_chsh.py artifacts/bell
+python tools/click_readings/bell.py artifacts/bell
 ```
 
-`tools/bell_chsh.py` (standard library, `fractions.Fraction`, no float in a
+`tools/click_readings/bell.py` (standard library, `fractions.Fraction`, no float in a
 criterion) reads each run's `run.json`, `initialization.json` and
 `events.jsonl`, prints per run the four counts, E and the expected E, then
 S, S', the offsets and the fingerprint, and every criterion with its
@@ -227,14 +227,14 @@ python examples/events/bell/make_chooser_worlds.py   # rewrites the seven worlds
 for w in read written_a0_b8 written_a0_b29 written_a25_b8 written_a25_b29 fixed one_clock; do
   python -m event_universe --init examples/events/bell/$w.json --output artifacts/bell363/$w
 done
-python tools/bell_choosers.py artifacts/bell363/read --replay 20
-python tools/bell_choosers.py artifacts/bell363/written_a0_b8 artifacts/bell363/written_a0_b29 \
+python tools/click_readings/bell_choosers.py artifacts/bell363/read --replay 20
+python tools/click_readings/bell_choosers.py artifacts/bell363/written_a0_b8 artifacts/bell363/written_a0_b29 \
     artifacts/bell363/written_a25_b8 artifacts/bell363/written_a25_b29
-python tools/bell_choosers.py artifacts/bell363/fixed
-python tools/bell_choosers.py artifacts/bell363/one_clock
+python tools/click_readings/bell_choosers.py artifacts/bell363/fixed
+python tools/click_readings/bell_choosers.py artifacts/bell363/one_clock
 ```
 
-`tools/bell_choosers.py` (standard library and the engine's own functions
+`tools/click_readings/bell_choosers.py` (standard library and the engine's own functions
 for the replay; `fractions.Fraction`, no float in a criterion) reads the
 offsets off the record (tick - phase mod 64, one value per counter), bins
 the pairs by the window carried on the plus counters' click and pass
