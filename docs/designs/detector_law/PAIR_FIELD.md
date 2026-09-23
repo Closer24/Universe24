@@ -52,18 +52,33 @@ lacks is section 8.
 
 - Generic: one primitive, the six-neighbour rule with a pair per kind; the
   source verb and the reading verb name no family and no kind by physical
-  name (a kind reads the record named in its declaration). PASS.
-- Vector: the source is an add, the reading is an add on the pair's num
-  before the one division; no root, no float, the remainder's line kept.
-  PASS.
+  name (a kind reads the record named in its declaration). Held.
+- Vector: the source is an add (no root, no float, the remainder's line
+  kept). The reading is NOT an add in the rule: the massive step
+  multiplies num by S_6, so with num + d read from the field record the
+  step becomes (num + d) x S_6, a product of two records' integers at the
+  Node, bilinear in the state. Verb (B) is the bilinear form with a
+  DECLARED matrix (ALGEBRA.md 2.2), and no verb of the six multiplies two
+  records. NOT HELD as the law's vector test stands: that product is
+  exactly what the hypothesis asks for, and the honest reason this page
+  is a hypothesis and not the law (Reviewer 3's read of 5ab165ce, 21:12Z).
 - Local: the field at a Node is that Node's own record and its six
   neighbours; a block sources its own cells; a Node reads its own record.
-  No global estimator, no self-field subtraction. PASS.
+  No global estimator, no self-field subtraction. Held.
 - What the hypothesis changes, said plainly: under the law the pair is a
-  declared constant of a kind; under `pair-field-v1` the pair is read from
-  a record at the Node. That is a change of what a pair IS, so it is a
-  hypothesis under its own identity and not the law, until the owner decides
-  otherwise (Highlights 5.4 by his word only).
+  declared constant of a kind and every step is linear in the state; under
+  `pair-field-v1` the pair is read from a record at the Node and the step
+  multiplies two records' integers. That is a change of what a pair IS and
+  of the rule's linearity, so it is a hypothesis under its own identity and
+  not the law, until the owner decides otherwise (Highlights 5.4 by his
+  word only).
+- The self-shift, named: a block reads its own field at its own cells
+  (local, lawful, no subtraction), so every block's rest pitch is lowered
+  by its own source, delta_self = 4 pi kappa (M phi(0) + the neighbours'
+  values at its cells) with phi(0) = 0.2527: the rest pitch that the pins
+  of MASSIVE_RECORD.md section 8 use is moved by kappa on the hypothesis's
+  worlds only; every pin of such a world is computed with the self-shift
+  in, and kappa is named beside it.
 
 ## 4. The four computations (COMPUTATION, `pair_field_pins.py`, 120^3 and 64^3, HOST 117 s)
 
@@ -107,7 +122,7 @@ kind's reduced Compton length is lambda_C = c / omega_0 = 3.87 Links at mu
 0.483, the pitch floored at 0 within two Links of the source; eigsh 107 s)
 the six lowest levels E_n = omega_n - omega_0 are -0.01300, -0.00557,
 -0.00420, -0.00302, -0.00172, -0.00093; the continuum's E_1 = -kappa /
-(2 a_B) = -0.01731 (the lattice's ground level at 0.75 of it: the strong
+(2 a_B) = -0.01731 (the GameBoard's ground level at 0.75 of it: the strong
 coupling and the two floored Links). NOT A LADDER YET: the periodic
 images floor the well at delta(60) = 0.0046 below omega_0, so every level
 above -0.0046 sits at the box's floor, the four levels of hydrogen's n = 2
