@@ -30,9 +30,17 @@ def source_fingerprint() -> str:
     return digest.hexdigest()
 
 
-def run_initialization(initialization: Path, output: Path, *, ticks: int | None = None) -> Path:
+def run_initialization(
+    initialization: Path,
+    output: Path,
+    *,
+    ticks: int | None = None,
+    omit_row_clicks: bool = False,
+) -> Path:
     """Run the world at `initialization` into the empty directory `output` and
-    return the path of its `run.json`; `ticks` overrides the world's own."""
+    return the path of its `run.json`; `ticks` overrides the world's own;
+    `omit_row_clicks` leaves the per-row click lines of the measured events
+    out of the record (`execute_nature_beam_run`), off by default."""
     source = initialization.read_bytes()
     loaded = load_world(source, base_dir=initialization.parent)
     world = loaded.world
@@ -61,6 +69,7 @@ def run_initialization(initialization: Path, output: Path, *, ticks: int | None 
             source_fingerprint(),
             count,
             initialization_record=initialization_record,
+            omit_row_clicks=omit_row_clicks,
         )
 
 
@@ -81,9 +90,20 @@ def main() -> None:
     parser.add_argument("--init", required=True, type=Path, help="The world file (JSON)")
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
+    parser.add_argument(
+        "--omit-row-clicks",
+        action="store_true",
+        help=(
+            "Leave the per-row click lines of the measured events out of events.jsonl "
+            "(a GameBoard diagnostic, most of a long record's bytes) and mark run.json "
+            "omit_row_clicks; off by default, every other line as it is"
+        ),
+    )
     args = parser.parse_args()
     try:
-        artifact = run_initialization(args.init, args.output, ticks=args.ticks)
+        artifact = run_initialization(
+            args.init, args.output, ticks=args.ticks, omit_row_clicks=args.omit_row_clicks
+        )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")
     print(artifact.resolve())
