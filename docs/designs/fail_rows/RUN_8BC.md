@@ -28,7 +28,9 @@ output `run_8bc_readings.out` (STEP 2: the run's record read against the
 pins, section 5); `j2_reemit.json` and `j2_reemit_control.json` (STEP 3a,
 the re-emitter world and its control, validated at load, never run) with
 `run_8bc_reemit_pins.py` and its output `run_8bc_reemit_pins.out` (the
-pins of section 6 from the engine's own tables).
+pins of section 6 from the engine's own tables); `run_8bc_reemit_readings.py`
+and its output `run_8bc_reemit_readings.out` (STEP 3b: the two runs read
+against those pins, section 6.3).
 
 **The kinds of every number** (HIGHLIGHTS 5.4): DETECTOR, a click or a
 record line of a declared detector, the only kind compared with nature or
@@ -508,7 +510,7 @@ x = 4 at t + 7, at x = 8 at t + 14, at x = 9 at t + 15, at x = 190 at t +
 | B2 | the second reader (x = 9): 16 clicks of 1007 arrivals; the ratio second over first 16 / 16 = 1.000 exactly | DETECTOR; the ratio COMPUTATION, nature's about 1 the thing compared with | 1023 births reach x = 9 less the 16 the first reader took; the fresh class j = 59 mod 64: j = 59, ..., 1019, sixteen |
 | B3 | the far detector (x = 190): 683 clicks of the 705 that reach it | DETECTOR | 705 births (1 .. 705) less 11 of the class 46 (j = 46 .. 686) and 11 of the class 59 (j = 59 .. 699); 683 / 705 = 0.9688, the limit 62 / 64 = 0.9688; nature's near-total passage the thing compared with |
 | B4 | the `pass` lines at x = 8 carry `phase - u` = (46 - j) mod 64, the 64 values 16 times each over the 1024 arrivals, the admitted rows those at 0; at x = 9 (59 - j) mod 64 | GAMEBOARD (the row's columns on the reader's line: the class filter visible) | u on those lines the rebirth's, 2 j mod 64; `phase` the running phase, j + 55 + shift(y) |
-| the books | balanced at every tick | GAMEBOARD | the completion's q_F = 1 placed at the re-emitter and the re-released row's content 1 must balance through the `waiting` and `cancelled` lines; if they do not, the world is refused as a reading and the cause reported, not patched |
+| the books | balanced at every tick | GAMEBOARD | the completion's q_F = 1 placed at the re-emitter and the re-released row's content 1 must balance through the `waiting` and `cancelled` lines; if they do not, the world is refused as a reading and the cause reported, not patched. The books are the admissibility gate (the physics-rule reviewer's line (i), 2026-09-23): balanced, the arrangement is a READING under existing keys and the pins are read; unbalanced, the completion of a massive row at a re-emitter is its click and no rebirth carries the quantum on, the world is refused as a reading, reading B is readable by no arrangement under existing keys for a massive row (it stays readable for light, whose pair is (1, 0)), and row 8b's word for the class filter returns to a RULE outside the law |
 
 The control (`j2_reemit_control.json`, the re-emitter without a lamp
 block: u_new = k = j): the path phase behind the re-emitter is 55 +
@@ -536,7 +538,28 @@ completions other than 1031, or a `split` line without `rebirth` (the
 re-emitter not a `sum` set in effect); a `pass` line at x = 8 whose
 `phase - u` is not (46 - j) mod 64 for its birth's j; a birth missing
 among the ticks 1 .. 1038 (the count row's remainder); the books not
-balanced. A FAIL is written as FAIL and the pin stays.
+balanced. A FAIL is written as FAIL and the pin stays. The books are the
+admissibility gate (the reviewer's line (i)): balanced, the arrangement is
+a READING under existing keys and the pins are read; unbalanced, the
+completion of a massive row at a re-emitter is its click and no rebirth
+carries the quantum on, the world is refused as a reading, reading B is
+readable by no arrangement under existing keys for a massive row (it
+stays readable for light, whose pair is (1, 0)), and row 8b's word for
+the class filter returns to a RULE outside the law.
+
+**The row's wording, conditional on the pins met, both halves** (the
+reviewer's line (ii), written before the run): under massive-rows-v1 with
+the nu quantum 1 AND a re-emitter declared between the source and the
+readers (an arrangement of the law, not nature's), the second reader's
+rate over the first's is 1.000 exactly (nature's about 1 the thing
+compared with) and the depth is the filter's: one class of 64 lost at
+each reader with a window, 62 / 64 at the far detector behind two,
+nothing behind 64; the law's filter, not a cross-section; the registered
+J2 (no re-emitter) reads 16 and 0 behind, the row FAIL for the law as
+built; the re-emitter reading beside it a declared arrangement's, not a
+pass against nature. The counts-table rate is the owner's second
+declaration of the compared number; his word on it is pending, and this
+file says so.
 
 **The cost (HOST) and the commands.** About 6 s wall each on one core (the
 world of section 5 took 6.1 s; the same size, one detector set and 1031
@@ -552,6 +575,63 @@ its `pass` lines (DETECTOR), the far detector's `events`, the re-emitter's
 `gather` and `split` lines with their `u` (DETECTOR), the `phase - u` of
 the pass lines (GAMEBOARD), the books; PASS / FAIL per pin B0 to B4 and C1
 to C3, under the declaration `massive-rows-v1` with the `nu` quantum 1.
+
+### 6.3 The readings (STEP 3b, on the Boss's GO of 2026-09-23, 01:3xZ, the reviewer's gate with lines (i) and (ii) above)
+
+The two runs, headless, through the shipped runner (the commands above):
+`j2_reemit` completed, 1038 intervals, 2.42 s the engine's own, 2.9 s wall
+(HOST); `j2_reemit_control` completed, 1038 intervals, 2.50 s, 2.7 s wall;
+source sha256 `5166dbe90169655d`, the worlds' sha256 `26fa288b15be89f6`
+and `de9045f45b79d42e`. Read by `run_8bc_reemit_readings.py` beside this
+file, its output `run_8bc_reemit_readings.out`, against the pins of 6.2 as
+written; no pin moved.
+
+**The books first, the admissibility gate** (GAMEBOARD): balanced at every
+completed tick in both runs (`conserved_at_every_completed_tick` true).
+The reviewer's open point, decided by the run: the completion of a massive
+record at the re-emitter places nothing (every `gather` line chosen
+`reemit` carries `content` 0 and `momentum` [0, 0, 0]; the re-emitter's
+`held` of `nu` is 0 at the end, its own `events` 0), and the rebirth
+carries the quantum on (each `split` line with `rebirth` born 1, the reborn
+row of content 1, which the readers and the far detector then hold: `held`
+16, 16 and 683). One unit where one was born; the arrangement is a READING
+under existing keys and the pins are read.
+
+| pin | as written | read | kind | verdict |
+| --- | --- | --- | --- | --- |
+| the lamp's births | one per interval, 1038 | 1038 `birth` lines over 1038 intervals, none skipped (held K + 1024) | GAMEBOARD | PASS |
+| B0 | the re-emitter: 1031 completions and 1031 rebirths, u the 32 even values | 1031 `gather` lines chosen `reemit`; 1031 `split` lines with `rebirth`, 0 without; the rebirths' u the 32 even values 0, 2, ..., 62 | DETECTOR | PASS |
+| B1 | the first reader (x = 8): 16 clicks of 1024 arrivals, the class j = 46 mod 64 | 16 clicks of 1024 arrivals (`events` [16, 0], 1008 `pass` lines); the clicked rows' u all 28 = 2 x 46 mod 64, the one class | DETECTOR | PASS |
+| B2 | the second reader (x = 9): 16 clicks of 1007 arrivals, the fresh class j = 59 mod 64; the ratio 1.000 | 16 clicks of 1007 arrivals; the clicked rows' u all 54 = 2 x 59 mod 64; the ratio second over first 16 / 16 = 1.000 exactly | DETECTOR; the ratio COMPUTATION | PASS |
+| B3 | the far detector (x = 190): 683 clicks; 705 births reach it within the run (GAMEBOARD) less 22 taken before | 683 clicks of 683 arrivals, 0 passes; the 22 rows the two readers took all among the births 1 .. 705 (their reborn records' ordinals), 705 - 22 = 683; the fraction 683 / 705 = 0.9688 | DETECTOR; the 705 GAMEBOARD | PASS |
+| B4 | the lines at x = 8 carry `phase - u` = (46 - j) mod 64, the 64 values 16 times each, the clicked rows at 0 | the 64 values, 16 rows each over the 1024 lines; the 16 clicked rows all at 0 | GAMEBOARD (the row's columns on the reader's line) | PASS |
+| C1 | the control, the first reader: 0 of 1024 | 0 clicks of 1024 arrivals; `phase - u` = 46 on all 1024 lines (the plane wave, one value) | DETECTOR; the phase GAMEBOARD | PASS |
+| C2 | the control, the second reader: 0 of 1023 | 0 clicks of 1023 arrivals | DETECTOR | PASS |
+| C3 | the control, the far detector: 705 of 705 | 705 clicks of 705 arrivals, 0 passes | DETECTOR | PASS |
+| the control's re-emitter | 1031 completions and rebirths as B0 | 1031 and 1031, the rebirths' u the 64 values 0 .. 63 (the wheel [1, N] as built) | DETECTOR | PASS |
+
+**The falsifiers, checked.** No count other than 16 / 16 / 683 / 1031; the
+two readers at distinct classes (u 28 and 54); no `split` line without
+`rebirth`; every line at x = 8 with `phase - u` = (46 - j) mod 64 (the 64
+values 16 each, the clicked ones 0); no birth missing; the books balanced.
+None tripped.
+
+**The verdict, in the wording written before the run (line (ii)).** Under
+massive-rows-v1 with the nu quantum 1 AND a re-emitter declared between
+the source and the readers (an arrangement of the law, not nature's), the
+second reader's rate over the first's is 1.000 exactly (nature's about 1
+the thing compared with) and the depth is the filter's: one class of 64
+lost at each reader with a window, 62 / 64 at the far detector behind two
+(683 of 705, read), nothing behind 64; the law's filter, not a
+cross-section; the registered J2 (no re-emitter) reads 16 and 0 behind,
+the row FAIL for the law as built; the re-emitter reading beside it a
+declared arrangement's, not a pass against nature. The counts-table rate
+is the owner's second declaration of the compared number; his word on it
+is pending. Row 8b's word after this run: a READING under existing keys
+(this arrangement) beside the DECLARATION, as section 0 states; the
+control confirms that the reading is the two wheels' and not the turn's
+(the same wheel at both gives the plane wave, 0 and 0 and 705). Nothing
+enters the paper from this file.
 
 ## 7. Links
 
