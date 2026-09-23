@@ -104,9 +104,11 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             sources = [measured[n - 1] for n in m["sources"]]
             assert len(sources) == (2 if m["flux"] else 0)
             if moving:
-                assert abs(generator.P.speed(lamp["momentum"][0], lamp["amount"]) - 0.2 * c) < 1e-6
+                # The per-axis drive of history under the world's key.
+                axis = generator.P.AXIS_DRIVE
+                assert abs(generator.P.speed(lamp["momentum"][0], lamp["amount"], axis) - 0.2 * c) < 1e-6
                 for source in sources:
-                    v = generator.P.speed(source["momentum"][0], source["amount"])
+                    v = generator.P.speed(source["momentum"][0], source["amount"], axis)
                     assert abs(v - 0.2 * c / (1 + m["k"])) < 1e-6, (member, v)
             else:
                 assert lamp["fixed"] and all(s["fixed"] for s in sources)

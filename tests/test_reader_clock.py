@@ -70,10 +70,12 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
         for body in crowds:
             assert body["amount"] == generator.flux(k_r if body["position"][0] == 10 else k_s) * 65536
         if moving:
-            assert abs(generator.P.speed(source["momentum"][0], source["amount"]) - 0.2 * c) < 1e-6
+            # The per-axis drive of history under the world's key.
+            axis = generator.P.AXIS_DRIVE
+            assert abs(generator.P.speed(source["momentum"][0], source["amount"], axis) - 0.2 * c) < 1e-6
             for body in crowds:
                 if body["position"][0] == 70:
-                    v = generator.P.speed(body["momentum"][0], body["amount"])
+                    v = generator.P.speed(body["momentum"][0], body["amount"], axis)
                     assert abs(v - 0.1 * c) < 1e-6
         else:
             assert source["fixed"]

@@ -94,7 +94,11 @@ def member(x: int, k: float, moving: bool) -> tuple[Json, list[Json]]:
         "table": {"mass": {"rule": "pass"}, "s_px1": {"rule": "pass"}},
     }
     if moving:
-        lamp["momentum"] = [P.momentum(v, P.LIGHT), 0, 0]
+        # The per-axis drive of history: `cluster_moving` is kept under the
+        # world key `per_axis_drive` (refused at load under the law's line
+        # drive, its wall Q^2 S M = 2^62 one past the bound; DEFAULT.md (b)),
+        # so its momenta are the per-axis rule's, as shipped.
+        lamp["momentum"] = [P.momentum(v, P.LIGHT, P.AXIS_DRIVE), 0, 0]
     else:
         lamp["fixed"] = True
     sources: list[Json] = []
@@ -114,7 +118,7 @@ def member(x: int, k: float, moving: bool) -> tuple[Json, list[Json]]:
             if moving:
                 # The crowd slowed alike, emulated: the sources at the
                 # lamp's speed on the GameBoard, v / (1 + k).
-                source["momentum"] = [P.momentum(v / (1 + k), amount), 0, 0]
+                source["momentum"] = [P.momentum(v / (1 + k), amount, P.AXIS_DRIVE), 0, 0]
             else:
                 source["fixed"] = True
             sources.append(source)

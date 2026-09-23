@@ -105,7 +105,11 @@ def lamp(x: int, reader: bool, moving: bool) -> Json:
         },
     }
     if moving:
-        body["momentum"] = [P.momentum(SPEED_OVER_C * C, P.LIGHT), 0, 0]
+        # The per-axis drive of history: `alike_receding` is kept under the
+        # world key `per_axis_drive` (refused at load under the law's line
+        # drive, its wall Q^2 S M = 2^62 one past the bound; DEFAULT.md (b)),
+        # so its momenta are the per-axis rule's, as shipped.
+        body["momentum"] = [P.momentum(SPEED_OVER_C * C, P.LIGHT, P.AXIS_DRIVE), 0, 0]
     else:
         body["fixed"] = True
     return body
@@ -130,7 +134,7 @@ def crowd(x: int, k: float, moving: bool) -> list[Json]:
         if moving:
             # the crowd slowed alike, emulated (series V): the sources at
             # the waiting lamp's pace v / (1 + k)
-            source["momentum"] = [P.momentum(SPEED_OVER_C * C / (1 + k), amount), 0, 0]
+            source["momentum"] = [P.momentum(SPEED_OVER_C * C / (1 + k), amount, P.AXIS_DRIVE), 0, 0]
         else:
             source["fixed"] = True
         out.append(source)
