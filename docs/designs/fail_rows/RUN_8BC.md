@@ -23,7 +23,9 @@ Base commit `e404baa1` (`origin/main`, "Merge pull request #965"). The files
 beside this one: `j2_massive.json` (the world, section 2, validated by the
 configuration validator at load, never run), `run_8bc_pins.py` and its
 output `run_8bc_pins.out` (the pins of section 3 computed from the engine's
-own tables of the loaded world, no run).
+own tables of the loaded world, no run); `run_8bc_readings.py` and its
+output `run_8bc_readings.out` (STEP 2: the run's record read against the
+pins, section 5).
 
 **The kinds of every number** (HIGHLIGHTS 5.4): DETECTOR, a click or a
 record line of a declared detector, the only kind compared with nature or
@@ -316,11 +318,78 @@ lines (GAMEBOARD, the diagnostic of pin A5); the far detector's `events`;
 script beside this file is written in STEP 2 and its output committed with
 the readings.
 
-## 5. The readings (STEP 2, after the Boss's GO)
+## 5. The readings (STEP 2, on the Boss's GO of 2026-09-23, the reviewer's gate)
 
-Not run. This section is written by the run's step, PASS / FAIL against the
-pins A of section 3, under the declaration `massive-rows-v1` with the `nu`
-quantum 1, every number by kind; nothing enters the paper from this file.
+The run of `j2_massive.json` as declared in section 2, headless, through
+the shipped runner (the command of section 4): status completed, 1038
+intervals, the engine's own elapsed 4.02 s and 6.1 s wall on one core
+(HOST); source sha256 `5166dbe90169655d`, world sha256 `ad26eddd321fc3d6`
+(`run.json`; the run's folder under `artifacts/` expires by the retention
+policy, the readings are kept here). Read by `run_8bc_readings.py` beside
+this file, its output `run_8bc_readings.out`, against the pins A1 to A5 of
+section 3 as written before the run; no pin is moved, a differing integer
+is a FAIL, its cause named beside it. The declaration under which every
+number is read: `massive-rows-v1` with the `nu` quantum 1 at p = 220, h =
+1024 (the run's `hypotheses`: `amplitude-v1`, `massive-rows-v1`, and
+`bohr-v1` carried by the world key `action` as the record writes it).
+
+| pin | as written | read | kind | verdict |
+| --- | --- | --- | --- | --- |
+| A1 | the first reader (x = 8): 0 clicks of 1024 arrivals | 0 clicks of 1023 arrivals (1023 `pass` lines, `events` [0, 0]) | DETECTOR | the clicks PASS; the arrivals FAIL by one |
+| A2 | the second reader (x = 9): 0 clicks of 1023 arrivals; the ratio 0 / 0 | 0 clicks of 1022 arrivals; the ratio 0 / 0, undefined | DETECTOR; the ratio COMPUTATION | the clicks PASS; the arrivals FAIL by one |
+| A3 | the reader at x = 14: 1014 clicks of 1014 arrivals, the whole beam that reaches it | 1013 clicks of 1013 arrivals, 0 passes: the whole beam that reaches it, every record completed there (1013 `gather` lines, every `chosen` at (14, 0, 0); the reader's `held` [1013, 1], q_F = 1 per completion) | DETECTOR | the whole beam PASS; the integer FAIL by one |
+| A4 | every other reader 0; the far detector 0 | no click at any of the other 125 readers; the far detector (x = 190) 0 clicks, 0 passes | DETECTOR | PASS |
+| A5 | the `pass` lines at x = 8 carry `phase - u` = 46, at x = 9 59; 16 rows per u value at x = 8 | `phase - u` = 46 on all 1023 lines at x = 8, 59 on all 1022 at x = 9; at x = 8 the 64 u values with 15 or 16 rows each (the class of the missing birth 15); the `click` lines at x = 14 `phase - u` = 0 on all 1013, the age 24 on every one, the 64 u values with 15 or 16 rows each: every class taken, no class filter | GAMEBOARD (the row's columns on the reader's line) | PASS |
+| the books | balanced at every tick | `conserved_at_every_completed_tick` true over 1038 intervals | GAMEBOARD | PASS |
+
+**The cause of the one-birth deficit, named and confirmed** (COMPUTATION;
+no pin moved). The lamp's `birth` lines: 1037 records at the ticks 1 and 3
+to 1038, none at the tick 2. The lamp's count row (`measured.py` :429,
+`Count("turn", "content", ...)`: the accumulator gains the held content
+each interval against the wall K = 2^30, the count taken, the remainder
+kept) replayed by `by_drive_rows` in `run_8bc_readings.py`: at the tick 1
+the accumulator gains 2^30, the count 1, the remainder 0, and the birth
+spends one unit; at the tick 2 it gains 2^30 - 1, below the wall by one,
+the count 0; from the tick 3 the remainder 2^30 - 1 carries every later
+count to 1 (the deficit t^2 / (2 K) of section 2 stays below 1 through
+the tick 1038). Section 2's arithmetic took the lag as a running sum and
+missed that the very first count has no remainder to carry: the births are
+1, 3 .. 1038, so the arrivals at x = 8 are the births 1, 3 .. 1024, 1023 of
+them, at x = 9 the births 1, 3 .. 1023, 1022, and at x = 14 the births 1,
+3 .. 1014, 1013, exactly as read. This is a rule of the lamp's count that
+the chain of section 1 step 3 (the lamp's count, GAMEBOARD) forgot, not a
+rule of the row: the turn per Link (A5, the `phase - u` of every line),
+the all-or-nothing gate at the Node of the whole turn (A3's "whole beam",
+A4) and the far detector are as the algebra of the path phase gave them.
+A run whose lamp held K + 1 at the start would birth at every interval and
+read 1024 / 1023 / 1014; that world is not run here, since no pin moves
+after a run.
+
+**The falsifiers of section 3, checked.** A click at x = 8 or 9: none. The
+reader at x = 14 reading fewer than 1014: 1013, tripped by one, the cause
+above (a class filter would have taken 16 rows of one u value; the reader
+took 15 or 16 of every one of the 64). A click at any other reader: none.
+The far detector above 0: 0. The books not balanced: balanced. A `pass`
+line at x = 8 whose `phase - u` is not 46: none. The rows in transit at the
+end: 24, at x = 0 .. 13, the births that had not reached x = 14 by the last
+interval (GAMEBOARD, `state.json`).
+
+**The verdict of the run.** Against the pins as written: A1 FAIL, A2 FAIL,
+A3 FAIL (each by the one missing birth of the tick 2), A4 PASS, A5 PASS,
+the books PASS. Against the chain of section 1: the window reads the turned
+phase less u, exactly as traced (the `phase - u` of every line the reader
+wrote, 46, 59 and 0, are floor(55 x / 4) mod 64 at x = 8, 9 and 14), and
+the reader at the Node of a whole turn takes the whole beam: the first click
+reading of a massive row's turn per Link, the beat at h / p = 256 / 55 =
+4.65 Links, confirmed at x = 14. Against nature (row 8b, two detectors in
+line reading the same rate, about 1): the first and the second reader read
+0 and 0 and the reader at x = 14 everything, so the row stays FAIL under
+the declaration `massive-rows-v1` with the `nu` quantum 1, in the form
+section 0 states, by the law's design of the path phase (BEAM_LAW stage
+(vii) step 2); the row's word is a READING under existing keys (the
+re-emitter arrangement of section 3, STEP 3 if ordered) beside the
+DECLARATION. Row 8c is unchanged by the run: a computation (section 3),
+the input no longer 0. Nothing enters the paper from this file.
 
 ## 6. Links
 
