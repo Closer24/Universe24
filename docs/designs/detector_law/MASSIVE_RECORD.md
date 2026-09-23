@@ -8,8 +8,8 @@ and the gate of this design is Reviewer 3's `PUSH_BALANCE.md`
 (docs/designs/detector_law/ on `push-balance-r3`, PR #1043): its sections 10
 and 11 at 6d7a03b5, 60509e9a and d9227352, its section 12 at bb43ef41 and
 f5752667, its 12.5 at 198a9bfe and its 12.6 at f089736f, and its 12.7 (his gate of
-7022428c, AGREED WITH SIX MUSTS, the Boss's relay of 14:33Z; on
-`push-balance-r3`, PR #1043, its SHA cited when it lands); cited by those
+7022428c, AGREED WITH SIX MUSTS, at 03a2ba665b6df033ee5d14452ff96a4a6bb6b1a8
+on `push-balance-r3`, PR #1043); cited by those
 SHAs, never rewritten. The six MUSTs are folded below (sections 1, 4, 7, 9,
 10, 13 and `massive_c_derivation.py`). Every number here is a COMPUTATION from the rule, written
 before the board runs it, and printed by a script beside this document (the
@@ -456,15 +456,15 @@ written for the record and the algebra file), and it needs NO SINK: the verbs ar
 passes on, and the click is the crossing. The whole detector law of today
 (the two slits, Malus, Bell) reads so.
 
-**POSTULATES.md section 10, two readings, decided by the owner.**
-POSTULATES 10 says "the record ends at the detector". Reading (a): it
-stands BESIDE the click above as the statement of the worlds that absorb
-(a screen that must not re-emit, a sponge), where the sink of section 7 is
-declared, and a detector that lets light pass (a window with a clock) is
-lawful too, its click the crossing alone. Reading (b): it is AMENDED to
-"the record is read at the detector, and ends there only where a sink is
-declared". Both are stated; nothing is decided here; the Boss asks the
-owner.
+**POSTULATES.md section 10, settled by the owner's word** (14:33Z, record
+1421: "all the postulates must be changed so that they agree with the
+algebra; what does not agree there is settled by the algebra"). The
+postulate follows the algebra: a record is READ at a detector by E in the
+detector's own clock (the click), and a light record ENDS only where a take
+is declared (the absorbing worlds of section 7; a clock body takes nothing).
+POSTULATES.md section 10 is being rewritten to this on the branch
+`postulates-by-algebra` (the whole file brought to ALGEBRA.md, Reviewer 3
+gating); this design cites the record and does not edit the postulate.
 
 ## 7. The coupling between the two record kinds: the dielectric, one declared g with G
 
@@ -644,6 +644,8 @@ prediction:
 | (g) the block at rest | its self-click its own mode, N_b(pair, s), no return and no timer; decaying in tau (section 7) unless re-excited; the clock sentence of DESIGN.md section 8 not needed for it | exact to the residual |
 | the index block | n from g, G, the pair and omega: n^2 = 1 + G g / (omega_0^2 - omega^2); the Fresnel step ((n - 1) / (n + 1))^2; the chain's 1.034, 1.083, 1.159 against 1.043, 1.104, 1.200 | the chain's 0.8 to 3.4 percent below the closed form at s = 12 (the faces' steps) |
 | the rest cavity (form (I)) | section 4's table: 0.2417 at s = 12 on a cube; the quadrature with the pair | the lattice's residual |
+| NATURE, the two-pace world (the owner's word of about 14:50Z: the two predictions checked against nature BEFORE any build) | the design predicts a massive record's limiting pace c_m = c sqrt(cos omega_0), the deficit omega_0^2 / 4 in c; nature bounds a massive particle's limiting pace against light's at about 10^-15 (electrons, the Crab's synchrotron) to 10^-23 (protons, no vacuum Cherenkov in cosmic rays; Coleman and Glashow 1999 and later), so the law in this form REQUIRES omega_0 < 10^-7, N_0 > 10^8 intervals; with the interval at the Planck scale the electron's omega_0 is about 10^-22 and the deficit 10^-44: not refuted, not measurable, a consistency requirement; the board's N_0 = 50 is a coarse world and its 0.4 percent is the lattice's, never compared with nature | NATURE (the sources to be verified before the row is pinned); CONVERSION for the interval |
+| NATURE, the band's second term | the design predicts a BOUND object's clock in motion reads (1 / gamma_m)(1 - eps (gamma_m^2 - 1) / 2), eps its binding depth; a free massive packet has eps = 0 (the muon, row 4a, exactly 1 / gamma_m). Under the HYPOTHESIS that a real clock's eps is its binding energy over its rest energy (not derived in this design, whose objects are declared cubes): an electronic transition of a stored ion (Ives and Stilwell with Li+ at 0.34 c, Botermann and others 2014, the deviation bounded at about 2 x 10^-9) has eps about 10^-9, the predicted deviation about 10^-10, below the bound; a nuclear transition on a rotor (the Moessbauer rotor, Kuendig 1963, Fe-57) has eps about 0.9 percent and the design predicts the shift 1 + eps times Einstein's, 1.009, against the measured ratio 1.0065 +- 0.011: consistent, at the edge of the precision, the one place nature can decide with a sharper rotor | NATURE (the sources and numbers to be verified before the row is pinned; the eps mapping a named hypothesis) |
 | the board's faces | an object nearer a non-periodic face than its mode's extent reads a raised clock (the tail cut, the cavity's creeping in); the margin rule of section 11 a load-time check, the faces periodic by default for the massive record; no pin of the object | the extent from the pair and the side (COMPUTATION); the faces a DECLARATION |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
 | 12, 13 | not derived in this design (the coupling gives an index at declared cells, nothing about a crowd's field); 2.00 and 1 + gamma_PPN stay under the ray law's history | as registered |
@@ -694,7 +696,9 @@ board's two-block world reads it.
    clock creeps in); a PERIODIC face wraps the tail onto the object's
    other side (a periodic image, small once the board exceeds a few
    extents); an OPEN board does not exist on the lattice (every world has
-   faces: declared walls, sponges or periodic). So the owner's reading is
+   faces: declared walls, sponges or periodic); PERIODIC is the algebra's
+   own (the torus of ALGEBRA.md 1.6), and a wall or a sponge at a face is a
+   declared deviation per world (the owner's word of record 1421). So the owner's reading is
    right: an object at the edge is not held as itself. THE MARGIN RULE, a
    load-time check like MUST I's floor: the object's cells at least one
    extent from any non-periodic face, and the board's side per axis at
