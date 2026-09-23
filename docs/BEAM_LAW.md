@@ -2293,7 +2293,17 @@ implementation's part of the contract. The design above is unchanged.
     `k_deflection.py`; the identity `meeting-v1`; `events/meeting.py`;
     `tests/test_meeting.py` (a) to (e); series K re-registered under the
     key in EXPERIMENTS.md and VALIDATION.md). The rule is section 3 step 3
-    as written. What the implementation decided where the design was
+    as written. **Since 2026-09-22 the paid unit's reading of the free crowd
+    is the law's default in the momentum form, not this note's: the
+    generic entry of the bending (`optical_turn`, verbs 2 and 3 of the
+    law's own; the time part in the flight wall, the space part the turn
+    along the momentum's line, gamma the declared input and 0 by default)
+    acts on every row with content in free space of every world, no key;
+    meeting-v1 under the key `meeting` is the earlier phase-register form
+    of the same reading, off by default, declared by the five lensing
+    worlds of 2026-09-20 only, history (the model owner's word of
+    2026-09-23 through the chief physicist, as his: it enters generically
+    as the default).** What the implementation decided where the design was
     silent, and what it found: (i) **The module and the two call sites.**
     The arc permutation (built once per direction table from the flight
     table's unit vectors and cached per target, forward and inverse), the
