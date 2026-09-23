@@ -2351,10 +2351,8 @@ head, an integer comparison and no root at run time); (iv) its motion
 the characters (omega, **k**) of 8.1's surface; (v) its momentum the
 existing **p** in Z^3 and its step the existing verb (T), one integer
 per axis for the whole block with its remainder, a declared tie, and
-its push the stress of light's field at its outer Ports (MASSIVE_RECORD.md
-section 5, by reference: the block's momentum, step and push stay
-stated there and are not restated here); (vi) its click the evaluation
-across R (8.6). The whole difference between light and a foreign object
+its push the stress of light's field at its outer Ports (8.11); (vi)
+its click the evaluation across R (8.6). The whole difference between light and a foreign object
 in the algebra is a gap. The cells' declaration is lawful world data, a
 scalar on Nodes on which the 48 act trivially, carried by the step verb
 like a wall's placement; nothing is declared in motion (the mode's
@@ -2807,12 +2805,19 @@ SCHEDULE.md's list; DECLARATIONS.md):**
    BOUND: the stored Li+ clock 2.2 x 10^-11 against its bound 2.3 x
    10^-9; the rotor 0.26 sigma; the eps mapping, a real clock's binding
    energy over its rest energy, a named hypothesis and not derived).
-3. The index in motion: the moving block's lab delay 0.50 of the
-   covariant slab's head-on at K = 3 and 6.8 times it from behind, under
-   the same-Node coupling with the drive's pair (8.5); falsified on the
-   world by a reading off +- 0.04 rad; against nature the DECLARED
-   NON-MATCH with Fizeau's drag (first order in beta at large K, not
-   computed), a prediction doing its job, written before the run.
+3. The index in motion: the moving block's lab delay head-on at K = 3
+   is 0.50 of the covariant slab's under the same-Node coupling with the
+   drive's pair (8.5; the design's script number +0.5103 rad, the
+   falsifier +- 0.04 rad); the receding number is the script's on the
+   DECLARED geometry of MASSIVE_RECORD.md section 11 item 6 (the chain
+   of 4000 with light's open faces as the engine has them and the
+   reading window [3400, 4800], closed before the face's reflection
+   reaches the probe), computed at pin time before the run, and not the
+   periodic-wrap chain's 6.8 times the covariant value (a number of the
+   script's own wrapped geometry, section 7, read against no open
+   face); against nature the DECLARED NON-MATCH with Fizeau's drag
+   (first order in beta at large K, not computed), a prediction doing
+   its job, written before the run.
 4. The hop's parametric pump: a block stepping at K = 3 through light
    feeds the mode k = 2 pi / 3 at omega = pi / 3 through its boundary
    cell, 10^-4 of light's energy per interval (8.5); falsified by no
@@ -2822,10 +2827,10 @@ SCHEDULE.md's list; DECLARATIONS.md):**
 5. Five's 1 and 1 from arms held by light alone: the force between two
    blocks through light is 2 A^2 cos(k_0 L) toward the partner, its
    equilibria the zeros of cos(k_0 L), L = (2 m + 1) lambda_0 / 4,
-   alternately stable and unstable by the clocks' relative phase (CARRIED:
-   MASSIVE_RECORD.md section 10, Reviewer 3's closed form; A the
-   emitters' amplitude set by g and G, k_0 the mode's wave number,
-   lambda_0 its wavelength, m whole); falsified in the two-arm world by
+   alternately stable and unstable by the clocks' relative phase (8.11,
+   the force between two blocks through light; A the emitters'
+   amplitude set by g and G, k_0 the mode's wave number, lambda_0 its
+   wavelength, m whole); falsified in the two-arm world by
    N_par / N_perp off 1 beyond 0.03 plus the second term.
 6. The atom's lines at the modes' own frequencies, not at their
    difference (a linear scalar coupling: an atom a well of the pair, its
@@ -2868,6 +2873,8 @@ from another) (SCHEDULE.md, NOT PREDICTED and NOT COMPARED).
 | the take (8.6) | a declaration of the absorbing world | (D) or the take's pair | the object's own cells | a declaration, no identity |
 | the seed (8.7) | a declaration of the initial state | none | none | the standing start PROVED HERE |
 | the direction of time (8.8) | the same rule | (D) with the ceiling, a declared variant | the same reads | the bijection CARRIED (the design's proof), its inverse exact |
+| the block's momentum, step and push (8.11) | one primitive, the stress at the outer Ports and one comparison, the declared integers Q, S, M and the take's scale 56 d; the tie declared per block | (G) the stresses summed into the block's vector, (D) with the remainder kept, (T) the step, then comparisons | the block's own outer Ports and the free Nodes beyond them; per block under the declared tie | the cadence and the bound PROVED HERE as identities of the accumulator; the stress as the wave's momentum flux CARRIED, a declaration of the design and not of the law |
+| the force between two blocks through light (8.11) | the same push read on two blocks | the same verbs | the same | the closed form CARRIED (Reviewer 3's, the continuum's coupled emitters); on the lattice COMPUTED, NOT PROVED |
 
 The design's scripts, each printing its record beside
 MASSIVE_RECORD.md and none an engine run: `massive_c_derivation.py`
@@ -2883,10 +2890,142 @@ and every board would need; what the design does not compute it says
 (section 12 of the design: Fizeau's drag, the click's completion under
 the take, the threshold under a light-shaped well, g against any nature
 row, form (C) beyond its name), and this chapter does not fill it. The
-block's momentum, step and push (MASSIVE_RECORD.md section 5) and the
-force between two blocks through light (its section 10) stay stated in
-the design and enter this chapter only by reference (8.3 (v) and 8.9's
-row 5). Where this chapter and a design page differ in a letter or a
+block's momentum, step and push and the force between two blocks
+through light are 8.11. Where this chapter and a design page differ in a letter or a
 factor, the design's integer lines are in force and this chapter says
 where it differs (8.2, the read sum's weight); no rule, no number and no
 reading is new here.
+
+### 8.11 The block's momentum, step and push, and the force between two blocks through light
+
+**Where the momentum lives (CARRIED: MASSIVE_RECORD.md section 5;
+DESIGN.md 5.1 (a), a declaration of the design and not of the law).**
+One integer per axis for the whole block, **P** = (P_x, P_y, P_z) in Z^3
+with a remainder per axis, the existing momentum of a body (chapter
+1.2's row, 2.1's drive), on the block and nowhere else; changed by
+nothing but light's field at the block's own outer Ports. Per block one
+integer for many cells is not one cell's reading, so the block's
+momentum is a DECLARED TIE (Reviewer 3's C11): per cell the same rule is
+local and lawful, one integer per cell pushed by the stress at its own
+Ports; the block declares that its cells share one. The block's own
+massive record is the block: the massive kind's rows do not push (a
+self-force excluded), and a massive-to-massive force between blocks is
+not in the law; the force between blocks is through light (below).
+
+**The step (CARRIED; the cadence PROVED HERE as an identity of the
+accumulator).** Per interval the accumulator of the axis i gains
+abs(P_i) against the wall 3 Q S M x 56 d (Q the label's scale, S the
+width and M the block's content, the head's letters; 56 d the take's
+pair scale, which enters only with light's push, the engine keeping the
+wall at 3 Q S M until the push step and rescaling the world files' P in
+the same commit, the builder's answer accepted in section 5 (e)); when
+the accumulator reaches the wall the block steps one Link along the
+axis in the sign of P_i and the wall is subtracted, the remainder kept
+on the block as the rule keeps r: verb (T) then (D), the count of 2.6.
+The cadence is the accumulator's closed form of 4.1: after t intervals
+the Links stepped on the axis are floor((A_0 + t abs(P_i)) / (3 Q S M
+x 56 d)), A_0 the accumulator's start, so the pace is v_i = P_i / (3 Q S
+M x 56 d) Links per interval exactly in the mean, one Link every K =
+(3 Q S M x 56 d) // abs(P_i) intervals with the remainder kept, and the
+declared step of a world is its initial P_i = 3 Q S M v_0 x 56 d; the
+rest energy E'_0 = Q S M and the momentum 3 Q S M v = E'_0 v / c^2 with
+c^2 = 1 / 3, the head's units. What steps: the block's CELLS and its
+pair region, one Link together by verb (T); the massive record's rows
+STAY on their Nodes and follow the moving well by the rule of 8.1 (a
+carried record would be a hop of the record, not the design; 8.4's
+formula is the stepped well's); the coupling's first differences stay
+the same-Node differences of 8.5 on every interval, and G g is carried
+as [K^2, K^2 - 3] (8.1, 8.5). The bound (PROVED HERE, one line): abs(**v**)
+< c is the integer comparison 3 (**P** . **P**) < (3 Q S M x 56
+d)^2, since abs(**v**)^2 = **P** . **P** / (3 Q S M x 56 d)^2 and c^2 =
+1 / 3; no root; checked at the initial **P** and at every change, a
+change that would cross it the WORLD'S STOP with a diagnostic naming the
+click and the block, never a clamp (a per-axis "K >= 2" is its one-axis
+shadow and not the bound: three axes at K = 2 give abs(**v**) = 0.866
+Links per interval, beta_c = 1.5; DESIGN.md 1.2 (c)); the record's own
+bound is c_m (8.1), tighter than c by the deficit, and the pin worlds
+step at K = 3 and 4, well inside both. MUST I's floor, lambda_0 (1 -
+beta_c) >= 12 Links with beta_c = sqrt 3 abs(**P**) / (3 Q S M x 56 d),
+is the second load-time check, at the initial **P** and at every change
+(Highlights 5.4, the owner's word of record 1363: not every N may be
+declared).
+
+**The push (CARRIED: MASSIVE_RECORD.md section 5 (a) to (d); DESIGN.md
+5.1 (a)).** (a) Which records push: the stress of the LIGHT kind's total
+field (all light records superposed, the block's own emission included:
+its recoil kept, physics and not a defect) at the free Node beyond each
+OUTER Port of the block (a Port from a cell of R to a Node not in R; 6
+s^2 on a cube). (b) The integer: at the free Node beyond a Port of the
+axis i the stress T_ii = 3 (motion)^2 + (the strain along i)^2 in the
+rule's own differences, the terms of the conserved form (DESIGN.md 2.1:
+the motion a Node's change in one interval, the strain the difference
+across the Link), an integer (times 4 as the pins script computes it);
+P_i changes by T_ii at the Ports behind less T_ii at the Ports ahead,
+summed over the block's outer Ports of the axis i (verb (G) into the
+block's vector), then (D) against the wall 3 Q S M x 56 d with the
+remainder kept, then the comparisons above: what the wave loses at the
+block the block gains; no new integer, no new verb. That T_ii is the
+wave's momentum flux is the design's identification, a declaration of
+the design (DESIGN.md 5.1 (a): "a declaration of the design, not of
+the law"), stated here as such and not proved: a proof would take the
+rule's conserved form on a travelling character and show its Port
+balance equals the change of **P** per interval to the remainders'
+grain. The click form first written, h times the wave number per click,
+is withdrawn as the push and kept as the READING: the clicks read the
+momentum the block has, they do not make it. (c) The ramp and the push
+together: `ramp` stays the pushing agent's declaration for the pin
+worlds (the design's chain device); in the two-arm world the momentum
+changes by (b) alone, the arms held at the equilibrium below and no
+ramp; a world declares one of the two, never both on one block. (d) The
+reading: the stress sum per interval per block is a GAMEBOARD reading
+(the force, against the closed form below); the block's pace is read by
+its clicks (the count between clicks on its own record and the Nodes of
+its clicks, DETECTOR; 3.2, 8.7). The three tests: generic, one
+primitive, the stress at the six Ports and one comparison, with the
+declared integers Q, S, M and the take's scale 56 d, no family name and
+no kind; vector, (G) the stresses summed into the block's vector, (D)
+the one division with the remainder kept, (T) the step, then
+comparisons, no root and no float; local, the block's own outer Ports
+and the free Nodes beyond them, nothing further; per block local under
+the declared tie, per cell local outright. All three held (DESIGN.md
+5.1 (a); MASSIVE_RECORD.md section 12's row "the block's momentum and
+step").
+
+**The force between two blocks through light (CARRIED: MASSIVE_RECORD.md
+section 10; Reviewer 3's closed form in
+[designs/detector_law/PUSH_BALANCE.md](designs/detector_law/PUSH_BALANCE.md)
+section 10.1, the coupled-oscillator force between two emitters at
+their own frequency, a COMPUTATION on a chain in floats).** Two blocks
+of the design at L Links face to face, each emitting at its mode
+through 8.5's source term and each pushed by the total field's stress
+at its outer Ports: the force on block 1 is 2 A^2 cos(k_0 L) toward
+the partner, A the emitters' amplitude set by g and G, k_0 the mode's
+wave number and lambda_0 = 2 pi / k_0 its wavelength in Links (with
+each block's own recoil beside it, the closed forms F_1 = (k_b^2 -
+k_f^2) T_0 + 2 k_b^2 T_0 cos(k_b k_0 L - delta) and F_2 = (k_b^2 -
+k_f^2) T_0 - 2 k_f^2 T_0 cos(k_f k_0 L + delta) at the pace beta_c, k_f
+= 1 / (1 - beta_c), k_b = 1 / (1 + beta_c), T_0 one emitter's
+travelling-wave stress at rest and delta the declared relative phase;
+at rest F_2 - F_1 = -4 T_0 cos(k_0 L) cos delta). Its EQUILIBRIA are
+the zeros of cos(k_0 L), L = (2 m + 1) lambda_0 / 4, m whole,
+alternately stable and unstable by the clocks' relative phase (in phase
+stable at (m' + 3 / 4) lambda_0, 88 Links at lambda_0 = 32; antiphase
+at (m' + 1 / 4) lambda_0, 72; COMPUTATION), NOT L = m lambda_0 / 2,
+which are the force's extrema: L_0 = 80 = 5 lambda_0 / 2 is the
+maximal repulsion and never an equilibrium (Reviewer 3's MUST (i)). In
+motion the stable point continued from the rest point by a slow ramp
+is L* = L_0 (1 - beta_c) for a pair of emitters at the lattice-time
+frequency, and L_0 / gamma_m for the covariant pair (PUSH_BALANCE.md
+10.2, COMPUTATION); the two-arm world of 8.9's row 5 holds its arms at
+this equilibrium by light's force alone and no rigid rod, prediction 5.
+On the lattice the closed form is COMPUTED, NOT PROVED (the chain
+within 3 percent at rest at every L from 72 to 92 and in sign and
+spacing at K = 3, `check_pair_motion.py` in Reviewer 3's scratchpad; a
+proof for every N and every board would take the stress of the
+superposition of the two blocks' travelling trains at the Ports from
+the rule's differences on a character and compute the cross term
+exactly, with the counter-propagating pair's cross term vanishing under
+c^2 = 1 / 3 as the design states, 3 omega_1 omega_2 - k_1 k_2 = 0). A
+consequence of the algebra written before any board run; the board's
+two-block world reads it; the force is the push of light at the Ports
+and nothing beside it (no 1 / r form: 8.9's rows not reached).
