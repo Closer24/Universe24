@@ -6256,3 +6256,50 @@ corrections (the chain's cut now starts at the first heading):
   a second, duplicate entry of my own was then removed in favour of the
   existing one).
 58 pages, 92 references (NUMBERS.md).
+
+## Applied (2026-09-23, the Boss's order of 01:05Z, step 2, commit 5): the failures by cause, in three classes; the runs' verdicts as merged only
+
+- Section 7.1 gains, after "The prediction, and the failures", the
+  paragraph "The failures by cause" and Table 7: every row of the
+  register's table and the four pinned rows in three classes (the
+  measured passes and the bounds; the passes under a declaration
+  named, counted apart; the failures, each with its cause), the cause
+  in the algebra's words (WHAT_IS_MISSING.md's four words READING,
+  DECLARATION, RULE, NOTHING, and its modes A to G, cited at its merge
+  c66de871), and the step of Section 3 the earlier reading broke
+  (modes A and C step (4), B, D and E step (3), F and G step (1); a
+  rule absent at the step where it would act). The honest count in the
+  paragraph: three measured passes and three bounds; four under a
+  declaration named (4b, 4a, 13, 8c); eleven FAIL with their cause,
+  eight in the table and three by their pins.
+- The runs' verdicts as merged only: RUN_4AB.md at 0a7b5db2 (PR #977,
+  merged 01:15Z) for rows 4b and 4a; RUN_8BC.md at 907f339d for rows
+  8b and 8c; three new references. No pin moved; no verdict of the
+  law's row changed: 4b, 8b, 13, 14 stay FAIL as the law's.
+- Row 2a's verdict word: "BOUND MET (a bound, not a match)", the
+  Boss's word of 01:05Z under the caption's own criterion (a visibility
+  above the apparatus-limited measurement, the one row 2b passes by),
+  with the two caveats (the biprism's figure read at its source's
+  abstract, the body unread; a central fringe's visibility against the
+  pattern's) and the Mach-Zehnder numbers kept. The file RUN_13_2A is
+  not on main; the ground is the Boss's word and the caption's
+  criterion, as reported. The tally follows in its four places (the
+  abstract, unchanged at 249 words; the caption; Section 4's "What is
+  proved"; the checks' paragraph) and 2a leaves the FAIL list of "The
+  prediction, and the failures".
+- Row 13's cell: under the declaration gamma_PPN = 1 the coefficient
+  a declared input equal to nature's, read within the fan's comb and
+  never within the grain, a pass in form and not a pass against
+  nature; row 14's cell "read under the declaration of the weight
+  rule". The weight rule stated once, in the paragraph: the pair
+  declared as gamma_PPN > 0's rule, at gamma_PPN = 0 a body weighs M
+  (the owner's decision B, record 1150, cited at the log); the options
+  A, B, C are not in the paper.
+- Row 4b's cell cites the merged run (the click read over the
+  detector's own count; the two one-way factors read on the k-ladder);
+  row 8b's cell carries the merged run's verdict (FAIL by the law's
+  design of the path phase, the beat 4.65 Links read at a click for
+  the first time).
+61 pages, 95 references (NUMBERS.md). Step 2's five commits are done;
+not touched: the cuts and the length (the owner's word). The
+physics-rule reviewer's full read follows, per the Boss's order.
