@@ -69,6 +69,8 @@ class Board:
         self.remainder = np.zeros((width, height), dtype=np.int64)
         self.absorbing = np.zeros((width, height), dtype=bool)
 
+    damped: np.ndarray | None = None  # the Nodes of a lossy body (a wall that takes the offer), or None
+
     def step(self) -> None:
         a = self.now
         total = np.zeros_like(a)
@@ -82,6 +84,10 @@ class Board:
         nxt = np.floor_divide(total, 3)
         self.remainder = total - 3 * nxt
         nxt[self.absorbing] = 0
+        if self.damped is not None:
+            # The lossy body: a Node of the wall keeps three quarters of what it would emit (the
+            # rest is the offer it books), the Euclidean division by 4 with the remainder dropped.
+            nxt[self.damped] = np.floor_divide(3 * nxt[self.damped], 4)
         self.before = a
         self.now = nxt
 
@@ -174,7 +180,7 @@ def section_a(period: float) -> None:
         )
 
 
-def section_b(wavelength: float, w0: int, train: int) -> dict:
+def section_b(wavelength: float, w0: int, train: int, wall: str = "zero") -> dict:
     scale = wavelength / REGISTERED_LAMBDA
     w = max(1, int(round(w0 * scale)))
     distance = int(round(108 * scale))
@@ -191,7 +197,20 @@ def section_b(wavelength: float, w0: int, train: int) -> dict:
     width = 4 + distance + margin
     board = Board(width, height + 2 * margin)
     wall_x = 2
-    board.absorbing[wall_x, :] = True
+    depth = 6 if wall == "lossy" else 1
+    if wall == "lossy":
+        # The wall a lossy body of `depth` Nodes on the source's side of the opening's line,
+        # the opening's line itself free: the wave through the opening meets no Node of amplitude 0.
+        board = Board(width + depth, height + 2 * margin)
+        board.damped = np.zeros_like(board.absorbing)
+        board.damped[wall_x : wall_x + depth, :] = True
+        wall_x = wall_x + depth
+        board.damped[
+            wall_x - depth : wall_x, margin + centre - w // 2 : margin + centre - w // 2 + w
+        ] = False
+        board.absorbing[wall_x - depth : wall_x, :] = False
+    else:
+        board.absorbing[wall_x, :] = True
     opening = [(wall_x, margin + centre - w // 2 + i) for i in range(w)]
     board.absorbing[wall_x, [y for _, y in opening]] = False
     screen_x = wall_x + distance
@@ -216,7 +235,8 @@ def section_b(wavelength: float, w0: int, train: int) -> dict:
     band, tol, pilot_exact = BANDS[w0]
     inside = abs(product - band) <= tol
     print(
-        f"\nB. THE SINGLE OPENING w0 = {w0} scaled by {scale:.3f}: w = {w} Nodes, L = {distance} Links, lambda = {wavelength:.3f} Links"
+        f"\nB. THE SINGLE OPENING w0 = {w0} scaled by {scale:.3f}, the wall {wall} (zero: a reflecting wall of amplitude 0;"
+        f" lossy: a body of {depth} Nodes losing a quarter per interval): w = {w} Nodes, L = {distance} Links, lambda = {wavelength:.3f} Links"
         f" (T = {period:.3f} intervals), the Fresnel number {fresnel:.3f}, the train {train} intervals, the screen {height} pixels,"
         f" {end} intervals, {time.time() - t0:.1f} s HOST"
     )
@@ -381,6 +401,7 @@ def main() -> None:
         section_a(wavelength / C)
         for w0 in (27, 9):
             section_b(wavelength, w0, train)
+        section_b(wavelength, 9, train, wall="lossy")
         section_c(wavelength, train)
         section_d(wavelength)
 

@@ -339,10 +339,9 @@ record is its rows' count (section 7).
 6.0 **What the script is and assumes.** The rule of section 2 on a 2D
 z-periodic board in int64 with the remainder kept, exactly the engine's
 integers; the source a line of Nodes driven by the record's clock for a
-train of 32 periods (the coherence, a lamp's declaration); the wall's
-Nodes hold amplitude 0 (a Node that clicks takes the amplitude: in the
-script that is a reflecting wall, in the engine an absorbing one; the
-difference is the first computation still to make, 6.1); the reading at
+train of 32 periods (the coherence, a lamp's declaration); the wall
+either of Nodes holding amplitude 0 (reflecting) or a lossy body of six
+Nodes (a wall that takes the offer), both computed in 6.1; the reading at
 the screen the accumulated offer per pixel over the window from the
 train's first arrival until the train has passed the farthest pixel, with
 the far edges beyond that window's light cone (nothing reflected enters
@@ -369,14 +368,25 @@ the OBLIQUITY sum as lambda grows, which is what a wave through a hard
 screen does; 22.2's band 0.886 +- 0.03: inside at 12 Links, at its edge
 at 16, OUTSIDE at 24 (0.842, below the refuting bound 0.85). The pin as
 declared: the rule's far-field bell must read inside 22.2's band with
-the ENGINE's wall (a wall that clicks absorbs the amplitude; an
-absorbing screen carries Kirchhoff's obliquity (1 + cos theta) / 2, whose
-sum at this geometry lies between 0.842 and 0.872), a computation the
-script does not yet make (its wall reflects): the first thing to compute
-before the build, named, not promised; if the absorbing wall also reads
-below 0.856, the far-field single slit is a MISS of the rule against
-22.2 and the design returns here. The pixel-to-pixel roughness near the
-peak 0.02 to 0.001: a bell, no speckle (the coin's 0.8 to 1.0).
+the ENGINE's wall (a wall that clicks takes the amplitude). Computed,
+the same run (the script's `wall = "lossy"`: the wall a body of 6 Nodes
+on the source's side losing a quarter of its amplitude per interval, the
+opening's line free, no Node of amplitude 0 beside the wave): 0.857,
+0.830, 0.814 at lambda = 12, 16, 24, LOWER than the reflecting wall's
+and further from the band. So, as the pin stands, the far-field single
+slit at w = 2 lambda is a MISS of the rule: 22.2's 0.886 is the far
+field's sinc constant for isotropic emitters (RUN_10.md, "nature's
+0.886"), and a wave through an opening two wavelengths wide, in any
+screen the rule can hold, carries an obliquity that narrows the bell by
+4 to 8 percent. What the design says about it, plainly: either the pin
+at w = 2 lambda is re-declared against a measurement of a slit that
+narrow (the sinc is Fraunhofer's approximation, not a datum) or against
+the wave's own obliquity sum (0.842), and then the rule reads inside; or
+the owner keeps 22.2's band as the pin, and then the rule fails row 10's
+far-field half and the design returns here. The near-field half (the
+Fresnel number 1.45) is inside the band with either wall. The
+pixel-to-pixel roughness near the peak 0.02 to 0.001: a bell, no speckle
+(the coin's 0.8 to 1.0).
 
 6.2 **The two slits** (row 2a; the registered 0.966 in the clicks at
 the fan's grain; nature's 0.98, Grangier, Roger and Aspect 1986 as the
@@ -539,15 +549,16 @@ against RUN_AUDIT.md. The owner reads sections 0, 1, 5 and 8 first.
    clock, E = h f = p c by the rule's own dispersion), the script's
    residue.
 4. The pins, computed: the single opening at the Fresnel number 1.45
-   inside 22.2's band at 12, 16 and 24 Links; at 0.16 the rule converges
-   on the hard screen's obliquity and misses the band at 24 Links, the
-   engine's absorbing wall the first computation still to make; the two
-   slits at 0.958 by the train's coherence, 0.98 reachable by the train;
-   the detector at rest 206.0 by the first-rung click at every
-   wavelength, the pin's number.
+   inside 22.2's band at 12, 16 and 24 Links; at 0.16 (w = 2 lambda) the
+   rule reads the wave's obliquity, 0.842 with a reflecting wall and
+   0.814 to 0.857 with a lossy one, below 22.2's sinc band: a MISS as the
+   pin stands, or a pin to re-declare against a measurement or the
+   wave's own sum, the owner's call; the two slits at 0.958 by the
+   train's coherence, 0.98 reachable by the train; the detector at rest
+   206.0 by the first-rung click at every wavelength, the pin's number.
 5. The price: the wavelength 12 Links or more, the light worlds scaled
    by 2.6 or more in length, hours per world, a train declared on the
    lamp.
 6. Nothing built; the build on the owner's GO after Reviewer 3's gate
-   and after 6.1's absorbing wall reads inside the band; the massive
-   form folds in as section 8.
+   and after his word on the far-field pin of 6.1; the massive form
+   folds in as section 8.
