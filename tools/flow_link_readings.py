@@ -51,8 +51,8 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from event_universe.world_loading import world_of_run
 from event_universe.trimmed_record import refuse_trimmed_record
+from event_universe.world_loading import world_of_run
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTATIONS = ROOT / "examples" / "events" / "flow_link" / "expectations.json"

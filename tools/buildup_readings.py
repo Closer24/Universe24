@@ -59,8 +59,8 @@ from event_universe.core.integer import by_clock
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import FIRST, coherent_pointer
-from event_universe.world_loading import world_of_run
 from event_universe.trimmed_record import refuse_trimmed_record
+from event_universe.world_loading import world_of_run
 
 # The spread readings of A10 (the moving mean, the half width, the rms)
 # are the sibling tool's, read from it and not copied.

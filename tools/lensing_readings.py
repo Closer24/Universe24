@@ -99,8 +99,8 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, REST_DIRECTIONS
-from event_universe.world_loading import world_of_run
 from event_universe.trimmed_record import refuse_trimmed_record
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-lensing-"
 MODEL_SUFFIX = "-space-v1"

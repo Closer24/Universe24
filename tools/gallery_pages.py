@@ -53,8 +53,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 from event_universe.events import NatureBeamSimulation
 from event_universe.runner import run_initialization, source_fingerprint
-from event_universe.world_loading import load_world
 from event_universe.trimmed_record import refuse_trimmed_record
+from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events"

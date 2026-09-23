@@ -45,8 +45,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from event_universe.world_loading import world_of_run  # noqa: E402
 from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+from event_universe.world_loading import world_of_run  # noqa: E402
 
 N = 64
 PAIRS = 128

@@ -95,8 +95,8 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.events.nature_beam import direction_flight
-from event_universe.world_loading import world_of_run
 from event_universe.trimmed_record import refuse_trimmed_record
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "beam-weak-"
 MODEL_SUFFIX = "-v1"
