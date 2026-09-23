@@ -337,3 +337,85 @@ algebra script to print them before the build, never after); form (I)'s
 exact eigenvalue at general s and pair beyond the quadrature; kappa
 against any nature row (rows 12 and 13 need the crowd's amounts, a world
 to declare).
+
+## 13. Where the board stopped, and how a foreign object connects to it, in the algebra
+
+The owner's word (13:25Z, to the chief physicist): nothing is run; we
+continue from where the board stopped, which is the OUTSIDE, at the foreign
+object; check exactly how the foreign object connects to the board,
+algebraically, and derive it to the board from there.
+
+**Where the board stopped.** The Inside is built and checked: the
+six-neighbour rule on the free Nodes (the splitting ray, the amplitudes
+held, the pace c, the bells and the two slits by the pins script; the
+chain's click in the build at f4a3971a). The Outside is where it stopped:
+the foreign object (the lamp that inserts, the receiver that clicks, the
+wall, the polariser) was carried in the build by declared forms (the
+lamp's train, the Port's take, the grace) and not by the law. This
+document replaces those forms by the massive record kind; this section
+states the connection itself, verb by verb, so that the engine derives it
+and does not declare it.
+
+**The connection: four verbs at the object's cells, and no other.** A
+foreign object is its cells R (section 1) carrying its massive record; a
+light record reaching a cell of R meets the object through exactly these:
+
+| What the object does | The verb, in ALGEBRA.md's terms | The declared integer | The three tests | Covariant |
+| --- | --- | --- | --- | --- |
+| INSERTS light and RECEIVES light (the lamp, the detector: the same thing) | (B) the bilinear form with a declared matrix, chapter 2.2: at a cell the two records' rows are coupled by the matrix **C** = [[0, g], [g, 0]]: light's row gains g times the massive row's amplitude per interval (the insert: the object's own oscillation at omega_0 drives light at its cells, a lamp at the object's rest frequency, no train declared), and the massive row gains g times light's amplitude (the receive: light arriving drives the object's record). One declared pair g, the same both ways (the law's coupling matrix, symmetric). | g = [g_n, g_d] | generic (one matrix form, no family name; light and the object values); vector (B with a declared matrix, linear in the other record's row); local (the cell's own two records) | yes: a linear coupling of two scalar records |
+| SCATTERS, REFLECTS, BINDS (the index, the mirror's limit, the wall, the air; the force between two objects) | (T) with the one-wall pair, section 7: light's pace at the cell lowered by the massive record's AMOUNT there, and the massive record's by light's; the pair [d^2, (d + f n A)^2], A the other's amount | kappa = f n | as section 7 | yes: through a scalar amount |
+| CLICKS (the reading in the Outside) | (E) the evaluation, chapter 2.5: the object's record is one element of Z[Z_N] across R; the click when the received light's motion, summed across the object's cells into its pointer, crosses the declared rung of the declared wheel W (the counting form, DESIGN.md section 5); the click line with the object's own count (its mode's cycles) and the light record's birth stamp | W, the sensitivity | as DESIGN.md section 5 | the reading, after the last group operation, as the reading rule says |
+| MOVES (the step; the momentum) | (T) the drive with the accumulator and the remainder, chapter 2.1; the momentum changed by the stress of the total field at the object's outer Ports, section 5 (the bilinear form of the field's differences, chapter 2.2) | Q S M x 56 d | as section 5 | yes: the stress the field's own |
+
+Nothing else connects the object to the board: no declared train, no
+grace, no fan, no one-way take, no timer, no clock sentence for the
+object (its clock is its mode, section 4 (III)); the receiver forms of
+DESIGN.md section 5 (the mirror, the sponge, the Port's take) become
+values of these verbs (the mirror the limit of the index; the sponge the
+damping the receive's g gives when the object's mode is broad; the take
+not needed), to be shown as such when the engine carries them.
+
+**What the algebra then gives for the Outside's readings, derived before
+the board runs** (each a consequence of the four verbs; the closed forms
+Reviewer 3's section 10 and 11 where they exceed this document):
+
+- The insert: an object at rest oscillating in its mode at omega_0 drives
+  light at its cells at omega_0 with the amplitude g times its mode's;
+  light leaves at lambda_0 = 2 pi c / omega_0 (the object's rest
+  wavelength; the register's lamp declared no clock: here the clock is
+  the mode); the power the coupling's, a COMPUTATION from g and the mode.
+- The receive: light of the object's own frequency arriving at its cells
+  drives its mode resonantly (the resonance Reviewer 3 asked for, now
+  the object's own, not declared); light of another frequency drives it
+  off resonance, less, by the mode's response; the click's rate per
+  arriving motion is this response, a COMPUTATION from g and omega_0; a
+  detector "reads" what resonates with it, and the counting form's rung
+  is crossed by the object's received motion across its cells.
+- The light clock at rest on two objects: A's mode drives light, light
+  reaches B at L / c, B's mode is driven and drives light back, A's mode
+  receives at 2 L / c plus the modes' response lags (two lags of the
+  order of the mode's own period over the coupling's strength, a
+  COMPUTATION from g): N_0 = 2 L / c + 2 tau_g, tau_g from g; the
+  register's 206 at L = 60 with the massless lamp's hard onset is the
+  limit of a stiff coupling (tau_g small against the period).
+- The light clock in motion: section 8, derived: 1 and 1 in the objects'
+  own counts, gamma_m N_0 in the lattice's intervals.
+- The polariser and the tables: the second member of the re-emission
+  table (a phase on the wheel) is now the object's mode's phase relative
+  to the arriving light's, set by the mode's response (the resonance's
+  quadrature), a COMPUTATION; Malus and Bell as consequences of the
+  coupling's phase, to be derived in Reviewer 3's section 11 or a section
+  of this document before any run, never found.
+
+**What the engine implements, from this section, in order**: (1) the two
+record kinds with the pair (section 1); (2) at the object's cells the
+coupling matrix **C** (verb B with g) and the one-wall pair with the
+other's amount (verb T with kappa); (3) the click across the cells at W;
+(4) the momentum from the stress and the step; (5) the worlds in section
+11's order, the two-object light clock at rest first (N_0 = 2 L / c + 2
+tau_g against the derivation, the modes' frequencies against section 4);
+the board checks, the algebra leads. The bound state of section 4 (III)
+that gives the object its extent is the one derivation still to be
+written before (5); until it is, (1) to (4) are built against the rest
+worlds with form (I)'s declared walls as the check of the confined mode,
+never against a moving world.
