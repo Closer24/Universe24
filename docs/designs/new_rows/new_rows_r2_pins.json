@@ -1,0 +1,220 @@
+{
+  "format": "new-rows-r2-pins-v1",
+  "worlds_validated_at_load": {
+    "sagnac2_k3": "beam-new-rows-sagnac2-k3-v1",
+    "sagnac2_k5": "beam-new-rows-sagnac2-k5-v1",
+    "sagnac2_k9": "beam-new-rows-sagnac2-k9-v1",
+    "sagnac2_k17": "beam-new-rows-sagnac2-k17-v1"
+  },
+  "held_mass": "kept as registered (the cart's M = 4194304 + 8192, K = 4202496); the mass rows a class of their own (amount 64, a crowd slot, never a single), colliding with nothing of content 1",
+  "R2": {
+    "sagnac2_k3": {
+      "k": 3,
+      "momentum": 141012366262272,
+      "pace_links_per_interval": "1/3",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/96",
+        "value": 0.5729166666666666
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_at_the_cart": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "39435/151",
+          "value": 261.158940397351
+        },
+        "plus_x_at_E": {
+          "form": "(L - 1) / (c - v)",
+          "exact": "39435/41",
+          "value": 961.829268292683
+        },
+        "ordinals_with_both_returns_inside_the_run": 538
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_+ from E's clock (its click of the cart's +x pulse, the record the cart's ordinal), n_- from the cart's clock (its click of E's -x pulse, the record E's ordinal), n_0 the common birth count (the birth stamp once branch birth-stamp lands); the two clocks one by construction (both counts the age, suspension 0), checked on the stamps; the mean over the window",
+        "pin": {
+          "exact": "55/96",
+          "value": 0.5729166666666666
+        },
+        "beta": {
+          "exact": "55/96",
+          "value": 0.5729166666666666
+        },
+        "pin_less_beta": 0.0,
+        "reads": "v / c exactly, r-free, no arrangement constant (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "151/32",
+          "value": 4.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "151/32",
+          "value": 4.71875
+        },
+        "on_the_ratio": 0.007716754693905583,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at each direct click, over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k5": {
+      "k": 5,
+      "momentum": 70506183131136,
+      "pace_links_per_interval": "1/5",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "11/32",
+        "value": 0.34375
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_at_the_cart": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "13145/43",
+          "value": 305.69767441860466
+        },
+        "plus_x_at_E": {
+          "form": "(L - 1) / (c - v)",
+          "exact": "13145/21",
+          "value": 625.952380952381
+        },
+        "ordinals_with_both_returns_inside_the_run": 874
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_+ from E's clock (its click of the cart's +x pulse, the record the cart's ordinal), n_- from the cart's clock (its click of E's -x pulse, the record E's ordinal), n_0 the common birth count (the birth stamp once branch birth-stamp lands); the two clocks one by construction (both counts the age, suspension 0), checked on the stamps; the mean over the window",
+        "pin": {
+          "exact": "11/32",
+          "value": 0.34375
+        },
+        "beta": {
+          "exact": "11/32",
+          "value": 0.34375
+        },
+        "pin_less_beta": 0.0,
+        "reads": "v / c exactly, r-free, no arrangement constant (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "215/32",
+          "value": 6.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "215/32",
+          "value": 6.71875
+        },
+        "on_the_ratio": 0.014423334086154432,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at each direct click, over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k9": {
+      "k": 9,
+      "momentum": 35253091565568,
+      "pace_links_per_interval": "1/9",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/288",
+        "value": 0.1909722222222222
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_at_the_cart": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "118305/343",
+          "value": 344.91253644314867
+        },
+        "plus_x_at_E": {
+          "form": "(L - 1) / (c - v)",
+          "exact": "118305/233",
+          "value": 507.74678111587986
+        },
+        "ordinals_with_both_returns_inside_the_run": 992
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_+ from E's clock (its click of the cart's +x pulse, the record the cart's ordinal), n_- from the cart's clock (its click of E's -x pulse, the record E's ordinal), n_0 the common birth count (the birth stamp once branch birth-stamp lands); the two clocks one by construction (both counts the age, suspension 0), checked on the stamps; the mean over the window",
+        "pin": {
+          "exact": "55/288",
+          "value": 0.1909722222222222
+        },
+        "beta": {
+          "exact": "55/288",
+          "value": 0.1909722222222222
+        },
+        "pin_less_beta": 0.0,
+        "reads": "v / c exactly, r-free, no arrangement constant (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "343/32",
+          "value": 10.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "343/32",
+          "value": 10.71875
+        },
+        "on_the_ratio": 0.025141928972723517,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at each direct click, over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    },
+    "sagnac2_k17": {
+      "k": 17,
+      "momentum": 17626545782784,
+      "pace_links_per_interval": "1/17",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/544",
+        "value": 0.10110294117647059
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
+        "minus_x_at_the_cart": {
+          "form": "(L - 1) / (c + v)",
+          "exact": "223465/599",
+          "value": 373.0634390651085
+        },
+        "plus_x_at_E": {
+          "form": "(L - 1) / (c - v)",
+          "exact": "223465/489",
+          "value": 456.9836400817996
+        },
+        "ordinals_with_both_returns_inside_the_run": 1043
+      },
+      "ratio": {
+        "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count 60: n_+ from E's clock (its click of the cart's +x pulse, the record the cart's ordinal), n_- from the cart's clock (its click of E's -x pulse, the record E's ordinal), n_0 the common birth count (the birth stamp once branch birth-stamp lands); the two clocks one by construction (both counts the age, suspension 0), checked on the stamps; the mean over the window",
+        "pin": {
+          "exact": "55/544",
+          "value": 0.10110294117647059
+        },
+        "beta": {
+          "exact": "55/544",
+          "value": 0.10110294117647059
+        },
+        "pin_less_beta": 0.0,
+        "reads": "v / c exactly, r-free, no arrangement constant (ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_minus_end_counts": {
+          "exact": "599/32",
+          "value": 18.71875
+        },
+        "remainder_plus_end_counts": {
+          "exact": "599/32",
+          "value": 18.71875
+        },
+        "on_the_ratio": 0.04510286336827651,
+        "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at each direct click, over the sum of the two returns (RUN_4AB 6.3)"
+      }
+    }
+  }
+}
