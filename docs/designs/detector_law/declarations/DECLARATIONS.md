@@ -287,6 +287,18 @@ section 1's phase reading.
 
 The descent, HOST and the day: as section 5; three worlds, seconds each.
 
+## The reader of record of every clock row, declared once (2026-09-23, 20:05Z)
+
+The clicks at W on the block's own record (the cells' sum as built, the
+window the hold after the ramp) are the reader of record of every row
+that reads a clock; the spectral peak of the summed record is a GAMEBOARD
+diagnostic beside, never the pin. A pin world's seed is the bound mode's
+shape from the margin module at load, as integers at the world's
+amplitude on the radius s / 2 + 2 / kappa, the same at both levels (a
+declaration of kind 2); a row whose clicks beat is a diagnostic until they
+read the mode (MASSIVE_RECORD.md section 11 item 7). Section 4 above (row
+4b) reads B's clicks so.
+
 ## What the engine lacks for these six, in one list (for the builder, on the Boss's word)
 
 - The phase reading of a record at a table Node from (a_before, a_now)

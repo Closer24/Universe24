@@ -1180,7 +1180,21 @@ board's two-block world reads it.
    The (i-a) and (i-b) worlds keep the flat seed (their modes sit inside
    the cells, the clicks read to 0.03 percent). The world keys: `seed`
    with the value `"mode"` in place of an integer, admitted only under
-   `margin`, the profile printed at load (GAMEBOARD).
+   `margin`, the profile printed at load (GAMEBOARD). THE FOUR LINES OF
+   THE DECLARATION (Reviewer 3's line of 19:55Z through the Boss, agreed;
+   the same seed he proposes, the margin module's Lanczos vector written
+   as integers at the world's amplitude): (1) the reader of record of
+   every pin row is the CLICKS at W on the block's own record; (2) the
+   seed is the bound mode's shape from the margin module at load, as
+   integers at the world's amplitude, on the radius s / 2 + 2 / kappa, the
+   same at both levels; (3) the click's record is the block's cells' SUM
+   as built (BUILD.md section 10 (c)), the centre cell's clicks a
+   diagnostic beside (less exposed to the medium's modes at the edges);
+   (4) the window is the hold, after the ramp. THE RULE: a row whose
+   clicks still beat (the ramp radiates into the medium in motion) is a
+   DIAGNOSTIC until they read the mode; the pin world then takes a longer
+   ramp (adiabaticity) before the run, and the spectral peak never
+   stands in for the clicks. The same for the 3-D rows.
    THE FIVE CUTS (the owner's approval of the physicist's five lines,
    the Boss's word of 17:10Z, yes to all with one condition): (1) ONE
    MASS for the first table, mu = 0.15; the mu = 0.05 worlds deferred to
