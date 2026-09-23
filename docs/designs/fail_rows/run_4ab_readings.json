@@ -1,0 +1,644 @@
+{
+ "format": "fail-rows-run-4ab-readings-v1",
+ "pins": "run_4ab_pins.json",
+ "runs": {
+  "cart_k3_key": {
+   "model": "beam-fail-rows-cart-k3-key-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 600,
+   "elapsed_seconds": 3.0093893060000028,
+   "hypotheses": [
+    "amplitude-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "58682d3f363a0deeed8f9fdb99715ef848b683e319de9769a14d26267fdaf873",
+   "audit_sha256": "4ef7e9561d1a67e926308f99fc6b49fd5a90f7b45148171cd1dfafefb47df5ff",
+   "events_sha256": "d2c06350babf2d6cb3cb07b659628de888d7eaf308d4faf53280d5a590898701",
+   "readings": {
+    "k_AB": {
+     "value": 2.1734104046242773,
+     "window": 376,
+     "band": 0.005319148936170213,
+     "pin": 2.157494254460831,
+     "verdict": "FAIL",
+     "counts_off": 2.7534939782761967,
+     "ordinals": 173.00000000000003,
+     "remainder_per_end": 3.2992528765381373,
+     "band_v2": 0.011560693641618495,
+     "verdict_v2": "FAIL"
+    },
+    "k_BA": {
+     "value": 2.1781376518218623,
+     "window": 538,
+     "band": 0.0037174721189591076,
+     "pin": 2.182250654953033,
+     "verdict": "FAIL",
+     "counts_off": -1.0159117733991252,
+     "ordinals": 247.0,
+     "remainder_per_end": 3.041625654953033,
+     "band_v2": 0.008097165991902834,
+     "verdict_v2": "PASS"
+    },
+    "ratio_k_BA_over_k_AB": {
+     "value": 1.002175036609527,
+     "pin": 1.0114746078424153,
+     "band": 0.005319148936170213,
+     "verdict": "FAIL",
+     "against_1": true
+    },
+    "round_trip": {
+     "value": 4.774193548387097,
+     "window": 296,
+     "band": 0.006756756756756757,
+     "pin": 4.708193249854554,
+     "verdict": "FAIL",
+     "counts_off": 4.0920185090176915,
+     "ordinals": 62.0,
+     "remainder_per_end": 6.3544346994257355,
+     "band_v2": 0.06451612903225806,
+     "verdict_v2": "FAIL"
+    },
+    "lamp_ordinal_gaps": {
+     "1": 173
+    },
+    "least_step": {
+     "changes": {
+      "0": 34,
+      "1": 91,
+      "2": 47,
+      "3": 1
+     },
+     "per_count": true
+    }
+   },
+   "gameboard": {
+    "steps": 219,
+    "gaps": {
+     "2": 77,
+     "3": 141
+    },
+    "energy_lines": 580,
+    "owed": 1
+   }
+  },
+  "cart_k3_law": {
+   "model": "beam-fail-rows-cart-k3-law-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 600,
+   "elapsed_seconds": 3.0938989710000016,
+   "hypotheses": [
+    "amplitude-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "a562d65c0923d297d4c13400f3cf60764536dbd34f30d9a332dc70e313b38f7f",
+   "audit_sha256": "5badef661813120dab6fd8364d466b77bec3812cecd79c39caa83437dc54bb11",
+   "events_sha256": "6275dae47c9790d5d84943cf58c344ae3aa5dbd4a2472d4d3af03ceb4320ca46",
+   "readings": {
+    "k_AB": {
+     "value": 2.349557522123894,
+     "window": 531,
+     "band": 0.003766478342749529,
+     "pin": 2.341463414634146,
+     "verdict": "FAIL",
+     "counts_off": 1.8292682926829684,
+     "ordinals": 226.0,
+     "remainder_per_end": 4.71875,
+     "band_v2": 0.008849557522123894,
+     "verdict_v2": "PASS"
+    },
+    "k_BA": {
+     "value": 1.5714285714285714,
+     "window": 539,
+     "band": 0.0037105751391465678,
+     "pin": 1.5729166666666667,
+     "verdict": "PASS",
+     "counts_off": -0.5104166666667425,
+     "ordinals": 343.0,
+     "remainder_per_end": 2.71875,
+     "band_v2": 0.0058309037900874635,
+     "verdict_v2": "PASS"
+    },
+    "ratio_k_BA_over_k_AB": {
+     "value": 0.6688189400053807,
+     "pin": 0.6717664930555556,
+     "band": 0.003766478342749529,
+     "verdict": "PASS",
+     "against_1": false
+    },
+    "round_trip": {
+     "value": 3.7083333333333335,
+     "window": 445,
+     "band": 0.0044943820224719105,
+     "pin": 3.682926829268293,
+     "verdict": "FAIL",
+     "counts_off": 3.0487804878048337,
+     "ordinals": 120.0,
+     "remainder_per_end": 8.4375,
+     "band_v2": 0.03333333333333333,
+     "verdict_v2": "PASS"
+    },
+    "lamp_ordinal_gaps": {
+     "1": 226
+    },
+    "least_step": {
+     "changes": {
+      "0": 49,
+      "1": 177
+     },
+     "per_count": true
+    }
+   },
+   "gameboard": {
+    "steps": 200,
+    "gaps": {
+     "3": 199
+    },
+    "energy_lines": 0,
+    "owed": 0
+   }
+  },
+  "cart_k5_key": {
+   "model": "beam-fail-rows-cart-k5-key-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 600,
+   "elapsed_seconds": 2.934482299999999,
+   "hypotheses": [
+    "amplitude-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "8d55dafdffb5cad30d2432c7549d272044a70dab537aea26cab52daee2d68958",
+   "audit_sha256": "9dc38152f0e3b2d2b92caffb8d3154ec07007c8a34fb8dbdcd83b15bbb9df387",
+   "events_sha256": "b3c7fe89042b180fbce294b98a15b443d1ce8c02522603cca7a723a7050623f0",
+   "readings": {
+    "k_AB": {
+     "value": 1.5092592592592593,
+     "window": 489,
+     "band": 0.00408997955010225,
+     "pin": 1.5150660402275344,
+     "verdict": "FAIL",
+     "counts_off": -1.8813970337211572,
+     "ordinals": 324.0,
+     "remainder_per_end": 5.57723317167393,
+     "band_v2": 0.006172839506172839,
+     "verdict_v2": "PASS"
+    },
+    "k_BA": {
+     "value": 1.5154929577464789,
+     "window": 538,
+     "band": 0.0037174721189591076,
+     "pin": 1.5194122349774395,
+     "verdict": "FAIL",
+     "counts_off": -1.3913434169910488,
+     "ordinals": 355.0,
+     "remainder_per_end": 2.8084747349774393,
+     "band_v2": 0.005633802816901409,
+     "verdict_v2": "PASS"
+    },
+    "ratio_k_BA_over_k_AB": {
+     "value": 1.0041303032921456,
+     "pin": 1.0028686503654007,
+     "band": 0.00408997955010225,
+     "verdict": "PASS",
+     "against_1": false
+    },
+    "round_trip": {
+     "value": 2.3076923076923075,
+     "window": 450,
+     "band": 0.0044444444444444444,
+     "pin": 2.302009878320537,
+     "verdict": "FAIL",
+     "counts_off": 1.1080737274951957,
+     "ordinals": 195.00000000000003,
+     "remainder_per_end": 9.072129279594511,
+     "band_v2": 0.02051282051282051,
+     "verdict_v2": "PASS"
+    },
+    "lamp_ordinal_gaps": {
+     "1": 334
+    },
+    "least_step": {
+     "changes": {
+      "0": 208,
+      "1": 126
+     },
+     "per_count": true
+    }
+   },
+   "gameboard": {
+    "steps": 137,
+    "gaps": {
+     "4": 87,
+     "5": 49
+    },
+    "energy_lines": 600,
+    "owed": 1
+   }
+  },
+  "cart_k5_law": {
+   "model": "beam-fail-rows-cart-k5-law-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 600,
+   "elapsed_seconds": 3.205641127000007,
+   "hypotheses": [
+    "amplitude-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "9650eccc6c816e9c0a2776cc2af3ff5d9f19b69531aa03b470845c2ba858c956",
+   "audit_sha256": "8c6a7b045d1aeb6e39a5f1445fa7e7ad108faeb250a8b638a2dadfa53ef56ea8",
+   "events_sha256": "9f2dcf1c6aa033fcab669acc0cf447b1351fb145fe163db973fee40f96c59493",
+   "readings": {
+    "k_AB": {
+     "value": 1.5197740112994351,
+     "window": 538,
+     "band": 0.0037174721189591076,
+     "pin": 1.5238095238095237,
+     "verdict": "FAIL",
+     "counts_off": -1.4285714285714448,
+     "ordinals": 354.0,
+     "remainder_per_end": 6.71875,
+     "band_v2": 0.005649717514124294,
+     "verdict_v2": "PASS"
+    },
+    "k_BA": {
+     "value": 1.3432835820895523,
+     "window": 540,
+     "band": 0.003703703703703704,
+     "pin": 1.34375,
+     "verdict": "PASS",
+     "counts_off": -0.1874999999998863,
+     "ordinals": 401.99999999999994,
+     "remainder_per_end": 2.71875,
+     "band_v2": 0.0049751243781094535,
+     "verdict_v2": "PASS"
+    },
+    "ratio_k_BA_over_k_AB": {
+     "value": 0.8838706097763969,
+     "pin": 0.8818359375,
+     "band": 0.0037174721189591076,
+     "verdict": "PASS",
+     "against_1": false
+    },
+    "round_trip": {
+     "value": 2.053719008264463,
+     "window": 497,
+     "band": 0.004024144869215292,
+     "pin": 2.0476190476190474,
+     "verdict": "FAIL",
+     "counts_off": 1.4761904761905953,
+     "ordinals": 241.99999999999997,
+     "remainder_per_end": 10.4375,
+     "band_v2": 0.01652892561983471,
+     "verdict_v2": "PASS"
+    },
+    "lamp_ordinal_gaps": {
+     "1": 364
+    },
+    "least_step": {
+     "changes": {
+      "0": 253,
+      "1": 111
+     },
+     "per_count": true
+    }
+   },
+   "gameboard": {
+    "steps": 120,
+    "gaps": {
+     "5": 119
+    },
+    "energy_lines": 0,
+    "owed": 0
+   }
+  },
+  "coasting_none_covariant_stamp": {
+   "model": "rays-hubble-stars-record-covariant-none-space-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 400,
+   "elapsed_seconds": 49.107850766,
+   "hypotheses": [
+    "amplitude-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "f6ffd2cb8cb42b26f58cb563df4d96236b624d6e72e20a1472262c982b262d3f",
+   "audit_sha256": "9f8d91e1b85d22dae9fb6fdd6d4bd27708bc2e63e0e94c5980d0bea5454c7da5",
+   "events_sha256": "1904134239ce16cecec673173611a86b38dd6b2273539bef6bab6aa88a346424",
+   "readings": {
+    "stamped_lines": 13564,
+    "differing": 0,
+    "ticks_with_click": 394,
+    "verdict": "PASS"
+   },
+   "gameboard": {
+    "steps": 1733,
+    "gaps": {
+     "0": 1339,
+     "1": 389,
+     "2": 4
+    },
+    "energy_lines": 9567,
+    "owed": 1
+   }
+  },
+  "j4_muon_12856_key": {
+   "model": "beam-fail-rows-j4-muon-12856-key-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.4682217530000088,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "5a41f64a59787bc68aff47b7f7001d5d1bca4f2d14702bcfc377ba3b4c9f5b6c",
+   "audit_sha256": "7b119b44c5bed16a2bd549c49c997de13bed3042df7e6310df5952d6ecc095f9",
+   "events_sha256": "962a58d0850ea55b680b1da78853cf042dd4253f681163ad088a76d10ed3259f",
+   "readings": {
+    "become": [
+     {
+      "tick": 124,
+      "node": [
+       72,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 344,
+     "tick": 344,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 220,
+     "pin": 344,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 124,
+     "ratio": 1.9375
+    }
+   },
+   "gameboard": {
+    "steps": 62,
+    "gaps": {
+     "1": 2,
+     "2": 58,
+     "4": 1
+    },
+    "energy_lines": 420,
+    "owed": 1
+   }
+  },
+  "j4_muon_12856_law": {
+   "model": "beam-fail-rows-j4-muon-12856-law-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.3413757430000004,
+   "hypotheses": [
+    "weak-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "14073705d6233c8113f7b4eb734034d07d9a74b4ecd6324669ee1427a4c7a636",
+   "audit_sha256": "722f6b1d420e300fb82710f834ea42228d0b4c7213ef85f386700df79cb7ea42",
+   "events_sha256": "491f3986aeec19a3775cc72b387480bea4a833080bfa9a1d016a6036b210c49b",
+   "readings": {
+    "become": [
+     {
+      "tick": 64,
+      "node": [
+       41,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 337,
+     "tick": 337,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 273,
+     "pin": 337,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 64,
+     "ratio": 1.0
+    }
+   },
+   "gameboard": {
+    "steps": 31,
+    "gaps": {
+     "2": 30
+    },
+    "energy_lines": 0,
+    "owed": 0
+   }
+  },
+  "j4_muon_3640_key": {
+   "model": "beam-fail-rows-j4-muon-3640-key-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.366854079999996,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "8c3c92e87705dcc0cb522e283ebfa09045006ce392f3f3c0a9eea2802f4a4cba",
+   "audit_sha256": "aa374547469c1b6e55139bae2608da02422e4fa30281b0422c225e5f275292c5",
+   "events_sha256": "ffc1216b4379d913944e79f2588eb3b99137e2f0936d5f34047454f9354f9d9b",
+   "readings": {
+    "become": [
+     {
+      "tick": 70,
+      "node": [
+       27,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 367,
+     "tick": 367,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 297,
+     "pin": 367,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 70,
+     "ratio": 1.09375
+    }
+   },
+   "gameboard": {
+    "steps": 17,
+    "gaps": {
+     "3": 4,
+     "4": 8,
+     "5": 4
+    },
+    "energy_lines": 420,
+    "owed": 1
+   }
+  },
+  "j4_muon_3640_law": {
+   "model": "beam-fail-rows-j4-muon-3640-law-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.4684040480000107,
+   "hypotheses": [
+    "weak-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "ac2a09db681a64f147f3ba4b5b5e7be90bffe5540a601c999bb12958ee7973d2",
+   "audit_sha256": "c51b679081a728077c9e2a43bcf1c979fc8c1fb82f2ca1c6e3bea8847114292e",
+   "events_sha256": "cad82d466fb2101c044c23aa619090f4ea43d1851dc1d980fbd323f8a466f019",
+   "readings": {
+    "become": [
+     {
+      "tick": 64,
+      "node": [
+       23,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 368,
+     "tick": 368,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 304,
+     "pin": 368,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 64,
+     "ratio": 1.0
+    }
+   },
+   "gameboard": {
+    "steps": 13,
+    "gaps": {
+     "4": 4,
+     "5": 8
+    },
+    "energy_lines": 0,
+    "owed": 0
+   }
+  },
+  "j4_muon_rest_key": {
+   "model": "beam-fail-rows-j4-muon-rest-key-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.5330949900000093,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "6aac9b10a27c31b1f814bf5c5009cb41ec3d14404ea4417d754b70b45805e3ee",
+   "audit_sha256": "297db4694e6976b28dc44e888af86695c4bea3e30a9ef023ff1c3be25cee4fe7",
+   "events_sha256": "0c5f70d4ca78bf71ee903bcd29ea8ad8d6c2ae9bdb55fbc42a7cd0e8d9169220",
+   "readings": {
+    "become": [
+     {
+      "tick": 64,
+      "node": [
+       10,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 390,
+     "tick": 390,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 326,
+     "pin": 390,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 64,
+     "ratio": 1.0
+    }
+   },
+   "gameboard": {
+    "steps": 0,
+    "gaps": {},
+    "energy_lines": 420,
+    "owed": 0
+   }
+  },
+  "j4_muon_rest_law": {
+   "model": "beam-fail-rows-j4-muon-rest-law-v1",
+   "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.4453995150000054,
+   "hypotheses": [
+    "weak-v1"
+   ],
+   "balanced": true,
+   "state_sha256": "bea570de839668ccc483260f1c71858c677b2cb7af54145bf17e7aeef1fc4cef",
+   "audit_sha256": "297db4694e6976b28dc44e888af86695c4bea3e30a9ef023ff1c3be25cee4fe7",
+   "events_sha256": "284822da2af4dd7092ee91581c9bcdf53ec8bfd129fac9e72d98babde8d6189b",
+   "readings": {
+    "become": [
+     {
+      "tick": 64,
+      "node": [
+       10,
+       0,
+       0
+      ],
+      "clock": 64
+     }
+    ],
+    "click": {
+     "count": 390,
+     "tick": 390,
+     "node": [
+      200,
+      0,
+      0
+     ],
+     "row_age": 326,
+     "pin": 390,
+     "tolerance": 2,
+     "verdict": "PASS",
+     "decay_from_click": 64,
+     "ratio": 1.0
+    }
+   },
+   "gameboard": {
+    "steps": 0,
+    "gaps": {},
+    "energy_lines": 0,
+    "owed": 0
+   }
+  }
+ }
+}

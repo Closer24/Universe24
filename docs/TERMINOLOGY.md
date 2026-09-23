@@ -300,7 +300,10 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
 - **Click (measurement)**: a paid row's units merged into a body's record by
   the rule `measure`: the content joins, the label enters the momentum, the
   phase is read, one click per unit; the click is the only one-way border of
-  the law (BEAM_LAW section 5). **Gather** is the click of a record: when
+  the law (BEAM_LAW section 5). A measurement is this action of the law on
+  the state, the record ended at the detector and the detector's own record
+  changed, and nothing else measures (the model owner, 2026-09-23, record 1139;
+  [POSTULATES.md](../POSTULATES.md) section 10). **Gather** is the click of a record: when
   its live units are 0 the layer reads its ladder at u and the record clicks
   at the chosen set, arm, channel and Node, with the content and the momentum
   the chosen rows carried; each Node's weight is the bilinear form

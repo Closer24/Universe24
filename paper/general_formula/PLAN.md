@@ -5255,3 +5255,81 @@ occurrence, before and after:
   Order 24" (the owner's choice, the name with its apposition).
 The abstract 247 words. No number moved. The PDF compiled from the true
 source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 00:55Z): Newton, Lorentz and Einstein named in the abstract
+
+On `paper-abstract-names` off main at dd0c111c, one commit, the
+abstract only. Newton named where the inverse square already stood
+("under a shell average Newton's inverse square and Poisson's
+equation"); one new sentence after the limits: "Under two named
+hypotheses on the click, Lorentz's factors, the equivalence principle
+and Einstein's step are reached, not derived from nothing; the law as
+built meets the first only."; the CHSH value folded into the exact
+results' sentence ("181/64 from 512 to 8192, 1.05 standard errors from
+the measured CHSH value"); "It has no relativistic dynamics; its
+sequential wheel signals in a pair's order, not in its counts." Paid for
+inside the abstract, no claim lost: "of a free family's flux" after
+Gauss's law, "the lattice" after Outside, "positive" before quadratic
+form, "not established" after conjectures, the tally's verbs, "the forms
+of", "above the board", "hypothesis". The owner's central sentence
+untouched. 248 words (mathematics one token each). Accepted usage:
+"recovered in a limit", "reached under named hypotheses" are the forms
+abstracts use for Newton's, Lorentz's and Einstein's laws; "derived
+from" without a qualifier is what desk rejections cite. The PDF from
+the true source, read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 01:30Z): the abstract for a reader of quantum mechanics
+
+A second commit on `paper-abstract-names`, the abstract only. The
+bridge is the postulate P1 (bounded integers; the phase on the circle
+Z_N): "the phase discrete in N steps" in the first sentence in place of
+"the phase grain"; after the Outside sentence: "An amplitude is an
+integer sum of N-th roots of unity and the Born rule its square at the
+click, under one axiom of the apparatus; interference, marginals and
+CHSH are then exact rationals of N." Paid for inside the abstract: the
+click's weight and the pair's marginals moved into that sentence out of
+the exact-results sentence; "Born's rule" and "Young's spacing" out of
+the recovered list (the Born rule and interference now stated as
+exact); "of the axes", "coefficient", "CHSH" before "value", "Recovered
+in limits", "their clicks" to "clicks", "passes to a detector" to
+"ends", "It has" dropped before "no relativistic dynamics". Newton,
+Lorentz, Einstein, the owner's central sentence, the tally, the
+conjectures and the two limitations kept. 250 words (mathematics one
+token each), the journal's limit. The PDF from the true source, read
+back. 52 pages.
+
+## Applied (2026-09-23, the reviewer's read AD through the Boss's order of 02:00Z): two word changes in the abstract
+
+A third commit on `paper-abstract-names`, the abstract only. (a) The
+Lorentz sentence: "Under two named hypotheses on the click, Lorentz's
+factors and Einstein's step are reached, the equivalence principle
+under the first alone, not derived from nothing; the law as built
+meets the first only." (the equivalence principle needs (A1) and the
+law as built, not (A2); a reader took the old order as needing (A2)).
+(b) The close with the law as its subject: "The law as built has no
+relativistic dynamics; its sequential wheel signals in a pair's order,
+not its counts." The eight words these cost, traded inside the
+abstract, none in the owner's central sentence and no name: "begins
+with" to "has"; "discrete in N steps" to "discrete, N steps"; "on that
+ring" to "on it"; "and the Born rule" to ", the Born rule" and "then"
+dropped; "the pace of every direction, and" to "every direction's
+pace,"; "the measured value" to "the measurement". The optional
+condition after the CHSH value ("a prediction once the wheel meets
+no-signalling in the order") not added: no words left under 250. 250
+words (mathematics one token each). The PDF from the true source, read
+back. 52 pages.
+
+## Applied (2026-09-23, the reviewer's whole read through the Boss's order of 00:50Z): Born's form exact, Born's rule its limit
+
+A fourth commit on `paper-abstract-names`, the abstract only. The one
+claim beyond the body, "the Born rule its square at the click", is
+brought to the ledger's word (row 276, the click's square Born's form
+exact; Born's rule its limit with a rate 1/N per cell): "An amplitude
+is an integer sum of N-th roots of unity, Born's form its square at the
+click under one axiom of the apparatus, Born's rule its limit;
+interference counts, marginals and CHSH are exact rationals." The two
+words this cost are taken from the central sentence, the same claim:
+"Everything compared with nature is a count between clicks at a
+detector or a ratio of such counts". The optional "from the measured
+CHSH value" not added: no words left. 250 words (mathematics one token
+each). The PDF from the true source, read back. 52 pages.
