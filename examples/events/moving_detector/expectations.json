@@ -436,15 +436,15 @@
  },
  "runs": {
   "capability_k5": {
-   "source_sha256": "9a189f6b8f53baed3411d89f4910d17ba228e518b627a5e602d82a6d1a8a94f2",
+   "source_sha256": "531e3868667ca41e0258055af4a6638bf6c9dd52dd190dc9fa498ea15f938081",
    "completed_ticks": 300,
-   "elapsed_seconds": 1.709,
+   "elapsed_seconds": 1.351,
    "hypotheses": [
     "amplitude-v1"
    ],
    "state_sha256": "fc90dfea05ea49f2797361661acd816859242eb216436d4dbef30057842e0da2",
    "audit_sha256": "16030d653e4564703024cff943a6920ca457fa9404fb71113e6d9ec8a14f5978",
-   "events_sha256": "11f614b5cd1d808f720456bd4718de54769aff5d77885e0b8c2f2475ce1535bb",
+   "events_sha256": "7791d297aeaf558efb9a9ae0cc93194d5eb1f75eb2b6f9430d1e28f6cf5bb6ce",
    "clicks_of_the_lamp_rows": 168,
    "returns": 0,
    "readings": {
