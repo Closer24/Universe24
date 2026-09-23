@@ -899,7 +899,7 @@ board's two-block world reads it.
    0.25, under the free pair's break at about 0.27 in the morning's chain
    run, which was the ramp's adiabaticity plus the recoil, PUSH_BALANCE.md
    10.7) with that run's ramp; at k = 3 only with the ramp lengthened per
-   10.7; expected 1 and 1 to the band's second term; (v) the index block (n from g, G). Nothing found,
+   10.7; expected 1 and 1 to the band's second term; (v) the index block (n from g, G); the builder's finding on STEP 4 (1a0f7dcd, through the Boss, 17:55Z), agreed: world (v)'s index block is the design script's CONFINED oscillator (`massive_dielectric_index.py`, the massive row zero outside the block), so the engine declares it a CAVITY of the kind's own pair [7, 8] and not a well, while the moving index world (v-m) keeps its block as the well [314, 315] in the medium [156, 157]; the two forms are section 4's (I) and (II), each named in its world. Nothing found,
    everything checked.
 4. **The board's faces and the margin rule** (the owner's question of
    14:12Z; COMPUTATION for the extents, `massive_board_margin.py`;
