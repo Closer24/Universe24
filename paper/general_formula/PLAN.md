@@ -6449,3 +6449,29 @@ Nothing else moved. 61 pages, 101 references, the abstract 249 words.
   move to NOT COMPARED; the count sentence stands in its five places.
   Held as a prepared change, not applied.
 62 pages, 102 references, the abstract 249 words.
+
+## Applied (2026-09-23, the owner's word "what the Boss says about the moves in the table"): commit 10, row 7a not predicted and row 2a NOT COMPARED
+
+- Row 7a's status: not predicted, the model's own number a declared
+  input (the limitations paragraph's third clause): the give once per
+  body is an integer of the family table, so the mass read 3673 against
+  the declared 3677 reads that input back; nature's 4.35 units a bound
+  on the input, not a prediction. The kinds' sentence in the count
+  gains a fourth clause for it, "the model's own number a declared
+  input".
+- Row 2a's status: NOT COMPARED, as it is, a kept word beside 2c:
+  nature's two-slit figure unverified, so no comparison stands until
+  it is; the law's 0.966 printed with the kind audit's grain bound; the
+  fan's width and the slits' grain declared inputs; once the figure is
+  verified, bound against bound.
+- The count in its four places and the abstract: ten observables
+  predicted (eleven once row 14 is read), four agree (5a as a bound
+  met), six disagree, eight not predicted (3, 4a, 4b, 5b, 7a, 8c, 11a,
+  11c), six rows keep their words (12, 2c, 2a, 10, 11b, 14), 1b a
+  control; the comparison and prediction paragraphs follow.
+62 pages, 102 references, the abstract 249 words. The owner also asked
+that the table be checked against the conventions of papers; the
+check's findings go to him and to the Boss, not applied here (they are
+the owner's and the Boss's to decide): the table's length (eight pages,
+cells of prose), the status column's mixed vocabulary, the internal
+kinds as jargon, and the citations of unmerged branches.
