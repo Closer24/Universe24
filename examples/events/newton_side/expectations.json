@@ -1,0 +1,111 @@
+{
+ "format": "newton-side-expectations-v1",
+ "design": "docs/designs/newton_clicks/NEWTON_ON_THE_SIDE.md section 4.1; docs/designs/fail_rows/RUN_14.md sections 1 to 3",
+ "kinds": "every pin a DETECTOR reading (a click's Node, the receiver's own count under clock_stamp, the row's ordinal); every number here COMPUTATION before the run; the tick GAMEBOARD, printed beside and never pinned",
+ "rung": {
+  "k": 19,
+  "M_row": 21,
+  "p": 71,
+  "rest_energy": 1344,
+  "pace_wall": 1349,
+  "links_per_count": "1 / 19",
+  "ladder_quantum": "1 / 380",
+  "u_over_c": 0.0912
+ },
+ "k_a": {
+  "massive_worlds": 0.0006953125,
+  "light_world": 0.0445,
+  "source": "the gr_rows pin world's GAMEBOARD age moment at (2^16, b = 6, [1, 4096]) scaled linearly to 2^10; DETECTOR when a lamp at b reads it against a control; every conditional pin below is re-derived by the same forms once read"
+ },
+ "geometry": {
+  "impact": 6,
+  "L": 26,
+  "L_line": 52,
+  "logarithm": 4.319
+ },
+ "window": {
+  "massive": 919,
+  "light": 110
+ },
+ "worlds": {
+  "control": {
+   "arrival_count": {
+    "pin": 979,
+    "bracket": 1,
+    "every_click_alike": "after the first ordinal: the lamp at the content K births at its first self-creation, skips the second once and births at every one after, so the ordinal lags its count by one and every click after the first reads the pin plus one (RUN_14.md step 6, the design's edge case)"
+   },
+   "pace": {
+    "pin": "1 / 19",
+    "band": "2 / W over W counts apart (the one band rule)"
+   },
+   "centroid_y": {
+    "pin": 0.0,
+    "exact": true
+   },
+   "count_ratio": {
+    "pin": 1.0,
+    "bracket": 0.01
+   }
+  },
+  "mass": {
+   "arrival_count": {
+    "count": 939.5,
+    "advance": -40.5,
+    "wall_delay": 0.68,
+    "push_advance": -41.19,
+    "bracket": 3.5,
+    "conditional": true
+   },
+   "advance_ratio": {
+    "pin": -0.0414
+   },
+   "centroid_toward_mass": {
+    "pin": 4.39,
+    "crossing": 4.46,
+    "bracket": 0.5,
+    "conditional": true
+   },
+   "count_ratio": {
+    "pin": 1.0,
+    "bracket": 0.01
+   },
+   "advance_over_own_wall_delay": 60.2,
+   "clocks_shift": -0.15
+  },
+  "light": {
+   "arrival_count": {
+    "control": 89,
+    "wall_delay": 3.96,
+    "clocks_rate": 0.9901,
+    "pin": 3.0,
+    "advance": 0.0,
+    "bracket": 1.0,
+    "conditional": true,
+    "note": "the read delay: the wall's +3.96 at c_f = 2 less the two clocks' stretch (the lamp and the receiver both at 26.7 Links from 2^16 count at 0.990 of the tick, so T_mass = 0.990 x (89 + 3.96) = 92.0 against the control's 89); the massive worlds' clocks at 2^10 move their pins by 0.15, inside 3.5"
+   },
+   "centroid_toward_mass": {
+    "arrivals": 4.63,
+    "crossing": 5.47,
+    "bracket": 0.5,
+    "deciding": true,
+    "conditional": true
+   },
+   "count_ratio": {
+    "pin": 1.0,
+    "bracket": 0.01,
+    "against_the_tick": 0.99,
+    "note": "the receiver's counts apart over the lamp's ordinals apart: both clocks in the same crowd at 26 to 27 Links from the mass (r_1 = r_2), so 1.000 within 0.1 per cent; the design's 0.990 is the receiver's rate against the tick, GAMEBOARD, printed as the count behind the tick"
+   }
+  }
+ },
+ "derivations": {
+  "arrival_count": "NEWTON_ON_THE_SIDE.md 3 (b): m(tau) = floor((2 tau p + E'_D) / (2 E'_D)) at E'_D = k p, the L-th Link at tau = k L - (k - 1) / 2; RUN_14.md step 3",
+  "advance": "NEWTON_FROM_CLICKS.md 3 (b) and (d); NEWTON_ON_THE_SIDE.md 3 (c) 1 and 4.1; RUN_14.md steps 7 and 8",
+  "centroid": "NEWTON_FROM_CLICKS.md 3 (c); NEWTON_ON_THE_SIDE.md 3 (c) 2 and 4.1; RUN_14.md step 9",
+  "light_row": "NEWTON_FROM_CLICKS.md 3 (c) and (e); NEWTON_ON_THE_SIDE.md 3 (c) and 4.1; RUN_14.md step 13 (the read delay +3.0: the clocks' stretch at 26.7 Links)",
+  "advance_over_own_wall_delay": "RUN_14.md step 10: the massive row's push advance over its own wall's delay in its world, (c / v)^2 (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) / c_f, a COMPUTATION of two closed forms the run reads only as their sum",
+  "count_ratio": "NEWTON_FROM_CLICKS.md 3 (e); the gr_rows design section 4 (0.990 at 2^16, 26.7 Links against the tick); RUN_14.md step 12 (the ratio of two clocks in one crowd, 1.000)",
+  "birth_convention": "RUN_14.md step 6: the lamp at the content K births at its first self-creation, skips the second once (its accumulator at K - M_row below the wall K) and births at every one after; every click after the first reads the flight's count plus one; the advance and the delay are differences and carry no convention",
+  "receiver_reads": "RUN_14.md step 5: the receivers read the presence; under the design's `age` the arriving rows' age moment would stretch the receiver's own count by 979 / 4096 per click"
+ }
+}
