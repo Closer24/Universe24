@@ -6586,3 +6586,17 @@ with one line naming the paper's section it serves. The paper 48
 pages exactly, the owner's number; the supplement 17. Held by the
 same test: each table stands once in the supplement and not in the
 paper; the families block, one table, is checked there.
+
+## Applied (2026-09-23, the Boss's orders of 02:56Z and 03:35Z): commit 16 on paper-48, the two citations at their merges
+
+The kind audit (KIND_AUDIT.md) is cited from main at 46c27396 and
+RUN_14 (RUN_14.md) from main at bf8330f1, their branch heads and "its
+merge pending" dropped; row 14's words unchanged, the count of record
+1204 standing (the owner's word of 03:30Z, record 1232) until the
+rules page is written. The branch: the Boss's order of 03:05Z put
+commits 13 and 14 on a new branch paper-48 off a98fd46f; the order was
+read after commits 13 to 15 had gone to paper-summary-table, so
+paper-48 was pushed at the same head 02525f64 (the same commits, off
+a98fd46f) and this commit and the next go there; paper-summary-table
+is not rewritten by the writer (no force push), its head the Boss's
+to reset.

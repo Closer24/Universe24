@@ -4753,6 +4753,16 @@ CORRECTIONS = [
         "The rows that disagree are the law's own results, each by its number in Table~\\ref{tab:nature}: 1c the order channel, 6 the atom's loop opening, 7b the strong ratio, 8a the neutron's step, 8b the neutrino's passage, 13 light unbent under the law before the generic entry (Section~\\ref{sec:delay}, against $1.75$ arcseconds); each refutes the law as declared on its own, and no count of agreements weighs against them; 1b, the phase-form window, is a control and not counted, and 14, Newton's periods, is not yet read against nature (its run's verdict in its cell). The rows not predicted by construction, 3, 4a, 4b, 5b, 7a, 8c, 11a and 11c, name their missing piece and its kind in their cells, and the law's own number is printed in each.",
         "The rows that disagree are the law's own results, each with its distance in Table~\\ref{tab:summary}; each refutes the law as declared on its own, and no count of agreements weighs against them; the rows not predicted by construction name their missing piece and its kind in their cells, the law's own number printed in each; 1b is a control and not counted, and 14, Newton's periods, is not yet read against nature.",
     ),
+    (
+        "commit 16, the Boss's order of 03:35Z: RUN_14 cited from main at its merge",
+        "\\texttt{docs/designs/fail\\_rows/RUN\\_14.md} of the archived code \\cite{zenodo}, on the branch \\texttt{fail-run-14} at f30f2b0a (its merge pending).",
+        "\\texttt{docs/designs/fail\\_rows/RUN\\_14.md} of the archived code \\cite{zenodo}, on main at bf8330f1.",
+    ),
+    (
+        "commit 16, the Boss's order of 02:56Z: the kind audit cited from main at its merge",
+        "\\texttt{docs/designs/fail\\_rows/KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on the branch \\texttt{kind-audit} at 568c4e4d (its merge pending).",
+        "\\texttt{docs/designs/fail\\_rows/KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396.",
+    ),
 ]
 
 
