@@ -259,7 +259,10 @@ Every physical name is the name of an element of the algebra's structure
 column, momentum the label; the masses and the charges are declared inputs;
 Newton's, Einstein's, Lorentz's and Bohr's forms are reached under named
 hypotheses (chapter 5) and are the things compared with, never inserted and never
-called emergent. The simulator does not assume every familiar physical phenomenon is fundamental.
+called emergent. (Re-read on 2.11's landing: the derived law adds the mass of a
+foreign object as the pair [num, den] on the six-neighbour term of its record's
+rule, the dictionary row of MASSIVE_RECORD.md section 1 on the branch
+detector-law-design; Reviewer 3's PUSH_BALANCE.md 12.6 (c).) The simulator does not assume every familiar physical phenomenon is fundamental.
 Mass, gravity, curvature or a known particle can count as an emergent result only
 if they arise from local events and laws, rather than being inserted under another name
 (history, superseded on 2026-09-23 by ALGEBRA.md 1.2).
