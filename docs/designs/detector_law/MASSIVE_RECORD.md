@@ -624,11 +624,37 @@ continuum's combination PLUS the cross term of the two first differences
 on the cells, which is what oscillates (up to 1.4 percent of J at G g =
 0.05 and 0.9 percent at 0.2 on the chain, 600 intervals; the combination
 without it drifts by 1.9 and 1.6 percent peak to peak while J holds to
-10^-12). So the engine's test (g) asserts J, an exact identity, with the
-remainders' term of section 3 added per record where the engine divides
-(`3 num`-scaled: each record's `SUM_i (a_next,i - a_before,i) (r_i -
-r'_i)` in its own units), and not a 3 percent tolerance; the cross term
-is a GAMEBOARD reading of the coupling's grain, not energy lost.
+10^-12). So the engine's test (g) asserts J, an exact identity, and not
+a 3 percent tolerance; the cross term is a GAMEBOARD reading of the
+coupling's grain, not energy lost. THE TWO SENTENCES FOR THE BUILDER
+(Reviewer 3's MUSTs A and B through the Boss, 17:00Z; the design's
+choice; test (g) written against them). (A) THE ONE DIVISION: the
+coupling is folded into the rule's one division, one D per row per
+interval and no second D for g or G: the massive row `3 den g_d a_next +
+r' = num g_d S_6 - 3 den g_d a_before + 3 den g_n P (a_l,now -
+a_l,before) + r`, `0 <= r' < 3 den g_d` (the wall `3 den g_d`, the
+coupling's numerator scaled by `3 den`), and light's row `3 G_d a_next +
+r' = G_d S_6 - 3 G_d a_before - 3 G_n P (a_m,next - a_m,now) + r`, `0 <=
+r' < 3 G_d`, with `g = [g_n, g_d]`, `G = [G_n, G_d]` and P one on the
+block's cells; then the remainders' term of section 3 per record, each
+with its own wall, is the WHOLE correction: `J(t) - J(t - 1) = SUM_i
+(a_m,next - a_m,before)_i (r - r')_i / (3 num_i g_d) + alpha SUM_i
+(a_l,next - a_l,before)_i (r - r')_i / (3 G_d)`, EXACT (checked in exact
+rationals on a chain at g = 1 / 20 and 1 / 5, the residual 0,
+`massive_conserved_form.py` part 3); test (g) asserts this identity in
+integers (J and both terms scaled by the common `3 num g_d G_d`), no
+tolerance. (B) THE SCHEME IN THE ENGINE'S COLUMNS: at each interval,
+first the massive record's step reads ITS OWN `a_now`, `a_before` and
+`r` and LIGHT'S `a_now - a_before` AS THEY STAND BEFORE LIGHT'S STEP OF
+THIS INTERVAL, writing the massive `a_next` and `r'`; then light's step
+reads ITS OWN `a_now`, `a_before` and `r` and the MASSIVE `a_next -
+a_now` JUST WRITTEN (the massive columns not yet shifted), writing
+light's `a_next` and `r'`; then both records shift (`a_before <- a_now
+<- a_next`, `r <- r'`). J above is the invariant of THIS scheme and of
+no other column choice: the mirror scheme (light's step first with the
+massive `a_now - a_before`, then the massive step with light's `a_next -
+a_now`) conserves its own J with the cross term on its own columns;
+test (g) asserts the J of the scheme built, which is this one.
 FIRST FINDING: the coupling's first difference taken ALONG THE CELL'S PATH
 on a hop interval (Reviewer 3's (b), the backward difference in both rows)
 is UNSTABLE, and so is the ADJOINT PAIR he then prescribed (his line on
@@ -1047,12 +1073,12 @@ board's two-block world reads it.
 
    | mu | s | g | omega_b | eps | the extent 1 / kappa | the side s + 4 / kappa | the world's kind | HOST, a moving world of 9500 intervals |
    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3; read 0.8113 against 1 / gamma_m 0.8165 and the formula's 0.8132) | 6 s |
-   | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent) | 12 s |
-   | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | a PIN world at mu = 0.05 (residual 0.3 percent) | about 1 min |
+   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8132 (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8165); the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z) | 6 s |
+   | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent): the pin the one formula's number at pin time on this layer | 12 s |
+   | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | a PIN world at mu = 0.05 (residual 0.3 percent): the pin the one formula's number at pin time | about 1 min |
    | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent) | 2 s |
-   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent; read 0.7832 against the formula's 0.7848) | 1 s |
-   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL (read 0.7635 against 0.7643) | 1 s |
+   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent): the pin the formula's 0.7848; the scratch reading 0.7832 a CONTROL | 1 s |
+   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7643; the scratch reading 0.7635 | 1 s |
 
    So on the layer the whole of (i) to (iii) reads in seconds and the
    pin worlds of five's residual in under a minute, all on the 24th with

@@ -20,6 +20,15 @@ of section 7 (the builder's two findings on the build's STEP 2, the Boss's 16:21
     the continuum's E_l + (G / g) E_m PLUS the cross term of the two first differences on
     the cells, which oscillates at the percent level while J is exact. Requires one pair on
     the coupled cells (alpha one number), the block's declaration.
+(3) The same in the ENGINE'S INTEGERS with the coupling folded into the rule's one division
+    (Reviewer 3's MUST A through the Boss, 17:00Z): the massive row
+    3 den g_d a_next + r' = num g_d S_6 - 3 den g_d a_before + 3 den g_n P (a_l,now - a_l,before) + r,
+    0 <= r' < 3 den g_d (one D per row per interval, the wall 3 den g_d), and light's row
+    3 G_d a_next + r' = G_d S_6 - 3 G_d a_before - 3 G_n P (a_m,next - a_m,now) + r, the wall
+    3 G_d. Then J(t) - J(t - 1) = SUM_i (a_m,next - a_m,before)_i (r - r')_i / (3 num_i g_d)
+    + alpha SUM_i (a_l,next - a_l,before)_i (r - r')_i / (3 G_d) EXACTLY (checked in exact
+    rationals on a chain, the residual 0): the remainders' term of section 3 per record, each
+    with its own wall, is the whole correction; nothing else.
 
     PYTHONPATH=src python docs/designs/detector_law/massive_conserved_form.py
 """
@@ -106,6 +115,69 @@ def coupled_chain(n=400, steps=600, g=1 / 20, G=1.0):
     )
 
 
+def coupled_chain_exact(n=40, steps=120, g=(1, 20), G=(1, 1)):
+    """The folded-division integer scheme on a chain, the identity checked in Fractions."""
+    from fractions import Fraction as F
+
+    num_out, den_out, num_in, den_in = 156, 157, 314, 315
+    cells = range(15, 25)
+    num = [num_out] * n
+    den = [den_out] * n
+    P = [0] * n
+    for i in cells:
+        num[i], den[i], P[i] = num_in, den_in, 1
+    g_n, g_d = g
+    G_n, G_d = G
+    alpha = F(g_n, g_d) * F(den_in, num_in) / F(G_n, G_d)
+    x_b = [int(v) for v in rng.integers(-40, 41, n)]
+    x = [int(v) for v in rng.integers(-40, 41, n)]
+    y_b = [int(v) for v in rng.integers(-40, 41, n)]
+    y = [int(v) for v in rng.integers(-40, 41, n)]
+    r_m = [0] * n
+    r_l = [0] * n
+
+    def s6(a, i):
+        return a[i - 1] + a[(i + 1) % n] + 4 * a[i]
+
+    def form(a_n, a, wt):
+        return (
+            sum(wt[i] * (F(a_n[i]) ** 2 + F(a[i]) ** 2) for i in range(n))
+            - sum(F(a_n[i]) * s6(a, i) for i in range(n)) / 3
+        )
+
+    w_m = [F(den[i], num[i]) for i in range(n)]
+    w_l = [F(1)] * n
+
+    def J(x_n, x, y_n, y):
+        cross = F(g_n, g_d) * sum(w_m[i] * (x_n[i] - x[i]) * (y_n[i] - y[i]) for i in cells)
+        return form(x_n, x, w_m) + alpha * form(y_n, y, w_l) + cross
+
+    worst = F(0)
+    j_prev = J(x, x_b, y, y_b)
+    for _ in range(steps):
+        x_n, r_m2 = [0] * n, [0] * n
+        for i in range(n):
+            rhs = (
+                num[i] * g_d * s6(x, i)
+                - 3 * den[i] * g_d * x_b[i]
+                + 3 * den[i] * g_n * P[i] * (y[i] - y_b[i])
+                + r_m[i]
+            )
+            x_n[i], r_m2[i] = divmod(rhs, 3 * den[i] * g_d)
+        y_n, r_l2 = [0] * n, [0] * n
+        for i in range(n):
+            rhs = G_d * s6(y, i) - 3 * G_d * y_b[i] - 3 * G_n * P[i] * (x_n[i] - x[i]) + r_l[i]
+            y_n[i], r_l2[i] = divmod(rhs, 3 * G_d)
+        j_now = J(x_n, x, y_n, y)
+        rem = sum(
+            F((x_n[i] - x_b[i]) * (r_m[i] - r_m2[i]), 3 * num[i] * g_d) for i in range(n)
+        ) + alpha * sum(F((y_n[i] - y_b[i]) * (r_l[i] - r_l2[i]), 3 * G_d) for i in range(n))
+        worst = max(worst, abs(j_now - j_prev - rem))
+        j_prev = j_now
+        x_b, x, y_b, y, r_m, r_l = x, x_n, y, y_n, r_m2, r_l2
+    return worst
+
+
 if __name__ == "__main__":
     print("(1) the form with the remainders' term, exact in integers (worst residual, must be 0):")
     for ext, pair in (((6, 6, 1), (156, 157)), ((40, 1, 1), (2, 3)), ((6, 6, 6), (800, 809))):
@@ -116,4 +188,9 @@ if __name__ == "__main__":
         print(
             f"    g = {g:.2f}: I_m + alpha I_l drifts {d_naive:.2e}; J exact to {d_exact:.1e};"
             f" the cross term up to {cross:.2e} of J"
+        )
+    print("(3) the folded-division integer scheme on a chain, 120 intervals, exact rationals:")
+    for g in ((1, 20), (1, 5)):
+        print(
+            f"    g = {g[0]}/{g[1]}, G = 1: J(t) - J(t-1) less the two remainder terms, worst residual {coupled_chain_exact(g=g)}"
         )
