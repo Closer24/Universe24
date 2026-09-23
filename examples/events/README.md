@@ -401,6 +401,40 @@ light bent toward the mass with the sign of gravity, the M / b form and
 the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
 past the mass), not delayed in time, the mass measuring the light turned
 into it; registered, 14 readings inside and 9 outside, not tuned.
+## Newton on the side, Side A: the moving detector with mass
+
+The folder [newton_side/](newton_side/README.md) holds the three worlds
+of Side A of Newton on the side (the model owner's words, records 1043,
+1046, 1098 and 1128; the design
+[NEWTON_ON_THE_SIDE.md](../../docs/designs/newton_clicks/NEWTON_ON_THE_SIDE.md)
+sections 3 and 4; the run
+[RUN_14.md](../../docs/designs/fail_rows/RUN_14.md)), written by
+`newton_side/make_worlds.py` with the pins before any run in
+`expectations.json`: series K's box with the lamp's family the massive
+family `matter` on the exact rung k = 19 of the ladder (M_row 21, p 71,
+E'_D = 1349 = 19 x 71: one Link per 19 counts with no remainder) under
+`massive_rows`, the pair `suspension` [1, 4096], `optical` 1 declared and
+`clock_stamp`, read at 1681 receiver bodies of `wall` on the plane x = 54
+(no detector set: a set without a body has no count; their entry reads
+the presence, the one departure from the design's keys, since the
+arriving rows' age moment would otherwise stretch the receivers' own
+count by 979 / 4096 per click, RUN_14.md step 5); `control` (no
+mass: the arrival count 979 on every click, the arrival Node the line's
+end), `mass` (2^10: Newton's advance, 40.5 counts early, and Newton's
+bending, 4.39 pixels, conditional on k_a(b)) and `light` (series K's
+photon past 2^16: the lever-arm centroid 4.63 against 5.47 pixels toward
+the mass, the pin that decides which count a row's push takes).
+`tools/newton_side_readings.py` reads the receivers' click lines alone
+(the receiver's own count less the row's ordinal, the pace, the
+centroid, the count ratio of consecutive clicks: DETECTOR; the tick
+GAMEBOARD) against the register. Nothing registered until the run on
+the owner's go. Beside it, Side B's two numbers in
+`orbit_lamp/make_worlds.py` (the width 404 and the launch momentum 4 x
+404 x M, the rung k = 17 under the per-axis drive) write the k17 pair
+`r12_k17`, `r24_k17` and their controls with `clock_stamp` and the
+detector line at y = 2, for the re-read on the ordinals on a later
+order; the registered orbit_lamp worlds untouched.
+
 ## The Hubble series with stars
 
 The folder [hubble_stars/](hubble_stars/README.md) holds the nine worlds of
