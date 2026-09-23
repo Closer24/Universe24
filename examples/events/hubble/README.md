@@ -255,10 +255,10 @@ tool prints both.
 
 ```bash
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/hubble examples/events/hubble/coasting_scalar.json examples/events/hubble/coasting_age.json examples/events/hubble/pushing_scalar.json examples/events/hubble/pushing_age.json
-PYTHONPATH=src python tools/hubble_readings.py artifacts/hubble
+PYTHONPATH=src python tools/click_readings/hubble.py artifacts/hubble
 ```
 
-`tools/hubble_readings.py` reads the engine's own record (`events.jsonl`,
+`tools/click_readings/hubble.py` reads the engine's own record (`events.jsonl`,
 `run.json`, `initialization.json`) and the flight table through the
 engine's own function, replays the world through the API for the clocks'
 counts, the positions and the momenta at the windows' ends (GameBoard
@@ -482,7 +482,7 @@ default, and the two `scalar` worlds' sources (their entries for the other
 sources' light without a word) count it; the two `age` worlds are
 byte-identical (record 409). The four worlds run again on the head of
 branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 400 intervals) and
-read by `tools/hubble_readings.py`; the two `scalar` worlds also run on
+read by `tools/click_readings/hubble.py`; the two `scalar` worlds also run on
 `main`'s engine and read by the same tool for the old value (the register's
 lines above read them with the tool of their day: 0.877, 0.969, 1.017,
 0.996 and 1.176, 1.302, 1.324, 1.301). DETECTOR, the near fit's H t_0 in
@@ -513,7 +513,7 @@ the design re-declares their F for the age word.
 
 The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md:
 a detector's time is the clock of the Node it sits on. The four worlds
-replayed on main's engine and read by `tools/hubble_readings.py`, whose
+replayed on main's engine and read by `tools/click_readings/hubble.py`, whose
 pinned reading is now in the detector's own clock (1 + z_d = r_w (1 +
 z), H_d = r_w H, r_w the detector's self-creations per interval over the
 window from the replay's edges) with the lattice's clock printed beside

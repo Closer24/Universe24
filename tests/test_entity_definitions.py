@@ -522,7 +522,14 @@ def test_the_shipped_definitions_are_the_generators_and_define_every_family_once
         for family in entity["families"]
     ]
     assert len(defined) == len(set(defined))
-    assert set(defined) == register_family_names()
+    # The families of the worlds deleted on 2026-09-22 (the model owner's
+    # word, record 894: the hand, catalog and gallery worlds): their
+    # definitions stay in families.json, which the paper's family table
+    # audits and the cart's build touches; no shipped world declares them.
+    families_of_deleted_worlds = {"apparatus", "neutron", "nubar", "screen"}
+    shipped = register_family_names()
+    assert not families_of_deleted_worlds & shipped
+    assert set(defined) == shipped | families_of_deleted_worlds
 
 
 def entity_world(reference: str, definition: str, position: list[int]) -> dict[str, object]:

@@ -1580,3 +1580,151 @@ on `main`
 (spatial fields);
 the return as a field (point 3 as amended, in place of the walk on the
 trace those features implement) is pending.
+
+## 26. The Inside and the Outside
+
+The model owner's word, 2026-09-23, 03:57Z, record 1242 (Hebrew, dictated;
+the Boss's English): "Everything we say here goes into the postulates,
+because it is very important later; and if it is contradicted, it must be
+thrown out of there." The two words are defined in
+[docs/TERMINOLOGY.md](docs/TERMINOLOGY.md#the-readings) ("Inside and
+Outside", record 768): Inside is inside the GameBoard, the Nodes, the
+integer rows and the tick, where no one measures; Outside is the game above
+the board, the detectors and their clicks only, which is not reality but is
+claimed to represent it. In each postulate the owner's statement comes
+first, the Boss's reading after it where one is given and marked as his,
+and the citations last. The records are in
+[docs/LOG_2026-09-20.md](docs/LOG_2026-09-20.md) and their decisions in
+[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); records 1242 to
+1245 are cited by number. Where
+[section 10](#10-measurement-and-display-are-outside-the-physics)
+or sections [23](#23-the-ray-event-model),
+[24](#24-everything-is-information-transfer-a-return-is-the-inverse-split-at-the-event)
+and [25](#25-the-law-of-the-bit-the-thing-or-its-shadow) already say a
+thing, this section cites them and does not restate. Section 23's phrase
+"Outside a Detector" predates record 768 and means "away from a Detector",
+not the Outside of this section.
+
+**26.1 Nature's atomic clock.** The owner: nature's atomic clock, by our
+definition, is a detector that reads a click and waits for the next click;
+it must have mass, the held content of its own record; this is the law we
+defined, and the laws of the clock are closed. The detector's own count
+under the age wall is its time; its tick is the return of its own packet to
+its held mass, at rest to the same Node and in motion to the next Node, one
+rule for both; there is no second clock and no rate from outside. The
+code's fact beside the owner's premise: the count needs a body, a measured
+event (an open face has no clock of its own, docs/TERMINOLOGY.md, "A
+detector's clock"), and the tick algebra finds the count's rate independent
+of the held mass (docs/designs/new_rows/TICK_ALGEBRA.md, records 1248 and
+1257). Records 678, 709, 1217, 1226, 1227, 1232 and 1234; section 10 (the click stamped with the detector's own count);
+docs/TERMINOLOGY.md, "A detector's clock".
+
+**26.2 What passes from the Inside to the Outside.** The owner: from the
+Inside to the Outside the mass passes as it is: the row's record's content
+in the family's units (docs/TERMINOLOGY.md, "Content": content on a body or
+a row, the mass). By the code (the Tick Algebraist's paragraph,
+docs/designs/new_rows/TICK_ALGEBRA.md, records 1248 and 1257, confirmed by
+the code): the mass is one integer in one column, `content`,
+in the family's units; a light packet carries the content of its own paid
+family and never the emitter's held mass, which does not pass. What arrives
+with a record and is read as it is: its content (the mass), its amount, its
+label **p** (the momentum vector, its direction and its size), its phase,
+its number and its own age (the click line, `nature_beam.py` lines 5536 to
+5566; [ENGINE.md, the detector's readings by type](docs/ENGINE.md#the-detectors-readings-by-type):
+the age of a row on the click line is a DETECTOR reading). The click's
+time is the detector's own count and its place the detector's own Node;
+what does not pass is the host's tick and any place but the detector's
+Node. Record 1234 (the detector's mass and the Inside's mass are one
+quantity in one record); section 10.
+
+**26.3 The Outside has Nodes.** The owner: the Outside has Nodes as the
+Inside has: the detectors' Nodes. The distance between two Outside Nodes is
+the distance between the two detectors; the time of the passage from one
+Outside Node to the next is the time between click and click, in the
+detector's own count. Both are read by clicks: the distance as the chain
+of clicks between neighbouring detectors (Locality Outside, DERIVATION.md
+section 0) or as a packet's round trip in the detector's own count (record
+1234). Records 1216 and 1234; the click theorem's
+definitions (a click is a triple: the Node, the detector's count at the
+arrival, what arrived; a velocity Outside is a ratio of two integers and
+never a reading of the tick).
+
+**26.4 The Outside is reached from the Inside only by clicks.** The owner:
+the Inside is something we reach only by clicks. The Outside is the possibility that was fixed by
+the actions coming in from the Inside: one realized possibility at a given
+count of a detector, not always all the places; the Inside carries all the
+possibilities that can be. The Boss's precision, marked as his: the Inside
+is one deterministic state with many rows; there is no draw at a Node
+(section 25, "The mark": there is no lottery; nothing at a Node, Highlights
+item 2, record 155; the paper's P4 as a cross-reference); the fan carries
+every declared direction; "all the possibilities" are the rows that could
+click, and the Outside is the subset that clicked. Record 1201 (no passage
+Outside without a packet Inside); section 23 (every trajectory an
+interaction permits happens, and the picture of the world is the list of
+clicks); section 25.
+
+**26.5 No time in the Outside apart from the detectors' counts.** The
+owner: there is no time in the Outside apart from the detectors' counts: no
+fixed time and no global time, because everything can happen from different
+things. The host's tick is a GAMEBOARD diagnostic and never the Outside's
+time. Records 281, 1216 and 1217; docs/TERMINOLOGY.md, "The readings";
+Highlights 5.4, the line of record 1196 (the time axis and the kind of a
+reading).
+
+**26.6 The Outside compared with Einstein's spacetime.** The owner: the
+Outside is compared with Einstein's spacetime; what is compared with
+Einstein's spacetime is determined from the Inside and read by clicks. The
+click theorem
+([docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame))
+gives Lorentz's form under its two assumptions together, A1 (a click
+passes information at most one Node per interval) and A2 (a click's
+content is an amplitude with a phase that splits each interval between
+staying and hopping), up to a correction of relative order m^2 v^2 (m the
+mass angle of the amplitude and v the velocity, as the theorem defines
+them), exact in the continuum limit. The law as built meets A1 and not A2:
+its rows hop whole and on the board no clock slows by motion
+([docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md), the head, item 8; records 687
+and 749), and the tick algebra finds that the law as built departs from
+Einstein's form at order v^2 by the whole beta^2 term (beta the velocity
+in units of c; the count rate 1 against 1 / gamma, gamma the Lorentz
+factor), not by the theorem's residual (docs/designs/new_rows/TICK_ALGEBRA.md,
+records 1248 and 1257). Whether the law as built matches Einstein's forms
+is what the light clock reads, its pins
+pending (records 1226 to 1235); until it passes, this postulate states the
+comparison and no derivation. Einstein's forms are the thing compared
+with: the law's result matches nature and is never said to be nature;
+"compared with", never "is" (records 762 and 817; section 9 says the same
+of Newton's and Einstein's equations).
+
+**26.7 Removal on contradiction.** The owner: if any statement of this
+section is contradicted by a reading (a detector's click) or by a later
+word of the owner, it is removed from the postulates with the record of
+the contradiction cited; the log keeps the history (records 1242 and 1244:
+what is outdated is deleted, its record staying in the log; the marking
+rule of records 802 and 941 superseded). Nothing else in POSTULATES.md
+changes by this section; where section 10 or sections 23 to 25 already say
+a thing, they are cited instead of restated.
+
+**26.8 The three levels.** The owner (2026-09-23, 04:04Z, record 1243,
+and in his own words at 04:09Z, record 1245): there are three levels.
+Level 1 is "what we see, what they measure": the experimenters'
+measurements, the detectors' clicks. Level 2 is "Einstein: hard for a
+person to see, but it predicts what we see very well": his event space,
+his spacetime. Level 3 is "our level, the Inside, what we call the
+GameBoard", from which level 2 follows. Level 2 is a model, not a datum,
+so the paper's test is double (the owner, confirmed, record 1245): that
+level 3 gives level 2's form, and that level 3's numbers, read by clicks,
+match level 1, the comparison table. "Gives level 2's form" is read as the
+comparison of 26.6, tested by the light clock: the click theorem gives
+that form under A1 and A2 together, the law as built meets A1 and not A2,
+and no derivation is claimed for the law as built until the light clock
+passes. The light clock tests both at once: if it reads gamma squared and
+gamma (gamma the Lorentz factor) where Einstein's forms read 1 and 1, the
+claim that level 3 gives level 2's form, the double test's first half,
+fails in its present form; 26.6, which states a comparison and claims no
+derivation, then stands as a disagreement in the comparison table, and
+26.7 is not invoked against it. Level 3 reaches level 1 only by clicks
+(26.4); nothing
+of level 1 is read from level 3 directly. Records 1216, 1220 (the three
+levels named first there), 1243 and 1245;
+[docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame).

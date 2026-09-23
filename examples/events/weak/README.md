@@ -21,7 +21,7 @@ one of two kinds ([the register](../../../docs/EXPERIMENTS.md), "Two kinds
 of readings"): a DETECTOR reading (a reader's clicks and passes, a shell's
 clicks: the only kind reality has) or a GAMEBOARD reading (the expectation
 from the flight table, a body's clock tick: the host's view). The readings
-tool is `tools/weak_readings.py`, every line labelled by its kind.
+tool is `tools/click_readings/weak.py`, every line labelled by its kind.
 
 ## J2: the neutrino's passage through a filled bar
 
@@ -81,14 +81,14 @@ law, not tuned.
 ```bash
 python examples/events/weak/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/weak examples/events/weak/j2_*.json
-PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+PYTHONPATH=src python tools/click_readings/weak.py artifacts/weak
 ```
 
 Each run takes about 3 s.
 
 ## What was measured (2026-09-20)
 
-`tools/weak_readings.py`: 0 record checks failed, 13 readings inside, 0
+`tools/click_readings/weak.py`: 0 record checks failed, 13 readings inside, 0
 outside, nothing moved (the numbers in the register entry). `j2_filter`:
 the first reader 16 clicks of 1024 arrivals (1 / 64 exactly), the 127
 behind it 0, the far detector 699 of 711; `j2_ladder`: the readers at
@@ -173,7 +173,7 @@ Run them and read the records:
 ```bash
 python examples/events/weak/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/weak examples/events/weak/j1_*.json examples/events/weak/j3_*.json
-PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+PYTHONPATH=src python tools/click_readings/weak.py artifacts/weak
 ```
 
 The J1 runs take about 4 minutes each, the J3 runs about one; their
@@ -181,7 +181,7 @@ records are large (the fan's rows at the border).
 
 ## What was measured in J1 and J3 (2026-09-20)
 
-`tools/weak_readings.py`: 0 record checks failed, 15 readings inside, 3
+`tools/click_readings/weak.py`: 0 record checks failed, 15 readings inside, 3
 outside, nothing moved (the numbers in the register entry). Inside: the
 shell's 64 clicks a step in both J1 worlds (from tick 541 to 563 in
 `j1_lattice`, the median 549, the width over the median 0.036; 541 to
@@ -225,7 +225,7 @@ proton of 1836 fixed at x = 3; 16 intervals.
 
 ```bash
 PYTHONPATH=src python tools/run_series.py --out artifacts/weak examples/events/weak/w_exchange.json
-PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+PYTHONPATH=src python tools/click_readings/weak.py artifacts/weak
 ```
 
 **What was measured (2026-09-20).** 5 readings inside, 0 outside: the
@@ -320,7 +320,7 @@ default, and the neutrons' clocks (their entries for the other families
 without a word) count it, so the `become` at the count 512 fires later
 wherever a crowd is read. The five worlds run again on the head of branch
 `clock-age-v1` (`tools/run_series.py --jobs 2`) and read by
-`tools/weak_readings.py` (13 readings inside, 5 outside; the registered
+`tools/click_readings/weak.py` (13 readings inside, 5 outside; the registered
 36 inside under the range estimator); the registered reading beside the
 new, every line labelled:
 
@@ -385,7 +385,7 @@ with this re-registration; nothing in NATURE moved on this branch.
 ## Re-read in the detector's own clock (2026-09-22)
 
 The model owner's word of records 678, 707 and 709 of docs/LOG_2026-09-20.md.
-`tools/weak_readings.py` reads the trigger off the neutron's own
+`tools/click_readings/weak.py` reads the trigger off the neutron's own
 `become` line as its count at the trigger (`counted`, within the pinned
 range of counts) and the W's click as the proton's own record; the
 survival curve in the betas' births (the click's tick less the beta's

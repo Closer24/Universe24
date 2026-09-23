@@ -32,8 +32,8 @@ one import; no run). Nothing here is registered or decided.
   ([DERIVATIONS_BEAM 5.2](../../DERIVATIONS_BEAM.md#52-the-clock-the-gravitational-redshift),
   reached at first order). GameBoard readings of probes, not admissible in
   NATURE (record 163 (5)).
-- **Pinned under the presence.** Series U ([a lamp inside a crowd](../crowd_clock/DESIGN.md))
-  and V ([a cluster of crowds](../cluster_clock/DESIGN.md)): `k = 4 F / 2^16`
+- **Pinned under the presence.** Series U (a lamp inside a crowd; its design deleted on 2026-09-23)
+  and V (a cluster of crowds; its design deleted on 2026-09-23): `k = 4 F / 2^16`
   at the lamp's Node, F the crowd's release per source per interval, the
   detector's `1 + z = 1 + k` (DETECTOR); G2's `gravity_scalar` on main.
 - **The age moment is already the field of the rows' rule.** optical-v1
@@ -188,7 +188,7 @@ of step 5, ENGINE.md, the catalog's clock row and the readings of section
 [BEAM_LAW section 3](../../BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 (step 5), note 25 and note 41;
 [DERIVATIONS_BEAM section 5](../../DERIVATIONS_BEAM.md#5-general-relativity-the-equation-of-the-delay-field);
-[series E](../../../examples/events/redshift/README.md); [series U](../crowd_clock/DESIGN.md);
-[series V](../cluster_clock/DESIGN.md); [optical-v1](../gr_rows/DESIGN.md);
+[series E](../../../examples/events/redshift/README.md); series U (deleted on 2026-09-23);
+series V (deleted on 2026-09-23); [optical-v1](../gr_rows/DESIGN.md);
 [NATURE](../../NATURE.md) rows 3, 4a, 4b and 11a;
 [the three tests](../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).

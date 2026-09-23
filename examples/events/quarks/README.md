@@ -71,7 +71,7 @@ shear), which the engine decides. Since 2026-09-21 every world's `replay`
 block pins the engine's record of its first 100 intervals by kind (the
 steps with their Nodes and the hand-overs, GAMEBOARD; the face clicks of
 the bodies that left, DETECTOR), written from the engine as shipped by
-`replay_register.py` and replayed bit-exact by
+`tools/click_readings/quarks_replay.py` and replayed bit-exact by
 `tests/test_quarks_expectations.py` (e); the fate's `engine_first_step`
 is the replay's first step. The crossing rule (BEAM_LAW note 48, PR #468)
 moved these readings after the register was written: the kicked u of
@@ -93,7 +93,7 @@ readings of the table below are of the run before the rule.
 | `q6_proton_kick` | the push at tick 2 on the ends +-336 852 257 664 (the one-Link lines alone; DETECTOR); the kicked u steps -x at tick 6 and then every 6 or 7 intervals (the replay's exact ticks), its push falling to the electric residual beyond the reach, out through `face:-x` at tick 64 (the toy's about 70 to 90; GAMEBOARD, DETECTOR); the other two a bound pair; 870 rows per interval from tick 4; the read mass 20 |
 | `q7_proton_dressed` | the ends 418 547 308 612 (or 613, the accumulator's one unit on the d's non-whole strong charge); no step; the read mass 1836 |
 
-The criteria of the readings tool (`tools/quarks_readings.py`): a record
+The criteria of the readings tool (`tools/click_readings/quarks.py`): a record
 check (every run completed, the books balanced at every tick) fails the
 tool; every reading above is registered inside or outside and never
 moved.
@@ -103,7 +103,7 @@ moved.
 ```bash
 python examples/events/quarks/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/quarks examples/events/quarks/q*.json
-PYTHONPATH=src python tools/quarks_readings.py artifacts/quarks
+PYTHONPATH=src python tools/click_readings/quarks.py artifacts/quarks
 ```
 
 ## What was measured (2026-09-21)
@@ -114,7 +114,7 @@ run, the design's base main `25a62924`), the project's environment
 (Python 3.14.0rc2, numpy 2.5.3), four cores, two jobs: every run
 completed with the books balanced at every tick, 10 min 37 s of wall
 time for the seven (the runner's seconds per world in the table, 20 min
-in all), the peak resident set below 1.8 GB. `tools/quarks_readings.py`:
+in all), the peak resident set below 1.8 GB. `tools/click_readings/quarks.py`:
 0 record checks failed, 55 readings inside, 0 outside among the tool's
 pins (the pushes, the border, the read mass, the fates, the books);
 two of the page's pins on the kicked world read outside (the table) and

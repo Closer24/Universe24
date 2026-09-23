@@ -165,7 +165,7 @@ worktree of `claude/universe24-new-3ytqde` at the tip `9fc895a2`, the
 Beam Law `beam-v1`), Python 3.14.0rc2, numpy 2.5.3, headless, four cores,
 `tools/run_series.py --jobs 4`; every run completed (6.5, 9.1, 9.9, 9.1 s
 for `control`, `mass`, `heavy`, `near`) with the books balanced at every
-tick; `tools/lensing_readings.py`: 0 record checks failed, 16 readings
+tick; `tools/click_readings/lensing.py`: 0 record checks failed, 16 readings
 inside, 0 outside, none moved.
 
 DETECTOR readings, the window [110, 400] (the deflection is the centroid's
@@ -249,7 +249,7 @@ cross past it. The register entry is
 
 **The expectation, written before the runs** (the design's offline
 flight of the beam beside the replayed crowd, `scratchpad/meeting/k_deflection.py`;
-the brackets fixed in `tools/lensing_readings.py`): `mass` the centroid
+the brackets fixed in `tools/click_readings/lensing.py`): `mass` the centroid
 -3.0 +- 0.5 pixels toward the mass, 0 +- 0.5 in z, the width about 6.0,
 the mean age about 90.4 (+- 1), the count ratio 0.996 (+- 0.05), no ray
 on the faces; `heavy` -4.3 with 209 rays on the faces (+- a quarter);
@@ -298,12 +298,12 @@ Run the worlds:
 ```bash
 python examples/events/lensing/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/lensing examples/events/lensing/control.json examples/events/lensing/mass.json examples/events/lensing/heavy.json examples/events/lensing/near.json
-PYTHONPATH=src python tools/lensing_readings.py artifacts/lensing
+PYTHONPATH=src python tools/click_readings/lensing.py artifacts/lensing
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/lensing_meeting examples/events/lensing/control_meeting.json examples/events/lensing/mass_meeting.json examples/events/lensing/heavy_meeting.json examples/events/lensing/near_meeting.json examples/events/lensing/lens_meeting.json
-PYTHONPATH=src python tools/lensing_readings.py artifacts/lensing_meeting
+PYTHONPATH=src python tools/click_readings/lensing.py artifacts/lensing_meeting
 ```
 
-`tools/lensing_readings.py` prints the record checks, the DETECTOR tables
+`tools/click_readings/lensing.py` prints the record checks, the DETECTOR tables
 above (the worlds without the key against the derivation, the worlds
 under the key against the offline flight) and the GAMEBOARD replay of
 every world (`--no-replay` skips it).

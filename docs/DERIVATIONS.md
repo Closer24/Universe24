@@ -4252,7 +4252,7 @@ stated rules on a box of 25³ to 41³ Nodes (seconds each, 45 s for the
 longest integer run), cited after each derivation and never used as its
 source. Unlike rounds 4 to 6 the scratch script is committed this time, as
 `tools/derivations_round7.py` (its subcommands `meanfield`, `integer`,
-`edge`, `home`, `walk`, `transit`), because the run plan of section 50
+`edge`, `home`, `walk`, `transit`; deleted on 2026-09-22 with round 8's, record 871, in the tree's history at 59c6b811), because the run plan of section 50
 quotes its fixed point as the prediction; it is not an engine run and
 establishes nothing about the engine.
 
@@ -5140,7 +5140,7 @@ each with what today's engine already has and what is new; sections 52 to
 engine that implements the law, and the first three worlds to run on it.
 As in every round: bottom-up from the stated rules, no physics assumed,
 no engine run, no edit to the engine; the numbers of sections 52 to 54
-come from `tools/derivations_round8.py` (committed, an iteration of the
+come from `tools/derivations_round8.py` (committed then, deleted on 2026-09-22, record 871; an iteration of the
 stated rules on a box of 41³ to 129 × 41² Nodes, seconds to a minute
 each), cited after each derivation and never used as its source. Nothing
 below is a decision: every point is the orchestrator's and the

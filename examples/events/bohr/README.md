@@ -105,7 +105,7 @@ lines of a finite fan), so j = 3 falls between the GameBoard radii 15 and
   derivation; the phase's turn per orbit, the fraction of a circle beyond
   whole circles, measured from the body's phase at successive closings
   against the design's j - floor(j).
-- **The coherent record** (DETECTOR, `tools/bohr_readings.py`): the clicks
+- **The coherent record** (DETECTOR, `tools/click_readings/bohr.py`): the clicks
   of the electron's rays on each side face, assigned to the turn in which
   the ray was released (the click's tick less the flight time of its
   heading from the centre's plane to the face, the engine's own
@@ -127,7 +127,7 @@ lines of a finite fan), so j = 3 falls between the GameBoard radii 15 and
 ```bash
 python examples/events/bohr/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/bohr examples/events/bohr/r*.json
-PYTHONPATH=src python tools/bohr_readings.py artifacts/bohr
+PYTHONPATH=src python tools/click_readings/bohr.py artifacts/bohr
 ```
 
 Each run takes 20 to 90 s (the proton's 262 rays per interval); the
