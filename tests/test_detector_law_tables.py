@@ -176,3 +176,94 @@ def test_b_the_pairs_two_arms_are_born_together_and_reach_their_bars():
     assert birth["arms"] == 1 and birth["labels"] == [[0, 1]] and "arm_records" not in birth
     with pytest.raises(ValueError, match="arms 2 does not divide"):
         parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0], [0, 1, 0]]))
+
+
+def splitter_world(weights: list[list[int]], turns: list[list[int]], inputs: bool = True) -> dict:
+    """A layer of 30 x 20 x 1 (z folded, x and y open), the lamp at (2, 2, 0) on +x with a train
+    of 6 periods, one splitter of the TABLE form at (12, 2, 0) arriving from -x (the input
+    direction +x) with its two outputs +x and +y, the split's weights and turns given."""
+    document = chain_world()
+    document["shape"] = [30, 20, 1]
+    document["boundary"] = {"x": "open", "y": "open", "z": "periodic"}
+    document["ticks"] = 120
+    lamp = document["measured"][0]
+    lamp["position"] = [2, 2, 0]
+    lamp["lamp"]["train"] = 6
+    lamp["lamp"]["rate"] = [1, 1]
+    lamp["amount"] = 1
+    table: dict = {"rule": "rerelease", "weights": weights, "turns": turns}
+    if inputs:
+        table["inputs"] = [[1, 0, 0]]
+    else:
+        # an opening's fan: one flat row of weights over the directions, no inputs
+        table["weights"], table["turns"] = weights[0], turns[0]
+    document["measured"] = [
+        lamp,
+        {
+            "position": [12, 2, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0], [0, 1, 0]],
+            "table": {"light": table},
+        },
+    ]
+    document["detectors"] = []
+    return document
+
+
+def test_c_the_splitters_table_re_emits_the_read_phase_on_two_outputs():
+    """(c) The splitter's table (DECLARATIONS.md row 2b; ALGEBRA.md 4.6): on a layer the lamp's
+    train arrives at the splitter at (12, 2, 0) from -x; the split's weights [21, 20] with the
+    turns [0, 16] (a quarter turn on the +y output at N = 64) re-emit it on +x and +y: over the
+    window after the arrival the peak levels driven at the output Nodes (13, 2, 0) and
+    (12, 3, 0) stand in the ratio 21 : 20 within 3 percent and the +x peak is 21 / 29 of the
+    input's read amplitude within 3 percent (GAMEBOARD, the isometry), the wave beyond the
+    outputs nonzero, the phase read at the two output Nodes (component 1, the amplitude each
+    output's peak) differs by 16 steps within 2 on at least three quarters of the intervals
+    of the window, the splitter's Node stays 0 (held, the take), no click and
+    no offer at the splitter's cell (its pointer 0), the books balanced. The edge cases: a
+    split without inputs (an opening's fan) refused under the rule; a row whose norm is no
+    square ([1, 1]) refused at load naming the norm."""
+    world = parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]]))
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    assert len(simulation.splitters) == 1
+    splitter = simulation.splitters[0]
+    assert splitter.inputs[0][0] == (11, 2, 0) and splitter.outputs == [(13, 2, 0), (12, 3, 0)]
+    peak_x = peak_y = 0
+    differences: list[int] = []
+    for _ in range(90):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+        live = next(iter(simulation.records.values()), None)
+        if live is None:
+            continue
+        assert int(live.now[12, 2, 0]) == 0
+        if simulation.tick < 40:
+            continue
+        peak_x = max(peak_x, abs(int(live.now[13, 2, 0])))
+        peak_y = max(peak_y, abs(int(live.now[12, 3, 0])))
+        if peak_x and peak_y:
+            read_x = simulation.read_phase(live, (13, 2, 0), peak_x)
+            read_y = simulation.read_phase(live, (12, 3, 0), peak_y)
+            if read_x is not None and read_y is not None:
+                differences.append((read_y[0] - read_x[0]) % world.phase_steps)
+    assert peak_x > 0 and peak_y > 0
+    ratio = peak_x / peak_y
+    assert abs(ratio - 21 / 20) < 0.03 * 21 / 20, (peak_x, peak_y)
+    read_peak = splitter.peaks[live.identity][0]
+    assert abs(peak_x - 21 * read_peak / 29) < 0.03 * read_peak, (peak_x, read_peak)
+    assert abs(int(live.now[14, 2, 0])) + abs(int(live.now[12, 4, 0])) > 0
+    assert len(differences) >= 20
+    near = sum(1 for d in differences if min((d - 16) % 64, (16 - d) % 64) <= 2)
+    assert near * 4 >= 3 * len(differences), differences
+    cell = simulation.cell_index[12, 2, 0]
+    assert not any(line["event"] == "click" and line.get("node") == [12, 2, 0] for line in lines)
+    assert all(live.pointers[cell] == 0 for live in simulation.records.values())
+    with pytest.raises(ValueError, match="a splitter declares its inputs"):
+        parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]], inputs=False))
+    with pytest.raises(ValueError, match="no square"):
+        DetectorLawSimulation(parse_nature_beam_world(splitter_world([[1, 1]], [[0, 16]])))

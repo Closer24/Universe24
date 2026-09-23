@@ -3756,10 +3756,15 @@ def _detector_law_load_checks(
                 f"{BEAM_LAW}: measured[{number}].lamp.turns is refused under {DETECTOR_LAW_RULE} "
                 "(a lamp inserts at its Nodes by its clock; there is no fan)"
             )
-        if any(split is not None for split in entry.splits):
+        # A split with `inputs` is the TABLE form's splitter (build 2, component
+        # 3: the split's integer matrix on the record's read phase, the outputs
+        # re-emitted at the table's output Nodes); a split without inputs is
+        # an opening's fan, refused under the rule.
+        if any(split is not None and split.inputs is None for split in entry.splits):
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}] declares a fan (a rerelease split with weights), "
-                f"refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is no fan)"
+                f"{BEAM_LAW}: measured[{number}] declares a fan (a rerelease split with weights and "
+                f"no inputs), refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is "
+                "no fan; a splitter declares its inputs)"
             )
     for index, family in enumerate(families):
         # A massive kind (massive-record-v1) has no declared clock: its

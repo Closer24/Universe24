@@ -66,7 +66,7 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import by_drive
+from event_universe.core.integer import by_drive, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines
 from event_universe.events.amplitude import cell_of, rungs
 from event_universe.events.world import (
@@ -145,6 +145,32 @@ class LiveRecord:
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
+
+
+@dataclass
+class Splitter:
+    """A splitter of the TABLE form (detector-law-v1, build 2, component 3;
+    DECLARATIONS.md row 2b, ALGEBRA.md 4.6): a measured event whose `table`
+    declares a `rerelease` split with `inputs`, one weights row and one
+    turns row per input direction, its `directions` the outputs. Its Node
+    is held at 0 and takes the arriving wave (a receiver that books no
+    offer); per interval, per light record, the record's phase and
+    amplitude at each input Node (the Node the input direction arrives
+    from) are read (`nearest_phase`, the amplitude the largest level the
+    input has shown to this record, an integer register of the table), and
+    each output Node is driven at the level SUM_i w_ij A_i C[phi_i + t_ij]
+    / (256 R_i), R_i the root of the row's norm (exact, checked at load:
+    the split an isometry, 21^2 + 20^2 = 29^2), verbs B (the matrix on the
+    read phase), D (one division per output per interval, no remainder
+    carried: the level is the read phase's function, not an accumulation)
+    and T (the drive of the output Node, as the lamp's)."""
+
+    number: int
+    family: int
+    node: tuple[int, int, int]
+    inputs: list[tuple[tuple[int, int, int], tuple[int, ...], tuple[int, ...], int]]
+    outputs: list[tuple[int, int, int]]
+    peaks: dict[int, list[int]] = field(default_factory=dict)
 
 
 @dataclass
@@ -287,6 +313,45 @@ class DetectorLawSimulation:
                 mask[:] = True
         self.records: dict[int, LiveRecord] = {}
         self.blocks: list[Block] = []
+        # The splitters of the TABLE form (build 2, component 3): their Nodes
+        # take and book nothing; their outputs are driven from the read phase.
+        self.splitters: list[Splitter] = []
+        self.splitter_mask = np.zeros(self.shape, dtype=bool)
+        for number, entry in enumerate(world.measured):
+            for family, split in enumerate(entry.splits):
+                if split is None or split.inputs is None:
+                    continue
+                node = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+                inputs = []
+                for k, direction in enumerate(split.inputs):
+                    vector = world.directions[direction]
+                    weights, turns = split.weights[k], split.turns[k]
+                    norm = sum(w * w for w in weights)
+                    root = integer_root(norm)
+                    if root * root != norm:
+                        raise ValueError(
+                            f"{BEAM_LAW}: measured[{number}].table: the split's row {list(weights)} has the "
+                            f"norm {norm}, no square: under {DETECTOR_LAW_RULE} the splitter's isometry "
+                            "divides by the root of the norm exactly (21, 20 against 29)"
+                        )
+                    source = (
+                        (node[0] - int(vector[0])) % self.shape[0],
+                        (node[1] - int(vector[1])) % self.shape[1],
+                        (node[2] - int(vector[2])) % self.shape[2],
+                    )
+                    inputs.append((source, weights, turns, root))
+                outputs: list[tuple[int, int, int]] = []
+                for direction in entry.directions:
+                    vector = world.directions[direction]
+                    outputs.append(
+                        (
+                            (node[0] + int(vector[0])) % self.shape[0],
+                            (node[1] + int(vector[1])) % self.shape[1],
+                            (node[2] + int(vector[2])) % self.shape[2],
+                        )
+                    )
+                self.splitters.append(Splitter(number, family, node, inputs, outputs))
+                self.splitter_mask[node] = True
         # The block's count at a light record's first rung at its cell
         # (the click's `clock`, the body's event in the body's own clock).
         self.rung_counts: dict[tuple[int, int], int] = {}
@@ -1060,6 +1125,8 @@ class DetectorLawSimulation:
                 port_motion += motion
         live.port_motion = port_motion
         live.before = live.now
+        # a splitter's Node takes and books nothing (component 3)
+        offer[self.splitter_mask] = 0
         offer = offer[self.absorbing]
         cells = self.cell_index[self.absorbing]
         if live.age < grace:
@@ -1076,6 +1143,42 @@ class DetectorLawSimulation:
                     live.first_rung[cell] = self.tick
         live.now = nxt
         self._drive(live)
+        self._split(live)
+
+    def _split(self, live: LiveRecord) -> None:
+        """The splitters' action on a light record after its step (component
+        3): the phase read at each input Node, the outputs driven."""
+        steps = self.world.phase_steps
+        for splitter in self.splitters:
+            if splitter.family != live.family:
+                continue
+            peaks = splitter.peaks.setdefault(live.identity, [0] * len(splitter.inputs))
+            levels = [0] * len(splitter.outputs)
+            driven = False
+            table = self._cosine_table(steps)
+            for k, (source, weights, turns, root) in enumerate(splitter.inputs):
+                level_now = int(live.now[source])
+                level_before = int(live.before[source])
+                peaks[k] = max(peaks[k], abs(level_now), abs(level_before))
+                if peaks[k] == 0:
+                    continue
+                reading = nearest_phase(
+                    level_before,
+                    level_now,
+                    peaks[k],
+                    (live.period_numerator, live.period_denominator),
+                    steps,
+                )
+                if reading is None:
+                    continue
+                driven = True
+                phi = reading[0]
+                for j, (weight, turn) in enumerate(zip(weights, turns, strict=True)):
+                    cosine = int(table[(phi + turn) % steps])
+                    levels[j] += (weight * peaks[k] * cosine) // (UNIT * root)
+            if driven:
+                for j, output in enumerate(splitter.outputs):
+                    live.now[output] = levels[j]
         live.age += 1
 
     def record_form(self, live: LiveRecord) -> int:

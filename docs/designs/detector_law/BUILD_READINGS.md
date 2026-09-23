@@ -60,7 +60,11 @@ eps 0.011, the extent 36.2), no coupling, the FLAT seed on the cells; at rest
 3500 intervals; at k = 3 the ramp 1500 and the hold 8000. The folders
 `examples/events/massive_record/EXPLORATORY_layer_rest_14/` and
 `EXPLORATORY_layer_k3_14/` (the events, the run's record without its audit, the
-world; copied from artifacts/ for the visualizer; not registered).
+world; copied from artifacts/ for the visualizer; not registered). The k3 copy's
+`mode` lines read [0, 0, 0] at every interval: that world declares no light
+(no lamp, no coupling, no emission) under its `mode_axis`, so the three
+residue sums of light's field are empty, not a stale seed; the copy is the
+run as made.
 
 | World | The clicks (DETECTOR, the reader of record) | The summed record's peak (GAMEBOARD) | The centre cell's peak (GAMEBOARD) | The algebra's numbers (COMPUTATION) |
 | --- | --- | --- | --- | --- |
