@@ -23,7 +23,7 @@ BLOCKS = {
         "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.55\\linewidth]{figures/lattice.pdf}",
     ),
     "simulator_led": (
-        "\\paragraph{How the simulator led to the results.}",
+        "\\paragraph{From the physics to the mathematics: the postulates and what each forces.}",
         "\\paragraph{The reading rule and the notation.}",
     ),
     "road": (
@@ -119,7 +119,7 @@ DEMOTED = [
 # The joins: the new headings and the sentences that show where a block went.
 JOINS = {
     "intro_pointer": (
-        "\\paragraph{Where the object came from.} How the object was reached from the GameBoard, the simulator running first and the derivations following it, is Section~\\ref{sec:route}; the GameBoard the object is computed with is Section~\\ref{sec:gameboard}.\n\n"
+        "\\paragraph{Where the object came from.} The object was not chosen first. One Node with six Ports, one Link per interval and bounded integers were the assumptions of a simulator; its rules, written one by one as operations on a state vector, turned out to be six maps on one ring, and the maps that preserve a Node and its causal cone turned out to be the $48$ signed permutations, their rotations the group of order $24$ (Theorem~\\ref{th:group}); what did not converge to that group and that ring was not put in. The road, from the postulates to the objects they force and back, with the simulator running first and the derivations following it, is Section~\\ref{sec:route}; the GameBoard the object is computed with is Section~\\ref{sec:gameboard}.\n\n"
     ),
     "algebra_head": (
         "\\section{The algebra: the group, the ring and the families}\\label{sec:algebra}\n\n"
@@ -150,7 +150,7 @@ JOINS = {
     ),
     "route_head": (
         "\\section{How the algebra was reached: from the GameBoard to the group}\\label{sec:route}\n\n"
-        "The order of this paper is not the order of the finding. The object of Section~\\ref{sec:algebra} was reached from the GameBoard: from one Node and its six neighbours, one message per Link per interval, through the simulator's runs, in dated steps; what did not converge to the group and the ring was not put in. This section gathers that road as it was recorded: the simulator's part, how the things of physics entered the algebra, the dated steps, the platform on which a formula is arrived at by two roads, and the check of the roads.\n\n"
+        "The order of this paper is not the order of the finding. The object of Section~\\ref{sec:algebra} was reached from the GameBoard: from one Node and its six neighbours, one message per Link per interval, through the simulator's runs, in dated steps; what did not converge to the group and the ring was not put in. This section states the two directions first, as two tables (the postulates and what each forces; the objects and what each gives back, with its word), then the road from the operations to the group, and then the road as it was recorded: the simulator's part, how the things of physics entered the algebra, the dated steps, the platform on which a formula is arrived at by two roads, and the check of the roads.\n\n"
     ),
     "comparison_head": (
         "\\section{The comparison with nature, and the failures by cause}\\label{sec:comparison}\n\n"

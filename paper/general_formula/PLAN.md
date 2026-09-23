@@ -6163,3 +6163,47 @@ Two passages, both in Section 2, through corrections:
   pending at submission) beside the derivation record.
 54 pages (NUMBERS.md). The mathematician's check of the two passages
 follows, per the Boss's order.
+
+## Applied (2026-09-23, the Boss's order of 01:05Z, step 2, commit 3): the route chapter gathered with the postulate table and the two-direction table; the postulates named beside their numbers
+
+- Section 2, after the definitions list: "The postulates, by name",
+  the owner's tenth word: P1 bounded integers; P2 the cubic lattice,
+  six Ports; P3 the six operations; P4 locality; P5 one Link per
+  interval; P6 one read-out; P7 the declared tables; P8 the families as
+  integers; P9 the blind flight; P10 the click axiom; P11 clicks only.
+  The numbers stay where the paper already cites them (the law
+  section states each; the ledger and the text cite by number); the
+  names are used beside the numbers in the new tables.
+- Section 6 opens with the two directions as two tables, the owner's
+  ninth word: Table 4, "From the physics to the mathematics", one row
+  per postulate (P2; P5 with P4; P1; P3 the merge; P7 with P8; P3 the
+  accumulator; P6 with P11 and P10; P9), the physical assumption and
+  the object it forces (the lattice and the group of order 24; the
+  translation group's shift, the causal front, the Manhattan bound,
+  the pace; Z_N and the free Z-module; Z[Z_N] and (G); the integer
+  matrices and (B), the pair's record; Eq. (1) with (T) and (D); (E),
+  Theorem 4 and the Outside; no dispersion, a rule chosen among few).
+  Table 5, "From the mathematics back to the physics", nine rows, the
+  object, what it gives, the word: the books and the walk (exact); the
+  Ports and the group (exact; c recovered in the limit of the grain);
+  Z[Z_N] and ev (Born's form and the counts exact; the rule and Young's
+  spacing recovered in a limit); the pair's record (the rational exact;
+  Tsirelson recovered in a limit); the push under a shell average
+  (recovered in a limit under a shell average); the step rule (exact;
+  the third law to the apportioning's grain); the clicks under the
+  named hypotheses, in the opening paragraph's words (reached under
+  named hypotheses); the flow per Euclidean Link and the closure
+  congruence (conjectured); the detector's counts (compared). Every
+  word is the ledger's ground word for that row.
+- Then "From the operations to the group", the physicist's six items
+  of GROUP_STRUCTURE.md section 3 in one paragraph, cited at its merge
+  on main (7739bbbe, a new reference), the paper writing no second
+  definition; then the road as it was recorded (the five blocks of
+  commit 1, unchanged).
+- The Introduction's pointer "Where the object came from" is now the
+  five lines of the owner's fifth word: the object not chosen first;
+  the simulator's assumptions; the rules turned out to be six maps on
+  one ring and the maps preserving a Node and its cone the 48; what did
+  not converge was not put in; the road is Section 6.
+- The route section's opening join says the two tables come first.
+56 pages, 90 references (NUMBERS.md).
