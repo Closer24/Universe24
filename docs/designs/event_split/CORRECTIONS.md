@@ -419,6 +419,72 @@ weight) and passes the three tests, and its cost is a moved pin (row
 registered photon's label momentum and clock energy disagree by 4.62,
 which the design of the lamp's label (kind 1) must then reconcile.
 
+**Both ties, for the owner's choice after the pilot (the Boss's order of
+07:17Z, record 1313).** The sentence is made true in the code by tying
+the family's two integers, and there are two ways, each moving
+different things (COMPUTATION on the integers, no engine line in
+either; both stated here so that the choice is his):
+
+- The chief physicist's tie: the clock raised to the label. The family
+  `light` declared with `quantum` h = 5 and the pair `phase_per_link`
+  [22, 3] (3 h n / d = 110 = e_D on the axis headings, the label kept at
+  |**u**| = Q = 64), so that lambda = c x period = (64 / 110) x (64 x 3 /
+  22) = 5.078 Links in place of 4.654. What it moves: the push weight
+  111 KEPT, so row 13's -1.93 and -3.86 pixels KEPT; the lamp spends 5
+  units per phase step; rows 2a and 10 re-pinned by their own scripts at
+  the new wavelength before any run: for the two slits (slits_huygens_pin.py
+  at the tied world, 2026-09-23 07:35Z) the clicks' visibility over the
+  pinned bright and dark pixels 0.9138 against 0.9659 untied (nature's
+  0.98: the tie moves row 2a AWAY from nature by 0.05), Pearson with the
+  two-source cosine 0.850 against 0.891, wall 919, screen 1853 on 103
+  pixels, faces 1324; for the openings the lamp's declared turns in the
+  world files are computed for the old rate (run_10_worlds.py), so the
+  worlds must be regenerated at the tied rate before run_10_pins.py can
+  print the exact sums at the new Fresnel numbers (1.329 at w = 27).
+  Where the two integers live: in each world file's own `families`
+  entry (opening_w27, opening_w9, slits_huygens, row 13's pin worlds);
+  NOT in Malus, whose world takes the photon entity of
+  `examples/events/entities/families.json` (quantum 1, no rate pair, its
+  phase from the polariser's half-angle tables and the wheel at N = 256),
+  shared by every world that names that entity, nor in the light clock's
+  `clock` family (quantum 1, no rate pair): the tie by the pair does not
+  touch them, and the quantum 5 would touch every world of the entity if
+  the entity were tied; the owner chooses the four worlds' own entries or
+  the entity.
+- Reviewer 3's tie: the label lowered to the clock. The lamp's label
+  |**u**| = 14 so that e_D = isqrt(3 x 14 x 14) = 24 exactly = 3 h n / d
+  at h = 1 and the registered rate, the wavelength KEPT at 4.654 Links.
+  What it moves: the push weight 111 to 24, row 13's -1.93 and -3.86
+  pixels to -0.42 and -0.84 (as computed above); light's flow label
+  scaled by 14 / 64 wherever light is a crowd's SOURCE; `family_flight`
+  extended to a non-massive family with its own label scale (a
+  declaration of kind 1, ALGEBRA 5.3); rows 2a and 10 unmoved.
+
+A fact of the record that both ties must face (found 2026-09-23 07:45Z
+in the loader, world.py about line 604, DERIVATIONS_BEAM 17.6 N5): the
+engine already carries an E = h f identity of its own, `3 h n = Q S
+d_K` (the exchange's accounting, the books' balance, WITHDRAWN until
+derived; a diagnostic line at load naming each paid family off it and
+its gap, a refusal only where the world declares `books`, which no
+pilot world does), and it differs from the sentence's form on the
+headings (3 h n / d = e_D = isqrt(3 u . u), 110.85 at |**u**| = Q) by
+exactly sqrt 3: N5 wants h n / d = Q S / 3 = 21.33, the sentence wants
+h n / d = 110 / 3 = 36.67. Neither is on the law today (ALGEBRA 5.3,
+"the content and the phase rate untied on main"); the physicist's tie is
+off N5 by sqrt 3 and the loader prints that gap as its diagnostic line;
+Reviewer 3's tie is off it by the same factor in the other direction.
+The sentence of record 1297 chooses the energy on the headings, the
+push's weight; the sqrt 3 is stated so that the choice is the owner's.
+
+The Boss recommends the physicist's tie to the owner, since it keeps the
+measured deflection (row 13) and moves only a wavelength the scripts
+re-pin; the chief physicist agrees, with the cost named: row 2a's
+expected visibility falls to 0.914 at the tied family, further from
+nature, and the openings' exact sums are re-derived only after their
+worlds are regenerated. The owner's "bug" of record 1267 is, by the pins
+of M11, not a bug in free space; the Highlights say so plainly in the
+rewritten line (the Boss's).
+
 **Form W or Form P: is it derived from the law? (the owner's question of
 06:39Z, record 1301; the Boss's answer corrected where it is wrong).**
 The Boss's answer: the law reads both moments on the same row and does
@@ -530,17 +596,32 @@ exact flight time on the arriving line, BEAM_LAW note 45; the cells of
 the wall, the faces and the pixels; the clicks of 4096 births by
 `cell_of`). Its findings, in the order they bind:
 
-1. **The reading machinery is right** (section V): the law as built,
-   straight lines with the one-time split over the world's forward fan at
-   the opening's Nodes, gives a smooth bell (the pixel-to-pixel roughness
+1. **The reading machinery is NOT YET the proof** (section V; Reviewer
+   3's read of ea9d12ee, record 1313, AGREED): the law as built, straight
+   lines with the one-time split over the world's forward fan at the
+   opening's Nodes, gives a smooth bell (the pixel-to-pixel roughness
    0.10) with w x FWHM / lambda = 1.055 at w = 27 against RUN_10's 0.916
-   and 0.674 at w = 9 against 0.891; the residual is the phase form of
-   Reviewer 3's D5 (the accumulator seeded at the table's count at the
-   record's age on the new line), which rounds a re-emitted row's time by
-   up to one Link's time, 1.7 intervals, a fifth of a turn at lambda =
-   4.65 Links: the registered engine gives a re-emitted row its own age
-   and is exact. D5's form is therefore itself a source of error at the
-   registered wavelength (a finding against my own design text).
+   and 0.674 at w = 9 against 0.891. The residual is the script's own:
+   it models the split at the opening as a TURNED row in reseed_flight's
+   form (the fan's rows advance by the record's age on the flight table,
+   `Line.made(tau)` with the record's tau, the old residue dropped), which
+   rounds a re-emitted row's time by up to one Link's time, 1.7
+   intervals, a fifth of a turn at lambda = 4.65 Links; the engine
+   re-creates a re-emitted row at the age 0 with its phase carried
+   (nature_beam.py, the rerelease lines about 5812; amplitude-v1 section
+   2.1) and is exact. So V does not reproduce the exact sums, and "the
+   reading machinery is right" does not stand until the script's
+   apparatus split is brought to the engine's own re-emission rule (a
+   new row at age 0, its line's residue its own, the phase carried) and
+   RUN_10's 0.916 and 0.891 (and w = 9's) are reproduced; until then no
+   number of split_pins.py is a pin, every one a COMPUTATION of the
+   script. The same rounding is in every section that creates rows on
+   the record's age: C (the openings and the slits under the coin), E
+   (the slower clocks) and F (the turn scan), whose rows all advance by
+   the record's tau on their lines; section G (the hop) uses exact times
+   per hop and carries no such rounding. The coin's verdict below
+   therefore rests on G (speckle at lambda = 16, 32 and 64 Links) and on
+   the dispersion diagnosis, not on C, E and F alone.
 2. **The copy rule is a diffusion** (section A): in one dimension its
    norm grows as 2^(t / 2) and its spread as 0.71 sqrt t; the coin's norm
    is conserved and its spread 0.54 t, a front (M10 confirmed).
@@ -569,7 +650,17 @@ the wall, the faces and the pixels; the clicks of 4096 births by
    (flat at lambda = 9.2, a dip at the centre at 18.5): the two-dimensional
    wave's wake and the pulse's time profile enter the reading, and the
    reference model itself is not yet right; not a verdict on the field
-   form, a statement that its pins are not yet computed.
+   form, a statement that its pins are not yet computed. Reviewer 3's
+   line (record 1313), agreed: section H is NO REFERENCE YET. Its failure
+   is the reference model's, not the field form's: the absorbing Nodes
+   zeroed at every step are Dirichlet reflectors, not absorbers; the
+   source is a one-step impulse, not the clock's frequency; the far edges
+   are damped by a hand-set factor. The right reference is the lattice
+   Helmholtz problem at the clock's frequency (a monochromatic source at
+   the aperture, an outgoing condition at the edges) at a wavelength of
+   ten Links or more, its pattern compared with the Fresnel sum at the
+   same Fresnel number; until that is computed, section H says nothing
+   for or against a lattice wave.
 6. **The registered bars** (section D): 98 percent of the pair record's
    norm leaves through the open faces, alice_plus reads 0.020 and
    bob_plus 0.0008, alice_minus and bob_minus nothing: NOT READABLE
