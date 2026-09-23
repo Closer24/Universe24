@@ -5318,3 +5318,18 @@ condition after the CHSH value ("a prediction once the wheel meets
 no-signalling in the order") not added: no words left under 250. 250
 words (mathematics one token each). The PDF from the true source, read
 back. 52 pages.
+
+## Applied (2026-09-23, the reviewer's whole read through the Boss's order of 00:50Z): Born's form exact, Born's rule its limit
+
+A fourth commit on `paper-abstract-names`, the abstract only. The one
+claim beyond the body, "the Born rule its square at the click", is
+brought to the ledger's word (row 276, the click's square Born's form
+exact; Born's rule its limit with a rate 1/N per cell): "An amplitude
+is an integer sum of N-th roots of unity, Born's form its square at the
+click under one axiom of the apparatus, Born's rule its limit;
+interference counts, marginals and CHSH are exact rationals." The two
+words this cost are taken from the central sentence, the same claim:
+"Everything compared with nature is a count between clicks at a
+detector or a ratio of such counts". The optional "from the measured
+CHSH value" not added: no words left. 250 words (mathematics one token
+each). The PDF from the true source, read back. 52 pages.
