@@ -98,3 +98,81 @@ def test_a_the_phase_reading_reads_the_clocks_phase_back_at_every_age():
         nearest_phase(1, 1, 0, (1, 1), 64)
     massive = [f for f, family in enumerate(world.families) if family.massive_kind]
     assert massive == []
+
+
+def bar_world(arms: int, directions: list[list[int]], branches: list[list[int]] | None = None) -> dict:
+    """The bar of DECLARATIONS.md row 1a (21 x 1 x 1, y and z periodic of one layer, x open),
+    the light family's clock [77, 25] on N = 64, one lamp at x = 10 with the arms and the
+    directions given (the joint labels `branches`), a train of 2 periods, 20 births held."""
+    lamp: dict = {"rate": [1, 1], "wheel": [1, 64], "directions": directions, "train": 2, "arms": arms}
+    if branches is not None:
+        lamp["branches"] = branches
+    document = chain_world()
+    document["shape"] = [21, 1, 1]
+    document["ticks"] = 60
+    document["measured"] = [
+        {
+            "position": [10, 0, 0],
+            "family": "light",
+            "amount": 20,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": directions,
+            "lamp": lamp,
+        }
+    ]
+    document["detectors"] = []
+    return document
+
+
+def test_b_the_pairs_two_arms_are_born_together_and_reach_their_bars():
+    """(b) The pair's two arms (DECLARATIONS.md rows 1a and 1d; DESIGN.md 6.3: "a pair record
+    is two records with one birth stamp and opposite trains; the rule's part is only that
+    both trains reach their bars"): on the bar of 21 the lamp at x = 10 with `arms` 2 on the
+    directions +x and -x and the joint labels [[0, 1], [3, 1]] births TWO records per birth on
+    one stamp (the same ordinal, u and interval; the identities the birth's and the birth's
+    plus 2^24), the +x arm's row 0 on every Node with x < 10 and the -x arm's on every Node
+    with x > 10 at every interval, the two rows equal by reflection through the lamp's Node,
+    both trains reaching the bars at x = 7 and x = 17 (a nonzero level there within 12
+    intervals of the birth), the birth line carrying arms 2, the labels and the two arm
+    records, the pair's one quantum on arm 0 (the books balanced at every interval); a lamp of
+    one arm is as it was (no mask, the identity the birth's, the birth line as before). The
+    edge case: arms 2 on three directions is refused at load naming the arms."""
+    world = parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]]))
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    reached = {7: None, 17: None}
+    for _ in range(40):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+        arms = [live for live in simulation.records.values() if live.born == 1]
+        if len(arms) < 2:
+            continue
+        plus = next(live for live in arms if live.arm == 0)
+        minus = next(live for live in arms if live.arm == 1)
+        assert plus.u == minus.u and plus.birth_tick == minus.birth_tick and plus.born == minus.born
+        assert minus.identity == plus.identity + (1 << 24)
+        assert plus.labels == ((0, 1), (3, 1)) and plus.arms == 2 and minus.arms == 2
+        assert plus.content == 1 and minus.content == 0
+        assert not np.any(plus.now[:10]) and not np.any(minus.now[11:])
+        assert np.array_equal(plus.now[10:].ravel(), minus.now[:11].ravel()[::-1])
+        for x in reached:
+            if reached[x] is None and (plus.now[x, 0, 0] != 0 or minus.now[x, 0, 0] != 0):
+                reached[x] = simulation.tick
+    births = [line for line in lines if line["event"] == "birth"]
+    assert births and births[0]["arms"] == 2 and births[0]["labels"] == [[0, 1], [3, 1]]
+    assert len(births[0]["arm_records"]) == 2
+    assert reached[7] is not None and reached[17] is not None
+    assert reached[7] - births[0]["tick"] <= 12 and reached[17] - births[0]["tick"] <= 12
+    single = parse_nature_beam_world(bar_world(1, [[1, 0, 0]]))
+    lines = []
+    simulation = DetectorLawSimulation(single, observer=lines.append)
+    for _ in range(5):
+        simulation.step()
+    live = next(iter(simulation.records.values()))
+    assert live.mask is None and live.arms == 1 and live.identity == 1
+    birth = next(line for line in lines if line["event"] == "birth")
+    assert birth["arms"] == 1 and birth["labels"] == [[0, 1]] and "arm_records" not in birth
+    with pytest.raises(ValueError, match="arms 2 does not divide"):
+        parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0], [0, 1, 0]]))

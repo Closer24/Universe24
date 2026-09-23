@@ -65,6 +65,7 @@ from math import gcd
 
 import numpy as np
 
+from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
 from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines
 from event_universe.events.amplitude import cell_of, rungs
@@ -74,6 +75,7 @@ from event_universe.events.world import (
     LABEL_SCALE,
     BlockDefinition,
     NatureBeamWorld,
+    Vector,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -132,6 +134,17 @@ class LiveRecord:
     # The Ports' first differences summed (a taken record): what an absorbing
     # block's cells read of light, the field its coupling receives.
     port_motion: np.ndarray | None = None
+    # The pair's arms (detector-law-v1, build 2, component 2; DECLARATIONS.md
+    # rows 1a and 1d, DESIGN.md 6.3): a lamp with `arms` births one record
+    # per arm on one birth stamp (the same ordinal, u and tick), each arm's
+    # row confined to its own half-space by the arm's first direction (the
+    # rows zero beyond the lamp's Node on the other side, verb D's comparison
+    # at every interval), the joint labels carried on every arm unchanged;
+    # a lamp of one arm has no mask and its record is as it was.
+    arm: int = 0
+    arms: int = 1
+    labels: tuple[tuple[int, int], ...] = ((0, 1),)
+    mask: np.ndarray | None = None
 
 
 @dataclass
@@ -807,45 +820,62 @@ class DetectorLawSimulation:
                 self.held[number][family] -= cost
                 self.ledger.held_spent[family] += cost
                 self.ledger.transit_released[family] += cost
-                live = LiveRecord(
-                    identity,
-                    number,
-                    family,
-                    u,
-                    ordinal,
-                    self.tick,
-                    cost,
-                    numerator,
-                    denominator,
-                    train,
-                    period,
-                    np.zeros(self.shape, dtype=np.int64),
-                    np.zeros(self.shape, dtype=np.int64),
-                    np.zeros(self.shape, dtype=np.int64),
-                    pointers=[0] * len(self.cell_names),
-                    first_rung=[None] * len(self.cell_names),
-                    ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
-                )
-                driven = np.zeros(self.shape, dtype=bool)
-                for node in self.lamp_nodes[number]:
-                    driven[node] = True
-                live.driven = driven
-                # The record's norm: the offer its train inserts (the squared
-                # amplitudes over the train at the lamp's Nodes), the wheel's
-                # rungs divide it; the first rung of a cell is the click's time.
-                table = self._cosine_table(world.phase_steps)
-                # The record's norm: the motion its train inserts (the squared
-                # steps of the driven amplitude over the train at the lamp's
-                # Nodes); the wheel's rungs divide it, the first rung of a cell
-                # is the click's time.
-                values = [
-                    int(table[self._phase(t, numerator, denominator, steps)]) for t in range(train + 1)
-                ]
-                values[-1] = 0
-                live.norm = len(self.lamp_nodes[number]) * sum(
-                    (values[t + 1] - values[t]) ** 2 for t in range(train)
-                )
-                self.records[identity] = live
+                # The pair's arms (build 2, component 2): one record per arm on
+                # this birth stamp; the pair's one quantum is carried by arm 0
+                # (the joint click books it once, the table rows' gather), the
+                # other arms carry 0; each arm's row is confined to the
+                # half-space of its first direction from the lamp's Node.
+                per_arm = len(lamp.directions) // lamp.arms if lamp.arms > 1 else 0
+                identities = []
+                for arm in range(lamp.arms):
+                    arm_identity = identity + (arm << 24) if lamp.arms > 1 else identity
+                    identities.append(arm_identity)
+                    live = LiveRecord(
+                        arm_identity,
+                        number,
+                        family,
+                        u,
+                        ordinal,
+                        self.tick,
+                        cost if arm == 0 else 0,
+                        numerator,
+                        denominator,
+                        train,
+                        period,
+                        np.zeros(self.shape, dtype=np.int64),
+                        np.zeros(self.shape, dtype=np.int64),
+                        np.zeros(self.shape, dtype=np.int64),
+                        pointers=[0] * len(self.cell_names),
+                        first_rung=[None] * len(self.cell_names),
+                        ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
+                        arm=arm,
+                        arms=lamp.arms,
+                        labels=tuple(lamp.branches),
+                    )
+                    if lamp.arms > 1:
+                        vector = world.directions[lamp.directions[arm * per_arm]]
+                        live.mask = self._half_space(entry.position, vector)
+                    driven = np.zeros(self.shape, dtype=bool)
+                    for node in self.lamp_nodes[number]:
+                        driven[node] = True
+                    live.driven = driven
+                    # The record's norm: the offer its train inserts (the squared
+                    # amplitudes over the train at the lamp's Nodes), the wheel's
+                    # rungs divide it; the first rung of a cell is the click's time.
+                    table = self._cosine_table(world.phase_steps)
+                    # The record's norm: the motion its train inserts (the squared
+                    # steps of the driven amplitude over the train at the lamp's
+                    # Nodes); the wheel's rungs divide it, the first rung of a cell
+                    # is the click's time.
+                    values = [
+                        int(table[self._phase(t, numerator, denominator, steps)])
+                        for t in range(train + 1)
+                    ]
+                    values[-1] = 0
+                    live.norm = len(self.lamp_nodes[number]) * sum(
+                        (values[t + 1] - values[t]) ** 2 for t in range(train)
+                    )
+                    self.records[arm_identity] = live
                 self.layer.born += 1
                 if self.record is not None:
                     self.record(
@@ -857,8 +887,9 @@ class DetectorLawSimulation:
                             "family": definition.name,
                             "record": identity,
                             "u": u,
-                            "labels": [[0, 1]],
-                            "arms": 1,
+                            "labels": [list(branch) for branch in lamp.branches],
+                            "arms": lamp.arms,
+                            **({"arm_records": identities} if lamp.arms > 1 else {}),
                             "units": 1,
                             "multiplicity": 1,
                             "train": train,
@@ -941,6 +972,17 @@ class DetectorLawSimulation:
                 total += self._shift(source, axis, sign, wrap=wrap)
         return total
 
+    def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
+        """The Nodes on the arm's side of the lamp: (node - origin) . vector at
+        least 0 on the board's raw coordinates (the arm's own half-space, the
+        lamp's Node included; the pair's two arms on a bar the two half-lines)."""
+        grids = np.indices(self.shape, dtype=np.int64)
+        dot = np.zeros(self.shape, dtype=np.int64)
+        for axis in range(3):
+            dot += (grids[axis] - int(origin[axis])) * int(vector[axis])
+        mask: np.ndarray = dot >= 0
+        return mask
+
     def _advance(self, live: LiveRecord, extra: np.ndarray | None = None, scale: int = 1) -> None:
         # The inserter's own Nodes are driven for the train and read their own
         # record only after its tail has left them (two periods after the
@@ -989,6 +1031,9 @@ class DetectorLawSimulation:
             live.age += 1
             return
         nxt[self.absorbing] = 0
+        if live.mask is not None:
+            # the arm's row lives on its own side of the lamp (component 2)
+            nxt[~live.mask] = 0
         port_motion = np.zeros(self.shape, dtype=np.int64) if self.blocks else None
         # The receivers: each Port facing a free Node follows the wave entering
         # by it one way (the take, no reflection); the offer booked to the cell
