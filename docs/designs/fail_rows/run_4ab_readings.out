@@ -1,0 +1,94 @@
+cart_k3_key: beam-fail-rows-cart-k3-key-v1; 600 intervals, 3.01 s HOST, ['amplitude-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  DETECTOR k_AB = the cart's counts apart over the lamp's ordinals apart, from the count 60: 2.17341 over 376 counts (174 lines); the pin 2.15749, the band 2 / W = 0.00532: FAIL
+    COMPUTATION the window's span misses the closed form's by +2.8 counts over 173 ordinals; the meeting's remainder per end 3.3 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.01156: FAIL
+  DETECTOR k_BA = the post's counts apart over the cart's ordinals apart, from the count 60: 2.17814 over 538 counts (260 lines); the pin 2.18225, the band 2 / W = 0.00372: FAIL
+    COMPUTATION the window's span misses the closed form's by -1.0 counts over 247 ordinals; the meeting's remainder per end 3.0 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00810: PASS
+  COMPUTATION the ratio k_BA / k_AB (two detectors' counts, carries r_R / r_D^2): 1.00218; the pin 1.01147 (on c^2 = 1/3 1.00000; the comparison 1), the band 0.00532: FAIL; against the comparison 1: PASS
+  DETECTOR round_trip = the cart's counts apart between two returns over its ordinals apart between the births they carry, r-free, from the count 100: 4.77419 over 296 counts (63 lines); the pin 4.70819, the band 2 / W = 0.00676: FAIL
+    COMPUTATION the window's span misses the closed form's by +4.1 counts over 62 ordinals; the meeting's remainder per end 6.4 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) + 2 counts = 0.06452: FAIL
+  DETECTOR the lamp's ordinals at the cart's consecutive clicks advance by {1: 173} (a missed birth would show as a gap of 2)
+  DETECTOR the least step: the Node's change between consecutive clicks of the lamp's rows {0: 34, 1: 91, 2: 47, 3: 1}, at most one per count holds (a check of the frame, not a pin here)
+  the radar velocity: NOT READ (issue #937; batch 933 stays as recorded)
+  GAMEBOARD: 219 step lines, the gaps between hops {2: 77, 3: 141}; 580 energy lines, the most intervals owed to proper time on one line 1; the final ages {1: 600, 2: 600} against 600 intervals; the tick of every line read by nothing above
+cart_k3_law: beam-fail-rows-cart-k3-law-v1; 600 intervals, 3.09 s HOST, ['amplitude-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  DETECTOR k_AB = the cart's counts apart over the lamp's ordinals apart, from the count 60: 2.34956 over 531 counts (227 lines); the pin 2.34146, the band 2 / W = 0.00377: FAIL
+    COMPUTATION the window's span misses the closed form's by +1.8 counts over 226 ordinals; the meeting's remainder per end 4.7 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00885: PASS
+  DETECTOR k_BA = the post's counts apart over the cart's ordinals apart, from the count 60: 1.57143 over 539 counts (360 lines); the pin 1.57292, the band 2 / W = 0.00371: PASS
+    COMPUTATION the window's span misses the closed form's by -0.5 counts over 343 ordinals; the meeting's remainder per end 2.7 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00583: PASS
+  COMPUTATION the ratio k_BA / k_AB (two detectors' counts, carries r_R / r_D^2): 0.66882; the pin 0.67177 (on c^2 = 1/3 0.66667; the comparison 1), the band 0.00377: PASS; against the comparison 1: FAIL
+  DETECTOR round_trip = the cart's counts apart between two returns over its ordinals apart between the births they carry, r-free, from the count 100: 3.70833 over 445 counts (121 lines); the pin 3.68293, the band 2 / W = 0.00449: FAIL
+    COMPUTATION the window's span misses the closed form's by +3.0 counts over 120 ordinals; the meeting's remainder per end 8.4 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) + 2 counts = 0.03333: PASS
+  DETECTOR the lamp's ordinals at the cart's consecutive clicks advance by {1: 226} (a missed birth would show as a gap of 2)
+  DETECTOR the least step: the Node's change between consecutive clicks of the lamp's rows {0: 49, 1: 177}, at most one per count holds (a check of the frame, not a pin here)
+  the radar velocity: NOT READ (issue #937; batch 933 stays as recorded)
+  GAMEBOARD: 200 step lines, the gaps between hops {3: 199}; 0 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 600, 2: 600, 3: 600} against 600 intervals; the tick of every line read by nothing above
+cart_k5_key: beam-fail-rows-cart-k5-key-v1; 600 intervals, 2.93 s HOST, ['amplitude-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  DETECTOR k_AB = the cart's counts apart over the lamp's ordinals apart, from the count 60: 1.50926 over 489 counts (335 lines); the pin 1.51507, the band 2 / W = 0.00409: FAIL
+    COMPUTATION the window's span misses the closed form's by -1.9 counts over 324 ordinals; the meeting's remainder per end 5.6 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00617: PASS
+  DETECTOR k_BA = the post's counts apart over the cart's ordinals apart, from the count 60: 1.51549 over 538 counts (374 lines); the pin 1.51941, the band 2 / W = 0.00372: FAIL
+    COMPUTATION the window's span misses the closed form's by -1.4 counts over 355 ordinals; the meeting's remainder per end 2.8 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00563: PASS
+  COMPUTATION the ratio k_BA / k_AB (two detectors' counts, carries r_R / r_D^2): 1.00413; the pin 1.00287 (on c^2 = 1/3 1.00000; the comparison 1), the band 0.00409: PASS; against the comparison 1: FAIL
+  DETECTOR round_trip = the cart's counts apart between two returns over its ordinals apart between the births they carry, r-free, from the count 100: 2.30769 over 450 counts (197 lines); the pin 2.30201, the band 2 / W = 0.00444: FAIL
+    COMPUTATION the window's span misses the closed form's by +1.1 counts over 195 ordinals; the meeting's remainder per end 9.1 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) + 2 counts = 0.02051: PASS
+  DETECTOR the lamp's ordinals at the cart's consecutive clicks advance by {1: 334} (a missed birth would show as a gap of 2)
+  DETECTOR the least step: the Node's change between consecutive clicks of the lamp's rows {0: 208, 1: 126}, at most one per count holds (a check of the frame, not a pin here)
+  the radar velocity: NOT READ (issue #937; batch 933 stays as recorded)
+  GAMEBOARD: 137 step lines, the gaps between hops {4: 87, 5: 49}; 600 energy lines, the most intervals owed to proper time on one line 1; the final ages {1: 600, 2: 600, 3: 551} against 600 intervals; the tick of every line read by nothing above
+cart_k5_law: beam-fail-rows-cart-k5-law-v1; 600 intervals, 3.21 s HOST, ['amplitude-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  DETECTOR k_AB = the cart's counts apart over the lamp's ordinals apart, from the count 60: 1.51977 over 538 counts (365 lines); the pin 1.52381, the band 2 / W = 0.00372: FAIL
+    COMPUTATION the window's span misses the closed form's by -1.4 counts over 354 ordinals; the meeting's remainder per end 6.7 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00565: PASS
+  DETECTOR k_BA = the post's counts apart over the cart's ordinals apart, from the count 60: 1.34328 over 540 counts (422 lines); the pin 1.34375, the band 2 / W = 0.00370: PASS
+    COMPUTATION the window's span misses the closed form's by -0.2 counts over 402 ordinals; the meeting's remainder per end 2.7 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) = 0.00498: PASS
+  COMPUTATION the ratio k_BA / k_AB (two detectors' counts, carries r_R / r_D^2): 0.88387; the pin 0.88184 (on c^2 = 1/3 0.88000; the comparison 1), the band 0.00372: PASS; against the comparison 1: FAIL
+  DETECTOR round_trip = the cart's counts apart between two returns over its ordinals apart between the births they carry, r-free, from the count 100: 2.05372 over 497 counts (244 lines); the pin 2.04762, the band 2 / W = 0.00402: FAIL
+    COMPUTATION the window's span misses the closed form's by +1.5 counts over 242 ordinals; the meeting's remainder per end 10.4 counts (one hop 1 / v plus one dwell 55 / 32, in the reader's counts); the band as PREREGISTRATION_V2 section 5 states it, 2 g / (ordinals apart) + 2 counts = 0.01653: PASS
+  DETECTOR the lamp's ordinals at the cart's consecutive clicks advance by {1: 364} (a missed birth would show as a gap of 2)
+  DETECTOR the least step: the Node's change between consecutive clicks of the lamp's rows {0: 253, 1: 111}, at most one per count holds (a check of the frame, not a pin here)
+  the radar velocity: NOT READ (issue #937; batch 933 stays as recorded)
+  GAMEBOARD: 120 step lines, the gaps between hops {5: 119}; 0 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 600, 2: 600, 3: 600} against 600 intervals; the tick of every line read by nothing above
+coasting_none_covariant_stamp: rays-hubble-stars-record-covariant-none-space-v1; 400 intervals, 49.11 s HOST, ['amplitude-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  DETECTOR the stamp check: 13564 stamped lines of the centre's measured event, 0 with clock differing from the line's tick, 394 intervals with a click (the pin: equal on every stamped line, r_A = 1 at suspension 0): PASS
+  DETECTOR z: read by tools/covariant_readings.py on this root (the centre's pointer over the late window [300, 400), in the centre's own count by the check above)
+  GAMEBOARD: 1733 step lines, the gaps between hops {0: 1339, 1: 389, 2: 4}; 9567 energy lines, the most intervals owed to proper time on one line 1; the final ages {1: 400, 2: 400, 3: 399, 4: 398, 5: 397, 6: 396, 7: 395, 8: 393, 9: 391, 10: 389, 11: 387, 12: 384, 13: 382, 14: 378, 15: 375, 16: 371, 17: 368, 18: 363, 19: 359, 20: 354, 21: 349, 22: 344, 23: 339} against 400 intervals; the tick of every line read by nothing above
+j4_muon_12856_key: beam-fail-rows-j4-muon-12856-key-v1; 420 intervals, 0.47 s HOST, ['weak-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 124 at x = 72, the muon's own count 64 (the pin's integer 124 at x = 72; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 344 (the pin 344 +- 2): PASS; the row's own age on the line 220 (the flight's, the pin's a(steps) 220); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 124; the ratio over 64: 1.9375 (the pin's form 1.9375; gamma 1.9558 the thing compared with)
+  GAMEBOARD: 62 step lines, the gaps between hops {1: 2, 2: 58, 4: 1}; 420 energy lines, the most intervals owed to proper time on one line 1; the final ages {1: 359, 2: 420} against 420 intervals; the tick of every line read by nothing above
+j4_muon_12856_law: beam-fail-rows-j4-muon-12856-law-v1; 420 intervals, 0.34 s HOST, ['weak-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 64 at x = 41, the muon's own count 64 (the pin's integer 64 at x = 41; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 337 (the pin 337 +- 2): PASS; the row's own age on the line 273 (the flight's, the pin's a(steps) 273); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 64; the ratio over 64: 1.0000 (the pin's form 1.0000; gamma 1.0000 the thing compared with)
+  GAMEBOARD: 31 step lines, the gaps between hops {2: 30}; 0 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 420, 2: 420} against 420 intervals; the tick of every line read by nothing above
+j4_muon_3640_key: beam-fail-rows-j4-muon-3640-key-v1; 420 intervals, 0.37 s HOST, ['weak-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 70 at x = 27, the muon's own count 64 (the pin's integer 70 at x = 27; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 367 (the pin 367 +- 2): PASS; the row's own age on the line 297 (the flight's, the pin's a(steps) 297); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 70; the ratio over 64: 1.0938 (the pin's form 1.0938; gamma 1.1074 the thing compared with)
+  GAMEBOARD: 17 step lines, the gaps between hops {3: 4, 4: 8, 5: 4}; 420 energy lines, the most intervals owed to proper time on one line 1; the final ages {1: 414, 2: 420} against 420 intervals; the tick of every line read by nothing above
+j4_muon_3640_law: beam-fail-rows-j4-muon-3640-law-v1; 420 intervals, 0.47 s HOST, ['weak-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 64 at x = 23, the muon's own count 64 (the pin's integer 64 at x = 23; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 368 (the pin 368 +- 2): PASS; the row's own age on the line 304 (the flight's, the pin's a(steps) 304); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 64; the ratio over 64: 1.0000 (the pin's form 1.0000; gamma 1.0000 the thing compared with)
+  GAMEBOARD: 13 step lines, the gaps between hops {4: 4, 5: 8}; 0 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 420, 2: 420} against 420 intervals; the tick of every line read by nothing above
+j4_muon_rest_key: beam-fail-rows-j4-muon-rest-key-v1; 420 intervals, 0.53 s HOST, ['weak-v1', 'covariant-readings-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 64 at x = 10, the muon's own count 64 (the pin's integer 64 at x = 10; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 390 (the pin 390 +- 2): PASS; the row's own age on the line 326 (the flight's, the pin's a(steps) 326); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 64; the ratio over 64: 1.0000 (the pin's form 1.0000; gamma 1.0000 the thing compared with)
+  GAMEBOARD: 0 step lines, the gaps between hops {}; 420 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 420, 2: 420} against 420 intervals; the tick of every line read by nothing above
+j4_muon_rest_law: beam-fail-rows-j4-muon-rest-law-v1; 420 intervals, 0.45 s HOST, ['weak-v1']; source 5166dbe90169
+  the record: completed, the books balanced at every tick
+  GAMEBOARD the become line: tick 64 at x = 10, the muon's own count 64 (the pin's integer 64 at x = 10; printed, not a verdict)
+  DETECTOR the beta click at the detector body (x = 200): the detector's own count 390 (the pin 390 +- 2): PASS; the row's own age on the line 326 (the flight's, the pin's a(steps) 326); 1 beta click(s)
+  CONVERSION the decay's count read back from the click, clock less the row's age: 64; the ratio over 64: 1.0000 (the pin's form 1.0000; gamma 1.0000 the thing compared with)
+  GAMEBOARD: 0 step lines, the gaps between hops {}; 0 energy lines, the most intervals owed to proper time on one line 0; the final ages {1: 420, 2: 420} against 420 intervals; the tick of every line read by nothing above
+0 record checks failed, 12 pins PASS, 11 pins FAIL, nothing moved

@@ -1,5 +1,7 @@
 # Newton on the side: the one chain from the click algebra to Newton's form, and the prescription for the side (the world, the detector, the reading; never the law) so that Newton's form is read from clicks (the Newton On The Side Mathematician, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.6; this file is kept as the record of 2026-09-22.
+
 The order (the Boss, 2026-09-22, one bounded task, docs only, no code,
 no run, no law change): the model owner's word of about 23:00Z on
 2026-09-22, in Hebrew, the Boss's translation: "How, how, how, what

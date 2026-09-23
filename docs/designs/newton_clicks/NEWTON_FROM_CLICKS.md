@@ -1,5 +1,7 @@
 # Newton from the clicks: the derivation of Newton's form from the algebra of the clicks, with Einstein's step named in the middle and nothing taken as a low-velocity limit (the Newton From Clicks Mathematician, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.6; this file is kept as the record of 2026-09-22.
+
 The order (the Boss, 2026-09-22, one bounded task): the owner's word of
 record 1044 (on `main` at 4376712e since PR #928, after this file's
 base commit; the numbers 1043, 1044 and 1046 checked there): "Newton has to come out of clicks in the algebra, not
