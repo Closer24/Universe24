@@ -140,7 +140,11 @@ difference of the two counter-propagating arrivals at one moving detector
 on a closed loop, as a ratio of that detector's own counts, which reads
 nothing of r (the click frame section 2 (a); ALGEBRA.md 5.1, the r-free
 lines). It stands beside them as the Boss's rule allows, and it is the
-one member of the family the law can meet at every order.
+one member of the family the law can meet at every order. The same
+family and NOT the same observable: R2 is r-free by construction and
+reads nothing of the second order where rows 4a, 4b and 5b fail, so the
+paper must never list it as evidence on those rows (the physics-rule
+reviewer's line on PR #988).
 
 **The chain click to click, by kind.**
 
@@ -234,7 +238,13 @@ hopping body (`nature_beam.py` :3351-3354, `adjacent_node` with
 on one self-creation (the amount per direction `min(by_clock(rate), held
 // (h s))`, the cost 2 per self-creation on the cart's 8192, 3000 over
 1500 intervals, M falling by 0.07 percent: the pace's drift 3 x 10^-4,
-inside the band).
+inside the band). The cart's count is its own age, one per interval
+(`clock_stamp`); this world declares `suspension` 0, so it owes no count
+for the crowd at its Node (`count_owed` returns 0 at a zero numerator,
+`engine.py` :157) and its count equals the tick in number; the ratio is a
+ratio of that one clock's stamps, r-free at r = 1 by declaration, and a
+world with a nonzero suspension would need `reads: presence` or the
+returns' age stretch in its pin.
 
 **HOST.** About 10 seconds per world on the register's timings (the cart
 worlds 5 s for 600 intervals, RUN_4AB section 4); the four worlds under a
@@ -340,7 +350,11 @@ of a moving thing). R4 is the round trip k_AB k_BA = (1 + beta) / (1 -
 beta) of the click frame (section 2 (a), the k-calculus), a ratio of the
 cart's own counts that reads nothing of r under any r (ALGEBRA.md 5.1, the
 r-free lines), read for the first time by RUN_4AB at k = 3 and 5 and in no
-row of Table 2 (the table has the one-way 4b only).
+row of Table 2 (the table has the one-way 4b only). The same family and
+NOT the same observable: R4 is r-free by construction and reads nothing
+of the second order where rows 4a, 4b and 5b fail, so the paper must
+never list it as evidence on those rows (the reviewer's line on PR
+#988).
 
 **The chain click to click, by kind** (RUN_4AB 1.2 steps 7 to 12, as
 registered):
@@ -421,8 +435,8 @@ rows they stand with (1c and 4b); the Architect numbers them.
 
 | Row | The dimensionless observable | Nature's value and its one source | The model's registered reading (world; register key; value) | Grain | Status, with the number |
 | --- | --- | --- | --- | --- | --- |
-| 1d (beside 1c) | The no-signalling marginals of the pair, the count form: each party's + fraction at its setting, and its difference between the other party's two settings | 0 within the statistical error, in every Bell test that reports its marginals; the loophole-free Hensen et al. 2015, Nature 526, 682 (the marginals in the supplement; to verify against the source); Weihs et al. 1998, Phys. Rev. Lett. 81, 5039 (to verify against the source) | `examples/events/amplitude/bell_0_8.json`, `bell_0_24.json`, `bell_16_8.json`, `bell_16_24.json`; `amplitude/expectations.json` `pair.marginal` = 32 and `pair.chsh.*.counts` 27, 5, 5, 27 (5, 27, 27, 5 at (0, 24)): each party's + count 32 of 64 at every setting pair (DETECTOR, replayed at head by the tests); the difference between the other party's settings 0 exactly (COMPUTATION from the cells); Theorem 5 (ALGEBRA.md 4.9) | N = 64; K = 15 x 2^20: not under the one set (K), as row 1a | agrees: 0 against 0, exact; the tolerance nature's statistical error on 0; the same at the seven grains 512 to 16384 (`pair_n`) |
-| 4c (beside 4b) | The round-trip Doppler off a receding transponder, the cart's counts apart between two returns over its ordinals apart between the births they carry, (1 + beta) / (1 - beta), r-free | (1 + beta) / (1 - beta) to all orders, the two-way form of every radar and two-way tracking, the same in Einstein's and in the ether form; a FORM row until a nature source is named (the register's rule (c)), as row 11b entered by a pin | `docs/designs/fail_rows/worlds/cart_k3_law.json`, `cart_k5_law.json`; RUN_4AB.md 6.3 (`run_4ab_readings.json`, `runs.<world>.readings.round_trip`): 3.70833 over 445 counts (120 returns) for the pin 151 / 41 = 3.68293 at k = 3 (beta 55/96), 2.05372 over 497 (241 returns) for 43 / 21 = 2.04762 at k = 5 (beta 11/32) (DETECTOR); under the key 4.774 for 4.708 and 2.308 for 2.302 at the identity's beta (DETECTOR, the hypothesis's, beside) | N = 64; K = 4 202 496, S = 2^20 (series O's numbers): not under the one set (K) | agrees in form: +3.05 and +1.48 counts off the closed form over the window, inside the meeting remainder of 8.44 and 10.44 counts per end (RUN_4AB 6.3), outside the version-1 band 2 / W as pinned (FAIL there, PASS under the preregistration's band); the number the law's; reads nothing of r, so it changes nothing in rows 4a and 4b |
+| 1d (beside 1c) | The no-signalling marginals of the pair, the count form: each party's + fraction at its setting, and its difference between the other party's two settings | 0 within the statistical error, in every Bell test that reports its marginals; the loophole-free Hensen et al. 2015, Nature 526, 682 (the marginals in the supplement; to verify against the source); Weihs et al. 1998, Phys. Rev. Lett. 81, 5039 (to verify against the source) | `examples/events/amplitude/bell_0_8.json`, `bell_0_24.json`, `bell_16_8.json`, `bell_16_24.json`; `amplitude/expectations.json` `pair.marginal` = 32 and `pair.chsh.*.counts` 27, 5, 5, 27 (5, 27, 27, 5 at (0, 24)): each party's + count 32 of 64 at every setting pair (DETECTOR, replayed at head by the tests); the difference between the other party's settings 0 exactly (COMPUTATION from the cells); Theorem 5 (ALGEBRA.md 4.9) | N = 64; K = 15 x 2^20: not under the one set (K), as row 1a | agrees: 0 against 0, exact, by Theorem 5 (ALGEBRA.md 4.9): a theorem of the click's form, a consistency check the law must pass and not an independent prediction, outside the referee's count of predictions; the tolerance nature's statistical error on 0; the same at the seven grains 512 to 16384 (`pair_n`) |
+| 4c (beside 4b) | The round-trip Doppler off a receding transponder, the cart's counts apart between two returns over its ordinals apart between the births they carry, (1 + beta) / (1 - beta), r-free | (1 + beta) / (1 - beta) to all orders, the two-way form of every radar and two-way tracking, the same in Einstein's and in the ether form; a FORM row until a nature source is named (the register's rule (c)), as row 11b entered by a pin | `docs/designs/fail_rows/worlds/cart_k3_law.json`, `cart_k5_law.json`; RUN_4AB.md 6.3 (`run_4ab_readings.json`, `runs.<world>.readings.round_trip`): 3.70833 over 445 counts (120 returns) for the pin 151 / 41 = 3.68293 at k = 3 (beta 55/96), 2.05372 over 497 (241 returns) for 43 / 21 = 2.04762 at k = 5 (beta 11/32) (DETECTOR); under the key 4.774 for 4.708 and 2.308 for 2.302 at the identity's beta (DETECTOR, the hypothesis's, beside) | N = 64; K = 4 202 496, S = 2^20 (series O's numbers): not under the one set (K) | FORM row, outside the count until a nature source with a number is named (the register's rule (c)): the law's worlds read 3.708 and 2.054 for 151 / 41 and 2.048 [43 / 21], +3.05 and +1.48 counts off the closed form over the window, outside the version-1 band 2 / W as pinned in RUN_4AB (FAIL there) and inside the preregistration's band in ordinals and the meeting remainder of 8.44 and 10.44 counts per end (RUN_4AB 6.3); reads nothing of r, so it changes nothing in rows 4a, 4b and 5b |
 
 ## 6. The three tests, on the two new arrangements (nothing enters the law)
 
@@ -438,8 +452,9 @@ Local: each click reads its own Node's arrivals; nothing kept at a Node.
 
 - The scout's table: the Boss's record 1168 (unread here); the owner's
   word, record 1173; the three statuses, record 1166.
-- docs/ALGEBRA.md on the branch algebra-one at 93033d54 (not yet on
-  main, so no link): 4.9 (Theorem 5), 4.12 (Malus), 5.1 (the r-free lines); [the click frame](../click_frame/DERIVATION.md)
+- [ALGEBRA.md](../../ALGEBRA.md) (on main since PR #982, beae0a4, the
+  merge base): [4.9, Theorem 5](../../ALGEBRA.md#4-the-exact-identities-one-line-each-and-the-link-to-the-proof),
+  4.12 (Malus), [5.1, the r-free lines](../../ALGEBRA.md#51-the-click-theorem-lorentzs-factors-from-the-clicks); [the click frame](../click_frame/DERIVATION.md)
   sections 2 to 4; [RUN_4AB.md](../fail_rows/RUN_4AB.md) 1.2, 3.2, 6.3;
   [RUN_8BC.md](../fail_rows/RUN_8BC.md) 5 (the lamp's first remainder);
   [the malus note](../malus/NOTE.md) section 3; [WHAT_IS_MISSING.md](../fail_rows/WHAT_IS_MISSING.md)
