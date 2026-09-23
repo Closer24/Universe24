@@ -17,7 +17,6 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CUT30 = ROOT / "paper" / "general_formula" / "cut30"
 MAIN_TEX = ROOT / "paper" / "general_formula" / "main.tex"
-SUPPLEMENT_TEX = ROOT / "paper" / "general_formula" / "supplement.tex"
 
 
 def _base_commit_available() -> bool:
@@ -39,23 +38,18 @@ def test_main_tex_is_the_assemblers_output() -> None:
         module = importlib.util.module_from_spec(spec)
         assert spec.loader is not None
         spec.loader.exec_module(module)
-        built, supplement = module.build_all()
+        built = module.build()
         assert built == MAIN_TEX.read_text(encoding="utf-8"), (
             "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
         )
-        if supplement:
-            assert supplement == SUPPLEMENT_TEX.read_text(encoding="utf-8"), (
-                "supplement.tex differs from cut30/assemble.py's output: run the assembler, do not edit it by hand"
-            )
-        else:
-            assert not SUPPLEMENT_TEX.exists(), (
-                "one document (supplement.ONE_DOCUMENT): supplement.tex must not exist"
-            )
+        # one paper in one document (the owner's word of 2026-09-23, record 1244)
+        assert not (MAIN_TEX.parent / "supplement.tex").exists(), (
+            "there is no supplement; there is only one paper"
+        )
         _check_reorder(module)  # one more build here, not in a second test: the parts are files
     finally:
         sys.path.remove(str(CUT30))
         sys.modules.pop("reorder", None)
-        sys.modules.pop("supplement", None)
 
 
 def test_every_correction_has_its_own_label() -> None:
@@ -83,17 +77,12 @@ def _check_reorder(module) -> None:
     import re  # noqa: PLC0415
 
     reorder = module.reorder
-    supplement_module = module.supplement
-    one_document = supplement_module.ONE_DOCUMENT
     moved = reorder.reorder
-    split = supplement_module.split
     try:
         reorder.reorder = lambda text: text
-        supplement_module.split = lambda text: (text, "")
         unordered = module.build()
     finally:
         reorder.reorder = moved
-        supplement_module.split = split
     blocks = {}
     rest = unordered
     for name in reorder.BLOCKS:
@@ -107,51 +96,22 @@ def _check_reorder(module) -> None:
             body = text[len(reorder.BLOCKS["law"][0]) :]
             body = body.replace(reorder.TRANSITION_HEADING, blocks["code"] + reorder.TRANSITION_HEADING)
         rewrites = reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]
-        if not one_document:
-            # the hand-worked update and the code went to the Supplementary Material (S6)
-            if name == "law":
-                i = body.index(supplement_module.HANDWORKED_START)
-                j = body.index(supplement_module.CODE_HEADING)
-                body = body[:i] + supplement_module.POINTERS["handworked"] + body[j:]
-            # the conversion table, the ledger and the families table went there too (S7 to S9)
-            for label, table in (
-                (supplement_module.CONVERSION_LABEL, "S7"),
-                (supplement_module.LEDGER_LABEL, "S8"),
-                (supplement_module.FAMILIES_LABEL, "S9"),
-            ):
-                if label in body:
-                    _, body = supplement_module.cut_table(body, label, table)
-            rewrites = rewrites + supplement_module.REFERENCES
         for old, new in rewrites:
             body = body.replace(old, new)
-        if not body.strip():
-            continue  # the block was one table, whole in the supplement (checked below)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
-    if one_document:
-        supplement = ""
-        assert "\\label{tab:summary}" in main and main.count("\\label{tab:nature}") == 1
-        for label in ("tab:conversion", "tab:ledger", "tab:families"):
-            assert main.count(f"\\label{{{label}}}") == 1
-        assert (
-            main.index("\\label{tab:summary}")
-            < main.index("\\label{app:register}")
-            < main.index("\\caption{\\label{tab:nature}")
-        ), "the summary in the comparison, the full record an appendix"
-    else:
-        supplement = SUPPLEMENT_TEX.read_text(encoding="utf-8")
-        assert "\\label{tab:summary}" in main and "\\label{tab:nature}" not in main
-        for label in ("tab:conversion", "tab:ledger", "tab:families"):
-            assert f"\\label{{{label}}}" not in main and supplement.count(f"\\label{{{label}}}") == 1
-        assert supplement.index("\\label{app:register}") < supplement.index(
-            "\\caption{\\label{tab:nature}"
-        ), "the full register opens the Supplementary Material"
+    assert "\\label{tab:summary}" in main and main.count("\\label{tab:nature}") == 1
+    for label in ("tab:conversion", "tab:ledger", "tab:families"):
+        assert main.count(f"\\label{{{label}}}") == 1
+    assert (
+        main.index("\\label{tab:summary}")
+        < main.index("\\label{app:register}")
+        < main.index("\\caption{\\label{tab:nature}")
+    ), "the summary in the comparison, the full record an appendix"
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
     assert refs <= set(labels), f"unresolved references: {refs - set(labels)}"
-    # the register's caption moved to the Supplementary Material, its references prefixed there
-    both = main + supplement.replace("{main-", "{")
     for old, new in reorder.REFS:
-        assert main.count(old) == 0 and both.count(new) == 1, (
+        assert main.count(old) == 0 and main.count(new) == 1, (
             f"a moved reference is not in place: {new[:50]}"
         )

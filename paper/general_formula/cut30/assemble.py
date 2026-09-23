@@ -19,7 +19,6 @@ sys.path.insert(0, str(HERE))
 
 import corrections  # noqa: E402  (the path above)
 import reorder  # noqa: E402
-import supplement  # noqa: E402
 
 HEADER = """% The paper on the general formula, the thirty-page form (the owner's instruction
 % of 2026-09-22, record 573, and his guiding statement: only the closed results,
@@ -32,8 +31,8 @@ HEADER = """% The paper on the general formula, the thirty-page form (the owner'
 % (docs/EXPERIMENTS.md); NUMBERS.md maps each number to its source. The long
 % form is at c15c1174, the forty-page cut at b0d1ebf7. The sections stand in
 % the six heads' order (cut30/reorder.py; the owner's approval of 2026-09-23),
-% in one document (his word of 2026-09-23, "one paper, not two"; the split into
-% a Supplementary Material, cut30/supplement.py, stays ready and unapplied).
+% one paper in one document (his word of 2026-09-23, record 1244: "we have no
+% supplement; there is only one paper").
 """
 
 
@@ -70,9 +69,8 @@ def _references(text: str, bib: str) -> str:
     return "{\\footnotesize\n" + head + "".join(kept) + "\\end{thebibliography}}\n\n"
 
 
-def build_all() -> tuple[str, str]:
-    """(main.tex, supplement.tex): the four parts joined, corrected, reordered,
-    the Supplementary Material split off, the references filtered for each."""
+def build() -> str:
+    """main.tex: the four parts joined, corrected, reordered, the references filtered."""
     for i in (1, 2, 3, 4):
         runpy.run_path(str(HERE / f"part{i}.py"), run_name="__main__")
     parts = "".join((HERE / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
@@ -86,50 +84,18 @@ def build_all() -> tuple[str, str]:
     )
     s = corrections.apply(s)
     s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
-    if supplement.ONE_DOCUMENT:
-        supp = ""  # one paper, one document (the owner's word of 2026-09-23, the venues' rules checked)
-    else:
-        s, supp = supplement.split(s)  # the Supplementary Material, ready for an editor's request
     body = s[: s.index("\\begin{thebibliography}")]
     bib = s[s.index("\\begin{thebibliography}") :]
     i = body.index("\\appendix")
     # The references follow the body on its last page (the cut to 35 pages of
     # 2026-09-22, record 852); the page split is read from the page numbers.
-    paper = HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
-    if not supp:
-        return paper, ""
-    preamble = supplement.preamble(body[: body.index("\\begin{document}")])
-    supp_doc = (
-        supplement.SUPPLEMENT_HEADER
-        + preamble
-        + "\\begin{document}\n\\maketitle\n\n"
-        + "This Supplementary Material accompanies the paper of the same title and is generated from the same source. "
-        + "The paper cites its sections as S1 to S6 and its tables as S1 to S3; the references are this document's own list; "
-        + "every other cross-reference (a theorem, a section, an equation, a table) is the paper's.\n\n"
-        + "\\small\n\n"
-        + supp
-        + "\n\n"
-        + _references(supp, bib)
-        + "\\end{document}\n"
-    )
-    return paper, supp_doc
-
-
-def build() -> str:
-    """The manuscript's text (main.tex); `build_all` gives the supplement beside it."""
-    return build_all()[0]
+    return HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
 
 
 def main() -> None:
-    out, supp = build_all()
+    out = build()
     (HERE.parent / "main.tex").write_text(out)
     print("main.tex written; references kept:", out.count("\\bibitem{"))
-    if supp:
-        (HERE.parent / "supplement.tex").write_text(supp)
-        print("supplement.tex written; references kept:", supp.count("\\bibitem{"))
-    else:
-        (HERE.parent / "supplement.tex").unlink(missing_ok=True)
-        print("one document: no supplement.tex")
 
 
 if __name__ == "__main__":

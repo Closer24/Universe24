@@ -6646,3 +6646,16 @@ the two prose places that still carry the 0.000 reading are labelled
 as the law before the generic entry (Section 4.3, "Light: no optical
 metric"; Section 3's list, item (vi)) and were left for the Boss's
 word, nothing else in the commit.
+
+## Applied (2026-09-23, the Boss's order of 04:06Z, the owner's record 1244): commit 19 on paper-48, the supplement's sources removed
+
+"We have no supplement; we cancelled the supplement; there is only
+one paper." Commit 17 had already returned every block to the one
+document by a switch; this commit removes the switch and the code it
+guarded: cut30/supplement.py deleted, the assembler builds main.tex
+alone (build(), no build_all), the test checks the one document and
+that no supplement.tex exists. The paper's text is that of commit 18
+(the header comment reworded); 63 pages, 103 references, one
+reference list. The owner's earlier 48 and his one file cannot both
+hold without cutting content; the count is put to him by the Boss,
+and nothing is cut until his word.
