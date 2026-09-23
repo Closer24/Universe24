@@ -118,10 +118,15 @@ detector, an input of kind 3, no family name; a sensitivity per family,
 which row 8b would need, is an input of kind 2 and a design item for the
 owner); vector PASS (a comparison, verb (D), of the set's accumulated
 square over the multiplicity against s_D times the birth norm); local
-PASS (the comparison is the detector's own on its own record; the
-exhaustion is the record's own count of its counted futures, a HOST
-bookkeeping of the record labelled so, as the layer's live count is
-today). Pins: the pair world's cells 27, 5, 5, 27 and S = 2.75, Malus
+PASS for the detector's comparison on its own record and for the grain
+on the row's own; the exhaustion ("no counted future in flight")
+decides WHEN the law acts on the whole record and is non-local, as the
+completion it replaces and as the deletion at the click: it passes only
+as the click's own non-local step, the one the law already has (ALGEBRA
+3.1; the owner's "what ends is only the click"; Reviewer 3's A2). One
+sentence for the owner: the sensitivity read as a first crossing is the
+local trigger, and it is the one the ladder forbids (S1), so the click's
+timing stays the record's. Pins: the pair world's cells 27, 5, 5, 27 and S = 2.75, Malus
 1 / 2, the single opening inside its band (DESIGN.md section 7), each
 conditional on s_D below the smallest offer that carries a cell (the
 faces' 0.011 share in row 10's first record, COMPUTATION, `run_10_pins.out`
@@ -218,21 +223,44 @@ that re-emits); the word is the mistake. The solution: the three comments
 and the register's READMEs say "a receiver body under `rerelease`"; no
 engine line, no number. Three tests: not applicable (a name).
 
-### M5. The meeting: the paid unit's reading of the free crowd
+### M5. The meeting: the paid unit's reading of the free crowd, and the two parts named against the code
 
 The owner (record 1272): it enters generically as the default. The code:
 it is the default since 2026-09-22 in the momentum form (`optical_turn`,
-`nature_beam.py` 3733 to 3770, verbs 2 and 3 of the generic entry: the
-time part in the flight wall for every row, the space part the turn of
-the momentum accumulator **W** by the crowd's flow with the weight
-content x w, on every row of every family in free space, no key);
-meeting-v1 under the key `meeting` is the earlier phase-register form,
-off by default, the five lensing worlds' history. Not a mistake of the
-code; a mistake of the law's text, corrected in BEAM_LAW note 35 (branch
-`beam-law-note-35`, 15db1a62). One consequence for row 13 is in section
-3: the space part's weight content x w is 0 on a row of no content, so
-light is not turned by the space part at head (series K's 0.000), and
-under the split the time part alone bends the wave.
+`nature_beam.py` 3733 to 3770, verbs 2 and 3 of the generic entry) on
+every row of every family in free space, no key; meeting-v1 under the
+key `meeting` is the earlier phase-register form, off by default, the
+five lensing worlds' history. Not a mistake of the code; a mistake of
+the law's text, corrected in BEAM_LAW note 35 (branch
+`beam-law-note-35`, 15db1a62, merged), whose sentence then named the
+parts wrongly and is corrected again on the branch `beam-law-note-35-fix`
+(this pass; Reviewer 2's and Reviewer 3's reading of the code). **What
+the turn and the wall each carry, against the code, on a light row of
+the registered worlds** (the `light` family, quantum 1, content 1 per
+unit): the wall of the row's flight is 2 T_D (d + f n A) with f = 1 +
+gamma and A the crowd's age moment at the Node (`age_wall`,
+`core/integer.py` 118; `optical_rate_and_wall`), the delay; the turn
+translates the row's momentum accumulator **W** by the flow **V** at the
+rate n x weight with the weight (1 + gamma) content x e_D per unit
+(`unit_weights`, `nature_beam.py` 3564: (E'_D^2 + 3 gamma p_D . p_D) //
+E'_D, e_D = isqrt(3 u_D . u_D) for the photon), the deflection. At gamma
+= 0 the turn gives the time part's deflection (Newton's half: the optical
+pin worlds' -1.93 pixels at M = 2^16, b = 6, the pair [1, 16384],
+DETECTOR; -1.993 on Reviewer 2's re-run of mass_g0) and the wall the time
+part's delay (2.68 intervals); at gamma = 1 each is doubled (-3.86,
+5.36). So "the time part in the flight wall, the space part the turn
+along the momentum's line" (note 35 at 15db1a62, the meeting line of
+record 1272, the first form of this item and of row 13's reason) was
+wrong as a naming: the turn is the deflection's mechanism and the wall
+the delay's, each at 1 + gamma; the time part is the 1 of both and the
+space part the gamma of both, absent at gamma 0. My earlier sentence
+"the space part's weight content x w is 0 on light" was wrong too:
+light's content per unit is 1 and the turn acts on it; a row of content
+0 (a free family, `nu` at head) is the only row the turn never moves.
+Series K's 0.000 (row 13's "the law as built") is a world at
+`suspension` 0, where n = 0 and neither the wall nor the turn has a
+rate, a declaration of that world. What M9 asks is then not a weight
+but the wave's own tilt under the split, against the turn.
 
 ### M6. Amplitudes added on the GameBoard: decided, the code's merge is the law
 
@@ -338,16 +366,46 @@ What Form W can move: every world with a crowd and a suspension pair
 (the optical pin worlds, G2's Hubble light, the clock-word and shell
 worlds); the crowd-free worlds bit-identical.
 
-### M8. A row of no content does not split at head, and a body is a quantum: what the design leaves for the massive form
+### M8. The split's domain, the recorded row of a family without the flag `massive`; a body is a quantum: what the design leaves for the massive form
 
-The owner's rule has one exception, the quantum. This design splits rows
-of no content (light, and any family declared with content 0, the
-neutrino's `nu` at head) and leaves every row of content and every body
-as it is: a body is the quantum that does not split, its record, its
+The owner's rule has one exception, the quantum. This design splits the
+recorded rows (`record != NO_RECORD`, born by a lamp under the amplitude
+law) of every family without the flag `massive`, light's rows of content
+1 per unit included (Reviewer 3's D1), and leaves every massive family's
+row and every body as it is: a body is the quantum that does not split, its record, its
 push, its contact and its `become` untouched (DESIGN.md section 8). Not
 a mistake found; the boundary of this design, named so that the massive
 form (the next design) says how a massive row splits, which rows 6, 8a
 and 14 need (section 3).
+
+### M10. The copy rule at a free Node is a diffusion; the split is the Grover coin (found in this pass, 06:50Z)
+
+amplitude-v1's split (section 2.1, the `rerelease` entry's rule) sends
+one arriving row to K outputs as K copies over sqrt K, an isometry of
+one input. At a free Node under the split the inputs are K arrivals, and
+the copy rule applied to each is the rank-one matrix (1 / sqrt K) J: it
+forgets the direction of what arrived and the record's amplitude then
+spreads as a diffusion with phases (in one dimension a_k(t + 1) =
+sqrt 2 cos k a_k(t), an amplifying heat kernel, no front), not as a
+wave; the shares of far and near cells are then set by the path counts,
+not by the interference, and the pins of DESIGN.md section 7 are not its
+readings. The correction (DESIGN.md section 3.2, on Reviewer 3's A1 that
+the split is verb (B) with a declared matrix): the split at a free Node
+is the multiplication of the Node's arrivals by Grover's coin (2 / K) J
+- I over the world's fan, unitary, declared by K alone, the norm
+conserved exactly, the single arrival's outputs 2 / K forward and (2 -
+K) / K backward (Huygens' forward wave); the lamp's fan and a
+`rerelease` entry keep the one-input rule. Three tests: generic PASS
+(one matrix by K, no name), vector PASS ((B), declared integers over K,
+the multiplicity times K^2), local PASS (the Node's own arrivals). What
+it costs, the exact wave's digits: the amounts grow as K^tau (a
+surviving row's amount at least K^tau / sqrt W), int64 to tau = 8 at K =
+90; the build carries them as Python integers (HOST, ten to fifty times
+int64); the one alternative, an amplitude grain declared at load with
+the remainders dropped at a stride, is a rounding at run time and not
+one of the six verbs: the owner's word decides between the exact form
+(the HOST pays) and a declared rounding, and this file takes the exact
+form until he speaks.
 
 ## 2. THE VERIFICATION PLAN, per solution, before any row is read
 
@@ -355,8 +413,9 @@ The owner's rule (record 1288, 05:55Z): every experiment is re-run
 under the corrected engine after the build; every reading of the engine
 without the split is history; no old reading stands as the law's. So:
 nothing registered moves before its re-pin, and every old reading is
-history in the log, labelled the old law's. The order: the pins of M9's question; the build of M1,
-M2 and M9's chosen form with their tests; the gate set re-pinned; then every
+history in the log, labelled the old law's. The order: the pins of `split_pins.py` (M1, M10, M9's question, D3's
+shares); the build of M1, M10, M2 and M9's chosen form with their tests;
+the gate set re-pinned; the pilot of four worlds (below); the gate set re-pinned; then every
 registered world re-run BESIDE its old reading (the rows of the record
 form first, compared with the pins of this section; then the rest,
 including the bodies' worlds, whose numbers are expected unchanged
@@ -364,13 +423,16 @@ until the massive form and whose re-run under the corrected engine is
 the check of that expectation); then M3's readings on the detector's
 own count; the old readings history.
 
-**M1, the split.** (a) Pins by the algebra before the run: DESIGN.md
-section 7 (the pair world 27, 5, 5, 27 and S = 2.75; Malus 1 / 2; the
-single opening's far field 0.887 and 0.891, the band 0.92 +- 0.03 and
-0.886 +- 0.03); to be added by a script beside the build, `split_pins.py`:
-the two slits' visibility as the Fourier sum of the double aperture at
-the pixel grain of `slits_huygens` (the fan's pin 0.9659 is history), and
-row 13's deflection (below). (b) The engine change: one function in the
+**M1 and M10, the split as the coin.** (a) Pins by the algebra before
+the run, written by `split_pins.py` beside this file (DESIGN.md section
+7): the fan's isotropy and the coin's front (the pace by direction, the
+norm to the digit); the single opening's sums at the pixel grain and the
+Fresnel number 1.45 (0.916 at w = 27, 0.891 at w = 9, the far field
+beside as the limit; Reviewer 3's D4); the two slits' visibility at the
+pixel grain (the fan's 0.9659 history); the pair's cells 27, 5, 5, 27 and
+Malus's 1 / 2 on the re-arranged bars (D3), with the closed form of the
+shares on the registered bars as the record that those cannot be read;
+row 13's tilt and turn (M9). (b) The engine change: one function in the
 interval's order beside the `rerelease` split, the copies at the row's
 Node with the multiplicity times K, the merge as it is; tests written
 with the build: a one-row world (one birth, one row) shows K rows at the
@@ -390,8 +452,59 @@ the smallest cell-carrying offer. (b) Tests: one click per record
 exactly (the last rung is W); no click while a counted future is in
 flight; the pair's two arms in one gather; a branch below s_D deleted at
 its Node and the record's total unchanged by more than s_D per branch;
-Q as S2 with the detectors the only sets. (c) Falsifiers: a record with
-two clicks or none; a fringe absent (the S1 form); a gather with one arm.
+Q as S2 with the detectors the only sets; the key `sensitivity` read,
+its default 1, a value below 1 refused. (c) Falsifiers: a record with
+two clicks or none; a fringe absent (the S1 form); a gather with one arm
+(the expected outcome on the registered open bars, D6).
+
+**The pilot before the full re-run (the owner's word of 06:06Z, record
+1293: "first we must run a few worlds that we know are supposed to be
+right, two, three, four, see that they converge, and then run
+everything").** After the build's tests and the gate set's re-pin, four
+worlds whose expectations are known run first, each against its pin
+from `split_pins.py` and its falsifier; the full re-run of the register
+(record 1288) only when all four converge; a miss sends the work back
+to the design, not to more runs. HOST estimates from the Architect's
+audit (3 to 8 microseconds per int64 row per interval; the
+Python-integer amounts ten to fifty times that, unmeasured):
+
+| Pilot | World | Pin (COMPUTATION, `split_pins.py`) | Falsifier | HOST |
+| --- | --- | --- | --- | --- |
+| (a) the single opening, w = 27 | `docs/designs/fail_rows/opening_w27.json` with the openings' fan entries removed, the fan K = 90, the lamp's rate lowered to one record per 32 intervals | the exact sum at the pixel grain and the Fresnel number 1.45, 0.916, inside 22.2's 0.92 +- 0.03; the coin walk's own sum beside it | below 0.85, or outside the band by more than the pixel's grain, or a norm not conserved | six live records x W rows x K: 2 x 10^6 row-operations per interval, seconds per interval, hours per world; about 150 records' clicks, the FWHM's bracket widened by their statistics |
+| (b) the two slits | `examples/events/amplitude/slits_huygens.json` with the fan entries removed, K = 90, the rate lowered likewise | the double aperture's visibility at the pixel grain | the visibility below the pin by more than the pixel grain, or the fringe's period off lambda / d | as (a), 7260 Nodes, hours |
+| (c) Malus | `malus_a.json` re-arranged: the bar 7 x 3 x 1 periodic in y and z, admitted and passed at one set | 1 / 2 exactly at 45 degrees (the rotation's) | off 1 / 2 by more than the tables' grain 1 / 256 | 21 Nodes, one record at a time, seconds |
+| (d) the light clock at rest | `docs/designs/new_rows/worlds/light_clock_rest.json` (branch light-clock, LIGHT_CLOCK.md; gate 1 the birth stamp on branch birth-stamp) | the return count N_0 = 206 +- 2 in the detector's own clock (the arm 60 Links, c = 32 / 55, the closed form 206.25), the birth stamp to the return click's clock; under the split the chosen cell's arrival stamp, the direct path's, with a tail of later counts from the split's longer paths whose shares the script gives | a return count off 206 by more than 2 on the direct path's cell; a click stamped by the host's tick anywhere | a bar of 60 Links, one record at a time, minutes |
+
+The click's time under the split, for (d) and for every time reading:
+the click is stamped with the chosen row's arrival at its set (the
+detector's own count at that arrival, `clock`), and the ladder's
+decision at the record's exhaustion is the host's view of when the
+choice was made, a delay of the view and not of the physics
+(amplitude-v1 section 13, departure 3); a detector never reads the
+tick.
+
+**The external things under the corrected law (the owner's word of
+06:06Z, record 1293: "the new method has all the detectors exactly as we
+say: a detector and an emitter, mirrors, everything outside the board,
+with its own clocks and everything we defined"; the checklist records
+1139, 1217, 1226, 1227, 1234, 1277 and 1286).** Everything outside the
+GameBoard's law is declared in the world file (record 562's list),
+nothing the board has by itself:
+
+| Kind | Declared (the key; the code) | Its clock | Its trigger under the decided form | The test before the engine changes |
+| --- | --- | --- | --- | --- |
+| a detector: a measured event with `measure` (a click), `read` (a non-absorbing read), `pass`, a `phase_window` (a setting), a `become` gate | `measured` entry, `table` per family (`world.default_table`, ENGINE.md's world-file section); `Measured`, `measured.py` 154; the click's deposit `nature_beam.py` 5498 | its own count of self-creations under the age wall (`engine.py` 699 to 706), stamped under `clock_stamp` on its `read`, `rerelease`, `click`, `become` lines; no host tick in any reading | `sensitivity` on its `detectors` entry, 1 by default (s_D = 1 / W); the record's exhaustion the click's non-local step | the stamp on every line of a registered world (audit item 1, byte-identical physics); one click per record; `tests/test_amplitude_click.py` extended for the key |
+| an emitter, the lamp (a detector at its Node, record 570) | `lamp` `{rate, wheel, directions, turns}` on a measured event of a paid family | its own count; the birth line stamped under `clock_stamp` once branch birth-stamp merges (Reviewer 3's MUST 1 on the light clock) | none (it births records; the one-input split at the birth, the fan its declared outputs) | the birth's u = ordinal x r mod W unchanged (`tests/test_birth_wheel.py`); the birth stamp's test on its branch |
+| a receiver body under `rerelease` (the thing the comments called a mirror; record 1234) | `rerelease` on a measured event with `directions`, `weights`, `turns`, `inputs` (`world.Split`); `nature_beam.py` 5413 to 5427 | its own count, stamped on its `rerelease` line | the one-input split rule with its declared outputs, unchanged; the row it re-emits continues under the coin from the next Node | `tests/test_amplitude_split.py` (the split and merge as inverses) unchanged; the comments' word replaced (M4) |
+| the `sum`, `wave` and `beam` sets | `detectors` entry: `name`, `positions`, `threshold`, `reading` | the set's measured events' own counts | the sensitivity per set (the key above); the ladder over the record's offers per set | `tests/test_amplitude_layer.py`, the offers per set; byte-identical for a `wave` or `beam` set of a world with no lamp |
+| a moving detector, the cart | the measured event's drive (`step_axis`, `engine.py` 122 to 154; the body carries its record, held content and Nodes, 1009 to 1011) | its own count under the age wall, the crowd slowing the count and not the click's tick; r_D = d / (d + A n) | as a detector; the click reads what arrives with the record as it is (POSTULATES 26.2) | `tests/test_moving_detector.py` (the cart's `clock` per ordinal); the two co-moving bodies both measuring (the reviewer's gate on PINS_R2) |
+| an open face | the GameBoard's boundary (`boundary` open) | none (no clock) | a cell of the ladder (an escape offers); no stamp | `tests/test_face_click_summary.py` unchanged |
+| a wall, a body of matter met in flight | a measured event of a paid family with `measure` (the contact rule, the push) | its own count | a click or a push, as built ("may not pass"); a body's own row does not split (M8) | the contact and push tests unchanged; the bodies' worlds re-run beside with their numbers expected unchanged |
+
+Nothing in the table is a mechanism beyond the Boss's list of 04:58Z
+except the `sensitivity` key (named in DESIGN.md section 4) and the
+recorded row's exemption from the collision (M10, DESIGN.md 3.2), both
+items of this design for the owner's reading.
 
 **M3, the readings on the detector's count.** (a) Pins: each of the
 audit's items 2 to 8 restated in counts before the re-run (the audit's
