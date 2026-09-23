@@ -126,6 +126,15 @@ clause:
    never the register's 206 in a body's counting form (section 9 row
    (d)); falsified by (iv-a) reading 206 +- 2 with the body's count.
 
+The index block at rest (world (v), a CONTROL of the coupling, not a
+nature row): its declared pin is the closed form n^2 = 1 + G g / (omega_0^2
+- omega^2), (K), unchanged after the exploratory rest reading of
+2026-09-23 (n - 1 at 0.87 of it at all three couplings); the engine's
+own cavity form (the closed form times the slab factor 0.830 at s = 12,
+0.884 at s = 24, a float scratch of the engine's form computed after that
+reading) stands beside it as a labelled CONTROL, never the pin
+(MASSIVE_RECORD.md section 11 item 6, the index row; the Boss's 18:08Z).
+
 ## The counts, by kind
 
 | Kind | Rows |
