@@ -224,7 +224,7 @@ schedule's worlds standing until then.
    direction within 0.8, 0.4, 0.2 percent at 12, 16, 24 Links), 10 (b)
    (0.886); 10 (a) (0.842) after STEP 3's (M) block.
 2. The massive (K) rows: 4a the layer pin world (200^2, s = 14, mu = 0.15,
-   the mode seed, ramp 1500, hold 8000: 0.8116 at c_eff, 0.8108 and 0.8132
+   the mode seed, the declared ramp 10000 and hold 8000 (DECLARATIONS.md section 8, the rule of ten relaxation times): 0.8116 at c_eff, 0.8108 and 0.8132
    beside as CONTROLS); 4b on the declared chain of 2200 (the pin by the
    one formula on the declared world, 1.9889, the free limit 1.9339 at the
    medium's own cone beside as the (K) form, the earlier 1.9355 retired:
@@ -232,10 +232,8 @@ schedule's worlds standing until then.
    the physicist's commit; 4c (3.732, the sidebands named); R2 (0.5774).
 3. The prediction rows: (ii-a), (ii-b) on 64^3 (0.7814, 0.8032; the
    controls beside); the deep well in motion on 128^2 (0.7531, a control);
-   the light clock of two bodies under its declaration (N_0 = 2 L / c + the
-   ring-ups at the declared L and coupling; the take world 206 +- 2 beside)
-   after the (M) block; (v-m) on its declared geometry; A and B as bounds,
-   no run.
+   the light clock of two bodies under its declaration (DECLARATIONS.md section 10: the chain of 673, B the open face as the mirror, the face detector's rung W = 10000, the pin 2 L / c = 207.85 +- 2 by the linear map before the run, the W = 64 precursor a (P) beside; no (M) block needed); (v-m) on its declared geometry; A, A2 and B as bounds,
+   no run (A2 light's own dispersion, PR #1066 merged).
 4. The table rows after the phase-reading component: 1a (181 / 64 = 2.828
    at N = 2048 recomputed on the declared table), 1b (2), 1d (0), 1c on its
    declaration, 9 (128 of 256), Malus's three settings (their counts of
@@ -314,6 +312,23 @@ matching runs; the only long exploratory world is e5 (about ten minutes),
 on the owner's word. No vectorisation of the engine unless byte identical,
 asserted by a test.
 
+The parallel plan, second form (the owner's words of 2026-09-24 about 00:00Z,
+record 1526: parallelise everything that strong machines and memory carry,
+without touching the working method; the writer NOT parallelised): (1) one
+session per WORLD at the GO, all at once, the 64^3 worlds together, and the
+3-D controls (191^3) started at the same GO on their own machines, never a
+gate; (2) one reviewer per group's readings in the morning, four reading in
+parallel, Reviewer 3 the gate of the declarations only; (3) tonight in
+parallel and without dependence: a Source Verifier for every RECALLED number
+(Fermi LAT GRB 090510, Joensson 1961, Tonomura 1989, Bertozzi 1964, the
+Compton clock), a generator of the "to write" world files beside the
+builder's components; (4) the builder at most two, one per component in
+separate modules, one integrator; (5) ONE WRITER, holding the storyline of
+section 8, starting on the owner's word with every number a blank until its
+click. Not parallelised: the declarations (one physicist), the log and
+Highlights (the Boss), the GO (the owner's word). The Boss's own cost, more
+sessions to coordinate, met by batching the records about once an hour.
+
 ## 6. The coverage map (the owner's point for thought)
 
 | The physics | The rows of the schedule | The kind |
@@ -342,3 +357,44 @@ CONTROL or the pinned row's; nothing exploratory in the paper's table;
 each head read once by Reviewer 3; the Boss records every landing; a rule
 enters the law only on the owner's word; the GO for each day is the owner's
 morning word and then the Boss's word per world.
+
+## 8. The storyline for the writer (one writer; the owner's word of 2026-09-24, about 00:05Z, record 1526)
+
+The writer is not parallelised. He starts on the owner's word alone (the
+suspension of record 1252 lifted by it), from the paper of PR #1006
+(paper-48), cut to this order, every number a blank until its click is read
+and merged; the bounds rows and the derivations final tonight. The line he
+holds, as summarised with the owner between 23:12Z and 23:40Z (records 1519
+to 1525):
+
+1. The title: The group of order 24 behind the clicks: one local integer
+   rule on the cube's lattice, and the quantum and relativistic experiments
+   it matches. The group by its fixed name (ALGEBRA.md 1.4: the group of
+   order 24, the rotation group of the cube, isomorphic to S_4); never
+   "modern algebra", "theory of everything", "nature" or "Einstein" in the
+   title.
+2. The opening: the group was found from the clicks and the law Inside
+   (ALGEBRA.md 1.3, how the group was reached from the operations), not
+   assumed.
+3. The algebra first: the one rule, the six operations, the band, the cone,
+   the click (ALGEBRA.md chapter 8); every number derived before any run
+   (ALGEBRAIC_CLOSURE.md).
+4. The method: an experiment is a world file, a result is clicks, the pin
+   written before the run, three checks per row (APPROVALS.md: the algebra,
+   the GameBoard without pins, the pins), a miss written as a miss; every
+   number by kind (K against nature's number, P the form); "matches
+   nature", never "is nature".
+5. The claim: the measured core of quantum interference without a wave
+   function assumed (the two slits, the Mach-Zehnder, Malus, Bell's 2 sqrt 2
+   without signalling, the outcome determined at the birth and written at
+   the click); special relativity as a result (c from the pair [1, 1], the
+   moving clock, the redshift, the light clock); the lattice's own
+   falsifiable signatures (the corrections of order m^2 v^2, the two gammas,
+   light's anisotropic dispersion A2, the bounds on the one scale).
+6. What it does not claim: gravity (the pair-field hypothesis in an outlook
+   only, after the pins, on the owner's word), the atom's ladder of levels,
+   alpha; the photoelectric effect named as the first falsifier to design.
+7. The order: the algebra, the method, the table of the rows with their
+   three checks, the departures, the limits, the outlook; the coverage page
+   and the published forms page as the map of what the set reflects.
+
