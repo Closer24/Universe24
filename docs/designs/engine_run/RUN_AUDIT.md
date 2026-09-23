@@ -400,9 +400,105 @@ split are estimates from the design's multiplicity and the measured
 rates, to be measured at the build's first run on one world before the
 machine is ordered.
 
-## 6. Links
+## 6. The record's writing against the compute: in memory or on disk (the owner's order of 06:44Z, record 1303)
 
-- `tools/profile_run.py`: the HOST profiler of section 2.
+The model owner's assumption: the experiments would run faster kept in
+memory and written to disk at the end, if wanted. Measured here, HOST,
+on the three worlds of section 2, 300 intervals each, the runner's own
+loop replicated by `tools/profile_run.py --writer` (a record line per
+event into `events.jsonl` through the runner's 1 MiB buffer, the books
+of every interval kept for the audit as `run.py:66-68` keeps them,
+`state.json` streamed and `run.json` dumped at the end), each world in
+its own process, three modes: ON (every line, today's default on main),
+OFF (the measure rule's per-row `click` lines dropped by the same guard
+as the runner's `--omit-row-clicks` of PR #1026: the lines carrying a
+`reading`), MEMORY (every line held as a string and written once at the
+end). No reading is taken; the files are deleted after the measurement.
+
+| World, mode (HOST) | Wall, 300 intervals | The compute (the interval) | The books per interval (the audit) | `json.dumps` | the `write` calls | the end flush | `state.json` | `run.json` | The writing, all | `events.jsonl` | Held in memory | Peak RSS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| the orbit, ON | 1.4 s | 1.2 s | 0.02 s | 0.02 s (1.2 percent) | 0.00 s (0.2 percent) | 0 | 0.08 s | 0.00 s | 0.10 s, 7.6 percent | 0.43 MB (1430 bytes per interval), 2295 lines | 0 | 46 MB |
+| the orbit, OFF | 1.3 s | 1.2 s | 0.02 s | 0.02 s | 0.00 s | 0 | 0.08 s | 0.00 s | 0.10 s, 7.4 percent | the same (no per-row click line in this world) | 0 | 46 MB |
+| the orbit, MEMORY | 1.4 s | 1.3 s | 0.02 s | 0.02 s | 0 | 0.00 s | 0.08 s | 0.00 s | 0.10 s, 7.2 percent | the same | 0.43 MB | 46 MB |
+| light beside a mass, ON | 27.1 s | 21.3 s | 4.46 s (16 percent) | 0.35 s (1.3 percent) | 0.06 s (0.2 percent) | 0 | 0.87 s | 0.01 s | 1.29 s, 4.8 percent | 14.5 MB (48229 per interval), 75998 lines | 0 | 91 MB |
+| light beside a mass, OFF | 26.4 s | 20.8 s | 4.33 s | 0.34 s | 0.06 s | 0 | 0.82 s | 0.01 s | 1.23 s, 4.7 percent | 14.1 MB (47158 per interval), 74945 lines, 1053 dropped | 0 | 91 MB |
+| light beside a mass, MEMORY | 27.8 s | 22.0 s | 4.49 s | 0.36 s | 0 | 0.10 s | 0.85 s | 0.01 s | 1.32 s, 4.8 percent | 14.5 MB | 14.5 MB | 126 MB |
+| the two slits, ON | 165.0 s | 156.8 s | 0.74 s | 3.14 s (1.9 percent) | 0.46 s (0.3 percent) | 0 | 3.83 s (2.3 percent) | 0.04 s | 7.47 s, 4.5 percent | 187.5 MB (625103 per interval), 522085 lines | 0 | 373 MB |
+| the two slits, OFF | 163.2 s | 157.3 s | 0.73 s | 1.10 s (0.7 percent) | 0.17 s (0.1 percent) | 0 | 3.92 s | 0.04 s | 5.23 s, 3.2 percent | 63.7 MB (212380 per interval), 194556 lines, 327529 dropped (63 percent of the lines) | 0 | 367 MB |
+| the two slits, MEMORY | 167.5 s | 158.1 s | 0.76 s | 3.42 s | 0 | 1.25 s | 3.92 s | 0.05 s | 8.64 s, 5.2 percent | 187.5 MB | 187.5 MB | 928 MB |
+
+**What the numbers say (HOST).** The record's writing is 4.5 to 7.6
+percent of the wall time with every line on, and of that the `write`
+calls themselves are 0.2 to 0.3 percent: the runner's stream is buffered
+by the megabyte (`run.py:57`), so the disk is touched once per MiB and
+the operating system's page cache takes the rest. The larger parts of
+the writing are the serialisation (`json.dumps`, 1.2 to 1.9 percent, one
+call per line) and the state snapshot at the end (`state.json`, 2.3
+percent on the two slits, 0.1 GB written once). Holding the record in
+memory and writing it once at the end saved nothing on any world (the
+wall time within the run-to-run noise: 165.0 s ON against 167.5 s
+MEMORY on the two slits, 27.1 against 27.8 on the lensing, 1.4 against
+1.4 on the orbit): the serialisation is paid either way, the end flush
+(1.25 s for 187 MB) replaces the buffered writes (0.46 s), and the record
+held costs memory equal to its size plus the interpreter's per-string
+overhead, 555 MB more on the two slits (928 against 373 MB at peak) for
+187 MB of lines, 35 MB more on the lensing. The per-row click lines off
+(the Trimmer's default in flight) is the real saving of the writer: on
+the two slits 63 percent of the lines, two thirds of the record's bytes,
+2.0 s of 7.5 s of writing; on the bodies' and crowds' worlds nothing,
+since their records are not per-row click lines. Larger than the writer
+on the crowd world is the runner's books per interval (`run.py:67`,
+`engine.books`, 4.5 s of 27.1, 16 percent: the Python loop over 1683
+measured events and their families, `engine.py:1465-1469`, the charge's
+`units` tuple built per event per interval, `measured.py:742-747`), a
+HOST cost of the conservation check that a cache of the unchanged events'
+charges would remove; it is not the record.
+
+**The answer to the assumption.** The record is already written from
+memory: a run does not wait on the disk per interval. An in-memory record
+with one write at the end would save, per world, of the order of 0.2 to
+0.3 percent of the wall time (the `write` calls) and would cost the whole
+record's size in memory for the length of the run: the two slits'
+registered 4300 intervals at 0.63 MB per interval are 2.7 GB held (8 GB
+with the interpreter's overhead at the measured ratio of three) for a
+saving of about 7 s in an hour; with the per-row lines off, 0.9 GB held
+for about 2 s. For the split's case of section 3 (10^7 live rows, the
+per-row lines off as the condition), the record per interval is the set
+`record` lines, the births and the gathers, of the order of 1 to 10 MB
+per interval by the rows ending at the sets, 4 to 40 GB per run held in
+memory against a saving of the same 0.2 to 0.3 percent, while the store
+itself is 14 GB at that size (section 5): an in-memory record would
+double or triple the run's memory to save a fraction of a percent, and a
+run killed at the wall clock would lose the record entirely. The present
+form is the faster one in every case measured.
+
+**The smallest form, if the owner still wants the option (nothing
+built).** A HOST option of the runner, `--record-in-memory`, off by
+default, that keeps the lines in a list and writes them in the `finally`
+of the run; the streaming write stays the default because a killed run
+(`--wall-seconds`, `--memory-mb`, a crash) keeps its partial record and
+the audit up to the last interval, which the readers and the reviewers
+use to name the interval of a refusal. What a killed run loses under each
+form:
+
+| The form | `events.jsonl` up to the kill | `state.json` | `run.json` (the audit, the books per interval) | The interval of a refusal |
+| --- | --- | --- | --- | --- |
+| streaming, buffered by 1 MiB (today) | kept to the last flushed MiB (at most the last MiB lost on a hard kill; nothing on a refusal, which the runner records and then flushes) | written by the runner on a refusal; lost on a hard kill | written by the runner on a refusal; lost on a hard kill | named by the runner on a refusal |
+| in memory, one write at the end | lost entirely on a hard kill; written in the `finally` on a refusal | the same as today | the same as today | the same on a refusal; nothing on a hard kill |
+
+The recommendation is not to build it: the measured gain is below the
+noise of a run, the memory cost is the record's size, and the loss on a
+kill is the whole record. What does pay, on the record's side, is the
+Trimmer's default (the per-row click lines off), and on the runner's
+side the cached charges of the books per interval on worlds with many
+measured events; both are HOST changes that leave every kept line byte
+identical, proved by the events file of a run with the lines on compared
+before and after.
+
+## 7. Links
+
+- `tools/profile_run.py`: the HOST profiler of section 2 and the record
+  writer's measurement of section 6 (`--writer on|off|memory`).
 - `docs/designs/event_split/DESIGN.md` and `CORRECTIONS.md` (the branch
   `event-split` at e6f6b343): the design section 3 estimates against.
 - `docs/ENGINE.md`: the engine's readings by type.
