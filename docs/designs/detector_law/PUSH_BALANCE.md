@@ -1259,3 +1259,70 @@ attraction beside the light binding (11.9). Each a declaration or a
 computation to come, none a change of the law before the owner's second
 word. Every number above is a COMPUTATION on the chain or the continuum
 pace; no pin moves; nothing enters the law by this section.
+
+**12.4 The chief physicist's placement of 12:42Z (MASSIVE_RECORD.md
+section 1, approved by the model owner), met line by line: where this
+file agrees, where it corrects, and what neither gives** (the Boss's
+order of 12:48Z).
+
+- P1 "the object a finite G_48-set R with the shape group its
+  stabiliser, declared": AGREED, the sharper form of C4. One precision:
+  R is the set of cells carrying the self pair; the object's CLOCK is
+  the mode, whose support is R only under form (I) (the mirror faces)
+  or in the cavity regime, and extends far beyond R in the well regime
+  (C6: 58 to 533 Links for s = 1 to 12 at mu = 0.05); the click read
+  across R reads the mode where it overlaps R.
+- P2 "the same interval map with one added rate -(p / q) a_now on the
+  own row, verb T with a linear rate": AGREED in substance, one
+  correction of placement: in ALGEBRA.md's inventory the rate that
+  depends on the state is (B), the bilinear form with a declared matrix
+  (2.2), (T) translates the accumulator by it (2.1) and (D) divides by
+  the wall (2.6); the wave rule's line in 2.9 is "the hop: B, T, D", and
+  the self term is one more entry of (B)'s matrix (C2), the wall 3 q.
+  "T with a linear rate" is the same map seen from (T); no verb differs.
+- P3 "the clock the bound eigenvector of the interval's map on R, a
+  character of the time translation at k = 0, one element of Z[Z_N]
+  carried by all the cells in step; light has no such character at k =
+  0, the zero mode a level and not a clock, so the whole difference
+  between light and a foreign object is the gap": AGREED (8.2, 11.2,
+  C6: no bound mode below an acoustic band; one below a gap), with the
+  precision of P1: the eigenvector is of the map on the whole board
+  (the operator H of C6), not on R alone, except under form (I).
+- P4 "the motion the characters (omega, k) on the surface 3 (2 cos omega
+  - 2) = sum (2 cos k_i - 2) - 3 p / q, the continuum limit omega^2 =
+  omega_0^2 + c^2 k^2 whose symmetry is the boost; Lorentz reached as a
+  relation on the characters, not added to the 48": AGREED on the
+  surface (identical to 11.3's) and on "reached, not added" (C8). Two
+  precisions. (i) The boost is a symmetry of the continuum surface, not
+  of the lattice's (whose characters are periodic in k); it holds for
+  the mode to the order kappa^2 / 12 of the mode's wave numbers (below
+  10^-3 at kappa = 0.04, 11.4). (ii) The characters describe the FREE
+  record; the object's clock in motion is the BOUND mode's phase at the
+  moving cells, which is the surface's covariance applied to the bound
+  state (11.4 (b) and (c): the moving well of strength g is a resting
+  well of strength gamma_m g), a step beyond the characters that gives
+  the deviation eps (gamma_m^2 - 1) / 2 from 1 / gamma_m and, for a
+  finite R, the two regimes of C8. What neither placement gives by the
+  algebra alone: WHICH regime a given (s, g) is in; that is C6 and C8's
+  computation (the mode's extent against R), and the design's condition.
+- P5 "the momentum the existing p in Z^3 as the character's k": AGREED
+  for the free packet (II), where the packet's k is the dictionary's
+  momentum of a row; a correction for a BOUND object: at rest its mode
+  is a k = 0 character while its momentum P (DESIGN.md 5.1 (a), the
+  accumulator that steps the cells) is another quantity; in motion the
+  boosted mode carries the phase gradient k = omega_0 gamma_m beta_c /
+  c (de Broglie's wave number, a COMPUTATION from 11.4), so "P as the
+  character's k" is an identification to DECLARE (the drive's P set
+  from the mode's phase gradient read between neighbouring cells, a
+  local comparison, verb D; or the cells stepped by P with the mode
+  following, as the chain check does). What neither gives: that tie.
+- P6 "the click the evaluation E and the norm across R": AGREED (11.7
+  (c), C10 (c)), with 11.5's precision: the click is the take on
+  LIGHT's record at R; the block's own massive record is read at its
+  cells and never taken.
+- What neither gives, gathered: the tie of P5; the second coupling (the
+  source term by which the block emits light at its mode, 11.7 (a) and
+  C10, absent from MASSIVE_RECORD.md's section 7 and needed by its
+  section 9); the regime of a given block (C6, C8); the block's
+  self-binding or its tie (C11); the cube's threshold (C7). Each a
+  declaration or a computation to come.
