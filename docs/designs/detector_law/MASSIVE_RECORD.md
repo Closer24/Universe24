@@ -746,7 +746,7 @@ board's two-block world reads it.
    on the chain; with the ENGINE'S seed, a declared flat amplitude A_0 on
    the emitter's cells at both levels, the same script reads N_0 = 235 at
    G g = 0.2 and 310 at 0.05 (the receiver's rung crossed 11 and 13
-   intervals after the front), and with an (M) mirror partner 233; the
+   intervals after the front), and with an (M) mirror partner 247; the
    world's pin is the script's number under the seed the world declares,
    the builder's question (h)) and in motion (rows
    (e), (f): 1 and 1 with the second term), the light emitted through the
