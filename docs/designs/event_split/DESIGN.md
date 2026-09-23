@@ -19,16 +19,21 @@ Reviewer 3 reads it, the owner reads it, and the build is a new session on
 the Boss's GO; no engine line before. This file changes no engine line,
 no key, no registered world and no document of the law.
 
-One correction owed to the owner from the chief physicist's own words of
-that hour ("the amplitudes never add on the GameBoard"): they do. The law
-as built already sums identical rows of one record at one Node (the
-merge, verb (G), [ALGEBRA.md 2.3](../../ALGEBRA.md#23-g-the-group-ring-addition-the-merge-and-the-cancel)),
-and cancels an antipodal pair. What the law as built lacks is not the
-addition but the split: a row splits only where an apparatus declares it
-(a lamp's fan at the birth, a `rerelease` entry's directions), and walks
-its one digital line everywhere else. Under the owner's rule the split is
-the Node's own and the merge is the field's addition; the wave the owner
-saw in the probe (record 1251) is then the law's default, not the fan's.
+The merge, an open question of the owner's, not resolved here. The
+owner's word of 04:29Z (record 1262): amplitudes are never added on the
+GameBoard; two possibilities meeting in a Node keep their own phases;
+interference exists only in the click's sum. The code as built sums
+identical rows of one record at one Node (the merge, verb (G),
+[ALGEBRA.md 2.3](../../ALGEBRA.md#23-g-the-group-ring-addition-the-merge-and-the-cancel))
+and cancels an antipodal pair; a row of another phase is not touched.
+The Boss put the contradiction to him; this design carries both forms
+([CORRECTIONS.md](CORRECTIONS.md) M6: keep, or the code's merge) with
+what each does to the pins (the same pointers, one threshold count
+apart). What the law as built lacks in either form is the split: a row
+splits only where an apparatus declares it (a lamp's fan at the birth, a
+`rerelease` entry's directions) and walks its one digital line
+everywhere else. The mistakes and the solutions, the verification plan
+and the table's convergence are in CORRECTIONS.md beside this file.
 
 Every number below is labelled COMPUTATION (a closed form of the algebra
 or of a registered reading) or HOST (a cost of the machine); no run was
@@ -53,7 +58,7 @@ place of the one Node of a fan's crossing). Entry by entry:
 | The click theorem and the click frame (5.1; 3.1) | UNCHANGED | The theorem reads counts of clicks Outside; the split is Inside. A click is one action that ends the record (3.1) and this design keeps it so: the record's rows on the GameBoard are the futures, the click is the one that happened (section 4). |
 | The tick algebra r_D (3.1, 3.3) | UNCHANGED | The detector's own count n_D and its ratios read the arrivals; what arrives is a row, split or not. |
 | The collision table and the push (2.4, 2.2) | UNCHANGED, and NOT APPLIED to a row of content until section 8's line is written | The split is defined for a row of no content (light) in this design; a row that meets matter does not pass (the owner's word): it clicks or pushes, as the contact rule and the push have it now; a body's row does not split under this design (section 8, the bodies' rows untouched). |
-| The merge and the cancel (2.3) | UNCHANGED as a verb; its place CHANGED | Today the merge acts where rows of one record become identical (a fan's crossing, a wall's Node); under the split it acts at every Node at every interval, and the field per Node is its image: the group-ring element f_x of the record's rows at x, the wave. |
+| The merge and the cancel (2.3) | UNCHANGED as a verb; its place CHANGED; whether it acts on the GameBoard at all is the owner's open question (CORRECTIONS.md M6) | Today the merge acts where rows of one record become identical (a fan's crossing, a wall's Node); under the split it acts at every Node at every interval, and the field per Node is its image: the group-ring element f_x of the record's rows at x, the wave. |
 | The exact identities (4) | UNCHANGED | None of them reads where a split happens; the ones that read the fan (the two-slit and single-opening sums) are re-derived in section 7 with the split's own paths. |
 | The reading rule and the kinds (3.2) | UNCHANGED | A DETECTOR number is a click; a GAMEBOARD number is a diagnostic; the split adds no kind. |
 
@@ -187,34 +192,27 @@ removed by the owner's word: under the split the record never completes
 on the GameBoard (its rows are all the futures; on a periodic axis they
 never end), and the record ends only at the click.
 
-**The click's trigger, the owner's open choice.** What decides the
-interval at which a record's one click is drawn from its offers, once
-completion no longer does. Three candidates, each a comparison (verb (D)):
-
-- (a) **The first arrival.** The record clicks at the first interval a row
-  of it reaches any set; the ladder is formed on the offers of that
-  interval alone. Local and immediate, but the offers of one interval are
-  not the record's weights: Born's ratios need the whole front (the two
-  slits' fringe is the sum over paths of different ages), so (a) gives the
-  nearest pixel, not the fringe. Not recommended.
-- (b) **The declared depth.** The record clicks at a declared age tau_c
-  (a world key of the record's lamp, an input of kind 3), the ladder on
-  every offer received up to it. Deterministic and bounded; the depth is a
-  choice the world makes.
-- (c) **The integer grain (recommended).** The record clicks when no
-  counted future is left: a branch whose share is below one unit of the
-  wheel (w W < m, the wheel W = 4096 the ladder's own grain: the rung of
-  such an offer is empty, `rungs`' docstring) is no longer counted, so the
-  counted futures of one quantum are finite and the record's live count
-  reaches 0 by the grain, not by the walls. This is the completion rule
-  re-read as the grain: the mechanism of the click (the ladder on the
-  record's offers, u by the wheel) is unchanged; only what "every row
-  ended" means changes (ended, or below one unit). The recommendation's
-  ground: the ladder needs the record's total to give Born, and (c) is the
-  one trigger that reads the total without a declared depth.
-
-The recommendation to the owner is (c); (b) is the fallback that costs a
-key; (a) is refused by the pins of section 7. The choice is his.
+**The click's trigger, bounded by the owner's word.** The owner's word
+of 05:02Z (record 1276 by the Boss's word): the trigger is the detector's
+SENSITIVITY (a declared threshold on what of the quantum has arrived at
+its set) or a SINGLE-QUANTUM reading (the detector clicks when one whole
+quantum's share is at its set); no third option unless the code forces
+one. The two options, each in the form the code can build, with the
+three tests and what each does to the pins, are [CORRECTIONS.md](CORRECTIONS.md)
+M2; in short: the ladder gives Born only over the record's whole front,
+so a first-crossing reading of the sensitivity truncates the front (the
+pins broken: the fringe and the spread narrowed, the pair's gather
+lost), and the sensitivity in the form the code allows is the counting
+rule, a set whose accumulated offer is below s_D takes no rung, a branch
+below s_D is no longer counted, and the record clicks when no counted
+future is in flight; the single-quantum reading is the same condition
+with the detectors the only sets. The grain (record 1263, the owner's
+bookkeeping: a branch below one unit no longer counted) is what makes
+the counted futures finite and is not the trigger; with s_D = 1 / W it is
+the sensitivity's default. The chief physicist's recommendation, beside
+the owner's two: the sensitivity in the counting form, s_D = 1 / W by
+default and declarable per detector, the single-quantum reading its
+special case. The choice is his.
 
 **Where the trigger comes from, the GameBoard or the detector (the
 owner's question of 2026-09-23).** The click is the detector's action:
@@ -231,7 +229,7 @@ pixel, not the fringe. The ladder therefore needs the sum over ALL the
 record's futures, which is the owner's sentence itself: the choice among
 the futures needs them all to have arrived. Today that condition is the
 record's live count reaching 0 (the completion, fed through the
-apparatus's Ports); under the split it is the grain of (c), the same
+apparatus's Ports); under the split it is the sensitivity's counting form, the same
 condition of the record on the GameBoard in another form. The detector
 stamps the click; the record decides that the time has come.
 
@@ -264,7 +262,7 @@ one non-local step that the law already has: the pair's gather deletes
 both arms' rows). Nothing is placed or cancelled at a distance beyond
 what the deletion already does today at the completion.
 
-**The grain.** A row whose share w / m is below 1 / W (its offer would
+**The grain (the owner's bookkeeping, record 1263).** A row whose share w / m is below 1 / W (its offer would
 take no rung) is not counted: it is deleted at the Node where it falls
 below, an event of the row's own record (its own accumulator against the
 wheel, verb (D)), nothing kept at the Node. Under equal weights the share
@@ -355,8 +353,9 @@ ratios: the four cells 27, 5, 5, 27 over the 64 births of the registered
 wheel and S = 2.75 at N = 64 (row 1a's DETECTOR reading at head,
 COMPUTATION here); the marginals 32 of 64 at every setting (row 1d). The
 one condition: the trigger reads both arms' offers of one record in one
-gather (choice (c) or (b) of section 4; under (a) the first arm's arrival
-would click before the second's, and the pair's gather is lost). The
+gather (the sensitivity in the counting form or the single-quantum
+reading, section 4; a first-crossing reading would click at the first
+arm's arrival, and the pair's gather is lost). The
 reading that refutes: any cell off by more than 1 (the ladder's rounding
 bound, RUN_10 section 5) under the split.
 
