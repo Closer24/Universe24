@@ -210,14 +210,15 @@ MUST F, one declared kind):
 | Parameter | What it is under the rule | Kind |
 | --- | --- | --- |
 | mass | the object's content M (`amount`, `held`), what its record hands over at a click | a declaration |
-| frequency | its clock, the family's pair [n, d] on the circle of N steps, the record's period | a declaration |
+| frequency | its REST clock, the family's pair [n, d] on the circle of N steps, the record's period: the initial condition of its record; in motion, under the clock sentence (section 8, the owner's word of 11:03Z), no declared clock: its insert follows the receive of its own record and its clock is the cycle of its own bound record read in its own count; the declared period is bounded below by the load-time checks of 1.2 | a declaration (the rest value); the motion's clock the Inside's |
 | phase | the phase at which its train starts, the clock's zero (3 N / 4, the cosine 0 and rising) | a declaration |
 | place | its Nodes on the GameBoard; a body of one Node or a line or a wall of Nodes | a declaration |
 | step | one of the six directions and the declared cadence k, intervals per Link (k = 0 at rest); a step is one Link, never a diagonal; the first rung of the object's own record at the next Node is the step's accompanying click, not its cause (a one-Node object's six neighbours cross 1 / W within an interval of the insert, so the rung alone sets no pace; Reviewer 3, MUST F); five is read with the declared pace, the dilation 8b's to derive, never the step's | a declaration |
-| momentum | the integer **P** on the object, one component per axis with its remainder, changed only by the clicks it receives (h times the arriving wave number per click, 5.1 (a)); its initial value 3 Q S M v_0 from the declared step; a free object's cadence is read from it (5.1) | a declaration of the design (5.1), not of the law |
+| momentum | the integer **P** on the object, one component per axis with its remainder, CHANGED BY THE FLUX at its six Ports (the stress of the total field, 5.1 (a)) and READ BY ITS CLICKS; its initial value 3 Q S M v_0 x 56 d from the declared step; a free object's cadence is read from it (5.1); |v| < c as the integer comparison 3 (P . P) < (3 Q S M x 56 d)^2, checked at the initial P and at every change | a declaration of the design (5.1), not of the law |
 | re-emission | the pair p = [p_n, p_d] of what its Nodes re-emit of what the rule gives them, or a TABLE (a partial re-emission with a phase: the polariser's rotation, a splitter, a trap), the fourth value of the parameter (section 5, the receiver forms) | a declaration |
 | train | the length of one insert in periods of its clock (the record's coherence, 4.5) | a declaration |
-| sensitivity | the rungs of the wheel one click needs, 1 (the first rung, the counting form) or 2 (the owner's "check 2 against 1", a computation pending) | a declaration |
+| sensitivity | the rungs of the wheel one click needs, 1 (the first rung, the counting form) or 2 (the owner's "check 2 against 1", 6.8: one interval's difference) | a declaration |
+| the wheel W | the rung's HEIGHT, 1 / W of the record's norm per rung (4096 the register's wheel; 64 declared for the chain and one-layer worlds, whose afterglow of 0.3 to 0.65 percent of the norm crosses the first rung of 4096 for 700 to 1100 intervals after a train, 6.8; a second parameter beside the sensitivity, Reviewer 3's line of 11:38Z) | a declaration per world |
 | the cycle's closed count N_s | the intervals after its last insert during which it does not receive its own record (the cycle sentence, section 5) | a declaration |
 
 Everything else the object has is read, not declared: its own count on
@@ -243,6 +244,38 @@ place where the law does not yet do what the owner says. N_s is the
 object's declared integer (kind 1) with its default named in the world
 file's definition of the one kind; the build's "grace" of two periods
 at f4a3971a is a module constant to become that declaration.
+
+1.2 **The load-time checks on the declared period and the declared
+cadence** (the model owner's word of 11:12Z through the Boss: "the
+declared clock N has a limit too: it cannot exceed the speed of light,
+so not every N may be declared"; the Boss's reading entered as declared
+checks, Reviewer 3 to gate; every number a COMPUTATION; where my
+arithmetic differs from the Boss's it is named):
+
+- (a) The hard floor from c, corrected by Reviewer 3's gate of 075636f1:
+  the lattice's band has a top at the period 5.10 intervals (omega_max =
+  2 arcsin(1 / sqrt 3)); a source faster than that drives no wave, and
+  at N = 2 the checkerboard grows linearly (the double root -1, 2.1), so
+  the check reads **N >= 6** (COMPUTATION, the band's top), refused
+  below; "N >= 2" (the Boss's first reading) was the interval's own
+  floor, not the wave's.
+- (b) The design's honest floor, already the design's: the wavelength
+  at least 12 Links (6.1, 8c), so **N >= 21 intervals at rest** (12
+  sqrt 3 = 20.8); for a moving object MUST I's floor lambda_0 (1 -
+  beta_c) >= 12 gives **N >= 50 at k = 3** (28.4 sqrt 3 = 49.2), **37 at
+  k = 4** (21.2 sqrt 3 = 36.7), **30 at k = 6** (16.9 sqrt 3 = 29.3);
+  the same arithmetic as the Boss's.
+- (c) The same bound on the motion, on the VECTOR (Reviewer 3's MUST on
+  075636f1): the check is 3 (P . P) < (3 Q S M x 56 d)^2, |v| < c with no
+  root, checked at the initial P and at every change (5.1 (a)); a
+  cadence bound per axis, "k >= 2", is its one-axis shadow and does not
+  keep the object below c (three axes at k = 2 give |v| = 0.866 Links
+  per interval, beta_c = 1.5). A change that would cross the bound is
+  not clamped (a clamp with the momentum kept and growing breaks p = 3 Q
+  S M v): the lawful refusal is the WORLD'S STOP with a diagnostic
+  naming the click and the object, recorded, never a clamp. MUST I's
+  floor (b) is checked at every click as well (N >= 155 at k = 2:
+  lambda_0 (1 - 0.866) >= 12, lambda_0 >= 89.6 Links).
 
 What is refused with the one kind, by the Algebra Auditor's rows
 (ALGEBRA_AUDIT.md at c848aad0 on `algebra-inside-outside`): a record
@@ -686,88 +719,138 @@ push on a massive record's rows is the stretched pace of 4.1.
 the law changes only on the owner's word). Each through the three
 tests; each with the pins it touches named; no pin moves.
 
-**(a) The push-to-cadence rule.** Where the momentum lives: on the
-object, as a declared integer per axis, P_i (i one of x, y, z), with a
-remainder per axis, changed only by the clicks the object receives and
-by nothing else (no field, no force at a distance). What a click adds:
-the record's momentum h times its wave number, with the sign of the
-Port it arrived by (one of six): a record with the clock [n, d] has the
-wave number (n / d) / c phase steps per Link, so in the unit "h times
-one phase step per Link" a click adds u_i x (n / d) x sqrt 3 along the
-Port's axis, u_i = +1 or -1; sqrt 3 is the declared pair [97, 56]
-(right to 0.01 percent), and the momentum is kept as the integer P_i
-= 56 d p_i (the family's d; several families of light in one world
-need the declared common denominator), so that a click adds exactly
-u_i x 97 n, no division at the click. The cadence: a body of content M
+**(a) The push-to-cadence rule** (re-formed on Reviewer 3's gate of
+4845f9f3, 11:38Z: NOT MET as the push, AGREED for the cadence). Where
+the momentum lives: on the object, as a declared integer per axis, P_i
+(i one of x, y, z), with a remainder per axis, changed by nothing but
+the wave at its own Ports. THE PUSH: per interval the momentum's change
+is the stress of the TOTAL field (all records superposed) at the
+object's six Ports: on the two Ports of axis i, T_ii = 3 (motion)^2 +
+(the strain along i)^2 at the free Node beyond the Port, an integer of
+the rule's own differences (the terms of E, 2.1; the momentum flux of
+the wave; in the integers x 4 as the pins script computes it), and P_i
+changes by T_ii at the Port behind less T_ii at the Port ahead: what
+the wave loses at the object the object gains. It is what the chain
+script of the reduced run does (the section's push), declared here.
+The click form first written ("h times the wave number per click") is
+withdrawn as the push, kept as the READING: it fails twice (it misses
+the reflected share, a mirror taking 2 h k and a scatterer (1 + R - T)
+h k; and it cannot act while the object's Ports are closed by the cycle
+sentence, which is when the binding acts); the clicks read the momentum
+the object has, they do not make it. The object's own emission's
+recoil in motion (the Doppler-asymmetric flux, 4.1's mass loss) is
+kept: physics, not a bug. THE CADENCE, as before: a body of content M
 has the rest energy E'_0 = Q S M (the flight table's units, where
 light's energy is h n / d per interval) and, at the pace v Links per
 interval, the momentum E'_0 v / c^2 = 3 Q S M v; so v_i = p_i / (3 Q S
 M), and the step is taken exactly in the integers with the remainder
 kept: per interval the accumulator A_i += |P_i|; when A_i >= 3 Q S M x
 56 d the object steps one Link along axis i in the sign of P_i and A_i
--= 3 Q S M x 56 d. That is k_i = (3 Q S M x 56 d) // |P_i| intervals per
-Link with the remainder kept on the object as the rule keeps r
-(Reviewer 3: else the pace is biased by up to one Link in M); at rest
-P_i = 0 and the object does not step; the declared step of 1.1 is the
-initial P_i = 3 Q S M v_0 x 56 d. A body's own insert is symmetric in
-its six Ports and adds nothing to P. The three tests: generic (one
-primitive, the sum of the arriving clicks' wave numbers and one
-comparison, with declared integers h, n, d, Q, S, M and the pair [97,
-56]; no family name, no kind); vector (verbs G, the sum of the clicks'
-momenta on the object's vector, and D, the one division with the
-remainder kept, then a comparison; no root, no float); local (the
-click at the object's own Node and the Port it came by; nothing read
-beyond its own Node and its six Ports). What it can move: five's first
-outcome (a pair that does not settle drifts by this rule alone: the
-radiation pressure of the partner's record is always away from it, so
-without (b) the pair separates, a prediction stated before the run);
-the pins it touches: (e), (f), 5b, 4a and 4b through 8b's member;
-none moves.
+-= 3 Q S M x 56 d (k = (3 Q S M x 56 d) // |P_i| intervals per Link with
+the remainder kept on the object, as the rule keeps r; at rest P_i = 0;
+the declared step of 1.1 is the initial P_i = 3 Q S M v_0 x 56 d; the
+object's own symmetric insert adds nothing to P). TWO CHECKS, declared:
+|v| < c on the vector, no root, as the integer comparison 3 (P . P) <
+(3 Q S M x 56 d)^2, checked at the initial P and at every change; a
+change that would cross it stops the world with a diagnostic, never a
+silent clamp (a per-axis "k >= 2" is its one-axis shadow, 1.2 (c), not the
+bound); and MUST I's floor lambda_0 (1 - beta_c) >= 12 with beta_c =
+sqrt 3 |P| / (3 Q S M x 56 d), checked at the initial P and at every
+change. The three tests: generic (one primitive, the stress at the six
+Ports and one comparison, with declared integers Q, S, M and the pair
+[97, 56]; no family name, no kind); vector (verbs G, the sum of the
+stresses into the object's vector, and D, the one division with the
+remainder kept, then comparisons; no root, no float); local (the
+object's own Node, its six Ports and the free Nodes beyond them;
+nothing further). The rule decides HOW the pair reaches beta, not WHICH
+member of 8b's family it ends in: that is the law of the object's
+frequency (section 8, the clock sentence and its completion). What it
+can move: five's first outcome (the pair's separating or holding); the
+pins it touches: (e), (f), 5b, 4a and 4b through 8b's member; none
+moves.
 
-**(b) The phased partial re-emission, the table's first member.** The
-fourth value of the re-emission parameter (1.1) is a TABLE; its first
-member, the one that can bind, is the index scatterer: the object's
-Node (or its w Nodes) runs the rule with the declared pair q = [num,
-den] on the six-neighbour term (4.1's form), the index n_o = sqrt(den /
-num) declared by the pair. What it re-emits: a thin scatterer (w Nodes,
-w much less than the wavelength) reflects the amplitude (n_o^2 - 1) pi
-w / lambda with the phase +- pi / 2 by the sign of n_o - 1 (the dipole's
-phase: the polarisability alpha proportional to n_o^2 - 1), and a thick
-one ((n_o - 1) / (n_o + 1))^2 of the motion (the Fresnel limit, 6.7:
-1 / 9 at n_o = 2 read by the script); an object with n_o > 1 in a
-standing pattern is pushed toward the antinodes and one with n_o < 1
-toward the nodes (the gradient force, Re alpha times the gradient of
-the intensity), which is the restoring force a pure receiver lacks (8b
-(i)) and the trap of an optical lattice. What it does to the other
-forms: the mirror is the limit q = 0 with its second declaration (held
-at 0, the drift term absent, section 5); the sponge is untouched (a
-ramp of the damping pair, not of the index; an object may declare
-both, an index and a damping); the polariser's rotation is the table's
-second member, a phase on the wheel applied to the record's phase read
-from (a_now, a_before), declared separately and not needed for the free
-pair. The three tests: generic (the pair per object, no family name;
-the same verb T and D as 4.1); vector (verb T with the pair on the
-six-neighbour term, D with the remainder kept: the rule's own step at
-the object's Node); local (the object's own Node and its six
-neighbours). What it can move: five's settling and where it settles
-(the antinodes for n_o > 1, the fixed points of 8b (iv) at whole
-numbers of the pattern's spacing); with (a) it decides the first
-outcome against the other two; it does not by itself decide between
-8b's member and Lorentz's, which is the clock's (8b (v-bis): the
-declared clock f_0 in the reduced run, the owner's candidate sentence
-prepared beside this section and not applied before his word); the
-pins it touches: (e), (f), 2b (the splitter is this member), 1a, 1d and
-9 (the second member); none moves.
+**(b) The phased partial re-emission, the table's first member**
+(AGREED WITH LINES, 11:38Z). The fourth value of the re-emission
+parameter (1.1) is a TABLE; its first member is the index scatterer:
+the object's Node (or its w Nodes) runs the rule with the declared pair
+q = [num, den] on the six-neighbour term IN THE COMPENSATED FORM of 4.1,
+
+    3 den a_next + r' = num (the six-neighbour sum) + 6 (den - num) a_now
+                        - 3 den a_before + r,
+
+the Laplacian form at the local pace c / n_o with no gap (the pair "on
+the six-neighbour term" alone would put an on-site term 2 (1 - q) a at
+the Node, a local mass: a barrier for q < 1, an instability for q > 1;
+Reviewer 3's line, the script's form the right one); the index n_o =
+sqrt(den / num) declared by the pair; the stability floor q < 3 (q = 9
+grows), a load-time check. What it is: a REACTIVE RELAY, not a
+resonance, and it needs none: a thin scatterer (w Nodes, w much less
+than the wavelength) reflects the amplitude (n_o^2 - 1) pi w / lambda
+with the phase +- pi / 2 by the sign of n_o - 1 (the polarisability
+alpha proportional to n_o^2 - 1), a thick one ((n_o - 1) / (n_o + 1))^2
+of the motion (the Fresnel limit, 6.7: 1 / 9 at n_o = 2 read by the
+script); its Node does not ring on its own when struck (COMPUTATION,
+the scratch preparation: the motion at a struck scatterer Node after a
+train has passed is 36 and 100 times smaller than a free Node's at n_o
+= 2 and 3, no localized mode, consistent with Reviewer 3's (C)
+computation of 11:43Z). What it does to the other forms: the mirror is
+the limit q = 0 with its second declaration (held at 0, the drift term
+absent, section 5); the sponge is untouched (a ramp of the damping
+pair, not of the index; an object may declare both); the polariser's
+rotation is the table's second member, a phase on the wheel applied to
+the record's phase read from (a_now, a_before), declared separately.
+The three tests: generic (the pair per object, no family name; the
+same verbs T and D as 4.1); vector (verb T with the pair on the
+six-neighbour term and the compensation, D with the remainder kept:
+the rule's own step at the object's Node); local (the object's own
+Node and its six neighbours). What it can move: with (a), where a
+coherent pair sits (Reviewer 3's closed form on the chain, record 1372:
+the force on emitter 1 is 2 A^2 cos(k L) toward the partner within 2
+percent from L = 64 to 108; for in-phase clocks the stable points at
+(m' + 1 / 4) lambda_0, 71.4 and 103.2 Links, the unstable at (m' + 3 /
+4) lambda_0, 87.3; L_0 = 80 = 2.52 lambda_0 with in-phase clocks the
+point of MAXIMAL repulsion; with clock 2 a quarter period behind, the
+force 2 A^2 cos(k L - pi / 2), zero at 79.4 and stable); it does not by
+itself decide between 8b's member and Lorentz's, which is the clock's;
+the pins it touches: (e), (f) (the declared relative phase, below), 2b
+(the splitter is this member), 1a, 1d and 9 (the second member); none
+moves.
 
 **What the reduced free-pair run reads with (a) and (b)** (8b (vii);
-the pins script's section I, prepared and not run before Reviewer 3's
-gate of this section and the owner's ear): two objects on the chain,
-each an index scatterer of one Node at a declared n_o, each inserting
-its own train at the declared clock f_0 (the first variant) or upon its
-receive (the owner's candidate, the second variant), each pushed by the
-clicks by (a); the separation and the cycle in the object's own count
-after a declared number of intervals, against the three outcomes named
-in 8b (vii).
+the pins script's section I, prepared in the scratchpad and not run
+before Reviewer 3's gate of this section and the owner's word): two
+objects on the chain, each an index scatterer of one Node at a declared
+n_o, each pushed by the total field's stress at its Ports by (a), the
+variants Reviewer 3's list of 11:43Z (the held list of 11:23Z and
+11:40Z superseded): (A) the declared resonance f_0 ticking in the
+lattice's intervals, emitting continuously (any train at least 2 L / c
++ 2 periods), with the declared relative phase of the two clocks (a
+quarter period, the stable parity at L_0 = 80); the relay (the owner's
+sentence read literally: the insert following the receive of the own
+record, re-formed alike); (B1), the two ends as ONE body with one
+shared momentum integer per axis (the pushes on both ends summed, the
+partner's radiation pressure internal, the extent rigid; the owner's
+words of 11:38Z, record 1370), LISTED as the control, not run; (C), no
+lawful variant on the massless rule (Reviewer 3's computation: no bound
+mode below an acoustic band; the one localized mode above the band's
+top 4 to 7 times faster than the floor N >= 21; a gapped rule that
+would give it is a scratch variant, not the law). The readings, by
+kind: the separation L (COMPUTATION on the objects' places); the cycle
+from the zero crossings of the object's own record at its Node (a
+GAMEBOARD reading, since the rung at W = 64 jitters by 6 percent, above
+five's band) beside the click (which keeps the outcome: settles or
+separates); the pair's frequency in the lattice's intervals between the
+objects (the reading that names the member: f / f_0 = 1.000 for (A)
+with L_along / L_0 = 0.667; 0.667 with L_along / L_0 = 1.0 and the cycle 1.50 N_0 for the relay, which binds too at its own parity; 0.816 with
+0.816 for Lorentz; PUSH_BALANCE.md section 6 at d69c87a9). The settling
+criterion, declared: a bounded oscillation of L about an equilibrium
+within +- lambda_0 / 4 over the last twenty cycles with no monotone
+drift; "separates" is excluded for a coherent pair at a stable parity
+by the closed form, so a separation now reads as the push's form, not
+the clock's. The scratch preparation's findings of 11:25Z (the pair
+separating at rest) are explained by the closed form: in-phase clocks
+at L_0 = 80 sit at the maximal repulsion, and 2-period trains never
+overlap at L / c = 139; both are re-formed here before any run.
 
 **The detector's own count and the birth stamp.** The click line carries
 the detector's count (`clock_stamp`) and the record's birth stamp; a
@@ -781,7 +864,10 @@ root, within int64 at A = 2^20 and trains to 2^11 intervals), one
 remainder, six reads and one division per interval; the host's cost per
 record is its rows' count (section 7).
 
-## 6. The pins before any build (COMPUTATION; `detector_law_pins.py`, `detector_law_pins.out`)
+## 6. The experiments with a foreign object: the pins before any build (COMPUTATION; `detector_law_pins.py`, `detector_law_pins.out`)
+
+The name is the model owner's (11:12Z, through the Boss): from today, everywhere, "the experiments with a foreign object": a foreign object can be anything (a detector, a clock, a mirror, a sponge, the air, a polariser), one definition with the same parameters (1.1), and the experiments with it go on; no other noun for the thing on the board that the Inside did not make. The light clock (6.4, 6.5), the wall of row 10 (6.1), the polariser (6.3), the air (6.7) are all experiments with a foreign object.
+
 
 6.0 **What the script is and assumes.** The rule of section 2 on a 2D
 z-periodic board in int64 with the remainder kept, exactly the engine's
@@ -959,7 +1045,7 @@ verb after all and the owner's "W and not P" is answered "P is needed";
 if it reads -3.99 at gamma 1, the wall alone carries both parts and no
 push is needed on a splitting record. Named, not promised.
 
-6.7 **The air as foreign objects: the coefficient form at a declared
+6.7 **The air as a foreign object (an experiment with a foreign object): the coefficient form at a declared
 index** (the owner's "the air modelled as foreign objects with air's
 parameters, with a convergence experiment"; Reviewer 3's correction of
 09:33Z: nature's air moves no pin; the experiment tests the coefficient
@@ -1049,7 +1135,12 @@ be 12 Links or more (8c), so at n_c = 2 the experiment runs at lambda_0
 - **The wavelength inside**: 11.00, 15.00, 24.00 Links at lambda_0 =
   24, 32, 48 (the pin lambda_0 / 2 +- 1: INSIDE at all three; the zero
   crossings between the train's own lobes, the dispersion's precursor
-  excluded).
+  excluded). Reviewer 3's line (11:35Z): the rule's own dispersion
+  inside gives 11.9, 15.9, 24.0 (the leapfrog relation at c^2 / n_c^2 =
+  1 / 12), so the one-Link shortfall at 24 and 32 is the reading's grain
+  (the crossings taken at whole Nodes), not the rule's pace: the +- 1
+  Link is named the READING's grain, by kind, and the next build of the
+  script interpolates each crossing between its two Nodes.
 - **The Fresnel step at the sharp boundary**: the reflected motion over
   the incident 0.1307, 0.1243, 0.1186 at 24, 32, 48 Links, converging
   on 1 / 9 = 0.1111 as the wavelength grows (the residual 0.020, 0.013,
@@ -1108,7 +1199,16 @@ moves. As computed below the delay is one interval, not two to six.
 **6.8 as computed** (section F of the script, the chain of 6.4 with the
 build's source and grace; COMPUTATION): the first rung on the Port's
 motion reads 208.0, 207.0, 207.0 from the birth at 12, 16, 24 Links
-(on a^2: 208.0 at all three): the pin (d) 206 +- 2 INSIDE at all three,
+(on a^2: 208.0 at all three): the pin (d) 206 +- 2 as declared for the
+run that was run INSIDE at all three, at its edge (the Boss's rule of
+11:35Z: not moved; the rule's own 2 L / c = 207.85 less the precursor's
+lead of about one interval, with the rung's grain as its band, is a
+declaration for a RE-RUN only, written before it, the 206 kept as the
+ray law's history in the row); the residual static level of the sine
+train (0.13, 0.10, 0.02 of the amplitude at 12, 16, 24 Links) is the
+zero-frequency mode the motion offer ignores, and the next build of the
+script ends the train at an exact zero (whole periods on the wheel),
+any change of reading to be said by kind;
 on the offer the engine books. The second rung follows the first by
 **1.0 interval** at every wavelength, on the motion and on a^2 alike:
 the pin's band (2 to 6, my estimate from 6.4's crossings at 1 / 4096
@@ -1209,7 +1309,9 @@ Under the rule, one paragraph per sentence of his:
   H): its rows leave and do not come back. So the rest cycle of a lone
   object is its declared period (1.1, N_s the whole of it), the Inside
   adding nothing to it in open space; and everything the Inside adds to
-  a body's cycle when it is not alone is the physics of this row: a
+  a body's cycle when it is not alone is the physics of this row (the
+  clock sentence below says what the object's clock IS when it is not
+  alone): a
   crowd around it (the coefficient of 4.1, its period stretched by
   (d + f n A) / d, row 12's ratio), a partner bound to it (8b, the
   standing pattern between them, the separation and the cycle from the
@@ -1229,6 +1331,133 @@ Under the rule, one paragraph per sentence of his:
   afterglow), so "no return" is a statement about three dimensions, and
   the pilot's worlds must not read a self-click from the tail (N_s
   declared above the tail's crossing time, section 5).
+- **The clock sentence, the owner's, entered on his word** (2026-09-23,
+  11:03Z, Hebrew, voice, through the Boss: "the clock sentence, all the
+  things we discussed until now, all of it into the Highlights file
+  immediately"; a DECLARATION of the design under its identity
+  `bound-clock-v1`, the law itself unchanged until Highlights carries
+  it; record 1352 his words): **the object's declaration (its frequency,
+  its period) is its REST value only; in motion the object has no
+  declared clock: its insert follows the receive of its own record, and
+  its clock is the cycle of its own bound record, read in its own
+  count.** Under the rule: an object inserts its train at its declared
+  rest frequency f_0 at its birth; thereafter it inserts again when it
+  receives its own record (the receive at its own Nodes after the closed
+  count N_s, at the declared rung, section 5), and its count advances by
+  one per insert-and-receive; its period is whatever the Inside returns:
+  2 L / c for a pair at rest at L, and in motion the cycle of the bound
+  pair by 8b. It replaces "in motion the declared period" wherever it
+  stood (1.1's frequency row; this section). WHICH FORM IS DECLARED
+  (Reviewer 3's line (i) on 075636f1): a local object cannot know
+  whether a partner exists, so "a lone object keeps its declared period,
+  outside this sentence" would be a second rule keyed on what the object
+  cannot read; the local alternative is one sentence with a timer (the
+  insert at the receive, or at the declared period if nothing has
+  returned), but the timer decides the run (at N_0 = 55 against a return
+  at 277 the period always fires first and the sentence is never
+  reached: variant (A) by construction). The design declares THE
+  SENTENCE, without a timer: the insert only on the receive of the
+  object's own record. By kind: a declaration of the design. Why: the
+  owner's words of 12:10Z to the chief physicist (his reading of record
+  1370, confirmed to him in his terms): a foreign object is not one
+  Node but a set of the board's own cells, and its record runs among
+  its cells by the same local rule, so at rest its own record RETURNS
+  to it through its own cells and the sentence alone fires its
+  self-click; its rest frequency is what that inner cycle produces, a
+  COMPUTATION from its extent (N = 2 s / c for a record crossing s
+  Links), not a declared number, and the click in the Outside is read
+  across its cells. Under that form no lone object is ever without a
+  return, and no timer and no second rule are needed. The one-Node
+  objects of the pilot's worlds and of the reduced run have no such
+  inner return; for them the declared rest period of 1.1 is variant
+  (A)'s declaration and is named so where it is used, never the
+  sentence's. What holds the object's cells together (declared rigid,
+  kind 1, or bound to each other through the Inside) is the same
+  question the reduced run asks of the pair, at the cells' scale; the
+  owner's word on closing his form of (B) is pending. The three tests: generic (one
+  primitive, the insert triggered by the receive of the object's own
+  record; no family name, no kind; f_0 a declared integer pair as the
+  initial condition); vector (a comparison of the record's identity at
+  the rung with the object's own, then the insert as today; no
+  arithmetic beyond the rule's, no root, no float); local (the object's
+  own Nodes and its Ports; the record's identity on its row; the six
+  neighbours through the rule). A declared factor f_0 / gamma stays a
+  hypothesis under its own identity, not the design's.
+
+  Reviewer 3's line beneath it (his push balance on the continuum pace,
+  a COMPUTATION, docs/designs/detector_law/PUSH_BALANCE.md at
+  d69c87a9f90d8ea8bae869ce45fb74d97d65dc9d on the branch
+  push-balance-r3, PR #1043, landed verbatim by the Boss; its section 6
+  names (A) and (B); the owner's challenge and (C) are record 1366): the sentence passes the three tests as a sentence, but
+  as written it makes the object a RELAY (it re-inserts what it
+  receives at a shifted phase), and a pure relay is never bound:
+  radiation pressure only, away from the partner at every separation;
+  an object WITH a natural frequency (a resonance, the reactive part set
+  by the declared phase, the dipole form of 5.1 (b)) is bound by the
+  coupled-oscillator force, with equilibria at L = m lambda_0 / 2,
+  alternately stable and unstable, the count m an initial condition. In
+  motion the standing condition is degenerate in L, and the member of
+  8b's family is selected by the LAW OF THE OBJECT'S FREQUENCY, so the
+  sentence needs ONE LINE on the object's natural frequency in motion,
+  with two lawful completions, the owner's word on them pending (the
+  Boss's recommendation: (A) tonight, (B) decided tomorrow with
+  tonight's numbers): **(A)** "the rest value stays the object's
+  resonance in motion, ticking in the lattice's intervals": buildable
+  now; the bound pair at the retarded pattern's nodes, L_along = L_0 /
+  gamma_m^2 and L_across = L_0 / gamma_m (0.667 and 0.816 at k = 3), the
+  cycle N_0, 8b's fixed point derived, the lab's dilation 1 against
+  gamma_m, a FAIL by design, honest; the form the reduced run tests
+  tonight. **(B)** "the object's resonance is itself a bound cycle of
+  the Inside, so that it transforms as the pair does": the covariant
+  object, the boost of the rest pair an exact solution of the wave
+  equation, L_along = L_0 / gamma_m, f = f_0 / gamma_m, the cycle gamma_m
+  N_0, Lorentz's member, five and the lab's dilation PASS by the wave
+  equation's covariance; every foreign object a composite of the law,
+  the atom's route, a program and not a sentence; the direction the
+  owner's words point to. THE OWNER'S CHALLENGE (11:20Z, record 1366):
+  "think again about (A) and (B): it does not follow that we must take
+  (B), nor that we must take (A)"; the push balance proves only that the
+  frequency law must be declared, (A) a buildable choice, (B) forced only
+  by nature and a program as a composite, the relay a third member. **(C)**,
+  a third completion from his own words: the object's resonance is the
+  BOUND MODE of the wave at its own Node under its declared pair q (the
+  index scatterer of 5.1 (b) as a well), so that the declared parameter
+  is the coefficient and "N at rest" is what the mode gives, a
+  COMPUTATION, and in motion the moving well's mode transforms by the
+  wave equation's covariance, Lorentz's member without a composite;
+  Reviewer 3's computation (11:43Z): NO lawful variant on the massless
+  rule (no bound mode below an acoustic band; the one localized mode
+  above the band's top is 4 to 7 times faster than the floor N >= 21; a
+  gapped rule that would give (C) is a scratch variant, not the law, the
+  owner's word); the scratch preparation agrees (a struck scatterer Node
+  does not ring, 5.1 (b)). THE OWNER'S FORM OF (B) (11:38Z, record
+  1370, a candidate sentence quoted, his word on closing it pending, not
+  applied and not declared in the pins): "a foreign object is not one
+  Node; its declared N (its mass) derives how many cells it is at rest,
+  the cells identical in the Inside; its click in the Outside is read
+  across its cells", read back by the Boss as: the object's rest extent
+  s = N c / 2 Links is the set of Nodes its own record crosses in one
+  cycle, so a pair at L_0 = 80, m = 5, is already such an object with
+  its two ends 80 Links apart. The sentence read literally as a relay (no
+  clock in motion, the inserted train continuing the received one)
+  BINDS at its own parity when the trains overlap (Reviewer 3's
+  correction of 12:05Z by his own closed form: a resonance is not needed
+  for the binding, the frequency law still selects the member); carried
+  rigidly to beta its frequency ends at f = f_0 / gamma_m^2 (the Doppler
+  integral), L_along = L_0, L_across = gamma_m L_0, the cycle gamma_m^2
+  N_0 in both arms: five's ratios 1.50 and 1.50 at k = 3, a FAIL of five
+  and of the lab row. Two quantities under the sentence, named
+  (Reviewer 3's line (ii)): the COUNT's cycle (the count advances per
+  insert-and-receive: 277 at rest for the light clock, in the lattice's
+  intervals) and the WAVE's frequency (the train's f_0 as the initial
+  condition, then whatever the Inside does to it); PINS.md says which
+  each row reads: the lab row the count's cycle, the member the wave's
+  frequency. The quantity that breaks the degeneracy and must
+  be read: the pair's oscillation frequency in the lattice's intervals
+  (the zero crossings of the wave between the objects) after the rest
+  pair is pushed to beta, beside the separation: f / f_0 = 1, 0.816,
+  0.667 names the member. Nothing beyond the sentence and this line
+  enters.
 - **In motion it pops up at the next Node**: the object steps to the
   neighbouring Node, one of six, never a diagonal, at its declared
   cadence k, and the first rung of its own record at that Node is the
@@ -1392,7 +1621,11 @@ differ by the one factor 1 / gamma_m on every length and every rate of
 the moving thing), which is why no reading from within distinguishes
 them.
 
-(v-bis) **The one-parameter family** (Reviewer 3's gate). The standing
+(v-bis) **The one-parameter family** (Reviewer 3's gate; his push
+balance on the continuum pace, PUSH_BALANCE.md at d69c87a9 on
+push-balance-r3, the four derivations: the radiation pressure on a
+scatterer, the coupled-oscillator force, the relay's Doppler integral,
+the boost of the rest pair). The standing
 condition fixes L given f and does not fix f: with the pair's frequency
 f in the lattice's intervals the round trip is m / f along and across
 for ANY f, so the bound states are a one-parameter family. f = f_0 (the
