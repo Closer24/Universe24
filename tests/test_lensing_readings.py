@@ -1,6 +1,6 @@
 """The series K readings tool reads the engine's own functions (the
 experimenter's rule, 2026-09-20: a readings tool never replays a rule of
-the engine; `tools/lensing_readings.py` reads the lamp's turn and the
+the engine; `tools/click_readings/lensing.py` reads the lamp's turn and the
 mass's rays per direction off `core.integer.by_clock`, the speed and the
 dwell off `nature_beam.direction_flight`, the world's keys through
 `parse_nature_beam_world`, the records off the runner's record and the
@@ -47,7 +47,7 @@ from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "lensing_readings_tool", ROOT / "tools" / "lensing_readings.py"
+    "lensing_readings_tool", ROOT / "tools" / "click_readings" / "lensing.py"
 )
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["lensing_readings_tool"] = TOOL

@@ -117,7 +117,7 @@ screen, a clock, a probe, a star, a planet, a neutron star) is one row of
 [the catalog of the entities](ENTITY_CATALOG.md#the-external-things): a
 definition carries the row's measured entries and detectors, and the world
 that places it declares the row's families and world keys. The catalog's
-own worlds (`examples/events/catalog/`) are plain inline worlds; a
+own worlds (`examples/events/catalog/`, deleted on 2026-09-22, record 894) were plain inline worlds; a
 definition of any placeable row is authored the same way.
 
 Host structural validation covers every definition, including unused ones.

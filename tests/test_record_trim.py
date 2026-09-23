@@ -11,9 +11,9 @@ record"), written down first:
 (a) the option on: a small registered world run twice, with and without it,
     on the gate world `detector/grouped_12_nodes.json` at its declared 4
     intervals (a set of 12 Nodes with a threshold, three rows clicked at the
-    4th) and on the catalog world `lamp_mirror_screen.json` at its declared
-    50 intervals (a lamp, two mirrors that re-release and a screen: records,
-    gathers and per-row clicks of records); the kept lines are byte-identical
+    4th) and on the gate's lamp world `bell/a0_b0.json` at its declared 160
+    intervals (a lamp and two detector sets: births, records, gathers and
+    per-row clicks of records); the kept lines are byte-identical
     line for line and in order (the trimmed record is a subsequence of the
     full one), the omitted lines are exactly the `click` lines whose
     `measured` is a number and that carry `push` (the measure rule's per-row
@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events"
 GATE_SET = WORLDS / "gate_set.json"
 DETECTOR = "detector/grouped_12_nodes.json"
-LAMP = "catalog/lamp_mirror_screen.json"
+LAMP = "bell/a0_b0.json"
 
 SPEC = importlib.util.spec_from_file_location("run_series", ROOT / "tools/run_series.py")
 RUN_SERIES = importlib.util.module_from_spec(SPEC)
@@ -100,7 +100,7 @@ def test_the_option_omits_exactly_the_per_row_click_lines(tmp_path: Path, world:
     kinds = {json.loads(line)["event"] for line in trimmed_lines}
     assert "record" in kinds and "click" in {json.loads(line)["event"] for line in full_lines}
     if world == LAMP:
-        assert {"birth", "gather", "record", "rerelease"} <= kinds
+        assert {"birth", "gather", "record"} <= kinds
         # The gathers, the detector's clicks of the records, all kept.
         gathers = [line for line in full_lines if json.loads(line)["event"] == "gather"]
         assert (

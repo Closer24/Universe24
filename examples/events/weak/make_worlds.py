@@ -17,7 +17,7 @@ each, and the sum over a = 0 .. at - 1 telescopes to floor(at x c / 2^20),
 so the self-creation that takes the age to `at` is the tick at + floor(at
 x c / 2^20); the crowd builds up over the first intervals (the count is
 lower before every line has arrived), so the tick is that number or up to
-three intervals before it. The readings tool (`tools/weak_readings.py`) reads the
+three intervals before it. The readings tool (`tools/click_readings/weak.py`) reads the
 run's record and compares; `expectations.json` beside the worlds holds the
 numbers this generator pinned.
 

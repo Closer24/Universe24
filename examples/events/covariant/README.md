@@ -27,7 +27,7 @@ and E'_0, the pace over the late window from the step lines, the
 invariant, the intervals owed to proper time: the host's view, a
 diagnostic, printed with its expectation and never a verdict since the
 model owner's rule of 2026-09-22, records 562 and 564; F5 and F7). The
-readings tool is `tools/covariant_readings.py`, every line labelled by
+readings tool is `tools/click_readings/covariant.py`, every line labelled by
 its kind.
 
 ## What was built (the engine, under the world key alone)
@@ -115,7 +115,7 @@ worlds of 17.6 M8, not run here).
 ```bash
 python examples/events/covariant/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/covariant examples/events/covariant/*.json
-PYTHONPATH=src python tools/covariant_readings.py artifacts/covariant
+PYTHONPATH=src python tools/click_readings/covariant.py artifacts/covariant
 ```
 
 The J4 runs take about 0.3 s each, the coasting run about 43 s.
@@ -148,7 +148,7 @@ its tolerance and the derived integer exactly.
 
 ## What was measured (2026-09-21)
 
-`tools/covariant_readings.py` on the four runs (the head `24e0c1ba...` of
+`tools/click_readings/covariant.py` on the four runs (the head `24e0c1ba...` of
 `run.json`'s `source_sha256`; Python 3.14.0rc2, numpy 2.5.3, headless; the
 J4 runs 0.3 s each, the coasting run 42.9 s; every run completed with the
 books balanced at every tick): 0 record checks failed, 24 readings inside,

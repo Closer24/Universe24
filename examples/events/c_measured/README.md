@@ -54,7 +54,7 @@ face. The click record carries no age and no direction as the engine
 stands: the age is the click's tick less the birth's tick (the lamp's own
 `birth` line), and the direction is read off the click's momentum, the
 unit vector of the direction at the scale Q = 64 (the engine's label
-table, injective on the fan; `tools/c_measured_readings.py`).
+table, injective on the fan; `tools/click_readings/c_measured.py`).
 
 The vector read after the detector, named before the run: the click's
 Node **x**, an integer 3-vector in Links, with its face and its tick (a
@@ -130,7 +130,7 @@ The run: `python -m event_universe --init examples/events/c_measured/c_measured.
 0.39 s (the wall 0.96 s), the source fingerprint
 `acf789fe08118a7aecf601e0a5f241351320ba5f2b4956056c194d37376e4b32`, the
 package 0.3.1, `completed`, the books balanced at every tick; the reading
-by `tools/c_measured_readings.py <folder>`, whose verdict is inside.
+by `tools/click_readings/c_measured.py <folder>`, whose verdict is inside.
 
 DETECTOR: one birth at tick 1 (290 units, the multiplicity 290); 290 clicks
 on the faces (`face:+x` 57, `face:-x` 57, `face:+y` 47, `face:-y` 47,
@@ -173,5 +173,5 @@ click's momentum label through the engine's own table.
 
     PYTHONPATH=src python examples/events/c_measured/make_world.py
     PYTHONPATH=src python -m event_universe --init examples/events/c_measured/c_measured.json --output artifacts/c_measured/run
-    PYTHONPATH=src python tools/c_measured_readings.py artifacts/c_measured/run
+    PYTHONPATH=src python tools/click_readings/c_measured.py artifacts/c_measured/run
     PYTHONPATH=src python -m pytest tests/test_c_measured.py -q

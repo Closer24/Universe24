@@ -23,7 +23,7 @@ beside `slits_huygens` (`../amplitude/make_worlds.py`); `expectations.json`
 beside them holds the pin, written before the run, with the line each
 number is read on, the byte-identity digests of the amplitude worlds
 registered from the base tree, and the small world's replay written by
-`replay_register.py`; `read_run.py` reads a run against the pin. The
+`tools/click_readings/massive_rows_replay.py`; `tools/click_readings/massive_rows.py` reads a run against the pin. The
 `age_bound` of every world is declared (a massive row's pace is its
 family's, below the flight's).
 
@@ -92,7 +92,7 @@ examples/events/massive_rows/slits_matter_1024.json --output <dir>
 e6de713d and by the architect on 40faf848 (the same engine sources), the
 same `events.jsonl` and `state.json` byte for byte on all three (sha256
 f561aedb... and afe643aa...), 2700 intervals completed, the books
-balanced at every interval. Its reading by `read_run.py` is registered
+balanced at every interval. Its reading by `tools/click_readings/massive_rows.py` is registered
 under `slits_matter_1024.run` in `expectations.json`, every number
 labelled; the pin's numbers are not moved. DETECTOR (the screen's
 gathers and the first `click` lines): the first `click` line at
@@ -120,7 +120,7 @@ paid family `wall` with the openings at y = 8 and 12 (where the lamp's
 diagonals land after five Links) re-releasing on a fan of five directions
 ((1, 0, 0), (2, +-1, 0), (1, +-1, 0)) with equal weights; a screen at x =
 10 of 21 `sum` pixels; 48 intervals. The register (`expectations.json`
-under `slits_matter_small.replay`, written by `replay_register.py` from
+under `slits_matter_small.replay`, written by `tools/click_readings/massive_rows_replay.py` from
 the engine as shipped, no number typed by hand) holds the run's digests
 (state, books, events), the gathers of the records 1 .. 8 (the tick, the
 chosen set, the Node, the content 4 and the one label 4 p_D), the books
@@ -151,7 +151,7 @@ detector. The group pace is pinned as the row's `age` on its first
 clock since its re-release at the opening: 815 and 876 within 5,
 `first_click_age` of `expectations.json`; DETECTOR), the line's tick the
 record's ordering (the re-release tick 140 plus the age; GAMEBOARD, the
-lattice's clock); `read_run.py` reads both so. The 1024-birth run's
+lattice's clock); `tools/click_readings/massive_rows.py` reads both so. The 1024-birth run's
 record replayed on main's engine reads 815 and 876 exactly; the reading
 and the verdict are in
 [the register's entry](../../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21),

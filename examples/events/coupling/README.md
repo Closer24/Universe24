@@ -104,10 +104,10 @@ equals that count at every tick.
 ```bash
 python examples/events/coupling/make_worlds.py   # rewrites the twenty-one worlds, unchanged
 python tools/run_series.py --jobs 4 --out artifacts/coupling examples/events/coupling/*.json
-PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling
+PYTHONPATH=src python tools/click_readings/coupling.py artifacts/coupling
 ```
 
-`tools/coupling_readings.py` reads each run's `run.json`,
+`tools/click_readings/coupling.py` reads each run's `run.json`,
 `initialization.json` and `events.jsonl`, replays worlds 5 and 5_long
 through the API (`NatureBeamSimulation`, `step`, the count, presence and flow
 arrays, the flux through the square), prints a table per item, every
@@ -238,7 +238,7 @@ record's new fields aside). The register entry has the momenta ([migration](../.
 The model owner's word of record 394: a clock counts the age moment by
 default, and item 6's probes (`pass` for the source's family, no word)
 count it. The series run again through `tools/run_series.py` on the head of
-branch `clock-age-v1` and read by `tools/coupling_readings.py`, whose item
+branch `clock-age-v1` and read by `tools/click_readings/coupling.py`, whose item
 6 now replays the age moment at the probe's Node (`sum amount x age` over
 the source's rows there after the interval, `Replay.age_moment_at`) as the
 count a clock reads, and whose ring keys follow the diagnostic's name

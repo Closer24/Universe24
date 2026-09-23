@@ -1,6 +1,6 @@
 """The Bohr readings tool reads the engine's own functions (the experimenter's
 rule, 2026-09-20: a readings tool never replays a rule of the engine;
-`tools/bohr_readings.py` reads the flight time off `Flight.manhattan_steps`,
+`tools/click_readings/bohr.py` reads the flight time off `Flight.manhattan_steps`,
 the coherent pointer off `nature_beam.coherent_pointer` with the circle's
 tables of `core/phase.py`, and the run off the runner's record). Each reading
 is checked against the engine on a minimal GameBoard; the expected integers,
@@ -50,7 +50,9 @@ from event_universe.events.nature_beam import coherent_pointer
 from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("bohr_readings_tool", ROOT / "tools" / "bohr_readings.py")
+SPEC = importlib.util.spec_from_file_location(
+    "bohr_readings_tool", ROOT / "tools" / "click_readings" / "bohr.py"
+)
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["bohr_readings_tool"] = TOOL
 SPEC.loader.exec_module(TOOL)

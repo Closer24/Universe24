@@ -1,6 +1,6 @@
 {
  "format": "gate-set-v1",
- "description": "The gate set (the model owner's decision of 2026-09-20, Highlights 5.4, record 87 of docs/LOG_2026-09-20.md; chosen by measured coverage on 2026-09-20, the trimming plan, record 91): the worlds replayed at every commit of an integration through tools/run_series.py --list. Together they declare every key, table rule and family kind of the register, write every record kind, and execute every engine line any registered world reaches. The whole register replays only under --full or on demand. A new key or rule adds the first world that declares it, with the line it covers. ticks is the world's declared duration; cap is the interval by which the world's coverage is complete (the fast pass, --list --fast). A world without a lamp carries `digests`: the sha256 of its state.json, of the books (the audit of run.json, JSON-encoded) and of events.jsonl at its cap, the register of the replay's expected bytes that tests/test_amplitude_click.py (d) reads (since 2026-09-21; before, the test's own table): the state's under the fraction-free law of 2026-09-20 (BEAM_LAW note 41), the books and the events the base tree's before the one click, j3_deuteron's moved at the fraction-free stage 1 and again under clock-age-v1 (2026-09-21: its neutrons' clocks count the age moment; the other fifteen worlds byte-identical, no other gate world reads a clock's word).",
+ "description": "The gate set (the model owner's decision of 2026-09-20, Highlights 5.4, record 87 of docs/LOG_2026-09-20.md; chosen by measured coverage on 2026-09-20, the trimming plan, record 91): the worlds replayed at every commit of an integration through tools/run_series.py --list. Together they declare every key, table rule and family kind of the register, write every record kind, and execute every engine line any registered world reaches. The whole register replays only under --full or on demand. A new key or rule adds the first world that declares it, with the line it covers. ticks is the world's declared duration; cap is the interval by which the world's coverage is complete (the fast pass, --list --fast). A world without a lamp carries `digests`: the sha256 of its state.json, of the books (the audit of run.json, JSON-encoded) and of events.jsonl at its cap, the register of the replay's expected bytes that tests/test_amplitude_click.py (d) reads (since 2026-09-21; before, the test's own table): the state's under the fraction-free law of 2026-09-20 (BEAM_LAW note 41), the books and the events the base tree's before the one click, j3_deuteron's moved at the fraction-free stage 1 and again under clock-age-v1 (2026-09-21: its neutrons' clocks count the age moment; the other fifteen worlds byte-identical, no other gate world reads a clock's word). On 2026-09-22 (the model owner's word, record 894: the gallery, hand and catalog worlds deleted) the rows of catalog/lamp_mirror_screen, catalog/sun_planet and hand/wu left with their worlds: a lamp's phase_window, rerelease on declared directions and a wave screen are executed by the amplitude worlds tests/test_amplitude_click.py replays; a body stepping under width by drive_b/plane_b and hubble/pushing_age; the hand on a family, the axis and the parity filter by the worlds tests/test_hand.py builds from tests/support/hand_worlds.py (the rule hand-v1 stays, read by series J2's world of the register).",
  "worlds": [
   {
    "path": "bell/a0_b0.json",
@@ -35,12 +35,6 @@
     "audit_sha256": "ef75f59dd76e6efc2cbd318cd5117c6b282ca1018350e5e41197c70fb37de430",
     "events_sha256": "05d83fef6cc1b1a7ad6c6dd501264e8aca2bc2604a511828e2142550de031004"
    }
-  },
-  {
-   "path": "catalog/lamp_mirror_screen.json",
-   "ticks": 50,
-   "cap": 14,
-   "covers": "a lamp's phase_window, rerelease on declared directions, a wave screen"
   },
   {
    "path": "lensing/heavy_meeting.json",
@@ -131,23 +125,6 @@
    "ticks": 350,
    "cap": 1,
    "covers": "a one-Node re-emitting opening under beam"
-  },
-  {
-   "path": "catalog/sun_planet.json",
-   "ticks": 50,
-   "cap": 12,
-   "covers": "a body stepping under width with a declared momentum"
-  },
-  {
-   "path": "hand/wu.json",
-   "ticks": 40,
-   "cap": 23,
-   "covers": "hand on a family (hand-v1), axis and the right-hand rule in become, the parity filter and the pass by hand, hand on the click, become and face lines, left/right in the books",
-   "digests": {
-    "state_sha256": "be402522aec9e62054e455b12f72d1ee581532f4f5706672f02762402b9bcc12",
-    "audit_sha256": "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
-    "events_sha256": "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988"
-   }
   },
   {
    "path": "drive_b/plane_b.json",

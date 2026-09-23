@@ -1035,8 +1035,8 @@ the plane) and the argument that every ray present at a Node is leaving it
    the detector's per-tick `record` is a new line).
 7. Delete `mixing.py`, `reversible.py`, the tests and examples of section 6;
    add the tests of section 7; rewrite the examples and the two generators.
-8. Documents of section 6; `tools/coupling_readings.py` and
-   `tools/bell_chsh.py` read the new record; re-register series C and Bell
+8. Documents of section 6; `tools/click_readings/coupling.py` and
+   `tools/click_readings/bell.py` read the new record; re-register series C and Bell
    with the expectations of section 8 and the runs' fingerprints.
 9. `python tools/check.py --full`; the physics-rule reviewer on the tables
    and the readings; the regression evidence in VALIDATION.md.
@@ -1120,7 +1120,7 @@ implementation's part of the contract. The design above is unchanged.
    check is against 2^62 - 1.
 9. **The Bell worlds run 160 intervals**: the flight's pace puts the
    plus click of age a at tick a + 14 and the minus click at a + 16, so 128
-   pairs need 144 ticks; 160 leaves the margin. `tools/bell_chsh.py` admits
+   pairs need 144 ticks; 160 leaves the margin. `tools/click_readings/bell.py` admits
    the `record` line among the record kinds and checks the minus offset
    above the plus.
 10. **`reads` names the component**, one of `scalar` (outside + here, the
@@ -1487,7 +1487,7 @@ implementation's part of the contract. The design above is unchanged.
     every push, momentum and book line x 64 exactly (the electric part
     too, `q_A q_B / M_B` being an integer on every series 7 world and
     `by_clock(age, 64 n, k) = 64 by_clock(age, n, k)` when k divides n),
-    the tool `tools/coupling_readings.py` dividing the labels by Q where
+    the tool `tools/click_readings/coupling.py` dividing the labels by Q where
     it compares with q or an amount, so every criterion and reading is
     the same; Bell is unchanged (S = 2, 326 criteria); series D is
     re-derived with L = 1 in label units under the Q S M rule and re-run
@@ -1519,7 +1519,7 @@ implementation's part of the contract. The design above is unchanged.
     event that had anything this interval, per family in family order
     (when two families click one set in one interval the later family's
     phase is the one the events keep). (iv) The `click` line keeps the
-    ray's own phase (the ray's record, what `tools/bell_chsh.py` reads
+    ray's own phase (the ray's record, what `tools/click_readings/bell.py` reads
     as the age mod N); the set's phase is on the `record` line and in the
     report. (v) Under `beam` the pairing walks the rows of the set in
     the order (measured event, number, row) and splits a row: the paired
@@ -1721,7 +1721,7 @@ implementation's part of the contract. The design above is unchanged.
     square of what it absorbs (its record is read by nothing). Unchanged:
     the Bell worlds (one ray per interval per counter: the pointer of one
     ray at phase p reads p, every click and pass identical, S = 2 exactly,
-    `tools/bell_chsh.py` 326 criteria passed), the two-slit screens and
+    `tools/click_readings/bell.py` 326 criteria passed), the two-slit screens and
     the Heisenberg worlds (declared), series C and D (no detector).
 30. **A body on a set of Nodes with one record, and the turn by momentum:
     Bohr as parameters outside the GameBoard** (the model owner, 2026-09-20,
@@ -2296,14 +2296,21 @@ implementation's part of the contract. The design above is unchanged.
     as written. **Since 2026-09-22 the paid unit's reading of the free crowd
     is the law's default in the momentum form, not this note's: the
     generic entry of the bending (`optical_turn`, verbs 2 and 3 of the
-    law's own; the time part in the flight wall, the space part the turn
-    along the momentum's line, gamma the declared input and 0 by default)
-    acts on every row with content in free space of every world, no key;
-    meeting-v1 under the key `meeting` is the earlier phase-register form
-    of the same reading, off by default, declared by the five lensing
-    worlds of 2026-09-20 only, history (the model owner's word of
-    2026-09-23 through the chief physicist, as his: it enters generically
-    as the default).** What the implementation decided where the design was
+    law's own) reads the crowd's two moments at the row's Node for every
+    row of every family in free space, no key: the age moment A on the
+    row's flight wall (the delay, 2 T_D (d + f n A), f = 1 + gamma) and
+    the flow **V** on the row's momentum accumulator **W** (the deflection,
+    at the weight (1 + gamma) content x e_D per unit, `unit_weights`),
+    gamma the declared input, 0 by default; at gamma = 0 both carry the
+    time part alone (Newton's half of the deflection and of Shapiro's
+    delay, the optical pin worlds' -1.93 pixels and 2.68 intervals) and
+    the space part is the gamma of both, not one of them. meeting-v1 under
+    the key `meeting` is the earlier phase-register form of the same
+    reading, off by default, declared by the five lensing worlds of
+    2026-09-20 only, history (the model owner's word of 2026-09-23
+    through the chief physicist, as his: it enters generically as the
+    default; the naming corrected on Reviewer 2's and Reviewer 3's reading
+    of the code, 2026-09-23).** What the implementation decided where the design was
     silent, and what it found: (i) **The module and the two call sites.**
     The arc permutation (built once per direction table from the flight
     table's unit vectors and cached per target, forward and inverse), the
@@ -2963,7 +2970,9 @@ implementation's part of the contract. The design above is unchanged.
     [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
     the physicist's design hand/DESIGN.md, record 122, read against the
     mathematician's integer form FORM.md, record 120; `tests/test_hand.py`
-    (a) to (g); the worlds of series P, `examples/events/hand/`). The one
+    (a) to (g); the worlds of series P, `examples/events/hand/`, deleted on
+    2026-09-22 with the owner's word of record 894 and built since by
+    `tests/support/hand_worlds.py`). The one
     thing the record did not carry: its sense of turning about its own
     direction. **The row** gains one column `hand` in {-1, 0, +1}: +1 a
     right-handed screw along u_d, -1 a left-handed one, 0 none (every row
@@ -3025,7 +3034,7 @@ implementation's part of the contract. The design above is unchanged.
     nuclear spin, and the left-handed beta's spin then points along the
     parent's axis, the product carrying the parent's sense; both forms are
     covariant and give the same parity difference, the sign decides which
-    reading is Wu's and `hand/wu.json` pins Wu's side); (ii) the strict
+    reading is Wu's and the `wu` world of `tests/support/hand_worlds.py` pins Wu's side); (ii) the strict
     hemisphere only, the equator not admitted (a heading perpendicular to
     the axis has no sign against it; on the six headings one direction is
     admitted, not five); (iii) the hand's home on the family, not on the
@@ -3442,8 +3451,8 @@ implementation's part of the contract. The design above is unchanged.
     Mach-Zehnder ports and the GHZ triples do not depend on the
     alignment: a click is a function of the record's u and the settings
     alone, the same integers read by ordinal on both counts (the
-    reviewer's `pair_by_ordinal.py`; `tools/bell_chsh.py`,
-    `tools/bell_choosers.py`, `tests/test_amplitude_pair.py`).
+    reviewer's `pair_by_ordinal.py`; `tools/click_readings/bell.py`,
+    `tools/click_readings/bell_choosers.py`, `tests/test_amplitude_pair.py`).
     (viii) **No tables, no remainder discarded, and the law's remaining
     divisions** (the model owner's record 155 of 2026-09-20; the
     derivation mathematician's inventory, `docs/DERIVATIONS_BEAM.md`

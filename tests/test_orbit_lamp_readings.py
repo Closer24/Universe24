@@ -1,4 +1,4 @@
-"""The series D3 readings tool (`tools/orbit_lamp_readings.py`, Newton after
+"""The series D3 readings tool (`tools/click_readings/orbit_lamp.py`, Newton after
 a detector) and its generator (`examples/events/orbit_lamp/make_worlds.py`)
 read the engine (the experimenter's rule, 2026-09-20: a readings tool never
 replays a rule of the engine; the reading is the detector line's `click`
@@ -66,7 +66,7 @@ def load(name: str, path: Path):
     return module
 
 
-TOOL = load("orbit_lamp_readings_tool", ROOT / "tools" / "orbit_lamp_readings.py")
+TOOL = load("orbit_lamp_readings_tool", ROOT / "tools" / "click_readings" / "orbit_lamp.py")
 GENERATOR = load("orbit_lamp_make_worlds", WORLDS / "make_worlds.py")
 
 PERIOD = 742.0

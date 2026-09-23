@@ -617,10 +617,10 @@ def test_the_registered_coasting_run_replays_bit_exact_at_its_cap(tmp_path):
 def test_a_gameboard_number_is_a_diagnostic_out_of_the_verdicts():
     """E' at load, the pace over the late window and the invariant are the
     host's view (records 562 and 564; the audit of record 567, F5 and F7):
-    `tools/covariant_readings.py` prints them beside their expectation as
+    `tools/click_readings/covariant.py` prints them beside their expectation as
     diagnostics, labelled GAMEBOARD, out of the verdicts; the `become` line
     and the click are DETECTOR (F6)."""
-    path = WORLDS.parents[2] / "tools" / "covariant_readings.py"
+    path = WORLDS.parents[2] / "tools" / "click_readings" / "covariant.py"
     spec = importlib.util.spec_from_file_location("covariant_readings_tool", path)
     assert spec is not None and spec.loader is not None
     tool = importlib.util.module_from_spec(spec)

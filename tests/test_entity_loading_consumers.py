@@ -3,11 +3,9 @@
 import copy
 import hashlib
 import json
-from pathlib import Path
 
 import pytest
 
-from event_universe import ui
 from event_universe.runner import run_initialization
 from event_universe.world_loading import load_world
 
@@ -114,9 +112,6 @@ def test_invalid_external_input_fails_before_output_directory(tmp_path):
     with pytest.raises(OSError):
         run_initialization(path, output)
     assert not output.exists()
-    with pytest.raises(ValueError):
-        ui.Workspace(path.parent, tmp_path / "workspace").start(path.read_text())
-    assert not (tmp_path / "workspace").exists()
 
 
 def test_plain_runner_retains_original_artifact_schema(tmp_path):
@@ -156,73 +151,6 @@ def test_resolution_artifacts_survive_a_recorded_runtime_refusal(tmp_path):
         (output / "initialization_bundle.json").read_bytes()
     )
     assert (output / "resolved_initialization.json").is_file()
-
-
-class _Process:
-    """A host process stub: exercise saved input ownership without a world run."""
-
-    def __init__(self):
-        self.code = None
-
-    def poll(self):
-        return self.code
-
-    def terminate(self):
-        self.code = 0
-
-    def wait(self, timeout=None):
-        return self.code
-
-    def kill(self):
-        self.code = -1
-
-
-def test_workspace_prepares_frozen_portable_templates_export_and_start(tmp_path, monkeypatch):
-    configs = tmp_path / "configs"
-    path, definition_path = _write_authoring(configs / "nested")
-    _write_authoring(configs / "another")
-    workspace = ui.Workspace(configs, tmp_path / "workspace")
-    templates = workspace.templates()
-    assert [item["id"] for item in templates] == ["another/world", "nested/world"]
-    original = next(item["source"] for item in templates if item["id"] == "nested/world")
-    assert json.loads(original)["format"] == "event-world-bundle-v1"
-    assert ui.validate_source(original)["measured"] == 1
-    definition_path.write_text(json.dumps(_definitions(2)), encoding="utf-8")
-    refreshed = next(item["source"] for item in workspace.templates() if item["id"] == "nested/world")
-    assert load_world(original).world.measured[0].amount == 3
-    assert load_world(refreshed).world.measured[0].amount == 2
-    definition_path.unlink()
-    exported = workspace.export(original)
-    export_id = Path(exported["url"]).stem
-    exported_bytes = workspace.exports[export_id][0].read_bytes()
-    assert exported_bytes == original.encode()
-    assert load_world(exported_bytes).world.measured[0].amount == 3
-    commands = []
-    process = _Process()
-
-    def start_process(command, **kwargs):
-        commands.append(command)
-        return process
-
-    monkeypatch.setattr(ui.subprocess, "Popen", start_process)
-    try:
-        result = workspace.start(original)
-        job = workspace.jobs[result["id"]]
-        assert job.initialization.read_bytes() == exported_bytes
-        assert commands[0][commands[0].index("--init") + 1] == str(job.initialization)
-        assert load_world(job.initialization.read_bytes()).world.measured[0].amount == 3
-        job.output.mkdir(parents=True)
-        for name in ("initialization_bundle.json", "resolved_initialization.json"):
-            (job.output / name).write_bytes(b"{}")
-        process.code = 0
-        artifacts = job.describe()["artifacts"]
-        for name in ("initialization_bundle.json", "resolved_initialization.json"):
-            assert name in artifacts
-            match = ui.FILE_ROUTE.fullmatch(artifacts[name])
-            assert match is not None and match[2] == name and name in ui.ARTIFACTS
-    finally:
-        workspace.close()
-    assert path.is_file()
 
 
 def test_metadata_copy_cannot_be_changed_during_execution(tmp_path, monkeypatch):

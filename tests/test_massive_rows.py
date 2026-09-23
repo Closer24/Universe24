@@ -60,7 +60,7 @@ first run; every number of a shipped world read from its register:
     48 intervals) replayed bit-exact through the runner: the digests of
     state, books and events, the gathers of the records 1 .. 8 (the tick,
     the chosen set, the Node, the content M and the one label), the books
-    at the end, the identity under `hypotheses`, as `replay_register.py`
+    at the end, the identity under `hypotheses`, as `tools/click_readings/massive_rows_replay.py`
     wrote them;
 (g) the pin derived from the world and the engine's tables (the round-2
     map's B on the engine's own Bresenham lines by the family's triple):

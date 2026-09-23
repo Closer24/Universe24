@@ -137,10 +137,10 @@ Run them in parallel and read the records:
 
 ```bash
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/orbit examples/events/orbit/s*.json
-PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
+PYTHONPATH=src python tools/click_readings/orbit.py artifacts/orbit
 ```
 
-`tools/orbit_readings.py` prints the record checks, the table of the
+`tools/click_readings/orbit.py` prints the record checks, the table of the
 readings (closed, T, the mean radius, the drift per orbit, the turns made,
 the least and greatest radius, the reads, the units taken, C measured
 against m q L / (2 pi r), how the run ended) and the period ratios per
@@ -251,7 +251,7 @@ Source fingerprint `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a32
 `claude/universe24-new-3ytqde` on the label commit), Python 3.14,
 headless, four cores; the six worlds regenerated; every run completed in
 3.9 to 6.1 s with the books balanced at every tick;
-`tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0.
+`tools/click_readings/orbit.py`: 12 record checks passed, 0 failed, exit 0.
 The register entry marks every reading measured against expected; the
 short of it (p in label units; C on the first turn):
 
@@ -291,7 +291,7 @@ Source fingerprint
 `cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`
 (the worktree of `claude/universe24-new-3ytqde` on the one-form commits),
 Python 3.14, headless, four cores; every run completed in 5.7 to 6.5 s
-with the books balanced at every tick; `tools/orbit_readings.py`: 12
+with the books balanced at every tick; `tools/click_readings/orbit.py`: 12
 record checks passed, 0 failed, exit 0. The register entry marks every
 reading measured against expected; the short of it:
 
