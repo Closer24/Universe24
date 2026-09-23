@@ -1002,10 +1002,17 @@ amplitude on its cells at interval 0, 2^20 by default, 0 silent),
 `absorbing` (the take on light's row at its cells, false by default: a clock
 body takes nothing), `cavity` (its own record held at 0 outside its
 cells), `ramp` (the momentum reached from 0 over that many intervals, the
-pushing agent's declaration), `margin` (`"pin"` or `"control"`, the margin
+pushing agent's declaration), `start` (the interval its drive begins, 0 by
+default, the ramp counted from it: the same agent's declaration), `margin` (`"pin"` or `"control"`, the margin
 rule's kind of world) and `emits` (the light family its record sources,
 one record per cycle of its clock, paid from its `held`); `probes` a list
-of Nodes whose light amplitude the record writes per interval. The record
+of Nodes whose light amplitude the record writes per interval; `mode_axis`
+(`"x"`, `"y"` or `"z"`) the axis along which the record writes a `mode`
+line per interval, the three sums of light's total field over the Nodes of
+each residue class of that coordinate modulo 3 (the content of the mode
+k = 2 pi / 3, the hop pump's signature of MASSIVE_RECORD.md section 7, a
+GAMEBOARD reading; the reading tool forms abs(S_0 + w S_1 + w^2 S_2)^2 with
+w the cube root of unity). The record
 under the key: `massive_record`, per family `pair` and `faces`, and
 `margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
 11 item 4: a load-time check made before the world runs by
@@ -1014,7 +1021,8 @@ iteration on the world's own board, its extent in the medium and the
 margin per axis, two extents for a `"pin"` world and one for a
 `"control"`, a declaration below the margin refusing the run; a HOST
 computation of the declaration, printed and recorded, never read by the
-state; a cavity is skipped) in `run.json`; the books' `form` per family (the conserved form I of section
+state; a cavity is skipped, and so is a folded axis, a periodic extent
+below the block's side, a layer's or a chain's) in `run.json`; the books' `form` per family (the conserved form I of section
 3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
 own record (`clock` its count), a `block` line per interval (its record's
 sum across its cells, its corner, its count, its steps), a `probe` line

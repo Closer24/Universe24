@@ -359,6 +359,7 @@ def block_world(
             "absorbing",
             "cavity",
             "ramp",
+            "start",
             "margin",
             "emits",
             "held",
@@ -928,3 +929,77 @@ def test_o_the_cavity_counts_the_separable_forms_cycles():
         simulation.step()
         assert not np.any(block.own.now[~block.mask])
     assert 99 <= block.count <= 101
+
+
+# The series' two keys of step 5 (BUILD.md section 4 step 7 and section 5 (v-m))
+
+
+def test_s_the_drives_start_and_the_ramp_counted_from_it():
+    """The block key `start` (the pushing agent's declaration, like `ramp`): a block of side 3
+    with the momentum 64 on x (one Link every three intervals against the wall 192) and
+    `start` 30 has not moved by interval 30, has stepped once by interval 33 and ten times by
+    interval 60; with `ramp` 30 as well the ramp counts from the start (no step before 30,
+    the momentum reaching 64 at interval 60). The edge case: `start` below 0 is refused."""
+    for extra, expected in (
+        ({"start": 30}, {30: 0, 33: 1, 60: 10}),
+        ({"start": 30, "ramp": 30}, {30: 0, 45: None}),
+    ):
+        document = block_world(
+            [64, 8, 8],
+            PERIODIC_CHAIN,
+            [800, 809],
+            [{"position": [10, 2, 2], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0], **extra}],
+            ticks=100,
+        )
+        document["age_bound"] = 100000
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        block = simulation.blocks[0]
+        steps: dict[int, int] = {}
+        for _ in range(60):
+            simulation.step()
+            steps[simulation.tick] = block.corner[0] - 10
+        for tick, count in expected.items():
+            if count is not None:
+                assert steps[tick] == count, (extra, tick, steps[tick])
+        if "ramp" in extra:
+            assert steps[30] == 0 and 0 < steps[45] < 5 and steps[60] > steps[45]
+    refused = block_world(
+        [64, 8, 8],
+        PERIODIC_CHAIN,
+        [800, 809],
+        [{"position": [10, 2, 2], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0], "start": -1}],
+    )
+    refused["age_bound"] = 100000
+    with pytest.raises(ValueError, match="start"):
+        parse_nature_beam_world(refused)
+
+
+def test_t_the_mode_line_sums_lights_field_by_residue_class():
+    """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the
+    three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3,
+    equal to the sums formed from the records' rows at that interval; on a chain of 30 with
+    a planted packet the three sums are the packet's residue sums. The edge case:
+    `mode_axis` without `massive_record` is refused, as is an axis not x, y or z."""
+    document = block_world([30, 1, 1], PERIODIC_CHAIN, [800, 809], [], ticks=20)
+    document["age_bound"] = 100000
+    document["mode_axis"] = "x"
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
+    now = np.arange(30, dtype=np.int64).reshape(30, 1, 1) * 7 - 100
+    light = planted(simulation, 0, now, now, np.zeros((30, 1, 1), dtype=np.int64))
+    simulation.records[light.identity] = light
+    simulation.step()
+    field = light.now.ravel().tolist()
+    modes = [line for line in lines if line["event"] == "mode"]
+    assert len(modes) == 1 and modes[0]["axis"] == "x"
+    assert modes[0]["sums"] == [sum(field[r::3]) for r in range(3)]
+    bad = dict(document)
+    bad["mode_axis"] = "w"
+    with pytest.raises(ValueError, match="mode_axis"):
+        parse_nature_beam_world(bad)
+    unkeyed = dict(document)
+    del unkeyed["massive_record"]
+    del unkeyed["measured"]
+    unkeyed["measured"] = []
+    with pytest.raises(ValueError, match="mode_axis"):
+        parse_nature_beam_world(unkeyed)

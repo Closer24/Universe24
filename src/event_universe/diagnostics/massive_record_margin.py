@@ -96,6 +96,8 @@ class MarginReading:
         return found
 
     def to_record(self) -> dict[str, object]:
+        """The reading as `run.json` records it; a folded axis (a periodic
+        extent below the block's side, a layer or a chain) has no row."""
         return {
             "measured": self.number,
             "family": self.family,
@@ -230,6 +232,12 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     extent = 1.0 / kappa if kappa > 0.0 else math.inf
     axes = []
     for axis, name in enumerate(("x", "y", "z")):
+        if wrap[axis] and shape[axis] < definition.side:
+            # A FOLDED axis (a layer or a chain, MASSIVE_RECORD.md section 11
+            # item 7: the block wraps onto itself and the rule reads the
+            # Node itself across it, a_U = a_D = a_now): no face, no tail,
+            # nothing for the rule to compare on that axis.
+            continue
         if wrap[axis]:
             have = float(shape[axis])
             need = definition.side + SIDE_EXTENTS[definition.margin] * extent

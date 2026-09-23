@@ -1,0 +1,458 @@
+{
+ "format": "massive-record-readings-v1",
+ "identity": "massive-record-v1",
+ "artifacts": "artifacts/massive_record/<world>/ (events.jsonl, run.json), each world run headless by python -m event_universe; the pins in expectations.json",
+ "rest_20": {
+  "kind": "GAMEBOARD",
+  "window": [
+   200,
+   3000
+  ],
+  "count": 49,
+  "rate_per_interval": 0.0175,
+  "click_mean_interval": 56.895833333333336,
+  "spectral_peak_omega": 0.11022873951361584,
+  "steps": 0,
+  "pin_omega_b": 0.11046047360491347,
+  "peak_over_pin": 0.997902108476137,
+  "rate_over_pin": 0.9954306666194825
+ },
+ "rest_28": {
+  "kind": "GAMEBOARD",
+  "window": [
+   200,
+   3000
+  ],
+  "count": 58,
+  "rate_per_interval": 0.020714285714285713,
+  "click_mean_interval": 48.14035087719298,
+  "spectral_peak_omega": 0.13033729205956648,
+  "steps": 0,
+  "pin_omega_b": 0.13053196656468333,
+  "peak_over_pin": 0.9985086066636376,
+  "rate_over_pin": 0.9970867602322155
+ },
+ "cavity_24": {
+  "kind": "GAMEBOARD",
+  "window": [
+   200,
+   3000
+  ],
+  "count": 87,
+  "rate_per_interval": 0.031071428571428573,
+  "click_mean_interval": 32.24418604651163,
+  "spectral_peak_omega": 0.19499457767116177,
+  "steps": 0,
+  "pin_omega": 0.19484558374587285,
+  "peak_over_pin": 1.0007646769427592,
+  "rate_over_pin": 1.0019603201666882
+ },
+ "moving_20": {
+  "kind": "GAMEBOARD",
+  "hold": {
+   "window": [
+    1500,
+    9500
+   ],
+   "count": 111,
+   "rate_per_interval": 0.013875,
+   "click_mean_interval": 72.58181818181818,
+   "spectral_peak_omega": 0.08648884350275193,
+   "steps": 2912
+  },
+  "rest": {
+   "window": [
+    200,
+    3000
+   ],
+   "count": 49,
+   "rate_per_interval": 0.0175,
+   "click_mean_interval": 56.895833333333336,
+   "spectral_peak_omega": 0.11022873951361584,
+   "steps": 0
+  },
+  "f_over_f0_by_rate": 0.7915008614796465,
+  "f_over_f0_by_peak": 0.7832884045658707,
+  "rest_box_ratio_64_over_48": 1.0017135564135216,
+  "pin_f_over_f0": 0.7831368656696219,
+  "pump": {
+   "light_form_first": 0,
+   "light_form_last": 0,
+   "light_drift_mean_per_interval": 0.0,
+   "light_drift_largest": 0,
+   "mode_content_mean": 0.0,
+   "mode_content_largest": 0.0
+  },
+  "rate_over_pin": 1.010680120138225,
+  "peak_over_pin": 1.0001935024424105
+ },
+ "moving_28": {
+  "kind": "GAMEBOARD",
+  "hold": {
+   "window": [
+    1500,
+    9500
+   ],
+   "count": 136,
+   "rate_per_interval": 0.017,
+   "click_mean_interval": 58.91851851851852,
+   "spectral_peak_omega": 0.10592968970787163,
+   "steps": 2912
+  },
+  "rest": {
+   "window": [
+    200,
+    3000
+   ],
+   "count": 58,
+   "rate_per_interval": 0.020714285714285713,
+   "click_mean_interval": 48.14035087719298,
+   "spectral_peak_omega": 0.13033729205956648,
+   "steps": 0
+  },
+  "f_over_f0_by_rate": 0.8134044938861242,
+  "f_over_f0_by_peak": 0.805520532164924,
+  "rest_box_ratio_64_over_48": 1.0089563818998393,
+  "pin_f_over_f0": 0.804774847102678,
+  "pump": {
+   "light_form_first": 0,
+   "light_form_last": 0,
+   "light_drift_mean_per_interval": 0.0,
+   "light_drift_largest": 0,
+   "mode_content_mean": 0.0,
+   "mode_content_largest": 0.0
+  },
+  "rate_over_pin": 1.0107230572805728,
+  "peak_over_pin": 1.0009265760043702
+ },
+ "cavity_24_moving": {
+  "kind": "GAMEBOARD",
+  "hold": {
+   "window": [
+    1500,
+    9500
+   ],
+   "count": 291,
+   "rate_per_interval": 0.036375,
+   "click_mean_interval": 27.49655172413793,
+   "spectral_peak_omega": 0.26933994447310716,
+   "steps": 2912
+  },
+  "rest": {
+   "window": [
+    200,
+    3000
+   ],
+   "count": 87,
+   "rate_per_interval": 0.031071428571428573,
+   "click_mean_interval": 32.24418604651163,
+   "spectral_peak_omega": 0.19499457767116177,
+   "steps": 0
+  },
+  "f_over_f0_by_rate": 1.1706896551724137,
+  "f_over_f0_by_peak": 1.3812688931654356,
+  "rest_box_ratio_64_over_48": 1.0,
+  "pin_f_over_f0": 0.6666666666666667,
+  "pump": {
+   "light_form_first": 0,
+   "light_form_last": 0,
+   "light_drift_mean_per_interval": 0.0,
+   "light_drift_largest": 0,
+   "mode_content_mean": 0.0,
+   "mode_content_largest": 0.0
+  },
+  "rate_over_pin": 1.7560344827586205,
+  "peak_over_pin": 2.071903339748153
+ },
+ "index_50": {
+  "kind": "GAMEBOARD",
+  "window": [
+   1000,
+   1800
+  ],
+  "delay_rad": 0.11433095392925807,
+  "n": 1.0366210361901744,
+  "amplitude_ratio": 0.9933960725089611,
+  "pin_n": 1.0420655913084853,
+  "n_over_pin": 0.9947752280051063,
+  "excess_over_pin": 0.8705698660365051
+ },
+ "index_20": {
+  "kind": "GAMEBOARD",
+  "window": [
+   1000,
+   1800
+  ],
+  "delay_rad": 0.27695821378333907,
+  "n": 1.088711730476782,
+  "amplitude_ratio": 0.9926782543034134,
+  "pin_n": 1.102157766144556,
+  "n_over_pin": 0.9878002622847639,
+  "excess_over_pin": 0.8683797015613319
+ },
+ "index_10": {
+  "kind": "GAMEBOARD",
+  "window": [
+   1000,
+   1800
+  ],
+  "delay_rad": 0.5313468198035385,
+  "n": 1.170194251415057,
+  "amplitude_ratio": 0.989030432695221,
+  "pin_n": 1.1956184520763786,
+  "n_over_pin": 0.9787355233459566,
+  "excess_over_pin": 0.8700316846828188
+ },
+ "index_moving_k3_toward": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.3430969922512457,
+   "n": 1.2358227031452935,
+   "amplitude_ratio": 0.9571350817501021
+  },
+  "rest_at_omega_prime": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.659421020025897,
+   "n": 1.234616048208805,
+   "amplitude_ratio": 0.9747175602398586
+  },
+  "moving": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.40229460552171936,
+   "n": 1.276511317433611,
+   "amplitude_ratio": 0.9547391288352933
+  },
+  "covariant_expected_delay_rad": 0.8076225123645274,
+  "ratio_read_over_expected": 0.4981220797621107,
+  "pump": {
+   "light_form_first": 9116581715001,
+   "light_form_last": 8943930348823,
+   "light_drift_mean_per_interval": -191834851.30888888,
+   "light_drift_largest": 113082706749,
+   "mode_content_mean": 185316743432.2405,
+   "mode_content_largest": 437326295682.9898
+  },
+  "halves": [
+   0.393914078197211,
+   0.4096335883122282
+  ],
+  "pin_ratio": 0.5,
+  "ratio_over_pin": 0.9962441595242214
+ },
+ "index_moving_k3_away": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.3430969922512457,
+   "n": 1.2358227031452935,
+   "amplitude_ratio": 0.9571350817501021
+  },
+  "rest_at_omega_prime": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.18294212673226218,
+   "n": 1.242916043907331,
+   "amplitude_ratio": 0.9770971534332079
+  },
+  "moving": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.5492545075456108,
+   "n": 1.3775220582210528,
+   "amplitude_ratio": 1.3779813813706172
+  },
+  "covariant_expected_delay_rad": 0.22405743147680823,
+  "ratio_read_over_expected": 2.4514005356812416,
+  "pump": {
+   "light_form_first": 8900096926309,
+   "light_form_last": 9176581017286,
+   "light_drift_mean_per_interval": 307204545.53,
+   "light_drift_largest": 115824017600,
+   "mode_content_mean": 192180396912.43643,
+   "mode_content_largest": 486106762309.04987
+  },
+  "halves": [
+   0.15158645575038054,
+   1.015206332076093
+  ],
+  "pin_ratio": 2.569,
+  "ratio_over_pin": 0.9542236417599228
+ },
+ "index_moving_long_k3_away": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega_prime": {
+   "window": [
+    5000,
+    6000
+   ],
+   "delay_rad": 0.19408981041748685,
+   "n": 1.2577182727209721,
+   "amplitude_ratio": 0.9802230244077836
+  },
+  "moving": {
+   "window": [
+    5000,
+    6000
+   ],
+   "delay_rad": 0.8515162527468076,
+   "n": 1.5852772511274442,
+   "amplitude_ratio": 1.5689861798514548
+  },
+  "covariant_expected_delay_rad": 0.2377104998981829,
+  "ratio_read_over_expected": 3.58215667003154,
+  "halves": [
+   1.5609768978096294,
+   0.09297081449123201
+  ],
+  "pump": {
+   "light_form_first": 13315389164150,
+   "light_form_last": 15520284049151,
+   "light_drift_mean_per_interval": 2204894885.001,
+   "light_drift_largest": 83256843955,
+   "mode_content_mean": 171528905068.493,
+   "mode_content_largest": 449427429721.0097
+  },
+  "pin_ratio": 6.74,
+  "ratio_over_pin": 0.5314772507465193
+ },
+ "index_moving_k4_toward": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.3430969922512457,
+   "n": 1.2358227031452935,
+   "amplitude_ratio": 0.9571350817501021
+  },
+  "rest_at_omega_prime": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.5358658648517647,
+   "n": 1.231678877459031,
+   "amplitude_ratio": 0.9589111862830398
+  },
+  "moving": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.3029523697222527,
+   "n": 1.208229883577228,
+   "amplitude_ratio": 0.9916981174790425
+  },
+  "covariant_expected_delay_rad": 0.5944898007673516,
+  "ratio_read_over_expected": 0.5096006177586392,
+  "pump": {
+   "light_form_first": 9094975121899,
+   "light_form_last": 8961715225915,
+   "light_drift_mean_per_interval": -148066551.09333333,
+   "light_drift_largest": 114768151162,
+   "mode_content_mean": 187523027540.3425,
+   "mode_content_largest": 443335265112.9948
+  },
+  "halves": [
+   0.3016957017990225,
+   0.30347549604915347
+  ]
+ },
+ "index_moving_k4_away": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.3430969922512457,
+   "n": 1.2358227031452935,
+   "amplitude_ratio": 0.9571350817501021
+  },
+  "rest_at_omega_prime": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.2153064310313022,
+   "n": 1.2352686494752136,
+   "amplitude_ratio": 0.978861725171021
+  },
+  "moving": {
+   "window": [
+    3400,
+    4300
+   ],
+   "delay_rad": 0.2816121256599313,
+   "n": 1.193561978715877,
+   "amplitude_ratio": 1.133651724661619
+  },
+  "covariant_expected_delay_rad": 0.23886103908323417,
+  "ratio_read_over_expected": 1.1789789022972474,
+  "pump": {
+   "light_form_first": 8889909259857,
+   "light_form_last": 9213526746856,
+   "light_drift_mean_per_interval": 359574985.55444443,
+   "light_drift_largest": 116411640905,
+   "mode_content_mean": 195991916330.3015,
+   "mode_content_largest": 550716840162.9728
+  },
+  "halves": [
+   0.15158645575038054,
+   0.41396147538166517
+  ]
+ },
+ "index_moving_long_k4_away": {
+  "kind": "GAMEBOARD",
+  "rest_at_omega_prime": {
+   "window": [
+    5000,
+    6000
+   ],
+   "delay_rad": 0.2271810717481504,
+   "n": 1.248244252066713,
+   "amplitude_ratio": 0.9686893607975522
+  },
+  "moving": {
+   "window": [
+    5000,
+    6000
+   ],
+   "delay_rad": 0.8171676004829225,
+   "n": 1.5616682070110346,
+   "amplitude_ratio": 0.9466004999278678
+  },
+  "covariant_expected_delay_rad": 0.25203477015471365,
+  "ratio_read_over_expected": 3.2422812137440293,
+  "halves": [
+   0.7497193943826432,
+   0.8858453064912029
+  ],
+  "pump": {
+   "light_form_first": 13368388369296,
+   "light_form_last": 15533429752209,
+   "light_drift_mean_per_interval": 2165041382.913,
+   "light_drift_largest": 86162505958,
+   "mode_content_mean": 170996633951.07184,
+   "mode_content_largest": 467037415424.99615
+  }
+ }
+}

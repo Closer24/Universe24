@@ -68,7 +68,13 @@ import numpy as np
 from event_universe.core.integer import by_drive
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines
 from event_universe.events.amplitude import cell_of, rungs
-from event_universe.events.world import BEAM_LAW, LABEL_SCALE, BlockDefinition, NatureBeamWorld
+from event_universe.events.world import (
+    AXES,
+    BEAM_LAW,
+    LABEL_SCALE,
+    BlockDefinition,
+    NatureBeamWorld,
+)
 
 Record = Callable[[dict[str, object]], None]
 
@@ -451,9 +457,12 @@ class DetectorLawSimulation:
         ramp the whole part P x t // ramp until the ramp ends (the pushing
         agent's declaration)."""
         ramp = block.definition.ramp
-        if ramp <= 0 or self.tick >= ramp:
+        elapsed = self.tick - block.definition.start
+        if elapsed < 0:
+            return [0, 0, 0]
+        if ramp <= 0 or elapsed >= ramp:
             return list(block.momentum)
-        return [component * self.tick // ramp for component in block.momentum]
+        return [component * elapsed // ramp for component in block.momentum]
 
     def motion_pair(self, block: Block) -> tuple[int, int]:
         """The index in motion (MASSIVE_RECORD.md section 7, record 1418): the
@@ -1220,6 +1229,23 @@ class DetectorLawSimulation:
                         value += int(live.now[probe])
                 values.append(value)
             self.record({"event": "probe", "tick": self.tick, "values": values})
+        if self.world.mode_axis is not None and self.record is not None:
+            # The mode k = 2 pi / 3 along the declared axis (MASSIVE_RECORD.md
+            # section 7, the hop pump's signature; a GAMEBOARD reading): the
+            # three sums of light's total field over the residue classes of
+            # the axis coordinate modulo 3 (verb G); the tool forms
+            # abs(S_0 + w S_1 + w^2 S_2)^2 with w the cube root of unity.
+            axis = self.world.mode_axis
+            field = np.zeros(self.shape, dtype=np.int64)
+            for live in self.records.values():
+                if not self.families[live.family].massive_kind:
+                    field += live.now
+            sums = []
+            for residue in range(3):
+                index = [slice(None)] * 3
+                index[axis] = slice(residue, None, 3)
+                sums.append(int(np.sum(field[tuple(index)].astype(object))))
+            self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     # The readings
 

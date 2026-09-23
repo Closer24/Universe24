@@ -421,6 +421,13 @@ WORLD_KEYS = {
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
     "probes",
+    # massive-record-v1: `mode_axis`, the axis ("x", "y" or "z") along which
+    # the record writes the `mode` line per interval (the three sums of
+    # light's total field over the Nodes of each residue class of that
+    # coordinate modulo 3, the content of the mode k = 2 pi / 3, a GAMEBOARD
+    # reading of the hop pump's signature, MASSIVE_RECORD.md section 7),
+    # absent by default, admitted under `massive_record` alone.
+    "mode_axis",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -824,6 +831,7 @@ BLOCK_KEYS = {
     "absorbing",
     "cavity",
     "ramp",
+    "start",
     "margin",
     "emits",
 }
@@ -1222,7 +1230,9 @@ class BlockDefinition:
     light's row at its cells, DESIGN.md section 5; a clock body takes
     nothing); `cavity` (form (I): its own record held at 0 outside its
     cells); `ramp` (the pushing agent's declaration: its momentum reached
-    from 0 over that many intervals); `margin` (the margin rule's kind of
+    from 0 over that many intervals); `start` (the same agent's: the
+    interval its drive begins, 0 by default, the ramp counted from it);
+    `margin` (the margin rule's kind of
     world); `emits` (the light family its own record sources, one record
     per cycle of its clock, paid from its held content)."""
 
@@ -1235,6 +1245,7 @@ class BlockDefinition:
     absorbing: bool = False
     cavity: bool = False
     ramp: int = 0
+    start: int = 0
     margin: str = MARGIN_KINDS[0]
     emits: int | None = None
 
@@ -1446,6 +1457,7 @@ class NatureBeamWorld:
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
+    mode_axis: int | None = None
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -3163,6 +3175,7 @@ def _block(
     if type(absorbing) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
+    start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
@@ -3204,6 +3217,7 @@ def _block(
         absorbing=absorbing,
         cavity=cavity,
         ramp=ramp,
+        start=start,
         margin=str(margin),
         emits=emits,
     )
@@ -4501,6 +4515,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
             "kind of the local detector law; the ray law has no record's rows at Nodes)"
         )
+    mode_axis: int | None = None
+    if "mode_axis" in obj:
+        if not massive_record:
+            raise ValueError(f"{BEAM_LAW}: mode_axis is refused without the world key `massive_record`")
+        if obj["mode_axis"] not in AXES:
+            raise ValueError(f"{BEAM_LAW}: mode_axis must be one of {list(AXES)}")
+        mode_axis = AXES.index(obj["mode_axis"])
     probes: tuple[Address3, ...] = ()
     if "probes" in obj:
         if not massive_record:
@@ -4649,6 +4670,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law=detector_law,
         massive_record=massive_record,
         probes=probes,
+        mode_axis=mode_axis,
     )
     if detector_law:
         _detector_law_load_checks(measured, families)
