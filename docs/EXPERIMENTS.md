@@ -7909,6 +7909,23 @@ sequential gates on an entangled record, the full register replay.
   past the drive unstretched at four of five b), the weight (the fall
   doubling from gamma 0 to 1 where the charge (M, 1) gives one Link).
   No pin moved.
+- **Step 3's gamma-0 bodies under the declared weight rule** (2026-09-23,
+  branch drive-default at 7ce820e; the model owner's word on record
+  1054's three forms, his answer B: the pair (w, Q S) is the
+  gravitational charge of a moving body at gamma above 0 alone, at gamma
+  0 a body weighs M; BODY_DRIVE.md D5 and DEFAULT.md (d) as amended):
+  the five gamma-0 body worlds re-pinned before the run by the map's
+  body walk at the charge (M, 1) (156 from y 29 at b = 10, 154 from 31,
+  33, 35, 37 at b = 12 to 18; the pair's walk their refuting reading;
+  the former pins and run blocks kept under `former`) and run once, 300
+  intervals. DETECTOR: the ticks 155, 154, 154, 154, 154 from y 29, 31,
+  33, 35, 37, the momenta carried out (66648064, -4402176, 0) at b = 10
+  to (66726912, -2817024, 0) at b = 18: 10 readings inside, 0 outside.
+  Read: one y-Link of fall at gamma 0 at every b where the pair gave two
+  to three, the click two to three intervals earlier; the digests the
+  replay's of a560877, the declaration changing no integer. The gamma-1
+  bodies and the controls stand as run on the flip day. The former row
+  above is history under its rule, not replaced.
 - **The fast worlds, the wall's factor on matter read** (2026-09-22,
   branch optical-every-family, 22064bc3 the pins then the run; the
   chief physicist): a slow row's stretch is swamped by Newton's fall, so

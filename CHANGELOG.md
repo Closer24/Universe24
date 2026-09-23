@@ -209,6 +209,16 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   bodies clicking as their run blocks, the gamma-0 bodies moved to the
   charge (M, 1) column of the flip-day table by the merge's weight-pair
   judgment (frozen for the owner's word; the register not written).
+- The weight pair declared gamma's rule at gamma above 0 alone, a body at
+  gamma 0 weighing M (2026-09-23, the model owner's word on record 1054's
+  three forms, his answer B; BODY_DRIVE.md D5 and DEFAULT.md (d)
+  amended, the engine's and the world's comments restated, no logic
+  changed; test (q) of `tests/test_optical_body.py` replaced by the test
+  that a body at rest weighs M with the edge at the pair's domain, the
+  gamma-0 weight test given up): series X's five gamma-0 optical bodies
+  re-pinned by the map's walk at the charge (M, 1) and run once (10
+  inside, 0 outside), the former pins and run blocks kept under `former`
+  in `examples/events/optical/body_expectations.json`.
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

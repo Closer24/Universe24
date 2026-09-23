@@ -531,6 +531,56 @@ digests: `3956cae6db28` / `665b8ecb9e90` (`body_b10_g0`, state / events),
 `2e862e668a35`, `8254ac7920c4`, `8ba8ad77cd9b` (`b14_g1`, moved),
 `f4395fc2108c`, `7d47cbca266e`.
 
+### The gamma-0 bodies re-pinned and run under the declared weight rule (2026-09-23, drive-default 7ce820e)
+
+The model owner's word on the weight pair (record 1054's three forms A /
+B / C, his answer B; [BODY_DRIVE.md](../../../docs/designs/one_wall/BODY_DRIVE.md)
+D5 and [DEFAULT.md](../../../docs/designs/drive_b/DEFAULT.md) (d) as
+amended): the pair (w, Q S), w = gamma_L (1 + gamma v^2) M, is the
+gravitational charge of a moving body at gamma above 0, declared as
+gamma's rule; at gamma 0 a body weighs M, main's rule at rest, no
+velocity term on the body. The merge's third rule is now the declared
+rule; the weight's test at gamma 0 is given up. The five gamma-0 body
+worlds were re-pinned before the run by the map's body walk at the
+charge (M, 1) (the flip-day table's last column: 156 from y 29 at b =
+10, 154 from 31, 33, 35, 37 at b = 12 to 18, the intervals owed 3, 2, 2,
+2, 2 GAMEBOARD; the pair's walk, the former pin, now the refuting reading
+`charge_pair_over_label_scale`; the former pins whole under `former` in
+the register), the worlds themselves unchanged byte for byte (no pin is
+in a world file), and run once on `drive-default` at `7ce820e` (source
+fingerprint `6ac5274a86e153df`; `tools/run_series.py --jobs 4`, 300
+intervals, 11 to 12 s each, the books balanced at every tick, `run.json`
+carrying `"drive": "line"` and no identity; `tools/drive_b_readings.py
+--expectations body_expectations.json --register` into a copy, the five
+blocks merged into the register with the flip-day blocks under
+`runs[<world>]["former"]`): 0 record checks failed, 10 readings inside, 0
+outside, nothing moved. The gamma-1 bodies and the controls are not
+re-run (the rule at gamma above 0 is the flip day's; their run blocks
+stand).
+
+| World | the click, DETECTOR: tick; the Node's y; the momentum carried out | the pin (tick +- 1; y) | inside | GAMEBOARD: the Links before the escape; the largest drive | the former run (2026-09-22, the pair at gamma 0): tick; y |
+| --- | --- | --- | --- | --- | --- |
+| `body_b10_g0` | 155; 29; (66648064, -4402176, 0) | 156; 29 | yes | [54, -1, 0]; 11972837376 | 158; 27 |
+| `body_b12_g0` | 154; 31; (66832384, -3219456, 0) | 154; 31 | yes | [54, -1, 0]; 11960975360 | 156; 30 |
+| `body_b14_g0` | 154; 33; (66349056, -3213312, 0) | 154; 33 | yes | [54, -1, 0]; 11736317952 | 156; 32 |
+| `body_b16_g0` | 154; 35; (66783232, -3122176, 0) | 154; 35 | yes | [54, -1, 0]; 11632312320 | 156; 34 |
+| `body_b18_g0` | 154; 37; (66726912, -2817024, 0) | 154; 37 | yes | [54, -1, 0]; 12075270144 | 156; 36 |
+
+Read: at gamma 0 the body falls one y-Link at every b under the charge
+(M, 1) where the pair gave two to three, and clicks two to three
+intervals earlier; the digests are the replay's of `a560877` (state
+`3956cae6db28`, `afb8d3f37adf`, `1c2c2e19011d`, `b1be232cb626`,
+`0bdf38daf0eb`; events `665b8ecb9e90`, `e99c6646e977`, `ca2cbc690a6d`,
+`ed78614f4d4d`, `0800168f06fd`), since the declaration changed no
+integer of the engine: the rule the merge wrote is the rule the owner
+declared. The doubling of the fall from gamma 0 to gamma 1 read on the
+flip day (3 to 6, 2 to 5, 2 to 4, 2 to 4, 2 to 4 pixels) is now read
+against the (M, 1) fall of one Link at gamma 0 (1 to 6, 1 to 5, 1 to 4,
+1 to 4, 1 to 4): the weight's (1 + gamma v^2) form at gamma 1 is read
+against a body that weighs M, not against gamma_L M. GAMEBOARD: the
+largest drive accumulators 1.16 to 1.21 x 10^10 against the pair's 1.19
+to 1.23 x 10^10.
+
 ## The deciding world of the beam's width for the wall's factor on matter (2026-09-22, branch optical-every-family): fast rows
 
 A slow row's wall stretch is swamped by Newton's fall and its grain (the

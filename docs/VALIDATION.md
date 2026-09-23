@@ -35,6 +35,22 @@ disputes, frozen for the owner's word; the digests in
 [the optical README](../examples/events/optical/README.md#the-replay-under-the-laws-line-drive-after-the-merges-with-main-2026-09-22-drive-default-a560877)
 and [the drive_b README](../examples/events/drive_b/README.md#the-replay-under-the-law-after-the-merges-with-main-2026-09-22-drive-default-a560877).
 
+## The optical gamma-0 bodies under the declared weight rule on drive-default 7ce820e - 2026-09-23
+
+The model owner's word on the weight pair (record 1054's three forms, his
+answer B): the pair (w, Q S) is the gravitational charge of a moving body
+at gamma above 0 alone, declared as gamma's rule; at gamma 0 a body
+weighs M. Series X's five gamma-0 body worlds re-pinned by the map's walk
+at the charge (M, 1) and run once (`tools/run_series.py --jobs 4`, 300
+intervals each, the books balanced at every tick, `run.json` `"drive":
+"line"`): DETECTOR the clicks at 155 from y 29 (b = 10) and 154 from 31,
+33, 35, 37 (b = 12 to 18) against the pins 156 and 154 +- 1, 10 readings
+inside, 0 outside; the run blocks registered with the flip-day blocks
+under `former` ([the optical
+README](../examples/events/optical/README.md#the-gamma-0-bodies-re-pinned-and-run-under-the-declared-weight-rule-2026-09-23-drive-default-7ce820e)).
+The digests are the frozen replay's (the declaration changed no integer);
+the gamma-1 bodies and the controls stand as run on the flip day.
+
 ## Series U under the law's line drive: the two admitted moving worlds on drive-default ca5fa00 - 2026-09-22
 
 The branch `drive-default` at `ca5fa00` (the generator's momenta by the

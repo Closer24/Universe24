@@ -596,23 +596,20 @@
  },
  "runs": {
   "body_b10_g0": {
-   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "source_sha256": "6ac5274a86e153dfffb62f5a89fb12f978eb4bbfa08a600a0feeed60219e070f",
    "completed_ticks": 300,
-   "elapsed_seconds": 10.876,
-   "hypotheses": [
-    "optical-v1",
-    "drive-b-v1"
-   ],
-   "fast_steps": 3,
-   "state_sha256": "2b6dd3d767826bddb374618ae685122295efde5dd861d6e5bb3813a40357b859",
-   "audit_sha256": "b15e07eafcec524105243af79de14dcb495b9db0aae7cdca89db2578659e24c6",
-   "events_sha256": "5153a3588f330927368ae6dda1e639f694ed3088aa933dbf276ecf392a3ba567",
+   "elapsed_seconds": 11.99,
+   "hypotheses": [],
+   "fast_steps": 0,
+   "state_sha256": "3956cae6db2876b7acea411351fa5db9e85c8160ebf938ed3356a2e76f72685f",
+   "audit_sha256": "7f66bdee9d9c42f033808f6b3c416e808e99b0005ca9e3f876c15b35f80f0cfe",
+   "events_sha256": "665b8ecb9e909cdd85a25d0f52303bf485d5936650795e742096b20c903d16ad",
    "click": {
     "event": "click",
-    "tick": 158,
+    "tick": 155,
     "node": [
      56,
-     27,
+     29,
      20
     ],
     "measured": 1,
@@ -622,8 +619,8 @@
     "amount": 64,
     "phase": 0,
     "momentum": [
-     66316613,
-     -8721434,
+     66648064,
+     -4402176,
      0
     ],
     "content": 64,
@@ -646,15 +643,78 @@
    "clicks": null,
    "links_before": [
     54,
-    -3,
+    -1,
     0
    ],
-   "farthest_from_the_line": 10.962,
-   "largest_drive": 12323473716,
+   "farthest_from_the_line": 10.947,
+   "largest_drive": 11972837376,
    "readings": {
     "inside": 2,
     "outside": 0,
     "record_checks_failed": 0
+   },
+   "former": {
+    "run_under": "the flip-day run (2026-09-22, drive-b-v1 under the key drive_b) under the pair at every gamma; since 2026-09-23 a body at gamma 0 weighs M (the model owner's word, record 1054's form B) and the block above is the run under that rule on drive-default 7ce820e",
+    "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+    "completed_ticks": 300,
+    "elapsed_seconds": 10.876,
+    "hypotheses": [
+     "optical-v1",
+     "drive-b-v1"
+    ],
+    "fast_steps": 3,
+    "state_sha256": "2b6dd3d767826bddb374618ae685122295efde5dd861d6e5bb3813a40357b859",
+    "audit_sha256": "b15e07eafcec524105243af79de14dcb495b9db0aae7cdca89db2578659e24c6",
+    "events_sha256": "5153a3588f330927368ae6dda1e639f694ed3088aa933dbf276ecf392a3ba567",
+    "click": {
+     "event": "click",
+     "tick": 158,
+     "node": [
+      56,
+      27,
+      20
+     ],
+     "measured": 1,
+     "detector": "face:+x",
+     "family": "probe",
+     "number": 1,
+     "amount": 64,
+     "phase": 0,
+     "momentum": [
+      66316613,
+      -8721434,
+      0
+     ],
+     "content": 64,
+     "held": [
+      64,
+      0,
+      0
+     ],
+     "home": [
+      0,
+      0,
+      0
+     ],
+     "home_content": [
+      0,
+      0,
+      0
+     ]
+    },
+    "clicks": null,
+    "links_before": [
+     54,
+     -3,
+     0
+    ],
+    "farthest_from_the_line": 10.962,
+    "largest_drive": 12323473716,
+    "readings": {
+     "inside": 2,
+     "outside": 0,
+     "record_checks_failed": 0
+    }
    }
   },
   "body_b10_g1": {
@@ -720,23 +780,20 @@
    }
   },
   "body_b12_g0": {
-   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "source_sha256": "6ac5274a86e153dfffb62f5a89fb12f978eb4bbfa08a600a0feeed60219e070f",
    "completed_ticks": 300,
-   "elapsed_seconds": 11.177,
-   "hypotheses": [
-    "optical-v1",
-    "drive-b-v1"
-   ],
+   "elapsed_seconds": 11.613,
+   "hypotheses": [],
    "fast_steps": 2,
-   "state_sha256": "6a7675bb0a6c3a47e5ef9f6222634096dd82ea6e59ffc10220e4bdbd3477a02c",
-   "audit_sha256": "e9fbcd3098d58f9a552827ff9991923e8cc977b2ca9785b116532b74beaefe98",
-   "events_sha256": "a4f9dca07dc811710f7267319ddb1b69bd2d6f148690f26ef81ebebdea406cfc",
+   "state_sha256": "afb8d3f37adfc5ae754aab916926e3a24651b5313d8a4feb2f42dac081ac0fe5",
+   "audit_sha256": "b2f27d4ae030075c5fe847d084143cda443cdd1b24992d6cbb01fabcb60d7650",
+   "events_sha256": "e99c6646e977502e5e346d61e8a62742bd641fc4a504392eceb2c61f5287ab99",
    "click": {
     "event": "click",
-    "tick": 156,
+    "tick": 154,
     "node": [
      56,
-     30,
+     31,
      20
     ],
     "measured": 1,
@@ -746,8 +803,8 @@
     "amount": 64,
     "phase": 0,
     "momentum": [
-     66482632,
-     -6762592,
+     66832384,
+     -3219456,
      0
     ],
     "content": 64,
@@ -770,15 +827,78 @@
    "clicks": null,
    "links_before": [
     54,
-    -2,
+    -1,
     0
    ],
-   "farthest_from_the_line": 12.985,
-   "largest_drive": 12024333384,
+   "farthest_from_the_line": 13.014,
+   "largest_drive": 11960975360,
    "readings": {
-    "inside": 0,
-    "outside": 2,
+    "inside": 2,
+    "outside": 0,
     "record_checks_failed": 0
+   },
+   "former": {
+    "run_under": "the flip-day run (2026-09-22, drive-b-v1 under the key drive_b) under the pair at every gamma; since 2026-09-23 a body at gamma 0 weighs M (the model owner's word, record 1054's form B) and the block above is the run under that rule on drive-default 7ce820e",
+    "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+    "completed_ticks": 300,
+    "elapsed_seconds": 11.177,
+    "hypotheses": [
+     "optical-v1",
+     "drive-b-v1"
+    ],
+    "fast_steps": 2,
+    "state_sha256": "6a7675bb0a6c3a47e5ef9f6222634096dd82ea6e59ffc10220e4bdbd3477a02c",
+    "audit_sha256": "e9fbcd3098d58f9a552827ff9991923e8cc977b2ca9785b116532b74beaefe98",
+    "events_sha256": "a4f9dca07dc811710f7267319ddb1b69bd2d6f148690f26ef81ebebdea406cfc",
+    "click": {
+     "event": "click",
+     "tick": 156,
+     "node": [
+      56,
+      30,
+      20
+     ],
+     "measured": 1,
+     "detector": "face:+x",
+     "family": "probe",
+     "number": 1,
+     "amount": 64,
+     "phase": 0,
+     "momentum": [
+      66482632,
+      -6762592,
+      0
+     ],
+     "content": 64,
+     "held": [
+      64,
+      0,
+      0
+     ],
+     "home": [
+      0,
+      0,
+      0
+     ],
+     "home_content": [
+      0,
+      0,
+      0
+     ]
+    },
+    "clicks": null,
+    "links_before": [
+     54,
+     -2,
+     0
+    ],
+    "farthest_from_the_line": 12.985,
+    "largest_drive": 12024333384,
+    "readings": {
+     "inside": 0,
+     "outside": 2,
+     "record_checks_failed": 0
+    }
    }
   },
   "body_b12_g1": {
@@ -844,23 +964,20 @@
    }
   },
   "body_b14_g0": {
-   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "source_sha256": "6ac5274a86e153dfffb62f5a89fb12f978eb4bbfa08a600a0feeed60219e070f",
    "completed_ticks": 300,
-   "elapsed_seconds": 11.03,
-   "hypotheses": [
-    "optical-v1",
-    "drive-b-v1"
-   ],
-   "fast_steps": 2,
-   "state_sha256": "9ebfd12c73ace0855bef4cc45679f241b63e87c73ec8a666f65788bac56fc3bd",
-   "audit_sha256": "e19b75c994bd286bc0bcff0303d2af68882f06e5d9ceed08cd107dfc18a6e847",
-   "events_sha256": "64808dbca1244dca10ba23a33709fff3073069c8f166b78cfd396e5b016aa32d",
+   "elapsed_seconds": 11.899,
+   "hypotheses": [],
+   "fast_steps": 1,
+   "state_sha256": "1c2c2e19011d8f8001fb4be822d62e494a149abd312ba11205e1b0b253592e57",
+   "audit_sha256": "3383f2afc5efedbe310052fa506833c847e5da5dc1292b17fd649fac1a35b50e",
+   "events_sha256": "ca2cbc690a6d0e088900345ee9111d4a829580a362957971270b7115b0df34f1",
    "click": {
     "event": "click",
-    "tick": 156,
+    "tick": 154,
     "node": [
      56,
-     32,
+     33,
      20
     ],
     "measured": 1,
@@ -870,8 +987,8 @@
     "amount": 64,
     "phase": 0,
     "momentum": [
-     65696648,
-     -6553594,
+     66349056,
+     -3213312,
      0
     ],
     "content": 64,
@@ -894,15 +1011,78 @@
    "clicks": null,
    "links_before": [
     54,
-    -2,
+    -1,
     0
    ],
-   "farthest_from_the_line": 15.082,
-   "largest_drive": 11924578688,
+   "farthest_from_the_line": 15.065,
+   "largest_drive": 11736317952,
    "readings": {
-    "inside": 0,
-    "outside": 2,
+    "inside": 2,
+    "outside": 0,
     "record_checks_failed": 0
+   },
+   "former": {
+    "run_under": "the flip-day run (2026-09-22, drive-b-v1 under the key drive_b) under the pair at every gamma; since 2026-09-23 a body at gamma 0 weighs M (the model owner's word, record 1054's form B) and the block above is the run under that rule on drive-default 7ce820e",
+    "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+    "completed_ticks": 300,
+    "elapsed_seconds": 11.03,
+    "hypotheses": [
+     "optical-v1",
+     "drive-b-v1"
+    ],
+    "fast_steps": 2,
+    "state_sha256": "9ebfd12c73ace0855bef4cc45679f241b63e87c73ec8a666f65788bac56fc3bd",
+    "audit_sha256": "e19b75c994bd286bc0bcff0303d2af68882f06e5d9ceed08cd107dfc18a6e847",
+    "events_sha256": "64808dbca1244dca10ba23a33709fff3073069c8f166b78cfd396e5b016aa32d",
+    "click": {
+     "event": "click",
+     "tick": 156,
+     "node": [
+      56,
+      32,
+      20
+     ],
+     "measured": 1,
+     "detector": "face:+x",
+     "family": "probe",
+     "number": 1,
+     "amount": 64,
+     "phase": 0,
+     "momentum": [
+      65696648,
+      -6553594,
+      0
+     ],
+     "content": 64,
+     "held": [
+      64,
+      0,
+      0
+     ],
+     "home": [
+      0,
+      0,
+      0
+     ],
+     "home_content": [
+      0,
+      0,
+      0
+     ]
+    },
+    "clicks": null,
+    "links_before": [
+     54,
+     -2,
+     0
+    ],
+    "farthest_from_the_line": 15.082,
+    "largest_drive": 11924578688,
+    "readings": {
+     "inside": 0,
+     "outside": 2,
+     "record_checks_failed": 0
+    }
    }
   },
   "body_b14_g1": {
@@ -968,23 +1148,20 @@
    }
   },
   "body_b16_g0": {
-   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "source_sha256": "6ac5274a86e153dfffb62f5a89fb12f978eb4bbfa08a600a0feeed60219e070f",
    "completed_ticks": 300,
-   "elapsed_seconds": 11.035,
-   "hypotheses": [
-    "optical-v1",
-    "drive-b-v1"
-   ],
-   "fast_steps": 3,
-   "state_sha256": "cdd72fc53bc0b423edcdb270cb5056cb35c09728b940bb5eaa509028763fa0b0",
-   "audit_sha256": "ca03de3f5a746c546e096a46f8b005d13cd9e929f662391ddaf1f3aca65be5a8",
-   "events_sha256": "56d3cf860144e15abeb081f7b2e89b8e8f6be3216def545db6c2d85fc2a642b5",
+   "elapsed_seconds": 11.521,
+   "hypotheses": [],
+   "fast_steps": 1,
+   "state_sha256": "b1be232cb626087384fc4bb67e42dd7b751449fd35c0fdff6f690bca07a97254",
+   "audit_sha256": "188dd5a44139f07ac16cee6f2055d1b31ef8f9cda9dae9254182f074871d6678",
+   "events_sha256": "ed78614f4d4d6fa698f05fbf2803915891d92764ca40a8ab70fcda0c7985a73d",
    "click": {
     "event": "click",
-    "tick": 156,
+    "tick": 154,
     "node": [
      56,
-     34,
+     35,
      20
     ],
     "measured": 1,
@@ -994,8 +1171,8 @@
     "amount": 64,
     "phase": 0,
     "momentum": [
-     65953811,
-     -6357197,
+     66783232,
+     -3122176,
      0
     ],
     "content": 64,
@@ -1018,15 +1195,78 @@
    "clicks": null,
    "links_before": [
     54,
-    -2,
+    -1,
     0
    ],
-   "farthest_from_the_line": 17.116,
-   "largest_drive": 12307806874,
+   "farthest_from_the_line": 16.978,
+   "largest_drive": 11632312320,
    "readings": {
-    "inside": 0,
-    "outside": 2,
+    "inside": 2,
+    "outside": 0,
     "record_checks_failed": 0
+   },
+   "former": {
+    "run_under": "the flip-day run (2026-09-22, drive-b-v1 under the key drive_b) under the pair at every gamma; since 2026-09-23 a body at gamma 0 weighs M (the model owner's word, record 1054's form B) and the block above is the run under that rule on drive-default 7ce820e",
+    "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+    "completed_ticks": 300,
+    "elapsed_seconds": 11.035,
+    "hypotheses": [
+     "optical-v1",
+     "drive-b-v1"
+    ],
+    "fast_steps": 3,
+    "state_sha256": "cdd72fc53bc0b423edcdb270cb5056cb35c09728b940bb5eaa509028763fa0b0",
+    "audit_sha256": "ca03de3f5a746c546e096a46f8b005d13cd9e929f662391ddaf1f3aca65be5a8",
+    "events_sha256": "56d3cf860144e15abeb081f7b2e89b8e8f6be3216def545db6c2d85fc2a642b5",
+    "click": {
+     "event": "click",
+     "tick": 156,
+     "node": [
+      56,
+      34,
+      20
+     ],
+     "measured": 1,
+     "detector": "face:+x",
+     "family": "probe",
+     "number": 1,
+     "amount": 64,
+     "phase": 0,
+     "momentum": [
+      65953811,
+      -6357197,
+      0
+     ],
+     "content": 64,
+     "held": [
+      64,
+      0,
+      0
+     ],
+     "home": [
+      0,
+      0,
+      0
+     ],
+     "home_content": [
+      0,
+      0,
+      0
+     ]
+    },
+    "clicks": null,
+    "links_before": [
+     54,
+     -2,
+     0
+    ],
+    "farthest_from_the_line": 17.116,
+    "largest_drive": 12307806874,
+    "readings": {
+     "inside": 0,
+     "outside": 2,
+     "record_checks_failed": 0
+    }
    }
   },
   "body_b16_g1": {
@@ -1092,23 +1332,20 @@
    }
   },
   "body_b18_g0": {
-   "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+   "source_sha256": "6ac5274a86e153dfffb62f5a89fb12f978eb4bbfa08a600a0feeed60219e070f",
    "completed_ticks": 300,
-   "elapsed_seconds": 10.903,
-   "hypotheses": [
-    "optical-v1",
-    "drive-b-v1"
-   ],
-   "fast_steps": 2,
-   "state_sha256": "e40a0247a62077637fd35355278a5f0e416a5aa68ddfc74d3db39e7b44a3161b",
-   "audit_sha256": "ef40106581f7b3fe9121e0ffc0e58e9c54d4bbc4c191246271879250b7bad9ba",
-   "events_sha256": "5629d6fa6f3ca23af5acea441658c2070c7ea5772bcfbbf8f3ef83b0979c7ed1",
+   "elapsed_seconds": 10.773,
+   "hypotheses": [],
+   "fast_steps": 1,
+   "state_sha256": "0bdf38daf0eb7e7bbd2b39912c593332783fe6f613aca0b0a6d9e8ac414149ed",
+   "audit_sha256": "eb38f76d6bae93ba47a6eedbc7749621645cf81a1da1329bde1d1f9c4a4a00f4",
+   "events_sha256": "0800168f06fdf0d06376699b1c8287fb008a52b8e2c7532443a84d3c5656e29f",
    "click": {
     "event": "click",
-    "tick": 156,
+    "tick": 154,
     "node": [
      56,
-     36,
+     37,
      20
     ],
     "measured": 1,
@@ -1118,8 +1355,8 @@
     "amount": 64,
     "phase": 0,
     "momentum": [
-     66214281,
-     -5400304,
+     66726912,
+     -2817024,
      0
     ],
     "content": 64,
@@ -1142,15 +1379,78 @@
    "clicks": null,
    "links_before": [
     54,
-    -2,
+    -1,
     0
    ],
-   "farthest_from_the_line": 19.22,
-   "largest_drive": 12206833896,
+   "farthest_from_the_line": 19.123,
+   "largest_drive": 12075270144,
    "readings": {
     "inside": 2,
     "outside": 0,
     "record_checks_failed": 0
+   },
+   "former": {
+    "run_under": "the flip-day run (2026-09-22, drive-b-v1 under the key drive_b) under the pair at every gamma; since 2026-09-23 a body at gamma 0 weighs M (the model owner's word, record 1054's form B) and the block above is the run under that rule on drive-default 7ce820e",
+    "source_sha256": "714c6754e4eba81433732c9d95190e03a2e959dd07ca745848bcfdc2c9dd4a5f",
+    "completed_ticks": 300,
+    "elapsed_seconds": 10.903,
+    "hypotheses": [
+     "optical-v1",
+     "drive-b-v1"
+    ],
+    "fast_steps": 2,
+    "state_sha256": "e40a0247a62077637fd35355278a5f0e416a5aa68ddfc74d3db39e7b44a3161b",
+    "audit_sha256": "ef40106581f7b3fe9121e0ffc0e58e9c54d4bbc4c191246271879250b7bad9ba",
+    "events_sha256": "5629d6fa6f3ca23af5acea441658c2070c7ea5772bcfbbf8f3ef83b0979c7ed1",
+    "click": {
+     "event": "click",
+     "tick": 156,
+     "node": [
+      56,
+      36,
+      20
+     ],
+     "measured": 1,
+     "detector": "face:+x",
+     "family": "probe",
+     "number": 1,
+     "amount": 64,
+     "phase": 0,
+     "momentum": [
+      66214281,
+      -5400304,
+      0
+     ],
+     "content": 64,
+     "held": [
+      64,
+      0,
+      0
+     ],
+     "home": [
+      0,
+      0,
+      0
+     ],
+     "home_content": [
+      0,
+      0,
+      0
+     ]
+    },
+    "clicks": null,
+    "links_before": [
+     54,
+     -2,
+     0
+    ],
+    "farthest_from_the_line": 19.22,
+    "largest_drive": 12206833896,
+    "readings": {
+     "inside": 2,
+     "outside": 0,
+     "record_checks_failed": 0
+    }
    }
   },
   "body_b18_g1": {

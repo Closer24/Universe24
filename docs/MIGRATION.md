@@ -86,7 +86,9 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   `moving_3` by the line rule, `moving_1` kept under the key; both re-run
   worlds refused by the generic entry before their 500 intervals); the
   replays of series X (byte for byte) and of the optical bodies (the
-  gamma-0 bodies moved by the merge's weight-pair judgment, frozen) close
+  gamma-0 bodies moved by the merge's weight-pair judgment, frozen, then
+  re-pinned and run again on 2026-09-23 under the owner's declared rule
+  B, the former kept) close
   step 2's list; the moving detector's six worlds stay under the
   transient key (their preregistered pace 1 / k exactly is not a whole
   momentum under the line drive: the design owner's word).
