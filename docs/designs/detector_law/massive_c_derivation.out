@@ -1,0 +1,24 @@
+second moment of the six neighbours SUM e e^T =
+ [[2 0 0]
+ [0 2 0]
+ [0 0 2]]  -> (1/3) of it is (2/3) I: True
+w=0.2000 s=+0.8000: omega(k=0) = 0.000e+00
+w=0.3333 s=+0.0000: omega(k=0) = 0.000e+00
+w=0.4000 s=-0.4000: omega(k=0) = 0.000e+00
+w=0.2000: phase pace at k->0 by direction [0.44721 0.44721 0.44721 0.44721 0.44721]  (sqrt w = 0.44721)
+w=0.3333: phase pace at k->0 by direction [0.57735 0.57735 0.57735 0.57735 0.57735]  (sqrt w = 0.57735)
+w=0.3000: 2 cos omega at the corner = -1.600 -> real (stable)
+w=0.3333: 2 cos omega at the corner = -2.000 -> real (stable) ; double root at -2: the checkerboard secular mode
+w=0.3400: 2 cos omega at the corner = -2.080 -> complex (grows)
+[num,den]=[128,129]: omega0 = 0.12460 (arccos(num/den) = 0.12460); (omega^2 - omega0^2)/k^2 at k=0.01 = 0.33160 (c_m^2 = (num/den)/3 = 0.33075); max group pace over the zone 0.57287 <= c_m = 0.57511: True
+[num,den]=[32,33]: omega0 = 0.24681 (arccos(num/den) = 0.24681); (omega^2 - omega0^2)/k^2 at k=0.01 = 0.32654 (c_m^2 = (num/den)/3 = 0.32323); max group pace over the zone 0.55985 <= c_m = 0.56854: True
+[num,den]=[8,9]: omega0 = 0.47588 (arccos(num/den) = 0.47588); (omega^2 - omega0^2)/k^2 at k=0.01 = 0.30778 (c_m^2 = (num/den)/3 = 0.29630); max group pace over the zone 0.51320 <= c_m = 0.54433: True
+[num,den]=[2,3]: omega0 = 0.84107 (arccos(num/den) = 0.84107); (omega^2 - omega0^2)/k^2 at k=0.01 = 0.25076 (c_m^2 = (num/den)/3 = 0.22222); max group pace over the zone 0.38490 <= c_m = 0.47140: True
+light [0,1]: max group pace over the zone 0.577350 (c = 0.577350) at k = [-2.723 -2.723 -2.723]; along the body diagonal exactly c: False
+[num,den]=[1,1]: pace 0.57735 = c/n with n^2 = den/num = 1.0000 -> n = 1.00000 vs sqrt = 1.00000
+[num,den]=[2,3]: pace 0.47140 = c/n with n^2 = den/num = 1.5000 -> n = 1.22474 vs sqrt = 1.22474
+[num,den]=[1,2]: pace 0.40825 = c/n with n^2 = den/num = 2.0000 -> n = 1.41421 vs sqrt = 1.41421
+d=1: Manhattan-bound isotropic pace 1/sqrt d = 1.00000; wave rule c = sqrt(2/(2d)) = 1.00000
+d=2: Manhattan-bound isotropic pace 1/sqrt d = 0.70711; wave rule c = sqrt(2/(2d)) = 0.70711
+d=3: Manhattan-bound isotropic pace 1/sqrt d = 0.57735; wave rule c = sqrt(2/(2d)) = 0.57735
+d=4: Manhattan-bound isotropic pace 1/sqrt d = 0.50000; wave rule c = sqrt(2/(2d)) = 0.50000
