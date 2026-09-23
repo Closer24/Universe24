@@ -191,6 +191,7 @@ pair, [n, d] the suspension pair, h the family's quantum, gamma the key
 | `bresenham_line`, `flight_bound`, `_direction_table`, `_direction`, `_directions` `world.py:1646-1727` | the digital line of a direction (the axis furthest behind, the lowest axis first: the declared tie) and the flight bound | D, P | ALGEBRAIC | nothing |
 | `_record_load_checks`, `_aperture_load_check`, `_walk_arm`, `_same_class`, `_aperture_of` `world.py:3295-3620` | the loader's walk of a record's paths through the openings per arm, refusing two paths whose multiplicities' ratio is not a square (4.6; ENGINE.md, "two paths of one record ... refused at load") | the openings, the multiplicities | ALGEBRAIC | nothing (a load-time check of the declaration, HOST; it forms no state) |
 | `_optical` `world.py:3930-3963` | gamma, the declared post-Newtonian input, 0 by default: the law's own number, nature's 1 a declaration per world and never a default (5.9; Highlights 5.4, "The one wall") | gamma | ALGEBRAIC | nothing |
+| `_boundary` `world.py:1790-1811` with the parse at `:4018` (the Boss's addition of 15:46Z, from Reviewer 3's read of POSTULATES.md at fb548877, PR #1048) | the torus Z_X x Z_Y x Z_Z (1.6: each factor a circle, a periodic axis, or a segment, an open axis); POSTULATES.md:79-81 on `origin/main` f3b322d: "its faces are the torus's unless a world declares a face open"; record 1421 as MASSIVE_RECORD.md section 11 item 4 quotes it: periodic is the algebra's own, a wall or a sponge at a face a declared deviation per world | the key `boundary`: `"open"` or an object of `x`, `y`, `z` to `"open"` or `"periodic"` | FINDING | the code's default is the opposite of the algebra's: an absent key reads `"open"` on every face (`obj.get("boundary", BOUNDARIES[0])`, `:4018`; ENGINE.md:58-59 "open on every face by default"), and in an object "the missing axes [are] open" (`declared.get(axis, BOUNDARIES[0])`, `:1804-1805`). The reach on the register at 05e9f10: no world omits the key; 204 worlds declare `"open"` in full and rest on nothing implicit; 94 worlds declare an object naming one axis periodic and leave two axes to the implicit open (the plane worlds: amplitude 38, coupling 21, orbit_lamp 13, heisenberg 8, orbit 8, massive_rows 3, the root `two_slits` and `one_slit`, detector 1). Aligning the default to the torus without touching those 94 files would wrap their x and y faces: every escape through them becomes a re-entry, so their books' escaped lines, their face clicks and their gate-set digests move, and with them the registered readings of series L (the plane worlds), C, D, D3, A10, W and the root two-slit world; the 204 declared-open worlds and every registered reading on them stay byte for byte. Aligning the default AND writing `"x": "open", "y": "open"` into the 94 objects by their generators moves no record at all (the declared values equal today's default), and a parser that refuses an object naming fewer than three axes and an absent key closes the implicit default for good. The recommendation for the owner: align the default to the torus (the one source's 1.6 and the postulate of PR #1048), every open-faced world declaring every open face, the 94 generators regenerating their worlds with the shipped records confirmed unchanged; until that word, the divergence stands marked here and in ENGINE.md:58-59. No engine line by this audit. |
 | `parse_nature_beam_world` `world.py:3965-4214` | the world file's parse and its refusals (ENGINE.md, "The world") | every key | FINDING (low) | the parser supplies a value where the file names none: N 64 (`:4032`), suspension 1 (`:4036`), width 1 (`:4042`), direction_bound 64 (`:4043`), threshold 1 (`:3913`), phase_width N / 2 (`:2134-2138`), phase true (`:1941`); each is named a default in ENGINE.md, and every registered world declares N, so nothing on the register rests on them; they are still values the world file did not declare (AGENTS.md: "do not ... reintroduce an implicit default") |
 
 ### 1.8 The host's modules (no physical state)
@@ -214,10 +215,10 @@ package and lives outside the physical path by design (`shell_readings.py:1-7`).
 | Verdict | Rows | Where |
 | --- | --- | --- |
 | ALGEBRAIC | 89 | the rows above not listed below, 5 of them under an identity beside the law (`energy_root`, `covariant_frame`, the covariant declaration, the atom levels' two rows) |
-| FINDING | 12 rows, 11 findings | the collision's undeclared tie (low); `reseed_flight` and `optical_turn`, a remainder discarded at run time (two rows, one rule each); `momentum_pair` with `split_ladder`, the pushed row's root; `meet`, the meeting's root; `register`, the meeting's run-time rounding; `gather_records` with `Layer.complete`, the global reach of the completion (two rows, one finding); `body_weight`, a third run-time root; `_walk`, the open face without a count (low); `_move`, the per-axis drive's lost Link (low); `parse_nature_beam_world`, the implicit defaults (low) |
+| FINDING | 13 rows, 12 findings | `_boundary`, the default open against the algebra's torus (the Boss's addition of 15:46Z); the collision's undeclared tie (low); `reseed_flight` and `optical_turn`, a remainder discarded at run time (two rows, one rule each); `momentum_pair` with `split_ladder`, the pushed row's root; `meet`, the meeting's root; `register`, the meeting's run-time rounding; `gather_records` with `Layer.complete`, the global reach of the completion (two rows, one finding); `body_weight`, a third run-time root; `_walk`, the open face without a count (low); `_move`, the per-axis drive's lost Link (low); `parse_nature_beam_world`, the implicit defaults (low) |
 | deferred to another row | 2 | `square_ladder` (to `momentum_pair`), `_frame_all` (to `body_weight`) |
 
-103 rows over the nine physical modules; the ranking of the findings is
+104 rows over the nine physical modules; the ranking of the findings is
 in part 5.
 
 ## 2. EVERY WORLD: every world file under examples/events/
@@ -799,7 +800,7 @@ worlds are re-declared first (the time base, `clock_stamp`) and then fit.
 
 | What was audited | ALGEBRAIC | FINDING or RE-DECLARE | HISTORY | Total |
 | --- | --- | --- | --- | --- |
-| The engine's components (part 1, one row each) | 89 rows (5 under an identity beside the law) | 12 rows carrying 11 findings (the gather counted once); 2 rows deferred | none | 103 rows over 9 physical modules |
+| The engine's components (part 1, one row each) | 89 rows (5 under an identity beside the law) | 13 rows carrying 12 findings (the gather counted once); 2 rows deferred | none | 104 rows over 9 physical modules |
 | The worlds (part 2, one row each) | 241 | 15 RE-DECLARE | 42 | 298 |
 | The reading tools (part 3) | 27 read only; 10 of them write beside the pins | 0 | none | 27 |
 | The worlds that fit the one form today (part 4.3) | 205 | 36 need the declaration written, 15 the re-declaration | 42 stay as record | 298 |
@@ -812,14 +813,15 @@ worlds are re-declared first (the time base, `clock_stamp`) and then fit.
 | 2 | Three roots of the state at run time: the meeting's norm (`meet` `meeting.py:360`), the pushed row's pair (`momentum_pair` `nature_beam.py:3716-3787` through `split_ladder`), and the moving body's weight under `drive_b` (`body_weight` `world.py:581`, called every interval by `_frame_all` `engine.py:687-693`); ALGEBRA.md 2.7 names the first two and not the third | the vector test (2.8) of every world with a crowd that pushes a row (optical 33, flow_link 14, lamp_shell 2, newton_side 3: every bending reading, 5.9), of the 5 meeting worlds, and of the 10 optical body worlds under `drive_b` |
 | 3 | A remainder discarded at run time: the residue rescaled at a push with the sub-unit part dropped (`optical_turn` `nature_beam.py:4022-4024`, `:4090`) and the crowd's carry dropped when a collision or the meeting turns a row (`reseed_flight` `:3529-3552`); TERMINOLOGY.md, "Remainder" | the exactness of the click's time on every pushed or turned row: the same bending worlds as rank 2 and every crowd world with collisions; the register's "exact phase at the click" holds on rows no crowd moved |
 | 4 | The meeting's register, adv = (abs(t) + Q / 2) // Q, a rounding at run time not declared at load (`register` `meeting.py:234-246`; ALGEBRA.md 2.7) | the 5 lensing worlds under `meeting` (HISTORY in part 2) and any new world that declares the key |
-| 5 | The open face as a detector with no count of its own (`_walk` `nature_beam.py:4262-4300`; TERMINOLOGY.md, "A detector's clock"; ALGEBRA_AUDIT.md Q1) | the time of every face click: c_measured's 290 ticks (Q), the products' face clicks of covariant (S), drive_b's face clicks, K's escapes: each DETECTOR in Node and face, GAMEBOARD in time; a reading of c from face clicks alone is a CONVERSION on a GAMEBOARD tick |
-| 6 | The per-axis drive's lost coincident Link (`_move` `engine.py:931-956`; ALGEBRA.md 4.7 "outside the theorem"); fixed by `by_line` under `drive_b` | the injectivity theorem (4.7) for every moving body on more than one axis without `drive_b`: bohr 7, atoms 6, orbit 8, hubble 4, hubble_stars 6, the kicked nucleus and quark worlds |
-| 7 | The collision's tie, Port order by the sorted 8-tuples (`collision_table` `nature_beam.py:1310-1313`), which ALGEBRA.md 2.4 calls the one undeclared breaking of the 48 | the 48-covariance claim (1.1, "tested and not counted") of every crowd world's collision; a declared tie closes it |
-| 8 | The parser's implicit defaults (N 64, suspension 1, width 1, direction_bound 64, threshold 1, phase_width N / 2, phase true; `world.py:4032-4044`, `:3913`, `:2134-2138`, `:1941`) | nothing on the register today (every registered world declares N; the others are named defaults in ENGINE.md); a world written by hand under the one form must declare them all, or the form's "nothing the declaration does not name" is broken silently |
+| 5 | The key `boundary` defaults to open on every face and on every axis an object leaves unnamed (`_boundary` `world.py:1790-1811`, `:4018`), where ALGEBRA.md 1.6 and POSTULATES.md:79-81 (PR #1048) make the torus the GameBoard and an open face a declared deviation (record 1421 as quoted) | the descent's rule "nothing in the world file that the declaration does not name" (part 4.1 step 2) for the 94 plane worlds whose x and y faces are open by the implicit default (series L's plane worlds, C, D, D3, A10, W, the root two-slit worlds, one detector demo); a bare change of the default would move their records, a change with the 94 generators declaring the faces moves none |
+| 6 | The open face as a detector with no count of its own (`_walk` `nature_beam.py:4262-4300`; TERMINOLOGY.md, "A detector's clock"; ALGEBRA_AUDIT.md Q1) | the time of every face click: c_measured's 290 ticks (Q), the products' face clicks of covariant (S), drive_b's face clicks, K's escapes: each DETECTOR in Node and face, GAMEBOARD in time; a reading of c from face clicks alone is a CONVERSION on a GAMEBOARD tick |
+| 7 | The per-axis drive's lost coincident Link (`_move` `engine.py:931-956`; ALGEBRA.md 4.7 "outside the theorem"); fixed by `by_line` under `drive_b` | the injectivity theorem (4.7) for every moving body on more than one axis without `drive_b`: bohr 7, atoms 6, orbit 8, hubble 4, hubble_stars 6, the kicked nucleus and quark worlds |
+| 8 | The collision's tie, Port order by the sorted 8-tuples (`collision_table` `nature_beam.py:1310-1313`), which ALGEBRA.md 2.4 calls the one undeclared breaking of the 48 | the 48-covariance claim (1.1, "tested and not counted") of every crowd world's collision; a declared tie closes it |
+| 9 | The parser's implicit defaults (N 64, suspension 1, width 1, direction_bound 64, threshold 1, phase_width N / 2, phase true; `world.py:4032-4044`, `:3913`, `:2134-2138`, `:1941`) | nothing on the register today (every registered world declares N; the others are named defaults in ENGINE.md); a world written by hand under the one form must declare them all, or the form's "nothing the declaration does not name" is broken silently |
 
 The world verdicts that follow from the findings and from the readings'
 kinds: the 15 RE-DECLARE worlds rest on the tick as their time base
-(rank 5's kin: a detector's count is the fix, ALGEBRA.md 6.1 mode A); the
+(rank 6's kin: a detector's count is the fix, ALGEBRA.md 6.1 mode A); the
 42 HISTORY worlds rest on a body's or a probe's own record read as a
 measurement, or on the meeting.
 
@@ -845,7 +847,7 @@ measurement, or on the meeting.
    law or goes, with its 5 worlds kept as history; the owner's audit line
    of record 1264 left it "a question for him".
 4. **The open face.** Whether an open face is a detector-emitter with a
-   count of its own (then a face click's time is DETECTOR and rank 5
+   count of its own (then a face click's time is DETECTOR and rank 6
    closes), or the board's edge and no thing (then every face-click time
    is GAMEBOARD, and series Q's c is a CONVERSION on the tick); ALGEBRA_AUDIT.md
    Q1, open since 2026-09-23 08:43Z.
@@ -853,7 +855,13 @@ measurement, or on the meeting.
    (rank 3) is declared at load as a grain of the law (a declared rounding,
    lawful under record 155 (6)) or the push is refused where it would
    truncate; a grain is a number the owner declares, not a table.
-6. **The re-runs.** Whether the 15 RE-DECLARE worlds are re-declared and
+6. **The faces' default.** Whether the key `boundary` is aligned to the
+   torus (an absent axis periodic, the algebra's own; every open face
+   declared, the 94 plane worlds regenerated with their faces written and
+   their records confirmed byte for byte) or kept open by default with the
+   divergence marked (rank 5; the Boss's addition of 15:46Z on Reviewer
+   3's read of POSTULATES.md at fb548877).
+7. **The re-runs.** Whether the 15 RE-DECLARE worlds are re-declared and
    re-run under the one form now (a `clock_stamp` line and a re-read on the
    detector's own count, the k17 pair's way), and whether the 47 worlds
    that do not yet fit the form get their declaration written before their
