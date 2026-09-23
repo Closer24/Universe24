@@ -1,0 +1,8 @@
+k = 3: beta = 1/3, c = 0.5774, gamma_m = 1.2247, 1/gamma_m = 0.8165, 1/gamma_m^2 = 0.6667
+s | g | eps at rest | f/f0 READ (chain, spectral peak) | closed form omega_b(gamma s, g)/(gamma omega_b(s, g)) | Reviewer 3's reading
+ 1 | 0.01830 | 0.100 | 0.7936 | 0.7852 | 0.7949   (travelled 2746 Links)
+12 | 0.00125 | 0.057 | 0.8065 | 0.8065 | 0.8060   (travelled 2746 Links)
+12 | 0.00250 | 0.201 | 0.7811 | 0.7812 | 0.7796   (travelled 2746 Links)
+24 | 0.00250 | 0.471 | 0.7448 | 0.7450 | 0.7461   (travelled 2746 Links)
+48 | 0.00250 | 0.748 | 0.7128 | 0.7129 | 0.7107   (travelled 2746 Links)
+the well limit of the closed form is 1/gamma_m (omega_b independent of s), the cavity limit 1/gamma_m^2 (omega_b proportional to 1/s)
