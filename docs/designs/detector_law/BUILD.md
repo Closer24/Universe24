@@ -428,6 +428,16 @@ rule decides each world's kind: on a periodic 48^3 board the s = 20 block
   record on a 48^3 periodic box (110,592 Nodes); the integer form with the
   remainder about twice that, 3 to 4 ms; the block's own record with the
   pair arrays 10 ms.
+- MEASURED at step 5 (the five cuts' first act, the Boss's 17:10Z): the
+  engine's own cost is 13.6 ms per interval on a periodic 200^2 layer
+  (40,000 Nodes; a block s = 14 at g = mu^2 / 4, 60 intervals, run.json's
+  elapsed seconds; `artifacts/EXPLORATORY_layer_cost_200`), 17 times the
+  design's numpy script's 0.80 ms on the same layer, beside this plan's
+  scratch of 1.6 ms per record on 48^3: the books' exact Python-integer
+  sums per interval are the cost. A moving layer pin world of 9500
+  intervals is about 2 minutes; the 64^3 moving worlds of (ii) took 47
+  and 49 minutes each (0.24 s per interval); no vectorisation (the Boss's
+  word of 19:50Z: the cost is acceptable).
 - (i-a), (i-b): 3000 intervals, under a minute each; the Lanczos of the
   margin module 75 to 85 iterations on 48^3 (the scratch), seconds.
 - (ii-a), (ii-b): 64^3 (262,144 Nodes), 9500 intervals at about 10 ms: 2
