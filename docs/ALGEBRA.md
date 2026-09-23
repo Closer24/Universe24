@@ -2304,6 +2304,35 @@ divide is I (8.6): a static level (a_now = a_before everywhere) has I =
 0 and clicks nowhere, which the sum of the squares would count
 (DESIGN.md 2.1, the reason).
 
+**Lemma (the layer against the 3-D board), PROVED HERE.** In the
+physicist's words (the Boss's addition of 20:33Z; the decision the
+owner's word of record 1454, [Highlights 5.4](HIGHLIGHTS.md), the pin
+worlds on a one-layer board provided the algebra holds there): a layer
+is the same rule with an axis of extent 1, on which the Node reads
+itself twice (a_U = a_D = a_now, DESIGN.md section 2; the six reads S_4
++ 2 a_now); the conserved form I holds exactly there with the
+remainders' term; so a layer and a 3-D board differ only in geometry
+(the mode's extent, the band's corner, the cube's threshold, isotropy
+under the 48), never in the rule; hence one 3-D world per pin row at
+the end, the layer's reading labelled beside. Proof: on an axis of
+extent 1 the read matrix **A** has A_ii = 2 for that axis's two reads
+(one per Port, +U and -U both landing on i) beside the other axes'
+reads; it is still symmetric (a self-read is its own converse) and its
+rows still sum to at most 6, so the two proofs above hold word for
+word: I is conserved (only the symmetry of **D** **M** was used),
+positive definite for den > num (only the Gershgorin bound was used),
+and the remainders' identity is the same three lines. On the layer
+the band of 8.1 reads 2 cos omega = (2 num / (3 den)) (cos k_x + cos
+k_y + 1), the folded axis contributing its cos 0 = 1, so the corner
+sits at 2 cos omega = -2 num / (3 den) and not at -2 num / den, which
+is why a layer is blind to the 3-D corner (MASSIVE_RECORD.md section
+3); the rule is one and the same. The design's identity for I on any
+extents including 1 is its section 3 (the builder's finding, the
+directed reads), and its script `massive_conserved_form.py` reads the
+residual 0 on a 6 x 6 x 1 periodic board (COMPUTATION), the check of
+this proof; a chain is the same lemma with two axes of extent 1 (four
+self-reads, the six reads S_2 + 4 a_now).
+
 ### 8.3 The block: the well of the pair on declared cells, its clock the bound mode
 
 **The object (CARRIED: MASSIVE_RECORD.md sections 1 and 4).** A foreign
