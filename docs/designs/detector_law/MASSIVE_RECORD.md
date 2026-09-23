@@ -857,7 +857,8 @@ the margin rule's numbers, with the HOST cost), `massive_light_clock_relay.py`
 (section 9 row (d), the two-object light clock on a chain: the rung-crossing
 time, N_0 against 2 L / c, the mirror variant), `massive_moving_index.py`
 (section 7, the moving block's index against the resting one), and
-`massive_well_spectrum.py` (section 9: the atom's levels as the well's bound modes, three shapes, against Balmer).
+`massive_well_spectrum.py` (section 9: the atom's levels as the well's bound modes, three shapes, against Balmer),
+`massive_time_reversal.py` (section 14: the rules' exact inverse in integers, the same formula backward, the click).
 Run each as its docstring says; the numbers in this document are theirs.
 
 **Not computed here, and said so:** Fizeau's drag (the stepped block's
@@ -938,3 +939,48 @@ Reviewer 3's sections 10, 11 and 12 where they exceed this document):
 
 **What the engine implements, from this section, in order**: section 11's
 order; the board checks, the algebra leads.
+
+## 14. The direction of time: in the Inside and at the click (the owner's question of record 1439; COMPUTATION, `massive_time_reversal.py`)
+
+- **(a) The light rule** `3 a_next + r' = S_6 - 3 a_before + r`, `0 <= r' < 3`.
+  Under the swap `(a_next, r') <-> (a_before, r)` the EQUATION is unchanged.
+  The RECURRENCE is a bijection of the row's state given the neighbours, in
+  three lines: `(a_before, r) -> N = S_6 - 3 a_before + r` is a bijection of
+  `Z x {0, 1, 2}` onto `Z` (each integer once); `N -> (floor(N / 3), N mod
+  3)` is a bijection of `Z` onto `Z x {0, 1, 2}`; so the step is a
+  bijection, and its inverse is exact: `N = 3 a_next + r'` is exact, `M =
+  S_6 - N = 3 a_before - r` has one solution with `0 <= r < 3`, `a_before =
+  ceil(M / 3)`, `r = 3 a_before - M`. Nothing is lost: the Inside is
+  REVERSIBLE to the bit (600 intervals forward and back on a chain of
+  integers: the deviation 0 of the amplitude 957234). But it is NOT
+  SYMMETRIC in form: the inverse rounds UP where the rule rounds DOWN, and
+  the remainder always lives on the later level; the SAME formula run
+  backward (the swap with the floor kept) is a different map and deviates
+  by the remainders' grain (29 of 957234 after 600 intervals, a random walk
+  of one unit per Node per interval). So the rule carries an arrow in its
+  bookkeeping (which level owns the remainder) and none in its information.
+- **(b) The massive kind** `3 den (a_next + a_before) + r' = num S_6 + r`:
+  the same three lines with `3 den` in place of 3; the exact inverse returns
+  to the bit (0 at [128, 129] and at [2, 3]); the same formula backward
+  deviates by 365 and 29.
+- **(c) The coupling in motion** (the same-Node pair, light's step first,
+  section 7): each half-step is invertible given the other record's levels
+  (a triangular map), so the pair of steps is a bijection; the reversed run
+  takes the half-steps in the opposite order (the massive first), and the
+  hop schedule is reversed with the drive's accumulator, itself an integer
+  map with an exact inverse. Reversible; not symmetric in order.
+- **(d) The click** is the one deletion (ALGEBRA.md 3.1): the record's rows
+  are removed at the detector's cells, its content handed over, the
+  detector's count advanced by one; the counts form a free abelian monoid,
+  not a group, and no step of the board un-deletes a row: the run with a
+  click at interval 300 reversed by the exact inverse deviates by 40092,
+  the deleted rows' amplitude. THE ARROW OF TIME IS BORN AT THE CLICK and
+  nowhere in the rule: (a) to (c) hold.
+- **(e) The world that shows it** (a CHECK, never a pin against nature): a
+  train on a chain or a layer with no detector declared, N intervals
+  forward under the engine, N intervals under the exact inverse (a host
+  step, the ceiling division), the board back to its first rows bit for
+  bit and the books' E equal; the same world with a detector declared,
+  which does not return, by the deleted rows exactly; and the same world
+  reversed by the engine's own formula, which returns only to the
+  remainders' grain.
