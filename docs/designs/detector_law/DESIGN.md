@@ -846,6 +846,144 @@ splits the same way: yes, by construction, the rule has no family name;
 what differs is the clock and the content it hands over, values not
 branches (the generic test).
 
+8b **The binding through the Inside: a moving object's cycle, two
+objects bound by their mutual insert-and-receive, the separation along
+and across from the wave law** (the Boss's item of 09:33Z; Reviewer 3's
+gate before five's computation). Algebra only, docs; every number
+COMPUTATION; the pin of five stated at the end BEFORE its computation.
+Symbols: c the rule's pace (1 / sqrt 3 Links per interval); beta the
+object's pace (1 / k Links per interval, one step of one Link every k
+intervals in one of six directions); gamma_m (the medium's Lorentz
+factor) = 1 / sqrt(1 - beta^2 / c^2), gamma_m^2 = 1.5 at k = 3; f the
+object's clock (its declared rate in periods per interval); lambda_0 =
+c / f its wavelength at rest; L the separation of two objects; N_0 the
+rest cycle 2 L / c in intervals.
+
+(i) **The moving object's step** is the Algebra Auditor's row: a foreign
+object steps to the neighbouring Node at which its own record's first
+rung fires first, one of six, never a diagonal; at rest the first rung
+fires at its own Node and it does not step. The step is therefore a
+reading of the record's return (where the returning offer's motion
+crosses 1 / W first), not a declared drive: k is a declaration only for
+the pins' worlds (the moving light clock's body driven at k = 3, 6.5),
+and a free object's k is what the Inside gives it.
+
+(ii) **The one-object cycle** (MUST H): a one-Node object at rest in
+open space inserts its train and the wave leaves; the rule returns
+nothing to it, so its first rung never fires at its own Node from the
+Inside and its rest cycle is its declared period (1.1). A one-object
+clock is not a clock of the Inside; every clock read through the Inside
+is a two-object cycle.
+
+(iii) **The two-object cycle at fixed separation** (the light clock as
+built and as computed in 6.4 and 6.5): A inserts at its clock f; the
+front reaches B at L / c; B receives (its first rung) and re-inserts
+(the same object, receive then insert); A receives at 2 L / c = N_0.
+Both objects stepping along +x at beta: the forward leg L / (c - beta),
+the back leg L / (c + beta), the cycle 2 L c / (c^2 - beta^2) =
+gamma_m^2 N_0 (187.1 against the rest 124.7 at k = 3, L = 36 Links,
+lambda_0 = 24; the script's E read 303 / 206 = 1.471 against gamma_m^2
+= 1.5, 6.5, the difference the lattice's dispersion and the first
+rung's grain).
+Stepping across: each leg L / sqrt(c^2 - beta^2), the cycle gamma_m
+N_0 (152.7). The ratio along to across is gamma_m: an anisotropy the
+Michelson-Morley null of nature forbids (the register's row 4a). This
+is the medium's algebra and it is what the rule reads at a fixed L;
+under it nothing comes out 1 and 1.
+
+(iv) **Two objects bound by their mutual insert-and-receive.** A and B
+each insert at f and receive the other's record. Co-moving objects in
+a medium receive each other's clock unshifted (the source's and the
+receiver's Doppler factors cancel: A moving at beta emits ahead at the
+lattice frequency f c / (c - beta) and the wavelength (c - beta) / f;
+B moving at beta reads f c / (c - beta) - beta f / (c - beta) = f), so
+each re-inserts at f and the two records between them form ONE standing
+pattern in the pair's own frame: the forward wave's wavenumber 2 pi f /
+(c - beta) and the back wave's 2 pi f / (c + beta) add to a node
+spacing
+
+    s_along = (lambda_0 / 2) (1 - beta^2 / c^2) = (lambda_0 / 2) / gamma_m^2
+
+along the motion, and across the motion (both legs at the pace
+sqrt(c^2 - beta^2))
+
+    s_across = (lambda_0 / 2) sqrt(1 - beta^2 / c^2) = (lambda_0 / 2) / gamma_m.
+
+By (i) an object steps toward the Node where its record's first rung
+fires first, which for a record returning through a standing pattern
+is toward the pattern's antinode: the pair has fixed points at
+separations L = m s (m a whole number of the pattern's spacings, an
+integer the pair keeps as long as it is bound), and a pair displaced
+from one returns to it by its own steps. That is the binding: nothing
+declared beyond the two objects' parameters; the separation, its
+contraction and the cycle come from the wave law of the Inside.
+(COMPUTATION, the analytic form on the continuum pace; the lattice's
+version is five's computation below.)
+
+(v) **The bound pair's cycle.** With L = m s the round trip is
+
+    along:  2 (m s_along) c / (c^2 - beta^2) = 2 m (lambda_0 / 2) / c = N_0,
+    across: 2 (m s_across) / sqrt(c^2 - beta^2) = N_0
+
+at every beta below c (124.7, 124.7, 124.7 at rest, along and across for
+k = 3; the same at k = 4 and 6): the bound pair's cycle in the
+lattice's own intervals is its rest cycle, along and across alike, and
+the object's count per cycle (its clock f times the cycle) is the rest
+count in both arms. That is the owner's "five must come out exactly":
+N_par / N_0 = 1 and N_perp / N_0 = 1, in the object's own count and in
+the lattice's intervals, from the wave law with nothing added, and the
+Michelson-Morley null with it. What the binding does to the pair's
+shape: the separation along contracts by 1 / gamma_m^2, across by
+1 / gamma_m; that is Lorentz's contraction (1 / gamma_m along, 1
+across) times an isotropic shrink by 1 / gamma_m, with the clock
+unslowed; in every reading the pair makes of itself it is the same as
+Lorentz's contraction with a clock slowed by 1 / gamma_m (the two
+differ by the one factor 1 / gamma_m on every length and every rate of
+the moving thing), which is why no reading from within distinguishes
+them.
+
+(vi) **What the binding does NOT give, stated before the computation
+and named for the pins table.** A reading from outside does distinguish
+them: nature's moving clock is slow by gamma in the lab's own time (the
+muon in flight, the lifetime gamma tau_0; the transverse Doppler shift
+f / gamma, Ives-Stilwell), and under the binding the bound pair's cycle
+in the lattice's intervals is N_0, not gamma_m N_0: a lab's row on the
+moving clock's rate reads 1 against nature's gamma_m (1.225 at k = 3),
+a FAIL predicted here, not a fit to be found; the only way the rule
+would give it is a slowing of the object's clock f by 1 / gamma_m with
+its pace, which neither the rule nor the binding contains (Reviewer 3's
+correction of 09:33Z: neither the count's slowing nor the arm's
+contraction is in the rule; the binding supplies the contraction and
+not the slowing). The two rows are therefore separate in the pins table
+(item G): five, the pair's own ratios, 1 and 1; and the lab's dilation,
+a nature row with the muon's lifetime, predicted FAIL by the rule as a
+medium. The owner is asked whether the lab's dilation is in his law by
+another sentence (a slowing of every clock that moves through the
+Inside) or is what the register must show as FAIL until one is stated;
+nothing here decides it.
+
+(vii) **Five's pin, stated first** (the owner's word on the band
+pending; proposed from the lattice's dispersion 0.2 to 0.8 percent and
+the first rung's grain): in a world of two foreign objects, A and B,
+lambda_0 = 24 Links, m = 3 (L = 36 Links at rest), both stepping along
++x at k = 3 with the separation set by the binding (L_along = 24
+Links, s_along = 8) and, in a second world, across at k = 3 (L_across
+= 29.4, read as the nearest whole number 29 with the residue named), the
+cycle read at A by the first rung of its own record's return:
+
+    N_par / N_0 = 1 +- 0.03,    N_perp / N_0 = 1 +- 0.03,
+
+N_0 the same world at rest read the same way; the falsifier a ratio
+outside 0.97 .. 1.03 in either arm, or a dependence on m or on the
+train's length beyond the band; a pair that does not hold its
+separation by (i) (the objects stepping apart or together over the
+run) is a FAIL of (iv) itself, named separately. The lab's dilation
+row beside it: the same N_par against gamma_m N_0, predicted 1 against
+1.225, FAIL. The computation is not run before Reviewer 3's gate of (i)
+to (vi); it goes in the pins script as section F with these two worlds,
+the readings labelled COMPUTATION (the script) and, when the engine
+runs them, DETECTOR (the click lines) beside the pin.
+
 ## 9. The three tests of the whole, and what the reviewer must gate
 
 Generic PASS, vector PASS, local PASS by section 2; the click's one
