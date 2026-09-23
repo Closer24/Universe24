@@ -319,21 +319,38 @@ def massive_pins() -> dict[str, float]:
         "alpha": alpha,
         "centroid_toward_mass": alpha * L,
         "centroid_toward_mass_crossing": alpha * L + lever,
-        "advance_over_light_delay": (1.0 - beta_squared)
+        "clocks_rate": clocks_rate(K_A_MASSIVE),
+        "clocks_shift": (clocks_rate(K_A_MASSIVE) - 1.0) * (ARRIVAL_CONTROL + wall_delay - push_advance),
+        "advance_over_own_wall_delay": (1.0 - beta_squared)
         * (1.0 + GAMMA_PPN * beta_squared)
         / beta_squared
         / FLIGHT_COEFFICIENT,
     }
 
 
+def clocks_rate(k_a: float) -> float:
+    """The rate of the two clocks at the ends against the tick: the lamp
+    and the receivers both sit at sqrt(L^2 + b^2) = 26.7 Links from the held
+    mass, where the crowd's stretch is k = k_a(b) b / r per interval, so
+    each counts 1 / (1 + k) of the tick (0.990 at 2^16, 0.99985 at 2^10;
+    the reviewer's line (i) of the GO, RUN_14.md step 13)."""
+    return 1.0 / (1.0 + k_a * IMPACT / math.hypot(L, IMPACT))
+
+
 def light_pins() -> dict[str, float]:
     """The light row's delay and lever-arm centroid at k_a(b) = 0.0445
     (NEWTON_FROM_CLICKS 3 (c) and (e); the design's 3.97 uses the pace on
-    the heading, 32 / 55)."""
+    the heading, 32 / 55). The READ delay (RUN_14.md step 13): the two
+    clocks at the ends count at `clocks_rate` of the tick, so T_mass =
+    rate x (89 + 3.96) against the control's 89: +3.0, not +3.96."""
     alpha = 2.0 * FLIGHT_COEFFICIENT * K_A_LIGHT
     lever = alpha * (math.pi * IMPACT / 4.0)
+    wall_delay = FLIGHT_COEFFICIENT * IMPACT * K_A_LIGHT / LIGHT_PACE_HEADING * logarithm()
+    control = light_arrival_count()
     return {
-        "wall_delay": FLIGHT_COEFFICIENT * IMPACT * K_A_LIGHT / LIGHT_PACE_HEADING * logarithm(),
+        "wall_delay": wall_delay,
+        "clocks_rate": clocks_rate(K_A_LIGHT),
+        "read_delay": clocks_rate(K_A_LIGHT) * (control + wall_delay) - control,
         "alpha": alpha,
         "centroid_toward_mass": alpha * L,
         "centroid_toward_mass_crossing": alpha * L + lever,
@@ -403,15 +420,19 @@ def expectations() -> Json:
                     "conditional": True,
                 },
                 "count_ratio": {"pin": 1.0, "bracket": COUNT_RATIO_BRACKET},
-                "advance_over_light_delay": round(massive["advance_over_light_delay"], 1),
+                "advance_over_own_wall_delay": round(massive["advance_over_own_wall_delay"], 1),
+                "clocks_shift": round(massive["clocks_shift"], 2),
             },
             "light": {
                 "arrival_count": {
                     "control": light_arrival_count(),
                     "wall_delay": round(light["wall_delay"], 2),
+                    "clocks_rate": round(light["clocks_rate"], 4),
+                    "pin": round(light["read_delay"], 1),
                     "advance": 0.0,
                     "bracket": LIGHT_DELAY_BRACKET,
                     "conditional": True,
+                    "note": "the read delay: the wall's +3.96 at c_f = 2 less the two clocks' stretch (the lamp and the receiver both at 26.7 Links from 2^16 count at 0.990 of the tick, so T_mass = 0.990 x (89 + 3.96) = 92.0 against the control's 89); the massive worlds' clocks at 2^10 move their pins by 0.15, inside 3.5",
                 },
                 "centroid_toward_mass": {
                     "arrivals": round(light["centroid_toward_mass"], 2),
@@ -432,7 +453,8 @@ def expectations() -> Json:
             "arrival_count": "NEWTON_ON_THE_SIDE.md 3 (b): m(tau) = floor((2 tau p + E'_D) / (2 E'_D)) at E'_D = k p, the L-th Link at tau = k L - (k - 1) / 2; RUN_14.md step 3",
             "advance": "NEWTON_FROM_CLICKS.md 3 (b) and (d); NEWTON_ON_THE_SIDE.md 3 (c) 1 and 4.1; RUN_14.md steps 7 and 8",
             "centroid": "NEWTON_FROM_CLICKS.md 3 (c); NEWTON_ON_THE_SIDE.md 3 (c) 2 and 4.1; RUN_14.md step 9",
-            "light_row": "NEWTON_FROM_CLICKS.md 3 (c) and (e); NEWTON_ON_THE_SIDE.md 3 (c) and 4.1; RUN_14.md step 10",
+            "light_row": "NEWTON_FROM_CLICKS.md 3 (c) and (e); NEWTON_ON_THE_SIDE.md 3 (c) and 4.1; RUN_14.md step 13 (the read delay +3.0: the clocks' stretch at 26.7 Links)",
+            "advance_over_own_wall_delay": "RUN_14.md step 10: the massive row's push advance over its own wall's delay in its world, (c / v)^2 (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) / c_f, a COMPUTATION of two closed forms the run reads only as their sum",
             "count_ratio": "NEWTON_FROM_CLICKS.md 3 (e); the gr_rows design section 4 (0.990 at 2^16, 26.7 Links against the tick); RUN_14.md step 12 (the ratio of two clocks in one crowd, 1.000)",
             "birth_convention": "RUN_14.md step 6: the lamp at the content K births at its first self-creation, skips the second once (its accumulator at K - M_row below the wall K) and births at every one after; every click after the first reads the flight's count plus one; the advance and the delay are differences and carry no convention",
             "receiver_reads": "RUN_14.md step 5: the receivers read the presence; under the design's `age` the arriving rows' age moment would stretch the receiver's own count by 979 / 4096 per click",

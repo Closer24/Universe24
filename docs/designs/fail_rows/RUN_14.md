@@ -65,8 +65,14 @@ name of the ratio of two count ratios, 0.0912 on the rung.
    returns the design's numbers: the control 979 exactly, the advance
    -40.5 (the wall +0.68, the push -41.19), the centroid 4.39 (4.46 under
    the crossing count), the light row's lever-arm centroid 4.63 against
-   5.47 toward the mass, its delay +3.96, the mark (c / v)^2 of Newton's
-   form 60.2.
+   5.47 toward the mass, its read delay +3.0 (the wall's +3.96 less the
+   two clocks' stretch at 26.7 Links from 2^16), the mark (c / v)^2 of
+   Newton's form 60.2 (the massive row's push advance over its own wall's
+   delay). The physics-rule reviewer's GO of 2026-09-23 (the Boss's word
+   of 01:30Z) is subject to three lines, folded here before the run: the
+   light delay pin +3.0 (step 13), the mark named as the row's own (step
+   10) with the clause on the presence read (step 5), and Side B's drive
+   (section 7).
 2. **Two steps the design did not list, found by the algebra before the
    run, both on the receiver's own count, neither a number of the chain:**
    (a) *The birth's convention, one count* (step 6; the design's own edge
@@ -181,7 +187,11 @@ forgot.
    click over d = 4096: 0.1 of a count over the window; under the
    design's `reads: "age"` it would count their age moment, 979 per click
    over 4096, a quarter of a count per click, the step of section 0 (2)
-   (b)). In the mass world two rules of the law act on the row, both the
+   (b); the key `reads` selects the component the receiver's clock
+   counts, a reading aid of the external thing (`count_component`); it
+   touches neither the row's push, which reads the crowd's arrivals at
+   its Node under either setting, nor the owner's open word on a body's
+   push). In the mass world two rules of the law act on the row, both the
    law's own since the generic entry (record 847), at the pair [1, 4096]:
    the flight in the age wall's set at c_f = 2 (the wall stretched by the
    crowd's age moment at the row's Node) and the push on a paid row by the
@@ -245,10 +255,19 @@ forgot.
    the deciding question goes.
 10. **[computation] The difference and the ratio.** T_mass - T_control =
     +0.68 - 41.19 = -40.5 counts on the control's 979: the ratio -0.0414.
-    The mark of Newton's form: the massive row's advance over the light
-    row's delay in the same world, (c / v)^2 (1 - v^2 / c^2) (1 +
-    gamma_PPN v^2 / c^2) / c_f = 120.33 x 0.99993 / 2 = 60.2; the row fell
-    as a slow particle and the light row does not. The first-order margin:
+    The mark of Newton's form: the massive row's push advance over its OWN
+    wall's delay in its world, 41.19 / 0.68 = (c / v)^2 (1 - v^2 / c^2)
+    (1 + gamma_PPN v^2 / c^2) / c_f = 120.33 x 0.99993 / 2 = 60.2, a
+    COMPUTATION of two closed forms the run reads only as their sum
+    (-40.5); the row fell as a slow particle, whose push outweighs its wall
+    by (c / v)^2 (the light row's push, at v = c, adds nothing to its
+    wall). It is not the advance over the light row's delay of the light
+    world: that row is read at 2^16 and this one at 2^10, and at equal
+    k_a(b) the advance over the light row's delay would be (c / v)^3 /
+    c_f, about 660. The two clocks at the ends, the lamp and the receiver,
+    both at 26.7 Links from the held mass, count at 1 / (1 + k_a(b) b /
+    26.7) = 0.99985 of the tick at 2^10, which moves the massive pins by
+    0.15 of a count, inside the bracket 3.5. The first-order margin:
     8 per cent of the advance, 3.3 counts, with the held mass's grain at
     2^10 (one row per direction per four self-creations, the crowd's shell
     every four intervals) inside it: the bracket 3.5.
@@ -284,7 +303,17 @@ forgot.
     at 52 Links on the heading, ceil((2 x 52 - 1) x 110 / 128) = 89 (55 for
     32 Links); the wall's delay c_f (b k_a(b) / c_h) ln(4 r_1 r_2 / b^2) = 2
     x (6 x 0.0445 / 0.5818) x 4.319 = +3.96 counts (the design's 3.97),
-    no advance (E'_0 = 0, the pace fixed by the square's own cap); the
+    no advance (E'_0 = 0, the pace fixed by the square's own cap). The
+    READ delay is smaller, since both clocks at the ends sit in the crowd
+    of 2^16: the lamp and the receiver at sqrt(26^2 + 6^2) = 26.7 Links
+    from the held mass, where the stretch is k = k_a(b) b / r = 0.0445 x 6
+    / 26.7 = 0.0100 per interval, so the lamp's ordinals and the
+    receiver's count both run at 1 / (1 + k) = 0.990 of the tick and T =
+    n_B - ordinal reads 0.990 x (89 + 3.96) = 92.0 in the mass world
+    against 89 in the control: the pin +3.0 +- 1, not +3.96 (the wall's
+    +3.96 at c_f = 2 less the two clocks' stretch; step 5 counted the same
+    stretch for the massive worlds at 2^10, where it is 64 times smaller,
+    0.15 of a count, inside 3.5); the
     centroid 2 (1 + gamma_PPN) k_a(b) L = 4 x 0.0445 x 26 = 4.63 pixels
     toward the mass under the arrivals count, and under the crossing count
     the lever arm (pi b / 4) (v / c) = 4.712 Links moves it to 4.63 + 0.178
@@ -312,7 +341,7 @@ forms and refutes nothing. The register beside the worlds:
 
 | The reading | The control | The mass world | The light world | Kind | PASS | FAIL |
 | --- | --- | --- | --- | --- | --- | --- |
-| the arrival count T = n_B - ordinal, per click, averaged over the window | 979 on the first click, 980 on every later one (step 6), the mean within 1 of 979; every click after the first alike | the advance T_mass - T_control = -40.5 +- 3.5 (the wall +0.68, the push -41.19; steps 8 to 10), the ratio -0.0414; the count itself about 939.5; conditional | the delay +3.96 +- 1 on the heading's 89 (+ the convention's one), no advance (step 13); conditional | DETECTOR (n_B under `clock_stamp`, the ordinal); the tick GAMEBOARD beside | inside; the mass world earlier than the control | a control off 979 by more than one, or two control clicks after the first differing (the rung not whole): the run stops; the mass world later than the control (the wall without the push: no fall); an advance off by more than the margin; a light row sped up |
+| the arrival count T = n_B - ordinal, per click, averaged over the window | 979 on the first click, 980 on every later one (step 6), the mean within 1 of 979; every click after the first alike | the advance T_mass - T_control = -40.5 +- 3.5 (the wall +0.68, the push -41.19; steps 8 to 10), the ratio -0.0414; the count itself about 939.5; conditional | the read delay +3.0 +- 1 on the heading's 89 (+ the convention's one): the wall's +3.96 at c_f = 2 less the two clocks' stretch, the lamp and the receiver both at 26.7 Links from 2^16 counting at 0.990 of the tick, so T_mass = 0.990 x (89 + 3.96) = 92.0 against the control's 89; no advance (step 13); conditional | DETECTOR (n_B under `clock_stamp`, the ordinal); the tick GAMEBOARD beside | inside; the mass world earlier than the control | a control off 979 by more than one, or two control clicks after the first differing (the rung not whole): the run stops; the mass world later than the control (the wall without the push: no fall); an advance off by more than the margin; a light row sped up |
 | the pace over the window, L_line over T | 52 / 979 within 2 / 979 of 1 / 19 (the one band rule) | the same to first order (the push's radial part raises v by 4 per cent along the path in the mean: reported, not pinned) | 52 / 89 against c_h = 32 / 55 (reported) | DETECTOR (a ratio of counts) | inside the band | outside it in the control |
 | the arrival Node: the centroid on the plane, pixels toward the mass | 0.00 exactly, the line's end (26, 20) | 4.39 +- 0.5 (4.46 under the crossing count: not separable) (step 11); conditional | 4.63 +- 0.5 under the arrivals count against 5.47 +- 0.5 under the crossing count (step 13): the deciding pin; conditional | DETECTOR (the click's Node) | inside; the light row inside one and outside the other | off both counts by more than the bracket (the straight-path form or the read k_a(b), not the count); a control off its Node |
 | no click of the family on a face | none | none | none | DETECTOR (a face click) | none | any: the row left the board (the control's FAIL; a capture or a turn in the others) |
@@ -485,7 +514,10 @@ term, its falsifier equal turns; the controls' escape at the 61st Link,
 counts); the re-read of `tools/orbit_lamp_readings.py` on the ordinals
 and the runs are the later order's. The line drive of PR #907 is not on
 `main`; the pins are the per-axis drive's, the drive of `main` today, as
-the Boss's note says.
+the Boss's note says: the rung k = 17 is the per-axis drive's; when the
+line drive is `main`'s default the four k17 files declare
+`per_axis_drive` (the moving detector's practice) or the rung is
+re-derived from the line drive's wall before any pin.
 
 ## 8. What is not done here, and what stays open
 
@@ -507,8 +539,8 @@ the Boss's note says.
   read by no click; the light row's pin is the continuum straight-path
   integral's.
 - The window's mean of the light row's count against the fit's intercept:
-  both printed; the pin on the mean (the design's), the slope of order
-  2.4 x 10^-4 per ordinal (0.3 of a count over the window) reported.
+  both printed; the pin on the mean (+3.0, the read delay), the slope of
+  order 2.4 x 10^-4 per ordinal (0.3 of a count over the window) reported.
 - Side B's run and its tool's re-read on the ordinals: a later order.
 - The value of G and the condition n S = d: declarations; the side
   carries n S / d = 1 / 4096 in front of every form.

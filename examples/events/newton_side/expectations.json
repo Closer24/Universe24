@@ -69,15 +69,19 @@
     "pin": 1.0,
     "bracket": 0.01
    },
-   "advance_over_light_delay": 60.2
+   "advance_over_own_wall_delay": 60.2,
+   "clocks_shift": -0.15
   },
   "light": {
    "arrival_count": {
     "control": 89,
     "wall_delay": 3.96,
+    "clocks_rate": 0.9901,
+    "pin": 3.0,
     "advance": 0.0,
     "bracket": 1.0,
-    "conditional": true
+    "conditional": true,
+    "note": "the read delay: the wall's +3.96 at c_f = 2 less the two clocks' stretch (the lamp and the receiver both at 26.7 Links from 2^16 count at 0.990 of the tick, so T_mass = 0.990 x (89 + 3.96) = 92.0 against the control's 89); the massive worlds' clocks at 2^10 move their pins by 0.15, inside 3.5"
    },
    "centroid_toward_mass": {
     "arrivals": 4.63,
@@ -98,7 +102,8 @@
   "arrival_count": "NEWTON_ON_THE_SIDE.md 3 (b): m(tau) = floor((2 tau p + E'_D) / (2 E'_D)) at E'_D = k p, the L-th Link at tau = k L - (k - 1) / 2; RUN_14.md step 3",
   "advance": "NEWTON_FROM_CLICKS.md 3 (b) and (d); NEWTON_ON_THE_SIDE.md 3 (c) 1 and 4.1; RUN_14.md steps 7 and 8",
   "centroid": "NEWTON_FROM_CLICKS.md 3 (c); NEWTON_ON_THE_SIDE.md 3 (c) 2 and 4.1; RUN_14.md step 9",
-  "light_row": "NEWTON_FROM_CLICKS.md 3 (c) and (e); NEWTON_ON_THE_SIDE.md 3 (c) and 4.1; RUN_14.md step 10",
+  "light_row": "NEWTON_FROM_CLICKS.md 3 (c) and (e); NEWTON_ON_THE_SIDE.md 3 (c) and 4.1; RUN_14.md step 13 (the read delay +3.0: the clocks' stretch at 26.7 Links)",
+  "advance_over_own_wall_delay": "RUN_14.md step 10: the massive row's push advance over its own wall's delay in its world, (c / v)^2 (1 - v^2 / c^2) (1 + gamma_PPN v^2 / c^2) / c_f, a COMPUTATION of two closed forms the run reads only as their sum",
   "count_ratio": "NEWTON_FROM_CLICKS.md 3 (e); the gr_rows design section 4 (0.990 at 2^16, 26.7 Links against the tick); RUN_14.md step 12 (the ratio of two clocks in one crowd, 1.000)",
   "birth_convention": "RUN_14.md step 6: the lamp at the content K births at its first self-creation, skips the second once (its accumulator at K - M_row below the wall K) and births at every one after; every click after the first reads the flight's count plus one; the advance and the delay are differences and carry no convention",
   "receiver_reads": "RUN_14.md step 5: the receivers read the presence; under the design's `age` the arriving rows' age moment would stretch the receiver's own count by 979 / 4096 per click"

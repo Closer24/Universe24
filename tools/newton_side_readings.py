@@ -536,11 +536,12 @@ def report(readings: list[Reading], register: dict[str, object]) -> int:
         arrival = pins["arrival_count"]
         if reading.lamp_family == "light":
             verdicts.pin(
-                "the light row's arrival count less its control (DETECTOR): the wall's delay, no advance",
+                "the light row's arrival count less its control (DETECTOR): the read delay, no advance",
                 delta,
-                float(arrival["wall_delay"]),
+                float(arrival["pin"]),
                 float(arrival["bracket"]),
-                "(a light row sped up refutes)",
+                f"(the wall's {arrival['wall_delay']} less the two clocks' stretch at {arrival['clocks_rate']} "
+                "of the tick; a light row sped up refutes)",
             )
             centroid = pins["centroid_toward_mass"]
             arrivals_ok = verdicts.pin(

@@ -12,7 +12,7 @@ small in-process run against the pins' integers.
     count 979 for 52 Links (the massive triple), the light row's 89 (the
     flight table); the pins of the register are the generator's closed
     forms (the advance -40.5 on 979, the centroid 4.39 and 4.46, the light
-    row's -4.63 and -5.47, the delay 3.96).
+    row's -4.63 and -5.47, the read delay 3.0 on the wall's 3.96).
 (b) Hand-written click lines: the control's clicks all at 979 counts on the
     line's end Node read the pin (every click alike, the pace inside the
     band, the centroid exact, the count ratio 1); the mass world's clicks
@@ -121,9 +121,12 @@ def test_the_shipped_worlds_are_the_generators_and_the_rung_is_the_designs():
         4.39,
         4.46,
     )
-    assert worlds["mass"]["advance_over_light_delay"] == 60.2
+    assert worlds["mass"]["advance_over_own_wall_delay"] == 60.2
     assert worlds["light"]["arrival_count"]["control"] == 89
     assert abs(worlds["light"]["arrival_count"]["wall_delay"] - 3.96) < 0.01
+    assert worlds["light"]["arrival_count"]["clocks_rate"] == 0.9901
+    assert worlds["light"]["arrival_count"]["pin"] == 3.0
+    assert abs(worlds["mass"]["clocks_shift"]) < 0.2
     assert (
         worlds["light"]["centroid_toward_mass"]["arrivals"],
         worlds["light"]["centroid_toward_mass"]["crossing"],
