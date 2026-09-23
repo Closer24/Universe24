@@ -360,16 +360,17 @@ morning word and then the Boss's word per world.
 
 ## 8. The storyline for the writer (one writer; the owner's word of 2026-09-24, about 00:05Z, record 1526)
 
-The writer is not parallelised. He starts on the owner's word alone (the
-suspension of record 1252 lifted by it), from the paper of PR #1006
+The writer is not parallelised. He started on the owner's word of about
+00:20Z to him (the suspension of record 1252 lifted by it; record 1529), from the paper of PR #1006
 (paper-48), cut to this order, every number a blank until its click is read
 and merged; the bounds rows and the derivations final tonight. The line he
 holds, as summarised with the owner between 23:12Z and 23:40Z (records 1519
 to 1525):
 
-1. The title: The group of order 24 behind the clicks: one local integer
-   rule on the cube's lattice, and the quantum and relativistic experiments
-   it matches. The group by its fixed name (ALGEBRA.md 1.4: the group of
+1. The title (the owner's word of 2026-09-24, about 00:20Z, to the writer:
+   take a title from the Boss and start it with Universe24): Universe24: the
+   group of order 24 behind the clicks, one local integer rule on the cube's
+   lattice, and the quantum and relativistic experiments it matches. The group by its fixed name (ALGEBRA.md 1.4: the group of
    order 24, the rotation group of the cube, isomorphic to S_4); never
    "modern algebra", "theory of everything", "nature" or "Einstein" in the
    title.
