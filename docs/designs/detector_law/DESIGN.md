@@ -57,6 +57,28 @@ such thing. It is only a moving detector. In the Inside it is a ray that
 splits at every free point and holds the amplitudes if it arrived through
 a detector." / "There is no field."
 
+To the Boss, 08:04Z to 08:43Z (the Boss's rendering): "A ray splits at
+all the possible points. A ray is in the Inside; there is no ray in the
+Outside. In the Outside it is only clicks, and clicks move exactly with
+mass." / [On the paragraph of record 1297, the generic weight:] "This
+needs to go in, and take out the things that contradict it." / "A
+detector or an emitter: it arrives at the same point and that is its
+clock; if it does not move, that is its clock, because it receives and
+inserts, or inserts and receives; that has a time, and it does it through
+the Inside. Confirm the genericity of detector and emitter." / "The whole
+digital ray and all sorts of clock counts are not relevant at all; every
+detector has its own clock time, how long it inserts or receives, its
+cycle time, determined by the Inside. The old engine is not needed." /
+"Every measuring instrument you put on the board is defined in the
+Outside; slits, a slit, all these things are never in the Inside. GO." /
+"Nothing is inserted, nothing can be inserted, into the Inside. Every
+instrument that is placed is Outside and must come with all the
+definitions we have for how things are measured Outside. It must be a
+simple Inside and a simple Outside; all the laws we have on the Inside
+must run, everything local. The detector and the emitter have a trigger
+that we closed, both. There are no other kinds for the board: there is a
+detector and there is an emitter."
+
 The terms, as he fixed them (POSTULATES.md section 26; docs/TERMINOLOGY.md
 "Inside and Outside", record 768): **the Inside is the board itself**, the
 Nodes and the Links, where the ray splits at every free Node and holds
@@ -127,6 +149,44 @@ Outside, a thing that reads or emits; the Inside is only the free Nodes
 and the record's rows on them. The far-field question of 6.1 is
 therefore a question of how a wall is declared (an Outside thing), not
 of the rule.
+
+**Two things only, on the board.** In his words: there is a detector and
+there is an emitter, and they are one generic thing, the
+receiver-inserter, with three acts: it RECEIVES (a click: the record's
+offer summed across intervals at its Nodes, the first rung), it INSERTS
+(an emission: a record born at its Nodes, driven by its clock for its
+train), and it has ITS CLOCK (its own count of round trips through the
+Inside: from an insert to the receive of the same record, or from a
+receive to the next insert; at rest at its own Node, in motion at the
+next). Every named instrument is that one thing with its declarations,
+Outside, in the world file: a lamp (inserts; how many, when and the
+train are declarations, not a law), a screen pixel or a wall Node
+(receives, read Outside or not read), a polariser (receives and inserts
+with its table), a receiver body at the far end of a clock (receives and
+inserts, never a mirror), a body (receives and inserts its own record
+each cycle, section 8). No third kind exists; a slit is Nodes of a wall
+(receivers whose detections are not read) around free Nodes. Nothing is
+inserted into the Inside and nothing can be: the Inside is the free
+Nodes, the record's rows on them and the one local rule; every
+declaration lives Outside with the definitions we have for how things
+are measured there (POSTULATES.md section 26, the click as the law's
+action on the state, the detector's own count on the click line, the
+birth stamp). The board's faces are not a third kind: an open face is a
+declared wall that is not read (the record's offer leaving there is
+booked as escaped, as today's faces), and a periodic world has none.
+
+**How the one kind is declared and how its clock is read.** A measured
+event with a body (`amount`, `held`, its family) and, for a receiver
+that inserts, its family's clock [n, d] and its train (the lamp's
+declaration, in periods); the detector sets of the world file name the
+cells the receives are read into. Its clock is read on the click line
+as the detector's own count (`clock_stamp`), and its cycle from the
+birth stamp of the record it inserted to the click that received it;
+the old engine's clock counts (the count of self-creations under the age
+wall, the flight accumulator, the host's tick as a time) are not
+carried: the cycle time is determined by the Inside, since what the
+Inside holds along the record's way changes it (a crowd's stretched
+pace, section 4.1).
 
 What is NOT in the picture: a line on the lattice between an emitter and
 a detector (the row's label **u**, its flight residue, its Bresenham
@@ -219,13 +279,13 @@ script drives an opening's Nodes.
 
 4.1 **The row on a digital line as the primitive** (the label **u**, the
 flight table T_D, the Bresenham line, the error accumulator **c**;
-BEAM_LAW.md, `nature_beam.py` the walk). Replaced by the rule of
-section 2 at every free Node; the record's rows are at Nodes, not on
-lines. What is still needed and why: the flight table's pace c = 1 /
-sqrt 3 survives as the pair [1, 3] inside the rule (the only constant);
-the direction label survives only as a READING at a detector, the
+BEAM_LAW.md, `nature_beam.py` the walk). Not relevant, by the owner's
+word of 08:22Z, and owed no justification: the design does not carry
+it. One line on what remains: the pace c = 1 / sqrt 3 is the pair
+[1, 3] inside the rule, the only constant; the flight table is not
+needed for it. The direction is only a READING at a detector, the
 gradient of the arriving offer's phase across the detector's Nodes (the
-momentum the click hands over, section 5), never as a thing carried by a
+momentum the click hands over, section 5), never a thing carried by a
 row. The one-wall function (`age_wall`, f = 1 + gamma) and the push
 (`optical_turn`) act today on a row's flight and label; under the rule
 they act on the pace at a Node: the crowd's age moment A at a Node
@@ -273,22 +333,34 @@ pace by direction within 0.8 percent of c at 12 Links, 0.4 at 16, 0.2 at
 4.5 **The two energies of light untied** (CORRECTIONS.md M9: the label's
 e_D = 111 against the clock's 3 h n / d = 24; Reviewer 3's code point of
 07:52Z that a born row's content is quantum x turn, so the quantum drops
-out of any tie on the row form). Under the rule there is no label stored
-and no row energy on the headings: a record has ONE energy, its content
-(the quantum h handed at the click, `E = h f` at the click as ALGEBRA
-4.11 already reads it) and ONE clock (the source's train at [n, d]); the
-push's weight of a light record at a crowd (section 4.1) is its content
-h, the generic weight the owner's sentence of record 1297 asks for ("the
-row's energy in content units", the same for every family), with M_eq =
-1 by construction, which is N5's identity `3 h n = Q S d` read as a
-DEFINITION of the family's clock in content units rather than as a
-balance to be met. So the tie's question is answered inside the design
-with no integer to choose: the momentum a click hands over is read from
-the arriving offer's phase gradient (section 5) and is `h` times the
-wave number by the rule's own dispersion, E = h f = p c to the lattice's
-dispersion (0.2 to 0.8 percent), no label to lower and no quantum to
-raise. Reviewer 3's label 14 and the physicist's h = 5 are both ties of
-the row form and do not apply here.
+out of any tie on the row form). The owner's rule (the paragraph of
+record 1297, ordered in at 08:07Z with the contradictions out): **the
+weight of a row in the law's push is its energy in content units, one
+sentence for every family**: a body's content M as today, a free-rate
+family's equivalent content M_eq = 3 h n / (Q S_w d) per unit, a rational
+formed at load from the family's declared clock [n, d] and quantum h,
+no root and no division at run time; `energy-weight-v1`, on by default.
+Under the rule there is no label stored and no row energy on the
+headings, so light has ONE energy, h f by its clock, and its weight in a
+push is M_eq: at the design's clock of 12 Links (n / d = 3.08 at N = 64,
+h = 1, Q = 64, S_w = 1) M_eq = 0.144 content units per unit; a push
+exists only where a crowd acts (4.1, the stretched pace; 6.6), so the
+weight enters there and nowhere else. E = p c holds by the rule's own
+dispersion (the momentum a click hands over is h times the wave number
+read from the arriving offer's phase gradient), to the lattice's 0.2 to
+0.8 percent; no second energy of light remains anywhere, and neither tie
+of the row form (the physicist's h = 5 and 22 / 3, Reviewer 3's label
+14) applies. What the sentence removes, each named: light's push weight
+read off the momentum label (content x e_D, e_D = isqrt(3 u . u),
+`unit_weights`, `optical_turn`, BEAM_LAW note 35, one_wall/NOTE.md); the
+rule "light's content is 0" as the weight of the turn (light's content
+is h, 1 today); any weight of a free row that is not its energy in
+content units; N5's status as a balance withdrawn (the quantity
+3 h n / (Q S d) is M_eq, a definition on the law, not a balance to be
+met; the loader's `off_identity` diagnostic becomes the computation of
+M_eq at load, the refusal under `books` gone). The places in the record
+that say otherwise are listed for the Boss's pass (the physicist's
+report of 09:20Z), not here.
 
 4.6 **The reader's script modelling the apparatus split differently from
 the engine** (CORRECTIONS.md M11 item 1, section V of split_pins.py: a
@@ -315,9 +387,10 @@ unit); the rungs on the wheel W = 4096 divide it; the record completes
 when its offer has been exhausted into detectors (the sum of the
 pointers reaches the norm less the grain, the exhaustion of event_split
 DESIGN.md section 4, the click's one non-local step, the host's, as
-today) or when its train and its rows have left the board (the faces
-absorb); at completion the click's cell is chosen by `cell_of` over the
-pointers, one click per record, as today. The click's TIME under this
+today) or when its train and its rows have left the board (an open face
+is a declared wall that is not read, the offer leaving there booked as
+escaped, section 1); at completion the click's cell is chosen by
+`cell_of` over the pointers, one click per record, as today. The click's TIME under this
 form is the interval at which the pointer of the chosen cell crossed its
 first rung (s_D = 1 / W), the front of the arriving offer, not its
 centre: section 6 (D) reads the detector at rest by this rule and finds
@@ -394,13 +467,19 @@ slit at w = 2 lambda is a MISS of the rule: 22.2's 0.886 is the far
 field's sinc constant for isotropic emitters (RUN_10.md, "nature's
 0.886"), and a wave through an opening two wavelengths wide, in any
 screen the rule can hold, carries an obliquity that narrows the bell by
-4 to 8 percent. What the design says about it, plainly: either the pin
+4 to 8 percent. THE PIN IS THE OWNER'S WORD (asked by the Boss at
+08:47Z with the physicist's recommendation, labelled so): either the pin
 at w = 2 lambda is re-declared against a measurement of a slit that
 narrow (the sinc is Fraunhofer's approximation, not a datum) or against
 the wave's own obliquity sum (0.842), and then the rule reads inside; or
 the owner keeps 22.2's band as the pin, and then the rule fails row 10's
-far-field half and the design returns here. The near-field half (the
-Fresnel number 1.45) is inside the band with either wall. The
+far-field half at 16 Links and beyond and the design returns here. The
+physicist's recommendation, not a decision: re-declare at w = 2 lambda
+against the wave's exact sum (Rayleigh-Sommerfeld, 0.842 +- 0.03), keep
+the near-field pin, and add a sinc pin in a world where Fraunhofer's
+approximation applies (about w = 8 lambda). Nothing in the register's
+pins is re-declared by this design. The near-field half (the Fresnel
+number 1.45) is inside the band with either wall. The
 pixel-to-pixel roughness near the peak 0.02 to 0.001: a bell, no speckle
 (the coin's 0.8 to 1.0).
 
