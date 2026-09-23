@@ -19,15 +19,16 @@ every place two sources state one rule differently), the header text
 for each source (section (c)) and the estimate (section (d)). Step 2,
 the document itself, waits for the chief physicist's page
 `docs/GROUP_STRUCTURE.md` (the branch `group-structure`, head
-`36ae8d1b` at the time of writing) to land, so that chapter 1 is his
-page and not a second definition of the groups.
+`e99a1afa`, its PR open; the Boss's addition of 2026-09-23 about
+01:30Z) to merge, so that chapter 1 is his page and not a second
+definition of the groups.
 
 Docs only: no code, no run, no law changed, no number moved, nothing
 deleted. Base commit `e404baa` (`origin/main`, "Merge pull request
 #965"). Sources read on `origin/main` unless a branch is named: record
 1128 and its Highlights line on `claude/universe24-new-3ytqde`
 (`01161389`); `docs/GROUP_STRUCTURE.md` on `group-structure`
-(`36ae8d1b`); `docs/designs/fail_rows/WHAT_IS_MISSING.md` on `fail-rows`
+(`e99a1afa`, sections 1 to 11); `docs/designs/fail_rows/WHAT_IS_MISSING.md` on `fail-rows`
 (`2252bbdf`, read AE folded; its last lines are being folded now, and
 step 2 takes the merge SHA). Every symbol below is named in English at
 its first use; a scalar plain, a vector bold lowercase (**p**), an
@@ -112,13 +113,25 @@ itself proves nothing anew.
 
 ### Chapter 1. The objects: the four group objects (by reference until the group page lands)
 
-Chapter 1 IS the chief physicist's page `docs/GROUP_STRUCTURE.md` when
-it lands (sections 1 to 6 of that page: the names fixed by the owner;
-the phase circle Z_N and its group ring; the translation group of the
-torus; the collision as a group action; the operations between them;
-how the 48 act, one table). The unifier writes no second definition of
-any group. Until it lands, chapter 1 is one paragraph naming the four
-objects with the link to his page, in this order:
+Chapter 1 is the chief physicist's page `docs/GROUP_STRUCTURE.md`
+(`group-structure` at `e99a1afa`), by reference: its sections 1 to 3
+in full (1 the definitions in symbols: the six Ports with the opposite
+involution as the cube; G_48 the signed permutation matrices, B_3 =
+O_h; G_24 = ker det, isomorphic to S_4, "the group of order 24"; the
+action on Z^3, the labels and the Nodes; Z_N and Z[Z_N] with the merge
+and the cancel; the translations; the cyclic action on the 3^8 slot
+states; the state of a Node and the one operator per interval; 2 the
+dictionary from the algebra to the physics, seventeen rows, mass =
+content, momentum = the label, energy = Q S M and the exact square,
+time = counts, c = the flight operator's norm, a measurement = a click,
+each with its owner document; 3 how the group was reached from the
+operations, six items), his sections 4 to 11 (the names, the objects,
+the action table, where each definition lives, every naming of 24 and
+48 verbatim) the index the chapter links to. The page itself is kept as
+the record with the header of section (c). The unifier writes no
+second definition of any group and no second dictionary: chapter 1 of
+the document is one paragraph naming the four objects in this order,
+each with the link to his section:
 
 1. The symmetry group of the cube: the 48 signed permutations of the
    three axes, with the hand as its pseudoscalar; the group of order
@@ -132,11 +145,12 @@ objects with the link to his page, in this order:
 4. The collision as the cyclic group's action on the 3^8 slot states of
    a Node, its orbits the collision classes.
 
-How his page enters (a decision for the Boss, listed in section (b.7)):
-carried over verbatim as chapter 1 with his name on it and his file
-kept as the record with the header of section (c), the sections 7 and
-8 of his page (where each definition lives; every 24/48 wording) staying
-in his file as the index the chapter links to.
+How his page enters (the Boss's word of 2026-09-23, about 01:30Z):
+by reference, sections 1 to 3 in full, not a second statement; the page
+kept as the record with the header. Chapter 7 of the document (how the
+group was reached) is then his section 3 by reference too, with the
+twenty-five dated steps of HISTORY.md and record 1109 beside it, so
+that the answer to "how did you reach this group" is stated once.
 
 ### Chapter 2. The ring and the six operations as maps, in symbols
 
@@ -457,12 +471,15 @@ join between sources, each made of the sources' own sentences.
 
 | Paragraph | Source | Kept / only |
 | --- | --- | --- |
-| 1 the four objects, their operations, the action of the 48 and of the group of order 24 | `docs/GROUP_STRUCTURE.md` sections 1 to 6 (branch `group-structure`, `36ae8d1b`, lines 1-150) | KEPT (the page carried over as the chapter on the Boss's decision, (b.7) D1; his sections 7 and 8 stay as the index) |
+| 1 the definitions in symbols (the cube, G_48, G_24, the action on the state, Z_N and Z[Z_N], the translations, the collision, the state and the operator) | `docs/GROUP_STRUCTURE.md` section 1 (branch `group-structure`, `e99a1afa`, lines 15-83) | KEPT (by reference, in full; the Boss's word) |
+| 1 the dictionary from the algebra to the physics (seventeen rows) | `docs/GROUP_STRUCTURE.md` section 2, lines 84-116 | KEPT (by reference, in full; the document adds no row) |
+| 1 how the group was reached from the operations (six items) | `docs/GROUP_STRUCTURE.md` section 3, lines 117-184 | KEPT (by reference, in full; chapter 7 links here) |
+| 1 the names fixed by the owner; the four objects; the operations between them; the action of the 48, one table; where each definition lives; every 24/48 wording | `docs/GROUP_STRUCTURE.md` sections 4 to 11, lines 185-361 | KEPT (the index the chapter links to) |
 | 1.1 Theorem 1, the 24 of the name | `paper/general_formula/main.tex` lines 309-317 (`th:group`) | KEPT (the paper is the mirror, not a source with a header) |
 | 1.1 the 48 not chosen; the crystallographic restriction | `docs/FULL_PICTURE.md` section 1, lines 36-110 ("The choices, and what follows from them"; "What is not chosen: the group of 48", lines 54-66) | KEPT |
 | 1.1 the hand as the pseudoscalar, h -> det(g) h; the axial record a -> det(g) g a | `docs/designs/hand/FORM.md` sections 1 and 2, lines 16-76; the verdict line 192 | KEPT |
 | 1.2 the ring Z[Z_N], the record as an element f | `docs/DERIVATIONS_BEAM.md` symbol table line 78; section 0 lines 148-160; section 6.5 lines 1570-1588 | KEPT |
-| 1.4 the collision as the cyclic action | `docs/DERIVATIONS_BEAM.md` section 1.2 line 342; `GROUP_STRUCTURE.md` section 4 | KEPT |
+| 1.4 the collision as the cyclic action | `docs/DERIVATIONS_BEAM.md` section 1.2 line 342; `GROUP_STRUCTURE.md` sections 1 and 7 | KEPT |
 
 ### (b.2) Chapter 2, the ring and the six operations
 
@@ -551,11 +568,11 @@ join between sources, each made of the sources' own sentences.
 | 6.2 the sixteen rows, one line each | `WHAT_IS_MISSING.md` section 0's table lines 122-139; the per-row sections 1.1 to 1.13 lines 207-843 (the audit lines) | KEPT (the document's lines are the table's cells, shortened; the sections are the record) |
 | 6.3 why the passed rows passed | `WHAT_IS_MISSING.md` section 0b lines 141-197 | KEPT (by reference) |
 | 6.4 the order | `WHAT_IS_MISSING.md` section 2 lines 845-898; record 1128 (a) | KEPT |
-| 7 (i) to (iii) the one choice and what it forces | `FULL_PICTURE.md` section 1 lines 36-110; `HISTORY.md` entry 18 lines 920-981 (line 947: "24 is the count of the rotations of the six-Port Node, the octahedral rotation group, 48 with the hand; a boost is not among them") | KEPT |
+| 7 (i) to (iii) the one choice and what it forces | `GROUP_STRUCTURE.md` section 3 (by reference, in full); `FULL_PICTURE.md` section 1 lines 36-110; `HISTORY.md` entry 18 lines 920-981 (line 947: "24 is the count of the rotations of the six-Port Node, the octahedral rotation group, 48 with the hand; a boost is not among them") | KEPT |
 | 7 (iv) the twenty-five dated steps | `HISTORY.md` "The entries, in date order" lines 58-1515 (the entries 1 to 25 at lines 60, 103, 142, 171, 233, 265, 324, 378, 419, 481, 524, 565, 631, 689, 729, 774, 845, 920, 992, 1059, 1125, 1198, 1235, 1326, 1444); "The argument in order" lines 1550-1620 | KEPT (one line per entry in the document; the entries are the record) |
 | 7 (v) the owner's sentence | record 1109 (the log) | ONLY as the chapter's closing line; the record is the record |
 
-The count: 72 rows above; seventeen source files and the group page
+The count: 75 rows above; seventeen source files and the group page
 under the header of section (c); the paper, Highlights, Terminology, the workflow skill and the log
 referenced without a header (they are the mirror, the law, the glossary,
 the skill and the record).
@@ -593,7 +610,7 @@ decision as one line. The sharpest is K6.
 - The paper, line 80 (P11): "Only a detector's reading is a measurement (the frame's assumption, P11): a click, a record's moments or an external thing's reading, as the world file declares."
 - `click_frame/DERIVATION.md` lines 967-968: "every Outside formula is a ratio or a difference of counts at a click, never the tick".
 - `light_outside/DERIVATION.md` lines 55-58: "Every Outside formula carries its own transformation: it is written as the map from the emitter's clicks at its place to the detector's clicks at its place, and nothing else. A reading at another place is a detector at that place".
-- `GROUP_STRUCTURE.md` section 5: "a click at a detector, a count between clicks on the detector's own record, and a ratio of such counts are what is compared with nature; nothing measured inside the board is compared (a GameBoard reading is a diagnostic)".
+- `GROUP_STRUCTURE.md` section 8 (at `e99a1afa`): "a click at a detector, a count between clicks on the detector's own record, and a ratio of such counts are what is compared with nature; nothing measured inside the board is compared (a GameBoard reading is a diagnostic)".
 - The difference: "a ratio" (the abstract) against "a ratio or a difference" (the click frame); "a click" against "a click, a record's moments or an external thing's reading" (P11). The document states the rule in one sentence and lists the readings it admits.
 
 **K6. The kind of a body's own record: DETECTOR in Highlights, GAMEBOARD in the Newton files and the FAIL rows (the sharpest).**
@@ -648,9 +665,10 @@ decision as one line. The sharpest is K6.
 
 ### (b.8) Decisions the plan needs before step 2 (the Boss and the owner)
 
-- D1. Chapter 1: the group page carried over verbatim as the chapter
-  (recommended: it is his page and the owner's fixed names), or one
-  paragraph with the link; and its SHA when it lands.
+- D1. Chapter 1: decided by the Boss's addition of 2026-09-23 (by
+  reference, sections 1 to 3 in full, the page kept as the record); what
+  remains is the merge SHA of `group-structure` (PR open at `e99a1afa`),
+  so that the header of section (c) lands on the merged file.
 - D2. The merge SHA of `fail-rows` (PR #964's fold of read AE), so that
   chapter 6's sixteen lines are taken from the merged file.
 - D3. K6 (the kind of a body's own record; "a read at a body is a
@@ -694,7 +712,7 @@ first commit's where the title has none):
 | `docs/designs/hand/FORM.md` | 1.1 (the hand as the pseudoscalar) | 2026-09-20 |
 | `docs/FULL_PICTURE.md` | 1 and 7 (section 1 of the file only; the rest of the file is the physicist's picture and is not the algebra) | 2026-09-22 |
 | `docs/designs/fail_rows/WHAT_IS_MISSING.md` | 6 | 2026-09-22 |
-| `docs/GROUP_STRUCTURE.md` | 1 | 2026-09-23 (on D1) |
+| `docs/GROUP_STRUCTURE.md` | 1 (and 7 through its section 3) | 2026-09-23 (after its merge) |
 
 Not given a header: the paper (its Part 1 is the document's mirror,
 and the paper never changes the tree), `docs/HIGHLIGHTS.md` (the law's
@@ -737,9 +755,10 @@ line): two to three hours each, in parallel; their must-fixes one more
 bounded commit. End to end about two days of the tree's clock, one
 working day of the unifier's.
 
-**What step 2 waits on.** D1 (the group page's SHA), D2 (the fail-rows
-merge SHA), D3 (K6, the owner's word); D4 to D6 can be taken as the
-plan proposes and corrected by one line if the word differs.
+**What step 2 waits on.** D1 (the group page's merge SHA; its content
+is read at `e99a1afa` already), D2 (the fail-rows merge SHA), D3 (K6,
+the owner's word); D4 to D6 can be taken as the plan proposes and
+corrected by one line if the word differs.
 
 ## Links
 
@@ -763,7 +782,7 @@ plan proposes and corrected by one line if the word differs.
   couplings](../couplings_algebra/COUPLINGS.md); [the hand](../hand/FORM.md);
   [the full picture](../../FULL_PICTURE.md); the FAIL rows
   (`docs/designs/fail_rows/WHAT_IS_MISSING.md` on `fail-rows`); the group
-  page (`docs/GROUP_STRUCTURE.md` on `group-structure`).
+  page (`docs/GROUP_STRUCTURE.md` on `group-structure` at `e99a1afa`).
 - The mirror: [the paper](../../../paper/general_formula/main.tex)
   (the abstract, Theorems 1 to 5 and the finite-N Bell value).
 - The rules: [AGENTS.md](../../../AGENTS.md) (the one-source rule);
