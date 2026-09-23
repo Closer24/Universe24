@@ -1425,3 +1425,122 @@ asked for.**
   mode is faster by exactly that residual. So the carried cells touch
   the clock at order eps and no further, and never bring it to the
   medium's 1 / gamma_m^2. YES, with that condition and that residual.
+
+**12.6 The derivation of c gated for circularity, and the board's
+massive rule: the compensated form (A) withdrawn for the board, the
+uncompensated pair (B) agreed (the Boss's order of 13:32Z on the
+owner's word through the physicist; COMPUTATION, closed forms only,
+check_uncompensated.py in the reviewer's scratch; nothing entered).**
+
+- (a) The derivation of c. The general 48-invariant rule of range 1,
+  second order and reversible in time, is a_next + a_before = w S_6 + s
+  a_now, two numbers; its dispersion 2 cos omega = s + 2 w (cos k_x +
+  cos k_y + cos k_z), so near k = 0 the pace is one number in every
+  direction (the six neighbours' second moment is 2 per axis) and c^2
+  = w. The uniform record a solution (no gap, the massless record)
+  forces s = 2 - 6 w and no more: a one-parameter family with c^2 = w
+  in (0, 1 / 3], stable while w <= 1 / 3 (the corner 2 - 12 w >= -2),
+  the self term s = 2 - 6 w >= 0. The absent self term (s = 0) picks w
+  = 1 / 3 in that family, and it is the same point as the stability
+  edge (the maximal pace) and the corner's double root. So: NOT
+  circular (no input uses c), but THREE inputs, not two: locality with
+  the 48, the zero mode (massless: the definition of light's record,
+  not a law), and the absent self term, which is the design's own
+  declaration ("no coefficient but 3", DESIGN.md section 2) or,
+  equivalently, the maximal stable pace; without it c^2 = w < 1 / 3
+  with a positive self term is a lawful massless record too. The
+  Highlight's line should read "forced by the absent self term", not
+  "by locality and the 48". The Manhattan road (P9, the flight
+  operator: one Link per interval spread over three axes, 1 / sqrt 3
+  per axis) is the same count (two time Ports over six space Ports is
+  three axes), not an independent derivation: a check of the counting.
+  The group pace of light over the zone: at most 0.577350 = c
+  (confirmed on 61^3, the maximum at k -> 0). The value in m/s is a
+  conversion. AGREED with that line.
+- (b) The contradiction, confirmed. The massive rule of 8.7, 11.1 and
+  C2, a_next + a_before = (1 / 3) S_6 - (p / q) a_now (the self term on
+  the w = 1 / 3 rule, form (A)), has 2 cos omega = (2 / 3) (cos k_x +
+  cos k_y + cos k_z) - p / q, at the corner -2 - p / q: below -2 for
+  every p > 0, a growing checkerboard with acosh(1 + p / 2 q) per
+  interval, 0.1249 at [1, 64] and 0.3517 at [1, 8] (his 0.125, 0.352).
+  In one and two dimensions the corner sits at 2 / 3 - p / q and -2 / 3
+  - p / q, inside the band: every chain and layer reading of sections
+  8, 10, 11, 12 stands; the board cannot run form (A). WITHDRAWN for
+  the board. The reason is the edge: light at w = 1 / 3 already has its
+  corner at -2, and any self term of the mass's sign pushes it over.
+- (c) The stable form (B), DESIGN.md 4.1's words, the pair on the six-
+  neighbour term ALONE: 3 den (a_next + a_before) + r' = num S_6 + r,
+  den > num, no self term. 2 cos omega = (2 num / 3 den) (cos k_x +
+  cos k_y + cos k_z), within [-2 num / den, 2 num / den] for every k:
+  stable for every pair. The gap cos omega_0 = num / den (with the
+  self pair's map den / num = 1 + p / 2 q, omega_0 = 0.1246 at [1,
+  64] against sqrt(p / q) = 0.1250, the rest energy h omega_0 the same
+  to second order). The three tests: generic (one primitive, the pair
+  on the neighbour term, no family name); vector (one entry of (B)'s
+  declared matrix); local (its own row and the six neighbours, the
+  remainder kept as light keeps it). Boundedness: for a_next +
+  a_before = M a_now with M symmetric the form I = a_next . a_next +
+  a_now . a_now - a_next . M a_now is conserved, and it is positive
+  definite exactly when M's eigenvalues lie strictly inside (-2, 2),
+  which (B) satisfies for every den > num (light itself, den = num,
+  sits at both ends, semi-definite, its corner and its zero mode the
+  null directions). In the engine's units: 3 den (a_next^2 + a_now^2)
+  summed over the Nodes less num (a_next,i a_now,j + a_next,j a_now,i)
+  summed over the Links, conserved up to the remainders' bounded
+  jitter. THE ONE PRIMITIVE: light's index form of 5.1 (b) is this
+  pair WITH the compensation 6 (den - num) a_now, which restores the
+  zero mode (the same pace, no gap: an index); the massive record is
+  the same pair WITHOUT it (the gap): the compensation is exactly the
+  difference between an index and a mass.
+- (d) The pace, and Lorentz among the characters. In the lattice's own
+  variables (B) is exactly relativistic: 4 sin^2(omega / 2) = 2 (1 -
+  num / den) + (num / den) (4 / 3) (sin^2(k_x / 2) + sin^2(k_y / 2) +
+  sin^2(k_z / 2)), light's form with c_m^2 = (num / den) c^2 = cos
+  omega_0 c^2: his c sqrt(cos omega_0), 0.40 percent below c at N_0 =
+  50 and 3.06 at N_0 = 18 (confirmed); in the continuum variables
+  d(omega^2) / d(k^2) the deficit is omega_0 cot omega_0 in c^2 (0.26
+  and 2.07 percent in c). This is not (B)'s defect but range 1's: for
+  every rule of the family above with a gap, c_m^2 / c^2 = 3 w and the
+  corner allows w <= (1 + cos omega_0) / 6, so c_m^2 / c^2 <= (1 + cos
+  omega_0) / 2 = cos^2(omega_0 / 2): NO 48-invariant rule of range 1
+  gives a massive record light's c in three dimensions; the least
+  deficit is omega_0^2 / 8 in c (0.20 percent at N_0 = 50), reached by
+  the edge form (C), 12 q (a_next + a_before) = (4 q - p) S_6 - 6 p
+  a_now (the pair on the neighbours AND a self term, marginal at the
+  corner exactly as light is; a two-coefficient rule). (B) is the
+  one-pair form, strictly inside, and the recommendation; (C) is named
+  for the record. What the deficit touches: the massive record's
+  characters are Lorentz's with c_m, light's with c, so a well's mode
+  boosted reads 1 / gamma at beta_m = beta_c c / c_m: at k = 3 and N_0
+  = 50, 0.8149 against 0.8165, 0.2 percent, inside five's band and
+  under the pins' grain (one interval on 206); a two-pace world at
+  second order in omega_0, a prediction of the model rather than a
+  pin moved.
+- (e) What changes in this file, and what survives. 8.7's integer
+  form, 11.1's and C2's are form (A): superseded for the board by (c);
+  their chain readings stand. C5's E_m is replaced by the invariant I
+  of (c); with a well (a per-Node pair [num_i, den_i]) it is I = sum
+  over Nodes of (a_next^2 + a_now^2) den_i / num_i less a_next . M_light
+  a_now (M_light the light operator, symmetric), conserved by the same
+  algebra, positive definite while the mode's 2 cos omega_b < 2. The
+  well of C6 and C8 becomes a local pair: the object's Nodes carry
+  [num', den'] with num' / den' > num / den, and the map is g = 2
+  (num' / den' - num / den) to first order in mu^2. The chain
+  eigenproblem in both forms (3001 Nodes, mu = 0.05):
+
+  | s | g | eps under (A) | eps under (B), g = 2 (C_in - C_out) |
+  | --- | --- | --- | --- |
+  | 1 | 0.0183 | 0.0998 | 0.0983 |
+  | 12 | mu^2 / 2 | 0.0573 | 0.0575 |
+  | 12 | mu^2 | 0.2009 | 0.2009 |
+
+  So the regimes, the extent 2 / (3 g) and C8's clock readings (0.806
+  against 0.817 at s = 12, g = mu^2 / 2) survive to 1.5 percent in eps
+  at s = 1 and better for the block, the deviation of order mu^2 / 2.
+  11.6's one-Node threshold and the ball's g R^2 >= 0.822 map with the
+  same g (the one-Node window's top is where the mode's 2 cos omega_b
+  reaches 2). Not run: the board in form (B) (the corner's stability
+  is the closed form above; the cube's threshold stays the scratch
+  board of 11.6). The source term named missing in 12.4 is the
+  dielectric's acceleration term of 12.5 (b), by which the block
+  emits at its mode: not a third thing.
