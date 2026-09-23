@@ -276,9 +276,22 @@ def covariant_frame(
 class NatureBeamSimulation:
     """One world of the Beam Law, stepped interval by interval."""
 
-    def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
+    def __init__(
+        self,
+        world: NatureBeamWorld,
+        observer: Record | None = None,
+        *,
+        keep_row_clicks: bool = False,
+    ) -> None:
         self.world = world
         self.record = observer
+        # The host's record switch (the model owner, 2026-09-23, record
+        # 1296 of docs/LOG_2026-09-20.md): False, the default, leaves the
+        # per-row `click` lines of the measured events out of the record
+        # the observer is given (`nature_beam(..., row_clicks=False)`);
+        # True keeps them (the runner's `--keep-row-clicks`). Every other
+        # line is written as it is, and nothing of the law reads it.
+        self.keep_row_clicks = keep_row_clicks
         self.tick = 0
         self.shape = world.shape
         self.families = world.families
@@ -601,6 +614,7 @@ class NatureBeamSimulation:
             self.record,
             self.ledger,
             layer=self.layer,
+            row_clicks=self.keep_row_clicks,
         )
         for number in sorted(self.measured):
             entry = self.measured[number]

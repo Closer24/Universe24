@@ -3169,6 +3169,14 @@ class Interval:
     # optical-v1: the crowd's moments at every Node with a row, read once
     # before step 1 (None without the key).
     crowd: CrowdMoments | None = None
+    # The host's record switch (2026-09-23, the runner's `--keep-row-clicks`):
+    # False omits the per-row `click` lines the measure rule writes for a
+    # measured event's clicked rows (`_apply_plan`), a GameBoard diagnostic
+    # of the record and nothing of the law; every other line is written as
+    # it is. True here by default (the frame of a bare `nature_beam` call
+    # is the whole record); the engine passes the simulation's switch,
+    # False unless the record keeps the lines.
+    row_clicks: bool = True
 
 
 class CrowdMoments:
@@ -3277,11 +3285,14 @@ def interval_frame(
     record: Record | None,
     ledger: Ledger,
     layer: Layer | None,
+    *,
+    row_clicks: bool = True,
 ) -> Interval:
     """Read the interval's frame once: the world's constants, the measured
     events in number order with the index of the one at each Node, and the
     crossing marks of the stepping bodies (the model owner's record 158;
-    BEAM_LAW note 48)."""
+    BEAM_LAW note 48). `row_clicks` is the host's record switch
+    (`Interval.row_clicks`): False omits the per-row click lines."""
     families = world.families
     free_of = [definition.free for definition in families]
     # The columns of the world, (name, sign), and every family's value per
@@ -3399,6 +3410,7 @@ def interval_frame(
         # 2026-09-22; at a pair with n = 0 or with no crowd they stretch
         # nothing and the walk is the table's, integer for integer).
         crowd=CrowdMoments(stores, [t.flow_labels for t in tables.family_flights]),
+        row_clicks=row_clicks,
     )
 
 
@@ -3412,6 +3424,7 @@ def nature_beam(
     ledger: Ledger,
     inverse: bool = False,
     layer: Layer | None = None,
+    row_clicks: bool = True,
 ) -> GameBoardDiagnostics:
     """A Node's whole interval for the rays present, at every Node (the
     module docstring, steps 1 to 6). With `inverse` the bijective steps are
@@ -3421,8 +3434,12 @@ def nature_beam(
     (`amplitude.Layer`): it is told of every end of a row of a record (a
     click, a face, the border), of every birth and split, and of the
     merge's cancels, and its completions are read after step 4 and after
-    the merge; steps 1 to 3 never read it."""
-    frame = interval_frame(stores, world, tables, measured, tick, record, ledger, layer)
+    the merge; steps 1 to 3 never read it. `row_clicks` False omits the
+    per-row click lines of the measured events from the record (the host's
+    switch, `Interval.row_clicks`); nothing else changes."""
+    frame = interval_frame(
+        stores, world, tables, measured, tick, record, ledger, layer, row_clicks=row_clicks
+    )
     if inverse:
         return _inverse_interval(frame)
     # 1. The walk: departures become arrivals; the escapes click on the faces.
@@ -5532,7 +5549,13 @@ def _apply_plan(
                             placed=1 - waits,
                             direction=plan.t_arrival[k],
                         )
-            if record is not None:
+            # The per-row click lines, one per clicked row: a GameBoard
+            # diagnostic of the record (the detector's reading of the row
+            # is the set's `record` line and, in a recorded world, the
+            # gather), left out of the record by default (`frame.row_clicks`
+            # False; the runner's `--keep-row-clicks` keeps them); the click
+            # itself above is the law's and never omitted.
+            if record is not None and frame.row_clicks:
                 for k in range(k0, k1):
                     click_line: dict[str, object] = {
                         "event": "click",

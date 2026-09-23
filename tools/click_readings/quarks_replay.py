@@ -48,7 +48,8 @@ def replay_of(name: str, cap: int) -> dict[str, object]:
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "run"
         out.mkdir()
-        execute_nature_beam_run(world, source, out, name, cap)
+        # The registered digests are of the whole record (`--keep-row-clicks`).
+        execute_nature_beam_run(world, source, out, name, cap, keep_row_clicks=True)
         block: dict[str, object] = tool.replay_block(out, cap)
     return block
 

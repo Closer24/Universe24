@@ -211,7 +211,9 @@ def bar(
 
 def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(copy.deepcopy(world)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(copy.deepcopy(world)), records.append, keep_row_clicks=True
+    )
     for _ in range(int(str(world["ticks"]))):
         simulation.step()
     assert simulation.books()["balanced"]
@@ -508,5 +510,7 @@ def test_the_fast_steps_are_reported(momentum, links, fast, tmp_path):
         assert ticks[:8] == [2, 4, 5, 7, 9, 10, 12, 14]
     path = tmp_path / "world.json"
     path.write_text(json.dumps(lone(momentum, 30)), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["fast_steps"] == fast and record["status"] == "completed"

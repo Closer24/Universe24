@@ -57,6 +57,18 @@ Run one:
 python -m event_universe --init examples/events/one_content.json --output artifacts/one_content
 ```
 
+By default (the model owner, 2026-09-23, record 1296 of
+docs/LOG_2026-09-20.md) the per-row `click` lines of the measured events are
+left out of `events.jsonl` and `run.json` carries `omit_row_clicks` true:
+the record of a long detector run is nearly all those lines (a GameBoard
+diagnostic; the detector's reading is the `record` and `gather` lines,
+written either way). `--keep-row-clicks` keeps them, the record as it was
+before the option and no such field; the runner says so on stderr at the
+start of a default run of a world whose rows can click, and a trimmed
+record is refused plainly by the reading tools that need the per-row lines
+(docs/ENGINE.md, "The trimmed record"). Every registered digest is of the
+whole record, replayed under the option.
+
 ## Writing and running a new series: what the experimenter of 2026-09-21 had to find out by refusals
 
 The rules below are the engine's (docs/ENGINE.md and the refusals of
@@ -93,7 +105,11 @@ refusal to learn while series O and P were built.
 5. **Run a series headless and read the record.**
    `PYTHONPATH=src python tools/run_series.py --jobs 3 --out <dir> <worlds...>`
    writes `<dir>/<world>/run/{run.json, initialization.json, events.jsonl,
-   state.json}` and a `summary.md`. The lines to read: `birth` (a lamp's
+   state.json}` and a `summary.md`; the per-row `click` lines are left out
+   by default (`run.json` marked `omit_row_clicks`; the `gather` and
+   `record` lines written), and `--keep-row-clicks` passes the runner's
+   option to every child when a reader of the series needs the per-row
+   lines. The lines to read: `birth` (a lamp's
    self-creation, `measured` the lamp's number, `record` its record), `click`
    (`measured` the reader, `record & 0xFFFFFFFF` the birth ordinal, so the
    slope of ordinal against tick is 1 / (1 + z); `age` the flight when the

@@ -162,7 +162,8 @@ def test_metadata_copy_cannot_be_changed_during_execution(tmp_path, monkeypatch)
     expected = copy.deepcopy(initialization_record)
     original_simulation = run.NatureBeamSimulation
 
-    def construct(world, observer=None):
+    def construct(world, observer=None, *, keep_row_clicks=False):
+        # The runner's record switch (2026-09-23), taken as the engine takes it.
         initialization_record["sources"][0]["sha256"] = "changed"
         return original_simulation(world, observer)
 

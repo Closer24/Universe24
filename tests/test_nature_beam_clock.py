@@ -220,7 +220,9 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         detectors=[{"name": "d", "positions": [[3, 0, 0]], "threshold": 1}],
     )
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(pair), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(pair), records.append, keep_row_clicks=True
+    )
     slow, gate, fast = simulation.measured[1], simulation.measured[2], simulation.measured[3]
     for tick in range(1, 9):
         simulation.step()
@@ -270,6 +272,7 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world([mover, resident], shape=[3, 1, 1], release=[0, 1], K=16)),
         records.append,
+        keep_row_clicks=True,
     )
     for tick in range(1, 7):
         simulation.step()
@@ -432,7 +435,9 @@ def test_every_age_against_a_key_is_the_one_by_clock():
         "in_transit": [rest, moving],
     }
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     store = simulation.stores[0]
     for tick in range(1, 21):
         simulation.step()

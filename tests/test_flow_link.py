@@ -202,7 +202,8 @@ def test_the_key_absent_reads_byte_for_byte_as_main(tmp_path):
     loaded = load_world(source, base_dir=path.parent, root=EXAMPLES)
     out = tmp_path / "gate"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"])
+    # The registered digests are of the whole record (`--keep-row-clicks`).
+    execute_nature_beam_run(loaded.world, source, out, "test", entry["cap"], keep_row_clicks=True)
     assert digests(out) == entry["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "flow_link" not in record and FLOW_LINK_RULE not in record["hypotheses"]
@@ -211,7 +212,12 @@ def test_the_key_absent_reads_byte_for_byte_as_main(tmp_path):
     out = tmp_path / "bar"
     out.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), out, "test", 40
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        out,
+        "test",
+        40,
+        keep_row_clicks=True,
     )
     assert {k: v[:16] for k, v in digests(out).items()} == BAR_DIGESTS
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))

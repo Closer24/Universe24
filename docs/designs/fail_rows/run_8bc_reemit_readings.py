@@ -19,6 +19,10 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 MODULUS = 64
 R, FIRST, SECOND, FAR = 4, 8, 9, 190
 # The pins of section 6.2 as written: (clicks, arrivals) per reader, the far detector's clicks and arrivals,
@@ -53,6 +57,7 @@ def read(folder: Path) -> None:
     passes: dict[int, list[dict[str, object]]] = collections.defaultdict(list)
     clicks: dict[int, list[dict[str, object]]] = collections.defaultdict(list)
     reemit_gather_content: collections.Counter[tuple[int, str]] = collections.Counter()
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
             event = json.loads(text)

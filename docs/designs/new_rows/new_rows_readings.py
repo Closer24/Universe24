@@ -26,6 +26,10 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 PINS = HERE / "new_rows_pins.json"
 OUT = HERE / "new_rows_readings.json"
@@ -38,6 +42,7 @@ def digest(path: Path) -> str:
 
 
 def read_run(folder: Path) -> dict[str, object]:
+    refuse_trimmed_record(folder)
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     events = [
         json.loads(text)

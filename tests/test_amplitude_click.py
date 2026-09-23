@@ -124,7 +124,9 @@ def lamp(directions: list[list[int]], rate: list[int]) -> dict[str, object]:
 
 def run(world: dict[str, object], ticks: int) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(ticks):
         simulation.step()
     return simulation, lines
@@ -260,7 +262,9 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
     )
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(parse_nature_beam_world(world), json.dumps(world).encode(), out, "test", 1)
+    execute_nature_beam_run(
+        parse_nature_beam_world(world), json.dumps(world).encode(), out, "test", 1, keep_row_clicks=True
+    )
     state = json.loads((out / "state.json").read_text(encoding="utf-8"))
     rows = [ray for node in state["nodes"] for f in node["families"] for ray in f["rays"]]
     assert sorted(("record" in ray, "branch" in ray, "multiplicity" in ray) for ray in rows) == [
@@ -311,9 +315,9 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did_before_the_law(tmp_path: Pa
         # gate set's `refusal`, the generic entry of the bending): the
         # digests beside it are the base tree's before the entry.
         with pytest.raises(OverflowError, match=entry["refusal"]["match"]):
-            execute_nature_beam_run(loaded.world, source, out, "test", cap)
+            execute_nature_beam_run(loaded.world, source, out, "test", cap, keep_row_clicks=True)
         return
-    execute_nature_beam_run(loaded.world, source, out, "test", cap)
+    execute_nature_beam_run(loaded.world, source, out, "test", cap, keep_row_clicks=True)
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "amplitude" not in record and "amplitude-v1" not in record["hypotheses"]
     digests = entry["digests"]
