@@ -589,7 +589,13 @@ reproduces its numbers independently on the engine's own lines.
   refusals: a born row's content is `quantum x turn`; a massive birth
   whose turn is not 1 is refused at the birth naming the lamp; the pin's
   lamp turns 1 (held 2^30 at K 2^30). Done (the refusal chosen over a
-  table per content: one table per family).
+  table per content: one table per family). The physics-rule reviewer's
+  line of 2026-09-23 (the run of `docs/designs/fail_rows/RUN_8BC.md`
+  section 5, its births 1, 3 .. 1038): a lamp holding exactly K births at
+  the first self-creation and not at the second (the first count leaves
+  no remainder), then at every one until the spent units sum to K, about
+  sqrt(2 K / M) births; the pins of any such world count the births 1,
+  3, ..., T (T - 1 births in T intervals).
 - **M4** (the value form, no flag at run time; F1 stated): section 2's
   first paragraph (per-family flight and turn tables for every family,
   the photon's by value, the identity test the tables' equality, the
