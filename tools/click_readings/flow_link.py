@@ -3,7 +3,7 @@ read from the runner's record and compared with the pins of
 `expectations.json`, written before the run (DESIGN.md section 4,
 ALGEBRA.md section 4 of docs/designs/flow_weight/).
 
-Usage: `PYTHONPATH=src python tools/flow_link_readings.py <runs root>
+Usage: `PYTHONPATH=src python tools/click_readings/flow_link.py <runs root>
 [--window-start 200] [--register examples/events/flow_link/expectations.json]`.
 The root holds the runs `tools/run_series.py` wrote (`<root>/<world>/run/`),
 told apart by the model of their record (`rays-flow-link-ring-b<b>-[control-]g<gamma>-v1`);
@@ -35,7 +35,7 @@ moved. With `--register` the run blocks (the source sha256, the digests,
 the readings and the verdicts) are written into the expectations file
 under `runs`, the pins untouched. The calibration copies
 (`calibration_mass_g*.json`, the registered optical worlds under the key)
-are read by `tools/lensing_readings.py` against the registered controls,
+are read by `tools/click_readings/lensing.py` against the registered controls,
 not here.
 """
 
@@ -53,7 +53,7 @@ from pathlib import Path
 
 from event_universe.world_loading import world_of_run
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 EXPECTATIONS = ROOT / "examples" / "events" / "flow_link" / "expectations.json"
 MODEL = re.compile(r"^rays-flow-link-ring-b(?P<b>\d+)-(?P<control>control-)?g(?P<gamma>\d)-v1$")
 IDENTITY = "flow-link-v1"

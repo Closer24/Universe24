@@ -517,7 +517,7 @@ K's box with the mass 2^16 at the pin n S = d and a ring of lamps on the
 heading at the impact distance b = 6, 3 and 8 (40, 16 and 48 starts) under
 `optical: 0` and `optical: 1`, each with its control, and the registered
 optical mass worlds under the key as the calibration.
-`tools/flow_link_readings.py` reads every start's arrival Node and age at
+`tools/click_readings/flow_link.py` reads every start's arrival Node and age at
 the screen (DETECTOR), the ring's mean radial shift against the design's
 pin (0.731 +- 0.025 Links at b = 6, gamma 1) and the conversions
 `C_nodes` and `C_ring` through the stated lever-arm factor against

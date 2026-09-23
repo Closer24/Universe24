@@ -23,7 +23,7 @@ before the run; the kind the Highlights head names for host arithmetic on
 readings), GAMEBOARD (the step algebra's momentum, not read by a run) or
 HOST (the run's cost). Einstein's 4 appears on the comparison side only (record 817);
 nothing here is pinned as nature's. The readings tool is
-`tools/flow_link_readings.py`, every line labelled by its kind.
+`tools/click_readings/flow_link.py`, every line labelled by its kind.
 
 ## What was built (the engine, under the world key alone)
 
@@ -149,7 +149,7 @@ run below.
 
 `tools/run_series.py --jobs 4`, 400 intervals, on the head of this branch
 (Python 3.14.0rc2, numpy 2.5.3, headless; this host: 4 cores, 15 GB). Read
-by `tools/flow_link_readings.py` (the window from interval 200, rows born
+by `tools/click_readings/flow_link.py` (the window from interval 200, rows born
 after the crowd filled the box) and, for the calibration,
 `tools/lensing_readings.py --no-replay` against the registered controls
 (the window [110, 400]); the run blocks (the source sha256, the digests of
@@ -298,7 +298,7 @@ digests through their tests; `ring_b6_g0` on the ladder: the audit
 five refused rings ran through `tools/run_series.py --jobs 4`, 400
 intervals, against the controls of the run before (unchanged), with the
 SAME pins; the run blocks under `runs_on_the_split_ladder_89f43572` of
-`expectations.json`, read by `tools/flow_link_readings.py`.
+`expectations.json`, read by `tools/click_readings/flow_link.py`.
 
 | World | the mean radial shift, Links (DETECTOR) | the pin | arrival Nodes the map's | starts moved by 0 / 1 / 2 / 3 (the map's) | the delay, intervals (DETECTOR, within 1) | `C_nodes` (COMPUTATION) | `C_ring` through the factor (COMPUTATION) against the expected, the grain; the residual in grains (the algebra's) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
