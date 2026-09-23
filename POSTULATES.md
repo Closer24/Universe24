@@ -1580,3 +1580,95 @@ on `main`
 (spatial fields);
 the return as a field (point 3 as amended, in place of the walk on the
 trace those features implement) is pending.
+
+## 26. The Inside and the Outside
+
+The model owner's word, 2026-09-23, 03:57Z, record 1242 (Hebrew, dictated;
+the Boss's English): "Everything we say here goes into the postulates,
+because it is very important later; and if it is contradicted, it must be
+thrown out of there." The two words are defined in
+[docs/TERMINOLOGY.md](docs/TERMINOLOGY.md#the-readings) ("Inside and
+Outside", record 768): Inside is inside the GameBoard, the Nodes, the
+integer rows and the tick, where no one measures; Outside is the game above
+the board, the detectors and their clicks only, which is not reality but is
+claimed to represent it. In each postulate the owner's statement comes
+first, the Boss's reading after it where one is given and marked as his,
+and the citations last. The records are in
+[docs/LOG_2026-09-20.md](docs/LOG_2026-09-20.md) and their decisions in
+[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); record 1242 is
+cited by number. Where [section 10](#10-measurement-and-display-are-outside-the-physics)
+or sections [23](#23-the-ray-event-model),
+[24](#24-everything-is-information-transfer-a-return-is-the-inverse-split-at-the-event)
+and [25](#25-the-law-of-the-bit-the-thing-or-its-shadow) already say a
+thing, this section cites them and does not restate.
+
+**26.1 Nature's atomic clock.** The owner: nature's atomic clock, by our
+definition, is a detector that reads a click and waits for the next click;
+it must have mass, the held content of its own record; this is the law we
+defined, and the laws of the clock are closed. The detector's own count
+under the age wall is its time; its tick is the return of its own packet to
+its held mass, at rest to the same Node and in motion to the next Node, one
+rule for both; there is no second clock and no rate from outside. Records
+678, 709, 1217, 1226, 1227, 1232 and 1234; section 10 (the click stamped
+with the detector's own count); docs/TERMINOLOGY.md, "A detector's clock".
+
+**26.2 What passes from the Inside to the Outside.** The owner: from the
+Inside to the Outside the mass passes as it is: the record's content in the
+family's units (docs/TERMINOLOGY.md, "Content": content on a body or a row,
+the mass). The Boss's reading, marked as his and to be confirmed by the
+Tick Algebraist's paragraph: the record's number (its owner) and the
+direction of its momentum label, the vector **p**, pass with it; time and
+place do not pass: the time is the detector's own count and the place the
+detector's own Node. Record 1234 (the detector's mass and the Inside's
+mass are one quantity in one record); section 10.
+
+**26.3 The Outside has Nodes.** The owner: the Outside has Nodes as the
+Inside has: the detectors' Nodes. The distance between two Outside Nodes is
+the distance between the two detectors; the time of the passage from one
+Outside Node to the next is the time between click and click, in the
+detector's own count. Records 1216 and 1234; the click theorem's
+definitions (a click is a triple: the Node, the detector's count at the
+arrival, what arrived; a velocity Outside is a ratio of two integers and
+never a reading of the tick).
+
+**26.4 The Inside is reached only by clicks.** The owner: the Inside is
+reached only by clicks. The Outside is the possibility that was fixed by
+the actions coming in from the Inside: one realized possibility at a given
+count of a detector, not always all the places; the Inside carries all the
+possibilities that can be. The Boss's precision, marked as his: the Inside
+is one deterministic state with many rows; there is no draw at a Node (the
+paper's P4; section 25, "The mark": there is no lottery); the fan carries
+every declared direction; "all the possibilities" are the rows that could
+click, and the Outside is the subset that clicked. Record 1201 (no passage
+Outside without a packet Inside); section 23 (every trajectory an
+interaction permits happens, and the picture of the world is the list of
+clicks); section 25.
+
+**26.5 No time in the Outside apart from the detectors' counts.** The
+owner: there is no time in the Outside apart from the detectors' counts: no
+fixed time and no global time, because everything can happen from different
+things. The host's tick is a GAMEBOARD diagnostic and never the Outside's
+time. Records 281, 1216 and 1217; docs/TERMINOLOGY.md, "The readings";
+Highlights 5.4, the line of record 1196 (the time axis and the kind of a
+reading).
+
+**26.6 The Outside compared with Einstein's spacetime.** The owner: the
+Outside is compared with Einstein's spacetime; what is compared with
+Einstein's spacetime is determined from the Inside and read by clicks. The
+click theorem
+([docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame)):
+the conversion from the lattice's momentum to motion read by clicks is
+Lorentz's form up to a correction of relative order m^2 v^2 (m the mass
+angle of the amplitude and v the velocity, as the theorem defines them),
+exact in the continuum limit; its present tests are the light clock and
+the tick algebra (records 1226 to 1235). Einstein's forms are the thing
+compared with: the law's result matches nature and is never said to be
+nature; "compared with", never "is" (records 762 and 817; section 9 says
+the same of Newton's and Einstein's equations).
+
+**26.7 Removal on contradiction.** The owner: if any statement of this
+section is contradicted by a reading, a detector's click, it is removed
+from the postulates, with the record of the contradiction cited (record
+1242). Nothing else in POSTULATES.md changes by this section; where section
+10 or sections 23 to 25 already say a thing, they are cited instead of
+restated.
