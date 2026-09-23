@@ -1,5 +1,7 @@
 # The couplings of the atom worlds and the light worlds: every rule the engine runs for them, as one of the six verbs on the GameBoard (the Couplings Definer, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 2.9; this file is kept as the record of 2026-09-22.
+
 The owner's word (record 929 of [the log](../../LOG_2026-09-20.md),
 2026-09-22, as the Boss relayed it): "See whether the atom test or the
 light tests need new definitions that define the algebraic couplings

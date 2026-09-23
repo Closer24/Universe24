@@ -1,5 +1,7 @@
 # The group structure of the law: the four group objects, their operations, and how the group of order 24 and the 48 act on each (the index page)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](ALGEBRA.md), section 1 (its sections 1 to 6 carried over there) and 7; this file is kept as the record of 2026-09-23.
+
 The model owner's word of 2026-09-22 ("how are the groups defined here;
 put it in order in the files if it needs ordering") on the Boss's order:
 one page that names the four group objects of the law, their definitions in symbols, the dictionary from the algebra to the physics, how the group was reached from the operations, their operations,

@@ -610,8 +610,8 @@ clicks at its place to the detector's clicks at its place, and a
 reading at another place is a detector at that place (Highlights 5.4,
 the owner's word of 2026-09-22); the paper's P11 lists the readings admitted. The
 five kinds: DETECTOR, GAMEBOARD, COMPUTATION, HOST, CONVERSION, as the
-head of this file defines them (the FAIL rows file, `docs/designs/fail_rows/WHAT_IS_MISSING.md` on the
-branch `fail-rows` until it merges, and [Newton from the clicks](designs/newton_clicks/NEWTON_FROM_CLICKS.md)
+head of this file defines them ([the FAIL rows file](designs/fail_rows/WHAT_IS_MISSING.md)
+and [Newton from the clicks](designs/newton_clicks/NEWTON_FROM_CLICKS.md)
 section 6, the same five).
 
 **The kind of a body's own record (the reading in force, pending the
@@ -1652,10 +1652,256 @@ expansion-v1:** named rules outside the law, chapter 6.
 
 ## 6. What each FAIL row lacks, by the algebra
 
-(The third commit.)
+The FAIL Rows Algebraist's reading ([the FAIL rows file](designs/fail_rows/WHAT_IS_MISSING.md),
+merged to main by PR #964, read AE folded; the owner's words of records
+1102 to 1104 and 1114: understand why the experiments that passed passed
+and what was missing in the ones that failed, by what the algebra
+derives to physics; make sure nothing is measured inside the board),
+stated here once, one line per row; the per-row sections of that file
+are the record.
+
+### 6.1 The four words, and the seven generic modes in the clicks
+
+**The four words** (the Boss's order, verbatim from the file). A
+READING: a click not yet made, named, with its side arrangement and its
+pins by the algebra before any run. A DECLARATION: a world integer or a
+world key, named, with what each option gives. A RULE: nothing in the
+six verbs and the declared tables gives the row's number; what a rule
+would have to do is stated under its own identity, outside the law,
+with the three tests and whether it can pass them; a RULE that cannot
+pass the three tests is still written as a RULE, and the row then stays
+FAIL under the law as it stands. NOTHING: no reading, no declaration
+and no rule of any kind, inside or outside the six verbs, moves the
+row: it is the law's own exact result and nature refutes the law there.
+The counts: READING 1 (row 14); DECLARATION 6 (rows 2a, 4a, 4b, 8b, 8c,
+13); RULE 8 (rows 1c, 3, 5b, 6, 7b, 8a, 11a, 11c); NOTHING 1 (row 1b).
+Sixteen rows: the twelve FAIL rows of the paper's confrontation table
+and the four that fail by a pin whose run is not made (4a, 5b, 11a,
+11c).
+
+**The seven modes** (the owner: "everything is read from clicks, so if
+you understood something now, you understood a generic problem in the
+clicks"), each one generic thing that goes wrong between a row and its
+click and one generic fix in the clicks: **A**, a GameBoard quantity
+taken as the reading (a period on the host's tick, a presence mean
+over a shell, an arrival tick, a body's own record) where a detector's
+own count is the click; the fix the detector's own count under
+`clock_stamp` (on main), the count ratio at two distances, the face
+click. **B**, a read counted as a click or a click counted as a read
+(the push taken at a body; the term 1 + u / c put where a click count
+does or does not have it); the fix the owner's word on which count the
+push takes, and the body a detector with mass. **C**, one record with
+two rates (the drive's 1 - v and the clock's 1 / (1 + k_crowd); the
+click theorem's missing line, r = 1 as the mover's own count); the fix
+the one rate shown or refuted by clicks on the k-ladder, the pace a
+ratio of counts. **D**, the click reads the row's birth content and not
+the row's rate at the arrival (E = h f absent at the click: the content
+per click fixed in flight); the fix the row's phase turning per Link
+(massive-rows-v1's turn, abs(p_a) N / h steps over the action h) and
+the click reading the phase steps per its own count. **E**, a
+transformation of a body fired at a declared count of its own clock, or
+declared once per body, and not at a met row (the `become` at a count,
+the give once per body); the fix the body a detector, the transformation
+a click of a row met. **F**, the click's grain (the fan's width, the
+wheel, the lattice's scale) where the comparison is the continuum's
+limit; no fix in the clicks, the grain the declaration's and the limit
+computed. **G**, the click's order (the wheel a counter, the outcome
+order deterministic); no fix in the clicks (a draw is not a click). F
+and G are the residue where the clicks are right and a declaration's
+grain or a theorem is what nature refutes.
+
+### 6.2 One line per row: the pinned reading and its kind, what the algebra gives exactly, the one word, the modes, and whether anything was measured inside the board
+
+| Row | The pinned reading, its kind; nature | What the algebra gives exactly | The one word | The modes; inside the board |
+| --- | --- | --- | --- | --- |
+| 1b the phase-form window | S = 2 exactly (DETECTOR, the counters' clicks); nature 2.42 +- 0.20 | SHOWN: the local bound is an identity of the window's form at any count (chapter 4.10) | NOTHING: Bell's bound is a theorem of every local read-out; the law's answer is row 1a's one gather (2.75, DETECTOR); 1b stays as the control of what a local read gives | none; NO |
+| 1c the order channel | 15 / 16 under a = 0 and -1 / 16 under the cycle, the serial correlation at lag 1 (DETECTOR); nature 0 | SHOWN: the click a function of (a, b, u) alone, the wheel a counter; the statistic exact at every start | RULE: a wheel that is not a counter; a draw fails the vector test (no draw at a Node); a declared permutation table of the wheel (verb (P)) passes the three tests but reaches 0 only as a fit at one count and one setting sequence; the claim kept to the counts | G; NO |
+| 2a the two-slit visibility | 0.966 in the clicks (DETECTOR); the pin 0.9659 (COMPUTATION, met bit for bit); nature 0.98 (a Mach-Zehnder source), 0.94 (a biprism, unverified) | SHOWN: the counts per cell bit for bit from the fan, the weights and the wheel; the ideal 1 the limit of every direction; the shortfall the digital lines' landings | DECLARATION: the fan's width P and the grain of the slits' world; the options 0.94, 0.97, 0.96 at P = 32, 48, 64 (COMPUTATION) do not reach 0.98; NOT COMPARED against a two-slit source until its figure is verified | F; NO |
+| 3 the deceleration | q = -0.108 registered, -0.104 at head (DETECTOR, the pointer's z per tick, that tick GAMEBOARD); nature -0.53 +- 0.01 | SHOWN: the coasting throw gives Milne's q = 0 exactly; SHOWN IN FORM: q_eff = -2 g_1 / (1 + g_1) from any linear stretch of the emitters' clocks (chapter 5.7); NOT SHOWN: the size g_1 = 0.36 and its sign from the law's own crowd | RULE: a term that makes the emitters' count stretch grow with the flight time by the law's own crowd, at the size 0.36 per Hubble length; the law's own crowd history gives the wrong sign; a declared gradient a fit | A and C; YES (the tick of an open-face detector as the time base) |
+| 4a the unslowed clock | the muon's `become` at 64 at every speed (GAMEBOARD, a body's own record; the products' face clicks DETECTOR); the ratio 1 against nature's 29.33 | SHOWN: on the law r_D = 1 at every speed, the hop costing the clock nothing; SHOWN IN FORM under covariant-readings-v1: r = 1 / gamma exact on the identity's integers within gamma <= 2; NOT SHOWN: r read at the ground through a mover's own records | DECLARATION: the key `covariant_readings` (one rate for the drive and the clock of one record), and the lifting of its domain cap by form B; off, FAIL by 29.33; on, gamma's form within the domain; the reading that decides from the clicks alone: k_AB, the missing direction | C, audited A; YES (the `become` line, a body's own record) |
+| 4b the moving lamp's redshift | z = 0.2636 registered, 0.2647 at head at beta = 0.2674 (DETECTOR; the tick GAMEBOARD); nature 0.315; under the key 0.3674 for 0.369 +- 0.003 (DETECTOR, series S) | SHOWN: 1 + z = 1 + v exactly, the count of what a rest detector meets (the click theorem's k_BA at r = 1); the two one-way factors apart by 1 - v^2 on the law; SHOWN IN FORM: gamma (1 + beta) under the identity | DECLARATION: the same key as 4a; off, 1 + v, seventeen grains below; on, the pin met; the rest detector in no crowd has r_B = 1 exactly, so the NOT READ clock adds nothing here | C, audited A; YES (the tick as the time base) |
+| 5b the arms' anisotropy | the round trips gamma^2 along and gamma across, 1.375 and 1.140 at beta = 0.4297 on the flight table (COMPUTATION, a pin; not run); nature's null at beta^2 / 2 = 5 x 10^-9 | SHOWN: the one-way pace relative to a mover c -+ v, the bond clock anisotropic under the law and the identity alike; NOT SHOWN: any object that contracts (the bond a whole Link) | RULE: a contraction of a moving body's extent by 1 / gamma along its motion; it needs a root of the state at run time (the seventh verb), so it fails the vector test; not reachable inside the six verbs | A and C; YES, wholly (no detector: the round trips computed on the flight table) |
+| 6 the atom's loop opening | the electron escapes at 3407 intervals (DETECTOR, series H); under `centred_step` the loop stays, C1 PASS, C2 and C3 FAIL as declared (DETECTOR); no line read; nature Balmer's 27 / 20 | SHOWN: a closed loop is an integer congruence of the action row; the one-click reach 2 i^2 >= j^2 and that a release unbinds (chapter 5.8); SHOWN IN FORM: the ladder (j / i)^2 and (j / i)^3 in the shell mean, 27 / 20 under the virial form in the limit; NOT SHOWN: the transition, any rule that selects the row | RULE: atom-give-v1 / atom-level-v1, the give at the closure with its amount read off the action rows, under its own identity; generic, vector and local PASS in the mathematician's judgement, the reviewer's read decides; no lattice we can run holds the scale, so the row stays FAIL by any run and the ladder a conjecture | F and E; YES in part (the loop's radius and period off the body's own record; the escape and the quarter crossings clicks) |
+| 7b the strong ratio | 2.0, the border's four clicks against two (DETECTOR, series N); nature 12.72 | SHOWN: the give once per body, held // h units at a contact, so the alpha gives 8 against the deuteron's 4 whatever the partners; the ratio a constant of the rule, blind to the give's value | RULE: a give that grows with the bonds a body makes; a bilinear form on the partners' rows passes the three tests in form; per partner 6, per partner squared 18 (COMPUTATION); nature's 12.72 the partners' count to the power 1.68, reachable only by a declared integer per shape, a fit | E; NO (the border clicks; the books a check) |
+| 8a the neutron's step | every neutron at its key on its own clock, the width 0 (DETECTOR, 64 clicks of content 3); in the lattice's clock 0.036 registered, 0.08 to 0.13 at head (GAMEBOARD); nature's exponential, width over median ln 9 / ln 2 = 3.17 | SHOWN: the `become` at a declared count is a step in each body's own clock at any count; the spread in the tick is the crowd's spread of 1 + k_crowd over the 64 Nodes, bounded by the crowd's range | RULE: decay-by-crowd-v1, the `become` fired by a met row of a declared family instead of by a count, so the waiting time is the arrivals' inter-arrival distribution, exponential only where the declared bath's arrivals approach a Poisson comb (COMPUTATION from the declaration); generic, vector ((E) and (D)) and local in form; a re-run reads the crowd's spread alone and cannot reach 3.17 | E, audited A; YES for the paper's number (the width over the median in the lattice's clock) |
+| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty; the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with 8c); content 0, no turn: 0 behind, as read; content 1 under massive-rows-v1 (the row turning its phase per Link by abs(p_a) N / h steps over the action h): each reader admits a class shifted by the turn per Link and the window empties a class, 16 rows per class over 1024 births, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION), the far detector 1024 less 16 per class covered; 0 behind again when the shift per Link is 0 mod N (p = 2^12 with h a power of two) | D; NO (the readers' own records) |
+| 8c the massless neutrino | the `nu` family with no content, an input; nature's heaviest state above 9.8 x 10^-8 of the electron's | SHOWN: a family's content is a declared integer of the family table | DECLARATION: the `nu` family's quantum 1 under `massive_rows`; 0 refuted; 1 puts the electron's declared content at 1.02 x 10^7 units or more (COMPUTATION on the comparison side), inside the working bound at S_w = 1 | D; NO (an input) |
+| 11a the far lamp's brightness | the pin q_eff = +1 (COMPUTATION; the run not made, expansion-v1 not built); nature -0.53 | SHOWN IN FORM: the click count falls as 1 / (1 + z) and the content per click stays the birth's, one factor where nature's flux has two (chapter 5.7) | RULE: a click whose read energy follows the row's frequency in flight ("not one of the six"); in form the massive row's phase turn per Link read as h f at the detector (a key and a reading), which gives q_eff = 0, Milne's, and then row 3's RULE remains | D and A; YES (no click made; the chain's inverse square the shell mean) |
+| 11c Tolman's test | the pin n = 1 in (1 + z)^-n (COMPUTATION); nature 4 | SHOWN IN FORM: the Nodes and the fan's lines fixed under the wall, a ruler of l Nodes at d subtends l / d; the flux one power of 1 + z | RULE: the same as 11a for one power (n = 2 at most), and for the other two an angular size that grows with the redshift, a board whose Links stretch, no verb on the state vector: it fails the vector test and the local test; not reachable inside the six verbs | D and A; YES (the ruler's size the board's Nodes) |
+| 13 light bending | the law as built 0.000 pixel (DETECTOR, series K); under `flow_link` at gamma_PPN = 1 the ring's mean radial shift 0.731 against 0.731 +- 0.025 (DETECTOR); C_ring = 3.652, 3.821, 3.918 at b = 6, 3, 8 (COMPUTATION), the continuum's 4 within 2.4, 1.0, 1.4 grains; nature 1.75 arcseconds, 1 + gamma = 2 | SHOWN: the walk of a light row past a held mass by the law's integer steps, the engine walking it as the algebra does to 0.01; the M / b form; SHOWN IN FORM: 2 c_f (n S_w / d) G M / (c^2 b) in the straight-path limit (chapter 5.9); NOT SHOWN: the 2 of c_f and the value of n S_w / d | DECLARATION: gamma_PPN = 1 (the key `optical`), c_f = 2 with it, and n S_w = d; gamma_PPN = 0 the time part alone, 0.87 arcseconds; gamma_PPN = 1 gives 1.75 in the limit of large b and L, the finite ring's 2.4 grains the lattice's own; the hypothesis that would derive the 2 must add a space part no verb reads: it stays a declaration | A in part; YES in one input (k_a(b) = 0.0445 from the board's age moment, not read by a lamp at b; the ring's click outside) |
+| 14 Newton's periods | T(24) / T(12) = 1.677 under the one constant, 1.512 under the line drive (COMPUTATION from two means of unclosed loops, DETECTOR clicks; the escapes face clicks at 1208 and 2452); the pin 2.00 +- 0.18; nature's inverse square 2^(3/2) in space, not compared | SHOWN: the push (1 + u / c) A / r from the click count, the circle unstable at 0.34 c; Newton's form in the algebra of the clicks with Einstein's step between (chapter 5.6); SHOWN IN FORM: the 1 / r and 1 / r^2 in the shell mean, NOT FROM THE CLICKS until read at two distances; NOT SHOWN: nature's velocity-free gravity, the value of G | READING: the moving detector's arrival click (a massive row released past a held mass, its Node against a control), the deciding pin -4.63 pixels under the arrivals count against -5.47 under the crossing count, the bracket 0.5; and the three readings of records 1098 and 1100 (the count ratio at two distances on one crowd, the second difference of arrival Nodes over ordinals at two distances, the recurrence on the ordinals) with the one word, whether a read at a body is a click (chapter 3.2) | A, B and C; YES, three times (the period on the host's tick, the probe's own record, the contacts) |
+
+### 6.3 Why the rows that passed passed, by the algebra (by reference)
+
+What the three passes and the two bounds share (the file's section 0b,
+one line per row of the paper's Table 2 that is not a FAIL, by
+reference): each reads a count of clicks or a ratio of two counts at a
+declared detector, from a formula that is exact on the law's integers
+(the rungs, the tables, the flight table, the window) with no shell
+mean, no tick and no body's own record in the chain: row 1a's S = 2.75
+at N = 64 from the closed form S(N) of chapter 4.10, one gather of one
+record from both settings; the marginals 32 of 64 at every setting
+(Theorem 5); S at seven grains, the plateau 181 / 64; row 2b's 64 / 0
+from the bilinear form's offers and the rungs; row 9's Malus cells on
+the tables' grain; row 5a's pace from one Link per interval and the
+digital line (a BOUND on Q); row 7a's give once per body (a BOUND on
+the input); GHZ's three-party sign from the same one gather; and the
+four host-tick readings that stand beside them (row 12's 1.907 under
+the age word, the equivalence after a detector in series X, the
+covariant readings in series S, the Doppler on the axis). The FAIL rows
+are the same chain with one thing missing, named in their column: 1b
+and 1c read the same gathers as 1a and lack nothing of the counts (a
+theorem; the counter); 2a reads the same rungs as 2b and 9 at a fan
+whose landings the comparison's limit does not have (F); 3, 4b and 12
+read the same count ratio as series T and X on a tick instead of a
+detector's own count (A), and 3 lacks besides the emitters' rate (C);
+4a and 4b read the same crossing count as the Doppler and lack the
+mover's rate r (C); 5b computes the same round trips as 5a's flight
+table with no detector at all (A) and lacks the contraction (C's
+root); 7b and 8a read the same border and shell clicks as 7a and lack
+a transformation fired by a met row (E); 8b and 8c read the same window
+as the marginals' gather on a row whose content and phase do not turn
+(D); 11a and 11c would read the same count ratio as series T on a flux
+whose energy does not follow the rate (D) over a shell mean (A); 13
+reads the same walk as light beside a mass with the crowd's stretch
+taken from the board (A) and the 2 declared; 14 reads the same lamp
+and line as series D3's controls on the host's tick, with the push at
+a body counted as a click (A, B and C).
+
+### 6.4 The order to take them in (by reference)
+
+The file's section 2 and the Boss's reading of it ([record 1128](LOG_2026-09-20.md)
+(a)): the generic fixes in the clicks that move several rows at once
+first (mode C's one rate, rows 4a and 4b, one decision, no run; mode
+D's turned phase read as a rate, rows 8b and 8c, one declaration and a
+run of seconds; row 13, the owner's word on gamma_PPN = 1; row 14, the
+moving detector's click, a world of minutes to an hour; then 2a, 8a,
+7b, 6, 3 and 11a, 11c, 5b, 1c, 1b), yielding to the owner's orders in
+force on rows 13 and 14; the items that are the owner's own decisions
+(4a and 4b's key, 13's strength, "a read at a body is a click") are put
+to him one line each.
 
 ---
 
-## 7. How the group was reached, from one Node and its six neighbours
+## 7. How the group was reached, from one Node and its six neighbours (one page)
 
-(The third commit.)
+The owner's word of 2026-09-23 ([record 1109](LOG_2026-09-20.md), the
+writer's translation): "they will ask how we got to this group. We
+reached it from the Nodes, a Node and its neighbours, there we started;
+between Nodes, the GameBoard; through the GameBoard we reached this
+group; the GameBoard showed us that everything converges to this group,
+or matrix, whatever you call it." This page gathers the answer; nothing
+here is written anew.
+
+**(i) The one choice, and the seven Nodes.** The one choice of the
+model is the six Ports of a Node, P = {+X, -X, +Y, -Y, +Z, -Z} with the
+opposite involution, the L1 neighbourhood of the cubic lattice: a Node
+and its six neighbours, the seven Nodes of the causal front, one message
+per Link per interval in each direction (chapter 1.1, "the cube"; the
+paper's section 2). Two more choices, and no fourth: the phase circle
+Z_N, N per world, and the translation group of the torus, Z_X x Z_Y x
+Z_Z, each factor a circle or a segment ([FULL_PICTURE.md](FULL_PICTURE.md)
+section 1, "The choices, and what follows from them": "one chooses the
+lattice (the dimension and the neighbourhood), the phase circle and
+the torus; the point group is then forced and is already the largest;
+the translation group is the board; and the only freedom that changes
+the physics is the neighbourhood, through the front, c and the table").
+
+**(ii) What the choice forces: the 48, and the 24 within them.** "What
+is not chosen: the group of 48. The cube's group (the signed
+permutations of the three axes, 3! x 2^3 = 48; the 24 of hand +1 the
+rotations, the 24 of hand -1 the reflections, told apart by the hand as
+a pseudoscalar) is the symmetry of choice 1: every map that preserves
+the six Ports as a set and the lattice's Links is one of the 48, and
+every one of the 48 does. Nothing was added to it; the mass ... lives
+on the amounts, on which the 48 act trivially" (FULL_PICTURE section 1,
+verbatim); every Bravais lattice's point group is a subgroup of the
+full octahedral group O_h of order 48, the crystallographic restriction,
+so a lattice can only keep the 48. Over the integers the only
+bijections that preserve the cone of one Link per interval are these
+48; a boost is not Z-linear, so no boost is among them, and Lorentz's
+form is reached Outside from the clicks (chapter 5.1) and not as a
+symmetry of the lattice. The determinant splits the 48: the 24
+rotations, the group of order 24, isomorphic to S_4 on the cube's four
+body diagonals, and the 24 reflections; the hand, needed to carry spin
+and polarisation (hand-v1, record 128), is the pseudoscalar that tells
+them apart, h -> det(g) h (chapter 1.1 and 1.4; Theorem 1). "24 is the
+count of the rotations of the six-Port Node, the octahedral rotation
+group, 48 with the hand; a boost is not among them" ([HISTORY.md](designs/algebra_transition/HISTORY.md)
+entry 18; the owner's word on the name, record 231: the 24 are the
+octahedron's 24 rotations, not his numeral).
+
+**(iii) The road back, from the operations to the group** (chapter 1.3,
+the chief physicist's six items, by reference): the operations came
+first as acts on the board; the group is the answer to "which maps
+preserve what the operations act on"; the 48 first appeared in the code
+as the collision table's invariance (the test enumerated the 48 maps
+that leave the table as it is) and were then recognised as the symmetry
+of every operation; the 24 came from the hand; the other objects the
+same way (the step and the flight shifts, hence the torus's
+translations; the turn adding modulo N, hence Z_N and Z[Z_N]; the
+collision a permutation generated by a shift, hence a cyclic action; c
+not chosen but the norm of the flight operator, 1 / sqrt 3, from
+locality and straightness); and the group does back to the physics
+what the physics gave it: it forces forms (the only isotropic even
+reading of a body's momentum within the six operations is c **p** .
+**p**, so the square m^2 + 3 **p** . **p** follows). In one sentence: the
+operations did not deduce a group; defined on a Node of six Ports, the
+48 are everything that preserves that Node and its cone, and once every
+rule is required to commute with them they choose the admissible forms,
+the group of order 24 being the part under which the hand is kept as
+well.
+
+**(iv) The twenty-five dated steps of the transition** (HISTORY.md,
+"The entries, in date order", each with what it was as ordinary
+physics, what it became in the law, when and by whose word, where it
+lives, its reading by kind, what it superseded; one line each here):
+1 (09-17) the shared quantum resource deleted, locality without
+exception; 2 (09-17) the amplitude a phase and a conserved content,
+Born's rule a coupling, a declared table of bounded integer ratios; 3
+(09-17) a force a catalog entry read at a meeting, the engine performing
+only simple operations; 4 (09-18) the Born table computed from N, a
+clock content, a Node its six Ports; 5 (09-19) the law of events,
+everything derived from vector operations, a field an event, matter a
+measured event; 6 (09-19) the law of the ray, a quantum an integer row
+on the record, the collision a permutation, the click the only one-way
+border; 7 (09-19) the tables generated from the keys, a detector's one
+reading the moments of order 0, 1, 2, the push one bilinear form; 8
+(09-19) E = h f, a release costing the emitter by its phase rate; 9
+(09-20) one mechanism for all the laws, a force a column with a sign and
+a lifetime, the coupling a signed inner product over the columns; 10
+(09-20) two kinds of readings, "our laws are on the GameBoard; in the
+detector one sees other laws"; 11 (09-20) masses and charges the
+initialisation, the law quantising what lives on a compact group and
+leaving free what lives on a scale; 12 (09-20) the amplitude law, a
+quantum a record, the click choosing one by the wheel, the world the
+list of clicks; 13 (09-20) the record's push by share, the step drive
+and the fraction-free law, every count an accumulator on the reader's
+own record; 14 (09-20/21) Doppler emerging by itself, the key deleted;
+15 (09-20) the fan as a width, Huygens on the lattice, the exact phase
+at the click, the register's pins detector readings only; 16 (09-21)
+the whole law one vector operation on the integer torus, the six verbs,
+the main course, the three tests; 17 (09-21) the click without
+amplitudes, the record an element of Z[Z_N], the weight one bilinear
+form f^T **G** f, Born's rule the unique positive quadratic form, complex
+numbers leaving the code; 18 (09-21) the vector program from group
+theory, the lattice as the translation group, the 48 with the hand, the
+wheel a count on Z_W, c the norm of the flight operator, rows and
+bodies; 19 (09-21) the world through a detector in vectors and tensors,
+a formula gives and a run proves; 20 (09-21) Lorentz A and B, the
+Lorentz factor a root, the seventh verb, not admitted, the covariant
+readings keeping the exact square; 21 (09-21/22) the clock's word the
+age moment, the one wall function of the crowd, Newton and Poisson
+after a detector; 22 (09-22) a detector's clock a member of the age
+wall's set at coefficient 1; 23 (09-22) the click theorem, a click the
+passage of information Node to Node, a click family's transformations
+the Lorentz group up to scale; 24 (09-22) the paper's framing, Inside
+and Outside, "matches nature" never "is nature", whatever can be
+computed algebraically computed algebraically, the conversion as a map;
+25 (09-22) the three formulas, the step beneath the board, the step
+above it and the conversion, a transformation for every formula with
+the detector at the place, locality Outside.
+
+**(v) The owner's sentence, the chapter's close** (record 1109): the
+GameBoard showed that everything converges to this group and this ring,
+and what did not converge was not put in.

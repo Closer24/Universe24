@@ -1,5 +1,7 @@
 # What is missing in every FAIL row, by the algebra alone: a READING, a DECLARATION, a RULE, or NOTHING (the FAIL Rows Algebraist, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 6; this file is kept as the record of 2026-09-22.
+
 The order (the Boss, 2026-09-22, one bounded task): the owner's word of
 about 23:15Z, in Hebrew, the Boss's translation: "So you arrange what is
 missing in Newton, and you can understand what is missing in more of the
