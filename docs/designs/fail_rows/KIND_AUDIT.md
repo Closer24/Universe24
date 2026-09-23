@@ -140,7 +140,49 @@ DETECTOR against the paper's GAMEBOARD tick; 8a's width: record 1166's
 "disagrees" against CRITERIA.md's GAMEBOARD); the Architect folds the
 outcome into the tally block; the writer into Part 7.
 
-## 3. Links
+## 3. Row 2a's fan-grain share (COMPUTATION, no run)
+
+The register's row 2a names its cause as "the fan's grain" (the width-48
+fan, whose smallest angle off the axis is 1.22 degrees, the pixel at L =
+44 Links 1.30 degrees). `row_2a_fan_grain.py` beside this file (its
+output `row_2a_fan_grain.out`) runs the pin machinery of
+`slits_huygens_pin.py` (the same integers as the click's; it reproduced
+the registered run bit for bit, checked again here: wall 882, screen
+1711, faces 1503, the visibility 0.9659) on the registered world with the
+openings' fan alone replaced, and reads the clicks of the records 1 to
+4096 for each fan:
+
+| the fan | directions | the clicks' visibility | the weights' visibility | Pearson |
+| --- | --- | --- | --- | --- |
+| registered: width 48, weighted by angle | 1327 | 0.9659 | 0.9663 | 0.891 |
+| weighted by angle, width 110 | 6907 | 0.9647 | 0.9685 | 0.914 |
+| weighted by angle, width 220 | 27351 | 0.9680 | 0.9693 | 0.920 |
+| selected one per 0.25 deg, width 48, unweighted | 641 | 0.9567 | 0.9519 | 0.859 |
+| selected one per 0.25 deg, width 330, unweighted | 686 | 0.9701 | 0.9650 | 0.917 |
+| selected one per 0.15 deg, width 330, unweighted | 1142 | 0.9654 | 0.9678 | 0.914 |
+
+Every number is a COMPUTATION on the declared world (nature's 0.98 and
+the ideal 1 are the things compared with; the only DETECTOR reading is
+the registered run's, unchanged). What it says: the fans without a hole
+give 0.965 to 0.970, so the fan's grain accounts for at most 0.004 of the
+shortfall 0.034 to the ideal, 12 percent of it, and for at most a third of
+the 0.014 to nature's 0.98; no fan tried reaches 0.98. What it would
+change: the row's cause line ("the cause named: the fan's grain") is not
+supported beyond 12 percent of the shortfall and should name the grain as
+a minor share; the Pearson with the two-source cosine rises with the
+finer fans (0.891 to 0.920), so the correlation pin 0.96 that the row
+records as missed is closer but not met. What it would not change: the
+verdict, FAIL against 0.98, under every fan tried. What it points at: the
+first record's exact weights already carry the floor (the weights'
+visibility 0.966 equals the clicks' 0.966 on the registered fan), so the
+residual weight at the cosine's dark pixels is in the record's phases at
+the click, not in the ladder's rounding or the fan; the next cause to
+test by the same script, before any run, is the phase grain N = 64 and
+the pixel's width against the path differences at the dark pixels (the
+world at N = 128 or the screen farther, each a declared world validated
+at load). Not started; the Boss's to order or drop.
+
+## 4. Links
 
 - [NATURE.md](../../NATURE.md): the rows as written; its tally.
 - [CRITERIA.md](../paper_criteria/CRITERIA.md): per row "what is measured
