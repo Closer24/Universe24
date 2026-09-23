@@ -193,7 +193,9 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    x = 1300.
 2. The declared integers (kind 2): the pairs above; s = 12; G, g, W; A's
    momentum [Q S M, 0, 0] with the sign toward -x (k = 3: beta_c = 1 /
-   sqrt 3, gamma_m = sqrt(3 / 2)); `ramp` 1500; the hold 8000 (a pin
+   sqrt 3; gamma_m the massive kind's own at c_m = c sqrt(cos omega_0),
+   1.22820, MASSIVE_RECORD.md section 8; light's gamma(c) = sqrt(3 / 2) a
+   CONTROL beside); `ramp` 1500; the hold 8000 (a pin
    world); 9500 intervals; the seeds; the block's content M = 1.
 3. The verbs: the massive rule (G, D by 3 den g_d with the coupling folded
    in the one division, T; section 7 (A)); the coupling's same-Node first
@@ -204,10 +206,11 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
 4. The pin (COMPUTATION, MASSIVE_RECORD.md sections 8 and 9 row 4b): the
    frequency B reads from A receding at beta_c, over the frequency B reads
    from A at rest (the control world), is 1 / (1 + z) with 1 + z = gamma_m
-   (1 + beta_c) = 1.932 at k = 3 (the character's frequency gamma_m
+   (1 + beta_c) = 1.9373 at k = 3 with gamma_m at c_m (1.9319 with
+   gamma(c), the CONTROL beside; the character's frequency gamma_m
    omega_0 shifted by the medium's Doppler; the band the peak's grain over
    the hold, 0.3 percent, plus the second term eps (gamma_m^2 - 1) / 2 of
-   A's own clock at its eps); the falsifier a ratio off 1 / 1.932 beyond
+   A's own clock at its eps); the falsifier a ratio off 1 / 1.9373 beyond
    the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
    1938; Botermann 2014 at beta = 0.338, in vacuum), matched in form at
    the world's beta_c.
