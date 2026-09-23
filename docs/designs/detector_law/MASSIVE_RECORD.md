@@ -27,6 +27,10 @@ never the reverse.
   outside holding many cells inside it, on the board, by locality; the
   cells produce its frequency at rest; there a real clock can be defined;
   its click in the Outside is read across its cells.
+- (13:05Z, to the chief physicist) On the choice the first draft of section 8
+  put to him: "there is something we do need to take from the algebra, and
+  it derives itself, and I do not need to decide." Sections 4, 7, 8 and 9
+  below are re-formed on it: the motion is derived, not decided.
 - (12:35Z, to the chief physicist) "Derive everything algebraically, then
   implement in the engine to check; a foreign object is a kind of group
   object like the rest": DESIGN.md's placement (section 1 here).
@@ -117,20 +121,20 @@ by the mass term: the checkerboard oscillates at the band's top, no secular
 growth). The norm the rungs divide is E_m; the Port's factor of 2.1 applies
 with the mass term's share named.
 
-## 4. The foreign object as a block: the shape a declaration, the rest clock a computation
+## 4. The foreign object as a block: the shape's symmetry a declaration, its extent and clock a derivation
 
-The object is a block of side s (a square of s x s cells on a layer; a cube
-of s^3 on the board), every cell carrying the same self pair `[p, q]`; the
-shape is a declaration (kind 1), as the owner said. What confines the
-record to the block is the one thing the algebra must name, and there are
-three forms, each with its consequence:
+The object is a block of side s (a square on a layer, a cube on the board),
+every cell carrying the same self pair `[p, q]`. What confines the record to
+the block is the one thing the algebra must supply, and the owner's word of
+13:05Z fixes how: nothing about the block's extent is DECLARED IN MOTION; the
+extent is what a BOUND STATE gives, so that the block's boost is the boost of
+a solution (section 8). Three forms, with their standing:
 
-- **(I) The block's faces as mirrors for its own record**: outside the
-  block the object's record is held at 0 (the mirror form of DESIGN.md
-  section 5, declared on the block's faces for its own record). Then the
-  block is a cavity, and its modes are the standing waves of a box of s
-  cells with Dirichlet faces, k_i = pi / (s + 1) per axis; the lowest
-  mode's frequency from section 2's surface:
+- **(I) The block's faces as mirrors for its own record** (a declared
+  cavity): outside the block the object's record is held at 0. The modes
+  are the standing waves of a box of s cells with Dirichlet faces, k_i =
+  pi / (s + 1) per axis; the lowest mode's frequency from section 2's
+  surface:
 
   | s | a square on a layer: omega, N | a cube: omega, N | the continuum c pi sqrt(dim) / (s + 1) |
   | --- | --- | --- | --- |
@@ -141,32 +145,36 @@ three forms, each with its consequence:
 
   with the self pair added, the rest frequency is the quadrature to the
   lattice's residual (s = 12 on a layer with [1, 16]: 0.3195 exact against
-  sqrt(0.2507^2 + 0.1972^2) = 0.3189). So a block of side s has a real
-  rest clock even at p = 0 (a confined massless record has a lowest mode,
-  as a photon in a box), and the pair raises it. The owner's "N derives how
-  many cells": N_rest(s, p, q) ties the three; declare the pair and s, the
-  frequency follows; or declare N and the pair, s follows. This is the form
-  the design carries.
-- **(II) The free massive packet**, no faces: a packet of width s of the
-  massive record at **k** = 0 is an exact solution of the covariant
-  equation in the continuum, and it SPREADS: the dispersion of a packet of
-  width sigma = s / 2 has the time tau = 2 sigma^2 omega_0 / c^2 = 6 sigma^2
-  omega_0: 54 intervals (2 rest periods) at s = 12 and [1, 16]; 227 at s = 12
-  and [1, 1]; 907 at s = 24 and [1, 1]; 15750 at s = 100 and [1, 1]. A free
-  packet at the sizes of the register's worlds is not an object; the form
-  is named and not carried.
-- **(III) The well of the pair**: a lower pair inside than outside (the
-  massive record everywhere, the block the region where its pair is
-  smaller). The bound mode exists in one dimension always and on the board
-  above a threshold (Reviewer 3's section 10, the closed form and the
-  threshold, cited when it lands); its frequency lies between the inner
-  and the outer gaps; its extent is a computation from the depth and s.
-  Lawful, one declared pair more (the outside's); the design carries (I)
-  as the simpler one and names (III) as the second lawful form.
+  sqrt(0.2507^2 + 0.1972^2) = 0.3189). This form is the ILLUSTRATION of a
+  confined record's rest clock (a confined massless record has one too, as
+  a photon in a box; the pair raises it): it is NOT the object's
+  definition, because a declared wall carried in motion is not covariant
+  (section 8).
+- **(II) The free massive packet**, no wall: covariant, and it SPREADS
+  (the packet's time tau = 2 sigma^2 omega_0 / c^2 = 6 sigma^2 omega_0: 54
+  intervals at s = 12 and [1, 16]; 227 at s = 12 and [1, 1]; 907 at s = 24
+  and [1, 1]; 15750 at s = 100 and [1, 1]); not an object at the register's
+  sizes. Named, not carried.
+- **(III) The bound state of the coupled records, CARRIED**: the massive
+  record and light coupled MUTUALLY in the one-wall form the law already
+  has (section 7): each record's pace at a cell is lowered where the other
+  record's amount is high. A region where the massive record sits slows
+  light there, which gathers there, which slows the massive record there,
+  which stays: a self-consistent bound state of the two records on the
+  board, its existence above a threshold in the coupling, its rest
+  frequency and extent a COMPUTATION from the pair and the one coupling
+  kappa (the self-consistent eigenproblem of the two interval maps on the
+  board; Reviewer 3's section 10 and the Algebra Mathematician's chapter,
+  cited when they land). Its shape on a cubic lattice has the cube's
+  symmetry (the 48), so the owner's square block is its shape by the
+  algebra; s is read from the bound state, not declared. Nothing rigid is
+  declared: the block IS this solution, and its boost is section 8's.
 
-Under (I) and (III) alike, what holds the cells of one object together is
-the DECLARATION of the region (the faces, or the pair's region), not a
-derivation; the design says so, as the owner's "the shape a declaration".
+The owner's "N derives how many cells" holds in (III) as a derivation:
+N_rest(p, q, kappa) and s(p, q, kappa) come together from the bound state.
+Form (I)'s table remains the check of the rest clock of a confined record
+at a given s, a COMPUTATION the board must reproduce when a wall is
+declared for a rest world; it is never carried into motion.
 
 ## 5. The block's momentum, step and push
 
@@ -197,75 +205,85 @@ the declared wheel W; the click line with the block's own count (its own
 mode's cycles, section 4) and the record's birth stamp. The evaluation E
 of the block's element of Z[Z_N] and the norm, as every record's click.
 
-## 7. The one coupling to light
+## 7. The one coupling, in the law's own one-wall form, both ways
 
-What light sees at the block's cells is the index pair of DESIGN.md 5.1 (b)
-declared as the massive record's PRESENCE: at a cell of the block, light's
-six-neighbour term carries q_light = [num, den] with den / num = 1 + kappa
-E_m(cell) / E_ref, kappa the one declared coupling, E_m the block's own
-record's energy density at the cell (section 3), E_ref a declared unit; at
-the block's rest mode E_m is stationary and the index is a constant of the
-block (the reactive relay of 5.1 (b), which scatters, reflects the Fresnel
-step and can bind through light). Generic (one pair, one declared kappa);
-vector (the rate of light's row bilinear in the state: the block's E_m
-times light's row, allowed as "at most bilinear"); local (the cell's own
-two records). This is also MUST E's definition of A under the rule (6.7
-form (b)): a crowd is its massive records on the Nodes around it, and
-their E_m sets light's pace there, rows 12 and 13's mechanism; the
-function, the pair from E_m, is this declaration.
+The coupling between the two record kinds is the ONE-WALL FORM the law
+already has (DESIGN.md 4.1, MUST E): at a cell, a record's six-neighbour
+term carries the pair [d^2, (d + f n A)^2] with A the OTHER record's amount
+at the cell (the integer magnitude of its row, a scalar of that record)
+and f n the one declared coupling kappa; the compensated form of 5.1 (b).
+Both ways: light's pace at a cell is lowered by the massive record's amount
+there (what light sees: the index of a block, the reactive relay that
+scatters, reflects the Fresnel step and binds two blocks through light,
+DESIGN.md 5.1 (b); rows 12 and 13's mechanism, the crowd's A being its
+massive records' amounts, MUST E's definition of A under the rule), and the
+massive record's pace at a cell is lowered by light's amount there (what
+binds the block, section 4 (III)). The three tests: generic (one pair form,
+one declared kappa, no family name; the same form for every record kind);
+vector (verb T, the rate of a record's row at most bilinear in the state:
+a linear function of the other record's amount times the row; then D);
+local (the cell's own two records). The coupling reads an amount (a scalar
+of the other record), not its energy density, and that is what keeps the
+coupled rules covariant in the continuum (the amount of a scalar record
+transforms as a scalar); a coupling through E_m, the first draft's, would
+not, and is withdrawn.
 
-## 8. The motion: what the algebra gives, said plainly (COMPUTATION)
+## 8. The motion: derived, not decided (COMPUTATION)
 
-- The free massive record's characters follow the continuum surface to
-  0.1 percent at k <= 0.3 per Link ([1, 16]: omega 0.2523, 0.2573, 0.2762,
-  0.3050 at k = 0.05, 0.1, 0.2, 0.3 against 0.2523, 0.2572, 0.2760, 0.3047;
-  the group pace 0.067, 0.131, 0.243, 0.328 Links per interval): the boost
-  of a free rest packet IS the moving packet, its frequency omega_0
-  gamma_m, its internal phase advancing at omega_0 / gamma_m per interval
-  along its path, its width s / gamma_m: Lorentz REACHED as a relation on
-  the characters, not added to the 48. But a free packet spreads (section
-  4 (II)).
-- A block confined by its declared faces (I) or its declared pair region
-  (III) that steps RIGIDLY (its shape carried unchanged, section 5) is a
-  moving cavity: its standing-wave cycle in the lattice's intervals is
-  2 L c / (c^2 - beta^2) = gamma_m^2 x 2 L / c along the motion and 2 L /
-  sqrt(c^2 - beta^2) = gamma_m x 2 L / c across (gamma_m^2 = 1.500, 1.231,
-  1.091 at k = 3, 4, 6): the MEDIUM's row (DESIGN.md 8b (iii)), not
-  Lorentz; five's ratios 1.50 and 1.22 at k = 3; the lab's dilation
-  gamma_m^2 along. This is a theorem of the linear rule with a declared
-  rigid shape, and it is what the board will read if the shape is carried
-  rigidly.
-- Lorentz for a CONFINED object therefore needs one of two things, neither
-  in the design as it stands, both named for the owner's word: (a) the
-  shape's declaration in motion is the contracted one, s / gamma_m along
-  (the region or the faces boosted with the block: `lorentz-shape-v1`, a
-  hypothesis under its own identity; with it the moving cavity's cycle is
-  gamma_m x 2 L / c along and across, the object's own count N_0 in both
-  arms, five 1 and 1, the lab's dilation gamma_m, rows 4a, 4b, 5b PASS by
-  the covariance of the field equation with a transformed confinement); or
-  (b) the confinement made of the record itself (the pair at a cell a
-  function of the record's own E_m there, a cubic rate, a soliton), which
-  is a seventh verb (the rate is not bilinear) and enters only if the
-  owner admits the verb. The algebra does not choose between them; it says
-  that the declared rigid block gives the medium's clock and that Lorentz
-  costs one declaration or one verb. Nothing is run to find out what the
-  algebra already says.
+- **The characters follow the covariant surface.** The free massive
+  record's characters lie on section 2's surface to 0.1 percent at k <=
+  0.3 per Link ([1, 16]: omega 0.2523, 0.2573, 0.2762, 0.3050 at k = 0.05,
+  0.1, 0.2, 0.3 against the continuum 0.2523, 0.2572, 0.2760, 0.3047; the
+  group pace 0.067, 0.131, 0.243, 0.328 Links per interval). The boost of
+  a rest state at omega_0 to the pace v is the character with the carrier
+  k = gamma_m omega_0 v / c^2: on the lattice its frequency is 0.3070,
+  0.2782, 0.2618 at k = 3, 4, 6 against gamma_m omega_0 = 0.3062, 0.2774,
+  0.2611 (+0.3 percent), and its internal phase advances by omega - k v =
+  0.2049, 0.2261, 0.2401 per interval against omega_0 / gamma_m = 0.2041,
+  0.2253, 0.2394: THE CLOCK SLOWS BY 1 / gamma_m AND THE PACKET CONTRACTS BY
+  1 / gamma_m, on the lattice's own surface, to the residual. Lorentz is
+  reached as a relation on the characters (the dictionary's line: no boost
+  among the 48), and nothing is declared for it.
+- **Every rule of the design is covariant in the continuum**: the massless
+  rule, the massive rule with its self pair, and the coupling of section 7
+  through the other record's amount (a scalar). Therefore the boost of any
+  rest SOLUTION is a solution: the bound state of section 4 (III) at rest,
+  boosted, is the contracted and slowed bound state; its own count per
+  cycle unchanged; its cycle in the lattice's intervals gamma_m N_0; its
+  extent along the motion s / gamma_m. That is the derivation the owner's
+  word of 13:05Z names: it derives itself, and no one decides it.
+- **The theorem on declared rigid shapes, kept for what it says**: a block
+  whose extent is DECLARED and carried unchanged in motion (a rigid cavity
+  of form (I), or a rigid pair region) is not a boosted solution, and the
+  linear rule gives it the MEDIUM's clock, 2 L c / (c^2 - beta^2) = gamma_m^2
+  x 2 L / c along and gamma_m x 2 L / c across (1.500 and 1.225 at k = 3):
+  DESIGN.md 8b (iii)'s row. This is why the design declares no extent in
+  motion; the first draft's "choice" between a declared contraction
+  (`lorentz-shape-v1`) and a cubic self term (a seventh verb) is WITHDRAWN:
+  the contraction is what the covariant bound state does, and the coupling
+  of section 7 is bilinear, so no verb is added.
+- **What remains a derivation to complete** (the one open item): the bound
+  state's existence, threshold, rest frequency and extent on the board
+  from the pair and kappa (section 4 (III)); Reviewer 3's section 10 and
+  the Algebra Mathematician's chapter. Until it is written, the board runs
+  nothing of the motion; when it is, the board checks it.
 
 ## 9. The light clock on two blocks: the pins as consequences
 
-Two blocks of side s, pair [p, q], at L Links (face to face) on a layer; a
-light record inserted by block A at its own mode's frequency (the block's
-clock, section 4) and received by B and back (the light record massless,
-DESIGN.md unchanged):
+Two bound blocks (section 4 (III)) at L Links face to face on a layer; a
+light record inserted by block A at its own mode's frequency and received
+by B and back (the light record massless, DESIGN.md unchanged):
 
 | Row | The consequence of the algebra (COMPUTATION, before any board run) | The band |
 | --- | --- | --- |
-| (d) at rest | N_0 = 2 L / c less the precursor's lead (207.85 - about 1 at L = 60, at the hard onset and the declared W), in the lattice's intervals; in the block's own count N_0 / N_rest(s, p, q) | the rung's grain and the lattice's residual |
-| (e), (f) rigid blocks | N_par / N_0 = gamma_m^2 (1.500 at k = 3), N_perp / N_0 = gamma_m (1.225): five FAIL, 5b FAIL, 4a FAIL, by the theorem of section 8; the block's own count the same ratios | the residual |
-| (e), (f) under `lorentz-shape-v1` | N_par / N_0 = N_perp / N_0 = gamma_m in the lattice's intervals, 1 and 1 in the block's own count: five PASS, 5b PASS, 4a PASS (the block's count slow by gamma_m), 4b PASS (gamma (1 + beta)) | the residual |
-| (g) the block at rest | its self-click its own mode, N_rest(s, p, q) exactly, no return and no timer; the clock sentence of DESIGN.md section 8 not needed for it (it remains the declaration of the one-Node objects of the pilot's worlds on the massless rule) | exact |
+| (d) at rest | N_0 = 2 L / c less the precursor's lead (207.85 - about 1 at L = 60, at the hard onset and the declared W), in the lattice's intervals; in the block's own count N_0 / N_rest(p, q, kappa) | the rung's grain and the lattice's residual |
+| (e), (f) in motion at k = 3 | the bound blocks boosted: L_along = L_0 / gamma_m, L_across = L_0; the cycle gamma_m N_0 in the lattice's intervals along AND across; the blocks' own count per cycle N_0 / N_rest in both arms: N_par / N_perp = 1, five 1 and 1, 5b PASS | the residual, about 0.3 percent at k = 3 |
+| 4a | the block's own clock slow by 1 / gamma_m in the lattice's intervals (its internal phase's advance omega_0 / gamma_m): the muon's row PASS in form, the number gamma_m at the world's beta | the residual |
+| 4b | the boosted block's emission read by a block at rest: 1 + z = gamma_m (1 + beta_c) receding (the character's frequency gamma_m omega_0 shifted by the Doppler of the medium) | the residual |
+| (g) the block at rest | its self-click its own mode, N_rest(p, q, kappa), no return and no timer; the clock sentence of DESIGN.md section 8 not needed for it (it remains the declaration of the one-Node objects of the pilot's worlds on the massless rule) | exact to the residual |
+| a declared rigid block (a rest world with form (I)'s walls, moved) | gamma_m^2 and gamma_m: the theorem of section 8, a check the board makes on a declared rigid world, never a pin of the object | the residual |
 | (h), 10, 2a, 2b, 9 | unchanged: light is massless and its pins are DESIGN.md's | as declared |
-| 12, 13 | the coefficient at a crowd from E_m by section 7's coupling; 2.00 and 1 + gamma_PPN as the consequence to compute from the coupling, not to find | the residual |
+| 12, 13 | the coefficient at a crowd from its massive records' amounts by section 7's coupling; 2.00 and 1 + gamma_PPN the consequence to compute from the coupling, not to find | the residual |
 
 No pin is found by a run; the board's run checks these numbers.
 
@@ -281,15 +299,19 @@ board's two-block world reads it.
 ## 11. What the engine implements, and in what order
 
 1. The rule with the pair per record (one added rate; light `[0, 1]`).
-2. The block: a declared square or cube of side s with its pair, its faces
-   the mirror for its own record (I), one declared receiver form for
-   light, one momentum integer per axis with its remainder, the rigid step.
-3. The coupling of section 7 (one kappa), the click of section 6.
-4. The worlds: one block at rest (its own mode's frequency against section
-   4's table, bit for bit to the residual); the two-block light clock at
-   rest (row (d)); in motion at k = 3 (the theorem of section 8: gamma_m^2
-   and gamma_m, the board checking the algebra); then, only on the owner's
-   word, `lorentz-shape-v1` or the verb.
+2. The coupling of section 7 (one kappa, the one-wall form both ways); the
+   block as the bound state of section 4 (III): its cells where its record
+   is, one momentum integer per axis with its remainder, the step of the
+   whole solution by verb T; one declared receiver form for light at its
+   cells; the click of section 6.
+3. A rest world with form (I)'s declared walls, for the check of the
+   confined record's rest clock against section 4's table only.
+4. The worlds: the bound block at rest (its frequency and extent against
+   the derivation); the boosted bound block at k = 3 (its frequency
+   gamma_m omega_0 and its extent s / gamma_m against section 8); the
+   two-block light clock at rest (row (d)) and in motion (rows (e), (f):
+   1 and 1); the declared rigid world moved, as the check of section 8's
+   theorem; nothing found, everything checked.
 5. The key `massive-record-v1` OFF by default; the build only on Reviewer
    3's gate of this design and its section 10, the independent
    mathematician's check the Boss opens, and the owner's second word; the
@@ -301,17 +323,17 @@ board's two-block world reads it.
 | Sentence | Generic | Vector | Local |
 | --- | --- | --- | --- |
 | the rule with the self pair (1) | PASS | PASS (T, D) | PASS |
-| the block's shape (4) | a declaration, kind 1 | a declaration | the block's cells |
-| the faces as the own record's mirror (4 (I)) | PASS (the mirror form) | PASS | PASS |
+| the block as the bound state (4 (III)) | PASS (a solution of the coupled rules, no declaration) | PASS (T, D on each record) | PASS |
+| the faces as the own record's mirror (4 (I), a rest-world check only) | PASS (the mirror form) | PASS | PASS |
 | the block's momentum and step (5) | PASS | PASS (G, D, T) | PASS (the block's own Ports) |
 | the click across the cells (6) | PASS | PASS (E) | PASS (the block's pointer) |
-| the coupling to light (7) | PASS (one kappa) | PASS (bilinear) | PASS |
-| `lorentz-shape-v1` (8 (a)) | a hypothesis under its own identity | a declaration | the block's cells |
-| the soliton (8 (b)) | a seventh verb: not in the law | FAIL as written (cubic) | PASS |
+| the coupling, both ways (7) | PASS (one kappa, the one-wall form) | PASS (bilinear through the amount) | PASS |
+| the motion (8) | a derivation, no sentence added | none needed | none needed |
 
-Not computed here, and said so: the bound mode's threshold on the board
-for form (III) (Reviewer 3's section 10); the block's mode with the mass
-term at general s and [p, q] beyond the quadrature (the exact eigenvalue
-of the map on R, seconds on the host, to be printed by the algebra script
-before the build, never after); the coupling's kappa against any nature
-row (rows 12 and 13 need the crowd's E_m, a world to declare).
+Not computed here, and said so: the bound state's existence, threshold,
+rest frequency and extent on the board from the pair and kappa (section 4
+(III); Reviewer 3's section 10 and the Algebra Mathematician's chapter, an
+algebra script to print them before the build, never after); form (I)'s
+exact eigenvalue at general s and pair beyond the quadrature; kappa
+against any nature row (rows 12 and 13 need the crowd's amounts, a world
+to declare).
