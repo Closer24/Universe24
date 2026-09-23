@@ -483,6 +483,24 @@ number 1.45) is inside the band with either wall. The
 pixel-to-pixel roughness near the peak 0.02 to 0.001: a bell, no speckle
 (the coin's 0.8 to 1.0).
 
+**THE PINS AS DECLARED, on the owner's word of 10:05Z** ("declare the pin
+again, because we are now in the right place"; his word to the chief
+physicist directly, reported to the Boss at 10:10Z): (a) the single
+opening two wavelengths wide (the Fresnel number 0.16): w x FWHM /
+lambda = **0.842 +- 0.03**, the wave's own exact sum through an opening
+in a wall of amplitude 0 (Rayleigh-Sommerfeld's obliquity), in place of
+the sinc constant; the rule reads 0.872, 0.856, 0.842 at 12, 16, 24
+Links with the reflecting wall, INSIDE at all three, and 0.857, 0.830,
+0.814 with the lossy body (inside at 12 and 16); the falsifier a reading
+outside 0.812 .. 0.872 at the engine's wall. (b) The near-field opening
+(the Fresnel number 1.45): **0.92 +- 0.03**, kept; the rule 0.946,
+0.930, 0.920, inside. (c) A new sinc pin in a world where Fraunhofer's
+approximation applies, an opening of about eight wavelengths: **0.886 +-
+0.03**, the far field's constant, where the rule must read it; not yet
+computed by the script (the next computation of 6.1). Nothing in the
+register's old pins moves; these are the new law's pins, before its
+first engine reading.
+
 6.2 **The two slits** (row 2a; the registered 0.966 in the clicks at
 the fan's grain; nature's 0.98, Grangier, Roger and Aspect 1986 as the
 lower bound; the ideal 1): the visibility over the two-source cosine's
@@ -659,13 +677,14 @@ against RUN_AUDIT.md. The owner reads sections 0, 1, 5 and 8 first.
    clock, E = h f = p c by the rule's own dispersion), the script's
    residue.
 4. The pins, computed: the single opening at the Fresnel number 1.45
-   inside 22.2's band at 12, 16 and 24 Links; at 0.16 (w = 2 lambda) the
+   inside its band at 12, 16 and 24 Links; at 0.16 (w = 2 lambda) the
    rule reads the wave's obliquity, 0.842 with a reflecting wall and
-   0.814 to 0.857 with a lossy one, below 22.2's sinc band: a MISS as the
-   pin stands, or a pin to re-declare against a measurement or the
-   wave's own sum, the owner's call; the two slits at 0.958 by the
-   train's coherence, 0.98 reachable by the train; the detector at rest
-   206.0 by the first-rung click at every wavelength, the pin's number;
+   0.814 to 0.857 with a lossy one, inside the pin as the owner
+   re-declared it at 10:05Z (0.842 +- 0.03, the wave's own sum; the sinc
+   constant a new pin at eight wavelengths, not yet computed); the two
+   slits at 0.958 by the train's coherence, 0.98 reachable by the train;
+   the detector at rest 206.0 by the first-rung click at every
+   wavelength, the pin's number;
    the moving detector along its motion 303 at 24 Links against the pin
    307 +- 10, the lattice read as a medium, row 4a's FAIL unchanged.
 5. The price: the wavelength 12 Links or more, the light worlds scaled
