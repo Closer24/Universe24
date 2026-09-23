@@ -1058,3 +1058,204 @@ percent), then one object emitting light from its mode (11.7 (a)) and
 its light's frequency read at rest and at k = 3 against omega_b and
 omega_b / gamma_m, then the pair. Each a COMPUTATION; the owner's
 second word before any of it enters the design's world files.
+
+## 12. The foreign object in the algebra's own terms, and the square block: the one law, claim by claim
+
+Written on the model owner's words of 12:28Z and 12:35Z (records 1385
+and 1386: one big generic law, physical, algebraic and vector, that
+solves the foreign object completely, so that a SQUARE block of cells
+can be placed, three by three or twelve by twelve; and "we do not
+create the laws of physics anew, we derive everything algebraically
+and then implement in the engine to test; check whether a foreign
+object is a kind of group, or something of that kind, like the rest";
+the Boss's orders of 12:32Z and 12:40Z). Every claim below is numbered
+for a line-by-line comparison with the Algebra Mathematician's
+independent derivation from [docs/ALGEBRA.md](../../ALGEBRA.md) alone;
+each names its kind and the formula of ALGEBRA.md it rests on; where a
+step needs something the algebra does not have it is named as a
+DECLARATION and not filled. The scratch scripts are `check_block.py`
+(the chain operator's lowest eigenvector and eigenvalue for a block of
+width s) and `check_block_motion2.py` (the block pushed to k = 3, its
+clock read by the spectral peak at its centre), seconds each.
+
+**12.1 The object's place in the structure (ALGEBRA.md chapter 1).**
+
+- C1 (DECLARATION of the design, the Boss's answer confirmed): the
+  foreign object is not a fifth group object. The four are the cube P
+  with G_48, the phase circle Z_N with its ring Z[Z_N], the translation
+  group of the torus, and the collision's Z_m (1.1); the object adds
+  none. Its self pair [p, q] is a scalar content of a Node, like the
+  content M and like the index pair of DESIGN.md 4.1, on which G_48
+  acts trivially (1.1: "trivially on every scalar"); its place is one
+  row of the dictionary 1.2, "the rest mass of a massive record: the
+  self pair [p, q] on its own present record", beside the row "mass: a
+  body's content M", never a new object.
+- C2 (COMPUTATION): the wave rule of DESIGN.md section 2 is the
+  central formula of ALGEBRA.md chapter 2 with the rate a bilinear form:
+  the accumulator is the remainder r, its rate S_6 - 3 a_before, its
+  wall 3, the whole part the new record a_next, the remainder kept; in
+  the six verbs, (B) the rate (a declared matrix over the neighbourhood's
+  records: +1 on each of the six neighbours' present records, -3 on the
+  own record before), (T) the translation of the accumulator by it, (D)
+  the division by the wall with the remainder kept. The self term of
+  11.1 is ONE MORE ENTRY of (B)'s declared matrix, the diagonal entry
+  -3 p on the own present record, with the wall scaled to 3 q; no verb
+  is added, none of the six is altered, and the term is inside the same
+  (B), (T), (D) as the rule's own. In the six-operation inventory of
+  2.9 the massive record's line is "the hop: B, T, D" with one more
+  matrix entry.
+- C3 (COMPUTATION): the rule with the self term commutes with G_48
+  exactly as the rule without it: the six neighbours enter with equal
+  coefficients (a G_48-invariant form on the cube), and the self term
+  acts on the Node's own record, a scalar under the 48 (1.1). The test
+  "generic" of 2.8 (commuting with the 48, made of the six operations,
+  reading the neighbourhood alone) holds; "vector" holds (the rate is
+  linear in the state, below bilinear; no root, no float, no rounding
+  at run time beyond the declared wall); "local" holds (the own record
+  and the six neighbours; fixed work and storage per Node).
+- C4 (DECLARATION): the block's shape is world data, as a wall's
+  placement is: a cube of cells is G_48-invariant about its centre, a
+  square on a one-layer world is invariant under the layer's D_4 and
+  not under the 48, lawfully so (the world breaks the symmetry, the
+  rule does not; the rule never asks the shape).
+
+**12.2 What follows by algebra alone (ALGEBRA.md chapters 2 and 5).**
+
+- C5 (COMPUTATION, the energy): ALGEBRA.md's E is a bilinear form
+  (2.2) of the state; the massive record's is the same form with one
+  more diagonal block, E_m = E + 3 (p / q) (sum over Nodes of a_now
+  a_before) - 3 g (sum over the block's cells of a_now a_before),
+  conserved by the leapfrog's product identity (11.3, written out) and
+  bounded below for p / q < 8 / 3, so every record stays bounded by its
+  energy at birth; the remainder's drift is the wave rule's. In
+  integers the form's entries are 3 p and 3 (p - p') over q.
+- C6 (COMPUTATION, the block's lowest mode at rest): on the chain the
+  one-interval operator is the symmetric tridiagonal H with H_jj = p / q
+  - g_j + 2 / 3 and H_j,j+1 = -1 / 3, and a mode is H a = 4 sin^2(omega
+  / 2) a; the lowest eigenvalue lam of H with g_j = g on the block's s
+  cells and 0 elsewhere gives omega_b = 2 arcsin(sqrt(lam) / 2), bound
+  iff lam < p / q, its extent the eigenvector's 1 / e width. On the
+  continuum pace the same is the even solution of the finite well
+  (c^2 = 1 / 3): inside k_in^2 = (omega^2 - mu^2 + g) / c^2, outside
+  kappa^2 = (mu^2 - omega^2) / c^2, matched by
+
+      k_in tan(k_in s / 2) = kappa,
+
+  the lowest root the mode; for s -> 1 it is 11.2's one-Node well
+  (sinh kappa = 3 g / 2), for s -> large it is the cavity's omega^2 ->
+  mu^2 - g + c^2 pi^2 / s^2. So "the frequency computed from the pair
+  and the size" is right, this is its formula, and the lattice and the
+  continuum agree to 0.1 percent at every width tried (mu = 0.05):
+
+  | g | s | the period N_b (lattice; continuum) | bound | the extent, Links | the binding depth eps |
+  | --- | --- | --- | --- | --- | --- |
+  | 0.5 mu^2 | 1 / 3 / 12 / 48 | 125.7 / 125.9 / 129.4 / 151.3 (the same) | yes | 1049 / 359 / 102 / 70 | 0.000 / 0.004 / 0.057 / 0.310 |
+  | mu^2 | 1 / 3 / 12 / 24 / 48 / 96 | 125.8 / 126.7 / 140.6 / 172.8 / 250.2 / 413.9 (the same) | yes | 533 / 181 / 58 / 46 / 56 / 90 | 0.002 / 0.017 / 0.201 / 0.471 / 0.748 / 0.908 |
+  | 4 mu^2 | 1 / 3 / 6 / 12 | 127.6 / 145.1 / 286.8 / grows | yes / yes / yes / NO | 133 / 47 / 28 / - | 0.030 / 0.250 / 0.808 / - |
+
+  On the chain every block binds at every g > 0 (one dimension); the
+  mode grows (lam < 0, unlawful) once the block is wide and its self
+  term reversed (g = 4 mu^2 at s >= 12). Two regimes, by the block's
+  width against the one-Node extent 2 / (3 g): the WELL regime (s much
+  smaller: the mode extends far beyond the block, its frequency near
+  the gap's, eps small) and the CAVITY regime (s comparable or larger:
+  the mode sits inside the block, its frequency the block's own
+  standing wave). The rest period is above the gap's period 2 pi / mu
+  in both, so above the floors N >= 21 and N >= 6 for mu <= 0.3
+  (DESIGN.md 1.2).
+- C7 (COMPUTATION, the board): for a one-Node well the three-dimensional
+  threshold is g_c = 1 / ((3 / 2) W_3) = 1.319 (11.6); for a block it
+  falls with the side as the spherical well's g R^2 >= pi^2 c^2 / 4 =
+  0.822 with R the block's half-side: a 3 x 3 x 3 block needs g >= 0.37,
+  a 12 x 12 x 12 block g >= 0.023, a 36-side block g >= 0.0025 = mu^2
+  (the inside massless); so a wide enough block binds at any g, as the
+  Boss expects, and a small block only with its self term reversed and
+  then inside a narrow window (11.6). The cube's exact threshold
+  against the sphere's is not computed (a scratch board of 60^3 Nodes,
+  minutes).
+- C8 (COMPUTATION, the Lorentz member; ALGEBRA.md 1.2's Lorentz row and
+  2.7): no boost is among the 48 and no root is in the rule; the
+  factor 1 / gamma_m is not a verb, it is a reached number, a ratio of
+  two readings of the same record (the mode's period at rest and in
+  motion), exactly the kind of relation 1.2 says Lorentz's forms are
+  ("reached Outside as relations among counts between clicks, the
+  algebra first and the comparison after"). Its derivation is 11.4 on
+  the continuum pace of the operator (the map's ds / dt = r(s) limit of
+  ALGEBRA.md section 0): the KG operator is boost-invariant, a moving
+  well of strength g is a resting well of strength gamma_m g, the
+  mode's phase at the well advances at omega' / gamma_m. For the block
+  the same argument makes the moving block of width s a RESTING block
+  of width gamma_m s with the same g (the boost widens the block in its
+  own frame, since the lattice does not contract the declared cells),
+  and the member follows the regime: in the WELL regime f / f_0 = (1 /
+  gamma_m) sqrt((1 - gamma_m^2 eps) / (1 - eps)) with the block's eps
+  (Lorentz to first order, the deviation eps / 4 at k = 3); in the
+  CAVITY regime the block is the rigid cavity of section 3 and reads
+  toward 1 / gamma_m^2. The chain (the block's exact lowest mode pushed
+  to k = 3 by the accumulator over 8000 intervals, the clock read by
+  the spectral peak at the block's centre):
+
+  | s | g | eps at rest | f / f_0 read at k = 3 | the well formula | 1 / gamma_m | 1 / gamma_m^2 |
+  | --- | --- | --- | --- | --- | --- | --- |
+  | 1 | 0.0183 | 0.100 | 0.7949 | 0.7934 | 0.8165 | 0.6667 |
+  | 12 | 0.5 mu^2 | 0.057 | 0.8060 | 0.8040 | 0.8165 | 0.6667 |
+  | 12 | mu^2 | 0.201 | 0.7796 | 0.7635 | 0.8165 | 0.6667 |
+  | 24 | mu^2 | 0.471 | 0.7461 | (the formula outside its range) | 0.8165 | 0.6667 |
+  | 48 | mu^2 | 0.748 | 0.7107 | (the cavity regime) | 0.8165 | 0.6667 |
+
+  So the massive block is Lorentz's clock within five's band only in
+  the well regime (s small against 2 / (3 g), eps under about 0.1: a
+  twelve-cell block at g = mu^2 / 2 reads 0.806 against 0.817), and
+  slides toward the rigid cavity's member as it widens: the size and
+  the pair are not free for a clock, and this is the one condition the
+  block form adds. (The zero-crossing count is fragile for this
+  reading; the spectral peak is the reading used, and 11.4's numbers
+  re-read by it are 0.7949 at eps = 0.10 against the closed form's
+  0.7934, 0.2 percent.)
+- C9 (COMPUTATION, the self-click): the block's own mode oscillates at
+  omega_b at every cell; its motion crosses the rung 1 / W each period
+  with no return, no partner and no timer, so the clock sentence of
+  DESIGN.md section 8 is NOT needed for a massive block (its clock is
+  its mode, a computation from the pair and the side by C6); what
+  remains of the sentence is the light-clock objects on the massless
+  rule alone (the one-Node emitters of the reduced run, variant (A)'s
+  declared period, and the relay), where it stands as declared without
+  a timer (my gate of 84db9247). The one declaration C9 needs is
+  11.5's: the own massive record is read at its cells, never taken.
+- C10 (DECLARATION, the two couplings as bilinear forms of chapter
+  2's kind): (a) what light sees at the block's cells is the index pair
+  of DESIGN.md 5.1 (b) on light's record there (the coefficient form,
+  itself (B), (T), (D)) and, for a source, an off-diagonal entry of
+  (B)'s matrix between the two records at one Node, light's record
+  receiving [s_n, s_d] x a_m per interval; symmetric, it is one
+  bilinear coupling with the conserved total of 11.7 (b). (b) What the
+  block feels from light: the push of 5.1 (a), light's stress at the
+  block's OUTER Ports, a form quadratic in light's state (the terms of
+  E, 2.2's "the click's weight is this form": nothing squared as a step
+  of its own beyond the form), its rate bilinear as 2.8 allows, then (T)
+  on the momentum and (D) the drive. Neither is in ALGEBRA.md today;
+  both are declarations of the design, and the algebra has the verbs
+  for them.
+- C11 (the block's momentum, one line each under the three tests): ONE
+  integer per axis for the whole block ("one body") needs the sum of
+  the stresses over the block's outer Ports, a sum over Nodes that are
+  not neighbours for any block wider than one cell: NOT local as it
+  stands; lawful only as a declared tie of the kind 1.1 names ("up to
+  the two declared ties"), a third tie, named as such. One integer per
+  CELL, each cell pushed by the stress at its own Ports (light's, and
+  the massive record's own, whose gradient at the block's edge cells
+  points inward), is generic, vector and local; whether the block then
+  holds together by its own mode's stress or needs the tie is a
+  COMPUTATION not done (a chain of two cells under their mode, seconds,
+  named for the next check). The lawful form is the second; the owner's
+  "one body" is the first with its tie declared.
+
+**12.3 What the algebra does not have, named (not filled).** The
+source term's integer pair [s_n, s_d] and its wall; the rule that names
+a cell as the object's when the mode is wider than the block (a rung
+on the massive amplitude); the block's rigidity or its self-binding
+(C11); the cube's threshold on the board (C7); the massive pair's own
+attraction beside the light binding (11.9). Each a declaration or a
+computation to come, none a change of the law before the owner's second
+word. Every number above is a COMPUTATION on the chain or the continuum
+pace; no pin moves; nothing enters the law by this section.
