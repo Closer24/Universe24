@@ -1,4 +1,5 @@
 (a) the atom's lines: the 64^2 layer, side 20 at full depth, G = [1, 1], g = [1, 200]: the bare mode 0.09097; the coupled map's eigenvalue nearest it 0.09953 (|lambda| 1.000000); the block's summed record's peak 0.09948 (1.0936 of the bare); the envelope's decay 1.00e-05 per interval. The PIN of the atom's world: its lines at the COUPLED modes; the bare 0.09097 is not the line.
+    the SECOND coupled mode (the bare pair at 0.1380 of massive_layer_pins.py): the map's eigenvalue nearest it with the largest block weight 0.14323 (the weight 0.0014; the pair's line, none at the difference 0.0437 in the probe's amplitude by the rule)
 (b) the emitter's radiative damping on the chain of 1400, side 12 at full depth (the window 2300, before light's return):
     G g = 0.2     : the peak 0.04610 (0.5165 of the bare 0.08926), the decay 7.27e-04 per interval = 0.0512 per period
     G g = 0.02    : the peak 0.14274 (1.5992 of the bare 0.08926), the decay 1.56e-03 per interval = 0.1099 per period
@@ -10,4 +11,5 @@
 (d) Newton's fall on the periodic 96^3 box: the field's gradient at r = 20 over 2 r = 40: 7.3515 (the declared box's own; Newton's 4.00 the limit as the box grows; the images' term makes the difference)
 (d) the point packet's fall by the ray equations at kappa = 1.0: the local mass m(10) / m(20) = 0.4955; the accelerations at the start -6.9162e-02 and -8.1286e-03 Link per interval^2 (the ratio 8.508); the fall times to four Links inward 11.2 and 30.3 intervals ((t20 / t10)^2 = 7.385); a PREDICTION of the form, not a pin (the spread and the floor are not in it)
 (d) the point packet's fall by the ray equations at kappa = 0.277: the local mass m(10) / m(20) = 0.8976; the accelerations at the start -7.6657e-03 and -1.6322e-03 Link per interval^2 (the ratio 4.697); the fall times to four Links inward 29.9 and 67.0 intervals ((t20 / t10)^2 = 5.046); a PREDICTION of the form, not a pin (the spread and the floor are not in it)
-HOST 1 s
+(e) the light clock's return on the open chain of 673 (A at [600, 612), the face at 672, L = 60): A's mode 0.08926; the outgoing light at the face exceeds 64 at t = 1; the returned wave exceeds the rung W at t = {64: 197, 1000: 202, 10000: 207, 100000: 212} (2 L / c = 207.85); the outgoing amplitude at the face at t = 300: 1.76e+06: THE PIN 207.85 +- 2 at W = 10000; at W = 64 the stencil's precursor (one Link per interval at 10^-5 of the wave) clicks 10 intervals early, a (P) beside
+HOST 2 s

@@ -200,7 +200,7 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    block: a block driven through g = [1, 50000] would carry too small a
    mark, and the light detector reads the received line's period directly.
    A CONTROL world with A at rest at x = 1300 (the second draft of this
-   section, 2026-09-24, 00:30Z, on the Boss's ruling of 21:22Z and the
+   section, 2026-09-23, 23:20Z, on the Boss's ruling of 21:22Z and the
    light clock's tension of `coupled_mode_pins.py` (b); a correction
    before any run of 4b, no reading against it).
 2. The declared integers (kind 2): the pairs above; s = 12; G, g, W; A's
@@ -339,7 +339,7 @@ read the mode (MASSIVE_RECORD.md section 11 item 7). Section 4 above (row
   are built; the second draft replaced the receiver block by that
   detector).
 
-## 7. The layer declaration, one line per PIN row of the paper's list (2026-09-24, 00:30Z, the Boss's order of 23:10Z item (a); before any run)
+## 7. The layer declaration, one line per PIN row of the paper's list (2026-09-23, 23:20Z, the Boss's order of 23:10Z item (a); before any run)
 
 The lemma (ALGEBRA.md 8.2, "the layer against the 3-D board", PROVED
 HERE): on an axis of extent 1 the rule reads the Node itself, so a layer
@@ -354,7 +354,7 @@ Every PIN row below stands on its declared board; the pins are unchanged.
 | Row | The declared board | Stands as the paper's world? | Why, in one line |
 | --- | --- | --- | --- |
 | 2a, 2b, 2c, 10 (a), 10 (b) | a layer (the ray law's worlds, 12 to 24 Links of wavelength) | YES | the wave's sum, the splitter's table and the mirror line live in the plane; the lemma folds the third axis; the pins are computed on the layer |
-| 5a, the anisotropy of c | a layer (the fan in the plane) | YES for the in-plane fan (the pin per direction of the fan); the out-of-plane directions (the body diagonal) a later 3-D control | a layer is blind to the out-of-plane directions by the lemma, so the row claims the plane's fan only |
+| 5a, the anisotropy of c | a layer (the fan in the plane) | YES for the in-plane fan (the pin per direction of the fan); the out-of-plane directions (the body diagonal) a later 3-D control | a layer is blind to the out-of-plane directions by the lemma, so the row claims the plane's fan only. THE READER (Reviewer 3's MUST 1, 23:50Z): the pin 0.8, 0.4, 0.2 percent at 12, 16, 24 Links is the PHASE pace by direction (k^2 (3 SUM n^4 - 1) / 72 on the axis, a quarter of it on the plane's diagonal), so the reader of record is the probes' phase advance per Link along each direction of the fan, GAMEBOARD, said so: the row is a reading of the engine's board against the rule's band, not a click measurement. The first click at a ring of 40 Links is read BESIDE (DETECTOR) and cannot resolve the deficit: by the light map on a 256^2 layer the click's interval runs from 59 to 73 intervals as the rung goes from 10^-4 to one half of the steady amplitude (the stencil's precursor first), while the group arrival is 70.9 and the phase's 69.3 on the axis at 12 Links; the rise band 14 intervals against a deficit of 1.6; printed before the run (the scratch of 23:40Z; the script's next record) |
 | 1a, 1b, 1c, 1d, 9, Malus's settings | a 64^2 layer (the tables) | YES | the tables act on the read phase at a Node; nothing of the third axis enters |
 | 4a, the muon's form | the 200^2 layer pin world (s = 14, the mode seed) | YES; the 191^3 world of PLAN.md 3.3 step 5 a later control | the pin is the one formula at the layer's own mode (`massive_layer_pins.py`); the corner does not enter the stable form |
 | (ii-a), (ii-b) | 64^3 boxes | YES, as 3-D worlds already (2 minutes each) | no layer needed |
@@ -393,18 +393,31 @@ omega_b) of its own well, printed by the pins script before the run.
 2. The declared integers: the pairs, s = 20, g, G, W; the hold 6000.
 3. The verbs: the massive rule with the coupling in the one division; the
    source term; the click at W on the light record.
-4. The pin (COMPUTATION, `coupled_mode_pins.py` (a) and the map's
-   eigenvalues): the lines at the COUPLED modes of the block with light,
+4. The pins (COMPUTATION, `coupled_mode_pins.py` (a): the ground mode
+   0.09953 and, printed since 23:40Z, the second coupled mode 0.14323 by
+   the map's eigenvalue nearest the bare pair 0.1380 with the largest
+   block weight): the lines at the COUPLED modes of the block with light,
    0.0995 (the ground; the bare 0.09097 shifted by 9.4 percent) and 0.1432
-   (the pair; the bare 0.1380), none at the difference 0.044; the band the
-   spectral grain of the hold, 2 pi / 6000 = 0.001, and the map's own
-   residual, together 1 percent; the falsifier a line at the difference
-   or the lines at the bare modes (9 and 4 percent away, outside the band).
-   Nature has no atom at this scale; the row is (P), the form of discrete
-   lines at the coupled modes.
+   (the pair; the bare 0.1380), none at the difference 0.044 in the light
+   record by the rule; the band the spectral grain of the hold, 2 pi /
+   6000 = 0.001, and the map's own residual, together 1 percent. THE
+   READER, split by kind (Reviewer 3's MUST 3, 23:50Z): DETECTOR the light
+   detector's click train, which carries the atom's own cycle, ONE line at
+   the coupled ground mode 0.0995 (the measurement); the click is
+   quadratic in the record, so with two modes in the block the train's
+   spectrum carries the difference 0.044 by the reader's own form, not by
+   the rule, and the difference's absence cannot be read on the clicks.
+   GAMEBOARD the probe's amplitude spectrum, linear in the light record,
+   the reader of the two lines and of the ABSENCE of the difference. The
+   falsifier stands on the probe: a line at the difference in the
+   amplitude spectrum, or the lines at the bare modes (9 and 4 percent
+   away, outside the band); on the clicks the falsifier is the ground line
+   off 0.0995 by more than the band. Nature has no atom at this scale; the
+   row is (P), the form of discrete lines at the coupled modes.
 5. The readings: DETECTOR the light detector's click train and its
-   spectrum; GAMEBOARD the probe's amplitude spectrum and the block's own
-   summed record's peak; COMPUTATION the pin.
+   spectrum (the ground line); GAMEBOARD the probe's amplitude spectrum
+   (the two lines, no difference) and the block's own summed record's
+   peak; COMPUTATION the pins.
 6. The identity: `detector-law-v1` with `massive-record-v1`.
 
 ## 10. The light clock of two bodies (item 6 of PLAN.md; row (d))
@@ -424,8 +437,8 @@ omega_b) of its own well, printed by the pins script before the run.
 3. The verbs: the massive rule with the coupling; the source term; the
    zero face; the click at W on the light record.
 4. The pin (COMPUTATION, the linear coupled map on the open chain of 673
-   against a chain of 3000 with no return in the window, the scratch of
-   01:30Z, to be printed by `coupled_mode_pins.py`'s next record): the
+   against a chain of 3000 with no return in the window, PRINTED by
+   `coupled_mode_pins.py` (e) in its record of 2026-09-23, 23:45Z): the
    return's front reaches the detector 2 L / c = 207.85 intervals after the
    emission's front leaves it: the interval between the detector's first
    click (the outgoing front) and the first click of the returned wave,
@@ -433,7 +446,7 @@ omega_b) of its own well, printed by the pins script before the run.
    of the face detector. The rung is declared so high because of the
    PRECURSOR: the stencil's front runs one Link per interval with an
    amplitude of 10^-5 of the wave (a_next reads the two neighbours), so at
-   W = 64 the returned wave clicks at 196 intervals, eleven early, while at
+   W = 64 the returned wave clicks at 197 intervals, ten early, while at
    W = 10^4 it clicks at 207 (above 10^3 at 202, above 10^5 at 212; the
    outgoing wave at the face is 1.8 x 10^6 in the engine's units at the
    seed 2^20, so W = 10^4 is crossed by the wave and not by its precursor);
@@ -454,15 +467,16 @@ omega_b) of its own well, printed by the pins script before the run.
 The first-declared window [3400, 4800] on the chain of 4000 with the
 source at 300 and the probe at 2500 sits inside the train's own arrival
 (the front reaches the probe at 3800): withdrawn before any run.
-DECLARED (2026-09-24, 00:30Z): the chain of 4000, light's faces open, the
+DECLARED (2026-09-23, 23:20Z): the chain of 4000, light's faces open, the
 source at x = 800 (a train at omega = 0.035), the probe at x = 2400, the
 block of side 24 (the well [314, 315] in [156, 157], g = [1, 200], G =
 [1, 1]) from x = 1500 stepping away at k = 3 from interval 3000; the front
 reaches the probe at 2770, the reflection from x = 0 at 5543 and from the
 far end at 8313; the window [3800, 5400]. The script's number on this
-geometry (`massive_moving_index.py`, the same-Node scheme with G g times
-gamma_m^2, the scratch of 00:20Z, to be printed by the script's next
-record): the rest block at omega' away reads n = 1.2519; the moving block's
+geometry (`massive_moving_index.py`, `receding_declared`, PRINTED in the
+script's record of 2026-09-23: the same-Node scheme with the DECLARED
+MOTION PAIR [K^2, K^2 - 3] of MASSIVE_RECORD.md on G g, gamma_m^2 = 3 / 2
+at K = 3, not a hand factor): the rest block at omega' away reads n = 1.2519; the moving block's
 lab phase delay over the window +1.0144 rad against the covariant
 expectation +0.2323 rad, the ratio 4.37; and the phase is NOT steady: the
 window's halves read +0.5539 and +1.5234 rad, a drift of 1.2 x 10^-3 rad
@@ -471,11 +485,14 @@ pump of MASSIVE_RECORD.md section 7: light gains through the receding
 block, the amplitude 1.02 of the reference), so the reader of record of
 this (P) row is BOTH the window's phase and its drift rate, each read
 against the script's number on the same geometry within +- 0.04 rad and
-+- 10 percent of the rate; Fizeau's drag stays the declared non-match.
++- 10 percent of the rate; both are a PROBE'S PHASE, GAMEBOARD, so the
+paper says the row is a prediction of the engine's board and not a
+measurement (Reviewer 3's line, 23:50Z); Fizeau's drag stays the declared
+non-match.
 Nothing of the pin's form moves: the row was never pinned to a number of
 nature.
 
-## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-24, 01:10Z, the owner's word and the Boss's decision of 23:32Z; `matter_wave_pins.py`)
+## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-23, 23:30Z, the owner's word and the Boss's decision of 23:32Z; `matter_wave_pins.py`)
 
 1. The objects: a 128 x 128 x 1 periodic layer; the MATTER family [800,
    809] (mu = 0.15, omega_0 = 0.14930) with a LAMP of that family (the
@@ -525,3 +542,44 @@ nature.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The honest
    limits: no two-quantum effect (bunching), no spin, no fine structure
    are in the law, and none is claimed.
+
+## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; 2026-09-23, 23:50Z)
+
+1. The objects: a chain of 2200 x 1 x 1, light's faces open; the massive
+   kind [800, 809]; two BLOCKS of side 12 at full depth ([800, 800]): A at
+   [700, 712) and B at [772, 784), L = 60 face to face, both pushed to k =
+   3 on +x by the declared momentum over a ramp of 1500 (the relaxation 10
+   intervals at eps 0.64; section 8), both `emits` (the source term, a
+   birth at the start of each cycle of the block's own clock, the record
+   stamped with its birth), G = [1, 1], g = [1, 50000], W = 64 on their own
+   records; two light DETECTORS of the ray law that step with their blocks
+   (the hop of `moving_detector`'s cart, one Link every three intervals):
+   at A's front face cell (x = 712 at the start) reading B's records
+   arriving on -x, at B's rear face cell (x = 772) reading A's records
+   arriving on +x, each with the rung W = 10000 (the precursor, section
+   10). A CONTROL world with both blocks at rest.
+2. The declared integers: the pairs, s = 12, L = 60, G, g, W; the
+   momentum [Q S M, 0, 0] on +x for both, `ramp` 1500, the hold 3000.
+3. The verbs: the massive rule with the coupling in the one division; the
+   source term with the birth stamp; the push; the click at W on the light
+   record carrying the record's birth stamp (the stamps as PINS_R2.md reads
+   them).
+4. The pin (COMPUTATION): two bodies stepping together receive each
+   other's lines UNSHIFTED (the gap constant, every front's transit the
+   same), so the received frequencies are the row's CONTROL (their
+   difference 0). The Sagnac ratio is in the one-way TRANSIT TIMES: A's
+   record chasing B, t_+ = L / (c - v) = 245.9 intervals; B's record
+   meeting A, t_- = L / (c + v) = 65.9; their difference over their sum
+   (t_+ - t_-) / (t_+ + t_-) = v / c = 1 / sqrt 3 = 0.5774 EXACTLY (K),
+   read as the receiver's click interval less the emitter's birth stamp
+   per direction; the band +- 2 intervals per end at W = 10^4 (the ratio's
+   band +- 0.008); nature's coefficient 0.975 +- 0.021 (Michelson, Gale
+   and Pearson 1925, TO VERIFY) matched in form. PINS_R2.md's 55 / (32 k)
+   is the old engine's number at its c, HISTORY.
+5. The readings: DETECTOR the two detectors' click stamps (the transit per
+   direction) and the blocks' own clicks (both read one period, the
+   control); GAMEBOARD the light amplitude at the faces; COMPUTATION the
+   pin; CONVERSION the ratio of two counts.
+6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
+   to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
+   `make_worlds.py`; HOST a minute each.

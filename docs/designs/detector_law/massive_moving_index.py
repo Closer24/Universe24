@@ -234,6 +234,45 @@ def receding_long():
         )
 
 
+def receding_declared():
+    """The receding case on the DECLARED geometry of DECLARATIONS.md section 11 (2026-09-23,
+    23:20Z): the chain of 4000, the source at 800, the probe at 2400, the block from 1500
+    moving away from interval 3000, the window [3800, 5400] (the front reaches the probe at
+    2770; the reflections from the faces reach it at 5543 and 8313, after the window); the
+    same-Node scheme with the declared motion pair [K^2, K^2 - 3] (gamma_m^2) on G g; the
+    window's halves printed beside, since the phase drifts (the pump's signature)."""
+    n = 4000
+    source, probe = 800, 2400
+    s = 24
+    ro = 156 / 157
+    mu = np.arccos(ro)
+    ri = 1 / (1 + mu**2 / 4)
+    g, G = 0.005, 1.0
+    omega = 0.035
+    t_move = 3000
+    t0, t1 = 3800, 5400
+    steps = t1 + 10
+    print(
+        f"\nthe receding case on the DECLARED geometry: n = {n}, the source at {source}, the probe at {probe}, the block from 1500 moving away from {t_move}; the window [{t0}, {t1}]"
+    )
+    om_p = GAMMA * omega * (1 - BETA)
+    d, amp, _ = delay(n, steps, om_p, source, probe, 1500, s, ro, ri, g, G, 0, t_move, 1.0, t0, t1)
+    n_p = 1 + d / ((om_p / C) * s)
+    print(
+        f"  at rest, light at omega' away = {om_p:.4f}: n = {n_p:.4f} (transmitted amplitude {amp:.3f})"
+    )
+    expected = (n_p - 1) * om_p * GAMMA * s / C
+    d, amp, lo_end = delay(
+        n, steps, omega, source, probe, 1500, s, ro, ri, g, G, +1, t_move, GAMMA2, t0, t1
+    )
+    print(
+        f"  moving away from the source (from behind), the motion pair [K^2, K^2 - 3] on G g: the lab phase delay {d:+.4f} rad"
+        f" over the window (the block from 1500 to {lo_end}; transmitted amplitude {amp:.3f}); the covariant expectation"
+        f" {expected:+.4f} rad; the ratio read / expected = {d / expected:.3f}; THE ROW'S NUMBERS the phase and the drift"
+        f" between the halves printed above"
+    )
+
+
 if __name__ == "__main__":
     COUPLING = "adjoint_r3"
     print(
@@ -256,3 +295,4 @@ if __name__ == "__main__":
     )
     main()
     receding_long()
+    receding_declared()
