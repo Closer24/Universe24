@@ -260,10 +260,10 @@ read; a row that misses is written as a miss; no pin moved after a reading.
 
 | When | What |
 | --- | --- |
-| Tonight, the 23rd, to about 02:00Z | PR #1056 merged; the seed build (one commit, Reviewer 3's read, merged); e2, e3, e4 run and read beside; chapter 8 and PAIR_FIELD.md merged; COVERAGE.md read; the phase-reading component if the night allows, else the morning |
-| The morning of the 24th, from the owner's word | the owner reads EXPLORATION.md, this page and COVERAGE.md; approves the list one word per item; the physicist's three lines; the GO; tier 3 steps 1 to 3 of section 3.3 run, four worlds at once, about two hours HOST on one container; the readings by kind on the pinned page; Reviewer 3 reads each head once |
-| The afternoon of the 24th | the table rows (step 4) after the phase-reading component; 10 (a) and the light clock after the (M) block; the 3-D worlds start, 4a on 191^3 first |
-| The 25th | the remaining 3-D worlds; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the pair-field rows (12, the delay, Newton's fall) after, on the owner's word on the hypothesis, never in their place |
+| Tonight, the 23rd (the owner's word of 23:05Z, record 1518: the paper closed tomorrow, everything run faster) | PR #1056, chapter 8, PAIR_FIELD.md, COVERAGE.md, PUBLISHED_FORMS.md merged; the physicist's launch list RUN_LIST.md and the declarations (the layer declaration per PIN row by the layer lemma, so every row of the paper's list runs on its declared board and no 3-D world gates the paper; the ramp 10000; the atom; the light clock without an (M) block; e3's geometry) landed at c0e88709, Reviewer 3's one bundle read; the builder's lamp check, the three components, the two 4a files regenerated, the two reader functions, the "to write" worlds; e2 and e3 run once as exploratory; the two matter-wave rows (de Broglie, E = m c^2) declared if the lamp carries the matter family |
+| The morning of the 24th, the GO by 06:00Z | the owner reads EXPLORATION.md, this page, COVERAGE.md and RUN_LIST.md; approves the list one word per item; the GO; EVERY row of RUN_LIST.md launched at once, one session per group (L, M1, M2, T), about one hour HOST; the readings by kind on the pinned page; Reviewer 3 reads each group's readings as one bundle |
+| The afternoon of the 24th, to about 15:00Z | the table rows (step 4) after the phase-reading component; the light clock; the matter-wave rows; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the paper closed in the evening |
+| After | the 3-D controls (4a on 191^3) started in parallel, never a gate on the paper; the pair-field rows (12, the delay, Newton's fall) on the owner's word on the hypothesis, never in the paper's place |
 
 The days read the order forward and are not a promise; each GO is the
 owner's morning word and then the Boss's word per world.
@@ -295,18 +295,24 @@ owner's morning word and then the Boss's word per world.
     word; the pair-field build (three engine lines, off by default) ordered
     after the current pins on his word on the hypothesis.
 
-## 5. The time economy (what can be shortened, as the physicist vouches)
+## 5. The time economy (what can be shortened, as the physicist vouches; the owner's word of 23:05Z)
 
-The layer instead of the box, seventeen times faster on the moving worlds
-(13.6 ms per interval on 200^2 against a box's minutes); the 8000 hold with
-the mode seed instead of a longer ramp; the light worlds at 12 Links the
-floor (the wavelength); one world per row for the paper, the series (the
-three couplings, the two boxes) exploratory only; reuse of matching runs;
-four worlds at once on one container; every tier 3 row but the 3-D worlds
-fits in one morning if the builds land tonight; the only long exploratory
-world is e5 (about ten minutes), on the owner's word; the 3-D worlds are
-the only hours and start early, in parallel, while the layer rows are read.
-No vectorisation of the engine unless byte identical, asserted by a test.
+Four things, from the owner's word that everything runs faster (record 1518):
+(1) every run in its own session, all at once at the GO, one session per
+group of RUN_LIST.md, not one world after another; (2) the layer instead
+of the box wherever the layer lemma (ALGEBRA.md 8.2) proves the reading
+identical, declared by the physicist before any run (DECLARATIONS.md
+section 7: every PIN row of the paper's list stands on its declared
+board; the 3-D worlds are later controls, never a gate), seventeen times
+faster on the moving worlds (13.6 ms per interval on 200^2); (3) the
+exploratory runs tonight in parallel, so that the morning holds only the
+GO; (4) one read by Reviewer 3 per bundle, not per commit. Beside them:
+the declared ramp 10000 with the hold 8000 (about 4 minutes HOST) instead
+of a longer hold; the light worlds at 12 Links the floor (the wavelength);
+one world per row for the paper, the series exploratory only; reuse of
+matching runs; the only long exploratory world is e5 (about ten minutes),
+on the owner's word. No vectorisation of the engine unless byte identical,
+asserted by a test.
 
 ## 6. The coverage map (the owner's point for thought)
 
