@@ -1212,6 +1212,30 @@ clock read by the spectral peak at its centre), seconds each.
   reading; the spectral peak is the reading used, and 11.4's numbers
   re-read by it are 0.7949 at eps = 0.10 against the closed form's
   0.7934, 0.2 percent.)
+
+  The same reading made on the one-Node well, for 12.4's P3 ("the
+  motion derived, not decided"): the exact chain bound state pushed to
+  k = 3 by the accumulator (the ramp 8000 intervals, the reading 6000,
+  the spectral peak at the well), once with the well's declared
+  strength g carried unchanged, once with the strength boosted as the
+  declared g / gamma_m(t) at each interval:
+
+  | eps at rest | g | f / f_0, g carried unchanged | the well formula | f / f_0, g / gamma_m(t) declared | 1 / gamma_m |
+  | --- | --- | --- | --- | --- | --- |
+  | 0.04 | 0.0115 | 0.8073 | 0.8080 | 0.8161 | 0.8165 |
+  | 0.10 | 0.0183 | 0.7947 | 0.7935 | 0.8158 | 0.8165 |
+  | 0.25 | 0.0289 | 0.7452 | 0.7454 | 0.8177 | 0.8165 |
+
+  So on the lattice "the boost of the rest bound state is a solution"
+  holds for the bound state exactly only when the binding declaration
+  is boosted with it (Lorentz's member to 0.15 percent); with the
+  declaration carried unchanged, as the law carries it, the clock is
+  Lorentz's to first order in eps, the residual from 1 / gamma_m being
+  eps (gamma_m^2 - 1) / 2 (1.1, 2.7 and 8.7 percent here). Nothing in
+  the law boosts a declaration (no boost is among the 48), so the
+  block's clock is Lorentz's within five's band exactly where the first
+  table says, and the deviation eps / 4 at k = 3 is the block form's
+  own signature: a COMPUTATION a run may read and may not move.
 - C9 (COMPUTATION, the self-click): the block's own mode oscillates at
   omega_b at every cell; its motion crosses the rung 1 / W each period
   with no return, no partner and no timer, so the clock sentence of
