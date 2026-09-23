@@ -1,0 +1,11 @@
+(a) the atom's lines: the 64^2 layer, side 20 at full depth, G = [1, 1], g = [1, 200]: the bare mode 0.09097; the coupled map's eigenvalue nearest it 0.09953 (|lambda| 1.000000); the block's summed record's peak 0.09948 (1.0936 of the bare); the envelope's decay 1.00e-05 per interval. The PIN of the atom's world: its lines at the COUPLED modes; the bare 0.09097 is not the line.
+(b) the emitter's radiative damping on the chain of 1400, side 12 at full depth (the window 2300, before light's return):
+    G g = 0.2     : the peak 0.04610 (0.5165 of the bare 0.08926), the decay 7.27e-04 per interval = 0.0512 per period
+    G g = 0.02    : the peak 0.14274 (1.5992 of the bare 0.08926), the decay 1.56e-03 per interval = 0.1099 per period
+    G g = 0.002   : the peak 0.09391 (1.0521 of the bare 0.08926), the decay 3.29e-03 per interval = 0.2315 per period
+    G g = 0.0002  : the peak 0.08981 (1.0062 of the bare 0.08926), the decay 6.71e-04 per interval = 0.0472 per period
+    G g = 2e-05   : the peak 0.08947 (1.0023 of the bare 0.08926), the decay 6.69e-05 per interval = 0.0047 per period
+(c) row 4b on its declared world (the chain of 2200, the medium [156, 157], the well [314, 315], side 12, k = 3): omega_0 = 0.11293, the well's mode 0.10175 (eps 0.188); gamma_m at the exact cone 1.22606; the one formula f / f0 = 0.7931 (the free emitter's 1 / gamma_m 0.8156); THE PIN 1 + z = (1 + beta_c) / (f / f0) = 1.9889; the free limit gamma_m (1 + beta_c) = 1.9339 beside (K); light on the chain at the line: phase pace 0.5769, group pace 0.5759 against c = 0.5774
+(d) Newton's fall on the periodic 96^3 box: the field's gradient at r = 10 over 2 r = 20: 4.2156 (THE PIN of the declared box; Newton's 4.00 the limit as the box grows; the images' term makes the difference)
+(d) Newton's fall on the periodic 96^3 box: the field's gradient at r = 20 over 2 r = 40: 7.3515 (THE PIN of the declared box; Newton's 4.00 the limit as the box grows; the images' term makes the difference)
+HOST 2 s
