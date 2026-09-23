@@ -1,0 +1,443 @@
+# The build plan of the massive record kind (`massive-record-v1`): the algebraic map of everything on the board, every sentence of the design mapped to a generic component, a world-file key and a verb, the tests' integers written before the code
+
+The Massive Record Builder's plan of 2026-09-23 on the Boss's order (the
+model owner's words of records 1381, 1414, 1418, 1421, 1423 and 1425: the
+board is algebraic, the whole algebra implemented on the GameBoard,
+everything generic; "we do everything by the algebra, not the reverse";
+"the whole board is an implementation of the algebra; all the engine's code
+is algebraic code; detector, emitter, whatever you want, are algebraic
+creatures on the board that we declare, under the algebraic laws"). The
+design built is [MASSIVE_RECORD.md](MASSIVE_RECORD.md) (sections 0 to 13;
+its section 11 the build's order) at the design branch's head
+7a82c155d6966b088cb0369963631dddec1d3d0e (its seven first scripts last
+changed at 5efd67c413b83c151c99d23ce7ee7d348f8d329c, its eighth and ninth,
+`massive_light_clock_relay.py` and `massive_moving_index.py`, at 7a82c155),
+with Reviewer 3's gate, [PUSH_BALANCE.md](PUSH_BALANCE.md) sections 12.5
+to 12.7 (03a2ba665b6df033ee5d14452ff96a4a6bb6b1a8). The module extended is
+`src/event_universe/events/detector_law.py` at the build branch's head
+f4a3971a6a410b8834bbdbc1d67e3d8a8bf2d0ca (the light record under the key
+`detector_law`). This file is the plan, docs only; the code follows it in
+the order of section 9, one pushed commit per step, on the Boss's word
+"the rows are pinned: build" (the owner's word of about 14:42Z: the two
+NATURE rows of section 9 verified before the engine is implemented; those
+rows are the physicist's and Reviewer 3's, not this plan's). Nothing here
+moves a rule of the design: where the plan reads two sentences of the
+design differently, section 10 names both and the reading built, for the
+Boss and the chief physicist.
+
+Every symbol at its first use: a_now, a_before, r the record's row at a
+Node (its amplitude now, one interval ago, and the remainder of the
+division); S_6 the sum of the six neighbours' a_now (verb G); [num, den]
+a record kind's pair on the six-neighbour term; mu the medium's gap
+(cos omega_0 = num / den, omega_0 the rest frequency in radians per
+interval); s the block's side in Links; g the well's depth to first order
+(g = 2 (num' / den' - num / den)) and [G, g] the dielectric coupling's
+two rationals; W the wheel (the rung's height 1 / W); K the drive's count
+of intervals per Link; gamma_m the medium's Lorentz factor,
+1 / sqrt(1 - 3 v^2) at the pace v Links per interval (the thing compared
+with, never formed at run time); kappa the mode's decay rate in the medium
+and 1 / kappa its extent; eps the binding depth 1 - omega_b^2 / omega_0^2
+with omega_b the bound mode's frequency; I the conserved form of section
+3; Q = 64 the label's scale, S the push's width, M the block's content;
+L the distance between two blocks' facing cells; N_0 the light clock's
+cycle in intervals.
+
+## 0. THE ALGEBRAIC MAP: everything that can be on the board, the group object it lives in, the data the world file declares for it, the verbs that act on it, and the one generic component that implements each verb
+
+Nothing on the board is outside this table (the owner's word of record
+1425). Every verb is one of the six of [ALGEBRA.md](../../ALGEBRA.md)
+chapter 2: (T) the translation of an accumulator, (B) the bilinear form
+with a declared matrix, (G) the group-ring addition, (P) the permutation,
+(E) the evaluation, (D) the division with the remainder kept and the
+comparison. Every component is in `src/event_universe/events/detector_law.py`
+unless named otherwise; a row that needs code outside the six verbs is a
+FINDING (the last rows), reported and not written as a component.
+
+| The thing on the board | The group object (ALGEBRA.md chapter 1) | The data the world file declares | The verbs that act on it | The one generic component per verb |
+| --- | --- | --- | --- | --- |
+| The light record (the massless kind) | one element of the group algebra Z[Z^3] of the torus's translations (its rows over the Nodes, MASSIVE_RECORD.md section 1: the interval's map the multiplication by h = (1 / 3) SUM over the six Ports [e]); its clock a character of Z_N (the family's pair on the circle of N steps) | the family: `quantum` h, `phase_per_link` [n, d] (its clock), no `pair` (the value [1, 1]); the lamp: `rate`, `wheel` [r, W], `train`; the world's `boundary` for its faces | (G) S_6; (D) the division by 3 den (den = 1) with the remainder kept; (T) the row's two columns advanced; (E) and (D) at the click (the pointer against the rung) | `_advance` (G, D, T, one vectorised step with the kind's pair arrays); `_click` with `amplitude.cell_of` (E, D) |
+| The massive record kind | the same element of Z[Z^3] under the same map with the pair [num, den] on h (a gap cos omega_0 = num / den); its rest frequency a character of the time translation at k = 0 | the family: `quantum` h (the content one unit), `pair` [num, den] with den > num, `faces` (periodic by default: the torus's) | (G), (D) by 3 den, (T): the same step | `_advance` with the family's pair arrays `num_at`, `den_at` (formed once at load, section 1) |
+| The foreign object as the well of the pair (the block's cells) | a finite G_48-set R of Nodes (a cube; a scalar on Nodes on which the 48 act trivially, world data like a wall's placement); the lowered pair on R | on a measured event of the massive kind: `position` (the cube's lower corner), `side` s, `pair` [num', den'] (the well) | none of its own (a declaration); the kind's (G), (D), (T) run on R with the lowered pair | `Block` (the cells; the pair arrays written on R) |
+| The block's own record (its clock: the bound mode) | one element of Z[Z_N] carried by all its cells in step (the bound mode of the map at k = 0); on the board one massive record of the kind | `seed` (the record's amplitude on the cells at interval 0), `wheel` W | (G) the sum across R; (D) the comparison that counts a cycle (the sum's crossing of 0 upward) and the rung; (E) the evaluation across R at W | `Block.clock` (G, D); `Block.first_rung` (E, D) |
+| The detector-emitter (a clock body: the block coupled to light) | the coupling matrix's one entry over the other record's two columns (now, before) at a cell; the response of the block's kind to a light record another element of Z[Z^3] of the massive kind | `coupling` {`G`: [n, d], `g`: [n, d]}; `emits` (the light family the block's own record sources, paid from its `held`) | (B) the entry g (a_l,now - a_l,before) on the massive row and -G (a_m,now - a_m,before) on light's row, then (D) each rational's division with the remainder kept; in motion (D) the pair [W_d^2, W_d^2 - 3 P . P] on g; the birth of the emitted record as the lamp's (T) | `couple` (B, D); `Block.motion_pair` (D); `_births` for the emitted record (T) |
+| The block's momentum and step | p in Z^3 (label units), the translation group of the torus acting on R | `momentum` [P_x, P_y, P_z]; `ramp` (the pushing agent's declaration, 0 by default) | (T) the accumulator per axis gains P_a against the wall 3 Q S M; (D) the count with the remainder kept, at most one Link per interval, the tie x before y before z; the comparison 3 (P . P) < (3 Q S M)^2 | `Block.step` (T, D); the pair arrays and the cells translated by `np.roll` (T) |
+| The absorbing object (the sink, POSTULATES 10 as settled by record 1421: a light record ends where a take is declared) | a declared loss on light's row at the cells: the Port's take (DESIGN.md section 5, the pair [-15, 56]) | `absorbing` true on the block (false by default, a clock body) | (T) the Port's amplitude follows the free neighbour's; (D) the pair's division with the remainder on the Port; the offer booked to the block's cell as today | the first build's receivers (`take_masks`, `_advance`), unchanged |
+| The wall (the (M) mirror for light: the pair on LIGHT's record at declared cells, a gapped lump in the massless surround, evanescent inside, MASSIVE_RECORD.md section 4 and PUSH_BALANCE.md 12.7 (c)) | the same G_48-set R with a pair on light's kind's rows there | a measured event of the LIGHT family with `side` and `pair` [num', den'] (den' > num': a gap on light's record at R; no clock, no coupling) | the light kind's (G), (D), (T) with the pair on R | `Block` on the light family (the pair arrays of light's kind, the same component) |
+| The lamp's insertion | the driven row at the lamp's Nodes: the clock's cosine table (a rounding declared at load) | the lamp as built | (T) the record's clock advanced, the table read; the record's norm (B) | `_drive`, `_births` (as built) |
+| The board's faces | the torus Z_X x Z_Y x Z_Z per kind: a periodic axis the algebra's own; an open face a declared deviation per world: for light a sponge (the face cells with the take, as built), for the massive kind a zero face (a wall for the massive record, section 11 item 4) | the world's `boundary` (light); the massive family's `faces` | (T) the wrap on a periodic axis; the take's (T), (D) at light's open face; nothing at a zero face (the neighbour beyond reads 0) | `_shift` with the kind's wrap flags; the face cells as built |
+| The books' conserved form I (a diagnostic of the board) | the leapfrog's quadratic form on the record's two columns, positive definite for den > num (section 3) | none | (B) with the declared matrix (den per Node on the squares, num on the Links), (G) the sums | `record_form` (GAMEBOARD, written under the key alone) |
+| FINDING 1: the margin rule's extent | the bound mode's frequency omega_b (the largest eigenvalue of D^-1/2 (L / 3) D^-1/2 on the world's board) and cosh kappa = 3 D_out cos omega_b - 2: a transcendental of the declaration, not a verb on the state | the block's `margin` (`"pin"` or `"control"`) | none (a check of the declaration before the world runs, like MUST I's floor) | a HOST module outside the integer audit, `diagnostics/massive_record_margin.py` (a Lanczos in numpy), called by the runner before the simulation is built; the state never reads it |
+| FINDING 2: the frequency and the extent read from the rows | a spectral peak (an FFT) and an envelope's 1 / e fall are readings of the board, HOST arithmetic on a record | none | none | `examples/events/massive_record/read_runs.py`, a tool, GAMEBOARD by label |
+| FINDING 3: world (iv)'s N_0 as the script defines it | "A's received part" is A's record with B present less A's record alone (`massive_light_clock_relay.py`): a subtraction of two runs, a counterfactual, not a local click | none | none | reproduced as GAMEBOARD by the reading tool from two runs; the engine's DETECTOR reading of the light clock on two bodies is A's click on B's OWN emitted record (a foreign record at A, its response's rung, section 5), stated beside the script's number, never equated with it |
+
+## 1. The rules of the build
+
+- The key `massive_record` (true or false, false by default; the identity
+  `massive-record-v1` under `hypotheses` when true). NAMING: the design
+  writes "the key `massive-record-v1`"; the repository's world keys are
+  `snake_case` and the identities carry the `-v1` suffix (`detector_law`
+  and `detector-law-v1`, `massive_rows` and `massive-rows-v1`), so the
+  key is `massive_record` and the identity `massive-record-v1`.
+- OFF by default: without the key the ray law and the light record are
+  unchanged byte for byte (a dedicated test pins the digests of the chain
+  world of `tests/test_detector_law.py` at f4a3971a: `events` sha256
+  f6b6f273d08c0a2d278fff1b2f4967ceb48e8d5b7a906d7351f86d142080372d, the
+  snapshot 9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962,
+  the books 1000ac3f0b5d84f26958d70cc75e9c2484ff697e45418a7a83720689fe48535a
+  over 600 intervals; read at head before any line of the build was
+  written, by the observer's lines, the snapshot stream and the books).
+- Generic throughout: the engine implements the verbs on the group
+  objects; the world file declares the kinds, their pairs, the cells, the
+  couplings, the wheel and the faces; the engine never branches on a
+  physical name, keeps nothing at a Node beyond the events there, and
+  reintroduces no implicit default (every default is a declared value
+  named in section 3).
+- Integers only in `events/` (the integer audit of
+  `tests/test_integer_algebra.py`; `detector_law.py` is already in its
+  list); the two findings of section 0 live outside it.
+- Every reading labelled by kind: a click is DETECTOR; a reading of the
+  board is GAMEBOARD; the algebra's numbers are COMPUTATION; the machine's
+  cost HOST. "Matches the algebra's number", never "is nature": these
+  worlds check the engine against the algebra.
+- The physicist's and the reviewer's files (MASSIVE_RECORD.md, DESIGN.md,
+  PINS.md, PUSH_BALANCE.md) are not edited; a contradiction goes to the
+  Boss (section 10).
+
+## 2. The map: every item of the order to its component, its keys and its verbs
+
+| The sentence (MASSIVE_RECORD.md) | The generic component | The world-file keys | The verbs | The test |
+| --- | --- | --- | --- | --- |
+| 1. The rule with a pair per record KIND on the six-neighbour term (section 1): `3 den a_next + r' = num S_6 - 3 den a_before + r`, `0 <= r' < 3 den` | `_advance` takes the kind's pair as two dense int64 arrays over the board, `num_at` and `den_at` (formed once at load from the family's pair and the blocks' pairs on their cells; translated with a block's step); light's kind is the value `[1, 1]`, under which the step is today's bit for bit | the family key `pair` `[num, den]` (light: absent, the value `[1, 1]`; a massive kind: `den > num`; refused without `massive_record`) | G, then D (by `3 den`, the remainder kept in `[0, 3 den)`), then T | (a), (b), (c) of section 6 |
+| 1. The rule runs at every Node the kind's rows reach | the record's rows are dense arrays over the board (the first build's form); a massive record spreads as light's does | none | as above | (a), (b) |
+| 1. The conserved form I read by the books, GAMEBOARD (section 3) | `record_form(live)`: `3 L den_x (a_now^2 + a_before^2)` summed over the Nodes less `L num_x (a_now,i a_before,j + a_now,j a_before,i)` summed over the Links, exact Python integers, L the least common multiple of the distinct numerators over the numerator per Node (one integer form for a well with another numerator; L = 1 at one numerator, section 3's line); per family in `books()` under `form` only under the key | none | B, G | (d) |
+| 2. The foreign object: a declared set of cells R, a cube of side s at a position, a G_48-set (section 4) | `Block`: R the cube `position + [0, s)^3` cut to the board (the lower corner at `position`, as `_span_nodes` places a body today); the block's pair written into the pair arrays on R; every block a measured event of the massive kind (or, for the (M) wall, of the light family) with these keys | `side`, `pair` (the well: `num' / den' > num / den` on the massive kind, refused otherwise; the reversed window `num' > den'` admitted as section 4 allows, named in the record; on the light family a gap, `den' > num'`, the mirror) | none (a declaration, kind 1) | (e) |
+| 2. One momentum integer per axis with its remainder, a declared tie; the step of the whole block by verb T (section 5) | `Block.step`: per axis the accumulator gains P_a per interval against the wall `3 Q S M` (the pace v_a = P_a / (3 Q S M), DESIGN.md 5.1 (a); k = 3 is P = Q S M on one axis), at most one Link per interval, the remainder kept, the sign of P_a the side; the whole block steps together: its cells and its pair region translate by T; the record's rows are NOT carried: they live on the Nodes and re-form behind the stepped cells by the rule (PUSH_BALANCE.md 12.7 (d); section 8's chain; section 10 (a)); the bound `3 (P . P) < (3 Q S M)^2` checked at load and at every change, a crossing the world's stop with a diagnostic (no clamp); the tie: x before y before z, a coincident second Link in one interval lost to the earlier axis as the frame loses it today | `momentum` (the existing key); `ramp` (an integer of intervals, 0 by default: the momentum reached from 0 by the whole part `P x t // ramp` over the ramp; the pushing agent's declaration, the design's own chain device, section 10 (e)) | T, D, the comparison | (f) |
+| 2. The coupling at its cells only: the dielectric in the first-difference form both ways, one declared g with G (section 7) | at a block's cells a light record k reaching the block owns a RESPONSE record r_k of the block's massive kind (dense arrays; the massive rule at every Node they reach); per interval at the cells the massive row gains `g (a_l,now - a_l,before)` and light's row gains `-G (r_now - r_before)`, each rational applied by D with its remainder kept on the row; the order within the interval: light's step, the massive step, then the two entries, both reading the two records' columns of the interval that ended; the block's total record at a Node is the sum (G) of its own record and the responses; the block's own record is driven by the light records the block itself emitted (below) and by no other | `coupling` `{"G": [n, d], "g": [n, d]}` (both `[0, 1]` by default: a block that neither drives nor is driven) | B then D | (g) |
+| 2. The source term the current entry (section 7): the block emits at its mode | a block that declares `emits` births one light record per cycle of its own clock, paying the light family's quantum h from its held content as a lamp does; the record's rows at the cells gain `-G (m_now - m_before)` of the block's OWN record during that cycle (the same entry); the block's own record gains `+g` of every light record it emitted (its own light's field, the radiation reaction); no train declared: the record ends as every record ends; its norm the sum over the cycle and the cells of the sourced amount squared (the first build's form of a lamp's norm) | `emits` (a light family's name; absent, no emission; refused unless the block holds that family) | B then D; the birth as the lamp's (T) | (h) |
+| 2. The click of section 6: the evaluation E of the object's own record across R at the declared wheel W in the object's own count | the block's cell `measured:<number>`; per light record k the block's pointer accumulates the response's motion across R, `sum over R of (r_now - r_before)^2` per interval, the first build's raw units (section 10 (d)); the FIRST RUNG when `pointer x W >= norm_k`, the interval and the block's own count stamped on the click; the cell chosen at the record's completion by `cell_of` over the cells' pointers as today; the block's OWN COUNT its clock: one count per cycle of its total record summed across R (the sum's crossing from at most 0 to above 0), a `click` line per cycle of its own (the self-click of row (g)); the `gather` line of a light record clicked at the block carries `clock`, the block's count | `wheel` W on the block (the world's wheel by default); `seed` (an integer from 0; the amplitude unit 2^20 by default; 0 a block whose own record is silent) | E, D, G | (i), (j) |
+| 2. The take on light's row only for an object declared ABSORBING (the existing Port's take, DESIGN.md section 5); no take for a clock body | an absorbing block's cells join the `absorbing` mask (the first build's receivers: light's amplitude taken at the cells, the one-way Port take with the pair `[-15, 56]`, the offer the Ports' motion booked to the block's cell); a clock body takes nothing: light's rows pass through its cells with the coupling alone; an absorbing block's coupling reads the Ports' amplitudes (the field the cells read) and emits nothing (its light rows are taken) | `absorbing` (false by default) | the take's T and D as built | (k) |
+| 2. The index in motion a COMPUTATION from the drive's own count K, the pair `[K^2, K^2 - 3]` (section 7, record 1418) | the coupling's `g` carried in motion as `g x [W_d^2, W_d^2 - 3 P . P]` with W_d = 3 Q S M the drive's wall and P the block's momentum, integers the stepping cell has (on one axis with K = W_d / abs(P_a) whole exactly `[K^2, K^2 - 3]`; at rest `[1, 1]`), reduced by the gcd and applied by D; nothing declared in motion; the reading is a PREDICTION of the model as built (7a82c155: the chain read 0.63 and 0.83 of the covariant slab with the pair) | none | D | (l) |
+| 3. The massive kind's faces PERIODIC by default; light's faces per the experiment (section 11 item 4) | `_shift` and `_neighbours` take the kind's own wrap flags: the massive family's from `faces`, light's from the world's `boundary` as today; the massive kind's open face is the ZERO face (the neighbour beyond reads 0, nothing booked) | the family key `faces` (`x`, `y`, `z` to `"periodic"` or `"open"`, every axis periodic by default; refused on a family without a massive pair) | none (the torus is the algebra's, ALGEBRA.md 1.6) | (m) |
+| 3. The margin rule, a LOAD-TIME check (section 11 item 4, Reviewer 3's two lines) | `diagnostics/massive_record_margin.py` (FINDING 1): for every block of the massive kind the bound mode's `2 cos omega_b` as the largest eigenvalue of `D^-1/2 (L / 3) D^-1/2` on the world's own board and faces (a Lanczos in numpy, the largest Ritz value to 1e-9), then `cosh kappa = 3 D_out cos omega_b - 2`, the extent `1 / kappa`, eps, printed before the world runs; the rule: a CONTROL world's cells at least ONE extent from any non-periodic face of the massive kind and a periodic axis's side at least the block's side plus TWO extents; a PIN world's cells at least TWO extents from a non-periodic face and a periodic side at least the side plus FOUR extents; a declaration below the margin refused naming the block, the axis, the extent and the distance; an unbound block (omega_b at the gap) refused; called by `events/run.py` before the simulation is built and by the preflight | `margin` on the block (`"pin"` by default; `"control"`) | none (a check of the declaration) | (n) |
+| 3. The cavity of form (I), the control (section 4) | a block declared `cavity` holds its own record at 0 outside R (the mirror faces: the row beyond R read as 0 and written 0), the record inside the cells alone; moved, the faces move with the cells and the record re-forms | `cavity` (false by default) | none (a declared mirror, DESIGN.md section 5) | (o) |
+| 4. The check worlds (section 11 item 3 at 7a82c155) | `examples/events/massive_record/`: the world files, `make_worlds.py`, `pins.py` (the pins before the run, printed to `pins.out`), `expectations.json` (the pins with the design script's name and SHA), `read_runs.py` (the readings by kind), README.md; the readings in `BUILD_READINGS.md` (written at step 5) | as section 5 | none | the runs are research runs, once, dated, fingerprinted; no test pins a world's number (CONTRIBUTING.md) |
+
+## 3. The world file under the key: every declaration, its default and its refusal
+
+- `massive_record`: true or false, false by default; any other type refused.
+  Under it the loader admits the family keys `pair` and `faces` and the
+  block keys below; without it each is refused as unknown.
+- A family with `pair` `[num, den]`: two integers from 1, `den > num`
+  (light's kind declares none and reads `[1, 1]`); such a family is the
+  massive kind and needs no `phase_per_link` (its clock is its gap; the
+  first build's check "every paid family needs the pair form of its clock"
+  reads "every paid family without a massive pair", section 10 (f)); a
+  family with `pair` and a `lamp` refused (a massive record is born of no
+  lamp: it is a block's own record or a block's response).
+- A family's `faces`: `x`, `y`, `z` each `"periodic"` or `"open"`, periodic
+  by default; on a family without a massive pair refused.
+- A measured event with `side` is a BLOCK: `position` (the cube's lower
+  corner), `family` (the massive kind: a clock body or a well; the light
+  family: the (M) wall), `amount` (its content M), `momentum`, and the
+  block keys: `side` (required), `pair` (required), `coupling` (`{"G":
+  [n, d], "g": [n, d]}`, `[0, 1]` each by default), `wheel` (the world's
+  wheel by default), `seed` (2^20 by default; 0 admitted), `absorbing`
+  (false), `cavity` (false), `ramp` (0), `margin` (`"pin"`), `emits`
+  (absent). Refused: `span` other than `[1, 1, 1]` with `side`; a `lamp`
+  on a block; a momentum past the pace bound; `coupling`, `seed`, `emits`,
+  `cavity`, `margin` or `wheel` on a block of the light family (the wall
+  has no clock and no coupling); every block key on a measured event
+  without `side`.
+- The light family: as the first build (a paid family with the pair form
+  of `phase_per_link`, its lamps with `rate`, `wheel`, `train`).
+- The record: `run.json` carries `massive_record` as declared and the
+  identity `massive-record-v1` under `hypotheses` when true; per family
+  `pair` and `faces` only then; per block its keys only then; the books
+  gain `form` per family (GAMEBOARD) only then; `events.jsonl` gains the
+  block's `click` lines, a `block` line per interval per block (its total
+  record's sum across R and its cells' amplitudes, GAMEBOARD, under the
+  key alone) and, where a world declares `probes`, a `probe` line per
+  interval (a declared Node's light amplitude, GAMEBOARD); without the key
+  no line changes.
+
+## 4. The interval's steps under the key, in the engine's order
+
+1. The births (the lamps' as built; a block's emission at the start of a
+   cycle of its own clock).
+2. For every live record, light or massive, the rule's step with its
+   kind's pair arrays: G, D, T (`_advance`); light's receivers and Ports
+   as built; a massive record's zero faces where its family declares an
+   axis open; a cavity's faces.
+3. The coupling at every block's cells: the responses and the light
+   records both ways; the block's own record and its emitted records both
+   ways; the offers booked (the responses' motion across R into the light
+   records' pointers at the block's cell; an absorbing block's Ports as
+   built); the first rungs stamped with the block's count.
+4. The block's clock: the total record summed across R, the cycle
+   counted, the self-click line; the block's step by its drive (the cells
+   and the pair arrays moved, the bound checked).
+5. The completions and the clicks as built (`cell_of` over the cells).
+6. The books: the lines as built and the form I per family (GAMEBOARD).
+
+## 5. The check worlds at 7a82c155, in section 11's order, each a CONTROL, a PIN or a PREDICTION world, with the pins declared before any run
+
+Every pin below is a COMPUTATION copied from a script beside the design
+(its name and the SHA of its `.out`: 5efd67c413b83c151c99d23ce7ee7d348f8d329c
+for the first seven, 7a82c155d6966b088cb0369963631dddec1d3d0e for the
+relay and the moving index) or from the closed form the design states;
+`pins.py` of the series recomputes each on the world's own board with the
+margin module and prints both numbers, the world's own being the pin
+(section 10 (b)); the pins file `expectations.json` is written before its
+world runs. The pairs: at mu = 0.15 the medium `D_out = 1 + mu^2 / 2 =
+809 / 800`, the kind `[800, 809]`; the well at full depth g = mu^2 is
+`D_in = 1`, the pair `[800, 800]`; at half depth g = mu^2 / 2, `D_in =
+1609 / 1600`, the kind written `[1600, 1618]` and the well `[1600, 1609]`.
+At mu = 0.05: the kind `[800, 801]` (full depth `[800, 800]`) or `[1600,
+1602]` (half depth `[1600, 1601]`). On the chains of (iv) and (v-m) the
+design's medium `[156, 157]` (omega_0 = 0.1129, lambda_0 = 32.1 Links)
+and its well `mu_in^2 = mu^2 / 2`, `den' / num' = 1 + mu^2 / 4 =
+1.0031855`, the pair `[314, 315]` (1.0031847). The margin of section 2's
+rule decides each world's kind: on a periodic 48^3 board the s = 20 block
+(the extent 5.7) fits a pin's four extents (42.9) and the s = 28 block
+(the extent 8.2) does not (60.8), so both prediction worlds declare
+`margin: "control"` and say so; the pin worlds of five are (i-c) alone.
+
+| World | Kind | The declaration | The pin (COMPUTATION) and its source | The reading, by kind |
+| --- | --- | --- | --- | --- |
+| (i-a) `rest_20.json`: one block at rest, mu = 0.15, s = 20, g = mu^2, a periodic 48^3 board, seed 2^20, no light, 3000 intervals (53 periods) | CONTROL (the cavity-leaning control, section 11 item 4) | `[800, 809]`, the well `[800, 800]`, `coupling` `[0, 1]`, `margin` `"control"` | `massive_board_margin.out` (96^3): omega_b 0.11066, omega_0 0.14930, eps 0.4507, kappa 0.17410, the extent 5.7 Links, the side by the rule 31; on the world's 48^3 box the module's own (the float scratch of this plan read 0.11046 and 5.73: the periodic image's shift, 0.2 percent) | GAMEBOARD: the frequency from the self-click count over the run and the spectral peak of the block line; the extent from the envelope in `state.json`; HOST separate |
+| (i-b) `rest_28.json`: s = 28, g = mu^2 / 2, the same board | CONTROL | `[1600, 1618]`, the well `[1600, 1609]`, `margin` `"control"` | `massive_board_margin.out`: omega_b 0.13184, eps 0.2202, kappa 0.12175, the extent 8.2, the side 44; on 48^3 the module's own (the scratch 0.13053 and 7.94: the image's shift 1 percent) | the same |
+| (i-c) the four smallest binding sides, if afforded: mu = 0.15 at s = 10 (g = mu^2) and 14 (g = mu^2 / 2); mu = 0.05 at s = 30 (g = mu^2) and 42 (g = mu^2 / 2); the side s + 4 / kappa | PIN worlds of five (at rest their clocks; in motion (ii-c)) | the pairs above; the sides 191, 206, 274, 288 (from the 96^3 and 128^3 extents 45.3, 48.0, 60.9, 61.5); `margin` `"pin"` | `massive_board_margin.out`: omega_b 0.14876, 0.14882, 0.04907, 0.04908; eps 0.0072, 0.0064, 0.0360, 0.0353; the extents beyond those boxes, the module's own on the world's box the pin | the same; the HOST cost of section 7 decides with the Boss |
+| (ii-a) `moving_20.json`: the s = 20 block pushed to k = 3 (P = Q S M on x) over a ramp of 1500 intervals and a hold of 8000, a periodic 64^3 board | PREDICTION (the block form's residual: eps 0.45, cavity-leaning) | as (i-a) with `momentum` `[64 M, 0, 0]`, `ramp` 1500, `margin` `"control"` | section 8's one formula `f / f_0 = omega_b(gamma_m s, g) / (gamma_m omega_b(s, g))` with omega_b at s' = 24.49 by `pins.py` (the module at the two integer sides, interpolated as `massive_block_clock_motion.py` does); the first-order residual `eps (gamma_m^2 - 1) / 2` = 0.113 (11 percent) on 1 / gamma_m = 0.8165, about 0.724 at first order; NOT five's pin | GAMEBOARD: the block's count per interval over the hold against its rest count; the spectral peak at the co-moving centre cell |
+| (ii-b) `moving_28.json`: the s = 28 block the same way | PREDICTION (eps 0.22, between the regimes) | as (i-b) with the momentum and the ramp | the formula at s' = 34.29; the residual 0.055 (5.5 percent), about 0.771 at first order; the design's mu = 0.05 chain numbers (0.8065 the well regime at s = 12, g = mu^2 / 2; 0.7128 the cavity regime at s = 48; `massive_block_clock_motion.out`) quoted beside as the formula's own checks, not read by these worlds | the same |
+| (ii-c) the four pin worlds of (i-c) pushed to k = 3, if afforded | PIN (five: 1 and 1 to the residual under one percent) | as (i-c) with the momentum and the ramp | 1 / gamma_m = 0.8165 with the residual 0.0009 to 0.0045 (eps 0.0072 to 0.036); the one formula by `pins.py` | the same |
+| (iii-a) `cavity_24.json`: the rest cavity of form (I), s = 24, `cavity` true, the kind `[800, 809]`, a periodic 48^3 board | CONTROL | the block's pair the kind's own (no well; the faces are the mirror) | section 4's table at `[1, 1]`: omega 0.1257, N = 50.0 for the 24-cube; with the pair the exact separable form on the lattice `cos omega = (num / den) cos(pi / (s + 1))`: omega 0.19503, N = 32.2 (the design's "quadrature" 0.19515 to the lattice's residual) | GAMEBOARD: the count and the spectral peak |
+| (iii-b) `cavity_24_moving.json`: the cavity pushed to k = 3 | CONTROL (the medium's clock) | the momentum and the ramp as (ii) | `1 / gamma_m^2 = 0.6667` (section 8's cavity limit; `massive_block_clock_motion.out`) | the same |
+| (iv-a) `two_bodies.json`: the light clock on two bodies at rest, the design's chain (1400 x 1 x 1, y and z periodic, x open for light; the massive kind `[156, 157]`, its faces open on x, the wells `[314, 315]` of s = 12 at x = 500 and at L = 60 between the facing cells; A seeded at 2^20, B seeded 0; both `coupling` G `[1, 1]`, g `[1, 5]` (0.2); W 64; A `emits` light, B `emits` light; 700 intervals); and the same world without B (`two_bodies_alone.json`) | PIN of row (d) per declaration (the script's number) | as stated; A holds light content for its births | `massive_light_clock_relay.out` at g = 0.2: B's pointer crosses the rung 20 intervals after the front (delta_rung); A's received part crosses at N_0 = 258 against 2 L / c = 207.85; A's mode alone e-folds in 183 intervals (3.0 periods); the register's 206 +- 2 NOT MET by two bodies (the design's line); the board's number "printed by the script's board form before the run" is the physicist's (the seed's shape: the script seeds the exact mode at A_0, the engine a declared amplitude on the cells; section 10 (h)) | GAMEBOARD: the received part by the subtraction of the two runs' block lines (FINDING 3); DETECTOR: A's click on B's emitted record (its `gather` line's `click` and `clock`), stated beside the script's 258 and never equated with it; B's first rung on A's record against the script's 20 |
+| (iv-b) `take_world.json`: the take world beside it, an (M) mirror (a block of the light family with `pair` `[21, 22]`, the gap 0.3: cos 0.3 = 0.9553, 21 / 22 = 0.9545) at L = 60 from a detector declared `absorbing` with a lamp (the register's light clock of DESIGN.md 6.4 under the rule) | the register's 206 +- 2 reproduced | the first build's chain of `tests/test_detector_law.py` with the mirror block in place of the far receiver | DESIGN.md 6.8 as computed: the first rung on the Port's motion 207 to 208 at 12 to 24 Links (the pin (d) 206 +- 2 as declared, inside at its edge); `massive_light_clock_relay.out` for the mirror with a body: N_0 = 238 and 236 (a body's counting form, not the take's) | DETECTOR: the lamp's click on its returned record (the `gather` line's `click` less `birth`) |
+| (v) `index.json` (three worlds at g = 1 / 50, 1 / 20, 1 / 10): a chain 1400 x 1 x 1, x open (light's faces receive), the massive kind `[7, 8]` (omega_0 = 0.50536; below the honest floor N >= 21, named: a check of the coupling's algebra, `massive_dielectric_index.py`'s own choice omega_0 = 0.5), a block of side 12 at x = 900 with `seed` 0 and G `[1, 1]`, the light clock `[153, 100]` on N = 64 (omega = 0.150214, lambda 24.2 Links), a lamp at x = 600, a probe at x = 1100; `index_reference.json` without the block | CONTROL of the coupling | `faces` of the massive kind open on x | the closed form `n^2 = 1 + G g / (omega_0^2 - omega^2)` with the declared integers: n = 1.0420, 1.1021, 1.1954 (the design's 1.0430, 1.1044, 1.1998 at its omega_0 = 0.5000); the design's chain read 1.034, 1.083, 1.159, 0.8 to 3.4 percent below the closed form (the faces' steps), named beside | GAMEBOARD: light's transmitted phase delay at the probe over 12 cells against the reference |
+| (v-m) `index_moving.json`: the moving index, the design's chain (2200 x 1 x 1, the source at 300, the probe at 1500, s = 24, `[156, 157]`, the well `[314, 315]`, g `[1, 200]`, G `[1, 1]`, light at omega = 0.035, the block at K = 3 toward the source from x = 1300 and away from x = 700, the window [3400, 4300]) | PREDICTION of the model as built | as stated; `momentum` `[Q S M / 1, 0, 0]` for K = 3, no ramp (the script steps from t = 2600 at once) | `massive_moving_index.out`: at rest n = 1.2362 (the delay +0.3436 rad); moving head-on the lab delay +0.3803 rad (G g unchanged) and +0.5103 (the drive's pair), the ratios 0.471 and 0.632 of the covariant expectation +0.8072; from behind +0.1098 and +0.1864, the ratios 0.486 and 0.825 of +0.2259; the engine carries the drive's pair, so its pin is +0.5103 head-on and +0.1864 from behind, +- 0.04 rad; the script TRANSLATES the massive rows with the step and the engine re-forms them (section 10 (a)): a difference between the two is that reading's, named | GAMEBOARD: the lab phase delay at the probe |
+
+## 6. The tests (`tests/test_massive_record.py`), one behaviour each, with the inputs and the expected integers written here before the code, and an edge case
+
+- (a) The rule on a chain (y and z periodic of one layer, x open on 5
+  Nodes, so S_6 = a_W + a_E + 4 a_now with 0 beyond the ends), the kind
+  `[2, 3]` (3 den = 9): a_now = [0, 5, -7, 3, 0], a_before = [1, 0, 2, -1,
+  0], r = [0, 1, 2, 0, 1]. The totals num S_6 - 9 a_before + r are [1, 27,
+  -56, 19, 7]; a_next = [0, 3, -7, 2, 0] (the floor division: -56 // 9 =
+  -7) and r' = [1, 0, 7, 1, 7], every r' in [0, 9). The edge case: the
+  same chain at the kind `[1, 1]` gives the head's integers (3 a_next +
+  r' = S_6 - 3 a_before + r) bit for bit, the existing test's random chain
+  unchanged.
+- (b) At a corner of an open 2 x 2 x 2 board (three neighbours, three
+  zero faces), the kind `[1, 2]` (3 den = 6): at (0, 0, 0) a_now = 4 with
+  the neighbours (1, 0, 0) = 3, (0, 1, 0) = -2, (0, 0, 1) = 5, a_before = 1,
+  r = 5: S_6 = 6, the total 1 x 6 - 6 x 1 + 5 = 5, a_next = 0, r' = 5.
+  With a_before = -2 the total is 23, a_next = 3, r' = 5.
+- (c) Light's pair `[1, 1]` on the first build's random chain: the total,
+  the quotient and the remainder equal to the existing test's, and the
+  chain world's digests of section 1 unchanged with the key declared on a
+  world that has no massive family.
+- (d) The conserved form I on a periodic 6^3 board at `[128, 129]` and at
+  the checkerboard seed of `massive_corner_stability.py` (a smooth 2^20
+  cosine plus one unit of checkerboard): I at interval 0 computed by the
+  test from the definition; over 200 intervals abs(I(t) - I(0)) below
+  10^-3 I(0) (the design's chain read 2 x 10^-4 over 200 intervals), and
+  the peak amplitude bounded (below 2 x 2^20). The edge case: `[1, 1]` on
+  the same seed grows linearly (the semidefinite corner, DESIGN.md 2.1),
+  named and allowed.
+- (e) A block of side 3 at (2, 2, 2) on an open 8^3 board of the kind
+  `[800, 809]` with the well `[800, 800]`: the pair arrays read 809 on
+  every Node but the 27 cells, 800 there, num 800 everywhere; the cells'
+  list is the cube. The edge case: a cube of side 4 at (6, 6, 6) cut by the
+  board is refused by the margin rule (its cells nearer than one extent to
+  the open face), not silently truncated.
+- (f) A block of content M = 1 with P = Q S M = 64 on x (S = 1): the
+  accumulator gains 64 per interval against the wall 192; it steps at the
+  intervals 3, 6, 9, ... (the remainder 0 each time); with P = 70 it steps
+  at 3, 6, 9 with the remainders 18, 36, 54 and at the interval 11 (the
+  fourth Link) with the remainder 2 (770 - 4 x 192 = 2); the cells and the
+  pair arrays move with it; a row of the block's own record at a cell
+  stays on its Node after the step. The edge case: P = [112, 112, 112]
+  (3 P . P = 112896 >= 192^2 = 36864) is refused at load naming the bound;
+  P = [64, 64, 64] (3 x 12288 = 36864, not below 36864) refused too; P =
+  [64, 64, 0] admitted (24576 < 36864).
+- (g) The coupling both ways on a chain of 400 Nodes (the kind `[156,
+  157]`, a block of side 12 with the well `[314, 315]`, G = `[1, 1]`, g =
+  `[1, 20]`), a light train of 4 periods at the clock `[1, 5]` on N = 64
+  (omega = 0.196) from a lamp at x = 40: E_light + 20 I_m (the pair G / g
+  = 20 / 1) constant to within 10^-3 of its value at the train's end over
+  400 intervals, while E_light alone falls by more than 1 percent (the
+  energy moved into the response). The edge case: g = `[0, 1]` leaves
+  E_light constant and I_m = 0.
+- (h) A seeded block (seed 2^20, the kind `[156, 157]`, the well `[314,
+  315]`, G `[1, 1]`, g `[1, 5]`) that `emits` light holding 3 units of the
+  light family (quantum 1): three births, one at each of the first three
+  cycles of its count, each paying 1, the books balanced at every tick;
+  the fourth cycle births nothing (the held 0). The edge case: a block
+  with `emits` and no held content of that family is refused at load.
+- (i) The click at W: the chain of (g) with W = 64 on the block and the
+  lamp at x = 40, the train's front reaching the block's near face at x =
+  200 after about (200 - 40) / c = 277 intervals: the block's first rung
+  on that record is crossed between 10 and 60 intervals after the front
+  (the relay script's 20 to 46 at g = 0.02 to 0.2 on the design's chain),
+  the rung `pointer x 64 >= norm` read as the comparison, the crossing
+  stamped with the block's count; the record's gather line, when the block
+  is the chosen cell, carries `clock` equal to that count. The edge case:
+  W = 1 stamps the first interval with any motion.
+- (j) A seeded block at rest (the kind `[800, 809]`, the well `[800,
+  800]`, s = 10, the smallest binding side of `massive_cube_threshold.out`
+  at mu = 0.15, on a periodic 32^3 board, no light): its count over 500
+  intervals equals the number of upward zero crossings of its summed
+  record read from the `block` lines, one `click` line per count, and the
+  mean period lies between 30 and 80 intervals (the gap's period 42.1;
+  the board's wrap at 32 admitted, the test a consistency of the count
+  and not a pin of the mode). The edge case: seed 0 counts nothing.
+- (k) The take: the chain of (g) with the block declared `absorbing`:
+  light's row at every cell is 0 after every step, its Ports book an offer
+  into the block's cell, and the record clicks at the block (the chosen
+  cell `measured:1`) with `clock` the block's count; the same chain with
+  `absorbing` false: light's row at the cells is nonzero after the front
+  and the record's pointer at the far face is nonzero (light passed). The
+  edge case: an absorbing block with `emits` is refused at load (its light
+  rows are taken; it cannot source).
+- (l) The motion's pair: a block with P = 64 on x and M = 1 (K = 3) has
+  the effective pair `[36864, 36864 - 3 x 4096] = [36864, 24576] = [3,
+  2]` (`[K^2, K^2 - 3] = [9, 6]` reduced); at rest `[1, 1]`; with P = [64,
+  64, 0] the pair `[36864, 36864 - 24576] = [3, 1]`. The edge case: K = 1
+  (P = 192) is refused by the pace bound before the pair is formed.
+- (m) The kind's faces: a massive record on a 5 x 1 x 1 board whose world
+  `boundary` is open on x and whose family declares no `faces` wraps on x
+  (the neighbour of Node 0 on the -x side is Node 4); with `faces` `{"x":
+  "open"}` the neighbour reads 0 (the zero face) and nothing is booked
+  (the faces' pointers of the light record unchanged). The edge case:
+  `faces` on the light family refused.
+- (n) The margin rule: (1) the s = 28 block of (i-b) on the periodic 48^3
+  board is refused as a pin world naming x, the extent (about 7.9 Links)
+  and the side needed (about 60 > 48), and admitted as a control (44 < 48);
+  (2) a block of s = 20 (`[800, 809]`, the well `[800, 800]`) whose cells
+  lie 3 Links from an open massive face is refused as a control (3 < 5.7)
+  naming the axis and the distance; (3) the kind `[800, 809]` with the
+  well `[800, 808]` at s = 3 (g = 2 (800 / 808 - 800 / 809) = 0.0031 far
+  below g_c(3) = 0.2245 of `massive_cube_threshold.out`) is refused as
+  unbound (omega_b at the gap); (4) the extent printed for (i-a) on 48^3
+  agrees with the float scratch's 5.73 to 0.05 Links.
+- (o) The cavity on a 5-cube of the kind `[800, 809]` on a periodic 24^3
+  board: the exact separable form `cos omega = (800 / 809) cos(pi / 6)`,
+  omega = 0.5423, the period 11.59 intervals: the block's count over 1159
+  intervals between 99 and 101 (one interval's grain); the rows outside
+  the cube 0 at every interval.
+- (p) The byte identity without the key: the digests of section 1 on the
+  first build's chain world over 600 intervals, exact.
+- (q) The loader's refusals, one per key of section 3, each naming the
+  key (`pair` without the key; den <= num on a massive kind; `faces` on
+  light; `side` with `span`; a lamp on a block; a block key on a
+  measured event without `side`; `coupling` on a wall; `emits` unheld;
+  `absorbing` with `emits`; a momentum past the bound).
+- (r) The record's keys under `massive_record` (`hypotheses` carrying
+  `massive-record-v1`, the families' `pair` and `faces`, the blocks'
+  keys, the books' `form`) and none without it.
+
+## 7. The HOST estimate (this machine, numpy int64; the engine's cost, measured at step 5)
+
+- The rule: a float scratch of this plan read 1.6 ms per interval per
+  record on a 48^3 periodic box (110,592 Nodes); the integer form with the
+  remainder about twice that, 3 to 4 ms; the block's own record with the
+  pair arrays 10 ms.
+- (i-a), (i-b): 3000 intervals, under a minute each; the Lanczos of the
+  margin module 75 to 85 iterations on 48^3 (the scratch), seconds.
+- (ii-a), (ii-b): 64^3 (262,144 Nodes), 9500 intervals at about 10 ms: 2
+  minutes each, the design's 2 minutes (`massive_board_margin.out`, HOST).
+- (iii): as (i) and (ii).
+- (iv), (v), (v-m): chains of 1400 to 2200 Nodes, a few light records
+  live with their responses, 700 to 4400 intervals: seconds to a minute.
+- (i-c), (ii-c): 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per
+  interval for the massive arrays alone (the design's 0.3 s at 200^3),
+  0.5 to 0.6 GB of int64 arrays per record; a rest reading of the
+  frequency to 0.36 percent (omega_b against omega_0 at eps 0.007) needs
+  about 300 cycles, 12,000 intervals at N_0 = 42: one to three hours per
+  rest world, the moving worlds 9500 intervals, one to two hours each,
+  and the Lanczos minutes (the gap ratio 2.5 x 10^-5 needs several hundred
+  iterations on three vectors); to be decided with the Boss after (i-a)
+  and (i-b) read.
+- The memory of a light record: three int64 arrays over the board and one
+  response record per block it reaches (three more), the first build's
+  cost doubled at a block.
+
+## 8. What is not built, and said so
+
+- The amplitude coupling `[[0, g], [g, 0]]`: withdrawn (the tachyon).
+- A damping on the mode (the sink's form (b)): not built; the take (a)
+  alone, on an absorbing block.
+- The pace coupling kappa: withdrawn (MUST 4).
+- A boost among the 48, a root at run time, a declared contraction: none.
+- Fizeau's drag: not computed by the design; no world.
+- The two NATURE rows of section 9: the physicist's and Reviewer 3's,
+  verified before the build; no world of this plan reads them.
+
+## 9. The order of the work, one pushed commit per step, on the Boss's word
+
+1. This plan and the index row (STEP 1; pushed).
+2. The rule with a pair per kind, the pair arrays, the form I, the tests
+   (a) to (d), (p), (q) in part, (r) (STEP 2).
+3. The block: the cells, the well, the drive and the step, the coupling
+   both ways with the response records, the source term and the emission,
+   the click at W and the self-click, the take for an absorbing block, the
+   index in motion; the tests (e) to (l) (STEP 3).
+4. The faces of the kind, the cavity, the margin module and its call in
+   the runner; the tests (m) to (o) (STEP 4).
+5. The series `examples/events/massive_record/`, its pins before each run,
+   the runs in the order (i), (ii), (iii), (iv), (v), the readings by kind
+   in BUILD_READINGS.md, a report after each world (STEP 5).
+
+## 10. The two readings of a sentence, where the plan had to choose; for the Boss and the chief physicist
+
+- (a) Section 5 says the block's "record's rows translate by verb T" with
+  its cells, and `massive_moving_index.py` (7a82c155) translates the
+  massive rows with the step; 12.7 (d) says "under (W) the record is NOT
+  carried, it lives on the Nodes and re-forms behind the stepped cells by
+  the rule", and section 8's one formula was checked on a chain that
+  stepped the well and let the field evolve (`massive_block_clock_motion.py`).
+  The two chain scripts of the design step differently. BUILT: the cells
+  and the pair region step; the record re-forms (the reviewer's gate and
+  the clock's pin). The moving index world (v-m) then reads the re-forming
+  block against a script that carried the rows: a difference is that
+  reading's and is named; the physicist's word on which step the board
+  takes is asked.
+- (b) The margin table's numbers were computed on 96^3 and 128^3 boxes;
+  the first check worlds are 48^3 by the design's own line. The periodic
+  image shifts omega_b by 0.2 percent (s = 20) and 1 percent (s = 28).
+  BUILT: the pin is the algebra's number on the world's own board (the
+  same operator, the same method); the design's box number beside it,
+  the difference named as the image's.
+- (c) Whose cycles are the block's clock: its own record's, or its total
+  record's (own plus the responses light drives). BUILT: the total across
+  R, the block's record as the algebra sees it; a block with seed 0 driven
+  by light counts the driven cycles.
+- (d) The units of the block's pointer: the first build books a Port's
+  motion squared raw and its norm the lamp's squared steps, and Reviewer
+  3's Port factor `[97, 28]` (DESIGN.md 2.1) is not applied there; the
+  relay script books 3 x the motion squared against light's E with the
+  strain. BUILT: the response's motion squared raw against the light
+  record's norm as built, the same declared scale as the first build; the
+  factor is a design question for both pointers together, not one.
+- (e) A ramp of the momentum is not a rule; it is the pushing agent's
+  declaration the design's own chain used. BUILT as the block key `ramp`,
+  0 by default, named a declaration of the world.
+- (f) The first build requires the pair form of the clock on every paid
+  family; the massive kind's clock is its gap. BUILT: the requirement
+  reads "every paid family without a massive pair".
+- (g) The merges of `origin/detector-law-design` (75ccec3e, then
+  7a82c155; docs only) into this branch so that this plan sits beside the
+  design it cites and its links resolve; the first merge commit carries
+  git's default message.
+- (h) World (iv)'s pin: the script seeds A with the exact bound mode at
+  A_0 (an eigenvector, a float of the host) and reads A's receive by the
+  subtraction of two runs; the engine seeds a declared integer amplitude
+  on the cells (the mode a computation the rule makes, never a seed) and
+  clicks locally. The board's number per the Boss's line is the script's
+  board form's, the physicist's to print with the engine's seed; the
+  engine's local DETECTOR reading (A's click on B's emitted record) is a
+  different quantity, stated beside it.
+- (i) A block of the light family with a pair (the (M) wall) shares the
+  block's component with no clock and no coupling; its keys are refused
+  so that a wall declares nothing a wall has not.
