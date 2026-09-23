@@ -969,7 +969,7 @@ board's two-block world reads it.
    | --- | --- | --- | --- | --- |
    | The block's own clock at rest (world (i), the control of section 4's threshold table) | (i-a) `rest_20.json`, (i-b) `rest_28.json` | CONTROL: omega_b 0.11066 and 0.13184, the extent 5.7 and 8.2 Links (`massive_board_margin.out`) | 48^3 periodic, 3000 intervals; under a minute each | 2026-09-24, once STEPS 3 to 5 are pushed (the rule of STEP 2 alone reads no block) |
    | Row 4a, the muon's form: the moving block's clock 1 / gamma_m to the band's second term (the FIRST nature-shaped reading, the number the lattice's) | (ii-a) `moving_20.json`, (ii-b) `moving_28.json` | PREDICTION (the block form's residual): the one formula of section 8, about 0.724 and 0.771 at first order against 1 / gamma_m = 0.8165 (eps 0.45 and 0.22) | 64^3 periodic, 9500 intervals; 2 minutes each | 2026-09-24, after (i) |
-   | Row 4a as five's pin: 1 / gamma_m within one percent (the residual 0.0009 to 0.0045) | (ii-c), the four smallest binding sides pushed to k = 3 | PIN: 0.8165 +- 0.01; at rest first, (i-c): omega_b 0.14876, 0.14882, 0.04907, 0.04908 | 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per interval; a rest world one to three hours, a moving world one to two hours, four of each | 2026-09-25 (the rest worlds after (i-a) and (i-b) read and the Boss's word on the HOST cost, the moving ones after them); not the morning of the 24th |
+   | Row 4a as five's pin: 1 / gamma_m within one percent (the residual 0.0009 to 0.0045) | (ii-c), the four smallest binding sides pushed to k = 3 | PIN: 0.8165 +- 0.01; at rest first, (i-c): omega_b 0.14876, 0.14882, 0.04907, 0.04908; ON A LAYER (item 7, the owner's word): its own pin worlds (mu = 0.15, s = 14, g = mu^2 / 4, a 200^2 layer, read 0.8113 in the script) | 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per interval; a rest world one to three hours, a moving world one to two hours, four of each | in 3-D 2026-09-25 (the rest worlds after (i-a) and (i-b) read and the Boss's word on the HOST cost, the moving ones after them); ON THE LAYER the 24th with (ii-a), seconds per world |
    | Five's 1 and 1, N_par / N_perp between two arms in motion (rows (e), (f); row 5b of the table) | the two-arm relay (b) of item 3: light-bound arms at section 10's equilibrium, pushed by the stress of section 5, at k = 4; its CONTROL (a), declared rigid arms at k = 3 | PIN: 1 and 1 within +- 0.03 plus eps (gamma_m^2 - 1) / 2; the control the theorem's gamma_m ratio times the ring-ups' ratio | a layer of two arms of L about 60 with the margin, about 200 x 200 x (s + 4 / kappa); an hour a world by the pin worlds' rate | NOT IN BUILD.md section 5 as pushed: light's push on the block (section 5's stress through section 10's force) is ordered by the Boss (16:33Z) as a step after world (iv), from sections 5 and 10 as written with the builder's lines added to section 5; 2026-09-26 at the earliest |
    | Row 4b, the moving lamp's redshift: 1 + z = gamma_m (1 + beta_c), the character's frequency shifted by the medium's Doppler | the boosted block's emission read by a block at rest: (ii-a) with a receiver block and light through the coupling, a world beside (iv-a) | COMPUTATION per declaration (section 9's row 4b); nature's 1.315 at beta = 0.2674 NOT COMPARED until the conversion of the pace | as (iv-a) on a chain, seconds; on a 64^3 board 2 minutes | 2026-09-25, after (iv-a) |
    | The rest cavity of form (I) and the cavity moved (the control of the medium's clock) | (iii-a) `cavity_24.json`, (iii-b) `cavity_24_moving.json` | CONTROL: omega 0.19503 (N = 32.2); moved 1 / gamma_m^2 = 0.6667 | 48^3 periodic; under a minute, 2 minutes | 2026-09-24, with (i) and (ii) |
@@ -1013,6 +1013,53 @@ board's two-block world reads it.
    run, and no world reads them (BUILD.md section 8).
 
 
+7. **The layer worlds (z = 1), on the owner's word** (Hebrew, to the
+   chief physicist directly, after the answer that a one-layer board cuts
+   the pin worlds' times about 200-fold: "if it works algebraically, and
+   on the times it clearly does, then yes"; passed to the Boss for the
+   record; COMPUTATION, `massive_layer_pins.py`). WHAT HOLDS ON THE LAYER:
+   the rule unchanged (the folded axis reads the Node itself twice, a_U =
+   a_D = a_now, DESIGN.md section 2; the six reads S_4 + 2 a_now); the
+   form I exact with the remainders' term (section 3, residual 0 on 6 x 6
+   x 1); the tail's cosh kappa = 3 D_out cos omega_b - 2 unchanged; the
+   margin rule unchanged (two extents from a face for a pin world); the
+   one formula of section 8 CHECKED ON THE LAYER ITSELF (the cells' set
+   stepped at k = 3 over a ramp of 1500 and a hold of 8000, the record
+   re-forming, the clock read at the co-moving centre): f / f_0 read
+   0.7832, 0.8113, 0.7635 against the one formula's 0.7880, 0.8141, 0.7691
+   (the moving well a resting well of width gamma_m s ALONG the motion and
+   s across) at eps 0.21, 0.011, 0.63, within 0.7 percent (the peak's
+   grain over 8000 intervals), the first-order 1 / gamma_m (1 - eps
+   (gamma_m^2 - 1) / 2) good at eps 0.011 and not at 0.63, as section 8
+   says. WHAT THE LAYER DOES NOT TEST: the 3-D corner (the layer blind to
+   it, as the chains were, section 3; the (B) form's stability there is
+   the 6^3 box's, `massive_corner_stability.py`) and the cube's binding
+   threshold (a square well on a layer binds at EVERY depth, so eps at the
+   same s and g is DEEPER than the cube's: 0.21 against 0.007 at mu =
+   0.15, s = 10, g = mu^2; the four smallest binding sides of item 4 are
+   NOT the layer's pin worlds). THE LAYER'S OWN PINS, re-declared before
+   any run (a periodic n x n x 1 layer; the pair as BUILD.md section 5,
+   the well `[num, den]` of the depth; HOST numpy on this machine):
+
+   | mu | s | g | omega_b | eps | the extent 1 / kappa | the side s + 4 / kappa | the world's kind | HOST, a moving world of 9500 intervals |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3; read 0.8113 against 1 / gamma_m 0.8165 and the formula's 0.8141) | 6 s |
+   | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent) | 12 s |
+   | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | a PIN world at mu = 0.05 (residual 0.3 percent) | about 1 min |
+   | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent) | 2 s |
+   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.2 percent; read 0.7832 against the formula's 0.7880) | 1 s |
+   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL (read 0.7635 against 0.7691) | 1 s |
+
+   So on the layer the whole of (i) to (iii) reads in seconds and the
+   pin worlds of five's residual in under a minute, all on the 24th with
+   the 48^3 worlds if STEPS 3 to 5 land; the two-arm relay (b) on a layer
+   (two arms in x and y, the third axis folded) about a minute once
+   light's push is built (the 26th); the 3-D worlds stay the law's own,
+   one per row after the layer's reading, on the Boss's word; a layer
+   reading is labelled "(layer)" beside its 3-D pin, never in its place.
+   The builder needs nothing new: the family's `faces` key already
+   declares a periodic axis of extent 1.
+
 ## 12. The three tests per sentence; the scripts; what is not computed
 
 | Sentence | Generic | Vector | Local |
@@ -1039,7 +1086,8 @@ time, N_0 against 2 L / c, the mirror variant), `massive_moving_index.py`
 (section 7, the moving block's index against the resting one), and
 `massive_well_spectrum.py` (section 9: the atom's levels as the well's bound modes, three shapes, against Balmer),
 `massive_time_reversal.py` (section 14: the rules' exact inverse in integers, the same formula backward, the click),
-`massive_conserved_form.py` (sections 3 and 7: the form on any extents with the remainders' term, exact in integers; the coupled scheme's exact invariant with its cross term).
+`massive_conserved_form.py` (sections 3 and 7: the form on any extents with the remainders' term, exact in integers; the coupled scheme's exact invariant with its cross term),
+`massive_layer_pins.py` (section 11 item 7: the layer's own pins, the one formula checked on the layer in motion, HOST).
 Run each as its docstring says; the numbers in this document are theirs.
 
 **Not computed here, and said so:** Fizeau's drag (the stepped block's

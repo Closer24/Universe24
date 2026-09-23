@@ -1,0 +1,25 @@
+the square well's bound mode on a ONE-LAYER periodic board (z = 1, form (B)), and the margin rule
+mu | s | g | layer n | omega_b | omega_0 | eps | kappa | extent 1/kappa | extent read | the side s + 4/kappa (a pin world)
+0.15 | 10 | 0.02250 | 256 | 0.13283 | 0.14930 | 0.2085 | 0.11848 | 8.4 | 7 | 44
+0.15 | 14 | 0.01125 | 256 | 0.14162 | 0.14930 | 0.1002 | 0.08216 | 12.2 | 9 | 63
+0.15 | 20 | 0.02250 | 256 | 0.09097 | 0.14930 | 0.6287 | 0.20558 | 4.9 | 5 | 39
+0.15 | 28 | 0.01125 | 256 | 0.12402 | 0.14930 | 0.3100 | 0.14444 | 6.9 | 7 | 56
+0.05 | 30 | 0.00250 | 512 | 0.04443 | 0.04997 | 0.2094 | 0.03963 | 25.2 | 18 | 131
+0.05 | 42 | 0.00125 | 512 | 0.04737 | 0.04997 | 0.1016 | 0.02760 | 36.2 | 26 | 187
+0.05 | 60 | 0.00250 | 512 | 0.03039 | 0.04997 | 0.6301 | 0.06873 | 14.6 | 13 | 118
+0.15 | 14 | 0.00562 | 256 | 0.14846 | 0.14930 | 0.0113 | 0.02759 | 36.2 | 20 | 159
+0.15 | 10 | 0.00562 | 256 | 0.14921 | 0.14930 | 0.0013 | 0.00921 | 108.6 | 57 | 445
+0.15 | 8 | 0.01125 | 256 | 0.14896 | 0.14930 | 0.0046 | 0.01755 | 57.0 | 24 | 236
+0.05 | 42 | 0.00063 | 512 | 0.04967 | 0.04997 | 0.0121 | 0.00952 | 105.0 | 58 | 462
+0.05 | 30 | 0.00063 | 512 | 0.04992 | 0.04997 | 0.0022 | 0.00403 | 248.4 | nan | 1024
+
+HOST: one interval of the two rules on an n x n x 1 layer (numpy, this machine):
+  n = 128 (16,384 Nodes): 0.26 ms per interval; a moving world of 9500 intervals 2 s
+  n = 200 (40,000 Nodes): 0.94 ms per interval; a moving world of 9500 intervals 9 s
+  n = 300 (90,000 Nodes): 2.68 ms per interval; a moving world of 9500 intervals 25 s
+
+the block's clock in motion ON THE LAYER at k = 3 (ramp 1500, hold 8000), against the one formula:
+mu | s | g | layer n | omega_b | eps | f/f0 read | 1/gamma_m | first order 1/gamma_m (1 - residual) | the one formula (the well of width gamma s along x) | residual | s
+0.15 | 10 | 0.02250 | 200 | 0.13283 | 0.2085 | 0.7832 | 0.8165 | 0.7739 | 0.7880 | 0.0521 | 3
+0.15 | 14 | 0.00562 | 200 | 0.14844 | 0.0115 | 0.8113 | 0.8165 | 0.8142 | 0.8141 | 0.0029 | 3
+0.15 | 20 | 0.02250 | 64 | 0.09097 | 0.6288 | 0.7635 | 0.8165 | 0.6882 | 0.7691 | 0.1572 | 0
