@@ -1568,3 +1568,92 @@ check_uncompensated.py in the reviewer's scratch; nothing entered).**
   board of 11.6). The source term named missing in 12.4 is the
   dielectric's acceleration term of 12.5 (b), by which the block
   emits at its mode: not a third thing.
+
+**12.7 The third voice read (ALGEBRA_MASSIVE_RECORD.md at 4d2f7289, on
+the Boss's word of 14:15Z): the convergence, the one structural
+discrepancy settled (whose record carries the pair), and the price of
+each placement (COMPUTATION; nothing entered).**
+
+- (a) The convergence. From ALGEBRA.md alone, without this file's
+  sections 8 to 10, the mathematician finds form (A) unbounded on every
+  three-dimensional periodic world for every p >= 1 (the global
+  checkerboard's Rayleigh quotient 4 + (p / q) |B| / N_board; cubes of
+  side 3, 4, 6 at [1, 3] growing 1.18, 1.37, 1.54 per interval) and
+  proposes, as the one bounded form within the six verbs, 3 (2 q + p)
+  (a_next + a_before) + r' = 2 q S_6 + r: form (B) with [num, den] =
+  [2 q, 2 q + p], cos omega_0 = 2 q / (2 q + p), the map of 12.6 (c)
+  exactly, with 12.6 (d)'s pace c sqrt(cos omega_0) as his c_in. Three
+  derivations (the physicist's corner, this file's dispersion, his
+  quadratic form), one rule. Also agreed: the object no fifth group
+  object (a declared scalar of the Node, the mass angle of ALGEBRA.md
+  5.1 (ii) on a place); the self term (B) then (D) then (T); the
+  commutation with the 48 with the shape carried along; the free
+  packet's clock 1 / gamma_m at second order (0.8165 at k = 3, 11.4);
+  four declarations named and not filled (the coupling to light, the
+  momentum and the push, the shape and the pair, the object's own
+  count), which are 11.7, 5.1 (a), (III) and 11.5 here. One number of
+  his to correct: his one-Node threshold on an open board, p / q =
+  2 / (3 W_S) = 0.4397, takes the Green's function of (1 / 3)(-Lap) at
+  the origin (W_S / 2 = 0.758) with the factor 3 that belongs to
+  -Lap's (W_S / 6 = 0.253); the threshold is 1 / 0.758 = 1.319 (11.6;
+  the physicist's Lanczos 1.3206; a 240^3 quadrature 1.3204). None of
+  his conclusions moves (a single Node at [1, 3] is still inside it;
+  his cube estimate 2.1 / s^2 is 11.6's sphere and stands beside the
+  physicist's exact 2.19 / s^2).
+- (b) The discrepancy, and it is structural. His block sits in a
+  MASSLESS SURROUND: the pair on LIGHT's record at the object's cells
+  and light's rule outside, one record kind. Then the block's lowest
+  mode is a leaking one (his 5.2: omega_1^2 = p / q + pi^2 / s^2 for a
+  cube, inside light's band outside, an outgoing wave, Q = 0.13 (mu
+  s)^3 per axis, under 1 for a twelve-cube at mu = 0.05): no bound
+  mode, no clock, no self-click. This file's well (C6, C8), the
+  physicist's threshold and his third draft put the pair on a SECOND
+  record kind, the massive record, at every Node its rows reach, with a
+  background pair [p, q] and the object a region of LOWERED pair: a
+  bound mode below the outside gap, its tail in the massive medium.
+  Both are in the algebra by the one primitive of 12.6 (c); they
+  differ by whose record carries it. Named here as (W), the well in
+  the massive medium, and (M), the mass lump in light.
+- (c) What each offers, and its price. (M): a gapped lump in a gapless
+  medium can bind nothing (a well needs a lower gap inside than
+  outside, and light's gap is zero), so under (M) no object has a
+  clock of its own; but the lump IS a mirror for light below mu
+  (evanescent inside, the reflection rising to one as omega falls
+  under mu), the wall the design declares as q = 0 today, here derived
+  from a pair; and above mu a leaky cavity of light with his Q. Price:
+  none in memory (one record), and no clock. (W): the massive record
+  kind is a second field, its rule (B) at every Node its rows reach
+  (rows created as the record spreads, as light's are; the tail of a
+  bound mode creates them out to about 14 / kappa Links on a 2^20
+  wheel, the whole board for a block in the well regime), its
+  background pair [p, q] the kind's own declaration in the world file
+  (its rest mass, as light's family has its clock), the object's
+  cells and their lowered pair world data (III), the coupling to
+  light the dielectric pair [G, g] at the cells (12.5 (b)), the hop
+  the drive (P5). Derived under (W): the bound mode and its clock; its
+  Lorentz member to first order in eps with the residual (12.5 (d));
+  the index, the scattering and the emission at the mode's frequency
+  through the dielectric coupling (and so the clock's radiative
+  lifetime, the MUST of 13:43Z, which a weak coupling makes long); a
+  free massive packet outside any object, physically a free massive
+  quantum, a matter wave at group pace below c with its own clock
+  omega_0, which (M) does not have. Not derived under (W): what binds
+  the cells (declared until the threshold and the fixed point of 12.5
+  (c)); the hop's tie (P5). Price: a second row at every Node the
+  record reaches (memory and work), two declared pairs (the kind's
+  and the cells'), and the massive medium as a vacuum with a gap. The
+  owner's "cube in the Inside that produces clicks in the Outside"
+  needs a clock, so it is (W); direction (ii) of 12:18Z is (W); and
+  (M) is not wasted, it is the wall.
+- (d) His caveat (iv), "a hopping object with its record carried is
+  not reachable, a declaration", against P5. The same tie from the
+  other side, and stronger than needed: under (W) the record is NOT
+  carried, it lives on the Nodes and re-forms behind the stepped cells
+  by the rule (C8's chain: the mode follows the well, with the residual
+  of the unboosted declaration), so the one declaration is the cells'
+  hop (the drive's P, P5), not the record's carriage; under (M) his
+  statement is exact, since the lump's record is the only record and
+  nothing in the six verbs moves a Node's row with a hop. His "the
+  covariance the dispersion's to second order only" is 12.6 (d): exact
+  in the lattice's own variables with c_m = c sqrt(cos omega_0), no
+  boost among the 48, the fourth-order anisotropy shared with light.
