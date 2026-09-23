@@ -4203,6 +4203,206 @@ CORRECTIONS = [
         "\\bibitem{hypotheses} Hypotheses under test,",
         "\\bibitem{failrows} What each FAIL row lacks, by the algebra: the rows one by one with the four words and the modes, \\texttt{docs/designs/fail\\_rows/WHAT\\_IS\\_MISSING.md} of the archived code \\cite{zenodo}, on \\texttt{main} at c66de871 (the merge of the branch \\texttt{fail-rows}). \\bibitem{run4ab} Rows 4a and 4b by the clicks: the eleven worlds, every reading at a stamped click, \\texttt{docs/designs/fail\\_rows/RUN\\_4AB.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 0a7b5db2 (the merge of the branch \\texttt{fail-run-4ab}). \\bibitem{run8bc} The neutrino's passage read at a click: rows 8b and 8c under massive-rows-v1, \\texttt{docs/designs/fail\\_rows/RUN\\_8BC.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 907f339d (the merge of the branch \\texttt{fail-run-8bc}). \\bibitem{hypotheses} Hypotheses under test,",
     ),
+    (
+        "step 2, commit 6 (the owner's GO of record 1166 and his three kinds of record 1173, the Boss's orders of 02:0xZ to 02:5xZ): the comparison paragraph, the three statuses and the limitations paragraph before the table, the weight rule once, the count",
+        "\\paragraph{The comparison with nature.} The confrontation register \\cite{nature} keeps one row per registered detector reading with a dimensionless counterpart in nature, one published source per value and one verdict per row (PASS within the stated uncertainty, FAIL with the number, BOUND where the comparison bounds a free parameter, NOT COMPARED where the law does not compute the observable); a FAIL is a result of the law and is stated with the same care as a pass. Table~\\ref{tab:nature} carries the rows read after a detector; six rows of the register (4a, 5b, 10, 11a to 11c) rest on a pin whose run is not made and are not in this table, four of them FAIL by their pin (4a, 5b, 11a, 11c); every verdict is the law's as built at the commit of Appendix~\\ref{app:reproduction}, and a hypothesis's PASS beside the law never changes the law's FAIL.",
+        "\\paragraph{The comparison with nature.} The confrontation register \\cite{nature} keeps one row per registered observable with a dimensionless counterpart in nature, one published source per value; Table~\\ref{tab:nature} carries every row of it, the rows read after a detector and the six that rest on a pin whose run is not made (4a, 5b, 10, 11a to 11c), the law's own number by a click printed in every row, so that nothing is hidden and no row is removed. The status column takes three values: \\emph{agrees}, the reading within the stated tolerance (a bound met is marked so); \\emph{disagrees}, with the number, the law's own result stated with the same care as an agreement; \\emph{not predicted} by the law as built, with the missing piece named in the cell and its kind: (1) the instrument is missing in the model (a moving thing's clock rate, a moving detector's count, a velocity from clicks, the crowd's history), (2) nature's number is a bound or a fitted parameter and not one measurement, (3) no click definition yet for the quantity (a position, a brightness, a period); a row may carry two kinds. Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built). A claim may stand in two rows, the second marked \\emph{beside}, one status each; none is added here. Every number's kind is named (DETECTOR a click; GAMEBOARD the host's view, a diagnostic; COMPUTATION the algebra's); the law's number is the law's as built at the commit of Appendix~\\ref{app:reproduction}, and a reading under a declared hypothesis stands beside it, never in its place.\n\n\\paragraph{The limitations, stated before the comparison.} The third status follows from the structure of the law as built and never from the outcome, and a referee's test that every cell must pass is that a row sits in the same class had it agreed. The law as built has no relativistic dynamics: a moving thing's own count is $r = 1$ at every speed (Section~\\ref{sec:click}) and nothing contracts, so no observable that reads a moving clock's rate or a moving body's extent is predicted; it has no term of the crowd's history, so no observable that reads the growth of an emitter's stretch with the flight time is predicted; and a declared input is not a prediction, so an observable whose number is a declared content, a declared fan width or a declared coefficient is not predicted, whatever the declared world reads. The weight rule, stated once: under the declaration $\\gamma_{\\mathrm{PPN}} > 0$ a moving body's gravitational charge is the pair $w = \\gamma_L(1 + \\gamma_{\\mathrm{PPN}}v^2)M$ with its wall, declared as that key's rule (the owner's decision B, record 1150 \\cite{log}); at $\\gamma_{\\mathrm{PPN}} = 0$ a body weighs $M$, the law's rule at rest, no velocity term on the body; rows 13 and 14 are read under that declaration where they say so, and the coefficient $2(1 + \\gamma_{\\mathrm{PPN}})$ of row 13 is the declared input and not a result. The count: of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin); the disagreeing rows are the law's own results, and the paper claims no rule it has not shown.",
+    ),
+    (
+        "step 2, commit 6: the register table's caption with the count sentence",
+        "\\caption{\\label{tab:nature}The confrontation register's rows read after a detector \\cite{nature}. The criterion per row: PASS where the reading meets nature's value within the stated uncertainty, or, for a visibility, where the model's value lies above the apparatus-limited measurement (a bound met); the model's numbers are ideal, at the registered grain, not a prediction for a given instrument. The one count, computed from the rows and repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: three readings pass (1a, 2b, 9); eleven fail in the table, ten in a registered run (1b, 1c, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); three are bounds (2a, a bound met and not a match, 5a, 7a)",
+        "\\caption{\\label{tab:nature}The confrontation register, every row \\cite{nature}, with the law's own number and a status of three values, agrees, disagrees, not predicted (its missing piece and kind), defined in the text; the model's numbers are ideal, at the registered grain, not a prediction for a given instrument. The one count, repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin)",
+    ),
+    (
+        "step 2, commit 6: the status column's name, the first head",
+        "Row & Observable and nature's value & The law's detector reading & Verdict \\\\\n\\midrule\n\\endfirsthead",
+        "Row & Observable and nature's value & The law's reading, by kind & Status \\\\\n\\midrule\n\\endfirsthead",
+    ),
+    (
+        "step 2, commit 6: the status column's name, the running head",
+        "Row & Observable and nature's value & The law's detector reading & Verdict \\\\\n\\midrule\n\\endhead",
+        "Row & Observable and nature's value & The law's reading, by kind & Status \\\\\n\\midrule\n\\endhead",
+    ),
+    (
+        "step 2, commit 6: row 1a's status cell",
+        "PASS: $1.65$ standard errors above the measured, $0.078$ below the bound; the pair by the click, Section~\\ref{sec:click} \\cite[section 10]{clickframe} \\\\",
+        "agrees: $S = 2.75$ at $\\Nphi = 64$ (DETECTOR), $1.65$ standard errors above the measured, $0.078$ below the quantum bound; the pair by the click, Section~\\ref{sec:click} \\cite[section 10]{clickframe} \\\\",
+    ),
+    (
+        "step 2, commit 6: row 1b's status cell",
+        "FAIL: the local bound, $2.1$ standard errors below \\\\",
+        "disagrees, a control: $S = 2$ exactly (DETECTOR), the local bound, $2.1$ standard errors below the measured; Bell's bound is a theorem of every local read-out and the phase-form window is one, the law's answer to nature being row 1a \\\\",
+    ),
+    (
+        "step 2, commit 6: row 1c's status cell",
+        "FAIL: the law's determinism, the wheel a counter, shows in the order and not in the counts \\\\",
+        "disagrees: $15/16$ and $-1/16$ (DETECTOR) against nature's $0$; the law's determinism, the wheel a counter, shows in the order and not in the counts \\\\",
+    ),
+    (
+        "step 2, commit 6: row 2a's status cell",
+        "BOUND MET (a bound, not a match): $0.966$ in the clicks lies above the biprism's central fringe $0.94$ \\cite{jacques2005}, the caption's criterion for a visibility, the one row 2b passes by; two caveats: the biprism's figure is read at its source's abstract, the body unread, and a central fringe's visibility is set against the pattern's. Against the Mach-Zehnder's $0.98$ the clicks read $0.014$ below, $0.034$ below the ideal, the cause the fan's discreteness, the digital lines' landings; not a number matched \\\\",
+        "not predicted, kind (2): the fan's width and the slits' grain are declared inputs of the world, and nature's two-slit figure is unverified ($0.98$ a Mach-Zehnder's, $0.94$ a biprism's central fringe read at its source's abstract); the law's number $0.966$ in the clicks (DETECTOR), $0.014$ below the Mach-Zehnder's and $0.034$ below the ideal $1$, the cause the fan's discreteness, the digital lines' landings; NOT COMPARED against a two-slit source until the figure is verified, and then bound against bound \\\\",
+    ),
+    (
+        "step 2, commit 6: row 2b's status cell",
+        "PASS as a bound met, not a quantitative agreement: the clicks' visibility $1.000$ ($64/0$, DETECTOR) above the apparatus-limited $0.98$; the offers' $0.9988$ a diagnostic of the apparatus layer \\\\",
+        "agrees, a bound met and not a quantitative agreement: the clicks' visibility $1.000$ ($64/0$, DETECTOR) above the apparatus-limited $0.98$; the offers' $0.9988$ a GAMEBOARD diagnostic of the apparatus layer \\\\",
+    ),
+    (
+        "step 2, commit 6: row 3's status cell",
+        "FAIL: $0.42$ from nature's value, the coasting ideal $q = 0$ and the reading within its grain of it; the law has no term carrying $q$ toward $-0.5$ \\\\",
+        "not predicted, kinds (1) and (2): the law's number $-0.108$ coasting (DETECTOR per tick, the tick GAMEBOARD), the coasting ideal $q = 0$ within the reading's grain, $0.42$ from nature's value; the crowd's history is missing, no term carries $q$ toward $-0.5$ and the law's own crowd gives the wrong sign; nature's $-0.53 \\pm 0.01$ is a fitted parameter of the diagram \\\\",
+    ),
+    (
+        "step 2, commit 6: row 4b's status cell",
+        "FAIL: $0.315$ expected, $17$ grains below; under covariant-readings-v1 $0.3674$ for the pinned $0.369 \\pm 0.003$ (series S; read again at a click over the detector's own count, $0.3674$ in $[0.366, 0.372]$, \\cite{run4ab}), the law's row FAIL; the frame: the two one-way factors apart by $1 - v^2$, read on the $k$-ladder \\cite{run4ab} \\\\",
+        "not predicted, kind (1): the law's number $0.2647$ (DETECTOR) against $0.315$, $17$ grains below, $1 + z = 1 + v$ with no moving clock's rate ($r = 1$); beside it, under covariant-readings-v1 as a declared hypothesis, $0.3674$ for $0.369 \\pm 0.003$, read at a click over the detector's own count, $0.3674$ in $[0.366, 0.372]$ \\cite{run4ab}; the two one-way factors apart by $1 - v^2$ under the law and at $1$ within $0.4$ percent under the key, read on the $k$-ladder \\cite{run4ab} \\\\",
+    ),
+    (
+        "step 2, commit 6: row 5a's status cell",
+        "BOUND on $N_l$: of order $5.8 \\times 10^{17}$ \\\\",
+        "agrees, a bound met: the pace $0.5774$ to $0.5818$ by direction (COMPUTATION; series Q's $290$ of $290$ clicks within it, DETECTOR), isotropic within $1/T_D$; a bound on $N_l$ of order $5.8 \\times 10^{17}$ for nature's $10^{-18}$ \\\\",
+    ),
+    (
+        "step 2, commit 6: row 6's status cell",
+        "FAIL, the law's: the loop opens at $3407$; under the key C1 PASS, C2 and C3 FAIL, no pin moved; the lines NOT COMPUTABLE by any run of the law as built (no rule of the six quantises a body's loop; $27/20$ waits on the new rule); the ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$ and Balmer's $27/20$ conjectured from the algebra in the shell mean's limit, computed from the algebra, not read on the board; a lattice able to hold the scale (the orbit's radius sixty thousand times the nucleus's) is not run (Section~\\ref{sec:discussion} (viii)) \\\\",
+        "disagrees: the loop opens at $3407$ intervals (DETECTOR) and no line is read, against Balmer's $27/20$; under the key C1 PASS, C2 and C3 FAIL, no pin moved; no rule of the six quantises a body's loop, so the lines are computable by no run of the law as built and $27/20$ waits on a rule under its own identity; the ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$ and Balmer's $27/20$ conjectured from the algebra in the shell mean's limit, not read on the board; a lattice able to hold the scale (the orbit's radius sixty thousand times the nucleus's) is not run (Section~\\ref{sec:discussion} (viii)) \\\\",
+    ),
+    (
+        "step 2, commit 6: row 7a's status cell",
+        "BOUND on a declared input: nature's $4.35$ units of $3677$ reachable by no whole give \\\\",
+        "agrees, a bound met on a declared input: the mass read $3673$ against the declared $3677$ (DETECTOR), $0.109$ percent; nature's $4.35$ units of $3677$ reachable by no whole give \\\\",
+    ),
+    (
+        "step 2, commit 6: row 7b's status cell",
+        "FAIL: a factor $6.4$; the give once per body \\\\",
+        "disagrees: $2.0$ (DETECTOR) against $12.72$, a factor $6.4$; the give once per body \\\\",
+    ),
+    (
+        "step 2, commit 6: row 8a's status cell",
+        "FAIL: a step, the width $0$ against nature's $3.17$ (DETECTOR); the registered J1 run predates the one flight wall, under which the weak register's become blocks move (\\cite[records 931 to 933]{log}), so the row is a reading of the law before it, kept as history, J1's redeclaration in the weak field after the paper \\\\",
+        "disagrees: a step, the width $0$ (DETECTOR) against nature's $3.17$, the step the law's own prediction; a width would need the crowd's history, missing (kind (1), named beside); the registered J1 run predates the one flight wall, under which the weak register's become blocks move (\\cite[records 931 to 933]{log}), J1's redeclaration in the weak field after the paper \\\\",
+    ),
+    (
+        "step 2, commit 6: row 8b's status cell",
+        "FAIL: $0$ against nature's ratio $1$; under the declaration massive-rows-v1 with the $\\nu$ quantum $1$ \\cite{run8bc}: the first and second readers $0$ and $0$, the reader at the Node of a whole turn the whole beam ($1013$ of $1013$), the far detector $0$, FAIL by the law's design of the path phase, the beat $h/p = 4.65$ Links read at a click for the first time \\\\",
+        "disagrees: $16$ of $1024$ and $0$ behind (DETECTOR, series J2) against nature's about $1$; under the declaration massive-rows-v1 with the $\\nu$ quantum $1$ the readers read $0$ and $0$ and the reader at the Node of a whole turn the whole beam, $1013$ of $1013$, the far detector $0$, by the law's design of the path phase, the beat $h/p = 4.65$ Links read at a click for the first time \\cite{run8bc}; beside it, with a re-emitter declared between the source and the readers, an arrangement of the law and not nature's, the second reader's rate over the first's is $1.000$ exactly ($16$ and $16$ of $1024$, the far detector $683$ of $705$, DETECTOR) \\cite{run8bc}, not a pass against nature \\\\",
+    ),
+    (
+        "step 2, commit 6: row 8c's status cell",
+        "a declared input refuted by nature: massless states cannot carry the observed splittings; a content above $0$ is an input the register does not declare \\\\",
+        "not predicted, kind (2): the family's content is a declared input, and nature's number a bound; the law's number $0$, the \\texttt{nu} family with no content, refuted as an input by the observed splittings; under massive-rows-v1 the quantum $1$ is the input no longer $0$, a computation and no click, the electron's declared content then at least $1.02 \\times 10^7$ units (COMPUTATION) \\cite{run8bc} \\\\",
+    ),
+    (
+        "step 2, commit 6: row 9's status cell",
+        "PASS: exact at $45$ and $90$ degrees; $0.8555$ against $\\cos^2 = 0.8536$ at $22.5$ \\\\",
+        "agrees: $128$ of $256$ exactly at $45$ degrees (DETECTOR), exact at $45$ and $90$; $0.8555$ against $\\cos^2 = 0.8536$ at $22.5$, within the tables' grain \\\\",
+    ),
+    (
+        "step 2, commit 6: row 13's status cell",
+        "FAIL, the law's: $0$ against $1.75$ arcseconds (series K). Under the declaration $\\gamma_{\\mathrm{PPN}} = 1$ (the weight rule, stated once in the paragraph on the failures by cause): the ring's rule read (DETECTOR, inside its pins), the coefficient $2(1 + \\gamma_{\\mathrm{PPN}})$ a declared input equal to nature's, read within the fan's comb ($3.65$, $3.82$, $3.92$ against $4$, two to nine percent) and never within the grain, a pass in form within the comb and not a pass against nature; the coefficient on the one constant stays conjectured from the algebra \\\\",
+        "disagrees: the law as built $0.000$ pixel and $0.00$ interval (DETECTOR, series K) against $1.75$ arcseconds; beside it, under the declaration $\\gamma_{\\mathrm{PPN}} = 1$ (the weight rule, stated once in the limitations paragraph), the ring's rule read inside its pins, the deciding ring $0.731$ against $0.731 \\pm 0.025$ (DETECTOR), the coefficient $2(1 + \\gamma_{\\mathrm{PPN}})$ a declared input equal to nature's, read within the fan's comb ($3.65$, $3.82$, $3.92$ against $4$, two to nine percent) and never within the grain, a declared input and not a prediction; the ring's position has no click definition yet (kind (3)); the coefficient on the one constant stays conjectured from the algebra \\\\",
+    ),
+    (
+        "step 2, commit 6: row 14's status cell",
+        "the inverse square in space NOT MADE; the run read under the declaration of the weight rule (the paragraph on the failures by cause) \\\\",
+        "the inverse square in space NOT MADE; the run read under the declaration of the weight rule (the limitations paragraph); the present word until the moving detector's run is read \\\\",
+    ),
+    (
+        "step 2, commit 6: row 4a, every row of the register in the table",
+        "4b & A moving lamp's redshift with the clock's factor",
+        "4a & The muon's lifetime in flight over its lifetime at rest: $\\gamma = 29.33$ at the storage ring, the dilation confirmed as $\\gamma$ to a fractional error of about $2 \\times 10^{-3}$ \\cite{bailey1977} & the \\texttt{become} at the count $64$ at every speed (GAMEBOARD, a body's own record), the products' face clicks (DETECTOR): the ratio $1$; under covariant-readings-v1 within its domain, the products' clicks $367$ and $344$, the ratios $70/64$ and $124/64$ against $\\gamma = 1.1074$ and $1.9558$ (DETECTOR) \\cite{run4ab} & not predicted, kind (1): no moving thing's clock rate, $r = 1$; the law's number $1$ against $29.33$; beside it, as a declared hypothesis, $\\gamma$'s form within the domain $\\gamma \\le 2$ \\cite{run4ab}, nature's $29.33$ outside the domain under either drive, a factor $14.8$ short at the cap \\\\\n4b & A moving lamp's redshift with the clock's factor",
+    ),
+    (
+        "step 2, commit 6: row 5b",
+        "6 & Bohr's line ratio $\\nu(\\mathrm{H}\\beta)/",
+        "5b & The anisotropy of $c$ between a laboratory's two arms when the laboratory moves: the null at the Earth's $\\beta = 10^{-4}$ \\cite{michelson1887} & the round trips $\\gamma^2$ along the motion and $\\gamma$ across on the flight table, $1.375$ and $1.140$ at $\\beta = 0.4297$ (COMPUTATION, a pin; the pair in motion not run) & not predicted, kind (1): nothing contracts, the bond a whole Link and a contraction a root of the state at run time; the pin's arms differ by $\\beta^2/2 = 5 \\times 10^{-9}$ at $\\beta = 10^{-4}$, eight to nine orders above the bound \\\\\n6 & Bohr's line ratio $\\nu(\\mathrm{H}\\beta)/",
+    ),
+    (
+        "step 2, commit 6: rows 10, 11a, 11b, 11c",
+        "12 & The clock's field at two distances at the same push",
+        "10 & The single-opening spread $w\\,\\Delta(\\sin\\theta)/\\lambda$: $0.886$, the full width at half maximum of the single-slit pattern \\cite{nairz2002} & the register's entry A10: $1.08$ at $w = 27$ with $\\lambda = 4.619$ Links (the crowd form, kept as history); the record form's re-run did not complete & NOT YET under the one click, as it is: the last registered $1.08$ against $0.886$, $22$ percent above; the smaller widths unread \\\\\n11a & The deceleration parameter read from the brightness of a far lamp: $-0.53 \\pm 0.01$ (row 3's sources) & a derivation's pin, $q_{\\mathrm{eff}} = +1$: the click count falls as $1/(1 + z)$ and the content per click stays the birth's, one factor where nature's flux has two (COMPUTATION; the run not made) & not predicted, kinds (1) and (3): no term of the crowd's history, and no click definition of a brightness yet; the pin $+1$ against $-0.53$ \\\\\n11b & The stretch of a far lamp's stream over $1 + z$: the exponent $b = 0.97 \\pm 0.10$ of $(1 + z)^b$ \\cite{blondin2008} & the same pin: $400$ rows released over $400$ intervals arrive over $1452$ at $300$ Links, the factor $3.639$ against $e^{Hd/c_0} = 3.629$, $b = 1$ (COMPUTATION; the run not made) & PASS by its pin, as it is: $b = 1$ within $0.97 \\pm 0.10$; pinned, the run not made, a pin needing a hypothesis not built \\\\\n11c & Tolman's test, the surface brightness of a resolved source at $z$: $(1 + z)^{-4}$, measured as $(1 + z)^{-n}$ with $n$ between $2.3$ and $3.1$ before correction \\cite{lubin2001} & the same pin: the board's Nodes and the fan's lines fixed under the wall, a ruler of $l$ Nodes at $d$ subtends $l/d$, the flux one power of $1 + z$, $n = 1$ (COMPUTATION; the run not made) & not predicted, kinds (1) and (2): an angular size growing with the redshift is a board whose Links stretch, no verb on the state; nature's exponent a fitted value; the pin $n = 1$ against $4$, three powers of $1 + z$ at most \\\\\n12 & The clock's field at two distances at the same push",
+    ),
+    (
+        "step 2, commit 6: the failures-by-cause paragraph and table of commit 5 withdrawn, the one table with three statuses in their place (nothing written twice)",
+        "\\paragraph{The failures by cause.} Table~\\ref{tab:causes} reads Table~\\ref{tab:nature} in the reverse direction, from the algebra to what each reading lacks, one line per row, in three classes: the measured passes and the bounds; the passes under a declaration named, counted apart from the measured passes; and the failures, each with its cause in the algebra's words. The cause is one of four words \\cite{failrows}: a READING not yet made at a click; a DECLARATION of the world file that puts the compared form in; a RULE the algebra has a place for and the law does not fill; or NOTHING, where the row is a control and nature refutes a theorem of every local read-out. Beside the word stands the mode, the generic thing that goes wrong between a row and its click \\cite{failrows}: (A) a GameBoard quantity taken as the reading where a detector's own count is the click; (B) a read counted as a click, or a click as a read; (C) one record with two rates, the drive's and the clock's; (D) a click that reads the row's birth content and not its rate at the arrival; (E) a transformation fired at a declared count of a body's own clock and not at a met row; (F) the click's grain, where the comparison is the continuum's limit; (G) the click's order, the wheel a counter. The last column names the step of Section~\\ref{sec:click} the earlier reading broke: modes A and C break step (4), the count not the detector's own; B, D and E break step (3), the click; F and G lie in step (1), the declaration; a rule absent is named at the step where it would act. The runs' verdicts are those of the merged files alone: rows 4a and 4b by the clicks \\cite{run4ab}, rows 8b and 8c under the declaration \\cite{run8bc}; no pin was moved after a run. The weight rule, stated once: under the declaration $\\gamma_{\\mathrm{PPN}} > 0$ a moving body's gravitational charge is the pair $w = \\gamma_L(1 + \\gamma_{\\mathrm{PPN}}v^2)M$ with its wall, declared as that key's rule (the owner's decision B, record 1150 \\cite{log}); at $\\gamma_{\\mathrm{PPN}} = 0$ a body weighs $M$, the law's rule at rest, no velocity term on the body; rows 13 and 14 are read under that declaration where they say so, and the coefficient $2(1 + \\gamma_{\\mathrm{PPN}})$ of row 13 is the declared input and not a result. The honest count: three measured passes and three bounds; four under a declaration named (4b, 4a, 13, 8c); eleven FAIL with their cause, eight in the table (1b, 1c, 3, 6, 7b, 8a, 8b, 14) and three by their pins (5b, 11a, 11c); the eight FAIL rows need a rule under its own identity, and the paper claims no rule it has not shown.\n\n{\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\begin{longtable}{L{0.55in}L{1.85in}L{2.55in}L{1.05in}}\n\\caption{\\label{tab:causes}The failures by cause: every row of Table~\\ref{tab:nature} and the four pinned rows, in three classes, with the cause in the algebra's words (READING, DECLARATION, RULE, NOTHING; the mode A to G) and the step of Section~\\ref{sec:click} the earlier reading broke. The numbers are Table~\\ref{tab:nature}'s and the merged run files' \\cite{failrows,run4ab,run8bc}; the kinds as there.}\\\\\n\\toprule\nRow & The verdict and its class & The cause, in the algebra's words & The step broken \\\\\n\\midrule\n\\endfirsthead\n\\toprule\nRow & The verdict and its class & The cause & The step broken \\\\\n\\midrule\n\\endhead\n\\bottomrule\n\\endlastfoot\n\\multicolumn{4}{l}{\\emph{Measured passes and bounds}} \\\\\n1a & PASS, measured: $S = 2.75$ at $\\Nphi = 64$ against $2.42 \\pm 0.20$ & the one gather of one record from both settings; $S(\\Nphi)$ the exact rational of the rungs and the tables (Theorem~\\ref{th:bell}); nothing read inside the board & none \\\\\n2b & PASS, a bound met above $0.98$: $64$ of $64$ and $0$ & the bilinear form at every $u$ gives the offers exactly, the rungs put every $u$ in the bright port; the $(20, 21)$ split's declared imbalance & none \\\\\n9 & PASS: $128$ of $256$ at $45$ degrees, $219$ at $22.5$ & the pass cells on the tables' grain $1/256$, exact at $45$ and $90$ degrees; $\\cos^2$ the thing compared with & none \\\\\n2a & BOUND MET (a bound, not a match): $0.966$ in the clicks above the biprism's $0.94$ & DECLARATION: the fan's width and the slits' grain, the ideal $1$ the limit of every direction; mode F & (1), the declaration's grain \\\\\n5a & BOUND on $N_l$ & the pace exact from one Link per interval and the digital line; a bound on the grain, $5.8 \\times 10^{17}$ for nature's $10^{-18}$ & none \\\\\n7a & BOUND on the input & the give once per body, $\\lfloor \\mathrm{held}/h \\rfloor$ units, a declared integer; nature's $4.35$ units reachable by no whole give & none \\\\\n\\multicolumn{4}{l}{\\emph{Passes under a declaration named, counted apart}} \\\\\n4b & under covariant-readings-v1: $z = 0.3674$ in $[0.366, 0.372]$, read at a click over the detector's own count \\cite{run4ab}; the law's row FAIL, $0.2647$ against $0.315$ & DECLARATION: the key's one rate $r = \\sqrt{1 - v^2}$ for the drive and the clock of one record; mode C; on the $k$-ladder the ratio $k_{BA}/k_{AB}$ at $1 - \\beta^2$ under the law ($0.669$, $0.884$) and at $1$ within $0.4$ percent under the key ($1.002$, $1.004$) & (4), the mover's own count \\\\\n4a (pin) & under the same key, within its domain $\\gamma \\le 2$: the products' clicks $367$ and $344$, the ratios $70/64$ and $124/64$ against $1.1074$ and $1.9558$, $\\gamma$'s form \\cite{run4ab}; nature's $29.33$ outside the domain under either drive, a factor $14.8$ short at the cap; the law's ratio $1$, FAIL & DECLARATION: the same key, the domain cap a second declaration; mode C & (4) \\\\\n13 & under $\\gamma_{\\mathrm{PPN}} = 1$: the coefficient $2(1 + \\gamma_{\\mathrm{PPN}})$ a declared input equal to nature's, read within the fan's comb, $C_{\\mathrm{ring}} = 3.65$, $3.82$, $3.92$ against $4$, a pass in form within the comb and not a pass against nature; the law's $0.000$, FAIL & DECLARATION: $\\gamma_{\\mathrm{PPN}}$ and $c_f = 2$ with it; mode A in part, the crowd's stretch read from the board & (6), the coefficient the input \\\\\n8c & under massive-rows-v1 with the $\\nu$ quantum $1$: the input no longer $0$, a computation and no click \\cite{run8bc}; the electron's declared content then at least $1.02 \\times 10^7$ units; the row as registered FAIL, an input refuted & DECLARATION: the family's content; mode D & (1) \\\\\n\\multicolumn{4}{l}{\\emph{Failures, each with its cause}} \\\\\n1b & FAIL, a control: $S = 2$ exactly, Bell's bound & NOTHING: the bound is a theorem of every local read-out and the phase-form window is one; the law's answer to nature is row 1a & none: the window local by design \\\\\n1c & FAIL: $15/16$ and $-1/16$ against nature's $0$ & RULE: a wheel that is not a counter; a draw fails P4, a permutation table a fit at one count; mode G & (1), the wheel \\\\\n3 & FAIL: $-0.108$ against $-0.53$ & RULE: a term making the emitters' count stretch grow with the flight time, $0.36$ per Hubble length; the law's own crowd gives the wrong sign; modes A and C, the tick of an open-face detector as the time base & (4) and (5) \\\\\n6 & FAIL: the loop opens at $3407$; no line read & RULE: the transition, a give at the closure under its own identity; no lattice that can be run holds the scale; modes F and E & (3) \\\\\n7b & FAIL: $2.0$ against $12.72$ & RULE: a give that grows with the bonds, $6$ per partner or $18$ per partner squared, never $12.72$; mode E & (3) \\\\\n8a & FAIL: a step against the exponential's $3.17$ & RULE: the transformation fired by a met row of a declared bath instead of by a count; the exponential where the bath's arrivals approach a Poisson comb; mode E & (3) \\\\\n8b & FAIL, and under the declaration too \\cite{run8bc}: the first and second readers $0$ and $0$, the reader at the Node of a whole turn the whole beam, $1013$ of $1013$, the far detector $0$ & DECLARATION beside a READING: by the law's design of the path phase, the beat $h/p = 4.65$ Links read at a click for the first time; the re-emitter arrangement under existing keys not run; mode D & (2) and (3) \\\\\n14 & FAIL as read: $1.677$ against $2.00 \\pm 0.18$, the loops unclosed & READING: the moving detector's arrival click, and whether a read at a body is a click; modes A, B and C, the period on the host's tick and the probe's own record & (4) and (5) \\\\\n5b (pin) & FAIL by its pin: $\\gamma^2$ along and $\\gamma$ across against a null & RULE: a contraction by $1/\\gamma$, a root of the state at run time, the seventh verb; modes A and C, no detector in the pin & (2) \\\\\n11a (pin) & FAIL by its pin: $q_{\\mathrm{eff}} = +1$ against $-0.53$ & RULE: a click whose read energy follows the row's rate in flight; in form the massive row's turn read as $hf$, which gives Milne's $0$ and leaves row 3's term; modes D and A & (3) \\\\\n11c (pin) & FAIL by its pin: $n = 1$ against $4$ & RULE: an angular size that grows with the redshift, a board whose Links stretch, no verb on the state; modes D and A & (2) \\\\\n\\end{longtable}}\n\n\\section{Discussion and conclusions}\\label{sec:discussion}",
+        "\\section{Discussion and conclusions}\\label{sec:discussion}",
+    ),
+    (
+        "step 2, commit 6: the tally in the closing paragraph of what is proved becomes the count",
+        "the harmonic constants. Against nature three readings pass (1a, 2b, 9); eleven fail in the table, ten in a registered run (1b, 1c, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); three are bounds (2a, a bound met and not a match, 5a, 7a)",
+        "the harmonic constants. Against nature, of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin)",
+    ),
+    (
+        "step 2, commit 6: the tally in the checks section becomes the count",
+        "written before the run; against nature three readings pass (1a, 2b, 9); eleven fail in the table, ten in a registered run (1b, 1c, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); three are bounds (2a, a bound met and not a match, 5a, 7a)",
+        "written before the run; against nature, of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin)",
+    ),
+    (
+        "step 2, commit 6: the abstract's count",
+        "three pass, eleven fail, three bounds, one not compared",
+        "of thirteen observables predicted, five agree, eight disagree; eight are not predicted by construction",
+    ),
+    (
+        "step 2, commit 6: the prediction paragraph's list of failures in the three statuses' words",
+        "The failures are the law's own results, every FAIL row of Table~\\ref{tab:nature} by its number: 1b the phase-form window, 1c the order channel, 3 the deceleration, 4b the moving lamp's redshift, 6 the atom's loop opening, 7b the strong ratio, 8a the neutron's step, 8b the neutrino's passage, 8c the massless neutrino, 13 light unbent under the law before the generic entry (Section~\\ref{sec:delay}, against $1.75$ arcseconds), 14 Newton's periods under the one constant; and by their pins, not in the table, 4a the unslowed clock, 5b the arms' anisotropy, 11a and 11c the far lamp's brightness and Tolman's test; each refutes the law as declared on its own, and no count of passes weighs against them.",
+        "The rows that disagree are the law's own results, each by its number in Table~\\ref{tab:nature}: 1b the phase-form window, 1c the order channel, 6 the atom's loop opening, 7b the strong ratio, 8a the neutron's step, 8b the neutrino's passage, 13 light unbent under the law before the generic entry (Section~\\ref{sec:delay}, against $1.75$ arcseconds), 14 Newton's periods under the one constant as read; each refutes the law as declared on its own, and no count of agreements weighs against them. The rows not predicted by construction, 2a, 3, 4a, 4b, 5b, 8c, 11a and 11c, name their missing piece and its kind in their cells, and the law's own number is printed in each.",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 1, zeta named at its first use",
+        "(E) $\\mathrm{ev} : \\Z[\\Z_{\\Nphi}] \\to \\Z[\\zeta_{\\Nphi}]$; (D)",
+        "(E) $\\mathrm{ev} : \\Z[\\Z_{\\Nphi}] \\to \\Z[\\zeta_{\\Nphi}]$, $\\zeta_{\\Nphi}$ the primitive $\\Nphi$-th root of unity and $\\Z[\\zeta_{\\Nphi}]$ the cyclotomic integers; (D)",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 2, S_1 and N_l named at their first use in (T)",
+        "On a row the flight's accumulator gains $2S_1N_l$ per interval against the wall $2T_D$",
+        "On a row the flight's accumulator gains $2S_1N_l$ per interval ($S_1 = |D_x| + |D_y| + |D_z|$ the direction's Manhattan length, $N_l$ the label's scale, $64$ on the register) against the wall $2T_D$",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 3, bold f the coordinate vector of f",
+        "the click's weight, $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$ with $\\mathbf G = \\mathbf E^{\\mathsf T}\\mathbf E$ the tables' Gram matrix",
+        "the click's weight, $\\mathbf f^{\\mathsf T}\\mathbf G\\mathbf f$, $\\mathbf f$ the coordinate vector of $f$ on the basis $x^p$ and $\\mathbf G = \\mathbf E^{\\mathsf T}\\mathbf E$ the tables' Gram matrix",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 4, the closing quotation mark",
+        "(the paragraph ``The objects and Definition~\\ref{def:row})",
+        "(the paragraph ``The objects'' and Definition~\\ref{def:row})",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 5, the closing quotation mark",
+        "(``The six operations as maps, in symbols).",
+        "(``The six operations as maps, in symbols'').",
+    ),
+    (
+        "step 2, commit 6: the mathematics reader's line 6, the two run-time roots named",
+        "a root of the state at run time (the pushed row's pair under the key \\texttt{optical}, a later rule; Lorentz's factor on a body's own counter)",
+        "a root of the state at run time (the two run-time roots of the algebra document's chapter 2.7, the meeting's norm under the key \\texttt{meeting} and the pushed row's pair under the key \\texttt{optical}, later rules in no world of this paper; Lorentz's factor on a body's own counter)",
+    ),
+    (
+        "step 2, commit 6: the algebra document cited at its merge on main (the Boss's word of 02:5xZ)",
+        "on the branch \\texttt{algebra-one} at 93033d54 (its merge pending at submission)",
+        "on \\texttt{main} at 863cf5fd (the merge of the branch \\texttt{algebra-one})",
+    ),
+    (
+        "step 2, commit 6: the sources of the six rows brought into the table",
+        "\\bibitem{hensen2015}",
+        "\\bibitem{bailey1977} J. Bailey et al., Nature 268, 301 (1977). \\bibitem{michelson1887} A. A. Michelson and E. W. Morley, Am. J. Sci. 34, 333 (1887). \\bibitem{nairz2002} O. Nairz, M. Arndt and A. Zeilinger, Phys. Rev. A 65, 032109 (2002). \\bibitem{blondin2008} S. Blondin et al., Astrophys. J. 682, 724 (2008). \\bibitem{lubin2001} L. M. Lubin and A. Sandage, Astron. J. 122, 1084 (2001). \\bibitem{hensen2015}",
+    ),
+    (
+        "step 2, commit 6: four of the six rows' sources were already in the bibliography (uncited until now); only Michelson and Morley is new",
+        "\\bibitem{bailey1977} J. Bailey et al., Nature 268, 301 (1977). \\bibitem{michelson1887} A. A. Michelson and E. W. Morley, Am. J. Sci. 34, 333 (1887). \\bibitem{nairz2002} O. Nairz, M. Arndt and A. Zeilinger, Phys. Rev. A 65, 032109 (2002). \\bibitem{blondin2008} S. Blondin et al., Astrophys. J. 682, 724 (2008). \\bibitem{lubin2001} L. M. Lubin and A. Sandage, Astron. J. 122, 1084 (2001). \\bibitem{hensen2015}",
+        "\\bibitem{michelson1887} A. A. Michelson and E. W. Morley, Am. J. Sci. 34, 333 (1887). \\bibitem{hensen2015}",
+    ),
+    (
+        "step 2, commit 6: the fail-rows file cited for the missing piece per row",
+        "(3) no click definition yet for the quantity (a position, a brightness, a period); a row may carry two kinds.",
+        "(3) no click definition yet for the quantity (a position, a brightness, a period); a row may carry two kinds; the missing piece per row is the one the fail-rows file names \\cite{failrows}.",
+    ),
+    (
+        "step 2, commit 6: the abstract's count sentence at its length (249 words)",
+        "the failures the law's own: of thirteen observables predicted",
+        "of thirteen observables predicted",
+    ),
 ]
 
 

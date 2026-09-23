@@ -6303,3 +6303,60 @@ corrections (the chain's cut now starts at the first heading):
 61 pages, 95 references (NUMBERS.md). Step 2's five commits are done;
 not touched: the cuts and the length (the owner's word). The
 physics-rule reviewer's full read follows, per the Boss's order.
+
+## Applied (2026-09-23, the owner's GO of record 1166 and his three kinds of record 1173, through the Boss's orders of 02:0xZ to 02:5xZ, read after commit 5 had gone out): commit 6, the one table with three statuses; the mathematics reader's six lines; the algebra document at its merge
+
+- Commit 5's "The failures by cause" paragraph and Table 7 are
+  withdrawn (one correction replaces that block), so nothing is written
+  twice: Part 7 has the one table, the register's every row (the six
+  pinned rows 4a, 5b, 10, 11a, 11b, 11c brought in with the law's own
+  number by kind and their sources), and a status column of three
+  values: agrees (a bound met marked so), disagrees with the number,
+  not predicted by construction with the missing piece and its kind
+  ((1) the instrument missing in the model, (2) nature's number a bound
+  or a fitted parameter, (3) no click definition yet), a row carrying
+  two kinds where it does (3: 1 and 2; 11a: 1 and 3; 11c: 1 and 2).
+  Four rows keep their words: 12 history, 2c not compared, 10 not yet,
+  11b a pin. The form can take a "beside" row (the same claim, two rows,
+  one status each); none added.
+- The placement, record 1166 with the Boss's 02:5xZ: agrees 1a, 2b, 9,
+  and 5a, 7a as bounds met; disagrees 1b (a control, the note kept),
+  1c, 6, 7b, 8a (the crowd's history named beside for a width), 8b (the
+  registered 16 and 0 behind; the declaration's 0, 0, 1013 of 1013;
+  beside it the re-emitter reading of RUN_8BC section 6.3, merged at
+  f852e50d, 1.000 exactly, 16 and 16, 683 of 705, an arrangement of the
+  law and not a pass against nature; the merge SHA written directly
+  since the merge landed, no "PR" in the text), 13 (0.000 pixel
+  against 1.75 arcseconds; the gamma_PPN = 1 reading beside it as a
+  declared input, kind (3) for the ring's position), 14 its present
+  word (FAIL as read, pending its run); not predicted 2a (kind 2, the
+  declared fan width; NOT COMPARED against a two-slit source until the
+  figure is verified; 0.966 printed), 3 (kinds 1 and 2), 4a and 4b
+  (kind 1, the identity's readings beside as a declared hypothesis),
+  5b (kind 1), 8c (kind 2), 11a (kinds 1 and 3), 11c (kinds 1 and 2).
+- Before the table: the comparison paragraph rewritten for the three
+  statuses (the earlier verdict words PASS, FAIL, BOUND gone from the
+  paragraph, kept in the four rows that keep their words), and the
+  new paragraph "The limitations, stated before the comparison": the
+  third status from the structure (no relativistic dynamics, r = 1 and
+  no contraction; no term of the crowd's history; a declared input not
+  a prediction), the referee's test (a row sits in the same class had
+  it agreed), the weight rule once (record 1150, decision B), and the
+  count sentence. The count sentence replaces the tally in its four
+  places (the caption, Section 4's "What is proved", the checks'
+  paragraph, the abstract at 249 words); the prediction paragraph's
+  list is in the three statuses' words.
+- The mathematics reader's six lines on commit 2, folded: zeta_N and
+  Z[zeta_N] named at their first use in the definitions list; S_1 and
+  N_l named in (T); bold f the coordinate vector of f on the basis x^p;
+  the two closing quotation marks (they had not closed in the pushed
+  text); the two run-time roots of ALGEBRA.md 2.7 named (the meeting's
+  norm under its key and the pushed row's pair under the key optical);
+  \bibitem{algebra} at the merge of algebra-one on main, 863cf5fd,
+  "pending" dropped.
+- The status column's header "Status" and the law column "The law's
+  reading, by kind"; the moved caption reference in reorder.REFS
+  follows the new caption text.
+61 pages, 100 references, the abstract 249 words (NUMBERS.md). Length
+48 still the target, no cut taken (the owner's word). The physics-rule
+reviewer's full read of the whole head follows on the Boss's order.

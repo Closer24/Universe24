@@ -193,8 +193,8 @@ REFS = [
         "are one platform, stated below so that",
     ),
     (
-        "repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: three",
-        "repeated verbatim in the abstract and in Section~\\ref{sec:physics}: three",
+        "repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: of the",
+        "repeated verbatim in the abstract and in Section~\\ref{sec:physics}: of the",
     ),
     (
         "off by default; Section~\\ref{sec:discussion}): the loop stays",
