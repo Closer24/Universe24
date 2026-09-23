@@ -17,9 +17,9 @@ declaration named under an existing world key. Base commit
 `e404baa19fe28d978a775862bcbea699ff52c40b` (`origin/main`, "Merge pull
 request #965"); WHAT_IS_MISSING.md read on the branch `fail-rows` at
 `2252bbdf`. Record 1129 is on no fetched branch at this hour; the
-order's text stands for it. STEP 2 (the runs and the readings by kind)
-follows in this file on the reviewer's read of section 1 and the Boss's
-GO.
+order's text stands for it. STEP 2 (the run and the readings by kind)
+is section 9, on the reviewer's read of section 1 and the Boss's GO of
+01:00Z.
 
 The arithmetic is in two maps beside this file, each importing the
 register's own algebra by its file, one canonical copy, and their
@@ -99,13 +99,17 @@ wording the order offered on the condition that all pins hold,
 "matches nature's 1.75 in the limit of large b and L under gamma_PPN =
 1 declared", CANNOT be written from the walk, since the limit within the
 grain is not reached at any b or L computed. The wording the algebra
-allows: **"under gamma_PPN = 1 declared and flow-link-v1, the ring
-reads the declared 2 c_f = 4 on the one constant within the fan's comb,
-10 to 20 percent, at every impact distance 3 to 14 and path 26 to 52
-computed, never within the grain; nature's 1.75 arcseconds is that
-coefficient's value at the Sun's limb, on the comparison side; every
-number of the row conditional on the lamps' click once it is read"**,
-never more. The run of STEP 2 (the lamp world, minutes) decides only
+allows (the reviewer's lines (ii) and (iii) of the GO, 2026-09-23
+01:00Z, folded): **"under gamma_PPN = 1 declared and flow-link-v1, the
+ring reads the declared 2 c_f = 4 on the one constant within the fan's
+comb, the mean over rings within 9 percent and single rings up to 23
+percent off (26 at gamma_PPN = 0), at every impact distance 6 to 14 and
+path 26 to 52 computed, never within the grain; gamma_PPN = 1 a declared
+input equal to nature's, read within the comb: not a pass against
+nature, the coefficient being the input; the law's own row 0.000 FAIL
+(series K); nature's 1.75 arcseconds is that coefficient's value at the
+Sun's limb, on the comparison side; every number of the row conditional
+on the lamps' click once it is read"**, never more. The run of STEP 2 (the lamp world, minutes) decides only
 the k_a(6) pin; nothing in it moves the trend.
 
 **Row 2a.** (iv) The comparison side (section 4): the two-slit figure is
@@ -304,10 +308,39 @@ HOST: the ring world ran 64 s for 400 intervals with 40 lamps on this
 class of host; the shell's 450 rows per interval are a seventh of the
 crowd's 4640 units but ten times the ring's rows, so about 2 to 3 times
 the ring world's cost per interval, 1200 intervals: 6 to 10 minutes per
-world, two worlds, one pass at `--jobs 2`. Not checked here: whether a
-pushed row of a lamp on a dense line meets the working bound on its
-momentum (the ring's did at d = 16384 before the split ladder and not
-after it); a refusal is a register's finding, reported as such.
+world, two worlds, one pass at `--jobs 2`. The two open items of the GO's line (i), closed before the run from the
+engine's lines and the algebra: (1) a face's `click` line carries
+`record` whenever the row has one (`nature_beam.py` 4331-4348: the
+face line writes `record` and `branch` where `store.record` is not
+NO_RECORD; every row of a lamp with a wheel has one), and the screen
+pixel's click line carries `record` as read_runs.py takes it (5560), so
+the reading is the same at a face and at a pixel, `record & 0xFFFFFFFF`
+the birth ordinal against the click's tick, no one-Node face detectors
+needed; the click lines carry `number`, the emitter's measured number,
+by which the lamps are told apart. (2) The working bound on a pushed
+row's momentum cannot refuse these rows: since the split ladder
+(89f43572) the wall's square X = R^2 + 3 |**P** / g|^2 is tested against
+2^63 - 1 and X Q^2 is never formed, so the bound is |**P** / g| <
+1.75 x 10^9; a light row of the lamp's content 8 at d = 16384 carries
+|**P**| = 64 x 16384 x 8 x 64 = 5.4 x 10^8 on a heading, plus the push's
+|**W**| of at most a few percent of it (alpha below 0.1 radian at r >=
+6), so even at g = 1 the primitive is 5.6 x 10^8 at most, a factor 3
+inside the bound (the ring's rows reached 6.6 x 10^7 at g = 8 and were
+refused only by the earlier test on X Q^2); a refusal would be a
+register's finding, reported as such, no pin moved. Where a lamp's row
+crosses another shell lamp's Node (a step along the largest axis from
+r = 5.74 to 6.48, for instance (4, 4, 1) to (5, 4, 1)), the family's
+default rule at a measured event measures it there (`world.py` 995-999,
+a paid family is measured): a click at that lamp, carrying the emitter's
+`number` and the `record`, read like any other; the content joins the
+lamp's amount, 8 against 8.6 x 10^9, and no row of another lamp dwells
+at a lamp's Node, so no lamp's clock counts them. The worlds are
+written by [lamp_shell/make_worlds.py](../../../examples/events/lamp_shell/make_worlds.py)
+with their pins in `expectations.json` before the run (the folder's
+[README](../../../examples/events/lamp_shell/README.md)); the reading
+tool [read_lamps.py](../../../examples/events/lamp_shell/read_lamps.py)
+reads the click lines alone, per emitter number, series T's inverse
+slope over the window.
 
 **(b) The walk's trend at larger b and L (a COMPUTATION, done here, no
 world).** run_13_trend_map.py section 3 overrides the Algebraist's box
@@ -354,14 +387,17 @@ holding, "matches nature's 1.75 in the limit of large b and L under
 gamma_PPN = 1 declared", is not available: the trend pin does not hold,
 and no click reads nature's 1.75 (the Sun's k is 2 x 10^-6, the ring's
 0.011). The wording the algebra allows, if the lamp world of STEP 2 reads
-its pin: "under gamma_PPN = 1 declared and flow-link-v1, the ring's
-clicks read the declared 2 c_f = 4 on the one constant, the crowd's
-stretch at b read by the lamps' count ratio and the deflection by the
-arrival Nodes, within the fan's comb of 10 to 20 percent at every impact
-distance 3 to 14 and path 26 to 52 computed, never within the grain;
+its pin (the reviewer's lines (ii) and (iii) folded): "under gamma_PPN =
+1 declared and flow-link-v1, the ring's clicks read the declared 2 c_f =
+4 on the one constant, the crowd's stretch at b read by the lamps' count
+ratio and the deflection by the arrival Nodes, within the fan's comb,
+the mean over rings within 9 percent and single rings up to 23 percent
+off (26 at gamma_PPN = 0), at every impact distance 6 to 14 and path 26
+to 52 computed, never within the grain; gamma_PPN = 1 a declared input
+equal to nature's, read within the comb: not a pass against nature, the
+coefficient being the input; the law's own row 0.000 FAIL (series K);
 nature's 1.75 arcseconds is that coefficient at the Sun's limb, on the
-comparison side only; the row stays FAIL for the law as built (0.000
-pixel, series K) and a DECLARATION under the key". If the lamp reads
+comparison side only; the row a DECLARATION under the key". If the lamp reads
 outside its pin: "the crowd's stretch at b is not the algebra's shell
 mean by the ratio read; the row's numbers re-derived on the read k".
 Nothing here enters the paper from this file.
@@ -491,8 +527,13 @@ clicks (DETECTOR) against 0.94 (Jacques et al. 2005, the abstract's
 figure for the biprism's central fringe), a bound met, bound against
 bound; 0.034 below the ideal 1, the fan's landings; against the
 Mach-Zehnder's 0.98 (Grangier, Roger and Aspect 1986, row 2b's source)
-not compared, another geometry"**; and NOT COMPARED stays only as far
-as the body's reading is wanted beyond the abstract (section 4). If the
+not compared, another geometry (the figure at the abstract's level, the
+body unread; the central fringe's visibility against the pattern's)"**,
+a bound met under the paper's caption criterion, the same criterion row
+2b passes by, the two caveats in the cell and the verdict word the
+writer's (the Boss, 2026-09-23 01:00Z: NO RUN for row 2a); NOT COMPARED
+stays only as far as the body's reading is wanted beyond the abstract
+(section 4). If the
 Boss orders a run nonetheless (his GO, 22 minutes at 0.27 s per interval
 on the registered host), the option the loader takes with the next
 visibility is P = 64 at 0.9606 (its counts per cell in the .out under
@@ -505,19 +546,109 @@ before the run and confirming the fan's algebra, not moving the row.
 
 - The body of Jacques et al. 2005: unread, every host blocked; the 94
   percent is the abstract's sentence in three renderings.
-- Whether a face's `click` line carries `record` (the birth ordinal the
-  reading tool takes) as the screen pixel's does; if not, the lamp world
-  declares series K's one-Node detectors on every face, a declaration,
-  the reading unchanged.
-- Whether a lamp on a dense line of the crowd at r = 6 has its pushed
-  rows refused by the working bound on their momentum (the ring's were
-  refused at d = 16384 before the split ladder and read after it).
+- (Closed before the run, section 2 (a): a face's `click` line carries
+  `record`; the ladder's bound cannot refuse a light row of content 8 at
+  d = 16384, a factor 3 of margin at g = 1.)
 - Why the ring at b = 10 reads 7 to 19 percent high on every box and
   both fans: the comb of the fan's lines at that ring, not analysed.
 - Record 1129 (the owner's word this order cites): on no fetched branch
   at this hour; the order's text taken as its content.
-- The reading tool for the lamp world (read_runs.py per lamp, 450
-  detectors' selections): a tool line of STEP 2, not written here.
+- (The reading tool of the lamp world, read_lamps.py, written with the
+  worlds before the run.)
+
+## 9. STEP 2: the run of the lamp world pair and the readings by kind (2026-09-23)
+
+**The order.** The Boss's GO of 2026-09-23 01:00Z on the physics-rule
+reviewer's read of this file at ba558c0e (the chain the click-to-click
+chain, every kind right, the lamp shell the right click for k_cont(6),
+the trend finding right, the pins hold), subject to three lines, folded
+above before the run: (i) the two open items closed at load (section 2
+(a)); (ii) and (iii) the trend's wording and the row's word (sections 0
+and 3). Row 2a: NO RUN (the Boss's word; section 6). The worlds and their
+pins were written by
+[lamp_shell/make_worlds.py](../../../examples/events/lamp_shell/make_worlds.py)
+before the run (`expectations.json`, every pin from the step algebra's
+crowd, no number typed by hand); the folder's
+[README](../../../examples/events/lamp_shell/README.md) is the register's
+entry. The run: `tools/run_series.py --jobs 2`, 1200 intervals, headless
+(Python 3.14.0rc2, numpy 2.5.3; this host 4 cores, 15 GB); the source
+sha256 of the world files `bc994db7456a7907` (`shell_b6_g1`) and
+`23903c999eaed057` (`shell_b6_control_g1`); both completed and
+conserved, the digests state `81a1caaad1f6` / audit `7e87ba384117` /
+events `27059403ac50` and `425631a6b854` / `c2c43cd7234d` /
+`455d31c0e564`. HOST: 496 s and 1908 MB (the mass world), 300 s and 1921
+MB (the control); the estimate of section 2 (a) was 6 to 10 minutes and
+about 1 GB, the time inside it and the memory twice it (the record of
+540 000 records). Read by
+[read_lamps.py](../../../examples/events/lamp_shell/read_lamps.py) from
+the click lines alone (per lamp, `record & 0xFFFFFFFF` against the
+click's tick over [200, 1200), the inverse slope), the lamps' own
+`birth` lines read beside them (a detector's own record, DETECTOR) so
+that the click ticks' jitter can be told from the clock; the per-lamp
+readings in
+[readings.json](../../../examples/events/lamp_shell/readings.json), the
+run block under `runs_2026_09_23` of `expectations.json`; no pin moved.
+One test line beside the worlds: `tests/test_flow_link.py` (a), which
+asserts the key absent in every registered world outside the ring
+worlds' folder, lists `lamp_shell` among the folders that declare the
+key by design, by its own pattern for series D3's one-constant worlds;
+no engine line, no default changed.
+
+| The reading | Kind | Read | The pin | Verdict |
+| --- | --- | --- | --- | --- |
+| k_a(6), the mean over the 450 lamps of the count ratio less 1 | COMPUTATION on 450 DETECTOR readings (the clicks) | 0.011210 (+0.07 percent of the pin); by the lamps' own births 0.011199 (-0.03 percent), beside | 0.011202, the bracket 0.010819 to 0.011585 | **PASS** |
+| k_plane, the 40 lamps at x = 0 | COMPUTATION on the DETECTOR readings | 0.022861 (+0.04 percent) | 0.022852 +- 0.00004 | PASS (the comb of the plane, read as the algebra lists it) |
+| the deciding ratio alpha_nodes / k_a(6), two clicks | COMPUTATION on two DETECTOR readings | 2.508; through the walk's lever-arm factor 0.683 (GAMEBOARD) 3.672 | 2.510, the bracket 2.424 to 2.596; 2 c_f = 4 on the comparison side | **PASS** |
+| the controls' count ratio | DETECTOR, 450 lamps | 1.0000 exactly at every lamp (k = 0.0) | 1.0000 | PASS |
+| each lamp's k against A_i / 16384 | DETECTOR, 450 lamps | 441 inside, 9 outside (the clicks); by the own births 426 inside, 24 outside, the extremes -0.68 and +0.39 n / d (-0.000042, +0.000024), the mean -0.05 n / d | +- 0.00004 (the births' grain alone) | **FAIL as written**, the cause below |
+| the falsifiers | | none fired: k_a(6) inside, the controls at 1.0000, the ratio inside, no refusal by the working bound (1200 of 1200 intervals in both worlds, conserved) | | |
+
+**The per-lamp FAIL and its cause, by the clicks and the own births.**
+Eight of the nine lamps outside the pin lie one Link downstream of
+another shell lamp's beam: (0, +-5, +-4) after (0, +-4, +-4), which emit
+on +-y, and (5, +-4, 0), (5, 0, +-4) after (4, +-4, 0), (4, 0, +-4),
+which emit on +x; each receives that beam's rows, measured at its Node at
+age 1 (990 clicks in the window at every one of the eight), and its own
+clock carries them: +0.39 n / d by its own births (0.000024, inside the
+grain) and +1.0 to +1.37 n / d by the clicks. The ninth, (-6, 0, 0),
+reads -0.67 n / d by the clicks and -0.17 by its own births, the same
+-0.17 as its five axis partners (+-6 on one axis), which read -0.45 to
++0.19 by the clicks: the click's tick carries the flight's residue at
+the row's birth, up to one tick, a second grain the pin's 0.00004 (the
+births' grain from the map's exact clock) did not carry. By the own
+births 24 of 450 lie beyond 0.00004, at most 0.68 n / d, the mean -0.05:
+the births' grain itself over 1000 intervals sits at the pin's edge. So
+the per-lamp pin fails by the grain it was given, the cause the
+reading's own two ticks of jitter and, at eight lamps, the law's own
+count of an arriving row of another lamp, not the crowd: no lamp reads
+the crowd at its Node off the algebra's stationary crowd by more than
+the grain plus the arriving beam. The pin is not moved; a next world
+would give the per-lamp pin the two grains (about 0.00006) and place no
+lamp on another's beam.
+
+**What the run establishes.** The crowd's stretch at the impact
+distance, read by 450 lamps' count ratios (DETECTOR), is the algebra's
+shell mean of the age moment to 0.07 percent, 0.993 of the continuum's
+k_cont(6); the one GAMEBOARD input of row 13's chain (section 1, step 9)
+is now a click, and every number of the row stands on clicks alone: the
+deflection by the arrival Nodes over the stretch by the lamps, 2.508
+(the pin 2.510), through the walk's lever arm 3.672 against 2 c_f = 4 on
+the comparison side, 8.2 percent below it by the finite path's 0.974,
+the shells' 0.993 and the comb (section 3 (d)). The row's wording of
+section 3 now stands on clicks, unchanged in its words: under gamma_PPN
+= 1 declared and flow-link-v1, the ring's clicks read the declared 2 c_f
+= 4 on the one constant, the crowd's stretch at b read by the lamps'
+count ratio and the deflection by the arrival Nodes, within the fan's
+comb, the mean over rings within 9 percent and single rings up to 23
+percent off (26 at gamma_PPN = 0), at every impact distance 6 to 14 and
+path 26 to 52 computed, never within the grain; gamma_PPN = 1 a declared
+input equal to nature's, read within the comb: not a pass against
+nature, the coefficient being the input; the law's own row 0.000 FAIL
+(series K); nature's 1.75 arcseconds is that coefficient at the Sun's
+limb, on the comparison side only; the row a DECLARATION under the key.
+It establishes no physical law: c_f = 2 is an input, n S_w = d a
+declaration, and 4 stays on the comparison side. Nothing enters the
+paper from this file; the writer words the row on the Boss's routing.
 
 ## 8. Links
 
@@ -526,6 +657,7 @@ before the run and confirming the fan's algebra, not moving the row.
 - [GENERIC_BENDING_PRICE.md](../one_wall/GENERIC_BENDING_PRICE.md); [one_wall/MATHEMATICIAN.md](../one_wall/MATHEMATICIAN.md) section 4 (the space part no verb reads).
 - [gr_rows/DESIGN.md](../gr_rows/DESIGN.md) section 4 (the pin world's k_a(b) = 0.0445 at [1, 4096]); [REVIEW_ROUND2.md](../gr_rows/REVIEW_ROUND2.md) (182.4 / 4096).
 - [NEWTON_ON_THE_SIDE.md](../newton_clicks/NEWTON_ON_THE_SIDE.md) section 1 step 1 and 3 (d); [NEWTON_FROM_CLICKS.md](../newton_clicks/NEWTON_FROM_CLICKS.md) section 3.
+- [The lamp shell's register](../../../examples/events/lamp_shell/README.md), its [expectations](../../../examples/events/lamp_shell/expectations.json) and [readings](../../../examples/events/lamp_shell/readings.json) (STEP 2).
 - [The ring worlds' register](../../../examples/events/flow_link/README.md) and [expectations.json](../../../examples/events/flow_link/expectations.json); [series K](../../../examples/events/lensing/README.md) (the age moment 11.4 at b = 6); [the optical worlds](../../../examples/events/optical/README.md) (the age moment 181.8 at b = 6, M = 2^16).
 - [Series X, Poisson after a detector](../../EXPERIMENTS.md) and [shell_clock/read_runs.py](../../../examples/events/shell_clock/read_runs.py) (series T's reading of a clock from click lines).
 - [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
