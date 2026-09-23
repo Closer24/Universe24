@@ -816,35 +816,97 @@ push is needed on a splitting record. Named, not promised.
   under the same rule at their periods (section 8), once, on the Boss's
   second GO, the readings on the detector's own count.
 
-## 8. The massive row: the same rule read at a body's period
+## 8. The massive row, in the owner's words: a foreign object that self-clicks, at rest or moving, through the Inside
 
-The owner's statement 5 makes the body's record the same thing as
-light's: a detector at rest is a record that pops up at the same Node
-each cycle, a moving one at the next Node; the mass moves only through
-the Inside; the cycle time is the detector's. Under the rule a massive
-family's record is born at its body's Node with its own clock (the
-rest frequency, E'_0 = Q S M in the units of the flight table, the
-family's [n, d]) and a train of its own period; it spreads by the same
-rule; it clicks, by the counting trigger, at the Node where its offer
-first crosses the rung: at rest that is its own Node (the return of
-record 1227), and the click is the body's SELF-CREATION (the count per
-self-creation of the light clock's algebra, TICK_ALGEBRA.md), the
-detector's own count advancing by one; the body's held content (its
-mass) is handed to itself; the next cycle starts. In motion (a drive,
-the momentum label of the massive form) the record's train is emitted
-with the phase gradient of its momentum and the first rung crosses at the
-NEXT Node later than at rest by the rule's own dispersion: that is the
-computation of 6.5, the candidate for gamma from the rule, attempted
-there and not claimed here. The massive form's separate design (the
-Boss's item 5 of 07:19Z: a body's own count as the whole part of its
-record's phase, the lifetime a share per self-creation, the three keys
-retired) folds into this section: the body's own count IS its clicks;
-the lifetime is the number of cycles the record's ledger allows; the
-keys of the massive form (`massive_rows`, `massive`, `momentum_magnitude`)
-become the family's clock and the lamp's train. Whether a massive record
-splits the same way: yes, by construction, the rule has no family name;
-what differs is the clock and the content it hands over, values not
-branches (the generic test).
+His words (section 0, statement 5; 10:05Z to 10:20Z): "The detector
+transfers mass through the Inside. It does not transfer mass in the
+Outside; it transfers mass only through the Inside, and it pops up at
+the next Node, or it can also pop up at the same Node. If it pops up at
+the same Node, that is in fact a detector at rest. But it does it
+through the Inside, and this has a time. And that is also the
+detector's cycle time." "A foreign object always self-clicks; otherwise
+it does not exist there." "The click is a local action of a Node on
+itself which produces the amplitudes." "There is no such thing as a
+detector and an emitter; each is both."
+
+Under the rule, one paragraph per sentence of his:
+
+- **A body is a foreign object** (1.1) with its content M (its mass,
+  what its record hands over at a click), its clock (the family's pair
+  [n, d]: the rest frequency, E'_0 = Q S M in the flight table's units,
+  the same pair the flight table gave the family), its place, its step
+  and its re-emission. Its record is the same thing as light's: rows on
+  the Nodes it reaches, the rule of section 2 at every one of them, no
+  family name anywhere in the step (the generic test); what differs is
+  the clock it is inserted with and the content it hands over, values
+  and not branches.
+- **It self-clicks**: each cycle it inserts its record at its Nodes and
+  receives it there (the cycle sentence, section 5: insert, N_s closed
+  intervals, receive); the receive is the click, "a local action of a
+  Node on itself": the Node's Ports take the record's motion, the first
+  rung crosses, the content M is handed to the object itself, the
+  amplitudes on the board are removed, and the click line is written
+  with the object's own count and the record's birth stamp. That click
+  IS the body's self-creation of the old engine (the `become` line, the
+  count per self-creation of TICK_ALGEBRA.md), and the object's own
+  count is its clicks; the lifetime is the number of cycles the ledger
+  allows. An object that does not self-click is not on the board.
+- **At rest it pops up at the same Node**, and the rule alone gives a
+  one-Node object in open space no return (8b (ii), Reviewer 3's MUST
+  H): its rows leave and do not come back. So the rest cycle of a lone
+  object is its declared period (1.1, N_s the whole of it), the Inside
+  adding nothing to it in open space; and everything the Inside adds to
+  a body's cycle when it is not alone is the physics of this row: a
+  crowd around it (the coefficient of 4.1, its period stretched by
+  (d + f n A) / d, row 12's ratio), a partner bound to it (8b, the
+  standing pattern between them, the separation and the cycle from the
+  wave law), a wall beside it (the mirror form, the return of record
+  1227, the light clock of 6.4). "It does it through the Inside, and
+  this has a time": that time is the two-object cycle, and a lone
+  object's is a declaration.
+- **In motion it pops up at the next Node**: the Algebra Auditor's row
+  (8b (i)): the object steps to the neighbouring Node, one of six, never
+  a diagonal, at which its own record's first rung fires first; the
+  mass moves only through the Inside, as the record's rows, and appears
+  Outside only at that click. A driven body (the pins' worlds at k
+  intervals per Link) is a declaration of the step; a free body's step
+  is what the Inside gives it, and a bound pair holds its separation by
+  its steps (8b (iv)).
+- **What the row does not get from the rule, named**: no return at
+  rest for a lone Node (its period declared); no slowing of its clock
+  with its pace (8b (vi): the lab's dilation predicted FAIL, the
+  question to the owner open); no binding energy (row 7a's bound stands
+  as a declared input, the give once per body); the momentum a click
+  hands over is the gradient of the arriving offer's phase across the
+  object's Nodes (section 5), not a label.
+- **The keys retired**: `massive_rows`, `massive`, `momentum_magnitude`
+  and the count of self-creations under the age wall become the
+  family's clock [n, d], the object's train and its declared period;
+  the `become` line becomes the object's click line with its own count.
+  The three tests: generic (no family name in the step; the clock and
+  the content values), vector (verbs G and D at every Node; a comparison
+  of the age at the cycle), local (the object's own record at its own
+  Nodes and the six neighbours; nothing kept at a Node beyond the row
+  and its age).
+
+8c **The moving source's wavelength and the lattice's floor** (Reviewer
+3's MUST I). A source stepping at beta (Links per interval) inserts at
+its clock f, and the wave ahead of it has the wavelength lambda_0 (1 -
+beta_c), beta_c = beta / c, behind it lambda_0 (1 + beta_c) (the
+medium's Doppler, 8b (iv); row 4b of PINS.md). The lattice carries a
+bell at 12 Links or more (6.1; the pace by direction within 0.8 percent
+of c there), so a moving source's world is declared with
+
+    lambda_0 (1 - beta_c) >= 12 Links,
+
+lambda_0 >= 28.4 Links at k = 3 (beta_c = 0.577), 21.2 at k = 4, 16.9
+at k = 6. That is why 6.5's readings at 12 and 16 Links (62 and 86) are
+not returns: the wave ahead of the body was 5.1 and 6.8 Links, below the
+floor, its slow modes overtaken; and 24 Links at k = 3 (10.2 ahead) is
+marginal, which is named beside its 303. Five's two worlds (8b (vii))
+are therefore declared at lambda_0 = 32 Links (13.5 ahead at k = 3),
+and every moving-object world of the register's re-run carries this
+floor as a load-time check under the key (11, step 1).
 
 8b **The binding through the Inside: a moving object's cycle, two
 objects bound by their mutual insert-and-receive, the separation along
@@ -965,10 +1027,11 @@ nothing here decides it.
 (vii) **Five's pin, stated first** (the owner's word on the band
 pending; proposed from the lattice's dispersion 0.2 to 0.8 percent and
 the first rung's grain): in a world of two foreign objects, A and B,
-lambda_0 = 24 Links, m = 3 (L = 36 Links at rest), both stepping along
-+x at k = 3 with the separation set by the binding (L_along = 24
-Links, s_along = 8) and, in a second world, across at k = 3 (L_across
-= 29.4, read as the nearest whole number 29 with the residue named), the
+lambda_0 = 32 Links (the floor of 8c: 13.5 Links ahead at k = 3), m = 3
+(L = 48 Links at rest), both stepping along +x at k = 3 with the
+separation set by the binding (L_along = 32 Links, s_along = 10.67, the
+residue named) and, in a second world, across at k = 3 (L_across =
+39.2, read as the nearest whole number 39 with the residue named), the
 cycle read at A by the first rung of its own record's return:
 
     N_par / N_0 = 1 +- 0.03,    N_perp / N_0 = 1 +- 0.03,
