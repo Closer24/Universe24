@@ -2296,14 +2296,21 @@ implementation's part of the contract. The design above is unchanged.
     as written. **Since 2026-09-22 the paid unit's reading of the free crowd
     is the law's default in the momentum form, not this note's: the
     generic entry of the bending (`optical_turn`, verbs 2 and 3 of the
-    law's own; the time part in the flight wall, the space part the turn
-    along the momentum's line, gamma the declared input and 0 by default)
-    acts on every row with content in free space of every world, no key;
-    meeting-v1 under the key `meeting` is the earlier phase-register form
-    of the same reading, off by default, declared by the five lensing
-    worlds of 2026-09-20 only, history (the model owner's word of
-    2026-09-23 through the chief physicist, as his: it enters generically
-    as the default).** What the implementation decided where the design was
+    law's own) reads the crowd's two moments at the row's Node for every
+    row of every family in free space, no key: the age moment A on the
+    row's flight wall (the delay, 2 T_D (d + f n A), f = 1 + gamma) and
+    the flow **V** on the row's momentum accumulator **W** (the deflection,
+    at the weight (1 + gamma) content x e_D per unit, `unit_weights`),
+    gamma the declared input, 0 by default; at gamma = 0 both carry the
+    time part alone (Newton's half of the deflection and of Shapiro's
+    delay, the optical pin worlds' -1.93 pixels and 2.68 intervals) and
+    the space part is the gamma of both, not one of them. meeting-v1 under
+    the key `meeting` is the earlier phase-register form of the same
+    reading, off by default, declared by the five lensing worlds of
+    2026-09-20 only, history (the model owner's word of 2026-09-23
+    through the chief physicist, as his: it enters generically as the
+    default; the naming corrected on Reviewer 2's and Reviewer 3's reading
+    of the code, 2026-09-23).** What the implementation decided where the design was
     silent, and what it found: (i) **The module and the two call sites.**
     The arc permutation (built once per direction table from the flight
     table's unit vectors and cached per target, forward and inverse), the
