@@ -66,6 +66,22 @@ its momentum the existing **p** in Z^3 as the character's **k**, the step
 the existing verb T, the push the stress at its Ports (DESIGN.md 5.1 (a));
 (vi) its click the evaluation E and the norm read across R.
 
+**In ALGEBRA.md's terms** (the Boss's order of 12:48Z: chapter 1's
+objects, the dictionary's row for the self pair, chapter 2's maps), one
+line per sentence of this design:
+
+| Sentence | ALGEBRA.md object or map | The dictionary's row |
+| --- | --- | --- |
+| the self term -(p / q) a_now | chapter 2.1, (T) the translation of the row's accumulator by a rate linear in the row, the pair [p, q] a declared rate; then 2.6 (D) the division by 3 q with the remainder kept | NEW ROW: **mass of a foreign object**: the pair [p, q] of the self term on its record's own row; the rest frequency omega_0 = arccos(1 - p / (2 q)) on the circle; the rest energy h omega_0 (de Broglie's clock); the content M = E'_0 / (Q S) of the existing row read from it, not declared beside it |
+| the block R | chapter 1, the translation group of the torus acting on Nodes; R a finite G_48-set, its shape group the stabiliser | shape: a declaration (kind 1), as a detector set |
+| the block's clock | chapter 1, the phase circle Z_N and its group ring Z[Z_N]: one element carried by the cells of R in step; the bound eigenvector of the interval's map on R; a character of the time translation at k = 0 | time, a clock: the block's own count of its mode's cycles (replaces "a body's count of self-creations") |
+| the motion | the characters (omega, **k**) of the time-and-space translations on the surface of section 2; the boost a relation on the characters, not among the 48 | Lorentz: reached as a relation on the characters (the dictionary's line kept: no boost among the 48) |
+| the momentum and the step | chapter 2.1, (T) the drive: **p** in Z^3 as the character's **k**; the accumulator per axis against 3 Q S M x 56 d, the remainder kept | momentum of a body: **p** in Z^3, moved by the push and read by the drive (unchanged) |
+| the push | chapter 2.2, (B) the bilinear form: the stress T_ii = 3 (motion)^2 + (strain)^2 at the outer Ports, a quadratic form of the state with the declared matrix diag(3, 1) | force, the push: the stress at the Ports (replaces the coupling matrix times the flow vector for the massless kind) |
+| the click | chapter 2.5, (E) the evaluation of the block's element of Z[Z_N] and the norm, across R; the wheel W declared | a measurement: a click at a detector; the block's count between clicks |
+| the coupling to light | chapter 2.2, (B): light's pair at a cell a bilinear reading of the block's E_m there, one declared kappa | gravity's column and the index: the crowd's E_m sets light's pace (rows 12 and 13) |
+| the conserved form E_m | chapter 4's identities: the leapfrog's quadratic form with the mass term, an integer times q | energy: E_m the record's, E'_0 = Q S M the block's rest energy read from omega_0 |
+
 ## 2. The dispersion surface, the gap, the rest frequency (COMPUTATION)
 
 The characters (omega, **k**) of the map:
