@@ -32,6 +32,11 @@ record byte for byte as it was (the base commit 59c6b811 holds them):
   the paper cites none of their numbers (records 868 and 871). Series T's
   generator (`clock_word/make_worlds.py`) carries the geometry's constants it
   took from series U's; its four worlds are byte for byte as they were.
+- On 2026-09-23, the same row: `examples/events/hubble_stars/{gravity,double}_{age,none,scalar}.json`
+  and their `record/` copies (G2's six crowd worlds; the paper's G2 rows rest
+  on `coasting_none`); the generator writes the coasting worlds
+  (`SHIPPED_CROWDS`) and still derives every crowd's block, so both registers
+  are byte for byte as they were (the blocks history, record 865).
 
 Old code nothing left reaches (the second commit): `tools/derivations_round7.py`
 and `derivations_round8.py` (the scratch of DERIVATIONS.md rounds 7 and 8, the law

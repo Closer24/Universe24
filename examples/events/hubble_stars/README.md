@@ -99,6 +99,14 @@ N 64, 400 intervals, `width` S = 2^20, `release` [1, 2^16].
 
 ## Three crowds, three clocks: the nine worlds
 
+The six crowd worlds (`gravity_<clock>`, `double_<clock>`, with their
+`record/` copies) were deleted on 2026-09-23 (the model owner's word of
+record 871; docs/designs/register_paper_sources/PLAN.md): the paper's G2
+rows rest on `coasting_none` and on the re-read of record 408. Their
+register blocks stay in `expectations.json` and `record/expectations.json`
+as history (record 865), the derivation before the runs still writing every
+crowd's block; the readings of the sections below are history.
+
 | World | The mass a star holds | F | The `mass` entry at a star | The clocks count | `suspension` |
 | --- | --- | --- | --- | --- | --- |
 | `coasting_<clock>` | 2^22 | 64 | `pass` (the coupling off: the rows pass, the clock counts them, nothing pushes) | nothing / the presence / the age moment | 0 / [1, 2^16] / [1, 2^23] |

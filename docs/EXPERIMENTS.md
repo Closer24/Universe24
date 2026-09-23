@@ -7753,7 +7753,11 @@ crowd, five), with their generators, registers and READMEs, the designs
 of theirs (record 868); their runs of 2026-09-21 and their readings under
 the generic entry and the split ladder stay in the CHANGELOG and the logs.
 Series T (the clock's word, above) keeps its four worlds; its generator
-carries the geometry's constants it took from series U's.
+carries the geometry's constants it took from series U's. The same row:
+G2's six crowd worlds `hubble_stars/{gravity,double}_{age,none,scalar}.json`
+with their `record/` copies (the paper's G2 rows rest on `coasting_none`
+and record 408's re-read); the registers keep every crowd's block as
+history (record 865), the generator deriving them before any run as before.
 
 ### Deleted on 2026-09-22, the owner's word of record 894: the gallery, hand and catalog worlds
 

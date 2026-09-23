@@ -1,6 +1,11 @@
-"""Write the nine worlds of series G2, the Hubble diagram with stars behind
+"""Write the worlds of series G2, the Hubble diagram with stars behind
 the detector, under the Beam Law, in space, and the expectations before the
-runs (`expectations.json`).
+runs (`expectations.json`). Since 2026-09-23 the three coasting worlds are
+written (`SHIPPED_CROWDS`); the six crowd worlds `gravity_*` and `double_*`
+with their `record/` copies are deleted (the model owner's word, record 871;
+docs/designs/register_paper_sources/PLAN.md), their register blocks kept as
+history (record 865): the derivation below still writes every crowd's block,
+so the registers stay as they were.
 
 The model owner's question (2026-09-20): "Can you run on a separate machine
 a test of whether dark energy is needed? What comes out of an experiment
@@ -53,7 +58,8 @@ one dimension). Every star's speed changes by (1 - v)^2 x amount / S per
 row whatever its mass (the equivalence principle), so what "mass" means
 here is the rows a star releases, F per direction per self-creation.
 
-Three crowds and three clocks, nine worlds:
+Three crowds and three clocks, nine worlds (the six crowd worlds deleted on
+2026-09-23, their rows kept here as the register's key):
 
 | World | The mass a star holds | F | The `mass` entry at a star | The clocks count | `suspension` |
 | --- | --- | --- | --- | --- | --- |
@@ -145,6 +151,8 @@ CLOCKS = {"none": 0, "scalar": [1, 1 << 16], "age": [1, 1 << 23]}
 # The crowds: the mass held (F = mass / 2^16) and whether the mass rows
 # push (`read`) or pass.
 CROWDS = {"coasting": (MASS, "pass"), "gravity": (MASS, "read"), "double": (2 * MASS, "read")}
+# The crowds whose worlds are written (the register's blocks derive for every crowd of CROWDS).
+SHIPPED_CROWDS = ("coasting",)
 WINDOWS = ((100, 200), (200, 300), (300, 400))
 EXPECTATIONS_FORMAT = "hubble-stars-expectations-v1"
 Json = dict[str, object]
@@ -295,12 +303,20 @@ def referenced(document: Json) -> Json:
 
 
 def worlds() -> dict[str, Json]:
-    return {f"{crowd}_{clock}": referenced(world(crowd, clock)) for crowd in CROWDS for clock in CLOCKS}
+    return {
+        f"{crowd}_{clock}": referenced(world(crowd, clock))
+        for crowd in SHIPPED_CROWDS
+        for clock in CLOCKS
+    }
 
 
 def record_worlds() -> dict[str, Json]:
-    """The same nine worlds under the record click, written to `record/`."""
-    return {f"{crowd}_{clock}": world(crowd, clock, record=True) for crowd in CROWDS for clock in CLOCKS}
+    """The same worlds under the record click, written to `record/`."""
+    return {
+        f"{crowd}_{clock}": world(crowd, clock, record=True)
+        for crowd in SHIPPED_CROWDS
+        for clock in CLOCKS
+    }
 
 
 # -- The derivation before the runs -------------------------------------------
@@ -309,7 +325,7 @@ def record_worlds() -> dict[str, Json]:
 def load_tool():
     """The readings tool's fits (`fit_points`, `Point`), so that the
     expectation is fitted by the same functions that read the runs."""
-    path = ROOT / "tools" / "hubble_stars_readings.py"
+    path = ROOT / "tools" / "click_readings" / "hubble_stars.py"
     spec = importlib.util.spec_from_file_location("hubble_stars_readings_tool", path)
     module = importlib.util.module_from_spec(spec)
     sys.modules["hubble_stars_readings_tool"] = module

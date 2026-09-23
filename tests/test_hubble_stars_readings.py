@@ -133,11 +133,15 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     """(a)."""
     generator = load("hubble_stars_make_worlds", WORLDS / "make_worlds.py")
     generated = generator.worlds()
-    assert set(generated) == {
-        f"{crowd}_{clock}"
-        for crowd in ("coasting", "gravity", "double")
+    # The six crowd worlds (gravity, double) deleted on 2026-09-23 (record
+    # 871); the register's blocks for every crowd stay, derived before any run.
+    assert generator.SHIPPED_CROWDS == ("coasting",)
+    assert set(generated) == {f"coasting_{clock}" for clock in ("none", "scalar", "age")}
+    assert not any(
+        (WORLDS / f"{crowd}_{clock}.json").exists()
+        for crowd in ("gravity", "double")
         for clock in ("none", "scalar", "age")
-    }
+    )
     for name, document in generated.items():
         assert json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8")) == document, name
         # The stars are one instance of the definition `hubble_stars`
@@ -155,7 +159,7 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     assert expectations["format"] == generator.EXPECTATIONS_FORMAT
     assert expectations["throw_age"] == generator.THROW_AGE
     assert {s["name"] for s in expectations["stars"]} == {
-        m["family"] for m in generated["gravity_scalar"]["measured"] if "momentum" in m
+        m["family"] for m in generated["coasting_scalar"]["measured"] if "momentum" in m
     }
     assert set(expectations["crowds"]) == set(generator.CROWDS)
     assert expectations["reading_rule"] == "acoustic"
@@ -201,7 +205,7 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     # that declares the key is refused as an unknown key.
     assert not (WORLDS / "doppler").exists() and not hasattr(generator, "doppler_worlds")
     with pytest.raises(ValueError, match="unknown keys: doppler"):
-        parse_nature_beam_world({**generator.record_worlds()["gravity_none"], "doppler": True})
+        parse_nature_beam_world({**generator.record_worlds()["coasting_none"], "doppler": True})
     # The tool names a run by its folder.
     assert TOOL.Run.prefix.fget(SimpleNamespace(under_record=True)) == "record/"
     assert TOOL.Run.prefix.fget(SimpleNamespace(under_record=False)) == ""
