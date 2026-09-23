@@ -216,6 +216,48 @@ completion no longer does. Three candidates, each a comparison (verb (D)):
 The recommendation to the owner is (c); (b) is the fallback that costs a
 key; (a) is refused by the pins of section 7. The choice is his.
 
+**Where the trigger comes from, the GameBoard or the detector (the
+owner's question of 2026-09-23).** The click is the detector's action:
+the detector receives the rows that reach it, its offer (the square of
+its Node's summed pointer) is its cell's weight in the ladder, its own
+count n_D stamps the click and the record ends there. What the detector
+cannot decide is WHEN the ladder is read, for one reason: two paths of
+one record of different lengths (the two slits to one pixel) reach the
+set at two different intervals, the set accumulates its pointer
+coherently over the intervals, and the square of the accumulated sum
+rises and falls (an antiphase row arriving later lowers it; amplitude-v1
+section 13, departure 3). A click at the first arrival reads the nearest
+pixel, not the fringe. The ladder therefore needs the sum over ALL the
+record's futures, which is the owner's sentence itself: the choice among
+the futures needs them all to have arrived. Today that condition is the
+record's live count reaching 0 (the completion, fed through the
+apparatus's Ports); under the split it is the grain of (c), the same
+condition of the record on the GameBoard in another form. The detector
+stamps the click; the record decides that the time has come.
+
+**Heisenberg under the split (the owner's condition of 2026-09-23: the
+wave may not break the uncertainty relation).** It does not, and this is
+a theorem of the algebra rather than a separate check: the reading at
+the detector is the evaluation (E), the Fourier transform of the
+record's element over the aperture's Nodes (section 7), and for a
+Fourier pair the product of the widths is bounded below by the
+transform itself. Row 10's number is the relation: for a uniform
+opening of width w, w x FWHM(sin theta) / lambda = 0.886 is the
+Fourier width, so 22.2's pin IS the uncertainty relation of the slit at
+the full width at half maximum, and a reading well below it would break
+the relation; the refutation threshold 0.85 is also the Heisenberg
+check. The law has caught one such break already: the fan hole of
+RUN_10 (no direction within 1.22 degrees of the axis at the width 48)
+read 0.360 at w = 9, narrower than the Fourier width, an artefact of the
+fan and not of the wave, fixed by the 601-direction fan (0.879); under
+the split at every Node there is no fan to have a hole, so that source
+of a break is gone. A single row on the GameBoard is sharp in both its
+Node and its direction; this breaks nothing: a row is one future, a ray,
+a GAMEBOARD number, and the relation constrains what the detector reads,
+the sum of all the futures (DETECTOR). Row 10's 27 lamp rows and 601
+directions per opening Node are all sharp, and their clicks are spread
+by exactly the Fourier width (COMPUTATION, `run_10_pins.out`).
+
 **The vanishing.** At the click the record's other rows, wherever they
 are, are deleted from the GameBoard (the one deletion, ALGEBRA 3.1, the
 one non-local step that the law already has: the pair's gather deletes
