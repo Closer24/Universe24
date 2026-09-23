@@ -92,15 +92,31 @@ emitters of travelling-wave stress A^2 each,
 
     F_1 = 2 A^2 cos(k L)     (toward the partner; the chain reads it within 2 percent at every L from 64 to 108 Links: +1.99 at 64, -1.98 at 80, +1.97 at 96, the continuum +1.99, -1.99, +1.98),
 
-zero and stable at L = (m' + 1 / 4) lambda_0 (71.4 and 103.2 Links),
-zero and unstable at (m' + 3 / 4) lambda_0 (87.3), maximal repulsion at
-(m' + 1 / 2) lambda_0: L_0 = 80 = 2.52 lambda_0 is that point for
-in-phase clocks. With the second clock a quarter period behind the
-force is 2 A^2 cos(k L - pi / 2), zero and stable at 79.4 Links: L_0 =
-80 at m = 5 holds with that phase declared. So what section 2 needs is
-not a resonance: it is the object's own coherent emission overlapping
-the partner's arrival at its Node, at a declared relative phase, and a
-push read from the TOTAL field. Read with the two records kept as
+and the force on emitter 2 is its mirror, F_2 = -2 A^2 cos(k L), so the
+RELATIVE force is F_2 - F_1 = -4 A^2 cos(k L) cos(delta) for a declared
+relative phase delta between the clocks (section 10, the chain reading
+both emitters: +3.96 at 80, +2.40 at 84, -0.59 at 88, within 3 percent).
+Second correction (12:16Z; the first version of this paragraph read
+the parity from F_1 alone and had it backwards, and read a binding
+into a quarter-period phase that has none): for IN-PHASE clocks the
+stable separations are L = (m' + 3 / 4) lambda_0 (87.3 Links at 31.75;
+88 at lambda_0 = 32) and the unstable ones (m' + 1 / 4) lambda_0 (71.4,
+103.2); for ANTIPHASE clocks the reverse; a QUARTER-PERIOD phase gives
+zero relative force at every L (the chain: 0.000 at all six L) and
+pushes the pair as a whole by 4 A^2 sin(k L) sin(delta), a phased
+array, not a binding. L_0 = 80 = 2.52 lambda_0 is an equilibrium for no
+phase: the maximal repulsion in phase, the maximal attraction in
+antiphase. The fixed points of a coherent pair are never at whole
+numbers of lambda_0 / 2 (DESIGN.md 8b (iv)): they are at odd quarter
+wavelengths, the parity by the sign of cos(delta). So what section 2
+needs is not a resonance: it is the object's own coherent emission at
+a FIXED relative phase (two declared clocks) overlapping the partner's
+arrival at its Node, and a push read from the TOTAL field. The relay
+of section 3 is excluded from this binding after all: its phase
+re-locks to the arriving wave at every L, so its relative force -2 A^2
+(k_f^2 + k_b^2) cos(phi) has no dependence on L (section 10.3), a
+collapse, a drift or a separation by the declared shift phi, never an
+equilibrium; the paragraphs above this correction stand for it. Read with the two records kept as
 separate fields and the stress summed per field, the chain gives 0.000
 at every L: the cross term is gone and only the scatterer's own
 reflection pushes, always apart (2 R A^2, R = 0.086 for a thin
@@ -143,9 +159,10 @@ binding weakens with m. This is the coupled-dipole binding of two
 resonant scatterers (the form known in optics as optical binding), and
 it is the restoring force that DESIGN.md 8b (iv) asserted and lacked:
 it exists for every object that emits coherently at the pair's
-frequency with a fixed phase (a declared clock, or the relay that
-re-inserts at a locked phase), and never for a receiver that does not
-emit (section 1 with its correction). COMPUTATION.
+frequency with a FIXED relative phase (two declared clocks), and never
+for a receiver that does not emit nor for a relay whose phase follows
+the arriving wave (section 1 with its corrections; section 10).
+COMPUTATION.
 
 ## 3. The relay's Doppler integral through the acceleration: f_0 / gamma_m^2
 
@@ -214,18 +231,24 @@ frequency is. Four cases, each self-consistent at a constant pace:
 | Case (the law of the object's frequency) | f / f_0 | L_along / L_0 | L_across / L_0 | The cycle over N_0, along and across | Five's ratios N_par / N_0, N_perp / N_0 (in the object's own count, the lattice's intervals) | The lab's dilation read against nature's gamma_m |
 | --- | --- | --- | --- | --- | --- | --- |
 | The medium (no binding; the pair held rigidly at L_0; the fixed-separation clock of DESIGN.md 6.5) | 1 | 1 | 1 | gamma_m^2 along, gamma_m across | k = 3: 1.500 and 1.225; k = 4: 1.231 and 1.109 | no clock of the pair's own to read |
-| (i) The declared clock: f_0 ticks in the lattice's intervals, the re-emission resonant (section 2's force holds the pair at the retarded pattern's nodes) | 1 | 1 / gamma_m^2 (0.667; 0.812) | 1 / gamma_m (0.816; 0.901) | 1 and 1 (N_0 in both arms) | 1.000 and 1.000 at both k | 1 against 1.225 (k = 3), 1 against 1.109 (k = 4): FAIL |
+| (i) The declared clock: f_0 ticks in the lattice's intervals, the pair held by the coherent force at a fixed relative phase (section 10; the first version of this row put the pair at the retarded pattern's nodes, 1 / gamma_m^2, which is the pattern's geometry and not the force's equilibrium) | 1 | 1 - beta_c (0.423; 0.567), the equilibrium continued from rest by a slow ramp, section 10.2 | the across case not computed on the chain (the pattern's 1 / gamma_m is the geometry, not the equilibrium) | along: (1 - beta_c) gamma_m^2 = 1 / (1 + beta_c) = 0.634 at k = 3 by the round trip at the contracted L; across not computed | not 1 and 1 by the round trip: 0.634 along at k = 3, across not computed | 1 against 1.225 (k = 3), 1 against 1.109 (k = 4): FAIL |
 | (ii) The relay: no clock in motion, the inserted train continuing the received oscillation; carried rigidly to beta_c (section 3) | 1 / gamma_m^2 (0.667; 0.812) | 1 | gamma_m (1.225; 1.109) | gamma_m^2 and gamma_m^2 | k = 3: 1.500 and 1.500; k = 4: 1.231 and 1.231: FAIL of five | gamma_m^2 against gamma_m: 1.500 against 1.225, 1.231 against 1.109: FAIL |
 | (iii) The covariant object: the rest frequency itself a bound cycle of the Inside (section 4) | 1 / gamma_m (0.816; 0.901) | 1 / gamma_m (0.816; 0.901) | 1 | gamma_m and gamma_m | 1.000 and 1.000 at both k | gamma_m against gamma_m: PASS |
 
 The two numbers in each cell are k = 3 then k = 4. In case (i) and case
 (iii) five reads 1 and 1; only case (iii) also reads the lab's dilation.
-In case (ii) the relay is bound too, at the parity its locked phase
-sets (section 1's correction), so "carried rigidly" is what its binding
-gives; five then reads 1.500 and 1.500, its FAIL. A pair whose records
-are pushed as separate fields, or whose trains never overlap, drifts
-apart in every case: that reading names the push's form, not the
-member.
+In case (ii) the relay is not bound at any separation (section 10.3:
+its phase re-locks to the arriving wave, its relative force has no
+dependence on L), so "carried rigidly" is an assumption about the
+pushes, as the first version said; a free relay pair collapses, drifts
+or separates by its declared shift phi, and five then has no reading.
+In case (i) the pair IS bound, at the odd quarter wavelengths, and in
+motion its separation follows L_0 (1 - beta_c) (section 10.2), so the
+row's "1 and 1" of the first version is withdrawn: five's along ratio
+under (A) is set by the contracted separation, not by the pattern; f /
+f_0 = 1.000 still names the member. A pair whose records are pushed as
+separate fields, or whose trains never overlap, drifts apart in every
+case: that reading names the push's form, not the member.
 
 ## 6. What the chain script must read, and the candidate clock rule
 
@@ -238,8 +261,8 @@ and settles, read beside its separation:
 | Reading at k = 3 | Case (i) | Case (ii) | Case (iii) |
 | --- | --- | --- | --- |
 | f / f_0 | 1.000 | 0.667 | 0.816 |
-| L_along / L_0 | 0.667 | 1.000 | 0.816 |
-| L_across / L_0 | 0.816 | 1.225 | 1.000 |
+| L_along / L_0 | 0.423 (section 10.2; the first version's 0.667 withdrawn) | no equilibrium (section 10.3) | 0.816 |
+| L_across / L_0 | not computed | no equilibrium | 1.000 |
 
 The three are far apart and the band +- 0.03 of PINS.md rows (e) and
 (f) separates them.
@@ -574,23 +597,25 @@ re-inserts the identical record at the identical phase has no
 restoring term of its own: its frequency is the received one, whatever
 that is; it is a relay, the phase-continuous kind of section 3, not a
 driven oscillator (a driven oscillator needs a natural frequency to be
-driven against). The binding it can have is section 1's correction:
-two cells that re-insert coherently at a locked phase are bound by the
-cross term at the parity the phase sets; so relay ends CAN be bound,
-and section 2's condition (each end resonating) is not needed for the
-binding. It is needed for the member: the frequency the bound pair
-settles to is set by the cells' law of frequency, and a relay's is the
-round trip's. A pure mirror pair (the cells reflecting without
+driven against). It has no binding at a separation (section 10.3, correcting the first
+version of this paragraph): a cell whose phase follows the arriving
+wave re-locks at every L, so the cross term's force loses its
+dependence on L and becomes a collapse (phi = 0), a drift (pi / 2) or a
+separation (pi) by the declared shift; binding needs a FIXED relative
+phase between two declared clocks (section 1's corrections). Section
+2's condition is then right in substance: each end must carry its own
+clock. A pure mirror pair (the cells reflecting without
 inserting outward) is not bound: the cavity's light pushes the mirrors
 apart and nothing pulls.
 
 **9.5 What the sentence predicts for the pair's frequency after the
 push at k = 3.** For (B2), the cells relaying with the phase
 continuous: section 3's Doppler integral, f / f_0 = 1 / gamma_m^2 =
-0.667, the pattern's like points then lambda / 2 = (lambda_0 gamma_m^2 /
-2) / gamma_m^2 = lambda_0 / 2 apart, so L_along / L_0 = 1.000 and L_across
-/ L_0 = 1.225: the extent does not contract, the cycle is gamma_m^2 N_0
-in both arms, five reads 1.500 and 1.500, its FAIL. For (B1), the block
+0.667 for whatever separation the pair has, and no equilibrium
+separation at all (10.3): the pair collapses, drifts or separates by
+its declared shift, and five has no reading; if it were held rigidly
+by something else it would read L_along / L_0 = 1.000, L_across / L_0 =
+1.225, the cycle gamma_m^2 N_0 in both arms, five's 1.500 and 1.500. For (B1), the block
 moved as one: the medium row, the cycle gamma_m^2 N_0 along and gamma_m
 N_0 across, five's 1.500 and 1.225, and the wave inside the block reads
 f / f_0 = 0.667 as the rigid cavity's round trip. Neither is 0.816. The
@@ -611,8 +636,9 @@ relay's member, and Lorentz's member needs (C), that is a gap.
 
 **9.6 The confirmations and the variant.** (B1) rigid in motion is the
 medium row, no Lorentz: confirmed. (B2) "the extent the wave's own" is
-Lorentz's member only with the cells at f_0 / gamma_m; with relay cells
-it is the relay's member and the extent stays L_0; its bottom is (C),
+Lorentz's member only with the cells at f_0 / gamma_m and the
+simultaneity phase between them (10.4); with relay cells it is the
+relay's member with no equilibrium extent; its bottom is (C),
 whose wall on the massless rule is not the dispersion near the band's
 top but the absence of a gap (8.2: the single Node's only mode sits
 above the band, and a slow Node has none). The added variant (the two
@@ -623,3 +649,116 @@ five reads 1.500 and 1.225; it is worth seconds on the chain as the
 calibration of the transport and of the zero-crossing reading, not as
 a variant of five. Kinds: every number COMPUTATION; (B1), (B2) and the
 sentence DECLARATION candidates for the owner; nothing entered.
+
+## 10. The coherent pair in motion: the closed forms, the tearing, the recoil
+
+Written 12:16Z on the Boss's question of 12:05Z (the chief physicist's
+finding of 11:52Z: an (A) pair carried rigidly to v = 0.27 and then
+torn, the leading object run away by the trailing one's compressed
+wave) and as the second correction of section 1. The chain check
+`check_pair_motion.py` (the reviewer's scratchpad; floats; soft
+sources emitting continuously at the clock [64, 55]; the total field's
+stress read four Links outside each emitter; the sources stepping one
+Link every K intervals) reads BOTH emitters, at rest and at K = 3;
+`track_root.py` follows the equilibrium as beta_c ramps. COMPUTATION
+throughout; T_0 is one emitter's travelling-wave stress at rest.
+
+**10.1 The closed forms.** Object 1 behind, object 2 ahead, F positive
+toward +x; k_f = 1 / (1 - beta_c) and k_b = 1 / (1 + beta_c) in units
+of k_0 (the emitter's forward and backward wave numbers in the lab, its
+frequency f_0 in the lattice's intervals, its amplitude unchanged by
+the motion in one dimension); delta = phi_2 - phi_1 the declared
+relative phase:
+
+    F_1 = (k_b^2 - k_f^2) T_0 + 2 k_b^2 T_0 cos(k_b k_0 L - delta),
+    F_2 = (k_b^2 - k_f^2) T_0 - 2 k_f^2 T_0 cos(k_f k_0 L + delta).
+
+The first term is each object's own recoil (10.5); the second is the
+cross term of its own emission with the partner's wave arriving in the
+same direction (the counter-propagating pair has no cross term under
+c^2 = 1 / 3: 3 omega_1 omega_2 - k_1 k_2 = 0). At rest F_2 - F_1 = -4
+T_0 cos(k_0 L) cos(delta) and F_1 + F_2 = 4 T_0 sin(k_0 L) sin(delta).
+The chain at rest agrees within 3 percent at every L from 72 to 92 for
+delta = 0, pi / 2 and pi (in phase: the relative force +0.48, +3.16,
++3.96, +2.40, -0.59, -3.23 at 72, 76, 80, 84, 88, 92; a quarter period:
+0.000 at every L with F_1 = F_2; antiphase: the signs reversed). At K =
+3 the chain agrees in sign and in the spacing of the fixed points, the
+stepping source adding sidebands (its stress ahead 5.95 T_0 against the
+closed 5.60, behind 1.04 against 0.40; the own recoil -4.9 against
+-5.2).
+
+**10.2 The equilibrium in motion.** The forward term dominates (k_f^2 =
+5.6, k_b^2 = 0.40 at k = 3), so the fixed points in motion are spaced
+lambda_0 (1 - beta_c) / 2 = 6.7 Links at k = 3 and the binding's
+amplitude is 2 (k_f^2 + k_b^2) T_0 = 12 T_0. The stable point continued
+from the rest point L_0 = 2.75 lambda_0 by a slow ramp (the root of
+k_f^2 cos(k_f k_0 L) + k_b^2 cos(k_b k_0 L) = 0 tracked in steps of 0.001
+in beta_c, stable throughout) is
+
+    L* = L_0 (1 - beta_c):   0.900 at beta_c 0.1, 0.792 at 0.2, 0.597 at 0.4, 0.423 at 0.577 (k = 3),
+
+36.9 Links at k = 3, where the forward wavelength lambda_0 (1 - beta_c)
+= 13.4 Links sits just above the floor of 12. This is what the (A) pair
+reads for L_along / L_0, and section 5's first version (1 / gamma_m^2,
+0.667, the retarded pattern's node spacing) was the pattern's geometry
+and not the force's equilibrium. The covariant object (iii) keeps L_0 /
+gamma_m: with its frequency f_0 / gamma_m and the simultaneity phase
+delta = -k_0 beta_c L_0 between the two boosted clocks (10.4), L = L_0 /
+gamma_m is an exact root of both cosines at once, the boost of the rest
+pair. An impulsive start does not by itself break a pair under the
+total-field push (the same kick on both), but the wells in motion are
+6.7 Links wide at k = 3, so the ramp over ten to thirty cycles is the
+right form and the settling band in motion is +- lambda_0 (1 - beta_c)
+/ 4, not +- lambda_0 / 4.
+
+**10.3 The relay has no equilibrium.** An object whose insert follows
+its receive with the received phase continued (plus a declared shift
+phi) re-locks its phase to the arriving wave at whatever L the pair
+has, so its cosines are cos(phi) at every L: F_2 - F_1 = -2 T_0 (k_f^2 +
+k_b^2) cos(phi), a collapse for phi = 0, a drift for pi / 2, a
+separation for pi, never a restoring force. Section 1's first
+correction ("the relay binds at its parity") is withdrawn; its first
+statement ("a relay pair is not bound") stands with the reason
+corrected: not the absence of a cross term, but the absence of its
+L-dependence. The chief physicist's finding 2 (11:25Z) was therefore
+two things at once: the push per field (no cross term) and, for the
+owner's candidate, a relay.
+
+**10.4 The tearing.** With the push per field (the physicist's section
+at 11:52Z) the only force in motion is the scatterer's asymmetric
+radiation pressure, 2 R (k_f^2 - k_b^2) T_0 forward on the leading
+object (R = 0.086 for the thin scatterer at n_o = 2; k_f^2 - k_b^2 = 4
+beta_c gamma_m^4 = 5.2 at k = 3), a runaway that grows with beta_c and
+showed itself at v = 0.27. Under the total-field push the binding of
+10.2, 12 T_0 at k = 3, stands against a tearing term of 0.9 T_0: there
+is no beta_c below 1 at which a thin scatterer's pressure beats the
+coherent binding, and k = 3 is above no threshold.
+
+**10.5 The recoil.** An emitter at the lattice-time frequency f_0
+radiates asymmetrically in motion and is braked by its own emission,
+(k_f^2 - k_b^2) T_0 = 4 beta_c gamma_m^4 T_0 per interval, 5.2 T_0 at k =
+3 (the chain 4.9), the same on both objects. Against a momentum of
+about 127,000 T_0 (E'_0 = 1000 trains of two periods = 220,000 T_0 c,
+P = E'_0 beta_c / c) that is 1.1 percent of the pace per cycle of 277
+intervals, about 45 percent over forty cycles: an (A) pair pushed to k
+= 3 does not stay at k = 3 under a push that includes its own record.
+The local form of DESIGN.md 5.1 (a)'s "a body's own insert adds
+nothing to P", exact in motion too because the own record is a
+separate field: the push is the stress of the total field LESS the
+stress of the object's own record alone at its six Ports (the cross
+terms and the partner's terms). Its price: no recoil, no momentum
+conservation with the object's own emission; the rocket's physics kept
+here as a COMPUTATION. Recommended for the reduced run; the owner's
+word on which the design keeps.
+
+**10.6 For the run, in one paragraph.** In-phase clocks at L_0 = 88
+(m = 5.5 at lambda_0 = 32), or antiphase at 72, or the clock N = 50
+(lambda_0 = 28.87, MUST I's floor at k = 3 exactly) in phase at 79.4;
+never L_0 = 80 and never a quarter period; the total-field push less
+the own record; continuous emission; the rest control showing the pair
+holding at the declared phase before any push; the ramp over ten to
+thirty cycles; the readings f / f_0 (1.000 names (A), 0.816 Lorentz,
+0.667 the relay) and L_along / L_0 (0.423 for (A) at k = 3, 0.816 for
+Lorentz, no equilibrium for the relay), the settling band in motion +-
+lambda_0 (1 - beta_c) / 4. Every number COMPUTATION; no pin moved by
+this file; the declarations the design's and the owner's.
