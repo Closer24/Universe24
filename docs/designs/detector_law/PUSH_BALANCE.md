@@ -446,3 +446,106 @@ computation, with its two prices named (a gap, and a clock that is not
 the light clock); the run decides between (A) and the relay, nothing
 decides (C) but the owner's word on the gap. Lorentz's member "matches
 nature", never "is nature".
+
+## 9. The model owner's form of (B): the object as the set of Nodes at which its own record is identical
+
+Written on the Boss's orders of 11:40Z and 11:46Z (the owner's records
+1370 and 1371: a foreign object is not one Node; a Node holds bounded
+integers, so a mass above the bound is several Nodes, and they are one
+body by one record held identically at all of them; its declared N
+gives its extent at rest, s = N c / 2 = lambda_0 / 2 Links, the Nodes
+its own record crosses in one cycle; its click in the Outside is the
+agreement of its cells). Every number a COMPUTATION on the continuum
+pace or from the tables above; the owner's words DECLARATION candidates;
+nothing enters the law.
+
+**9.1 Which of (A) and (B) gives Lorentz.** Section 5's table: only
+case (iii), the covariant object, reads both five's 1 and 1 and the
+lab's dilation gamma_m; case (i), (A), reads five's 1 and 1 and fails
+the lab's row; case (ii) fails both. So (B) is the only candidate for
+Lorentz and (A) is its control, as the Boss answered the owner; and (B)
+gives Lorentz by construction (the covariance it declares), which is
+why its wall is the question: what makes the object covariant.
+
+**9.2 Two objects hide in "identical".** (B1) Contiguous Nodes holding
+the identical record (the owner's 11:44Z form: several Nodes, each
+returning and receiving the same thing): a block with no gradient
+inside, one Node replicated, moved as one by one momentum integer.
+(B2) Separated cells at the like points of the object's own standing
+pattern (the Boss's reading), lambda_0 / 2 apart at rest (the pattern's
+sign alternating between them, identical up to the sign; lambda_0 apart
+if the sign is required too), each a Node that re-inserts the record it
+receives at the identical phase. Both satisfy the sentence; they are
+different objects with different pushes, and the sentence must name
+which.
+
+**9.3 The three tests on the sentence** ("a foreign object is the set
+of Nodes at which its own record is identical; its mass is their count;
+its clock is the cycle of that record across them; nothing else
+declared"). Generic: PASS (no family name, no kind; one record, one
+count). Vector: PASS (a comparison of identity, the rule's own verbs,
+no root). Local: NOT as it stands for (B2), because "identical" between
+Nodes lambda_0 / 2 apart is a comparison across non-neighbours that no
+Node can make; its local form is the phase lock at each cell (a cell
+belongs to the object when the record arriving at its own Node is
+identical in phase with the one it holds and re-inserts), and that
+form is a relay's condition, met at any separation the pattern allows;
+PASS for (B1), where the identity is between neighbours. The mass as
+the count is a declaration of the design (the local integer contract's
+reason for it agreed); the clock as the record's cycle across the
+cells is section 6's candidate rule restated for an extended object.
+
+**9.4 Does the sentence contain the resonance.** No. A cell that
+re-inserts the identical record at the identical phase has no
+restoring term of its own: its frequency is the received one, whatever
+that is; it is a relay, the phase-continuous kind of section 3, not a
+driven oscillator (a driven oscillator needs a natural frequency to be
+driven against). The binding it can have is section 1's correction:
+two cells that re-insert coherently at a locked phase are bound by the
+cross term at the parity the phase sets; so relay ends CAN be bound,
+and section 2's condition (each end resonating) is not needed for the
+binding. It is needed for the member: the frequency the bound pair
+settles to is set by the cells' law of frequency, and a relay's is the
+round trip's. A pure mirror pair (the cells reflecting without
+inserting outward) is not bound: the cavity's light pushes the mirrors
+apart and nothing pulls.
+
+**9.5 What the sentence predicts for the pair's frequency after the
+push at k = 3.** For (B2), the cells relaying with the phase
+continuous: section 3's Doppler integral, f / f_0 = 1 / gamma_m^2 =
+0.667, the pattern's like points then lambda / 2 = (lambda_0 gamma_m^2 /
+2) / gamma_m^2 = lambda_0 / 2 apart, so L_along / L_0 = 1.000 and L_across
+/ L_0 = 1.225: the extent does not contract, the cycle is gamma_m^2 N_0
+in both arms, five reads 1.500 and 1.500, its FAIL. For (B1), the block
+moved as one: the medium row, the cycle gamma_m^2 N_0 along and gamma_m
+N_0 across, five's 1.500 and 1.225, and the wave inside the block reads
+f / f_0 = 0.667 as the rigid cavity's round trip. Neither is 0.816. The
+Boss's (B2) argument (the boosted pattern's like points are 1 /
+gamma_m closer, so the identity condition places the cells contracted)
+holds for the boost of the rest solution, whose frequency at the cells
+is f_0 / gamma_m; but the cells do not carry that frequency unless
+their own law gives it: with relay cells the pattern they generate is
+the one at f_0 / gamma_m^2, whose like points are not contracted, and
+the identity condition places them there. The identity condition is
+degenerate exactly as the standing condition of section 5: it is
+satisfied at every L for whatever frequency the cells hold, and the
+member is selected by the frequency law alone. The only cell that holds
+f_0 / gamma_m is one whose rest frequency is a covariant bound cycle of
+its own: (C) at the bottom (8.3 (ii)), which on the massless rule does
+not exist (8.2). So (B) as the owner's sentence is (B2) with the
+relay's member, and Lorentz's member needs (C), that is a gap.
+
+**9.6 The confirmations and the variant.** (B1) rigid in motion is the
+medium row, no Lorentz: confirmed. (B2) "the extent the wave's own" is
+Lorentz's member only with the cells at f_0 / gamma_m; with relay cells
+it is the relay's member and the extent stays L_0; its bottom is (C),
+whose wall on the massless rule is not the dispersion near the band's
+top but the absence of a gap (8.2: the single Node's only mode sits
+above the band, and a slow Node has none). The added variant (the two
+ends as one body with one shared momentum, the control against finding
+2) has its outcome in the algebra already: the block moves at the
+cadence of 5.1 (a), the wave inside reads f / f_0 = 0.667 at k = 3 and
+five reads 1.500 and 1.225; it is worth seconds on the chain as the
+calibration of the transport and of the zero-crossing reading, not as
+a variant of five. Kinds: every number COMPUTATION; (B1), (B2) and the
+sentence DECLARATION candidates for the owner; nothing entered.
