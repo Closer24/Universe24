@@ -5333,3 +5333,674 @@ words this cost are taken from the central sentence, the same claim:
 detector or a ratio of such counts". The optional "from the measured
 CHSH value" not added: no words left. 250 words (mathematics one token
 each). The PDF from the true source, read back. 52 pages.
+
+## Step 1 of the reordering (2026-09-23, the Boss's order of 23:10Z, the owner's go and his approval): the plan, docs only
+
+On `paper-algebra-first` off main after the abstract's four commits merged
+(PR #967, merge c324434d6f7ee52811c86ef622eef5c618c0da06; the paper file last changed at d2a58a7d). The sources
+cited by the plan, all merged: docs/GROUP_STRUCTURE.md (PR #968, merge 7739bbbea5846ec5efccc83ca3e24bf695d5b9a5),
+docs/designs/fail_rows/WHAT_IS_MISSING.md (PR #964, merge c66de8718357beae6114590a1f86c21c59a84299), RUN_8BC.md
+(PR #975, merge 907f339d08eaa64c29acab190e106b74f06e67ee). Nothing of the paper's text changes in this commit; step 2,
+the reordering itself through the generator, starts only on the Boss's go
+after this plan is read. The plan follows, in the order it was drafted through
+the evening of 2026-09-22, each of the owner's words folded in where it came.
+
+## Planned (2026-09-22, the owner's word through the Boss's order of 23:10Z): the paper in the algebra's order, step 1, the plan
+
+The owner's word: the paper begins with the algebraic object and says
+all of it first (the group of the six Ports, the 24, the cyclic group
+of the phase and its ring, the families of the ring and how the
+operations act on their members), then says that not all the physical
+rules were put into the algebra but part of them, and then what that
+part gave. This is a reordering of the present text; no claim, no
+number, no row and no verdict changes; every sentence moved keeps its
+words, and the only new prose is the section's opening lines and the
+paragraph in the owner's words. Step 2 (the reordering itself, through
+the generator) starts only on the Boss's go after this plan is read.
+
+### The new order of the sections
+
+1. Introduction (as now; its first paragraph "The algebra first"
+   stays, and its "The words of this paper" paragraph moves to the new
+   Section 2).
+2. **The algebra: the group, the ring and the families** (new; made of
+   moved text). In this order:
+   - The six Ports and their group: the paragraph "The six Ports, the
+     group and the front" and Theorem 1 (th:group) with its proof
+     reference, from Section 3 (lines 294 to 322 now); the hand as the
+     pseudoscalar column; the 24 rotations and the 24 reflections.
+   - The cyclic group of the phase and its ring: the record as an
+     element f = sum f_p x^p of Z[Z_N], the pointer ev(f) at the roots
+     of unity, and the pair's record in Z[Z_N] x Z^2 x Z^2 (the
+     paragraph "The objects", line 704 now, from Section 6), with
+     Definition "Row and record" (def:row, line 536) and its amplitude
+     equation.
+   - The six operations on those objects: the paragraph "The road from
+     the cells to the algebra" (Section 2 now) and Definition "The
+     update rules of one interval" (def:rules, line 563, from Section
+     6): the translation, the split (the table), the merge (the ring's
+     addition), the rotation (the integer matrix), the evaluation (the
+     click) and the accumulator (the division with the remainder kept).
+   - The families as declared integers on the objects: Appendix D's
+     table tab:families brought forward whole (its caption and the
+     three columns "the declared integers", "the algebraic object",
+     "the verbs that act on it"), with the paragraph "The words of this
+     paper" (Section 1 now) as its introduction; the column "the click
+     that reads it" stays in the table (it names the rows of Table 2).
+   - **The paragraph in the owner's words** (new prose): not all the
+     rules of physics were put into the algebra; what was put in is the
+     six operations and the declared tables, and what was not: the
+     atom's rule (no operation quantises a body's loop), the hypothesis
+     (A2) (the amplitude's split between staying and hopping; the law
+     as built meets (A1) only), the recoil at a free release (the free
+     family's third law a symmetry of two readers, not a balance per
+     message), the collision (Rule C acts in no world of this paper),
+     the tables at 1/256 (a declared input, P7), the masses and the
+     coupling matrix's entries (initialisation and declared integers,
+     not results), the shell average (a limit taken Outside, not an
+     operation Inside), and the generic entry of the bending (a later
+     rule, outside this paper's law identity). "We put part of the
+     rules in, and saw what they gave."
+   - What the part put in gave, in one paragraph: the exact identities
+     (Theorems 2 to 6; the books; Gauss's law; the pace with its
+     Manhattan bound), the limits recovered (c = 1/sqrt 3, Born,
+     Tsirelson, Young, the inverse square and Poisson under a shell
+     average), the chain to Lorentz's factors, the equivalence principle
+     and Einstein's step under (A1) and (A2) and to Newton in a limit
+     (Section 9's chain, cited, not moved), and the comparison by kind
+     (Table 2).
+3. The law and its implementation (Section 2 now, minus the two
+   paragraphs moved up; its map Eq. (1), the state, the components, the
+   two blocks, the read-out, the hand-worked update, the code, the
+   ledger stay).
+4. Geometry and symmetries (Section 3 now, minus the Ports paragraph
+   and Theorem 1; the symmetries, the octahedron, Proposition 1 and
+   "What a detector measures" stay).
+5. Conservation, the flux and the forces (unchanged).
+6. The delay field (unchanged).
+7. Measurement and the quadratic form (Section 6 now, minus def:row,
+   def:rules and "The objects"; Definition "The click" (def:click), the
+   rungs, the lemma, Theorems 2 to 4 and the rest stay; a one-line
+   pointer to Section 2 where the definitions were).
+8. Bell and CHSH (unchanged).
+9. The simulator's checks and the comparison with nature (unchanged).
+10. Discussion and conclusions (unchanged; its chain stays where it is
+    and is cited from Section 2).
+Declarations, References, Appendices A to C unchanged; Appendix D keeps
+the roads table (tab:roads) and its dated transition paragraph, and
+loses the families table (moved up) or keeps a one-line pointer.
+
+### What moves, by label
+
+- th:group (4 references), def:row (1), def:rules (2), tab:families
+  (5): move to Section 2; every \ref follows the label, so no
+  cross-reference is rewritten by hand; the generator's assembler
+  moves the text blocks and the numbers renumber themselves.
+- The shared theorem counter: Theorem 1 stays Theorem 1 (first in the
+  new Section 2); the two definitions moved up become Definitions 2
+  and 3 in order of appearance and the click's definition follows
+  later; the theorems 2 to 6 keep their numbers (they stay in order
+  after Theorem 1). The reviewers' issue comments cite "Definition 7"
+  and "Definition 8" by the old numbers; the labels are what the paper
+  cites, and the NUMBERS.md row of step 2 will list the old and the
+  new numbers side by side.
+- sec:law, sec:geometry, sec:measurement keep their labels; their
+  section numbers move by one (2 to 3, 3 to 4, 6 to 7); every
+  Section~\ref follows.
+- No equation label moves except the amplitude equation inside def:row
+  (unlabelled) and none is renumbered out of order: Eq. (1), the map,
+  stays first because Section 3 (the law) still precedes every other
+  numbered equation; the amplitude equation in the new Section 2 is
+  unnumbered now and stays so.
+- Figures: none move. Tables: tab:families moves before tab:ledger, so
+  the table numbers renumber (the families table becomes Table 1, the
+  ledger Table 2, the confrontation table Table 3, the conversion
+  table Table 4); every Table~\ref follows; the prose that says "Table
+  2" in words (none: the paper cites tables by \ref only, checked by
+  grep) needs no hand edit; the NUMBERS.md and PLAN.md notes that say
+  "Table 2" for the confrontation table are history and stay.
+
+### What stays as it is
+
+Every sentence of physics, every number, every verdict, the abstract
+(its first sentence already turned), the chain sentence "In one chain,
+with nothing of Einstein's put in", the Declarations, the references.
+
+### The expected page count
+
+The moved text is the same text; the new prose is the section's opening
+(about 60 words), the owner's paragraph (about 130 words) and the
+"what it gave" paragraph (about 90 words): about half a page. Expected
+52 or 53 pages; reported at step 2.
+
+### How step 2 is done
+
+Through the generator: the assembler gains one step that cuts the named
+blocks (by their paragraph headings and labels, matched exactly once
+each) and places them under the new section heading, before the present
+Section 2; the new prose enters as corrections with their own labels;
+the tests of the generator (test_paper_cut30) gain one check that every
+label of the paper is defined once and referenced as before (the same
+\ref counts). One or two commits on paper-algebra-first; the PDF from
+the true source, read back; check.py; then the physics-rule reviewer's
+full read and the mathematician's check of the group's details.
+
+### The owner's third word (23:10Z), folded into this plan
+
+- The beginning states and does not narrate: the opening paragraph's
+  closing sentence ("That order ... is the order in which the model was
+  found") is dropped; the object is stated as found ("the paper has one
+  algebraic object"), in the form other papers use.
+- The paper is a paper on modern algebra: the new Section 2 is its
+  subject; the lattice is the way the object is computed with, named in
+  the abstract and in Section 3 as the tool, not in the title.
+- The failures with their cause: where a FAIL's cause is a rule absent
+  from the algebra (3, 4b, 6, 13; the pinned 4a, 5b), the verdict cell
+  says so in one word beside FAIL, "a rule absent"; the hypotheses
+  refuted (7b, 8a, 8b, 8c) and the failures of grain or apparatus (1b,
+  1c, 2a, 14) named as such in the tally sentence; the verdict words the
+  register's to confirm. What was found and why: the families table
+  (what) and Table 2's cause cells (why) are that table; no new table
+  unless the register defines a column.
+- The title from the group: the rotation group of the cube, order 24,
+  the octahedral rotation group (isomorphic to S4), Theorem 1; the
+  candidates put to the owner; the chosen title enters at step 2.
+
+### The owner's fourth word (23:15Z): the organisation, in the form of the great papers
+
+The order of the paper is the order of Wigner (1939, the group first,
+the particles as its representations after), Yang and Mills (1954, the
+gauge group and its field first, the physics read from it), Gell-Mann
+(1961, the Lie algebra first, the hadrons as its multiplets) and of a
+mathematics paper (definitions, theorem, proof, then the application):
+
+1. The algebra (the new Section 2): the group of the six Ports (48 and
+   24, Theorem 1); the cyclic group of the phase and its integer group
+   ring Z[Z_N]; the record as an element; the six operations written as
+   maps on the ring in the algebra's own notation (the translation
+   f -> x^phi f carried one Link; the split f -> (a_i x^{t_i} f)_i; the
+   merge, the ring's addition; the rotation, the integer matrix U_s on
+   the label pair; the click, the evaluation ev: Z[Z_N] -> Z[zeta] with
+   its norm; the accumulator, the division with the remainder kept);
+   the central formula, Eq. (1), boxed, read as the composition of
+   those maps; the families as declared integers on the objects (the
+   families table). "These are the operations of the algebra that
+   nature's readings are compared with."
+2. What follows from the algebra, in its own symbols: the exact
+   identities (Theorems 2 to 6, the books, Gauss, the pace), and the
+   forms reached under (A1) and (A2): Lorentz's factors, the
+   equivalence principle, Einstein's step, Newton's inverse square in a
+   limit; "reached", the hypotheses named.
+3. The way: the lattice, the GameBoard and the simulator, as the way
+   the algebra is computed with (the present Sections 2 to 8, reordered
+   under this heading, each keeping its text).
+4. How the group was reached through physics (a chapter gathered from
+   what exists: "The road from the cells to the algebra", "How the
+   simulator led to the results", "The transition from ordinary physics
+   to modern algebra, dated", Section 9's "The platform" and "The road
+   to each"): the dated entries, the six verbs found one by one, and
+   what was not put in.
+5. The comparison with nature by kind, the failures by cause, the
+   discussion, the declarations.
+
+Where the text can shorten under this order (the owner asks; his word on
+each): the Introduction's "The paper in one page" repeats what the new
+Section 2 says (about half a page); "The hand-worked update" and "In the
+code" of Section 3 can go to Appendix C (about a page); Section 9's
+"The platform" and "The road to each" fold into the chapter on how the
+group was reached (about half a page saved by the merge); the register's
+paragraphs of Section 9 ("The simulator's checks") shorten by their
+duplicates of Table 2's cells (about half a page). Nothing physical is
+cut; every number and verdict stays; about two to three pages in all if
+every one is taken.
+
+### The owner's fifth word (23:25Z): the cuts are allowed; where "how we reached the algebra" goes
+
+The owner allows the shortenings listed above (his word: "if you think
+it can be cut and shortened, yes"), and asks where the chapter "how we
+reached this algebra" goes, since readers will ask how the group was
+found. The answer of the great papers: a short motivation in the
+Introduction and one section of its own before the comparison with
+nature (Wigner's and Gell-Mann's papers motivate in the introduction and
+keep the construction's origin to a section; a mathematics paper puts
+it in "Background" or at the end). Here: five lines in the Introduction
+("where the object came from") and a section of its own, the fourth in
+the new order, "How the algebra was reached: from one Node and its six
+neighbours to the group", between the way (the lattice and the
+simulator) and the comparison with nature. Its content exists and is
+gathered, not written anew: a Node and its six neighbours, the seven
+Nodes of the causal front (the octahedron, Figure 3), one message per
+Link per interval; the GameBoard as the way of computing between Nodes;
+the twenty-four dated steps of the transition (Appendix C's paragraph,
+HISTORY.md): 09-17 the amplitude a phase with a content; 09-18 the Born
+table from N and a Node its six Ports; 09-19 the quantum an integer row,
+the click the one border, the push one bilinear form; 09-20 the readings
+by kind, every count an accumulator; 09-21 the six verbs, the record in
+Z[Z_N], the lattice the translation group, the Lorentz factor refused as
+a seventh verb; 09-22 the detector's clock and the click theorem. The
+sentence in the owner's words: the GameBoard showed that everything
+converged to this group and this ring; what did not converge was not
+put in. The dated paragraph leaves Appendix C for this section; the
+Introduction's "How the simulator led to the results" moves here whole.
+
+### The owner's sixth word (23:55Z and 00:00Z): the click-to-click algebra, and the reverse direction
+
+- Part 2 of the new order opens with a named subsection, "The algebra
+  from click to click": the click as the one measured event (the
+  one-way border); everything measured a count between clicks or a
+  ratio of such counts (the detector's own count, the interval between
+  two clicks, the smallest distance between clicks 1/(k(k+1)) on the
+  k-ladder, the count ratio k_a(b) of the moving detector); the map
+  from the ring's elements to those counts (the record as an element,
+  its ordinal on the released rows the detector's own count, the click
+  theorem as the statement about count ratios); the sources the click
+  frame's section 0 and NEWTON_FROM_CLICKS.md sections 1.1 and 1.2;
+  every reading of Table 2 then named as such a count or ratio, or
+  marked as not one (a GameBoard reading a diagnostic, never compared).
+  The central idea (records 1104 and 1108): everything is measured
+  between click and click, nothing inside the board; it is in the
+  abstract and in the opening paragraph from the paper-opening branch
+  on, and in Highlights 5.4 by the Boss.
+- Part 5 (the comparison and the failures by cause) is framed in the
+  reverse direction: from the algebra to what the experiments lack;
+  each FAIL a READING not yet made, a DECLARATION, a RULE the algebra
+  has a place for and the law does not fill (the owner's "perhaps
+  another physical force"), or NOTHING; the FAIL Rows Algebraist's file
+  (branch fail-rows) the source, cited as pending until it merges; the
+  paper claims no force it has not shown.
+
+### The owner's seventh word (00:40Z): the definitions in the new order, and the names
+
+The new Section 2 opens with the definitions in this order, each one
+line of mathematics before its words: (1) the GameBoard, the cubic
+lattice Z^3 of Nodes with six Ports each and one Link per interval; (2)
+the group of order 24, the rotations of the cube acting on the six
+Ports, inside the 48 signed permutations (Theorem 1; isomorphic to the
+symmetric group S_4, which is not written "S_24": S_24 would name the
+symmetric group on 24 letters, of order 24!, a different group); (3) the
+cyclic group Z_N of the phase and its integer group ring Z[Z_N]; the
+record as an element f = sum f_p x^p at a Node with a direction; (4) the
+six operations, maps on the records (the law's step Inside); (5) the
+click, the evaluation ev: Z[Z_N] -> Z[zeta] with its norm at a detector,
+and the Outside: counts between clicks and ratios of counts, the only
+things compared with nature. So the correct sentence is: the group of
+order 24 is the symmetry of the GameBoard (what maps its directions to
+directions keeping opposites), not the GameBoard itself; the six
+operations act Inside on the ring's elements; the Outside is not an
+operation on the group but the read-out, the click and its counts.
+The words of the world, kept as the paper uses them: "exact" for an
+identity of the algebra; "recovered in a limit" for a known law
+re-obtained in a named limit (c = 1/sqrt 3, Born, Tsirelson, Young, the
+inverse square and Poisson under a shell average); "reached under
+hypotheses" for the chain to Lorentz's factors, the equivalence
+principle, Einstein's step and Newton (under (A1), (A3), (A2) as named);
+"conjectured" for the bending's coefficient and the atom's ladder;
+"compared" for Table 2's readings; "derived" nowhere for a law of
+nature.
+
+### The owner's eighth word (00:50Z): the paper is how the algebra and the physics connect; where the route goes
+
+The great papers place the route in two places and nowhere else: a
+paragraph of motivation in the Introduction (Dirac 1928, Yang and
+Mills 1954, Gell-Mann 1961 all begin from the physics that called for
+the mathematics, in a page), and a section of its own once the
+mathematics and its consequences are on the table (Gell-Mann's closing
+sections; Wigner's physical sections after the group). The reordered
+paper follows that, and its five parts read as the two directions of
+the connection: Part 1 the algebra; Part 2 the algebra to the physics
+(what follows, the click-to-click algebra, the forms reached); Part 3
+the GameBoard, the way the algebra is computed with; Part 4 the physics
+to the algebra: "How the algebra was reached from the GameBoard" (the
+route, the twenty-four dated steps, what did not converge and was not
+put in); Part 5 the comparison with nature by kind and the failures by
+cause. The Introduction carries the route in five lines and points to
+Part 4; Part 4 comes after Part 3 because the GameBoard must be defined
+before the paper says how it led to the group.
+
+### The owner's ninth word (00:58Z): from the physics to the mathematics by the postulates, and back
+
+Part 4 is written as a table, one row per postulate of the law, the
+physical assumption on the left and the mathematical object it forces
+on the right (the objects already in the paper; the table is new):
+- P2, space a cubic array of Nodes with six Ports -> the lattice Z^3,
+  the six directions, and their symmetries: the 48 signed permutations,
+  their rotations the group of order 24 (Theorem 1);
+- P5, one Link per interval; P4, a rule reads its own record and the
+  six neighbours and keeps nothing at a Node -> the translation group's
+  shift, the causal front (the octahedron), the Manhattan bound and the
+  pace c = 1/sqrt 3 in the limit (Proposition 1);
+- P1, every quantity a bounded integer; the phase on a bounded circle
+  -> the cyclic group Z_N and the free Z-module of the rows; the amount
+  an integer coefficient;
+- messages that meet and add, opposite phases cancelling -> the group
+  ring Z[Z_N] and its addition (the merge);
+- P7, P8, the declared tables and the families as rows of integers ->
+  the integer matrices (the split, the rotation) and the coupling
+  matrix; the record of a pair in Z[Z_N] x Z^2 x Z^2;
+- P3, the rates and walls made of the six operations; the bounded
+  accumulator -> Eq. (1), the division with the remainder kept, the
+  comparison that is the event;
+- P6 and P11, a record read out once by one comparison, the GameBoard
+  read in no other way; P10, one axiom of the apparatus -> the
+  evaluation at the roots of unity with its norm, the click's weight the
+  positive quadratic form (Theorem 4), and the Outside: counts between
+  clicks and their ratios;
+- P9, the flight blind to the phase and the crowd -> no dispersion, the
+  constancy of c; a rule chosen among few, so named.
+Then the way back, mathematics to physics, in the same table's last
+column or a second table: what each object gives that is compared with
+nature (the books and Gauss's law exact; c, Born, Tsirelson, Young, the
+inverse square and Poisson recovered in limits; Lorentz's factors, the
+equivalence principle, Einstein's step and Newton reached under (A1),
+(A3), (A2); the CHSH value 181/64 and Table 2's rows), each with its
+word. The two tables are the paper's two directions in one page.
+
+### The owner's tenth word (01:05Z): the postulates get names, not only numbers
+
+"P9" is not a name. In the new Section 2 every postulate keeps its
+number and gets its name, used in the text from then on: P1 bounded
+integers; P2 the cubic lattice (six Ports); P3 the six operations; P4
+locality (a rule reads its own record and the six neighbours, nothing
+kept at a Node); P5 one Link per interval; P6 one read-out (a record
+read once by one comparison); P7 the declared tables; P8 the families
+as integers; P9 the blind flight (a row in transit moves at its declared
+rate whatever its phase and whatever the crowd; no dispersion); P10 the
+click axiom (the click's weight the one positive quadratic form); P11
+clicks only (the GameBoard read in no other way). The numbers stay for
+the cross-references already in the paper and the ledger.
+
+### The Boss's note (00:55Z): the group's definitions are the physicist's file
+
+docs/GROUP_STRUCTURE.md (the physicist, branch group-structure, on the
+owner's word: the four objects, the group of order 24, the 48; nothing
+renamed) is the one definition; the reordered paper's Section 2 cites
+it once it merges and writes no second definition of the group.
+
+### The owner's go (2026-09-23 ~00:20Z his clock): the order is good; reorder the whole paper; the length
+
+The owner: "Yes, this order is good, and reorder the whole paper with
+the things we talked about; and say whether there is a way to shorten
+it, perhaps to 24 pages, still including all our important things; if
+not 24, then at least 48; and see how many pages Einstein and the
+greatest submitted."
+
+The lengths of the great papers, as printed: Einstein 1905 (special
+relativity) 31 pages; Einstein 1905 (the light quantum) 17; Einstein
+1916 (general relativity) 54; Heisenberg 1925, 15; Schroedinger 1926
+(first communication) 16; Dirac 1928, 15; Wigner 1939, 56; Feynman
+1948, 21; Yang and Mills 1954, 5; Gell-Mann 1962 (Phys. Rev.) 18; Bell
+1964, 6. The foundational ones with a new mathematics (Einstein 1916,
+Wigner 1939) are the long ones, about 55; the rest 5 to 31.
+
+What the reordered paper can be, from the present 52 (42 of main text,
+3 of declarations and references, 6 of appendices; about 34,000
+words): (i) about 48 pages as one paper: the reordering, the cuts
+already listed (2 to 3 pages), the reproduction appendix and the roads
+table to a supplement (2 pages); every claim, number and row kept.
+(ii) About 24 pages of main text with a supplement (a form Foundations
+of Physics accepts as electronic supplementary material): the main
+text keeps the algebra (4 pages), what follows with the theorems stated
+and the proofs in the supplement (6), the GameBoard (3), the route (2),
+the comparison with Table 2 compact (4), the discussion (3), references
+(2); the supplement carries the proofs, the technical details, the
+reproduction, the families and roads tables, the ledger's long rows and
+the register's paragraphs. Nothing is lost; it moves. The generator can
+emit both from one source. The recommendation: (i) for the submission
+(the journal has no page limit and the paper's evidence is its
+tables), (ii) ready if the editor asks for a short main text.
+
+### The owner's word of record 1129 (the Boss's order of ~01:10Z): "The steps between two clicks", stated exactly
+
+A numbered subsection at the head of Part 2 (before the click-to-click
+algebra, which it introduces): the chain every comparison in the paper
+walks, one line per step with its kind.
+1. The birth of a record's rows at a declared source: a declaration
+   (the family's row of integers, the world file's source and its rate
+   [r, W]); the wheel reading u fixed here.
+2. The flight: the six operations on Z[Z_N] and the lattice, the phase
+   turning per Link, the split and the rotation by the declared tables,
+   the merge in the ring; the law (P3, P4, P5, P9).
+3. The arrival at a detector's Node and the click: the one measured
+   event, the evaluation of the record at the roots of unity and the
+   comparison (DETECTOR; P6, P10, P11).
+4. The detector's own count between two clicks, read under the key
+   clock_stamp (DETECTOR; outside this paper's law identity, named as
+   such).
+5. A ratio of two such counts, k_a(b), or a count itself (COMPUTATION
+   on clicks; nothing of the board enters).
+6. The identity the algebra states between the ratios, the form of
+   nature compared with. The proposed sentence: "Step (6) is the only
+   place where a formula meets a measurement: the click theorem gives
+   the ratios' identity from the ring, Lorentz's factors under (A1) to
+   (A3), Einstein's step and, in the limit under a shell average,
+   Newton's form; a row of Table 2 compares the ratio of step (5) with
+   that identity, and with nothing else."
+And the closing line: anything read from the board itself (a tick, a
+presence mean, a body's own record, a shell mean) is a GameBoard
+diagnostic and enters no comparison (the central idea, record 1104).
+Part 5's failures-by-cause table then names, for each FAIL row, which
+of the six steps its earlier reading broke (WHAT_IS_MISSING.md's four
+words, READING, DECLARATION, RULE, NOTHING, and its modes A to E; on
+branch fail-rows, cited as pending until it merges). The owner's aim:
+the FAIL rows are to be turned by runs whose steps the algebra confirms
+to be exactly these six, and the paper must let a reader see the six
+steps exactly.
+
+### The owner's word (~00:00Z UTC): the abstract for a reader of quantum mechanics, through the discrete
+
+The bridge is the postulate P1 (bounded integers; the phase on the
+circle Z_N, the grain N declared, P7): an amplitude is an integer sum
+of N-th roots of unity, the Born rule its square at the click under one
+axiom of the apparatus (P10), and interference, the marginals and CHSH
+are then exact rationals of N. A draft abstract at 250 words carries it
+(scratchpad/abstract_draft_QM.txt); in the reordered paper the same
+bridge opens the new Section 2 in one sentence after the definitions,
+and the postulate P1 is named "bounded integers" beside its number.
+
+### The physicist's six items for Section 2, "how the group was reached through physics" (record 1136; docs/GROUP_STRUCTURE.md, branch group-structure at e99a1afa, its section 3; cited, not rewritten)
+
+The outline of the new Section 2's road back, in the physicist's order:
+1. The operations came first as acts on the board (the flight one Link
+   per interval, the collision, the step by an accumulator, the turn,
+   the merge, the click), each then one of the six operations on a
+   state vector (record 191).
+2. The group is the answer to which maps preserve what the operations
+   act on: a Node of six Ports and its Links, a cone of one Link per
+   interval; the bijections of the Ports keeping opposites opposite are
+   the 48 signed permutations, over the integers the only
+   cone-preserving bijections; a boost is not Z-linear, so Lorentz is
+   reached Outside from the clicks, not as a lattice symmetry.
+3. The 48 first appeared in the code as the collision table's
+   invariance (BEAM_LAW note 42): the invariance of one operation, then
+   recognised as the symmetry of all.
+4. The 24 came from the hand: spin and polarisation needed a
+   pseudoscalar (record 128); det(g) splits the 48 into the 24 rotations
+   keeping the hand and the 24 reflections.
+5. The other objects the same way: the shifts the translation group,
+   the turn modulo N the circle Z_N and the merge Z[Z_N], the collision
+   a cyclic action; c not chosen but the flight operator's norm
+   1/sqrt 3 (record 186).
+6. What the group does back: a rule reading the local state must
+   commute with the 48, so the admissible forms are forced (Theorem 3 of
+   the Lorentz note: the only isotropic even reading of the momentum
+   within the six operations is c p . p; "generic" in the three tests
+   means this).
+In one sentence, the physicist's: the operations did not deduce a
+group; defined on a Node of six Ports, the 48 are everything that
+preserves that Node and its cone, and requiring every rule to commute
+with them chooses the admissible forms, the group of order 24 the part
+under which the hand is kept too. Section 2 cites GROUP_STRUCTURE.md
+for the definitions and writes no second one.
+
+The abstract and the road back (the Boss's judgement, agreed): at 250
+words the abstract holds the objects and the results; the road back is
+the Introduction's five lines and Section 2's; no clause of it enters
+the abstract, since every word there now carries something the owner
+asked for (the object, the discrete phase, the Born bridge, the exact
+results, the limits, Newton, Lorentz, Einstein, the central sentence,
+the tally, the conjectures, the limitations).
+
+### The owner's word (~00:15Z UTC): the system of information transfer
+
+The paper's paragraph "The GameBoard as a system of information
+transfer" (Section 2 now: the rows the only objects, a Link a channel
+carrying one step of a row per interval each way, the six things an
+interval does to messages, the books saying no message is lost or made
+in transit, the lattice gases and Shannon's channel as the family it
+belongs to) opens the definition of the GameBoard in the new Section 2,
+moved whole: the GameBoard is defined as a system of information
+transfer whose messages are the rows with their attributes, whose
+channels are the Links, whose symmetry is the group of order 24 inside
+the 48, and whose only read-out is the click. The algebra is then what
+the messages are (elements of Z[Z_N]) and what the six operations do to
+them; the owner's sentence, "in all, a system for transferring
+information", closes that definition.
+
+### The owner's word (~00:20Z UTC): "we see it as reality, but one can also see it as a system of information transfer with costs; define it correctly"
+
+The definition proposed for the new Section 2 (the two readings of one
+object): "Definition (The GameBoard). A system of information transfer
+with costs. Its messages are the rows, each a tuple of bounded integers
+(a Node, a direction, an age, a phase in Z_N, an emitter, a content per
+unit, a record, a label, an amount, a multiplicity). Its channels are
+the Links, each carrying at most one step of a message per interval in
+each direction. Every step is paid: a message advances only by its own
+accumulator, a rate against a wall (Eq. (1)), and turns its phase by
+its declared turn per Link; a message is created only at a source that
+pays its content (a release's cost, E = hf); a split and a rotation
+re-emit it by declared integer tables; a merge adds messages that meet
+and cancels opposite phases; nothing is kept at a Node beyond the
+messages present (locality, P4); and the only reading is the click,
+which consumes the message it reads and pays nothing back (the one
+read-out, P6, P11). The books are the audit: at every interval released
+equals in transit plus absorbed plus escaped plus cancelled. Read as
+physics, the same objects are Nodes, Links and records and the costs
+are contents and phases; read as a channel, they are Shannon's messages
+and capacity with a budget per message, and the lattice gases' bits on
+links with a phase and an amount added."
+
+### The owner's words of record 1139 (the Boss's order of ~01:45Z): the click an action; locality and discreteness Outside
+
+1. "The detector does not only read; when it reads it performs an
+   action; that is what explains that a detector changes the outcome."
+   In the subsection "The steps between two clicks", step (3) reads:
+   "the arrival at a detector's Node and the click: the record ends
+   there, its content enters the detector's own record and its count
+   advances; the click is an action of the law on the state, not a
+   passive read (P11)". The reading rule's paragraph (now "Only a
+   detector's reading is a measurement") is reworded: "Only a
+   detector's click is a measurement, and a click is an action of the
+   law on the state: the one step that deletes Inside and the one row
+   that Outside gains." The repository's rule wording is corrected the
+   same way by the physicist (branch measurement-acts), so the paper
+   and the law files say one thing; the paper cites it once it merges.
+2. "Check whether one can say that above the board too there is
+   locality and discreteness; whether it follows from all the things."
+   It follows, and it is proved in the click frame; the plan states
+   both as theorems beside P11, in Part 1 (after the definitions), one
+   line each, "not an added assumption":
+   - "Locality Outside (a theorem of (A1) with the definition of
+     Outside; the click frame's section 0 and its closing theorem,
+     DERIVATION.md lines 53 to 73 and 1452 to 1456): every Outside
+     passage is a chain of clicks between neighbouring places, so
+     Outside inherits Inside's locality through the map, one Node per
+     interval of the tick, 1/r_D Nodes per the detector's own count;
+     the one exception is the pair's gather, P6, the law's one
+     non-local operation."
+   - "Discreteness Outside (a theorem of the click's definition, M3):
+     the counts form a free abelian monoid and their ratios lie in Q;
+     every Outside quantity is an integer count or a ratio of counts;
+     nothing continuous enters above the board."
+   And the line between the theorem and the assumption, stated as what
+   it is: "What is more than (A1) is not a theorem: that the apparatus
+   is itself inside the law, that we are built of clicks (DERIVATION.md
+   lines 74 to 92), is an assumption about the world, or a programme for
+   the law; the paper marks it so."
+
+### The owner's word of record 1141 (the Boss's order of ~02:30Z): the uncertainty relation and Bell by the click, "the one fact and its two faces"
+
+One paragraph in the section on the click (P11), every claim the
+derivation's (DERIVATIONS_BEAM section 22) or the entanglement page's
+(docs/designs/click_frame/ENTANGLEMENT_PAGE.md), cited, none new; then
+one citation each in the uncertainty row (row 10, A10) and the Bell row
+(row 1a) with the click frame's section 10.
+- The one fact: a record is read once; the click reads one cell of one
+  record and ends it; the two results are that fact from two sides.
+- The uncertainty relation: a record is a vector f in Z[Z_N]; its
+  position the Node its rows ended at, its momentum the turn per Link
+  |p| N / h (de Broglie as the declared turn); the click evaluates f at
+  the N-th roots of unity, the discrete Fourier transform on Z_N, so
+  position and phase are the two sides of one transform. Exact, no
+  limit: the support bound |supp f| x |supp f^| >= N (checked by
+  enumeration at N = 64: one phase gives all 64 roots, the antiphase
+  pair 32, the comb of every eighth phase 8, the equality case) and the
+  Weyl relation VU = omega UV, from which [x, p] = i hbar follows as
+  N -> infinity with hbar = hN / 2 pi; Kennard's Delta x Delta p >=
+  hbar / 2 as that limit; at finite N the entropic bound, the two
+  entropies summing to at least log2 N ("bits read plus bits erased =
+  log2 N per record"). What makes it an uncertainty and not a spread:
+  the click reads one cell; read at a Node the record gives its
+  position and its phase vector is erased; read on the fan's angle its
+  momentum's direction and not the Node; not jointly readable because
+  there is one read-out; the reading is what is uncertain, not the
+  board (the detector acts, record 1139). The pin: w x FWHM(sin theta)
+  / lambda = 0.886 far field, 0.92 +- 0.03 at the registered geometry
+  (row 10).
+- Entanglement: a lamp releases one record with two arms, the joint
+  labels 00 and 11 of weight 1, psi = (00) + (11) in Z^2 (x) Z^2
+  tensored with its phase in Z[Z_N], its coefficient matrix of rank 2,
+  no u (x) v = psi: entangled by construction; in flight each arm
+  local, nothing of one arm written on the other; a setting an integer
+  rotation U_s with U_s^T U_s = n_s I; the pair's click one gather of
+  the one record from both settings at the completion, J(o_A, o_B) =
+  sum_l U_a[o_A][l] U_b[o_B][l], the cell's weight J^2, the birth wheel
+  selecting one of four cells through the ladder; the rows local, the
+  read-out not: the non-locality in one object, a record of rank 2 read
+  by one gather at two clicks; no signal between the arms; E(a, b) =
+  cos(2 pi (a - b) / N) within the rounding, the marginals exactly 1/2
+  (no-signalling an identity of the integers), S = 2 sqrt 2 before
+  rounding and 176/64 = 2.75 at N = 64 (row 1a, against Hensen 2015's
+  2.42 +- 0.20), the plateau 181/64; Tsirelson's bound a theorem of the
+  operator algebra on the labels; not a hidden-variable value because
+  the pair's weight is one quadratic form with cross terms where a
+  mixture is linear (Fine's theorem).
+- What links them: the same one read-out per record makes the support
+  bound an uncertainty and denies Bell a hidden joint distribution.
+  Not proven, and said so (section 22.3): that Bell's excess is "the
+  same Fourier fact" as the support bound.
+The owner's question, whether these are the terms: the paper uses the
+standard names as the things compared with, per record 817: the
+support uncertainty principle on Z_N (Donoho and Stark), Kennard's
+relation as its limit, the Weyl relation, the entropic uncertainty
+bound, Tsirelson's bound, Fine's theorem; the model's own words (the
+click, the record, the gather, the wheel) name the mechanism.
+
+### The owner's approval (2026-09-23 ~00:35Z UTC)
+
+After the check of the structure against Einstein 1916, Dirac 1928 and
+Gell-Mann 1962 (the object; the physics from the mathematics; the
+comparison with nature; the route in the introduction and, here, in a
+section of its own; the failures table ours alone; the click-to-click
+head ours alone): "This is the best structure, an excellent structure
+for the paper; only make sure the others are built with this structure
+too." And: "Okay, approved." The structure of the reordered paper is
+the owner's decision; part 6 (the failures by cause) is the Boss's and
+the algebraist's work, cited as pending.
+
+### The Boss's word of 00:50Z: part 6's sources merged, and the runs' verdicts for the plan's honesty
+
+WHAT_IS_MISSING.md is merged to main at c66de871
+(docs/designs/fail_rows/WHAT_IS_MISSING.md, PR #964); Part 5/6 cites
+it merged, its four words (READING, DECLARATION, RULE, NOTHING) and its
+modes A to E, and counts its rows in three classes (the Boss's count to
+the owner, record 1144): at most two rows turned by a click; three by
+a declaration that puts the compared form in, counted apart from the
+measured passes; the rest stay FAIL. The runs so far: row 8b run, the
+row stays FAIL by the law's design of the path phase (the beat at
+h/p = 4.65 Links read at a click for the first time; RUN_8BC.md on
+fail-run-8bc, its PR opening); row 4a outside the identity's domain
+under either drive (a factor 14.8); row 2a's comparison figure
+verified at the abstract's level, 0.94 (Jacques et al. 2005), the
+law's 0.966 above it, a bound met and not a number matched; row 13's
+continuum coefficient read on the lattice only within the fan's comb
+(10 to 20 percent), so "matches 1.75 in the limit" is not written.
