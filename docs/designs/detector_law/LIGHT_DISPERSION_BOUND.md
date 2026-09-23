@@ -31,9 +31,12 @@ the pair [1, 1], the six reads and the three axes give the number.
 
 The quadratic dispersion of light is ANISOTROPIC on the sky with a cubic
 pattern: zero along the GameBoard's body diagonals, largest along its axes,
-the coefficient (3 SUM n_i^4 - 1) in [0, 2]. No continuum theory of
-quantum gravity gives a direction-dependent coefficient of this shape;
-this is the lattice's own signature. Its falsifier: a set of bursts in
+the coefficient (3 SUM n_i^4 - 1) in [0, 2]. Direction-dependent
+coefficients exist elsewhere (the standard-model extension's photon
+sector at mass dimension 6 carries them up to j = 4, with FREE
+coefficients); what is the GameBoard's own is the FIXED shape with no
+free coefficient: 2 on an axis, 1 / 2 on a face diagonal, 0 on a body
+diagonal, the average 4 / 5. Its falsifier: a set of bursts in
 different directions whose dispersion coefficients, once nature's
 sensitivity reaches the effect, do not fit one cubic pattern on the sky.
 Nature today has bounds, not a measured coefficient, so this is a
@@ -45,17 +48,23 @@ Nature parametrises a quadratic photon dispersion as v / c = 1 - s (3 / 2)
 (E / E_QG2)^2, s = +1 for the subluminal side, which is the GameBoard's
 sign (a short wave is slower). With k = E a / (hbar c), a the Link:
 
-    a <= (hbar c / E_QG2) sqrt(36 / (3 SUM n^4 - 1)),   tau = a / c_nature.
+    a <= (hbar c / E_QG2) sqrt(36 / (3 SUM n^4 - 1)),   tau = a / (sqrt 3 c_nature),
+
+the interval from the Link through the GameBoard's own c = 1 / sqrt 3 Link
+per interval (light covers one Link in sqrt 3 intervals; Reviewer 3's line
+of 23:32Z: row A's number is a time from a time and carries no such
+factor). hbar c = 1.973 x 10^-16 GeV m, c_nature and the Planck length and
+time are CONVERSION, as in the script.
 
 RECALLED: the Fermi gamma-ray-burst bound on the subluminal quadratic term,
 E_QG2 of order 1.3 x 10^11 GeV (GRB 090510, the Fermi LAT analysis of
 2013). With that input the script prints: on an axis the Link a <= 6.4 x
-10^-27 m and one interval tau <= 2.2 x 10^-35 s; for the sphere average
-1.0 x 10^-26 m and 3.4 x 10^-35 s; on a face diagonal 1.3 x 10^-26 m and
-4.3 x 10^-35 s. Along a body diagonal the quadratic term vanishes and the
+10^-27 m and one interval tau <= 1.2 x 10^-35 s (2.3 x 10^8 Planck
+times); for the sphere average 1.0 x 10^-26 m and 2.0 x 10^-35 s; on a
+face diagonal 1.3 x 10^-26 m and 2.5 x 10^-35 s. Along a body diagonal the quadratic term vanishes and the
 bound does not apply; several bursts in different directions close that
-gap. The bound is a factor of about 10^7 tighter than row A's two-pace
-bound (3.6 x 10^-28 s) and about 4 x 10^8 above the Planck time (5.4 x
+gap. The bound is a factor of about 1.8 x 10^7 tighter than row A's two-pace
+bound (3.6 x 10^-28 s) and about 2 x 10^8 above the Planck time (5.4 x
 10^-44 s), which it does not reach. The published number, its side and its
 burst are the Source Verifier's to confirm; the script takes E_QG2 as its
 input so the bound follows the confirmed value without a change of text.
@@ -64,8 +73,12 @@ input so the bound follows the confirmed value without a change of text.
 
 - It is a derived, dimensionless ratio (a pace over a pace) with no
   declared input, read against a published bound: row A2, a BOUND row
-  beside row A, no run needed (the dispersion is a GAMEBOARD fact of the
-  rule, checked once by the light worlds' own pace by wavelength, row 5a).
+  beside row A, no run needed (the dispersion is the rule's own
+  COMPUTATION, its band; row 5a's pace by wavelength is the reading that
+  checks it). Row 5a's 0.8, 0.4 and 0.2 percent at 12, 16 and 24 Links
+  are the same coefficient on the PHASE pace (k^2 / 72 along an axis),
+  consistent with the group pace's k^2 / 24 at the same k; the two are not
+  one number.
 - It is not a derivation of c, hbar or G: those are the three unit
   conversions and no theory computes them. The one scale (the Link, the
   interval) is bounded here, not fixed.

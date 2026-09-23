@@ -14,7 +14,8 @@ Nature parametrises a quadratic photon dispersion as v / c = 1 - s (3 / 2) (E / 
 subluminal side, which is the GameBoard's sign). With k = E a / (hbar c), a the Link:
     (3 SUM n^4 - 1) / 24 (E a / hbar c)^2 <= (3 / 2) (E / E_QG2)^2
     a <= (hbar c / E_QG2) sqrt(36 / (3 SUM n^4 - 1))
-and the one interval tau = a / c_nature. The published E_QG2 is the Source Verifier's
+and the one interval tau = a / (sqrt 3 c_nature), since light covers one Link in sqrt 3
+intervals on the GameBoard (c = 1 / sqrt 3 Link per interval; Reviewer 3's line of 23:32Z). The published E_QG2 is the Source Verifier's
 to confirm; this script takes it as an input and prints the bound it implies.
 
     PYTHONPATH=src python docs/designs/detector_law/light_dispersion_bound.py [E_QG2_GeV]
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     )
     for name, coeff in (("axis", 2.0), ("sphere average", 0.8), ("face diagonal", 0.5)):
         a = (HBAR_C_GEV_M / e_qg2) * math.sqrt(36 / coeff)
-        tau = a / C_M_S
+        tau = a / (math.sqrt(3) * C_M_S)
         print(
             f"    {name:15s}: the Link a <= {a:.2e} m ({a / PLANCK_LENGTH_M:.1e} Planck lengths),"
             f" one interval tau <= {tau:.2e} s ({tau / PLANCK_TIME_S:.1e} Planck times)"
@@ -83,5 +84,5 @@ if __name__ == "__main__":
     two_pace = 3.6e-28
     print(
         f"    beside it, row A's two-pace bound on the same interval, 3.6e-28 s: this one is tighter by"
-        f" {two_pace / ((HBAR_C_GEV_M / e_qg2) * math.sqrt(36 / 0.8) / C_M_S):.1e}."
+        f" {two_pace / ((HBAR_C_GEV_M / e_qg2) * math.sqrt(36 / 0.8) / (math.sqrt(3) * C_M_S)):.1e}."
     )
