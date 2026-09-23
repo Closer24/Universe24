@@ -39,6 +39,7 @@ from typing import Any
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import nature_beam_tables
 from event_universe.world_loading import world_of_run
+from event_universe.trimmed_record import refuse_trimmed_record
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EXPECTATIONS = ROOT / "examples" / "events" / "c_measured" / "expectations.json"
@@ -155,6 +156,7 @@ def read_run(folder: Path, register: Json) -> Reading:
     births: list[int] = []
     clicks: list[Json] = []
     gathers = 0
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
             line = json.loads(text)

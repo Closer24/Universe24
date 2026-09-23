@@ -52,6 +52,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from event_universe.world_loading import world_of_run
+from event_universe.trimmed_record import refuse_trimmed_record
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTATIONS = ROOT / "examples" / "events" / "flow_link" / "expectations.json"
@@ -154,6 +155,7 @@ def read_run(folder: Path, window_start: int) -> Reading | None:
                 index + 1, int(position[1]) - centre[0], int(position[2]) - centre[1]
             )
     lo, hi = reading.window
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"click"' not in line or '"screen_' not in line:

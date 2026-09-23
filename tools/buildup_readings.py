@@ -60,6 +60,7 @@ from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import FIRST, coherent_pointer
 from event_universe.world_loading import world_of_run
+from event_universe.trimmed_record import refuse_trimmed_record
 
 # The spread readings of A10 (the moving mean, the half width, the rms)
 # are the sibling tool's, read from it and not copied.
@@ -175,6 +176,7 @@ def read_run(folder: Path, *, window_start: int = DEFAULT_WINDOW_START) -> Readi
     # The clicks of one interval at one pixel, gathered until the pixel's
     # `record` line of that interval (written after the set's last click).
     pending: dict[int, list[tuple[int, int]]] = {}
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"screen_' not in line:

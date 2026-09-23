@@ -100,6 +100,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
 from event_universe.world_loading import world_of_run
+from event_universe.trimmed_record import refuse_trimmed_record
 
 MODEL_PREFIX = "rays-hubble-"
 MODEL_SUFFIX = "-space-v1"
@@ -311,6 +312,7 @@ def read_run(folder: Path) -> Run:
         distance = sum(abs(int(a) - int(b)) for a, b in zip(declared["position"], centre, strict=True))
         sources[family] = Source(family, number, content, p, p / (Q * width * content + p), distance)
     by_number = {source.number: source for source in sources.values()}
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             event = json.loads(line)

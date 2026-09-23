@@ -19,6 +19,10 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 
 def read(run: Path) -> None:
     record = json.loads((run / "run.json").read_text(encoding="utf-8"))
@@ -33,6 +37,7 @@ def read(run: Path) -> None:
         record["source_sha256"][:16],
     )
     clicks: dict[int, list[tuple[int, int]]] = {}
+    refuse_trimmed_record(run)
     with (run / "events.jsonl").open(encoding="utf-8") as lines:
         for line in lines:
             event = json.loads(line)

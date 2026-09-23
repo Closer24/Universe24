@@ -42,6 +42,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world 
 from event_universe.events.amplitude import Layer  # noqa: E402
 from event_universe.events.world import FACE_NAMES, LIFETIME_NAME  # noqa: E402
 from event_universe.world_loading import world_of_run  # noqa: E402
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
 
 DETECTOR, GAMEBOARD = "DETECTOR", "GAMEBOARD"
 
@@ -105,6 +106,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
             if not quiet:
                 print(DETECTOR, json.dumps(gather))
 
+    refuse_trimmed_record(run)
     with (run / "events.jsonl").open(encoding="utf-8") as stream:
         for raw in stream:
             line = json.loads(raw)

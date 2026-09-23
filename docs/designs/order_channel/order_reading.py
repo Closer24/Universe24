@@ -30,6 +30,10 @@ import sys
 from fractions import Fraction
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 LAMP = 1 << 32
 BIRTHS = 192
 N = 64
@@ -76,6 +80,7 @@ def read_events(folder: Path) -> tuple[dict[int, dict[str, object]], dict[int, s
     counter per ordinal (a set: every arrival line of the record there)."""
     gathers: dict[int, dict[str, object]] = {}
     windows: dict[int, set[int]] = {}
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as lines:
         for line in lines:
             event = json.loads(line)

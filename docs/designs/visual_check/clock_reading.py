@@ -13,12 +13,15 @@ from pathlib import Path
 
 from common import events, ordinal
 
+from event_universe.trimmed_record import refuse_trimmed_record
+
 DETECTOR_NUMBER = 1
 
 
 def clicks(folder: Path) -> list[tuple[int, int, int]]:
     """(tick, birth ordinal, age) of the detector's clicks, in tick order."""
     found = []
+    refuse_trimmed_record(folder)
     for line in events(folder, {"click"}):
         if line.get("measured") == DETECTOR_NUMBER and "record" in line:
             found.append((int(line["tick"]), ordinal(int(line["record"])), int(line["age"])))

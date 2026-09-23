@@ -54,6 +54,7 @@ from PIL import Image, ImageDraw, ImageFont
 from event_universe.events import NatureBeamSimulation
 from event_universe.runner import run_initialization, source_fingerprint
 from event_universe.world_loading import load_world
+from event_universe.trimmed_record import refuse_trimmed_record
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events"
@@ -1521,6 +1522,7 @@ def page_worlds(out: Path, runs: Path | None) -> Path:
     world = WORLDS / "amplitude" / "mz_equal.json"
     record_dir = runner_record(world, runs)
     record = read_json(record_dir / "run.json")
+    refuse_trimmed_record(record_dir)
     events = scan_events(
         record_dir / "events.jsonl", ["birth", "split", "cancel", "click", "record", "gather"]
     )
@@ -2119,6 +2121,7 @@ def decay_player(
     products in flight and the shell's clicks."""
     record_dir = runner_record(world, runs)
     record = read_json(record_dir / "run.json")
+    refuse_trimmed_record(record_dir)
     events = scan_events(record_dir / "events.jsonl", ["become", "step", "contact"])
     shell = [
         line
@@ -2552,6 +2555,7 @@ def lensing_player(
     screen's and the mass's clicks of light and the books' turned line."""
     record_dir = runner_record(world, runs)
     record = read_json(record_dir / "run.json")
+    refuse_trimmed_record(record_dir)
     clicks = [
         line
         for line in scan_events(record_dir / "events.jsonl", ["click"])["click"]
