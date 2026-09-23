@@ -1,0 +1,119 @@
+THE PINS OF THE EVENT SPLIT BEFORE ANY RUN (COMPUTATION; the coin walk offline, no engine run, nothing registered)
+
+V. THE READING MACHINERY CHECKED ON THE LAW AS BUILT: straight lines, the one-time equal split over the world's forward fan at the opening's Nodes
+   (the registered rerelease, its 601 forward directions), the screen read as above: against RUN_10's exact sums 0.916 (w = 27) and 0.891 (w = 9)
+   opening_w27: the fan K = 621; the walk ended after 271 intervals, the absorbed norm 1.0845 (the one-time split is not unitary over re-met paths, amplitude-v1 2.5); the screen's share 0.8860; the peak at y = 80, FWHM(sin theta) = 0.1818, w x FWHM / lambda = 1.055 against 0.916; the roughness 0.103
+      the screen weights y = 60 .. 100 (per mille): 1.2 2.3 2.5 1.6 2.5 4.7 5.6 5.7 10.8 15.2 22.7 29.0 29.4 32.3 36.5 39.8 40.0 38.6 43.0 41.4 47.2 41.4 43.0 38.6 40.0 39.8 36.5 32.3 29.4 29.0 22.7 15.2 10.8 5.7 5.6 4.7 2.5 1.6 2.5 2.3 1.2
+   opening_w9: the fan K = 605; the walk ended after 249 intervals, the absorbed norm 1.0680 (the one-time split is not unitary over re-met paths, amplitude-v1 2.5); the screen's share 0.7729; the peak at y = 74, FWHM(sin theta) = 0.3488, w x FWHM / lambda = 0.674 against 0.891; the roughness 0.097
+      the screen weights y = 60 .. 100 (per mille): 8.8 11.6 12.6 14.5 13.7 13.6 14.1 13.2 13.1 19.7 20.3 19.0 17.3 19.2 22.5 18.3 14.3 13.4 13.7 15.9 18.1 15.9 13.7 13.4 14.3 18.3 22.5 19.2 17.3 19.0 20.3 19.7 13.1 13.2 14.1 13.6 13.7 14.5 12.6 11.6 8.8
+
+A. THE COPY RULE AGAINST THE COIN IN ONE DIMENSION (K = 2), from one birth of amplitude 1 at x = 0
+   the copy rule: a(x, t + 1) = (a(x - 1, t) + a(x + 1, t)) / sqrt 2, the growth factor sqrt 2 cos k per interval;
+   the coin: out_right = a_left_arrival - ... : the Grover coin over two outputs is [[0, 1], [1, 0]]: a swap, and
+   the wave in one dimension needs the two-output coin with a sign, the Hadamard [[1, 1], [1, -1]] / sqrt 2 (K = 2 is
+   the one K where Grover's (2 / K) J - I is a permutation); shown with Hadamard here, the two-dimensional walks use Grover's.
+   t =  16: the copy rule's norm 9172 (grows), its rms spread 2.87 = 0.718 sqrt t (diffusive); the coin's norm 1.000000 (conserved), its rms spread 8.68 = 0.543 t (ballistic), its front at |x| = 14
+   t =  64: the copy rule's norm 1.298e+18 (grows), its rms spread 5.68 = 0.710 sqrt t (diffusive); the coin's norm 1.000000 (conserved), its rms spread 34.64 = 0.541 t (ballistic), its front at |x| = 50
+   t = 128: the copy rule's norm 1.695e+37 (grows), its rms spread 8.02 = 0.708 sqrt t (diffusive); the coin's norm 1.000000 (conserved), its rms spread 69.28 = 0.541 t (ballistic), its front at |x| = 96
+
+B. THE COIN WALK'S FRONT ON AN EMPTY BOARD, one birth at the centre on every direction of the fan, equal amplitudes
+   fan Manhattan <= 1 (K = 4): age 32: the front's radius by 15-degree sector, min 13.5, max 19.0, mean 15.7 Links; the flight table's c tau = 18.5; the anisotropy (max - min) / mean 0.353
+   fan Manhattan <= 1 (K = 4): age 64: the front's radius by 15-degree sector, min 26.2, max 34.1, mean 30.4 Links; the flight table's c tau = 37.0; the anisotropy (max - min) / mean 0.259
+   fan Manhattan <= 1: the norm after 64 intervals 1.000000000 (1 under the coin; the escapes counted)
+   fan Manhattan <= 3 (K = 16): age 32: the front's radius by 15-degree sector, min 19.2, max 22.0, mean 20.3 Links; the flight table's c tau = 18.5; the anisotropy (max - min) / mean 0.138
+   fan Manhattan <= 3 (K = 16): age 64: the front's radius by 15-degree sector, min 37.6, max 40.0, mean 38.5 Links; the flight table's c tau = 37.0; the anisotropy (max - min) / mean 0.063
+   fan Manhattan <= 3: the norm after 64 intervals 1.000000000 (1 under the coin; the escapes counted)
+   fan Manhattan <= 6 (K = 48): age 32: the front's radius by 15-degree sector, min 19.8, max 21.0, mean 20.5 Links; the flight table's c tau = 18.5; the anisotropy (max - min) / mean 0.057
+   fan Manhattan <= 6 (K = 48): age 64: the front's radius by 15-degree sector, min 38.3, max 40.0, mean 39.2 Links; the flight table's c tau = 37.0; the anisotropy (max - min) / mean 0.044
+   fan Manhattan <= 6: the norm after 64 intervals 1.000000000 (1 under the coin; the escapes counted)
+
+C. THE SINGLE OPENING AND THE TWO SLITS UNDER THE COIN, the in-plane fan of Manhattan <= 3 plus the lamp's directions
+   opening_w27: w = 27, L = 108, lambda = 4.6538, the fan K = 36; the walk ended after 400 intervals, the live norm 2.97e-01, the absorbed norm 0.703194 (1 under the coin)
+      the shares (COMPUTATION, the cells' weights over their sum): the screen 0.3144, the wall 0.3464, the faces 0.3393 (face:+y 0.0762, face:-x 0.1868, face:-y 0.0762)
+      the screen's exact sum: the peak at y = 80, the half-maximum crossings s = -0.0053 and 0.0053, FWHM(sin theta) = 0.0106, w x FWHM / lambda = 0.062; the pin at the pixel grain and the Fresnel number 0.916 (22.2's band 0.92 +- 0.03: OUTSIDE); the far field 0.886; the refuting bound 0.85: BELOW
+      the clicks of 4096 births under the golden wheel over every cell (the pixels, the wall's Nodes, the faces): the screen 1288 of 4096, the peak at y = 80 (69), FWHM 0.0106, w x FWHM / lambda = 0.062
+      the screen weights y = 60 .. 100 (per mille of the screen's sum): 1.8 7.6 0.6 0.0 5.2 11.0 3.2 3.1 7.2 11.8 0.3 5.4 2.3 1.6 1.3 16.4 41.6 7.0 7.9 6.9 53.6 6.9 7.9 7.0 41.6 16.4 1.3 1.6 2.3 5.4 0.3 11.8 7.2 3.1 3.2 11.0 5.2 0.0 0.6 7.6 1.8
+   opening_w9: w = 9, L = 108, lambda = 4.6538, the fan K = 22; the walk ended after 400 intervals, the live norm 1.63e-01, the absorbed norm 0.836877 (1 under the coin)
+      the shares (COMPUTATION, the cells' weights over their sum): the screen 0.0634, the wall 0.8580, the faces 0.0787 (face:+y 0.0064, face:-x 0.0658, face:-y 0.0064)
+      the screen's exact sum: the peak at y = 78, the half-maximum crossings s = -0.0244 and -0.0138, FWHM(sin theta) = 0.0106, w x FWHM / lambda = 0.020; the pin at the pixel grain and the Fresnel number 0.891 (22.2's band 0.886 +- 0.03: OUTSIDE); the far field 0.886; the refuting bound 0.85: BELOW
+      the clicks of 4096 births under the golden wheel over every cell (the pixels, the wall's Nodes, the faces): the screen 260 of 4096, the peak at y = 78 (12), FWHM 0.0108, w x FWHM / lambda = 0.021
+      the screen weights y = 60 .. 100 (per mille of the screen's sum): 12.6 15.2 11.6 40.2 23.9 9.2 9.3 9.5 1.9 4.9 2.8 17.4 21.3 0.1 14.2 4.8 8.5 9.8 46.2 0.8 15.1 0.8 46.2 9.8 8.5 4.8 14.2 0.1 21.3 17.4 2.8 4.9 1.9 9.5 9.3 9.2 23.9 40.2 11.6 15.2 12.6
+   slits_huygens: the openings at y = [55, 65], the separation 10, L = 44, lambda = 4.6538, the fringe period lambda L / d = 20.48 pixels; the fan K = 16; the walk ended after 400 intervals, the absorbed norm 0.982657
+      the shares: the screen 0.0035, the wall 0.0199, the faces 0.9766
+      the screen weights y = 45 .. 75 (per mille of the screen's sum): 0.5 5.0 10.3 14.1 12.9 13.1 5.1 2.3 8.8 4.3 0.9 0.2 9.2 0.6 25.3 58.2 25.3 0.6 9.2 0.2 0.9 4.3 8.8 2.3 5.1 13.1 12.9 14.1 10.3 5.0 0.5
+      the visibility over the central fringes (I_max - I_min) / (I_max + I_min) = 0.9922 (the fan's registered 0.9659, history); the peaks at [48, 50, 53, 57, 60, 63, 67, 70, 72]
+
+D. THE REGISTERED BARS UNDER THE COIN WITH THE SIX HEADINGS (K = 6, the coin on the arrivals at each Node, the outputs on +-y and +-z escaping at the next step, y and z open)
+   examples/events/bell/read.json: the lamp at x = 10 on [(1, 0), (-1, 0)]; the walk ended after 170 intervals; the shares of the cells (COMPUTATION):
+      escape:y,z: 0.97186
+      alice_plus: 0.02755
+      bob_plus: 0.00058
+      the ratio of the sets' shares alice_plus : bob_plus = 47.134; the registered arrangement reads the two outcomes at different depths, so this ratio, not the rotation's, would set the cells: NOT READABLE under the split (Reviewer 3's D3); the re-arranged bar of DESIGN.md section 7 puts both outcomes at one depth
+   examples/events/amplitude/malus_a.json: the lamp at x = 0 on [(1, 0)]; the walk ended after 53 intervals; the shares of the cells (COMPUTATION):
+      escape:y,z: 0.93754
+      first (read, non-absorbing: counted here as absorbing for the share): 0.03392
+      face:-x: 0.02854
+
+E. THE COIN WALK'S OWN WAVELENGTH: the single opening w = 27 at slower clocks (the phase rate n / d in turns of N = 64 per interval), the fan Manhattan <= 3
+   the ray law's lambda = c N d / n is exact at every rate; the coin walk is a lattice wave with its own dispersion, isotropic only where lambda is many Links:
+   at each rate the screen's exact sum, its FWHM in sin theta, w x FWHM / lambda against the far field's 0.886 lambda / w (the Fresnel number w^2 / (lambda L) beside)
+   n / d = 8591334592 / 1073741824: the period 8.00 intervals, lambda = 4.65 Links, the Fresnel number 1.450; the screen's share 0.5380; the peak at y = 75, FWHM(sin theta) = 0.0122, w x FWHM / lambda = 0.071 (the far field 0.886); the pixel-to-pixel roughness 0.982
+      the screen weights y = 60 .. 100 (per mille): 2.6 6.3 1.1 4.3 14.2 2.2 4.1 10.4 3.4 33.7 10.0 7.2 1.6 11.2 7.4 75.7 26.2 6.9 1.0 3.8 14.7 3.8 1.0 6.9 26.2 75.7 7.4 11.2 1.6 7.2 10.0 33.7 3.4 10.4 4.1 2.2 14.2 4.3 1.1 6.3 2.6
+   n / d = 4 / 1: the period 16.00 intervals, lambda = 9.31 Links, the Fresnel number 0.725; the screen's share 0.6156; the peak at y = 80, FWHM(sin theta) = 0.0160, w x FWHM / lambda = 0.046 (the far field 0.886); the pixel-to-pixel roughness 1.042
+      the screen weights y = 60 .. 100 (per mille): 5.2 15.3 18.9 1.0 31.9 4.2 20.0 6.9 4.4 8.8 6.1 4.6 8.1 0.0 9.2 7.4 4.8 7.2 0.8 18.7 44.4 18.7 0.8 7.2 4.8 7.4 9.2 0.0 8.1 4.6 6.1 8.8 4.4 6.9 20.0 4.2 31.9 1.0 18.9 15.3 5.2
+   n / d = 2 / 1: the period 32.00 intervals, lambda = 18.62 Links, the Fresnel number 0.363; the screen's share 0.4431; the peak at y = 105, FWHM(sin theta) = 0.0095, w x FWHM / lambda = 0.014 (the far field 0.886); the pixel-to-pixel roughness 0.740
+      the screen weights y = 60 .. 100 (per mille): 6.7 13.1 6.7 2.5 9.1 10.6 0.3 1.9 16.2 10.4 10.5 1.5 3.2 0.2 8.2 13.3 15.4 17.9 15.2 8.8 9.9 8.8 15.2 17.9 15.4 13.3 8.2 0.2 3.2 1.5 10.5 10.4 16.2 1.9 0.3 10.6 9.1 2.5 6.7 13.1 6.7
+   n / d = 1 / 1: the period 64.00 intervals, lambda = 37.24 Links, the Fresnel number 0.181; the screen's share 0.5266; the peak at y = 80, FWHM(sin theta) = 0.0110, w x FWHM / lambda = 0.008 (the far field 0.886); the pixel-to-pixel roughness 0.981
+      the screen weights y = 60 .. 100 (per mille): 0.6 1.2 6.8 4.4 13.2 21.9 6.8 9.7 11.2 2.0 1.0 0.8 12.8 2.1 32.1 8.6 30.0 0.5 1.4 6.1 38.0 6.1 1.4 0.5 30.0 8.6 32.1 2.1 12.8 0.8 1.0 2.0 11.2 9.7 6.8 21.9 13.2 4.4 6.8 1.2 0.6
+   n / d = 1 / 2: the period 128.00 intervals, lambda = 74.47 Links, the Fresnel number 0.091; the screen's share 0.6327; the peak at y = 76, FWHM(sin theta) = 0.0113, w x FWHM / lambda = 0.004 (the far field 0.886); the pixel-to-pixel roughness 0.923
+      the screen weights y = 60 .. 100 (per mille): 14.1 5.2 0.0 5.9 5.4 3.9 28.0 1.9 10.5 1.3 16.0 4.3 6.5 9.2 2.3 4.0 35.0 8.4 5.7 6.7 8.6 6.7 5.7 8.4 35.0 4.0 2.3 9.2 6.5 4.3 16.0 1.3 10.5 1.9 28.0 3.9 5.4 5.9 0.0 5.2 14.1
+
+F. THE COIN'S ONE PARAMETER: the unitary coin symmetric in the outputs is exp(i eps P), P the projector on the symmetric vector;
+   eps = pi is Grover's, eps -> 0 the straight rays; the single opening w = 27 at the registered clock (lambda = 4.65) and at n / d = 2 (lambda = 18.6),
+   the fan Manhattan <= 3: the screen's share, w x FWHM / lambda (the pins 0.916 at lambda = 4.65, Fresnel 1.45; the far field 0.886 at lambda = 18.6, Fresnel 0.36), the roughness
+   lambda =  4.65, eps =  1 / 64 turn: the screen's share 0.215, the peak at y = 80, w x FWHM / lambda = 0.054 (the pin 0.916), the roughness 1.845; the absorbed norm 0.9999 after 500 intervals
+      y = 60 .. 100 (per mille): 1.2 1.4 0.2 0.5 0.2 0.3 0.4 0.1 0.3 0.1 0.1 0.6 0.0 1.0 0.4 0.9 0.1 0.1 0.4 0.6 116.1 0.6 0.4 0.1 0.1 0.9 0.4 1.0 0.0 0.6 0.1 0.1 0.3 0.1 0.4 0.3 0.2 0.5 0.2 1.4 1.2
+   lambda =  4.65, eps =  2 / 64 turn: the screen's share 0.275, the peak at y = 52, w x FWHM / lambda = 0.050 (the pin 0.916), the roughness 1.628; the absorbed norm 0.9995 after 500 intervals
+      y = 60 .. 100 (per mille): 3.2 4.7 0.7 0.6 0.5 1.4 0.2 0.3 0.1 0.5 0.2 0.6 0.1 5.0 3.9 1.2 2.1 0.9 1.0 1.6 97.8 1.6 1.0 0.9 2.1 1.2 3.9 5.0 0.1 0.6 0.2 0.5 0.1 0.3 0.2 1.4 0.5 0.6 0.7 4.7 3.2
+   lambda =  4.65, eps =  4 / 64 turn: the screen's share 0.442, the peak at y = 80, w x FWHM / lambda = 0.055 (the pin 0.916), the roughness 1.286; the absorbed norm 0.9958 after 500 intervals
+      y = 60 .. 100 (per mille): 3.3 7.4 5.6 0.1 12.0 1.5 4.0 0.9 1.8 3.3 0.7 3.0 0.3 6.5 4.1 4.0 2.7 6.7 1.5 2.6 82.3 2.6 1.5 6.7 2.7 4.0 4.1 6.5 0.3 3.0 0.7 3.3 1.8 0.9 4.0 1.5 12.0 0.1 5.6 7.4 3.3
+   lambda =  4.65, eps =  8 / 64 turn: the screen's share 0.303, the peak at y = 102, w x FWHM / lambda = 0.053 (the pin 0.916), the roughness 1.107; the absorbed norm 0.9753 after 500 intervals
+      y = 60 .. 100 (per mille): 13.6 0.5 6.0 10.3 23.3 0.3 3.1 9.7 3.4 5.7 13.3 2.7 2.8 8.4 17.1 5.0 28.7 4.8 9.4 1.2 4.4 1.2 9.4 4.8 28.7 5.0 17.1 8.4 2.8 2.7 13.3 5.7 3.4 9.7 3.1 0.3 23.3 10.3 6.0 0.5 13.6
+   lambda =  4.65, eps = 16 / 64 turn: the screen's share 0.423, the peak at y = 58, w x FWHM / lambda = 0.052 (the pin 0.916), the roughness 0.942; the absorbed norm 0.9120 after 500 intervals
+      y = 60 .. 100 (per mille): 8.2 6.0 0.9 4.6 25.3 8.1 29.2 2.0 5.1 5.9 6.3 2.7 21.2 5.6 7.9 11.8 0.1 0.4 17.6 2.8 2.5 2.8 17.6 0.4 0.1 11.8 7.9 5.6 21.2 2.7 6.3 5.9 5.1 2.0 29.2 8.1 25.3 4.6 0.9 6.0 8.2
+   lambda =  4.65, eps = 32 / 64 turn: the screen's share 0.473, the peak at y = 75, w x FWHM / lambda = 0.094 (the pin 0.916), the roughness 0.859; the absorbed norm 0.8455 after 500 intervals
+      y = 60 .. 100 (per mille): 4.3 1.8 0.5 0.6 8.4 7.0 5.4 8.5 0.0 36.2 7.9 4.5 1.8 12.3 0.9 58.5 37.5 4.6 0.9 5.3 36.3 5.3 0.9 4.6 37.5 58.5 0.9 12.3 1.8 4.5 7.9 36.2 0.0 8.5 5.4 7.0 8.4 0.6 0.5 1.8 4.3
+   lambda = 18.62, eps =  1 / 64 turn: the screen's share 0.452, the peak at y = 52, w x FWHM / lambda = 0.012 (the pin 0.886), the roughness 1.823; the absorbed norm 0.9999 after 500 intervals
+      y = 60 .. 100 (per mille): 0.2 0.4 0.2 0.5 0.1 0.8 0.7 0.4 0.7 0.4 0.0 0.4 1.0 0.8 1.0 0.6 0.6 0.5 0.9 0.2 100.4 0.2 0.9 0.5 0.6 0.6 1.0 0.8 1.0 0.4 0.0 0.4 0.7 0.4 0.7 0.8 0.1 0.5 0.2 0.4 0.2
+   lambda = 18.62, eps =  2 / 64 turn: the screen's share 0.366, the peak at y = 80, w x FWHM / lambda = 0.014 (the pin 0.886), the roughness 1.546; the absorbed norm 0.9995 after 500 intervals
+      y = 60 .. 100 (per mille): 3.9 0.1 0.6 2.6 1.9 3.7 5.1 2.1 3.6 0.5 0.0 0.5 1.6 1.5 1.4 1.1 0.3 2.6 2.1 1.6 104.4 1.6 2.1 2.6 0.3 1.1 1.4 1.5 1.6 0.5 0.0 0.5 3.6 2.1 5.1 3.7 1.9 2.6 0.6 0.1 3.9
+   lambda = 18.62, eps =  4 / 64 turn: the screen's share 0.472, the peak at y = 80, w x FWHM / lambda = 0.017 (the pin 0.886), the roughness 1.037; the absorbed norm 0.9958 after 500 intervals
+      y = 60 .. 100 (per mille): 1.6 2.8 6.2 6.9 1.5 1.8 1.0 3.3 0.8 1.4 10.9 0.6 2.7 4.1 1.7 0.6 1.8 2.6 0.4 13.0 60.6 13.0 0.4 2.6 1.8 0.6 1.7 4.1 2.7 0.6 10.9 1.4 0.8 3.3 1.0 1.8 1.5 6.9 6.2 2.8 1.6
+   lambda = 18.62, eps =  8 / 64 turn: the screen's share 0.401, the peak at y = 27, w x FWHM / lambda = 0.010 (the pin 0.886), the roughness 0.942; the absorbed norm 0.9753 after 500 intervals
+      y = 60 .. 100 (per mille): 1.1 2.4 9.9 1.1 5.5 1.5 1.4 18.4 0.4 7.6 5.9 1.7 7.3 3.3 6.1 9.8 17.5 1.3 0.5 1.1 22.2 1.1 0.5 1.3 17.5 9.8 6.1 3.3 7.3 1.7 5.9 7.6 0.4 18.4 1.4 1.5 5.5 1.1 9.9 2.4 1.1
+   lambda = 18.62, eps = 16 / 64 turn: the screen's share 0.405, the peak at y = 115, w x FWHM / lambda = 0.036 (the pin 0.886), the roughness 0.892; the absorbed norm 0.9120 after 500 intervals
+      y = 60 .. 100 (per mille): 13.3 10.1 3.6 0.2 18.3 1.9 6.9 0.2 10.5 8.2 10.2 0.8 21.9 3.5 2.3 0.7 2.7 6.2 4.8 8.7 7.8 8.7 4.8 6.2 2.7 0.7 2.3 3.5 21.9 0.8 10.2 8.2 10.5 0.2 6.9 1.9 18.3 0.2 3.6 10.1 13.3
+   lambda = 18.62, eps = 32 / 64 turn: the screen's share 0.421, the peak at y = 92, w x FWHM / lambda = 0.016 (the pin 0.886), the roughness 0.818; the absorbed norm 0.8455 after 500 intervals
+      y = 60 .. 100 (per mille): 7.5 26.2 7.1 4.1 2.8 7.2 1.5 3.6 30.5 5.9 4.2 2.4 6.3 5.9 10.7 25.7 4.4 8.9 16.9 5.1 9.2 5.1 16.9 8.9 4.4 25.7 10.7 5.9 6.3 2.4 4.2 5.9 30.5 3.6 1.5 7.2 2.8 4.1 7.1 26.2 7.5
+
+G. THE HOP (pace B) FOR COMPARISON: the four headings, every row one Link per interval (the pace 1, not the flight table's), Grover's coin (eps = pi),
+   the single opening w = 27 at slow clocks (lambda = the period in Links at pace 1): the pattern, its width against the far field and the Fresnel sum
+   n / d = 4 / 1: lambda = 16.0 Links, the Fresnel number 0.422; the screen's share 0.638; the peak at y = 72, w x FWHM / lambda = 0.021 (the far field 0.886); the roughness 0.781; the absorbed norm 0.9986
+      y = 60 .. 100 (per mille): 7.0 21.2 7.6 5.6 1.8 1.1 2.2 3.9 5.4 2.5 20.1 9.8 28.2 5.4 5.3 4.8 3.3 12.9 7.1 12.8 23.0 12.8 7.1 12.9 3.3 4.8 5.3 5.4 28.2 9.8 20.1 2.5 5.4 3.9 2.2 1.1 1.8 5.6 7.6 21.2 7.0
+   n / d = 2 / 1: lambda = 32.0 Links, the Fresnel number 0.211; the screen's share 0.485; the peak at y = 80, w x FWHM / lambda = 0.010 (the far field 0.886); the roughness 0.741; the absorbed norm 0.9986
+      y = 60 .. 100 (per mille): 2.4 2.2 3.8 1.3 5.7 5.9 10.1 1.9 5.3 21.0 8.2 5.6 5.3 10.0 0.3 0.9 6.9 10.4 38.8 9.8 41.6 9.8 38.8 10.4 6.9 0.9 0.3 10.0 5.3 5.6 8.2 21.0 5.3 1.9 10.1 5.9 5.7 1.3 3.8 2.2 2.4
+   n / d = 1 / 1: lambda = 64.0 Links, the Fresnel number 0.105; the screen's share 0.375; the peak at y = 97, w x FWHM / lambda = 0.005 (the far field 0.886); the roughness 0.886; the absorbed norm 0.9986
+      y = 60 .. 100 (per mille): 1.6 1.1 1.4 50.0 14.0 1.1 8.9 0.5 2.0 9.1 1.8 0.7 5.1 0.6 13.1 0.2 5.7 7.3 5.3 3.8 7.9 3.8 5.3 7.3 5.7 0.2 13.1 0.6 5.1 0.7 1.8 9.1 2.0 0.5 8.9 1.1 14.0 50.0 1.4 1.1 1.6
+
+H. THE SCALAR LATTICE WAVE FOR COMPARISON (the field form, build (i), with two time levels): psi(t + 1) = c^2 sum over the four in-plane
+   neighbours of psi(t) + (2 - 4 c^2) psi(t) - psi(t - 1), c^2 = 1 / 3 (the flight table's pace is the lattice wave's stability limit in three
+   dimensions); the source the aperture itself, psi = 1 on the opening's 27 Nodes at t = 0 (the plane wave the registered lamp's turns make);
+   the field at an absorbing Node is deposited into its cell with the record's phase at the age and zeroed (the click); the far edges damped;
+   the single opening w = 27 at the registered clock and slower ones, the same reading: the pattern, its width against the pins
+   n / d = 8591334592 / 1073741824: lambda = 4.62 Links, the Fresnel number 1.462; the peak at y = 80, the crossings s = -0.1064 and 0.1064, FWHM(sin theta) = 0.2128, w x FWHM / lambda = 1.244 (the pin at the pixel grain and Fresnel 1.45: 0.916; 22.2's band 0.92 +- 0.03); the roughness 0.008; 1199 intervals
+      y = 60 .. 100 (per mille): 3.6 4.8 6.1 7.7 9.5 11.6 13.9 16.2 18.6 21.1 23.7 26.3 28.7 30.9 32.9 34.8 36.5 37.9 38.8 39.3 39.4 39.3 38.8 37.9 36.5 34.8 32.9 30.9 28.7 26.3 23.7 21.1 18.6 16.2 13.9 11.6 9.5 7.7 6.1 4.8 3.6
+   n / d = 4 / 1: lambda = 9.24 Links, the Fresnel number 0.731; the peak at y = 96, the crossings s = -0.2447 and 0.2447, FWHM(sin theta) = 0.4895, w x FWHM / lambda = 1.431 (the far field 0.886 (Fresnel 0.73)); the roughness 0.008; 1199 intervals
+      y = 60 .. 100 (per mille): 15.2 15.4 15.6 15.7 15.7 15.6 15.6 15.5 15.4 15.3 15.3 15.2 15.1 14.9 14.7 14.4 14.0 13.8 13.5 13.4 13.3 13.4 13.5 13.8 14.0 14.4 14.7 14.9 15.1 15.2 15.3 15.3 15.4 15.5 15.6 15.6 15.7 15.7 15.6 15.4 15.2
+   n / d = 2 / 1: lambda = 18.48 Links, the Fresnel number 0.365; the peak at y = 130, the crossings s = 0.3774 and 0.4724, FWHM(sin theta) = 0.0950, w x FWHM / lambda = 0.139 (the far field 0.886 (Fresnel 0.37)); the roughness 0.016; 1199 intervals
+      y = 60 .. 100 (per mille): 8.5 9.0 9.4 9.9 10.2 10.3 10.1 9.5 8.5 7.2 5.8 4.3 3.0 2.0 1.5 1.4 1.6 2.1 2.6 2.9 3.1 2.9 2.6 2.1 1.6 1.4 1.5 2.0 3.0 4.3 5.8 7.2 8.5 9.5 10.1 10.3 10.2 9.9 9.4 9.0 8.5
+

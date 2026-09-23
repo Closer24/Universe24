@@ -366,6 +366,101 @@ What Form W can move: every world with a crowd and a suspension pair
 (the optical pin worlds, G2's Hubble light, the clock-word and shell
 worlds); the crowd-free worlds bit-identical.
 
+
+**The owner's sentence of 06:22Z (record 1297), stated as ordered, and
+read against the code.** His words (the Boss's rendering): "the generic
+weight is the row's energy in content units, the same for every family;
+for a body it is the content as today, for light it is M_eq = 3 h n /
+(Q S_w d) per unit from its phase rate, a rational number made at load,
+no root and no division at run time; E = h f becomes one sentence for
+both." Against the code: the push's weight per unit today is (1 + gamma)
+content x e_D (`unit_weights`, `nature_beam.py` 3564 to 3582, the
+weight (E'_D^2 + 3 gamma p_D . p_D) // E'_D; `optical_turn` 3733 to
+3770), with E'_D the family's energy per unit on its own labels
+(`unit_energies`: e_D = isqrt(3 u_D . u_D) for a family without the flag
+`massive`, E'_0 = Q S_w M for a massive one, S_w the world's `width`, 1 by
+default): the photon's energy in the code is read off its MOMENTUM
+label, |p| = Q |u_D| at the label's scale, e_D = isqrt(3 Q^2) = 110 or
+111 by direction (COMPUTATION), and the wall's stretch reads the age
+moment alone, no weight. The owner's sentence reads the photon's energy
+off its FREQUENCY through the load-time identity 3 h n = Q S_w d
+(ALGEBRA 5.3): E'_eq = Q S_w M_eq = 3 h n / d. The numbers for the
+registered light (the family `light`, quantum h = 1, phase rate n / d =
+8591334592 / 1073741824 = 8.0013 steps per interval; the same family in
+row 13's pin worlds, the two slits and Malus): E'_eq = 3 x 1 x 8.0013 =
+24.004 against the code's e_D = 111, the ratio 4.62; M_eq = 24.004 / (Q
+S_w) = 0.375 content units per unit of light at S_w = 1 (COMPUTATION;
+S_w cancels in the ratio). So the sentence CHANGES light's push weight,
+from the label's 111 to the clock's 24: what it says, plainly, is that
+in the registered light E = p c does not hold (the momentum label at the
+flight's grain Q against the clock's h f differ by 4.62; ALGEBRA 5.3's
+"the content and the phase rate untied on main"), and that the push
+reads the energy by the clock, not by the label. The three tests of the
+sentence: generic PASS (one primitive, the family's h and n / d from the
+table, the same for every family, no name); vector PASS (a rational pair
+formed at load, a declared rounding at load if reduced, the same verb
+(T) on **W** at run time, no root, no float); local PASS (nothing kept
+at a Node; the crowd's flow at the row's Node as today). What it moves
+(COMPUTATION, the push linear in the weight at small angles): row 13's
+pin worlds' shifts -1.93 and -3.86 pixels to -0.42 and -0.84 (divided by
+4.62), the delays 2.68 and 5.36 unchanged (the wall takes no weight);
+light as a SOURCE of the push on others is unchanged (the crowd's
+moments are amounts, ages and labels, not energies); nothing else in
+the register has a crowd on light. The one-wall identity is untouched
+by the weight in its form; in its number the push's constant drops by
+4.62 against the wall's, so on the pin worlds (the pair [1, 16384], the
+release [1, 4096], k_wall / k_push = 1 / 4 in the code, `one_wall_check.out`
+section 3) the two constants come within 15 percent of each other
+(4.62 / 4 = 1.15) under the sentence: a COMPUTATION worth the owner's
+eye, not a derivation. My view for him, one sentence: the sentence is
+right in principle (E = h f for light and E = m c^2 for a body as one
+weight) and passes the three tests, and its cost is a moved pin (row
+13's -1.93 to -0.42 at gamma 0) and the plain statement that the
+registered photon's label momentum and clock energy disagree by 4.62,
+which the design of the lamp's label (kind 1) must then reconcile.
+
+**Form W or Form P: is it derived from the law? (the owner's question of
+06:39Z, record 1301; the Boss's answer corrected where it is wrong).**
+The Boss's answer: the law reads both moments on the same row and does
+not say whether they are one thing written twice; the one-reading
+principle decides; if the identity holds on the lattice Form W is the
+law's form and gamma stays declared; if the lattice breaks it, the
+difference is the lattice's space part and gamma may be derived. The
+correction, on the computations that exist: (i) the one-wall identity
+(the tilt equals the push) is a CONTINUUM identity (`one_wall_check.out`
+sections 1 and 2, exact in the closed forms); (ii) on the lattice it is
+NOT met by the crowd's own moments: the light-bending map
+(`docs/designs/open_problems/light_bending/light_bending_map.out`, lines
+35 and 52) reads the ratio of the flow to the gradient of the age moment
+along the beam's line at -0.340 and -0.023 against the continuum's 1.000
+("the ripple the digital lines'"), and the one-wall map (section C) reads
+the delay's difference between neighbouring rows as no gradient at all
+at the fan P = 6 (its sign flips from b = 6 to b = 3; "the front's tilt
+is not readable by neighbouring rows at P = 6; it needs the dense fan or
+a shell mean"): the lattice reads two combs, not one number; (iii) so
+the law as built is not double-reading one thing: it reads two moments
+(A on the wall, **V** on the momentum) that agree only in the shell mean
+and the continuum; a ray takes the delay from the one and the bend from
+the other, and the "one-reading principle" is not a principle the law
+as built has: it reads twice by design (the generic entry's verbs 1 and
+2). Therefore: under (b) of M11 (the ray law, Huygens at every
+apparatus) the question does not arise: both readings stay, gamma is a
+declared input (0 by default; 1 gives nature's 2 and Shapiro's 2, an
+input read back), row 13 stays "an input read back", and nothing is
+derived. Under (a) (a lattice wave), a wave tilts by the wall's delay
+across its whole front (the shell mean the map says a wave needs), so the
+wave WOULD read the delay's gradient as a bend and the push as a second
+bend: there Form W (the push off for the row that splits) would follow
+from a one-reading principle IF the owner writes that principle into
+the law (it is not there today), and gamma stays declared; whether the
+lattice's front tilt equals the continuum's is then the wave's own
+computation with its dispersion (Reviewer 3's caution), not made, and
+if it differs, the difference is the lattice's, not a derived gamma. So
+Form W is not derived from the law as built: it needs his word as a new
+rule ("a row reads the crowd once"), and only for a wave; for the ray
+law there is nothing to choose. That is the answer to his question,
+plainly: not derived; his signature, and only under (a).
+
 ### M8. The split's domain, the recorded row of a family without the flag `massive`; a body is a quantum: what the design leaves for the massive form
 
 The owner's rule has one exception, the quantum. This design splits the
@@ -378,7 +473,7 @@ a mistake found; the boundary of this design, named so that the massive
 form (the next design) says how a massive row splits, which rows 6, 8a
 and 14 need (section 3).
 
-### M10. The copy rule at a free Node is a diffusion; the split is the Grover coin (found in this pass, 06:50Z)
+### M10. The copy rule at a free Node is a diffusion; the split as the Grover coin: REFUTED BY M11 (rows 2a and 10), kept as the record of the form tried
 
 amplitude-v1's split (section 2.1, the `rerelease` entry's rule) sends
 one arriving row to K outputs as K copies over sqrt K, an isometry of
@@ -407,6 +502,139 @@ one of the six verbs: the owner's word decides between the exact form
 (the HOST pays) and a declared rounding, and this file takes the exact
 form until he speaks.
 
+Reviewer 3's second read (record 1300) on this item, answered by M11's
+refutation and by one line each: P1 (the walk's dispersion, cos omega' =
+(1 / K) sum_j cos(k . d_j) on the propagating pair, the pace c / sqrt 2
+at long wavelength on an in-plane fan, further branches on fans of 8 and
+more, flat bands at +1 and -1 holding 2 / K of every arrival): agrees
+with what split_pins.py measured (the front a bundle at 0.54 to 0.61
+Links per interval, the trapped share never ending), and it is why the
+reading is speckle; P2 (the grain's cap of W rows against the 10^5 to
+10^6 cells a resolved wave needs): moot under M11's option (b), a design
+question of its own under (a), where the grain acts on the merged offer
+at the sets and not per row on the GameBoard, the rows then the wave's
+cells and the HOST theirs; C1 (the coin's words: the direct ray continues
+with -(K - 2) / K and decays as ((K - 2) / K)^(2 t), the wave what the
+scattered 2 / K builds): right, and moot; the light clock under the coin
+(one return per birth lost, the direct cell's share ((K - 2) / K)^(2 L))
+moot under (b), where one return per birth stands and gate 1's five
+pins are the law's.
+
+### M11. The pins' verdict on the coin, before any build (split_pins.py, 07:40Z): the coin form is refuted by its own pins; the build is not ready
+
+`split_pins.py` beside this file (its output `split_pins.out`, COMPUTATION
+only, no engine run) walks one record offline on the registered worlds
+under each candidate form and reads the screen as the law reads it (the
+pointer per set over the arrivals, the phase the record's rate times the
+exact flight time on the arriving line, BEAM_LAW note 45; the cells of
+the wall, the faces and the pixels; the clicks of 4096 births by
+`cell_of`). Its findings, in the order they bind:
+
+1. **The reading machinery is right** (section V): the law as built,
+   straight lines with the one-time split over the world's forward fan at
+   the opening's Nodes, gives a smooth bell (the pixel-to-pixel roughness
+   0.10) with w x FWHM / lambda = 1.055 at w = 27 against RUN_10's 0.916
+   and 0.674 at w = 9 against 0.891; the residual is the phase form of
+   Reviewer 3's D5 (the accumulator seeded at the table's count at the
+   record's age on the new line), which rounds a re-emitted row's time by
+   up to one Link's time, 1.7 intervals, a fifth of a turn at lambda =
+   4.65 Links: the registered engine gives a re-emitted row its own age
+   and is exact. D5's form is therefore itself a source of error at the
+   registered wavelength (a finding against my own design text).
+2. **The copy rule is a diffusion** (section A): in one dimension its
+   norm grows as 2^(t / 2) and its spread as 0.71 sqrt t; the coin's norm
+   is conserved and its spread 0.54 t, a front (M10 confirmed).
+3. **The coin on the fan with the digital lines** (sections B, C, E, F):
+   unitary only when it acts on every row at a Node every interval (the
+   arrivals and the dwellers together; acting on the arrivals alone and
+   merging with the dwellers it does not conserve the norm), the front at
+   0.54 to 0.61 Links per interval by direction (the isotropy 6 percent at
+   K = 16, 4 percent at K = 48 at the age 64, not the 0.9 percent of the
+   facets), the norm 1.000000000; BUT the screen's pattern read at the
+   record's clock is speckle (the roughness 0.8 to 1.0, no envelope) at
+   the registered wavelength and at every slower clock tried (lambda =
+   4.65 to 74 Links), and for every turn of the coin's one parameter (the
+   unitary coin symmetric in the outputs is exp(i eps P), eps = pi
+   Grover's, eps -> 0 the straight rays: at small eps a spike, at large
+   eps speckle, no eps a bell). The single opening's w x FWHM / lambda
+   reads 0.02 to 0.09 against the pins 0.916 and 0.891: refuted, below the
+   0.85 that refutes 22.2, by its own pins.
+4. **The hop (pace B) with Grover's coin** (section G): speckle likewise
+   at lambda = 16, 32 and 64 Links.
+5. **A scalar lattice wave** (section H, the field form of build (i) with
+   two time levels, psi(t + 1) = c^2 sum over the neighbours - psi(t - 1)
+   + (2 - 4 c^2) psi(t), c^2 = 1 / 3, the source the aperture as a plane
+   wave): a smooth bell (the roughness 0.008), but 1.244 against 0.916 at
+   the registered clock and no diffraction pattern at the slower clocks
+   (flat at lambda = 9.2, a dip at the centre at 18.5): the two-dimensional
+   wave's wake and the pulse's time profile enter the reading, and the
+   reference model itself is not yet right; not a verdict on the field
+   form, a statement that its pins are not yet computed.
+6. **The registered bars** (section D): 98 percent of the pair record's
+   norm leaves through the open faces, alice_plus reads 0.020 and
+   bob_plus 0.0008, alice_minus and bob_minus nothing: NOT READABLE
+   (Reviewer 3's D3 confirmed by the numbers).
+
+**The diagnosis.** The law as built is dispersion-free: every row moves
+at c on an exact line, so one birth's pulse, read at the record's clock
+over its arrivals, IS the monochromatic pattern (the Fresnel sum), exact
+at any wavelength; that is why the registered pins are so precise. A
+lattice walk (any coin, any pace) has its own dispersion: the record's
+clock read on one birth's pulse selects the walk's modes at that
+frequency, several branches at unrelated wavelengths (a coin's -1
+eigenvalue folds the frequency by half a turn), so the walk's response
+at the clock's frequency is not the Helmholtz kernel and the screen
+reads speckle. A lattice wave with a clean long-wavelength limit (the
+scalar two-level field) reads smoothly, but its pins are not yet
+computed right and its wavelength must be many Links (the registered
+4.65 is not), which scales every world's geometry with it.
+
+**What this means for the design.** The split as the Grover coin (M10,
+DESIGN.md 3.2) does not reproduce rows 2a and 10 in the record form's
+reading and is refuted before any engine line; the build of M1 as
+written is not ready and does not start. What stands: the split's
+absence is the owner's finding and his decision; the copy rule is not a
+wave; the diagnosis above. What is open, for the owner's word through
+the Boss, one line each: (a) whether the split at every Node must be a
+lattice wave equation (the field form, build (i), a two-level field per
+record, "the sum from the six neighbours, the event propagates", whose
+dispersion at the world's clock must first be shown to give the
+diffraction pins, a computation to make right before any build, and
+whose wavelength must be many Links, the worlds re-registered at a
+slower clock and a larger geometry, HOST); or (b) whether "the ray
+splits" is met by the law's Huygens at every apparatus (the split at
+the lamp, the openings, the re-emitters, the law as built, exact at
+every wavelength, passing the pins) with the split at a free Node shown
+by these pins to be a diffusion or a speckle, so that the correction of
+M1 is the world files' fans (M7) and not the engine; or (c) a third
+form the physics-rule reviewer or the mathematician names, with its
+pins first. The chief physicist's recommendation: (b) now, because it
+is exact and passes; (a) as a design of its own with the mathematician,
+its dispersion and its pins before any engine line; nothing built until
+the owner chooses.
+
+### M12. The Register Architect's fixes (RUN_AUDIT.md section 4 at 62e3aba9), the chief physicist's read
+
+His measured rates (HOST): 3 to 8 microseconds per live row per interval,
+1.4 KB of peak memory per live row; 315 registered worlds after PR #860,
+465924 registered intervals; a week for the full re-run on the present
+structures, a day with his top three fixes. On the law's order within an
+interval: the fixes that touch no rule (rank 1 the age wall vectorised,
+rank 2 the dense per-Node arrays kept across intervals, rank 3 the
+per-row `click` lines written on request, rank 5 the crowd's `unique`
+reused, ranks 6 to 9 the Python loops and the runner's dump) are the
+host's and may be built on the Boss's GO, the gate set's digests their
+proof; the fused re-ordering of rank 4 (one sort per interval in place
+of the walk's, the measure's and the merge's three) is lawful only if no
+rule reads the store's order between them: the collision reads the
+(Node, number, content) groups on its own sort, the tables read the rows
+per set in the plan's order of arrivals, the merge reads its identity
+words on its own sort; a fused order must keep each reader's own order
+or prove the readers order-blind; the gate set's bit-identity at every
+cap is the proof, and a fused re-ordering that changes one digest is
+refused. My word: build rank 4 last, after ranks 1 to 3, under that
+proof; rank 10 (`_walk_rows` dead code): delete.
+
 ## 2. THE VERIFICATION PLAN, per solution, before any row is read
 
 The owner's rule (record 1288, 05:55Z): every experiment is re-run
@@ -414,8 +642,9 @@ under the corrected engine after the build; every reading of the engine
 without the split is history; no old reading stands as the law's. So:
 nothing registered moves before its re-pin, and every old reading is
 history in the log, labelled the old law's. The order: the pins of `split_pins.py` (M1, M10, M9's question, D3's
-shares); the build of M1, M10, M2 and M9's chosen form with their tests;
-the gate set re-pinned; the pilot of four worlds (below); the gate set re-pinned; then every
+shares; their verdict M11: the coin form refuted, the build held until
+the owner chooses the form); then the build of the chosen form with its
+tests; the gate set re-pinned; the pilot of four worlds (below); the gate set re-pinned; then every
 registered world re-run BESIDE its old reading (the rows of the record
 form first, compared with the pins of this section; then the rest,
 including the bodies' worlds, whose numbers are expected unchanged
