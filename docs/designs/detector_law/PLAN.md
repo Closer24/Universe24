@@ -163,10 +163,12 @@ what he does not approve is set aside by name and its pinned row waits.
    before its row runs, none a pin moved.
 6. `docs/ALGEBRA.md` chapter 8 merged (the owner's two-file rule): the law
    the pins test is in the algebra's own document before the pins.
-7. The phase reading of a record at a table Node (DECLARATIONS.md's head)
-   built as one component with its test, before the table rows (1a, 1b, 1d,
-   9, Malus's settings, 2b); the splitter's table and the receiver block
-   declared.
+7. The three components the six quantum rows still lack in the engine
+   (Reviewer 3's clause on the closure page): the phase reading of a record
+   at a table Node (DECLARATIONS.md's head), the pair's two arms, and the
+   splitter's table, each built as one component with its test before the
+   table rows (1a, 1b, 1d, 9, Malus's settings, 2b); the receiver block for
+   4b declared.
 
 ### 3.2 The paper's list, closed from the CLOSED rows (the owner's rule of 21:35Z, record 1506; the physicist's `ALGEBRAIC_CLOSURE.md`)
 
@@ -188,8 +190,10 @@ the owner's word on the hypothesis: 12 (Newton's potential, the clock in a
 field), the DELAY in place of 13's bending (Shapiro's form, the same
 1 + gamma, one declared input), NEWTON'S FALL in place of 14's orbit (a
 free massive packet released at r and at 2 r from a source block, the
-acceleration ratio 4.00 by the arrival clicks; a 96^3 box, minutes;
-prediction only at the declared kappa); "Newton we surely want" is met by
+acceleration ratio by the arrival clicks; the pin the DECLARED BOX's own
+gradient ratio from its periodic Green's function, Newton's 4.00 beside as
+the form it tends to as the box grows, or the box chosen with L >= 8 r,
+Reviewer 3's line; minutes; prediction only at the declared kappa); "Newton we surely want" is met by
 the fall and the potential. REPLACED: 6 by the atom's lines, 13 by the
 delay, 14 by the fall. DROPPED, out of the list, "not predicted" stays:
 R5 (its take undeclared; one day's page if the owner wants it), R6, 5b
