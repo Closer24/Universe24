@@ -549,15 +549,27 @@ n(omega') the RESTING block's own reading at the block-frame frequency; the
 energy account printed (light's E on the chain beyond the source's feed,
 the massive E, and their conserved combination E_light + (G / g) E_m).
 FIRST FINDING: the coupling's first difference taken ALONG THE CELL'S PATH
-on a hop interval (Reviewer 3's (b)) is UNSTABLE: light's E grows by 2 x
+on a hop interval (Reviewer 3's (b), the backward difference in both rows)
+is UNSTABLE, and so is the ADJOINT PAIR he then prescribed (his line on
+4f74bf2a through the Boss, 15:39Z: light's step first, the source the
+backward difference of the massive levels along the path on the hop
+interval, the receive the forward difference of light along the path on
+the interval before the hop), implemented as stated in the script and
+printed beside the same-Node form: it pumps more slowly than the
+both-backward form (light's E +17 to +9 x 10^4 per interval in the 4400-step
+windows, unbounded on the longer chain, the amplitude 7 x 10^4 by 3000
+intervals of motion) and its head-on readings before the pump dominates
+are 0.79 and 1.07, the both-backward form's; the same-Node pair conserves.
+The both-backward form light's E grows by 2 x
 10^11 per interval in the head-on window and without bound on a longer
 chain (the transmitted amplitude 5 x 10^10 by 3000 intervals of motion),
 while the hopping well alone, without light, is bounded (a scratch check
 of both the (B) form and the chain H form); the SAME-NODE first difference
 on every interval (the hop changing only the cells' set and the pair
 region) conserves the combination to 10^-5 per interval, as at rest. So the
-path form is a conservation breach and is withdrawn; the same-node form is
-the coupling in motion. SECOND FINDING, in the stable form: HEAD-ON the lab
+path forms as tried are conservation breaches and are withdrawn; the
+same-Node form is the coupling in motion in this design until Reviewer 3
+names a conserving path form and it is checked the same way. SECOND FINDING, in the stable form: HEAD-ON the lab
 delay is 0.40 of the covariant value with G g unchanged and 0.50 with G g x
 [K^2, K^2 - 3]; FROM BEHIND (the longer chain, the window after the
 block-frame period settles) 4.3 and 6.8 times the covariant value (the
@@ -730,11 +742,28 @@ board's two-block world reads it.
    rest cavity of form (I) against section 4's table, and moved, against
    gamma_m^2 (the control); (iv) the light clock on two blocks at rest (row
    (d): N_0 = 2 L / c + the two ring-ups, the script's number for the
-   world's declaration, 258 at G g = 0.2 on the chain) and in motion (rows
+   world's declaration: with the exact mode as the seed 258 at G g = 0.2
+   on the chain; with the ENGINE'S seed, a declared flat amplitude A_0 on
+   the emitter's cells at both levels, the same script reads N_0 = 235 at
+   G g = 0.2 and 310 at 0.05 (the receiver's rung crossed 11 and 13
+   intervals after the front), and with an (M) mirror partner 233; the
+   world's pin is the script's number under the seed the world declares,
+   the builder's question (h)) and in motion (rows
    (e), (f): 1 and 1 with the second term), the light emitted through the
    source term of section 7, decaying in tau; and the TAKE WORLD beside it
    (an (M) mirror and a detector declared absorbing, the take on the
-   arriving light) as the register's 206 +- 2 reproduced; (v) the index block (n from g, G). Nothing found,
+   arriving light) as the register's 206 +- 2 reproduced; the TWO-ARM RELAY
+   in motion (rows (e), (f)) as two worlds, which is which declared
+   (Reviewer 3's line through the Boss, 15:39Z, on the arms' lengths): (a)
+   the CONTROL, declared rigid arms (cells at L along and across the
+   motion) at k = 3, expected the theorem's gamma_m ratio between the arms
+   times the ring-ups' ratio (the cavity's reading, section 8); (b) five's
+   PIN, the arms held by light's force at section 10's equilibrium ((2 m +
+   1) lambda_0 / 4) and pushed by the stress of section 5, at k = 4 (v =
+   0.25, under the free pair's break at about 0.27 in the morning's chain
+   run, which was the ramp's adiabaticity plus the recoil, PUSH_BALANCE.md
+   10.7) with that run's ramp; at k = 3 only with the ramp lengthened per
+   10.7; expected 1 and 1 to the band's second term; (v) the index block (n from g, G). Nothing found,
    everything checked.
 4. **The board's faces and the margin rule** (the owner's question of
    14:12Z; COMPUTATION for the extents, `massive_board_margin.py`;

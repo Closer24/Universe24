@@ -11,9 +11,15 @@ the window). At rest: n(omega) = 1 + dphi / (k s), k = omega / c. In motion at o
 every K = 3 intervals (the pace 1 / 3 Links per interval, beta = 0.577 of c, gamma_m =
 1.2247), the step verb translates the block's CELLS and its pair region only; the
 massive rows stay on their Nodes and follow by the rule (the design's reading, Reviewer
-3's MUST on 7a82c155, record 1431: a carried record is a hop, not the design); on a hop
-interval the coupling's first difference is taken along the cell's path (the cell's
-Node now less the cell's previous Node before, a neighbour's row, local); G g is carried
+3's MUST on 7a82c155, record 1431: a carried record is a hop, not the design); the coupling on
+a hop is the ADJOINT pair of the discrete Lagrangian (Reviewer 3's MUST on 4f74bf2a):
+light's step first; the source term in light's row the BACKWARD difference of the
+massive levels along the cell's path (the cell's Node now less the cell's previous Node
+before) on the hop interval; the receive in the massive row the FORWARD difference of
+light along the path (light's next level at the cell's next Node less light's now at
+the cell) on the interval before a hop; the same-Node differences otherwise, and the
+same-Node pair printed beside it (a first path form that took the backward difference
+in both rows pumped light without bound: not adjoint, superseded); G g is carried
 as G g x [K^2, K^2 - 3] = G g gamma_m^2 (the drive's rational pair), and the unchanged
 G g is printed beside it for the record. Light meets the block head-on (the block toward
 the source) or from behind (the block away). The covariant expectation,
@@ -37,7 +43,7 @@ GAMMA2 = K * K / (K * K - 3)  # the drive's rational gamma_m^2 = 1.5
 GAMMA = np.sqrt(GAMMA2)
 
 
-PATH_DIFFERENCE = True  # the coupling's first difference along the cell's path on a hop (Reviewer 3's (b)); False: the same-Node difference
+COUPLING = "adjoint"  # "adjoint": the adjoint pair along the path on a hop (Reviewer 3's MUST on 4f74bf2a); "same_node": the same-Node differences, light first
 
 
 def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, direction, t_move, gain):
@@ -58,9 +64,10 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
     e_light = np.zeros(steps)
     e_mass = np.zeros(steps)
     acc = 0
+    moving = s > 0 and direction != 0
     for t in range(steps):
-        hop = False
-        if s > 0 and direction != 0 and t >= t_move:
+        hop_now = False
+        if moving and t >= t_move:
             acc += 1
             if acc == K:
                 acc = 0
@@ -69,16 +76,21 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
                 r[lo : lo + s] = ratio_in
                 coupled = np.zeros(n, bool)
                 coupled[lo : lo + s] = True
-                hop = True  # the cells and the pair region moved; the rows stay on their Nodes
+                hop_now = True  # the cells and the pair region moved at the start of this interval; the rows stay
+        hop_next = (
+            moving and t + 1 >= t_move and acc == K - 1
+        )  # the cells move at the start of the next interval
         al[source] = np.sin(omega * t)
-        # the coupling's first difference along the cell's path: on a hop interval the cell now at x was at x - direction
-        al_prev = np.roll(al_b, direction) if (hop and PATH_DIFFERENCE) else al_b
-        s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
-        am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al - al_prev), 0.0)
+        path = COUPLING == "adjoint"
+        # light's step first: the source term the backward difference of the massive levels, along the path on a hop
+        am_prev = np.roll(am_b, direction) if (hop_now and path) else am_b
         s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
-        am_now_prev = np.roll(am, direction) if (hop and PATH_DIFFERENCE) else am
-        al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am_n - am_now_prev), 0.0)
+        al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am - am_prev), 0.0)
         al_n[0] = al_n[-1] = 0.0
+        # the massive step: the receive the forward difference of light, along the path on the interval before a hop
+        al_fwd = np.roll(al_n, -direction) if (hop_next and path) else al_n
+        s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
+        am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al_fwd - al), 0.0)
         am_b, am = am, am_n
         al_b, al = al, al_n
         out[t] = al[probe]
@@ -211,13 +223,14 @@ def receding_long():
 
 if __name__ == "__main__":
     print(
-        "=== the coupling's first difference ALONG THE CELL'S PATH on a hop interval (Reviewer 3's (b))"
+        "=== the ADJOINT pair on a hop (light's step first; the source the backward difference along the path,"
+        " the receive the forward difference along the path)"
     )
     main()
     receding_long()
-    PATH_DIFFERENCE = False
+    COUPLING = "same_node"
     print(
-        "\n=== the SAME-NODE first difference on every interval (the hop changes only the cells' set and the pair region)"
+        "\n=== the SAME-NODE differences on every interval, light's step first (the hop changes only the cells' set and the pair region)"
     )
     main()
     receding_long()

@@ -50,7 +50,20 @@ def bound_mode(n, cells, ratio_out, ratio_in):
     return np.arccos(lam[0] / 2), v
 
 
-def run(n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, with_b=True, mirror_ratio=None):
+def run(
+    n,
+    cells_a,
+    cells_b,
+    ratio_out,
+    ratio_in,
+    g,
+    G,
+    A0,
+    steps,
+    with_b=True,
+    mirror_ratio=None,
+    seed="mode",
+):
     om, v = bound_mode(n, cells_a, ratio_out, ratio_in)
     r = np.full(n, ratio_out)
     r[cells_a] = ratio_in
@@ -62,8 +75,13 @@ def run(n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, with_b=True, 
         coupled[cells_b] = True
     if with_b and mirror_ratio is not None:
         rl[cells_b] = mirror_ratio
-    am_b = A0 * v * np.cos(-om)
-    am = A0 * v.copy()
+    if seed == "mode":  # the exact bound mode at A_0 (a host eigenvector)
+        am_b = A0 * v * np.cos(-om)
+        am = A0 * v.copy()
+    else:  # the engine's seed: a declared flat amplitude A_0 on A's cells, both levels (a level, no phase)
+        am = np.zeros(n)
+        am[cells_a] = A0
+        am_b = am.copy()
     al = np.zeros(n)
     al_b = np.zeros(n)
     hist_am = np.zeros((steps, n))
@@ -110,19 +128,27 @@ def main():
         f" A_0 = 2^20; W = {W}; 2 L / c = {2 * L / C:.2f}; the arrival at B taken as L / c = {L / C:.1f} from A's near face"
     )
     mirror_gap = 0.3  # the (M) wall: the pair on light's record at B's cells with cos omega_gap = num / den, light at 0.10 evanescent inside
-    for g, G, kind in (
-        (0.02, 1.0, "W"),
-        (0.05, 1.0, "W"),
-        (0.1, 1.0, "W"),
-        (0.2, 1.0, "W"),
-        (0.05, 1.0, "M"),
-        (0.2, 1.0, "M"),
-    ):
+    # the seed: "mode" the exact bound mode at A_0 (a host eigenvector); "cells" the engine's declared flat amplitude A_0 on A's cells
+    # (the builder's question (h): the world's pin is the script's number under the engine's own seed)
+    cases = [
+        (0.02, 1.0, "W", "mode"),
+        (0.05, 1.0, "W", "mode"),
+        (0.1, 1.0, "W", "mode"),
+        (0.2, 1.0, "W", "mode"),
+        (0.05, 1.0, "M", "mode"),
+        (0.2, 1.0, "M", "mode"),
+        (0.05, 1.0, "W", "cells"),
+        (0.2, 1.0, "W", "cells"),
+        (0.2, 1.0, "M", "cells"),
+    ]
+    for g, G, kind, seed in cases:
         mirror = np.cos(mirror_gap) if kind == "M" else None
         om, am_with, al_with = run(
-            n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, True, mirror
+            n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, True, mirror, seed
         )
-        _, am_alone, al_alone = run(n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, False)
+        _, am_alone, al_alone = run(
+            n, cells_a, cells_b, ratio_out, ratio_in, g, G, A0, steps, False, None, seed
+        )
         # A's emitted train: its front reaches B's near face at t_front (light at c from A's far face)
         arrival = int(
             round(L / C)
@@ -145,7 +171,7 @@ def main():
         efold = next((t for t in range(steps) if peak[t] < peak[40] / np.e), None)
         budget = None if cross_a is None else cross_a - 2 * L / C
         print(
-            f"B a {'BODY (W), the well of the pair with the receive' if kind == 'W' else 'MIRROR (M), the pair on lights record at its cells, the gap 0.3'}; "
+            f"seed {seed.upper()} ({'the exact mode' if seed == 'mode' else 'the engine flat A_0 on the cells'}); B a {'BODY (W), the well of the pair with the receive' if kind == 'W' else 'MIRROR (M), the pair on lights record at its cells, the gap 0.3'}; "
             f"g = {g}, G = {G}: A's mode omega_b = {om:.4f} (N_b = {2 * np.pi / om:.1f}); the front at B after {arrival} intervals"
             f" (L / c = {L / C:.1f} plus A's far-to-near {s} cells); the train's norm at the end of the insert {norm:.3e} in the"
             f" amplitude unit squared, the rung {rung:.3e}; B's pointer crosses the rung {delta_rung if kind == 'W' else 'n/a (a mirror has no record)'} intervals after the front"

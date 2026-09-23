@@ -1,69 +1,69 @@
-=== the coupling's first difference ALONG THE CELL'S PATH on a hop interval (Reviewer 3's (b))
+=== the ADJOINT pair on a hop (light's step first; the source the backward difference along the path, the receive the forward difference along the path)
 the chain: n = 2200, the source at 300, the probe at 1500; the block s = 24 cells, the medium's pair [156, 157] (omega_0 = 0.1129), the well mu_in^2 = mu^2 / 2; g = 0.005, G = 1.0; light at omega = 0.035 (lambda = 104 Links); K = 3, beta = 0.577 c, gamma_m = 1.2247; the window [3400, 4300]
-      (the energy account over the window: light's E drifts -1.125e-03 per interval beyond the reference train's own feed, the massive E -2.307e-08; the combination E_light + (G / g) E_m drifts -1.130e-03)
+      (the energy account over the window: light's E drifts -1.125e-03 per interval beyond the reference train's own feed, the massive E -2.376e-08; the combination E_light + (G / g) E_m drifts -1.130e-03)
       (the phase in the window's two halves: +0.3436, +0.3437 rad: steady if equal)
   at rest, light at omega = 0.0350: the phase delay +0.3436 rad over 24 cells -> n = 1.2362 (transmitted amplitude 0.962)
-      (the energy account over the window: light's E drifts +2.055e-03 per interval beyond the reference train's own feed, the massive E -1.594e-08; the combination E_light + (G / g) E_m drifts +2.052e-03)
+      (the energy account over the window: light's E drifts +2.055e-03 per interval beyond the reference train's own feed, the massive E +1.101e-08; the combination E_light + (G / g) E_m drifts +2.057e-03)
       (the phase in the window's two halves: +0.6610, +0.6561 rad: steady if equal)
   at rest, light at omega' toward = 0.0676: the phase delay +0.6591 rad over 24 cells -> n = 1.2345 (transmitted amplitude 0.985)
-      (the energy account over the window: light's E drifts +1.524e-04 per interval beyond the reference train's own feed, the massive E +5.954e-09; the combination E_light + (G / g) E_m drifts +1.536e-04)
+      (the energy account over the window: light's E drifts +1.524e-04 per interval beyond the reference train's own feed, the massive E +6.050e-09; the combination E_light + (G / g) E_m drifts +1.536e-04)
       (the phase in the window's two halves: +0.2246, +0.1501 rad: steady if equal)
   at rest, light at omega' away = 0.0181: the phase delay +0.1844 rad over 24 cells -> n = 1.2449 (transmitted amplitude 0.984)
-      (the energy account over the window: light's E drifts +8.077e+06 per interval beyond the reference train's own feed, the massive E +3.159e+04; the combination E_light + (G / g) E_m drifts +1.439e+07)
-      (the phase in the window's two halves: +0.6398, +0.6388 rad: steady if equal)
-  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.6393 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.024); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.792
-      (the energy account over the window: light's E drifts +2.387e+11 per interval beyond the reference train's own feed, the massive E +4.978e+08; the combination E_light + (G / g) E_m drifts +3.383e+11)
-      (the phase in the window's two halves: +0.8636, +0.8659 rad: steady if equal)
-  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.8648 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.698); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 1.071
-      (the energy account over the window: light's E drifts +2.618e+07 per interval beyond the reference train's own feed, the massive E +9.887e+04; the combination E_light + (G / g) E_m drifts +4.595e+07)
-      (the phase in the window's two halves: +0.1514, -0.0530 rad: steady if equal)
-  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.0477 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.017); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.211
-      (the energy account over the window: light's E drifts +1.714e+11 per interval beyond the reference train's own feed, the massive E +3.660e+08; the combination E_light + (G / g) E_m drifts +2.446e+11)
-      (the phase in the window's two halves: +0.2270, -0.0286 rad: steady if equal)
-  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.0953 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.066); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.422
+      (the energy account over the window: light's E drifts +1.702e+01 per interval beyond the reference train's own feed, the massive E +4.308e-02; the combination E_light + (G / g) E_m drifts +2.564e+01)
+      (the phase in the window's two halves: +0.6411, +0.6400 rad: steady if equal)
+  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.6406 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.010); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.794
+      (the energy account over the window: light's E drifts +2.742e+04 per interval beyond the reference train's own feed, the massive E +4.858e+01; the combination E_light + (G / g) E_m drifts +3.714e+04)
+      (the phase in the window's two halves: +0.8668, +0.8665 rad: steady if equal)
+  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.8667 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.005); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 1.074
+      (the energy account over the window: light's E drifts +1.548e+01 per interval beyond the reference train's own feed, the massive E +3.825e-02; the combination E_light + (G / g) E_m drifts +2.313e+01)
+      (the phase in the window's two halves: +0.1514, -0.0527 rad: steady if equal)
+  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.0476 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.022); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.211
+      (the energy account over the window: light's E drifts +8.825e+04 per interval beyond the reference train's own feed, the massive E +1.561e+02; the combination E_light + (G / g) E_m drifts +1.195e+05)
+      (the phase in the window's two halves: +0.2270, -0.0282 rad: steady if equal)
+  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.0951 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.075); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.421
 
 the receding case on a longer chain: n = 4000, the source at 300, the probe at 2500, the block from 1500 moving away from 3000; the window [5000, 6000]
-      (the energy account over the window: light's E drifts +1.492e-04 per interval beyond the reference train's own feed, the massive E -1.954e-09; the combination E_light + (G / g) E_m drifts +1.488e-04)
+      (the energy account over the window: light's E drifts +1.492e-04 per interval beyond the reference train's own feed, the massive E -2.173e-09; the combination E_light + (G / g) E_m drifts +1.488e-04)
       (the phase in the window's two halves: +0.1868, +0.1976 rad: steady if equal)
   at rest, light at omega' away = 0.0181: n = 1.2551 (transmitted amplitude 0.984)
-      (the energy account over the window: light's E drifts +6.292e+19 per interval beyond the reference train's own feed, the massive E +2.359e+17; the combination E_light + (G / g) E_m drifts +1.101e+20)
-      (the phase in the window's two halves: +0.1485, +2.9592 rad: steady if equal)
-  moving away from the source (from behind), G g carried unchanged: the lab phase delay +2.9333 rad (the block from 1500 to 2566; transmitted amplitude 48477244966.357); the covariant expectation +0.2353 rad; the ratio read / expected = 12.464
-      (the energy account over the window: light's E drifts +3.302e+26 per interval beyond the reference train's own feed, the massive E +6.336e+23; the combination E_light + (G / g) E_m drifts +4.569e+26)
-      (the phase in the window's two halves: +0.2155, +2.8734 rad: steady if equal)
-  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +2.8475 rad (the block from 1500 to 2566; transmitted amplitude 66798124974592.461); the covariant expectation +0.2353 rad; the ratio read / expected = 12.100
+      (the energy account over the window: light's E drifts +3.574e+08 per interval beyond the reference train's own feed, the massive E +8.956e+05; the combination E_light + (G / g) E_m drifts +5.365e+08)
+      (the phase in the window's two halves: +0.1490, +2.9238 rad: steady if equal)
+  moving away from the source (from behind), G g carried unchanged: the lab phase delay +2.8916 rad (the block from 1500 to 2566; transmitted amplitude 68196.981); the covariant expectation +0.2353 rad; the ratio read / expected = 12.287
+      (the energy account over the window: light's E drifts +8.008e+14 per interval beyond the reference train's own feed, the massive E +1.437e+12; the combination E_light + (G / g) E_m drifts +1.088e+15)
+      (the phase in the window's two halves: +0.2165, -0.4208 rad: steady if equal)
+  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay -0.4466 rad (the block from 1500 to 2566; transmitted amplitude 57082127.937); the covariant expectation +0.2353 rad; the ratio read / expected = -1.898
 
-=== the SAME-NODE first difference on every interval (the hop changes only the cells' set and the pair region)
+=== the SAME-NODE differences on every interval, light's step first (the hop changes only the cells' set and the pair region)
 the chain: n = 2200, the source at 300, the probe at 1500; the block s = 24 cells, the medium's pair [156, 157] (omega_0 = 0.1129), the well mu_in^2 = mu^2 / 2; g = 0.005, G = 1.0; light at omega = 0.035 (lambda = 104 Links); K = 3, beta = 0.577 c, gamma_m = 1.2247; the window [3400, 4300]
-      (the energy account over the window: light's E drifts -1.125e-03 per interval beyond the reference train's own feed, the massive E -2.307e-08; the combination E_light + (G / g) E_m drifts -1.130e-03)
+      (the energy account over the window: light's E drifts -1.125e-03 per interval beyond the reference train's own feed, the massive E -2.376e-08; the combination E_light + (G / g) E_m drifts -1.130e-03)
       (the phase in the window's two halves: +0.3436, +0.3437 rad: steady if equal)
   at rest, light at omega = 0.0350: the phase delay +0.3436 rad over 24 cells -> n = 1.2362 (transmitted amplitude 0.962)
-      (the energy account over the window: light's E drifts +2.055e-03 per interval beyond the reference train's own feed, the massive E -1.594e-08; the combination E_light + (G / g) E_m drifts +2.052e-03)
+      (the energy account over the window: light's E drifts +2.055e-03 per interval beyond the reference train's own feed, the massive E +1.101e-08; the combination E_light + (G / g) E_m drifts +2.057e-03)
       (the phase in the window's two halves: +0.6610, +0.6561 rad: steady if equal)
   at rest, light at omega' toward = 0.0676: the phase delay +0.6591 rad over 24 cells -> n = 1.2345 (transmitted amplitude 0.985)
-      (the energy account over the window: light's E drifts +1.524e-04 per interval beyond the reference train's own feed, the massive E +5.954e-09; the combination E_light + (G / g) E_m drifts +1.536e-04)
+      (the energy account over the window: light's E drifts +1.524e-04 per interval beyond the reference train's own feed, the massive E +6.050e-09; the combination E_light + (G / g) E_m drifts +1.536e-04)
       (the phase in the window's two halves: +0.2246, +0.1501 rad: steady if equal)
   at rest, light at omega' away = 0.0181: the phase delay +0.1844 rad over 24 cells -> n = 1.2449 (transmitted amplitude 0.984)
-      (the energy account over the window: light's E drifts -4.736e-04 per interval beyond the reference train's own feed, the massive E -3.536e-08; the combination E_light + (G / g) E_m drifts -4.807e-04)
-      (the phase in the window's two halves: +0.3171, +0.3286 rad: steady if equal)
-  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.3228 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.008); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.400
-      (the energy account over the window: light's E drifts -7.267e-04 per interval beyond the reference train's own feed, the massive E -2.822e-08; the combination E_light + (G / g) E_m drifts -7.324e-04)
-      (the phase in the window's two halves: +0.3876, +0.4188 rad: steady if equal)
-  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.4031 rad (the block from 1300 to 700 over the run; transmitted amplitude 0.997); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.499
-      (the energy account over the window: light's E drifts -2.084e-05 per interval beyond the reference train's own feed, the massive E +4.559e-08; the combination E_light + (G / g) E_m drifts -1.172e-05)
-      (the phase in the window's two halves: +0.1514, +0.5772 rad: steady if equal)
-  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.3604 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.254); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 1.595
-      (the energy account over the window: light's E drifts -2.470e-05 per interval beyond the reference train's own feed, the massive E +2.709e-08; the combination E_light + (G / g) E_m drifts -1.928e-05)
-      (the phase in the window's two halves: +0.2270, +0.9779 rad: steady if equal)
-  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.5870 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.499); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 2.599
+      (the energy account over the window: light's E drifts -5.436e-04 per interval beyond the reference train's own feed, the massive E -3.265e-08; the combination E_light + (G / g) E_m drifts -5.501e-04)
+      (the phase in the window's two halves: +0.3159, +0.3283 rad: steady if equal)
+  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.3221 rad (the block from 1300 to 700 over the run; transmitted amplitude 0.998); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.399
+      (the energy account over the window: light's E drifts -7.947e-04 per interval beyond the reference train's own feed, the massive E -2.774e-08; the combination E_light + (G / g) E_m drifts -8.002e-04)
+      (the phase in the window's two halves: +0.3887, +0.4189 rad: steady if equal)
+  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.4037 rad (the block from 1300 to 700 over the run; transmitted amplitude 0.983); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.500
+      (the energy account over the window: light's E drifts -6.311e-05 per interval beyond the reference train's own feed, the massive E +3.863e-08; the combination E_light + (G / g) E_m drifts -5.539e-05)
+      (the phase in the window's two halves: +0.1514, +0.5751 rad: steady if equal)
+  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.3573 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.230); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 1.582
+      (the energy account over the window: light's E drifts -8.169e-05 per interval beyond the reference train's own feed, the massive E +2.207e-08; the combination E_light + (G / g) E_m drifts -7.727e-05)
+      (the phase in the window's two halves: +0.2270, +0.9733 rad: steady if equal)
+  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.5802 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.457); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 2.569
 
 the receding case on a longer chain: n = 4000, the source at 300, the probe at 2500, the block from 1500 moving away from 3000; the window [5000, 6000]
-      (the energy account over the window: light's E drifts +1.492e-04 per interval beyond the reference train's own feed, the massive E -1.954e-09; the combination E_light + (G / g) E_m drifts +1.488e-04)
+      (the energy account over the window: light's E drifts +1.492e-04 per interval beyond the reference train's own feed, the massive E -2.173e-09; the combination E_light + (G / g) E_m drifts +1.488e-04)
       (the phase in the window's two halves: +0.1868, +0.1976 rad: steady if equal)
   at rest, light at omega' away = 0.0181: n = 1.2551 (transmitted amplitude 0.984)
-      (the energy account over the window: light's E drifts +6.903e-06 per interval beyond the reference train's own feed, the massive E +2.799e-08; the combination E_light + (G / g) E_m drifts +1.250e-05)
-      (the phase in the window's two halves: +0.9279, +1.0947 rad: steady if equal)
-  moving away from the source (from behind), G g carried unchanged: the lab phase delay +1.0092 rad (the block from 1500 to 2566; transmitted amplitude 1.214); the covariant expectation +0.2353 rad; the ratio read / expected = 4.288
-      (the energy account over the window: light's E drifts -1.514e-05 per interval beyond the reference train's own feed, the massive E +1.960e-08; the combination E_light + (G / g) E_m drifts -1.122e-05)
-      (the phase in the window's two halves: +1.5265, +1.6520 rad: steady if equal)
-  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +1.5894 rad (the block from 1500 to 2566; transmitted amplitude 1.338); the covariant expectation +0.2353 rad; the ratio read / expected = 6.754
+      (the energy account over the window: light's E drifts -3.401e-05 per interval beyond the reference train's own feed, the massive E +2.284e-08; the combination E_light + (G / g) E_m drifts -2.944e-05)
+      (the phase in the window's two halves: +0.9259, +1.0915 rad: steady if equal)
+  moving away from the source (from behind), G g carried unchanged: the lab phase delay +1.0066 rad (the block from 1500 to 2566; transmitted amplitude 1.185); the covariant expectation +0.2353 rad; the ratio read / expected = 4.277
+      (the energy account over the window: light's E drifts -6.467e-05 per interval beyond the reference train's own feed, the massive E +1.444e-08; the combination E_light + (G / g) E_m drifts -6.178e-05)
+      (the phase in the window's two halves: +1.5235, +1.6483 rad: steady if equal)
+  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +1.5861 rad (the block from 1500 to 2566; transmitted amplitude 1.296); the covariant expectation +0.2353 rad; the ratio read / expected = 6.740
