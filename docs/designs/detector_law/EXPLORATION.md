@@ -33,9 +33,9 @@ reached this page; the page is updated when they land.
 | The same at side 28, half depth | omega_b = 0.13053, the period 48.14 | 48.140 | 0.01 percent | (K) CONTROL |
 | The rest cavity of form (I), side 24 | the separable form on the lattice, omega = 0.19485, the period 32.25 | 32.244 | 0.15 percent, the lattice's residual | (K) CONTROL |
 | Light slowed in matter: the index block at rest on a chain of 1400, at three couplings | the closed form n^2 = 1 + G g / (omega_0^2 - omega^2): n = 1.0421, 1.1022, 1.1956 (the declared PIN, unchanged) | n read 1.0366, 1.0887, 1.1702 (GAMEBOARD: the light amplitude's phase at a probe) | the excess n - 1 at 0.87 of the form's, ONE factor at all three couplings | (K) CONTROL of the coupling: the linearity in G g and the omega_0 dependence pass; the factor 0.87 is explained in kind and open in size (section 2) |
-| The index block IN MOTION at K = 3 (a prediction with no known formula: the same-Node coupling's own number, not Fizeau's drag) | head-on 0.500 of the covariant slab's delay; from behind 2.569 (the 2200-chain's own script number) | head-on 0.498; from behind 2.451 (the builder's first run, before the faces as declared; re-run PENDING) | 0.4 percent head-on; 5 percent from behind, to re-read | (P) PREDICTION: the algebra's number came out of the engine head-on |
-| The moving body's clock: the block pushed to k = 3 on the 64^3 boxes (side 20 and 28) and on the layer pin world (side 14, a quarter depth) | the one formula f / f_0 = omega_b(gamma_m s) / (gamma_m omega_b(s)) with gamma_m at the massive kind's own pace c_m: 0.7805, 0.8024; the layer 0.8108 (against 1 / gamma_m = 0.8142; light's gamma(c) beside as a CONTROL: 0.7831, 0.8048, 0.8132) | PENDING (the builder's moving worlds (ii-a), (ii-b), (iii-b) and the exploratory layer worlds running at 18:00Z) | PENDING | (K) the muon's form 1 / gamma_m, with (P) the second term of a bound clock beside |
-| The rest cavity moved | 1 / gamma_m^2 = 0.6626 at c_m (0.6667 at c) | PENDING ((iii-b)) | PENDING | (K) CONTROL of the medium's clock |
+| The index block IN MOTION at K = 3 (a prediction with no known formula: the same-Node coupling's own number, not Fizeau's drag) | head-on 0.500 of the covariant slab's delay; from behind 2.569 (the 2200-chain's own script number) | head-on 0.498; from behind 2.451 (the builder's first run, before the faces as declared; re-run PENDING) | 0.4 percent head-on; 5 percent from behind, to re-read | (P) PREDICTION, its number here a CONTROL OF THE IMPLEMENTATION against the design's own scratch of the same scheme (the +- 0.04 rad falsifier is that check); the prediction itself stays untested against nature by design (Fizeau a declared non-match) |
+| The moving body's clock: the block pushed to k = 3 on the 64^3 boxes (side 20 and 28) and on the layer pin world (side 14, a quarter depth) | the one formula f / f_0 = omega_b(gamma_m s) / (gamma_m omega_b(s)) with gamma_m at the massive kind's own exact cone c_eff (1 / gamma_m = 0.8150): 0.7814 and 0.8032 on the two boxes, 0.8116 on the layer pin world (its own scratch reads 0.8113); the second-order c_m (0.8142) and light's gamma(c) (0.8165) beside as CONTROLS | PENDING (the builder's moving worlds (ii-a), (ii-b), (iii-b) and the exploratory layer worlds running at 18:00Z) | PENDING | (K) the muon's form 1 / gamma_m, with (P) the second term of a bound clock beside |
+| The rest cavity moved | 1 / gamma_m^2 = 0.6642 at c_eff (0.6626 at c_m, 0.6667 at c) | PENDING ((iii-b)) | PENDING | (K) CONTROL of the medium's clock |
 | The small "atom": a well of side 20 on a 64^2 layer, its lines read in light through the coupling | three bound modes, 0.09097 and a pair at 0.13800; the lines expected AT THE MODES' OWN FREQUENCIES (a linear scalar coupling), not at their difference 0.047 | PENDING (the builder's exploratory atom world, sent 17:22Z) | PENDING | (P) PREDICTION: discrete lines from the algebra; no Balmer-type ladder of differences at this scale, said before the run |
 
 The reading of the first four rows in one sentence: the generic engine per
@@ -63,23 +63,26 @@ head-on to half a percent.
   builder's first run was before the faces as declared; the re-run is
   PENDING and reads with them.
 - **The one formula's gamma.** Reviewer 3 found, and the derivation
-  confirms (MASSIVE_RECORD.md section 8, CONFIRMED at 18:26Z), that the
-  moving clock's gamma is the massive kind's own, at its pace c_m = c
-  sqrt(cos omega_0), not light's: 0.28 percent apart at k = 3 and mu =
-  0.15, the size of the pin world's band, so the layer's own scratch
-  (0.8113 at a binding of 0.011) cannot tell the two apart. The pins were
-  recomputed with gamma at c_m before any pinned run (a derivation, not a
-  pin moved) and light's gamma(c) numbers stand beside as labelled
-  controls. This is prediction 1's second face: a bound clock dilates by
-  gamma at c_m, slower than light's gamma by beta^2 gamma^2 omega_0^2 / 4
-  (0.28 percent here; about 10^-14 at nature's electron). The falsifier is
+  confirms (MASSIVE_RECORD.md section 8, CONFIRMED at 18:26Z, its exact
+  form on his token of 19:20Z), that the moving clock's gamma is the
+  massive kind's own, at the exact cone of its band's bottom c_eff^2 =
+  cos omega_0 (omega_0 / sin omega_0) c^2, not light's c: 1 / gamma =
+  0.8150 at c_eff against 0.8165 at c (0.19 percent apart) and 0.8142 at
+  the second-order cone c_m, all inside the pin world's 0.3 percent band,
+  so the layer's own scratch (0.8113 at a binding of 0.011) cannot tell
+  them apart. The pins were recomputed with gamma at c_eff before any
+  pinned run (a derivation and its exact form, not a pin moved) and the
+  c_m and c numbers stand beside as labelled controls. This is prediction
+  1's second face: a bound clock dilates by gamma at its own cone, slower
+  than light's gamma (about 10^-14 at nature's electron). The falsifier is
   honest but weak on this world (Reviewer 3's clause, 18:30Z); THE WORLD
   THAT SEPARATES THEM is a deeper mass at the same k: mu = 0.3 on a 128^2
   layer, the square well of side 10 at an eighth of the depth (its bound
   mode 0.29372, binding 0.0055, the extent 26 Links, the residual 0.15
-  percent), where the two gammas are 1.14 percent apart, eight times the
-  band (1 / gamma: 0.8073 at c_m against 0.8165 at c); its rest period 21.3
-  intervals sits at the honest floor of 21 and is named so. Written in
+  percent), declared with the exact cone: 1 / gamma 0.8104 at c_eff
+  against 0.8165 at c, 0.76 percent apart, five bands (and 0.38 percent
+  from the second-order c_m's 0.8073); its rest period 21.3 intervals sits
+  at the honest floor of 21 and is named so. Written in
   `SCHEDULE.md` as a DEFERRED world: no run, no pin moved, the owner's word
   if the second face is to be tested rather than only named.
 - **Nothing against nature yet.** No number on this page is compared with

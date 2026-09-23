@@ -759,7 +759,8 @@ well-regime block reads Lorentz to first order with its cells declared)
 are ONE statement:
 
     f / f_0 = omega_b(gamma_m s, g) / (gamma_m omega_b(s, g)),
-    gamma_m = 1 / sqrt(1 - v^2 / c_m^2),  c_m = c sqrt(cos omega_0),
+    gamma_m = 1 / sqrt(1 - v^2 / c_eff^2),  c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2
+    (the exact cone of the band's bottom; c_m^2 = cos omega_0 c^2 its second order),
 
 the moving block a RESTING block of width gamma_m s with the same g, read
 at 1 / gamma_m (the boost of the continuum's operator: the declared cells
@@ -781,15 +782,25 @@ the declared cells of width s are gamma(c_m) s wide and its phase turns
 at omega_b / gamma(c_m). Light's gamma(c) has no standing in the massive
 record's equation (light enters only through the coupling, which does
 not carry the well). At k = 3, mu = 0.15: beta_c = 0.57735, gamma(c) =
-1.22474, gamma(c_m) = 1.22820, the ratio 0.99718; the pins by the one
-formula move by 0.28 percent from the numbers computed with gamma(c)
-(0.8132 to 0.8109 on the layer pin world, 0.7831 to 0.7809 and 0.8048 to
-0.8025 on (ii-a), (ii-b), recomputed exactly by the scripts), and the
-gamma(c) numbers stay in the tables as a labelled CONTROL beside; the
-pin world's residual band is 0.3 percent, the size of the difference, so
-the formula names its gamma or the world could not tell the two apart.
-The same gamma(c_m) carries row 4b (1 + z = gamma(c_m)(1 + beta_c) =
-1.9373 at k = 3 against 1.9319 with gamma(c)) and the second term's
+1.22474, gamma(c_m) = 1.22820, the ratio 0.99718; THE EXACT FORM OF THE
+SAME DERIVATION (Reviewer 3's token on 26674947, 19:20Z; decided once,
+before any pinned run, the exact form and not its second order, not a
+pin moved): expanding cos omega = cos omega_0 cos omega_l(k) at the
+band's bottom with no truncation in omega_0, omega = omega_0 + delta with
+sin omega_0 delta = cos omega_0 omega_l^2 / 2, so omega^2 = omega_0^2 +
+cos omega_0 (omega_0 / sin omega_0) c^2 k^2: THE NAMED GAMMA IS
+gamma(c_eff) with c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the
+factor omega_0 / sin omega_0 = 1.0037 at mu = 0.15 (c_m^2 = cos omega_0
+c^2 is its second order); the k^4 terms of light's own band remain the
+lattice's residual, absorbed by the band as for row 5a. At k = 3, mu =
+0.15: gamma(c_eff) = 1.22705 (1 / gamma = 0.8150), gamma(c_m) = 1.22820
+(0.8142) and light's gamma(c) = 1.22474 (0.8165) the two CONTROLS beside,
+0.09 and 0.19 percent from the named one, inside the pin world's 0.3
+percent band, so the formula names its gamma by derivation or the world
+could not tell the three apart; the pins recomputed exactly by the
+scripts with gamma(c_eff) and the two controls printed beside each. The
+same gamma carries row 4b (1 + z = gamma(c_eff)(1 + beta_c) = 1.9355 at k
+= 3; 1.9373 at c_m and 1.9319 at c beside) and the second term's
 gamma_m^2. It is prediction 1's second face (SCHEDULE.md, the (P) list):
 a bound clock dilates by gamma at c_m, slower than light's gamma by
 beta^2 gamma^2 omega_0^2 / 4 (0.28 percent at k = 3; about 10^-14 at
@@ -862,7 +873,7 @@ prediction:
 | (e), (f) in motion at k = 3 | the blocks' own count per cycle in both arms: N_par / N_perp = 1 and 1, within +- 0.03 (Reviewer 3's third line), plus the band's second term eps (gamma_m^2 - 1) / 2 for eps <= 0.1 (at most 0.025 at k = 3); the cycle in the lattice's intervals gamma_m N_0 along and across | +- 0.03 plus eps (gamma_m^2 - 1) / 2; the two-pace prediction 0.2 percent at N_0 = 50 |
 | the lab's row | the moving block's clock read by a resting one: 1 / gamma_m in the well regime, to the second term; 1 / gamma_m^2 for form (I) moved (the control) | eps (gamma_m^2 - 1) / 2; the residual |
 | 4a | the block's own clock slow by 1 / gamma_m in the lattice's intervals: the muon's row PASS in form, the number gamma_m at the world's beta_c (gamma at beta_m = beta_c c / c_m to second order) | the second term; 0.2 percent at N_0 = 50 |
-| 4b | the boosted block's emission read by a block at rest: 1 + z = gamma_m (1 + beta_c) receding, gamma_m at c_m (section 8: 1.9373 at k = 3, mu = 0.15; 1.9319 with gamma(c), a CONTROL beside), the character's frequency gamma_m omega_0 shifted by the medium's Doppler | the residual |
+| 4b | the boosted block's emission read by a block at rest: 1 + z = gamma_m (1 + beta_c) receding, gamma_m at the exact cone c_eff (section 8: 1.9355 at k = 3, mu = 0.15; 1.9373 at c_m and 1.9319 at c, CONTROLS beside), the character's frequency gamma_m omega_0 shifted by the medium's Doppler | the residual |
 | (g) the block at rest | its self-click its own mode, N_b(pair, s), no return and no timer; decaying in tau (section 7) unless re-excited; the clock sentence of DESIGN.md section 8 not needed for it | exact to the residual |
 | the index block | n from g, G, the pair and omega: n^2 = 1 + G g / (omega_0^2 - omega^2); the Fresnel step ((n - 1) / (n + 1))^2; the chain's 1.034, 1.083, 1.159 against 1.043, 1.104, 1.200 | the chain's 0.8 to 3.4 percent below the closed form at s = 12 (the faces' steps) |
 | the index block IN MOTION (a prediction of the model as built) | in the design's reading with the stable same-Node coupling (section 7, `massive_moving_index.py`): the stepped block's lab phase delay at K = 3 is 0.40 (G g unchanged) and 0.50 (the drive's pair) of the covariant slab's head-on, and 4.3 and 6.8 times it from behind; the path-difference coupling on hops unstable and withdrawn; not covariant under either declaration; nature's row Fizeau's drag at first order in beta, not computed | the chain's +- 0.001 rad head-on; Fizeau pending |
@@ -1038,8 +1049,8 @@ board's two-block world reads it.
    | The experiment (the row) | The world that reads it | The pin before the run, or the kind | The board; HOST | The earliest day |
    | --- | --- | --- | --- | --- |
    | The block's own clock at rest (world (i), the control of section 4's threshold table) | (i-a) `rest_20.json`, (i-b) `rest_28.json` | CONTROL: omega_b 0.11066 and 0.13184, the extent 5.7 and 8.2 Links (`massive_board_margin.out`) | 48^3 periodic, 3000 intervals; under a minute each | 2026-09-24, once STEPS 3 to 5 are pushed (the rule of STEP 2 alone reads no block) |
-   | Row 4a, the muon's form: the moving block's clock 1 / gamma_m to the band's second term (the FIRST nature-shaped reading, the number the lattice's) | (ii-a) `moving_20.json`, (ii-b) `moving_28.json` | PREDICTION (the block form's residual): the one formula of section 8 COMPUTED PER WORLD on its own 64^3 box before its run (Reviewer 3's line on 05ad61b2, through the Boss, 16:42Z; `massive_moving_pins.py`): with gamma_m AT c_m (section 8, Reviewer 3's MUST on PR #1053, decided by derivation before any pinned run): (ii-a) f / f_0 = omega_b(24.56, 20; g) / (1.22820 x 0.11065) = **0.7805**; (ii-b) omega_b(34.39, 28; g) / (1.22820 x 0.13170) = **0.8024**; the same formula with light's gamma(c) = 1.22474 gives 0.7831 and 0.8048, a labelled CONTROL beside (the two 0.3 percent apart, the band's size); the first-order 0.7209 and 0.7683 are the band's second term only, not the pins; the pins written in PINS.md before the run and never moved | 64^3 periodic, 9500 intervals; 2 minutes each | 2026-09-24, after (i) |
-   | Row 4a as five's pin: 1 / gamma_m within one percent (the residual 0.0009 to 0.0045) | (ii-c), the four smallest binding sides pushed to k = 3 | PIN: the one formula per world at pin time on the world's own board (`pins.py`, the inputs s, g and gamma_m AT c_m = 1.22820 of each row, section 8; the rectangular well gamma_m s along the motion), 1 / gamma_m = 0.8142 less the residual 0.0009 to 0.0045, +- 0.01 (gamma(c)'s 0.8165 a CONTROL beside); at rest first, (i-c): omega_b 0.14876, 0.14882, 0.04907, 0.04908; ON A LAYER (item 7, the owner's word): its own pin worlds (mu = 0.15, s = 14, g = mu^2 / 4, a 200^2 layer, the formula's number in item 7) | 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per interval; a rest world one to three hours, a moving world one to two hours, four of each | in 3-D 2026-09-25 (the rest worlds after (i-a) and (i-b) read and the Boss's word on the HOST cost, the moving ones after them); ON THE LAYER the 24th with (ii-a), seconds per world |
+   | Row 4a, the muon's form: the moving block's clock 1 / gamma_m to the band's second term (the FIRST nature-shaped reading, the number the lattice's) | (ii-a) `moving_20.json`, (ii-b) `moving_28.json` | PREDICTION (the block form's residual): the one formula of section 8 COMPUTED PER WORLD on its own 64^3 box before its run (Reviewer 3's line on 05ad61b2, through the Boss, 16:42Z; `massive_moving_pins.py`): with gamma_m at the EXACT CONE c_eff (section 8, Reviewer 3's MUST on PR #1053 and his token of 19:20Z, decided by derivation before any pinned run): (ii-a) f / f_0 = omega_b(24.54, 20; g) / (1.22705 x 0.11065) = **0.7814**; (ii-b) omega_b(34.36, 28; g) / (1.22705 x 0.13170) = **0.8032**; the same formula with the second-order gamma(c_m) = 1.22820 gives 0.7805 and 0.8024 and with light's gamma(c) = 1.22474 gives 0.7831 and 0.8048, labelled CONTROLS beside (all within the band's 0.3 percent); the first-order 0.7221 and 0.7692 are the band's second term only, not the pins; the pins written in PINS.md before the run and never moved | 64^3 periodic, 9500 intervals; 2 minutes each | 2026-09-24, after (i) |
+   | Row 4a as five's pin: 1 / gamma_m within one percent (the residual 0.0009 to 0.0045) | (ii-c), the four smallest binding sides pushed to k = 3 | PIN: the one formula per world at pin time on the world's own board (`pins.py`, the inputs s, g and gamma_m at the exact cone c_eff, 1.22705, of each row, section 8; the rectangular well gamma_m s along the motion), 1 / gamma_m = 0.8150 less the residual 0.0009 to 0.0045, +- 0.01 (gamma(c_m)'s 0.8142 and gamma(c)'s 0.8165 CONTROLS beside); at rest first, (i-c): omega_b 0.14876, 0.14882, 0.04907, 0.04908; ON A LAYER (item 7, the owner's word): its own pin worlds (mu = 0.15, s = 14, g = mu^2 / 4, a 200^2 layer, the formula's number in item 7) | 191^3 to 288^3 (7 to 24 million Nodes), 0.3 to 0.9 s per interval; a rest world one to three hours, a moving world one to two hours, four of each | in 3-D 2026-09-25 (the rest worlds after (i-a) and (i-b) read and the Boss's word on the HOST cost, the moving ones after them); ON THE LAYER the 24th with (ii-a), seconds per world |
    | Five's 1 and 1, N_par / N_perp between two arms in motion (rows (e), (f); row 5b of the table) | the two-arm relay (b) of item 3: light-bound arms at section 10's equilibrium, pushed by the stress of section 5, at k = 4; its CONTROL (a), declared rigid arms at k = 3 | PIN: 1 and 1 within +- 0.03 plus eps (gamma_m^2 - 1) / 2; the control the theorem's gamma_m ratio times the ring-ups' ratio | a layer of two arms of L about 60 with the margin, about 200 x 200 x (s + 4 / kappa); an hour a world by the pin worlds' rate | NOT IN BUILD.md section 5 as pushed: light's push on the block (section 5's stress through section 10's force) is ordered by the Boss (16:33Z) as a step after world (iv), from sections 5 and 10 as written with the builder's lines added to section 5; 2026-09-26 at the earliest |
    | Row 4b, the moving lamp's redshift: 1 + z = gamma_m (1 + beta_c), the character's frequency shifted by the medium's Doppler | the boosted block's emission read by a block at rest: (ii-a) with a receiver block and light through the coupling, a world beside (iv-a) | COMPUTATION per declaration (section 9's row 4b); nature's 1.315 at beta = 0.2674 NOT COMPARED until the conversion of the pace | as (iv-a) on a chain, seconds; on a 64^3 board 2 minutes | 2026-09-25, after (iv-a) |
    | The rest cavity of form (I) and the cavity moved (the control of the medium's clock) | (iii-a) `cavity_24.json`, (iii-b) `cavity_24_moving.json` | CONTROL: omega 0.19503 (N = 32.2); moved 1 / gamma_m^2 = 0.6667 | 48^3 periodic; under a minute, 2 minutes | 2026-09-24, with (i) and (ii) |
@@ -1096,13 +1107,14 @@ board's two-block world reads it.
    one formula of section 8 CHECKED ON THE LAYER ITSELF (the cells' set
    stepped at k = 3 over a ramp of 1500 and a hold of 8000, the record
    re-forming, the clock read at the co-moving centre): f / f_0 read
-   0.7832, 0.8113, 0.7635 against the one formula's 0.7822, 0.8108, 0.7614
-   with gamma_m at c_m (section 8; the moving well a resting well of width
-   gamma_m s ALONG the motion and s across; with light's gamma(c) the
-   formula reads 0.7848, 0.8132, 0.7643, a CONTROL beside) at eps 0.21,
-   0.011, 0.63, within 0.3 percent either way (the peak's grain over 8000
-   intervals: the layer's scratch cannot tell the two gammas apart, which
-   is why the formula names its gamma by derivation), the first-order 1 / gamma_m (1 - eps
+   0.7832, 0.8113, 0.7635 against the one formula's 0.7831, 0.8116, 0.7624
+   with gamma_m at the exact cone c_eff (section 8; the moving well a
+   resting well of width gamma_m s ALONG the motion and s across; with the
+   second-order c_m the formula reads 0.7822, 0.8108, 0.7614 and with
+   light's gamma(c) 0.7848, 0.8132, 0.7643, CONTROLS beside) at eps 0.21,
+   0.011, 0.63, within 0.15 percent (the peak's grain over 8000 intervals:
+   the layer's scratch cannot tell the three gammas apart, which is why
+   the formula names its gamma by derivation), the first-order 1 / gamma_m (1 - eps
    (gamma_m^2 - 1) / 2) good at eps 0.011 and not at 0.63, as section 8
    says. WHAT THE LAYER DOES NOT TEST: the 3-D corner (the layer blind to
    it, as the chains were, section 3; the (B) form's stability there is
@@ -1116,12 +1128,12 @@ board's two-block world reads it.
 
    | mu | s | g | omega_b | eps | the extent 1 / kappa | the side s + 4 / kappa | the world's kind | HOST, a moving world of 9500 intervals |
    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8108 with gamma_m at c_m (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8142); the same formula with gamma(c), 0.8132 against 0.8165, a labelled CONTROL beside; the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z); the hold 8000 | 6 s |
+   | 0.15 | 14 | mu^2 / 4 | 0.14846 | 0.011 | 36 | 159 (a 200^2 layer) | a PIN world of five's residual (0.3 percent at k = 3): THE PIN the one formula's 0.8116 with gamma_m at the exact cone c_eff (the well of width gamma_m s along the motion on this layer; against 1 / gamma_m 0.8150); the same formula with gamma(c_m), 0.8108 against 0.8142, and with gamma(c), 0.8132 against 0.8165, labelled CONTROLS beside; the script's motion reading 0.8113 a float-scratch CONTROL beside it, not the pin (Reviewer 3's clause, 17:00Z); the hold 8000 | 6 s |
    | 0.15 | 8 | mu^2 / 2 | 0.14896 | 0.005 | 57 | 236 (a 256^2 layer) | a PIN world (residual 0.1 percent): the pin the one formula's number at pin time on this layer; the hold 8000 | 12 s |
    | 0.05 | 42 | mu^2 / 4 | 0.04967 | 0.012 | 105 | 462 (a 512^2 layer) | DEFERRED to the second paper (the Boss's word of 17:10Z on the owner's approval: one mass, mu = 0.15, for the first table); declared, not deleted; a PIN world at mu = 0.05 (residual 0.3 percent) when run, the hold 8000 | about 1 min |
    | 0.15 | 14 | mu^2 / 2 | 0.14162 | 0.100 | 12 | 63 (a 128^2 layer) | the PREDICTION world at eps 0.1 (residual 2.5 percent); the hold 8000 (Reviewer 3's token, 17:16Z: at 2000 the peak's grain is about 2.5 percent, the size of this world's own residual) | 6 s |
-   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.3 percent): the pin the formula's 0.7822 with gamma at c_m (0.7848 with gamma(c), a CONTROL); the scratch reading 0.7832 a CONTROL; the hold 2000 | 1 s |
-   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7614 with gamma at c_m (0.7643 with gamma(c)); the scratch reading 0.7635; the hold 2000 | 1 s |
+   | 0.15 | 10 | mu^2 | 0.13283 | 0.209 | 8.4 | 44 (a 64^2 layer) | PREDICTION (residual 5.3 percent): the pin the formula's 0.7831 with gamma at c_eff (0.7822 at c_m, 0.7848 at c, CONTROLS); the scratch reading 0.7832 a CONTROL; the hold 2000 | 1 s |
+   | 0.15 | 20 | mu^2 | 0.09097 | 0.629 | 4.9 | 39 (a 64^2 layer) | the cavity-leaning CONTROL: the formula's 0.7624 with gamma at c_eff (0.7614 at c_m, 0.7643 at c); the scratch reading 0.7635; the hold 2000 | 1 s |
 
    So on the layer the whole of (i) to (iii) reads in seconds and the
    pin worlds of five's residual in under a minute, all on the 24th with
