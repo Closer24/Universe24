@@ -15,6 +15,7 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.diagnostics.massive_record_margin import block_margin, check_margins
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import LIGHT_PAIR, MASSIVE_RECORD_RULE, parse_nature_beam_world
 from tests.test_detector_law import chain_world
@@ -841,3 +842,89 @@ def test_l_the_index_in_motion_is_the_drives_pair():
                 [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": [192, 0, 0]}],
             )
         )
+
+
+# The faces and the margin rule (STEP 4 of the build: BUILD.md section 6, (n) and (o))
+
+PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
+
+
+def test_n_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
+    """BUILD.md (n): (1) the s = 28 block of world (i-b) on the periodic 48^3 board is refused as
+    a pin world naming x, the extent (about 7.9 Links) and the side needed (about 60 > 48), and
+    admitted as a control (44 < 48); (2) a block of s = 20 whose cells lie 3 Links from an open
+    massive face is refused as a control (3 < 5.7) naming the axis and the distance; (3) the
+    kind [800, 809] with the well [800, 808] at s = 3 (far below the threshold) is refused: on a
+    finite periodic box the unbound case reads as an extent beyond the board (261 Links against
+    24), the refusal the margin's; (4) the extent printed for (i-a) on 48^3 is 5.73 within 0.05
+    Links (the float scratch of the plan) and its mode 0.1105 (the design's 96^3 box 0.1107)."""
+    for margin, admitted in (("pin", False), ("control", True)):
+        document = block_world(
+            [48, 48, 48],
+            PERIODIC,
+            [1600, 1618],
+            [{"position": [10, 10, 10], "side": 28, "pair": [1600, 1609], "margin": margin}],
+        )
+        document["age_bound"] = 100000
+        world = parse_nature_beam_world(document)
+        if admitted:
+            readings = check_margins(world)
+            assert 7.8 < readings[0].extent < 8.1
+            assert readings[0].axes[0][3] < 48
+        else:
+            with pytest.raises(ValueError, match="below the margin rule on x for a pin world"):
+                check_margins(world)
+    near = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        [800, 809],
+        [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
+        faces={"x": "open"},
+    )
+    near["age_bound"] = 100000
+    with pytest.raises(ValueError, match="cells lie 3 Links from a zero face"):
+        check_margins(parse_nature_beam_world(near))
+    shallow = block_world(
+        [24, 24, 24],
+        PERIODIC,
+        [800, 809],
+        [{"position": [10, 10, 10], "side": 3, "pair": [800, 808], "margin": "control"}],
+    )
+    shallow["age_bound"] = 100000
+    with pytest.raises(ValueError, match="below the margin rule"):
+        check_margins(parse_nature_beam_world(shallow))
+    assert block_margin(parse_nature_beam_world(shallow), 0).extent > 100
+    rest = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        [800, 809],
+        [{"position": [14, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
+    )
+    rest["age_bound"] = 100000
+    reading = check_margins(parse_nature_beam_world(rest))[0]
+    assert abs(reading.extent - 5.73) < 0.05
+    assert abs(reading.omega_b - 0.1105) < 0.0005
+    assert abs(reading.omega_0 - 0.1493) < 0.0001
+    assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
+
+
+def test_o_the_cavity_counts_the_separable_forms_cycles():
+    """BUILD.md (o): a cavity of side 5 with the kind's own pair [800, 809] on a periodic 24^3
+    board: the exact separable form cos omega = (800 / 809) cos(pi / 6), omega 0.5423, the
+    period 11.58 intervals; over 1159 intervals the block's count between 99 and 101 (one
+    interval's grain; measured 99), and its rows outside the cube 0 at every interval."""
+    document = block_world(
+        [24, 24, 24],
+        PERIODIC,
+        [800, 809],
+        [{"position": [10, 10, 10], "side": 5, "pair": [800, 809], "cavity": True, "margin": "control"}],
+    )
+    document["age_bound"] = 100000
+    world = parse_nature_beam_world(document)
+    simulation = DetectorLawSimulation(world)
+    block = simulation.blocks[0]
+    assert block.own is not None
+    for _ in range(1159):
+        simulation.step()
+        assert not np.any(block.own.now[~block.mask])
+    assert 99 <= block.count <= 101

@@ -3117,8 +3117,15 @@ def _block(
         _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
     )
     kind = family.pair
+    cavity = obj.get("cavity", False)
+    if type(cavity) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
     if family.massive_kind:
-        if pair[0] * kind[1] <= pair[1] * kind[0]:
+        # A well lowers the pair; a cavity (form (I), the faces the mirror)
+        # may carry the kind's own pair, its record bound by the faces.
+        if pair[0] * kind[1] < pair[1] * kind[0] or (
+            pair[0] * kind[1] == pair[1] * kind[0] and not cavity
+        ):
             raise ValueError(
                 f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is no well of the kind's pair "
                 f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (num' / den' > "
@@ -3155,9 +3162,6 @@ def _block(
     absorbing = obj.get("absorbing", False)
     if type(absorbing) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
-    cavity = obj.get("cavity", False)
-    if type(cavity) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:

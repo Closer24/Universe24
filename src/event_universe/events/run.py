@@ -25,6 +25,7 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
+from event_universe.diagnostics.massive_record_margin import check_margins
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import BEAM_LAW, NatureBeamWorld
@@ -45,6 +46,14 @@ def execute_nature_beam_run(
     Optional initialization provenance is copied for output only, never physics.
     """
     initialization_metadata = copy.deepcopy(initialization_record)
+    # massive-record-v1: the margin rule, a load-time check of every block
+    # before the world runs (MASSIVE_RECORD.md section 11 item 4; a HOST
+    # computation of the declaration, printed and recorded, never read by
+    # the state); a declaration below the margin refuses the run here.
+    margins = check_margins(world) if world.massive_record else []
+    for reading in margins:
+        for line in reading.lines():
+            print(line)
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
     measured_content: list[list[int]] = []
@@ -123,7 +132,11 @@ def execute_nature_beam_run(
         # massive-record-v1 (2026-09-23): the world key `massive_record` as
         # declared, written only under the key (every other record byte for
         # byte); `massive-record-v1` under `hypotheses` when it is true.
-        **({"massive_record": True} if world.massive_record else {}),
+        **(
+            {"massive_record": True, "margin": [reading.to_record() for reading in margins]}
+            if world.massive_record
+            else {}
+        ),
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).

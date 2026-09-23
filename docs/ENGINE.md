@@ -1006,8 +1006,15 @@ pushing agent's declaration), `margin` (`"pin"` or `"control"`, the margin
 rule's kind of world) and `emits` (the light family its record sources,
 one record per cycle of its clock, paid from its `held`); `probes` a list
 of Nodes whose light amplitude the record writes per interval. The record
-under the key: `massive_record` and per family `pair` and `faces` in
-`run.json`; the books' `form` per family (the conserved form I of section
+under the key: `massive_record`, per family `pair` and `faces`, and
+`margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
+11 item 4: a load-time check made before the world runs by
+`diagnostics/massive_record_margin`, the block's bound mode by a Lanczos
+iteration on the world's own board, its extent in the medium and the
+margin per axis, two extents for a `"pin"` world and one for a
+`"control"`, a declaration below the margin refusing the run; a HOST
+computation of the declaration, printed and recorded, never read by the
+state; a cavity is skipped) in `run.json`; the books' `form` per family (the conserved form I of section
 3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
 own record (`clock` its count), a `block` line per interval (its record's
 sum across its cells, its corner, its count, its steps), a `probe` line
