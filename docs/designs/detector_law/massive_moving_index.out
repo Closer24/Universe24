@@ -5,11 +5,11 @@ the chain: n = 2200, the source at 300, the probe at 1500; the block s = 24 cell
   at rest, light at omega' toward = 0.0676: the phase delay +0.6591 rad over 24 cells -> n = 1.2345 (transmitted amplitude 0.985)
       (the phase in the window's two halves: +0.2246, +0.1501 rad: steady if equal)
   at rest, light at omega' away = 0.0181: the phase delay +0.1844 rad over 24 cells -> n = 1.2449 (transmitted amplitude 0.984)
-      (the phase in the window's two halves: +0.3801, +0.3805 rad: steady if equal)
-  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.3803 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.005); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.471
-      (the phase in the window's two halves: +0.5102, +0.5105 rad: steady if equal)
-  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.5103 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.002); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.632
-      (the phase in the window's two halves: +0.1514, +0.0695 rad: steady if equal)
-  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.1098 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.014); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.486
-      (the phase in the window's two halves: +0.2270, +0.1484 rad: steady if equal)
-  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.1864 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.067); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.825
+      (the phase in the window's two halves: +0.6398, +0.6388 rad: steady if equal)
+  moving toward the source (head-on), G g carried unchanged: the lab phase delay +0.6393 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.024); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 0.792
+      (the phase in the window's two halves: +0.8636, +0.8659 rad: steady if equal)
+  moving toward the source (head-on), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.8648 rad (the block from 1300 to 700 over the run; transmitted amplitude 1.698); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.8072 rad with n(omega') = 1.2345 from the rest reading; the ratio read / expected = 1.071
+      (the phase in the window's two halves: +0.1514, -0.0530 rad: steady if equal)
+  moving away from the source (from behind), G g carried unchanged: the lab phase delay +0.0477 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.017); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.211
+      (the phase in the window's two halves: +0.2270, -0.0286 rad: steady if equal)
+  moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +0.0953 rad (the block from 700 to 1300 over the run; transmitted amplitude 1.066); the covariant expectation (n(omega') - 1) omega' gamma_m s / c = +0.2259 rad with n(omega') = 1.2449 from the rest reading; the ratio read / expected = 0.422
