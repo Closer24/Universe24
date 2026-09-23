@@ -194,9 +194,10 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
 2. The declared integers (kind 2): the pairs above; s = 12; G, g, W; A's
    momentum [Q S M, 0, 0] with the sign toward -x (k = 3: beta_c = 1 /
    sqrt 3; gamma_m the massive kind's own at the exact cone c_eff^2 = cos
-   omega_0 (omega_0 / sin omega_0) c^2, 1.22705, MASSIVE_RECORD.md section
-   8; gamma(c_m) = 1.22820 and light's gamma(c) = sqrt(3 / 2) CONTROLS
-   beside); `ramp` 1500; the hold 8000 (a pin
+   omega_0 (omega_0 / sin omega_0) c^2 of THIS medium's omega_0 = 0.1129,
+   1.22606, MASSIVE_RECORD.md section 8; gamma(c_m) = 1.22675 at its
+   second-order cone and light's gamma(c) = sqrt(3 / 2) CONTROLS beside;
+   item 4 carries the same three); `ramp` 1500; the hold 8000 (a pin
    world); 9500 intervals; the seeds; the block's content M = 1.
 3. The verbs: the massive rule (G, D by 3 den g_d with the coupling folded
    in the one division, T; section 7 (A)); the coupling's same-Node first

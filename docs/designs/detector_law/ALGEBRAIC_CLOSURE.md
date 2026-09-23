@@ -85,8 +85,9 @@ THE DECLARED BOX IS NOT THE INFINITE BOARD (his line of 21:36Z): on a
 periodic box with the background subtracted the field carries the images'
 harmonic term r^2 / (6 L^3) beside 1 / (4 pi r), whose gradient opposes the
 fall; the box's own gradient ratio from its periodic Green's function is
-4.22 at r = 10 and 20 on 96^3, 7.35 at r = 20 and 40, 4.12 at r = 10 and 20
-on 128^3 (`coupled_mode_pins.py` (d); his 4.06 was the first term only,
+4.22 at r = 10 and 20 on 96^3, 7.35 at r = 20 and 40 (`coupled_mode_pins.py`
+(d), which runs 96^3 only), and 4.12 at r = 10 and 20 on 128^3 by Reviewer
+3's own check with the same FFT (his 4.06 was the first term only,
 withdrawn). And the fall's click has no room on 96^3 (his MUST 2): a
 detector plane four Links inward of a packet of width 8 is covered by the
 seed at t = 0; the r = 10 packet's inner edge sits inside the 7-Link floor
@@ -100,8 +101,9 @@ and printed before any run, NOT pinned and not in the paper's list as a
 pin; Newton's potential (row 12, the clock's shift ratio 2.00 at r and
 2 r) is the closed Newton row. The form's number, by the ray equations of
 the exact band with the local pitch in the declared 96^3 box's field, a
-point packet from rest to four Links inward (the spread and the floor not
-in it): at kappa = 1.0 the accelerations at the start 6.9 x 10^-2 and 8.1 x
+point packet from rest to four Links inward (the spread not in it; the
+floor IS in the last Link of the r = 10 fall at kappa = 1.0, since the
+pitch reaches zero at r = 6.7 and the script's pitch floors at zero): at kappa = 1.0 the accelerations at the start 6.9 x 10^-2 and 8.1 x
 10^-3 Link per interval^2 at r = 10 and 20 (the ratio 8.51), the fall times
 11.2 and 30.3 intervals ((t20 / t10)^2 = 7.39); at kappa = 0.277 the ratio
 4.70 and the times 29.9 and 67.0 ((t20 / t10)^2 = 5.05). The way that
