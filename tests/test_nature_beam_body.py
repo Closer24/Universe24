@@ -247,7 +247,9 @@ def run_one_node(
     body: dict[str, object],
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]], list[int]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(one_node_world(body)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(one_node_world(body)), records.append, keep_row_clicks=True
+    )
     xs = []
     for tick in range(1, 31):
         simulation.step()
@@ -372,7 +374,9 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     three = [beam([3, 0, z], [1, 0, 0], 2) for z in range(3)]
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(set_world(three, suspension=[1, 1])), records.append
+        parse_nature_beam_world(set_world(three, suspension=[1, 1])),
+        records.append,
+        keep_row_clicks=True,
     )
     body = simulation.measured[1]
     assert body.span == (1, 1, 3) and body.nodes == SET_NODES
@@ -390,7 +394,9 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     # A smaller set passes: the threshold reads the pointer's square over
     # the set (one ray, 1 < 3; two rays in phase would read 4 and click).
     records.clear()
-    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:1])), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(set_world(three[:1])), records.append, keep_row_clicks=True
+    )
     simulation.step()
     assert simulation.books()["balanced"]
     assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3)]
@@ -416,7 +422,9 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert simulation.measured[2].contacts == [1, 0]
     # Without the anchor the whole body clicks on the face at the age 8.
     records.clear()
-    simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([])), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(mover_world([])), records.append, keep_row_clicks=True
+    )
     body = simulation.measured[1]
     xs = []
     for _ in range(7):
@@ -722,7 +730,9 @@ def test_the_refusals_and_the_record(tmp_path):
     )
     path = tmp_path / "world.json"
     path.write_text(json.dumps(turning), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "run", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert (
         record["action"] == 64
         and record["hypotheses"] == [BOHR_RULE]
@@ -740,7 +750,9 @@ def test_the_refusals_and_the_record(tmp_path):
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
     assert state["measured"][0]["span"] == [1, 3, 1]
     path.write_text(json.dumps({**base, "ticks": 2}), encoding="utf-8")
-    record = json.loads(run_initialization(path, tmp_path / "plain").read_text(encoding="utf-8"))
+    record = json.loads(
+        run_initialization(path, tmp_path / "plain", keep_row_clicks=True).read_text(encoding="utf-8")
+    )
     assert record["action"] is None and record["hypotheses"] == []
     assert (
         record["numbers"]["1"]["span"] == [1, 1, 1]
@@ -773,7 +785,9 @@ def test_one_set_object_shared_by_a_body_and_a_detector_and_one_table_over_it():
     assert isinstance(detectors, list)
     detectors[0]["positions"] = [[4, 0, 1], [6, 0, 1]]
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     first, second_body = simulation.measured[1], simulation.measured[2]
     assert first.detector_set is second_body.detector_set
     assert first.detector_set.nodes == {
@@ -834,6 +848,7 @@ def test_one_set_object_shared_by_a_body_and_a_detector_and_one_table_over_it():
             )
         ),
         records.append,
+        keep_row_clicks=True,
     )
     simulation.step()
     assert simulation.books()["balanced"]
@@ -854,7 +869,9 @@ def test_one_set_object_shared_by_a_body_and_a_detector_and_one_table_over_it():
     assert isinstance(detectors, list)
     detectors[0].update({"reading": "beam", "threshold": 1})
     records = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     body = simulation.measured[1]
     simulation.step()
     assert simulation.books()["balanced"]

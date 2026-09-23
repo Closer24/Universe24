@@ -303,9 +303,41 @@ push on a row with its energy as the weight (issue #605, record 421).
 
 The owner's word: "Always understand how each item affects as an information-transfer system, what the generic solution is and why it will work; short answers." Before the Boss brings the owner a question, gives a session an order, weighs a review finding or lists a decision, it states three short answers, one line each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows (the section above), never a patch beside it; (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; and, in every report that needs the owner's decision, (4) why do this at all: what the item buys the law or a measurement, and what stays unread or wrong if it is not done (the owner, 2026-09-21, record 533); and (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change (the owner, 2026-09-21, record 534); a rule kept in Git is kept because it was decided on evidence, and the report says whether the evidence in hand still supports it; and (6) the implementation: what the item changes in the tree (engine, register, documents), which identities and registrations it touches, the time it takes end to end (the build, the runs, the review), and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default (the owner, 2026-09-21, record 535). The answers go into the order or the question itself, so the session or the owner reads the reason with the ask. Changing a Highlights decision is an option, not a breach (the owner, 2026-09-21, record 536): when the evidence in hand no longer supports a decision of section 5.4, the report says so and proposes the new line; the change is made on the owner's word and recorded as a new decision line that names the one it supersedes, with the record. Every session reports to the Boss in the same six lines (skills/workflow.md, "The six lines of every report").
 
-### The four answers of every ask (the owner, 2026-09-23, record 1299)
+### Speaking to the owner: simple, short, the four answers (the owner, 2026-09-23, records 1299, 1425, 1437)
 
-The owner's word: "When you turn to me with something that needs me, tell me what the generic law is, why I am needed, what you recommend, and what we get out of it." Every item put to the owner carries these four, one line each, before the ask: (1) the generic law as it stands (the primitive, its integers, the code line); (2) why his word is needed (a law change, a declaration outside the six verbs, a choice among forms, a pin); (3) the Boss's recommendation, one; (4) what the decision buys (a measurement read, a law line closed, a run saved). This is the short form of the six answers above; nothing is put to him without it, and an item that needs nothing from him is not put to him as a question.
+One rule for every message to the owner, whether a report, a question or a
+decision put to him; the three words of his are one form.
+
+SIMPLE (record 1437: "always explain to me simply"): plain words that a
+reader outside the project understands at one reading; one idea per line;
+no term of the project without its plain meaning in the same line, no
+symbol without its name; the picture first (what happens on the board, in
+one sentence), the formula only if he needs it to decide; first what it
+means for him (what changed, what he decides, what he gets), only then how.
+
+SHORT (record 1425: "shorten all your conversations and the physicist's;
+everything is being shortened; your work is basically from the postulates
+and what we closed in the algebra"): three to six SHORT lines, one clause
+each; cite the record and the SHA instead of restating content; never
+recap what the reader wrote; a number only when it changes what the reader
+does. The same holds for every exchange between the Boss and a session.
+The log record keeps the full text; the message does not.
+
+THE FOUR ANSWERS (record 1299: "when you turn to me with something that
+needs me, tell me what the generic law is, why I am needed, what you
+recommend, and what we get out of it"): every item put to the owner
+carries, one line each, in plain words, before the ask: (1) the generic law
+as it stands (the primitive, its integers, the code line); (2) why his word
+is needed (a law change, a declaration outside the six verbs, a choice
+among forms, a pin); (3) the Boss's recommendation, one; (4) what the
+decision buys (a measurement read, a law line closed, a run saved). This is
+the short form of the six answers above (record 530), which stay the form
+of orders to sessions and of reports between sessions. An item that needs
+nothing from him is not put to him as a question.
+
+Order of a message: what it means for him, then the four answers if he is
+needed, then the one ask; Hebrew in conversation, English in every
+artifact.
 
 ### Every agent closes its own tasks (the owner, 2026-09-22, record 622)
 

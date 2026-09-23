@@ -120,7 +120,12 @@ def write_run(tmp_path: Path, name: str, *, mass: bool) -> dict[str, object]:
     folder = tmp_path / name
     folder.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", TICKS
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        folder,
+        "test",
+        TICKS,
+        keep_row_clicks=True,
     )
     return document
 

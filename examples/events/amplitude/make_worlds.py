@@ -714,7 +714,10 @@ def two_slits_reading() -> dict[str, object]:
 
     reference = two_slits_one()
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(reference), observer=lines.append)
+    # The reading is of the per-row click lines: the whole record.
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(reference), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(reference["ticks"])):
         simulation.step()
     assert all(store.size == 0 for store in simulation.stores), "a row of the birth is still in flight"

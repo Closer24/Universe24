@@ -31,6 +31,8 @@ from common import (
     style,
 )
 
+from event_universe.trimmed_record import refuse_trimmed_record
+
 WORLDS = (("r12", 12), ("r24", 24))
 CENTRE = 60
 
@@ -40,6 +42,7 @@ def read(folder):
     escape = None
     path: list[tuple[int, int]] = []
     probe = None
+    refuse_trimmed_record(folder)
     for line in events(folder, {"click", "step"}):
         if line["event"] == "step":
             if probe is None:

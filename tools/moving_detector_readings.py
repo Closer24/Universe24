@@ -46,6 +46,10 @@ from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 EXPECTATIONS = ROOT / "examples" / "events" / "moving_detector" / "expectations.json"
 PREFIX = "beam-moving-detector-"
 ORDINAL_MASK = (1 << 32) - 1
@@ -116,6 +120,7 @@ def read_run(folder: Path) -> Reading:
     for entry in record["measured"]:
         if int(entry["number"]) == cart:
             reading.final_age = int(entry["age"])
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
             if '"clock"' not in text and '"step"' not in text:

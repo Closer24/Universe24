@@ -95,6 +95,7 @@ from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.trimmed_record import refuse_trimmed_record
 from event_universe.world_loading import world_of_run
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -351,6 +352,7 @@ def read_run(folder: Path) -> Run:
         star.number: axis_of(document["measured"][star.number - 1]["momentum"])
         for star in stars.values()
     }
+    refuse_trimmed_record(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             event = json.loads(line)

@@ -38,6 +38,10 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+from event_universe.trimmed_record import refuse_trimmed_record  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 PINS = HERE / "run_4ab_pins.json"
 OUT = HERE / "run_4ab_readings.json"
@@ -81,6 +85,7 @@ def read_run(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     if not record.get("clock_stamp"):
         raise SystemExit(f"{folder}: the record carries no clock stamp; nothing here reads the tick")
+    refuse_trimmed_record(folder)
     roles = {str(entry["family"]): int(number) for number, entry in record["numbers"].items()}
     events = [
         json.loads(text)

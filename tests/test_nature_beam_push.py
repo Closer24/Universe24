@@ -257,7 +257,9 @@ def reads_of(records: list[dict[str, object]], number: int) -> list[tuple[int, i
 
 def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), records.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"])):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -362,7 +364,9 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
     reader = probe(table={"light": "read"})
     world = bar([lamp, reader], release=[0, 1])
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), records.append, keep_row_clicks=True
+    )
     for _ in range(30):
         simulation.step()
         books = simulation.books()
@@ -432,7 +436,9 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
             ticks=1,
         )
         records: list[dict[str, object]] = []
-        simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(world), records.append, keep_row_clicks=True
+        )
         assert simulation.books()["momentum"]["transit"] == label
         simulation.step()
         books = simulation.books()
@@ -473,7 +479,9 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
     # No ray leaves a GameBoard periodic on every axis: the age bound is declared.
     world["age_bound"] = 64
     records = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), records.append, keep_row_clicks=True
+    )
     for _ in range(20):
         simulation.step()
         assert simulation.books()["balanced"]

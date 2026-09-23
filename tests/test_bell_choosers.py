@@ -95,7 +95,12 @@ def run(document: dict[str, object], folder: Path) -> Path:
     folder.mkdir()
     source = json.dumps(document).encode("utf-8")
     execute_nature_beam_run(
-        parse_nature_beam_world(document), source, folder, "test", int(document["ticks"])
+        parse_nature_beam_world(document),
+        source,
+        folder,
+        "test",
+        int(document["ticks"]),
+        keep_row_clicks=True,
     )
     return folder
 

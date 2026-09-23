@@ -29,12 +29,15 @@ from common import (
     style,
 )
 
+from event_universe.trimmed_record import refuse_trimmed_record
+
 
 def main() -> None:
     runs, out = arguments()
     folder = run_folder(runs, "amplitude", "slits_one")
     counts: Counter = Counter()
     ages: dict[int, list[int]] = {}
+    refuse_trimmed_record(folder)
     for line in events(folder, {"click"}):
         detector = line.get("detector") or ""
         if detector.startswith("screen_"):

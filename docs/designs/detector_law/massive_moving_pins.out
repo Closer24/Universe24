@@ -1,5 +1,5 @@
-k = 3: beta_c = 0.57735, gamma_m = 1.22474, 1 / gamma_m = 0.81650
-world | mu | s | g | box | omega_b(s) | eps | gamma_m s | omega_b(lo) | omega_b(hi) | THE PIN f/f_0 | first order
-(ii-a) moving_20 | 0.15 | 20 | 0.02250 | 64^3 | 0.11065 | 0.4508 | 24.49 | 0.10654 | 0.10571 | 0.7831 | 0.7245
-(ii-b) moving_28 | 0.15 | 28 | 0.01125 | 64^3 | 0.13170 | 0.2219 | 34.29 | 0.12988 | 0.12964 | 0.8048 | 0.7712
-(ii-c) and the layer pin worlds: the same formula at pin time on the world's own board by pins.py, the inputs s, g, gamma_m = sqrt(3 / 2) per row; the layer's s = 14, g = mu^2 / 4 world 0.8132 (massive_layer_pins.out).
+k = 3: beta_c = 0.57735; gamma(c) = 1.22474 (a CONTROL beside); the one formula's gamma_m = gamma(c_m) = 1.22820 at c_m = c sqrt(cos omega_0), cos omega_0 = 0.98888; 1 / gamma_m = 0.81420
+world | mu | s | g | box | omega_b(s) | eps | gamma_m s | omega_b(lo) | omega_b(hi) | THE PIN f/f_0 (gamma at c_m) | first order | the control (gamma at c)
+(ii-a) moving_20 | 0.15 | 20 | 0.02250 | 64^3 | 0.11065 | 0.4508 | 24.56 | 0.10654 | 0.10571 | 0.7805 | 0.7209 | the CONTROL with gamma(c): 0.7831
+(ii-b) moving_28 | 0.15 | 28 | 0.01125 | 64^3 | 0.13170 | 0.2219 | 34.39 | 0.12988 | 0.12964 | 0.8024 | 0.7683 | the CONTROL with gamma(c): 0.8048
+(ii-c) and the layer pin worlds: the same formula at pin time on the world's own board by pins.py, the inputs s, g and gamma_m at c_m per row; the layer's s = 14, g = mu^2 / 4 world by massive_layer_pins.out (massive_layer_pins.out).

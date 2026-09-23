@@ -103,7 +103,54 @@ def index_check(pair_m=(1, 4), g=0.05, s=12, omega=0.15):
     )
 
 
+def engine_form_run(length, steps, s, g, omega, source, probe, r_in=7 / 8):
+    """A float scratch of the ENGINE'S form (BUILD.md, STEP 3 and 4): form (B) for both records
+    on the chain (S_6 = a_{j-1} + a_{j+1} + 4 a), the massive CAVITY of the kind's own pair
+    [7, 8] on the block's cells and zero outside, light [1, 1]; the first-difference coupling of
+    MASSIVE_RECORD.md section 7 (B): the massive step first with g (a_l,now - a_l,before), then
+    light's step with -G (a_m,next - a_m,now), G = 1; the same source, probe and reading."""
+    al = np.zeros(length)
+    al_b = np.zeros(length)
+    am = np.zeros(length)
+    am_b = np.zeros(length)
+    inside = np.zeros(length, bool)
+    inside[900 : 900 + s] = True
+    out = []
+    for t in range(steps):
+        al[source] = math.sin(omega * t)
+        s6m = np.roll(am, 1) + np.roll(am, -1) + 4 * am
+        am_n = np.where(inside, (r_in / 3) * s6m - am_b + g * (al - al_b), 0.0)
+        s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
+        al_n = s6l / 3 - al_b - np.where(inside, G_COUPLE * (am_n - am), 0.0)
+        al_n[0] = al_n[-1] = 0.0
+        al_b, al = al, al_n
+        am_b, am = am, am_n
+        out.append(al[probe])
+    return np.array(out)
+
+
+def engine_form_check(s=12, g=0.05, omega=2 * math.pi * 153 / (100 * 64)):
+    """The engine's form on the design's chain: the slab factor of a CAVITY of s cells (the
+    excess n - 1 over the closed form's), computed after the exploratory rest reading of world (v)
+    (the Boss's 18:08Z: a labelled CONTROL beside the declared pin, never the pin)."""
+    ref = engine_form_run(1400, 1850, s, 0.0, omega, 600, 1100)
+    sig = engine_form_run(1400, 1850, s, g, omega, 600, 1100)
+    dphi = phase_delay(ref, omega, 1000, 1800) - phase_delay(sig, omega, 1000, 1800)
+    dphi = (dphi + math.pi) % (2 * math.pi) - math.pi
+    n_read = 1 + dphi / (omega * math.sqrt(3) * s)
+    w0 = math.acos(7 / 8)
+    n_form = math.sqrt(1 + G_COUPLE * g / (w0 * w0 - omega * omega))
+    print(
+        f"the ENGINE'S form (a cavity [7, 8], zero outside, the first-difference coupling): s = {s}, g = {g:.3f},"
+        f" omega = {omega:.6f}: n read {n_read:.4f}; the closed form {n_form:.4f}; the slab factor"
+        f" (n - 1) / (n_form - 1) = {(n_read - 1) / (n_form - 1):.3f}"
+    )
+
+
 if __name__ == "__main__":
     for g in (0.02, 0.05, 0.1):
         index_check(g=g)
     index_check(pair_m=(1, 16), g=0.05, omega=0.15)
+    for s in (12, 24):
+        for g in (0.02, 0.05, 0.1):
+            engine_form_check(s=s, g=g)

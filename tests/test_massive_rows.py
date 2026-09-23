@@ -201,7 +201,9 @@ def run(
     world: dict[str, object], ticks: int | None = None
 ) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(world["ticks"]) if ticks is None else ticks):  # type: ignore[call-overload]
         simulation.step()
     return simulation, lines
@@ -265,9 +267,9 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did(tmp_path: Path, path: str, 
         # gate set's `refusal`, the generic entry of the bending): the
         # digests beside it are the base tree's before the entry.
         with pytest.raises(OverflowError, match=entry["refusal"]["match"]):
-            execute_nature_beam_run(world, source, out, "test", cap)
+            execute_nature_beam_run(world, source, out, "test", cap, keep_row_clicks=True)
         return
-    execute_nature_beam_run(world, source, out, "test", cap)
+    execute_nature_beam_run(world, source, out, "test", cap, keep_row_clicks=True)
     assert digests_of(out) == entry["digests"], path
     assert b'"acc_turn"' not in (out / "state.json").read_bytes()
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
@@ -305,7 +307,7 @@ def test_an_amplitude_world_reads_as_it_did_before_the_identity(tmp_path: Path, 
     assert all((t.placed, t.quantum) == (1, 0) for t in simulation.tables.family_flights)
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(parsed, source, out, "test", int(registered["ticks"]))
+    execute_nature_beam_run(parsed, source, out, "test", int(registered["ticks"]), keep_row_clicks=True)
     found = digests_of(out)
     assert found == {key: registered[key] for key in found}, name
     assert b'"acc_turn"' not in (out / "state.json").read_bytes()
@@ -575,7 +577,9 @@ def momentum_total(books: dict[str, object]) -> list[int]:
 def test_the_books_identities_hold_at_every_step_and_a_completion_places_one_quantum():
     """(e)."""
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(small_world()), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(small_world()), observer=lines.append, keep_row_clicks=True
+    )
     table = simulation.tables.family_flights[0]
     labels = {tuple(row.tolist()) for row in table.labels}
     completions = 0
@@ -702,7 +706,7 @@ def test_the_small_two_slit_world_replays_bit_exact(tmp_path: Path):
     assert loaded.world.ticks == block["intervals"]
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(loaded.world, source, out, "test", loaded.world.ticks)
+    execute_nature_beam_run(loaded.world, source, out, "test", loaded.world.ticks, keep_row_clicks=True)
     assert digests_of(out) == registered["digests"]
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert record["hypotheses"] == registered["hypotheses"] and MASSIVE_ROWS_RULE in record["hypotheses"]

@@ -328,7 +328,12 @@ def test_a_small_run_on_a_bar_reads_the_derived_count_on_every_click(tmp_path, c
         folder = tmp_path / family
         folder.mkdir()
         execute_nature_beam_run(
-            parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 160
+            parse_nature_beam_world(document),
+            json.dumps(document).encode("utf-8"),
+            folder,
+            "test",
+            160,
+            keep_row_clicks=True,
         )
     readings = TOOL.find_runs(tmp_path)
     assert [r.name for r in readings] == ["bar_light", "bar_matter"]
@@ -385,7 +390,12 @@ def test_a_small_run_on_a_bar_reads_the_derived_count_on_every_click(tmp_path, c
     folder = tmp_path / "matter_age"
     folder.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 160
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        folder,
+        "test",
+        160,
+        keep_row_clicks=True,
     )
     stretched = TOOL.read_run(folder)
     ordered = sorted(stretched.clicks, key=lambda c: c.ordinal)

@@ -143,7 +143,12 @@ def test_read_run_reads_the_runners_record(tmp_path):
     folder = tmp_path / "filter"
     folder.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 205
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        folder,
+        "test",
+        205,
+        keep_row_clicks=True,
     )
     assert TOOL.first_arrival_age(8) == 13 and TOOL.first_arrival_age(30) == 51
     reading = TOOL.read_run(folder)
@@ -207,7 +212,12 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     folder = tmp_path / "lattice"
     folder.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 12
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        folder,
+        "test",
+        12,
+        keep_row_clicks=True,
     )
     reading = TOOL.read_run(folder)
     assert reading.name == "j1_lattice" and reading.completed and reading.balanced
@@ -303,7 +313,12 @@ def test_read_run_reads_the_w_world(tmp_path):
     folder = tmp_path / "exchange"
     folder.mkdir()
     execute_nature_beam_run(
-        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 8
+        parse_nature_beam_world(document),
+        json.dumps(document).encode("utf-8"),
+        folder,
+        "test",
+        8,
+        keep_row_clicks=True,
     )
     reading = TOOL.read_run(folder)
     assert reading.name == "w_exchange" and reading.completed and reading.balanced

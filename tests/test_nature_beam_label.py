@@ -221,7 +221,7 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
     }
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([lamp, screen, mirror])), records.append
+        parse_nature_beam_world(world([lamp, screen, mirror])), records.append, keep_row_clicks=True
     )
     lamp_entry, screen_entry, mirror_entry = (simulation.measured[n] for n in (1, 2, 3))
     store = simulation.stores[LIGHT]
@@ -428,7 +428,9 @@ def test_a_merged_row_beyond_the_bound_is_refused_before_the_product_naming_the_
         ticks=2,
     )
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(document), records.append, keep_row_clicks=True
+    )
     simulation.step()
     re_emitted = [r for r in records if r["event"] == "rerelease"]
     assert [(r["number"], r["amount"], r["push"]) for r in re_emitted] == [

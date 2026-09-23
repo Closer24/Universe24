@@ -90,7 +90,9 @@ def world(
 
 def run(declared: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     lines: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(parse_nature_beam_world(declared), observer=lines.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(declared), observer=lines.append, keep_row_clicks=True
+    )
     for _ in range(int(declared["ticks"])):  # type: ignore[call-overload]
         simulation.step()
     return simulation, lines
@@ -230,7 +232,9 @@ def test_the_replay_reads_the_wheel_from_the_lamp(tmp_path: Path):
     source.write_text(json.dumps(declared), encoding="utf-8")
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(parse_nature_beam_world(declared), source.read_bytes(), out, "test", 60)
+    execute_nature_beam_run(
+        parse_nature_beam_world(declared), source.read_bytes(), out, "test", 60, keep_row_clicks=True
+    )
     spec = importlib.util.spec_from_file_location("amplitude_path", ROOT / "tools" / "amplitude_path.py")
     assert spec is not None and spec.loader is not None
     tool = importlib.util.module_from_spec(spec)

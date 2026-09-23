@@ -287,6 +287,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [two, one], 0, detector)),
         records.append,
+        keep_row_clicks=True,
     )
     entry = simulation.measured[1]
     assert entry.threshold == 3
@@ -308,6 +309,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [alone], 0, detector)),
         records.append,
+        keep_row_clicks=True,
     )
     entry = simulation.measured[1]
     simulation.step()
@@ -325,7 +327,9 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     # 1 at phase 32 point to phase 0, outside the window 32, so all pass.
     records.clear()
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world(FAMILIES, [gate, *sources], [two, late])), records.append
+        parse_nature_beam_world(world(FAMILIES, [gate, *sources], [two, late])),
+        records.append,
+        keep_row_clicks=True,
     )
     entry = simulation.measured[1]
     assert entry.threshold == 1 and entry.windows == [None, 32]
@@ -341,6 +345,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world(FAMILIES, [gate, *sources], [two, late], 0, gate_detectors)),
         records.append,
+        keep_row_clicks=True,
     )
     entry = simulation.measured[1]
     simulation.step()
