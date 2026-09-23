@@ -46,12 +46,22 @@ def box_mode(n, sx, s, mu, g, L):
 
 
 K = 3
-BETA = (1 / K) * np.sqrt(3)
-GAMMA = 1 / np.sqrt(1 - BETA**2)
+MU = 0.15
+COS_OMEGA_0 = 1 / (1 + MU**2 / 2)  # num / den of the medium's pair [800, 809]
+BETA = (1 / K) * np.sqrt(3)  # the pace over light's c
+# Reviewer 3's MUST on PR #1053 (18:12Z), decided by derivation (MASSIVE_RECORD.md section 8): the
+# massive rule's own cone is c_m = c sqrt(cos omega_0) (its band cos omega = cos omega_0 cos omega_light,
+# so omega^2 = omega_0^2 + cos omega_0 c^2 k^2), and the boost that carries the well is at c_m; the one
+# formula's gamma is gamma(c_m) = 1 / sqrt(1 - beta_c^2 / cos omega_0). gamma(c) beside it, a CONTROL.
+GAMMA_C = 1 / np.sqrt(1 - BETA**2)
+GAMMA = 1 / np.sqrt(1 - BETA**2 / COS_OMEGA_0)
 
-print(f"k = {K}: beta_c = {BETA:.5f}, gamma_m = {GAMMA:.5f}, 1 / gamma_m = {1 / GAMMA:.5f}")
 print(
-    "world | mu | s | g | box | omega_b(s) | eps | gamma_m s | omega_b(lo) | omega_b(hi) | THE PIN f/f_0 | first order"
+    f"k = {K}: beta_c = {BETA:.5f}; gamma(c) = {GAMMA_C:.5f} (a CONTROL beside); the one formula's gamma_m = gamma(c_m)"
+    f" = {GAMMA:.5f} at c_m = c sqrt(cos omega_0), cos omega_0 = {COS_OMEGA_0:.5f}; 1 / gamma_m = {1 / GAMMA:.5f}"
+)
+print(
+    "world | mu | s | g | box | omega_b(s) | eps | gamma_m s | omega_b(lo) | omega_b(hi) | THE PIN f/f_0 (gamma at c_m) | first order | the control (gamma at c)"
 )
 worlds = [
     ("(ii-a) moving_20", 0.15, 20, 0.15**2, 64),
@@ -68,11 +78,18 @@ for name, mu, s, g, n in worlds:
     ob_w = ob_lo + (ob_hi - ob_lo) * (w - lo)
     pin = ob_w / (GAMMA * ob)
     first = (1 / GAMMA) * (1 - eps * (GAMMA**2 - 1) / 2)
+    # the CONTROL beside: the same formula with gamma(c)
+    wc = GAMMA_C * s
+    lo_c, hi_c = int(np.floor(wc)), int(np.ceil(wc))
+    ob_lo_c, _ = box_mode(n, lo_c, s, mu, g, L)
+    ob_hi_c, _ = box_mode(n, hi_c, s, mu, g, L)
+    control = (ob_lo_c + (ob_hi_c - ob_lo_c) * (wc - lo_c)) / (GAMMA_C * ob)
     print(
         f"{name} | {mu} | {s} | {g:.5f} | {n}^3 | {ob:.5f} | {eps:.4f} | {w:.2f} | {ob_lo:.5f} | {ob_hi:.5f} | {pin:.4f} | {first:.4f}"
+        f" | the CONTROL with gamma(c): {control:.4f}"
     )
 print(
     "(ii-c) and the layer pin worlds: the same formula at pin time on the world's own board by pins.py,"
-    " the inputs s, g, gamma_m = sqrt(3 / 2) per row; the layer's s = 14, g = mu^2 / 4 world 0.8132"
+    " the inputs s, g and gamma_m at c_m per row; the layer's s = 14, g = mu^2 / 4 world by massive_layer_pins.out"
     " (massive_layer_pins.out)."
 )
