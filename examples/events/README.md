@@ -617,6 +617,19 @@ register entry is
 0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
 0.5818 in the limit, against c = 0.5774.
 
+## The massive record kind
+
+The folder [massive_record/](massive_record/README.md) holds the check worlds
+of the massive record kind (`massive-record-v1`; the chief physicist's design
+docs/designs/detector_law/MASSIVE_RECORD.md, the build's plan BUILD.md, the
+readings BUILD_READINGS.md), written by `massive_record/make_worlds.py` with
+their pins in `expectations.json` written by `pins.py` before any run: one
+block at rest on a periodic 48^3 board (CONTROL), the block pushed to k = 3
+on 64^3 (PREDICTION of the block form's residual), the rest cavity and the
+cavity moved (CONTROL), the index block at rest on a chain (CONTROL of the
+coupling) and the index in motion at K = 3 and K = 4 (PREDICTION of the
+model as built); `read_runs.py` writes the runs' readings beside the pins.
+
 ## The massive rows
 
 The folder [massive_rows/](massive_rows/README.md) holds the worlds of the

@@ -25,6 +25,8 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
+from event_universe.diagnostics.massive_record_margin import check_margins, profile_check
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import BEAM_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
@@ -52,6 +54,23 @@ def execute_nature_beam_run(
     before the option, byte for byte. Every other line is written either way.
     """
     initialization_metadata = copy.deepcopy(initialization_record)
+    # massive-record-v1: the margin rule, a load-time check of every block
+    # before the world runs (MASSIVE_RECORD.md section 11 item 4; a HOST
+    # computation of the declaration, printed and recorded, never read by
+    # the state); a declaration below the margin refuses the run here.
+    margins = check_margins(world) if world.massive_record else []
+    for reading in margins:
+        for line in reading.lines():
+            print(line)
+        # a block seeded with an integer profile: the GAMEBOARD check that the
+        # file's integers are the module's mode at the file's amplitude (a
+        # comparison printed; no float enters the run's record)
+        check = profile_check(world, reading.number)
+        if check is not None:
+            print(
+                f"seed (GAMEBOARD): block {reading.number}: the declared profile against the margin "
+                f"module's mode at the amplitude {check[1]}: the largest deviation {check[0]} units"
+            )
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
     measured_content: list[list[int]] = []
@@ -68,7 +87,13 @@ def execute_nature_beam_run(
             """Write one event line to `events.jsonl`."""
             stream.write(json.dumps(event) + "\n")
 
-        simulation = NatureBeamSimulation(world, observer=record, keep_row_clicks=keep_row_clicks)
+        # detector-law-v1: the local detector law's own engine when the world
+        # declares it; the ray law as built otherwise, unchanged.
+        simulation = (
+            DetectorLawSimulation(world, observer=record)
+            if world.detector_law
+            else NatureBeamSimulation(world, observer=record, keep_row_clicks=keep_row_clicks)
+        )
         try:
             for _ in range(count):
                 simulation.step()
@@ -121,6 +146,14 @@ def execute_nature_beam_run(
         # as declared, written only when true; a record field, no
         # hypothesis (every other record byte for byte as it was).
         **({"clock_stamp": True} if world.clock_stamp else {}),
+        # massive-record-v1 (2026-09-23): the world key `massive_record` as
+        # declared, written only under the key (every other record byte for
+        # byte); `massive-record-v1` under `hypotheses` when it is true.
+        **(
+            {"massive_record": True, "margin": [reading.to_record() for reading in margins]}
+            if world.massive_record
+            else {}
+        ),
         # The host's record switch (2026-09-23): written on every record
         # whose per-row click lines were left out of `events.jsonl` (the
         # default), so that a reader of those lines knows the record is
@@ -189,8 +222,25 @@ def execute_nature_beam_run(
                     if world.massive_rows
                     else {}
                 ),
+                # The record kind's pair on the six-neighbour term and its
+                # faces (`massive-record-v1`), written only in a world that
+                # declares `massive_record` (light's kind [1, 1] and the
+                # world's faces where the family declares none).
+                **(
+                    {
+                        "pair": list(family.pair),
+                        "faces": {
+                            axis: "periodic" if wraps else "open"
+                            for axis, wraps in zip(
+                                ("x", "y", "z"), world.kind_periodic(index), strict=True
+                            )
+                        },
+                    }
+                    if world.massive_record
+                    else {}
+                ),
             }
-            for family in world.families
+            for index, family in enumerate(world.families)
         ],
         "numbers": {
             str(index + 1): {
