@@ -6360,3 +6360,18 @@ physics-rule reviewer's full read follows, per the Boss's order.
 61 pages, 100 references, the abstract 249 words (NUMBERS.md). Length
 48 still the target, no cut taken (the owner's word). The physics-rule
 reviewer's full read of the whole head follows on the Boss's order.
+
+## Applied (2026-09-23, the Boss's order of 03:1xZ, read after commit 6): commit 7, 1b a control and not counted
+
+The Boss's placement of record 1166 with his word of 03:1xZ matches
+commit 6 in every row but one: 1b, the phase-form window, is a control
+and not counted (Bell's bound a theorem of every local read-out; the
+law's answer to nature row 1a). Its status cell says so; the count in
+its four places and the abstract reads twelve observables predicted,
+five agree, seven disagree (1c, 6, 7b, 8a, 8b, 13, 14 as read), eight
+not predicted, with "1b a control, not counted" beside the four rows
+that keep their words; the old tally's remainder ("one is not compared
+(2c)") that had trailed the count in three places is folded into it;
+the prediction paragraph and the comparison paragraph name 1b the
+control. 8c "not predicted, kind (2)" as the Boss settled it, already
+so in commit 6. 61 pages, 100 references, the abstract 249 words.

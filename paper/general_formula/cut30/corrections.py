@@ -4403,6 +4403,51 @@ CORRECTIONS = [
         "the failures the law's own: of thirteen observables predicted",
         "of thirteen observables predicted",
     ),
+    (
+        "commit 7 (the Boss's order of 03:1xZ): 1b a control, not counted; the count in the limitations paragraph",
+        "The count: of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin)",
+        "The count: of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted",
+    ),
+    (
+        "commit 7: the count in the caption, the old tally's remainder folded",
+        "Section~\\ref{sec:discussion}: of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin); one is not compared (2c); one is history",
+        "Section~\\ref{sec:discussion}: of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted; one is history",
+    ),
+    (
+        "commit 7: the count in what is proved, the old tally's remainder folded",
+        "the harmonic constants. Against nature, of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin); one is not compared (2c); one is history",
+        "the harmonic constants. Against nature, of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted; one is history",
+    ),
+    (
+        "commit 7: the count in the checks' paragraph, the old tally's remainder folded",
+        "written before the run; against nature, of the thirteen observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), eight disagree (1b, 1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin); one is not compared (2c); one is history",
+        "written before the run; against nature, of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted; one is history",
+    ),
+    (
+        "commit 7: row 1b, a control, not counted",
+        "disagrees, a control: $S = 2$ exactly (DETECTOR), the local bound, $2.1$ standard errors below the measured; Bell's bound is a theorem of every local read-out and the phase-form window is one, the law's answer to nature being row 1a \\\\",
+        "a control, not counted: $S = 2$ exactly (DETECTOR), the local bound, $2.1$ standard errors below the measured; Bell's bound is a theorem of every local read-out and the phase-form window is one, the law's answer to nature being row 1a \\\\",
+    ),
+    (
+        "commit 7: the abstract's count",
+        "of thirteen observables predicted, five agree, eight disagree; eight are not predicted by construction",
+        "of twelve observables predicted, five agree, seven disagree; eight are not predicted by construction",
+    ),
+    (
+        "commit 7: the prediction paragraph's list without 1b",
+        "each by its number in Table~\\ref{tab:nature}: 1b the phase-form window, 1c the order channel,",
+        "each by its number in Table~\\ref{tab:nature}: 1c the order channel,",
+    ),
+    (
+        "commit 7: the prediction paragraph names 1b the control",
+        "and no count of agreements weighs against them. The rows not predicted by construction,",
+        "and no count of agreements weighs against them; 1b, the phase-form window, is a control and not counted. The rows not predicted by construction,",
+    ),
+    (
+        "commit 7: the comparison paragraph names 1b the control",
+        "Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built).",
+        "Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built), and 1b is a control, not counted.",
+    ),
 ]
 
 
