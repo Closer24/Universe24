@@ -164,6 +164,7 @@ from __future__ import annotations
 import json
 import math
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -228,6 +229,26 @@ FLOW_KEY = "flow_link"
 FLOW_SUFFIX = "_flow"
 ORBIT_N_FLOW = 8
 T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
+# Side B of Newton on the side (docs/designs/newton_clicks/NEWTON_ON_THE_SIDE.md
+# sections 3 (b), 4.2 and 4.3; the run docs/designs/fail_rows/RUN_14.md
+# section 7): the orbit re-read on the ORDINALS (`record` mod 2^32 on every
+# click line, the probe's own count) at the exact rung k = 17 of the ladder
+# under the per-axis drive the engine runs: the pace |p_a| / (Q S M + |p_a|)
+# is exactly 1 / k when |p_a| = Q S M / (k - 1), and the circular balance
+# n^2 / (S + n) = A under the key `flow_link` (A = 1.4838 on this fan) with
+# n = S / (k - 1) gives S = A k (k - 1) = 403.6, declared 404; so the two
+# numbers: the width S = 404 and the launch momentum p = 4 x 404 x M in
+# label units (n = p / (Q M) = 25.25, the balance 404 / 272 = 1.485, 0.1
+# per cent off A). The detector line at y = 2 (58 Links below the source),
+# `clock_stamp` true; the registered worlds untouched. The pins of the
+# design's section 4.2 are restated in RUN_14.md and written to no register
+# here (Side B runs on a later order).
+K17_SUFFIX = "_k17"
+RUNG_K17 = 17
+WIDTH_K17 = 404
+MOMENTUM_FACTOR_K17 = 4 * WIDTH_K17
+Y_D_K17 = 2
+assert MOMENTUM_FACTOR_K17 * (RUNG_K17 - 1) == LABEL_SCALE * WIDTH_K17, "the rung k = 17 is exact"
 # The tool's constant of the flow on the plane, flow x 2 pi r / q (series C).
 FLOW_CONSTANT = 1.0
 # The continuum map's own margin on a period (the orbit register's lamp
@@ -337,6 +358,13 @@ WORLDS_FLOW: dict[str, dict[str, object]] = {
     f"r12{FLOW_SUFFIX}_control": {"radius": 12, "source": False},
     f"r24{FLOW_SUFFIX}_control": {"radius": 24, "source": False},
 }
+# The k17 pair and their controls (Side B of Newton on the side, above).
+WORLDS_K17: dict[str, dict[str, object]] = {
+    f"r12{K17_SUFFIX}": {"radius": 12, "source": True},
+    f"r24{K17_SUFFIX}": {"radius": 24, "source": True},
+    f"r12{K17_SUFFIX}_control": {"radius": 12, "source": False},
+    f"r24{K17_SUFFIX}_control": {"radius": 24, "source": False},
+}
 
 
 def declared_n(n: int | None, flow: bool) -> int:
@@ -345,9 +373,11 @@ def declared_n(n: int | None, flow: bool) -> int:
     return n if n is not None else (ORBIT_N_FLOW if flow else ORBIT_N)
 
 
-def world(name: str, n: int | None = None, flow: bool = False) -> Json:
-    keys = (WORLDS_FLOW if flow else WORLDS)[name]
-    n = declared_n(n, flow)
+def world(name: str, n: int | None = None, flow: bool = False, k17: bool = False) -> Json:
+    keys = (WORLDS_K17 if k17 else WORLDS_FLOW if flow else WORLDS)[name]
+    n = declared_n(n, flow or k17)
+    width = WIDTH_K17 if k17 else WIDTH
+    line_y = Y_D_K17 if k17 else Y_D
     radius = int(keys["radius"])
     mass = held_mass(name)
     total = RESERVOIR + mass
@@ -371,8 +401,9 @@ def world(name: str, n: int | None = None, flow: bool = False) -> Json:
             "amount": RESERVOIR,
             "phase": 0,
             "fixed": False,
-            # In label units: n units of the probe's whole content, Q each.
-            "momentum": [0, n * LABEL_SCALE * total, 0],
+            # In label units: n units of the probe's whole content, Q each
+            # (the k17 pair: p = 4 x 404 x M, the rung's exact 1 / 17).
+            "momentum": [0, (MOMENTUM_FACTOR_K17 if k17 else n * LABEL_SCALE) * total, 0],
             "held": {MASS_FAMILY: mass},
             # The entry for `m` is the keys' own, `read` (the push taken, the
             # rays go on), and a default entry is not written out (the
@@ -391,7 +422,7 @@ def world(name: str, n: int | None = None, flow: bool = False) -> Json:
     for x in range(SIDE):
         measured.append(
             {
-                "position": [x, Y_D, 0],
+                "position": [x, line_y, 0],
                 "family": WALL_FAMILY,
                 "amount": 1,
                 "fixed": True,
@@ -401,7 +432,7 @@ def world(name: str, n: int | None = None, flow: bool = False) -> Json:
         detectors.append(
             {
                 "name": f"{DETECTOR_PREFIX}{x}",
-                "positions": [[x, Y_D, 0]],
+                "positions": [[x, line_y, 0]],
                 "threshold": 1,
                 "reading": "wave",
             }
@@ -416,11 +447,13 @@ def world(name: str, n: int | None = None, flow: bool = False) -> Json:
         "N": N,
         "release": [1, RELEASE_D],
         "suspension": 0,
-        "width": WIDTH,
+        "width": width,
         # flow-link-v1: the key, true, on the one-constant worlds alone; the
         # registered worlds carry no key and read as they did, byte for byte
-        # (DESIGN.md section 6).
-        **({FLOW_KEY: True} if flow else {}),
+        # (DESIGN.md section 6). The k17 pair carries it too (its balance is
+        # the one constant's) and the click instrument `clock_stamp`.
+        **({FLOW_KEY: True} if flow or k17 else {}),
+        **({"clock_stamp": True} if k17 else {}),
         "directions": [list(v) for v in DECLARED],
         "families": [
             {"name": PROBE_FAMILY, "quantum": 1},
@@ -432,12 +465,19 @@ def world(name: str, n: int | None = None, flow: bool = False) -> Json:
     }
 
 
-def worlds(n: int | None = None, flow: bool = False) -> dict[str, Json]:
-    """The registered five, or the four one-constant worlds (`flow`)."""
+def worlds(n: int | None = None, flow: bool = False, k17: bool = False) -> dict[str, Json]:
+    """The registered five, the four one-constant worlds (`flow`), or the
+    k17 pair with its controls (`k17`, Side B of Newton on the side)."""
     return {
-        name: families_by_definition(world(name, n, flow), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
-        for name in (WORLDS_FLOW if flow else WORLDS)
+        name: families_by_definition(world(name, n, flow, k17), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        for name in (WORLDS_K17 if k17 else WORLDS_FLOW if flow else WORLDS)
     }
+
+
+def pace_k17() -> Fraction:
+    """The k17 pair's pace under the per-axis drive, |p_a| / (Q S M + |p_a|)
+    per unit of content: exactly 1 / 17 (the rung)."""
+    return Fraction(MOMENTUM_FACTOR_K17, LABEL_SCALE * WIDTH_K17 + MOMENTUM_FACTOR_K17)
 
 
 def second_difference_lag(radius: int, n: int | None = None, drive: str = DRIVE) -> int:
@@ -646,6 +686,18 @@ def main() -> None:
             encoding="utf-8",
         )
         print((HERE / register).relative_to(ROOT))
+    print(
+        f"the k17 pair (Side B of Newton on the side): S = {WIDTH_K17}, p = {MOMENTUM_FACTOR_K17} x M "
+        f"(n = {Fraction(MOMENTUM_FACTOR_K17, LABEL_SCALE)}), the pace {pace_k17()} exactly; the balance "
+        f"{WIDTH_K17 / (RUNG_K17 * (RUNG_K17 - 1)):.4f} against A = {circle_constant(True):.4f}; the circle's "
+        f"T_1 = 2 pi r k = {2 * math.pi * 12 * RUNG_K17:.0f} and {2 * math.pi * 24 * RUNG_K17:.0f} (REPORTED, "
+        f"not pinned); the controls' escape at the 61st Link, {61 * RUNG_K17} on the probe's own count; the "
+        f"detector line at y = {Y_D_K17}"
+    )
+    for name, document in worlds(k17=True).items():
+        path = HERE / f"{name}.json"
+        path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
+        print(path.relative_to(ROOT))
 
 
 if __name__ == "__main__":
