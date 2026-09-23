@@ -181,8 +181,8 @@ REFS = [
         "are not derived here (Section~\\ref{sec:click})",
     ),
     (
-        "not for the flight (Section~\\ref{sec:discussion}, the bending under the key)",
-        "not for the flight (Section~\\ref{sec:click}, the bending under the key)",
+        "no verb reads the space part (Section~\\ref{sec:discussion}, the bending under the key)",
+        "no verb reads the space part (Section~\\ref{sec:click}, the bending under the key)",
     ),
     (
         "the hypotheses beside the law are on the tree (Section~\\ref{sec:discussion})",

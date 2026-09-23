@@ -6659,3 +6659,20 @@ that no supplement.tex exists. The paper's text is that of commit 18
 reference list. The owner's earlier 48 and his one file cannot both
 hold without cutting content; the count is put to him by the Boss,
 and nothing is cut until his word.
+
+## Applied (2026-09-23, the Boss's order of 04:15Z): commit 20 on paper-48, row 13's two prose places at head
+
+Section 4.3's paragraph "Light: no optical metric" (now "Light: the
+time part alone, no optical metric") and Section 3's list item (vi)
+restated to the law at head: half of nature's by the time part alone,
+-1.993 pixel at gamma_PPN = 0 on a coupled world (DETECTOR, the pin
+met, the audit cited), a factor 2 against nature's 1 + gamma = 2;
+series K's 0.000 kept beside each as the reading of the worlds that
+declared the coupling away, history, before the generic entry of
+2026-09-22. The paragraph's closing clause, "the delay field is a
+metric for clocks and for the bodies' pushes, not for the flight",
+was false at head in the same breath and now reads "for clocks, for
+the bodies' pushes and, since the entry, for the flight's time part,
+and no verb reads the space part"; the reorder's moved reference on
+that clause follows it. Nothing else; the count sentence unchanged;
+63 pages, 103 references.

@@ -4783,6 +4783,16 @@ CORRECTIONS = [
         "KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396. ",
         "KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396. \\bibitem{disagrees} The six rows that disagree, with the number: why each disagrees and whether the experiment behind it was sound (the Disagreement Auditor, 2026-09-23; row 13's suspect confirmed by one re-run at head, its section 9), \\texttt{docs/designs/fail\\_rows/DISAGREES.md} of the archived code \\cite{zenodo}, on the branch \\texttt{disagrees-audit} at 103a30fa (its merge pending). ",
     ),
+    (
+        "commit 20, the Boss's order of 04:15Z: Section 4.3's light paragraph at head, the time part alone",
+        "\\paragraph{Light: no optical metric.} A row reads nothing of the crowd: beside a mass it is neither bent nor delayed (series K, three worlds, the deflection $0.000$ pixel and the delay $0.00$ interval, DETECTOR; FAIL against nature's $1.75$ arcseconds, Table~\\ref{tab:nature}); the law as built here is the law before the generic entry of 2026-09-22 (on \\texttt{main} at 5b855791 since that day \\cite{genericentry}), and the paper's readings under the entry are the ring's alone (row 13); the delay field is a metric for clocks and for the bodies' pushes, not for the flight (Section~\\ref{sec:discussion}, the bending under the key). ",
+        "\\paragraph{Light: the time part alone, no optical metric.} The law at head bends a light row past a held mass by the time part alone, half of nature's: on a coupled world the centroid shift is $-1.993$ pixel at $\\gamma_{\\mathrm{PPN}} = 0$ (DETECTOR, \\texttt{optical/mass\\_g0} against \\texttt{control\\_g0}, the pin $-1.93 \\pm 0.5$ met \\cite{disagrees}), a factor $2$ against nature's $1 + \\gamma = 2$, $1.75$ arcseconds (Table~\\ref{tab:nature}, row 13); series K's $0.000$ pixel and $0.00$ interval (three worlds, DETECTOR) are the reading of the worlds that declared the coupling away, history, before the generic entry of 2026-09-22 (on \\texttt{main} at 5b855791 since that day \\cite{genericentry}), and the paper's readings of the full deflection under the entry are the ring's alone (row 13); the delay field is a metric for clocks, for the bodies' pushes and, since the entry, for the flight's time part, and no verb reads the space part (Section~\\ref{sec:discussion}, the bending under the key). ",
+    ),
+    (
+        "commit 20, the Boss's order of 04:15Z: Section 3's item (vi) at head, the time part alone",
+        "(vi) Light's bending: on the law of this paper, the runtime before the generic entry, $0$, the flight blind to the crowd (series K, $0.000$ pixel, DETECTOR; FAIL against $1.75$ arcseconds); ",
+        "(vi) Light's bending: on the law at head, half of nature's, by the time part alone, $-1.993$ pixel at $\\gamma_{\\mathrm{PPN}} = 0$ on a coupled world (DETECTOR, the pin met \\cite{disagrees}), a factor $2$ against nature's $1 + \\gamma = 2$, $1.75$ arcseconds; series K's $0.000$ pixel (DETECTOR) the reading of the worlds that declared the coupling away, history, before the generic entry of 2026-09-22; ",
+    ),
 ]
 
 
