@@ -104,6 +104,7 @@ pattern the cart's place changes by one Node per hop and by nothing between
 hops, the counts between two hops are `k` exactly when `1 / v = k` is a
 whole number and only `k` and `k + 1` when `1 / v` lies between them (the
 quantum of velocity `1 / (k (k + 1))`, his Theorem 3 in the same words).
+Superseded on 2026-09-22 by [PREREGISTRATION_V2.md](PREREGISTRATION_V2.md) section 1 (the radar coordinate `x_D = c (n_r - n_e) / 2` gives `+v`; the five FAILs of version 1 preserved in its section 4).
 
 The world reads the three things that are NOT READ on main (the click
 frame section 4; the Einstein Mathematician's II.3 to II.5 "NOT READ"): the
@@ -198,6 +199,14 @@ ratio carries `r_R / r_D^2` (as section 6 uses it); the round trip and the
 radar velocity are ratios of the cart's own counts alone and carry no r.
 
 ## 5. The pins, from the formulas, before any run
+
+**Superseded on the radar velocity's sign (2026-09-22, issue #937): the
+frozen coordinate `x_D = c (n_r - n_e) / 2` gives `+ v`, not the `- v`
+pinned below; the versioned preregistration is
+[PREREGISTRATION_V2.md](PREREGISTRATION_V2.md) (the coordinate kept, the
+prediction `+ v`, the batch-933 failures preserved, the round-trip band
+answered by kind). The text of sections 5 and 6 below is kept verbatim as
+version 1.**
 
 At r = 1 (the law), beta = 55 / (32 k), each ratio read over a window of W
 counts apart with the tolerance 2 / W (the hop's one-count remainder at

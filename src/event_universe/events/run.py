@@ -109,6 +109,10 @@ def execute_nature_beam_run(
         # The massive rows (2026-09-21): the world key as declared, false by
         # default; `massive-rows-v1` under `hypotheses` when it is true.
         "massive_rows": world.massive_rows,
+        # The clock stamp (2026-09-22, the moving detector): the world key
+        # as declared, written only when true; a record field, no
+        # hypothesis (every other record byte for byte as it was).
+        **({"clock_stamp": True} if world.clock_stamp else {}),
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
@@ -124,13 +128,20 @@ def execute_nature_beam_run(
         # drive-b-v1 (2026-09-22): the world key `drive_b` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.drive_b else {"drive_b": True}),
-        # optical-v1 (2026-09-21): the key's gamma and the derived flight
-        # coefficient 1 + gamma, written only under the key.
-        **(
-            {}
-            if world.optical is None
-            else {"optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient}}
-        ),
+        # The row's flight in the age wall's set (optical-v1, 2026-09-21;
+        # the law's own since 2026-09-22): the world's gamma and the flight
+        # coefficient 1 + gamma, written for every world.
+        "optical": {"gamma": world.optical, "flight_coefficient": world.flight_coefficient},
+        # centred-step-v1 (2026-09-22): the world key `centred_step` as
+        # declared, written only under the key (every other record byte for
+        # byte).
+        **({} if not world.centred_step else {"centred_step": True}),
+        # flow-link-v1 (2026-09-22): the world key `flow_link` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.flow_link else {"flow_link": True}),
+        # atom-level-v1 (2026-09-22): the world key `atom_level` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.atom_level else {"atom_level": True}),
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

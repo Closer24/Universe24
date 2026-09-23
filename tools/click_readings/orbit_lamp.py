@@ -76,6 +76,12 @@ DETECTOR_PREFIX = "line_"
 FACE_PREFIX = "face:"
 DETECTOR = "DETECTOR"
 GAMEBOARD = "GAMEBOARD"
+# The reviewer's two kinds beside them (2026-09-22, the run under flow_link):
+# a COMPUTATION is arithmetic on DETECTOR readings (the ratio of two periods,
+# the product of two moments); a CONVERSION is a click turned into a
+# distance by the flight table (the radius at the births from the age).
+COMPUTATION = "COMPUTATION"
+CONVERSION = "CONVERSION"
 # The half-Node level the crossings are read at (never a column's own x).
 LEVEL_OFFSET = 0.5
 # The flight table of the six headings: a row's Links walked by its age on a
@@ -139,6 +145,15 @@ class SecondDifference:
 
 
 @dataclass
+class Contact:
+    tick: int
+    node: tuple[int, int, int]
+    rule: str
+    axis: int
+    component: int
+
+
+@dataclass
 class Reading:
     name: str
     folder: Path
@@ -155,6 +170,10 @@ class Reading:
     probe_number: int
     clicks: list[Click]
     escape: tuple[str, int] | None
+    # The probe's contacts with the detector line (the register's `contact`
+    # events of the probe's number: the tick, the Node, the wall's rule and
+    # the momentum component the wall's `measure` entry took), in order.
+    contacts: list[Contact]
     homes: int
     final_position: list[int] | None
     final_momentum: list[int] | None
@@ -300,11 +319,26 @@ def read_run(folder: Path) -> Reading:
     radius = abs(probe.position[0] - centre_x)
     clicks: list[Click] = []
     escape = None
+    contacts: list[Contact] = []
     homes = 0
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"home"' in line and '"event": "home"' in line:
                 homes += 1
+                continue
+            if '"contact"' in line:
+                event = json.loads(line)
+                if event.get("event") == "contact" and int(event.get("number", 0)) == probe_number:
+                    node = tuple(int(c) for c in event["node"])
+                    contacts.append(
+                        Contact(
+                            int(event["tick"]),
+                            (node[0], node[1], node[2]),
+                            str(event.get("rule")),
+                            int(event.get("axis", -1)),
+                            int(event.get("component", 0)),
+                        )
+                    )
                 continue
             if '"click"' not in line:
                 continue
@@ -348,6 +382,7 @@ def read_run(folder: Path) -> Reading:
         probe_number,
         clicks,
         escape,
+        contacts,
         homes,
         final_position,
         final_momentum,
@@ -379,17 +414,19 @@ class Verdicts:
         if not ok:
             self.failed_checks += 1
 
-    def bracket(self, label: str, value: float | None, bracket: list[float]) -> None:
+    def bracket(
+        self, label: str, value: float | None, bracket: list[float], kind: str = DETECTOR
+    ) -> None:
         lo, hi = bracket
         if value is None:
             self.outside += 1
-            print(f"  {DETECTOR} {label}: none (expected {lo:.4g} .. {hi:.4g}): outside")
+            print(f"  {kind} {label}: none (expected {lo:.4g} .. {hi:.4g}): outside")
             return
         ok = lo <= value <= hi
         self.inside += ok
         self.outside += not ok
         print(
-            f"  {DETECTOR} {label}: {value:.4g} (expected {lo:.4g} .. {hi:.4g}): {'inside' if ok else 'outside'}"
+            f"  {kind} {label}: {value:.4g} (expected {lo:.4g} .. {hi:.4g}): {'inside' if ok else 'outside'}"
         )
 
     def exact(self, label: str, ok: bool, detail: str) -> None:
@@ -427,7 +464,7 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
         if reading.clicks:
             radii = reading.radii
             print(
-                f"  {DETECTOR} the radius at the births (y from the age off the flight table): "
+                f"  {CONVERSION} the radius at the births (y from the age off the flight table): "
                 f"{min(radii):.1f} .. {max(radii):.1f}, the mean {sum(radii) / len(radii):.1f}"
             )
         if pin.get("source"):
@@ -455,7 +492,7 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             if second.omega_squared is not None and reading.amplitude:
                 acceleration = second.omega_squared * reading.amplitude
                 print(
-                    f"  {DETECTOR} the acceleration omega^2 x amplitude: {acceleration:.4g} Links per interval^2 "
+                    f"  {COMPUTATION} the acceleration omega^2 x amplitude: {acceleration:.4g} Links per interval^2 "
                     f"(the pin v^2 / r {pin['acceleration']['pin']:.4g}; 3.3's small-n limit "
                     f"{pin['acceleration']['small_n_limit']:.4g})"
                 )
@@ -473,14 +510,34 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
             if reading.escape is None:
                 verdicts.bracket("the escape tick", None, pin["escape_tick"]["bracket"])
             else:
-                print(
-                    f"  {DETECTOR} the probe left through {reading.escape[0]} (the escape's tick is the face "
-                    "click's tick, the record's ordering; the detector's count of it is the lamp's births "
-                    "to the escape: a label, the pin as registered, the clock audit of 2026-09-22)"
-                )
                 verdicts.bracket(
                     "the escape tick", float(reading.escape[1]), pin["escape_tick"]["bracket"]
                 )
+        # The probe's escape and its contacts with the detector line, for every
+        # world alike: a source world's escape is not pinned, and before
+        # 2026-09-22 it was read and never printed (the Newton Diagnostician's
+        # finding on the run under flow_link, record 1022). The escape is a
+        # face click, DETECTOR; a contact is the wall's measure entry taking a
+        # momentum component from the probe at its Node, no detector's click,
+        # and reads GAMEBOARD as the register labels a contact line (the
+        # atom register's give, DIAGNOSIS.md 3.1; the reviewer, 2026-09-22).
+        print(
+            f"  {DETECTOR} the probe left through {reading.escape[0]} at the tick {reading.escape[1]} "
+            "(the face click's tick, the record's ordering; the detector's count of it is the lamp's "
+            "births to the escape: a label, the clock audit of 2026-09-22)"
+            if reading.escape is not None
+            else f"  {DETECTOR} the probe did not leave the plane in {reading.ticks} intervals"
+        )
+        print(
+            f"  {GAMEBOARD} (a contact line) the probe touched the detector line {len(reading.contacts)} time(s): "
+            + "; ".join(
+                f"the tick {c.tick} at {list(c.node)} (the wall's rule {c.rule}, the axis {c.axis} "
+                f"component {c.component} taken)"
+                for c in reading.contacts
+            )
+            if reading.contacts
+            else f"  {GAMEBOARD} (a contact line) the probe never touched the detector line"
+        )
         print(
             f"  {GAMEBOARD} (a diagnostic, not pinned): homes {reading.homes}; the probe at the end "
             f"{reading.final_position}, |p| / |p_0| = "
@@ -491,10 +548,23 @@ def report(readings: list[Reading], pins: dict[str, object]) -> int:
     print("across the worlds:")
     ratio_pin = pins["ratio"]
     assert isinstance(ratio_pin, dict)
-    t12, t24 = periods.get("r12"), periods.get("r24")
+    # The two worlds of the ratio: the registered `r12` and `r24`, or the
+    # names the pins carry (the one-constant worlds `r12_flow`, `r24_flow`).
+    near, far = ratio_pin.get("worlds", ("r12", "r24"))
+    t12, t24 = periods.get(near), periods.get(far)
     ratio = t24 / t12 if t12 and t24 else None
-    verdicts.bracket("the ratio T(24) / T(12)", ratio, ratio_pin["bracket"])
-    equivalence = pins["equivalence"]
+    # A COMPUTATION from two DETECTOR periods of two records (the reviewer, 2026-09-22).
+    verdicts.bracket("the ratio T(24) / T(12)", ratio, ratio_pin["bracket"], COMPUTATION)
+    equivalence = pins.get("equivalence")
+    if equivalence is None:
+        # No equivalence world in this register (the one-constant worlds:
+        # the equivalence carries no constant and is closed by the
+        # registered run).
+        print(
+            f"{verdicts.failed_checks} record checks failed, {verdicts.inside} readings inside, "
+            f"{verdicts.outside} outside, none moved"
+        )
+        return 1 if verdicts.failed_checks else 0
     assert isinstance(equivalence, dict)
     first, second = equivalence["worlds"]
     if (

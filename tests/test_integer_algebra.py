@@ -29,7 +29,8 @@ so that the list is always the inventory. The reasons distinguish a rounding at 
 docs/designs/vector_form/LAW.md section 6), a predicate (a perfect-square
 test, no rounded number enters a reading) and a root at run time (the
 seventh verb, named in docs/designs/register_paper_sources/NODE_ALGEBRA.md
-section 2, pending the owner's word). The self-tests at the end write
+section 2, pending the owner's word; one such root since PR #855, the
+meeting's norm). The self-tests at the end write
 sources with one violation each and show the gate catches them.
 """
 
@@ -124,15 +125,11 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
         "events/nature_beam.py",
         "unit_energies",
     ): "at load: the per-direction energies of the flight triple, the same rounding",
-    (
-        "events/nature_beam.py",
-        "momentum_pair",
-    ): "AT RUN TIME under the key `optical`: the pushed row's wall isqrt((R^2 + 3 |P|^2) Q^2); the seventh verb, NODE_ALGEBRA.md section 2, the owner's word pending",
     ("events/meeting.py", "arc_shift"): "at load: the bound of the arc table from the momentum bound",
     (
         "events/meeting.py",
         "meet",
-    ): "AT RUN TIME under the key `meeting`: the norm of the crowd's target |t| = isqrt(t . t); the seventh verb named in LAW.md 4.3",
+    ): "AT RUN TIME under the key `meeting`: the norm of the crowd's target |t| = isqrt(t . t); the seventh verb named in LAW.md 4.3 (the one root at run time since the optical key's wall became the ladder of comparisons `split_ladder`, PR #855)",
     (
         "events/engine.py",
         "__init__",
@@ -302,7 +299,7 @@ def numpy_violations(tree: ast.AST) -> list[str]:
                 if value.value.id == "np" and value.attr not in NUMPY_DTYPES_ALLOWED:
                     found.append(f"dtype np.{value.attr} at line {node.lineno}")
             elif isinstance(value, ast.Name):
-                if value.id not in BUILTIN_DTYPES_ALLOWED and value.id != "dtype":
+                if value.id not in BUILTIN_DTYPES_ALLOWED:
                     found.append(f"dtype {value.id} at line {node.lineno}")
             elif isinstance(value, ast.Constant):
                 if value.value not in ("int64", "bool", "object"):
@@ -412,6 +409,7 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
         ("y = float(x)\n", lambda s, t: numpy_violations(t)),
         ("y = x.mean()\n", lambda s, t: numpy_violations(t)),
         ("y = x.astype(scale)\n", lambda s, t: numpy_violations(t)),
+        ("y = x.astype(dtype)\n", lambda s, t: numpy_violations(t)),
         ("import numpy as np\ny = np.linalg.norm(x)\n", lambda s, t: numpy_violations(t)),
         ("import numpy as np\ny = np.linspace(0, 1, 3)\n", lambda s, t: numpy_violations(t)),
         ("import numpy as np\ny = np.random.default_rng()\n", lambda s, t: numpy_violations(t)),
@@ -427,7 +425,7 @@ def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
     source = (
         "import numpy as np\nimport math\n"
         "x = np.zeros(3, dtype=np.int64)\nm = np.ones(3, dtype=bool)\no = np.full(2, None, dtype=object)\n"
-        "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(dtype)\n"
+        "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\n"
     )
     tree = ast.parse(source)
     assert float_literals(source) == [] and true_divisions(source) == []

@@ -41,6 +41,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import math
+import shutil
 import sys
 from pathlib import Path
 
@@ -118,6 +119,57 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_are_pinned()
     )
     assert pinned["worlds"]["r12_control"]["x"] == 72 and pinned["worlds"]["r24_control"]["x"] == 84
     assert pinned["worlds"]["r24_4m"]["held_mass"] == 4 * pinned["worlds"]["r24"]["held_mass"]
+
+
+def test_the_one_constant_pins_are_the_generators_and_the_worlds_differ_by_the_key_alone():
+    """flow-link-v1 (the generator's docstring): `expectations_flow.json`
+    equals `expectations(flow=True)`, the balance divided by F_plane = 1.2871
+    to the whole n = 8 (T = 377 and 754), and the four one-constant worlds
+    are the registered ones with the key `flow_link` and the momentum at 8,
+    nothing else changed; the ratio's names are the flow worlds', no
+    equivalence world. The world files themselves ship with the key
+    (the loader refuses an unknown key until then)."""
+    pinned = json.loads((WORLDS / "expectations_flow.json").read_text(encoding="utf-8"))
+    pinned.pop(REPLICATED, None)
+    assert pinned == json.loads(json.dumps(GENERATOR.expectations(flow=True)))
+    assert pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned[GENERATOR.FLOW_KEY] is True and pinned["orbit_n"] == 8
+    assert abs(pinned["flow_incidence"] - 1.2871) < 5e-5
+    assert abs(pinned["flow_constant"] - 1 / pinned["flow_incidence"]) < 1e-12
+    assert 7.5 < pinned["orbit_n_real"] < 8.0
+    assert abs(pinned["worlds"]["r12_flow"]["period"]["pin"] - 2 * math.pi * 12 * 40 / 8) < 1e-9
+    assert abs(pinned["worlds"]["r24_flow"]["period"]["pin"] - 2 * math.pi * 24 * 40 / 8) < 1e-9
+    assert pinned["worlds"]["r12_flow"]["momentum"] == 8 * 64 * ((1 << 12) + (1 << 20))
+    assert abs(pinned["worlds"]["r12_flow_control"]["escape_tick"]["pin"] - 61 * 40 / 8) < 1e-9
+    assert pinned["ratio"]["worlds"] == ["r12_flow", "r24_flow"]
+    assert pinned["ratio"]["bracket"] == [1.82, 2.18]
+    assert "equivalence" not in pinned
+    for key in ("flow_link", "flow_incidence", "period", "ratio", "control"):
+        assert key in pinned["derivations"], key
+    registered = GENERATOR.worlds()
+    flow = GENERATOR.worlds(flow=True)
+    assert set(flow) == {"r12_flow", "r24_flow", "r12_flow_control", "r24_flow_control"}
+    for name, document in flow.items():
+        base = registered[name.replace(GENERATOR.FLOW_SUFFIX, "")]
+        assert document[GENERATOR.FLOW_KEY] is True and GENERATOR.FLOW_KEY not in base
+        assert document["model_id"] == base["model_id"].replace("-plane-v1", "-flow-plane-v1").replace(
+            "-control-flow-", "-flow-control-"
+        )
+        probe = next(i for i, m in enumerate(document["measured"]) if "lamp" in m)
+        assert document["measured"][probe]["momentum"] == [0, 8 * 64 * ((1 << 12) + (1 << 20)), 0]
+        assert base["measured"][probe]["momentum"] == [0, 9 * 64 * ((1 << 12) + (1 << 20)), 0]
+        stripped = {k: v for k, v in document.items() if k not in (GENERATOR.FLOW_KEY, "model_id")}
+        stripped["measured"] = [
+            {k: v for k, v in m.items() if k != "momentum"} for m in stripped["measured"]
+        ]
+        expected = {k: v for k, v in base.items() if k != "model_id"}
+        expected["measured"] = [
+            {k: v for k, v in m.items() if k != "momentum"} for m in expected["measured"]
+        ]
+        assert stripped == expected, name
+        shipped = WORLDS / f"{name}.json"
+        if shipped.exists():
+            assert json.loads(shipped.read_text(encoding="utf-8")) == document, name
 
 
 def circle_clicks() -> list[dict[str, object]]:
@@ -224,7 +276,7 @@ def tiny_world() -> dict[str, object]:
     }
 
 
-def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path):
+def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path, capsys):
     document = tiny_world()
     folder = tmp_path / "tiny" / "run"
     folder.mkdir(parents=True)
@@ -258,3 +310,63 @@ def test_read_run_reads_the_line_clicks_and_the_engines_flight(tmp_path):
     line = next(d for d in record["detectors"] if d["name"] == f"line_{PROBE[0]}")
     assert line["families"]["probe"]["clicks"] == len(reading.clicks)
     assert TOOL.period_of(reading.samples, reading.centre_x).value is None
+    assert reading.contacts == []
+    # The probe's escape and its contacts with the detector line are read
+    # from the register's own lines and printed for every world, a source
+    # world's included (the Newton Diagnostician's finding of 2026-09-22 on
+    # the run under flow_link: the source worlds' escape was read and never
+    # printed, record 1022). A copy of the run with a face click of the
+    # probe's number and a contact line appended, under another name.
+    copy = tmp_path / "copy" / "run"
+    shutil.copytree(folder, copy)
+    record["model"] = "rays-orbit-lamp-tiny-two-plane-v1"
+    (copy / "run.json").write_text(json.dumps(record), encoding="utf-8")
+    with (copy / "events.jsonl").open("a", encoding="utf-8") as stream:
+        stream.write(
+            json.dumps(
+                {
+                    "event": "contact",
+                    "tick": 20,
+                    "number": 1,
+                    "node": [4, 2, 0],
+                    "to": [4, 1, 0],
+                    "occupant": 6,
+                    "family": "probe",
+                    "rule": "measure",
+                    "axis": 1,
+                    "component": -5,
+                    "momentum": [0, 0, 0],
+                }
+            )
+            + "\n"
+        )
+        stream.write(
+            json.dumps(
+                {"event": "click", "tick": 37, "detector": "face:+y", "family": "probe", "measured": 1}
+            )
+            + "\n"
+        )
+    (second,) = TOOL.find_runs(tmp_path / "copy")
+    assert second.name == "tiny_two" and len(second.clicks) == len(reading.clicks)
+    assert second.escape == ("face:+y", 37)
+    assert second.contacts == [TOOL.Contact(20, (4, 2, 0), "measure", 1, -5)]
+    pins = {
+        "birth_interval": 2,
+        "ratio": {"bracket": [1.82, 2.18]},
+        "worlds": {
+            "tiny": {"source": False, "x": PROBE[0], "escape_tick": {"bracket": [30.0, 40.0]}},
+            "tiny_two": {"source": False, "x": PROBE[0], "escape_tick": {"bracket": [30.0, 40.0]}},
+        },
+    }
+    capsys.readouterr()
+    assert TOOL.report([reading, second], pins) == 0
+    printed = capsys.readouterr().out
+    assert "DETECTOR the probe did not leave the plane in 40 intervals" in printed
+    assert "GAMEBOARD (a contact line) the probe never touched the detector line" in printed
+    assert "DETECTOR the probe left through face:+y at the tick 37" in printed
+    assert (
+        "GAMEBOARD (a contact line) the probe touched the detector line 1 time(s): the tick 20 at [4, 2, 0] "
+        "(the wall's rule measure, the axis 1 component -5 taken)"
+    ) in printed
+    assert "the escape tick: 37 (expected 30 .. 40): inside" in printed
+    assert "the escape tick: none (expected 30 .. 40): outside" in printed

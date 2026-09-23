@@ -1,0 +1,20 @@
+THE RUN: model beam-fail-rows-j2_massive-v1, status completed, 1038 intervals completed; source sha256 5166dbe90169655d, world sha256 ad26eddd321fc3d6; the engine's own elapsed 4.02 s (HOST)
+THE BOOKS (GAMEBOARD): balanced at every completed tick: True
+THE BIRTHS (GAMEBOARD): 1037 records over 1038 intervals; the intervals with no birth: [2]; u of the first 66 births [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 0, 1]
+  the lamp's count row replayed by `by_drive_rows(acc, held, K)` per interval, one unit spent per birth (COMPUTATION): the intervals whose count is 0: [2] (after the first birth the held content is K - 1, below the wall by one: the second self-creation's count is 0 and the remainder K - 1 carries every later count)
+THE READERS (DETECTOR: each reader's `click` and `pass` lines, its state's `events`)
+  A1 the first reader (x = 8): 0 clicks of 1024 arrivals: read 0 clicks of 1023 arrivals (1023 passes): the clicks PASS, the arrivals FAIL; FAIL
+  A2 the second reader (x = 9): 0 clicks of 1023 arrivals: read 0 clicks of 1022 arrivals (1022 passes): the clicks PASS, the arrivals FAIL; FAIL
+  A3 the reader at x = 14: 1014 clicks of 1014 arrivals: read 1013 clicks of 1013 arrivals (0 passes): the clicks FAIL, the arrivals FAIL; FAIL
+  A4 every other reader 0; the far detector 0: the readers with a click among the other 125: none; the far detector (x = 190) 0 clicks, 0 passes; PASS
+  A5 `phase - u` on the pass lines (GAMEBOARD, the row's columns on the reader's line): at x = 8 {46: 1023}, at x = 9 {59: 1022}; the u values at x = 8: 64 classes, 15 to 16 rows each; PASS
+  the click lines at x = 14: `phase - u` {0: 1013}, the age [24], the u values 64 classes, 15 to 16 rows each (every class taken: no class filter); the reader's `held` [1013, 1] (q_F = 1 per completion, the placed quantum)
+THE FALSIFIERS (section 3), checked:
+  a click at x = 8 or 9: 0 and 0 (none: not tripped)
+  the reader at x = 14 reading fewer than 1014: 1013 (tripped by one; the cause the birth count above, not a class filter)
+  a click at a reader other than x = 14: none (not tripped)
+  the far detector above 0: 0 (not tripped)
+  the books not balanced: False (not tripped)
+  a pass line at x = 8 whose phase - u is not 46: none (not tripped)
+THE ROWS IN TRANSIT AT THE END (GAMEBOARD, state.json): 24 rows at x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] (the births that had not reached x = 14 by the last interval)
+THE VERDICTS against the pins as written: A1 FAIL, A2 FAIL, A3 FAIL, A4 PASS, A5 PASS

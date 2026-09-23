@@ -257,10 +257,17 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did(tmp_path: Path, path: str, 
     assert world.massive_rows is False and MASSIVE_ROWS_RULE not in world.hypotheses
     out = tmp_path / "run"
     out.mkdir()
-    execute_nature_beam_run(world, source, out, "test", cap)
     entry = next(
         e for e in json.loads(GATE_SET.read_text(encoding="utf-8"))["worlds"] if e["path"] == path
     )
+    if "refusal" in entry:
+        # The world refuses before its cap under the law as it stands (the
+        # gate set's `refusal`, the generic entry of the bending): the
+        # digests beside it are the base tree's before the entry.
+        with pytest.raises(OverflowError, match=entry["refusal"]["match"]):
+            execute_nature_beam_run(world, source, out, "test", cap)
+        return
+    execute_nature_beam_run(world, source, out, "test", cap)
     assert digests_of(out) == entry["digests"], path
     assert b'"acc_turn"' not in (out / "state.json").read_bytes()
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
@@ -642,7 +649,10 @@ def test_the_turn_is_the_plane_wave_to_one_remainder():
 
 def test_two_rows_of_different_remainders_never_merge():
     """(e): `acc_turn` is an identity field of the merge."""
-    assert IDENTITY_FIELDS[-1] == "acc_turn"
+    # `acc_turn` is followed by one identity field, `turn`, the row's own
+    # phase rate of atom-level-v1 (2026-09-22), constant 0 without the key
+    # `atom_level`; the last field of the massive rows' own is `acc_turn`.
+    assert IDENTITY_FIELDS[-2:] == ("acc_turn", "turn")
     store = NatureBeamStore((4, 1, 1))
     one = np.array([1, 1])
     store.append(

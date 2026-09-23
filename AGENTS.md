@@ -137,10 +137,14 @@ responsibilities. Keep renames, consumers, migration notes and the
 - The engine requires world-defined families, measured events and tables. Do
   not branch on physical names, reintroduce an implicit default, or keep
   anything at a Node beyond the events there (no register, remainder or draw).
-- Displays and measurements only read state. Runs and tests are headless unless
+- Displays only read state. A measurement is a detector's click, an action of
+  the law on the state: the record ends at the detector and the detector's own
+  record changes (the model owner, 2026-09-23, record 1139; [POSTULATES.md](POSTULATES.md)
+  section 10). Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render
   dependencies in the ordinary runner path; see the definitions display contract.
-- A measurement is a detector's reading: a click, a record's moments or an
+- A measurement is a detector's reading: a click (the action above, the record
+  ended at the detector), a record's moments or an
   external thing's reading, as declared in the world file. Only a measurement is
   compared with nature or pinned as an expectation. A GameBoard reading (the
   host's view of stores, books, presences and phases) is a diagnostic; label it

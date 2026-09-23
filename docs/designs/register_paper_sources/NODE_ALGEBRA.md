@@ -34,7 +34,7 @@ law, the turn and the count).
 | 2. The readings | `read_arrivals` (:522), `Moments` (:365), `CrowdMoments` (:3069) | (B) the moments `sum w u^k`, exact integers, the bound a refusal | in the six |
 | 3. The collision | `_collide` (:3360), `collision_table` (:1203) | (P) the eight slots' single units permuted within their class, an exact cache of "sort, then shift" | in the six |
 | 3b. The meeting (the key `meeting`, off by default; K under the meeting) | `meeting.py:329-365` | (B) the crowd's flow and the column sum, (P) the arc permutation, (T)/(D) on Z_N with the carry; and one root: `norm = integer_root(t . t)` per row per interval (:359) | ONE ROOT at run time, the known seventh verb (LAW.md 4.3 names it; the exact form is the comparison ladder of `t . t` against `(k Q)^2`) |
-| 3c. Under the key `optical` (off by default) | `optical_turn` (:3730), `optical_walk_step` (:3634), `momentum_pair` (:3494) | (T) the turn's accumulator by the crowd's flow, (D) the stretched rate against the stretched wall; and one root: `resolution = math.isqrt((R^2 + 3 abs(P)^2) Q^2)` per pushed row in every interval its momentum changes (:3549) | ONE ROOT at run time, not named as a seventh verb anywhere; the 32 crowd worlds refuse exactly there (record 866: "the wall's square ... exceeds the working bound before the root"); `generic-bending` keeps it (its `momentum_pair` at :3531, the root at :3586) |
+| 3c. Under the key `optical` (off by default) | `optical_turn` (:3730), `optical_walk_step` (:3634), `momentum_pair` (:3494) | (T) the turn's accumulator by the crowd's flow, (D) the stretched rate against the stretched wall; and one root: `resolution = math.isqrt((R^2 + 3 abs(P)^2) Q^2)` per pushed row in every interval its momentum changes (:3549) | ONE ROOT at run time, not named as a seventh verb anywhere; the 32 crowd worlds refuse exactly there (record 866: "the wall's square ... exceeds the working bound before the root"); `generic-bending` keeps it (its `momentum_pair` at :3531, the root at :3586). Since PR #855 (main at 536edefb, merged here on 2026-09-23) the root is gone: `momentum_pair` (:3697) forms the wall by `split_ladder` (:3645), two ladders of comparisons, (D) in the six; the gate lists no root in this row |
 | 4. The measured events' tables and the detectors (the click) | `_family_plan` (:4317, 587 lines), `FamilyPlan` (:2557), `_apply_plan` (:4915, 458 lines), `_measure` (:5423) | (D) the window `(d + w // 2) mod N < w`, the threshold on the amount, the parity filter on the hand; (B) the push `p += C a` per column through `push_form` (:2932) and `signed_inner`; (D) the share `label x amount // m`; (P) the gate; the record lines | in the six, but spread over about 1,500 lines of bulk numpy, the verbs not named |
 | 4b. The click's ledger and the read-out | `amplitude.py`: `Layer.evaluate` (:766), `gram_form` (:788), `cells` (:817), `rungs` and `cell_of` (:241, :275), `node_choice` (:299) | (E) the offer `(X, Y) += 32 w (C[p], S[p])`, a ring homomorphism; (B) the Gram form; the norm `abs(z)^2` of the evaluation; (D) the one comparison `2 T u + T <= 2 W C_k` and the rungs, no division at run time; the wheel (T) on Z_W | in the six: the click is the clearest part of the code |
 | 4c. The join of two multiplicities at an offer | `common_denominator` (`amplitude.py:223`) | `math.isqrt` used as the test "is the ratio a perfect square" (refused when not); an exact predicate, no rounded number enters a reading | a comparison in effect, written as a root: to be written as the predicate it is |
@@ -69,6 +69,9 @@ enforce the six verbs at run time, only the integers.
    read, in the six) or a comparison ladder (`(R^2 + 3 abs(P)^2) Q^2` against
    `T^2` for the candidate T, the exact form LAW.md gives the meeting), or it
    is admitted as the seventh verb under its own identity (record 249's B).
+   Resolved on main by PR #855 (the physicist's route (b), 2026-09-22): the
+   wall is the comparison ladder `split_ladder`, and the one root at run
+   time left is the meeting's norm.
 3. **A root written where a comparison is meant**: `common_denominator`'s
    perfect-square test. No number is rounded, but the code says root.
 4. **Clarity**: the click's ledger (`amplitude.py`) is clear; the Node's
@@ -117,7 +120,9 @@ rule's identity):
    root anywhere else in `events/` fails the gate.
 5. The pushed row's wall under the generic bending: the owner's and the
    physicist's word (section 2, item 2) before the gate of item 4 is turned
-   on, since the branch as it stands would fail it.
+   on, since the branch as it stands would fail it. Done by PR #855: the
+   wall is a ladder of comparisons, and the gate's list carries no root
+   there (2026-09-23).
 
 The cost, as a host estimate: items 1 to 3 about a day of the architect's
 work after the merges, no run needed, every registered digest the proof;

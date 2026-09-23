@@ -1,0 +1,80 @@
+1. THE ENGINE'S TABLES AGAINST round(256 cos), round(256 sin), EVERY POWER OF TWO N FROM 4 TO 65536
+   N =     4: entries differing from the exact rounding 0; C^2 + S^2 in [65536, 65536]
+   N =     8: entries differing from the exact rounding 0; C^2 + S^2 in [65522, 65536]
+   N =    16: entries differing from the exact rounding 0; C^2 + S^2 in [65522, 65773]
+   N =    32: entries differing from the exact rounding 0; C^2 + S^2 in [65501, 65773]
+   N =    64: entries differing from the exact rounding 0; C^2 + S^2 in [65448, 65773]
+   N =   128: entries differing from the exact rounding 0; C^2 + S^2 in [65242, 65824]
+   N =   256: entries differing from the exact rounding 0; C^2 + S^2 in [65242, 65824]
+   N =   512: entries differing from the exact rounding 0; C^2 + S^2 in [65242, 65825]
+   N =  1024: entries differing from the exact rounding 0; C^2 + S^2 in [65221, 65825]
+   N =  2048: entries differing from the exact rounding 0; C^2 + S^2 in [65221, 65825]
+   N =  4096: entries differing from the exact rounding 0; C^2 + S^2 in [65209, 65897]
+   N =  8192: entries differing from the exact rounding 0; C^2 + S^2 in [65192, 65897]
+   N = 16384: entries differing from the exact rounding 0; C^2 + S^2 in [65192, 65897]
+   N = 32768: entries differing from the exact rounding 0; C^2 + S^2 in [65185, 65897]
+   N = 65536: entries differing from the exact rounding 0; C^2 + S^2 in [65185, 65897]
+   the largest |C^2 + S^2 - 65536| over these N: 361
+
+2. THE TABLES AT N = 64 AS INTEGERS (the scale 256; the entry p is at 2 pi p / 64)
+   C[0..63] = 256 255 251 245 237 226 213 198 181 162 142 121 98 74 50 25 0 -25 -50 -74 -98 -121 -142 -162 -181 -198 -213 -226 -237 -245 -251 -255 -256 -255 -251 -245 -237 -226 -213 -198 -181 -162 -142 -121 -98 -74 -50 -25 0 25 50 74 98 121 142 162 181 198 213 226 237 245 251 255
+   S[0..63] = 0 25 50 74 98 121 142 162 181 198 213 226 237 245 251 255 256 255 251 245 237 226 213 198 181 162 142 121 98 74 50 25 0 -25 -50 -74 -98 -121 -142 -162 -181 -198 -213 -226 -237 -245 -251 -255 -256 -255 -251 -245 -237 -226 -213 -198 -181 -162 -142 -121 -98 -74 -50 -25
+   C[8] = S[8] = 181  (256 cos(pi / 4) = 256 / sqrt 2 = 181.01934)
+   the norms C[p]^2 + S[p]^2 take the values [65448, 65501, 65522, 65533, 65536, 65650, 65717, 65773]
+
+3. THE REFEREE'S EXAMPLE: f = 256 x^8 - 181 (1 + x^16) AT N = 64
+   after the cancel x^32 = -1 the rows are 256 at the phase 8, 181 at 32, 181 at 48
+   as written: rows {8: 256, 32: 181, 48: 181}; the terms 256 x (181, 181), 181 x (-256, 0), 181 x (0, -256)
+      tables: (X, Y) = (0, 0), R = X^2 + Y^2 = 0, R / 65536 = 0.00000
+      exact:  256 ev = (4.9500, 4.9500), R* = 49.0052, R* / 65536 = 0.000748
+      the pointer's error (-4.9500, -4.9500); the lemma's bound A / 2 = 309.0 per component (A = 618)
+   rotated by 8 steps (x^8 f): rows {16: 256, 40: 181, 56: 181}; the terms 256 x (0, 256), 181 x (-181, -181), 181 x (181, -181)
+      tables: (X, Y) = (0, 14), R = X^2 + Y^2 = 196, R / 65536 = 0.00299
+      exact:  256 ev = (-0.0000, 7.0004), R* = 49.0052, R* / 65536 = 0.000748
+      the pointer's error (+0.0000, +6.9996); the lemma's bound A / 2 = 309.0 per component (A = 618)
+   rotated by 1 step (x f): rows {9: 256, 33: 181, 49: 181}; the terms 256 x (162, 198), 181 x (-255, -25), 181 x (25, -255)
+      tables: (X, Y) = (-158, 8), R = X^2 + Y^2 = 25028, R / 65536 = 0.38190
+      exact:  256 ev = (4.4410, 5.4114), R* = 49.0052, R* / 65536 = 0.000748
+      the pointer's error (-162.4410, +2.5886); the lemma's bound A / 2 = 309.0 per component (A = 618)
+   |ev(f)|^2 exactly, the tables' scale as the unit = (256 - 181 sqrt 2)^2 = 0.000748 = R* / 65536 (the referee's 0.00075); the tables read 0, 196 / 65536 = 0.00299 and 25028 / 65536 = 0.38190 at the three rotations
+   lemma 3's bound on |R - R*|: A sqrt(2 R*) + A^2 / 2 = 6118.2 + 190962.0 = 197080.2; the readings' errors 49.0 and 147.0 lie inside it
+   hypothesis (a), R(x f) = R(f), on the built click at this f: R(f) = 0, R(x^8 f) = 196, R(x f) = 25028; the exact R* = 49.005 is one number at every rotation
+
+4. THE SUM LEMMA ON THE PAPER'S SUMS (k terms of magnitude up to M: the pointer off by at most k M / 2 per component)
+   one row (k = 1, M = 1): |R - 65536| <= 256 sqrt 2 + 1 / 2 = 362.5 by lemma 3; the tables' extreme at N = 64 is 237 (65773 - 65536)
+   the aligned record of total amount A: relative error of R at most sqrt 2 / 256 + 1 / 131072 = 0.00553 (a part in 181)
+   the Mach-Zehnder's dark port (k = 2, phases D = 32 apart, equal M): the sum is exactly 0 by C[p + 32] = -C[p], S[p + 32] = -S[p]: True
+   the quarter turn (k = 2, D = 16, equal M): R = M^2 ((C[p] + C[p+16])^2 + (S[p] + S[p+16])^2), over p in [ 130896 , 131546 ] against the exact 131072
+   a cancelling sum (the referee's k = 3, M = 256): no relative bound; the absolute bound A / 2 = 309 per component covers a reading of 0
+
+5. MALUS AT 22.5 DEGREES ON THE HALF-ANGLE TABLES (2N = 512 AT N = W = 256; malus_map.out section 2), BY HARMONIC j
+   j | C'[32 j] | S'[32 j] | plus weight C'^2 | minus weight S'^2 | the pass x 256 / (C'^2 + S'^2) | the rung's count of 256
+    1 |  237 |   98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+    3 |   98 |  237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+    5 |  -98 |  237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+    7 | -237 |   98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+    9 | -237 |  -98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   11 |  -98 | -237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   13 |   98 | -237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   15 |  237 |  -98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   17 |  237 |   98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   19 |   98 |  237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   21 |  -98 |  237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   23 | -237 |   98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   25 | -237 |  -98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   27 |  -98 | -237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   29 |   98 | -237 |  9604 | 56169 | 2458624/65773 = 37.380 | 37
+   31 |  237 |  -98 | 56169 |  9604 | 14379264/65773 = 218.620 | 219
+   the classes: j = +-1 mod 8 read the plus weight 56169, j = +-3 mod 8 read 9604; the total 65773 for every j
+   the built Born number 256 x 56169 / 65773 = 218.6196; the exact cos^2(22.5 deg) x 256 = 218.5097; the pinned count 219 (DETECTOR)
+   the rung keeps 219 iff the plus weight >= 28742801/512 = 56138.283, a margin of 30.717 on the weight (0.1196 of a cell)
+   the shift per unit weight w on the class +-3: 46565 on the weight, 181.24 cells of 1 / 256
+   w* (the polariser) = 15727/23841280 = 0.000660 = 1 / 1516: above it the reading is 218, not 219; below it the reading is 219
+   the chain's cell 0+: Born 3154956561 of 4326087529 (256 x = 186.6973, the pinned 187); the class +-3 92236816; w* (the chain) = 0.001089 = 1 / 919
+   the margin-free bound (a shift of one whole cell, whatever the margin): w = 65773 / (46565 x 256) = 0.005518 = 1 / 181.2
+   the class +-1 mod 8 (j = 7, 9, 15, 17, 23, 25, 31): the same weights as j = 1 at 22.5, 45 and 90 degrees; Malus bounds nothing on it
+
+6. THE TWO-SLIT BANDS (L2b; DETECTOR: the bright pixels 19 to 51 clicks of 4096 births, the rungs within one; paper main.tex line 1204)
+   the member j reads 1 + cos(2 pi j D / 64) where Born reads 1 + cos(2 pi D / 64); a weight w on j != 1 moves a pixel's count by at most
+   w x |cos(j t) - cos(t)| x (peak / (1 + V)) <= 2 w x 51 / 1.966 = 51.9 w clicks (V = 0.966 the registered visibility); one click is the cell, so
+   a change of one whole click needs w >= 1 / 51.9 = 0.0193; below that the bands cannot be relied on to exclude it (the pixels' margins not read here)

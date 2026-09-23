@@ -308,9 +308,23 @@ class NatureBeam:
     # column is 0 on every row of every world without the key. An identity
     # field of the merge (two rows with different remainders are two rows).
     acc_turn: int = 0
+    # The row's own phase rate (`atom-level-v1`, 2026-09-22; docs/designs/
+    # atom_levels/LEVELS.md section 2 (d)): the steps its phase turns per
+    # interval of its age beyond its family's rate, its content over the
+    # family's quantum on a row a level release bore (the Planck identity
+    # E = h_q s = h_q N f as a rule of the row); 0 on every row the law
+    # births, so the column is 0 on every row of every world without the
+    # key. An identity field of the merge (two rows of different rates are
+    # two rows); carried by the collision and the meeting; not carried
+    # through a re-emission (the re-emitter's row is the law's).
+    turn: int = 0
 
     def record_line(
-        self, vectors: np.ndarray, handed: bool = False, massive: bool = False
+        self,
+        vectors: np.ndarray,
+        handed: bool = False,
+        massive: bool = False,
+        memoryless: bool = False,
     ) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
@@ -338,7 +352,9 @@ class NatureBeam:
             line["share"] = [self.share_x, self.share_y, self.share_z]
         if massive:
             line["acc_turn"] = self.acc_turn
-        if self.made or self.residue:
+        if self.turn:
+            line["turn"] = self.turn
+        if (self.made or self.residue) and not memoryless:
             line["flight"] = [self.made, self.residue]
         if self.push_x or self.push_y or self.push_z:
             line["push"] = [self.push_x, self.push_y, self.push_z]
@@ -448,10 +464,11 @@ def moment_table(
     the table is Python integers (the dtype `object`; the one use is the
     pointer of a detector set, a report of the host that is never refused,
     where the register would not hold the table): the same table."""
-    dtype = object if exact else np.int64
     if exact:
-        v, a = v.astype(dtype), a.astype(dtype)
-    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=dtype)
+        v, a = v.astype(object), a.astype(object)
+        table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=object)
+    else:
+        table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
     table[:, 0] = a * v.any(axis=1)
     table[:, 1] = a - table[:, 0]
     table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
@@ -459,7 +476,8 @@ def moment_table(
     if ages is None:
         table[:, AGE_COLUMN:] = 0
     else:
-        weighted = a * np.asarray(ages).reshape(-1).astype(dtype)
+        age_column = np.asarray(ages).reshape(-1)
+        weighted = a * (age_column.astype(object) if exact else age_column.astype(np.int64))
         table[:, AGE_COLUMN] = weighted * v.any(axis=1)
         table[:, AGE_COLUMN + 1] = weighted - table[:, AGE_COLUMN]
     return table
@@ -627,7 +645,7 @@ def exact_phase(
     rate: tuple[int, int] | None,
     modulus: int,
     where: str,
-    last_link: tuple[int, int] | None = None,
+    last_link: tuple[int, int, int] | None = None,
 ) -> tuple[int, int, int]:
     """The phase of a row at the exact time of its last Link (the model
     owner's decision of 2026-09-21, record 163 (2) of the log of 2026-09-20;
@@ -650,30 +668,38 @@ def exact_phase(
     on a rest slot, reads its phase as it is (the remainder 0 over 1); the
     phase per Link crossed (the integer form) is exact per Link already. A
     row whose direction a collision changed reads its age on its present
-    line, as the flight table does for its next step. Under `optical`
-    (optical-v1, 2026-09-21) the time of the last Link is not the count's:
-    the caller hands `last_link` = (age r - s, r), r = 2 S_1 Q d the
-    stretched rate and s the row's stored residue after the carry (the
-    last Link crossed at the fraction 1 - s / r of its interval), and the
-    one floor is floor(n (age r - s) / (d r))."""
+    line, as the flight table does for its next step. Since the generic
+    entry of the bending (2026-09-22; the physics-rule reviewer's line on
+    PR #855) the engine hands `last_link` for every row of every world, the
+    ONE form of the last Link's time: (age r - s + T d, r, 2 d) with r =
+    2 S_1 Q d the stretched rate, s the row's stored residue after the
+    carry and T d the half wall the accumulator was seeded from (T_D on
+    the family's line, T(P) on a pushed row's), and the one floor is
+    floor(n (age r - s + T d) / (d_n r)); on a row no crowd moved this is
+    made T_d / (S_1 Q) exactly, the count's form below, which stays as the
+    identity a test asserts. The remainder is written over the family's
+    own units where it is exact there (the pair divided by what it shares
+    with 2 d, the stretched units' scale; the count's form's pair on every
+    row no crowd moved, byte for byte), else over the stretched units."""
     s1 = int(flight.manhattan[direction])
     if rate is None or s1 == 0:
         return phase % modulus, 0, 1
     numerator, denominator = rate
     resolution = int(flight.resolution[direction])
     if last_link is not None:
-        time_numerator, time_denominator = last_link
+        time_numerator, time_denominator, unit = last_link
         try:
             product = checked_work(numerator * time_numerator)
         except OverflowError as error:
             raise OverflowError(
-                f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s) = "
+                f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s + T d) = "
                 f"{numerator} x {time_numerator} exceeds the working bound {MAX_WORK_INT}"
             ) from error
         divisor = denominator * time_denominator
         made_phase, remainder = divmod(product, divisor)
+        shared = math.gcd(remainder, unit)
         held = (terms * numerator) // denominator
-        return (phase - held + made_phase) % modulus, remainder, divisor
+        return (phase - held + made_phase) % modulus, remainder // shared, divisor // shared
     made = (2 * made_at * s1 * Q + resolution) // (2 * resolution)
     try:
         product = checked_work(checked_work(numerator * made) * resolution)
@@ -771,6 +797,12 @@ class Flight:
     # fan a row turns on (`optical_turn`).
     energy: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
     neighbours: np.ndarray = field(default_factory=lambda: np.zeros((0, 0), dtype=np.int64))
+    # flow-link-v1 (2026-09-22; docs/designs/flow_weight/DESIGN.md section
+    # 1.2): the flow label f_D of every direction, the integer vector
+    # nearest Q D / S_1 (`flow_label`, one Euclidean division per component
+    # at load), what the arrival flow counts per arriving row under the
+    # world key `flow_link`; `labels` itself without the key, byte for byte.
+    flow_labels: np.ndarray = field(default_factory=lambda: np.zeros((0, 3), dtype=np.int64))
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
@@ -844,8 +876,42 @@ def unit_label(vector: Vector) -> Vector:
     return found[0], found[1], found[2]
 
 
-def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
-    """The flight of a direction set, its constants computed once at load."""
+def flow_label(vector: Vector, magnitude: int) -> Vector:
+    """The flow label of a direction under `flow-link-v1` (docs/designs/
+    flow_weight/DESIGN.md section 1.2; the physics-rule reviewer's line of
+    record 902): the integer vector nearest |p_D| D / S_1, the label of one
+    unit per EUCLIDEAN LINK of the digital line in place of `unit_label`'s
+    per Node, S_1 = |a| + |b| + |c| the line's Nodes per period, in integers
+    only: each component |a| is rounded as k(|a|) = (2 |p_D| |a| + S_1) //
+    (2 S_1), the nearest whole (the tie upward), and the sign restored, so
+    that f_{-D} = -f_D exactly and f_{gD} = g f_D for the 48 signed axis
+    permutations (k depends on |a| and S_1 alone). `magnitude` is |p_D|: Q
+    for the photon (`direction_flight`) and a massive family's
+    `momentum_magnitude` (`family_flight`); the photon is the case |p_D| =
+    Q. A heading gives exactly |p_D| e_d, the zero vector the zero vector,
+    and every component is within the unit label's on the same line (|D|
+    <= S_1, the rounding monotone), so every bound the flow's sums test on
+    the labels covers the flow labels. The one product 2 |p_D| |a| is
+    tested by division before it is formed, as the pair's are."""
+    s1 = sum(abs(c) for c in vector)
+    if s1 == 0:
+        return ZERO3
+    found = []
+    for a in vector:
+        if magnitude and abs(a) > (MAX_WORK_INT - s1) // (2 * magnitude):
+            raise OverflowError(
+                f"{BEAM_LAW}: flow-link-v1's flow label 2 x {magnitude} x {abs(a)} + {s1} on the "
+                f"direction {list(vector)} exceeds the working bound {MAX_WORK_INT}"
+            )
+        k = (2 * magnitude * abs(a) + s1) // (2 * s1)
+        found.append(k if a >= 0 else -k)
+    return found[0], found[1], found[2]
+
+
+def direction_flight(vectors: tuple[tuple[int, int, int], ...], flow_link: bool = False) -> Flight:
+    """The flight of a direction set, its constants computed once at load;
+    under `flow_link` (flow-link-v1) the flow labels f_D beside the labels
+    u_D, else the labels themselves."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
     resolution = np.ones(count, dtype=np.int64)
@@ -874,6 +940,11 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         [integer_root(3 * sum(int(c) * int(c) for c in label)) for label in labels.tolist()],
         dtype=np.int64,
     )
+    flow_labels = (
+        np.array([flow_label(vector, Q) for vector in vectors], dtype=np.int64).reshape(count, 3)
+        if flow_link
+        else labels
+    )
     return Flight(
         np.array(vectors, dtype=np.int64).reshape(count, 3),
         manhattan,
@@ -883,6 +954,7 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         labels,
         energy,
         fan_neighbours(vectors),
+        flow_labels,
     )
 
 
@@ -995,6 +1067,15 @@ class FamilyFlight:
     # step 2: the floor a load-time rounding by construction); the same
     # integers the turn formed per row before; empty without the key.
     weight: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
+    # flow-link-v1 (2026-09-22): the family's flow labels, what the arrival
+    # flow counts per arriving row of the family under the world key
+    # `flow_link`: formed from its own labels by `flow_label`'s one division
+    # with |p_D| in Q's place (Q for a family without the flag `massive`,
+    # `momentum_magnitude` for a massive one, the reviewer's line of record
+    # 902); `labels` itself without the key. Read by `CrowdMoments` for the
+    # rows' push and by a body's push through the group moment of a free
+    # family's rays; never by the momentum a click moves.
+    flow_labels: np.ndarray = field(default_factory=lambda: np.zeros((0, 3), dtype=np.int64))
 
     def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """The position's accumulator of a row of direction d at age tau
@@ -1061,7 +1142,8 @@ def family_flight(
     width: int,
     modulus: int,
     action: int | None,
-    optical: int | None = None,
+    optical: int = 0,
+    flow_link: bool = False,
 ) -> FamilyFlight:
     """The family's tables from its keys and the world's flight (`FamilyFlight`):
     a family without the flag `massive` takes Flight's numbers by value and
@@ -1069,7 +1151,9 @@ def family_flight(
     triple from E'_0 = Q S M, its turn |p_{D,a}| N over h and the pair (0,
     M). Formed once at load (`nature_beam_tables`), with the weight per
     unit of the crowd's push at the world's gamma under `optical`
-    (`unit_weights`)."""
+    (`unit_weights`) and, under `flow_link` (flow-link-v1), the flow labels
+    from the family's own label magnitude (`flow_label`; Flight's by value
+    for a family without the flag)."""
     count = flight.vectors.shape[0]
     if not definition.massive:
         turn = np.full((count, DIMENSIONS), definition.phase_per_link, dtype=np.int64)
@@ -1088,6 +1172,7 @@ def family_flight(
                 0,
                 0,
                 unit_energies(flight.labels, 0),
+                flow_labels=flight.flow_labels,
             ),
             optical,
         )
@@ -1104,6 +1189,14 @@ def family_flight(
     rest = Q * width * definition.quantum
     rate, wall, start = flight_triple(labels, rest)
     turn = np.abs(labels) * modulus
+    flow_labels = (
+        np.array(
+            [flow_label((int(v[0]), int(v[1]), int(v[2])), scale) for v in flight.vectors],
+            dtype=np.int64,
+        ).reshape(count, DIMENSIONS)
+        if flow_link
+        else labels
+    )
     return with_weights(
         FamilyFlight(
             rate,
@@ -1119,17 +1212,16 @@ def family_flight(
             definition.quantum,
             rest,
             unit_energies(labels, rest),
+            flow_labels=flow_labels,
         ),
         optical,
     )
 
 
-def with_weights(table: FamilyFlight, optical: int | None) -> FamilyFlight:
+def with_weights(table: FamilyFlight, optical: int) -> FamilyFlight:
     """The family's table with its weight per unit of the crowd's push
-    formed for every direction at the world's gamma (`unit_weights`); empty
-    without the key (nothing of `optical` is read at run time)."""
-    if optical is None:
-        return table
+    formed for every direction at the world's gamma (`unit_weights`), for
+    every world (the coupling is the law's since 2026-09-22)."""
     return dataclasses.replace(
         table, weight=unit_weights(table, optical, np.arange(table.labels.shape[0]))
     )
@@ -1264,7 +1356,7 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     """Build a world's tables once at load (`NatureBeamTables`): the flight per direction, the
     collision table, the phase circle of N and every family's tables."""
     circle = phase_circle(world.phase_steps)
-    flight = direction_flight(world.directions)
+    flight = direction_flight(world.directions, world.flow_link)
     return NatureBeamTables(
         flight,
         collision_table(),
@@ -1274,7 +1366,13 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
         arc_table(flight.labels),
         tuple(
             family_flight(
-                definition, flight, world.width, world.phase_steps, world.action, world.optical
+                definition,
+                flight,
+                world.width,
+                world.phase_steps,
+                world.action,
+                world.optical,
+                world.flow_link,
             )
             for definition in world.families
         ),
@@ -1498,6 +1596,9 @@ FIELDS = (
     "cross_y",
     "cross_z",
     "acc_turn",
+    # atom-level-v1 (2026-09-22): the row's own phase rate, 0 on every row
+    # of every world without the key (`NatureBeam.turn`).
+    "turn",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -1528,6 +1629,7 @@ IDENTITY_FIELDS = (
     "cross_y",
     "cross_z",
     "acc_turn",
+    "turn",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
@@ -1551,6 +1653,7 @@ COLUMN_DEFAULTS = {
     "cross_y": 0,
     "cross_z": 0,
     "acc_turn": 0,
+    "turn": 0,
 }
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
@@ -1920,6 +2023,7 @@ class NatureBeamStore:
         self.cross_y: np.ndarray
         self.cross_z: np.ndarray
         self.acc_turn: np.ndarray
+        self.turn: np.ndarray
 
     @property
     def size(self) -> int:
@@ -2156,6 +2260,7 @@ class NatureBeamStore:
                 int(self.cross_y[i]),
                 int(self.cross_z[i]),
                 int(self.acc_turn[i]),
+                int(self.turn[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -3086,7 +3191,8 @@ class CrowdMoments:
         self.empty = False
         node = np.concatenate(nodes)
         # The flow's labels on each family's own table (u_D by value for a
-        # family without the flag `massive`, p_D for a massive one).
+        # family without the flag `massive`, p_D for a massive one; under
+        # the world key `flow_link` the flow labels f_D, flow-link-v1).
         unit_rows = np.concatenate(
             [u[np.maximum(s.arrival, 0)] for s, u in zip(stores, units, strict=True) if s.size]
         )
@@ -3288,11 +3394,11 @@ def interval_frame(
         entered=entered,
         trail_nodes=trail_nodes,
         trail_events=trail_events,
-        crowd=(
-            CrowdMoments(stores, [t.labels for t in tables.family_flights])
-            if world.optical is not None
-            else None
-        ),
+        # The crowd's moments at every Node with a row, for every world
+        # (the row's flight in the age wall's set is the law's own since
+        # 2026-09-22; at a pair with n = 0 or with no crowd they stretch
+        # nothing and the walk is the table's, integer for integer).
+        crowd=CrowdMoments(stores, [t.flow_labels for t in tables.family_flights]),
     )
 
 
@@ -3336,11 +3442,11 @@ def nature_beam(
     # it by its phase register; the crowd untouched (`meeting.meet`).
     if world.meeting:
         meet(stores, world, tables, frame.occupied, ledger)
-    # optical-v1 (under the world key `optical`): the turn at the same
-    # place, the rows pushed by the crowd's flow and turned to the fan's
-    # nearest direction (`optical_turn`); refused together with `meeting`
-    # at load (one turn verb per row).
-    if world.optical is not None:
+    # The turn at the same place, the rows pushed by the crowd's flow and
+    # turned to the line of their momentum (`optical_turn`; the law's own
+    # since 2026-09-22): under `meeting` the meeting's turn keeps the
+    # heading and this one does not act, one turn verb per row.
+    if not world.meeting:
         optical_turn(frame)
 
     # 4. The measured events' tables and the detectors.
@@ -3397,7 +3503,35 @@ def _collide(frame: Interval, store: NatureBeamStore, backward: bool) -> None:
     rank = np.arange(by_slot.shape[0]) - start
     new_slot = collision.singles[target[own_group], rank]
     new_direction = np.where(new_slot >= 6, new_slot - 6, new_slot + HEADING_OFFSET)
-    store.direction[eligible[by_slot]] = new_direction
+    changed = eligible[by_slot]
+    store.direction[changed] = new_direction
+    family = next(k for k, s in enumerate(frame.stores) if s is store)
+    reseed_flight(store, frame.tables.family_flights[family], changed, frame.world.suspension[1])
+
+
+def reseed_flight(
+    store: NatureBeamStore, table: FamilyFlight, rows: np.ndarray, denominator: int
+) -> None:
+    """A row whose direction a collision or the meeting changed reads its
+    age on its present line, as the flight table does for its next step
+    (`exact_phase`): its flight accumulator becomes the table's own count
+    at its age on the new line, scaled to the stretched units (the value
+    `optical_walk_step` seeds a fresh row from), the crowd's carry on the
+    old line dropped with the old line (a row turned to rest carries
+    nothing); two rows alike on the new line are alike in the merge, as
+    they are without a crowd, and a world where no crowd acts walks, merges
+    and reads byte for byte as it did."""
+    if rows.shape[0] == 0:
+        return
+    heading = store.direction[rows] >= REST_DIRECTIONS
+    if heading.any():
+        moving = rows[heading]
+        made0, residue0 = table.accumulator(store.direction[moving], store.age[moving])
+        store.made[moving] = made0
+        store.residue[moving] = residue0 * denominator
+    if (~heading).any():
+        store.made[rows[~heading]] = 0
+        store.residue[rows[~heading]] = 0
 
 
 def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
@@ -3426,10 +3560,11 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
             f"({MASSIVE_ROWS_RULE}): the inverse of the turn on the row's accumulator is exact per "
             "Link but is not built (as the border `lifetime` has no inverse)"
         )
-    if world.optical is not None:
+    if world.suspension[0] > 0:
         raise ValueError(
-            f"{BEAM_LAW}: the inverse interval is refused under the key optical: a row's wall reads "
-            "the crowd of the interval before, which the after-state does not hold (optical-v1)"
+            f"{BEAM_LAW}: the inverse interval is refused at the pair {list(world.suspension)}: "
+            "a row's wall reads the crowd of the interval before, which the after-state does not "
+            "hold (the row's flight in the age wall's set, the generic entry of the bending)"
         )
     for definition in families:
         if definition.lifetime is not None:
@@ -3473,21 +3608,91 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
         per_age = families[family].phase_per_age
         if per_age is not None:
             turned = turned + np.where(resting, 0, by_clock_rows(back, per_age[0], per_age[1]))
+        # The row's own rate (`atom-level-v1`), a whole number of steps per
+        # interval of age, walked back as it was walked forward.
+        turned = turned + np.where(resting, 0, store.turn)
         store.phase = (store.phase - turned) % modulus
         store.arrival[:] = NO_ARRIVAL
+        # At a pair with n = 0 (the inverse is refused otherwise) no crowd
+        # moved any accumulator off the table's own count at its age, the
+        # value the next walk seeds a fresh row from: the rows go back
+        # fresh, the store bit for bit what it was.
+        store.made[:] = 0
+        store.residue[:] = 0
         store.merge()
     return GameBoardDiagnostics(shape, unit, [])
 
 
+def square_ladder(square: int) -> int:
+    """The largest T with T^2 <= `square`, by a ladder of comparisons of
+    squares and nothing else (no root primitive: the form LAW.md gives the
+    meeting, the Register Architect's NODE_ALGEBRA.md section 2, the model
+    owner's word of record 920 that the board is algebra): from the high
+    bit down, the candidate T + 2^k is kept when its square does not exceed
+    `square`. Exact integers; the same floor as the integer root, reached by
+    comparisons alone, so the pushed row's wall T(P) of `momentum_pair` is
+    a comparison in the law's interval and not a seventh verb."""
+    if square < 0:
+        raise ValueError("a square is not negative")
+    found = 0
+    bit = 1 << ((square.bit_length() + 1) // 2)
+    while bit:
+        candidate = found + bit
+        if candidate * candidate <= square:
+            found = candidate
+        bit >>= 1
+    return found
+
+
+def split_ladder(square: int, scale: int) -> int:
+    """The largest T with T^2 <= `square` x `scale`^2, by two ladders of
+    comparisons with every intermediate within the working bound whenever
+    `square` itself is (the physics-rule reviewer's route (b) on the ring
+    worlds of flow-link-v1, 2026-09-22: the wall's square X = R^2 + 3
+    |P|^2 of a pushed row at d = 16384 is in bound, about 2^52 to 2^54,
+    while X Q^2 is not, so `square_ladder(X Q^2)` cannot be formed).
+    The candidate is split as T = scale x a + b: first a = the largest
+    whole with a^2 <= X (`square_ladder` on X), then b, below `scale`,
+    the largest whole with (scale a + b)^2 <= X scale^2, that is
+    2 scale a b + b^2 <= (X - a^2) scale^2, by the ladder from the high
+    bit of `scale` down. Both sides of that comparison are below
+    2 a scale^2 + scale^2 (X - a^2 <= 2 a), so for X within the working
+    bound the ladder's numbers are within it too (refused here, naming
+    the number, if they were not). The same floor as `square_ladder(X
+    scale^2)` and the integer root, reached by comparisons alone: no root
+    primitive, not a seventh verb."""
+    if square < 0:
+        raise ValueError("a square is not negative")
+    if scale < 1:
+        raise ValueError("a scale is at least 1")
+    a = square_ladder(square)
+    remainder = square - a * a
+    if remainder > MAX_WORK_INT // (scale * scale):
+        raise OverflowError(
+            f"{BEAM_LAW}: the split ladder's remainder {remainder} x {scale}^2 exceeds the working "
+            f"bound {MAX_WORK_INT}"
+        )
+    room = remainder * scale * scale
+    found = 0
+    bit = 1 << (scale.bit_length() - 1)
+    while bit:
+        candidate = found + bit
+        if candidate < scale and 2 * scale * a * candidate + candidate * candidate <= room:
+            found = candidate
+        bit >>= 1
+    return scale * a + found
+
+
 def wall_square_overflow(rest: int, primitive: list[int], denominator: int) -> OverflowError:
     """The refusal of the wall's square on a pushed row's momentum before
-    it is formed (`momentum_pair`): R^2 + 3 |**P**|^2 with R the rest term
-    and **P** the primitive momentum, both over their gcd, must fit the
-    working bound over Q^2, tested by division term by term."""
+    it is formed (`momentum_pair`): X = R^2 + 3 |**P**|^2 with R the rest
+    term and **P** the primitive momentum, both over their gcd, must fit
+    the working bound, tested by division term by term; the split ladder
+    then takes X Q^2 without forming it (`split_ladder`)."""
     return OverflowError(
         f"{BEAM_LAW}: optical-v1's pair on the momentum, the wall's square R^2 + 3 |P|^2 "
-        f"with R = {rest} and P = {primitive} at d = {denominator}, times Q^2 = {Q * Q}, "
-        f"exceeds the working bound {MAX_WORK_INT} before the root is taken"
+        f"with R = {rest} and P = {primitive} at d = {denominator} exceeds the working bound "
+        f"{MAX_WORK_INT} before the ladder takes it"
     )
 
 
@@ -3508,10 +3713,11 @@ def momentum_pair(
     resolution, the family's triple on the momentum's direction: at
     E'_0 = 0 the photon's T = isqrt(3 |**P**|^2 Q^2) exactly as before, at
     **W** = 0 the massive triple's pace |**p**_D|_1 / E'_D, and under a push
-    along **p**_D a larger pace (a falling row speeds up), the law's own
-    integer root taken per pushed row when **P** changes (a bounded host
-    cost). The pair of a row of zero momentum is (0, 0), refused by the
-    wall."""
+    along **p**_D a larger pace (a falling row speeds up), the floor
+    reached per pushed row when **P** changes by the split ladder of
+    comparisons (`split_ladder`: X = R^2 + 3 |**P**|^2 within the working
+    bound, X Q^2 never formed; a bounded host cost). The pair of a row of
+    zero momentum is (0, 0), refused by the wall."""
     whole = Q * denominator * (store.amount[rows] * store.content[rows])
     s1 = np.zeros(rows.shape[0], dtype=np.int64)
     t = np.zeros(rows.shape[0], dtype=np.int64)
@@ -3531,13 +3737,16 @@ def momentum_pair(
         primitive = [c // g for c in momentum]
         rest_primitive = rest // g
         manhattan = sum(abs(c) for c in primitive)
-        # The wall's square R^2 + 3 |P|^2 (times Q^2 under the root) is
-        # tested against the working bound by division before each term is
-        # formed (the physics-rule reviewer's MUST-FIX 2 on EVERY_FAMILY.md:
-        # the intermediate respects the bound or is refused naming the rule
-        # before it is formed): R <= room / R, then each 3 c^2 <= the room
-        # left, the room MAX_WORK_INT / Q^2 less the terms already summed.
-        room = MAX_WORK_INT // (Q * Q)
+        # The wall's square X = R^2 + 3 |P|^2 is tested against the working
+        # bound by division before each term is formed (the physics-rule
+        # reviewer's MUST-FIX 2 on EVERY_FAMILY.md: the intermediate respects
+        # the bound or is refused naming the rule before it is formed): R <=
+        # bound / R, then each 3 c^2 <= the room left. The wall T = isqrt(X
+        # Q^2) is then taken by the split ladder, which never forms X Q^2
+        # (the reviewer's route (b) on the ring worlds of flow-link-v1,
+        # 2026-09-22: at d = 16384 a pushed row's X is in bound while X Q^2
+        # is not); the pair it returns is tested against the bound below.
+        room = MAX_WORK_INT
         if rest_primitive > room // rest_primitive if rest_primitive else False:
             raise wall_square_overflow(rest_primitive, primitive, denominator)
         square = rest_primitive * rest_primitive
@@ -3546,7 +3755,7 @@ def momentum_pair(
             if c and c > ((room - square) // 3) // c:
                 raise wall_square_overflow(rest_primitive, primitive, denominator)
             square += 3 * c * c
-        resolution = math.isqrt(square * Q * Q)
+        resolution = split_ladder(square, Q)
         if 2 * resolution > MAX_WORK_INT // max(1, denominator) or 2 * manhattan * Q > (
             MAX_WORK_INT // max(1, denominator)
         ):
@@ -3633,7 +3842,7 @@ def optical_rate_and_wall(
 
 def optical_walk_step(
     frame: Interval, store: NatureBeamStore, table: FamilyFlight
-) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int]]]:
+) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int, int]]]:
     """Step 1 under `optical`: the row's stored accumulator gains the
     stretched rate against the wall the crowd's age moment stretches
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
@@ -3702,29 +3911,45 @@ def optical_walk_step(
             cross[:, 2],
         )
     rates = rate
+    half_walls = wall0 // 2
 
-    def last_link(index: int, age_after: int) -> tuple[int, int]:
+    def last_link(index: int, age_after: int) -> tuple[int, int, int]:
+        # The one form of the last Link's time (the physics-rule reviewer's
+        # line on PR #855): (age r - s + T d) / r, T the half wall of the
+        # row's present pair (T_D on its family's line, T(P) on a pushed
+        # row's), the start the accumulator was seeded from; 2 d the
+        # stretched units' scale (`exact_phase`).
         r = int(rates[index])
-        return age_after * r - int(store.residue[index]), r
+        numerator = age_after * r - int(store.residue[index]) + int(half_walls[index]) * denominator
+        return numerator, r, 2 * denominator
 
     return step, last_link
 
 
 def optical_last_link(
     store: NatureBeamStore, table: FamilyFlight, world: NatureBeamWorld, index: int, age: int
-) -> tuple[int, int]:
+) -> tuple[int, int, int]:
     """The time of a row's last Link off its stored accumulator, after the
-    walk: (age r - s, r) with r the row's stretched rate, its family's
-    rate times d on a row never pushed (2 S_1 Q d for the photon) and the
-    momentum's 2 S_1(P) Q d on a pushed row, and s the residue
-    (`exact_phase`'s `last_link`)."""
+    walk, in the one form of every world (the physics-rule reviewer's line
+    on PR #855): (age r - s + T d, r, 2 d) with r the row's stretched rate (its
+    family's rate times d on a row never pushed, 2 S_1 Q d for the photon;
+    the momentum's 2 S_1(P) Q d on a pushed row), s the residue and T the
+    half wall of the row's present pair (T_D on its family's line, T(P) on
+    a pushed row's), the start the accumulator was seeded from in stretched
+    units. On a row no crowd has moved this is the count's own form, made
+    T_d / (S_1 Q), floor for floor (`exact_phase`, the identity
+    `tests/test_optical.py` asserts); on a row a crowd moved it is the
+    accumulator's, and no row reads two forms."""
     rows = np.array([index], dtype=np.int64)
     if store.push_x[index] or store.push_y[index] or store.push_z[index]:
-        rate0 = 2 * int(momentum_pair(store, table, world.suspension[1], rows)[0][0]) * Q
+        s1, t = momentum_pair(store, table, world.suspension[1], rows)
+        rate0, half_wall = 2 * int(s1[0]) * Q, int(t[0])
     else:
         rate0 = int(table.rate[store.direction[index]])
-    r = rate0 * world.suspension[1]
-    return age * r - int(store.residue[index]), r
+        half_wall = int(table.wall[store.direction[index]]) // 2
+    d = world.suspension[1]
+    r = rate0 * d
+    return age * r - int(store.residue[index]) + half_wall * d, r, 2 * d
 
 
 def optical_turn(frame: Interval) -> None:
@@ -3796,11 +4021,11 @@ def optical_turn(frame: Interval) -> None:
     # crossing rule's set, what a body's push reads in the same interval;
     # the arrival marks are cleared at the merge), read here after the walk
     # and the collision, each family's arrivals on its own labels; the age
-    # moment of the wall was read before step 1.
-    crowd = CrowdMoments(frame.stores, [t.labels for t in family_flights])
+    # moment of the wall was read before step 1. The flow's labels are the
+    # families' flow labels (flow-link-v1: f_D under the world key
+    # `flow_link`, u_D by value without it).
+    crowd = CrowdMoments(frame.stores, [t.flow_labels for t in family_flights])
     numerator, denominator = world.suspension
-    gamma = world.optical
-    assert gamma is not None
     for family, store in enumerate(frame.stores):
         if store.size == 0:
             continue
@@ -3998,21 +4223,18 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         # by the family's triple; under `optical` the accumulator on the row
         # against the wall the crowd's age moment stretches
         # (`optical_walk_step`, on the world's flight).
-        if frame.crowd is None:
-            step, moved, node_after, escaped = _walk_rows(table, store, world.periodic, extents)
-            last_link = None
-        else:
-            step, last_link = optical_walk_step(frame, store, table)
-            moved = step.any(axis=1)
-            x, y, z = store.coordinates(store.node)
-            coordinates = np.stack([x, y, z], axis=1) + step
-            escaped = np.zeros(store.size, dtype=bool)
-            for axis in range(3):
-                if world.periodic[axis]:
-                    coordinates[:, axis] %= extents[axis]
-                else:
-                    escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
-            node_after = coordinates @ np.array(store.strides, dtype=np.int64)
+        # The one walk of every world (the generic entry of the bending, 2026-09-22).
+        step, last_link = optical_walk_step(frame, store, table)
+        moved = step.any(axis=1)
+        x, y, z = store.coordinates(store.node)
+        coordinates = np.stack([x, y, z], axis=1) + step
+        escaped = np.zeros(store.size, dtype=bool)
+        for axis in range(3):
+            if world.periodic[axis]:
+                coordinates[:, axis] %= extents[axis]
+            else:
+                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        node_after = coordinates @ np.array(store.strides, dtype=np.int64)
         left = bool(escaped.any())
         # The Port of the Link crossed (a diagnostic of the walk, and the
         # face a ray leaves through) and the direction the ray arrived on.
@@ -4085,7 +4307,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                     definition.phase_per_age,
                     modulus,
                     FACE_NAMES[int(port[index])],
-                    None if last_link is None else last_link(index, int(store.age[index]) + 1),
+                    last_link(index, int(store.age[index]) + 1),
                 )
                 for index in gone.tolist()
             }
@@ -4161,6 +4383,12 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         if definition.phase_per_age is not None:
             rate_n, rate_d = definition.phase_per_age
             turned = turned + np.where(resting, 0, by_clock_rows(store.age, rate_n, rate_d))
+        # The row's own rate (`atom-level-v1`, docs/designs/atom_levels/
+        # LEVELS.md section 2 (d)): a row a level release bore turns `turn`
+        # steps per interval of its age beside its family's rate, one
+        # addition, no division; 0 on every row of every world without the
+        # key, so the phase is as it was.
+        turned = turned + np.where(resting, 0, store.turn)
         store.age = np.where(resting, store.age, store.age + 1)
         store.phase = (store.phase + turned) % modulus
         store.arrival = arrival
@@ -4331,6 +4559,14 @@ def _family_plan(
     # by (the crossing rule reads a row's last steps).
     table = frame.family_flights[family]
     unit = table.labels
+    # flow-link-v1 (2026-09-22): the flow a body's push reads from a FREE
+    # family's rays (the field the reader sums, `push_form`'s columns) is
+    # taken on the family's flow labels (f_D under the world key
+    # `flow_link`, u_D by value without it); a paid family's rays push by
+    # the momentum they carry, which stays on the labels (the label moved
+    # at a click stays Q per unit, BEAM_LAW note 18; the physics-rule
+    # reviewer's line of record 902: the key changes no conservation).
+    flow_unit = table.flow_labels
     flight = frame.flight
     modulus = frame.modulus
     entries = frame.entries
@@ -4797,8 +5033,21 @@ def _family_plan(
             for column, (_, rest) in zip(columns, found, strict=True):
                 column[i] = rest
     g_ends = (g_starts + g_sizes).tolist()
+    # The moment a body's push reads per group: a free family's rays on
+    # the flow labels (flow-link-v1; the amount per row), a paid family's
+    # their shares of the labels. A row that carries a record pushes by
+    # its share of the label whatever its family (stage (vii) step 3): a
+    # free family's rows carry no record today, and the share rule holds
+    # if one ever does (the physics-rule reviewer's guard on d2f87644).
+    if free:
+        push_rows = flow_unit[read_on[taken]] * a_t[:, None]
+        push_shares = [
+            shares[k] if record_t[k] != NO_RECORD else row for k, row in enumerate(push_rows.tolist())
+        ]
+    else:
+        push_shares = shares
     plan.g_moment = [
-        [sum(shares[k][axis] for k in range(s, e)) for axis in range(3)]
+        [sum(push_shares[k][axis] for k in range(s, e)) for axis in range(3)]
         for s, e in zip(g_starts.tolist(), g_ends, strict=True)
     ]
     plan.g_remainder = [
@@ -4814,7 +5063,7 @@ def _family_plan(
         members = [k for k in range(s_k, e_k) if recorded_rows[k]]
         plan.g_recorded_total.append(sum(int(a_t[k]) for k in members))
         plan.g_recorded_content.append(sum(int(carried_t[k]) for k in members))
-        plan.g_recorded_moment.append([sum(shares[k][axis] for k in members) for axis in range(3)])
+        plan.g_recorded_moment.append([sum(push_shares[k][axis] for k in members) for axis in range(3)])
         plan.g_recorded_label.append([sum(int(labels[k, axis]) for k in members) for axis in range(3)])
     plan.g_number = num_t[g_starts].tolist()
     plan.g_start = g_starts.tolist()
@@ -4848,9 +5097,7 @@ def _family_plan(
             families[family].phase_per_age,
             modulus,
             f"measured event {int(e)}",
-            None
-            if frame.crowd is None
-            else optical_last_link(store, table, frame.world, int(ix), int(ag)),
+            optical_last_link(store, table, frame.world, int(ix), int(ag)),
         )
         for ph, ag, ar, e, ix in zip(
             ph_t.tolist(),
@@ -4929,6 +5176,9 @@ def _apply_plan(
     the rule (read, re-release or click, with the transformation's click
     trigger), and after the set's last active measured event the set's
     record and the phase returned to the set."""
+    # The clock stamp (the world key `clock_stamp`): the event's own count
+    # of self-creations on every line it writes.
+    stamp = frame.world.clock_stamp
     measured = frame.measured
     tick = frame.tick
     record = frame.record
@@ -5136,6 +5386,8 @@ def _apply_plan(
                         "content": group_content,
                         "reading": reading_value,
                     }
+                    if stamp:
+                        read_line["clock"] = entry.age
                     recorded_rows = taken_rows(plan, k0, k1)
                     if recorded_rows:
                         read_line["rows"] = recorded_rows
@@ -5219,6 +5471,8 @@ def _apply_plan(
                         "content": group_content,
                         "reading": reading_value,
                     }
+                    if stamp:
+                        group_line["clock"] = entry.age
                     recorded_rows = taken_rows(plan, k0, k1)
                     if recorded_rows:
                         group_line["rows"] = recorded_rows
@@ -5294,6 +5548,8 @@ def _apply_plan(
                         "content": plan.t_carried[k],
                         "reading": reading_value,
                     }
+                    if stamp:
+                        click_line["clock"] = entry.age
                     if families[family].phase_per_age is not None:
                         # The phase at the exact time of the last
                         # Link, the click's, with its remainder
@@ -6065,6 +6321,7 @@ def _release(frame: Interval) -> None:
                             "products": thrown_rows,
                             "recoil": thrown_recoil,
                             "counted": count_read,
+                            **({"clock": entry.age} if frame.world.clock_stamp else {}),
                         }
                     )
             entry.transformed = []
@@ -6156,9 +6413,7 @@ def _border(frame: Interval) -> None:
                 definition.phase_per_age,
                 modulus,
                 LIFETIME_NAME,
-                None
-                if frame.crowd is None
-                else optical_last_link(store, table, frame.world, int(index), int(store.age[index])),
+                optical_last_link(store, table, frame.world, int(index), int(store.age[index])),
             )
             for index in gone.tolist()
         }

@@ -56,6 +56,16 @@ K, N, Q = BOHR.K, BOHR.N, BOHR.Q
 ELECTRON, PROTON, RATIO, SHELL = BOHR.ELECTRON, BOHR.PROTON, BOHR.RATIO, BOHR.SHELL
 WIDTH = 45120  # series H's registered width (v = 0.06 at r = 8 under today's drive)
 RADIUS = 12
+# atom-level-v1 (docs/designs/atom_levels/LEVELS.md section 5): the three
+# rungs at whole Links where the shell mean's closure 4 sqrt(r / 12) is
+# nearest 2, 3 and 4, each hydrogen's construction at its radius under the
+# centred step with the key `atom_level` and the electron's `level`
+# declaration (the released family `light`, the pair [512, 1], the return
+# at the +x crossing of the x axis, `p_x` crossing from + to -).
+LEVEL_RADII = (3, 7, 12)
+LEVEL_FAMILY = "light"
+LEVEL_PAIR = [512, 1]
+LEVEL_RETURN = [0, -1]
 REFERENCE_RADIUS, REFERENCE_J = BOHR.REFERENCE_RADIUS, BOHR.REFERENCE_J
 T_D_AXIS = math.isqrt(3 * Q * Q)  # 110: the axis direction's period constant
 PACE = T_D_AXIS / Q  # form B's second wall term per unit of n on an axis, 110 / 64
@@ -120,10 +130,9 @@ def derive() -> dict[str, object]:
     directions = BOHR.fan(BOHR.FAN_LOW, BOHR.FAN_HIGH)
     count = BOHR.entries_per_node(directions, 2 * RADIUS + 4)
     # Hydrogen: series H's flux at r = 12 and at the reference radius, the orbit under form B, the action re-fixed.
-    flux = {r: BOHR.body_flux(count, r) for r in (REFERENCE_RADIUS, RADIUS)}
-    hydrogen = {
-        r: orbit_form_b((1 + RATIO) * Q * flux[r] * r / SHELL, r) for r in (REFERENCE_RADIUS, RADIUS)
-    }
+    radii = sorted({REFERENCE_RADIUS, RADIUS, *LEVEL_RADII})
+    flux = {r: BOHR.body_flux(count, r) for r in radii}
+    hydrogen = {r: orbit_form_b((1 + RATIO) * Q * flux[r] * r / SHELL, r) for r in radii}
     action = 4 * int(hydrogen[REFERENCE_RADIUS]["p"]) * REFERENCE_RADIUS // REFERENCE_J
     # Helium: the nucleus's four sources and the partner electron, exact at the start Nodes and on the ring.
     e1 = ELECTRON_OFFSETS[0]
@@ -251,6 +260,61 @@ def hydrogen_world(derived: dict[str, object]) -> Json:
     return document
 
 
+def hydrogen_level_world(derived: dict[str, object], radius: int) -> Json:
+    """Hydrogen's construction at `radius` under the centred step with the
+    level's key (atom-level-v1, docs/designs/atom_levels/LEVELS.md section
+    5 (a)): `hydrogen_world`'s arithmetic at the radius (the flux the
+    electron's three Nodes receive on the ring, the orbit under form B's
+    rule, the SAME action h = 16 p_B(8) on every rung so that the three
+    closures are one ladder), the side of series H's rule, five turns of
+    ticks, `centred_step` (the loop that stays, atom_give/RUN_CENTRED.md),
+    the family `light` (the photon's, quantum 1) for the released rows and
+    the electron's `level` declaration."""
+    directions = derived["directions"]  # type: ignore[assignment]
+    reading = derived["hydrogen"][radius]  # type: ignore[index]
+    side = BOHR.side_for(radius)
+    c = side // 2
+    document = base(
+        f"rays-atoms-hydrogen-r{radius}-level-v1",
+        side,
+        ticks_for(reading["period"]),
+        int(derived["action"]),
+        directions,
+    )  # type: ignore[arg-type]
+    document["centred_step"] = True
+    document["atom_level"] = True
+    document["families"] = [
+        {"name": "p", "quantum": 0, "charge": [1, 1], "phase": False},
+        {"name": "e", "quantum": 0, "charge": -RATIO, "phase": True},
+        {"name": LEVEL_FAMILY, "quantum": 1},
+    ]
+    document["measured"] = [
+        {
+            "position": [c, c, c],
+            "family": "p",
+            "amount": PROTON,
+            "fixed": True,
+            "directions": whole_fan(directions),
+        },  # type: ignore[arg-type]
+        {
+            "position": [c + radius, c, c],
+            "family": "e",
+            "amount": ELECTRON,
+            "phase": 0,
+            "fixed": False,
+            "momentum": [0, int(reading["p"]), 0],
+            "span": list(BOHR.SPAN),
+            "phase_by_momentum": True,
+            "directions": BOHR.IN_PLANE,
+            "level": {"family": LEVEL_FAMILY, "pair": list(LEVEL_PAIR), "return": list(LEVEL_RETURN)},
+        },
+    ]
+    document["detectors"] = [
+        {"name": "at_proton", "positions": [[c, c, c]], "threshold": 1, "reading": "wave"}
+    ]
+    return document
+
+
 def helium_world(derived: dict[str, object]) -> Json:
     directions = derived["directions"]  # type: ignore[assignment]
     reading = derived["helium"]  # type: ignore[assignment]
@@ -319,8 +383,13 @@ def main() -> None:
     args = parser.parse_args()
     derived = derive()
     args.out.mkdir(parents=True, exist_ok=True)
-    for name, builder in (("hydrogen_r12", hydrogen_world), ("helium_r12", helium_world)):
-        document = families_by_definition(builder(derived), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+    worlds = [
+        ("hydrogen_r12", hydrogen_world(derived)),
+        ("helium_r12", helium_world(derived)),
+        *((f"hydrogen_r{r}_level", hydrogen_level_world(derived, r)) for r in LEVEL_RADII),
+    ]
+    for name, built in worlds:
+        document = families_by_definition(built, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path = args.out / f"{name}.json"
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path)

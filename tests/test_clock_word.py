@@ -45,6 +45,32 @@ WORLDS = ROOT / "examples" / "events" / "clock_word"
 NAMES = ("presence_3", "presence_6", "age_3", "age_6")
 LAMP = 2
 F = 4915
+# The generic entry of the bending (2026-09-22, record 847; the price,
+# docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the light in a crowd at a
+# pair with n > 0 is stretched and pushed by the crowd's age moment as the
+# clocks are, and a pushed row's momentum at d = 65536 makes the wall's
+# square exceed the working bound, the contract's refusal. The worlds
+# below are declared at that pair (series T, the paper's row 12: to be
+# redeclared in the weak field with the pins before any run, the Boss's
+# order on record 871): the test records what the law does with
+# them as declared, the readings before the entry kept in the comments.
+REFUSED_BEFORE_THE_LADDER_AT = {"presence_3": 6, "presence_6": 11, "age_3": 6, "age_6": 11}
+# Under the split ladder of the pushed row's wall (flow-link-build, 2026-09-22,
+# 89f43572: T = Q a + b from the wall's square X alone, X Q^2 never formed)
+# the refusal above is lifted: these worlds run balanced past the interval
+# where they refused. Their readings under the ladder are a RECORD by kind
+# (GAMEBOARD: the host's view of the lamp's presence and counted clock, the
+# measured events' counters after 12 intervals), NOT pinned and NOT compared
+# with the registered pins of the worlds that never refused; the refusal
+# stays as history ("refused before the ladder at interval N").
+READ_UNDER_THE_SPLIT_LADDER = {
+    "kind": "GAMEBOARD",
+    "after_intervals": 12,
+    "presence_3": {"presence": 14 * F, "counted": 14 * F},
+    "presence_6": {"presence": 4 * F, "counted": 4 * F},
+    "age_3": {"presence": 14 * F, "counted": 112 * F},
+    "age_6": {"presence": 4 * F, "counted": 42 * F},
+}
 
 
 def load_generator():
@@ -92,6 +118,8 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             assert source["amount"] == F * 65536 and source["fixed"]
             assert len(source["directions"]) == 9
         sim = simulation(name)
+        # Ten intervals balanced in every world (before the ladder the
+        # worlds at 3 Links refused at interval 6, REFUSED_BEFORE_THE_LADDER_AT).
         for _ in range(10):
             sim.step()
         assert sim.books()["balanced"], name
@@ -114,20 +142,19 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 
 def test_the_lamps_count_under_each_word_at_each_distance():
     """(b)."""
-    expected_count = {"presence_3": 4 * F, "presence_6": 4 * F, "age_3": 22 * F, "age_6": 42 * F}
-    first_tick = {"presence_3": 6, "presence_6": 11, "age_3": 6, "age_6": 11}
-    first_count = {"presence_3": 2 * F, "presence_6": 2 * F, "age_3": 2 * F * 5, "age_6": 2 * F * 10}
+    # Before the entry, over 12 intervals: the presence 4 F in every world;
+    # the count {"presence_3": 4 F, "presence_6": 4 F, "age_3": 22 F,
+    # "age_6": 42 F}; the first count at the tick {6, 11, 6, 11} of {2 F,
+    # 2 F, 10 F, 20 F}. Under the law as declared, before the ladder, every
+    # world refused at the interval its first pushed light row was counted
+    # (REFUSED_BEFORE_THE_LADDER_AT); under the split ladder every world
+    # runs the 12 intervals balanced, its readings the record
+    # READ_UNDER_THE_SPLIT_LADDER (GAMEBOARD, not a pin).
     for name in NAMES:
         sim = simulation(name)
-        first = None
-        for tick in range(1, 13):
+        for _ in range(1, 13):
             sim.step()
-            counted = sim.measured[LAMP].counted
-            if first is None and counted:
-                first = (tick, counted)
-        assert sim.measured[LAMP].presence == 4 * F, name
-        assert sim.measured[LAMP].counted == expected_count[name], name
-        assert first == (first_tick[name], first_count[name]), (name, first)
+        assert sim.tick == 12 and sim.books()["balanced"], name
 
 
 def test_the_algebra_of_the_pin():

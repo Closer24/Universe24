@@ -6,7 +6,10 @@ A world selecting `"law": "beam"` runs the Beam Law
 ([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a row with a record on the digital line
 of its momentum at one speed, the collision table a bijection inside its
 invariant classes, the detector's record the squared coherent sum of what it
-clicked, the click the one one-way border. Coverage (a detector's Nodes), the
+clicked, the click the one one-way border and the one measurement: an
+action of the law on the state, the record ended at the detector and the
+detector's own record changed (the model owner, 2026-09-23, record 1139;
+[POSTULATES.md](POSTULATES.md) section 10). Coverage (a detector's Nodes), the
 threshold and the `reads` component are independent data. No audit record or
 whole-GameBoard sum supplies memory, routing or a physical result; the readings
 of the engine (`cube_flux`) and of the host (`diagnostics/shell_readings`, the
@@ -14,6 +17,58 @@ shell means, outside the engine since 2026-09-21) are read-only. The
 `reversible-detector-v1` candidate of the same day is absorbed and deleted
 ([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
 quantum uncertainty and Born behavior remain separate unproved goals.
+
+### The couplings on the GameBoard are the six verbs (2026-09-22)
+
+Every rule a LocalRule runs on a NodeState, for a row on its Link or for a
+body at its Node, is one of the six verbs on bounded integers (the model
+owner, records 181, 202 and 929): the translation of an accumulator by its
+rate with the whole part taken and the remainder kept
+(`core.integer.by_drive`, `nature_beam.by_drive_rows`), the bilinear form
+with a declared matrix (`core.integer.signed_inner`, the columns' signs,
+the labels' weights, the Gram matrix), the group-ring addition, the
+permutation, the evaluation and the Euclidean division; a rule that needs
+more is stated under its own identity and never enters the law by a key.
+The couplings the atom worlds and the light worlds exercise are read
+against the six, one row each with its code lines and its three tests, in
+[docs/designs/couplings_algebra/COUPLINGS.md](docs/designs/couplings_algebra/COUPLINGS.md);
+the definitions they add to the vocabulary, each pointing at its code and
+its design, are in [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md) ("The rule"):
+
+- **The age wall** and **the age wall's set**: the one wall function of
+  the crowd, `core.integer.age_wall` (`core/integer.py:153-187`), and its
+  declared members with their coefficients, `measured.AGE_WALL_SET`
+  (`measured.py:345`, `age_wall_set` `:364-379`): the body's clock at 1
+  (the owed count, `engine.count_owed`, `engine.py:157-182`), the row's
+  flight at 1 + gamma under the world key `optical`; never the phase per
+  age (BEAM_LAW note 25; records 394, 421, 422, 428).
+- **The crowd at a row's Node**: a row's two reads of the one reading set
+  at its own Node, less its own number, the age moment before step 1 and
+  the arrival flow after the walk (`nature_beam.CrowdMoments`,
+  `nature_beam.py:3069-3153`; under `optical`).
+- **The wall on the flight, the push on a row, the label by Bresenham**:
+  the three verbs of `optical-v1` on a row in transit
+  (`nature_beam.optical_walk_step` `:3634-3710`, `optical_turn`
+  `:3730-3963`; docs/designs/one_wall/NOTE.md, EVERY_FAMILY.md).
+- **The phase per age**: the pair form of `phase_per_link`, the first
+  difference of a floor at every walk (`nature_beam.by_clock_rows`
+  `:569-583`), the remainder read at the click (BEAM_LAW notes 37 and 45).
+- **The placed fraction and the completion's quantum** (f_F, q_F) of a
+  family: (1, 0) without the flag `massive`, (0, M) with it
+  (`nature_beam.FamilyFlight` `:979-980`, `_place_completion`
+  `:6363-6455`; docs/designs/massive_rows/DESIGN.md section 3).
+- **The flow label f_D** of `flow-link-v1`, the integer vector nearest
+  Q D / S_1 in the flow sums alone, when it merges (docs/designs/flow_weight/DESIGN.md
+  section 1.2; absent from `main` at 8fa9e00b).
+
+The gate is `tests/test_integer_algebra.py` (the Register Architect's,
+record 920 (A)): no float literal, no true division, no float dtype, no
+random draw and no integer root outside the named table-formation
+functions in the five modules of the physical path. Two integer roots
+taken at run time on these worlds' path are named by their design and by
+COUPLINGS.md (section 3) for that gate: the meeting's norm
+(`meeting.py:359-361`) and the pair of a pushed row
+(`nature_beam.py:3549`).
 
 ## GameBoard topology (2026-09-19)
 
@@ -312,7 +367,8 @@ The field and turning components could be supplied independently to that
 candidate's API, with denominators from the same configuration used by state
 audits. Custom implementations had to be local, deterministic, bounded and
 without evolving private state. Measurement code reads output and records
-evidence. No local law receives a world object or knows source identities at
+evidence (the host's tools; a measurement of the law is the detector's click,
+an action, [POSTULATES.md](POSTULATES.md) section 10, the model owner, 2026-09-23, record 1139). No local law receives a world object or knows source identities at
 remote nodes.
 
 That engine received field activity as a predicate instead of interpreting the

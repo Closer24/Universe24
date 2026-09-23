@@ -408,6 +408,7 @@ WORLD_KEYS = {
     "action",
     "meeting",
     "massive_rows",
+    "clock_stamp",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -417,6 +418,13 @@ WORLD_KEYS = {
     # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
     # false by default (`DRIVE_B_RULE`).
     "drive_b",
+    # flow-link-v1 (2026-09-22): one arrival counts one Euclidean Link of
+    # its line, a boolean, false by default (`FLOW_LINK_RULE`).
+    "flow_link",
+    "atom_level",
+    # centred-step-v1 (2026-09-22): the body's step at half the wall, a
+    # boolean, false by default (`CENTRED_STEP_RULE`).
+    "centred_step",
     "directions",
     "direction_bound",
     "families",
@@ -476,6 +484,34 @@ T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
 # Bresenham line of the momentum with no coincident fire lost. Absent, the
 # per-axis drive of BEAM_LAW note 17 runs unchanged, byte for byte.
 DRIVE_B_RULE = "drive-b-v1"
+# The identity of the centred step (the model owner's word through the Boss,
+# 2026-09-22, record 953 of the log of 2026-09-20; the cause of the atom's
+# widening, docs/designs/atom_give/CAUSE.md section 2 (v); the design
+# docs/designs/atom_give/CENTRED_STEP.md): under the world key `centred_step`
+# the count of a body's step is the NEAREST whole number of its accumulator in
+# units of the wall, on both drives (`core.integer.by_drive` and `by_line`,
+# `centred`), so a step fires when the accumulated motion passes half a Link
+# beyond the Node and the whole wall is subtracted: the body's Node the
+# nearest to its accumulated motion, the lag of the Node behind the motion
+# (half a Link per axis in the mean, which turns the push read at the Node
+# along the motion) zero in the mean. Every other count keeps the whole
+# part. Absent, every registered world replays byte for byte.
+CENTRED_STEP_RULE = "centred-step-v1"
+# The identity of the atom's levels (`atom-level-v1`, 2026-09-22; the model
+# owner's word of record 973 through the Boss; docs/designs/atom_levels/
+# LEVELS.md section 2 (b), the virial form on the physics-rule reviewer's
+# recommendation): under the world key `atom_level` a body that declares
+# `level` carries, beside its action rows, the action gained on each axis
+# since its last return (DESIGN.md's give rows without the modulus), the
+# count of its self-creations since that return and the level at its last
+# release; at a return (the momentum's declared component crossing zero in
+# the declared sense) its level is the whole part of n_l x (the action
+# gained) over 2 h d_l x (the count), and the rise of that level above the
+# last released one is released as one row per declared direction of the
+# declared paid family, content h_q x (the rise), the row's phase turning
+# that many steps per interval of its age (the Planck identity as a rule of
+# the row). Absent by default: every registered world byte for byte.
+ATOM_LEVEL_RULE = "atom-level-v1"
 
 
 def drive_wall(momentum: Sequence[int], content: int, width: int, cap: bool = True) -> int:
@@ -644,6 +680,23 @@ MEETING_RULE = "meeting-v1"
 # nearest its whole momentum (`nature_beam.optical_turn`). Absent, nothing
 # of it exists and every world reads as it did, byte for byte.
 OPTICAL_RULE = "optical-v1"
+# The identity of the flow label (`flow-link-v1`; the model owner's decision of
+# 2026-09-22, record 915 of docs/LOG_2026-09-20.md, on the Flow Weight
+# Designer's design docs/designs/flow_weight/DESIGN.md, the physics-rule
+# reviewer's ADMISSIBLE of record 902): under the world key `flow_link` (a
+# boolean, absent by default) the arrival flow every reader sums counts each
+# arriving row of direction D with the flow label f_D, the integer vector
+# nearest |p_D| D / S_1 (the label per Euclidean Link of the line, S_1 = |a| +
+# |b| + |c| the line's Nodes per period), in place of the unit label u_D, the
+# integer vector nearest |p_D| D / |D| (the label per Node); |p_D| is Q for
+# the photon and a massive family's `momentum_magnitude`. Formed once at load
+# by one Euclidean division per component (`nature_beam.flow_label`), read
+# by the flow's sums alone (`nature_beam.CrowdMoments`, a body's push through
+# the group moment of a free family's rays); the age moment, the wall, the
+# flight, the collision, the phase and the momentum a click moves untouched.
+# Absent, the flow labels are the labels and every world reads as it did,
+# byte for byte.
+FLOW_LINK_RULE = "flow-link-v1"
 # The identity of the hand (`hand-v1`; the model owner, 2026-09-20, record
 # 128 of docs/LOG_2026-09-20.md, "the hand's three choices confirmed"; the
 # physicist's design hand/DESIGN.md with the mathematician's FORM.md; BEAM_LAW
@@ -733,6 +786,7 @@ MEASURED_KEYS = {
     "fixed",
     "span",
     "phase_by_momentum",
+    "level",
     "directions",
     "table",
     "lamp",
@@ -1048,6 +1102,24 @@ class WindowReading:
 
 
 @dataclass(frozen=True)
+class LevelDeclaration:
+    """A body's `level` under `atom-level-v1` (docs/designs/atom_levels/
+    LEVELS.md section 2 (c)): `family` the paid family of the released
+    rows (its quantum h_q the content per step), `pair` the rule's grain
+    [n_l, d_l] (the released family's Planck constant in units of the
+    world's action, h d_l / (N n_l) per phase step; [1, 1] the
+    dictionary's own), `axis` the axis of the return and `sign` the sign
+    the momentum's component crosses TO at a return (DESIGN.md section 1
+    (b): once per loop on any loop that circles a centre, never on a
+    straight flight)."""
+
+    family: int
+    pair: tuple[int, int]
+    axis: int
+    sign: int
+
+
+@dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
     phase, its momentum, whether it is held in place, the directions it
@@ -1120,6 +1192,8 @@ class MeasuredDefinition:
     # The energy E' declared under `covariant_readings` (`E`, whole units of
     # the identity), None for the load-time root `isqrt(E'_0^2 + d p . p)`.
     energy: int | None = None
+    # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
+    level: LevelDeclaration | None = None
 
     def __post_init__(self) -> None:
         if not self.hands:
@@ -1217,20 +1291,36 @@ class NatureBeamWorld:
     # The covariant readings (the world key `covariant_readings`, absent by
     # default): the declaration, or None (`covariant-readings-v1`).
     covariant: CovariantDeclaration | None = None
-    # optical-v1 (the world key `optical`, absent by default): gamma, the
-    # post-Newtonian parameter, or None; the flight's coefficient is
-    # `flight_coefficient`, 1 + gamma.
-    optical: int | None = None
+    # The row's flight in the age wall's set (optical-v1, 2026-09-21; the
+    # law's own since 2026-09-22, the generic entry of the bending): gamma,
+    # the declared post-Newtonian parameter of the world key `optical`, 0
+    # by default; the flight's coefficient is `flight_coefficient`, 1 + gamma.
+    optical: int = 0
     # drive-b-v1 (the world key `drive_b`, false by default): the
     # directional drive of a body (`drive_wall`, `core.integer.by_line`).
     drive_b: bool = False
+    # flow-link-v1 (the world key `flow_link`, false by default): the flow
+    # label per Euclidean Link in place of the unit label per Node
+    # (`nature_beam.flow_label`, formed once at load).
+    flow_link: bool = False
+    # centred-step-v1 (the world key `centred_step`, false by default): the
+    # body's step at half the wall on both drives (`CENTRED_STEP_RULE`).
+    centred_step: bool = False
+    # The clock stamp (the world key `clock_stamp`, false by default): every
+    # line a measured event writes carries `clock`, its own count of
+    # self-creations; a record field, no physics, no hypothesis.
+    clock_stamp: bool = False
+    # atom-level-v1 (the world key `atom_level`, false by default): the
+    # release at a closure of the difference of two closures' levels
+    # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
+    atom_level: bool = False
 
     @property
-    def flight_coefficient(self) -> int | None:
-        """The age wall's coefficient of the row's flight under `optical`,
-        f = 1 + gamma (the time part 1 and the space part gamma of the
-        weak-field index 1 + (1 + gamma) k), None without the key."""
-        return None if self.optical is None else 1 + self.optical
+    def flight_coefficient(self) -> int:
+        """The age wall's coefficient of the row's flight, f = 1 + gamma
+        (the time part 1 and the space part gamma of the weak-field index
+        1 + (1 + gamma) k); 1 by default, gamma the world's `optical`."""
+        return 1 + self.optical
 
     @property
     def recorded(self) -> bool:
@@ -1294,10 +1384,11 @@ class NatureBeamWorld:
         found = []
         for column in range(len(self.families[0].columns)):
             scale = 1
-            if column == 0 and self.optical is not None and self.drive_b:
-                # Every family under one wall, step 3: under `optical` and
-                # `drive_b` together a moving body's gravity charge is the
-                # pair (w, Q S) (`body_weight`), so gravity's Lambda is Q S.
+            if column == 0 and self.drive_b:
+                # Every family under one wall, step 3 (the law's own since
+                # the generic entry of 2026-09-22): under `drive_b` a moving
+                # body's gravity charge is the pair (w, Q S) (`body_weight`),
+                # so gravity's Lambda is Q S.
                 scale = LABEL_SCALE * self.width
             for family in self.families:
                 denominator = family.columns[column].value[1]
@@ -1362,7 +1453,10 @@ class NatureBeamWorld:
         `hand-v1` when the world declares a hand or an axis,
         `covariant-readings-v1` when the world declares `covariant_readings`,
         `optical-v1` for the world key `optical`, `drive-b-v1` for the world
-        key `drive_b` (the directional drive of a body) and, last,
+        key `drive_b` (the directional drive of a body), `flow-link-v1` for
+        the world key `flow_link` (the flow label per Euclidean Link),
+        `centred-step-v1` for the world key `centred_step` (the body's step at
+        half the wall) and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""
@@ -1383,10 +1477,18 @@ class NatureBeamWorld:
             found.append(HAND_RULE)
         if self.covariant is not None:
             found.append(COVARIANT_READINGS_RULE)
-        if self.optical is not None:
-            found.append(OPTICAL_RULE)
+        # The row's flight in the age wall's set is the law's own since
+        # 2026-09-22 (the generic entry of the bending): `optical-v1` names
+        # no hypothesis any more; the runs that carried it keep it in their
+        # records as history.
         if self.drive_b:
             found.append(DRIVE_B_RULE)
+        if self.flow_link:
+            found.append(FLOW_LINK_RULE)
+        if self.centred_step:
+            found.append(CENTRED_STEP_RULE)
+        if self.atom_level:
+            found.append(ATOM_LEVEL_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -2671,6 +2773,79 @@ def _table_entry(
     return str(rule), window, str(reads), width, transformation, hand
 
 
+def _atom_levels(
+    value: object,
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    atom_level: bool,
+    action: int | None,
+    ticks: int,
+) -> tuple[MeasuredDefinition, ...]:
+    """The bodies' `level` declarations under the world key `atom_level`
+    (`atom-level-v1`, docs/designs/atom_levels/LEVELS.md section 2 (c)):
+    `{"family": F, "pair": [n_l, d_l], "return": [axis, sign]}` on a
+    measured event that turns its phase by its momentum and is not fixed;
+    F a paid family with a phase circle (its rows carry the turn); the pair
+    two positive integers; the axis 0, 1 or 2 and the sign -1 or +1. Refused
+    without the key, and the key's bounds refused at load: the divisor
+    `2 h d_l T` for a count T up to the run's ticks within the register."""
+    assert isinstance(value, list)
+    found = list(measured)
+    names = {family.name: index for index, family in enumerate(families)}
+    for index, (entry, definition) in enumerate(zip(value, measured, strict=True)):
+        assert isinstance(entry, dict)
+        if "level" not in entry:
+            continue
+        label = f"measured[{index}].level"
+        if not atom_level:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} is refused without the world key atom_level "
+                "(atom-level-v1, off by default)"
+            )
+        obj = _object(entry["level"], label, {"family", "pair", "return"}, {"family", "pair", "return"})
+        family_name = obj["family"]
+        if not isinstance(family_name, str) or family_name not in names:
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
+        family = names[family_name]
+        if families[family].free:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.family names the free family {family_name!r}: a released "
+                "row carries content h_q x (the rise of the level), so the family is paid"
+            )
+        if not families[family].phase:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.family names the family {family_name!r} without a phase "
+                "circle: a released row turns its phase by its content over the quantum"
+            )
+        pair_value = obj["pair"]
+        if not isinstance(pair_value, list) or len(pair_value) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}.pair must be two positive integers [n_l, d_l]")
+        pair = (
+            _integer(pair_value[0], f"{label}.pair[0]", 1),
+            _integer(pair_value[1], f"{label}.pair[1]", 1),
+        )
+        return_value = obj["return"]
+        if not isinstance(return_value, list) or len(return_value) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}.return must be [axis, sign]")
+        axis = _integer(return_value[0], f"{label}.return[0]", 0, 2)
+        sign = _integer(return_value[1], f"{label}.return[1]", -1, 1)
+        if sign == 0:
+            raise ValueError(f"{BEAM_LAW}: {label}.return[1] must be -1 or +1, the sign crossed to")
+        if definition.fixed or not definition.phase_by_momentum:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} needs a body that steps and turns its phase by its momentum "
+                "(phase_by_momentum, not fixed): the level is read off its action rows"
+            )
+        assert action is not None
+        if 2 * action * pair[1] > MOMENTUM_BOUND // max(ticks, 1):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: the level's divisor 2 h d_l x (the count) leaves the "
+                f"integer bound {MOMENTUM_BOUND} within the run's ticks"
+            )
+        found[index] = replace(definition, level=LevelDeclaration(family, pair, axis, sign))
+    return tuple(found)
+
+
 def _measured(
     value: object,
     shape: Address3,
@@ -3758,62 +3933,32 @@ def _optical(
     meeting: bool,
     table: tuple[Vector, ...],
     massive_rows: bool = False,
-) -> int | None:
-    """The world key `optical` (`optical-v1`, 2026-09-21; docs/designs/one_wall/NOTE.md
-    section 2, the declarations and the refusals once): gamma, a
+) -> int:
+    """The world key `optical`: gamma, the declared post-Newtonian
+    parameter of the row's flight in the age wall's set (the generic entry
+    of the bending, the model owner's word of 2026-09-22, record 847;
+    docs/designs/one_wall/EVERY_FAMILY.md section 6, step 5): a
     non-negative integer (a boolean, a float, a string or a negative
-    integer refused), or None when absent. Refused at load, naming the
-    rule: with `suspension` [0, d] (the wall would be stretched by nothing
-    and the turn would act alone: a declared identity that does nothing);
-    with `meeting` (one turn verb per row, the physicist's must-fix of
-    2026-09-21: the two turns act on the same headings from the same flow
-    and would add on every row); with a direction table in which a moving
-    direction has no neighbour (no other moving direction within a right
-    angle: the six headings alone, for one, whose neighbours are all
-    orthogonal; a row on such a direction would have no fan to turn on);
-    with the key `massive_rows` (the physics-rule review of f4138855,
-    record 510: under both keys the walk would take every family's step
-    from the world's flight under the age wall while a massive family
-    walks by its own triple, a composed flight not reviewed; declare one
-    of the two). The other refusals of the note (a wall, a weight or a
-    momentum beyond the register) are the run's, tested by division
-    before the product is formed."""
+    integer refused), 0 when absent (the time part alone, the law's own
+    number; nature's 1 is a declaration per world and never a default,
+    record 817). The coupling is the law's for every world: since the
+    stretch is n / d times the crowd's age moment and the push is n times
+    the crowd's flow, a world at `suspension` [0, d] or with no crowd walks
+    integer for integer as before (the refusals of optical-v1 at
+    suspension 0, with `meeting` and for a heading without a neighbour are
+    lifted: under `meeting` the meeting's turn keeps the heading and the
+    stretch stays, one turn verb per row; a heading without a neighbour
+    turns to nothing, `nature_beam.optical_turn`). The other refusals of
+    the note (a wall, a weight or a momentum beyond the register) are the
+    run's, tested by division before the product is formed."""
+    del suspension, meeting, table, massive_rows
     if value is None:
-        return None
+        return 0
     if type(value) is not int or value < 0:
         raise ValueError(
             f"{BEAM_LAW}: optical must be a non-negative integer, gamma the post-Newtonian "
             f"parameter (nature's 1), not {value!r}"
         )
-    if suspension[0] == 0:
-        raise ValueError(
-            f"{BEAM_LAW}: the key optical is refused with suspension {list(suspension)}: the "
-            "age wall stretches the flight by the clock's pair n / d, and at n = 0 nothing is "
-            "stretched while the turn would act alone (a declared identity that does nothing)"
-        )
-    if meeting:
-        raise ValueError(
-            f"{BEAM_LAW}: the key optical is refused with the key meeting: one turn verb per row "
-            "(the two turns, the meeting's at its grain constant and optical-v1's at the flow's "
-            "weight, act on the same headings from the same flow and would add on every row)"
-        )
-    # The key `massive_rows` beside `optical` is admitted since 2026-09-22
-    # (every family under one wall, docs/designs/one_wall/EVERY_FAMILY.md):
-    # every family walks by its own table under the age wall, the photon by
-    # Flight's numbers by value, a massive family by its triple; the
-    # refusal of record 510 is lifted.
-    moving = [v for v in table if any(v)]
-    for vector in moving:
-        if not any(
-            sum(a * b for a, b in zip(vector, other, strict=True)) > 0
-            for other in moving
-            if other != vector
-        ):
-            raise ValueError(
-                f"{BEAM_LAW}: the key optical is refused: the direction {list(vector)} has no "
-                "neighbour (no other moving direction within a right angle), and a row turns to "
-                "the fan's nearest direction"
-            )
     return value
 
 
@@ -3911,6 +4056,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "(twice the flight bound) is not its bound; declare the largest age a row may carry"
         )
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
+    # The clock stamp (the moving detector, 2026-09-22, the chief physicist's
+    # design docs/designs/moving_detector/DESIGN.md section 7): true or
+    # false, false by default; with it every line a measured event writes
+    # (its `click`, `read`, `rerelease` and `become` lines and its face
+    # click) carries `clock`, the event's own count of self-creations (its
+    # `age`). A record field and no physics: it enters neither the model
+    # identity nor the hypothesis list, and without it every record is byte
+    # identical to what it was.
+    clock_stamp = obj.get("clock_stamp", False)
+    if type(clock_stamp) is not bool:
+        raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -3968,6 +4124,30 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for entry in measured:
             if not entry.fixed:
                 drive_wall(entry.momentum, sum(entry.held), width, obj.get("covariant_readings") is None)
+    # flow-link-v1 (2026-09-22): the world key `flow_link`, a boolean, false
+    # by default; the flow labels it declares are formed once at load by
+    # `nature_beam.direction_flight` and `nature_beam.family_flight`, their
+    # one product tested by division before it is formed.
+    flow_link = obj.get("flow_link", False)
+    if type(flow_link) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: flow_link must be true or false ({FLOW_LINK_RULE}, off by default), "
+            f"not {flow_link!r}"
+        )
+    # centred-step-v1 (2026-09-22): the world key `centred_step`, a boolean,
+    # false by default (docs/designs/atom_give/CENTRED_STEP.md section 1).
+    centred_step = obj.get("centred_step", False)
+    if type(centred_step) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: centred_step must be true or false (centred-step-v1, off by default)"
+        )
+    # atom-level-v1 (2026-09-22): the world key `atom_level`, a boolean,
+    # false by default, and the bodies' `level` declarations under it
+    # (docs/designs/atom_levels/LEVELS.md section 2 (b) and (c)).
+    atom_level = obj.get("atom_level", False)
+    if type(atom_level) is not bool:
+        raise ValueError(f"{BEAM_LAW}: atom_level must be true or false (atom-level-v1, off by default)")
+    measured = _atom_levels(obj["measured"], measured, families, atom_level, action, ticks)
     covariant = _covariant(
         obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
     )
@@ -3976,21 +4156,23 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
-    # Every family under one wall, step 3: a moving body under `optical`.
-    if optical is not None:
-        for index, entry in enumerate(measured):
-            if entry.fixed or not any(entry.momentum):
-                continue
-            if not drive_b:
-                # Every family under one wall, step 3 (2026-09-22): a moving
-                # body under `optical` walks by form B's directional drive,
-                # the member of the age wall's set; the per-axis drive of
-                # note 17 is never a member (REVIEW_3 must-fix 2 and 3).
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{index}]: a moving body under the key optical needs the "
-                    "key drive_b (form B's directional drive, the member of the age wall's set; "
-                    "the per-axis drive is never a member, docs/designs/one_wall/BODY_DRIVE.md)"
-                )
+    # Every family under one wall, step 3: a moving body under the wall
+    # (the law's own since the generic entry of 2026-09-22).
+    for index, entry in enumerate(measured):
+        if entry.fixed or not any(entry.momentum):
+            continue
+        if optical > 0 and not drive_b:
+            # Every family under one wall, step 3 (2026-09-22): a moving
+            # body at gamma > 0 walks by form B's directional drive, the
+            # member of the age wall's set at gamma; the per-axis drive of
+            # note 17 is never a member (REVIEW_3 must-fix 2 and 3). At
+            # gamma 0 the member is declared at 0 and nothing is stretched.
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{index}]: a moving body at gamma {optical} needs the "
+                "key drive_b (form B's directional drive, the member of the age wall's set; "
+                "the per-axis drive is never a member, docs/designs/one_wall/BODY_DRIVE.md)"
+            )
+        if drive_b:
             body_weight(entry.momentum, sum(entry.held), width, optical)
     world = NatureBeamWorld(
         model_id,
@@ -4017,6 +4199,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         covariant=covariant,
         optical=optical,
         drive_b=drive_b,
+        flow_link=flow_link,
+        centred_step=centred_step,
+        clock_stamp=clock_stamp,
+        atom_level=atom_level,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)

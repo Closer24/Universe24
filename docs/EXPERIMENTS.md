@@ -2524,6 +2524,7 @@ states "exactly" and means integer equality at every tick.
   this series is re-registered; the lines above stand as history with
   their kind, and this line is the detector's-clock reading of the
   head's replay, dated.
+- **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`; `record/coasting_none` and the base `coasting_none` through `tools/run_series.py`, 400 intervals, 62.6 and 60.4 s, completed and conserved; read by `tools/hubble_stars_readings.py`; the criteria in [docs/designs/paper_criteria/CRITERIA.md](designs/paper_criteria/CRITERIA.md), rows 3 and 4b, pinned before the run).** DETECTOR, the window [300, 400) in the detector's own clock (r = 1.0000): q = -0.104, H (t_0 + T_0) = 1.0232, rms 0.0019; `s_mz2`'s z = 0.2647; 150 readings inside, 0 outside; equal to the replay of 2026-09-22 above and to the Replicator's at `6b707a5`, nothing moved at head (the digests state `3993941601dc`, audit `33cf0ac763ce`, events `0fa8cfa523de`; the base world NOT READABLE under the acoustic rule, its digests `1a385429c948` / `33cf0ac763ce` / `f75ca18274d2`). Under the paper's criteria NATURE rows 3 and 4b stay FAIL (-0.104 against -0.527 +- 0.011; 0.2647 against 0.315). No number re-registered; this line dated.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -2870,6 +2871,24 @@ states "exactly" and means integer equality at every tick.
   `r8`'s 0.969 and C(2) = 1.24, are the action-row re-read's to the
   digit; 0 record checks failed, 2 readings inside, 0 outside. The
   verdict stands.
+- **The atoms series' baseline run as the law stands (2026-09-22; measured,
+  nothing pinned here; record 886 on record 884 (2)).** One run of
+  `examples/events/atoms/hydrogen_r12.json` (series H's `r12` with the
+  momentum derived for form B's circle, 293 783 192, and h_B = 5 536 242 544;
+  form B's key not declared, so the drive on `main`), the pins declared
+  before it from the atom's algebra and the clicks read after it in
+  [docs/designs/atom_baseline/RUN.md](designs/atom_baseline/RUN.md): the
+  electron widens every quarter turn (the crossings at 13, 13, 17 and 26
+  Links from the proton's Node, the arrival Nodes of its rows on the side
+  faces, DETECTOR) and leaves through `face:+y` at count 3407 (DETECTOR),
+  the register's precedent at this radius repeated (`r12` under the signed
+  drive left through `face:+x` at 2059); no return, no period, no closure
+  read; the dwell 20.0 counts per Link about the three crossings inside
+  r = 17 (19.05 by formula at r = 12; 23.06 over all 16 hops, FAIL as
+  declared); one row read by the proton per crossing (DETECTOR); four pins FAIL, two NOT READ, one PASSES; nothing moved; the radius from the step lines 12.00 to
+  27.86 (GAMEBOARD, a diagnostic); nothing compared with nature, NATURE
+  row 6 NOT YET. A labelled baseline for the stability rule's design
+  (atom-give-v1, record 881), not a re-read of series H's verdict.
 
 ### I, the nucleus (2026-09-20)
 
@@ -3927,6 +3946,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   word that moves is `j1_source`'s trigger criterion at the cap (inside
   on the ticks, outside on the counts); the registered J1 verdict (a
   step, a line, the bound neutron later) stands.
+- **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`; `j1_lattice` and `j1_source` at the cap 1024 (206.5 and 224.6 s) and `j2_filter` at its 1037 intervals (6.2 s) through `tools/run_series.py`, completed and conserved; read by `tools/weak_readings.py`; the criteria in [docs/designs/paper_criteria/CRITERIA.md](designs/paper_criteria/CRITERIA.md), rows 8a and 8b, pinned before the run).** Every number equal to the replay of 2026-09-22 above: `j1_lattice` 64 of 64 at their keys, the counts 154476 .. 338172 inside, 64 clicks of content 3 (DETECTOR), the widths 0.1111 (births) and 0.0787 (ticks) [GAMEBOARD, the lattice's clock, not counted]; `j1_source` 64 of 64, the counts 171027 .. 367454 (one or more outside, as above), the widths 0.1279 and 0.1147; `j2_filter` 16 of 1024, 0 behind, the far detector 699 (DETECTOR, 3 inside). The digests: `j1_lattice` state `c6f9e3542a09`, audit `9a8126568046`, events `75b7e5372a87`; `j1_source` `b1bdb15150e0` / `446427636161` / `2008b437cdb5`; `j2_filter` `ddec44874294` / `38ae53006d7b` / `1c92c9c38177`. NATURE rows 8a and 8b stay FAIL under the paper's criteria. No number re-registered; this line dated.
 
 ### L, the amplitude law (2026-09-20)
 
@@ -4410,6 +4430,7 @@ end, every one of the records 1 to 4096 gathered): dark
   0.96 pin was the screen's fan's, not this world's. The numbers beside the
   world in [its README](../examples/events/amplitude/README.md#l2-the-two-slits-at-a-low-rate).
   DETECTOR.
+- **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`, the initialization `b75b611959ec3dfe`; 4300 intervals in 1152.9 s through `tools/run_series.py`, completed and conserved; the pin for this world's own fan derived before the run by the register's algebra in [docs/designs/paper_criteria/slits_huygens_pin.py](designs/paper_criteria/slits_huygens_pin.py) (the counts per cell bit for bit, the clicks' visibility 0.9659; [CRITERIA.md](designs/paper_criteria/CRITERIA.md) row 2a).** DETECTOR, the gathers of the records 1 to 4096 off `run.json`'s world list: wall 882, screen 1711 on 107 pixels, faces 1503, every pixel's count equal to the pin's and to the run of 2026-09-21 above, the visibility 0.9659; the pin met bit for bit, NATURE row 2a's FAIL stands by the algebra and the run alike (the digests state `9eef5f81f610`, audit `8ad36b7f1b63`, events `ee441d9ba8c9`). A finding for the tool's owner, not a reading: `tools/amplitude_path.py --check` reports the layer's replay differing from the world list on this run and on `slits_low` at head (80 against 80) while equal on `mz_equal`. No number re-registered; this line dated.
 
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
@@ -4631,6 +4652,7 @@ sequential gates on an entangled record, the full register replay.
   of the falling rate), no contact, no `bond` row or click, `held.bond` 2
   at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
   are identical (no lamp, no crowd on a fan). The verdict stands.
+- **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`; the three worlds through `tools/run_series.py --jobs 2`, 3000 intervals, 98.0, 21.6 and 59.9 s, completed and conserved; read off the record; the criteria in [docs/designs/paper_criteria/CRITERIA.md](designs/paper_criteria/CRITERIA.md), rows 7a and 7b, pinned before the run).** DETECTOR: B1 two `bond` clicks at tick 19 at (8, 10, 10) and (13, 10, 10) of amount 2 and content 2, the escaped 4, the mass read 3673 (`held` (1834, 0, 1, 0) and (0, 1837, 1, 0)), `given` 2 at each body's first contact and 0 on the 346 later; B3 four `bond` clicks at 18, 18, 18, 19, the escaped 8, the ratio 2.0; B2 no contact, no `bond` click, `held.bond` 2, the lamp's 2993 gathers 2958 of content 8 and 35 of 7 (registered 2961 and 32). In the lattice's clock (GAMEBOARD, the tick of a line) the first contacts fall one interval later than in 2026-09-20 (B1 at 17, B3's gives at 16, 16, 16, 17; the alpha's first step at 82). Every pin of the rows met; NATURE rows 7a BOUND and 7b FAIL stand. The digests: `deuteron_bond` state `36d43a04f9ac`, audit `3243dd29965b`, events `46cd2ba58723`; `alpha_square_bond` `647f45e71e86` / `ba6e81715af5` / `c18da506c68e`; `proton_bond_lamp` `5ac833225257` / `e994ab4c63af` / `a6df0ee9feb4`. No number re-registered; this line dated.
 
 ### Q, c measured behind a detector (2026-09-21)
 
@@ -7414,6 +7436,7 @@ sequential gates on an entangled record, the full register replay.
   similar figures; the scale symmetry of the 1 / r force is the claim it
   tests; not closed. A circle's period, amplitude and omega^2 outside:
   the grain of the push and the per-axis drive's anisotropy, both named.
+- **Under the one constant (flow-link-v1; the owner's decision of 2026-09-22, record 915; the pins before any run, [the one-constant worlds](../examples/events/orbit_lamp/README.md#the-one-constant-worlds-flow-link-v1-2026-09-22-the-pins-before-any-run)).** Four worlds by the same generator (`worlds(flow=True)`, `expectations_flow.json`): `r12_flow`, `r24_flow` and their controls, the registered worlds with the key `flow_link: true` and the probe's momentum at the whole n = 8 of the circle under the key, nothing else changed, the registered five untouched. The generator's own derivation: the plane fan's mean of S_1 / |D|, F_plane = 1.2871 (4 / pi in the limit), divides the circular balance q L C / (2 pi) = 1.910 to 1.484, the real root n = 7.672, the whole 8 (the design's 7.818 divides the whole 9's balance; the same whole). Pinned, GAMEBOARD by formula until the run: T = 2 pi r (S + n) / n = 377 and 754 at the pace 8 / 40 within the register's 9 percent (343 to 411; 686 to 822; the design's 384 and 768 at 7.818); T(24) / T(12) = 2.00 +- 0.18 unchanged (the factor a constant of the line, cancelling in the ratio); omega^2 = 2.78e-4 and 6.94e-5 within T's brackets; the amplitude r - 1 to r + 2; the controls' x = 60 + r on every click and the escape at the 61st step, 305 +- 6. DETECTOR when run: the lamp's rows' clicks (x, tick, age), T the recurrence of x as in the registered run; Newton's and Kepler's forms on the comparison side only (record 817). Refuted if T leaves its band, the ratio leaves its bracket, or a control moves under the key (a click off x = 60 + r, the escape off its bracket). Not pinned: the equivalence (no constant in it; closed above), the byte identity of a flow control with a keyless control at n = 8 (the design's section 3 (d), by formula). The world files shipped at `485a57dc` (the key merged from `origin/flow-link-build` at `a3be9ba13f08`), the pins first. **The run (2026-09-22, the Boss's order of record 962; [the run's section](../examples/events/orbit_lamp/README.md#the-run-under-the-key-2026-09-22-measured-against-the-pins-of-expectations_flowjson-none-moved), [run_flow.out](../examples/events/orbit_lamp/run_flow.out)):** source fingerprint `00fda864cf1bb868`, Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every world completed at 4000 intervals (18.5 to 9.4 s) with the books balanced, every record `flow_link: true` (HOST: the key in the run); 0 record checks failed, 4 readings inside, 7 outside, none moved. DETECTOR (the radius at the births a CONVERSION of the age click by the flight table; the reviewer's kinds): `r12_flow` 145 clicks, x 31 to 96, the radius at the births 3.2 to 68.3 about 24.3, T = 588.7 (343 to 411): outside, omega^2 7.78e-5: outside, the amplitude 32.5: outside, the escape through `face:+y` at the tick 1208 after touching the detector line at 808; `r24_flow` 288 clicks, x 0 to 90, the radius 17.0 to 71.0 about 37.6, T = 987.3 (686 to 822): outside, omega^2 3.11e-5: outside, the amplitude 45: outside, the escape through `face:-x` at 2452 after touching the line at 633 (the register's first record of this run said no escape: corrected from the registered events on the Newton Diagnostician's finding, record 1022, the tool printing every world's escape and contacts since; the periods the means of two and three spacings of loops that never closed; no other number moved); the ratio T(24) / T(12) = 1.677 (1.82 to 2.18), COMPUTATION from two DETECTOR periods of two records: outside; the controls every click at x = 60 + r and the escape at 305 (299 to 311): inside, both. The verdict by the pins as written: the controls inside; the periods and the ratio outside, the two refuting readings both read; what is refuted is the circle's period at the whole 8 under the key and the ratio of two loops that are not similar figures (the mean radii 24.3 and 37.6, the ratio 1.55; T / the mean radius 24.2 and 26.3, COMPUTATION, not pinned). Three causes named, none moved: the loops not circles (two or three unequal recurrences each); the whole-n grain of the launch (n = 8 sits 7.8 percent above the balance under the key, twice the registered 3.4 percent as built); the push's grain and the drive's anisotropy, as registered. On flow-link-v1 the run decides nothing: no world as built at n = 8 was run to separate the constant from the grain (named, not run, not proposed); the hypothesis's own reading is the ring's, stated beside this row when it comes. Status: run once, registered, none moved.
 
 ## B. Proof for the paper
 

@@ -505,6 +505,43 @@ the `step` lines against the line of the momentum and the accumulators'
 bound (GAMEBOARD) against the pins; the register entry is
 [X, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22).
 
+## The flow-link series
+
+The folder [flow_link/](flow_link/README.md) holds the ring worlds of
+`flow-link-v1` (the world key `flow_link`, off by default; the model
+owner's decision of 2026-09-22, record 915 of the log of 2026-09-20; the
+design [docs/designs/flow_weight/DESIGN.md](../../docs/designs/flow_weight/DESIGN.md)
+section 4 with its algebra), written by `flow_link/make_worlds.py` with
+their expectations before the run (`flow_link/expectations.json`): series
+K's box with the mass 2^16 at the pin n S = d and a ring of lamps on the
+heading at the impact distance b = 6, 3 and 8 (40, 16 and 48 starts) under
+`optical: 0` and `optical: 1`, each with its control, and the registered
+optical mass worlds under the key as the calibration.
+`tools/flow_link_readings.py` reads every start's arrival Node and age at
+the screen (DETECTOR), the ring's mean radial shift against the design's
+pin (0.731 +- 0.025 Links at b = 6, gamma 1) and the conversions
+`C_nodes` and `C_ring` through the stated lever-arm factor against
+`2 c_f x 0.990 x L / sqrt(L^2 + b^2)` on the one constant, labelled so; the
+verdict by the pins is in the folder's README.
+
+## The hand series
+
+The folder [hand/](hand/README.md) holds the worlds of series P, the hand
+(`hand-v1`, the model owner's decision of 2026-09-20, record 128 of the
+log; [BEAM_LAW note 39](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+written by `hand/make_worlds.py`: `w_hand`, the W world with a second
+proton, the W family left-handed and the neutron given an axis (the W
+leaves against the axis to the proton on one side; the mirror image of the
+world sends it to the other: the parity test); `w_two_sides`, the control
+without a hand or an axis (mirror-equal); `wu`, Wu's experiment on a bar of
+17 (the left-handed beta against the nuclear axis to the reader at x = 0,
+the right-handed antineutrino along it out of the face); and `nu_hand`,
+J2's bar with the neutrino left-handed and two readers admitting one hand
+each (0 and 1022 clicks; mirror-equal, a hand without an axis being a
+datum a mirror cannot see). The register entry is
+[P, the hand (2026-09-20)](../../docs/EXPERIMENTS.md#p-the-hand-2026-09-20);
+the parity test itself is `tests/test_hand.py` (d).
+
 ## The amplitude series
 
 The folder [amplitude/](amplitude/README.md) holds the worlds of series L,

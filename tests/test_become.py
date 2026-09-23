@@ -375,10 +375,14 @@ def test_the_crowd_slows_the_trigger_and_the_gate_holds_it():
     assert [(r["tick"], r["counted"]) for r in become] == [(3, 192)]
     # The owed accumulator at [1, 128] on the age moment: 64 at tick 2 owes 0,
     # 64 + 192 = 256 at tick 3 owes 2, then 192 owes 1 and 256 owes 2 in
-    # turn (the self-creations at the ticks 1, 2, 3, 6, 8, 11: age 6, waited
-    # 6, the remainder 64 after tick 11); under the presence word age 7,
-    # waited 5, the remainder 64.
-    assert simulation.measured[2].age == 6 and simulation.measured[2].waited == 6
+    # turn. Before the generic entry of the bending (2026-09-22): the
+    # self-creations at the ticks 1, 2, 3, 6, 8, 11, age 6, waited 6, the
+    # remainder 64 after tick 11 (under the presence word age 7, waited 5).
+    # Since the entry the crowd's own rows are stretched by the crowd of
+    # the other number at their Node, dwell longer and count more (the age
+    # moment counted 4224 after 12 intervals): age 4, waited 8, the
+    # remainder 64 (GAMEBOARD, a test world at the pair [1, 128]).
+    assert simulation.measured[2].age == 4 and simulation.measured[2].waited == 8
     assert simulation.measured[2].acc_owed == 64
     free, free_records, _ = run(world([neutron()], suspension=[1, 128]), 12)
     assert [r["tick"] for r in free_records if r["event"] == "become"] == [3]

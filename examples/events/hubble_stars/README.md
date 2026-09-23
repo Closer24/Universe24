@@ -837,3 +837,7 @@ clock printed beside it and the step rule's burst printed as a diagnostic,
 not counted; the pins restated, the readings and the verdicts are in
 [the register's entry](../../../docs/EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20),
 "Re-read in the detector's own clock (2026-09-22)".
+
+## Re-run at head (2026-09-22)
+
+The criteria runner re-ran `record/coasting_none` and `coasting_none` at `origin/main` `4028b020` for the paper's Table 3 rows 3 and 4b (the criteria pinned first in [docs/designs/paper_criteria/CRITERIA.md](../../../docs/designs/paper_criteria/CRITERIA.md)): q = -0.104, H (t_0 + T_0) = 1.0232, `s_mz2`'s z = 0.2647 in the detector's own clock (DETECTOR), 150 readings inside, equal to the replay of 2026-09-22; the register's entry carries the dated line.

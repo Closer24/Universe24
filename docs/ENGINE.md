@@ -16,6 +16,17 @@ is the owner. The engines before it (the law of events, `events-v1`, of the
 evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
 
+The physical path (`nature_beam.py`, `meeting.py`, `engine.py`, `world.py`,
+`amplitude.py` on `core/integer.py` and `core/phase.py`) is the six verbs on
+bounded integers and nothing else (the model owner, records 181, 202 and
+929; every coupling of the atom worlds and the light worlds read against
+the six in [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md)), gated by
+`tests/test_integer_algebra.py` (the Register Architect's, record 920 (A));
+beneath it two integer roots are taken at run time, each declared by its
+design: the meeting's norm under the key `meeting` (`meeting.py:359-361`,
+BEAM_LAW note 35) and the pushed row's pair under the key `optical`
+(`nature_beam.py:3549`, EVERY_FAMILY.md; being replaced on PR #855).
+
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
@@ -221,10 +232,12 @@ model owner's word, record 394), or for a family whose table entry reads
 the age word's shape one wall function of the crowd, `core.integer.age_wall`,
 the rate r x d against the wall w x (d + c k n) over the declared set
 `measured.AGE_WALL_SET` of accumulators with a coefficient c each, today the
-clock alone at c = 1, the owed count the excess of its stretched wall over
-its stretched rate in units of d, integer for integer as before; the flight
-joins under optical-v1's key at its own coefficient by a declaration in the
-set, the phase per age never (`AGE_WALL_NEVER`);
+clock at c = 1, the owed count the excess of its stretched wall over its
+stretched rate in units of d, integer for integer as before, and the row's
+flight at c = 1 + gamma (the law's own since 2026-09-22, the generic entry
+of the bending, the model owner's word of record 847; gamma the
+world's declared `optical`, 0 by default), the phase per age never
+(`AGE_WALL_NEVER`);
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in
@@ -482,12 +495,15 @@ register, [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 3 and note 35; refused with a paid family without a phase circle,
 and refused when it is not true or false; the record carries it and the
 identity `meeting-v1` under `hypotheses` when it is true); `optical`
-(since 2026-09-21, `optical-v1` in its generic form, the model owner's
-"go" of record 303 and "clearly, in the generic form", records 421 to
-428; docs/designs/one_wall/NOTE.md; absent by default: gamma, the
-post-Newtonian parameter, a non-negative integer, nature's 1; under it
-the row's flight joins the age wall's declared set at the coefficient
-f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
+(since 2026-09-21 `optical-v1` in its generic form under its key, the
+model owner's "go" of record 303 and "clearly, in the generic form",
+records 421 to 428, docs/designs/one_wall/NOTE.md; since 2026-09-22 the
+law's own for every world, the generic entry of the bending, the model
+owner's word of record 847, "bring it back immediately": gamma,
+the post-Newtonian parameter, a non-negative integer, 0 by default, the
+time part alone, the law's own number; nature's 1 a declaration per world
+and never a default, record 817; the row's flight is a member of the age
+wall's declared set at the coefficient f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
 wall 2 T_D (d + f n A), A the crowd's age moment at the row's Node read
 before step 1, one interval retarded, the accumulator a field of the row
 with its residue, `nature_beam.optical_walk_step`, one Link per interval
@@ -514,9 +530,11 @@ first, floor, the sub-unit remainder dropped (record 496's rule for the
 time of the last Link, generalised: the pace's direction changed), not
 at the label's turn; the label D is then the phase's, the click's
 momentum label and the books' alone (records 494 and 496;
-`nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
-turn verb per row), with a direction that has no neighbour within a right
-angle and with gamma out of range; with the key `massive_rows` admitted
+`nature_beam.optical_turn`, the books' `turned` line); refused with gamma out of range; at
+`suspension` 0 nothing is stretched and nothing pushed; under `meeting`
+the meeting's turn keeps the heading and this turn does not act (one turn
+verb per row); a direction without a neighbour within a right angle turns
+to nothing (the three refusals of optical-v1 lifted on 2026-09-22); with the key `massive_rows` admitted
 since 2026-09-22 (every family under one wall,
 [docs/designs/one_wall/EVERY_FAMILY.md](designs/one_wall/EVERY_FAMILY.md):
 every row walks by its own family's table under the one wall, a pushed
@@ -524,19 +542,79 @@ row by the pair of its momentum with the family's rest term,
 `nature_beam.row_pairs` and `momentum_pair`, the wall's square refused
 naming the rule before it is formed, and is pushed at the weight per
 unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels,
-`nature_beam.unit_weights`; the refusal of record 510 lifted); with the
-key `drive_b` beside it (the body's drive under the one wall, step 3,
-2026-09-22, [docs/designs/one_wall/BODY_DRIVE.md](designs/one_wall/BODY_DRIVE.md))
+`nature_beam.unit_weights`; the refusal of record 510 lifted); the
+inverse interval refused at a pair with n > 0 (a row's wall reads the
+crowd of the interval before, which the after-state does not hold); the
+record carries the block `optical` {gamma, flight_coefficient} for every
+world and no identity (`optical-v1` names no hypothesis since
+2026-09-22); a world at [0, d] or with no crowd walks integer for integer
+as before, its record and its state byte for byte: the stretch is n / d
+times the crowd's age moment and the push n times its flow, and the
+snapshot writes a row's flight accumulator only where a crowd moved it
+off the table's own count at its age, the value the walk seeds from
+(`tests/test_optical.py` (e), the gate set's digests), and by the same
+test the click's exact time is the count's own on a row no crowd moved
+and the accumulator's where one did, in ONE form for every row of every
+world, (age r - s + T d) / r with T the half wall of the row's present
+pair, the start its accumulator was seeded from (`optical_last_link`, the
+walk's `last_link`; the physics-rule reviewer's line on PR #855: a row no
+crowd moved reads the count's own floor, made T_d / (S_1 Q), by identity,
+and no row reads two forms; the amplitude worlds' clicks byte for byte);
+the pushed row's wall T(P) is a comparison ladder of squares, no root in
+the interval (`nature_beam.square_ladder`; since the ring worlds of
+flow-link-v1, 2026-09-22, the split ladder `nature_beam.split_ladder`:
+the wall's square X = R^2 + 3 |P|^2 is bounded, X Q^2 never formed, T = Q a
++ b reached by a ladder on X and a ladder on the remainder, the same
+floor; the physics-rule reviewer's route (b)); a row
+whose direction a collision or the meeting changed reads its age on its
+present line, its accumulator the table's own count there
+(`nature_beam.reseed_flight`, the crowd's carry on the old line dropped
+with the old line), so two rows alike on the new line are alike in the
+merge; the inverse interval at n = 0 returns the rows fresh, the store
+bit for bit (`tests/test_nature_beam_bijection.py`, `tests/test_meeting.py`
+(e)); at the register's
+crowd worlds at a pair with n > 0 the light is stretched by the crowd's
+age moment as the clocks are, which is the law and their inputs' number
+(the standing of the 32 registered crowd worlds at such a pair: the
+model owner's word of record 871, not needed, not in the paper, the
+Register Architect's to remove; series T's four stay with NATURE row
+12 and are redeclared in the weak field); with the key `drive_b`
+beside it (the body's drive under the one wall, step 3, 2026-09-22,
+[docs/designs/one_wall/BODY_DRIVE.md](designs/one_wall/BODY_DRIVE.md))
 the body's directional drive is a member of the age wall's set at the
 coefficient gamma (`measured.age_wall_set`: the clock 1, the flight
-1 + gamma, the drive gamma; the rates x d against the wall x (d + gamma n
-A) in `engine._move`), a moving body's gravity charge is (w, Q S), the
-rows' weight on its momentum over the label scale (`world.body_weight`,
-gravity's Lambda Q S), and a moving body under `optical` without
-`drive_b` is refused at load; the
-inverse interval refused under it; the record carries the block `optical` {gamma, flight_coefficient}
-and the identity `optical-v1` under `hypotheses`; without the key every
-world reads as it did, byte for byte); the amplitude law
+1 + gamma, the drive gamma, at gamma 0 declared at 0 and unstretched;
+the rates x d against the wall x (d + gamma n A) in `engine._move`), a
+moving body's gravity charge is (w, Q S), the rows' weight on its
+momentum over the label scale (`world.body_weight`, gravity's Lambda
+Q S), and a moving body at gamma > 0 without `drive_b` is refused at
+load (the per-axis drive is never a member));
+`flow_link` (since 2026-09-22,
+`flow-link-v1`, the model owner's decision of record 915 on the Flow
+Weight Designer's design
+[docs/designs/flow_weight/DESIGN.md](designs/flow_weight/DESIGN.md), the
+physics-rule reviewer's ADMISSIBLE of record 902; true or false, false by
+default, any other type refused: under it the arrival flow every reader
+sums counts each arriving row of direction D with the flow label f_D, the
+integer vector nearest |p_D| D / S_1 (the label per Euclidean Link of the
+line, S_1 = |a| + |b| + |c|; per component sign(D_i) x (2 |p_D| |D_i| +
+S_1) // (2 S_1), one Euclidean division per component at load,
+`nature_beam.flow_label`, the one product tested by division before it is
+formed), in place of the unit label u_D nearest |p_D| D / |D| (the label
+per Node); |p_D| is Q for the photon (`Flight.flow_labels`) and a massive
+family's `momentum_magnitude` (`FamilyFlight.flow_labels`, each family's
+from its own labels); read by the flow's sums alone, the rows' push
+(`nature_beam.CrowdMoments`, `optical_turn`) and a body's push through
+the group moment of a free family's rays (`_family_plan`, `push_form`);
+the age moment, the wall, the flight, the collision, the phase and the
+momentum a click moves (a paid family's push, the label Q per unit, note
+18) untouched; the push's shell mean then carries no L1 factor (the
+fan's mean of S_1 / |D|, 1.4355 on series K's 290 directions) and the
+push's constant of gravity is the clock's; the record carries `flow_link:
+true` and the identity `flow-link-v1` under `hypotheses`; the first world
+that declares it is `examples/events/flow_link/` (the ring of starts at
+b = 6); without the key the flow labels ARE the labels and every world
+reads as it did, byte for byte, `tests/test_flow_link.py` (a)); the amplitude law
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
 step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
@@ -587,7 +665,13 @@ is refused naming the lamp; the inverse interval is refused with the key;
 `run.json` carries `massive_rows` as declared, the identity under
 `hypotheses` when it is true and per family `massive` and
 `momentum_magnitude` only then; without the key every world reads as it
-did, byte for byte (`tests/test_massive_rows.py`); `doppler` (the reading's
+did, byte for byte (`tests/test_massive_rows.py`); the clock stamp (2026-09-22,
+the moving detector, docs/designs/moving_detector/DESIGN.md section 7): the
+world key `clock_stamp` (true or false, false by default), under which every
+line a measured event writes carries `clock`, its own count of
+self-creations (the readings table below); `run.json` carries the key only
+when true; no hypothesis, no rule, no verb, and without the key every
+record is byte identical (`tests/test_moving_detector.py`); `doppler` (the reading's
 weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
 2026-09-21 with the crossing rule,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
@@ -906,8 +990,8 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `optical` (since 2026-09-21, under the key alone:
-`gamma` and `flight_coefficient` 1 + gamma), `fast_steps` (since the crossing rule of 2026-09-21,
+false by default), `optical` (`gamma` and `flight_coefficient` 1 + gamma, for every world
+since 2026-09-22), `fast_steps` (since the crossing rule of 2026-09-21,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the count of Links a body crossed in the interval right after another of
 its Links, where the rule's one-per-crossing count is not proved; a
@@ -927,7 +1011,9 @@ paid families off 3 h n = Q S d as `off_identity`, the most `comparisons`
 one frame took and `waited`, the intervals each body owed to proper time),
 `optical-v1` when the world declares `optical`, `drive-b-v1` when the world
 declares `drive_b` (2026-09-22, the directional drive of a body; the record
-then carries `drive_b: true`, under the key alone),
+then carries `drive_b: true`, under the key alone), `flow-link-v1` when
+the world declares `flow_link` (2026-09-22, the flow label per Euclidean
+Link; the record then carries `flow_link: true`, under the key alone),
 last; `[]` without any; in a world with a hand every family carries
 its `hand` and every number its `axis`, the heading's vector or None),
 `columns` (the
@@ -1092,6 +1178,10 @@ on the `record` line (a `wave` set's line under `pointer`, and the `sum`
 set's line at a gather, per label); nothing further is exposed. The
 things themselves, one row each in the three worlds, are in
 [THREE_WORLDS.md](THREE_WORLDS.md).
+A detector's reading is the record of an action of the law: the click ends
+the record at the detector and changes the detector's own record, and only
+that action measures; the host's readings of the board only read
+(the model owner, 2026-09-23, record 1139; [POSTULATES.md](../POSTULATES.md) section 10).
 
 | The reading | Type and symbol | Where the record carries it | Unit | Kind |
 | --- | --- | --- | --- | --- |
@@ -1104,6 +1194,7 @@ things themselves, one row each in the three worlds, are in
 | the age of a row | scalar | `age` on the `click` line of a record's row; the age moment `reading` when the entry reads `age` (sum amount x age) | intervals (the moment: units x intervals) | detector (read whole only by a measured event) |
 | the content | scalar M | `content` on a `click`, `read`, `home` or `rerelease` line (amount x content per unit); `content` and `held` of a measured event's state; `content` and `measured_content` on a face | units of content | detector |
 | the clock of a measured event | scalars | `age` (its intervals), `phase_steps` (its turns), `owed` (the count owed in a crowd), `waited`, `steps` of its state | intervals, steps, units | detector |
+| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines and its face click): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
 | the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rows that arrived) or `here` (the rows that did not step) | units of amount | detector |
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
@@ -1116,6 +1207,7 @@ things themselves, one row each in the three worlds, are in
 | the tick of a line | scalar | every line | intervals | GameBoard (the record's ordering; a duration or rate is read off a clock's clicks) |
 | a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |
 | the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
+| the level of a closure (`atom-level-v1`, the world key `atom_level`; docs/designs/atom_levels/LEVELS.md section 2 (b)) | scalars | the `level` line of `events.jsonl` at a body's return: `action` (the action gained over the loop, the sum of the body's give rows), `count` (its self-creations since the last return), `level` (the whole part of `n_l x action / (2 h d_l x count)`), `last` (the level at the last release, null at the first return), `released` (the rise released), `content` and `momentum` after; the released rows' `turn` (their own phase rate, steps per interval) on their `state.json` rows | steps of h d_l / (N n_l); label units x Links; intervals | GameBoard (the host's view of the body's store: the level a detector reads is the same arithmetic on two counts of the faces, LEVELS.md section 5 (d), R3) |
 | the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |
 | the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `cells` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
 | a non-absorbing read of a record's rows | a deferred offer, not an outcome | the `read` line of a record's rows that went on: the layer stores a residual selector keyed by the record's current label set (`amplitude.Layer.end`, the read branch) and the rows continue; a later rotation replaces that label set (`Layer.rotate`, `nature_beam.rotate_rows`) and the record's one click gathers at its far completion, so a read followed by a rotation and a second read is not a sequential measurement and is out of the register's contract (sequential-instrument use is unsupported under `amplitude-v1`; issue #584, 2026-09-21) | units of amount | detector (deferred to the gather) |

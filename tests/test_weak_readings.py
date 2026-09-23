@@ -401,7 +401,22 @@ def test_the_j1_and_j3_register_is_the_generators_warm_run_on_the_shipped_worlds
         loaded = load_world(path.read_bytes(), base_dir=path.parent, root=path.parent.parent)
         shipped = json.loads(loaded.expanded_source)
         derived = generator.become_expectations({name: shipped})[name]
-        assert derived == registered["become"][name], name
+        block = registered["become"][name]
+        if "under_the_generic_entry" in block:
+            # Since the generic entry of the bending (2026-09-22) the crowd's
+            # rows are stretched by the crowd of the other numbers at their
+            # Node, and the warm run's ranges differ from the registered
+            # ones: the registered block is the reading before the entry
+            # (its standing the model owner's decision, the paper's row 8a
+            # resting on J1), the block beside it the warm run under the law
+            # as it stands, a derivation and no pin; the test reads that.
+            current = {
+                k: v for k, v in block["under_the_generic_entry"].items() if k not in ("since", "note")
+            }
+            assert derived == current, name
+            block = {k: v for k, v in block.items() if k != "under_the_generic_entry"}
+        else:
+            assert derived == block, name
         assert (
             derived["dwell"] == list(generator.DWELL) and derived["warm_ticks"] == generator.WARM_TICKS
         )
