@@ -4673,6 +4673,51 @@ CORRECTIONS = [
         "The rows not predicted by construction, 2a, 3, 4a, 4b, 5b, 8c, 11a and 11c, name",
         "The rows not predicted by construction, 3, 4a, 4b, 5b, 7a, 8c, 11a and 11c, name",
     ),
+    (
+        "commit 11 (the Boss's order of 02:40Z, the owner's 'go for it' on the two placements, record 1204): the count's 2a clause in the limitations paragraph",
+        "The count: of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; six rows keep their words (12 history, 2c and 2a not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+        "The count: of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; 2a NOT COMPARED until its source is verified; six rows keep their words (12 history, 2c not compared, 2a as said, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 11 (the Boss's order of 02:40Z, the owner's 'go for it' on the two placements, record 1204): the count's 2a clause in the caption",
+        "Section~\\ref{sec:discussion}: of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; six rows keep their words (12 history, 2c and 2a not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+        "Section~\\ref{sec:discussion}: of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; 2a NOT COMPARED until its source is verified; six rows keep their words (12 history, 2c not compared, 2a as said, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 11 (the Boss's order of 02:40Z, the owner's 'go for it' on the two placements, record 1204): the count's 2a clause in what is proved",
+        "the harmonic constants. Against nature, of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; six rows keep their words (12 history, 2c and 2a not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+        "the harmonic constants. Against nature, of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; 2a NOT COMPARED until its source is verified; six rows keep their words (12 history, 2c not compared, 2a as said, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 11 (the Boss's order of 02:40Z, the owner's 'go for it' on the two placements, record 1204): the count's 2a clause in the checks' paragraph",
+        "written before the run; against nature, of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; six rows keep their words (12 history, 2c and 2a not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+        "written before the run; against nature, of the ten observables the law as built predicts (eleven once row 14 is read), four agree within tolerance (1a, 2b, 9; 5a as a bound met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (3, 4a, 4b, 5b, 7a, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, no click definition yet, or the model's own number a declared input; 2a NOT COMPARED until its source is verified; six rows keep their words (12 history, 2c not compared, 2a as said, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 11: row 7a's cell in the Boss's wording",
+        "not predicted, the model's own number a declared input (the limitations paragraph's third clause): the give once per body, $\\lfloor \\mathrm{held}/h \\rfloor$ units, is an integer of the family table, so the mass read $3673$ against the declared $3677$ (DETECTOR), $0.109$ percent, reads that input back; nature's $4.35$ units of $3677$ reachable by no whole give, a bound on the input and not a prediction \\\\",
+        "not predicted: the give per nucleon a declared input read back \\cite[record 106]{log}; the escaped $4$ of $3677$ (DETECTOR) brackets nature's $4.35$ between the whole gives $4$ and $5$; the missing piece a rule that derives the binding; the law's number the mass read $3673$ against the declared $3677$ (DETECTOR), $0.109$ percent \\\\",
+    ),
+    (
+        "commit 11: row 2a's cell in the Boss's wording",
+        "NOT COMPARED, as it is: nature's two-slit figure is unverified ($0.98$ a Mach-Zehnder's, $0.94$ a biprism's central fringe read at its source's abstract), so no comparison stands until it is; the law's number $0.966$ in the clicks (DETECTOR), $0.014$ below the Mach-Zehnder's and $0.034$ below the ideal $1$, the fan's grain at most $0.004$ of the $0.034$ shortfall by the pin machinery on finer fans (the kind audit \\cite[section 3]{kindaudit}, COMPUTATION), the residual in the record's phases at the click; the fan's width and the slits' grain declared inputs of the world; once the figure is verified, bound against bound \\\\",
+        "NOT COMPARED until the two-slit source is verified; the law's number $0.966$ in the clicks (DETECTOR) a prediction under every fan (the grain's share at most $12$ percent of the shortfall, $0.004$ of $0.034$, the kind audit \\cite[section 3]{kindaudit}, COMPUTATION); a bound met against the biprism's $0.94$ at the abstract's level \\cite{jacques2005}; against the Mach-Zehnder's $0.98$ another geometry \\\\",
+    ),
+    (
+        "commit 11: the structure line on declared inputs names 7a, 8c and 13's gamma",
+        "and a declared input is not a prediction, so an observable whose number is a declared content, a declared fan width or a declared coefficient is not predicted, whatever the declared world reads.",
+        "and a declared input is not a prediction, so an observable whose number is a declared give (row 7a), a declared content (row 8c) or a declared coefficient (row 13's $\\gamma_{\\mathrm{PPN}}$) is not predicted, whatever the declared world reads.",
+    ),
+    (
+        "commit 11: the sentence on the two placements, the owner's word after the kind audit",
+        "the disagreeing rows are the law's own results, and the paper claims no rule it has not shown.",
+        "the disagreeing rows are the law's own results, and the paper claims no rule it has not shown. Two placements, row 7a to not predicted and row 2a to NOT COMPARED, are the model owner's word of 2026-09-23 after the kind audit \\cite{kindaudit}; nothing else moved.",
+    ),
+    (
+        "commit 11: the comparison paragraph's kept words in the same words",
+        "Six rows keep their earlier words (12 history, 2c and 2a not compared, 10 not yet, 11b a pin needing a hypothesis not built, 14 not yet read against nature), and 1b is a control, not counted.",
+        "Six rows keep their earlier words (12 history, 2c not compared, 2a NOT COMPARED until its source is verified, 10 not yet, 11b a pin needing a hypothesis not built, 14 not yet read against nature), and 1b is a control, not counted.",
+    ),
 ]
 
 

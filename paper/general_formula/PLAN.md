@@ -6475,3 +6475,24 @@ check's findings go to him and to the Boss, not applied here (they are
 the owner's and the Boss's to decide): the table's length (eight pages,
 cells of prose), the status column's mixed vocabulary, the internal
 kinds as jargon, and the citations of unmerged branches.
+
+## Applied (2026-09-23, the Boss's order of 02:40Z, the owner's "go for it", record 1204, read after commit 10): commit 11, the two placements in the Boss's wording
+
+Commit 10 had applied the owner's word as I read it from him directly;
+the Boss's order with the exact wording arrived after it. Commit 11
+aligns: row 7a "not predicted: the give per nucleon a declared input
+read back (record 106); the escaped 4 of 3677 (DETECTOR) brackets
+nature's 4.35 between the whole gives 4 and 5; the missing piece a rule
+that derives the binding", the law's number kept; row 2a "NOT COMPARED
+until the two-slit source is verified; the law's number 0.966 a
+prediction under every fan (the grain's share at most 12 percent of the
+shortfall, the kind audit's section 3); a bound met against the
+biprism's 0.94 at the abstract's level; against the Mach-Zehnder's 0.98
+another geometry", no kind bracket; the count in its four places and the
+comparison paragraph carry "2a NOT COMPARED until its source is
+verified"; the structure line on declared inputs names 7a's give, 8c's
+content and 13's gamma; one sentence in the limitations paragraph says
+the two placements are the owner's word of 2026-09-23 after the kind
+audit, nothing else moved. The abstract's short form unchanged from
+commit 10 (ten predicted, four agree, six disagree, eight not
+predicted), 249 words. 62 pages, 102 references.
