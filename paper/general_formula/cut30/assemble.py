@@ -19,6 +19,7 @@ sys.path.insert(0, str(HERE))
 
 import corrections  # noqa: E402  (the path above)
 import reorder  # noqa: E402
+import supplement  # noqa: E402
 
 HEADER = """% The paper on the general formula, the thirty-page form (the owner's instruction
 % of 2026-09-22, record 573, and his guiding statement: only the closed results,
@@ -34,8 +35,42 @@ HEADER = """% The paper on the general formula, the thirty-page form (the owner'
 """
 
 
-def build() -> str:
-    """The manuscript's text: the four parts joined, corrected, the references filtered."""
+def _references(text: str, bib: str) -> str:
+    """The bibliography's entries that `text` cites, in the bibliography's order."""
+    # A citation with an optional argument, \cite[section 10]{key}, counts too.
+    cited = {
+        k.strip()
+        for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", text)
+        for k in m.group(1).split(",")
+    }
+    items = re.split(r"(?=\\bibitem\{)", bib)
+    head = items[0]
+    entries = {
+        re.match(r"\\bibitem\{([^}]*)\}", it).group(1): re.sub(
+            r"\\end\{thebibliography\}.*", "", it, flags=re.S
+        )
+        for it in items[1:]
+    }
+    # An entry cited only from another kept entry (the archive behind a document) is kept too.
+    while True:
+        more = {
+            k.strip()
+            for key in cited
+            if key in entries
+            for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", entries[key])
+            for k in m.group(1).split(",")
+        }
+        if more <= cited:
+            break
+        cited |= more
+    kept = [entries[key] for key in entries if key in cited]
+    # the references at footnotesize (the owner's "cut" to 36, record 922; the Boss's order of 11:30Z)
+    return "{\\footnotesize\n" + head + "".join(kept) + "\\end{thebibliography}}\n\n"
+
+
+def build_all() -> tuple[str, str]:
+    """(main.tex, supplement.tex): the four parts joined, corrected, reordered,
+    the Supplementary Material split off, the references filtered for each."""
     for i in (1, 2, 3, 4):
         runpy.run_path(str(HERE / f"part{i}.py"), run_name="__main__")
     parts = "".join((HERE / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
@@ -49,39 +84,41 @@ def build() -> str:
     )
     s = corrections.apply(s)
     s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
+    s, supp = supplement.split(s)  # the Supplementary Material (the owner's word, 48 pages)
     body = s[: s.index("\\begin{thebibliography}")]
-    # A citation with an optional argument, \cite[section 10]{key}, counts too.
-    cited = {
-        k.strip()
-        for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", body)
-        for k in m.group(1).split(",")
-    }
     bib = s[s.index("\\begin{thebibliography}") :]
-    items = re.split(r"(?=\\bibitem\{)", bib)
-    head, kept = items[0], []
-    for it in items[1:]:
-        key = re.match(r"\\bibitem\{([^}]*)\}", it).group(1)
-        if key in cited:
-            kept.append(re.sub(r"\\end\{thebibliography\}.*", "", it, flags=re.S))
     i = body.index("\\appendix")
     # The references follow the body on its last page (the cut to 35 pages of
     # 2026-09-22, record 852); the page split is read from the page numbers.
-    return (
-        HEADER
-        + body[:i]
-        + "{\\footnotesize\n"  # the references at footnotesize (the owner's "cut" to 36, record 922; the Boss's order of 11:30Z)
-        + head
-        + "".join(kept)
-        + "\\end{thebibliography}}\n\n"
-        + body[i:]
+    paper = HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
+    preamble = supplement.preamble(body[: body.index("\\begin{document}")])
+    supp_doc = (
+        supplement.SUPPLEMENT_HEADER
+        + preamble
+        + "\\begin{document}\n\\maketitle\n\n"
+        + "This Supplementary Material accompanies the paper of the same title and is generated from the same source. "
+        + "The paper cites its sections as S1 to S6 and its tables as S1 to S3; the references are this document's own list; "
+        + "every other cross-reference (a theorem, a section, an equation, a table) is the paper's.\n\n"
+        + "\\small\n\n"
+        + supp
+        + "\n\n"
+        + _references(supp, bib)
         + "\\end{document}\n"
     )
+    return paper, supp_doc
+
+
+def build() -> str:
+    """The manuscript's text (main.tex); `build_all` gives the supplement beside it."""
+    return build_all()[0]
 
 
 def main() -> None:
-    out = build()
+    out, supp = build_all()
     (HERE.parent / "main.tex").write_text(out)
+    (HERE.parent / "supplement.tex").write_text(supp)
     print("main.tex written; references kept:", out.count("\\bibitem{"))
+    print("supplement.tex written; references kept:", supp.count("\\bibitem{"))
 
 
 if __name__ == "__main__":

@@ -6530,3 +6530,27 @@ predicted), 249 words. 62 pages, 102 references.
   Einstein's four sources), which enters only on the owner's own go as
   a separate commit in the place proposed.
 63 pages, 102 references, the abstract 249 words.
+
+## Applied (2026-09-23, the owner's word "you need to shorten the paper, 48 pages"): commit 13 on paper-summary-table, the Supplementary Material
+
+The owner's word lifts his earlier "not now" on the length; the form is
+the one he approved on 01:40Z, the paper as one document with the
+records a reader needs only to reproduce or to audit in a supplement.
+The generator (cut30/supplement.py, called by assemble.build_all) cuts
+six blocks whole from the reordered text and writes them as
+supplement.tex, generated from the same source and held by the same
+test: S1 the confrontation register's full record (Table S1); S2 the
+check of the roads (Table S2); S3 the reproduction appendix's seven
+confirmations; S4 the symbols table (Table S3); S5 the auxiliary
+proofs of Theorems 1, 4 and 5; S6 the hand-worked update and "In the
+code". The paper keeps a one-line pointer at each place and rewrites
+its references to them (Table S1, Table S2, Table S3; S1 to S6 of the
+Supplementary Material); the supplement resolves its references to the
+paper's labels through xr-hyper (\externaldocument[main-]{main}, its
+own references prefixed), has its own reference list, and is compiled
+after the paper in the same directory. Nothing physical cut, every
+claim, number and row kept; the paper 53 pages (63 before), the
+supplement 13. The remaining five pages to 48 are commit 14: the
+prose cuts of the owner's fifth word (about two to three pages) and,
+for his word, two more pages from the ledger, the conversion table or
+the families table moved to the supplement, none cut.

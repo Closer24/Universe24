@@ -17,6 +17,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CUT30 = ROOT / "paper" / "general_formula" / "cut30"
 MAIN_TEX = ROOT / "paper" / "general_formula" / "main.tex"
+SUPPLEMENT_TEX = ROOT / "paper" / "general_formula" / "supplement.tex"
 
 
 def _base_commit_available() -> bool:
@@ -38,14 +39,18 @@ def test_main_tex_is_the_assemblers_output() -> None:
         module = importlib.util.module_from_spec(spec)
         assert spec.loader is not None
         spec.loader.exec_module(module)
-        built = module.build()
+        built, supplement = module.build_all()
         assert built == MAIN_TEX.read_text(encoding="utf-8"), (
             "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
+        )
+        assert supplement == SUPPLEMENT_TEX.read_text(encoding="utf-8"), (
+            "supplement.tex differs from cut30/assemble.py's output: run the assembler, do not edit it by hand"
         )
         _check_reorder(module)  # one more build here, not in a second test: the parts are files
     finally:
         sys.path.remove(str(CUT30))
         sys.modules.pop("reorder", None)
+        sys.modules.pop("supplement", None)
 
 
 def test_every_correction_has_its_own_label() -> None:
@@ -73,12 +78,16 @@ def _check_reorder(module) -> None:
     import re  # noqa: PLC0415
 
     reorder = module.reorder
+    supplement_module = module.supplement
     moved = reorder.reorder
+    split = supplement_module.split
     try:
         reorder.reorder = lambda text: text
+        supplement_module.split = lambda text: (text, "")
         unordered = module.build()
     finally:
         reorder.reorder = moved
+        supplement_module.split = split
     blocks = {}
     rest = unordered
     for name in reorder.BLOCKS:
@@ -91,18 +100,26 @@ def _check_reorder(module) -> None:
         if name == "law":
             body = text[len(reorder.BLOCKS["law"][0]) :]
             body = body.replace(reorder.TRANSITION_HEADING, blocks["code"] + reorder.TRANSITION_HEADING)
-        for old, new in reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]:
+            # the hand-worked update and the code went to the Supplementary Material (S6)
+            i = body.index(supplement_module.HANDWORKED_START)
+            j = body.index(supplement_module.CODE_HEADING)
+            body = body[:i] + supplement_module.POINTERS["handworked"] + body[j:]
+        rewrites = reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]
+        for old, new in rewrites + supplement_module.REFERENCES:
             body = body.replace(old, new)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
-    assert main.index("\\label{app:register}") < main.index("\\caption{\\label{tab:nature}"), (
-        "the full register stands in its appendix, after the summary"
-    )
-    assert main.index("\\label{tab:summary}") < main.index("\\label{app:register}")
+    supplement = SUPPLEMENT_TEX.read_text(encoding="utf-8")
+    assert "\\label{tab:summary}" in main and "\\label{tab:nature}" not in main
+    assert supplement.index("\\label{app:register}") < supplement.index(
+        "\\caption{\\label{tab:nature}"
+    ), "the full register opens the Supplementary Material"
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
     assert refs <= set(labels), f"unresolved references: {refs - set(labels)}"
+    # the register's caption moved to the Supplementary Material, its references prefixed there
+    both = main + supplement.replace("{main-", "{")
     for old, new in reorder.REFS:
-        assert main.count(old) == 0 and main.count(new) == 1, (
+        assert main.count(old) == 0 and both.count(new) == 1, (
             f"a moved reference is not in place: {new[:50]}"
         )
