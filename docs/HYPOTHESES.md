@@ -1291,7 +1291,11 @@ couplings.
   rule `beam-v1`'s (BEAM_LAW note 17 as amended), the per-axis drive of
   history under the key `per_axis_drive`; the register's moving-body
   worlds re-pinned series by series. This entry stays as the record of a
-  hypothesis that entered the law.
+  hypothesis that entered the law. On 2026-09-23 the model owner declared
+  the weight pair (w, Q S) gamma's rule at gamma above 0 alone, a body at
+  gamma 0 weighing M (record 1054's three forms, his answer B; BODY_DRIVE.md
+  D5, DEFAULT.md (d)): series X's five gamma-0 body worlds re-pinned and
+  run again with the former kept, the weight's test at gamma 0 given up.
 
 ## 29. flow-link-v1: one arrival counts one Euclidean Link of its line, not one Node; the law's two constants of gravity are one, stated so that it can fail
 

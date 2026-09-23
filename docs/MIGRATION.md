@@ -103,6 +103,14 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   the atoms, G2, would have been refused at load by a rule that changes
   nothing of its integers); a moving body at gamma > 0 is refused at load
   under `per_axis_drive` (the per-axis drive of history is never a member).
+  On 2026-09-23 the model owner declared that rule (record 1054's three
+  forms, his answer B): the pair is gamma's rule at gamma above 0 alone
+  and at gamma 0 a body weighs M, the bound (Q S M)^2 <= 2^63 - 1 the
+  pair's domain at gamma above 0 (G2, H and the atoms refused there), so
+  series X's five gamma-0 body worlds were re-pinned by the walk at the
+  charge (M, 1) and run again, the former pins and run blocks kept under
+  `former` and the weight's test at gamma 0 given up (BODY_DRIVE.md D5,
+  DEFAULT.md (d)).
   The flow worlds of series D3 (`flow_link`, PR #879) keep their whole
   n = 8 under the line drive (the real root 8.28 against the per-axis
   7.67), their pins of `expectations_flow.json` re-derived at the line

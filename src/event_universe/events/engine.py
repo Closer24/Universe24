@@ -677,8 +677,11 @@ class NatureBeamSimulation:
                 # the generic entry of 2026-09-22): a moving body's gravity
                 # charge under the law's line drive at gamma > 0 is the pair
                 # (w, Q S), the rows' weight on the body's own momentum
-                # (`world.body_weight`; gravity's Lambda is Q S then); at
-                # gamma 0 the weight is the content itself, byte for byte.
+                # (`world.body_weight`; gravity's Lambda is Q S then). The
+                # pair is gamma's rule at gamma > 0 alone, declared by the
+                # model owner on 2026-09-23 (record 1054's form B; DEFAULT.md
+                # (d), BODY_DRIVE.md D5): at gamma 0 a body weighs M, main's
+                # rule at rest, no velocity term on the body.
                 entry.frame_charges[0] = body_weight(
                     entry.momentum, entry.frame_content, self.world.width, self.world.optical
                 )

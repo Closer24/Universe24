@@ -4,6 +4,7 @@
   "optical-v1"
  ],
  "drive": "line (the law's drive since 2026-09-22; built and pinned as drive-b-v1 under the key drive_b, deleted the same day)",
+ "weight": "the pair (w, Q S), w = (E'^2 + 3 gamma p . p) // E', the gravitational charge of a moving body at gamma above 0 alone, declared as gamma's rule; at gamma 0 a body weighs M over 1, main's rule at rest, no velocity term on the body (the model owner's word of 2026-09-23 on record 1054's three forms, the form B; DEFAULT.md (d), BODY_DRIVE.md D5): the gamma-0 pins re-derived by the walk at the charge (M, 1) on 2026-09-23, the former pins under former",
  "derivation": "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the engine's verbs integer for integer on the light-bending map's stationary crowd (the drive member at gamma, the clock's owed count, the charge (w, Q S)); the click's tick within one interval, the face and the Node exact; written before the run (record 205)",
  "constants": {
   "content": 64,
@@ -44,29 +45,58 @@
    "impact": 10,
    "control": "body_control_b10",
    "click": {
-    "tick": 159,
+    "tick": 156,
     "tolerance": 1,
     "face": "face:+x",
     "node": [
      56,
-     27,
+     29,
      20
     ],
     "links_before": [
      54,
-     -3,
+     -1,
      0
     ]
    },
    "owed_intervals_gameboard": 3,
    "refuting_readings": {
     "drive_unstretched": {
-     "tick": 159,
-     "y": 27
-    },
-    "charge_content_over_one": {
      "tick": 156,
      "y": 29
+    },
+    "charge_pair_over_label_scale": {
+     "tick": 159,
+     "y": 27
+    }
+   },
+   "former": {
+    "pinned_under": "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 alone and at gamma 0 a body weighs M (the model owner's word, record 1054's form B), so the pin above is the walk at the charge (M, 1) and this one its refuting reading; the former run blocks under runs[<world>][\"former\"]",
+    "click": {
+     "tick": 159,
+     "tolerance": 1,
+     "face": "face:+x",
+     "node": [
+      56,
+      27,
+      20
+     ],
+     "links_before": [
+      54,
+      -3,
+      0
+     ]
+    },
+    "owed_intervals_gameboard": 3,
+    "refuting_readings": {
+     "drive_unstretched": {
+      "tick": 159,
+      "y": 27
+     },
+     "charge_content_over_one": {
+      "tick": 156,
+      "y": 29
+     }
     }
    }
   },
@@ -130,29 +160,58 @@
    "impact": 12,
    "control": "body_control_b12",
    "click": {
-    "tick": 158,
+    "tick": 154,
     "tolerance": 1,
     "face": "face:+x",
     "node": [
      56,
-     29,
+     31,
      20
     ],
     "links_before": [
      54,
-     -3,
+     -1,
      0
     ]
    },
-   "owed_intervals_gameboard": 3,
+   "owed_intervals_gameboard": 2,
    "refuting_readings": {
     "drive_unstretched": {
-     "tick": 158,
-     "y": 29
-    },
-    "charge_content_over_one": {
      "tick": 154,
      "y": 31
+    },
+    "charge_pair_over_label_scale": {
+     "tick": 158,
+     "y": 29
+    }
+   },
+   "former": {
+    "pinned_under": "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 alone and at gamma 0 a body weighs M (the model owner's word, record 1054's form B), so the pin above is the walk at the charge (M, 1) and this one its refuting reading; the former run blocks under runs[<world>][\"former\"]",
+    "click": {
+     "tick": 158,
+     "tolerance": 1,
+     "face": "face:+x",
+     "node": [
+      56,
+      29,
+      20
+     ],
+     "links_before": [
+      54,
+      -3,
+      0
+     ]
+    },
+    "owed_intervals_gameboard": 3,
+    "refuting_readings": {
+     "drive_unstretched": {
+      "tick": 158,
+      "y": 29
+     },
+     "charge_content_over_one": {
+      "tick": 154,
+      "y": 31
+     }
     }
    }
   },
@@ -216,29 +275,58 @@
    "impact": 14,
    "control": "body_control_b14",
    "click": {
-    "tick": 158,
+    "tick": 154,
     "tolerance": 1,
     "face": "face:+x",
     "node": [
      56,
-     31,
+     33,
      20
     ],
     "links_before": [
      54,
-     -3,
+     -1,
      0
     ]
    },
-   "owed_intervals_gameboard": 3,
+   "owed_intervals_gameboard": 2,
    "refuting_readings": {
     "drive_unstretched": {
-     "tick": 158,
-     "y": 31
-    },
-    "charge_content_over_one": {
      "tick": 154,
      "y": 33
+    },
+    "charge_pair_over_label_scale": {
+     "tick": 158,
+     "y": 31
+    }
+   },
+   "former": {
+    "pinned_under": "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 alone and at gamma 0 a body weighs M (the model owner's word, record 1054's form B), so the pin above is the walk at the charge (M, 1) and this one its refuting reading; the former run blocks under runs[<world>][\"former\"]",
+    "click": {
+     "tick": 158,
+     "tolerance": 1,
+     "face": "face:+x",
+     "node": [
+      56,
+      31,
+      20
+     ],
+     "links_before": [
+      54,
+      -3,
+      0
+     ]
+    },
+    "owed_intervals_gameboard": 3,
+    "refuting_readings": {
+     "drive_unstretched": {
+      "tick": 158,
+      "y": 31
+     },
+     "charge_content_over_one": {
+      "tick": 154,
+      "y": 33
+     }
     }
    }
   },
@@ -302,29 +390,58 @@
    "impact": 16,
    "control": "body_control_b16",
    "click": {
-    "tick": 157,
+    "tick": 154,
     "tolerance": 1,
     "face": "face:+x",
     "node": [
      56,
-     33,
+     35,
      20
     ],
     "links_before": [
      54,
-     -3,
+     -1,
      0
     ]
    },
-   "owed_intervals_gameboard": 3,
+   "owed_intervals_gameboard": 2,
    "refuting_readings": {
     "drive_unstretched": {
-     "tick": 157,
-     "y": 33
-    },
-    "charge_content_over_one": {
      "tick": 154,
      "y": 35
+    },
+    "charge_pair_over_label_scale": {
+     "tick": 157,
+     "y": 33
+    }
+   },
+   "former": {
+    "pinned_under": "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 alone and at gamma 0 a body weighs M (the model owner's word, record 1054's form B), so the pin above is the walk at the charge (M, 1) and this one its refuting reading; the former run blocks under runs[<world>][\"former\"]",
+    "click": {
+     "tick": 157,
+     "tolerance": 1,
+     "face": "face:+x",
+     "node": [
+      56,
+      33,
+      20
+     ],
+     "links_before": [
+      54,
+      -3,
+      0
+     ]
+    },
+    "owed_intervals_gameboard": 3,
+    "refuting_readings": {
+     "drive_unstretched": {
+      "tick": 157,
+      "y": 33
+     },
+     "charge_content_over_one": {
+      "tick": 154,
+      "y": 35
+     }
     }
    }
   },
@@ -388,29 +505,58 @@
    "impact": 18,
    "control": "body_control_b18",
    "click": {
-    "tick": 156,
+    "tick": 154,
     "tolerance": 1,
     "face": "face:+x",
     "node": [
      56,
-     36,
+     37,
      20
     ],
     "links_before": [
      54,
-     -2,
+     -1,
      0
     ]
    },
    "owed_intervals_gameboard": 2,
    "refuting_readings": {
     "drive_unstretched": {
-     "tick": 156,
-     "y": 36
-    },
-    "charge_content_over_one": {
      "tick": 154,
      "y": 37
+    },
+    "charge_pair_over_label_scale": {
+     "tick": 156,
+     "y": 36
+    }
+   },
+   "former": {
+    "pinned_under": "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 alone and at gamma 0 a body weighs M (the model owner's word, record 1054's form B), so the pin above is the walk at the charge (M, 1) and this one its refuting reading; the former run blocks under runs[<world>][\"former\"]",
+    "click": {
+     "tick": 156,
+     "tolerance": 1,
+     "face": "face:+x",
+     "node": [
+      56,
+      36,
+      20
+     ],
+     "links_before": [
+      54,
+      -2,
+      0
+     ]
+    },
+    "owed_intervals_gameboard": 2,
+    "refuting_readings": {
+     "drive_unstretched": {
+      "tick": 156,
+      "y": 36
+     },
+     "charge_content_over_one": {
+      "tick": 154,
+      "y": 37
+     }
     }
    }
   },

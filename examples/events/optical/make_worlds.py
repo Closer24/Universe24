@@ -437,6 +437,12 @@ RUN_2026_09_22_FAST: dict[str, object] = {
 # refuting readings the same walk with one verb changed: the drive
 # unstretched (the member refused) and the charge held at (M, 1) (the
 # weight refused). GAMEBOARD beside: the intervals the clock owed.
+# Since 2026-09-23 the weight pair is gamma's rule at gamma above 0 alone
+# (the model owner's word on record 1054's three forms, the form B,
+# DEFAULT.md (d) and BODY_DRIVE.md D5): at gamma 0 a body weighs M, main's
+# rule at rest, no velocity term on the body, so the gamma-0 pins are the
+# walk at the charge (M, 1) and the pair's walk is their refuting reading
+# (the former pins, the pair at every gamma, kept under `former`).
 BODY_CONTENT = 64
 BODY_WIDTH = SUSPENSION[1]
 BODY_MOMENTUM = 1 << 26
@@ -445,13 +451,51 @@ BODY_IMPACTS: tuple[int, ...] = (10, 12, 14, 16, 18)
 BODY_TICK_TOLERANCE = 1
 # Per (b, gamma): the click's tick and the Node's y (x = 56, z = 20), the
 # Links on y before the escape (x 54), the intervals owed; then the two
-# refuting readings' (tick, y).
+# refuting readings' (tick, y): at gamma above 0 the drive unstretched and
+# the charge (M, 1) (`blind`); at gamma 0 the drive unstretched (the same
+# walk, the coefficient 0) and the charge as the pair (`pair`, the former
+# pin), with the former pin whole under `former`.
 BODY_PINS: dict[tuple[int, int], dict[str, object]] = {
-    (10, 0): {"tick": 159, "y": 27, "owed": 3, "unstretched": (159, 27), "blind": (156, 29)},
-    (12, 0): {"tick": 158, "y": 29, "owed": 3, "unstretched": (158, 29), "blind": (154, 31)},
-    (14, 0): {"tick": 158, "y": 31, "owed": 3, "unstretched": (158, 31), "blind": (154, 33)},
-    (16, 0): {"tick": 157, "y": 33, "owed": 3, "unstretched": (157, 33), "blind": (154, 35)},
-    (18, 0): {"tick": 156, "y": 36, "owed": 2, "unstretched": (156, 36), "blind": (154, 37)},
+    (10, 0): {
+        "tick": 156,
+        "y": 29,
+        "owed": 3,
+        "unstretched": (156, 29),
+        "pair": (159, 27),
+        "former": {"tick": 159, "y": 27, "owed": 3, "unstretched": (159, 27), "blind": (156, 29)},
+    },
+    (12, 0): {
+        "tick": 154,
+        "y": 31,
+        "owed": 2,
+        "unstretched": (154, 31),
+        "pair": (158, 29),
+        "former": {"tick": 158, "y": 29, "owed": 3, "unstretched": (158, 29), "blind": (154, 31)},
+    },
+    (14, 0): {
+        "tick": 154,
+        "y": 33,
+        "owed": 2,
+        "unstretched": (154, 33),
+        "pair": (158, 31),
+        "former": {"tick": 158, "y": 31, "owed": 3, "unstretched": (158, 31), "blind": (154, 33)},
+    },
+    (16, 0): {
+        "tick": 154,
+        "y": 35,
+        "owed": 2,
+        "unstretched": (154, 35),
+        "pair": (157, 33),
+        "former": {"tick": 157, "y": 33, "owed": 3, "unstretched": (157, 33), "blind": (154, 35)},
+    },
+    (18, 0): {
+        "tick": 154,
+        "y": 37,
+        "owed": 2,
+        "unstretched": (154, 37),
+        "pair": (156, 36),
+        "former": {"tick": 156, "y": 36, "owed": 2, "unstretched": (156, 36), "blind": (154, 37)},
+    },
     (10, 1): {"tick": 168, "y": 23, "owed": 3, "unstretched": (164, 23), "blind": (159, 29)},
     (12, 1): {"tick": 166, "y": 26, "owed": 3, "unstretched": (162, 26), "blind": (158, 31)},
     (14, 1): {"tick": 166, "y": 28, "owed": 3, "unstretched": (163, 28), "blind": (157, 33)},
@@ -532,6 +576,16 @@ def body_expectations() -> Json:
         for gamma in GAMMAS:
             pin = BODY_PINS[(b, gamma)]
             y = int(pin["y"])  # type: ignore[arg-type]
+            if gamma > 0:
+                refuting = {
+                    "drive_unstretched": {"tick": pin["unstretched"][0], "y": pin["unstretched"][1]},  # type: ignore[index]
+                    "charge_content_over_one": {"tick": pin["blind"][0], "y": pin["blind"][1]},  # type: ignore[index]
+                }
+            else:
+                refuting = {
+                    "drive_unstretched": {"tick": pin["unstretched"][0], "y": pin["unstretched"][1]},  # type: ignore[index]
+                    "charge_pair_over_label_scale": {"tick": pin["pair"][0], "y": pin["pair"][1]},  # type: ignore[index]
+                }
             worlds[f"body_b{b}_g{gamma}"] = {
                 "gamma": gamma,
                 "flight_coefficient": 1 + gamma,
@@ -546,15 +600,46 @@ def body_expectations() -> Json:
                     "links_before": [K.SHAPE[0] - 1 - K.LAMP_X, y - (K.CENTRE[1] + b), 0],
                 },
                 "owed_intervals_gameboard": pin["owed"],
-                "refuting_readings": {
-                    "drive_unstretched": {"tick": pin["unstretched"][0], "y": pin["unstretched"][1]},  # type: ignore[index]
-                    "charge_content_over_one": {"tick": pin["blind"][0], "y": pin["blind"][1]},  # type: ignore[index]
-                },
+                "refuting_readings": refuting,
             }
+            if "former" in pin:
+                former = pin["former"]  # type: ignore[index]
+                former_y = int(former["y"])  # type: ignore[index]
+                worlds[f"body_b{b}_g{gamma}"]["former"] = {
+                    "pinned_under": (
+                        "the pair (w, Q S) at every gamma (the flip day, 2026-09-22, drive-b-v1 under "
+                        "the key drive_b); since 2026-09-23 the pair is gamma's rule at gamma above 0 "
+                        "alone and at gamma 0 a body weighs M (the model owner's word, record 1054's "
+                        "form B), so the pin above is the walk at the charge (M, 1) and this one its "
+                        'refuting reading; the former run blocks under runs[<world>]["former"]'
+                    ),
+                    "click": {
+                        "tick": former["tick"],  # type: ignore[index]
+                        "tolerance": BODY_TICK_TOLERANCE,
+                        "face": "face:+x",
+                        "node": [K.SHAPE[0] - 1, former_y, K.CENTRE[2]],
+                        "links_before": [K.SHAPE[0] - 1 - K.LAMP_X, former_y - (K.CENTRE[1] + b), 0],
+                    },
+                    "owed_intervals_gameboard": former["owed"],  # type: ignore[index]
+                    "refuting_readings": {
+                        "drive_unstretched": {
+                            "tick": former["unstretched"][0],
+                            "y": former["unstretched"][1],
+                        },  # type: ignore[index]
+                        "charge_content_over_one": {"tick": former["blind"][0], "y": former["blind"][1]},  # type: ignore[index]
+                    },
+                }
     return {
         "format": "optical-body-expectations-v1",
         "identity": ["optical-v1"],
         "drive": "line (the law's drive since 2026-09-22; built and pinned as drive-b-v1 under the key drive_b, deleted the same day)",
+        "weight": (
+            "the pair (w, Q S), w = (E'^2 + 3 gamma p . p) // E', the gravitational charge of a moving "
+            "body at gamma above 0 alone, declared as gamma's rule; at gamma 0 a body weighs M over 1, "
+            "main's rule at rest, no velocity term on the body (the model owner's word of 2026-09-23 on "
+            "record 1054's three forms, the form B; DEFAULT.md (d), BODY_DRIVE.md D5): the gamma-0 pins "
+            "re-derived by the walk at the charge (M, 1) on 2026-09-23, the former pins under former"
+        ),
         "derivation": (
             "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the "
             "engine's verbs integer for integer on the light-bending map's stationary crowd (the drive "

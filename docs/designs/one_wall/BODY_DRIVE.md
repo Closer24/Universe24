@@ -108,7 +108,26 @@ The chief physicist's, as the owner asked for them by name:
   (E'^2 + 3 gamma **p** . **p**) // E', E' = isqrt((Q S M)^2 + 3 **p** . **p**):
   gamma_L (1 + gamma v^2) times the content, the rows' formula on the
   body's own momentum; only under the keys (without them series D would
-  move by 8 per cent, the one-wall note's section 4).
+  move by 8 per cent, the one-wall note's section 4). Amended on
+  2026-09-23 by the model owner's word (record 1054 of
+  [LOG_2026-09-20.md](../../LOG_2026-09-20.md), the reviewer's read U,
+  the three forms A / B / C; his answer B): the pair (w, Q S), w = gamma_L
+  (1 + gamma v^2) M, is the gravitational charge of a moving body under
+  form B alone, declared as gamma's rule at gamma above 0; at gamma 0 a
+  body weighs M, main's rule at rest, no velocity term on the body. The
+  merge's third rule (the pair at gamma above 0 alone, written inside
+  the merge of the line drive with the generic entry on 2026-09-22 and
+  not agreed then) is now the declared rule and is so stated. The bound
+  (Q S M)^2 <= 2^63 - 1 (Q S M <= 3.04 x 10^9: M <= 2896 at S = 16384,
+  M <= 92681 at S = 512) is the pair's domain at gamma above 0 and
+  refuses there the worlds whose rest energy exceeds it: series G2 (the
+  rest energy 2.96 x 10^14), series H and the atoms at gamma above 0;
+  at gamma 0 they load and weigh M. The weight's test at gamma 0 (test
+  (q)'s pair (2^27, 2^20) and push -8192 of the flip day) is given up;
+  series X's five gamma-0 body worlds are re-pinned by the walk at the
+  charge (M, 1) and run again ([the optical
+  README](../../../examples/events/optical/README.md), the former pins
+  and run blocks kept under `former`).
 - **D6, a world under `optical` with a moving body and no `drive_b`** is
   refused at load naming the rule; a fixed body and a body at rest load.
 

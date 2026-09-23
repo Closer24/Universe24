@@ -577,7 +577,11 @@ def body_weight(momentum: Sequence[int], content: int, width: int, gamma: int) -
     3 p . p / E'^2 (the one-wall note's section 4, the drive's integer
     form). The square is tested against the working bound by division
     before its terms are formed (the wall's square of `momentum_pair`)
-    and refused naming the rule; a body of no content weighs (0, 1)."""
+    and refused naming the rule; a body of no content weighs (0, 1). The
+    pair is gamma's rule at gamma above 0 alone (the model owner's word of
+    2026-09-23, record 1054's form B): the engine forms it there and at
+    gamma 0 a body weighs M over 1; the bound (Q S M)^2 <= 2^63 - 1 is the
+    pair's domain at gamma above 0 (M <= 2896 at S = 16384)."""
     if content <= 0:
         return 0, 1
     scale = LABEL_SCALE * width
@@ -1408,10 +1412,13 @@ class NatureBeamWorld:
                 # Every family under one wall, step 3 (the law's own since
                 # the generic entry of 2026-09-22): under the law's line
                 # drive a moving body's gravity charge at gamma > 0 is the
-                # pair (w, Q S) (`body_weight`), so gravity's Lambda is Q S;
-                # at gamma 0 the weight is the content itself, byte for
-                # byte, and the pair is not formed (its root and the
-                # working bound on (Q S M)^2 are gamma's alone).
+                # pair (w, Q S) (`body_weight`), so gravity's Lambda is Q S.
+                # The pair is gamma's rule at gamma > 0 alone, declared by
+                # the model owner on 2026-09-23 (record 1054's form B): at
+                # gamma 0 a body weighs M, main's rule at rest, no velocity
+                # term on the body, and the pair is not formed (its root and
+                # the working bound (Q S M)^2 <= 2^63 - 1 are its domain at
+                # gamma > 0 alone).
                 scale = LABEL_SCALE * self.width
             for family in self.families:
                 denominator = family.columns[column].value[1]
@@ -4209,9 +4216,12 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 "docs/designs/one_wall/BODY_DRIVE.md)"
             )
         if optical > 0 and not per_axis_drive:
-            # The pair is formed at gamma > 0 alone (at gamma 0 the weight
-            # is the content, the identity: no root, no bound on (Q S M)^2,
-            # every registered world with a heavy body loading as it did).
+            # The pair is gamma's rule at gamma > 0 alone (the model owner's
+            # word of 2026-09-23, record 1054's form B): at gamma 0 a body
+            # weighs M, no root, no bound on (Q S M)^2; the bound is the
+            # pair's domain at gamma > 0 and refuses there the worlds whose
+            # Q S M exceeds 3.04e9 (series G2, series H and the atoms at
+            # gamma > 0; docs/designs/drive_b/DEFAULT.md (d)).
             body_weight(entry.momentum, sum(entry.held), width, optical)
     world = NatureBeamWorld(
         model_id,

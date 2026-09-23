@@ -30,16 +30,23 @@ before the first run:
     order (the frame, the move, the reading, the count owed); at gamma 0
     the wall is unstretched and the clock alone slows the body (a Link per
     9.6 intervals on the crowd);
-(q) the weight: `body_weight` at p = (2^26, 0, 0), content 64, S = 16384
-    (Q S M = 2^26, E' = isqrt(2^52 + 3 x 2^52) = 2^27 exactly, gamma_L = 2,
-    v^2 = 3/4) is (2^27, 2^20) at gamma 0 and (7 x 2^25, 2^20) at gamma 1
-    (1 + gamma v^2 = 7/4); at rest (2^26, 2^20), the content over 1; a
-    body of no content (0, 1). The push by hand: an m row of amount 1
-    arriving from -y at the body's Node (V = (0, 64, 0)) pushes the body
-    by -4096 on y under the law alone (today's -M V), by -8192 under
-    `optical` 0 (gamma_L times it) and by -14336 under `optical` 1 (7/4
-    of that): gravity's Lambda is Q S = 2^20 under the two keys, 1
-    without them;
+(q) the weight (the model owner's word of 2026-09-23, record 1054's form
+    B): a body at rest weighs M. `body_weight` at rest, content 64, S =
+    16384, gamma 1 is (2^26, 2^20), the content over 1 exactly; moving at
+    p = (2^26, 0, 0) (Q S M = 2^26, E' = isqrt(2^52 + 3 x 2^52) = 2^27
+    exactly, gamma_L = 2, v^2 = 3/4) it is (7 x 2^25, 2^20) at gamma 1
+    (1 + gamma v^2 = 7/4); a body of no content (0, 1). The pair is
+    formed at gamma above 0 alone: the push by hand of an m row of amount
+    1 arriving from -y at the body's Node (V = (0, 64, 0)) is -4096 on y
+    (-M V, gravity's Lambda 1) with the key absent and under `optical` 0
+    alike, a body at gamma 0 weighing M whatever its momentum, and
+    -14336 under `optical` 1 (7/4 of gamma_L times it, Lambda Q S = 2^20).
+    The edge at the pair's domain (Q S M)^2 <= 2^63 - 1, M <= 2896 at S
+    = 16384: at rest the content 2896 weighs (2896 x 2^20, 2^20) at gamma
+    1 and 2897 is refused naming the working bound, while at gamma 0 the
+    body of content 2897 loads and is pushed by -M V = -185408, the pair
+    never formed. The weight's test at gamma 0 (the pair (2^27, 2^20) and
+    the push -8192 of the flip day) is given up by the owner's word;
 (r) the refusal: a moving body under `optical` with the per-axis drive of
     history (`per_axis_drive`) is refused at load naming the key; a fixed
     body and a body at rest
@@ -133,7 +140,11 @@ def crowd_bar(optical: int | None, *, per_axis: bool = False, ticks: int = 120) 
 
 
 def push_bar(
-    optical: int | None, *, per_axis: bool = False, momentum: list[int] | None = None
+    optical: int | None,
+    *,
+    per_axis: bool = False,
+    momentum: list[int] | None = None,
+    amount: int = 64,
 ) -> dict[str, object]:
     """(q): the body of content 64 at S = 16384 (Q S M = 2^26) at (2, 1, 0)
     with p = (2^26, 0, 0), an m row of amount 1 arriving from -y at tick 1
@@ -156,7 +167,7 @@ def push_bar(
             {
                 "position": [2, 1, 0],
                 "family": "probe",
-                "amount": 64,
+                "amount": amount,
                 "momentum": [1 << 26, 0, 0] if momentum is None else momentum,
             },
             # The row's own number: a fixed m off the row's line and the body's.
@@ -258,29 +269,40 @@ def test_a_body_on_a_rest_crowd_walks_by_the_stretched_drive_and_its_slowed_cloc
     assert found[-1] == (6 if gamma == 1 else 12)
 
 
-def test_the_weight_of_a_moving_body_is_the_rows_weight_over_the_label_scale():
-    """(q)."""
-    assert body_weight([1 << 26, 0, 0], 64, 16384, 0) == (1 << 27, 1 << 20)
-    assert body_weight([1 << 26, 0, 0], 64, 16384, 1) == (7 << 25, 1 << 20)
+def test_a_body_at_rest_weighs_its_content_and_the_pair_is_gammas_rule_above_zero():
+    """(q): a body at rest weighs M; the pair (w, Q S) is the gravitational
+    charge of a moving body at gamma above 0 alone (the model owner's word
+    of 2026-09-23, record 1054's form B; docs/designs/one_wall/BODY_DRIVE.md
+    D5), at gamma 0 the content M over 1 whatever the momentum."""
+    # Inputs: at rest the pair is (Q S M, Q S), the content over 1 exactly.
     assert body_weight([0, 0, 0], 64, 16384, 1) == (1 << 26, 1 << 20)
+    assert body_weight([1 << 26, 0, 0], 64, 16384, 1) == (7 << 25, 1 << 20)
     assert body_weight([1 << 26, 0, 0], 0, 16384, 1) == (0, 1)
-    # Since the generic entry of the bending (2026-09-22) the key absent
-    # is gamma 0; the body's weight is the pair under the law's line drive
-    # at gamma > 0 alone, and at gamma 0 the content itself (the push
-    # -4096 at the scale 1, byte for byte as before the entry: the pair's
-    # root and the working bound on (Q S M)^2 are gamma's alone, so every
-    # registered world with a heavy body loads as it did).
-    for optical, push, scale in (
-        (None, -4096, 1),
-        (0, -4096, 1),
-        (1, -14336, 1 << 20),
+    # The edge at the pair's domain (Q S M)^2 <= 2^63 - 1: M = 2896 at
+    # S = 16384 is the last content whose pair forms; 2897 is refused
+    # naming the working bound (docs/designs/drive_b/DEFAULT.md (d)).
+    assert body_weight([0, 0, 0], 2896, 16384, 1) == (2896 << 20, 1 << 20)
+    with pytest.raises(OverflowError, match="working bound"):
+        body_weight([0, 0, 0], 2897, 16384, 1)
+    # Expected: the push by one m row -M V at gamma 0 (the key absent or
+    # 0 alike; gravity's Lambda 1) and gamma_L (1 + gamma v^2) times it at
+    # gamma 1 over the scale Q S; at gamma 0 the body past the pair's
+    # bound loads and is pushed by -M V, the pair never formed, and at
+    # gamma 1 the same body is refused at load naming the working bound.
+    for optical, amount, push, scale in (
+        (None, 64, -4096, 1),
+        (0, 64, -4096, 1),
+        (1, 64, -14336, 1 << 20),
+        (0, 2897, -185408, 1),
     ):
-        world = parse_nature_beam_world(push_bar(optical))
+        world = parse_nature_beam_world(push_bar(optical, amount=amount))
         assert world.column_scales[0] == scale
         simulation = NatureBeamSimulation(world)
         simulation.step()
         assert simulation.books()["balanced"]
         assert simulation.measured[1].momentum == [1 << 26, push, 0]
+    with pytest.raises(OverflowError, match="working bound"):
+        parse_nature_beam_world(push_bar(1, amount=2897))
 
 
 def test_a_moving_body_under_optical_needs_the_directional_drive():
@@ -315,6 +337,18 @@ def test_the_body_worlds_load_under_both_keys_and_carry_their_pins():
         "drive_unstretched": {"tick": 164, "y": 23},
         "charge_content_over_one": {"tick": 159, "y": 29},
     }
+    # At gamma 0 a body weighs M (2026-09-23, the owner's form B): the pin
+    # is the walk at the charge (M, 1), the pair's walk its refuting
+    # reading, the former pin (the pair at every gamma) kept beside.
+    assert pins["body_b10_g0"]["click"]["tick"] == 156
+    assert pins["body_b10_g0"]["click"]["node"] == [56, 29, 20]
+    assert pins["body_b10_g0"]["refuting_readings"] == {
+        "drive_unstretched": {"tick": 156, "y": 29},
+        "charge_pair_over_label_scale": {"tick": 159, "y": 27},
+    }
+    assert pins["body_b10_g0"]["former"]["click"]["tick"] == 159
+    assert pins["body_b10_g0"]["former"]["click"]["node"] == [56, 27, 20]
+    assert "former" not in pins["body_b10_g1"]
     for b in (10, 12, 14, 16, 18):
         for name in (f"body_b{b}_g0", f"body_b{b}_g1", f"body_control_b{b}"):
             loaded = load_world(
@@ -325,8 +359,8 @@ def test_the_body_worlds_load_under_both_keys_and_carry_their_pins():
             body = world.measured[0]
             assert list(body.momentum) == [1 << 26, 0, 0] and tuple(body.position) == (2, 20 + b, 20)
             # Gravity's Lambda is Q S where the weight pair is formed, at
-            # gamma > 0 alone (the merge of the line drive with the generic
-            # entry, 2026-09-22); at gamma 0 the content itself, the scale 1.
+            # gamma > 0 alone, gamma's rule (the model owner's word of
+            # 2026-09-23, form B); at gamma 0 the body weighs M, the scale 1.
             assert not body.fixed and world.column_scales[0] == (1 << 20 if world.optical > 0 else 1)
             if name.startswith("body_control"):
                 assert len(world.measured) == 1
