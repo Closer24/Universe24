@@ -19,10 +19,15 @@ Printed, each with its kind:
       omega_b(gamma_m s) / (gamma_m omega_b(s)) with gamma_m at the massive kind's exact
       cone, and 1 + z = (1 + beta_c) / (f / f0); the free emitter's gamma_m (1 + beta_c)
       beside as the (K) limit; light's phase and group pace on the chain at the line;
-  (d) NEWTON'S FALL ON THE DECLARED BOX (Reviewer 3's line of 21:36Z): on a periodic
-      96^3 box the field carries the images' term beside 1 / (4 pi r); the pin is the
+  (d) NEWTON'S FALL ON THE DECLARED BOX (Reviewer 3's lines of 21:36Z and 21:52Z): on a
+      periodic 96^3 box the field carries the images' term beside 1 / (4 pi r): the
       box's own gradient ratio at r and 2 r from the periodic Green's function of
-      pair_field_pins.py (a), Newton's 4.00 beside as the limit the ratio tends to.
+      pair_field_pins.py (a), Newton's 4.00 the limit the ratio tends to; and the
+      point packet's fall by the ray equations of the exact band with the local pitch
+      omega_0 - delta(x) (the mass m(x) = 3 tan(omega_0 - delta(x)) is the local
+      pitch's, not a constant): the fall times from rest at r = 10 and 20 to four
+      Links inward and the accelerations at the start, at kappa = 1.0 and 0.277; the
+      form's number, a PREDICTION, not a pin (the spread is not in it).
 
     PYTHONPATH=src python docs/designs/detector_law/coupled_mode_pins.py
 """
@@ -106,7 +111,7 @@ def block_record(reads, d_node, cells, g, big_g, steps):
 
 def peak_and_decay(sums, omega_b):
     """The summed record's spectral peak inside the mode's band and the envelope's decay
-    per interval (both GAMEBOARD readings of the map, not clicks)."""
+    per interval (both COMPUTATION, the map's numbers before any run, not clicks)."""
     x = sums - sums.mean()
     spec = np.abs(np.fft.rfft(x * np.hanning(len(x)), n=len(x) * 8))
     w = 2 * math.pi * np.fft.rfftfreq(len(x) * 8)
@@ -183,12 +188,15 @@ if __name__ == "__main__":
     ratio = w_gs / (gamma_m * w_s)
     eps = 1 - (w_s / omega_0) ** 2
     k_line = math.acos(3 * math.cos(w_s) - 2)
+    gamma_cm = 1 / math.sqrt(1 - (1 / 9) / ((num_out / den_out) * c2))
+    gamma_c = 1 / math.sqrt(1 - (1 / 9) / c2)
     print(
         f"(c) row 4b on its declared world (the chain of {n}, the medium [{num_out}, {den_out}], the well"
         f" [{num_in}, {den_in}], side {s}, k = 3): omega_0 = {omega_0:.5f}, the well's mode {w_s:.5f} (eps {eps:.3f});"
         f" gamma_m at the exact cone {gamma_m:.5f}; the one formula f / f0 = {ratio:.4f} (the free emitter's 1 / gamma_m"
         f" {1 / gamma_m:.4f}); THE PIN 1 + z = (1 + beta_c) / (f / f0) = {(1 + beta) / ratio:.4f}; the free limit"
-        f" gamma_m (1 + beta_c) = {gamma_m * (1 + beta):.4f} beside (K); light on the chain at the line: phase pace"
+        f" gamma_m (1 + beta_c) = {gamma_m * (1 + beta):.4f} beside (K), with the CONTROLS at this medium's second-order"
+        f" cone {gamma_cm * (1 + beta):.4f} and at light's {gamma_c * (1 + beta):.4f}; light on the chain at the line: phase pace"
         f" {w_s / k_line:.4f}, group pace {math.sin(k_line) / (3 * math.sin(w_s)):.4f} against c = {math.sqrt(c2):.4f}"
     )
     # (d) Newton's fall on the declared box: the periodic Green's function's gradient ratio
@@ -210,7 +218,43 @@ if __name__ == "__main__":
         ratio_box = grad(r) / grad(2 * r)
         print(
             f"(d) Newton's fall on the periodic {n}^3 box: the field's gradient at r = {r} over 2 r = {2 * r}:"
-            f" {ratio_box:.4f} (THE PIN of the declared box; Newton's 4.00 the limit as the box grows;"
+            f" {ratio_box:.4f} (the declared box's own; Newton's 4.00 the limit as the box grows;"
             f" the images' term makes the difference)"
+        )
+    omega_0 = math.acos(800 / 809)
+    axis = phi[:, 0, 0] - phi[0, 0, 0] + 0.2527310098  # the axis line gauged to the infinite lattice
+    xs = np.arange(n)
+
+    def pitch(x):
+        d = 4 * math.pi * kappa_fall * np.interp(x, xs, axis)
+        return max(omega_0 - d, 0.0)
+
+    def omega_of(x, k):
+        return math.acos(math.cos(pitch(x)) * (2 * math.cos(k) + 4) / 6)
+
+    def fall(x0, x_end, dt=0.05):
+        x, k, t = float(x0), 0.0, 0.0
+        h = 1e-3
+        while x > x_end and t < 5000:
+            dxdt = (omega_of(x, k + h) - omega_of(x, k - h)) / (2 * h)
+            dkdt = -(omega_of(x + h, k) - omega_of(x - h, k)) / (2 * h)
+            x += dxdt * dt
+            k += dkdt * dt
+            t += dt
+        return t
+
+    for kappa_fall in (1.0, 0.277):
+        acc = {}
+        for r in (10, 20):
+            h = 1e-3
+            m_loc = 3 * math.tan(pitch(r))
+            acc[r] = -(pitch(r + h) - pitch(r - h)) / (2 * h) / m_loc
+        t10, t20 = fall(10, 6), fall(20, 16)
+        print(
+            f"(d) the point packet's fall by the ray equations at kappa = {kappa_fall}: the local mass m(10) / m(20) ="
+            f" {3 * math.tan(pitch(10)) / (3 * math.tan(pitch(20))):.4f}; the accelerations at the start"
+            f" {acc[10]:.4e} and {acc[20]:.4e} Link per interval^2 (the ratio {acc[10] / acc[20]:.3f});"
+            f" the fall times to four Links inward {t10:.1f} and {t20:.1f} intervals ((t20 / t10)^2 = {(t20 / t10) ** 2:.3f});"
+            f" a PREDICTION of the form, not a pin (the spread and the floor are not in it)"
         )
     print(f"HOST {time.time() - t0:.0f} s")

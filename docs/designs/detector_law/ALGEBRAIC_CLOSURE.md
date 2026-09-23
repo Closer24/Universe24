@@ -49,56 +49,67 @@ Boss's to close and the owner's to approve (`PLAN.md`).
 | A, B, the two-pace bound and the bound clock's second term | no run: derivations read as bounds | the deficit omega_0^2 / 4 and the term eps (gamma^2 - 1) / 2, both printed on every massive world | none | CLOSED as BOUNDS |
 | 12, the clock in a field (Newton's potential) | under `pair-field-v1` only: a source block, the pair field, a clock block at r and 2 r | the field is the lattice Green's function (1 / (4 pi r) within 0.5 percent from r = 6, `pair_field_pins.py` (a)); the clock's shift ratio 2.00 at r = 8 ((b)); the clock a block's clicks | a 96^3 box, the field settled in 200 intervals, the clocks read over 2000: minutes | CLOSED under the hypothesis (Newton's potential, K in form) |
 | 13, the bending of light | a ray past a crowd | NOT CLOSED as bending: a 12-Link wavelength on a 128^2 board bends by less than the grain | | REPLACED by the DELAY (Shapiro's form, the same 1 + gamma): a light pulse through a medium block sitting in the field against the clock's shift there: 1 + gamma_eff = (n_m^2 - 1) / n_m at one declared coupling, nature's 2 at n_m = 1 + sqrt 2 ((c)); a chain, a minute; CLOSED under the hypothesis with one declared input |
-| 14, Newton's 1 / r (the period ratio) | two blocks in orbit | NOT CLOSED: no orbit on a small board (a packet spreads; a well does not move) | hours | REPLACED by NEWTON'S FALL (section 2): a free massive packet released at r = 10 and at 20 from a source block, its acceleration ratio by the arrival clicks at a detector row; the PIN the declared periodic 96^3 box's own gradient ratio 4.22 (`coupled_mode_pins.py` (d)), Newton's 4.00 beside as the limit the ratio tends to as the box grows; minutes; CLOSED under the hypothesis on the declared box |
+| 14, Newton's 1 / r (the period ratio) | two blocks in orbit | NOT CLOSED: no orbit on a small board (a packet spreads; a well does not move) | hours | REPLACED by NEWTON'S FALL as a PREDICTION OF THE FORM under the hypothesis (section 2): a free massive packet's fall toward a source block, its number computed by the ray equations with the local mass in the declared box's field (`coupled_mode_pins.py` (d)), NOT pinned, not in the paper's list as a pin (the Boss's ruling of 22:14Z on Reviewer 3's MUSTs); Newton's potential, row 12, is the closed Newton row |
 | 3, 11a to 11c, the far lamp (cosmology) | none | NOT CLOSED: the crowd's field on a ray over cosmological lengths has no small board; the second step (the field's push on a block) not derived | | DROPPED; "not predicted" stays |
 | 7a, 7b, the nuclear bindings | none | NOT CLOSED: what a nucleus is under the rule is undeclared; the contact numbers of (e) are box-limited | | DROPPED |
 | 8a to 8c, decays and the neutrino | none | NOT CLOSED: no lifetime from the rule | | DROPPED |
 
-The count: CLOSED 17 rows (quantum: 1a to 1d, 2a, 2b, 2c, 9 with Malus's settings, 10, the atom's lines; classical: 4a, 4b, 4c, 5a, R2, the light clock, the index at rest and in motion, A and B), plus 3 under the hypothesis `pair-field-v1` (12, the delay for 13, Newton's fall for 14); REPLACED 3 (6, 13, 14); DROPPED 7 (R5, R6, 5b, 3, 11, 7, 8). The owner's "three from the quantum, three from the classical, a few from the far" is met with room: the Boss chooses the paper's set from the CLOSED rows.
+The count: CLOSED 17 rows (quantum: 1a to 1d, 2a, 2b, 2c, 9 with Malus's settings, 10, the atom's lines; classical: 4a, 4b, 4c, 5a, R2, the light clock, the index at rest and in motion, A and B as bounds), plus 2 under the hypothesis `pair-field-v1` (12, Newton's potential; the delay for 13) and Newton's fall as a PREDICTION of the form, not pinned; REPLACED 3 (6, 13, 14); DROPPED 7 (R5, R6, 5b, 3, 11, 7, 8). The owner's "three from the quantum, three from the classical, a few from the far" is met with room: the Boss chooses the paper's set from the CLOSED rows; "Newton we surely want" is met by row 12's 1 / r and the fall's form.
 
-## 2. Newton's fall: the derivation (COMPUTATION, from the algebra; a hypothesis row under `pair-field-v1`)
+## 2. Newton's fall: the derivation, and why it is a prediction of the form and not a pin (COMPUTATION; a hypothesis row under `pair-field-v1`)
 
 The massive kind's band: cos omega = cos omega_0 cos omega_l(k). Near the
-bottom, omega(k) = omega_0 + k^2 / (2 m) with the GameBoard's mass m = 3 tan
-omega_0 = 0.451 (mu = 0.15), from the six-neighbour sum's k^2 / 6 and the
-pair's cot omega_0. Under the hypothesis the pitch at a Node is omega_0 -
-delta(r), delta(r) = 4 pi kappa phi(r) -> kappa / r beyond a few Links
-(`pair_field_pins.py` (a)). A packet of the massive kind wide against its
-Compton length (w >= 20 Links against lambda_C = 3.87) has the local
-dispersion H(x, k) = omega_0 - delta(x) + k^2 / (2 m); the six-neighbour
-rule moves its mean position and mean phase gradient by Hamilton's
-equations on the GameBoard (the discrete Ehrenfest identities of the linear
-rule, exact for the mean of k and the mean of x up to the packet's
-spread), so d^2 x / dt^2 = (1 / m) d delta / dx = -kappa / (m r^2): the
-fall toward the source with the inverse square, Newton's, with G M
-standing for kappa / m. On the INFINITE board at kappa = 0.277 (the a_B =
-8 source of the script): the acceleration 1.5 x 10^-3 Link per interval^2
-at r = 20 and 3.8 x 10^-4 at r = 40, the ratio 4.00. THE DECLARED BOX IS
-NOT THE INFINITE BOARD (Reviewer 3's line of 21:36Z): on a periodic box
-with the background subtracted the field carries the images' harmonic term
-r^2 / (6 L^3) beside 1 / (4 pi r), whose gradient r / (3 L^3) opposes the
-fall, 4 percent of Newton's gradient at r = 20 on 96^3 and 30 percent at
-r = 40, so a(20) / a(40) on that box is far from 4.00 and the row as first
-written would have falsified the hypothesis by the box. The closure: the
-pin is the DECLARED BOX's own gradient ratio from its periodic Green's
-function (pair_field_pins.py (a)), computed before the run: on 96^3 at
-r = 10 and 20 it is 4.22, at r = 20 and 40 it is 7.35 (`coupled_mode_pins.py`
-(d)), so the radii are 10 and 20, and Newton's 4.00 stands beside as the
-form the ratio tends to as the box grows (4.06 at r = 10 and 20 on 128^3).
-The packet is then tight: its width about 8 Links, above lambda_C = 3.87
-and below r, its width doubling in m w^2 = 29 intervals; at kappa = 1.0
-(declared, the pitch floored within 7 Links of the source, outside the
-packet's path) the fall from rest at r = 10 covers 9 Links in 29 intervals
-and at r = 20 2.3 Links; readable by the arrival clicks at a detector
-plane four Links inward of each start (the first click's interval,
-DETECTOR). The two things declared: the source block's kappa (one number,
-the same for every block) and the box; the falsifier: the ratio off the
-box's own 4.22 by more than the spread's grain, which the script prints
-before the run by the same linear map (the packet's fall by the massive
-rule alone in the static field, the box and the spread in). Two-dimensional
-note: on a layer the field is logarithmic, not 1 / r; Newton's fall needs
-the 96^3 box (the field settles in about 200 intervals, the fall 100:
-minutes at the engine's cost).
+bottom, omega(k) = omega_0 + k^2 / (2 m) with the GameBoard's mass m = 3
+tan omega_0 (0.451 at mu = 0.15), from the six-neighbour sum's k^2 / 6 and
+the pair's cot omega_0. Under the hypothesis the pitch at a Node is
+omega_0 - delta(r), delta(r) = 4 pi kappa phi(r) -> kappa / r beyond a few
+Links (`pair_field_pins.py` (a)), so the MASS IS THE LOCAL PITCH'S, m(r) =
+3 tan(omega_0 - delta(r)), and not a constant (Reviewer 3's MUST 1, 21:52Z:
+the constant-m line of the first draft dropped it). A packet of the
+massive kind wide against its Compton length has the local dispersion
+omega(x, k) = arccos(cos(omega_0 - delta(x)) cos omega_l(k)); the
+six-neighbour rule moves its mean position and mean phase gradient by
+Hamilton's equations on the GameBoard (the discrete Ehrenfest identities
+of the linear rule, exact for the means up to the packet's spread), so from
+rest d^2 x / dt^2 = (1 / m(r)) d delta / dr = -kappa / (m(r) r^2): the fall
+toward the source, Newton's inverse square in the weak field (kappa / r
+small against omega_0, where m(r) -> m), with G M standing for kappa / m.
+Newton's 4.00 for a(r) / a(2 r) is that WEAK-FIELD LIMIT, never the row's
+number on a small board: at kappa = 1.0 the pitch shift at r = 10 is two
+thirds of omega_0 and m(10) / m(20) = 0.50, so the ratio reads 8.0 on the
+infinite board; at kappa = 0.277 it reads 4.46; a small kappa does not
+rescue it, since at kappa = 0.03 the four-Link fall from r = 10 takes over
+100 intervals against the packet's spread time of 29.
+
+THE DECLARED BOX IS NOT THE INFINITE BOARD (his line of 21:36Z): on a
+periodic box with the background subtracted the field carries the images'
+harmonic term r^2 / (6 L^3) beside 1 / (4 pi r), whose gradient opposes the
+fall; the box's own gradient ratio from its periodic Green's function is
+4.22 at r = 10 and 20 on 96^3, 7.35 at r = 20 and 40, 4.12 at r = 10 and 20
+on 128^3 (`coupled_mode_pins.py` (d); his 4.06 was the first term only,
+withdrawn). And the fall's click has no room on 96^3 (his MUST 2): a
+detector plane four Links inward of a packet of width 8 is covered by the
+seed at t = 0; the r = 10 packet's inner edge sits inside the 7-Link floor
+of the pitch at kappa = 1.0; between the Compton length 3.9, the spread (29
+intervals at w = 8), the floor and the box, no start on 96^3 reads the
+fall by a click, and at r = 20 and 40 the box's term spoils it.
+
+THE RULING (the Boss, 22:14Z, on Reviewer 3's recommendation): Newton's
+fall is a PREDICTION OF THE FORM under the hypothesis, its number computed
+and printed before any run, NOT pinned and not in the paper's list as a
+pin; Newton's potential (row 12, the clock's shift ratio 2.00 at r and
+2 r) is the closed Newton row. The form's number, by the ray equations of
+the exact band with the local pitch in the declared 96^3 box's field, a
+point packet from rest to four Links inward (the spread and the floor not
+in it): at kappa = 1.0 the accelerations at the start 6.9 x 10^-2 and 8.1 x
+10^-3 Link per interval^2 at r = 10 and 20 (the ratio 8.51), the fall times
+11.2 and 30.3 intervals ((t20 / t10)^2 = 7.39); at kappa = 0.277 the ratio
+4.70 and the times 29.9 and 67.0 ((t20 / t10)^2 = 5.05). The way that
+would close the fall as a pin stays open for a later page, before any run:
+the spread IN the printed number (the linear map of the massive rule in
+the static field, the pin each start's first-click interval from that
+map). Two-dimensional note: on a layer the field is logarithmic, not
+1 / r; the fall's form needs a box.
 
 ## 3. What the Boss is asked (the owner's word)
 

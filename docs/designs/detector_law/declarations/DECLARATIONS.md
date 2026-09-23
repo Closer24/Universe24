@@ -206,13 +206,21 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    click (E, D) stamped with B's count (section 6).
 4. The pin (COMPUTATION, MASSIVE_RECORD.md sections 8 and 9 row 4b): the
    frequency B reads from A receding at beta_c, over the frequency B reads
-   from A at rest (the control world), is 1 / (1 + z) with 1 + z = gamma_m
-   (1 + beta_c) = 1.9355 at k = 3 with gamma_m at c_eff (1.9373 at c_m and
-   1.9319 at c, the CONTROLS beside; the character's frequency gamma_m
-   omega_0 shifted by the medium's Doppler; the band the peak's grain over
-   the hold, 0.3 percent, plus the second term eps (gamma_m^2 - 1) / 2 of
-   A's own clock at its eps); the falsifier a ratio off 1 / 1.9355 beyond
-   the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
+   from A at rest (the control world), is 1 / (1 + z) with THE PIN 1 + z =
+   (1 + beta_c) / (f / f_0)(world) = 1.9889 at k = 3, f / f_0 = 0.7931 the
+   one formula omega_b(gamma_m s) / (gamma_m omega_b(s)) on THIS world's
+   well (side 12, [314, 315] in [156, 157], half depth, eps 0.188, the mode
+   0.10175) with gamma_m = 1.22606 at this medium's exact cone (omega_0 =
+   0.1129), by `coupled_mode_pins.py` (c) (the Boss's ruling of 21:22Z:
+   the pin per world by the one formula, as row 4a's); the free emitter's
+   limit gamma_m (1 + beta_c) = 1.9339 beside as the (K) form, with the
+   CONTROLS 1.9350 at this medium's second-order cone and 1.9319 at
+   light's; the first draft's 1.9355 (with mu = 0.15's gamma_m, 1.22705,
+   on this mu = 0.113 medium) is RETIRED, a correction before any run of
+   4b, no reading against it (Reviewer 3's MUST 3 through the Boss,
+   22:14Z); the character's frequency gamma_m omega_0 shifted by the
+   medium's Doppler; the band the peak's grain over the hold, 0.3 percent;
+   the falsifier a ratio off 1 / 1.9889 beyond the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
    1938; Botermann 2014 at beta = 0.338, in vacuum), matched in form at
    the world's beta_c.
 5. The readings: DETECTOR B's clicks (the count between clicks on B's own
