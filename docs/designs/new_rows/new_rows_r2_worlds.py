@@ -5,12 +5,14 @@ only, no run).
 
 Writes `worlds/sagnac2_k<k>.json` for k = 3, 5, 9, 17 (every declaration
 under existing keys: `boundary` per axis, `age_bound`, `clock_stamp`, a
-lamp's `directions`, `rerelease`; no engine line, no key of a hypothesis),
+lamp's `directions`, `measure` at both bodies; no engine line, no key of a
+hypothesis),
 validates each at load through the shipped loader (`load_world`) and never
 runs one, and writes the pins `new_rows_r2_pins.json` with its print
 `new_rows_r2_pins.out`, every number a COMPUTATION from the closed forms
-(the r-free line of docs/ALGEBRA.md 5.1; the transponder's return of
-RUN_4AB 1.2) on the engine's own flight table, before any run.
+(the r-free line of docs/ALGEBRA.md 5.1; each pulse clicked directly at
+the other body, the reviewer's gate of 2026-09-23) on the engine's own
+flight table, before any run.
 
 Usage: `PYTHONPATH=src python docs/designs/new_rows/new_rows_r2_worlds.py`.
 """
@@ -38,8 +40,10 @@ Json = dict[str, object]
 
 # The cart of RUN_4AB (series O's numbers) on a periodic bar, with a
 # co-moving body E one Node behind it: the reviewer's arrangement (RUNS.md
-# section 4, the ruling of 2026-09-23). Two numbers, two classes of the
-# collision: the cart's +x pulse and E's -x pulse pass through each other.
+# section 4, the ruling of 2026-09-23; PINS_R2.md as gated). Two numbers,
+# two classes of the collision: the cart's +x pulse and E's -x pulse pass
+# through each other; each body clicks the other's pulse directly, so the
+# click's deposit of content is symmetric and the two drives stay in step.
 TICKS = 1500
 BAR = 240
 AGE_BOUND = 1500
@@ -57,8 +61,7 @@ DWELL = Fraction(55, 32)  # one Link of a heading row, intervals (the flight tab
 def body(x: int, momentum: int, lamp_direction: list[int], table: Json) -> Json:
     """A body of the cart's family, momentum and content (the same
     accumulators as the cart's: it hops in step), with one lamp direction
-    and the table given; its `directions` (the mass release and any
-    re-release) +x."""
+    and the table given; its `directions` (the mass release) +x."""
     return {
         "position": [x, 1, 1],
         "family": "cart",
@@ -92,23 +95,23 @@ def world(k: int) -> Json:
             {"name": "mass", "quantum": 0, "charge": 0, "phase": False},
         ],
         "measured": [
-            # The cart D: the +x pulse alone; it clicks every cart row of
-            # another number (E's -x pulse directly; its own +x pulse back
-            # from E, re-stamped with E's number).
+            # The cart D: the +x pulse alone; it clicks E's -x pulse on its
+            # arrival from the +x side, the line stamped with its own count.
             body(
                 CART_X,
                 momentum,
                 [1, 0, 0],
                 {"cart": {"rule": "measure", "reads": "age"}, "mass": {"rule": "pass"}},
             ),
-            # The body E, one Node behind: the -x pulse alone; it re-emits
-            # the cart's +x pulse on its declared direction +x, one Link to
-            # the cart, stamped with its own number.
+            # The body E, one Node behind: the -x pulse alone; it clicks the
+            # cart's +x pulse on its arrival from the -x side, the line
+            # stamped with its own count (both bodies measure: the click
+            # deposits the row's content, so both M change alike).
             body(
                 E_X,
                 momentum,
                 [-1, 0, 0],
-                {"cart": {"rule": "rerelease"}, "mass": {"rule": "pass"}},
+                {"cart": {"rule": "measure", "reads": "age"}, "mass": {"rule": "pass"}},
             ),
         ],
     }
@@ -125,24 +128,23 @@ def heading_pace(flight) -> Fraction:
 
 
 def pins(k: int, c: Fraction) -> Json:
-    """The two returns of one ordinal at the cart's own count. E's -x pulse,
-    born one Node behind the cart at the same count, goes round the loop
-    and meets the cart from the +x side at c + v after L - 1 Links: t_- =
-    (L - 1) / (c + v), a direct click (another number). The cart's +x pulse
-    goes round, meets E from the -x side at c - v after L - 1 Links, is
-    re-emitted at E's next self-creation (one count) and closes the last
-    Link on the receding cart at c - v: t_+ = (L - 1) / (c - v) + 1 + 1 / (c
-    - v) = L / (c - v) + 1. Both exact in the mean (ALGEBRA.md 4.1); the
-    ratio (n_+ - n_-) / (n_+ + n_- - 2 n_0) = (t_+ - t_-) / (t_+ + t_-),
-    r-free (every term a count of one clock, r = 1 by the declaration
-    suspension 0), beta plus the one asymmetric constant of E's dwell."""
+    """The two returns of one ordinal, one at each body. E's -x pulse, born
+    one Node behind the cart at the same count, goes round the loop and
+    meets the cart from the +x side at c + v after L - 1 Links: t_- = (L -
+    1) / (c + v), clicked at the cart. The cart's +x pulse goes round and
+    meets E from the -x side at c - v after L - 1 Links: t_+ = (L - 1) / (c
+    - v), clicked at E. Both exact in the mean (ALGEBRA.md 4.1; the tables
+    and the releases run in one interval, no dwell added). The two bodies'
+    counts are one clock by construction (both the age, suspension 0), so
+    (n_+ - n_-) / (n_+ + n_- - 2 n_0) = (t_+ - t_-) / (t_+ + t_-) = v / c =
+    beta exactly, r-free, no arrangement constant."""
     v = Fraction(1, k)
     beta = v / c
     t_minus = (BAR - 1) / (c + v)
-    t_plus = Fraction(BAR) / (c - v) + 1
+    t_plus = (BAR - 1) / (c - v)
     ratio = (t_plus - t_minus) / (t_plus + t_minus)
     remainder_minus = k + DWELL  # one hop plus one dwell at the direct click
-    remainder_plus = 2 * (k + DWELL) + 1  # the meeting with E, E's next self-creation, the last Link
+    remainder_plus = k + DWELL  # one hop plus one dwell at the direct click at E
     band = (remainder_minus + remainder_plus) / (t_plus + t_minus)
     return {
         "k": k,
@@ -152,24 +154,25 @@ def pins(k: int, c: Fraction) -> Json:
         "beta_on_the_heading": {"exact": str(beta), "value": float(beta)},
         "returns_after_the_birth_intervals": {
             "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1, suspension 0)",
-            "minus_x_direct_from_E": {
+            "minus_x_at_the_cart": {
                 "form": "(L - 1) / (c + v)",
                 "exact": str(t_minus),
                 "value": float(t_minus),
             },
-            "plus_x_via_E": {"form": "L / (c - v) + 1", "exact": str(t_plus), "value": float(t_plus)},
+            "plus_x_at_E": {"form": "(L - 1) / (c - v)", "exact": str(t_plus), "value": float(t_plus)},
             "ordinals_with_both_returns_inside_the_run": int(TICKS - math.ceil(t_plus)),
         },
         "ratio": {
             "kind": "DETECTOR (the stamps); CONVERSION (the ratio)",
             "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) per ordinal from the cart's count "
-            f"{FROM_COUNT}: n_0 the birth line's clock at the cart, n_- the click of E's -x pulse "
-            "(number E, the record E's ordinal), n_+ the click of the cart's +x pulse back from E "
-            "(number E, the record the cart's ordinal); the mean over the window",
+            f"{FROM_COUNT}: n_+ from E's clock (its click of the cart's +x pulse, the record the cart's "
+            "ordinal), n_- from the cart's clock (its click of E's -x pulse, the record E's ordinal), "
+            "n_0 the common birth count (the birth stamp once branch birth-stamp lands); the two clocks one "
+            "by construction (both counts the age, suspension 0), checked on the stamps; the mean over the window",
             "pin": {"exact": str(ratio), "value": float(ratio)},
             "beta": {"exact": str(beta), "value": float(beta)},
             "pin_less_beta": float(ratio - beta),
-            "reads": "v / c plus the one asymmetric constant of E's dwell, r-free (ALGEBRA.md 5.1)",
+            "reads": "v / c exactly, r-free, no arrangement constant (ALGEBRA.md 5.1)",
             "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)",
         },
         "band": {
@@ -180,8 +183,8 @@ def pins(k: int, c: Fraction) -> Json:
             },
             "remainder_plus_end_counts": {"exact": str(remainder_plus), "value": float(remainder_plus)},
             "on_the_ratio": float(band),
-            "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at the direct click; twice it "
-            "plus E's one count at the re-emitted return; over the sum of the two returns (RUN_4AB 6.3)",
+            "reads": "the meeting remainder (one hop 1 / v plus one dwell 55 / 32) at each direct click, "
+            "over the sum of the two returns (RUN_4AB 6.3)",
         },
     }
 
@@ -222,11 +225,12 @@ def main() -> None:
         r = p["returns_after_the_birth_intervals"]
         lines.append(
             f"k = {k}: beta = {p['beta_on_the_heading']['exact']} = {p['beta_on_the_heading']['value']:.5f}; "
-            f"t_- = {r['minus_x_direct_from_E']['exact']} = {r['minus_x_direct_from_E']['value']:.2f}, "
-            f"t_+ = {r['plus_x_via_E']['exact']} = {r['plus_x_via_E']['value']:.2f} intervals; "
+            f"t_- = {r['minus_x_at_the_cart']['exact']} = {r['minus_x_at_the_cart']['value']:.2f}, "
+            f"t_+ = {r['plus_x_at_E']['exact']} = {r['plus_x_at_E']['value']:.2f} intervals; "
             f"{r['ordinals_with_both_returns_inside_the_run']} ordinals with both returns inside {TICKS}; "
             f"the ratio's pin {p['ratio']['pin']['exact']} = {p['ratio']['pin']['value']:.5f} "
-            f"(beta {p['ratio']['pin_less_beta']:+.5f}); the band {p['band']['on_the_ratio']:.4f} "
+            f"(beta exactly, the pin less beta {p['ratio']['pin_less_beta']:+.5f}); the band {p['band']['on_the_ratio']:.4f} "
+            f"(over beta {p['band']['on_the_ratio'] / p['beta_on_the_heading']['value']:.3f}) "
             f"(the remainders {p['band']['remainder_minus_end_counts']['value']:.2f} and "
             f"{p['band']['remainder_plus_end_counts']['value']:.2f} counts)"
         )
