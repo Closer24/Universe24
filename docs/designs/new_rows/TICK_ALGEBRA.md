@@ -777,7 +777,7 @@ that it is nature. The light clock's pins are the Light Clock Runner's
 - [The click frame](../click_frame/DERIVATION.md) sections 0 to 3 (the
   click theorem; r = 1 on the law; the two one-way factors);
   [ALGEBRA.md](../../ALGEBRA.md) 4.1, 4.2 and 5.1.
-- [The crowd clock](../crowd_clock/DESIGN.md), [the clock's word](../clock_age/NOTE.md),
+- The crowd clock (`docs/designs/crowd_clock/DESIGN.md`, deleted from the tree by the paper-sources plan, in the history at main d2982954), [the clock's word](../clock_age/NOTE.md),
   [the moving detector](../moving_detector/DESIGN.md) and its
   [preregistration](../moving_detector/PREREGISTRATION_V2.md), [the
   reader's clock](../reader_clock/DESIGN.md): what they derived is cited
