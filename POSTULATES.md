@@ -1595,8 +1595,8 @@ claimed to represent it. In each postulate the owner's statement comes
 first, the Boss's reading after it where one is given and marked as his,
 and the citations last. The records are in
 [docs/LOG_2026-09-20.md](docs/LOG_2026-09-20.md) and their decisions in
-[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); records 1242 and
-1243 are cited by number. Where [section 10](#10-measurement-and-display-are-outside-the-physics)
+[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); records 1242, 1243
+and 1245 are cited by number. Where [section 10](#10-measurement-and-display-are-outside-the-physics)
 or sections [23](#23-the-ray-event-model),
 [24](#24-everything-is-information-transfer-a-return-is-the-inverse-split-at-the-event)
 and [25](#25-the-law-of-the-bit-the-thing-or-its-shadow) already say a
@@ -1673,20 +1673,21 @@ from the postulates, with the record of the contradiction cited (record
 10 or sections 23 to 25 already say a thing, they are cited instead of
 restated.
 
-**26.8 The three levels.** The owner (2026-09-23, 04:04Z, record 1243):
-"There are three levels. The first level is the reality we see, the way we
-see the world. The second level is Einstein's event space (his spacetime),
-which we know much of the world behaves like, one can imagine it behaves
-so. The third level is the paper, the Inside, from which Einstein's level
-follows." The Boss's reading, marked as his: level 1 is the Outside as
-read, the detectors' clicks and nature's measurements (DETECTOR); level 2
-is the form the Outside is compared with, Einstein's spacetime, a model
-that fits most of what level 1 shows (the thing compared with, record
-817); level 3 is the Inside, the GameBoard and the law of the paper. The
-relations: 3 gives 2 by derivation (the click theorem, the conversion and
-the tick algebra: Lorentz's form up to corrections of order m^2 v^2, 26.6);
-2 is compared with 1 ("matches nature", never "is nature"); 3 reaches 1
-only by clicks (26.4), and nothing of level 1 is read from level 3
-directly. Records 1216, 1220 (the three levels named first there), 1242
-and 1243;
+**26.8 The three levels.** The owner (2026-09-23, 04:04Z, record 1243,
+and in his own words at 04:09Z, record 1245): there are three levels.
+Level 1 is "what we see, what they measure": the experimenters'
+measurements, the detectors' clicks. Level 2 is "Einstein: hard for a
+person to see, but it predicts what we see very well": his event space,
+his spacetime. Level 3 is "our level, the Inside, what we call the
+GameBoard", from which level 2 follows. Level 2 is a model, not a datum,
+so the paper's test is double (the owner, confirmed, record 1245): that
+level 3 gives level 2's form, the derivation (the click theorem, the tick
+algebra: Lorentz's form up to corrections of order m^2 v^2, 26.6), and
+that level 3's numbers, read by clicks, match level 1, the comparison
+table. The light clock tests both at once: if it reads gamma squared and
+gamma (gamma the Lorentz factor) where Einstein's forms read 1 and 1, the
+derivation from 3 to 2 fails in its present form and postulate 26.6 is
+removed under 26.7. Level 3 reaches level 1 only by clicks (26.4); nothing
+of level 1 is read from level 3 directly. Records 1216, 1220 (the three
+levels named first there), 1243 and 1245;
 [docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame).
