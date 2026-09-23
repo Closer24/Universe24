@@ -13,11 +13,19 @@ it (`tools/run_series.py`). Standard library only; nothing of
 
     PYTHONPATH=src python tools/algebra_visualizer/render.py RUNS_DIR [--render OUT.html]
         [--light c_measured] [--detector slits_low]
+    PYTHONPATH=src python tools/algebra_visualizer/render.py RUN_FOLDER [--render OUT.html]
 
 `RUNS_DIR` holds one folder per world, `<name>/run` (the runner's output
-through `tools/run_series.py`) or `<name>`. The registers are read from
-`examples/events/` by the world's name (`REGISTERS`); a world without a
-register prints no PIN.
+through `tools/run_series.py`) or `<name>`: the first page, two runs in
+three layers (DESIGN.md). `RUN_FOLDER` holds one run's `run.json`: the 3-D
+page of docs/designs/algebra_visualizer/DESIGN_3D.md, any registered run of
+either engine (the Beam Law on main, or the detector law told from
+`run.json`'s `hypotheses`) in the owner's three layers, the algebra, the
+GameBoard as the Inside in 3-D with a step control over the intervals, and
+the clicks as the Outside. The registers are read from `examples/events/`
+by the world's name (`REGISTERS`); a world without a register prints no PIN.
+An EXPLORATORY run (the word in its folder's path or its model identity)
+carries EXPLORATORY in the page's title and on every panel, never a result.
 """
 
 from __future__ import annotations
@@ -26,13 +34,26 @@ import argparse
 import sys
 from html import escape
 from pathlib import Path
+from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from panels import KIND_WORDS, KINDS, Panel, as_rows, build_panels, head_numbers  # noqa: E402
+import json  # noqa: E402
+
+from board3d import build_layer  # noqa: E402
+from panels import (  # noqa: E402
+    KIND_WORDS,
+    KINDS,
+    Panel,
+    as_rows,
+    build_panels,
+    build_run_panels,
+    head_numbers,
+    head_numbers_run,
+)
 from record import MissingRun, RunRecord, load_run  # noqa: E402
 from svg import figure  # noqa: E402
 
@@ -58,7 +79,37 @@ LAYERS = {
     ),
 }
 
-WIDE = {"light_rule", "fan", "pace", "life", "screen", "clock", "objects", "gameboard", "block"}
+LAYERS_RUN = {
+    1: (
+        "The algebra",
+        "The run's declared objects as objects of ALGEBRA.md: the families with their pairs, the blocks with their pairs and sides, the detectors and the emitters, the board's extents and faces, the verbs that act per interval. Every integer DECLARATION, read from run.json and the world file beside it.",
+    ),
+    2: (
+        "The GameBoard, the Inside: a diagnostic, never a measurement",
+        "The board in 3-D: the Nodes' extents as a box, a layer or a chain; the records' presence over the intervals where the record shows it; the blocks as cubes at their recorded positions; the detectors as faces or cells; a step control over the intervals. GAMEBOARD, the host's view of the board.",
+    ),
+    3: (
+        "The Outside: the clicks",
+        "The clicks as the detectors' own records in their own counts: per detector its clicks, the count against the detector's own count where the run stamps it, the intervals between clicks, the pattern an experimenter sees. Every number DETECTOR; nothing pinned or compared.",
+    ),
+}
+
+WIDE = {
+    "light_rule",
+    "fan",
+    "pace",
+    "life",
+    "screen",
+    "clock",
+    "objects",
+    "gameboard",
+    "block",
+    "board",
+    "alg_blocks",
+    "alg_instruments",
+    "out_records",
+    "out_clock",
+}
 
 CSS = """
 :root{--ground:#f5f6f8;--surface:#ffffff;--ink:#14181d;--muted:#5c6470;--rule:#d9dde3;--soft:#eceff3;
@@ -134,6 +185,81 @@ dl.nums dt{color:var(--muted);} dl.nums dd{margin:0;font-family:ui-monospace,Men
 .foot{margin-top:2rem;font-size:.85rem;color:var(--muted);border-top:1px solid var(--rule);padding-top:1rem;}
 :focus-visible{outline:2px solid var(--detector);outline-offset:2px;}
 @media (prefers-reduced-motion: no-preference){.stage{transition:border-color .15s;}}
+.figure .b-edge{stroke:var(--ink);stroke-width:1.1;fill:none;} .figure .b-edge-periodic{stroke:var(--muted);stroke-width:1;stroke-dasharray:5 4;fill:none;}
+.figure .b-face{fill:var(--detector);opacity:.07;stroke:var(--detector);stroke-width:.6;}
+.figure .b-cube{fill:var(--declaration);opacity:.55;stroke:var(--ink);stroke-width:.8;}
+.figure .b-cell{fill:var(--gameboard);} .figure .b-cell-neg{fill:var(--host);}
+.figure .b-det{fill:var(--detector);} .figure .b-lamp{fill:var(--host);} .figure .b-body{fill:var(--muted);} .figure .b-blockcell{fill:var(--declaration);}
+.figure .b-mark{fill:var(--gameboard);} .figure .b-mark-det{fill:var(--detector);}
+.board-wrap{touch-action:none;cursor:grab;user-select:none;} .board-wrap:active{cursor:grabbing;}
+.strip{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.85rem;font-family:ui-monospace,Menlo,Consolas,monospace;}
+details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--muted);}
+.tbl-scroll{overflow:auto;max-height:320px;border:1px solid var(--rule);border-radius:4px;}
+table.rec{border-collapse:collapse;font-size:.8rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;width:100%;}
+table.rec th,table.rec td{padding:2px 8px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap;}
+table.rec th{position:sticky;top:0;background:var(--surface);font-weight:600;}
+.explor{display:inline-block;padding:2px 8px;border:2px solid var(--pin);color:var(--pin);border-radius:4px;font-weight:700;letter-spacing:.08em;font-size:.8rem;}
+"""
+
+SCRIPT_3D = """
+(function(){
+  var holder=document.querySelector('[data-board-json]'); if(!holder) return;
+  var B=JSON.parse(holder.textContent);
+  var box=document.querySelector('[data-board]'), svg=box.querySelector('svg'), g=svg.querySelector('[data-board-drawn]');
+  var range=box.querySelector('input[data-t]'), out=box.querySelector('[data-t-out]'), strip=box.querySelector('[data-strip]');
+  var yawIn=box.querySelector('input[data-yaw]'), pitchIn=box.querySelector('input[data-pitch]');
+  var X=Math.max(B.shape[0],1), Y=Math.max(B.shape[1],1), Z=Math.max(B.shape[2],1);
+  var W=760, H=460, PAD=36, yaw=0.62, pitch=0.42, t=B.ticks;
+  function proj(x,y,z){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    var x1=x*cy-y*sy, y1=x*sy+y*cy; return [x1, -(y1*sp+z*cp), y1*cp-z*sp];}
+  var at, scale;
+  function fit(){var cs=[],i,j,k; for(i=0;i<2;i++)for(j=0;j<2;j++)for(k=0;k<2;k++) cs.push(proj(i?X:0,j?Y:0,k?Z:0));
+    var u0=Math.min.apply(null,cs.map(function(c){return c[0]})), u1=Math.max.apply(null,cs.map(function(c){return c[0]}));
+    var v0=Math.min.apply(null,cs.map(function(c){return c[1]})), v1=Math.max.apply(null,cs.map(function(c){return c[1]}));
+    scale=Math.min((W-2*PAD)/Math.max(u1-u0,1e-9),(H-2*PAD)/Math.max(v1-v0,1e-9));
+    at=function(x,y,z){var p=proj(x,y,z); return [PAD+(p[0]-u0)*scale, PAD+(p[1]-v0)*scale, p[2]];};}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  function posAt(obj){var p=obj.positions[0][1]; for(var i=0;i<obj.positions.length;i++){if(obj.positions[i][0]<=t) p=obj.positions[i][1];} return p;}
+  function countAt(name){var s=B.counts[name]||[], c=0; for(var i=0;i<s.length;i++){if(s[i][0]<=t) c=s[i][1];} return c;}
+  function draw(){fit(); var items=[]; var ext=[X,Y,Z];
+    B.faces.forEach(function(f){var ax='xyz'.indexOf(f.axis); var others=[0,1,2].filter(function(i){return i!==ax}); var fixed=f.positive?ext[ax]:0;
+      var q=[[0,0],[ext[others[0]],0],[ext[others[0]],ext[others[1]]],[0,ext[others[1]]]].map(function(ab){var pt=[0,0,0]; pt[ax]=fixed; pt[others[0]]=ab[0]; pt[others[1]]=ab[1]; return at(pt[0],pt[1],pt[2]);});
+      var d=(q[0][2]+q[1][2]+q[2][2]+q[3][2])/4;
+      items.push([d-0.5,'<polygon points="'+q.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')+'" class="b-face"><title>'+esc(f.name)+', an open face, a detector</title></polygon>']);});
+    var E=[[[0,0,0],[X,0,0]],[[0,Y,0],[X,Y,0]],[[0,0,Z],[X,0,Z]],[[0,Y,Z],[X,Y,Z]],[[0,0,0],[0,Y,0]],[[X,0,0],[X,Y,0]],[[0,0,Z],[0,Y,Z]],[[X,0,Z],[X,Y,Z]],[[0,0,0],[0,0,Z]],[[X,0,0],[X,0,Z]],[[0,Y,0],[0,Y,Z]],[[X,Y,0],[X,Y,Z]]];
+    E.forEach(function(e){var a=at(e[0][0],e[0][1],e[0][2]), b=at(e[1][0],e[1][1],e[1][2]); var axis=[0,1,2].filter(function(i){return e[0][i]!==e[1][i]})[0];
+      items.push([(a[2]+b[2])/2-1,'<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" class="'+(B.axes[axis].periodic?'b-edge-periodic':'b-edge')+'"/>']);});
+    if(t===B.ticks && B.snapshot.cells.length){var top=1; B.snapshot.cells.forEach(function(c){top=Math.max(top,Math.abs(c[3]))});
+      B.snapshot.cells.forEach(function(c){var p=at(c[0]+0.5,c[1]+0.5,c[2]+0.5); var f=Math.min(Math.abs(c[3])/top,1);
+        items.push([p[2],'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+Math.max(1.2+2.2*f,1.2).toFixed(1)+'" class="'+(c[3]<0?'b-cell-neg':'b-cell')+'" opacity="'+(0.25+0.7*f).toFixed(2)+'"><title>('+c[0]+', '+c[1]+', '+c[2]+'): '+c[3]+', GAMEBOARD</title></circle>']);});}
+    if(B.probes){var row=null; B.probes.values.forEach(function(v){if(v[0]<=t) row=v;}); if(row){var top2=1; row[1].forEach(function(v){top2=Math.max(top2,Math.abs(v))});
+      B.probes.nodes.forEach(function(n,i){var p=at(n[0]+0.5,n[1]+0.5,n[2]+0.5); var v=row[1][i]||0; var f=Math.min(Math.abs(v)/top2,1);
+        items.push([p[2],'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(2+3*f).toFixed(1)+'" class="'+(v<0?'b-cell-neg':'b-cell')+'" opacity="'+(0.3+0.6*f).toFixed(2)+'"><title>probe ('+n.join(', ')+') at t = '+row[0]+': '+v+', GAMEBOARD</title></circle>']);});}}
+    B.cells.forEach(function(c){var cls={detector:'b-det',emitter:'b-lamp',block:'b-blockcell',body:'b-body'}[c.role]||'b-body'; var n0=c.nodes[0]; var cnt=countAt(c.name);
+      c.nodes.forEach(function(n){var p=at(n[0]+0.5,n[1]+0.5,n[2]+0.5);
+        items.push([p[2],'<rect x="'+(p[0]-3).toFixed(1)+'" y="'+(p[1]-3).toFixed(1)+'" width="6" height="6" class="'+cls+'"><title>'+esc(c.name)+', '+esc(c.role)+' at ('+n.join(', ')+'), DECLARATION; clicks so far '+cnt+', DETECTOR</title></rect>']);});
+      if(cnt>0 && n0){var p0=at(n0[0]+0.5,n0[1]+0.5,n0[2]+0.5); items.push([p0[2]-0.02,'<text x="'+(p0[0]+5).toFixed(1)+'" y="'+(p0[1]-4).toFixed(1)+'" class="t-tiny" data-kind="DETECTOR">'+cnt+'</text>']);}});
+    B.faces.forEach(function(f){var cnt=countAt(f.name); if(!cnt) return; var ax='xyz'.indexOf(f.axis); var pt=[X/2,Y/2,Z/2]; pt[ax]=f.positive?ext[ax]:0; var p=at(pt[0],pt[1],pt[2]);
+      items.push([p[2]-0.6,'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]+(f.positive?14:-14)).toFixed(1)+'" class="t-small" text-anchor="middle" data-kind="DETECTOR">'+esc(f.name)+' '+cnt+'</text>']);});
+    B.objects.forEach(function(o){var n=posAt(o); var size=o.side?[o.side,o.side,o.side]:o.span; var org=o.side?n.slice():[n[0]-((size[0]-1)>>1),n[1]-((size[1]-1)>>1),n[2]-((size[2]-1)>>1)];
+      var c=[]; [0,size[0]].forEach(function(dx){[0,size[1]].forEach(function(dy){[0,size[2]].forEach(function(dz){c.push(at(org[0]+dx,org[1]+dy,org[2]+dz));});});});
+      [[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]].forEach(function(f){var q=f.map(function(i){return c[i]}); var d=(q[0][2]+q[1][2]+q[2][2]+q[3][2])/4;
+        items.push([d,'<polygon points="'+q.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')+'" class="b-cube"><title>'+esc(o.name)+' at ('+n.join(', ')+') from its line, GAMEBOARD</title></polygon>']);});});
+    B.marks.forEach(function(m){if(m[0]>t) return; var p=at(m[2]+0.5,m[3]+0.5,m[4]+0.5); var age=Math.max(0,Math.min(t-m[0],40));
+      items.push([p[2]+0.01,'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="2.6" class="'+(m[5]==='DETECTOR'?'b-mark-det':'b-mark')+'" opacity="'+(0.9-0.02*age).toFixed(2)+'"><title>'+esc(m[1])+' at ('+m[2]+', '+m[3]+', '+m[4]+'), t = '+m[0]+', '+m[5]+'</title></circle>']);});
+    items.sort(function(a,b){return b[0]-a[0]}); g.innerHTML=items.map(function(i){return i[1]}).join('');
+    if(out) out.textContent=String(t);
+    if(strip){var parts=[]; var bk=B.books; if(bk.transit.length&&t>=1){var r=Math.min(t,bk.transit.length)-1; bk.families.forEach(function(f,i){parts.push('<span><span class="n" data-kind="GAMEBOARD" data-source="run.json: transit_content">'+esc(f)+' in transit '+bk.transit[r][i]+'</span>'+(bk.measured[r]?', <span class="n" data-kind="GAMEBOARD" data-source="run.json: measured_content">measured '+bk.measured[r][i]+'</span>':'')+'</span>');});}
+      strip.innerHTML=parts.join('');}}
+  if(range){range.addEventListener('input',function(){t=parseInt(range.value,10); draw();});}
+  box.querySelectorAll('[data-step]').forEach(function(b){b.addEventListener('click',function(){t=Math.max(0,Math.min(B.ticks,t+parseInt(b.getAttribute('data-step'),10))); if(range) range.value=String(t); draw();});});
+  if(yawIn){yawIn.addEventListener('input',function(){yaw=parseFloat(yawIn.value); draw();});}
+  if(pitchIn){pitchIn.addEventListener('input',function(){pitch=parseFloat(pitchIn.value); draw();});}
+  var drag=null; svg.addEventListener('pointerdown',function(e){drag=[e.clientX,e.clientY,yaw,pitch]; svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',function(e){if(!drag) return; yaw=drag[2]+(e.clientX-drag[0])*0.01; pitch=Math.max(-1.5,Math.min(1.5,drag[3]+(e.clientY-drag[1])*0.01)); if(yawIn) yawIn.value=yaw.toFixed(2); if(pitchIn) pitchIn.value=pitch.toFixed(2); draw();});
+  svg.addEventListener('pointerup',function(){drag=null;}); svg.addEventListener('pointercancel',function(){drag=null;});
+  draw();
+})();
 """
 
 SCRIPT = """
@@ -183,14 +309,64 @@ def legend() -> str:
     return f'<ul class="legend">{items}</ul>'
 
 
-def panel_html(panel: Panel) -> str:
+def table_html(fig: dict[str, Any], key: str) -> str:
+    """A panel's table: every cell one labelled number (DESIGN_3D.md 6.3)."""
+    rows = fig.get("rows", [])
+    if not rows:
+        return ""
+    head = "".join(f"<th>{escape(h)}</th>" for h in fig.get("head", []))
+    body = []
+    for row in rows:
+        body.append(
+            "<tr>"
+            + "".join(
+                f'<td><span class="n" data-kind="{kind}" data-source="{escape(source, quote=True)}">{escape(value)}</span></td>'
+                for value, kind, source in row
+            )
+            + "</tr>"
+        )
+    return (
+        f'<details class="tbl" id="tbl-{key}"><summary>the lines, as a table (<span class="n" data-kind="HOST" data-source="the count of rows">{len(rows)}</span> rows)</summary>'
+        f'<div class="tbl-scroll"><table class="rec"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div></details>'
+    )
+
+
+def board_html(panel: Panel) -> str:
+    """The 3-D board: the step control, the view's two angles, the pre-rendered
+    picture, the books' strip and the board's data as one JSON element."""
+    board = panel.figure["board"]
+    ticks = int(board["ticks"])
+    data = json.dumps(board, separators=(",", ":"))
+    return (
+        "<div data-board>"
+        f'<div class="control"><label for="t-{panel.key}">the interval t</label>'
+        f'<button type="button" data-step="-1" aria-label="one interval back" data-ref="control">-1</button>'
+        f'<input id="t-{panel.key}" type="range" min="0" max="{ticks}" value="{ticks}" step="1" data-t>'
+        f'<button type="button" data-step="1" aria-label="one interval forward" data-ref="control">+1</button>'
+        f'<span>t = <span class="n" data-kind="GAMEBOARD" data-source="run.json: completed_ticks (the record\'s ordering)" data-t-out>{ticks}</span>{badge("GAMEBOARD")}</span></div>'
+        f'<div class="control"><label for="yaw-{panel.key}">turn</label><input id="yaw-{panel.key}" type="range" min="-3.2" max="3.2" value="0.62" step="0.02" data-yaw>'
+        f'<label for="pitch-{panel.key}">tilt</label><input id="pitch-{panel.key}" type="range" min="-1.5" max="1.5" value="0.42" step="0.02" data-pitch><span class="note">or drag the board</span></div>'
+        f'<div class="fig board-wrap">{figure(panel.figure)}</div>'
+        '<div class="strip" data-strip data-ref="books"></div>'
+        f'<script type="application/json" data-board-json>{data.replace("</", "<\\/")}</script>'
+        "</div>"
+    )
+
+
+def panel_html(panel: Panel, exploratory: bool = False) -> str:
     classes = ["panel"]
     if panel.key in WIDE:
         classes.append("wide")
-    if panel.key == "gameboard" or (panel.numbers and all(n.kind == "GAMEBOARD" for n in panel.numbers)):
+    if (
+        panel.key == "gameboard"
+        or panel.key.startswith("board")
+        or (panel.numbers and all(n.kind == "GAMEBOARD" for n in panel.numbers))
+    ):
         classes.append("diag")
     parts = [f'<article class="{" ".join(classes)}" id="p-{panel.key}">']
     eyebrow = "GAMEBOARD, a diagnostic" if "diag" in classes else f"Layer {panel.layer}"
+    if exploratory:
+        eyebrow = "EXPLORATORY, never a result; " + eyebrow
     parts.append(f'<div class="eyebrow" data-ref="layer">{escape(eyebrow)}</div>')
     parts.append(f'<h3 data-ref="title">{escape(panel.title)}</h3>')
     if panel.algebra:
@@ -240,6 +416,10 @@ def panel_html(panel: Panel) -> str:
                 f'<input id="step-{panel.key}" type="range" min="0" max="{len(stages) - 1}" value="{len(stages) - 1}" step="1"></div>'
                 f'<ol class="stages">{"".join(items)}</ol></div>'
             )
+        elif kind == "board3d":
+            parts.append(board_html(panel))
+        elif kind == "table":
+            parts.append(table_html(fig, panel.key))
         elif fig:
             drawn = figure(fig)
             if drawn:
@@ -297,6 +477,73 @@ def page_html(light: RunRecord, detector: RunRecord, panels: list[Panel]) -> str
     return "\n".join(parts)
 
 
+def page_html_run(run: RunRecord, panels: list[Panel]) -> str:
+    """The 3-D page of one run in the owner's three layers (DESIGN_3D.md)."""
+    explor = run.exploratory
+    title = ("EXPLORATORY: " if explor else "") + f"Algebra 3-D, {run.name}"
+    heading = ("EXPLORATORY: " if explor else "") + f"The Algebra Visualizer in 3-D: {run.name}"
+    rows = "".join(number_row(n.label, n.value, n.kind, n.source) for n in head_numbers_run(run))
+    parts = [
+        f"<title>{escape(title)}</title>",
+        f"<style>{CSS}</style>",
+        '<div class="wrap">',
+        '<header class="head">',
+        (
+            '<p><span class="explor" data-ref="exploratory">EXPLORATORY</span> <span class="note">an exploratory run: its page is a reading of its record and never a result</span></p>'
+            if explor
+            else ""
+        ),
+        f'<h1 data-ref="title">{escape(heading)}</h1>',
+        '<p class="lede" data-ref="lede">One run in the owner\'s three layers, read from its record alone: the algebra, the GameBoard as the Inside in 3-D, and the clicks as the Outside. '
+        "Every number carries its kind and its source; nothing here is computed by the page beyond a sum, a difference or a ratio of recorded integers, nothing is pinned, nothing is compared with nature. "
+        "Neither engine records the board's state per Node per interval: the board draws only what the record writes and says so on its face. "
+        '<span class="ref" data-ref="design">docs/designs/algebra_visualizer/DESIGN_3D.md</span>; the algebra quoted from <span class="ref" data-ref="algebra">docs/ALGEBRA.md</span>.</p>',
+        legend(),
+        '<div class="runs">',
+        f'<section class="run"><h3 data-ref="run">The run: <span class="ref">{escape(run.name)}</span></h3>'
+        f'<p class="note" data-ref="folder">read from <span class="ref">{escape(str(run.folder))}</span></p><dl class="nums">{rows}</dl></section>',
+        "</div></header>",
+    ]
+    for layer, (ltitle, lede) in LAYERS_RUN.items():
+        own = [p for p in panels if p.layer == layer]
+        parts.append(
+            f'<section class="layer" id="layer-{layer}"><div class="layer-head"><div class="layer-n" data-ref="layer">{layer}</div><div><h2>{escape(ltitle)}</h2><p class="lede" data-ref="lede">{escape(lede)}</p></div></div>'
+        )
+        parts.append(legend())
+        parts.append(
+            '<div class="panels">' + "".join(panel_html(p, explor) for p in own) + "</div></section>"
+        )
+    parts.append(
+        '<footer class="foot"><p>A picture of the board is a diagnostic in every case; it is never compared with nature. Only a detector\'s reading is a measurement: a click, '
+        "a count between clicks on the detector's own record, a ratio of such counts. A GameBoard reading is the host's view of the board. "
+        "The page reads the record and computes no physics: no rule of the law is evaluated, no table of the engine is loaded, no record is stepped again, no block is interpolated between two of its lines; "
+        "the only arithmetic is a sum, a difference or a ratio of recorded integers, labelled as its inputs are.</p></footer>"
+    )
+    parts.append("</div>")
+    parts.append(f"<script>{SCRIPT}</script>")
+    parts.append(f"<script>{SCRIPT_3D}</script>")
+    return "\n".join(parts)
+
+
+def load_one(folder: Path) -> RunRecord:
+    """One run folder (`run.json` in it, or in its `run/`), with the register
+    of its world where `REGISTERS` names one by the folder's name."""
+    if not (folder / "run.json").exists() and (folder / "run" / "run.json").exists():
+        folder = folder / "run"
+    name = folder.parent.name if folder.name == "run" else folder.name
+    register, block = register_of(name)
+    return load_run(folder, register, block)
+
+
+def build_run(run: RunRecord) -> list[Panel]:
+    _board, board_panels = build_layer(run)
+    return build_run_panels(run, board_panels)
+
+
+def is_run_folder(path: Path) -> bool:
+    return (path / "run.json").exists() or (path / "run" / "run.json").exists()
+
+
 def run_folder(runs: Path, name: str) -> Path:
     nested = runs / name / "run"
     return nested if nested.exists() else runs / name
@@ -322,14 +569,23 @@ def print_rows(panels: list[Panel]) -> None:
         print(f"{kind:<11} {key:<10} {label}: {value}  [{source}]")
     for panel in panels:
         if panel.missing:
-            print(f"{'(none)':<11} {panel.key:<10} not recorded by these two runs: {panel.missing}")
+            print(f"{'(none)':<11} {panel.key:<10} not recorded: {panel.missing}")
+        rows = panel.figure.get("rows") if panel.figure.get("kind") == "table" else None
+        if rows:
+            print(
+                f"{'(table)':<11} {panel.key:<10} {len(rows)} rows of labelled cells (the page's table)"
+            )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("runs", type=Path, help="the runs directory (one folder per world, <name>/run)")
+    parser.add_argument(
+        "runs",
+        type=Path,
+        help="a run folder (one run.json: the 3-D page of one run) or the runs directory of the first page (one folder per world, <name>/run)",
+    )
     parser.add_argument("--light", default="c_measured", help="the light world's folder name")
     parser.add_argument("--detector", default="slits_low", help="the detector world's folder name")
     parser.add_argument(
@@ -337,15 +593,25 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     try:
-        light, detector = load_pair(args.runs, args.light, args.detector)
+        if is_run_folder(args.runs):
+            run = load_one(args.runs)
+            print(
+                f"{'(engine)':<11} {run.name:<10} {run.engine}"
+                + ("  EXPLORATORY" if run.exploratory else "")
+            )
+            panels = build_run(run)
+            page = None if args.render is None else page_html_run(run, panels)
+        else:
+            light, detector = load_pair(args.runs, args.light, args.detector)
+            panels = build_panels(light, detector)
+            page = None if args.render is None else page_html(light, detector, panels)
     except MissingRun as refused:
         print(str(refused), file=sys.stderr)
         return 2
-    panels = build_panels(light, detector)
-    if args.render is None:
+    if page is None:
         print_rows(panels)
         return 0
-    args.render.write_text(page_html(light, detector, panels), encoding="utf-8")
+    args.render.write_text(page, encoding="utf-8")
     print(f"wrote {args.render} ({args.render.stat().st_size} bytes)")
     return 0
 
