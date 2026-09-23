@@ -1,0 +1,100 @@
+# The algebraic closure of every experiment: the rows that close on a small board in minutes, the rows replaced by a simpler experiment that closes, and the rows dropped (the chief physicist, 2026-09-23; docs only, no run)
+
+The model owner's word of 2026-09-23, about 21:35Z (Hebrew, in substance):
+"Verify that for every experiment you see the algebraic way to do it. Our
+foreign object is simple: a few sentences. An experiment we do not know
+how to realise algebraically, or whose proof you do not see, we do not do;
+if needed we replace it by something simple that we can do. Newton we
+surely want: that is classical physics. Experiments not proven
+algebraically are not done; nor those whose board is too small or that
+take hours. Only what is closed in the algebra, then the physics, then at
+the end the pins, after we ran them without pins and showed they work.
+And tell the Boss: some experiments are only predictions; he should go
+over the papers of the world and see how these experiments are best done
+to show the connection of the physics to us."
+
+This page is that verification, one row at a time. CLOSED means: the
+objects are declared in the one form (a record kind, a block of declared
+cells with a pair, a table, a detector with a click), the number is
+computed from the algebra before the run by a script beside this page,
+the board is a chain, a layer or a box of at most 128^3, and the run takes
+minutes. REPLACED means the row's own experiment does not close, and a
+simpler experiment that tests the same physics does. DROPPED means no
+simple experiment closes tonight; the row keeps its history and its
+"not predicted" in the schedule. Every verdict is mine; the list is the
+Boss's to close and the owner's to approve (`PLAN.md`).
+
+## 1. The verdicts
+
+| Row | The experiment as scheduled | The algebraic path | Board and time | Verdict |
+| --- | --- | --- | --- | --- |
+| 1a to 1d, Bell's CHSH, its window, the order channel, no-signalling | a pair of records with two polariser tables reading the phase from (a_now, a_before) | the table's cos^2 law on a shared record, summed at the four settings: 181 / 64 at N = 2048, exact (`DECLARATIONS.md` section 1); no-signalling 0 by the table's symmetry | a 64^2 layer, seconds | CLOSED (quantum, K) |
+| 2a, the two slits | the ray splitting at every free Node behind two openings, the screen's clicks | the wave's own sum (the first build's gate test (a) passed); the visibility from the train's coherence, computed | a layer, a minute | CLOSED (quantum, K) |
+| 2b, Mach-Zehnder | two corridors between mirror receivers with a splitter table | the splitter's table is the object; the visibility 1.00 - 0.02 by the corridors' equal lengths, computed | a layer, a minute | CLOSED (quantum, K) |
+| 2c, Born's exponent (Sorkin) | the three-opening sum | the rule is linear, so the three-opening record is the sum of the three; the click a quadratic form: the Sorkin sum 0 to the grain, EXACT | a layer, seconds | CLOSED (quantum, K) |
+| 9 and Malus's three settings | the polariser table at 45 degrees and at 11.25, 28.125, 33.75 | the table's cos^2 on the counts of 256 | a layer, seconds | CLOSED (quantum, K) |
+| 10, the single opening's spread | the wave's sum through an opening in a mirror block | the Rayleigh-Sommerfeld sum on the lattice, computed; 0.842 at F = 0.16 | a layer, seconds | CLOSED (quantum, K) |
+| R5, complementarity | a which-path detector at one opening | NOT DECLARED: the detector's take on one opening and the visibility's fall need the take's declaration under the rule, and the number (V^2 + D^2 = 1) is a theorem of the click's quadratic form once declared | a layer, seconds | DROPPED tonight: the declaration is one page, not written; if the Boss wants it in the paper it is one day's work, else 2a and 2c carry the quantum |
+| The atom's lines (item 7 of the plan) | a well of side 20 on a 64^2 layer, emitting through the coupling | the COUPLED mode of the block with light by the linear map of section 7's scheme (my scratch of 21:20Z: 0.09948 against the engine's 0.0998); the lines at the coupled modes, none at their difference | a 64^2 layer, a minute | CLOSED (quantum, P) |
+| 6, Bohr's ladder | the 1 / r well's levels | NOT CLOSED: hydrogen's a_B is 527 Links at mu = 0.15; the box-limited ladder of `pair_field_pins.py` (d) is not a ladder | 256^3 or larger, hours | REPLACED by the atom's lines above (discrete lines at the modes: the atom's physics that closes) |
+| 4a, the muon in flight | the block pushed to k = 3 on the layer | the one formula at the exact cone, 0.8116, computed | a 200^2 layer, 2 minutes | CLOSED (classical, K) |
+| 4b, the moving lamp's redshift | the pushed block emitting through the coupling, a resting block reading | 1 + z = (1 + beta) / (f / f0)(world) by the one formula on the chain (my line 3: 1.959 at quarter depth; the free limit 1.9355); the emitter's coupling gG = 2 x 10^-5, the receiver a light detector | a chain of 1400, a minute | CLOSED on the PUSHED block (a stepping well is not the object) |
+| 4c, the round trip off a receding transponder | light off a hopping mirror face | the mirror's hop of one Link per three intervals: the reflected line at (1 + beta) / (1 - beta) = 3.732 in the mean, with the hop's sidebands at 2 pi / 3 declared beside (the cart worlds already read the form) | a chain, seconds | CLOSED (classical, K) with the sidebands named |
+| 5a, the anisotropy of c | the fan of directions under the rule | the lattice's own dispersion by direction, computed (0.8, 0.4, 0.2 percent at 12, 16, 24 Links) | a layer, seconds | CLOSED (classical, K) |
+| 5b, the two arms in motion (Michelson) | two blocks bound by light's standing wave, pushed together | NOT CLOSED: the arms' rigidity in motion is derived on the continuum pace (`PUSH_BALANCE.md`), not on the lattice; the bound pair's push is not built; a declared rigid arm would make the null trivial | a 200^2 layer, unknown | DROPPED from the pinned list; kept as the PREDICTION page it is (five's 1 and 1 from light-bound arms) |
+| R2, Sagnac | two pushed blocks emitting toward each other, each clicked at the other | beta = v / c exactly by the pushed blocks' clocks and the chain's light, computed | a chain, a minute | CLOSED (classical, K) on the PUSHED blocks |
+| R6, aberration | a moving detector's reading of a direction | NOT DECLARED: a direction reading of a detector's set on a 12-Link wavelength has no simple object | a layer | DROPPED |
+| The light clock of two bodies | A emitting, B returning, the round trip in A's clicks | 2 L / c with L face to face, the return read by a light detector at A's face, A's coupling gG = 2 x 10^-5 (my line 2), the ring-ups the front's | a chain of 1400, seconds | CLOSED (classical, K in 2 L / c) once the reader is re-declared (Reviewer 3's read) |
+| The index at rest (v) and in motion (v-m) | the medium block on a chain | the closed form n^2 = 1 + G g / (omega_0^2 - omega^2); in motion the scheme's own scratch number | a chain, a minute | CLOSED (v: K CONTROL with the 4 percent open in size; v-m: P, Fizeau a declared non-match) |
+| A, B, the two-pace bound and the bound clock's second term | no run: derivations read as bounds | the deficit omega_0^2 / 4 and the term eps (gamma^2 - 1) / 2, both printed on every massive world | none | CLOSED as BOUNDS |
+| 12, the clock in a field (Newton's potential) | under `pair-field-v1` only: a source block, the pair field, a clock block at r and 2 r | the field is the lattice Green's function (1 / (4 pi r) within 0.5 percent from r = 6, `pair_field_pins.py` (a)); the clock's shift ratio 2.00 at r = 8 ((b)); the clock a block's clicks | a 96^3 box, the field settled in 200 intervals, the clocks read over 2000: minutes | CLOSED under the hypothesis (Newton's potential, K in form) |
+| 13, the bending of light | a ray past a crowd | NOT CLOSED as bending: a 12-Link wavelength on a 128^2 board bends by less than the grain | | REPLACED by the DELAY (Shapiro's form, the same 1 + gamma): a light pulse through a medium block sitting in the field against the clock's shift there: 1 + gamma_eff = (n_m^2 - 1) / n_m at one declared coupling, nature's 2 at n_m = 1 + sqrt 2 ((c)); a chain, a minute; CLOSED under the hypothesis with one declared input |
+| 14, Newton's 1 / r (the period ratio) | two blocks in orbit | NOT CLOSED: no orbit on a small board (a packet spreads; a well does not move) | hours | REPLACED by NEWTON'S FALL (section 2): a free massive packet released at r and at 2 r from a source block, its acceleration ratio 4.00 by the arrival clicks at a detector row; a 96^3 box, minutes; CLOSED under the hypothesis |
+| 3, 11a to 11c, the far lamp (cosmology) | none | NOT CLOSED: the crowd's field on a ray over cosmological lengths has no small board; the second step (the field's push on a block) not derived | | DROPPED; "not predicted" stays |
+| 7a, 7b, the nuclear bindings | none | NOT CLOSED: what a nucleus is under the rule is undeclared; the contact numbers of (e) are box-limited | | DROPPED |
+| 8a to 8c, decays and the neutrino | none | NOT CLOSED: no lifetime from the rule | | DROPPED |
+
+The count: CLOSED 17 rows (quantum: 1a to 1d, 2a, 2b, 2c, 9 with Malus's settings, 10, the atom's lines; classical: 4a, 4b, 4c, 5a, R2, the light clock, the index at rest and in motion, A and B), plus 3 under the hypothesis `pair-field-v1` (12, the delay for 13, Newton's fall for 14); REPLACED 3 (6, 13, 14); DROPPED 7 (R5, R6, 5b, 3, 11, 7, 8). The owner's "three from the quantum, three from the classical, a few from the far" is met with room: the Boss chooses the paper's set from the CLOSED rows.
+
+## 2. Newton's fall: the derivation (COMPUTATION, from the algebra; a hypothesis row under `pair-field-v1`)
+
+The massive kind's band: cos omega = cos omega_0 cos omega_l(k). Near the
+bottom, omega(k) = omega_0 + k^2 / (2 m) with the lattice mass m = 3 tan
+omega_0 = 0.451 (mu = 0.15), from the six-neighbour sum's k^2 / 6 and the
+pair's cot omega_0. Under the hypothesis the pitch at a Node is omega_0 -
+delta(r), delta(r) = 4 pi kappa phi(r) -> kappa / r beyond a few Links
+(`pair_field_pins.py` (a)). A packet of the massive kind wide against its
+Compton length (w >= 20 Links against lambda_C = 3.87) has the local
+dispersion H(x, k) = omega_0 - delta(x) + k^2 / (2 m); the six-neighbour
+rule moves its mean position and mean phase gradient by Hamilton's
+equations on the lattice (the discrete Ehrenfest identities of the linear
+rule, exact for the mean of k and the mean of x up to the packet's
+spread), so d^2 x / dt^2 = (1 / m) d delta / dx = -kappa / (m r^2): the
+fall toward the source with the inverse square, Newton's, with G M
+standing for kappa / m. At kappa = 0.277 (the a_B = 8 source of the
+script): the acceleration 1.5 x 10^-3 Link per interval^2 at r = 20 and
+3.8 x 10^-4 at r = 40, the ratio 4.00. The packet's spread over the fall:
+its width doubles in m w^2 = 180 intervals at w = 20, the fall from rest
+at r = 30 covers 14 Links in 200 intervals; readable by the arrival clicks
+at a detector row (the first click's interval, DETECTOR), the ratio of the
+two falls' times sqrt 4 = 2.00 at equal distances. The one thing declared:
+the source block's kappa (one number, the same for every block); the
+falsifier: the ratio off 4.00 by more than the spread's grain, printed by
+the script before the run. Two-dimensional note: on a layer the field is
+logarithmic, not 1 / r; Newton's fall needs the 96^3 box (the field
+settles in about 200 intervals, the fall 400: minutes at the engine's
+cost).
+
+## 3. What the Boss is asked (the owner's word)
+
+1. Close the paper's list from the CLOSED rows only; the REPLACED rows
+   enter under their new names; the DROPPED rows stay "not predicted".
+2. Some rows are predictions only (the atom's lines, the index in motion,
+   the bound clock's second term, Newton's fall's number at the declared
+   kappa): the paper says so; a prediction is not a pass.
+3. Go over the papers of the world for each CLOSED row (the Source
+   Verifier's pass from the schedule's NATURE column) and set each
+   experiment the way its published form is best matched by our objects.
+4. The pair-field rows (12, the delay, Newton's fall) run only after the
+   owner's word on the hypothesis and after the current pins, never in
+   their place (`PLAN.md` section 4).
