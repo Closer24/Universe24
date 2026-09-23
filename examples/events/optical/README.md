@@ -625,3 +625,56 @@ intervals of the single-line world at b = 10 averaged by the beam's five
 lines. The light worlds at the same mass and b read -1.773 / -3.403
 pixels and +2.56 / +4.35 intervals: the fast rows (v = 0.74 c) bend more
 (the dwell) and delay the same within the grain. No pin moved.
+
+## The massive rows at gamma 0 under the rows' rule (2026-09-23, drive-default after 40875a5): `matter_g0`, `matter2_g0`, `fast_g0`
+
+The model owner's word on the rows (2026-09-23, through the Boss, the
+reviewer's sentence; [BODY_DRIVE.md](../../../docs/designs/one_wall/BODY_DRIVE.md)
+D5): "gravity's charge on a moving thing at gamma_PPN = 0 is its content,
+on a body and on a row alike; at gamma_PPN above 0 the pair". A massive
+row's weight per unit (`nature_beam.unit_weights`) at gamma 0 is its
+content per unit E'_0 (64 for `matter`, where the rule as built on
+2026-09-22 weighed it E'_D = 66 at p = 10 and 94 at p = 40); at gamma
+above 0 (E'_D^2 + 3 gamma **p**_D . **p**_D) // E'_D as before, the photon's
+e_D unchanged. The three gamma-0 worlds whose massive rows read a weight
+were re-pinned by the map under the rule before the run (`follow` and
+the integer walk with the weight E'_0 at gamma 0; the former pins under
+`former` in `expectations.json`, the map's former form kept as
+`weight_form="energy_former"`): `matter_g0` and `matter2_g0` the shift
+-5.59 +- 0.5 pixel and the arrival -8.48 +- 1 interval (the former -5.76
+and -8.36; the angle 0.235, the former 0.242; the refuting reading
+without the speed-up +43.36, the former +43.99); `fast_g0` the beam's
+mean shift -2.20 and arrival +3.62 (per line (1, 0, 0) -2 px, +2.0;
+(24, 1, 0) +1, +2.1; (24, -1, 0) -5, +3.8; (12, 1, 0) +2, +6.8; (12,
+-1, 0) -7, +3.4; the wall unstretched +1.01; the former -2.60 and +1.94),
+the ratios' pins 2.00 and 1.24 (the weights' continuum ratio gamma_L (1
++ gamma v^2) = 145 / 64 = 2.27, the blind 2.91; the former 1.69, 1.54,
+2.46, 2.31). The gamma-1 worlds' weights are unmoved and they are not
+re-run. Run once with their gamma-0 controls (`tools/run_series.py
+--jobs 4`; the controls for the reading tool's comparison alone: without
+the mass no weight is read), the books balanced at every tick, `run.json`
+carrying `"drive": "line"`; read by `tools/lensing_readings.py --no-replay
+--register expectations.json` with `--window-start 500` on the matter
+worlds and `200` on the fast (the run block `run_2026_09_23_rows_rule` of
+`expectations.json`, written by the generator; the verdicts the tool's):
+
+| World | DETECTOR: the shift in pixels; the arrival in intervals, each against its control | the pin (2026-09-23) | inside | the former run (2026-09-22) and its pin |
+| --- | --- | --- | --- | --- |
+| `matter_g0` | -5.000; -11.00 (501 clicks in the window [500, 1000]) | -5.59 +- 0.5; -8.48 +- 1 | no (0.09); no (1.52) | -5.000; -12.00 against -5.76; -8.36 |
+| `matter2_g0` | -5.000; -11.00 (501) | -5.59 +- 0.5; -8.48 +- 1 | no (0.09); no (1.52) | -5.000; -12.00 against -5.76; -8.36 |
+| `fast_g0` | -2.000; +2.38 (920 clicks of the control's 1005 in [200, 400]) | -2.20 +- 0.5; +3.62 +- 1 | yes; no (0.24) | -3.000; +1.64 against -2.60; +1.94 |
+
+Read: the slow rows fall the same pixel as on the flip day and arrive
+one interval later (the weight 64 in place of 66, a push 3 per cent
+smaller under the grain of one y-Link), the equivalence on content exact
+(`matter2_g0` on `matter_g0`'s numbers); the fast beam falls one pixel
+less and arrives 0.74 interval later (the weight 64 in place of 94, a
+third less push): two readings inside, four outside, none moved by hand,
+the shifts' pixel grain and the arrivals' bracket as before (the map's
+mean crowd the one approximation). GAMEBOARD: the crowd at b as before
+(1.59 rays per Node and the age moment 27.3 at b = 10; 9.92 and 136.3 at
+b = 8). The digests (state / audit / events): `matter_g0` `f127213e68d1` / `15cefc537d26` / `d7c253cfc515`,
+`matter2_g0` `ea29bcf4ec7a` / `1ff8ee872436` / `4bb76c1b1ccc`, `fast_g0` `efc1e6108666` / `40fa5ef55fe5` / `311ae922330f`; the controls
+`5b37d6640137` / `596e6cfbffcb` / `dcc16c1e7f04`, `8bc41e558ef6` /
+`39fc8bfdfded` / `14332aab421b`, `1cfd5c71b14e` / `7bbc6ef8c39d` /
+`bbae7b71164b`.

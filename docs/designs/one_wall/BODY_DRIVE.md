@@ -127,7 +127,27 @@ The chief physicist's, as the owner asked for them by name:
   series X's five gamma-0 body worlds are re-pinned by the walk at the
   charge (M, 1) and run again ([the optical
   README](../../../examples/events/optical/README.md), the former pins
-  and run blocks kept under `former`).
+  and run blocks kept under `former`). In the reviewer's words (his
+  check of B, 2026-09-23): the pair (w, Q S) is the rule at gamma_PPN
+  above 0; at gamma_PPN = 0 a moving body's charge is its content M (no
+  root, no square, no refusal), the owner's decision B of 2026-09-23.
+  The rows, by the owner's word of the same day (delegated to the Boss
+  as "whatever is precise and generic", the reviewer's sentence): B on
+  rows too, one rule for one quantity, "gravity's charge on a moving
+  thing at gamma_PPN = 0 is its content, on a body and on a row alike;
+  at gamma_PPN above 0 the pair": a massive row's weight per unit
+  (`nature_beam.unit_weights`) at gamma_PPN = 0 is its content per unit
+  E'_0 = Q S M (no root, no square; E'_D = gamma_L E'_0 until that day),
+  at gamma_PPN above 0 (E'_D^2 + 3 gamma **p**_D . **p**_D) // E'_D as
+  before; the registered worlds whose massive rows move at gamma 0 and
+  read a weight (`examples/events/optical/matter_g0`, `matter2_g0`,
+  `fast_g0`; `examples/events/massive_rows/slits_matter_1024` and the
+  small replay world) re-pinned or re-read with the former kept. The
+  active side (the crowd a moving mass releases, `by_clock` on the held
+  content) carries no gamma_L under either form and does not move. On
+  "the equivalence exact": true at rest only (series C); in motion the
+  drive's wall carries the velocity term under either form, and B
+  removes the root from gravity's charge, no more.
 - **D6, a world under `optical` with a moving body and no `drive_b`** is
   refused at load naming the rule; a fixed body and a body at rest load.
 

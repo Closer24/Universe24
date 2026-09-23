@@ -153,11 +153,32 @@ MATTER_IMPACT = 10
 # the ARRIVAL against the control's in intervals, negative when earlier
 # (a falling row speeds up, its pace |P| / E'(P) growing under the push,
 # the speed-up of about -8 intervals larger than the wall's stretch).
-MATTER_PINS: dict[tuple[str, int], dict[str, float]] = {
-    ("matter", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+# Since 2026-09-23 a massive row at gamma 0 weighs its content per unit,
+# E'_0 (the model owner's decision B on the rows, one rule for one
+# quantity: nature_beam.unit_weights, BODY_DRIVE.md D5), where the map's
+# rule until that day weighed it E'_D = 66: the gamma-0 pins re-derived by
+# the map (`follow`, weight_form "energy"), the former pins kept under
+# `former` (the map's "energy_former"); the gamma-1 pins unmoved.
+MATTER_PINS: dict[tuple[str, int], dict[str, object]] = {
+    ("matter", 0): {
+        "angle": 0.235,
+        "shift": -5.59,
+        "arrival": -8.48,
+        "former": {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+    },
     ("matter", 1): {"angle": 0.252, "shift": -6.11, "arrival": -7.42},
-    ("matter2", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+    ("matter2", 0): {
+        "angle": 0.235,
+        "shift": -5.59,
+        "arrival": -8.48,
+        "former": {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+    },
 }
+MATTER_FORMER_NOTE = (
+    "the pin until 2026-09-23, the map's weight E'_D = gamma_L E'_0 on a massive row at gamma 0; "
+    "since that day the row weighs its content per unit E'_0 (the model owner's decision B on the "
+    "rows, nature_beam.unit_weights, BODY_DRIVE.md D5), the pin above the map's under it"
+)
 # The readings that refute (the map at gamma = 1 with one verb changed):
 # the massive wall unstretched (f = 0 on the massive rows, verb 1 not on
 # every family) puts the gamma 1 arrival at -11.03 intervals (the rule's
@@ -169,10 +190,14 @@ MATTER_PINS: dict[tuple[str, int], dict[str, float]] = {
 # arrival at +43.99 (the rule's -8.36; the map's first form of this
 # reading, +2.57 in the note before the run, left the y-Links unpaid and is
 # superseded by the map as kept, `pace="unpushed"`).
-MATTER_REFUTING: dict[str, float] = {
+MATTER_REFUTING: dict[str, object] = {
     "gamma_1_arrival_wall_unstretched": -11.03,
     "gamma_1_shift_weight_blind_to_speed": -10.45,
-    "gamma_0_arrival_without_the_speed_up": 43.99,
+    "gamma_0_arrival_without_the_speed_up": 43.36,
+    "former": {
+        "gamma_0_arrival_without_the_speed_up": 43.99,
+        "note": "until 2026-09-23, the row's weight E'_D at gamma 0",
+    },
 }
 # The pins of the fast worlds (the beam of five lines at b = 8, M = 2^16),
 # from the map's integer walk (every_family_map.py, `walk`, the engine's
@@ -187,18 +212,34 @@ FAST_LINES: tuple[tuple[int, int, int], ...] = (
     (12, 1, 0),
     (12, -1, 0),
 )
+# The gamma-0 fast pins re-derived on 2026-09-23 under the rows' rule (the
+# weight E'_0 = 64 per unit at gamma 0 in place of E'_D = 94: the model
+# owner's decision B on the rows), the former under `former`; gamma 1 unmoved.
 FAST_PINS: dict[int, dict[str, object]] = {
     0: {
-        "shift": -2.60,
-        "arrival": 1.94,
+        "shift": -2.20,
+        "arrival": 3.62,
         "lines": {
-            "(1, 0, 0)": [-3, 2.0],
-            "(24, 1, 0)": [0, 2.8],
-            "(24, -1, 0)": [-5, 2.0],
-            "(12, 1, 0)": [0, 5.2],
-            "(12, -1, 0)": [-5, -2.3],
+            "(1, 0, 0)": [-2, 2.0],
+            "(24, 1, 0)": [1, 2.1],
+            "(24, -1, 0)": [-5, 3.8],
+            "(12, 1, 0)": [2, 6.8],
+            "(12, -1, 0)": [-7, 3.4],
         },
-        "arrival_wall_unstretched": -0.66,
+        "arrival_wall_unstretched": 1.01,
+        "former": {
+            "shift": -2.60,
+            "arrival": 1.94,
+            "lines": {
+                "(1, 0, 0)": [-3, 2.0],
+                "(24, 1, 0)": [0, 2.8],
+                "(24, -1, 0)": [-5, 2.0],
+                "(12, 1, 0)": [0, 5.2],
+                "(12, -1, 0)": [-5, -2.3],
+            },
+            "arrival_wall_unstretched": -0.66,
+            "note": "until 2026-09-23, the map's walk at the weight E'_D = 94 at gamma 0",
+        },
     },
     1: {
         "shift": -4.40,
@@ -221,11 +262,24 @@ FAST_PINS: dict[int, dict[str, object]] = {
 # grain); the deciding reading the gamma 1 arrival 4.49 +- 1 against the
 # wall unstretched -0.80, 5.3 intervals apart, and the gamma 1 shift
 # -4.40 +- 0.5 against the blind -6.40, 2.0 pixels apart.
-FAST_RATIOS: dict[str, float] = {
-    "shift_g1_over_g0": 1.69,
-    "shift_continuum": 1.54,
-    "shift_blind": 2.46,
-    "arrival_g1_over_g0": 2.31,
+# Since 2026-09-23 (the rows' rule at gamma 0, the weight E'_0): the
+# shifts' 4.40 / 2.20 = 2.00 by the integer walk (the weights' continuum
+# ratio gamma_L (1 + gamma v^2) = 145 / 64 = 2.27 at v^2 = 0.543, where the
+# former rule's was 1 + gamma v^2 = 1.54; light's 2.00; the weight blind
+# to the speed 6.40 / 2.20 = 2.91) and the arrivals' 4.49 / 3.62 = 1.24;
+# the former ratios under `former`.
+FAST_RATIOS: dict[str, object] = {
+    "shift_g1_over_g0": 2.00,
+    "shift_continuum": 2.27,
+    "shift_blind": 2.91,
+    "arrival_g1_over_g0": 1.24,
+    "former": {
+        "shift_g1_over_g0": 1.69,
+        "shift_continuum": 1.54,
+        "shift_blind": 2.46,
+        "arrival_g1_over_g0": 2.31,
+        "note": "until 2026-09-23, the gamma-0 pins at the weight E'_D",
+    },
 }
 # The ratios' bracket: 0.25 on mass and near as registered (by fiat; a
 # registered pin moves on the model owner's word); on far the brackets
@@ -374,6 +428,81 @@ RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
 # The fast worlds' run (2026-09-22, branch optical-every-family, after the
 # pins' commit 22064bc3; EVERY_FAMILY.md section 5c): the wall's factor on
 # a massive row read at the detector. DETECTOR unless marked.
+# The run of 2026-09-23 under the rows' rule at gamma 0 (the model owner's
+# decision B on the rows: a massive row weighs its content per unit E'_0 at
+# gamma 0, nature_beam.unit_weights): the three gamma-0 massive-row worlds
+# and their controls run once on drive-default after 40875a5, read against
+# the re-derived pins; the gamma-1 worlds not re-run (their weights unmoved).
+RUN_2026_09_23_ROWS_RULE: dict[str, object] = {
+    "branch": "drive-default",
+    "after": (
+        "the rows' rule at gamma 0 (the weight E'_0 per unit on a massive row, the model owner's "
+        "decision B of 2026-09-23) and the gamma-0 pins re-derived by the map under it, the former "
+        "kept; the controls run again for the reading tool's comparison (their weights unread)"
+    ),
+    "read_by": (
+        "tools/lensing_readings.py --no-replay --register expectations.json, --window-start 500 on "
+        "the matter worlds and 200 on the fast worlds (DETECTOR, the verdicts the tool's)"
+    ),
+    "worlds": {
+        "matter_g0": {
+            "shift": -5.000,
+            "arrival": -11.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.09,
+            "arrival_inside": False,
+            "arrival_outside_by": 1.52,
+            "former": {"shift": -5.0, "arrival": -12.0, "pin": {"shift": -5.76, "arrival": -8.36}},
+        },
+        "matter2_g0": {
+            "shift": -5.000,
+            "arrival": -11.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.09,
+            "arrival_inside": False,
+            "arrival_outside_by": 1.52,
+            "equivalence_on_matter_g0": True,
+            "former": {"shift": -5.0, "arrival": -12.0, "pin": {"shift": -5.76, "arrival": -8.36}},
+        },
+        "fast_g0": {
+            "shift": -2.000,
+            "arrival": 2.38,
+            "clicks": 920,
+            "control_clicks": 1005,
+            "taken_by_the_mass": 0,
+            "shift_inside": True,
+            "arrival_inside": False,
+            "arrival_outside_by": 0.24,
+            "former": {"shift": -3.0, "arrival": 1.64, "pin": {"shift": -2.60, "arrival": 1.94}},
+        },
+    },
+    "ratios": {
+        "shift_g1_over_g0": 2.40,
+        "arrival_g1_over_g0": 1.87,
+        "pinned": {"shift_g1_over_g0": 2.00, "arrival_g1_over_g0": 1.24},
+        "former": {"shift_g1_over_g0": 1.60, "arrival_g1_over_g0": 2.71},
+        "note": "fast_g1's readings of 2026-09-22 (-4.804, 4.44) over fast_g0's of this run",
+    },
+    "gameboard_crowd_at_b": {
+        "matter": {"presence": 1.59, "age_moment": 27.3},
+        "fast": {"presence": 9.92, "age_moment": 136.3},
+    },
+    "note": (
+        "under the rows' rule the slow rows fall the same pixel (-5.000, the pin -5.59 +- 0.5 outside "
+        "by 0.09; the former pin -5.76 outside by 0.26) and arrive one interval later than on "
+        "2026-09-22 (-11.00 against the pin -8.48 +- 1, outside by 1.52; the former -12.00 against "
+        "-8.36, 2.64): the weight 64 in place of 66, a 3 per cent smaller push under the pixel's "
+        "grain; the equivalence on content exact (matter2_g0 on matter_g0's numbers); the fast beam "
+        "falls -2.000 (the pin -2.20 +- 0.5 inside; the former -3.000 against -2.60) and arrives "
+        "+2.38 (the pin +3.62 +- 1, outside by 0.24; the former +1.64 against +1.94): the weight 64 "
+        "in place of 94, a third less push, one pixel less of fall and 0.74 interval more of arrival "
+        "at the detector; no pin moved by hand"
+    ),
+}
+
+
 RUN_2026_09_22_FAST: dict[str, object] = {
     "branch": "optical-every-family",
     "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
@@ -802,6 +931,7 @@ def expectations() -> Json:
     out["run_2026_09_22_far"] = RUN_2026_09_22_FAR
     out["run_2026_09_22_every_family"] = RUN_2026_09_22_EVERY_FAMILY
     out["run_2026_09_22_fast"] = RUN_2026_09_22_FAST
+    out["run_2026_09_23_rows_rule"] = RUN_2026_09_23_ROWS_RULE
     for name, pin in PINS.items():
         ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -843,6 +973,7 @@ def expectations() -> Json:
                 "arrival": pin["arrival"],
                 "arrival_bracket": DELAY_BRACKET,
                 "control": f"{family}_control_g{gamma}",
+                **({"former": {**pin["former"], "note": MATTER_FORMER_NOTE}} if "former" in pin else {}),  # type: ignore[dict-item]
             }
             for (family, gamma), pin in MATTER_PINS.items()
         }
@@ -866,8 +997,9 @@ def expectations() -> Json:
                 "arrival_bracket": DELAY_BRACKET,
                 "lines": pin["lines"],
                 "refuting_readings": {
-                    k: v for k, v in pin.items() if k not in ("shift", "arrival", "lines")
+                    k: v for k, v in pin.items() if k not in ("shift", "arrival", "lines", "former")
                 },
+                **({"former": pin["former"]} if "former" in pin else {}),  # type: ignore[dict-item]
                 "control": f"fast_control_g{gamma}",
                 "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)",
             }

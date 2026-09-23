@@ -221,7 +221,10 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   row's push accumulator **W** is translated by the crowd's arrival flow at
   the rate n x weight, **W** -= n x weight x **V**, the weight the row's
   content times the family's weight per unit (E'_D^2 + 3 gamma **p**_D .
-  **p**_D) // E'_D formed once at load (`nature_beam.unit_weights`,
+  **p**_D) // E'_D at gamma above 0, and at gamma 0 a massive row's content
+  per unit E'_0 (the model owner's decision B of 2026-09-23, one rule for
+  one quantity on a body and on a row; the photon's e_D), formed once at
+  load (`nature_beam.unit_weights`,
   `nature_beam.py:3563-3582`; `optical_turn`, `:3730-3885`); a free family's
   row has content 0 and never turns; at every push the residue is rescaled
   to the new pace, s' = s x S_1(**P**') // S_1(**P**), the sub-unit remainder

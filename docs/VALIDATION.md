@@ -51,6 +51,29 @@ README](../examples/events/optical/README.md#the-gamma-0-bodies-re-pinned-and-ru
 The digests are the frozen replay's (the declaration changed no integer);
 the gamma-1 bodies and the controls stand as run on the flip day.
 
+## The massive rows at gamma 0 under the rows' rule on drive-default after 40875a5 - 2026-09-23
+
+The model owner's word on the rows (through the Boss, the reviewer's
+sentence): gravity's charge on a moving thing at gamma_PPN = 0 is its
+content, on a body and on a row alike; at gamma_PPN above 0 the pair.
+`nature_beam.unit_weights` gives a massive row its content per unit E'_0
+at gamma 0 (64 for `matter` in place of E'_D = 66 and 94). The registered
+worlds whose massive rows move at gamma 0 and read a weight: the optical
+`matter_g0`, `matter2_g0` and `fast_g0`, re-pinned by the map under the
+rule and run once with their controls (`tools/run_series.py --jobs 4`,
+the books balanced at every tick): DETECTOR `matter_g0` and `matter2_g0`
+the shift -5.000 pixel and the arrival -11.00 intervals against the pins
+-5.59 +- 0.5 and -8.48 +- 1 (outside by 0.09 and 1.52; the former run
+-5.000 / -12.00 against -5.76 / -8.36), `fast_g0` -2.000 / +2.38 against
+-2.20 +- 0.5 and +3.62 +- 1 (inside; outside by 0.24; the former -3.000 /
++1.64 against -2.60 / +1.94): two inside, four outside, none moved by
+hand ([the optical README](../examples/events/optical/README.md#the-massive-rows-at-gamma-0-under-the-rows-rule-2026-09-23-drive-default-after-40875a5-matter_g0-matter2_g0-fast_g0)).
+The massive two-slit worlds: `massive_rows/slits_matter_small` replays
+byte for byte under the rule (no push is read in it: its digests
+`2e78caac5944`, `8d659dce2c67`, `20e2599207a7` unchanged);
+the 1024-birth run `slits_matter_1024` (2700 intervals) runs again under the rule at this commit (its rows are pushed where the two openings' fans cross; the reviewer's estimate a fraction of a grain, E' / E'_0 = 4113 / 4096) and its reading is registered by the next commit with the former run block kept under `former`; the 4096-birth `slits_matter` (5750 intervals, hours on this host) is not re-run, its pins the tables' and unmoved. Every photon world and every world at gamma above 0
+reads as it did.
+
 ## Series U under the law's line drive: the two admitted moving worlds on drive-default ca5fa00 - 2026-09-22
 
 The branch `drive-default` at `ca5fa00` (the generator's momenta by the

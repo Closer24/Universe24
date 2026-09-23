@@ -581,7 +581,13 @@ def body_weight(momentum: Sequence[int], content: int, width: int, gamma: int) -
     pair is gamma's rule at gamma above 0 alone (the model owner's word of
     2026-09-23, record 1054's form B): the engine forms it there and at
     gamma 0 a body weighs M over 1; the bound (Q S M)^2 <= 2^63 - 1 is the
-    pair's domain at gamma above 0 (M <= 2896 at S = 16384)."""
+    pair's domain at gamma above 0 (M <= 2896 at S = 16384). In the
+    reviewer's words: the pair (w, Q S) is the rule at gamma_PPN > 0; at
+    gamma_PPN = 0 a moving body's charge is its content M (no root, no
+    square, no refusal), the owner's decision B of 2026-09-23; and on a
+    row alike (`nature_beam.unit_weights`): "gravity's charge on a moving
+    thing at gamma_PPN = 0 is its content, on a body and on a row alike;
+    at gamma_PPN > 0 the pair"."""
     if content <= 0:
         return 0, 1
     scale = LABEL_SCALE * width

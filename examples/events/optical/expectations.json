@@ -527,6 +527,90 @@
   },
   "note": "every pin met: verb 1 on a massive row read for the first time at the detector (the gamma 1 arrival 4.44 against the pin 4.49 and the wall unstretched -0.80, 5.2 intervals away; gamma 0 1.64 against 1.94, the unstretched -0.66); the weight's form read between Newton's and light's (the shifts' ratio 1.60 against the continuum's 1.54, light's 2.00 and the blind 2.46; the gamma 1 shift -4.804 against the blind -6.40); no pin moved"
  },
+ "run_2026_09_23_rows_rule": {
+  "branch": "drive-default",
+  "after": "the rows' rule at gamma 0 (the weight E'_0 per unit on a massive row, the model owner's decision B of 2026-09-23) and the gamma-0 pins re-derived by the map under it, the former kept; the controls run again for the reading tool's comparison (their weights unread)",
+  "read_by": "tools/lensing_readings.py --no-replay --register expectations.json, --window-start 500 on the matter worlds and 200 on the fast worlds (DETECTOR, the verdicts the tool's)",
+  "worlds": {
+   "matter_g0": {
+    "shift": -5.0,
+    "arrival": -11.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.09,
+    "arrival_inside": false,
+    "arrival_outside_by": 1.52,
+    "former": {
+     "shift": -5.0,
+     "arrival": -12.0,
+     "pin": {
+      "shift": -5.76,
+      "arrival": -8.36
+     }
+    }
+   },
+   "matter2_g0": {
+    "shift": -5.0,
+    "arrival": -11.0,
+    "clicks": 501,
+    "shift_inside": false,
+    "shift_outside_by": 0.09,
+    "arrival_inside": false,
+    "arrival_outside_by": 1.52,
+    "equivalence_on_matter_g0": true,
+    "former": {
+     "shift": -5.0,
+     "arrival": -12.0,
+     "pin": {
+      "shift": -5.76,
+      "arrival": -8.36
+     }
+    }
+   },
+   "fast_g0": {
+    "shift": -2.0,
+    "arrival": 2.38,
+    "clicks": 920,
+    "control_clicks": 1005,
+    "taken_by_the_mass": 0,
+    "shift_inside": true,
+    "arrival_inside": false,
+    "arrival_outside_by": 0.24,
+    "former": {
+     "shift": -3.0,
+     "arrival": 1.64,
+     "pin": {
+      "shift": -2.6,
+      "arrival": 1.94
+     }
+    }
+   }
+  },
+  "ratios": {
+   "shift_g1_over_g0": 2.4,
+   "arrival_g1_over_g0": 1.87,
+   "pinned": {
+    "shift_g1_over_g0": 2.0,
+    "arrival_g1_over_g0": 1.24
+   },
+   "former": {
+    "shift_g1_over_g0": 1.6,
+    "arrival_g1_over_g0": 2.71
+   },
+   "note": "fast_g1's readings of 2026-09-22 (-4.804, 4.44) over fast_g0's of this run"
+  },
+  "gameboard_crowd_at_b": {
+   "matter": {
+    "presence": 1.59,
+    "age_moment": 27.3
+   },
+   "fast": {
+    "presence": 9.92,
+    "age_moment": 136.3
+   }
+  },
+  "note": "under the rows' rule the slow rows fall the same pixel (-5.000, the pin -5.59 +- 0.5 outside by 0.09; the former pin -5.76 outside by 0.26) and arrive one interval later than on 2026-09-22 (-11.00 against the pin -8.48 +- 1, outside by 1.52; the former -12.00 against -8.36, 2.64): the weight 64 in place of 66, a 3 per cent smaller push under the pixel's grain; the equivalence on content exact (matter2_g0 on matter_g0's numbers); the fast beam falls -2.000 (the pin -2.20 +- 0.5 inside; the former -3.000 against -2.60) and arrives +2.38 (the pin +3.62 +- 1, outside by 0.24; the former +1.64 against +1.94): the weight 64 in place of 94, a third less push, one pixel less of fall and 0.74 interval more of arrival at the detector; no pin moved by hand"
+ },
  "matter": {
   "derivation": "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py (the light-bending map's crowd lines, the row followed along its own momentum, verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): the deciding world of every family under one wall, the mass 2^14, the pair [1, 16384], one massive row per interval on the heading at b = 10; the arrival carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) grows under the push), so the pin is the map's arrival per world and the readings that refute are the map's with one verb changed",
   "mass": 16384,
@@ -559,12 +643,18 @@
     "family": "matter",
     "quantum": 1,
     "momentum_magnitude": 10,
-    "angle_radians": 0.242,
-    "shift": -5.76,
+    "angle_radians": 0.235,
+    "shift": -5.59,
     "shift_bracket": 0.5,
-    "arrival": -8.36,
+    "arrival": -8.48,
     "arrival_bracket": 1.0,
-    "control": "matter_control_g0"
+    "control": "matter_control_g0",
+    "former": {
+     "angle": 0.242,
+     "shift": -5.76,
+     "arrival": -8.36,
+     "note": "the pin until 2026-09-23, the map's weight E'_D = gamma_L E'_0 on a massive row at gamma 0; since that day the row weighs its content per unit E'_0 (the model owner's decision B on the rows, nature_beam.unit_weights, BODY_DRIVE.md D5), the pin above the map's under it"
+    }
    },
    "matter_g1": {
     "gamma": 1,
@@ -585,12 +675,18 @@
     "family": "matter",
     "quantum": 2,
     "momentum_magnitude": 20,
-    "angle_radians": 0.242,
-    "shift": -5.76,
+    "angle_radians": 0.235,
+    "shift": -5.59,
     "shift_bracket": 0.5,
-    "arrival": -8.36,
+    "arrival": -8.48,
     "arrival_bracket": 1.0,
-    "control": "matter2_control_g0"
+    "control": "matter2_control_g0",
+    "former": {
+     "angle": 0.242,
+     "shift": -5.76,
+     "arrival": -8.36,
+     "note": "the pin until 2026-09-23, the map's weight E'_D = gamma_L E'_0 on a massive row at gamma 0; since that day the row weighs its content per unit E'_0 (the model owner's decision B on the rows, nature_beam.unit_weights, BODY_DRIVE.md D5), the pin above the map's under it"
+    }
    },
    "fast_g0": {
     "gamma": 0,
@@ -631,34 +727,62 @@
       0
      ]
     ],
-    "shift": -2.6,
+    "shift": -2.2,
     "shift_bracket": 0.5,
-    "arrival": 1.94,
+    "arrival": 3.62,
     "arrival_bracket": 1.0,
     "lines": {
      "(1, 0, 0)": [
-      -3,
+      -2,
       2.0
      ],
      "(24, 1, 0)": [
-      0,
-      2.8
+      1,
+      2.1
      ],
      "(24, -1, 0)": [
       -5,
-      2.0
+      3.8
      ],
      "(12, 1, 0)": [
-      0,
-      5.2
+      2,
+      6.8
      ],
      "(12, -1, 0)": [
-      -5,
-      -2.3
+      -7,
+      3.4
      ]
     },
     "refuting_readings": {
-     "arrival_wall_unstretched": -0.66
+     "arrival_wall_unstretched": 1.01
+    },
+    "former": {
+     "shift": -2.6,
+     "arrival": 1.94,
+     "lines": {
+      "(1, 0, 0)": [
+       -3,
+       2.0
+      ],
+      "(24, 1, 0)": [
+       0,
+       2.8
+      ],
+      "(24, -1, 0)": [
+       -5,
+       2.0
+      ],
+      "(12, 1, 0)": [
+       0,
+       5.2
+      ],
+      "(12, -1, 0)": [
+       -5,
+       -2.3
+      ]
+     },
+     "arrival_wall_unstretched": -0.66,
+     "note": "until 2026-09-23, the map's walk at the weight E'_D = 94 at gamma 0"
     },
     "control": "fast_control_g0",
     "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)"
@@ -737,15 +861,26 @@
    }
   },
   "fast_ratios": {
-   "shift_g1_over_g0": 1.69,
-   "shift_continuum": 1.54,
-   "shift_blind": 2.46,
-   "arrival_g1_over_g0": 2.31
+   "shift_g1_over_g0": 2.0,
+   "shift_continuum": 2.27,
+   "shift_blind": 2.91,
+   "arrival_g1_over_g0": 1.24,
+   "former": {
+    "shift_g1_over_g0": 1.69,
+    "shift_continuum": 1.54,
+    "shift_blind": 2.46,
+    "arrival_g1_over_g0": 2.31,
+    "note": "until 2026-09-23, the gamma-0 pins at the weight E'_D"
+   }
   },
   "refuting_readings": {
    "gamma_1_arrival_wall_unstretched": -11.03,
    "gamma_1_shift_weight_blind_to_speed": -10.45,
-   "gamma_0_arrival_without_the_speed_up": 43.99
+   "gamma_0_arrival_without_the_speed_up": 43.36,
+   "former": {
+    "gamma_0_arrival_without_the_speed_up": 43.99,
+    "note": "until 2026-09-23, the row's weight E'_D at gamma 0"
+   }
   },
   "equivalence": "matter2_g0 (quantum 2, p = 20, E' = 132) on matter_g0's shift within 0.5 pixel and its arrival within 1 interval, each against its own control: the same fall at twice the content (the pace and v^2 equal to the integer, the push twice on twice the momentum; GAMEBOARD arithmetic of the declaration)",
   "readings": "DETECTOR: the screen's click lines of the massive family (each click's Node and its age moment, `reads: age`), the centroid's shift and the mean age's arrival against the control in the late window; no store, no replay"

@@ -156,3 +156,27 @@ record replayed on main's engine reads 815 and 876 exactly; the reading
 and the verdict are in
 [the register's entry](../../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21),
 "Re-read in the row's own clock (2026-09-22)".
+
+## Re-read under the rows' rule at gamma 0 (2026-09-23, branch drive-default)
+
+The model owner's word on the rows (through the Boss, the reviewer's
+sentence; [BODY_DRIVE.md](../../../docs/designs/one_wall/BODY_DRIVE.md)
+D5): "gravity's charge on a moving thing at gamma_PPN = 0 is its content,
+on a body and on a row alike; at gamma_PPN above 0 the pair". A massive
+row's weight per unit of the crowd's push (`nature_beam.unit_weights`)
+at gamma 0 is its content per unit E'_0 = 4096 here, where the rule as
+built on 2026-09-22 weighed it E'_D = 4113 (the reviewer's estimate of
+the move: a fraction of a grain, 4113 / 4096). Nothing of the pin moves:
+the flight's triple, the turn and the lines are the tables', not the
+weight's, so `expectations.json`'s pins and `tests/test_massive_rows.py`
+(g) stand; the weight is read only where rows of two numbers cross (the
+two openings' fans behind the wall, the push on a row by the other
+opening's rows). `slits_matter_small` replays byte for byte under the
+rule (`replay_register.py` run again: the digests `2e78caac5944`,
+`8d659dce2c67`, `20e2599207a7`, the gathers, the books and the momentum
+block as registered; no push is read within its 48 intervals), so the
+register's replay block stands unchanged. The 1024-birth run
+`slits_matter_1024` runs again under the rule (2700 intervals, hours on
+this host with the branch's checks beside it) and its reading joins the
+register under `slits_matter_1024.run` with the former run block under
+`former` by the next commit; the 4096-birth `slits_matter` is not re-run.

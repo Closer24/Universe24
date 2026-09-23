@@ -3775,9 +3775,21 @@ def unit_weights(table: FamilyFlight, gamma: int, directions: np.ndarray) -> np.
     p_D its label, the push of the parametrised post-Newtonian metric (1 +
     gamma v^2) E' with v^2 = 3 p . p / E'^2; for the photon (E'_0 = 0) e_D at
     gamma = 0 exactly and 2 e_D within one unit at gamma = 1 (the root's
-    floor, the one floor of the composition); for a massive row E'_D at
-    gamma = 0, Newton's push on a slow row of content M."""
+    floor, the one floor of the composition). For a massive row at gamma
+    = 0 the weight is the content per unit, E'_0 = Q S M (`FamilyFlight.rest`;
+    no root, no square), and at gamma > 0 the pair's (E'_D^2 + 3 gamma
+    p_D . p_D) // E'_D as before: the model owner's decision B of
+    2026-09-23 (record 1054's three forms; docs/designs/one_wall/BODY_DRIVE.md
+    D5), one rule for one quantity, "gravity's charge on a moving thing at
+    gamma_PPN = 0 is its content, on a body and on a row alike; at
+    gamma_PPN > 0 the pair", as `world.body_weight` gives a body M at gamma
+    0. Until that day a massive row weighed E'_D = gamma_L E'_0 at gamma 0
+    (the rows' rule as built on 2026-09-22)."""
     energy = table.energy[directions]
+    if gamma == 0 and table.rest:
+        # A massive family at gamma 0: the content per unit on every
+        # direction that carries a row (the rest vector weighs 0).
+        return np.where(energy != 0, table.rest, 0).astype(np.int64)
     return np.array(
         [
             # A direction of no motion (the rest vector (0, 0, 0) of the

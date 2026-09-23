@@ -544,8 +544,11 @@ every row walks by its own family's table under the one wall, a pushed
 row by the pair of its momentum with the family's rest term,
 `nature_beam.row_pairs` and `momentum_pair`, the wall's square refused
 naming the rule before it is formed, and is pushed at the weight per
-unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels,
-`nature_beam.unit_weights`; the refusal of record 510 lifted); the
+unit (E'_D^2 + 3 gamma p_D . p_D) // E'_D on the family's labels at
+gamma above 0 and, since 2026-09-23 (the model owner's decision B on
+the rows), its content per unit E'_0 at gamma 0 for a massive row (the
+photon's e_D unchanged), `nature_beam.unit_weights`; the refusal of
+record 510 lifted); the
 inverse interval refused at a pair with n > 0 (a row's wall reads the
 crowd of the interval before, which the after-state does not hold); the
 record carries the block `optical` {gamma, flight_coefficient} for every

@@ -219,6 +219,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   re-pinned by the map's walk at the charge (M, 1) and run once (10
   inside, 0 outside), the former pins and run blocks kept under `former`
   in `examples/events/optical/body_expectations.json`.
+- The rows' rule at gamma 0 (2026-09-23, the model owner's word on the
+  rows through the Boss: one rule for one quantity, gravity's charge on
+  a moving thing at gamma_PPN = 0 its content, on a body and on a row
+  alike): `nature_beam.unit_weights` gives a massive row its content per
+  unit E'_0 at gamma 0 (E'_D until then; the photon's e_D and every
+  weight at gamma above 0 unchanged), the map `every_family_map.py` the
+  same with its former form kept; test (k) of `tests/test_optical.py`
+  the rows' rule with the edge at gamma 1; the optical `matter_g0`,
+  `matter2_g0` and `fast_g0` re-pinned by the map and run once (two
+  inside, four outside, the former pins and readings kept), the massive
+  two-slit worlds re-read (`slits_matter_small` byte for byte;
+  `slits_matter_1024` run again, its reading registered by the next commit with the former kept); BODY_DRIVE.md D5, DEFAULT.md (d), ENGINE.md,
+  TERMINOLOGY.md, MIGRATION and TEST_EXPECTATIONS amended.
 - Series G2 re-pinned under the law (`examples/events/hubble_stars/`):
   the generator's momenta by the line rule at the declared speeds and the
   continuum derivation's push factor (1 - v T_D / Q)^2, both registers

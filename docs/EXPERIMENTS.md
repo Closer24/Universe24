@@ -5024,6 +5024,16 @@ sequential gates on an entangled record, the full register replay.
   and the row's age carries it on the record. The 4096-birth pin is
   restated likewise (`first_click_age` beside `first_click_tick`), to be
   read when the host allows that run.
+- **Re-read under the rows' rule at gamma 0 (2026-09-23; the model
+  owner's decision B on the rows, one rule for one quantity).** A massive
+  row's weight per unit of the crowd's push at gamma 0 is its content
+  E'_0 = 4096 (`nature_beam.unit_weights`; E'_D = 4113 until then), read
+  only where the two openings' fans cross. The pins are the tables' and
+  unmoved; `slits_matter_small` replays byte for byte (no push within
+  its 48 intervals); the 1024-birth run runs again under the rule and
+  its reading is registered by the next commit with the former kept
+  (`examples/events/massive_rows/README.md`); `slits_matter` (4096
+  births) is not re-run.
 
 ### N, the binding that costs content (2026-09-20)
 
@@ -7943,6 +7953,26 @@ sequential gates on an entangled record, the full register replay.
   read between Newton's and light's (the shifts' ratio 1.60 against the
   continuum's 1.54, light's 2.00, the blind 2.46; the arrivals' 2.71).
   No pin moved.
+- **The massive rows at gamma 0 under the rows' rule** (2026-09-23,
+  branch drive-default; the model owner's word on the rows through the
+  Boss, the reviewer's sentence: "gravity's charge on a moving thing at
+  gamma_PPN = 0 is its content, on a body and on a row alike; at
+  gamma_PPN above 0 the pair"; `nature_beam.unit_weights` gives a massive
+  row its content per unit E'_0 at gamma 0, 64 in place of E'_D = 66 for
+  `matter` and 94 for the fast rows): `matter_g0`, `matter2_g0` and
+  `fast_g0` re-pinned by the map under the rule before the run (the shift
+  -5.59 +- 0.5 and the arrival -8.48 +- 1; the fast beam -2.20 and +3.62;
+  the former pins kept under `former`) and run once with their controls.
+  DETECTOR: `matter_g0` -5.000 pixel / -11.00 intervals, `matter2_g0` the
+  same (the equivalence on content exact), `fast_g0` -2.000 / +2.38 (920
+  clicks of 1005): two readings inside, four outside (the slow rows'
+  shift by 0.09 and arrival by 1.52; the fast arrival by 0.24), none
+  moved by hand. Read: the slow rows fall the same pixel and arrive one
+  interval later than on the flip day (the push 3 per cent smaller under
+  the grain of one y-Link); the fast beam one pixel less of fall and
+  0.74 interval later (a third less push). The gamma-1 worlds are not
+  re-run (their weights unmoved); the row above is history under its
+  rule, not replaced.
 - **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
   2.00 after the review's M1; 2.03 and 2.07 before it; 1.73 and 2.07
   under the Bresenham form, the mass ratio 0.02 outside); the turn bends

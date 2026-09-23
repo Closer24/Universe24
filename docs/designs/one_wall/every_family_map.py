@@ -65,8 +65,10 @@ def follow(
     arrival time, the final angle in radians). `wall_factor` overrides f =
     1 + gamma on the massive wall (0: the wall unstretched, the reading
     that would refute the composition's verb 1); `weight_form` "energy" is
-    the rule's (E'^2 + 3 gamma p^2) // E', "light" the light-blind (1 +
-    gamma) E' (the reading that would refute verb 2); `pace` "pushed" is
+    the rule's (E'_0 at gamma 0 since 2026-09-23, (E'^2 + 3 gamma p^2) //
+    E' at gamma > 0; "energy_former" the rule's until that day, E' at gamma
+    0), "light" the light-blind (1 + gamma) E' (the reading that would
+    refute verb 2); `pace` "pushed" is
     the rule's (the time per x-Link on the pushed momentum's energy and
     x component), "unpushed" holds the pace at the family's own p / E'
     on the Manhattan length walked while the push still bends the row
@@ -80,6 +82,11 @@ def follow(
     e0 = q * quantum
     e_row = math.isqrt(e0 * e0 + 3 * p * p)
     if weight_form == "energy":
+        # The rule: the content per unit E'_0 at gamma 0 (the model owner's
+        # decision B of 2026-09-23, BODY_DRIVE.md D5; E'_D until that day),
+        # the pair (E'^2 + 3 gamma p^2) // E' at gamma > 0.
+        w = e0 if gamma == 0 else (e_row * e_row + 3 * gamma * p * p) // e_row
+    elif weight_form == "energy_former":
         w = (e_row * e_row + 3 * gamma * p * p) // e_row
     else:
         w = (1 + gamma) * e_row
@@ -192,6 +199,13 @@ class IntegerWalk:
     def weight(self, d: int, gamma: int, form: str) -> int:
         e = self.energy[d]
         if form == "energy":
+            # The rule (nature_beam.unit_weights): the content per unit E'_0
+            # at gamma 0 (the model owner's decision B of 2026-09-23), the
+            # pair at gamma > 0; "energy_former" the rule until that day.
+            if gamma == 0:
+                return self.rest
+            return (e * e + 3 * gamma * sum(c * c for c in self.labels[d])) // e
+        if form == "energy_former":
             return (e * e + 3 * gamma * sum(c * c for c in self.labels[d])) // e
         return (1 + gamma) * e
 

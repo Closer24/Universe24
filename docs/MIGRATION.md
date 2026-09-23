@@ -112,7 +112,16 @@ after the physics-rule reviewer's ADMISSIBLE. What moves:
   series X's five gamma-0 body worlds were re-pinned by the walk at the
   charge (M, 1) and run again, the former pins and run blocks kept under
   `former` and the weight's test at gamma 0 given up (BODY_DRIVE.md D5,
-  DEFAULT.md (d)).
+  DEFAULT.md (d)). The same day, by his word on the rows (one rule for
+  one quantity: "gravity's charge on a moving thing at gamma_PPN = 0 is
+  its content, on a body and on a row alike; at gamma_PPN above 0 the
+  pair"), `nature_beam.unit_weights` gives a massive row its content per
+  unit E'_0 at gamma 0 (E'_D = gamma_L E'_0 until then; the photon's e_D
+  and every weight at gamma above 0 unchanged), so the optical worlds
+  `matter_g0`, `matter2_g0` and `fast_g0` were re-pinned by the map and
+  run again and `massive_rows/slits_matter_1024` re-read, the former pins
+  and readings kept; every photon world and every world at gamma above 0
+  reads as it did, byte for byte.
   The flow worlds of series D3 (`flow_link`, PR #879) keep their whole
   n = 8 under the line drive (the real root 8.28 against the per-axis
   7.67), their pins of `expectations_flow.json` re-derived at the line

@@ -627,32 +627,42 @@ def test_the_pin_worlds_parse_run_and_carry_their_pins():
     matter = expected["matter"]
     assert matter["mass"] == 1 << 14 and matter["ticks"] == 1000 and matter["window_start"] == 500
     assert matter["impact"] == 10
+    # Since 2026-09-23 a massive row at gamma 0 weighs its content per unit
+    # (the model owner's decision B on the rows): the gamma-0 pins the
+    # map's under it, the former (the weight E'_D at gamma 0) kept beside.
     assert [matter["worlds"][n]["shift"] for n in ("matter_g0", "matter_g1", "matter2_g0")] == [
-        -5.76,
+        -5.59,
         -6.11,
-        -5.76,
+        -5.59,
     ]
     assert [matter["worlds"][n]["arrival"] for n in ("matter_g0", "matter_g1", "matter2_g0")] == [
-        -8.36,
+        -8.48,
         -7.42,
-        -8.36,
+        -8.48,
     ]
-    assert matter["refuting_readings"] == {
-        "gamma_1_arrival_wall_unstretched": -11.03,
-        "gamma_1_shift_weight_blind_to_speed": -10.45,
-        "gamma_0_arrival_without_the_speed_up": 43.99,
-    }
+    assert matter["worlds"]["matter_g0"]["former"]["shift"] == -5.76
+    assert matter["worlds"]["matter_g0"]["former"]["arrival"] == -8.36
+    assert "former" not in matter["worlds"]["matter_g1"]
+    assert matter["refuting_readings"]["gamma_1_arrival_wall_unstretched"] == -11.03
+    assert matter["refuting_readings"]["gamma_1_shift_weight_blind_to_speed"] == -10.45
+    assert matter["refuting_readings"]["gamma_0_arrival_without_the_speed_up"] == 43.36
+    assert matter["refuting_readings"]["former"]["gamma_0_arrival_without_the_speed_up"] == 43.99
     # The fast worlds (the beam of five lines at b = 8, M = 2^16, p = 40):
-    # the pins of the map's integer walk, written before the run.
+    # the pins of the map's integer walk, written before the run; gamma 0
+    # re-derived under the rows' rule on 2026-09-23 with the former kept.
     fast = [matter["worlds"][f"fast_g{g}"] for g in (0, 1)]
-    assert [w["shift"] for w in fast] == [-2.60, -4.40]
-    assert [w["arrival"] for w in fast] == [1.94, 4.49]
+    assert [w["shift"] for w in fast] == [-2.20, -4.40]
+    assert [w["arrival"] for w in fast] == [3.62, 4.49]
+    assert fast[0]["former"]["shift"] == -2.60 and fast[0]["former"]["arrival"] == 1.94
+    assert fast[0]["refuting_readings"] == {"arrival_wall_unstretched": 1.01}
+    assert "former" not in fast[1]
     assert all(w["mass"] == 1 << 16 and w["impact"] == 8 and w["momentum_magnitude"] == 40 for w in fast)
     assert fast[1]["refuting_readings"] == {
         "arrival_wall_unstretched": -0.80,
         "shift_weight_blind_to_speed": -6.40,
     }
-    assert matter["fast_ratios"]["shift_g1_over_g0"] == 1.69
+    assert matter["fast_ratios"]["shift_g1_over_g0"] == 2.00
+    assert matter["fast_ratios"]["former"]["shift_g1_over_g0"] == 1.69
     for name in ("fast_g0", "fast_g1", "fast_control_g1"):
         loaded = load_world((WORLDS / f"{name}.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent)
         lamp = next(m for m in loaded.world.measured if m.lamp is not None)
@@ -928,10 +938,17 @@ def test_the_weight_per_unit_is_the_familys_energy_on_its_own_labels():
     1 and 3): the energy per unit of amount of a direction on the family's
     labels, e_D = isqrt(3 u_D . u_D) = 110 for the photon on a heading (the
     rest 0), E'_D = isqrt(64^2 + 3 x 10^2) = 66 for `matter` (the rest 64);
-    the weight (E'^2 + 3 gamma p . p) // E': the photon's 110 at gamma = 0
-    (2 e_D = 220 until this day, unchanged) and (12100 + 12288) // 110 = 221
-    at gamma = 1 (the one floor, 2 e_D + 1); matter's 66 and (4356 + 300)
-    // 66 = 70 (70.5 floored), Newton's push on a slow row at gamma = 0."""
+    the weight (E'^2 + 3 gamma p . p) // E' at gamma > 0: the photon's 110
+    at gamma = 0 (2 e_D = 220 until this day, unchanged) and (12100 +
+    12288) // 110 = 221 at gamma = 1 (the one floor, 2 e_D + 1); matter's
+    (4356 + 300) // 66 = 70 (70.5 floored) at gamma = 1. The rows' rule at
+    gamma = 0 (the model owner's decision B of 2026-09-23, one rule for one
+    quantity, docs/designs/one_wall/BODY_DRIVE.md D5): a massive row weighs
+    its content per unit, E'_0 = 64 for `matter` (no root, no square;
+    E'_D = 66 until that day), as a body weighs M; the edge at gamma = 1
+    where the pair returns, 70; the photon's 110 at gamma 0 unchanged (its
+    content 0, its weight its energy); the massive rest vector, of the
+    energy E'_0, weighs 64 under both rules."""
     light = NatureBeamSimulation(parse_nature_beam_world(turn_world(1))).tables.family_flights[0]
     assert light.rest == 0 and int(light.energy[PLUS_X]) == 110
     assert unit_weights(light, 0, np.array([PLUS_X])).tolist() == [110]
@@ -944,8 +961,17 @@ def test_the_weight_per_unit_is_the_familys_energy_on_its_own_labels():
         132,
         66,
     )
-    assert unit_weights(matter, 0, np.array([heading])).tolist() == [66]
+    # The rows' rule at gamma 0 (2026-09-23): the content per unit, 64,
+    # on every direction that carries a row; the pair's 70 at gamma 1.
+    assert unit_weights(matter, 0, np.array([heading])).tolist() == [64]
     assert unit_weights(matter, 1, np.array([heading])).tolist() == [70]
+    # The massive rest vector's energy is E'_0 itself, its weight 64 under
+    # both rules; every direction of the table weighs the content at gamma 0.
+    rest = int(np.flatnonzero((matter.labels == [0, 0, 0]).all(axis=1))[0])
+    assert int(matter.energy[rest]) == 64
+    assert unit_weights(matter, 0, np.array([rest, heading])).tolist() == [64, 64]
+    at_gamma_0 = NatureBeamSimulation(parse_nature_beam_world(matter_bar(0))).tables.family_flights[0]
+    assert set(at_gamma_0.weight.tolist()) == {64} and set(matter.weight.tolist()) == {64, 70}
 
 
 def test_a_massive_row_walks_by_its_triple_under_the_wall_and_its_pair_is_its_momentums():
