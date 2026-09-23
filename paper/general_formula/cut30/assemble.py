@@ -31,7 +31,9 @@ HEADER = """% The paper on the general formula, the thirty-page form (the owner'
 % every check a detector reading of the experiments register
 % (docs/EXPERIMENTS.md); NUMBERS.md maps each number to its source. The long
 % form is at c15c1174, the forty-page cut at b0d1ebf7. The sections stand in
-% the six heads' order (cut30/reorder.py; the owner's approval of 2026-09-23).
+% the six heads' order (cut30/reorder.py; the owner's approval of 2026-09-23),
+% in one document (his word of 2026-09-23, "one paper, not two"; the split into
+% a Supplementary Material, cut30/supplement.py, stays ready and unapplied).
 """
 
 
@@ -84,13 +86,18 @@ def build_all() -> tuple[str, str]:
     )
     s = corrections.apply(s)
     s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
-    s, supp = supplement.split(s)  # the Supplementary Material (the owner's word, 48 pages)
+    if supplement.ONE_DOCUMENT:
+        supp = ""  # one paper, one document (the owner's word of 2026-09-23, the venues' rules checked)
+    else:
+        s, supp = supplement.split(s)  # the Supplementary Material, ready for an editor's request
     body = s[: s.index("\\begin{thebibliography}")]
     bib = s[s.index("\\begin{thebibliography}") :]
     i = body.index("\\appendix")
     # The references follow the body on its last page (the cut to 35 pages of
     # 2026-09-22, record 852); the page split is read from the page numbers.
     paper = HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
+    if not supp:
+        return paper, ""
     preamble = supplement.preamble(body[: body.index("\\begin{document}")])
     supp_doc = (
         supplement.SUPPLEMENT_HEADER
@@ -116,9 +123,13 @@ def build() -> str:
 def main() -> None:
     out, supp = build_all()
     (HERE.parent / "main.tex").write_text(out)
-    (HERE.parent / "supplement.tex").write_text(supp)
     print("main.tex written; references kept:", out.count("\\bibitem{"))
-    print("supplement.tex written; references kept:", supp.count("\\bibitem{"))
+    if supp:
+        (HERE.parent / "supplement.tex").write_text(supp)
+        print("supplement.tex written; references kept:", supp.count("\\bibitem{"))
+    else:
+        (HERE.parent / "supplement.tex").unlink(missing_ok=True)
+        print("one document: no supplement.tex")
 
 
 if __name__ == "__main__":

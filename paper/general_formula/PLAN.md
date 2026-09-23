@@ -6600,3 +6600,26 @@ paper-48 was pushed at the same head 02525f64 (the same commits, off
 a98fd46f) and this commit and the next go there; paper-summary-table
 is not rewritten by the writer (no force push), its head the Boss's
 to reset.
+
+## Applied (2026-09-23, the owner's word "one paper, not two"): commit 17 on paper-48, one document
+
+The owner, on the reviewer's recommendation to split and on the two
+PDFs: "do not split it into two if it is not needed; put everything in
+one paper; check the external sources and the rules for papers, and
+if the split is not needed, do not do it." The rules checked (the
+search results; the pages themselves are blocked from this session):
+arXiv states no size limit on a submission apart from the file size
+(info.arxiv.org/help/sizes.html); Foundations of Physics, the venue
+after arXiv, states no page limit, and Springer's Supplementary
+Information is an option for what cannot be printed, not a
+requirement (the plan's earlier finding, "the journal has no page
+limit", stands). So the split is not needed and is switched off:
+supplement.ONE_DOCUMENT = True, the generator writes main.tex alone,
+supplement.tex and its PDF removed, every block back at its place of
+commit 12 (the full record Appendix D, the roads Appendix C, the
+proofs, the symbols, the hand-worked update and the three tables in
+the text); cut30/supplement.py stays ready for an editor's request.
+The prose cuts of commit 14 and the citations of commit 16 stay. The
+paper 63 pages (48 with the supplement's 17 beside it before; the
+same content in one file). The owner's "48 pages" of 03:0xZ is
+superseded by this word, his own, on the same day.

@@ -1,7 +1,9 @@
 """Split the Supplementary Material out of the manuscript (the owner's word of
 2026-09-23, "48 pages", the form he approved on 01:40Z: the paper as one
 document, the records that a reader needs only to reproduce or to audit in a
-supplement generated from the same source).
+supplement generated from the same source). Superseded the same day by his
+word "one paper, not two" once the venues' rules were checked (ONE_DOCUMENT
+below): the split stays ready, not applied.
 
 `split(s)` takes the reordered manuscript text (before the references are
 filtered) and returns `(paper, supplement_body)`: the nine blocks below are
@@ -34,6 +36,12 @@ LEDGER_LABEL = "\\caption{\\label{tab:ledger}"
 FAMILIES_LABEL = "\\caption{\\label{tab:families}"
 
 SUPPLEMENT = "the Supplementary Material"
+
+# The owner's word of 2026-09-23 (after the check of the venues' rules: arXiv
+# and the journal set no page limit and require no supplement): one paper,
+# one document; the split below is kept ready for an editor's request and is
+# not applied while this is True.
+ONE_DOCUMENT = True
 
 # The pointers left in the paper where a block stood.
 POINTERS = {

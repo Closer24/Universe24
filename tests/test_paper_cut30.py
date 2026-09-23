@@ -43,9 +43,14 @@ def test_main_tex_is_the_assemblers_output() -> None:
         assert built == MAIN_TEX.read_text(encoding="utf-8"), (
             "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
         )
-        assert supplement == SUPPLEMENT_TEX.read_text(encoding="utf-8"), (
-            "supplement.tex differs from cut30/assemble.py's output: run the assembler, do not edit it by hand"
-        )
+        if supplement:
+            assert supplement == SUPPLEMENT_TEX.read_text(encoding="utf-8"), (
+                "supplement.tex differs from cut30/assemble.py's output: run the assembler, do not edit it by hand"
+            )
+        else:
+            assert not SUPPLEMENT_TEX.exists(), (
+                "one document (supplement.ONE_DOCUMENT): supplement.tex must not exist"
+            )
         _check_reorder(module)  # one more build here, not in a second test: the parts are files
     finally:
         sys.path.remove(str(CUT30))
@@ -79,6 +84,7 @@ def _check_reorder(module) -> None:
 
     reorder = module.reorder
     supplement_module = module.supplement
+    one_document = supplement_module.ONE_DOCUMENT
     moved = reorder.reorder
     split = supplement_module.split
     try:
@@ -100,31 +106,45 @@ def _check_reorder(module) -> None:
         if name == "law":
             body = text[len(reorder.BLOCKS["law"][0]) :]
             body = body.replace(reorder.TRANSITION_HEADING, blocks["code"] + reorder.TRANSITION_HEADING)
-            # the hand-worked update and the code went to the Supplementary Material (S6)
-            i = body.index(supplement_module.HANDWORKED_START)
-            j = body.index(supplement_module.CODE_HEADING)
-            body = body[:i] + supplement_module.POINTERS["handworked"] + body[j:]
-        # the conversion table, the ledger and the families table went to the Supplementary Material (S7 to S9)
-        for label, table in (
-            (supplement_module.CONVERSION_LABEL, "S7"),
-            (supplement_module.LEDGER_LABEL, "S8"),
-            (supplement_module.FAMILIES_LABEL, "S9"),
-        ):
-            if label in body:
-                _, body = supplement_module.cut_table(body, label, table)
         rewrites = reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]
-        for old, new in rewrites + supplement_module.REFERENCES:
+        if not one_document:
+            # the hand-worked update and the code went to the Supplementary Material (S6)
+            if name == "law":
+                i = body.index(supplement_module.HANDWORKED_START)
+                j = body.index(supplement_module.CODE_HEADING)
+                body = body[:i] + supplement_module.POINTERS["handworked"] + body[j:]
+            # the conversion table, the ledger and the families table went there too (S7 to S9)
+            for label, table in (
+                (supplement_module.CONVERSION_LABEL, "S7"),
+                (supplement_module.LEDGER_LABEL, "S8"),
+                (supplement_module.FAMILIES_LABEL, "S9"),
+            ):
+                if label in body:
+                    _, body = supplement_module.cut_table(body, label, table)
+            rewrites = rewrites + supplement_module.REFERENCES
+        for old, new in rewrites:
             body = body.replace(old, new)
         if not body.strip():
-            continue  # the block was one table, now whole in the supplement (checked below)
+            continue  # the block was one table, whole in the supplement (checked below)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
-    supplement = SUPPLEMENT_TEX.read_text(encoding="utf-8")
-    assert "\\label{tab:summary}" in main and "\\label{tab:nature}" not in main
-    for label in ("tab:conversion", "tab:ledger", "tab:families"):
-        assert f"\\label{{{label}}}" not in main and supplement.count(f"\\label{{{label}}}") == 1
-    assert supplement.index("\\label{app:register}") < supplement.index(
-        "\\caption{\\label{tab:nature}"
-    ), "the full register opens the Supplementary Material"
+    if one_document:
+        supplement = ""
+        assert "\\label{tab:summary}" in main and main.count("\\label{tab:nature}") == 1
+        for label in ("tab:conversion", "tab:ledger", "tab:families"):
+            assert main.count(f"\\label{{{label}}}") == 1
+        assert (
+            main.index("\\label{tab:summary}")
+            < main.index("\\label{app:register}")
+            < main.index("\\caption{\\label{tab:nature}")
+        ), "the summary in the comparison, the full record an appendix"
+    else:
+        supplement = SUPPLEMENT_TEX.read_text(encoding="utf-8")
+        assert "\\label{tab:summary}" in main and "\\label{tab:nature}" not in main
+        for label in ("tab:conversion", "tab:ledger", "tab:families"):
+            assert f"\\label{{{label}}}" not in main and supplement.count(f"\\label{{{label}}}") == 1
+        assert supplement.index("\\label{app:register}") < supplement.index(
+            "\\caption{\\label{tab:nature}"
+        ), "the full register opens the Supplementary Material"
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
