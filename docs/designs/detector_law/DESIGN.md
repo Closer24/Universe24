@@ -781,6 +781,64 @@ verb after all and the owner's "W and not P" is answered "P is needed";
 if it reads -3.99 at gamma 1, the wall alone carries both parts and no
 push is needed on a splitting record. Named, not promised.
 
+6.7 **The air as foreign objects: the coefficient form at a declared
+index** (the owner's "the air modelled as foreign objects with air's
+parameters, with a convergence experiment"; Reviewer 3's correction of
+09:33Z: nature's air moves no pin; the experiment tests the coefficient
+form at a large declared index). Air is not in the rule: the rule's one
+medium is the lattice. A region filled with foreign objects of a
+declared age moment A is, by 4.1, a region where the six-neighbour
+term carries the pair q = [d^2, (d + f n A)^2], the index n_c = (d + f
+n A) / d; the experiment declares n_c = 2 (q = [1, 4]), large enough
+that the lattice's own dispersion (0.2 to 0.8 percent) is far below
+every effect, and asks three things of the rule, each with its pin
+stated here before the script runs it (PINS.md row (h)):
+
+- **The wavelength inside**: a train of lambda_0 = 12, 16, 24 Links
+  entering the region reads, by its zero crossings inside, **lambda_0
+  / 2 +- 1 Link** (the phase pace c / n_c; COMPUTATION on the chain).
+- **The Fresnel step at a sharp boundary**: the reflected motion over
+  the incident motion, read at one probe Node in front of the boundary
+  before and after the train has passed, **((n_c - 1) / (n_c + 1))^2 =
+  1 / 9 = 0.111 +- 0.010** (the wave law's normal-incidence step for a
+  change of pace with the amplitude and its gradient continuous, which
+  the coefficient form is); the convergence experiment is this number
+  at 12, 16 and 24 Links, converging on 1 / 9 as the lattice's residual
+  falls (the falsifier: a value outside 0.101 .. 0.121 at 24 Links, or
+  one that does not move toward 1 / 9 with the wavelength).
+- **The graded boundary**: the same with the pair ramped from [1, 1] to
+  [1, 4] over one wavelength of Nodes: the reflected motion **below
+  0.010** (the product of many small steps; the sponge of section 5 is
+  this ramp with a re-emission pair added).
+- **The two slits at lambda_0 / n_c**: section 6.2's world with the
+  region behind the wall filled at n_c = 2: the fringe spacing
+  **lambda_0 L / (n_c d) +- 3 percent**, half of 6.2's (COMPUTATION on
+  the accumulated offer's peaks), the Fresnel step at the opening's
+  face reflecting 1 / 9 of the motion back toward the lamp, booked as
+  a face's escape in the engine.
+
+What passes here passes the coefficient form of the wall, not nature's
+air: at air's n = 1.000 27 every number above is inside its band's
+hundredth, which is the sensitivity check the medium column of PINS.md
+records, and no pin of the register moves for it.
+
+6.8 **The sensitivity 2 against 1** (the owner's "check the sensitivity
+2 versus 1"; 1.1's parameter; PINS.md row (i)). The sensitivity is the
+rung of the wheel at which the receive counts: 1 (the first rung, the
+counting form of section 5, 1 / W of the record's norm) or 2 (the
+second rung, 2 / W). The pin stated first: on the light clock's chain
+of 6.4, **the second rung reads N_0 later than the first by 2 to 6
+intervals at 12 Links** (the front's rise between 1 / 4096 and 2 / 4096
+of the return, the band from the front's steepness in 6.4's crossings
+at 1 / 4096 and 1 / 16), and less at longer wavelengths only through
+the front's shape, not its pace; the bells of 6.1 do not move (the rung
+sets the click's time, not its pixel). Beside it, MUST A's form: the
+same crossings read on the Port's motion (a_now - a_before)^2 instead
+of a^2 (the receiver's offer of section 5); the pin (d) 206 +- 2 is
+declared for the first rung on the offer the engine books, so a
+first-rung reading on the motion outside 204 .. 208 is a finding to
+report, not a number to choose between.
+
 ## 7. The price
 
 - **The wavelength.** The lattice carries the bells at lambda >= 12
