@@ -704,3 +704,171 @@ def figure(fig: dict[str, Any]) -> str:
     kind = fig.get("kind")
     drawer = FIGURES.get(str(kind))
     return drawer(fig) if drawer is not None else ""
+
+
+# --- the GameBoard in 3-D (DESIGN_3D.md section 3) ---------------------------
+
+
+def _project(x: float, y: float, z: float, yaw: float, pitch: float) -> tuple[float, float, float]:
+    """The same orthographic projection as `board3d.project` and the page's
+    script: yaw about z, then a tilt; (u, v, depth), v downwards."""
+    cy, sy = math.cos(yaw), math.sin(yaw)
+    cp, sp = math.cos(pitch), math.sin(pitch)
+    x1 = x * cy - y * sy
+    y1 = x * sy + y * cy
+    return (x1, -(y1 * sp + z * cp), y1 * cp - z * sp)
+
+
+def board3d(fig: dict[str, Any]) -> str:
+    """The pre-rendered board at the last interval in the default view: the
+    box, the open faces, the cells, the objects as cubes, the marks (every
+    tick, each carrying `data-tick` so the script can show and hide), the
+    snapshot's cells shaded by their value. Floats in drawing coordinates."""
+    board = fig["board"]
+    x_n, y_n, z_n = (max(int(v), 1) for v in board["shape"])
+    yaw, pitch = 0.62, 0.42
+    corners = [(x, y, z) for x in (0, x_n) for y in (0, y_n) for z in (0, z_n)]
+    projected = [_project(*c, yaw, pitch) for c in corners]
+    u_min = min(p[0] for p in projected)
+    u_max = max(p[0] for p in projected)
+    v_min = min(p[1] for p in projected)
+    v_max = max(p[1] for p in projected)
+    width, height, pad = 760, 460, 36
+    scale = min(
+        (width - 2 * pad) / max(u_max - u_min, 1e-9), (height - 2 * pad) / max(v_max - v_min, 1e-9)
+    )
+
+    def at(x: float, y: float, z: float) -> tuple[float, float, float]:
+        u, v, d = _project(x, y, z, yaw, pitch)
+        return (pad + (u - u_min) * scale, pad + (v - v_min) * scale, d)
+
+    items: list[tuple[float, str]] = []
+    # the open faces, translucent
+    for face in board["faces"]:
+        axis = "xyz".index(face["axis"])
+        fixed = [x_n, y_n, z_n][axis] if face["positive"] else 0
+        others = [i for i in range(3) if i != axis]
+        ext = [x_n, y_n, z_n]
+        quad = []
+        for a, b in ((0, 0), (ext[others[0]], 0), (ext[others[0]], ext[others[1]]), (0, ext[others[1]])):
+            point = [0.0, 0.0, 0.0]
+            point[axis] = fixed
+            point[others[0]] = a
+            point[others[1]] = b
+            quad.append(at(*point))
+        depth = sum(q[2] for q in quad) / 4
+        points = " ".join(f"{q[0]:.1f},{q[1]:.1f}" for q in quad)
+        items.append(
+            (
+                depth - 0.5,
+                f'<polygon points="{points}" class="b-face"><title>{escape(face["name"])}, an open face, a detector</title></polygon>',
+            )
+        )
+    # the box's edges
+    edges = [
+        ((0, 0, 0), (x_n, 0, 0)),
+        ((0, y_n, 0), (x_n, y_n, 0)),
+        ((0, 0, z_n), (x_n, 0, z_n)),
+        ((0, y_n, z_n), (x_n, y_n, z_n)),
+        ((0, 0, 0), (0, y_n, 0)),
+        ((x_n, 0, 0), (x_n, y_n, 0)),
+        ((0, 0, z_n), (0, y_n, z_n)),
+        ((x_n, 0, z_n), (x_n, y_n, z_n)),
+        ((0, 0, 0), (0, 0, z_n)),
+        ((x_n, 0, 0), (x_n, 0, z_n)),
+        ((0, y_n, 0), (0, y_n, z_n)),
+        ((x_n, y_n, 0), (x_n, y_n, z_n)),
+    ]
+    for a, b in edges:
+        pa, pb = at(*a), at(*b)
+        axis = next(i for i in range(3) if a[i] != b[i])
+        cls = "b-edge-periodic" if board["axes"][axis]["periodic"] else "b-edge"
+        items.append(
+            (
+                (pa[2] + pb[2]) / 2 - 1.0,
+                f'<line x1="{pa[0]:.1f}" y1="{pa[1]:.1f}" x2="{pb[0]:.1f}" y2="{pb[1]:.1f}" class="{cls}"/>',
+            )
+        )
+    # the snapshot's cells, shaded by value
+    cells = board["snapshot"]["cells"]
+    if cells:
+        top = max(abs(c[3]) for c in cells) or 1
+        for x, y, z, value in cells:
+            p = at(x + 0.5, y + 0.5, z + 0.5)
+            r = 1.2 + 2.2 * min(abs(value) / top, 1.0) * scale / max(scale, 1)
+            items.append(
+                (
+                    p[2],
+                    f'<circle cx="{p[0]:.1f}" cy="{p[1]:.1f}" r="{max(r, 1.2):.1f}" class="{"b-cell-neg" if value < 0 else "b-cell"}" opacity="{0.25 + 0.7 * min(abs(value) / top, 1.0):.2f}"><title>({x}, {y}, {z}): {value}, GAMEBOARD</title></circle>',
+                )
+            )
+    # the detectors' cells
+    for cell in board["cells"]:
+        for node in cell["nodes"]:
+            p = at(node[0] + 0.5, node[1] + 0.5, node[2] + 0.5)
+            cls = {
+                "detector": "b-det",
+                "emitter": "b-lamp",
+                "block": "b-blockcell",
+                "body": "b-body",
+            }.get(cell["role"], "b-body")
+            items.append(
+                (
+                    p[2],
+                    f'<rect x="{p[0] - 3:.1f}" y="{p[1] - 3:.1f}" width="6" height="6" class="{cls}"><title>{escape(cell["name"])}, {escape(cell["role"])} at ({node[0]}, {node[1]}, {node[2]}), DECLARATION</title></rect>',
+                )
+            )
+    # the objects as cubes at their last recorded position
+    for obj in board["objects"]:
+        tick, node = obj["positions"][-1]
+        size = [obj["side"]] * 3 if obj["side"] else obj["span"]
+        origin = list(node) if obj["side"] else [node[i] - (size[i] - 1) // 2 for i in range(3)]
+        c = [
+            (origin[0] + dx, origin[1] + dy, origin[2] + dz)
+            for dx in (0, size[0])
+            for dy in (0, size[1])
+            for dz in (0, size[2])
+        ]
+        faces_idx = [(0, 1, 3, 2), (4, 5, 7, 6), (0, 1, 5, 4), (2, 3, 7, 6), (0, 2, 6, 4), (1, 3, 7, 5)]
+        for f in faces_idx:
+            quad = [at(*c[i]) for i in f]
+            depth = sum(q[2] for q in quad) / 4
+            points = " ".join(f"{q[0]:.1f},{q[1]:.1f}" for q in quad)
+            items.append(
+                (
+                    depth,
+                    f'<polygon points="{points}" class="b-cube"><title>{escape(obj["name"])} at ({node[0]}, {node[1]}, {node[2]}) from its line at t = {tick}, GAMEBOARD</title></polygon>',
+                )
+            )
+    # the marks, every tick, with data-tick for the script
+    last = board["ticks"]
+    for tick, event, x, y, z, kind in board["marks"]:
+        p = at(x + 0.5, y + 0.5, z + 0.5)
+        age = max(0, min(last - tick, 40))
+        opacity = 0.9 - 0.02 * age
+        cls = "b-mark-det" if kind == "DETECTOR" else "b-mark"
+        items.append(
+            (
+                p[2] + 0.01,
+                f'<circle cx="{p[0]:.1f}" cy="{p[1]:.1f}" r="2.6" class="{cls}" opacity="{opacity:.2f}" data-tick="{tick}"><title>{escape(event)} at ({x}, {y}, {z}), t = {tick}, {kind}</title></circle>',
+            )
+        )
+    items.sort(key=lambda item: item[0], reverse=True)
+    body = "".join(html for _depth, html in items)
+    # the axes' names at the box's far corners
+    labels = []
+    for axis, (name, extent) in enumerate(zip(("x", "y", "z"), (x_n, y_n, z_n), strict=True)):
+        end = [0.0, 0.0, 0.0]
+        end[axis] = extent + 0.5
+        p = at(*end)
+        labels.append(_text(p[0], p[1], f"{name} = {extent}", "t-small", "middle", "DECLARATION"))
+    origin = at(-0.3, -0.3, -0.3)
+    labels.append(_text(origin[0], origin[1], "(0, 0, 0)", "t-tiny", "middle", "DECLARATION"))
+    label = f"the GameBoard in 3-D at the last interval, {board['form']}, GAMEBOARD, a diagnostic"
+    return (
+        f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{escape(label)}" data-kind="GAMEBOARD" class="figure" data-board-svg>'
+        f"<g data-board-drawn>{body}</g>{''.join(labels)}</svg>"
+    )
+
+
+FIGURES["board3d"] = board3d

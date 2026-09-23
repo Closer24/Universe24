@@ -27,6 +27,7 @@ from typing import Any
 
 from record import (
     RunRecord,
+    chosen_of,
     face_node,
     fraction,
     label_class,
@@ -1567,3 +1568,933 @@ def as_rows(panels: list[Panel]) -> list[tuple[str, str, str, str, str]]:
 def register_fraction(value: Any) -> Fraction:
     """A register's number as a fraction (kept for the readers' callers)."""
     return fraction(value)
+
+
+# --- one run of either engine: the algebra layer (DESIGN_3D.md section 2) ----
+
+
+def _pair_text(value: Any) -> str:
+    if isinstance(value, list) and len(value) == 2:
+        return f"[{int(value[0])}, {int(value[1])}]"
+    return str(value)
+
+
+def _vec_text(value: Any) -> str:
+    if isinstance(value, list):
+        return "(" + ", ".join(str(int(v)) for v in value) + ")"
+    return str(value)
+
+
+def panel_algebra_board(run: RunRecord) -> Panel:
+    shape = run.shape
+    numbers = [
+        Number("the extents (x, y, z)", vec(shape), "DECLARATION", "run.json: shape"),
+        Number(
+            "the faces per axis",
+            _boundary_text(run.meta.get("boundary")),
+            "DECLARATION",
+            "run.json: boundary",
+        ),
+    ]
+    ones = sum(1 for v in shape if v == 1)
+    form = "a chain" if ones >= 2 else ("a layer" if ones == 1 else "a 3-D box")
+    numbers.append(Number("the GameBoard's form", form, "DECLARATION", "run.json: shape"))
+    families = run.meta.get("families") if isinstance(run.meta.get("families"), list) else []
+    if run.massive:
+        for family in families:
+            faces = family.get("faces")
+            if isinstance(faces, dict):
+                numbers.append(
+                    Number(
+                        f"the family {family.get('name')}'s own faces",
+                        ", ".join(f"{a} {faces.get(a, 'periodic')}" for a in ("x", "y", "z")),
+                        "DECLARATION",
+                        "run.json: families[].faces",
+                    )
+                )
+    return Panel(
+        key="alg_board",
+        layer=1,
+        title="The board: the translation group of the torus",
+        algebra=[
+            (
+                "Z_X x Z_Y x Z_Z per world: the GameBoard's extents per axis, each factor a circle (a periodic axis) or a segment (an open axis whose faces are the border, a click at the face detector). Chosen per world by shape and boundary.",
+                "ALGEBRA.md 1.6",
+            ),
+            (
+                "An open face of the GameBoard is a detector, named face:+x .. face:-z; a periodic axis has no faces.",
+                "TERMINOLOGY.md, Face, face detector",
+            ),
+        ],
+        note="A 3-D box when every extent exceeds 1, a layer when one extent is 1 (the layer worlds of the new engine's schedule), a chain when two are. On a massive world each family's own faces are a second declaration beside light's.",
+        numbers=numbers,
+    )
+
+
+def panel_algebra_families(run: RunRecord) -> Panel:
+    families = run.meta.get("families") if isinstance(run.meta.get("families"), list) else []
+    if not families:
+        return Panel(
+            "alg_families", 1, "The families and their pairs", missing="no families in run.json"
+        )
+    numbers: list[Number] = []
+    for family in families:
+        name = str(family.get("name"))
+        numbers.append(
+            Number(
+                f"{name}: quantum h",
+                str(family.get("quantum")),
+                "DECLARATION",
+                "run.json: families[].quantum",
+            )
+        )
+        if "charge" in family:
+            numbers.append(
+                Number(
+                    f"{name}: charge per unit of content",
+                    _pair_text(family.get("charge")),
+                    "DECLARATION",
+                    "run.json: families[].charge",
+                )
+            )
+        if "phase" in family:
+            numbers.append(
+                Number(
+                    f"{name}: a phase circle",
+                    str(family.get("phase")),
+                    "DECLARATION",
+                    "run.json: families[].phase",
+                )
+            )
+        if "phase_per_link" in family:
+            numbers.append(
+                Number(
+                    f"{name}: phase per Link (the family's clock)",
+                    _pair_text(family.get("phase_per_link")),
+                    "DECLARATION",
+                    "run.json: families[].phase_per_link",
+                )
+            )
+        if family.get("lifetime") is not None:
+            numbers.append(
+                Number(
+                    f"{name}: lifetime",
+                    str(family.get("lifetime")),
+                    "DECLARATION",
+                    "run.json: families[].lifetime",
+                )
+            )
+        if "pair" in family:
+            pair = family["pair"]
+            kind_word = (
+                "light's kind bit for bit"
+                if pair == [1, 1]
+                else "a massive kind (den > num), its clock its gap, no lamp"
+            )
+            numbers.append(
+                Number(
+                    f"{name}: the pair [num, den] on the six-neighbour term ({kind_word})",
+                    _pair_text(pair),
+                    "DECLARATION",
+                    "run.json: families[].pair",
+                )
+            )
+        elif run.is_new:
+            numbers.append(
+                Number(
+                    f"{name}: the pair",
+                    "[1, 1] (light's kind; no pair key under the world without massive_record)",
+                    "DECLARATION",
+                    "run.json: families[] (absent pair reads as [1, 1], BUILD.md section 3)",
+                )
+            )
+    note = (
+        "The rule with the pair: 3 den a_next + r' = num S_6 - 3 den a_before + r, 0 <= r' < 3 den; [1, 1] the light rule bit for bit, den > num a massive kind whose gap is cos omega_0 = num / den."
+        if run.is_new
+        else "No pair is declared: the engine on main runs the Beam Law, whose record form is amplitude-v1; the six-neighbour rule with the pair is not in it, and nothing is invented here."
+    )
+    return Panel(
+        key="alg_families",
+        layer=1,
+        title="The families and their pairs",
+        algebra=[
+            (
+                "A row turns phi(tau) = floor((tau + 1) n / d) - floor(tau n / d) steps per interval of age, the pair [n, d] its family's declaration, read modulo N.",
+                "ALGEBRA.md 2.1",
+            ),
+            (
+                "A record kind's pair [num, den] on the six-neighbour term: [1, 1] light's, den > num a massive kind.",
+                "MASSIVE_RECORD.md sections 1 and 2 (detector-law-build)",
+            ),
+        ],
+        note=note,
+        numbers=numbers,
+    )
+
+
+BLOCK_KEYS = (
+    "side",
+    "pair",
+    "amount",
+    "momentum",
+    "held",
+    "coupling",
+    "wheel",
+    "seed",
+    "absorbing",
+    "cavity",
+    "ramp",
+    "margin",
+    "emits",
+)
+BODY_KEYS = ("amount", "momentum", "fixed", "held", "phase", "directions")
+
+
+def panel_algebra_blocks(run: RunRecord) -> Panel:
+    numbers: list[Number] = []
+    measured = run.declared_measured()
+    numbers_meta = run.meta.get("numbers") if isinstance(run.meta.get("numbers"), dict) else {}
+    if run.is_new:
+        blocks = [(i, e) for i, e in enumerate(measured) if "side" in e]
+        if not blocks:
+            return Panel(
+                "alg_blocks",
+                1,
+                "The blocks with their pairs and sides",
+                missing="no block declared (no measured event with side)",
+            )
+        for index, entry in blocks:
+            label = f"block measured:{index} ({entry.get('family')})"
+            numbers.append(
+                Number(
+                    f"{label}: the corner",
+                    _vec_text(entry.get("position")),
+                    "DECLARATION",
+                    "initialization.json: measured[].position",
+                )
+            )
+            for key in BLOCK_KEYS:
+                if key in entry:
+                    value = entry[key]
+                    if key == "coupling" and isinstance(value, dict):
+                        text = "G " + _pair_text(value.get("G")) + ", g " + _pair_text(value.get("g"))
+                    elif isinstance(value, dict):
+                        text = ", ".join(f"{k} {v}" for k, v in value.items())
+                    elif isinstance(value, list):
+                        text = _pair_text(value) if key == "pair" else _vec_text(value)
+                    else:
+                        text = str(value)
+                    numbers.append(
+                        Number(
+                            f"{label}: {key}",
+                            text,
+                            "DECLARATION",
+                            f"initialization.json: measured[].{key}",
+                        )
+                    )
+        note = "A block is a measured event that declares side: a cube of that side at its corner, its cells carrying its own pair [num', den'] (a well when num' / den' > num / den), its momentum P one integer per axis. run.json's numbers echoes its position and family and no block key (the branch at 2f44797c)."
+    else:
+        if not numbers_meta:
+            return Panel(
+                "alg_blocks",
+                1,
+                "The blocks with their pairs and sides",
+                missing="no body declared (run.json numbers is empty)",
+            )
+        for key, entry in numbers_meta.items():
+            label = f"body {key} ({entry.get('family')})"
+            numbers.append(
+                Number(
+                    f"{label}: position",
+                    _vec_text(entry.get("position")),
+                    "DECLARATION",
+                    "run.json: numbers[].position",
+                )
+            )
+            numbers.append(
+                Number(
+                    f"{label}: span (its extent)",
+                    _vec_text(entry.get("span")),
+                    "DECLARATION",
+                    "run.json: numbers[].span",
+                )
+            )
+            if entry.get("become") is not None:
+                numbers.append(
+                    Number(
+                        f"{label}: become",
+                        str(entry.get("become")),
+                        "DECLARATION",
+                        "run.json: numbers[].become",
+                    )
+                )
+            declared = measured[int(key) - 1] if 0 < int(key) <= len(measured) else {}
+            for dkey in BODY_KEYS:
+                if dkey in declared:
+                    value = declared[dkey]
+                    text = (
+                        _vec_text(value)
+                        if isinstance(value, list) and value and not isinstance(value[0], list)
+                        else str(value)
+                    )
+                    numbers.append(
+                        Number(
+                            f"{label}: {dkey}",
+                            text,
+                            "DECLARATION",
+                            f"initialization.json: measured[].{dkey}",
+                        )
+                    )
+            table = declared.get("table")
+            if isinstance(table, dict):
+                rules = ", ".join(
+                    f"{fam} {rule.get('rule') if isinstance(rule, dict) else rule}"
+                    for fam, rule in table.items()
+                )
+                numbers.append(
+                    Number(
+                        f"{label}: its rule per family (the table)",
+                        rules,
+                        "DECLARATION",
+                        "initialization.json: measured[].table",
+                    )
+                )
+        note = "A body of the Beam Law: its extent span, a box of Nodes centred on its position, its rule per family; not a cube of the massive kind, whose pair and side no run on main declares."
+    return Panel(
+        key="alg_blocks",
+        layer=1,
+        title="The blocks with their pairs and sides",
+        algebra=[
+            (
+                "A foreign object as a declared cube of side s at a corner, its cells carrying the lowered pair [num', den'], a well; its momentum one integer per axis with its remainder; its click the evaluation (E) across its cells.",
+                "MASSIVE_RECORD.md sections 4 to 7 (detector-law-build)",
+            )
+        ],
+        note=note,
+        numbers=numbers,
+    )
+
+
+def panel_algebra_instruments(run: RunRecord) -> Panel:
+    numbers: list[Number] = []
+    for entry in run.declared_detectors():
+        name = str(entry.get("name"))
+        positions = entry.get("positions") if isinstance(entry.get("positions"), list) else []
+        numbers.append(
+            Number(
+                f"detector {name}: Nodes",
+                str(len(positions)),
+                "DECLARATION",
+                "initialization.json: detectors[].positions",
+            )
+        )
+        if positions:
+            numbers.append(
+                Number(
+                    f"detector {name}: first Node",
+                    _vec_text(positions[0]),
+                    "DECLARATION",
+                    "initialization.json: detectors[].positions",
+                )
+            )
+        for key in ("threshold", "reading"):
+            if key in entry:
+                numbers.append(
+                    Number(
+                        f"detector {name}: {key}",
+                        str(entry[key]),
+                        "DECLARATION",
+                        f"initialization.json: detectors[].{key}",
+                    )
+                )
+    faces = []
+    for axis in ("x", "y", "z"):
+        if not run.periodic(axis):
+            faces.extend([f"face:+{axis}", f"face:-{axis}"])
+    numbers.append(
+        Number(
+            "the face detectors (the open faces)",
+            ", ".join(faces) or "none",
+            "DECLARATION",
+            "run.json: boundary",
+        )
+    )
+    base = 0 if run.is_new else 1
+    for index, entry in enumerate(run.declared_measured()):
+        label = f"measured:{index + base} ({entry.get('family')}) at {_vec_text(entry.get('position'))}"
+        lamp = entry.get("lamp")
+        if isinstance(lamp, dict):
+            numbers.append(
+                Number(
+                    f"emitter {label}: rate",
+                    _pair_text(lamp.get("rate")),
+                    "DECLARATION",
+                    "initialization.json: measured[].lamp.rate",
+                )
+            )
+            numbers.append(
+                Number(
+                    f"emitter {label}: wheel [r, W]",
+                    _pair_text(lamp.get("wheel")),
+                    "DECLARATION",
+                    "initialization.json: measured[].lamp.wheel",
+                )
+            )
+            directions = lamp.get("directions") if isinstance(lamp.get("directions"), list) else []
+            numbers.append(
+                Number(
+                    f"emitter {label}: directions",
+                    str(len(directions)),
+                    "DECLARATION",
+                    "initialization.json: measured[].lamp.directions",
+                )
+            )
+            if "train" in lamp:
+                numbers.append(
+                    Number(
+                        f"emitter {label}: train (in periods)",
+                        str(lamp["train"]),
+                        "DECLARATION",
+                        "initialization.json: measured[].lamp.train",
+                    )
+                )
+        if "emits" in entry:
+            numbers.append(
+                Number(
+                    f"emitter {label}: emits",
+                    str(entry["emits"]),
+                    "DECLARATION",
+                    "initialization.json: measured[].emits",
+                )
+            )
+        if "lamp" not in entry and "emits" not in entry:
+            numbers.append(
+                Number(
+                    f"receiver {label}",
+                    "a measured event: its Nodes receive"
+                    if run.is_new
+                    else "a measured event, a detector of one Node where outside every set",
+                    "DECLARATION",
+                    "initialization.json: measured[]",
+                )
+            )
+    probes = run.world.get("probes")
+    if isinstance(probes, list):
+        numbers.append(
+            Number(
+                "probes (light's amplitude read per interval, a diagnostic)",
+                str(len(probes)),
+                "DECLARATION",
+                "initialization.json: probes",
+            )
+        )
+    return Panel(
+        key="alg_instruments",
+        layer=1,
+        title="The detectors and the emitters",
+        algebra=[
+            (
+                "A detector D at a Node has its own count n_D; it never reads the tick, only n_D.",
+                "ALGEBRA.md 3.1",
+            ),
+            (
+                "A detector, a lamp and an external body are declarations of the world file, not records that hop.",
+                "ALGEBRA.md 3.4",
+            ),
+            (
+                "Every external entity is one generic detector-emitter, a receiver-inserter declared Outside.",
+                "HIGHLIGHTS.md 5.4, the line of record 1327",
+            ),
+        ],
+        note="Every declared set with its Nodes, the face detectors the open faces make, every emitter (a measured event with a lamp: its rate, its wheel, its directions; on the new engine its train; a block with emits), every receiver."
+        + (
+            " Under the detector law every declared set's Nodes and every measured event's Nodes receive (BUILD.md section 3)."
+            if run.is_new
+            else ""
+        ),
+        numbers=numbers,
+    )
+
+
+VERB_LINES = [
+    (
+        "(T) the translation of an accumulator by its rate: x -> x + r on Z^k or on a torus; every count of the law is this.",
+        "ALGEBRA.md 2.1",
+    ),
+    (
+        "(B) the bilinear form with a declared matrix: a signed inner product over declared columns times the moment.",
+        "ALGEBRA.md 2.2",
+    ),
+    (
+        "(G) the group-ring addition: the merge of identical rows is the ring's addition, f <- f + g, with the cancel [p + N/2] = -[p].",
+        "ALGEBRA.md 2.3",
+    ),
+    (
+        "(P) the permutation of the joint state: of directions, labels or Nodes, never of contents.",
+        "ALGEBRA.md 2.4",
+    ),
+    (
+        "(E) the evaluation at the roots of unity: ev(f) = sum over p of f_p zeta_N^p, the click's pointer.",
+        "ALGEBRA.md 2.5",
+    ),
+    (
+        "(D) the division with the remainder kept, and the comparison: the count is the whole part in units of the wall, that much is subtracted and the remainder stays.",
+        "ALGEBRA.md 2.6",
+    ),
+]
+
+
+def panel_algebra_verbs(run: RunRecord) -> Panel:
+    if run.is_new:
+        acting = [
+            (
+                "One line per record per interval: 3 den a_next + r' = num S_6 - 3 den a_before + r, 0 <= r' < 3 den: (G) the sum over the six Ports, (D) the division by 3 den with the remainder kept, (T) the carry of r; the pair one entry of (B)'s declared matrix; (E) the click across the cells.",
+                "MASSIVE_RECORD.md section 1; ALGEBRA_MASSIVE_RECORD.md 0.1",
+            )
+        ]
+        note = "No run records the row's three integers a_now, a_before and r (DESIGN_3D.md, Finding 1); the rule's instance is the first page's worked example, COMPUTATION, in DESIGN.md section 2.5."
+    else:
+        acting = [
+            (
+                "One interval of a record applies, in order, (T) on every accumulator, (D) whose whole part is the event, (B) at the push and at the click, (G) and (E) where rows are summed at one Node and where they end, and (P) at a collision; the lines are the hop, the phase, the push, the crowd, the split, the sum, the click and the age.",
+                "ALGEBRA.md 2.11",
+            )
+        ]
+        note = "The verbs as the Beam Law applies them per interval, quoted; the record's lines of this run (the events) are the marks of the GameBoard layer."
+    return Panel(
+        key="alg_verbs",
+        layer=1,
+        title="The verbs that act per interval",
+        algebra=VERB_LINES + acting,
+        note=note,
+    )
+
+
+# --- one run of either engine: the Outside layer (DESIGN_3D.md section 4) ----
+
+
+def _cell_group(name: str) -> str:
+    if name.startswith("face:"):
+        return "the faces"
+    if name.startswith("measured:"):
+        return "the measured events"
+    return "the declared sets"
+
+
+def _axis_of(run: RunRecord, gathers: list[dict[str, Any]]) -> tuple[str, str, str]:
+    """The key of a click's count on a gather line, its kind and its label."""
+    if gathers and all("clock" in g for g in gathers):
+        return "clock", "DETECTOR", "the detector's own count (DETECTOR, the clock field)"
+    if run.is_new and gathers and all("click" in g for g in gathers):
+        return (
+            "click",
+            "GAMEBOARD",
+            "the interval of the first rung's crossing (GAMEBOARD, the record's ordering; the detector's own count is not stamped in this run)",
+        )
+    return (
+        "tick",
+        "GAMEBOARD",
+        "the tick (GAMEBOARD, the record's ordering; the detector's own count is not stamped in this run)",
+    )
+
+
+def panel_outside_records(run: RunRecord) -> Panel:
+    gathers = run.of_kind("gather")
+    numbers: list[Number] = []
+    chosen = Counter(chosen_of(g) or "none" for g in gathers)
+    for entry in run.meta_detectors():
+        name = str(entry.get("name"))
+        if run.is_new:
+            positions = entry.get("positions") if isinstance(entry.get("positions"), list) else []
+            numbers.append(
+                Number(
+                    f"{name}: Nodes",
+                    str(len(positions)),
+                    "DECLARATION",
+                    "run.json: detectors[].positions",
+                )
+            )
+            numbers.append(
+                Number(
+                    f"{name}: clicks (the gathers whose chosen cell it is)",
+                    str(entry.get("clicks")),
+                    "DETECTOR",
+                    "run.json: detectors[].clicks",
+                )
+            )
+        else:
+            for key in ("nodes", "threshold", "reading"):
+                if key in entry:
+                    numbers.append(
+                        Number(
+                            f"{name}: {key}",
+                            str(entry[key]),
+                            "DECLARATION",
+                            f"run.json: detectors[].{key}",
+                        )
+                    )
+            families = entry.get("families") if isinstance(entry.get("families"), dict) else {}
+            for family, values in families.items():
+                if not isinstance(values, dict):
+                    continue
+                for key in ("measured", "clicks", "record", "content", "phase"):
+                    if key in values:
+                        text = (
+                            _vec_text(values[key]) if isinstance(values[key], list) else str(values[key])
+                        )
+                        numbers.append(
+                            Number(
+                                f"{name}, {family}: {key}"
+                                + (" (the detector's own record)" if key == "record" else ""),
+                                text,
+                                "DETECTOR",
+                                f"run.json: detectors[].families.{key}",
+                            )
+                        )
+        numbers.append(
+            Number(
+                f"{name}: gather lines chosen here",
+                str(chosen.get(name, 0)),
+                "DETECTOR",
+                "events.jsonl: gather.chosen",
+            )
+        )
+    if not run.is_new:
+        faces = Counter(
+            str(line.get("detector"))
+            for line in run.of_kind("click")
+            if str(line.get("detector", "")).startswith("face:")
+        )
+        for name, count in sorted(faces.items()):
+            numbers.append(
+                Number(
+                    f"{name}: face click lines", str(count), "DETECTOR", "events.jsonl: click.detector"
+                )
+            )
+    for name, count in sorted(chosen.items()):
+        if not any(str(e.get("name")) == name for e in run.meta_detectors()):
+            numbers.append(
+                Number(
+                    f"{name} ({_cell_group(name)}): gather lines chosen here",
+                    str(count),
+                    "DETECTOR",
+                    "events.jsonl: gather.chosen",
+                )
+            )
+    if run.is_new:
+        cycles = [line for line in run.of_kind("click")]
+        by_block = Counter(int(line.get("measured", -1)) for line in cycles)
+        for index, count in sorted(by_block.items()):
+            numbers.append(
+                Number(
+                    f"block measured:{index}: its own cycles (its self-clicks)",
+                    str(count),
+                    "DETECTOR",
+                    "events.jsonl: click.cycle",
+                )
+            )
+            last = [line for line in cycles if line.get("measured") == index][-1]
+            if "clock" in last:
+                numbers.append(
+                    Number(
+                        f"block measured:{index}: its count at its last self-click",
+                        str(last["clock"]),
+                        "DETECTOR",
+                        "events.jsonl: click.clock",
+                    )
+                )
+    numbers.append(
+        Number(
+            "gather lines (the records' clicks)", str(len(gathers)), "DETECTOR", "events.jsonl: gather"
+        )
+    )
+    layer = run.meta.get("layer")
+    if isinstance(layer, dict):
+        for key in ("born", "gathered", "open"):
+            if key in layer:
+                numbers.append(
+                    Number(f"the layer's {key}", str(layer[key]), "DETECTOR", f"run.json: layer.{key}")
+                )
+    if not numbers:
+        return Panel(
+            "out_records",
+            3,
+            "The detectors' own records in their own counts",
+            missing="no detector table and no gather line in this run",
+        )
+    return Panel(
+        key="out_records",
+        layer=3,
+        title="The detectors' own records in their own counts",
+        algebra=[
+            (
+                "A click is an action, not a passive read: the record ends at the detector, its content enters the detector's own record, and the detector's count advances.",
+                "ALGEBRA.md 3.1",
+            )
+        ],
+        note="One card per detector from the run's own table (run.json detectors), beside the count of gather lines chosen at it, which the test holds equal to the record's own totals; on the new engine a block's self-clicks are the click of a body (MASSIVE_RECORD.md section 1).",
+        numbers=numbers,
+    )
+
+
+def panel_outside_clock(run: RunRecord) -> Panel:
+    gathers = run.of_kind("gather")
+    if not gathers:
+        return Panel(
+            "out_clock",
+            3,
+            "The counts against the detector's own count",
+            missing="no gather line in this run",
+        )
+    key, kind, label = _axis_of(run, gathers)
+    per_cell: dict[str, list[int]] = {}
+    for g in gathers:
+        name = chosen_of(g)
+        if name is not None:
+            per_cell.setdefault(name, []).append(int(g[key]))
+    series = [
+        {
+            "name": "every cell together",
+            "ticks": sorted(int(g[key]) for g in gathers if chosen_of(g) is not None),
+        }
+    ]
+    for name, ticks in sorted(per_cell.items()):
+        series.append({"name": name, "ticks": sorted(ticks)})
+    numbers = [
+        Number(
+            "clicks with a chosen cell",
+            str(len(series[0]["ticks"])),
+            "DETECTOR",
+            "events.jsonl: gather.chosen",
+        ),
+        Number(
+            "the first click's " + ("own count" if kind == "DETECTOR" else "ordering"),
+            str(series[0]["ticks"][0]),
+            kind,
+            f"events.jsonl: gather.{key}",
+        ),
+        Number(
+            "the last click's " + ("own count" if kind == "DETECTOR" else "ordering"),
+            str(series[0]["ticks"][-1]),
+            kind,
+            f"events.jsonl: gather.{key}",
+        ),
+    ]
+    if run.is_new:
+        cycles = run.of_kind("click")
+        if cycles and all("clock" in c for c in cycles):
+            series.append(
+                {
+                    "name": "a block's own cycles (click.cycle against click.clock)",
+                    "ticks": sorted(int(c["clock"]) for c in cycles),
+                }
+            )
+            numbers.append(
+                Number(
+                    "a block's self-clicks", str(len(cycles)), "DETECTOR", "events.jsonl: click.clock"
+                )
+            )
+    return Panel(
+        key="out_clock",
+        layer=3,
+        title="The counts against the detector's own count",
+        algebra=[
+            (
+                "A detector D at a Node has its own count n_D, its count of intervals stretched by what arrives at it; it never reads the tick, only n_D; the click is the event of receiving a packet, stamped with n_D.",
+                "ALGEBRA.md 3.1",
+            )
+        ],
+        note="A staircase: the count of clicks against "
+        + label
+        + ", for every cell together and for one cell chosen by the reader.",
+        numbers=numbers,
+        figure={"kind": "staircase", "series": series, "axis": label, "axis_kind": kind},
+    )
+
+
+def panel_outside_intervals(run: RunRecord) -> Panel:
+    gathers = [g for g in run.of_kind("gather") if chosen_of(g) is not None]
+    if len(gathers) < 2:
+        return Panel(
+            "out_intervals",
+            3,
+            "The intervals between clicks",
+            missing="fewer than two clicks with a chosen cell",
+        )
+    key, kind, _label = _axis_of(run, gathers)
+    ticks = sorted(int(g[key]) for g in gathers)
+    diffs = [b - a for a, b in zip(ticks[:-1], ticks[1:], strict=True)]
+    us = [int(g["u"]) for g in gathers if "u" in g]
+    numbers = [
+        Number(
+            "the intervals between consecutive clicks",
+            ", ".join(str(d) for d in diffs[:24]) + (" ..." if len(diffs) > 24 else ""),
+            "CONVERSION",
+            f"gather.{key} differences ({kind} axis)",
+        ),
+        Number("the least interval", str(min(diffs)), "CONVERSION", f"gather.{key} differences"),
+        Number("the greatest interval", str(max(diffs)), "CONVERSION", f"gather.{key} differences"),
+    ]
+    if us:
+        numbers.append(
+            Number(
+                "the wheel's value u of each click, in order",
+                ", ".join(str(u) for u in us[:24]) + (" ..." if len(us) > 24 else ""),
+                "DETECTOR",
+                "events.jsonl: gather.u",
+            )
+        )
+        numbers.append(
+            Number("distinct u among them", str(len(set(us))), "DETECTOR", "events.jsonl: gather.u")
+        )
+    if run.is_new and all("birth" in g and "click" in g for g in gathers):
+        ages = [int(g["click"]) - int(g["birth"]) for g in gathers]
+        numbers.append(
+            Number(
+                "each record's age at its click, in the record's ordering (click - birth)",
+                ", ".join(str(a) for a in ages[:24]) + (" ..." if len(ages) > 24 else ""),
+                "CONVERSION",
+                "gather.click - gather.birth (GAMEBOARD integers)",
+            )
+        )
+    return Panel(
+        key="out_intervals",
+        layer=3,
+        title="The intervals between clicks",
+        algebra=[
+            (
+                "The least time a detector times by itself is a pulse to its neighbour and its return, two intervals Inside, two of its counts at r_D = 1; the tick itself is GAMEBOARD and never read.",
+                "ALGEBRA.md 3.4, discreteness Outside",
+            )
+        ],
+        note="The differences of consecutive clicks' counts over every cell, as a histogram of exact integers, and the wheel's value of every click.",
+        numbers=numbers,
+        figure={"kind": "histogram", "values": diffs, "axis_kind": kind},
+    )
+
+
+def panel_outside_pattern(run: RunRecord) -> Panel:
+    gathers = run.of_kind("gather")
+    if not gathers:
+        return Panel(
+            "out_pattern", 3, "The pattern an experimenter sees", missing="no gather line in this run"
+        )
+    chosen = Counter(chosen_of(g) or "none" for g in gathers)
+    names = [str(e.get("name")) for e in run.declared_detectors()]
+    bars = [{"name": name, "count": chosen.get(name, 0)} for name in names]
+    others = []
+    for name, count in sorted(chosen.items()):
+        if name not in names:
+            others.append({"name": name, "count": count})
+    numbers = [
+        Number("gathers (the records' clicks)", str(len(gathers)), "DETECTOR", "events.jsonl: gather"),
+        Number(
+            "at the declared sets",
+            str(sum(b["count"] for b in bars)),
+            "DETECTOR",
+            "events.jsonl: gather.chosen",
+        ),
+        Number(
+            "elsewhere (the measured events, the faces)",
+            str(sum(o["count"] for o in others)),
+            "DETECTOR",
+            "events.jsonl: gather.chosen",
+        ),
+        Number(
+            "cells with at least one click",
+            str(sum(1 for c in chosen.values() if c)),
+            "DETECTOR",
+            "events.jsonl: gather.chosen",
+        ),
+    ]
+    reg = run.register
+    if isinstance(reg, dict):
+        for key, value in reg.items():
+            if isinstance(value, (int, str)) and not isinstance(value, bool):
+                numbers.append(
+                    Number(
+                        f"the register's {key}",
+                        str(value),
+                        "PIN",
+                        "expectations.json (the world's block)",
+                    )
+                )
+    if not bars:
+        bars = others
+        others = []
+    return Panel(
+        key="out_pattern",
+        layer=3,
+        title="The pattern an experimenter sees",
+        algebra=[
+            (
+                "A click at a detector, a count between clicks on the detector's own record, and a ratio of such counts are what is compared with nature; nothing measured inside the board is compared; a reading of the board itself is a diagnostic.",
+                "ALGEBRA.md 3.2, the reading rule",
+            )
+        ],
+        note="One bar per declared set in the world file's order, the count of gathers whose chosen cell it is; the measured events' and the faces' beside. On a chain or a world of one detector the pattern is one bar. A register's number, where the series has one, is PIN; nothing is called matched; this page compares nothing.",
+        numbers=numbers,
+        figure={"kind": "bars", "bars": bars, "others": others},
+    )
+
+
+def head_numbers_run(run: RunRecord) -> list[Number]:
+    """The head of a one-run page: the first page's head plus the engine."""
+    found = head_numbers(run)
+    found.insert(
+        0,
+        Number(
+            "the engine, told from run.json's hypotheses",
+            run.engine,
+            "DECLARATION",
+            "run.json: hypotheses",
+        ),
+    )
+    found.insert(
+        1,
+        Number(
+            "the identities",
+            ", ".join(str(v) for v in run.meta.get("hypotheses", [])),
+            "DECLARATION",
+            "run.json: hypotheses",
+        ),
+    )
+    if run.massive:
+        found.insert(
+            2,
+            Number(
+                "the massive record kind's key",
+                str(run.meta.get("massive_record")),
+                "DECLARATION",
+                "run.json: massive_record",
+            ),
+        )
+    found.append(
+        Number(
+            "the intervals requested",
+            str(run.meta.get("requested_ticks")),
+            "DECLARATION",
+            "run.json: requested_ticks",
+        )
+    )
+    if run.meta.get("error"):
+        found.append(Number("the error", str(run.meta.get("error")), "HOST", "run.json: error"))
+    return found
+
+
+def build_run_panels(run: RunRecord, board_panels: list[Panel]) -> list[Panel]:
+    """The thirteen panels of one run in the owner's three layers
+    (DESIGN_3D.md sections 2 to 4): the algebra, the GameBoard (built by
+    `board3d.build_layer`), the Outside."""
+    return [
+        panel_algebra_board(run),
+        panel_algebra_families(run),
+        panel_algebra_blocks(run),
+        panel_algebra_instruments(run),
+        panel_algebra_verbs(run),
+        *board_panels,
+        panel_outside_records(run),
+        panel_outside_clock(run),
+        panel_outside_intervals(run),
+        panel_outside_pattern(run),
+    ]

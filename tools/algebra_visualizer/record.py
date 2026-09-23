@@ -8,7 +8,12 @@ Nothing of the law is computed: no rule is evaluated, no engine table is
 loaded, no record is stepped again (docs/designs/algebra_visualizer/DESIGN.md,
 "The rules the page obeys"; the display contract of SIMULATOR_DEFINITIONS.md).
 The module imports nothing of `event_universe`; the record's field names are
-those of docs/ENGINE.md, "The detector's readings by type".
+those of docs/ENGINE.md, "The detector's readings by type", and, for the
+detector-law engine, of docs/designs/detector_law/BUILD.md section 3 on the
+branch detector-law-build (read from its runs at 2f44797c; DESIGN_3D.md
+section 5). The engine a run came from is told from `run.json`'s
+`hypotheses` alone (`engine_of`); a key an engine does not write is "not
+recorded", never a crash.
 """
 
 from __future__ import annotations
@@ -21,6 +26,15 @@ from pathlib import Path
 from typing import Any
 
 RUN_FILES = ("run.json", "events.jsonl", "state.json", "initialization.json")
+
+# The two engines, told from `run.json`'s `hypotheses` (DESIGN_3D.md 5.1).
+ENGINE_OLD = "the Beam Law (beam-v1 with amplitude-v1)"
+ENGINE_NEW = "the detector law (detector-law-v1)"
+NEW_IDENTITY = "detector-law-v1"
+MASSIVE_IDENTITY = "massive-record-v1"
+
+# The line that makes one run folder (the runner, outside the tree).
+MAKE_RUN = "PYTHONPATH=src python -m event_universe --init WORLD.json --output FOLDER"
 
 # The line that makes a runs directory (the register's runner, outside the tree).
 MAKE_RUNS = (
@@ -51,6 +65,93 @@ class RunRecord:
     @property
     def name(self) -> str:
         return self.folder.parent.name if self.folder.name == "run" else self.folder.name
+
+    @property
+    def engine(self) -> str:
+        """The engine the run came from, from `hypotheses` alone."""
+        return engine_of(self.meta)
+
+    @property
+    def is_new(self) -> bool:
+        return self.engine == ENGINE_NEW
+
+    @property
+    def massive(self) -> bool:
+        """The massive record kind's key, written by the new engine when true."""
+        return bool(self.meta.get("massive_record")) or MASSIVE_IDENTITY in hypotheses_of(self.meta)
+
+    @property
+    def exploratory(self) -> bool:
+        """An EXPLORATORY run: the word in its folder's path or its model identity
+        (the Boss's rule of 2026-09-23: such a page carries EXPLORATORY in its
+        title and on every panel, never a result)."""
+        return (
+            "EXPLORATORY" in str(self.folder).upper()
+            or "EXPLORATORY" in str(self.meta.get("model", "")).upper()
+        )
+
+    @property
+    def ticks(self) -> int:
+        value = self.meta.get("completed_ticks", self.meta.get("tick", 0))
+        return int(value) if isinstance(value, int) else 0
+
+    @property
+    def shape(self) -> tuple[int, int, int]:
+        found = self.meta.get("shape")
+        if isinstance(found, list) and len(found) == 3:
+            return (int(found[0]), int(found[1]), int(found[2]))
+        return (0, 0, 0)
+
+    def periodic(self, axis: str) -> bool:
+        """Whether light's axis is periodic (`boundary`: "open", or per axis)."""
+        boundary = self.meta.get("boundary")
+        if isinstance(boundary, dict):
+            return boundary.get(axis) == "periodic"
+        return boundary == "periodic"
+
+    def with_node(self) -> list[dict[str, Any]]:
+        """Every line with a `tick` and a `node` (one Node or a list of Nodes),
+        in the record's order: the marks of the board (DESIGN_3D.md 3.2)."""
+        return [line for line in self.events if "tick" in line and node_of(line) is not None]
+
+    def steps_of(self, number: int) -> list[dict[str, Any]]:
+        """The old engine's `step` lines of one body, by its `number`."""
+        return [
+            line for line in self.events if line.get("event") == "step" and line.get("number") == number
+        ]
+
+    def block_lines_of(self, index: int) -> list[dict[str, Any]]:
+        """The new engine's `block` lines of one block, by its `measured` index."""
+        return [
+            line
+            for line in self.events
+            if line.get("event") == "block" and line.get("measured") == index
+        ]
+
+    def blocks_snapshot(self) -> list[dict[str, Any]]:
+        """The new engine's `blocks` of the snapshot (under the massive key)."""
+        found = self.state.get("blocks", [])
+        return list(found) if isinstance(found, list) else []
+
+    def records_snapshot(self) -> list[dict[str, Any]]:
+        """The new engine's live `records` of the snapshot."""
+        found = self.state.get("records", [])
+        return list(found) if isinstance(found, list) else []
+
+    def declared_measured(self) -> list[dict[str, Any]]:
+        """The world file's measured events (`initialization.json`, `measured`)."""
+        found = self.world.get("measured", [])
+        return list(found) if isinstance(found, list) else []
+
+    def declared_detectors(self) -> list[dict[str, Any]]:
+        """The world file's detector sets (`initialization.json`, `detectors`)."""
+        found = self.world.get("detectors", [])
+        return list(found) if isinstance(found, list) else []
+
+    def meta_detectors(self) -> list[dict[str, Any]]:
+        """The per-detector counts of `run.json` (`detectors`)."""
+        found = self.meta.get("detectors", [])
+        return list(found) if isinstance(found, list) else []
 
     def of_kind(self, *kinds: str) -> list[dict[str, Any]]:
         """The lines whose `event` is one of `kinds`, in the record's order."""
@@ -109,7 +210,8 @@ def load_run(folder: Path, register: Path | None = None, block: str | None = Non
     if missing:
         raise MissingRun(
             f"no run record under {folder} (missing {', '.join(missing)}); "
-            f"make the runs first, outside the tree:\n    {MAKE_RUNS}"
+            f"make the runs first, outside the tree:\n    {MAKE_RUNS}\n"
+            f"or one run:\n    {MAKE_RUN}"
         )
     events = list(_load_lines(folder / "events.jsonl"))
     counts: dict[str, int] = {}
@@ -132,6 +234,43 @@ def load_run(folder: Path, register: Path | None = None, block: str | None = Non
         counts=counts,
     )
     return found
+
+
+def hypotheses_of(meta: dict[str, Any]) -> list[str]:
+    found = meta.get("hypotheses")
+    return [str(v) for v in found] if isinstance(found, list) else []
+
+
+def engine_of(meta: dict[str, Any]) -> str:
+    """The engine a `run.json` came from: the new one when `detector-law-v1`
+    is among its `hypotheses`, else the old. A `run.json` without the key
+    is refused, naming it (DESIGN_3D.md 5.1)."""
+    if "hypotheses" not in meta:
+        raise MissingRun("run.json without the key hypotheses: the engine cannot be told; refused")
+    return ENGINE_NEW if NEW_IDENTITY in hypotheses_of(meta) else ENGINE_OLD
+
+
+def node_of(line: dict[str, Any]) -> list[tuple[int, int, int]] | None:
+    """The Node or Nodes a line names (`node`: one triple or a list of them;
+    on a `step` line the Node it moved to), or None when it names none."""
+    raw = line.get("to") if line.get("event") == "step" else line.get("node")
+    if not isinstance(raw, list) or not raw:
+        return None
+    if all(isinstance(v, int) for v in raw) and len(raw) == 3:
+        return [(int(raw[0]), int(raw[1]), int(raw[2]))]
+    found = []
+    for entry in raw:
+        if isinstance(entry, list) and len(entry) == 3 and all(isinstance(v, int) for v in entry):
+            found.append((int(entry[0]), int(entry[1]), int(entry[2])))
+    return found or None
+
+
+def chosen_of(line: dict[str, Any]) -> str | None:
+    """The cell a `gather` line's click chose (`chosen[0][0]`), or None."""
+    chosen = line.get("chosen")
+    if isinstance(chosen, list) and chosen and isinstance(chosen[0], list) and chosen[0]:
+        return str(chosen[0][0])
+    return None
 
 
 def fraction(value: Any) -> Fraction:
