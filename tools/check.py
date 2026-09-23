@@ -36,6 +36,13 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
     "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),
+    # Side A of Newton on the side (2026-09-23): the worlds, the register and
+    # the generator the reading tool's test pins.
+    "examples/events/newton_side/expectations.json": ("tests/test_newton_side_readings.py",),
+    "examples/events/newton_side/make_worlds.py": ("tests/test_newton_side_readings.py",),
+    "examples/events/newton_side/control.json": ("tests/test_newton_side_readings.py",),
+    "examples/events/newton_side/mass.json": ("tests/test_newton_side_readings.py",),
+    "examples/events/newton_side/light.json": ("tests/test_newton_side_readings.py",),
     "examples/events/gate_set.json": (
         "tests/test_nature_beam_worlds.py",
         "tests/test_amplitude_click.py",

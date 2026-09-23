@@ -1,0 +1,313 @@
+{
+  "format": "new-rows-readings-v1",
+  "runs": {
+    "malus_s16": {
+      "cells": {
+        "0+": 246,
+        "0-": 10
+      },
+      "pin": {
+        "0+": 246,
+        "0-": 10
+      },
+      "verdict": "PASS",
+      "pass_fraction": 0.9609375,
+      "cos2": 0.9619397662556434,
+      "labels_read": {
+        "0": 256
+      },
+      "residues_covered": 256,
+      "records_gathered": 256,
+      "all_gathered": 289,
+      "clicks_at_second": 289,
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "a05823b9564a1050dd7848ad39b8f9e381a99b10c5ac91ee9fcbd140e6873e81",
+        "events_sha256": "a850d56453e63f08fc2f047269cc4847c63d0c79db3b5902e602af8ddcafd278"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "malus_s40": {
+      "cells": {
+        "0+": 199,
+        "0-": 57
+      },
+      "pin": {
+        "0+": 199,
+        "0-": 57
+      },
+      "verdict": "PASS",
+      "pass_fraction": 0.77734375,
+      "cos2": 0.7777851165098012,
+      "labels_read": {
+        "0": 256
+      },
+      "residues_covered": 256,
+      "records_gathered": 256,
+      "all_gathered": 289,
+      "clicks_at_second": 289,
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "4cc198dec6157fc875837ebcbb8ca9ae608f40b110d1f9eb831178d6e42f2256",
+        "events_sha256": "12dca1c9ffa0593a58a6a04e694d9b8f53220025951bf82fe353114928114d1b"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "malus_s48": {
+      "cells": {
+        "0+": 177,
+        "0-": 79
+      },
+      "pin": {
+        "0+": 177,
+        "0-": 79
+      },
+      "verdict": "PASS",
+      "pass_fraction": 0.69140625,
+      "cos2": 0.6913417161825449,
+      "labels_read": {
+        "0": 256
+      },
+      "residues_covered": 256,
+      "records_gathered": 256,
+      "all_gathered": 289,
+      "clicks_at_second": 289,
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "362d4b8eddebce47571d938d2c0d0413a9e4efcea685d1f50de467904168d94e",
+        "events_sha256": "e4c5ac05b1ba8c9fdd5323633306fa82067ad4530b29d469a6906fcc8b8fb6a0"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "sagnac_k17": {
+      "status": "completed",
+      "error": null,
+      "completed_ticks": 1500,
+      "balanced": true,
+      "age_bound": 840,
+      "births": 1499,
+      "cart_steps": 88,
+      "cart_own_clicks": 0,
+      "stamped_returns": 0,
+      "home_lines": {
+        "cart": 119,
+        "mass": 1148
+      },
+      "face_clicks": {
+        "face:-y": 107,
+        "face:+y": 107,
+        "face:-z": 1099,
+        "face:+z": 1099
+      },
+      "face_labels": {
+        "[0, -64, 0]": 107,
+        "[0, 64, 0]": 107,
+        "[0, 0, -64]": 1099,
+        "[0, 0, 64]": 1099
+      },
+      "records_gathered_at_faces": 1095,
+      "first_face_click": {
+        "tick": 211,
+        "node": [
+          140,
+          0,
+          1
+        ],
+        "face": "face:-y"
+      },
+      "escape_ages": [
+        162,
+        250
+      ],
+      "escape_displacements_distinct": 39,
+      "ratio": null,
+      "ratio_pin": {
+        "exact": "55/544",
+        "value": 0.10110294117647059
+      },
+      "verdict": "NOT READ",
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "a6b5d7336096cfc46d1bf60da96ed3ea1703eff230df5df66ede5fe8311e988e",
+        "events_sha256": "e83375bb8920d740f79600556c646dc55c862a6b624c257d1f6b7a221dd995f0"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "sagnac_k3": {
+      "status": "failed",
+      "error": "beam-v1: a ray carries the age 841 beyond the world's age_bound 840 (declare a larger age_bound or a smaller GameBoard)",
+      "completed_ticks": 841,
+      "balanced": true,
+      "age_bound": 840,
+      "births": 841,
+      "cart_steps": 280,
+      "cart_own_clicks": 0,
+      "stamped_returns": 0,
+      "home_lines": {
+        "mass": 579,
+        "cart": 572
+      },
+      "face_clicks": {
+        "face:-z": 4,
+        "face:+z": 4,
+        "face:-y": 1,
+        "face:+y": 1
+      },
+      "face_labels": {
+        "[0, 0, -64]": 4,
+        "[0, 0, 64]": 4,
+        "[0, -64, 0]": 1,
+        "[0, 64, 0]": 1
+      },
+      "records_gathered_at_faces": 0,
+      "first_face_click": {
+        "tick": 214,
+        "node": [
+          142,
+          1,
+          0
+        ],
+        "face": "face:-z"
+      },
+      "escape_ages": [
+        195,
+        269
+      ],
+      "escape_displacements_distinct": 8,
+      "ratio": null,
+      "ratio_pin": {
+        "exact": "55/96",
+        "value": 0.5729166666666666
+      },
+      "verdict": "NOT READ",
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "45c42c123ab9363933397cc0b8bbda2b9631aaf6a642413123b918d7fa444a48",
+        "events_sha256": "1ee8809dd5188607196cb06cc471af84f55ecfe0993542b8ac5818b493bb1f2e"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "sagnac_k5": {
+      "status": "completed",
+      "error": null,
+      "completed_ticks": 1500,
+      "balanced": true,
+      "age_bound": 840,
+      "births": 1499,
+      "cart_steps": 300,
+      "cart_own_clicks": 0,
+      "stamped_returns": 0,
+      "home_lines": {
+        "cart": 691,
+        "mass": 1193
+      },
+      "face_clicks": {
+        "face:-y": 56,
+        "face:+y": 56,
+        "face:-z": 801,
+        "face:+z": 801
+      },
+      "face_labels": {
+        "[0, -64, 0]": 56,
+        "[0, 64, 0]": 56,
+        "[0, 0, -64]": 801,
+        "[0, 0, 64]": 801
+      },
+      "records_gathered_at_faces": 454,
+      "first_face_click": {
+        "tick": 211,
+        "node": [
+          140,
+          0,
+          1
+        ],
+        "face": "face:-y"
+      },
+      "escape_ages": [
+        11,
+        614
+      ],
+      "escape_displacements_distinct": 128,
+      "ratio": null,
+      "ratio_pin": {
+        "exact": "11/32",
+        "value": 0.34375
+      },
+      "verdict": "NOT READ",
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "1ea319ad7a5398a574e388918beb97b30879a4013e3a58771e93a6d1e10bb8f0",
+        "events_sha256": "46cdf14b2d6ef1c64e0509c2432c4a2be05c27f6c16145699e426638697c39f1"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    },
+    "sagnac_k9": {
+      "status": "completed",
+      "error": null,
+      "completed_ticks": 1500,
+      "balanced": true,
+      "age_bound": 840,
+      "births": 1499,
+      "cart_steps": 166,
+      "cart_own_clicks": 0,
+      "stamped_returns": 0,
+      "home_lines": {
+        "cart": 365,
+        "mass": 1155
+      },
+      "face_clicks": {
+        "face:-y": 116,
+        "face:+y": 116,
+        "face:+z": 953,
+        "face:-z": 954
+      },
+      "face_labels": {
+        "[0, -64, 0]": 116,
+        "[0, 64, 0]": 116,
+        "[0, 0, 64]": 953,
+        "[0, 0, -64]": 954
+      },
+      "records_gathered_at_faces": 786,
+      "first_face_click": {
+        "tick": 211,
+        "node": [
+          140,
+          0,
+          1
+        ],
+        "face": "face:-y"
+      },
+      "escape_ages": [
+        11,
+        346
+      ],
+      "escape_displacements_distinct": 120,
+      "ratio": null,
+      "ratio_pin": {
+        "exact": "55/288",
+        "value": 0.1909722222222222
+      },
+      "verdict": "NOT READ",
+      "source_sha256": "5166dbe90169655db010359f125f08265bb7b90e6cb18c0c81bb3257497029e4",
+      "digests": {
+        "state_sha256": "0c5ada87477665485349980fa3042f5bc8e7fe449470de3d3a4111e7bf3ff428",
+        "events_sha256": "951db80147e6450ff3cdd84fa9430f5cb05e4729981f160e43507f81acbb704e"
+      },
+      "hypotheses": [
+        "amplitude-v1"
+      ]
+    }
+  }
+}

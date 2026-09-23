@@ -39,11 +39,13 @@ def test_main_tex_is_the_assemblers_output() -> None:
         assert spec.loader is not None
         spec.loader.exec_module(module)
         built = module.build()
+        assert built == MAIN_TEX.read_text(encoding="utf-8"), (
+            "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
+        )
+        _check_reorder(module)  # one more build here, not in a second test: the parts are files
     finally:
         sys.path.remove(str(CUT30))
-    assert built == MAIN_TEX.read_text(encoding="utf-8"), (
-        "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
-    )
+        sys.modules.pop("reorder", None)
 
 
 def test_every_correction_has_its_own_label() -> None:
@@ -61,3 +63,42 @@ def test_every_correction_has_its_own_label() -> None:
         sys.modules.pop("corrections", None)
     assert len(labels) == len(set(labels)), "a correction's label is repeated"
     assert all(old for _, old, _ in corrections.CORRECTIONS), "a correction has an empty anchor"
+
+
+def _check_reorder(module) -> None:
+    """The six heads' order (cut30/reorder.py) moves text and rewrites nothing
+    beyond the joins: every cut block of the unordered text stands verbatim
+    and once in main.tex, every label is defined once, every reference
+    resolves, and the references whose targets moved point at the new place."""
+    import re  # noqa: PLC0415
+
+    reorder = module.reorder
+    moved = reorder.reorder
+    try:
+        reorder.reorder = lambda text: text
+        unordered = module.build()
+    finally:
+        reorder.reorder = moved
+    blocks = {}
+    rest = unordered
+    for name in reorder.BLOCKS:
+        blocks[name], rest = reorder.cut(rest, name)
+    main = MAIN_TEX.read_text(encoding="utf-8")
+    for name, text in blocks.items():
+        body = text
+        if name == "families_table":
+            body = text[len(reorder.FAMILIES_HEADING) :]
+        if name == "law":
+            body = text[len(reorder.BLOCKS["law"][0]) :]
+            body = body.replace(reorder.TRANSITION_HEADING, blocks["code"] + reorder.TRANSITION_HEADING)
+        for old, new in reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]:
+            body = body.replace(old, new)
+        assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
+    labels = re.findall(r"\\label\{([^}]*)\}", main)
+    assert len(labels) == len(set(labels)), "a label is defined twice"
+    refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
+    assert refs <= set(labels), f"unresolved references: {refs - set(labels)}"
+    for old, new in reorder.REFS:
+        assert main.count(old) == 0 and main.count(new) == 1, (
+            f"a moved reference is not in place: {new[:50]}"
+        )
