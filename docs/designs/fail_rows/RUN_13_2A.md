@@ -331,10 +331,7 @@ register's finding, reported as such, no pin moved. Where a lamp's row
 crosses another shell lamp's Node (a step along the largest axis from
 r = 5.74 to 6.48, for instance (4, 4, 1) to (5, 4, 1)), the family's
 default rule at a measured event measures it there (`world.py` 995-999,
-a paid family is measured): a click at that lamp, carrying the emitter's
-`number` and the `record`, read like any other; the content joins the
-lamp's amount, 8 against 8.6 x 10^9, and no row of another lamp dwells
-at a lamp's Node, so no lamp's clock counts them. The worlds are
+a paid family is measured): a click at that lamp, carrying the emitter's `number` and the `record`, read like any other; the content joins the lamp's amount, 8 against 8.6 x 10^9; the row is counted by that lamp's clock at its arrival (the age moment sums every ray of another number at the Node: one unit at age 1 per arrival, about +1 n / d over the window at a lamp one Link downstream of another's heading), which section 9 reads at eight lamps and the per-lamp pin did not carry. The worlds are
 written by [lamp_shell/make_worlds.py](../../../examples/events/lamp_shell/make_worlds.py)
 with their pins in `expectations.json` before the run (the folder's
 [README](../../../examples/events/lamp_shell/README.md)); the reading
