@@ -1178,6 +1178,10 @@ on the `record` line (a `wave` set's line under `pointer`, and the `sum`
 set's line at a gather, per label); nothing further is exposed. The
 things themselves, one row each in the three worlds, are in
 [THREE_WORLDS.md](THREE_WORLDS.md).
+A detector's reading is the record of an action of the law: the click ends
+the record at the detector and changes the detector's own record, and only
+that action measures; the host's readings of the board only read
+(the model owner, 2026-09-23, record 1139; [POSTULATES.md](../POSTULATES.md) section 10).
 
 | The reading | Type and symbol | Where the record carries it | Unit | Kind |
 | --- | --- | --- | --- | --- |

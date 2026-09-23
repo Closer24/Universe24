@@ -6,7 +6,10 @@ A world selecting `"law": "beam"` runs the Beam Law
 ([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a row with a record on the digital line
 of its momentum at one speed, the collision table a bijection inside its
 invariant classes, the detector's record the squared coherent sum of what it
-clicked, the click the one one-way border. Coverage (a detector's Nodes), the
+clicked, the click the one one-way border and the one measurement: an
+action of the law on the state, the record ended at the detector and the
+detector's own record changed (the model owner, 2026-09-23, record 1139;
+[POSTULATES.md](POSTULATES.md) section 10). Coverage (a detector's Nodes), the
 threshold and the `reads` component are independent data. No audit record or
 whole-GameBoard sum supplies memory, routing or a physical result; the readings
 of the engine (`cube_flux`) and of the host (`diagnostics/shell_readings`, the
@@ -364,7 +367,8 @@ The field and turning components could be supplied independently to that
 candidate's API, with denominators from the same configuration used by state
 audits. Custom implementations had to be local, deterministic, bounded and
 without evolving private state. Measurement code reads output and records
-evidence. No local law receives a world object or knows source identities at
+evidence (the host's tools; a measurement of the law is the detector's click,
+an action, [POSTULATES.md](POSTULATES.md) section 10, the model owner, 2026-09-23, record 1139). No local law receives a world object or knows source identities at
 remote nodes.
 
 That engine received field activity as a predicate instead of interpreting the

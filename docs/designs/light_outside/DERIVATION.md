@@ -1,5 +1,7 @@
 # Light Outside from the board: every equation of light Inside, carried Outside by its own transformation to a named detector at a named place (the owner's order, 2026-09-22, about 05:55Z, as the Boss relayed it)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.7; this file is kept as the record of 2026-09-22.
+
 The Light Mathematician, 2026-09-22, on the Boss's order; a derivation
 on paper in the shape of the click frame's sections 0 and 8 (the click
 frame on `main` since PR #769 merged at 70e9781a, its content that of

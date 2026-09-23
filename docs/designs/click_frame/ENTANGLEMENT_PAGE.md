@@ -1,5 +1,7 @@
 # Entanglement in the law, on one page: how a pair is built, how it is read, and what our records say
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 3.6; this file is kept as the record of 2026-09-22.
+
 For a reader who knows physics and not this repository. Sources: the
 registered Bell worlds ([bell](../../../examples/events/bell/README.md),
 [amplitude](../../../examples/events/amplitude/README.md), `bell_0_8.json`

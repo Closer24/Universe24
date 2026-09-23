@@ -1,5 +1,7 @@
 # Lorentz from the clicks: Bondi's two factors on the GameBoard, the one line that makes them one, and what the register has read (the owner's order, 2026-09-22, records 723, 725 and 728)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 3 (the click algebra) and 5.1 (the click theorem); this file is kept as the record of 2026-09-22.
+
 The derivation mathematician, 2026-09-22, on the Boss's order of about
 04:30Z; a derivation on paper, no run, no code; every number a closed
 form or a registered reading labelled by its kind (DETECTOR or
