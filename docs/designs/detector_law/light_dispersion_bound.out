@@ -1,0 +1,19 @@
+(a) light's own dispersion on the GameBoard, exact against the series (COMPUTATION):
+    direction | 3 SUM n^4 - 1 | k | v_g / c exact | 1 - coeff k^2 / 24
+    axis (1,0,0)                 | 2.0000 | 0.1 | 0.999166 | 0.999167
+    axis (1,0,0)                 | 2.0000 | 0.3 | 0.992472 | 0.992500
+    axis (1,0,0)                 | 2.0000 | 0.6 | 0.969553 | 0.970000
+    face diagonal (1,1,0)/sqrt2  | 0.5000 | 0.1 | 0.999792 | 0.999792
+    face diagonal (1,1,0)/sqrt2  | 0.5000 | 0.3 | 0.998116 | 0.998125
+    face diagonal (1,1,0)/sqrt2  | 0.5000 | 0.6 | 0.992358 | 0.992500
+    body diagonal (1,1,1)/sqrt3  | 0.0000 | 0.1 | 1.000000 | 1.000000
+    body diagonal (1,1,1)/sqrt3  | 0.0000 | 0.3 | 1.000000 | 1.000000
+    body diagonal (1,1,1)/sqrt3  | 0.0000 | 0.6 | 1.000000 | 1.000000
+    the sphere average of 3 SUM n^4 - 1: 0.7992 (exactly 4 / 5 = 0.8)
+(b) the PREDICTION of the form: the quadratic dispersion is ANISOTROPIC on the sky, its coefficient (3 SUM n^4 - 1) in [0, 2], zero along a body diagonal, 2 along an axis: a cubic pattern.
+(c) the BOUND on the one scale from a published quadratic bound E_QG2 = 1.3e+11 GeV (the input; RECALLED until the Source Verifier confirms it; the subluminal side):
+    axis           : the Link a <= 6.44e-27 m (4.0e+08 Planck lengths), one interval tau <= 1.24e-35 s (2.3e+08 Planck times)
+    sphere average : the Link a <= 1.02e-26 m (6.3e+08 Planck lengths), one interval tau <= 1.96e-35 s (3.6e+08 Planck times)
+    face diagonal  : the Link a <= 1.29e-26 m (8.0e+08 Planck lengths), one interval tau <= 2.48e-35 s (4.6e+08 Planck times)
+    along a body diagonal the quadratic term vanishes and this bound does not apply; several bursts in different directions close that gap.
+    beside it, row A's two-pace bound on the same interval, 3.6e-28 s: this one is tighter by 1.8e+07.
