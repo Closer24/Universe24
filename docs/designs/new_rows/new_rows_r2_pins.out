@@ -1,0 +1,9 @@
+THE PINS OF PINS_R2.md, BEFORE ANY RUN (COMPUTATION; the worlds validated at load, none run)
+
+Worlds validated at load: sagnac2_k3 (beam-new-rows-sagnac2-k3-v1), sagnac2_k5 (beam-new-rows-sagnac2-k5-v1), sagnac2_k9 (beam-new-rows-sagnac2-k9-v1), sagnac2_k17 (beam-new-rows-sagnac2-k17-v1)
+c = 32/55 on the heading (the engine's flight table); L = 240; age_bound 1500; 1500 intervals
+
+k = 3: beta = 55/96 = 0.57292; t_- = 39435/151 = 261.16, t_+ = 39435/41 = 961.83 intervals; 538 ordinals with both returns inside 1500; the ratio's pin 55/96 = 0.57292 (beta exactly, the pin less beta +0.00000); the band 0.0077 (over beta 0.013) (the remainders 4.72 and 4.72 counts)
+k = 5: beta = 11/32 = 0.34375; t_- = 13145/43 = 305.70, t_+ = 13145/21 = 625.95 intervals; 874 ordinals with both returns inside 1500; the ratio's pin 11/32 = 0.34375 (beta exactly, the pin less beta +0.00000); the band 0.0144 (over beta 0.042) (the remainders 6.72 and 6.72 counts)
+k = 9: beta = 55/288 = 0.19097; t_- = 118305/343 = 344.91, t_+ = 118305/233 = 507.75 intervals; 992 ordinals with both returns inside 1500; the ratio's pin 55/288 = 0.19097 (beta exactly, the pin less beta +0.00000); the band 0.0251 (over beta 0.132) (the remainders 10.72 and 10.72 counts)
+k = 17: beta = 55/544 = 0.10110; t_- = 223465/599 = 373.06, t_+ = 223465/489 = 456.98 intervals; 1043 ordinals with both returns inside 1500; the ratio's pin 55/544 = 0.10110 (beta exactly, the pin less beta +0.00000); the band 0.0451 (over beta 0.446) (the remainders 18.72 and 18.72 counts)

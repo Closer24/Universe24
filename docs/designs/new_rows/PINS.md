@@ -199,10 +199,14 @@ the detector's own counts the difference over the mean is v / c exactly
 in the moving-loop form, the same to all orders in Einstein's and in the
 ether form (a ratio of one detector's own counts, r-free). Michelson,
 Gale and Pearson 1925, ApJ 61, 140: the observed shift 0.230 +- 0.005
-fringe against the computed 0.236 for the Earth's rotation, the ratio 0.97
-+- 0.02 (to verify against the source); Sagnac 1913, C. R. Acad. Sci. 157,
-708 and 1410 (to verify). Every modern ring-laser gyroscope reads the same
-form.
+fringe against the computed 0.236 for the Earth's rotation, the
+coefficient of v / c 0.975 +- 0.021 (to verify against the source); Sagnac
+1913, C. R. Acad. Sci. 157, 708 and 1410 (to verify). Every modern
+ring-laser gyroscope reads the same form. The law's number: the mean ratio
+over beta, pinned 1 exactly under the arrangement of
+[PINS_R2.md](PINS_R2.md) (the reviewer's gate of 2026-09-23), the
+tolerance the band over beta; so R2 enters the register as agrees or
+disagrees on the coefficient, not as a form row.
 
 **The pin, before any run** (COMPUTATION, `new_rows_pins.out`; c = 32 / 55
 from the engine's own flight table on the loaded world; L = 240):
