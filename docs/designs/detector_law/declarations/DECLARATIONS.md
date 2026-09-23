@@ -193,9 +193,10 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    x = 1300.
 2. The declared integers (kind 2): the pairs above; s = 12; G, g, W; A's
    momentum [Q S M, 0, 0] with the sign toward -x (k = 3: beta_c = 1 /
-   sqrt 3; gamma_m the massive kind's own at c_m = c sqrt(cos omega_0),
-   1.22820, MASSIVE_RECORD.md section 8; light's gamma(c) = sqrt(3 / 2) a
-   CONTROL beside); `ramp` 1500; the hold 8000 (a pin
+   sqrt 3; gamma_m the massive kind's own at the exact cone c_eff^2 = cos
+   omega_0 (omega_0 / sin omega_0) c^2, 1.22705, MASSIVE_RECORD.md section
+   8; gamma(c_m) = 1.22820 and light's gamma(c) = sqrt(3 / 2) CONTROLS
+   beside); `ramp` 1500; the hold 8000 (a pin
    world); 9500 intervals; the seeds; the block's content M = 1.
 3. The verbs: the massive rule (G, D by 3 den g_d with the coupling folded
    in the one division, T; section 7 (A)); the coupling's same-Node first
@@ -206,11 +207,11 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
 4. The pin (COMPUTATION, MASSIVE_RECORD.md sections 8 and 9 row 4b): the
    frequency B reads from A receding at beta_c, over the frequency B reads
    from A at rest (the control world), is 1 / (1 + z) with 1 + z = gamma_m
-   (1 + beta_c) = 1.9373 at k = 3 with gamma_m at c_m (1.9319 with
-   gamma(c), the CONTROL beside; the character's frequency gamma_m
+   (1 + beta_c) = 1.9355 at k = 3 with gamma_m at c_eff (1.9373 at c_m and
+   1.9319 at c, the CONTROLS beside; the character's frequency gamma_m
    omega_0 shifted by the medium's Doppler; the band the peak's grain over
    the hold, 0.3 percent, plus the second term eps (gamma_m^2 - 1) / 2 of
-   A's own clock at its eps); the falsifier a ratio off 1 / 1.9373 beyond
+   A's own clock at its eps); the falsifier a ratio off 1 / 1.9355 beyond
    the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
    1938; Botermann 2014 at beta = 0.338, in vacuum), matched in form at
    the world's beta_c.
@@ -285,6 +286,20 @@ section 1's phase reading.
 6. The identity: as section 5.
 
 The descent, HOST and the day: as section 5; three worlds, seconds each.
+
+## The reader of record of every clock row, declared once (2026-09-23, 20:05Z)
+
+The clicks at W on the block's own record (the cells' sum as built, the
+window the hold after the ramp) are the reader of record of every row
+that reads a clock; the spectral peak of the summed record is a GAMEBOARD
+diagnostic beside, never the pin. A pin world's seed is the bound mode's
+shape as the margin module computes it, as integers at the world's
+amplitude over the whole board, the same at both levels (a declaration
+of kind 2), written into the world file by the generator so that the run
+follows from the world file and the engine alone, byte for byte (the
+profile printed at load the GAMEBOARD check); a row whose clicks beat is a diagnostic until they
+read the mode (MASSIVE_RECORD.md section 11 item 7). Section 4 above (row
+4b) reads B's clicks so.
 
 ## What the engine lacks for these six, in one list (for the builder, on the Boss's word)
 
