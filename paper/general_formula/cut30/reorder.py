@@ -84,7 +84,7 @@ BLOCKS = {
     ),
     "dated": (
         "\\paragraph{The transition from ordinary physics to modern algebra, dated.}",
-        "\\paragraph{Use of AI tools.}",
+        "\\section{The families in the algebra, and the check of the roads}\\label{app:families}",
     ),
     "families_table": (
         "\\section{The families in the algebra, and the check of the roads}\\label{app:families}",
@@ -193,8 +193,8 @@ REFS = [
         "are one platform, stated below so that",
     ),
     (
-        "repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: of the",
-        "repeated verbatim in the abstract and in Section~\\ref{sec:physics}: of the",
+        "repeated in the abstract and in Section~\\ref{sec:discussion}: of the",
+        "repeated in the abstract and in Section~\\ref{sec:physics}: of the",
     ),
     (
         "off by default; Section~\\ref{sec:discussion}): the loop stays",

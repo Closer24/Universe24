@@ -4503,6 +4503,131 @@ CORRECTIONS = [
         "\\bibitem{hypotheses} Hypotheses under test,",
         "\\bibitem{run14} Row 14 by the clicks: the moving detector's arrival, the control and the two conditional worlds, \\texttt{docs/designs/fail\\_rows/RUN\\_14.md} of the archived code \\cite{zenodo}, on the branch \\texttt{fail-run-14} at f30f2b0a (its merge pending). \\bibitem{hypotheses} Hypotheses under test,",
     ),
+    (
+        "commit 9 (the physics-rule reviewer's full read at 286993c4, MUST (i)): row 3's time base, the detector's own clock",
+        "the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ); $-0.104$ at head",
+        "read at head in the detector's own clock, its count of self-creations under the age wall ($r = 1.0000$, no crowd at the detector; \\cite{criteria}, the re-run of 2026-09-22), equal to the host's interval to the integer, DETECTOR; the registered run's time base was the host's interval \\cite[record 768]{log}, superseded; a two-way light clock at the detector, not read, reads the same count in no crowd (series X)); $-0.104$ at head",
+    ),
+    (
+        "commit 9, MUST (i): row 4b's time base",
+        "the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ); $0.2647$ at head",
+        "read at head in the detector's own clock, its count of self-creations under the age wall ($r = 1.0000$, no crowd at the detector; \\cite{criteria}, the re-run of 2026-09-22), equal to the host's interval to the integer, DETECTOR; the registered run's time base was the host's interval \\cite[record 768]{log}, superseded; a two-way light clock at the detector, not read, reads the same count in no crowd (series X)); $0.2647$ at head",
+    ),
+    (
+        "commit 9, MUST (i): row 12's clause, the ratio in which the interval cancels",
+        "the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ), the age clock $1.907$",
+        "the ratio of the two records' rates over the same intervals, in which the interval cancels (DETECTOR)), the age clock $1.907$",
+    ),
+    (
+        "commit 9, MUST (i): the platform paragraph's time base",
+        "where a count is taken per tick of an open-face detector without a body (the redshift rows 3, 4b and 12) the time base is the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own clock NOT READ",
+        "where a count is taken at an open-face detector without a body (the redshift rows 3, 4b and 12) it is read at head in the detector's own clock, its count of self-creations under the age wall ($r = 1.0000$, no crowd at the detector; \\cite{criteria}, the re-run of 2026-09-22), equal to the host's interval to the integer, DETECTOR; the registered run's time base was the host's interval \\cite[record 768]{log}, superseded; a two-way light clock at the detector, not read, reads the same count in no crowd (series X)",
+    ),
+    (
+        "commit 9, MUST (i): row 3's status kind",
+        "(DETECTOR per tick, the tick GAMEBOARD)",
+        "(DETECTOR, the detector's own clock)",
+    ),
+    (
+        "commit 9, MUST (i): row 4b's status kind",
+        "the law's number $0.2647$ (DETECTOR) against $0.315$",
+        "the law's number $0.2647$ (DETECTOR, the detector's own clock) against $0.315$",
+    ),
+    (
+        "commit 9, MUST (ii): row 8a's bracket",
+        "a width would need the crowd's history, missing (kind (1), named beside)",
+        "a width would need a decay fired by a met row of a declared bath (\\cite[section 1.8]{failrows}), none of the three pieces; the width in the lattice's clock a diagnostic beside it",
+    ),
+    (
+        "commit 9, MUST (ii): row 13's bracket",
+        "the ring's position has no click definition yet (kind (3))",
+        "the ring's shift and the ratio read the declared $\\gamma_{\\mathrm{PPN}}$ back (DETECTOR readings of a declared input)",
+    ),
+    (
+        "commit 9, MUST (iii): row 2a's cause, the kind audit's number",
+        "the cause the fan's discreteness, the digital lines' landings",
+        "the fan's grain at most $0.004$ of the $0.034$ shortfall by the pin machinery on finer fans (the kind audit \\cite[section 3]{kindaudit}, COMPUTATION), the residual in the record's phases at the click; the status the register's, pending the owner's word on whether a fan width that does not set the number is a declared input",
+    ),
+    (
+        "commit 9, MUST (iii): the kind audit's reference (branch head; the merge SHA when it lands)",
+        "\\bibitem{hypotheses} Hypotheses under test,",
+        "\\bibitem{kindaudit} The kind audit of the register's rows: every number's kind re-read against its source, \\texttt{docs/designs/fail\\_rows/KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on the branch \\texttt{kind-audit} at 568c4e4d (its merge pending). \\bibitem{hypotheses} Hypotheses under test,",
+    ),
+    (
+        "commit 9, MUST (iv): the conversion table's words",
+        "row 4b $0.2636$ (FAIL); series S $0.3674$ (MET in its domain)",
+        "row 4b $0.2636$ (not predicted, Table~\\ref{tab:nature}); series S $0.3674$ (inside its pins in its domain)",
+    ),
+    (
+        "commit 9, MUST (iv): paragraph (vii)'s words, row 3",
+        "(G2, MET; FAIL against nature's $-0.53$, row 3)",
+        "(G2, inside its pin; row 3, not predicted, the crowd's history missing)",
+    ),
+    (
+        "commit 9, MUST (iv): paragraph (vii)'s words, row 11a",
+        "(row 11a, FAIL)",
+        "(row 11a, not predicted)",
+    ),
+    (
+        "commit 9, MUST (v): the weight pair's symbols named",
+        "$w = \\gamma_L(1 + \\gamma_{\\mathrm{PPN}}v^2)M$ with its wall",
+        "$w = \\gamma_L(1 + \\gamma_{\\mathrm{PPN}}v^2)M$ with its wall, $\\gamma_L$ the Lorentz factor of the body's speed and $\\gamma_{\\mathrm{PPN}}$ the declared space-curvature coefficient (the parametrized post-Newtonian gamma)",
+    ),
+    (
+        "commit 9, MUST (v): the walk's invariant, omega and kappa named at their first use",
+        "staying and hopping (A2), whose exact invariant is $\\cos\\omega = \\cos m\\cos\\kappa$; Eq.~\\eqref{eq:map}, which hops whole",
+        "staying and hopping (A2), whose exact invariant is $\\cos\\omega = \\cos m\\cos\\kappa$, $\\omega$ the walk's frequency per interval and $\\kappa$ its momentum angle per Link; Eq.~\\eqref{eq:map}, which hops whole",
+    ),
+    (
+        "commit 9, MUST (v): row 14's angular rate squared named",
+        "$\\omega^2 = 7.775 \\times 10^{-5}$",
+        "$\\omega^2 = 7.775 \\times 10^{-5}$ (the angular rate squared)",
+    ),
+    (
+        "commit 9, MUST (v): the Sorkin parameter's kappa told apart, row 2c's nature cell",
+        "the Sorkin parameter $\\kappa = 0.0064 \\pm 0.0119$",
+        "the Sorkin parameter $\\kappa_{\\mathrm S} = 0.0064 \\pm 0.0119$",
+    ),
+    (
+        "commit 9, MUST (v): the Sorkin parameter's kappa, row 2c's status",
+        "NOT COMPARED ($\\kappa$ not computed)",
+        "NOT COMPARED ($\\kappa_{\\mathrm S}$ not computed)",
+    ),
+    (
+        "commit 9, MUST (v): the Sorkin parameter's kappa, the discussion",
+        "Sorkin's $\\kappa$ on a three-opening world",
+        "Sorkin's $\\kappa_{\\mathrm S}$ on a three-opening world",
+    ),
+    (
+        "commit 9, SHOULD (a): row 4a's become line, a body's own record DETECTOR, its interval GAMEBOARD",
+        "the \\texttt{become} at the count $64$ at every speed (GAMEBOARD, a body's own record)",
+        "the \\texttt{become} at the count $64$ at every speed (a body's own record, DETECTOR; its interval GAMEBOARD)",
+    ),
+    (
+        "commit 9, SHOULD (b): row 8b's re-emitter counts as RUN_8BC 6.3 reads",
+        "($16$ and $16$ of $1024$",
+        "($16$ of $1024$ and $16$ of $1007$",
+    ),
+    (
+        "commit 9, SHOULD (c): the caption no longer says verbatim",
+        "repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: ",
+        "repeated in the abstract and in Section~\\ref{sec:discussion}:",
+    ),
+    (
+        "commit 9, SHOULD (d): row 12's history clause once, not in the paper in one page",
+        "not counted; one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}), the failures",
+        "not counted; the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}), the failures",
+    ),
+    (
+        "commit 9, SHOULD (d): row 12's history clause once, not in what is proved",
+        "not counted; one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}). What no rule",
+        "not counted; the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}). What no rule",
+    ),
+    (
+        "commit 9, SHOULD (e): the appendix's second AI-tools paragraph with its placeholder removed, the declaration's kept",
+        "\\paragraph{Use of AI tools.} The code, the documents, the checks and the drafts of this manuscript were produced with AI coding agents under the author's direction and review; the author verified every number against the archived runs and is responsible for the whole text; no AI system is an author. [The tool and version are named at submission.]  \\section{The families in the algebra, and the check of the roads}\\label{app:families}",
+        "\\section{The families in the algebra, and the check of the roads}\\label{app:families}",
+    ),
 ]
 
 

@@ -6402,3 +6402,50 @@ so in commit 6. 61 pages, 100 references, the abstract 249 words.
   where a click read the crowd; otherwise the law's own number is the
   integral on the comb.
 Nothing else moved. 61 pages, 101 references, the abstract 249 words.
+
+## Applied (2026-09-23, the physics-rule reviewer's full read of the head 286993c4, through the Boss's order of 02:29Z): commit 9, the five MUST lines and the SHOULD lines (a) to (e)
+
+- MUST (i): rows 3, 4b and 12 and the platform paragraph of Section 6
+  no longer say the time base is the host's interval with the
+  detector's clock not read; they say, in the reviewer's words, that
+  the count is read at head in the detector's own clock (its count of
+  self-creations under the age wall, r = 1.0000, no crowd at the
+  detector, CRITERIA.md's re-run), equal to the host's interval to the
+  integer, DETECTOR, the registered run's time base superseded, a
+  two-way light clock at the detector reading the same count in no
+  crowd (series X); row 12's clause is the ratio of the two records'
+  rates over the same intervals, in which the interval cancels; the
+  status cells of 3 and 4b read "(DETECTOR, the detector's own clock)".
+- MUST (ii): row 8a's bracket says a width would need a decay fired by
+  a met row of a declared bath (the fail-rows file's 1.8), none of the
+  three pieces, the lattice-clock width a diagnostic beside it; row
+  13's bracket says the ring's shift and the ratio read the declared
+  gamma_PPN back (DETECTOR readings of a declared input).
+- MUST (iii): row 2a's cause is the kind audit's: the fan's grain at
+  most 0.004 of the 0.034 shortfall on finer fans, the residual in the
+  record's phases at the click; the status the register's, pending the
+  owner's word on whether a fan width that does not set the number is
+  a declared input; KIND_AUDIT.md cited at the branch head 568c4e4d,
+  its merge pending.
+- MUST (iv): one word per row outside the table: the conversion
+  table's row 4b "not predicted, Table 6" and series S "inside its
+  pins in its domain"; paragraph (vii) "G2, inside its pin; row 3, not
+  predicted, the crowd's history missing" and "row 11a, not
+  predicted"; FAIL and MET kept only where a row's status is disagrees
+  or a pin's own verdict is meant.
+- MUST (v): the weight pair's gamma_L and gamma_PPN named; the walk's
+  invariant's omega and kappa named at their first use (the step
+  beneath); row 14's omega squared named the angular rate squared; the
+  Sorkin parameter written kappa_S in its three places.
+- SHOULD (a) to (e): row 4a's become line "a body's own record,
+  DETECTOR; its interval GAMEBOARD"; row 8b's re-emitter counts "16 of
+  1024 and 16 of 1007"; the caption says the count is repeated in the
+  abstract (not "verbatim"); row 12's history clause once (the
+  caption's), dropped from "The paper in one page" and "What is
+  proved"; the appendix's second "Use of AI tools" paragraph with its
+  placeholder removed, the declaration's kept (the reorder's dated
+  block now ends at the appendix heading).
+- NOT now, the owner's word: row 7a's move to not predicted and 2a's
+  move to NOT COMPARED; the count sentence stands in its five places.
+  Held as a prepared change, not applied.
+62 pages, 102 references, the abstract 249 words.
