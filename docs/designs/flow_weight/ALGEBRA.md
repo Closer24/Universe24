@@ -1,5 +1,7 @@
 # The algebraic check of flow-link-v1: the step algebra of light beside a mass, the ring of starts and Newton's rows under the weighted flow (the Flow Weight Designer, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.9; this file is kept as the record of 2026-09-22.
+
 The owner's word (record 888, translated, as the Boss relayed it):
 "(c): try to solve it algebraically too. It is an important law." This
 file is the algebra of [DESIGN.md](DESIGN.md)'s rule in the manner of the

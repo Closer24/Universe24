@@ -1,5 +1,7 @@
 # Derivations of the known laws from the Beam Law (round 9 onward)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](ALGEBRA.md), section 2 (the operations), 4 (the identities) and 5 (the map's rows); this file is kept as the record of 2026-09-22.
+
 The model owner's direction of 2026-09-20 ([record 159](LOG_2026-09-20.md#159-the-owner-proposes-a-derivation-mathematician-2335z-the-owners-words-translated-a-formula-mathematician-whose-whole-role-is-to-derive-formulas-without-runs-will-work-on-a-strong-machine-of-his-own-the-role-to-reach-the-known-formulas-only-from-our-vector-scalar-and-tensor-activity-which-is-in-fact-an-infinite-activity-on-the-gameboard-to-look-at-everything-and-verify-that-everything-is-only-in-such-activity-the-bosss-answer-yes-as-round-9-onward-of-derivationsmd-on-the-beam-law-rounds-1-to-8-derived-the-earlier-laws-beam-v1-has-no-derivation-round-yet-a-standing-read-only-session-with-the-register-as-its-test-data-one-formula-per-note-checked-against-a-registered-integer-and-the-audit-of-every-rule-as-an-operation-on-the-integer-torus-opened-on-the-owners-word),
 his words translated): "to reach the known formulas only from our vector,
 scalar and tensor activity, which is in fact an infinite activity on the
