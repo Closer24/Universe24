@@ -1326,3 +1326,102 @@ order of 12:48Z).
   section 9); the regime of a given block (C6, C8); the block's
   self-binding or its tie (C11); the cube's threshold (C7). Each a
   declaration or a computation to come.
+
+**12.5 The chief physicist's scratch findings of 13:20Z (COMPUTATION,
+nothing committed, nothing entered), and the one line the owner
+asked for.**
+
+- (a) The tachyon. His finding: the coupling matrix [[0, g], [g, 0]]
+  on the two AMPLITUDES (section 13 of e1084106, and C10 (a)'s source
+  term here) has, at k = 0, the coupled mass matrix [[0, -g], [-g,
+  omega_0^2]] with the lower eigenvalue -g^2 / omega_0^2 < 0 for every
+  g: the vacuum grows. Confirmed as a closed form (the 2 x 2 matrix at
+  k, [[c^2 k^2, -g], [-g, c^2 k^2 + omega_0^2]], has a negative
+  eigenvalue wherever c^2 k^2 (c^2 k^2 + omega_0^2) < g^2, so for all
+  c k below g / omega_0). 13's growth on the chain read here (the
+  one-Node coupling, e-fold 116 intervals at g = 0.02) is this
+  instability at a point, where only the board's threshold g ~ 1.15
+  omega_b holds it; a block of side s carries the k = 0 mode once s >
+  pi c omega_0 / g, four Links at g = 0.02 and omega_0 = 0.047, so on
+  the board too every block of use grows. C10 (a)'s source term as an
+  amplitude entry is WITHDRAWN with his, and the MUST of 13:43Z on
+  section 13 ("check the growth on the board") is closed: it grows.
+- (b) The dielectric. His stable form: the massive record gains g a_l,
+  light's record gains -G (a_m,next - 2 a_m,now + a_m,before), the
+  massive step first. Dispersion (c^2 k^2 - omega^2) (omega_0^2 -
+  omega^2) = G g omega^2: both roots omega^2 real and non-negative for
+  every k and G g > 0 (their sum c^2 k^2 + omega_0^2 + G g, their
+  product c^2 k^2 omega_0^2, the discriminant at least (c^2 k^2 -
+  omega_0^2)^2), so stable at every g; n^2 = 1 + G g / (omega_0^2 -
+  omega^2), and his chain's 1.043, 1.104, 1.200 are the closed form at
+  omega_0^2 = 1 / 4, omega = 0.15 (confirmed). AGREED as the stable
+  coupling, the index and the Fresnel step derived from G, g, the
+  pair and s. Two precisions. (1) The second difference one way and
+  the amplitude the other has no Lagrangian and so no local conserved
+  energy. The same dispersion and the same index with a positive
+  conserved energy is the FIRST difference both ways: light's record
+  gains -G (a_m,now - a_m,before), the massive record's current, and
+  the massive record gains g (a_l,now - a_l,before), light's field;
+  then E_light + (G / g) E_m is conserved and the coupling moves
+  nothing into it (gyroscopic; the determinant (c^2 k^2 - omega^2)
+  (omega_0^2 - omega^2) - G g omega^2 is the same). This is Maxwell's
+  dielectric written on the potentials: the record is the potential,
+  the field its first time difference, the polarization's current the
+  massive record's. In the verbs: an entry of (B)'s matrix over the
+  other record's two columns (now, before) at the same cell; generic,
+  vector, local; the order of the two steps within the interval is
+  the engine's. (2) Covariance. At rest the dielectric's. In motion
+  the co-moving first difference at a carried cell is (u . d) /
+  gamma_m, so the moving block reads in its own frame n^2 - 1 = (G g /
+  gamma_m^2) / (omega_0^2 - omega'^2): short by 1 - beta_c^2, a third
+  at k = 3, unless the declared product G g is carried as G g x [K^2,
+  K^2 - 3] (gamma_m^2 = K^2 / (K^2 - 3) at the drive's k = K, beta_c =
+  sqrt(3) / K): a rational pair from the drive's own declared count,
+  no root, unlike the well's g / gamma_m. Whether that pair is a
+  declaration boosted or a computation from the drive is the owner's
+  word; the moving block's index against the resting one is a chain
+  check (a minute) not made under the stop of 12:50Z.
+- (c) The pace form. His finding: under (ii) as his (each record's
+  pace lowered by the other's magnitude) a fixed-point iteration on a
+  400-cell chain finds no self-trapped pair at kappa = 0.3, 1, 3.
+  AGREED, and it is 12.3's line: light has no gap to bind below, so
+  it is not held by an index lump in one dimension (only leaky modes,
+  above a depth threshold, on the board), and the massive record's
+  pace well is a well only where light's magnitude is localized,
+  which it is not. His conclusion, the cube's cells a DECLARATION
+  until a three-dimensional threshold in kappa is derived, is (III)
+  of the first draft as 12.4 reads it: R declared as world data, like
+  a wall's placement. His gap well p_eff = p - kappa M_l is the self
+  term's form (a local mass; covariant); its threshold from 11.6: a
+  region of radius R binds the massive record when kappa M_l R^2 >=
+  0.822 (the spherical well; the cube's own number the scratch board
+  of 11.6, not run). His withdrawal of "the other record's amount" is
+  AGREED: A is the other record's row at the cell (a_now, a_before,
+  r). The open derivation (what holds the cube's cells together)
+  stands as: declared today; a self-consistent pair (the massive
+  record bound where light is intense, light held by the massive
+  record's index) needs that threshold and a fixed point of the two,
+  neither computed; the block's self-binding by its own pair (C11)
+  has the same status.
+- (d) The one line (the well regime; 12.4's P3 and C8's two tables).
+  The cube with declared cells and its mode as its clock IS Lorentz's
+  clock in the well regime by the rule alone, to first order in the
+  binding depth eps: f / f_0 = (1 / gamma_m) sqrt((1 - gamma_m^2 eps)
+  / (1 - eps)) = (1 / gamma_m) (1 - eps (gamma_m^2 - 1) / 2 + ...),
+  under the condition s < 2 / (3 g) (the mode's extent set by the
+  pair, not by the side) with eps under about 0.1 (the deviation from
+  1 / gamma_m under 3 percent at k = 3, inside five's band); exactly
+  Lorentz only with the declaration carried as g / gamma_m, a root the
+  algebra does not have, so the residual eps (gamma_m^2 - 1) / 2 is
+  the carried cells' mark on the clock and the block form's own
+  prediction. On his theorem (a declared rigid region carried in
+  motion reads the medium's clock, 1 / gamma_m^2): mis-scoped, true
+  in the cavity regime (s > 2 / (3 g), the mode set by the side) and
+  false in the well regime. There the mode's centre follows the
+  stepped cells (C8's chain steps the well by the accumulator and
+  reads the mode at it); the boosted rest mode is a solution of the
+  stepped well only with g / gamma_m, and with g carried unchanged the
+  stepped well is the boost of a deeper rest well, gamma_m g, whose
+  mode is faster by exactly that residual. So the carried cells touch
+  the clock at order eps and no further, and never bring it to the
+  medium's 1 / gamma_m^2. YES, with that condition and that residual.
