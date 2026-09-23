@@ -879,26 +879,30 @@ declare, the path integral of the primitive a_tau and of the flow
 **V** over the fan as declared, before any comparison; a CHECK, a
 COMPUTATION, not a pin of the register): the kernel on the bent line,
 the advance -113.0 counts, the massive centroid 11.6 pixels, the light
-centroid 16.9 pixels; the light row's flight 118.7 ticks (against the
-engine's rows' age, GAMEBOARD, since the read T is the two clocks').
-Its band, declared from the check's own grain and not from the read:
-on the advance the crowd's pulse over the dwell, 19 counts (the period-4
-pulse of the held mass at 2^10, the same grain the read's spread of 19.2
-counts over the clicks shows, 9.1); on a centroid one Link (the error
-bound of the Bresenham line about **P**, `optical_turn`'s docstring)
-plus the whole-Node reading of the comb, one Link, two pixels in all;
-on the light flight two ticks (the rounding of the walk's 52 steps).
+centroid 16.9 pixels (the light row's flight in ticks, 118.7 against the
+engine's rows' age 120.7, is a GAMEBOARD comparison and stays in 10.2 as
+a diagnostic; by Highlights 5.4 kind 9 it is never the ground of a
+verdict). Its band: on the advance +- 19 counts, which is the read's own
+spread over the clicks (9.1, a DETECTOR spread, 844 to 965 over 525
+clicks, the crowd's period-4 pulse over the dwell) and not a number
+derived from the check's grain (an estimate from a_tau's spread over the
+about 40 pushed Nodes of the walk gives about 9 to 10 counts; the
+verdict does not turn on it, the advance being 2.3 counts from the pin);
+on a centroid one Link (the error bound of the Bresenham line about
+**P**, `optical_turn`'s docstring) plus the whole-Node reading of the
+comb, one Link, two pixels in all. The band and the comparison are one
+commit, so "declared before the comparison" is not shown by the history;
+for a CHECK that is acceptable and is said here.
 
-| The comb pin (COMPUTATION) | Its band | The read (DETECTOR; the light flight GAMEBOARD) | Inside |
+| The comb pin (COMPUTATION) | Its band | The read (DETECTOR) | Inside |
 | --- | --- | --- | --- |
-| the advance -113.0 counts | +- 19 | -115.3 | yes (2.3 counts) |
+| the advance -113.0 counts | +- 19 (the read's spread) | -115.3 | yes (2.3 counts) |
 | the massive centroid 11.6 pixels | +- 2 | 11.0 | yes (0.6 pixel) |
 | the light centroid 16.9 pixels | +- 2 | 18.85 | yes, at the band's edge (1.95 pixels) |
-| the light flight 118.7 ticks | +- 2 | 120.7 (the rows' age at the plane) | yes (2.0 ticks) |
 
 **The verdict in one sentence:** the run's readings of section 9 lie
 within the comb pin's band, the massive row's advance and centroid well
-inside and the light row's centroid and flight at the band's edge (the
+inside and the light row's centroid at the band's edge (the
 light row passes within 4.5 Links of the mass, where the comb's teeth
 change from one Node to the next and the kernel reads them at whole
 Nodes; its momentum profile is 15 per cent under the engine's at the
@@ -934,7 +938,7 @@ Nodes, or the crowd read by a lamp at b against a control with the two
 clocks on Nodes of equal a_tau) is the physicist's design on the
 owner's word.
 
-## 10. Links
+## 11. Links
 
 - [NEWTON_ON_THE_SIDE.md](../newton_clicks/NEWTON_ON_THE_SIDE.md)
   (sections 0, 1, 3, 4.1, 4.3, 5 and 6) and
