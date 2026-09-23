@@ -4448,6 +4448,61 @@ CORRECTIONS = [
         "Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built).",
         "Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built), and 1b is a control, not counted.",
     ),
+    (
+        "commit 8 (the Boss's order of 03:5xZ, the reviewer's ruling on RUN_14): the count in the limitations paragraph",
+        "The count: of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted",
+        "The count: of the eleven observables the law as built predicts (twelve once row 14 is read), five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; five rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 8 (the Boss's order of 03:5xZ, the reviewer's ruling on RUN_14): the count in the caption",
+        "Section~\\ref{sec:discussion}: of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted",
+        "Section~\\ref{sec:discussion}: of the eleven observables the law as built predicts (twelve once row 14 is read), five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; five rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 8 (the Boss's order of 03:5xZ, the reviewer's ruling on RUN_14): the count in what is proved",
+        "the harmonic constants. Against nature, of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted",
+        "the harmonic constants. Against nature, of the eleven observables the law as built predicts (twelve once row 14 is read), five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; five rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 8 (the Boss's order of 03:5xZ, the reviewer's ruling on RUN_14): the count in the checks' paragraph",
+        "written before the run; against nature, of the twelve observables the law as built predicts, five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), seven disagree (1c, 6, 7b, 8a, 8b, 13, and 14 as read, its word pending its run), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; four rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin), and 1b is a control, not counted",
+        "written before the run; against nature, of the eleven observables the law as built predicts (twelve once row 14 is read), five agree within tolerance (1a, 2b, 9; 5a and 7a as bounds met), six disagree (1c, 6, 7b, 8a, 8b, 13), and eight are not predicted by construction (2a, 3, 4a, 4b, 5b, 8c, 11a, 11c), each with its missing piece named in its cell and its kind, the instrument missing in the model, nature's number a bound or a fitted parameter, or no click definition yet; five rows keep their words (12 history, 2c not compared, 10 not yet, 11b a pin, 14 not yet read against nature), and 1b is a control, not counted",
+    ),
+    (
+        "commit 8: row 14's status cell, not yet read against nature, the reviewer's sentence",
+        "FAIL as read under the one constant ($1.677$ against $2.00 \\pm 0.18$), the law's at the launch pace $0.34\\,c$: the probes left a confining push and no loop closed, the face clicks the reading; the ratio not compared with nature; the law as built: $1.997$ in $[1.82, 2.18]$ on the plane's $1/r$ form (Section~\\ref{sec:forces}), the inverse square in space NOT MADE; the run read under the declaration of the weight rule (the limitations paragraph); the present word until the moving detector's run is read \\\\",
+        "not yet read against nature: the law's number $1.677$ under the one constant and $1.512$ under the line drive (COMPUTATION on the host's tick of unclosed loops; the register's $2.00 \\pm 0.18$ a host-tick period; the D3 probes left a confining push and no loop closed, the face clicks DETECTOR); the law as built $1.997$ in $[1.82, 2.18]$ on the plane's $1/r$ form (Section~\\ref{sec:forces}), the inverse square in space NOT MADE; read under the declaration of the weight rule (the limitations paragraph). The run of 2026-09-23 \\cite{run14}: the click algebra's rung confirmed by the control ($979$ then $980$, DETECTOR); the conditional pins, the law's shell-mean form on an input no click read, FAIL on this fan by the comb ($2.5$ to $4$ times, DETECTOR against a conditional pin); nature's period not compared \\\\",
+    ),
+    (
+        "commit 8: the abstract's count",
+        "of twelve observables predicted, five agree, seven disagree; eight are not predicted by construction",
+        "of eleven observables predicted, five agree, six disagree; eight are not predicted by construction",
+    ),
+    (
+        "commit 8: the reviewer's principle on the fan's comb, one sentence in the limitations paragraph (the register's finding)",
+        "or a declared coefficient is not predicted, whatever the declared world reads.",
+        "or a declared coefficient is not predicted, whatever the declared world reads. A fan of directions bounded in Manhattan length is not a fan of every direction (its angular density is the octahedron's, the axes $2.8$ times denser than the face diagonals); a reading that assumes the isotropic mean holds only where the fan is declared uniform in angle at a grain finer than the reading, or where a click read the crowd; otherwise the law's own number for that world is the integral on the comb (the register's finding under rows 6, 10, 13 and 14).",
+    ),
+    (
+        "commit 8: the prediction paragraph's list without 14",
+        "against $1.75$ arcseconds), 14 Newton's periods under the one constant as read; each refutes the law as declared on its own",
+        "against $1.75$ arcseconds); each refutes the law as declared on its own",
+    ),
+    (
+        "commit 8: the prediction paragraph names 14 not yet read",
+        "; 1b, the phase-form window, is a control and not counted. The rows not predicted",
+        "; 1b, the phase-form window, is a control and not counted, and 14, Newton's periods, is not yet read against nature (its run's verdict in its cell). The rows not predicted",
+    ),
+    (
+        "commit 8: the comparison paragraph, five rows keep their words",
+        "Four rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built), and 1b is a control, not counted.",
+        "Five rows keep their earlier words (12 history, 2c not compared, 10 not yet, 11b a pin needing a hypothesis not built, 14 not yet read against nature), and 1b is a control, not counted.",
+    ),
+    (
+        "commit 8: RUN_14's reference (the branch head; the merge SHA at the reviewer's full read)",
+        "\\bibitem{hypotheses} Hypotheses under test,",
+        "\\bibitem{run14} Row 14 by the clicks: the moving detector's arrival, the control and the two conditional worlds, \\texttt{docs/designs/fail\\_rows/RUN\\_14.md} of the archived code \\cite{zenodo}, on the branch \\texttt{fail-run-14} at f30f2b0a (its merge pending). \\bibitem{hypotheses} Hypotheses under test,",
+    ),
 ]
 
 

@@ -6375,3 +6375,30 @@ that keep their words; the old tally's remainder ("one is not compared
 the prediction paragraph and the comparison paragraph name 1b the
 control. 8c "not predicted, kind (2)" as the Boss settled it, already
 so in commit 6. 61 pages, 100 references, the abstract 249 words.
+
+## Applied (2026-09-23, the Boss's order of 03:5xZ): commit 8, row 14 not yet read against nature; the count of eleven; the fan's comb
+
+- Row 14's status cell "not yet read against nature", the physics-rule
+  reviewer's ruling on RUN_14's step 2: the conditional pins were the
+  law's shell-mean form on an input no click read, the run refuted that
+  premise and not a number of the law as built, and nature's period was
+  not compared (the D3 2.00 +- 0.18 a host-tick period); the cell prints
+  the law's numbers (1.677 and 1.512, COMPUTATION on the host's tick of
+  unclosed loops) and the reviewer's sentence (the rung confirmed by the
+  control, 979 then 980; the conditional pins FAIL on this fan by the
+  comb, 2.5 to 4 times; nature's period not compared); RUN_14 cited at
+  the branch head f30f2b0a, the merge SHA to be swapped at the
+  reviewer's full read.
+- The count in its four places and the abstract: eleven observables
+  predicted (twelve once row 14 is read), five agree, six disagree (1c,
+  6, 7b, 8a, 8b, 13), eight not predicted, five rows keep their words
+  (12, 2c, 10, 11b, 14), 1b a control not counted; the prediction and
+  comparison paragraphs follow.
+- One sentence in the limitations paragraph, the reviewer's principle
+  under rows 6, 10, 13 and 14, stated as the register's finding (the
+  owner's Highlights line pending): a fan bounded in Manhattan length is
+  not a fan of every direction; the isotropic mean holds only where the
+  fan is declared uniform in angle at a grain finer than the reading or
+  where a click read the crowd; otherwise the law's own number is the
+  integral on the comb.
+Nothing else moved. 61 pages, 101 references, the abstract 249 words.
