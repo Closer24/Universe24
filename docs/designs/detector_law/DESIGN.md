@@ -722,6 +722,50 @@ order the engine takes them each interval, each with its gate:
    the memory and the time per interval reported as HOST beside the
    run's record (RUN_AUDIT.md's form).
 
+The build's first step (the branch `detector-law-build`, the module
+`events/detector_law.py`, the world key `detector_law`, the lamp's key
+`train`; the Boss's order of 08:47Z to build in parallel with the review)
+made four choices the text above left open, each named here for Reviewer
+3, none a new constant of the law beyond a declared pair:
+
+- **The receiver's take.** A Node that receives must not send the wave
+  back (a wall of amplitude 0 reflects, as 6.1's script showed; a mirror
+  is a receiver body that re-emits). The record's row at a receiver holds
+  one amplitude per Port that faces a free Node (the NodeState's Ports),
+  the wave entering by that Port, following it one way: g(t + 1) =
+  a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude
+  and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair
+  [-15, 56] (the first-order one-way condition; a rounding declared at
+  load, no root at run time); the free neighbour reads g as the
+  receiver's amplitude on that Link. Measured on the chain at 12 Links:
+  0.07 percent of a packet's motion reflected, against 30 percent from a
+  wall of amplitude 0 (the build's test).
+- **The offer is the Port's motion**, (g(t + 1) - g(t))^2, not the
+  amplitude squared: the rule has a zero-frequency mode (a static level
+  on the board is a solution of the six-neighbour rule) which no receiver
+  takes and which carries nothing; the motion of a Port is what a wave
+  does to a receiver and what a static level does not. The record's norm
+  is the motion its train inserts; the board's energy in the completion
+  test is the rows' motion likewise.
+- **The train begins and ends at the clock's zero** (the phase 3 N / 4,
+  the cosine 0 and rising, N divisible by 4): a step in the inserted
+  amplitude would leave the static level above on the board.
+- **The inserter's grace.** The lamp's own Nodes read their own record
+  only two periods after the train: a Port books the wave's motion beside
+  it, and the record's tail leaving the lamp is not an arrival. A
+  detector at rest still receives its own record's return after that (the
+  light clock, section 8). The reviewer is asked whether the grace should
+  be replaced by a Port that books only the entering characteristic (two
+  Links deep, not local) or stays as a declaration of the receiver.
+
+The build's chain test: a lamp at one end of an open chain, a receiver
+body read as a set at 68 Links, one record per forty intervals: one click
+per record, the books balanced at every tick, the screen's click at the
+front's first rung 116 intervals after the birth (L / c = 118), the
+stamp and the birth stamp on every click line; a record whose wheel
+sends it back to the lamp returns its unit to the lamp's stock (a
+detector at rest).
+
 The gate set before any reading is called a result: the four pilot
 worlds under the rule at 12 Links (the single opening at both Fresnel
 numbers, the two slits, Malus, the light clock at rest) against section
