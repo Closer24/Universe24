@@ -37,6 +37,9 @@ GAMMA2 = K * K / (K * K - 3)  # the drive's rational gamma_m^2 = 1.5
 GAMMA = np.sqrt(GAMMA2)
 
 
+PATH_DIFFERENCE = True  # the coupling's first difference along the cell's path on a hop (Reviewer 3's (b)); False: the same-Node difference
+
+
 def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, direction, t_move, gain):
     """Light's row al and the massive row am on n cells; the block's cells start at block0
     and step one Link every K intervals in `direction` (-1 toward the source, +1 away, 0 at
@@ -52,6 +55,8 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
     am = np.zeros(n)
     am_b = np.zeros(n)
     out = np.zeros(steps)
+    e_light = np.zeros(steps)
+    e_mass = np.zeros(steps)
     acc = 0
     for t in range(steps):
         hop = False
@@ -67,17 +72,21 @@ def chain(n, steps, omega, source, probe, block0, s, ratio_out, ratio_in, g, G, 
                 hop = True  # the cells and the pair region moved; the rows stay on their Nodes
         al[source] = np.sin(omega * t)
         # the coupling's first difference along the cell's path: on a hop interval the cell now at x was at x - direction
-        al_prev = np.roll(al_b, direction) if hop else al_b
+        al_prev = np.roll(al_b, direction) if (hop and PATH_DIFFERENCE) else al_b
         s6 = np.roll(am, 1) + np.roll(am, -1) + 4 * am
         am_n = (r / 3) * s6 - am_b + np.where(coupled, g * (al - al_prev), 0.0)
         s6l = np.roll(al, 1) + np.roll(al, -1) + 4 * al
-        am_now_prev = np.roll(am, direction) if hop else am
+        am_now_prev = np.roll(am, direction) if (hop and PATH_DIFFERENCE) else am
         al_n = s6l / 3 - al_b - np.where(coupled, gain * G * (am_n - am_now_prev), 0.0)
         al_n[0] = al_n[-1] = 0.0
         am_b, am = am, am_n
         al_b, al = al, al_n
         out[t] = al[probe]
-    return out, lo
+        e_light[t] = 3 * np.sum((al - al_b) ** 2) + np.sum((al[1:] - al[:-1]) * (al_b[1:] - al_b[:-1]))
+        e_mass[t] = 3 * np.sum((am - am_b) ** 2 / r) + np.sum(
+            (am[1:] - am[:-1]) * (am_b[1:] - am_b[:-1])
+        )
+    return out, lo, e_light, e_mass
 
 
 def phase(sig, omega, t0, t1):
@@ -87,8 +96,17 @@ def phase(sig, omega, t0, t1):
 
 
 def delay(n, steps, omega, source, probe, block0, s, ro, ri, g, G, direction, t_move, gain, t0, t1):
-    ref, _ = chain(n, steps, omega, source, probe, block0, 0, ro, ri, g, G, 0, t_move, 1.0)
-    sig, lo_end = chain(n, steps, omega, source, probe, block0, s, ro, ri, g, G, direction, t_move, gain)
+    ref, _, e_ref, _ = chain(n, steps, omega, source, probe, block0, 0, ro, ri, g, G, 0, t_move, 1.0)
+    sig, lo_end, e_l, e_m = chain(
+        n, steps, omega, source, probe, block0, s, ro, ri, g, G, direction, t_move, gain
+    )
+    # the energy account (HOST-free, COMPUTATION): light's E on the chain and the massive kind's, the window's drift per interval
+    # against the reference train's own growth (the hard source feeds the chain steadily); the coupling's conserved combination at rest is E_light + (G / g) E_m
+    drift_l = (e_l[t1 - 1] - e_l[t0]) / (t1 - t0) - (e_ref[t1 - 1] - e_ref[t0]) / (t1 - t0)
+    drift_m = (e_m[t1 - 1] - e_m[t0]) / (t1 - t0)
+    print(
+        f"      (the energy account over the window: light's E drifts {drift_l:+.3e} per interval beyond the reference train's own feed, the massive E {drift_m:+.3e}; the combination E_light + (G / g) E_m drifts {drift_l + (G / g) * drift_m:+.3e})"
+    )
     d = phase(ref, omega, t0, t1) - phase(sig, omega, t0, t1)
     d = (d + np.pi) % (2 * np.pi) - np.pi
     tm = (t0 + t1) // 2
@@ -157,5 +175,49 @@ def main():
             )
 
 
+def receding_long():
+    """The receding case on a longer chain with a later window (the block-frame period 350
+    intervals needs several periods to settle after the motion starts)."""
+    n = 4000
+    source, probe = 300, 2500
+    s = 24
+    ro = 156 / 157
+    mu = np.arccos(ro)
+    ri = 1 / (1 + mu**2 / 4)
+    g, G = 0.005, 1.0
+    omega = 0.035
+    steps = 6200
+    t_move = 3000
+    t0, t1 = 5000, 6000
+    print(
+        f"\nthe receding case on a longer chain: n = {n}, the source at {source}, the probe at {probe}, the block from 1500 moving away from {t_move}; the window [{t0}, {t1}]"
+    )
+    om_p = GAMMA * omega * (1 - BETA)
+    d, amp, _ = delay(n, steps, om_p, source, probe, 1500, s, ro, ri, g, G, 0, t_move, 1.0, t0, t1)
+    n_p = 1 + d / ((om_p / C) * s)
+    print(
+        f"  at rest, light at omega' away = {om_p:.4f}: n = {n_p:.4f} (transmitted amplitude {amp:.3f})"
+    )
+    expected = (n_p - 1) * om_p * GAMMA * s / C
+    for gain, glabel in ((1.0, "G g carried unchanged"), (GAMMA2, "G g x [K^2, K^2 - 3] (gamma_m^2)")):
+        d, amp, lo_end = delay(
+            n, steps, omega, source, probe, 1500, s, ro, ri, g, G, +1, t_move, gain, t0, t1
+        )
+        print(
+            f"  moving away from the source (from behind), {glabel}: the lab phase delay {d:+.4f} rad (the block from 1500 to {lo_end};"
+            f" transmitted amplitude {amp:.3f}); the covariant expectation {expected:+.4f} rad; the ratio read / expected = {d / expected:.3f}"
+        )
+
+
 if __name__ == "__main__":
+    print(
+        "=== the coupling's first difference ALONG THE CELL'S PATH on a hop interval (Reviewer 3's (b))"
+    )
     main()
+    receding_long()
+    PATH_DIFFERENCE = False
+    print(
+        "\n=== the SAME-NODE first difference on every interval (the hop changes only the cells' set and the pair region)"
+    )
+    main()
+    receding_long()
