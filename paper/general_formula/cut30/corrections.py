@@ -4763,6 +4763,26 @@ CORRECTIONS = [
         "\\texttt{docs/designs/fail\\_rows/KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on the branch \\texttt{kind-audit} at 568c4e4d (its merge pending).",
         "\\texttt{docs/designs/fail\\_rows/KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396.",
     ),
+    (
+        "commit 18, the Boss's order of 03:53Z on the auditor's finding (row 13): the summary table's cell, the law's own number on a coupled world",
+        "13 & The bending of light at the Sun's limb & $1.75$ arcseconds \\cite{dyson1920}, unverified & $0.000$ pixel (DETECTOR, series K) & $-$$^{b}$ & disagrees \\\\",
+        "13 & The bending of light at the Sun's limb & $1.75$ arcseconds \\cite{dyson1920}, unverified & the centroid shift $-1.993$ pixel and the delay $2.95$ intervals at $\\gamma_{\\mathrm{PPN}} = 0$ (DETECTOR, \\texttt{optical/mass\\_g0} against \\texttt{control\\_g0} at head), half of the $\\gamma_{\\mathrm{PPN}} = 1$ world's $-3.989$; series K's $0.000$ pixel the suspension-$0$ worlds' reading, history & a factor $2$$^{b}$ & disagrees \\\\",
+    ),
+    (
+        "commit 18, the Boss's order of 03:53Z on the auditor's finding (row 13): the register's law cell",
+        "the law as built: a row reads nothing of the crowd, the deflection $0.000$ pixel and the delay $0.00$ interval (series K, three worlds, DETECTOR).",
+        "the law as built at head, on a coupled world: the centroid shift $-1.993$ pixel and the delay $2.95$ intervals at $\\gamma_{\\mathrm{PPN}} = 0$ (DETECTOR, \\texttt{optical/mass\\_g0} against \\texttt{control\\_g0} at head), the pin $-1.93 \\pm 0.5$ met, the audit's re-run \\cite{disagrees}), half of the declared $\\gamma_{\\mathrm{PPN}} = 1$ world's $-3.989$: the time part alone, a factor $2$ against nature's $1 + \\gamma = 2$ under the register's conversion (COMPUTATION on two DETECTOR shifts through the declared weight rule; record 1216). Series K's $0.000$ pixel and $0.00$ interval (three worlds, DETECTOR) are the reading of worlds that declare suspension $0$, at which a row's coupling to the crowd is zero by declaration: history, not the law's number on a coupled world.",
+    ),
+    (
+        "commit 18, the Boss's order of 03:53Z on the auditor's finding (row 13): the register's status cell",
+        "& disagrees: the law as built $0.000$ pixel and $0.00$ interval (DETECTOR, series K) against $1.75$ arcseconds; beside it,",
+        "& disagrees: the law as built $-1.993$ pixel at $\\gamma_{\\mathrm{PPN}} = 0$ (DETECTOR), half of nature's by the time part alone, a factor $2$ against $1 + \\gamma = 2$, $1.75$ arcseconds; series K's $0.000$ history; beside it,",
+    ),
+    (
+        "commit 18, the Boss's order of 03:53Z: the audit cited",
+        "KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396. ",
+        "KIND\\_AUDIT.md} of the archived code \\cite{zenodo}, on main at 46c27396. \\bibitem{disagrees} The six rows that disagree, with the number: why each disagrees and whether the experiment behind it was sound (the Disagreement Auditor, 2026-09-23; row 13's suspect confirmed by one re-run at head, its section 9), \\texttt{docs/designs/fail\\_rows/DISAGREES.md} of the archived code \\cite{zenodo}, on the branch \\texttt{disagrees-audit} at 103a30fa (its merge pending). ",
+    ),
 ]
 
 

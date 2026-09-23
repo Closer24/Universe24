@@ -6623,3 +6623,26 @@ The prose cuts of commit 14 and the citations of commit 16 stay. The
 paper 63 pages (48 with the supplement's 17 beside it before; the
 same content in one file). The owner's "48 pages" of 03:0xZ is
 superseded by this word, his own, on the same day.
+
+## Applied (2026-09-23, the Boss's order of 03:53Z): commit 18 on paper-48, row 13's number at head
+
+The Disagreement Auditor found, and the physics-rule reviewer's own
+re-run confirmed (PR 1002, the digests byte identical), that row 13's
+printed "law as built 0.000 pixel" is series K's reading on worlds that
+declare suspension 0, at which a row's coupling to the crowd is zero by
+declaration; the law at head (the generic entry on for every world
+since PR 855, gamma_PPN 0 by default) on the coupled world
+optical/mass_g0 against control_g0 reads the centroid shift -1.993
+pixel and the delay 2.95 intervals (DETECTOR, the pin -1.93 +- 0.5
+met), half of the declared gamma_PPN = 1 world's -3.989: the time part
+alone, a factor 2 against nature's 1 + gamma = 2 under the register's
+conversion. Both of row 13's cells (Table 6 and the register) now
+print that number with series K's 0.000 named beside it as history;
+the distance column reads "a factor 2"; the status stays disagrees and
+the count sentence is unchanged; DISAGREES.md is cited at the branch
+head 103a30fa until its merge SHA comes. The order also named a "no
+bending" phrase of row 13 in the limitations paragraph: there is none;
+the two prose places that still carry the 0.000 reading are labelled
+as the law before the generic entry (Section 4.3, "Light: no optical
+metric"; Section 3's list, item (vi)) and were left for the Boss's
+word, nothing else in the commit.
