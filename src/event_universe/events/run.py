@@ -25,6 +25,7 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import BEAM_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
@@ -60,7 +61,13 @@ def execute_nature_beam_run(
             """Write one event line to `events.jsonl`."""
             stream.write(json.dumps(event) + "\n")
 
-        simulation = NatureBeamSimulation(world, observer=record)
+        # detector-law-v1: the local detector law's own engine when the world
+        # declares it; the ray law as built otherwise, unchanged.
+        simulation = (
+            DetectorLawSimulation(world, observer=record)
+            if world.detector_law
+            else NatureBeamSimulation(world, observer=record)
+        )
         try:
             for _ in range(count):
                 simulation.step()

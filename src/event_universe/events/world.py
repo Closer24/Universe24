@@ -409,6 +409,9 @@ WORLD_KEYS = {
     "meeting",
     "massive_rows",
     "clock_stamp",
+    # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
+    # by default (`DETECTOR_LAW_RULE`; docs/designs/detector_law/DESIGN.md).
+    "detector_law",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -720,6 +723,12 @@ NO_HAND = 0
 # engine's fact); no registered world does either, and every world without
 # one reads as it did, byte for byte.
 BINDING_RULE = "binding-v1"
+# The identity of the local detector law (the model owner's words of
+# 2026-09-23, docs/designs/detector_law/DESIGN.md): the ray splits at every
+# free Node inside the board and holds its amplitudes; outside only clicks
+# through a detector. The record carries it when the world declares
+# `detector_law: true`; absent, the ray law as built runs unchanged.
+DETECTOR_LAW_RULE = "detector-law-v1"
 # The identity of the massive rows (`massive-rows-v1`; the model owner's yes
 # of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
 # design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
@@ -801,6 +810,9 @@ MEASURED_KEYS = {
 LAMP_KEYS = {
     "rate",
     "wheel",
+    # detector-law-v1: the record's train in periods of its clock (the
+    # record's coherence), a declaration of the lamp, absent by default.
+    "train",
     "directions",
     "phase_window",
     "phase_width",
@@ -1087,6 +1099,9 @@ class LampDefinition:
     # `momentum` on a measured event is a vector): required on a lamp of a
     # massive family, refused on any other lamp; None without.
     momentum_magnitude: int | None = None
+    # detector-law-v1: the record's train in periods of the family's clock,
+    # None without (the law's default then).
+    train: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1310,6 +1325,11 @@ class NatureBeamWorld:
     # line a measured event writes carries `clock`, its own count of
     # self-creations; a record field, no physics, no hypothesis.
     clock_stamp: bool = False
+    # detector-law-v1 (2026-09-23): the local detector law selected, false by
+    # default; under it the loader refuses a lamp with turns and a measured
+    # event with a fan table (instruments of the ray law), and needs the pair
+    # form of the clock on every paid family.
+    detector_law: bool = False
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -1489,6 +1509,8 @@ class NatureBeamWorld:
             found.append(CENTRED_STEP_RULE)
         if self.atom_level:
             found.append(ATOM_LEVEL_RULE)
+        if self.detector_law:
+            found.append(DETECTOR_LAW_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -2301,6 +2323,7 @@ def _lamp(
         hand=hand,
         label_hands=label_hands,
         momentum_magnitude=momentum_magnitude,
+        train=None if "train" not in obj else _integer(obj["train"], f"{label}.train", 1),
     )
 
 
@@ -3292,6 +3315,33 @@ def covariant_square(
     return square
 
 
+def _detector_law_load_checks(
+    measured: tuple[MeasuredDefinition, ...], families: tuple[FamilyDefinition, ...]
+) -> None:
+    """Under `detector_law` (detector-law-v1) the instruments of the ray law
+    are refused, naming the rule: a lamp's `turns` (a fan of directions
+    with phases; the lamp inserts at its Nodes by its clock), a measured
+    event's fan `table` (an opening is free Nodes); and every paid family
+    needs the pair form of `phase_per_link`, its clock."""
+    for number, entry in enumerate(measured):
+        if entry.lamp is not None and any(entry.lamp.turns):
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].lamp.turns is refused under {DETECTOR_LAW_RULE} "
+                "(a lamp inserts at its Nodes by its clock; there is no fan)"
+            )
+        if any(split is not None for split in entry.splits):
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}] declares a fan (a rerelease split with weights), "
+                f"refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is no fan)"
+            )
+    for index, family in enumerate(families):
+        if family.quantum != FREE_QUANTUM and family.phase_per_age is None:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}] needs the pair form of phase_per_link under "
+                f"{DETECTOR_LAW_RULE} (the family's clock)"
+            )
+
+
 def _record_load_checks(
     measured: tuple[MeasuredDefinition, ...],
     detectors: tuple[DetectorDefinition, ...],
@@ -4067,6 +4117,11 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     clock_stamp = obj.get("clock_stamp", False)
     if type(clock_stamp) is not bool:
         raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
+    detector_law = obj.get("detector_law", False)
+    if type(detector_law) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE}, off by default)"
+        )
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
@@ -4203,7 +4258,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         centred_step=centred_step,
         clock_stamp=clock_stamp,
         atom_level=atom_level,
+        detector_law=detector_law,
     )
+    if detector_law:
+        _detector_law_load_checks(measured, families)
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
