@@ -18,6 +18,7 @@ table. The summary table and the kept-words table stay in the paper. No claim, n
 no count is cut; the count sentence stands in every place.
 """
 
+import click
 import law
 import route
 from reorder import REGISTER_HEADING, ROADS_HEADING
@@ -56,6 +57,10 @@ NEW_DELAY_HEADING = "\\subsection{Light past a held mass: the time part alone}\\
 LIGHT_START = "\\paragraph{Light: the time part alone, no optical metric.}"
 REGISTERED_START = "\\paragraph{Against the registered integers.}"
 INTERFERENCE_START = "\\paragraph{Interference, by the formulas alone.}"
+# The click as the beam law defined it (the layer, the ladder, the lemma): to the
+# records file; cut30/click.py (one click, the detector law's form) in its place.
+OLDCLICK_START = "\\begin{definition}[The click]\\label{def:click}"
+OLDCLICK_END = "\\end{lemma}\n"
 LONGTABLE_END = "\\end{longtable}}"
 TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
 CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
@@ -209,6 +214,9 @@ def cut(s: str) -> tuple[str, str]:
     delay, s = s[i:j], s[:i] + "\n\n" + s[j:]
     s = s.replace(DELAY_HEADING, NEW_DELAY_HEADING, 1)
     registered, s = _cut_between(s, REGISTERED_START, INTERFERENCE_START, "the registered integers")
+    i = _once(s, OLDCLICK_START, "the old click")
+    j = s.index(OLDCLICK_END, i) + len(OLDCLICK_END)
+    oldclick, s = s[i:j], s[:i] + click.DEFINITION + s[j:]
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
@@ -243,6 +251,9 @@ def cut(s: str) -> tuple[str, str]:
         + delay
         + "\n\n"
         + registered
+        + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
+        + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
+        + oldclick
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
         + handworked
         + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{rec:conversion}\n\n"
@@ -281,6 +292,10 @@ def strip_block(body: str) -> str:
         body = body[:i] + body[j:]
     if body.lstrip().startswith(OLDROAD_START):  # the old dictionary, likewise
         return ""
+    if OLDCLICK_START in body:  # the beam law's click, whole in the records file
+        i = body.index(OLDCLICK_START)
+        j = body.index(OLDCLICK_END, i) + len(OLDCLICK_END)
+        body = body[:i] + click.DEFINITION + body[j:]
     if REPRODUCTION_HEADING in body and ARCHIVE_SENTENCE in body:
         i = body.index(REPRODUCTION_HEADING) + len(REPRODUCTION_HEADING) + 2
         j = body.index(ARCHIVE_SENTENCE, i)

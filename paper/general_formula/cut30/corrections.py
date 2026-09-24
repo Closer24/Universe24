@@ -5033,6 +5033,46 @@ CORRECTIONS = [
         "Newton's inverse square and Poisson's law closed after a detector ($G$ not read; D3): decided by a closed orbit's period at two radii under the directional drive (form B, built off by default, series Y), the escape's count at a face detector and the clock's form at more distances.",
         "Newton's inverse square, closed from the clicks under its hypotheses (Section~\\ref{sec:click}); its old reading (D3) and Poisson's law after a detector are history \\cite{records}: decided by a run under the law as it stands, pinned before it (Section~\\ref{sec:comparison}).",
     ),
+    (
+        "commit 35, the physicist's first line: one click for the whole paper, the detector law's form in step (3)",
+        "\\item[(3)] The arrival at a detector's Node and the click, the one measured event and an action of the law on the state, not a passive read (P6 one read-out, P10 the click axiom, P11 clicks only; the law's rule \\cite[section 10]{postulates}): the record ends at the detector, its content moves into the detector's own record, and the click is stamped with the detector's own count; the flight of every other row is untouched, no back-action; the evaluation of the record at the roots of unity and the comparison (DETECTOR).",
+        "\\item[(3)] The arrival at a detector and the click, the one measured event and an action of the law on the state, not a passive read (P6 one read-out, P10 the click axiom, P11 clicks only; the law's rule \\cite[section 10]{postulates}): the record's wave runs on the free Nodes and passes through the detector's cells, the detector's pointer accumulates its offer, and the click is the first rung, $W$ times the pointer at or above the record's norm, in the detector's own count (Definition~\\ref{def:click}); one click per record, its completion one gather over all its detectors, the law's one non-local step; the click is stamped with the detector's own count, the flight of every other record untouched, no back-action; the weight is one quadratic form of the record's element, the evaluation at the roots of unity on the rows and the same form on the pair of levels, then one comparison (DETECTOR).",
+    ),
+    (
+        "commit 35, the physicist's second line: one group in two representations, ALGEBRA.md 1.7's identity, said once",
+        "which the multiplicity $\\mathtt m$ books.",
+        "which the multiplicity $\\mathtt m$ books.\n\n\\paragraph{One group, two representations.} Under the rule of Section~\\ref{sec:massive} a record at a Node is not rows with phase labels but two integers, its level now and one interval ago, $(a_{\\mathrm{before}}, a_{\\mathrm{now}}) = A(\\cos(\\varphi - k\\theta), \\cos\\varphi)$ at the amplitude unit declared at load, $\\theta = 2\\pi/\\Nphi$ one step and $k$ the kind's clock in whole steps per interval: two samples of the real part of one character of $\\Z_{\\Nphi}$ and the time translation, which fix the character, $A$ and $\\varphi$, wherever the sine table's $S[k]$ is not $0$; the phase and the amplitude are both in the pair and neither is a label, and nothing else is kept at the Node (the remainder aside, on the record by verb (D)). The phase circle acts on the pair by the linear form: for every $t \\in \\Z_{\\Nphi}$, with $\\kappa = k\\theta$ and $\\tau = t\\theta$,\n\\begin{equation}\\label{eq:linearform}\n\\boxed{\\,\\sin\\kappa\\,\\cos(\\varphi + \\tau) = \\cos\\varphi\\,\\sin(\\kappa + \\tau) - \\cos(\\varphi - \\kappa)\\,\\sin\\tau\\,},\n\\end{equation}\nthe angle-addition identity, proved in the algebra document \\cite[1.7]{algebra}, so the record turned by $t$ is $(a_{\\mathrm{now}} S[k + t] - a_{\\mathrm{before}} S[t])/S[k]$ with the sine table $S[j] = \\mathrm{round}(256\\sin j\\theta)$, an input of kind 1, the grain of the computation: verb (B) on the record's two columns and one division with the remainder kept (D), no nearest entry, no phase label, no register \\cite[section 14]{declarations}. The shift by $[t]$ of the group ring $\\Z[\\Z_{\\Nphi}]$, which the beam law applies to a record's whole weight vector $f$, is here applied to the two samples of one character: the same group, the same characters, a representation of dimension $2$ in place of the regular one; the merge (G) is the rule's own addition, and the click is the rung on the pointer against the norm in place of the evaluation $\\mathrm{ev}$, both one bilinear form and then one comparison (D). Three pairs, named once and never confused: a kind's pair $[\\mathrm{num}, \\mathrm{den}]$, the clock of a record kind, declared world data of kind 2, the table of families; a record's pair $(a_{\\mathrm{before}}, a_{\\mathrm{now}})$, its state; and the pair of records, one record with two arms, the Bell rows (Definition~\\ref{def:click}). A reader sees one law in two representations, not two laws.",
+    ),
+    (
+        "commit 35, the seven points by 1.7's words: the input kinds numbered, a record two samples of a character",
+        "\\item[(2)] \\emph{The records and the pair.} At every Node sit the integers of a record, a level before and a level now, and every interval the rule computes the next from them and from the six neighbours, with a remainder (Eq.~\\eqref{eq:massive}). Every record kind has one pair: light $[1, 1]$, matter $[800, 809]$. The pair fixes the rate at rest, that is, the mass.",
+        "\\item[(2)] \\emph{The records and the pair.} At every Node sit the integers of a record, a level before and a level now, two samples of the real part of one character of the phase circle, which fix its phase and amplitude wherever the sine table's $S[k]$ is not $0$, and every interval the rule computes the next from them and from the six neighbours, with a remainder (Eq.~\\eqref{eq:massive}). Every record kind has one pair, an input of kind 2, the table of families: light $[1, 1]$, matter $[800, 809]$. The pair fixes the rate at rest, that is, the mass.",
+    ),
+    (
+        "commit 35, the seven points, item (3): the tables' rounding an input of kind 1",
+        "acting directly on the record's pair of levels at the Nodes of a line, in the linear form, with no reading of a phase and no register \\cite[section 14]{declarations}.",
+        "acting directly on the record's pair of levels at the Nodes of a line, in the linear form, with no reading of a phase and no register \\cite[section 14]{declarations}; the tables' rounding at $1/256$ is an input of kind 1, the grain of the computation.",
+    ),
+    (
+        "commit 35, the seven points, item (4): the block an input of kind 3, the glossary's name",
+        "\\item[(4)] \\emph{The foreign object.} A cube of declared cells in the shape of the $48$ itself, with a pair lower than its surroundings: a well.",
+        "\\item[(4)] \\emph{The foreign object.} A block of declared cells in the shape of the $48$ itself, an input of kind 3, the state and the apparatus, with a pair lower than its surroundings: a well.",
+    ),
+    (
+        "commit 35, the seven points, item (5): a light detector a detector set, a line of Nodes read as one Port",
+        "A body is a detector of itself, its cells; a light detector is a Node or a line on the light record. One click per record",
+        "A body is a detector of itself, its cells; a light detector is a detector set, a Node or a line of Nodes read as one Port, with a rung on the light record. One click per record",
+    ),
+    (
+        "commit 35, the quadratic form named by the record's element, not the old layer's X and Y",
+        "the quadratic form of the rows' phase counts (Definition~\\ref{def:click}'s $X^2 + Y^2$, the same integer",
+        "the quadratic form of the record's element (Definition~\\ref{def:click}, the same integer",
+    ),
+    (
+        "commit 35, ALGEBRA.md cited at the merge of its section 1.7",
+        "on \\texttt{main} at 688b7174 (chapter 8's merge)",
+        "on \\texttt{main} at d06d7963 (the merge of section 1.7, the groups' account)",
+    ),
 ]
 
 

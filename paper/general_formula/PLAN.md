@@ -6926,3 +6926,24 @@ for the paper as it stands (the title, the algebra first, the list with
 its blanks, the declarations). The arXiv bundle (main.tex, figures, the
 records as ancillary files) was compiled clean in a separate directory
 at 46 pages and given to the author.
+
+## Applied (2026-09-24, the physicist's three lines and the Boss's order of 02:00Z): commit 35 on paper-48, one click and one law
+
+The chief physicist's three lines (01:08Z, on the owner's word that the
+algebra between the GameBoard and the click be reflected right: one
+world, different transformations, only its clicks expressed): (1) the
+chain's step (3) and the Definition of the click now state the detector
+law's click (the wave through the cells, the pointer, the rung W, one
+click per record, the completion one gather), the beam law's Definition
+(the layer's X and Y, the ladder, the lemma) whole in records.tex; the
+pair's declaration stays (the Boss's word of 02:00Z: 3.6's sentence on u
+and the rung is the pair's declaration); (2) "One group, two
+representations" says once, with ALGEBRA.md 1.7's identity boxed, that
+the shift of Z[Z_N] on the rows and the same shift on the two samples
+of one character are one group, and names the three pairs; (3) the
+figure's caption already had the block's own cells (commit 28); a light
+detector is now "a detector set, a Node or a line of Nodes read as one
+Port" in the seven points and the massive section. The seven points
+carry 1.7's words (the input kinds numbered as Highlights item 5; a
+record two samples of the real part of one character, not a character).
+47 pages.

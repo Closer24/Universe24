@@ -140,7 +140,7 @@ JOINS = {
         "The six Ports and their group are Theorem~\\ref{th:group} of Section~\\ref{sec:algebra}; the symmetries of the law and the pace follow from them.\n\n"
     ),
     "measurement_pointer": (
-        "The row and the record, the update rules of one interval and the click are Definitions~\\ref{def:row}, \\ref{def:rules} and~\\ref{def:click} of Section~\\ref{sec:algebra}, with Lemma~\\ref{lem:one}.\n\n"
+        "The row and the record, the update rules of one interval and the click are Definitions~\\ref{def:row}, \\ref{def:rules} and~\\ref{def:click} of Section~\\ref{sec:algebra}, one click per record by that Definition.\n\n"
     ),
     "objects_pointer": (
         "The objects are those of Section~\\ref{sec:algebra}: the record's element $f$ of $\\Z[\\Z_{\\Nphi}]$, its pointer $\\mathrm{ev}(f)$ and the function $R$ of a cell's element.\n\n"
