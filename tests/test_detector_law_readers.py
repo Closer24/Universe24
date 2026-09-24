@@ -131,6 +131,19 @@ def test_a_hand_made_screen_row_reads_its_centroid_maxima_and_visibility_exactly
     reading = READER.screen_clicks(mixed, row=row)
     assert reading["total"] == 1 and reading["unplaced"] == 1
     assert reading["centroid"] == Fraction(0)
+    # the declared fringe window [0, 2] along y leaves the edge Node without a click out
+    # of the visibility, (3 - 1) / (3 + 1) = 1 / 2; the centroid and the maxima unchanged
+    fringed = READER.screen_clicks(clicks_at([1, 3, 1, 0, 2]), row=row, fringe=(0, 2))
+    assert fringed["fringe"] == [0, 2]
+    assert fringed["max"] == 3 and fringed["min"] == 1 and fringed["visibility"] == Fraction(1, 2)
+    assert fringed["centroid"] == Fraction(13, 7) and fringed["maxima"] == [Fraction(1), Fraction(4)]
+    assert screen["fringe"] is None
+    edge = READER.screen_clicks(clicks_at([0, 4, 4, 4, 0]), row=row)
+    assert edge["visibility"] == Fraction(1)
+    edge_fringed = READER.screen_clicks(clicks_at([0, 4, 4, 4, 0]), row=row, fringe=(1, 3))
+    assert edge_fringed["visibility"] == Fraction(0)
+    outside = READER.screen_clicks(clicks_at([1, 3, 1, 0, 2]), row=row, fringe=(7, 9))
+    assert outside["max"] == 0 and outside["visibility"] is None
     windowed = READER.screen_clicks(clicks_at([1, 3, 1, 0, 2]), row=row, window=(1, 4))
     assert windowed["counts"] == {(8, 0, 0): 1, (8, 1, 0): 3, (8, 2, 0): 0, (8, 3, 0): 0, (8, 4, 0): 0}
 
@@ -182,10 +195,21 @@ def test_gather_lines_are_clicks_at_the_chosen_cells_one_node_and_escapes_are_no
     ]
     train = READER.light_clicks([c for c in clicks if c.cell == "screen"])
     assert train["count"] == 1 and train["birth"] == 12 and train["first_interval"] == 118
+    assert train["birth_intervals"] == [118]
     assert train["mean_interval"] is None and train["line_omega"] is None
     declared = READER.light_clicks(clicks, birth=100)
     assert declared["first_interval"] == 30 and declared["intervals"] == [11, 11, 8]
     assert declared["mean_interval"] == Fraction(30, 3)
+    assert declared["birth_intervals"] == [118, 121, 119]
+    # a train of many records (the light clock, one record per period): each click's
+    # interval from its own birth stamp; the first click's from its own, none declared;
+    # the window keeps a click with its own stamp
+    many = READER.light_clicks(clicks)
+    assert many["birth"] == 12 and many["first_interval"] == 118
+    assert many["birth_intervals"] == [118, 121, 119]
+    later = READER.light_clicks(clicks, window=(140, 155))
+    assert later["count"] == 2 and later["birth"] == 20 and later["first_interval"] == 121
+    assert later["birth_intervals"] == [121, 119] and later["intervals"] == [11]
     screen = READER.screen_clicks(clicks, row=[(70, 0, 0)])
     assert screen["counts"] == {(70, 0, 0): 2} and screen["unplaced"] == 1
 
@@ -202,6 +226,7 @@ def test_an_empty_train_reads_zero_clicks_and_raises_nothing():
     train = READER.light_clicks([], birth=5)
     assert train["count"] == 0 and train["first_tick"] is None and train["first_interval"] is None
     assert train["intervals"] == [] and train["mean_interval"] is None and train["line_omega"] is None
+    assert train["birth_intervals"] == []
     one = READER.light_clicks([READER.Click(tick=9, node=None, cell=None)], birth=5)
     assert one["count"] == 1 and one["first_interval"] == 4 and one["mean_interval"] is None
     assert READER.click_mean_interval([]) is None and READER.click_mean_interval([4]) is None

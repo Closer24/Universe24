@@ -226,15 +226,19 @@ def screen_clicks(
     row: Iterable[Node] | None = None,
     axis: int | None = None,
     window: tuple[int, int] | None = None,
+    fringe: tuple[int, int] | None = None,
 ) -> dict[str, object]:
     """The clicks per Node of a detector row (DETECTOR): the counts by Node (every Node of
     `row` present, a Node without a click at 0; without `row`, the clicked Nodes), the
-    count centroid along the row's axis (an exact fraction; None with no click), the
-    positions of the maxima (each strict local maximum of the counts along the row, a
-    plateau of equal counts at its middle as a fraction) and the visibility
-    (max - min) / (max + min) of the counts (None when both are 0). A click without a
-    Node (a set of several Nodes) is counted as `unplaced` and enters nothing else.
-    An empty train reads zero clicks and raises nothing."""
+    count centroid along the row's axis (an exact fraction; None with no click; over the
+    whole row always), the positions of the maxima (each strict local maximum of the
+    counts along the row, a plateau of equal counts at its middle as a fraction) and the
+    visibility (max - min) / (max + min) of the counts (None when both are 0) over the
+    declared fringe window `fringe`, the coordinates [low, high] along the row's axis
+    inclusive, declared before the run on the row's page (an edge Node without a click
+    outside it reads no visibility of 1); without one, over the whole row. A click
+    without a Node (a set of several Nodes) is counted as `unplaced` and enters nothing
+    else. An empty train reads zero clicks and raises nothing."""
     chosen = [click for click in clicks if window is None or window[0] <= click.tick <= window[1]]
     counts: Counter[Node] = Counter(click.node for click in chosen if click.node is not None)
     unplaced = sum(1 for click in chosen if click.node is None)
@@ -262,7 +266,16 @@ def screen_clicks(
         if values[start] > 0 and above_left and above_right and (start > 0 or end < len(values) - 1):
             maxima.append(Fraction(ordered[start][axis] + ordered[end][axis], 2))
         start = end + 1
-    largest, smallest = (max(values), min(values)) if values else (0, 0)
+    fringe_values = (
+        [
+            count
+            for node, count in zip(ordered, values, strict=True)
+            if fringe[0] <= node[axis] <= fringe[1]
+        ]
+        if fringe is not None
+        else values
+    )
+    largest, smallest = (max(fringe_values), min(fringe_values)) if fringe_values else (0, 0)
     return {
         "kind": "DETECTOR",
         "axis": "xyz"[axis],
@@ -271,6 +284,7 @@ def screen_clicks(
         "unplaced": unplaced,
         "centroid": centroid,
         "maxima": maxima,
+        "fringe": list(fringe) if fringe is not None else None,
         "max": largest,
         "min": smallest,
         "visibility": Fraction(largest - smallest, largest + smallest) if largest + smallest else None,
@@ -283,18 +297,24 @@ def light_clicks(
     window: tuple[int, int] | None = None,
 ) -> dict[str, object]:
     """One light detector's click train (DETECTOR): the count, the first and the last
-    click's interval, the first click's interval from the declared birth stamp (`birth`;
-    the first click's own stamp when none is declared and its line carries one), the
-    successive intervals, the mean interval by `click_mean_interval` (the reader of the
-    tracked runs' block clocks, an exact fraction) and the train's line 2 pi over it in
-    radians per interval (the host's conversion of that fraction). An empty train reads
-    zero clicks, None for every interval, and raises nothing."""
-    ticks = sorted(
-        click.tick for click in clicks if window is None or window[0] <= click.tick <= window[1]
+    click's interval, the first click's interval from the birth stamp (the declared
+    `birth`; without one, the first click's own stamp where its line carries one), the
+    interval of every click from its own record's birth stamp (`birth_intervals`, one
+    per click whose line carries a stamp, in the train's order: a train of many records,
+    the light clock's one record per period, reads each click against its own birth),
+    the successive intervals, the mean interval by `click_mean_interval` (the reader of
+    the tracked runs' block clocks, an exact fraction) and the train's line 2 pi over it
+    in radians per interval (the host's conversion of that fraction). The window keeps a
+    click with its own stamp. An empty train reads zero clicks, None for every interval,
+    and raises nothing."""
+    chosen = sorted(
+        (click for click in clicks if window is None or window[0] <= click.tick <= window[1]),
+        key=lambda click: click.tick,
     )
-    stamps = [click.birth for click in clicks if click.birth is not None]
-    if birth is None and stamps:
-        birth = min(stamps)
+    ticks = [click.tick for click in chosen]
+    own = [click.tick - click.birth for click in chosen if click.birth is not None]
+    if birth is None and chosen and chosen[0].birth is not None:
+        birth = chosen[0].birth
     mean_interval = click_mean_interval(ticks)
     return {
         "kind": "DETECTOR",
@@ -303,6 +323,7 @@ def light_clicks(
         "last_tick": ticks[-1] if ticks else None,
         "birth": birth,
         "first_interval": ticks[0] - birth if ticks and birth is not None else None,
+        "birth_intervals": own,
         "intervals": [b - a for a, b in zip(ticks, ticks[1:], strict=False)],
         "mean_interval": mean_interval,
         "line_omega": 2.0 * math.pi / mean_interval if mean_interval else None,
