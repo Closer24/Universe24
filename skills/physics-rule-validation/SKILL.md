@@ -203,5 +203,11 @@ pair or a correlation placed by hand? Does any block do two blocks' work?
 A world that fails any of the four is a SHORTCUT, reported with the real
 apparatus and the composition that removes it within the four building
 blocks and the six verbs. A property nature gives to an apparatus, such as
-a crystal's two branches, stays DECLARED on that apparatus and is never
-written as derived.
+a crystal's two conversion channels, stays DECLARED on that apparatus. What
+nature produces from such a property, such as the entangled state where
+the two channels' amplitudes add, is never declared: it must arise by the
+law (the owner, 2026-09-24, records 1821 and 1822). For every row the reviewer
+also names the mechanism the experiment exists to test, such as the split at
+every Node, the addition of amplitudes, the click or the bound mode's clock,
+and reports TESTS when the world exercises it, or BYPASSES when a
+declaration or a board edge does its work.
