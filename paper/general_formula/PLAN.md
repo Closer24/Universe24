@@ -6788,3 +6788,21 @@ Figure 1; the old readings' figures left in commit 24. The rewrite of
 the old-law sections (2's click with the wheel, 4's theorems on hopping
 rows, 5's law and implementation, 6's route) follows, on the owner's
 word, section by section.
+
+## Applied (2026-09-24, the owner's words on the figures): commit 27 on paper-48, one figure from the groups to the click
+
+"The figure must be in the paper's colour, not colourful; more
+three-dimensional drawings; without too much text"; "keep only the
+second figure, three-dimensional and in the paper's colour, without
+much text; an octahedron belongs there". Figure 1 is now the road from
+the groups to the click, drawn in grey and in three dimensions
+(groups_figure.py, from the definitions, no run): the cube with its six
+Ports and the octahedron they span (the causal front), the same six
+Ports along a body diagonal as a hexagon (the cubic pattern), the
+GameBoard with the block of cells inside it, the phase circle as the
+record's clock on it and the rung of the detector's cells around it,
+and the click as the quadratic form crossing the rung. The
+square-within-a-square figure of commit 25 and its script are removed;
+the seven points' first sentence names the figure as drawn. The chief
+physicist's line on the hexagon and the nesting, asked for on the
+owner's word, moves the drawing if it differs.

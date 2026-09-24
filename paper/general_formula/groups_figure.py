@@ -1,9 +1,11 @@
-"""Draw how a click is reached from the groups (the model owner's word of
-2026-09-24: "with a hexagon if possible, and a cube; a few things one inside
-the other"). Drawn from the definitions (docs/ALGEBRA.md chapters 1, 2, 3
-and 8; docs/GLOSSARY.md); no run. Writes figures/groups_to_click.pdf.
+"""Draw how a click is reached from the groups, in the paper's grey, in three
+dimensions and with few words (the model owner's words of 2026-09-24: a
+cube, a hexagon, an octahedron, things one inside the other). Drawn from the
+definitions (docs/ALGEBRA.md chapters 1, 3 and 8; docs/GLOSSARY.md); no run.
+Writes figures/groups_to_click.pdf.
 """
 
+from itertools import product
 from pathlib import Path
 
 import matplotlib
@@ -11,201 +13,112 @@ import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Polygon, Rectangle  # noqa: E402
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
+
+GREY = "#555555"
+LIGHT = "#bbbbbb"
+PORTS = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]], dtype=float)
 
 
-def cube(ax, cx, cy, s):
-    """A cube in oblique view with its six face centres marked (the six Ports)."""
-    d = 0.42 * s
-    front = [
-        (cx - s / 2, cy - s / 2),
-        (cx + s / 2, cy - s / 2),
-        (cx + s / 2, cy + s / 2),
-        (cx - s / 2, cy + s / 2),
-    ]
-    back = [(x + d, y + d) for (x, y) in front]
-    ax.add_patch(Polygon(back, closed=True, fc="none", ec="#888888", lw=0.8, ls="--"))
-    for a, b in zip(front, back, strict=True):
-        ax.plot([a[0], b[0]], [a[1], b[1]], color="#888888", lw=0.8, ls="--")
-    ax.add_patch(Polygon(front, closed=True, fc="none", ec="black", lw=1.0))
-    # The six face centres: right, left, top, bottom (mid-depth), front, back.
-    h = d / 2
-    centres = [
-        (cx + s / 2 + h, cy + h),
-        (cx - s / 2 + h, cy + h),
-        (cx + h, cy + s / 2 + h),
-        (cx + h, cy - s / 2 + h),
-        (cx, cy),
-        (cx + d, cy + d),
-    ]
-    for x, y in centres:
-        ax.plot(x, y, "o", color="#2b4c7e", ms=4)
-    return centres
+def wire_cube(ax, centre, half, color=GREY, lw=0.9, ls="-"):
+    c = np.asarray(centre, dtype=float)
+    corners = np.array(list(product([-half, half], repeat=3))) + c
+    for i, a in enumerate(corners):
+        for b in corners[i + 1 :]:
+            if np.sum(np.abs(a - b) > 1e-9) == 1:
+                ax.plot([a[0], b[0]], [a[1], b[1]], [a[2], b[2]], color=color, lw=lw, ls=ls)
 
 
-def hexagon(ax, cx, cy, r):
-    """The same six Ports seen along a body diagonal: a hexagon's vertices."""
-    pts = [
-        (cx + r * np.cos(np.pi / 6 + k * np.pi / 3), cy + r * np.sin(np.pi / 6 + k * np.pi / 3))
-        for k in range(6)
-    ]
-    ax.add_patch(Polygon(pts, closed=True, fc="none", ec="black", lw=1.0))
-    for x, y in pts:
-        ax.plot(x, y, "o", color="#2b4c7e", ms=4)
-    for k in range(3):
-        ax.plot([pts[k][0], pts[k + 3][0]], [pts[k][1], pts[k + 3][1]], color="#bbbbbb", lw=0.7)
-    return pts
+def octahedron(ax, centre, r, alpha=0.18):
+    c = np.asarray(centre, dtype=float)
+    v = PORTS * r + c
+    faces = []
+    for sx, sy, sz in product([0, 1], repeat=3):
+        faces.append([v[sx], v[2 + sy], v[4 + sz]])
+    ax.add_collection3d(
+        Poly3DCollection(faces, facecolors="#dddddd", edgecolors=GREY, linewidths=0.7, alpha=alpha)
+    )
+
+
+def bare(ax):
+    ax.set_axis_off()
+    ax.set_box_aspect((1, 1, 1))
 
 
 def draw(output: Path) -> None:
-    fig, ax = plt.subplots(figsize=(9.2, 4.9))
-    ax.set_xlim(0, 13.2)
-    ax.set_ylim(0, 7.0)
-    ax.set_aspect("equal")
-    ax.axis("off")
-    # 1. The first group: the cube and its hexagon.
-    ax.text(0.2, 6.7, "1. the first group,\non the directions", fontsize=7.4, weight="bold", va="top")
-    cube(ax, 1.5, 4.6, 1.5)
-    ax.text(
-        0.2,
-        3.35,
-        "the six Ports, the face centres;\nthe $48$ signed permutations, the\n$24$ rotations the group of order $24$",
-        fontsize=6.6,
-        va="top",
+    fig = plt.figure(figsize=(9.6, 3.1))
+    # 1. The cube and the octahedron: the six Ports, the symmetry group of the cube.
+    ax = fig.add_subplot(1, 4, 1, projection="3d")
+    wire_cube(ax, (0, 0, 0), 1.0)
+    octahedron(ax, (0, 0, 0), 1.0)
+    ax.scatter(PORTS[:, 0], PORTS[:, 1], PORTS[:, 2], color="black", s=16, depthshade=False)
+    ax.view_init(elev=22, azim=-55)
+    lim = 1.25
+    ax.set_xlim(-lim, lim)
+    ax.set_ylim(-lim, lim)
+    ax.set_zlim(-lim, lim)
+    bare(ax)
+    ax.set_title(
+        "the six Ports: the cube's group, $48$;\nits rotations, $24$; the octahedron, the front",
+        fontsize=7.2,
+        color="black",
     )
-    hexagon(ax, 1.5, 1.35, 0.85)
-    ax.text(
-        2.55,
-        1.6,
-        "the same six Ports\nalong a body diagonal:\nthe hexagon; the cubic\npattern of the dispersion",
-        fontsize=6.4,
-        va="top",
-    )
-    # 2. Inside one Node: the record, its pair, and the second group, the phase circle.
-    ax.add_patch(
-        FancyBboxPatch(
-            (4.55, 2.4), 3.2, 3.6, boxstyle="round,pad=0.02", fc="#fbfbfb", ec="black", lw=1.0
-        )
-    )
-    ax.text(
-        4.7, 6.7, "2. one Node: the record,\nthe second group", fontsize=7.4, weight="bold", va="top"
-    )
-    ax.text(
-        4.7,
-        5.85,
-        "two integer levels $(a_{\\rm before}, a_{\\rm now})$\nand a remainder; one pair per kind,\n$[\\mathrm{num}, \\mathrm{den}]$: the mass",
-        fontsize=6.6,
-        va="top",
-    )
-    circ = Circle((6.15, 3.65), 0.85, fc="none", ec="black", lw=1.0)
-    ax.add_patch(circ)
+    # 2. The same six Ports along a body diagonal: the hexagon.
+    ax = fig.add_subplot(1, 4, 2, projection="3d")
+    wire_cube(ax, (0, 0, 0), 1.0, color=LIGHT)
+    octahedron(ax, (0, 0, 0), 1.0, alpha=0.25)
+    ax.scatter(PORTS[:, 0], PORTS[:, 1], PORTS[:, 2], color="black", s=16, depthshade=False)
+    ax.view_init(elev=35.264, azim=45)
+    ax.set_xlim(-lim, lim)
+    ax.set_ylim(-lim, lim)
+    ax.set_zlim(-lim, lim)
+    bare(ax)
+    ax.set_title("along a body diagonal:\nthe hexagon, the cubic pattern", fontsize=7.2, color="black")
+    # 3. The GameBoard with a block of cells inside it and the rung's cells around the block.
+    ax = fig.add_subplot(1, 4, 3, projection="3d")
+    n = 5
+    g = np.array(list(product(range(n), repeat=3)), dtype=float)
+    ax.scatter(g[:, 0], g[:, 1], g[:, 2], color=LIGHT, s=4, depthshade=False)
+    wire_cube(ax, (2, 2, 2), 2.0, color=LIGHT, lw=0.6)
+    wire_cube(ax, (2, 2, 2), 0.5, color="black", lw=1.1)
+    wire_cube(ax, (2, 2, 2), 1.0, color=GREY, lw=0.9, ls="--")
+    # The phase circle on the block: the record's clock, a ring around the block's centre.
+    t = np.linspace(0, 2 * np.pi, 200)
+    ax.plot(2 + 0.75 * np.cos(t), 2 + 0.75 * np.sin(t), 2 + 0 * t, color="black", lw=0.8)
     for k in range(12):
         a = 2 * np.pi * k / 12
-        ax.plot(6.15 + 0.85 * np.cos(a), 3.65 + 0.85 * np.sin(a), "o", color="black", ms=2)
-    ax.add_patch(
-        FancyArrowPatch(
-            (6.15 + 0.85 * np.cos(0.3), 3.65 + 0.85 * np.sin(0.3)),
-            (6.15 + 0.85 * np.cos(1.1), 3.65 + 0.85 * np.sin(1.1)),
-            connectionstyle="arc3,rad=0.3",
-            arrowstyle="-|>",
-            mutation_scale=10,
-            lw=1.0,
-            color="#8a1c1c",
+        ax.scatter(
+            [2 + 0.75 * np.cos(a)], [2 + 0.75 * np.sin(a)], [2], color="black", s=5, depthshade=False
         )
+    ax.view_init(elev=20, azim=-50)
+    ax.set_xlim(-0.2, 4.2)
+    ax.set_ylim(-0.2, 4.2)
+    ax.set_zlim(-0.2, 4.2)
+    bare(ax)
+    ax.set_title(
+        "on the board: the block, a cube of cells,\nthe phase circle $\\mathbb{Z}_N$ its clock; the rung $W$ around it",
+        fontsize=7.2,
+        color="black",
     )
-    ax.text(6.15, 3.65, "$\\mathbb{Z}_N$", fontsize=8, ha="center", va="center")
-    ax.text(
-        4.7,
-        2.65,
-        "the phase circle: the record's phase\nadvances by the wheel; a table shifts it\nby $t$, linear on the pair",
-        fontsize=6.4,
-        va="top",
+    # 4. The click: the quadratic form in the cells crossing the rung.
+    ax = fig.add_subplot(1, 4, 4)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    x = np.linspace(0.08, 0.92, 200)
+    y = 0.22 + 0.55 * (1 - np.exp(-((x - 0.08) * 4.0))) * (1 + 0.08 * np.sin(40 * x))
+    ax.plot(x, y, color="black", lw=1.0)
+    ax.axhline(0.62, xmin=0.06, xmax=0.94, color=GREY, lw=0.9, ls="--")
+    xc = x[np.argmax(y >= 0.62)]
+    ax.plot([xc], [0.62], "o", color="black", ms=5)
+    ax.text(0.9, 0.65, "$W$", fontsize=8, ha="right")
+    ax.text(xc, 0.7, "click", fontsize=7.5, ha="center")
+    ax.text(0.5, 0.1, "$X^2 + Y^2$ in the cells, against the count", fontsize=6.8, ha="center")
+    ax.set_title(
+        "the click: the quadratic form\ncrosses the rung, one per record", fontsize=7.2, color="black"
     )
-    # 3. The block inside the board, the detector around it.
-    ax.text(
-        8.45,
-        6.7,
-        "3. the block on the board,\nthe rung around it",
-        fontsize=7.4,
-        weight="bold",
-        va="top",
-    )
-    ax.add_patch(
-        FancyBboxPatch((8.3, 2.4), 4.6, 3.6, boxstyle="round,pad=0.02", fc="#f4f4f4", ec="black", lw=1.0)
-    )
-    ax.text(8.45, 5.85, "the GameBoard", fontsize=6.8, style="italic", va="top")
-    x0, y0, d = 8.7, 2.85, 0.38
-    for i in range(9):
-        for j in range(7):
-            ax.plot(x0 + d * i, y0 + d * j, "o", color="#999999", ms=1.6)
-    ax.add_patch(
-        Rectangle(
-            (x0 + d * 3 - 0.1, y0 + d * 2 - 0.1),
-            d * 3 + 0.2,
-            d * 3 + 0.2,
-            fc="#dbe6f5",
-            ec="#2b4c7e",
-            lw=1.0,
-        )
-    )
-    ax.text(
-        x0 + d * 4.5,
-        y0 + d * 3.5,
-        "the block:\ncells of the\n48's shape,\na lower pair;\nits bound mode\nthe clock",
-        fontsize=5.4,
-        ha="center",
-        va="center",
-    )
-    ax.add_patch(
-        Rectangle(
-            (x0 + d * 3 - 0.28, y0 + d * 2 - 0.28),
-            d * 3 + 0.56,
-            d * 3 + 0.56,
-            fc="none",
-            ec="#8a5a00",
-            lw=1.2,
-            ls="--",
-        )
-    )
-    ax.text(
-        x0 + d * 7.4,
-        y0 + d * 5.4,
-        "the detector's cells,\nthe rung $W$",
-        fontsize=5.6,
-        ha="center",
-        color="#8a5a00",
-    )
-    # 4. The click.
-    ax.add_patch(
-        FancyBboxPatch(
-            (8.3, 0.25), 4.6, 1.75, boxstyle="round,pad=0.02", fc="#eaf3e6", ec="black", lw=1.0
-        )
-    )
-    ax.text(8.45, 1.85, "4. the click", fontsize=8, weight="bold", va="top")
-    ax.text(
-        8.45,
-        1.4,
-        "the quadratic form of the record's values in the\ncells crosses $W$: one click, in the detector's own\ncount, with the record's birth stamp; one per record,\nits completion one gather over its detectors",
-        fontsize=6.2,
-        va="top",
-    )
-    # The arrows of the chain.
-    for a, b in [((3.5, 4.6), (4.5, 4.6)), ((7.8, 4.4), (8.25, 4.4))]:
-        ax.add_patch(FancyArrowPatch(a, b, arrowstyle="-|>", mutation_scale=12, lw=1.1, color="black"))
-    ax.add_patch(
-        FancyArrowPatch(
-            (10.6, 2.35), (10.6, 2.05), arrowstyle="-|>", mutation_scale=12, lw=1.1, color="black"
-        )
-    )
-    ax.text(4.0, 4.75, "the rule\ncommutes", fontsize=6, ha="center")
-    ax.text(8.02, 4.55, "on every\ncell", fontsize=6, ha="center")
-    ax.text(
-        0.2,
-        0.15,
-        "the band from the group and the pair; the tables from the circle; the clock from the block; the click from the rung",
-        fontsize=6.6,
-    )
-    fig.savefig(output / "groups_to_click.pdf", bbox_inches="tight")
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.82, bottom=0.04, wspace=0.05)
+    fig.savefig(output / "groups_to_click.pdf")
 
 
 if __name__ == "__main__":

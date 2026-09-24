@@ -4918,6 +4918,16 @@ CORRECTIONS = [
         "\\bibitem{declarations} The declarations of the pinned worlds, every pin by kind before its run, \\texttt{docs/designs/detector\\_law/declarations/DECLARATIONS.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 53cec95d. ",
         "\\bibitem{declarations} The declarations of the pinned worlds, every pin by kind before its run, \\texttt{docs/designs/detector\\_law/declarations/DECLARATIONS.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 53cec95d; its section 14 (the tables act on the record's pair in the linear form) on the branch \\texttt{detector-law-design} at aea7c166 (its merge pending). \\bibitem{glossary} The closed glossary: one name per term, the retired names beside it and the source of each, \\texttt{docs/GLOSSARY.md} of the archived code \\cite{zenodo}, on the branch \\texttt{glossary-closed} at 95564f92 (its merge pending). ",
     ),
+    (
+        "commit 27, the owner's word on the figures: one figure, in the paper's grey, in three dimensions, few words, with the octahedron",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=\\linewidth]{figures/worlds.pdf}\\caption{\\label{fig:worlds}The three worlds as a square within a square, and what they lead to. Inside the inner square, the GameBoard: the symmetry group of the cube, the phase circle, a record's two levels and its remainder, the pair per kind, the block of cells with its bound mode, the tables acting on the phase; nothing is measured there. The outer square, the clicks: detectors as sets of Nodes with a rung, one click per record, the click list of Nodes, counts and birth stamps. To the right, nature: the ratios of counts that the rows of Table~\\ref{tab:list} compare, and where each group is seen. Drawn from the definitions by \\texttt{worlds\\_figure.py}; no run.}\\end{figure}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=\\linewidth]{figures/groups_to_click.pdf}\\caption{\\label{fig:worlds}From the groups to the click. Left: the six Ports as the face centres of a cube, the symmetry group of the cube ($48$, its rotations the group of order $24$), and the octahedron they span, the causal front of one interval. Second: the same six Ports along a body diagonal, a hexagon, the cubic pattern of the dispersion. Third: the GameBoard with a block of cells inside it, the phase circle $\\Z_{\\Nphi}$ as the record's clock on it, and the rung $W$ of the detector's cells around it. Right: the click, the quadratic form of the record's values in the cells crossing the rung, one per record. Drawn from the definitions by \\texttt{groups\\_figure.py}; no run.}\\end{figure}",
+    ),
+    (
+        "commit 27, the seven points' first sentence names the figure as drawn",
+        "and Figure~\\ref{fig:worlds} draws them as a square within a square and what the squares lead to.",
+        "and Figure~\\ref{fig:worlds} draws the road from the two groups to the click.",
+    ),
 ]
 
 
