@@ -5,6 +5,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+- The World Generator writes the three declared world forms (2026-09-24, the one list): `two_slits.json` in L-3's second draft (160 x 256 with x and y open, d = 26, L = 113, the openings of width 3, the lamp's `receiver` the 201 screen sets with the rung wheel 2^20, the wheel [1, 1024], 5500 intervals); the four Malus worlds on the bar of 8 without the which-path read body and its set; `matter_waves_{12,16}.json` in section 12's sized form (the wheel [1, 2048] at one per 2, the lamp's `receiver` the 121 screen sets with the rung wheel 65536, 4700 intervals); `RECEIVER_KEY` on, so every emitting block's `receiver` comes from the generator (the redshift, sagnac and light clock files unchanged by it).
+
 - detector-law-v1: a lamp's `receiver`, its records' ladder by name (the named detector sets; every other set and every face a sink, taken and booked but never chosen), the cell of u over the ladder's own sum; the gather line's `ladder` and `sunk` fields (SIZING.md; BUILD.md section 20).
 
 ### flow-link-v1 under its key, and the split ladder of the pushed row's wall (2026-09-22)
