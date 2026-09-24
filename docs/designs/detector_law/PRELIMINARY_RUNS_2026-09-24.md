@@ -148,4 +148,20 @@ after another. bell_a0b0 (sha256 prefix 1ccd60ef85a0):
 - GAMEBOARD: every ladder lists one cell only, the arm's own table's cell "0";
   the seed order is read (`u` 1465, 864, 1062, ... distinct over the 2048).
 
-bell_a0b1, bell_a1b0 and bell_a1b1: pending at this commit; appended when read.
+bell_a0b1 (sha256 prefix 796d3d582c6b; residue_seed 7815816498507250857):
+
+- HOST: 1147 seconds, one core, 66 MB resident; 2048 births, 4096 gathers,
+  0 live at the end; the books balanced.
+- MEASUREMENT: 2048 clicks at Alice's one cell "0" and 2048 at Bob's; no
+  escape; Alice's first rung 7 intervals after the birth stamp, Bob's 15.
+- COMPUTATION: every Alice arm completes at age 3201 and every Bob arm at
+  3205, as in bell_a0b0.
+- GAMEBOARD (the close probe): energy x 64 < absorbed first holds at age 70
+  (Alice) and 380 (Bob), energy x 256 < absorbed at 267 and 1481, all within
+  the train, on every arm; after the train each first holds at 3200 on every
+  arm; the completion as built follows at 3201 and 3205.
+- GAMEBOARD: one cell per ladder, the arm's own table's cell "0"; the seed
+  order is read (`u` 1419, 1811, 1930, ... distinct over the 2048). The two
+  files differ in the seed order and in nothing this run reads.
+
+bell_a1b0 and bell_a1b1: pending at this commit; appended when read.
