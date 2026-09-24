@@ -19,9 +19,10 @@ the stock 1024 at one record per 16 intervals, the wheel [1, 64], the train 32
 periods; the mirror line at x = 40, two Nodes deep, with the openings at y = 48
 and 80; the screen at x = 104 over y in [4, 124], one detector set per Node;
 the open faces the sponges; 17300 intervals) and `pace_fan_<12,16,24>.json` (L-6: the lamp at the
-centre with one record on the four headings, the probes and the ring sets at
-the eight Nodes of the axes and the diagonals, 800 intervals; the clocks
-[77, 25], [30, 13], [77, 50]). Every light wall is a MIRROR LINE (L-1, the
+centre with one record on the four headings; the physicist's lines of
+2026-09-24 09:02Z: two probes per ray at 36 and 40 Links, free Nodes, the ring
+sets at 48 Links on the eight rays, the ticks 1000, 1400 and 1900 per clock;
+the clocks [77, 25], [30, 13], [77, 50]). Every light wall is a MIRROR LINE (L-1, the
 fourth commit): blocks of light's kind of side 1 per Node with the pair [1, 2],
 two Nodes deep, under the world key `massive_record`. Rows 2c, 10 (a), 10 (b)
 and 2b are not in the GO (L-4, L-5, T-2) and have no file.
@@ -284,7 +285,13 @@ def two_slits() -> dict:
     return document
 
 
-FAN_NODES = [
+# The pace fan's eight rays (the axes at 40 Links, the plane's diagonals at 39.6), the
+# physicist's four lines of 2026-09-24 09:02Z (through the Boss, 09:12Z): the probes at the
+# 40-Link Nodes of L-6, now FREE Nodes, with a second probe per ray at 36 Links; the ring
+# sets moved outward to 48 Links on the same rays; the ticks per clock 1000, 1400, 1900
+# (the trains 665, 943 and 1330 intervals); the reader the probes' PHASE per ray
+# (GAMEBOARD, section 7), the ring sets' first rungs a flux reading beside.
+FAN_PROBES_40 = [
     [104, 64, 0],
     [24, 64, 0],
     [64, 104, 0],
@@ -294,27 +301,51 @@ FAN_NODES = [
     [92, 36, 0],
     [36, 92, 0],
 ]
+FAN_PROBES_36 = [
+    [100, 64, 0],
+    [28, 64, 0],
+    [64, 100, 0],
+    [64, 28, 0],
+    [89, 89, 0],
+    [39, 39, 0],
+    [89, 39, 0],
+    [39, 89, 0],
+]
+FAN_RINGS_48 = [
+    [112, 64, 0],
+    [16, 64, 0],
+    [64, 112, 0],
+    [64, 16, 0],
+    [98, 98, 0],
+    [30, 30, 0],
+    [98, 30, 0],
+    [30, 98, 0],
+]
+FAN_TICKS = {12: 1000, 16: 1400, 24: 1900}
 
 
-def pace_fan(name: str, pair: list[int]) -> dict:
-    """Section 15 L-6 (row 5a): the lamp at the centre, one record on the four headings,
-    the probes and the ring detector sets of one Node at the eight Nodes of the axes (40
-    Links) and the plane's diagonals (39.6 Links)."""
-    document = ray_world(name, [128, 128, 1], {"x": "open", "y": "open", "z": "periodic"}, pair, 800)
+def pace_fan(name: str, pair: list[int], wavelength: int) -> dict:
+    """Section 15 L-6 (row 5a) with the physicist's lines of 2026-09-24 09:02Z: the lamp at
+    the centre, one record on the four headings; two probes per ray at 36 and 40 Links (free
+    Nodes); the ring detector sets of one Node at 48 Links on the eight rays; the ticks per
+    clock (1000, 1400, 1900)."""
+    document = ray_world(
+        name, [128, 128, 1], {"x": "open", "y": "open", "z": "periodic"}, pair, FAN_TICKS[wavelength]
+    )
     headings = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]]
     document["measured"].append(lamp([64, 64, 0], 1, [1, 1], [1, 64], headings, TRAIN_32))
-    for position in FAN_NODES:
+    for position in FAN_RINGS_48:
         document["measured"].append(body(position, "light"))
         label = f"ring_{position[0]}_{position[1]}"
         document["detectors"].append({"name": label, "positions": [position], "threshold": 1})
-    document["probes"] = [list(position) for position in FAN_NODES]
+    document["probes"] = [list(position) for position in FAN_PROBES_40 + FAN_PROBES_36]
     return document
 
 
 def light_worlds() -> dict[str, dict]:
     out: dict[str, dict] = {"two_slits": two_slits()}
     for wavelength, pair in CLOCKS.items():
-        out[f"pace_fan_{wavelength}"] = pace_fan(f"pace-fan-{wavelength}", pair)
+        out[f"pace_fan_{wavelength}"] = pace_fan(f"pace-fan-{wavelength}", pair, wavelength)
     return out
 
 
