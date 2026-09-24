@@ -6,7 +6,10 @@ table under the rule."""
 
 from __future__ import annotations
 
+import json
 import math
+from fractions import Fraction
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -16,6 +19,8 @@ from event_universe.core.phase import nearest_phase, phase_cosines, phase_sines
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_detector_law import chain_world
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def clock_phase(age: int, numerator: int, denominator: int, steps: int) -> int:
@@ -593,3 +598,69 @@ def test_g_the_joint_weights_are_the_declared_integers():
     assert singlet[0][1] == 0 and singlet[3][1] == 0 and singlet[1][1] == singlet[2][1] > 0
     one = DetectorLawSimulation.joint_weights([(237, 98)], [0], ((0, 1),))
     assert one == [((0,), 237 * 237), ((1,), 98 * 98)]
+
+
+def test_h_the_reader_reads_the_joint_cells_the_correlations_and_s_from_the_gather_lines(tmp_path):
+    """(h) The reader of RUN_LIST.md rows 1a to 1d and 9 (`tools/click_readings/detector_law_bell.py`)
+    on run folders written as the runner writes them (`initialization.json`, `events.jsonl`):
+    four bar worlds at the settings (0, 16), (0, 48), (32, 16), (32, 48) (a = 0, a' = 32; b =
+    16, b' = 48 at N = 64) give the four cells' counts per run (DETECTOR), E per run and S = E(a,
+    b) - E(a, b') + E(a', b) + E(a', b') (COMPUTATION) on integers and Fractions; a one-table
+    world (the polariser chain of test (d) at s = 16) gives the + share 32 / 64; the marginals
+    one half."""
+    import importlib.util
+    import sys
+
+    path = ROOT / "tools/click_readings/detector_law_bell.py"
+    spec = importlib.util.spec_from_file_location("detector_law_bell", path)
+    assert spec is not None and spec.loader is not None
+    reader = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = reader
+    spec.loader.exec_module(reader)
+
+    def write_run(name: str, document: dict) -> Path:
+        folder = tmp_path / name
+        folder.mkdir()
+        (folder / "initialization.json").write_text(json.dumps(document), encoding="utf-8")
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        for _ in range(document["ticks"]):
+            simulation.step()
+        (folder / "events.jsonl").write_text(
+            "".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8"
+        )
+        return folder
+
+    folders = []
+    for settings in ((0, 16), (0, 48), (32, 16), (32, 48)):
+        document = bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]], settings)
+        document["measured"][0]["amount"] = 64
+        document["ticks"] = 264
+        folders.append(write_run(f"bell_{settings[0]}_{settings[1]}", document))
+    readings = [reader.read_run(folder) for folder in folders]
+    for reading in readings:
+        assert reading.names == ["alice", "bob"] and reading.total == 64 and reading.escaped == 0
+        assert reading.marginal(0) == Fraction(1, 2) and abs(
+            reading.marginal(1) - Fraction(1, 2)
+        ) <= Fraction(1, 64)
+    correlations = {tuple(reading.settings): reading.correlation for reading in readings}
+    # (0, 16) and (32, 48): the half angles 0 against 45 and 90 against 135 degrees, E = 0;
+    # (0, 48): 0 against 135 degrees; (32, 16): 90 against 45
+    assert correlations[(0, 16)] == 0 and correlations[(32, 48)] == 0
+    value = reader.chsh(readings)
+    assert (
+        value
+        == correlations[(0, 16)]
+        - correlations[(0, 48)]
+        + correlations[(32, 16)]
+        + correlations[(32, 48)]
+    )
+    assert value == -correlations[(0, 48)] + correlations[(32, 16)]
+    report = reader.report(readings)
+    assert any(line.startswith("COMPUTATION S = ") for line in report)
+    assert reader.main([str(folder) for folder in folders]) == 0
+    one = write_run("malus_16", polariser_world(16))
+    single = reader.read_run(one)
+    assert single.names == ["pol"] and single.marginal(0) == Fraction(1, 2) and single.total == 64
+    assert any("the + share 1/2" in line for line in reader.report([single]))
