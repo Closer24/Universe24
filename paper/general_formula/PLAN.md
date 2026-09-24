@@ -7261,3 +7261,14 @@ arm's anisotropy against the cavity bounds; the norm bound per declared
 pair with the two marginal modes of [1, 1] named; the joint weight a
 declared read-out and the 24 the lattice's rotations (the Bell section).
 Microtype added, formatting only, for the 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 10:44Z, PR 1122 at ecebf895): commit 63 on paper-48
+
+The light clock's declared pin 213 +- 1 with 218 +- 2 as the earlier
+form's number, history (row LC); the Bell rows' reading as the pair's
+one gather on the four joint cells, the joint gather the build item,
+rows 1a to 1d and 10 NOT RUN on this engine (the Bell section and the
+table); the click line and the receiver by name in Definition 3. The
+flight table's history paragraph and the six operations as the engine
+runs them moved whole to records.tex behind pointers (rec:flighthistory,
+rec:sixops) for the 48 pages. No reading written.

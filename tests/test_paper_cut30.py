@@ -151,6 +151,14 @@ def _check_reorder(module) -> None:
         and "the delay's chain are in the records file" in main
     )
     assert recs.count("\\label{rec:roadcheck}") == 1 and "no formula of nature was put in" in main
+    assert (
+        recs.count("\\label{rec:flighthistory}") == 1
+        and "the ground of Proposition~\\ref{prop:pace}), is in the records file" in main
+    )
+    assert (
+        recs.count("\\label{rec:sixops}") == 1
+        and "The order of the six verbs within one interval" in main
+    )
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))

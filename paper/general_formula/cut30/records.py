@@ -111,6 +111,24 @@ FLIGHT_POINTER = (
 )
 
 
+HISTORY_START = "\\paragraph{History: the beam law's flight table, the runtime before 3a9a7109.}"
+HISTORY_END = "\\begin{proposition}[The pace]\\label{prop:pace}"
+HISTORY_POINTER = (
+    "\\paragraph{History.} The beam law's flight table, the runtime before 3a9a7109 (two rules, one Link per "
+    "interval and the digital line of a direction, the octahedron of the six neighbours the causal front, the ground "
+    "of Proposition~\\ref{prop:pace}), is in the records file \\cite{records}, history: under the law as it stands "
+    "light is the record kind $[1, 1]$ whose band disperses at $k^2$ (row A2), and $c$ Outside is a bound "
+    "(Theorem~\\ref{th:discreteness}).\n"
+)
+SIXOPS_START = "\\paragraph{The six operations as the engine runs them.}"
+SIXOPS_END = "\\paragraph{The three tests, rule by rule.}"
+SIXOPS_POINTER = (
+    "\\paragraph{The six operations as the engine runs them.} The order of the six verbs within one interval, one "
+    "line each in symbols \\cite[2.1 to 2.6, 2.11]{algebra}, and what is not one of them (a root of the state at run "
+    "time, a float, a true division, a draw) are in the records file \\cite{records}.\n\n"
+)
+
+
 def cut_flight(s: str) -> tuple[str, str]:
     """The flight table's proof and its ground out of the paper, kept whole."""
     i = _once(s, FLIGHT_PROOF_START, "the flight proof")
@@ -319,6 +337,12 @@ def cut(s: str) -> tuple[str, str]:
     i = _once(s, ROAD_START, "the roads' check")
     j = s.index(ROAD_END, i)
     roadcheck, s = s[i:j], s[:i] + ROAD_POINTER + s[j:]
+    i = _once(s, HISTORY_START, "the flight table's history")
+    j = s.index(HISTORY_END, i)
+    flighthistory, s = s[i:j], s[:i] + HISTORY_POINTER + s[j:]
+    i = _once(s, SIXOPS_START, "the six operations as run")
+    j = s.index(SIXOPS_END, i)
+    sixops, s = s[i:j], s[:i] + SIXOPS_POINTER + s[j:]
     i = _once(s, LIGHT_START, "the delay's head")
     j = s.index(DELAY_HEAD_END, i)
     delayhead, s = s[i:j], s[:i] + DELAY_HEAD_POINTER + s[j:]
@@ -364,6 +388,10 @@ def cut(s: str) -> tuple[str, str]:
         + oldclick
         + "\n\\section{The road to each formula, and the check that nothing was derived from them, as Section 7 carried it}\\label{rec:roadcheck}\n\n"
         + roadcheck
+        + "\n\n\\section{The beam law's flight table, the runtime before 3a9a7109, as Section 5 carried it, history}\\label{rec:flighthistory}\n\n"
+        + flighthistory
+        + "\n\n\\section{The six operations as the engine runs them, as Section 6 carried them}\\label{rec:sixops}\n\n"
+        + sixops
         + "\n\n\\section{Light past a held mass by the time part alone, the delay paragraph's head, history}\\label{rec:olddelayhead}\n\n"
         + delayhead
         + "\n\n\\section{The beam law's weight rule for its rows 13 and 14, history}\\label{rec:weightrule}\n\n"
@@ -418,6 +446,14 @@ def strip_block(body: str) -> str:
         i = body.index(ROAD_START)
         j = body.index(ROAD_END, i) if ROAD_END in body[i:] else len(body)
         body = body[:i] + ROAD_POINTER + body[j:]
+    if HISTORY_START in body:  # the flight table's history, likewise
+        i = body.index(HISTORY_START)
+        j = body.index(HISTORY_END, i) if HISTORY_END in body[i:] else len(body)
+        body = body[:i] + HISTORY_POINTER + body[j:]
+    if SIXOPS_START in body:  # the six operations as run, likewise
+        i = body.index(SIXOPS_START)
+        j = body.index(SIXOPS_END, i) if SIXOPS_END in body[i:] else len(body)
+        body = body[:i] + SIXOPS_POINTER + body[j:]
     if LIGHT_START in body and DELAY_HEAD_END in body:  # the delay's head, likewise
         i = body.index(LIGHT_START)
         j = body.index(DELAY_HEAD_END, i)
