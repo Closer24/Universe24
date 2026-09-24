@@ -571,8 +571,10 @@ nature.
    lobe), the band one Node a 4.4-sigma statistic; the expected counts per
    Node at the stock printed (the centre 42, the side maximum 39); for
    lambda_dB = 16 the centroid 64 + 39.23, sd 0.32 (3.1 sigma). Nature's row: electron and neutron
-   two-slit interference at lambda L / d (Joensson 1961, Tonomura 1989;
-   RECALLED until the Source Verifier). M2, THE ENERGY OF A MOVING MASS (K
+   two-slit interference at lambda L / d (electrons: Joensson 1961, Tonomura 1989;
+   neutrons: Zeilinger, Gaehler, Shull, Treimer and Mampe 1988, Rev. Mod.
+   Phys. 60, 1067, the Source Verifier's candidate, taken; Tonomura's
+   count RECALLED until verified). M2, THE ENERGY OF A MOVING MASS (K
    in the form): M2 has ITS OWN WORLD, a chain (Reviewer 3's line A, and
    the screen's small share: through two width-1 openings a record's
    offer at one screen Node is far below a rung of its norm over 64, so
