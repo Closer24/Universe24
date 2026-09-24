@@ -60,9 +60,12 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   periodic 200 x 200 x 1 layer, `margin` "pin"), the seed the bound mode's integer
   profile at 2^20 over the whole layer (the generator's integers in the file, the
   same at both levels: the reader of record is the clicks, which a flat seed makes
-  beat on a wide mode); at rest and pushed to k = 3 over the ramp 1500 and the hold
-  8000: PIN worlds (layer), the pin the mode's period and the one formula at the
-  exact cone.
+  beat on a wide mode); at rest and pushed to k = 3 over the ramp 10000 (ten times the
+  well's relaxation time 1 / (omega_0 - omega_b) = 1027 intervals, the physicist's
+  declaration DECLARATIONS.md section 8 after the exploratory reading of the ramp 1500,
+  whose clicks beat) and the hold 8000, the ticks 18500 in both files so that the hold
+  [10200, 18200] is read at rest and at k = 3 alike: PIN worlds (layer), the pin the
+  mode's period and the one formula at the exact cone.
 
 Run from the repository root:
 
@@ -391,9 +394,10 @@ def worlds() -> dict[str, dict]:
     # margin s + 4 extents = 159 < 200), the seed the BOUND MODE'S INTEGER PROFILE at 2^20 over
     # the whole layer (the generator computes the module's mode and writes the integers into
     # the world file; the engine reads integers; the load-time check prints the deviation): at
-    # rest 3500 intervals, and pushed to k = 3 over the ramp 1500 and the hold 8000.
+    # rest and pushed to k = 3 over the ramp 10000 and the hold 8000 (DECLARATIONS.md section
+    # 8: the ramp ten relaxation times of the well; the ticks 18500 in both files).
     block = {"position": [93, 93, 0], "side": 14, "pair": [3200, 3227], "margin": "pin"}
-    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 3500)
+    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 18500)
     profile = mode_profile(rest, 0)
     rest["measured"][0]["seed"] = profile
     out["layer_pin_rest_14"] = rest
@@ -403,8 +407,8 @@ def worlds() -> dict[str, dict]:
         [200, 200, 1],
         PERIODIC,
         [3200, 3236],
-        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
-        9500,
+        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=10000)],
+        18500,
         mode_axis="x",
     )
     moving["measured"][0]["seed"] = profile
