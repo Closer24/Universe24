@@ -3693,6 +3693,24 @@ the fix is the algebra for one-arm records and may merge as the bug's fix
 with (a), (b) and (d) corrected; the tool's final form is the material
 one.
 
+**CONFIRMED at polariser-fix e99b7091 (2026-09-24, the physicist's
+corrected head).** The three corrections read line by line:
+- (a) `table_bodies_by_family` is indexed by the record's family as data,
+  filled from each body's own declaration, with no branch on a family.
+- (b) The guard on the weights' sum is removed.
+- (d) `channel_weights` groups the labels by their bits on the other arms
+  (the key label & ~(1 << arm)). The pointer is coherent within a group
+  (verb B) and the weight is the sum over the groups of the squares: the
+  partial trace. An arm of HV + VH gets (65522, 65522) at s = 512,
+  (65536, 65536) at s = 0 and (65773, 65773) at s = 256, which is 2 x
+  181^2, 2 x 256^2 and 237^2 + 98^2 on the tables.
+- `if gain:` remains the lawful host skip.
+
+tests/test_detector_law_tables.py passes on that head (15 passed). The
+gate: CONFIRMED as the bug's fix. Under 9.14's adopted axis, the pair
+(a, b) enters `channel_weights` in place of (C', S') with no other
+change.
+
 ### 9.12 The take and the click (the owner's word of 21:30Z through the Boss: "the receiver's take is defined by an operation of the group; we named it E, I think; check it")
 
 **Three operations at a receiver, told apart (DERIVED HERE from 2.5, 3.1,
@@ -3974,25 +3992,73 @@ none of the fifteen needs one.
 The gate (9.5) reads the new `joint_weights` line by line against this
 section.
 
-### 9.15 Momentum: a photon that changes direction (the owner's word of 21:40Z)
+### 9.15 Momentum on the board's own values (the owner's words of 21:40Z and 22:30Z; REVISED at 22:30Z: no book at a held body)
 
-**DERIVED HERE.** The law commutes with the translations (1.6), so its
-conserved momentum is the TOTAL over every record and every FREE body
-(the characters' law, 9.2). A tool is a body at rest by declaration (9.1:
-a fixed point of the time translation, its momentum held at 0): it is a
-held body, and a held body is where momentum leaves the ledger of the
-free things, as a mirror bolted to the table takes the recoil of a
-reflected photon. So: at the crystal the arriving record's momentum (its
-flow booked at the crystal's Ports, the push of 2.2 and 8.11) is HANDED
-TO THE CRYSTAL at its click; the pair is born by **E**^T from the crystal's
-cells with no heading and no phase gradient (9.7 (b)), its momenta not
-tied to the arriving one; LIGHT'S MOMENTUM ALONE IS NOT CONSERVED, and the
-total with the crystal's book is. The crystal stays at rest because it is
-declared at rest; its book records the recoil. The same holds for the
-mirror (k_perp -> -k_perp, the reflection, 9.2: twice the normal momentum
-to the mirror's book) and for every tool. The owner's reading, "a photon
-that changes direction", is this: the direction changes at a held body,
-and the held body takes the difference.
+THE OWNER'S WORD (22:30Z, translated): "when the photon moves in the
+crystal the momentum IS conserved, because the crystal's cells change ...
+after we put the values into the board, the momentum is conserved." The
+earlier reading (a book at a held body) is WITHDRAWN. The reading below
+has four parts.
+
+**(i) The theorem on a homogeneous board (PROVED HERE).** Where every
+Node carries the same pair, the rule commutes with every translation
+(1.6). So the rule maps each character of the torus to itself: the
+record's content in each wave vector **k** is advanced by that character's
+own clock and never moved to another **k** (8.1's band). The records'
+total content in each **k**, and with it the total momentum SUM over **k**
+of **k** times that content, is therefore the same at every interval.
+Nothing is booked: the values carry it.
+
+**(ii) Where a tool's cells carry it (DERIVED HERE, from 8.11 and 8.3
+(v)).** A tool's material breaks the translations at its cells, and there
+the field's momentum changes (a reflection sends k_perp to -k_perp). On
+the board the difference is carried by the one value that a body has
+besides its material: ITS OWN RECORD'S MOMENTUM VECTOR, advanced by the
+push (8.11). The push is the stress of light's field summed at the body's
+outer Ports (verb G), divided with the remainder kept (verb D), and it
+steps the body's record, by the hop, when the accumulator passes its
+wall (verb T). These are the law's own verbs on the body's own values:
+NO BOOK. "The crystal's cells change" is this: the body's record moves
+by the push it received.
+- At the crystal: before the click the arriving record's stress at the
+  crystal's outer Ports enters the crystal's vector. At the click the
+  arriving record ends. The pair is born by **E**^T with no heading, and
+  the birth's own push on the crystal is 0 on the average, because the
+  six Port vectors of the orbit sum add to 0 (PROVED HERE: SUM over the
+  six Ports of the unit vectors is 0). So the board's total before is the
+  crystal's vector plus the arriving record's, and after it is the
+  crystal's new vector plus the pair's mean of 0: equal.
+- At the mirror: the reflected record's stress at the mirror's Ports
+  steps the mirror body's vector by twice the normal momentum.
+
+**(iii) What cannot carry it, said plainly.** A body declared `fixed` has
+its step suppressed: its vector is held at 0. So a FIXED BODY'S CELLS
+CANNOT CARRY MOMENTUM UNDER THE LAW, and wherever a fixed body reflects,
+converts or absorbs, the board's total changes by the difference.
+Momentum is conserved on the board exactly when EVERY TOOL IS A FREE BODY
+WITH ITS OWN RECORD (a block of a massive kind carrying the tool's light
+material, the transponder's form, section 8 of the specification), held
+in place only by its mass: its velocity after a push is the push over
+its mass. A body of mass M that reflects a photon of momentum k moves
+at 2 k / M Links per interval afterwards, so it drifts 2 k T / M Links
+over T intervals. A crystal
+or mirror of a massive kind that drifts less than one Link over the run
+is "at rest" to the board's own grain.
+
+**(iv) Exactness.** The push's accumulator and its step are PROVED as
+identities (8.11). That the stress at the Ports equals the field's
+momentum flux is CARRIED (8.11: a declaration of the design, not of the
+law). So on the GameBoard the total over the records' characters and the
+free bodies' vectors is conserved to that declaration. It is exact in
+(i), where no body intervenes.
+
+WHAT CHANGES. The tools of the specification become free bodies of a
+massive kind carrying their light material. Their `fixed` flag retires
+from the tools, and their mass is written so that the drift over the run
+is below one Link (the specification's A.3, A.4, A.5 and A.6). Nothing
+changes in any count: the counts are computed weights or first rungs, and
+a drift below one Link moves no cell. MISSING: a proof that the stress is
+the flux on the board, not only in the continuum.
 
 ### 9.16 What was missing, closed item by item (the Boss's order of 2026-09-24, 22:10Z: "close, do not bring the owner questions")
 
@@ -4089,3 +4155,72 @@ THE CRYSTAL'S WORLD FILE is a = b = 0 and c = 1, the branches [[1, 1],
 **(6) The cone: ACCEPTED as not derivable (9.3, 9.7).** The pair's
 headings are the placement's: the receivers are placed where the pair
 goes (LAB_TOOLS.md 11.3).
+
+### 9.17 The only operation is the click, and the emitter clicks (the owner's word of 22:30Z: "in principle we cannot do any operation on the cells except to produce a click, which really takes out a record. Verify whether the emitter must also make a click")
+
+**(1) The form of every tool (DERIVED HERE, from 8.8 and 9.12).** The
+Inside is a bijection and the click is its one deletion (8.8). So a
+tool's action is the law's own advance (the rule **R**, with the tool's
+material, and the push of 9.15) PLUS AT MOST A CLICK. The click may have
+a birth as its other side (9.13): **E**^T writes the born record's two
+levels once, at the click's interval, and from then on only the law
+advances it. Read against that form:
+- THE RECEIVER: a click. FORM MET.
+- THE MIRROR, THE SPLITTER, THE FACES: the law's advance on a gap or on
+  the zero row. No click. FORM MET.
+- THE POLARISER: the law's advance with **B**_u on the label rows
+  (9.16 (2)), then its receivers' clicks. FORM MET once the per-label
+  rows are built. The table form (the split of booked offers with a kept
+  remainder) is an operation on the books and not the law's advance: it
+  RETIRES (9.11 (e)).
+- THE CRYSTAL: the arriving record's click, then a birth. FORM MET.
+- THE WELL AND THE TRANSPONDER: the law's advance, and its own record's
+  clicks. FORM MET.
+- THE EMITTER, as main has it: NOT MET, twice over. First, the lamp's
+  births come from a rate accumulator with no record behind them, so a
+  record begins where none ends. Second, `_drive` writes the cosine value
+  at the emitter's Node every interval of the train (verb T on a cell
+  that the law does not advance), and it overwrites what arrives there
+  (the physicist's observation of 18:50Z).
+
+**(2) The emitter must click (DERIVED HERE).** One quantum, one click
+(8.6) and the bijection (8.8) together say that the number of quanta
+changes only at a click. A birth adds one, so A BIRTH MUST BE THE OTHER
+SIDE OF A CLICK THAT ENDS ONE: the emitter's own excited record ends as
+the new record begins. This is the atom's transition: **E** on the
+emitter's own record, then **E**^T. Its own clock's rung alone is not
+enough, because a count on a clock with no record behind it ends nothing
+(it is lawful as a count, 9.5, but it creates a quantum from nothing).
+The algebra's form is therefore THE BLOCK EMITTER: a body with its own
+record (a well of a massive kind, 8.3) whose record clicks at its own
+rung. That click ends the record, and the photon's record is born at the
+same interval on the emitter's cells.
+- THE BORN RECORD'S VALUES are written once, at the click, by **E**^T:
+  the born clock's character on the emitter's cells at both levels. They
+  are never driven afterwards.
+- A NARROW TRAIN IS A LENGTH, NOT A DURATION: a record of n periods is
+  written over n wavelengths of emitter cells in a line (its direction
+  the line's, a placement, 9.6). On a single cell the born record is
+  broadband.
+- The emitter's cells are cells like any other before and after the
+  birth, and an arriving amplitude passes them under the rule. This
+  answers 9.10 item 1 and the physicist's question: nothing is
+  overwritten.
+
+**(3) What changes in the code.**
+- `_drive` retires. The lamp's rate accumulator retires as a source of
+  births. `train` becomes the born record's extent on a line of emitter
+  cells.
+- A birth is fired only by a click: the emitter body's own record's rung,
+  or an arriving record's rung at a crystal.
+- The loader refuses a birth with no clicking record behind it.
+- The light clock is unchanged, because its A is already a block whose
+  record clicks.
+- The consequences for the fifteen:
+  - Bell and Malus read computed weights and are unchanged.
+  - The rows reading a steady field (the two slits, the pace fans, M1,
+    the index probes) take the born packet's spectrum, the extent of
+    their emitter line. Their pins are re-derived blind on the
+    regenerated worlds.
+  - The first-rung rows (M2, Sagnac) re-derive their first rung from the
+    packet's front.

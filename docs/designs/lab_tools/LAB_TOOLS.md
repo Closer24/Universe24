@@ -115,15 +115,18 @@ and no tool name.** Every tool is built from these alone.
   G_48's trivial representation (9.4, 9.13).
 - A direction: NONE. A beam is a line of emitter cubes driven in phase, a
   placement (9.6).
-- Its primitive: **E**^T, the amplitude A C[phase(t)] imposed at its
-  cells by its own clock (verb T). Its births are triggered by its own
-  clock.
-- Its material integers: the family and its clock [p, q]; the amplitude
-  A; the train in periods; the rate; the wheel [step, W]; the residue
+- Its primitive: its own record's click (**E**, **D**, **X**), then
+  **E**^T, which writes the born record's two levels once on its cells
+  (ALGEBRA.md 9.17). There is no drive: `_drive` and the lamp's rate
+  accumulator retire. A narrow train is a line of emitter cells n
+  wavelengths long.
+- Its material integers: its body's (a block of a massive kind with its
+  own record, 8.3); the born family and its clock [p, q]; the amplitude
+  A; the line's length in wavelengths; the wheel [step, W]; the residue
   order; the label state (branches).
 - On the board at interval 0: nothing (births come later).
-- Its load check: the train ends at the clock's quarter, exactly; `arms`
-  is refused; the wheel's step is coprime to W (a permutation).
+- Its load check: every birth has a clicking record behind it (9.17);
+  `arms` is refused; the wheel's step is coprime to W (a permutation).
 - Its unit tests (COMPUTATION on main's `_births` and `_phase`):
   - At [2464, 25] and 128 periods the train lasts 3200 intervals (154
     periods of [2464, 25]; 77 of [1232, 25]).
@@ -260,6 +263,42 @@ and no tool name.** Every tool is built from these alone.
 - Its unit test: the closed face's reflection delay on the chain at
   [2464, 25] is 3.547 intervals.
 
+**A.10 THE ONE TABLE (the owner's word of 22:30Z: every tool, click or
+no click, the rotation of its shape, its primitive, its material).**
+Every tool is the law's advance on its material plus at most a click
+(ALGEBRA.md 9.17). Every tool is a FREE body of a massive kind carrying
+its light material, so that its own record's vector carries the push and
+momentum is conserved on the board (9.15). Its mass is written so that
+it drifts less than one Link over the run.
+
+| Tool | Click? | Its group element: the rotation of its shape | A direction? | Its generic primitive | Its material integers |
+| --- | --- | --- | --- | --- | --- |
+| Emitter | YES: its own record clicks, and the birth is the click's other side | **E**^T, the projector onto G_48's trivial representation (the orbit sum of a Port) | none on a cube; a line of cells gives a line's (a placement) | its own record's **E**, **D**, **X**, then **E**^T once | the block's pair, side and seed; the born clock [p, q]; A; the line's length; the wheel [step, W]; the branches |
+| Receiver | YES | **E** then the rung: a scalar, the trivial representation | none | **E**, **D**, **X** | W; its name in the ladders |
+| Mirror | no | the reflection -I x (the half-turn of V_4 about the face's normal), arising from the gap | none on a cube; a slab's unoriented normal | **R** with the gap | the gap [num, den], the side |
+| Splitter | no | the reflection weighted by r, the identity by t | the layer's normal | **R** with the layer's pair | [91, 107] at [2464, 25] |
+| Polariser | no of its own; its two receivers click | the rational projector **P**_u in Q[G_48]'s image M_2(Q), not in G_48; chiral: (a, b) -> (a, -b) | no spatial direction | **B**_u on the label rows | the axis [a, b], gcd 1; its two receivers |
+| Crystal | YES: the arriving record clicks at it, and the pair is born | **E**, then m^T, then **E**^T; all 48 on a cube | none; the headings are the placement's | **E**, **D**, **X** on the arriving record, then **E**^T | the born clocks p_1 + p_2 = p; the branches [[1, 1], [2, 1]]; `label_hands`; the wheel W |
+| Well | YES: its own record's clicks (its clock) | the bound mode, a character of the time translation at **k** = 0 | none at rest; its momentum in motion | **R** with the lowered pair; its own **E**, **D** | the pair, the side, the seed, the momentum and ramp, the coupling, the wheel |
+| Transponder | its own record's clicks; the reflection itself does not click | the well's, plus the mirror's reflection in its moving frame | its momentum | **R** with two families' pairs | the well's, plus the gap [1, 2] for light |
+| Faces | no | the segment's border, the row beyond read as 0 | the axis's normal | **R** | none (periodic or closed per axis) |
+
+**A.11 The crystal's keys for its world file (the physicist's two
+questions of 18:50Z).**
+- (1) THERE IS NO TAKE PAIR: the take is removed (ALGEBRA.md 9.12). The
+  crystal's cells are the arriving record's NAMED RECEIVER, and its
+  material is its light pair (the vacuum's [1, 1] unless an index is
+  declared) and its massive body's pair.
+- (2) The pair's wheel is the crystal's own `wheel` key: W = 2560 for the
+  Bell pin of B.
+- (3) THE PAIR CARRIES THE ARRIVING RECORD'S RESIDUE u (one quantum, one
+  residue, ALGEBRA.md 9.7 (b)). The residue order and the seed are
+  therefore the EMITTER's, on the arriving train, and the crystal has no
+  `residue_seed`.
+- (4) THE SHELL OF RECEIVER CUBES RETIRES with the take. The faces are
+  closed and reflect (A.9), so the two slits' layer gains no bodies; its
+  regeneration follows B's margin.
+
 ## B. THE FIFTEEN EXPERIMENTS AS PLACED TOOLS (cubes on a torus; RUN_LIST.md's rows; the pins blind, written before any run)
 
 THE TIMING'S FORM, in every row: nothing reaches a receiver at Manhattan
@@ -289,7 +328,7 @@ where a shift common to every record cancels.
 | The moving mass's energy (M2) | chain 200, closed | a matter emitter at 20 (train 8); a receiver at 104 | 169 +- 2 at W = 64 (K) | the first rung from the birth; FACE MARGIN 95 Links, so a reflection returns long after the first rung |
 | The bound clock's second term (ii-a, ii-b) | cubes 64^3 and 48^3, periodic | one well, side 20 or 28, pair [800, 800], at rest or at k = 3 | 0.7814 and 0.8032, band 0.3 percent (P) | its own clicks over the hold; no face |
 | The deep well (control) | 128 x 128 layer, periodic | one well, side 40, pair [800, 800], at (44, 44) | 0.7531, band 0.3 percent (CONTROL) | its own clicks over the hold; no face |
-| The light clock | chain 673, closed | a well A, side 12, at 600, emits light, receiver at_a at 612; the far face at 672 is the clock's mirror | 213 +- 1 at W = 64 (K) | the first cycle's first rung at 612 from its birth; the face is the clock's own mirror, by design |
+| The light clock | chain 674, closed | a well A, side 12, at 600, emits light, receiver at_a at 612; the mirror body, gap [1, 2], at [672, 674) | 214 +- 1 at W = 64 (K; the physicist's blind map with the material mirror [1, 2] at [672, 674) on the chain of 674; 213 on the closed face HISTORY) | the first cycle's first rung at 612 from its birth, after one reflection |
 | The receding index at k = 3 (v-m) | chain 4000, closed | an emitter at 800 (the clock [3565, 10000]); a moving well, side 24, pair [314, 315], at 1500; the rest and reference worlds beside | the lab phase +1.0144 rad +- 0.04; the drift 1.2 x 10^-3 rad per interval +- 10 percent (P; GAMEBOARD by declaration) | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
 | The receding index at k = 4 | as at k = 3 | as at k = 3, at k = 4 | +0.6103 rad +- 0.04; drift 4.3 x 10^-4 rad per interval +- 10 percent (P) | as at k = 3 |
 
@@ -1043,9 +1082,14 @@ to the last free Node.
 the measured event with `side`, `pair`).
 
 **3.6 The unit tests.** A chain, an emitter of [2464, 25], the mirror of
-depth 2 with the face open behind it and a sink beyond: the offer booked
-beyond it over the booked total 5.561 x 10^-4 (the steady value; the
-train's spread of clocks MEASURED ONLY beside); depth 1: 3.000 x 10^-2;
+depth 2 with the face open behind it and a sink beyond: THE SHARE ON THE
+TRAIN'S STEADY WINDOW (the booking gained beyond the mirror over the
+window, over the same gain without the mirror), 5.561 x 10^-4; depth 1:
+3.000 x 10^-2. The ratio of the whole bookings at the records' close is
+NOT the share (1.4 x 10^-2 at depth 1 on the physicist's board: the
+front is broadband and the records close at different intervals). The
+physicist's reading on material-mirror 27226b9d: 3.02 to 3.07 x 10^-2 and
+5.6 to 6.0 x 10^-4 window by window, inside the intervals;
 the reflected train's first rung at the emitter's receiver later than a
 closed face's by the delay difference (K form above, MEASURED ONLY).
 
@@ -1353,9 +1397,13 @@ between 2.886 x 10^-2 and 3.116 x 10^-2; depth 2 between 5.314 x 10^-4 and
 and 0.5098. THE CLOSED FACE (the Node beyond the last free Node held at 0):
 r = -e^(2ik), its phase -2.0859 rad and its delay 2 / v_g = +3.547
 intervals referred to the last free Node; the gap mirror's +4.085, so the
-material mirror adds +0.538 intervals per reflection over the closed face
-(the light clock's pin moves by twice that per round trip, to be carried
-in the physicist's blind re-derivation).
+material mirror adds +0.538 intervals per reflection over the closed face.
+The light clock's first rung comes after ONE reflection (A's record
+leaves A, reflects once and returns to A's set), so it moves by +0.538
+once, not twice (the physicist's correction). His blind map gives 214 at
+W = 64 (211 at 256, 209 at 1024), against 213 on the closed face: the
+pin is 214 +- 1 at W = 64, on the chain of 674 with the mirror body at
+[672, 674).
 
 **11.6 The label bits as hands (his point (h)).** ALGEBRA.md 9.3's
 derivation of HV + VH reads the label bit as the hand (1.2's dictionary).
