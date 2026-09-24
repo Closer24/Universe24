@@ -5763,6 +5763,31 @@ CORRECTIONS = [
         "the published number verified against its source \\cite{sourcesverified}, its $3/2$ normalisation not found there \\cite{lightdispersion} & n/a & n/a, a form and a bound & \\underline{\\hspace{0.3in}} \\\\",
         "the published number verified against its source \\cite{sourcesverified}, the factor $3/2$ the paper's own reading, the sensitivity $\\sqrt{2/3}$ beside \\cite{lightdispersion} & n/a & n/a, a form and a bound & DERIVED\\_BLIND (the form); FALSIFIER\\_ONLY (the bound, its source verified) \\\\",
     ),
+    (
+        "commit 47, PR 1104's merge 25a7abf4: row R2's three moving clicks as declared pins at W = 256",
+        "the ratio $0.975 \\pm 0.021$ ours, a CONVERSION & not yet &",
+        "the ratio $0.975 \\pm 0.021$ ours, a CONVERSION; the clicks declared at $W = 256$: $108$ at rest, $247$ chasing, $72$ meeting, each $\\pm 2$; raw $175/319 = 0.5486$, $0.5774$ after each direction's own rise, the identity (DECLARATION, sections 13 and 15 at 25a7abf4 \\cite{declarations}; no reading yet) & not yet &",
+    ),
+    (
+        "commit 47, PR 1104's merge 25a7abf4: row LC's receiving set",
+        "$N_0 = 218 \\pm 2$ in A's own clicks at $W = 64$ on its returned record (the declarations' section 10, item 9 \\cite{declarations})",
+        "$N_0 = 218 \\pm 2$ in A's own clicks at $W = 64$ on its returned record, the receiving set at $x = 612$ (the declarations' section 10, item 9, on \\texttt{main} at 25a7abf4 \\cite{declarations})",
+    ),
+    (
+        "commit 47, the page count: the octahedron figure narrower",
+        "width=0.22\\textwidth]{figures/octahedron.pdf}",
+        "width=0.18\\textwidth]{figures/octahedron.pdf}",
+    ),
+    (
+        "commit 47, the page count: the lattice figure narrower",
+        "width=0.42\\linewidth]{figures/lattice.pdf}",
+        "width=0.36\\linewidth]{figures/lattice.pdf}",
+    ),
+    (
+        "commit 47, the page count: no preferred page break before a heading (the ragged bottom left fourteen empty lines before the AI declaration)",
+        "\\captionsetup{labelsep=space}\n",
+        "\\captionsetup{labelsep=space}\n\\makeatletter\\@secpenalty=0\\makeatother\n",
+    ),
 ]
 
 

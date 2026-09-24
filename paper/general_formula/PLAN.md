@@ -7115,3 +7115,16 @@ DERIVED_BLIND, the bound FALSIFIER_ONLY with its source verified; the
 3/2 factor named as the paper's own reading with the sensitivity
 sqrt(2/3) beside. The blank class fields left: R2 (the owner at
 09:00). R2's moving clicks wait on the merge SHA. 48 pages.
+
+## Applied (2026-09-24, the Boss's message of 05:05Z): commit 47 on paper-48
+
+PR 1104's merge (25a7abf4) brings R2's three declared clicks at
+W = 256 (108 / 247 / 72, each +/- 2; the raw ratio 175/319, the
+identity 0.5774 after each direction's own rise) into row R2 as
+DECLARATION with no reading yet, and the light clock's receiving set
+at x = 612 into row LC. The page count is held at 48 by two narrower
+figures and by removing the preferred page break before headings. The
+five click-path gaps stay untouched until the Boss's one order; by
+Reviewer 3's reading (04:59Z) gap 3 is stale (the linear form is in
+the engine at af071b3f), gap 1 a labelling, gaps 2, 4 and 5 questions
+for the owner at 09:00.

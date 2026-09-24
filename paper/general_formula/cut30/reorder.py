@@ -22,7 +22,7 @@ import massive
 BLOCKS = {
     "words": (
         "\\paragraph{The definitions, in order.}",
-        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.42\\linewidth]{figures/lattice.pdf}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.36\\linewidth]{figures/lattice.pdf}",
     ),
     "simulator_led": (
         "\\paragraph{From the physics to the mathematics: the postulates and what each forces.}",
