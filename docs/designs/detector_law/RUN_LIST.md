@@ -37,8 +37,9 @@ face-cell set), it needs a new one. Nothing runs tonight, preliminary or
 pinned, until the owner answers whether the preliminaries may start after
 the builder's push or all after 09:00. ANSWERED (the owner, 04:18Z
 through the Boss, record 1648): the preliminaries and the checks run AT
-the GO, after his word at 09:00 Israel, before any pin run, nothing
-before; the sequence is THE PREFLIGHT below. Dark matter has no row, no
+the GO, after his word at 09:00 Israel, before any pin run; by his word
+of 05:08Z (record 1665) they may also run before the GO as a dry run,
+no pin run; the sequence is THE PREFLIGHT below. Dark matter has no row, no
 world and no pin (the owner's word; CLOSER24's page stays a proposal).
 
 THE PREFLIGHT (the model owner's rule of 2026-09-24, 04:18Z through the
@@ -46,8 +47,12 @@ Boss, record 1648: "when the GO comes, only then, before it, check that
 everything runs: all sorts of small tests, see that everything works,
 that the engine functions well, our whole checklist, tests, that
 everything runs as it should"): the sequence the launcher follows after
-the owner's GO and before the first pin run, in this order, nothing
-before the GO:
+the owner's GO and before the first pin run, in this order. THE DRY
+RUN (the owner's word of 05:08Z, record 1665): before the GO all the
+preliminaries may run again, each by its runner, and the full gate with
+them, to confirm each world works and there is no bug, labelled
+EXPLORATORY, no pin run; the sequence at the GO is unchanged and runs
+again on the final main. The sequence:
 
 (a) THE FULL GATE. `python tools/check.py --full` green on the merged
     main that carries the builder's lines and the world files (the one
@@ -69,7 +74,13 @@ before the GO:
     section 2 item 8: no Bell run before ORDER_CHANNEL_ATTACKS.md is on
     main under Reviewer 3's read with no objection open) and
     `malus_{45,11.25,28.125,33.75}`. A refusal stops that world's chain
-    and no other's. HOST: seconds per world.
+    and no other's. For the Bell worlds the load line names Reviewer 3's
+    two CHECKs explicitly (his 04:50Z and 04:59Z): `residue_order`
+    "seed" present and READ by the loader (the builder's keys landed, no
+    default), and the births exactly W = 2048 within the world's `ticks`
+    (the shipped bell worlds carry 300); a Bell world that loads under
+    the counter form or short of W is refused at (b), not read at (c).
+    HOST: seconds per world.
 (c) PER WORLD ITS PRELIMINARY RUN as its PRELIMINARY column declares:
     EXPLORATORY, unpinned, labelled EXPLORATORY in its output directory
     and on the 09:00 page (it loads, the emitter emits, the clicks arrive
@@ -85,7 +96,9 @@ before the GO:
     his word is the approval, with APPROVALS.md's three checks cited on
     the row (check 1 the algebra CLOSED on the closure page; check 2 the
     GameBoard without pins, which the preliminary is; check 3 the pin
-    written before the run); no pin runs without it.
+    written before the run); no pin runs without it. His word per world
+    is "the world works" or the named defect, never MET, PASS or FAIL on
+    an exploratory reading (the owner's rule).
 (e) ONLY THEN THAT WORLD'S PIN RUN: the run command above, the reader of
     record, the reading beside the pin by kind, one run, no pin moved.
 

@@ -15,17 +15,22 @@ OWNER for the 09:00 page with the two accounts and a recommendation; and
 says what changes where. No gap is settled by my own word and none by a
 silent change of the code or the paper; Reviewer 3 reads this page
 adversarially; the builder gets the code lines and the writer the paper's
-sentences from the Boss as one order.
+sentences from the Boss as one order. Reviewer 3's own reading of the
+five gaps at af071b3f reached me through the Boss at 05:05Z after the
+first version of this page: (a), (b), (d) and (e) right as facts, (c)
+stale (built at af071b3f); on the Boss's order rows (2) and (5) are
+written as QUESTIONS FOR THE OWNER with the two accounts and my
+recommendation, the pins untouched until his word.
 
 ## The five gaps at a glance
 
 | Gap | The fact, re-read | The law that decides it | What changes, where |
 | --- | --- | --- | --- |
 | (1) the cell chosen by u | the paper and the engine agree on the cell rule (u selects the cell through the rung) and on the stamp (the count and the birth stamp); the engine's gather line carries one more field, `u` | the wheel (record 180), the inputs (record 189), the click (record 1414), the six lines (records 1647 and 1648) | nothing in the code's cell rule and nothing in the paper; `u` on the gather line and on the `records` reading labelled HOST in ENGINE.md; the reader of record reads `chosen`, `birth`, `click` |
-| (2) the pointer's form | the paper's Definition 3, ALGEBRA.md 8.6 and the engine agree: the pointer books the motion squared of the receiver's own record; the paper's figure label and three phrases say "the record's values" and X^2 + Y^2 | the click (record 1414), by the algebra (record 1421), ALGEBRA.md 8.6 carried; the unit DESIGN.md sections 2.1 and 5 | one clause in ALGEBRA.md 8.6 (mine); the paper's label and three phrases (the writer's); nothing in the engine; a one-line confirmation for the 09:00 page |
-| (3) the linear form S[k] | in the code at af071b3f (the table's action, `_table_action`; the sine table imported); not on main because PR 1068 is open; one dead diagnostic function, `read_phase` | the groups' one account (record 1547), by the algebra (record 1421), section 14 on main (record 1545), the clock clause (record 1543) | PR 1068's merge (the Boss); `read_phase` and `nearest_phase` deleted or labelled a diagnostic with no caller (the builder); nothing in ALGEBRA.md or the paper |
+| (2) the pointer's form | the paper carries two accounts: Definition 3 and the read-out paragraph say the receiver's own record's MOTION (the engine's and ALGEBRA.md 8.6's), items (5) and 117, the caption and the panel label say the norm of the pair, ev(f)'s square, X^2 + Y^2 (ALGEBRA.md 2.5's form on the record's pair) | QUESTION FOR THE OWNER (the two accounts and my recommendation below); records 1414 and 1421 name the click, not the unit; the pins were derived with the motion squared | after his word: under the motion squared the paper's label and three phrases (the writer's) and one clause in ALGEBRA.md 8.6 (mine); under the pair's form the pins re-derived before any run, the engine's two lines and Definition 3 instead |
+| (3) the linear form S[k] | in the code at af071b3f (`_sine_table` 885, `read_pair` 1243, `_split` 1312); not on main because PR 1068 is open; one dead diagnostic function, `read_phase` | the groups' one account (record 1547), by the algebra (record 1421), section 14 on main (record 1545), the clock clause (record 1543) | PR 1068's merge (the Boss); `read_phase` and `nearest_phase` deleted or labelled a diagnostic with no caller (the builder); nothing in ALGEBRA.md or the paper |
 | (4) the default path | `run.py` runs the old ray law unless `detector_law: true`; a block needs `massive_record: true`; the old law is 10000 lines, 332 example worlds and 95 test files | the owner's word of 04:53Z ("throw out old code from the engine"; relayed 04:56Z, the Boss's record); Highlights item 10 amended by the Boss on it | the builder's removal PR, after the pin runs (my recommendation); one Highlights clause (the Boss); nothing in the paper, which names one law; the 09:00 line on the old worlds and tests |
-| (5) the block's click | the paper's Definition 3, ALGEBRA.md 8.6 and the engine agree: the rung test on the body's response's motion across its cells against the record's norm, stamped with the body's own count of cycles; the writer read where the pointer is stored as whose it is | the click (record 1414), the detector's own count (Highlights item 7, record 394), by the algebra (record 1421) | nothing in the engine, ALGEBRA.md or Highlights; one clause of clarity in the paper's Definition 3 (the writer's, optional) |
+| (5) the block's click | the engine has two mechanisms, the click (light's rung on the body's response across its cells) and the body's count (its own mode's cycles, no rung); ALGEBRA.md 8.6 has the two; the paper's Definition 3 ("the detector's count advancing" at the click) and its read-out paragraph (683) read as one mechanism, the count advancing at the click | QUESTION FOR THE OWNER (the two accounts and my recommendation below); Highlights items 6 and 7 (records 1414 and 394) are the two mechanisms; every pin in a body's count was derived with them | after his word: under the two mechanisms one sentence of the paper's Definition 3 and one gloss at 683 (the writer's), nothing in the engine; under one mechanism every pin in a body's count is void and the engine's clock changes, which no map derived |
 
 ## (1) The cell chosen by u
 
@@ -107,35 +112,61 @@ the levels and not their motion. The paper's theorem of section 5 (the
 read-out a positive quadratic form on the lattice, 498 to 572) is not
 touched: (Y - X)^2 is one.
 
-(b) THE LAW. The click is the evaluation of the body's own record on its
-cells at the declared wheel (the owner's word, record 1414); the
-postulates and the paper go by the algebra (the owner's word, record
-1421); ALGEBRA.md 8.6 carries the unit from DESIGN.md sections 2.1 and 5
-(the conserved form's units, the motion squared; Reviewer 3's Port
-factor; the build's measurement). No decision of the owner names the
-unit by itself; it enters under records 1414 and 1421 through 8.6. For
-the 09:00 page, one line, not a question unless the Boss reads 1421
-otherwise: THE POINTER BOOKS THE MOTION SQUARED, (a_now - a_before)^2 of
-the receiver's own record per cell per interval, never the levels'
-squares; a static level moves no receiver. My recommendation: the motion
-squared, as built, as 8.6 has it and as the paper's Definition 3 has it.
+(b) THE LAW: QUESTION FOR THE OWNER (Reviewer 3's line through the
+Boss, 05:05Z: which quadratic form the click's read-out is, is a law
+question; the motion squared is what the maps derived the pins from,
+and a change to the pair's form moves pins and cannot be settled
+silently). The owner's words name the click (record 1414: the
+evaluation E at the declared wheel) and the algebra as the judge
+(record 1421), not the unit. THE TWO ACCOUNTS. (I) THE MOTION SQUARED of
+one column: the pointer books (a_now - a_before)^2 of the receiver's own
+record per cell per interval, summed across its cells and over the
+intervals; the engine as built (a set's Port 1211, a block's response
+1871 to 1872), ALGEBRA.md 8.6, DESIGN.md sections 2.1 and 5, the paper's
+Definition 3 (251) and its read-out paragraph (683); the light clock's
+218 +- 2, R2's 108 / 247 / 72, row 4a's and 4b's readings in a body's
+count were all derived with it (`coupled_mode_pins.py`, the ledger's
+unit). (II) THE PAIR'S FORM: the norm of the record's pair, ev(f)'s
+square, X^2 + Y^2 = f^T G f (ALGEBRA.md 2.5, line 570; the conserved
+form I on the two levels, 8.2), the paper's item (5) (67), 117 ("ev(f)
+with its norm |ev(f)|^2 at a detector, the one read-out"), the caption
+(72) and the fourth panel's label. Reviewer 3's expectation, which I
+share: for a travelling character the two agree up to the phase (both
+accumulate about linearly, the rung crossed within a fraction of a
+period of each other); they differ on a standing residual, which the
+pair's form counts and the motion does not. MY RECOMMENDATION: (I), the
+motion squared, for three reasons: a static level (the rule's
+zero-frequency mode, which no receiver takes) is zero in it and not in
+(II), and DESIGN.md section 5 measured that with the levels' squares a
+record on a board with a residual never completes ("with a^2 no
+completion"); every pin in a body's count was derived with (I), so (I)
+moves no pin; and (I) is a positive quadratic form on the pair, so the
+paper's read-out theorem (498 to 572) stands under it. If the owner
+chooses (II), the pins of the light clock, R2, 4a and 4b are re-derived
+before any run (a derivation before a run is not a pin moved) and the
+engine's two lines change; nothing runs on either form before his word.
 
-(c) WHAT CHANGES WHERE. ALGEBRA.md 8.6: one clause, mine, on the next
-commit that touches the file: "the motion squared, (a_now - a_before)^2
-per cell per interval, never the levels' squares a^2 (DESIGN.md section
-5: with a^2 no completion)". Highlights 5.4: nothing. The engine:
-nothing. The paper (the writer, on the Boss's order): the fourth
-panel's label to "(a_now - a_before)^2 across R: the record's motion";
-in item (5), in the caption and in the paragraph at 328, "the quadratic
-form of the record's values" to "the quadratic form of the record's
-motion, (a_now - a_before)^2 summed across its cells"; Definition 3
-unchanged.
+(c) WHAT CHANGES WHERE, after the owner's word. Under (I): ALGEBRA.md 8.6
+one clause, mine, on the next commit that touches the file: "the motion
+squared, (a_now - a_before)^2 per cell per interval, never the levels'
+squares a^2 (DESIGN.md section 5: with a^2 no completion)"; Highlights
+5.4 the owner's line, the Boss's clause; the engine nothing; the paper
+(the writer, on the Boss's order): the fourth panel's label to "(a_now -
+a_before)^2 across R: the record's motion", in item (5), in 117, in the
+caption and in the paragraph at 328 "the quadratic form of the record's
+values" and "ev(f) with its norm" to "the quadratic form of the record's
+motion, (a_now - a_before)^2 summed across its cells", Definition 3 and
+683 unchanged. Under (II): the engine's two lines (1211, 1871 to 1872)
+to the pair's form, the pins re-derived, Definition 3 and 683 to the
+pair's norm, ALGEBRA.md 8.6 and DESIGN.md sections 2.1 and 5 rewritten.
 
 ## (3) The linear form S[k]
 
 (a) THE FACT, re-read. At af071b3f the linear form IS in the code:
-`_table_action` (1244 to 1262) applies "the table's action on a record's
-pair at a Node by the linear form of DECLARATIONS.md section 14 item 1
+`read_pair` (1243 to 1262; the sine table `_sine_table` at 885; the
+splitter's `_split` at 1312: Reviewer 3's names) applies "the table's
+action on a record's pair at a Node by the linear form of
+DECLARATIONS.md section 14 item 1
 ... the level A cos(phi + t) = (a_now S[k + t] - a_before S[t]) / S[k] at
 the turn t, S the sine table and k the interval's own whole step of the
 record's clock (`by_clock`), one division", refusing a clock step whose
@@ -235,37 +266,75 @@ norm is the light record's, its insert's motion over the train
 pointer the body's own record's motion across R against the record's
 norm at the rung 1 / W "in the block's OWN clock", the click line the
 block's own count (its mode's cycles, 8.3) and the birth stamp. The
-paper's Definition 3 (251 to 254) and the paragraph at 328 ("the
-evaluation (E) of the record on the detector's cells in the detector's
-own clock; a body is a detector of itself, across its own cells"): the
-same. CORRECTED: no gap in substance. The writer read where the pointer
-is STORED (one integer per record per cell, on the record's `pointers`
-array) as WHOSE motion it is (the body's response across R), and read
-the body's cycle count as "a separate mechanism": it is the body's own
-clock (Highlights item 7, the detector's own count), the stamp; the rung
-test is the click (Highlights item 6). Two items, one account.
+paper's read-out paragraph (683: "the click is the evaluation (E) of a
+body's own record on its cells at the declared rung W ... in the block's
+own clock; the click line carries the block's own count and the light
+record's birth stamp") and the paragraph at 328 say the pointer and the
+rung as the engine has them. CORRECTED in part: the writer read where
+the pointer is STORED (one integer per record per cell, on the record's
+`pointers` array) as WHOSE motion it is (the body's response across R);
+that is no gap. The gap that stands (Reviewer 3's, the deepest): the
+paper's Definition 3 says at the click "the detector's count advancing,
+the click stamped with that count" (254), and 683 reads as ONE
+mechanism, the evaluation at the rung "in the body's own clock", while
+the engine has TWO: the body's count advances at its own mode's zero
+crossings with no rung (`_block_clock`), and the click is light's rung
+on the body's response, stamped with whatever the count is then.
 
-(b) THE LAW. The click (record 1414: the evaluation E of the record's
-time series on the foreign object's cells at the declared wheel W); the
-detector's own count (Highlights item 7, record 394); by the algebra
-(record 1421). No question for the owner.
+(b) THE LAW: QUESTION FOR THE OWNER (the Boss's order on Reviewer 3's
+line: both can be the law, a clock counts and a detector clicks; the
+answer must not move the maps' pins, the first-rung form). THE TWO
+ACCOUNTS. (I) ONE MECHANISM: the body's count advances at each click
+(the detector counts its clicks), and the click is the rung of its own
+record across its cells: Definition 3's "the detector's count advancing"
+read literally. (II) TWO MECHANISMS: the body's count is its own record's
+cycles across its cells (the zero crossings of its sum, `_block_clock`),
+its clock, ticking with or without light; the click is light's rung on
+the body's response across its cells against the light record's norm,
+stamped with the body's count at that interval (`_book_response`,
+`rung_counts`): the engine, ALGEBRA.md 8.6 ("the block's OWN clock
+(the counting form ...); the click line carries the block's own count
+(its mode's cycles, 8.3)"), Highlights item 6 (the click, record 1414)
+and item 7 (the detector's own count: what it emits and receives back,
+counted on its own record, record 394), and every pin in a body's count
+(the light clock's 218 +- 2 in A's own cycles, R2's 108 / 247 / 72 in
+the blocks' cycles, 4a's 42.364, 4b's per-record ratio). MY
+RECOMMENDATION: (II), firmly: under (I) a body that receives no light
+has no clock and every pin in a body's count is void (A's 218 would be
+a count of clicks, one per record), which no map derived and the
+owner's item 7 excludes; under (II) nothing moves. The paper's two
+sentences are then the writer's to align.
 
-(c) WHAT CHANGES WHERE. The engine: nothing. ALGEBRA.md: nothing.
-Highlights 5.4: nothing. The paper (the writer, optional, one clause in
-Definition 3 for a reader of the code): "the pointer is kept per record
-and per cell; its value is the body's response's motion across its
-cells; the body's count is its own record's cycles, the zero crossings
-of its sum across its cells, and the click is stamped with that count".
+(c) WHAT CHANGES WHERE, after the owner's word. Under (II): the engine
+nothing; ALGEBRA.md nothing; Highlights 5.4 nothing (items 6 and 7 as
+they stand); the paper (the writer, on the Boss's order): Definition 3's
+"the detector's count advancing, the click stamped with that count" to
+"the click stamped with the detector's own count, its own record's
+cycles across its cells, which advance with or without light"; at 683
+one gloss after "in the block's own clock": "(its own record's cycles
+across its cells, not a count of clicks)". Under (I): the engine's
+`_block_clock` replaced by a click counter, every pin in a body's count
+re-derived before any run, ALGEBRA.md 8.3 and 8.6 and Highlights item 7
+rewritten on the owner's word.
 
 ## For the 09:00 page
 
-1. Gap (4): the old law's removal, its timing (after the pin runs, my
-   recommendation) and the old worlds' and tests' fate (history
-   directory or deletion): the owner's line, the Boss's decision line
-   standing.
-2. Gap (2): one confirmation line, the pointer's unit the motion squared
-   under records 1414 and 1421 through ALGEBRA.md 8.6; a question only
-   if the Boss reads those records as not covering it.
-3. Gaps (1), (3) and (5): settled by the decisions cited; the changes
-   are labels, a merge, a deletion of dead code and the writer's
-   phrases; no physics moves and no pin moves.
+1. Gap (2), QUESTION FOR THE OWNER: the click's read-out books the
+   motion squared of the receiver's own record (I, as built, the pins'
+   form) or the pair's norm X^2 + Y^2 (II, the paper's items (5) and
+   117); my recommendation (I); under (II) the pins of the light clock,
+   R2, 4a and 4b are re-derived before any run.
+2. Gap (5), QUESTION FOR THE OWNER: a body's count is its own record's
+   cycles and the click light's rung on its response, two mechanisms
+   (II, the engine, ALGEBRA.md 8.6, Highlights items 6 and 7), or the
+   count advances at each click, one mechanism (I, the paper's
+   Definition 3 read literally); my recommendation (II), under which
+   nothing moves but two sentences of the paper.
+3. Gap (4): the old law's removal, its timing (after the pin runs, my
+   recommendation; the Boss's, removal) and the old worlds' and tests'
+   fate (history directory or deletion): the owner's line, the Boss's
+   decision line standing; the owner's word of 04:53Z already says
+   "throw out".
+4. Gaps (1) and (3): settled by the decisions cited; the changes are a
+   HOST label, PR 1068's merge and a deletion of dead code; no physics
+   moves and no pin moves.
