@@ -1,5 +1,6 @@
 """Part 4 of the thirty-page assembly; see assemble.py."""
 
+import os
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -303,5 +304,5 @@ bib = bib.replace(
     1,
 )
 out.append(bib)
-open(str(HERE / "part4.tex"), "w").write("".join(out))
+open(str(Path(os.environ.get("CUT30_SCRATCH", str(HERE))) / "part4.tex"), "w").write("".join(out))
 print("part4 ok", sum(len(x) for x in out))

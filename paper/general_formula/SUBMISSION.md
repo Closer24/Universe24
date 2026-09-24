@@ -80,6 +80,17 @@ paper's, the macros written out):
 1. An account on the journal's submission system (Springer Nature's
    Editorial Manager, reached from the journal's "Submit manuscript"
    page); the manuscript type: Article (the journal sets no page limit).
+   The author's choices (2026-09-24): the article type Research (not
+   Review, Perspective or Hypothesis); where the system asks for a
+   subject or classification, in this order: Foundations of Quantum
+   Mechanics (Quantum Foundations) first, since the paper's substance is
+   Born's rule, the click as the measurement, Bell and CHSH, locality and
+   no-signalling on a discrete foundational model; Mathematical Physics
+   second; Relativity and Gravitation (Foundations of Relativity) third
+   where a further category is allowed; never a broad "General Physics".
+   The venue is decided: Foundations of Physics, Springer
+   (link.springer.com/journal/10701); the title page's affiliation, email
+   and ORCID are confirmed by the author.
 2. The files: `main.tex` with `figures/` as the source (the journal
    recommends its LaTeX template `sn-jnl` and accepts a manuscript in
    another class), `main.pdf` as the compiled output, `records.tex` as

@@ -1,5 +1,6 @@
 """Part 1 of the thirty-page assembly; see assemble.py."""
 
+import os
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -289,5 +290,5 @@ The muon's decay tick under covariant-readings-v1 & the identity's owed count & 
 
 """)
 
-open(str(HERE / "part1.tex"), "w").write("".join(out))
+open(str(Path(os.environ.get("CUT30_SCRATCH", str(HERE))) / "part1.tex"), "w").write("".join(out))
 print("part1 ok", sum(len(x) for x in out))

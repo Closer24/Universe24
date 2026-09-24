@@ -1,5 +1,6 @@
 """Part 2 of the thirty-page assembly; see assemble.py."""
 
+import os
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -230,5 +231,5 @@ light = sub(
     "the derivation's 24.3, row 14, REFUTED\non main; Table~\\ref{tab:nature}).",
 )
 out.append(light)
-open(str(HERE / "part2.tex"), "w").write("".join(out))
+open(str(Path(os.environ.get("CUT30_SCRATCH", str(HERE))) / "part2.tex"), "w").write("".join(out))
 print("part2 ok", sum(len(x) for x in out))

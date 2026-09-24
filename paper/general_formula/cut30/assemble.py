@@ -9,9 +9,11 @@ orders, and writes main.tex with its header. `build()` returns the text
 without writing it; tests/test_paper_cut30.py holds main.tex to it.
 """
 
+import os
 import re
 import runpy
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -74,11 +76,14 @@ def _references(text: str, bib: str) -> str:
 def build_all() -> tuple[str, str]:
     """(main.tex, records.tex): the four parts joined, corrected, reordered,
     the records cut out, the references filtered."""
+    scratch = Path(tempfile.mkdtemp(prefix="cut30-"))  # the parts' files outside the repository
+    os.environ["CUT30_SCRATCH"] = str(scratch)
     for i in (1, 2, 3, 4):
         runpy.run_path(str(HERE / f"part{i}.py"), run_name="__main__")
-    parts = "".join((HERE / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
+    parts = "".join((scratch / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
     for i in (1, 2, 3, 4):
-        (HERE / f"part{i}.tex").unlink()
+        (scratch / f"part{i}.tex").unlink()
+    scratch.rmdir()
     s = (
         parts.replace("sec:newton", "sec:forces")
         .replace("Part~III", "Section~\\ref{sec:measurement}")

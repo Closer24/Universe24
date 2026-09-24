@@ -7040,3 +7040,17 @@ cited: the order channel's derivation (PR 1090), the GO's declarations
 verification page (PR 1095). The owner's two words of 03:05Z: the venue
 Foundations of Physics (Springer, link.springer.com/journal/10701);
 the title page's three fields correct. 48 pages, the owner's number.
+
+## Applied (2026-09-24): commit 42 on paper-48, the parts' scratch files out of the repository; the author's submission choices
+
+The repository check on commit 41 failed once in the hygiene test: the
+four parts write their scratch .tex files into cut30/ while the
+assembler runs, and the hygiene test, walking the tree in the same
+parallel pytest session, listed one and found it deleted (a race, not a
+content fault; the hygiene test alone passed). The parts now write to a
+temporary directory the assembler names (CUT30_SCRATCH) and the
+assembler removes it; main.tex and records.tex are byte-identical.
+SUBMISSION.md records the author's choices of 03:12Z: the article type
+Research; the classification Quantum Foundations first, Mathematical
+Physics second, Relativity third; the venue Foundations of Physics
+(Springer) decided; the title page's three fields confirmed. 48 pages.

@@ -1,5 +1,6 @@
 """Part 3 of the thirty-page assembly; see assemble.py."""
 
+import os
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -225,5 +226,5 @@ the model does not model; the comparison with nature is
 Section~\ref{sec:checks}.
 
 """)
-open(str(HERE / "part3.tex"), "w").write("".join(out))
+open(str(Path(os.environ.get("CUT30_SCRATCH", str(HERE))) / "part3.tex"), "w").write("".join(out))
 print("part3 ok", sum(len(x) for x in out))
