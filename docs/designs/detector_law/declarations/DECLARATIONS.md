@@ -1868,12 +1868,13 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   cos(phi + t) for t in {0, N / 8, N / 4, 3 N / 8} within the
   coefficients' rounding (1 / 256 and by_clock's 0.6 percent); rows 1a to
   1d and 9 enter the GO on it.
-- T-2, ROW 2b (`mach_zehnder.json`): NOT IN THE GO tonight. The splitter
+- T-2, ROW 2b (`mach_zehnder.json`): on the one list (the owner's word of
+  11:29Z; the first draft's "NOT IN THE GO tonight" HISTORY). The splitter
   waits on the builder's component (section 14 items 2 to 4), the mirror
   form has no key on main, and section 3's geometry (the positions (12,
   2, 0) and (12, 12, 0) with L = 10 lambda = 120 Links on a 33 x 33
-  layer) does not fit: the world is redeclared after the GO on a 160 x
-  160 layer with absorbing corridor walls (L-1's blocks), the lamp's
+  layer) does not fit: the world is redeclared, before its file is written,
+  on a 160 x 160 layer with absorbing corridor walls (L-1's blocks), the lamp's
   `rate` [1, 32] and `amount` 256, the clock [77, 25]; section 3's
   unfinished sentence stands as the record of the first draft until
   then.
@@ -2068,9 +2069,15 @@ as the Generator wrote them: the well [800, 800] of side 40 at the corner
 1500, `ticks` 9500 in both (the rest world needs the hold 8000 alone; 9500
 keeps the two readers' windows equal): CONFIRMED.
 
-**Not in the GO tonight, in one list:** 2b (T-2), 2c (L-4), 10 (a) and
-(b) (L-5); the light clock and 4b until the builder's key (i) lands and
-R2 until (i) and (ii) land (M1-4); 2a EXPLORATORY until the light-kind
-block's path lands (L-1); 1a to 1d and 9 until the rotation on the pair
-lands (T-1); every other row of RUN_LIST.md has its lines above or in its
-section.
+**THE ONE LIST (the owner's word of 2026-09-24, 11:29Z, "there is no GO
+tonight, there is one list of all the experiments we want", recorded by
+the Boss as record 1805):** RUN_LIST.md is that list, every row with its
+world file, its reader, its pin, its build and its state; the split of
+this section's first drafts into "in the GO tonight" and "NOT IN THE GO
+tonight" (2b in T-2, 2c in L-4, 10 (a) and (b) in L-5; the light clock
+and 4b until the builder's key (i), R2 until (i) and (ii), 2a EXPLORATORY
+until the light-kind block's path, 1a to 1d and 9 until the rotation on
+the pair) is HISTORY as a split and stands as the record of what each row
+waited on; the freeze is every world of the list reading clean on one
+commit of main, no pin runs before it, and every row's lines stand above
+or in its section.
