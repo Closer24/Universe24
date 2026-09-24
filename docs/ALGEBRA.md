@@ -4318,8 +4318,9 @@ too. The form, with its integers:
 1. THE EXCITED RECORDS, IN TURN. The emitter is a body of a massive kind
    with `emits` and a STOCK `amount` = M, the number of its excitations.
    - At interval 0 its first excited record is on the board: the body's
-     seed at both levels (9.9), content one quantum, its residue u_1 from
-     the body's wheel [step, W] in its residue order.
+     seed at both levels (9.9), content one quantum, its residue u_1
+     (SUPERSEDED by 9.19 (4), ADOPTED: the law's remainder at its centre
+     cell, no wheel and no residue order on the body).
    - Excited record k clicks at ITS OWN RUNG on its own cells: **E** is
      its own offer booked through its cells (read-through, no take), and
      **D** is 2 T u_k + T <= 2 W C with T its norm.
@@ -4347,9 +4348,12 @@ too. The form, with its integers:
 3. THE NORM: T = SUM over the emitter's cells of (now - before)^2 at the
    birth, the motion the one write inserts. The rung's T is this.
 4. THE WHEEL AND THE RATE: the wheel [step, W] and the residue order
-   `seed` stay on the emitter body. The rate keys ([1, 1] for Bell, [1, 4]
-   for the two slits) retire: births come at the excited records' rungs.
-   A world that needs W births declares M = W.
+   `seed` stayed on the emitter body in this reading; SUPERSEDED by 9.19
+   (4), ADOPTED: no wheel and no residue order on any body, u the law's
+   remainder and W from the centre cell's pair. The rate keys ([1, 1]
+   for Bell, [1, 4] for the two slits) retire: births come at the
+   excited records' rungs. A world that needs n births declares the
+   stock M = n.
 5. THE STEADY-FIELD PINS are re-derived blind by the World Generator's
    map (the physicist's tool) on the born packets. The mathematician
    checks each derivation. The pace fans need no single-cell source: two
@@ -4394,7 +4398,8 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    massive_kind` to set the record's `driven` mask. That is a branch on a
    family's kind (9.10; the three tests: no family name or kind). The mask
    belongs to the record's own data, set from the emitter's declaration,
-   with no branch at the birth.
+   with no branch at the birth. SUPERSEDED by 9.18 (3): there is no
+   `driven` mask at all; nothing drives a record after its birth.
 5. CONFIRMED IN FORM on 7ce8d66a:
    - X is `del self.records[...]`, a deletion of the whole record.
    - The rung 2 T u + T <= 2 W C.
@@ -4417,7 +4422,7 @@ OF THE WORLD, `born: [now, before]` per birth, computed by the generator
 generator's recompute; a line's born profile is the generator's integers
 in the same way. No emitter is refused for any s.
 
-### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
+### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z (2026-09-25 on the Israel clock) through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
 
 THE QUESTION. The owner's questions that led here: is every tool a
 body of a massive kind; is there any duplication; is a massive family
@@ -4464,9 +4469,10 @@ and 9.17).**
   (4)).
 
 **(2) THE FAMILIES (DERIVED HERE).** A family is its vacuum pair and its
-quantum, nothing else. Its clock (`phase_per_link`) is read by the
-generator for the born profiles and the seeds (9.17 (5), 8.7), not by the
-law.
+label module, nothing else; its quantum is the counting unit of its
+content, a convention of the reading (9.22 (1)). Its clock
+(`phase_per_link`) is a datum of the birth, read by the generator for the
+born profiles and the seeds (9.17 (5), 8.7), not by the law.
 - LIGHT: the pair [1, 1], with no rest frequency (at **k** = 0, omega =
   0). It is never a body.
 - A MASSIVE FAMILY: the pair [num, den] with num < den, whose rest
@@ -4537,18 +4543,23 @@ and no kind.**
    its wall. Which families push a body is its declared data, not a
    branch.
 8. A COUNT ON A RECORD'S OWN AGE (9.5): the close of a screen's ladder
-   (9.12 item 2).
+   (9.12 item 2). RETIRED by 9.19 (3) (a): the ladder is read at every
+   interval and the record ends at its click, at the face receiver at
+   the latest; no count on an age remains in the law.
 9. THE LOADER'S CHECKS (9.5), never the law's:
    - the body whole on the board, and the bodies' cells disjoint;
    - the composed seed bit for bit, and the hybrids' share within the
      band (9.9);
    - the excited record's norm per period, and the born profile's band
      check (9.17 (5));
-   - the wheel a permutation, and the axis with gcd(a, b) = 1;
+   - the axis with gcd(a, b) = 1 (the wheel as a permutation REFUSED,
+     9.19 (4): no wheel is declared);
    - the tool bodies' drift: SUM over the run of abs(p_i) below the
-     step's wall 3 Q S M x 56 d (8.11), so that no tool hops. Here Q is
-     the label's scale, S the width, M the body's content and 56 d the
-     take's pair scale.
+     step's wall (8.11), so that no tool hops; the wall is the push's own
+     integer denominator, 3 Q S M d, with Q the label's scale, S the
+     width, M the body's content and d the push's declared scale, an
+     integer of the world; the take's pair scale (56 d) of the first
+     reading is REFUSED with the take (9.12).
 
 **(5) WHAT RETIRES FROM MAIN'S ENGINE (read on main 5b0e8a77,
 `detector_law.py` and `world.py`), each replaced by (4):**
@@ -4593,7 +4604,7 @@ and none of 2.7's exceptions.
 | the excited record's norm per period; before = -now; the born profile as material | DECIDED (9.17 (5)), fixed only up to a convention |
 | the tool bodies' binding, their mass and the hybrid share | SIZING integers the generator chooses and the loader checks, not values the algebra fixes |
 | the material integers, the placement, the cone | declarations of the world by their nature (9.8; 9.16 (6)) |
-| the faces per family | OPEN for the owner (one board, 1.6) |
+| the faces per family | DECIDED (record 1875): one border for every family |
 
 THE VERDICT: YES IN ITS OBJECTS AND OPERATIONS, NOT IN EVERYTHING.
 - THE ALGEBRA CARRIES THE UNIFICATION AT ONCE WHERE IT MATTERS: one
@@ -4623,7 +4634,7 @@ rework):**
 - The retirements of (5).
 The gate (9.5) reads each against this section.
 
-### 9.19 The whole board is algebra: one element, one operator, one click (the model owner's words of 2026-09-24, 22:00Z, through the Boss: "the whole board is algebra ... there are no parts"; his questions to the mathematician on the residues and on what the algebra carries; ADOPTED, record 1875)
+### 9.19 The whole board is algebra: one element, one operator, one click (the model owner's words of 2026-09-24, 22:00Z (2026-09-25 on the Israel clock), through the Boss: "the whole board is algebra ... there are no parts"; his questions to the mathematician on the residues and on what the algebra carries; ADOPTED, record 1875)
 
 THE CLAIM. The state of the whole board, every Node, every family and
 every label together, is ONE ELEMENT of one module. The law is ONE MAP of
@@ -4656,21 +4667,21 @@ body's pair on its cells, the zero row at a closed face), the couplings
 (g, G) between families on declared cells (8.5) and the axes (a, b) on
 declared cells (9.16 (2)). Write **M**_F = **D**_F^-1 **A** / 3 for 8.2's
 matrix of the family F (**A** the read matrix, **D**_F the diagonal of the
-pairs). The step S of the law is:
+pairs). The step **S** of the law (bold, apart from CHSH's S) is:
 
-    S: v -> v'  with, per summand of family F,  a_next = M_F a_now - a_before  (with the remainder, 8.1),
+    **S**: v -> v'  with, per summand of family F,  a_next = M_F a_now - a_before  (with the remainder, 8.1),
                  plus the coupling's bilinear term between summands of coupled families (8.5),
                  plus the label matrix on the axis's cells (9.16 (2)),
                  plus the push of the operator's regions (8.11: a body's cells step by its vector).
 
-The whole board is one bound system (PROVED HERE, from 8.2): S restricted
+The whole board is one bound system (PROVED HERE, from 8.2): **S** restricted
 to one family is a second-order linear recurrence with the symmetric
 operator **D**^1/2 **M** **D**^-1/2 = **D**^-1/2 (**A** / 3) **D**^-1/2,
 whose eigenvectors are THE MODES of the board and whose eigenvalues are 2
 cos omega, omega the mode's clock. On a torus the spectrum is finite, one
 mode per Node. A mode is BOUND when its 2 cos omega lies above the vacuum
 band's top (omega below the rest frequency omega_0, 8.3), FREE when it
-lies inside the band. Each mode is rotated by S at its own clock, with the
+lies inside the band. Each mode is rotated by **S** at its own clock, with the
 conserved form I (8.2) as its norm. THE STABILITY CONDITION (PROVED HERE):
 the form I is positive definite, and every mode a rotation, exactly when
 the largest eigenvalue is below 2; a mode with 2 cos omega >= 2 grows
@@ -4680,7 +4691,12 @@ most denominator at every Node is SUFFICIENT (then abs(2 cos omega) <= 2
 by 8.1's band), not necessary (the one-cell well [8, 7] on [7, 8] has
 1.90 on a chain, 1.75 on a layer). THE LOADER'S CHECK is the spectral one:
 the composed operator's largest eigenvalue below 2, refused otherwise (the
-physicist's refusal CONFIRMED).
+physicist's refusal CONFIRMED). THE LOWER END (Reviewer 4's line): the
+symmetrised operator D^-1/2 (A / 3) D^-1/2 has nonnegative entries, so by
+Perron-Frobenius its largest eigenvalue is the largest in absolute value
+and the smallest eigenvalue is at least minus the largest; with the
+largest below 2 every eigenvalue lies in (-2, 2), abs(2 cos omega) < 2,
+and every mode is a rotation: the one check bounds both ends.
 
 EXACTNESS. The rotation of the modes is exact in the real reading
 (Outside, 3.4). On the board the levels are integers and the step keeps
@@ -4795,17 +4811,21 @@ as the rule's remainder r at the birth cell at the interval of the click
 that births the record (the excited record's remainder at its click; the
 arriving record's at the crystal's), with the wheel W = 3 x the pair's
 denominator at that cell. Then the world declares no residue.
-- THE RANGE OF THE REMAINDER (PROVED HERE, one line): with the pair in
-  lowest terms, r moves on the multiples of gcd(numerator, 3 x
-  denominator), so it takes 3 x denominator / gcd(numerator, 3) values.
-  COMPUTATION on a chain: the vacuum [800, 809] gives 2427 values,
+- THE RANGE OF THE REMAINDER (PROVED HERE, one line): the rule gives r'
+  = numerator x S_6 + r (mod 3 x denominator), so from r = 0 every
+  remainder is a multiple of gcd(numerator, 3 x denominator) =
+  gcd(numerator, 3) with the pair in lowest terms: AT MOST 3 x
+  denominator / gcd(numerator, 3) values. THAT EVERY ONE IS REACHED, and
+  equidistributed, is COMPUTED, not proved: on a chain the vacuum [800,
+  809] gives 2427 values,
   equidistributed over 18000 intervals (chi-square 21 on 19 degrees of
   freedom, the 95 percent bound 30) and equidistributed over 160 births
   read one per birth (11 on 9, the bound 17); [3200, 3227] gives 9681;
-  light [77, 25] gives 75; A WELL [800, 800] = [1, 1] AND LIGHT [1, 1]
-  GIVE THREE. So the residue is read where the pair is rich: a well
-  declared [800, 801] (2403 values) rather than [800, 800]; Bell's light
-  [2464, 25] gives 75.
+  A WELL [800, 800] = [1, 1] AND LIGHT [1, 1] GIVE THREE. The lamps'
+  [77, 25] and [2464, 25] are BORN CLOCKS (the phase per Link, 9.17 (4)),
+  not pairs: light's pair is [1, 1], so a light birth cell needs an index
+  pair (4a). So the residue is read where the pair is rich: a well
+  declared [800, 801] (2403 values) rather than [800, 800].
 - THE COST: with a declared permutation W records cover the wheel exactly
   once and the pins are exact (8/2/2/8 at W = 20, no band); with the
   law's remainder the residues are equidistributed but not a permutation,
@@ -4863,13 +4883,16 @@ denominator at that cell. Then the world declares no residue.
     --) are (2 / 5, 1 / 10, 1 / 10, 2 / 5) at E = 3 / 5, (1 / 20, 9 / 20,
     9 / 20, 1 / 20) at E = -4 / 5, (9 / 20, 1 / 20, 1 / 20, 9 / 20) at E =
     4 / 5; S = 14 / 5 with the variance SUM over the four pairs of (1 -
-    E^2) / n = 2.28 / n. At n = 100 per setting (400 pair records): the
+    E^2) / n = (16 + 9 + 9 + 16) / (25 n) = 2.00 / n (the earlier 2.28
+    was an arithmetic slip, Reviewer 4). At n = 100 per setting (400 pair
+    records): the
     expected counts 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0,
     4.9), 5 / 45 / 45 / 5 (2.2, 5.0, 5.0, 2.2), 45 / 5 / 5 / 45 (5.0, 2.2,
     2.2, 5.0), 40 / 10 / 10 / 40; S = 2.80 with the standard deviation
-    0.141, so S above 2 by 5.7 standard deviations. THE VERDICT "S above 2
-    at 5 standard deviations" needs n >= 90 per setting (360 pair
-    records); at 3 standard deviations n >= 33 (132). THE PIN: n = 100
+    0.141 (sqrt(2 / 100)), so S above 2 by 5.7 standard deviations. THE
+    VERDICT "S above 2 at 5 standard deviations" needs n >= 79 per
+    setting (316 pair records: 0.8 >= 5 sqrt(2 / n)); at 3 standard
+    deviations n >= 29 (116). THE PIN: n = 100
     per setting, S in [2.38, 3.22] (3 standard deviations), the falsifier S
     <= 2. MALUS at 256 records, H arriving, the + cell: 128 +- 24 at (1,
     1), 246 +- 9 at (5, 1), 199 +- 20 at (15, 8), 177 +- 22 at (3, 2) (3
@@ -4941,7 +4964,7 @@ is the statement the property test of 9.20 checks.
   spectral load check; the born pair as the world's integers (9.17 (6)); the
   residue's source if the owner takes (4).
 
-### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z; the owner's word of 22:10Z: "he only needs to verify it, because it is an algebraic test of the families he wants, before a code test"; ADOPTED, record 1875)
+### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z (2026-09-25 on the Israel clock); the owner's word of 22:10Z: "he only needs to verify it, because it is an algebraic test of the families he wants, before a code test"; ADOPTED, record 1875)
 
 **(A) THE ALGEBRA'S VERIFICATION FIRST, property by property, per family
 and for the families together (the owner's word).** Each property is read
@@ -4996,9 +5019,12 @@ expected value says otherwise. The small world: a cube of 12 x 12 x 12
 (periodic on every axis), light's family [77, 25] and a massive family
 [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
 [800, 801] seeded on its composed mode; one light record born at (8, 2,
-7) on one cell with the branches [[0, 1], [1, 1]] (both labels), the
-wheel [1, 8]; one receiver of one cell at (9, 9, 2) named on the
-record's ladder, W = 8; 60 intervals.
+7) on one cell with the branches [[0, 1], [1, 1]] (both labels), its
+residues supplied by the TEST HARNESS (a permutation over W = 8, an
+input of the test and not a world key; the engine's u is the law's
+remainder, 9.19 (4), and the harness may read it from the law instead,
+the six tests holding for either source by 6c); one receiver of one
+cell at (9, 9, 2) named on the record's ladder; 60 intervals.
 
 1. EQUIVARIANCE UNDER THE 48. For each of the 48 elements g: apply g to
    the world (every cube's vertex and orientation, every axis (a, b)
@@ -5063,8 +5089,9 @@ code and say whether it works").** The one element and the one operator of
 rule with a pair per Node and the remainder, the flux reading, the rung,
 the deletion, the emitter as a clicking body (its seed the composed
 operator's bound mode, its norm one period's one-way flux into its centre)
-and the birth with before = -now; W = 8, the residues a declared
-permutation. Every expected value of the six tests met:
+and the birth with before = -now; W = 8 and the residues a permutation
+supplied by the test harness (an input of the prototype, not a world
+key). Every expected value of the six tests met:
 - THE INITIAL STATE FROM THE OPERATOR: the well [800, 801] of side 2 on
   [800, 809] has the largest eigenvalue 1.978065 (below 2: stable), the
   mode's clock 0.14824 below the vacuum's 0.14930 (bound); seeded on that
@@ -5115,7 +5142,7 @@ interval m across the coupling. THE ENGINE'S TEST is (B) run on the
 engine, per family and together; (A) is its verification in the algebra,
 done before it.
 
-### 9.21 The implications of one algebra (the owner's word of 2026-09-24, 22:15Z: "what is certain is that the whole world is one big algebra"), one line each, marked (ADOPTED, record 1875)
+### 9.21 The implications of one algebra (the owner's word of 2026-09-24, 22:15Z (2026-09-25 on the Israel clock): "what is certain is that the whole world is one big algebra"), one line each, marked (ADOPTED, record 1875)
 
 1. THE WORLDS. A world is its initial element (integers at interval 0)
    PLUS its operator (the pairs, couplings and axes per region) PLUS the
@@ -5177,7 +5204,7 @@ done before it.
    body's own record to carry its momentum and the pairs to follow it: OPEN
    (9.15, a proof owed that the stress is the flux). (b) The per-family
    faces of main: DECIDED, one border (record 1875). (c) The cosine
-   tables: DECIDED (the owner, 2026-09-24, 23:00Z: "if it is not used,
+   tables: DECIDED (the owner, 2026-09-24, 23:00Z (2026-09-25 on the Israel clock): "if it is not used,
    throw it out; no formulas on the board"; superseding his word of
    2026-09-21 that the table stays for the click's Gram matrix, which the
    flux reading has replaced): the engine carries NO TABLE; the generator
@@ -5187,7 +5214,7 @@ done before it.
    The one non-local act, the click's deletion of a summand across the
    board: not ruled out; it is the algebra's one deletion (8.8,
    POSTULATES.md section 10).
-8. LARGE BOARDS (the model owner's question of 2026-09-24, 23:10Z,
+8. LARGE BOARDS (the model owner's question of 2026-09-24, 23:10Z (2026-09-25 on the Israel clock),
    through the Boss: "large boards' scalability, in a few marked
    lines"), each line marked.
    - (a) THE STEP: per interval, per alive record, per family, at every
@@ -5261,7 +5288,7 @@ done before it.
    residue-blindness (6c) holds for either, and no prototype on the
    remainder is owed, the engine's test of 9.20 being the test.
 
-### 9.22 What defines a family and an experiment, and the initial state as a function of it (the model owner's word of 2026-09-24, 22:28Z, through the Boss: "you need to understand what really defines an experiment, and a family, in order to reach a correct algebraic initial state"; ADOPTED with the package of record 1875)
+### 9.22 What defines a family and an experiment, and the initial state as a function of it (the model owner's word of 2026-09-24, 22:28Z (2026-09-25 on the Israel clock), through the Boss: "you need to understand what really defines an experiment, and a family, in order to reach a correct algebraic initial state"; ADOPTED with the package of record 1875)
 
 **(1) A FAMILY (DERIVED HERE from 8.1 and 3.6).** The minimal data: its
 VACUUM PAIR [numerator, denominator] and its LABEL MODULE (Z^2 per arm
@@ -5348,29 +5375,121 @@ AGAINST IT.** "Today declares" lists what (2) does not allow; "lacks"
 what (2) needs and the file has not. Every row's regeneration is the
 World Generator's, its pin re-derived blind (9.19 (4b), 9.17 (5)).
 
+In the table a bracket pair is a PAIR [numerator, denominator] of a
+family or a body unless it is named a born clock, a wheel, a rate, a
+gap, a take or a momentum.
+
 | Row | Its defining data in the form of (2) | Today declares, not allowed | Lacks |
 | --- | --- | --- | --- |
-| Bell (4 files) | the layer [30, 33, 1], periodic; light [2464, 25], a holder family; the emitter body at (2, 16) with a stock of 100 per setting; the crystal body at (13, 15) side 3 with its light index and branches [[1, 1], [2, 1]]; two polariser bodies with the axes (1, 0) or (1, 1) and (1, 2) or (3, 1); their receivers; the ladders | a chain of 21 with an open x face; a lamp with rate, wheel, train, directions, `arms` 2 and `branches`, a residue seed; two table bodies with `phase_window`; the family `counter` | the crystal, the polariser bodies with axes, the emitter body, the holder family, the layer |
-| Malus (4 files) | the bar of 8; light [308, 25], a holder family; the emitter body at x = 0 with a stock of 256; the polariser body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2); its + receiver at x = 7 | a lamp with rate, wheel [159, 256], train 32, directions; a table body with `phase_window`; `counter` | the emitter body, the polariser body with its axis, the holder family |
-| The two slits | the layer 160 x 256 grown to x >= 485 (the margin rule); light [77, 25], a holder family; the emitter body at (20, 128) with a stock of 1024; the wall of gap cubes [1, 2] with its two openings; the 201 screen receivers; the face receivers; the ladder naming the screen | a lamp with rate [1, 4], wheel [1, 1024], train 32; the screen sets with a wheel 2^20; open sponge faces | the emitter body, the face receivers, the grown board |
-| The pace fans | the layer 128 x 128; light [77, 25], a holder family; two LINE emitter bodies (one along the axis, one along the diagonal) with born profiles of n wavelengths; the probes as a GAMEBOARD reading | a lamp with rate, wheel, train and four `directions`; open sponge faces | the two line emitters, the face receivers |
+| Bell (4 files) | the layer [30, 33, 1], periodic; light [1, 1] with the born clock [2464, 25], a holder family; the emitter body at (2, 16) with a stock of 100 per setting; the crystal body at (13, 15) side 3 with its light index and branches [[1, 1], [2, 1]]; two polariser bodies with the axes (1, 0) or (1, 1) and (1, 2) or (3, 1); their receivers; the ladders | a chain of 21 with an open x face; a lamp with rate, wheel, train, directions, `arms` 2 and `branches`, a residue seed; two table bodies with `phase_window`; the family `counter` | the crystal, the polariser bodies with axes, the emitter body, the holder family, the layer |
+| Malus (4 files) | the bar of 8; light [1, 1] with the born clock [308, 25], a holder family; the emitter body at x = 0 with a stock of 256; the polariser body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2); its + receiver at x = 7 | a lamp with rate, wheel [159, 256], train 32, directions; a table body with `phase_window`; `counter` | the emitter body, the polariser body with its axis, the holder family |
+| The two slits | the layer 160 x 256 grown to x >= 485 (the margin rule); light [1, 1] with the born clock [77, 25], a holder family; the emitter body at (20, 128) with a stock of 1024; the wall of gap cubes [1, 2] with its two openings; the 201 screen receivers; the face receivers; the ladder naming the screen | a lamp with rate [1, 4], wheel [1, 1024], train 32; the screen sets with a wheel 2^20; open sponge faces | the emitter body, the face receivers, the grown board |
+| The pace fans | the layer 128 x 128; light [1, 1] with the born clock [77, 25], a holder family; two LINE emitter bodies (one along the axis, one along the diagonal) with born profiles of n wavelengths; the probes as a GAMEBOARD reading | a lamp with rate, wheel, train and four `directions`; open sponge faces | the two line emitters, the face receivers |
 | The muon's form (4a) | the layer 200 x 200, periodic; matter [3200, 3236]; the well [3200, 3227] of side 14 at (93, 93), one quantum, at rest and with the momentum [64, 0, 0] | nothing outside (2) (the `margin` key is the generator's label) | the moving summand as the boosted mode (the ramp stays until 8.4 is settled) |
 | The redshift (4b) | the chain 4096 with the face receivers; light [1, 1], matter [156, 157]; the well [314, 315] of side 12 at 2994 with the coupling, a stock, its light birth, the momentum; the receiver at 4094 | `own_grace`, a receiver `wheel` 64, a light lamp with `directions` in the control; open sponge faces; a flat seed (regenerated on the mode since body-check) | the face receivers, the stock in place of `emits` |
-| The round trip (4c) | the chain; light [2464, 25], a holder family; an emitter body with its receiver; the transponder body with the gap [1, 2] and the momentum k = 3 | the whole table form: the families post, source, cart and mass, `rerelease` and `pass` tables, a lamp with directions | everything: rebuilt as the transponder |
+| The round trip (4c) | the chain; light [1, 1] with the born clock [2464, 25], a holder family; an emitter body with its receiver; the transponder body with the gap [1, 2] and the momentum k = 3 | the whole table form: the families post, source, cart and mass, `rerelease` and `pass` tables, a lamp with directions | everything: rebuilt as the transponder |
 | Sagnac (R2) | the chain 3000 with the face receivers; light [1, 1], matter [800, 809]; two wells [800, 801] of side 12 at 700 and 772 with the coupling, a stock each, momenta; the receivers at_a and at_b; the ladders A -> at_b, B -> at_a | wells [800, 800] (3 remainder values); `own_grace`, `wheel`; open sponge x face; seeds computed alone | rich pairs, composed seeds, the face receivers |
 | de Broglie's fringes (M1) | the layer 128 x 128; matter [800, 809] and a holder family; a matter emitter body with a stock of 2048; the barrier of gap cubes [1, 2] with its openings; the 121 screen receivers; the face receivers | a matter lamp with rate [1, 2], wheel [1, 2048], train 8; the family key `take` [-19, 86]; the take lines (252 cubes of the vacuum pair); the screen sets' wheel 65536; open sponge faces | the emitter body, the face receivers; the barrier and the screen as holder-family bodies, not matter bodies (9.18 (2)) |
 | The moving mass's energy (M2) | the chain 200 with the face receivers; matter [800, 809]; a matter emitter body with a stock; the receiver at 104 | a matter lamp with rate [1, 8], train 8, directions; the family `take`; open sponge faces | the emitter body, the face receivers |
 | The boxes (ii-a, ii-b) | the cubes 64^3 and 48^3, periodic; matter; one well [800, 801] of side 20 or 28, one quantum, at rest or with the momentum | the well [800, 800]; a flat seed (regenerated on the mode) | the rich pair |
 | The deep well | the layer 128 x 128, periodic; matter; one well [800, 801] of side 40 at (44, 44) | the well [800, 800]; a flat seed (regenerated) | the rich pair |
 | The light clock | the chain 674 with the face receivers; light [1, 1], matter [800, 809], a holder family; the well A [800, 801] of side 12 at 600 with the coupling and a stock; the mirror body [672, 674) with the gap [1, 2]; the receiver at_a at 612 | the well [800, 800]; `own_grace` 70, `wheel`; per-family faces (periodic for matter, closed for light); a flat seed (regenerated) | the rich pair, one border, the face receivers, the mirror as a holder-family body |
-| The receding index (k = 3, k = 4) | the chain 4000 with the face receivers; light [3565, 10000] or [1846, 10000], matter [156, 157] and a holder family; a light emitter body at 800 with a stock of 200; the medium body [314, 315] of side 24 at 1500 with the coupling and the momentum; the probe as a GAMEBOARD reading | a lamp with rate, wheel [2531, 4096], train 200, directions; the medium a SILENT body (seed 0) with `start` 3000; open sponge faces | the emitter body; the medium as a BOUND body of the holder family with its own record (ADOPTED: tool bodies bound), the index pin re-derived blind on it (COMPUTATION owed) |
+| The receding index (k = 3, k = 4) | the chain 4000 with the face receivers; light [1, 1] with the born clock [3565, 10000] or [1846, 10000], matter [156, 157] and a holder family; a light emitter body at 800 with a stock of 200; the medium body [314, 315] of side 24 at 1500 with the coupling and the momentum; the probe as a GAMEBOARD reading | a lamp with rate, wheel [2531, 4096], train 200, directions; the medium a SILENT body (seed 0) with `start` 3000; open sponge faces | the emitter body; the medium as a BOUND body of the holder family with its own record (ADOPTED: tool bodies bound), the index pin re-derived blind on it (COMPUTATION owed) |
 
 THE THREE THINGS THIS TABLE SETTLES ONCE (DERIVED HERE): every lamp
 becomes a body with a stock; every sponge face becomes a face receiver;
 every well [800, 800] becomes [800, 801]. THE ONE THING IT OPENS: the
 index rows' medium, silent today, becomes bound; its pin moves with it and
 is re-derived blind before any run.
-### 9.23 A two-qubit quantum computer on the board (the model owner's word of 2026-09-24, 22:46Z, through the Boss: "in our world the Outside sees only the click; lab equipment simulates on the board what we built from the algebra; check whether a quantum computer of two qubits can be simulated this way"), marked, before any code
+
+**(5) THE THREE ROLES, AND THE SHORT EXPERIMENT FILE (the model owner's
+decision, record 1879, 2026-09-25 on the Israel clock; DERIVED HERE
+where marked).** Three roles and no fourth. (i) THE BOARD GENERATOR is
+the only writer, and it writes at interval 0 only: it reads the short
+file of (2), composes the operator (the pairs, couplings and axes per
+region, 9.19 (2)) and computes the initial element of (3), the bound
+modes' integer profiles and the born pairs and profiles (9.17 (6));
+after interval 0 nothing writes but the law. (ii) THE LAW acts at every
+Node, at most one Link per interval: the rule per family with the
+coupling, the axis and the push, the click and the birth (9.19 (5));
+its locality is PROVED (9.20 (5)). (iii) THE CLICK READER is the only
+reader: the flux on the named sets, the rung, the deletion and the
+counts (9.19 (3)); a GameBoard reading is a diagnostic. THERE IS NO
+WORLD WRITER: an experiment is a SHORT FILE of what is on the board, (2)
+and nothing else: the extents and per axis periodic or open; the
+families (pair and label module); the tools placed with their integers
+(vertex, edge, pair, coupling, axis, stock, born clock and profile,
+branches); the occupation (quanta, amplitude, momentum); the receivers'
+names and the ladders. Everything the fifteen's files declare beyond it
+(the "today declares" column of (4)) is the generator's to derive or the
+loader's to refuse; what the short file does not carry is DERIVED: the
+initial element, the norms, the residues, the wheels, the pins' bands.
+
+**(6) WHERE A TENSOR ENTERS, AND WHETHER IT MUST (the model owner's
+word, record 1880, 2026-09-25 on the Israel clock: "write clearly in
+the laws where a tensor computation enters and whether we must have it,
+because the world generator gets complicated"; the Boss's lines of
+record 1877 CONFIRMED line by line, with one precision).** THE ONE
+TENSOR is the pair: a record of fixed rank 2 whose label module is Z^2
+(x) Z^2, four integer weights on the joint labels, each arm's rows over
+the Nodes as any record's (9.23 (1)); nothing of size Nodes x Nodes
+exists, and a body's label matrix acts on one arm's two rows (9.16
+(2)). IT IS REQUIRED only where entanglement is measured: Bell (a
+product state gives S at most 2, PROVED: CHSH's bound holds for weights
+that factor) and the circuits of 9.23; no other row of the fifteen has
+one. IT IS BORN only by the crystal, during the run, at an arriving
+record's click (9.7 (b), 9.13); it is never written at interval 0, and
+two separately born records are never joined (9.23 (1)). SO THE BOARD
+GENERATOR WRITES ONLY VECTORS: each occupied mode's integer profile with
+its labels, and the born pairs and profiles; it writes no tensor and
+computes none; the crystal's branches are four integers of the short
+file. THE TENSOR'S OPERATIONS live in the birth and in the pair's
+click: the crystal's birth writes the four weights (**E**^T with the
+branches); a body's label matrix acts on one arm (verb B on that arm's
+rows); the click of ONE arm alone reads the weights summed over the
+other arm's labels, the partial trace (9.11 (d)), computed at that
+click from the four weights and kept nowhere (the precision); the
+click of both arms reads the joint weights R = J^2 (3.6); a joint body
+(9.23 (3), not on main) acts on the four weights with a declared 4 x 4
+integer matrix. Each is verb B or P with declared integers, under the
+declared contract of docs/ARCHITECTURE.md ("Integers, vectors and
+tensors": a fixed rank 2, fixed dimensions 2 x 2, integer components,
+no general tensor).
+
+**(7) THE INITIAL STATE: STORED ONCE BESIDE THE SHORT FILE, CHECKED
+EXACTLY AT LOAD (the Boss's question of record 1879, "recomputed at
+every load, or stored once and checked"; DERIVED HERE).** Recomputation
+at every load is NOT reproducible bit for bit across hosts: the
+generator's Lanczos vector is a float whose last digits depend on the
+host (the order of the sums, the threads, fused multiply-add) and on the
+convergence tolerance, about 10^-8 relative; an entry within that of a
+half-integer at the amplitude rounds differently on another host, and on
+10^5 Nodes at the amplitude 4096 about 8 entries are expected within it
+(COMPUTED: the window 2 x 4096 x 10^-8 per unit, times 10^5). Two hosts
+would then load two worlds, and their clicks would differ. SO THE FORM:
+the generator writes the initial element ONCE, as the world's integers
+beside the short file (the profiles at both levels, the born pairs and
+profiles, and for each occupied mode its clock as a rational [a, b], the
+generator's rounding of 2 cos omega to a denominator b at least the
+amplitude), and the loader CHECKS IT EXACTLY, in integers and with no
+float: (i) the integers are the ones the generator wrote (the file's
+hash in the short file); (ii) the eigen-equation's residual at every
+Node of the profile p, abs(b x numerator_i x (S_6 p)_i - 3 x
+denominator_i x a x p_i) <= b x (3 x numerator_i + 6 x denominator_i),
+PROVED HERE as the bound for the rounded profile of an exact mode (each
+entry off by at most 1 / 2, six neighbours, the clock off by at most
+1 / b; a profile that is not a mode fails it by a margin of the
+amplitude's order), exact in integers and the same on every host; (iii)
+a / b above the band's top (bound) and below 2 (stable), rational
+comparisons; (iv) the remainders 0, the amplitude's bound, the disjoint
+cells, the rich birth cells, as in (3). What (ii) does not do: single
+out the mode among near-degenerate ones (9.9 (3)'s hybrid share stays
+the generator's, printed as GAMEBOARD), and check a moving body's
+summand (8.4's product, OPEN, the generator's recomputation printed).
+Recomputation at load stays a DIAGNOSTIC (the largest deviation
+printed), never the check. IN ONE LINE: store once, check exactly in
+integers; recompute only to print.
+### 9.23 A two-qubit quantum computer on the board (the model owner's word of 2026-09-24, 22:46Z (2026-09-25 on the Israel clock), through the Boss: "in our world the Outside sees only the click; lab equipment simulates on the board what we built from the algebra; check whether a quantum computer of two qubits can be simulated this way"), marked, before any code
 
 **(1) THE QUBIT (DERIVED HERE from 3.6, 9.16 (2) and 9.19 (1)).** A qubit
 is the label module Z^2 of ONE ARM of a record, carried by that arm's two

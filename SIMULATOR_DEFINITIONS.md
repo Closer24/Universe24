@@ -140,9 +140,35 @@ in the day's log; nothing of them is a name the engine branches on.
   border for every family.
 - **The initial state.** The sum over the occupied bound modes of the
   composed operator of the quanta times the mode's integer profile at the
-  declared amplitude, at both levels, every remainder 0, computed by the
-  generator and checked at load bit for bit; nothing else on the board at
-  interval 0 (ALGEBRA.md 9.9, 9.22 (3)).
+  declared amplitude, at both levels, every remainder 0; nothing else on
+  the board at interval 0 (ALGEBRA.md 9.9, 9.22 (3)). It is computed by
+  the generator ONCE and stored as the world's integers beside the short
+  experiment file, with each mode's clock as a rational [a, b], and the
+  loader checks it EXACTLY in integers (the eigen-equation's residual
+  bounded at every Node, the clock bound and stable, the file's hash);
+  a recomputation at load is a diagnostic, never the check, because the
+  generator's float mode is not reproducible bit for bit across hosts
+  (ALGEBRA.md 9.22 (7)).
+- **The three roles** (the model owner, record 1879): the board
+  generator is the only writer, at interval 0 only; the law acts at
+  every Node, at most one Link per interval; the click reader is the
+  only reader. There is no world writer: an experiment is a short file
+  of what is on the board, and one generic board generator composes the
+  operator and computes the initial state from it (ALGEBRA.md 9.22 (5)).
+- **Where a tensor enters** (the model owner, record 1880): the one
+  tensor is the pair, a record of fixed rank 2 in Z^2 (x) Z^2, four
+  integer weights on the joint labels, each arm's rows over the Nodes as
+  any record's; it is required only where entanglement is measured
+  (Bell: a product state gives S at most 2); it is born only by the
+  crystal during the run, never written at interval 0, and two
+  separately born records are never joined. So the board generator
+  writes only vectors (each occupied mode's integer profile with its
+  labels, the born pairs and profiles) and no tensor; the tensor's
+  operations (the crystal's birth writing the four weights, a body's
+  label matrix on one arm, the partial trace at one arm's click, the
+  joint weights at the pair's click) live in the birth and the click,
+  under the declared contract of docs/ARCHITECTURE.md (fixed rank and
+  dimensions, integer components) (ALGEBRA.md 9.22 (6)).
 - **What an experiment declares, and nothing else** (ALGEBRA.md 9.22
   (2)): the board's extents and per axis periodic or open; the families;
   the material map (the regions with their pairs, couplings and axes, as
@@ -314,7 +340,8 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   well full-depth; `margin` control; the seed FLAT (the loader's default);
   the ramp 1500 against the relaxation 26 (57 times): met; condition 5 NOT
   met. The light clock (`light_clock_60.json`): the segment [600, 612) on
-  the chain of 673 (periodic for the matter kind, closed for light), whole;
+  the chain of 673 (periodic for the matter kind, closed for light: the
+  per-kind faces, HISTORY, one border for every family, record 1875), whole;
   the well [800, 800]; `margin` pin by default; the seed FLAT 52428800; no
   ramp; condition 5 NOT met. The Sagnac ratio (`sagnac_k3.json` and its
   rest world): the segments [700, 712) and [772, 784) on the chain of 3000
@@ -343,7 +370,9 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   (`two_slits.json`): the mirror line, blocks of edge 1 of light's kind
   with the gap [1, 2], single cells, no seed and no clock: conditions 3 to
   7 do not apply. De Broglie's fringes (`matter_waves_12.json`): the take
-  lines and the barrier line, blocks of edge 1 of the matter kind, silent.
+  lines and the barrier line, blocks of edge 1 of the matter kind, silent
+  (the silent body: HISTORY, tool bodies are bound and of the holder
+  family, record 1875).
   The energy of a moving mass (`matter_front_12.json`): NO body (a matter
   lamp and a one-Node receiver body `front`). On `main` 8b9a2897 both
   files were REFUSED at load for the family's missing `take` pair (the fix
@@ -367,10 +396,12 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   before their preliminaries (M1-11).
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
-  zero face is the kind's own `faces` declaration, not a body. A
-  polariser is a body WITH A TABLE (a measured event whose table entry
-  carries an integer `phase_window`, the setting): under the joint gather it is a table
-  body of two cells, its own Node and the next Node on the arm's line.
+  zero face is the kind's own `faces` declaration, not a body. HISTORY
+  (no table in the engine, ALGEBRA.md 9.14 (b) and 9.17 (6)): a
+  polariser WAS a body WITH A TABLE (a measured event whose table entry
+  carried an integer `phase_window`, the setting), under the joint gather
+  a table body of two cells, its own Node and the next Node on the arm's
+  line; it is a body with an integer axis (a, b) and no table.
 
 ## GameBoard topology (2026-09-19)
 
