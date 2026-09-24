@@ -6860,3 +6860,16 @@ as it was. P9 keeps its number; its instances are now the rules the
 algebra document marks as carried; the name "the blind flight" in
 Section 2's list and its "no dispersion" row of Section 7's table are
 the next commit's to reconcile (the Boss's word asked). 51 pages.
+
+## Applied (2026-09-24, the owner's word on the issues): commit 31 on paper-48
+
+"Search the issues on the paper from ChatGPT; address only the relevant
+ones." Of the nine open (972, 1012, 1077, 1079 to 1084) the five the
+paper settles from its own text are applied as wording: the abstract's
+joint limit (1084), the scope of the Z-linear map (972), the rational
+velocities in Theorem discreteness (1012), the ground of a conjectured
+row in the ledger paragraph (1079), the provenance rule with row 2a's
+calibration named (1082). The three physics issues (1077, 1080, 1081)
+and 1083 (its sentence already gone) are the Boss's and the physicist's;
+the paper states the pair click's non-locality and the order's
+signalling plainly and changes nothing there.
