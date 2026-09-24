@@ -43,6 +43,18 @@ Printed, each with its kind:
       with the receiver read at the face cell alone; also the RECEIVE of another body's
       record for row R2 at rest (B at [772, 784) emitting one cycle, A's cells the
       receiver, L = 60 face to face): the first rung against L / c = 103.9.
+  (f) R2'S RISE PER DIRECTION (DECLARATIONS.md section 13; Reviewer 3's line B of 00:45Z,
+      record 1543): the same one record with BOTH blocks stepping to k = 3 on +x
+      (`one_record_moving`: the cells and their wells move, the rows stay, the coupling's
+      operands along the path on a hop interval as massive_moving_index.py's adjoint_r3
+      convention; the emitter seeded in its rest mode and ramped 1500 intervals before its
+      train of one cycle). Printed per direction (A's record chasing B ahead of it; B's
+      record meeting A behind it) and for the control at rest: the first rung from the
+      birth at W = 64, 256, 1024, 4096, the front's transit L / (c -+ v), the RISE (the
+      click less the transit) at the declared W = 64, and the Sagnac ratio read three ways:
+      from the clicks alone, with the rest rise subtracted from both (Reviewer 3's caution),
+      and with each direction's OWN rise subtracted (the reader of record), with the band
+      from one interval of the click's grain on each side.
 
     PYTHONPATH=src python docs/designs/detector_law/coupled_mode_pins.py
 """
@@ -175,6 +187,11 @@ def one_record(n, steps, emitter_lo, receiver_lo, s=12, g=1 / 50000, big_g=1.0, 
     return omega_b, norm, offer_cells, offer_face
 
 
+def sagnac_ratio(t_plus, t_minus):
+    """The Sagnac ratio of two one-way intervals, their difference over their sum."""
+    return (t_plus - t_minus) / (t_plus + t_minus)
+
+
 def first_rung(offer, norm, wheel, start):
     """The interval at which the pointer (the offer accumulated from `start`) crosses the
     first rung, pointer x wheel >= norm; None if never."""
@@ -184,6 +201,61 @@ def first_rung(offer, norm, wheel, start):
         if pointer * wheel >= norm:
             return t
     return None
+
+
+def one_record_moving(
+    n, steps, emitter_lo, receiver_lo, s=12, k=3, ramp=1500, g=1 / 50000, big_g=1.0, amp=2**20, train=70
+):
+    """R2's map (Reviewer 3's line B of 00:45Z): the one record of `one_record` with BOTH blocks
+    stepping one Link every k intervals on +x from t = 0 (the cells and their wells move, the
+    rows stay, the coupling's operands taken along the path on a hop interval, the convention
+    of massive_moving_index.py's adjoint_r3); the emitter seeded in its rest mode and ramped
+    `ramp` intervals before its train (the record's birth at t = ramp). Returns the mode's
+    frequency, the birth, the norm and the per-interval offer at the receiver's CURRENT cells,
+    so that the first rung from the birth is the click of that direction."""
+    reads = open_chain_reads(n)
+    idx = np.arange(n)
+    lo_e, lo_r = emitter_lo, receiver_lo
+
+    def cells(lo):
+        return (idx >= lo) & (idx < lo + s)
+
+    d_node = well_d(cells(lo_e) | cells(lo_r), 800, 809, 800, 800)
+    omega_b, prof = bare_mode(reads, np.where(cells(lo_e), 1.0, 809 / 800))
+    prof = prof / np.abs(prof).max() * amp
+    if prof[lo_e + s // 2] < 0:
+        prof = -prof
+    m_now, m_bef = prof.copy(), prof * math.cos(omega_b)
+    l_now, l_bef = np.zeros(n), np.zeros(n)
+    norm = 0.0
+    offer = np.empty(steps)
+    acc = 0
+    for t in range(steps):
+        hop_now = False
+        acc += 1
+        if acc == k:
+            acc = 0
+            lo_e += 1
+            lo_r += 1
+            d_node = well_d(cells(lo_e) | cells(lo_r), 800, 809, 800, 800)
+            hop_now = True
+        hop_next = acc == k - 1
+        ce = cells(lo_e).astype(float)
+        l_prev = np.roll(l_bef, 1) if hop_now else l_bef
+        m_next = (reads @ m_now) / d_node / 3 - m_bef + g * ce * (l_now - l_prev)
+        m_fwd = np.roll(m_next, -1) if hop_next else m_next
+        in_train = ramp <= t < ramp + train
+        source = big_g * ce * (m_fwd - m_now) if in_train else 0.0
+        l_next = (reads @ l_now) / 3 - l_bef - source
+        l_next[0] = 0.0
+        l_next[-1] = 0.0
+        if in_train:
+            norm += float(np.sum(source**2))
+        motion = l_next - l_now
+        offer[t] = float(np.sum(motion[cells(lo_r)] ** 2))
+        m_bef, m_now = m_now, m_next
+        l_bef, l_now = l_now, l_next
+    return omega_b, ramp, norm, offer
 
 
 def block_record(reads, d_node, cells, g, big_g, steps):
@@ -373,6 +445,49 @@ if __name__ == "__main__":
     print(
         f"    R2 at rest (B at [772, 784) emits one cycle, A's cells at [700, 712) the receiver, L = 60): the first rung by W:"
         f" {clicks_r2} against L / c = {60 * math.sqrt(3):.2f}: the rung's rise at W = 64 is {clicks_r2[64] - 60 * math.sqrt(3):+.1f}"
-        f" intervals, the band per end for the transit ratio"
+        f" intervals (WITHOUT the ramp; (f) below, with the world's ramp, is the reader's map)"
+    )
+    # (f) R2's rise per direction: both blocks stepping to k = 3, the emitter's one record
+    c_pace, v_pace, gap = 1 / math.sqrt(3), 1 / 3, 60
+    wheels = (64, 256, 1024, 4096)
+    cases = {
+        "rest, B to A": (772, 700, 10**9, gap / c_pace),
+        "rest, A to B": (700, 772, 10**9, gap / c_pace),
+        "k = 3, A chases B": (700, 772, 3, gap / (c_pace - v_pace)),
+        "k = 3, B meets A": (772, 700, 3, gap / (c_pace + v_pace)),
+    }
+    rises = {}
+    print(
+        "(f) R2's rise per direction, the click's own form on the chain of 2200 (the blocks at [700, 712) and [772, 784),"
+    )
+    print(
+        "    L = 60, W the wheel; a click is the first rung from the record's birth after a ramp of 1500):"
+    )
+    for name, (e_lo, r_lo, k_step, transit) in cases.items():
+        omega_r2, birth, norm_r2, offer_r2 = one_record_moving(
+            2200, 1950, e_lo, r_lo, k=k_step, train=train
+        )
+        clicks = {w: first_rung(offer_r2, norm_r2, w, birth) - birth for w in wheels}
+        rises[name] = clicks[64] - transit
+        print(
+            f"    {name}: the clicks by W {clicks}; the front's transit {transit:.1f}; the rise at W = 64 {rises[name]:+.1f}"
+            f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g})"
+        )
+    t_plus = cases["k = 3, A chases B"][3] + rises["k = 3, A chases B"]
+    t_minus = cases["k = 3, B meets A"][3] + rises["k = 3, B meets A"]
+    rest_rise = rises["rest, B to A"]
+    exact = v_pace / c_pace
+    own = sagnac_ratio(cases["k = 3, A chases B"][3], cases["k = 3, B meets A"][3])
+    grain = max(
+        abs(sagnac_ratio(t_plus + da, t_minus + db) - sagnac_ratio(t_plus, t_minus))
+        for da in (-1, 1)
+        for db in (-1, 1)
+    )
+    print(
+        f"    THE RATIO at W = 64: from the clicks alone {sagnac_ratio(t_plus, t_minus):.4f}; with the rest rise {rest_rise:+.1f}"
+        f" subtracted from both {sagnac_ratio(t_plus - rest_rise, t_minus - rest_rise):.4f}; with each direction's OWN rise"
+        f" subtracted {own:.4f} = v / c = {exact:.4f} exactly (the reader of record: the click per direction less"
+        f" that direction's rise from this map, COMPUTATION); one interval of the click's grain on each side moves"
+        f" the ratio by up to {grain:.4f}, so the band +- 0.01 holds"
     )
     print(f"HOST {time.time() - t0:.0f} s")
