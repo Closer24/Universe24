@@ -7183,3 +7183,11 @@ Definition 3, Theorem 2, P1, the state paragraph, the linear-form
 paragraph and Theorem 6. Finding 4 beyond these words waits on the
 owner. The delay paragraph's head is in records.tex behind a pointer,
 and the table's columns are re-proportioned, for the page. 48 pages.
+
+## Applied (2026-09-24, the Boss's messages of 06:40Z to 06:50Z): commit 55 on paper-48
+
+The attacks page's item 21 at its merge SHA; Reviewer 3's words on
+the kinds paragraph and the Conclusion; the physicist's numbers of
+finding 21 (the declared pair's pitch 0.1493, the gap 0.19 percent,
+the deficit 0.56 percent at N_0 = 42.08) and the two "to verify"
+markers resolved by the sources page's rows 55 and 80. 48 pages.

@@ -6058,6 +6058,51 @@ CORRECTIONS = [
         "L{0.3in}L{1.1in}L{0.25in}L{1.7in}L{1.1in}L{0.9in}L{0.5in}",
         "L{0.3in}L{0.95in}L{0.25in}L{2.2in}L{0.95in}L{0.7in}L{0.5in}",
     ),
+    (
+        "commit 55, PR 1110 merged at f94e8fad: the attacks page's item 21 on main",
+        "on its branch at 484d28bb until that merge.",
+        "on \\texttt{main} at f94e8fad, with the worst-case line $1/(W - 1)$ beside $E/(W - 1)$.",
+    ),
+    (
+        "commit 55, Reviewer 3's words on the kinds (a): HOST's example",
+        "HOST, a number of the host's bookkeeping (the tick, a field of a gather line), never a detector's reading.",
+        "HOST, a number of the host's bookkeeping (the residue on a gather line, the ledger's rows, a run's seconds), never a detector's reading.",
+    ),
+    (
+        "commit 55, Reviewer 3's words (b): the rung in its two senses",
+        "A \\emph{rung} is one integer threshold of the click's ladder over the birth phase (Eq.~\\eqref{eq:rung}); the ladder's cell the phase falls in is the outcome.",
+        "A \\emph{rung} is an integer threshold: the pointer's rung, $1/W$ of the record's norm, decides when a cell's pointer has read enough; the ladder's rungs over the birth phase (Eq.~\\eqref{eq:rung}) decide which cell, the ladder's cell the phase falls in being the outcome.",
+    ),
+    (
+        "commit 55, Reviewer 3's words (c): DETECTOR's three readings",
+        "DETECTOR, a count of clicks, the only measurement;",
+        "DETECTOR, a click, a count of clicks or a body's own count, the only measurement;",
+    ),
+    (
+        "commit 55, Reviewer 3's word on the Conclusion: the read-out's quadratic form under its axiom",
+        "Exact on the lattice are the count marginals, the quadratic read-out and the CHSH sum",
+        "Exact on the lattice are the count marginals, the read-out's quadratic form under its axiom and the CHSH sum",
+    ),
+    (
+        "commit 55, the physicist's finding-21 words (1): row 4a's pair",
+        "($\\mu = 0.15$, $s = 14$)",
+        "(the pair $[800, 809]$, $s = 14$)",
+    ),
+    (
+        "commit 55, the physicist's finding-22 words (a): the 1925 inputs verified in published excerpts",
+        "\\cite{mgp1925} (the two inputs as read from it, to verify against the page)",
+        "\\cite{mgp1925} (the two inputs verified in published excerpts, \\cite[row 80]{sourcesverified})",
+    ),
+    (
+        "commit 55, the physicist's finding-22 words (b): Altschul verified",
+        "the coefficient's value and its page to verify.",
+        "the value and both articles verified, \\cite[row 55]{sourcesverified}.",
+    ),
+    (
+        "commit 55, the sources page's rows at their SHA",
+        "\\texttt{docs/designs/detector\\_law/SOURCES\\_VERIFIED.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 2aeea22c.",
+        "\\texttt{docs/designs/detector\\_law/SOURCES\\_VERIFIED.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 2aeea22c (its rows 55 and 80 at 6f51f630).",
+    ),
 ]
 
 
