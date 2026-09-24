@@ -547,13 +547,23 @@ Boss's word).
 
 ## 5. Row 9, Malus's law at 45 degrees
 
-1. The objects. The torus: a chain of 7 x 1 x 1 (DESIGN.md 6.3: the
-   record's train arrives along the 7-Node line), y and z periodic of one
+1. The objects. The torus: a chain of 8 x 1 x 1 (DESIGN.md 6.3: the
+   record's train arrives along the line; EIGHT Nodes, 12:15Z, so that the
+   polariser's EXIT cell, the Node beyond its entry at x = 6 (section 14
+   item 6), sits at x = 7 ON THE BOARD: Reviewer 3's read of Builder 3's
+   files at 88b3752, the 7-Node bar's exit off the board and the loader's
+   refusal under the joint-gather build; the 7-Node line HISTORY; every
+   other position unchanged), y and z periodic of one
    layer, x open. Z_256. The family `light`, h = 1, the lamp on the wheel
    [159, 256] releasing one row per self-creation on +x, born on label 0
    (`malus_22_5.json`'s form, new_rows PINS.md section 3). The which-path
-   `read` at x = 4 with no rotation (the whole beam on label 0, one cell).
-   The POLARISER as a foreign object of the TABLE form at x = 6 with the
+   `read` at x = 4 with no rotation (the whole beam on label 0, one cell)
+   is DROPPED with its detector set `first` (12:15Z, Reviewer 3's second
+   defect: under detector-law-v1 a set's Node is a take Node, so the set
+   at x = 4 took the record before the polariser and nothing reached it;
+   the amplitude law's which-path reader has no place in this world: the
+   lamp, the polariser's two cells, nothing between them; the World
+   Generator regenerates the four files). The POLARISER as a foreign object of the TABLE form at x = 6 with the
    setting s = 64 (the angle 180 s / 256 = 45 degrees), its detector set
    the cells + and -.
 2. The declared integers (the grain kind 1, the pairs kind 2, the
@@ -1173,7 +1183,14 @@ omega_b) of its own well, printed by the pins script before the run.
    taken per interval printed per record as a GAMEBOARD diagnostic where
    asked; one test, the light clock's chain of (ac):
    no rung at the set before the return's transit and the first rung
-   after it, none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
+   after it, none at 141. THE 173 CHAIN'S STANDING (12:15Z, the Boss's
+   item 3 of 11:36Z): the builder's (ac) test on the chain of 173 is an
+   ENGINE reading (a preliminary, EXPLORATORY); the pin on that chain, to
+   which light_clock_60 shrinks (SIZING.md), has its own provenance in
+   the map `light_clock_60_receiver_173.py` and `.out` beside that page
+   (213 +- 1 at W = 64, 211 at 256, 209 at 1024, the -x return 346: the
+   same integers as the 673 chain's), not in the test. REVIEWER 3'S
+   THREE ANSWERS (05:45Z
    through the Boss): the defect is the DECLARATION's, not the engine's
    (the map `light_held_pair_pins.py` modelled the emission without A's
    coupled interior; the remnant is the rule's band-edge mode, group
@@ -1218,6 +1235,26 @@ measurement (Reviewer 3's line, 23:50Z); Fizeau's drag stays the declared
 non-match.
 Nothing of the pin's form moves: the row was never pinned to a number of
 nature.
+THE CLOCK, ONE INTEGER (12:15Z, on Reviewer 3's read of the file and the
+Runner's readings, the Boss's item 6 of 11:36Z): the light family's
+`phase_per_link` [3565, 10000] on N = 64 in `index_moving_long_k3_away.json`
+IS the declared omega = 0.035 per interval: the PAIR form of the key turns
+a row's phase per interval of its age (world.py, the amplitude law of
+2026-09-20, `by_clock(age, n, d)`; the integer form alone turns per Link
+crossed), and 0.3565 x 2 pi / 64 = 0.03500 rad per interval, exactly as
+[77, 25] on N = 64 is light's omega 0.3024 for lambda_0 = 12 (the L block's
+header of section 15; the fans read 0.5264 rad per Link on the board under
+it, k = omega / c). The wavenumber on the board follows from the rule,
+k = 0.0606 per Link at c = 0.577 (lambda 104 Links), and is declared by no
+key. So the file and the declaration are ONE clock and no integer moves;
+the reading "k = 0.0350 rad per Link" was the integer form's. The Runner's
+peak at 0.018 per interval is not explained by the file's clock: the window
+of 1600 intervals holds 8.9 periods of 179.5 and its spectral grain is
+0.0039 per interval; I ask for the probe's series and the reader's form (a
+squared series reads 2 omega, a difference of the record's two columns a
+beat) before any word on the away phase, the halves' order and the drift,
+which stay GAMEBOARD readings of the file as it is; my explanation of e3's
+earlier gap waits on that series.
 
 ## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-23, 23:30Z, the owner's word and the Boss's decision of 23:32Z; the second draft 2026-09-24, 00:15Z, on Reviewer 3's read of 00:05Z; `matter_wave_pins.py`)
 
@@ -1508,11 +1545,19 @@ nature.
    which the record's cell is final, after the record's train and when
    it is not sourcing: at the rung where the record's ladder holds one
    cell, at the close where it holds several; the content moves with
-   the line; a record still moving after its line is field energy the
+   the line (0 for a block's record, which is born at content 0, section
+   15 M1-2, so the click's count is on the gather lines and no content
+   is declared); a record still moving after its line is field energy the
    sinks absorb, booked to the escaped row at its close or as open at
-   the run's end; a record whose cells cross no rung within the ticks
-   completes with no click, its content to the escaped row at its close
-   or open at the run's end. THE LADDER'S SIZE is the world's
+   the run's end; a record whose ONE cell (a one-cell ladder, the
+   receiver) crosses no rung within the ticks completes with no click,
+   its content to the row of the take that ended it (taken_by_emitter
+   where its emitter took it, escaped where a face did; 0 for a block's
+   record) or open at the run's end; a many-cell ladder writes its line
+   at the close with the cell by u and the time the cell's first rung or,
+   where it crossed none, the close, as built (`click_at` completion);
+   the three words of 11:20Z, Reviewer 3's read, the Boss's order of
+   11:36Z. THE LADDER'S SIZE is the world's
    declaration, not the law's: an emitting block names its receiver by
    the key `receiver` (a set's name; required on every emitting block,
    refused at load without it, no implicit default; the set may be the
@@ -1827,7 +1872,23 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   band's 0.57 percent, and if it stays at a few percent the drift is
   the front's own chirp and the earliest reading stands alone, the row
   then reading "the axis against the diagonal within the reader's
-  spread" and no more. With no set on the fan the record has no click
+  spread" and no more (the 10:15Z form, HISTORY from 12:15Z). THE READING
+  OF RECORD, THE SETTLING CRITERION (DECLARED 12:15Z, on SIZING.md's line
+  of 11:20Z and the Boss's item 2 of 11:36Z): the two probes' phase
+  difference per ray is read at every period after the front, from the
+  second period to the train's end, and printed as a series (GAMEBOARD);
+  the reading of record is THE SETTLED VALUE, the first period after which
+  the eight rays' values change by less than 0.05 percent between
+  consecutive periods (the World Generator's rerun without rings, 10:55Z:
+  at two periods the eight rays spread 2.3 percent, the front's own
+  transient; at four periods 0.32 percent, the axes settled at 0.5268 and
+  the diagonals still moving at 0.5260; the criterion, not a chosen period,
+  is the declaration); IF THE CRITERION IS NOT MET by the train's end, the
+  reading of record is the last period's value with its change from the
+  period before printed beside it, and the row reads "the axis against the
+  diagonal within that change" and no more (no reading of record is
+  withheld); the `ticks` 1000 / 1400 / 1900 above run the window to the
+  train's end (830 / 1110 / 1500 the minimum, SIZING.md). With no set on the fan the record has no click
   and the earlier "first click at a ring" line of section 7 is
   withdrawn (a bound below its own grain, and its set a contaminant of
   the reader). HOST seconds.
