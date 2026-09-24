@@ -7128,3 +7128,14 @@ five click-path gaps stay untouched until the Boss's one order; by
 Reviewer 3's reading (04:59Z) gap 3 is stale (the linear form is in
 the engine at af071b3f), gap 1 a labelling, gaps 2, 4 and 5 questions
 for the owner at 09:00.
+
+## Applied (2026-09-24, the owner's word of 05:25Z): commit 48 on paper-48
+
+Gap 2 as wording: the pointer books the record's motion (its squared
+step, summed over the cells), in item (5), the detector paragraph,
+Figure 1's caption and its panel 4 label. Gap 4 by the owner's rule:
+no old law cited without a reason; the ten citations of the beam law
+in the text each carry a theorem, a reading or a history label and
+stay; the engine's default is decided with the Boss under the
+repository's "no implicit default" rule. Gaps 1, 3 and 5 wait for the
+Boss's one order. 48 pages.

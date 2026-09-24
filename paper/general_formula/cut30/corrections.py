@@ -5788,6 +5788,16 @@ CORRECTIONS = [
         "\\captionsetup{labelsep=space}\n",
         "\\captionsetup{labelsep=space}\n\\makeatletter\\@secpenalty=0\\makeatother\n",
     ),
+    (
+        "commit 48, gap 2 on the owner's word (fix for coherence) and the physicist's verdict: item (5), the pointer books the record's motion",
+        "when the quadratic form of the record's values in its cells crosses $W$, it counts. A body is a detector of itself",
+        "when the record's motion in its cells, squared and summed, crosses $W$, it counts. A body is a detector of itself",
+    ),
+    (
+        "commit 48, gap 2: Figure 1's caption, the record's motion crossing the rung",
+        "Right: the click, the record's quadratic form crossing the rung, the only thing that leaves the board.",
+        "Right: the click, the record's motion, squared and summed over its cells, crossing the rung, the only thing that leaves the board.",
+    ),
 ]
 
 

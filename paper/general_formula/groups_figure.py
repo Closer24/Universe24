@@ -128,7 +128,13 @@ def draw(output: Path) -> None:
     ax.plot([xc], [0.62], "o", color="black", ms=5)
     ax.text(0.9, 0.65, "$W$", fontsize=8, ha="right")
     ax.text(xc, 0.7, "click", fontsize=8.5, ha="center")
-    ax.text(0.5, 0.1, "$X^2 + Y^2$ in the cells, against the count", fontsize=8.8, ha="center")
+    ax.text(
+        0.5,
+        0.1,
+        "the record's motion squared in the cells, against the count",
+        fontsize=8.8,
+        ha="center",
+    )
     ax.set_title(
         "the click: the form crosses the rung,\nthe only thing that leaves the board",
         fontsize=8.2,
