@@ -7161,3 +7161,13 @@ cells, and a body writes two click lines (Definition 3, the read-out's
 gloss). The attacks page is cited at the declared form. All five gaps
 now have their paper sentences; the four-layer check on main remains
 the task's close. 48 pages.
+
+## Applied (2026-09-24, the Boss's order (B) of 06:10Z): commit 52 on paper-48
+
+The referee's consistency findings 5, 10, 14, 15, 16, 19, 20, 21, 22
+and 23, each verified against the text before it was applied; the
+physicist's numbers, the unreachable sources' "to verify" markers, the
+unreferenced labels and the (A1) to (A3) gloss left as they are, with
+the reasons in NUMBERS.md. The findings on the title, the two laws,
+the abstract's claims and the physics (1 to 4, 6 to 9, 11 to 13, 17,
+18) are the owner's and the physicist's, not this commit's. 48 pages.

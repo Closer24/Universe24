@@ -130,7 +130,7 @@ JOINS = {
     "families_paragraph": "\\paragraph{The families as declared integers.} ",
     "click_head": (
         "\\section{From click to click}\\label{sec:click}\n\n"
-        "Everything compared with nature is a count between clicks at a detector or a ratio of such counts; nothing inside the board is compared. This section is the chain from the ring's element read at a click to those counts and to the forms they take, the click frame under the hypotheses (A1) to (A3), each named where it enters; it uses the objects of Sections~\\ref{sec:physics} and~\\ref{sec:gameboard} by the names defined there. It opens with the six steps between two clicks, the two theorems of the Outside, and the one fact behind the uncertainty relation and Bell's excess; then the chain.\n\n"
+        "Everything compared with nature is a count between clicks at a detector or a ratio of such counts; nothing inside the board is compared. This section reads forward: its clicks are those of Definition~\\ref{def:click} and its postulates are stated in Section~\\ref{sec:law}. This section is the chain from the ring's element read at a click to those counts and to the forms they take, the click frame under the hypotheses (A1) to (A3), each named where it enters; it uses the objects of Sections~\\ref{sec:physics} and~\\ref{sec:gameboard} by the names defined there. It opens with the six steps between two clicks, the two theorems of the Outside, and the one fact behind the uncertainty relation and Bell's excess; then the chain.\n\n"
     ),
     "physics_head": (
         "\\section{From the algebra, the physics}\\label{sec:physics}\n\n"

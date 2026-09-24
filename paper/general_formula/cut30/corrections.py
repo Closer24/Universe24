@@ -5828,6 +5828,176 @@ CORRECTIONS = [
         "\\bibitem{glossary}",
         "\\bibitem{attacks} The order channel's attacks page, the four attacks answered and the guard, \\texttt{docs/designs/detector\\_law/ORDER\\_CHANNEL\\_ATTACKS.md}, with \\texttt{ONE\\_ACCOUNT.md} (one account in four layers) and DECLARATIONS.md section 2, item 8 (the two keys), of the archived code \\cite{zenodo}, on \\texttt{main} at d2d1d2fb. \\bibitem{glossary}",
     ),
+    (
+        "commit 52, finding 5: no boost preserves the polyhedral cone (Section 7, the second place)",
+        "a boost being not $\\Z$-linear, so Lorentz's form is reached Outside",
+        "no boost preserving the polyhedral cone $|\\mathbf x|_1 \\le t$ (whose linear automorphisms are finite), so Lorentz's form is reached Outside",
+    ),
+    (
+        "commit 52, finding 10: the measured grains, seven, named once (the seven points)",
+        "measured at seven $\\Nphi$",
+        "measured at seven grains, $64$ and the six from $512$ to $16384$",
+    ),
+    (
+        "commit 52, finding 10: the measured grains at the platform paragraph",
+        "($S$ at seven grains)",
+        "($S$ at the same seven grains)",
+    ),
+    (
+        "commit 52, finding 10: Theorem 8's list of the measured grains, with 64",
+        "measured after a detector at $512$, $1024$, $2048$, $4096$, $8192$ and $16384$ \\cite{register}",
+        "measured after a detector at $64$ and at $512$, $1024$, $2048$, $4096$, $8192$ and $16384$ \\cite{register}",
+    ),
+    (
+        "commit 52, finding 10: the proof's dangling pointer",
+        "and the engine's three values below.",
+        "and the engine's measured values below (the paragraph on the finite-grain value).",
+    ),
+    (
+        "commit 52, finding 10: the finite-grain paragraph's list, with 1024",
+        "measured after a detector at $\\Nphi = 512$, $2048$, $4096$, $8192$ and, the plateau's end, $16384$",
+        "measured after a detector at $\\Nphi = 512$, $1024$, $2048$, $4096$, $8192$ and, the plateau's end, $16384$",
+    ),
+    (
+        "commit 52, finding 14: the six kinds defined in one place",
+        "Every number carries its \\emph{kind}: DETECTOR, a count of clicks, the only measurement; GAMEBOARD, a number of the board's state, a diagnostic and never a result.",
+        "Every number carries its \\emph{kind}: DETECTOR, a count of clicks, the only measurement; GAMEBOARD, a number of the board's state, a diagnostic and never a result; COMPUTATION, a number computed from the algebra before any run; CONVERSION, a number the paper converts from a published one or from counts; DECLARATION, a declared input of a world file; HOST, a number of the host's bookkeeping (the tick, a field of a gather line), never a detector's reading.",
+    ),
+    (
+        "commit 52, finding 15: row 13's one status, history and NOT PREDICTED, the FAIL word out",
+        "what is read is series K's $0.000$ pixel under the law as built (FAIL)",
+        "what is read is series K's $0.000$ pixel under the law as built, history",
+    ),
+    (
+        "commit 52, finding 16: row 2a's withdrawn 128-period value purged (the lamp withdrawn as calibrated, Section 1)",
+        "at or above the train's coherence value, $0.99$ at $128$ periods, the band $0.01$",
+        "at or above the train's coherence value, the band $0.01$",
+    ),
+    (
+        "commit 52, finding 19: T_D at its first use",
+        "was the flight's declared wall $T_D$, a rule chosen among few (P9),",
+        "was the flight's declared wall $T_D$ (the table's count of intervals per period of a direction, Proposition~\\ref{prop:pace}), a rule chosen among few (P9),",
+    ),
+    (
+        "commit 52, finding 19: N_t at its first use",
+        "in the joint limit of $\\Nphi$ and $N_t$)",
+        "in the joint limit of $\\Nphi$ and $N_t$, the tables' scale)",
+    ),
+    (
+        "commit 52, finding 19: h_q and h at their first use",
+        "with $\\hbar = h_q\\Nphi/2\\pi = h/2\\pi$,",
+        "with $\\hbar = h_q\\Nphi/2\\pi = h/2\\pi$ ($h_q$ the energy of one phase step, $h = h_q\\Nphi$ Planck's constant in the law's units, an input),",
+    ),
+    (
+        "commit 52, finding 19: h_A at its first use",
+        "($E = h_q n/d = h_A f$,",
+        "($E = h_q n/d = h_A f$, $h_A = h_q\\Nphi$ the energy per cycle,",
+    ),
+    (
+        "commit 52, finding 19: N_w at its first use",
+        "at the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis",
+        "at the pace $|p_a|/(N_lN_wM + |p_a|)$ per axis ($N_w$ the world's width)",
+    ),
+    (
+        "commit 52, finding 19: r_D at its first use",
+        "which in a detector's own count is $1/r_D$ Nodes per count,",
+        "which in a detector's own count is $1/r_D$ Nodes per count ($r_D$ the detector's count per interval of the tick, $1$ at rest),",
+    ),
+    (
+        "commit 52, finding 20: the atom's pointer to a cut item",
+        "not computed (item (viii) of the list above)",
+        "not computed (the atom's item in the records file \\cite{records})",
+    ),
+    (
+        "commit 52, finding 20: the dangling concept DOI",
+        "it replaces the concept DOI below.",
+        "it replaces the concept DOI of the data availability statement.",
+    ),
+    (
+        "commit 52, finding 20: the caption's blank",
+        "blank until the closure page fixes it; only a DERIVED\\_BLIND row",
+        "blank where the closure page has not fixed it (row R2); only a DERIVED\\_BLIND row",
+    ),
+    (
+        "commit 52, finding 20: the external theorems disambiguated (1)",
+        "(Theorems 1 and 2 and rows II.1, II.3 and II.6 of \\cite{einsteinoutside})",
+        "(the cited page's Theorems 1 and 2 and its rows II.1, II.3 and II.6, \\cite{einsteinoutside})",
+    ),
+    (
+        "commit 52, finding 20: the list's numbering after the cuts (iv to iii)",
+        "(iv) The anisotropy of $c$ by direction",
+        "(iii) The anisotropy of $c$ by direction",
+    ),
+    (
+        "commit 52, finding 20: the list's numbering after the cuts (v to iv)",
+        "(v) The equivalence's constant",
+        "(iv) The equivalence's constant",
+    ),
+    (
+        "commit 52, finding 20: the list's numbering after the cuts (vi to v)",
+        "(vi) Light's bending:",
+        "(v) Light's bending:",
+    ),
+    (
+        "commit 52, finding 21: Theorem 7's cell order stated",
+        "$R(o_A, o_B) = J^2$. Then the first party's outcome",
+        "$R(o_A, o_B) = J^2$, the four joint cells in the declared order of Definition~\\ref{def:click}. Then the first party's outcome",
+    ),
+    (
+        "commit 52, finding 21: item (2)'s heading against its content",
+        "\\item[(2)] The group of order $24$: $G_{48} =",
+        "\\item[(2)] The group of order $48$ and its rotations, the group of order $24$: $G_{48} =",
+    ),
+    (
+        "commit 52, finding 21: the isotropic reading's constant not the pace of light",
+        "within the six operations is $c\\,\\mathbf p \\cdot \\mathbf p$, and the square $W$",
+        "within the six operations is $\\lambda\\,\\mathbf p \\cdot \\mathbf p$ with $\\lambda$ a constant, and the square $W$",
+    ),
+    (
+        "commit 52, finding 22: a role noun out of the prose",
+        "within the band the physicist declared, labelled exploratory",
+        "within the band declared before the run, labelled exploratory",
+    ),
+    (
+        "commit 52, finding 22: a role noun out of a bibitem",
+        "The families in the paper, the mathematician's audit of 2026-09-21,",
+        "The families in the paper, the audit of the families table of 2026-09-21,",
+    ),
+    (
+        "commit 52, finding 22: Michelson, Gale and Pearson 1925 cited",
+        "(Michelson, Gale and Pearson 1925, to verify)",
+        "\\cite{mgp1925} (the two inputs as read from it, to verify against the page)",
+    ),
+    (
+        "commit 52, finding 22: the 1925 bibitem",
+        "\\bibitem{glossary}",
+        "\\bibitem{mgp1925} A. A. Michelson, H. G. Gale and F. Pearson, Astrophys. J. 61, 140 (1925), \\url{https://doi.org/10.1086/142879}. \\bibitem{glossary}",
+    ),
+    (
+        "commit 52, finding 23: the abstract's coined terms glossed",
+        "Exact on the lattice: the books, Gauss's law",
+        "Exact on the lattice: the books (the conserved integer sums), Gauss's law",
+    ),
+    (
+        "commit 52, finding 23: the abstract's grain glossed",
+        "in the joint limit of the grain and the tables' scale",
+        "in the joint limit of the grain $\\Nphi$ and the tables' scale",
+    ),
+    (
+        "commit 52, finding 23: the bending sentence split (1)",
+        "$1.75$ arcseconds; series K's $0.000$ pixel",
+        "$1.75$ arcseconds. Series K's $0.000$ pixel",
+    ),
+    (
+        "commit 52, finding 23: the bending sentence split (2)",
+        "before the generic entry of 2026-09-22;  under the key \\texttt{optical},",
+        "before the generic entry of 2026-09-22. Under the key \\texttt{optical},",
+    ),
+    (
+        "commit 52, finding 23: a conclusion paragraph",
+        "\\section*{Declarations}",
+        "\\paragraph{Conclusion.} One local integer rule on the cubic lattice, six operations required to commute with the group of order $48$, is read only through detectors' clicks. Exact on the lattice are the count marginals, the quadratic read-out and the CHSH sum as a rational of the grain; the moving clock's rate is derived under the massive record kind; Lorentz's factors and Einstein's step are reached only under two named hypotheses. No pinned reading is in the table yet: every row is closed in the algebra before its run, and the pinned runs decide, row by row, what the law matches and where it fails.\n\n\\section*{Declarations}",
+    ),
 ]
 
 
