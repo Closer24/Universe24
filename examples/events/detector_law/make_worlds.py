@@ -72,11 +72,11 @@ intervals). The deep well worlds of group M2
 are the massive record series' own (its generator writes them; RUN_LIST.md
 step 3).
 
-The worlds whose lines the engine on main does not carry yet are written into
+A world whose lines the engine on main does not carry yet is written into
 `docs/designs/detector_law/held_worlds/` (HELD_NAMES below), outside the
-shipped set under `examples/events` that the gate loads; each moves back to
-its folder when its line lands. Every world is held until PR 1068's merge SHA
-(the builder's 36fd5235, on which all twenty load), the Boss's shipping order.
+shipped set under `examples/events` that the gate loads, until its line lands.
+Since PR 1068's merge (main 5fe266c9, the builder's 36fd5235) every world loads
+and ships at its RUN_LIST path; the held set is empty.
 
 Run from the repository root:
 
@@ -106,28 +106,7 @@ NEW_ROWS = DESIGNS / "new_rows" / "worlds"
 # land; then their names move back (the Boss's rule of 2026-09-24, 02:15Z: nothing shipped
 # that the gate loads and refuses).
 HELD = DESIGNS / "detector_law" / "held_worlds"
-HELD_NAMES = {
-    "two_slits",
-    "pace_fan_12",
-    "pace_fan_16",
-    "pace_fan_24",
-    "bell_a0b0",
-    "bell_a0b1",
-    "bell_a1b0",
-    "bell_a1b1",
-    "malus_45",
-    "malus_11.25",
-    "malus_28.125",
-    "malus_33.75",
-    "redshift_k3",
-    "redshift_control",
-    "sagnac_k3",
-    "sagnac_rest",
-    "light_clock_60",
-    "matter_waves_12",
-    "matter_waves_16",
-    "matter_front_12",
-}  # every world until PR 1068's merge SHA (the builder's keys: `own_grace`, `block`, `take`, ...)
+HELD_NAMES: set[str] = set()  # empty since PR 1068's merge (main 5fe266c9): every world loads and ships
 
 
 def load_massive_generator():
