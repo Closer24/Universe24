@@ -1,0 +1,33 @@
+1. The deceleration parameter q_0 = Omega_m / 2 - Omega_DE (1 + 3 w_0) / 2 from DATA
+  Planck 2018 flat LCDM, Omega_m 0.3153 +- 0.0073: q_0: -0.5271
+    the clocks' stretch gradient nature's q_0 would need, g_1 = -q_0 / (2 + q_0): 0.3578
+  Pantheon+ flat LCDM, Omega_m 0.334 +- 0.018: q_0: -0.4990
+    the clocks' stretch gradient nature's q_0 would need, g_1 = -q_0 / (2 + q_0): 0.3324
+  DESI 2024 + CMB + Pantheon+, w_0 = -0.827 at Omega_m 0.31 (Omega_m RECALLED): q_0: -0.3559
+    the clocks' stretch gradient nature's q_0 would need, g_1 = -q_0 / (2 + q_0): 0.2165
+  the uncertainty of Planck's q_0 at fixed flatness, 3/2 x 0.0073: 0.0109
+  the uncertainty of Pantheon+'s q_0, 3/2 x 0.018: 0.0270
+2. The Hubble tension, DATA: 73.04 +- 1.04 (SH0ES 2022) against 67.36 +- 0.54 (Planck 2018)
+  the difference: 5.6800
+  the difference over the combined error, squared: 23.4943
+  the difference over the combined error: 4.8471
+  the ratio 73.04 / 67.36: 1.0843
+  the crowd stretch difference k_B - k_B' the detector's own rate would need, H_d = r_B H: 0.0843
+3. The baryon fraction from Planck's densities, Omega_b h^2 / (Omega_b h^2 + Omega_c h^2)
+  0.0224 / (0.0224 + 0.120): 0.157
+4. The kinematic numbers at K = 3 on the lattice, beta_c = 1 / sqrt 3 (COMPUTATION)
+  beta_c: 0.57735
+  the law's one-way factor behind a receding emitter, (1 - beta) / (1 + beta) = 2 - sqrt 3: 0.26795
+  its square, 7 - 4 sqrt 3 (the wave's energy share behind over ahead on a chain): 0.07180
+  the free emitter's product (1 + z_behind)(1 + z_ahead) = gamma_m^2 (1 - beta_c^2) at gamma_m 1.22606: 1.00215
+  the bound emitter's product on row 4b's world, (1 - beta_c^2) / (f / f_0)^2 at f / f_0 = 0.7931: 1.05987
+  the same product light's gamma would give, gamma(c)^2 (1 - beta_c^2) = 1 exactly: 1.00000
+5. Tolman's exponent: the surface brightness ratio times (1 + z), the law's 1 against nature's (1 + z)^-3
+  row 4b's pin 1 + z = 1.9889: nature's (1 + z)^-3: 0.1271
+  the ray law's 1 + beta_c: nature's (1 + z)^-3: 0.2548
+6. The neutrino bounds over the electron's mass 0.511 MeV (DATA over DATA)
+  KATRIN 2025 0.45 eV / 0.511 MeV: 0.000000881
+  DESI 2024 + CMB, the sum 0.072 eV over three, over 0.511 MeV: 0.000000047
+7. Seeliger's history, the law's own crowd (DARK_ENERGY.md section 3 (b)): q_eff = 2 k_0 (3 - k_0) / (1 - k_0)^2
+  at k_0 = 1/100: 0.0610
+  at k_0 = 1/10: 0.7160
