@@ -1,0 +1,131 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-redshift-control-v1",
+ "shape": [
+  4096,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 9600,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "amplitude_bound": 4294967296,
+ "wheel": 64,
+ "directions": [],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    156,
+    157
+   ],
+   "faces": {
+    "x": "open"
+   }
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    2994,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 12,
+   "pair": [
+    314,
+    315
+   ],
+   "coupling": {
+    "G": [
+     1,
+     50
+    ],
+    "g": [
+     1,
+     1000
+    ]
+   },
+   "wheel": 64,
+   "seed": 52428800,
+   "emits": "light",
+   "own_grace": 3000
+  },
+  {
+   "position": [
+    4094,
+    0,
+    0
+   ],
+   "family": "light",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  }
+ ],
+ "detectors": [
+  {
+   "name": "light_detector",
+   "positions": [
+    [
+     4094,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1,
+   "wheel": 64
+  }
+ ],
+ "probes": [
+  [
+   4094,
+   0,
+   0
+  ]
+ ]
+}

@@ -1,0 +1,124 @@
+{
+ "law": "beam",
+ "model_id": "beam-detector-law-malus-45-v1",
+ "shape": [
+  7,
+  1,
+  1
+ ],
+ "boundary": {
+  "z": "periodic"
+ },
+ "ticks": 1200,
+ "K": 1125899906842624,
+ "N": 256,
+ "release": [
+  0,
+  1
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "measured": [
+  {
+   "position": [
+    0,
+    0,
+    0
+   ],
+   "family": "light",
+   "amount": 256,
+   "fixed": true,
+   "lamp": {
+    "rate": [
+     1,
+     1
+    ],
+    "wheel": [
+     159,
+     256
+    ],
+    "directions": [
+     [
+      1,
+      0,
+      0
+     ]
+    ],
+    "train": 32
+   }
+  },
+  {
+   "position": [
+    4,
+    0,
+    0
+   ],
+   "family": "counter",
+   "amount": 1,
+   "fixed": true,
+   "table": {
+    "light": {
+     "rule": "read"
+    }
+   }
+  },
+  {
+   "position": [
+    6,
+    0,
+    0
+   ],
+   "family": "counter",
+   "amount": 1,
+   "fixed": true,
+   "table": {
+    "light": {
+     "phase_window": 64
+    }
+   }
+  }
+ ],
+ "detectors": [
+  {
+   "name": "first",
+   "positions": [
+    [
+     4,
+     0,
+     0
+    ]
+   ],
+   "reading": "sum"
+  },
+  {
+   "name": "second",
+   "positions": [
+    [
+     6,
+     0,
+     0
+    ]
+   ],
+   "reading": "sum"
+  }
+ ],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    308,
+    25
+   ]
+  },
+  {
+   "name": "counter",
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
+  }
+ ]
+}
