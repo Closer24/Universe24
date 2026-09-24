@@ -29,15 +29,14 @@ NO TABLE ANYWHERE (the owner's word of 2026-09-24, 18:55Z, through the
 Boss: "make sure we have no such thing at all as Nodes with a table; it
 should not exist at all"). A Node carries only its NodeState and the one
 rule acts; every tool is a BODY OF MATERIAL whose Nodes carry only
-material integers. THE MATERIAL, one form for every tool: per LABEL, in
-the label basis rotated by the body's own declared angle (the wheel's
-translation x^s on the two hands, ALGEBRA.md 9.14, with no table; never a
-Node's table), and per
+material integers. THE MATERIAL, one form for every tool (HISTORY in its angle and its
+take, superseded by part A: the angle is the integer axis (a, b) of
+ALGEBRA.md 9.14 (b), ADOPTED, and the take is removed, 9.12): per LABEL,
+the label matrix **M**_u = [[a, b], [-b, a]] of the body's axis on the
+record's label rows (ALGEBRA.md 9.16 (2); never a Node's table), and per
 FAMILY where two families meet (the crystal), an INDEX PAIR (the
-coefficient [num, den] = 1 / n^2 of DESIGN.md 4.1) and a TAKE PAIR (the
-receiver's form: the share of the arriving amplitude the Node takes and
-books, [1, 1] a complete take, [0, 1] none); the rotation is a 2 x 2
-over the labels (verb B). THE ONE ENABLING ENGINE LINE for all of it:
+coefficient [num, den] = 1 / n^2 of DESIGN.md 4.1); the rotation is a 2
+x 2 over the labels (verb B). THE ONE ENABLING ENGINE LINE for all of it:
 ONE AMPLITUDE PER LABEL VALUE on every record (two fields, H and V,
 each stepped by the split with its own pair), which the crystal needs
 anyway; a record of rank 2 keeps its joint label state for the gather,
@@ -67,20 +66,27 @@ it), or DECLARATION. Existing design files are cited, never copied.
 Nothing here is code; the physicist writes the code, the worlds and the
 test-run lines, each tool's code after its section is agreed.
 
-THE SYMBOLS USED IN SEVERAL SECTIONS. N = 2048 the phase circle's steps
-and W = 2048 the birth wheel; omega (the angular frequency per interval,
-an Outside reading) of a clock pair [p, q] is 2 pi p / (q N); the light
-family's clock [2464, 25] (omega_0 = 0.302378, a period of 20.779
-intervals, about 12 Links per period) and the halved clock [1232, 25]
-(omega_1 = omega_0 / 2, about 24 Links); the Outside reading of the
-split, 3 cos omega = cos k_x + cos k_y + cos k_z (ALGEBRA.md 8.1 at [1,
-1]), with **k** the wave vector (bold lowercase, a vector); c = 1 / sqrt
-3 Links per interval; a label is an integer whose bit j is the value on
-arm j (0 for H, 1 for V); the branches [[label, weight], ...] a record's
-joint labels with integer weights from 1; C'[s] and S'[s] the half-angle
-tables at 1 / 256 at the setting s, **U**_s = [[C'[s], S'[s]], [-S'[s],
-C'[s]]] (bold uppercase, a matrix); R a cell's weight; E(a, b) a
-correlation and S the CHSH sum.
+THE SYMBOLS USED IN SEVERAL SECTIONS (HISTORY where marked; part A
+holds). N = 2048 the phase circle's steps (W = 2048 the birth wheel:
+HISTORY, no wheel is declared, ALGEBRA.md 9.19 (4)); a clock pair [p, q]
+is the born character's PHASE PER LINK, k = 2 pi p / (q N) (ALGEBRA.md
+9.17 (4)), and its frequency omega (per interval, an Outside reading)
+follows from the band along a lattice axis, 3 cos omega = cos k + 2:
+the light family's clock [2464, 25] has k = 0.302378 per Link, omega =
+0.17413, a period of 36.08 intervals and a wavelength of 20.78 Links
+(the earlier reading of [p, q] as omega, "a period of 20.779 intervals",
+is HISTORY: 20.78 is the wavelength in Links); the halved clock [1232,
+25] has k = 0.151189, omega = 0.08723, a period of 72.03 intervals and
+a wavelength of 41.56 Links; the Outside reading of the split, 3 cos
+omega = cos k_x + cos k_y + cos k_z (ALGEBRA.md 8.1 at [1, 1]), with
+**k** the wave vector (bold lowercase, a vector); c = 1 / sqrt 3 Links
+per interval; a label is an integer whose bit j is the value on arm j
+(0 for H, 1 for V); the branches [[label, weight], ...] a record's joint
+labels with integer weights from 1; C'[s], S'[s] and **U**_s = [[C'[s],
+S'[s]], [-S'[s], C'[s]]] (the half-angle tables at the setting s, bold
+uppercase a matrix): HISTORY, the axis (a, b) and **M**_u replace them
+(ALGEBRA.md 9.14 (b)); R a cell's weight; E(a, b) a correlation and S
+the CHSH sum.
 
 ---
 
@@ -349,7 +355,7 @@ world's pin is re-derived blind on its own map before any run.
 
 ---
 
-## 0. Each tool from the algebra: the operation, the body that carries it, what is written on the board, the load-time check (the owner's words of 2026-09-24, 19:10Z and 19:25Z, through the Boss)
+## 0. (HISTORY) Each tool from the algebra: the operation, the body that carries it, what is written on the board, the load-time check (the owner's words of 2026-09-24, 19:10Z and 19:25Z, through the Boss)
 
 THE DERIVATION NOW LIVES IN [ALGEBRA.md chapter 9](../../ALGEBRA.md) ("The
 tools as operations of the group", the owner's word of 19:35Z): a tool is a
@@ -468,7 +474,7 @@ group.
 
 ---
 
-## 1. The crystal (it folds in the blind page docs/designs/detector_law/CRYSTAL_ALGEBRA.md, branch crystal-algebra at 238c7281, Reviewer 3's read CONFIRMED WITH LINES, record 1829)
+## 1. (HISTORY) The crystal (it folds in the blind page docs/designs/detector_law/CRYSTAL_ALGEBRA.md, branch crystal-algebra at 238c7281, Reviewer 3's read CONFIRMED WITH LINES, record 1829)
 
 **1.1 What it is and what nature gives it.** In the laboratory a
 nonlinear crystal converts a small fraction of an arriving photon's
@@ -932,7 +938,7 @@ world itself stays small (L = 24).
 
 ---
 
-## 2. The polariser (a material: it takes one label along its own axis; the counts arise from the record's label state projected on that axis)
+## 2. (HISTORY) The polariser (a material: it takes one label along its own axis; the counts arise from the record's label state projected on that axis)
 
 **2.1 What it is.** In the laboratory an absorbing polariser (a sheet)
 takes the polarisation across its axis and passes the one along it; a
@@ -1034,7 +1040,7 @@ unchanged (no exit cell from any arm).
 
 ---
 
-## 3. The material mirror (a gap block of light's kind; the reflection arises)
+## 3. (HISTORY) The material mirror (a gap block of light's kind; the reflection arises)
 
 **3.1 What it is.** A mirror reflects because the light cannot proceed
 inside it; nothing tells it the outgoing direction. Here: a body of
@@ -1097,7 +1103,7 @@ closed face's by the delay difference (K form above, MEASURED ONLY).
 
 ---
 
-## 4. The well body (the massive record's block)
+## 4. (HISTORY) The well body (the massive record's block)
 
 A body declared by its vertex and edge (a cube; a square on a layer; a
 segment on a chain), of a massive kind: A WELL, its pair lowered on its
@@ -1145,7 +1151,7 @@ from every block of the family, not only its own.
 
 ---
 
-## 5. The receiver (an absorbing material with its click's named set)
+## 5. (HISTORY) The receiver (an absorbing material with its click's named set)
 
 A body declared by its vertex and edge (the smallest of side 1), of
 light's kind, A MATERIAL, NO BOUND MODE, whose Nodes carry the TAKE PAIR
@@ -1169,7 +1175,7 @@ the K form).
 
 ---
 
-## 6. The emitter with no heading
+## 6. (HISTORY) The emitter with no heading
 
 **6.1 What it is.** A source whose Nodes insert its family's train by
 its clock, one record per birth: its amplitude at its own Nodes driven
@@ -1207,7 +1213,7 @@ record of branches [[0, 1], [1, 1]] carried with one amplitude per Node.
 
 ---
 
-## 7. The splitter (a thin layer of material; its outputs arise from its plane)
+## 7. (HISTORY) The splitter (a thin layer of material; its outputs arise from its plane)
 
 **7.1 What it is.** A half-silvered layer: the transmitted and the
 reflected light arise from its plane; nothing declares where they go.
@@ -1240,7 +1246,7 @@ beside).
 
 ---
 
-## 8. The transponder (a moving mirror: a mirror material carried by the massive body)
+## 8. (HISTORY) The transponder (a moving mirror: a mirror material carried by the massive body)
 
 **8.1 What it is.** A reflector receding from a lamp at rest: the
 reflected light returns red-shifted by (1 - beta) / (1 + beta), beta the
@@ -1289,7 +1295,7 @@ owner's word before any run).
 
 ---
 
-## 9. What each tool needs and what retires, in one table
+## 9. (HISTORY) What each tool needs and what retires, in one table
 
 | Tool | Its body and kind | The engine lines it needs | What retires on main |
 | --- | --- | --- | --- |
@@ -1304,9 +1310,10 @@ owner's word before any run).
 
 ---
 
-## 10. What is agreed, and what goes to the owner
+## 10. (HISTORY) What is agreed, and what goes to the owner
 
-Nothing in this file is agreed yet: each section is checked by the
+HISTORY (part A holds): at this section's writing nothing in this file
+was agreed yet; each section is checked by the
 physicist and agreed or sent to the Boss. The points for the owner from
 this draft: (1) no table anywhere: every tool a body of material, the
 one enabling line one amplitude per label on every record (the head);
@@ -1324,7 +1331,7 @@ blind: 3.7733 at [2464, 25] on the board against the continuum's 3.7321.
 
 ---
 
-## 11. The settlements with the physicist (his checks of 17:10Z and 17:40Z on 08890a34 and 570bc2cf)
+## 11. (HISTORY) The settlements with the physicist (his checks of 17:10Z and 17:40Z on 08890a34 and 570bc2cf)
 
 AGREED by the physicist and marked so: section 4 (the well body, his body
 check on body-check 6c6386ce); section 6 (the emitter with no heading, his
@@ -1420,7 +1427,7 @@ profile over the whole board; his check to assert that the set of records
 at interval 0 is exactly the bodies' own.
 
 
-## 12. The two engine forms that close ALGEBRA.md 9.16 (1) and (2), with their unit tests (for the physicist to build)
+## 12. (HISTORY) The two engine forms that close ALGEBRA.md 9.16 (1) and (2), with their unit tests (for the physicist to build)
 
 **12.1 The split sum on one record (ALGEBRA.md 9.16 (1)).**
 
