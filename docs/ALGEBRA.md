@@ -3611,13 +3611,82 @@ the fix is the algebra for one-arm records and may merge as the bug's fix
 with (a), (b) and (d) corrected; the tool's final form is the material
 one.
 
-### 9.12 What is missing, for the owner
+### 9.12 The take and the click (the owner's word of 21:30Z through the Boss: "the receiver's take is defined by an operation of the group; we named it E, I think; check it")
+
+**Three operations at a receiver, told apart (DERIVED HERE from 2.5, 3.1,
+8.6 and 8.8).** (i) THE EVALUATION E (2.5): ev: Z[Z_N] -> Z[zeta_N], a
+ring homomorphism; with the norm (B) and the rung (D) it READS the
+record at the receiver's cells and changes nothing on the board. (ii) THE
+CLICK'S ACTION (3.1; POSTULATES.md section 10): the record ENDS at the
+detector, all its rows everywhere, and the detector's own record
+changes: the one deletion of the law (8.8). (iii) THE TAKE (8.6's last
+paragraph): at every interval the declared cells' amplitude of the record
+is held at 0 and its motion booked: a projection of the Inside, a
+diagonal map with a 0 on those cells (verb B with a degenerate matrix),
+NOT invertible. THE TAKE IS NOT E: E reads and leaves the Inside a
+bijection; the take removes amplitude from the Inside before any click.
+And it is not the click: the click deletes a record once and whole; the
+take deletes part of every record that passes, every interval. By 8.8
+the Inside is a bijection and the click is its one deletion; the take is
+the one other loss, which 8.6 already names "a declaration of the world,
+not the law's". Under the owner's rule that every operation in the cells
+is an operation of the group (9.5), a projection that no group element
+performs is not admitted into the law.
+
+**The take can be removed, and what replaces it (DERIVED HERE).**
+
+1. A record whose click's weights are COMPUTED from its state, not from
+   booked offers (the joint gather's R = J^2; the polariser's
+   projection; a ladder of one named receiver), needs no take: its click
+   is E then D at the first rung (the line at the rung, the receiver by
+   name), and at that interval the click's action DELETES THE RECORD
+   WHOLE, its leftover field included. The leftover field does not go to
+   sinks; it ends with the record. The crystal's arriving record (9.7
+   (b)) and the pair's gather are of this kind.
+2. A record whose click chooses among SEVERAL cells by their booked offers
+   (a screen's pixels: the two slits, de Broglie's fringes) needs the
+   offers at a CLOSE. Without a take the lossless field is read by E at
+   the screen's cells as it passes (a clock body is read and not taken,
+   8.6: "light passes on, and the click needs no sink"), and the close is
+   a COUNT ON THE RECORD'S OWN CLOCK (its age reaching a declared close,
+   lawful by 9.5): the offers booked up to that age form the ladder, the
+   residue chooses the cell, and the click deletes the record. The world
+   must be large enough that no reflection from a face reaches the screen
+   before the close (a timing condition per world, from the distances and
+   c, a load check).
+3. THE FACES: an open axis's face is the segment's border (1.6); with no
+   take, the row beyond read as 0 is a closed face that reflects (the
+   delay 3.547 intervals of the lab tools' specification 11.5), and it is
+   harmless exactly when every click happens before the first reflection
+   reaches its receiver (items 1 and 2). No face and no receiver then
+   needs a take pair; the shell of receiver cubes (9.8) needs none.
+4. THE COMPLETION (the host's reading of a record's remaining motion,
+   DESIGN.md 2.1) RETIRES: a record ends at its click (item 1) or at its
+   close (item 2), both lawful. A record that never reaches a rung before
+   its close ends at the close with the ladder of the offers it booked;
+   with no offer at all it ends unread, which the books count as its own
+   row (a record with no click), never as "escaped" into a sink.
+
+**What changes in the counts and the books (DERIVED HERE).** The Bell
+counts: none (the weights are computed; the first rungs unchanged,
+because the first rung is reached by the direct front before any
+reflection on the Bell layer: the faces are at least 11 Links behind every
+receiver along its line, 11.3 of the lab tools' specification). Malus:
+none (computed weights). The two slits and de Broglie's fringes: the
+screen's offers up to the close equal the offers the sinks' form booked,
+provided no reflection arrives before the close; their pins stand on
+that condition, which each world's generator checks. The books: the
+Inside's content is conserved exactly until the clicks (8.8's bijection);
+"absorbed" is the clicked content alone; "escaped" retires, replaced by
+"ended unread" for a record that closes with no offer. The one input the
+algebra did not produce (the take, 9.13 item 3) is thereby removed.
+
+### 9.13 What is missing, for the owner
 
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
 label module carried by the amplitudes, not only as weights): needed by
-every polar tool acting on the board. (3) The take, a declaration and not
-an operation. (4) The polariser's general angle, a declared rotation
+every polar tool acting on the board. (3) The take, a declaration and not an operation: REMOVABLE (9.12), the close on the record's own clock in its place. (4) The polariser's general angle, a declared rotation
 outside the cells' group. (5) The same-hand channels' weights a and b of
 the crystal (9.3), a material integer the symmetry leaves free. (6) The
 cone of the pair's headings: not derivable under the rule of reading
