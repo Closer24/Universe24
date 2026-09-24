@@ -53,12 +53,14 @@ train's length, the hold), not pins.
    interval, the probes at 40 and 36 Links on the eight rays reading 0
    until the front (about 62 to 70 intervals after the birth at 40 Links)
    and nonzero after it; the run reaching 1000, 1400 and 1900 ticks (past
-   the train's end by at least 300). The reader (L-6): per ray the phase
-   difference of its two probes printed per period from the second period
-   after the front to the train's end, and the reading of record the
-   settled value (the first period after which the eight change by less
-   than 0.05 percent) or, if none settles, the last period's value with its
-   change beside; both GAMEBOARD. HOST: seconds each, under 100 MB.
+   the train's end by at least 300). The reader (L-6, 14:50Z): per ray the
+   phase difference of its two probes printed per period from the second
+   period after the front to the train's end, and the reading of record
+   the MEAN of that series over the window with its spread beside (the
+   settling criterion HISTORY: the series settled on none of the three
+   worlds, the spread 2.5 to 6.5 percent per ray, the Runner's 13:40Z);
+   both GAMEBOARD; a spread above 0.57 percent leaves the row unresolved,
+   named, not a defect. HOST: seconds each, under 100 MB.
 3. Not clean: a `click` line or a `gather` line naming a set (there is
    none); a probe at 40 Links reading nonzero before 55 intervals or
    still 0 at 120; a second `gather` line; the run ending inside the
@@ -92,19 +94,25 @@ train's length, the hold), not pins.
    cart world as built under the ray law, `beam-moving-detector-cart-k3-v1`;
    re-declared under the rule by its README; no feature waited on).
 2. Clean: the world loads and runs its 600 ticks on the 240 x 3 x 3 board;
-   the lamp's births and the cart's clicks as its README declares (the
-   sent line and the received line); the reader
-   `tools/moving_detector_readings.py` on the run folder printing the
-   received line's period over the sent line's (DETECTOR). HOST: seconds.
+   THE RUN KEEPS THE ROW CLICKS (the runner's flag `--keep-row-clicks`; the
+   runner's default omits them and the reader then refuses the record as
+   trimmed, the Preliminary Runner's finding of 13:40Z): the lamp's births
+   and the cart's clicks as its README declares (the sent line and the
+   received line); the reader `tools/moving_detector_readings.py` on the run
+   folder printing the received line's period over the sent line's
+   (DETECTOR). HOST: seconds.
 3. Not clean: no click on the cart within the run; the reader unable to
    form a period from fewer than three clicks.
 
 ## 4. The energy of a moving mass, row M2 (on main)
 
-1. `examples/events/massive_record/matter_front_12.json` on main af4c3b03
-   (the chain of 200, x open, the matter lamp at x = 20 with `rate` [1, 8],
+1. `examples/events/massive_record/matter_front_12.json` regenerated on
+   runner-lines with the matter family's `take` [-19, 86] (the loader's
+   requirement on a matter lamp since PR 1115; the file on main af4c3b03 is
+   refused without it, the Preliminary Runner's finding of 13:40Z): the
+   chain of 200, x open, the matter lamp at x = 20 with `rate` [1, 8],
    `wheel` [1, 64], `train` 8 periods, the set `front` on the body at x =
-   104 with W = 64, 600 ticks); no feature waited on.
+   104 with W = 64, 600 ticks; no feature waited on.
 2. Clean: `birth` lines from tick 8 at one per 8 intervals (the lamp's
    stock); the first record's `gather` line with `chosen` "front" and
    `click_at` "rung", its `click` between 120 and 260 intervals after its
@@ -162,7 +170,10 @@ train's length, the hold), not pins.
    cells short of the probe at 6000; no set, no `click`; the run to 6000.
    The reader: `read_runs.index_reading` over the window [3800, 5400]
    (the phase by projection at the declared omega 0.035 per interval, the
-   window's halves, the rest n; GAMEBOARD). The Runner's earlier peak at
+   window's halves, the rest n; GAMEBOARD), EACH WORLD PAIRED WITH THE
+   REFERENCE AT ITS OWN SOURCE CLOCK (section 11, 14:50Z): the away world
+   against `index_moving_long_reference_omega.json`, the rest world against
+   `index_moving_long_reference_k3_away.json`. The Runner's earlier peak at
    0.018 (PRELIMINARY_RUNS_2026-09-24.md section 10) is read again with
    the series printed, so that its origin is named. HOST: about 4 seconds
    each, 40 MB.
