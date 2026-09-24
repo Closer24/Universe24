@@ -79,7 +79,8 @@
    },
    "wheel": 64,
    "seed": 52428800,
-   "emits": "light"
+   "emits": "light",
+   "own_grace": 3000
   },
   {
    "position": [
@@ -113,7 +114,8 @@
    },
    "wheel": 64,
    "seed": 52428800,
-   "emits": "light"
+   "emits": "light",
+   "own_grace": 3000
   }
  ],
  "detectors": [

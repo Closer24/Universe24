@@ -38,10 +38,10 @@ same clock).
 
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
-`redshift_control.json` (section 4), `sagnac_k3.json` and `sagnac_rest.json`
-(section 13, the blocks their own receivers with `own_grace` 70),
-`light_clock_60.json` (section 10, A its own receiver with `own_grace` 70, the
-chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
+`redshift_control.json` (section 4, A's `own_grace` 8000), `sagnac_k3.json` and `sagnac_rest.json`
+(section 13, the blocks their own receivers with `own_grace` 3000, the hold),
+`light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
+its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
 (M1-3), the receivers detector sets bound to their body by the key `block`
 with their own wheel 64 (M1-4), `amplitude_bound` 2^32 on every massive world
@@ -405,15 +405,17 @@ MATTER_TAKE_PAIRS = {
     16: [-5, 27],
 }  # M1-6: the take's pair on the matter kind's take lines
 MATTER_TRAIN = 8  # periods (150 intervals), section 12 and M1-6
-OWN_GRACE = 70  # section 10 item 1 and section 13 item 2: the emitting block's key `own_grace`
+OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
+REDSHIFT_GRACE = 8000  # section 4 item 2 (go-lines 795602cd): 4b's A, the hold
+R2_GRACE = 3000  # section 13 item 1 (go-lines a59d3a26): R2's blocks, the whole hold
 LAMP_GRACE = 16700  # M1-6: the matter lamp's `own_grace`, the whole hold
 
 
 def emitter(position: list[int], side: int, pair: list[int], grace: int | None, **extra: object) -> dict:
     """A block that emits light at G = [1, 50], g = [1, 1000], the seed 50 x 2^20, W = 64
     on its own record; it holds no light content (section 15 M1-2: the emission is the
-    coupling's source term); its `own_grace` where its section declares one (sections 10
-    and 13: 70; section 4 declares none for 4b's emitter, so the key is absent there)."""
+    coupling's source term); its `own_grace` as its section declares it (section 10: 70;
+    section 13: 3000, the hold; section 4: 8000, the hold)."""
     block: dict = {
         "position": position,
         "side": side,
@@ -448,6 +450,14 @@ def matter_world(
     return document
 
 
+def graced(document: dict, blocks: list[dict]) -> None:
+    """The emitters' `own_grace` onto the world's block entries (the series' `world`
+    helper copies its own block keys only)."""
+    for index, block in enumerate(blocks):
+        if "own_grace" in block:
+            document["measured"][index]["own_grace"] = block["own_grace"]
+
+
 def bounded(document: dict) -> None:
     """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`."""
     items = list(document.items())
@@ -476,7 +486,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             [2200, 1, 1],
             chain,
             MEDIUM,
-            [emitter([x, 0, 0], 12, WELL_HALF, None, **motion)],
+            [emitter([x, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE, **motion)],
             9500,
             light=light_11,
             faces=massive.FACES_OPEN,
@@ -484,14 +494,16 @@ def massive_worlds(massive) -> dict[str, dict]:
             mode_axis="x" if motion else None,
         )
         bounded(document)
+        graced(document, [emitter([x, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
         document["measured"].append(body([1900, 0, 0], "light", [[-1, 0, 0]]))
         receiver_set(document, "light_detector", 1)
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 2200, both pushed to k = 3 on +x over the ramp 1500 and the
-    # hold 3000, both emitting, x open for the massive kind too (M1-7); each block's cells
-    # a detector set on the light record with its own wheel 64 (M1-4, the builder's keys
-    # (i) and (ii)); the control with both at rest; the probes at the facing cells.
+    # hold 3000, both emitting with own_grace 3000 (the hold, section 13 item 1), x open
+    # for the massive kind too (M1-7); each block's cells a detector set on the light
+    # record bound by `block` with its own wheel 64 (M1-4); the control with both at rest;
+    # the probes at the facing cells.
     for name, motion in (
         ("sagnac_k3", {"momentum": [massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
         ("sagnac_rest", {}),
@@ -503,8 +515,8 @@ def massive_worlds(massive) -> dict[str, dict]:
             chain,
             KIND,
             [
-                emitter([700, 0, 0], 12, WELL_FULL, OWN_GRACE, **motion),
-                emitter([772, 0, 0], 12, WELL_FULL, OWN_GRACE, **motion),
+                emitter([700, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
+                emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
             ],
             4500,
             light=light_11,
@@ -513,14 +525,21 @@ def massive_worlds(massive) -> dict[str, dict]:
             mode_axis="x" if motion else None,
         )
         bounded(document)
+        graced(
+            document,
+            [
+                emitter([700, 0, 0], 12, WELL_FULL, R2_GRACE),
+                emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE),
+            ],
+        )
         receiver_set(document, "at_a", 0)
         receiver_set(document, "at_b", 1)
         out[name] = document
     # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
     # chain of 673 CLOSED for light at both ends (the loader's third face value, the
-    # builder's line), the emitter A of side 12 at full depth at [600, 612), the mirror the
-    # closed face at 672, A's cells a detector set on the light record with its own wheel
-    # 64 (M1-4), the hold 2000; the probe at the face. N_s = 70 has no key on main.
+    # builder's line), the emitter A of side 12 at full depth at [600, 612) with own_grace
+    # 70, the mirror the closed face at 672, the receiving set A's face cell x = 611 alone
+    # with its own wheel 64 (section 10 item 9), the hold 2000; the probe at the face.
     document = massive.world(
         "light-clock-60",
         "PIN",
@@ -533,7 +552,13 @@ def massive_worlds(massive) -> dict[str, dict]:
         probes=[[612, 0, 0]],
     )
     bounded(document)
-    receiver_set(document, "at_a", 0)
+    graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
+    # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the free
+    # Node adjacent to A's face toward the mirror, x = 612, alone, with its own wheel 64,
+    # taking the returning record at its click (the take is the engine's, no key).
+    document["detectors"].append(
+        {"name": "at_a", "positions": [[612, 0, 0]], "threshold": 1, "wheel": 64}
+    )
     out["light_clock_60"] = document
     # Rows M1 and M2 (section 12 with section 15 M1-6): the 128 x 128 x 1 layer, y periodic,
     # x open for the matter kind, no light; the matter lamp at (20, 64) with its own clock,
