@@ -86,8 +86,12 @@ declared phi read back as phi at every u of the wheel.
    COMPUTATION; the registered 2.75 in the unit 64 is the N = 64 pilot's,
    HISTORY); recomputed by the generator's `bell.py` under the linear form
    with the declared clock pair before the run and written to `expectations.json`; the
-   falsifier S outside 2.42 +- 0.40 (two standard errors of Hensen 2015)
-   or above 2.828; the nature row S = 2.42 +- 0.20 (NATURE; the electron
+   run's falsifier |S - 181 / 64| beyond the counts' band (the exact
+   rational at N = 2048; 2.828125 is the pin, not a miss: Reviewer 3's
+   wording, issue #1077; the first draft's "outside 2.42 +- 0.40 or above
+   2.828" excluded its own pin), the comparison with nature in form, above
+   Bell's 2 and at the quantum bound 2 sqrt 2 within the grain; the nature
+   row S = 2.42 +- 0.20 (NATURE; the electron
    spins in diamond at 1.3 km; no medium).
 5. The readings by kind: DETECTOR the joint clicks per cell (++, +-, -+,
    --) per settings pair over the births (the `gather` lines' chosen
@@ -450,8 +454,11 @@ omega_b) of its own well, printed by the pins script before the run.
 
 ## 10. The light clock of two bodies (item 6 of PLAN.md; row (d)); the third draft, 2026-09-24, 00:25Z, on Reviewer 3's lines A and B
 
-1. The objects: a chain of 673 x 1 x 1, x open for light at both ends (a
-   zero face is a mirror); the massive kind [800, 809]; the EMITTER A of
+1. The objects: a chain of 673 x 1 x 1, x CLOSED for light at both ends
+   (a closed face is a zero face, a mirror; an OPEN face is a SPONGE for
+   light, Reviewer 3's blocking line of 01:55Z: the loader's third value
+   "closed", the zero beyond the face without the layer's take, the
+   builder's one generic line); the massive kind [800, 809]; the EMITTER A of
    side 12 at full depth ([800, 800]) at the cells [600, 612), `emits`,
    G = [1, 50], g = [1, 1000], the seed 50 x 2^20 (section 15 item M1-1;
    the same world as G = [1, 1], g = [1, 50000], seed 2^20 by the exact
@@ -459,8 +466,10 @@ omega_b) of its own well, printed by the pins script before the run.
    `phase_per_link` [1, 1] for the loader (the kind's rows carry no
    phase label, ALGEBRA.md 1.7); no face detector: A's own `wheel` 64 is
    the receiver; the MIRROR B is the chain's
-   open face at x = 672, sixty Links from A's face at x = 612 (no block, no
-   (M) block needed). THE RECEIVER IS A ITSELF, under the cycle sentence
+   CLOSED face at x = 672, a mirror (the map (e) reflects at a zero face,
+   so the pin 218 +- 2 does not move; the first draft's "open face" would
+   absorb A's record there and read no return), sixty Links from A's face
+   at x = 612 (no block, no (M) block needed). THE RECEIVER IS A ITSELF, under the cycle sentence
    (DESIGN.md section 5, the owner's 10:12Z): A's own cells are the
    detector set of its own emitted records; A's Ports take nothing of a
    record of its own during that record's train and for N_s intervals
@@ -828,7 +837,12 @@ withdrawn).**
   (DESIGN.md 6.2, the rule's own COMPUTATION at 32 periods; 0.99 is the
   128-period train's, a second world beyond tonight's HOST), the band
   +- 0.02 from the counts (about 1000 clicks over five fringes; the dark
-  pixels' Poisson error), the falsifier below 0.93. THE FRINGE WINDOW for
+  pixels' Poisson error), the falsifier below 0.93. THE READINGS BY PROVENANCE (Reviewer 3, issue
+  #1077): the visibility is the train's (APPARATUS_INPUT, an
+  IMPLEMENTATION_GATE of the declared coherence); the blind reading
+  counted against nature is the fringe POSITIONS, the maxima at y = 64 and
+  64 +- 27 for lambda = 12 at L = 64, d = 32 (the two-source sum exactly,
+  lambda L / d in form). THE FRINGE WINDOW for
   the visibility, declared before the run (Reviewer 3's token on the
   readers): y in [20, 108], the three maxima at 37, 64, 91 and the four
   minima between and beside them, the two-source sum's bright and dark
@@ -939,8 +953,9 @@ waves).**
   detector set bound to its block and stepping with it. A block's own
   `wheel` is a DIFFERENT reading: the click at W on the block's own
   record, its clock, the massive series' reader of record (4a, the deep
-  well). So the light clock and 4b enter the GO when (i) lands, R2 when
-  (i) and (ii) land. The builder's (b) is answered: section 10's third
+  well). So 4b enters the GO when (i) lands, the light clock when (i) and the
+  closed face for light land (section 10 item 1), R2 when (i) and (ii)
+  land. The builder's (b) is answered: section 10's third
   draft is consistent with the engine only through key (i); no receiver
   body at A's face cell (a body there takes the line), no W = 10000
   anywhere, no second detector.
@@ -973,9 +988,10 @@ waves).**
   cells [700, 712) and B's [772, 784) at t = 0, the separation L = 60
   face to face (712 to 772), both pushed to k = 3 on +x by the momentum
   [Q S M, 0, 0]; the chain 2200 x 1 x 1 with x OPEN for light and for the
-  massive kind (zero faces, mirrors at 0 and 2199, 700 and 1416 Links
-  from the blocks: a return after at least 2400 intervals, past every
-  click read); a block emits from its cells in every direction, so on
+  massive kind (LIGHT'S OPEN FACES ARE SPONGES, Reviewer 3's line of
+  01:55Z: the half-records reaching 0 and 2199 are taken there and
+  nothing returns; the massive kind's zero faces are mirrors, 700 and 1416
+  Links from the blocks, past every click read); a block emits from its cells in every direction, so on
   the chain half of each record runs to the far face and half to the
   other block, and the record read per direction is the one reaching the
   other block (A's toward +x at B, B's toward -x at A); PINS_R2.md's
