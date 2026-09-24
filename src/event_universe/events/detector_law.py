@@ -214,9 +214,18 @@ class TableBody:
     exit_node: tuple[int, int, int]
     entry_cell: int
     exit_cell: int
+    # the label-0 weights C'[s]^2, S'[s]^2 and their sum (the declared
+    # integers of the setting; a record on label 0 is split by them)
     plus: int
     minus: int
     norm: int
+    # the half-angle pair (C'[s], S'[s]) itself: the record's own channel
+    # pointers J(o) are formed from it and the record's label weights
+    # (`joint_weights` with this one body), so that a record born on label 1
+    # or on a superposition is split by its state, not by the setting alone
+    # (Reviewer 3's bug line of 2026-09-24, 15:15Z)
+    cosine: int = 0
+    sine: int = 0
 
 
 @dataclass
@@ -432,6 +441,11 @@ class DetectorLawSimulation:
         # The table bodies (DECLARATIONS.md section 14 item 6): a polariser's
         # two cells, formed where a detector set names its Node.
         self.table_bodies: list[TableBody] = []
+        # the table bodies that act on each family, by the family's index: the
+        # material's own declaration (a body's table names the family it acts
+        # on), read as data at the split, never a branch on a family (the
+        # mathematician's gate, ALGEBRA.md 9.11, defect (a))
+        self.table_bodies_by_family: list[list[tuple[int, TableBody]]] = [[] for _ in world.families]
         settings = self._table_settings()
         for detector in world.detectors:
             set_cell: int | None = None
@@ -819,24 +833,68 @@ class DetectorLawSimulation:
                 cosine * cosine,
                 sine * sine,
                 cosine * cosine + sine * sine,
+                cosine=cosine,
+                sine=sine,
             )
+        )
+        self.table_bodies_by_family[family].append((len(self.table_bodies) - 1, self.table_bodies[-1]))
+
+    @staticmethod
+    def channel_weights(
+        cosine: int, sine: int, arm: int, labels: tuple[tuple[int, int], ...]
+    ) -> tuple[int, int]:
+        """A body's two channel weights on a record's own label state, the
+        PARTIAL TRACE over the other arms (the mathematician's gate, ALGEBRA.md
+        9.11, defect (d)): the labels are grouped by their bits on the other
+        arms (one group for a one-arm record); within a group the channel
+        pointer is coherent, J(o) = SUM over the group's labels l of w_l x
+        U_s[o][bit of l on this arm] (verb B on the integer weights); the
+        weight R(o) is the SUM over the groups of J(o)^2. For a one-arm record
+        this is `joint_weights` with one body; for an arm of a rank-2 record
+        it is the reduced state's weight (an arm of HV + VH books half on each
+        channel at every setting, where the coherent sum over both labels
+        would book the whole offer on one). Integers throughout, no root."""
+        rows = ((cosine, sine), (-sine, cosine))
+        groups: dict[int, list[int]] = {}
+        for label, weight in labels:
+            pointers = groups.setdefault(label & ~(1 << arm), [0, 0])
+            bit = (label >> arm) & 1
+            pointers[0] += weight * rows[0][bit]
+            pointers[1] += weight * rows[1][bit]
+        return (
+            sum(pointers[0] * pointers[0] for pointers in groups.values()),
+            sum(pointers[1] * pointers[1] for pointers in groups.values()),
         )
 
     def _split_table_offers(self, live: LiveRecord) -> None:
         """The split of this interval's offer at each table body's entry cell
-        (DECLARATIONS.md section 14 item 6): the entry pointer's gain since
-        the last split, times C'[s]^2 over n_s with the remainder kept (one
-        division, verb D), moved to the + cell; the first rung of the
-        body's WHOLE offer (the two cells' sum) over the cell's wheel stamps
-        both cells' first rung. The pointers' sum, `absorbed`, the norm and
-        every other cell are untouched."""
-        for index, body in enumerate(self.table_bodies):
-            if body.family != live.family:
-                continue
+        (DECLARATIONS.md section 14 item 6) BY THE RECORD'S OWN STATE: the
+        channel weights R(+) and R(-) of `channel_weights` (the partial trace
+        over the other arms; for a one-arm record the channel pointers J(o) =
+        SUM over the labels l of U_s[o][bit of l on the body's arm] x a_l,
+        verb B on the record's label weights, then the square), the weights
+        J(+)^2 and J(-)^2; the entry pointer's gain since the last split,
+        times J(+)^2 over their sum with the remainder kept (one division,
+        verb D), moved to the + cell; the first rung of the body's WHOLE
+        offer (the two cells' sum) over the cell's wheel stamps both cells'
+        first rung. For a record on label 0 the weights are the setting's
+        C'[s]^2 and S'[s]^2 (the counts of DECLARATIONS.md sections 5 and 6
+        unchanged); on label 1 they swap; on a superposition they are the
+        state's (Reviewer 3's bug line of 2026-09-24, 15:15Z: the polariser
+        acts on the state, never assigns the outcome from the setting alone).
+        The weights' sum is n_s times the state's norm, never 0 (the gate's
+        defect (b): no guard). The bodies acting on the record's family are
+        read as the material's own declaration (`table_bodies_by_family`, no
+        branch on a family, defect (a)). The pointers' sum, `absorbed`, the
+        norm and every other cell are untouched."""
+        for index, body in self.table_bodies_by_family[live.family]:
             seen, remainder = live.table_shares.get(index, (0, 0))
             gain = live.pointers[body.entry_cell] - seen
             if gain:
-                plus, remainder = divmod(gain * body.plus + remainder, body.norm)
+                plus_weight, minus_weight = self.channel_weights(
+                    body.cosine, body.sine, body.arm, live.labels
+                )
+                plus, remainder = divmod(gain * plus_weight + remainder, plus_weight + minus_weight)
                 live.pointers[body.entry_cell] -= plus
                 live.pointers[body.exit_cell] += plus
             live.table_shares[index] = (live.pointers[body.entry_cell], remainder)

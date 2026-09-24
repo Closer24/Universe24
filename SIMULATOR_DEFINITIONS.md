@@ -126,16 +126,16 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   DECLARATIONS.md section 10), and the grace acts on one thing only, the
   receiver SET bound to the emitting body (`_exempt`): for `own_grace`
   intervals after the train that set takes nothing of the body's own
-  record, so that the outgoing wave leaves without a click at its own
-  birth cells and the returning wave (the light clock's round trip, the
+  record, so that the record's outgoing amplitudes leave without a click
+  at its own birth cells and the returning amplitudes (the light clock's round trip, the
   Sagnac partner's arrival) clicks. The arising form: the receiver's take
   is already one-way per Port (a set takes at its Ports what arrives from
-  the free side), and the outgoing wave is the body's own source at its
+  the free side), and the outgoing amplitudes are the body's own source at its
   cells, not an arrival through a Port; so the rule "a set bound to a body
   takes at its Ports only what arrives from the free side" would replace
   the window with no declared integer, at no new cost (the Port masks
   exist, `_form_take_masks`). What could move: the light clock's first
-  rung, by the intervals in which the outgoing wave's back lobe re-enters
+  rung, by the intervals in which the outgoing amplitudes' back lobe re-enters
   through the Port before the round trip (re-derived blind by the same map
   before any run); the redshift's and Sagnac's first rungs the same way.
   No code until the owner's word.
@@ -417,6 +417,52 @@ the board (world.py), not a block; they act on nothing and are compared
 with nothing but the declaration's own script. The splitter of the
 TABLE form (a table entry with `inputs`) is a body with a table, as the
 polariser is.
+
+THE THREE LEVELS (the model owner's word of 16:15Z through the Boss: "we
+have the body, we have lab tools, and we have the experiment: those are
+the levels"), the rule from then on:
+
+1. The building blocks: the emitter, the body, the receiver, the clock,
+   and the six verbs; the engine knows these and nothing else.
+2. The lab tools: named compositions of the blocks (the polariser, the
+   splitter, the mirror, the crystal, the well body, the receiver's
+   screen). Each tool is defined ONCE in the tool library
+   (examples/events/entities/apparatus.json through its generator
+   make_definitions.py), has its own design file with its algebra (its
+   action on every input, its timing, the exact values its unit test
+   carries; the mathematician's specification docs/designs/lab_tools/
+   LAB_TOOLS.md indexes them, one copy each) and its own unit test on a
+   small world that is none of the fifteen, covering every kind of input
+   it can receive (every label, a superposition, an input from each Port)
+   BEFORE it is composed into an experiment; the mathematician confirms
+   each tool's section before its code. The library on main still carries
+   `pair_source` and `ghz_source` (the cancelled two-arm form), a one-Node
+   mirror re-emitting in a declared direction and a directional slit,
+   which declare the directions of what leaves them; by the owner's
+   standard (17:25Z) a tool declares its own orientation and never the
+   directions of what leaves it, so those four are retired with the reason
+   when the library is next written, replaced by the material mirror (the
+   gap block of light's kind) and the mask.
+3. The experiments: a world file that PLACES tools by name at positions
+   (`entity_definitions` and `entities`), plus its own declarations, its
+   pin computed from the tools' algebra; the experiment tests the
+   composition only. The worlds of the list are moved to placement as they
+   are next regenerated, not before.
+
+THE TESTS OF EACH BLOCK AND COMPOSITION, as they stand (the owner's rule of
+15:55Z: every block and every composition has its own unit tests before it
+is composed; the gaps named):
+
+| Block or composition | Its test file and tests | The input kinds covered | The gap |
+| --- | --- | --- | --- |
+| The emitter (a lamp; an emitting body) | tests/test_detector_law.py (a chain world clicks once per record; the emitter's own take from the first interval after the train; the lamp's ladder by name); tests/test_massive_record.py (h: a seeded block emits one record per cycle) | one heading and the six headings (a lamp without `directions`); the train; the birth wheel's u; the emitting body's cycle | a lamp born on a label other than 0 has no key (the test sets the record's state at birth) |
+| The body (a block: the well, the barrier, the take line, the mirror line) | tests/test_massive_record.py (the rule's integers, the margin rule, the take lines, the barrier, the stepping block); tests/test_body_conditions.py (the shape whole on the board, the seed on the mode, the ramp) | the well at rest and pushed; the cavity; the barrier; the take line; the seed as a profile and flat; the cube, the square and the segment | the MIRROR BODY of light's kind (the gap block, pair [1, 2]) has no test of its own: its reflection and its penetration on a chain, before the light clock's material mirror |
+| The receiver (a set with a wheel; the receiver by name; the sinks) | tests/test_receiver_by_name.py (a, b, c, d); tests/test_detector_law.py (the lamp's ladder keeps the faces out) | a set of positions; a set bound to a body; the named receiver with the faces sinks; the escaped row | none named |
+| The clock (a body's count; a set's first rung) | tests/test_massive_record.py (i: the click at the wheel stamped with the block's count; y: the mode-seeded layer block's clicks read the bound mode) | the block's cycles at rest and pushed; the set's first rung | none named |
+| The polariser (a table body of two cells) | tests/test_detector_law_tables.py (d: label 0 at three settings; d2: label 1 and the equal superposition; d3: Malus's four worlds) | label 0, label 1, a superposition; one Port (the arm's line) | the input from the other Port (a record arriving from the exit side) untested |
+| The splitter (the table form with `inputs`) | tests/test_detector_law_tables.py (c: the linear form on the pair) | the pair on two inputs; the turns | a superposition input untested |
+| The joint gather (the record of rank 2 over two table bodies) | tests/test_detector_law_tables.py (e, e2, f, g, h) | the four settings' pairs; the marginals; the joint weights as declared integers; the reader | the rank-2 record born at a crystal (owed with the crystal) |
+| The crystal (the conversion body) | none yet (its specification the mathematician's; its tests: each channel alone, the two channels adding where the directions coincide and not adding where they differ, the timing) | none | the whole tool, owed |
 
 ## GameBoard topology (2026-09-19)
 
