@@ -686,6 +686,10 @@ stabilisation of the engine and the freeze:
    run only after every tool's algebra is closed and every tool merged; a
    well's seed is the bound mode of the composed world and never collides
    with another tool (the owner, 2026-09-25, record 1855).
+   No tool acts on cells but through the law's advance and the click; momentum
+   is conserved on the board's own values. Nature24 merges each tool to main
+   on green CI with the mathematician's line-by-line confirmation, and tells
+   the Boss for the record (the owner, 2026-09-25, record 1856).
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,
    never the worlds' writer, writes one report on the list. For each
