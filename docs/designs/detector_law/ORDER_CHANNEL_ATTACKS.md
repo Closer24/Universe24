@@ -7,9 +7,9 @@ attacking the same thing." This page lists every objection a referee can
 raise against the solution of row 1c (the birth residue Inside: the
 births in a seed-set order, the click stamped without the residue), the
 answer, and the status of each: CLOSED (by derivation or by the engine as
-built), CLOSED BY DECLARATION (a line the Boss DECLARED at 04:14Z on the
-owner's word of 04:12Z, record 1647; the six lines are listed at the
-end), STATED (an honest limit the
+built), CLOSED BY DECLARATION (a line DECLARED by the owner, 04:18Z
+(record 1648), and by the Boss, 04:14Z on his word of 04:12Z (record
+1647); the six lines are listed at the end), STATED (an honest limit the
 paper says), FUTURE (a declared later test), CHECK (a check of a world
 file, the World Generator's). The computations are
 `order_channel_pins.py` and `order_channel_hidden_pins.py` (their `.out`
@@ -153,7 +153,7 @@ Bohm's configuration is under quantum equilibrium).
     rate against `ticks`): CHECK, the World Generator's, before the
     preliminary run.
 
-## The six lines, DECLARED (the Boss, 2026-09-24 04:14Z, on the owner's word of 04:12Z, record 1647)
+## The six lines, DECLARED (the owner, 2026-09-24 04:18Z, record 1648; the Boss, 04:14Z on his word of 04:12Z, record 1647)
 
 1. THE RESIDUES' ORDER: the births of the pair record take the residues
    of Z_N (one per u) in an order set by the world's seed through a

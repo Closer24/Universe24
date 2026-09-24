@@ -158,7 +158,8 @@ and the ray law's series exists.
    be a local deterministic assignment of outcomes to u, whose S is at
    most 2; at S = 181 / 64 some party's sequence must move with the
    other's setting. THE ROW'S WORD under the counter form [1, 1]
-   (HISTORY since item 8's declaration, 04:14Z): FAIL by derivation for
+   (HISTORY since item 8's declaration, 04:14Z and 04:18Z): FAIL by
+   derivation for
    no-signalling in the order, PASS exact for no-signalling in the
    counts (row 1d). Under item 8 (the residues in the seed-set order)
    the row reads PASS in form Outside: DETECTOR the four click lists in
@@ -166,10 +167,11 @@ and the ray law's series exists.
    1 / 2 within the binomial band; GAMEBOARD the flips above, read with
    the residues from the gather lines' `u` (HOST), the diagnostic E_N;
    no pin moves.
-8. THE TEST OF THE HIDDEN RESIDUE, DECLARED (the Boss, 2026-09-24
-   04:14Z, on the owner's word of 04:12Z (record 1647): "I left it to
-   the Boss to declare; just make sure it cannot be attacked in any
-   form, any way"; the six lines (i) to (vi) below, the same six on
+8. THE TEST OF THE HIDDEN RESIDUE, DECLARED (the owner, 2026-09-24
+   04:18Z (record 1648, "DECLARE"), and the Boss, 04:14Z on his word of
+   04:12Z (record 1647): "I left it to the Boss to declare; just make
+   sure it cannot be attacked in any form, any way"; the six lines (i)
+   to (vi) below, the same six on
    ORDER_CHANNEL_ATTACKS.md; prepared on the owner's word of 03:14Z,
    "make preparations for the above test", on my answer to his question
    "the algebra does not solve it; what does?"; the keys enter the four
