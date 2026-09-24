@@ -51,7 +51,8 @@ HOLD = (1500, 9500)
 LAYER_HOLD = (10200, 18200)
 INDEX_WINDOW = (1000, 1800)
 MOVING_WINDOW = (3400, 4300)
-LONG_WINDOW = (5000, 6000)
+# the long chains regenerated on DECLARATIONS.md section 11's geometry: the window [3800, 5400]
+LONG_WINDOW = (3800, 5400)
 INDEX_CELLS = 12
 MOVING_CELLS = 24
 
@@ -67,6 +68,65 @@ def lines(name: str, event: str) -> list[dict]:
             if record.get("event") == event:
                 found.append(record)
     return found
+
+
+def run_lines(run: Path, event: str) -> list[dict]:
+    """The lines of one event kind from a run directory's `events.jsonl` (a run of
+    `python -m event_universe --output <run>`, or a tracked copy); none when the file
+    is missing or empty."""
+    path = run / "events.jsonl"
+    if not path.exists():
+        return []
+    found = []
+    with path.open(encoding="utf-8") as stream:
+        for line in stream:
+            if line.strip():
+                record = json.loads(line)
+                if record.get("event") == event:
+                    found.append(record)
+    return found
+
+
+def click_stamps(run: Path) -> dict[str, list[int]]:
+    """The clicks of the ray law's detectors (DETECTOR), a reader of clicks only: per
+    detector set, the click stamps of the records whose chosen cell is that set (the
+    `gather` line's `click`, the interval its pointer crossed the first rung), sorted;
+    a record escaped or taken by a face or a body outside every set is no click of a
+    set. An empty train (no gather line) reads no click, no exception."""
+    stamps: dict[str, list[int]] = {}
+    for line in run_lines(run, "gather"):
+        chosen = line.get("chosen")
+        if not chosen:
+            continue
+        name = str(chosen[0][0])
+        if name.startswith("measured:") or name.startswith("face:"):
+            continue
+        stamps.setdefault(name, []).append(int(line["click"]))
+    return {name: sorted(found) for name, found in stamps.items()}
+
+
+def screen_clicks(run: Path, prefix: str = "screen") -> dict[str, int]:
+    """The ray law's screen (rows 2a, 2c, 10, M1; DETECTOR): the click count per
+    detector set whose name starts with `prefix`, keyed by the set's name; a screen
+    of one set per Node (`screen_<y>`) reads its clicks per Node. Zero sets on an
+    empty train."""
+    return {name: len(found) for name, found in click_stamps(run).items() if name.startswith(prefix)}
+
+
+def light_clicks(run: Path, detector: str) -> list[int]:
+    """A light detector's train (rows 4b, R2, the light clock; DETECTOR): the sorted
+    click stamps at the named detector set; an empty list on an empty train."""
+    return click_stamps(run).get(detector, [])
+
+
+def mean_interval(stamps: list[int], window: tuple[int, int] | None = None) -> float | None:
+    """The mean interval between consecutive clicks inside the window (both ends
+    included), the reader of record of a received line's period; None below two
+    clicks."""
+    inside = [s for s in stamps if window is None or window[0] <= s <= window[1]]
+    if len(inside) < 2:
+        return None
+    return float(np.mean(np.diff(np.array(inside, dtype=np.int64))))
 
 
 def run_record(name: str) -> dict | None:
@@ -238,7 +298,10 @@ def main() -> None:
         layer_rest["pin_omega_b"] = pin["omega_b"]
         layer_rest["peak_over_pin"] = layer_rest["spectral_peak_omega"] / pin["omega_b"]
         layer_rest["rate_over_pin"] = layer_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
-        readings["layer_pin_rest_14"] = {"kind": "DETECTOR (the clicks); the peaks GAMEBOARD", **layer_rest}
+        readings["layer_pin_rest_14"] = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            **layer_rest,
+        }
     if layer_hold and layer_rest:
         pin = pins["layer_pin_k3_14"]["pin"]
         expected = pin.get("pin_f_over_f0", pin.get("f_over_f0"))
@@ -254,6 +317,50 @@ def main() -> None:
         reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
         reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
         readings["layer_pin_k3_14"] = reading
+    # the deep well in motion (the cavity row's CONTROL, RUN_LIST.md step 3): the clicks'
+    # mean interval over the hold at k = 3 over the rest world's (DETECTOR)
+    deep_hold = clock("deep_well_k3_40", HOLD)
+    deep_rest = clock("deep_well_rest_40", REST_WINDOW)
+    if deep_rest:
+        pin = pins["deep_well_rest_40"]["pin"]
+        deep_rest["pin_omega_b"] = pin["omega_b"]
+        deep_rest["rate_over_pin"] = deep_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
+        readings["deep_well_rest_40"] = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            **deep_rest,
+        }
+    if deep_hold and deep_rest:
+        expected = pins["deep_well_k3_40"]["pin"]["pin_f_over_f0"]
+        reading = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            "hold": deep_hold,
+            "rest": deep_rest,
+            "f_over_f0_by_rate": deep_hold["rate_per_interval"] / deep_rest["rate_per_interval"],
+            "f_over_f0_by_peak": deep_hold["spectral_peak_omega"] / deep_rest["spectral_peak_omega"],
+            "pin_f_over_f0": expected,
+            "pump": pump("deep_well_k3_40", HOLD),
+        }
+        reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
+        reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
+        readings["deep_well_k3_40"] = reading
+    # (4b) the redshift of the moving lamp (RUN_LIST.md step 2), when its worlds exist: B's
+    # clicks over the hold in the receding world over the control's (DETECTOR, `light_clicks`)
+    receding = mean_interval(light_clicks(ARTIFACTS / "redshift_k3", "B"), HOLD)
+    at_rest = mean_interval(light_clicks(ARTIFACTS / "redshift_control", "B"), HOLD)
+    if receding is not None and at_rest is not None:
+        reading = {
+            "kind": "DETECTOR (B's clicks)",
+            "receding_mean_interval": receding,
+            "control_mean_interval": at_rest,
+            "one_plus_z": receding / at_rest,
+            "clicks": [
+                len(light_clicks(ARTIFACTS / name, "B")) for name in ("redshift_k3", "redshift_control")
+            ],
+        }
+        if "redshift_k3" in pins:
+            reading["pin_one_plus_z"] = pins["redshift_k3"]["pin"]["one_plus_z"]
+            reading["one_plus_z_over_pin"] = reading["one_plus_z"] / reading["pin_one_plus_z"]
+        readings["redshift_k3"] = reading
     # (v) the index at rest
     for name in ("index_50", "index_20", "index_10"):
         pin = pins[name]["pin"]
