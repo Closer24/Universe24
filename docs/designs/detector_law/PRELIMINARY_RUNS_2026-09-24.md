@@ -222,6 +222,9 @@ record at 4000, 6000, 8000 and 8450 (the Boss's reading (5) of 09:46Z).
   0.004, 0.003, the rest ahead of B. At most 0.045 on any record read (A born
   3785 at age 215, its +x half crossing the gap).
 - COMPUTATION (read, not compared): each record's light leaves as two packets
-  about 30 to 35 Links wide at one Link per interval, one to the other block
-  and one to the open face, with about equal pointers at the two; a record
-  completes 60 to 100 intervals after its face half is absorbed.
+  about 30 to 35 Links wide, one to the other block and one to the open face,
+  with about equal pointers at the two; the packets travel at about 0.57 Links
+  per interval (c = 1 / sqrt 3; B born 3574's +x half at 2140 to 2175 at age
+  2426 from 784; Reviewer 3's line through the Boss, 10:09Z), so A's records
+  complete about 1310 after the birth for the 700 Links to the -x face and
+  B's about 4000 for the 2216 Links to the +x face.
