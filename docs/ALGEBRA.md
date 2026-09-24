@@ -4843,9 +4843,55 @@ is the statement the property test of 9.20 checks.
   spectral load check; the write with the table of 2N (9.17 (6)); the
   residue's source if the owner takes (4).
 
-### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z, for the owner's next step)
+### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z; the owner's word of 22:10Z: "he only needs to verify it, because it is an algebraic test of the families he wants, before a code test")
 
-Six properties of the one map S of 9.19, each a test on a small world
+**(A) THE ALGEBRA'S VERIFICATION FIRST, property by property, per family
+and for the families together (the owner's word).** Each property is read
+off the one map S of 9.19 before any code; its mark is the mark of the
+line of the algebra it follows from.
+1. EQUIVARIANCE UNDER THE 48. Per family: the step is (B) the pair on the
+   six reads, (T) the shift and (D) the division, and the six reads are
+   the orbit of one Port under the 48 (1.1), so the step at g . x on g . w
+   is g applied to the step at x on w; the remainder is per Node and moves
+   with it. Together: the coupling adds (B) between the two families' rows
+   AT THE SAME CELL (8.5), a scalar entry, invariant under every g; the
+   axes (a, b) and the hand change sign together under a reflection (9.4);
+   the push sums the stress over the outer Ports, an orbit (8.11). PROVED
+   for the rule (1.1, 8.1), the coupling (8.5) and the reading (9.19 (3)
+   is a bilinear form of the two ends of a Link, carried with the Link);
+   CARRIED for the push (8.11).
+2. TRANSLATION ON THE TORUS. The same, with the translations (1.6): the
+   reads are the same six offsets at every Node. PROVED per family and
+   together.
+3. CONSERVATION BETWEEN CLICKS. (a) Content: nothing but a click or a
+   birth changes the summands (9.17): exact, DERIVED. (b) Per family the
+   form I is conserved exactly before the remainders and obeys the exact
+   remainder identity with them (8.2, PROVED); together, J = I_m + alpha
+   I_l + the cross term is conserved exactly before the remainders (8.5,
+   PROVED). (c) Momentum: on a homogeneous board each character is an
+   eigenvector of S, so its wave vector is exact (1.6, PROVED); at a
+   body the difference goes into the body's vector by the push, CARRIED
+   (8.11).
+4. REVERSIBILITY EXCEPT THE CLICK. Per family: the step is a bijection
+   of (level, remainder) with the exact inverse a_before = ceil(m / (3
+   den)), r = 3 den a_before - m (8.8, PROVED). Together: the coupled step
+   is two such bijections in a column order, each reading data the other
+   leaves in place, so it is inverted in the reverse order (DERIVED HERE,
+   one line). The click deletes a summand and has no inverse (8.8).
+5. LOCALITY. The step at a Node reads the six neighbours and the cell's
+   two families only (8.1, 8.5), so a change at one Node reaches
+   Manhattan distance m at interval m and no further; the reading reads a
+   Link's two ends (9.19 (3)); the push reads the outer Ports (8.11).
+   PROVED per family and together; the click's deletion is the law's one
+   non-local act (POSTULATES.md section 10).
+6. ONLY THE CLICK READS. The step is one function of the seven inputs at
+   every Node (the pair, the row with its remainder, the six reads), with
+   no branch on a name or a value (9.5, 9.7); the only comparison on the
+   state is the rung. DERIVED (the gate of 9.5 reads the code for it).
+   The residue enters the rung alone, so two elements that differ only in
+   their residues evolve identically until a click (DERIVED).
+
+**(B) THE PLANTED BOARDS.** Six properties of the one map S of 9.19, each a test on a small world
 that is none of the fifteen, each with its expected value. Every test
 runs headless, on integers, and compares arrays bit for bit unless the
 expected value says otherwise. The small world: a cube of 12 x 12 x 12
@@ -4911,7 +4957,7 @@ and (b) from 8.6 and 8.2; 3 (c) from 1.6 on a homogeneous board; 4 from
 8.8; 5 from the six reads (8.1). A failure of any of them is an engine
 defect, never a change of the law.
 
-**THE PROTOTYPE'S READING (COMPUTATION, 2026-09-24, outside the engine:
+**(C) THE PROTOTYPES' READING (COMPUTATION, 2026-09-24, outside the engine:
 [docs/designs/lab_tools/board_algebra.py](designs/lab_tools/board_algebra.py),
 its record `board_algebra.out` beside it; the model owner's word: "try it in
 code and say whether it works").** The one element and the one operator of
@@ -4946,3 +4992,82 @@ permutation. Every expected value of the six tests met:
   until the first click.
 The engine's test of 9.20 runs the same six on the engine; this prototype
 is the algebra's own reading of them, not a run of the engine.
+
+THE FAMILIES TOGETHER (COMPUTATION,
+[docs/designs/lab_tools/board_algebra_coupled.py](designs/lab_tools/board_algebra_coupled.py),
+its record beside it): the same torus with the massive kind [800, 809],
+its well [800, 801] of side 2 seeded on the composed operator's bound
+mode, and light [1, 1] coupled on the well's cells with g = 1 / 1000 and G
+= 1 / 50 in 8.5's column order, the couplings' denominators folded into
+the rows' walls: (1) 48 of 48 transformed boards identical bit for bit
+after 40 coupled steps; (2) 7 of 7 shifts identical; (3) J's relative
+drift at most 9.1 x 10^-4 over 200 intervals at the amplitude 4096 (the
+grain), the well radiating into light (I_l from 0 to 1.4 x 10^4 against I_m
+1.8 x 10^8); (4) 40 coupled steps and 40 of the reverse-order inverse
+return both families bit for bit, remainders included; (5) a one-unit
+change of light at one Node stays inside the Manhattan ball of radius m at
+interval m across the coupling. THE ENGINE'S TEST is (B) run on the
+engine, per family and together; (A) is its verification in the algebra,
+done before it.
+
+### 9.21 The implications of one algebra (the owner's word of 2026-09-24, 22:15Z: "what is certain is that the whole world is one big algebra"), one line each, marked
+
+1. THE WORLDS. A world is its initial element (integers at interval 0)
+   PLUS its operator (the pairs, couplings and axes per region) PLUS the
+   births' data PLUS the receivers' names: DERIVED (9.19 (5)). Not "the
+   initial element alone": the operator is the world's second declaration,
+   and it is data, not a rule. A world file may declare exactly those four
+   and the board's extents; it may not declare a residue, a wheel, a take,
+   a grace, a train, a rate, a heading or a table: DERIVED (9.19 (4)
+   ADOPTED; 9.12; 9.17). A tool's test world is a small planted element on
+   a small operator: DERIVED (9.20 (B)).
+2. THE FIFTEEN. Survive as declared inputs: the extents, the families'
+   pairs and quanta, the bodies' cubes and pairs, the couplings, the axes,
+   the emitters' stocks and born profiles, the crystal's branches and
+   clocks, the receivers' names with W, the amplitudes. Become DERIVED:
+   the seeds (the composed operator's modes, 9.9), the trains (a born
+   profile's length), the residues (the law's remainders), the tools'
+   shares (the operator's scattering), the first rungs (the flux), the
+   counts' bands (binomial at the records). Retire: the tables, the takes,
+   the rates, the grace windows, the headings, the two-arm emitter, the
+   sponge faces: DERIVED (9.18 (5), 9.19).
+3. THE ENGINE. One step of one operator on the one element (the rule per
+   family with the coupling, the axes and the push) plus the click (the
+   flux, the rung, the deletion, the birth): DERIVED (9.19 (5)). No place
+   in it for: `_drive`, `_source` as a birth, `_block_births`, the grace,
+   the exemption, the own take, the take masks, `_complete`, the close,
+   `escaped`, `TableBody`, `read_pair`, `half_angle`, `Splitter`, the
+   residue orders and seeds, the `massive_kind` branches in the law's
+   path: DERIVED (9.18 (5), 9.19 (3) and (4)).
+4. THE TESTS. The property test is the test of the one operator: verified
+   in the algebra in 9.20 (A) (PROVED for the rule, the coupling, the
+   reading, reversibility, locality; DERIVED for content and the blind
+   step; CARRIED for the push), then computed on planted boards (9.20
+   (C), all met), then built on the engine from that section: the order
+   the owner set.
+5. THE FAMILIES. A family is an index of the summands and the operator's
+   pair for them, nothing else: DERIVED (9.19 (1)). The number of families
+   is fixed by the world's needs and by one pair per family per Node: the
+   families a tool acts on or reads, plus one holder for bound tool bodies:
+   at most three: DERIVED (9.18 (2)); OPEN whether the holder is one
+   family or the experiment's matter (the owner's).
+6. THE CONSERVED QUANTITIES. Exactly conserved by the one algebra: the
+   content (the quanta) between clicks (DERIVED); per family the form I,
+   and together J, before the remainders, with the exact remainder
+   identity on integers (PROVED, 8.2, 8.5); a character's wave vector on a
+   homogeneous board (PROVED, 1.6); the equivariance itself (PROVED).
+   Conserved by declaration, not by the algebra: momentum at a body (the
+   push, CARRIED, 8.11). Not conserved: nothing else is claimed.
+7. WHAT THE STATEMENT RULES OUT THAT IS STILL CARRIED. (a) The push as a
+   separate rule with declared integers (Q, S, M, 56 d, the tie): it moves
+   the operator's regions from outside the operator; the one algebra
+   would have the regions move by the law's own values, which needs the
+   body's own record to carry its momentum and the pairs to follow it: OPEN
+   (9.15, a proof owed that the stress is the flux). (b) The per-family
+   faces of main (one board, 1.6): OPEN for the owner. (c) The cosine
+   tables in the readers and the generator: lawful as load-time data
+   (2.7), outside the law, and they stay. (d) The float Lanczos of the
+   generator: HOST, outside the law, its integers checked at load. (e)
+   The one non-local act, the click's deletion of a summand across the
+   board: not ruled out; it is the algebra's one deletion (8.8,
+   POSTULATES.md section 10).
