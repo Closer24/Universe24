@@ -2740,8 +2740,8 @@ the click line carries the block's own count (its
 mode's cycles, 8.3) and the light record's birth stamp. The
 receiver-inserter's second face (the model owner's word of 2026-09-24,
 06:42Z, record 1694; DECLARATIONS.md section 10 item 10): an emitter takes its own
-record's remnant after its train, from the interval at which the last
-inserted interval has left its cells, in the receiver form of the take
+record's remnant after its train, from the first interval after it (the
+owner's word of 07:42Z; no timing integer), in the receiver form of the take
 and in the record's kind's pair; what it takes never left it and is not
 received back (the detector's own count, Highlights item 7), so it is
 booked as content taken by the emitter, a host row, never a pointer and
