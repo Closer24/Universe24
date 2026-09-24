@@ -29,7 +29,18 @@ regenerates its file from the line here. Nothing runs by this page.
    same and the cell of u repeats after W births: a stock of k W records
    gives exactly k times the counts of one wheel. The minimal stock is
    ONE WHEEL, and the band is the ladder's grain (one rung, 1 / W of the
-   record per cell), not a Poisson error. A lamp under `residue_order`
+   record per cell), not a Poisson error. THE WHEEL IS SIZED TO THE BAND
+   (corrected 11:20Z, on the Preliminary Runner's two_slits reading of
+   10:45Z, 1024 records with the wheel [1, 64] choosing one cell 16 times
+   over): a count row's band b needs the grain 1 / W below b, so W is the
+   stock and the stock is W, each u once: two_slits W = 1024 (the dark
+   fringe about 2 percent of the screen's total, 20 counts of 1024, the
+   visibility's grain 0.002 against the band 0.02), M1 W = 2048 (the
+   lobe's centroid at the grain of one count in 610, a tenth of a Node).
+   The stocks declared for 2a and M1 were therefore the right size by a
+   wrong statistic; what was wrong is the wheel of 64 beside them, which
+   repeats one coarse pattern 16 and 32 times. Their HOST does not
+   shrink; their reading becomes exact. A lamp under `residue_order`
    "seed" (Bell) draws one permutation of 0 .. W - 1 per world, again each
    u once: one wheel, the counts exact. THIS IS A FINDING of this page for
    Reviewer 3's read: rows 2a and M1 declared Poisson bands (0.02 over
@@ -84,12 +95,12 @@ declared size and at the minimal size (one core).
 | redshift_control | the control's f_B (the ratio's denominator) | the same at rest | 13 | chain 1420 (the pair alike) | 4000 (the pair alike; 1450 would do at rest) | 38 / 4096 / 9600 | 2.9 / 2.9 / 2.4 | 3.3 min / 9 s |
 | bell_a0b0, a0b1, a1b0, a1b1 | S = 181 / 64 exactly at N = 2048 (the finite-N value, W = N); the band the ladder's grain 1 / 2048 | the joint cells' counts per setting, DETECTOR; S from the four correlations; the seed permutation gives each u once, the counts exact | 2048 (one wheel; the pin's own N) | the bar of 21 (the tables at 3 and 7 Links, the sponges) | 5500 (2048 births, the train 3200, the close 250) | 2048 / 21 / 5500 | 1 / 1 / 1 | 19 min each / 19 min (the train is the cost: 128 periods, DESIGN.md 6.2's coherence line; a 16-period train would read 1.5 min, a re-derivation of that line, not made here) |
 | malus_45, 11.25, 28.125, 33.75 | 128, 246, 199, 177 of 256 (cos^2 s x 256), the band one count (the wheel [159, 256] a permutation, exact) | the + cell's count, DETECTOR | 256 (one wheel) | the bar of 9 (section 14 item 6) | 1200 (256 births, the train 800, margin) | 256 / 7 to 9 / 1200 | 1 / 1 / 1 | seconds / seconds |
-| two_slits | the visibility 0.959 at 32 periods; the band +- 0.02 was declared as Poisson over about 1000 clicks: RE-DERIVED as the ladder's grain at W = 64 (a blind computation on the same geometry, before the pin run) | the screen's clicks per Node, DETECTOR; (max - min) / (max + min) | 64 (one wheel [1, 64]; 1024 is 16 copies of it) | the 128 x 128 layer (d = 32, L = 64, the fringes over y in [4, 124]: the pin's geometry) | 2000 (64 births at one per 16 = 1024, the train 665, the transit 146, margin) | 1024 / 128^2 / 17300 | 16 / 1 / 8.7 | 24 min / 3 min |
-| pace_fan_12, 16, 24 | the phase pace by direction, 0.8 / 0.4 / 0.2 percent on the axis, a quarter on the diagonal (GAMEBOARD); the band the reader's spread (L-6, 10:15Z) | the two probes' phase difference per ray at one interval, GAMEBOARD | 1 | the 128 x 128 layer (the probes at 40 Links plus the sponge; 96 x 96 would do) | 830 / 1110 / 1500 (the train, the train's end past the inner probe, margin 100) | 1 / 128^2 / 1000, 1400, 1900 | 1 / 1.8 / 1.2 | seconds / seconds |
+| two_slits | the visibility 0.959 at 32 periods; the band +- 0.02 was declared as Poisson over about 1000 clicks: RE-DERIVED as the ladder's grain at W = 1024 (about 0.002; a blind computation of the count visibility of the 1024-pattern on the same geometry, before the pin run) | the screen's clicks per Node, DETECTOR; (max - min) / (max + min); THE SCREEN MUST BE THE LADDER: the Runner's 10:45Z reading on the declared file put every one of 1024 clicks at the open face behind the lamp (the faces are cells there and hold 97 percent of every record, the wall reflecting all but two openings of width 1), so the faces and the mirror line are declared SINKS for this row, outside the ladder, and the screen's 121 sets are the ladder (the record's 97 percent to the escaped row at its close); the screen's sets carry their own rung wheel 65536 so that the dimmest cell u can choose (1 / 2048 of the screen's 3 percent, 1.5e-5 of the norm) crosses its rung | 1024 = one wheel [1, 1024] (the same stock as declared, each u once) | the 128 x 128 layer (d = 32, L = 64, the fringes over y in [4, 124]: the pin's geometry) | 4900 (1024 births at one per 4, the train 665, the transit 146, margin 100) | 1024 / 128^2 / 17300 | 1 / 1 / 3.5 | 24 min / 24 min (the cost is the stock times a record's life, not the cadence) |
+| pace_fan_12, 16, 24 | the phase pace by direction, 0.8 / 0.4 / 0.2 percent on the axis, a quarter on the diagonal (GAMEBOARD); the band the reader's spread (L-6, 10:15Z) | the two probes' phase difference per ray, GAMEBOARD, read at every period after the front from the second to the train's end and printed as a series; THE READING OF RECORD is the settled value: the first period after which the eight rays' values change by less than 0.05 percent between consecutive periods (the World Generator's rerun without rings, 10:55Z: at two periods the eight rays spread 2.3 percent, the front's own transient; at four 0.32 percent, the axes settled at 0.5268 and the diagonals still moving at 0.5260; the criterion, not a chosen period, is the declaration) | 1 | the 128 x 128 layer (the probes at 40 Links plus the sponge; 96 x 96 would do) | 830 / 1110 / 1500 (the train of 32 periods, the train's end past the inner probe, margin 100: the settling may need many periods, so the window runs to the train's end) | 1 / 128^2 / 1000, 1400, 1900 | 1 / 1.8 / 1.2 | seconds / seconds |
 | layer_pin_rest_14, layer_pin_k3_14 (4a) | f / f_0 = 0.8116, the band 0.3 percent | the block's clicks' mean interval over the hold, at k = 3 over the rest's | 24 clicks at k = 3 (a hold of 1000), 28 at rest (1200) | the 200 x 200 layer: set by the shallow well's mode extent (section 8, eps 0.013), NOT re-derived here | k = 3: 11100 (ramp 10000 by section 8's rule, hold 1000, margin); rest 1200 | 150 clicks / 200^2 / 18500; rest 80 / 200^2 / 3500 | 6 / 1 / 1.7; rest 2.9 / 1 / 2.9 | 4.2 min / 2.5 min; rest 0.8 / 0.3 min |
 | cart_k3 (4c) | (1 + beta) / (1 - beta) = 3.732 | the cart's received line over the sent (a frequency ratio) | as built (the lamps' 8192 records are 128 wheels of [1, 64]; the ratio needs one) | 240 x 3 x 3 as built | 600 as built | 8192 x 2 / 240 x 3 x 3 / 600 | 128 / 1 / 1 | seconds / seconds |
 | matter_front_12 (M2) | 169 +- 2 at W = 64 | the first click's interval from the birth, DETECTOR | 1 | the chain of 200 (the set at 84 Links) | 420 (the rung 169, the train 150, margin 100) | 1 / 200 / 600 | 1 / 1 / 1.4 | seconds / seconds |
-| matter_waves_12 (M1; the file not yet written) | the centroid y = 64 + 27.79, the band one Node; declared as a 4.4-sigma Poisson statistic at 2048: RE-DERIVED as the ladder's grain if the matter lamp's wheel is a stride (section 12 names no wheel; it must) | the screen's counts per Node, the side lobe's centroid, DETECTOR | 64 (one wheel) if a stride wheel; 2048 stands only under a drawn residue per birth | the 128 x 128 layer (d = 32, L = 64) | 930 (64 births at one per 8, the train 150, the transit 167, margin 100) | 2048 / 128^2 / 16700 | 32 / 1 / 18 | 30 min / 1.7 min |
+| matter_waves_12 (M1; the file not yet written) | the centroid y = 64 + 27.79, the band one Node; declared as a 4.4-sigma Poisson statistic at 2048: RE-DERIVED as the ladder's grain at W = 2048 (the centroid of the 2048-pattern, exact to a tenth of a Node; section 12 must name the lamp's wheel [1, 2048]) | the screen's counts per Node, the side lobe's centroid, DETECTOR; as for two_slits the take lines at x = 0 and 127 are SINKS outside the ladder and the screen's sets are the ladder, with their own rung wheel 65536 | 2048 = one wheel [1, 2048] (the same stock as declared, each u once) | the 128 x 128 layer (d = 32, L = 64) | 4700 (2048 births at one per 2, the train 150, the transit 167, margin) | 2048 / 128^2 / 16700 | 1 / 1 / 3.6 | 30 min / 30 min (the stock times a record's life) |
 | moving_20, moving_28 ((ii-a), (ii-b)) | 0.7814 and 0.8032, the band 0.3 percent | the block's clicks' mean interval at k = 3 over the rest's | 19 clicks (a hold of 1000 at the moving period about 52) | the 64^3 box: set by the well's mode extent, NOT re-derived here | 2600 (ramp 1500 as section 8 keeps it, hold 1000, margin 100) | 150 / 64^3 / 9500 | 8 / 1 / 3.7 | 38 min each / 10 min |
 | rest_20, rest_28 | the rest clocks (the denominators) | the same at rest | 28 clicks (1200) | the 48^3 box, as above | 1200 | 70 / 48^3 / 3000 | 2.5 / 1 / 2.5 | 12 min each / 5 min |
 | deep_well_k3_40, deep_well_rest_40 | 0.7531 (the cavity's control), the band 0.3 percent | the block's clicks' mean interval | 19 clicks at k = 3 (1000); 28 at rest (1200) | the 128 x 128 layer for s = 40: the well's extent, NOT re-derived here | k = 3: 2600 (ramp 1500, hold 1000, margin); rest 1200 | 150 / 128^2 / 9500; rest 80 / 128^2 / 3500 | 8 / 1 / 3.7; rest 2.9 / 1 / 2.9 | 3 min / 0.8 min; rest 1.1 / 0.4 min |
@@ -98,10 +109,12 @@ declared size and at the minimal size (one core).
 The totals, HOST on one core, the worlds one after another: DECLARED
 about 260 minutes (Bell 76, the boxes and their rest worlds 100, M1 30,
 two_slits 24, the sagnac and redshift chains 16, 4a 5, the deep well 4,
-the index 6, the rest seconds); MINIMAL about 120 minutes with Bell's
-train as declared (Bell 76, the boxes 30, the index 4.5, 4a 2.8, two_slits
-3, M1 1.7, the deep well 1.2, the chains under a minute), about 50 minutes
-if Bell's train is re-derived to 16 periods.
+the index 6, the rest seconds); MINIMAL about 170 minutes with Bell's
+train as declared (Bell 76, M1 30, two_slits 24, the boxes 30, the index
+4.5, 4a 2.8, the deep well 1.2, the chains under a minute), about 100
+minutes if Bell's train is re-derived to 16 periods. The count rows keep
+their cost: a click row's cost is its wheel times a record's life on the
+board, and the wheel is the band's.
 
 ## Which worlds are larger than their derivation needs, and why they were sized so
 
@@ -150,23 +163,32 @@ tables read of the chirped front), not made on this page; Bell STAYS.
 
 Malus (1 / 1 / 1): sized by its wheel; STAYS.
 
-two_slits (16 in records, 8.7 in ticks): the stock 1024 was sized as
+two_slits (3.5 in ticks; the records stay): the stock 1024 was sized as
 Poisson statistics (L-3: "about 1000 clicks over five fringes; the dark
-pixels' Poisson error") which the counting form with the stride wheel
-[1, 64] does not produce; the cadence one per 16 was chosen for the HOST
-per interval and stretched the ticks to 17300. It SHRINKS to one wheel,
-64 records, 2000 ticks; the pin's band is re-derived as the ladder's grain
-at W = 64 on the same geometry (blind: the count visibility of the
-64-pattern, in which a dark fringe below 1 / 128 of the record reads no
-click), before its pin run.
+pixels' Poisson error") which the counting form does not produce; the
+wheel [1, 64] beside it repeats one coarse pattern 16 times; the cadence
+one per 16 stretched the ticks to 17300. The Runner's preliminary of
+10:45Z on the declared file read every click at the open face behind the
+lamp and none on the screen (the faces hold 97 percent of every record,
+the mirror line reflecting all but two openings of width 1). It is
+RE-DECLARED: the faces and the mirror line sinks outside the ladder, the
+screen's sets the ladder with their own rung wheel 65536, the lamp's
+wheel [1, 1024] with the stock 1024 (one wheel, each u once), the cadence
+one per 4, 4900 ticks; the band the ladder's grain at W = 1024, about
+0.002, the pin 0.959 re-derived as the count visibility of the
+1024-pattern on the same geometry, blind, before its pin run. Its HOST
+does not shrink (the stock times a record's life); its reading becomes
+exact.
 
-matter_waves_12 (32 in records, 18 in ticks): the same sizing by Poisson
-(section 12: "the Poisson sd 0.23 at the stock of 2048") for a stock of
-2048 at one per 8; section 12 names no wheel for the matter lamp. If the
-wheel is a stride, it SHRINKS to one wheel and 930 ticks with the band
-re-derived as the ladder's grain; if the row wants drawn residues (a
-seed order per birth, as Bell's), the declaration must say so and the
-stock stands. The declaration decides before the file is written.
+matter_waves_12 (3.6 in ticks; the records stay): the same sizing by
+Poisson (section 12: "the Poisson sd 0.23 at the stock of 2048") for a
+stock of 2048 at one per 8; section 12 names no wheel for the matter lamp.
+It is RE-DECLARED as two_slits is: the take lines sinks outside the
+ladder, the screen's sets the ladder with their own rung wheel 65536, the
+lamp's wheel [1, 2048] with the stock 2048 (one wheel), the cadence one
+per 2, 4700 ticks; the band the ladder's grain (the centroid of the
+2048-pattern, a tenth of a Node), the pin re-derived on the same
+geometry, blind. Its HOST does not shrink.
 
 4a, the boxes (ii-a), (ii-b) and the deep well (1.7 to 3.7 in ticks): the
 holds of 8000 were carried from the exploration's runs, whose reader was a
@@ -189,7 +211,9 @@ shorten to 3400 for a saving of a minute). They STAY.
 None of the pins' numbers move with a shrink except as stated: the light
 clock's 213 +- 1 is re-derived on the 173 chain and reads 213 there (the
 same map, blind); two_slits' and M1's BANDS change form, from a Poisson
-error to the ladder's grain, a re-derivation on the same geometry, blind.
+error to the ladder's grain, and their worlds change form (the faces and
+the wall sinks, the screen the ladder, the wheel the stock), a
+re-derivation on the same geometry, blind.
 Geometry-free: sagnac (the gap and the speed), redshift (the formula on
 the well pair at k = 3), Bell and Malus (the tables), 4a, the boxes and
 the deep well (the well's formula), M2, the cart, the fans and the index
@@ -203,7 +227,10 @@ to keep one reflection out of a run made long for the later cycles; the
 pin needs one record. Redshift: the loader's cap and the lamp's hold,
 carried. Bell: sized by its pin's own N and by a declared coherence line.
 Malus, M2, the cart, the fans, the index: sized by derivation or as
-built, minimal. Two slits and M1: sized by Poisson statistics the
-counting form does not have. 4a, the boxes, the deep well: the holds
+built, minimal. Two slits and M1: their stocks sized by Poisson
+statistics the counting form does not have, the right size by a wrong
+statistic, with a wheel of 64 that repeated one coarse pattern, and with
+the open faces on the ladder, where the mirror line sends 97 percent of
+every record. 4a, the boxes, the deep well: the holds
 carried from a peak reader that no longer reads them; the ramps derived
 or kept above the rule.
