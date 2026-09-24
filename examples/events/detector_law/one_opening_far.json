@@ -29,7 +29,7 @@
  "measured": [
   {
    "family": "light",
-   "amount": 4096,
+   "amount": 2048,
    "phase": 0,
    "momentum": [
     0,
@@ -47,7 +47,7 @@
    "lamp": {
     "rate": [
      1,
-     4
+     8
     ],
     "wheel": [
      2531,

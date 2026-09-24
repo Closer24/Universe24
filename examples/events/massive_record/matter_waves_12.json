@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 18000,
+ "ticks": 16700,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -45,7 +45,7 @@
     0
    ],
    "family": "matter",
-   "amount": 4096,
+   "amount": 2048,
    "phase": 0,
    "momentum": [
     0,
@@ -63,7 +63,7 @@
    "lamp": {
     "rate": [
      1,
-     4
+     8
     ],
     "directions": [
      [
@@ -72,7 +72,7 @@
       0
      ]
     ],
-    "train": 60
+    "train": 8
    }
   },
   {

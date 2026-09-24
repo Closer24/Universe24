@@ -108,30 +108,7 @@
    "emits": "light"
   }
  ],
- "detectors": [
-  {
-   "name": "at_a",
-   "positions": [
-    [
-     712,
-     0,
-     0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "at_b",
-   "positions": [
-    [
-     772,
-     0,
-     0
-    ]
-   ],
-   "threshold": 1
-  }
- ],
+ "detectors": [],
  "probes": [
   [
    712,

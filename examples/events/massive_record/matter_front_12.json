@@ -1,8 +1,8 @@
 {
  "law": "beam",
- "model_id": "beam-massive-record-sagnac-rest-v1",
+ "model_id": "beam-massive-record-matter-front-12-v1",
  "shape": [
-  2200,
+  200,
   1,
   1
  ],
@@ -11,7 +11,6 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 4500,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -26,22 +25,21 @@
  "directions": [],
  "families": [
   {
-   "name": "light",
-   "quantum": 1
-  },
-  {
    "name": "matter",
    "quantum": 1,
    "pair": [
     800,
     809
-   ]
+   ],
+   "faces": {
+    "x": "open"
+   }
   }
  ],
  "measured": [
   {
    "position": [
-    700,
+    20,
     0,
     0
    ],
@@ -54,27 +52,27 @@
     0
    ],
    "fixed": true,
-   "side": 12,
-   "pair": [
-    800,
-    800
-   ],
-   "coupling": {
-    "G": [
+   "directions": [
+    [
      1,
-     1
-    ],
-    "g": [
-     1,
-     50000
+     0,
+     0
     ]
-   },
-   "wheel": 64,
-   "emits": "light"
+   ],
+   "lamp": {
+    "directions": [
+     [
+      1,
+      0,
+      0
+     ]
+    ],
+    "train": 8
+   }
   },
   {
    "position": [
-    772,
+    104,
     0,
     0
    ],
@@ -87,36 +85,26 @@
     0
    ],
    "fixed": true,
-   "side": 12,
-   "pair": [
-    800,
-    800
-   ],
-   "coupling": {
-    "G": [
-     1,
-     1
-    ],
-    "g": [
-     1,
-     50000
+   "directions": [
+    [
+     -1,
+     0,
+     0
     ]
-   },
-   "wheel": 64,
-   "emits": "light"
+   ]
   }
  ],
- "detectors": [],
- "probes": [
-  [
-   712,
-   0,
-   0
-  ],
-  [
-   772,
-   0,
-   0
-  ]
+ "detectors": [
+  {
+   "name": "front",
+   "positions": [
+    [
+     104,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1
+  }
  ]
 }
