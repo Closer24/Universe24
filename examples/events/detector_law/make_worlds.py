@@ -600,7 +600,7 @@ REDSHIFT_GRACE = 3000
 REDSHIFT_WORLD_WHEEL = 64
 R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
 R2_WHEEL = 256  # section 13 item 4 (main 25a7abf4): the declared wheel of R2's block sets
-LAMP_GRACE = MATTER_TICKS  # M1-6: the matter lamp's `own_grace`, the whole hold (4700 since the sized form)
+LAMP_GRACE = MATTER_TICKS  # M1-6: the matter lamp's `own_grace`, the whole hold (the sized form)
 
 
 def emitter(position: list[int], side: int, pair: list[int], grace: int | None, **extra: object) -> dict:
