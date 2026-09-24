@@ -661,11 +661,14 @@ stabilisation of the engine and the freeze:
    (`examples/events/entities/apparatus.json`), with its own section of
    algebra and a unit test that checks that algebra exactly. An experiment
    is a world file that places tools by name at positions on the board,
-   and its pin is computed from the tools' algebra. Each tool has one design file (its
-   specification, algebra, timing, cost and test values; the existing ones
-   reused), indexed from ALGEBRA.md ("The lab tools"), and the mathematician
-   reads and confirms it before the tool's code is written (records 1830 and
-   1831). A tool
+   and its pin is computed from the tools' algebra. All the tools are specified in one
+   file, `docs/designs/lab_tools/LAB_TOOLS.md` (one section per tool: its
+   specification, algebra, timing, cost, engine lines and test values;
+   existing design files cited, never copied), linked from ALGEBRA.md. The
+   mathematician writes it; Nature24 checks every section and talks with the
+   mathematician directly by Routine; a disagreement goes to the Boss for
+   the owner. Nature24 writes each tool's code once its section is agreed
+   (records 1830 to 1832). A tool
    declares its own orientation and never the directions of what leaves it.
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,

@@ -71,3 +71,16 @@ integer vector, each arrival, each click), and the expected values of each
 block's unit tests. The writer's design and the mathematician's page must
 agree before the code is written; a difference goes to the physics-rule
 reviewer and to the owner.
+
+## The mathematician writes the lab tools' specification (the owner, 2026-09-24, record 1832)
+
+The owner's word (translated): "All of the above is defined in one
+specification file of the lab tools. The mathematician can write the design
+of everything; Nature just checks all of it and talks with him." The
+mathematician writes `docs/designs/lab_tools/LAB_TOOLS.md`, one section per
+lab tool: what it is and what nature gives it, its declared properties and
+orientation, its action on every kind of input, its timing, its cost, the
+engine lines it needs with their three tests, and its unit tests' exact
+values. Nature24, the physicist and the only writer of code, checks each
+section and talks with the mathematician directly by Routine; what they
+agree enters the file, and a disagreement goes to the Boss for the owner.
