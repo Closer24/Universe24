@@ -300,6 +300,12 @@ class Block:
     cycle_length: int = 0
     stepped: int = 0
     answered: int = 0
+    # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): the excitations
+    # started (k), the current excited record's booked offer C (its own
+    # motion through its cells), and whether its rung fired this interval
+    excitations: int = 0
+    offer: int = 0
+    emit_now: bool = False
 
 
 @dataclass
@@ -409,6 +415,17 @@ class DetectorLawSimulation:
                 assert lamp_definition.residue_seed is not None
                 self.birth_orders[number] = keyed_permutation(
                     lamp_definition.wheel[1], lamp_definition.residue_seed
+                )
+        for number, entry in enumerate(world.measured):
+            block_definition = entry.block
+            if (
+                block_definition is not None
+                and block_definition.emitter is not None
+                and block_definition.emitter.residue_order == "seed"
+            ):
+                assert block_definition.emitter.residue_seed is not None
+                self.birth_orders[number] = keyed_permutation(
+                    block_definition.emitter.wheel[1], block_definition.emitter.residue_seed
                 )
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
@@ -649,6 +666,11 @@ class DetectorLawSimulation:
                 block.own = own_record
                 self.records[own_record.identity] = own_record
                 block.previous_sum = int(np.sum(own_record.now[mask]))
+                if definition.emitter is not None:
+                    # the first excited record (ALGEBRA.md 9.17 (4) item 1): the
+                    # seed at both levels, its residue the first of the wheel,
+                    # its norm the seed's squares over the body's cells
+                    self._excite(block, own_record)
             self.blocks.append(block)
             self.block_by_number[number] = block
         # Light's wall under the coupling (MASSIVE_RECORD.md section 7, MUST
@@ -1302,6 +1324,164 @@ class DetectorLawSimulation:
                     }
                 )
 
+    def _excitation_residue(self, block: Block, ordinal: int) -> int:
+        """The residue of the block's `ordinal`-th excitation (from 1) on the
+        emitter's wheel [step, W] in its residue order (the lamp's forms)."""
+        emitter = block.definition.emitter
+        assert emitter is not None
+        stride, width = emitter.wheel
+        if block.number in self.birth_orders:
+            return self.birth_orders[block.number][(ordinal - 1) % width]
+        return (ordinal - 1) * stride % width
+
+    def _excite(self, block: Block, own_record: LiveRecord) -> None:
+        """The excited record's residue and norm (ALGEBRA.md 9.17 (4) item 1):
+        the next excitation's residue on the wheel, the norm T the seed's
+        squares over the body's cells (the record as written at both levels;
+        its motion is booked against it), the offer C from 0."""
+        block.excitations += 1
+        own_record.u = self._excitation_residue(block, block.excitations)
+        levels = own_record.now[block.mask].astype(object)
+        own_record.norm = int(np.sum(levels * levels))
+        block.offer = 0
+        block.emit_now = False
+
+    def _excitation_rung(self, block: Block) -> None:
+        """E then D on the excited record at its own cells (ALGEBRA.md 9.17 (4)
+        item 1): its own motion this interval, (now - before)^2 summed over
+        its cells, booked to its offer C (read-through, no take), and the
+        rung 2 T u + T <= 2 W C on the emitter's wheel W fires the click
+        (the birth follows once the interval's records are advanced)."""
+        own = block.own
+        emitter = block.definition.emitter
+        if own is None or emitter is None or block.emit_now:
+            return
+        motion = (own.now - own.before).astype(object)
+        block.offer += int(np.sum(np.where(block.mask, motion * motion, 0)))
+        width = emitter.wheel[1]
+        if 2 * own.norm * own.u + own.norm <= 2 * width * block.offer:
+            block.emit_now = True
+
+    def _emit(self, block: Block) -> None:
+        """The click of the excited record and the birth (ALGEBRA.md 9.17 (4)
+        items 1 to 3; 9.13: E, then X, then E^T): X ends the excited record;
+        E^T writes the born record ONCE on the body's cells at both levels,
+        now = A C[phase(0)] and before = A C[phase(-1)] on every cell (the
+        broadband birth of one cell or of cells in phase; the line's
+        travelling character owed), A the lamp's unit; the norm T the motion
+        the write inserts,
+        the residue the excitation's, the content one quantum moved from the
+        body's stock; then, while the stock lasts, the next excited record
+        (the seed again, the next residue). Nothing drives the born record
+        afterwards: the law advances it."""
+        world = self.world
+        emitter = block.definition.emitter
+        own = block.own
+        assert emitter is not None and own is not None
+        number = block.number
+        family = emitter.family
+        definition = self.families[family]
+        assert definition.phase_per_age is not None
+        numerator, denominator = definition.phase_per_age
+        steps = world.phase_steps
+        period = (steps * denominator + numerator - 1) // numerator
+        cost = definition.quantum
+        excitation = block.excitations
+        residue = own.u
+        offer = block.offer
+        # X: the excited record ends
+        del self.records[own.identity]
+        block.own = None
+        block.births += 1
+        identity = number * (1 << 32) + block.births
+        live = LiveRecord(
+            identity,
+            number,
+            family,
+            residue,
+            block.births,
+            self.tick,
+            cost,
+            numerator,
+            denominator,
+            0,
+            period,
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            pointers=[0] * len(self.cell_names),
+            first_rung=[None] * len(self.cell_names),
+            ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
+            labels=tuple(emitter.branches),
+            emitter=number,
+        )
+        # E^T: the born clock's character on the body's cells, written once at
+        # both levels, every cell at the vertex's phase (the one-cell broadband
+        # birth; a line's travelling character, the per-Link pair of ALGEBRA.md
+        # 9.17 (4) item 2, is owed until that pair is declared)
+        table = self._cosine_table(steps)
+        level_now = int(table[self._phase(0, numerator, denominator, steps)])
+        level_before = int(table[self._phase(-1, numerator, denominator, steps)])
+        live.now[block.mask] = level_now
+        live.before[block.mask] = level_before
+        motion = (live.now - live.before).astype(object)
+        live.norm = int(np.sum(motion * motion))
+        if self.families[family].massive_kind:
+            # a born record of a massive kind (the matter emitter's): advanced
+            # by the rule with its family's pair, taken by the sets as light's
+            live.driven = np.zeros(self.shape, dtype=bool)
+        if emitter.receiver is not None:
+            live.ladder = [cell for cell, name in enumerate(self.cell_set) if name in emitter.receiver]
+        self.held[number][block.family] -= 1
+        self.ledger.held_spent[block.family] += 1
+        self.ledger.transit_released[family] += cost
+        block.emitted.append(identity)
+        self.records[identity] = live
+        self.layer.born += 1
+        if self.record is not None:
+            self.record(
+                {
+                    "event": "birth",
+                    "tick": self.tick,
+                    "node": list(block.corner),
+                    "measured": number,
+                    "family": definition.name,
+                    "record": identity,
+                    "u": residue,
+                    "labels": [list(label) for label in emitter.branches],
+                    "arms": 1,
+                    "units": 1,
+                    "multiplicity": 1,
+                    "train": 0,
+                    "excitation": excitation,
+                    "excitation_norm": own.norm,
+                    "excitation_offer": offer,
+                    "norm": live.norm,
+                    "cells": int(np.sum(block.mask)),
+                    "cycle": block.count,
+                    **({"clock": block.count} if world.clock_stamp else {}),
+                }
+            )
+        # the next excitation while the stock lasts
+        if self.held[number][block.family] > 0:
+            fresh = self._massive_record(
+                number * (1 << 32) + (1 << 30) + block.excitations, number, block.family
+            )
+            if block.definition.profile is not None:
+                profile = np.array(block.definition.profile, dtype=np.int64).reshape(self.shape)
+                fresh.now[:] = profile
+                fresh.before[:] = profile
+            else:
+                fresh.now[block.mask] = block.definition.seed
+                fresh.before[block.mask] = block.definition.seed
+            block.own = fresh
+            self.records[fresh.identity] = fresh
+            block.previous_sum = int(np.sum(fresh.now[block.mask]))
+            self._excite(block, fresh)
+        else:
+            block.emit_now = False
+            block.offer = 0
+
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
         record summed across its cells (G over R: its own record and the
@@ -1951,7 +2131,12 @@ class DetectorLawSimulation:
         if live.sourcing or live.age < live.train:
             return None
         if live.emitter is not None:
-            return self.block_by_number[live.emitter].mask
+            block = self.block_by_number[live.emitter]
+            if block.definition.emitter is not None:
+                # the emitter as a clicking body (ALGEBRA.md 9.17): its cells
+                # are cells like every other after the birth, no own take
+                return None
+            return block.mask
         return live.driven
 
     def _exempt(self, live: LiveRecord) -> np.ndarray | None:
@@ -2427,6 +2612,8 @@ class DetectorLawSimulation:
             if block.definition.cavity:
                 block.own.now[~block.mask] = 0
                 block.own.remainder[~block.mask] = 0
+            if block.definition.emitter is not None:
+                self._excitation_rung(block)
         for identity in list(self.records):
             live = self.records[identity]
             if live.arm_done:
@@ -2469,6 +2656,9 @@ class DetectorLawSimulation:
                 if sources is not None:
                     sources += self._source(block, response, live)
             self._advance(live, sources, self.light_scale)
+        for block in self.blocks:
+            if block.emit_now:
+                self._emit(block)
         for block in self.blocks:
             self._block_clock(block)
         for identity in list(self.records):

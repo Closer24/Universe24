@@ -1349,6 +1349,94 @@ would have found no cell.
   every tick; without the key the same world clicks at face:-x (the
   control); the string form names one set; the four refusals.
 
+## 26. The emitter as a clicking body: the excited records in turn, the birth written once (ALGEBRA.md 9.17 (4), the mathematician's integers of 2026-09-24 on the physicist's five questions; LAB_TOOLS.md A.1; the model owner's word of 22:30Z, "we cannot do any operation on the cells except to produce a click"; `emitter-click`; sections 24 and 25 are the material mirror's and the crystal's on their own branches)
+
+1. THE FORM. Neither emitter on main was the algebra's: the lamp births
+   from a rate accumulator with no record behind it and drives its cells
+   with the cosine table every interval of the train (an overwrite); the
+   block emitter "clicks" on a count of the sum of its own record that
+   deletes nothing, and fills its light record every interval of the cycle
+   by the coupling's source term. The form (9.17 (4)): the emitter is a
+   BODY OF A MASSIVE KIND with its seed (the bound mode) and a stock
+   `amount` = M, the number of its excitations. At interval 0 its first
+   excited record is on the board (the seed at both levels, the body's own
+   record as before), its residue u_1 from the emitter's wheel [step, W] in
+   its residue order. Excited record k clicks at ITS OWN RUNG on its own
+   cells: E is its own motion (now - before)^2 summed over its cells and
+   booked to its offer C interval by interval (read-through, no take; the
+   massive advance as before, the coupling's receive term included); D is
+   the rung 2 T u_k + T <= 2 W C with T its norm. At that click X ends the
+   excited record (deleted from the records) and E^T births the photon and,
+   while the stock lasts, excited record k + 1 (the seed again, the next
+   residue, its offer from 0). The emission times are the rungs, spread by
+   the residues over the wheel. No rate, no train, no drive, no source
+   term (`block.current` and the emission by the cycle stay unused by this
+   form; they retire with `emits` in the next push).
+2. THE INTEGERS AS BUILT, and the two read by the physicist, named for the
+   gate: (i) T, "its norm", is the excited record's seed squared and summed
+   over the body's cells (the record as written at both levels; nothing
+   else on main is a norm for a massive record); (ii) the born values,
+   written ONCE at the click's interval on every cell of the body at both
+   levels: now = A C[phase(0)] and before = A C[phase(-1)], phase(age) =
+   (3 N / 4 + floor(age n / d)) mod N (main's `_phase`) on the born clock
+   n / d, A the lamp's unit (the cosine table on UNIT); the norm T of the
+   born record the motion the write inserts, SUM over the cells of (now -
+   before)^2; the residue the excitation's; the content one quantum moved
+   from the body's stock (the body's family spent, the born family
+   released; the books balance per family). A LINE'S travelling character
+   (item 2's now = A C[phase(0) - floor(x p / q)] along the line) is OWED:
+   it needs the per-Link pair [p, q], which no world file declares (the
+   clock per interval n / d is another number); until it is, every cell of
+   the body is written at the vertex's phase, the one-cell broadband birth.
+   The one-cell write carries a STATIC LEVEL (the mean of the two levels,
+   C[3N/4] = 0 and C[3N/4 - floor(n/d)] != 0), which the sponge faces
+   drain slowly: under main's completion a record on a one-cell chain
+   lingers about 1200 intervals after its click at the screen; under the
+   end at the click (9.12) it does not matter; no count and no rung moves.
+3. THE LOADER (`_emitter`, the key `emitter` on a block): {"family": the
+   born family (a paid family with the pair form of its clock, not the
+   body's own), "wheel": [step, W] (the step coprime to W), "residue_order":
+   "ordinal" or "seed" with "residue_seed", "branches": the born labels
+   (optional, [[0, 1]]), "receiver": the born records' ladder by name
+   (optional, a list; the block's own `receiver`, one name, is the line at
+   the rung; not both)}; refused on a body of light's kind, on a silent
+   body (seed 0), with `amount` below 1, beside `emits` or `own_grace`, on
+   an absorbing block. The refusals name their keys.
+4. THE ENGINE (`_excite`, `_excitation_rung`, `_emit`): the birth orders
+   for emitter bodies as the lamps' (`keyed_permutation` under "seed");
+   the first excitation at construction; the rung checked after each
+   interval's massive advance; the emission fired once the interval's
+   records are advanced (the born record's first advance is the next
+   interval, its age 0 at the birth); the own take is none for a record
+   born of an emitter body (its cells are cells like every other after
+   the birth), the grace none (no `own_grace`, the train 0), the exemption
+   none. The birth line: `excitation` (k), `excitation_norm` (T),
+   `excitation_offer` (C at the click), `norm`, `cells`, `u`, `train` 0,
+   and the block's clock count under `clock_stamp`.
+5. THE SMOKE RUN (a chain of 80, x open; the body of the matter kind
+   [800, 809] with the well pair [800, 800] of side 12 at x = 5 seeded on
+   its mode at 100 by the generator's `seed_on_the_mode`, the stock 4, the
+   wheel [1, 4], the light [77, 25] on N = 64, the receiver at 70): the
+   births at 24, 111, 253 and 447 with the residues 0, 1, 2, 3 (the offers
+   at the click 11840, 35106, 57472, 81154 against the thresholds T (2 u +
+   1) / 8 = 11484, 34451, 57418, 80385 with T = 91868), the four records'
+   first rungs at the screen 120, 207, 349, 543, the books balanced at
+   every interval, the stock 4 spent and 4 released, no record left.
+6. THE TESTS: `tests/test_emitter.py` (a: M excitations give M births at
+   the first interval where the offer crosses the rung, tracked interval
+   by interval; the residues in the wheel's order and under "seed" the
+   keyed permutation; the quanta conserved; the excited record ended and
+   the next seeded; a stock below and above the wheel; b: the born values
+   equal the cosine table at phase(0) and phase(-1) on the body's cells
+   and 0 elsewhere, the norm the squared steps, no drive and no own take
+   afterwards, nothing beyond Manhattan distance m before age m; c: the
+   loader's refusals). NEXT on this branch (the Boss's order of 23:30Z,
+   item 2 with 9.12 folded): the lamp's `rate`, `train` and `_drive` and
+   the block's `emits`, `own_grace` and cycle births retired under the
+   detector law; every listed world regenerated onto emitter bodies seeded
+   on their modes; the tests rewritten; the light clock's, Sagnac's and
+   the redshift's readings re-derived blind before any run.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

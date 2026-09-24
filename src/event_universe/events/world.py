@@ -859,6 +859,10 @@ BLOCK_KEYS = {
     "start",
     "margin",
     "emits",
+    # the emitter as a clicking body (ALGEBRA.md 9.17 (4); LAB_TOOLS.md A.1):
+    # the excited records in turn on the body's cells, each clicking at its
+    # own rung, the born record written once by E^T at that interval
+    "emitter",
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7): an emitting block names the detector set whose one cell is its
     # record's ladder; admitted on an emitting block alone
@@ -1298,6 +1302,38 @@ class LevelDeclaration:
 
 
 @dataclass(frozen=True)
+class EmitterDefinition:
+    """The emitter as a clicking body (ALGEBRA.md 9.17 (4), the mathematician's
+    integers of 2026-09-24; LAB_TOOLS.md A.1): on a body of a massive kind
+    with its seed (the excited record: the body's seed at both levels) and
+    its stock `amount` = M (the number of its excitations), the key
+    `emitter`: {"family": the born family's name (a paid family with the
+    pair form of its clock), "wheel": [step, W] (the excited records'
+    residues, one per excitation), "residue_order": "ordinal" or "seed"
+    with "residue_seed", "branches": the born record's labels (optional,
+    [[0, 1]] by the lamp's form), "receiver": the born records' ladder by
+    name (optional, a list of set names; the block's own `receiver`, one
+    name, is the line at the rung)}; every cell of the body is written at
+    the vertex's phase (the one-cell broadband birth; a line's travelling
+    character, ALGEBRA.md 9.17 (4) item 2, is owed until its per-Link pair
+    is declared). Excited record k
+    clicks at its own rung on its own cells (E its own motion booked
+    through its cells, D the rung 2 T u_k + T <= 2 W C with T its norm, the
+    seed's squares over its cells); at that click X ends it and E^T births
+    the photon (content one quantum, its residue the excitation's) and,
+    while the stock lasts, excited record k + 1. No rate, no train, no
+    drive, no source term, no grace."""
+
+    family: int
+    wheel: tuple[int, int]
+    residue_order: str
+    residue_seed: int | None
+    branches: tuple[tuple[int, int], ...]
+    label_hands: tuple[int, int] | None
+    receiver: tuple[str, ...] | None
+
+
+@dataclass(frozen=True)
 class BlockDefinition:
     """A block, the foreign object of the massive record kind
     (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its cells R
@@ -1351,6 +1387,9 @@ class BlockDefinition:
     # sinks for it); None where the world names none, the ladder then every
     # cell and the line at the close, as before the key.
     receiver: str | None = None
+    # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): None on a body
+    # that emits nothing by the click
+    emitter: EmitterDefinition | None = None
 
 
 @dataclass(frozen=True)
@@ -3545,7 +3584,7 @@ def _block(
         )
     receiver: str | None = None
     if "receiver" in obj:
-        if emits is None:
+        if emits is None and "emitter" not in obj:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.receiver is refused on a block that emits nothing (the "
                 "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
@@ -3564,6 +3603,41 @@ def _block(
             "`receiver`: an emitting block names the detector set whose one cell is the ladder "
             "of its records (the receiver by name, DECLARATIONS.md section 13 item 7; no default)"
         )
+    emitter: EmitterDefinition | None = None
+    if "emitter" in obj:
+        # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): a body of a
+        # massive kind with its seed (the excited record) and its stock
+        if not family.massive_kind:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emitter is refused on a body of light's kind: the emitter "
+                "is a body of a massive kind whose excited record (its seed, the bound mode) "
+                "clicks at its own rung (ALGEBRA.md 9.17 (4))"
+            )
+        if seed <= 0:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emitter needs the body's `seed` (its excited record is the "
+                "seed at both levels; a silent body excites nothing)"
+            )
+        if amount < 1:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
+                "body's excitations, M; a world that needs W births declares M = W)"
+            )
+        for key in ("emits", "own_grace"):
+            if key in obj:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.{key} is refused beside `emitter`: the emission by the "
+                    "cycle's source term and the emitter's grace retire (ALGEBRA.md 9.17)"
+                )
+        if absorbing:
+            raise ValueError(f"{BEAM_LAW}: {label}: an absorbing block emits nothing")
+        emitter = _emitter(obj["emitter"], f"{label}.emitter", family, families, names)
+        if receiver is not None and emitter.receiver is not None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: one ladder for the born records: the block's `receiver` "
+                "(one name, the line at the rung) or the emitter's `receiver` (a list, the "
+                "ladder by name), not both"
+            )
     return BlockDefinition(
         side,
         pair,
@@ -3581,7 +3655,68 @@ def _block(
         own_grace=own_grace,
         take=take,
         receiver=receiver,
+        emitter=emitter,
     )
+
+
+def _emitter(
+    value: object,
+    label: str,
+    family: FamilyDefinition,
+    families: Sequence[FamilyDefinition],
+    names: dict[str, int],
+) -> EmitterDefinition:
+    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4)): the born
+    family a paid family with the pair form of its clock (not the body's
+    own), the wheel [step, W] of the excitations' residues (the step coprime
+    to W: a permutation), the residue order with its seed as the lamp's
+    keys had them, the born labels, the ladder by name, the line's axis."""
+    obj = _object(
+        value,
+        label,
+        {"family", "wheel", "residue_order", "residue_seed", "branches", "receiver"},
+        {"family", "wheel", "residue_order"},
+    )
+    name = obj["family"]
+    if not isinstance(name, str) or name not in names:
+        raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
+    born = families[names[name]]
+    if born is family:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.family is the body's own family (the born record is of another "
+            "family, the photon of the excited body)"
+        )
+    if born.free or born.phase_per_age is None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.family {name!r}: the born family is a paid family with the pair "
+            "form of its clock (light's kind, or a massive kind with a declared clock)"
+        )
+    if not isinstance(obj["wheel"], list):
+        raise ValueError(f"{BEAM_LAW}: {label}.wheel must be [step, W], the excitations' residue wheel")
+    wheel = _ratio(obj["wheel"], f"{label}.wheel", zero=False)
+    if math.gcd(wheel[0], wheel[1]) != 1:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.wheel [{wheel[0]}, {wheel[1]}]: the step is coprime to W (one "
+            "residue per excitation over W excitations, a permutation)"
+        )
+    order = obj["residue_order"]
+    if order not in ("ordinal", "seed"):
+        raise ValueError(f'{BEAM_LAW}: {label}.residue_order must be "ordinal" or "seed"')
+    seed: int | None = None
+    if order == "seed":
+        if "residue_seed" not in obj:
+            raise ValueError(f'{BEAM_LAW}: {label}.residue_seed is required under residue_order "seed"')
+        seed = _integer(obj["residue_seed"], f"{label}.residue_seed", 0, (1 << 64) - 1)
+        if wheel[0] != 1:
+            raise ValueError(f'{BEAM_LAW}: {label}.wheel: the step must be 1 under residue_order "seed"')
+    elif "residue_seed" in obj:
+        raise ValueError(f'{BEAM_LAW}: {label}.residue_seed is refused under residue_order "ordinal"')
+    branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    label_hands: tuple[int, int] | None = None
+    if "branches" in obj:
+        branches, label_hands = _branches(obj["branches"], f"{label}.branches", 1)
+    receiver = _receiver_names(obj, label, True)
+    return EmitterDefinition(names[name], wheel, str(order), seed, branches, label_hands, receiver)
 
 
 def _measured(
