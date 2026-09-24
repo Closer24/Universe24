@@ -220,19 +220,19 @@ bound energy. Printed:
 | The measured shift over the second-order Doppler prediction | b = 1.0065 +- 0.011, "in agreement within an experimental error of 1.1 percent with the predictions of the theory of relativity" (NATURE, snippet) | 1.0065 +- 0.011 | SAME |
 | The arrangement | a Co-57 source at the centre of an ultracentrifuge rotor on a piezoelectric transducer (a triangular voltage moving the source so the whole resonance line is scanned at each angular velocity); an Fe-57 absorber at R = 9.3 cm; the 14.4 keV line (NATURE, snippet) | Fe-57, 14.4 keV | SAME |
 | The rotor's speed | the rotation "varied between 300 and 35 000 rpm" (NATURE, snippet). Rim speed at 35 000 rpm and R = 9.3 cm: u = 2 pi x 0.093 m x 35 000 / 60 = 340.9 m/s; u / c = 1.14 x 10^-6; u^2 / (2 c^2) = 6.5 x 10^-13 (COMPUTATION) | not recalled | the rpm seen; the rim speed computed |
-| The 14.4 keV transition against the nucleon's binding: the design's eps by the physicist's hypothesis | B / A of Fe-57: NOT FOUND from here (no nuclear-data host reachable; the snippets gave Fe-56's 8.79 MeV per nucleon only). The nucleon's rest energy: (938.27209 + 939.56542) / 2 = 938.92 MeV (CONSTANT) | 8.8 MeV over 939 MeV, about 0.9 percent | B / A NOT FOUND; the arithmetic below runs on the RECALLED 8.8 MeV |
+| The 14.4 keV transition against the nucleon's binding: the design's eps by the physicist's hypothesis | B / A of Fe-57: 8.770 MeV (the Source Verifier's correction, SOURCES_VERIFIED.md, 2026-09-24: the 8.8 recalled here was Fe-56's 8.790 rounded up; NOT FOUND by this page's own search, no nuclear-data host reachable). The nucleon's rest energy: (938.27209 + 939.56542) / 2 = 938.92 MeV (CONSTANT) | 8.8 MeV over 939 MeV, about 0.9 percent | the recalled 8.8 DIFFERS from 8.770 by 0.3 percent; the arithmetic below runs on 8.770 MeV |
 
 ### C.3 The design's eps for this clock and the rotor arithmetic (COMPUTATION)
 
     m_N = (938.27209 + 939.56542) / 2 = 938.92 MeV                (CONSTANT)
-    eps = 8.8 MeV / 938.92 MeV = 0.0094 = 0.94 percent            (B / A RECALLED)
-    with B / A = 8.7: eps = 0.0093;  8.79: 0.0094;  8.9: 0.0095   (the sensitivity to the unverified input)
+    eps = 8.770 MeV / 938.92 MeV = 0.00934 = 0.934 percent        (B / A the Source Verifier's 8.770 MeV; the recalled 8.8 gave 0.0094)
+    with B / A = 8.7: eps = 0.0093;  8.79: 0.0094;  8.9: 0.0095   (the sensitivity; 8.770 inside 8.7 to 8.9, the sigmas below unchanged)
 
     the design's second term over the standard second-order Doppler shift:
-        (eps (gamma^2 - 1) / 2) / ((gamma - 1)) -> eps at u << c, so the ratio measured / predicted = 1 + eps = 1.0094
-    Kuendig's 1.0065 +- 0.011 against 1.0094: 0.26 sigma;  against 1.0000: 0.59 sigma
-    Kholmetskii 2008's re-analysis of Kuendig: k = 0.596 +- 0.006, ratio 2 k = 1.192 +- 0.012; against 1.0094: 15 sigma
-    Yarman and others 2016: k = 0.69 +- 0.02, ratio 1.38 +- 0.04; against 1.0094: 9 sigma
+        (eps (gamma^2 - 1) / 2) / ((gamma - 1)) -> eps at u << c, so the ratio measured / predicted = 1 + eps = 1.0093
+    Kuendig's 1.0065 +- 0.011 against 1.0093: 0.26 sigma;  against 1.0000: 0.59 sigma
+    Kholmetskii 2008's re-analysis of Kuendig: k = 0.596 +- 0.006, ratio 2 k = 1.192 +- 0.012; against 1.0093: 15 sigma
+    Yarman and others 2016: k = 0.69 +- 0.02, ratio 1.38 +- 0.04; against 1.0093: 9 sigma
     Corda 2015: k about 2 / 3, ratio about 1.33 (a theoretical value, no uncertainty)
 
 (The 14.4 keV line itself over the nucleon's rest energy is 1.5 x 10^-5,
@@ -259,35 +259,36 @@ contested and by whom, without deciding.
 **The four answers for the Boss.**
 
 1. What the published number says for the prediction: on Kuendig's own
-   number, the design's second term (the ratio 1 + eps = 1.0094 on the
+   number, the design's second term (the ratio 1 + eps = 1.0093 on the
    recalled B / A) is CONSISTENT (0.26 sigma), and so is no term at all
    (0.59 sigma): the band of 1.1 percent does not separate the two, so
    the row is a bound, not a test. On the contested re-analyses and the
    later rotor experiments (k = 0.596 to 0.69, ratios 1.19 to 1.38), the
-   design's 0.94 percent is 9 to 15 sigma too SMALL to be their excess:
+   design's 0.93 percent is 9 to 15 sigma too SMALL to be their excess:
    if those numbers stand, the design's term does not explain them, and
    if the excess is instrumental (Friedman's group) or a synchronization
    effect (Corda), the design's term is consistent with what remains.
    Which of the three readings matches nature is not settled in the
    literature and is not this page's to settle.
 2. Why a word is needed: two words. The physicist's B / A = 8.8 MeV for
-   Fe-57 is unverified from here (Fe-56's 8.79 was seen; Fe-57's not);
+   Fe-57 was recalled (the Source Verifier's 8.770 MeV replaces it,
+   SOURCES_VERIFIED.md, 2026-09-24);
    and the hypothesis that the nucleon's binding is the design's eps for
    a nuclear clock is his, to be stated as such in the pin.
 3. The recommendation for the NATURE row's wording: "A nuclear clock on
    a rotor at u = 341 m/s: the measured second-order Doppler shift over
    its prediction is 1.0065 +- 0.011 (Kuendig 1963, Phys. Rev. 129, 2371;
    snippet, to verify against the source); the design's second term
-   gives 1 + eps = 1.0094 at eps = B / A over m_N = 0.94 percent
-   (COMPUTATION on the recalled B / A = 8.8 MeV, to verify); BOUND: both
-   1.0094 and 1.0000 are within the band. The re-analysis k = 0.596 +-
+   gives 1 + eps = 1.0093 at eps = B / A over m_N = 0.93 percent
+   (COMPUTATION on the Source Verifier's B / A = 8.770 MeV); BOUND: both
+   1.0093 and 1.0000 are within the band. The re-analysis k = 0.596 +-
    0.006 (Kholmetskii and others 2008) and the later rotors k = 0.69 +-
    0.02 (Yarman and others 2016) are CONTESTED (Corda 2015 to 2019 for
    the interpretation; Friedman and others 2016 for the instrument) and
    are listed beside the row, not in it, until the dispute is closed by
    a source this register accepts."
 4. The gain: the rotor is the one experiment whose eps, by the
-   physicist's hypothesis, is large (0.94 percent) and whose band (1.1
+   physicist's hypothesis, is large (0.93 percent) and whose band (1.1
    percent) is of the same size, so a rotor experiment at the 0.1
    percent level would be a real test of the design's second term; the
    snippets say no such uncontested number exists today, which is itself
@@ -324,8 +325,9 @@ contested and by whom, without deciding.
   what the erratum changed beyond the "GeV" unit; the AME value of the
   7Li mass (the textbook 7.016003 u was used); the transition's energy
   from a line list (computed from the 548.5 nm of the snippet).
-- **(C) NOT FOUND**: Fe-57's binding energy per nucleon (the arithmetic
-  runs on the recalled 8.8 MeV; the sensitivity is printed); the
+- **(C) NOT FOUND**: Fe-57's binding energy per nucleon by this page's own search
+  (since found by the Source Verifier, 8.770 MeV, on which the arithmetic
+  now runs; the sensitivity is printed); the
   numerical result of Champeney, Isaak and Khan 1965 and the attribution
   of the "about 2 per cent" sentence between Hay 1960 and the Champeney
   group; Kholmetskii 2009's own k (recalled as 0.68 +- 0.03); the

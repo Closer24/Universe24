@@ -8,7 +8,11 @@ subluminal electron. This one is light against light: on the GameBoard a
 short wave of light runs slower than a long one, by an amount the rule
 fixes with no declaration, and nature has measured that ratio in the
 photons of gamma-ray bursts. Every number is labelled; the published bound
-is RECALLED until the Source Verifier confirms it.
+was RECALLED until the Source Verifier confirmed it (SOURCES_VERIFIED.md,
+2026-09-24: E_QG2 = 1.3 x 10^11 GeV VERIFIED, Vasileiou and others 2013;
+the parametrisation's factor 3 / 2 in section 3 NOT FOUND by him, so it is
+this page's own reading of the published form: without it the Link and
+the interval below are smaller by sqrt(2 / 3) = 0.82, the same order).
 
 ## 1. The derivation (COMPUTATION, `light_dispersion_bound.py`)
 
@@ -56,7 +60,8 @@ of 23:32Z: row A's number is a time from a time and carries no such
 factor). hbar c = 1.973 x 10^-16 GeV m, c_nature and the Planck length and
 time are CONVERSION, as in the script.
 
-RECALLED: the Fermi gamma-ray-burst bound on the subluminal quadratic term,
+VERIFIED by the Source Verifier (Vasileiou and others 2013; RECALLED when
+first written): the Fermi gamma-ray-burst bound on the subluminal quadratic term,
 E_QG2 of order 1.3 x 10^11 GeV (GRB 090510, the Fermi LAT analysis of
 2013). With that input the script prints: on an axis the Link a <= 6.4 x
 10^-27 m and one interval tau <= 1.2 x 10^-35 s (2.3 x 10^8 Planck
