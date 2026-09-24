@@ -670,7 +670,16 @@ stabilisation of the engine and the freeze:
    the owner. Nature24 writes each tool's code once its section is agreed
    (records 1830 to 1832). No Node carries a table: a tool is a body of
    material whose Nodes carry only material integers, and its action arises
-   from the one rule (record 1838). A tool
+   from the one rule (record 1838).
+10. **The algebra, then the code, then the mathematician confirms** (the
+   owner, 2026-09-24, record 1843). A tool is taken from the algebra, never
+   invented: its section in ALGEBRA.md names its group element (of G_48, of
+   the rotations G_24 = S4, or a rotation of the label module) and says
+   whether it has a direction at all. Nature24 writes its code from that
+   section; the code merges only after the mathematician confirms, line by
+   line, that it performs exactly that group operation. Every operation in
+   the cells is an operation of the group: a per-cell branch that is not one
+   is forbidden. A tool
    declares its own orientation and never the directions of what leaves it.
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,
