@@ -215,8 +215,9 @@ period N_0 = 2 pi / omega_0 in intervals:
 | [1, 1] | [2, 3] | 0.8411 | 7.5 | 0.8165 |
 
 **The pace of a massive record is below c on the lattice, by order
-omega_0^2**: c_m = c sqrt(cos omega_0), 0.39 percent below c at N_0 = 50,
-3.0 percent at N_0 = 18, the same c in the limit num / den -> 1. This is
+omega_0^2**: c_m = c sqrt(cos omega_0), 0.56 percent below c at the
+declared pair [800, 809] (omega_0 = 0.1493, N_0 = 42.08), the illustrations
+0.39 percent at N_0 = 50 and 3.0 percent at N_0 = 18, the same c in the limit num / den -> 1. This is
 range 1's, not form (B)'s (Reviewer 3's 12.6 (d)): for every 48-invariant
 rule of range 1 with a gap, c_m^2 / c^2 <= cos^2(omega_0 / 2); NO such rule
 gives a massive record light's c in three dimensions; the least deficit,

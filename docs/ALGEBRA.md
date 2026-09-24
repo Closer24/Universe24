@@ -2301,7 +2301,9 @@ c^2 k^2 + O(4): omega^2 = omega_0'^2 + c_m^2 k^2 with omega_0'^2 = 2 (1
 
 the Klein-Gordon dispersion whose cone is c_m and not c: a massive
 record's limiting pace is below light's by the deficit omega_0^2 / 4 in
-c (COMPUTATION: 0.39 percent at N_0 = 50, 3.0 percent at N_0 = 18;
+c (COMPUTATION: 0.56 percent at the declared pair [800, 809], omega_0 =
+0.1493, N_0 = 42.08; the illustrations 0.39 percent at N_0 = 50 and 3.0
+percent at N_0 = 18;
 MASSIVE_RECORD.md section 2), the same c in the limit num / den -> 1.
 (ii) With no truncation in omega_0: write omega = omega_0 + delta at
 the band's bottom; cos(omega_0 + delta) = cos omega_0 - sin omega_0
@@ -2737,7 +2739,7 @@ currency with the ladder's weights of 2.6: the owner's word of
 the click line carries the block's own count (its
 mode's cycles, 8.3) and the light record's birth stamp. The
 receiver-inserter's second face (the model owner's word of 2026-09-24,
-06:42Z; DECLARATIONS.md section 10 item 10): an emitter takes its own
+06:42Z, record 1694; DECLARATIONS.md section 10 item 10): an emitter takes its own
 record's remnant after its train, from the interval at which the last
 inserted interval has left its cells, in the receiver form of the take
 and in the record's kind's pair; what it takes never left it and is not

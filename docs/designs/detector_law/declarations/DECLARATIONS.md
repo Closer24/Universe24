@@ -1024,7 +1024,8 @@ omega_b) of its own well, printed by the pins script before the run.
    owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
    a detector at its own Node): AN EMITTER TAKES ITS OWN RECORD'S
    REMNANT AFTER ITS TRAIN, THE RULE (the model owner's word of
-   2026-09-24, 06:42Z, "go with the recommendation", on the
+   2026-09-24, 06:42Z, "go with the recommendation", record 1694 of
+   docs/LOG_2026-09-20.md, on the
    physicist's recommendation that the take be the law's own for every
    emitter and not a per-world key; Reviewer 3's three lines on
    c5930770 folded, his key form of 06:20Z superseded by the owner's
@@ -1045,7 +1046,8 @@ omega_b) of its own well, printed by the pins script before the run.
    in Links and v_g the record's kind's band group pace at its declared
    clock (0.564 Links per interval at 12 Links per period against c =
    0.577; the 2 a margin), computed at load: 24 for a block of side 12,
-   4 for a one-Node lamp. THE FORM: from that interval the
+   4 for a one-Node lamp (the arithmetic named once in section 15 M1-4;
+   the loader writes T per emitter into the run's metadata). THE FORM: from that interval the
    emitter's cells are a taking set for THAT record alone, in the
    receiver form of DESIGN.md section 5 (the row held at 0, one ghost
    per Port), the take in the record's OWN KIND'S pair as the take key
@@ -1099,7 +1101,8 @@ omega_b) of its own well, printed by the pins script before the run.
    T = ceil(extent / v_g) + 2 computed at load from the emitter's extent
    along its emission and the kind's band group pace at its declared
    clock (the dispersion of the six-neighbour rule on the world's axes,
-   a rounding at load); a per-record taking mask of the emitter's cells
+   a rounding at load; the arithmetic of M1-4, T written per emitter to
+   the run's metadata); a per-record taking mask of the emitter's cells
    switched on at age > train + T, in the record's kind's pair, its
    bookings excluded from the ladder as the
    grace's exclusion is (`keep`), the content taken booked to the HOST
@@ -1678,10 +1681,10 @@ waves).**
   03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
   05:40Z on the builder's finding (ac), section 10 item 10, with
   Reviewer 3's three lines of 06:20Z, and THE RULE on the owner's word
-  of 06:42Z: every emitter takes its own record's remnant after its
+  of 06:42Z, record 1694: every emitter takes its own record's remnant after its
   train, no key; a per-record taking mask of the emitter's cells at age
   > train + T, T = ceil(extent / v_g) + 2 computed at load (24 for a
-  block of side 12, 4 for a one-Node lamp), in the record's kind's pair,
+  block of side 12, 4 for a one-Node lamp; the group pace at load is the band's closed form v_g = sin k / (3 sin omega) with cos omega = (2 + cos k) / 3, the six-neighbour rule's band of ALGEBRA.md 8.1 along the emission's axis, at the kind's declared clock (k = 2 pi / lambda, lambda the declared Links per period), host arithmetic once at load, no table entry read; the loader writes T per emitter into the run's metadata (COMPUTATION at load); no Node holds it (Reviewer 3's line (b) of 07:55Z on e6b4ec3d)), in the record's kind's pair,
   its bookings
   excluded from the ladder and the content booked to the HOST row
   `taken_by_emitter`, the builder's line before the light clock's
