@@ -6836,3 +6836,27 @@ template gives 150 to 250 words. The abstract had grown to about 270
 with commit 24's sentences; it is cut to 245 words with every claim,
 every name (Newton, Lorentz, Einstein, Born, Tsirelson, Gauss, Poisson)
 and every number kept, by removing repetitions only.
+
+## Applied (2026-09-24, the Boss's order of 01:00Z): commit 30 on paper-48, Section 6 to history
+
+"Do not hold on the diagram: start the old-law sections to history now,
+each replaced by chapters 1 to 3 and 8 in the owner's order, the
+surviving theorems kept; one commit per section with the head." The
+first: Section 6, the GameBoard as the way the algebra is computed
+with. The old section (the rows that hop, the wheel u, the rungs, the
+drive's old wall, the birth wheel, the two blocks, the ladder read-out,
+the code's gates, the dated transition) is whole in records.tex under
+"The law as the engine ran it before 2026-09-23"; the hand-worked
+update keeps its own records section. The new section (cut30/law.py)
+is ALGEBRA.md's: the one map with the centred variant and the two
+blocks (chapter 2), the postulates by their numbers with the
+parameters of chapter 8, the state as the record's two levels and
+remainder per Node and the block's cells, the six operations in their
+order and one line each (2.1 to 2.6, 2.11), what is not one of the six
+(2.7), the three tests and the mark of every rule of chapter 8 (2.8,
+8.10), the read-out at W with the take and the click as an action (8.6,
+3.1), the scripts as the code's gates (8.10), and the ledger paragraph
+as it was. P9 keeps its number; its instances are now the rules the
+algebra document marks as carried; the name "the blind flight" in
+Section 2's list and its "no dispersion" row of Section 7's table are
+the next commit's to reconcile (the Boss's word asked). 51 pages.

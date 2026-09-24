@@ -129,6 +129,8 @@ def _check_reorder(module) -> None:
     ):
         assert f"\\label{{{label}}}" not in main and recs.count(f"\\label{{{label}}}") == 1, label
     assert "\\bibitem{records}" in main and "\\cite{records}" in main
+    # the law as the engine ran it before 2026-09-23 is history (the Boss's order of 2026-09-24)
+    assert recs.count("\\label{rec:oldlaw}") == 1 and "the rows that hop whole with their wheel" in main
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))

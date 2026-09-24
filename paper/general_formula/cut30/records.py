@@ -18,6 +18,7 @@ table. The summary table and the kept-words table stay in the paper. No claim, n
 no count is cut; the count sentence stands in every place.
 """
 
+import law
 from reorder import REGISTER_HEADING, ROADS_HEADING
 
 BIB_START = "\\begin{thebibliography}"
@@ -28,6 +29,12 @@ REPRODUCTION_HEADING = "\\section{Reproduction}\\label{app:reproduction}"
 ARCHIVE_SENTENCE = "The archived version cited at submission is the tag"
 HANDWORKED_START = "\\paragraph{A hand-worked update.}"
 CODE_HEADING = "\\paragraph{The code implements the law.}"
+# The law as the engine ran it before 2026-09-23 (the rows that hop): the whole
+# section to the records file, cut30/law.py in its place, its ledger paragraph kept.
+OLDLAW_START = "\\section{The GameBoard: the way the algebra is computed with}\\label{sec:gameboard}"
+OLDLAW_END = "\\section{How the algebra was reached: from the GameBoard to the group}\\label{sec:route}"
+LEDGER_START = "\\paragraph{The ledger.}"
+LAW_BLOCK_START = "\\paragraph{The GameBoard as a system of information transfer.}"
 LONGTABLE_END = "\\end{longtable}}"
 TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
 CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
@@ -147,8 +154,13 @@ def cut(s: str) -> tuple[str, str]:
     reproduction, s = s[i:j], s[:i] + POINTERS["reproduction"] + s[j:]
     confirmations, s = _cut_between(s, CONFIRMATIONS_START, BIB_START, "the confirmations")
     proofs, s = _cut_between(s, PROOFS_HEADING, TECHNICAL_HEADING, "the proofs")
-    handworked, s = _cut_between(s, HANDWORKED_START, CODE_HEADING, "the hand-worked update")
-    s = s.replace(CODE_HEADING, POINTERS["handworked"] + CODE_HEADING, 1)
+    # The old law's section, whole, to the records; the new section (cut30/law.py)
+    # and the old ledger paragraph in its place; the hand-worked update as before.
+    oldlaw, s = _cut_between(s, OLDLAW_START, OLDLAW_END, "the old law section")
+    k = oldlaw.index(LEDGER_START)
+    ledger_paragraph, oldlaw = oldlaw[k:], oldlaw[:k]
+    s = s.replace(OLDLAW_END, law.SECTION + ledger_paragraph + OLDLAW_END, 1)
+    handworked, oldlaw = _cut_between(oldlaw, HANDWORKED_START, CODE_HEADING, "the hand-worked update")
     conversion, s = cut_table(s, CONVERSION_LABEL, "the conversion table")
     ledger, s = cut_table(s, LEDGER_LABEL, "the ledger")
     families, s = cut_table(s, FAMILIES_LABEL, "the families table")
@@ -175,6 +187,9 @@ def cut(s: str) -> tuple[str, str]:
         + confirmations
         + "\n\n"
         + proofs
+        + "\n\\section{The law as the engine ran it before 2026-09-23: the rows that hop, history}\\label{rec:oldlaw}\n\n"
+        + "The section of the GameBoard as the paper carried it until the algebra's chapter 8 replaced the rows that hop (the Boss's order of 2026-09-24): the postulates with their old parameters, the map's old components, the two blocks, the old read-out by the wheel and the rungs, the code's gates and the dated transition.\n\n"
+        + oldlaw
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
         + handworked
         + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{rec:conversion}\n\n"
@@ -199,6 +214,10 @@ def cut(s: str) -> tuple[str, str]:
 def strip_block(body: str) -> str:
     """The cuts of `cut`, applied to one text block where their markers are
     present, for the test that holds every reordered block verbatim."""
+    if LAW_BLOCK_START in body:  # the old law's section, whole in the records file
+        body = body[: body.index(LAW_BLOCK_START)]
+    if body.lstrip().startswith(CODE_HEADING):  # its gates on the code, likewise
+        return ""
     if REPRODUCTION_HEADING in body and ARCHIVE_SENTENCE in body:
         i = body.index(REPRODUCTION_HEADING) + len(REPRODUCTION_HEADING) + 2
         j = body.index(ARCHIVE_SENTENCE, i)
