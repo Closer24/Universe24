@@ -25,7 +25,11 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.diagnostics.massive_record_margin import check_margins, profile_check
+from event_universe.diagnostics.massive_record_margin import (
+    check_body_conditions,
+    check_margins,
+    profile_check,
+)
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import BEAM_LAW, NatureBeamWorld
@@ -71,6 +75,13 @@ def execute_nature_beam_run(
                 f"seed (GAMEBOARD): block {reading.number}: the declared profile against the margin "
                 f"module's mode at the amplitude {check[1]}: the largest deviation {check[0]} units"
             )
+    # The body's conditions exact in the initial state (the model owner's word
+    # of 2026-09-24, 16:48Z): the seed on the bound mode at both levels and
+    # the ramp against the relaxation time, on the engine as constructed,
+    # before the first interval; a refusal here names the body and the Node.
+    if margins and world.detector_law:
+        for line in check_body_conditions(world, DetectorLawSimulation(world), margins):
+            print(line)
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
     measured_content: list[list[int]] = []

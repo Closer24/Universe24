@@ -43,3 +43,58 @@ A rule enters the law only if it is generic (one primitive with declared integer
 ## The targets as the source of the expectations (the owner, 2026-09-21, record 205)
 
 Every series' expectation is derived before the run from the law's operations and registered with its section; a target not reached marks a quantity a run may only measure; skills/workflow.md, "The main course".
+
+## A closed-form pin is confirmed by the mathematician when needed (the owner, 2026-09-24, record 1815)
+
+The owner's word of 2026-09-24, 16:35Z: "for every such confirmation, call
+the mathematician to confirm, as needed." Where a pin is an exact closed form
+on the engine's own tables and rungs (the Bell counts 874, 150, 150, 874 and
+S = 181 / 64 on the wheel [1, 2048]; Malus's 128, 246, 199, 177; a light
+clock's first rung on the map), the physics-rule reviewer's closed form is
+the first check; when the Boss judges it needed (a pin the paper cites, a
+disagreement between two closed forms, a form with no proof on the closure
+page), the Boss opens one bounded order to a mathematician session: recompute
+the closed form independently from the declaration and the tables, in
+integers, and report CONFIRMED with the computation or the line where it
+differs; no run, no pin moved. The confirmation is one line on the closure
+page with its record.
+
+## The algebra and the timing first, computed blind (the owner, 2026-09-24, record 1824)
+
+The owner's word (translated): "Check also in the algebra and the mathematics
+that it is created with the right timing, so that the experiment only
+confirms what we already computed." For a new composition (the crystal the
+first), the mathematician computes its pin blind to the writer's design,
+from the owner's specification and the algebra on main: the state it
+produces, the counts, and the timing (each birth, each arm's pace along its
+integer vector, each arrival, each click), and the expected values of each
+block's unit tests. The writer's design and the mathematician's page must
+agree before the code is written; a difference goes to the physics-rule
+reviewer and to the owner.
+
+## The mathematician writes the lab tools' specification (the owner, 2026-09-24, record 1832)
+
+The owner's word (translated): "All of the above is defined in one
+specification file of the lab tools. The mathematician can write the design
+of everything; Nature just checks all of it and talks with him." The
+mathematician writes `docs/designs/lab_tools/LAB_TOOLS.md`, one section per
+lab tool: what it is and what nature gives it, its declared properties and
+orientation, its action on every kind of input, its timing, its cost, the
+engine lines it needs with their three tests, and its unit tests' exact
+values. Nature24, the physicist and the only writer of code, checks each
+section and talks with the mathematician directly by Routine; what they
+agree enters the file, and a disagreement goes to the Boss for the owner.
+
+## The tools derived in the algebra as operations of the group (the owner, 2026-09-24, records 1840 and 1841)
+
+The owner's word (translated): "Derive everything that happens in the body
+through the group and its operations; put them in the algebra; each does
+something different, polar or not polar; it must come from the group."
+Every lab tool is derived in docs/ALGEBRA.md as a body at rest, a fixed
+point of the translation group's action whose shape its stabilizer in
+G_48 fixes, performing one group action on the records that pass its
+cells. The integers written on the board are computed from the algebra,
+as a body's seed is, and checked at load. A consequence (a state, a
+cause, a length, a form) is derived with its proof and never put to the
+owner as a choice. LAB_TOOLS.md cites the section for the engine lines and
+the tests.

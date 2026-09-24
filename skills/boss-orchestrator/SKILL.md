@@ -18,6 +18,26 @@ edits to a specialist instead of doing the long task on the primary agent. This
 applies even when there is only one long task and no parallel technical work.
 Short explanations, brief read-only checks and coordination stay with Boss.
 
+**The Boss writes no code; it activates the agents and synchronises them
+(the model owner, 2026-09-24, 12:40Z: "so that the conversation with me is
+continuous, you always activate agents; I want to always be able to talk
+to you; you only synchronise the agents; do not write code yourself, only
+activate others and synchronise the code").** Every change under `src/`,
+`tests/`, `tools/` and the world files is made by a session the Boss opens
+or messages, with one bounded order and one report; the Boss reads the
+report and the diff, opens the pull request and merges on green. The Boss
+itself writes only the day's log, Highlights 5.4, the Skills, the status
+page and its messages to the owner. A long read, a run or a research
+question goes to a session as well; the Boss keeps to short answers from
+the two files of the owner's rule, `docs/ALGEBRA.md` and
+`docs/HIGHLIGHTS.md`, and to the coordination.
+
+The process in force for the engine's stabilisation and the freeze is
+[the shortened process](../workflow.md#the-shortened-process-for-the-engines-features-the-owner-2026-09-24-records-1812-and-1813)
+(one list of fifteen, one agent writes all the code, features by name, one
+branch and one merge, the reviewer's one read after the merge, a test-run line
+per world, the Boss's three-column status).
+
 **Read the messages first, answer first, record after (the model owner,
 2026-09-21, records 412 and 413).** On every wake and before every act, the
 Boss reads every queued notification (ReadNotifications until none remain):
@@ -232,10 +252,10 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 | The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
-| A design, a hypothesis or a verdict on physics (item by item) | the physicist's session, by Routine; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
-| A derivation, the map's status, order and error term | the derivation mathematician's session, by Routine ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
-| The law's text, the genericity probe, a host-only unification | the architect's session, by Routine |
-| A gallery page | the Visualiser's session, by Routine |
+| A design, a hypothesis or a verdict on physics (item by item) | Nature24's session (the physicist), by direct message; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
+| A derivation, the map's status, order and error term | the derivation mathematician's session, by direct message ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
+| The law's text, the genericity probe, a host-only unification | the architect's session, by direct message |
+| A gallery page | the Visualiser's session, by direct message |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
@@ -251,6 +271,14 @@ One agent may use several skills. Exploration normally uses one owner unless par
 7. Apply the PR skill only to integration, or when the user explicitly requests a PR for a candidate.
 
 ## The order by Routine (the owner, 2026-09-21, record 309)
+
+**Sent by direct message, never by a Routine (the owner, 2026-09-24: "always
+use SendMessage").** The Boss talks to every session with the SendMessage
+tool, after ListAgents shows the receiver as reachable; a Routine is created
+only for what must happen at a later time (a check-in, a re-read after a
+run's expected end); the rule is [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309),
+item 8, and binds every role. The name "the order by Routine" below is the
+order's form, kept from record 309; its channel is the direct message.
 
 Every assignment to a role's own session is one bounded order: the question,
 the pins before any number, the deliverable's file, the bound in time, the
@@ -365,8 +393,8 @@ approval, while bugs, labels and small corrections need none. Two more
 closes it and reports done, none is left open, the Boss archives the
 session at its merge and re-asks any report overdue by its own stated time;
 and every session the Boss opens is named in two words (Paper Writer,
-Physics Reviewer, Newton Runner), never a sentence, while a Routine carries
-a short name with the order in its prompt. The law's
+Physics Reviewer, Newton Runner), never a sentence, while a Routine (for a
+later time only) carries a short name with the order in its prompt. The law's
 rules do not move under this word:
 LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
 the pins declared before the run, `python tools/check.py` before the push.
@@ -456,3 +484,14 @@ day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
    one entry); the key algebraic formulas boxed in the paper; the GameBoard,
    the clicks and nature named as the three worlds with the passage between
    them; "matches nature", never "is nature".
+
+## The Boss closes with Nature24 and the mathematician (the owner, 2026-09-24, record 1845)
+
+The owner's word (translated): "You and Nature close everything by
+yourselves: Nature writes the code, you coordinate." What the algebra
+derives is not put to the owner as a choice: the mathematician derives it,
+Nature24 checks it and writes the code, the mathematician confirms the code
+is the algebra, and the Boss coordinates and merges. Only a real
+disagreement between them, or a change of the law's own words, goes to the
+owner. Every message to the owner is in Hebrew, with plain names and no
+codes.

@@ -4872,6 +4872,48 @@ def _optical(
     return value
 
 
+def _body_fit_check(world: NatureBeamWorld) -> None:
+    """A body's cube whole on the board, never cut (the model owner's word of
+    2026-09-24, 16:35Z and 16:48Z, through the Boss: the experimenter places
+    the body exactly where he wants it; SIMULATOR_DEFINITIONS.md, the four
+    building blocks, the body's condition 1): the cells [x0, x0 + s) on each
+    axis from the lower vertex `position` with the edge `side` lie on the
+    board on every axis the body's kind does not fold. On an open or closed
+    axis the far vertex is on the board; on a periodic axis the extent is at
+    least the edge (a cube across the seam is whole, a cube wrapped onto
+    itself is not); the folded axis of extent 1 (a layer, a chain) is the
+    one exception, the stabiliser's square or segment (ALGEBRA.md 8.2 and
+    8.3). Refused naming the body, the axis and the extent; the engine's
+    `_cube` and the margin module's `block_cells` then never cut."""
+    shape = world.shape
+    for number, entry in enumerate(world.measured):
+        block = entry.block
+        if block is None:
+            continue
+        wrap = world.kind_periodic(entry.family)
+        for axis, name in enumerate(AXES):
+            extent = int(shape[axis])
+            corner = int(entry.position[axis])
+            if extent == 1:
+                continue
+            if wrap[axis]:
+                if extent < block.side:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} wraps onto "
+                        f"itself on the periodic axis {name} of extent {extent} (a body is a whole "
+                        "cube, square or segment on the board, never cut or folded but on an axis "
+                        "of extent 1; the model owner's word of 2026-09-24, 16:35Z)"
+                    )
+            elif corner < 0 or corner + block.side > extent:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} at {corner} on "
+                    f"the axis {name} reaches {corner + block.side - 1} beyond the face at "
+                    f"{extent - 1}: a body lies whole on the board, exactly where it is declared, "
+                    "never cut to fit (the model owner's word of 2026-09-24, 16:35Z; move the "
+                    "vertex or the edge, or open the axis as periodic)"
+                )
+
+
 def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     """Reject anything but a lawful world of the Beam Law."""
     if not isinstance(document, dict):
@@ -5243,6 +5285,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
+    _body_fit_check(world)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
     # tested where Lambda_c is formed (`column_scales`): a world whose column
     # scales leave the register is refused here, at load, not at its first

@@ -1349,6 +1349,86 @@ would have found no cell.
   every tick; without the key the same world clicks at face:-x (the
   control); the string form names one set; the four refusals.
 
+## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
+
+1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
+   from the setting alone and never read the record's label state, so a
+   record born on label 1, or on a superposition through joint labels, was
+   split as if on label 0: the polariser assigned the outcome instead of
+   acting on the state. It lived because the polariser's one test (d)
+   drove label 0 alone.
+2. THE FIX, with the primitive already on main: the table body keeps its
+   half-angle pair (C'[s], S'[s]); per record the channel pointers J(o) =
+   SUM over the labels l of U_s[o][bit of l on the arm] x a_l are formed by
+   `joint_weights` with this one body (verb B on the record's label
+   weights, then the square), the split by [J(+)^2, J(-)^2] over their sum
+   with the remainder kept; the label-0 weights `plus`, `minus`, `norm`
+   stay on the body as the declared integers. THE GATE (the mathematician's
+   line-by-line read, ALGEBRA.md 9.11, 2026-09-24): (a) the bodies acting
+   on a record's family are read as the material's own declaration
+   (`table_bodies_by_family`), no branch on a family; (b) the weights' sum
+   is n_s times the state's norm and never 0, so no guard; (d) for an arm
+   of a rank-2 record the weights are the partial trace over the other
+   arm's bit (`channel_weights`: the labels grouped by the other arm's bit,
+   the pointer coherent within a group, the weight the sum of the groups'
+   squares), an arm of HV + VH half on each channel at every setting; the
+   joint counts unchanged (test d4).
+3. THE TESTS (tests/test_detector_law_tables.py): (d) label 0 unchanged
+   (64, 32, 0 of 64 in + at s = 0, N / 4, N / 2); (d2) label 1 swaps (0,
+   32, 64) and the equal superposition gives (32, 64, 32) with J(+) = C' +
+   S' and J(-) = C' - S', the expected counts the algebra's; (d3) Malus's
+   four worlds keep 128, 246, 199 and 177 of 256. The three tests hold: one
+   primitive on declared integers, no family name; verb B and one
+   division, no root, no float; the entry cell reads its own record's
+   labels and pair.
+
+## 22. The body's conditions exact in the initial state, checked at load (SIMULATOR_DEFINITIONS.md, the four building blocks, the body's conditions 1, 5 and 7; the model owner's words of 2026-09-24, 16:35Z and 16:48Z, through the Boss; `body-check`)
+
+1. THE SHAPE WHOLE ON THE BOARD (`_body_fit_check`, world.py, the loader's
+   last check): a body's cube from its lower vertex `position` with the
+   edge `side` lies whole on the board on every axis its kind does not
+   fold; an open or closed face it would pass, or a periodic axis shorter
+   than its edge, refuses the world naming the body, the axis and the
+   vertex; the folded axis of extent 1 (a layer, a chain) is the one
+   exception; a cube across a periodic seam is whole. Before this line the
+   engine's `_cube` and the margin module's `block_cells` cut the cube to
+   the board silently (the defect under the owner's word of 16:35Z, "the
+   experimenter must be able to put the cube exactly where he wants it").
+2. THE SEED ON THE MODE (`check_body_conditions`, the margin module,
+   called by run.py and `tools/preflight_worlds.py` after `check_margins`
+   on the engine as constructed, before the first interval): for every
+   bound body the module's own mode (`bound_mode`, the Lanczos vector)
+   rounded at the seed's largest magnitude is the expected initial state
+   over the whole board; the body's own record at both levels, `now` and
+   `before`, must equal it bit for bit; the first Node that differs refuses
+   the world, named with both values. A flat seed (the first builds' form,
+   the value on the cells) is refused by it.
+3. THE RAMP (the same call): a body with a momentum declares `ramp` at
+   least ten relaxation times 1 / (omega_0 - omega_b) of its own well
+   (DECLARATIONS.md section 8), or is refused naming the ramp and the
+   relaxation time; the ramp's ratio is printed as COMPUTATION. A silent
+   body (seed 0, no own record: the receding index's medium body with a
+   momentum and no ramp) has no reading and no ramp check, as the margin
+   module skips it (Reviewer 3's line F; test g on that world).
+4. The three tests hold: the check is host-side at load, outside the
+   integer path; no rule of the law moves; nothing is kept at a Node.
+   Conditions 2 (the lowered pair) and 6 (the amplitude bound) stay the
+   loader's own refusals; 3 and 4 (the bound mode, the margin) stay
+   `check_margins`.
+5. THE RUN LIST'S WORLDS UNDER IT (tests/test_body_conditions.py, test g):
+   as the files stood, the muon's layer pin world alone passed (its seed
+   the generator's `mode_profile`); the deep well (and its rest world),
+   the boxes, the light clock, sagnac (two) and redshift (two) carried a
+   flat seed and were refused. THE WORLD LINE (DECLARATIONS.md section 15
+   M1-11, on the owner's word): the massive generator's `seed_on_the_mode`
+   seeds every bound body on its mode at the declared amplitude (the
+   detector-law generator calls it once its emitter documents are
+   complete, `seed_profile=False` on its `world` calls); the layer pin
+   worlds' ramp 12000 and ticks 20500 (section 8: ten relaxation times by
+   the module's own 1164.6 intervals); every listed massive world loads
+   clean under the check; the index's silent body and the light-kind walls
+   have no reading. The preliminaries of the regenerated worlds re-run.
+
 ## 21. The receiver by name and the click line at the rung (DECLARATIONS.md section 13 item 7, the owner's word of 2026-09-24, 09:50Z; section 10 items 9 and 10; Nature24's eight decisions of 12:40Z through the Boss, the declaration built to; the former build-4 of record 1800, never pushed; the Engine Fixer's line 1 on `engine-fix-1`, 2026-09-24)
 
 - THE LINE (`world.py`: `BlockDefinition.receiver`, the block key

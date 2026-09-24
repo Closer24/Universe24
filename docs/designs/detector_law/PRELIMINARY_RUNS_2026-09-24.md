@@ -1,5 +1,16 @@
 # EXPLORATORY: the preliminary runs of the GO worlds on 2026-09-24 (the Preliminary Runner, 08:05Z to 09:30Z)
 
+HISTORY SINCE body-check (2026-09-24, the model owner's word "regenerate",
+records 1817 and 1818): the readings below of the light clock (section 6),
+Sagnac (sections 5 and 8), the redshift pair (section 4), the muon's layer
+pin worlds (section 13), the deep well (section 16) and the boxes (section
+17) were taken on the flat-seeded files (the seed the value on the cells);
+those eleven files and the muon's form in motion (the ramp 12000) are
+regenerated with the seed on the bound mode (the declaration of the body's
+seed on its mode, DECLARATIONS.md section 15 M1-11), and the Runner re-runs
+them on the regenerated files before anything is compared. The readings
+stand as the record of the flat-seeded forms; none is a pin.
+
 Every run on this page is EXPLORATORY: a dry run of a world on an engine as it
 stands, never a pin run. No pin is compared and no MET, PASS or FAIL is written.
 Every number is labelled by kind: a detector's click (its interval and its cell)
