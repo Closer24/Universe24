@@ -2,7 +2,7 @@
  "law": "beam",
  "model_id": "beam-detector-law-malus-28-125-v1",
  "shape": [
-  7,
+  8,
   1,
   1
  ],
@@ -50,21 +50,6 @@
   },
   {
    "position": [
-    4,
-    0,
-    0
-   ],
-   "family": "counter",
-   "amount": 1,
-   "fixed": true,
-   "table": {
-    "light": {
-     "rule": "read"
-    }
-   }
-  },
-  {
-   "position": [
     6,
     0,
     0
@@ -80,17 +65,6 @@
   }
  ],
  "detectors": [
-  {
-   "name": "first",
-   "positions": [
-    [
-     4,
-     0,
-     0
-    ]
-   ],
-   "reading": "sum"
-  },
   {
    "name": "second",
    "positions": [
