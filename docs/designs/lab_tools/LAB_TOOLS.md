@@ -1041,23 +1041,20 @@ leave in different directions) and by a birefringent crystal (rejected,
 a world of the list ever needs it, and not for all records. The head's
 paragraph "THE ONE ENABLING ENGINE LINE" is superseded by this item.
 
-**11.2 One quantum, one click, settled (his point 2).** ALGEBRA.md 9.7
-settles it: the arriving record's ONE residue u chooses, on its ladder,
-the crystal's cells (a receiver, its take pair the crystal's material) or
-the receivers and sinks beyond; when it chooses the crystal, the arriving
-record ends there (its click) and the crystal, as an emitter, births the
-pair's record by its own clocks with its OWN residue on its own wheel of
-W. So both readings of his point hold, each for its own record: THE
-ARRIVING RECORDS' clicks are counted at the conversion fraction (the share
-the crystal takes, a board quantity, MEASURED ONLY), which sets how many
-arriving quanta the world needs; THE PAIRS' joint counts are exact on the
-crystal's wheel once it has made W births: at the settings (0, 256), (0,
-768), (512, 256), (512, 768), 150, 874, 874, 150 and 874, 150, 150, 874
-thrice (HV + VH), S = 181 / 64 with Bob's settings exchanged (the pin's
-form declared in 1.1a item 7). The crystal's own count as the pair's
-residue is therefore not "the emitter's residue passed on" but the
-crystal's own births' wheel; the order channel's seed order is declared
-at the crystal.
+**11.2 One quantum, one click, settled (his point 2, in his form of 18:05Z).**
+ALGEBRA.md 9.7 (b): the crystal is the arriving record's NAMED receiver;
+the arriving record clicks at its first rung at the crystal and ends
+there (its remaining field energy to the sinks, content 0); at that
+interval the crystal births the pair by its own clocks, the pair carrying
+the arriving record's residue u. Every arriving record that reaches the
+crystal's rung gives one pair, so the emitter's W births over its wheel
+(its residue order "seed") give W pairs, and the pairs' joint counts are
+exact: at (0, 256), (0, 768), (512, 256), (512, 768), 150, 874, 874, 150
+and 874, 150, 150, 874 thrice (HV + VH), S = 181 / 64 with Bob's settings
+exchanged. The "fraction converted" is the share of the arriving norm the
+crystal's cells book, which must reach the rung (at least 1 / W; about 3
+cells over 2 pi 11 Links on the layer, some 4 percent, COMPUTATION of the
+order); the crystal's own wheel is not needed.
 
 **11.3 The Bell world's placement and its timing as integers (his points 3
 and 6).** The layer [30, 33, 1], periodic on both axes with a shell of
@@ -1067,7 +1064,7 @@ receiver cubes of side 1 (take [1, 1]) on x = 0, x = 29, y = 0 and y = 32
 x 13 to 15, y 15 to 17, centred on the mirror line). Alice's polariser: a
 cube of side 1 at (26, 28, 0), its + receiver a cube of side 1 at (27, 29,
 0); Bob's: (26, 4, 0) and (27, 3, 0) (mirror images through y = 16). THE
-INTEGERS THE UNIT TEST ASSERTS AS BOUNDS: the crystal's click (the pair's
+INTEGERS THE UNIT TEST ASSERTS AS BOUNDS: the crystal's click, the arriving record's first rung there (the pair's
 birth) at t_e + 11 or later (the Manhattan distance from (2, 16) to (13,
 16)); each arm's first rung at its polariser at the birth + 22 or later
 (the Manhattan distance from (15, 17) to (26, 28), and from (15, 15) to
@@ -1079,9 +1076,12 @@ interval. The K forms beside, never asserted: the birth near t_e + 11 / c
 of [1232, 25], 3200 intervals, the common zero with the arriving train.
 
 **11.4 The crystal's cells (his point 4).** Under 11.2 the crystal is ONE
-receiver set (its cells), on the arriving record's ladder by name, NOT a
+receiver set (its cells), the arriving record's receiver by name, NOT a
 sink; its first rung is taken over the arriving record's norm with the
-set's wheel (the world's W unless declared); no per-Node cells.
+set's wheel (the world's W unless declared); no per-Node cells. The open
+faces stay faces (ALGEBRA.md 9.8: the face's cell admitted as the shell's
+shorthand), so the Bell world's layer is [30, 33, 1] with open faces in
+place of the shell of 11.3, the Nodes unchanged.
 
 **11.5 The mirror's and the splitter's test intervals and the closed
 face's delay (his point 5; COMPUTATION, the chain's exact harmonic

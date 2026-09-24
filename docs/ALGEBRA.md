@@ -3477,23 +3477,27 @@ replacements.**
    with no quantum behind it: it breaks one quantum, one click (8.6) and
    the initial state (9.9). REJECTED. (b) THE CLICK, THEN A BIRTH (the
    Boss's "or the click itself"; the owner's "the receiver gives a
-   click"): the crystal's cells are a RECEIVER for the arriving record (its
-   take pair the crystal's material, the share it takes per interval) and
-   the arriving record's one residue u chooses, on its ladder, the crystal
-   or the receivers beyond it (ONE QUANTUM, ONE CLICK); when the ladder
-   chooses the crystal, the arriving record ENDS there (its click, the one
-   lawful read) and the crystal, as an EMITTER, BIRTHS the pair's record
-   on its own cells by its own clocks (the born clocks summing to the
-   arriving one: m^T, 9.2), with its own residue on its own wheel.
-   ADOPTED (DERIVED HERE: it is the only form that reads nothing but a
-   click and keeps one quantum, one click). Consequences, DERIVED HERE:
-   the pair's phase cannot inherit the arriving record's local phase (that
-   would be a read), so the pair is born in phase over the crystal's cells
-   and NO CONE forms (the headings come from the placement, 9.6); the
-   pair's counts are exact on the crystal's wheel (874, 150, 150, 874 when
-   the crystal has made W births); the arriving records' share that the
-   crystal takes is a board quantity (MEASURED ONLY), which sets only how
-   many arriving quanta make W pairs.
+   click"; the physicist's form of 18:05Z): the crystal's cells are the
+   arriving record's NAMED RECEIVER (its ladder by name, SIMULATOR_DEFINITIONS.md,
+   the receiver by name: every other cell a sink), so the arriving record
+   clicks at its FIRST RUNG at the crystal (the one comparison 9.5 allows,
+   the line at the rung where the ladder holds one cell) and ends there
+   (ONE QUANTUM, ONE CLICK; its remaining field is energy the sinks
+   absorb, content 0, as main's receiver by name does); at that interval
+   the crystal, as an EMITTER, BIRTHS the pair's record on its cells by
+   its own clocks (the born clocks summing to the arriving one: m^T, 9.2),
+   the pair carrying the arriving record's residue u (one quantum, one
+   residue). ADOPTED (DERIVED HERE: it reads nothing but the rung and
+   keeps one quantum, one click). Consequences, DERIVED HERE: the pair's
+   phase cannot inherit the arriving record's local phase (that would be
+   a read), so the pair is born in phase over the crystal's cells and NO
+   CONE forms (the headings come from the placement, 9.6); every arriving
+   record that reaches the crystal's rung gives one pair, so W arriving
+   births over the wheel give W pairs and the pairs' counts are exact
+   (874, 150, 150, 874 up to the settings' order); the "fraction
+   converted" becomes the share of the arriving norm the crystal's cells
+   book, which decides only whether the rung is reached (it must be at
+   least 1 / W).
 2. The train's end at the clock's quarter (the emitter): computed AT
    LOAD from the declared clock, no cell read: LAWFUL.
 3. The emitter's take of its own remnant after its train: a comparison
@@ -3516,12 +3520,16 @@ the torus's extents per axis (the translation group, 1.6); (2) THE
 FAMILIES, each its clock and its vacuum pair (light's [1, 1], a massive
 kind's [num, den]; 8.1); (3) THE CUBES, each with its written integers
 (its pair per family, its take, its wheel, its coupling, its seed); (4)
-THE INITIAL STATE (9.9). Nothing else. THE FACES ARE CUBES: an open face
-on main is a sponge (it takes and books to the escaped row, SIMULATOR_DEFINITIONS.md,
-the receiver); the same is a shell of receiver cubes of side 1 with the
-take pair [1, 1] around the region of interest on a periodic board, so the
-board is a torus on every axis and an experiment is ONLY CUBES ON A
-TORUS (the "open axis" becomes a shorthand for that shell). What lies
+THE INITIAL STATE (9.9). Nothing else. THE FACES: an open face on main is a sponge whose Nodes are not on the
+board (the row beyond read as 0, the boundary Node's outward Port booked
+to the face's cell, a sink under the receiver by name); a shell of
+receiver cubes of side 1 with the take [1, 1] on a periodic board is the
+same held-at-0 boundary with the same booking. DECIDED: the face's cell
+is ADMITTED as the shell's shorthand (the two are the same operation; the
+shell would add one body per boundary Node, about 830 on the two slits'
+layer, for nothing), and the load check counts the face's cells as a
+declared set. So an experiment is cubes on a board whose faces are
+receivers. What lies
 between the cubes is the vacuum: the families' own pairs, declared once.
 
 ### 9.9 The initial state, over the whole board (the owner's word of 20:05Z)
