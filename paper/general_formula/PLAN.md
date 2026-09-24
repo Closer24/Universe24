@@ -7272,3 +7272,10 @@ table); the click line and the receiver by name in Definition 3. The
 flight table's history paragraph and the six operations as the engine
 runs them moved whole to records.tex behind pointers (rec:flighthistory,
 rec:sixops) for the 48 pages. No reading written.
+
+## Applied (2026-09-24, the Boss's order of 11:13Z): commit 64 on paper-48
+
+Commit 63 narrowed to PR 1122's two lines: the Bell and Malus rows' NOT
+RUN cells and the Bell section's joint-gather sentence withdrawn (the
+reading cells back to "not yet"), waiting for the owner's choice on the
+Bell rows. The two pointer moves kept for the 48 pages.

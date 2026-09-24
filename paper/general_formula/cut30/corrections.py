@@ -6328,36 +6328,6 @@ CORRECTIONS = [
         "$N_0 = 218 \\pm 2$ in A's own clicks at $W = 64$ on its returned record, the receiving set at $x = 612$ (the declarations' section 10, item 9, on \\texttt{main} at 25a7abf4 \\cite{declarations})",
         "$N_0 = 213 \\pm 1$ in A's own clicks at $W = 64$ on its returned record at the receiving set bound to A by name, the free Node at $x = 612$ (the set's first rung at age $213$ by the derivation under the click line and the receiver by name, the geometry alone, the declarations' section 10, item 9, merged at ecebf895 \\cite{declarations}; the earlier form's $218 \\pm 2$, derived for the set at A's twelve cells, no longer in the world, kept as history), a pin declared before any pin run",
     ),
-    (
-        "commit 63 (b), row 1a: the Bell reading the pair's one gather on the four joint cells; NOT RUN on this engine, group 2",
-        "& not yet: the phase-reading component and the tables &",
-        "& NOT RUN on this engine (the joint gather the build item, Section~\\ref{sec:bell}; group 2, last) &",
-    ),
-    (
-        "commit 63 (b), row 1b NOT RUN on this engine",
-        "1b & The CHSH sum under the phase-form window & K & $2$, a control & not yet &",
-        "1b & The CHSH sum under the phase-form window & K & $2$, a control & NOT RUN on this engine (the joint gather the build item, row 1a) &",
-    ),
-    (
-        "commit 63 (b), row 1c NOT RUN on this engine",
-        "& not yet (the declared form's run) &",
-        "& NOT RUN on this engine (the joint gather the build item, row 1a; the declared form's run) &",
-    ),
-    (
-        "commit 63 (b), row 1d NOT RUN on this engine",
-        "1d & No-signalling of the marginals & K & $0$ exactly by the table's symmetry, each party's $+$ fraction $N/2$ of $N$ at every setting, $1024$ of $2048$ on the declared world & not yet &",
-        "1d & No-signalling of the marginals & K & $0$ exactly by the table's symmetry, each party's $+$ fraction $N/2$ of $N$ at every setting, $1024$ of $2048$ on the declared world & NOT RUN on this engine (the joint gather the build item, row 1a) &",
-    ),
-    (
-        "commit 63 (b), row 10 (Malus) NOT RUN on this engine, the one-table case",
-        "10 & The single opening's spread, two halves & K & (a) $0.842$ at $w = 2\\lambda$, $F = 0.16$, the Rayleigh--Sommerfeld sum on the board; (b) $0.886$ in the far field; both COMPUTATION \\cite[row 10 and its script]{closure} & not yet &",
-        "10 & The single opening's spread, two halves & K & (a) $0.842$ at $w = 2\\lambda$, $F = 0.16$, the Rayleigh--Sommerfeld sum on the board; (b) $0.886$ in the far field; both COMPUTATION \\cite[row 10 and its script]{closure} & NOT RUN on this engine (the one-table case of the joint gather, row 1a; group 2) &",
-    ),
-    (
-        "commit 63 (b), the Bell section: the Bell rows' reading the pair's one gather on the four joint cells, the joint gather the build item, group 2",
-        "rather than the $48$. Row 1c reads PASS in form under the declared form; its run confirms the counts and reads the flips as the diagnostic.",
-        "rather than the $48$. On the engine the Bell rows' reading is the pair record's one gather on the four joint cells $(++, +-, -+, --)$ with the weights $R = J^2$ over both tables and the birth's one $u$; an arm's own ladder is not the Bell reading, and Malus is the one-table case; that joint gather is the build item on detector-law-v1 as read on 2026-09-24 (\\cite[section 14, item 7]{declarations}, merged at ecebf895), and rows 1a to 1d and 10 run after it, in group 2. Row 1c reads PASS in form under the declared form; its run confirms the counts and reads the flips as the diagnostic.",
-    ),
 ]
 
 
