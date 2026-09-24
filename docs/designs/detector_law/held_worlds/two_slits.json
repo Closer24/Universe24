@@ -72,7 +72,8 @@
       0
      ]
     ],
-    "train": 32
+    "train": 32,
+    "remnant_take": 4
    }
   },
   {

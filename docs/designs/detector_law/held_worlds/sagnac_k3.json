@@ -81,7 +81,8 @@
    "seed": 52428800,
    "ramp": 1500,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "remnant_take": 24
   },
   {
    "position": [
@@ -117,7 +118,8 @@
    "seed": 52428800,
    "ramp": 1500,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "remnant_take": 24
   }
  ],
  "detectors": [

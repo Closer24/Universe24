@@ -1,6 +1,6 @@
 {
  "law": "beam",
- "model_id": "beam-detector-law-bell-a1b1-v1",
+ "model_id": "beam-detector-law-bell-a0b1-v1",
  "shape": [
   21,
   1,
@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 300,
+ "ticks": 5000,
  "K": 15728640,
  "N": 2048,
  "release": [
@@ -82,7 +82,10 @@
       1
      ]
     ],
-    "train": 128
+    "train": 128,
+    "residue_order": "seed",
+    "residue_seed": 7815816498507250857,
+    "remnant_take": 4
    }
   },
   {
@@ -96,7 +99,7 @@
    "fixed": true,
    "table": {
     "light": {
-     "phase_window": 512
+     "phase_window": 0
     }
    }
   },

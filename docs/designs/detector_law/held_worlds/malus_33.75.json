@@ -1,6 +1,6 @@
 {
  "law": "beam",
- "model_id": "beam-detector-law-malus-11-25-v1",
+ "model_id": "beam-detector-law-malus-33-75-v1",
  "shape": [
   7,
   1,
@@ -9,7 +9,7 @@
  "boundary": {
   "z": "periodic"
  },
- "ticks": 300,
+ "ticks": 1200,
  "K": 1125899906842624,
  "N": 256,
  "release": [
@@ -27,7 +27,7 @@
     0
    ],
    "family": "light",
-   "amount": 1125899906842624,
+   "amount": 256,
    "fixed": true,
    "lamp": {
     "rate": [
@@ -44,7 +44,9 @@
       0,
       0
      ]
-    ]
+    ],
+    "train": 32,
+    "remnant_take": 4
    }
   },
   {
@@ -73,7 +75,7 @@
    "fixed": true,
    "table": {
     "light": {
-     "phase_window": 16
+     "phase_window": 48
     }
    }
   }

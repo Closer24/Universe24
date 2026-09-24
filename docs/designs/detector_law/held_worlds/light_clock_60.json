@@ -77,12 +77,14 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 70
+   "own_grace": 70,
+   "remnant_take": 24
   }
  ],
  "detectors": [
   {
    "name": "at_a",
+   "block": 0,
    "positions": [
     [
      612,

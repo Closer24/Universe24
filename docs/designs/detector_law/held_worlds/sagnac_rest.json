@@ -80,7 +80,8 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "remnant_take": 24
   },
   {
    "position": [
@@ -115,7 +116,8 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "remnant_take": 24
   }
  ],
  "detectors": [
