@@ -28,7 +28,7 @@ Boss's to close and the owner's to approve (`PLAN.md`).
 
 | Row | The experiment as scheduled | The algebraic path | Board and time | Verdict |
 | --- | --- | --- | --- | --- |
-| 1a to 1d, Bell's CHSH, its window, the order channel, no-signalling | a pair of records with two polariser tables reading the phase from (a_now, a_before) | the table's cos^2 law on a shared record, summed at the four settings: 181 / 64 at N = 2048, exact (`DECLARATIONS.md` section 1); no-signalling 0 by the table's symmetry | a 64^2 layer, seconds | CLOSED (quantum, K) |
+| 1a to 1d, Bell's CHSH, its window, the order channel, no-signalling | a pair of records with two polariser tables acting on the pair (a_now, a_before) by the linear form (DECLARATIONS.md section 14; the clock pair [2464, 25] on N = 2048) | the table's cos^2 law on a shared record, summed at the four settings: 181 / 64 at N = 2048, exact (`DECLARATIONS.md` section 1); no-signalling 0 by the table's symmetry | a 64^2 layer, seconds | CLOSED (quantum, K) |
 | 2a, the two slits | the ray splitting at every free Node behind two openings, the screen's clicks | the wave's own sum (the first build's gate test (a) passed); the visibility from the train's coherence, computed | a layer, a minute | CLOSED (quantum, K) |
 | 2b, Mach-Zehnder | two corridors between mirror receivers with a splitter table | the splitter's table is the object; the visibility 1.00 - 0.02 by the corridors' equal lengths, computed | a layer, a minute | CLOSED (quantum, K) |
 | 2c, Born's exponent (Sorkin) | the three-opening sum | the rule is linear, so the three-opening record is the sum of the three; the click a quadratic form: the Sorkin sum 0 to the grain, EXACT | a layer, seconds | CLOSED (quantum, K) |

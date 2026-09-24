@@ -30,8 +30,9 @@ section 14: the tables act on the pair itself, no nearest entry, no grain
 beyond the table's 1 / 256 in the coefficients); the table's action is then the algebra's
 own on that phi (the rotation **U**_s of ALGEBRA.md 3.6 for a polariser,
 the split's integer matrix of 4.6 for a splitter), and the click the
-rung on the table's weights (4.12). The reading is a declared input of
-kind 2 (the pair's nearest angle, its remainder the grain 1 / N); the
+rung on the table's weights (4.12). The input of kind 2 is the pair
+itself (section 14), the grain the coefficients' rounding at 1 / 256, the
+nearest angle a GAMEBOARD diagnostic (Reviewer 3's token, 00:25Z); the
 engine does not carry it yet (DESIGN.md: "until the reading is declared
 in the engine, the tables of Malus and Bell are unchanged from the
 amplitude law only in form"); it is one component under the key, written
@@ -62,12 +63,14 @@ declared phi read back as phi at every u of the wheel.
    release as the L3 series declares them, h = 1, the train 128 periods
    (the coherence a fortieth of the path difference, DESIGN.md 6.2), the
    settings s_A in {0, N / 4}, s_B in {N / 8, 3 N / 8}, 300 intervals; the
-   phase reading above.
+   light family's clock the pair [2464, 25] (section 14 item 1: lambda =
+   12 Links, 98.56 steps per interval); the tables on the pair by the
+   linear form (section 14).
 3. The verbs. The flight (T, D) of each arm's row on its own line, the
    phase turned per Link, nothing of one arm written on the other (B1);
    the ray splitting at every free Node (the rule of DESIGN.md section 2);
    the rotation at the bar by **U**_s (verb (B), rule R, ALGEBRA.md 3.6)
-   on the phase read as declared; the ONE GATHER (G) of the one record
+   on the pair by the linear form (section 14); the ONE GATHER (G) of the one record
    from both settings at the completion interval, the joint pointer
    J(o_A, o_B) = SUM over the labels l of U_a[o_A][l] U_b[o_B][l], the
    cell's weight R = J^2, the birth wheel's u selecting one of the four
@@ -77,8 +80,8 @@ declared phi read back as phi at every u of the wheel.
    of the tables; S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = 181 / 64
    = 2.828125 exactly at N = 2048 with the wheel [1, N] (the L3 series'
    COMPUTATION; the registered 2.75 in the unit 64 is the N = 64 pilot's,
-   HISTORY); recomputed by the generator's `bell.py` under the declared
-   phase reading before the run and written to `expectations.json`; the
+   HISTORY); recomputed by the generator's `bell.py` under the linear form
+   with the declared clock pair before the run and written to `expectations.json`; the
    falsifier S outside 2.42 +- 0.40 (two standard errors of Hensen 2015)
    or above 2.828; the nature row S = 2.42 +- 0.20 (NATURE; the electron
    spins in diamond at 1.3 km; no medium).
@@ -86,18 +89,18 @@ declared phi read back as phi at every u of the wheel.
    --) per settings pair over the births (the `gather` lines' chosen
    cells); COMPUTATION the correlations and S from the counts; GAMEBOARD
    the gathers' weights and the books; no CONVERSION.
-6. The identity: `detector-law-v1` with the table form; the phase reading
-   a declared input, no hypothesis beside the law.
+6. The identity: `detector-law-v1` with the table form; the pair the
+   tables' declared input, no hypothesis beside the law.
 
 The descent: `shape` [21, 1, 1], `boundary` {x open, y and z periodic},
-`N`, `families` [light with `phase_per_link` the pair], the lamp's
+`N`, `families` [light with `phase_per_link` [2464, 25]], the lamp's
 `arms` 2 and `branches`, `train` 128, the two polarisers' `table` with
 `phase_window` s (the TABLE form's key of the first build, `read` and
 `sum` as the amplitude series names them), `detectors` Alice and Bob
 reading the joint gather, `clock_stamp` true, `detector_law` true,
 `ticks` 300. The generator `make_worlds.py` of the series writes the four
 worlds and `expectations.json`. HOST: seconds per world (a bar of 21).
-The earliest day: 2026-09-26, after the phase reading lands in the engine
+The earliest day: 2026-09-26, after the linear form lands in the engine
 and the ray law's series exists.
 
 ## 2. Row 1d, the no-signalling marginals of the pair
@@ -141,18 +144,18 @@ twice; no world of its own).
    ALGEBRA.md 4.6 (Theorem 2, an isometry up to the scaling: the weights
    [21, 20] and [20, 21] by the arrival's side, 21^2 + 20^2 = 29^2, and
    the turns [16, 0], [0, 16], a quarter turn on one output), acting on the
-   record's phase read as declared above: a partial re-emission with a
+   pair by the linear form (section 14): a partial re-emission with a
    phase, the fourth receiver form: ADDITIVE, on the pair, one table Node per
    Node of the line across the corridor (section 14).
 2. The declared integers (kind 2): N = 64, the wheel [1, 64], W = 64, K,
    Q, S and the release as the first build's chain world declares them
    (`tests/test_detector_law.py`), h = 1, the train 128 periods, the arm
    length L = 10 lambda, the splitter's weights and turns above, 2000
-   intervals; the phase reading above.
+   intervals; the tables on the pair by the linear form (section 14).
 3. The verbs: the flight (T, D) with the ray splitting at every free Node;
    the mirrors' return (the mirror form, no verb: the row held at 0); the
-   split (P, B, D, T) at each splitter on the pair (a_before, a_now) read
-   as declared; the merge with the cancel at the ports (G); the click of
+   split (P, B, D, T) at each splitter on the pair by the linear form
+   (section 14); the merge with the cancel at the ports (G); the click of
    the record by the ladder (E, D), one click per record.
 4. The pins (COMPUTATION, before the run): with equal arms the offers at
    D1 and D2 are the bilinear form on the splitter's rows (ALGEBRA.md 4.8)
@@ -176,7 +179,7 @@ with `train` 128, the two mirrors' form `mirror`, the two splitters'
 the first build's table form), `detectors` D1 and D2, `clock_stamp`,
 `detector_law`, `ticks` 2000. HOST: seconds (a layer of 1089 Nodes).
 The earliest day: 2026-09-26, after the splitter's table under the rule
-(the phase reading) lands in the engine.
+(the linear form) lands in the engine.
 
 ## 4. Row 4b, the redshift of a moving lamp against its speed
 
@@ -269,11 +272,13 @@ Boss's word).
    the cells + and -.
 2. The declared integers (kind 2): N = 256, the wheel [159, 256] (every
    residue u once over 256 births), W = 256, K, Q, S and the release as
-   registered for row 9, h = 1, s = 64, 300 intervals; the phase reading
-   above.
+   registered for row 9, h = 1, s = 64, 300 intervals; the light
+   family's clock the pair [308, 25] on N = 256 (section 14 item 1); the
+   table on the pair by the linear form (section 14).
 3. The verbs: the flight (T, D) with the ray splitting at every free Node
    (on a chain the split is the line itself); the table's rotation
-   **U**_s (B) on the phase read as declared; the click (E, D): the
+   **U**_s (B) on the pair by the linear form (section 14); the click
+   (E, D): the
    channels + and - weigh (256 C'[s])^2 and (256 S'[s])^2 on the
    half-angle tables of 2N, the rungs b = (2 W C + T) // (2 T) on the
    cumulative weight, one click per record (ALGEBRA.md 4.12).
@@ -291,7 +296,7 @@ Boss's word).
 The descent: `malus_45.json` in the registered form of `malus_22_5.json`
 with `detector_law` true, `clock_stamp` true and the table's
 `phase_window` 64; HOST: seconds. The earliest day: 2026-09-26, with
-section 1's phase reading.
+section 14's linear form and the clock pair above.
 
 ## 6. Malus at three new settings (the scout's R3: 11.25, 28.125 and 33.75 degrees)
 
@@ -329,14 +334,17 @@ read the mode (MASSIVE_RECORD.md section 11 item 7). Section 4 above (row
 
 ## What the engine lacks for these six, in one list (for the builder, on the Boss's word)
 
-- The phase reading of a record at a table Node from (a_before, a_now)
-  by the phase table at load (the paragraph at the head), one component,
-  one test (a declared phi read back at every u).
+- The tables' action on the pair (a_before, a_now) by the linear form
+  of section 14 (the nearest-angle reading of the head's paragraph is a
+  GAMEBOARD diagnostic only), one component, one test (a record of a
+  declared phi and amplitude driven to A cos(phi + t) at every t of the
+  table, within the coefficients' rounding).
 - The pair record's two arms under the ray law (the lamp's `arms` and
   `branches` keys of the amplitude series admitted under `detector_law`;
   the rule's part only that both trains reach their bars, DESIGN.md 6.3).
 - The splitter's table under the rule (the split's integer matrix acting
-  on the read phase, the two outputs re-emitted by the table form).
+  on the pair by the linear form, the two outputs re-emitted additively,
+  section 14 items 3 and 4).
 - Row 4b's world of section 4 in BUILD.md section 5 (no new component:
   the block, the coupling, the emission and the ray law's light detector
   are built; the second draft replaced the receiver block by that
@@ -676,6 +684,31 @@ nature.
    the table's own rounding of cos 45 degrees, which the linear form
    carries unchanged. Options (i) N = 64 and (ii) a finer table are not
    taken (the first moves the pin, the second is law data).
+   THE CLOCK'S STEP (Reviewer 3's line, 00:25Z): the linear form does not
+   cure a small clock step, it only stops hiding it; the phase lives in
+   the pair's difference and the form divides by S[k], so the condition
+   is k SUCH THAT S[k] IS LARGE. The L3 worlds on N = 2048 declare no
+   family clock (their `rate` [1, 1] and `wheel` [1, 2048] are the lamp's
+   count and birth wheel; `families.json`'s [77, 25] is the 64-circle's):
+   a step of one gives S[1] = round(256 sin(2 pi / 2048)) = round(0.785)
+   = 1, a 27 percent error in the divisor, the pair's difference 0.3
+   percent of A at the record's integer grain; [77, 25] read on 2048
+   gives k = 3, S[3] = round(2.36) = 2, 18 percent. DECLARED: the Bell
+   rows (sections 1 and 2) carry the light family's `phase_per_link`
+   [2464, 25] on N = 2048, the series' lambda = 12 clock [77, 25] on the
+   64-circle scaled by 32 (98.56 steps per interval, the period 20.78
+   intervals): k = 98 or 99, S[98] = 76, S[99] = 77, the rounding 0.4
+   percent, the pair's difference about 0.3 A; Malus (sections 5 and 6)
+   carries [308, 25] on N = 256, the same clock (k = 12 or 13, S[12] = 74,
+   S[13] = 80). The bar of 21 does not care about the wavelength and the
+   pins do not move; the generator's `bell.py` re-prints 181 / 64 under
+   the linear form with the declared clock before the run (section 1 item
+   4), and the World Generator writes the Bell worlds from this clause.
+   THE STEP k IN THE IDENTITY (Reviewer 3's token 3) is the interval's
+   own whole step: what the floor of age x n / d gains at that interval
+   (`core.integer.by_clock`, floor(n / d) or one more as the clock's
+   floor advances), which the engine knows and component 1 handled; the
+   builder does not take k = n / d.
 2. THE SPLITTER'S AMPLITUDE: no per-record register at the table's Node
    ("the largest level shown" is a register beyond the events there, which
    the contract forbids): the drive is the linear map of the pair above,
