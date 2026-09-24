@@ -681,6 +681,11 @@ stabilisation of the engine and the freeze:
    the cells is an operation of the group: a per-cell branch that is not one
    is forbidden. A tool
    declares its own orientation and never the directions of what leaves it.
+   The specification goes into the tool file (LAB_TOOLS.md) from the
+   algebra alone, the code is built from that file, and the experiments
+   run only after every tool's algebra is closed and every tool merged; a
+   well's seed is the bound mode of the composed world and never collides
+   with another tool (the owner, 2026-09-25, record 1855).
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,
    never the worlds' writer, writes one report on the list. For each
