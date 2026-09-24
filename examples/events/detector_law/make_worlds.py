@@ -33,23 +33,21 @@ at the labels 0, N / 8, N / 4, 3 N / 8 of N = 2048, the wheel [1, 2048], the
 clock [2464, 25] on the light and the counter families, K and the release the
 L3 series'; the births' seed-set order of section 2 item 8: `residue_order`
 "seed" and one `residue_seed` per world, drawn once from the host's entropy
-and kept; `ticks` 5000, at least the W = 2048 births, the train's 2660
-intervals and the far arm's transit), `malus_45.json` (section 5:
+and kept; the stock 2048 = W births; `ticks` 5000, at least the W = 2048 births,
+the train's 2660 intervals and the far arm's transit), `malus_45.json` (section 5:
 `amplitude/malus_22_5.json`'s form at s = 64 with the clock [308, 25] on
 N = 256, the lamp's train 32 periods, its stock 256 and `ticks` 1200) and
 `malus_<11.25,28.125,33.75>.json` (section 6:
 `docs/designs/new_rows/worlds/malus_s<16,40,48>.json`'s form, the same clock,
 train and ticks).
 
-Every emitter (a lamp or an emitting block) of every world carries the key
-`remnant_take` of section 10 item 10 (Reviewer 3's three lines, 2026-09-24):
-the intervals after its train from which its own cells take its own record's
-remnant, ceil(extent / v_g) + 2, the extent the cells' span along the emission
-in Links and v_g the group pace of the record's own kind's band at the declared
-wavelength (light at 12 Links per period, 0.564: 24 for a block of side 12, 4
-for a one-Node lamp; a matter lamp's record by the matter band's v_g at its
-wavelength: 4 at 12 Links, 5 at 16); no default, computed here from the band
-and written per world.
+The emitter's take of its own record's remnant after its train (section 10
+item 10) is THE RULE of the law, not a world key (the model owner, 2026-09-24
+06:42Z; main 02f7388b): no emitter carries a timing key, the engine computes
+it at load. A world with a detector set and no lamp carries the world key
+`wheel` 64, the rung W of the ladder that chooses a record's cell (Reviewer 3's
+line, the Boss's 06:50Z: 4b, R2 and the light clock; without it the loader's
+default is 1 and a set holding a quarter of a record's offer crosses no rung).
 
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
@@ -77,9 +75,8 @@ step 3).
 The worlds whose lines the engine on main does not carry yet are written into
 `docs/designs/detector_law/held_worlds/` (HELD_NAMES below), outside the
 shipped set under `examples/events` that the gate loads; each moves back to
-its folder when its line lands. Since `remnant_take` is on every emitter and
-the loader on main does not carry it, every world is held until the builder's
-line lands.
+its folder when its line lands. Every world is held until PR 1068's merge SHA
+(the builder's 36fd5235, on which all twenty load), the Boss's shipping order.
 
 Run from the repository root:
 
@@ -130,7 +127,7 @@ HELD_NAMES = {
     "matter_waves_12",
     "matter_waves_16",
     "matter_front_12",
-}  # every world: `remnant_take` (section 10 item 10) is on every emitter, not yet loaded on main
+}  # every world until PR 1068's merge SHA (the builder's keys: `own_grace`, `block`, `take`, ...)
 
 
 def load_massive_generator():
@@ -161,38 +158,7 @@ CLOCKS = {12: [77, 25], 16: [30, 13], 24: [77, 50]}
 WALL_PAIR = [1, 2]  # the mirror line's block pair, two Nodes deep (section 15 L-1, the fourth commit)
 TRAIN_32 = 32  # periods, section 15 L-3 and L-6
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
-C_SQUARED = 1 / 3  # the six-neighbour rule's pace squared (ALGEBRA.md 8.1)
-LIGHT_TAKE_WAVELENGTH = 12  # Links per period, section 10 item 10: the declared wavelength of the take
-MATTER_KIND = [
-    800,
-    809,
-]  # the matter kind's pair (section 12; its band cos omega = cos omega_0 cos omega_l)
-
-
-def band_pace(wavelength: float, pair: list[int] | None = None) -> float:
-    """The group pace d omega / dk on the axis of the six-neighbour band cos omega =
-    cos omega_0 (cos k + 2) / 3 (ALGEBRA.md 8.1; `docs/designs/detector_law/matter_wave_pins.py`),
-    cos omega_0 = 1 for light and the pair's ratio for a massive kind, at the wavelength in
-    Links: 0.564 for light at 12 Links, 0.50264 and 0.47300 for the matter kind at 12 and 16."""
-    cos_omega_0 = 1.0 if pair is None else pair[0] / pair[1]
-    k = 2 * math.pi / wavelength
-
-    def omega(value: float) -> float:
-        return math.acos(cos_omega_0 * (math.cos(value) + 2) / 3)
-
-    step = 1e-6
-    return (omega(k + step) - omega(k - step)) / (2 * step)
-
-
-def remnant_take(extent: int, pace: float) -> int:
-    """Section 10 item 10 (Reviewer 3's three lines): the intervals after the train from
-    which an emitter's cells take its own record's remnant, ceil(extent / v_g) + 2, the
-    extent the cells' span along the emission in Links, v_g the band's group pace at the
-    declared wavelength (24 for a block of side 12, 4 for a one-Node lamp)."""
-    return math.ceil(extent / pace) + 2
-
-
-LIGHT_LAMP_TAKE = remnant_take(1, band_pace(LIGHT_TAKE_WAVELENGTH))  # 4
+SET_WHEEL = 64  # the world key `wheel` of a world with a set and no lamp (the Boss's 06:50Z (a))
 
 
 def light_family(pair: list[int] | None) -> dict:
@@ -284,11 +250,9 @@ def lamp(
     directions: list[list[int]],
     train: int,
     family: str = "light",
-    take: int = LIGHT_LAMP_TAKE,
 ) -> dict:
     """The lamp in the template's form (the matter lamp's frequency is its family's
-    `phase_per_link`, section 15 M1-6, not a lamp key) with its `remnant_take` (section 10
-    item 10: one Node's extent over the band's pace, 4 for light)."""
+    `phase_per_link`, section 15 M1-6, not a lamp key)."""
     entry: dict = {
         "position": position,
         "family": family,
@@ -298,13 +262,7 @@ def lamp(
         "fixed": True,
         "directions": directions,
     }
-    inner: dict = {
-        "rate": rate,
-        "wheel": wheel,
-        "directions": directions,
-        "train": train,
-        "remnant_take": take,
-    }
+    inner: dict = {"rate": rate, "wheel": wheel, "directions": directions, "train": train}
     entry["lamp"] = inner
     return entry
 
@@ -362,7 +320,13 @@ def light_worlds() -> dict[str, dict]:
 
 L3_K = 15728640  # the L3 series' K (`amplitude/bell_n2048_*.json`)
 L3_RELEASE = [1, 67108864]
-L3_LAMP_AMOUNT = 15728642
+L3_LAMP_AMOUNT = 15728642  # the L3 series' stock (HISTORY: the amplitude law's lamp)
+# Section 2 item 8: a Bell world counts EXACTLY W = 2048 births (under the seed order more
+# than W births repeat the order), and the lamp's stock of records is its `amount` (one
+# quantum per birth, the engine's `_births`), so the stock is W; the L3 series' stock
+# would birth one record per interval to the end (the preview on 299b6bb2: 3433 births by
+# the interval 3433).
+BELL_STOCK = 2048
 BELL_N = 2048
 BELL_WHEEL = [1, BELL_N]  # section 1 item 2, kept by section 14 item 1
 BELL_CLOCK = [2464, 25]  # section 14 item 1: the 12-Link clock [77, 25] on 64 scaled by 32 to N = 2048
@@ -405,8 +369,8 @@ def bell(a: str, b: str) -> dict:
     N = 2048, the pair lamp at x = 10 with two arms and the joint labels 00 and 11, the
     train 128, the polarisers at x = 7 (Alice) and 17 (Bob) with their settings, each a
     detector set of one Node reading `sum`; the births in the seed-set order (section 2
-    item 8: `residue_order` "seed", the world's own `residue_seed`), the lamp's
-    `remnant_take` 4 (section 10 item 10), 5000 intervals (BELL_TICKS); the clock
+    item 8: `residue_order` "seed", the world's own `residue_seed`, the stock 2048 = W
+    births), 5000 intervals (BELL_TICKS); the clock
     [2464, 25] on the light family and [1, 1] on the counter family (section 1 item 3 and
     section 15 T-1)."""
     return {
@@ -429,7 +393,7 @@ def bell(a: str, b: str) -> dict:
             {
                 "position": [10, 0, 0],
                 "family": "light",
-                "amount": L3_LAMP_AMOUNT,
+                "amount": BELL_STOCK,
                 "phase": 0,
                 "fixed": True,
                 "lamp": {
@@ -441,7 +405,6 @@ def bell(a: str, b: str) -> dict:
                     "train": BELL_TRAIN,
                     "residue_order": "seed",
                     "residue_seed": residue_seed(f"bell_{a}{b}"),
-                    "remnant_take": LIGHT_LAMP_TAKE,
                 },
             },
             {
@@ -474,7 +437,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
     file (the registered entity references carry no clock); the lamp's train 32 periods
     and `ticks` 1200 (section 5 item 2, 2026-09-24: the registered 300 intervals gave 300
     births and no click, a gather line written only at completion), the lamp's stock
-    `amount` 256 (the count of 256 births), its `remnant_take` 4 (section 10 item 10)."""
+    `amount` 256 (the count of 256 births)."""
     document = json.loads(source.read_text(encoding="utf-8"))
     document = copy.deepcopy(document)
     rebuilt: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1"}
@@ -497,7 +460,6 @@ def malus(name: str, source: Path, setting: int) -> dict:
         if isinstance(inner, dict):
             entry["amount"] = MALUS_BIRTHS
             inner["train"] = MALUS_TRAIN
-            inner["remnant_take"] = LIGHT_LAMP_TAKE
     return rebuilt
 
 
@@ -540,8 +502,7 @@ def emitter(position: list[int], side: int, pair: list[int], grace: int | None, 
     """A block that emits light at G = [1, 50], g = [1, 1000], the seed 50 x 2^20, W = 64
     on its own record; it holds no light content (section 15 M1-2: the emission is the
     coupling's source term); its `own_grace` as its section declares it (section 10: 70;
-    section 13: 3000, the hold; section 4: 8000, the hold); its `remnant_take` the block's
-    side over light's pace at 12 Links per period plus 2 (section 10 item 10: 24 at side 12)."""
+    section 13: 3000, the hold; section 4: 8000, the hold)."""
     block: dict = {
         "position": position,
         "side": side,
@@ -550,7 +511,6 @@ def emitter(position: list[int], side: int, pair: list[int], grace: int | None, 
         "seed": EMITTER_SEED,
         "wheel": 64,
         "emits": "light",
-        "remnant_take": remnant_take(side, band_pace(LIGHT_TAKE_WAVELENGTH)),
     }
     if grace is not None:
         block["own_grace"] = grace
@@ -578,22 +538,25 @@ def matter_world(
 
 
 def graced(document: dict, blocks: list[dict]) -> None:
-    """The emitters' `own_grace` and `remnant_take` onto the world's block entries (the
-    series' `world` helper copies its own block keys only)."""
+    """The emitters' `own_grace` onto the world's block entries (the series' `world`
+    helper copies its own block keys only)."""
     for index, block in enumerate(blocks):
-        for key in ("own_grace", "remnant_take"):
-            if key in block:
-                document["measured"][index][key] = block[key]
+        if "own_grace" in block:
+            document["measured"][index]["own_grace"] = block["own_grace"]
 
 
-def bounded(document: dict) -> None:
-    """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`."""
+def bounded(document: dict, wheel: int | None = None) -> None:
+    """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`,
+    and the world key `wheel` of a world with a set and no lamp (the ladder's W; the Boss's
+    06:50Z (a) on Reviewer 3's line) after it."""
     items = list(document.items())
     document.clear()
     for key, value in items:
         document[key] = value
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
+            if wheel is not None:
+                document["wheel"] = wheel
 
 
 def massive_worlds(massive) -> dict[str, dict]:
@@ -628,7 +591,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             probes=[[4094, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        bounded(document)
+        bounded(document, SET_WHEEL)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
         document["measured"].append(body([4094, 0, 0], "light", [[-1, 0, 0]]))
         document["detectors"].append(
@@ -661,7 +624,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             probes=[[712, 0, 0], [772, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        bounded(document)
+        bounded(document, SET_WHEEL)
         graced(
             document,
             [
@@ -688,7 +651,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         light=light_11,
         probes=[[612, 0, 0]],
     )
-    bounded(document)
+    bounded(document, SET_WHEEL)
     graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
     # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the free
     # Node adjacent to A's face toward the mirror, x = 612, alone, with its own wheel 64,
@@ -717,8 +680,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             16700,
             clock,
         )
-        take = remnant_take(1, band_pace(wavelength, MATTER_KIND))  # 4 at 12 Links, 5 at 16
-        matter_lamp = lamp([20, 64, 0], 2048, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter", take)
+        matter_lamp = lamp([20, 64, 0], 2048, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter")
         matter_lamp["own_grace"] = LAMP_GRACE
         document["measured"].append(matter_lamp)
         take_pair = MATTER_TAKE_PAIRS[wavelength]
@@ -731,16 +693,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         out[f"matter_waves_{wavelength}"] = document
     document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
     document["measured"].append(
-        lamp(
-            [20, 0, 0],
-            1,
-            [1, 8],
-            [1, 64],
-            [[1, 0, 0]],
-            MATTER_TRAIN,
-            "matter",
-            remnant_take(1, band_pace(12, MATTER_KIND)),
-        )
+        lamp([20, 0, 0], 1, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter")
     )
     document["measured"].append(body([104, 0, 0], "matter", [[-1, 0, 0]]))
     document["detectors"].append({"name": "front", "positions": [[104, 0, 0]], "threshold": 1})

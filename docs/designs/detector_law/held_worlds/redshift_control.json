@@ -24,6 +24,7 @@
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 4294967296,
+ "wheel": 64,
  "directions": [],
  "families": [
   {
@@ -80,8 +81,7 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 8000,
-   "remnant_take": 24
+   "own_grace": 8000
   },
   {
    "position": [

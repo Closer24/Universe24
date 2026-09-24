@@ -47,7 +47,7 @@
     0
    ],
    "family": "light",
-   "amount": 15728642,
+   "amount": 2048,
    "phase": 0,
    "fixed": true,
    "lamp": {
@@ -84,8 +84,7 @@
     ],
     "train": 128,
     "residue_order": "seed",
-    "residue_seed": 13126270930023642186,
-    "remnant_take": 4
+    "residue_seed": 13126270930023642186
    }
   },
   {
