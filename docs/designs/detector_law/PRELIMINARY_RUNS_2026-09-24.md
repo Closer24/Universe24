@@ -118,7 +118,11 @@ wheel`. On ENGINE B (the c4284f7a files, ticks 14686, `wheel` 64):
   (B born 1: 2489, 2614, 2962, 2995); the birth place holds 0 to 9.5 percent.
 - GAMEBOARD (the chosen cell): at the 64 crossing the ladder with u = 0 chooses
   at_b on all of A's and at_a on all of B's; the same as the built cell on
-  every completed record.
+  every completed record. With u = 0 the chosen cell is the first in the
+  ladder's order holding at least 1 / (2 W) of the absorbed (0.195 percent at
+  W = 256), not the first with a nonzero pointer: at_a is nonzero on A's
+  records and is skipped because it holds 0.14 percent at most (Reviewer 3's
+  correction through the Boss, 09:46Z).
 - GAMEBOARD (the hop take): the emitter's own set books its own record first at
   age train + own_grace + 0 to 2 on 38 of A's and 29 of B's records; its share
   of the absorbed at 6400 is 0.0014 or less.
@@ -148,4 +152,137 @@ after another. bell_a0b0 (sha256 prefix 1ccd60ef85a0):
 - GAMEBOARD: every ladder lists one cell only, the arm's own table's cell "0";
   the seed order is read (`u` 1465, 864, 1062, ... distinct over the 2048).
 
-bell_a0b1, bell_a1b0 and bell_a1b1: pending at this commit; appended when read.
+bell_a0b1 (sha256 prefix 796d3d582c6b; residue_seed 7815816498507250857):
+
+- HOST: 1147 seconds, one core, 66 MB resident; 2048 births, 4096 gathers,
+  0 live at the end; the books balanced.
+- MEASUREMENT: 2048 clicks at Alice's one cell "0" and 2048 at Bob's; no
+  escape; Alice's first rung 7 intervals after the birth stamp, Bob's 15.
+- COMPUTATION: every Alice arm completes at age 3201 and every Bob arm at
+  3205, as in bell_a0b0.
+- GAMEBOARD (the close probe): energy x 64 < absorbed first holds at age 70
+  (Alice) and 380 (Bob), energy x 256 < absorbed at 267 and 1481, all within
+  the train, on every arm; after the train each first holds at 3200 on every
+  arm; the completion as built follows at 3201 and 3205.
+- GAMEBOARD: one cell per ladder, the arm's own table's cell "0"; the seed
+  order is read (`u` 1419, 1811, 1930, ... distinct over the 2048). The two
+  files differ in the seed order and in nothing this run reads.
+
+bell_a1b0 (sha256 prefix f43e7e96915a; residue_seed 5111944488953294737) and
+bell_a1b1 (65d41223674f; residue_seed 14513186461269123306), run in parallel
+on two cores:
+
+- HOST: 1159 and 1162 seconds, 66 MB resident each; 2048 births, 4096 gathers,
+  0 live at the end, the books balanced, on both.
+- MEASUREMENT: 2048 clicks at Alice's one cell "0" and 2048 at Bob's on both;
+  no escape; Alice's first rung 7 intervals after the birth stamp, Bob's 15.
+- COMPUTATION: every Alice arm completes at age 3201 and every Bob arm at
+  3205 on both.
+- GAMEBOARD (the close probe): the 64 form first holds at age 70 (Alice) and
+  380 (Bob), the 256 form at 267 and 1481, within the train, on every arm of
+  both; after the train each first holds at 3200 on every arm.
+- GAMEBOARD: one cell per ladder on both; the seed order is read (`u` 308,
+  1212, 1455, ... on bell_a1b0 and 1599, 806, 1725, ... on bell_a1b1, distinct
+  over the 2048 on each).
+
+The Bell four on ENGINE C read the same in every number but `u`: the setting
+changes no count this run reads, as on ENGINE B.
+
+## 8. sagnac_rest on ENGINE C (the open chain of 3000, both blocks at rest, ticks 8450)
+
+The World Generator's file at 90c687a4 (the same content as at 0fd1156, sha256
+prefix 53f1f254df2f): A fixed at [700, 712) and B at [772, 784), own_grace
+3000, wheel 256, the x faces open. Read in-process with the blocks' corners at
+every interval and the x-profile of the squared steps of every open light
+record at 4000, 6000, 8000 and 8450 (the Boss's reading (5) of 09:46Z).
+
+- HOST: 258 seconds, one core; 240 births (120 per block), 147 gathers, 240
+  click lines, 93 light records open at the end; the books balanced.
+- GAMEBOARD (the blocks): A's corner 700 and B's corner 772 at every one of the
+  8450 intervals, 0 hops; neither resting block hops under the other's light.
+  The emitter's own set books no rung on any of the 240 light records; the two
+  blocks' own massive records hold absorbed 0 and no pointer at 8450.
+- MEASUREMENT: at_b 100 clicks (all of A's completed records) and at_a 47 (all
+  of B's); no click at a face or a measured cell; `u` 0 on every gather.
+- COMPUTATION (the completion as built): A's records complete at ages 1309 to
+  1336 on 97 of 100 (the three earliest at 8116, 2936 and 1487); B's at 3996 to
+  5054, the first at tick 4402, 4007 to 4060 on the births up to about 2500 and
+  rising after (5054 on B born 3362). The chosen cell at the first 64 crossing
+  with u = 0 equals the built cell on all 147.
+- GAMEBOARD (the late B records): B born 3433 at 8000 (age 4567, completed at
+  4888): energy 1.51e11 against absorbed 2.363e13, 99.8 percent ahead of B,
+  0.2 percent in the gap, none behind A or on a block's cells; the 90 percent
+  range 1464 to 2922, the peak 2841; the pointers at_a 1.192e13 and face:+x
+  1.171e13. B born 3574 at 8450 (age 4876, open): energy 1.047e11 against
+  2.377e13 (energy x 256 / absorbed 1.13), 99.6 percent ahead of B, 0.4 in the
+  gap, the range 2130 to 2982, the peak 2928; at 6000 the same record was a
+  packet 35 Links wide (2140 to 2175) with energy 6.84e12.
+- GAMEBOARD (the gap's share on the oldest records): A born 54: 0.011, 0.027,
+  0.013, 0.010 at the four samples, the rest behind A; B born 54: 0.007, 0.011,
+  0.004, 0.003, the rest ahead of B. At most 0.045 on any record read (A born
+  3785 at age 215, its +x half crossing the gap).
+- COMPUTATION (read, not compared): each record's light leaves as two packets
+  about 30 to 35 Links wide, one to the other block and one to the open face,
+  with about equal pointers at the two; the packets travel at about 0.57 Links
+  per interval (c = 1 / sqrt 3; B born 3574's +x half at 2140 to 2175 at age
+  2426 from 784; Reviewer 3's line through the Boss, 10:09Z), so A's records
+  complete about 1310 after the birth for the 700 Links to the -x face and
+  B's about 4000 for the 2216 Links to the +x face.
+
+## 9. two_slits on ENGINE C (the board 128 x 128 x 1, ticks 17300)
+
+The World Generator's file examples/events/detector_law/two_slits.json at
+248235b (sha256 prefix eec84865be63): the lamp at [20, 64, 0] with rate 1/16,
+the wall of 252 blocks at x = 40 and 41 with the gaps at y = 48 and y = 80,
+121 screen sets at x = 104, wheel 64. Read in-process (the Boss's order of
+10:09Z); the preliminary reading of record for this file on 540456da, the
+World Generator's later run of the same file being its regression check.
+
+- HOST: 1609 seconds wall on one core, 645 intervals per minute cumulative,
+  the live records at a plateau of 49 to 50, resident 357 MB at tick 2000 and
+  931 MB at tick 8000; 4359600 block lines counted and dropped.
+- GAMEBOARD: 1024 births (one every 16 intervals from tick 16 to 16384, one
+  arm each, `u` the birth's index modulo 64), 1024 gathers, 0 click lines, 0
+  live at 17300; the books balanced: transit released 1024, absorbed 0,
+  escaped 1024.
+- MEASUREMENT: 0 clicks at every one of the 121 screen sets and at every wall
+  cell; every gather chooses the cell face:-x "0" (the open face behind the
+  lamp), 1024 of 1024, click_at rung, clock_source interval.
+- GAMEBOARD (the completion as built): age 791 on every record, 1024 of 1024,
+  the first gather at tick 807 and the last at 17175.
+- COMPUTATION (read, not compared): on this file and this engine bit no record
+  reaches the screen within its life; each record's light is booked at the -x
+  face and the gather closes it there at the same age.
+
+## 10. The receding index's three worlds on ENGINE C (the chain of 4000, ticks 6000)
+
+The three files of main ecebf895 named by RUN_LIST.md's index row, unchanged:
+index_moving_long_k3_away.json (sha256 prefix f151bb27f71b),
+index_moving_long_rest_k3_away.json (87f5b98ea570) and
+index_moving_long_reference_k3_away.json (f81bc35bfe59); the source at 800,
+the probe at 2400, the block of side 24 from 1500 (away) or at 2100 (rest).
+The probe's phase is a GAMEBOARD reading (DECLARATIONS.md section 11: the row
+is a prediction of the engine's board, not a measurement); the declared
+numbers are read beside, not compared (the Boss's order of 11:07Z).
+
+- HOST: 4.2, 3.0 and 1.2 seconds wall (away, rest, reference), 37 MB peak
+  each, one light record live throughout, 6000 probe lines each.
+- GAMEBOARD (the board): the away block hops from 1500 at tick 3002 one Link
+  every 3 intervals to 2500 at 5999 (its cells reach the probe after the
+  window); the rest block stays at 2100; the probe first reads nonzero at
+  2745 (2748 on the rest run); the amplitude ratio world / reference in the
+  window [3800, 5400] is 0.981 (rest) and 1.052 (away).
+- GAMEBOARD (the probe's phase, the script's projection form over the window
+  and its halves, reference minus world): at the series' own frequency,
+  0.0180 rad per interval (the projection amplitude's peak on the reference),
+  the rest world reads +0.1976 rad (halves +0.1982, +0.1964; n 1.2641 by
+  n = 1 + d / ((omega / c) s)) and the away world +1.9071 rad (halves
+  +2.4494, +0.9506; the drift -1.87e-3 rad per interval). At the script's
+  omega 0.035 (3.7 percent of the series' projection amplitude): rest +0.4297
+  rad (n 1.2953), away +1.6522 rad (halves +1.9703, +1.1671; the drift
+  -1.00e-3 rad per interval).
+- Read beside (declared, not compared): the script's +1.0144 rad with the
+  halves +0.5539 and +1.5234 (the drift +1.2e-3 rad per interval) and the
+  rest n 1.2519; this reading's halves come in the opposite order and the
+  source's frequency on the board reads 0.018 where the script declares
+  0.035.
