@@ -539,12 +539,10 @@ nature.
    row is the absorbing sets that read, and two TAKE lines (absorbing, not read) at
    x = 0 behind the lamp and at x = 127 behind the screen exhaust the
    record's offer so that every record completes with one click (a
-   mirror books nothing). No light in this world. THE
-   SECOND PASS, named: the mirror line reflects the train back toward -x;
-   it reflects again off the zero face at x = 0 and passes the openings
-   80 Links later (159 intervals at v_g = 0.503), coherent at the same k,
-   so the maxima are unchanged and the first click at the centre is the
-   direct front's; no wrap reaches the screen's back.
+   mirror books nothing). No light in this world. (The first draft's
+   "second pass" of the train reflected back through the openings is
+   dead with the take line at x = 0, which absorbs it behind the lamp:
+   Reviewer 3's token of 00:45Z; there is no second pass.)
 2. The declared integers: the pair; omega = 0.33408 (lambda_dB = 12.000
    Links exactly on the axis, k = 0.52360 = 2 pi / 12; a second world at
    omega = 0.26995, lambda_dB = 16, beside); THE STOCK 2048 records at the
@@ -616,7 +614,7 @@ nature.
    limits: no two-quantum effect (bunching), no spin, no fine structure
    are in the law, and none is claimed.
 
-## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; the second draft 2026-09-24, 00:25Z, on his line B)
+## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; the second draft 2026-09-24, 00:25Z, on his line B; the third draft 01:05Z, on his line on the band, record 1543: the rise per direction by the map)
 
 1. The objects: a chain of 2200 x 1 x 1, light's faces open; the massive
    kind [800, 809]; two BLOCKS of side 12 at full depth ([800, 800]): A at
@@ -645,24 +643,36 @@ nature.
    record chasing B, t_+ = L / (c - v) = 245.9 intervals; B's record
    meeting A, t_- = L / (c + v) = 65.9; their difference over their sum
    (t_+ - t_-) / (t_+ + t_-) = v / c = 1 / sqrt 3 = 0.5774 EXACTLY (K).
-   The click comes at the first rung, a rise delta after the front: in the
-   CONTROL world at rest (`coupled_mode_pins.py` (e), the click's own form)
-   B's record's first rung at A's cells is 113 intervals from its birth
-   at W = 64 against L / c = 103.9, delta = 9.1 (111, 109, 107 at W = 256,
-   1024, 4096). The reader of record is therefore the receiver's click
-   interval from the emitter's birth stamp LESS the control world's own
-   rise delta, per direction (DETECTOR both), and the pin 0.5774 has the
-   band +- 0.01 from delta's variation with the direction of arrival (the
-   chasing record arrives at the pace c - v, the meeting one at c + v, so
-   their rises differ; the difference is a (P) of the click's form, read
-   beside). Nature's coefficient 0.975 +- 0.021 (Michelson, Gale and
-   Pearson 1925, TO VERIFY) matched in form. PINS_R2.md's 55 / (32 k) is
-   the old engine's number at its c, HISTORY.
+   The click comes at the first rung, a RISE after the front, and the
+   rise differs by direction (Reviewer 3's line, record 1543: the chasing
+   front and the meeting front reach the receiver with different
+   profiles), so the second draft's one rest rise subtracted from both
+   directions is WITHDRAWN. THE MAP (`coupled_mode_pins.py` (f),
+   `one_record_moving`: both blocks stepping to k = 3 on +x, the emitter
+   ramped 1500 intervals then emitting one cycle, the click the first
+   rung of the pointer at the receiver's moving cells, COMPUTATION) gives,
+   at W = 64: A's record chasing B, the click 250 intervals from the
+   birth against the transit 245.9, the rise +4.1; B's record meeting A,
+   the click 74 against 65.9, the rise +8.1; at rest (the CONTROL world,
+   either direction) the click 109 against 103.9, the rise +5.1 (the
+   second draft's 113 was the map without the ramp, HISTORY). THE READER
+   OF RECORD: each block's click interval from the other's birth stamp
+   (DETECTOR, per direction) LESS THAT DIRECTION'S OWN RISE from the map
+   (COMPUTATION, +4.1 and +8.1 at W = 64); the ratio of the two results
+   is the pin 0.5774. Read from the clicks alone the ratio is 0.5432,
+   and with the rest rise subtracted from both 0.5608: neither is the
+   reader. THE BAND +- 0.01: one interval of the click's grain on either
+   side moves the ratio by at most 0.0062; the control world's click
+   109 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
+   0.975 +- 0.021 (Michelson, Gale and Pearson 1925, TO VERIFY) matched
+   in form. PINS_R2.md's 55 / (32 k) is the old engine's number at its
+   c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
-   (the transit per direction, less the control's rise) and the blocks'
-   own clicks (both read one period, the control); GAMEBOARD the light
-   amplitude at the faces; COMPUTATION the pin; CONVERSION the ratio of
-   two counts.
+   (the click interval per direction from the birth stamp) and the
+   blocks' own clicks (both read one period, the control); COMPUTATION
+   the rise per direction from the map, subtracted, and the pin;
+   CONVERSION the ratio of the two corrected intervals; GAMEBOARD the
+   light amplitude at the faces.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
    to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
    `make_worlds.py`; HOST a minute each.
