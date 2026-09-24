@@ -37,10 +37,16 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 
 from event_universe.events.world import BEAM_LAW, MARGIN_KINDS, NatureBeamWorld
+
+# The ramp of a pushed body at least this many relaxation times 1 / (omega_0
+# - omega_b) of its own well (DECLARATIONS.md section 8, the rule for any
+# pushed block; the layer pin world's ten).
+RELAXATION_TIMES = 10
 
 RITZ_TOLERANCE = 1e-9
 MOST_ITERATIONS = 2000
@@ -379,3 +385,81 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
                     )
                 )
     return found
+
+
+def relaxation_time(reading: MarginReading) -> float:
+    """The mode's relaxation time 1 / (omega_0 - omega_b) in intervals
+    (DECLARATIONS.md section 8; COMPUTATION)."""
+    return 1.0 / (reading.omega_0 - reading.omega_b)
+
+
+def check_body_conditions(
+    world: NatureBeamWorld, simulation: Any, readings: list[MarginReading]
+) -> list[str]:
+    """The body's algebraic conditions exact in the initial state, checked at
+    load (the model owner's word of 2026-09-24, 16:48Z, through the Boss;
+    SIMULATOR_DEFINITIONS.md, the four building blocks, the body's
+    conditions 5 and 7; conditions 1, 2 and 6 are the loader's own refusals,
+    3 and 4 `check_margins`): for every body the margin rule read (a bound
+    body of a massive kind with its own record), (a) THE SEED ON THE MODE:
+    the bound mode's integer profile over the whole board is recomputed
+    from the declared pair, shape and amplitude (`bound_mode`, the module's
+    own Lanczos vector, rounded at the largest magnitude of the declared
+    seed) and compared with the simulation's initial state of the body's
+    own record at both levels, `now` and `before`, bit for bit; the first
+    Node that differs refuses the world, named with the two values
+    (ALGEBRA.md 8.7, the standing start exact); (b) THE RAMP: a body with a
+    momentum declares `ramp` at least RELAXATION_TIMES times 1 / (omega_0 -
+    omega_b) of its own well, or is refused naming the ramp and the
+    relaxation time. `simulation` is the world's `DetectorLawSimulation`
+    before its first interval (its `block_by_number`); nothing here is read
+    by the state: a HOST check at load, the lines returned are printed as
+    COMPUTATION."""
+    lines: list[str] = []
+    blocks = simulation.block_by_number
+    for reading in readings:
+        number = reading.number
+        entry = world.measured[number]
+        definition = entry.block
+        assert definition is not None
+        own = blocks[number].own
+        if own is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}]: a bound body without its own record at load"
+            )
+        amplitude = int(definition.seed)
+        expected = np.rint(bound_mode(world, number) * amplitude).astype(np.int64)
+        for level_name, level in (("now", own.now), ("before", own.before)):
+            found = np.asarray(level, dtype=np.int64)
+            differing = np.nonzero(found != expected)
+            if differing[0].size:
+                x, y, z = (int(differing[axis][0]) for axis in range(3))
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}]: the body's initial state is not the bound "
+                    f"mode's integer profile at the amplitude {amplitude}: at the Node ({x}, {y}, "
+                    f"{z}) the level `{level_name}` holds {int(found[x, y, z])} where the mode gives "
+                    f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; the seed is "
+                    "written as the margin module's own integers over the whole board, "
+                    "`mode_profile` of the massive record generator, ALGEBRA.md 8.7: the standing "
+                    "start exact; the model owner's word of 2026-09-24, 16:48Z)"
+                )
+        lines.append(
+            f"seed (COMPUTATION): block {number}: the initial state is the bound mode's integer "
+            f"profile at the amplitude {amplitude} at both levels, bit for bit "
+            f"({int(np.count_nonzero(expected))} Nodes nonzero)"
+        )
+        relaxation = relaxation_time(reading)
+        if any(int(component) != 0 for component in entry.momentum):
+            need = RELAXATION_TIMES * relaxation
+            if definition.ramp < need:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}]: the ramp {definition.ramp} is below "
+                    f"{RELAXATION_TIMES} relaxation times of its own well (1 / (omega_0 - omega_b) = "
+                    f"{relaxation:.1f} intervals, {RELAXATION_TIMES} times {need:.0f}; "
+                    "DECLARATIONS.md section 8): a pushed body declares `ramp` at least that"
+                )
+            lines.append(
+                f"ramp (COMPUTATION): block {number}: the ramp {definition.ramp} against the "
+                f"relaxation time {relaxation:.1f} intervals, {definition.ramp / relaxation:.1f} times"
+            )
+    return lines
