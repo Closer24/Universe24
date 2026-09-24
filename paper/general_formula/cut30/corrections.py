@@ -6278,6 +6278,51 @@ CORRECTIONS = [
         "no reading pinned yet;",
         "none pinned yet;",
     ),
+    (
+        "commit 62 (iii), the physicist's word: the CHSH test at about 6 x 10^-5 under the five-sigma rule",
+        "And a CHSH measurement at $10^{-4}$, deciding $181/64$ against $2\\sqrt2$.",
+        "And a CHSH measurement at about $6 \\times 10^{-5}$, deciding $181/64$ against $2\\sqrt2$ under the five-sigma rule.",
+    ),
+    (
+        "commit 62 (a), the physicist's word: 'local' in Fine's theorem sentence",
+        "not a hidden-variable value, because",
+        "not a local hidden-variable value, because",
+    ),
+    (
+        "commit 62 (b), the physicist's word: the declared form's one permutation per pair lamp, the Bell section",
+        "the seed is an input of kind 1 drawn once per world, independent per world and of the settings, never read Outside;",
+        "the seed is an input of kind 1 drawn once per world, independent per world and of the settings, never read Outside; one permutation per pair lamp for the run, drawn once at load from the seed, the same for every cycle, the order repeating every $W$ births (a fresh permutation per cycle is not the declared form; an independent draw per birth is what P4 forbids); the count channel under the declared form is item 21's statistic, the model's own prediction;",
+    ),
+    (
+        "commit 62 (b), the physicist's word: the declared form's one permutation per pair lamp, row 1c",
+        "under the declared form (the residues in a seed-set order, the click stamped without the residue \\cite[records 1647 and 1648]{log}) PASS IN FORM Outside:",
+        "under the declared form (the residues in a seed-set order, one permutation per pair lamp drawn once at load from the seed and repeating every $W$ births, the click stamped without the residue \\cite[records 1647 and 1648]{log}) PASS IN FORM Outside:",
+    ),
+    (
+        "commit 62 (d), the physicist's word: row A2's 'no free coefficient beyond the one scale and the frame', the law paragraph",
+        "disperses at $k^2$ by direction with no free coefficient (row A2)",
+        "disperses at $k^2$ by direction with no free coefficient beyond the one scale and the frame (row A2)",
+    ),
+    (
+        "commit 62 (e), the physicist's word: row LCm's light-held excess as the number it is",
+        "the excess tending to $(a/\\lambda)^2\\beta^2$ and the pair's settling at the nodes the named open step",
+        "the excess $1.36$ percent $42$ times $(a/\\lambda)^2\\beta^2 = 3.24 \\times 10^{-4}$ on the declared world (COMPUTATION), tending to $(a/\\lambda)^2\\beta^2$ only in the limit, and the pair's settling at the nodes the named open step",
+    ),
+    (
+        "commit 62 (e), the physicist's word: the rigid arm's anisotropy against the cavity bounds, row LCm",
+        "so the along arm is a predicted FAIL as declared and the across arm is met in form",
+        "so the along arm is a predicted FAIL as declared (a rigid arm's anisotropy $\\beta^2/2$, $5 \\times 10^{-9}$ at the Earth's orbital speed, against the cavity bounds at $10^{-17}$ \\cite{herrmann2009,nagel2015}) and the across arm is met in form",
+    ),
+    (
+        "commit 62 (g), the physicist's sentence verbatim in the Bell section: the joint weight a declared read-out; the 24 the lattice's rotations",
+        "Row 1c reads PASS in form under the declared form; its run confirms the counts and reads the flips as the diagnostic.",
+        "The joint weight $J^2$ is the click's evaluation of the one record through the two tables, a declared read-out (Definition~\\ref{def:click}; Theorem~\\ref{th:gleason}'s characterization), which the paper names the one non-local step and does not derive from local transport; the group of order $24$ is the lattice's rotations, the symmetry the rule is built on, and no result in the paper needs the $24$ rather than the $48$. Row 1c reads PASS in form under the declared form; its run confirms the counts and reads the flips as the diagnostic.",
+    ),
+    (
+        "commit 62, formatting only for the 48 pages: microtype (character protrusion and font expansion, no wording moved)",
+        "\\usepackage{float}\n\\usepackage{enumitem}",
+        "\\usepackage{microtype}\n\\usepackage{float}\n\\usepackage{enumitem}",
+    ),
 ]
 
 

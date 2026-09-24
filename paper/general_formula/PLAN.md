@@ -7247,3 +7247,17 @@ and S's form; units on rows 7 and ii. Issue #1113: the abstract's
 "passes in form" clause qualified to fixed settings, the switching
 statistic's prediction standing in Section 2's one page. The abstract
 249 words. 48 pages.
+
+## Applied (2026-09-24, the Boss's word of 08:55Z): commit 62 on paper-48
+
+The physicist's one word each on the second referee report's physics
+items, verbatim where a sentence was given: the CHSH test at about
+6 x 10^-5 under the five-sigma rule; "local" in Fine's theorem sentence;
+the declared form's one permutation per pair lamp (the Bell section and
+row 1c); the party asymmetry a labelling of the cells at the lamp
+(Definition 3); row A2's coefficient free only in the scale and the
+frame; row LCm's light-held excess as the number it is and the rigid
+arm's anisotropy against the cavity bounds; the norm bound per declared
+pair with the two marginal modes of [1, 1] named; the joint weight a
+declared read-out and the 24 the lattice's rotations (the Bell section).
+Microtype added, formatting only, for the 48 pages.

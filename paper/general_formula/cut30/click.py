@@ -27,7 +27,7 @@ $c_\ell = (1, 1)$ in every world here; one click: the ladder over $u$ chooses th
 \qquad \text{the cell is the } k \text{ with } \rung_{k-1} \le u < \rung_k\,},
 \label{eq:rung}
 \end{equation}
-the pair's declaration \cite[3.6]{algebra}, the coarse rung over $o_A$ followed by the fine rung over $o_B$ within it with the same $u$ being how Theorem~\ref{th:marginals} states it; the settings chosen freely of the record and the reading with $c_1 = 1$ (P10) are assumed of the world; no Hilbert space is assumed. The non-locality sits in one object, the pair's record of tensor rank 2, carried by local verbs on two arms and read by one gather at two clicks.
+the pair's declaration \cite[3.6]{algebra}, the coarse rung over $o_A$ followed by the fine rung over $o_B$ within it with the same $u$ being how Theorem~\ref{th:marginals} states it (the ladder's order, the first party's outcome coarse and the second's fine, is the declared order of the joint cells at the source, fixed at the lamp before either station reads; both stations read the one record's gather, so neither acts first, and the asymmetry is a labelling of the cells, not a time order between space-like stations); the settings chosen freely of the record and the reading with $c_1 = 1$ (P10) are assumed of the world; no Hilbert space is assumed. The non-locality sits in one object, the pair's record of tensor rank 2, carried by local verbs on two arms and read by one gather at two clicks.
 \end{definition}
 
 """
