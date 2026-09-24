@@ -6891,3 +6891,22 @@ boost among them, the determinant's split and the hand; the author's
 sentence that everything converged to this group and this ring. The
 paragraph "From the operations to the group" (chapter 1.3), the dated
 steps (chapter 7's (iv)), the platform and the check of the roads stay.
+
+## Applied (2026-09-24, the Boss's order of 01:00Z): commit 33 on paper-48, Section 5's old readings and derivations to history
+
+The unambiguous part of Section 5 (from the algebra, the physics), done
+without holding while the Boss answers on the theorems: the readings of
+the engine before 2026-09-23 that the section quoted as DETECTOR support
+(the pace after a detector, the registered integers of the split), the
+derivations from the push of the rows that hop (the push's operations,
+the inverse square as a shell mean, Newton's law and the place of G,
+Coulomb's law, their ground) and the delay field (the retarded
+potential, Poisson's equation, the clock's redshift) are whole in
+records.tex under "The readings and the derivations of the engine
+before 2026-09-23". The pace, the books, Gauss's law and every theorem
+stay in place; the owner's paragraph on light past a held mass keeps its
+subsection, renamed. The abstract and the proved paragraph say so:
+Newton's inverse square stays as the form from the clicks (Section 4);
+Poisson's equation, Coulomb's law, the retarded potential and the
+clock's 1/r form are history. 46 pages; the Boss's plan fills Section 8
+from merged readings and closes at 48.

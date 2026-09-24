@@ -5018,6 +5018,21 @@ CORRECTIONS = [
         "\\bibitem{glossary}",
         "\\bibitem{pins} The pins of the paper's list by kind, one row per experiment, with the provenance of each declaration, \\texttt{docs/designs/detector\\_law/PINS.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 11381628. \\bibitem{glossary}",
     ),
+    (
+        "commit 33, the delay field to history: the abstract's shell-average clause without Poisson",
+        "under a shell average Newton's inverse square and Poisson's equation.",
+        "under a shell average Newton's inverse square.",
+    ),
+    (
+        "commit 33, the old push's derivations and the delay field to history: the proved paragraph's shell-average sentence",
+        "Recovered under an average that covers the shell, with the condition in the claim: Newton's and Coulomb's inverse square, the retarded potential and Poisson's equation, the clock's $1/r$ form.",
+        "Recovered under an average that covers the shell, with the condition in the claim: Newton's inverse square, from the clicks (Section~\\ref{sec:click}); Coulomb's inverse square, the retarded potential, Poisson's equation and the clock's $1/r$ form were derived from the push of the rows that hop and read on the engine before 2026-09-23, history \\cite{records}.",
+    ),
+    (
+        "commit 33, the proved paragraph's check of Newton and Poisson, the old readings named history",
+        "Newton's inverse square and Poisson's law closed after a detector ($G$ not read; D3): decided by a closed orbit's period at two radii under the directional drive (form B, built off by default, series Y), the escape's count at a face detector and the clock's form at more distances.",
+        "Newton's inverse square, closed from the clicks under its hypotheses (Section~\\ref{sec:click}); its old reading (D3) and Poisson's law after a detector are history \\cite{records}: decided by a run under the law as it stands, pinned before it (Section~\\ref{sec:comparison}).",
+    ),
 ]
 
 

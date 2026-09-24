@@ -44,6 +44,18 @@ OPERATIONS_START = "\\paragraph{From the operations to the group.}"
 SIMULATOR_START = "\\paragraph{How the simulator led to the results.}"
 OLDROAD_START = "\\paragraph{The road from the cells to the algebra.}"
 DATED_START = "\\paragraph{The transition from ordinary physics to the algebra, dated.}"
+# The readings of the engine before 2026-09-23 quoted as support, the old push's
+# derivations and the delay field: to the records file (record 1459; ALGEBRA.md 2.11).
+DETECTOR_START = "\\paragraph{What a detector measures.}"
+FORCES_HEADING = "\\subsection{Conservation, the flux and the forces}\\label{sec:forces}"
+OPERATIONS_PAR = "\\paragraph{The operations.}"
+GAUSS_START = "\\paragraph{Gauss's law, exact.}"
+SHELL_START = "\\paragraph{The inverse square as a shell mean.}"
+DELAY_HEADING = "\\subsection{The delay field: the retarded potential, Poisson's equation and the clock}\\label{sec:delay}"
+NEW_DELAY_HEADING = "\\subsection{Light past a held mass: the time part alone}\\label{sec:delay}"
+LIGHT_START = "\\paragraph{Light: the time part alone, no optical metric.}"
+REGISTERED_START = "\\paragraph{Against the registered integers.}"
+INTERFERENCE_START = "\\paragraph{Interference, by the formulas alone.}"
 LONGTABLE_END = "\\end{longtable}}"
 TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
 CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
@@ -186,6 +198,17 @@ def cut(s: str) -> tuple[str, str]:
     for label in OLD_FIGURES:
         figure, s = cut_figure(s, label)
         figures.append(figure)
+    # (after the old figures, which sat inside these paragraphs) The old readings and derivations of the physics section: the pace's readings,
+    # the push's operations, the old push's derivations (the shell mean, Newton,
+    # Coulomb, their ground), the delay field, the registered integers of the click.
+    detector, s = _cut_between(s, DETECTOR_START, FORCES_HEADING, "the pace's readings")
+    operations, s = _cut_between(s, OPERATIONS_PAR, GAUSS_START, "the push's operations")
+    push, s = _cut_between(s, SHELL_START, DELAY_HEADING, "the old push's derivations")
+    i = _once(s, DELAY_HEADING, "the delay field") + len(DELAY_HEADING)
+    j = s.index(LIGHT_START, i)
+    delay, s = s[i:j], s[:i] + "\n\n" + s[j:]
+    s = s.replace(DELAY_HEADING, NEW_DELAY_HEADING, 1)
+    registered, s = _cut_between(s, REGISTERED_START, INTERFERENCE_START, "the registered integers")
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
@@ -209,6 +232,17 @@ def cut(s: str) -> tuple[str, str]:
         + tables
         + "\n\n"
         + oldroad
+        + "\n\\section{The readings and the derivations of the engine before 2026-09-23, history}\\label{rec:oldreadings}\n\n"
+        + "The paragraphs of the physics section that quoted the readings of the engine before 2026-09-23 as support (the pace after a detector, the registered integers of the split), the derivations from the push of the rows that hop (the inverse square as a shell mean, Newton's law and the place of G, Coulomb's law, their ground) and the delay field (the retarded potential, Poisson's equation, the clock's redshift), as the paper carried them until the algebra document's chapters replaced the rows that hop (record 1459; ALGEBRA.md 2.11).\n\n"
+        + detector
+        + "\n\n"
+        + operations
+        + "\n\n"
+        + push
+        + "\n\n"
+        + delay
+        + "\n\n"
+        + registered
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
         + handworked
         + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{rec:conversion}\n\n"

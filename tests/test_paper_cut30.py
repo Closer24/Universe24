@@ -124,6 +124,11 @@ def _check_reorder(module) -> None:
         "tab:kept",
         "tab:forward",
         "tab:back",
+        "eq:shell",
+        "eq:newton",
+        "eq:coulomb",
+        "eq:fields",
+        "eq:wave",
         "fig:mechanism",
         "fig:interference",
         "fig:pair",
@@ -134,6 +139,7 @@ def _check_reorder(module) -> None:
     # the law as the engine ran it before 2026-09-23 is history (the Boss's order of 2026-09-24)
     assert recs.count("\\label{rec:oldlaw}") == 1 and "the rows that hop whole with their wheel" in main
     assert recs.count("\\label{rec:oldroute}") == 1 and "The one choice, and the seven Nodes." in main
+    assert recs.count("\\label{rec:oldreadings}") == 1 and "Light past a held mass" in main
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
