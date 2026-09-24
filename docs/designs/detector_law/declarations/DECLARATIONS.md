@@ -488,6 +488,32 @@ omega_b) of its own well, printed by the pins script before the run.
    e2 of PLAN.md 2.3 as an exploratory run first, then the pinned run; the
    builder confirms that the grace holds for a block's emitted records as
    for a lamp's.
+7. THE LIGHT CLOCK IN MOTION, the prediction as declared (2026-09-24,
+   01:45Z, on the referee's item (4); COMPUTATION,
+   `light_clock_motion_pins.py`; a derivation before any run, no pin
+   moved). Two blocks pushed together at k = 3 at a DECLARED separation
+   L (section 13's form, the receive the other block's click): the round
+   trip along the motion is L / (c - v) + L / (c + v) = 245.9 + 65.9 =
+   311.8 intervals = 2 L gamma^2 / c against N_0 = 2 L / c = 207.85 at
+   rest, and each block's clock runs at 1 / gamma_m (section 8's one
+   formula, the well limit), so THE MOVING CLOCK'S OWN COUNT of the round
+   trip over its rest count is gamma^2 / gamma_m = 1.2224 along the motion
+   and gamma / gamma_m = 0.9981 across it ([800, 809]; 1.2234 and 0.9989
+   for [156, 157]): Reviewer 3's algebra of Highlights 5.4's "five" (a
+   medium, gamma^2 along and gamma across in the lattice's intervals)
+   divided by the clock's gamma_m. Einstein's 1 and 1 needs the along
+   separation to contract by gamma, which a declared rigid separation
+   does not do; the design's route to it (the same line's section 8b: a
+   pair held by light alone, prediction 5 of ALGEBRA.md 8.9, its
+   separation contracting by the wave law) is not this world's. So AS
+   DECLARED the row is a (P) with the number 1.2224 at k = 3 and nature's
+   null (Michelson-Morley and Kennedy-Thorndike, Herrmann 2009 at 10^-17,
+   RECALLED) its falsifier: the law as declared does not meet "five" on a
+   pushed pair, and the paper's row (d) in motion must carry that number
+   and say so (the abstract's "meets (A1) only" is the same fact). What
+   would meet it, and only it, is a world of two bodies whose separation
+   is held by light and read after the push, to be declared and derived
+   (8b) before it is computed; the model owner's word.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
