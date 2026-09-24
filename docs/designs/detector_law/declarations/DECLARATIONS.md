@@ -522,7 +522,7 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    -x half, about 5200 intervals after birth; the click line is written
    at completion with the first-rung stamp (1905 after birth), so the
    reading is unchanged, but `ticks` must be at least ramp + hold +
-   about 5200, about 14700; DECLARED 08:06Z: `ticks` 15000 for redshift_k3 and redshift_control under the world key `wheel` 256 (HISTORY, superseded 09:33Z: Reviewer 3's named defect from the runner's dry run, the receding block A off the board at tick 9722 under the file's hold of 8000, 250 Links in the ramp then one Link per three intervals; and two integers, the world key 256 beside the light_detector's 64). DECLARED 2026-09-24, 09:33Z, before any pinned run: the hold H = 3000 after the ramp of 1500 (the key `own_grace` 3000, the hold, as R2's blocks have it), `ticks` 10000 for both redshift_k3 and redshift_control (one window for the pair), the world key `wheel` 64, one integer with the light_detector's rung (the first rungs derived at 64 stay): A stands at 2994 - 250 - 1000 = 1744 at the hold's end (tick 4500), inside the margin; the last hold record reaches the light_detector at 4094 after sqrt 3 x (4094 - 1744) = 4070, its first rung near 8600; about 38 hold records at the receding cycle of about 78 intervals, the grain of one interval over the hold 0.03 percent, below the pin's band; the control's block at rest at 2994, its transit 1905, within the same 10000; every hold record's line at its rung under section 13 item 7's sentence (A `receiver` light_detector). The per-record reading of item 5 is
+   about 5200, about 14700; DECLARED 08:06Z: `ticks` 15000 for redshift_k3 and redshift_control under the world key `wheel` 256 (HISTORY, superseded 09:33Z: Reviewer 3's named defect from the runner's dry run, the receding block A off the board at tick 9722 under the file's hold of 8000, 250 Links in the ramp then one Link per three intervals; and two integers, the world key 256 beside the light_detector's 64). DECLARED 2026-09-24, 09:33Z, before any pinned run: the hold H = 3000 after the ramp of 1500 (the key `own_grace` 3000, the hold, as R2's blocks have it), `ticks` 9600 for both redshift_k3 and redshift_control (one window for the pair; my first line's 10000 of 09:33Z was Reviewer 3's named defect of 11:10Z by his stamp: the block keeps its momentum after the hold, so its corner reaches x = 0 at 1500 + (2994 - 250) x 3 = 9732 whatever the hold is, and 10000 would run it off the board for 268 intervals; corrected 10:15Z), the world key `wheel` 64, one integer with the light_detector's rung (the first rungs derived at 64 stay): A stands at 2994 - 250 - 1000 = 1744 at the hold's end (tick 4500), inside the margin; the last hold record's +x half reaches the light_detector at 4094 after sqrt 3 x (4094 - 1744) = 4070, its first rung near 8600, its -x half the face near 7520, so 9600 holds every hold record's line with about 700 of margin and stays under 9732; about 38 hold records at the receding cycle of about 78 intervals, the grain of one interval over the hold 0.03 percent, below the pin's band; the control's block at rest at 2994, its transit 1905, within the same 9600; every hold record's line at its rung under section 13 item 7's sentence (A `receiver` light_detector). The per-record reading of item 5 is
    CONFIRMED by Reviewer 3 as a declaration before any run. THE
    EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
    each train does not reach the set at 1100 Links (it does not
@@ -663,7 +663,7 @@ Every PIN row below stands on its declared board; the pins are unchanged.
 | Row | The declared board | Stands as the paper's world? | Why, in one line |
 | --- | --- | --- | --- |
 | 2a, 2b, 2c, 10 (a), 10 (b) | a layer (the ray law's worlds, 12 to 24 Links of wavelength) | YES | the wave's sum, the splitter's table and the mirror line live in the plane; the lemma folds the third axis; the pins are computed on the layer |
-| 5a, the anisotropy of c | a layer (the fan in the plane) | YES for the in-plane fan (the pin per direction of the fan); the out-of-plane directions (the body diagonal) a later 3-D control | a layer is blind to the out-of-plane directions by the lemma, so the row claims the plane's fan only. THE READER (Reviewer 3's MUST 1, 23:50Z): the pin 0.8, 0.4, 0.2 percent at 12, 16, 24 Links is the PHASE pace by direction (k^2 (3 SUM n^4 - 1) / 72 on the axis, a quarter of it on the plane's diagonal), so the reader of record is the probes' phase advance per Link along each direction of the fan, GAMEBOARD, said so: the row is a reading of the engine's board against the rule's band, not a click measurement. The first click at a ring of 40 Links is read BESIDE (DETECTOR); its interval and band are printed in the click's own form (the pointer, the first rung of the record's norm over W, DESIGN.md section 5) by the light map before the run, in the morning's record; the group arrival is 70.9 and the phase's 69.3 on the axis at 12 Links, a difference the first click is not expected to resolve. THE READING FORM, DECLARED 09:22Z (section 15 L-6): two probes per ray at 40 and 36 Links, free Nodes, their phase difference at one interval within the declared window, GAMEBOARD; the ring sets at 48 Links, their first rungs a flux reading beside, DETECTOR |
+| 5a, the anisotropy of c | a layer (the fan in the plane) | YES for the in-plane fan (the pin per direction of the fan); the out-of-plane directions (the body diagonal) a later 3-D control | a layer is blind to the out-of-plane directions by the lemma, so the row claims the plane's fan only. THE READER (Reviewer 3's MUST 1, 23:50Z): the pin 0.8, 0.4, 0.2 percent at 12, 16, 24 Links is the PHASE pace by direction (k^2 (3 SUM n^4 - 1) / 72 on the axis, a quarter of it on the plane's diagonal), so the reader of record is the probes' phase advance per Link along each direction of the fan, GAMEBOARD, said so: the row is a reading of the engine's board against the rule's band, not a click measurement. The first click at a ring of 40 Links is read BESIDE (DETECTOR); its interval and band are printed in the click's own form (the pointer, the first rung of the record's norm over W, DESIGN.md section 5) by the light map before the run, in the morning's record; the group arrival is 70.9 and the phase's 69.3 on the axis at 12 Links, a difference the first click is not expected to resolve. THE READING FORM, DECLARED 09:22Z and 10:15Z (section 15 L-6): two probes per ray at 40 and 36 Links, free Nodes, their phase difference two periods after the front passes the outer probe, GAMEBOARD, its spread over the window printed beside as the reader's precision; no ring sets (withdrawn 10:15Z as the reader's contaminant), no click on this row |
 | 1a, 1b, 1c, 1d, 9, Malus's settings | a 64^2 layer (the tables) | YES | the tables act on the read phase at a Node; nothing of the third axis enters |
 | 4a, the muon's form | the 200^2 layer pin world (s = 14, the mode seed) | YES; the 191^3 world of PLAN.md 3.3 step 5 a later control | the pin is the one formula at the layer's own mode (`massive_layer_pins.py`); the corner does not enter the stable form |
 | (ii-a), (ii-b) | 64^3 boxes | YES, as 3-D worlds already (2 minutes each) | no layer needed |
@@ -1550,8 +1550,10 @@ nature.
    LINE: the key `receiver` on the emitting measured event; a block's
    record's ladder the named cell; the gather line at the rung for a
    one-cell ladder, at the close for several; the sinks' bookings to
-   escaped; the World Generator adds the key to sagnac's four files,
-   light_clock_60, redshift_k3, redshift_control and 4b's world.
+   escaped; the World Generator adds the key to every emitting block
+   of the GO and held files as he enumerates them: sagnac_k3,
+   sagnac_rest, light_clock_60, redshift_k3, redshift_control, and 4b's
+   world where it emits.
 
 ## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
 
@@ -1680,7 +1682,7 @@ nature.
    lists one cell per arm (the Preliminary Runner's bell_a0b0, 09:36Z),
    so the Bell counts are not yet readable there (the close is: every
    arm at the train's end). The GO in groups, the owner's word of
-   09:50Z: sagnac's four, the light clock, redshift's pair and 4b on
+   09:50Z: sagnac_k3, sagnac_rest, the light clock, redshift's pair and 4b on
    the current build after the hop fix and the receiver by name; Bell's
    four and Malus's four after the joint-gather build, with one
    regression rerun of a first-group world on the later engine, bit for
@@ -1790,9 +1792,15 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   diagonals, 39.6 Links; the diagonal's 40 is no Node), FREE NODES with
   no set there, and a second probe per ray at 36 Links, [100, 64], [28,
   64], [64, 100], [64, 28] and [89, 89], [39, 39], [89, 39], [39, 89]
-  (35.4 Links); ring detector sets of one Node at 48 Links on the same
-  eight rays, [112, 64], [16, 64], [64, 112], [64, 16] and [98, 98],
-  [30, 30], [98, 30], [30, 98] (48.1 Links), `wheel` [1, 64]; `ticks`
+  (35.4 Links); NO RING SETS (the second draft's rings of one Node at
+  48 Links on the eight rays are withdrawn, 10:15Z: on the World
+  Generator's preliminary of 248235b on 540456da the two-probe phase
+  read the axis and the diagonal 0.48 percent apart two periods after
+  the front, 0.5264 against 0.5239 rad per Link at 12 Links, and then
+  drifted by a few percent at four and eight periods, which is the
+  rings' back-scatter reaching the probes 8 Links away, a contaminant
+  of the reader; the record ends at the layer's open faces, escaped,
+  and the row is a GAMEBOARD reading by declaration, section 7); `ticks`
   1000, 1400 and 1900 for the 12, 16 and 24-Link clocks (the trains
   665, 943 and 1330 plus at least 300; the first draft's 800 for all
   three was the 12-Link clock's arithmetic and ended the 16 and 24 runs
@@ -1810,17 +1818,19 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   phase of each probe from one period of its amplitude series against
   the lamp's clock (the light map's fit, COMPUTATION); the pin the axis
   against the diagonal as section 7 states (the axis below the diagonal
-  by k^2 / 48, 0.57 percent at 12 Links). The ring sets' first rungs are
-  the detector's reading and the only pinnable number there: a FLUX
-  reading (the interval at which 1 / 64 of the norm has been booked at
-  a one-Node set holding about 1 percent of the offer, hundreds of
-  intervals after the front's arrival), a bound beside the diagnostic,
-  never the front's time and never the band's; one record gives ONE
-  click, and its cell is a labelling (the record's u is 0 by the wheel
-  [1, 64], so the ladder's first ring in the list's order; a lamp's
-  record, not a block's, so section 13 item 7's receiver by name does
-  not apply), the other rings' rungs on no line unless the builder
-  prints `first_rung` per cell on the gather line (HOST). HOST seconds.
+  by k^2 / 48, 0.57 percent at 12 Links). THE READER'S PRECISION
+  (DECLARED 10:15Z, on the World Generator's preliminary): the reading
+  of record is the earliest one, two periods after the front passes
+  the outer probe, as above; beside it the same difference read at
+  every interval of the window and its spread printed (GAMEBOARD): with
+  the rings gone that spread is the reader's precision against the
+  band's 0.57 percent, and if it stays at a few percent the drift is
+  the front's own chirp and the earliest reading stands alone, the row
+  then reading "the axis against the diagonal within the reader's
+  spread" and no more. With no set on the fan the record has no click
+  and the earlier "first click at a ring" line of section 7 is
+  withdrawn (a bound below its own grain, and its set a contaminant of
+  the reader). HOST seconds.
 
 **T, the table rows.**
 
