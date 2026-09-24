@@ -458,7 +458,7 @@ def test_the_lamps_ladder_by_name_keeps_the_faces_out_of_it():
         "s2": rung_of["s2"] - rung_of["s1"],
     }
     control, _ = run_layer(layer_world())
-    assert all(gather["ladder"] is None and gather["sunk"] == 0 for gather in control)
+    assert all("ladder" not in gather and "sunk" not in gather for gather in control)
     assert any(
         gather["chosen"] is not None and gather["chosen"][0][0] == "face:-x" for gather in control
     )

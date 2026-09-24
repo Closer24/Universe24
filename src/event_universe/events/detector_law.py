@@ -2154,12 +2154,11 @@ class DetectorLawSimulation:
             # the ladder by name (the lamp's `receiver`): the sets on it, and
             # HOST the pointers' sum at the sinks (the cells off the ladder,
             # taken and booked, never chosen); None and 0 for every cell
-            "ladder": (
-                sorted({self.cell_set[cell] for cell in live.ladder})
+            **(
+                {"ladder": sorted({self.cell_set[cell] for cell in live.ladder}), "sunk": sunk}
                 if live.ladder is not None
-                else None
+                else {}
             ),
-            "sunk": sunk,
             "birth": live.birth_tick,
             # The click's time: the interval at which the chosen cell's pointer
             # crossed its first rung (the counting form, s_D = 1 / W), the

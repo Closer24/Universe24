@@ -1319,7 +1319,8 @@ would have found no cell.
   detector law, on an empty list, on a repeated name and on a name no set
   declares (a face is never on it). Absent, the ladder is every cell as
   built: the table rows' lamp worlds are untouched and their gather lines
-  byte for byte, with two HOST fields added (`ladder` None, `sunk` 0). The
+  byte for byte (the two HOST fields `ladder` and `sunk` appear on a lamp
+  with the key alone; the chain world's digests of test (p) unmoved). The
   same word as the block's `receiver` of line (1): a record's ladder is what
   the world names, one set for a block's record, the named sets for a
   lamp's.
