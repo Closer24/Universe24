@@ -7054,3 +7054,17 @@ SUBMISSION.md records the author's choices of 03:12Z: the article type
 Research; the classification Quantum Foundations first, Mathematical
 Physics second, Relativity third; the venue Foundations of Physics
 (Springer) decided; the title page's three fields confirmed. 48 pages.
+
+## Applied (2026-09-24, the owner's words on the three rows; PR 1097's merge): commit 43 on paper-48
+
+The owner's words through the Boss (03:08Z "as per your recommendation";
+03:30Z "the Boss decided to throw them out"): the perihelion, the
+supernova diagram and the atom are out of the text entirely, their
+full statements whole in records.tex, the atom's row blank in the
+table; no FAIL on the three. Row 1c alone is a derivation under the
+current law and keeps "FAIL by derivation, the falsifier declared
+before any run", with its direction (one way, from the first party to
+the second). The merge of PR 1097 brings the two gammas' gap at c_eff
+(/6), the lattice sentence as chapter 7 says it, the light-held pair's
+numbers beside the rigid pair's, and Poh's value verified. The abstract
+says the six operations act at the applicable local events. 48 pages.

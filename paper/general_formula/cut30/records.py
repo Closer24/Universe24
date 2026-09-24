@@ -61,23 +61,24 @@ INTERFERENCE_START = "\\paragraph{Interference, by the formulas alone.}"
 # records file; cut30/click.py (one click, the detector law's form) in its place.
 OLDCLICK_START = "\\begin{definition}[The click]\\label{def:click}"
 OLDCLICK_END = "\\end{lemma}\n"
-# The three FAIL rows (the perihelion, the supernova diagram, the atom): one sentence
-# each in the text, the full statement to the records file (the Boss's word of 01:27Z).
+# The three rows of the earlier beam law (the perihelion, the supernova diagram, the
+# atom): out of the text entirely, whole in the records file (the owner's word of
+# 2026-09-24, 03:30Z, through the Boss); the families' pointer sentence stays.
 FAIL_CUTS = (
     (
         "(iii) The perihelion:",
         " (iv) ",
-        "(iii) The perihelion: FAIL by the one law, pinned in order and symmetry: the drive's pace departs from $p/m_i$ at first order per axis, so a bound orbit's apsides move per revolution by an angle of order $\\beta$ with the lattice's symmetry, where Einstein has $6\\pi\\beta^2$ isotropic, about $330$ times nature's at Mercury's pace and of the wrong symmetry; the coefficient and the deciding reading NOT MADE; the full statement is history \\cite{records}.",
+        "",
     ),
     (
         "(vii) Dark energy's shape:",
         " (viii) The atom.",
-        "(vii) Dark energy's shape: FAIL, stated as a failure and not a resolution: the redshift against flight time at a detector is Milne's coasting form, $q = 0$ exactly, times the emitters' clock stretch by their crowd, an apparent acceleration for every $g_1 > 0$ with nothing accelerating on the board; the size $g_1$ is an input, the crowd's own accumulation gives the wrong sign, and a standard lamp's brightness reads one factor of $1 + z$ short (rows 3 and 11a, not predicted); the model has no cosmological constant and needs none as a rule; the full statement is history \\cite{records}.",
+        "",
     ),
     (
         "(viii) The atom.",
         "\\paragraph{",
-        "(viii) The atom: NOT COMPARED and the law's own FAIL: the ladder $a_j/a_i = (j/i)^2$ with $E_j$ proportional to $1/j^2$ and Balmer's $27/20$ is conjectured from the algebra in the shell mean and not read, no lattice able to hold the atom's scale being run; the hydrogen loop at $r = 12$ escapes under the drive as built at $3407$ intervals (DETECTOR, history), and under the centred step, a hypothesis under its own name, it stays and tightens with no line read (row 6); the full statement is history \\cite{records}. The families of the register, each with its declared integers, its algebraic object and the click that reads it, are the families table \\cite{records}.\n\n",
+        "The families of the register, each with its declared integers, its algebraic object and the click that reads it, are the families table \\cite{records}.\n\n",
     ),
 )
 

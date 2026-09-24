@@ -5298,6 +5298,41 @@ CORRECTIONS = [
         "The archived version cited at submission is the tag The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration at the end of the paper states; every decision is the author's.",
         "The archived version cited at submission is the tag The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration at the end of the paper states; every decision is the author's. Every theorem, identity and number of the paper was re-derived and recomputed independently, one line per statement \\cite{mathread}.",
     ),
+    (
+        "commit 43, issue 972's follow-up: the six operations act at the applicable local events (the abstract)",
+        "six integer operations act at every Node.",
+        "six integer operations act at the applicable local events.",
+    ),
+    (
+        "commit 43, issue 1081: the order channel one way, from the first party to the second (the table)",
+        "the order of outcomes, an observable of the detector, a FAIL by derivation computed before the run: under the declared ladder",
+        "the order of outcomes, an observable of the detector, a FAIL by derivation computed before the run, one way from the first party to the second: under the declared ladder",
+    ),
+    (
+        "commit 43, issue 1081: the direction in Reviewer 3's sentence",
+        "forces its nonlocality into the order of outcomes, which nature's quantum mechanics does not carry:",
+        "forces its nonlocality into the order of outcomes, one way, from the first party to the second (the second's rung computed from $R(o_A, o_B)$ with $a$ and $o_A$ supplied), which nature's quantum mechanics does not carry:",
+    ),
+    (
+        "commit 43, item 8 on PR 1097's merge: the light-held pair on the band beside the rigid pair's number",
+        "nature's null \\cite{herrmann2009} the falsifier, a light-held pair the world that could meet it",
+        "nature's null \\cite{herrmann2009} the falsifier; a light-held pair on the band (the declared world $\\lambda_0 = 32.1$ Links at $k = 3$) reads $L_{\\mathrm{along}}/L_0 = 0.8127$ against $1/\\gamma = 0.8165$ and the along ratio $1.0136$ inside the declared band $1 \\pm 0.03$, COMPUTATION \\cite{lightheld}, the excess tending to $(a/\\lambda)^2\\beta^2$ and the pair's settling at the nodes the named open step",
+    ),
+    (
+        "commit 43, Poh's value verified against its source",
+        "$2.82759 \\pm 0.00051$ \\cite{poh2015}",
+        "$2.82759 \\pm 0.00051$ \\cite{poh2015}, verified \\cite{sourcesverified}",
+    ),
+    (
+        "commit 43, the algebra document cited at PR 1097's merge (chapter 7's sentence, 8.9's gap)",
+        "on \\texttt{main} at d06d7963 (the merge of section 1.7, the groups' account)",
+        "on \\texttt{main} at a867ab22 (section 1.7 the groups' account; chapter 7's lattice sentence; 8.9's gap)",
+    ),
+    (
+        "commit 43, the light-held pair's bibitem",
+        "\\bibitem{glossary}",
+        "\\bibitem{lightheld} The light-held pair on the band, the declared world and its along ratio, \\texttt{docs/designs/detector\\_law/light\\_held\\_pair\\_pins.py} with its output and DECLARATIONS.md's clause of the archived code \\cite{zenodo}, on \\texttt{main} at a867ab22. \\bibitem{glossary}",
+    ),
 ]
 
 

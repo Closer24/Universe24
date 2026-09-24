@@ -28,7 +28,7 @@ the massive band as light's band times the pitch's cosine, proved in the algebra
 \begin{equation}\label{eq:cone}
 \boxed{\,\omega^2 = \omega_0^2 + c_{\mathrm{eff}}^2\,k^2 + O(k^4), \qquad c_{\mathrm{eff}}^2 = \cos\omega_0\,\frac{\omega_0}{\sin\omega_0}\,c^2, \qquad \frac{c_{\mathrm{eff}}^2}{c_m^2} = \frac{\omega_0}{\sin\omega_0} = 1 + \frac{\omega_0^2}{6} + O(\omega_0^4)\,},
 \end{equation}
-proved in the algebra document as the expansion at the band's bottom ($1.0037$ at the pitch $\mu = 0.15$, COMPUTATION). So a bound clock in motion dilates by $\gamma_m = 1/\sqrt{1 - v^2/c_{\mathrm{eff}}^2}$ at the massive kind's own cone and not by $\gamma = 1/\sqrt{1 - v^2/c^2}$ at light's: two gammas, apart by about $\beta^2\gamma^2\omega_0^2/4$ to second order, the lattice's own signature (Section~\ref{sec:comparison}).
+proved in the algebra document as the expansion at the band's bottom ($1.0037$ at the pitch $\mu = 0.15$, COMPUTATION). So a bound clock in motion dilates by $\gamma_m = 1/\sqrt{1 - v^2/c_{\mathrm{eff}}^2}$ at the massive kind's own cone and not by $\gamma = 1/\sqrt{1 - v^2/c^2}$ at light's: two gammas, apart by about $\beta^2\gamma^2\omega_0^2/6$ to second order at $c_{\mathrm{eff}}$ ($0.187$ percent at $k = 3$, $\mu = 0.15$; $/4$ at $c_m$, the control), the lattice's own signature (Section~\ref{sec:comparison}).
 
 \paragraph{Light against itself.} Light's own band, the pair $[1, 1]$, disperses by wavelength and by direction with nothing declared: along a unit direction $\mathbf n$ with $|\mathbf k| = k$,
 \begin{equation}\label{eq:dispersion}
