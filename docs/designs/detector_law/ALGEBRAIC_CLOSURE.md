@@ -131,3 +131,52 @@ map). Two-dimensional note: on a layer the field is logarithmic, not
 4. The pair-field rows (12, the delay, Newton's fall) run only after the
    owner's word on the hypothesis and after the current pins, never in
    their place (`PLAN.md` section 4).
+
+## 4. The provenance word per row (issue #1077, the model owner, 2026-09-24; the Boss's order of 01:30Z, record 1561; the chief physicist, 01:55Z)
+
+The owner's test, applied to every row above: redact the NATURE value and
+ask whether the same world parameters, tables, windows, reader corrections
+and pin value can still be produced from the law and the independently
+declared apparatus. One word per row: DERIVED_BLIND (the pin follows from
+the law and inputs fixed without the target), APPARATUS_INPUT (a declared
+table or apparatus property of kind 1 or 3 carries the form, chosen without
+the target, and the pin follows from it: a check of the declared apparatus,
+not a derivation of the form), CALIBRATED_FROM_TARGET (an input was chosen
+from the value compared with), IMPLEMENTATION_GATE (a declared parameter
+read back), FALSIFIER_ONLY (a nature value that stands as a requirement, no
+prediction). Only DERIVED_BLIND counts as independent evidence; an
+APPARATUS_INPUT row is evidence for the law only through its independent
+falsifier. The (K) and (P) marks of the pins stay as they are; nothing here
+moves a pin or a world.
+
+| Row | Provenance word | The declaration that carries the target, or the blind inputs | The independent falsifier |
+| --- | --- | --- | --- |
+| 1a to 1d, Bell (S, the window, the order channel, no-signalling) | APPARATUS_INPUT | the cosine and sine tables at 1 / 256 (the phase circle's rounding, kind 1, the law's own grain) and the polariser's rotation U_s at the CHSH settings 0, N / 8, N / 4, 3 N / 8 (kind 3, the standard arrangement, not the measured S); the pin 181 / 64 follows from them with no use of nature's 2.42; the marginals 1 / 2 and no-signalling of the counts are DERIVED_BLIND theorems of the table's symmetry; the row does not derive the cos^2 law, it inserts the circle's rounding | S at settings other than the maximal four and at another N (the exact rational per N); the order channel (row 1c), open |
+| 2a, the two slits | APPARATUS_INPUT | the lamp's train (the coherence, kind 3): the first draft's 128 periods WAS chosen from nature's 0.98 (PINS.md's own sentence) and is CALIBRATED_FROM_TARGET, withdrawn; the GO's train of 32 periods (DECLARATIONS.md section 15 L-3) is chosen by HOST, and the visibility 0.959 follows from it blind (DESIGN.md 6.2); a lamp's coherence is an independent property of a source, declarable without the target | the fringe positions (the maxima at 64 and 64 +- 27 for lambda L / d, DERIVED_BLIND, which no train length sets) and the visibility's rise with the train (a second world at 64 periods, the coherence argument's own number) |
+| 2b, Mach-Zehnder (not in the GO) | APPARATUS_INPUT | the splitter's integer table [21, 20], [20, 21] over 29 with the quarter turn (kind 3, a balanced splitter by the design, not by nature's 0.98); the dark port 1 / 1682 follows blind | the visibility against an unequal-arm world (the dark port's rise with the path difference, the coherence's own number) |
+| 2c, Born's exponent (Sorkin; not in the GO) | DERIVED_BLIND | the click's quadratic form (the law's click axiom P10, no target) and the rule's linearity; nature's 0.0064 +- 0.0119 nowhere in the inputs | any Sorkin sum beyond the counts' error in a three-opening world |
+| 9 and Malus's three settings | APPARATUS_INPUT | the same tables as Bell's (kind 1) and the polariser's rotation at s (kind 3); the counts 128 / 128 at 45 degrees follow blind; the row is a check of the declared table, not a derivation of cos^2 | the three new settings 11.25, 28.125, 33.75 degrees with the table's rounding predicted before the run (-0.00100, -0.00044, +0.00006: DERIVED_BLIND numbers of the grain) |
+| 10 (a) and (b), the single opening (not in the GO) | DERIVED_BLIND | the rule's own sum through a declared opening; the pins 0.842 and 0.886 are computations of wave optics (the datums' kinds, DESIGN.md 6.1), no nature value in the inputs; NATURE (Nairz 2002) is named beside, unused | the bell's width at a second Fresnel number |
+| The atom's lines (P) | DERIVED_BLIND | the well (side, pair) and the coupling (kind 2, 3) chosen by the design; the coupled modes computed from them; nature has no atom at this scale | a line at the modes' difference, or a line off the coupled mode by more than the band |
+| M1, de Broglie | DERIVED_BLIND | the lamp's omega (kind 3, 12 Links by the design), the openings and the screen; k(omega) from the band; the centroid follows; Joensson's spacing unused | the second wavelength (16 Links, the centroid 64 + 39.23) and any lobe off the two-source sum |
+| M2, the energy of a moving mass | DERIVED_BLIND | the same lamp; the front's first rung from the band's v_g by the map; Bertozzi unused; E = m c^2 an identity of the band | the first rung at 16 Links (170) against the band's 177.6 |
+| 4a, the muon in flight | DERIVED_BLIND | the one formula at the exact cone on the declared world; nature's gamma unused (the form 1 / gamma_m compared) | a second k within the floor (the form at two speeds) |
+| 4b, the moving lamp's redshift | DERIVED_BLIND | the one formula on the declared world (the well [314, 315] in [156, 157], the coupling g G = 2 x 10^-5 chosen weak by the design after the builder's finding at g = 1 / 5, not by the target); Ives-Stilwell's form compared, its number unused | the control at rest (1.9350 / 1.9319) and the free emitter's limit 1.9339 beside; a reading off 1.9889 by more than the band |
+| 4c, the receding transponder | DERIVED_BLIND | the hop of one Link per three intervals; (1 + beta) / (1 - beta) follows; no target in the inputs | the sidebands at 2 pi / 3 declared beside |
+| 5a, the anisotropy of c | DERIVED_BLIND | the band's own dispersion by direction; nature's bound unused; a GAMEBOARD reading of the engine against the rule | a phase pace off k^2 (3 SUM n^4 - 1) / 72 by direction |
+| R2, Sagnac | DERIVED_BLIND (Reviewer 3's word asked) | the two blocks' push (kind 3) and the chain's light; the reader's rise per direction (+4.1, +8.1 at W = 64) computed from the engine's own map before the run (`coupled_mode_pins.py` (f)), with no use of Michelson, Gale and Pearson's 0.975: the redaction test passes | the control world's click 109 +- 2; the two clicks per direction 250 +- 2 and 74 +- 2 as the DETECTOR readings the band is on |
+| The light clock of two bodies, at rest | DERIVED_BLIND | 2 L / c and the rise from the map (218 at W = 64); no target | the pin's band +- 2; the rise's fall with W (216, 214, 212) |
+| The light clock in motion (DECLARATIONS.md section 10 item 7; P) | DERIVED_BLIND, and FALSIFIER_ONLY against nature | the pushed pair at a declared separation: gamma^2 / gamma_m = 1.2224 along at k = 3 by the band and the transits; nature's null (Michelson-Morley, Kennedy-Thorndike) is the requirement the law as declared does not meet; not a pass | the null itself; a light-held pair (Highlights' five, section 8b) is the world that could meet it |
+| The index at rest (v) and in motion (v-m) | DERIVED_BLIND | the closed form n^2 = 1 + G g / (omega_0^2 - omega^2) from the declared coupling; (v-m) the scheme's own number, a prediction; Fizeau a declared non-match | the cavity's mode sum beside (the 4 percent open in size) |
+| A, B, the two-pace bound and the bound clock's second term | DERIVED_BLIND | bounds printed from the band on every massive world; nature's bounds compared, unused as inputs | the bounds themselves |
+| 12, the clock in a field (under `pair-field-v1`; not in the paper's list) | DERIVED_BLIND under the hypothesis | the lattice Green's function from the hypothesis's field; the shift ratio 2.00 at r and 2 r computed (`pair_field_pins.py` (b)), not taken from nature; the hypothesis itself is beside the law | the ratio at 4 r; the field's 1 / r against the box's images |
+| 13, the bending of light, as the DELAY (under the hypothesis; not in the paper's list) | CALIBRATED_FROM_TARGET | the one declared coupling that puts n_m at 1 + sqrt 2 so that 1 + gamma_eff = 2: the target fixes the input; a form check only. The original row 13 (gamma_PPN = 1 declared, then compared with nature's 2) is an IMPLEMENTATION_GATE of the declared parameter, as PINS.md's design question says | a second coupling (the form (n_m^2 - 1) / n_m at another n_m), or the same coupling's clock shift read beside |
+| 14, Newton's fall (the form, under the hypothesis; not pinned) | DERIVED_BLIND (P, the form) | the ray equations with the local mass in the declared box's field; the spread not in it; no target | the fall's number against the box's gradient at two radii |
+| 3, 11a to 11c, the far lamp (outside the paper's list) | FALSIFIER_ONLY | the registered nature values q_0, b, Tolman's 4 stand as requirements, not computed, not predicted (the owner's comment on issue #1077 is right); no world | the values themselves, when a derivation exists |
+| 5b and Kennedy-Thorndike (dropped) | FALSIFIER_ONLY | the null as the requirement; the light-held pair's push not built; the pushed pair's number is the light clock in motion above | the null |
+| R5, R6, 6, 7, 8, the photoelectric effect, Cavendish (dropped) | FALSIFIER_ONLY | nature's values stand as requirements the law does not reach or does not declare; the photoelectric effect the first falsifier to design (the click's onset moves with the intensity, not the frequency) | each row's own value |
+
+THE COUNT by first word: APPARATUS_INPUT 4; DERIVED_BLIND 16; CALIBRATED_FROM_TARGET 1; FALSIFIER_ONLY 3. The paper's table carries the word per
+row from this section (the writer, on the merge); Reviewer 3's own words on
+1a, 2a, 2b, 9, 13 and R2 under the same test are asked independently and
+decide where they differ from mine.
