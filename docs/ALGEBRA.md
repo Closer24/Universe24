@@ -3301,10 +3301,12 @@ group's law ([p] [q] = [p + q] on Z_N, 1.1 and 1.5). The transpose of the
 product, m^T([p]) = SUM over a + b = p of [a] (x) [b], is a linear map
 with the group's own 0 / 1 table (verb B) whose image lies exactly on the
 pairs whose product is the arriving character: CONSERVATION IS ITS
-SUPPORT, not a check. On the translations the transpose is the drive at
-every cell with the arriving character's phase there (the born
-amplitudes of all the cells adding where the characters multiply to the
-arriving one). The degenerate split [p / 2] (x) [p / 2] is exact on the
+SUPPORT, not a check. On the translations the transpose would be the drive at
+every cell with the arriving character's phase there; under the rule of
+reading (9.7) that phase is not read, the pair is born by the crystal's
+click with its own clocks, and the arriving record's momentum is handed to the crystal
+at its click (the receiver's take, 8.6), the pair's birth spreading from
+the crystal's cells with no phase gradient. The degenerate split [p / 2] (x) [p / 2] is exact on the
 circle of 2N (3.6's tables). IT TAKES WITHOUT A CLICK: what it takes is
 the born record's (m^T conserves the quantum), so it has no rung and
 books on no pointer. MISSING: a record on main carries one clock per
@@ -3337,15 +3339,16 @@ counts 150, 874, 874, 150 and 874, 150, 150, 874 thrice, S = 181 / 64
 with Bob's two settings exchanged (the mirror image of Bob's polariser,
 the exchange of the rows of **U**_b, 9.2), 0 in the cancelled roles.
 
-**The cone: dispersion, never birefringence.** A pace per hand inside the
+**The hands' paces: equal, never birefringence.** A pace per hand inside the
 crystal would have to be invariant under the stabiliser; sigma_z
 exchanges the hands, so the two hands' indices are EQUAL in every body on
 a layer (DERIVED HERE): birefringence between the hands is forbidden by
-the crystal's own symmetry. The cone therefore comes from the difference
-between the arriving family's pace and the born family's (the index form
-D_i >= 1 of 8.3, one per family): sin theta_out = sqrt(n_b^2 - n_a^2), and
-for the heading (a, b, 0) the exact pair D = [a^2 + 2 b^2] / [a^2 + b^2]
-at n_a = 1 (the lab tools' specification, 1.1a).
+the crystal's own symmetry. Under the crystal of 9.7 (the click, then a
+birth) the pair is born in phase over the crystal's cells and no cone
+forms; a cone would need the pair's phase to carry the arriving record's
+local phase, which needs a read (9.7): the cone is NOT DERIVABLE under
+the rule of reading, and an experiment's headings are its placement's
+(9.6).
 
 **The length the experiment needs.** The joint gather reads the pair's
 label state and the two receivers' rotations (3.6); the arms' headings
@@ -3406,14 +3409,16 @@ For every tool, after the physicist writes its code, the mathematician
 reads the code against this chapter and confirms, line by line, that
 each operation on a cell is one of the six verbs (2.1 to 2.6) applied
 with the tool's written integers and performs exactly the group
-operation of 9.4, and nothing else. THE RULE OF THE READING: a
-conditional on a cell is lawful ONLY when it is the comparison of verb D
-named in this chapter (the rung of 8.6 and 9.2, the emitter's age
-against its train, 9.7; the clock's quarter at a train's end and the
-gap's check are load-time arithmetic, not cell reads; the crystal's
-rising-zero start is withdrawn, 9.7); any other branch on a cell, on a family's name or on a tool's
-name is a DEFECT (the owner: "every operation in the cells is always an
-operation of the group, exactly the one"). The confirmation is written
+operation of 9.4, and nothing else. THE RULE OF THE READING (the owner's word of 20:05Z, through the Boss
+at 20:20Z: "you cannot ask a cell what is in it; you get it only by a
+click from above"): the ONLY lawful read of a cell's value that decides
+anything is THE CLICK, the rung of 8.6 and 9.2; a count of a record's or
+a body's OWN clock (its accumulator under verb T: an emitter's train
+counted on its own clock, a body's age) is not a read of a cell and is
+lawful; a check at LOAD (the gap's check, the clocks' sum, the seeds) is
+the loader's, not the law's; every other branch on a cell's value, on a
+family's name or on a tool's name is a DEFECT (the owner: "every operation
+in the cells is always an operation of the group, exactly the one"). The confirmation is written
 per tool as CONFIRMED (the code is the algebra) or the defect line with
 its file and line; it is the gate for the tool's merge.
 
@@ -3463,24 +3468,32 @@ replacements.**
 
 1. THE CRYSTAL'S START "at the arriving amplitude's first rising zero
    after that Node's first rung" (the lab tools' specification 1.1a)
-   READS A CELL TO DECIDE: forbidden. REPLACED by the operation that needs
-   no decision: THE BILINEAR COUPLING of the arriving and the born
-   families at the crystal's cells, the born family's source g a_arriving
-   a_born and the arriving family's -g a_born^2 (verb B, a rate bilinear
-   in the state, within the vector test of 2.8), the interaction form V =
-   g SUM over the crystal's cells of a_arriving a_born^2 added to the
-   conserved form. The product of the arriving character with a born one
-   carries the difference clock (1.5's product), resonant exactly when
-   the born clock is HALF the arriving one: THE HALVING ARISES from m^T's
-   time part with no read and no branch; the headings arise as in 9.3.
-   Its condition (PROVED HERE): from a born amplitude of 0 the product is
-   0, so the born family needs a SEED on the crystal's cells at interval
-   0 (the crystal's `seed`, the stand-in of nature's vacuum; 9.9); the
-   born amplitude then grows as sinh(g A t) (A the arriving amplitude), so
-   the converted share is set by g, the seed and the crystal's size.
-   MISSING: the conserved form of the coupled scheme with the cubic term
-   written in integers and its exact identity (as 8.5 writes J for the
-   bilinear coupling): owed before the crystal's code.
+   READS A CELL TO DECIDE: WITHDRAWN. Two replacements were weighed:
+   (a) THE BILINEAR COUPLING g a_arriving a_born (verb B, no read): the
+   halving would arise by resonance, BUT from a born amplitude of 0 the
+   product is 0 (PROVED HERE), so it needs a SEED of the born family at
+   interval 0; a seed on the board is a record with no birth, which
+   spreads by the split before any arrival and could be booked and click
+   with no quantum behind it: it breaks one quantum, one click (8.6) and
+   the initial state (9.9). REJECTED. (b) THE CLICK, THEN A BIRTH (the
+   Boss's "or the click itself"; the owner's "the receiver gives a
+   click"): the crystal's cells are a RECEIVER for the arriving record (its
+   take pair the crystal's material, the share it takes per interval) and
+   the arriving record's one residue u chooses, on its ladder, the crystal
+   or the receivers beyond it (ONE QUANTUM, ONE CLICK); when the ladder
+   chooses the crystal, the arriving record ENDS there (its click, the one
+   lawful read) and the crystal, as an EMITTER, BIRTHS the pair's record
+   on its own cells by its own clocks (the born clocks summing to the
+   arriving one: m^T, 9.2), with its own residue on its own wheel.
+   ADOPTED (DERIVED HERE: it is the only form that reads nothing but a
+   click and keeps one quantum, one click). Consequences, DERIVED HERE:
+   the pair's phase cannot inherit the arriving record's local phase (that
+   would be a read), so the pair is born in phase over the crystal's cells
+   and NO CONE forms (the headings come from the placement, 9.6); the
+   pair's counts are exact on the crystal's wheel (874, 150, 150, 874 when
+   the crystal has made W births); the arriving records' share that the
+   crystal takes is a board quantity (MEASURED ONLY), which sets only how
+   many arriving quanta make W pairs.
 2. The train's end at the clock's quarter (the emitter): computed AT
    LOAD from the declared clock, no cell read: LAWFUL.
 3. The emitter's take of its own remnant after its train: a comparison
@@ -3517,14 +3530,80 @@ between the cubes is the vacuum: the families' own pairs, declared once.
 over the bodies of each body's seed: a well body's seed is its bound
 mode's integer profile OVER THE WHOLE BOARD at both levels (8.7: the
 tail is not cut at the cube, so "zero outside the bodies" would be wrong
-for a well), a crystal's seed is the born family's seed on its cells, and
-every other record is absent (emitters birth later); every remainder is
+for a well); no other record exists (a crystal carries no seed, 9.7;
+emitters birth later) (emitters birth later); every remainder is
 0. THE LOAD-TIME CONDITION: the board's state at interval 0 equals that
 sum Node by Node, exactly (integers), each well's profile equal bit for
 bit to the generator's (the body check, 8.7), and no Node carries any
 other nonzero amplitude; refused at load otherwise.
 
-### 9.10 What is missing, for the owner
+### 9.10 Reviewer 3's forbidden branches, and the one rule for each group (the Boss's line of 20:20Z)
+
+Reviewer 3's audit of main's physical path named eleven per-cell branches
+that are not group operations. Each group has one rule, DERIVED HERE:
+
+1. THE EMITTER'S OWN CELLS (the grace window; its exclusion in the Port
+   read; the exemption of an emitting block's sets for its own record;
+   the own take; the fresh Port's first-interval case): ONE RULE: the
+   emitter's cells are cells like every other; a record's offer at them
+   is booked as at any receiver whose take they declare, and they are on
+   the record's ladder as every cell is. WHETHER AN EMITTER MAY CLICK ON
+   ITS OWN RECORD follows from the algebra and is not decided: a rule that
+   treats a record's own emitter's cells differently branches on the
+   record's identity, which no element of the group sees (9.1: the tool's
+   action is equivariant; a record's identity is not a group object); so
+   an emitter MAY click on its own record, with the share its cells book.
+   The driven cells' amplitude is imposed by the emitter's own clock
+   (verb T); their Ports book the offer that arrives through them from the
+   neighbours, as every cell's do. The test value: the share of a record's
+   norm booked at a one-cell emitter with the take [1, 1] on a free board
+   (a COMPUTATION owed with DESIGN.md section 5's Port form; MEASURED ONLY
+   until then), and 0 at an emitter declared with the take [0, 1].
+2. THE TAKE PAIRS (two take pairs chosen per cell by set membership): ONE
+   RULE: one take pair per cell, the cell's material (section 9.2's
+   receiver), whatever sets name the cell.
+3. THE TABLE FORMS (the splitter's Node that takes and books nothing; the
+   table body acting on one family only): RETIRED with the table forms
+   (the no-table rule; the material tools of 9.2).
+4. THE BODY'S READ (the cavity's record zeroed outside its cells every
+   interval; two forms of a body's read chosen by absorbing or taking):
+   ONE RULE: one read for every body (its take pair, rule 2); the
+   cavity's boundary is a DECLARED ZERO FACE made material: a gap pair of
+   the record's own kind around the cells, whose band admits no clock of
+   the mode (8.1), so the mode's amplitude decays outside by cosh kappa =
+   6 (den / num) cos omega_b - 2 per Link on a chain; the declared zero
+   is the limit of a deep gap, and the leak per Node e^(-kappa) is the
+   test value (computed per world from the cavity's pair).
+5. The arm's half-space cut dies with the two-arm emitter (record 1818).
+
+### 9.11 The first tool through the gate: the polariser's fix (PR 1139, polariser-fix at 32745860), read against this chapter
+
+Read line by line: `TableBody` gains the half-angle pair; `_split_table_offers`
+forms the weights from `joint_weights` with one body on the record's
+labels and moves J(+)^2 / (J(+)^2 + J(-)^2) of each interval's booked
+gain to the + cell with the remainder kept. THE ALGEBRA, for a record of
+ONE arm: CONFIRMED (the weights are 3.6's projection of the record's label
+state on the body's rotation, verb B then the square; the division verb
+D with its remainder; the first rung the click). THE DEFECTS: (a) `if
+body.family != live.family: continue` is a branch on a family (Reviewer
+3's item 28, 9.11 rule 3); (b) `if norm:` is a dead branch (J(+)^2 +
+J(-)^2 = n_s times the state's norm, never 0), to be removed; (c) `if
+gain:` is a host skip with no effect (the division of 0 with a remainder
+below the wall gives 0): lawful as bookkeeping; (d) FOR A RECORD OF RANK
+2 the one-body weights on the JOINT labels are a coherent sum over the
+other arm's bit, which is not the arm's reduced state: the lawful weight
+is the partial trace, R(o) = SUM over the other arms' bits b of (SUM over
+the labels l with that bit b of w_l U_s[o][bit of l on this arm])^2; with
+HV + VH at s = 512 the code books all of an arm's offer on the + cell
+where the reduced state books half; the Bell counts are not moved (the
+joint gather reads the whole offer), but the books are wrong; (e) the
+tool is still the table form, which the no-table rule retires (the
+absorbing material of the lab tools' specification, section 2). VERDICT:
+the fix is the algebra for one-arm records and may merge as the bug's fix
+with (a), (b) and (d) corrected; the tool's final form is the material
+one.
+
+### 9.12 What is missing, for the owner
 
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
@@ -3533,4 +3612,5 @@ every polar tool acting on the board. (3) The take, a declaration and not
 an operation. (4) The polariser's general angle, a declared rotation
 outside the cells' group. (5) The same-hand channels' weights a and b of
 the crystal (9.3), a material integer the symmetry leaves free. (6) The
-conserved form of the crystal's bilinear coupling in integers (9.7).
+cone of the pair's headings: not derivable under the rule of reading
+(9.3, 9.7); an experiment's headings are its placement's.

@@ -96,7 +96,9 @@ experiment needing a crystal of one cell, the splitter a material layer.
 This section is the summary table beside it; where they differ, chapter 9
 holds. In particular chapter 9.7 replaces the crystal's start "at the
 first rising zero after the Node's first rung" (1.1a item 2), a read of a
-cell to decide, by the bilinear coupling with a seed; and 9.8 makes the
+cell to decide, by THE CLICK, THEN A BIRTH (the bilinear coupling with a
+seed weighed and rejected there): the crystal a receiver for the arriving
+record and, on its click, an emitter of the pair, no cone (section 11); and 9.8 makes the
 faces shells of receiver cubes, an experiment only cubes on a torus.
 
 THE OWNER'S WORDS (translated): "all of it must follow from the algebra.
@@ -1012,3 +1014,97 @@ counts unchanged under the material polariser (the click's weights the
 projection of the label state on the material's axis), the books a
 consistency test within the rung's margin; (6) the transponder's pin,
 blind: 3.7733 at [2464, 25] on the board against the continuum's 3.7321.
+
+---
+
+## 11. The settlements with the physicist (his checks of 17:10Z and 17:40Z on 08890a34 and 570bc2cf)
+
+AGREED by the physicist and marked so: section 4 (the well body, his body
+check on body-check 6c6386ce); section 6 (the emitter with no heading, his
+no-heading 98eefac9); section 3's numbers and its engine line "none";
+section 5's form; section 0's table; the key `axis` in place of
+`phase_window` with `TableBody`'s retirement; the transponder's blind pin
+3.7733 (8.3), its sidebands MEASURED ONLY; the retirements table (9). His
+recomputation on main's `joint_weights`, `half_angle` and `cell_of`
+confirmed every count of 2.6, 1.6 and 1.1a items 7 and 9 exactly.
+
+**11.1 The amplitude per label: withdrawn as the head's enabling line
+(his point 1, AGREED).** A one-arm record's label amplitudes are w_l times
+ONE field, so the ABSORBING polariser is performed on one field by the
+projection: at its cell the passing amplitude J(+) a / 256 with the
+record's label state set to the along label, and J(-) a / 256 taken and
+booked at the - cell (for an arm of a record of rank 2 the weights are the
+partial trace of ALGEBRA.md 9.11 (d), not the coherent sum). One amplitude
+per label is needed ONLY by the polariser's SPLITTING form (the two parts
+leave in different directions) and by a birefringent crystal (rejected,
+1.1a item 4 and ALGEBRA.md 9.3); it is built with the splitting form, if
+a world of the list ever needs it, and not for all records. The head's
+paragraph "THE ONE ENABLING ENGINE LINE" is superseded by this item.
+
+**11.2 One quantum, one click, settled (his point 2).** ALGEBRA.md 9.7
+settles it: the arriving record's ONE residue u chooses, on its ladder,
+the crystal's cells (a receiver, its take pair the crystal's material) or
+the receivers and sinks beyond; when it chooses the crystal, the arriving
+record ends there (its click) and the crystal, as an emitter, births the
+pair's record by its own clocks with its OWN residue on its own wheel of
+W. So both readings of his point hold, each for its own record: THE
+ARRIVING RECORDS' clicks are counted at the conversion fraction (the share
+the crystal takes, a board quantity, MEASURED ONLY), which sets how many
+arriving quanta the world needs; THE PAIRS' joint counts are exact on the
+crystal's wheel once it has made W births: at the settings (0, 256), (0,
+768), (512, 256), (512, 768), 150, 874, 874, 150 and 874, 150, 150, 874
+thrice (HV + VH), S = 181 / 64 with Bob's settings exchanged (the pin's
+form declared in 1.1a item 7). The crystal's own count as the pair's
+residue is therefore not "the emitter's residue passed on" but the
+crystal's own births' wheel; the order channel's seed order is declared
+at the crystal.
+
+**11.3 The Bell world's placement and its timing as integers (his points 3
+and 6).** The layer [30, 33, 1], periodic on both axes with a shell of
+receiver cubes of side 1 (take [1, 1]) on x = 0, x = 29, y = 0 and y = 32
+(ALGEBRA.md 9.8); the mirror line y = 16. The emitter: a cube of side 1 at
+(2, 16, 0). The crystal: a cube of side 3 at the vertex (13, 15, 0) (cells
+x 13 to 15, y 15 to 17, centred on the mirror line). Alice's polariser: a
+cube of side 1 at (26, 28, 0), its + receiver a cube of side 1 at (27, 29,
+0); Bob's: (26, 4, 0) and (27, 3, 0) (mirror images through y = 16). THE
+INTEGERS THE UNIT TEST ASSERTS AS BOUNDS: the crystal's click (the pair's
+birth) at t_e + 11 or later (the Manhattan distance from (2, 16) to (13,
+16)); each arm's first rung at its polariser at the birth + 22 or later
+(the Manhattan distance from (15, 17) to (26, 28), and from (15, 15) to
+(26, 4)); THE TWO ARMS' FIRST RUNGS EQUAL EXACTLY (the mirror theorem, one
+field, a mirror-symmetric placement); the gather's stamp that common
+interval. The K forms beside, never asserted: the birth near t_e + 11 / c
+= t_e + 19.05, each arm's first rung near the birth + 12 sqrt 2 / c = +
+29.39 (from the crystal's centre (14, 16)). The pair's train: 77 periods
+of [1232, 25], 3200 intervals, the common zero with the arriving train.
+
+**11.4 The crystal's cells (his point 4).** Under 11.2 the crystal is ONE
+receiver set (its cells), on the arriving record's ladder by name, NOT a
+sink; its first rung is taken over the arriving record's norm with the
+set's wheel (the world's W unless declared); no per-Node cells.
+
+**11.5 The mirror's and the splitter's test intervals and the closed
+face's delay (his point 5; COMPUTATION, the chain's exact harmonic
+solution over the train's clocks, the angular frequency within 3 x 2 pi /
+3200 of [2464, 25]).** The transmitted share of the booked total: depth 1
+between 2.886 x 10^-2 and 3.116 x 10^-2; depth 2 between 5.314 x 10^-4 and
+5.816 x 10^-4. The splitter [91, 107]: the reflected share between 0.4901
+and 0.5098. THE CLOSED FACE (the Node beyond the last free Node held at 0):
+r = -e^(2ik), its phase -2.0859 rad and its delay 2 / v_g = +3.547
+intervals referred to the last free Node; the gap mirror's +4.085, so the
+material mirror adds +0.538 intervals per reflection over the closed face
+(the light clock's pin moves by twice that per round trip, to be carried
+in the physicist's blind re-derivation).
+
+**11.6 The label bits as hands (his point (h)).** ALGEBRA.md 9.3's
+derivation of HV + VH reads the label bit as the hand (1.2's dictionary).
+On main the joint gather reads `labels`, and a bit is a hand only where
+the lamp declares `label_hands`: the crystal's world declares it (bit 0
+the hand +1, bit 1 the hand -1), so that the derivation's premise is the
+world's declaration.
+
+**11.7 The initial state's wording (his point (k)).** Adopted in ALGEBRA.md
+9.9: no record but the bodies' own at interval 0, each a well's mode
+profile over the whole board; his check to assert that the set of records
+at interval 0 is exactly the bodies' own.
+
