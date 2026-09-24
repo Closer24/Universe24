@@ -7211,3 +7211,14 @@ candidate (a), record 1711): the title line, the abstract's first
 sentence that echoes it ("confront the quantum and relativistic
 experiments?") and COVER_LETTER.md's quotation of the title. Nothing
 else in this commit. 48 pages.
+
+## Applied (2026-09-24, the Boss's orders of 07:30Z and 07:45Z): commit 58 on paper-48
+
+Reviewer 3's words on Section 4's item (4) (the detector's count under
+the world key clock_stamp, scoped like the Bell paragraph); the
+physicist's words for the abstract's last sentence and the one page's
+row-1c sentence (the counter wheel's FAIL by derivation, the declared
+seed-set order's PASS in form, the residual the model's own prediction,
+not yet run), one account with row 1c and the Bell section; the
+abstract kept within 250 words by shortening the writer's own clauses
+only (the object, Outside, amplitude and pins sentences). 48 pages.

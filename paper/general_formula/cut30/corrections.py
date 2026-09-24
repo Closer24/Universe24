@@ -6183,6 +6183,41 @@ CORRECTIONS = [
         "read only through detectors' clicks, match the quantum and relativistic experiments?",
         "read only through detectors' clicks, confront the quantum and relativistic experiments?",
     ),
+    (
+        "commit 58 (A), Reviewer 3's words of 07:34Z on Section 4's item (4): scoped like the Bell paragraph",
+        "\\item[(4)] The detector's own count between two clicks, read under the key \\texttt{clock\\_stamp} (DETECTOR; a key outside this paper's law identity, Section~\\ref{sec:law}, named as such where it is read).",
+        "\\item[(4)] The detector's own count between two clicks (DETECTOR), read under the world key \\texttt{clock\\_stamp}, declared true in every world of the GO. The key is outside this paper's law identity (Section~\\ref{sec:law}): this paper's own runs read the interval between clicks as the host's tick at the detector's set (GAMEBOARD \\cite[record 768]{log}), named as such where it is read.",
+    ),
+    (
+        "commit 58 (B), the physicist's sentence of 07:37Z for the abstract's last sentence (the residual clause dropped for the abstract's room, as he allowed)",
+        "The law derives a moving clock's $1/\\gamma_m$, not the Lorentz group; a pair's counts are no-signalling exactly, the order of its outcomes is not, a FAIL by derivation.",
+        "The law derives a moving clock's $1/\\gamma_m$, not the Lorentz group; a pair's counts are no-signalling exactly, and the order of its outcomes, which signalled under the counter wheel (a fail by derivation), passes in form under the declared seed-set order.",
+    ),
+    (
+        "commit 58 (B), the physicist's sentence of 07:37Z for the one page's row-1c sentence",
+        "The law as built derives the clock's $1/\\gamma_m$ under the massive record kind (Section~\\ref{sec:massive}) and not the Lorentz group; a pair's counts are no-signalling exactly, and the order of outcomes under the sequential wheel is not, a FAIL by derivation (row 1c).",
+        "The law as built derives the clock's $1/\\gamma_m$ under the massive record kind (Section~\\ref{sec:massive}) and not the Lorentz group. Row 1c: under the counter wheel the second party's sequence flipped with the first's setting, a FAIL by derivation; under the declared seed-set order (the attacks page \\cite{attacks}, twenty-one objections, none open) the counts are exact and the order carries no setting, PASS in form; the finite grain's residual in the sequential statistic, $E_N/(W - 1)$, is the model's own prediction, not yet run.",
+    ),
+    (
+        "commit 58 (C), the abstract within 250 words, the writer's own clauses only: the object sentence",
+        "and their $24$ rotations; six integer operations act at the applicable local events.",
+        "and their $24$ rotations; six integer operations at local events.",
+    ),
+    (
+        "commit 58 (C), the abstract within 250 words: the Outside sentence",
+        "Outside are detectors and clicks only; a record ends at one comparison, the click, the one non-local step.",
+        "Outside are detectors and clicks only; a record ends at the click, the one non-local step.",
+    ),
+    (
+        "commit 58 (C), the abstract within 250 words: the amplitude sentence",
+        "An amplitude is an integer sum of $\\Nphi$-th roots of unity, Born's form its square at the click under one axiom.",
+        "An amplitude is an integer sum of roots of unity, its square at the click Born's form, one axiom.",
+    ),
+    (
+        "commit 58 (C), the abstract within 250 words: the pins and the conjectures in one sentence (P11 already in the Outside sentence)",
+        "Only clicks are compared with nature, every number computed before its run; no pinned reading is in the table yet. The bending's $2(1 + \\gamma)$ and the atom's ladder are conjectures.",
+        "Every number is computed before its run, no reading pinned yet; the bending's $2(1 + \\gamma)$ and the atom's ladder are conjectures.",
+    ),
 ]
 
 
