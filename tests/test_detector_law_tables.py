@@ -735,6 +735,35 @@ def test_d2_the_polariser_splits_by_the_records_own_state_not_the_setting_alone(
         ((0,), body.plus),
         ((1,), body.minus),
     ]
+    assert DetectorLawSimulation.channel_weights(body.cosine, body.sine, 0, ((0, 1),)) == (
+        body.plus,
+        body.minus,
+    )
+
+
+def test_d4_an_arm_of_a_rank_2_record_is_split_by_the_partial_trace():
+    """(d4) The mathematician's gate on the polariser's fix (ALGEBRA.md 9.11, defect (d)): for an
+    arm of a rank-2 record the one-body weights are the PARTIAL TRACE over the other arm's
+    bit, R(o) = SUM over the other bit b of (SUM over the labels l with that bit of w_l
+    U_s[o][bit of l on this arm])^2, not the coherent sum over all labels. THE ALGEBRA'S
+    INTEGERS on HV + VH (the branches [[1, 1], [2, 1]]), N = 2048: at s = 512 (C' = S' = 181)
+    each arm's weights are (2 x 181^2, 2 x 181^2) = (65522, 65522), half on each channel,
+    where the coherent sum would give (362^2, 0) and book the whole offer on +; at s = 0
+    (C' = 256, S' = 0) the weights are (65536, 65536); at s = 256 (C' = 237, S' = 98) the
+    weights are (237^2 + 98^2, 98^2 + 237^2) = (65773, 65773): an arm of the entangled pair
+    is unpolarised at every setting. The other arm reads the same. A one-arm record keeps
+    the coherent sum (test d2's superposition: at s = 512 the weights (362^2, 0)). The
+    joint counts (tests e and f) do not move: the gather reads the whole offer."""
+    from event_universe.events.amplitude import half_angle
+
+    weights = DetectorLawSimulation.channel_weights
+    pair = ((1, 1), (2, 1))
+    for setting, expected in ((512, (65522, 65522)), (0, (65536, 65536)), (256, (65773, 65773))):
+        cosine, sine = half_angle(setting, 2048)
+        assert weights(cosine, sine, 0, pair) == expected, setting
+        assert weights(cosine, sine, 1, pair) == expected, setting
+    cosine, sine = half_angle(512, 2048)
+    assert weights(cosine, sine, 0, ((0, 1), (1, 1))) == (362 * 362, 0)
 
 
 @pytest.mark.parametrize(

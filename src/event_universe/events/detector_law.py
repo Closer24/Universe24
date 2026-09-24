@@ -441,6 +441,11 @@ class DetectorLawSimulation:
         # The table bodies (DECLARATIONS.md section 14 item 6): a polariser's
         # two cells, formed where a detector set names its Node.
         self.table_bodies: list[TableBody] = []
+        # the table bodies that act on each family, by the family's index: the
+        # material's own declaration (a body's table names the family it acts
+        # on), read as data at the split, never a branch on a family (the
+        # mathematician's gate, ALGEBRA.md 9.11, defect (a))
+        self.table_bodies_by_family: list[list[tuple[int, TableBody]]] = [[] for _ in world.families]
         settings = self._table_settings()
         for detector in world.detectors:
             set_cell: int | None = None
@@ -832,12 +837,41 @@ class DetectorLawSimulation:
                 sine=sine,
             )
         )
+        self.table_bodies_by_family[family].append((len(self.table_bodies) - 1, self.table_bodies[-1]))
+
+    @staticmethod
+    def channel_weights(
+        cosine: int, sine: int, arm: int, labels: tuple[tuple[int, int], ...]
+    ) -> tuple[int, int]:
+        """A body's two channel weights on a record's own label state, the
+        PARTIAL TRACE over the other arms (the mathematician's gate, ALGEBRA.md
+        9.11, defect (d)): the labels are grouped by their bits on the other
+        arms (one group for a one-arm record); within a group the channel
+        pointer is coherent, J(o) = SUM over the group's labels l of w_l x
+        U_s[o][bit of l on this arm] (verb B on the integer weights); the
+        weight R(o) is the SUM over the groups of J(o)^2. For a one-arm record
+        this is `joint_weights` with one body; for an arm of a rank-2 record
+        it is the reduced state's weight (an arm of HV + VH books half on each
+        channel at every setting, where the coherent sum over both labels
+        would book the whole offer on one). Integers throughout, no root."""
+        rows = ((cosine, sine), (-sine, cosine))
+        groups: dict[int, list[int]] = {}
+        for label, weight in labels:
+            pointers = groups.setdefault(label & ~(1 << arm), [0, 0])
+            bit = (label >> arm) & 1
+            pointers[0] += weight * rows[0][bit]
+            pointers[1] += weight * rows[1][bit]
+        return (
+            sum(pointers[0] * pointers[0] for pointers in groups.values()),
+            sum(pointers[1] * pointers[1] for pointers in groups.values()),
+        )
 
     def _split_table_offers(self, live: LiveRecord) -> None:
         """The split of this interval's offer at each table body's entry cell
         (DECLARATIONS.md section 14 item 6) BY THE RECORD'S OWN STATE: the
-        channel pointers J(o) = SUM over the record's labels l of U_s[o][bit
-        of l on the body's arm] x a_l (`joint_weights` with this one body,
+        channel weights R(+) and R(-) of `channel_weights` (the partial trace
+        over the other arms; for a one-arm record the channel pointers J(o) =
+        SUM over the labels l of U_s[o][bit of l on the body's arm] x a_l,
         verb B on the record's label weights, then the square), the weights
         J(+)^2 and J(-)^2; the entry pointer's gain since the last split,
         times J(+)^2 over their sum with the remainder kept (one division,
@@ -848,24 +882,21 @@ class DetectorLawSimulation:
         unchanged); on label 1 they swap; on a superposition they are the
         state's (Reviewer 3's bug line of 2026-09-24, 15:15Z: the polariser
         acts on the state, never assigns the outcome from the setting alone).
-        A record whose two pointers are both 0 (a state orthogonal to both
-        channels' rows cannot occur; J(+)^2 + J(-)^2 = n_s x the state's norm)
-        is left untouched. The pointers' sum, `absorbed`, the norm and every
-        other cell are untouched."""
-        for index, body in enumerate(self.table_bodies):
-            if body.family != live.family:
-                continue
+        The weights' sum is n_s times the state's norm, never 0 (the gate's
+        defect (b): no guard). The bodies acting on the record's family are
+        read as the material's own declaration (`table_bodies_by_family`, no
+        branch on a family, defect (a)). The pointers' sum, `absorbed`, the
+        norm and every other cell are untouched."""
+        for index, body in self.table_bodies_by_family[live.family]:
             seen, remainder = live.table_shares.get(index, (0, 0))
             gain = live.pointers[body.entry_cell] - seen
             if gain:
-                (_, plus_weight), (_, minus_weight) = self.joint_weights(
-                    [(body.cosine, body.sine)], [body.arm], live.labels
+                plus_weight, minus_weight = self.channel_weights(
+                    body.cosine, body.sine, body.arm, live.labels
                 )
-                norm = plus_weight + minus_weight
-                if norm:
-                    plus, remainder = divmod(gain * plus_weight + remainder, norm)
-                    live.pointers[body.entry_cell] -= plus
-                    live.pointers[body.exit_cell] += plus
+                plus, remainder = divmod(gain * plus_weight + remainder, plus_weight + minus_weight)
+                live.pointers[body.entry_cell] -= plus
+                live.pointers[body.exit_cell] += plus
             live.table_shares[index] = (live.pointers[body.entry_cell], remainder)
             whole = live.pointers[body.entry_cell] + live.pointers[body.exit_cell]
             if whole and whole * self.cell_wheel[body.entry_cell] >= live.norm:

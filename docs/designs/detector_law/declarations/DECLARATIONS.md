@@ -1802,7 +1802,14 @@ the two pins, not a third pin.
    S')^2 and (C' - S')^2 (32, 64, 32 of 64 in +): the polariser acts on the
    state and never assigns the outcome from the setting alone
    (tests/test_detector_law_tables.py, tests d, d2 and d3; the expected
-   counts the algebra's, never read from a run). Before the fix the split
+   counts the algebra's, never read from a run). FOR AN ARM OF A RECORD OF
+   RANK 2 the weights are the PARTIAL TRACE over the other arm's bit (the
+   mathematician's gate, ALGEBRA.md 9.11: the labels grouped by the other
+   arm's bit, the pointer coherent within a group, the weight the sum of
+   the groups' squares), so an arm of HV + VH books half on each channel at
+   every setting (65522 and 65522 at s = 512, where the coherent sum would
+   book the whole offer on +); the joint counts read the whole offer and do
+   not move (test d4). Before the fix the split
    read the setting alone, and a record born on label 1 or on a
    superposition was split as if on label 0; Malus's four worlds (every
    record on label 0) were unaffected. Each

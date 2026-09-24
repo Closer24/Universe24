@@ -1363,9 +1363,16 @@ would have found no cell.
    `joint_weights` with this one body (verb B on the record's label
    weights, then the square), the split by [J(+)^2, J(-)^2] over their sum
    with the remainder kept; the label-0 weights `plus`, `minus`, `norm`
-   stay on the body as the declared integers. A record whose two weights
-   are both 0 is left untouched (it cannot occur: their sum is n_s times
-   the state's norm).
+   stay on the body as the declared integers. THE GATE (the mathematician's
+   line-by-line read, ALGEBRA.md 9.11, 2026-09-24): (a) the bodies acting
+   on a record's family are read as the material's own declaration
+   (`table_bodies_by_family`), no branch on a family; (b) the weights' sum
+   is n_s times the state's norm and never 0, so no guard; (d) for an arm
+   of a rank-2 record the weights are the partial trace over the other
+   arm's bit (`channel_weights`: the labels grouped by the other arm's bit,
+   the pointer coherent within a group, the weight the sum of the groups'
+   squares), an arm of HV + VH half on each channel at every setting; the
+   joint counts unchanged (test d4).
 3. THE TESTS (tests/test_detector_law_tables.py): (d) label 0 unchanged
    (64, 32, 0 of 64 in + at s = 0, N / 4, N / 2); (d2) label 1 swaps (0,
    32, 64) and the equal superposition gives (32, 64, 32) with J(+) = C' +
