@@ -653,6 +653,15 @@ stabilisation of the engine and the freeze:
    composed into an experiment's world, which tests the composition. A
    block tested on one kind of input alone is a gap: the polariser's bug
    lived because it was tested on label 0 alone.
+8. **Three levels: the building blocks, the lab tools, the experiments**
+   (the owner, 2026-09-24, record 1825). The engine knows the emitter, the
+   body, the receiver, the clock and the six verbs. A lab tool (the
+   polariser, the splitter, the mirror, the crystal, the well body) is a
+   named composition defined once in the tool library
+   (`examples/events/entities/apparatus.json`), with its own section of
+   algebra and a unit test that checks that algebra exactly. An experiment
+   is a world file that places tools by name at positions on the board,
+   and its pin is computed from the tools' algebra.
 
 Unchanged, the law: one unit test per feature; no pin moved after a reading;
 no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
