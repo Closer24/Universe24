@@ -344,6 +344,12 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             # mode has no tail in the medium and the rule has no extent to
             # compare; the control world of MASSIVE_RECORD.md section 4.
             continue
+        if entry.block.seed == 0:
+            # A silent block (seed 0, no own record) holds nothing to bind: a
+            # take line (an absorbing block with the kind's own pair, item 6b)
+            # takes at its cells and carries no mode, so the threshold and
+            # the extent have no record to read.
+            continue
         kind = world.families[entry.family].pair
         if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
             # A barrier (a raised pair, the matter wall of DECLARATIONS.md

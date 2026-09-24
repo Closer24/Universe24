@@ -979,6 +979,39 @@ def test_n_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
 
 
+def test_aj_a_silent_take_line_has_no_mode_for_the_margin_rule_to_bind():
+    """The margin rule skips a silent block (seed 0, no own record): a take line of the matter
+    kind (an absorbing block of side 1 with the kind's own pair [800, 809], the take [-19, 86],
+    seed 0) at x = 0 of an open chain loads and passes `check_margins` with no reading, as the
+    runner and the preflight tool call it. The edge case: the same block with a seed holds an
+    unbound record and is refused as not bound."""
+    for seed, admitted in ((0, True), (1 << 20, False)):
+        document = block_world(
+            [300, 1, 1],
+            CHAIN,
+            [800, 809],
+            [
+                {
+                    "position": [0, 0, 0],
+                    "side": 1,
+                    "pair": [800, 809],
+                    "seed": seed,
+                    "absorbing": True,
+                    "take": [-19, 86],
+                    "margin": "control",
+                }
+            ],
+            faces={"x": "open"},
+        )
+        document["age_bound"] = 1 << 20
+        world = parse_nature_beam_world(document)
+        if admitted:
+            assert check_margins(world) == []
+        else:
+            with pytest.raises(ValueError, match="the block's mode is not bound"):
+                check_margins(world)
+
+
 def test_o_the_cavity_counts_the_separable_forms_cycles():
     """BUILD.md (o): a cavity of side 5 with the kind's own pair [800, 809] on a periodic 24^3
     board: the exact separable form cos omega = (800 / 809) cos(pi / 6), omega 0.5423, the
@@ -1889,6 +1922,47 @@ def test_ak_a_stepping_block_past_its_hold_books_nothing_of_its_own_record():
                 foreign = live
     assert past_hold_hops > 50 and block.stepped > 100
     assert foreign is not None and foreign.pointers[cell] > 0
+
+
+def test_al_a_block_that_steps_off_the_board_refuses_the_interval():
+    """Reviewer 3's line from the redshift dry run (BUILD.md section 18): a block pushed toward
+    a zero face (momentum [-64, 0, 0] from x = 30 on the open chain of 300, one hop per three
+    intervals) refuses the run at the interval its cells would leave the board, naming the block
+    and the interval, instead of running on with the block gone; before that interval it steps
+    and the books balance. The edge case: on a periodic chain the same block wraps and steps on
+    through 400 intervals with no refusal."""
+    for boundary, faces, refused in ((CHAIN, {"x": "open"}, True), (PERIODIC_CHAIN, None, False)):
+        document = massive_world([300, 1, 1], boundary, [800, 809], faces=faces)
+        document["ticks"] = 400
+        document["age_bound"] = 1 << 20
+        document["clock_stamp"] = True
+        document["measured"] = [
+            {
+                "position": [30, 0, 0],
+                "family": "matter",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [-64, 0, 0],
+                "fixed": True,
+                "side": 12,
+                "pair": [800, 800],
+                "seed": 50 << 20,
+                "wheel": 64,
+                "margin": "control",
+            }
+        ]
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        block = simulation.blocks[0]
+        if refused:
+            with pytest.raises(RuntimeError, match=r"measured\[0\] stepped off the board at interval"):
+                for _ in range(400):
+                    simulation.step()
+                    assert simulation.books()["balanced"]
+            assert block.stepped > 20 and simulation.tick < 400
+        else:
+            for _ in range(400):
+                simulation.step()
+            assert block.stepped > 100 and int(np.count_nonzero(block.mask)) == 12
 
 
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
