@@ -224,7 +224,7 @@ schedule's worlds standing until then.
    direction within 0.8, 0.4, 0.2 percent at 12, 16, 24 Links), 10 (b)
    (0.886); 10 (a) (0.842) after STEP 3's (M) block.
 2. The massive (K) rows: 4a the layer pin world (200^2, s = 14, mu = 0.15,
-   the mode seed, ramp 1500, hold 8000: 0.8116 at c_eff, 0.8108 and 0.8132
+   the mode seed, the declared ramp 10000 and hold 8000 (DECLARATIONS.md section 8, the rule of ten relaxation times): 0.8116 at c_eff, 0.8108 and 0.8132
    beside as CONTROLS); 4b on the declared chain of 2200 (the pin by the
    one formula on the declared world, 1.9889, the free limit 1.9339 at the
    medium's own cone beside as the (K) form, the earlier 1.9355 retired:
@@ -232,10 +232,8 @@ schedule's worlds standing until then.
    the physicist's commit; 4c (3.732, the sidebands named); R2 (0.5774).
 3. The prediction rows: (ii-a), (ii-b) on 64^3 (0.7814, 0.8032; the
    controls beside); the deep well in motion on 128^2 (0.7531, a control);
-   the light clock of two bodies under its declaration (N_0 = 2 L / c + the
-   ring-ups at the declared L and coupling; the take world 206 +- 2 beside)
-   after the (M) block; (v-m) on its declared geometry; A and B as bounds,
-   no run.
+   the light clock of two bodies under its declaration (DECLARATIONS.md section 10: the chain of 673, B the open face as the mirror, the face detector's rung W = 10000, the pin 2 L / c = 207.85 +- 2 by the linear map before the run, the W = 64 precursor a (P) beside; no (M) block needed); (v-m) on its declared geometry; A, A2 and B as bounds,
+   no run (A2 light's own dispersion, PR #1066 merged).
 4. The table rows after the phase-reading component: 1a (181 / 64 = 2.828
    at N = 2048 recomputed on the declared table), 1b (2), 1d (0), 1c on its
    declaration, 9 (128 of 256), Malus's three settings (their counts of
@@ -260,10 +258,10 @@ read; a row that misses is written as a miss; no pin moved after a reading.
 
 | When | What |
 | --- | --- |
-| Tonight, the 23rd, to about 02:00Z | PR #1056 merged; the seed build (one commit, Reviewer 3's read, merged); e2, e3, e4 run and read beside; chapter 8 and PAIR_FIELD.md merged; COVERAGE.md read; the phase-reading component if the night allows, else the morning |
-| The morning of the 24th, from the owner's word | the owner reads EXPLORATION.md, this page and COVERAGE.md; approves the list one word per item; the physicist's three lines; the GO; tier 3 steps 1 to 3 of section 3.3 run, four worlds at once, about two hours HOST on one container; the readings by kind on the pinned page; Reviewer 3 reads each head once |
-| The afternoon of the 24th | the table rows (step 4) after the phase-reading component; 10 (a) and the light clock after the (M) block; the 3-D worlds start, 4a on 191^3 first |
-| The 25th | the remaining 3-D worlds; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the pair-field rows (12, the delay, Newton's fall) after, on the owner's word on the hypothesis, never in their place |
+| Tonight, the 23rd (the owner's word of 23:05Z, record 1518: the paper closed tomorrow, everything run faster) | PR #1056, chapter 8, PAIR_FIELD.md, COVERAGE.md, PUBLISHED_FORMS.md merged; the physicist's launch list RUN_LIST.md and the declarations (the layer declaration per PIN row by the layer lemma, so every row of the paper's list runs on its declared board and no 3-D world gates the paper; the ramp 10000; the atom; the light clock without an (M) block; e3's geometry) landed at c0e88709, Reviewer 3's one bundle read; the builder's lamp check, the three components, the two 4a files regenerated, the two reader functions, the "to write" worlds; e2 and e3 run once as exploratory; the two matter-wave rows (de Broglie, E = m c^2) declared if the lamp carries the matter family |
+| The morning of the 24th, the GO by 06:00Z | the owner reads EXPLORATION.md, this page, COVERAGE.md and RUN_LIST.md; approves the list one word per item; the GO; EVERY row of RUN_LIST.md launched at once, one session per group (L, M1, M2, T), about one hour HOST; the readings by kind on the pinned page; Reviewer 3 reads each group's readings as one bundle |
+| The afternoon of the 24th, to about 15:00Z | the table rows (step 4) after the phase-reading component; the light clock; the matter-wave rows; the paper's table takes the pinned rows on their merge SHAs (the paper's writing resumes on the owner's word, suspended since record 1252); the paper closed in the evening |
+| After | the 3-D controls (4a on 191^3) started in parallel, never a gate on the paper; the pair-field rows (12, the delay, Newton's fall) on the owner's word on the hypothesis, never in the paper's place |
 
 The days read the order forward and are not a promise; each GO is the
 owner's morning word and then the Boss's word per world.
@@ -295,18 +293,41 @@ owner's morning word and then the Boss's word per world.
     word; the pair-field build (three engine lines, off by default) ordered
     after the current pins on his word on the hypothesis.
 
-## 5. The time economy (what can be shortened, as the physicist vouches)
+## 5. The time economy (what can be shortened, as the physicist vouches; the owner's word of 23:05Z)
 
-The layer instead of the box, seventeen times faster on the moving worlds
-(13.6 ms per interval on 200^2 against a box's minutes); the 8000 hold with
-the mode seed instead of a longer ramp; the light worlds at 12 Links the
-floor (the wavelength); one world per row for the paper, the series (the
-three couplings, the two boxes) exploratory only; reuse of matching runs;
-four worlds at once on one container; every tier 3 row but the 3-D worlds
-fits in one morning if the builds land tonight; the only long exploratory
-world is e5 (about ten minutes), on the owner's word; the 3-D worlds are
-the only hours and start early, in parallel, while the layer rows are read.
-No vectorisation of the engine unless byte identical, asserted by a test.
+Four things, from the owner's word that everything runs faster (record 1518):
+(1) every run in its own session, all at once at the GO, one session per
+group of RUN_LIST.md, not one world after another; (2) the layer instead
+of the box wherever the layer lemma (ALGEBRA.md 8.2) proves the reading
+identical, declared by the physicist before any run (DECLARATIONS.md
+section 7: every PIN row of the paper's list stands on its declared
+board; the 3-D worlds are later controls, never a gate), seventeen times
+faster on the moving worlds (13.6 ms per interval on 200^2); (3) the
+exploratory runs tonight in parallel, so that the morning holds only the
+GO; (4) one read by Reviewer 3 per bundle, not per commit. Beside them:
+the declared ramp 10000 with the hold 8000 (about 4 minutes HOST) instead
+of a longer hold; the light worlds at 12 Links the floor (the wavelength);
+one world per row for the paper, the series exploratory only; reuse of
+matching runs; the only long exploratory world is e5 (about ten minutes),
+on the owner's word. No vectorisation of the engine unless byte identical,
+asserted by a test.
+
+The parallel plan, second form (the owner's words of 2026-09-24 about 00:00Z,
+record 1526: parallelise everything that strong machines and memory carry,
+without touching the working method; the writer NOT parallelised): (1) one
+session per WORLD at the GO, all at once, the 64^3 worlds together, and the
+3-D controls (191^3) started at the same GO on their own machines, never a
+gate; (2) one reviewer per group's readings in the morning, four reading in
+parallel, Reviewer 3 the gate of the declarations only; (3) tonight in
+parallel and without dependence: a Source Verifier for every RECALLED number
+(Fermi LAT GRB 090510, Joensson 1961, Tonomura 1989, Bertozzi 1964, the
+Compton clock), a generator of the "to write" world files beside the
+builder's components; (4) the builder at most two, one per component in
+separate modules, one integrator; (5) ONE WRITER, holding the storyline of
+section 8, starting on the owner's word with every number a blank until its
+click. Not parallelised: the declarations (one physicist), the log and
+Highlights (the Boss), the GO (the owner's word). The Boss's own cost, more
+sessions to coordinate, met by batching the records about once an hour.
 
 ## 6. The coverage map (the owner's point for thought)
 
@@ -336,3 +357,45 @@ CONTROL or the pinned row's; nothing exploratory in the paper's table;
 each head read once by Reviewer 3; the Boss records every landing; a rule
 enters the law only on the owner's word; the GO for each day is the owner's
 morning word and then the Boss's word per world.
+
+## 8. The storyline for the writer (one writer; the owner's word of 2026-09-24, about 00:05Z, record 1526)
+
+The writer is not parallelised. He started on the owner's word of about
+00:20Z to him (the suspension of record 1252 lifted by it; record 1529), from the paper of PR #1006
+(paper-48), cut to this order, every number a blank until its click is read
+and merged; the bounds rows and the derivations final tonight. The line he
+holds, as summarised with the owner between 23:12Z and 23:40Z (records 1519
+to 1525):
+
+1. The title (the owner's word of 2026-09-24, about 00:20Z, to the writer:
+   take a title from the Boss and start it with Universe24): Universe24: the
+   group of order 24 behind the clicks, one local integer rule on the cube's
+   lattice, and the quantum and relativistic experiments it matches. The group by its fixed name (ALGEBRA.md 1.4: the group of
+   order 24, the rotation group of the cube, isomorphic to S_4); never
+   "modern algebra", "theory of everything", "nature" or "Einstein" in the
+   title.
+2. The opening: the group was found from the clicks and the law Inside
+   (ALGEBRA.md 1.3, how the group was reached from the operations), not
+   assumed.
+3. The algebra first: the one rule, the six operations, the band, the cone,
+   the click (ALGEBRA.md chapter 8); every number derived before any run
+   (ALGEBRAIC_CLOSURE.md).
+4. The method: an experiment is a world file, a result is clicks, the pin
+   written before the run, three checks per row (APPROVALS.md: the algebra,
+   the GameBoard without pins, the pins), a miss written as a miss; every
+   number by kind (K against nature's number, P the form); "matches
+   nature", never "is nature".
+5. The claim: the measured core of quantum interference without a wave
+   function assumed (the two slits, the Mach-Zehnder, Malus, Bell's 2 sqrt 2
+   without signalling, the outcome determined at the birth and written at
+   the click); special relativity as a result (c from the pair [1, 1], the
+   moving clock, the redshift, the light clock); the lattice's own
+   falsifiable signatures (the corrections of order m^2 v^2, the two gammas,
+   light's anisotropic dispersion A2, the bounds on the one scale).
+6. What it does not claim: gravity (the pair-field hypothesis in an outlook
+   only, after the pins, on the owner's word), the atom's ladder of levels,
+   alpha; the photoelectric effect named as the first falsifier to design.
+7. The order: the algebra, the method, the table of the rows with their
+   three checks, the departures, the limits, the outlook; the coverage page
+   and the published forms page as the map of what the set reflects.
+
