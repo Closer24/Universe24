@@ -6701,3 +6701,18 @@ credits row 13's re-run to the Disagreement Auditor and Reviewer 2;
 the parenthesis in row 13's cell closed. The paper 48 pages exactly;
 94 references. The title stays "Universe24: ..." unless the Boss
 sends another.
+
+## Applied (2026-09-24, the owner's title and his boxed formulas): commit 22 on paper-48
+
+The title as the owner chose it through the Boss (record 1529): the
+group by its fixed name, one colon after Universe24, no dash. The
+formulas boxed, on the owner's word and the Boss's list (record 1531):
+the click's accumulation, the walk's invariant, the energy-momentum
+relation, the pair's closed form S(N), the pace bound and the shell
+mean, beside the five already boxed; the three formulas of ALGEBRA.md
+chapter 8 (the massive band, the exact cone with the two gammas,
+light's dispersion A2) are not in the paper yet and are boxed where
+the rewrite in the storyline's order (PLAN.md section 8 of the
+detector-law design) brings them in. 49 pages: the title's three
+lines and the boxes' height carried the appendices onto one more page;
+the rewrite restores 48.

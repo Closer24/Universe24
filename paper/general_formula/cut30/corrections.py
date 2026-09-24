@@ -4803,6 +4803,41 @@ CORRECTIONS = [
         "\\bibitem{nature} The confrontation register, \\texttt{docs/NATURE.md} of the archived code \\cite{zenodo}. ",
         "\\bibitem{nature} The confrontation register, \\texttt{docs/NATURE.md} of the archived code \\cite{zenodo}. \\bibitem{records} The paper's records, cut from the paper at 48 pages (the owner's word of 2026-09-23) and kept verbatim from the same source: the full confrontation record, the check of the roads, the seven confirmations, the auxiliary proofs, the hand-worked update, the conversion table and the forcing ledger, \\texttt{paper/general\\_formula/records.tex} of the archived code \\cite{zenodo}. ",
     ),
+    (
+        "commit 22, the owner's title through the Boss (00:30Z): the group by its fixed name",
+        "\\title{Universe24: Physical Relations from the Group Ring of a Cyclic Group under the Octahedral Group of Order 24}",
+        "\\title{Universe24: the group of order 24 behind the clicks, one local integer rule on the cube's lattice, and the quantum and relativistic experiments it matches}",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the click's accumulation",
+        "\\begin{equation}\nX \\mathrel{+}= \\sum 32\\,w\\,C_{\\Nphi}[p],\\qquad Y \\mathrel{+}= \\sum 32\\,w\\,S_{\\Nphi}[p],\n\\end{equation}",
+        "\\begin{equation}\n\\boxed{\\,X \\mathrel{+}= \\sum 32\\,w\\,C_{\\Nphi}[p],\\qquad Y \\mathrel{+}= \\sum 32\\,w\\,S_{\\Nphi}[p]\\,},\n\\end{equation}",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the walk's invariant",
+        "whose exact invariant is $\\cos\\omega = \\cos m\\cos\\kappa$, $\\omega$ the walk's frequency per interval",
+        "whose exact invariant is $\\boxed{\\cos\\omega = \\cos m\\cos\\kappa}$, $\\omega$ the walk's frequency per interval",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the energy-momentum relation",
+        "gives $E^2 = E_0^2 + c^2p^2$; the whole unit",
+        "gives $\\boxed{E^2 = E_0^2 + c^2p^2}$; the whole unit",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the pair's closed form",
+        "the rungs on the fixed correlations are the closed form $S(\\Nphi) = 8(c_1 + c_1')/\\Nphi - 4$ with",
+        "the rungs on the fixed correlations are the closed form $\\boxed{S(\\Nphi) = 8(c_1 + c_1')/\\Nphi - 4}$ with",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the pace",
+        "hence $v \\le 1/\\sqrt3$, the radius of the octahedron's inscribed sphere",
+        "hence $\\boxed{v \\le 1/\\sqrt3}$, the radius of the octahedron's inscribed sphere",
+    ),
+    (
+        "commit 22, the owner's word (boxed formulas): the shell mean",
+        "\\begin{equation}\\label{eq:shell}\n\\langle a\\rangle(r) = \\frac{q\\,N_l\\,F}{\\mathcal N(r)} \\to \\frac{q\\,N_l\\,F}{2\\pi r} \\ \\text{on the plane},\\qquad \\frac{q\\,N_l\\,F}{4\\pi r^2}\\ \\text{in space},\\qquad F = \\langle S_1/|\\mathbf D|\\rangle_{\\mathrm{fan}},\n\\end{equation}",
+        "\\begin{equation}\\label{eq:shell}\n\\boxed{\\,\\langle a\\rangle(r) = \\frac{q\\,N_l\\,F}{\\mathcal N(r)} \\to \\frac{q\\,N_l\\,F}{2\\pi r} \\ \\text{on the plane},\\qquad \\frac{q\\,N_l\\,F}{4\\pi r^2}\\ \\text{in space},\\qquad F = \\langle S_1/|\\mathbf D|\\rangle_{\\mathrm{fan}}\\,},\n\\end{equation}",
+    ),
 ]
 
 
