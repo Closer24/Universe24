@@ -156,12 +156,17 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
      board (a square on a layer, a segment on a chain: the folded axis of
      extent 1). As built: the loader reads `position` and `side` and
      forms no cells; the cells are formed at the simulation's start
-     (`_cube`), wrapped on a periodic axis and CUT on an open one. NOT
-     REFUSED: CUT TO FIT, a defect under the owner's word of 16:35Z. The
-     refusal proposed and built on the body-check branch: at load, a body
-     whose cells fall off an open face, or wrap onto themselves on a
-     periodic axis shorter than its edge (the folded axis of extent 1
-     excepted), is refused naming the body and the axis; no cut.
+     (`_cube`), wrapped on a periodic axis and, before body-check, CUT on
+     an open one (not refused: cut to fit, the defect under the owner's
+     word of 16:35Z). CHECKED AT LOAD since body-check (`_body_fit_check`
+     in world.py, the last check of the loader): a body whose far vertex
+     passes an open or closed face, or whose edge exceeds a periodic axis
+     (wrapped onto itself; the folded axis of extent 1 excepted), is
+     refused with the sentence "the body of side s at x0 on the axis a
+     reaches x0 + s - 1 beyond the face at extent - 1: a body lies whole on
+     the board, exactly where it is declared, never cut to fit"; a cube
+     across the seam of a periodic axis is whole and admitted
+     (tests/test_body_conditions.py, test b).
   2. THE LOWERED PAIR: num' / den' above the medium's num / den on the
      massive kind (a well; a gap on light's kind, den' above num'). CHECKED
      AT LOAD (world.py: the kind's own pair is refused without `cavity` or
@@ -184,26 +189,36 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
      deviation printed as GAMEBOARD) and NEVER REFUSED; a scalar seed is
      the flat value on the cells and 0 outside, which is not the mode (the
      record relaxes from it); the standing start (`now` = `before`) is
-     exact by construction (`DetectorLawSimulation.__init__`). The
-     refusal ordered by the owner (16:48Z) and built on the body-check
-     branch: at load the mode's integer profile is recomputed from the
-     declared pair, shape and amplitude and compared with the initial
-     state at both levels bit for bit, refused on any Node that differs,
-     naming the Node.
+     exact by construction (`DetectorLawSimulation.__init__`). CHECKED AT
+     LOAD since body-check, on the owner's word of 16:48Z
+     (`check_body_conditions` in the margin module, called by run.py and by
+     `tools/preflight_worlds.py` on the engine as constructed, before the
+     first interval): the mode's integer profile is recomputed from the
+     declared pair, shape and amplitude (the module's own Lanczos vector
+     rounded at the seed's largest magnitude) and compared with the body's
+     own record at both levels bit for bit; the first Node that differs
+     refuses the world with the sentence "the body's initial state is not
+     the bound mode's integer profile at the amplitude A: at the Node (x, y,
+     z) the level `now` holds v where the mode gives w (n Nodes differ)". A
+     flat seed is refused by it (test d); a profile with one Node off is
+     refused naming that Node (test c); the layer pin world's profile
+     passes bit for bit (test g).
   6. THE AMPLITUDE BOUND: the seed's magnitude at most A. CHECKED AT LOAD
      (world.py, MUST 3; the profile's largest magnitude the same).
   7. THE RAMP of a pushed body at least ten relaxation times 1 / (omega_0
-     - omega_b) of its own well (DECLARATIONS.md section 8). DECLARED
-     ONLY, NOT CHECKED: the pins script prints the relaxation time before
-     the run; nothing at load or at the runner's start compares the
-     declared `ramp` with it. The refusal proposed and built on the
-     body-check branch: at the runner's start, from the margin reading, a
-     `ramp` below ten relaxation times is refused naming the body, the
-     ramp and the relaxation time; a body with no `ramp` and a momentum is
-     refused the same way unless its `start` is 0 and its momentum 0.
-  Whether a condition not checked today should be checked at load is put
-  to the owner through the Boss; the owner's word of 16:48Z answers it
-  for 1, 5 and 7, built on body-check and not merged before his read.
+     - omega_b) of its own well (DECLARATIONS.md section 8). Before
+     body-check DECLARED ONLY, NOT CHECKED (the pins script printed the
+     relaxation time; nothing compared the declared `ramp` with it).
+     CHECKED AT LOAD since body-check (the same `check_body_conditions`,
+     from the margin reading's omega_0 and omega_b): a body with a
+     momentum whose `ramp` is below ten relaxation times is refused with
+     the sentence "the ramp r is below 10 relaxation times of its own well
+     (1 / (omega_0 - omega_b) = t intervals, 10 times 10 t)"; at or above
+     it the ramp's line is printed as COMPUTATION (test f).
+  Conditions 3 and 4 stay the margin module's at the runner's start (the
+  same call, before the first interval); the owner's word of 16:48Z
+  answered conditions 1, 5 and 7 and they are built on body-check, read by
+  Reviewer 3 on main.
   THE FIFTEEN WORLDS' BODIES AGAINST THE LIST (the scan of 2026-09-24,
   read from the files on `main` 8b9a2897 through the loader; with the
   vertex check of 15:20Z above):
@@ -247,10 +262,15 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   pair (the fix on runner-lines 195a9fb9, not yet merged). Bell's four,
   Malus's four, the pace fans and the cart: no body (the polarisers bodies
   of one Node with a table, the receivers bodies of one Node). SO: seven
-  files (the deep well, the boxes' two, the light clock, sagnac's two,
-  redshift's two) carry a flat seed and would be refused by the seed check
-  of 16:48Z: a world line owed (their seeds as the module's integer
-  profiles through the generator), not a change of the check.
+  files (the deep well and its rest world, the boxes' two, the light
+  clock, sagnac's two, redshift's two) carry a flat seed and ARE REFUSED by
+  the seed check of body-check at the runner's start and by the preflight
+  tool (test g of tests/test_body_conditions.py names them): a world line
+  owed (their seeds as the module's integer profiles at the declared
+  amplitude through the generator's `mode_profile`, a change of the
+  declared worlds that takes the owner's word, since the record's norm at
+  interval 0 changes from the flat value on the cells to the mode's
+  integral), not a change of the check.
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A

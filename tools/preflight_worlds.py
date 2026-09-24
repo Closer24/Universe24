@@ -32,7 +32,11 @@ from dataclasses import dataclass
 from itertools import product
 from pathlib import Path
 
-from event_universe.diagnostics.massive_record_margin import check_margins, profile_check
+from event_universe.diagnostics.massive_record_margin import (
+    check_body_conditions,
+    check_margins,
+    profile_check,
+)
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
 from event_universe.events.world import NatureBeamWorld
@@ -126,8 +130,9 @@ def load_one(path: Path) -> Outcome:
         loaded = load_world(path.read_bytes(), base_dir=path.parent)
         world = loaded.world
         notes: list[str] = []
+        readings = check_margins(world) if world.massive_record else []
         if world.massive_record:
-            for reading in check_margins(world):
+            for reading in readings:
                 notes.extend(reading.lines())
                 check = profile_check(world, reading.number)
                 if check is not None:
@@ -137,7 +142,10 @@ def load_one(path: Path) -> Outcome:
                     )
         engine = "detector_law" if world.detector_law else "rays"
         if world.detector_law:
-            DetectorLawSimulation(world)
+            simulation = DetectorLawSimulation(world)
+            # the body's conditions exact in the initial state (the owner's
+            # word of 2026-09-24, 16:48Z), as the runner checks them
+            notes.extend(check_body_conditions(world, simulation, readings))
             pair_lamp_checks(world)
         else:
             NatureBeamSimulation(world)

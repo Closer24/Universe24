@@ -5,6 +5,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+- The body's conditions exact in the initial state, checked at load (the model owner's word of 2026-09-24, 16:48Z): the loader refuses a body that does not lie whole on the board (`_body_fit_check`; before, the cube was cut to the board silently); the margin module's `check_body_conditions`, called by the runner and by `tools/preflight_worlds.py` on the engine as constructed, recomputes every bound body's mode as an integer profile and refuses a world whose body's own record differs from it at either level on any Node, naming the Node, and refuses a pushed body whose `ramp` is below ten relaxation times of its own well; `tests/test_body_conditions.py`. As the files stand, the muon's layer pin world passes and seven flat-seeded worlds of the run list (the deep well, the boxes, the light clock, sagnac, redshift) are refused: their seeds on the mode are a world line owed.
+
 - detector-law-v1: a lamp's `receiver`, its records' ladder by name (the named detector sets; every other set and every face a sink, taken and booked but never chosen), the cell of u over the ladder's own sum; the gather line's `ladder` and `sunk` fields (SIZING.md; BUILD.md section 20).
 
 ### flow-link-v1 under its key, and the split ladder of the pushed row's wall (2026-09-22)

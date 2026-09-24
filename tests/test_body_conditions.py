@@ -1,0 +1,226 @@
+"""The body's algebraic conditions exact in the initial state, checked at load (the model
+owner's word of 2026-09-24, 16:48Z, through the Boss; SIMULATOR_DEFINITIONS.md, the four
+building blocks, the body's conditions): (a) a cube on a small board, a square on a layer
+and a segment on a chain, each seeded with the margin module's own integer profile, load,
+construct and pass the check bit for bit; (b) a body that does not fit the board is refused
+at load, named with the axis, never cut; (c) a profile with one Node off is refused naming
+the Node; (d) a flat seed is refused (the initial state is not the mode); (e) a pair not
+lowered is the loader's own refusal; (f) a pushed body's ramp below ten relaxation times of
+its own well is refused, at or above it admitted; (g) the run list's massive worlds under
+the check as their files stand: the muon's layer pin world passes, the seven flat-seeded
+worlds are refused with the seed sentence (a world line owed, not a change of the check),
+the silent bodies and the light-kind walls have no reading. Every number here is a
+COMPUTATION of the declaration; nothing of the check is read by the state."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from event_universe.diagnostics.massive_record_margin import (
+    bound_mode,
+    check_body_conditions,
+    check_margins,
+    relaxation_time,
+)
+from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.world import parse_nature_beam_world
+from tests.test_massive_record import block_world
+
+PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
+KIND = [800, 809]
+WELL = [800, 800]
+AMPLITUDE = 1 << 20
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events"
+
+
+def seeded(
+    shape: list[int],
+    corner: list[int],
+    side: int,
+    momentum: list[int] | None = None,
+    ramp: int = 0,
+    faces: dict[str, str] | None = None,
+) -> dict:
+    """A world of one body of the kind [800, 809] with the full-depth well [800, 800], a
+    control world, its seed the margin module's own mode rounded at the amplitude 2^20 over
+    the whole board (the generator's `mode_profile` form)."""
+    document = block_world(
+        shape,
+        PERIODIC,
+        KIND,
+        [{"position": corner, "side": side, "pair": WELL, "margin": "control"}],
+        faces=faces,
+    )
+    document["age_bound"] = 100000
+    entry = document["measured"][0]
+    entry["margin"] = "control"
+    if momentum is not None:
+        entry["momentum"] = momentum
+        entry["ramp"] = ramp
+    mode = bound_mode(parse_nature_beam_world(document), 0)
+    entry["seed"] = [int(value) for value in np.rint(mode * AMPLITUDE).astype(np.int64).ravel()]
+    return document
+
+
+def checked(document: dict) -> list[str]:
+    """The check as the runner and the preflight tool call it: the margins first, then the
+    body's conditions on the engine as constructed."""
+    world = parse_nature_beam_world(document)
+    readings = check_margins(world)
+    return check_body_conditions(world, DetectorLawSimulation(world), readings)
+
+
+def test_a_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
+    """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment
+    of side 8 on a chain of 64, each on its own board's mode: one COMPUTATION line each,
+    the initial state the profile at both levels bit for bit."""
+    for shape, corner, side in (
+        ([48, 48, 48], [14, 14, 14], 20),
+        ([32, 32, 1], [12, 12, 0], 8),
+        ([64, 1, 1], [28, 0, 0], 8),
+    ):
+        lines = checked(seeded(shape, corner, side))
+        assert len(lines) == 1 and "bit for bit" in lines[0], (shape, lines)
+        assert f"amplitude {AMPLITUDE}" in lines[0]
+
+
+def test_b_a_body_that_does_not_fit_is_refused_at_load_never_cut():
+    """A body whose far vertex passes an open face is refused naming the axis and the
+    vertex; a body wider than a periodic axis is refused as wrapped onto itself; a segment
+    past the chain's end the same; the folded axis of extent 1 is no refusal (the square
+    above). Before this line the engine cut the cube to the board silently."""
+    off = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        KIND,
+        [{"position": [40, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
+        faces={"x": "open"},
+    )
+    off["age_bound"] = 100000
+    with pytest.raises(
+        ValueError, match=r"side 20 at 40 on the axis x reaches 59 beyond the face at 47"
+    ):
+        parse_nature_beam_world(off)
+    wrapped = block_world(
+        [16, 48, 48],
+        PERIODIC,
+        KIND,
+        [{"position": [2, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
+    )
+    wrapped["age_bound"] = 100000
+    with pytest.raises(ValueError, match=r"wraps onto itself on the periodic axis x of extent 16"):
+        parse_nature_beam_world(wrapped)
+    chain = block_world(
+        [64, 1, 1],
+        PERIODIC,
+        KIND,
+        [{"position": [60, 0, 0], "side": 8, "pair": WELL, "margin": "control"}],
+        faces={"x": "open"},
+    )
+    chain["age_bound"] = 100000
+    with pytest.raises(ValueError, match=r"reaches 67 beyond the face at 63"):
+        parse_nature_beam_world(chain)
+    # across the seam of a periodic axis the cube is whole: admitted
+    seam = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        KIND,
+        [{"position": [40, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
+    )
+    seam["age_bound"] = 100000
+    assert parse_nature_beam_world(seam).measured[0].block is not None
+
+
+def test_c_one_node_off_the_mode_is_refused_naming_the_node():
+    document = seeded([48, 48, 48], [14, 14, 14], 20)
+    index = (14 * 48 + 14) * 48 + 14
+    document["measured"][0]["seed"][index] += 1
+    with pytest.raises(ValueError, match=r"at the Node \(14, 14, 14\) the level `now` holds") as found:
+        checked(document)
+    assert "(1 Nodes differ" in str(found.value)
+
+
+def test_d_a_flat_seed_is_not_the_mode_and_is_refused():
+    """The flat seed of the first builds (the value on the cells, 0 outside) is not the bound
+    mode's profile: refused at the first differing Node, the sentence naming the generator's
+    `mode_profile` as the form the seed takes."""
+    document = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        KIND,
+        [{"position": [14, 14, 14], "side": 20, "pair": WELL, "margin": "control", "seed": AMPLITUDE}],
+    )
+    document["age_bound"] = 100000
+    document["measured"][0]["seed"] = AMPLITUDE
+    with pytest.raises(
+        ValueError, match=r"is not the bound mode's integer profile at the amplitude 1048576"
+    ):
+        checked(document)
+
+
+def test_e_a_pair_not_lowered_is_the_loaders_own_refusal():
+    document = block_world(
+        [48, 48, 48],
+        PERIODIC,
+        KIND,
+        [{"position": [14, 14, 14], "side": 20, "pair": KIND, "margin": "control"}],
+    )
+    document["age_bound"] = 100000
+    with pytest.raises(ValueError, match=r"is the kind's own pair"):
+        parse_nature_beam_world(document)
+
+
+def test_f_the_ramp_against_ten_relaxation_times():
+    """The box of side 20 (omega_0 0.1493, omega_b 0.1105: the relaxation 25.7 intervals,
+    DECLARATIONS.md section 8's 26): pushed with a ramp of 100 it is refused naming the ramp
+    and the relaxation time; with 300 (11.7 times) it is admitted with the ramp's line."""
+    world = parse_nature_beam_world(seeded([48, 48, 48], [14, 14, 14], 20))
+    relaxation = relaxation_time(check_margins(world)[0])
+    assert 25.0 < relaxation < 26.5
+    with pytest.raises(ValueError, match=r"the ramp 100 is below 10 relaxation times"):
+        checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=100))
+    lines = checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=300))
+    assert len(lines) == 2 and lines[1].startswith("ramp (COMPUTATION): block 0: the ramp 300")
+
+
+CLEAN = "bit for bit"
+FLAT = "is not the bound mode's integer profile"
+NONE = "no reading"
+
+
+@pytest.mark.parametrize(
+    ("name", "verdict"),
+    [
+        ("massive_record/layer_pin_rest_14.json", CLEAN),
+        ("massive_record/deep_well_k3_40.json", FLAT),
+        ("massive_record/moving_20.json", FLAT),
+        ("massive_record/light_clock_60.json", FLAT),
+        ("massive_record/sagnac_k3.json", FLAT),
+        ("massive_record/redshift_k3.json", FLAT),
+        ("massive_record/index_moving_long_k3_away.json", NONE),
+        ("detector_law/two_slits.json", NONE),
+    ],
+)
+def test_g_the_run_lists_massive_worlds_under_the_check_as_their_files_stand(name: str, verdict: str):
+    """The muon's layer pin world (`layer_pin_rest_14.json`, its seed the generator's
+    `mode_profile`) passes bit for bit; the deep well, the boxes, the light clock, the
+    Sagnac blocks and the redshift emitter carry a flat seed and are REFUSED (their seeds on
+    the mode are a world line owed, DECLARATIONS.md, not a change of the check); the index's
+    silent body and the two slits' mirror line of light's kind have no reading."""
+    document = json.loads((WORLDS / name).read_text(encoding="utf-8"))
+    world = parse_nature_beam_world(document)
+    readings = check_margins(world)
+    if verdict == NONE:
+        assert readings == []
+        assert check_body_conditions(world, DetectorLawSimulation(world), readings) == []
+        return
+    if verdict == CLEAN:
+        lines = check_body_conditions(world, DetectorLawSimulation(world), readings)
+        assert lines and all(CLEAN in line for line in lines if line.startswith("seed"))
+        return
+    with pytest.raises(ValueError, match=FLAT):
+        check_body_conditions(world, DetectorLawSimulation(world), readings)
