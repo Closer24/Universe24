@@ -4928,6 +4928,56 @@ CORRECTIONS = [
         "and Figure~\\ref{fig:worlds} draws them as a square within a square and what the squares lead to.",
         "and Figure~\\ref{fig:worlds} draws the road from the two groups to the click.",
     ),
+    (
+        "commit 28, appendix A's first sentence, an editing residue removed",
+        "\\paragraph{The tables and their rounding.} interval $t \\in \\Z$. The circle is",
+        "\\paragraph{The tables and their rounding.} The circle is",
+    ),
+    (
+        "commit 28, the declarations' section 14 merged to main (PR 1069)",
+        "on \\texttt{main} at 53cec95d; its section 14 (the tables act on the record's pair in the linear form) on the branch \\texttt{detector-law-design} at aea7c166 (its merge pending).",
+        "on \\texttt{main} at 6e16f16d, its section 14 the tables acting on the record's pair in the linear form.",
+    ),
+    (
+        "commit 28, the glossary merged to main (PR 1070)",
+        "on the branch \\texttt{glossary-closed} at 95564f92 (its merge pending).",
+        "on \\texttt{main} at 0e479a22.",
+    ),
+    (
+        "commit 28, the approvals file merged to main (PR 1071), with the paper's storyline",
+        "on the branch \\texttt{claude/universe24-new-3ytqde} at 65b96b69 (its merge pending).",
+        "on \\texttt{main} at 054a6223, beside the paper's storyline, section 8 of \\texttt{docs/designs/detector\\_law/PLAN.md}.",
+    ),
+    (
+        "commit 28, the disagreement audit merged to main",
+        "on the branch \\texttt{disagrees-audit} at 103a30fa (its merge pending).",
+        "on \\texttt{main} at 103a30fa.",
+    ),
+    (
+        "commit 28, the light clock's pin corrected on the Boss's word: 218 +/- 2 at W = 64, 2L/c beside",
+        "$N_0 = 2L/c = 207.85 \\pm 3$ in A's clicks, (K) in $2L/c$ and (P) in the two ring-ups",
+        "$N_0 = 218 \\pm 2$ in A's clicks at $W = 64$, $2L/c = 207.85$ beside as the (K) form, (P) in the two ring-ups",
+    ),
+    (
+        "commit 28, M2's pin corrected on the Boss's word: 169 +/- 2, the group transit beside",
+        "the first click $157$ intervals after the lamp's birth at the declared rung, the group transit $167.1$ beside as the form",
+        "the first click $169 \\pm 2$ intervals after the lamp's birth at the declared rung, the group transit $167.1$ beside as the form",
+    ),
+    (
+        "commit 28, keywords after the abstract, as the journal's template asks",
+        "\\end{abstract}\n\n\\section{Introduction}\\label{sec:intro}",
+        "\\end{abstract}\n\n\\noindent\\textbf{Keywords:} integer lattice model; the symmetry group of the cube; cyclic group ring; Bell correlations; discrete relativity; pre-registered simulation\n\n\\section{Introduction}\\label{sec:intro}",
+    ),
+    (
+        "commit 28, the declarations in the journal's list: consent, data availability and code availability apart",
+        "\\paragraph{Data and code availability.} The simulator, every world file, every registered run's record, the check scripts with their outputs, the figures' scripts and the derivation records cited in this paper are archived at Zenodo \\cite{zenodo} (concept DOI 10.5281/zenodo.22738746); the commit of the archived version is named in Appendix~\\ref{app:reproduction}, and every number of the paper has one row in the ledger of that archive (\\texttt{paper/general\\_formula/NUMBERS.md}) naming its kind and its source.",
+        "\\paragraph{Consent to participate and consent for publication.} Not applicable: no human participants and no animals.\n\\paragraph{Data availability.} Every world file, every registered run's record, the check scripts' outputs and the derivation records cited in this paper are archived at Zenodo \\cite{zenodo} (concept DOI 10.5281/zenodo.22738746); the commit of the archived version is named in Appendix~\\ref{app:reproduction}, and every number of the paper has one row in the ledger of that archive (\\texttt{paper/general\\_formula/NUMBERS.md}) naming its kind and its source.\n\\paragraph{Code availability.} The simulator, the check scripts and the figures' scripts are in the same archive \\cite{zenodo}, under its open licence; the figures are drawn by those scripts from the definitions, none by a generative tool.",
+    ),
+    (
+        "commit 28, the figure's caption after the physicist's line: the block is the detector, the light record through it, only the click leaves the board",
+        "Third: the GameBoard with a block of cells inside it, the phase circle $\\Z_{\\Nphi}$ as the record's clock on it, and the rung $W$ of the detector's cells around it. Right: the click, the quadratic form of the record's values in the cells crossing the rung, one per record.",
+        "Third: the GameBoard with the block inside it, the block itself the detector, its cells the detector set with the rung $W$; the phase circle $\\Z_{\\Nphi}$ on it, the record's clock, tied to the record's pair by the kind's declared clock (light's phase per Link $[n, d]$, the massive kind's $\\cos\\omega_0 = \\mathrm{num}/\\mathrm{den}$); the light record running on the free Nodes and through the block; the take a declaration of the world file. Right: the click, the quadratic form of the record's values in the cells crossing the rung, one per record, the only thing that leaves the board; every other number of the paper is a GAMEBOARD reading of the host.",
+    ),
 ]
 
 

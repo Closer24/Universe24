@@ -6806,3 +6806,25 @@ square-within-a-square figure of commit 25 and its script are removed;
 the seven points' first sentence names the figure as drawn. The chief
 physicist's line on the hexagon and the nesting, asked for on the
 owner's word, moves the drawing if it differs.
+
+## Applied (2026-09-24, the physicist's line and the Boss's numbers): commit 28 on paper-48
+
+The chief physicist's line on the figure (00:55Z): the hexagon is the
+six Ports along a body diagonal; the phase circle is drawn as a circle;
+the nesting is the circle in the record's pair at a Node, the Node in
+the block, the block on the board, the click outside; the block itself
+is the detector, its cells the detector set with the rung W, no ring of
+cells around it; a light record runs on the free Nodes and passes
+through the block; the caption names the kind's clock tying the circle
+to the pair, the take as a declaration, and that only a click leaves
+the board, every other number a GAMEBOARD reading. The third panel and
+the caption follow it. The citations to the declarations' section 14,
+the glossary, the approvals file and the disagreement audit point to
+main (PRs 1069, 1070, 1071 merged). The light clock's and M2's pins
+carry the Boss's corrected numbers. The massive section uses the
+glossary's names for the foreign object and the block. Keywords and
+the declarations follow Springer Nature's template (Foundations of
+Physics: sn-jnl, keywords, Funding, Competing interests, Ethics,
+Consent, Data availability, Code availability, Author contributions,
+the use of a large language model documented; no figure by a
+generative tool). Appendix A's first sentence lost an editing residue.

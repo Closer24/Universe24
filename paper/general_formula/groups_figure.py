@@ -74,14 +74,16 @@ def draw(output: Path) -> None:
     ax.set_zlim(-lim, lim)
     bare(ax)
     ax.set_title("along a body diagonal:\nthe hexagon, the cubic pattern", fontsize=7.2, color="black")
-    # 3. The GameBoard with a block of cells inside it and the rung's cells around the block.
+    # 3. The GameBoard with the block of cells inside it: the block is the detector, its rung W;
+    #    a light record runs on the free Nodes and passes through the block.
     ax = fig.add_subplot(1, 4, 3, projection="3d")
     n = 5
     g = np.array(list(product(range(n), repeat=3)), dtype=float)
     ax.scatter(g[:, 0], g[:, 1], g[:, 2], color=LIGHT, s=4, depthshade=False)
     wire_cube(ax, (2, 2, 2), 2.0, color=LIGHT, lw=0.6)
     wire_cube(ax, (2, 2, 2), 0.5, color="black", lw=1.1)
-    wire_cube(ax, (2, 2, 2), 1.0, color=GREY, lw=0.9, ls="--")
+    ax.text(2.55, 2.0, 2.65, "$W$", fontsize=8, color="black")
+    ax.plot([-0.1, 4.1], [2.0, 2.0], [2.0, 2.0], color=GREY, lw=1.0)
     # The phase circle on the block: the record's clock, a ring around the block's centre.
     t = np.linspace(0, 2 * np.pi, 200)
     ax.plot(2 + 0.75 * np.cos(t), 2 + 0.75 * np.sin(t), 2 + 0 * t, color="black", lw=0.8)
@@ -96,7 +98,7 @@ def draw(output: Path) -> None:
     ax.set_zlim(-0.2, 4.2)
     bare(ax)
     ax.set_title(
-        "on the board: the block, a cube of cells,\nthe phase circle $\\mathbb{Z}_N$ its clock; the rung $W$ around it",
+        "on the board: the block is the detector, its rung $W$;\nthe circle $\\mathbb{Z}_N$ the record's clock; light through it",
         fontsize=7.2,
         color="black",
     )
@@ -115,7 +117,9 @@ def draw(output: Path) -> None:
     ax.text(xc, 0.7, "click", fontsize=7.5, ha="center")
     ax.text(0.5, 0.1, "$X^2 + Y^2$ in the cells, against the count", fontsize=6.8, ha="center")
     ax.set_title(
-        "the click: the quadratic form\ncrosses the rung, one per record", fontsize=7.2, color="black"
+        "the click: the form crosses the rung,\nthe only thing that leaves the board",
+        fontsize=7.2,
+        color="black",
     )
     fig.subplots_adjust(left=0.01, right=0.99, top=0.82, bottom=0.04, wspace=0.05)
     fig.savefig(output / "groups_to_click.pdf")
