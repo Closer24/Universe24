@@ -848,6 +848,31 @@ den (ALGEBRA.md 8.1). Its unit tests are the body check's and the rest
 worlds' pins (RUN_LIST.md, the muon's form at rest). This section is an
 index.
 
+**4.1 The well among the other tools (ALGEBRA.md 9.9, the well and the
+other tools).**
+- Only a body with a pair of the well's own family enters its record's
+  operator; light's tools are the vacuum for it.
+- No click but its own reads its record (by name).
+- Its seed is the mode of the COMPOSED world. Where two wells of one
+  family are nearly degenerate, the seed is the hybrid localised on the
+  well, and the world is refused if sin^2(delta omega T / 2) exceeds the
+  reading's band.
+- No two bodies share a Node.
+
+The expected values of the load check:
+- `sagnac_rest.json`: delta omega = 1.96 x 10^-7 per interval and
+  sin^2(delta omega T / 2) = 6.9 x 10^-7, so it is accepted on the band.
+  Its seeds, computed alone, differ from the composed ones by up to 244
+  units at 72 Nodes (amplitude 52428800), so they are refused until they
+  are regenerated.
+- A light mirror added off the deep well: the seed is unchanged,
+  accepted.
+- A receiver of side 2 at (80, 80, 0) inside the deep well: refused; at
+  (84, 44, 0): accepted.
+
+The engine line: the margin module's `bound_mode` forms the operator
+from every block of the family, not only its own.
+
 ---
 
 ## 5. The receiver (an absorbing material with its click's named set)

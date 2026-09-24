@@ -3546,6 +3546,87 @@ sum Node by Node, exactly (integers), each well's profile equal bit for
 bit to the generator's (the body check, 8.7), and no Node carries any
 other nonzero amplitude; refused at load otherwise.
 
+**THE WELL AND THE OTHER TOOLS (the owner's word through the Boss,
+22:10Z: "a well looking at the fields around it must not collide with
+the other lab tools; the initial conditions must close that").** A
+correction of wording first: each well's seed is written on ITS OWN
+RECORD (every record carries its own rows, 8.6), not summed with other
+seeds on one Node's state. The condition then follows in four steps
+(DERIVED HERE).
+
+1. WHICH TOOLS ENTER A WELL'S RECORD. A record of the family F moves by
+   the one rule with each Node's pair FOR F (8.1). A tool enters F's
+   operator only through a pair for F, or through a polar matrix that
+   acts on F's labels. The mirror, the splitter, the polariser, the
+   crystal and the receivers are LIGHT's materials: they carry no pair
+   for a massive family, so they are the vacuum for a matter record, and
+   a light tool anywhere leaves the well's operator unchanged. So a well
+   can collide only with a body that carries a pair of its own family:
+   another well of that family, a transponder's massive body, or that
+   family's faces (the zero row, already in the module).
+2. NO TOOL READS OR CHANGES THE WELL'S RECORD BY AN OPERATION. By 9.7 the
+   only read that decides is a click, and a click reads only a record
+   that names the clicking cells (the ladder by name): a receiver's E and
+   a crystal's click read their named records, and the well's record
+   names its own block. The take is removed (9.12). So nothing but the
+   rule's material acts on the well's record, and step 1 names that
+   material.
+3. THE SEED IS THE MODE OF THE COMPOSED WORLD. The standing start is
+   exact only for an eigenvector of the operator the record actually
+   feels (8.7). That is F's operator with EVERY body's pair for F in
+   place, not the well's alone. Two cases:
+   - (i) The well's mode is separated from every other mode of the
+     composed operator by more than 1 / T (T the run's intervals). Then
+     the seed is the composed operator's own mode, computed with every
+     body of F in place.
+   - (ii) Two wells of one family whose modes are nearly degenerate (the
+     same pair and side). The composed modes are the even and odd
+     hybrids, split by delta omega, and NO LOCALISED EIGENVECTOR EXISTS.
+     The seed is then the well-alone mode projected on the composed modes
+     within 1 / T of its own frequency; for two wells that is the hybrid
+     combination localised on the well. It moves to the other well at the
+     rate delta omega / 2, carrying the norm share sin^2(delta omega T /
+     2) over the run. THE CONDITION: that share must be below the
+     reading's band.
+
+   On main, `bound_mode` computes each well ALONE ("the other blocks'
+   wells not carried"): a defect for every world with two wells of one
+   family.
+4. NO OVERLAP. One Node is one body's: a body is the material of its
+   Nodes (9.1), and two bodies on one Node give that Node two materials
+   with no rule to choose between them. REFUSED at load.
+
+THE LOAD-TIME CHECK that follows (the body check, extended):
+- (a) The cells of every two bodies are disjoint; the first shared Node
+  is named in the refusal.
+- (b) For each well of family F, the composed operator (every body's pair
+  for F) is formed. Its modes within 1 / T of the well's are found, and
+  the seed is recomputed as in 3 and compared with the file bit for bit
+  at both levels.
+- (c) In case (ii), sin^2(delta omega T / 2) is printed (COMPUTATION) and
+  the world is refused if it exceeds the reading's declared band.
+
+THE EXPECTED VALUES (COMPUTATION: a dense eigen decomposition of the
+chain operator D^(-1/2) (S_6 / 3) D^(-1/2), float, on the host):
+- `sagnac_rest.json` (two matter wells of side 12 and pair [800, 800] at
+  x = 700 and 772 on the open chain of 3000, T = 8450): the wells are case
+  (ii). omega_b = 0.089258 per interval, delta omega = 1.96 x 10^-7 per
+  interval and sin^2(delta omega T / 2) = 6.9 x 10^-7, far below the
+  band of 3 x 10^-3: ACCEPTED on (c). The composed seed differs from the
+  well-alone seed at the amplitude 52428800 by at most 244 units, at 72
+  Nodes. So the file's seeds, computed alone, are REFUSED by (b) until
+  they are regenerated on the composed world; the reading does not move
+  beyond 7 x 10^-7.
+- `deep_well_rest_40.json` with a light mirror cube added anywhere off
+  the well: the matter operator is unchanged, so the seed is the same
+  bit for bit: ACCEPTED.
+- The same world with a receiver cube of side 2 at (80, 80, 0), inside
+  the well [44, 84): REFUSED by (a) at (80, 80, 0). At (84, 44, 0),
+  adjacent to the well: ACCEPTED.
+- Every other world of the list has a single well per family (the
+  layer, the redshift, the deep well, the boxes, the light clock, the
+  receding index): (b) reduces to main's check, with no change.
+
 ### 9.10 Reviewer 3's forbidden branches, and the one rule for each group (the Boss's line of 20:20Z)
 
 Reviewer 3's audit of main's physical path named eleven per-cell branches
