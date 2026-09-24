@@ -1229,6 +1229,26 @@ measurement (Reviewer 3's line, 23:50Z); Fizeau's drag stays the declared
 non-match.
 Nothing of the pin's form moves: the row was never pinned to a number of
 nature.
+THE K = 4 WORLDS' PIN (`index_moving_long_k4_away.json` with its rest and
+reference worlds; DECLARED BLIND 2026-09-24, 12:50Z, the Boss's order of
+12:45Z, before any reading of those worlds, the Preliminary Runner holding
+his k = 4 readings unrelayed until this line is on main): the same
+geometry and window, the block stepping one Link every FOUR intervals
+(beta = 0.433 c, the motion pair [16, 13], gamma_m^2 = 16 / 13; the rest
+world's light clock [2243, 10000] on N = 64 is the block-frame frequency
+gamma_m omega (1 - beta) = 0.02202 per interval, the same convention as
+k = 3's). The script's number (`massive_moving_index_k4.py` and `.out`,
+the same-Node scheme with the motion pair on G g): the resting block at
+omega' away reads n = 1.2577; the moving block's lab phase delay over the
+window +0.6103 rad against the covariant expectation +0.2616 rad, the
+ratio 2.33; the window's halves +0.4423 and +0.7856 rad, a drift of 4.3 x
+10^-4 rad per interval. THE READER OF RECORD as for k = 3: the window's
+phase within +- 0.04 rad and its drift rate within +- 10 percent of the
+script's, both a probe's phase, GAMEBOARD, a prediction of the engine's
+board and not a measurement (P). The k = 3 and k = 4 rows together read
+the pump's dependence on the pace (the phase 1.0144 against 0.6103, the
+drift 1.2 x 10^-3 against 4.3 x 10^-4), a COMPUTATION of the script beside
+the two pins, not a third pin.
 
 ## 12. The two matter-wave rows, M1 (de Broglie) and M2 (the energy of a moving mass), one world (2026-09-23, 23:30Z, the owner's word and the Boss's decision of 23:32Z; the second draft 2026-09-24, 00:15Z, on Reviewer 3's read of 00:05Z; `matter_wave_pins.py`)
 

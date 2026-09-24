@@ -1,0 +1,9 @@
+THE RECEDING INDEX AT K = 4: beta = 0.4330 c, the motion pair [16, 13], gamma_m^2 = 1.2308, gamma_m = 1.1094; the block-frame frequency away 0.02202 per interval (the rest world's clock [2243, 10000] on N = 64 = 0.02202); the same-Node scheme, the declared geometry of section 11
+
+the receding case on the DECLARED geometry: n = 4000, the source at 800, the probe at 2400, the block from 1500 moving away from 3000; the window [3800, 5400]
+      (the energy account over the window: light's E drifts -2.981e-04 per interval beyond the reference train's own feed, the massive E -9.194e-10; the combination E_light + (G / g) E_m drifts -2.983e-04)
+      (the phase in the window's two halves: +0.2044, +0.2708 rad: steady if equal)
+  at rest, light at omega' away = 0.0220: n = 1.2577 (transmitted amplitude 0.978)
+      (the energy account over the window: light's E drifts -3.602e-04 per interval beyond the reference train's own feed, the massive E -1.287e-08; the combination E_light + (G / g) E_m drifts -3.628e-04)
+      (the phase in the window's two halves: +0.4423, +0.7856 rad: steady if equal)
+  moving away from the source (from behind), the motion pair [K^2, K^2 - 3] on G g: the lab phase delay +0.6103 rad over the window (the block from 1500 to 2102; transmitted amplitude 1.001); the covariant expectation +0.2616 rad; the ratio read / expected = 2.333; THE ROW'S NUMBERS the phase and the drift between the halves printed above
