@@ -103,10 +103,18 @@ def test_a_the_phase_reading_reads_the_clocks_phase_back_at_every_age():
     assert massive == []
 
 
-def bar_world(arms: int, directions: list[list[int]], branches: list[list[int]] | None = None) -> dict:
+def bar_world(
+    arms: int,
+    directions: list[list[int]],
+    branches: list[list[int]] | None = None,
+    settings: tuple[int, int] | None = None,
+) -> dict:
     """The bar of DECLARATIONS.md row 1a (21 x 1 x 1, y and z periodic of one layer, x open),
     the light family's clock [77, 25] on N = 64, one lamp at x = 10 with the arms and the
-    directions given (the joint labels `branches`), a train of 2 periods, 20 births held."""
+    directions given (the joint labels `branches`), a train of 2 periods, 20 births held;
+    with `settings` (a, b) the two polarisers of the counter family at x = 7 (Alice, the -x
+    arm) and x = 17 (Bob, the +x arm) at those settings, the table bodies of two cells named
+    by the sets `alice` and `bob` (section 14 item 6; the joint gather of section 1 item 3)."""
     lamp: dict = {
         "rate": [1, 1],
         "wheel": [1, 64],
@@ -136,6 +144,24 @@ def bar_world(arms: int, directions: list[list[int]], branches: list[list[int]] 
         }
     ]
     document["detectors"] = []
+    if settings is not None:
+        document["families"] = [
+            {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+            {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
+        ]
+        for name, x, setting in (("alice", 7, settings[0]), ("bob", 17, settings[1])):
+            document["measured"].append(
+                {
+                    "position": [x, 0, 0],
+                    "family": "counter",
+                    "amount": 1,
+                    "phase": 0,
+                    "momentum": [0, 0, 0],
+                    "fixed": True,
+                    "table": {"light": {"phase_window": setting}},
+                }
+            )
+            document["detectors"].append({"name": name, "positions": [[x, 0, 0]], "reading": "sum"})
     return document
 
 
@@ -146,16 +172,20 @@ def test_b_the_pairs_two_arms_are_born_together_and_reach_their_bars():
     directions +x and -x and the joint labels [[0, 1], [3, 1]] births TWO records per birth on
     one stamp (the same ordinal, u and interval; the identities the birth's and the birth's
     plus 2^24), the +x arm's row 0 on every Node with x < 10 and the -x arm's on every Node
-    with x > 10 at every interval, the two rows equal by reflection through the lamp's Node,
-    both trains reaching the bars at x = 7 and x = 17 (a nonzero level there within 12
-    intervals of the birth), the birth line carrying arms 2, the labels and the two arm
-    records, the pair's one quantum on arm 0 (the books balanced at every interval); a lamp of
-    one arm is as it was (no mask, the identity the birth's, the birth line as before). The
-    edge case: arms 2 on three directions is refused at load naming the arms."""
-    world = parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]]))
+    with x > 10 at every interval, the two rows equal by reflection through the lamp's Node
+    until a body acts (Alice's entry cell at x = 7 reads x = 8 by its one-way Port), both trains
+    reaching the bars at x = 7 and x = 17 (a nonzero level at the free Nodes
+    beside them, x = 8 and x = 16, within 12 intervals of the birth; the bars' Nodes are the
+    table bodies' entry cells, held at 0), the birth line carrying arms 2, the labels and the
+    two arm records, the pair's one quantum on arm 0 (the books balanced at every interval);
+    a lamp of one arm is as it was (no mask, the identity the birth's, the birth line as
+    before). The edge cases: arms 2 on three directions is refused at load naming the arms; a
+    pair lamp without a table body on each arm is refused (the joint gather's cells)."""
+    world = parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]], (0, 0)))
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    reached = {7: None, 17: None}
+    reached = {8: None, 16: None}
+    mirrored = 0
     for _ in range(40):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -169,15 +199,26 @@ def test_b_the_pairs_two_arms_are_born_together_and_reach_their_bars():
         assert plus.labels == ((0, 1), (3, 1)) and plus.arms == 2 and minus.arms == 2
         assert plus.content == 1 and minus.content == 0
         assert not np.any(plus.now[:10]) and not np.any(minus.now[11:])
-        assert np.array_equal(plus.now[10:].ravel(), minus.now[:11].ravel()[::-1])
+        if not np.any(minus.now[:9]):
+            # the mirror image holds until a body acts: Alice's entry cell at
+            # x = 7 reads the -x arm's level at x = 8 through its Port (the
+            # one-way take, its ghost read back at x = 8), Bob's at x = 17
+            # four Links later
+            assert np.array_equal(plus.now[10:].ravel(), minus.now[:11].ravel()[::-1])
+            mirrored += 1
         for x in reached:
             if reached[x] is None and (plus.now[x, 0, 0] != 0 or minus.now[x, 0, 0] != 0):
                 reached[x] = simulation.tick
     births = [line for line in lines if line["event"] == "birth"]
     assert births and births[0]["arms"] == 2 and births[0]["labels"] == [[0, 1], [3, 1]]
     assert len(births[0]["arm_records"]) == 2
-    assert reached[7] is not None and reached[17] is not None
-    assert reached[7] - births[0]["tick"] <= 12 and reached[17] - births[0]["tick"] <= 12
+    assert mirrored >= 3
+    assert reached[8] is not None and reached[16] is not None
+    assert reached[8] - births[0]["tick"] <= 12 and reached[16] - births[0]["tick"] <= 12
+    with pytest.raises(ValueError, match="a pair lamp needs ONE table body"):
+        DetectorLawSimulation(
+            parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]]))
+        )
     single = parse_nature_beam_world(bar_world(1, [[1, 0, 0]]))
     lines = []
     simulation = DetectorLawSimulation(single, observer=lines.append)
@@ -453,3 +494,102 @@ def test_d_a_polariser_is_a_table_body_of_two_cells_splitting_the_offer():
     two_lamps["measured"].append(dict(two_lamps["measured"][0], position=[10, 0, 0]))
     with pytest.raises(ValueError, match="ONE lamp"):
         DetectorLawSimulation(parse_nature_beam_world(two_lamps))
+
+
+def pair_counts(
+    settings: tuple[int, int], births: int = 64
+) -> tuple[dict[tuple[int, int], int], list[dict]]:
+    """The joint cells' counts of the bar world at the settings over `births` pair births (the
+    full wheel of 64: u = 0 .. 63 once each), read from the gather lines' chosen joint cell
+    (Alice's channel, Bob's channel), with the gathers."""
+    document = bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]], settings)
+    document["measured"][0]["amount"] = births
+    document["ticks"] = births + 200
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    for _ in range(document["ticks"]):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+    assert not simulation.records
+    gathers = [line for line in lines if line["event"] == "gather"]
+    found: dict[tuple[int, int], int] = {}
+    for gather in gathers:
+        chosen = gather["chosen"]
+        assert chosen is not None and [cell[0] for cell in chosen] == ["alice", "bob"]
+        key = (chosen[0][1], chosen[1][1])
+        found[key] = found.get(key, 0) + 1
+    return found, gathers
+
+
+def test_e_the_pair_gathers_once_on_the_joint_ladder_of_four_cells():
+    """(e) DECLARATIONS.md section 1 item 3 (the joint gather): on the bar with Alice at s = 0
+    and Bob at s = 16 (the half angle 45 degrees at N = 64) each pair birth gathers ONCE (64
+    gathers of 64 births, no arm gathered alone), the gather's `record` the birth's identity
+    with both `arm_records`, its ladder the four joint cells [[alice, o_A, "0"], [bob, o_B,
+    "0"]] in the order ++, +-, -+, --, the four counts summing to the births, `u` every
+    residue once, the click at the later of the arms' first rungs (`click_at` "rung"), the
+    content one quantum handed once (the books balanced); at (0, 16) the four weights are
+    equal (J = 256 x 181 on every cell) and the counts 16 each; at (0, 0) the cells ++ and --
+    take 32 each (E = 1); at (0, 32) the cells +- and -+ take 32 each (E = -1)."""
+    counts, gathers = pair_counts((0, 16))
+    assert len(gathers) == 64 and counts == {(0, 0): 16, (0, 1): 16, (1, 0): 16, (1, 1): 16}
+    assert sorted(gather["u"] for gather in gathers) == list(range(64))
+    for gather in gathers:
+        assert gather["arm_records"] == [gather["record"], gather["record"] + (1 << 24)]
+        assert gather["click_at"] == "rung" and gather["content"] == 1
+        assert [cell[0] for cell in gather["cells"]] == [
+            [["alice", 0, "0"], ["bob", 0, "0"]],
+            [["alice", 0, "0"], ["bob", 1, "0"]],
+            [["alice", 1, "0"], ["bob", 0, "0"]],
+            [["alice", 1, "0"], ["bob", 1, "0"]],
+        ]
+        assert gather["weight"] == [(256 * 181) ** 2, 1] and gather["click"] >= gather["birth"]
+        assert len(gather["arm_offers"]) == 2 and all(offer > 0 for offer in gather["arm_offers"])
+    assert pair_counts((0, 0))[0] == {(0, 0): 32, (1, 1): 32}
+    assert pair_counts((0, 32))[0] == {(0, 1): 32, (1, 0): 32}
+
+
+def test_f_the_marginals_are_one_half_each_at_every_setting():
+    """(f) DECLARATIONS.md section 2 (row 1d, no signalling): at the settings (0, 16), (16, 0),
+    (8, 24) and (16, 24) Alice's + channel counts exactly 32 of 64 (R++ + R+- = n_a n_b, half
+    the total, the ladder's rung at 32 exactly) and Bob's within one of 32 (his cells are not
+    adjacent on the ladder: the rounding of two rungs)."""
+    for settings in ((0, 16), (16, 0), (8, 24), (16, 24)):
+        counts, _ = pair_counts(settings)
+        assert sum(counts.values()) == 64
+        alice_plus = counts.get((0, 0), 0) + counts.get((0, 1), 0)
+        bob_plus = counts.get((0, 0), 0) + counts.get((1, 0), 0)
+        assert alice_plus == 32, (settings, counts)
+        assert abs(bob_plus - 32) <= 1, (settings, counts)
+
+
+def test_g_the_joint_weights_are_the_declared_integers():
+    """(g) The joint weights R = J^2 from planted tables (DECLARATIONS.md section 1 item 3): with
+    psi = (00) + (11) (the labels 0 and 3 of weight 1, Alice reading the bit of arm 1 and Bob
+    of arm 0) and the pairs (C', S') = (256, 0) and (181, 181), J(+, +) = 256 x 181, J(+, -) =
+    -256 x 181, J(-, +) = 256 x 181, J(-, -) = 256 x 181 (the sign squared away); with (237,
+    98) and (256, 0) (Bob's 22.5 degrees of N = 2048 against Alice's 0) the four weights
+    (256 x 237)^2, (256 x 98)^2, (256 x 98)^2, (256 x 237)^2 and E = (237^2 - 98^2) / (237^2
+    + 98^2) = 46565 / 65773 (COMPUTATION, the form's own number, for the generator's `bell.py`
+    to compare with the pin 181 / 64); the singlet (01) - (10) at equal settings gives J(+,
+    +) = 0; a one-body table gives the two weights C'^2 and S'^2 (Malus's form)."""
+    labels = ((0, 1), (3, 1))
+    cells = DetectorLawSimulation.joint_weights([(256, 0), (181, 181)], [1, 0], labels)
+    assert [channels for channels, _ in cells] == [(0, 0), (0, 1), (1, 0), (1, 1)]
+    assert [weight for _, weight in cells] == [(256 * 181) ** 2] * 4
+    cells = DetectorLawSimulation.joint_weights([(256, 0), (237, 98)], [1, 0], labels)
+    assert [weight for _, weight in cells] == [
+        (256 * 237) ** 2,
+        (256 * 98) ** 2,
+        (256 * 98) ** 2,
+        (256 * 237) ** 2,
+    ]
+    plus_plus, plus_minus, minus_plus, minus_minus = (weight for _, weight in cells)
+    assert (plus_plus + minus_minus - plus_minus - minus_plus) * 65773 == 46565 * sum(
+        weight for _, weight in cells
+    )
+    singlet = DetectorLawSimulation.joint_weights([(181, 181), (181, 181)], [1, 0], ((1, 1), (2, -1)))
+    assert singlet[0][1] == 0 and singlet[3][1] == 0 and singlet[1][1] == singlet[2][1] > 0
+    one = DetectorLawSimulation.joint_weights([(237, 98)], [0], ((0, 1),))
+    assert one == [((0,), 237 * 237), ((1,), 98 * 98)]

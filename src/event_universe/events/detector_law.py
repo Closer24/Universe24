@@ -161,6 +161,10 @@ class LiveRecord:
     # split left it and the split's remainder, so that each interval's
     # offer at the entry is split once, the remainder kept.
     table_shares: dict[int, tuple[int, int]] = field(default_factory=dict)
+    # The joint gather (DECLARATIONS.md section 1 item 3): an arm of a pair
+    # that has completed waits, its rows still, for the other arms; the pair
+    # gathers once when every arm has completed.
+    arm_done: bool = False
 
 
 @dataclass
@@ -464,6 +468,28 @@ class DetectorLawSimulation:
                 free = view < 0
                 view[free] = cell
                 mask[:] = True
+        # The pair lamps' table bodies (DECLARATIONS.md section 1 item 3; the
+        # joint gather): a lamp of several arms needs ONE table body of its
+        # family on each arm's line; the bodies in the sets' order (the cells'
+        # order), the joint cells' order the product of their channels.
+        self.pair_bodies: dict[int, list[TableBody]] = {}
+        for number, entry in enumerate(world.measured):
+            lamp_definition = entry.lamp
+            if lamp_definition is None or lamp_definition.arms < 2:
+                continue
+            bodies = sorted(
+                (body for body in self.table_bodies if body.family == entry.family),
+                key=lambda body: body.entry_cell,
+            )
+            arms_covered = sorted(body.arm for body in bodies)
+            if arms_covered != list(range(lamp_definition.arms)):
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].lamp has {lamp_definition.arms} arms but the family "
+                    f"{self.families[entry.family].name!r} has table bodies on the arms {arms_covered} "
+                    "(a pair lamp needs ONE table body of two cells on each arm's line: the joint "
+                    "gather's cells, DECLARATIONS.md section 1 item 3 and section 14 item 6)"
+                )
+            self.pair_bodies[number] = bodies
         self.records: dict[int, LiveRecord] = {}
         self.blocks: list[Block] = []
         self.block_by_number: dict[int, Block] = {}
@@ -2011,6 +2037,141 @@ class DetectorLawSimulation:
         if self.record is not None:
             self.record(gather)
 
+    @staticmethod
+    def joint_weights(
+        tables: list[tuple[int, int]], arms: list[int], labels: tuple[tuple[int, int], ...]
+    ) -> list[tuple[tuple[int, ...], int]]:
+        """The joint cells of a pair's gather and their weights (DECLARATIONS.md
+        section 1 item 3, ALGEBRA.md 3.6): per body its half-angle pair
+        (C'[s], S'[s]) and the arm it reads; the rotation U_s = [[C', S'],
+        [-S', C']] (the row the channel o, + then -; the column the label's
+        bit on that arm, the amplitude law's `rotation`); the joint pointer
+        J(o_1, .., o_n) = SUM over the joint labels l (weight w) of w x
+        PRODUCT over the bodies of U_s[o][bit of l on the body's arm]; the
+        cell's weight R = J^2. The cells in the lexicographic order of the
+        bodies' channels (++, +-, -+, -- for two). Integers throughout, no
+        root, no float; the record's flight enters nowhere here (it sets the
+        click's interval, section 14 item 6)."""
+        cells: list[tuple[tuple[int, ...], int]] = []
+        count = len(tables)
+        for index in range(1 << count):
+            channels = tuple((index >> (count - 1 - k)) & 1 for k in range(count))
+            pointer = 0
+            for label, weight in labels:
+                term = weight
+                for k, ((cosine, sine), arm) in enumerate(zip(tables, arms, strict=True)):
+                    bit = (label >> arm) & 1
+                    row = ((cosine, sine), (-sine, cosine))[channels[k]]
+                    term *= row[bit]
+                pointer += term
+            cells.append((channels, pointer * pointer))
+        return cells
+
+    def _click_pair(self, arms: list[LiveRecord]) -> None:
+        """The ONE GATHER of a pair (DECLARATIONS.md section 1 item 3; the
+        model owner's word of 09:48Z): the joint ladder of the pair's bodies'
+        cells with the weights R = J^2 (`joint_weights`), the birth's one u
+        choosing one joint cell (`cell_of`, the rung), each body counting
+        its own channel of the chosen cell; the ladder is empty (the pair
+        escapes) where an arm's offer never reached its body. The pair's
+        content (the arms' contents summed, one quantum) is handed once, to
+        the first body in the sets' order (a books line of the arm-per-record
+        form, named in BUILD.md section 19, pending the first builder's
+        paragraph); the click's interval the later of the arms' first rungs
+        at their bodies, its stamp the interval (a receiver's count)."""
+        first = arms[0]
+        family = first.family
+        bodies = self.pair_bodies[first.lamp]
+        by_arm = {live.arm: live for live in arms}
+        offers = [
+            by_arm[body.arm].pointers[body.entry_cell] + by_arm[body.arm].pointers[body.exit_cell]
+            for body in bodies
+        ]
+        cells = self.joint_weights(
+            [half_angle(body.setting, self.world.phase_steps) for body in bodies],
+            [body.arm for body in bodies],
+            first.labels,
+        )
+        weights = [(weight, 1) for _, weight in cells]
+        reached = all(offers)
+        chosen = cell_of(weights, self.wheel, first.u) if reached else None
+        ladder, total = rungs(weights, self.wheel)
+        content = sum(live.content for live in arms)
+        absorbed = sum(live.absorbed for live in arms)
+        if chosen is None:
+            if all(live.emitter_took for live in arms) and not any(live.absorbed for live in arms):
+                self.ledger.taken_by_emitter[family] += content
+            else:
+                self.ledger.transit_escaped[family] += content
+            self.ledger.held_escaped[family] += 0
+        else:
+            self.held[bodies[0].measured][family] += content
+            self.ledger.held_measured[family] += content
+            self.ledger.transit_absorbed[family] += content
+        rung_ticks = [by_arm[body.arm].first_rung[body.entry_cell] for body in bodies]
+        clicked = chosen is not None and all(tick is not None for tick in rung_ticks)
+        click = max(tick for tick in rung_ticks if tick is not None) if clicked else self.tick
+        self.layer.gathered += 1
+        gather: dict[str, object] = {
+            "event": "gather",
+            "tick": self.tick,
+            "arrived": self.tick,
+            "family": self.families[family].name,
+            "record": first.identity,
+            "arm_records": [live.identity for live in arms],
+            "u": first.u,
+            "taken_by_emitter": (
+                content if chosen is None and all(live.emitter_took for live in arms) else 0
+            ),
+            "born": first.born,
+            # the joint cell: one triple [set, channel, label] per body, in the
+            # sets' order; each body counts its own channel of it
+            "chosen": (
+                [
+                    [self.cell_set[body.entry_cell], channel, "0"]
+                    for body, channel in zip(bodies, cells[chosen][0], strict=True)
+                ]
+                if chosen is not None
+                else None
+            ),
+            "node": [],
+            "windows": [],
+            "content": content,
+            "momentum": [0, 0, 0],
+            "weight": [cells[chosen][1] if chosen is not None else 0, 1],
+            "total": list(total),
+            "unit": UNIT,
+            "T": absorbed,
+            # HOST: each arm's whole offer at its body (the two shares' sum)
+            "arm_offers": offers,
+            "before": sum(1 for live in arms for p in live.pointers if p),
+            "after": 1 if chosen is not None else 0,
+            "cells": [
+                [
+                    [
+                        [self.cell_set[body.entry_cell], channel, "0"]
+                        for body, channel in zip(bodies, channels, strict=True)
+                    ],
+                    rung,
+                ]
+                for (channels, weight), rung in zip(cells, ladder, strict=True)
+                if weight
+            ],
+            "birth": first.birth_tick,
+            "click": click,
+            "click_at": "rung" if clicked else "completion",
+            "clock_source": "interval",
+            **({"clock": click} if self.world.clock_stamp else {}),
+        }
+        for live in arms:
+            for splitter in self.splitters:
+                splitter.remainders.pop(live.identity, None)
+            for key in [key for key in self.rung_counts if key[0] == live.identity]:
+                del self.rung_counts[key]
+        self.layer.gathers.append(gather)
+        if self.record is not None:
+            self.record(gather)
+
     def step(self) -> None:
         self.tick += 1
         self._births()
@@ -2036,6 +2197,9 @@ class DetectorLawSimulation:
                 block.own.remainder[~block.mask] = 0
         for identity in list(self.records):
             live = self.records[identity]
+            if live.arm_done:
+                # a completed arm of a pair waits for the other arms
+                continue
             if self.families[live.family].massive_kind:
                 # A block's massive record is advanced with its block above;
                 # a matter lamp's record (a massive kind with a declared
@@ -2076,8 +2240,25 @@ class DetectorLawSimulation:
         for block in self.blocks:
             self._block_clock(block)
         for identity in list(self.records):
+            if identity not in self.records:
+                # an arm gathered with its pair above
+                continue
             live = self.records[identity]
             if self.families[live.family].massive_kind and live.driven is None:
+                continue
+            if live.arms > 1:
+                # the joint gather: the pair completes when every arm has
+                if not live.arm_done and self._complete(live):
+                    live.arm_done = True
+                arms = [
+                    other
+                    for other in self.records.values()
+                    if other.lamp == live.lamp and other.born == live.born and other.arms > 1
+                ]
+                if len(arms) == live.arms and all(other.arm_done for other in arms):
+                    self._click_pair(sorted(arms, key=lambda other: other.arm))
+                    for other in arms:
+                        del self.records[other.identity]
                 continue
             if self._complete(live):
                 self._click(live)
