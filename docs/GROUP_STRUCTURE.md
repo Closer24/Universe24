@@ -281,6 +281,16 @@ nothing measured inside the board is compared (a GameBoard reading is a
 diagnostic). The evaluation (E) is the last group operation before a
 number leaves the board; every comparison is made on counts after it.
 
+**Under the rule of the massive record kind and the massless kind
+beside it** (`massive-record-v1`, `detector-law-v1`, hypotheses beside
+the law; 2026-09-24): a record is a pair of levels (a_before, a_now), two
+samples of one character of Z_N, and a table acts on that pair by the
+linear form, the shift of Z[Z_N] read on two samples; the click is the
+rung on the pointer against the norm in place of the evaluation. The one
+statement is [ALGEBRA.md](ALGEBRA.md) 1.7 (the identity proved there)
+and 8.6; the objects of the board (a foreign object, a detector set) are
+sets of Nodes on which the groups act, elements of none, ALGEBRA.md 1.7.
+
 ## 9. How the 48 act: one table
 
 The 48 act on directions and Nodes and commute with every verb of the
