@@ -154,6 +154,8 @@ def open_chain_reads(n):
 
 
 TAKE_K = -15 / 56  # light's take pair [-15, 56], the one-way Port (DESIGN.md section 5)
+STEPPED_FORM = "motion"  # the booking of the Node a taking set steps into (the hop rule): see (h)
+GHOST_INIT = "near"  # the new Port's ghost at a hop: the entered Node's own level ("near") or the free neighbour's ("free")
 
 
 def one_record(
@@ -305,6 +307,24 @@ def one_record_moving(
         cr = cells(lo_r)
         near = lo_r + s - 1 if lo_r < lo_e else lo_r  # the receiver's face cell toward the emitter
         free = near + 1 if lo_r < lo_e else near - 1  # its free neighbour
+        stepped = 0.0
+        if take and hop_now:
+            # THE HOP RULE OF THE MOVING TAKE (DECLARATIONS.md section 10, M1-4; Reviewer 3's line
+            # of 04:09Z): at a hop the face's Port is a NEW Port, its ghost starting at its free
+            # neighbour's level (no jump booked), and the content of the Node the set steps into is
+            # taken that interval and booked to the set's pointer (its motion squared, the ledger
+            # closed) before its row is held at 0.
+            entered = cr & ~cells(lo_r - 1)
+            ghost = l_now[free] if GHOST_INIT == "free" else l_now[near]
+            if STEPPED_FORM == "motion":
+                stepped = float(np.sum((l_now[entered] - l_bef[entered]) ** 2))
+            elif STEPPED_FORM == "level":
+                stepped = float(np.sum(l_now[entered] ** 2))
+            else:  # "energy": 3 x motion^2 + the strain to the free neighbour
+                idx_e = np.where(entered)[0]
+                stepped = float(
+                    sum(3 * (l_now[i] - l_bef[i]) ** 2 + (l_now[i] - l_now[free]) ** 2 for i in idx_e)
+                )
         l_prev = np.roll(l_bef, 1) if hop_now else l_bef
         m_next = (reads @ m_now) / d_node / 3 - m_bef + g * ce * (l_now - l_prev)
         m_fwd = np.roll(m_next, -1) if hop_next else m_next
@@ -326,7 +346,7 @@ def one_record_moving(
         if take:
             l_next[cr] = 0.0  # the taking set's rows held at 0 (the other's record)
             new = l_now[free] + TAKE_K * (l_next[free] - ghost)
-            offer_take[t] = (new - ghost) ** 2
+            offer_take[t] = (new - ghost) ** 2 + stepped
             ghost = new
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
@@ -606,23 +626,55 @@ if __name__ == "__main__":
         f" {residual:.3f} of the rung at W = 64 (at W >= 1024 it trips the rung at once, so the declared wheel"
         f" is 64); THE PIN at W = 64: {clicks_h[64]} +- 2, re-derived with the take before any run"
     )
+    # R2 with the take and THE HOP RULE OF THE MOVING TAKE (section 13 item 4; Reviewer 3's line
+    # of 04:09Z): a new Port at a hop (its ghost the entered Node's own level, which the free
+    # neighbour's level equals within the map's grain: both printed), the stepped-into content
+    # booked in the ledger's unit, the motion squared (the engine's completion test sums the
+    # squared steps); the level squared (Reviewer 3's closed form) and the energy with the strain
+    # printed beside. The declared wheel of R2's sets is 256, where the three bookings agree.
     r2_h, rises_h = {}, {}
     for name, (e_lo, r_lo, k_step, transit) in cases.items():
         _, birth_h, norm_rh, _, _, take_rh = one_record_moving(
             2200, 1950, e_lo, r_lo, k=k_step, train=train, take=True
         )
         r2_h[name] = {w: first_rung(take_rh, norm_rh, w, birth_h) - birth_h for w in wheels}
-        rises_h[name] = r2_h[name][64] - transit
+        rises_h[name] = r2_h[name][256] - transit
         print(
-            f"    R2 in the receiver form, {name}: the clicks by W {r2_h[name]}; the transit {transit:.1f};"
-            f" the rise at W = 64 {rises_h[name]:+.1f}"
+            f"    R2 in the receiver form with the hop rule, {name}: the clicks by W {r2_h[name]}; the transit"
+            f" {transit:.1f}; the rise at W = 256 {rises_h[name]:+.1f}"
         )
-    tp_h, tm_h = r2_h["k = 3, A chases B"][64], r2_h["k = 3, B meets A"][64]
-    own_h = sagnac_ratio(tp_h - rises_h["k = 3, A chases B"], tm_h - rises_h["k = 3, B meets A"])
     print(
-        f"    THE DECLARED PINS OF R2 (re-derived with the take before any run): the rest click"
-        f" {r2_h['rest, B to A'][64]}, the chasing {tp_h}, the meeting {tm_h}, each +- 2 at W = 64; the raw"
-        f" ratio {sagnac_ratio(tp_h, tm_h):.4f} ({tp_h - tm_h} / {tp_h + tm_h}); with each direction's own rise"
-        f" subtracted {own_h:.4f} = v / c, the map's identity"
+        "    THE HOP RULE'S FORMS (the meeting click, W = 64 / 256 / 1024; the rest and chasing clicks are 110 / 253 at W = 64 in every form):"
+    )
+    for init in ("near", "free"):
+        for form in ("motion", "energy", "level"):
+            GHOST_INIT, STEPPED_FORM = init, form  # noqa: PLW0603, F811
+            row = {}
+            for name in ("rest, B to A", "k = 3, A chases B", "k = 3, B meets A"):
+                e_lo, r_lo, k_step, _t = cases[name]
+                _, b_f, n_f, _, _, t_f = one_record_moving(
+                    2200, 1950, e_lo, r_lo, k=k_step, train=train, take=True
+                )
+                row[name] = {w: first_rung(t_f, n_f, w, b_f) - b_f for w in (64, 256, 1024)}
+            print(
+                f"      the ghost at a hop from the {'entered Node' if init == 'near' else 'free neighbour'}, the"
+                f" stepped-into content booked as its {form}: rest {row['rest, B to A']}, chasing"
+                f" {row['k = 3, A chases B']}, meeting {row['k = 3, B meets A']}"
+            )
+    GHOST_INIT, STEPPED_FORM = "near", "motion"
+    tp_h, tm_h, tr_h = (
+        r2_h["k = 3, A chases B"][256],
+        r2_h["k = 3, B meets A"][256],
+        r2_h["rest, B to A"][256],
+    )
+    own_h = sagnac_ratio(tp_h - rises_h["k = 3, A chases B"], tm_h - rises_h["k = 3, B meets A"])
+    rest_rise = rises_h["rest, B to A"]
+    print(
+        f"    THE DECLARED PINS OF R2 (re-derived with the take and the hop rule before any run, W = 256 the"
+        f" declared wheel of R2's sets): the rest click {tr_h}, the chasing {tp_h}, the meeting {tm_h}, each +- 2;"
+        f" the rises {rest_rise:+.1f}, {rises_h['k = 3, A chases B']:+.1f}, {rises_h['k = 3, B meets A']:+.1f};"
+        f" the raw ratio {sagnac_ratio(tp_h, tm_h):.4f} ({tp_h - tm_h} / {tp_h + tm_h}); with the rest rise"
+        f" subtracted from both {sagnac_ratio(tp_h - rest_rise, tm_h - rest_rise):.4f}; with each direction's own"
+        f" rise subtracted {own_h:.4f} = v / c, the map's identity"
     )
     print(f"HOST {time.time() - t0:.0f} s")
