@@ -484,3 +484,14 @@ day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
    one entry); the key algebraic formulas boxed in the paper; the GameBoard,
    the clicks and nature named as the three worlds with the passage between
    them; "matches nature", never "is nature".
+
+## The Boss closes with Nature24 and the mathematician (the owner, 2026-09-24, record 1845)
+
+The owner's word (translated): "You and Nature close everything by
+yourselves: Nature writes the code, you coordinate." What the algebra
+derives is not put to the owner as a choice: the mathematician derives it,
+Nature24 checks it and writes the code, the mathematician confirms the code
+is the algebra, and the Boss coordinates and merges. Only a real
+disagreement between them, or a change of the law's own words, goes to the
+owner. Every message to the owner is in Hebrew, with plain names and no
+codes.

@@ -223,3 +223,9 @@ half-space, the translation), as host bookkeeping outside the law's
 values, or as a per-cell branch that is not a group operation. The last
 kind is a defect, reported with the group operation that should replace
 it.
+
+The owner's further word (record 1845): no one asks a cell what is in it;
+the one read is the click, from above. The reviewer also lists every place
+where the law reads a cell's or a record's value at a Node to decide what
+happens, marked as the click, host bookkeeping that changes no value of the
+law, or a forbidden read.
