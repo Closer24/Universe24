@@ -187,3 +187,21 @@ building blocks and the declarations, and reports CONFIRMED / lines / NOT
 CONFIRMED; a defect found is fixed on `main` as a bug with a test. Docs
 branches (a list, a declaration) are read once before their merge as before.
 One read per bundle; nothing waits on the reviewer.
+
+## Every world is composed as its real apparatus (the model owner, 2026-09-24, record 1818)
+
+The owner's word after Bell's two-arm emitter was found to play the pump and
+the crystal together (translated): "Make sure all the other experiments are
+done as they should be, not like what we found in Bell." In every read of a
+world, and in the audit of the list, the reviewer checks four things per
+block. Is the block a thing in the lab? Does every property sit at the block
+where nature puts it: the source's at the source, the medium's in the
+medium, the optics' at the optics, the detector's at the detector? Is
+anything declared in the file that nature produces by the event laws, such
+as a direction pushed after a birth, a phase set, a state assigned, or a
+pair or a correlation placed by hand? Does any block do two blocks' work?
+A world that fails any of the four is a SHORTCUT, reported with the real
+apparatus and the composition that removes it within the four building
+blocks and the six verbs. A property nature gives to an apparatus, such as
+a crystal's two branches, stays DECLARED on that apparatus and is never
+written as derived.
