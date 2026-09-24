@@ -1,0 +1,21 @@
+K = 3: beta = 0.5774; the source moved from 3500 to 5233
+  behind: field amplitude 51556.2, angle 0.05674 (continuum omega_s D = 0.05674)
+  ahead:  field amplitude 197328.1, angle 0.21286 (continuum omega_s / (1 - beta) = 0.21176)
+  amplitude ratio behind / ahead = 0.2613; the continuum's D_b / D_a = (1 - beta) / (1 + beta) = 0.2679
+  the hop's pump line at pi / 3: behind 125.3, ahead 214.3 (against the Doppler line's amplitude)
+  energy share behind / ahead = 0.0683; the continuum's ((1 - beta) / (1 + beta))^2 = 0.0718
+
+K = 4: beta = 0.4330; the source moved from 3500 to 4800
+  behind: field amplitude 56924.8, angle 0.06242 (continuum omega_s D = 0.06246)
+  ahead:  field amplitude 144263.3, angle 0.15810 (continuum omega_s / (1 - beta) = 0.15785)
+  amplitude ratio behind / ahead = 0.3946; the continuum's D_b / D_a = (1 - beta) / (1 + beta) = 0.3957
+  the hop's pump line at pi / 3: behind 587.3, ahead 216.4 (against the Doppler line's amplitude)
+  energy share behind / ahead = 0.1557; the continuum's ((1 - beta) / (1 + beta))^2 = 0.1565
+
+K = 0: beta = 0.0000; the source moved from 3500 to 3500
+  behind: field amplitude 81142.4, angle 0.08946 (continuum omega_s D = 0.08950)
+  ahead:  field amplitude 81854.9, angle 0.08954 (continuum omega_s / (1 - beta) = 0.08950)
+  amplitude ratio behind / ahead = 0.9913; the continuum's D_b / D_a = (1 - beta) / (1 + beta) = 1.0000
+  the hop's pump line at pi / 3: behind 67.0, ahead 136.2 (against the Doppler line's amplitude)
+  energy share behind / ahead = 0.9827; the continuum's ((1 - beta) / (1 + beta))^2 = 1.0000
+
