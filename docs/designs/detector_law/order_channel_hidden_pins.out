@@ -1,0 +1,19 @@
+N = 64: the counts of + at b = 3N/8 32 and 32 of 64 (exact);
+   with the residues known the two lists differ on 44 of 64 births = 0.68750 (E_N; Inside, Bell's theorem)
+   (a) AS DECLARED, the counter family [1, 1] (the birth order the residue order):
+       a = 0: the + fraction among B's first N/4 births 0.312; runs in the whole list 4
+       a = N/4: the + fraction among B's first N/4 births 1.000; runs in the whole list 4
+   (b) UNDER A SEED-SET ORDER, 200 seeds, the decoders fixed before the run: the first-quarter decoder right 191 of 400 (0.477); the threshold decoder right 212 of 400 (0.530); the runs about 32 (the balanced string's own)
+N = 256: the counts of + at b = 3N/8 128 and 128 of 256 (exact);
+   with the residues known the two lists differ on 180 of 256 births = 0.70312 (E_N; Inside, Bell's theorem)
+   (a) AS DECLARED, the counter family [1, 1] (the birth order the residue order):
+       a = 0: the + fraction among B's first N/4 births 0.297; runs in the whole list 4
+       a = N/4: the + fraction among B's first N/4 births 1.000; runs in the whole list 4
+   (b) UNDER A SEED-SET ORDER, 200 seeds, the decoders fixed before the run: the first-quarter decoder right 196 of 400 (0.490); the threshold decoder right 200 of 400 (0.500); the runs about 128 (the balanced string's own)
+N = 2048: the counts of + at b = 3N/8 1024 and 1024 of 2048 (exact);
+   with the residues known the two lists differ on 1448 of 2048 births = 0.70703 (E_N; Inside, Bell's theorem)
+   (a) AS DECLARED, the counter family [1, 1] (the birth order the residue order):
+       a = 0: the + fraction among B's first N/4 births 0.293; runs in the whole list 4
+       a = N/4: the + fraction among B's first N/4 births 1.000; runs in the whole list 4
+   (b) UNDER A SEED-SET ORDER, 200 seeds, the decoders fixed before the run: the first-quarter decoder right 212 of 400 (0.530); the threshold decoder right 200 of 400 (0.500); the runs about 1024 (the balanced string's own)
+(c) THE THEOREM: for a uniformly random permutation of the births, B's list at fixed b is a balanced multiset (N/2 pluses for either a) in uniformly random order, so its distribution is the uniform distribution over balanced strings for a and for a' alike; no decoder fixed before the run, without the seed, does better than 1/2 (exact over the ensemble of seeds). The Inside dependence (E_N of the residues) is Bell's theorem and stays.
