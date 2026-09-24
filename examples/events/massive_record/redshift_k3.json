@@ -115,7 +115,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 64
   }
  ],
  "probes": [

@@ -255,7 +255,7 @@ def bell(a: str, b: str) -> dict:
     N = 2048, the pair lamp at x = 10 with two arms and the joint labels 00 and 11, the
     train 128, the polarisers at x = 7 (Alice) and 17 (Bob) with their settings, each a
     detector set of one Node reading `sum`, 300 intervals; the clock [2464, 25] on the
-    light family and on the counter family (section 15 T-1)."""
+    light family and [1, 1] on the counter family (section 1 item 3 and section 15 T-1)."""
     return {
         "law": "beam",
         "model_id": f"beam-detector-law-bell-{a}{b}-v1",
@@ -270,7 +270,7 @@ def bell(a: str, b: str) -> dict:
         "detector_law": True,
         "families": [
             light_family(BELL_CLOCK),
-            {"name": "counter", "quantum": 1, "phase_per_link": BELL_CLOCK},
+            {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
         ],
         "measured": [
             {
@@ -313,9 +313,9 @@ def bell(a: str, b: str) -> dict:
 def malus(name: str, source: Path, setting: int) -> dict:
     """DECLARATIONS.md sections 5 and 6: the registered form of the source world with
     `detector_law` true, `clock_stamp` true, the table's `phase_window` at the declared
-    setting and the clock [308, 25] on N = 256 (section 14 item 1) on the light and the
-    counter families, written in the file (the registered entity references carry no
-    clock; section 15 T-1)."""
+    setting, the clock [308, 25] on N = 256 (section 14 item 1) on the light family and
+    [1, 1] on the counter family (section 5 item 3 and section 15 T-1), written in the
+    file (the registered entity references carry no clock)."""
     document = json.loads(source.read_text(encoding="utf-8"))
     document = copy.deepcopy(document)
     rebuilt: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1"}
@@ -328,7 +328,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
             rebuilt["detector_law"] = True
     rebuilt["families"] = [
         light_family(MALUS_CLOCK),
-        {"name": "counter", "quantum": 1, "phase_per_link": MALUS_CLOCK},
+        {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
     ]
     for entry in rebuilt["measured"]:
         table = entry.get("table", {}).get("light")
@@ -379,11 +379,14 @@ def emitter(position: list[int], side: int, pair: list[int], **extra: object) ->
     return block
 
 
-def light_detector(document: dict, name: str, x: int, facing: int) -> None:
-    """A detector of the ray law on the light record at a chain Node (section 15 M1-5):
-    the template's receiver body and its set; its rung the builder's line (W = 64)."""
-    document["measured"].append(body([x, 0, 0], "light", [[facing, 0, 0]]))
-    document["detectors"].append({"name": name, "positions": [[x, 0, 0]], "threshold": 1})
+def receiver_set(document: dict, name: str, positions: list[list[int]]) -> None:
+    """A detector set on the light record at the receiving body's own cells with its own
+    wheel W = 64 (section 15 M1-4: the builder's key (i), a set's own `wheel`)."""
+    document["detectors"].append({"name": name, "positions": positions, "threshold": 1, "wheel": 64})
+
+
+def cells(corner: int, side: int) -> list[list[int]]:
+    return [[corner + k, 0, 0] for k in range(side)]
 
 
 def matter_world(massive, name: str, shape: list[int], boundary: dict, ticks: int) -> dict:
@@ -418,17 +421,19 @@ def massive_worlds(massive) -> dict[str, dict]:
             probes=[[1900, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        light_detector(document, "light_detector", 1900, -1)
+        document["measured"].append(body([1900, 0, 0], "light", [[-1, 0, 0]]))
+        receiver_set(document, "light_detector", [[1900, 0, 0]])
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 2200, both pushed to k = 3 on +x over the ramp 1500 and the
-    # hold 3000, both emitting, each the receiver of the other's records by its own wheel
-    # 64; the control with both at rest; the probes at the facing cells.
+    # hold 3000, both emitting, x open for the massive kind too (M1-7); each block's cells
+    # a detector set on the light record with its own wheel 64 (M1-4, the builder's keys
+    # (i) and (ii)); the control with both at rest; the probes at the facing cells.
     for name, motion in (
         ("sagnac_k3", {"momentum": [massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
         ("sagnac_rest", {}),
     ):
-        out[name] = massive.world(
+        document = massive.world(
             name.replace("_", "-"),
             "PIN",
             [2200, 1, 1],
@@ -440,24 +445,31 @@ def massive_worlds(massive) -> dict[str, dict]:
             ],
             4500,
             light=light_11,
+            faces=massive.FACES_OPEN,
             probes=[[712, 0, 0], [772, 0, 0]],
             mode_axis="x" if motion else None,
         )
+        receiver_set(document, "at_a", cells(700, 12))
+        receiver_set(document, "at_b", cells(772, 12))
+        out[name] = document
     # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
-    # chain of 673 open for light at both ends, the emitter A of side 12 at full depth at
-    # [600, 612), the mirror the open face at 672, A itself the receiver by its wheel 64,
-    # the hold 2000; the probe at the face. N_s = 70 has no key on main.
-    out["light_clock_60"] = massive.world(
+    # chain of 673 CLOSED for light at both ends (the loader's third face value, the
+    # builder's line), the emitter A of side 12 at full depth at [600, 612), the mirror the
+    # closed face at 672, A's cells a detector set on the light record with its own wheel
+    # 64 (M1-4), the hold 2000; the probe at the face. N_s = 70 has no key on main.
+    document = massive.world(
         "light-clock-60",
         "PIN",
         [673, 1, 1],
-        chain,
+        {"x": "closed", "y": "periodic", "z": "periodic"},
         KIND,
         [emitter([600, 0, 0], 12, WELL_FULL)],
         2000,
         light=light_11,
         probes=[[612, 0, 0]],
     )
+    receiver_set(document, "at_a", cells(600, 12))
+    out["light_clock_60"] = document
     # Rows M1 and M2 (section 12 with section 15 M1-6): the 128 x 128 x 1 layer, y periodic,
     # x open for the matter kind, no light; the matter lamp at (20, 64) with its own clock,
     # the wheel [1, 64], the stock 2048 at one record per 8 intervals, the train 8 periods;

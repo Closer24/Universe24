@@ -34,8 +34,8 @@
    "name": "counter",
    "quantum": 1,
    "phase_per_link": [
-    2464,
-    25
+    1,
+    1
    ]
   }
  ],
