@@ -78,6 +78,154 @@ cancelled (1818); the entanglement arises from two indistinguishable
 conversion channels whose amplitudes add in one record of rank 2 (1821);
 the crystal is birefringent (1829); the split is the board's own (1831).
 
+**1.1a THE FORM THIS FILE NOW RECOMMENDS: THE RECEIVER-EMITTER CRYSTAL
+(the owner's "think of a beautiful solution for the crystal that
+works", through the Boss, 18:30Z; the Boss's proposal computed and
+broken where it breaks). Sections 1.2 to 1.10 below are the alternative
+(B), two crossed crystals, kept as computed.**
+
+1. THE BODY AND ITS KIND. One body of light's kind declared by its
+   vertex and edge, a square of side L on a layer (a cube on a board),
+   each of its Nodes its own cell; A MATERIAL, NO BOUND MODE; `seed` 0.
+   Its ORIENTATION: none beyond its cells; its dispersion is its one
+   declared property about pace: ONE COEFFICIENT PAIR PER FAMILY at its
+   cells, [1, 1] for the arriving record's family and [num, den] = 1 /
+   n_b^2 for the born pair's family (on main the pace is already held per
+   family per Node, `kind_num` and `kind_den`; a body writes only its own
+   family's arrays today, so the extension is a body carrying a pair for
+   each of two families). Two families of light's kind: the emitter's,
+   at [2464, 25], and the pair's, at [1232, 25], summing to it; the
+   polarisers and the receivers read the pair's family.
+2. ITS ACTION (the receiver's form, then the emitter's, at the same
+   Node). At each of its Nodes it TAKES the declared fraction of the
+   arriving record's amplitude (booked on no pointer: the taken part is
+   the pair's, one quantum, one click) and with it DRIVES the pair's
+   record at that Node, with no heading. THE PHASE HALVED: the pair's
+   drive at a Node starts at the first rising zero of the arriving
+   amplitude after the Node's first rung, on the pair's own clock, so its
+   phase is half the arriving phase there without a sign ambiguity (the
+   start is an event of that Node's cell; the halving is exact on the
+   circle of 2N steps). BOTH CHANNELS (H on the first arm and V on the
+   second; V on the first and H on the second) are driven at the same
+   Nodes, with the same phase and the same index: the record is born
+   with the branches [[1, 1], [2, 1]] directly (verb G at the birth), its
+   relative phase 0 EXACTLY (PROVED HERE: the two channels' drives are one
+   drive), and ONE FIELD of amplitudes serves both arms (the arms differ
+   only by the body each is gathered at, as on main).
+3. WHAT ARISES (PROVED HERE in the continuum; COMPUTATION on the board's
+   own dispersion). The drive's phase along the crystal is the arriving
+   record's own, halved, so the born amplitudes of all the crystal's
+   Nodes add in phase only where the pair's wave vector (Outside
+   reading) has the component k_p / 2 along the axis: inside cos
+   theta_in = n_a / n_b, outside sin theta_out = sqrt(n_b^2 - n_a^2) with
+   n_a = 1 (the cone, an Outside reading). No gradient is declared. For an
+   integer heading (a, b, 0) the exact continuum pair is [num, den] = [a^2
+   + b^2, a^2 + 2 b^2]: [2, 3] for (1, 1, 0), [5, 6] for (2, 1, 0), [5, 9]
+   for (1, 2, 0). On the board at [2464, 25] with [2, 3]: the cone at
+   44.321 degrees; the collinear heading leaves the main lobe from L =
+   109 and the neighbouring integer headings from L = 178; the half-power
+   band 32.2 to 55.1 degrees at L = 109, 37.2 to 51.0 at L = 178, 0.1 to
+   88.9 (no cone) at L = 12 and 24; the lobe read in the far field, 2 A^2
+   / (23.95 Links) with A = sqrt 2 L: about 1984 Links at L = 109 and
+   5292 at L = 178. At the doubled clock ([4928, 25], the pair at about
+   12 Links) the cone sits at 41.94 degrees (the board's own anisotropy),
+   the collinear heading leaves from L = 58 and the neighbours from L =
+   103, the far field about 1130 and 3565 Links. THE PRICE: a formed cone
+   needs a crystal of about 60 to 180 Nodes and a board of a few thousand
+   Links on a side; the Bell pin does not need it (item 6).
+4. THE ENTANGLEMENT AND THE ANALOGY. Both channels see the SAME born index,
+   so their cones coincide everywhere and the channels' amplitudes add on
+   the whole cone: HV + VH on every direction of it, with no amplitude per
+   label (the Boss's point 5 CONFIRMED). BIREFRINGENCE AMONG THE BORN
+   LABELS WOULD BREAK IT (PROVED HERE): with n_H different from n_V the H
+   arms' cone and the V arms' cone on a layer are two different pairs of
+   headings (+-theta_H, +-theta_V) with no heading in common, so no
+   direction carries both channels and the state is a mixture of products
+   (abs(S) <= 2). The pace difference that makes the cone is the
+   dispersion between the arriving family and the born one, not a
+   birefringence. THE ANALOGY: the geometry is that of the source of Kwiat
+   and others, 1999 (two cones made to coincide, entangled everywhere on
+   them); the labels HV + VH are those of the type II source of 1995,
+   where the two cones differ and the entanglement lives only at their
+   two crossings. So the analogy holds for the geometry, not for the
+   crystal's physics: in nature the coincidence of the two cones is bought
+   by two crystals of type I (HH + VV), which this body gives by one
+   variant, the conversion entries V to HH and H to VV at the same born
+   index with the arriving record polarised at 45 degrees (the state HH +
+   VV, the cancelled worlds' pin with the old roles).
+5. THE ARMS AND THE GATHER (PROVED HERE). One field serves both arms, so
+   each arm reaches each receiver with the same offer. (i) The state HV +
+   VH is symmetric under exchanging the arms (the labels 1 and 2 swap and
+   carry equal weights), so the joint weights R = J^2 do not depend on
+   which arm is gathered at which body; the same holds for every state,
+   since exchanging the arms changes J by at most a sign. CONFIRMED. (ii)
+   On main the joint gather binds one table body to each arm and gathers
+   once over the product of the two bodies' channels: every gathered pair
+   is a coincidence at the two different bodies. (iii) If instead the
+   gather chose each arm's receiver by its offer, freely, then with two
+   receivers of equal offers the two clicks would land at two different
+   receivers with the chance 1 / 2 and at the same receiver with 1 / 2 (2
+   p_A p_B / (p_A + p_B)^2 = 1 / 2 at p_A = p_B); the correlation
+   conditioned on two different receivers is the state's, the same weights
+   R, so S is unchanged.
+6. WHAT IT DOES NOT CARRY (the Boss's point 7). The pair's opposite
+   transverse directions: each arm alone forms the whole cone (on a layer,
+   both headings +theta and -theta); the two arms are not tied to opposite
+   sides. The cost: under a free gather half the pairs land at one
+   receiver (the coincidence share 1 / 2 on a layer, less in three
+   dimensions, the share of the cone a receiver subtends); it does not
+   change S (5 (iii)). The pairing as a law of the click (optional, for
+   the owner): main's joint gather already binds each arm to one body,
+   which IS the pairing; stated as a law, "the two clicks of a pair are
+   at two cells mirror images through the crystal's axis" is a
+   permutation of cells by the body's own mirror (verb P) inside the
+   gather: generic (the crystal's own symmetry, no name), vector (P, then
+   the ladder's D), and not local, as the gather is not: it adds nothing
+   to the law's one declared non-local step (POSTULATES.md section 10).
+7. THE NUMBERS FOR THE BELL WORLD (the cone not formed, item 3). The
+   pair family at [1232, 25], the crystal a square of side 4 with the
+   coefficient [2, 3] for the pair's family (the cone's pair, harmless on a
+   short crystal), the per-Node fraction a Pythagorean pair of size about
+   1 / 4 ([7, 25], the passing numerator 24), the bodies at 45 degrees
+   (their placement the experimenter's), the smallest layer about 32 x 33
+   (the page of the branch crystal-algebra, 3.6, with the crystal's side
+   added). THE TIMING: the arriving train 3200 intervals; the first birth
+   at the crystal's first Node t_e + L0 / c plus at most one arriving
+   period (20.8 intervals) for the rising zero after the first rung
+   (bound t_e + L0); each arm's first rung at its body t_birth + d / c (K
+   form; bound the Manhattan distance); THE MIRROR THEOREM HOLDS: one
+   field, a symmetric crystal, board and bodies, so the two bodies' first
+   rungs and completions are equal EXACTLY at every setting (the crystal
+   page 3.4); the gather at the common completion, after the train and
+   the flight. THE PIN, declared blind: the state HV + VH, so at the
+   cancelled worlds' settings a in {0, 512}, b in {256, 768} the counts are
+   the cancelled counts with Bob's two settings exchanged ((0, 256): 150,
+   874, 874, 150; the other three 874, 150, 150, 874), S = E(0, 768) - E(0,
+   256) + E(512, 768) + E(512, 256) = 181 / 64 EXACTLY under the crystal's
+   own count as the pair's wheel (the crystal page 4.5), and 0 in the
+   cancelled roles. The variant HH + VV (item 4) keeps the old roles.
+8. THE ENGINE LINES: (i) a body carrying a coefficient pair for each of
+   two families (generic: the pair chosen by the record's family, as
+   today; vector: T and D as today; local); (ii) the take-and-drive at
+   each crystal Node, fired at the rising zero after the Node's first
+   rung (generic: a declared conversion entry; vector: B the linear form,
+   D the division with the remainder kept, E the clock's table; local:
+   the Node's own amplitudes and the arriving record's own pair; no birth
+   fires on an arrival on main); (iii) a record of rank 2 with ONE field
+   for both arms (the gather's offers at the two bodies read on the same
+   field); (iv) the pair's residue from the crystal's own count. Cost:
+   one field per pair, one linear form per crystal Node per interval.
+9. THE UNIT TESTS: (a) one channel only (the branches [[2, 1]]): at (0,
+   0) 0, 2048, 0, 0; at (512, 512) 512 in each cell; (b) both channels:
+   at (0, 0) 0, 1024, 1024, 0; at (512, 512) 1024, 0, 0, 1024 (the
+   entanglement test against (a)'s 512 each); (c) the born family's pace
+   in the crystal c / n_b (a slab test as 1.9 test 1, the family in place
+   of the label); (d) the same counts with the two bodies' arms exchanged
+   (5 (i)); (e) the refusals: the pair's clocks not summing to the
+   arriving clock, a non-Pythagorean fraction, a pair num > den; (f) the
+   cone (a large board, L = 109, GAMEBOARD by declaration): the peak at
+   44.3 degrees, the half-power band 32.2 to 55.1 degrees.
+
 **1.2 The answer to the owner's question of record 1831 ("the medium
 alone causes this ... confirm whether I am right") (PROVED HERE).**
 
@@ -106,7 +254,7 @@ alone causes this ... confirm whether I am right") (PROVED HERE).**
   phase across the crystal's cells (its section 8.2), which record 1830
   forbids.
 
-THE DESIGN THIS SECTION SPECIFIES: TWO CROSSED CRYSTALS OF TYPE I, the
+THE ALTERNATIVE (B), superseded by 1.1a as this file's recommendation: TWO CROSSED CRYSTALS OF TYPE I, the
 laboratory's second form. It differs from record 1821's channels (H on
 the first arm and V on the second, and the swap), which are type II: A
 POINT FOR THE OWNER through the Boss. What the two forms share is the
@@ -591,9 +739,13 @@ MEASURED ONLY beside).
 
 Nothing in this file is agreed yet: each section is checked by the
 physicist and agreed or sent to the Boss. The points for the owner from
-this draft: (1) the crystal in the type I form of two crossed crystals
-(1.2): record 1830's rule and record 1831's word leave type II with
-mirror arms impossible with an index per label; (2) the crystal's index
-table per label AND per clock (its dispersion, 1.3), which keeps one
-amplitude per Node per record everywhere; (3) the splitter as a material
-layer (7.2).
+this draft: (1) the crystal in the receiver-emitter form of 1.1a (one
+body, one coefficient pair per family, the owner's channels HV and VH
+adding on the whole cone; the pin with Bob's settings exchanged), or its
+variant HH + VV (the old roles), or the alternative (B) of two crossed
+crystals; (2) that the cone arises from the dispersion between the
+arriving and the born family, and that birefringence among the born
+labels would remove the entanglement on a layer (1.1a item 4); (3) the
+cost of a formed cone (a crystal of about 60 to 180 Nodes, a board of a
+few thousand Links), which the Bell pin does not need; (4) the splitter
+as a material layer (7.2).
