@@ -94,7 +94,10 @@ phase 0 (a theorem of the crystal's mirror), the hands' indices equal (no
 birefringence: the cone from the families' dispersion), the Bell
 experiment needing a crystal of one cell, the splitter a material layer.
 This section is the summary table beside it; where they differ, chapter 9
-holds.
+holds. In particular chapter 9.7 replaces the crystal's start "at the
+first rising zero after the Node's first rung" (1.1a item 2), a read of a
+cell to decide, by the bilinear coupling with a seed; and 9.8 makes the
+faces shells of receiver cubes, an experiment only cubes on a torus.
 
 THE OWNER'S WORDS (translated): "all of it must follow from the algebra.
 Do not assume from physics ... We have a receiver, an emitter, a

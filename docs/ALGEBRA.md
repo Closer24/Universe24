@@ -3408,15 +3408,123 @@ each operation on a cell is one of the six verbs (2.1 to 2.6) applied
 with the tool's written integers and performs exactly the group
 operation of 9.5, and nothing else. THE RULE OF THE READING: a
 conditional on a cell is lawful ONLY when it is the comparison of verb D
-named in this chapter (the rung of 8.6 and 9.2, the rising zero of the
-crystal's start, the clock's quarter at a train's end, the gap's load
-check); any other branch on a cell, on a family's name or on a tool's
+named in this chapter (the rung of 8.6 and 9.2, the emitter's age
+against its train, 9.7; the clock's quarter at a train's end and the
+gap's check are load-time arithmetic, not cell reads; the crystal's
+rising-zero start is withdrawn, 9.7); any other branch on a cell, on a family's name or on a tool's
 name is a DEFECT (the owner: "every operation in the cells is always an
 operation of the group, exactly the one"). The confirmation is written
 per tool as CONFIRMED (the code is the algebra) or the defect line with
 its file and line; it is the gate for the tool's merge.
 
-### 9.6 What is missing, for the owner
+### 9.6 Cubes and their orientation (the owner's word of 20:05Z: "everything is made of cubes ... check whether the cubes' orientation has a meaning")
+
+**A cube has no orientation of its own (DERIVED HERE).** A body is
+declared by a cube's lower vertex and edge (8.3; a square on a layer, a
+segment on a chain, the cube's section by the board's folded axes). Its
+faces are the lattice's coordinate planes, so every g of G_48 about its
+centre maps it onto itself: its stabiliser is the whole G_48, and the
+only "orientation" a cube could have is an element of G_48, which leaves
+it unchanged. THE CUBES' ORIENTATION HAS NO MEANING. A direction in an
+experiment can come from exactly three places (DERIVED HERE, by listing
+what can break G_48): (i) THE RELATIVE PLACEMENT of cubes (the vectors
+between their centres; the arrangement's stabiliser is the intersection
+of the placements' stabilisers); (ii) THE ARRIVING RECORD (its
+character's wave vector, 9.4); (iii) THE LABEL AXIS of a polariser's
+rotation, which is not a spatial direction (9.4). The board's own shape
+(a layer, a chain) is the torus's, not a tool's.
+
+**No tool needs a shape other than a cube (DECIDED HERE, derived).** The
+mirror: a cube of gap of side s reflects through whichever face the
+record meets (9.4); its transmitted share falls with the depth crossed
+(the chain's numbers, the lab tools' specification 3.3), so a cube of
+side s >= 2 is a mirror for a beam no wider than s; a wider mirror is a
+row of such cubes side by side, a RELATIVE PLACEMENT (i), not a new
+shape. The splitter: a row of cubes of side 1 (its plane the row's, a
+placement). The polariser, the receiver, the emitter, the crystal and the
+well body: one cube each (a beam from an emitter is a row of emitter
+cubes driven in phase, a placement). So AN EXPERIMENT IS CUBES ON A
+BOARD, and every direction it has is a placement of cubes or the
+arriving record's.
+
+### 9.7 Nothing asks a cell (the owner's word of 20:05Z: "you cannot ASK a cell what is in it; you can get it only by a click from above")
+
+**The rule of reading (DERIVED HERE from 2.1 to 2.6 and 3.1).** The six
+verbs READ amplitudes to COMPUTE (the sum of six reads, a bilinear form,
+a division): that is the rule itself, a group-ring and bilinear
+operation, and no decision. What the law never does is read a cell to
+DECIDE (a branch on a value): the one comparison that decides is verb D's
+at the click, the rung, from above (3.1, 8.6). So a tool's definition may
+use the six verbs on the amplitudes freely and a comparison only as the
+click.
+
+**The places in the tools' definitions that asked a cell, and their
+replacements.**
+
+1. THE CRYSTAL'S START "at the arriving amplitude's first rising zero
+   after that Node's first rung" (the lab tools' specification 1.1a)
+   READS A CELL TO DECIDE: forbidden. REPLACED by the operation that needs
+   no decision: THE BILINEAR COUPLING of the arriving and the born
+   families at the crystal's cells, the born family's source g a_arriving
+   a_born and the arriving family's -g a_born^2 (verb B, a rate bilinear
+   in the state, within the vector test of 2.8), the interaction form V =
+   g SUM over the crystal's cells of a_arriving a_born^2 added to the
+   conserved form. The product of the arriving character with a born one
+   carries the difference clock (1.5's product), resonant exactly when
+   the born clock is HALF the arriving one: THE HALVING ARISES from m^T's
+   time part with no read and no branch; the headings arise as in 9.3.
+   Its condition (PROVED HERE): from a born amplitude of 0 the product is
+   0, so the born family needs a SEED on the crystal's cells at interval
+   0 (the crystal's `seed`, the stand-in of nature's vacuum; 9.9); the
+   born amplitude then grows as sinh(g A t) (A the arriving amplitude), so
+   the converted share is set by g, the seed and the crystal's size.
+   MISSING: the conserved form of the coupled scheme with the cubic term
+   written in integers and its exact identity (as 8.5 writes J for the
+   bilinear coupling): owed before the crystal's code.
+2. The train's end at the clock's quarter (the emitter): computed AT
+   LOAD from the declared clock, no cell read: LAWFUL.
+3. The emitter's take of its own remnant after its train: a comparison
+   of the record's AGE with its train, the emitter's own count, not a
+   cell's value: LAWFUL (the clock's comparison, verb D on a count).
+4. The polariser: a take per label component in the rotated basis (a
+   multiplication, B), no branch: LAWFUL; its click's weights are read
+   from the record's label state AT THE CLICK, from above: LAWFUL.
+5. The record's completion (the pair's gather waiting for every arm): a
+   HOST reading of the board's remaining motion, named as the one
+   non-local host step (DESIGN.md 2.1): not a cell's decision, but a
+   host's; LAWFUL as named, never a physical dependency.
+6. The mirror, the splitter, the receiver's take, the well body: no read
+   beyond the six verbs: LAWFUL.
+
+### 9.8 Outside the cubes: what an experiment defines (the owner's word of 20:05Z)
+
+**DECIDED HERE, derived.** An experiment defines exactly: (1) THE BOARD,
+the torus's extents per axis (the translation group, 1.6); (2) THE
+FAMILIES, each its clock and its vacuum pair (light's [1, 1], a massive
+kind's [num, den]; 8.1); (3) THE CUBES, each with its written integers
+(its pair per family, its take, its wheel, its coupling, its seed); (4)
+THE INITIAL STATE (9.9). Nothing else. THE FACES ARE CUBES: an open face
+on main is a sponge (it takes and books to the escaped row, SIMULATOR_DEFINITIONS.md,
+the receiver); the same is a shell of receiver cubes of side 1 with the
+take pair [1, 1] around the region of interest on a periodic board, so the
+board is a torus on every axis and an experiment is ONLY CUBES ON A
+TORUS (the "open axis" becomes a shorthand for that shell). What lies
+between the cubes is the vacuum: the families' own pairs, declared once.
+
+### 9.9 The initial state, over the whole board (the owner's word of 20:05Z)
+
+**DERIVED HERE from 8.7.** At interval 0 every Node's state is the SUM
+over the bodies of each body's seed: a well body's seed is its bound
+mode's integer profile OVER THE WHOLE BOARD at both levels (8.7: the
+tail is not cut at the cube, so "zero outside the bodies" would be wrong
+for a well), a crystal's seed is the born family's seed on its cells, and
+every other record is absent (emitters birth later); every remainder is
+0. THE LOAD-TIME CONDITION: the board's state at interval 0 equals that
+sum Node by Node, exactly (integers), each well's profile equal bit for
+bit to the generator's (the body check, 8.7), and no Node carries any
+other nonzero amplitude; refused at load otherwise.
+
+### 9.10 What is missing, for the owner
 
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
@@ -3424,4 +3532,5 @@ label module carried by the amplitudes, not only as weights): needed by
 every polar tool acting on the board. (3) The take, a declaration and not
 an operation. (4) The polariser's general angle, a declared rotation
 outside the cells' group. (5) The same-hand channels' weights a and b of
-the crystal (9.3), a material integer the symmetry leaves free.
+the crystal (9.3), a material integer the symmetry leaves free. (6) The
+conserved form of the crystal's bilinear coupling in integers (9.7).
