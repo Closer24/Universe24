@@ -101,7 +101,34 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   moves one Link at a time by the drive's accumulators (`_move_block`),
   carries its own massive record on its cells (`seed`), takes what
   reaches its cells where it is `absorbing` or bound to a receiver, and
-  is hit (its response records and its coupling `receive` and `source`).
+  is hit (its response records and its coupling, the keys `coupling.g` and
+  `coupling.G`, the fields `receive` and `source`).
+  ITS DECLARATION IN THE WORLD FILE, BY THE CUBE'S VERTICES (the owner's
+  word of 15:02Z, the Boss's 15:05Z): the loader reads `position`, the
+  cube's lower vertex (x0, y0, z0), and `side` s, its edge; the cube's cells
+  are [x0, x0 + s) on each axis, its opposite vertex (x0 + s - 1, y0 + s -
+  1, z0 + s - 1), cut to the board on an open axis and wrapped on a periodic
+  one (`_cube`); its `pair` is its well or gap, its `momentum` its drive.
+  Two opposite vertices in place of `side` would be a change of the loader
+  (the engine's), not of the file alone: the owner's word; today the file
+  names the cube by its lower vertex and its edge, which fixes every vertex.
+  ON A LAYER a body is the cube's square section: a layer of extent 1 on
+  one axis is the 3-D rule with that axis folded (ALGEBRA.md 8.2 and 8.3,
+  the layer lemma; a body a G_48-set, on the layer the stabiliser's square),
+  so a body of side s declared on a layer is the square of s x s cells on
+  the layer's one z, a square and not a cube put on one z; ON A CHAIN it is
+  the segment [x0, x0 + s) (the light clock's A at [600, 612), sagnac's
+  blocks at 700 and 772 of side 12, the index's block of side 24). THE
+  FIFTEEN WORLDS' BODIES, checked against this (15:20Z): 4a's block of side
+  14 at [93, 93] on the 200 x 200 layer and the deep well's of side 40 at
+  [44, 44] on 128 x 128, squares; the boxes' blocks of side 20 and 28 in
+  64^3 and 48^3, cubes; the light clock's, sagnac's, redshift's and the
+  index's blocks on chains, segments of 12 and 24; the mirror line's and
+  the take lines' blocks of side 1 on the two_slits and M1 layers, single
+  cells; Bell's and Malus's polarisers, bodies of one Node with a table;
+  the fans, M2 and the cart have no block (a lamp and receiver bodies of
+  one Node): every file declares its body by the lower vertex and the edge
+  as the loader reads it; none fails; no world line owed.
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A
@@ -114,9 +141,12 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   the rung (pointer x wheel at or above the record's norm, the counting
   form) the set has clicked; the record's line names the cell the birth
   wheel's u chooses on the record's ladder and the record ends there for
-  the ladder. A face of the GameBoard is a receiver that books to the
-  escaped row (light's sponge), and so is every set the record's ladder
-  does not name: a SINK takes and books, and is never chosen.
+  the ladder. Under a declared `receiver` a face of the GameBoard is a
+  receiver that books to the escaped row (light's sponge), and so is every
+  set the record's ladder does not name: a SINK takes and books, and is
+  never chosen; absent the key the ladder is every cell as built and a face
+  is chosen as any cell is (BUILD.md section 20; TEST_RUNS.md sections 1
+  and 4).
 - **The clock.** A body's own count (its record's cycles across its
   cells, `_block_clock`; the stamp `clock` on its lines) or a detector
   set's count (the interval of the first rung at the set): the click is
@@ -133,11 +163,14 @@ The features, each a composition of the four and nothing else:
 - **The joint gather** (section 1 item 3, section 14 item 6; BUILD.md
   section 19): an emitter of two arms + two bodies with a table (each a
   receiver of two cells) + one receiver of the pair on the four joint
-  cells (the rung on the joint weights R = J^2) + the bodies' clocks.
+  cells (the rung on the joint weights R = J^2) + the interval as the stamp
+  (the pair's line is stamped `clock_source` "interval", `_click_pair`; no
+  body's count enters; the bodies' counts are the reading).
 - **The lamp's ladder** (SIZING.md; BUILD.md section 20): a
   lamp + the named receivers (the screen's sets, the record's ladder) +
-  the sinks outside the ladder (the faces, the mirror line's take) + the
-  sets' clocks.
+  the sinks outside the ladder (the faces; a gap block of pair [1, 2]
+  reflects and is a sink only where declared `absorbing`) + the sets'
+  clocks.
 
 WHERE THE CODE BRANCHED PER BODY BEFORE, AND WHERE IT IS ONE NOW (the
 owner's framing, 14:00Z: the three features are one job, the four blocks
@@ -156,10 +189,17 @@ with an integer setting on an arm forms a table body of two cells for any
 family; a record of several arms gathers once on the joint cells. No
 branch on a family's or an experiment's name remains in `src/`.
 
-A fifth thing: none. The probes (`probes`, a list of Nodes whose light
-amplitude is written per interval) are a HOST reading of the board, not a
-block; they act on nothing and are compared with nothing but the
-declaration's own script (a GAMEBOARD diagnostic). The splitter of the
+A fifth thing, NAMED (Reviewer 3's line of 13:38Z): THE RECEIVER'S PAIR
+FORM. The joint gather's receiver of the pair is not a set of cells with a
+wheel booking the offer at its Ports: its ladder is the product of two
+sets' channels with the weights R = J^2 from both arms' tables (the ladder
+of a rank-2 record over two tables), the law's one declared non-local step
+(POSTULATES.md section 10; ALGEBRA.md 3.4 and 3.6); whether it counts as a
+fifth building block is the owner's word, put to him by the Boss, not this
+section's silence. Nothing else: the probes (`probes`, a list of Nodes
+whose light amplitude is written per interval) are a GAMEBOARD reading of
+the board (world.py), not a block; they act on nothing and are compared
+with nothing but the declaration's own script. The splitter of the
 TABLE form (a table entry with `inputs`) is a body with a table, as the
 polariser is.
 

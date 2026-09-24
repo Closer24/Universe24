@@ -47,7 +47,7 @@ train's length, the hold), not pins.
    `pace_fan_24.json` on main af4c3b03 (loaded on 328b560f by the World
    Generator's re-read); no feature waited on.
 2. Clean: one `birth` line at tick 1 (the lamp at [64, 64], `amount` 1, one
-   record, the train 32 periods: 665, 943 and 1330 intervals); no detector
+   record, the train 32 periods: 665, 887 and 1330 intervals); no detector
    set exists, so exactly ONE `gather` line per run at the record's close
    naming a face (the sponge) and no other; the 16 `probe` values per
    interval, the probes at 40 and 36 Links on the eight rays reading 0
@@ -77,7 +77,7 @@ train's length, the hold), not pins.
    cycle of its record; the rest world's cycle about 49 intervals, so about
    55 to 60 clicks over the hold [200, 3000]); in the k = 3 world the drive
    ramping over 10000 intervals, then one Link every 3 intervals along x
-   (the `step` lines; the block wrapping on the periodic axis, never off
+   (the `block` line's corner and steps, no `step` event is written; the block wrapping on the periodic axis, never off
    the board), and at least 100 clicks over the hold [10200, 18200], their
    intervals longer than the rest world's. The reader: `read_runs.clock`
    on each (the count, the rate per interval, the mean interval between
@@ -166,7 +166,7 @@ train's length, the hold), not pins.
    absent); no feature waited on.
 2. Clean: one `birth` at tick 1; the `probe` line every interval, reading
    0 until about 2740 (1600 Links at c) and nonzero after; the away
-   block's `step` lines from about 3002, one Link every 3 intervals, its
+   block's corner on the `block` lines advancing from about 3002, one Link every 3 intervals, its
    cells short of the probe at 6000; no set, no `click`; the run to 6000.
    The reader: `read_runs.index_reading` over the window [3800, 5400]
    (the phase by projection at the declared omega 0.035 per interval, the
@@ -257,7 +257,7 @@ train's length, the hold), not pins.
    `malus_28.125.json`, `malus_33.75.json`: on main at 88b3752 they carry
    the bar of 7 and the read body at x = 4, which the joint gather's loader refuses (the
    exit cell off the board); FILES OWED by regeneration from section 5's
-   two lines (the bar 8, no read body, the set on the polariser's Node);
+   two lines (the bar 8, no read body, the set of two cells: the two channels + and -, the exit and the entry Node);
    the joint gather on engine-features b487b0b9.
 2. Clean: 256 `birth` lines at one per interval (the wheel [159, 256], u
    every residue once); 256 `gather` lines, each with `chosen` naming the
