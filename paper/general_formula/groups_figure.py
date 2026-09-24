@@ -130,9 +130,9 @@ def draw(output: Path) -> None:
     ax.text(xc, 0.7, "click", fontsize=8.5, ha="center")
     ax.text(
         0.5,
-        0.1,
-        "the record's motion squared in the cells, against the count",
-        fontsize=8.8,
+        0.06,
+        "the record's motion squared in the cells,\nagainst the count",
+        fontsize=8,
         ha="center",
     )
     ax.set_title(
