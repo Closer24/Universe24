@@ -25,6 +25,28 @@ the rule maps to themselves, ALGEBRA.md 1.6 and 8.1); every sentence
 below that uses them says what the rule does to the amplitudes, and the
 reading is named as such.
 
+NO TABLE ANYWHERE (the owner's word of 2026-09-24, 18:55Z, through the
+Boss: "make sure we have no such thing at all as Nodes with a table; it
+should not exist at all"). A Node carries only its NodeState and the one
+rule acts; every tool is a BODY OF MATERIAL whose Nodes carry only
+material integers. THE MATERIAL, one form for every tool: per LABEL, in
+the label basis rotated by the body's own declared angle (the half-angle
+tables of 2N, the law's constant data, never a Node's table), and per
+FAMILY where two families meet (the crystal), an INDEX PAIR (the
+coefficient [num, den] = 1 / n^2 of DESIGN.md 4.1) and a TAKE PAIR (the
+receiver's form: the share of the arriving amplitude the Node takes and
+books, [1, 1] a complete take, [0, 1] none); the rotation is a 2 x 2
+over the labels (verb B). THE ONE ENABLING ENGINE LINE for all of it:
+ONE AMPLITUDE PER LABEL VALUE on every record (two fields, H and V,
+each stepped by the split with its own pair), which the crystal needs
+anyway; a record of rank 2 keeps its joint label state for the gather,
+and each arm's amplitudes per label carry its timing and its books. WHAT
+RETIRES on main: the table body of two cells (`TableBody`, the split by
+declared weights), the splitter of the table form (`Splitter`, declared
+inputs, weights and outputs, with the linear form it reads), and the
+rules by family name (the old transponder's `rerelease`); the setting's
+key `phase_window` becomes the body's `axis`.
+
 THE FORM OF EVERY SECTION: what the tool is and what nature gives it; ITS
 BODY (declared by its cube's lower vertex and its edge, as every body:
 a cube on a board, a square on a layer, a segment on a chain, the
@@ -97,7 +119,8 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    at [2464, 25], and the pair's, at [1232, 25], summing to it; the
    polarisers and the receivers read the pair's family.
 2. ITS ACTION (the receiver's form, then the emitter's, at the same
-   Node). At each of its Nodes it TAKES the declared fraction of the
+   Node; the fraction is the body's COUPLING PAIR between the arriving
+   family and the born family, a material integer, no table). At each of its Nodes it TAKES the declared fraction of the
    arriving record's amplitude (booked on no pointer: the taken part is
    the pair's, one quantum, one click) and with it DRIVES the pair's
    record at that Node, with no heading. THE PHASE HALVED: the pair's
@@ -110,7 +133,8 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    Nodes, with the same phase and the same index: the record is born
    with the branches [[1, 1], [2, 1]] directly (verb G at the birth), its
    relative phase 0 EXACTLY (PROVED HERE: the two channels' drives are one
-   drive), and ONE FIELD of amplitudes serves both arms (the arms differ
+   drive), and ONE FIELD of amplitudes per label serves both arms (the
+   head's one amplitude per label on every record) (the arms differ
    only by the body each is gathered at, as on main).
 3. WHAT ARISES (PROVED HERE in the continuum; COMPUTATION on the board's
    own dispersion). The drive's phase along the crystal is the arriving
@@ -136,7 +160,8 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
 4. THE ENTANGLEMENT AND THE ANALOGY. Both channels see the SAME born index,
    so their cones coincide everywhere and the channels' amplitudes add on
    the whole cone: HV + VH on every direction of it, with no amplitude per
-   label (the Boss's point 5 CONFIRMED). BIREFRINGENCE AMONG THE BORN
+   label needed for the entanglement itself (the head's amplitudes per label
+   serve the polarisers) (the Boss's point 5 CONFIRMED). BIREFRINGENCE AMONG THE BORN
    LABELS WOULD BREAK IT (PROVED HERE): with n_H different from n_V the H
    arms' cone and the V arms' cone on a layer are two different pairs of
    headings (+-theta_H, +-theta_V) with no heading in common, so no
@@ -226,6 +251,28 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    cone (a large board, L = 109, GAMEBOARD by declaration): the peak at
    44.3 degrees, the half-power band 32.2 to 55.1 degrees.
 
+10. THE COUPLING WITHOUT A DECLARED HALVING (for the owner and the
+   physicist; not this file's recommendation). The engine's coupling
+   between records at a body's cells (the massive coupling, ALGEBRA.md
+   8.5) is linear in the arriving amplitude, and a linear coupling
+   invariant in time keeps the clock (the crystal page 3.2): it cannot
+   make [1232, 25] from [2464, 25]. The coupling that makes the halved
+   clock ARISE is BILINEAR, the born family's source g a_arriving
+   a_born at each crystal Node (verb B, a rate bilinear in the state,
+   within the vector test): the product's difference frequency is
+   resonant at half the arriving clock, the parametric resonance of
+   nature's down-conversion. Its conditions, PROVED HERE: (i) from a born
+   amplitude of 0 it makes nothing (the product is 0), so the born family
+   needs a SEED on the crystal's cells (the body's `seed`, the stand-in
+   of nature's vacuum); (ii) the born amplitude then grows as sinh(g A t),
+   A the arriving amplitude, so the converted share is set by g, the seed
+   and the length, not by a declared fraction; (iii) the arriving record
+   must lose what the born one gains (a back-coupling -g a_born^2 on it),
+   and the conserved form of the coupled scheme with that cubic term is
+   still to be written. Item 2's take-and-drive (the start at the rising
+   zero) is its first-order form with the seed and the gain folded into
+   the one coupling pair.
+
 **1.2 The answer to the owner's question of record 1831 ("the medium
 alone causes this ... confirm whether I am right") (PROVED HERE).**
 
@@ -254,7 +301,9 @@ alone causes this ... confirm whether I am right") (PROVED HERE).**
   phase across the crystal's cells (its section 8.2), which record 1830
   forbids.
 
-THE ALTERNATIVE (B), superseded by 1.1a as this file's recommendation: TWO CROSSED CRYSTALS OF TYPE I, the
+THE ALTERNATIVE (B), superseded by 1.1a as this file's recommendation (its
+sentences on one amplitude per record predate the head's no-table rule, which
+puts one amplitude per label on every record): TWO CROSSED CRYSTALS OF TYPE I, the
 laboratory's second form. It differs from record 1821's channels (H on
 the first arm and V on the second, and the swap), which are type II: A
 POINT FOR THE OWNER through the Boss. What the two forms share is the
@@ -498,58 +547,72 @@ world itself stays small (L = 24).
 
 ---
 
-## 2. The polariser (its corrected form: it reads the record's label state; Reviewer 3's finding of record 1819)
+## 2. The polariser (a material: it takes one label along its own axis; the counts arise from the record's label state projected on that axis)
 
-**2.1 What it is.** A sheet that passes the polarisation's component
-along its axis; in the laboratory a polarising beam splitter sends the
-two components to two detectors. Its existing designs: [the Malus
-note](../malus/NOTE.md) and DECLARATIONS.md section 14 (the table form).
+**2.1 What it is.** In the laboratory an absorbing polariser (a sheet)
+takes the polarisation across its axis and passes the one along it; a
+polarising beam splitter reflects the one and passes the other to two
+detectors. The former table form (a body of two cells splitting a booked
+offer by declared weights; [the Malus note](../malus/NOTE.md),
+DECLARATIONS.md section 14) RETIRES.
 
-**2.2 Its body, its kind, its orientation.**
+**2.2 Its body, its kind, its orientation.** A body declared by its
+vertex and edge (the smallest of side 1; a line of such cubes across a
+beam), of light's kind, A MATERIAL, NO BOUND MODE. Its ORIENTATION,
+declared by itself: its AXIS, the angle pi s / N on the half-angle tables
+of 2N (the setting s, the key `axis` in place of `phase_window`). Its
+MATERIAL, in its own rotated label basis (the component along the axis
+a_par = (C'[s] a_H + S'[s] a_V) / 256 and the one across it a_perp =
+(-S'[s] a_H + C'[s] a_V) / 256, each division with its remainder kept):
+- THE ABSORBING FORM: along the axis the index pair [1, 1] and the take
+  pair [0, 1] (it passes); across it the take pair [1, 1] (it takes and
+  books); a plain receiver beyond it books what passes. The two cells of
+  the click are the polariser's own (the - cell) and the receiver beyond
+  (the + cell): no exit cell is declared from any arm.
+- THE SPLITTING FORM (a polarising splitter layer, one Node thick):
+  across the axis a gap pair (the mirror's [1, 2], section 3), along it
+  [1, 1]: the across part is reflected and the along part passes, each to
+  its own receiver; the two counts arise at the two receivers.
+The algebra's one condition, true of the tables: **U**_s^T **U**_s = n_s
+**I** exactly, so the rotation keeps the record's norm up to the factor n_s
+/ 65536 on both parts alike (ALGEBRA.md 3.6).
 
-- THE BODY: a cube of side 1 declared by its vertex (its ENTRY cell),
-  and its EXIT cell the next Node along its own THROUGH-LINE; the two
-  cells one body of two cells (the table body).
-- THE KIND: light's kind, a MATERIAL, NO BOUND MODE; its cells are take
-  Nodes (a receiver's form: the amplitude held at 0 there). The algebra
-  requires one condition of it, true of the tables: **U**_s^T **U**_s =
-  n_s **I** exactly (ALGEBRA.md 3.6), so the two weights of a record
-  whose weights are w_l sum to n_s times the sum of w_l^2 and the split
-  loses nothing beyond the kept remainder.
-- THE ORIENTATION, declared by the polariser itself: its TRANSMISSION
-  AXIS, the setting s (the axis at pi s / N on the half-angle tables of
-  2N), and its THROUGH-LINE, an integer vector of the body's own. On
-  main the exit is "the next Node beyond it on the arm's line", taken
-  from the emitter's arm direction; with the double emitter cancelled the
-  exit is taken from the polariser's own through-line (the Boss's line
-  of 18:20Z).
+**2.3 Its action (PROVED HERE).** A record of one arm whose label state
+is SUM over l of w_l (l) has the amplitudes per label a_l = w_l a (one
+field a, born by the emitter, times the label's weight), so along the
+axis a_par = (C' w_H + S' w_V) a / 256 and across it a_perp = (-S' w_H +
+C' w_V) a / 256: the two parts' booked motions stand in the ratio R(+) :
+R(-) = (C' w_H + S' w_V)^2 : (-S' w_H + C' w_V)^2, THE PROJECTION OF THE
+RECORD'S LABEL STATE ON THE MATERIAL'S AXIS, exactly the weights of the
+joint gather's primitive with one body. The click's weights are these
+(computed from the record's label state and the body's axis, as the
+gather computes them), and the board's books must agree with them within
+the rung's margin (2.6): a consistency test of the material, not a
+second source of the counts. For a record of rank 2 each arm's
+polariser rotates that arm's amplitudes per label (the timing and the
+books) and the joint gather computes R = J^2 from the record's joint
+label state and the two bodies' axes (ALGEBRA.md 3.6), unchanged.
 
-**2.3 Its action (PROVED HERE).** A record whose label state is SUM over
-l of w_l (l) reaching the body is split by the weights R(+) = (SUM over
-l of w_l U_s[+][bit of l on the body's arm])^2 and R(-) likewise: the
-offer booked at the entry cell's Ports moves R(+) / (R(+) + R(-)) of
-itself to the exit cell (the + cell), one division per interval with
-the remainder kept, and the click's cell is chosen by the birth wheel's
-u on the ladder of the two weights. For a record of rank 2 the body's
-two cells are one side of the joint gather (ALGEBRA.md 3.6), unchanged.
-Nature24's fix on his branch polariser-fix reads this form (his point
-5); on main the split reads [C'[s]^2, S'[s]^2], label H's weights alone.
+**2.4 Timing (PROVED HERE).** The first rung of the click is the first
+interval at which the record's offer booked at the two cells together
+times W reaches the norm; the rotation redistributes the offer between
+the two parts, the parts' amplitudes step by the same pair [1, 1] up to
+the polariser, and the receiver beyond sits one Link further: in the
+absorbing form the + cell's first rung lags the - cell's by the one Link
+(a K form of 1 / c = 1.73 intervals, MEASURED ONLY); the joint click's
+stamp is the later arm's first rung at its body's two cells, the same at
+every setting.
 
-**2.4 Timing (PROVED HERE, the crystal page 3.4).** The first rung of
-both cells is the first interval at which the whole offer times W
-reaches the record's norm; the split moves the offer between the cells
-after the booking and the amplitudes never read the setting: the click's
-interval is the same at every setting.
+**2.5 The engine lines.** (1) One amplitude per label on every record
+(the head); (2) the rotation of a record's label amplitudes by a body's
+axis at its cells and the per-part pairs (verb B, the 2 x 2; generic:
+the body's declared angle and pairs, no name; vector: B, then T and D
+per part; local: the Node's own amplitudes); (3) the click's weights
+from the record's label state and the body's axis (the gather's
+primitive with one body, as on Nature24's branch polariser-fix, point 5
+of his notes). RETIRES: `TableBody` and its split of a booked offer.
 
-**2.5 The engine lines.** (1) The split's weights from the record's
-labels (2.3): generic (the body's table and the record's own label
-weights); vector (B, the rotation on the label vector; D, the division
-with the remainder kept); local (the entry cell's own Ports). (2) The
-exit cell from the body's own through-line (a loader line). Cost: one
-pair of weights per record at the body, formed once.
-
-**2.6 The unit tests (COMPUTATION; the + and - counts over one wheel of
-births):**
+**2.6 The unit tests (COMPUTATION on main's tables and rung).**
 
 | The record, W = 2048 | s = 0 | s = 256 | s = 512 | s = 768 | s = 1024 |
 | --- | --- | --- | --- | --- | --- |
@@ -557,15 +620,21 @@ births):**
 | label V, [[1, 1]] | 0, 2048 | 299, 1749 | 1024, 1024 | 1749, 299 | 2048, 0 |
 | 45 degrees, H + V, [[0, 1], [1, 1]] | 1024, 1024 | 1747, 301 | 2048, 0 | 1747, 301 | 1024, 1024 |
 
-The weights: H at s = 256 (56169, 9604) = (237^2, 98^2); H + V at 256
-(112225, 19321) = ((237 + 98)^2, (237 - 98)^2), at 512 (131044, 0) =
-(362^2, 0). At W = 64 the + counts at s = 0, N / 4 and N / 2 are 64,
-32, 0 for H, 0, 32, 64 for V and 32, 64, 32 for H + V (Nature24's test,
-agreeing). Malus's four worlds (records of label H) keep their declared
-counts (RUN_LIST.md row 9). The timing test: the click's interval equal
-at every setting. The through-line test: a polariser whose through-line
-is (0, 1, 0) on a layer takes its exit cell at its vertex plus (0, 1, 0)
-with no emitter arm declared.
+(+, - counts over one wheel of births). MALUS'S FOUR WORLDS under the
+material form (label H, N = 256, W = 256): 128, 246, 199, 177 at s = 64,
+16, 40, 48, UNCHANGED (the weights (32761, 32761), (63001, 2500), (51076,
+14641), (45369, 20164)); their rung margins 0.500, 0.271, 0.466 and 0.269
+of a count, so the material's books must agree with the projection to
+about 1 part in 1000 of the norm for the board's own offers to give the
+same counts. BELL'S FOUR SETTINGS: 874, 150, 150, 874 per settings pair,
+UNCHANGED (the gather's weights); the margins 0.0218 of a count at (0,
+256) and (0, 768), 0.0986 at the other two: a book-based count would
+need agreement to about 1 part in 100000. The pins are re-derived before
+any run on the owner's word; under this form none moves. The books test:
+the - cell's booked motion over the + cell's equal to R(-) / R(+) within
+the margins above (MEASURED ONLY). The axis test: the counts at the same
+setting with the body's line turned by 90 degrees on the layer
+unchanged (no exit cell from any arm).
 
 ---
 
@@ -650,21 +719,27 @@ index.
 
 ---
 
-## 5. The receiver
+## 5. The receiver (an absorbing material with its click's named set)
 
 A body declared by its vertex and edge (the smallest of side 1), of
-light's kind, A MATERIAL, NO BOUND MODE, whose cells are take Nodes with
-a wheel: it books the record's offer at its Ports and clicks at the
-first rung (pointer times W at or above the record's norm). Specified in
-DESIGN.md section 5 (the counting form and the books),
-SIMULATOR_DEFINITIONS.md "The four building blocks" (the receiver, the
-ladder by name, the sinks) and TEST_RUNS.md sections 1 and 4 (its
-tests). Its orientation: none (it takes from every Port). Its action on
-every label: it books the whole offer and reads no label (a polariser
-does). Its timing: the first rung. Its cost: one pointer per record per
-cell. No new engine line. The unit test added: a record of branches
-[[0, 1], [1, 1]] booked as one record of the same norm, the first rung
-at the same interval as a record of one label.
+light's kind, A MATERIAL, NO BOUND MODE, whose Nodes carry the TAKE PAIR
+[1, 1] (a complete take: the arriving amplitude booked at its Ports and
+held at 0, the counting form of DESIGN.md section 5) for every label
+alike, and a wheel: it clicks at the first rung (pointer times W at or
+above the record's norm). Its click's NAMED SET is the ladder by name
+(SIMULATOR_DEFINITIONS.md, the receiver, the ladder by name, the sinks;
+TEST_RUNS.md sections 1 and 4). Its orientation: none (it takes from
+every Port). Its action on every label: it books the sum of the record's
+label amplitudes' motions and reads no label (a polariser does). A take
+pair below [1, 1] is a partial absorber (a grey filter), the untaken
+share passing on by the split. Its timing: the first rung. Its cost: one
+pointer per record per cell. The engine line: the take pair as a
+material integer (today a receiver's take is complete by construction;
+[1, 1] keeps every registered world unchanged). The unit tests added: a
+record of branches [[0, 1], [1, 1]] booked as one record of the same norm,
+its first rung at the same interval as a record of one label; a take
+pair [1, 2] books half the offer at its first Node (MEASURED ONLY beside
+the K form).
 
 ---
 
@@ -706,46 +781,117 @@ record of branches [[0, 1], [1, 1]] carried with one amplitude per Node.
 
 ---
 
-## 7. The splitter (a thin layer; its outputs from its orientation: A DESIGN LINE FOR THE OWNER)
+## 7. The splitter (a thin layer of material; its outputs arise from its plane)
 
 **7.1 What it is.** A half-silvered layer: the transmitted and the
 reflected light arise from its plane; nothing declares where they go.
-On main the splitter of the table form declares its outputs
-(DECLARATIONS.md section 14 item 4; record 1830 puts it to the owner).
+The splitter of the table form (`Splitter`, declared inputs, weights and
+outputs, DECLARATIONS.md section 14 item 4) RETIRES under the owner's
+word of 18:55Z.
 
-**7.2 The proposal.** A layer ONE Node thick: a line of cubes of side 1
-(a line of bodies, as the mirror line is), each of light's kind with a
-gap pair [num, den], A MATERIAL, NO BOUND MODE; its orientation its
-plane; the reflected share arises by the split. COMPUTATION (the chain's
-exact harmonic solution): the one-Node pairs nearest a half-and-half
-split are [91, 107] (abs(r)^2 = 0.49987) and [108, 127] (0.50016) at
-[2464, 25], and [183, 199] (0.49987) at [1232, 25]: the share depends on
-the clock, as a real coating's does, and is not exactly 1 / 2 at any
-pair of this search (denominators below 200). At 45 degrees on a layer
-the reflected light leaves at the mirror angle (the tangential wave
-vector kept, an Outside reading, 3.3), so a Mach-Zehnder geometry arises. THE OWNER'S WORD:
-whether the splitter becomes this material layer (its share a computed
-number, not a declared 1 / 2) or keeps the table form with declared
-outputs.
+**7.2 Its body, its kind, its orientation, its material.** A layer ONE
+Node thick, a line of cubes of side 1 (a line of bodies, as the mirror
+line is), of light's kind, A MATERIAL, NO BOUND MODE, each Node with a
+gap pair [num, den] for every label alike; its orientation its plane.
+COMPUTATION (the chain's exact harmonic solution of the split): the
+one-Node pairs nearest a half-and-half split are [91, 107] (abs(r)^2 =
+0.49987) and [108, 127] (0.50016) at [2464, 25], and [183, 199]
+(0.49987) at [1232, 25]; the share depends on the clock, as a real
+coating's does, and is not exactly 1 / 2 at any pair with a denominator
+below 200. At 45 degrees on a layer the reflected light leaves at the
+mirror angle (the tangential wave vector kept, an Outside reading,
+3.3), so a Mach-Zehnder geometry arises. The POLARISING splitter is the
+polariser's splitting form (2.2): the gap for one label only, in the
+body's rotated label basis.
 
-**7.3 The unit tests (if adopted).** A chain, the layer [91, 107], an
-emitter of [2464, 25]: the offer booked beyond over the total 0.50013,
-before it 0.49987 (the steady values; the train's spread of clocks
-MEASURED ONLY beside).
+**7.3 The engine lines: none** beyond the head's (a body with a pair is
+on main). RETIRES: `Splitter` and the linear form it reads.
+
+**7.4 The unit tests.** A chain, the layer [91, 107], an emitter of
+[2464, 25]: the offer booked beyond over the total 0.50013, before it
+0.49987 (the steady values; the train's spread of clocks MEASURED ONLY
+beside).
 
 ---
 
-## 8. What is agreed, and what goes to the owner
+## 8. The transponder (a moving mirror: a mirror material carried by the massive body)
+
+**8.1 What it is.** A reflector receding from a lamp at rest: the
+reflected light returns red-shifted by (1 - beta) / (1 + beta), beta the
+reflector's pace over c; the round trip's sent period over the received
+one (1 + beta) / (1 - beta) (RUN_LIST.md row 4c, the round trip off a
+receding transponder). Reviewer 3's audit (record 1819) found main's
+world a SHORTCUT (the old table form, a lamp carrying an imposed
+momentum label and a `rerelease` by family name): it RETIRES.
+
+**8.2 Its body, its kind, its orientation.** The massive body of
+section 4 (a WELL, its bound mode and its body check), carried at k = 3
+(one Link per three intervals), whose cells carry ALSO the mirror
+material for light's family: the gap pair [1, 2] (section 3). This is the
+crystal's extension (1.1a item 1): a body carrying a pair for each of
+two families. Its orientation: its cells' plane. A lamp with its own
+receiver at rest (sections 5 and 6) sends and receives.
+
+**8.3 Its action (PROVED HERE on the band; COMPUTATION for the
+numbers).** The reflection arises as at a resting mirror (section 3); on
+the mirror's line x = v t the incident and the reflected amplitudes keep
+one phase, so omega_r = omega_i - v (k_i + k_r), both on the vacuum
+band 3 cos omega = 2 + cos k (a chain), v = 1 / 3. The continuum gives
+omega_i / omega_r = (1 + beta) / (1 - beta) with beta = v / c = sqrt 3 /
+3: 3.7321. ON THE BOARD'S OWN DISPERSION (the pin's number, blind): the
+sent over the received clock 3.7733 at [2464, 25] (about 12 Links per
+period), 3.7420 at [1232, 25] (about 24 Links): the band's dispersion
+adds 1.1 and 0.3 percent to the continuum form. The mirror moves by
+hops, one Link every three intervals, so the reflected train carries
+sidebands at the hop's clock beside the mean (MEASURED ONLY); the
+pin's reading is the mean.
+
+**8.4 Timing.** The round trip from the lamp's birth to the first rung
+at its own receiver: 2 D / (c (1 - beta)) in the continuum for a mirror
+at the distance D at the birth, receding; the reflection's own delay
+(section 3.4, 4.09 intervals at rest) stretched by the motion (MEASURED
+ONLY).
+
+**8.5 The engine lines.** A body carrying a pair for each of two
+families (shared with the crystal); none else. RETIRES: `rerelease` by
+family name and the table body that re-emitted.
+
+**8.6 The unit tests.** At rest (k = 0) the reflected clock equals the
+sent one exactly; at k = 3 the ratio of the sent to the received clock
+3.7733 at [2464, 25] within the reading's grain (the pin, blind, the
+owner's word before any run).
+
+---
+
+## 9. What each tool needs and what retires, in one table
+
+| Tool | Its body and kind | The engine lines it needs | What retires on main |
+| --- | --- | --- | --- |
+| The crystal | a square of light's kind, material | one amplitude per label; a body with a pair for each of two families; the take-and-drive at the rising zero (the coupling pair); the pair's residue from the crystal's own count | the two-arm emitter (`arms`), already cancelled |
+| The polariser | a cube or a line of cubes of light's kind, material | one amplitude per label; the rotation by the body's axis with the per-part pairs; the click's weights from the label state and the axis | `TableBody`; the key `phase_window` (becomes `axis`) |
+| The material mirror | a cube or a line of cubes of light's kind, gap [1, 2], material | none | the one-Node mirror with a declared direction; the closed face as a mirror |
+| The well body | a cube of a massive kind, a well | none (the body check) | none |
+| The receiver | a cube of light's kind, take [1, 1], material | the take pair as a material integer | none |
+| The emitter | a cube, isotropic, material | one amplitude per label | `arms` and declared headings |
+| The splitter | a line of cubes, gap [91, 107], material | none | `Splitter` and the linear form |
+| The transponder | the massive body carrying the mirror's pair | a body with a pair for each of two families | `rerelease` by family name |
+
+---
+
+## 10. What is agreed, and what goes to the owner
 
 Nothing in this file is agreed yet: each section is checked by the
 physicist and agreed or sent to the Boss. The points for the owner from
-this draft: (1) the crystal in the receiver-emitter form of 1.1a (one
-body, one coefficient pair per family, the owner's channels HV and VH
-adding on the whole cone; the pin with Bob's settings exchanged), or its
-variant HH + VV (the old roles), or the alternative (B) of two crossed
-crystals; (2) that the cone arises from the dispersion between the
-arriving and the born family, and that birefringence among the born
-labels would remove the entanglement on a layer (1.1a item 4); (3) the
-cost of a formed cone (a crystal of about 60 to 180 Nodes, a board of a
-few thousand Links), which the Bell pin does not need; (4) the splitter
-as a material layer (7.2).
+this draft: (1) no table anywhere: every tool a body of material, the
+one enabling line one amplitude per label on every record (the head);
+(2) the crystal in the receiver-emitter form of 1.1a with his channels
+HV and VH (the pin with Bob's settings exchanged), or its variant HH + VV
+(the old roles), or the alternative (B); the bilinear coupling of 1.1a
+item 10 named, with its seed and its unwritten conserved form, as the
+form in which the halving itself arises; (3) the cone from the dispersion
+between the families, birefringence among the born labels removing the
+entanglement on a layer; (4) a formed cone's cost; (5) Malus's and Bell's
+counts unchanged under the material polariser (the click's weights the
+projection of the label state on the material's axis), the books a
+consistency test within the rung's margin; (6) the transponder's pin,
+blind: 3.7733 at [2464, 25] on the board against the continuum's 3.7321.
