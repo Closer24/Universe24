@@ -253,3 +253,36 @@ World Generator's later run of the same file being its regression check.
 - COMPUTATION (read, not compared): on this file and this engine bit no record
   reaches the screen within its life; each record's light is booked at the -x
   face and the gather closes it there at the same age.
+
+## 10. The receding index's three worlds on ENGINE C (the chain of 4000, ticks 6000)
+
+The three files of main ecebf895 named by RUN_LIST.md's index row, unchanged:
+index_moving_long_k3_away.json (sha256 prefix f151bb27f71b),
+index_moving_long_rest_k3_away.json (87f5b98ea570) and
+index_moving_long_reference_k3_away.json (f81bc35bfe59); the source at 800,
+the probe at 2400, the block of side 24 from 1500 (away) or at 2100 (rest).
+The probe's phase is a GAMEBOARD reading (DECLARATIONS.md section 11: the row
+is a prediction of the engine's board, not a measurement); the declared
+numbers are read beside, not compared (the Boss's order of 11:07Z).
+
+- HOST: 4.2, 3.0 and 1.2 seconds wall (away, rest, reference), 37 MB peak
+  each, one light record live throughout, 6000 probe lines each.
+- GAMEBOARD (the board): the away block hops from 1500 at tick 3002 one Link
+  every 3 intervals to 2500 at 5999 (its cells reach the probe after the
+  window); the rest block stays at 2100; the probe first reads nonzero at
+  2745 (2748 on the rest run); the amplitude ratio world / reference in the
+  window [3800, 5400] is 0.981 (rest) and 1.052 (away).
+- GAMEBOARD (the probe's phase, the script's projection form over the window
+  and its halves, reference minus world): at the series' own frequency,
+  0.0180 rad per interval (the projection amplitude's peak on the reference),
+  the rest world reads +0.1976 rad (halves +0.1982, +0.1964; n 1.2641 by
+  n = 1 + d / ((omega / c) s)) and the away world +1.9071 rad (halves
+  +2.4494, +0.9506; the drift -1.87e-3 rad per interval). At the script's
+  omega 0.035 (3.7 percent of the series' projection amplitude): rest +0.4297
+  rad (n 1.2953), away +1.6522 rad (halves +1.9703, +1.1671; the drift
+  -1.00e-3 rad per interval).
+- Read beside (declared, not compared): the script's +1.0144 rad with the
+  halves +0.5539 and +1.5234 (the drift +1.2e-3 rad per interval) and the
+  rest n 1.2519; this reading's halves come in the opposite order and the
+  source's frequency on the board reads 0.018 where the script declares
+  0.035.
