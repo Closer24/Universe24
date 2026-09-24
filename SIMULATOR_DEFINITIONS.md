@@ -116,11 +116,18 @@ in the day's log; nothing of them is a name the engine branches on.
 - **The birth.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
   cell, and the born record is written ONCE on the body's cells at both
-  levels, now = A C_2N[3 N / 2 + s] and before = -now (the table of 2 N,
-  load-time data), or the generator's born profile along a line; the next
+  levels, the world's two integers `born: [now, before]` with before =
+  -now (the generator's, round(A x 256 sin(pi s / N)), checked at load)
+  or the generator's born profile along a line; the next
   excitation follows while the stock lasts (ALGEBRA.md 9.17 (4) to (6)).
   A crystal births a record of rank 2 at an arriving record's click on
   its cells (9.7 (b), 9.13). Nothing drives a record after its birth.
+- **No table in the engine** (the model owner, 2026-09-24, 23:00Z: "if
+  it is not used, throw it out; no formulas on the board"): the reading
+  is the flux, the axes are integers, the born pairs and profiles and the
+  seeds are the world's integers written by the generator; `core.phase`
+  is read by the generator and by the host's phase readers only, never
+  by the engine's step or click.
 - **The residue.** A record's u is the rule's remainder at its birth's
   centre cell at the birthing click, and its wheel is 3 x denominator /
   gcd(numerator, 3) of that cell's pair; no residue, wheel or seed is

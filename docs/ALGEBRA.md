@@ -3962,12 +3962,16 @@ none of the fifteen needs one.
 - The polariser keeps no remainder: its rows are group elements, so it
   applies only the ring's verbs (a translation and a sum), with no
   division.
-- What STAYS: `phase_cosines` and `phase_sines` where ev is still read
-  through the rounded circle (the Z[i] pointers and `cmul`, the detector
-  law's cosine and sine arrays, `world.py`'s sine table). Replacing that
-  ev by the cancel is the same step one level down, and it removes the
-  homomorphism defect of the derivations' 6.7. It is A POINT FOR THE OWNER
-  and outside this order.
+- What STAYED at the time of writing: `phase_cosines` and `phase_sines`
+  where ev was still read through the rounded circle (the Z[i] pointers
+  and `cmul`, the detector law's cosine and sine arrays, `world.py`'s
+  sine table). SUPERSEDED (the owner's word of 23:00Z, "if it is not used,
+  throw it out; no formulas on the board"): with the flux as the reading
+  (9.19 (3)), the axes as integers and the born pair as the world's
+  integers (9.17 (6)), THE ENGINE OF THE FIFTEEN CARRIES NO TABLE; the
+  readers that turned levels into phases (`read_phase`, `nearest_phase`)
+  are host tools outside the engine, and `core.phase` stays only for them
+  and for the generator.
 
 **What Nature24 must change.**
 1. `joint_weights`: take the rows (x^0, x^(-s)) and (x^0, x^(N/2 - s))
@@ -4332,15 +4336,16 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    regenerated worlds included.
 
 **(6) The write for an odd clock step (the physicist's question (2) of
-22:00Z; DECIDED HERE).** The born pair is the character sampled half a
-step either side of its zero, on the circle of 2 N steps: now = A x
-C_2N[3 N / 2 + s] and before = -now exactly, with C_2N the cosine table
-of 2 N steps (`core.phase`, load-time data, lawful under 2.7) and s =
-floor(n / d) the clock's step per interval. For s even this is C_N[3 N /
-4 + s / 2], item (5) 2 as written; for s = 1 on N = 64 it is 256 sin(pi /
-64), 13 after rounding, never 0. No emitter is refused for s = 1; where 2
-N exceeds the tables' bound (N = 65536) an odd s is refused, and no world
-of the fifteen has one.
+22:00Z; DECIDED HERE; the table moved out of the engine on the owner's
+word of 23:00Z).** The born pair is the character sampled half a step
+either side of its zero: now = round(A x 256 sin(pi s / N)) and before =
+-now exactly, s = floor(n / d) the clock's step per interval (for s even
+this is the table of N at 3 N / 4 + s / 2; for s = 1 on N = 64 it is 13,
+never 0). THE ENGINE HOLDS NO TABLE FOR IT: the born pair is TWO INTEGERS
+OF THE WORLD, `born: [now, before]` per birth, computed by the generator
+(a host tool, as the seed's mode is) and checked at load against the
+generator's recompute; a line's born profile is the generator's integers
+in the same way. No emitter is refused for any s.
 
 ### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
 
@@ -4852,7 +4857,7 @@ is the statement the property test of 9.20 checks.
 - WHAT CHANGES FOR THE ENGINE (the physicist), beyond 9.18 (7): E as the
   one-way flux at every set, and T as the record's I (the take, the grace,
   the own take, the exemption and the driven mask retire with them); the
-  spectral load check; the write with the table of 2N (9.17 (6)); the
+  spectral load check; the born pair as the world's integers (9.17 (6)); the
   residue's source if the owner takes (4).
 
 ### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z; the owner's word of 22:10Z: "he only needs to verify it, because it is an algebraic test of the families he wants, before a code test"; ADOPTED, record 1875)
@@ -5084,8 +5089,12 @@ done before it.
    body's own record to carry its momentum and the pairs to follow it: OPEN
    (9.15, a proof owed that the stress is the flux). (b) The per-family
    faces of main: DECIDED, one border (record 1875). (c) The cosine
-   tables in the readers and the generator: lawful as load-time data
-   (2.7), outside the law, and they stay. (d) The float Lanczos of the
+   tables: DECIDED (the owner, 2026-09-24, 23:00Z: "if it is not used,
+   throw it out; no formulas on the board"; superseding his word of
+   2026-09-21 that the table stays for the click's Gram matrix, which the
+   flux reading has replaced): the engine carries NO TABLE; the generator
+   computes the born pairs and profiles and writes integers, and the
+   phase readers are host tools outside the engine. (d) The float Lanczos of the
    generator: HOST, outside the law, its integers checked at load. (e)
    The one non-local act, the click's deletion of a summand across the
    board: not ruled out; it is the algebra's one deletion (8.8,
@@ -5158,9 +5167,10 @@ remainder (9.9).
 - A HOST COMPUTATION, ROUNDED: the mode's real profile (the generator's
   Lanczos vector, float, unique up to sign and scale), rounded to the
   nearest integer at the amplitude; the character's cosine at each Node
-  for a moving body (the tables, load-time data, 2.7). Their integers,
-  once written, are the world's data; the float that produced them is
-  never read by the law.
+  for a moving body, and the born pairs and profiles (the generator's
+  own cosines). Their integers, once written, are the world's data; the
+  float that produced them is never read by the law, and the engine
+  carries no table (the owner's word of 23:00Z).
 - THE LOAD CHECK REFUSES: a body whose cells are cut or overlap another's
   (9.9 (4)); a composed operator with a mode at or above 2 (9.19 (2)); a
   body's summand that is not the composed mode's integer profile bit for
