@@ -2,6 +2,16 @@
 
 ## Where the project stands on 2026-09-20 (read this first)
 
+**Update of 2026-09-24, 11:58Z (the Boss, record 1806 of docs/LOG_2026-09-20.md).** On the
+model owner's word every agent session is stopped and closed until a plan is reached with the
+physicist and presented to him: one list of the experiments we want to support, one engine on
+main, no building of worlds, the engine stabilised until a freeze on one commit, no pin runs
+until then, one GO on his word, the paper submitted only when everything is stable. The live
+state (open pull requests, the branches with unmerged work, the declaration defects found and
+not yet fixed, the three idle sessions holding unpushed engine work) is record 1806; the owner's
+decisions of the day are in docs/HIGHLIGHTS.md section 5.4 and the GO status page is
+docs/designs/detector_law/GO_STATUS_2026-09-24.md.
+
 This is a snapshot of `claude/universe24-new-3ytqde` at the pull request
 that carries the day's work to `main`; read current Git, the linked issues
 and pull requests, and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector) (the
