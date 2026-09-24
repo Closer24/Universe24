@@ -542,7 +542,21 @@ omega_b) of its own well, printed by the pins script before the run.
    and say so (the abstract's "meets (A1) only" is the same fact). What
    would meet it, and only it, is a world of two bodies whose separation
    is held by light and read after the push, to be declared and derived
-   (8b) before it is computed; the model owner's word.
+   (8b) before it is computed; the model owner's word. THE READER OF THE
+   ROW (Reviewer 3's line, 02:00Z): the row reads the moving clock's OWN
+   count, the block's own clock (its rung count on its own record, the
+   massive series' reader), so the receiving detector set of key (i) at
+   the block's cells must STAMP the block's count (the engine's clock
+   field from the block's rung count, which the gather line carries only
+   for a block's cell; key (ii)'s binding carries it with the stepping
+   block); the same world read in the LATTICE'S intervals gives the
+   medium's numbers, gamma^2 = 1.500 along and gamma = 1.225 across, not
+   1.2224 and 0.9981. THE ACROSS ARM IS A POSITIVE (his token): the
+   transverse clock's own count equals its rest count to 0.2 percent, the
+   kind's slowing 1 / gamma_m meeting the medium's gamma, the residue the
+   two-pace ratio c_eff / c = 0.99627, row A's number; so the row's (P)
+   carries two numbers with two words, MET in form across (0.9981) and a
+   predicted FAIL along (1.2224) as declared.
 8. THE LIGHT-HELD PAIR IN MOTION on the lattice's band (derivation (a),
    2026-09-24, 02:35Z, on the Boss's YES of 02:00Z to the owner's
    question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin).
