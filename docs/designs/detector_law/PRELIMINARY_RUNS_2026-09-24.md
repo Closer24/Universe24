@@ -168,7 +168,25 @@ bell_a0b1 (sha256 prefix 796d3d582c6b; residue_seed 7815816498507250857):
   order is read (`u` 1419, 1811, 1930, ... distinct over the 2048). The two
   files differ in the seed order and in nothing this run reads.
 
-bell_a1b0 and bell_a1b1: pending at this commit; appended when read.
+bell_a1b0 (sha256 prefix f43e7e96915a; residue_seed 5111944488953294737) and
+bell_a1b1 (65d41223674f; residue_seed 14513186461269123306), run in parallel
+on two cores:
+
+- HOST: 1159 and 1162 seconds, 66 MB resident each; 2048 births, 4096 gathers,
+  0 live at the end, the books balanced, on both.
+- MEASUREMENT: 2048 clicks at Alice's one cell "0" and 2048 at Bob's on both;
+  no escape; Alice's first rung 7 intervals after the birth stamp, Bob's 15.
+- COMPUTATION: every Alice arm completes at age 3201 and every Bob arm at
+  3205 on both.
+- GAMEBOARD (the close probe): the 64 form first holds at age 70 (Alice) and
+  380 (Bob), the 256 form at 267 and 1481, within the train, on every arm of
+  both; after the train each first holds at 3200 on every arm.
+- GAMEBOARD: one cell per ladder on both; the seed order is read (`u` 308,
+  1212, 1455, ... on bell_a1b0 and 1599, 806, 1725, ... on bell_a1b1, distinct
+  over the 2048 on each).
+
+The Bell four on ENGINE C read the same in every number but `u`: the setting
+changes no count this run reads, as on ENGINE B.
 
 ## 8. sagnac_rest on ENGINE C (the open chain of 3000, both blocks at rest, ticks 8450)
 
