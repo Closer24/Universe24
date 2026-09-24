@@ -46,6 +46,7 @@ def massive_world(
         "suspension": 0,
         "detector_law": True,
         "massive_record": True,
+        "amplitude_bound": 1 << 32,
         "directions": [],
         "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
         "measured": [],
@@ -249,9 +250,12 @@ def run_chain_digests() -> dict[str, str]:
 
 def test_p_the_light_record_is_byte_identical_without_the_key():
     """BUILD.md (p): the first build's chain world over 600 intervals gives the digests read at
-    the head f4a3971a before any line of the build was written."""
+    the head f4a3971a before any line of the build was written: the state and the audit
+    unchanged; the events' digest moved ONCE, at the GO's fold (BUILD.md section 13), by the
+    two fields added to every gather line (`click_at`, `clock_source`; Reviewer 3's line 2 and
+    key (i)), the rows and every other field byte for byte (the state digest the witness)."""
     assert run_chain_digests() == {
-        "events": "f6b6f273d08c0a2d278fff1b2f4967ceb48e8d5b7a906d7351f86d142080372d",
+        "events": "9e29e924a2f7ba63d34d9fb1bdaa30123006a554e42781ecf29804664c3832b3",
         "state": "9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962",
         "audit": "1000ac3f0b5d84f26958d70cc75e9c2484ff697e45418a7a83720689fe48535a",
     }
@@ -262,6 +266,7 @@ def test_q_the_loaders_refusals_name_the_key():
     base = massive_world([4, 4, 4], "open", [2, 3])
     without_key = json.loads(json.dumps(base))
     without_key["massive_record"] = False
+    del without_key["amplitude_bound"]
     with pytest.raises(ValueError, match="pair is refused without the world key"):
         parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
@@ -389,6 +394,7 @@ def block_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
+        "amplitude_bound": 1 << 32,
         "directions": [],
         "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
         "measured": measured,
@@ -429,10 +435,28 @@ def test_e_the_blocks_cells_and_its_pair_on_them():
     assert np.all(simulation.kind_num[1] == 800)
     assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
     assert block.own is not None and int(block.own.now[3, 3, 3]) == UNIT
-    with pytest.raises(ValueError, match="no well of the kind's pair"):
+    # a raised pair is a BARRIER (DECLARATIONS.md section 15 M1-6): admitted, no own record,
+    # its seed and clock keys refused; the kind's own pair without `cavity` refused
+    barrier = parse_nature_beam_world(
+        block_world(
+            [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 810]}]
+        )
+    )
+    assert barrier.measured[0].block is not None and barrier.measured[0].block.seed == 0
+    assert DetectorLawSimulation(barrier).blocks[0].own is None
+    with pytest.raises(ValueError, match="refused on a barrier"):
         parse_nature_beam_world(
             block_world(
-                [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 810]}]
+                [8, 8, 8],
+                "open",
+                [800, 809],
+                [{"position": [2, 2, 2], "side": 3, "pair": [800, 810], "seed": 5}],
+            )
+        )
+    with pytest.raises(ValueError, match="is the kind's own pair"):
+        parse_nature_beam_world(
+            block_world(
+                [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 809]}]
             )
         )
 
@@ -1012,6 +1036,7 @@ def test_t_the_mode_line_sums_lights_field_by_residue_class():
         parse_nature_beam_world(bad)
     unkeyed = dict(document)
     del unkeyed["massive_record"]
+    del unkeyed["amplitude_bound"]
     del unkeyed["measured"]
     unkeyed["measured"] = []
     with pytest.raises(ValueError, match="mode_axis"):
@@ -1037,13 +1062,18 @@ def test_u_a_massive_record_never_completes_nor_clicks_as_escaped():
 
 
 def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """MUST 3: a kind's pair whose rule total at the amplitude bound A = 2^40 reaches 2^63 is
-    refused at load naming the bound and the pair ([2^20, 2^20 + 1]: 6 x 2^60 + ... above
-    2^63); [800, 809] is admitted; a block's pair with its g_d folded into the wall is checked
-    with that scale ([800, 800] with g = [1, 2^20] refused, with g = [1, 20] admitted)."""
+    """MUST 3: a kind's pair whose rule total at the world's declared amplitude bound A reaches
+    2^63 is refused at load naming the bound and the pair (A = 2^40 declared, [2^20, 2^20 + 1]:
+    6 x 2^60 + ... above 2^63); [800, 809] is admitted; a block's pair with its g_d folded into
+    the wall is checked with that scale ([800, 800] with g = [1, 2^20] refused at A = 2^40, with
+    g = [1, 20] admitted). The world key (issue #1085, section 15 M1-10): a massive world
+    without `amplitude_bound` is refused naming it; a seed above the bound is refused naming
+    the bound and the pair (a seed of 2^60 at A = 2^32); the key without `massive_record`
+    refused; a planted row above the bound stops the run at its interval."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
     document["age_bound"] = 100
+    document["amplitude_bound"] = 1 << 40
     with pytest.raises(ValueError, match=r"num x 6 x A \+ 3 x den x \(A \+ 1\).*not below 2\^63"):
         parse_nature_beam_world(document)
     with pytest.raises(ValueError, match=r"\[1048576, 1048577\]"):
@@ -1063,11 +1093,41 @@ def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
             ],
         )
         world["age_bound"] = 100
+        world["amplitude_bound"] = 1 << 40
         if admitted:
             parse_nature_beam_world(world)
         else:
             with pytest.raises(ValueError, match="with the coupling's denominator 1048576"):
                 parse_nature_beam_world(world)
+    unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    unbounded["age_bound"] = 100
+    del unbounded["amplitude_bound"]
+    with pytest.raises(ValueError, match="declares `amplitude_bound`"):
+        parse_nature_beam_world(unbounded)
+    huge_seed = block_world(
+        [24, 24, 24],
+        PERIODIC,
+        [800, 809],
+        [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "seed": 1 << 60}],
+    )
+    huge_seed["age_bound"] = 100
+    with pytest.raises(
+        ValueError, match=r"above the world's amplitude bound A = 4294967296 on the pair"
+    ):
+        parse_nature_beam_world(huge_seed)
+    bounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    bounded["age_bound"] = 100
+    world = parse_nature_beam_world(bounded)
+    simulation = DetectorLawSimulation(world)
+    planted_row = planted(
+        simulation,
+        1,
+        np.full((6, 6, 6), 1 << 33),
+        np.zeros((6, 6, 6)),
+        np.zeros((6, 6, 6)),
+    )
+    with pytest.raises(RuntimeError, match="above the world's declared amplitude bound"):
+        simulation._advance(planted_row)
 
 
 def test_w_the_form_on_a_chain_is_exact_with_the_remainders_term():
@@ -1169,6 +1229,7 @@ def matter_lamp_world(matter_lamp: bool, clock: list[int] | None = None) -> dict
     document["shape"] = [200, 1, 1]
     document["ticks"] = 160
     document["massive_record"] = True
+    document["amplitude_bound"] = 1 << 32
     matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157]}
     if clock is not None:
         matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
@@ -1344,6 +1405,209 @@ def test_ab_the_world_key_wheel_declares_the_detectors_rung_without_a_lamp():
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False
     no_law["massive_record"] = False
+    del no_law["amplitude_bound"]
     no_law["wheel"] = 64
     with pytest.raises(ValueError, match="refused without `detector_law`"):
         parse_nature_beam_world(no_law)
+
+
+def light_clock_world(faces: str, far_body: bool) -> dict:
+    """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10): a chain of
+    173 (x `closed` for light, the zero face at 172 the mirror B sixty Links from A's face at
+    112; or x open, the sponges), the matter kind [800, 809], the emitter A of side 12 at
+    [100, 112) at full depth with the seed 50 x 2^20, `emits` light with G = [1, 50] and
+    g = [1, 1000], W = 64; light's clock [1, 1]; the receiving set `A_face` bound to A with its
+    own wheel 64 (key (i)); with `far_body`, a receiver body at x = 160 read as the set `far`
+    with its own wheel 64; the amplitude bound 2^32."""
+    document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
+    document["families"][0]["phase_per_link"] = [1, 1]
+    document["ticks"] = 600
+    document["measured"] = [
+        {
+            "position": [100, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "side": 12,
+            "pair": [800, 800],
+            "seed": 50 << 20,
+            "coupling": {"G": [1, 50], "g": [1, 1000]},
+            "wheel": 64,
+            "emits": "light",
+            "held": {"light": 100},
+            "margin": "control",
+            "grace": 70,
+        }
+    ]
+    document["detectors"] = [{"name": "A_face", "block": 0, "wheel": 64}]
+    if far_body:
+        document["measured"].append(
+            {
+                "position": [160, 0, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "directions": [[-1, 0, 0]],
+            }
+        )
+        document["detectors"].append({"name": "far", "positions": [[160, 0, 0]], "wheel": 64})
+    return document
+
+
+def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
+    """Line B (the block's grace), key (i) (a detector set bound to a block, its own wheel, the
+    block's count on the stamp) and the closed face (Reviewer 3's blocking line), on the light
+    clock's chain (section 10 with section 15's lines; A's `grace` 70 = N_s). (1) With the
+    faces OPEN and no body: A's first emitted record books nothing at `A_face` while A sources
+    it (its cycle, 70 intervals) and for the 70 intervals of the grace after (no pointer, no
+    rung); at the grace's end the set's rung is crossed AT ONCE by the record's own residual at
+    the cells (a tenth of the emission's peak, decaying slowly; a READING for the physicist:
+    the first rung after the grace is the residual's, in the open world and the closed alike,
+    so the return of the light clock is not this rung), stamped with A's own count as the
+    interval begins (the count the block carries when the offer arrives, before the block's
+    clock of the same interval; `rung_counts`, as `_book_response` stamps a block's cell) and
+    named by `clock_source` on the gather line when the set is
+    chosen; with a receiver body at x = 160 beside, the far set crosses its rung after the
+    grace as well. (2) With the faces CLOSED (the zero face at 172 the mirror, no take, no face
+    cell): the record's level at x = 160 between the intervals 250 and 320 (after the wave's
+    front passed toward the face and the return came back, 2 L / c = 208 after the emission)
+    stays above one hundredth of the emission's peak and above ten times the open world's
+    (where the wave is taken at the face: 7.0 x 10^6 against 1.7 x 10^5 read, the peak
+    1.6 x 10^7); the books balanced at every interval in both
+    worlds; `click_at` on every gather line. The loader: `closed` without `detector_law`
+    refused, a set with both `block` and `positions` refused, `block` naming no block refused,
+    `grace` on a block that emits nothing refused."""
+    first = 1  # A's first emitted record: block 0, birth 1
+    levels: dict[str, int] = {}
+    peak = 0
+    for faces in ("open", "closed"):
+        world = parse_nature_beam_world(light_clock_world(faces, False))
+        assert world.closed == (faces == "closed", False, False)
+        assert world.boundary_per_axis["x"] == faces
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        assert ("face:+x" in simulation.cell_names) == (faces == "open")
+        a_face = simulation.cell_names.index("A_face")
+        block = simulation.blocks[0]
+        in_grace_pointer_seen = 0
+        grace_end: int | None = None
+        rung: int | None = None
+        stamp: int | None = None
+        count_then: int | None = None
+        late = 0
+        for _ in range(320):
+            count_before = block.count
+            simulation.step()
+            assert simulation.books()["balanced"], simulation.tick
+            live = simulation.records.get(first)
+            if live is None:
+                continue
+            peak = max(peak, int(np.max(np.abs(live.now))))
+            if simulation._in_grace(live):
+                in_grace_pointer_seen = max(in_grace_pointer_seen, live.pointers[a_face])
+                assert live.first_rung[a_face] is None
+            elif grace_end is None:
+                grace_end = simulation.tick
+            if rung is None and live.first_rung[a_face] is not None:
+                rung = live.first_rung[a_face]
+                stamp = simulation.rung_counts[(first, a_face)]
+                count_then = count_before
+            if simulation.tick >= 250:
+                late = max(late, int(abs(live.now[160, 0, 0])))
+        assert in_grace_pointer_seen == 0 and grace_end is not None
+        assert rung is not None and rung >= grace_end and rung - grace_end <= 2, (rung, grace_end)
+        assert stamp == count_then and stamp is not None and stamp >= 1
+        assert block.cycle_length > 0
+        gathers = [line for line in lines if line["event"] == "gather"]
+        assert all("click_at" in gather and "clock_source" in gather for gather in gathers)
+        for gather in gathers:
+            if gather["chosen"] and gather["chosen"][0][0] == "A_face":
+                assert gather["clock_source"] == "measured:0" and gather["click_at"] == "rung"
+        levels[faces] = late
+    assert peak > 0
+    assert levels["closed"] * 100 > peak, (levels, peak)
+    assert levels["closed"] > 10 * levels["open"], (levels, peak)
+    # a receiver beyond the grace clicks: the far body's set crosses its rung after the grace
+    beside = DetectorLawSimulation(parse_nature_beam_world(light_clock_world("open", True)))
+    far = beside.cell_names.index("far")
+    far_rung: int | None = None
+    for _ in range(320):
+        beside.step()
+        live = beside.records.get(first)
+        if live is not None and far_rung is None and live.first_rung[far] is not None:
+            far_rung = live.first_rung[far]
+    assert far_rung is not None and far_rung > 100
+    # the loader's refusals
+    with pytest.raises(ValueError, match="closed"):
+        bad = light_clock_world("closed", False)
+        bad["detector_law"] = False
+        bad["massive_record"] = False
+        del bad["amplitude_bound"]
+        parse_nature_beam_world(bad)
+    both = light_clock_world("open", False)
+    both["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
+    with pytest.raises(ValueError, match="both `block` and `positions`"):
+        parse_nature_beam_world(both)
+    no_block = light_clock_world("open", True)
+    no_block["detectors"] = [{"name": "B", "block": 1}]
+    with pytest.raises(ValueError, match="names a measured event that is no block"):
+        parse_nature_beam_world(no_block)
+    silent = light_clock_world("open", False)
+    del silent["measured"][0]["emits"]
+    silent["detectors"] = []
+    with pytest.raises(ValueError, match="grace is refused on a block that emits nothing"):
+        parse_nature_beam_world(silent)
+
+
+def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
+    """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
+    kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the
+    lamp at x = 2, the screen at x = 70): the blocks have no own record, no clock and no
+    coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
+    rule skips light's kind), light's pair arrays carry [1, 2] at the two cells and [1, 1]
+    elsewhere; over 200 intervals the largest level beyond the wall (x in [45, 69]) stays below
+    three percent of the largest level before it (x in [10, 38]; the engine reads 1.45 percent
+    beside the declaration's 0.7 percent of the amplitude, the front's precursor included),
+    the books balanced at every interval; a light-kind block with `seed`,
+    `coupling` or `margin` refused."""
+    document = chain_world()
+    document["massive_record"] = True
+    document["amplitude_bound"] = 1 << 32
+    document["ticks"] = 200
+    for x in (40, 41):
+        document["measured"].append(
+            {
+                "position": [x, 0, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "side": 1,
+                "pair": [1, 2],
+            }
+        )
+    world = parse_nature_beam_world(document)
+    assert [entry.block is not None for entry in world.measured] == [False, False, True, True]
+    assert world.measured[2].block is not None and world.measured[2].block.seed == 0
+    simulation = DetectorLawSimulation(world)
+    assert all(block.own is None for block in simulation.blocks)
+    assert int(simulation.kind_den[0][40, 0, 0]) == 2 and int(simulation.kind_den[0][41, 0, 0]) == 2
+    assert int(simulation.kind_den[0][39, 0, 0]) == 1 and int(simulation.kind_num[0][40, 0, 0]) == 1
+    before = beyond = 0
+    for _ in range(200):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+        for live in simulation.records.values():
+            before = max(before, int(np.max(np.abs(live.now[10:39, 0, 0]))))
+            beyond = max(beyond, int(np.max(np.abs(live.now[45:70, 0, 0]))))
+    assert before > 0 and beyond * 100 < 3 * before, (before, beyond)
+    for key, value in (("seed", 5), ("coupling", {"G": [1, 1], "g": [1, 2]}), ("margin", "control")):
+        bad = json.loads(json.dumps(document))
+        bad["measured"][2][key] = value
+        with pytest.raises(ValueError, match="refused on a block of light's kind"):
+            parse_nature_beam_world(bad)

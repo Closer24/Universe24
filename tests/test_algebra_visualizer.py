@@ -320,6 +320,7 @@ def write_new_engine_record(folder: Path) -> None:
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
+        "amplitude_bound": 1 << 32,
         "probes": [[20, 0, 0], [30, 0, 0]],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
@@ -454,6 +455,7 @@ def write_new_engine_record(folder: Path) -> None:
         "width": 1,
         "clock_stamp": True,
         "massive_record": True,
+        "amplitude_bound": 1 << 32,
         "omit_row_clicks": True,
         "hypotheses": ["amplitude-v1", "detector-law-v1", "massive-record-v1"],
         "families": families_meta,

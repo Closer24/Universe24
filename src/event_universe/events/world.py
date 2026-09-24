@@ -428,6 +428,13 @@ WORLD_KEYS = {
     # reading of the hop pump's signature, MASSIVE_RECORD.md section 7),
     # absent by default, admitted under `massive_record` alone.
     "mode_axis",
+    # massive-record-v1 (DECLARATIONS.md section 15 M1-10; issue #1085): the
+    # world key `amplitude_bound`, the amplitude A every row of a massive
+    # world stays below, declared per world (no default: a massive world
+    # without it is refused); MUST 3's load bound at that A, the seed and a
+    # profile's largest magnitude refused above it, the rows asserted below
+    # it at every interval.
+    "amplitude_bound",
     # detector-law-v1: `wheel`, the rung W of the world's detector sets
     # where no lamp's birth wheel declares a larger one (a world whose
     # records a block emits; RUN_LIST.md's light detectors at W = 64), an
@@ -861,6 +868,8 @@ MEASURED_KEYS = {
     "family",
     "amount",
     "held",
+    # detector-law-v1, line B: an emitter block's `grace` (N_s), intervals
+    "grace",
     "phase",
     "momentum",
     "fixed",
@@ -935,7 +944,7 @@ CLOCK_ONLY_KEYS = ("at", "crowd")
 # rows at the set give the centre, and the offset added to it.
 WINDOW_READING_KEYS = {"reads", "offset"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age", "hand"}
-DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
+DETECTOR_KEYS = {"name", "positions", "threshold", "reading", "block", "wheel"}
 # The readings a detector may declare; the first is the default: `wave`
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
@@ -959,6 +968,11 @@ RESERVED_SET_PREFIX = "measured:"
 # The GameBoard's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
+# detector-law-v1 (DECLARATIONS.md section 10, Reviewer 3's line, 2026-09-24):
+# a face declared "closed" is a zero face for light WITHOUT the open face's
+# take (a mirror: the level 0 beyond it, no face cell, no sponge), per
+# axis, admitted under `detector_law` alone (the ray law has no rows).
+CLOSED_FACE = "closed"
 
 
 @dataclass(frozen=True)
@@ -1264,6 +1278,11 @@ class BlockDefinition:
     start: int = 0
     margin: str = MARGIN_KINDS[0]
     emits: int | None = None
+    # detector-law-v1, line B: the emitter's grace after each cycle's end, in
+    # intervals (DECLARATIONS.md section 10's N_s), during which its own
+    # cells take nothing of the record it emitted; None: two of the block's
+    # periods (the lamp's grace in the block's clock).
+    grace: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1394,12 +1413,19 @@ class TransitDefinition:
 @dataclass(frozen=True)
 class DetectorDefinition:
     """A named set of measured events, its threshold and its reading
-    (`beam` or `wave`)."""
+    (`beam` or `wave`); under the local detector law a set may instead be
+    BOUND TO A BLOCK (`block`, the measured event's number): its Nodes are
+    the block's cells at every interval (a stepping block's follow it), its
+    pointer the light record's motion summed there, its rung its own
+    `wheel` (DECLARATIONS.md section 15 M1-4, keys (i) and (ii)); the click
+    stamps the block's own count."""
 
     name: str
     positions: tuple[Address3, ...]
     threshold: int
     reading: str = DETECTOR_READINGS[0]
+    block: int | None = None
+    wheel: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1477,6 +1503,13 @@ class NatureBeamWorld:
     # detector-law-v1: the world key `wheel`, the detector sets' rung W
     # where no lamp declares a larger birth wheel; 1 by default.
     wheel: int = 1
+    # detector-law-v1: per axis, whether the face is declared "closed" (a
+    # zero face for light with no take); never on a periodic axis.
+    closed: tuple[bool, bool, bool] = (False, False, False)
+    # massive-record-v1: the world key `amplitude_bound`, the amplitude A
+    # every row stays below (declared on a massive world; the constant
+    # 2^40 on a world without the kind, where no row is bounded so).
+    amplitude_bound: int = AMPLITUDE_BOUND
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -1689,10 +1722,10 @@ class NatureBeamWorld:
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
-        """The GameBoard's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
+        """The GameBoard's faces per axis, `x`, `y`, `z` to `open`, `periodic` or `closed`."""
         return {
-            axis: BOUNDARIES[1] if wraps else BOUNDARIES[0]
-            for axis, wraps in zip(AXES, self.periodic, strict=True)
+            axis: BOUNDARIES[1] if wraps else (CLOSED_FACE if shut else BOUNDARIES[0])
+            for axis, wraps, shut in zip(AXES, self.periodic, self.closed, strict=True)
         }
 
     def owners(self, family: int) -> tuple[int, ...]:
@@ -1976,15 +2009,16 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
     if (
         isinstance(value, dict)
         and set(value) <= set(AXES)
-        and all(item in BOUNDARIES for item in value.values())
+        and all(item in BOUNDARIES or item == CLOSED_FACE for item in value.values())
     ):
         declared = {str(key): str(item) for key, item in value.items()}
         wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
         return declared, (wraps[0], wraps[1], wraps[2])
     raise ValueError(
         f"{BEAM_LAW}: the GameBoard is open (its edge is infinity) unless an axis is declared "
-        'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic"); '
-        "a closed GameBoard is refused"
+        'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic", or '
+        '"closed" per axis under detector_law: a zero face without the take); '
+        "a closed GameBoard (the string) is refused"
     )
 
 
@@ -2051,22 +2085,27 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
-def _pair_bound(numerator: int, denominator: int, label: str, scale: int = 1) -> None:
+def _pair_bound(
+    numerator: int, denominator: int, label: str, scale: int = 1, bound: int = AMPLITUDE_BOUND
+) -> None:
     """The load bound of a pair (Reviewer 3's MUST 3): the rule's total at a
-    Node under the amplitude bound A, num x scale x 6 x A + 3 x den x scale
-    x (A + 1), below 2^63 (the coupling's folded denominator as `scale`);
-    refused otherwise naming the bound and the pair."""
-    total = numerator * scale * 6 * AMPLITUDE_BOUND + 3 * denominator * scale * (AMPLITUDE_BOUND + 1)
+    Node under the amplitude bound A (the world's `amplitude_bound`), num x
+    scale x 6 x A + 3 x den x scale x (A + 1), below 2^63 (the coupling's
+    folded denominator as `scale`); refused otherwise naming the bound and
+    the pair."""
+    total = numerator * scale * 6 * bound + 3 * denominator * scale * (bound + 1)
     if total >= TOTAL_BOUND:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
             + (f" with the coupling's denominator {scale}" if scale != 1 else "")
-            + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = 2^40 "
-            f"is {total}, not below 2^63 (the bound of the rows' int64)"
+            + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = "
+            f"{bound} is {total}, not below 2^63 (the bound of the rows' int64)"
         )
 
 
-def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tuple[int, int]:
+def _kind_pair(
+    obj: dict[str, object], label: str, massive_record: bool, amplitude_bound: int = AMPLITUDE_BOUND
+) -> tuple[int, int]:
     """The family key `pair` (`massive-record-v1`): [num, den], two integers
     from 1 with den >= num (den > num a massive kind, den = num light's
     kind written out); refused without the world key `massive_record`, and
@@ -2086,7 +2125,7 @@ def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tupl
         raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the kind's pair")
     numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
     denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
-    _pair_bound(numerator, denominator, label)
+    _pair_bound(numerator, denominator, label, 1, amplitude_bound)
     if denominator < numerator:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
@@ -2145,6 +2184,7 @@ def _families(
     massive_rows: bool = False,
     action: int | None = None,
     massive_record: bool = False,
+    amplitude_bound: int = AMPLITUDE_BOUND,
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -2229,7 +2269,7 @@ def _families(
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
-        pair = _kind_pair(obj, f"families[{index}]", massive_record)
+        pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
         faces = _kind_faces(obj, f"families[{index}]", pair)
         found.append(
             FamilyDefinition(
@@ -3133,6 +3173,7 @@ def _block(
     lamp_declared: bool,
     span: tuple[int, int, int],
     shape: Address3,
+    amplitude_bound: int = AMPLITUDE_BOUND,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -3175,15 +3216,27 @@ def _block(
         raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
     if family.massive_kind:
         # A well lowers the pair; a cavity (form (I), the faces the mirror)
-        # may carry the kind's own pair, its record bound by the faces.
-        if pair[0] * kind[1] < pair[1] * kind[0] or (
-            pair[0] * kind[1] == pair[1] * kind[0] and not cavity
-        ):
+        # may carry the kind's own pair, its record bound by the faces; a
+        # BARRIER raises it (num' / den' below the kind's: the matter wall
+        # of DECLARATIONS.md section 15 M1-6, the mirror line of the matter
+        # kind), a block with no bound mode, no seed and no clock.
+        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is no well of the kind's pair "
-                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (num' / den' > "
-                "num / den; MASSIVE_RECORD.md section 4)"
+                f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
+                f"[{kind[0]}, {kind[1]}] and no cavity: a block lowers the pair at its cells (a "
+                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
             )
+        if pair[0] * kind[1] < pair[1] * kind[0]:
+            clock_keys = [
+                key for key in ("coupling", "seed", "emits", "cavity", "margin", "wheel") if key in obj
+            ]
+            if clock_keys:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a barrier (a raised pair "
+                    f"[{pair[0]}, {pair[1]}] on the kind [{kind[0]}, {kind[1]}] has no bound mode, "
+                    "no clock and no coupling; DECLARATIONS.md section 15 M1-6)"
+                )
+            obj = dict(obj, seed=0)
     else:
         if pair[1] <= pair[0]:
             raise ValueError(
@@ -3199,6 +3252,9 @@ def _block(
                 f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
                 "(M) wall has no clock and no coupling)"
             )
+        # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
+        # its cells carry the gap's pair and nothing else, no own record
+        obj = dict(obj, seed=0)
     receive = (0, 1)
     source = (0, 1)
     if "coupling" in obj:
@@ -3211,7 +3267,7 @@ def _block(
         receive = _ratio(coupling["g"], f"{label}.coupling.g", zero=True)
         # the block's rows divide by 3 den g_d (the coupling folded into the
         # one division): the load bound of MUST 3 with that scale
-        _pair_bound(pair[0], pair[1], label, receive[1])
+        _pair_bound(pair[0], pair[1], label, receive[1], amplitude_bound)
         source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
     wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
     seed = BLOCK_SEED
@@ -3238,6 +3294,13 @@ def _block(
         seed = max(abs(value) for value in profile)
     elif "seed" in obj:
         seed = _integer(obj["seed"], f"{label}.seed", 0)
+    if seed > amplitude_bound:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.seed {seed} (the scalar seed, or a profile's largest magnitude) "
+            f"is above the world's amplitude bound A = {amplitude_bound} on the pair "
+            f"[{pair[0]}, {pair[1]}]: every admitted amplitude enters the one declared bound "
+            "(issue #1085; MUST 3)"
+        )
     absorbing = obj.get("absorbing", False)
     if type(absorbing) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
@@ -3274,6 +3337,11 @@ def _block(
             f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
             f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
         )
+    grace: int | None = None
+    if "grace" in obj:
+        if emits is None:
+            raise ValueError(f"{BEAM_LAW}: {label}.grace is refused on a block that emits nothing")
+        grace = _integer(obj["grace"], f"{label}.grace", 0)
     return BlockDefinition(
         side,
         pair,
@@ -3288,6 +3356,7 @@ def _block(
         start=start,
         margin=str(margin),
         emits=emits,
+        grace=grace,
     )
 
 
@@ -3304,6 +3373,7 @@ def _measured(
     action: int | None,
     massive_record: bool = False,
     width: int = 1,
+    amplitude_bound: int = AMPLITUDE_BOUND,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -3568,6 +3638,7 @@ def _measured(
             lamp is not None,
             span,
             shape,
+            amplitude_bound,
         )
         found.append(
             MeasuredDefinition(
@@ -4425,7 +4496,7 @@ def _detectors(
     found: list[DetectorDefinition] = []
     for index, entry in enumerate(value):
         label = f"detectors[{index}]"
-        obj = _object(entry, label, DETECTOR_KEYS, {"name", "positions"})
+        obj = _object(entry, label, DETECTOR_KEYS, {"name"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{BEAM_LAW}: {label}.name must be a nonempty string")
@@ -4440,6 +4511,29 @@ def _detectors(
             raise ValueError(
                 f"{BEAM_LAW}: {label}.name {name!r} is the name of the border every event of a "
                 "family with a lifetime clicks on; declare another"
+            )
+        bound_block: int | None = None
+        set_wheel: int | None = None
+        if "wheel" in obj:
+            set_wheel = _integer(obj["wheel"], f"{label}.wheel", 1)
+        if "block" in obj:
+            if "positions" in obj:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label} declares both `block` and `positions`: a set bound to a "
+                    "block has the block's cells as its Nodes"
+                )
+            bound_block = _integer(obj["block"], f"{label}.block", 0, max(0, len(measured) - 1))
+            if measured[bound_block].block is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.block {bound_block} names a measured event that is no "
+                    "block (a set bound to a block reads the light record at the block's cells)"
+                )
+            threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
+            found.append(DetectorDefinition(name, (), threshold, block=bound_block, wheel=set_wheel))
+            continue
+        if "positions" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} needs `positions` (or `block`, a set bound to a block)"
             )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:
@@ -4474,7 +4568,9 @@ def _detectors(
                 f"{BEAM_LAW}: {label}.reading must be one of "
                 f"{[*DETECTOR_READINGS, SUM_READING]}, not {reading!r}"
             )
-        found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
+        found.append(
+            DetectorDefinition(name, tuple(positions), threshold, str(reading), wheel=set_wheel)
+        )
     return tuple(found)
 
 
@@ -4567,6 +4663,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
+    closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
+    closed = (closed[0], closed[1], closed[2])
     ticks = _integer(obj["ticks"], "ticks", 0)
     # The clock's rate: an integer K is the pair [1, K] (one phase step per
     # K units of content per self-creation), a pair [n, d] is n phase steps
@@ -4636,6 +4734,26 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
             "kind of the local detector law; the ray law has no record's rows at Nodes)"
         )
+    if any(closed) and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: a face declared {CLOSED_FACE!r} is refused without `detector_law` (a "
+            "zero face without the take is the local detector law's; the ray law has no rows)"
+        )
+    # massive-record-v1: the amplitude bound A, declared per massive world
+    amplitude_bound = AMPLITUDE_BOUND
+    if massive_record:
+        if "amplitude_bound" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: a world under `massive_record` declares `amplitude_bound`, the "
+                "amplitude A every row stays below (DECLARATIONS.md section 15 M1-10: 2^32 in "
+                "every massive world of the GO; MUST 3's load bound and the rows' run-time "
+                "assertion use it; no default)"
+            )
+        amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
+    elif "amplitude_bound" in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: amplitude_bound is refused without the world key `massive_record`"
+        )
     wheel = 1
     if "wheel" in obj:
         if not detector_law:
@@ -4674,7 +4792,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
             f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
         )
-    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action, massive_record)
+    families = _families(
+        obj["families"], phase_steps, age_bound, massive_rows, action, massive_record, amplitude_bound
+    )
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -4703,6 +4823,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
         massive_record,
         width,
+        amplitude_bound,
     )
     _column_budget(families, measured, release)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -4801,6 +4922,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         probes=probes,
         mode_axis=mode_axis,
         wheel=wheel,
+        closed=closed,
+        amplitude_bound=amplitude_bound,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

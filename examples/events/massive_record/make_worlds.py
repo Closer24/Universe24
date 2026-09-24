@@ -104,6 +104,7 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 FACES_OPEN = {"x": "open"}
 AGE_BOUND = 1 << 20
+AMPLITUDE_BOUND = 1 << 32
 MOMENTUM_K3 = 64
 MOMENTUM_K4 = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -177,6 +178,10 @@ def world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
+        # the amplitude bound A every row stays below (DECLARATIONS.md section
+        # 15 M1-10: 2^32 in every massive world; MUST 3 at that A, the rows
+        # asserted below it at run time)
+        "amplitude_bound": AMPLITUDE_BOUND,
         "directions": [],
         "families": [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
         "measured": measured,
