@@ -708,6 +708,19 @@ class DetectorLawSimulation:
                     block.corner[axis] %= self.shape[axis]
         old_mask = block.mask
         block.mask = self._cube(block.corner, block.definition.side, block.family)
+        if int(np.count_nonzero(block.mask)) < int(np.count_nonzero(old_mask)):
+            # Reviewer 3's line from the redshift dry run (the Boss's 09:45Z): a
+            # stepping block whose cell would leave the board by a zero face
+            # (the cube cut by `_cube` on a non-periodic axis) refuses the
+            # interval naming the block, instead of running on with the block
+            # gone and the books balanced; the margin rule refuses the same
+            # block at load, not at a hop, so this is the run's own check.
+            raise RuntimeError(
+                f"{BEAM_LAW}: measured[{block.number}] stepped off the board at interval "
+                f"{self.tick} (its corner {list(block.corner)}, side {block.definition.side}, "
+                f"{int(np.count_nonzero(block.mask))} of {int(np.count_nonzero(old_mask))} cells "
+                "left on the board): a block's cells must stay on the board; the run is refused"
+            )
         self._write_pair(block)
         block.stepped += 1
         # The block's cell follows its cells: an absorbing block's take masks

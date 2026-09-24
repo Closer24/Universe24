@@ -1891,6 +1891,47 @@ def test_ak_a_stepping_block_past_its_hold_books_nothing_of_its_own_record():
     assert foreign is not None and foreign.pointers[cell] > 0
 
 
+def test_al_a_block_that_steps_off_the_board_refuses_the_interval():
+    """Reviewer 3's line from the redshift dry run (BUILD.md section 18): a block pushed toward
+    a zero face (momentum [-64, 0, 0] from x = 30 on the open chain of 300, one hop per three
+    intervals) refuses the run at the interval its cells would leave the board, naming the block
+    and the interval, instead of running on with the block gone; before that interval it steps
+    and the books balance. The edge case: on a periodic chain the same block wraps and steps on
+    through 400 intervals with no refusal."""
+    for boundary, faces, refused in ((CHAIN, {"x": "open"}, True), (PERIODIC_CHAIN, None, False)):
+        document = massive_world([300, 1, 1], boundary, [800, 809], faces=faces)
+        document["ticks"] = 400
+        document["age_bound"] = 1 << 20
+        document["clock_stamp"] = True
+        document["measured"] = [
+            {
+                "position": [30, 0, 0],
+                "family": "matter",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [-64, 0, 0],
+                "fixed": True,
+                "side": 12,
+                "pair": [800, 800],
+                "seed": 50 << 20,
+                "wheel": 64,
+                "margin": "control",
+            }
+        ]
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        block = simulation.blocks[0]
+        if refused:
+            with pytest.raises(RuntimeError, match=r"measured\[0\] stepped off the board at interval"):
+                for _ in range(400):
+                    simulation.step()
+                    assert simulation.books()["balanced"]
+            assert block.stepped > 20 and simulation.tick < 400
+        else:
+            for _ in range(400):
+                simulation.step()
+            assert block.stepped > 100 and int(np.count_nonzero(block.mask)) == 12
+
+
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
     """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
     kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the

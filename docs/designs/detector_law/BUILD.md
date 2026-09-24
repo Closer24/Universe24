@@ -1203,6 +1203,18 @@ on the light clock's chain.
   train the row evolves, line B); a foreign record's entered content
   books as before. Test (ak) pins it on a stepping block with own_grace
   70 and a lamp behind it.
+- A BLOCK THAT STEPS OFF THE BOARD REFUSES THE INTERVAL (Reviewer 3's
+  line from the Preliminary Runner's redshift dry run, the Boss's 09:45Z:
+  the receding block ran off the board at tick 9722, its sum 0 from
+  9756, the run going on to 14686 with the books balanced): at a hop
+  whose cube is cut by a zero face (`_cube` on a non-periodic axis, the
+  count of cells below the count before the hop) `_move_block` raises,
+  naming the block, the interval, the corner and the cells left; a
+  periodic axis wraps as before. The margin rule refuses such a block
+  at load; this is the run's own check (the cheaper of Reviewer 3's two
+  forms, the margin's distance the load-time rule's). Test (al): a
+  block pushed toward the open face refuses at the interval its cells
+  would leave, having stepped before; on a periodic chain it wraps on.
 - THE GUARD (Reviewer 3, 07:43Z, on the sagnac_k3 phantom): before the
   booking loop an absorbing Node whose cell is the sentinel refuses the
   interval naming the Node (a Python list's index -1 would otherwise
