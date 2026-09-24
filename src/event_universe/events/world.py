@@ -924,6 +924,14 @@ LAMP_KEYS = {
     # detector-law-v1: the record's train in periods of its clock (the
     # record's coherence), a declaration of the lamp, absent by default.
     "train",
+    # detector-law-v1: the lamp record's LADDER BY NAME (SIZING.md, the click
+    # line and the receiver by name, DECLARATIONS.md section 13 item 7): the
+    # detector sets, by name, among which the birth wheel's u chooses the
+    # record's cell; every other set and every face is a SINK for the lamp's
+    # records (what it takes is booked to the escaped row, never chosen).
+    # Absent, the ladder is every cell as built. A string or a list of
+    # strings; refused outside `detector_law` and on a name no set declares.
+    "receiver",
     "directions",
     "phase_window",
     "phase_width",
@@ -1249,6 +1257,10 @@ class LampDefinition:
     # intervals after its train during which its own body takes nothing of
     # its own record; None: two periods of its clock (the engine's constant).
     own_grace: int | None = None
+    # detector-law-v1: the record's ladder by name (`receiver`), the detector
+    # sets among which u chooses the cell, in the world's order; None: every
+    # cell as built (the lamp worlds of the tables, untouched).
+    receiver: tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -2720,7 +2732,35 @@ def _lamp(
         own_grace=None
         if "own_grace" not in obj
         else _integer(obj["own_grace"], f"{label}.own_grace", 0),
+        receiver=_receiver_names(obj, label, detector_law),
     )
+
+
+def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> tuple[str, ...] | None:
+    """The lamp's `receiver`, its records' ladder by name: a set's name or a
+    list of distinct names; None without the key. Refused outside the local
+    detector law (the ladder is that law's form)."""
+    if "receiver" not in obj:
+        return None
+    if not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.receiver is admitted under {DETECTOR_LAW_RULE} alone (the "
+            "record's ladder by name is the local detector law's form)"
+        )
+    value = obj["receiver"]
+    names = [value] if isinstance(value, str) else value
+    if (
+        not isinstance(names, list)
+        or not names
+        or any(not isinstance(name, str) or not name for name in names)
+    ):
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.receiver must be a detector set's name or a nonempty list of "
+            "names (the lamp record's ladder, SIZING.md)"
+        )
+    if len(set(names)) != len(names):
+        raise ValueError(f"{BEAM_LAW}: {label}.receiver names a set twice")
+    return tuple(names)
 
 
 def _branches(
@@ -5147,6 +5187,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                         "`take` [n, d], the Ports' follow at its own remnant take; DECLARATIONS.md "
                         "section 10 item 10)"
                     )
+        set_names = {detector.name for detector in detectors}
+        for number, entry in enumerate(measured):
+            # the lamp record's ladder by name: every name a declared set's
+            if entry.lamp is not None and entry.lamp.receiver is not None:
+                for name in entry.lamp.receiver:
+                    if name not in set_names:
+                        raise ValueError(
+                            f"{BEAM_LAW}: measured[{number}].lamp.receiver names {name!r}, which no "
+                            "detector set declares (the record's ladder is made of declared sets; "
+                            "a face is never on it)"
+                        )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),

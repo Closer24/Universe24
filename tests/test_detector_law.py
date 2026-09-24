@@ -350,3 +350,127 @@ def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_tra
     with pytest.raises(RuntimeError, match=r"absorbing Node without a cell .*\(70, 0, 0\)"):
         for _ in range(200):
             guarded.step()
+
+
+def layer_world(receiver: object = None) -> dict:
+    """A layer of 24 x 7 x 1 (x open at both faces, light's sponges; y and z
+    periodic): the lamp's body at [2, 3, 0] emitting toward +x, three
+    receiver bodies at x = 18 on the rows y = 2, 3, 4 read as the sets s0,
+    s1, s2 (one Node each, the screen), the faces 2 and 5 Links from the
+    lamp and the screen. With `receiver`, the lamp's records' ladder is the
+    named sets and the faces are sinks."""
+    lamp: dict = {
+        "rate": [1, 30],
+        "wheel": [1, 8],
+        "directions": [[1, 0, 0]],
+        "train": 2,
+    }
+    if receiver is not None:
+        lamp["receiver"] = receiver
+    measured = [
+        {
+            "position": [2, 3, 0],
+            "family": "light",
+            "amount": 8,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0]],
+            "lamp": lamp,
+        }
+    ]
+    detectors = []
+    for index, y in enumerate((2, 3, 4)):
+        measured.append(
+            {
+                "position": [18, y, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "directions": [[-1, 0, 0]],
+            }
+        )
+        detectors.append({"name": f"s{index}", "positions": [[18, y, 0]], "threshold": 1})
+    return {
+        "law": "beam",
+        "model_id": "beam-detector-law-layer-v1",
+        "shape": [24, 7, 1],
+        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+        "ticks": 400,
+        "K": 1073741824,
+        "N": 64,
+        "release": [1, 128],
+        "suspension": 0,
+        "clock_stamp": True,
+        "detector_law": True,
+        "directions": [],
+        "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}],
+        "measured": measured,
+        "detectors": detectors,
+    }
+
+
+def run_layer(document: dict, ticks: int = 420) -> tuple[list[dict], DetectorLawSimulation]:
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    for _ in range(ticks):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+    return [line for line in lines if line["event"] == "gather"], simulation
+
+
+def test_the_lamps_ladder_by_name_keeps_the_faces_out_of_it():
+    """(f) The lamp record's ladder by name (SIZING.md; DECLARATIONS.md section 13
+    item 7, the receiver by name): with `receiver` [s0, s1, s2] every click of
+    the layer world's lamp is at one of the three sets, never at a face,
+    the cell of u taken over the ladder's own sum (the first named cell whose
+    rung exceeds u on the gather's own rungs), the sinks' shares booked and
+    printed (`sunk`), the books balanced; without the key the same world
+    clicks at the open face behind the lamp (the control); the loader
+    refuses a name no set declares, a repeated name, an empty list and the
+    key outside the local detector law; the string form names one set."""
+    gathers, simulation = run_layer(layer_world(["s0", "s1", "s2"]))
+    assert len(gathers) == 8 and not simulation.records
+    assert sorted(gather["u"] for gather in gathers) == list(range(8))
+    for gather in gathers:
+        assert gather["ladder"] == ["s0", "s1", "s2"]
+        assert gather["sunk"] > 0 and gather["T"] > gather["sunk"]
+        assert gather["chosen"] is not None and gather["chosen"][0][0] in {"s0", "s1", "s2"}
+        # the cumulative rule on the engine's own shares: the first named cell,
+        # in the world's order, whose rung exceeds u
+        named = [
+            (cell[0][0], rung) for cell, rung in gather["cells"] if cell[0][0] in {"s0", "s1", "s2"}
+        ]
+        first = next(name for name, rung in named if gather["u"] < rung)
+        assert gather["chosen"][0][0] == first
+        # the ladder's total is the named cells' sum: the last named rung is the wheel
+        assert named[-1][1] == simulation.wheel
+    # the counts over one wheel are the rungs' differences (every u once; the
+    # records are identical, so one gather's rungs are every gather's)
+    counts = {name: sum(1 for g in gathers if g["chosen"][0][0] == name) for name in ("s0", "s1", "s2")}
+    rung_of = {cell[0][0]: rung for cell, rung in gathers[0]["cells"]}
+    assert counts == {
+        "s0": rung_of["s0"],
+        "s1": rung_of["s1"] - rung_of["s0"],
+        "s2": rung_of["s2"] - rung_of["s1"],
+    }
+    control, _ = run_layer(layer_world())
+    assert all(gather["ladder"] is None and gather["sunk"] == 0 for gather in control)
+    assert any(
+        gather["chosen"] is not None and gather["chosen"][0][0] == "face:-x" for gather in control
+    )
+    one, _ = run_layer(layer_world("s1"))
+    assert all(gather["chosen"] is not None and gather["chosen"][0][0] == "s1" for gather in one)
+    with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
+        parse_nature_beam_world(layer_world(["s0", "screen"]))
+    with pytest.raises(ValueError, match="names a set twice"):
+        parse_nature_beam_world(layer_world(["s0", "s0"]))
+    with pytest.raises(ValueError, match="nonempty list of names"):
+        parse_nature_beam_world(layer_world([]))
+    outside = layer_world(["s0"])
+    outside["detector_law"] = False
+    with pytest.raises(ValueError, match="admitted under detector-law-v1 alone"):
+        parse_nature_beam_world(outside)
