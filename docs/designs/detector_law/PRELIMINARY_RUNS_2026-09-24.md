@@ -118,7 +118,11 @@ wheel`. On ENGINE B (the c4284f7a files, ticks 14686, `wheel` 64):
   (B born 1: 2489, 2614, 2962, 2995); the birth place holds 0 to 9.5 percent.
 - GAMEBOARD (the chosen cell): at the 64 crossing the ladder with u = 0 chooses
   at_b on all of A's and at_a on all of B's; the same as the built cell on
-  every completed record.
+  every completed record. With u = 0 the chosen cell is the first in the
+  ladder's order holding at least 1 / (2 W) of the absorbed (0.195 percent at
+  W = 256), not the first with a nonzero pointer: at_a is nonzero on A's
+  records and is skipped because it holds 0.14 percent at most (Reviewer 3's
+  correction through the Boss, 09:46Z).
 - GAMEBOARD (the hop take): the emitter's own set books its own record first at
   age train + own_grace + 0 to 2 on 38 of A's and 29 of B's records; its share
   of the absorbed at 6400 is 0.0014 or less.
