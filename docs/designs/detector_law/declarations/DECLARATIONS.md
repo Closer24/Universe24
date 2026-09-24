@@ -426,13 +426,83 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    the falsifier a ratio off 1 / 1.9889 beyond the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
    1938; Botermann 2014 at beta = 0.338, in vacuum), matched in form at
    the world's beta_c.
-5. The readings: DETECTOR the light detector's clicks at x = 1900 (the
-   mean interval between clicks over the hold in the receding world over
-   the same in the control world is 1 + z; the count ratio beside);
-   GAMEBOARD the light amplitude's spectral peak at a probe there, A's
-   count per interval, the energy account and the form J; COMPUTATION the
+5. The readings: DETECTOR the light detector's clicks at x = 1900, read
+   PER RECORD (item 7, declared 2026-09-24, 05:20Z, before any run): for
+   consecutive clicks at the set, of the records i and j in birth
+   order, the frequency B reads is f_B = (o_j - o_i) / (c_j - c_i), o
+   the record's birth ordinal (A's own count at the birth, a birth per
+   cycle of A's clock by the source term; the record identity's
+   ordinal; DETECTOR, A's own record) and c the set's count at the
+   first rung (the gather line's `click`), summed over the hold as
+   (o_last - o_first) / (c_last - c_first); 1 + z = f_B(control) /
+   f_B(receding); the mean interval between clicks and the count ratio
+   beside as diagnostics only (they carry the ladder's share of item 7,
+   never the pin's reading); GAMEBOARD the light amplitude's spectral
+   peak at a probe there, A's count per interval, the energy account,
+   the form J and the ladder's share per cell (item 7); COMPUTATION the
    pin; no CONVERSION (a ratio of counts).
 6. The identity: `detector-law-v1` with `massive-record-v1`.
+
+7. THE ONE-DELETION CHECK before the preliminary run (the Boss's order
+   of 05:00Z on CLOSER24's exploratory finding on main's engine
+   a5e80449, `docs/designs/cosmology/REPORT.md`: every light record is
+   gathered once; on a chain of 2200 with an emitter block at 1500 and
+   receiver blocks at 100 and 1900, at rest all 84 records went to the
+   nearer, strongly coupled receiver and the rows still flying the
+   other way were deleted with them, a far probe reading 0 for the
+   whole run). THE ENGINE AS BUILT (`detector_law.py` at af071b3f,
+   lines 331 to 345, 1205 to 1240, 1402 to 1432): an open face's layer
+   is a TAKING CELL (`face:-x`, `face:+x`, light's sponge) with a
+   pointer like any set's; the record completes when its train has
+   ended and the motion left on the board times W is below what all the
+   cells have taken; the click's cell is then chosen by u on the ladder
+   of ALL the cells' pointers, the faces' included, and a click at a
+   face is booked as escaped. FOR THIS WORLD: (i) the -x face is OPEN
+   for light as declared (a sponge, a taking cell, not a mirror); the
+   -x half of each of A's records reaches it after about 700 sqrt 3 =
+   1210 intervals (c = 1 / sqrt 3 Links per interval on the chain) and
+   is taken there; the +x half reaches the set at 1900 after about 1200
+   sqrt 3 = 2080 intervals; the face's take alone does not complete the
+   record (the +x half's motion is still on the board and W = 64 times
+   it exceeds the face's pointer), so the record lives to the set and
+   completes there: THE RECEIVER BEHIND DOES READ THE RECEDING LIGHT
+   under the one deletion. (ii) But the click's cell is chosen by u
+   between the face's pointer and the set's (and `face:+x`'s residual):
+   at rest the two halves' pointers are about equal, so about half of
+   A's records click at the -x face as escaped and never at the set;
+   receding, the forward (-x) wave is blue-shifted and the backward
+   (+x) wave red-shifted, and the pointers book the motion squared, so
+   the face's share grows and the set's falls (COMPUTATION, a bound at
+   equal amplitude: the forward and backward frequencies scale by 1 /
+   (1 - beta_c) and 1 / (1 + beta_c), a ratio (1 + beta_c) / (1 -
+   beta_c) = 3.73 at beta_c = 1 / sqrt 3, their motions squared by its
+   square, 13.9; the shares are read, not derived here). A reading by
+   the mean interval between clicks or by the count would carry this
+   share and miss the pin by it. THE DECLARATION, before any run (a
+   declaration before a run is not a pin moved, record 1518): the
+   reading of item 5 is per record, f_B = Delta(A's birth ordinal) /
+   Delta(B's count) between consecutive clicks at the set, in which a
+   record that clicked at the face drops out of both differences; the
+   pin 1.9889, the band and the falsifier do not move; the geometry
+   does not move. THE PRELIMINARY READS (EXPLORATORY): that the set's
+   clicks exist in both worlds (the count over the hold, DETECTOR); the
+   first rung of the first click after the transit 2080 (COMPUTATION);
+   the ladder's share per cell (`face:-x`, the set, `face:+x`) in both
+   worlds from the gather lines' cells (GAMEBOARD); and the per-record
+   ratio beside the pin, read and not compared (Reviewer 3's word).
+   CLOSER24's line for the builder (a seed-0 receiver block counts no
+   cycle, its driven sum one-sided) does not touch this world: its
+   receiver is the set, no receiver block (item 1). CHECK (the World
+   Generator's, arithmetic from item 1's numbers, before any run): A at
+   x = 700 stepping 1 Link per 3 intervals toward -x reaches the -x face
+   after 2100 intervals of steady motion, about 3900 with the ramp,
+   before the hold of 8000 ends, and the massive kind's x faces are zero
+   faces, so A's cells would leave the board; the hold, the chain's
+   length or A's start must be redeclared before any run: my
+   recommendation a chain of 5000 (section 11's length) with A at 3500
+   and the set at 4700 (the same 1200 Links, the same transit 2080),
+   A's room 3500 Links = 10500 intervals; Reviewer 3's read, then the
+   World Generator's file.
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
 the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
