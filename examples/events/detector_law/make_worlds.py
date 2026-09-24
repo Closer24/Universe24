@@ -32,10 +32,11 @@ the world key `massive_record`.
 The table rows (group T, this folder): `bell_<a><b>.json` (sections 1 and 2:
 the bar of 21, the pair lamp with `arms` 2 and `branches` [[0, 1], [3, 1]], the
 train 128, the polarisers' `phase_window` at the labels 0, N / 8, N / 4,
-3 N / 8 of N = 2048, the wheel [8, 2048] on the physicist's line of
-2026-09-24, K and the release the L3 series'), `malus_45.json` (section 5:
-`amplitude/malus_22_5.json`'s form at s = 64), `malus_<11.25,28.125,33.75>.json`
-(section 6: `docs/designs/new_rows/worlds/malus_s<16,40,48>.json`'s form) and
+3 N / 8 of N = 2048, the wheel [1, 2048], the light clock [2464, 25] of
+section 14 item 1, K and the release the L3 series'), `malus_45.json` (section
+5: `amplitude/malus_22_5.json`'s form at s = 64 with the clock [308, 25] of
+section 14), `malus_<11.25,28.125,33.75>.json` (section 6:
+`docs/designs/new_rows/worlds/malus_s<16,40,48>.json`'s form, the same clock) and
 `mach_zehnder.json` (section 3: the 33 x 33 x 1 layer, the lamp at (2, 2, 0),
 the splitters' tables in `amplitude/mz_equal.json`'s arrangement, the weights
 [21, 20], [20, 21] and the turns [16, 0], [0, 16]).
@@ -275,7 +276,9 @@ L3_K = 15728640  # the L3 series' K (`amplitude/bell_n2048_*.json`)
 L3_RELEASE = [1, 67108864]
 L3_LAMP_AMOUNT = 15728642
 BELL_N = 2048
-BELL_WHEEL = [8, BELL_N]  # the physicist's line of 2026-09-24 (DECLARATIONS.md section 1 item 2)
+BELL_WHEEL = [1, BELL_N]  # section 1 item 2, kept by section 14 item 1 (the line [8, 2048] withdrawn)
+BELL_CLOCK = [2464, 25]  # section 14 item 1: the 12-Link clock [77, 25] on 64 scaled by 32 to N = 2048
+MALUS_CLOCK = [308, 25]  # section 14 item 1: the same clock on N = 256
 BELL_BRANCHES = [[0, 1], [3, 1]]
 BELL_SETTINGS = {"a0": 0, "a1": BELL_N // 4, "b0": BELL_N // 8, "b1": 3 * BELL_N // 8}
 
@@ -284,8 +287,9 @@ def bell(a: str, b: str) -> dict:
     """DECLARATIONS.md sections 1 and 2: the bar of 21 x 1 x 1 (x open, y and z periodic),
     N = 2048, the pair lamp at x = 10 with two arms and the joint labels 00 and 11, the
     train 128, the polarisers at x = 7 (Alice) and 17 (Bob) with their settings, each a
-    detector set of one Node reading `sum`, 300 intervals. The light family's clock pair
-    is not declared (the L3 series declares K, no pair)."""
+    detector set of one Node reading `sum`, 300 intervals; the light family's clock
+    [2464, 25] on N = 2048 (section 14 item 1). The counter family's clock pair, which
+    the loader also asks for under `detector_law`, is not declared."""
     document: dict = {
         "law": "beam",
         "model_id": f"beam-detector-law-bell-{a}{b}-v1",
@@ -298,11 +302,7 @@ def bell(a: str, b: str) -> dict:
         "suspension": 0,
         "clock_stamp": True,
         "detector_law": True,
-        "entity_definitions": "../entities/families.json",
-        "entities": [
-            {"name": "photon", "definition": "photon", "position": [0, 0, 0]},
-            {"name": "counter_material", "definition": "counter_material", "position": [0, 0, 0]},
-        ],
+        "families": [light_family(BELL_CLOCK), {"name": "counter", "quantum": 1}],
         "measured": [
             {
                 "position": [10, 0, 0],
@@ -344,18 +344,21 @@ def bell(a: str, b: str) -> dict:
 
 def malus(name: str, source: Path, setting: int) -> dict:
     """DECLARATIONS.md sections 5 and 6: the registered form of the source world with
-    `detector_law` true, `clock_stamp` true and the table's `phase_window` at the
-    declared setting."""
+    `detector_law` true, `clock_stamp` true, the table's `phase_window` at the declared
+    setting and the light family's clock [308, 25] on N = 256 (section 14 item 1), the
+    families written in the file (the registered entity references carry no clock). The
+    counter family's clock pair is not declared."""
     document = json.loads(source.read_text(encoding="utf-8"))
     document = copy.deepcopy(document)
     rebuilt: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1"}
     for key, value in document.items():
-        if key in ("law", "model_id"):
+        if key in ("law", "model_id", "entity_definitions", "entities", "families"):
             continue
         rebuilt[key] = value
         if key == "suspension":
             rebuilt["clock_stamp"] = True
             rebuilt["detector_law"] = True
+    rebuilt["families"] = [light_family(MALUS_CLOCK), {"name": "counter", "quantum": 1}]
     for entry in rebuilt["measured"]:
         table = entry.get("table", {}).get("light")
         if isinstance(table, dict) and "phase_window" in table:

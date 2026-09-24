@@ -21,25 +21,18 @@
  "suspension": 0,
  "clock_stamp": true,
  "detector_law": true,
- "entity_definitions": "../entities/families.json",
- "entities": [
+ "families": [
   {
-   "name": "photon",
-   "definition": "photon",
-   "position": [
-    0,
-    0,
-    0
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    2464,
+    25
    ]
   },
   {
-   "name": "counter_material",
-   "definition": "counter_material",
-   "position": [
-    0,
-    0,
-    0
-   ]
+   "name": "counter",
+   "quantum": 1
   }
  ],
  "measured": [
@@ -59,7 +52,7 @@
      1
     ],
     "wheel": [
-     8,
+     1,
      2048
     ],
     "directions": [
