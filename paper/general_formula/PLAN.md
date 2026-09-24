@@ -6828,3 +6828,11 @@ Physics: sn-jnl, keywords, Funding, Competing interests, Ethics,
 Consent, Data availability, Code availability, Author contributions,
 the use of a large language model documented; no figure by a
 generative tool). Appendix A's first sentence lost an editing residue.
+
+## Applied (2026-09-24, the owner's word on the abstract's length): commit 29 on paper-48
+
+"Don't they need an abstract of a certain size?" Springer Nature's
+template gives 150 to 250 words. The abstract had grown to about 270
+with commit 24's sentences; it is cut to 245 words with every claim,
+every name (Newton, Lorentz, Einstein, Born, Tsirelson, Gauss, Poisson)
+and every number kept, by removing repetitions only.
