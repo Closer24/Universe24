@@ -261,7 +261,10 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    omega_0 (omega_0 / sin omega_0) c^2 of THIS medium's omega_0 = 0.1129,
    1.22606, MASSIVE_RECORD.md section 8; gamma(c_m) = 1.22675 at its
    second-order cone and light's gamma(c) = sqrt(3 / 2) CONTROLS beside;
-   item 4 carries the same three); `ramp` 1500; the hold 8000 (a pin
+   item 4 carries the same three); `ramp` 1500; A's key `own_grace` 8000
+   (the hold: A is not a receiver of its own records, there being no set
+   at A, and line B refuses an emitting body without the key; the World
+   Generator's token of 03:21Z, declared 03:45Z); the hold 8000 (a pin
    world); 9500 intervals; the seeds; the block's content M = 1.
 3. The verbs: the massive rule (G, D by 3 den g_d with the coupling folded
    in the one division, T; section 7 (A)); the coupling's same-Node first
@@ -297,8 +300,8 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
 6. The identity: `detector-law-v1` with `massive-record-v1`.
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
-the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `momentum`
-and `ramp`, a `detectors` entry of the ray law on the light family at
+the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
+8000, `momentum` and `ramp`, a `detectors` entry of the ray law on the light family at
 x = 1900 with W = 64, `probes` where the reader needs a light amplitude
 (GAMEBOARD); the control world without the momentum.
 HOST: a chain of 2200, seconds to a minute. The earliest day: 2026-09-25,
