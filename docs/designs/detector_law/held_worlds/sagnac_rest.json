@@ -123,13 +123,13 @@
    "name": "at_a",
    "block": 0,
    "threshold": 1,
-   "wheel": 64
+   "wheel": 256
   },
   {
    "name": "at_b",
    "block": 1,
    "threshold": 1,
-   "wheel": 64
+   "wheel": 256
   }
  ],
  "probes": [

@@ -109,7 +109,13 @@
  "detectors": [
   {
    "name": "light_detector",
-   "block": 1,
+   "positions": [
+    [
+     1900,
+     0,
+     0
+    ]
+   ],
    "threshold": 1,
    "wheel": 64
   }

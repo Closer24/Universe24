@@ -39,12 +39,13 @@ same clock).
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
 `redshift_control.json` (section 4, A's `own_grace` 8000), `sagnac_k3.json` and `sagnac_rest.json`
-(section 13, the blocks their own receivers with `own_grace` 3000, the hold),
+(section 13, the blocks their own receivers at W = 256 with `own_grace` 3000, the hold),
 `light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
 its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
-(M1-3), the receivers detector sets bound to their body by the key `block`
-with their own wheel 64 (M1-4), `amplitude_bound` 2^32 on every massive world
+(M1-3), the receivers detector sets with their own wheel (M1-4: 4b's at its body's Node with
+wheel 64, R2's bound to the blocks by the key `block` with wheel 256, the light
+clock's at the free Node x = 612 with wheel 64), `amplitude_bound` 2^32 on every massive world
 (M1-10); `matter_waves_12.json`, `matter_waves_16.json` and
 `matter_front_12.json` (M1-6: the matter family's `phase_per_link` [1089, 320]
 or [11, 4] on N = 64, the lamp with the wheel [1, 64], the stock 2048 at one
@@ -407,7 +408,8 @@ MATTER_TAKE_PAIRS = {
 MATTER_TRAIN = 8  # periods (150 intervals), section 12 and M1-6
 OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
 REDSHIFT_GRACE = 8000  # section 4 item 2 (go-lines 795602cd): 4b's A, the hold
-R2_GRACE = 3000  # section 13 item 1 (go-lines a59d3a26): R2's blocks, the whole hold
+R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
+R2_WHEEL = 256  # section 13 item 4 (main 25a7abf4): the declared wheel of R2's block sets
 LAMP_GRACE = 16700  # M1-6: the matter lamp's `own_grace`, the whole hold
 
 
@@ -431,11 +433,11 @@ def emitter(position: list[int], side: int, pair: list[int], grace: int | None, 
     return block
 
 
-def receiver_set(document: dict, name: str, block: int) -> None:
-    """A detector set on the light record bound to the receiving body (section 15 M1-4 and
-    the Boss's line of 02:50Z: the one key `block`, the measured number of the body, its
-    Nodes the body's current cells) with its own wheel W = 64."""
-    document["detectors"].append({"name": name, "block": block, "threshold": 1, "wheel": 64})
+def receiver_set(document: dict, name: str, block: int, wheel: int) -> None:
+    """A detector set on the light record bound to the receiving block (section 15 M1-4:
+    the one key `block`, the measured number of the block, its Nodes the block's current
+    cells) with its own wheel: 256 on R2's sets (section 13 item 4, main 25a7abf4)."""
+    document["detectors"].append({"name": name, "block": block, "threshold": 1, "wheel": wheel})
 
 
 def matter_world(
@@ -495,15 +497,20 @@ def massive_worlds(massive) -> dict[str, dict]:
         )
         bounded(document)
         graced(document, [emitter([x, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
+        # the receiver a body of one Node at 1900 (section 4, the ray law's detector) and
+        # its set with positions and its own wheel 64 (BUILD.md section 14's form for 4b;
+        # the receiving body is no block, so the `block` key does not name it)
         document["measured"].append(body([1900, 0, 0], "light", [[-1, 0, 0]]))
-        receiver_set(document, "light_detector", 1)
+        document["detectors"].append(
+            {"name": "light_detector", "positions": [[1900, 0, 0]], "threshold": 1, "wheel": 64}
+        )
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 2200, both pushed to k = 3 on +x over the ramp 1500 and the
     # hold 3000, both emitting with own_grace 3000 (the hold, section 13 item 1), x open
     # for the massive kind too (M1-7); each block's cells a detector set on the light
-    # record bound by `block` with its own wheel 64 (M1-4); the control with both at rest;
-    # the probes at the facing cells.
+    # record bound by `block` with its own wheel 256 (M1-4, section 13 item 4); the control
+    # with both at rest; the probes at the facing cells.
     for name, motion in (
         ("sagnac_k3", {"momentum": [massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
         ("sagnac_rest", {}),
@@ -532,8 +539,8 @@ def massive_worlds(massive) -> dict[str, dict]:
                 emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE),
             ],
         )
-        receiver_set(document, "at_a", 0)
-        receiver_set(document, "at_b", 1)
+        receiver_set(document, "at_a", 0, R2_WHEEL)
+        receiver_set(document, "at_b", 1, R2_WHEEL)
         out[name] = document
     # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
     # chain of 673 CLOSED for light at both ends (the loader's third face value, the
