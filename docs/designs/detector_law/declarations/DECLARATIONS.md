@@ -522,7 +522,7 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    -x half, about 5200 intervals after birth; the click line is written
    at completion with the first-rung stamp (1905 after birth), so the
    reading is unchanged, but `ticks` must be at least ramp + hold +
-   about 5200, about 14700, or the hold's last records never click. The per-record reading of item 5 is
+   about 5200, about 14700; DECLARED 08:06Z, before any pinned run: `ticks` 15000 for redshift_k3 and redshift_control (the last hold records, born near 9500, completing near 14800 under the world key `wheel` 256; every hold record counts), or the hold's last records never click. The per-record reading of item 5 is
    CONFIRMED by Reviewer 3 as a declaration before any run. THE
    EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
    each train does not reach the set at 1100 Links (it does not
@@ -1248,7 +1248,12 @@ nature.
 
 ## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; the second draft 2026-09-24, 00:25Z, on his line B; the third draft 01:05Z, on his line on the band, record 1543: the rise per direction by the map)
 
-1. The objects: a chain of 2200 x 1 x 1, light's faces open; the massive
+1. The objects: a chain of 3000 x 1 x 1 (2200 in the first drafts; 3000
+   declared 2026-09-24, 08:06Z, before any pinned run, so that every hold
+   record's forward half reaches the +x sponge and the record completes
+   under the world key `wheel` 256 while B's front, at 784 + ticks / 3,
+   stays short of that face; A, B and L unchanged, every first-rung pin
+   and the arrival column untouched), light's faces open; the massive
    kind [800, 809]; two BLOCKS of side 12 at full depth ([800, 800]): A at
    [700, 712) and B at [772, 784), L = 60 face to face, both pushed to k =
    3 on +x by the declared momentum over a ramp of 1500 (the relaxation 17
@@ -1283,9 +1288,14 @@ nature.
    10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
 2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 256 on
-   the sets (item 4), each block's key `own_grace` 3000 (the hold; item
+   the sets (item 4) and the world key `wheel` 256, the same integer for
+   the ladder (item 7), each block's key `own_grace` 3000 (the hold; item
    1); the momentum [Q S M,
-   0, 0] on +x for both, `ramp` 1500, the hold 3000.
+   0, 0] on +x for both, `ramp` 1500, the hold 3000; `ticks` 6400 for
+   sagnac_k3 and 8450 for sagnac_rest (Reviewer 3's arithmetic of 08:25Z,
+   record 1719: a k3 record born at t completes near 0.423 t + 4468 and a
+   rest record near t + 3990, the last hold birth near 4450; every hold
+   record counts, a declaration before the run, no pin).
 3. The verbs: the massive rule with the coupling in the one division; the
    source term with the birth stamp; the push; the pointer and the click
    at W under the cycle sentence, the click stamped with the record's
@@ -1384,6 +1394,36 @@ nature.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
    to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
    `make_worlds.py`; HOST a minute each.
+7. THE CELL OF A BLOCK RECORD'S CLICK, STATED AS THE ENGINE HAS IT (the
+   World Generator's gather reading of sagnac_k3 at 906d3635, 07:20Z,
+   EXPLORATORY; Reviewer 3's line C of 07:18Z; the Boss's order of
+   07:30Z; stated 2026-09-24, 07:40Z, before any pinned run of R2). A
+   block's emitted record has no birth draw: its birth residue is u = 0
+   (only a lamp draws u from its wheel). So its click's cell is not chosen
+   by a draw but is THE FIRST CELL IN THE WORLD'S LADDER ORDER WHOSE
+   CUMULATIVE SHARE OF THE LADDER'S TOTAL REACHES 1 / (2 W), W the
+   world's one wheel (the world key `wheel`, 256 on the four R2 worlds,
+   the same integer as the sets' rung; the ladder's W and the rung's W
+   are one), and the click is stamped at that cell's first rung. The
+   PREDICTION this states for sagnac_k3: every hold record of B that
+   completes within the world's ticks lists at_a (its share of the total
+   a GAMEBOARD reading of the gather line: the 906d3635 run at W = 1
+   read a quarter to a third, with a face:+x pointer under the builder's
+   ledger read, Reviewer 3's 07:43Z; not part of this prediction) and
+   at_a, first in the order, wins on EVERY one of them; the meeting
+   direction's click is at_a's first rung on every B record that
+   completes within the world's ticks, and the pin 72 +- 2 is read on
+   all of them; the
+   chasing direction and the rest world have one cell each and are
+   untouched. The light clock's set (section 10 item 9) is chosen the
+   same way, first in its order. What this form hides is named: the
+   escaped share of a block's record never decides its cell, so a
+   count of clicks at a set is not a reading of the set's share; the
+   share is a GAMEBOARD reading of the gather line. A cell chosen by
+   weight for a block's record (the block's own count at the birth mod
+   W as its u, a stride wheel on the ordinal, not a draw) is a question
+   for the model owner after the paper, not a change today. No pin
+   moves under this statement: every pin is a first-rung time at a set.
 
 ## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
 
