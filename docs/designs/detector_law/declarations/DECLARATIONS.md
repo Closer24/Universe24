@@ -531,9 +531,12 @@ nature.
    records toward +x; a MIRROR LINE at x = 40 (a zero line for the matter
    kind, as row 2a's mirror line for light) with two openings of width 1
    at y = 48 and y = 80 (d = 32); a SCREEN of detectors of the ray law on
-   the matter record at x = 104 (L = 64 from the openings), one per Node
-   over y in [4, 124], each with its click; the detector row is the
-   absorbing set that reads, and two TAKE lines (absorbing, not read) at
+   the matter record at x = 104 (L = 64 from the openings), ONE DETECTOR
+   SET PER NODE of the row over y in [4, 124], the same W = 64, each with
+   its click (Builder 2's finding, 00:40Z: a set of several positions is
+   one cell and its click unplaced, so a screen read per Node is one set
+   per Node; the same for every row `screen_clicks` reads); the detector
+   row is the absorbing sets that read, and two TAKE lines (absorbing, not read) at
    x = 0 behind the lamp and at x = 127 behind the screen exhaust the
    record's offer so that every record completes with one click (a
    mirror books nothing). No light in this world. THE
