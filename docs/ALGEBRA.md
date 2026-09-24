@@ -344,6 +344,84 @@ and `boundary` ([FULL_PICTURE.md](FULL_PICTURE.md) section 1, choice 3;
 DERIVATIONS_BEAM's list is the action of this group on Nodes, and on the
 counts the same division with the remainder kept.
 
+### 1.7 The record of the rule as a pair of levels: how Z_N acts on it, the three pairs, and where a foreign object and a detector sit (the chief physicist, 2026-09-24, on the model owner's word of 00:40Z; not carried over, this file's own)
+
+The four group objects of 1.1 do not change under the rule of chapter
+8 (the massive record kind) and of the massless kind under
+[designs/detector_law/DESIGN.md](designs/detector_law/DESIGN.md)
+section 2; what changes is how a record carries the phase, and this
+subsection states it once so that the groups' account is one account.
+
+- **The record of the rule is two samples of one character.** Under the
+  rule a record at a Node is not rows with phase labels but two
+  integers, its level now and one interval ago, (a_before, a_now), at
+  the amplitude unit declared at load (chapter 8's symbols). With the
+  kind's clock k whole steps of Z_N per interval (the first difference
+  of a floor, `core.integer.by_clock`; k such that the sine table's
+  S[k] is large, DECLARATIONS.md section 14) and theta = 2 pi / N one
+  step, the pair is (a_before, a_now) = A (cos(phi - k theta), cos phi):
+  two samples of one character of Z_N x (the time translation), the
+  plane waves of 8.1. The phase phi and the amplitude A are both in the
+  pair and neither is a label; nothing else is kept at the Node (the
+  remainder r of the row aside).
+- **Z_N acts on the pair by the linear form (PROVED HERE).** For every
+  t in Z_N, with kappa = k theta and tau = t theta,
+
+      sin(kappa) cos(phi + tau) = cos(phi) sin(kappa + tau) - cos(phi - kappa) sin(tau).
+
+  Proof: sin(kappa + tau) = sin kappa cos tau + cos kappa sin tau and
+  cos(phi - kappa) = cos phi cos kappa + sin phi sin kappa; the right
+  side is cos phi sin kappa cos tau + cos phi cos kappa sin tau - cos
+  phi cos kappa sin tau - sin phi sin kappa sin tau = sin kappa (cos phi
+  cos tau - sin phi sin tau) = sin kappa cos(phi + tau). So the record
+  turned by t is A cos(phi + tau) = (a_now sin(kappa + tau) - a_before
+  sin tau) / sin kappa, a linear map of the pair. With the sine table
+  S[j] = round(256 sin(j theta)) (the declared rounding of the circle,
+  an input of kind 2, 1.5) a table's drive is (a_now S[k + t] - a_before
+  S[t]) / S[k]: verb (B), the bilinear form with the declared matrix on
+  the record's two columns, then one division with the remainder kept
+  (D); no nearest entry, no phase label, no register (DECLARATIONS.md
+  section 14, the linear form; the nearest angle of the head of that
+  file is a GAMEBOARD diagnostic). In the group's words: the shift by
+  [t] of the group ring Z[Z_N] (1.5), which the beam law applies to a
+  record's whole weight vector f, is here applied to the two samples of
+  one character; the same group, the same characters, a representation
+  of dimension 2 in place of the regular one. The merge (G) is the
+  rule's own addition (the levels and the reads' sum S_6 add linearly,
+  the cancel a sign); the click is 8.6's rung on the pointer against
+  the norm in place of the evaluation ev, both one bilinear form and
+  then one comparison (D).
+- **The three pairs, named once and never confused.** (1) A kind's pair
+  [num, den] (8.1): the clock of a record kind, cos omega_0 = num /
+  den, declared world data of kind 1 (light [1, 1], the matter kind
+  [800, 809]). (2) A record's pair (a_before, a_now): the two levels of
+  one record at one Node, its state, the phase and the amplitude
+  together (this subsection). (3) The pair of records (3.6): one record
+  with two arms, of tensor rank 2, the Bell rows. The first is a
+  declaration, the second a state, the third one record.
+- **Where a foreign object and a detector sit.** A foreign object (a
+  table, a mirror, a block; 8.3) is no element of any of the four
+  groups and no new group object: it is a finite set R of Nodes, a
+  G_48-set (the 48 turn it, the translations of 1.6 move it), declared
+  world data like a wall's placement, carrying a kind's pair (a well,
+  8.3) or a table; a table is a map from Z_N (its setting t) to the
+  linear form above, acting on the records' pairs at its Nodes; the
+  object's own record, where it has one (a block), is again a pair of
+  levels per cell whose phase runs on Z_N like every record's. A
+  detector set is a subset of Nodes with a declared wheel W, one set
+  per Node where a screen is read per Node; its click (8.6) is the one
+  output of the board, in the Outside; every other number of the board
+  is a GAMEBOARD diagnostic (3.2; record 281). In one sentence: the
+  groups act, the objects are sets of Nodes on which they act, and the
+  only thing that leaves the board is a click.
+- **The course from the one choice to a click, one line.** The six
+  Ports force the 48 and the group of order 24 within them (1.3, 7);
+  the two chosen groups, Z_N and the torus's translations, carry the
+  phase and the place; a record is two samples of one of their
+  characters; a foreign object is a set of Nodes with a pair, its table
+  acting through Z_N on the records' pairs; a detector set clicks by
+  the rung; the click is the only measurement (3.2).
+
 ---
 
 ## 2. The ring and the six operations as maps, in symbols
@@ -2345,9 +2423,11 @@ medium whose pair [num, den] is the kind's own declaration (the
 medium's pitch mu); (iii) its clock the bound mode of the map in that
 well, omega_b a character of the time translation at **k** = 0, one
 element of Z[Z_N] carried by all the cells in step (the phase of a row
-read from its two levels (a_before, a_now) as the nearest angle on Z_N
-at the record's clock by the phase table at load, DECLARATIONS.md's
-head, an integer comparison and no root at run time); (iv) its motion
+is carried by its two levels (a_before, a_now) together with its
+amplitude, and a table acts on that pair by the linear form of 1.7,
+DECLARATIONS.md section 14; the nearest angle on Z_N by the phase table
+at load, DECLARATIONS.md's head, is a GAMEBOARD diagnostic and not a
+table's input); (iv) its motion
 the characters (omega, **k**) of 8.1's surface; (v) its momentum the
 existing **p** in Z^3 and its step the existing verb (T), one integer
 per axis for the whole block with its remainder, a declared tie, and
