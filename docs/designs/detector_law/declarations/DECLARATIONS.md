@@ -1,5 +1,11 @@
 # The six declarations in the one form, before any run: Bell's CHSH sum (1a), the no-signalling marginals (1d), the Mach-Zehnder visibility (2b), the moving lamp's redshift (4b), Malus at 45 degrees (9) and Malus at three new settings (the chief physicist, 2026-09-23; docs only, no run)
 
+THE FOUR BUILDING BLOCKS (the model owner, 2026-09-24, 13:36Z and 13:43Z): every
+object a section below declares is a composition of the emitter, the body,
+the receiver and the clock, and the engine branches on no name of it; the
+definitions are in [SIMULATOR_DEFINITIONS.md](../../../../SIMULATOR_DEFINITIONS.md),
+"The four building blocks", and every feature (F1, F2, F3) names its blocks there.
+
 The Boss's order of 2026-09-23, about 17:12Z, on the owner's word of 16:55Z
 (everything anew on the new engine): the six PIN rows of `../SCHEDULE.md`
 whose declaration was missing, each written in the one form of
