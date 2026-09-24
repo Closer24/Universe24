@@ -1268,3 +1268,48 @@ on the light clock's chain.
 - THE THREE TESTS: generic (the take primitive as built, no family
   name), vector (the receiver form's verbs, no root, no float), local
   (the emitter's own Nodes, its own record).
+
+## 20. The lamp record's ladder by name and the cell over the ladder's own sum (SIZING.md, 2026-09-24; DECLARATIONS.md section 13 item 7, the click line and the receiver by name; the model owner's word of 12:57Z; `engine-fix-3`)
+
+The finding it answers (the Preliminary Runner's two_slits run of 10:45Z):
+every one of 1024 clicks at the open face behind the lamp and none on the
+screen, because the faces were cells on the record's ladder and held 97
+percent of every record, and because the cell of u was taken over the
+record's whole `absorbed`, so that with the faces sunk every u above 0.03 W
+would have found no cell.
+
+- THE KEY (`world.py`, `LAMP_KEYS`, `LampDefinition.receiver`,
+  `_receiver_names`): `receiver` on a LAMP, a detector set's name or a list
+  of distinct names, the record's LADDER BY NAME; refused outside the local
+  detector law, on an empty list, on a repeated name and on a name no set
+  declares (a face is never on it). Absent, the ladder is every cell as
+  built: the table rows' lamp worlds are untouched and their gather lines
+  byte for byte, with two HOST fields added (`ladder` None, `sunk` 0). The
+  same word as the block's `receiver` of line (1): a record's ladder is what
+  the world names, one set for a block's record, the named sets for a
+  lamp's.
+- THE LINE (`detector_law.py`, `LiveRecord.ladder`, `_births`, `_click`):
+  at birth the record's ladder is the named sets' cells; at the click the
+  ladder's weights are the named cells' pointers with every other cell at
+  0, so `cell_of` and `rungs` take the cell of u over the LADDER'S OWN SUM
+  (the cumulative rule, the first named cell whose rung exceeds u), and a
+  sink (a face, an unnamed set) is never chosen. A sink takes and books as
+  every cell does (the pointer, `absorbed`, its rung): the record's
+  completion (`_complete`, the motion left against `absorbed` over the
+  world's wheel) and the record's norm are untouched; the click's time
+  stays the chosen cell's first rung against the norm on the set's own
+  `wheel`. The gather line carries `ladder` (the named sets) and `sunk`
+  (HOST: the pointers' sum at the sinks). The content goes with the chosen
+  cell as before; a record whose named cells hold nothing escapes.
+- THE THREE TESTS: generic (one primitive, the ladder's weights, no kind,
+  no family name); vector (the rung on the pointer, integers, no root, no
+  float); local (the record's own pointers, nothing kept at a Node).
+- THE TEST (`tests/test_detector_law.py` (f)): the layer of 24 x 7 with the
+  lamp two Links from the -x face and three one-Node sets at x = 18:
+  under `receiver` [s0, s1, s2] every one of 8 clicks at a named set, the
+  chosen cell the first named cell whose rung exceeds u on the gather's own
+  rungs, the counts over the wheel of 8 the rungs' differences (3, 2, 3),
+  the sinks' share printed and below the whole, the books balanced at
+  every tick; without the key the same world clicks at face:-x (the
+  control); the string form names one set; the four refusals.
+

@@ -155,6 +155,13 @@ class LiveRecord:
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
+    # The record's LADDER BY NAME (the lamp's `receiver`, SIZING.md; the
+    # click line and the receiver by name, DECLARATIONS.md section 13 item
+    # 7): the cells among which u chooses, None for every cell as built. A
+    # cell outside the ladder is a SINK for this record: it takes and books
+    # as every cell does (the pointer, `absorbed`, the rung), but the click
+    # never chooses it and its share is not in the ladder's sum.
+    ladder: list[int] | None = None
 
 
 @dataclass
@@ -1131,6 +1138,11 @@ class DetectorLawSimulation:
                     if lamp.arms > 1:
                         vector = world.directions[lamp.directions[arm * per_arm]]
                         live.mask = self._half_space(entry.position, vector)
+                    if lamp.receiver is not None:
+                        # the ladder by name: the cells of the named sets
+                        live.ladder = [
+                            cell for cell, name in enumerate(self.cell_names) if name in lamp.receiver
+                        ]
                     driven = np.zeros(self.shape, dtype=bool)
                     for node in self.lamp_nodes[number]:
                         driven[node] = True
@@ -1684,10 +1696,16 @@ class DetectorLawSimulation:
         return energy * self.wheel < live.absorbed
 
     def _click(self, live: LiveRecord) -> None:
-        weights = [(p, 1) for p in live.pointers]
+        # The ladder's weights: every cell's pointer, or, under the lamp's
+        # `receiver`, the named cells' pointers with every other cell at 0,
+        # so that the cell of u is taken over the LADDER'S OWN SUM and a sink
+        # (a face, an unnamed set) is never chosen (SIZING.md).
+        on_ladder = [live.ladder is None or cell in live.ladder for cell in range(len(live.pointers))]
+        weights = [(p if here else 0, 1) for p, here in zip(live.pointers, on_ladder, strict=True)]
         chosen = cell_of(weights, self.wheel, live.u) if live.absorbed else None
         family = live.family
         ladder, total = rungs(weights, self.wheel)
+        sunk = sum(p for p, here in zip(live.pointers, on_ladder, strict=True) if not here)
         if chosen is None:
             if live.emitter_took:
                 # item 10: a record its own emitter took wholly (HOST row;
@@ -1738,6 +1756,15 @@ class DetectorLawSimulation:
                 for cell_name, rung, pointer in zip(self.cell_names, ladder, live.pointers, strict=True)
                 if pointer
             ],
+            # the ladder by name (the lamp's `receiver`): the sets on it, and
+            # HOST the pointers' sum at the sinks (the cells off the ladder,
+            # taken and booked, never chosen); None and 0 for every cell
+            "ladder": (
+                sorted({self.cell_names[cell] for cell in live.ladder})
+                if live.ladder is not None
+                else None
+            ),
+            "sunk": sunk,
             "birth": live.birth_tick,
             # The click's time: the interval at which the chosen cell's pointer
             # crossed its first rung (the counting form, s_D = 1 / W), the

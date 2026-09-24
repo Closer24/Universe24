@@ -5,6 +5,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+- detector-law-v1: a lamp's `receiver`, its records' ladder by name (the named detector sets; every other set and every face a sink, taken and booked but never chosen), the cell of u over the ladder's own sum; the gather line's `ladder` and `sunk` fields (SIZING.md; BUILD.md section 20).
+
 ### flow-link-v1 under its key, and the split ladder of the pushed row's wall (2026-09-22)
 
 - The world key `flow_link` (off by default; the model owner's decision of
