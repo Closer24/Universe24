@@ -86,6 +86,15 @@ WEIGHT_POINTER = (
     "The beam law's weight rule for its rows 13 and 14 ($\\gamma_{\\mathrm{PPN}}$, the declared "
     "space-curvature coefficient) is in the records file \\cite{records}, history. "
 )
+# the delay paragraph's head (the beam law's bending by the time part alone, history):
+# to the records file with a pointer (commit 53, the page count, the pointer rule).
+DELAY_HEAD_END = "\\subsection{Measurement and the quadratic form}"
+DELAY_HEAD_POINTER = (
+    "\\paragraph{Light: the time part alone, no optical metric.} The law at head bends a light "
+    "row past a held mass by the time part alone, half of nature's, a reading of the engine of "
+    "2026-09-22, history, NOT PREDICTED under the law as it stands; its readings, the ring's run "
+    "and the delay's chain are in the records file \\cite{records} (row 13, history).\n\n"
+)
 FLIGHT_POINTER = (
     "The proof (Cauchy--Schwarz against $(1, 1, 1)$), the Courant and lattice Boltzmann "
     "comparisons and the ground of the bound are in the records file \\cite{records}, history.\n"
@@ -297,6 +306,9 @@ def cut(s: str) -> tuple[str, str]:
     i = _once(s, CODE_RUNTIME_START, "the code's gates")
     j = s.index(CODE_RUNTIME_END, i)
     coderuntime, s = s[i:j], s[:i] + CODE_RUNTIME_POINTER + s[j:]
+    i = _once(s, LIGHT_START, "the delay's head")
+    j = s.index(DELAY_HEAD_END, i)
+    delayhead, s = s[i:j], s[:i] + DELAY_HEAD_POINTER + s[j:]
     i = _once(s, WEIGHT_START, "the weight rule")
     j = s.index(WEIGHT_END, i) + len(WEIGHT_END)
     weightrule, s = s[i:j], s[:i] + WEIGHT_POINTER + s[j:]
@@ -337,7 +349,9 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
         + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
         + oldclick
-        + "\n\\section{The beam law's weight rule for its rows 13 and 14, history}\\label{rec:weightrule}\n\n"
+        + "\n\\section{Light past a held mass by the time part alone, the delay paragraph's head, history}\\label{rec:olddelayhead}\n\n"
+        + delayhead
+        + "\n\n\\section{The beam law's weight rule for its rows 13 and 14, history}\\label{rec:weightrule}\n\n"
         + weightrule
         + "\n\n\\section{The design's scripts that gate the code, as Section 6 listed them}\\label{rec:coderuntime}\n\n"
         + coderuntime
@@ -385,6 +399,10 @@ def strip_block(body: str) -> str:
         return ""
     if FAIL_CUTS[0][0] in body:  # the three FAIL rows, one sentence each
         body, _ = cut_fail_rows(body)
+    if LIGHT_START in body and DELAY_HEAD_END in body:  # the delay's head, likewise
+        i = body.index(LIGHT_START)
+        j = body.index(DELAY_HEAD_END, i)
+        body = body[:i] + DELAY_HEAD_POINTER + body[j:]
     if WEIGHT_START in body and WEIGHT_END in body:  # the weight rule, likewise
         i = body.index(WEIGHT_START)
         j = body.index(WEIGHT_END, i) + len(WEIGHT_END)

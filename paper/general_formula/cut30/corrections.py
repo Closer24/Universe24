@@ -5998,6 +5998,66 @@ CORRECTIONS = [
         "\\section*{Declarations}",
         "\\paragraph{Conclusion.} One local integer rule on the cubic lattice, six operations required to commute with the group of order $48$, is read only through detectors' clicks. Exact on the lattice are the count marginals, the quadratic read-out and the CHSH sum as a rational of the grain; the moving clock's rate is derived under the massive record kind; Lorentz's factors and Einstein's step are reached only under two named hypotheses. No pinned reading is in the table yet: every row is closed in the algebra before its run, and the pinned runs decide, row by row, what the law matches and where it fails.\n\n\\section*{Declarations}",
     ),
+    (
+        "commit 53 (54 folded in), the physicist's exact words of 06:28Z on the owner's declaration (records 1648, 1682): the Bell section's sentences",
+        "Stated plainly: the law as built, with its sequential wheel, does not meet operational no-signalling; its counts are blind to the other party's setting, the order of its outcomes is not, and until the wheel is other than a counter the pair's construction models a Bell experiment in its counts only, not in its record of outcomes. The declared form (2026-09-24, \\cite[record 1647]{log}; the four attacks on it answered \\cite{attacks}): the births of the pair record take the residues of $\\Z_{\\Nphi}$, one per $u$, in an order set by the world's seed through a declared integer hash (a Fisher--Yates permutation under a 64-bit SplitMix64 mixing hash) in place of the counter's $[1, 1]$; the click is stamped with the detector's count and the birth interval, never $u$; the seed is an input of kind 1 drawn once per world, never read Outside and independent of the settings; the lamp's cadence is fixed and independent of the residues; the click's stamp is the cell's own first rung, never the completion tick. Stated honestly: the nonlocality is Inside and declared, one gather; the model's standing is Bohm's under quantum equilibrium \\cite{bohm1952,dgz1992}; no reader Outside without the seed beats $1/2$. Row 1c's cell stands as derived under the counter until the declared form's runs are read.",
+        "Stated plainly: under the counter wheel the law as built did not meet operational no-signalling in the order of its outcomes (its counts blind to the other party's setting, its order not), a fail by derivation; under the declared form it does, in form: the births of the pair record take the residues of $\\Z_{\\Nphi}$, one per $u$, in an order set by the world's seed through a declared integer hash (a Fisher--Yates permutation under a 64-bit SplitMix64 mixing hash) in place of the counter's $[1, 1]$; the click is stamped with the detector's count and the birth interval, never $u$; the seed is an input of kind 1 drawn once per world, independent per world and of the settings, never read Outside; the lamp's cadence is fixed and independent of the residues; the click's stamp is the cell's own first rung \\cite[records 1647 and 1648]{log}. Stated honestly: the nonlocality is Inside and declared, one gather, the flips against the residues $E_N$ a GameBoard diagnostic; the model's standing is Bohm's under quantum equilibrium \\cite{bohm1952,dgz1992}; for settings held fixed over a wheel cycle the counts are no-signalling exactly and no reader Outside without the seed beats $1/2$ on the order; for per-trial settings the marginal is no-signalling in distribution, and the order of the second party's outcomes carries the first party's switching pattern at order $E_N/(W - 1)$, the finite grain's own residue, stated as the model's prediction \\cite[item 21]{attacks}. Row 1c reads PASS in form under the declared form; its run confirms the counts and reads the flips as the diagnostic.",
+    ),
+    (
+        "commit 53 (54 folded in), the physicist's exact words: row 1c's cell",
+        "1c & The order channel & K & the counts no-signalling exactly (row 1d); the order of outcomes, an observable of the detector, a FAIL by derivation computed before the run, one way from the first party to the second: under the declared ladder and the wheel $[1, N]$ the first party's outcome sequence never flips with the second's setting, and the second's flips with the first's on $1448$ of $2048$ births at $b = 3N/8$ ($0$ of $2048$ at $b = N/8$), open by Bell's theorem for any deterministic wheel \\cite{orderderivation} & not yet & \\underline{\\hspace{0.45in}} & APPARATUS\\_INPUT \\\\",
+        "1c & The order channel & K & the counts no-signalling exactly (row 1d). The order of outcomes: under the counter wheel $[1, N]$ a FAIL by derivation (the second party's outcome sequence flips with the first party's setting on $1448$ of $2048$ births at $b = 3N/8$, the flip fraction $E_N = S_N/4$ exactly, open by Bell's theorem for any deterministic wheel \\cite{orderderivation}); under the declared form (the residues in a seed-set order, the click stamped without the residue \\cite[records 1647 and 1648]{log}) PASS IN FORM Outside: no reader without the seed reads the first party's setting from the second party's list (exact for a uniformly random order, the seed-set permutation its integer form), the flips against the residues a GAMEBOARD diagnostic of the declared Inside nonlocality; the finite grain's residue, the second party's sequential agreement rate carrying the first party's switching pattern at order $E_N/(W - 1)$, $3.5 \\times 10^{-4}$ at $N = 2048$, is the model's own prediction (COMPUTATION, \\cite[item 21]{attacks}) & not yet (the declared form's run) & \\underline{\\hspace{0.45in}} & APPARATUS\\_INPUT \\\\",
+    ),
+    (
+        "commit 53 (54 folded in): E_N a GameBoard diagnostic beside the closed form",
+        "a closed form and not a statistic;",
+        "a closed form and not a statistic, a GameBoard diagnostic;",
+    ),
+    (
+        "commit 53 (54 folded in): the attacks page's item 21 at 484d28bb until its merge",
+        "item 8 (the two keys), of the archived code \\cite{zenodo}, on \\texttt{main} at d2d1d2fb.",
+        "item 8 (the two keys), of the archived code \\cite{zenodo}, on \\texttt{main} at d2d1d2fb; its item 21 (the finite grain's residue, the model's prediction) on its branch at 484d28bb until that merge.",
+    ),
+    (
+        "commit 53, finding 6: Theorem 2's hypothesis stated and the completion named",
+        "Under (A1), with the definition of Outside (P6 and P11: nothing leaves the board but clicks),",
+        "Under (A1), the locality of the verbs on the board, taken here as the hypothesis of the conditional extension, and with the definition of Outside (P6 and P11: nothing leaves the board but clicks),",
+    ),
+    (
+        "commit 53, finding 6: the exceptions named",
+        "The one exception is the pair's click, one gather of one record from both settings, the law's one non-local operation.",
+        "The exceptions are the model's non-local steps, named: the completion of a record at its click, one deletion everywhere (P6, P11), and the pair's click, one gather of one record from both settings; local Inside, one non-local deletion at the click.",
+    ),
+    (
+        "commit 53, finding 8: the one page's non-local sentence",
+        "this is the only non-local thing: the record's completion is one gather over all its detectors.",
+        "this is the verbs' only non-local step: the record's completion is one gather over all its detectors; the two declared non-local objects beside it, a body's cells acting as one and the record's own ledger, are named in Section~\\ref{sec:law}.",
+    ),
+    (
+        "commit 53, finding 9: light's clock with its own symbol, the pairs told apart, the premise stated",
+        "$k$ chosen so that $S[k]$ is large, the clock clause (Bell's rows $[2464, 25]$ on $\\Nphi = 2048$, Malus $[308, 25]$ on $\\Nphi = 256$;",
+        "$k$ chosen so that $S[k]$ is large, the clock clause (light's clock $\\kappa_c$ in steps of $\\Z_{\\Nphi}$ per interval of the record's age, a pair of integers: Bell's rows $[2464, 25]$, $98.56$ steps per interval at $12$ Links per period on $\\Nphi = 2048$, Malus $[308, 25]$ on $\\Nphi = 256$; not a kind's pair $[\\mathrm{num}, \\mathrm{den}]$, whose $\\cos\\omega_0 = \\mathrm{num}/\\mathrm{den}$ is the band's equation; the premise of this paragraph, that a record at a Node is two samples of one character of the rule's band at the declared wavelength, is stated as the premise, the identity of \\cite[1.7]{algebra} holding under it;",
+    ),
+    (
+        "commit 53, finding 13: Theorem 6's title",
+        "[The quadratic read-out on the phase lattice, a Gleason-like characterization]",
+        "[The quadratic read-out on the phase lattice, a characterization under the parallelogram law]",
+    ),
+    (
+        "commit 53, finding 13: the summary's word",
+        "the quadratic read-out characterization on $\\Z_{\\Nphi}$ (Gleason-like)",
+        "the quadratic read-out characterization on $\\Z_{\\Nphi}$ (under the parallelogram-law axiom)",
+    ),
+    (
+        "commit 53, finding 13: what is derived",
+        "the multiplicity rule $A = \\sum a_i^2$ and the square as the only power are derived,",
+        "the multiplicity rule $A = \\sum a_i^2$ and the Gram form are derived under the parallelogram-law axiom (quadratic, positive, on the lattice), not quadraticity itself; the physics is the built form, the record's motion squared summed across the cells, which satisfies the axiom;",
+    ),
+    (
+        "commit 53, the page count: the table's algebra column wider (2.2in) and the experiment, GameBoard and pinned columns narrower, the row heights smaller; no wording changes",
+        "L{0.3in}L{1.1in}L{0.25in}L{1.7in}L{1.1in}L{0.9in}L{0.5in}",
+        "L{0.3in}L{0.95in}L{0.25in}L{2.2in}L{0.95in}L{0.7in}L{0.5in}",
+    ),
 ]
 
 

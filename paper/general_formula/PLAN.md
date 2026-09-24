@@ -7171,3 +7171,15 @@ unreferenced labels and the (A1) to (A3) gloss left as they are, with
 the reasons in NUMBERS.md. The findings on the title, the two laws,
 the abstract's claims and the physics (1 to 4, 6 to 9, 11 to 13, 17,
 18) are the owner's and the physicist's, not this commit's. 48 pages.
+
+## Applied (2026-09-24, the Boss's orders of 06:22Z and 06:30Z): commit 53 on paper-48, commit 54 folded in
+
+Row 1c and the Bell section in the physicist's exact words on the
+owner's declaration: FAIL by derivation under the counter wheel, PASS
+in form under the declared form, the finite grain's residue the
+model's prediction (the attacks page's item 21). The physics answers
+to the referee's findings 3, 6, 7, 8, 9 and 13 as sentences in
+Definition 3, Theorem 2, P1, the state paragraph, the linear-form
+paragraph and Theorem 6. Finding 4 beyond these words waits on the
+owner. The delay paragraph's head is in records.tex behind a pointer,
+and the table's columns are re-proportioned, for the page. 48 pages.

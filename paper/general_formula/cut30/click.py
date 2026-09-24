@@ -21,7 +21,7 @@ integers both, the crossing of the first rung $1/W$ of the norm in the detector'
 R(o_A, o_B) = J(o_A, o_B)^2,\qquad J(o_A, o_B) = \sum_\ell c_\ell\,U_a[o_A][\ell]\,U_b[o_B][\ell],
 \label{eq:joint}
 \end{equation}
-$c_\ell = (1, 1)$ in every world here; the birth wheel's $u \in \Z_{\Nphi}$, the lamp's phase at the birth, selects one cell through the rung on the cumulative weights $C_1 \le \dots \le C_K$ in the declared order,
+$c_\ell = (1, 1)$ in every world here; one click: the ladder over $u$ chooses the cell on the pointers' shares (the Born statistics are the shares of the accumulated motion squared across the cells), and the chosen cell's first rung gives the click's time in that cell's own count; no race decides a cell; the Born and Bell results use the ladder, the pins in a body's count the first rung of a single receiver; the birth wheel's $u \in \Z_{\Nphi}$, the lamp's phase at the birth, selects one cell through the rung on the cumulative weights $C_1 \le \dots \le C_K$ in the declared order,
 \begin{equation}
 \boxed{\,\rung_k = \left\lfloor \frac{2\Nphi C_k + C_K}{2C_K} \right\rfloor \quad (\rung_0 = 0,\ \rung_K = \Nphi),
 \qquad \text{the cell is the } k \text{ with } \rung_{k-1} \le u < \rung_k\,},
