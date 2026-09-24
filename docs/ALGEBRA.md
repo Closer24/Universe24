@@ -4124,7 +4124,8 @@ and main's `rungs`):
   W = 20, gives the SAME S = 14 / 5 with 20 pair records per setting.
   The counts are 8, 2, 2, 8; 1, 9, 9, 1; 9, 1, 1, 9; 8, 2, 2, 8, with
   marginals exactly 10 (COMPUTATION, main's `rungs`), in about 1 / 100 of
-  the host time. Any multiple of 20 is the same pin scaled.
+  the host time. Any multiple of 20 is the same pin scaled. ADOPTED by
+  the Boss at 00:05Z: THE BELL WORLDS ARE PINNED AT W = 20.
 - MALUS. H arrives; the + cell is along the axis, with the share a^2 /
   (a^2 + b^2). The axes, chosen as the integer vectors nearest the four
   settings of the list:
