@@ -522,7 +522,7 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    -x half, about 5200 intervals after birth; the click line is written
    at completion with the first-rung stamp (1905 after birth), so the
    reading is unchanged, but `ticks` must be at least ramp + hold +
-   about 5200, about 14700, or the hold's last records never click. The per-record reading of item 5 is
+   about 5200, about 14700; DECLARED 08:06Z, before any pinned run: `ticks` 15000 for redshift_k3 and redshift_control (the last hold records, born near 9500, completing near 14800 under the world key `wheel` 256; every hold record counts), or the hold's last records never click. The per-record reading of item 5 is
    CONFIRMED by Reviewer 3 as a declaration before any run. THE
    EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
    each train does not reach the set at 1100 Links (it does not
@@ -1248,7 +1248,12 @@ nature.
 
 ## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; the second draft 2026-09-24, 00:25Z, on his line B; the third draft 01:05Z, on his line on the band, record 1543: the rise per direction by the map)
 
-1. The objects: a chain of 2200 x 1 x 1, light's faces open; the massive
+1. The objects: a chain of 3000 x 1 x 1 (2200 in the first drafts; 3000
+   declared 2026-09-24, 08:06Z, before any pinned run, so that every hold
+   record's forward half reaches the +x sponge and the record completes
+   under the world key `wheel` 256 while B's front, at 784 + ticks / 3,
+   stays short of that face; A, B and L unchanged, every first-rung pin
+   and the arrival column untouched), light's faces open; the massive
    kind [800, 809]; two BLOCKS of side 12 at full depth ([800, 800]): A at
    [700, 712) and B at [772, 784), L = 60 face to face, both pushed to k =
    3 on +x by the declared momentum over a ramp of 1500 (the relaxation 17
@@ -1283,9 +1288,14 @@ nature.
    10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
 2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 256 on
-   the sets (item 4), each block's key `own_grace` 3000 (the hold; item
+   the sets (item 4) and the world key `wheel` 256, the same integer for
+   the ladder (item 7), each block's key `own_grace` 3000 (the hold; item
    1); the momentum [Q S M,
-   0, 0] on +x for both, `ramp` 1500, the hold 3000.
+   0, 0] on +x for both, `ramp` 1500, the hold 3000; `ticks` 6400 for
+   sagnac_k3 and 8450 for sagnac_rest (Reviewer 3's arithmetic of 08:25Z,
+   record 1719: a k3 record born at t completes near 0.423 t + 4468 and a
+   rest record near t + 3990, the last hold birth near 4450; every hold
+   record counts, a declaration before the run, no pin).
 3. The verbs: the massive rule with the coupling in the one division; the
    source term with the birth stamp; the push; the pointer and the click
    at W under the cycle sentence, the click stamped with the record's
