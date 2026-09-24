@@ -672,3 +672,10 @@ as L-3, a family letter such as M1) may follow the name in parentheses as an
 index into a table, never stand alone in a message, a heading, a report or a
 commit; a new label is not coined. The features' rule of 14:00Z is the same
 rule.
+
+Our names, never the laboratory's, for a block (the owner, 2026-09-24,
+record 1820): "use only our names; there is no pump, there is an emitter."
+A block is called by what it is on the GameBoard: an emitter, a body, a
+receiver, a clock, or a named composition of them (a crystal, a polariser, a
+mirror). The laboratory's word for the same thing (a pump, a laser, a beam
+splitter) may be said once to explain what it models, never as its name.
