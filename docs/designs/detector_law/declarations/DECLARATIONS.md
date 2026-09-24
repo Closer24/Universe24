@@ -522,7 +522,7 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    -x half, about 5200 intervals after birth; the click line is written
    at completion with the first-rung stamp (1905 after birth), so the
    reading is unchanged, but `ticks` must be at least ramp + hold +
-   about 5200, about 14700, or the hold's last records never click. The per-record reading of item 5 is
+   about 5200, about 14700; DECLARED 08:06Z, before any pinned run: `ticks` 15000 for redshift_k3 and redshift_control (the last hold records, born near 9500, completing near 14800 under the world key `wheel` 256; every hold record counts), or the hold's last records never click. The per-record reading of item 5 is
    CONFIRMED by Reviewer 3 as a declaration before any run. THE
    EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
    each train does not reach the set at 1100 Links (it does not
@@ -934,7 +934,14 @@ omega_b) of its own well, printed by the pins script before the run.
    the owner's rule of 03:29Z) before the pin runs: the world loads under
    line B, the emission's first cycle, no rung at the set before the
    return's transit (2 L / c = 207.85), the first rung within 218 +- 2 at
-   W = 64. DECLARED: the receiving set bound to
+   W = 64. THE RECORD THE PIN READS, named before the run (Reviewer 3's
+   item 4, 09:22Z through the Boss; DECLARED 2026-09-24, 09:10Z): the
+   record inserted during A's FIRST cycle, the emission's first cycle,
+   and that record alone; its first rung at the set is the pin's
+   reading (the T = 0 preliminary on build-3 540456da read 214,
+   EXPLORATORY). The later cycles' records (217 +- 1 there) are read
+   beside as a second line, the cycles' spacing, not the pin.
+   DECLARED: the receiving set bound to
    A is the free Node adjacent to A's face toward the mirror, x = 612,
    alone (the map (e)'s face Node: `one_record` reads the offer at
    receiver_lo + s = 612, outside the block, so the coupling and the take
@@ -977,7 +984,10 @@ omega_b) of its own well, printed by the pins script before the run.
    receiver after, the map's own assumption. DECLARED: for the emitting
    block's OWN record the set's Nodes stay FREE (the row evolving, no
    take) for the record's whole grace (own_grace; the hold for R2's
-   blocks) and become take Nodes for that record after it; the masks per
+   blocks), except the emitter's own cells after its train, which item
+   10 holds at 0 (record 1711; Reviewer 3's clause on build-3, 09:02Z:
+   a Node both free and taking would be neither held at 0 nor free),
+   and become take Nodes for that record after it; the masks per
    record by the record's emitter and age, values of the record (no
    name, no kind; local: the Node's own state per record); for a stepping
    block the masks re-form at each step and the Port's ghost is carried
@@ -1024,7 +1034,8 @@ omega_b) of its own well, printed by the pins script before the run.
    owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
    a detector at its own Node): AN EMITTER TAKES ITS OWN RECORD'S
    REMNANT AFTER ITS TRAIN, THE RULE (the model owner's word of
-   2026-09-24, 06:42Z, "go with the recommendation", on the
+   2026-09-24, 06:42Z, "go with the recommendation", record 1694 of
+   docs/LOG_2026-09-20.md, on the
    physicist's recommendation that the take be the law's own for every
    emitter and not a per-world key; Reviewer 3's three lines on
    c5930770 folded, his key form of 06:20Z superseded by the owner's
@@ -1037,24 +1048,41 @@ omega_b) of its own well, printed by the pins script before the run.
    key. THE TIMING: the drive
    inserts over ALL the emitter's cells (`_drive`), so at age = train
    the last inserted intervals are still inside the cells, propagating
-   out; a take from age > train would hold those rows at 0, shorten the
-   emitted train, change its arriving energy and rise, and move 218 +- 2
-   and R2's rises. So the take begins only after the last inserted
-   interval has left the emitter's cells: at age > train + T, with T =
-   ceil(extent / v_g) + 2, the extent the cells' span along the emission
-   in Links and v_g the record's kind's band group pace at its declared
-   clock (0.564 Links per interval at 12 Links per period against c =
-   0.577; the 2 a margin), computed at load: 24 for a block of side 12,
-   4 for a one-Node lamp. THE FORM: from that interval the
+   out. THE TAKE BEGINS AT THE FIRST INTERVAL AFTER THE TRAIN, age >
+   train, NO TIMING INTEGER (the model owner's word of 2026-09-24,
+   07:42Z, "go with it", record 1711, on the physicist's and Reviewer 3's
+   recommendation after the builder's seven ages on the (ac) chain,
+   07:09Z, GAMEBOARD: the remnant's zero-group-pace mode leaks onto the
+   free Nodes beside the face, where item 9's set sits, during any
+   delay, and the set's first rung came at 147 with a delay of 24, 174
+   at 4, and 214, after the return, at none). The physicist's earlier
+   delay T = ceil(extent / v_g) + 2 (24 for a block of side 12, 4 for a
+   one-Node lamp, computed at load) is WITHDRAWN as the defect: the
+   outside remnant is fed by the inside one, and holding the cells at 0
+   from the train's end is what keeps the set quiet to the return. The
+   cost, named: the tail of the emission still inside the cells at the
+   train's end (at most 12 percent of the record's motion energy on the
+   chain, GAMEBOARD) is taken with the remnant; a record that clicks
+   books nothing of it on any row (the ledger books content, one
+   indivisible integer per record, to the click's cell; Reviewer 3's
+   note on build-3, 09:02Z through the Boss), and the motion the
+   emitter's cells take per interval is a GAMEBOARD diagnostic per
+   record when the builder prints it, not a row; the HOST row below
+   carries only a record the emitter took wholly. It touches no pin,
+   every pin being a first-rung
+   time set by the returning front, which left the cells during the
+   train; the norm stays the declared train's. THE FORM: from that interval the
    emitter's cells are a taking set for THAT record alone, in the
    receiver form of DESIGN.md section 5 (the row held at 0, one ghost
    per Port), the take in the record's OWN KIND'S pair as the take key
    declares per kind (light [-15, 56]; a matter lamp's record, M1 and
    M2, in the matter kind's pair; no family name). THE BOOKS: what the
    cells take is booked as CONTENT (the ledger books content, not
-   motion) on a HOST row of its own, `taken_by_emitter`, not on the
-   escaped row (escaped names content that left the board, which this
-   did not) and never onto a pointer: the remnant is HOST because it
+   motion) on a HOST row of its own, `taken_by_emitter`, at the record's
+   end and only where no cell was chosen (the emitter took the record
+   wholly; a clicking record's content goes whole to its cell), not on
+   the escaped row (escaped names content that left the board, which
+   this did not) and never onto a pointer: the remnant is HOST because it
    never left the emitter and is not "received back" (Highlights item 7
    counts what a body emits and receives back); the emitter has no cell
    of its own on its own record's ladder and never clicks on its own
@@ -1096,14 +1124,14 @@ omega_b) of its own well, printed by the pins script before the run.
    lamps: the lamp's Node takes its own remnant after the train with
    remnant_take 4; the cells 7 and 10 Links away are untouched. THE
    BUILDER'S LINE (section 15 M1-4): the rule for every emitter, no key;
-   T = ceil(extent / v_g) + 2 computed at load from the emitter's extent
-   along its emission and the kind's band group pace at its declared
-   clock (the dispersion of the six-neighbour rule on the world's axes,
-   a rounding at load); a per-record taking mask of the emitter's cells
-   switched on at age > train + T, in the record's kind's pair, its
+   no timing integer, nothing computed at load and no metadata row for
+   it (the owner's word of 07:42Z, record 1711); a per-record taking mask of the emitter's cells
+   switched on at age > train, the first interval after the train, in the record's kind's pair, its
    bookings excluded from the ladder as the
-   grace's exclusion is (`keep`), the content taken booked to the HOST
-   row `taken_by_emitter`; one test, the light clock's chain of (ac):
+   grace's exclusion is (`keep`), the content of a record taken wholly
+   booked to the HOST row `taken_by_emitter` at its end, the motion
+   taken per interval printed per record as a GAMEBOARD diagnostic where
+   asked; one test, the light clock's chain of (ac):
    no rung at the set before the return's transit and the first rung
    after it, none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
    through the Boss): the defect is the DECLARATION's, not the engine's
@@ -1248,7 +1276,12 @@ nature.
 
 ## 13. Row R2, the Sagnac ratio (Reviewer 3's MUST 2, 23:50Z; the second draft 2026-09-24, 00:25Z, on his line B; the third draft 01:05Z, on his line on the band, record 1543: the rise per direction by the map)
 
-1. The objects: a chain of 2200 x 1 x 1, light's faces open; the massive
+1. The objects: a chain of 3000 x 1 x 1 (2200 in the first drafts; 3000
+   declared 2026-09-24, 08:06Z, before any pinned run, so that every hold
+   record's forward half reaches the +x sponge and the record completes
+   under the world key `wheel` 256 while B's front, at 784 + ticks / 3,
+   stays short of that face; A, B and L unchanged, every first-rung pin
+   and the arrival column untouched), light's faces open; the massive
    kind [800, 809]; two BLOCKS of side 12 at full depth ([800, 800]): A at
    [700, 712) and B at [772, 784), L = 60 face to face, both pushed to k =
    3 on +x by the declared momentum over a ramp of 1500 (the relaxation 17
@@ -1283,9 +1316,14 @@ nature.
    10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
 2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 256 on
-   the sets (item 4), each block's key `own_grace` 3000 (the hold; item
+   the sets (item 4) and the world key `wheel` 256, the same integer for
+   the ladder (item 7), each block's key `own_grace` 3000 (the hold; item
    1); the momentum [Q S M,
-   0, 0] on +x for both, `ramp` 1500, the hold 3000.
+   0, 0] on +x for both, `ramp` 1500, the hold 3000; `ticks` 6400 for
+   sagnac_k3 and 8450 for sagnac_rest (Reviewer 3's arithmetic of 08:25Z,
+   record 1719: a k3 record born at t completes near 0.423 t + 4468 and a
+   rest record near t + 3990, the last hold birth near 4450; every hold
+   record counts, a declaration before the run, no pin).
 3. The verbs: the massive rule with the coupling in the one division; the
    source term with the birth stamp; the push; the pointer and the click
    at W under the cycle sentence, the click stamped with the record's
@@ -1384,6 +1422,36 @@ nature.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
    to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
    `make_worlds.py`; HOST a minute each.
+7. THE CELL OF A BLOCK RECORD'S CLICK, STATED AS THE ENGINE HAS IT (the
+   World Generator's gather reading of sagnac_k3 at 906d3635, 07:20Z,
+   EXPLORATORY; Reviewer 3's line C of 07:18Z; the Boss's order of
+   07:30Z; stated 2026-09-24, 07:40Z, before any pinned run of R2). A
+   block's emitted record has no birth draw: its birth residue is u = 0
+   (only a lamp draws u from its wheel). So its click's cell is not chosen
+   by a draw but is THE FIRST CELL IN THE WORLD'S LADDER ORDER WHOSE
+   CUMULATIVE SHARE OF THE LADDER'S TOTAL REACHES 1 / (2 W), W the
+   world's one wheel (the world key `wheel`, 256 on the four R2 worlds,
+   the same integer as the sets' rung; the ladder's W and the rung's W
+   are one), and the click is stamped at that cell's first rung. The
+   PREDICTION this states for sagnac_k3: every hold record of B that
+   completes within the world's ticks lists at_a (its share of the total
+   a GAMEBOARD reading of the gather line: the 906d3635 run at W = 1
+   read a quarter to a third, with a face:+x pointer under the builder's
+   ledger read, Reviewer 3's 07:43Z; not part of this prediction) and
+   at_a, first in the order, wins on EVERY one of them; the meeting
+   direction's click is at_a's first rung on every B record that
+   completes within the world's ticks, and the pin 72 +- 2 is read on
+   all of them; the
+   chasing direction and the rest world have one cell each and are
+   untouched. The light clock's set (section 10 item 9) is chosen the
+   same way, first in its order. What this form hides is named: the
+   escaped share of a block's record never decides its cell, so a
+   count of clicks at a set is not a reading of the set's share; the
+   share is a GAMEBOARD reading of the gather line. A cell chosen by
+   weight for a block's record (the block's own count at the birth mod
+   W as its u, a stride wheel on the ordinal, not a draw) is a question
+   for the model owner after the paper, not a change today. No pin
+   moves under this statement: every pin is a first-rung time at a set.
 
 ## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
 
@@ -1678,10 +1746,10 @@ waves).**
   03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
   05:40Z on the builder's finding (ac), section 10 item 10, with
   Reviewer 3's three lines of 06:20Z, and THE RULE on the owner's word
-  of 06:42Z: every emitter takes its own record's remnant after its
+  of 06:42Z, record 1694: every emitter takes its own record's remnant after its
   train, no key; a per-record taking mask of the emitter's cells at age
-  > train + T, T = ceil(extent / v_g) + 2 computed at load (24 for a
-  block of side 12, 4 for a one-Node lamp), in the record's kind's pair,
+  > train, the first interval after the train, no timing integer (the model owner's word of 07:42Z, "go with it", record 1711; the delay T = ceil(extent / v_g) + 2 of the first text, 24 for a
+  block of side 12, 4 for a one-Node lamp, is withdrawn, section 10 item 10; the record of how it was computed: the group pace at load was the band's closed form along the emission's axis, v_g = sin k_x / (3 sin omega) with cos omega = (cos k_x + cos k_y + cos k_z) / 3, the three-dimensional six-neighbour band of ALGEBRA.md 8.1 for the pair [1, 1], at the transverse components k_y = k_z = 0 (so cos omega = (2 + cos k_x) / 3 on the axis) and the kind's declared clock (k_x = 2 pi / lambda, lambda the declared Links per period), host arithmetic once at load, no table entry read (Reviewer 3's axis form, 07:12Z), a load-time host number the rule no longer has), in the record's kind's pair,
   its bookings
   excluded from the ladder and the content booked to the HOST row
   `taken_by_emitter`, the builder's line before the light clock's
