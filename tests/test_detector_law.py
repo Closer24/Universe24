@@ -11,6 +11,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.integer import keyed_permutation
+from event_universe.core.phase import remnant_intervals
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 
@@ -272,3 +273,58 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
             del entry["lamp"]
     with pytest.raises(ValueError, match="outside the local detector law"):
         parse_nature_beam_world(outside)
+
+
+def test_the_emitters_own_take_is_the_rule_with_its_timing_computed_at_load():
+    """Item 10 THE RULE (DECLARATIONS.md section 10 item 10 at remnant-rule e6b4ec3d, the model
+    owner's word of 06:42Z): no key; the intervals after its train before an emitter's own Nodes
+    take its record's remnant are T = ceil(extent / v_g) + 2 computed at load in the tables'
+    fixed point (`core.phase.remnant_intervals`): 24 for a block of side 12 emitting light at
+    the clock [77, 25] on N = 64 (v_g = 0.564 Links per interval at 12 Links per period), 4 for
+    a one-Node lamp at that clock, 23 for the side-12 block at the clock [1, 1], 4 for a one-Node
+    lamp of the matter kind [156, 157]; a clock outside the band or beyond a quarter turn per
+    interval refused; the chain world's lamp reads T = 4 and a key `remnant_take` written into a
+    world is refused as unknown; a detector-law world with a set and no lamp declares the world
+    key `wheel` (refused absent, no implicit default); a massive kind's `take` is refused on
+    light's kind; the ledger carries the HOST row `taken_by_emitter`, 0 on the chain world whose
+    record ends at the screen, the books balanced."""
+    assert remnant_intervals(12, (1, 1), (77, 25), 64) == 24
+    assert remnant_intervals(1, (1, 1), (77, 25), 64) == 4
+    assert remnant_intervals(12, (1, 1), (1, 1), 64) == 23
+    assert remnant_intervals(1, (156, 157), (77, 25), 64) == 4
+    with pytest.raises(ValueError, match="outside the kind's band"):
+        remnant_intervals(1, (1, 2), (77, 25), 64)
+    with pytest.raises(ValueError, match=r"outside \(0, pi / 2\]"):
+        remnant_intervals(1, (1, 1), (17, 1), 64)
+    world = parse_nature_beam_world(chain_world())
+    assert world.measured[0].lamp is not None and world.measured[0].lamp.remnant_take == 4
+    keyed = chain_world()
+    keyed["measured"][0]["lamp"]["remnant_take"] = 4
+    with pytest.raises(ValueError, match="remnant_take"):
+        parse_nature_beam_world(keyed)
+    no_wheel = chain_world()
+    no_wheel["measured"][0] = {
+        "position": [2, 0, 0],
+        "family": "light",
+        "amount": 1,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[1, 0, 0]],
+    }
+    with pytest.raises(ValueError, match="declares the world key `wheel`"):
+        parse_nature_beam_world(no_wheel)
+    no_wheel["wheel"] = 64
+    parse_nature_beam_world(no_wheel)
+    on_light = chain_world()
+    on_light["massive_record"] = True
+    on_light["families"][0]["take"] = [-15, 56]
+    with pytest.raises(ValueError, match="admitted on a massive kind alone"):
+        parse_nature_beam_world(on_light)
+    simulation = DetectorLawSimulation(world)
+    for _ in range(400):
+        simulation.step()
+    books = simulation.books()
+    assert books["balanced"]
+    light = books["families"]["light"]["transit"]
+    assert light["taken_by_emitter"] == 0 and light["absorbed"] >= 1

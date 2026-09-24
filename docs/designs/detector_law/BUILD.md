@@ -1124,3 +1124,99 @@ the row is held at 0 (`LiveRecord.was_exempt`, `_advance`); the ledger
 stays balanced (test (ac)'s assertion at every interval) and the
 booking is one Node's content, below the ringing's per-interval booking
 on the light clock's chain.
+
+## 18. Item 10, THE RULE: every emitter takes its own record's remnant after its train (DECLARATIONS.md section 10 item 10 and section 15 M1-4 at remnant-rule e6b4ec3d, the model owner's word of 06:42Z on the physicist's recommendation, Reviewer 3 CONFIRMED; the Boss's 06:50Z; `detector-law-build-2`)
+
+- NO KEY: the timing integer T = ceil(extent / v_g) + 2 is COMPUTED AT
+  LOAD (`core.phase.remnant_intervals`, the tables' fixed point: the
+  band of the six-neighbour rule with the kind's pair [num, den] along
+  an axis, cos omega = (num / den)(cos k + 2) / 3, v_g = d omega / d k =
+  (num / den) sin k / (3 sin omega), so extent / v_g = 3 extent sin
+  omega den / (num sin k); the series for sin and cos, the integer root
+  for sin k, no float; a clock outside the band or beyond a quarter turn
+  per interval refused) from the emitter's extent along its emission
+  (a lamp's span on the axes its directions run along; a block's side)
+  and the record's kind's band group pace at its declared clock: 24 for
+  a block of side 12 emitting light at the clock [77, 25] on N = 64
+  (v_g = 0.564 Links per interval at 12 Links per period), 4 for a
+  one-Node lamp at that clock, 4 for a one-Node lamp of the matter kind
+  [156, 157] at it, and 23 for the light clock's A at the chain's
+  declared clock [1, 1] (v_g = 0.577 there: the declaration's 24 is the
+  12-Link clock's, for the physicist). The loader writes T per emitter
+  into the run's metadata (`remnant_take`, COMPUTATION at load, printed
+  as the margins are) and the preflight tool prints it, so no reader
+  meets a silent constant; a `remnant_take` key written into a world is
+  refused as unknown. The kind's take pair: the family key `take` [n, d]
+  on a MASSIVE kind (refused on light's kind, which keeps the law's
+  [-15, 56]), required where a lamp of that kind exists (Reviewer 3's
+  line 2 on item 6b: the pair belongs to the record's family).
+- THE LINE (`_own_take`, `_advance`, `_form_take_masks`): from age >
+  train + T (a lamp's record; an emitting block's after its sourcing
+  cycle) the record's own emitter's Nodes (a lamp's Nodes; the block's
+  CURRENT cells) are a taking set for THAT record alone in the receiver
+  form: the row held at 0 there, one ghost per Port in the record's OWN
+  KIND'S pair, the Ports of the record's taking set (the receivers and
+  its emitter together) formed per record with one slot per (axis,
+  sign) so a record's Port arrays keep their index, a Port new this
+  interval (the first, a hop) starting at its free neighbour's level
+  with no jump booked. What the emitter takes is booked NOWHERE as
+  motion (the ledger books content): onto no pointer and not into the
+  record's `absorbed`, so the ladder never sees it (the grace's `keep`
+  exclusion made permanent) and the record's completion comes from what
+  the sets and faces took; a record its emitter took wholly has energy 0
+  and completes with no cell chosen, its content booked to the ledger's
+  HOST row `taken_by_emitter` (not to `escaped`: the remnant never left
+  the board and is not received back), the books balanced with the new
+  row (`transit.taken_by_emitter` in the books and run.json); the gather
+  line carries `taken_by_emitter` (the content so booked, 0 where a cell
+  was chosen) and the records reading `emitter_taking` (whether the
+  emitter's take has acted), both HOST. The emitter never clicks on its
+  own record; the block's own massive record is untouched; during the
+  train the cells insert as built; the sets' `own_grace` stands. THE
+  WORLD KEY `wheel` (the Boss's line (5)): a detector-law world with a
+  set, no lamp and no `wheel` is refused at load naming the key.
+- WHAT MOVED: every lamp's record is taken at its lamp's Nodes from
+  train + T (before: after the grace of two periods, onto the lamp's own
+  cell, the first build's afterglow, which could win the ladder), so
+  test (p)'s events and audit digests moved once more (the state digest
+  unchanged); an absorbing block's own cell now stamps its first rung
+  with the block's count in the generic offer loop (key (i); before,
+  only the clock body's path stamped it, a gap the afterglow had
+  hidden); no world file changes.
+- READINGS (EXPLORATORY; test (ac) on the light clock's chain of 173, the
+  world's `wheel` 64, the set at x = 112, own_grace 70, W = 64, A's T =
+  23): the remnant's level at A's cells is above 10^5 at 90 and 0 from
+  95 (GAMEBOARD); the set's Ports begin at the grace's end at the free
+  neighbour's level; but THE FIRST RUNG COMES AT 147 after the birth,
+  not after the return's transit 207.85 as the declaration's preliminary
+  expects: it is booked from the remnant's alternating mode on the FREE
+  Nodes beside A's face (x = 113 onward), which A's cells do not take
+  and which the delay lets spill out of the cells. THE SWEEP over the
+  delay on the same chain (the first rung after the birth; the set's
+  pointer at 208 against the rung 6.7 x 10^10): 0: 214 (5.4 x 10^10);
+  4: 174 (8.5 x 10^10); 8: 157 (1.2 x 10^11); 12: 152 (1.4 x 10^11); 16:
+  151 (1.5 x 10^11); 24: 147 (2.1 x 10^11). Only the take at the train's
+  end keeps the set below one rung before the return on this chain. THE
+  CELLS' SHARE of the record's motion energy with no take (the Boss's
+  line (6), for the physicist's integer): 12.3 percent at 70, 6.2 at 80,
+  16.3 at 90, 20.5 at 94, 21.5 at 100, 19.2 at 110, 13.7 at 120 (the
+  largest level inside 5.6 x 10^6 at 70, 2.0 x 10^6 at 80, 1.4 x 10^6 at
+  90, 4.2 x 10^5 at 94, 1.2 x 10^6 at 100; the twelve free Nodes beside
+  the face hold 27, 25, 21, 23, 17, 18 and 22 percent at the same ages):
+  the tail has left by about 94 while the remnant's motion share rises,
+  its level about 10^6 alternating each interval. The return shows after
+  208 as the pointer's rise (2.8 x 10^12 from 208 to 240 against 2.0 x
+  10^11 from 140 to 208); with the faces open the same rung and no rise.
+  A finding for the physicist, not built around: the engine reads the
+  rule as declared. Test (k)'s clock-body case: the record's click went
+  to the lamp's own cell at 981 (the afterglow); under the rule the lamp
+  takes it and the record lives on past 1200 with the clock body
+  radiating into it (pinned as a reading).
+- THE PREFLIGHT (Reviewer 3's nit): CHECK 2 prints the interval of the
+  W-th birth and the margin the ticks leave for the arm's transit and
+  the completion, which the tool does not check (the world's geometry,
+  the World Generator's line).
+- THE THREE TESTS: generic (the take primitive as built, no family
+  name), vector (the receiver form's verbs, no root in the law; the
+  timing's root at load in the tables' fixed point), local (the
+  emitter's own Nodes, its own record).

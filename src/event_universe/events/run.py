@@ -32,6 +32,18 @@ from event_universe.events.world import BEAM_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
+def remnant_take_lines(world: NatureBeamWorld) -> list[dict[str, int]]:
+    """The rule's timing per emitter (item 10), as the loader computed it:
+    one line per lamp or emitting block under the local detector law."""
+    lines: list[dict[str, int]] = []
+    for number, entry in enumerate(world.measured):
+        if entry.lamp is not None and entry.lamp.remnant_take is not None:
+            lines.append({"measured": number, "intervals": entry.lamp.remnant_take})
+        elif entry.block is not None and entry.block.remnant_take is not None:
+            lines.append({"measured": number, "intervals": entry.block.remnant_take})
+    return lines
+
+
 def execute_nature_beam_run(
     world: NatureBeamWorld,
     source: bytes,
@@ -59,6 +71,16 @@ def execute_nature_beam_run(
     # computation of the declaration, printed and recorded, never read by
     # the state); a declaration below the margin refuses the run here.
     margins = check_margins(world) if world.massive_record else []
+    # detector-law-v1, item 10 the rule: the intervals after its train before
+    # each emitter's own Nodes take its record's remnant, computed at load
+    # (COMPUTATION; DECLARATIONS.md section 10 item 10) and written to the
+    # run's metadata so that no reader meets a silent constant.
+    remnant_lines = remnant_take_lines(world)
+    for timing in remnant_lines:
+        print(
+            f"remnant take (COMPUTATION): measured {timing['measured']}: the emitter's own take from "
+            f"age > train + {timing['intervals']} intervals"
+        )
     for reading in margins:
         for line in reading.lines():
             print(line)
@@ -165,6 +187,8 @@ def execute_nature_beam_run(
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
         "hypotheses": simulation.hypotheses,
+        # detector-law-v1, item 10 (COMPUTATION at load): each emitter's T
+        **({"remnant_take": remnant_lines} if remnant_lines else {}),
         # The crossing rule's report (2026-09-21, BEAM_LAW note 48): the
         # Links a body crossed in the interval right after another of its
         # Links, where the rule's one-per-crossing count is not proved.

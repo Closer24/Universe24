@@ -33,7 +33,8 @@ def massive_world(
 ) -> dict:
     """A world of the massive kind `matter` (its pair on the six-neighbour term) beside light,
     no lamp, no block (the rule's tests construct a record's rows directly)."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
+    # item 10: the kind's take pair, a matter lamp's own remnant take in its kind's pair
+    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "take": [-19, 86]}
     if faces is not None:
         matter["faces"] = faces
     return {
@@ -259,9 +260,9 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
     the scope of `balanced` named), every other field byte for byte."""
     assert run_chain_digests() == {
-        "events": "9e29e924a2f7ba63d34d9fb1bdaa30123006a554e42781ecf29804664c3832b3",
+        "events": "c89bd703a4ddc65f2c67527c73e62c5dd5ff1d3970c2cb114468a318f6222033",
         "state": "9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962",
-        "audit": "5cd95d38d58d8ccb1da6808b9da635fdc905786722f5bf9a05f0d7f2036374e1",
+        "audit": "c822d12b00282f936df445b50c79698716056758b5895e332abc8b2ab0293904",
     }
 
 
@@ -319,6 +320,8 @@ def test_q_the_loaders_refusals_name_the_key():
     written = json.loads(json.dumps(base))
     written["families"][1]["pair"] = [1, 1]
     written["families"][1]["phase_per_link"] = [77, 25]
+    # light's kind carries no take pair of its own (the law's [-15, 56])
+    del written["families"][1]["take"]
     world = parse_nature_beam_world(written)
     assert not world.families[1].massive_kind
 
@@ -353,7 +356,7 @@ def block_world(
     """A world of the massive kind `matter` with blocks (measured events of `matter` with
     `side`), a light family with the chain test's clock [77, 25] (the period 20.8 intervals,
     lambda 12 Links), and optionally a lamp of light at a Node."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": kind}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "take": [-19, 86]}
     if faces is not None:
         matter["faces"] = faces
     measured: list[dict] = []
@@ -417,7 +420,12 @@ def lamp_at(x: int, amount: int = 1, train: int = 4) -> dict:
         "momentum": [0, 0, 0],
         "fixed": True,
         "directions": [[1, 0, 0]],
-        "lamp": {"rate": [1, 1], "wheel": [2531, 4096], "directions": [[1, 0, 0]], "train": train},
+        "lamp": {
+            "rate": [1, 1],
+            "wheel": [2531, 4096],
+            "directions": [[1, 0, 0]],
+            "train": train,
+        },
     }
 
 
@@ -1251,7 +1259,7 @@ def matter_lamp_world(matter_lamp: bool, clock: list[int] | None = None) -> dict
     document["ticks"] = 160
     document["massive_record"] = True
     document["amplitude_bound"] = 1 << 32
-    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157]}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "take": [-19, 86]}
     if clock is not None:
         matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
     document["families"].append(matter)
@@ -1266,7 +1274,12 @@ def matter_lamp_world(matter_lamp: bool, clock: list[int] | None = None) -> dict
                 "momentum": [0, 0, 0],
                 "fixed": True,
                 "directions": [[1, 0, 0]],
-                "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 6},
+                "lamp": {
+                    "rate": [1, 1],
+                    "wheel": [1, 64],
+                    "directions": [[1, 0, 0]],
+                    "train": 6,
+                },
             }
         )
     document["detectors"] = []
@@ -1442,7 +1455,12 @@ def lamp_entry(x: int, amount: int) -> dict:
         "momentum": [0, 0, 0],
         "fixed": True,
         "directions": [[1, 0, 0]],
-        "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 2},
+        "lamp": {
+            "rate": [1, 1],
+            "wheel": [1, 64],
+            "directions": [[1, 0, 0]],
+            "train": 2,
+        },
     }
 
 
@@ -1460,6 +1478,9 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 600
     document["clock_stamp"] = True
+    # the world's rung W (the records' completion and the sets' default), as
+    # the GO's light worlds declare it; required with a set and no lamp
+    document["wheel"] = 64
     document["measured"] = [
         {
             "position": [100, 0, 0],
@@ -1496,34 +1517,40 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 
 
 def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_closed_face():
-    """Line 7 (DECLARATIONS.md section 10 item 9, the receiving set a RECEIVER with the
-    per-record transparency; line B's grace; the closed face; key (i)'s stamp) on the light
-    clock's chain (L = 60 from A's face at 111 to the mirror at 172; own_grace 70; W = 64).
-    With the faces CLOSED: A's first emitted record passes the set's Node x = 112 freely during
-    its grace (the train of 70 and the 70 intervals after: the row there nonzero, no pointer, no
-    rung), the level at the mirror's neighbour x = 171 rises before the return's transit
-    2 L / c = 208 after the birth, and the set's Ports begin their take at the grace's end at
-    the free neighbours' own levels (the first booking the Ports' motion alone, no jump from a
-    stale ghost: the hop rule's principle). THE ENGINE'S READING (EXPLORATORY, a finding for
-    the owner, not the ordered band 200 to 240 after the birth): the FIRST RUNG comes at the
-    grace's end (141 after the birth), booked from the record's own ringing inside A's twelve
-    cells after the train (the lattice's alternating mode, level about 5 percent of the far
-    field's, its motion per interval large), leaking through the face; the return is visible
-    after 208 as the pointer's rise (240 against 208 larger than 208 against 140), with the
-    faces OPEN the same rung at the grace's end and no rise. The take holds the row at 0 there
-    after the grace; the click is stamped with A's own count as the interval begins
-    (`rung_counts`) and named by `clock_source`; the record ends at the set (one gather,
-    `click_at` "rung"); the books balanced at every interval. With a receiver body at x = 160
-    beside and the faces open, the far set crosses its rung after the grace. The loader:
-    `block` with a position on a measured Node refused, with two positions refused, `block`
-    naming a body refused naming the positions form, `closed` without `detector_law` refused,
-    `own_grace` on a silent block refused, `held` on an emitter refused."""
+    """Line B, line 7 (the receiving set at ONE free Node), item 10 THE RULE (the emitter's own
+    take of its record's remnant at age > train + T, T = ceil(extent / v_g) + 2 computed at load,
+    DECLARATIONS.md section 10 item 10 at remnant-rule e6b4ec3d) and the closed face on the light
+    clock's chain of 173 (L = 60 from A's face at 111 to the mirror at 172; own_grace 70; W = 64;
+    the world's `wheel` 64; A's T = 23 at the chain's declared clock [1, 1], 24 at 12 Links per
+    period). With the faces CLOSED: A's first emitted record passes the set's Node x = 112 freely
+    during its grace of 140 (the row there nonzero, no pointer, no rung); from age 94 A's twelve
+    cells take the record in light's pair, their rows held at 0 (the remnant's level at A's cells
+    read beside, GAMEBOARD: above 10^5 at 90, 0 from 95), nothing booked onto any pointer nor
+    into `absorbed`, the ledger balanced with the row `taken_by_emitter`; the set's Ports begin
+    their take at the grace's end at the free neighbour's level (the first booking the Port's
+    motion plus the set Node's own term, no jump); the mirror's neighbour x = 171 rises before the
+    return's transit 2 L / c = 208. THE ENGINE'S READING (EXPLORATORY; the declaration's
+    preliminary expects no rung before 207.85 and the first after it): THE FIRST RUNG AT 147
+    after the birth, booked from the remnant's alternating mode on the free Nodes beside A's face
+    (x = 113 onward, which A's cells do not take) that the delay lets spill out of the cells (the
+    sweep of BUILD.md section 18 over the delay: 214 at 0, 174 at 4, 157 at 8, 152 at 12, 147 at
+    24; the pointer at 208 against the rung 6.7 x 10^10: 5.4 x 10^10 at 0, 2.1 x 10^11 at 24);
+    the return shows as the pointer's rise after 208 (2.8 x 10^12 from 208 to 240 against 2.0 x
+    10^11 from 140 to 208); the click stamped with A's count as the interval begins and named by
+    `clock_source`; the row held at 0 after the grace. With the faces OPEN the same rung and no
+    rise. A receiver body at
+    x = 160 beside crosses its rung after the grace. The loader: `block` with a position on a
+    measured Node refused, with two positions refused, `block` naming a body refused naming the
+    positions form, `closed` without `detector_law` refused, `own_grace` on a silent block
+    refused, `held` on an emitter refused."""
     first = 1  # A's first emitted record: block 0, birth 1
     readings: dict[str, dict[str, int]] = {}
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, False))
         if faces == "closed":
             assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
+        # the rule's T at load: ceil(12 / v_g) + 2 = 23 at the clock [1, 1] (24 at 12 Links per period)
+        assert world.measured[0].block is not None and world.measured[0].block.remnant_take == 23
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
         if faces == "closed":
@@ -1544,6 +1571,8 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
         first_booking: int | None = None
         expected_booking: int | None = None
         pointer_at: dict[int, int] = {}
+        remnant_level: dict[int, int] = {}
+        norm = 0
         for _ in range(600):
             count_before = block.count
             # the step's exemption is decided by the record's state as the
@@ -1551,12 +1580,20 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
             before_step = simulation.records.get(first)
             grace_before = before_step is None or simulation._in_grace(before_step)
             simulation.step()
-            assert simulation.books()["balanced"], simulation.tick
+            books = simulation.books()
+            assert books["balanced"], simulation.tick
             live = simulation.records.get(first)
             if live is None:
                 continue
             birth = live.birth_tick
             age = simulation.tick - birth
+            norm = live.norm
+            # item 10: nothing of A's own take reaches a pointer or `absorbed`
+            assert live.pointers[block.cell] == 0
+            if age in (90, 95, 100, 140, 208):
+                remnant_level[age] = int(np.max(np.abs(live.now[100:112, 0, 0])))
+            if age > 95:
+                assert not np.any(live.now[100:112, 0, 0]) and live.emitter_took
             if grace_before:
                 assert live.pointers[a_face] == 0 and live.first_rung[a_face] is None
                 passed_freely = passed_freely or int(live.now[112, 0, 0]) != 0
@@ -1565,21 +1602,23 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 previous_remainder = live.remainder.copy()
                 previous_scale = live.scale
             elif first_booking is None and previous_now is not None:
-                # the first taken interval: the Ports' motion from the free
-                # neighbours' levels as the grace ended (no jump booked), plus
-                # the set Node's own content taken as the hop rule takes an
-                # entered Node's (BUILD.md section 17): the rule's next level
-                # there (light's pair [1, 1] on the chain: S_6 = 4 a + the two
-                # x neighbours, the wall 3 x the coupling's scale, the remainder
-                # carried) less the current, squared
+                # the first taken interval: the Port's motion from the free
+                # neighbour's level as the grace ended (no jump booked; the set's
+                # Port toward A's face is no Port of this record, A's cells
+                # taking it), plus the set Node's own content taken as the hop
+                # rule takes an entered Node's (BUILD.md section 17): the rule's
+                # next level there (light's pair [1, 1] on the chain: S_6 = 4 a
+                # + the two x neighbours, the wall 3 x the coupling's scale, the
+                # remainder carried) less the current, squared
                 first_booking = live.pointers[a_face]
+                own_masks = simulation._form_take_masks(simulation.absorbing | block.mask)
                 expected_booking = sum(
                     (
                         int(live.ports[index][112, 0, 0])
                         - int(simulation._shift(previous_now, axis, sign)[112, 0, 0])
                     )
                     ** 2
-                    for index, (axis, sign, mask) in enumerate(simulation.take_masks)
+                    for index, (axis, sign, mask) in enumerate(own_masks)
                     if bool(mask[112, 0, 0])
                 )
                 six = (
@@ -1606,23 +1645,18 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 pointer_at[age] = live.pointers[a_face]
         assert birth is not None and passed_freely
         assert first_booking is not None and first_booking == expected_booking and first_booking > 0
-        assert rung is not None and 140 <= rung - birth <= 142, (rung, birth)
+        assert remnant_level[90] > 100000 and remnant_level[95] == 0 and remnant_level[140] == 0
+        assert rung is not None and rung - birth == 147, (rung, birth)
         assert stamp == count_then and stamp is not None and stamp >= 1
         assert held_after
+        assert norm // 64 < pointer_at[208] - pointer_at[140] < 4 * (norm // 64), pointer_at
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
+        assert all(g["taken_by_emitter"] == 0 for g in gathers)
         if faces == "closed":
             assert mirror_seen is not None and mirror_seen - birth < 208, (mirror_seen, birth)
-            assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
-            assert gathers[0]["click_at"] == "rung" and gathers[0]["clock_source"] == "measured:0"
-            assert gathers[0]["click"] == rung and gathers[0]["clock"] == stamp
-            assert pointer_at[240] - pointer_at[208] > pointer_at[208] - pointer_at[140]
-        else:
-            # nothing returns: the record ends at the sponge face before 240
-            assert 240 not in pointer_at and pointer_at[208] - pointer_at[140] > 0
-            assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "face:+x"
-            assert gathers[0]["clock_source"] == "interval"
+            assert pointer_at[240] - pointer_at[208] > 10 * (pointer_at[208] - pointer_at[140])
         readings[faces] = {"rung": rung - birth, **pointer_at}
-    assert readings["closed"][140] == readings["open"][140]
+    assert readings["closed"]["rung"] == readings["open"]["rung"] == 147
     # a receiver beyond the grace clicks
     beside = DetectorLawSimulation(parse_nature_beam_world(light_clock_world("open", True)))
     far = beside.cell_names.index("far")

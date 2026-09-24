@@ -314,7 +314,7 @@ from event_universe.core.integer import (
     integer_root,
     rational_sum,
 )
-from event_universe.core.phase import MAX_PHASE_STEPS, phase_sines
+from event_universe.core.phase import MAX_PHASE_STEPS, phase_sines, remnant_intervals
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -826,6 +826,11 @@ FAMILY_KEYS = {
     # admitted under the world key `massive_record` alone.
     "pair",
     "faces",
+    # item 10 and Reviewer 3's line 2 on item 6b: the kind's take pair [n, d]
+    # (the Ports' follow of a record of the kind at its emitter's own take),
+    # admitted on a massive kind alone; light's kind keeps the law's
+    # [-15, 56]; required where a lamp of the kind emits.
+    "take",
 }
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
@@ -1088,6 +1093,8 @@ class FamilyDefinition:
     # deviation: a zero face for the massive record, MASSIVE_RECORD.md
     # section 11 item 4).
     faces: tuple[bool, bool, bool] | None = None
+    # item 10: the kind's take pair (None: light's kind, the law's [-15, 56])
+    take: tuple[int, int] | None = None
 
     @property
     def massive_kind(self) -> bool:
@@ -1220,6 +1227,12 @@ class LampDefinition:
     # the seed of the seed-set order, None under "ordinal".
     residue_order: str | None = None
     residue_seed: int | None = None
+    # item 10, THE RULE (DECLARATIONS.md section 10 item 10): the intervals
+    # after the train before the lamp's own Nodes take its record's remnant,
+    # T = ceil(extent / v_g) + 2 COMPUTED AT LOAD from the lamp's extent
+    # along its emission and its kind's band group pace at its clock
+    # (`core.phase.remnant_intervals`); None outside the local detector law
+    remnant_take: int | None = None
     # The hand of the lamp's rows (`hand-v1`): a circularly polarised lamp
     # of a family without a hand, -1 or +1; a lamp of a chiral family may
     # repeat the family's value only; 0 means the family's (none, or its
@@ -1321,6 +1334,11 @@ class BlockDefinition:
     # record it emitted (the grace = the train + own_grace; DECLARATIONS.md
     # section 10 item 1); declared on every emitter, no default.
     own_grace: int | None = None
+    # item 10, the rule: the intervals after the cycle before the block's
+    # cells take its record's remnant, T = ceil(side / v_g) + 2 computed at
+    # load from the emitted kind's band at its clock; None on a block that
+    # emits nothing
+    remnant_take: int | None = None
 
 
 @dataclass(frozen=True)
@@ -2309,6 +2327,14 @@ def _families(
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
         faces = _kind_faces(obj, f"families[{index}]", pair)
+        take: tuple[int, int] | None = None
+        if "take" in obj:
+            if pair is None or pair[1] <= pair[0]:
+                raise ValueError(
+                    f"{BEAM_LAW}: families[{index}].take is admitted on a massive kind alone (light's "
+                    "kind takes with the law's [-15, 56])"
+                )
+            take = _take_pair(obj["take"], f"families[{index}].take")
         found.append(
             FamilyDefinition(
                 name,
@@ -2322,6 +2348,7 @@ def _families(
                 massive=massive,
                 pair=pair,
                 faces=faces,
+                take=take,
             )
         )
         declared.append(columns)
@@ -2352,6 +2379,7 @@ def _families(
             family.massive,
             pair=family.pair,
             faces=family.faces,
+            take=family.take,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -3268,6 +3296,7 @@ def _block(
     span: tuple[int, int, int],
     shape: Address3,
     amplitude_bound: int = AMPLITUDE_BOUND,
+    phase_steps: int = 64,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -3475,6 +3504,21 @@ def _block(
             "its own set takes nothing of its own record (N_s, DECLARATIONS.md section 10 item "
             "1; no default)"
         )
+    remnant_take: int | None = None
+    if emits is not None:
+        # item 10, the rule: the intervals after the cycle before the block's
+        # cells take its emitted record's remnant, from the block's side (its
+        # extent along the emission) and the emitted kind's band at its clock
+        emitted_clock = families[emits].phase_per_age
+        assert emitted_clock is not None
+        emitted_pair = families[emits].pair if families[emits].pair is not None else (1, 1)
+        try:
+            remnant_take = remnant_intervals(side, emitted_pair, emitted_clock, phase_steps)
+        except ValueError as error:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emits {families[emits].name!r}: the remnant take's timing "
+                f"(item 10) cannot be formed at its clock: {error}"
+            ) from None
     return BlockDefinition(
         side,
         pair,
@@ -3490,6 +3534,7 @@ def _block(
         margin=str(margin),
         emits=emits,
         own_grace=own_grace,
+        remnant_take=remnant_take,
         take=take,
     )
 
@@ -3760,6 +3805,23 @@ def _measured(
                 massive=families[family].massive,
                 detector_law=detector_law,
             )
+        if lamp is not None and detector_law:
+            # item 10, the rule: the intervals after the train before the lamp's
+            # own Nodes take its record's remnant, from the lamp's extent along
+            # its emission (its span on the axes its directions run along) and
+            # its kind's band group pace at its clock, computed at load
+            axes = {axis for index in lamp.directions for axis in range(3) if table[index][axis] != 0}
+            extent = max((span[axis] for axis in axes), default=1)
+            clock = families[family].phase_per_age
+            kind_pair = families[family].pair if families[family].pair is not None else (1, 1)
+            if clock is not None:
+                # a clock the band refuses leaves T None; the load checks name
+                # it after the clock's own refusals (`_detector_law_load_checks`)
+                try:
+                    timing: int | None = remnant_intervals(extent, kind_pair, clock, phase_steps)
+                except ValueError:
+                    timing = None
+                lamp = replace(lamp, remnant_take=timing)
         block = _block(
             obj,
             label,
@@ -3775,6 +3837,7 @@ def _measured(
             span,
             shape,
             amplitude_bound,
+            phase_steps=phase_steps,
         )
         found.append(
             MeasuredDefinition(
@@ -3960,6 +4023,21 @@ def covariant_square(
                 f"grain {grain} (a larger grain)"
             )
     return square
+
+
+def _take_pair(value: object, label: str) -> tuple[int, int]:
+    """A take pair [n, d]: the Ports' one-way follow k = n / d in (-1, 0]
+    (light's [-15, 56]); a declaration of kind 2 per kind or per block."""
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label} must be [n, d], the take's pair")
+    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, 0)
+    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
+    if -numerator >= denominator:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} [{numerator}, {denominator}]: the take's pair k = n / d lies in "
+            "(-1, 0] (the Port follows the wave one way; light's [-15, 56])"
+        )
+    return (numerator, denominator)
 
 
 def _detector_law_load_checks(
@@ -5097,6 +5175,31 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)
+        for number, entry in enumerate(measured):
+            if entry.lamp is not None and entry.lamp.remnant_take is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}]: the remnant take's timing (item 10) cannot be "
+                    "formed at the lamp's clock (the clock lies outside the kind's band or beyond a "
+                    "quarter turn per interval)"
+                )
+        if detectors and all(entry.lamp is None for entry in measured) and "wheel" not in obj:
+            # the Boss's line (5) of 06:50Z: no implicit default of the rung
+            raise ValueError(
+                f"{BEAM_LAW}: a world under the local detector law with a detector set and no lamp "
+                "declares the world key `wheel` (the sets' rung W and the records' completion rung; "
+                "no implicit default)"
+            )
+        for number, entry in enumerate(measured):
+            # item 10: a lamp of a massive kind takes its record's remnant in
+            # the kind's own pair, which the family must declare (no default)
+            if entry.lamp is not None and families[entry.family].massive_kind:
+                if families[entry.family].take is None:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}]: a lamp of the massive kind "
+                        f"{families[entry.family].name!r} needs the kind's take pair (the family key "
+                        "`take` [n, d], the Ports' follow at its own remnant take; DECLARATIONS.md "
+                        "section 10 item 10)"
+                    )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
