@@ -521,7 +521,11 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    propagate) and books nothing there; it delays the record's
    completion until it decays or, under item 10's declaration, is taken
    at A's cells; the stamp is unchanged and the ticks line above covers
-   it. Reviewer 3's read, then the World Generator's file on this line.
+   it. REVIEWER 3'S WORD (05:45Z through the Boss): the redeclared
+   geometry is THE SAME EXPERIMENT on a longer chain, not a pin moved;
+   the per-record reading is a DETECTOR reading; the World Generator
+   writes 4b's two files on his word (the chain 5000, A at 3500, the set
+   at 4700, `ticks` at least ramp + 8000 + 6100).
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
 the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
@@ -1044,7 +1048,21 @@ omega_b) of its own well, printed by the pins script before the run.
    cells switched on at age > train, its bookings excluded from the
    ladder as the grace's exclusion is (`keep`), the take booked to
    transit_escaped; one test, the light clock's chain of (ac): the first
-   rung after 208 and none at 141.
+   rung after 208 and none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
+   through the Boss): the defect is the DECLARATION's, not the engine's
+   (the map `light_held_pair_pins.py` modelled the emission without A's
+   coupled interior; the remnant is the rule's band-edge mode, group
+   velocity zero, undamped); R2 and 4b are NOT touched by the dispersion,
+   and R2's preliminary reads the receiving set's pointer at the other
+   block's front arrival as a GAMEBOARD diagnostic, expected near zero;
+   of the remedies by their pins, (a) a longer own_grace cannot read the
+   row, (b) A's cells taking their own record's remnant at the
+   sourcing's end keeps 218 +- 2 and R2's pins, a declaration and the
+   builder's line, (c) a taper changes the norm and the rise so that 218
+   and R2's rises re-derive on the maps before any run, (d) a probe is
+   GAMEBOARD, not the measurement; his recommendation (b) for the light
+   clock alone, which is the declaration above; until it is on the map
+   the light clock is out of the preliminaries.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
