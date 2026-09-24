@@ -576,6 +576,30 @@ section 1 (E), lines 282-283; section 6.7, lines 1826-1876;
 [the click frame](designs/click_frame/DERIVATION.md) section 9 (2) (a),
 lines 1464-1481.
 
+**The two words "pointer" and "weight", one currency (the model owner's
+word of 2026-09-24, 05:55Z, on the physicist's recommendation re-verified
+twice, record 1679; Reviewer 3's naming of the clash on ONE_ACCOUNT.md
+row (2)).** The pointer (X, Y) = **E** f and the weight X^2 + Y^2 of
+this subsection are the ray law's click frame, the account of
+`nature_beam` (HISTORY under the rule of chapter 8). Under the rule the
+pointer of the rung (8.6) is one accumulator per record per receiving
+cell that books the MOTION SQUARED, (a_now - a_before)^2 of the
+receiver's own record per cell per interval, summed across the cells
+and over the intervals; the ladder's weights of 2.6 ARE those pointers,
+in one currency with the record's norm (the motion its insert booked)
+and with the completion (the motion left on the board against what the
+cells took); never the levels' squares (DESIGN.md section 5: with a^2 no
+completion, a static level moving no receiver). The norm X^2 + Y^2 of
+the record's pair of levels survives under the rule only as the click's
+weight of the cell for the pair of records, Bell's J^2 of 3.6, not as the
+pointer of the rung. The motion squared is a positive quadratic form on
+the pair (a_before, a_now), so the read-out characterization of the
+paper's section 5 stands under it; for a travelling character the two
+forms cross the rung at about the same interval, each against its own
+norm, the forms themselves differing by the factor kappa^2 per interval
+(about 0.14 at 12 Links per period), and they differ on a standing
+residual, which the levels' squares count and the motion does not.
+
 ### 2.6 (D) The division with the remainder kept, and the comparison
 
 The count primitive: at each self-creation the accumulator gains its
@@ -2706,7 +2730,11 @@ conserved form, the design's counting form); the click is the
 comparison W x (the pointer) >= (the record's norm), integers both, the
 crossing of the first rung 1 / W of the norm in the block's OWN clock
 (the counting form, DESIGN.md section 5; the norm the record's I at the
-end of its insert); the click line carries the block's own count (its
+end of its insert; the pointer books the motion squared, (a_now -
+a_before)^2 per cell per interval, never the levels' squares, in one
+currency with the ladder's weights of 2.6: the owner's word of
+2026-09-24, record 1679, and 2.5's closing paragraph on the two words);
+the click line carries the block's own count (its
 mode's cycles, 8.3) and the light record's birth stamp. Light does not
 need to stay in order to be read; it needs only to pass through a body
 that has a clock. A click is a body's event in the body's clock: light
