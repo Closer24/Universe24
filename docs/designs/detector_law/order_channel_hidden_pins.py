@@ -10,7 +10,7 @@ at b = 3 N / 8: the fraction of + among his first N / 4 births (0.293 at a = 0, 
 4), the whole list four runs; a decoder fixed before the run reads a with certainty.
 (b) UNDER A SEED-SET ORDER (the births take the residues of Z_N in the order of a permutation
 drawn from the world's seed by an integer hash: here a Fisher-Yates shuffle driven by a 64-bit
-linear congruential generator, plain integers, the engine's form the builder's on the owner's
+mixing hash of SplitMix64's form, plain integers, the engine's form the builder's on the owner's
 word): the same decoders read about 1 / 2 for either setting of A over many seeds; the lists
 still differ on E_N of the births for a reader who holds the residues (Inside, Bell's theorem),
 and the counts are N / 2 exactly either way.
@@ -32,18 +32,27 @@ from order_channel_pins import o_b, table  # noqa: E402
 MASK = (1 << 64) - 1
 
 
-def lcg(state):
-    """One step of a 64-bit linear congruential generator (Knuth's multiplier), plain integers."""
-    return (6364136223846793005 * state + 1442695040888963407) & MASK
+def mix64(state):
+    """One output of a 64-bit mixing hash (SplitMix64's form: a Weyl step, then two xor-shift
+    multiplies), plain integers; every bit of the output depends on every bit of the state, unlike
+    a linear congruential generator, whose low bits cycle. Returns the new state and the output."""
+    state = (state + 0x9E3779B97F4A7C15) & MASK
+    z = state
+    z = ((z ^ (z >> 30)) * 0xBF58476D1CE4E5B9) & MASK
+    z = ((z ^ (z >> 27)) * 0x94D049BB133111EB) & MASK
+    return state, z ^ (z >> 31)
 
 
 def permutation(n, seed):
-    """A Fisher-Yates shuffle of range(n) driven by the generator seeded with the world's seed."""
+    """A Fisher-Yates shuffle of range(n) driven by the mixing hash seeded with the world's seed:
+    the integer form of a uniformly random order, closed to a reader without the seed (the engine's
+    form is the builder's under the same requirement, a keyed permutation indistinguishable from
+    uniform without its key)."""
     order = list(range(n))
-    state = lcg(seed & MASK)
+    state = seed & MASK
     for i in range(n - 1, 0, -1):
-        state = lcg(state)
-        j = (state >> 33) % (i + 1)
+        state, out = mix64(state)
+        j = out % (i + 1)
         order[i], order[j] = order[j], order[i]
     return order
 
@@ -61,6 +70,29 @@ def first_quarter(seq):
 
 def runs(seq):
     return 1 + sum(seq[i] != seq[i - 1] for i in range(1, len(seq)))
+
+
+def lag_one(seq):
+    """The fraction of neighbouring births with the same outcome (an autocorrelation decoder)."""
+    return sum(seq[i] == seq[i - 1] for i in range(1, len(seq))) / (len(seq) - 1)
+
+
+def halves(seq):
+    """The + fraction of the first half less the second half's (a drift decoder)."""
+    h = len(seq) // 2
+    return (sum(x > 0 for x in seq[:h]) - sum(x > 0 for x in seq[h:])) / h
+
+
+# The battery of decoders fixed before the run, each a statistic of B's list alone and a rule
+# "guess a = N / 4 when the statistic is above its midpoint between the two declared-order values";
+# under a seed-set order each is expected right on 1 / 2 of the trials.
+DECODERS = {
+    "first quarter": (first_quarter, 0.5),
+    "threshold": (first_quarter, (0.293 + 1.0) / 2),
+    "runs (few = the declared order)": (lambda s: -runs(s), -100.0),
+    "lag-one sameness": (lag_one, 0.5),
+    "halves' drift": (halves, 0.0),
+}
 
 
 if __name__ == "__main__":
@@ -83,22 +115,19 @@ if __name__ == "__main__":
             )
         # (b) under a seed-set order: the decoders fixed before the run
         seeds = range(1, 201)
-        hits_q, hits_r = 0, 0
+        hits = dict.fromkeys(DECODERS, 0)
         for seed in seeds:
             perm = permutation(n, seed)
             for a in (0, 1):
                 s = [lists[a][u] for u in perm]
-                # the first-quarter decoder: as declared 0.293 (a = 0) against 1.000 (a = N/4)
-                hits_q += int((first_quarter(s) > 0.5) == (a == 1))
-                # the run-count decoder: as declared four runs; the guess "a = N/4" when the
-                # first-quarter fraction is above the mean of the two declared values
-                hits_r += int((first_quarter(s) > (0.293 + 1.0) / 2) == (a == 1))
+                for name, (stat, mid) in DECODERS.items():
+                    hits[name] += int((stat(s) > mid) == (a == 1))
         trials = 2 * len(seeds)
+        summary = "; ".join(f"{name} {h} of {trials} ({h / trials:.3f})" for name, h in hits.items())
         print(
-            f"   (b) UNDER A SEED-SET ORDER, {len(seeds)} seeds, the decoders fixed before the run:"
-            f" the first-quarter decoder right {hits_q} of {trials} ({hits_q / trials:.3f});"
-            f" the threshold decoder right {hits_r} of {trials} ({hits_r / trials:.3f}); the runs"
-            f" about {n // 2} (the balanced string's own)"
+            f"   (b) UNDER A SEED-SET ORDER (the mixing hash), {len(seeds)} seeds, the decoders fixed"
+            f" before the run, each right on: {summary}; the runs about {n // 2} (the balanced"
+            f" string's own)"
         )
     print(
         "(c) THE THEOREM: for a uniformly random permutation of the births, B's list at fixed b is"

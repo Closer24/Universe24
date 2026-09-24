@@ -102,7 +102,9 @@ declared phi read back as phi at every u of the wheel.
 
 The descent: `shape` [21, 1, 1], `boundary` {x open, y and z periodic},
 `N`, `families` [light with `phase_per_link` [2464, 25]], the lamp's
-`arms` 2 and `branches`, `train` 128, the two polarisers' `table` with
+`arms` 2 and `branches`, `train` 128, `residue_order` "seed" and
+`residue_seed` (one 64-bit draw per world; section 2 item 8), the two
+polarisers' `table` with
 `phase_window` s (the TABLE form's key of the first build, `read` and
 `sum` as the amplitude series names them), `detectors` Alice and Bob
 reading the joint gather, `clock_stamp` true, `detector_law` true,
@@ -155,17 +157,28 @@ and the ray law's series exists.
    sequence over u that depended on each party's own setting alone would
    be a local deterministic assignment of outcomes to u, whose S is at
    most 2; at S = 181 / 64 some party's sequence must move with the
-   other's setting. THE ROW'S WORD: FAIL by derivation for no-signalling
-   in the order (the paper's row 1c says so), PASS exact for
-   no-signalling in the counts (row 1d); the run confirms the numbers
-   above (DETECTOR: the two click lists in birth order at the four
-   settings pairs, the flips counted); no pin moves.
-8. THE TEST OF THE HIDDEN RESIDUE, PREPARED, NOT DECLARED (the model
-   owner's word of 2026-09-24, 03:14Z, "make preparations for the above
-   test", on my answer to his question "the algebra does not solve it;
-   what does?"; his word on the declaration pending, for the 09:00 page;
-   nothing here enters a GO world; `order_channel_hidden_pins.py`,
-   COMPUTATION, no run, no pin moved). THE FINDING (item 7 and the
+   other's setting. THE ROW'S WORD under the counter form [1, 1]
+   (HISTORY since item 8's declaration, 04:14Z and 04:18Z): FAIL by
+   derivation for
+   no-signalling in the order, PASS exact for no-signalling in the
+   counts (row 1d). Under item 8 (the residues in the seed-set order)
+   the row reads PASS in form Outside: DETECTOR the four click lists in
+   birth order and the decoders fixed before the run (item 8), each at
+   1 / 2 within the binomial band; GAMEBOARD the flips above, read with
+   the residues from the gather lines' `u` (HOST), the diagnostic E_N;
+   no pin moves.
+8. THE TEST OF THE HIDDEN RESIDUE, DECLARED (the owner, 2026-09-24
+   04:18Z (record 1648, "DECLARE"), and the Boss, 04:14Z on his word of
+   04:12Z (record 1647): "I left it to the Boss to declare; just make
+   sure it cannot be attacked in any form, any way"; the six lines (i)
+   to (vi) below, the same six on
+   ORDER_CHANNEL_ATTACKS.md; prepared on the owner's word of 03:14Z,
+   "make preparations for the above test", on my answer to his question
+   "the algebra does not solve it; what does?"; the keys enter the four
+   Bell worlds of sections 1 and 2 by the World Generator's
+   regeneration, the runs under THE GUARD at the end of this item;
+   `order_channel_hidden_pins.py`, COMPUTATION, no run, no pin moved).
+   THE FINDING (item 7 and the
    script's (a)): the channel is open by Bell's theorem for any
    deterministic wheel, and AS DECLARED it is readable Outside without
    any stamp: the counter family [1, 1] makes the birth residue u the
@@ -183,7 +196,7 @@ and the ray law's series exists.
    searches in N^2 trials), in place of the counter family's [1, 1];
    (ii) the click's stamp carries the detector's count and the birth
    interval, never the residue (P11, clicks only; the seed an input of
-   kind 1, drawn once, never read Outside). THE THEOREM (exact for a
+   kind 1, drawn once and independently per world, never read Outside). THE THEOREM (exact for a
    uniformly random order; the seed-set shuffle its integer form, closed
    to a reader without the seed: Reviewer 3's word, 03:44Z): B's list at
    fixed b is a balanced multiset (N / 2 pluses for either a) in a
@@ -209,11 +222,83 @@ and the ray law's series exists.
    closure to a reader without the seed, the same kind of statement as
    quantum equilibrium (the paper's own positioning beside Bohm); a draw
    at the click would only move the same randomness from the birth to
-   the click and break the counter form of the click. Until the owner's
-   word row 1c keeps his word of 03:05Z (FAIL by derivation under the
-   current law); on his word this item becomes a declaration, row 1c
-   reads PASS in form Outside, and the paper's row 1c and #1081's
-   sentence change with it.
+   the click and break the counter form of the click. THREE MORE LINES
+   beside (i) to (iii), on the owner's order of 04:08Z ("make sure it
+   cannot be attacked in any form"), the objections and their answers on
+   ORDER_CHANNEL_ATTACKS.md: (iv) the seed is drawn independently of the
+   settings (no superdeterminism); (v) the lamp's cadence of births is
+   fixed and independent of the residues (the birth-interval stamp
+   carries nothing of u); (vi) the click's stamp is the cell's own first
+   rung, never the gather's completion tick (as the engine's `_click`
+   already does), and the reader of record reads the click lists per
+   set, the gather line with its `u` being HOST. The hash's form in the
+   script is a mixing hash (SplitMix64's form), the requirement on the
+   engine's form a keyed permutation indistinguishable from uniform
+   without its key; five decoders fixed before the run read 1 / 2 over
+   200 seeds. ON THE DECLARATION row 1c reads PASS in form Outside (the
+   owner's word of 03:05Z, FAIL by derivation under the counter form, is
+   HISTORY of that form; the Inside dependence E_N stays a GAMEBOARD
+   diagnostic, the model's declared nonlocality); the paper's row 1c and
+   #1081's sentence change with it on the merge SHA. THE GUARD (the
+   Boss, 04:14Z): no run of any Bell world before ORDER_CHANNEL_ATTACKS.md
+   is on main under Reviewer 3's read with every objection CLOSED,
+   CLOSED BY DECLARATION, STATED, FUTURE or CHECK and none OPEN; an
+   objection Reviewer 3 marks OPEN returns this item to PREPARED until
+   it is closed or stated (item 21 of the attacks page, the sequential
+   statistic of per-trial settings at order 1 / W, is STATED with its
+   prediction declared and has the standing of item 5: the run
+   proceeds on it, the GO's four worlds holding their settings fixed);
+   the owner's rule of 03:29Z holds beside (no
+   pin run without its approved preliminary, RUN_LIST.md). THE LOADER
+   KEYS (the builder's, on this declaration; the names and forms written
+   so that nothing is asked), on the pair lamp's entry (LAMP_KEYS of
+   `world.py`, beside `rate` and `wheel`): (1) `residue_order`, a
+   string, REQUIRED on a pair lamp (a lamp with `arms`) with NO DEFAULT:
+   absent there it is refused (Reviewer 3, 04:38Z: an implicit default
+   to the open-channel form is against AGENTS.md; his CHECK 1, the seed
+   form not yet built, becomes this load-time refusal once the builder
+   lands the keys); on a lamp without arms the key is not admitted (the
+   birth wheel's form as built, no far setting to hide); the values
+   `"ordinal"` (the counter form, u = (ordinal - 1) x r mod W from
+   `wheel` [r, W], the engine's line as built, declared where a
+   diagnostic wants the open channel) or `"seed"` (the seed-set order,
+   declared wherever the Bell rows run: u = order[(ordinal -
+   1) mod W], where order = permutation(W, residue_seed) is the
+   Fisher-Yates shuffle of range(W) driven by the SplitMix64 mixing hash,
+   copied from the script's `mix64` and `permutation` verbatim, the
+   constants 0x9E3779B97F4A7C15, 0xBF58476D1CE4E5B9 and
+   0x94D049BB133111EB and the shifts 30, 27 and 31 included, plain
+   integers masked to 64 bits, the same order on every host; the stride
+   r must be 1 under `"seed"`, refused otherwise, so that W births take
+   every residue once; with more than W births the order repeats from
+   the first residue, so a Bell world counts exactly W births, its
+   `ticks` at least W + the arm's transit + the completion: the shipped
+   bell worlds' `ticks` 300 at the rate [1, 1] give about 300 births and
+   not 2048, the World Generator regenerates them, Reviewer 3's CHECK
+   2); (2) `residue_seed`, an integer in [0, 2^64) (an
+   input of kind 1, the width 64 declared), required under `"seed"` and
+   refused under `"ordinal"` (a key that does nothing is refused, the
+   loader's habit); the World Generator draws one per world from the
+   host's entropy (`secrets.randbits(64)` or any host source; the
+   requirement is the draw's independence of the settings), four seeds
+   for the four worlds of a Bell row, independent per world (a seed
+   shared across a and a' would align B's lists across the settings,
+   Reviewer 3's strongest attack), written into the world file and
+   never into `expectations.json` or the paper; no reading's form
+   depends on its value (the counts and S exact for every seed, one
+   birth per residue). The light family's `phase_per_link` [1, 1] and
+   the lamp's `wheel` [1, 2048] stay as declared (the modulus and the
+   ladder's read of u in `cell_of` unchanged); the lamp's `rate` is the
+   cadence of line (v), fixed per world. THE STAMP'S FIELDS, none new:
+   the gather line's `click` (the interval of the chosen cell's first
+   rung, the detector's count in its own clock), `birth` (the record's
+   birth interval) and `chosen` (the cell's name); the reader of record
+   (the four click lists per set in birth order, the decoders fixed
+   before the run) reads these three and nothing else; the gather
+   line's `u` and the `records` reading's `u` stay as HOST, the input of
+   the diagnostic E_N, never a reader-of-record field. The engine's
+   change is the two keys and the one line of u; the stamp, the ladder,
+   the tables and the pins do not move.
 
 The descent, HOST and the day: as section 1 (the same four runs read
 twice; no world of its own).
@@ -345,13 +430,111 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    the falsifier a ratio off 1 / 1.9889 beyond the band; the nature row 1 + z = gamma (1 + beta) (Ives and Stilwell
    1938; Botermann 2014 at beta = 0.338, in vacuum), matched in form at
    the world's beta_c.
-5. The readings: DETECTOR the light detector's clicks at x = 1900 (the
-   mean interval between clicks over the hold in the receding world over
-   the same in the control world is 1 + z; the count ratio beside);
-   GAMEBOARD the light amplitude's spectral peak at a probe there, A's
-   count per interval, the energy account and the form J; COMPUTATION the
+5. The readings: DETECTOR the light detector's clicks at x = 1900, read
+   PER RECORD (item 7, declared 2026-09-24, 05:20Z, before any run): for
+   consecutive clicks at the set, of the records i and j in birth
+   order, the frequency B reads is f_B = (o_j - o_i) / (c_j - c_i), o
+   the record's birth ordinal (A's own count at the birth, a birth per
+   cycle of A's clock by the source term; the record identity's
+   ordinal; DETECTOR, A's own record) and c the click's interval at the
+   first rung (the gather line's `click`; the set is bound to no block,
+   so its stamp is the interval, the engine's 1483 to 1499: cycles per
+   interval, both DETECTOR), summed over the hold as
+   (o_last - o_first) / (c_last - c_first); 1 + z = f_B(control) /
+   f_B(receding); the mean interval between clicks and the count ratio
+   beside as diagnostics only (they carry the ladder's share of item 7,
+   never the pin's reading); GAMEBOARD the light amplitude's spectral
+   peak at a probe there, A's count per interval, the energy account,
+   the form J and the ladder's share per cell (item 7); COMPUTATION the
    pin; no CONVERSION (a ratio of counts).
 6. The identity: `detector-law-v1` with `massive-record-v1`.
+
+7. THE ONE-DELETION CHECK before the preliminary run (the Boss's order
+   of 05:00Z on CLOSER24's exploratory finding on main's engine
+   a5e80449, `docs/designs/cosmology/REPORT.md`: every light record is
+   gathered once; on a chain of 2200 with an emitter block at 1500 and
+   receiver blocks at 100 and 1900, at rest all 84 records went to the
+   nearer, strongly coupled receiver and the rows still flying the
+   other way were deleted with them, a far probe reading 0 for the
+   whole run). THE ENGINE AS BUILT (`detector_law.py` at af071b3f,
+   lines 331 to 345, 1205 to 1240, 1402 to 1432): an open face's layer
+   is a TAKING CELL (`face:-x`, `face:+x`, light's sponge) with a
+   pointer like any set's; the record completes when its train has
+   ended and the motion left on the board times W is below what all the
+   cells have taken; the click's cell is then chosen by u on the ladder
+   of ALL the cells' pointers, the faces' included, and a click at a
+   face is booked as escaped. FOR THIS WORLD: (i) the -x face is OPEN
+   for light as declared (a sponge, a taking cell, not a mirror); the
+   -x half of each of A's records reaches it after about 700 sqrt 3 =
+   1210 intervals (c = 1 / sqrt 3 Links per interval on the chain) and
+   is taken there; the +x half reaches the set at 1900 after about 1200
+   sqrt 3 = 2080 intervals; the face's take alone does not complete the
+   record (the +x half's motion is still on the board and W = 64 times
+   it exceeds the face's pointer), so the record lives to the set and
+   completes there: THE RECEIVER BEHIND DOES READ THE RECEDING LIGHT
+   under the one deletion. (ii) But the click's cell is chosen by u
+   between the face's pointer and the set's (and `face:+x`'s residual):
+   at rest the two halves' pointers are about equal, so about half of
+   A's records click at the -x face as escaped and never at the set;
+   receding, the forward (-x) wave is blue-shifted and the backward
+   (+x) wave red-shifted, and the pointers book the motion squared, so
+   the face's share grows and the set's falls (COMPUTATION, a bound at
+   equal amplitude: the forward and backward frequencies scale by 1 /
+   (1 - beta_c) and 1 / (1 + beta_c), a ratio (1 + beta_c) / (1 -
+   beta_c) = 3.73 at beta_c = 1 / sqrt 3; the Port books the
+   time-integrated motion squared (1205 to 1211), which over a train of
+   fixed cycles scales with that ratio, 3.73, the per-interval rate with
+   its square, 13.9 (Reviewer 3's correction); the shares are read, not
+   derived here). A reading by
+   the mean interval between clicks or by the count would carry this
+   share and miss the pin by it. THE DECLARATION, before any run (a
+   declaration before a run is not a pin moved, record 1518): the
+   reading of item 5 is per record, f_B = Delta(A's birth ordinal) /
+   Delta(B's count) between consecutive clicks at the set, in which a
+   record that clicked at the face drops out of both differences; the
+   pin 1.9889, the band and the falsifier do not move; the geometry
+   does not move. THE PRELIMINARY READS (EXPLORATORY): that the set's
+   clicks exist in both worlds (the count over the hold, DETECTOR); the
+   first rung of the first click after the transit 2080 (COMPUTATION);
+   the ladder's share per cell (`face:-x`, the set, `face:+x`) in both
+   worlds from the gather lines' cells (GAMEBOARD); and the per-record
+   ratio beside the pin, read and not compared (Reviewer 3's word).
+   CLOSER24's line for the builder (a seed-0 receiver block counts no
+   cycle, its driven sum one-sided) does not touch this world: its
+   receiver is the set, no receiver block (item 1). CHECK (the World
+   Generator's, arithmetic from item 1's numbers, before any run): A at
+   x = 700 stepping 1 Link per 3 intervals toward -x reaches the -x face
+   after 2100 intervals of steady motion, about 3900 with the ramp,
+   before the hold of 8000 ends, and the massive kind's x faces are zero
+   faces, so A's cells would leave the board; the hold, the chain's
+   length or A's start must be redeclared before any run. THE LOADER'S
+   BOUND (the World Generator's blocking token, 06:00Z; Reviewer 3: a
+   HOST bound, nothing physical): every shape axis is capped at 4096
+   (`world.py`, on main and on the builder's head), so a chain of 5000
+   is refused; the redeclaration ON 4096, Reviewer 3's (b) and mine, no
+   code moving before the GO: the chain 4096 (x = 0 to 4095); A at x =
+   2994, its room 2994 Links against the 1500 / 6 + 8000 / 3 = 2917
+   Links the ramp and the hold need; THE SET AT 1100 LINKS, x = 4094,
+   the +x face at 4095 beyond it (its transit 1100 sqrt 3 = 1905 in
+   place of 2080; the pin, a ratio, unmoved). THE TICKS CONSEQUENCE
+   (Reviewer 3, 05:32Z): the -x face is 2994 Links from A, its transit
+   5186 > 1905, so a record completes only when the -x face takes its
+   -x half, about 5200 intervals after birth; the click line is written
+   at completion with the first-rung stamp (1905 after birth), so the
+   reading is unchanged, but `ticks` must be at least ramp + hold +
+   about 5200, about 14700, or the hold's last records never click. The per-record reading of item 5 is
+   CONFIRMED by Reviewer 3 as a declaration before any run. THE
+   EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
+   each train does not reach the set at 1100 Links (it does not
+   propagate) and books nothing there; it delays the record's
+   completion until it decays or, under item 10's declaration, is taken
+   at A's cells; the stamp is unchanged and the ticks line above covers
+   it. REVIEWER 3'S WORD (05:45Z through the Boss): the redeclared
+   geometry is THE SAME EXPERIMENT on a longer chain, not a pin moved;
+   the per-record reading is a DETECTOR reading; the World Generator
+   writes 4b's two files on his word, on the 4096 chain above (A at
+   2994, the set at 4094, `ticks` at least ramp + 8000 + 5200; his files
+   for the 5000 chain, unpushed, withdrawn by the loader's bound).
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
 the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
@@ -376,7 +559,15 @@ Boss's word).
 2. The declared integers (the grain kind 1, the pairs kind 2, the
    placements kind 3, by Highlights item 5): N = 256, the wheel [159, 256] (every
    residue u once over 256 births), W = 256, K, Q, S and the release as
-   registered for row 9, h = 1, s = 64, 300 intervals; the light
+   registered for row 9, h = 1, s = 64; THE LAMP'S TRAIN 32 periods
+   (declared 2026-09-24, 06:05Z, on the World Generator's preliminary
+   through Reviewer 3: the four Malus worlds loaded and gave 300 births
+   and 0 clicks, because no train was declared, the loader's default of
+   32 periods is 665 intervals on this clock, and a gather line is
+   written only at completion; 300 intervals was the amplitude law's
+   registered form); so `ticks` at least 256 births + 665 + the transit 6
+   + the completion, the World Generator regenerating (1200 declared);
+   the count of 256 births stands; the light
    family's clock the pair [308, 25] on N = 256 (section 14 item 1); the
    table on the pair by the linear form (section 14). The counter family of the
    polarisers' bodies (quantum 1 in `families.json`) declares
@@ -805,6 +996,130 @@ omega_b) of its own well, printed by the pins script before the run.
    1), the sets at the blocks' cells and the pins unchanged; a receiver
    that does not emit (4b's block, the one Node [1900, 0, 0]) has no own
    residual and is unchanged.
+10. THE EMITTER'S RINGING, the light clock's blocker, and its
+   declaration (the builder's test (ac) at 906d3635, his report of
+   05:17Z, EXPLORATORY; the Boss's order of 05:30Z; declared here before
+   the light clock's preliminary, a declaration before any run, record
+   1518; Reviewer 3's read). THE FINDING: on the chain of 173 with the
+   set at the free Node beside A's face, W = 64, own_grace 70 and the
+   faces closed, the record passes the set freely during its grace of
+   140 and the mirror's neighbour is reached before 208; but the set's
+   FIRST RUNG comes at 141, the grace's end, not near 218: it is booked
+   from the record's own RINGING inside A's twelve cells after the
+   train, the lattice's alternating mode (the sign flipping at
+   neighbouring Nodes; on this rule cos omega = 1 - 2 / 3, omega = 1.23
+   per interval, its group velocity zero, so it does not propagate;
+   COMPUTATION), at a level about 5 x 10^5 against the front's 10^7,
+   whose motion per interval is large, so the Port beside the face books
+   about 10^11 per interval against the rung's threshold norm / W = 6.7
+   x 10^10; the set's pointer reaches 2.1 x 10^12, half the norm 4.3 x
+   10^12, by 208 before the return arrives, and the return shows only as
+   the pointer's rise; with the faces open the same rung at 141 and no
+   rise. So under item 9's form the set clicks on the emitter's ringing,
+   not on the return, and no W helps. THE CAUSE: the driven cells are
+   released at the train's end with the alternating remnant of the
+   top-hat drive over twelve cells; it is the emitter's own, on its own
+   cells, and decays only slowly (10^6 at 100, 4 x 10^5 at 200). THE
+   DECLARATION (the receiver-inserter of DESIGN.md section 1; the
+   owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
+   a detector at its own Node): AN EMITTER TAKES ITS OWN RECORD'S
+   REMNANT AFTER ITS TRAIN, THE RULE (the model owner's word of
+   2026-09-24, 06:42Z, "go with the recommendation", on the
+   physicist's recommendation that the take be the law's own for every
+   emitter and not a per-world key; Reviewer 3's three lines on
+   c5930770 folded, his key form of 06:20Z superseded by the owner's
+   word): every emitter (a lamp's Nodes, an emitting block's cells)
+   takes its own record's remnant after its train; no key, nothing for
+   the World Generator to write, the loader refusing nothing; the
+   timing integer below is COMPUTED AT LOAD by the engine from the
+   emitter's extent and the record's kind's band, a declared rounding
+   at load like the tables (an input of kind 1's grain), never a world
+   key. THE TIMING: the drive
+   inserts over ALL the emitter's cells (`_drive`), so at age = train
+   the last inserted intervals are still inside the cells, propagating
+   out; a take from age > train would hold those rows at 0, shorten the
+   emitted train, change its arriving energy and rise, and move 218 +- 2
+   and R2's rises. So the take begins only after the last inserted
+   interval has left the emitter's cells: at age > train + T, with T =
+   ceil(extent / v_g) + 2, the extent the cells' span along the emission
+   in Links and v_g the record's kind's band group pace at its declared
+   clock (0.564 Links per interval at 12 Links per period against c =
+   0.577; the 2 a margin), computed at load: 24 for a block of side 12,
+   4 for a one-Node lamp. THE FORM: from that interval the
+   emitter's cells are a taking set for THAT record alone, in the
+   receiver form of DESIGN.md section 5 (the row held at 0, one ghost
+   per Port), the take in the record's OWN KIND'S pair as the take key
+   declares per kind (light [-15, 56]; a matter lamp's record, M1 and
+   M2, in the matter kind's pair; no family name). THE BOOKS: what the
+   cells take is booked as CONTENT (the ledger books content, not
+   motion) on a HOST row of its own, `taken_by_emitter`, not on the
+   escaped row (escaped names content that left the board, which this
+   did not) and never onto a pointer: the remnant is HOST because it
+   never left the emitter and is not "received back" (Highlights item 7
+   counts what a body emits and receives back); the emitter has no cell
+   of its own on its own record's ladder and never clicks on its own
+   record (section 13 item 1's rule kept; own_grace as declared for the
+   sets); during the train the cells insert as built; the block's own
+   record is untouched (the take acts on the emitted record's rows). The three tests: generic (the take primitive
+   as built, no family name); vector (the receiver form's verbs, no
+   root); local (the emitter's own cells, its own record). WHAT IT
+   CHANGES: the remnant (non-propagating) is taken by about train + 24
+   + a few intervals, about 95 on the light clock's chain, and the set
+   exempt to 140 books nothing of A's own record to the return at 208; the map (h) assumed a clean
+   tail at the set (the residual 0.085 of the rung), now true by
+   construction: THE PIN 218 +- 2 STANDS; a record's completion, held
+   up on every world by the remnant's motion (energy times W above the
+   absorbed until the remnant decays), comes at the take; the emitter's
+   radiative damping (section 4's g G line) is unchanged. THE CANDIDATES
+   NOT TAKEN: a longer own_grace (the remnant at 200 still books 10^11
+   per interval, and the grace cannot outlast the return at 208); a
+   softer turn-off of the drive (a change of the train, the norm and
+   the pins, for a remnant the spatial edges make anyway); a probe of
+   the level as the reader (a GAMEBOARD reading, not a click). THE
+   PRELIMINARY (EXPLORATORY, the builder's (ac) rerun on the
+   declaration): no rung at the set before the return's transit 207.85,
+   the first rung after it, the remnant's level at A's cells read beside
+   (GAMEBOARD); "within 218 +- 2" is the pin run's reading, not the
+   preliminary's. THE OTHER ROWS, one line each: R2 (section 13): the
+   blocks sit at 700 and 772, their faces 60 Links apart (Reviewer 3's
+   correction of "about 1000 Links"); the remnant does not propagate,
+   and with the take at the emitter it is gone by about train + 24 + a
+   few intervals; the diagnostic he reads from the DETECTOR lines per
+   record is the click's interval minus the front's arrival (birth + 60
+   sqrt 3, about 104), a tail booked before the arrival putting the
+   click at or before it (on the old form nothing was booked before the
+   arrival); the pins 108 / 247 / 72 stand; the sagnac preliminaries at
+   885bc2f8 ran the old set form (no take, no hop rule) and are HISTORY,
+   the World Generator rerunning both on the take's build. 4b (section 4
+   item 7): the set at 1100 Links from A is untouched; the completion
+   likewise; the ticks line of item 7 covers it. The Bell and Malus
+   lamps: the lamp's Node takes its own remnant after the train with
+   remnant_take 4; the cells 7 and 10 Links away are untouched. THE
+   BUILDER'S LINE (section 15 M1-4): the rule for every emitter, no key;
+   T = ceil(extent / v_g) + 2 computed at load from the emitter's extent
+   along its emission and the kind's band group pace at its declared
+   clock (the dispersion of the six-neighbour rule on the world's axes,
+   a rounding at load); a per-record taking mask of the emitter's cells
+   switched on at age > train + T, in the record's kind's pair, its
+   bookings excluded from the ladder as the
+   grace's exclusion is (`keep`), the content taken booked to the HOST
+   row `taken_by_emitter`; one test, the light clock's chain of (ac):
+   no rung at the set before the return's transit and the first rung
+   after it, none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
+   through the Boss): the defect is the DECLARATION's, not the engine's
+   (the map `light_held_pair_pins.py` modelled the emission without A's
+   coupled interior; the remnant is the rule's band-edge mode, group
+   velocity zero, undamped); R2 and 4b are NOT touched by the dispersion,
+   and R2's preliminary reads the receiving set's pointer at the other
+   block's front arrival as a GAMEBOARD diagnostic, expected near zero;
+   of the remedies by their pins, (a) a longer own_grace cannot read the
+   row, (b) A's cells taking their own record's remnant at the
+   sourcing's end keeps 218 +- 2 and R2's pins, a declaration and the
+   builder's line, (c) a taper changes the norm and the rise so that 218
+   and R2's rises re-derive on the maps before any run, (d) a probe is
+   GAMEBOARD, not the measurement; his recommendation (b) for the light
+   clock alone, which is the declaration above; until it is on the map
+   the light clock is out of the preliminaries.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
@@ -1056,7 +1371,11 @@ nature.
    the change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
    (32 k) is the old engine's number at its c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
-   (the click interval per direction from the birth stamp) and the
+   (the click interval per direction from the birth stamp; "over the
+   hold" selects the records by their BIRTH in the hold, never by their
+   click, so that the ramp's tail, the chasing intervals of 111 to 246
+   during the ramp, never enters the hold's mean: Reviewer 3's note,
+   06:20Z) and the
    blocks' own clicks (both read one period, the control); COMPUTATION
    the rise per direction from the map, subtracted, and the map's ratio
    0.5774 beside the three clicks, the pins;
@@ -1356,7 +1675,17 @@ waves).**
   pairs of levels and carry no phase label (ALGEBRA.md 1.7).
 - M1-4, THE RECEIVERS of R2, of the light clock and of 4b (corrected
   at 01:40Z on the builder's report (b); the placement corrected at
-  03:35Z on his reading (a), section 10 item 9): a DETECTOR SET at the
+  03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
+  05:40Z on the builder's finding (ac), section 10 item 10, with
+  Reviewer 3's three lines of 06:20Z, and THE RULE on the owner's word
+  of 06:42Z: every emitter takes its own record's remnant after its
+  train, no key; a per-record taking mask of the emitter's cells at age
+  > train + T, T = ceil(extent / v_g) + 2 computed at load (24 for a
+  block of side 12, 4 for a one-Node lamp), in the record's kind's pair,
+  its bookings
+  excluded from the ladder and the content booked to the HOST row
+  `taken_by_emitter`, the builder's line before the light clock's
+  preliminary): a DETECTOR SET at the
   receiving body's cells, corrected per row on the builder's reading
   (a): the light clock's A receives its OWN record's return, so its set
   is the free Node adjacent to its face toward the mirror, x = 612, alone,
