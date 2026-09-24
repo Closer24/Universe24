@@ -111,7 +111,11 @@ declared phi read back as phi at every u of the wheel.
    registered 2.75 in the unit 64 the N = 64 pilot's, HISTORY; recomputed
    by the generator's `bell.py` under the linear form with the declared
    clock pair before the run as the rungs' counts and written to
-   `expectations.json`; NO BAND: a deterministic wheel counts exactly, and
+   `expectations.json` (Reviewer 3's note of 16:15Z: `bell.py` in
+   tools/click_readings reads run folders and writes no file, and no
+   `expectations.json` exists in examples/events/detector_law/ on main;
+   until a register file is written the pin's register is this
+   declaration and RUN_LIST.md); NO BAND: a deterministic wheel counts exactly, and
    a count that differs is an engine defect to name, never a miss in a
    band (the run's falsifier any count other than 874, 150, 150, 874;
    2.828125 is the pin, not a miss: Reviewer 3's
@@ -1823,7 +1827,7 @@ rest in Links, the one label for a wavelength on every page and script
 of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
 12); the matter rows' lambda_dB is the matter wave's, section 12.**
 
-- L-1, THE WALL of every light row (the fourth commit, 02:20Z, on the
+- THE WALL of every light row (L-1; the fourth commit, 02:20Z, on the
   builder's finding that the engine has no path for a block of light's
   kind and that a detector set clicks at the lamps' wheel): a MIRROR LINE
   of blocks of light's kind with the pair [1, 2] (the gap 60 degrees
@@ -1844,14 +1848,14 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   for a block of light's kind is on main and the loader admits the mirror
   line (CLOSED 15:20Z on Reviewer 3's note; the first draft's "if it does
   not land tonight, 2a runs as EXPLORATORY only" HISTORY).
-- L-2, THE LAMP is one body at one Node behind the wall on the axis of
+- THE LAMP (L-2) is one body at one Node behind the wall on the axis of
   symmetry (the engine's lamp is a body at a Node; DESIGN.md 6.0's "line
   of Nodes driven" is the openings seen from the far side): its wave
   reaches both openings with equal amplitude and phase, so the two-source
   sum of the pins is unchanged. The record: ONE per release, splitting
   at every free Node, so the fringes are one record's wave and the clicks
   are one per record over the stock.
-- L-3, ROW 2a (`two_slits.json`), THE SECOND DRAFT (2026-09-24, 12:10Z,
+- THE TWO SLITS (`two_slits.json`; L-3, row 2a), THE SECOND DRAFT (2026-09-24, 12:10Z,
   on the blind map of the world itself, `two_slits_1024.py` and `.out`
   beside SIZING.md; no screen reading exists, the Runner's 10:45Z run read
   the open face alone): the layer 160 x 256 x 1 (x AND y OPEN, the four
@@ -1908,7 +1912,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   (about 40 records in flight on 128^2; the builder's cost line to
   confirm; if above two hours the stock halves and the band widens to
   +- 0.03).
-- L-4, ROW 2c (`three_openings_*.json`): the same world as L-3's second
+- THE THREE OPENINGS (`three_openings_*.json`; L-4, row 2c): the same world as the two slits' second
   draft with the third opening on the axis (the openings a, b, c of width
   3 centred at y = 115, 128, 141, spacing 13) and the masks closing the
   unnamed openings (abc, ab, ac, bc, a, b, c: seven worlds); `ticks` 5500
@@ -1930,7 +1934,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   the theorem (the click a quadratic form, the exponent 2 exactly,
   ALGEBRAIC_CLOSURE.md), the Sorkin sum of the accumulated offers per
   Node 0 to the grain a GAMEBOARD check when run.
-- L-5, ROW 10 (a) and (b) (`one_opening_near.json`, `one_opening_far.json`):
+- ONE OPENING, NEAR AND FAR (`one_opening_near.json`, `one_opening_far.json`; L-5, row 10 (a) and (b)):
   on the one list (the owner's word of 11:29Z), sized in SIZING.md (12:10Z):
   (a) at W = 1024 on 6.1's 522 x 895 board 18 hours of HOST (4.5 at W =
   256), the reading the half-maximum crossings of the counts summed in
@@ -1944,7 +1948,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   Their pins (0.842 +- 0.03 and 0.886 +- 0.03) stand as COMPUTATION
   checks of the rule against the wave law (6.1, "the datums' kinds"); no
   world is written tonight.
-- L-6, ROW 5a (`pace_fan_{12,16,24}.json`): the layer 128 x 128 x 1 (x
+- THE PACE FANS, THE ANISOTROPY OF c (`pace_fan_{12,16,24}.json`; L-6, row 5a): the layer 128 x 128 x 1 (x
   and y open, z folded); the light family's clock per world as above;
   the lamp at [64, 64, 0], `amount` 1, `rate` [1, 1], `wheel` [1, 64],
   `train` 32 periods, `directions` [[1, 0, 0], [-1, 0, 0], [0, 1, 0],
@@ -2014,7 +2018,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
 
 **T, the table rows.**
 
-- T-1, ROWS 1a to 1d and 9, Malus: as section 14 item 1 (light's
+- BELL'S FOUR SETTINGS AND MALUS, THE TABLES' CLOCKS (T-1; rows 1a to 1d and 9): as section 14 item 1 (light's
   `phase_per_link` [2464, 25] on N = 2048; [308, 25] on N = 256; the
   wheel [1, N]); the Generator's finding that the worlds load with a
   pair on light AND on the counter family is accepted: the counter
@@ -2036,7 +2040,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   cos(phi + t) for t in {0, N / 8, N / 4, 3 N / 8} within the
   coefficients' rounding (1 / 256 and by_clock's 0.6 percent); rows 1a to
   1d and 9 enter the GO on it.
-- T-2, ROW 2b (`mach_zehnder.json`): on the one list (the owner's word of
+- THE MACH-ZEHNDER VISIBILITY (`mach_zehnder.json`; T-2, row 2b): on the one list (the owner's word of
   11:29Z; the first draft's "NOT IN THE GO tonight" HISTORY). The splitter
   waits on the builder's component (section 14 items 2 to 4), the mirror
   form has no key on main, and section 3's geometry (the positions (12,
@@ -2050,7 +2054,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
 **M1, the massive rows with light (4b, the light clock, R2, the matter
 waves).**
 
-- M1-1, THE COUPLING WITHIN THE LOAD BOUND (the Boss's item, the decision
+- THE COUPLING WITHIN THE LOAD BOUND (M1-1; the Boss's item, the decision
   asked of me): DECIDED, the coupling pairs G = [1, 50], g = [1, 1000]
   and the seed 50 x 2^20 = 52428800 in every world of sections 4, 10 and
   13, in place of G = [1, 1], g = [1, 50000], seed 2^20. The two worlds
@@ -2069,7 +2073,7 @@ waves).**
   interval, a random walk of 0.15 percent over a train, below one
   interval of the clicks. No engine change. The alternative (a lower A
   in MUST 3) is not needed.
-- M1-2, THE EMITTER'S HELD LIGHT CONTENT: NONE (the sixth commit, on
+- THE EMITTER'S HELD LIGHT CONTENT: NONE (M1-2; the sixth commit, on
   the Boss's line of 02:25Z withdrawing the fifth commit's `held`). The
   emission is the coupling's source term (MASSIVE_RECORD.md section 7;
   ALGEBRA.md 8.5), a birth at the start of each cycle of the block's own
@@ -2078,10 +2082,10 @@ waves).**
   stock (the builder's one line in `_block_births`), so no emitter, the
   atom's included, declares `held`, and the Generator's five worlds load
   without it.
-- M1-3, LIGHT'S CLOCK PAIR in sections 10 and 13: `phase_per_link` [1, 1]
+- LIGHT'S CLOCK PAIR in sections 10 and 13 (M1-3): `phase_per_link` [1, 1]
   as in sections 4 and 9, the loader's requirement; the kind's rows are
   pairs of levels and carry no phase label (ALGEBRA.md 1.7).
-- M1-4, THE RECEIVERS of R2, of the light clock and of 4b (corrected
+- THE RECEIVERS of the Sagnac ratio, of the light clock and of the moving lamp's redshift (M1-4; R2 and 4b; corrected
   at 01:40Z on the builder's report (b); the placement corrected at
   03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
   05:40Z on the builder's finding (ac), section 10 item 10, with
@@ -2124,14 +2128,14 @@ waves).**
   draft is consistent with the engine only through key (i); no receiver
   body at A's face cell (a body there takes the line), no W = 10000
   anywhere, no second detector.
-- M1-5, ROW 4b: as section 4 with M1-1 to M1-4; the receiver the
+- THE MOVING LAMP'S REDSHIFT (M1-5; row 4b): as section 4 with M1-1 to M1-4; the receiver the
   detector set of one Node at [1900, 0, 0] with its own wheel 64 (key
   (i)); the control world's A at rest at x = 1300. The pin 1.9889 is the
   one formula's number on the declared world and carries no g; the
   damping's 0.2 percent shift is g G's and unchanged by M1-1
   (`coupled_mode_pins.py` (g) prints the light clock's and R2's clicks
   at the declared coupling, identical to (e)'s and (f)'s).
-- M1-6, THE MATTER WAVES (`matter_waves_12.json`, `matter_waves_16.json`,
+- THE MATTER WAVES, DE BROGLIE'S FRINGES AND THE ENERGY OF A MOVING MASS (M1-6; `matter_waves_12.json`, `matter_waves_16.json`,
   `matter_front_12.json`): the matter family [800, 809] WITH
   `phase_per_link` in the PAIR form on the family's entry (the Boss's
   line of 02:25Z: the same key light's family carries, the steps of the
@@ -2197,7 +2201,7 @@ waves).**
   lamp on the massive kind is the builder's component; these lines are
   its declaration.
 
-- M1-7, R2's WORLD LINES the Generator lacked (the builder's (f)): A's
+- THE SAGNAC RATIO'S WORLD LINES the Generator lacked (M1-7; R2; the builder's (f)): A's
   cells [700, 712) and B's [772, 784) at t = 0, the separation L = 60
   face to face (712 to 772), both pushed to k = 3 on +x by the momentum
   [Q S M, 0, 0]; the chain 2200 x 1 x 1 with x OPEN for light and for the
@@ -2209,13 +2213,13 @@ waves).**
   other block, and the record read per direction is the one reaching the
   other block (A's toward +x at B, B's toward -x at A); PINS_R2.md's
   arrangement is the previous engine's, HISTORY.
-- M1-8, THE LAYER PIN WORLD AT REST (`layer_pin_rest_14.json`, the
+- THE MUON'S FORM, THE LAYER PIN WORLD AT REST (M1-8; `layer_pin_rest_14.json`, the
   builder's (d)): `ticks` 18500 with the same hold [10200, 18200] as the
   k = 3 world, so the two readers' windows are equal and the damping's
   slow drift (0.2 percent over the hold) is read alike; main's 3500 is
   superseded by this word.
 
-- M1-9, THE RULE'S BOUND on the GO's boards (the mathematician's
+- THE RULE'S BOUND on the GO's boards (M1-9; the mathematician's
   chapter, `docs/ALGEBRA_MASSIVE_RECORD.md` at 4d2f7289, on the Boss's
   question of 01:55Z): the GO's massive rule is the PAIR form, 3 den
   a_next + r' = num S_6 - 3 den a_before + r, the leapfrog of A' = 2 I -
@@ -2231,7 +2235,7 @@ waves).**
   - 3 q a_before - 3 p a_now, unstable on a 3-D board for every p) is a
   different rule, not the law's; its instability does not touch the GO.
   The matter lamp's omega 0.334 lies inside the band [0.149, pi - 0.149].
-- M1-10, THE AMPLITUDE BOUND, declared per world (the builder's key
+- THE AMPLITUDE BOUND, declared per world (M1-10; the builder's key
   `amplitude_bound`, on MUST 3's line at load and asserted on the rows at run time): A = 2^32 =
   4294967296 in every massive world (4b's two, the light clock, R2's two,
   the matter waves' three, the deep well's two, the atom, e3). The

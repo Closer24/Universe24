@@ -314,7 +314,11 @@ train's length, the hold), not pins.
    1.5 GB.
 3. Not clean: any `gather` line at a face (the first draft's whole
    finding); `chosen` None on a record whose `T` is nonzero; fewer than
-   1024 lines; a count centroid outside the screen.
+   1024 lines; a count centroid outside the screen. The y faces' returned
+   share (GAMEBOARD, the faces' `sunk` against the map's margin form) above
+   the band's cost is the one criterion for regenerating the layer taller
+   before the pin run (SIZING.md's contingency); the screen's visibility is
+   the pin's statistic and is not read for it.
 
 ## 15. De Broglie's fringes, row M1 (waits on the lamp's ladder and the sized form)
 

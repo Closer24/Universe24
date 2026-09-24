@@ -96,6 +96,17 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   From the first interval after the train its own cells take the record's
   remnant and book it on no pointer (item 10 of DECLARATIONS.md section
   10; `_own_take`).
+  ITS ARMS ARE ITS PROPERTY (the owner's word of 15:28Z and 15:33Z through
+  the Boss, 15:30Z and 15:35Z: "an emitter that emits to two sides is
+  simply another property of the emitter: there is a one-side emitter and
+  a two-side emitter, it is the same emitter"): `arms` 1 or 2 with
+  `directions`; a two-arm emitter births ONE record of rank 2 with the
+  joint labels of `branches`, entangled by construction (ALGEBRA.md 3.6).
+  The consequence, in one sentence: a two-arm record has ONE click, one
+  gather at its completion from both receivers' settings, landing on both
+  receivers (POSTULATES.md section 10, the law's one non-local step;
+  `_click_pair`). This sentence lives here, as the property of the record a
+  two-arm emitter births, and nowhere else.
 - **The body.** A block of cells with a pair on the six-neighbour term
   (a well of a massive kind, a gap of light's kind) and a momentum: it
   moves one Link at a time by the drive's accumulators (`_move_block`),
@@ -129,6 +140,117 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   the fans, M2 and the cart have no block (a lamp and receiver bodies of
   one Node): every file declares its body by the lower vertex and the edge
   as the loader reads it; none fails; no world line owed.
+  ITS NODES ARE ORDINARY NODES (the owner's word of 15:38Z through the
+  Boss, 15:40Z): a body's cells are Nodes under the same six verbs every
+  interval as every Node of the GameBoard, differing only in the declared
+  lowered pair on its cells (ALGEBRA.md 8.3: the well); nothing else is
+  kept at them and no rule branches on them.
+  THE CONDITIONS A BODY MUST SATISFY TO BE A BODY, and where each is
+  checked as the code stands on `main` (Reviewer 3's preview of 16:15Z,
+  read against world.py, detector_law.py and the margin module
+  `src/event_universe/diagnostics/massive_record_margin.py`; the owner's
+  word of 16:35Z, "the experimenter must be able to put the cube exactly
+  where he wants it", and of 16:48Z, an engine check at load that the
+  conditions are exact in the initial state):
+  1. THE SHAPE: a cube of edge s from its lower vertex, whole on the
+     board (a square on a layer, a segment on a chain: the folded axis of
+     extent 1). As built: the loader reads `position` and `side` and
+     forms no cells; the cells are formed at the simulation's start
+     (`_cube`), wrapped on a periodic axis and CUT on an open one. NOT
+     REFUSED: CUT TO FIT, a defect under the owner's word of 16:35Z. The
+     refusal proposed and built on the body-check branch: at load, a body
+     whose cells fall off an open face, or wrap onto themselves on a
+     periodic axis shorter than its edge (the folded axis of extent 1
+     excepted), is refused naming the body and the axis; no cut.
+  2. THE LOWERED PAIR: num' / den' above the medium's num / den on the
+     massive kind (a well; a gap on light's kind, den' above num'). CHECKED
+     AT LOAD (world.py: the kind's own pair is refused without `cavity` or
+     `absorbing`; a raised pair is a barrier with no seed and no clock).
+  3. THE BOUND MODE below the medium's band, omega_b below omega_0 (the
+     body's clock). PRODUCED AT THE RUNNER'S START, not at load: the
+     margin module's Lanczos eigenvalue on the world's own board
+     (`check_margins`, called by run.py before the first interval); a mode
+     not bound refuses the run there.
+  4. THE MARGIN from the faces (a pin world two extents from a zero face
+     and a periodic side of the edge plus four extents; a control world
+     one and two). PRODUCED AT THE RUNNER'S START by the same module,
+     refused there naming the body, the axis, the extent and the distance.
+  5. THE SEED: the bound mode's integer profile over the whole board at
+     the declared amplitude, the same at both levels (ALGEBRA.md 8.7, the
+     standing start exact). As built: a profile seed is admitted at load
+     only with `margin` declared, its length and integers checked
+     (world.py); its values are the FILE'S integers, COMPARED with the
+     module's mode at the runner's start (`profile_check`, the largest
+     deviation printed as GAMEBOARD) and NEVER REFUSED; a scalar seed is
+     the flat value on the cells and 0 outside, which is not the mode (the
+     record relaxes from it); the standing start (`now` = `before`) is
+     exact by construction (`DetectorLawSimulation.__init__`). The
+     refusal ordered by the owner (16:48Z) and built on the body-check
+     branch: at load the mode's integer profile is recomputed from the
+     declared pair, shape and amplitude and compared with the initial
+     state at both levels bit for bit, refused on any Node that differs,
+     naming the Node.
+  6. THE AMPLITUDE BOUND: the seed's magnitude at most A. CHECKED AT LOAD
+     (world.py, MUST 3; the profile's largest magnitude the same).
+  7. THE RAMP of a pushed body at least ten relaxation times 1 / (omega_0
+     - omega_b) of its own well (DECLARATIONS.md section 8). DECLARED
+     ONLY, NOT CHECKED: the pins script prints the relaxation time before
+     the run; nothing at load or at the runner's start compares the
+     declared `ramp` with it. The refusal proposed and built on the
+     body-check branch: at the runner's start, from the margin reading, a
+     `ramp` below ten relaxation times is refused naming the body, the
+     ramp and the relaxation time; a body with no `ramp` and a momentum is
+     refused the same way unless its `start` is 0 and its momentum 0.
+  Whether a condition not checked today should be checked at load is put
+  to the owner through the Boss; the owner's word of 16:48Z answers it
+  for 1, 5 and 7, built on body-check and not merged before his read.
+  THE FIFTEEN WORLDS' BODIES AGAINST THE LIST (the scan of 2026-09-24,
+  read from the files on `main` 8b9a2897 through the loader; with the
+  vertex check of 15:20Z above):
+  the muon's form, the layer pin world at rest (`layer_pin_rest_14.json`):
+  the square of edge 14 at [93, 93] on the 200 x 200 periodic layer, whole;
+  the well [3200, 3227] on [3200, 3236]; `margin` pin; the seed a PROFILE
+  of 40000 integers, the module's own mode at its amplitude (compared, not
+  refused, at the runner's start); at rest, no ramp: every condition met.
+  The deep well in motion (`deep_well_k3_40.json`): the square of edge 40
+  at [44, 44] on 128 x 128 periodic, whole; the well [800, 800] on [800,
+  809]; `margin` control; the seed FLAT, 1048576 on the cells (condition 5
+  NOT met as the owner's word reads it: the record relaxes from the flat
+  seed); the ramp 1500 against the relaxation 11 (136 times): met.
+  The bound clock's second term, the boxes (`moving_20.json` and its rest
+  world): the cube of edge 20 at [22, 22, 22] in 64^3 periodic, whole; the
+  well full-depth; `margin` control; the seed FLAT (the loader's default);
+  the ramp 1500 against the relaxation 26 (57 times): met; condition 5 NOT
+  met. The light clock (`light_clock_60.json`): the segment [600, 612) on
+  the chain of 673 (periodic for the matter kind, closed for light), whole;
+  the well [800, 800]; `margin` pin by default; the seed FLAT 52428800; no
+  ramp; condition 5 NOT met. The Sagnac ratio (`sagnac_k3.json` and its
+  rest world): the segments [700, 712) and [772, 784) on the chain of 3000
+  (x open for the matter kind), whole; `margin` pin; the seeds FLAT
+  52428800; the ramp 1500 against the relaxation 17 (88 times): met;
+  condition 5 NOT met. The moving lamp's redshift (`redshift_k3.json` and
+  its control): the segment [2994, 3006) on the chain of 4096, whole; the
+  well [314, 315] on [156, 157]; `margin` pin; the seed FLAT 52428800; the
+  ramp 1500 against the relaxation 90 (16 times): met; condition 5 NOT
+  met. The receding index at k = 3 and k = 4
+  (`index_moving_long_k{3,4}_away.json`): the segment [1500, 1524) on the
+  chain of 4000, whole; the well [314, 315]; the seed 0, a SILENT body (no
+  own record, the coupling's medium alone): conditions 3, 4, 5 and 7 do not
+  apply (the margin module skips it); pushed at `start` 3000 with no ramp,
+  which the ramp rule does not reach (no record to lag). The two slits
+  (`two_slits.json`): the mirror line, blocks of edge 1 of light's kind
+  with the gap [1, 2], single cells, no seed and no clock: conditions 3 to
+  7 do not apply. De Broglie's fringes and the energy of a moving mass
+  (`matter_waves_12.json`, `matter_front_12.json`): the take lines and the
+  barrier line, blocks of edge 1 of the matter kind, silent; on `main`
+  8b9a2897 both files are REFUSED at load for the family's missing `take`
+  pair (the fix on runner-lines 195a9fb9, not yet merged). Bell's four,
+  Malus's four, the pace fans and the cart: no body (the polarisers bodies
+  of one Node with a table, the receivers bodies of one Node). SO: seven
+  files (the deep well, the boxes' two, the light clock, sagnac's two,
+  redshift's two) carry a flat seed and would be refused by the seed check
+  of 16:48Z: a world line owed (their seeds as the module's integer
+  profiles through the generator), not a change of the check.
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A
@@ -161,11 +283,13 @@ The features, each a composition of the four and nothing else:
   that one set, the line at the set's first rung; every other receiver a
   sink) + the clock of the receiver (the stamp).
 - **The joint gather** (section 1 item 3, section 14 item 6; BUILD.md
-  section 19): an emitter of two arms + two bodies with a table (each a
-  receiver of two cells) + one receiver of the pair on the four joint
-  cells (the rung on the joint weights R = J^2) + the interval as the stamp
-  (the pair's line is stamped `clock_source` "interval", `_click_pair`; no
-  body's count enters; the bodies' counts are the reading).
+  section 19): a two-arm emitter + two bodies with a table + two receivers
+  (each the table body's two cells, a plain set with a wheel; "a receiver
+  and a receiver, they are not related", the owner's word of 15:33Z) + the
+  interval as the stamp (the pair's line is stamped `clock_source`
+  "interval", `_click_pair`; no body's count enters); the counts are the
+  reading. The one click of the two-arm record is the emitter's property
+  (its paragraph above), not the receivers'.
 - **The lamp's ladder** (SIZING.md; BUILD.md section 20): a
   lamp + the named receivers (the screen's sets, the record's ladder) +
   the sinks outside the ladder (the faces; a gap block of pair [1, 2]
@@ -189,14 +313,16 @@ with an integer setting on an arm forms a table body of two cells for any
 family; a record of several arms gathers once on the joint cells. No
 branch on a family's or an experiment's name remains in `src/`.
 
-A fifth thing, NAMED (Reviewer 3's line of 13:38Z): THE RECEIVER'S PAIR
-FORM. The joint gather's receiver of the pair is not a set of cells with a
-wheel booking the offer at its Ports: its ladder is the product of two
-sets' channels with the weights R = J^2 from both arms' tables (the ladder
-of a rank-2 record over two tables), the law's one declared non-local step
-(POSTULATES.md section 10; ALGEBRA.md 3.4 and 3.6); whether it counts as a
-fifth building block is the owner's word, put to him by the Boss, not this
-section's silence. Nothing else: the probes (`probes`, a list of Nodes
+A fifth thing: NONE (the owner's word of 15:28Z and 15:33Z through the
+Boss, on Reviewer 3's line of 13:38Z that named "the receiver's pair
+form"). The reason, in his words: an emitter to two sides is the same
+emitter with another property, and a receiver is a receiver; the one
+click of a two-arm record, one gather at its completion from both
+receivers' settings on the joint weights R = J^2 (the ladder of a rank-2
+record over two tables, POSTULATES.md section 10, ALGEBRA.md 3.4 and 3.6),
+is the property of the record the two-arm emitter births, written in the
+emitter's paragraph and nowhere else; no receiver has a pair form. Nothing
+else: the probes (`probes`, a list of Nodes
 whose light amplitude is written per interval) are a GAMEBOARD reading of
 the board (world.py), not a block; they act on nothing and are compared
 with nothing but the declaration's own script. The splitter of the
