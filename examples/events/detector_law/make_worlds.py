@@ -202,15 +202,19 @@ def wall_node(
 ) -> dict:
     """One Node of a wall: a block of side 1 with the pair [1, 2] (section 15 L-1 the
     mirror line of light's kind; M1-6 the barrier line of the matter kind, its raised pair
-    the builder's line), or a take Node (`absorbing` true, the matter kind's take lines of
-    M1-6's correction: the kind's own pair on the block and the take's pair [n, d] under the
-    builder's key `take`, BUILD.md item 6b on 299b6bb2)."""
+    the builder's line), or a take Node (`absorbing` true with `seed` 0, no record of its
+    own; the matter kind's take lines of M1-6's correction: the kind's own pair on the block
+    and the take's pair [n, d] under the builder's key `take`, BUILD.md item 6b)."""
     entry = body(position, family)
     entry["side"] = 1
     if pair is not None:
         entry["pair"] = list(pair)
     if absorbing:
+        # A take line holds no record of its own: `seed` 0 (the builder's line of
+        # 2026-09-24 08:56Z: a block without the key takes the loader's default seed and
+        # builds an own record on its cell, which the margin rule refuses as unbound).
         entry["absorbing"] = True
+        entry["seed"] = 0
     if take is not None:
         entry["take"] = list(take)
     return entry
