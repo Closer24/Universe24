@@ -160,6 +160,55 @@ and the ray law's series exists.
    no-signalling in the counts (row 1d); the run confirms the numbers
    above (DETECTOR: the two click lists in birth order at the four
    settings pairs, the flips counted); no pin moves.
+8. THE TEST OF THE HIDDEN RESIDUE, PREPARED, NOT DECLARED (the model
+   owner's word of 2026-09-24, 03:14Z, "make preparations for the above
+   test", on my answer to his question "the algebra does not solve it;
+   what does?"; his word on the declaration pending, for the 09:00 page;
+   nothing here enters a GO world; `order_channel_hidden_pins.py`,
+   COMPUTATION, no run, no pin moved). THE FINDING (item 7 and the
+   script's (a)): the channel is open by Bell's theorem for any
+   deterministic wheel, and AS DECLARED it is readable Outside without
+   any stamp: the counter family [1, 1] makes the birth residue u the
+   birth index, so B's click list in birth order is the list in residue
+   order, and at b = 3 N / 8 the fraction of + among B's first N / 4
+   births is 0.293 at a = 0 and 1.000 at a = N / 4 (four runs in the
+   whole list either way); a decoder fixed before the run reads a with
+   certainty. THE SOLUTION PROPOSED (the ensemble, not the algebra): the
+   residue is INSIDE. Two world keys, the builder's on the owner's word:
+   (i) the births take the residues of Z_N (one per u, so S_N and every
+   count stay exact) in the order of a permutation drawn from the
+   world's seed by a declared integer hash (the script's form: a
+   Fisher-Yates shuffle driven by a 64-bit linear congruential
+   generator, plain integers; never an affine stride, which a reader
+   searches in N^2 trials), in place of the counter family's [1, 1];
+   (ii) the click's stamp carries the detector's count and the birth
+   interval, never the residue (P11, clicks only; the seed an input of
+   kind 1, drawn once, never read Outside). THE THEOREM (exact over the
+   ensemble of seeds, not typicality): B's list at fixed b is a balanced
+   multiset (N / 2 pluses for either a) in a uniformly random order, so
+   its distribution is the uniform distribution over balanced strings
+   for a and for a' alike; no decoder fixed before the run, without the
+   seed, does better than 1 / 2; the script's (b) checks it on the
+   first-quarter and the threshold decoders over 200 seeds (about 1 /
+   2), with the flips for a reader who holds the residues still E_N =
+   181 / 256 (Inside, Bell's theorem) and the counts 1024 of 2048 either
+   way. THE READER OF THE TEST, if declared: DETECTOR the four click
+   lists in birth order with their stamps (the count and the birth
+   interval) and the decoders fixed before the run (the first-quarter
+   fraction and the threshold, each expected at 1 / 2 within the
+   binomial error of N / 4 births); COMPUTATION the counts and S;
+   GAMEBOARD the flips with the residues (E_N), a diagnostic of the
+   model's Inside nonlocality, never a pin. THE PINS unchanged (S = 181
+   / 64, the marginals N / 2). What must be said with it: the Inside
+   dependence is Bell's theorem and stays; the closure Outside is
+   closure to a reader without the seed, the same kind of statement as
+   quantum equilibrium (the paper's own positioning beside Bohm); a draw
+   at the click would only move the same randomness from the birth to
+   the click and break the counter form of the click. Until the owner's
+   word row 1c keeps his word of 03:05Z (FAIL by derivation under the
+   current law); on his word this item becomes a declaration, row 1c
+   reads PASS in form Outside, and the paper's row 1c and #1081's
+   sentence change with it.
 
 The descent, HOST and the day: as section 1 (the same four runs read
 twice; no world of its own).
