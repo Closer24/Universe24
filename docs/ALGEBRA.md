@@ -4283,3 +4283,50 @@ too. The form, with its integers:
    give a travelling character, and k(axis) - k(diagonal) = k^2 / 48 at
    fixed omega is a property of the band that holds per character. So the
    fans' reading is kept with lines, and the pin stands.
+
+**(5) The physicist's two readings and one question on the emitter's
+first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
+1. THE EXCITED RECORD'S NORM T is the offer its own mode books over ONE
+   PERIOD of its own clock, T = SUM over the P intervals of a period of
+   SUM over its cells of (now - before)^2, with P the nearest integer to
+   2 pi / omega_b. The generator computes it by advancing the seed alone
+   for P intervals, the rule being exact on integers, and writes it as the
+   emitter's integer `norm`. The loader recomputes it the same way and
+   refuses a mismatch; the count is the loader's, not the law's (9.5).
+   - WHY: a bound record books without end, so its only finite measure is
+     per cycle. With this T, the excitation of residue u clicks within its
+     first period, at about (2 u + 1) / (2 W) of it. The mean wait is half
+     a period WHATEVER THE WELL'S DEPTH: W births take about W P / 2
+     intervals, and the cadence is not a sizing integer.
+   - The seed's squares (the head's T) make the wait scale as 1 / omega^2,
+     which is a unit accident.
+   - The smoke run's numbers move accordingly. The generator re-derives
+     them.
+2. THE STATIC LEVEL: the one-cell write carries no zero-frequency part.
+   now = A C[(3 N / 4 + floor(s / 2)) mod N], with s = floor(n / d) the
+   clock's step, and before = -now EXACTLY. That is the character sampled
+   half a step either side of its zero crossing. The norm is then 4 now^2
+   per cell.
+3. THE LINE'S TRAVELLING CHARACTER: no per-Link pair enters the engine.
+   The band's k at a rational omega is not rational, so the born profile
+   along a line is MATERIAL: the generator writes the two levels' integers
+   over the body's cells (the key `born`, a profile at both levels, as the
+   well's seed is, 8.7). The engine copies them at the click. The loader
+   prints the band check (the profile's k and omega on 3 cos omega = cos
+   k + 2), as the seed's check is printed.
+   - Default with no `born`: the one-cell pair of item 2 on every cell
+     (cells in phase).
+4. A DEFECT to correct: `_emit` branches on `self.families[family].
+   massive_kind` to set the record's `driven` mask. That is a branch on a
+   family's kind (9.10; the three tests: no family name or kind). The mask
+   belongs to the record's own data, set from the emitter's declaration,
+   with no branch at the birth.
+5. CONFIRMED IN FORM on 7ce8d66a:
+   - X is `del self.records[...]`, a deletion of the whole record.
+   - The rung 2 T u + T <= 2 W C.
+   - The offer read through the body's cells with no take.
+   - One write at the birth, with nothing driven afterwards.
+   - The next excitation, while the stock lasts.
+   - The content moved from the stock.
+   THE GATE (9.5) stays on the whole line, the retirements and the
+   regenerated worlds included.
