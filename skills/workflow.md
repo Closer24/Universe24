@@ -658,3 +658,15 @@ declaration error, never a silent change of shape. Where the loader today
 cuts a side to the board, that is a defect against this word, listed among the
 body's conditions in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md)
 and fixed on the owner's word as an engine line with its test.
+
+## Plain names, never codes alone (the owner, 2026-09-24, 16:55Z, record 1815)
+
+The owner's word: "L and M are not clear; use only clear names." Every
+experiment, world line, feature and file is called by its plain name first:
+"the two slits, the second draft", "de Broglie's fringes", "the energy of a
+moving mass", "the muon's form", "Sagnac", "the moving lamp's redshift", "the
+receiver by name". A code (a row number such as 4a or R2, a line label such
+as L-3, a family letter such as M1) may follow the name in parentheses as an
+index into a table, never stand alone in a message, a heading, a report or a
+commit; a new label is not coined. The features' rule of 14:00Z is the same
+rule.
