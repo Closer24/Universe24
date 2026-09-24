@@ -3839,6 +3839,19 @@ It needs no new object, keeps every pin, and retires the half-angle
 tables from every polariser path. (b) stays admissible for a world that
 declares integer axes.
 
+**ADOPTED: (b), the integer axis (the Boss's order of 2026-09-24, 22:10Z,
+on the owner's hint "perhaps we do not need the general angle at all").**
+A polariser declares its AXIS as an integer vector **u** = (a, b) of the
+plane across the path; the setting s and the half-angle tables retire.
+The engine's change is one line, because `joint_weights` already takes a
+pair (C', S') per body and forms U = [[C', S'], [-S', C']]: it takes
+(a, b) in its place. The weights R = J^2 are then exact integers, the rung
+is unchanged, the sign recursion of (a) is not needed and no ring weight
+enters the ladder. The steps that belong to (a) alone (1, 2 and 3 in the
+list below) do not apply. The pins under (b) are in 9.16 (4). (a) stays
+derived, for a world that needs an angle that is not a rational axis;
+none of the fifteen needs one.
+
 **What disappears from the code (read at 9b8554e1's base).**
 - `amplitude.half_angle` and the tables of 2N behind it, at its four call
   sites: `DetectorLaw.joint_weights` (through `_click_pair`),
@@ -3900,12 +3913,98 @@ to the mirror's book) and for every tool. The owner's reading, "a photon
 that changes direction", is this: the direction changes at a held body,
 and the held body takes the difference.
 
-### 9.16 What is missing, for the owner
+### 9.16 What was missing, closed item by item (the Boss's order of 2026-09-24, 22:10Z: "close, do not bring the owner questions")
 
-(1) A record carrying the whole sum m^T (all the splits); main carries
-one clock per family. (2) One amplitude per hand on every record (the
-label module carried by the amplitudes, not only as weights): needed by
-every polar tool acting on the board. (3) The take, a declaration and not an operation: REMOVABLE (9.12), the close on the record's own clock in its place. (4) The polariser's general angle: NOT MISSING, the wheel's translation x^s on the hands (9.14); the engine's rows and the sign of the rung are to be changed. (5) The same-hand channels' weights a and b of
-the crystal (9.3), a material integer the symmetry leaves free. (6) The
-cone of the pair's headings: not derivable under the rule of reading
-(9.3, 9.7); an experiment's headings are its placement's.
+**(1) The whole sum m^T on one record: an engine form (DERIVED HERE).**
+A record's clock becomes a finite list of COMPONENTS, each with its own
+clock pair on its arms and an integer weight: arm 0 at a and arm 1 at p -
+a, for a in the crystal's declared WINDOW [a_lo, a_hi] (its material, both
+clocks inside their families' propagating bands, 8.1). One component is
+main's record, unchanged. The generic step: each component is propagated
+by the one rule at its own clock, and the record's offer at a cell is the
+sum of the components' offers (linearity; distinct clocks are orthogonal
+characters, so the norms add over a full period). The click reads the
+record's offer; the joint gather's weights read the label state only
+(3.6), so THE COUNTS DO NOT DEPEND ON THE COMPONENTS. The identity behind
+it: m(m^T([p])) = N [p] on Z[Z_N], and over a window of w components
+m(SUM over the window) = w [p] (PROVED HERE: each term [a] (x) [p - a]
+multiplies back to [p]). None of the fifteen pins reads it; it is the
+form for nature's broad spectrum of the pair. The engine form and its
+unit tests: [the lab tools' specification](designs/lab_tools/LAB_TOOLS.md),
+section 12.1.
+
+**(2) One amplitude per label on every record: an engine form (DERIVED
+HERE).** Every record carries its rows per label value of each arm (two
+rows per arm for the label pair). The one rule acts on each label row
+alike, because the paces of the two labels are equal in every body
+(9.3). A POLAR BODY with the axis **u** = (a, b) applies at its cells the
+integer matrix **M**_u = [[a, b], [-b, a]] to the pair of label rows
+(verb B). There is no division: the common factor abs(**u**)^2 scales the
+record's norm, as n_s did, by the identity (a x + b y)^2 + (-b x + a y)^2
+= (a^2 + b^2)(x^2 + y^2) (Brahmagupta's, exact on integers). For a record
+of rank 2 the arm's weights are the partial trace (9.11 (d)), which the
+per-label rows give without a new rule. The unit tests are in the
+specification's section 12.2.
+
+**(3) The take: REMOVED (9.12).** CLOSED.
+
+**(4) The polariser's angle: the integer axis, ADOPTED (9.14).** The
+setting s and the half-angle tables retire. THE PINS, written before any
+run (COMPUTATION: main's `joint_weights` with (a, b) in place of (C', S')
+and main's `rungs`):
+- BELL. The pair's state is HV + VH, the crystal's (item (5)). Alice's
+  axes are (1, 0) and (1, 1). Bob's are (1, 2) and (3, 1): the reflections
+  in the diagonal of (2, 1) and (1, 3), because the state HV + VH is HH +
+  VV with Bob's labels exchanged. For the lamp's HH + VV on main's files,
+  Bob's axes are (2, 1) and (1, 3) and the counts are the same. The
+  weights (++, +-, -+, --) are:
+  - (1, 0) with (1, 2): 4, 1, 1, 4 of 10, so E = 3 / 5.
+  - (1, 0) with (3, 1): 1, 9, 9, 1 of 20, so E = -4 / 5.
+  - (1, 1) with (1, 2): 9, 1, 1, 9 of 20, so E = 4 / 5.
+  - (1, 1) with (3, 1): 16, 4, 4, 16 of 40, so E = 3 / 5.
+
+  S = 3 / 5 + 4 / 5 + 4 / 5 + 3 / 5 = 14 / 5 EXACTLY at every wheel W that
+  is a multiple of 20. THE PIN AT W = 2560 (the wheel [1, 2560], N = 2048
+  unchanged): 1024, 256, 256, 1024; 128, 1152, 1152, 128; 1152, 128, 128,
+  1152; 1024, 256, 256, 1024. So S = 14 / 5 = 2.8 (DETECTOR), each
+  marginal exactly 1280 of 2560, with no band: a differing count is an
+  engine defect. At W = 2048 the same weights give 717 / 256 (the rung's
+  rounding), which is why the wheel moves to 2560. Nature's optimum, 2
+  sqrt 2 = 2.828, is not a pin.
+- MALUS. H arrives; the + cell is along the axis, with the share a^2 /
+  (a^2 + b^2). The axes, chosen as the integer vectors nearest the four
+  settings of the list:
+  - (1, 1) at 45 degrees: 1 / 2.
+  - (5, 1) at 11.31 degrees: 25 / 26.
+  - (15, 8) at 28.07 degrees: 225 / 289.
+  - (3, 2) at 33.69 degrees: 9 / 13.
+
+  THE PINS AT W = 256 (the wheel [159, 256] as the files stand): 128, 246,
+  199 and 177 of 256 on the + cell (DETECTOR). These are the rung's
+  nearest integers to 128, 246.15, 199.31 and 177.23, none of them a tie,
+  and they are the list's numbers, unmoved. Each share is exact at its own
+  wheel: W = 2, 26, 289 and 13, or together at W = 7514, with 3757, 7225,
+  5850 and 5202.
+
+**(5) The crystal's same-hand weights a and b: the crystal's MATERIAL,
+with a = b = 0 (DERIVED HERE).** Beyond c = d (9.3) the symmetry fixes
+nothing. The half-turn about the arriving axis exchanges the arms and
+changes the sign of both labels, and gives c = d again. The quarter turn
+carries the arms out of the placement's plane, so it relates channels of
+other headings. So a and b are free. What the algebra does fix is WHICH
+STATES ARE MAXIMALLY ENTANGLED: the coefficient matrix [[a, c], [c, b]]
+must be a multiple of an orthogonal matrix, and that holds exactly when
+b = -a (any c) or when c = 0 and a = b (PROVED HERE: a c + c b = 0 and a^2
++ c^2 = c^2 + b^2). A state outside those two families (for example a =
+b = c, the product state (H + V)(H + V)) lowers S. THE VALUE WRITTEN IN
+THE CRYSTAL'S WORLD FILE is a = b = 0 and c = 1, the branches [[1, 1],
+[2, 1]] (label bit j is the value on arm j). The reasons:
+- It is maximally entangled.
+- It is the smallest material: one nonzero integer, the channel that
+  symmetry already fixes.
+- It is the owner's channel of record 1821.
+- The Bell pin in (4) is computed for it.
+
+**(6) The cone: ACCEPTED as not derivable (9.3, 9.7).** The pair's
+headings are the placement's: the receivers are placed where the pair
+goes (LAB_TOOLS.md 11.3).

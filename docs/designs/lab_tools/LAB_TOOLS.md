@@ -1120,3 +1120,69 @@ world's declaration.
 profile over the whole board; his check to assert that the set of records
 at interval 0 is exactly the bodies' own.
 
+
+## 12. The two engine forms that close ALGEBRA.md 9.16 (1) and (2), with their unit tests (for the physicist to build)
+
+**12.1 The split sum on one record (ALGEBRA.md 9.16 (1)).**
+
+The form:
+- A record's clock is a list of components [[a, n_a], ...]: arm 0 at the
+  clock a, arm 1 at p - a, with the integer weight n_a >= 1.
+- A crystal's birth writes the components of its declared window [a_lo,
+  a_hi] (the material key `window`), with weight 1 each.
+- Each component is propagated by the one rule at its own clock. The
+  record's offer at a cell is the sum of the components' offers.
+- The joint gather's weights are unchanged, because they read the label
+  state only.
+- Default: one component, which is main's record byte for byte.
+
+The generic primitive is the rule (verbs S and T) applied per component,
+with no family name.
+
+The unit tests (inputs, expected values, edge cases):
+1. m m^T = N on Z[Z_8]: m^T([3]) has the 8 terms [a] (x) [3 - a], and
+   the product of each pair is [3], so m(m^T([3])) = 8 [3].
+2. A window [1, 3] at p = 3 gives the 3 components (1, 2), (2, 1) and
+   (3, 0), and m of their sum is 3 [3].
+3. The degenerate split (a = p - a on Z_N) exists exactly when p is even,
+   with two solutions: at N = 8 and p = 4, a = 2 and a = 6; at p = 3,
+   none.
+4. The default: a world with one component replays main's record byte for
+   byte (the gate set's three digests).
+5. The counts do not depend on the components: Bell at the axes of 9.16
+   (4) with 1 component and with 3 gives the same counts, 1024, 256, 256,
+   1024 at W = 2560 for (1, 0) with (1, 2).
+
+**12.2 One amplitude per label on every record (ALGEBRA.md 9.16 (2)).**
+
+The form:
+- A record carries two rows per arm, one per label value (bit 0 and bit
+  1).
+- The one rule acts on each row alike.
+- A polar body's cells apply **M**_u = [[a, b], [-b, a]] to the arriving
+  pair of rows (verb B). The + row (along the axis) and the - row (across
+  it) continue to the body's two receivers.
+- The record's norm scale is multiplied by abs(**u**)^2. There is no
+  division and no remainder.
+- Default: a record with one label value carries one row, which is main's
+  record byte for byte.
+
+The generic primitive is verb B with the body's written integers (a, b).
+There is no family name and no branch on a label.
+
+The unit tests:
+1. The norm identity: at **u** = (15, 8), with rows x = 3 and y = 4, the +
+   row is 77 and the - row is 36. So 77^2 + 36^2 = 7225 = 289 x 25 =
+   abs(**u**)^2 (x^2 + y^2).
+2. H arriving (1, 0) at **u** = (5, 1): the rows are 5 and -1, so the
+   books stand 25 : 1. At **u** = (1, 1) they stand 1 : 1, which is 128 of
+   256 at the rung.
+3. The partial trace (the defect (d) of ALGEBRA.md 9.11): HV + VH at any
+   **u** books equal weights on + and -, a^2 + b^2 each. That is 2 and 2 at
+   (1, 1) and 289 and 289 at (15, 8). The code on polariser-fix booked all
+   of it on + at s = 512; the per-label rows remove that case.
+4. Label blindness: a record with the rows (x, 0) and one with (0, x),
+   from the same emitter, book the same offer at every cell at every
+   interval until a polar body.
+5. The default: a world with one label replays main's record byte for
+   byte.
