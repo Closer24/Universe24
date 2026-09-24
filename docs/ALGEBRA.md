@@ -3406,7 +3406,7 @@ For every tool, after the physicist writes its code, the mathematician
 reads the code against this chapter and confirms, line by line, that
 each operation on a cell is one of the six verbs (2.1 to 2.6) applied
 with the tool's written integers and performs exactly the group
-operation of 9.5, and nothing else. THE RULE OF THE READING: a
+operation of 9.4, and nothing else. THE RULE OF THE READING: a
 conditional on a cell is lawful ONLY when it is the comparison of verb D
 named in this chapter (the rung of 8.6 and 9.2, the emitter's age
 against its train, 9.7; the clock's quarter at a train's end and the
