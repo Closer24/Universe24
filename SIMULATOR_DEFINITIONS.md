@@ -96,17 +96,49 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   From the first interval after the train its own cells take the record's
   remnant and book it on no pointer (item 10 of DECLARATIONS.md section
   10; `_own_take`).
-  ITS ARMS ARE ITS PROPERTY (the owner's word of 15:28Z and 15:33Z through
-  the Boss, 15:30Z and 15:35Z: "an emitter that emits to two sides is
-  simply another property of the emitter: there is a one-side emitter and
-  a two-side emitter, it is the same emitter"): `arms` 1 or 2 with
-  `directions`; a two-arm emitter births ONE record of rank 2 with the
-  joint labels of `branches`, entangled by construction (ALGEBRA.md 3.6).
-  The consequence, in one sentence: a two-arm record has ONE click, one
-  gather at its completion from both receivers' settings, landing on both
-  receivers (POSTULATES.md section 10, the law's one non-local step;
-  `_click_pair`). This sentence lives here, as the property of the record a
-  two-arm emitter births, and nowhere else.
+  AN EMITTER HAS ONE ARM (the owner's word of 15:05Z through the Boss,
+  superseding his word of 15:28Z that the pair is the emitter's two-arm
+  property: "there is no such emitter; there must be an emitter that fires
+  at a crystal, as defined; then the double emitter is cancelled; this also
+  tests our mechanism"): one arm, and with no declared heading the six
+  headings (the engine's default, an isotropic source; a beam's shape
+  arises from the mask and the split). THE TWO-ARM EMITTER IS CANCELLED:
+  the lamp key `arms` with `branches` (the four Bell files of the two-arm
+  form, a record of rank 2 born at the lamp) leaves the engine with the
+  crystal's code, refused at load naming the change, its tests retired with
+  the reason; not kept as a control ("there is no need for the double
+  emitter, because it does not test the split nicely", 15:30Z). A record of
+  rank 2 is born only at a lab tool's conversion, the crystal (a body with
+  a conversion entry; its specification the mathematician's
+  docs/designs/lab_tools/LAB_TOOLS.md, checked by the chief physicist, its
+  code after the section is agreed). THE ONE CLICK OF A RECORD OF RANK 2,
+  the property of that record wherever it is born: one gather at its
+  completion from both receivers' settings, written as ONE LINE naming
+  both receivers' channels, the content on the body of its birth arm
+  (`_click_pair`, arm 0; POSTULATES.md section 10, the law's one non-local
+  step), read by the joint gather as today. This sentence lives here and
+  nowhere else.
+  `own_grace`, A DESIGN LINE FOR THE OWNER (Reviewer 3's second reading,
+  16:25Z, item 3: a declared window in which the emitter's own set takes
+  none of its own record; should it arise?): as built, from the first
+  interval after its train the emitter's own cells take its record's
+  remnant on no pointer whatever the grace (`_own_take`, item 10 of
+  DECLARATIONS.md section 10), and the grace acts on one thing only, the
+  receiver SET bound to the emitting body (`_exempt`): for `own_grace`
+  intervals after the train that set takes nothing of the body's own
+  record, so that the outgoing wave leaves without a click at its own
+  birth cells and the returning wave (the light clock's round trip, the
+  Sagnac partner's arrival) clicks. The arising form: the receiver's take
+  is already one-way per Port (a set takes at its Ports what arrives from
+  the free side), and the outgoing wave is the body's own source at its
+  cells, not an arrival through a Port; so the rule "a set bound to a body
+  takes at its Ports only what arrives from the free side" would replace
+  the window with no declared integer, at no new cost (the Port masks
+  exist, `_form_take_masks`). What could move: the light clock's first
+  rung, by the intervals in which the outgoing wave's back lobe re-enters
+  through the Port before the round trip (re-derived blind by the same map
+  before any run); the redshift's and Sagnac's first rungs the same way.
+  No code until the owner's word.
 - **The body.** A block of cells with a pair on the six-neighbour term
   (a well of a massive kind, a gap of light's kind) and a momentum: it
   moves one Link at a time by the drive's accumulators (`_move_block`),
@@ -232,7 +264,17 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   its control): the segment [2994, 3006) on the chain of 4096, whole; the
   well [314, 315] on [156, 157]; `margin` pin; the seed FLAT 52428800; the
   ramp 1500 against the relaxation 90 (16 times): met; condition 5 NOT
-  met. The receding index at k = 3 and k = 4
+  met. The muon's form in motion (`layer_pin_k3_14.json`): the same square
+  and profile as at rest; pushed to k = 3 over the ramp 10000, which is 8.6
+  relaxation times by the margin module on its own 200 x 200 layer
+  (omega_b 0.14844 against omega_0 0.14930, the relaxation 1165 intervals;
+  9.7 by section 8's 1027): condition 7 NOT met as the file stands; whether
+  the rule's ten stays and the ramp moves is the owner's word (put to him
+  by the Boss, 14:45Z; his "2 yes" of 15:05Z: the ramp to ten relaxation
+  times or more, regenerated on body-check). The box of edge 28
+  (`moving_28.json` and `rest_28.json`, the same 64^3 board): the seed FLAT
+  (the loader's default); the ramp 1500 against the relaxation 56.8 (26
+  times): met; condition 5 NOT met. The receding index at k = 3 and k = 4
   (`index_moving_long_k{3,4}_away.json`): the segment [1500, 1524) on the
   chain of 4000, whole; the well [314, 315]; the seed 0, a SILENT body (no
   own record, the coupling's medium alone): conditions 3, 4, 5 and 7 do not
@@ -240,17 +282,23 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   which the ramp rule does not reach (no record to lag). The two slits
   (`two_slits.json`): the mirror line, blocks of edge 1 of light's kind
   with the gap [1, 2], single cells, no seed and no clock: conditions 3 to
-  7 do not apply. De Broglie's fringes and the energy of a moving mass
-  (`matter_waves_12.json`, `matter_front_12.json`): the take lines and the
-  barrier line, blocks of edge 1 of the matter kind, silent; on `main`
-  8b9a2897 both files are REFUSED at load for the family's missing `take`
-  pair (the fix on runner-lines 195a9fb9, not yet merged). Bell's four,
-  Malus's four, the pace fans and the cart: no body (the polarisers bodies
-  of one Node with a table, the receivers bodies of one Node). SO: seven
-  files (the deep well, the boxes' two, the light clock, sagnac's two,
-  redshift's two) carry a flat seed and would be refused by the seed check
-  of 16:48Z: a world line owed (their seeds as the module's integer
-  profiles through the generator), not a change of the check.
+  7 do not apply. De Broglie's fringes (`matter_waves_12.json`): the take
+  lines and the barrier line, blocks of edge 1 of the matter kind, silent.
+  The energy of a moving mass (`matter_front_12.json`): NO body (a matter
+  lamp and a one-Node receiver body `front`). On `main` 8b9a2897 both
+  files are REFUSED at load for the family's missing `take` pair (the fix
+  on runner-lines 195a9fb9). Bell's four, Malus's four, the pace fans and
+  the cart: no body (the polarisers bodies of one Node with a table, the
+  receivers bodies of one Node). SO: ELEVEN FILES (the deep well's two,
+  `deep_well_k3_40` and `deep_well_rest_40`; the boxes' four, `moving_20`,
+  `moving_28`, `rest_20`, `rest_28`; the light clock, `light_clock_60`;
+  Sagnac's two, `sagnac_k3` and `sagnac_rest`; the redshift's two,
+  `redshift_k3` and `redshift_control`) carry a flat seed and would be
+  refused by the seed check of 16:48Z, and the muon's form in motion by
+  the ramp: world lines owed (their seeds as the module's integer profiles
+  through the generator; the ramp at ten relaxation times or more), not a
+  change of the check; the owner's word "regenerate" (records 1817 and
+  1818) answered it, done on body-check.
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A
@@ -283,13 +331,17 @@ The features, each a composition of the four and nothing else:
   that one set, the line at the set's first rung; every other receiver a
   sink) + the clock of the receiver (the stamp).
 - **The joint gather** (section 1 item 3, section 14 item 6; BUILD.md
-  section 19): a two-arm emitter + two bodies with a table + two receivers
-  (each the table body's two cells, a plain set with a wheel; "a receiver
-  and a receiver, they are not related", the owner's word of 15:33Z) + the
-  interval as the stamp (the pair's line is stamped `clock_source`
-  "interval", `_click_pair`; no body's count enters); the counts are the
-  reading. The one click of the two-arm record is the emitter's property
-  (its paragraph above), not the receivers'.
+  section 19): an emitter of one arm + the crystal (the lab tool at whose
+  conversion the record of rank 2 is born; on the four Bell files of the
+  cancelled form the lamp's `arms` played the emitter and the crystal
+  together, retired with the crystal's code) + two bodies with a table +
+  two receivers (each the table body's two cells, a plain set with a
+  wheel; "a receiver and a receiver, they are not related", the owner's
+  word of 15:33Z) + the interval as the stamp (the pair's line is stamped
+  `clock_source` "interval", `_click_pair`; no body's count enters); the
+  counts are the reading. The one click of the rank-2 record is the
+  record's own property (the emitter's paragraph above), not the
+  receivers'.
 - **The lamp's ladder** (SIZING.md; BUILD.md section 20): a
   lamp + the named receivers (the screen's sets, the record's ladder) +
   the sinks outside the ladder (the faces; a gap block of pair [1, 2]
@@ -315,14 +367,15 @@ branch on a family's or an experiment's name remains in `src/`.
 
 A fifth thing: NONE (the owner's word of 15:28Z and 15:33Z through the
 Boss, on Reviewer 3's line of 13:38Z that named "the receiver's pair
-form"). The reason, in his words: an emitter to two sides is the same
-emitter with another property, and a receiver is a receiver; the one
-click of a two-arm record, one gather at its completion from both
+form"). The reason, in his words: a receiver is a receiver, and an
+emitter has one arm (15:05Z; the two-arm emitter cancelled); the one
+click of a record of rank 2, one gather at its completion from both
 receivers' settings on the joint weights R = J^2 (the ladder of a rank-2
 record over two tables, POSTULATES.md section 10, ALGEBRA.md 3.4 and 3.6),
-is the property of the record the two-arm emitter births, written in the
-emitter's paragraph and nowhere else; no receiver has a pair form. Nothing
-else: the probes (`probes`, a list of Nodes
+is the property of that record, born at the crystal's conversion, written
+in the emitter's paragraph and nowhere else; no receiver has a pair form
+and no block is a "crystal" to the engine: the crystal is a lab tool, a
+composition. Nothing else: the probes (`probes`, a list of Nodes
 whose light amplitude is written per interval) are a GAMEBOARD reading of
 the board (world.py), not a block; they act on nothing and are compared
 with nothing but the declaration's own script. The splitter of the
