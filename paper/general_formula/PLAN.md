@@ -6910,3 +6910,19 @@ Newton's inverse square stays as the form from the clicks (Section 4);
 Poisson's equation, Coulomb's law, the retarded potential and the
 clock's 1/r form are history. 46 pages; the Boss's plan fills Section 8
 from merged readings and closes at 48.
+
+## Applied (2026-09-24, the owner's word on the submission): commit 34 on paper-48
+
+"Make sure you have everything I need to submit to arXiv, GitHub and
+Foundations of Physics." SUBMISSION.md is the checklist: what is ready
+in the repository (the source that compiles clean with standard
+packages, the PDF, the figures by script, the records file, the title
+page with ORCID, the abstract at 245 words and 1453 characters, the
+keywords, the declarations, the references, the archive's DOI, the
+licence), and what only the author's hand can do (the arXiv account,
+category and licence; the GitHub release and the Zenodo version DOI;
+the journal's system and the cover letter). COVER_LETTER.md is rewritten
+for the paper as it stands (the title, the algebra first, the list with
+its blanks, the declarations). The arXiv bundle (main.tex, figures, the
+records as ancillary files) was compiled clean in a separate directory
+at 46 pages and given to the author.
