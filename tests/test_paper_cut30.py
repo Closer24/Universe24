@@ -150,6 +150,7 @@ def _check_reorder(module) -> None:
         recs.count("\\label{rec:olddelayhead}") == 1
         and "the delay's chain are in the records file" in main
     )
+    assert recs.count("\\label{rec:roadcheck}") == 1 and "no formula of nature was put in" in main
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))

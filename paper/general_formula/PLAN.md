@@ -7191,3 +7191,15 @@ the kinds paragraph and the Conclusion; the physicist's numbers of
 finding 21 (the declared pair's pitch 0.1493, the gap 0.19 percent,
 the deficit 0.56 percent at N_0 = 42.08) and the two "to verify"
 markers resolved by the sources page's rows 55 and 80. 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 07:05Z): commit 56 on paper-48
+
+Reviewer 3's three words on commit 53 and the physicist's exact words
+for the referee's findings 2 (one law, the theorems under the record
+kind), 11 (the abstract's exact and recovered lists) and 12 (181/64 a
+comparison at a declared grain, not a test), under the owner's word.
+The abstract 249 words. The roads' check paragraph in records.tex
+behind a pointer for the page. The abstract's last sentence ("the
+order of its outcomes is not, a FAIL by derivation") is the counter
+wheel's and now differs from row 1c's declared-form reading; raised to
+the Boss, not changed. 48 pages.

@@ -95,6 +95,16 @@ DELAY_HEAD_POINTER = (
     "2026-09-22, history, NOT PREDICTED under the law as it stands; its readings, the ring's run "
     "and the delay's chain are in the records file \\cite{records} (row 13, history).\n\n"
 )
+# "The road to each, and the check that nothing was derived from them" (Section 7):
+# to the records file with a pointer (commit 56, the page count, the pointer rule).
+ROAD_START = "\\paragraph{The road to each, and the check that nothing was derived from them.}"
+ROAD_END = "\\section{The comparison with nature"
+ROAD_POINTER = (
+    "\\paragraph{The road to each, and the check that nothing was derived from them.} The three "
+    "roads are the one chain of Section~\\ref{sec:click}, each from the Inside step, the six verbs "
+    "and the hypotheses named where they enter; the road to each formula and the check that no "
+    "formula of nature was put in are in the records file \\cite{records}.\n\n"
+)
 FLIGHT_POINTER = (
     "The proof (Cauchy--Schwarz against $(1, 1, 1)$), the Courant and lattice Boltzmann "
     "comparisons and the ground of the bound are in the records file \\cite{records}, history.\n"
@@ -306,6 +316,9 @@ def cut(s: str) -> tuple[str, str]:
     i = _once(s, CODE_RUNTIME_START, "the code's gates")
     j = s.index(CODE_RUNTIME_END, i)
     coderuntime, s = s[i:j], s[:i] + CODE_RUNTIME_POINTER + s[j:]
+    i = _once(s, ROAD_START, "the roads' check")
+    j = s.index(ROAD_END, i)
+    roadcheck, s = s[i:j], s[:i] + ROAD_POINTER + s[j:]
     i = _once(s, LIGHT_START, "the delay's head")
     j = s.index(DELAY_HEAD_END, i)
     delayhead, s = s[i:j], s[:i] + DELAY_HEAD_POINTER + s[j:]
@@ -349,7 +362,9 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
         + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
         + oldclick
-        + "\n\\section{Light past a held mass by the time part alone, the delay paragraph's head, history}\\label{rec:olddelayhead}\n\n"
+        + "\n\\section{The road to each formula, and the check that nothing was derived from them, as Section 7 carried it}\\label{rec:roadcheck}\n\n"
+        + roadcheck
+        + "\n\n\\section{Light past a held mass by the time part alone, the delay paragraph's head, history}\\label{rec:olddelayhead}\n\n"
         + delayhead
         + "\n\n\\section{The beam law's weight rule for its rows 13 and 14, history}\\label{rec:weightrule}\n\n"
         + weightrule
@@ -399,6 +414,10 @@ def strip_block(body: str) -> str:
         return ""
     if FAIL_CUTS[0][0] in body:  # the three FAIL rows, one sentence each
         body, _ = cut_fail_rows(body)
+    if ROAD_START in body:  # the roads' check, likewise (its block ends before the section)
+        i = body.index(ROAD_START)
+        j = body.index(ROAD_END, i) if ROAD_END in body[i:] else len(body)
+        body = body[:i] + ROAD_POINTER + body[j:]
     if LIGHT_START in body and DELAY_HEAD_END in body:  # the delay's head, likewise
         i = body.index(LIGHT_START)
         j = body.index(DELAY_HEAD_END, i)

@@ -6103,6 +6103,76 @@ CORRECTIONS = [
         "\\texttt{docs/designs/detector\\_law/SOURCES\\_VERIFIED.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 2aeea22c.",
         "\\texttt{docs/designs/detector\\_law/SOURCES\\_VERIFIED.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 2aeea22c (its rows 55 and 80 at 6f51f630).",
     ),
+    (
+        "commit 56 (A b), Reviewer 3: the click's weight under the parallelogram axiom in What is proved",
+        "the click's weight a positive quadratic form of power $2$;",
+        "the click's weight a positive quadratic form of power $2$ under the parallelogram axiom;",
+    ),
+    (
+        "commit 56 (A c), Reviewer 3: the clock_stamp phrase scoped to the registered pair worlds, history",
+        "the arm's own count is read only under the later key \\texttt{clock\\_stamp}, outside this paper's law)",
+        "the arm's own count read under the key \\texttt{clock\\_stamp} in the registered pair worlds of the engine before 2026-09-23, history; every world of the GO stamps the click with the detector's count)",
+    ),
+    (
+        "commit 56 (B, finding 2), the physicist's paragraph after Theorem 5: the theorems under the record kind",
+        " drive, whose later coincident fire is lost under the engine's rule (P5, Section~\\ref{sec:law}), is outside it and is not injective in that case.\n\\end{theorem}\n",
+        " drive, whose later coincident fire is lost under the engine's rule (P5, Section~\\ref{sec:law}), is outside it and is not injective in that case.\n\\end{theorem}\n\n\\paragraph{The theorems under the record kind.} Theorems~\\ref{th:isometry} and~\\ref{th:bijection} are theorems of the rows' linear block. Under the record kind of Section~\\ref{sec:massive} the same tables act on the record's pair of levels by the linear form \\cite[1.7]{algebra}: the turn by $t$ is the linear map $(a_{\\mathrm{now}} S[k+t] - a_{\\mathrm{before}} S[t])/S[k]$, inverted by the turn by $-t$ with the remainder kept, and it carries the character to the character with its amplitude unchanged; so no interval between clicks deletes the amplitude or the phase, and the isometry is of the amplitude, exact in the reals and within the tables' rounding in the integers. That inheritance is proved there by one identity and is not restated here. Theorems~\\ref{th:gleason}, \\ref{th:marginals} and~\\ref{th:bell} are theorems of the click, of its weights and its counts (Definition~\\ref{def:click}), which the record kind leaves as they are; they hold under the law as stated.\n",
+    ),
+    (
+        "commit 56 (B, finding 11), the physicist's abstract sentences",
+        "Exact on the lattice: the books (the conserved integer sums), Gauss's law, every direction's pace, the Clauser--Horne--Shimony--Holt (CHSH) sum $181/64$, $1.05$ standard errors from the measurement. Recovered in limits: $c = 1/\\sqrt3$; Tsirelson's value in the joint limit of the grain $\\Nphi$ and the tables' scale; under a shell average Newton's inverse square. Under two named hypotheses, Lorentz's factors and Einstein's step are reached, the equivalence principle under the first; the law as built meets the first only.",
+        "Exact on the lattice: the record's ledger (the conserved integer sums), the click's weight a positive quadratic form, the exact count marginals of a pair, and the Clauser--Horne--Shimony--Holt (CHSH) sum as an exact rational of the declared grain, $181/64$ at $\\Nphi = 2048$. Recovered in limits: $c = 1/\\sqrt3$ as the band's pace at $k \\to 0$, isotropic at second order by the $48$; Born's rule; Tsirelson's value in the joint limit of the grain and the tables' scale. Under two named hypotheses, Lorentz's factors and Einstein's step are reached; the law as built meets the first only.",
+    ),
+    (
+        "commit 56 (B, finding 11), What is proved: Gauss's law the row form's theorem, its record",
+        "Gauss's law of a free family's flux under its world condition;",
+        "Gauss's law of a free family's flux under its world condition (the row form's theorem, its record);",
+    ),
+    (
+        "commit 56 (B, finding 11), What is proved: the pace's line",
+        "the pace of every direction, isotropic within $1/T_D$;",
+        "the pace's bound, one Link per interval on every line, and $c = 1/\\sqrt3$ the band's pace at $k \\to 0$ on every direction, its dispersion declared;",
+    ),
+    (
+        "commit 56 (B, finding 12), the one page's 181/64 sentence",
+        "One finite-grain value, $S = 181/64$, inside Poh et al. at $1.05$ standard errors, a prediction once the wheel meets no-signalling in the order of its outcomes.",
+        "$S = 181/64$ at the declared grain $\\Nphi = 2048$, $1.05$ standard errors from Poh et al.: a comparison at a declared grain, not a test of the grain; the measurement excludes the grains whose $S(\\Nphi)$ lies outside its band and the shortfall of a measurement from $2\\sqrt2$ is its apparatus's.",
+    ),
+    (
+        "commit 56 (B, finding 12), row 1a",
+        "$S = 181/64 = 2.828$ at $\\Nphi = 2048$, exact; nature $2.42 \\pm 0.20$ \\cite{hensen2015}",
+        "$S = 181/64 = 2.828$ at the declared grain $\\Nphi = 2048$, exact, $1.05$ standard errors from Poh et al.: a comparison at a declared grain, not a test of the grain (the measurement excludes the grains whose $S(\\Nphi)$ lies outside its band; the shortfall of a measurement from $2\\sqrt2$ is its apparatus's); nature $2.42 \\pm 0.20$ \\cite{hensen2015}",
+    ),
+    (
+        "commit 56, the abstract under 250 words (the physicist's sentences untouched): the pinned readings' clause shorter",
+        "the pinned readings fill the table as runs merge, none yet, a miss written as a miss.",
+        "no pinned reading is in the table yet.",
+    ),
+    (
+        "commit 56, the abstract under 250 words: Born's rule named once, in the recovered list",
+        "Born's form its square at the click under one axiom, Born's rule its limit.",
+        "Born's form its square at the click under one axiom.",
+    ),
+    (
+        "commit 56, the page count: the captions' and floats' skips smaller (formatting only)",
+        "\\makeatletter\\@secpenalty=0\\makeatother\n",
+        "\\makeatletter\\@secpenalty=0\\makeatother\n\\setlength{\\abovecaptionskip}{4pt}\\setlength{\\belowcaptionskip}{2pt}\\setlength{\\textfloatsep}{12pt}\n",
+    ),
+    (
+        "commit 56, the page count: the longtable's skips smaller, set after the package is loaded",
+        "\\begin{document}",
+        "\\setlength{\\LTpre}{6pt}\\setlength{\\LTpost}{6pt}\n\\begin{document}",
+    ),
+    (
+        "commit 56, the abstract under 250 words (2)",
+        "The rule stated here has one object:",
+        "The rule has one object:",
+    ),
+    (
+        "commit 56, the abstract under 250 words (3)",
+        "and the atom's $1/j^2$ ladder are conjectures.",
+        "and the atom's ladder are conjectures.",
+    ),
 ]
 
 
