@@ -1824,6 +1824,73 @@ def test_ai_the_emitters_own_take_wins_over_its_sets_exemption_at_its_cells():
         assert block.stepped > 0 if momentum[0] else block.stepped == 0
 
 
+def test_ak_a_stepping_block_past_its_hold_books_nothing_of_its_own_record():
+    """BUILD.md section 18 (item 10 at every age, the physicist's finding on sagnac_k3): an
+    emitting block whose set IS its cells (own_grace 70, W 64, the set's wheel 256) pushed at
+    k = 3 on a chain of 600 with a light lamp at x = 40 behind it: over 900 intervals, past the
+    hold of train + own_grace, the block steps onto its own records' remnants and books NOTHING
+    of them (every own record's pointer at the set and at the block's own cell 0 at every
+    interval, `absorbed` the faces' pointers alone, its row 0 at the current cells from the
+    first interval after its train), while the lamp's record
+    entering by the same steps books to the set (its pointer there above 0); the books balance.
+    The edge case: before this line the hop booked the own record's entered content to the
+    block's own pointer once the hold had ended (a self-click one record away)."""
+    document = massive_world([600, 1, 1], CHAIN, [800, 809], faces={"x": "open"})
+    document["ticks"] = 900
+    document["age_bound"] = 1 << 20
+    document["clock_stamp"] = True
+    document["wheel"] = 64
+    document["measured"] = [
+        lamp_entry(40, 2),
+        {
+            "position": [200, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [64, 0, 0],
+            "fixed": True,
+            "side": 12,
+            "pair": [800, 800],
+            "seed": 50 << 20,
+            "coupling": {"G": [1, 50], "g": [1, 1000]},
+            "wheel": 64,
+            "emits": "light",
+            "own_grace": 70,
+            "margin": "control",
+        },
+    ]
+    document["detectors"] = [{"name": "at_a", "block": 1, "wheel": 256}]
+    world = parse_nature_beam_world(document)
+    simulation = DetectorLawSimulation(world)
+    block = simulation.blocks[0]
+    cell = simulation.cell_names.index("at_a")
+    past_hold_hops = 0
+    foreign = None
+    for _ in range(900):
+        stepped = block.stepped
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+        for live in simulation.records.values():
+            if live.family != 0:
+                continue
+            if live.emitter == block.number:
+                # nothing on the set's pointer nor on the block's own cell; what
+                # the open faces take is the sponge's, not the emitter's
+                assert live.pointers[cell] == 0 and live.pointers[block.cell] == 0, (
+                    simulation.tick,
+                    live.identity,
+                )
+                assert live.absorbed == sum(live.pointers)
+                if not live.sourcing and live.age >= live.train:
+                    assert not np.any(live.now[block.mask]), (simulation.tick, live.identity)
+                    if block.stepped != stepped and live.age > live.train + 70:
+                        past_hold_hops += 1
+            else:
+                foreign = live
+    assert past_hold_hops > 50 and block.stepped > 100
+    assert foreign is not None and foreign.pointers[cell] > 0
+
+
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
     """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
     kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the

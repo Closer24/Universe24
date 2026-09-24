@@ -1188,6 +1188,21 @@ on the light clock's chain.
   k = 3: the own record's row 0 at the current cells from the first
   interval after its train at every interval, the set booking nothing
   of it, the books balanced, every level below four times the seed.
+- THE HOP'S TAKE OF THE BLOCK'S OWN RECORD AT EVERY AGE (the physicist's
+  finding on the Preliminary Runner's sagnac_k3 at 540456da, 09:12Z; the
+  Boss's 09:30Z): `_move_block`'s hop rule exempted the block's own
+  emitted records only during the hold of train + own_grace, so once the
+  hold had ended a step onto an own record's remnant booked that Node's
+  content onto the block's own pointer (at_a's pointers on 37 of A's 69
+  open records, first rungs on 16 of them at about 3500 after the birth,
+  a self-click one record away at 0.14 percent of the absorbed against
+  the click's 1 / (2 W) = 0.195). Item 10 has the emitter's take of its
+  own record on no pointer and not into `absorbed` at ANY age, so the
+  hop now holds the entered Node at 0 for the block's own record and
+  books nothing, from the first interval after the train on (during the
+  train the row evolves, line B); a foreign record's entered content
+  books as before. Test (ak) pins it on a stepping block with own_grace
+  70 and a lamp behind it.
 - THE GUARD (Reviewer 3, 07:43Z, on the sagnac_k3 phantom): before the
   booking loop an absorbing Node whose cell is the sentinel refuses the
   interval naming the Node (a Python list's index -1 would otherwise

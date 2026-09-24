@@ -743,7 +743,16 @@ class DetectorLawSimulation:
             for live in self.records.values():
                 if not live.ports:
                     continue
-                exempt = live.emitter == block.number and self._in_grace(live)
+                # The block's own emitted record: during its train the cells
+                # insert and the row evolves (line B); from the first interval
+                # after the train the block's take of its own record books
+                # nothing, at ANY age (item 10, record 1711: on no pointer and
+                # not into `absorbed`), so the Node the block steps into is
+                # held at 0 for that record and booked nowhere (before this
+                # line the hop booked it to the block's own pointer once the
+                # hold of train + own_grace had ended).
+                own = live.emitter == block.number
+                exempt = own and self._own_take(live) is None
                 ports = []
                 for axis, sign, mask in self.take_masks:
                     kept = next(
@@ -768,6 +777,10 @@ class DetectorLawSimulation:
                     ports.append(fresh)
                 live.ports = ports
                 if exempt or not entered.any():
+                    continue
+                if own:
+                    live.now[entered] = 0
+                    live.before[entered] = 0
                     continue
                 motion = np.where(entered, live.now - live.before, 0).astype(object)
                 value = int(np.sum(motion * motion))
