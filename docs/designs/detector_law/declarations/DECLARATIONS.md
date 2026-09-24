@@ -25,7 +25,9 @@ the pair [p, q] on N (the phase per Link, the period 2 pi q / p intervals)
 the pair (a_before, a_now) = A (cos(phi - omega), cos phi) determines phi
 on Z_N by the phase table at load (`core.phase.phase_cosines`, cos x 256,
 immutable law data; the nearest table entry, an integer comparison, no
-root and no float at run time); the table's action is then the algebra's
+root and no float at run time; SUPERSEDED for the run by the LINEAR FORM of
+section 14: the tables act on the pair itself, no nearest entry, no grain
+beyond the table's 1 / 256 in the coefficients); the table's action is then the algebra's
 own on that phi (the rotation **U**_s of ALGEBRA.md 3.6 for a polariser,
 the split's integer matrix of 4.6 for a splitter), and the click the
 rung on the table's weights (4.12). The reading is a declared input of
@@ -140,7 +142,8 @@ twice; no world of its own).
    [21, 20] and [20, 21] by the arrival's side, 21^2 + 20^2 = 29^2, and
    the turns [16, 0], [0, 16], a quarter turn on one output), acting on the
    record's phase read as declared above: a partial re-emission with a
-   phase, the fourth receiver form.
+   phase, the fourth receiver form: ADDITIVE, on the pair, one table Node per
+   Node of the line across the corridor (section 14).
 2. The declared integers (kind 2): N = 64, the wheel [1, 64], W = 64, K,
    Q, S and the release as the first build's chain world declares them
    (`tests/test_detector_law.py`), h = 1, the train 128 periods, the arm
@@ -610,3 +613,51 @@ nature.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
    to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
    `make_worlds.py`; HOST a minute each.
+
+## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
+
+1. THE READING'S GRAIN (the builder's finding, RIGHT): the table is
+   C = round(256 cos), so two phases one clock step apart tie wherever
+   256 k (2 pi / N) |sin phi| < 1: at N = 2048 no clock step k reads every
+   phase (at k = 1 within 23 degrees of an extremum, at k = 9 still 9
+   percent of the circle, and the two branches tie at every zero
+   crossing). My line of 00:00Z (the wheel [8, 2048]) is WITHDRAWN: it does
+   not remove the ties. DECIDED, option (iii): THE LINEAR FORM. The pair
+   (a_before, a_now) determines the record's phase and amplitude together,
+   and every table (the polariser's rotation U_s at its bar, the splitter's
+   integer matrix) acts on the pair itself by verb B on the record's two
+   columns: the drive A cos(phi + t) = (a_now S[k + t] - a_before S[t]) /
+   S[k] (the angle-addition identity, S the sine table, k the clock's step),
+   one division by S[k] per output, no nearest entry, no tie, no
+   amplitude register, no reading at all; the click stays the rung on the
+   table's weights (the quadratic form). The grain is the table's 1 / 256
+   in the coefficients only. N = 2048 with the wheel [1, N] stands for the
+   Bell rows, and the pin 181 / 64 = 2.828125 stands: it is 4 x 181 / 256,
+   the table's own rounding of cos 45 degrees, which the linear form
+   carries unchanged. Options (i) N = 64 and (ii) a finer table are not
+   taken (the first moves the pin, the second is law data).
+2. THE SPLITTER'S AMPLITUDE: no per-record register at the table's Node
+   ("the largest level shown" is a register beyond the events there, which
+   the contract forbids): the drive is the linear map of the pair above,
+   the record's own levels, nothing kept.
+3. THE SPLITTER'S RE-EMISSION: ADDITIVE, not hard. The fourth receiver form
+   is "a partial re-emission with a phase of what the rule gives them", the
+   mirror its model: the re-emitted term is ADDED to the rule's value at
+   the output Nodes, as the coupling's source term is added in
+   MASSIVE_RECORD.md section 7, so the record's own wave passing round a
+   held Node and what the other Ports give are not overwritten; a hard
+   level is a lamp's, a source, and would inject or remove the conserved
+   form at the port. With the split's pair [21, 20] and [20, 21] over 29
+   and the quarter turn, the two outputs' squares sum to the input's
+   (21^2 + 20^2 = 29^2) and I holds at the table, the division's remainder
+   carried as everywhere in the rule.
+4. THE SPLITTER'S EXTENT (row 2b, section 3): one table Node per Node of
+   the line across the corridor, as the detector sets are (one held Node
+   in a corridor would let the wave pass round it); the same for the
+   polariser's bar (rows 1a to 1d, 9): the table on every Node of the
+   bar's line.
+5. What changes in the builder's component 3: the amplitude and the
+   re-emission (one change in the split, as he said) and the extent; the
+   phase reading of component 1 stays as a diagnostic (GAMEBOARD, the
+   nearest angle) and is not the tables' input. The pins of sections 1, 3,
+   5 and 6 are unchanged.
