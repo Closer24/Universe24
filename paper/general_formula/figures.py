@@ -23,6 +23,13 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
+matplotlib.rcParams.update(
+    {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
+        "font.size": 8,
+    }
+)  # the journal's lettering: Helvetica or Arial, 8 to 12 pt
 import matplotlib.pyplot as plt  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -33,6 +40,12 @@ MUTED = DARK
 WHITE = "#ffffff"
 TSIRELSON = 2 * math.sqrt(2)
 POH_S, POH_SIGMA = 2.82759, 0.00051
+
+
+def save(fig, path):
+    """The PDF the paper includes and the EPS the journal asks for, side by side."""
+    fig.savefig(path)
+    fig.savefig(path.with_suffix(".eps"))
 
 
 def load_checks():
@@ -87,7 +100,7 @@ def figure_mach_zehnder(summary: dict, output: Path) -> None:
     ax.legend(frameon=False, fontsize=8, ncol=3, loc="upper right")
     style(ax)
     fig.tight_layout()
-    fig.savefig(output / "mach_zehnder.pdf")
+    save(fig, output / "mach_zehnder.pdf")
     plt.close(fig)
 
 
@@ -126,7 +139,7 @@ def figure_two_slits(summary: dict, output: Path) -> None:
     for ax in (ax1, ax2):
         style(ax)
     fig.tight_layout()
-    fig.savefig(output / "two_slits.pdf")
+    save(fig, output / "two_slits.pdf")
     plt.close(fig)
 
 
@@ -182,7 +195,7 @@ def figure_pair(summary: dict, checks, output: Path) -> None:
     ax.legend(frameon=False, fontsize=8, loc="upper center")
     style(ax)
     fig.tight_layout()
-    fig.savefig(output / "pair_64.pdf")
+    save(fig, output / "pair_64.pdf")
     plt.close(fig)
 
 
@@ -231,7 +244,7 @@ def figure_lattice(output: Path) -> None:
             c[1] + 1.35 * d[1],
             c[2] + 1.35 * d[2],
             name,
-            fontsize=7,
+            fontsize=8,
             ha="center",
             va="center",
             color=INK,
@@ -240,7 +253,7 @@ def figure_lattice(output: Path) -> None:
         0.5,
         0.03,
         "one Node and its six Ports, the Links to its six neighbours",
-        fontsize=7.5,
+        fontsize=8.5,
         ha="center",
         transform=ax.transAxes,
         color=INK,
@@ -249,7 +262,7 @@ def figure_lattice(output: Path) -> None:
     ax.view_init(elev=22, azim=-58)
     ax.set_axis_off()
     fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
-    fig.savefig(output / "lattice.pdf")
+    save(fig, output / "lattice.pdf")
     plt.close(fig)
 
 
@@ -341,14 +354,14 @@ def figure_mechanism(output: Path) -> None:
         (6, 7, "pixel 5"),
         (7, 8, "pixel 6"),
     ):
-        ax2.text(1.06, (y0 + y1) / 2, name, fontsize=6.5, va="center")
+        ax2.text(1.06, (y0 + y1) / 2, name, fontsize=8.5, va="center")
     ax2.plot(0.45, 4.6, "o", color=INK, markersize=3)
     ax2.text(0.62, 4.6, "$u$", fontsize=9, ha="left", va="center")
-    ax2.text(0.6, n + 0.3, "the rungs $b_k$ of the ladder", fontsize=7.5, ha="center")
+    ax2.text(0.6, n + 0.3, "the rungs $b_k$ of the ladder", fontsize=8.5, ha="center")
     ax2.text(0.2, -0.5, "Outside: the click", fontsize=8, ha="left")
     ax2.axis("off")
     fig.subplots_adjust(left=0.02, right=0.98, top=0.98, bottom=0.05, wspace=0.05)
-    fig.savefig(output / "mechanism.pdf")
+    save(fig, output / "mechanism.pdf")
     plt.close(fig)
 
 
@@ -387,7 +400,7 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
     ax.tick_params(labelsize=7)
     style(ax)
     # The legend at the lower left, clear of the inset (a referee's read of 2026-09-22).
-    ax.legend(frameon=False, fontsize=6, loc="lower left")
+    ax.legend(frameon=False, fontsize=8, loc="lower left")
     # The inset: the plateau and its end, where the main panel cannot resolve them.
     powers = [n for n in ns if n & (n - 1) == 0 and n >= 512]
     inset = ax.inset_axes([0.38, 0.33, 0.58, 0.36])
@@ -416,7 +429,7 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
         xytext=(0, -8),
         textcoords="offset points",
         ha="center",
-        fontsize=6,
+        fontsize=8,
         color=INK,
     )
     inset.annotate(
@@ -425,7 +438,7 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
         xytext=(-3, 4),
         textcoords="offset points",
         ha="right",
-        fontsize=6,
+        fontsize=8,
         color=INK,
     )
     inset.set_xscale("log", base=2)
@@ -433,11 +446,11 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
     inset.set_ylim(2.8275, 2.8292)
     inset.set_yticks([2.828, 2.829])
     inset.tick_params(labelsize=5.5, length=2, pad=1)
-    inset.set_title("512 to 16384", fontsize=6, pad=2)
+    inset.set_title("512 to 16384", fontsize=8, pad=2)
     for side in ("top", "right"):
         inset.spines[side].set_visible(False)
     fig.tight_layout()
-    fig.savefig(output / "s_of_n.pdf")
+    save(fig, output / "s_of_n.pdf")
     plt.close(fig)
 
 

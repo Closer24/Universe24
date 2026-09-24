@@ -5578,6 +5578,186 @@ CORRECTIONS = [
         "width=0.55\\linewidth]{figures/lattice.pdf}",
         "width=0.42\\linewidth]{figures/lattice.pdf}",
     ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (bell1964)",
+        "\\bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).",
+        "\\bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964), \\url{https://doi.org/10.1103/PhysicsPhysiqueFizika.1.195}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (chsh1969)",
+        "\\bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).",
+        "\\bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969), \\url{https://doi.org/10.1103/PhysRevLett.23.880}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (hpp1976)",
+        "\\bibitem{hpp1976} J. Hardy, O. de Pazzis and Y. Pomeau, Phys. Rev. A 13, 1949 (1976).",
+        "\\bibitem{hpp1976} J. Hardy, O. de Pazzis and Y. Pomeau, Phys. Rev. A 13, 1949 (1976), \\url{https://doi.org/10.1103/PhysRevA.13.1949}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (fhp1986)",
+        "\\bibitem{fhp1986} U. Frisch, B. Hasslacher and Y. Pomeau, Phys. Rev. Lett. 56, 1505 (1986).",
+        "\\bibitem{fhp1986} U. Frisch, B. Hasslacher and Y. Pomeau, Phys. Rev. Lett. 56, 1505 (1986), \\url{https://doi.org/10.1103/PhysRevLett.56.1505}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (herrmann2009)",
+        '\\bibitem{herrmann2009} S. Herrmann, A. Senger, K. M\\"ockel, M. Nagel, E. V. Kovalchuk and A. Peters, Rotating optical cavity experiment testing Lorentz invariance at the $10^{-17}$ level, Phys. Rev. D 80, 105011 (2009).',
+        '\\bibitem{herrmann2009} S. Herrmann, A. Senger, K. M\\"ockel, M. Nagel, E. V. Kovalchuk and A. Peters, Rotating optical cavity experiment testing Lorentz invariance at the $10^{-17}$ level, Phys. Rev. D 80, 105011 (2009), \\url{https://doi.org/10.1103/PhysRevD.80.105011}.',
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (nagel2015)",
+        "\\bibitem{nagel2015} M. Nagel, S. R. Parker, E. V. Kovalchuk, P. L. Stanwix, J. G. Hartnett, E. N. Ivanov, A. Peters and M. E. Tobar, Nature Commun. 6, 8174 (2015).",
+        "\\bibitem{nagel2015} M. Nagel, S. R. Parker, E. V. Kovalchuk, P. L. Stanwix, J. G. Hartnett, E. N. Ivanov, A. Peters and M. E. Tobar, Nature Commun. 6, 8174 (2015), \\url{https://doi.org/10.1038/ncomms9174}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (bailey1977)",
+        "\\bibitem{bailey1977} J. Bailey et al., Nature 268, 301 (1977).",
+        "\\bibitem{bailey1977} J. Bailey et al., Nature 268, 301 (1977), \\url{https://doi.org/10.1038/268301a0}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (botermann2014)",
+        "\\bibitem{botermann2014} B. Botermann et al., Phys. Rev. Lett. 113, 120405 (2014).",
+        "\\bibitem{botermann2014} B. Botermann et al., Phys. Rev. Lett. 113, 120405 (2014), \\url{https://doi.org/10.1103/PhysRevLett.113.120405}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (sinha2010)",
+        "\\bibitem{sinha2010} U. Sinha, C. Couteau, T. Jennewein, R. Laflamme and G. Weihs, Science 329, 418 (2010).",
+        "\\bibitem{sinha2010} U. Sinha, C. Couteau, T. Jennewein, R. Laflamme and G. Weihs, Science 329, 418 (2010), \\url{https://doi.org/10.1126/science.1190545}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (gleason1957)",
+        "\\bibitem{gleason1957} A. M. Gleason, J. Math. Mech. 6, 885 (1957).",
+        "\\bibitem{gleason1957} A. M. Gleason, J. Math. Mech. 6, 885 (1957), \\url{https://doi.org/10.1512/iumj.1957.6.56050}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (donoho1989)",
+        "\\bibitem{donoho1989} D. L. Donoho and P. B. Stark, SIAM J. Appl. Math. 49, 906 (1989).",
+        "\\bibitem{donoho1989} D. L. Donoho and P. B. Stark, SIAM J. Appl. Math. 49, 906 (1989), \\url{https://doi.org/10.1137/0149053}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (kennard1927)",
+        "\\bibitem{kennard1927} E. H. Kennard, Z. Phys. 44, 326 (1927).",
+        "\\bibitem{kennard1927} E. H. Kennard, Z. Phys. 44, 326 (1927), \\url{https://doi.org/10.1007/BF01391200}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (schwinger1960)",
+        "\\bibitem{schwinger1960} J. Schwinger, Proc. Natl. Acad. Sci. USA 46, 570 (1960).",
+        "\\bibitem{schwinger1960} J. Schwinger, Proc. Natl. Acad. Sci. USA 46, 570 (1960), \\url{https://doi.org/10.1073/pnas.46.4.570}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (robertson1929)",
+        "\\bibitem{robertson1929} H. P. Robertson, Phys. Rev. 34, 163 (1929).",
+        "\\bibitem{robertson1929} H. P. Robertson, Phys. Rev. 34, 163 (1929), \\url{https://doi.org/10.1103/PhysRev.34.163}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (maassen1988)",
+        "\\bibitem{maassen1988} H. Maassen and J. B. M. Uffink, Phys. Rev. Lett. 60, 1103 (1988).",
+        "\\bibitem{maassen1988} H. Maassen and J. B. M. Uffink, Phys. Rev. Lett. 60, 1103 (1988), \\url{https://doi.org/10.1103/PhysRevLett.60.1103}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (jordan1935)",
+        "\\bibitem{jordan1935} P. Jordan and J. von Neumann, Ann. Math. 36, 719 (1935).",
+        "\\bibitem{jordan1935} P. Jordan and J. von Neumann, Ann. Math. 36, 719 (1935), \\url{https://doi.org/10.2307/1968653}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (bialynicki1994)",
+        "\\bibitem{bialynicki1994} I. Bialynicki-Birula, Phys. Rev. D 49, 6920 (1994).",
+        "\\bibitem{bialynicki1994} I. Bialynicki-Birula, Phys. Rev. D 49, 6920 (1994), \\url{https://doi.org/10.1103/PhysRevD.49.6920}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (meyer1996)",
+        "\\bibitem{meyer1996} D. A. Meyer, J. Stat. Phys. 85, 551 (1996).",
+        "\\bibitem{meyer1996} D. A. Meyer, J. Stat. Phys. 85, 551 (1996), \\url{https://doi.org/10.1007/BF02199356}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (arrighi2019)",
+        "\\bibitem{arrighi2019} P. Arrighi, Natural Computing 18, 885 (2019).",
+        "\\bibitem{arrighi2019} P. Arrighi, Natural Computing 18, 885 (2019), \\url{https://doi.org/10.1007/s11047-019-09762-6}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (bohm1952)",
+        "\\bibitem{bohm1952} D. Bohm, Phys. Rev. 85, 166 and 180 (1952).",
+        "\\bibitem{bohm1952} D. Bohm, Phys. Rev. 85, 166 and 180 (1952), \\url{https://doi.org/10.1103/PhysRev.85.166} and \\url{https://doi.org/10.1103/PhysRev.85.180}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (dgz1992)",
+        '\\bibitem{dgz1992} D. D\\"urr, S. Goldstein and N. Zangh\\`{\\i}, J. Stat. Phys. 67, 843 (1992).',
+        '\\bibitem{dgz1992} D. D\\"urr, S. Goldstein and N. Zangh\\`{\\i}, J. Stat. Phys. 67, 843 (1992), \\url{https://doi.org/10.1007/BF01049004}.',
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (spekkens2007)",
+        "\\bibitem{spekkens2007} R. W. Spekkens, Phys. Rev. A 75, 032110 (2007).",
+        "\\bibitem{spekkens2007} R. W. Spekkens, Phys. Rev. A 75, 032110 (2007), \\url{https://doi.org/10.1103/PhysRevA.75.032110}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (hs2010)",
+        "\\bibitem{hs2010} N. Harrigan and R. W. Spekkens, Found. Phys. 40, 125 (2010).",
+        "\\bibitem{hs2010} N. Harrigan and R. W. Spekkens, Found. Phys. 40, 125 (2010), \\url{https://doi.org/10.1007/s10701-009-9347-0}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (fine1982)",
+        "\\bibitem{fine1982} A. Fine, Phys. Rev. Lett. 48, 291 (1982).",
+        "\\bibitem{fine1982} A. Fine, Phys. Rev. Lett. 48, 291 (1982), \\url{https://doi.org/10.1103/PhysRevLett.48.291}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (tsirelson1980)",
+        "\\bibitem{tsirelson1980} B. S. Cirel'son, Lett. Math. Phys. 4, 93 (1980).",
+        "\\bibitem{tsirelson1980} B. S. Cirel'son, Lett. Math. Phys. 4, 93 (1980), \\url{https://doi.org/10.1007/BF00417500}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (pr1994)",
+        "\\bibitem{pr1994} S. Popescu and D. Rohrlich, Found. Phys. 24, 379 (1994).",
+        "\\bibitem{pr1994} S. Popescu and D. Rohrlich, Found. Phys. 24, 379 (1994), \\url{https://doi.org/10.1007/BF02058098}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (poh2015)",
+        "\\bibitem{poh2015} H. S. Poh, S. K. Joshi, A. Cer\\`e, A. Cabello and C. Kurtsiefer, Phys. Rev. Lett. 115, 180408 (2015).",
+        "\\bibitem{poh2015} H. S. Poh, S. K. Joshi, A. Cer\\`e, A. Cabello and C. Kurtsiefer, Phys. Rev. Lett. 115, 180408 (2015), \\url{https://doi.org/10.1103/PhysRevLett.115.180408}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (hensen2015)",
+        "\\bibitem{hensen2015} B. Hensen et al., Nature 526, 682 (2015).",
+        "\\bibitem{hensen2015} B. Hensen et al., Nature 526, 682 (2015), \\url{https://doi.org/10.1038/nature15759}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (grangier1986)",
+        "\\bibitem{grangier1986} P. Grangier, G. Roger and A. Aspect, Europhys. Lett. 1, 173 (1986).",
+        "\\bibitem{grangier1986} P. Grangier, G. Roger and A. Aspect, Europhys. Lett. 1, 173 (1986), \\url{https://doi.org/10.1209/0295-5075/1/4/004}.",
+    ),
+    (
+        "commit 45, Springer's reference form: the DOI as a full link (altschul2006)",
+        "\\bibitem{altschul2006} B. Altschul, Phys. Rev. Lett. 96, 201101 (2006); Phys. Rev. D 74, 083003 (2006); the coefficient's value and its page to verify.",
+        "\\bibitem{altschul2006} B. Altschul, Phys. Rev. Lett. 96, 201101 (2006), \\url{https://doi.org/10.1103/PhysRevLett.96.201101}; Phys. Rev. D 74, 083003 (2006), \\url{https://doi.org/10.1103/PhysRevD.74.083003}; the coefficient's value and its page to verify.",
+    ),
+    (
+        "commit 45, Springer's reference form: the archive's DOI as a full link",
+        "Zenodo (2026), doi:10.5281/zenodo.22738746 (concept DOI, resolving to the latest version).",
+        "Zenodo (2026), \\url{https://doi.org/10.5281/zenodo.22738746} (the concept DOI, resolving to the latest version).",
+    ),
+    (
+        "commit 45, Springer's caption form: Fig. 1 and Table 1 with no punctuation after the number",
+        "\\usepackage{caption}",
+        "\\usepackage{caption}\n\\captionsetup{labelsep=space}\n\\renewcommand{\\figurename}{Fig.}",
+    ),
+    (
+        "commit 45, Springer's abstract rule: no undefined abbreviation, CHSH expanded",
+        "every direction's pace, the CHSH sum $181/64$",
+        "every direction's pace, the Clauser--Horne--Shimony--Holt (CHSH) sum $181/64$",
+    ),
+    (
+        "commit 45, the owner's word (04:10Z): the affiliation's city and country",
+        "\\small Independent researcher\\\\",
+        "\\small Independent researcher, Haifa, Israel\\\\",
+    ),
+    (
+        "commit 45, the order channel declared (the owner's word of 04:12Z, record 1647): the wheel other than a counter",
+        "open until the wheel is other than a counter, which P4 (no draw) does not allow, or the claim is kept to the counts, as it is here.",
+        "open until the wheel is other than a counter (P4 allows no draw; the declared form below is a permutation from a world input, not a draw), or the claim is kept to the counts, as it is here.",
+    ),
+    (
+        "commit 45, the order channel declared: the model's declared form and the honest sentence",
+        "the pair's construction models a Bell experiment in its counts only, not in its record of outcomes.",
+        "the pair's construction models a Bell experiment in its counts only, not in its record of outcomes. The declared form (2026-09-24, \\cite[record 1647]{log}): the births of the pair record take the residues of $\\Z_{\\Nphi}$, one per $u$, in an order set by the world's seed through a declared integer hash (a Fisher--Yates permutation under a 64-bit SplitMix64 mixing hash) in place of the counter's $[1, 1]$; the click is stamped with the detector's count and the birth interval, never $u$; the seed is an input of kind 1 drawn once per world, never read Outside and independent of the settings; the lamp's cadence is fixed and independent of the residues; the click's stamp is the cell's own first rung, never the completion tick. Stated honestly: the nonlocality is Inside and declared, one gather; the model's standing is Bohm's under quantum equilibrium \\cite{bohm1952,dgz1992}; no reader Outside without the seed beats $1/2$. Row 1c's cell stands as derived under the counter until the declared form's runs are read.",
+    ),
 ]
 
 

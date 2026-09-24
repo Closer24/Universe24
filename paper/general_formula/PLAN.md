@@ -7090,3 +7090,20 @@ external" wait on the owner. Part C applies the glossary lines of
 03:21Z (three world files; lattice only mathematical; every cell
 qualified). The three beam-law rows stay out of the text (the owner's
 word). 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 04:14Z): commit 45 on paper-48
+
+The journal's four items (the guidelines the owner pasted at 04:46Z):
+every external reference with a DOI carries it as a full link (none
+invented; three entries have none); captions as "Fig. 1" and "Table 1"
+without punctuation after the number; CHSH expanded in the abstract;
+the figures' lettering in the journal's font and size with an EPS
+beside each PDF. The affiliation names Haifa, Israel (the owner's
+word). The Bell section states the order channel's declared form and
+the honest sentence (record 1647); the residue-Inside item of the
+09:00 list is decided: declared on the owner's word, not for the
+owner. Still for the owner at 09:00: R2's kind, P4's wording, the
+title's framing and "brought in nothing external", and whether the
+GitHub link joins the code availability statement. R2's moving clicks
+are not printed as pins until the declared hop rule of the moving take
+reaches the paper. 48 pages.

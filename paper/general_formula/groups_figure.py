@@ -12,12 +12,25 @@ import matplotlib
 import numpy as np
 
 matplotlib.use("Agg")
+matplotlib.rcParams.update(
+    {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
+        "font.size": 8,
+    }
+)  # the journal's lettering: Helvetica or Arial, 8 to 12 pt
 import matplotlib.pyplot as plt  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 
 GREY = "#555555"
 LIGHT = "#bbbbbb"
 PORTS = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]], dtype=float)
+
+
+def save(fig, path):
+    """The PDF the paper includes and the EPS the journal asks for, side by side."""
+    fig.savefig(path)
+    fig.savefig(path.with_suffix(".eps"))
 
 
 def wire_cube(ax, centre, half, color=GREY, lw=0.9, ls="-"):
@@ -60,7 +73,7 @@ def draw(output: Path) -> None:
     bare(ax)
     ax.set_title(
         "the six Ports: the cube's group, $48$;\nits rotations, $24$; the octahedron, the front",
-        fontsize=7.2,
+        fontsize=8.2,
         color="black",
     )
     # 2. The same six Ports along a body diagonal: the hexagon.
@@ -73,7 +86,7 @@ def draw(output: Path) -> None:
     ax.set_ylim(-lim, lim)
     ax.set_zlim(-lim, lim)
     bare(ax)
-    ax.set_title("along a body diagonal:\nthe hexagon, the cubic pattern", fontsize=7.2, color="black")
+    ax.set_title("along a body diagonal:\nthe hexagon, the cubic pattern", fontsize=8.2, color="black")
     # 3. The GameBoard with the block of cells inside it: the block is the detector, its rung W;
     #    a light record runs on the free Nodes and passes through the block.
     ax = fig.add_subplot(1, 4, 3, projection="3d")
@@ -99,7 +112,7 @@ def draw(output: Path) -> None:
     bare(ax)
     ax.set_title(
         "on the board: the block is the detector, its rung $W$;\nthe circle $\\mathbb{Z}_N$ the record's clock; light through it",
-        fontsize=7.2,
+        fontsize=8.2,
         color="black",
     )
     # 4. The click: the quadratic form in the cells crossing the rung.
@@ -114,15 +127,15 @@ def draw(output: Path) -> None:
     xc = x[np.argmax(y >= 0.62)]
     ax.plot([xc], [0.62], "o", color="black", ms=5)
     ax.text(0.9, 0.65, "$W$", fontsize=8, ha="right")
-    ax.text(xc, 0.7, "click", fontsize=7.5, ha="center")
-    ax.text(0.5, 0.1, "$X^2 + Y^2$ in the cells, against the count", fontsize=6.8, ha="center")
+    ax.text(xc, 0.7, "click", fontsize=8.5, ha="center")
+    ax.text(0.5, 0.1, "$X^2 + Y^2$ in the cells, against the count", fontsize=8.8, ha="center")
     ax.set_title(
         "the click: the form crosses the rung,\nthe only thing that leaves the board",
-        fontsize=7.2,
+        fontsize=8.2,
         color="black",
     )
     fig.subplots_adjust(left=0.01, right=0.99, top=0.82, bottom=0.04, wspace=0.05)
-    fig.savefig(output / "groups_to_click.pdf")
+    save(fig, output / "groups_to_click.pdf")
 
 
 if __name__ == "__main__":
