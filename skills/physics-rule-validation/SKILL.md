@@ -172,9 +172,10 @@ and the Boss's answer he accepted on Reviewer 3's read of 13:20Z: a
 preliminary run shows what breaks (no click, a refusal, an overflow, a reader
 that cannot read); it does not show what this review checks: that the code is
 generic (no branch on an experiment, a family or a world key beyond the
-declared one), local and integer-only, that every feature is a composition of
-the four building blocks (the emitter, the body, the receiver, the clock;
-[SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
+declared one), local and integer-only, that the engine is the one operator,
+the click and the birth, every tool a region of the operator with its
+material integers (they replaced the four building blocks on 2026-09-25,
+record 1875; [SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
 moved. The case of the day: one-list at 2bcadd7f re-printed the Bell pin as a
 weight ratio; the counts on the wheel give 181 / 64 exactly; a run would have
 counted right against a wrong pin.
@@ -182,8 +183,8 @@ counted right against a wrong pin.
 The form since 13:55Z: the reviewer does not gate a merge. The writer of the
 engine (one agent, Nature24) pushes each feature when its unit test passes,
 and the Boss merges the one branch; the reviewer then reads the merged head on
-`main` once, all features together, against the three tests, the four
-building blocks and the declarations, and reports CONFIRMED / lines / NOT
+`main` once, all features together, against the three tests, the one
+operator, the click and the birth, and the declarations, and reports CONFIRMED / lines / NOT
 CONFIRMED; a defect found is fixed on `main` as a bug with a test. Docs
 branches (a list, a declaration) are read once before their merge as before.
 One read per bundle; nothing waits on the reviewer.
