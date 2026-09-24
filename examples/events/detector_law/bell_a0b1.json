@@ -1,0 +1,148 @@
+{
+ "law": "beam",
+ "model_id": "beam-detector-law-bell-a0b1-v1",
+ "shape": [
+  21,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 300,
+ "K": 15728640,
+ "N": 2048,
+ "release": [
+  1,
+  67108864
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "entity_definitions": "../entities/families.json",
+ "entities": [
+  {
+   "name": "photon",
+   "definition": "photon",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "name": "counter_material",
+   "definition": "counter_material",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    10,
+    0,
+    0
+   ],
+   "family": "light",
+   "amount": 15728642,
+   "phase": 0,
+   "fixed": true,
+   "lamp": {
+    "rate": [
+     1,
+     1
+    ],
+    "wheel": [
+     8,
+     2048
+    ],
+    "directions": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      -1,
+      0,
+      0
+     ]
+    ],
+    "arms": 2,
+    "branches": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      1
+     ]
+    ],
+    "train": 128
+   }
+  },
+  {
+   "position": [
+    7,
+    0,
+    0
+   ],
+   "family": "counter",
+   "amount": 1,
+   "fixed": true,
+   "table": {
+    "light": {
+     "phase_window": 0
+    }
+   }
+  },
+  {
+   "position": [
+    17,
+    0,
+    0
+   ],
+   "family": "counter",
+   "amount": 1,
+   "fixed": true,
+   "table": {
+    "light": {
+     "phase_window": 768
+    }
+   }
+  }
+ ],
+ "detectors": [
+  {
+   "name": "alice",
+   "positions": [
+    [
+     7,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1,
+   "reading": "sum"
+  },
+  {
+   "name": "bob",
+   "positions": [
+    [
+     17,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1,
+   "reading": "sum"
+  }
+ ]
+}
