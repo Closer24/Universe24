@@ -5,28 +5,33 @@ The world files of the rows that
 marks "to write: the builder", each written by `make_worlds.py` beside them
 from its declaration alone
 ([DECLARATIONS.md](../../../docs/designs/detector_law/declarations/DECLARATIONS.md),
-[DESIGN.md](../../../docs/designs/detector_law/DESIGN.md) sections 6.0 to 6.2,
-[PINS.md](../../../docs/designs/detector_law/PINS.md) rows 2a, 2c, 5a and 10,
-and the launch list's own lines). The rule of the writing (the Boss's order of
-2026-09-24): every number in a file is the declaration's; a line the file needs
-and the declaration lacks is left ABSENT, so that the loader's refusal names
-it, and is reported to the Boss, never filled by the writer. No pin is written
-here: the pins script writes `expectations.json` before each run.
+its section 15 the world lines row by row and section 14 the tables' clocks;
+[DESIGN.md](../../../docs/designs/detector_law/DESIGN.md) sections 6.0 to 6.2;
+[PINS.md](../../../docs/designs/detector_law/PINS.md); the launch list's own
+lines). The rule of the writing (the Boss's order of 2026-09-24): every number
+in a file is the declaration's; a line the file needs and the declaration
+lacks is left ABSENT, so that the loader's refusal names it, and is reported
+to the Boss, never filled by the writer. No pin is written here: the pins
+script writes `expectations.json` before each run.
 
 The form is the first build's ray-law world
 (`tests/test_detector_law.py::chain_world`: `clock_stamp` and `detector_law`
 true, a lamp with `rate`, `wheel`, `train` and `directions`, a receiver a
-fixed body of the light family with one detector set on its Node) and, for the
-massive rows, the massive record series' form (`../massive_record/make_worlds.py`,
-whose `world` helper writes them; they live in that folder). A mirror line is
-the engine's (M) wall, a block of light's kind of side 1 per Node with the
-pair [21, 22] (the launch list's row 10 (a), BUILD.md section 5 (iv-b)).
+fixed body of the family with one detector set on its Node, a screen one set
+per Node of its row) and, for the massive rows, the massive record series'
+form (`../massive_record/make_worlds.py`, whose `world` helper writes them;
+they live in that folder). Every wall is the absorbing form of section 15
+L-1: a block of side 1 per Node with `absorbing` true (on light's kind the
+pair [21, 22]), the openings left free.
 
-| Group | Files here | Written from | The loader on main (2026-09-24) |
+| Group | Files | Written from | The loader on main (2026-09-24, after section 15) |
 | --- | --- | --- | --- |
-| L | `two_slits.json`; `three_openings_{abc,ab,ac,bc,a,b,c}.json`; `pace_fan_{12,16,24}.json`; `one_opening_near.json`; `one_opening_far.json` | DESIGN.md 6.2, 6.1, 6.0 A; PINS.md 2a, 2c, 5a, 10; the list's lines | refused: `ticks` (not declared); the lamp's Node (not declared); the third opening's place (not declared, the mirror line unbroken); the 24-Link clock pair (not declared); the far opening's board (not declared) |
-| T | `bell_{a0b0,a0b1,a1b0,a1b1}.json`; `malus_{45,11.25,28.125,33.75}.json`; `mach_zehnder.json` | DECLARATIONS.md sections 1, 2, 5, 6, 3 and 14 item 1 (the clocks [2464, 25] on N = 2048 and [308, 25] on N = 256 on the light and the counter families, the wheel [1, N]) | the Bell and Malus worlds load; refused: the Mach-Zehnder lamp's rate, the mirrors' Nodes and the ports (not declared); the splitter's table (refused as a fan under the rule until the splitter component lands) |
-| M1, M2 | in `../massive_record/`: `redshift_{k3,control}.json`; `sagnac_{k3,rest}.json`; `matter_waves_12.json`; `matter_front_12.json`; `deep_well_{k3,rest}_40.json`; `light_clock_60.json` | DECLARATIONS.md sections 4, 13, 12, 10 on main (6e16f16d); the list's step 3 line with `massive_layer_pins.py` | the deep well worlds load; refused: the declared coupling g = [1, 50000] (the load bound of the rows' int64, BUILD.md section 3); `held` light content for `emits` (not declared); light's clock pair (sections 10 and 13); the matter lamp's wheel rate, rate and omega, the zero line and the take lines (section 12; the lamp on the massive kind is the component the list names as waiting); N_s has no key |
+| L | `two_slits.json`; `pace_fan_{12,16,24}.json` | section 15 L-1 to L-3 and L-6 (row 2a: the lamp at [20, 64, 0], the stock 1024 at one per 16, the train 32 periods, the wall at x = 40, the screen at x = 104, the take lines, 17300 intervals; row 5a: one record on the four headings, the probes and ring sets at eight Nodes, 800 intervals; the clocks [77, 25], [30, 13], [77, 50]) | the four files load; rows 2c, 10 (a), 10 (b) are not in the GO (L-4, L-5) and have no file |
+| T | `bell_{a0b0,a0b1,a1b0,a1b1}.json`; `malus_{45,11.25,28.125,33.75}.json` | sections 1, 2, 5, 6 with section 14 item 1 and section 15 T-1 (the clocks [2464, 25] on N = 2048 and [308, 25] on N = 256 on the light and the counter families, the wheel [1, N]) | the eight files load; row 2b is not in the GO (T-2) and has no file |
+| M1 | in `../massive_record/`: `redshift_{k3,control}.json`; `sagnac_{k3,rest}.json`; `light_clock_60.json`; `matter_waves_{12,16}.json`; `matter_front_12.json` | sections 4, 13, 10, 12 with section 15 M1-1 to M1-6 (G = [1, 50], g = [1, 1000], the seed 50 x 2^20; no held content; light [1, 1]; the blocks their own receivers; the matter lamp's clock [1089, 320] or [11, 4], the wheel [1, 64], the stock 2048 at one per 8, the train 8 periods, the walls absorbing blocks of the matter kind) | refused, the builder's lines: `emits` without `held` (M1-2); the lamp on the massive kind and its clock key (M1-6); the matter walls' block pair (not declared) |
+
+The deep well worlds of group M2 are the massive record series' own
+(`../massive_record/make_worlds.py`).
 
 Regenerate from the repository root:
 

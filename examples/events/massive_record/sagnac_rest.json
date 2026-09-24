@@ -27,7 +27,11 @@
  "families": [
   {
    "name": "light",
-   "quantum": 1
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
   },
   {
    "name": "matter",
@@ -62,14 +66,15 @@
    "coupling": {
     "G": [
      1,
-     1
+     50
     ],
     "g": [
      1,
-     50000
+     1000
     ]
    },
    "wheel": 64,
+   "seed": 52428800,
    "emits": "light"
   },
   {
@@ -95,14 +100,15 @@
    "coupling": {
     "G": [
      1,
-     1
+     50
     ],
     "g": [
      1,
-     50000
+     1000
     ]
    },
    "wheel": 64,
+   "seed": 52428800,
    "emits": "light"
   }
  ],

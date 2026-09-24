@@ -11,6 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
+ "ticks": 600,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -60,6 +61,14 @@
     ]
    ],
    "lamp": {
+    "rate": [
+     1,
+     8
+    ],
+    "wheel": [
+     1,
+     64
+    ],
     "directions": [
      [
       1,
@@ -67,7 +76,11 @@
       0
      ]
     ],
-    "train": 8
+    "train": 8,
+    "phase_per_link": [
+     1089,
+     320
+    ]
    }
   },
   {
