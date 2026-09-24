@@ -46,10 +46,12 @@ participants. The simulator, every world file, every registered run's
 record, the check scripts, the figures' scripts and the derivation
 records are archived at Zenodo (concept DOI 10.5281/zenodo.22738746) with
 the commit named in the reproduction appendix; the code is under the MIT
-licence. A large language model (Claude, Anthropic, through Claude Code,
-2026) was used as a tool under my direction for code, computation and the
-drafting of the text, as the manuscript's declaration states; I reviewed
-every statement and am responsible for every claim. I laid down every
+licence. I used a large language model (Claude, Anthropic, through Claude Code,
+2026) extensively as a tool, under my direction and instructions, for the
+software, the computations, the mathematical derivations and their checks,
+the physics of the design pages and the drafting of the text, as the
+manuscript's declaration states; the model is not an author; I reviewed
+and edited every statement and take full responsibility for the content. I laid down every
 postulate and hypothesis of the model myself and brought in nothing
 external; the forms of Newton, Kepler, Einstein, Lorentz, Bohr and Balmer
 that the paper cites are the things compared with, not inputs to the

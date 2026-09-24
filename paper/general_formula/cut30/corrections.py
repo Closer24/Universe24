@@ -5203,6 +5203,21 @@ CORRECTIONS = [
         "\\bibitem{nagel2015}",
         '\\bibitem{herrmann2009} S. Herrmann, A. Senger, K. M\\"ockel, M. Nagel, E. V. Kovalchuk and A. Peters, Rotating optical cavity experiment testing Lorentz invariance at the $10^{-17}$ level, Phys. Rev. D 80, 105011 (2009). \\bibitem{nagel2015}',
     ),
+    (
+        "commit 40, the owner's word: the use of a large language model stated in the customary form, extensively, for the software, the physics and the mathematics, the project and its guidelines the author's",
+        "\\paragraph{Use of artificial intelligence.} A large language model (Claude, Anthropic, through Claude Code, 2026) was used as a tool under the author's direction for code, computation and the drafting of the text; the author reviewed every statement and is responsible for every claim.",
+        "\\paragraph{Use of artificial intelligence.} The author used a large language model (Claude, Anthropic, through Claude Code, 2026) extensively as a tool, under the author's direction and instructions, for the software of the simulator and its checks, the computations, the mathematical derivations and their verification, the physics of the design pages, and the drafting and editing of the text; the model is not an author and meets no criterion of authorship. Every guideline, postulate, hypothesis, rule, world and decision of the project is the author's, recorded in the archived log; the author reviewed and edited every statement of this paper and takes full responsibility for its content.",
+    ),
+    (
+        "commit 40, the author contributions name the guidelines and point to the declaration",
+        "\\paragraph{Author contributions.} Sole author: the model, its rules, the worlds and the experiments, every reading and its verdict, and the decisions recorded in the archived log.",
+        "\\paragraph{Author contributions.} Sole author: the guidelines of the project, the model, its rules, the worlds and the experiments, every reading and its verdict, and the decisions recorded in the archived log; the part of the large language model used as a tool is stated in the next declaration.",
+    ),
+    (
+        "commit 40, the reproduction appendix names the tool's use, as the journal asks in the methods' place",
+        "The archived version cited at submission is the tag",
+        "The archived version cited at submission is the tag The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration at the end of the paper states; every decision is the author's.",
+    ),
 ]
 
 

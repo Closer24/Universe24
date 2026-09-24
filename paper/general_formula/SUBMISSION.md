@@ -104,3 +104,43 @@ paper's, the macros written out):
 - The release tag on GitHub and the Zenodo version DOI (with the Boss).
 - His word on the open items the paper still carries: the glossary's
   OPEN rows, the venue's name, the referee's proposals the Boss holds.
+
+## Common causes of a desk rejection, checked against the paper
+
+The causes editors name most often, and where the paper stands on each:
+
+- Out of the journal's scope: the paper is a foundational model of
+  quantum and relativistic phenomena with its method stated; the cover
+  letter names the journal's own precedents ('t Hooft; Harrigan and
+  Spekkens).
+- Overclaiming in the title or abstract: the abstract says what is exact,
+  what is recovered in a limit, what is reached under named hypotheses,
+  what is conjectured, and that no pinned reading is in this version;
+  "matches", never "is"; every departure the algebra computes is marked
+  before any run.
+- Missing or incomplete declarations: funding, competing interests,
+  ethics, consent, data, materials, code, author contributions and the
+  use of a large language model are all present, in the journal's list.
+- Undisclosed use of generative tools: the declaration states the
+  model, its maker, the tool, the year, the extent (extensively, for the
+  software, the computations, the mathematics, the physics of the design
+  pages and the text), the author's direction and responsibility, and
+  that the model is not an author; the reproduction appendix repeats it
+  in the methods' place; the cover letter repeats it; no figure is
+  generative.
+- Duplicate or simultaneous submission: the arXiv preprint is allowed by
+  the journal and is named in the cover letter; the paper is submitted to
+  one journal.
+- Unavailable data or code: the archive's concept DOI is in the
+  declaration; the version DOI is added at the release.
+- References incomplete or mostly self-citations: every external claim
+  has a published source; the archive's own pages are cited only where a
+  claim needs them, one per claim, by commit.
+- Poor English or structure: the paper follows the structure of the
+  field's papers (the object, the method, the results by kind, the
+  comparison, the limits); reviewers still check the language.
+- Excessive length or a missing methods statement: no page limit at the
+  journal; the method is stated in one paragraph and the reproduction
+  appendix.
+- Authorship and identity: one author, a real affiliation, email and
+  ORCID on the title page (the author confirms the three).

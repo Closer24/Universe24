@@ -7006,3 +7006,21 @@ and the blind train named; the block's step a declaration; the light
 clock in motion with its numbers at PR 1087's merge. The owner asked
 whether the paper has any FAIL: none after a detector; the word marks
 what the algebra says before a run, with its falsifier declared. 47 pages.
+
+## Applied (2026-09-24, the owner's word on rejections and the AI statement): commit 40 on paper-48
+
+"Check what papers are rejected for and make sure we do not do it; make
+sure it is written that all the guidelines and the project are mine and
+that I used AI extensively for the software, the physics and the
+mathematics, in the customary form, and where to say it." The customary
+form (Springer Nature's policy): the use of a large language model is
+documented in the manuscript, in the methods' place or a suitable part
+and in the declarations; the model is not an author; the author takes
+responsibility. The declaration now says so with the extent named; the
+author contributions name the guidelines of the project as the
+author's; the reproduction appendix (the methods' place) repeats the
+tool's use in one sentence; the cover letter says the same. The
+desk-rejection checklist (scope, overclaiming, declarations,
+undisclosed tools, duplicate submission, data availability, references,
+language, length, authorship) is in SUBMISSION.md with the paper's
+standing on each. 47 pages.
