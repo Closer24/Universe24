@@ -138,7 +138,17 @@ and the ray law's series exists.
    sequence flips with A's setting on 0 of 2048 births at b = N / 8 and
    on 1448 of 2048 (0.7070) at b = 3 N / 8 (the pair (0, 3 N / 8) is the
    reversed ladder); the same fractions 0.6875 and 0.7031 at N = 64 and
-   256. So THE ORDER CHANNEL IS OPEN: B reads a bit of A's setting from
+   256. THE WIDTH IS E_N ITSELF (Reviewer 3's token, 02:42Z through the
+   Boss): the flip fraction at b = 3 N / 8 equals the finite-N
+   correlation E_N exactly, 44 / 64 = 11 / 16, 180 / 256 = 45 / 64 and
+   1448 / 2048 = 181 / 256, the same numbers as S_N / 4, a closed form
+   and not a statistic. The physical sentence: the birth residue u is a
+   hidden variable known at both stations (the birth stamp travels with
+   the record), so the counter form of the click is a deterministic
+   hidden-variable model, and Bell's theorem forces its nonlocality into
+   the order of outcomes, which nature's quantum mechanics does not
+   carry; the counter form's own falsifiable departure from nature,
+   declared before any run. So THE ORDER CHANNEL IS OPEN: B reads a bit of A's setting from
    the order of its outcomes at b = 3 N / 8, with certainty, while the
    counts stay no-signalling exactly (1024 of 2048 at every setting, row
    1d). It is open BY BELL'S THEOREM for any deterministic wheel: a
@@ -804,23 +814,36 @@ nature.
    OF RECORD: each block's click interval from the other's birth stamp
    (DETECTOR, per direction) LESS THAT DIRECTION'S OWN RISE from the map
    (COMPUTATION, +4.1 and +8.1 at W = 64); the ratio of the two results
-   is the pin 0.5774. THE DETECTOR READINGS the band is on (Reviewer 3's
+   is the map's 0.5774 by construction. THE DETECTOR READINGS the band is on (Reviewer 3's
    token, 01:15Z): the chasing click 250 +- 2 and the meeting click 74 +-
    2 at W = 64, as the rest world's 109 +- 2; one interval on the meeting
    side is 0.005 on the ratio, two reach the band; a reading of 0.5774 is
    the engine's clicks matching the map, not a corrected number. Read
-   from the clicks alone the ratio is 0.5432,
-   and with the rest rise subtracted from both 0.5608: neither is the
-   reader. THE BAND +- 0.01: one interval of the click's grain on either
+   from the clicks alone the ratio is 0.5432 (176 / 324: the map's own
+   prediction of the raw ratio the engine reads, its grain about 0.006
+   per interval on a side), and with the rest rise subtracted from both
+   0.5608: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
    side moves the ratio by at most 0.0062; the control world's click
    109 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
-   0.975 +- 0.021 (Michelson, Gale and Pearson 1925, TO VERIFY) matched
-   in form. PINS_R2.md's 55 / (32 k) is the old engine's number at its
-   c, HISTORY.
+   0.975 +- 0.021 (derived from the source's fringe shift 0.230 +- 0.005
+   against its computed 0.236, SOURCES_VERIFIED.md rows R2; Michelson,
+   Gale and Pearson 1925) matched in the Sagnac FORM, the ratio linear in
+   v / c, not in the number. THE KIND (Reviewer 3's word, 02:42Z through
+   the Boss, agreeing with the issue triage reader's identity): the
+   corrected ratio is the map's transit by construction, so THE PINS ARE
+   THE THREE CLICKS, 109 at rest and 250 and 74 at k = 3, at W = 64, each
+   +- 2, DERIVED_BLIND in their inputs (the two blocks' push, the chain's
+   light, the coupling; no target); the run is the engine against the
+   map on those three DETECTOR readings; the ratio 0.5774 is a
+   COMPUTATION of the map's kinematics printed beside them, and k = 4 (v
+   / c = 0.4330) is the falsifier of the form. No number moves; the
+   change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
+   (32 k) is the old engine's number at its c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
    (the click interval per direction from the birth stamp) and the
    blocks' own clicks (both read one period, the control); COMPUTATION
-   the rise per direction from the map, subtracted, and the pin;
+   the rise per direction from the map, subtracted, and the map's ratio
+   0.5774 beside the three clicks, the pins;
    CONVERSION the ratio of the two corrected intervals; GAMEBOARD the
    light amplitude at the faces.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:

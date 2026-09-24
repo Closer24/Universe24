@@ -809,11 +809,15 @@ percent band, so the formula names its gamma by derivation or the world
 could not tell the three apart; the pins recomputed exactly by the
 scripts with gamma(c_eff) and the two controls printed beside each. The
 same gamma carries row 4b (1 + z = gamma(c_eff)(1 + beta_c) = 1.9355 at k
-= 3; 1.9373 at c_m and 1.9319 at c beside) and the second term's
+= 3; 1.9373 at c_m and 1.9319 at c beside, on this section's pair at mu
+= 0.15; row 4b's declared world [156, 157] reads 1.9339, DECLARATIONS.md
+section 4) and the second term's
 gamma_m^2. It is prediction 1's second face (SCHEDULE.md, the (P) list):
-a bound clock dilates by gamma at c_m, slower than light's gamma by
-beta^2 gamma^2 omega_0^2 / 4 (0.28 percent at k = 3; about 10^-14 at
-nature's omega_0 of row A). Section 8's line below ("the boosted well's
+a bound clock dilates by gamma at c_eff, slower than light's gamma by
+beta^2 gamma^2 omega_0^2 / 6 (0.19 percent at k = 3, the computed 0.188;
+at c_m the coefficient is 1 / 4, 0.28 percent, the control beside; the
+Paper Verifier's line, 2026-09-24; about 10^-14 at nature's omega_0 of
+row A). Section 8's line below ("the boosted well's
 mode reads 1 / gamma at beta_m = beta_c c / c_m, 0.8149 against 0.8165")
 said it already; the scripts' GAMMA had used c and are corrected. Checked on an independent chain (the
 rest mode stepped by an accumulator to k = 3 after a ramp of 1500

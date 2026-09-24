@@ -2023,9 +2023,13 @@ Ports as a set and the lattice's Links is one of the 48, and every one
 of the 48 does. Nothing was added to it; the mass, the charge and the
 other contents of the family table live on the amounts, on which the
 48 act trivially (the 48 permute directions and Nodes; a content is a
-scalar)" (FULL_PICTURE section 1, verbatim); every Bravais lattice's point group is a subgroup of the
-full octahedral group O_h of order 48, the crystallographic restriction,
-so a lattice can only keep the 48. Over the integers the only
+scalar)" (FULL_PICTURE section 1, verbatim); no three-dimensional lattice has a point group of order above 48
+(the crystallographic restriction: the cubic holohedry O_h, of order 48,
+is the largest of the seven holohedries by order; the hexagonal D_6h, of
+order 24, is not a subgroup of O_h, so "every Bravais lattice's point
+group is a subgroup of O_h" is false, the Paper Verifier's line of
+2026-09-24), so a lattice can keep at most the 48, and the cubic lattice
+keeps all of them. Over the integers the only
 bijections that preserve the cone of one Link per interval are these
 48; a boost is not Z-linear, so no boost is among them, and Lorentz's
 form is reached Outside from the clicks (chapter 5.1) and not as a
@@ -2313,8 +2317,9 @@ number computed from the pair and K, never formed inside a rule
 1.22820, gamma(c) = 1.22474, the last two the CONTROLS the pins carry
 beside the named one, 0.09 and 0.19 percent from it; MASSIVE_RECORD.md
 section 8). The same gamma_m carries row 4b's 1 + z = gamma_m (1 +
-beta_c) (COMPUTATION: 1.9355 at k = 3, mu = 0.15; 1.9373 at c_m and
-1.9319 at c beside) and the second term of 8.4.
+beta_c) (COMPUTATION on the example pair [800, 809]: 1.9355 at k = 3, mu =
+0.15; 1.9373 at c_m and 1.9319 at c beside; row 4b's declared world
+[156, 157] reads 1.9339, DECLARATIONS.md section 4) and the second term of 8.4.
 
 ### 8.2 The conserved form I on any extents, and the remainders' exact identity
 
@@ -2850,7 +2855,9 @@ gamma_m at c_eff (the layer mu = 0.15, s = 14, g_w = mu^2 / 4; against
 1 / gamma_m = 0.8150 to the residual 0.3 percent; 0.8108 at c_m and
 0.8132 at c the CONTROLS beside; nature's form 1 / gamma, Bailey 1977,
 matched in form at the world's beta_c); row 4b, the moving lamp's
-redshift, 1 + z = gamma_m (1 + beta_c) = 1.9355 at K = 3 receding (8.1;
+redshift, 1 + z = gamma_m (1 + beta_c) = 1.9355 at K = 3 receding on
+the example pair [800, 809] at mu = 0.15 (row 4b's declared world [156,
+157] reads 1.9339, DECLARATIONS.md section 4; 8.1;
 nature's form gamma (1 + beta), Ives and Stilwell 1938, Botermann
 2014); row 4c, the round-trip Doppler off a receding transponder, (1 +
 beta_c) / (1 - beta_c) = 3.732 at K = 3, r-free (5.1); row 5b, five's 1
@@ -2877,7 +2884,9 @@ SCHEDULE.md's list; DECLARATIONS.md):**
    number, the scale the owner's declaration and no formula). Its second
    face: a bound clock dilates by gamma at the massive kind's own cone
    c_eff (8.1 (ii)), slower than light's gamma by about beta^2 gamma^2
-   omega_0^2 / 4 to second order (0.19 percent at K = 3, mu = 0.15;
+   omega_0^2 / 6 to second order (0.19 percent at K = 3, mu = 0.15, the
+   computed 0.188; 1 / 4 is c_m's coefficient, 0.28 percent, the control
+   beside; the Paper Verifier's line, 2026-09-24;
    about 10^-14 at nature's omega_0 of row A); falsified on a pin world
    by the one formula reading gamma(c)'s number and not gamma(c_eff)'s
    beyond the 0.3 percent band. The world that separates the two gammas

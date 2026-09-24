@@ -147,3 +147,14 @@ Fermi bound; "over 98 percent" for Grangier's visibility; which of Sinha's
 three kappas is quoted; "on reversing the flow" for Fizeau's 0.46; the
 quantity delta nu / nu at 95 percent confidence for Nagel's number; the end
 pages and DOIs above where a page carries a start page only.
+
+## Added after the Source Verifier's page (the chief physicist, 2026-09-24)
+
+One row added on the Paper Verifier (physicist)'s line (3) of 2026-09-24: the
+CHSH value the paper's abstract compares 181 / 64 with was in neither
+docs/NATURE.md row 1a nor this page. The same three words, the same mark
+(snippet): the number read in the abstract's excerpt, the paper not opened.
+
+| Page and section | The number as the page quotes it | The published source | The number as published (snippet) | Verdict (snippet: read in a search excerpt, not in the paper) |
+| --- | --- | --- | --- | --- |
+| paper/general_formula/main.tex (paper-48, commit 38): the abstract, the one page and Table 1 row 1a; docs/NATURE.md row 1a | S = 2.82759 +- 0.00051 (the CHSH value the abstract's "1.05 standard errors" is measured against); Poh et al. 2015, Phys. Rev. Lett. 115, 180408 | H. S. Poh, S. K. Joshi, A. Cere, A. Cabello and C. Kurtsiefer, "Approaching Tsirelson's bound in a photon pair experiment", Phys. Rev. Lett. 115, 180408 (2015); DOI 10.1103/PhysRevLett.115.180408; arXiv:1506.01865 | the abstract (snippet, the ADS and arXiv abstract pages): "a value S = 2.82759 +- 0.00051 is observed", "S - 2 sqrt 2 = 0.00084 +- 0.00051" (below Tsirelson's bound), and a violation of Grinbaum's bound 2.82537 by 4.3 standard deviations | VERIFIED (snippet); added by the chief physicist, 2026-09-24, on the Paper Verifier (physicist)'s line (3): 181 / 64 - 2.82759 = 0.000535 = 1.05 of the source's standard error, the abstract's arithmetic right |
