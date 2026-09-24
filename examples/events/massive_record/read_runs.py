@@ -18,6 +18,14 @@ declaration; a reading "matches the algebra's number", never "is nature").
   difference over the hold: mean and largest) and the content of the mode
   k = 2 pi / 3 along x (the `mode` lines: abs(S_0 + w S_1 + w^2 S_2)^2, w the cube root
   of unity, mean and largest over the hold).
+- The clicks alone, for the ray law's screens and the light detectors' trains (RUN_LIST.md,
+  the reader of record of rows 2a, 2c, 10, M1, M2, 4b, R2 and the light clock): `clicks_of`
+  turns a run's click lines into clicks (a `click` line's tick and Node; a `gather` line's
+  chosen cell and its `click` interval, the Node the cell's one declared Node), `screen_clicks`
+  counts them per Node of a detector row (the count centroid, the maxima's positions and the
+  visibility as exact fractions), `light_clicks` reads one detector's train (the first click's
+  interval from a declared birth stamp, the mean interval by the same reader as the block
+  clocks above, the train's line 2 pi over it): DETECTOR readings, no value of the board read.
 - The index (v, v-m): light's phase at the probe by projection on the window (the
   design's `massive_moving_index.py`: phase = atan2(sum v cos omega t, sum v sin
   omega t)), the delay the reference's phase less the world's, n = 1 + delay / (k s)
@@ -35,6 +43,10 @@ from __future__ import annotations
 import cmath
 import json
 import math
+from collections import Counter
+from collections.abc import Iterable
+from dataclasses import dataclass
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -88,6 +100,15 @@ def spectral_peak(values: np.ndarray) -> float:
     return 2.0 * math.pi * (peak + shift) / len(series)
 
 
+def click_mean_interval(ticks: list[int]) -> Fraction | None:
+    """The mean interval between the clicks of one train, the span of the train over its
+    intervals (the reader of the block clocks' click lines and of a light detector's train):
+    None with fewer than two clicks."""
+    if len(ticks) < 2:
+        return None
+    return Fraction(ticks[-1] - ticks[0], len(ticks) - 1)
+
+
 def clock(name: str, window: tuple[int, int]) -> dict[str, float]:
     """The block's clock over a window: the count, its rate, the clicks' mean interval, the
     spectral peak of the summed record."""
@@ -100,18 +121,213 @@ def clock(name: str, window: tuple[int, int]) -> dict[str, float]:
     centres = np.array([float(line.get("centre", 0)) for line in block])
     count = counts[-1] - counts[0]
     span = block[-1]["tick"] - block[0]["tick"]
+    mean_interval = click_mean_interval(clicks)
     reading = {
         "window": list(window),
         "count": count,
         "rate_per_interval": count / span if span else math.nan,
-        "click_mean_interval": (clicks[-1] - clicks[0]) / (len(clicks) - 1)
-        if len(clicks) > 1
-        else math.nan,
+        "click_mean_interval": float(mean_interval) if mean_interval is not None else math.nan,
         "spectral_peak_omega": spectral_peak(sums),
         "centre_peak_omega": spectral_peak(centres) if np.any(centres) else math.nan,
         "steps": block[-1].get("steps", 0),
     }
     return reading
+
+
+Node = tuple[int, int, int]
+
+
+@dataclass(frozen=True)
+class Click:
+    """One click of a detector as its record line carries it: the interval of the click,
+    the Node it was read at (None when the line names a set of several Nodes and no one
+    Node), the cell's name, the record's birth stamp where the line carries one and the
+    detector's own count (`clock`) where the world stamps it."""
+
+    tick: int
+    node: Node | None
+    cell: str | None
+    birth: int | None = None
+    clock: int | None = None
+
+
+def detector_nodes(world: dict) -> dict[str, list[Node]]:
+    """The Nodes of every cell a click line can name, from the world file: each detector
+    set by its name with its declared positions, each measured event as `measured:<n>`
+    at its position (its span when it has one)."""
+    cells: dict[str, list[Node]] = {}
+    for number, entry in enumerate(world.get("measured", [])):
+        origin = tuple(int(v) for v in entry["position"])
+        span = entry.get("span")
+        nodes: list[Node] = []
+        if span is None:
+            nodes.append((origin[0], origin[1], origin[2]))
+        else:
+            for dx in range(int(span[0]) or 1):
+                for dy in range(int(span[1]) or 1):
+                    for dz in range(int(span[2]) or 1):
+                        nodes.append((origin[0] + dx, origin[1] + dy, origin[2] + dz))
+        cells[f"measured:{number}"] = nodes
+    for detector in world.get("detectors", []):
+        cells[detector["name"]] = [
+            (int(p[0]), int(p[1]), int(p[2])) for p in detector.get("positions", [])
+        ]
+    return cells
+
+
+def clicks_of(records: Iterable[dict], cells: dict[str, list[Node]] | None = None) -> list[Click]:
+    """The clicks among a run's record lines, in the order of their intervals: a `click`
+    line is a click at its interval and its Node (the block's own clock line, the ray
+    law's click at a face or a set); a `gather` line with a chosen cell is a light
+    record's click under the detector law at its `click` interval (the first rung of the
+    chosen cell), its Node the cell's one declared Node when `cells` (from
+    `detector_nodes`) gives exactly one, else None; a gather with no chosen cell is an
+    escape and not a click. Nothing else of a line is read."""
+    found: list[Click] = []
+    for line in records:
+        event = line.get("event")
+        if event == "click":
+            node = line.get("node")
+            found.append(
+                Click(
+                    tick=int(line["tick"]),
+                    node=(int(node[0]), int(node[1]), int(node[2])) if node else None,
+                    cell=line.get("detector"),
+                    birth=None if line.get("birth") is None else int(line["birth"]),
+                    clock=None if line.get("clock") is None else int(line["clock"]),
+                )
+            )
+        elif event == "gather" and line.get("chosen"):
+            cell = str(line["chosen"][0][0])
+            nodes = (cells or {}).get(cell, [])
+            found.append(
+                Click(
+                    tick=int(line["click"]),
+                    node=nodes[0] if len(nodes) == 1 else None,
+                    cell=cell,
+                    birth=None if line.get("birth") is None else int(line["birth"]),
+                    clock=None if line.get("clock") is None else int(line["clock"]),
+                )
+            )
+    found.sort(key=lambda click: click.tick)
+    return found
+
+
+def _row_axis(nodes: list[Node]) -> int:
+    """The axis along which a row's Nodes differ (x when they do not)."""
+    for axis in range(3):
+        if len({node[axis] for node in nodes}) > 1:
+            return axis
+    return 0
+
+
+def screen_clicks(
+    clicks: Iterable[Click],
+    row: Iterable[Node] | None = None,
+    axis: int | None = None,
+    window: tuple[int, int] | None = None,
+    fringe: tuple[int, int] | None = None,
+) -> dict[str, object]:
+    """The clicks per Node of a detector row (DETECTOR): the counts by Node (every Node of
+    `row` present, a Node without a click at 0; without `row`, the clicked Nodes), the
+    count centroid along the row's axis (an exact fraction; None with no click; over the
+    whole row always), the positions of the maxima (each strict local maximum of the
+    counts along the row, a plateau of equal counts at its middle as a fraction) and the
+    visibility (max - min) / (max + min) of the counts (None when both are 0) over the
+    declared fringe window `fringe`, the coordinates [low, high] along the row's axis
+    inclusive, declared before the run on the row's page (an edge Node without a click
+    outside it reads no visibility of 1); without one, over the whole row. A click
+    without a Node (a set of several Nodes) is counted as `unplaced` and enters nothing
+    else. An empty train reads zero clicks and raises nothing."""
+    chosen = [click for click in clicks if window is None or window[0] <= click.tick <= window[1]]
+    counts: Counter[Node] = Counter(click.node for click in chosen if click.node is not None)
+    unplaced = sum(1 for click in chosen if click.node is None)
+    nodes = [tuple(int(v) for v in node) for node in row] if row is not None else list(counts)
+    if row is not None:
+        counts = Counter({node: counts.get(node, 0) for node in nodes})
+    if axis is None:
+        axis = _row_axis(nodes)
+    ordered = sorted(nodes, key=lambda node: node[axis])
+    values = [counts[node] for node in ordered]
+    total = sum(values)
+    centroid = (
+        Fraction(sum(count * node[axis] for node, count in zip(ordered, values, strict=True)), total)
+        if total
+        else None
+    )
+    maxima: list[Fraction] = []
+    start = 0
+    while start < len(values):
+        end = start
+        while end + 1 < len(values) and values[end + 1] == values[start]:
+            end += 1
+        above_left = start == 0 or values[start - 1] < values[start]
+        above_right = end == len(values) - 1 or values[end + 1] < values[start]
+        if values[start] > 0 and above_left and above_right and (start > 0 or end < len(values) - 1):
+            maxima.append(Fraction(ordered[start][axis] + ordered[end][axis], 2))
+        start = end + 1
+    fringe_values = (
+        [
+            count
+            for node, count in zip(ordered, values, strict=True)
+            if fringe[0] <= node[axis] <= fringe[1]
+        ]
+        if fringe is not None
+        else values
+    )
+    largest, smallest = (max(fringe_values), min(fringe_values)) if fringe_values else (0, 0)
+    return {
+        "kind": "DETECTOR",
+        "axis": "xyz"[axis],
+        "counts": {node: counts[node] for node in ordered},
+        "total": total,
+        "unplaced": unplaced,
+        "centroid": centroid,
+        "maxima": maxima,
+        "fringe": list(fringe) if fringe is not None else None,
+        "max": largest,
+        "min": smallest,
+        "visibility": Fraction(largest - smallest, largest + smallest) if largest + smallest else None,
+    }
+
+
+def light_clicks(
+    clicks: Iterable[Click],
+    birth: int | None = None,
+    window: tuple[int, int] | None = None,
+) -> dict[str, object]:
+    """One light detector's click train (DETECTOR): the count, the first and the last
+    click's interval, the first click's interval from the birth stamp (the declared
+    `birth`; without one, the first click's own stamp where its line carries one), the
+    interval of every click from its own record's birth stamp (`birth_intervals`, one
+    per click whose line carries a stamp, in the train's order: a train of many records,
+    the light clock's one record per period, reads each click against its own birth),
+    the successive intervals, the mean interval by `click_mean_interval` (the reader of
+    the tracked runs' block clocks, an exact fraction) and the train's line 2 pi over it
+    in radians per interval (the host's conversion of that fraction). The window keeps a
+    click with its own stamp. An empty train reads zero clicks, None for every interval,
+    and raises nothing."""
+    chosen = sorted(
+        (click for click in clicks if window is None or window[0] <= click.tick <= window[1]),
+        key=lambda click: click.tick,
+    )
+    ticks = [click.tick for click in chosen]
+    own = [click.tick - click.birth for click in chosen if click.birth is not None]
+    if birth is None and chosen and chosen[0].birth is not None:
+        birth = chosen[0].birth
+    mean_interval = click_mean_interval(ticks)
+    return {
+        "kind": "DETECTOR",
+        "count": len(ticks),
+        "first_tick": ticks[0] if ticks else None,
+        "last_tick": ticks[-1] if ticks else None,
+        "birth": birth,
+        "first_interval": ticks[0] - birth if ticks and birth is not None else None,
+        "birth_intervals": own,
+        "intervals": [b - a for a, b in zip(ticks, ticks[1:], strict=False)],
+        "mean_interval": mean_interval,
+        "line_omega": 2.0 * math.pi / mean_interval if mean_interval else None,
+    }
 
 
 def pump(name: str, window: tuple[int, int]) -> dict[str, float]:

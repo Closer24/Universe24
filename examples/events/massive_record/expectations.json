@@ -20,8 +20,8 @@
    "out": "c96af1cbec8a6071f318e84e251397072e9d4788"
   },
   "massive_moving_index": {
-   "py": "ffd4025ed3496f0863a2da5b5228a5be7cca28f2",
-   "out": "73829b1918a2cb02905fad9ae6d16d8c864b32cc"
+   "py": "614a97ce962831377b52278a8b51a7ed6ad2e25f",
+   "out": "a69dbd0a5211a14ac8de3a8b35c124a275d55d3a"
   },
   "massive_light_clock_relay": {
    "py": "5dafc33d468f1779f49d0aad45514e98ebb43b75",
@@ -191,7 +191,7 @@
   },
   "layer_pin_k3_14": {
    "kind": "PIN (layer)",
-   "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [1500, 9500] against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+   "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp of 10000 (DECLARATIONS.md section 8) against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
    "pin": {
     "cone": "exact",
     "omega_b_rest": 0.14844325144589593,
