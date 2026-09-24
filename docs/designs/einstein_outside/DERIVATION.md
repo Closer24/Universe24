@@ -549,8 +549,10 @@ k`). So a velocity Outside is a ratio of two whole counts, Nodes over
 counts, and the velocities a detector can read are the rationals `1 /
 k` and their means: a body between the patterns `1 / k` and `1 / (k +
 1)` reads as a mean of the two over many hops (the drive's remainder),
-never as a number between them at one hop; the quantum of velocity at
-the pace `1 / k` is `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, and on the
+never as a number between them at one hop; the gap between the
+consecutive paces `1 / k` and `1 / (k + 1)` is `1 / (k (k + 1))`, not a
+universal quantum of velocity (a velocity read over dx Links and dn
+counts is the rational dx / dn; issue #1012, 2026-09-24), and on the
 Beam Law's lattice the pace is a ratio over Q (the click frame's M3,
 :78-86: "a Q-linear map on the counts' ratios in the mean").
 
