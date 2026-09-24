@@ -2,17 +2,21 @@
 2026-09-23 22:25Z; docs/designs/detector_law/declarations/DECLARATIONS.md, "what the engine
 lacks"; BUILD.md section 11), one test each with its inputs, its expected integers and an edge
 case: (a) the phase reading of a record at a Node, (c) the splitter's table under the rule,
-(d) the polariser as a table body of two cells. SINCE THE EMITTER AS A CLICKING BODY
-(ALGEBRA.md 9.17; BUILD.md section 26) every source here is an emitter body (the chain
+(g, d4) the joint weights and the partial trace as integers. SINCE THE EMITTER AS A CLICKING
+BODY (ALGEBRA.md 9.17; BUILD.md section 26) every source here is an emitter body (the chain
 world's), and the two-arm lamp's tests (b, e, e2, f, h: the pair born at a lamp) are RETIRED
 with the lamp: the pair is born at the crystal, and its tests return with the crystal's
-branch (tests/test_crystal.py there)."""
+branch (tests/test_crystal.py there). SINCE THE FLUX READING (9.19 (3); BUILD.md section 26
+item 14) the polariser's tests (d, d2, d3: the table body of two cells at one Node and
+Malus's counts) are HELD with the four Malus worlds: under the cumulative ladder as written
+the entry's whole offer reaches the rung no later than the + share of it, so the two cells
+at one Node give no distribution (the finding in tests/test_detector_law.py); the
+polariser returns as a body with an axis and two receivers named (the mathematician's step
+3) and its counts are re-derived on it."""
 
 from __future__ import annotations
 
-import json
 import math
-from pathlib import Path
 
 import numpy as np
 import pytest
@@ -23,8 +27,6 @@ from event_universe.events.detector_law import UNIT, DetectorLawSimulation, Live
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_detector_law import chain_world
 from tests.test_emitter import massive_generator
-
-ROOT = Path(__file__).resolve().parents[1]
 
 
 def clock_phase(age: int, numerator: int, denominator: int, steps: int) -> int:
@@ -90,12 +92,14 @@ def test_a_the_phase_reading_reads_the_clocks_phase_back_at_every_age():
 
 
 def splitter_world(weights: list[list[int]], turns: list[list[int]], inputs: bool = True) -> dict:
-    """A layer of 30 x 20 x 1 (z folded, x and y open), the emitter body at (2, 2, 0) (one
-    excitation, one birth), one splitter of the TABLE form at (12, 2, 0) arriving from -x (the
-    input direction +x) with its two outputs +x and +y, the split's weights and turns given."""
+    """A layer of 30 x 20 x 1 (z folded, x and y closed: mirrors, no face receiver), the
+    emitter body at (2, 2, 0) (one excitation, one birth), one splitter of the TABLE form at
+    (12, 2, 0) arriving from -x (the input direction +x) with its two outputs +x and +y, the
+    split's weights and turns given; no detector set, so the born record's ladder is empty
+    and it lives on."""
     document = chain_world(stock=1, wheel=(1, 1), on_mode=False)
     document["shape"] = [30, 20, 1]
-    document["boundary"] = {"x": "open", "y": "open", "z": "periodic"}
+    document["boundary"] = {"x": "closed", "y": "closed", "z": "periodic"}
     document["ticks"] = 120
     lamp = document["measured"][0]
     lamp["position"] = [2, 2, 0]
@@ -160,8 +164,9 @@ def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
     the input's squares within 2 percent (21^2 + 20^2 = 29^2). (3) A second call on the same
     pair adds the same term again (additive: the rule's value at the output is never
     overwritten). (4) The run of 90 intervals: the books balanced at every interval, the
-    splitter's Node 0 (held, the take), no click and no offer at its cell, the wave beyond
-    both outputs nonzero, every remainder inside its wall. The edge cases: a split without
+    splitter's Node evolving under the rule like every Node (the take retired: nothing holds
+    it at 0), no click at its cell (the record's ladder is empty: it lives on), the wave
+    beyond both outputs nonzero, every remainder inside its wall. The edge cases: a split without
     inputs (an opening's fan) refused; a row whose norm is no square refused naming the norm;
     a clock whose step has a sine of 0 ([32, 1] on N = 64: the step 32, sin pi = 0; [1, 2]: a
     step of 0) refused at load naming the step. Light's worlds without a splitter are byte for
@@ -212,16 +217,15 @@ def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
     for _ in range(90):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        for live in simulation.records.values():
-            if live.family == 0:
-                assert int(live.now[12, 2, 0]) == 0
         for remainders in splitter.remainders.values():
             assert all(0 <= r < sines[3] * 29 or 0 <= r < sines[4] * 29 for r in remainders)
     live = next(record for record in simulation.records.values() if record.family == 0)
     assert abs(int(live.now[14, 2, 0])) > 0 and abs(int(live.now[12, 4, 0])) > 0
-    cell = simulation.cell_index[12, 2, 0]
-    assert not any(line["event"] == "click" and line.get("node") == [12, 2, 0] for line in lines)
-    assert all(live.pointers[cell] == 0 for live in simulation.records.values())
+    # the one `click` line is the emitter's excited record's (its birth); the
+    # born record clicks nowhere (no gather line: its ladder is empty)
+    assert not any(line["event"] == "gather" for line in lines)
+    assert [line["family"] for line in lines if line["event"] == "click"] == ["matter"]
+    assert not live.clicked and not simulation.dead
     with pytest.raises(ValueError, match="a splitter declares its inputs"):
         parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]], inputs=False))
     with pytest.raises(ValueError, match="no square"):
@@ -231,112 +235,6 @@ def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
         zero_step["families"][0]["phase_per_link"] = clock
         with pytest.raises(ValueError, match="has a sine of 0"):
             parse_nature_beam_world(zero_step)
-
-
-POLARISER_TICKS = 2800  # 64 excitations over about 1350 intervals, the records' close after
-
-
-def polariser_world(setting: int, position: int = 36, faces: str = "closed") -> dict:
-    """A chain of 40 (x closed at both ends: no sponge), the light family's clock [77, 25]
-    on N = 64, the emitter body at x = 2 (the matter kind on its mode, the well pair
-    [800, 700]) with the stock 64 on the wheel [1, 64] (a full wheel: u = 0 .. 63 once each
-    over 64 births, at the excitations' rungs), and one polariser of the counter family at
-    `position` with the setting `phase_window` (DECLARATIONS.md section 14 item 6), named
-    by the set `pol` of one Node."""
-    document = chain_world(stock=64, wheel=(1, 64), on_mode=False)
-    document["shape"] = [40, 1, 1]
-    document["boundary"] = {"x": faces, "y": "periodic", "z": "periodic"}
-    document["ticks"] = POLARISER_TICKS
-    document["families"].append({"name": "counter", "quantum": 1, "phase_per_link": [1, 1]})
-    document["measured"] = [
-        document["measured"][0],
-        {
-            "position": [position, 0, 0],
-            "family": "counter",
-            "amount": 1,
-            "phase": 0,
-            "momentum": [0, 0, 0],
-            "fixed": True,
-            "table": {"light": {"phase_window": setting}},
-        },
-    ]
-    document["detectors"] = [{"name": "pol", "positions": [[position, 0, 0]], "reading": "sum"}]
-    massive_generator().seed_on_the_mode(document)
-    return document
-
-
-def test_d_a_polariser_is_a_table_body_of_two_cells_splitting_the_offer():
-    """(d) DECLARATIONS.md section 14 item 6 (the polariser's two channels as cells of this
-    engine): the polariser at x = 36 is a TABLE BODY of two cells, `pol+` at the exit Node
-    x = 37 and `pol-` at the entry Node x = 36, both take Nodes booking to the body, the +
-    cell before the - cell on the ladder; each interval's offer at the entry is split by
-    [C'[s]^2, S'[s]^2] over n_s with the remainder kept (the shares' sum the whole offer, the
-    entry's pointer within one unit of the declared share of the sum), the first rung of the
-    whole offer stamped on both cells at one interval; the gather's cells are [pol, 0, "0"]
-    and [pol, 1, "0"]; over the full wheel of 64 births the + channel counts 64 of 64 at s =
-    0, 32 of 64 at s = N / 4 (the half angle 45 degrees, C' = S' = 181) and 0 of 64 at s =
-    N / 2 (the pin's form: 128 of 256 at 45 degrees); the books balanced at every interval.
-    The edge cases at load: the exit Node off the board (the body at the last Node), no set
-    naming the body, two emitter bodies of the family."""
-    counts: dict[int, tuple[int, int]] = {}
-    for setting in (0, 16, 32):
-        world = parse_nature_beam_world(polariser_world(setting))
-        lines: list[dict] = []
-        simulation = DetectorLawSimulation(world, observer=lines.append)
-        plus = simulation.cell_names.index("pol+")
-        minus = simulation.cell_names.index("pol-")
-        assert plus < minus and simulation.cell_set[plus] == simulation.cell_set[minus] == "pol"
-        assert simulation.cell_channel[plus] == 0 and simulation.cell_channel[minus] == 1
-        assert simulation.cell_measured[plus] == simulation.cell_measured[minus] == 1
-        assert (
-            int(simulation.cell_index[37, 0, 0]) == plus
-            and int(simulation.cell_index[36, 0, 0]) == minus
-        )
-        assert bool(simulation.absorbing[37, 0, 0]) and bool(simulation.absorbing[36, 0, 0])
-        body = simulation.table_bodies[0]
-        expected = {0: (65536, 0), 16: (181 * 181, 181 * 181), 32: (0, 65536)}[setting]
-        assert (body.plus, body.minus) == expected and body.norm == sum(expected)
-        checked = 0
-        for _ in range(POLARISER_TICKS):
-            simulation.step()
-            assert simulation.books()["balanced"], simulation.tick
-            for live in simulation.records.values():
-                whole = live.pointers[plus] + live.pointers[minus]
-                if whole:
-                    # the entry keeps the - share, the split's remainder below n_s
-                    share = whole * body.minus // body.norm
-                    assert abs(live.pointers[minus] - share) <= 1 + whole // body.norm, (
-                        live.pointers[minus],
-                        share,
-                    )
-                    assert live.first_rung[plus] == live.first_rung[minus]
-                    checked += 1
-        assert checked > 0
-        gathers = [line for line in lines if line["event"] == "gather"]
-        births = [line for line in lines if line["event"] == "birth"]
-        assert len(births) == 64 and len(gathers) == 64 and not simulation.records
-        chosen = [gather["chosen"][0] for gather in gathers]
-        assert all(cell[0] == "pol" and cell[2] == "0" and cell[1] in (0, 1) for cell in chosen)
-        for gather in gathers:
-            assert gather["click_at"] == "rung"
-            triples = {tuple(cell[0][0]) for cell in gather["cells"]}
-            assert triples <= {("pol", 0, "0"), ("pol", 1, "0")}
-        counts[setting] = (
-            sum(1 for cell in chosen if cell[1] == 0),
-            sum(1 for cell in chosen if cell[1] == 1),
-        )
-    assert counts == {0: (64, 0), 16: (32, 32), 32: (0, 64)}
-    # the loader's refusals (the engine's construction, as the splitter's)
-    with pytest.raises(ValueError, match="off the board"):
-        DetectorLawSimulation(parse_nature_beam_world(polariser_world(16, position=39)))
-    unnamed = polariser_world(16)
-    unnamed["detectors"] = []
-    with pytest.raises(ValueError, match="no detector set of one Node names its Node"):
-        DetectorLawSimulation(parse_nature_beam_world(unnamed))
-    two_emitters = polariser_world(16)
-    two_emitters["measured"].append(dict(two_emitters["measured"][0], position=[10, 0, 0]))
-    with pytest.raises(ValueError, match="ONE emitter body"):
-        DetectorLawSimulation(parse_nature_beam_world(two_emitters))
 
 
 def test_g_the_joint_weights_are_the_declared_integers():
@@ -370,63 +268,6 @@ def test_g_the_joint_weights_are_the_declared_integers():
     assert one == [((0,), 237 * 237), ((1,), 98 * 98)]
 
 
-def relabelled_counts(setting: int, labels: tuple[tuple[int, int], ...]) -> tuple[int, int]:
-    """The polariser world at `setting` stepped to its close with every record's label
-    state set to `labels` at its birth (the record's own state, the joint labels' form; the
-    emitter's `branches` would declare it, and the test sets the state on the record as it
-    is born, 34 Links before the polariser); the + and - counts over the 64 births."""
-    world = parse_nature_beam_world(polariser_world(setting))
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(world, observer=lines.append)
-    seen: set[int] = set()
-    for _ in range(POLARISER_TICKS):
-        simulation.step()
-        for identity, live in simulation.records.items():
-            if identity not in seen:
-                seen.add(identity)
-                live.labels = labels
-        assert simulation.books()["balanced"], simulation.tick
-    chosen = [line["chosen"][0] for line in lines if line["event"] == "gather"]
-    assert len(chosen) == 64 and not simulation.records
-    return sum(1 for cell in chosen if cell[1] == 0), sum(1 for cell in chosen if cell[1] == 1)
-
-
-def test_d2_the_polariser_splits_by_the_records_own_state_not_the_setting_alone():
-    """(d2) Reviewer 3's bug line (2026-09-24, 15:15Z): the split took C'[s]^2 and S'[s]^2
-    from the setting alone and never read the record's label state, so a record born on
-    label 1 was split as if on label 0. Now the channel pointers are the record's own,
-    J(o) = SUM_l U_s[o][l] a_l (`joint_weights` with one body), the weights J^2. THE
-    ALGEBRA'S EXPECTED COUNTS over the full wheel of 64 (each u once, the rungs exact):
-    on LABEL 1 the counts SWAP, (0, 64) at s = 0, (32, 32) at s = N / 4 and (64, 0) at
-    s = N / 2 (J(+) = S', J(-) = C'); on the SUPERPOSITION of labels 0 and 1 with equal
-    weights, J(+) = C' + S' and J(-) = C' - S': (32, 32) at s = 0 (256 and 256), (64, 0)
-    at s = N / 4 (362 and 0: the state is the + channel's own at 45 degrees) and (32, 32)
-    at s = N / 2 (256 and -256); label 0 unchanged from (d). The edge case: the weights of
-    a record on label 0 are still the declared C'^2 and S'^2 (`body.plus`, `body.minus`)."""
-    assert {s: relabelled_counts(s, ((1, 1),)) for s in (0, 16, 32)} == {
-        0: (0, 64),
-        16: (32, 32),
-        32: (64, 0),
-    }
-    assert {s: relabelled_counts(s, ((0, 1), (1, 1))) for s in (0, 16, 32)} == {
-        0: (32, 32),
-        16: (64, 0),
-        32: (32, 32),
-    }
-    assert relabelled_counts(16, ((0, 1),)) == (32, 32)
-    world = parse_nature_beam_world(polariser_world(16))
-    body = DetectorLawSimulation(world).table_bodies[0]
-    assert (body.cosine, body.sine) == (181, 181)
-    assert DetectorLawSimulation.joint_weights([(body.cosine, body.sine)], [0], ((0, 1),)) == [
-        ((0,), body.plus),
-        ((1,), body.minus),
-    ]
-    assert DetectorLawSimulation.channel_weights(body.cosine, body.sine, 0, ((0, 1),)) == (
-        body.plus,
-        body.minus,
-    )
-
-
 def test_d4_an_arm_of_a_rank_2_record_is_split_by_the_partial_trace():
     """(d4) The mathematician's gate on the polariser's fix (ALGEBRA.md 9.11, defect (d)): for an
     arm of a rank-2 record the one-body weights are the PARTIAL TRACE over the other arm's
@@ -450,24 +291,3 @@ def test_d4_an_arm_of_a_rank_2_record_is_split_by_the_partial_trace():
         assert weights(cosine, sine, 1, pair) == expected, setting
     cosine, sine = half_angle(512, 2048)
     assert weights(cosine, sine, 0, ((0, 1), (1, 1))) == (362 * 362, 0)
-
-
-@pytest.mark.parametrize(
-    ("name", "expected"),
-    [("malus_45", 128), ("malus_11.25", 246), ("malus_28.125", 199), ("malus_33.75", 177)],
-)
-def test_d3_malus_four_worlds_keep_their_counts_under_the_split_by_state(name: str, expected: int):
-    """(d3) Malus's four worlds as declared (DECLARATIONS.md sections 5 and 6: every record
-    born on label 0) keep their + counts 128, 246, 199 and 177 of 256 under the split by
-    the record's own state: the state is label 0, whose channel pointers are the
-    setting's C'[s] and S'[s], the weights the declared C'^2 and S'^2, the counts the
-    tables' own on the wheel [159, 256] (each residue once)."""
-    document = json.loads((ROOT / "examples" / "events" / "detector_law" / f"{name}.json").read_text())
-    world = parse_nature_beam_world(document)
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(world, observer=lines.append)
-    for _ in range(world.ticks):
-        simulation.step()
-    chosen = [line["chosen"][0] for line in lines if line["event"] == "gather"]
-    assert len(chosen) == 256
-    assert sum(1 for cell in chosen if cell[1] == 0) == expected

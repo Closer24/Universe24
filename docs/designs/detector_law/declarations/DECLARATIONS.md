@@ -1,11 +1,16 @@
 # The six declarations in the one form, before any run: Bell's CHSH sum (1a), the no-signalling marginals (1d), the Mach-Zehnder visibility (2b), the moving lamp's redshift (4b), Malus at 45 degrees (9) and Malus at three new settings (the chief physicist, 2026-09-23; docs only, no run)
 
-THE FOUR BUILDING BLOCKS (the model owner, 2026-09-24, 13:36Z and 13:43Z): every
-object a section below declares is a composition of the emitter, the body,
-the receiver and the clock, and the engine branches on no name of it; the
-definitions are in [SIMULATOR_DEFINITIONS.md](../../../../SIMULATOR_DEFINITIONS.md),
-"The four building blocks", and every feature (the receiver by name, the joint gather, the lamp's ladder)
-names its blocks there.
+THE FOUR BUILDING BLOCKS (the model owner, 2026-09-24, 13:36Z and 13:43Z) ARE
+HISTORY SINCE THE ADOPTION OF THE UNIFICATION (the model owner, 2026-09-24,
+22:39Z, record 1875; ALGEBRA.md 9.18 to 9.22): the engine knows the one
+element, the one operator, the click and the birth, and nothing else
+([SIMULATOR_DEFINITIONS.md](../../../../SIMULATOR_DEFINITIONS.md), "The one
+operator, the click and the birth"); every object a section below declares is
+a region of the operator, a birth's data or a receiver's name, and the engine
+branches on no name of it. The features named below (the receiver by name, the
+joint gather, the lamp's ladder, the take, the grace, the tables) are the
+declarations' history; what stands of each is said in ALGEBRA.md 9.21 and in
+BUILD.md section 26.
 
 The Boss's order of 2026-09-23, about 17:12Z, on the owner's word of 16:55Z
 (everything anew on the new engine): the six PIN rows of `../SCHEDULE.md`
@@ -1697,7 +1702,8 @@ the two pins, not a third pin.
    world where it emits. THE LAMP'S `receiver` (DECLARED 15:20Z on Reviewer
    3's must-fix of 13:42Z, before two_slits or M1 is regenerated; the
    lamp's ladder, BUILD.md section 20 and SIMULATOR_DEFINITIONS.md "The
-   four building blocks"): a lamp record's ladder is the sets its
+   four building blocks", history since the adoption; the ladder of ALGEBRA.md
+   9.19 (3) (b) is the emitter's named sets, read cumulatively): a lamp record's ladder is the sets its
    `receiver` names (a set's name or a list of names), the faces and every
    unnamed set sinks for it, the cell of u taken over the ladder's own sum;
    absent the key the ladder is every cell as built (the table rows' lamp

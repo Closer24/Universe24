@@ -453,7 +453,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
         simulation.step()
         own = block.own
         assert own is not None
-        total += simulation.inward_flux(own, simulation.centre_mask(block), before_advance=True)
+        total += simulation.inward_flux(own, simulation.centre_mask(block))
     return total
 
 

@@ -11,17 +11,26 @@ the norm T the motion the write inserts and the excitation's residue, and, while
 lasts, excited record k + 1. No rate, no train, no drive, no source term, no grace, no own
 take. BUILD.md section 26.
 
+SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26 items 13 and 14): the
+excited record's offer is the one-way flux into the body's centre cell, its norm T the
+generator's integer `norm` (that flux over one period of the mode advanced alone); the born
+record's norm its conserved form I; every set books the one-way flux into its cells and the
+click is on the cumulative ladder, the record deleted whole at it. The unit world's faces
+are CLOSED (mirrors): an open face two Links behind a body is the face receiver, last on
+every ladder, and the half that leaves through it clicks there before anything reaches a
+screen (test_detector_law.py reads that).
+
 (a) M excitations give M births at the rungs: each birth at the first interval where the
-    excited record's booked motion crosses T (2 u + 1) / (2 W) (tracked interval by
+    excited record's booked flux crosses T (2 u + 1) / (2 W) (tracked interval by
     interval), the residues in the wheel's order ("ordinal" the counter, "seed" the keyed
     permutation), the quanta conserved (the stock spent one per birth, the books balanced
     at every interval), the excited record ended at its click and the next one seeded with
     the next residue, none after the stock; the birth line's keys.
 (b) The born values: at the birth the record's `now` and `before` equal the cosine table at
     phase(0) and phase(-1) of the born clock on every cell of the body and 0 elsewhere; its
-    norm is the sum of the squared steps; nothing drives it afterwards (its train 0, no
-    grace, its own body's cells taking nothing of it); nothing reaches Manhattan distance m
-    before age m; the born records reach the receiver by name and click.
+    norm is its conserved form; nothing drives it afterwards (its train 0, no grace, no
+    take); nothing reaches Manhattan distance m before age m; the born records reach the
+    receiver by name and click.
 (c) The loader's refusals, each naming its key.
 """
 
@@ -62,7 +71,7 @@ def emitter_world(
     side: int = 12,
     on_mode: bool = True,
 ) -> dict:
-    """The emitter's unit world: a chain of 80 (x open), the emitter a body of the matter
+    """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the matter
     kind [800, 809] with the well pair [800, 800] of side `side` at x = 5, seeded on its
     bound mode at the amplitude 100 (the generator's `seed_on_the_mode`, the body's
     conditions of the load check), its stock `amount` = `stock`, its `emitter` the light
@@ -80,7 +89,7 @@ def emitter_world(
         "law": "beam",
         "model_id": "beam-detector-law-emitter-unit-v1",
         "shape": [80, 1, 1],
-        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": ticks,
         "K": 1073741824,
         "N": 64,
@@ -166,8 +175,9 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     # generator's integers `period` and `norm`, recomputed at load and read
     # on the board here: the body alone (the same world, its emitter and its
     # screen removed), the flux into the Node x = 11 (the corner 5 plus 12 //
-    # 2) summed over `period` intervals, bit for bit; the period the nearest
-    # integer to 2 pi / omega_b (about 70 on this well)
+    # 2) from the two levels after each interval's step, summed over
+    # `period` intervals, bit for bit; the period the nearest integer to
+    # 2 pi / omega_b (about 70 on this well)
     emitter = document["measured"][0]["emitter"]
     assert emitter["norm"] == norm and 60 <= emitter["period"] <= 80
     alone = json.loads(json.dumps(document))
@@ -183,7 +193,7 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     for _ in range(emitter["period"]):
         solitary.step()
         assert body.own is not None
-        flux += solitary.inward_flux(body.own, centre, before_advance=True)
+        flux += solitary.inward_flux(body.own, centre)
     assert flux == norm
     by_tick = {entry["tick"]: entry for entry in trace}
     for line in births:
@@ -213,7 +223,11 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert sorted(gather["u"] for gather in gathers) == [0, 1, 2, 3]
     for gather in gathers:
         assert gather["content"] == 1 and gather["click_at"] == "rung"
-        assert gather["click"] >= gather["birth"] + 65  # the Manhattan distance 5 + 12 .. 70
+        # the +x half's front over the 54 Links from the body's face at 16 to
+        # the screen at 70 at light's pace c = 0.577 (about 94 intervals); the
+        # rung (2 u + 1) T / 128 crossed on the front
+        assert gather["click"] >= gather["birth"] + 65
+        assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
     # the seed order: the wheel's permutation, the same counts of births
     lines, _, _ = run(emitter_world(stock=4, wheel=(1, 4), order="seed", seed=7))
     seeded = [line["u"] for line in lines if line["event"] == "birth"]
@@ -252,7 +266,10 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
             assert now == 155648 and phase_cosines(2 * steps)[99] == 38
             assert np.all(born.now[block.mask] == now) and np.all(born.before[block.mask] == before)
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
-            assert born.norm == birth["norm"] == 12 * (now - before) ** 2
+            # the norm T the record's conserved form I in the flux's units
+            # (ALGEBRA.md 9.19 (3), BUILD.md section 26 item 14), the engine's
+            # integer read on the board at the birth
+            assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
             assert birth["cells"] == 12 and birth["excitation"] == 1 and birth["train"] == 0
             assert born.u == 0 and born.content == 1 and born.emitter == 0
             assert born.ladder == [simulation.cell_names.index("screen")]
@@ -264,10 +281,9 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 16 + age
-    # no drive and no own take after the write: the body's cells are free
-    # Nodes for the born record (not absorbing), and the record's own body
-    # books nothing of it onto the ledger's retired row
-    assert not simulation.absorbing[block.mask].any()
+    # no drive and no take after the write (the take retired, ALGEBRA.md
+    # 9.19 (3)): nothing absorbs, and the ledger's retired row stays 0
+    assert not simulation.absorbing.any()
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 

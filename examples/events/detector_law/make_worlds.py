@@ -79,9 +79,8 @@ step 3).
 A world whose lines the engine on main does not carry yet is written into
 `docs/designs/detector_law/held_worlds/` (HELD_NAMES below), outside the
 shipped set under `examples/events` that the gate loads, until its line lands.
-Since PR 1118's merge (main 1454030f, the margin rule skips a silent block)
-every world loads and constructs at its RUN_LIST path; nothing is held
-(HELD_NAMES below is empty).
+The four Bell worlds are held until the crystal (BUILD.md section 26) and the
+four Malus worlds until the polariser body with an axis (item 14).
 
 Run from the repository root:
 
@@ -118,7 +117,22 @@ HELD = DESIGNS / "detector_law" / "held_worlds"
 # their two-arm lamp is cancelled and refused at load (ALGEBRA.md 9.17; the model owner's
 # word of 2026-09-24, 15:05Z); the crystal's branch regenerates them through the crystal
 # at the wheel [1, 20] (the Boss's adoption of 00:05Z).
-HELD_NAMES: set[str] = {"bell_a0b0", "bell_a0b1", "bell_a1b0", "bell_a1b1"}
+HELD_NAMES: set[str] = {
+    "bell_a0b0",
+    "bell_a0b1",
+    "bell_a1b0",
+    "bell_a1b1",
+    # the four Malus worlds held with them (BUILD.md section 26 item 14): under
+    # the cumulative ladder of ALGEBRA.md 9.19 (3) (b) the table body's two
+    # cells at ONE Node cannot give Malus's counts (the entry's whole offer
+    # crosses the rung no later than the + share of it), so the polariser
+    # returns as a body with an axis and two receivers named (the
+    # mathematician's step 3), the counts re-derived on it
+    "malus_45",
+    "malus_11.25",
+    "malus_28.125",
+    "malus_33.75",
+}
 
 
 def load_massive_generator():

@@ -6,9 +6,10 @@ engine's integer rule up to the remainders' own term of 8.2 at the Node, (a_next
 a_before,i) (r_i - r'_i) / (3 num_i), on planted random rows (light's pair [1, 1] and the
 matter kind [800, 809]), the flux antisymmetric and pair-free; (b) a packet's one-way inward
 flux into one cell, SUM over intervals and Ports of max(G, 0), over its passage is the
-packet's conserved form I to a part in a hundred (the backward part of a planted packet the
-rest), the signed sum below a part in a million of I. Every number here is a COMPUTATION on
-the rule's integers; no pin."""
+packet's conserved form I to a part in a hundred (the backward part of a planted packet
+returns through the open face's mirror and passes the cell too, the excess the lattice's
+counter-flow), the signed sum below a part in a million of I. Every number here is a
+COMPUTATION on the rule's integers; no pin."""
 
 from __future__ import annotations
 
@@ -133,9 +134,11 @@ def test_a_the_local_flux_identity_is_exact_on_the_rules_integers():
 
 def test_b_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the
-    cell 200 over 600 intervals: the one-way inward flux 0.9865 of I (the backward part of the
-    planted packet, 1.35 percent, to the -x face), the signed sum 7 x 10^4 against I 5.9 x
-    10^11 (COMPUTATION)."""
+    cell 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
+    planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and
+    passes the cell too; the excess the lattice's counter-flow on the passage; before the
+    take retired the sponge took that part and the reading was 0.9865), the signed sum
+    7 x 10^4 against I 5.9 x 10^11 (COMPUTATION)."""
     simulation = chain_world(None, 400, {"x": "open", "y": "periodic", "z": "periodic"})
     matrix = reads(simulation, 0, 400)
     k = 0.3024
@@ -173,7 +176,7 @@ def test_b_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
             one_way += max(g, Fraction(0))
             signed += g
     ratio = one_way / start
-    assert Fraction(98, 100) < ratio < 1, float(ratio)
+    assert Fraction(99, 100) < ratio < Fraction(101, 100), float(ratio)
     assert abs(signed) * 1_000_000 < start, (float(signed), float(start))
 
 

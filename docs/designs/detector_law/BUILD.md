@@ -1614,6 +1614,113 @@ would have found no cell.
    re-derived blind; and the owner's decision of 22:20Z, the residue from
    the law's remainder at the birth cell (no declared residue or wheel),
    as he specifies it.
+14. THE PROPERTY TEST ON THE ENGINE AND E AS THE FLUX (ALGEBRA.md 9.19 (3)
+   with the mathematician's answers of 22:28Z, 9.20 (B), 9.21 (3); the
+   owner's adoption, record 1875; the Boss's order of 22:39Z and the
+   mathematician's cleanup order of 22:50Z, steps 0 and 1; the fourth
+   push of this branch). THE GATE FIRST: tests/test_board_properties.py
+   runs 9.20 (B)'s six properties on the engine's small world (a cube of
+   12 x 12 x 12 periodic on every axis; light [77, 25] and the massive
+   family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the
+   pair [800, 801] seeded on its composed mode; one light record planted as
+   its birth writes it on the cell (8, 2, 7); one receiver of one cell at
+   (9, 9, 2), bound to the well in this head's loader form; W = 8; 90
+   intervals): (1) 48 of 48 transformed worlds give the transformed states
+   bit for bit, remainders included, and the same click at the same
+   interval; (2) 7 of 7 translations; (3) the light's quantum constant
+   until the click and gone with the deleted record, and per record the
+   form I less 8.2's accumulated remainder term the same rational at every
+   interval, exact; (4) 90 intervals and 90 of 8.8's inverse (`step_inverse`,
+   the reverse column order, `_advance_inverse` the rule backwards with
+   the ceiling) return the initial element bit for bit, and with the
+   receiver named the inverse from 90 returns the state at the click's
+   interval with every remaining summand bit for bit, the deleted one in
+   neither; (5) a one-unit change at one Node stays inside the Manhattan
+   ball of radius m at interval m and is nonzero for every m <= 12; (6)
+   200 random elements with two Nodes of equal seven inputs give equal
+   outputs, and two runs differing only in their residues are identical
+   until the first click; (7) the scaling check the owner asked (the
+   Boss's 22:55Z; HOST): the host time per Node per interval 15, 5.0 and
+   1.1 microseconds and the peak memory per Node 426, 317 and 187 bytes at
+   12^3, 24^3 and 48^3 (the small board's fixed costs dominate it, every
+   step linear or bilinear in the levels), the generator's composed mode
+   0.01, 1.4 and 2.4 seconds. The reference record clicks at 81 with u =
+   0 (9.20's "60 intervals" reads on the prototype's flux, three times
+   the engine's, item 13's finding to the mathematician). THE FLUX AT
+   EVERY SET: after each interval's step the one-way inward flux into
+   every cell (`flux_offer`, the two levels after the step, the
+   prototype's reading) is booked to the record's pointer C at that cell;
+   the ladder of a record is its emitter's named sets in their declared
+   order, or its block's one receiver, or every detector set as declared,
+   the face receiver last (`_ladder_of`); at every interval the cumulative
+   sums L_k are read in that order and the click fires at the first k
+   with 2 W L_k >= (2 u + 1) T (`_ladder_click`; T the record's conserved
+   form at its birth, W the set's wheel on this head, the record's own
+   from step 2), the line written with `click` that interval, the content
+   handed to the set's body (a set without a body, the face included,
+   consumes the quantum as any click does), and the record deleted whole
+   after the interval's advances (`self.dead`, 8.8's one deletion). THE
+   FACE RECEIVER: an open axis carries the set `face` on its border layer,
+   last on every ladder (record 15 kept); a periodic axis has none; a
+   `closed` face is a zero row with no receiver. RETIRED IN THIS PUSH: the
+   take (no Node absorbs: the rows evolve at every cell, the Ports' ghosts
+   read by nothing, the masks empty), the sponge, the completion
+   (`_complete`), the close (`_close_clicked`, `_close_without_click`,
+   `_click` at the close), the pair's click at the close (`_click_pair`,
+   the crystal's rework), the clock body's booking (`_book_response`), the
+   hop's booking of an entered Node's content, the line at the rung
+   (`_line_at_rung`), `escaped` on a record and on the click line (the
+   ledger's row stays at 0 until the books' rewrite), `earlier`; every
+   test of those forms rewritten or removed in the same push (the Boss's
+   rule of 22:55Z): tests i, k, u, ai, ak and ag of
+   tests/test_massive_record.py (the take at a clock body's cell, the
+   absorbing block, the completion, the self-click of a set at its own
+   body's cells, the take's pair on a massive kind) removed; aa, ac and
+   ah rewritten; tests/test_receiver_by_name.py rewritten (the cells off
+   the ladder book and are never chosen, the line's `T` counts them, a
+   block's own cell on no ladder, sagnac_rest's records clicking at the
+   other body's set); the chain digests of test (p) moved. THE TAKE'S
+   DATA (the `absorbing` and `take` keys, the take masks, a record's
+   Ports and `driven`, a block's `taking`) is switched off here (the
+   masks empty at every construction and hop) and is REMOVED with the
+   loader's rewrite of step 2, where its refusals are rewritten. THE
+   LADDER BY NAME in the NAMED order (9.19 (3) (b), "its declared
+   order"): `live.ladder` follows the emitter's `receiver` list, a set's
+   cells in the cells' order within it; the click line's `ladder` and
+   `sunk` read `_ladder_of` (the face last). THE WORLDS: every emitter
+   body's `norm` regenerated (the flux read from the two levels after the
+   step, item 13's reading before the step withdrawn); the four Malus
+   worlds moved to held_worlds/ with the Bell four (below). THE TEST
+   WORLDS' FACES: the chain of 80, the layer of 24 x 7, the emitter's
+   unit chain, the chain of 200 and the splitter's layer are CLOSED
+   (mirrors) since the flux reading: an open face two Links behind an
+   emitter body is the receiver `face`, last on every ladder, and the
+   half that leaves through it reaches (2 u + 1) T / (2 W) before
+   anything reaches a screen, so every record clicked at the face
+   (test_detector_law.py test (a) reads that on the open chain: the first
+   record's click at `face` within twelve intervals of its birth). THE
+   FINDING FOR THE MATHEMATICIAN (the owner's method, values on the
+   board; tests/test_detector_law.py, the layer test): under the
+   cumulative rule AS WRITTEN, "the first interval at which some L_k
+   reaches (2 u + 1) T / (2 W), at the first such k", the LAST sum L_K
+   is the first to reach the rung whenever the cells receive together,
+   and at that interval only the tail sums exceed it: on the layer's
+   three sets all eight residues click at s2 under [s0, s1, s2] and all
+   eight at s0 under [s2, s1, s0], no distribution over the cells; the
+   same for a screen and for the polariser's two cells at one Node
+   (the entry's whole offer reaches the rung no later than the + share
+   of it), so Malus's counts cannot come from the table body under this
+   rule and the four Malus worlds and tests d, d2 and d3 of
+   tests/test_detector_law_tables.py are HELD until the polariser body
+   with an axis (the mathematician's step 3). 9.22 (3) (b)'s derivation,
+   "for offers in fixed proportions the crossing cell is the final
+   ladder's", holds if the click's INTERVAL is read on the ladder's total
+   L_K against T and the CELL on the ladder's proportions at that
+   interval (main's `cell_of` with the total the ladder's own sum), two
+   comparisons; the mathematician's word is owed and the engine carries
+   the rule as written until it comes (no silent law change). The line's
+   suites re-read on this engine: their numbers are the engine's,
+   COMPUTATION; the property test green at every push of this item.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
@@ -1648,7 +1755,7 @@ would have found no cell.
    division, no root, no float; the entry cell reads its own record's
    labels and pair.
 
-## 22. The body's conditions exact in the initial state, checked at load (SIMULATOR_DEFINITIONS.md, the four building blocks, the body's conditions 1, 5 and 7; the model owner's words of 2026-09-24, 16:35Z and 16:48Z, through the Boss; `body-check`)
+## 22. The body's conditions exact in the initial state, checked at load (SIMULATOR_DEFINITIONS.md, the four building blocks (history since record 1875), the body's conditions 1, 5 and 7; the model owner's words of 2026-09-24, 16:35Z and 16:48Z, through the Boss; `body-check`)
 
 1. THE SHAPE WHOLE ON THE BOARD (`_body_fit_check`, world.py, the loader's
    last check): a body's cube from its lower vertex `position` with the
