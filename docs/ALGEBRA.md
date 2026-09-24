@@ -4670,17 +4670,24 @@ HERE:
   not move.
 
 THE PHYSICIST'S THREE QUESTIONS OF 22:17Z, ANSWERED (DERIVED HERE):
-- (a) THE FACES: every board is CLOSED, a torus or a box of zero rows;
-  the open face as a sponge is a take and retires; `escaped` retires with
-  it. A record's energy stays on the board, and on a closed board the
-  one-way inward flux at any set on its ladder keeps accumulating as the
-  field passes it again, so EVERY RECORD CLICKS (its rung is at most T);
-  the close on a record's own age (9.12 item 2) RETIRES too: the click is
-  the record's one end, and a record alive at the run's last interval is
-  reported alive, a host reading. The chains (the index rows, the
-  redshift, the light clock) and the two slits' layer take the margin
-  rule of the specification's part B (half the train behind every
-  receiver) at their regeneration.
+- (a) THE FACES, read against Highlights' record 15 of 2026-09-19 ("the
+  GameBoard of a run is open on every face, what leaves clicking on the
+  face detector; an axis may be declared periodic; a closed board is
+  refused"): THAT DECISION STANDS, with the take replaced by the click.
+  An open face is the zero row beyond the border (1.6) AND A RECEIVER
+  named `face` at the border cells, on every record's ladder as its last
+  set, read like any set by the one-way inward flux; what leaves clicks
+  there and is deleted whole; the sponge (a take with no click) retires,
+  and `escaped` is the face receiver's count. A board with neither a
+  periodic axis nor a face receiver stays refused. Before the face's rung
+  is reached the zero row reflects, so the steady-field rows keep the
+  margin rule of the specification's part B at regeneration. On such a
+  board every record's energy is read by some set of its ladder without
+  end, so EVERY RECORD CLICKS and the close on a record's own age (9.12
+  item 2) RETIRES: the click is the record's one end; a record alive at
+  the run's last interval is reported alive, a host reading. (An earlier
+  line here, "every board is closed and the open face retires",
+  CONTRADICTED record 15 and is withdrawn.)
 - (b) THE CLICK'S ACT: the record is deleted WHOLE at the rung, its rows
   everywhere (8.8's one deletion), at that interval; a set's offer is
   read through its Ports only (a Link from a Node outside the set into a
@@ -4739,7 +4746,14 @@ denominator at that cell. Then the world declares no residue.
   crystal's centre cell), and its wheel is W = 3 x denominator /
   gcd(numerator, 3) of that cell's pair for the clicking record's family,
   in lowest terms. No `residue_order`, no `residue_seed`, no declared
-  wheel anywhere; the loader refuses them. The first excitation of a
+  wheel anywhere; the loader refuses them. Read against Highlights: the
+  remainder read is the RECORD'S ROW'S (8.1: the remainder kept on the
+  record's row), not the Node's, so record 155 ("a Node keeps no
+  remainder and no draw") holds; and W, listed by record 189 among the
+  law's grain constants as the birth wheel, becomes a quantity of the
+  world's pair (3 x denominator / gcd(numerator, 3)), no longer a constant
+  of the law: a RECLASSIFICATION for the Boss's record, not a change of a
+  rule. The first excitation of a
   body, on the board at interval 0 with every remainder 0 (9.9), has u =
   0 and clicks at its earliest rung. What follows, DERIVED HERE, blind:
   - (4a) THE RICHNESS OF THE BIRTH CELL. The granularity of Born's rule
@@ -4802,7 +4816,7 @@ denominator at that cell. Then the world declares no residue.
 | a body | a region of the operator where a family's pair differs from the vacuum's | yes (a cube, a pair) |
 | a tool | a region of the operator with its integers, and at most a birth and a name | yes |
 | a face | the operator's zero row beyond the border | the board's extents: yes |
-| a receiver | a NAME the host gives a set of cells, on records' ladders, with W | yes (a name and W) |
+| a receiver | a NAME the host gives a set of cells, on records' ladders; the rung's wheel is the record's own, born with u (4), not the receiver's | yes (a name) |
 | the emitter's stock, the born profile, the crystal's branches | the birth's data | yes |
 | the residues | one integer per summand | yes, or the rule's own remainder (4) |
 | the click, the birth, the push | the map S and its one deletion | no: the law |
@@ -4812,9 +4826,9 @@ So THE WORLD FILE DECLARES: the board's extents; the families (a pair and
 a quantum each); THE OPERATOR (every region where a pair, a coupling or an
 axis differs from the vacuum, as cubes); THE INITIAL ELEMENT (the seeds, one
 per bound body, the composed modes of 9.9); THE BIRTHS (a body's stock and
-born profile, a crystal's branches and clocks); THE NAMES (the receivers,
-each set with its W, and the ladders that name them); and, unless (4)'s
-option is taken, THE RESIDUES. Nothing else. THE GENERIC ENGINE IS: one
+born profile, a crystal's branches and clocks); THE NAMES (the
+receivers' sets and the ladders that name them; no wheel: the rung's
+wheel is the record's, (4)). Nothing else, the residues included (4). THE GENERIC ENGINE IS: one
 step of S on the one element, then the click (E the flux, D the rung, X
 the deletion, E^T the birth) on the summands whose ladders name a set.
 
@@ -5014,7 +5028,7 @@ done before it.
 
 1. THE WORLDS. A world is its initial element (integers at interval 0)
    PLUS its operator (the pairs, couplings and axes per region) PLUS the
-   births' data PLUS the receivers' names: DERIVED (9.19 (5)). Not "the
+   births' data PLUS the receivers' names (no wheel): DERIVED (9.19 (5)). Not "the
    initial element alone": the operator is the world's second declaration,
    and it is data, not a rule. A world file may declare exactly those four
    and the board's extents; it may not declare a residue, a wheel, a take,
@@ -5024,7 +5038,8 @@ done before it.
 2. THE FIFTEEN. Survive as declared inputs: the extents, the families'
    pairs and quanta, the bodies' cubes and pairs, the couplings, the axes,
    the emitters' stocks and born profiles, the crystal's branches and
-   clocks, the receivers' names with W, the amplitudes. Become DERIVED:
+   clocks, the receivers' names, the amplitudes. Become DERIVED: the
+   wheel (the birth cell's pair),
    the seeds (the composed operator's modes, 9.9), the trains (a born
    profile's length), the residues (the law's remainders), the tools'
    shares (the operator's scattering), the first rungs (the flux), the

@@ -145,10 +145,11 @@ and no tool name.** Every tool is built from these alone.
   representation (9.4, 9.12).
 - A direction: NONE.
 - Its primitive: **E**, **D**, **X**.
-- Its material integers: its wheel W, and its name in the ladders of the
-  records it reads (the ladder by name). No take pair (9.12).
+- Its material integers: its name in the ladders of the records it reads
+  (the ladder by name). No take pair (9.12) and no wheel: the rung's wheel
+  is the record's own (ALGEBRA.md 9.19 (4)).
 - On the board at interval 0: nothing.
-- Its load check: W >= 1; every ladder names only declared receivers; the
+- Its load check: every ladder names only declared receivers; the
   generator's timing condition that each record's click or close comes
   before the first face reflection reaches its receivers (9.12 item 2;
   the per-row margins are in B).
@@ -262,9 +263,12 @@ and no tool name.** Every tool is built from these alone.
   0.
 - A direction: the axis's normal.
 - Its primitive: **R**.
-- Its material integers: none. Each axis is periodic or closed.
+- Its material integers: none. Each axis is periodic, or open with the
+  face receiver `face` at its border on every ladder's end (Highlights'
+  record 15, kept: what leaves clicks there; ALGEBRA.md 9.19 (3) (a)).
 - On the board at interval 0: nothing.
-- Its load check: the timing condition of A.2.
+- Its load check: a periodic axis or a face receiver on every axis (a
+  closed board is refused); the timing condition of A.2.
 - Its unit test: the closed face's reflection delay on the chain at
   [2464, 25] is 3.547 intervals.
 
@@ -279,7 +283,7 @@ it drifts less than one Link over the run.
 | Tool | Click? | Its group element: the rotation of its shape | A direction? | Its generic primitive | Its material integers |
 | --- | --- | --- | --- | --- | --- |
 | Emitter | YES: its own record clicks, and the birth is the click's other side | **E**^T, the projector onto G_48's trivial representation (the orbit sum of a Port) | none on a cube; a line of cells gives a line's (a placement) | its own record's **E**, **D**, **X**, then **E**^T once | the block's pair, side and seed; the born clock [p, q]; A; the line's length; the wheel [step, W]; the branches |
-| Receiver | YES | **E** then the rung: a scalar, the trivial representation | none | **E**, **D**, **X** | W; its name in the ladders |
+| Receiver | YES | **E** then the rung: a scalar, the trivial representation | none | **E**, **D**, **X** | its name in the ladders (no wheel) |
 | Mirror | no | the reflection -I x (the half-turn of V_4 about the face's normal), arising from the gap | none on a cube; a slab's unoriented normal | **R** with the gap | the gap [num, den], the side |
 | Splitter | no | the reflection weighted by r, the identity by t | the layer's normal | **R** with the layer's pair | [91, 107] at [2464, 25] |
 | Polariser | no of its own; its two receivers click | the rational projector **P**_u in Q[G_48]'s image M_2(Q), not in G_48; chiral: (a, b) -> (a, -b) | no spatial direction | **B**_u on the label rows | the axis [a, b], gcd 1; its two receivers |
