@@ -4793,6 +4793,16 @@ CORRECTIONS = [
         "(vi) Light's bending: on the law of this paper, the runtime before the generic entry, $0$, the flight blind to the crowd (series K, $0.000$ pixel, DETECTOR; FAIL against $1.75$ arcseconds); ",
         "(vi) Light's bending: on the law at head, half of nature's, by the time part alone, $-1.993$ pixel at $\\gamma_{\\mathrm{PPN}} = 0$ on a coupled world (DETECTOR, the pin met \\cite{disagrees}), a factor $2$ against nature's $1 + \\gamma = 2$, $1.75$ arcseconds; series K's $0.000$ pixel (DETECTOR) the reading of the worlds that declared the coupling away, history, before the generic entry of 2026-09-22; ",
     ),
+    (
+        "commit 21, the reviewer's reading (B), line 2: the parenthesis in row 13's cell",
+        "the audit's re-run \\cite{disagrees}), half of the declared",
+        "the audit's re-run \\cite{disagrees}; half of the declared",
+    ),
+    (
+        "commit 21, the owner's word 48 pages: the records file cited",
+        "\\bibitem{nature} The confrontation register, \\texttt{docs/NATURE.md} of the archived code \\cite{zenodo}. ",
+        "\\bibitem{nature} The confrontation register, \\texttt{docs/NATURE.md} of the archived code \\cite{zenodo}. \\bibitem{records} The paper's records, cut from the paper at 48 pages (the owner's word of 2026-09-23) and kept verbatim from the same source: the full confrontation record, the check of the roads, the seven confirmations, the auxiliary proofs, the hand-worked update, the conversion table and the forcing ledger, \\texttt{paper/general\\_formula/records.tex} of the archived code \\cite{zenodo}. ",
+    ),
 ]
 
 

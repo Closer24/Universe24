@@ -17,6 +17,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CUT30 = ROOT / "paper" / "general_formula" / "cut30"
 MAIN_TEX = ROOT / "paper" / "general_formula" / "main.tex"
+RECORDS_TEX = ROOT / "paper" / "general_formula" / "records.tex"
 
 
 def _base_commit_available() -> bool:
@@ -38,9 +39,12 @@ def test_main_tex_is_the_assemblers_output() -> None:
         module = importlib.util.module_from_spec(spec)
         assert spec.loader is not None
         spec.loader.exec_module(module)
-        built = module.build()
+        built, recs = module.build_all()
         assert built == MAIN_TEX.read_text(encoding="utf-8"), (
             "main.tex differs from cut30/assemble.py's output: run the assembler, do not edit main.tex by hand"
+        )
+        assert recs == RECORDS_TEX.read_text(encoding="utf-8"), (
+            "records.tex differs from cut30/assemble.py's output: run the assembler, do not edit it by hand"
         )
         # one paper in one document (the owner's word of 2026-09-23, record 1244)
         assert not (MAIN_TEX.parent / "supplement.tex").exists(), (
@@ -50,6 +54,7 @@ def test_main_tex_is_the_assemblers_output() -> None:
     finally:
         sys.path.remove(str(CUT30))
         sys.modules.pop("reorder", None)
+        sys.modules.pop("records", None)
 
 
 def test_every_correction_has_its_own_label() -> None:
@@ -77,12 +82,14 @@ def _check_reorder(module) -> None:
     import re  # noqa: PLC0415
 
     reorder = module.reorder
-    moved = reorder.reorder
+    records = module.records
+    moved, cut_records = reorder.reorder, records.cut
     try:
         reorder.reorder = lambda text: text
+        records.cut = lambda text: (text, "")
         unordered = module.build()
     finally:
-        reorder.reorder = moved
+        reorder.reorder, records.cut = moved, cut_records
     blocks = {}
     rest = unordered
     for name in reorder.BLOCKS:
@@ -98,20 +105,30 @@ def _check_reorder(module) -> None:
         rewrites = reorder.REFS + [(reorder.FAMILIES_APPENDIX_REF, reorder.FAMILIES_BELOW_REF)]
         for old, new in rewrites:
             body = body.replace(old, new)
+        # the records cut from the paper (cut30/records.py) leave their pointers in the blocks
+        body = records.strip_block(body)
+        if not body.strip():
+            continue  # the block was one table, now whole in records.tex (checked below)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
-    assert "\\label{tab:summary}" in main and main.count("\\label{tab:nature}") == 1
-    for label in ("tab:conversion", "tab:ledger", "tab:families"):
-        assert main.count(f"\\label{{{label}}}") == 1
-    assert (
-        main.index("\\label{tab:summary}")
-        < main.index("\\label{app:register}")
-        < main.index("\\caption{\\label{tab:nature}")
-    ), "the summary in the comparison, the full record an appendix"
+    recs = RECORDS_TEX.read_text(encoding="utf-8")
+    assert "\\label{tab:summary}" in main and "\\label{tab:kept}" in main
+    for label in (
+        "tab:nature",
+        "tab:roads",
+        "tab:conversion",
+        "tab:ledger",
+        "tab:families",
+        "app:register",
+        "app:proofs",
+    ):
+        assert f"\\label{{{label}}}" not in main and recs.count(f"\\label{{{label}}}") == 1, label
+    assert "\\bibitem{records}" in main and "\\cite{records}" in main
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
     assert refs <= set(labels), f"unresolved references: {refs - set(labels)}"
+    both = main + recs  # a moved reference may now stand in the records file
     for old, new in reorder.REFS:
-        assert main.count(old) == 0 and main.count(new) == 1, (
+        assert both.count(old) == 0 and both.count(new) == 1, (
             f"a moved reference is not in place: {new[:50]}"
         )

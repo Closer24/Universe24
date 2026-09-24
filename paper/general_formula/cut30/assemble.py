@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import corrections  # noqa: E402  (the path above)
+import records  # noqa: E402
 import reorder  # noqa: E402
 
 HEADER = """% The paper on the general formula, the thirty-page form (the owner's instruction
@@ -32,7 +33,8 @@ HEADER = """% The paper on the general formula, the thirty-page form (the owner'
 % form is at c15c1174, the forty-page cut at b0d1ebf7. The sections stand in
 % the six heads' order (cut30/reorder.py; the owner's approval of 2026-09-23),
 % one paper in one document (his word of 2026-09-23, record 1244: "we have no
-% supplement; there is only one paper").
+% supplement; there is only one paper") at 48 pages (his word of the same day):
+% the records cut from it stand verbatim in records.tex (cut30/records.py).
 """
 
 
@@ -69,8 +71,9 @@ def _references(text: str, bib: str) -> str:
     return "{\\footnotesize\n" + head + "".join(kept) + "\\end{thebibliography}}\n\n"
 
 
-def build() -> str:
-    """main.tex: the four parts joined, corrected, reordered, the references filtered."""
+def build_all() -> tuple[str, str]:
+    """(main.tex, records.tex): the four parts joined, corrected, reordered,
+    the records cut out, the references filtered."""
     for i in (1, 2, 3, 4):
         runpy.run_path(str(HERE / f"part{i}.py"), run_name="__main__")
     parts = "".join((HERE / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
@@ -84,18 +87,27 @@ def build() -> str:
     )
     s = corrections.apply(s)
     s = reorder.reorder(s)  # the six heads (the owner's approval of 2026-09-23)
+    s, recs = records.cut(s)  # the records file (the owner's "48 pages", one paper)
     body = s[: s.index("\\begin{thebibliography}")]
     bib = s[s.index("\\begin{thebibliography}") :]
     i = body.index("\\appendix")
     # The references follow the body on its last page (the cut to 35 pages of
     # 2026-09-22, record 852); the page split is read from the page numbers.
-    return HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
+    paper = HEADER + body[:i] + _references(body, bib) + body[i:] + "\\end{document}\n"
+    return paper, records.RECORDS_HEADER + recs + "\n"
+
+
+def build() -> str:
+    """The manuscript's text (main.tex); `build_all` gives the records file beside it."""
+    return build_all()[0]
 
 
 def main() -> None:
-    out = build()
+    out, recs = build_all()
     (HERE.parent / "main.tex").write_text(out)
+    (HERE.parent / "records.tex").write_text(recs)
     print("main.tex written; references kept:", out.count("\\bibitem{"))
+    print("records.tex written:", len(recs), "characters")
 
 
 if __name__ == "__main__":
