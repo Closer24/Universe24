@@ -3284,9 +3284,10 @@ receiver acting in the rotated label basis, not a separate operation
 (DERIVED HERE). Its equivariance: a reflection exchanges the two hands,
 and exchanging the rows and columns of **U**_s gives **U**_(-s), so the
 mirror image of a polariser at s is the polariser at -s (DERIVED HERE, a
-one-line check). MISSING: at a general s the rotation is not an element
-of the cells' group (the 48 give no rotation of the label pair but the
-exchange); its angle is a declared rounding (kind 1, 3.6's tables).
+one-line check). At a general s the rotation is not an element of the
+cells' group (the 48 give only quarter turns); it IS an element of the
+wheel's group, the relative translation x^s of the two hands, with no
+table (9.14).
 Polar.
 
 **The well body (IN THE ALGEBRA, 8.3).** A G_48-set with a lowered pair,
@@ -3715,44 +3716,169 @@ births per cycle of its own clock are this); for a lamp, only the naming
 arriving record's click, not by its own clock (9.7 (b)); the train, the
 wheel and the residue are unchanged.
 
-### 9.14 The polariser's angle: how much the general angle is needed (the owner's word of 21:40Z)
+### 9.14 The polariser's angle: an element of the wheel's group, with no table (the owner's word of 21:40Z, and of 2026-09-24 17:27Z through the Boss: "about the general angle of the polariser, perhaps we do not need it at all")
 
-**The group's own angles give no Bell violation (PROVED HERE).** On the
-label module the cells' group gives only the identity and the exchange
-(9.4): polariser angles 0 and 90 degrees (s = 0 and s = N / 2). With
-those, every correlation E(a, b) = cos 2 (theta_a - theta_b) is +1 or -1
-(COMPUTATION on the tables: 1, -1, -1, 1), both settings commute, and S
-<= 2 (the four E's of +-1 satisfy abs(S) <= 2 by the CHSH identity's
-case count). So S above 2 NEEDS angles outside the group.
+This section replaces the earlier reading, in which the half-angle tables
+were kept as a declared rounding. The question: can every polariser
+setting the fifteen experiments need be an operation of the algebra, with
+no declared table? Two candidates are tested: (a) the setting as an
+element of the wheel's group Z_N; (b) the setting as an element of the
+cells' group ring. The result: (a) is exact and keeps every pin; (b) is
+exact only on the lattice's rational axes, and it never reaches 22.5
+degrees.
 
-**The angles the fifteen experiments use.** Bell's settings s = 0, 256,
-512, 768 on the half-angle tables of 2N at N = 2048 are 0, 22.5, 45 and
-67.5 degrees; Malus's s = 64, 16, 40, 48 at N = 256 are 45, 11.25, 28.125
-and 33.75 degrees. None but 0 is in the group; they are the declared
-rounding of the tables (kind 1).
+**The cells' own group gives no Bell violation (PROVED HERE).** A
+reflection of G_48 that keeps the record's path exchanges the two hands
+(the hand is a pseudoscalar, 9.3). The elements that fix the path act on
+the plane across it only through quarter turns and the reflections of
+that plane. So the polarisers in the group sit at multiples of 45 degrees
+(s a multiple of N / 4, with the angle theta = pi s / N). Every
+correlation E(a, b) = cos 2 (theta_a - theta_b) is then 1, 0 or -1, and
+the four terms of CHSH give abs(S) <= 2: with values in {-1, 0, 1}, S = 4
+would need b = b' and b = b' + 90 degrees together. So S above 2 needs
+something beyond the cells' own group.
 
-**THE LATTICE'S OWN ANGLES, WITH NO ROUNDING (DERIVED HERE).** Read the
-label pair as the plane across the record's path (linear polarisation)
-and let a polariser declare its AXIS AS AN INTEGER VECTOR **u** of that
-plane (its orientation, 9.6; a translation vector's direction, not a
-rotation of the group). Then for the state HH + VV the joint weights are
-EXACT INTEGERS with no table: R(+, +) = R(-, -) = (**u**_A . **u**_B)^2 and
-R(+, -) = R(-, +) = (**u**_A x **u**_B)^2, their sum abs(**u**_A)^2
-abs(**u**_B)^2, and E = cos 2 (theta_A - theta_B) = (2 (**u**_A .
-**u**_B)^2 - abs(**u**_A)^2 abs(**u**_B)^2) / (abs(**u**_A)^2
-abs(**u**_B)^2), RATIONAL. With the axes (1, 0) and (1, 1) for Alice and
-(2, 1) and (1, 3) for Bob: E = 3 / 5, -4 / 5, 4 / 5, 3 / 5 and S = 3 / 5 + 4
-/ 5 + 4 / 5 + 3 / 5 = 14 / 5 = 2.8 EXACTLY (Tsirelson's 2 sqrt 2 =
-2.828). The counts (COMPUTATION on main's rung): at W = 2048, 819, 205,
-205, 819 at the pairs E = 3 / 5 and 102, 922, 922, 102 and 922, 102, 102,
-922 at E = -4 / 5 and 4 / 5, S = 717 / 256 = 2.80078; at a wheel that is a
-multiple of 20 (the shares 2 / 5, 1 / 10, 9 / 20, 1 / 20), for example W =
-2560, S = 14 / 5 exactly. So THE GENERAL ANGLE IS NOT NEEDED FOR A BELL
-VIOLATION: the lattice's rational directions give S = 14 / 5 with no
-declared rounding at all; the general angle (the tables) is needed only
-to reach the settings of nature's optimal 22.5 degrees and Malus's
-chosen angles. This moves Bell's pin (181 / 64 on the tables against 14 /
-5 on the lattice's axes): A POINT FOR THE OWNER, with the derivation.
+**(b) The cells' group ring: exact, but only on rational axes (PROVED
+HERE).** The group ring Q[G_48] acts on the plane across the path through
+the dihedral group of the square, D_4: I, **Z** = diag(1, -1) (the
+reflection in the H axis), **X** (the reflection in the diagonal, which
+exchanges H and V) and the quarter turn **X** **Z**. Their rational span is
+all of M_2(Q), the 2 x 2 rational matrices. Every element of the ring
+therefore acts by a RATIONAL matrix, because G_48's characters are
+integers and this plane is realised over Q with entries 0 and +-1. A
+polariser is an orthogonal rank-one projector. The rational ones are
+exactly **P** = **u** **u**^T / abs(**u**)^2 for an integer axis **u** =
+(a, b); this is the lattice-axes result of the earlier reading. The
+projector at 22.5 degrees has the entries (2 + sqrt 2) / 4 and sqrt 2 /
+4, which are irrational, so it is NOT in the ring: "22.5 degrees through
+the ring" is impossible exactly. What (b) does give is S = 14 / 5 exactly
+on the axes (1, 0) and (1, 1) for Alice and (2, 1) and (1, 3) for Bob,
+with R(+, +) = (**u**_A . **u**_B)^2 and R(+, -) = (**u**_A x
+**u**_B)^2 (COMPUTATION; the counts at W = 2048 are 819/205 and 102/922,
+S = 717 / 256, and S = 14 / 5 exactly at W = 2560). That result stands
+as a special case, but it moves Bell's pin, and Malus's angles are not
+rational axes.
+
+**(a) The wheel's group: the setting is a translation (DERIVED HERE).**
+Read the label pair in the hands (circular) basis, with `label_hands`
+declared (LAB_TOOLS.md 11.6). A turn of the polarisation plane by theta
+multiplies the two hands by exp(-i theta) and exp(+i theta). Up to a
+common phase, which cancels in every weight, that is the RELATIVE
+translation by s on the wheel: 2 theta = 2 pi s / N, so the setting s
+is the element x^s of Z_N acting on one hand. The group the polarisers
+live in is the dihedral group D_N = Z_N x| {hand exchange}: the wheel's
+translations together with the cells' hand exchange. Both factors are
+already in the algebra (the wheel, chapter 2; the exchange, 9.3), so
+nothing is declared but the integer s. G_48's quarter turns are the
+subgroup s in {0, N / 4, N / 2, 3 N / 4}. THE WHEEL'S GROUP IS WHAT GOES
+BEYOND THE CELLS.
+- The polariser at s is the reflection r_s = (hand exchange) then x^s in
+  D_N, and its pass projector is the ring element (1 + r_s) / 2. In the
+  hands basis (+, -) the channel rows have ONE GROUP ELEMENT PER ENTRY:
+  the pass row (x^0, x^(-s)) and the block row (x^0, x^(N/2 - s)), the
+  second because -x^(-s) = x^(N/2 - s) under the cancel (2.3). Each row
+  has the norm 2, the same for both channels, and the common factor
+  drops out of every ladder as n_s does today. The half angle is gone:
+  in the linear basis the angle enters as cos theta and sin theta, while
+  in the hands basis it enters only as the full relative phase 2 theta,
+  a whole number s of steps.
+- The joint pointer is J(o_A, o_B) = SUM over the joint labels of w times
+  the product of the two rows' entries: an element of the group ring
+  Z[Z_N], formed with the ring's convolution (`ring_product`). The cell's
+  weight is R = J J*, with J* the involution x^p -> x^(-p) (the complex
+  conjugate under ev). R is a REAL element of Z[zeta_N], and the cancel
+  x^(N/2) = -1 reduces it exactly (2.3; for N a power of two, the
+  cancel IS ev). For HH + VV = (+-) + (-+) and k = s_A - s_B:
+  R(+, +) = R(-, -) = 2 + x^k + x^(-k) and R(+, -) = R(-, +) = 2 - x^k -
+  x^(-k). The TOTAL is the integer 8 at every setting, because the
+  channel projectors sum to the identity. E(a, b) = ev(x^k + x^(-k)) / 2
+  = cos(2 pi k / N), exactly.
+- Bell's settings s = 0 and 512 for Alice and s = 256 and 768 for Bob, at
+  N = 2048, give k = -256, -768, 256 and -256. In the ring, S = 3 cos(pi
+  / 4) + cos(pi / 4) = 2 sqrt 2 = ev(x^(N/8) + x^(-N/8)) EXACTLY: the
+  Tsirelson bound as an element of Z[zeta_N]. S ABOVE 2 FOLLOWS WITH NO
+  DECLARATION beyond the integers s.
+
+**The click: the one place a weight becomes a count (PROVED HERE).** The
+rung compares 2 T u + T <= 2 W C_k (`cell_of`). Here T is an integer and
+C_k a real element of Z[zeta_N], so the rung is the NEAREST INTEGER TO AN
+IRRATIONAL. That value is unique and never a tie. It is main's own
+rounding at the rung, the same one that makes 14 / 5 exact only at W a
+multiple of 20; it is not a declared table. The comparison is exact with
+integers alone, no root and no float. For N = 2^m, the number c_m = 2
+cos(2 pi / 2^m) satisfies c_m^2 = 2 + c_(m-1), with c_2 = 0. An element
+p(c_m) splits as a + b c_m, with a and b one level down, and the sign of
+a + b c_m follows from sign a, sign b and, where these differ, sign(a^2 -
+b^2 (2 + c_(m-1))). The recursion ends at the integers. Its depth is
+log2 of the order of the element x^k, minus 2: depth 1 for Bell (the
+order 8), where the test is one comparison of squares: (16 u + 8 - 4 W)
+<= 0 or (16 u + 8 - 4 W)^2 <= 8 W^2. Malus's settings have the depths 0,
+2, 3 and 2. The work is fixed for a fixed wheel but grows exponentially
+with the depth: a general s at N = 2048 has a depth of up to 9 (this is
+the host's cost, reported separately).
+
+**The pins do not move (COMPUTATION, exact sign recursion against the
+current tables, checked against floats on 300 random elements with no
+mismatch).**
+- Bell at N = W = 2048: the counts are 874, 150, 150, 874 at every pair
+  of settings (150, 874, 874, 150 at E = -cos(pi / 4)), the same as the
+  half-angle tables give, so S = 181 / 64 on the counts (2 sqrt 2 in the
+  ring).
+- Malus at N = W = 256 with H arriving and R(+) = 2 + x^s + x^(-s) of
+  the total 4: the counts are 128, 246, 199 and 177 at s = 64, 16, 40
+  and 48, the same as today.
+- So the owner's open choice between the tables (181 / 64) and the
+  lattice axes (14 / 5) DISSOLVES: (a) keeps 181 / 64 with no table.
+
+**Which is exact, and the verdict.** Both are exact. (a) is exact in the
+ring: every setting s is a group element, the weights are elements of
+Z[zeta_N], ev is the cancel, and the only rounding is the rung's. (b) is
+exact in the rationals, but only on the rational axes: it gives S = 14 / 5
+and reaches neither 22.5 degrees nor Malus's angles. RECOMMENDED: (a).
+It needs no new object, keeps every pin, and retires the half-angle
+tables from every polariser path. (b) stays admissible for a world that
+declares integer axes.
+
+**What disappears from the code (read at 9b8554e1's base).**
+- `amplitude.half_angle` and the tables of 2N behind it, at its four call
+  sites: `DetectorLaw.joint_weights` (through `_click_pair`),
+  `_table_body` (the pair C'^2, S'^2 and n_s = C'^2 + S'^2 in
+  `TableBody`), the amplitude layer's rotation (`amplitude.py`, the
+  `half_angle(s, self.steps)` line) and `nature_beam.py`'s rotation.
+- The norm n_s and the assertion **U**_s^T **U**_s = n_s **I** (3.6)
+  become the fixed row norm 2.
+- The polariser keeps no remainder: its rows are group elements, so it
+  applies only the ring's verbs (a translation and a sum), with no
+  division.
+- What STAYS: `phase_cosines` and `phase_sines` where ev is still read
+  through the rounded circle (the Z[i] pointers and `cmul`, the detector
+  law's cosine and sine arrays, `world.py`'s sine table). Replacing that
+  ev by the cancel is the same step one level down, and it removes the
+  homomorphism defect of the derivations' 6.7. It is A POINT FOR THE OWNER
+  and outside this order.
+
+**What Nature24 must change.**
+1. `joint_weights`: take the rows (x^0, x^(-s)) and (x^0, x^(N/2 - s))
+   per body, form J with `ring_product` in place of the Z[i] product of
+   the table rows, and form R = J J* reduced by the cancel.
+2. `cell_of` and `rungs`: accept the weights as real elements of the
+   ring, with an integer total, and compare them by the sign recursion
+   above in place of the integer product.
+3. `TableBody` and `_split_table_offers`: the split share becomes the
+   ring element (2 +- (x^s + x^(-s))) / 4. An integer count cannot carry
+   an irrational share with a kept remainder, so the split moves onto the
+   ring pointer (the per-hand amplitude of 9.16 (2)), or the body's books
+   are compared with the click only within the rung's margin (LAB_TOOLS.md
+   2.3).
+4. The world file: the settings stay integers s, and `label_hands` is
+   declared wherever a polariser acts.
+5. The tests: the pins stay (874/150/150/874 with S = 181 / 64; Malus
+   128, 246, 199, 177). Tests that pin the tables' integers C'[s], S'[s]
+   or n_s retire with the tables. A new test pins the sign recursion on
+   inputs, their expected signs and an edge case: the zero element, and a
+   u exactly at a rational rung.
+The gate (9.5) reads the new `joint_weights` line by line against this
+section.
 
 ### 9.15 Momentum: a photon that changes direction (the owner's word of 21:40Z)
 
@@ -3779,8 +3905,7 @@ and the held body takes the difference.
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
 label module carried by the amplitudes, not only as weights): needed by
-every polar tool acting on the board. (3) The take, a declaration and not an operation: REMOVABLE (9.12), the close on the record's own clock in its place. (4) The polariser's general angle, a declared rotation
-outside the cells' group. (5) The same-hand channels' weights a and b of
+every polar tool acting on the board. (3) The take, a declaration and not an operation: REMOVABLE (9.12), the close on the record's own clock in its place. (4) The polariser's general angle: NOT MISSING, the wheel's translation x^s on the hands (9.14); the engine's rows and the sign of the rung are to be changed. (5) The same-hand channels' weights a and b of
 the crystal (9.3), a material integer the symmetry leaves free. (6) The
 cone of the pair's headings: not derivable under the rule of reading
 (9.3, 9.7); an experiment's headings are its placement's.

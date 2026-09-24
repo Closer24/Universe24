@@ -30,8 +30,9 @@ Boss: "make sure we have no such thing at all as Nodes with a table; it
 should not exist at all"). A Node carries only its NodeState and the one
 rule acts; every tool is a BODY OF MATERIAL whose Nodes carry only
 material integers. THE MATERIAL, one form for every tool: per LABEL, in
-the label basis rotated by the body's own declared angle (the half-angle
-tables of 2N, the law's constant data, never a Node's table), and per
+the label basis rotated by the body's own declared angle (the wheel's
+translation x^s on the two hands, ALGEBRA.md 9.14, with no table; never a
+Node's table), and per
 FAMILY where two families meet (the crystal), an INDEX PAIR (the
 coefficient [num, den] = 1 / n^2 of DESIGN.md 4.1) and a TAKE PAIR (the
 receiver's form: the share of the arriving amplitude the Node takes and
@@ -171,7 +172,7 @@ translations' characters gives momentum. The consequences:
 | The crystal | the transpose m^T of the ring's product on the clocks and on the translations (DERIVED, 0.2); in the blocks, a receiver and an emitter at the same Nodes (1.1a) | a cube (a square on a layer) by its vertices; its stabiliser about the arriving axis fixes the cone's symmetry | the born family's clock (one split of m^T), the born family's index pair D = [a^2 + 2 b^2] / [a^2 + b^2] for the cone's heading (a, b, 0) (DERIVED, 1.1a item 3), the coupling pair (the share taken), a Pythagorean pair | the born clocks' product equal to the arriving clock (the group law, an integer identity); the index's D - 1 equal to b^2 / (a^2 + b^2) exactly; the coupling pair Pythagorean |
 | The mirror | a reflection of the det = -1 coset of G_48 (IN, 1.1) acting on the characters, k_perp -> -k_perp; REALISED by a gap: the band cos omega = (num / den) cos omega_l(k) (IN, 8.1) carries no clock with cos omega > num / den, so below the gap the amplitude decays inside and the reflection arises with the tangential character kept (DERIVED, 3.3) | a slab of cubes whose plane is the reflection's fixed set; its stabiliser the plane's | the gap pair [num, den], the depth D | every family clock that reaches it below its gap, C[k] > 256 num / den on the tables (an integer comparison); the depth such that the transmitted share is below the declared bound (computed, 3.3) |
 | The splitter | the mirror's operation at a finite depth: the reflection sigma weighted by the layer's r and the identity by t; NOT a separate operation (DERIVED HERE: the same band, a thinner layer) | a one-Node layer of cubes; its plane | the gap pair of the share (computed, 7.2) | the share computed from the pair at the declared clock (7.2), printed at load as GAMEBOARD |
-| The polariser | the rotation U_s on the label module Z^2 (IN, 3.6), then the receiver's take on one component: a receiver acting in the rotated label basis, NOT a separate operation (DERIVED HERE); U_s at a general s lies outside G_48 (the 48 give only quarter turns of the label plane about an axis): its angle is a declared rounding of a rotation (the half-angle tables, IN as a declaration of kind 1, 3.6) | a cube or a slab of cubes; the label plane is not a spatial direction, so the body's shape is free (its through-line the arriving path's) | the angle s and the take pairs, [1, 1] across the axis and [0, 1] along it | U_s^T U_s = n_s I exactly (IN, 3.6), true of the tables at every s |
+| The polariser | the rotation U_s on the label module Z^2 (IN, 3.6), then the receiver's take on one component: a receiver acting in the rotated label basis, NOT a separate operation (DERIVED HERE); U_s at a general s lies outside G_48 (the 48 give only quarter turns of the label plane about an axis) but inside the wheel's group: the relative translation x^s of the two hands, rows (x^0, x^(-s)) and (x^0, x^(N/2 - s)), no table (ALGEBRA.md 9.14) | a cube or a slab of cubes; the label plane is not a spatial direction, so the body's shape is free (its through-line the arriving path's) | the angle s and the take pairs, [1, 1] across the axis and [0, 1] along it | each row's norm 2 at every s, exactly (ALGEBRA.md 9.14) |
 
 **0.4 What the owner's three blocks cover (DERIVED HERE).** The owner
 names a receiver, an emitter and a crystal. With the body (8.3) as the
@@ -695,6 +696,17 @@ a_par = (C'[s] a_H + S'[s] a_V) / 256 and the one across it a_perp =
 The algebra's one condition, true of the tables: **U**_s^T **U**_s = n_s
 **I** exactly, so the rotation keeps the record's norm up to the factor n_s
 / 65536 on both parts alike (ALGEBRA.md 3.6).
+
+**2.2a The axis as an element of the wheel's group (ALGEBRA.md 9.14,
+replacing the half-angle form above).** In the hands basis, with
+`label_hands` declared, the axis s is the relative translation x^s of the
+two hands. Along the axis a_pass = a_+ + x^(-s) a_-, and across it a_block
+= a_+ + x^(N/2 - s) a_-: a translation and a sum on the ring, with no
+division and no remainder. Both rows have the norm 2, and the common
+factor drops out of the ladder. The weights are real elements of
+Z[zeta_N], and the rung compares them exactly by the sign recursion of ALGEBRA.md
+9.14. The pins do not move (Bell 874/150/150/874 with S = 181 / 64;
+Malus 128, 246, 199, 177). In 2.3 below read C' and S' as these rows.
 
 **2.3 Its action (PROVED HERE).** A record of one arm whose label state
 is SUM over l of w_l (l) has the amplitudes per label a_l = w_l a (one
