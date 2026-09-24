@@ -33,8 +33,8 @@ at the labels 0, N / 8, N / 4, 3 N / 8 of N = 2048, the wheel [1, 2048], the
 clock [2464, 25] on the light and the counter families, K and the release the
 L3 series'; the births' seed-set order of section 2 item 8: `residue_order`
 "seed" and one `residue_seed` per world, drawn once from the host's entropy
-and kept; the stock 2048 = W births; `ticks` 5000, at least the W = 2048 births,
-the train's 2660 intervals and the far arm's transit), `malus_45.json` (section 5:
+and kept; the stock 2048 = W births; `ticks` 5500, at least the W = 2048 births,
+the completion 3204 after the last birth and the far arm's transit), `malus_45.json` (section 5:
 `amplitude/malus_22_5.json`'s form at s = 64 with the clock [308, 25] on
 N = 256, the lamp's train 32 periods, its stock 256 and `ticks` 1200) and
 `malus_<11.25,28.125,33.75>.json` (section 6:
@@ -335,11 +335,13 @@ BELL_BRANCHES = [[0, 1], [3, 1]]
 BELL_SETTINGS = {"a0": 0, "a1": BELL_N // 4, "b0": BELL_N // 8, "b1": 3 * BELL_N // 8}
 # Section 2 item 8 (the loader's keys): under `residue_order` "seed" a Bell world counts
 # exactly W = 2048 births at the rate [1, 1] (2048 intervals), so its `ticks` is at least
-# W + the far arm's transit + the completion: the train 128 periods on the clock [2464, 25]
-# at N = 2048 is ceil(128 x 2048 x 25 / 2464) = 2660 intervals, the far polariser 7 Links
-# from the lamp is 12.1 intervals at c = 1 / sqrt 3, 2048 + 2660 + 13 = 4721; written 5000
-# with the completion's allowance in the form of section 5's Malus line (927 declared 1200).
-BELL_TICKS = 5000
+# W / rate + the far arm's transit + the completion (Reviewer 3's margin line). The engine
+# ends a train at the first clock zero after the declared periods: on the clock [2464, 25]
+# at N = 2048 the 128 periods (2660 intervals) end at 3200 (the birth line's `train` on
+# 299b6bb2), and every record completed 3204 intervals after its birth in the preview
+# (the last, born 2048, at 5252); the far polariser 7 Links from the lamp is 12.1 intervals
+# at c = 1 / sqrt 3: 2048 + 3204 + 13 = 5265; written 5500, the margin 235 intervals.
+BELL_TICKS = 5500
 MALUS_TRAIN = 32  # periods (665 intervals on [308, 25]), section 5 item 2, 2026-09-24 06:05Z
 MALUS_TICKS = 1200  # section 5 item 2: at least 256 births + 665 + the transit 6 + the completion
 # Section 5 item 2, "the count of 256 births stands": the lamp's stock of records is its
@@ -370,7 +372,7 @@ def bell(a: str, b: str) -> dict:
     train 128, the polarisers at x = 7 (Alice) and 17 (Bob) with their settings, each a
     detector set of one Node reading `sum`; the births in the seed-set order (section 2
     item 8: `residue_order` "seed", the world's own `residue_seed`, the stock 2048 = W
-    births), 5000 intervals (BELL_TICKS); the clock
+    births), 5500 intervals (BELL_TICKS); the clock
     [2464, 25] on the light family and [1, 1] on the counter family (section 1 item 3 and
     section 15 T-1)."""
     return {

@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 5000,
+ "ticks": 5500,
  "K": 15728640,
  "N": 2048,
  "release": [
