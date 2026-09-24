@@ -4222,8 +4222,9 @@ same interval on the emitter's cells.
 - A birth is fired only by a click: the emitter body's own record's rung,
   or an arriving record's rung at a crystal.
 - The loader refuses a birth with no clicking record behind it.
-- The light clock is unchanged, because its A is already a block whose
-  record clicks.
+- The light clock's A changes too (see (4): main's block does not delete
+  its record at its count, and it drives its light record by the source
+  term).
 - The consequences for the fifteen:
   - Bell and Malus read computed weights and are unchanged.
   - The rows reading a steady field (the two slits, the pace fans, M1,
@@ -4232,3 +4233,53 @@ same interval on the emitter's cells.
     regenerated worlds.
   - The first-rung rows (M2, Sagnac) re-derive their first rung from the
     packet's front.
+
+**(4) The emitter's integers (the physicist's five questions of 19:45Z;
+DERIVED HERE).** First, a CORRECTION of (3): main's block emitter is not
+the form either. Its "click" is a count on the sum of its record (a
+crossing from at most 0 to above 0) that deletes nothing. Its light
+record is born at content 0 and filled at every interval of the cycle by
+the coupling's source term (`_source`). So the light clock's A CHANGES
+too. The form, with its integers:
+1. THE EXCITED RECORDS, IN TURN. The emitter is a body of a massive kind
+   with `emits` and a STOCK `amount` = M, the number of its excitations.
+   - At interval 0 its first excited record is on the board: the body's
+     seed at both levels (9.9), content one quantum, its residue u_1 from
+     the body's wheel [step, W] in its residue order.
+   - Excited record k clicks at ITS OWN RUNG on its own cells: **E** is
+     its own offer booked through its cells (read-through, no take), and
+     **D** is 2 T u_k + T <= 2 W C with T its norm.
+   - At that click **X** ends it, and **E**^T births two records: the
+     photon (content one quantum) and, while the stock lasts, excited
+     record k + 1 (the seed again, content one quantum, residue u_(k+1)).
+   - So quanta are conserved at every click, M in all. The emission
+     times are the rungs, spread by the residues over the wheel: the
+     spontaneous emission of the algebra. THE RATE KEY RETIRES: the rate
+     is the rungs'. There is no source term and no drive.
+2. THE BORN VALUES, written once at the click's interval t_0 on the
+   emitter's cells (N the wheel of phases, [p, q] the born family's
+   phase per Link, n / d its clock per interval, phase(age) main's
+   `_phase` = (3 N / 4 + floor(age n / d)) mod N):
+   - On ONE CELL: now = A C[phase(0)] and before = A C[phase(-1)]. The
+     record is broadband.
+   - On A LINE of L cells from the vertex along +e, at the cell x = 0 ..
+     L - 1: now = A C[(phase(0) - floor(x p / q)) mod N] and before = A
+     C[(phase(-1) - floor(x p / q)) mod N], a character travelling along
+     +e. The line's order from its vertex is its placement (9.6), and its
+     heading is the born character's.
+   - A narrow packet of n wavelengths has L = round(n N q / p) Links, the
+     nearest integer (the loader prints it).
+   - The residue u enters only the born record's rung, as today.
+3. THE NORM: T = SUM over the emitter's cells of (now - before)^2 at the
+   birth, the motion the one write inserts. The rung's T is this.
+4. THE WHEEL AND THE RATE: the wheel [step, W] and the residue order
+   `seed` stay on the emitter body. The rate keys ([1, 1] for Bell, [1, 4]
+   for the two slits) retire: births come at the excited records' rungs.
+   A world that needs W births declares M = W.
+5. THE STEADY-FIELD PINS are re-derived blind by the World Generator's
+   map (the physicist's tool) on the born packets. The mathematician
+   checks each derivation. The pace fans need no single-cell source: two
+   LINE emitters, one along the axis and one along the diagonal, each
+   give a travelling character, and k(axis) - k(diagonal) = k^2 / 48 at
+   fixed omega is a property of the band that holds per character. So the
+   fans' reading is kept with lines, and the pin stands.

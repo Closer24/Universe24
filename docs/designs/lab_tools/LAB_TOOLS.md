@@ -117,8 +117,10 @@ and no tool name.** Every tool is built from these alone.
   placement (9.6).
 - Its primitive: its own record's click (**E**, **D**, **X**), then
   **E**^T, which writes the born record's two levels once on its cells
-  (ALGEBRA.md 9.17). There is no drive: `_drive` and the lamp's rate
-  accumulator retire. A narrow train is a line of emitter cells n
+  (ALGEBRA.md 9.17). There is no drive: `_drive`, the block's source
+  term and the lamp's rate accumulator retire. The body holds M excited
+  records IN TURN, each clicking at its own rung, each click birthing the
+  photon and the next excitation (9.17 (4)). A narrow train is a line of emitter cells n
   wavelengths long.
 - Its material integers: its body's (a block of a massive kind with its
   own record, 8.3); the born family and its clock [p, q]; the amplitude
