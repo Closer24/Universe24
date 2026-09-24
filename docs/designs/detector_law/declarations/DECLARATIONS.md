@@ -503,29 +503,34 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    after 2100 intervals of steady motion, about 3900 with the ramp,
    before the hold of 8000 ends, and the massive kind's x faces are zero
    faces, so A's cells would leave the board; the hold, the chain's
-   length or A's start must be redeclared before any run: my
-   recommendation a chain of 5000 (section 11's length) with A at 3500
-   and the set at 4700 (the same 1200 Links, the same transit 2080),
-   A's room 3500 Links = 10500 intervals. THE TICKS CONSEQUENCE
-   (Reviewer 3, 05:32Z): with A's room above 8000 / 3 = 2667 Links the
-   -x face is at least 2667 Links away, its transit at least 4620 >
-   2080, so a record completes only when the -x face takes its -x half,
-   3500 sqrt 3 = 6062 intervals after birth on the 5000 chain; the click
-   line is written at completion with the first-rung stamp (2080 after
-   birth), so the reading is unchanged, but `ticks` must be at least
-   ramp + hold + about 6100, about 15600 on the 5000 chain, or the
-   hold's last records never click. The per-record reading of item 5 is
+   length or A's start must be redeclared before any run. THE LOADER'S
+   BOUND (the World Generator's blocking token, 06:00Z; Reviewer 3: a
+   HOST bound, nothing physical): every shape axis is capped at 4096
+   (`world.py`, on main and on the builder's head), so a chain of 5000
+   is refused; the redeclaration ON 4096, Reviewer 3's (b) and mine, no
+   code moving before the GO: the chain 4096 (x = 0 to 4095); A at x =
+   2994, its room 2994 Links against the 1500 / 6 + 8000 / 3 = 2917
+   Links the ramp and the hold need; THE SET AT 1100 LINKS, x = 4094,
+   the +x face at 4095 beyond it (its transit 1100 sqrt 3 = 1905 in
+   place of 2080; the pin, a ratio, unmoved). THE TICKS CONSEQUENCE
+   (Reviewer 3, 05:32Z): the -x face is 2994 Links from A, its transit
+   5186 > 1905, so a record completes only when the -x face takes its
+   -x half, about 5200 intervals after birth; the click line is written
+   at completion with the first-rung stamp (1905 after birth), so the
+   reading is unchanged, but `ticks` must be at least ramp + hold +
+   about 5200, about 14700, or the hold's last records never click. The per-record reading of item 5 is
    CONFIRMED by Reviewer 3 as a declaration before any run. THE
    EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
-   each train does not reach the set at 1200 Links (it does not
+   each train does not reach the set at 1100 Links (it does not
    propagate) and books nothing there; it delays the record's
    completion until it decays or, under item 10's declaration, is taken
    at A's cells; the stamp is unchanged and the ticks line above covers
    it. REVIEWER 3'S WORD (05:45Z through the Boss): the redeclared
    geometry is THE SAME EXPERIMENT on a longer chain, not a pin moved;
    the per-record reading is a DETECTOR reading; the World Generator
-   writes 4b's two files on his word (the chain 5000, A at 3500, the set
-   at 4700, `ticks` at least ramp + 8000 + 6100).
+   writes 4b's two files on his word, on the 4096 chain above (A at
+   2994, the set at 4094, `ticks` at least ramp + 8000 + 5200; his files
+   for the 5000 chain, unpushed, withdrawn by the loader's bound).
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
 the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
@@ -550,7 +555,15 @@ Boss's word).
 2. The declared integers (the grain kind 1, the pairs kind 2, the
    placements kind 3, by Highlights item 5): N = 256, the wheel [159, 256] (every
    residue u once over 256 births), W = 256, K, Q, S and the release as
-   registered for row 9, h = 1, s = 64, 300 intervals; the light
+   registered for row 9, h = 1, s = 64; THE LAMP'S TRAIN 32 periods
+   (declared 2026-09-24, 06:05Z, on the World Generator's preliminary
+   through Reviewer 3: the four Malus worlds loaded and gave 300 births
+   and 0 clicks, because no train was declared, the loader's default of
+   32 periods is 665 intervals on this clock, and a gather line is
+   written only at completion; 300 intervals was the amplitude law's
+   registered form); so `ticks` at least 256 births + 665 + the transit 6
+   + the completion, the World Generator regenerating (1200 declared);
+   the count of 256 births stands; the light
    family's clock the pair [308, 25] on N = 256 (section 14 item 1); the
    table on the pair by the linear form (section 14). The counter family of the
    polarisers' bodies (quantum 1 in `families.json`) declares
@@ -1005,23 +1018,45 @@ omega_b) of its own well, printed by the pins script before the run.
    cells, and decays only slowly (10^6 at 100, 4 x 10^5 at 200). THE
    DECLARATION (the receiver-inserter of DESIGN.md section 1; the
    owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
-   a detector at its own Node): EVERY EMITTER TAKES ITS OWN RECORD'S
-   REMNANT AFTER ITS TRAIN. From the interval after its train ends (age
-   > train) the emitter's cells (an emitting block's cells; a lamp's
-   Nodes) are a taking set for THAT record alone, in the receiver form
-   of DESIGN.md section 5 (the row held at 0, one ghost per Port with k
-   = [-15, 56]); what they take is booked as escaped at the emitter
-   (HOST, the ledger's transit_escaped), never onto a pointer: the
-   emitter has no cell of its own on its own record's ladder and never
-   clicks on its own record (section 13 item 1's rule kept; own_grace
-   as declared for the sets); during the train the cells insert as
-   built; the block's own record is untouched (the take acts on the
-   emitted record's rows). The three tests: generic (the take primitive
+   a detector at its own Node): AN EMITTER TAKES ITS OWN RECORD'S
+   REMNANT AFTER ITS TRAIN, UNDER A KEY (Reviewer 3's three lines on
+   c5930770, 06:20Z by his clock, folded: not an engine default but a
+   declaration on every emitter). THE KEY `remnant_take`, an integer of
+   intervals on the emitter's entry (a lamp or an emitting block),
+   required on every emitter and refused when absent (no implicit
+   default; the World Generator writes it into every GO world's file;
+   the owner may confirm it as the rule at 09:00). THE TIMING: the drive
+   inserts over ALL the emitter's cells (`_drive`), so at age = train
+   the last inserted intervals are still inside the cells, propagating
+   out; a take from age > train would hold those rows at 0, shorten the
+   emitted train, change its arriving energy and rise, and move 218 +- 2
+   and R2's rises. So the take begins only after the last inserted
+   interval has left the emitter's cells: at age > train + remnant_take,
+   with remnant_take = ceil(extent / v_g) + 2, the extent the cells'
+   span along the emission in Links and v_g the band's group pace at the
+   declared wavelength (0.564 Links per interval at 12 Links per period,
+   against c = 0.577; the 2 a margin): 24 for a block of side 12, 4 for
+   a one-Node lamp, declared per world. THE FORM: from that interval the
+   emitter's cells are a taking set for THAT record alone, in the
+   receiver form of DESIGN.md section 5 (the row held at 0, one ghost
+   per Port), the take in the record's OWN KIND'S pair as the take key
+   declares per kind (light [-15, 56]; a matter lamp's record, M1 and
+   M2, in the matter kind's pair; no family name). THE BOOKS: what the
+   cells take is booked as CONTENT (the ledger books content, not
+   motion) on a HOST row of its own, `taken_by_emitter`, not on the
+   escaped row (escaped names content that left the board, which this
+   did not) and never onto a pointer: the remnant is HOST because it
+   never left the emitter and is not "received back" (Highlights item 7
+   counts what a body emits and receives back); the emitter has no cell
+   of its own on its own record's ladder and never clicks on its own
+   record (section 13 item 1's rule kept; own_grace as declared for the
+   sets); during the train the cells insert as built; the block's own
+   record is untouched (the take acts on the emitted record's rows). The three tests: generic (the take primitive
    as built, no family name); vector (the receiver form's verbs, no
    root); local (the emitter's own cells, its own record). WHAT IT
-   CHANGES: the remnant is taken within a few intervals of the train's
-   end, so the set beside A's face books nothing of A's own record
-   between the grace's end and the return; the map (h) assumed a clean
+   CHANGES: the remnant (non-propagating) is taken by about train + 24
+   + a few intervals, about 95 on the light clock's chain, and the set
+   exempt to 140 books nothing of A's own record to the return at 208; the map (h) assumed a clean
    tail at the set (the residual 0.085 of the rung), now true by
    construction: THE PIN 218 +- 2 STANDS; a record's completion, held
    up on every world by the remnant's motion (energy times W above the
@@ -1034,21 +1069,31 @@ omega_b) of its own well, printed by the pins script before the run.
    the level as the reader (a GAMEBOARD reading, not a click). THE
    PRELIMINARY (EXPLORATORY, the builder's (ac) rerun on the
    declaration): no rung at the set before the return's transit 207.85,
-   the first rung within 218 +- 2 at W = 64, the remnant's level at A's
-   cells read beside (GAMEBOARD). THE OTHER ROWS, one line each: R2
-   (section 13): the sets are the other block's cells, about 1000 Links
-   from the emitter's remnant, which does not propagate, so the stamps
-   are untouched; each record's completion waited on the remnant's
-   decay and now comes at its take; the pins 108 / 247 / 72 stand. 4b
-   (section 4 item 7): the set at 1200 Links from A is untouched; the
-   completion likewise; the ticks line of item 7 covers it. The Bell
-   and Malus lamps: the lamp's Node takes its own remnant after the
-   train; the cells 7 and 10 Links away are untouched. THE BUILDER'S
-   LINE (section 15 M1-4): a per-record taking mask of the emitter's
-   cells switched on at age > train, its bookings excluded from the
-   ladder as the grace's exclusion is (`keep`), the take booked to
-   transit_escaped; one test, the light clock's chain of (ac): the first
-   rung after 208 and none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
+   the first rung after it, the remnant's level at A's cells read beside
+   (GAMEBOARD); "within 218 +- 2" is the pin run's reading, not the
+   preliminary's. THE OTHER ROWS, one line each: R2 (section 13): the
+   blocks sit at 700 and 772, their faces 60 Links apart (Reviewer 3's
+   correction of "about 1000 Links"); the remnant does not propagate,
+   and with the take at the emitter it is gone by about train + 24 + a
+   few intervals; the diagnostic he reads from the DETECTOR lines per
+   record is the click's interval minus the front's arrival (birth + 60
+   sqrt 3, about 104), a tail booked before the arrival putting the
+   click at or before it (on the old form nothing was booked before the
+   arrival); the pins 108 / 247 / 72 stand; the sagnac preliminaries at
+   885bc2f8 ran the old set form (no take, no hop rule) and are HISTORY,
+   the World Generator rerunning both on the take's build. 4b (section 4
+   item 7): the set at 1100 Links from A is untouched; the completion
+   likewise; the ticks line of item 7 covers it. The Bell and Malus
+   lamps: the lamp's Node takes its own remnant after the train with
+   remnant_take 4; the cells 7 and 10 Links away are untouched. THE
+   BUILDER'S LINE (section 15 M1-4): the key `remnant_take` on every
+   emitter (refused when absent); a per-record taking mask of the
+   emitter's cells switched on at age > train + remnant_take, in the
+   record's kind's pair, its bookings excluded from the ladder as the
+   grace's exclusion is (`keep`), the content taken booked to the HOST
+   row `taken_by_emitter`; one test, the light clock's chain of (ac):
+   no rung at the set before the return's transit and the first rung
+   after it, none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
    through the Boss): the defect is the DECLARATION's, not the engine's
    (the map `light_held_pair_pins.py` modelled the emission without A's
    coupled interior; the remnant is the rule's band-edge mode, group
@@ -1314,7 +1359,11 @@ nature.
    the change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
    (32 k) is the old engine's number at its c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
-   (the click interval per direction from the birth stamp) and the
+   (the click interval per direction from the birth stamp; "over the
+   hold" selects the records by their BIRTH in the hold, never by their
+   click, so that the ramp's tail, the chasing intervals of 111 to 246
+   during the ramp, never enters the hold's mean: Reviewer 3's note,
+   06:20Z) and the
    blocks' own clicks (both read one period, the control); COMPUTATION
    the rise per direction from the map, subtracted, and the map's ratio
    0.5774 beside the three clicks, the pins;
@@ -1615,11 +1664,14 @@ waves).**
 - M1-4, THE RECEIVERS of R2, of the light clock and of 4b (corrected
   at 01:40Z on the builder's report (b); the placement corrected at
   03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
-  05:40Z on the builder's finding (ac), section 10 item 10: every emitter
-  takes its own record's remnant after its train, a per-record taking
-  mask of its cells at age > train, its bookings excluded from the ladder
-  and booked to transit_escaped, the builder's line before the light
-  clock's preliminary): a DETECTOR SET at the
+  05:40Z on the builder's finding (ac), section 10 item 10, with
+  Reviewer 3's three lines of 06:20Z: the key `remnant_take` on every
+  emitter, refused when absent; a per-record taking mask of the
+  emitter's cells at age > train + remnant_take (24 for a block of side
+  12, 4 for a one-Node lamp), in the record's kind's pair, its bookings
+  excluded from the ladder and the content booked to the HOST row
+  `taken_by_emitter`, the builder's line before the light clock's
+  preliminary): a DETECTOR SET at the
   receiving body's cells, corrected per row on the builder's reading
   (a): the light clock's A receives its OWN record's return, so its set
   is the free Node adjacent to its face toward the mirror, x = 612, alone,
