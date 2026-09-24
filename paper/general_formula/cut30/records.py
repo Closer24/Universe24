@@ -19,6 +19,7 @@ no count is cut; the count sentence stands in every place.
 """
 
 import law
+import route
 from reorder import REGISTER_HEADING, ROADS_HEADING
 
 BIB_START = "\\begin{thebibliography}"
@@ -35,6 +36,14 @@ OLDLAW_START = "\\section{The GameBoard: the way the algebra is computed with}\\
 OLDLAW_END = "\\section{How the algebra was reached: from the GameBoard to the group}\\label{sec:route}"
 LEDGER_START = "\\paragraph{The ledger.}"
 LAW_BLOCK_START = "\\paragraph{The GameBoard as a system of information transfer.}"
+# The road as the paper carried it before the algebra document: the two direction
+# tables, the simulator's part and the old dictionary to the records file;
+# cut30/route.py (ALGEBRA.md chapter 7) before the paragraph that stays.
+FORWARD_START = "\\paragraph{From the physics to the mathematics: the postulates and what each forces.}"
+OPERATIONS_START = "\\paragraph{From the operations to the group.}"
+SIMULATOR_START = "\\paragraph{How the simulator led to the results.}"
+OLDROAD_START = "\\paragraph{The road from the cells to the algebra.}"
+DATED_START = "\\paragraph{The transition from ordinary physics to the algebra, dated.}"
 LONGTABLE_END = "\\end{longtable}}"
 TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
 CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
@@ -161,6 +170,11 @@ def cut(s: str) -> tuple[str, str]:
     ledger_paragraph, oldlaw = oldlaw[k:], oldlaw[:k]
     s = s.replace(OLDLAW_END, law.SECTION + ledger_paragraph + OLDLAW_END, 1)
     handworked, oldlaw = _cut_between(oldlaw, HANDWORKED_START, CODE_HEADING, "the hand-worked update")
+    # The route's old road: the two tables and the simulator's part to the records,
+    # the algebra document's chapter 7 before the paragraph that stays.
+    tables, s = _cut_between(s, FORWARD_START, OPERATIONS_START, "the two direction tables")
+    oldroad, s = _cut_between(s, SIMULATOR_START, DATED_START, "the old road")
+    s = s.replace(OPERATIONS_START, route.OPENING + OPERATIONS_START, 1)
     conversion, s = cut_table(s, CONVERSION_LABEL, "the conversion table")
     ledger, s = cut_table(s, LEDGER_LABEL, "the ledger")
     families, s = cut_table(s, FAMILIES_LABEL, "the families table")
@@ -190,6 +204,11 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The law as the engine ran it before 2026-09-23: the rows that hop, history}\\label{rec:oldlaw}\n\n"
         + "The section of the GameBoard as the paper carried it until the algebra's chapter 8 replaced the rows that hop (the Boss's order of 2026-09-24): the postulates with their old parameters, the map's old components, the two blocks, the old read-out by the wheel and the rungs, the code's gates and the dated transition.\n\n"
         + oldlaw
+        + "\n\\section{The road as the paper carried it before the algebra document, history}\\label{rec:oldroute}\n\n"
+        + "The two direction tables (the postulates and what each forces; the objects and what each gives back), the simulator's part and the dictionary of the rows that hop, as the route's section carried them until the algebra document's chapter 7 took their place (the Boss's order of 2026-09-24).\n\n"
+        + tables
+        + "\n\n"
+        + oldroad
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
         + handworked
         + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{rec:conversion}\n\n"
@@ -217,6 +236,16 @@ def strip_block(body: str) -> str:
     if LAW_BLOCK_START in body:  # the old law's section, whole in the records file
         body = body[: body.index(LAW_BLOCK_START)]
     if body.lstrip().startswith(CODE_HEADING):  # its gates on the code, likewise
+        return ""
+    if FORWARD_START in body:  # the route's two tables, whole in the records file
+        i = body.index(FORWARD_START)
+        j = body.index(OPERATIONS_START) if OPERATIONS_START in body else len(body)
+        body = body[:i] + body[j:]
+    if SIMULATOR_START in body:  # the simulator's part, likewise
+        i = body.index(SIMULATOR_START)
+        j = body.index(DATED_START) if DATED_START in body else len(body)
+        body = body[:i] + body[j:]
+    if body.lstrip().startswith(OLDROAD_START):  # the old dictionary, likewise
         return ""
     if REPRODUCTION_HEADING in body and ARCHIVE_SENTENCE in body:
         i = body.index(REPRODUCTION_HEADING) + len(REPRODUCTION_HEADING) + 2

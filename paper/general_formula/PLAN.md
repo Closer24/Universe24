@@ -6873,3 +6873,21 @@ calibration named (1082). The three physics issues (1077, 1080, 1081)
 and 1083 (its sentence already gone) are the Boss's and the physicist's;
 the paper states the pair click's non-locality and the order's
 signalling plainly and changes nothing there.
+
+## Applied (2026-09-24, the Boss's order of 01:00Z): commit 32 on paper-48, Section 7's old road to history
+
+The second of the old-law sections: the route. The two direction
+tables (one row per postulate with the object it forces, among them
+P9 "no dispersion"; one row per object with what it gives back), the
+paragraph that introduced them, "How the simulator led to the results"
+and "The road from the cells to the algebra" (the dictionary of the
+rows that hop: amount, phase, multiplicity, age, mass as content,
+charge) are whole in records.tex under "The road as the paper carried
+it before the algebra document". In their place cut30/route.py states
+ALGEBRA.md chapter 7's (i), (ii) and (v): the one choice, the six Ports
+and the seven Nodes of the front, the two more choices and no fourth;
+what the choice forces, the 48 as the crystallographic maximum, no
+boost among them, the determinant's split and the hand; the author's
+sentence that everything converged to this group and this ring. The
+paragraph "From the operations to the group" (chapter 1.3), the dated
+steps (chapter 7's (iv)), the platform and the check of the roads stay.

@@ -152,7 +152,7 @@ JOINS = {
     ),
     "route_head": (
         "\\section{How the algebra was reached: from the GameBoard to the group}\\label{sec:route}\n\n"
-        "The order of this paper is not the order of the finding. The object of Section~\\ref{sec:algebra} was reached from the GameBoard: from one Node and its six neighbours, one message per Link per interval, through the simulator's runs, in dated steps; what did not converge to the group and the ring was not put in. This section states the two directions first, as two tables (the postulates and what each forces; the objects and what each gives back, with its word), then the road from the operations to the group, and then the road as it was recorded: the simulator's part, how the things of physics entered the algebra, the dated steps, the platform on which a formula is arrived at by two roads, and the check of the roads.\n\n"
+        "The order of this paper is not the order of the finding. The object of Section~\\ref{sec:algebra} was reached from the GameBoard: from one Node and its six neighbours, one message per Link per interval, through the simulator's runs, in dated steps; what did not converge to the group and the ring was not put in. This section states the one choice and what it forces (the algebra document's chapter 7 \\cite{algebra}), the road from the operations to the group, the dated steps, the platform on which a formula is arrived at by two roads, and the check of the roads; the two direction tables, the simulator's part and the dictionary of the rows that hop, as the paper carried them, are its record \\cite{records}.\n\n"
     ),
     "comparison_head": (
         "\\section{The comparison with nature, and the failures by cause}\\label{sec:comparison}\n\n"
