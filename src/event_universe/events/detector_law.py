@@ -201,6 +201,11 @@ class Block:
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
     count: int = 0
     previous_sum: int = 0
+    # a block bound by a detector set without positions: its cells are the
+    # set's take Nodes (a receiver, DECLARATIONS.md section 10 item 9 and
+    # section 13 item 1), the absorbing path for every record but its own
+    # during that record's grace
+    taking: bool = False
     own: LiveRecord | None = None
     responses: dict[int, LiveRecord] = field(default_factory=dict)
     emitted: list[int] = field(default_factory=list)
@@ -304,17 +309,37 @@ class DetectorLawSimulation:
         # (DECLARATIONS.md section 15 M1-4: the receivers of 4b, the light
         # clock and R2 at their own W = 64 in a lamp-less world).
         self.cell_wheel: dict[int, int] = {}
-        # The sets bound to a block (keys (i) and (ii)): (the set's cell, the
-        # block's number, the set's wheel or None for the world's); their
-        # Nodes are the block's current cells, read at every interval.
-        self.block_sets: list[tuple[int, int, int | None]] = []
+        # The sets bound to a block (DECLARATIONS.md section 10 item 9, section
+        # 13 item 1, section 15 M1-4; line 7): RECEIVERS in the form of
+        # DESIGN.md section 5, their Nodes take Nodes (the one-way Port take,
+        # the row held at 0, the offer booked to the set's cell, `absorbed`
+        # moved, the click at the first rung stamped with the block's own
+        # count), FREE for the emitting block's own record during that
+        # record's grace (the masks per record by its emitter and age). A set
+        # with one declared position is the receiving Node beside the block
+        # (the light clock's x = 612); a set without positions takes at the
+        # block's current cells (R2's blocks, a stepping block's cells follow
+        # it). `set_block`: the set's cell to its block; `set_nodes`: the
+        # set's declared Nodes' mask, None where the Nodes are the block's.
+        self.set_block: dict[int, int] = {}
+        self.set_nodes: dict[int, np.ndarray | None] = {}
         for detector in world.detectors:
             set_cell: int | None = None
             if detector.block is not None:
                 set_cell = self._cell(detector.name, detector.block, False)
-                self.block_sets.append((set_cell, detector.block, detector.wheel))
+                self.set_block[set_cell] = detector.block
                 if detector.wheel is not None:
                     self.cell_wheel[set_cell] = detector.wheel
+                if detector.positions:
+                    nodes_mask = np.zeros(self.shape, dtype=bool)
+                    for position in detector.positions:
+                        node = (int(position[0]), int(position[1]), int(position[2]))
+                        nodes_mask[node] = True
+                        self.cell_index[node] = set_cell
+                        self.absorbing[node] = True
+                    self.set_nodes[set_cell] = nodes_mask
+                else:
+                    self.set_nodes[set_cell] = None
                 continue
             for position in detector.positions:
                 node = (int(position[0]), int(position[1]), int(position[2]))
@@ -494,6 +519,14 @@ class DetectorLawSimulation:
                     address = (int(node[0]), int(node[1]), int(node[2]))
                     self.cell_index[address] = block.cell
                     self.absorbing[address] = block.definition.absorbing
+            # a set bound to a block without positions: the block's cells are
+            # the set's take Nodes, booked to the set's cell (line 7)
+            for set_cell, number in self.set_block.items():
+                if self.set_nodes[set_cell] is None:
+                    block = self.block_by_number[number]
+                    block.taking = True
+                    self.cell_index[block.mask] = set_cell
+                    self.absorbing[block.mask] = True
             self.take_masks = []
             free = ~self.absorbing
             for axis in range(3):
@@ -654,11 +687,20 @@ class DetectorLawSimulation:
             address = (int(node[0]), int(node[1]), int(node[2]))
             self.cell_index[address] = -1
             self.absorbing[address] = False
+        set_cell = next(
+            (
+                cell
+                for cell, number in self.set_block.items()
+                if number == block.number and self.set_nodes[cell] is None
+            ),
+            None,
+        )
         for node in zip(*np.nonzero(block.mask), strict=True):
             address = (int(node[0]), int(node[1]), int(node[2]))
-            self.cell_index[address] = block.cell
-            self.absorbing[address] = block.definition.absorbing
-        if block.definition.absorbing:
+            self.cell_index[address] = block.cell if set_cell is None else set_cell
+            self.absorbing[address] = block.definition.absorbing or block.taking
+        if block.definition.absorbing or block.taking:
+            old_masks = self.take_masks
             self.take_masks = []
             free = ~self.absorbing
             for axis in range(3):
@@ -669,9 +711,59 @@ class DetectorLawSimulation:
                     mask = self.absorbing & neighbour_free
                     if mask.any():
                         self.take_masks.append((axis, sign, mask))
+            # THE HOP RULE OF THE MOVING TAKE (DECLARATIONS.md section 13 item
+            # 4, declared 04:20Z): at a hop the face's Port is a NEW Port whose
+            # ghost starts at its free neighbour's own level (no jump booked; a
+            # Port that persists keeps its ghost); the content of a Node the
+            # set steps into is taken that interval, its motion squared booked
+            # to the set's pointer and to `absorbed` before its row is held at
+            # 0; no stale ghost is carried across the hop. The block's own
+            # record in its grace is exempt (its row evolves at the cells).
+            entered = block.mask & ~old_mask
             for live in self.records.values():
-                if live.ports and len(live.ports) != len(self.take_masks):
-                    live.ports = [np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks]
+                if not live.ports:
+                    continue
+                exempt = live.emitter == block.number and self._in_grace(live)
+                ports = []
+                for axis, sign, mask in self.take_masks:
+                    kept = next(
+                        (
+                            old
+                            for old_axis, old_sign, old in old_masks
+                            if old_axis == axis and old_sign == sign
+                        ),
+                        None,
+                    )
+                    old_index = next(
+                        (
+                            i
+                            for i, (old_axis, old_sign, _) in enumerate(old_masks)
+                            if old_axis == axis and old_sign == sign
+                        ),
+                        None,
+                    )
+                    fresh = np.where(mask, self._shift(live.now, axis, sign), 0)
+                    if kept is not None and old_index is not None and old_index < len(live.ports):
+                        fresh = np.where(mask & kept, live.ports[old_index], fresh)
+                    ports.append(fresh)
+                live.ports = ports
+                if exempt or not entered.any():
+                    continue
+                motion = np.where(entered, live.now - live.before, 0).astype(object)
+                value = int(np.sum(motion * motion))
+                cell = block.cell if set_cell is None else set_cell
+                if value:
+                    live.pointers[cell] += value
+                    live.absorbed += value
+                    if (
+                        live.first_rung[cell] is None
+                        and live.pointers[cell] * self.cell_wheel[cell] >= live.norm
+                    ):
+                        live.first_rung[cell] = self.tick
+                        if cell in self.set_block:
+                            self.rung_counts[(live.identity, cell)] = block.count
+                live.now[entered] = 0
+                live.before[entered] = 0
 
     def _difference(self, live: LiveRecord, block: Block) -> np.ndarray:
         """The first difference of a record's row the coupling reads at the
@@ -708,7 +800,7 @@ class DetectorLawSimulation:
         difference at its cells (an absorbing block reads its Ports' motion,
         the field its cells read); in motion g carried as the drive's pair;
         the term 3 den g_n pair_n x delta against the wall 3 den g_d pair_d."""
-        if block.definition.absorbing:
+        if block.definition.absorbing or block.taking:
             delta = light.port_motion if light.port_motion is not None else np.zeros_like(light.now)
         else:
             delta = self._difference(light, block)
@@ -864,7 +956,7 @@ class DetectorLawSimulation:
         to the light record's pointer for the block's cell, the first rung
         at 1 / W of the record's norm stamped with the block's count; an
         absorbing block books its Ports' offer as built and nothing here."""
-        if block.definition.absorbing:
+        if block.definition.absorbing or block.taking:
             return
         if light.emitter == block.number and self._in_grace(light):
             return
@@ -1130,6 +1222,12 @@ class DetectorLawSimulation:
         # block's own cell; the first rung after the grace is the receive.
         in_grace = self._in_grace(live)
         driven = self._driven(live) if in_grace else None
+        # the sets bound to the emitting block are FREE for its own record
+        # during the record's grace (line 7; DECLARATIONS.md section 10 item
+        # 9): no take, no zero, the row evolving there
+        exempt = self._exempt(live) if in_grace else None
+        if exempt is not None:
+            driven = exempt if driven is None else (driven | exempt)
         # The take (the receivers' Ports, the faces' sponge) reads every
         # LAMP'S record, light's kind or a massive kind alike (the click is
         # the law's one action on any record, POSTULATES 10; Reviewer 3's
@@ -1183,7 +1281,10 @@ class DetectorLawSimulation:
             # block's record has no train and is driven by nothing here).
             self._drive(live)
             return
-        nxt[self.absorbing] = 0
+        if exempt is None:
+            nxt[self.absorbing] = 0
+        else:
+            nxt[self.absorbing & ~exempt] = 0
         if live.mask is not None:
             # the arm's row lives on its own side of the lamp (component 2)
             nxt[~live.mask] = 0
@@ -1202,11 +1303,20 @@ class DetectorLawSimulation:
                 self.take_den,
             )
             ghost = np.where(mask if driven is None else (mask & ~driven), ghost, 0)
+            if exempt is not None:
+                # A set's Port free for its block's own record (line 7): its
+                # ghost follows the free neighbour's level and books no
+                # motion, so the Port's take at the grace's end starts at
+                # that level with no jump booked (the hop rule's principle,
+                # DECLARATIONS.md section 13 item 4: no stale ghost carried).
+                ghost = np.where(mask & exempt, free_next, ghost)
             # The offer arriving by the Port is the Port's motion, (g(t + 1) -
             # g(t))^2: a wave moves the receiver, a static level on the board
             # (the rule's zero-frequency mode, which no receiver takes and
             # which carries nothing) does not.
             motion = ghost - live.ports[index]
+            if exempt is not None:
+                motion[exempt] = 0
             live.ports[index] = ghost
             offer += motion * motion
             if port_motion is not None:
@@ -1219,7 +1329,10 @@ class DetectorLawSimulation:
         cells = self.cell_index[self.absorbing]
         if in_grace:
             own = (
-                np.array([self.block_by_number[live.emitter].cell])
+                np.array(
+                    [self.block_by_number[live.emitter].cell]
+                    + [cell for cell, number in self.set_block.items() if number == live.emitter]
+                )
                 if live.emitter is not None
                 else self.cell_index[tuple(zip(*self.lamp_nodes[live.lamp], strict=True))]
             )
@@ -1236,6 +1349,12 @@ class DetectorLawSimulation:
                     and live.pointers[cell] * self.cell_wheel[cell] >= live.norm
                 ):
                     live.first_rung[cell] = self.tick
+                    if cell in self.set_block:
+                        # the click of a set bound to a block is stamped with
+                        # the block's own count as the interval begins
+                        self.rung_counts[(live.identity, cell)] = self.block_by_number[
+                            self.set_block[cell]
+                        ].count
         live.now = nxt
         self._drive(live)
         self._split(live)
@@ -1275,7 +1394,27 @@ class DetectorLawSimulation:
             # the emitter's declared own_grace (N_s), required at load
             declared = self.block_by_number[live.emitter].definition.own_grace
             return live.age < live.train + (declared if declared is not None else 0)
+        measured = self.world.measured
+        lamp = measured[live.lamp].lamp if 0 <= live.lamp < len(measured) else None
+        if lamp is not None and lamp.own_grace is not None:
+            # a lamp's declared own_grace (the matter lamp's whole hold, M1-6)
+            return live.age < live.train + lamp.own_grace
         return live.age < live.train + 2 * live.period
+
+    def _exempt(self, live: LiveRecord) -> np.ndarray | None:
+        """The Nodes of the sets bound to the record's emitting block: free for
+        the block's own record during its grace (the declared Nodes, or the
+        block's current cells); None for a record with no such set."""
+        if live.emitter is None:
+            return None
+        found: np.ndarray | None = None
+        for cell, number in self.set_block.items():
+            if number != live.emitter:
+                continue
+            nodes = self.set_nodes[cell]
+            mask = self.block_by_number[number].mask if nodes is None else nodes
+            found = mask.copy() if found is None else (found | mask)
+        return found
 
     def _driven(self, live: LiveRecord) -> np.ndarray | None:
         """The Nodes the record's own object holds during its grace: the lamp's
@@ -1284,30 +1423,6 @@ class DetectorLawSimulation:
         if live.emitter is not None:
             return self.block_by_number[live.emitter].mask
         return live.driven
-
-    def _book_set(self, cell: int, block: Block, wheel: int | None, light: LiveRecord) -> None:
-        """A detector set bound to a block (keys (i) and (ii), DECLARATIONS.md
-        section 15 M1-4): the light record's motion summed at the block's
-        current cells (the squared first differences, the maps' form of the
-        offer, no take: the block's cells are free Nodes) added to the
-        record's pointer for the set, the first rung at 1 / W of the norm on
-        the set's own wheel stamped with the block's own count; nothing of
-        the block's own emitted record during its grace (line B). The set
-        takes nothing, so the record's `absorbed` (what decides its
-        completion against the motion left on the board) is not moved: a
-        record read by such a set completes when the faces and the bodies
-        have taken its wave, and on a board of mirrors it lives on."""
-        if light.emitter == block.number and self._in_grace(light):
-            return
-        motion = (light.now - light.before).astype(object)
-        value = int(np.sum(np.where(block.mask, motion * motion, 0)))
-        if value == 0:
-            return
-        light.pointers[cell] += value
-        rung = self.cell_wheel[cell] if wheel is None else wheel
-        if light.first_rung[cell] is None and light.pointers[cell] * rung >= light.norm:
-            light.first_rung[cell] = self.tick
-            self.rung_counts[(light.identity, cell)] = block.count
 
     def _split(self, live: LiveRecord) -> None:
         """The splitters' action on a light record after its step (component
@@ -1579,8 +1694,6 @@ class DetectorLawSimulation:
                 if sources is not None:
                     sources += self._source(block, response, live)
             self._advance(live, sources, self.light_scale)
-            for cell, number, wheel in self.block_sets:
-                self._book_set(cell, self.block_by_number[number], wheel, live)
         for block in self.blocks:
             self._block_clock(block)
         for identity in list(self.records):

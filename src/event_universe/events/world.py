@@ -898,6 +898,11 @@ MEASURED_KEYS = {
 LAMP_KEYS = {
     "rate",
     "wheel",
+    # detector-law-v1, line B: a lamp's `own_grace` (N_s, the intervals after
+    # its train during which its own body takes nothing of its own record;
+    # DECLARATIONS.md section 15 M1-6: the matter lamp 16700, the hold);
+    # without it a lamp's grace is the engine's constant two periods
+    "own_grace",
     # detector-law-v1: the record's train in periods of its clock (the
     # record's coherence), a declaration of the lamp, absent by default.
     "train",
@@ -1215,6 +1220,10 @@ class LampDefinition:
     # detector-law-v1: the record's train in periods of the family's clock,
     # None without (the law's default then).
     train: int | None = None
+    # detector-law-v1, line B: the lamp's declared own_grace (N_s), the
+    # intervals after its train during which its own body takes nothing of
+    # its own record; None: two periods of its clock (the engine's constant).
+    own_grace: int | None = None
 
 
 @dataclass(frozen=True)
@@ -2625,6 +2634,9 @@ def _lamp(
         label_hands=label_hands,
         momentum_magnitude=momentum_magnitude,
         train=None if "train" not in obj else _integer(obj["train"], f"{label}.train", 1),
+        own_grace=None
+        if "own_grace" not in obj
+        else _integer(obj["own_grace"], f"{label}.own_grace", 0),
     )
 
 
@@ -3350,6 +3362,12 @@ def _block(
         if not isinstance(name, str) or name not in names:
             raise ValueError(f"{BEAM_LAW}: {label}.emits names an unknown family")
         emits = names[name]
+        if obj.get("held"):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.held is refused on a block that emits: the declarations' "
+                "sixth commit (DECLARATIONS.md section 15 M1-2) withdrew the stock; the emission "
+                "is the coupling's source term, the record born at content 0"
+            )
         emitted = families[emits]
         if emitted.free or emitted.massive_kind or emitted.phase_per_age is None:
             raise ValueError(
@@ -4558,19 +4576,39 @@ def _detectors(
         if "wheel" in obj:
             set_wheel = _integer(obj["wheel"], f"{label}.wheel", 1)
         if "block" in obj:
-            if "positions" in obj:
-                raise ValueError(
-                    f"{BEAM_LAW}: {label} declares both `block` and `positions`: a set bound to a "
-                    "block has the block's cells as its Nodes"
-                )
             bound_block = _integer(obj["block"], f"{label}.block", 0, max(0, len(measured) - 1))
             if measured[bound_block].block is None:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.block {bound_block} names a measured event that is no "
-                    "block (a set bound to a block reads the light record at the block's cells)"
+                    "block; a receiver set on a BODY is `positions` on the body's Node with its "
+                    "own `wheel` (4b's B at [1900, 0, 0]: DECLARATIONS.md section 15 M1-4)"
                 )
             threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
-            found.append(DetectorDefinition(name, (), threshold, block=bound_block, wheel=set_wheel))
+            bound_positions: list[Address3] = []
+            if "positions" in obj:
+                # the receiving set at ONE declared Node beside the block (the
+                # light clock's free Node adjacent to A's face, section 10
+                # item 9): a free Node is admitted here, the set its receiver
+                positions_value = obj["positions"]
+                if not isinstance(positions_value, list) or len(positions_value) != 1:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}.positions with `block` names ONE Node, the receiving "
+                        "set beside the block (DECLARATIONS.md section 10 item 9)"
+                    )
+                position = _address(positions_value[0], f"{label}.positions", shape)
+                if position in at or position in inside or position in taken:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}.positions with `block` names a Node of a measured "
+                        f"event or of another set {list(position)}: the receiving set is a free "
+                        "Node beside the block"
+                    )
+                taken.add(position)
+                bound_positions.append(position)
+            found.append(
+                DetectorDefinition(
+                    name, tuple(bound_positions), threshold, block=bound_block, wheel=set_wheel
+                )
+            )
             continue
         if "positions" not in obj:
             raise ValueError(
@@ -4590,7 +4628,9 @@ def _detectors(
                         "named by its centre)"
                     )
                 raise ValueError(
-                    f"{BEAM_LAW}: {label}.positions names a Node without a measured event {list(position)}"
+                    f"{BEAM_LAW}: {label}.positions names a Node without a measured event "
+                    f"{list(position)} (a receiving set at a free Node beside a block declares "
+                    "`block` with that one position, DECLARATIONS.md section 10 item 9)"
                 )
             if position in taken:
                 raise ValueError(f"{BEAM_LAW}: a Node in two detectors {list(position)}")
@@ -4783,14 +4823,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         )
     # massive-record-v1: the amplitude bound A, declared per massive world
     amplitude_bound = AMPLITUDE_BOUND
-    if massive_record:
-        if "amplitude_bound" not in obj:
-            raise ValueError(
-                f"{BEAM_LAW}: a world under `massive_record` declares `amplitude_bound`, the "
-                "amplitude A every row stays below (DECLARATIONS.md section 15 M1-10: 2^32 in "
-                "every massive world of the GO; MUST 3's load bound and the rows' run-time "
-                "assertion use it; no default)"
-            )
+    if massive_record and "amplitude_bound" in obj:
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
         if amplitude_bound > AMPLITUDE_BOUND:
             raise ValueError(
@@ -4843,6 +4876,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     families = _families(
         obj["families"], phase_steps, age_bound, massive_rows, action, massive_record, amplitude_bound
     )
+    # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
+    # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
+    # light world under `massive_record` (its probes, its mirror blocks of
+    # light's kind) loads without it (the Boss's 03:44Z, Reviewer 3's line B).
+    if massive_record and "amplitude_bound" not in obj and any(f.massive_kind for f in families):
+        raise ValueError(
+            f"{BEAM_LAW}: a world with a massive family declares `amplitude_bound`, the amplitude "
+            "A every row stays below (DECLARATIONS.md section 15 M1-10: 2^32 in every massive "
+            "world of the GO; MUST 3's load bound and the rows' run-time assertion use it; no "
+            "default)"
+        )
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).

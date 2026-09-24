@@ -885,42 +885,78 @@ world is not written (the Boss's rule). No pin world was run.
 Each a generic line under the contract, one test each in
 `tests/test_massive_record.py`; no pinned run.
 
-- LINE B, the block's grace (test (ac)): a block's emitted record has the
-  grace a lamp's record has: while the block sources it (its cycle) and
-  for the block's `own_grace` after the cycle's end (the declared N_s of
-  DECLARATIONS.md section 10 item 1, an integer of intervals REQUIRED on
-  every emitting body, refused absent naming it and refused on a body
+- LINE B, the block's grace (tests (ac), (h)): a block's emitted record has
+  the grace a lamp's record has: while the block sources it (its cycle)
+  and for the block's `own_grace` after the cycle's end (the declared N_s
+  of DECLARATIONS.md section 10 item 1, an integer of intervals REQUIRED
+  on every emitting body, refused absent naming it and refused on a body
   that emits nothing; the grace = the train + own_grace; no default),
   its driven set is the block's CURRENT cells (a stepping block's follow
-  it), the offer at the block's own cell is dropped, the block's own
-  response to it books nothing, and a set bound to the block books
-  nothing of it. `grace` on a block that emits nothing is refused. A
-  READING for the physicist: at the grace's end a set bound to the block
-  crosses its rung AT ONCE on the record's own residual at the cells (a
-  tenth of the emission's peak on the light clock's chain, decaying
-  slowly), in the open world and the closed alike, so the first rung
-  after the grace is the residual's and not the return's; the return is
-  read by the level (a probe) or by a longer grace, the physicist's
-  line.
-- KEYS (i) AND (ii), one key (test (ac)): a detector set declared by
-  `"block": <measured number>` (no `positions`) with its own `wheel`: its
-  Nodes are the block's current cells at every interval, its pointer the
-  light record's motion summed there (the squared first differences, the
-  maps' form of the offer; the block's cells take nothing, so the
-  record's `absorbed`, which decides its completion, is not moved: on a
-  board of mirrors the record lives on), the first rung at pointer x W
-  at or above the norm on the set's own wheel, stamped with the block's
-  own count as the interval begins (`rung_counts`, as a block's cell is
-  stamped) and named on the gather line by `clock_source`
-  ("measured:<n>"; "interval" for a receiver as built). A set with
-  positions may declare its own `wheel` too (4b's B at W = 64 in a
-  lamp-less world): the rung per cell is the set's, or the world's.
+  it), the offer at the block's own cell is dropped and the block's own
+  response to it books nothing. A LAMP may declare `own_grace` too (the
+  Boss's line (A) of 04:40Z; the matter lamp's whole hold, M1-6): its
+  records' grace is then the train + own_grace, and a light lamp without
+  the key keeps the module's constant two periods. `held` on an emitter
+  is refused (line (E): the declarations' sixth commit withdrew the
+  stock; the record is born at content 0).
+- LINE 7, A SET BOUND TO A BLOCK IS A RECEIVER (the Boss's 03:56Z, 04:14Z
+  and 04:40Z on DECLARATIONS.md section 10 item 9 and section 13; tests
+  (ac), (ah)): a detector set declared by `"block": <measured number>`
+  with its own `wheel` is a take line, as a receiver body's set is: its
+  Nodes are absorbing (the row held at 0 there, the Ports' one-way take
+  with light's pair, the record's `absorbed` moved, so the record
+  completes as at any receiver), its pointer the Ports' motion squared,
+  the first rung at pointer x W at or above the norm on the set's own
+  wheel, stamped with the block's own count as the interval begins
+  (`rung_counts`) and named on the gather line by `clock_source`
+  ("measured:<n>"; "interval" for a receiver as built). Two forms: (a)
+  `block` alone, the set's Nodes the block's own cells at every interval
+  (R2's form, section 13 item 1: the block is then absorbing, its cells
+  taking), and (b) `block` with ONE `positions` entry, a free Node (the
+  light clock's x = 612, item 9; a Node of a measured event or of another
+  set refused). A set on a BODY (4b's B at [1900, 0, 0]) is `positions`
+  on the body's Node with its own `wheel`, and `block` naming a body is
+  refused naming that form. The set is FREE for the emitting block's own
+  record during that record's grace (the per-record exemption, by
+  emitter and age: no take, no zero, the row evolving there; its Ports'
+  ghosts follow the free neighbours' levels and book nothing, so the take
+  at the grace's end starts at those levels with no jump booked). A
+  stepping block's take masks are re-formed at each step, and (f) THE HOP
+  RULE (section 13 item 4, declared at go-lines-2 0bc5cc0f): at a hop the
+  face's Port is a NEW Port whose ghost starts at the entered Node's own
+  level (no jump booked, no stale ghost carried); the content of the Node
+  the set steps into is taken that interval, its motion squared booked to
+  the set's pointer and to `absorbed`, the row then held at 0 there.
+  READINGS (EXPLORATORY, test (ac), the light clock's chain of section
+  10 with the set at the free Node x = 112 beside A's face, W = 64,
+  own_grace 70): the record passes the set freely during its grace of
+  140 (the train 70 and the 70 after), the mirror's neighbour x = 171 is
+  reached before 208, and the FIRST RUNG comes at 141 after the birth,
+  AT THE GRACE'S END, not in the ordered band near 218: it is booked from
+  the record's own RINGING inside A's twelve cells after the train (the
+  lattice's alternating mode at about 5 x 10^5 against the front's 10^7,
+  its motion per interval large because it flips sign each interval),
+  leaking through the face; the set's pointer reaches 2.1 x 10^12 (half
+  the norm 4.3 x 10^12) by 208 before the return arrives, and the return
+  is visible after 208 only as the pointer's rise (2.8 x 10^12 from 208 to
+  240 against 2.1 x 10^12 from 141 to 208); with the faces open the same
+  rung at 141 and no rise (the record ends at the sponge at 220). A
+  FINDING FOR THE OWNER: under this form the light clock's set clicks on
+  the emitter's ringing, not on the return; the candidates (a longer
+  own_grace, the emitter's cells taking their own record's remnant at the
+  train's end, a softer turn-off of the drive, a probe of the level) are
+  the physicist's, none built. Test (ah) reads form (a) on a chain of
+  300: a light lamp's record taken at the block's cells clicks once at
+  the set at rest (stamped with the block's count 4 at 324) and with the
+  block pushed toward the lamp at k = 3 (the click at 203, the count 2),
+  the books balanced at every interval through the hops.
 - THE CLOSED FACE (test (ac)): the boundary value `"closed"` per axis,
   under `detector_law` alone: a zero face for light without the open
   face's take (no face cell, no sponge; the level 0 beyond it as
   `_shift` fills), the mirror B of section 10 at x = 672. On the light
   clock's chain the level at x = 160 after the return is 7.0 x 10^6 with
-  the face closed against 1.7 x 10^5 with it open (the peak 1.6 x 10^7).
+  the face closed against 1.7 x 10^5 with it open (the peak 1.6 x 10^7),
+  a GAMEBOARD reading of the first form's run.
 - THE CLICK'S KIND (test (ac), every gather line): `click_at` is "rung"
   where the chosen cell crossed its first rung (the `click` field that
   rung's interval) and "completion" where none was crossed (a screen
@@ -929,8 +965,11 @@ Each a generic line under the contract, one test each in
   Test (p)'s events digest moved once by these two fields (the state and
   audit digests unchanged, the witness that the rows are byte for byte).
 - THE AMPLITUDE BOUND (test (v); issue #1085): the world key
-  `amplitude_bound`, required on every massive world (no default; the
-  physicist's A = 2^32 in every world of the GO, section 15 M1-10): MUST
+  `amplitude_bound`, required on every world that declares a massive
+  FAMILY (den > num; the Boss's line 6 of 03:44Z: a light-only world
+  under `massive_record` loads without it, and the key is refused on a
+  world without the flag; no default; the physicist's A = 2^32 in every
+  world of the GO, section 15 M1-10): MUST
   3's load bound at that A, the scalar seed and a profile's largest
   magnitude refused above it naming the bound and the pair, every row
   asserted below it at every interval (the run refused at the interval
@@ -939,9 +978,11 @@ Each a generic line under the contract, one test each in
 - THE (M) WALL'S PATH (test (ad); section 15 L-1): a block of light's
   kind is a mirror line: its `seed` is 0 at load (no own record, no
   clock, no coupling; the keys refused as before), its cells carry the
-  gap's pair on light's kind ([1, 2] two Nodes deep: the engine reads
-  1.45 percent of the level beyond the wall against the declaration's
-  0.7 percent of the amplitude, the front's precursor included); the
+  gap's pair on light's kind ([1, 2] two Nodes deep: the declaration's
+  wall transmits 1.9 percent of the amplitude two deep (section 15 M1-6's
+  decay 1.97 per Link); the engine reads 1.45 percent of the level beyond
+  the wall over 200 intervals, a transient below that figure, the front's
+  precursor included; line (F) of the Boss's 04:40Z); the
   margin rule skips light's kind. And M1-6's BARRIER (test (e)): a
   raised pair on a block of the matter kind is admitted (no own record,
   its seed and clock keys refused, the margin rule skipping it); the
@@ -987,7 +1028,10 @@ Each a generic line under the contract, one test each in
   proof standing at 2^40 (2^32 inside it). The splitter's remainders are
   cleared at the record's completion (Reviewer 3's HOST token). The
   registered worlds of `examples/events/massive_record/` (35 files and
-  the two tracked copies) gained the key `amplitude_bound` 2^32, which
+  the two tracked EXPLORATORY copies,
+  `EXPLORATORY_layer_rest_14/world.json` and
+  `EXPLORATORY_layer_k3_14/world.json`) gained the key `amplitude_bound`
+  2^32, which
   the required key demands: named for the owner (Highlights 5.4 item
   10). The matter lamp's clock stays the family's
   `phase_per_link` in the pair form (item 0). The stepping detector as a

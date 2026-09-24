@@ -1426,17 +1426,34 @@ def test_ab_the_world_key_wheel_declares_the_detectors_rung_without_a_lamp():
         parse_nature_beam_world(no_law)
 
 
+def lamp_entry(x: int, amount: int) -> dict:
+    """A lamp of light at a Node of a chain, its train of 2 periods on +x, `amount` births."""
+    return {
+        "position": [x, 0, 0],
+        "family": "light",
+        "amount": amount,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[1, 0, 0]],
+        "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 2},
+    }
+
+
 def light_clock_world(faces: str, far_body: bool) -> dict:
-    """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10): a chain of
-    173 (x `closed` for light, the zero face at 172 the mirror B sixty Links from A's face at
-    112; or x open, the sponges), the matter kind [800, 809], the emitter A of side 12 at
-    [100, 112) at full depth with the seed 50 x 2^20, `emits` light with G = [1, 50] and
-    g = [1, 1000], W = 64; light's clock [1, 1]; the receiving set `A_face` bound to A with its
-    own wheel 64 (key (i)); with `far_body`, a receiver body at x = 160 read as the set `far`
-    with its own wheel 64; the amplitude bound 2^32."""
+    """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10) and item 9:
+    a chain of 173 (x `closed` for light, the zero face at 172 the mirror B sixty Links from
+    A's face at 111; or x open, the sponges), the matter kind [800, 809], the emitter A of side
+    12 at [100, 112) at full depth with the seed 50 x 2^20, `emits` light with G = [1, 50] and
+    g = [1, 1000], W = 64, `own_grace` 70 (N_s, required on an emitter); light's clock [1, 1];
+    the receiving set `A_face` bound to A at ONE declared Node, the free Node adjacent to A's
+    face toward the mirror (x = 112; item 9), with its own wheel 64 (line 7: a receiver); with
+    `far_body`, a receiver body at x = 160 read as the set `far` with its own wheel 64; the
+    amplitude bound 2^32."""
     document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 600
+    document["clock_stamp"] = True
     document["measured"] = [
         {
             "position": [100, 0, 0],
@@ -1455,7 +1472,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "own_grace": 70,
         }
     ]
-    document["detectors"] = [{"name": "A_face", "block": 0, "wheel": 64}]
+    document["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0]], "wheel": 64}]
     if far_body:
         document["measured"].append(
             {
@@ -1472,80 +1489,113 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
     return document
 
 
-def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
-    """Line B (the block's grace), key (i) (a detector set bound to a block, its own wheel, the
-    block's count on the stamp) and the closed face (Reviewer 3's blocking line), on the light
-    clock's chain (section 10 with section 15's lines; A's `own_grace` 70 = N_s). (1) With the
-    faces OPEN and no body: A's first emitted record books nothing at `A_face` while A sources
-    it (its cycle, 70 intervals) and for the 70 intervals of `own_grace` after (no pointer, no
-    rung); at the grace's end the set's rung is crossed AT ONCE by the record's own residual at
-    the cells (a tenth of the emission's peak, decaying slowly; a READING for the physicist:
-    the first rung after the grace is the residual's, in the open world and the closed alike,
-    so the return of the light clock is not this rung), stamped with A's own count as the
-    interval begins (the count the block carries when the offer arrives, before the block's
-    clock of the same interval; `rung_counts`, as `_book_response` stamps a block's cell) and
-    named by `clock_source` on the gather line when the set is
-    chosen; with a receiver body at x = 160 beside, the far set crosses its rung after the
-    grace as well. (2) With the faces CLOSED (the zero face at 172 the mirror, no take, no face
-    cell): the record's level at x = 160 between the intervals 250 and 320 (after the wave's
-    front passed toward the face and the return came back, 2 L / c = 208 after the emission)
-    stays above one hundredth of the emission's peak and above ten times the open world's
-    (where the wave is taken at the face: 7.0 x 10^6 against 1.7 x 10^5 read, the peak
-    1.6 x 10^7); the books balanced at every interval in both
-    worlds; `click_at` on every gather line. The loader: `closed` without `detector_law`
-    refused, a set with both `block` and `positions` refused, `block` naming no block refused,
-    `own_grace` on a block that emits nothing refused."""
+def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_closed_face():
+    """Line 7 (DECLARATIONS.md section 10 item 9, the receiving set a RECEIVER with the
+    per-record transparency; line B's grace; the closed face; key (i)'s stamp) on the light
+    clock's chain (L = 60 from A's face at 111 to the mirror at 172; own_grace 70; W = 64).
+    With the faces CLOSED: A's first emitted record passes the set's Node x = 112 freely during
+    its grace (the train of 70 and the 70 intervals after: the row there nonzero, no pointer, no
+    rung), the level at the mirror's neighbour x = 171 rises before the return's transit
+    2 L / c = 208 after the birth, and the set's Ports begin their take at the grace's end at
+    the free neighbours' own levels (the first booking the Ports' motion alone, no jump from a
+    stale ghost: the hop rule's principle). THE ENGINE'S READING (EXPLORATORY, a finding for
+    the owner, not the ordered band 200 to 240 after the birth): the FIRST RUNG comes at the
+    grace's end (141 after the birth), booked from the record's own ringing inside A's twelve
+    cells after the train (the lattice's alternating mode, level about 5 percent of the far
+    field's, its motion per interval large), leaking through the face; the return is visible
+    after 208 as the pointer's rise (240 against 208 larger than 208 against 140), with the
+    faces OPEN the same rung at the grace's end and no rise. The take holds the row at 0 there
+    after the grace; the click is stamped with A's own count as the interval begins
+    (`rung_counts`) and named by `clock_source`; the record ends at the set (one gather,
+    `click_at` "rung"); the books balanced at every interval. With a receiver body at x = 160
+    beside and the faces open, the far set crosses its rung after the grace. The loader:
+    `block` with a position on a measured Node refused, with two positions refused, `block`
+    naming a body refused naming the positions form, `closed` without `detector_law` refused,
+    `own_grace` on a silent block refused, `held` on an emitter refused."""
     first = 1  # A's first emitted record: block 0, birth 1
-    levels: dict[str, int] = {}
-    peak = 0
-    for faces in ("open", "closed"):
+    readings: dict[str, dict[str, int]] = {}
+    for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, False))
-        assert world.closed == (faces == "closed", False, False)
-        assert world.boundary_per_axis["x"] == faces
+        if faces == "closed":
+            assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
-        assert ("face:+x" in simulation.cell_names) == (faces == "open")
+        if faces == "closed":
+            assert "face:+x" not in simulation.cell_names and "face:-x" not in simulation.cell_names
         a_face = simulation.cell_names.index("A_face")
+        assert bool(simulation.absorbing[112, 0, 0]) and int(simulation.cell_index[112, 0, 0]) == a_face
         block = simulation.blocks[0]
-        in_grace_pointer_seen = 0
-        grace_end: int | None = None
+        birth: int | None = None
+        passed_freely = False
+        mirror_seen: int | None = None
         rung: int | None = None
         stamp: int | None = None
         count_then: int | None = None
-        late = 0
-        for _ in range(320):
+        held_after = False
+        previous_now: np.ndarray | None = None
+        first_booking: int | None = None
+        expected_booking: int | None = None
+        pointer_at: dict[int, int] = {}
+        for _ in range(600):
             count_before = block.count
+            # the step's exemption is decided by the record's state as the
+            # interval begins (the grace read before the step)
+            before_step = simulation.records.get(first)
+            grace_before = before_step is None or simulation._in_grace(before_step)
             simulation.step()
             assert simulation.books()["balanced"], simulation.tick
             live = simulation.records.get(first)
             if live is None:
                 continue
-            peak = max(peak, int(np.max(np.abs(live.now))))
-            if simulation._in_grace(live):
-                in_grace_pointer_seen = max(in_grace_pointer_seen, live.pointers[a_face])
-                assert live.first_rung[a_face] is None
-            elif grace_end is None:
-                grace_end = simulation.tick
+            birth = live.birth_tick
+            age = simulation.tick - birth
+            if grace_before:
+                assert live.pointers[a_face] == 0 and live.first_rung[a_face] is None
+                passed_freely = passed_freely or int(live.now[112, 0, 0]) != 0
+                previous_now = live.now.copy()
+            elif first_booking is None and previous_now is not None:
+                # the first taken interval: the Ports' motion from the free
+                # neighbours' levels as the grace ended, no jump booked
+                first_booking = live.pointers[a_face]
+                expected_booking = sum(
+                    (
+                        int(live.ports[index][112, 0, 0])
+                        - int(simulation._shift(previous_now, axis, sign)[112, 0, 0])
+                    )
+                    ** 2
+                    for index, (axis, sign, mask) in enumerate(simulation.take_masks)
+                    if bool(mask[112, 0, 0])
+                )
+            if mirror_seen is None and abs(int(live.now[171, 0, 0])) > 0:
+                mirror_seen = simulation.tick
             if rung is None and live.first_rung[a_face] is not None:
                 rung = live.first_rung[a_face]
                 stamp = simulation.rung_counts[(first, a_face)]
                 count_then = count_before
-            if simulation.tick >= 250:
-                late = max(late, int(abs(live.now[160, 0, 0])))
-        assert in_grace_pointer_seen == 0 and grace_end is not None
-        assert rung is not None and rung >= grace_end and rung - grace_end <= 2, (rung, grace_end)
+            if rung is not None and not simulation._in_grace(live):
+                held_after = held_after or int(live.now[112, 0, 0]) == 0
+            if age in (140, 208, 240):
+                pointer_at[age] = live.pointers[a_face]
+        assert birth is not None and passed_freely
+        assert first_booking is not None and first_booking == expected_booking and first_booking > 0
+        assert rung is not None and 140 <= rung - birth <= 142, (rung, birth)
         assert stamp == count_then and stamp is not None and stamp >= 1
-        assert block.cycle_length > 0
-        gathers = [line for line in lines if line["event"] == "gather"]
-        assert all("click_at" in gather and "clock_source" in gather for gather in gathers)
-        for gather in gathers:
-            if gather["chosen"] and gather["chosen"][0][0] == "A_face":
-                assert gather["clock_source"] == "measured:0" and gather["click_at"] == "rung"
-        levels[faces] = late
-    assert peak > 0
-    assert levels["closed"] * 100 > peak, (levels, peak)
-    assert levels["closed"] > 10 * levels["open"], (levels, peak)
-    # a receiver beyond the grace clicks: the far body's set crosses its rung after the grace
+        assert held_after
+        gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
+        if faces == "closed":
+            assert mirror_seen is not None and mirror_seen - birth < 208, (mirror_seen, birth)
+            assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
+            assert gathers[0]["click_at"] == "rung" and gathers[0]["clock_source"] == "measured:0"
+            assert gathers[0]["click"] == rung and gathers[0]["clock"] == stamp
+            assert pointer_at[240] - pointer_at[208] > pointer_at[208] - pointer_at[140]
+        else:
+            # nothing returns: the record ends at the sponge face before 240
+            assert 240 not in pointer_at and pointer_at[208] - pointer_at[140] > 0
+            assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "face:+x"
+            assert gathers[0]["clock_source"] == "interval"
+        readings[faces] = {"rung": rung - birth, **pointer_at}
+    assert readings["closed"][140] == readings["open"][140]
+    # a receiver beyond the grace clicks
     beside = DetectorLawSimulation(parse_nature_beam_world(light_clock_world("open", True)))
     far = beside.cell_names.index("far")
     far_rung: int | None = None
@@ -1556,25 +1606,96 @@ def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
             far_rung = live.first_rung[far]
     assert far_rung is not None and far_rung > 100
     # the loader's refusals
+    bad = light_clock_world("closed", False)
+    bad["detector_law"] = False
+    bad["massive_record"] = False
+    del bad["amplitude_bound"]
     with pytest.raises(ValueError, match="closed"):
-        bad = light_clock_world("closed", False)
-        bad["detector_law"] = False
-        bad["massive_record"] = False
-        del bad["amplitude_bound"]
         parse_nature_beam_world(bad)
-    both = light_clock_world("open", False)
-    both["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
-    with pytest.raises(ValueError, match="both `block` and `positions`"):
-        parse_nature_beam_world(both)
+    on_body = light_clock_world("open", False)
+    on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
+    with pytest.raises(ValueError, match="names a Node of a measured event"):
+        parse_nature_beam_world(on_body)
+    two = light_clock_world("open", False)
+    two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0], [113, 0, 0]]}]
+    with pytest.raises(ValueError, match="names ONE Node"):
+        parse_nature_beam_world(two)
     no_block = light_clock_world("open", True)
     no_block["detectors"] = [{"name": "B", "block": 1}]
-    with pytest.raises(ValueError, match="names a measured event that is no block"):
+    with pytest.raises(ValueError, match="a receiver set on a BODY is `positions`"):
         parse_nature_beam_world(no_block)
     silent = light_clock_world("open", False)
     del silent["measured"][0]["emits"]
     silent["detectors"] = []
     with pytest.raises(ValueError, match="own_grace is refused on a block that emits nothing"):
         parse_nature_beam_world(silent)
+    stocked = light_clock_world("open", False)
+    stocked["measured"][0]["held"] = {"light": 3}
+    with pytest.raises(ValueError, match="held is refused on a block that emits"):
+        parse_nature_beam_world(stocked)
+
+
+def test_ah_a_set_at_a_blocks_cells_takes_and_steps_with_the_hop_rule():
+    """Line 7 for a set bound to a block WITHOUT positions (R2's form, DECLARATIONS.md section 13
+    item 1): the block's twelve cells are the set's take Nodes; a light lamp's record (the lamp
+    at x = 20 on a chain of 300, one birth) is taken there and clicks once at the set, the click
+    stamped with the block's own count and named by `clock_source`, the books balanced; the
+    block's cells are absorbing and its own cell books no response. Pushed toward the lamp at
+    k = 3 (the hop rule of the moving take, section 13 item 4): the record still clicks once at
+    the set, the block having stepped, every Port's ghost after a hop starting at its free
+    neighbour's level (no jump: the record's `absorbed` never exceeds its norm by the hop's
+    booking beyond the level squared at the entered Node), the books balanced. The loader: a
+    set with `block` and no positions on an absorbing block is refused? No: admitted, the block
+    absorbing already; `wheel` below 1 refused."""
+    for momentum in ([0, 0, 0], [-64, 0, 0]):
+        document = massive_world([300, 1, 1], CHAIN, [800, 809])
+        document["ticks"] = 1200
+        document["age_bound"] = 1 << 20
+        document["clock_stamp"] = True
+        document["measured"] = [
+            lamp_entry(20, 2),
+            {
+                "position": [200, 0, 0],
+                "family": "matter",
+                "amount": 1,
+                "phase": 0,
+                "momentum": momentum,
+                "fixed": True,
+                "side": 12,
+                "pair": [800, 800],
+                "seed": 50 << 20,
+                "wheel": 64,
+                "margin": "control",
+            },
+        ]
+        document["detectors"] = [{"name": "B_cells", "block": 1, "wheel": 64}]
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        block = simulation.blocks[0]
+        assert block.taking and bool(simulation.absorbing[205, 0, 0])
+        cell = simulation.cell_names.index("B_cells")
+        assert int(simulation.cell_index[205, 0, 0]) == cell
+        identity = 0 * (1 << 32) + 1
+        count_at_rung: int | None = None
+        for _ in range(1200):
+            count_before = block.count
+            simulation.step()
+            assert simulation.books()["balanced"], simulation.tick
+            live = simulation.records.get(identity)
+            if live is not None and count_at_rung is None and live.first_rung[cell] is not None:
+                count_at_rung = count_before
+            if any(g["event"] == "gather" and g["record"] == identity for g in lines):
+                break
+        gathers = [g for g in lines if g["event"] == "gather" and g["record"] == identity]
+        assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "B_cells", gathers
+        assert gathers[0]["clock_source"] == "measured:1" and gathers[0]["clock"] == count_at_rung
+        assert block.stepped > 0 if momentum[0] else block.stepped == 0
+        assert live is None or live.pointers[block.cell] == 0
+    bad = document
+    bad["detectors"] = [{"name": "B_cells", "block": 1, "wheel": 0}]
+    with pytest.raises(ValueError, match="wheel"):
+        parse_nature_beam_world(bad)
 
 
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
