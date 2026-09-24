@@ -138,7 +138,17 @@ and the ray law's series exists.
    sequence flips with A's setting on 0 of 2048 births at b = N / 8 and
    on 1448 of 2048 (0.7070) at b = 3 N / 8 (the pair (0, 3 N / 8) is the
    reversed ladder); the same fractions 0.6875 and 0.7031 at N = 64 and
-   256. So THE ORDER CHANNEL IS OPEN: B reads a bit of A's setting from
+   256. THE WIDTH IS E_N ITSELF (Reviewer 3's token, 02:42Z through the
+   Boss): the flip fraction at b = 3 N / 8 equals the finite-N
+   correlation E_N exactly, 44 / 64 = 11 / 16, 180 / 256 = 45 / 64 and
+   1448 / 2048 = 181 / 256, the same numbers as S_N / 4, a closed form
+   and not a statistic. The physical sentence: the birth residue u is a
+   hidden variable known at both stations (the birth stamp travels with
+   the record), so the counter form of the click is a deterministic
+   hidden-variable model, and Bell's theorem forces its nonlocality into
+   the order of outcomes, which nature's quantum mechanics does not
+   carry; the counter form's own falsifiable departure from nature,
+   declared before any run. So THE ORDER CHANNEL IS OPEN: B reads a bit of A's setting from
    the order of its outcomes at b = 3 N / 8, with certainty, while the
    counts stay no-signalling exactly (1024 of 2048 at every setting, row
    1d). It is open BY BELL'S THEOREM for any deterministic wheel: a
@@ -584,37 +594,63 @@ omega_b) of its own well, printed by the pins script before the run.
    predicted FAIL along (1.2224) as declared.
 8. THE LIGHT-HELD PAIR IN MOTION on the lattice's band (derivation (a),
    2026-09-24, 02:35Z, on the Boss's YES of 02:00Z to the owner's
-   question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin).
-   Member (iii) of PUSH_BALANCE.md section 5, the covariant object, is
-   now the law's, since the massive kind's bound clock reads f = f_0 /
-   gamma_m from the rule (ALGEBRA.md 8.1, 8.4; Reviewer 3's line of
-   01:55Z): the standing condition of 8b (iv) at that frequency gives, IN
-   THE CONTINUUM, the separation L_0 / gamma along the motion and L_0
-   across, and five's ratio 1 and 1 exactly (the wave equation's
-   covariance, PUSH_BALANCE.md section 4; the script's check). ON THE
-   CHAIN'S OWN BAND the forward wave of the moving pair is
-   Doppler-compressed into the lattice's dispersive range (5.8 Links at
-   lambda_0 = 12, k = 3; the backward wave 23 Links), and the standing
-   condition with the band's k(omega) and group paces gives L_along /
-   L_0 = 0.771, 0.795, 0.808 at lambda_0 = 12, 16, 24 Links for k = 3
-   (against 1 / gamma = 0.8165) and 0.885, 0.893, 0.898 for k = 4
-   (against 0.9014), and FIVE'S ALONG RATIO in the pair's own count
-   1.158, 1.067, 1.025 at k = 3 and 1.045, 1.023, 1.009 at k = 4, the
-   rigid pair's 1.501, 1.343, 1.269 and 1.182, 1.145, 1.124 beside. So
-   the light-held pair reads five as 1 + O((a / lambda)^2 beta^2), the
-   lattice's own term (the same order as row A2's dispersion), tending to
-   1 as the wavelength grows or the speed falls, and 1 exactly in the
-   continuum; in nature's regime (a / lambda below 10^-20, beta below
-   10^-3) the term is below 10^-40, invisible to Michelson-Morley and
-   Kennedy-Thorndike, so the light-held pair matches the null in form.
-   The across arm is 1 in the continuum; its lattice term is the
-   anisotropy's order and is not computed here. What stays open (Reviewer
-   3): the settling of the pair at the pattern's nodes under the coupling
-   with the push of light at the blocks' outer Ports (ALGEBRA.md 8.11),
-   a COMPUTATION on the coupled map with the push, then a world; the
-   paper's row (d) in motion carries the rigid pair's 1.222 as the
-   law-as-declared number and the light-held pair's 1 + O(k^2 beta^2) as
-   the form five reaches, with the settling named as the open step.
+   question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin;
+   corrected 02:42Z on Reviewer 3's two tokens, the rows under the floor
+   and the form of the excess). Member (iii) of PUSH_BALANCE.md section
+   5, the covariant object, is now the law's, since the massive kind's
+   bound clock reads f = f_0 / gamma_m from the rule (ALGEBRA.md 8.1,
+   8.4; Reviewer 3's line of 01:55Z): the standing condition of 8b (iv)
+   at that frequency gives, IN THE CONTINUUM, the separation L_0 / gamma
+   along the motion and L_0 across, and five's ratio 1 and 1 exactly (the
+   wave equation's covariance, PUSH_BALANCE.md section 4; the script's
+   check). ON THE CHAIN'S OWN BAND the forward wave of the moving pair is
+   Doppler-compressed into the lattice's dispersive range, and the
+   standing condition with the band's k(omega) and group paces gives, AT
+   THE DECLARED WORLD of sections 4 and 13 (lambda_0 = 32.1 Links, k =
+   3): L_along / L_0 = 0.8127 against 1 / gamma = 0.8165 (0.8120 for
+   [156, 157]) and FIVE'S ALONG RATIO in the pair's own count 1.0136
+   (both pairs; the rigid pair's 1.247 beside), INSIDE the band 1 +- 0.03
+   of Highlights 5.4's "five"; at lambda_0 = 48, k = 3 it reads 1.0058,
+   and at lambda_0 = 32, k = 4 1.0050. THE ROWS UNDER THE FLOOR
+   (Reviewer 3's line of 03:00Z on my re-check): the floor is 8c's, the
+   wave ON THE BOARD at least 12 Links, read on the pair's forward wave;
+   the first draft's rows lambda_0 = 12 and 16 at k = 3 (five 1.158,
+   1.067; the forward waves 5.8, 8.0 Links) and 12 and 16 at k = 4 (1.045,
+   1.023; 7.3, 9.9 Links) are under it and are not admissible worlds;
+   lambda_0 = 24 at k = 3 (five 1.025) is AT the floor, the forward wave
+   12.25 Links on the band (12.42 in the continuum, lambda_0 sqrt((1 -
+   beta_c) / (1 + beta_c))), admissible and marginal; at k = 4 lambda_0 =
+   24 reads 15.0 Links, admissible. MUST I's form lambda_0 (1 - beta_c)
+   >= 12 (DESIGN.md 1.2 (b)) is that floor written on declared integers
+   for an emitter whose period is the HOST'S count (the ray law's lamp
+   moved at cadence k); the light-held pair's emitter is not that
+   emitter: by member (iii), now the law's, its period is dilated by
+   gamma_m, so the host-count form drops that factor and reads 10.1 at
+   lambda_0 = 24, k = 3, conservative for a law-dilated emitter; the
+   script marks every row on the forward wave and prints the host-count
+   form beside. For the loader, not now: MUST I's check at the initial P
+   and every change stays the refusal (it refuses at 24 / k = 3 a world
+   the physics admits and admits nothing wrong) until the model owner
+   declares the dilated form for emitters whose count the law dilates, a
+   line for DESIGN.md 1.2 (b) when the light clock in motion's world is
+   declared (the owner's 09:00 page). THE FORM OF THE EXCESS: five - 1 is the lattice's own term TENDING TO (a /
+   lambda)^2 beta^2, not written as "1 + O(...)": the script prints the
+   local exponents, the excess falling as lambda^-2.6 between 12 and 24
+   Links and lambda^-2.1 between 24 and 48 at k = 3, lambda^-2.00 above
+   96 Links at every k, and as beta^3.4 between k = 3 and 4, beta^2.1
+   between k = 12 and 16; at k = 16, lambda_0 = 192 the excess is 18 (a /
+   lambda_0)^2 beta^2. In nature's regime (a / lambda below 10^-20, beta
+   below 10^-3) the term is of the order 10^-40, invisible to
+   Michelson-Morley and Kennedy-Thorndike, so the light-held pair matches
+   the null in form. The across arm is 1 in the continuum; its lattice
+   term is the anisotropy's order and is not computed here. What stays
+   open (Reviewer 3): the settling of the pair at the pattern's nodes
+   under the coupling with the push of light at the blocks' outer Ports
+   (ALGEBRA.md 8.11), a COMPUTATION on the coupled map with the push,
+   then a world. So the paper's row (d) in motion carries the rigid pair's
+   1.222 as the law-as-declared number and the light-held pair's 1.0136
+   at the declared world, tending to (a / lambda)^2 beta^2, as the form
+   five reaches, with the settling named as the open step.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
@@ -791,23 +827,36 @@ nature.
    OF RECORD: each block's click interval from the other's birth stamp
    (DETECTOR, per direction) LESS THAT DIRECTION'S OWN RISE from the map
    (COMPUTATION, +4.1 and +8.1 at W = 64); the ratio of the two results
-   is the pin 0.5774. THE DETECTOR READINGS the band is on (Reviewer 3's
+   is the map's 0.5774 by construction. THE DETECTOR READINGS the band is on (Reviewer 3's
    token, 01:15Z): the chasing click 250 +- 2 and the meeting click 74 +-
    2 at W = 64, as the rest world's 109 +- 2; one interval on the meeting
    side is 0.005 on the ratio, two reach the band; a reading of 0.5774 is
    the engine's clicks matching the map, not a corrected number. Read
-   from the clicks alone the ratio is 0.5432,
-   and with the rest rise subtracted from both 0.5608: neither is the
-   reader. THE BAND +- 0.01: one interval of the click's grain on either
+   from the clicks alone the ratio is 0.5432 (176 / 324: the map's own
+   prediction of the raw ratio the engine reads, its grain about 0.006
+   per interval on a side), and with the rest rise subtracted from both
+   0.5608: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
    side moves the ratio by at most 0.0062; the control world's click
    109 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
-   0.975 +- 0.021 (Michelson, Gale and Pearson 1925, TO VERIFY) matched
-   in form. PINS_R2.md's 55 / (32 k) is the old engine's number at its
-   c, HISTORY.
+   0.975 +- 0.021 (derived from the source's fringe shift 0.230 +- 0.005
+   against its computed 0.236, SOURCES_VERIFIED.md rows R2; Michelson,
+   Gale and Pearson 1925) matched in the Sagnac FORM, the ratio linear in
+   v / c, not in the number. THE KIND (Reviewer 3's word, 02:42Z through
+   the Boss, agreeing with the issue triage reader's identity): the
+   corrected ratio is the map's transit by construction, so THE PINS ARE
+   THE THREE CLICKS, 109 at rest and 250 and 74 at k = 3, at W = 64, each
+   +- 2, DERIVED_BLIND in their inputs (the two blocks' push, the chain's
+   light, the coupling; no target); the run is the engine against the
+   map on those three DETECTOR readings; the ratio 0.5774 is a
+   COMPUTATION of the map's kinematics printed beside them, and k = 4 (v
+   / c = 0.4330) is the falsifier of the form. No number moves; the
+   change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
+   (32 k) is the old engine's number at its c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
    (the click interval per direction from the birth stamp) and the
    blocks' own clicks (both read one period, the control); COMPUTATION
-   the rise per direction from the map, subtracted, and the pin;
+   the rise per direction from the map, subtracted, and the map's ratio
+   0.5774 beside the three clicks, the pins;
    CONVERSION the ratio of the two corrected intervals; GAMEBOARD the
    light amplitude at the faces.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
