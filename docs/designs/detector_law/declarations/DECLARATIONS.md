@@ -498,14 +498,15 @@ omega_b) of its own well, printed by the pins script before the run.
    the same world in the closed form), light the kind [1, 1] with
    `phase_per_link` [1, 1] for the loader (the kind's rows carry no
    phase label, ALGEBRA.md 1.7); no face detector: A's own receiving set
-   at W = 64 (its FACE CELL toward the mirror, x = 611, alone: item 9)
+   at W = 64 (the free Node adjacent to its face toward the mirror, x =
+   612, alone, taking at its click: item 9)
    is the receiver; the MIRROR B is the chain's
    CLOSED face at x = 672, a mirror (the map (e) reflects at a zero face,
    so the pin 218 +- 2 does not move; the first draft's "open face" would
    absorb A's record there and read no return), sixty Links from A's face
    at x = 612 (no block, no (M) block needed). THE RECEIVER IS A ITSELF, under the cycle sentence
-   (DESIGN.md section 5, the owner's 10:12Z): A's face cell toward the
-   mirror (x = 611, alone: item 9) is the
+   (DESIGN.md section 5, the owner's 10:12Z): A's own set at the free Node
+   adjacent to its face toward the mirror (x = 612, alone: item 9) is the
    detector set of its own emitted records; A's Ports take nothing of a
    record of its own during that record's train and for N_s intervals
    after, so its own emission is excluded, and the first rung of that
@@ -524,8 +525,8 @@ omega_b) of its own well, printed by the pins script before the run.
    record has one click, at the first rung of its chosen cell's pointer;
    a face detector passed by the outgoing record at emission would click
    the emission, never the return).
-2. The declared integers: the pairs, s = 12, G, g, W = 64 on A's face
-   cell (x = 611), L = 60 face to face, N_s = 70, the hold 2000.
+2. The declared integers: the pairs, s = 12, G, g, W = 64 on A's set
+   (x = 612), L = 60 face to face, N_s = 70, the hold 2000.
 3. The verbs: the massive rule with the coupling; the source term (a
    birth at the start of each cycle of A's own clock, one record per
    cycle); the zero face; the pointer and the click at W under the cycle
@@ -671,11 +672,35 @@ omega_b) of its own well, printed by the pins script before the run.
    intervals from the grace's end to the return the residual's pointer
    is below one percent of the return's own passage, far under the rung
    (COMPUTATION from his numbers). DECLARED: the receiving set bound to
-   A is its face cell toward the mirror, x = 611, alone, W = 64,
-   `own_grace` 70 unchanged (the grace 140); the map (e) already prints
-   the click at the face cell alone, 218 at W = 64 (215, 213, 211 at 256,
-   1024, 4096), so THE PIN 218 +- 2 STANDS. A longer own_grace is not
-   taken: the bulk residual decays slowly and the return is at 208. The
+   A is the free Node adjacent to A's face toward the mirror, x = 612,
+   alone (the map (e)'s face Node: `one_record` reads the offer at
+   receiver_lo + s = 612, outside the block, so the coupling and the take
+   never act on one Node), W = 64, `own_grace` 70 unchanged (the grace
+   140); the map (e) prints the click at that Node, 218 at W = 64 (215,
+   213, 211 at 256, 1024, 4096), so THE PIN 218 +- 2 STANDS. A longer
+   own_grace is not taken: the bulk residual decays slowly and the return
+   is at 208. THE CLICK IS THE SET'S TAKE (Reviewer 3's contract point on
+   the builder's 1bfe5627, 03:37Z through the Boss; DECLARED 03:50Z): a
+   set that reads the light at a block's cells and changes nothing (the
+   build's `_book_set` moving the pointer and not `absorbed`) is a
+   GAMEBOARD reading, not a click; a click is the law's action on the
+   state (POSTULATES.md section 10), the record ending at the detector,
+   its content entering the detector's own record. So the receiving set
+   bound to A is a detector set in the full sense of DESIGN.md section
+   5: at its first rung it TAKES the returning record (the record ends
+   there, its content entering the set's own record; `absorbed` moves at
+   the set's click), one click per record, the click stamped with the
+   set's count and the record's birth. The block's own response through
+   the coupling (`_book_response`, the block's `wheel` on its own record)
+   is NOT this row's reader: it is A's own clock, the control, and the
+   return's drive through g G = 2 x 10^-5 is of order 10^-6 of A's own
+   motion at the seed, unreadable at any rung of A's own norm (M1-4's
+   reason for the set on the light record). The same for R2's sets at
+   the blocks' cells: the take at the first rung of the other's record is
+   the click, the block's wheel its own clock beside. Whether the
+   residual falls below the rung before the return is the preliminary
+   run's reading (EXPLORATORY, the owner's rule of 03:29Z), not declared
+   here. The
    same reading applies to R2's blocks, which need not receive their
    own records: there the fix is own_grace = the hold (section 13 item
    1), the sets at the blocks' cells and the pins unchanged; a receiver
@@ -831,10 +856,12 @@ nature.
    bulk cells, a tenth of the peak, would trip the rung at the grace's
    end and END that record everywhere, so the other block would never
    receive it); the OTHER block's record clicks at the first rung of
-   its pointer there. The set stays the block's twelve cells, not the
-   face cell: at the face cell alone the map (f) reads 110, 252 and 92
-   at W = 64 (the meeting click's rise +26 at one cell), so the cells'
-   set and its pins stand. No separate face detectors (Reviewer 3's line
+   its pointer there. The set stays the block's twelve cells, not a
+   single Node: at the free Node adjacent to the block's face toward the
+   emitter the map (f) reads 108, 248 and 91 at W = 64 (the meeting
+   click's rise +25 at one Node), so the cells' set and its pins stand;
+   the set TAKES the other's record at its first rung (the click of the
+   law, section 10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
 2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 64, each
    block's key `own_grace` 3000 (the hold; item 1); the momentum [Q S M,
@@ -1195,9 +1222,9 @@ waves).**
   03:35Z on his reading (a), section 10 item 9): a DETECTOR SET at the
   receiving body's cells, corrected per row on the builder's reading
   (a): the light clock's A receives its OWN record's return, so its set
-  is its FACE CELL toward the mirror alone, x = 611 (the bulk cells hold
-  the record's residual, which would trip the rung at the grace's end;
-  section 10 item 9); R2's blocks receive only the OTHER's records, so
+  is the free Node adjacent to its face toward the mirror, x = 612, alone,
+  taking at its click (the bulk cells hold the record's residual, which
+  would trip the rung at the grace's end; section 10 item 9); R2's blocks receive only the OTHER's records, so
   their sets stay their twelve cells with own_grace = the hold (section
   13 item 1); for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
   light record's offer at those Nodes (DESIGN.md section 5 item 4; the

@@ -217,7 +217,7 @@ def one_record_moving(
     of massive_moving_index.py's adjoint_r3); the emitter seeded in its rest mode and ramped
     `ramp` intervals before its train (the record's birth at t = ramp). Returns the mode's
     frequency, the birth, the norm, the per-interval offer at the receiver's CURRENT cells and
-    the offer at the receiver's face cell toward the emitter alone (printed beside: the light
+    the offer at the free Node adjacent to the receiver's face toward the emitter (as (e); printed beside: the light
     clock's receiving set is A's face cell, DECLARATIONS.md section 10 item 9; R2's sets stay the
     blocks' cells with own_grace the hold, section 13 item 1), so that the first rung from the
     birth is the click of that direction."""
@@ -262,7 +262,9 @@ def one_record_moving(
             norm += float(np.sum(source**2))
         motion = l_next - l_now
         offer[t] = float(np.sum(motion[cells(lo_r)] ** 2))
-        face = lo_r + s - 1 if lo_r < lo_e else lo_r
+        face = (
+            lo_r + s if lo_r < lo_e else lo_r - 1
+        )  # the free Node adjacent to the receiver's face, as (e)
         offer_face[t] = float(motion[face] ** 2)
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
@@ -487,7 +489,7 @@ if __name__ == "__main__":
         r2_face[name] = clicks_face
         print(
             f"    {name}: the clicks by W {clicks}; the front's transit {transit:.1f}; the rise at W = 64 {rises[name]:+.1f}"
-            f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g}); at the receiver's face cell toward the emitter alone,"
+            f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g}); at the free Node adjacent to the receiver's face toward the emitter,"
             f" printed beside and NOT R2's declared set (section 13 item 1: the set stays the block's cells, its own"
             f" records excluded by own_grace = the hold): {clicks_face}"
         )
