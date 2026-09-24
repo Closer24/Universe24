@@ -805,17 +805,24 @@ nothing is chosen by the Generator. The engine's keys are BUILD.md's and
 Links, [77, 50] for 23.99 Links; the first draft's [51, 25] = 18.1 Links
 withdrawn).**
 
-- L-1, THE WALL of every light row is ABSORBING, not a mirror: a line of
-  blocks of light's kind, side 1 per Node of the line, `absorbing` true,
-  the pair [21, 22] as the Generator wrote (immaterial under the take),
-  with the openings left free. Reason: the engine has no mirror form on
-  main, and a [21, 22] block of side 1 is no mirror for 12-Link light
-  (cos omega_0 = 21 / 22 puts the gap at 0.3028 against light's omega
-  0.3023, the decay 0.014 per Link: it transmits); DESIGN.md 6.0 admits
-  either a reflecting or a lossy wall, and an absorbing wall has no
-  second pass. If one Node's take leaves a remainder, the builder's line
-  gives the wall's depth (2 or 3 Nodes); the pins (the two-source sum,
-  symmetric at the openings) do not move.
+- L-1, THE WALL of every light row (the fourth commit, 02:20Z, on the
+  builder's finding that the engine has no path for a block of light's
+  kind and that a detector set clicks at the lamps' wheel): a MIRROR LINE
+  of blocks of light's kind with the pair [1, 2] (the gap 60 degrees
+  against light's omega 0.3023, the decay 1.25 per Link), TWO Nodes deep
+  (0.7 percent of the amplitude transmitted), the openings left free;
+  the reflected train is absorbed at the layer's OPEN FACE behind the
+  lamp (an open face is light's sponge), so there is no second pass and
+  no take line is needed (the first draft's absorbing lines at x = 0 and
+  127 are dropped). Not a detector set: a set takes the record's click
+  at the lamps' wheel, and a wall that receives most of the wave would
+  click before the screen for almost every record. The [21, 22] pair of
+  the first draft is no mirror (the gap 0.3028, the decay 0.014 per
+  Link: it transmits) and is withdrawn. DESIGN.md 6.0 computed the pins
+  with a reflecting wall, so the two-source sum stands. THIS NEEDS the
+  builder's path for a block of light's kind in the blocks' loop (his
+  minutes); if it does not land tonight, 2a runs as EXPLORATORY only and
+  its pin waits.
 - L-2, THE LAMP is one body at one Node behind the wall on the axis of
   symmetry (the engine's lamp is a body at a Node; DESIGN.md 6.0's "line
   of Nodes driven" is the openings seen from the far side): its wave
@@ -830,9 +837,9 @@ withdrawn).**
   intervals at 12 Links; if the key counts intervals, 665); the wall at
   x = 40 (L-1) with two openings of width 1 at y = 48 and y = 80 (d =
   32); the screen at x = 104 (L = 64), one detector set per Node over y
-  in [4, 124] (section 12's form); two absorbing lines at x = 0 and x =
-  127 (L-1's blocks, no openings) so that every record completes;
-  `ticks` 17300 (the stock's 16384 intervals, the last train, the
+  in [4, 124] (section 12's form); the layer's open faces at x = 0 and
+  x = 127 are the sponges (no absorbing lines, L-1), so that every record
+  completes; `ticks` 17300 (the stock's 16384 intervals, the last train, the
   transit 146). THE PIN at this train: the visibility 0.959 at 12 Links
   (DESIGN.md 6.2, the rule's own COMPUTATION at 32 periods; 0.99 is the
   128-period train's, a second world beyond tonight's HOST), the band
@@ -899,7 +906,14 @@ withdrawn).**
   1a to 1d and 9 (the builder's (c)): the table's action by the linear
   form of section 14 item 1 on every Node of the bar's line (item 4), the
   rotation U_s on the record's two columns and the click's weights of
-  ALGEBRA.md 4.12 unchanged; no reading of a phase.
+  ALGEBRA.md 4.12 unchanged; no reading of a phase. NEEDED TONIGHT (the
+  builder's item 4, 02:15Z): under the rule a light record is the pair of
+  levels (DESIGN.md section 2) and carries no phase label, so the tables
+  as built (the amplitude law's, on a label) cannot act on it; the test
+  of the component: a record of declared A and phi at the bar reads A
+  cos(phi + t) for t in {0, N / 8, N / 4, 3 N / 8} within the
+  coefficients' rounding (1 / 256 and by_clock's 0.6 percent); rows 1a to
+  1d and 9 enter the GO on it.
 - T-2, ROW 2b (`mach_zehnder.json`): NOT IN THE GO tonight. The splitter
   waits on the builder's component (section 14 items 2 to 4), the mirror
   form has no key on main, and section 3's geometry (the positions (12,
@@ -974,10 +988,23 @@ waves).**
   12.000; 3.4031 steps per interval) and [11, 4] for omega = 0.26998
   (lambda_dB = 16.00); the lamp's `wheel` [1, 64] (W = 64, the screen's
   rung); `amount` 2048, `rate` [1, 8], `train` 8 periods (150 intervals);
-  the wall at x = 40 and the take lines at x = 0 and 127 are ABSORBING
-  blocks of the matter kind, side 1 per Node, `absorbing` true, the
-  openings free (L-1's form on the matter row; if the take is light's
-  only, the builder's one generic line); `ticks` 16700. `matter_front_12`:
+  the wall at x = 40 is a BARRIER LINE of blocks of the matter kind with
+  the pair [1, 2] (the gap 60 degrees above the lamp's omega 0.334, the
+  decay 1.25 per Link), two Nodes deep, the openings free (the fourth
+  commit: the matter kind has no take, so no absorbing line exists for
+  it; the first draft's take lines at x = 0 and 127 are dropped, the
+  zero faces are the matter kind's mirrors); the loader must admit a
+  RAISED pair on a block (a barrier, num' / den' below the kind's), else
+  the builder's one line. THE SECOND PASS, real in this form: the wall
+  reflects the train back to the zero face at x = 0, which returns it
+  through the openings 80 Links later, coherent at the same k, so the
+  maxima and the centroid do not move and the first click at the centre
+  is the direct front's. THE LAMP'S OWN BODY IS NOT A RECEIVER of its own
+  records at any time (the cycle sentence with N_s the whole hold, no
+  rung on its own family at its Node: the builder's test aa); the
+  screen's sets are the only receivers, and the part of a matter train
+  the screen's Ports reflect returns off the zero face to the screen
+  coherently, the centroid unmoved. `ticks` 16700. `matter_front_12`:
   the chain 200 x 1 x 1, the lamp at [20, 0, 0], `amount` 1, the detector
   set of one Node at [104, 0, 0], `ticks` 600, no take (the chain's zero
   face returns the front after 380 intervals, past the click at 169). The
@@ -1002,6 +1029,34 @@ waves).**
   slow drift (0.2 percent over the hold) is read alike; main's 3500 is
   superseded by this word.
 
+- M1-9, THE RULE'S BOUND on the GO's boards (the mathematician's
+  chapter, `docs/ALGEBRA_MASSIVE_RECORD.md` at 4d2f7289, on the Boss's
+  question of 01:55Z): the GO's massive rule is the PAIR form, 3 den
+  a_next + r' = num S_6 - 3 den a_before + r, the leapfrog of A' = 2 I -
+  r S_6 / 3 with r = num / den <= 1 at every Node (a well's r' <= 1 as
+  well). spec(S_6 / 3) lies in [-2, 2] on every board (in [-2 / 3, 2] on
+  a layer, in [2 / 3, 2] on a chain), so spec(A') lies in [2 - 2 r, 2 +
+  2 r], inside [0, 4] for every r <= 1: bounded on every board, the
+  conserved form I of ALGEBRA.md 8.2 its energy; on the GO's boards (all
+  chains and layers) the top margin 2 - 2 r / 3 >= 4 / 3 is strict, so
+  the coupling's g G = 2 x 10^-5 cannot reach it; at r = 1 (light) the
+  checkerboard is marginal only on a full 3-D board, as light's rule
+  always was. The additive self term of record 1386 (3 q a_next = q S_6
+  - 3 q a_before - 3 p a_now, unstable on a 3-D board for every p) is a
+  different rule, not the law's; its instability does not touch the GO.
+  The matter lamp's omega 0.334 lies inside the band [0.149, pi - 0.149].
+- M1-10, THE AMPLITUDE BOUND, declared per world (the builder's key, on
+  MUST 3's line at load and asserted on the rows at run time): A = 2^32 =
+  4294967296 in every massive world (4b's two, the light clock, R2's two,
+  the matter waves' three, the deep well's two, the atom, e3). The
+  bound's line at A = 2^32 and g_d = 1000: 3.1 x 10^16 on [800, 800] and
+  1.2 x 10^16 on [314, 315], far below 2^63. The rows' levels: the
+  massive seed 50 x 2^20 = 2^25.6; the light's source G delta m about
+  2^16.5 per interval, its level below 2^24 over a train; the receding
+  index's gain 1.04 per window compounds over at most 20 windows of the
+  longest hold to a factor below 2.5: every row stays below 2^27, a
+  margin of 2^5 to A.
+
 **M2, the deep well.** `deep_well_k3_40.json` and `deep_well_rest_40.json`
 as the Generator wrote them: the well [800, 800] of side 40 at the corner
 [44, 44, 0] on the 128^2 layer (the well [44, 84) centred on the layer),
@@ -1011,5 +1066,7 @@ keeps the two readers' windows equal): CONFIRMED.
 
 **Not in the GO tonight, in one list:** 2b (T-2), 2c (L-4), 10 (a) and
 (b) (L-5); the light clock and 4b until the builder's key (i) lands and
-R2 until (i) and (ii) land (M1-4); every other row of RUN_LIST.md has its
-lines above or in its section.
+R2 until (i) and (ii) land (M1-4); 2a EXPLORATORY until the light-kind
+block's path lands (L-1); 1a to 1d and 9 until the rotation on the pair
+lands (T-1); every other row of RUN_LIST.md has its lines above or in its
+section.
