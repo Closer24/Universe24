@@ -7024,3 +7024,19 @@ desk-rejection checklist (scope, overclaiming, declarations,
 undisclosed tools, duplicate submission, data availability, references,
 language, length, authorship) is in SUBMISSION.md with the paper's
 standing on each. 47 pages.
+
+## Applied (2026-09-24, the Boss's label lines and the night's merges): commit 41 on paper-48
+
+The label lines the status rules give (the Boss's 02:45Z message, from
+the physicist verifier's page): every reading of the engine before
+2026-09-23 that the text still quoted as DETECTOR carries "history";
+the bending's pixel is the engine of 2026-09-22's, not predicted under
+the law as it stands; row 1c is a FAIL by derivation everywhere, with
+Reviewer 3's sentence on the order channel's width and the hidden
+variable; row 2a shows NOT COMPARED; row 6 NOT COMPARED; the world
+files' nS/d an input; row A2's number verified. The night's merges
+cited: the order channel's derivation (PR 1090), the GO's declarations
+(PR 1091), the sources verified (PR 1072), the mathematical
+verification page (PR 1095). The owner's two words of 03:05Z: the venue
+Foundations of Physics (Springer, link.springer.com/journal/10701);
+the title page's three fields correct. 48 pages, the owner's number.

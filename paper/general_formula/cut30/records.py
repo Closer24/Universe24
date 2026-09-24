@@ -77,7 +77,7 @@ FAIL_CUTS = (
     (
         "(viii) The atom.",
         "\\paragraph{",
-        "(viii) The atom: NOT YET and the law's own FAIL: the ladder $a_j/a_i = (j/i)^2$ with $E_j$ proportional to $1/j^2$ and Balmer's $27/20$ is conjectured from the algebra in the shell mean and not read, no lattice able to hold the atom's scale being run; the hydrogen loop at $r = 12$ escapes under the drive as built at $3407$ intervals (DETECTOR, history), and under the centred step, a hypothesis under its own name, it stays and tightens with no line read (row 6); the full statement is history \\cite{records}. The families of the register, each with its declared integers, its algebraic object and the click that reads it, are the families table \\cite{records}.\n\n",
+        "(viii) The atom: NOT COMPARED and the law's own FAIL: the ladder $a_j/a_i = (j/i)^2$ with $E_j$ proportional to $1/j^2$ and Balmer's $27/20$ is conjectured from the algebra in the shell mean and not read, no lattice able to hold the atom's scale being run; the hydrogen loop at $r = 12$ escapes under the drive as built at $3407$ intervals (DETECTOR, history), and under the centred step, a hypothesis under its own name, it stays and tightens with no line read (row 6); the full statement is history \\cite{records}. The families of the register, each with its declared integers, its algebraic object and the click that reads it, are the families table \\cite{records}.\n\n",
     ),
 )
 
