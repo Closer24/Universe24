@@ -695,7 +695,12 @@ moving mass", "the muon's form", "Sagnac", "the moving lamp's redshift", "the
 receiver by name". A code (a row number such as 4a or R2, a line label such
 as L-3, a family letter such as M1) may follow the name in parentheses as an
 index into a table, never stand alone in a message, a heading, a report or a
-commit; a new label is not coined. The features' rule of 14:00Z is the same
+commit; a new label is not coined. In any message the owner may read,
+including an agent's replies in its own session, no code appears at all,
+not even in parentheses: say what the thing is ("the declaration of the
+muon's ramp", not "M1-8"; "the list of the world lines in the
+declarations", not "section 15") (the owner, 2026-09-24, record 1828,
+"still using unclear names"). The features' rule of 14:00Z is the same
 rule.
 
 Our names, never the laboratory's, for a block (the owner, 2026-09-24,
