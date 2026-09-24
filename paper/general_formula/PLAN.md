@@ -6990,3 +6990,19 @@ light detectors, the light clock's draft, the kinds of rows 5a, 7 and
 v-m, the block's table, hbar, the unsourced numbers) went to the Boss
 as proposals for the physicist and Reviewer 3; nothing changed on their
 say alone.
+
+## Applied (2026-09-24, the Boss's messages of 02:15Z to 02:31Z): commit 39 on paper-48
+
+P9's sentence from the physicist printed where P9 is named; the one
+statement beside P6 (issue 1080) and the order channel as a FAIL by
+derivation (issue 1081; the Boss's word of 02:45Z: the kind of a
+computed departure is FAIL BY DERIVATION, the algebra's answer before
+any run, never "after a detector") in the table, the abstract and the
+one-page paragraph; the referee's physics lines (3) and (4) folded where
+the paper makes the claims; row 5a a parameter bound with no pinned
+entry (issue 1083); the class column filled from the closure page at PR
+1088's merge, R2 blank on the Boss's hold; row 2a's calibration withdrawn
+and the blind train named; the block's step a declaration; the light
+clock in motion with its numbers at PR 1087's merge. The owner asked
+whether the paper has any FAIL: none after a detector; the word marks
+what the algebra says before a run, with its falsifier declared. 47 pages.
