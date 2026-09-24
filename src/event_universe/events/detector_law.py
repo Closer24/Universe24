@@ -156,7 +156,6 @@ class LiveRecord:
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
-<<<<<<< HEAD
     # The table bodies' shares (DECLARATIONS.md section 14 item 6): per body
     # (its index in `table_bodies`) the entry cell's pointer as the last
     # split left it and the split's remainder, so that each interval's
@@ -166,6 +165,14 @@ class LiveRecord:
     # that has completed waits, its rows still, for the other arms; the pair
     # gathers once when every arm has completed.
     arm_done: bool = False
+
+    # The record's LADDER BY NAME (the lamp's `receiver`, SIZING.md; the
+    # click line and the receiver by name, DECLARATIONS.md section 13 item
+    # 7): the cells among which u chooses, None for every cell as built. A
+    # cell outside the ladder is a SINK for this record: it takes and books
+    # as every cell does (the pointer, `absorbed`, the rung), but the click
+    # never chooses it and its share is not in the ladder's sum.
+    ladder: list[int] | None = None
 
 
 @dataclass
@@ -200,15 +207,6 @@ class TableBody:
     plus: int
     minus: int
     norm: int
-=======
-    # The record's LADDER BY NAME (the lamp's `receiver`, SIZING.md; the
-    # click line and the receiver by name, DECLARATIONS.md section 13 item
-    # 7): the cells among which u chooses, None for every cell as built. A
-    # cell outside the ladder is a SINK for this record: it takes and books
-    # as every cell does (the pointer, `absorbed`, the rung), but the click
-    # never chooses it and its share is not in the ladder's sum.
-    ladder: list[int] | None = None
->>>>>>> engine-fix-3
 
 
 @dataclass
@@ -1383,7 +1381,7 @@ class DetectorLawSimulation:
                     if lamp.receiver is not None:
                         # the ladder by name: the cells of the named sets
                         live.ladder = [
-                            cell for cell, name in enumerate(self.cell_names) if name in lamp.receiver
+                            cell for cell, name in enumerate(self.cell_set) if name in lamp.receiver
                         ]
                     driven = np.zeros(self.shape, dtype=bool)
                     for node in self.lamp_nodes[number]:
@@ -2006,7 +2004,7 @@ class DetectorLawSimulation:
             # HOST the pointers' sum at the sinks (the cells off the ladder,
             # taken and booked, never chosen); None and 0 for every cell
             "ladder": (
-                sorted({self.cell_names[cell] for cell in live.ladder})
+                sorted({self.cell_set[cell] for cell in live.ladder})
                 if live.ladder is not None
                 else None
             ),

@@ -1269,7 +1269,6 @@ on the light clock's chain.
   name), vector (the receiver form's verbs, no root, no float), local
   (the emitter's own Nodes, its own record).
 
-<<<<<<< HEAD
 ## 19. The joint gather: the polariser's two cells and the pair's one ladder (DECLARATIONS.md section 1 item 3, section 14 item 6, section 15 T-1; the model owner's word of 2026-09-24, about 09:48Z, "go with the recommendations", the Boss's order of 10:00Z; `detector-law-joint-gather` off `detector-law-build-3` at 1529d20)
 
 The finding it answers (the Preliminary Runner, records 1770 to 1779): on
@@ -1304,7 +1303,7 @@ board and the world is refused at construction naming it; the chain of 8
 (or the polariser at x = 5) admits it. Their `read` counter at x = 4 stays
 Reviewer 3's named defect of 08:52Z. The Bell four load unchanged (alice at
 x = 7 with the exit x = 6 on the -x arm, bob at x = 17 with the exit x = 18).
-=======
+
 ## 20. The lamp record's ladder by name and the cell over the ladder's own sum (SIZING.md, 2026-09-24; DECLARATIONS.md section 13 item 7, the click line and the receiver by name; the model owner's word of 12:57Z; `engine-fix-3`)
 
 The finding it answers (the Preliminary Runner's two_slits run of 10:45Z):
@@ -1349,4 +1348,3 @@ would have found no cell.
   every tick; without the key the same world clicks at face:-x (the
   control); the string form names one set; the four refusals.
 
->>>>>>> engine-fix-3
