@@ -136,6 +136,10 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
         "__init__",
     ): "at load: E' = integer_root(W) once under `covariant_readings`, the declared rounding of DERIVATIONS_BEAM 17.6 M3; comparisons from then on",
     (
+        "events/detector_law.py",
+        "__init__",
+    ): "a predicate at load under `detector_law`: a splitter's row norm is a perfect square (the root squared back and compared, the row refused otherwise), the root R the isometry's exact divisor of the outputs' levels (build 2, component 3); no rounded number enters the state",
+    (
         "events/amplitude.py",
         "common_denominator",
     ): "a predicate at a join of two multiplicities: is the ratio a perfect square (the root squared back and compared); no rounded number enters a reading",

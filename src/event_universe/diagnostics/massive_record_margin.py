@@ -344,6 +344,11 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             # mode has no tail in the medium and the rule has no extent to
             # compare; the control world of MASSIVE_RECORD.md section 4.
             continue
+        kind = world.families[entry.family].pair
+        if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
+            # A barrier (a raised pair, the matter wall of DECLARATIONS.md
+            # section 15 M1-6) binds nothing: no mode, no margin.
+            continue
         reading = block_margin(world, number)
         found.append(reading)
         if not reading.bound:

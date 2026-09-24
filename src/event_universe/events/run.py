@@ -286,6 +286,9 @@ def execute_nature_beam_run(
         "tick": simulation.tick,
         "elapsed_seconds": time.perf_counter() - started,
         "conserved_at_every_completed_tick": all(bool(entry["balanced"]) for entry in audit),
+        # issue #1086: what `balanced` covers (content alone; the momentum
+        # books carry the blocks' held momentum and no transit or escape)
+        "balanced_scope": "content alone (the momentum books are not accounted)",
         "audit": audit,
         "measured_content": measured_content,
         "transit_content": transit_content,

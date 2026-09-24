@@ -10,6 +10,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from event_universe.core.integer import keyed_permutation
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 
@@ -122,3 +123,152 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
             assert 104 <= flight <= 132, flight
     books = simulation.books()["families"]["light"]
     assert books["measured"]["measured"] + books["transit"]["escaped"] == len(gathers)
+
+
+def pair_world(residue_order: str | None, residue_seed: int | None, births: int) -> dict:
+    """A pair lamp on the chain of 80 (x open, the sponge faces): the lamp at x = 40 with two
+    arms on +x and -x, the wheel [1, 64], one birth per interval, `births` held, a train of 2
+    periods; a receiver body at x = 60 read as the set `right` and one at x = 20 as `left`;
+    the order channel's keys as given (None: the key absent)."""
+    document = chain_world()
+    document["ticks"] = births + 400
+    lamp: dict = {
+        "rate": [1, 1],
+        "wheel": [1, 64],
+        "directions": [[1, 0, 0], [-1, 0, 0]],
+        "train": 2,
+        "arms": 2,
+    }
+    if residue_order is not None:
+        lamp["residue_order"] = residue_order
+    if residue_seed is not None:
+        lamp["residue_seed"] = residue_seed
+    document["measured"] = [
+        {
+            "position": [40, 0, 0],
+            "family": "light",
+            "amount": births,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0], [-1, 0, 0]],
+            "lamp": lamp,
+        },
+        {
+            "position": [60, 0, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[-1, 0, 0]],
+        },
+        {
+            "position": [20, 0, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0]],
+        },
+    ]
+    document["detectors"] = [
+        {"name": "right", "positions": [[60, 0, 0]], "threshold": 1},
+        {"name": "left", "positions": [[20, 0, 0]], "threshold": 1},
+    ]
+    return document
+
+
+def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_residues_order():
+    """Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8, the model
+    owner's declaration; Reviewer 3's line of 04:38Z: no default; the Boss's 04:55Z and
+    05:30Z): `keyed_permutation` is the declaration's Fisher-Yates permutation driven by the
+    SplitMix64 mixing hash, a bijection on Z_W at W = 16, 256 and 2048 for several keys, the
+    same key the same order, two keys two orders, no key the counter's order, a count below 1
+    refused; a pair lamp (two arms) under the local detector law WITHOUT `residue_order` is
+    refused naming the key; under "ordinal" the births' residues are today's, u = (ordinal - 1)
+    mod 64 over 64 births; under "seed" the 64 births take every residue of Z_64 once, in the
+    permutation's order (the engine's `birth_orders`), two seeds two orders, the same seed the
+    same order; the four cells' counts of the world's clicks (the two receivers, the two sponge
+    faces) over exactly W = 64 births are the same under "ordinal" and "seed" (the derivation's
+    claim; a GAMEBOARD reading, no pin); the gather line keeps `u` (HOST); the refusals: the
+    stride r = 2 under "seed", the seed absent under "seed", the seed present under "ordinal",
+    a value that is neither, either key on a lamp without arms and either key on a pair lamp
+    outside the local detector law."""
+    for count in (16, 256, 2048):
+        for key in (0, 1, 50 << 20, (1 << 64) - 1):
+            order = keyed_permutation(count, key)
+            assert sorted(order) == list(range(count))
+            assert order == keyed_permutation(count, key)
+        assert keyed_permutation(count, 1) != keyed_permutation(count, 2)
+        assert keyed_permutation(count, 7) != list(range(count))
+    with pytest.raises(ValueError, match="positive count"):
+        keyed_permutation(0, 1)
+
+    def run(document: dict) -> tuple[list[dict], list[dict], DetectorLawSimulation]:
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        for _ in range(document["ticks"]):
+            simulation.step()
+        births = [line for line in lines if line["event"] == "birth"]
+        gathers = [line for line in lines if line["event"] == "gather"]
+        return births, gathers, simulation
+
+    # no default: the key absent on a pair lamp is refused
+    with pytest.raises(ValueError, match="residue_order is required on a pair lamp"):
+        parse_nature_beam_world(pair_world(None, None, 64))
+    ordinal_births, ordinal_gathers, ordinal = run(pair_world("ordinal", None, 64))
+    assert [line["u"] for line in ordinal_births] == list(range(64))
+    assert ordinal.birth_orders == {}
+    seed_births, seed_gathers, seeded = run(pair_world("seed", 50 << 20, 64))
+    residues = [line["u"] for line in seed_births]
+    assert sorted(residues) == list(range(64)) and residues != list(range(64))
+    assert residues == seeded.birth_orders[0] == keyed_permutation(64, 50 << 20)
+    other_births, _, _ = run(pair_world("seed", 7, 64))
+    assert [line["u"] for line in other_births] != residues
+    again_births, _, _ = run(pair_world("seed", 50 << 20, 64))
+    assert [line["u"] for line in again_births] == residues
+    # the counts do not move with the order: one record per arm per birth,
+    # each clicking once; the four cells' counts the same multiset
+    assert len(ordinal_gathers) == len(seed_gathers) == 128
+
+    def counts(gathers: list[dict]) -> dict[str, int]:
+        found: dict[str, int] = {}
+        for gather in gathers:
+            found[gather["chosen"][0][0]] = found.get(gather["chosen"][0][0], 0) + 1
+        return found
+
+    assert counts(ordinal_gathers) == counts(seed_gathers)
+    assert sum(counts(seed_gathers).values()) == 128 and len(counts(seed_gathers)) >= 2
+    assert all("u" in gather and "birth" in gather and "click" in gather for gather in seed_gathers)
+    assert sorted(gather["u"] for gather in seed_gathers) == sorted(list(range(64)) * 2)
+    # the refusals
+    for order, seed, message in (
+        ("seed", None, "residue_seed is required under residue_order"),
+        ("ordinal", 5, "residue_seed is refused under residue_order"),
+        ("counter", None, 'must be "ordinal"'),
+        ("seed", -1, "residue_seed"),
+        ("seed", 1 << 64, "residue_seed"),
+    ):
+        with pytest.raises(ValueError, match=message):
+            parse_nature_beam_world(pair_world(order, seed, 64))
+    stride = pair_world("seed", 3, 64)
+    stride["measured"][0]["lamp"]["wheel"] = [2, 64]
+    with pytest.raises(ValueError, match="the stride r must be 1"):
+        parse_nature_beam_world(stride)
+    for key, value in (("residue_order", "ordinal"), ("residue_seed", 3)):
+        single = chain_world()
+        single["measured"][0]["lamp"][key] = value
+        with pytest.raises(ValueError, match="not admitted on a lamp without arms"):
+            parse_nature_beam_world(single)
+    outside = pair_world("ordinal", None, 64)
+    outside["detector_law"] = False
+    outside["clock_stamp"] = False
+    for entry in outside["measured"]:
+        entry["lamp"] = entry.get("lamp") and {k: v for k, v in entry["lamp"].items() if k != "train"}
+        if not entry["lamp"]:
+            del entry["lamp"]
+    with pytest.raises(ValueError, match="outside the local detector law"):
+        parse_nature_beam_world(outside)

@@ -1,17 +1,17 @@
 {
  "law": "beam",
- "model_id": "beam-massive-record-cavity-24-v1",
+ "model_id": "beam-massive-record-deep-well-rest-40-v1",
  "shape": [
-  48,
-  48,
-  48
+  128,
+  128,
+  1
  ],
  "boundary": {
   "x": "periodic",
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 3000,
+ "ticks": 3500,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -46,9 +46,9 @@
  "measured": [
   {
    "position": [
-    12,
-    12,
-    12
+    44,
+    44,
+    0
    ],
    "family": "matter",
    "amount": 1,
@@ -59,12 +59,12 @@
     0
    ],
    "fixed": true,
-   "side": 24,
+   "side": 40,
    "pair": [
     800,
-    809
+    800
    ],
-   "cavity": true,
+   "seed": 1048576,
    "margin": "control"
   }
  ],

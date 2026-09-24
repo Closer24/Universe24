@@ -23,6 +23,7 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "amplitude_bound": 4294967296,
  "directions": [],
  "families": [
   {
@@ -48,7 +49,7 @@
  "measured": [
   {
    "position": [
-    300,
+    800,
     0,
     0
    ],
@@ -91,7 +92,7 @@
  "detectors": [],
  "probes": [
   [
-   2500,
+   2400,
    0,
    0
   ]
