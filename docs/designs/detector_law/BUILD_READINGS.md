@@ -208,3 +208,41 @@ head-on, positive from behind), the mode's content of order 2 x 10^11 in
 both directions; these are the GAMEBOARD numbers the design asked for and
 carry no pin. Wall time: seconds per world (the chain of 4000, 6000
 intervals: about 30 seconds).
+
+## e3, EXPLORATORY: the receding index on the long chain regenerated on DECLARATIONS.md section 11's geometry (the Boss's 23:40Z; one run, not a pinned run)
+
+The four worlds `index_moving_long_k3_away`, `index_moving_long_rest_k3_away`
+and the two references, regenerated on the declared geometry (the chain of
+4000, the source at 800, the probe at 2400, the block from x = 1500 stepping
+away at k = 3 from interval 3000, the window [3800, 5400]; light's faces open
+as declared, the reflection from x = 0 at 5543, after the window), each run
+once headless by the one line, read by `read_runs.py`'s `index_reading` over
+the window and its two halves. Every number below is GAMEBOARD (light's phase
+at the probe by projection on the window against the reference) beside the
+script's number of section 11 (COMPUTATION); EXPLORATORY, no pinned run.
+e2 (the light clock) did not run: its world is refused at load by MUST 3
+(BUILD.md section 12).
+
+| Reading | The engine (GAMEBOARD, EXPLORATORY) | The script's number on the same geometry (section 11) |
+| --- | --- | --- |
+| the rest block at omega' away (x = 2100), n | 1.2639 (the delay +0.1987 rad, the transmitted amplitude 0.981) | 1.2519 |
+| the moving block's lab phase delay over [3800, 5400] | +0.9590 rad | +1.0144 rad (the band +- 0.04; the engine's differs by 0.055) |
+| the covariant expectation (n(omega') - 1) omega' gamma_m s / c | +0.2434 rad (from the engine's own rest reading) | +0.2323 rad |
+| the ratio, the delay over the expectation | 3.94 | 4.37 |
+| the window's two halves | +0.4336, +1.5350 rad | +0.5539, +1.5234 rad |
+| the drift rate (the halves' difference over 800 intervals) | 1.38 x 10^-3 rad per interval | 1.2 x 10^-3 (the band +- 10 percent; the engine's is 15 percent above) |
+| the transmitted amplitude over the reference | 1.043 | 1.02 |
+| light's form over the window (the pump) | +2.4 x 10^9 per interval of 1.1 x 10^13 to 1.5 x 10^13 (2 x 10^-4 of itself); the mode k = 2 pi / 3 content 1.9 x 10^11 mean | the hop's parametric pump, the row's own signature |
+| the block at the window's end | the cells [2300, 2324), 76 Links before the probe; the block reaches the probe's Node at about 5700, after the window | the same geometry |
+
+Read beside the script: the second half of the window agrees with the
+script's to 0.012 rad, the first half reads 0.12 rad below it, so the
+window's mean delay reads 0.055 rad below the script's (beyond its +- 0.04
+band) and the drift 15 percent above (beyond its +- 10 percent band); the
+receding block's gain on light (1.04 of the reference) and the drift's sign
+are the script's. Where the first half differs: the engine's block re-forms
+its rows at every step (the record re-forming, MASSIVE_RECORD.md section 5)
+and its coupling is the drive's pair [9, 6] folded into the one division,
+while the script's same-Node scheme carries G g times gamma_m^2; the
+physicist reads the difference. A reading, not a verdict; the pinned run
+waits on the owner's word and the Boss's GO with these numbers beside.
