@@ -64,22 +64,23 @@ def o_b(k):
     return +1 if k in (0, 2) else -1
 
 
-for n in (64, 256, 2048):
-    t = table(n)
-    # A's sequence at a = 0: does it depend on b?  compare (0, N/8) vs (0, 3N/8)
-    flip_a0 = sum(o_a(x) != o_a(y) for x, y in zip(t[(0, 1)], t[(0, 3)], strict=True))
-    flip_a1 = sum(o_a(x) != o_a(y) for x, y in zip(t[(1, 1)], t[(1, 3)], strict=True))
-    # B's sequence at b = N/8: compare a = 0 vs a = N/4; at b = 3N/8 likewise
-    flip_b1 = sum(o_b(x) != o_b(y) for x, y in zip(t[(0, 1)], t[(1, 1)], strict=True))
-    flip_b3 = sum(o_b(x) != o_b(y) for x, y in zip(t[(0, 3)], t[(1, 3)], strict=True))
-    marg = {k: (sum(o_a(c) > 0 for c in v), sum(o_b(c) > 0 for c in v)) for k, v in t.items()}
-    corr = {k: Fr(sum(o_a(c) * o_b(c) for c in v), n) for k, v in t.items()}
-    s = corr[(0, 1)] - corr[(0, 3)] + corr[(1, 1)] + corr[(1, 3)]
-    print(
-        f"N = {n}: the marginals (+ counts of A, B) per settings pair {marg}; S = {s} = {float(s):.6f}"
-    )
-    print(
-        f"   THE ORDER CHANNEL: A's outcome flips with B's setting on {flip_a0} of {n} births at a = 0 and {flip_a1} at a = N/4;"
-        f" B's flips with A's setting on {flip_b1} of {n} at b = N/8 and {flip_b3} at b = 3N/8"
-        f" ({flip_a0 / n:.4f}, {flip_a1 / n:.4f}, {flip_b1 / n:.4f}, {flip_b3 / n:.4f} of the births)"
-    )
+if __name__ == "__main__":
+    for n in (64, 256, 2048):
+        t = table(n)
+        # A's sequence at a = 0: does it depend on b?  compare (0, N/8) vs (0, 3N/8)
+        flip_a0 = sum(o_a(x) != o_a(y) for x, y in zip(t[(0, 1)], t[(0, 3)], strict=True))
+        flip_a1 = sum(o_a(x) != o_a(y) for x, y in zip(t[(1, 1)], t[(1, 3)], strict=True))
+        # B's sequence at b = N/8: compare a = 0 vs a = N/4; at b = 3N/8 likewise
+        flip_b1 = sum(o_b(x) != o_b(y) for x, y in zip(t[(0, 1)], t[(1, 1)], strict=True))
+        flip_b3 = sum(o_b(x) != o_b(y) for x, y in zip(t[(0, 3)], t[(1, 3)], strict=True))
+        marg = {k: (sum(o_a(c) > 0 for c in v), sum(o_b(c) > 0 for c in v)) for k, v in t.items()}
+        corr = {k: Fr(sum(o_a(c) * o_b(c) for c in v), n) for k, v in t.items()}
+        s = corr[(0, 1)] - corr[(0, 3)] + corr[(1, 1)] + corr[(1, 3)]
+        print(
+            f"N = {n}: the marginals (+ counts of A, B) per settings pair {marg}; S = {s} = {float(s):.6f}"
+        )
+        print(
+            f"   THE ORDER CHANNEL: A's outcome flips with B's setting on {flip_a0} of {n} births at a = 0 and {flip_a1} at a = N/4;"
+            f" B's flips with A's setting on {flip_b1} of {n} at b = N/8 and {flip_b3} at b = 3N/8"
+            f" ({flip_a0 / n:.4f}, {flip_a1 / n:.4f}, {flip_b1 / n:.4f}, {flip_b3 / n:.4f} of the births)"
+        )
