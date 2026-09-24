@@ -2735,7 +2735,15 @@ a_before)^2 per cell per interval, never the levels' squares, in one
 currency with the ladder's weights of 2.6: the owner's word of
 2026-09-24, record 1679, and 2.5's closing paragraph on the two words);
 the click line carries the block's own count (its
-mode's cycles, 8.3) and the light record's birth stamp. Light does not
+mode's cycles, 8.3) and the light record's birth stamp. The
+receiver-inserter's second face (the model owner's word of 2026-09-24,
+06:42Z; DECLARATIONS.md section 10 item 10): an emitter takes its own
+record's remnant after its train, from the interval at which the last
+inserted interval has left its cells, in the receiver form of the take
+and in the record's kind's pair; what it takes never left it and is not
+received back (the detector's own count, Highlights item 7), so it is
+booked as content taken by the emitter, a host row, never a pointer and
+never a click. Light does not
 need to stay in order to be read; it needs only to pass through a body
 that has a clock. A click is a body's event in the body's clock: light
 never clicks; light is read: it moves the body's record, and the body
