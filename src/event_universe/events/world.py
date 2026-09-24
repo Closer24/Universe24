@@ -314,7 +314,7 @@ from event_universe.core.integer import (
     integer_root,
     rational_sum,
 )
-from event_universe.core.phase import MAX_PHASE_STEPS
+from event_universe.core.phase import MAX_PHASE_STEPS, phase_sines
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -428,6 +428,11 @@ WORLD_KEYS = {
     # reading of the hop pump's signature, MASSIVE_RECORD.md section 7),
     # absent by default, admitted under `massive_record` alone.
     "mode_axis",
+    # detector-law-v1: `wheel`, the rung W of the world's detector sets
+    # where no lamp's birth wheel declares a larger one (a world whose
+    # records a block emits; RUN_LIST.md's light detectors at W = 64), an
+    # integer from 1, 1 by default, admitted under `detector_law` alone.
+    "wheel",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -1469,6 +1474,9 @@ class NatureBeamWorld:
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
     mode_axis: int | None = None
+    # detector-law-v1: the world key `wheel`, the detector sets' rung W
+    # where no lamp declares a larger birth wheel; 1 by default.
+    wheel: int = 1
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -3748,7 +3756,11 @@ def covariant_square(
 
 
 def _detector_law_load_checks(
-    measured: tuple[MeasuredDefinition, ...], families: tuple[FamilyDefinition, ...]
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    directions: tuple[Vector, ...],
+    periodic: tuple[bool, bool, bool],
+    phase_steps: int,
 ) -> None:
     """Under `detector_law` (detector-law-v1) the instruments of the ray law
     are refused, naming the rule: a lamp's `turns` (a fan of directions
@@ -3771,6 +3783,43 @@ def _detector_law_load_checks(
                 f"no inputs), refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is "
                 "no fan; a splitter declares its inputs)"
             )
+        # The splitter's linear form divides by S[k], the sine of the clock's
+        # step of the interval (DECLARATIONS.md section 14): a family whose
+        # clock gives a step with S[k] = 0 (a step of 0, or of N / 2) on some
+        # interval has no pair to act on there, refused at load.
+        sines = phase_sines(phase_steps)
+        for family_index, split in enumerate(entry.splits):
+            if split is None or split.inputs is None:
+                continue
+            clock = families[family_index].phase_per_age
+            if clock is None:
+                continue
+            steps = {clock[0] // clock[1], clock[0] // clock[1] + (1 if clock[0] % clock[1] else 0)}
+            for step in steps:
+                if sines[step % phase_steps] == 0:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}].table on the family "
+                        f"{families[family_index].name!r} with the clock {list(clock)}: the clock's step "
+                        f"{step} of {phase_steps} has a sine of 0, and the splitter's linear form "
+                        "divides by S[k] (DECLARATIONS.md section 14); declare a clock whose every "
+                        "step has a nonzero sine"
+                    )
+        # An arm's half-space is the sign of (node - origin) . vector on the
+        # board's raw coordinates: on a periodic axis there is no half-space,
+        # so arms whose first direction has a component on a periodic axis
+        # are refused (the pair's two arms, component 2).
+        if entry.lamp is not None and entry.lamp.arms > 1:
+            per_arm = len(entry.lamp.directions) // entry.lamp.arms
+            for arm in range(entry.lamp.arms):
+                vector = directions[entry.lamp.directions[arm * per_arm]]
+                for axis in range(3):
+                    if int(vector[axis]) and periodic[axis]:
+                        raise ValueError(
+                            f"{BEAM_LAW}: measured[{number}].lamp.arms: the arm {arm}'s first "
+                            f"direction {list(int(v) for v in vector)} has a component on the periodic "
+                            f"axis {AXES[axis]}, which has no half-space (an arm's row lives on its "
+                            "own side of the lamp's Node on an open axis)"
+                        )
     for index, family in enumerate(families):
         # A massive kind (massive-record-v1) needs no declared clock (a
         # block's kind: its clock is its gap; a matter lamp's kind declares
@@ -4587,6 +4636,14 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
             "kind of the local detector law; the ray law has no record's rows at Nodes)"
         )
+    wheel = 1
+    if "wheel" in obj:
+        if not detector_law:
+            raise ValueError(
+                f"{BEAM_LAW}: the world key `wheel` is refused without `detector_law` (the rung W of "
+                "the detector sets under the local detector law)"
+            )
+        wheel = _integer(obj["wheel"], "wheel", 1, MAX_VALUE)
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -4743,9 +4800,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         massive_record=massive_record,
         probes=probes,
         mode_axis=mode_axis,
+        wheel=wheel,
     )
     if detector_law:
-        _detector_law_load_checks(measured, families)
+        _detector_law_load_checks(measured, families, table, periodic, phase_steps)
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),

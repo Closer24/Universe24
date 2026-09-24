@@ -1011,7 +1011,7 @@ pushing agent's declaration), `start` (the interval its drive begins, 0 by
 default, the ramp counted from it: the same agent's declaration), `margin` (`"pin"` or `"control"`, the margin
 rule's kind of world) and `emits` (the light family its record sources,
 one record per cycle of its clock, paid from its `held`); `probes` a list
-of Nodes whose light amplitude the record writes per interval; `mode_axis`
+of Nodes whose light amplitude the record writes per interval; `wheel` (an integer from 1, under `detector_law`) the detector sets' rung W where no lamp declares a larger birth wheel (a world whose records a block emits); `mode_axis`
 (`"x"`, `"y"` or `"z"`) the axis along which the record writes a `mode`
 line per interval, the three sums of light's total field over the Nodes of
 each residue class of that coordinate modulo 3 (the content of the mode

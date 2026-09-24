@@ -1199,9 +1199,10 @@ def test_z_a_matter_lamps_train_carries_the_kinds_band():
     3 den cos omega / num - 2 (the rule's plane wave a_next + a_before = (num / 3 den) S_6 with
     S_6 = 2 cos k + 4 on a chain): k = 4.99 steps of 64. Read: the record's phase at the Nodes
     x = 106 and x = 110 (and x = 94, x = 90 on the other side) at the interval 100 by `read_phase`
-    at each Node's peak register, the span over 4 Links within 2 steps of 4 k on either side (the
-    reading's grain, BUILD.md section 11); the record never completes (MUST 2) and the books
-    balance at every interval. The edge cases: a lamp on a massive kind WITHOUT the clock is
+    at each Node's peak register, the span over 4 Links within 3 steps of 4 k on either side (the
+    reading's grain, BUILD.md section 11: read 22 beside 19.97 with the record through the take,
+    21 before it); the record does not complete within the train (its click is test (aa)) and
+    the books balance at every interval. The edge cases: a lamp on a massive kind WITHOUT the clock is
     refused at load naming the pair form; light's [1, 1] unchanged: light's record's rows at
     every interval are identical with and without the matter lamp beside it (and the first
     build's chain digests stand, test (p))."""
@@ -1226,7 +1227,7 @@ def test_z_a_matter_lamps_train_carries_the_kinds_band():
         other.step()
         assert simulation.books()["balanced"], tick
         live = simulation.records.get(identity)
-        assert live is not None, "the matter lamp's record never completes (MUST 2)"
+        assert live is not None, "the matter lamp's record is in flight through its train"
         for node in nodes:
             peaks[node] = max(peaks[node], abs(int(live.now[node])))
         # light's rows unchanged beside the matter lamp
@@ -1242,7 +1243,107 @@ def test_z_a_matter_lamps_train_carries_the_kinds_band():
     # the wave leaves the lamp both ways: the phase lags by k per Link away from it
     right = (phase[(106, 0, 0)] - phase[(110, 0, 0)]) % steps
     left = (phase[(94, 0, 0)] - phase[(90, 0, 0)]) % steps
-    assert abs(right - 4 * k_steps) < 2, (right, 4 * k_steps)
-    assert abs(left - 4 * k_steps) < 2, (left, 4 * k_steps)
+    assert abs(right - 4 * k_steps) < 3, (right, 4 * k_steps)
+    assert abs(left - 4 * k_steps) < 3, (left, 4 * k_steps)
     with pytest.raises(ValueError, match="needs the pair form of phase_per_link on the family"):
         parse_nature_beam_world(matter_lamp_world(True))
+
+
+def test_aa_a_matter_lamps_record_is_taken_and_clicks_once_at_the_rung():
+    """Reviewer 3's line on the matter lamp (the Boss's 01:10Z): a lamp's record of a massive
+    kind goes through the same take and pointer path as light's (the click is the law's one
+    action on any record, POSTULATES 10); a block's record keeps MUST 2. The chain world of
+    test (z) without light's lamp (the matter kind's faces periodic, so that the train's two
+    halves both arrive at the screen, one round the chain), the matter lamp's stock 2 at the
+    rate [1, 1] (two births on consecutive intervals, u = 0 and u = 1 on the wheel [1, 64],
+    W = 64), a receiver body of the matter family at x = 184 read as the set `screen`: each
+    record clicks ONCE, its `click` stamp the first interval its pointer at the chosen cell
+    reached 1 / W of the norm, after the front's flight (84 Links at the band's group pace
+    0.5, so more than 100 intervals after the birth) and before its completion interval; the
+    screen's pointer reaches nine tenths of each record's norm (the lamp's own body takes the
+    train's reflections off the screen's Ports after its grace, the take's pair being light's); the second record (u = 1) is chosen at the screen (the
+    ladder's u = 0 falls on the first cell with a rung, the lamp's own body, an artefact of the
+    order, not of the take); both records then gone from the board, the books balanced at
+    every interval, two gather lines in all. A block's record (test (u)) still never
+    completes."""
+    document = matter_lamp_world(True, [77, 25])
+    document["ticks"] = 3000
+    document["measured"] = [
+        {
+            "position": [184, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[-1, 0, 0]],
+        },
+        dict(document["measured"][1], amount=2),
+    ]
+    document["detectors"] = [{"name": "screen", "positions": [[184, 0, 0]], "threshold": 1}]
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    assert simulation.wheel == 64
+    identities = [1 * (1 << 32) + 1, 1 * (1 << 32) + 2]
+    screen = simulation.cell_names.index("screen")
+    crossed: dict[int, dict[str, int]] = {identity: {} for identity in identities}
+    shares: dict[int, tuple[int, int]] = {}
+    for _ in range(3000):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+        for identity in identities:
+            live = simulation.records.get(identity)
+            if live is None:
+                continue
+            shares[identity] = (live.pointers[screen], live.norm)
+            for cell, pointer in enumerate(live.pointers):
+                name = simulation.cell_names[cell]
+                if name not in crossed[identity] and pointer * 64 >= live.norm:
+                    crossed[identity][name] = simulation.tick
+        gathers = [line for line in lines if line["event"] == "gather"]
+        if len(gathers) == 2:
+            break
+    gathers = [line for line in lines if line["event"] == "gather"]
+    assert [gather["record"] for gather in gathers] == identities
+    assert [gather["u"] for gather in gathers] == [0, 1]
+    for gather in gathers:
+        chosen = gather["chosen"][0][0]
+        assert gather["click"] == crossed[gather["record"]][chosen], (chosen, gather["click"])
+        assert gather["click"] - gather["birth"] > 100
+        assert gather["click"] < gather["tick"]
+        assert gather["record"] not in simulation.records
+    assert gathers[1]["chosen"][0][0] == "screen"
+    assert "screen" in crossed[identities[0]] and "screen" in crossed[identities[1]]
+    for identity in identities:
+        at_screen, norm = shares[identity]
+        assert at_screen * 10 >= norm * 9, (identity, at_screen, norm)
+    assert simulation.books()["balanced"]
+
+
+def test_ab_the_world_key_wheel_declares_the_detectors_rung_without_a_lamp():
+    """The world key `wheel` (detector-law-v1; RUN_LIST.md's light detectors at W = 64 in worlds
+    whose records a block emits, which have no lamp): the detector sets' rung W where no lamp
+    declares a larger birth wheel; 1 by default; a lamp's larger wheel wins; refused below 1
+    and without `detector_law`."""
+    base = massive_world([8, 8, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [156, 157])
+    assert DetectorLawSimulation(parse_nature_beam_world(base)).wheel == 1
+    keyed = json.loads(json.dumps(base))
+    keyed["wheel"] = 64
+    assert parse_nature_beam_world(keyed).wheel == 64
+    assert DetectorLawSimulation(parse_nature_beam_world(keyed)).wheel == 64
+    with_lamp = matter_lamp_world(True, [77, 25])  # light's lamp [2531, 4096], matter's [1, 64]
+    with_lamp["wheel"] = 16
+    assert DetectorLawSimulation(parse_nature_beam_world(with_lamp)).wheel == 4096
+    with_lamp["wheel"] = 8192
+    assert DetectorLawSimulation(parse_nature_beam_world(with_lamp)).wheel == 8192
+    zero = json.loads(json.dumps(base))
+    zero["wheel"] = 0
+    with pytest.raises(ValueError, match="wheel"):
+        parse_nature_beam_world(zero)
+    no_law = json.loads(json.dumps(base))
+    no_law["detector_law"] = False
+    no_law["massive_record"] = False
+    no_law["wheel"] = 64
+    with pytest.raises(ValueError, match="refused without `detector_law`"):
+        parse_nature_beam_world(no_law)

@@ -66,8 +66,8 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import by_drive, integer_root
-from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines
+from event_universe.core.integer import by_clock, by_drive, integer_root
+from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines, phase_sines
 from event_universe.events.amplitude import cell_of, rungs
 from event_universe.events.world import (
     AXES,
@@ -152,25 +152,32 @@ class Splitter:
     """A splitter of the TABLE form (detector-law-v1, build 2, component 3;
     DECLARATIONS.md row 2b, ALGEBRA.md 4.6): a measured event whose `table`
     declares a `rerelease` split with `inputs`, one weights row and one
-    turns row per input direction, its `directions` the outputs. Its Node
-    is held at 0 and takes the arriving wave (a receiver that books no
-    offer); per interval, per light record, the record's phase and
-    amplitude at each input Node (the Node the input direction arrives
-    from) are read (`nearest_phase`, the amplitude the largest level the
-    input has shown to this record, an integer register of the table), and
-    each output Node is driven at the level SUM_i w_ij A_i C[phi_i + t_ij]
-    / (256 R_i), R_i the root of the row's norm (exact, checked at load:
-    the split an isometry, 21^2 + 20^2 = 29^2), verbs B (the matrix on the
-    read phase), D (one division per output per interval, no remainder
-    carried: the level is the read phase's function, not an accumulation)
-    and T (the drive of the output Node, as the lamp's)."""
+    turns row per input direction, its `directions` the outputs; one
+    table Node per Node of the line across a corridor (DECLARATIONS.md
+    section 14 item 4, a list of splitters). Its Node is held at 0 and
+    takes the arriving wave (a receiver that books no offer); per
+    interval, per light record, the table acts on the record's PAIR
+    (a_before, a_now) at each input Node (the Node the input direction
+    arrives from) by the LINEAR FORM of section 14, A cos(phi + t) =
+    (a_now S[k + t] - a_before S[t]) / S[k] (S the sine table, cos x 256's
+    companion; k the interval's own whole step of the clock, `by_clock`),
+    and each output's term SUM_i w_ij (a_now,i S[k + t_ij] - a_before,i
+    S[t_ij]) / (S[k] R_i), R_i the root of the row's norm (exact, checked
+    at load: the split an isometry, 21^2 + 20^2 = 29^2), is ADDED to what
+    the rule gave the output Node (a partial re-emission with a phase, the
+    mirror its model; never a hard level): verbs B (the matrix on the two
+    columns), D (one division per output per interval by the wall S[k] x
+    L, L the least common multiple of the rows' roots, the remainder
+    carried per output as the rule's) and G (the term added). No reading,
+    no register: the record's own levels and the division's remainder,
+    nothing else."""
 
     number: int
     family: int
     node: tuple[int, int, int]
     inputs: list[tuple[tuple[int, int, int], tuple[int, ...], tuple[int, ...], int]]
     outputs: list[tuple[int, int, int]]
-    peaks: dict[int, list[int]] = field(default_factory=dict)
+    remainders: dict[int, list[int]] = field(default_factory=dict)
 
 
 @dataclass
@@ -370,10 +377,17 @@ class DetectorLawSimulation:
         self.kind_wrap: list[tuple[bool, bool, bool]] = [
             world.kind_periodic(index) for index in range(len(world.families))
         ]
+        # The rung W of every detector set: the lamps' birth wheels' largest
+        # denominator, or the world key `wheel` where it is larger (a world
+        # without a lamp, whose records a block emits, declares its W so;
+        # RUN_LIST.md's light detectors at W = 64).
         self.wheel = max(
-            (entry.lamp.wheel[1] for entry in world.measured if entry.lamp is not None), default=1
+            (entry.lamp.wheel[1] for entry in world.measured if entry.lamp is not None),
+            default=1,
         )
+        self.wheel = max(self.wheel, world.wheel)
         self.cosine: dict[int, np.ndarray] = {}
+        self.sine: dict[int, np.ndarray] = {}
         # The receivers' free neighbours per direction (for the one-way take):
         # for each of the six shifts, the absorbing Nodes whose neighbour on
         # that side is a free Node.
@@ -822,6 +836,15 @@ class DetectorLawSimulation:
 
     # The source
 
+    def _sine_table(self, steps: int) -> np.ndarray:
+        """The sine table of the circle (`core.phase.phase_sines`, sin x 256,
+        immutable law data) as an integer array, formed once: the linear
+        form's coefficients (DECLARATIONS.md section 14)."""
+        if steps not in self.sine:
+            self.sine[steps] = np.array(phase_sines(steps), dtype=np.int64)
+        table: np.ndarray = self.sine[steps]
+        return table
+
     def _cosine_table(self, steps: int) -> np.ndarray:
         """The clock's cosine on the amplitude unit: the phase circle's integer
         table (`core.phase.phase_cosines`, cos x 256, immutable law data)
@@ -1056,12 +1079,15 @@ class DetectorLawSimulation:
         # lamp is not an arrival.
         grace = live.train + 2 * live.period
         driven = live.driven if live.age < grace else None
-        # The take (the receivers' Ports, the faces' sponge) reads light's
-        # kind alone: a massive record (den > num) is taken by nothing and
-        # reads no Port, its faces its own (massive-record-v1; DESIGN.md
-        # section 5, MASSIVE_RECORD.md section 7: no take for a clock body,
-        # the sink a declaration on light's row).
-        taken = not self.families[live.family].massive_kind
+        # The take (the receivers' Ports, the faces' sponge) reads every
+        # LAMP'S record, light's kind or a massive kind alike (the click is
+        # the law's one action on any record, POSTULATES 10; Reviewer 3's
+        # line on the matter lamp): a BLOCK'S massive record (den > num,
+        # born of no lamp) is taken by nothing and reads no Port, its faces
+        # its own (massive-record-v1; DESIGN.md section 5, MASSIVE_RECORD.md
+        # section 7, MUST 2: no take for a clock body, the sink a
+        # declaration on light's row).
+        taken = not self.families[live.family].massive_kind or live.driven is not None
         # The rule with the kind's pair on the six-neighbour term
         # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
         # neighbours, then D by 3 den with the remainder kept, then T; at
@@ -1151,38 +1177,43 @@ class DetectorLawSimulation:
 
     def _split(self, live: LiveRecord) -> None:
         """The splitters' action on a light record after its step (component
-        3): the phase read at each input Node, the outputs driven."""
-        steps = self.world.phase_steps
-        for splitter in self.splitters:
-            if splitter.family != live.family:
-                continue
-            peaks = splitter.peaks.setdefault(live.identity, [0] * len(splitter.inputs))
-            levels = [0] * len(splitter.outputs)
-            driven = False
-            table = self._cosine_table(steps)
-            for k, (source, weights, turns, root) in enumerate(splitter.inputs):
-                level_now = int(live.now[source])
-                level_before = int(live.before[source])
-                peaks[k] = max(peaks[k], abs(level_now), abs(level_before))
-                if peaks[k] == 0:
+        3; DECLARATIONS.md section 14): the linear form on the record's pair
+        at each input Node, the outputs' terms added to the rule's values
+        with the remainder carried (the `Splitter` docstring)."""
+        if self.splitters:
+            steps = self.world.phase_steps
+            sines = self._sine_table(steps)
+            # The pair at a Node after the step is (the level at age - 1, the
+            # level at age): the clock's step between them is what the floor
+            # of age x n / d gained at the interval that took the age from
+            # age - 1 to age (`by_clock`; at the first interval the pair is
+            # (0, the first level) and the step is the first interval's).
+            k = by_clock(max(live.age - 1, 0), live.period_numerator, live.period_denominator)
+            s_k = int(sines[k % steps])
+            for splitter in self.splitters:
+                if splitter.family != live.family or s_k == 0:
                     continue
-                reading = nearest_phase(
-                    level_before,
-                    level_now,
-                    peaks[k],
-                    (live.period_numerator, live.period_denominator),
-                    steps,
-                )
-                if reading is None:
-                    continue
-                driven = True
-                phi = reading[0]
-                for j, (weight, turn) in enumerate(zip(weights, turns, strict=True)):
-                    cosine = int(table[(phi + turn) % steps])
-                    levels[j] += (weight * peaks[k] * cosine) // (UNIT * root)
-            if driven:
+                common = 1
+                for _, _, _, root in splitter.inputs:
+                    common = common * root // gcd(common, root)
+                wall = s_k * common
+                remainders = splitter.remainders.setdefault(live.identity, [0] * len(splitter.outputs))
+                totals = [0] * len(splitter.outputs)
+                for source, weights, turns, root in splitter.inputs:
+                    now = int(live.now[source])
+                    before = int(live.before[source])
+                    if now == 0 and before == 0:
+                        continue
+                    factor = common // root
+                    for j, (weight, turn) in enumerate(zip(weights, turns, strict=True)):
+                        totals[j] += (
+                            weight
+                            * factor
+                            * (now * int(sines[(k + turn) % steps]) - before * int(sines[turn % steps]))
+                        )
                 for j, output in enumerate(splitter.outputs):
-                    live.now[output] = levels[j]
+                    quotient, remainders[j] = divmod(totals[j] + remainders[j], wall)
+                    live.now[output] += quotient
         live.age += 1
 
     def record_form(self, live: LiveRecord) -> int:
@@ -1241,10 +1272,11 @@ class DetectorLawSimulation:
         what the receivers hold."""
         if live.sourcing or live.age <= live.train:
             return False
-        # A massive record never completes and is never clicked as escaped
-        # (Reviewer 3's MUST 2 on step 2): its rows are the block's own,
-        # read by the block's clock, taken by nothing.
-        if self.families[live.family].massive_kind:
+        # A block's massive record never completes and is never clicked as
+        # escaped (Reviewer 3's MUST 2 on step 2): its rows are the block's
+        # own, read by the block's clock, taken by nothing. A lamp's record
+        # of a massive kind completes and clicks as light's.
+        if self.families[live.family].massive_kind and live.driven is None:
             return False
         motion = (live.now - live.before).astype(object)
         energy = int(np.sum(motion * motion))
@@ -1363,9 +1395,11 @@ class DetectorLawSimulation:
                 # A block's massive record is advanced with its block above;
                 # a matter lamp's record (a massive kind with a declared
                 # clock, born of a lamp) is advanced by the rule with the
-                # family's pair alone: taken by nothing (MUST 2), coupled to
-                # no block (the coupling is declared on light's row,
-                # MASSIVE_RECORD.md section 7), its faces the kind's.
+                # family's pair alone, through the take and the detector
+                # sets' pointers as light's (the click at W, one per record),
+                # coupled to no block (the coupling is declared on light's
+                # row, MASSIVE_RECORD.md section 7), its faces the kind's
+                # (a zero face a mirror).
                 if live.driven is not None:
                     self._advance(live)
                 continue
@@ -1398,7 +1432,7 @@ class DetectorLawSimulation:
             self._block_clock(block)
         for identity in list(self.records):
             live = self.records[identity]
-            if self.families[live.family].massive_kind:
+            if self.families[live.family].massive_kind and live.driven is None:
                 continue
             if self._complete(live):
                 self._click(live)
@@ -1445,7 +1479,8 @@ class DetectorLawSimulation:
         board where the wave spreads); None where the record has no level
         at the Node. A block's massive record has no clock on the circle and
         is not read; a matter lamp's record is read at the family's clock as
-        light's."""
+        light's (a GAMEBOARD diagnostic: the tables act on the pair by the
+        linear form, DECLARATIONS.md section 14, not on this reading)."""
         if self.families[live.family].massive_kind and live.driven is None:
             return None
         return nearest_phase(

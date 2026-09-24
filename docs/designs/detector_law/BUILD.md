@@ -617,7 +617,7 @@ with one test (the inputs, the expected integers, an edge case).
 | --- | --- | --- | --- | --- |
 | 1. The phase reading of a record at a table Node | DECLARATIONS.md's head: the angle phi on Z_N nearest to the pair (a_before, a_now) = A (cos(phi - k), cos phi) at the record's clock [n, d] (k the clock's whole step of the interval, floor(n / d) or one more), read by the phase table at load (cos x 256, `core.phase.phase_cosines`), the nearest entry by an integer comparison, no root and no float at run time; the amplitude A the third input the declaration names (the lamp's UNIT on a bar; a table's peak register where the wave spreads) | `core.phase.nearest_phase(before, now, amplitude, clock, N)` -> (phi, residual) or None for the zero pair; `DetectorLawSimulation.read_phase(record, node, amplitude)` | the residual abs(256 now - A C[phi]) + abs(256 before - A C[phi - k]) minimised over 2 N entries (verbs B and the comparison of D), the residual the reading's grain (0 for a pair the clock drove) | (a): N = 64 with [77, 25] and [1, 1] exact at every age at two amplitudes; N = 128 exact 16 units from the extrema; N = 2048 with [3, 1] within one step 32 units from them; the chain world's reading advancing by the clock's step; the zero pair None; a zero circle, clock or amplitude refused |
 | 2. The pair's two arms | DECLARATIONS.md rows 1a and 1d, DESIGN.md 6.3: a pair record is two records with one birth stamp and opposite trains, each arm's row on its own line with nothing of one arm written on the other (B1); the rule's part only that both trains reach their bars; the joint labels psi = (00) + (11) carried unchanged (the rotation at the bars and the one gather are the table rows', later) | `_births`: the lamp's `arms` and `branches` (the amplitude series' keys, admitted under the key) birth one record per arm on one stamp (the same ordinal, u and interval; the arm's identity the birth's plus arm x 2^24), each arm's row confined to the half-space of its first direction from the lamp's Node (`_half_space`, verb D's comparison at every interval in `_advance`), the labels on every arm; the pair's one quantum on arm 0, the other arms 0 (a default, named: the joint click books it once); the birth line's `arms`, `labels` and `arm_records` | (b): on the bar of 21 two records per birth on one stamp, the +x arm 0 for x < 10 and the -x arm 0 for x > 10 at every interval, the two rows mirror images, both trains at the bars x = 7 and 17 within 12 intervals, the books balanced; a lamp of one arm as it was (byte for byte, test (p)); arms 2 on three directions refused |
-| 3. The splitter's table | DECLARATIONS.md row 2b, DESIGN.md's fourth receiver form ("a partial re-emission with a phase"), ALGEBRA.md 4.6 (the split (w, m, p) -> ((w a_i, m A, p + t_i)) an isometry): the split's integer matrix acting on the record's read phase, the two outputs re-emitted by the table form | `Splitter` in the engine from a measured event's `table` `{"rule": "rerelease", "inputs", "weights", "turns"}` with its `directions` the outputs (the amplitude series' keys, admitted under the key when `inputs` is declared; a fan without inputs stays refused): the Node held at 0 and taking the arriving wave, booking no offer (no click at a splitter); per interval, per light record, the phase and amplitude at each input Node (the Node the input direction arrives from) read by component 1 with the amplitude the largest level the input has shown to that record (an integer register of the table, a default named), and each output Node driven at SUM_i w_ij A_i C[phi_i + t_ij] / (256 R_i), R_i the root of the row's norm, exact (checked at load: 21^2 + 20^2 = 29^2; a norm that is no square refused naming it); verbs B, D (one division per output per interval, no remainder carried: the level is the read phase's function, not an accumulation, a default named) and T (the output's drive, as the lamp's) | (c): on a layer the lamp's train through the splitter's weights [21, 20] and turns [0, 16]: the driven output peaks in the ratio 21 : 20 within 3 percent, the +x peak 21 / 29 of the input's read amplitude within 3 percent, the phase read at the two outputs a quarter turn apart (16 steps within 2) on three quarters of the intervals, the splitter's Node 0, no click and no offer there, the books balanced, the wave beyond the outputs nonzero; a fan without inputs refused; a row of norm 2 refused |
+| 3. The splitter's table | DECLARATIONS.md row 2b, DESIGN.md's fourth receiver form ("a partial re-emission with a phase"), ALGEBRA.md 4.6 (the split (w, m, p) -> ((w a_i, m A, p + t_i)) an isometry); SINCE SECTION 14 (the physicist's line on Reviewer 3's read, 2026-09-24): the table acts on the record's PAIR by the linear form, the re-emission additive, the remainder carried, one table Node per Node of the line | `Splitter` in the engine from a measured event's `table` `{"rule": "rerelease", "inputs", "weights", "turns"}` with its `directions` the outputs (the amplitude series' keys, admitted under the key when `inputs` is declared; a fan without inputs stays refused): the Node held at 0 and taking the arriving wave, booking no offer (no click at a splitter); per interval, per light record, the LINEAR FORM on the pair (a_before, a_now) at each input Node, A cos(phi + t) = (a_now S[k + t] - a_before S[t]) / S[k] (S the sine table, cos x 256's companion, immutable law data; k the interval's own whole step of the clock by `core.integer.by_clock`, floor(n / d) or one more), and each output's term SUM_i w_ij (a_now,i S[k + t_ij] - a_before,i S[t_ij]) / (S[k] R_i), R_i the root of the row's norm (exact at load: 21^2 + 20^2 = 29^2; a norm that is no square refused naming it), ADDED to what the rule gave the output Node; verbs B (the matrix on the two columns), D (one division per output per interval by the wall S[k] x L, L the least common multiple of the rows' roots, the remainder carried per output as the rule's) and G (the term added); no reading, no register (the first fold's peak register and hard level, Reviewer 3's (a) and (b), are gone); a family whose clock's step has a sine of 0 refused at load | (c): the integers of the linear form on a planted pair at every one of the 64 phases (the outputs from 0 exactly floor(w_j (a_now S[k + t_j] - a_before S[t_j]) / (S[k] 29)) with the remainder kept, each term w_j UNIT cos(phi + t_j) / 29 within UNIT / 64), the isometry (the two outputs' squares over the 64 phases summing to the input's within 2 percent), the additive re-emission (a second call adds the same term), the run of 90 intervals with the books balanced, the splitter's Node 0, no click and no offer there, the wave beyond both outputs nonzero, every remainder inside its wall (GAMEBOARD readings of the rows; the ratios 21 : 20 and 21 / 29 of the first fold no longer read, since the outputs carry the rule's value too); a fan without inputs, a row of norm 2 and the clocks [32, 1] and [1, 2] (a step with sin 0) refused |
 
 FINDING of build 2 (component 1), for the physicist through the Boss: the
 reading's grain is the phase table's scale 1 / 256, not 1 / N. Where the
@@ -659,12 +659,29 @@ read; `read_phase` read no massive record. The one generic line, BUILT:
   refused naming the pair form).
 - The engine advances a lamp's record of a massive kind (the record has
   `driven`, a block's has not) by the rule with the family's pair alone,
-  its faces the kind's, taken by nothing (MUST 2), coupled to no block
-  (the coupling is declared on light's row, MASSIVE_RECORD.md section 7;
-  a default, named), never completing (MUST 2; its content stays in
-  transit, the books balanced); the drive at the lamp's Nodes for the
-  train is the same verb as light's (a block's record has no train and is
-  not driven); `read_phase` reads it at the family's clock.
+  its faces the kind's (a zero face a mirror), coupled to no block (the
+  coupling is declared on light's row, MASSIVE_RECORD.md section 7; a
+  default, named); the drive at the lamp's Nodes for the train is the
+  same verb as light's (a block's record has no train and is not driven);
+  `read_phase` reads it at the family's clock. SINCE Reviewer 3's line on
+  f5aba037 (the Boss's 01:10Z): the lamp's record goes through the SAME
+  TAKE AND POINTER PATH as light's (the receivers' Ports, the faces'
+  sponge, the detector sets' pointers, the click at W once per record at
+  its completion, POSTULATES 10: the click is the law's one action on any
+  record); a block's massive record keeps MUST 2 (taken by nothing, never
+  completing). The first fold had the lamp's record taken by nothing and
+  never completing, MUST 2 read on the wrong record; test (aa) reads the
+  click: on the chain of 200 without light's lamp, two births of the
+  matter lamp (u = 0 and 1 on the wheel [1, 64]), a receiver body of the
+  matter family at x = 184 read as `screen`: each record clicks once, its
+  stamp the first interval its pointer at the chosen cell reached 1 / 64
+  of the norm, more than 100 intervals after its birth and before its
+  completion; the screen's pointer reaches nine tenths of each norm; the
+  second record (u = 1) chosen at the screen (the ladder's u = 0 falls on
+  the first cell with a rung, the lamp's own body, which takes the train's
+  reflections off the screen's Ports after its grace: the take's pair
+  [-15, 56] is light's impedance, so a matter train is partly reflected
+  by a receiver, a reading for the physicist); the books balanced.
 - Light's [1, 1] unchanged: a block's records take the same path as
   before (no `driven`), and the light record's rows are identical beside
   a matter lamp (test (z)); the first build's digests stand (test (p)).
@@ -673,9 +690,10 @@ read; `read_phase` read no massive record. The one generic line, BUILT:
   one lamp on a chain of 200; the band on a chain from the rule's plane
   wave, cos k = 3 den cos omega / num - 2, k = 4.99 steps of 64; the
   record's phase at the interval 100 read at each Node's peak register
-  over 4 Links on both sides of the lamp: 21 steps on each side beside
-  4 k = 19.97 (the reading's grain of section 11's FINDING and the
-  train's dispersive front; the test's bound 2 steps); the books
+  over 4 Links on both sides of the lamp: 22 steps on each side beside
+  4 k = 19.97 (21 before the record went through the take; the reading's
+  grain of section 11's FINDING and the train's dispersive front; the
+  test's bound 3 steps); the books
   balanced at every interval; light's rows identical with and without
   the matter lamp; the lamp without the clock refused.
 - Not in this line: the probes and the `mode` line sum light's rows
@@ -775,3 +793,91 @@ world is not written (the Boss's rule). No pin world was run.
   (the receding index on the regenerated long chain) runs once as
   EXPLORATORY after this section's commits land, its readings in
   BUILD_READINGS.md beside section 11's numbers.
+
+## 13. The fold of DECLARATIONS.md section 14 and the night's lines (the Boss's 00:20Z, 00:40Z, 00:50Z, 01:00Z, 01:10Z, 01:20Z; main 0a5ea8be merged by one merge commit)
+
+- The splitter under section 14: section 11's row 3 as it now reads
+  (the linear form on the pair, additive, the remainder carried, no
+  register; test (c) rewritten). The three tokens of 00:20Z: (1) arms
+  whose first direction has a component on a periodic axis are refused
+  at load naming the axis (no half-space there; test (b)); (2) the
+  output division's remainder is carried per output (the rounded
+  division not taken: the remainder is the rule's own form); (3) row 3's
+  test column names its ratios GAMEBOARD (and no longer reads them).
+- The world key `wheel` (an integer from 1, 1 by default, admitted under
+  `detector_law` alone): the detector sets' rung W where no lamp declares
+  a larger birth wheel, for the worlds whose records a block emits (4b's
+  B, the light clock's face detector, R2's) and have no lamp: the
+  engine's wheel is the largest of the lamps' and the key's (test (ab)).
+  One W per world: two detectors at different rungs in one world (the
+  light clock's W = 10000 beside W = 64) are not declarable.
+- The matter lamp's record through the take (section 11.1, test (aa)).
+- The World Generator's list (the Boss's 01:00Z), the engine's side:
+  (1) THE g BOUND: MUST 3 guards the rule's int64 total on the rows
+  (numpy int64, not Python ints): num x g_d x S_6 + 3 den g_d a_before +
+  the coupling's term + r must fit 2^63 at the largest amplitude any
+  row may reach, taken as A = 2^40 (`AMPLITUDE_BOUND`, a constant). The
+  arithmetic: with g = [1, 50000] the bound needs A below about 2^37 on
+  [314, 315] and 2^36 on [800, 800]; the seed is 2^20 and a pumped row
+  grows by the coupling's gain (1.04 per window on the receding index).
+  A per-world amplitude bound (a declared key, checked at load in MUST
+  3's line and asserted on the rows at run time, the run refused when a
+  row exceeds it) admits the declared g at A = 2^32 with a margin of
+  2^12 over the seed; the number is the physicist's, the key an hour's
+  build with its test. NOT built tonight without his word.
+  (2) A detector's own rung W as a world key: BUILT (`wheel`, above).
+  (3) A detector set that steps with its block: NOT FOR THE GO (the
+  cells and the take masks are re-formed at a step for the block's
+  cells only; a body that steps is a new form).
+  (4) A lamp on the massive kind: EXISTS (section 11.1; the lamp's
+  `wheel` key as light's; the kind's omega is the pair form of
+  `phase_per_link` on the family, a clock, not a turn).
+  (5) A zero line for the matter kind: with the take path a receiver
+  body's Nodes hold the matter row at 0 and TAKE it one way (a sponge
+  line; the reflection off it is the take's imperfect impedance, not a
+  mirror's); the mirror form as a key: NOT FOR THE GO (the kind's open
+  faces are the only mirrors). The (M) wall as a block of light's kind
+  with the pair [21, 22] (BUILD.md (iv-b)): the loader admits it (no
+  `seed`, no `margin`, no coupling on a light-kind block) but the engine
+  has no path for it and stops at the first interval ("list index out of
+  range" in the blocks' loop): NOT FOR THE GO; the take world (iv-b) was
+  never run.
+  (6) The splitter's fan: the fold above; a fan without inputs stays
+  refused (a splitter declares its inputs).
+  (7) The tables' clock pairs [2464, 25] on N = 2048 and [308, 25] on
+  N = 256: the splitter's division uses the world's own step k by
+  `by_clock` at every interval (the record's clock, not a ratio); a step
+  with S[k] = 0 is refused at load. The polariser's rotation on the pair
+  (the same linear form with U_s) is NOT built: the tables of Bell and
+  Malus are unchanged from the amplitude law in form (DESIGN.md's
+  sentence); the fourth line the tables' rows need.
+  (8) The emitter's held light: EXISTS, the block key `held`
+  `{"light": n}`, a stock the births pay one unit each; the number the
+  physicist declares is the births the run may hold, at most one per
+  interval, so `ticks` is an inert bound.
+  (9) The screen as one detector set per Node: LOADS (121 one-Node sets
+  with their 121 bodies on a 128^2 layer), and main's `screen_clicks`
+  places them by the sets' Nodes; HOST on 128^2 with 19 records in
+  flight and the screen's 121 bodies: 21.5 ms per interval.
+- LINE B (the grace for a block's emitted records): it does NOT hold. A
+  lamp's record has `driven` (the lamp's Nodes) and a grace of its train
+  plus two periods, during which its own Nodes take nothing of it and
+  the offer at the lamp's own cell is dropped; a block's emitted record
+  is born with no train, no period and no `driven` (`_block_births`), so
+  its grace is 0 and a receiver at the block's face takes its emission
+  from the first interval. One change gives it: in `_advance`, a record
+  with an `emitter` takes its `driven` set from the block's cells while
+  `sourcing` and for two of the block's periods after the cycle's end
+  (the block's period the cycle's length, known at the cycle's end), and
+  the dropped offer's cell is the block's cell; then the first rung after
+  the grace is the receive, as the cycle sentence reads. About twenty
+  lines and one test; not built tonight without the Boss's word.
+- LINE C (the cost per record per interval, this host, the head of this
+  section): 128^2, light's lamp, no body: 0.9 ms with one record in
+  flight, 1.1 ms per record per interval at 20 in flight (21 ms per
+  interval); 256^2: 4.1 ms with one, 5.2 ms per record per interval at
+  20 (104 ms per interval). Section 12's 19 records in flight on 128^2
+  with the screen's 121 bodies: 21.5 ms per interval, a minute per 3000
+  intervals; the first-draft 280 records in flight would be 300 ms per
+  interval, ten minutes per 2000. Reviewer 3's 1.6 s per interval is
+  not this engine's number.

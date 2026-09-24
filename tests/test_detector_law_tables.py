@@ -6,11 +6,14 @@ table under the rule."""
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import pytest
 
-from event_universe.core.phase import nearest_phase, phase_cosines
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.core.integer import by_clock
+from event_universe.core.phase import nearest_phase, phase_cosines, phase_sines
+from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_detector_law import chain_world
 
@@ -174,6 +177,9 @@ def test_b_the_pairs_two_arms_are_born_together_and_reach_their_bars():
     assert live.mask is None and live.arms == 1 and live.identity == 1
     birth = next(line for line in lines if line["event"] == "birth")
     assert birth["arms"] == 1 and birth["labels"] == [[0, 1]] and "arm_records" not in birth
+    on_periodic = bar_world(2, [[0, 1, 0], [0, -1, 0]], [[0, 1], [3, 1]])
+    with pytest.raises(ValueError, match="periodic axis y, which has no half-space"):
+        parse_nature_beam_world(on_periodic)
     with pytest.raises(ValueError, match="arms 2 does not divide"):
         parse_nature_beam_world(bar_world(2, [[1, 0, 0], [-1, 0, 0], [0, 1, 0]]))
 
@@ -214,52 +220,101 @@ def splitter_world(weights: list[list[int]], turns: list[list[int]], inputs: boo
     return document
 
 
-def test_c_the_splitters_table_re_emits_the_read_phase_on_two_outputs():
-    """(c) The splitter's table (DECLARATIONS.md row 2b; ALGEBRA.md 4.6): on a layer the lamp's
-    train arrives at the splitter at (12, 2, 0) from -x; the split's weights [21, 20] with the
-    turns [0, 16] (a quarter turn on the +y output at N = 64) re-emit it on +x and +y: over the
-    window after the arrival the peak levels driven at the output Nodes (13, 2, 0) and
-    (12, 3, 0) stand in the ratio 21 : 20 within 3 percent and the +x peak is 21 / 29 of the
-    input's read amplitude within 3 percent (GAMEBOARD, the isometry), the wave beyond the
-    outputs nonzero, the phase read at the two output Nodes (component 1, the amplitude each
-    output's peak) differs by 16 steps within 2 on at least three quarters of the intervals
-    of the window, the splitter's Node stays 0 (held, the take), no click and
-    no offer at the splitter's cell (its pointer 0), the books balanced. The edge cases: a
-    split without inputs (an opening's fan) refused under the rule; a row whose norm is no
-    square ([1, 1]) refused at load naming the norm."""
+def planted_light(simulation: DetectorLawSimulation, age: int, identity: int = 1) -> LiveRecord:
+    """A light record's rows given directly (no lamp): the clock [77, 25] on N = 64, at `age`."""
+    return LiveRecord(
+        identity,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        77,
+        25,
+        200,
+        21,
+        np.zeros(simulation.shape, dtype=np.int64),
+        np.zeros(simulation.shape, dtype=np.int64),
+        np.zeros(simulation.shape, dtype=np.int64),
+        pointers=[0] * len(simulation.cell_names),
+        first_rung=[None] * len(simulation.cell_names),
+        ports=[np.zeros(simulation.shape, dtype=np.int64) for _ in simulation.take_masks],
+        age=age,
+    )
+
+
+def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
+    """(c) The splitter's table under DECLARATIONS.md section 14 (the linear form, the additive
+    re-emission, the remainder carried): on the layer of `splitter_world` the splitter at
+    (12, 2, 0) reads the input Node (11, 2, 0) and adds its terms at (13, 2, 0) and (12, 3, 0).
+    (1) The integers: a planted pair (a_before, a_now) = (C[phi - k] UNIT / 256, C[phi] UNIT /
+    256) at the input (the record's age 1, the clock's step k = by_clock(0, 77, 25) = 3) gives
+    at the outputs, from 0, exactly floor(w_j (a_now S[k + t_j] - a_before S[t_j]) / (S[k] 29))
+    with the remainder in [0, S[k] 29) kept on the splitter, w = [21, 20], t = [0, 16]; and each
+    term is w_j UNIT cos(phi + t_j) / 29 within UNIT / 64 (the tables' 1 / 256 in the
+    coefficients only). (2) The isometry: over the 64 phases the two outputs' squares sum to
+    the input's squares within 2 percent (21^2 + 20^2 = 29^2). (3) A second call on the same
+    pair adds the same term again (additive: the rule's value at the output is never
+    overwritten). (4) The run of 90 intervals: the books balanced at every interval, the
+    splitter's Node 0 (held, the take), no click and no offer at its cell, the wave beyond
+    both outputs nonzero, every remainder inside its wall. The edge cases: a split without
+    inputs (an opening's fan) refused; a row whose norm is no square refused naming the norm;
+    a clock whose step has a sine of 0 ([32, 1] on N = 64: the step 32, sin pi = 0; [1, 2]: a
+    step of 0) refused at load naming the step. Light's worlds without a splitter are byte for
+    byte as before (test (p) of test_massive_record.py)."""
     world = parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]]))
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(world, observer=lines.append)
+    simulation = DetectorLawSimulation(world)
     assert len(simulation.splitters) == 1
     splitter = simulation.splitters[0]
     assert splitter.inputs[0][0] == (11, 2, 0) and splitter.outputs == [(13, 2, 0), (12, 3, 0)]
-    peak_x = peak_y = 0
-    differences: list[int] = []
+    steps = world.phase_steps
+    cosines = phase_cosines(steps)
+    sines = phase_sines(steps)
+    k = by_clock(0, 77, 25)
+    assert k == 3
+    unit_per_cell = UNIT // 256
+    squares_in = squares_out = 0
+    for phi in range(steps):
+        live = planted_light(simulation, 1, identity=phi + 1)
+        now = cosines[phi] * unit_per_cell
+        before = cosines[(phi - k) % steps] * unit_per_cell
+        live.now[11, 2, 0] = now
+        live.before[11, 2, 0] = before
+        simulation._split(live)
+        assert live.age == 2
+        remainders = splitter.remainders[live.identity]
+        wall = sines[k] * 29
+        for j, (weight, turn, output) in enumerate(
+            zip((21, 20), (0, 16), splitter.outputs, strict=True)
+        ):
+            total = weight * (now * sines[(k + turn) % steps] - before * sines[turn])
+            expected, remainder = divmod(total, wall)
+            assert int(live.now[output]) == expected
+            assert remainders[j] == remainder and 0 <= remainder < wall
+            closed = weight * UNIT * math.cos(2 * math.pi * (phi + turn) / steps) / 29
+            assert abs(expected - closed) < UNIT / 64, (phi, j, expected, closed)
+            squares_out += expected * expected
+        squares_in += now * now
+        # additive: the same pair again adds the same term (up to the carried remainder)
+        first = [int(live.now[output]) for output in splitter.outputs]
+        simulation._split(live)
+        for j, output in enumerate(splitter.outputs):
+            assert abs(int(live.now[output]) - 2 * first[j]) <= 1
+    assert abs(squares_out / squares_in - 1.0) < 0.02, squares_out / squares_in
+    # the run
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    splitter = simulation.splitters[0]
     for _ in range(90):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        live = next(iter(simulation.records.values()), None)
-        if live is None:
-            continue
-        assert int(live.now[12, 2, 0]) == 0
-        if simulation.tick < 40:
-            continue
-        peak_x = max(peak_x, abs(int(live.now[13, 2, 0])))
-        peak_y = max(peak_y, abs(int(live.now[12, 3, 0])))
-        if peak_x and peak_y:
-            read_x = simulation.read_phase(live, (13, 2, 0), peak_x)
-            read_y = simulation.read_phase(live, (12, 3, 0), peak_y)
-            if read_x is not None and read_y is not None:
-                differences.append((read_y[0] - read_x[0]) % world.phase_steps)
-    assert peak_x > 0 and peak_y > 0
-    ratio = peak_x / peak_y
-    assert abs(ratio - 21 / 20) < 0.03 * 21 / 20, (peak_x, peak_y)
-    read_peak = splitter.peaks[live.identity][0]
-    assert abs(peak_x - 21 * read_peak / 29) < 0.03 * read_peak, (peak_x, read_peak)
-    assert abs(int(live.now[14, 2, 0])) + abs(int(live.now[12, 4, 0])) > 0
-    assert len(differences) >= 20
-    near = sum(1 for d in differences if min((d - 16) % 64, (16 - d) % 64) <= 2)
-    assert near * 4 >= 3 * len(differences), differences
+        for live in simulation.records.values():
+            assert int(live.now[12, 2, 0]) == 0
+        for remainders in splitter.remainders.values():
+            assert all(0 <= r < sines[3] * 29 or 0 <= r < sines[4] * 29 for r in remainders)
+    live = next(iter(simulation.records.values()))
+    assert abs(int(live.now[14, 2, 0])) > 0 and abs(int(live.now[12, 4, 0])) > 0
     cell = simulation.cell_index[12, 2, 0]
     assert not any(line["event"] == "click" and line.get("node") == [12, 2, 0] for line in lines)
     assert all(live.pointers[cell] == 0 for live in simulation.records.values())
@@ -267,3 +322,8 @@ def test_c_the_splitters_table_re_emits_the_read_phase_on_two_outputs():
         parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]], inputs=False))
     with pytest.raises(ValueError, match="no square"):
         DetectorLawSimulation(parse_nature_beam_world(splitter_world([[1, 1]], [[0, 16]])))
+    for clock in ([32, 1], [1, 2]):
+        zero_step = splitter_world([[21, 20]], [[0, 16]])
+        zero_step["families"][0]["phase_per_link"] = clock
+        with pytest.raises(ValueError, match="has a sine of 0"):
+            parse_nature_beam_world(zero_step)
