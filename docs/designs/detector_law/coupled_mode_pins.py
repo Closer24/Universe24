@@ -28,13 +28,21 @@ Printed, each with its kind:
       pitch's, not a constant): the fall times from rest at r = 10 and 20 to four
       Links inward and the accelerations at the start, at kappa = 1.0 and 0.277; the
       form's number, a PREDICTION, not a pin (the spread is not in it);
-  (e) THE LIGHT CLOCK'S RETURN (DECLARATIONS.md section 10): the same map on an OPEN chain
-      of 673 (zero faces; the block A at [600, 612) seeded in its mode at the engine's
-      amplitude 2^20, G = [1, 1], g = [1, 50000], the face at 672 the mirror) against a
-      chain of 3000 with no return in the window: the light at the detector cell 612, the
-      returned wave as the difference, and the first interval at which it exceeds a rung
-      W (64, 10^3, 10^4, 10^5) against 2 L / c = 207.85: the precursor of the stencil at a
-      low rung, the wave's front at a high one.
+  (e) THE LIGHT CLOCK'S RETURN IN THE CLICK'S OWN FORM (DECLARATIONS.md section 10;
+      Reviewer 3's line A of 00:50Z): the same map on an OPEN chain of 673 (zero faces; the
+      block A at [600, 612) seeded in its mode at the engine's amplitude 2^20, G = [1, 1],
+      g = [1, 50000], the face at 672 the mirror). ONE RECORD: the light the source term
+      inserts during A's first cycle (the train, 70 intervals), then free; its NORM the
+      squared motion inserted (SUM over the cells and the train of (G delta m)^2). The
+      receiver is A's OWN cells under the cycle sentence (DESIGN.md section 5): its Ports
+      take nothing of its own record during the train and for N_s after (declared N_s =
+      one period), and the POINTER then accumulates the record's offer at A's cells (the
+      Port's motion squared, (a_l(t + 1) - a_l(t))^2); the click is the first rung,
+      pointer x W >= norm, W the declared wheel. Printed: the click's interval from the
+      record's birth at W = 64, 256, 1024, 4096 against 2 L / c = 207.85, and the same
+      with the receiver read at the face cell alone; also the RECEIVE of another body's
+      record for row R2 at rest (B at [772, 784) emitting one cycle, A's cells the
+      receiver, L = 60 face to face): the first rung against L / c = 103.9.
 
     PYTHONPATH=src python docs/designs/detector_law/coupled_mode_pins.py
 """
@@ -128,30 +136,54 @@ def open_chain_reads(n):
     return (sp.diags([o, o], [-1, 1], shape=(n, n)) + 4 * sp.identity(n)).tocsr()
 
 
-def light_at_face(n, steps, lo=600, s=12, g=1 / 50000, big_g=1.0, amp=2**20, face=612):
-    """The light record at `face` over `steps` intervals on an open chain of n with the
-    block A at [lo, lo + s) seeded in its bare mode at amplitude `amp`."""
+def one_record(n, steps, emitter_lo, receiver_lo, s=12, g=1 / 50000, big_g=1.0, amp=2**20, train=70):
+    """One light record on an open chain of n: the block at emitter_lo (side s, seeded in its
+    mode at amplitude amp) drives light through the source term during the train only;
+    then light runs free. Returns the record's norm (the inserted squared motion), the
+    per-interval offer at the receiver block's cells (the light's motion squared summed
+    over its s cells) and at the receiver's face cell alone."""
     reads = open_chain_reads(n)
     idx = np.arange(n)
-    cells = ((idx >= lo) & (idx < lo + s)).astype(float)
-    d_node = well_d(cells > 0, 800, 809, 800, 800)
-    omega_b, prof = bare_mode(reads, d_node)
+    cells_e = ((idx >= emitter_lo) & (idx < emitter_lo + s)).astype(float)
+    cells_r = (idx >= receiver_lo) & (idx < receiver_lo + s)
+    inside = (cells_e > 0) | cells_r
+    d_node = well_d(inside, 800, 809, 800, 800)
+    omega_b, prof = bare_mode(reads, np.where(cells_e > 0, 1.0, 809 / 800))
     prof = prof / np.abs(prof).max() * amp
-    if prof[lo + s // 2] < 0:  # the eigenvector's sign is arbitrary; the same seed on both chains
+    if prof[emitter_lo + s // 2] < 0:
         prof = -prof
     m_now, m_bef = prof.copy(), prof * math.cos(omega_b)
     l_now, l_bef = np.zeros(n), np.zeros(n)
     inv_d = 1 / d_node
-    out = np.empty(steps)
+    norm = 0.0
+    offer_cells = np.empty(steps)
+    offer_face = np.empty(steps)
+    face = receiver_lo + s if receiver_lo < emitter_lo or receiver_lo == emitter_lo else receiver_lo
     for t in range(steps):
-        m_next = inv_d * (reads @ m_now) / 3 - m_bef + g * cells * (l_now - l_bef)
-        l_next = (reads @ l_now) / 3 - l_bef - big_g * cells * (m_next - m_now)
+        m_next = inv_d * (reads @ m_now) / 3 - m_bef + g * cells_e * (l_now - l_bef)
+        source = big_g * cells_e * (m_next - m_now) if t < train else 0.0
+        l_next = (reads @ l_now) / 3 - l_bef - source
         l_next[0] = 0.0
         l_next[-1] = 0.0
+        if t < train:
+            norm += float(np.sum(source**2))
+        motion = l_next - l_now
+        offer_cells[t] = float(np.sum(motion[cells_r] ** 2))
+        offer_face[t] = float(motion[face] ** 2)
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
-        out[t] = l_now[face]
-    return omega_b, out
+    return omega_b, norm, offer_cells, offer_face
+
+
+def first_rung(offer, norm, wheel, start):
+    """The interval at which the pointer (the offer accumulated from `start`) crosses the
+    first rung, pointer x wheel >= norm; None if never."""
+    pointer = 0.0
+    for t in range(start, len(offer)):
+        pointer += offer[t]
+        if pointer * wheel >= norm:
+            return t
+    return None
 
 
 def block_record(reads, d_node, cells, g, big_g, steps):
@@ -323,18 +355,24 @@ if __name__ == "__main__":
             f" the fall times to four Links inward {t10:.1f} and {t20:.1f} intervals ((t20 / t10)^2 = {(t20 / t10) ** 2:.3f});"
             f" a PREDICTION of the form, not a pin (the spread and the floor are not in it)"
         )
-    # (e) the light clock's return on the open chain
-    steps = 600
-    omega_a, short = light_at_face(673, steps)
-    _, long = light_at_face(3000, steps)
-    ret = short - long
-    t_out = int(np.argmax(np.abs(short) > 64))
-    crossings = {w: int(np.argmax(np.abs(ret) > w)) for w in (64, 1000, 10000, 100000)}
+    # (e) the light clock's return, and R2's receive at rest, in the click's own form
+    train, n_s = 70, 70
+    omega_a, norm, offer_cells, offer_face = one_record(673, 700, 600, 600, train=train)
+    grace = train + n_s
+    clicks_cells = {w: first_rung(offer_cells, norm, w, grace) for w in (64, 256, 1024, 4096)}
+    clicks_face = {w: first_rung(offer_face, norm, w, grace) for w in (64, 256, 1024, 4096)}
     print(
-        f"(e) the light clock's return on the open chain of 673 (A at [600, 612), the face at 672, L = 60): A's mode"
-        f" {omega_a:.5f}; the outgoing light at the face exceeds 64 at t = {t_out}; the returned wave exceeds the rung W at"
-        f" t = {crossings} (2 L / c = {120 * math.sqrt(3):.2f}); the outgoing amplitude at the face at t = 300:"
-        f" {abs(short[300]):.3g}: THE PIN 207.85 +- 2 at W = 10000; at W = 64 the stencil's precursor (one Link per"
-        f" interval at 10^-5 of the wave) clicks {int(120 * math.sqrt(3)) - crossings[64]} intervals early, a (P) beside"
+        f"(e) the light clock in the click's own form (one record, the train {train}, the grace {grace} = the train + N_s"
+        f" with N_s one period; the norm {norm:.3g}): the first rung at A's own cells after the grace, by W:"
+        f" {clicks_cells} (2 L / c = {120 * math.sqrt(3):.2f}); at A's face cell alone: {clicks_face}."
+        f" THE PIN at W = 64 on A's cells: {clicks_cells[64]} intervals from the record's birth, the band +- 2 (the rung's"
+        f" rise between W = 64 and 4096: {clicks_cells[4096]} to {clicks_cells[64]})"
+    )
+    omega_b2, norm2, offer_a, _ = one_record(2200, 500, 772, 700, train=train)
+    clicks_r2 = {w: first_rung(offer_a, norm2, w, 0) for w in (64, 256, 1024, 4096)}
+    print(
+        f"    R2 at rest (B at [772, 784) emits one cycle, A's cells at [700, 712) the receiver, L = 60): the first rung by W:"
+        f" {clicks_r2} against L / c = {60 * math.sqrt(3):.2f}: the rung's rise at W = 64 is {clicks_r2[64] - 60 * math.sqrt(3):+.1f}"
+        f" intervals, the band per end for the transit ratio"
     )
     print(f"HOST {time.time() - t0:.0f} s")

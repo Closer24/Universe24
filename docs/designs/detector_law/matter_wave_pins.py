@@ -78,23 +78,44 @@ def maxima_of(ys, pat):
     return [int(ys[i]) for i in range(1, len(ys) - 1) if pat[i] > pat[i - 1] and pat[i] >= pat[i + 1]]
 
 
-def chain_front(omega, x_source, x_probe, n=400, steps=400):
-    """The massive rule on an open chain with a hard source sin(omega t) switched on at
-    t = 0 at x_source: the record at x_probe over time (the front's rise)."""
+def chain_first_rung(omega, x_source, x_probe, train_periods, wheels, n=400, steps=600):
+    """M2 in the click's own form (Reviewer 3's line A): the massive rule on an open chain
+    with a lamp at x_source inserting a train of `train_periods` periods (a hard level
+    sin(omega t) for the train, then off; the record's NORM the squared motion it inserts),
+    a detector at x_probe whose POINTER accumulates the record's offer there (the motion
+    squared); the click is the first rung, pointer x W >= norm. Returns the click's
+    interval from the birth per wheel W, and the record's transit by the group pace."""
     a_now = np.zeros(n)
     a_bef = np.zeros(n)
     ratio = NUM / DEN
-    out = np.empty(steps)
+    train = int(round(train_periods * 2 * math.pi / omega))
+    norm = 0.0
+    offer = np.empty(steps)
+    prev_probe = 0.0
     for t in range(steps):
-        a_now[x_source] = math.sin(omega * t)
+        if t < train:
+            a_now[x_source] = math.sin(omega * t)
+            norm += (math.sin(omega * (t + 1)) - math.sin(omega * t)) ** 2
         s6 = np.zeros(n)
         s6[1:-1] = a_now[:-2] + a_now[2:] + 4 * a_now[1:-1]
         a_next = ratio * s6 / 3 - a_bef
         a_next[0] = 0.0
         a_next[-1] = 0.0
+        if t < train:
+            a_next[x_source] = math.sin(omega * (t + 1))
+        offer[t] = (a_next[x_probe] - prev_probe) ** 2
+        prev_probe = a_next[x_probe]
         a_bef, a_now = a_now, a_next
-        out[t] = a_now[x_probe]
-    return out
+    clicks = {}
+    for w in wheels:
+        pointer = 0.0
+        clicks[w] = None
+        for t in range(steps):
+            pointer += offer[t]
+            if pointer * w >= norm:
+                clicks[w] = t
+                break
+    return train, clicks
 
 
 if __name__ == "__main__":
@@ -105,7 +126,7 @@ if __name__ == "__main__":
     )
     d, length, half_width = 32, 64, 60
     x_lamp, x_openings, x_screen = 20, 40, 104
-    stock = 4096
+    stock = 2048
     for lam in (12.0, 16.0):
         k = 2 * math.pi / lam
         omega = omega_of_k(k)
@@ -143,17 +164,16 @@ if __name__ == "__main__":
             f" side lobe's count centroid over y in [{lo_y}, {hi_y}]: {y_c:.2f} with the Poisson sd {sd_c:.2f} at this stock"
             f" ({n_lobe:.0f} clicks in the lobe), so the band of one Node is a {1 / sd_c:.1f}-sigma statistic"
         )
-        front = chain_front(omega, x_lamp, x_screen)
-        steady = np.abs(front[300:]).max()
-        crossings = {f: int(np.argmax(np.abs(front) > f * steady)) for f in (1e-3, 1e-2, 1e-1, 0.5)}
+        train, clicks = chain_first_rung(omega, x_lamp, x_screen, 8, (64, 256, 1024, 4096))
         transit = (x_screen - x_lamp) / vg
         print(
-            f"(b) E OF A MOVING MASS at that k: v_g = {vg:.5f} Link per interval on the axis; the direct front's transit from"
-            f" the lamp's birth at x = {x_lamp} to the centre at x = {x_screen} is {transit:.1f} intervals by the group pace;"
-            f" the FIRST CLICK by the chain map (the rung at a fraction of the steady amplitude): {crossings} (THE PIN at the"
-            f" fraction 0.1: {crossings[0.1]}, the band from the fraction 0.01 to 0.5: [{crossings[0.01]}, {crossings[0.5]}]);"
-            f" m = k / v_g = {m:.5f}, the band's number in the form of a moving mass (the continuum's omega / c_m^2 ="
-            f" {omega / ((NUM / DEN) * C2):.4f} at this k, not nature's gamma m)"
+            f"(b) E OF A MOVING MASS at that k, in the click's own form on a chain (the lamp at x = {x_lamp} inserting a"
+            f" train of 8 periods, {train} intervals; the detector at x = {x_screen}, 84 Links; the pointer the record's"
+            f" motion squared there against its norm over W): v_g = {vg:.5f} Link per interval, the group transit"
+            f" {transit:.1f} intervals; THE FIRST RUNG by W: {clicks} intervals from the birth; THE PIN at W = 64:"
+            f" {clicks[64]}, the band +- 2 (the rise between W = 64 and 4096); m = k / v_g = {m:.5f}, the band's number in"
+            f" the form of a moving mass (the continuum's omega / c_m^2 = {omega / ((NUM / DEN) * C2):.4f} at this k, not"
+            f" nature's gamma m)"
         )
     print(
         "    the form (K): omega_0 = m c_eff^2 exactly at the kind's own cone (m = 3 tan omega_0), E = m c^2 a derivation;"
