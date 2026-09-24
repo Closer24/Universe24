@@ -21,7 +21,7 @@ readings pages; Reviewer 3 reads each landing once.
 | --- | --- | --- |
 | 1. Algebra | the experiment's number follows from the one law before any run, CLOSED on the closure page, with its line in [ALGEBRA.md](../../ALGEBRA.md) (chapter 8 for the massive kind) | [ALGEBRAIC_CLOSURE.md](ALGEBRAIC_CLOSURE.md), Reviewer 3's read |
 | 2. GameBoard without pins | an EXPLORATORY run on the engine reads beside the algebra's number within the band the physicist declared, labelled exploratory, never a result | [EXPLORATION.md](EXPLORATION.md), [BUILD_READINGS.md](BUILD_READINGS.md), the records |
-| 3. Pinned | the pin written before the run ([declarations/DECLARATIONS.md](declarations/DECLARATIONS.md), [SCHEDULE.md](SCHEDULE.md), RUN_LIST.md (on detector-law-design until PR 1067 merges)), one run at the owner's GO, the clicks read by the reader of record, the reading by kind (K against nature's number, P the form) inside the pin | the pinned page (the exploration page's successor), then `docs/NATURE.md` after Reviewer 3's read |
+| 3. Pinned | the pin written before the run ([declarations/DECLARATIONS.md](declarations/DECLARATIONS.md), [SCHEDULE.md](SCHEDULE.md), [RUN_LIST.md](RUN_LIST.md)), one run at the owner's GO, the clicks read by the reader of record, the reading by kind (K against nature's number, P the form) inside the pin | the pinned page (the exploration page's successor), then `docs/NATURE.md` after Reviewer 3's read |
 
 A row whose pinned reading falls outside its pin is written as a miss, in
 the paper's table, by kind; no pin moves after a reading.
@@ -62,5 +62,7 @@ the paper's table, by kind; no pin moves after a reading.
 
 Rows of the paper's list: 19 (17 CLOSED on the closure page, A2 pending one line, the two matter-wave rows pending their declaration).
 Check 1: 17 of 19. Check 2: 3 full (7, 4a at rest, v at rest; the prediction rows ii-a and ii-b beside), 3 partial, the rest not yet. Check 3: 0 of 19; the first pinned runs at the owner's GO of the morning of 2026-09-24, all at once by RUN_LIST.md.
+
+Note of 2026-09-24 00:15Z: the tables' form for the Bell rows (1a to 1d, 9) and the splitter's row 2b is closed in the algebra by DECLARATIONS.md section 14 (the linear form, aea7c166, PR 1069); the two matter-wave rows M1 and M2 enter the GO only when the physicist folds Reviewer 3's lines C and A of record 1534 (the stock's HOST; the click's pointer form); their check 1 stands as declared.
 
 The paper exists when column 3 carries a reading by kind on every row of section 1 that is not a bound; a miss counts as a reading. The Boss updates this file at every landing and nowhere else.
