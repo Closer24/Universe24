@@ -555,6 +555,23 @@ def test_e_the_pair_gathers_once_on_the_joint_ladder_of_four_cells():
     assert pair_counts((0, 32))[0] == {(0, 1): 32, (1, 0): 32}
 
 
+def test_e2_the_pairs_quantum_lands_on_the_body_of_its_birth_arm():
+    """(e2) The pair's one quantum (born on arm 0, the lamp's first direction, +x: Bob's arm
+    on the bar) lands once at the joint click on that arm's body, the first builder's word of
+    10:57Z: over 64 births Bob's counter body holds 64 and Alice's 0, the lamp's stock spent, the
+    books balanced (the held asymmetry of the preliminary runs is this books line, not a
+    reading)."""
+    document = bar_world(2, [[1, 0, 0], [-1, 0, 0]], [[0, 1], [3, 1]], (0, 16))
+    document["measured"][0]["amount"] = 64
+    document["ticks"] = 264
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    for _ in range(264):
+        simulation.step()
+    assert simulation.books()["balanced"] and not simulation.records
+    held = {entry["position"][0]: entry["held"][0] for entry in simulation.contents()}
+    assert held == {10: 0, 7: 0, 17: 64}
+
+
 def test_f_the_marginals_are_one_half_each_at_every_setting():
     """(f) DECLARATIONS.md section 2 (row 1d, no signalling): at the settings (0, 16), (16, 0),
     (8, 24) and (16, 24) Alice's + channel counts exactly 32 of 64 (R++ + R+- = n_a n_b, half

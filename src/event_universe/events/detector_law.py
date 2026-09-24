@@ -2074,11 +2074,12 @@ class DetectorLawSimulation:
         choosing one joint cell (`cell_of`, the rung), each body counting
         its own channel of the chosen cell; the ladder is empty (the pair
         escapes) where an arm's offer never reached its body. The pair's
-        content (the arms' contents summed, one quantum) is handed once, to
-        the first body in the sets' order (a books line of the arm-per-record
-        form, named in BUILD.md section 19, pending the first builder's
-        paragraph); the click's interval the later of the arms' first rungs
-        at their bodies, its stamp the interval (a receiver's count)."""
+        content (the arms' contents summed, one quantum, born on arm 0, the
+        lamp's first direction) is handed once, to the body on that arm
+        (the first builder's word of 10:57Z: the quantum lands where it is
+        born and closes at the joint click; BUILD.md section 19); the
+        click's interval the later of the arms' first rungs at their bodies,
+        its stamp the interval (a receiver's count)."""
         first = arms[0]
         family = first.family
         bodies = self.pair_bodies[first.lamp]
@@ -2105,7 +2106,8 @@ class DetectorLawSimulation:
                 self.ledger.transit_escaped[family] += content
             self.ledger.held_escaped[family] += 0
         else:
-            self.held[bodies[0].measured][family] += content
+            landing = next(body for body in bodies if body.arm == first.arm)
+            self.held[landing.measured][family] += content
             self.ledger.held_measured[family] += content
             self.ledger.transit_absorbed[family] += content
         rung_ticks = [by_arm[body.arm].first_rung[body.entry_cell] for body in bodies]
