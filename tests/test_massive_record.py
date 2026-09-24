@@ -388,6 +388,7 @@ def block_world(
             "held",
             "own_grace",
             "take",
+            "receiver",
         ):
             if key in block:
                 entry[key] = block[key]
@@ -411,6 +412,26 @@ def block_world(
         "measured": measured,
         "detectors": [],
     }
+
+
+def with_screen(document: dict, x: int) -> dict:
+    """The receiver by name for a test world's emitting block (DECLARATIONS.md section 13
+    item 7, required at load): a receiver body of light at x read as the set `screen` with
+    the wheel 64, the world's `wheel` 64 (a set and no lamp); the block names `screen`."""
+    document["measured"].append(
+        {
+            "position": [x, 0, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[-1, 0, 0]],
+        }
+    )
+    document["detectors"].append({"name": "screen", "positions": [[x, 0, 0]], "wheel": 64})
+    document["wheel"] = 64
+    return document
 
 
 def lamp_at(x: int, amount: int = 1, train: int = 4) -> dict:
@@ -715,9 +736,12 @@ def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():
         "coupling": {"G": [1, 1], "g": [1, 500]},
         "emits": "light",
         "own_grace": 70,
+        "receiver": "screen",
     }
     world = parse_nature_beam_world(
-        block_world([240, 1, 1], CHAIN, [156, 157], [block], ticks=300, faces={"x": "open"})
+        with_screen(
+            block_world([240, 1, 1], CHAIN, [156, 157], [block], ticks=300, faces={"x": "open"}), 230
+        )
     )
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -1539,6 +1563,8 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "emits": "light",
             "margin": "control",
             "own_grace": 70,
+            # the receiver by name (section 13 item 7): A's own bound set
+            "receiver": "A_face",
         }
     ]
     document["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0]], "wheel": 64}]
@@ -1698,16 +1724,19 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
             assert rung is None or rung - birth > 250, (rung, birth)
         readings[faces] = {"rung": None if rung is None else rung - birth, **pointer_at}
     assert readings["closed"][140] == readings["open"][140]
-    # a receiver beyond the grace clicks
+    # a body beyond the grace is a SINK under the receiver by name (A names A_face):
+    # it takes the record (its take on the record's HOST `escaped`) and books no
+    # pointer, so it crosses no rung
     beside = DetectorLawSimulation(parse_nature_beam_world(light_clock_world("open", True)))
     far = beside.cell_names.index("far")
-    far_rung: int | None = None
+    far_took = False
     for _ in range(320):
         beside.step()
         live = beside.records.get(first)
-        if live is not None and far_rung is None and live.first_rung[far] is not None:
-            far_rung = live.first_rung[far]
-    assert far_rung is not None and far_rung > 100
+        if live is not None:
+            assert live.pointers[far] == 0 and live.first_rung[far] is None
+            far_took = far_took or live.escaped > 0
+    assert far_took
     # the loader's refusals
     bad = light_clock_world("closed", False)
     bad["detector_law"] = False
@@ -1832,6 +1861,7 @@ def test_ai_the_emitters_own_take_wins_over_its_sets_exemption_at_its_cells():
                 "emits": "light",
                 "own_grace": 3000,
                 "margin": "control",
+                "receiver": "at_a",
             }
         ]
         document["detectors"] = [{"name": "at_a", "block": 0, "wheel": 256}]
@@ -1890,6 +1920,7 @@ def test_ak_a_stepping_block_past_its_hold_books_nothing_of_its_own_record():
             "emits": "light",
             "own_grace": 70,
             "margin": "control",
+            "receiver": "at_a",
         },
     ]
     document["detectors"] = [{"name": "at_a", "block": 1, "wheel": 256}]
@@ -1913,7 +1944,9 @@ def test_ak_a_stepping_block_past_its_hold_books_nothing_of_its_own_record():
                     simulation.tick,
                     live.identity,
                 )
-                assert live.absorbed == sum(live.pointers)
+                # the faces are sinks under the receiver by name: their take
+                # on `escaped` (HOST), inside `absorbed`, on no pointer
+                assert live.absorbed == sum(live.pointers) + live.escaped
                 if not live.sourcing and live.age >= live.train:
                     assert not np.any(live.now[block.mask]), (simulation.tick, live.identity)
                     if block.stepped != stepped and live.age > live.train + 70:
