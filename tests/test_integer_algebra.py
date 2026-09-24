@@ -136,6 +136,10 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
         "__init__",
     ): "at load: E' = integer_root(W) once under `covariant_readings`, the declared rounding of DERIVATIONS_BEAM 17.6 M3; comparisons from then on",
     (
+        "core/phase.py",
+        "remnant_intervals",
+    ): "at load: sin k = integer_root(F^2 - cos^2 k) in the tables' fixed point for the emitter's own take's timing T = ceil(extent / v_g) + 2 (DECLARATIONS.md section 10 item 10, the rule; BUILD.md section 18), a declared rounding like the tables', written to the run's metadata",
+    (
         "events/detector_law.py",
         "__init__",
     ): "a predicate at load under `detector_law`: a splitter's row norm is a perfect square (the root squared back and compared, the row refused otherwise), the root R the isometry's exact divisor of the outputs' levels (build 2, component 3); no rounded number enters the state",
