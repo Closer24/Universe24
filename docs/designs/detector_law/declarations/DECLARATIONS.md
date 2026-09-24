@@ -1395,11 +1395,15 @@ nature.
    world's one wheel (the world key `wheel`, 256 on the four R2 worlds,
    the same integer as the sets' rung; the ladder's W and the rung's W
    are one), and the click is stamped at that cell's first rung. The
-   PREDICTION this states for sagnac_k3: every hold record of B lists
-   at_a (its share a quarter to a third of the total, the rest booked
-   escaped at the board's +x face) and at_a, first in the order, wins on
-   EVERY one of them; the meeting direction's click is at_a's first rung
-   on every B record, and the pin 72 +- 2 is read on all of them; the
+   PREDICTION this states for sagnac_k3: every hold record of B that
+   completes within the world's ticks lists at_a (its share of the total
+   a GAMEBOARD reading of the gather line: the 906d3635 run at W = 1
+   read a quarter to a third, with a face:+x pointer under the builder's
+   ledger read, Reviewer 3's 07:43Z; not part of this prediction) and
+   at_a, first in the order, wins on EVERY one of them; the meeting
+   direction's click is at_a's first rung on every B record that
+   completes within the world's ticks, and the pin 72 +- 2 is read on
+   all of them; the
    chasing direction and the rest world have one cell each and are
    untouched. The light clock's set (section 10 item 9) is chosen the
    same way, first in its order. What this form hides is named: the
