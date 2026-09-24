@@ -79,10 +79,9 @@ step 3).
 A world whose lines the engine on main does not carry yet is written into
 `docs/designs/detector_law/held_worlds/` (HELD_NAMES below), outside the
 shipped set under `examples/events` that the gate loads, until its line lands.
-Since PR 1068's merge (main 5fe266c9, the builder's 36fd5235) every world loads
-at its RUN_LIST path but the two matter layer worlds, held again: the engine's
-construction refuses their side-1 take-line blocks of the matter kind as a mode
-that is not bound (HELD_NAMES below).
+Since PR 1118's merge (main 1454030f, the margin rule skips a silent block)
+every world loads and constructs at its RUN_LIST path; nothing is held
+(HELD_NAMES below is empty).
 
 Run from the repository root:
 
@@ -111,14 +110,11 @@ NEW_ROWS = DESIGNS / "new_rows" / "worlds"
 # land; then their names move back (the Boss's rule of 2026-09-24, 02:15Z: nothing shipped
 # that the gate loads and refuses).
 HELD = DESIGNS / "detector_law" / "held_worlds"
-# The matter layer worlds are held again on main 5fe266c9: the loader admits the kind's own
-# pair on an absorbing take line (the builder's item 6b), but the engine's construction
-# (the pre-GO preflight tool, tools/preflight_worlds.py, and the runner) refuses a side-1
-# block of the matter kind at [800, 809] as a mode that is not bound (2 cos omega_b =
-# 1.977555 at the gap's 1.977750, MASSIVE_RECORD.md section 4's table), so the gate's
-# preflight test fails on them; the builder's line (an absorbing take line holds no
-# bound record) frees them.
-HELD_NAMES: set[str] = {"matter_waves_12", "matter_waves_16"}
+# Empty since PR 1118's merge (main 1454030f): the margin rule skips a silent block (seed
+# 0, no record of its own), so the matter layer worlds' absorbing take lines of the matter
+# kind at the kind's own pair are no longer refused as a mode that is not bound, and the
+# two files are back at their RUN_LIST path (the Boss's word of 2026-09-24, 10:16Z).
+HELD_NAMES: set[str] = set()
 
 
 def load_massive_generator():
