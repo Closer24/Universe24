@@ -560,7 +560,7 @@ omega_b) of its own well, printed by the pins script before the run.
 8. THE LIGHT-HELD PAIR IN MOTION on the lattice's band (derivation (a),
    2026-09-24, 02:35Z, on the Boss's YES of 02:00Z to the owner's
    question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin;
-   corrected 03:05Z on Reviewer 3's two tokens, the rows under the floor
+   corrected 02:42Z on Reviewer 3's two tokens, the rows under the floor
    and the form of the excess). Member (iii) of PUSH_BALANCE.md section
    5, the covariant object, is now the law's, since the massive kind's
    bound clock reads f = f_0 / gamma_m from the rule (ALGEBRA.md 8.1,
