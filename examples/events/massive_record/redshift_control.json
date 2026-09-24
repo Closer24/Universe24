@@ -81,7 +81,8 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "receiver": "light_detector"
   },
   {
    "position": [

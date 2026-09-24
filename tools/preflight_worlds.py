@@ -107,6 +107,17 @@ def pair_lamp_checks(world: NatureBeamWorld) -> None:
                 f"records within the ticks {world.ticks} at the rate {list(lamp.rate)} and the stock "
                 f"{entry.amount} (W = {wheel} births needed, one per residue; CHECK 2)"
             )
+        # Reviewer 3's nit: W births within the ticks is necessary, not
+        # sufficient; the W-th birth must also reach its cell and complete
+        # within the ticks. The margin printed is the ticks beyond the W-th
+        # birth; the arm's transit and the completion are NOT checked here
+        # (they are the world's geometry, the World Generator's line).
+        margin = world.ticks - (wheel * denominator + numerator - 1) // numerator
+        print(
+            f"  pair lamp measured[{number}] (CHECK 2): the W-th birth at about interval "
+            f"{world.ticks - margin}, the margin {margin} intervals for the arm's transit and the "
+            "completion (not checked by this tool)"
+        )
 
 
 def load_one(path: Path) -> Outcome:
