@@ -128,6 +128,28 @@ and the ray law's series exists.
    births; COMPUTATION the fractions and their differences; GAMEBOARD as
    in section 1.
 6. The identity: as section 1.
+7. ROW 1c, THE ORDER CHANNEL, computed before the run (the issue triage
+   reader's line, 2026-09-24; record 762: the pin the computed value;
+   `order_channel_pins.py`). Under the declared ladder and the wheel
+   [1, N] a party's outcome at each birth u is a function of u and both
+   settings. THE STATISTIC: at N = 2048, A's outcome sequence never
+   flips with B's setting (0 of 2048 at a = 0 and at a = N / 4, since
+   A's two cells fill the first half of the ladder in both orders); B's
+   sequence flips with A's setting on 0 of 2048 births at b = N / 8 and
+   on 1448 of 2048 (0.7070) at b = 3 N / 8 (the pair (0, 3 N / 8) is the
+   reversed ladder); the same fractions 0.6875 and 0.7031 at N = 64 and
+   256. So THE ORDER CHANNEL IS OPEN: B reads a bit of A's setting from
+   the order of its outcomes at b = 3 N / 8, with certainty, while the
+   counts stay no-signalling exactly (1024 of 2048 at every setting, row
+   1d). It is open BY BELL'S THEOREM for any deterministic wheel: a
+   sequence over u that depended on each party's own setting alone would
+   be a local deterministic assignment of outcomes to u, whose S is at
+   most 2; at S = 181 / 64 some party's sequence must move with the
+   other's setting. THE ROW'S WORD: FAIL by derivation for no-signalling
+   in the order (the paper's row 1c says so), PASS exact for
+   no-signalling in the counts (row 1d); the run confirms the numbers
+   above (DETECTOR: the two click lists in birth order at the four
+   settings pairs, the flips counted); no pin moves.
 
 The descent, HOST and the day: as section 1 (the same four runs read
 twice; no world of its own).
