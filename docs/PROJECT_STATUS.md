@@ -1,6 +1,83 @@
 # Project status and restart guide
 
-## Where the project stands on 2026-09-20 (read this first)
+## Where the project stands on 2026-09-24 (read this first)
+
+Written by the Boss on 2026-09-24 at about 12:30Z from `main` at
+`111e6b1e`, the open pull requests and issues on GitHub, and
+[Highlights 5.4](HIGHLIGHTS.md#54-the-detector). A snapshot, not live
+evidence: read current Git before acting on it. The record of the day is
+`docs/LOG_2026-09-20.md`; records 1654 to 1806 are on the records branch
+(PR #1107) until it merges.
+
+1. **The plan in force (the model owner, 2026-09-24, 11:27Z to 11:58Z,
+   records 1805 and 1806).** One list of every experiment we want to
+   support, kept by the physicist; one engine on `main`, every fix and
+   build merged into it; no world file is generated, sized or regenerated
+   now; the engine is stabilised until the freeze; until the freeze no pin
+   run anywhere, every preliminary run a diagnostic (HOST, GAMEBOARD,
+   COMPUTATION by kind) and never a result; the freeze is the one commit
+   of `main` on which every world of the list loads and reads clean,
+   announced by the Boss; the GO is the owner's own word on that commit,
+   and then every pin runs in one go; the paper is submitted only when
+   everything is stable, not today. On the owner's stop order of 11:52Z
+   every agent session is stopped until a plan reached with the physicist
+   is presented to him; no agent runs before that.
+2. **The law and the engine.** The Beam Law (`beam-v1`,
+   [BEAM_LAW.md](BEAM_LAW.md)) with `amplitude-v1` and the detector's law
+   (`detector-law-v1`: [DESIGN.md](designs/detector_law/DESIGN.md), the
+   declarations in
+   [DECLARATIONS.md](designs/detector_law/declarations/DECLARATIONS.md))
+   runs in `src/event_universe/events/`; the three tests of every rule
+   (generic, vector, local), bounded integers and LOCALITY-1 hold. On
+   `main`: PR #1122 (the click line and the receiver by name, the Bell
+   joint gather, the redshift ticks 9600) at `ecebf895`, PR #1098 (the
+   detector-law world files) at `068b89b1`, PR #1123 (the preliminaries'
+   record) at `111e6b1e`. In flight: PR #1115 (`detector-law-build-3`,
+   the rule at T = 0 and the hop-take fix; Reviewer 3 CONFIRMED
+   `d65eadb2`; CI in progress at 11:28Z; merges on green), the receiver by
+   name as build-4 (local on the first builder's container, not on
+   origin), the joint gather's commits 2 and 3 (local on Builder 3's
+   container; commit 1 on `detector-law-joint-gather` at `cac9653d`).
+3. **The experiments and their three checks.** The paper's list with one
+   row per experiment and three checks each (the algebra, the GameBoard
+   without pins, the pins) is
+   [APPROVALS.md](designs/detector_law/APPROVALS.md); the launch list with
+   the world file, the run command, the reader of record and the pin by
+   kind is [RUN_LIST.md](designs/detector_law/RUN_LIST.md). At this
+   writing every CLOSED row carries the algebra check (A2, de Broglie and
+   E = m c^2 pending their declaration); the GameBoard check is partial or
+   "not yet" on most rows (the atom's coupled mode, the index at rest and
+   the 64^3 clock rows read exploratory); no row carries the pinned check.
+   Declaration defects found on 2026-09-24 and not yet fixed: the Bell
+   pin's rational (to be re-printed blind from the form's own integers
+   before any Bell reading is seen), the Malus files' two defects (the
+   polariser's exit off the chain, the read set at a take Node), the index
+   files' one clock, the fans' settling criterion (L-6), and the redshift
+   row 4b's three forms (issue #1125). The exploratory readings of the day
+   are in [PRELIMINARY_RUNS_2026-09-24.md](designs/detector_law/PRELIMINARY_RUNS_2026-09-24.md)
+   and [EXPLORATION.md](designs/detector_law/EXPLORATION.md), diagnostics
+   by kind, never results.
+4. **The paper.** `paper/general_formula/` on branch `paper-48` (PR #1006,
+   commit 65 at `cc8b22b8`, 48 pages); the venue Foundations of Physics
+   (record 1621); the results table fills only from pinned readings of
+   merged records; the Zenodo record is to be opened anew and its DOI
+   replaced in the paper and in `README.md`, `CITATION.cff` (record 1653).
+5. **Open on GitHub.** Pull requests: #1115 (build-3), #1124 (`SIZING.md`,
+   the sizing by the algebra, moot while no world is built), #1006 (the
+   paper), #1107 (the records 1654 to 1806, the Highlights clauses and the
+   GO status page), and the older #1018, #907 and #863. Issues: #1113,
+   #1116, #1120, #1121, #1125, each answered on the record. Unmerged
+   branches with work: `detector-law-joint-gather`, `visualizer-3` (docs),
+   `world-sizing`, `paper-48`.
+6. **Decided and recorded (Highlights 5.4, 2026-09-24).** The order
+   channel's solution declared by the Boss on the owner's word with the
+   run guard (record 1647); the pin runs only after a preliminary run of
+   the same file reads clean and Reviewer 3's word (records 1630, 1641,
+   1648); the one list, one engine and no building of worlds; no pins
+   until the freeze and one GO; the paper only when everything is stable
+   (records 1805 and 1806, on PR #1107).
+
+## Where the project stood on 2026-09-20 (history)
 
 This is a snapshot of `claude/universe24-new-3ytqde` at the pull request
 that carries the day's work to `main`; read current Git, the linked issues
