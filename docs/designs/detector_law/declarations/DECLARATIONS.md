@@ -934,7 +934,14 @@ omega_b) of its own well, printed by the pins script before the run.
    the owner's rule of 03:29Z) before the pin runs: the world loads under
    line B, the emission's first cycle, no rung at the set before the
    return's transit (2 L / c = 207.85), the first rung within 218 +- 2 at
-   W = 64. DECLARED: the receiving set bound to
+   W = 64. THE RECORD THE PIN READS, named before the run (Reviewer 3's
+   item 4, 09:22Z through the Boss; DECLARED 2026-09-24, 09:10Z): the
+   record inserted during A's FIRST cycle, the emission's first cycle,
+   and that record alone; its first rung at the set is the pin's
+   reading (the T = 0 preliminary on build-3 540456da read 214,
+   EXPLORATORY). The later cycles' records (217 +- 1 there) are read
+   beside as a second line, the cycles' spacing, not the pin.
+   DECLARED: the receiving set bound to
    A is the free Node adjacent to A's face toward the mirror, x = 612,
    alone (the map (e)'s face Node: `one_record` reads the offer at
    receiver_lo + s = 612, outside the block, so the coupling and the take
@@ -977,7 +984,10 @@ omega_b) of its own well, printed by the pins script before the run.
    receiver after, the map's own assumption. DECLARED: for the emitting
    block's OWN record the set's Nodes stay FREE (the row evolving, no
    take) for the record's whole grace (own_grace; the hold for R2's
-   blocks) and become take Nodes for that record after it; the masks per
+   blocks), except the emitter's own cells after its train, which item
+   10 holds at 0 (record 1711; Reviewer 3's clause on build-3, 09:02Z:
+   a Node both free and taking would be neither held at 0 nor free),
+   and become take Nodes for that record after it; the masks per
    record by the record's emitter and age, values of the record (no
    name, no kind; local: the Node's own state per record); for a stepping
    block the masks re-form at each step and the Port's ghost is carried
@@ -1052,8 +1062,14 @@ omega_b) of its own well, printed by the pins script before the run.
    from the train's end is what keeps the set quiet to the return. The
    cost, named: the tail of the emission still inside the cells at the
    train's end (at most 12 percent of the record's motion energy on the
-   chain, GAMEBOARD) is taken with the remnant and booked on the HOST
-   row below, visible; it touches no pin, every pin being a first-rung
+   chain, GAMEBOARD) is taken with the remnant; a record that clicks
+   books nothing of it on any row (the ledger books content, one
+   indivisible integer per record, to the click's cell; Reviewer 3's
+   note on build-3, 09:02Z through the Boss), and the motion the
+   emitter's cells take per interval is a GAMEBOARD diagnostic per
+   record when the builder prints it, not a row; the HOST row below
+   carries only a record the emitter took wholly. It touches no pin,
+   every pin being a first-rung
    time set by the returning front, which left the cells during the
    train; the norm stays the declared train's. THE FORM: from that interval the
    emitter's cells are a taking set for THAT record alone, in the
@@ -1062,9 +1078,11 @@ omega_b) of its own well, printed by the pins script before the run.
    declares per kind (light [-15, 56]; a matter lamp's record, M1 and
    M2, in the matter kind's pair; no family name). THE BOOKS: what the
    cells take is booked as CONTENT (the ledger books content, not
-   motion) on a HOST row of its own, `taken_by_emitter`, not on the
-   escaped row (escaped names content that left the board, which this
-   did not) and never onto a pointer: the remnant is HOST because it
+   motion) on a HOST row of its own, `taken_by_emitter`, at the record's
+   end and only where no cell was chosen (the emitter took the record
+   wholly; a clicking record's content goes whole to its cell), not on
+   the escaped row (escaped names content that left the board, which
+   this did not) and never onto a pointer: the remnant is HOST because it
    never left the emitter and is not "received back" (Highlights item 7
    counts what a body emits and receives back); the emitter has no cell
    of its own on its own record's ladder and never clicks on its own
@@ -1110,8 +1128,10 @@ omega_b) of its own well, printed by the pins script before the run.
    it (the owner's word of 07:42Z, record 1711); a per-record taking mask of the emitter's cells
    switched on at age > train, the first interval after the train, in the record's kind's pair, its
    bookings excluded from the ladder as the
-   grace's exclusion is (`keep`), the content taken booked to the HOST
-   row `taken_by_emitter`; one test, the light clock's chain of (ac):
+   grace's exclusion is (`keep`), the content of a record taken wholly
+   booked to the HOST row `taken_by_emitter` at its end, the motion
+   taken per interval printed per record as a GAMEBOARD diagnostic where
+   asked; one test, the light clock's chain of (ac):
    no rung at the set before the return's transit and the first rung
    after it, none at 141. REVIEWER 3'S THREE ANSWERS (05:45Z
    through the Boss): the defect is the DECLARATION's, not the engine's
