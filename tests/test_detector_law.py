@@ -272,3 +272,74 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
             del entry["lamp"]
     with pytest.raises(ValueError, match="outside the local detector law"):
         parse_nature_beam_world(outside)
+
+
+def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_train():
+    """Item 10 THE RULE (DECLARATIONS.md section 10 item 10; the model owner's words of 06:42Z,
+    record 1694, and 07:27Z, record 1711: the timing integer withdrawn): from the first interval
+    after its train every emitter's own Nodes take its record's remnant in the record's kind's
+    pair, booked onto no pointer and not into `absorbed`; no key and no load-time integer. On
+    the chain world: the lamp's Node holds the record's row at 0 from age train + 1 on (the
+    drive's last write at age train - 1, its value standing at age train; the take acts in the
+    interval that starts at age train, the first after the train) and `emitter_taking` is read
+    on the records reading; a
+    `remnant_take` key written into a world is refused as unknown; a detector-law world with a
+    set and no lamp declares the world key `wheel` (refused absent, no implicit default); a
+    massive kind's `take` is refused on light's kind; the ledger carries the HOST row
+    `taken_by_emitter`, 0 on the chain world whose record ends at the screen, the books
+    balanced. THE GUARD (Reviewer 3, 07:43Z): an absorbing Node without a cell refuses the
+    interval naming the Node, never booking to the last cell by the list's wrap."""
+    world = parse_nature_beam_world(chain_world())
+    simulation = DetectorLawSimulation(world)
+    train = None
+    for _ in range(450):
+        simulation.step()
+        live = simulation.records.get(1)
+        if live is None:
+            continue
+        train = live.train
+        at_lamp = int(live.now[2, 0, 0])
+        if live.age <= train:
+            assert not live.emitter_took
+        else:
+            # the take acts in the interval that starts at age train, the
+            # first after the train: the row is 0 from age train + 1 on
+            assert at_lamp == 0 and live.emitter_took
+    assert train is not None
+    readings = dict(simulation.snapshot_stream())
+    assert all("emitter_taking" in record for record in readings.get("records", []))
+    books = simulation.books()
+    assert books["balanced"]
+    light = books["families"]["light"]["transit"]
+    assert light["taken_by_emitter"] == 0 and light["absorbed"] >= 1
+    keyed = chain_world()
+    keyed["measured"][0]["lamp"]["remnant_take"] = 4
+    with pytest.raises(ValueError, match="remnant_take"):
+        parse_nature_beam_world(keyed)
+    no_wheel = chain_world()
+    no_wheel["measured"][0] = {
+        "position": [2, 0, 0],
+        "family": "light",
+        "amount": 1,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[1, 0, 0]],
+    }
+    with pytest.raises(ValueError, match="declares the world key `wheel`"):
+        parse_nature_beam_world(no_wheel)
+    no_wheel["wheel"] = 64
+    parse_nature_beam_world(no_wheel)
+    on_light = chain_world()
+    on_light["massive_record"] = True
+    on_light["families"][0]["take"] = [-15, 56]
+    with pytest.raises(ValueError, match="admitted on a massive kind alone"):
+        parse_nature_beam_world(on_light)
+    # the guard: an absorbing Node whose cell is the sentinel refuses the interval
+    guarded = DetectorLawSimulation(parse_nature_beam_world(chain_world()))
+    for _ in range(3):
+        guarded.step()
+    guarded.cell_index[70, 0, 0] = -1
+    with pytest.raises(RuntimeError, match=r"absorbing Node without a cell .*\(70, 0, 0\)"):
+        for _ in range(200):
+            guarded.step()

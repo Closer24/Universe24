@@ -126,6 +126,13 @@ class LiveRecord:
     # line 7: whether the record's last interval was exempt at the sets bound
     # to its emitter (the grace's end books the set Nodes' own content once)
     was_exempt: bool = False
+    # item 10 (DECLARATIONS.md section 10 item 10): whether the record's own
+    # emitter's Nodes have taken it (from the first interval after its train; HOST:
+    # the content booked to the ledger's row `taken_by_emitter` at its end,
+    # never to a pointer nor to `absorbed`), and the emitter's Nodes at the
+    # last interval (a new Port at a hop)
+    emitter_took: bool = False
+    own_previous: np.ndarray | None = None
     # massive-record-v1: the emitter's number for a record a block emitted
     # (None for a lamp's record), whether the block is still sourcing it
     # (the current cycle's record), and the coupling's denominator folded
@@ -235,6 +242,9 @@ class Ledger:
     transit_released: list[int]
     transit_absorbed: list[int]
     transit_escaped: list[int]
+    # item 10 (HOST): the content of the records their own emitters took
+    # wholly (the remnant never left the board and is not received back)
+    taken_by_emitter: list[int]
 
     def escaped_amount(self, family: int) -> int:
         return self.transit_escaped[family]
@@ -287,7 +297,13 @@ class DetectorLawSimulation:
             [0] * count,
             [0] * count,
             [0] * count,
+            [0] * count,
         )
+        # item 10: the take pair per KIND at an emitter's own Nodes (light's
+        # [-15, 56], the law's; a massive kind's declared family `take`)
+        self.kind_take: list[tuple[int, int]] = [
+            family.take if family.take is not None else (-15, 56) for family in world.families
+        ]
         # The cells: index 0 .. K - 1 with a name, the Nodes of each, and the
         # measured event (if any) that receives the content of a click there.
         self.cell_names: list[str] = []
@@ -459,16 +475,7 @@ class DetectorLawSimulation:
         # The receivers' free neighbours per direction (for the one-way take):
         # for each of the six shifts, the absorbing Nodes whose neighbour on
         # that side is a free Node.
-        self.take_masks: list[tuple[int, int, np.ndarray]] = []
-        free = ~self.absorbing
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                continue
-            for sign in (1, -1):
-                neighbour_free = self._shift(free, axis, sign, fill=False)
-                mask = self.absorbing & neighbour_free
-                if mask.any():
-                    self.take_masks.append((axis, sign, mask))
+        self.take_masks: list[tuple[int, int, np.ndarray]] = self._form_take_masks(self.absorbing)
         self.take_count = np.zeros(self.shape, dtype=np.int64)
         for _, _, mask in self.take_masks:
             self.take_count += mask
@@ -543,19 +550,25 @@ class DetectorLawSimulation:
                     block.taking = True
                     self.cell_index[block.mask] = set_cell
                     self.absorbing[block.mask] = True
-            self.take_masks = []
-            free = ~self.absorbing
-            for axis in range(3):
-                if self.shape[axis] == 1:
-                    continue
-                for sign in (1, -1):
-                    neighbour_free = self._shift(free, axis, sign, fill=False)
-                    mask = self.absorbing & neighbour_free
-                    if mask.any():
-                        self.take_masks.append((axis, sign, mask))
+            self.take_masks = self._form_take_masks(self.absorbing)
             self.take_count = np.zeros(self.shape, dtype=np.int64)
             for _, _, mask in self.take_masks:
                 self.take_count += mask
+
+    def _form_take_masks(self, taking: np.ndarray) -> list[tuple[int, int, np.ndarray]]:
+        """The Ports of a taking set: per slot (each axis of extent above 1,
+        each sign) the taking Nodes whose neighbour on that side is free of
+        the set; one slot per (axis, sign) always, so a record's Port arrays
+        keep their index whatever the set (the global receivers, or the
+        receivers with the record's own emitter after its train, item 10)."""
+        masks: list[tuple[int, int, np.ndarray]] = []
+        free = ~taking
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            for sign in (1, -1):
+                masks.append((axis, sign, taking & self._shift(free, axis, sign, fill=False)))
+        return masks
 
     def _cell(self, name: str, measured: int | None, face: bool) -> int:
         self.cell_names.append(name)
@@ -695,6 +708,19 @@ class DetectorLawSimulation:
                     block.corner[axis] %= self.shape[axis]
         old_mask = block.mask
         block.mask = self._cube(block.corner, block.definition.side, block.family)
+        if int(np.count_nonzero(block.mask)) < int(np.count_nonzero(old_mask)):
+            # Reviewer 3's line from the redshift dry run (the Boss's 09:45Z): a
+            # stepping block whose cell would leave the board by a zero face
+            # (the cube cut by `_cube` on a non-periodic axis) refuses the
+            # interval naming the block, instead of running on with the block
+            # gone and the books balanced; the margin rule refuses the same
+            # block at load, not at a hop, so this is the run's own check.
+            raise RuntimeError(
+                f"{BEAM_LAW}: measured[{block.number}] stepped off the board at interval "
+                f"{self.tick} (its corner {list(block.corner)}, side {block.definition.side}, "
+                f"{int(np.count_nonzero(block.mask))} of {int(np.count_nonzero(old_mask))} cells "
+                "left on the board): a block's cells must stay on the board; the run is refused"
+            )
         self._write_pair(block)
         block.stepped += 1
         # The block's cell follows its cells: an absorbing block's take masks
@@ -717,16 +743,7 @@ class DetectorLawSimulation:
             self.absorbing[address] = block.definition.absorbing or block.taking
         if block.definition.absorbing or block.taking:
             old_masks = self.take_masks
-            self.take_masks = []
-            free = ~self.absorbing
-            for axis in range(3):
-                if self.shape[axis] == 1:
-                    continue
-                for sign in (1, -1):
-                    neighbour_free = self._shift(free, axis, sign, fill=False)
-                    mask = self.absorbing & neighbour_free
-                    if mask.any():
-                        self.take_masks.append((axis, sign, mask))
+            self.take_masks = self._form_take_masks(self.absorbing)
             # THE HOP RULE OF THE MOVING TAKE (DECLARATIONS.md section 13 item
             # 4, declared 04:20Z): at a hop the face's Port is a NEW Port whose
             # ghost starts at its free neighbour's own level (no jump booked; a
@@ -739,7 +756,16 @@ class DetectorLawSimulation:
             for live in self.records.values():
                 if not live.ports:
                     continue
-                exempt = live.emitter == block.number and self._in_grace(live)
+                # The block's own emitted record: during its train the cells
+                # insert and the row evolves (line B); from the first interval
+                # after the train the block's take of its own record books
+                # nothing, at ANY age (item 10, record 1711: on no pointer and
+                # not into `absorbed`), so the Node the block steps into is
+                # held at 0 for that record and booked nowhere (before this
+                # line the hop booked it to the block's own pointer once the
+                # hold of train + own_grace had ended).
+                own = live.emitter == block.number
+                exempt = own and self._own_take(live) is None
                 ports = []
                 for axis, sign, mask in self.take_masks:
                     kept = next(
@@ -764,6 +790,10 @@ class DetectorLawSimulation:
                     ports.append(fresh)
                 live.ports = ports
                 if exempt or not entered.any():
+                    continue
+                if own:
+                    live.now[entered] = 0
+                    live.before[entered] = 0
                     continue
                 motion = np.where(entered, live.now - live.before, 0).astype(object)
                 value = int(np.sum(motion * motion))
@@ -1193,6 +1223,7 @@ class DetectorLawSimulation:
         ports: list[np.ndarray] | None = None,
         driven: np.ndarray | None = None,
         wrap: tuple[bool, bool, bool] | None = None,
+        masks: list[tuple[int, int, np.ndarray]] | None = None,
     ) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at every Node (verb G):
         the wrap on a periodic axis, 0 beyond an open face (light's sponge
@@ -1208,7 +1239,9 @@ class DetectorLawSimulation:
             for sign in (1, -1):
                 source = a
                 if ports is not None:
-                    for index, (mask_axis, mask_sign, mask) in enumerate(self.take_masks):
+                    for index, (mask_axis, mask_sign, mask) in enumerate(
+                        self.take_masks if masks is None else masks
+                    ):
                         # The receiver r with a free neighbour on its -mask_sign side
                         # (the mask) is read by that neighbour as the +mask_sign
                         # neighbour of the free Node: the shift by -mask_sign.
@@ -1248,6 +1281,35 @@ class DetectorLawSimulation:
         exempt = self._exempt(live) if in_grace else None
         if exempt is not None:
             driven = exempt if driven is None else (driven | exempt)
+        # Item 10 (DECLARATIONS.md section 10 item 10, the emitter's ringing,
+        # the rule at T = 0, record 1711): from the first interval after its
+        # train the record's own emitter's Nodes (a lamp's Nodes; an emitting
+        # block's current cells) are a taking set for THIS record alone in the
+        # receiver form (the row held at 0, one ghost per Port in the record's
+        # own KIND'S pair), booking nothing onto a pointer nor `absorbed` (the
+        # ledger books the content to the HOST row `taken_by_emitter` at the
+        # record's end): the emitter never clicks on its own record. The Ports
+        # of that set are the record's own (`masks`); a Port new this interval
+        # (the first, a hop) starts at its free neighbour's level, no jump.
+        own = self._own_take(live)
+        masks = self.take_masks
+        fresh: np.ndarray | None = None
+        if own is not None:
+            if driven is not None:
+                driven = driven & ~own
+            if exempt is not None:
+                # A set that IS the emitting block's cells (the form without
+                # positions, R2's and the sagnac worlds'): item 10's take wins
+                # at the emitter's own cells from the train's end, so the
+                # set's exemption keeps only its Nodes beyond them (the
+                # positions form's free Node); a Node both exempt and taking
+                # would be neither held at 0 nor free, a half-state that
+                # grows without bound on a stepping block.
+                exempt = exempt & ~own
+                if not exempt.any():
+                    exempt = None
+            masks = self._form_take_masks(self.absorbing | own)
+            fresh = own if live.own_previous is None else (own & ~live.own_previous)
         # The take (the receivers' Ports, the faces' sponge) reads every
         # LAMP'S record, light's kind or a massive kind alike (the click is
         # the law's one action on any record, POSTULATES 10; Reviewer 3's
@@ -1273,7 +1335,7 @@ class DetectorLawSimulation:
             live.scale = scale
         wall = 3 * den * scale
         neighbours = self._neighbours(
-            live.now, live.ports if taken else None, driven, self.kind_wrap[live.family]
+            live.now, live.ports if taken else None, driven, self.kind_wrap[live.family], masks
         )
         total = num * scale * neighbours
         total -= wall * live.before
@@ -1302,6 +1364,7 @@ class DetectorLawSimulation:
             self._drive(live)
             return
         ended: list[tuple[int, int]] = []
+        taking = self.absorbing if own is None else (self.absorbing | own)
         if exempt is None:
             if live.was_exempt:
                 # The grace's end (Reviewer 3's line on 906d3635): the set
@@ -1310,15 +1373,18 @@ class DetectorLawSimulation:
                 # motion there squared, booked to the set's pointer and to
                 # `absorbed` below, before the row is held at 0.
                 freed = self._exempt(live)
+                if freed is not None and own is not None:
+                    # the emitter's own cells were never free (item 10)
+                    freed = freed & ~own
                 if freed is not None:
                     motion = np.where(freed, nxt - live.now, 0).astype(object)
                     for node in zip(*np.nonzero(freed), strict=True):
                         ended.append((int(self.cell_index[node]), int(motion[node]) ** 2))
                 live.was_exempt = False
-            nxt[self.absorbing] = 0
+            nxt[taking] = 0
         else:
             live.was_exempt = True
-            nxt[self.absorbing & ~exempt] = 0
+            nxt[taking & ~exempt] = 0
         if live.mask is not None:
             # the arm's row lives on its own side of the lamp (component 2)
             nxt[~live.mask] = 0
@@ -1329,13 +1395,26 @@ class DetectorLawSimulation:
         # record's own lamp is driven during its train and receives nothing
         # from that record then.
         offer = np.zeros(self.shape, dtype=np.int64)
-        for index, (axis, sign, mask) in enumerate(self.take_masks):
+        for index, (axis, sign, mask) in enumerate(masks):
             free_now = self._shift(live.now, axis, sign)
             free_next = self._shift(nxt, axis, sign)
+            if fresh is not None:
+                # a new Port of the emitter's own set starts at its free
+                # neighbour's level (no stale ghost, no jump booked)
+                live.ports[index] = np.where(fresh & mask, free_now, live.ports[index])
+            if own is not None:
+                # the emitter's own Ports follow in the record's KIND'S pair
+                # (light's [-15, 56]; a massive kind's declared `take`)
+                own_num, own_den = self.kind_take[live.family]
+                own_ghost = np.floor_divide(
+                    own_den * free_now + own_num * (free_next - live.ports[index]), own_den
+                )
             ghost = np.floor_divide(
                 self.take_den * free_now + self.take_num * (free_next - live.ports[index]),
                 self.take_den,
             )
+            if own is not None:
+                ghost = np.where(own, own_ghost, ghost)
             ghost = np.where(mask if driven is None else (mask & ~driven), ghost, 0)
             if exempt is not None:
                 # A set's Port free for its block's own record (line 7): its
@@ -1359,8 +1438,24 @@ class DetectorLawSimulation:
         live.before = live.now
         # a splitter's Node takes and books nothing (component 3)
         offer[self.splitter_mask] = 0
+        if own is not None:
+            # the emitter's own take: on no pointer and not in `absorbed` (the
+            # ledger books content, not motion: the record's content goes to
+            # the HOST row `taken_by_emitter` at its end); the ladder never
+            # sees it (the grace's `keep` exclusion made permanent here)
+            offer[own] = 0
+            live.emitter_took = True
+        live.own_previous = own
         offer = offer[self.absorbing]
         cells = self.cell_index[self.absorbing]
+        if (cells < 0).any():
+            # Reviewer 3's guard (07:43Z): an absorbing Node without a cell
+            # would book to the last cell by the list's wrap; refuse, naming it
+            missing = np.argwhere(self.absorbing & (self.cell_index < 0))
+            raise RuntimeError(
+                f"{BEAM_LAW}: an absorbing Node without a cell at interval {self.tick}: "
+                f"{[tuple(int(v) for v in node) for node in missing[:4]]} (the take books to no cell)"
+            )
         if in_grace:
             own = (
                 np.array(
@@ -1389,6 +1484,12 @@ class DetectorLawSimulation:
                         self.rung_counts[(live.identity, cell)] = self.block_by_number[
                             self.set_block[cell]
                         ].count
+                    else:
+                        # an absorbing block's own cell (its Ports' offer booked
+                        # here): key (i), the block's own count at the rung
+                        for block in self.blocks:
+                            if block.cell == cell:
+                                self.rung_counts[(live.identity, cell)] = block.count
         live.now = nxt
         self._drive(live)
         self._split(live)
@@ -1434,6 +1535,21 @@ class DetectorLawSimulation:
             # a lamp's declared own_grace (the matter lamp's whole hold, M1-6)
             return live.age < live.train + lamp.own_grace
         return live.age < live.train + 2 * live.period
+
+    def _own_take(self, live: LiveRecord) -> np.ndarray | None:
+        """The record's own emitter's Nodes as a taking set for it (item 10,
+        the rule with its timing integer withdrawn, the model owner's word,
+        record 1711): from the first interval after its train, an emitting
+        block's current cells or the lamp's Nodes; None during the train and
+        for a record with no emitter's Nodes (a block's own massive record, a
+        planted record). The interval whose start is the record's age `train`
+        is the first after the train (the drive's last write is at the age
+        train - 1), so the take acts from `age >= train`."""
+        if live.sourcing or live.age < live.train:
+            return None
+        if live.emitter is not None:
+            return self.block_by_number[live.emitter].mask
+        return live.driven
 
     def _exempt(self, live: LiveRecord) -> np.ndarray | None:
         """The Nodes of the sets bound to the record's emitting block: free for
@@ -1573,7 +1689,12 @@ class DetectorLawSimulation:
         family = live.family
         ladder, total = rungs(weights, self.wheel)
         if chosen is None:
-            self.ledger.transit_escaped[family] += live.content
+            if live.emitter_took:
+                # item 10: a record its own emitter took wholly (HOST row;
+                # the remnant never left the board and was not received back)
+                self.ledger.taken_by_emitter[family] += live.content
+            else:
+                self.ledger.transit_escaped[family] += live.content
             self.ledger.held_escaped[family] += 0
             name = None
         else:
@@ -1596,6 +1717,10 @@ class DetectorLawSimulation:
             # a reader-of-record field (the reader reads `click`, `birth` and
             # `chosen`; DECLARATIONS.md section 2 item 8)
             "u": live.u,
+            # HOST (item 10): the record's content booked to the ledger's row
+            # `taken_by_emitter` (its own emitter took it wholly; on no cell's
+            # ladder), 0 where a cell was chosen
+            "taken_by_emitter": live.content if chosen is None and live.emitter_took else 0,
             "born": live.born,
             "chosen": [[name, 0, "0"]] if name is not None else None,
             "node": [],
@@ -1818,9 +1943,14 @@ class DetectorLawSimulation:
                 "current": transit_current,
                 "absorbed": ledger.transit_absorbed[index],
                 "escaped": ledger.transit_escaped[index],
+                # HOST (item 10): the content the records' own emitters took
+                "taken_by_emitter": ledger.taken_by_emitter[index],
             }
             transit["balanced"] = transit["released"] == (
-                transit["current"] + transit["absorbed"] + transit["escaped"]
+                transit["current"]
+                + transit["absorbed"]
+                + transit["escaped"]
+                + transit["taken_by_emitter"]
             )
             balanced = balanced and bool(measured["balanced"]) and bool(transit["balanced"])
             lines: dict[str, object] = {"measured": measured, "transit": transit}
@@ -1929,6 +2059,9 @@ class DetectorLawSimulation:
                     "lamp": live.lamp,
                     "family": self.families[live.family].name,
                     "u": live.u,
+                    # HOST (item 10): whether the record's own emitter's Nodes
+                    # have taken it (from the first interval after its train)
+                    "emitter_taking": live.emitter_took,
                     "born": live.born,
                     "birth": live.birth_tick,
                     "age": live.age,

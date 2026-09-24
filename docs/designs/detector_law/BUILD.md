@@ -1124,3 +1124,147 @@ the row is held at 0 (`LiveRecord.was_exempt`, `_advance`); the ledger
 stays balanced (test (ac)'s assertion at every interval) and the
 booking is one Node's content, below the ringing's per-interval booking
 on the light clock's chain.
+
+## 18. Item 10, THE RULE: every emitter takes its own record's remnant from the first interval after its train (DECLARATIONS.md section 10 item 10 and section 15 M1-4 at remnant-rule e6b4ec3d; the model owner's word of 06:42Z, record 1694, and his word of 07:27Z, record 1711, the timing integer withdrawn; Reviewer 3 and the physicist's recommendation T = 0 of 07:18Z and 07:22Z; the Boss's 07:45Z; `detector-law-build-3`)
+
+- THE LINE (`_own_take`, `_advance`, `_form_take_masks`): from the first
+  interval after its train (a lamp's record at age > train; an emitting
+  block's after its sourcing cycle) the record's own emitter's Nodes (a
+  lamp's Nodes; the block's CURRENT cells) are a taking set for THAT
+  record alone in the receiver form: the row held at 0 there, one ghost
+  per Port in the record's OWN KIND'S pair (the family key `take` [n, d]
+  on a MASSIVE kind, refused on light's kind, required where a lamp of
+  the kind exists, Reviewer 3's line 2 on item 6b; light's kind the
+  law's [-15, 56]), the Ports of the record's taking set (the receivers
+  and its emitter together) formed per record with one slot per (axis,
+  sign) so a record's Port arrays keep their index, a Port new this
+  interval (the first, a hop) starting at its free neighbour's level
+  with no jump booked. The tail of the train still inside the cells at
+  the train's end (at most 12 percent of the record's motion on the
+  light clock's chain, the reading below) is taken with the remnant.
+  What the emitter takes is booked NOWHERE as motion (the ledger books
+  content): onto no pointer and not into the record's `absorbed`, so
+  the ladder never sees it (the grace's `keep` exclusion made permanent)
+  and the record's completion comes from what the sets and faces took;
+  a record its emitter took wholly has energy 0 and completes with no
+  cell chosen, its content booked to the ledger's HOST row
+  `taken_by_emitter` (not to `escaped`: the remnant never left the board
+  and is not received back), the books balanced with the new row
+  (`transit.taken_by_emitter` in the books and run.json); the gather
+  line carries `taken_by_emitter` (the content so booked, 0 where a cell
+  was chosen) and the records reading `emitter_taking` (whether the
+  emitter's take has acted), both HOST. The emitter never clicks on its
+  own record; the block's own massive record is untouched; during the
+  train the cells insert as built; the sets' `own_grace` stands. NO KEY
+  and no load-time integer: the earlier forms (a per-world key
+  `remnant_take`; T = ceil(extent / v_g) + 2 computed at load in the
+  tables' fixed point, 24 for a side-12 block at the 12-Link clock, 4
+  for a one-Node lamp, 23 for the light clock's A at its clock [1, 1])
+  are HISTORY of 2026-09-24's morning, withdrawn by record 1711; a
+  `remnant_take` key written into a world is refused as unknown. THE
+  WORLD KEY `wheel` (the Boss's line (5)): a detector-law world with a
+  set, no lamp and no `wheel` is refused at load naming the key (the
+  guard that would have caught the sagnac files' ladder at W = 1).
+- THE TAKE'S START: the interval whose start is the record's age `train`
+  is the first after the train (a lamp's drive writes last at the age
+  train - 1; a block's record is sourced last in the interval before the
+  next record's birth, its `train` that age), so the take acts from
+  `age >= train` and the row is 0 from the age train + 1 on (test (e);
+  the light clock's cells the drive's at 69, 0 from 70, test (ac)).
+- THE SET THAT IS THE EMITTER'S CELLS (the form without positions, R2's
+  and the sagnac worlds', `block` alone): line 7's exemption (the set
+  free for the block's own record during train + own_grace) and item
+  10's take name the same Nodes there; the take wins at the emitter's
+  own cells from the train's end and the exemption keeps only a set's
+  Nodes beyond them (the positions form's free Node). Before this line
+  a cell both exempt and taking was neither held at 0 nor free (the
+  row evolving while the rule read the Ports' ghosts as its neighbours),
+  stable at rest and growing without bound on a stepping block: the
+  World Generator's sagnac_k3 (k = 3, own_grace 3000) was refused by the
+  amplitude bound at interval 1357, its records' levels tripling every
+  50 intervals at A's trailing cells from about 1100 (EXPLORATORY, on
+  this branch before the line; at 36fd5235 the same intervals read
+  levels of 1.2 x 10^7, stable). Test (ai) pins the form at rest and at
+  k = 3: the own record's row 0 at the current cells from the first
+  interval after its train at every interval, the set booking nothing
+  of it, the books balanced, every level below four times the seed.
+- THE HOP'S TAKE OF THE BLOCK'S OWN RECORD AT EVERY AGE (the physicist's
+  finding on the Preliminary Runner's sagnac_k3 at 540456da, 09:12Z; the
+  Boss's 09:30Z): `_move_block`'s hop rule exempted the block's own
+  emitted records only during the hold of train + own_grace, so once the
+  hold had ended a step onto an own record's remnant booked that Node's
+  content onto the block's own pointer (at_a's pointers on 37 of A's 69
+  open records, first rungs on 16 of them at about 3500 after the birth,
+  a self-click one record away at 0.14 percent of the absorbed against
+  the click's 1 / (2 W) = 0.195). Item 10 has the emitter's take of its
+  own record on no pointer and not into `absorbed` at ANY age, so the
+  hop now holds the entered Node at 0 for the block's own record and
+  books nothing, from the first interval after the train on (during the
+  train the row evolves, line B); a foreign record's entered content
+  books as before. Test (ak) pins it on a stepping block with own_grace
+  70 and a lamp behind it.
+- A BLOCK THAT STEPS OFF THE BOARD REFUSES THE INTERVAL (Reviewer 3's
+  line from the Preliminary Runner's redshift dry run, the Boss's 09:45Z:
+  the receding block ran off the board at tick 9722, its sum 0 from
+  9756, the run going on to 14686 with the books balanced): at a hop
+  whose cube is cut by a zero face (`_cube` on a non-periodic axis, the
+  count of cells below the count before the hop) `_move_block` raises,
+  naming the block, the interval, the corner and the cells left; a
+  periodic axis wraps as before. The margin rule refuses such a block
+  at load; this is the run's own check (the cheaper of Reviewer 3's two
+  forms, the margin's distance the load-time rule's). Test (al): a
+  block pushed toward the open face refuses at the interval its cells
+  would leave, having stepped before; on a periodic chain it wraps on.
+- THE GUARD (Reviewer 3, 07:43Z, on the sagnac_k3 phantom): before the
+  booking loop an absorbing Node whose cell is the sentinel refuses the
+  interval naming the Node (a Python list's index -1 would otherwise
+  book it to the last cell, the +x face); test (e) trips it by hand.
+- WHAT MOVED: every lamp's record is taken at its lamp's Nodes from the
+  train's end (before: after the grace of two periods, onto the lamp's
+  own cell, the first build's afterglow, which could win the ladder), so
+  test (p)'s three digests moved once more (the state digest by the
+  take's start at the age `train`, the record alive at 600 carrying
+  its pointers); an absorbing block's own cell now stamps its first rung
+  with the block's count in the generic offer loop (key (i); before,
+  only the clock body's path stamped it, a gap the afterglow had
+  hidden); no world file changes.
+- READINGS (EXPLORATORY, before the GO, none pinned; test (ac) on the
+  light clock's chain of 173, the world's `wheel` 64, the set at x =
+  112, own_grace 70, W = 64): the level at A's cells is the drive's
+  millions at 69 and 0 from 70 (GAMEBOARD); the set books less than one
+  rung of A's own record between the grace's end and the return (5.4 x
+  10^10 at 208 against the rung 6.7 x 10^10); the set's first rung reads
+  214 after the birth on this chain (the declaration's pin run reads it
+  beside 218 +- 2; the map's transit 207.85), the return's rise 2.7 x
+  10^12 from 208 to 240. THE SWEEP over a delay after the train, the
+  reading that withdrew the timing integer (the first rung; the pointer
+  at 208): 0: 214 (5.4 x 10^10); 4: 174 (8.5 x 10^10); 8: 157 (1.2 x
+  10^11); 12: 152 (1.4 x 10^11); 16: 151 (1.5 x 10^11); 24: 147 (2.1 x
+  10^11): every interval of delay lets the remnant's alternating mode
+  (the band's edge, group pace 0) spill onto the free Nodes beside the
+  face, which the emitter's cells do not take. THE CELLS' SHARE of the
+  record's motion energy with no take (the Boss's line (6)): 12.3
+  percent at 70, 6.2 at 80, 16.3 at 90, 20.5 at 94, 21.5 at 100, 19.2 at
+  110, 13.7 at 120 (the largest level inside 5.6 x 10^6, 2.0 x 10^6, 1.4
+  x 10^6, 4.2 x 10^5, 1.2 x 10^6 at 70 to 100; the twelve free Nodes
+  beside the face 27, 25, 21, 23, 17, 18 and 22 percent): the tail has
+  left by about 94 while the remnant's motion share rises, its level
+  about 10^6 alternating each interval. Test (k)'s clock-body case: the
+  record's click went to the lamp's own cell at 981 (the afterglow);
+  under the rule the lamp takes it and the record lives on past 1200
+  with the clock body radiating into it (pinned as a reading; it
+  completes at the clock body's cell at 2437, EXPLORATORY).
+- THE COMPLETION AT W = 1 (Reviewer 3's second point, 07:43Z): the
+  record completes when the motion left on the board is below one rung
+  (norm / W) of what the receivers hold, so at W = 1 a record closes as
+  soon as the board's motion is below the whole of the absorbed; the
+  sagnac runs of 906d3635 ran on files without a world `wheel` (W = 1),
+  so their completions are that file's, not the law's; the `wheel`
+  refusal above stops such a file at load.
+- THE PREFLIGHT (Reviewer 3's nit): CHECK 2 prints the interval of the
+  W-th birth and the margin the ticks leave for the arm's transit and
+  the completion, which the tool does not check (the world's geometry,
+  the World Generator's line).
+- THE THREE TESTS: generic (the take primitive as built, no family
+  name), vector (the receiver form's verbs, no root, no float), local
+  (the emitter's own Nodes, its own record).
