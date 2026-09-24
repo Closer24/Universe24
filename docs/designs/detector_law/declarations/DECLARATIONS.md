@@ -1023,24 +1023,29 @@ omega_b) of its own well, printed by the pins script before the run.
    DECLARATION (the receiver-inserter of DESIGN.md section 1; the
    owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
    a detector at its own Node): AN EMITTER TAKES ITS OWN RECORD'S
-   REMNANT AFTER ITS TRAIN, UNDER A KEY (Reviewer 3's three lines on
-   c5930770, 06:20Z by his clock, folded: not an engine default but a
-   declaration on every emitter). THE KEY `remnant_take`, an integer of
-   intervals on the emitter's entry (a lamp or an emitting block),
-   required on every emitter and refused when absent (no implicit
-   default; the World Generator writes it into every GO world's file;
-   the owner may confirm it as the rule at 09:00). THE TIMING: the drive
+   REMNANT AFTER ITS TRAIN, THE RULE (the model owner's word of
+   2026-09-24, 06:42Z, "go with the recommendation", on the
+   physicist's recommendation that the take be the law's own for every
+   emitter and not a per-world key; Reviewer 3's three lines on
+   c5930770 folded, his key form of 06:20Z superseded by the owner's
+   word): every emitter (a lamp's Nodes, an emitting block's cells)
+   takes its own record's remnant after its train; no key, nothing for
+   the World Generator to write, the loader refusing nothing; the
+   timing integer below is COMPUTED AT LOAD by the engine from the
+   emitter's extent and the record's kind's band, a declared rounding
+   at load like the tables (an input of kind 1's grain), never a world
+   key. THE TIMING: the drive
    inserts over ALL the emitter's cells (`_drive`), so at age = train
    the last inserted intervals are still inside the cells, propagating
    out; a take from age > train would hold those rows at 0, shorten the
    emitted train, change its arriving energy and rise, and move 218 +- 2
    and R2's rises. So the take begins only after the last inserted
-   interval has left the emitter's cells: at age > train + remnant_take,
-   with remnant_take = ceil(extent / v_g) + 2, the extent the cells'
-   span along the emission in Links and v_g the band's group pace at the
-   declared wavelength (0.564 Links per interval at 12 Links per period,
-   against c = 0.577; the 2 a margin): 24 for a block of side 12, 4 for
-   a one-Node lamp, declared per world. THE FORM: from that interval the
+   interval has left the emitter's cells: at age > train + T, with T =
+   ceil(extent / v_g) + 2, the extent the cells' span along the emission
+   in Links and v_g the record's kind's band group pace at its declared
+   clock (0.564 Links per interval at 12 Links per period against c =
+   0.577; the 2 a margin), computed at load: 24 for a block of side 12,
+   4 for a one-Node lamp. THE FORM: from that interval the
    emitter's cells are a taking set for THAT record alone, in the
    receiver form of DESIGN.md section 5 (the row held at 0, one ghost
    per Port), the take in the record's OWN KIND'S pair as the take key
@@ -1090,10 +1095,13 @@ omega_b) of its own well, printed by the pins script before the run.
    likewise; the ticks line of item 7 covers it. The Bell and Malus
    lamps: the lamp's Node takes its own remnant after the train with
    remnant_take 4; the cells 7 and 10 Links away are untouched. THE
-   BUILDER'S LINE (section 15 M1-4): the key `remnant_take` on every
-   emitter (refused when absent); a per-record taking mask of the
-   emitter's cells switched on at age > train + remnant_take, in the
-   record's kind's pair, its bookings excluded from the ladder as the
+   BUILDER'S LINE (section 15 M1-4): the rule for every emitter, no key;
+   T = ceil(extent / v_g) + 2 computed at load from the emitter's extent
+   along its emission and the kind's band group pace at its declared
+   clock (the dispersion of the six-neighbour rule on the world's axes,
+   a rounding at load); a per-record taking mask of the emitter's cells
+   switched on at age > train + T, in the record's kind's pair, its
+   bookings excluded from the ladder as the
    grace's exclusion is (`keep`), the content taken booked to the HOST
    row `taken_by_emitter`; one test, the light clock's chain of (ac):
    no rung at the set before the return's transit and the first rung
@@ -1669,10 +1677,12 @@ waves).**
   at 01:40Z on the builder's report (b); the placement corrected at
   03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
   05:40Z on the builder's finding (ac), section 10 item 10, with
-  Reviewer 3's three lines of 06:20Z: the key `remnant_take` on every
-  emitter, refused when absent; a per-record taking mask of the
-  emitter's cells at age > train + remnant_take (24 for a block of side
-  12, 4 for a one-Node lamp), in the record's kind's pair, its bookings
+  Reviewer 3's three lines of 06:20Z, and THE RULE on the owner's word
+  of 06:42Z: every emitter takes its own record's remnant after its
+  train, no key; a per-record taking mask of the emitter's cells at age
+  > train + T, T = ceil(extent / v_g) + 2 computed at load (24 for a
+  block of side 12, 4 for a one-Node lamp), in the record's kind's pair,
+  its bookings
   excluded from the ladder and the content booked to the HOST row
   `taken_by_emitter`, the builder's line before the light clock's
   preliminary): a DETECTOR SET at the
