@@ -111,7 +111,7 @@ def _check_reorder(module) -> None:
             continue  # the block was one table, now whole in records.tex (checked below)
         assert main.count(body) == 1, f"the block {name} does not stand once and whole in main.tex"
     recs = RECORDS_TEX.read_text(encoding="utf-8")
-    assert "\\label{tab:summary}" in main and "\\label{tab:kept}" in main
+    assert "\\label{tab:list}" in main  # the paper's list with its three checks (the storyline)
     for label in (
         "tab:nature",
         "tab:roads",
@@ -120,6 +120,11 @@ def _check_reorder(module) -> None:
         "tab:families",
         "app:register",
         "app:proofs",
+        "tab:summary",
+        "tab:kept",
+        "fig:interference",
+        "fig:pair",
+        "fig:sofn",
     ):
         assert f"\\label{{{label}}}" not in main and recs.count(f"\\label{{{label}}}") == 1, label
     assert "\\bibitem{records}" in main and "\\cite{records}" in main

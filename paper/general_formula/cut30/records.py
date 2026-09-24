@@ -34,6 +34,11 @@ CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
 LEDGER_LABEL = "\\caption{\\label{tab:ledger}"
 FAMILIES_LABEL = "\\caption{\\label{tab:families}"
 SYMBOLS_START = "\\paragraph{The symbols.} {\\footnotesize"
+SUMMARY_LABEL = "\\caption{\\label{tab:summary}"
+KEPT_LABEL = "\\caption{\\label{tab:kept}"
+OLD_FIGURES = ("fig:interference", "fig:pair", "fig:sofn")
+FIGURE_START = "\\begin{figure}"
+FIGURE_END = "\\end{figure}"
 
 RECORDS = "the paper's records file \\cite{records}"
 
@@ -66,10 +71,6 @@ REFERENCES = [
         "the conversion table and the full record \\cite{records}",
     ),
     (
-        "the full record, Table~\\ref{tab:nature} of Appendix~\\ref{app:register}, keyed",
-        "the full record \\cite{nature,records}, keyed",
-    ),
-    (
         "Table~\\ref{tab:conversion} names, row by row,",
         "The conversion table, in " + RECORDS + ", names, row by row,",
     ),
@@ -82,6 +83,14 @@ REFERENCES = [
     ),
     ("Table~\\ref{tab:ledger}", "the forcing ledger \\cite{records}"),
     ("Table~\\ref{tab:nature}", "the full record \\cite{nature,records}"),
+    (
+        "Figure~\\ref{fig:sofn}'s ($S$ at seven grains)",
+        "the $S(\\Nphi)$ figure's, history \\cite{records} ($S$ at seven grains)",
+    ),
+    (
+        "Figure~\\ref{fig:sofn}",
+        "the $S(\\Nphi)$ figure of the engine before 2026-09-23, history \\cite{records}",
+    ),
     ("Table~\\ref{tab:families} (below) lists", "The families table, in " + RECORDS + ", lists"),
     ("Table~\\ref{tab:families}", "the families table \\cite{records}"),
     (
@@ -110,6 +119,14 @@ def _cut_between(s: str, start: str, end: str, name: str) -> tuple[str, str]:
     return s[i:j], s[:i] + s[j:]
 
 
+def cut_figure(s: str, label: str) -> tuple[str, str]:
+    """Cut one figure environment whole by the label it carries."""
+    i = _once(s, "\\label{" + label + "}", label)
+    start = s.rindex(FIGURE_START, 0, i)
+    end = s.index(FIGURE_END, i) + len(FIGURE_END)
+    return s[start:end], s[:start] + s[end:]
+
+
 def cut_table(s: str, label: str, name: str) -> tuple[str, str]:
     """Cut one longtable whole, from its size group to the group's end."""
     i = _once(s, label, name)
@@ -134,13 +151,19 @@ def cut(s: str) -> tuple[str, str]:
     conversion, s = cut_table(s, CONVERSION_LABEL, "the conversion table")
     ledger, s = cut_table(s, LEDGER_LABEL, "the ledger")
     families, s = cut_table(s, FAMILIES_LABEL, "the families table")
+    # The comparison of the engine before 2026-09-23 (the one-page summary, the
+    # kept words) and the figures of its readings: history (record 1459).
+    summary, s = cut_table(s, SUMMARY_LABEL, "the old summary table")
+    kept, s = cut_table(s, KEPT_LABEL, "the old kept-words table")
+    figures = []
+    for label in OLD_FIGURES:
+        figure, s = cut_figure(s, label)
+        figures.append(figure)
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
     for old, new in REFERENCES:
-        if old not in s:
-            raise ValueError(f"records: the paper's reference {old!r} is not there to rewrite")
-        s = s.replace(old, new)
+        s = s.replace(old, new)  # a reference the paper no longer carries is simply absent
     records = (
         register
         + "\n\n"
@@ -161,6 +184,13 @@ def cut(s: str) -> tuple[str, str]:
         + families
         + "\n\n\\section{The symbols}\\label{rec:symbols}\n\n"
         + symbols
+        + "\n\n\\section{The comparison of the engine before 2026-09-23, history}\\label{rec:oldcomparison}\n\n"
+        + "The one-page summary and the kept words of the register as the paper carried them until the law changed from its foundation (record 1459): the readings of the engine before 2026-09-23, never carried into the paper's table.\n\n"
+        + summary
+        + "\n\n"
+        + kept
+        + "\n\n\\section{The figures of the readings of the engine before 2026-09-23, history}\\label{rec:oldfigures}\n\n"
+        + "\n\n".join(figures)
     )
     return s, records
 
@@ -181,9 +211,12 @@ def strip_block(body: str) -> str:
     if HANDWORKED_START in body and CODE_HEADING in body:
         i, j = body.index(HANDWORKED_START), body.index(CODE_HEADING)
         body = body[:i] + POINTERS["handworked"] + body[j:]
-    for label in (CONVERSION_LABEL, LEDGER_LABEL, FAMILIES_LABEL):
+    for label in (CONVERSION_LABEL, LEDGER_LABEL, FAMILIES_LABEL, SUMMARY_LABEL, KEPT_LABEL):
         if label in body:
             _, body = cut_table(body, label, label)
+    for label in OLD_FIGURES:
+        if "\\label{" + label + "}" in body and FIGURE_START in body:
+            _, body = cut_figure(body, label)
     if SYMBOLS_START in body:
         i = body.index(SYMBOLS_START)
         j = body.index(LONGTABLE_END, i) + len(LONGTABLE_END)

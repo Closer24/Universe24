@@ -195,8 +195,8 @@ REFS = [
         "are one platform, stated below so that",
     ),
     (
-        "repeated in the abstract and in Section~\\ref{sec:discussion}: of the",
-        "repeated in the abstract and in Section~\\ref{sec:physics}: of the",
+        "repeated in the abstract and in Section~\\ref{sec:discussion}: the paper's list",
+        "repeated in the abstract and in Section~\\ref{sec:physics}: the paper's list",
     ),
     (
         "off by default; Section~\\ref{sec:discussion}): the loop stays",

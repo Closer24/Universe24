@@ -6739,3 +6739,22 @@ paragraph heading, the law's section, the dated transition's heading,
 which is also a reorder marker); it remains only inside a cited
 document's own title. 52 pages: the section's three pages; the 48
 returns with the comparison rebuilt from the paper's list (commit 24).
+
+## Applied (2026-09-24, the storyline of PLAN.md section 8, items 4 and 5): commit 24 on paper-48, the method and the table of the paper's list
+
+The comparison rebuilt from the paper's list (cut30/comparison.py): the
+method (an experiment a world file, a result clicks, the pin before the
+run, APPROVALS.md's three checks, (K) and (P), a miss written as a
+miss, "matches nature" never "is nature"); Table tab:list, one line per
+row with the algebra's number (COMPUTATION, nature's beside it for a
+(K) row), the GameBoard without pins (an exploratory reading labelled
+so, or not yet) and the pinned reading, a visible blank until its run
+is read and merged; the derivations final; the three rows under the
+pair-field hypothesis after the pins and on the owner's word; the rows
+that left the list with their missing piece. The old comparison
+(Tables summary and kept) and the three figures of the old readings
+leave the paper for the records file as history (record 1459); the
+count sentence in its four places and the abstract's sentence say the
+list's state. 51 pages, 87 references; the 48 returns with the
+rewrite of the old-law sections on the owner's word "rewrite
+everything algebra first".
