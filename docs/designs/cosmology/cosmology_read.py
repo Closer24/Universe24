@@ -103,3 +103,73 @@ print(
 )
 for k0 in (F(1, 100), F(1, 10)):
     show(f"  at k_0 = {k0}", 2 * k0 * (3 - k0) / (1 - k0) ** 2)
+
+print(
+    "8. The receding emitter on the chain's own band (the Boss's item 1, 03:26Z): the character matching"
+)
+
+
+def cos_series(x, terms=30):
+    """cos x as a fraction by its series, to 1e-14 for abs(x) < 1 (a host COMPUTATION)."""
+    total, term, x2 = F(0), F(1), x * x
+    for n in range(terms):
+        total += term
+        term = -term * x2 / ((2 * n + 1) * (2 * n + 2))
+    return total
+
+
+def band_omega(k):
+    """omega of the chain's band, cos omega = (cos k + 2) / 3, by bisection on [0, 1]."""
+    target = (cos_series(k) + 2) / 3
+    low, high = F(0), F(1)
+    for _ in range(60):
+        mid = (low + high) / 2
+        if cos_series(mid) > target:
+            low = mid
+        else:
+            high = mid
+    return (low + high) / 2
+
+
+omega_0 = F(1129, 10000)
+for label, f_over_f0 in (
+    ("the bound block of row 4b's world, f / f_0 = 0.7931", F(7931, 10000)),
+    ("the free emitter, f / f_0 = 1 / gamma_m = 1 / 1.22606", 1 / F(122606, 100000)),
+):
+    omega_source = omega_0 * f_over_f0
+    v = F(1, 3)
+    low, high = F(0), F(1)
+    for _ in range(60):
+        mid = (low + high) / 2
+        if band_omega(mid) + mid * v < omega_source:
+            low = mid
+        else:
+            high = mid
+    k_behind = (low + high) / 2
+    omega_behind = band_omega(k_behind)
+    show(f"  {label}, K = 3: the wave number behind", k_behind, 6)
+    show("    the received frequency angle per interval", omega_behind, 6)
+    show("    1 + z on the lattice, omega_0 over the received angle", omega_0 / omega_behind, 5)
+    continuum = (1 + root(F(1, 3))) / f_over_f0
+    show("    1 + z of the continuum form, (1 + beta_c) / (f / f_0)", continuum, 5)
+    show(
+        "    the lattice over the continuum, the band's dispersion",
+        omega_0 / omega_behind / continuum,
+        6,
+    )
+
+print("9. The coasting throw's diagram against the flight age, the free emitter: q_eff = c^2 / c_eff^2")
+c_eff_over_c_squared = (
+    cos_series(omega_0) * omega_0 / (omega_0 - omega_0**3 / 6 + omega_0**5 / 120 - omega_0**7 / 5040)
+)
+show(
+    "  c_eff^2 / c^2 = cos omega_0 (omega_0 / sin omega_0) at omega_0 = 0.1129", c_eff_over_c_squared, 6
+)
+show("  q_eff = c^2 / c_eff^2", 1 / c_eff_over_c_squared, 6)
+show("  1 + omega_0^2 / 3, the second order", 1 + omega_0**2 / 3, 6)
+for K in (3, 4, 5, 6):
+    beta = root(F(3)) / K
+    x = beta / (1 + beta)
+    z1 = (1 + beta) / root(1 - beta * beta / c_eff_over_c_squared)
+    show(f"  K = {K}: x = tau / t_0", x, 5)
+    show("    1 + z of the free emitter at the kind's cone", z1, 5)

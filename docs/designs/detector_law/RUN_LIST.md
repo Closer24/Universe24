@@ -35,8 +35,70 @@ already had an exploratory run on the current engine and declarations
 since (own_grace, the block key, amplitude_bound, the matter family, the
 face-cell set), it needs a new one. Nothing runs tonight, preliminary or
 pinned, until the owner answers whether the preliminaries may start after
-the builder's push or all after 09:00. Dark matter has no row, no world
-and no pin (the owner's word; CLOSER24's page stays a proposal).
+the builder's push or all after 09:00. ANSWERED (the owner, 04:18Z
+through the Boss, record 1648): the preliminaries and the checks run AT
+the GO, after his word at 09:00 Israel, before any pin run, nothing
+before; the sequence is THE PREFLIGHT below. Dark matter has no row, no
+world and no pin (the owner's word; CLOSER24's page stays a proposal).
+
+THE PREFLIGHT (the model owner's rule of 2026-09-24, 04:18Z through the
+Boss, record 1648: "when the GO comes, only then, before it, check that
+everything runs: all sorts of small tests, see that everything works,
+that the engine functions well, our whole checklist, tests, that
+everything runs as it should"): the sequence the launcher follows after
+the owner's GO and before the first pin run, in this order, nothing
+before the GO:
+
+(a) THE FULL GATE. `python tools/check.py --full` green on the merged
+    main that carries the builder's lines and the world files (the one
+    explicitly justified complete audit of CONTRIBUTING.md; that main's
+    SHA named on the 09:00 page). HOST: BOUND about 15 minutes on four
+    workers (the 28-test selection of a branch runs in 2 minutes; the
+    first full run sets the number).
+(b) EVERY GO WORLD LOADS under the builder's line B on that main: the
+    World Generator's list, one line per world with its SHA and the
+    loader's word (loaded, or refused with the refusal's text). The
+    worlds of this table in the GO: group L `two_slits`,
+    `pace_fan_{12,16,24}`; group M1 `layer_pin_rest_14`,
+    `layer_pin_k3_14`, `redshift_k3`, `redshift_control`, `cart_k3`,
+    `sagnac_rest`, `sagnac_k3`, `matter_front_12`, `matter_waves_12`;
+    group M2 `moving_20`, `moving_28`, `rest_20`, `rest_28`,
+    `deep_well_k3_40` and its rest world, `light_clock_60`,
+    `index_moving_long_k3_away` and its rest and reference worlds; group
+    T `bell_{a0b0,a0b1,a1b0,a1b1}` (under the guard of DECLARATIONS.md
+    section 2 item 8: no Bell run before ORDER_CHANNEL_ATTACKS.md is on
+    main under Reviewer 3's read with no objection open) and
+    `malus_{45,11.25,28.125,33.75}`. A refusal stops that world's chain
+    and no other's. HOST: seconds per world.
+(c) PER WORLD ITS PRELIMINARY RUN as its PRELIMINARY column declares:
+    EXPLORATORY, unpinned, labelled EXPLORATORY in its output directory
+    and on the 09:00 page (it loads, the emitter emits, the clicks arrive
+    at the declared detector within the declared count, the reader of
+    record reads; its numbers diagnostics, never compared, never MET,
+    PASS or FAIL), in the launch order of this list (step 1 group L,
+    step 2 group M1, step 3 group M2, step 4 group T; within a row the
+    column's own order, the rest world or the first world first), the
+    four groups in parallel, one session per group; the HOST time of a
+    preliminary is its row's HOST column (the same world as the pin
+    run), named on its line.
+(d) REVIEWER 3'S WORD PER WORLD on its preliminary, on the 09:00 page:
+    his word is the approval, with APPROVALS.md's three checks cited on
+    the row (check 1 the algebra CLOSED on the closure page; check 2 the
+    GameBoard without pins, which the preliminary is; check 3 the pin
+    written before the run); no pin runs without it.
+(e) ONLY THEN THAT WORLD'S PIN RUN: the run command above, the reader of
+    record, the reading beside the pin by kind, one run, no pin moved.
+
+THE ESTIMATED HOST TIME OF THE WHOLE PREFLIGHT (BOUND, the preliminaries'
+HOST times summed per group from the HOST column, the groups in
+parallel): group L about 1 hour (`two_slits` about an hour, the three
+fans seconds); group M1 about 45 minutes (4a 8, 4b 2, 4c seconds, R2 2,
+M1 30, M2 seconds); group M2 about 1 hour (the two boxes of (ii) 50 in
+parallel, the deep well 6, the light clock seconds, the index 6); group T
+about a minute (the eight table worlds seconds each). With the full gate
+first: about 1 hour and a quarter of wall time with the four groups in
+parallel, about 3 hours if the groups run one after another. Reviewer
+3's reading time is not HOST. Nothing runs before the GO.
 
 ## Step 1: the light (K) rows (the ray law's worlds; group L)
 
