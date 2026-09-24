@@ -55,9 +55,9 @@ The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
 `redshift_control.json` (section 4 with item 7's CHECK on the loader's bound of 4096: the
 chain of 4096, A at 2994, the receiver's set at 4094 with wheel 64, A's `own_grace` 8000,
-14686 intervals), `sagnac_k3.json` and `sagnac_rest.json`
+15000 intervals), `sagnac_k3.json` and `sagnac_rest.json`
 (section 13 on the chain of 3000 of 2026-09-24 07:58Z, the blocks their own receivers at
-W = 256 with `own_grace` 3000, the hold, 5700 and 7800 intervals),
+W = 256 with `own_grace` 3000, the hold, 6400 and 8450 intervals),
 `light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
 its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
@@ -93,7 +93,6 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
-import math
 import secrets
 import sys
 from pathlib import Path
@@ -152,10 +151,12 @@ BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 SET_WHEEL = 64  # the world key `wheel` of a world with a set and no lamp (the Boss's 06:50Z (a))
 R2_WORLD_WHEEL = 256  # the physicist's word of 07:37Z: R2's ladder W is 256, one integer with the sets' rung (section 13 item 4), on the four R2 files; the light clock keeps 64
 R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
-R2_TICKS = {
-    "sagnac_k3": 5700,
-    "sagnac_rest": 7800,
-}  # 07:58Z: every hold record completes (the forward half reaches the +x face at 2999)
+# The physicist's word of 08:06Z on Reviewer 3's arithmetic (a k3 record born at t completes near
+# 0.423 t + 4468, a rest record near t + 3990; the last hold birth near 4450): every hold record
+# counts, so sagnac_k3 6400 and sagnac_rest 8450; the redshift pair 15000 (the last hold records,
+# born near 9500, complete near 14800).
+R2_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
+REDSHIFT_TICKS = 15000
 
 
 def light_family(pair: list[int] | None) -> dict:
@@ -570,9 +571,9 @@ def massive_worlds(massive) -> dict[str, dict]:
     # the transit 1905; the +x face at 4095 beyond it) with its set {positions [[4094, 0, 0]],
     # wheel 64}; the probe there; the control the same world without the momentum. The
     # ticks: a record completes only when the -x face takes its -x half, 2994 sqrt 3 = 5186
-    # intervals after birth, so ticks = ramp + hold + 5186 = 14686 in both worlds (the two
-    # readers' windows equal).
-    redshift_ticks = 1500 + 8000 + math.ceil(2994 * math.sqrt(3))
+    # intervals after birth, ramp + hold + 5186 = 14686; the physicist's word of 08:06Z on
+    # Reviewer 3's margin line: 15000 in both worlds (the two readers' windows equal).
+    redshift_ticks = REDSHIFT_TICKS
     for name, motion in (
         ("redshift_k3", {"momentum": [-massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
         ("redshift_control", {}),
@@ -600,8 +601,8 @@ def massive_worlds(massive) -> dict[str, dict]:
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 3000 (the physicist's 07:58Z: one chain for both worlds,
     # the blocks and the gap of 60 unchanged, so that every hold record's forward half
-    # reaches the +x face at 2999 and completes within the ticks: 5700 for k3, 7800 at
-    # rest), both pushed to k = 3 on +x over the ramp 1500 and the hold 3000, both emitting
+    # reaches the +x face at 2999 and completes within the ticks: 6400 for k3, 8450 at
+    # rest, the physicist's 08:06Z), both pushed to k = 3 on +x over the ramp 1500 and the hold 3000, both emitting
     # with own_grace 3000 (the hold, section 13 item 1), x open for the massive kind too
     # (M1-7); each block's cells a detector set on the light record bound by `block` with
     # its own wheel 256 (M1-4, section 13 item 4), the world key `wheel` 256 the ladder's W
