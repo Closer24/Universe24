@@ -2,7 +2,7 @@
  "law": "beam",
  "model_id": "beam-massive-record-redshift-k3-v1",
  "shape": [
-  2200,
+  5000,
   1,
   1
  ],
@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 9500,
+ "ticks": 15563,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -49,7 +49,7 @@
  "measured": [
   {
    "position": [
-    700,
+    3500,
     0,
     0
    ],
@@ -85,7 +85,7 @@
   },
   {
    "position": [
-    1900,
+    4700,
     0,
     0
    ],
@@ -112,7 +112,7 @@
    "name": "light_detector",
    "positions": [
     [
-     1900,
+     4700,
      0,
      0
     ]
@@ -123,7 +123,7 @@
  ],
  "probes": [
   [
-   1900,
+   4700,
    0,
    0
   ]

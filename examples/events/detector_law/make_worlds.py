@@ -38,7 +38,8 @@ same clock).
 
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
-`redshift_control.json` (section 4, A's `own_grace` 8000), `sagnac_k3.json` and `sagnac_rest.json`
+`redshift_control.json` (section 4 with item 7's CHECK: the chain of 5000, A at 3500,
+the receiver's set at 4700 with wheel 64, A's `own_grace` 8000, 15563 intervals), `sagnac_k3.json` and `sagnac_rest.json`
 (section 13, the blocks their own receivers at W = 256 with `own_grace` 3000, the hold),
 `light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
 its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
@@ -71,6 +72,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -474,35 +476,37 @@ def massive_worlds(massive) -> dict[str, dict]:
     out: dict[str, dict] = {}
     chain = massive.CHAIN
     light_11 = light_family([1, 1])
-    # Row 4b (section 4 with section 15 M1-1 to M1-5): the chain of 2200, the emitter A of
-    # side 12 at the half-depth well, receding on -x at k = 3 from x = 700 over the ramp
-    # 1500, 9500 intervals; the control with A at rest at x = 1300; the light detector at
-    # x = 1900 and the probe there.
-    for name, x, motion in (
-        ("redshift_k3", 700, {"momentum": [-massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
-        ("redshift_control", 1300, {}),
+    # Row 4b (section 4 with section 15 M1-1 to M1-5 and item 7's CHECK, the Boss's line of
+    # 05:45Z on Reviewer 3's word): the chain of 5000 (section 11's length), the emitter A of
+    # side 12 at the half-depth well at x = 3500, receding on -x at k = 3 over the ramp 1500
+    # with own_grace 8000 and the hold 8000; the receiver a body of one Node at 4700 (the
+    # same 1200 Links) with its set {positions [[4700, 0, 0]], wheel 64}; the probe there;
+    # the control the same world without the momentum. The ticks: a record completes only
+    # when the -x face takes its -x half, 3500 sqrt 3 = 6063 intervals after birth, so ticks
+    # = ramp + hold + 6063 = 15563 in both worlds (the two readers' windows equal).
+    redshift_ticks = 1500 + 8000 + math.ceil(3500 * math.sqrt(3))
+    for name, motion in (
+        ("redshift_k3", {"momentum": [-massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
+        ("redshift_control", {}),
     ):
         document = massive.world(
             name.replace("_", "-"),
             "PIN",
-            [2200, 1, 1],
+            [5000, 1, 1],
             chain,
             MEDIUM,
-            [emitter([x, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE, **motion)],
-            9500,
+            [emitter([3500, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE, **motion)],
+            redshift_ticks,
             light=light_11,
             faces=massive.FACES_OPEN,
-            probes=[[1900, 0, 0]],
+            probes=[[4700, 0, 0]],
             mode_axis="x" if motion else None,
         )
         bounded(document)
-        graced(document, [emitter([x, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
-        # the receiver a body of one Node at 1900 (section 4, the ray law's detector) and
-        # its set with positions and its own wheel 64 (BUILD.md section 14's form for 4b;
-        # the receiving body is no block, so the `block` key does not name it)
-        document["measured"].append(body([1900, 0, 0], "light", [[-1, 0, 0]]))
+        graced(document, [emitter([3500, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
+        document["measured"].append(body([4700, 0, 0], "light", [[-1, 0, 0]]))
         document["detectors"].append(
-            {"name": "light_detector", "positions": [[1900, 0, 0]], "threshold": 1, "wheel": 64}
+            {"name": "light_detector", "positions": [[4700, 0, 0]], "threshold": 1, "wheel": 64}
         )
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
