@@ -979,6 +979,39 @@ def test_n_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
 
 
+def test_aj_a_silent_take_line_has_no_mode_for_the_margin_rule_to_bind():
+    """The margin rule skips a silent block (seed 0, no own record): a take line of the matter
+    kind (an absorbing block of side 1 with the kind's own pair [800, 809], the take [-19, 86],
+    seed 0) at x = 0 of an open chain loads and passes `check_margins` with no reading, as the
+    runner and the preflight tool call it. The edge case: the same block with a seed holds an
+    unbound record and is refused as not bound."""
+    for seed, admitted in ((0, True), (1 << 20, False)):
+        document = block_world(
+            [300, 1, 1],
+            CHAIN,
+            [800, 809],
+            [
+                {
+                    "position": [0, 0, 0],
+                    "side": 1,
+                    "pair": [800, 809],
+                    "seed": seed,
+                    "absorbing": True,
+                    "take": [-19, 86],
+                    "margin": "control",
+                }
+            ],
+            faces={"x": "open"},
+        )
+        document["age_bound"] = 1 << 20
+        world = parse_nature_beam_world(document)
+        if admitted:
+            assert check_margins(world) == []
+        else:
+            with pytest.raises(ValueError, match="the block's mode is not bound"):
+                check_margins(world)
+
+
 def test_o_the_cavity_counts_the_separable_forms_cycles():
     """BUILD.md (o): a cavity of side 5 with the kind's own pair [800, 809] on a periodic 24^3
     board: the exact separable form cos omega = (800 / 809) cos(pi / 6), omega 0.5423, the
