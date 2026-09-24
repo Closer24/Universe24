@@ -128,10 +128,15 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
 def pair_world(residue_order: str | None, residue_seed: int | None, births: int) -> dict:
     """A pair lamp on the chain of 80 (x open, the sponge faces): the lamp at x = 40 with two
     arms on +x and -x, the wheel [1, 64], one birth per interval, `births` held, a train of 2
-    periods; a receiver body at x = 60 read as the set `right` and one at x = 20 as `left`;
+    periods; a polariser of the counter family (a table body of two cells, section 14 item
+    6) at x = 60 read as the set `right` and one at x = 20 as `left`, both at the setting 16;
     the order channel's keys as given (None: the key absent)."""
     document = chain_world()
     document["ticks"] = births + 400
+    document["families"] = [
+        {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+        {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
+    ]
     lamp: dict = {
         "rate": [1, 1],
         "wheel": [1, 64],
@@ -156,26 +161,26 @@ def pair_world(residue_order: str | None, residue_seed: int | None, births: int)
         },
         {
             "position": [60, 0, 0],
-            "family": "light",
+            "family": "counter",
             "amount": 1,
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,
-            "directions": [[-1, 0, 0]],
+            "table": {"light": {"phase_window": 16}},
         },
         {
             "position": [20, 0, 0],
-            "family": "light",
+            "family": "counter",
             "amount": 1,
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,
-            "directions": [[1, 0, 0]],
+            "table": {"light": {"phase_window": 16}},
         },
     ]
     document["detectors"] = [
-        {"name": "right", "positions": [[60, 0, 0]], "threshold": 1},
-        {"name": "left", "positions": [[20, 0, 0]], "threshold": 1},
+        {"name": "right", "positions": [[60, 0, 0]], "threshold": 1, "reading": "sum"},
+        {"name": "left", "positions": [[20, 0, 0]], "threshold": 1, "reading": "sum"},
     ]
     return document
 
@@ -190,9 +195,10 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
     refused naming the key; under "ordinal" the births' residues are today's, u = (ordinal - 1)
     mod 64 over 64 births; under "seed" the 64 births take every residue of Z_64 once, in the
     permutation's order (the engine's `birth_orders`), two seeds two orders, the same seed the
-    same order; the four cells' counts of the world's clicks (the two receivers, the two sponge
-    faces) over exactly W = 64 births are the same under "ordinal" and "seed" (the derivation's
-    claim; a GAMEBOARD reading, no pin); the gather line keeps `u` (HOST); the refusals: the
+    same order; the four joint cells' counts of the world's pair gathers (the two polarisers'
+    channels, section 1 item 3) over exactly W = 64 births are the same under "ordinal" and
+    "seed" (the derivation's claim; a GAMEBOARD reading, no pin); the gather line keeps `u`
+    (HOST); the refusals: the
     stride r = 2 under "seed", the seed absent under "seed", the seed present under "ordinal",
     a value that is neither, either key on a lamp without arms and either key on a pair lamp
     outside the local detector law."""
@@ -230,20 +236,21 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
     assert [line["u"] for line in other_births] != residues
     again_births, _, _ = run(pair_world("seed", 50 << 20, 64))
     assert [line["u"] for line in again_births] == residues
-    # the counts do not move with the order: one record per arm per birth,
-    # each clicking once; the four cells' counts the same multiset
-    assert len(ordinal_gathers) == len(seed_gathers) == 128
+    # the counts do not move with the order: one gather per pair birth (the
+    # joint ladder); the four joint cells' counts the same multiset
+    assert len(ordinal_gathers) == len(seed_gathers) == 64
 
     def counts(gathers: list[dict]) -> dict[str, int]:
         found: dict[str, int] = {}
         for gather in gathers:
-            found[gather["chosen"][0][0]] = found.get(gather["chosen"][0][0], 0) + 1
+            key = " ".join(f"{cell[0]}{cell[1]}" for cell in gather["chosen"])
+            found[key] = found.get(key, 0) + 1
         return found
 
     assert counts(ordinal_gathers) == counts(seed_gathers)
-    assert sum(counts(seed_gathers).values()) == 128 and len(counts(seed_gathers)) >= 2
+    assert sum(counts(seed_gathers).values()) == 64 and len(counts(seed_gathers)) >= 2
     assert all("u" in gather and "birth" in gather and "click" in gather for gather in seed_gathers)
-    assert sorted(gather["u"] for gather in seed_gathers) == sorted(list(range(64)) * 2)
+    assert sorted(gather["u"] for gather in seed_gathers) == list(range(64))
     # the refusals
     for order, seed, message in (
         ("seed", None, "residue_seed is required under residue_order"),

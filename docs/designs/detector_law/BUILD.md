@@ -1268,3 +1268,38 @@ on the light clock's chain.
 - THE THREE TESTS: generic (the take primitive as built, no family
   name), vector (the receiver form's verbs, no root, no float), local
   (the emitter's own Nodes, its own record).
+
+## 19. The joint gather: the polariser's two cells and the pair's one ladder (DECLARATIONS.md section 1 item 3, section 14 item 6, section 15 T-1; the model owner's word of 2026-09-24, about 09:48Z, "go with the recommendations", the Boss's order of 10:00Z; `detector-law-joint-gather` off `detector-law-build-3` at 1529d20)
+
+The finding it answers (the Preliminary Runner, records 1770 to 1779): on
+every engine every gather's ladder held one cell, the arm's own table's
+cell "0", no joint cell and no channel; the Bell and Malus pins were
+unbuilt. Three commits, one per component; the first builder's take and
+click lines untouched (the ladder's head of `_click`, the completion loop
+of `step` and one call after the booking loop of `_advance` are this
+build's, as named to the Boss at 10:32Z).
+
+| Component | The declaration | The code | The test |
+| --- | --- | --- | --- |
+| 1. The table body of two cells | Section 14 item 6: a polariser is a TABLE BODY of two cells on the arm's line; the entry cell its Node, the exit cell the next Node beyond it; the record's offer at the entry's Ports split by [C'[s]^2, S'[s]^2] over n_s with the remainder kept, the + share to the exit, the - share to the entry; the click's interval the first rung of the whole offer at the body over W, its cell by u on the ladder of the two weights; the three tests held (one primitive, verbs B, D and E, the entry's own record and its one Link to the exit) | `TableBody`, `_polarisers` (a measured event whose table entry carries an integer `phase_window` on a family; its arm the one of the family's ONE lamp whose direction points from the lamp to the body, the exit Node body + direction, on the board and free; a reading of the window's centre, a body on no arm, two lamps, an exit off the board or taken, or no set of one Node naming the body: refused at construction), `_table_body` (the cells `<set>+` at the exit and `<set>-` at the entry, in that order on the ladder, both take Nodes booking to the body, on the set's wheel; the pair from `amplitude.half_angle`, the amplitude law's own integers), `_split_table_offers` (called once per interval after the booking loop: the entry pointer's gain since the last split times C'^2 over n_s, the remainder per record, moved to the + cell; the whole offer's rung stamped on both cells; `absorbed`, the norm and every other cell untouched), the gather's cell triples [set, channel, label] from `cell_set` and `cell_channel` (every cell as built [name, 0, "0"], so the lamp worlds' lines are byte for byte: test (p)'s digests unchanged). The rotation U_s enters through the split's weights and the joint weights; the rows are taken at the entry. THE READING NOT TAKEN: the `directions` of a measured event default to the six headings and cannot name the arm; the arm is the lamp's | `tests/test_detector_law_tables.py` (d): two cells, the shares within a unit of the declared share, one rung for both cells, the gather's triples, 64 / 32 / 0 of 64 at s = 0, N / 4 and N / 2 over the full wheel (the pin's form, 128 of 256 at 45 degrees), the books balanced; the four refusals |
+| 2. The pair's one gather | Section 1 item 3: the pair's record gathers ONCE, its ladder the four joint cells (++, +-, -+, --) with the weights R = J^2, J(o_A, o_B) = SUM over the labels l of U_a[o_A][l] U_b[o_B][l] over both arms' tables (the declared integer pairs, no root, no float), the birth's one u choosing one cell, each arm's table counting its own channel of it; an arm's own two-cell ladder is NOT the Bell reading (Reviewer 3's withdrawn line); Malus the one-table case of the same ladder | `joint_weights` (per body its half-angle pair and its arm; U_s the row the channel, the column the label's bit on the body's arm, as `amplitude.rotation`; J over the birth's joint labels with their weights; R = J^2; the cells in the lexicographic order of the bodies' channels; one primitive for two bodies or one), `pair_bodies` (a lamp of several arms needs ONE table body of its family on each arm, in the sets' order; refused otherwise), `LiveRecord.arm_done` and the completion loop of `step` (an arm that completes waits, its rows still; the pair gathers when every arm has), `_click_pair` (the ladder over the four weights where every arm's offer reached its body, else no cell; the content, the arms' contents summed, one quantum, handed once to the body on the arm it was born on, arm 0; `chosen` the joint cell, one triple per body; `arm_records`; `arm_offers` HOST; `click` the later of the arms' first rungs at their bodies, `click_at` "rung" where both have one, the stamp the interval) | (e): 64 gathers of 64 births, the four cells' order, the counts 16 each at (0, N / 4), 32 and 32 on ++ and -- at (0, 0), on +- and -+ at (0, N / 2), u once each, the content one; (f): Alice's marginal exactly 32 of 64 at four settings pairs, Bob's within one (his cells not adjacent on the ladder); (g): the declared J^2 integers from planted tables, E = 46565 / 65773 at (256, 0) against (237, 98) (COMPUTATION, the form's own number for the generator's `bell.py`), the singlet's zero cells, the one-table case; (b) with the two table bodies and the refusal of a pair lamp without them; the order channel's test on 64 pair gathers |
+| 3. The reader | RUN_LIST.md rows 1a to 1d and 9: the four cells' counts per setting, S from the four correlations, the marginals per side; Malus the + channel's share; read from the gather lines, never a pin moved | `tools/click_readings/detector_law_bell.py` (`read_run`, `counts_of`, `chsh`, `report`; integers and Fractions, no float in a number) | (h): the reader on a run folder written by the runner from the bar worlds |
+
+THE BOOKS LINE, named (the Boss's item (1), the preliminary's Alice [0, 1]
+against Bob [2048, 1]): in the engine as built the pair's one quantum rode
+arm 0, the lamp's first direction (+x, Bob's arm on the GO bar), and Alice's
+arm carried 0 (`_births`: "the pair's one quantum on arm 0, a default,
+named"), so the asymmetry was the arm-per-record form's, not a physical
+reading. Under the one gather the quantum lands once, at the joint click,
+on the body of the arm it was born on (arm 0, the lamp's first direction:
+bob on the GO bar), the first builder's word of 10:57Z: the quantum lands
+where it is born and closes in the joint gather; the gather names the
+joint cell, both channels.
+
+THE WORLD FILES (a finding for the World Generator, not this build's):
+`malus_45.json` and its three settings at `detector-law-worlds` 0fd1156 put
+the polariser at x = 6 on a chain of 7, so its exit cell x = 7 is off the
+board and the world is refused at construction naming it; the chain of 8
+(or the polariser at x = 5) admits it. Their `read` counter at x = 4 stays
+Reviewer 3's named defect of 08:52Z. The Bell four load unchanged (alice at
+x = 7 with the exit x = 6 on the -x arm, bob at x = 17 with the exit x = 18).
