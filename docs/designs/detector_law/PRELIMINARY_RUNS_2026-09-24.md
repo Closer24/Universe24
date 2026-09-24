@@ -844,3 +844,25 @@ The control at rest (`redshift_control.json`):
   first about 1900 after its birth, no face, one line per record, A at
   rest; HOST 32 minutes wall on a shared core against "about a minute").
 
+
+## 25. Bell's four settings on the two-arm files (`bell_a0b0.json` at a071e65a, `bell_a0b1.json` at 04a2d047, `bell_a1b0.json` at f841a75a, `bell_a1b1.json` at 297ec816; "the joint gather"; main 2e1d5610): STOPPED ON THE OWNER'S WORD
+
+The four loaded VALID on main 2e1d5610 and ran from 13:58Z to 14:06Z on the
+four cores (the runner's default record, 5500 ticks each). On the owner's
+word of 15:50Z through the Boss (the two-arm emitter is cancelled; Bell is
+one experiment through a crystal, its four worlds to come from Nature24's
+design), the batch was STOPPED at 15:08Z by killing the four engine
+processes, at 64 to 68 minutes of wall time each (HOST: 3819, 4083, 4051
+and 3972 s, 73 MB each, exit by signal 15). The runner writes `run.json`
+and the event lines at the run's end, so NO partial count exists: the four
+`events.jsonl` files are empty and no `run.json` was written; the only
+count of this build on these files is a 300-tick HOST probe of
+bell_a0b0 made at 15:03Z to read the build's pace (300 births in 13 s, one
+per interval, no gather within 300 intervals: GAMEBOARD, a diagnostic of
+the joint gather's code alone, nothing compared). The Boss's earlier line
+of 15:05Z (let the batch finish as a diagnostic) is superseded by 15:50Z.
+No further run starts on these four files; Bell's row is run again on the
+crystal's worlds when they land.
+
+- Against TEST_RUNS.md (section 13, main 8b9a2897): not run to its end;
+  no line.
