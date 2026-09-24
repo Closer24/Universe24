@@ -7203,3 +7203,11 @@ behind a pointer for the page. The abstract's last sentence ("the
 order of its outcomes is not, a FAIL by derivation") is the counter
 wheel's and now differs from row 1c's declared-form reading; raised to
 the Boss, not changed. 48 pages.
+
+## Applied (2026-09-24, the owner's word of 07:27Z through the Boss's order of 07:45Z): commit 57 on paper-48
+
+The title's "matches" becomes "it confronts" (the owner's pick of
+candidate (a), record 1711): the title line, the abstract's first
+sentence that echoes it ("confront the quantum and relativistic
+experiments?") and COVER_LETTER.md's quotation of the title. Nothing
+else in this commit. 48 pages.

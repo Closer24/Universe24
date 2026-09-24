@@ -6173,6 +6173,16 @@ CORRECTIONS = [
         "and the atom's $1/j^2$ ladder are conjectures.",
         "and the atom's ladder are conjectures.",
     ),
+    (
+        "commit 57, the owner's word of 07:27Z (record 1711): the title's 'matches' becomes 'it confronts'",
+        "and the quantum and relativistic experiments it matches}",
+        "and the quantum and relativistic experiments it confronts}",
+    ),
+    (
+        "commit 57, the abstract's first line echoing the title: 'match' becomes 'confront'",
+        "read only through detectors' clicks, match the quantum and relativistic experiments?",
+        "read only through detectors' clicks, confront the quantum and relativistic experiments?",
+    ),
 ]
 
 

@@ -4,7 +4,7 @@ Dear Editors,
 
 I submit the manuscript "Universe24: the group of order 24 behind the
 clicks, one local integer rule on the cube's lattice, and the quantum and
-relativistic experiments it matches" for consideration as a regular
+relativistic experiments it confronts" for consideration as a regular
 article. A preprint is posted on arXiv (identifier to be added on
 posting); the manuscript is not under consideration elsewhere.
 
