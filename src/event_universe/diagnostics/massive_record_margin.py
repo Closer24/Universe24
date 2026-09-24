@@ -80,6 +80,16 @@ class MarginReading:
     def bound(self) -> bool:
         return self.kappa > 0.0
 
+    @property
+    def runaway(self) -> bool:
+        """The largest eigenvalue at or above 2: the well's mode is no
+        oscillation (2 cos omega_b = lambda has no omega_b) but a level
+        that grows by lambda / 2 + sqrt(lambda^2 / 4 - 1) per interval
+        (a well too deep for its board: on a chain or a layer the folded
+        axes' self-reads count fully, so a one-cell well runs away at a
+        depth that binds on a cube; BUILD.md section 26)."""
+        return self.lambda_max >= 2.0
+
     def lines(self) -> list[str]:
         """The reading printed, one line per fact, labelled COMPUTATION."""
         found = [
@@ -308,11 +318,13 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     extent = 1.0 / kappa if kappa > 0.0 else math.inf
     axes = []
     for axis, name in enumerate(("x", "y", "z")):
-        if wrap[axis] and shape[axis] < definition.side:
+        if wrap[axis] and shape[axis] <= definition.side:
             # A FOLDED axis (a layer or a chain, MASSIVE_RECORD.md section 11
             # item 7: the block wraps onto itself and the rule reads the
             # Node itself across it, a_U = a_D = a_now): no face, no tail,
-            # nothing for the rule to compare on that axis.
+            # nothing for the rule to compare on that axis. A body whose side
+            # equals the axis's extent spans it the same way (an emitter body
+            # of side 1 on a chain or a layer, BUILD.md section 26).
             continue
         if wrap[axis]:
             have = float(shape[axis])
@@ -363,6 +375,14 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             continue
         reading = block_margin(world, number)
         found.append(reading)
+        if reading.runaway:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}]: the block's mode is a runaway (2 cos omega_b = "
+                f"{reading.lambda_max:.6f} at or above 2: no oscillation, a level growing by "
+                f"{reading.lambda_max / 2 + math.sqrt(reading.lambda_max**2 / 4 - 1):.4f} per "
+                "interval; the well is too deep for its board, the folded axes' self-reads "
+                "counting fully on a chain or a layer; BUILD.md section 26)"
+            )
         if not reading.bound:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{number}]: the block's mode is not bound (2 cos omega_b = "

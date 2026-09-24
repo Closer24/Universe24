@@ -41,6 +41,15 @@ any of these missing. The numbers below (intervals, counts) are the
 declarations' geometry (the transit at c = 0.577 Links per interval, the
 train's length, the hold), not pins.
 
+SINCE BUILD.md SECTION 26 (2026-09-24): the lamp is refused under the
+detector law and every world below is regenerated onto an emitter body
+(the kind [7, 8], the well [8, 7], seeded on its mode; the Malus bar's
+ticks 3200 for its wheel of 256); a section's "births from tick n at one
+per m intervals" reads on the emitter as the u-th residue's click about
+(2 u + 1) / (W omega_b^2) intervals after its excitation (section 26 item
+8); its "clean" lines on the lamp's train stand as written until the
+preliminary on the emitter, which this file records before the run.
+
 ## 1. The pace fans, row 5a (three worlds, on main)
 
 1. `examples/events/detector_law/pace_fan_12.json`, `pace_fan_16.json`,

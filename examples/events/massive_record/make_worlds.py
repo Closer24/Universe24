@@ -125,6 +125,9 @@ BLOCK_KEYS = (
     "margin",
     "emits",
     "held",
+    # the emitter as a clicking body (ALGEBRA.md 9.17; BUILD.md section 26)
+    "emitter",
+    "receiver",
 )
 
 
@@ -151,14 +154,18 @@ def world(
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
     if faces is not None:
         matter["faces"] = faces
+    families = [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter]
+    if any(block.get("family") == "source" for block in blocks):
+        # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
+        families.append({"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)})
     measured: list[dict] = []
     if lamp is not None:
         measured.append(lamp)
     for block in blocks:
         entry: dict = {
             "position": block["position"],
-            "family": "matter",
-            "amount": 1,
+            "family": block.get("family", "matter"),
+            "amount": block.get("amount", 1),
             "phase": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
             "fixed": True,
@@ -188,7 +195,7 @@ def world(
         # asserted below it at run time)
         "amplitude_bound": AMPLITUDE_BOUND,
         "directions": [],
-        "families": [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
+        "families": families,
         "measured": measured,
         "detectors": [],
     }
@@ -207,14 +214,17 @@ def seed_on_the_mode(document: dict) -> None:
     the body's algebraic conditions exact in the initial state, the whole board carrying the
     mode's values; the engine's `check_body_conditions` refuses a body whose initial state
     differs from it on any Node): a block of the massive kind with a lowered pair (a well),
-    a nonzero scalar seed (the loader's default 2^20 where none is declared) and no cavity
+    a nonzero scalar seed (the loader's default 2^20 where none is declared) and no cavity,
+    of ANY massive family (the emitter bodies of the light worlds and the M1 rows' source
+    family included, ALGEBRA.md 9.17),
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
     silent block (seed 0), a barrier (a raised pair) and a cavity keep their keys."""
-    kind = next(family["pair"] for family in document["families"] if family["name"] == "matter")
+    kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
     for number, entry in enumerate(document["measured"]):
-        if "side" not in entry or entry.get("family") != "matter" or entry.get("cavity"):
+        if "side" not in entry or entry.get("family") not in kinds or entry.get("cavity"):
             continue
+        kind = kinds[entry["family"]]
         pair = entry["pair"]
         if pair[0] * kind[1] <= pair[1] * kind[0]:
             continue
@@ -225,17 +235,32 @@ def seed_on_the_mode(document: dict) -> None:
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
 
 
-def lamp_at(x: int, train: int) -> dict:
-    """A lamp of light at a Node of the chain, its train of `train` periods on +x."""
+SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505; no clock)
+SOURCE_WELL = [8, 7]  # its one-cell well: bound on a chain (omega_b = 0.32) and on a layer
+
+
+def emitter_at(
+    x: int, stock: int = 1, wheel: list[int] | None = None, pair: list[int] | None = None
+) -> dict:
+    """An EMITTER BODY of light at a Node of the chain (ALGEBRA.md 9.17 (4); BUILD.md section
+    26): a well of the massive kind of side 1 seeded on its mode (`seed_on_the_mode`), its
+    stock `stock` excitations on the wheel given ([1, 1] for one birth), each clicking at its
+    own rung and writing its photon once; the lamp's train of periods retired (a one-cell
+    birth is broadband; the line emitter's travelling character is owed, LAB_TOOLS.md A.1).
+    The body is of the family `source` (the kind SOURCE_KIND, added to the world by
+    `world`), its well SOURCE_WELL unless given; the wheel's cadence (COMPUTATION, BUILD.md
+    section 26) about (2 u + 1) / (W omega_b^2) intervals for the u-th residue, 10 (2 u + 1)
+    / W on this well; a well too deep for its board is a runaway, refused at the margin
+    rule."""
     return {
         "position": [x, 0, 0],
-        "family": "light",
-        "amount": 1,
-        "phase": 0,
-        "momentum": [0, 0, 0],
-        "fixed": True,
-        "directions": [[1, 0, 0]],
-        "lamp": {"rate": [1, 1], "wheel": [2531, 4096], "directions": [[1, 0, 0]], "train": train},
+        "family": "source",
+        "side": 1,
+        "pair": list(pair or SOURCE_WELL),
+        "seed": 100,
+        "amount": stock,
+        "margin": "control",
+        "emitter": {"family": "light", "wheel": list(wheel or [1, 1]), "residue_order": "ordinal"},
     }
 
 
@@ -346,11 +371,11 @@ def worlds() -> dict[str, dict]:
             [1400, 1, 1],
             CHAIN,
             [7, 8],
-            [block],
+            [emitter_at(600), block],
             1850,
             light=index_light,
             faces={"x": "open"},
-            lamp=lamp_at(600, 64),
+            lamp=None,
             probes=[[1100, 0, 0]],
         )
     out["index_reference"] = world(
@@ -359,11 +384,11 @@ def worlds() -> dict[str, dict]:
         [1400, 1, 1],
         CHAIN,
         [7, 8],
-        [],
+        [emitter_at(600)],
         1850,
         light=index_light,
         faces={"x": "open"},
-        lamp=lamp_at(600, 64),
+        lamp=None,
         probes=[[1100, 0, 0]],
     )
     # (v-m) the moving index, PREDICTION: the block at rest at x = 1100 read at light's
@@ -388,7 +413,7 @@ def worlds() -> dict[str, dict]:
                 4400,
                 light=light_clock,
                 faces=FACES_OPEN,
-                lamp=lamp_at(300, 200),
+                lamp=None,
                 probes=[[1500, 0, 0]],
             )
     for k, momentum in ((3, MOMENTUM_K3), (4, MOMENTUM_K4)):
@@ -400,11 +425,11 @@ def worlds() -> dict[str, dict]:
                 [2200, 1, 1],
                 CHAIN,
                 [156, 157],
-                [moving_block(x, [sign * momentum, 0, 0], start=2600)],
+                [emitter_at(300), moving_block(x, [sign * momentum, 0, 0], start=2600)],
                 4400,
                 light={"name": "light", "quantum": 1, "phase_per_link": MOVING_CLOCKS["omega"]},
                 faces=FACES_OPEN,
-                lamp=lamp_at(300, 200),
+                lamp=None,
                 probes=[[1500, 0, 0]],
                 mode_axis="x",
             )
@@ -418,8 +443,8 @@ def worlds() -> dict[str, dict]:
     for label in ("omega", "k3_away", "k4_away"):
         light_clock = {"name": "light", "quantum": 1, "phase_per_link": MOVING_CLOCKS[label]}
         for name, blocks in (
-            (f"index_moving_long_rest_{label}", [moving_block(2100, [0, 0, 0])]),
-            (f"index_moving_long_reference_{label}", []),
+            (f"index_moving_long_rest_{label}", [emitter_at(800), moving_block(2100, [0, 0, 0])]),
+            (f"index_moving_long_reference_{label}", [emitter_at(800)]),
         ):
             if label == "omega" and "rest" in name:
                 continue
@@ -433,7 +458,7 @@ def worlds() -> dict[str, dict]:
                 6000,
                 light=light_clock,
                 faces=FACES_OPEN,
-                lamp=lamp_at(800, 200),
+                lamp=None,
                 probes=[[2400, 0, 0]],
             )
     for k, momentum in ((3, MOMENTUM_K3), (4, MOMENTUM_K4)):
@@ -444,11 +469,11 @@ def worlds() -> dict[str, dict]:
             [4000, 1, 1],
             CHAIN,
             [156, 157],
-            [moving_block(1500, [momentum, 0, 0], start=3000)],
+            [emitter_at(800), moving_block(1500, [momentum, 0, 0], start=3000)],
             6000,
             light={"name": "light", "quantum": 1, "phase_per_link": MOVING_CLOCKS["omega"]},
             faces=FACES_OPEN,
-            lamp=lamp_at(800, 200),
+            lamp=None,
             probes=[[2400, 0, 0]],
             mode_axis="x",
         )
@@ -504,11 +529,10 @@ def receiver_at(x: int, name: str) -> tuple[dict, dict]:
 
 def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra: object) -> dict:
     """An EMITTER block of the launch list (DECLARATIONS.md sections 4 and 10): the well at
-    the cells, the seed 50 x 2^20, `emits` light with G [1, 50] and g [1, 1000] (section
-    15 M1-1: the same world as G [1, 1], g [1, 50000], seed 2^20 inside MUST 3's bound;
-    the emitter's radiative damping 6.7 x 10^-5 per interval), W = 64, `own_grace` 70
-    (N_s, section 10 item 1); the emission consumes no stock (M1-2, no `held`). `ticks`
-    is the world's."""
+    the cells, the seed 50 x 2^20, the coupling G [1, 50] and g [1, 1000] (section 15
+    M1-1) for its response to light, W = 64; SINCE ALGEBRA.md 9.17 its emission is by its
+    excited records' clicks (`emitter`: light on the wheel [1, 64], the stock 64
+    excitations), no `emits`, no `own_grace`, no source term. `ticks` is the world's."""
     _ = ticks
     block: dict = {
         "position": position,
@@ -517,8 +541,8 @@ def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra
         "seed": 50 << 20,
         "coupling": {"G": [1, 50], "g": [1, 1000]},
         "wheel": 64,
-        "emits": "light",
-        "own_grace": 70,
+        "amount": 64,
+        "emitter": {"family": "light", "wheel": [1, 64], "residue_order": "ordinal"},
         "margin": "pin",
     }
     block.update(extra)

@@ -124,23 +124,11 @@ class LiveRecord:
     first_rung: list[int | None] = field(default_factory=list)
     ports: list[np.ndarray] = field(default_factory=list)
     driven: np.ndarray | None = None
-    # line 7: whether the record's last interval was exempt at the sets bound
-    # to its emitter (the grace's end books the set Nodes' own content once)
-    was_exempt: bool = False
-    # item 10 (DECLARATIONS.md section 10 item 10): whether the record's own
-    # emitter's Nodes have taken it (from the first interval after its train; HOST:
-    # the content booked to the ledger's row `taken_by_emitter` at its end,
-    # never to a pointer nor to `absorbed`), and the emitter's Nodes at the
-    # last interval (a new Port at a hop)
-    emitter_took: bool = False
-    own_previous: np.ndarray | None = None
-    # massive-record-v1: the emitter's number for a record a block emitted
-    # (None for a lamp's record), whether the block is still sourcing it
-    # (the current cycle's record), and the coupling's denominator folded
+    # massive-record-v1: the emitter's number for a record a body emitted
+    # (None for a planted record), and the coupling's denominator folded
     # into the row's wall (MASSIVE_RECORD.md section 7, MUST A: one D per
     # row per interval; the wall 3 den x scale, the remainder in [0, wall)).
     emitter: int | None = None
-    sourcing: bool = False
     scale: int = 1
     # The Ports' first differences summed (a taken record): what an absorbing
     # block's cells read of light, the field its coupling receives.
@@ -400,22 +388,12 @@ class DetectorLawSimulation:
         self.cell_channel: list[int] = []
         self.cell_index = np.full(self.shape, -1, dtype=np.int64)
         self.absorbing = np.zeros(self.shape, dtype=bool)
-        self.lamp_nodes: dict[int, list[tuple[int, int, int]]] = {}
-        self.lamp_accumulator: dict[int, int] = {}
-        self.lamp_births: dict[int, int] = {}
-        # The order channel's key (DECLARATIONS.md section 2 item 8): a pair
-        # lamp under `residue_order` "seed" births the residues of its wheel's
+        # The order channel's key (DECLARATIONS.md section 2 item 8): an emitter
+        # body under `residue_order` "seed" excites the residues of its wheel's
         # Z_W in the order of a keyed permutation, formed once here from its
         # `residue_seed` (an input of kind 1, written to no line; the hash the
-        # declaration's, verbatim); a lamp under "ordinal" keeps the counter.
+        # declaration's, verbatim); a body under "ordinal" keeps the counter.
         self.birth_orders: dict[int, list[int]] = {}
-        for number, entry in enumerate(world.measured):
-            lamp_definition = entry.lamp
-            if lamp_definition is not None and lamp_definition.residue_order == "seed":
-                assert lamp_definition.residue_seed is not None
-                self.birth_orders[number] = keyed_permutation(
-                    lamp_definition.wheel[1], lamp_definition.residue_seed
-                )
         for number, entry in enumerate(world.measured):
             block_definition = entry.block
             if (
@@ -429,10 +407,6 @@ class DetectorLawSimulation:
                 )
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
-            if entry.lamp is not None:
-                self.lamp_nodes[number] = nodes
-                self.lamp_accumulator[number] = 0
-                self.lamp_births[number] = 0
             own = self._cell(f"measured:{number}", number, False)
             for node in nodes:
                 self.cell_index[node] = own
@@ -605,12 +579,16 @@ class DetectorLawSimulation:
         self.kind_wrap: list[tuple[bool, bool, bool]] = [
             world.kind_periodic(index) for index in range(len(world.families))
         ]
-        # The rung W of every detector set: the lamps' birth wheels' largest
-        # denominator, or the world key `wheel` where it is larger (a world
-        # without a lamp, whose records a block emits, declares its W so;
-        # RUN_LIST.md's light detectors at W = 64).
+        # The rung W of every detector set: the emitter bodies' wheels' largest
+        # W, or the world key `wheel` where it is larger (a world without an
+        # emitter body declares its W so; RUN_LIST.md's light detectors at W =
+        # 64).
         self.wheel = max(
-            (entry.lamp.wheel[1] for entry in world.measured if entry.lamp is not None),
+            (
+                entry.block.emitter.wheel[1]
+                for entry in world.measured
+                if entry.block is not None and entry.block.emitter is not None
+            ),
             default=1,
         )
         self.wheel = max(self.wheel, world.wheel)
@@ -742,10 +720,10 @@ class DetectorLawSimulation:
         14 item 6; the engine knows the entry, its setting and its arm): a
         measured event whose table entry for a family carries a
         `phase_window` s, the setting (an integer; a reading of the window's
-        centre is refused under the rule). Each lies on ONE arm's line of the
-        family's one lamp (the body's Node less the lamp's a positive
-        multiple of one of the arm's directions), and its EXIT Node is the
-        next Node beyond it along that direction, on the board and free.
+        centre is refused under the rule). Each reads the records of the
+        family's ONE emitter body (ALGEBRA.md 9.17: no heading), and its EXIT
+        Node is the next Node beyond it away from that body's centre (per
+        axis the sign of the offset), on the board and free.
         Returns per entry Node (the measured event's number, the family, the
         setting, the arm, the exit Node)."""
         world = self.world
@@ -760,45 +738,40 @@ class DetectorLawSimulation:
                         f"{BEAM_LAW}: {label}.phase_window must be an integer setting under "
                         f"{DETECTOR_LAW_RULE} (a table body's setting is a declared integer, not a reading)"
                     )
-                lamps = [
-                    (lamp_number, lamp_entry)
-                    for lamp_number, lamp_entry in enumerate(world.measured)
-                    if lamp_entry.lamp is not None and lamp_entry.family == family
+                sources = [
+                    (source_number, source_entry)
+                    for source_number, source_entry in enumerate(world.measured)
+                    if source_entry.block is not None
+                    and source_entry.block.emitter is not None
+                    and source_entry.block.emitter.family == family
                 ]
-                if len(lamps) != 1:
+                if len(sources) != 1:
                     raise ValueError(
-                        f"{BEAM_LAW}: {label}: a table body lies on the arm's line of the family's ONE "
-                        f"lamp; the family {self.families[family].name!r} has {len(lamps)}"
+                        f"{BEAM_LAW}: {label}: a table body reads the records of the family's ONE "
+                        f"emitter body; the family {self.families[family].name!r} has {len(sources)}"
                     )
-                lamp_number, lamp_entry = lamps[0]
-                lamp = lamp_entry.lamp
-                assert lamp is not None
+                source_number, source_entry = sources[0]
+                block_definition = source_entry.block
+                assert block_definition is not None
                 node = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-                delta = tuple(node[axis] - int(lamp_entry.position[axis]) for axis in range(3))
-                per_arm = len(lamp.directions) // lamp.arms
-                arm_found: int | None = None
-                vector: tuple[int, int, int] | None = None
-                for index, direction in enumerate(lamp.directions):
-                    v = tuple(int(c) for c in world.directions[direction])
-                    steps: set[int] = set()
-                    aligned = True
-                    for axis in range(3):
-                        if v[axis] == 0:
-                            aligned = aligned and delta[axis] == 0
-                        elif delta[axis] % v[axis]:
-                            aligned = False
-                        else:
-                            steps.add(delta[axis] // v[axis])
-                    if aligned and len(steps) == 1 and next(iter(steps)) > 0:
-                        arm_found = index // per_arm if per_arm else 0
-                        vector = (v[0], v[1], v[2])
-                        break
-                if arm_found is None or vector is None:
+                # the exit cell: the next Node beyond the body away from the
+                # emitter body's centre (per axis the sign of the body's offset
+                # from the centre, in doubled coordinates; nothing declared:
+                # the emitter has no heading, ALGEBRA.md 9.17); one arm
+                centre = tuple(
+                    2 * int(source_entry.position[axis]) + block_definition.side - 1 for axis in range(3)
+                )
+                vector = tuple(
+                    (1 if 2 * node[axis] > centre[axis] else -1 if 2 * node[axis] < centre[axis] else 0)
+                    for axis in range(3)
+                )
+                if not any(vector):
                     raise ValueError(
-                        f"{BEAM_LAW}: {label}: the body at {node} lies on no arm's line of the lamp "
-                        f"measured[{lamp_number}] at {tuple(int(c) for c in lamp_entry.position)} "
-                        "(a table body's exit cell is the next Node beyond it on the arm's line)"
+                        f"{BEAM_LAW}: {label}: the body at {node} sits at the centre of the emitter "
+                        f"body measured[{source_number}] (a table body's exit cell is the next Node "
+                        "beyond it away from the emitter)"
                     )
+                arm_found = 0
                 exit_node = [node[axis] + vector[axis] for axis in range(3)]
                 for axis in range(3):
                     if world.periodic[axis]:
@@ -1131,16 +1104,10 @@ class DetectorLawSimulation:
             for live in self.records.values():
                 if not live.ports:
                     continue
-                # The block's own emitted record: during its train the cells
-                # insert and the row evolves (line B); from the first interval
-                # after the train the block's take of its own record books
-                # nothing, at ANY age (item 10, record 1711: on no pointer and
-                # not into `absorbed`), so the Node the block steps into is
-                # held at 0 for that record and booked nowhere (before this
-                # line the hop booked it to the block's own pointer once the
-                # hold of train + own_grace had ended).
-                own = live.emitter == block.number
-                exempt = own and self._own_take(live) is None
+                # The block's own emitted record is a record like every other
+                # at the Node it steps into (ALGEBRA.md 9.17: no grace, no own
+                # take; the hop rule books the entered content as for any
+                # record).
                 ports = []
                 for axis, sign, mask in self.take_masks:
                     kept = next(
@@ -1164,11 +1131,7 @@ class DetectorLawSimulation:
                         fresh = np.where(mask & kept, live.ports[old_index], fresh)
                     ports.append(fresh)
                 live.ports = ports
-                if exempt or not entered.any():
-                    continue
-                if own:
-                    live.now[entered] = 0
-                    live.before[entered] = 0
+                if not entered.any():
                     continue
                 motion = np.where(entered, live.now - live.before, 0).astype(object)
                 value = int(np.sum(motion * motion))
@@ -1246,83 +1209,6 @@ class DetectorLawSimulation:
         return self._coupled_term(
             light, delta, block.mask, -numerator * (self.light_scale // denominator)
         )
-
-    def _block_births(self) -> None:
-        """A block that emits births one light record at each new cycle of its
-        clock, paying the family's quantum from its held content (as a lamp
-        does); the record's rows are sourced by the block's own current at
-        its cells while the cycle lasts."""
-        world = self.world
-        for block in self.blocks:
-            if not block.new_cycle:
-                continue
-            block.new_cycle = False
-            family = block.definition.emits
-            if family is None or block.own is None:
-                continue
-            # The emission is the coupling's source term: the record is born
-            # at content 0 and consumes no stock (DECLARATIONS.md section 15
-            # M1-2; the books balance with 0 content as a response's do).
-            cost = 0
-            block.births += 1
-            identity = block.number * (1 << 32) + block.births
-            definition = self.families[family]
-            assert definition.phase_per_age is not None
-            numerator, denominator = definition.phase_per_age
-            # No train and no grace: the block's cells are no lamp's Nodes
-            # (the record is sourced at the cells by the block's current,
-            # not driven), so the record's period and train are 0 and its
-            # completion waits on the cycle's end (`sourcing`).
-            live = LiveRecord(
-                identity,
-                block.number,
-                family,
-                0,
-                block.births,
-                self.tick,
-                cost,
-                numerator,
-                denominator,
-                0,
-                0,
-                np.zeros(self.shape, dtype=np.int64),
-                np.zeros(self.shape, dtype=np.int64),
-                np.zeros(self.shape, dtype=np.int64),
-                pointers=[0] * len(self.cell_names),
-                first_rung=[None] * len(self.cell_names),
-                ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
-                emitter=block.number,
-                sourcing=True,
-            )
-            live.driven = np.zeros(self.shape, dtype=bool)
-            if block.current is not None and block.current in self.records:
-                previous = self.records[block.current]
-                previous.sourcing = False
-                previous.train = previous.age
-                previous.period = block.cycle_length
-            block.current = identity
-            block.emitted.append(identity)
-            self.records[identity] = live
-            self.layer.born += 1
-            if self.record is not None:
-                self.record(
-                    {
-                        "event": "birth",
-                        "tick": self.tick,
-                        "node": list(block.corner),
-                        "measured": block.number,
-                        "family": definition.name,
-                        "record": identity,
-                        "u": 0,
-                        "labels": [[0, 1]],
-                        "arms": 1,
-                        "units": 1,
-                        "multiplicity": 1,
-                        "train": 0,
-                        "cycle": block.count,
-                        **({"clock": block.count} if world.clock_stamp else {}),
-                    }
-                )
 
     def _excitation_residue(self, block: Block, ordinal: int) -> int:
         """The residue of the block's `ordinal`-th excitation (from 1) on the
@@ -1544,8 +1430,6 @@ class DetectorLawSimulation:
         absorbing block books its Ports' offer as built and nothing here."""
         if block.definition.absorbing or block.taking:
             return
-        if light.emitter == block.number and self._in_grace(light):
-            return
         motion = (response.now - response.before).astype(object)
         value = int(np.sum(np.where(block.mask, motion * motion, 0)))
         if value == 0:
@@ -1584,160 +1468,11 @@ class DetectorLawSimulation:
         table: np.ndarray = self.cosine[steps]
         return table
 
-    def _births(self) -> None:
-        world = self.world
-        for number in self.lamp_nodes:
-            entry = world.measured[number]
-            lamp = entry.lamp
-            assert lamp is not None
-            family = entry.family
-            definition = world.families[family]
-            cost = definition.quantum
-            rate_numerator, rate_denominator = lamp.rate
-            self.lamp_accumulator[number] += rate_numerator
-            while (
-                self.lamp_accumulator[number] >= rate_denominator and self.held[number][family] >= cost
-            ):
-                self.lamp_accumulator[number] -= rate_denominator
-                ordinal = self.lamp_births[number] + 1
-                self.lamp_births[number] = ordinal
-                u = (ordinal - 1) * lamp.wheel[0] % lamp.wheel[1]
-                if number in self.birth_orders:
-                    # the seed-set order: u = order[(ordinal - 1) mod W], one
-                    # residue per birth over W births (the stride 1 at load)
-                    u = self.birth_orders[number][(ordinal - 1) % lamp.wheel[1]]
-                identity = number * (1 << 32) + ordinal
-                pair = definition.phase_per_age
-                if pair is None:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {DETECTOR_LAW_RULE} needs the pair form of phase_per_link on the family "
-                        f"{definition.name!r} (its clock)"
-                    )
-                numerator, denominator = pair
-                steps = world.phase_steps
-                if steps % 4:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {DETECTOR_LAW_RULE} needs N divisible by 4 (the clock's zero)"
-                    )
-                if numerator <= 0:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {DETECTOR_LAW_RULE} needs a positive clock on the family {definition.name!r}"
-                    )
-                # The period in intervals, N d / n, its ceiling as an integer.
-                period = (steps * denominator + numerator - 1) // numerator
-                train_periods = lamp.train if lamp.train is not None else DEFAULT_TRAIN
-                # The train begins at the clock's zero (the phase 3 N / 4, the
-                # cosine 0 and rising) and ends at the first zero after the
-                # declared periods, so that the insertion starts and stops
-                # smoothly: a step in the inserted amplitude would leave a
-                # static level on the board (the wave's zero-frequency mode),
-                # which no receiver takes.
-                train = max(1, (train_periods * steps * denominator + numerator - 1) // numerator)
-                while self._phase(train, numerator, denominator, steps) not in (
-                    steps // 4,
-                    3 * steps // 4,
-                ):
-                    train += 1
-                self.held[number][family] -= cost
-                self.ledger.held_spent[family] += cost
-                self.ledger.transit_released[family] += cost
-                # The pair's arms (build 2, component 2): one record per arm on
-                # this birth stamp; the pair's one quantum is carried by arm 0
-                # (the joint click books it once, the table rows' gather), the
-                # other arms carry 0; each arm's row is confined to the
-                # half-space of its first direction from the lamp's Node.
-                per_arm = len(lamp.directions) // lamp.arms if lamp.arms > 1 else 0
-                identities = []
-                for arm in range(lamp.arms):
-                    arm_identity = identity + (arm << 24) if lamp.arms > 1 else identity
-                    identities.append(arm_identity)
-                    live = LiveRecord(
-                        arm_identity,
-                        number,
-                        family,
-                        u,
-                        ordinal,
-                        self.tick,
-                        cost if arm == 0 else 0,
-                        numerator,
-                        denominator,
-                        train,
-                        period,
-                        np.zeros(self.shape, dtype=np.int64),
-                        np.zeros(self.shape, dtype=np.int64),
-                        np.zeros(self.shape, dtype=np.int64),
-                        pointers=[0] * len(self.cell_names),
-                        first_rung=[None] * len(self.cell_names),
-                        ports=[np.zeros(self.shape, dtype=np.int64) for _ in self.take_masks],
-                        arm=arm,
-                        arms=lamp.arms,
-                        labels=tuple(lamp.branches),
-                    )
-                    if lamp.arms > 1:
-                        vector = world.directions[lamp.directions[arm * per_arm]]
-                        live.mask = self._half_space(entry.position, vector)
-                    if lamp.receiver is not None:
-                        # the ladder by name: the cells of the named sets
-                        live.ladder = [
-                            cell for cell, name in enumerate(self.cell_set) if name in lamp.receiver
-                        ]
-                    driven = np.zeros(self.shape, dtype=bool)
-                    for node in self.lamp_nodes[number]:
-                        driven[node] = True
-                    live.driven = driven
-                    # The record's norm: the offer its train inserts (the squared
-                    # amplitudes over the train at the lamp's Nodes), the wheel's
-                    # rungs divide it; the first rung of a cell is the click's time.
-                    table = self._cosine_table(world.phase_steps)
-                    # The record's norm: the motion its train inserts (the squared
-                    # steps of the driven amplitude over the train at the lamp's
-                    # Nodes); the wheel's rungs divide it, the first rung of a cell
-                    # is the click's time.
-                    values = [
-                        int(table[self._phase(t, numerator, denominator, steps)])
-                        for t in range(train + 1)
-                    ]
-                    values[-1] = 0
-                    live.norm = len(self.lamp_nodes[number]) * sum(
-                        (values[t + 1] - values[t]) ** 2 for t in range(train)
-                    )
-                    self.records[arm_identity] = live
-                self.layer.born += 1
-                if self.record is not None:
-                    self.record(
-                        {
-                            "event": "birth",
-                            "tick": self.tick,
-                            "node": list(entry.position),
-                            "measured": number,
-                            "family": definition.name,
-                            "record": identity,
-                            "u": u,
-                            "labels": [list(branch) for branch in lamp.branches],
-                            "arms": lamp.arms,
-                            **({"arm_records": identities} if lamp.arms > 1 else {}),
-                            "units": 1,
-                            "multiplicity": 1,
-                            "train": train,
-                            **({"clock": self.tick} if world.clock_stamp else {}),
-                        }
-                    )
-
     @staticmethod
     def _phase(age: int, numerator: int, denominator: int, steps: int) -> int:
         """The record's clock at its age: the zero (3 N / 4) advanced by the
         whole part of age x n / d on the circle of N steps."""
         return (3 * steps // 4 + age * numerator // denominator) % steps
-
-    def _drive(self, live: LiveRecord) -> None:
-        """The record's clock at the lamp's Nodes for the train."""
-        if live.age >= live.train:
-            return
-        steps = self.world.phase_steps
-        phase = self._phase(live.age, live.period_numerator, live.period_denominator, steps)
-        value = int(self._cosine_table(steps)[phase])
-        for node in self.lamp_nodes[live.lamp]:
-            live.now[node] = value
 
     # The rule
 
@@ -1813,53 +1548,11 @@ class DetectorLawSimulation:
         return mask
 
     def _advance(self, live: LiveRecord, extra: np.ndarray | None = None, scale: int = 1) -> None:
-        # The inserter's own Nodes are driven for the train and read their own
-        # record only after its tail has left them (two periods after the
-        # train; the first build's grace, DESIGN.md section 11): a receiver's
-        # Port books the wave's motion beside it, and the tail leaving the
-        # lamp is not an arrival.
-        # Line B (Reviewer 3, DECLARATIONS.md section 10's cycle sentence): a
-        # BLOCK'S emitted record has the same grace, its driven set the
-        # block's current cells while the block sources it and for two of
-        # the block's periods after the cycle's end, the offer dropped at the
-        # block's own cell; the first rung after the grace is the receive.
-        in_grace = self._in_grace(live)
-        driven = self._driven(live) if in_grace else None
-        # the sets bound to the emitting block are FREE for its own record
-        # during the record's grace (line 7; DECLARATIONS.md section 10 item
-        # 9): no take, no zero, the row evolving there
-        exempt = self._exempt(live) if in_grace else None
-        if exempt is not None:
-            driven = exempt if driven is None else (driven | exempt)
-        # Item 10 (DECLARATIONS.md section 10 item 10, the emitter's ringing,
-        # the rule at T = 0, record 1711): from the first interval after its
-        # train the record's own emitter's Nodes (a lamp's Nodes; an emitting
-        # block's current cells) are a taking set for THIS record alone in the
-        # receiver form (the row held at 0, one ghost per Port in the record's
-        # own KIND'S pair), booking nothing onto a pointer nor `absorbed` (the
-        # ledger books the content to the HOST row `taken_by_emitter` at the
-        # record's end): the emitter never clicks on its own record. The Ports
-        # of that set are the record's own (`masks`); a Port new this interval
-        # (the first, a hop) starts at its free neighbour's level, no jump.
-        own = self._own_take(live)
+        # THE EMITTER'S CELLS ARE CELLS LIKE EVERY OTHER (ALGEBRA.md 9.17; the
+        # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
+        # own take, no fresh Port; the born record is written once and the
+        # law advances it (the retired forms in BUILD.md section 26).
         masks = self.take_masks
-        fresh: np.ndarray | None = None
-        if own is not None:
-            if driven is not None:
-                driven = driven & ~own
-            if exempt is not None:
-                # A set that IS the emitting block's cells (the form without
-                # positions, R2's and the sagnac worlds'): item 10's take wins
-                # at the emitter's own cells from the train's end, so the
-                # set's exemption keeps only its Nodes beyond them (the
-                # positions form's free Node); a Node both exempt and taking
-                # would be neither held at 0 nor free, a half-state that
-                # grows without bound on a stepping block.
-                exempt = exempt & ~own
-                if not exempt.any():
-                    exempt = None
-            masks = self._form_take_masks(self.absorbing | own)
-            fresh = own if live.own_previous is None else (own & ~live.own_previous)
         # The take (the receivers' Ports, the faces' sponge) reads every
         # LAMP'S record, light's kind or a massive kind alike (the click is
         # the law's one action on any record, POSTULATES 10; Reviewer 3's
@@ -1885,7 +1578,7 @@ class DetectorLawSimulation:
             live.scale = scale
         wall = 3 * den * scale
         neighbours = self._neighbours(
-            live.now, live.ports if taken else None, driven, self.kind_wrap[live.family], masks
+            live.now, live.ports if taken else None, None, self.kind_wrap[live.family], masks
         )
         total = num * scale * neighbours
         total -= wall * live.before
@@ -1908,33 +1601,25 @@ class DetectorLawSimulation:
             live.before = live.now
             live.now = nxt
             live.age += 1
-            # A matter lamp's record is driven at the lamp's Nodes for its
-            # train as light's (the same verb at the family's clock; a
-            # block's record has no train and is driven by nothing here).
-            self._drive(live)
             return
+        # Content found on a take Node this interval (a record written on a
+        # set's own cells: an emitter whose set IS its cells, the form without
+        # positions) is taken as the hop rule takes an entered Node's content
+        # (DECLARATIONS.md section 13 item 4): its motion squared booked to
+        # the cell and its rows held at 0 from here, so that the set reads
+        # the write itself (the self-click of that form, E E^T; BUILD.md
+        # section 26) and nothing of a record vanishes unbooked; the rule's
+        # step this interval read the content as it stood (a planted row's
+        # integers unchanged).
         ended: list[tuple[int, int]] = []
-        taking = self.absorbing if own is None else (self.absorbing | own)
-        if exempt is None:
-            if live.was_exempt:
-                # The grace's end (Reviewer 3's line on 906d3635): the set
-                # Nodes' own row, which evolved freely, is taken now as the
-                # hop rule takes an entered Node's content: this interval's
-                # motion there squared, booked to the set's pointer and to
-                # `absorbed` below, before the row is held at 0.
-                freed = self._exempt(live)
-                if freed is not None and own is not None:
-                    # the emitter's own cells were never free (item 10)
-                    freed = freed & ~own
-                if freed is not None:
-                    motion = np.where(freed, nxt - live.now, 0).astype(object)
-                    for node in zip(*np.nonzero(freed), strict=True):
-                        ended.append((int(self.cell_index[node]), int(motion[node]) ** 2))
-                live.was_exempt = False
-            nxt[taking] = 0
-        else:
-            live.was_exempt = True
-            nxt[taking & ~exempt] = 0
+        found = self.absorbing & ((live.now != 0) | (live.before != 0))
+        if found.any():
+            motion = np.where(found, live.now - live.before, 0).astype(object)
+            for node in zip(*np.nonzero(found), strict=True):
+                ended.append((int(self.cell_index[node]), int(motion[node]) ** 2))
+            live.now[found] = 0
+            live.before[found] = 0
+        nxt[self.absorbing] = 0
         if live.mask is not None:
             # the arm's row lives on its own side of the lamp (component 2)
             nxt[~live.mask] = 0
@@ -1948,38 +1633,16 @@ class DetectorLawSimulation:
         for index, (axis, sign, mask) in enumerate(masks):
             free_now = self._shift(live.now, axis, sign)
             free_next = self._shift(nxt, axis, sign)
-            if fresh is not None:
-                # a new Port of the emitter's own set starts at its free
-                # neighbour's level (no stale ghost, no jump booked)
-                live.ports[index] = np.where(fresh & mask, free_now, live.ports[index])
-            if own is not None:
-                # the emitter's own Ports follow in the record's KIND'S pair
-                # (light's [-15, 56]; a massive kind's declared `take`)
-                own_num, own_den = self.kind_take[live.family]
-                own_ghost = np.floor_divide(
-                    own_den * free_now + own_num * (free_next - live.ports[index]), own_den
-                )
             ghost = np.floor_divide(
                 self.take_den * free_now + self.take_num * (free_next - live.ports[index]),
                 self.take_den,
             )
-            if own is not None:
-                ghost = np.where(own, own_ghost, ghost)
-            ghost = np.where(mask if driven is None else (mask & ~driven), ghost, 0)
-            if exempt is not None:
-                # A set's Port free for its block's own record (line 7): its
-                # ghost follows the free neighbour's level and books no
-                # motion, so the Port's take at the grace's end starts at
-                # that level with no jump booked (the hop rule's principle,
-                # DECLARATIONS.md section 13 item 4: no stale ghost carried).
-                ghost = np.where(mask & exempt, free_next, ghost)
+            ghost = np.where(mask, ghost, 0)
             # The offer arriving by the Port is the Port's motion, (g(t + 1) -
             # g(t))^2: a wave moves the receiver, a static level on the board
             # (the rule's zero-frequency mode, which no receiver takes and
             # which carries nothing) does not.
             motion = ghost - live.ports[index]
-            if exempt is not None:
-                motion[exempt] = 0
             live.ports[index] = ghost
             offer += motion * motion
             if port_motion is not None:
@@ -1988,14 +1651,6 @@ class DetectorLawSimulation:
         live.before = live.now
         # a splitter's Node takes and books nothing (component 3)
         offer[self.splitter_mask] = 0
-        if own is not None:
-            # the emitter's own take: on no pointer and not in `absorbed` (the
-            # ledger books content, not motion: the record's content goes to
-            # the HOST row `taken_by_emitter` at its end); the ladder never
-            # sees it (the grace's `keep` exclusion made permanent here)
-            offer[own] = 0
-            live.emitter_took = True
-        live.own_previous = own
         offer = offer[self.absorbing]
         cells = self.cell_index[self.absorbing]
         if (cells < 0).any():
@@ -2006,18 +1661,6 @@ class DetectorLawSimulation:
                 f"{BEAM_LAW}: an absorbing Node without a cell at interval {self.tick}: "
                 f"{[tuple(int(v) for v in node) for node in missing[:4]]} (the take books to no cell)"
             )
-        if in_grace:
-            own = (
-                np.array(
-                    [self.block_by_number[live.emitter].cell]
-                    + [cell for cell, number in self.set_block.items() if number == live.emitter]
-                )
-                if live.emitter is not None
-                else self.cell_index[tuple(zip(*self.lamp_nodes[live.lamp], strict=True))]
-            )
-            keep = ~np.isin(cells, own)
-            offer = offer[keep]
-            cells = cells[keep]
         squares = offer.astype(object)
         receiver = self._receiver_of(live)
         for cell, value in list(zip(cells.tolist(), squares.tolist(), strict=True)) + ended:
@@ -2052,7 +1695,6 @@ class DetectorLawSimulation:
             self._split_table_offers(live)
         live.now = nxt
         self._line_at_rung(live)
-        self._drive(live)
         self._split(live)
 
     def _line_at_rung(self, live: LiveRecord) -> None:
@@ -2071,7 +1713,7 @@ class DetectorLawSimulation:
         receiver = self._receiver_of(live)
         if receiver is None or live.clicked or live.first_rung[receiver] is None:
             return
-        if live.sourcing or live.age < live.train:
+        if live.age < live.train:
             return
         self._gather_line(live, receiver)
         live.clicked = True
@@ -2101,66 +1743,6 @@ class DetectorLawSimulation:
         now = int(live.now[node])
         before = int(live.before[node])
         return (now * int(sines[(k + turn) % steps]) - before * int(sines[turn % steps])) // s_k
-
-    def _in_grace(self, live: LiveRecord) -> bool:
-        """The record's grace: its train and two periods after it (a lamp's
-        record); for a block's emitted record the cycle it is sourced in and
-        two of the block's periods after the cycle's end (line B)."""
-        if live.emitter is not None and live.sourcing:
-            return True
-        if live.emitter is not None:
-            # the emitter's declared own_grace (N_s), required at load
-            declared = self.block_by_number[live.emitter].definition.own_grace
-            return live.age < live.train + (declared if declared is not None else 0)
-        measured = self.world.measured
-        lamp = measured[live.lamp].lamp if 0 <= live.lamp < len(measured) else None
-        if lamp is not None and lamp.own_grace is not None:
-            # a lamp's declared own_grace (the matter lamp's whole hold, M1-6)
-            return live.age < live.train + lamp.own_grace
-        return live.age < live.train + 2 * live.period
-
-    def _own_take(self, live: LiveRecord) -> np.ndarray | None:
-        """The record's own emitter's Nodes as a taking set for it (item 10,
-        the rule with its timing integer withdrawn, the model owner's word,
-        record 1711): from the first interval after its train, an emitting
-        block's current cells or the lamp's Nodes; None during the train and
-        for a record with no emitter's Nodes (a block's own massive record, a
-        planted record). The interval whose start is the record's age `train`
-        is the first after the train (the drive's last write is at the age
-        train - 1), so the take acts from `age >= train`."""
-        if live.sourcing or live.age < live.train:
-            return None
-        if live.emitter is not None:
-            block = self.block_by_number[live.emitter]
-            if block.definition.emitter is not None:
-                # the emitter as a clicking body (ALGEBRA.md 9.17): its cells
-                # are cells like every other after the birth, no own take
-                return None
-            return block.mask
-        return live.driven
-
-    def _exempt(self, live: LiveRecord) -> np.ndarray | None:
-        """The Nodes of the sets bound to the record's emitting block: free for
-        the block's own record during its grace (the declared Nodes, or the
-        block's current cells); None for a record with no such set."""
-        if live.emitter is None:
-            return None
-        found: np.ndarray | None = None
-        for cell, number in self.set_block.items():
-            if number != live.emitter:
-                continue
-            nodes = self.set_nodes[cell]
-            mask = self.block_by_number[number].mask if nodes is None else nodes
-            found = mask.copy() if found is None else (found | mask)
-        return found
-
-    def _driven(self, live: LiveRecord) -> np.ndarray | None:
-        """The Nodes the record's own object holds during its grace: the lamp's
-        Nodes, or the emitting block's CURRENT cells (a stepping block's follow
-        it)."""
-        if live.emitter is not None:
-            return self.block_by_number[live.emitter].mask
-        return live.driven
 
     def _split(self, live: LiveRecord) -> None:
         """The splitters' action on a light record after its step (component
@@ -2257,7 +1839,7 @@ class DetectorLawSimulation:
         the board (the squared steps of every row, the wave's energy in the
         rule's own terms; a static level moves nothing) is below one rung of
         what the receivers hold."""
-        if live.sourcing or live.age <= live.train:
+        if live.age <= live.train:
             return False
         # A block's massive record never completes and is never clicked as
         # escaped (Reviewer 3's MUST 2 on step 2): its rows are the block's
@@ -2303,10 +1885,7 @@ class DetectorLawSimulation:
         take that ended it, `taken_by_emitter` where its own emitter took it
         (item 10) and the escaped row where a face or another set did (0
         for a block's record, born at content 0); its rows released."""
-        if live.emitter_took:
-            self.ledger.taken_by_emitter[live.family] += live.content
-        else:
-            self.ledger.transit_escaped[live.family] += live.content
+        self.ledger.transit_escaped[live.family] += live.content
         self._release(live)
 
     def _release(self, live: LiveRecord) -> None:
@@ -2319,8 +1898,6 @@ class DetectorLawSimulation:
             block.responses.pop(live.identity, None)
             if live.identity in block.emitted:
                 block.emitted.remove(live.identity)
-            if block.current == live.identity:
-                block.current = None
         for key in [key for key in self.rung_counts if key[0] == live.identity]:
             del self.rung_counts[key]
 
@@ -2343,12 +1920,7 @@ class DetectorLawSimulation:
         ladder, total = rungs(weights, self.wheel)
         sunk = sum(p for p, here in zip(live.pointers, on_ladder, strict=True) if not here)
         if chosen is None:
-            if live.emitter_took:
-                # item 10: a record its own emitter took wholly (HOST row;
-                # the remnant never left the board and was not received back)
-                self.ledger.taken_by_emitter[family] += live.content
-            else:
-                self.ledger.transit_escaped[family] += live.content
+            self.ledger.transit_escaped[family] += live.content
             self.ledger.held_escaped[family] += 0
         else:
             measured = self.cell_measured[chosen]
@@ -2369,10 +1941,9 @@ class DetectorLawSimulation:
             # a reader-of-record field (the reader reads `click`, `birth` and
             # `chosen`; DECLARATIONS.md section 2 item 8)
             "u": live.u,
-            # HOST (item 10): the record's content booked to the ledger's row
-            # `taken_by_emitter` (its own emitter took it wholly; on no cell's
-            # ladder), 0 where a cell was chosen
-            "taken_by_emitter": live.content if chosen is None and live.emitter_took else 0,
+            # HOST: the ledger's row `taken_by_emitter` is 0 since the emitter's
+            # own take retired (ALGEBRA.md 9.17); kept for the readers' form
+            "taken_by_emitter": 0,
             # HOST (the receiver by name): the sinks' take of the record by
             # this line, in the pointer's unit (the faces and every set but
             # the receiver; on no pointer); on a record with a receiver alone
@@ -2515,10 +2086,7 @@ class DetectorLawSimulation:
         content = sum(live.content for live in arms)
         absorbed = sum(live.absorbed for live in arms)
         if chosen is None:
-            if all(live.emitter_took for live in arms) and not any(live.absorbed for live in arms):
-                self.ledger.taken_by_emitter[family] += content
-            else:
-                self.ledger.transit_escaped[family] += content
+            self.ledger.transit_escaped[family] += content
             self.ledger.held_escaped[family] += 0
         else:
             landing = next(body for body in bodies if body.arm == first.arm)
@@ -2537,9 +2105,7 @@ class DetectorLawSimulation:
             "record": first.identity,
             "arm_records": [live.identity for live in arms],
             "u": first.u,
-            "taken_by_emitter": (
-                content if chosen is None and all(live.emitter_took for live in arms) else 0
-            ),
+            "taken_by_emitter": 0,
             "born": first.born,
             # the joint cell: one triple [set, channel, label] per body, in the
             # sets' order; each body counts its own channel of it
@@ -2591,8 +2157,6 @@ class DetectorLawSimulation:
 
     def step(self) -> None:
         self.tick += 1
-        self._births()
-        self._block_births()
         for block in self.blocks:
             self._move_block(block)
         # The massive records first (each block's own record driven by its
@@ -2636,11 +2200,8 @@ class DetectorLawSimulation:
                 sources = np.zeros(self.shape, dtype=np.int64)
             for block in self.blocks:
                 if live.emitter == block.number:
-                    if block.current == identity and block.own is not None and sources is not None:
-                        term = self._source(block, block.own, live)
-                        sources += term
-                        added = np.floor_divide(term, 3 * self.kind_den[live.family] * self.light_scale)
-                        live.norm += int(np.sum(added.astype(object) * added.astype(object)))
+                    # a body answers no record of its own (its own record
+                    # received the born light's difference above)
                     continue
                 if block.definition.receive == (0, 1) and block.definition.source == (0, 1):
                     continue
@@ -2893,9 +2454,6 @@ class DetectorLawSimulation:
                     "lamp": live.lamp,
                     "family": self.families[live.family].name,
                     "u": live.u,
-                    # HOST (item 10): whether the record's own emitter's Nodes
-                    # have taken it (from the first interval after its train)
-                    "emitter_taking": live.emitter_took,
                     # HOST (the receiver by name): whether the record's line
                     # was written at its receiver's rung (it lives on with
                     # content 0); on a world with a receiver alone

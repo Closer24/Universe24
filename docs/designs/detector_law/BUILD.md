@@ -1436,6 +1436,118 @@ would have found no cell.
    detector law; every listed world regenerated onto emitter bodies seeded
    on their modes; the tests rewritten; the light clock's, Sagnac's and
    the redshift's readings re-derived blind before any run.
+7. THE RETIREMENTS (the second push of this branch, 2026-09-24): under
+   the detector law the lamp is refused at load ("lamp is refused under
+   detector-law-v1": a birth has a clicking record behind it), and with it
+   `emits`, `own_grace`, the cycle births and the coupling's source term
+   on a block (`block.current`), the lamp's `_births` and `_drive`, the
+   grace (`_in_grace`), the exemption (`_exempt`), the emitter's own take
+   (`_own_take`, item 10 of DECLARATIONS.md section 10), the fresh Port
+   and the fields `was_exempt`, `own_previous`, `emitter_took` and
+   `sourcing`; `_advance` reads every record with the world's take masks
+   and nothing else; the ledger's HOST row `taken_by_emitter` stays at 0
+   for the readers. The simulation's wheel is the largest of the emitter
+   bodies' W and the world key `wheel`; a world with a detector set and no
+   emitter body declares `wheel`. The table bodies read the records of the
+   family's ONE emitter body (`_table_settings`; the exit cell away from
+   the body's centre). The lamp's forms stay in the amplitude law.
+8. THE RUNAWAY WELL (a finding of this push, COMPUTATION): the wells of
+   the smoke runs, [800, 700], [800, 500] and [800, 400] on the kind
+   [800, 809] and [157, 137] on [156, 157] on a chain or a layer, have
+   their largest eigenvalue AT OR ABOVE 2 (2 cos omega_b = 2.03, 2.47,
+   2.95 and 2.04): no oscillation but a level growing by 1.2 or more per
+   interval (a one-cell well on a chain runs away at a depth that binds on
+   a cube, the folded axes' self-reads counting fully). Their "cadences"
+   were the runaway's and are withdrawn; the coupled chain's own record
+   reached the amplitude bound at interval 362 through such a well beside
+   it. The margin module refuses a runaway naming it (`MarginReading
+   .runaway`, `check_margins`; test (n)'s fifth case) as it refuses an
+   unbound mode. THE ONE WELL for every one-cell emitter body of both
+   generators and the tests: [8, 7] on the kind [7, 8] (the index worlds'
+   kind, omega_0 = 0.505): bound on a chain (2 cos omega_b = 1.90, omega_b
+   = 0.32, the extent 1.4 Links, 1 / omega_b^2 = 10 intervals) and on a
+   layer (1.75, 0.50, the extent 15 Links, 4 intervals); the massive
+   worlds carry it as the family `source` beside their matter kind. THE
+   CADENCE (COMPUTATION, the rung of item 1 on a bound mode of frequency
+   omega_b): the u-th residue clicks about (2 u + 1) / (W omega_b^2)
+   intervals after its excitation, the whole wheel of W in about W /
+   omega_b^2 (the Malus bar's 256 in 2611 intervals, MALUS_TICKS 3200;
+   the light clock's A of side 12 at [800, 800], omega_b = 0.089, 125
+   intervals per unit); a world whose ticks hold a part of its wheel
+   births that part, the regeneration of the fifteen reads it. The
+   margin rule skips an axis the body spans (`shape[axis] <= side`, an
+   emitter of side 1 on a chain or a layer).
+9. THE ONE-CELL BIRTH'S CHARACTER (COMPUTATION, on the write of item 2):
+   the write now = C[phase(0)] = 0, before = C[phase(-1)] on one cell (or
+   on cells in phase) is a velocity impulse. For light's kind it leaves a
+   STATIC LEVEL between two fronts (the rule's zero-frequency mode: A's
+   twelve cells of the light clock hold 1.06 x 10^6 unmoving after the
+   fronts leave), the fronts alone carrying the motion the sets take; a
+   front's edge disperses on its way, so a set fifty Links off crosses
+   its rung (the coupled chain's block at 21 to 24 intervals after the
+   front's first motion) and one 180 Links off does not, the record
+   completing on the fronts' motion (energy x W below what is taken)
+   with the level left; the mirror wall of test (ad) leaks 3.1 percent of
+   it (1.45 of the train). A one-Node take set on a chain takes the whole
+   half arriving at it (its row held at 0, nothing passes): the light
+   clock's set at x = 112 takes the +x half, its rung two intervals after
+   the birth, and x = 171 stays 0 with the faces closed and open alike;
+   the return through the closed face, read under the exemption of old,
+   is re-derived in the mirror item with a geometry the set does not
+   block. For a massive kind the impulse has a STANDING PART at the gap's
+   frequency (no group pace) that oscillates at the emitter and keeps
+   the record from completing (test (aa): the travelling part's rung at
+   the screen 158 intervals after the birth, the line at the rung, the
+   record alive at 1000). THE REMEDY is item 2's line with the per-Link
+   pair (a written travelling character), owed to the mathematician's
+   gate; every DETECTOR reading pinned on the lamp's train stands as
+   written until re-derived on the emitter before its run (the Boss's
+   order of 23:30Z).
+10. CONTENT FOUND ON A TAKE NODE: a record written on a set's own cells
+   (an emitter whose set IS its cells, the form without positions of R2
+   and the Sagnac worlds) is taken as the hop rule takes an entered
+   Node's content (DECLARATIONS.md section 13 item 4): its motion squared
+   booked to the cell at the interval's end and its rows held at 0 from
+   there, so that the set reads the write itself, the whole norm at once,
+   the SELF-CLICK of that form (E E^T = T; the click line at the birth's
+   next interval stamped with the block's count, the record then complete
+   and closed after its click) and nothing of a record vanishes unbooked
+   (before this line the born record was zeroed at the cells with nothing
+   booked and closed without a click); the rule's step of that interval
+   reads the content as it stood (a planted row's integers unchanged,
+   tests (a), (b), (m), (w)). A usable receiver stands at a free Node
+   beside the body (the positions form); the Sagnac worlds' form is read
+   at their regeneration. Named for the gate.
+11. THE WORLDS: both generators write emitter bodies (`emitter_body` in
+   the detector-law generator with EMITTER_KIND [7, 8] and EMITTER_WELL
+   [8, 7]; `emitter_at` in the massive generator, the family `source`
+   added by `world` where a body names it), every bound body seeded on
+   its mode by `seed_on_the_mode` over every massive family; the four
+   Bell worlds held in `docs/designs/detector_law/held_worlds/` until the
+   crystal (HELD_NAMES; the lamp's arms have no emitter form yet); the
+   preflight loads 29, refuses 0, misses the held 4. The Malus bar of 8
+   keeps its emitter at its cell (the extent 1.4 Links within the bar).
+12. THE TESTS: `tests/test_detector_law.py` on `chain_world` with the
+   emitter body at x = 2 (six births on the wheel [1, 6], the order
+   channel on the body, the cells like every other: no own take, the
+   ledger row 0, the world key `wheel`, the guard; the lamp, `emits` and
+   `own_grace` refused); `tests/test_detector_law_tables.py` on that chain
+   (the splitter and the polariser; the bar and the pair worlds retired
+   with the lamp, returning with the crystal); `tests/test_massive_record.py`
+   rewritten test by test onto emitter bodies (the block world's source,
+   the coupled chain's emitter fifty Links before the block, the matter
+   emitter world of (z), (aa), (ab), (af) and (ag), the light clock of
+   (ac) as item 9 reads it, (ah) with the line at the set's rung, (ai)
+   and (ak) the self-click of item 10, (ad)'s leak, (n)'s runaway, (p)'s
+   digests moved once more); `tests/test_body_conditions.py` (g) with
+   the emitter bodies read clean; `tests/test_preflight_worlds.py` without
+   the pair lamp's CHECKs (held with Bell); `tests/test_receiver_by_name.py`
+   on emitter bodies (the line at the rung on the chain of 200, the
+   self-click of the form without positions, the light clock's set beside
+   A, two bodies naming the free Node between them, the close without a
+   click at a receiver of wheel 1, `sagnac_rest.json` loaded and stepped
+   with no line under item 10). Every number in them is the engine's
+   reading on this head, COMPUTATION; no pin.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

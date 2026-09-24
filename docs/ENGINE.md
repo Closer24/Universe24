@@ -618,7 +618,9 @@ reads as it did, byte for byte, `tests/test_flow_link.py` (a)); the amplitude la
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
 step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
-naming MIGRATION): every lamp births records; every row of a record
+naming MIGRATION): every lamp births records (under the detector law, since
+BUILD.md section 26, the lamp is refused and an emitter body of a massive
+kind births them, its excited record clicking at its own rung); every row of a record
 carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record

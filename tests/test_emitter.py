@@ -65,7 +65,7 @@ def emitter_world(
     bound mode at the amplitude 100 (the generator's `seed_on_the_mode`, the body's
     conditions of the load check), its stock `amount` = `stock`, its `emitter` the light
     family [77, 25] on the wheel given with its residue order and its ladder the set
-    `screen`; the receiver a body of light at x = 70 read as `screen`; the world's wheel 64."""
+    `screen`; the receiver a body of light at x = 70 read as `screen`; the world's wheel 64 the sets' rung."""
     emitter: dict = {
         "family": "light",
         "wheel": list(wheel),
@@ -237,9 +237,11 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 16 + age
-    # no drive after the write: the body's cells carry the law's values, not
-    # the cosine table's (the second interval's level differs from any drive)
-    assert simulation._own_take(born) is None and not simulation._in_grace(born)
+    # no drive and no own take after the write: the body's cells are free
+    # Nodes for the born record (not absorbing), and the record's own body
+    # books nothing of it onto the ledger's retired row
+    assert not simulation.absorbing[block.mask].any()
+    assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 
 def test_c_the_loaders_refusals_name_their_keys():

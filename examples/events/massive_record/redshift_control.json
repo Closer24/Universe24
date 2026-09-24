@@ -55,7 +55,7 @@
     0
    ],
    "family": "matter",
-   "amount": 1,
+   "amount": 64,
    "phase": 0,
    "momentum": [
     0,
@@ -4177,8 +4177,14 @@
     29,
     9
    ],
-   "emits": "light",
-   "own_grace": 3000,
+   "emitter": {
+    "family": "light",
+    "wheel": [
+     1,
+     64
+    ],
+    "residue_order": "ordinal"
+   },
    "receiver": "light_detector",
    "margin": "pin"
   },

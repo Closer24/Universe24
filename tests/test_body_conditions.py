@@ -205,8 +205,8 @@ NONE = "no reading"
         ("massive_record/sagnac_rest.json", CLEAN),
         ("massive_record/redshift_k3.json", CLEAN),
         ("massive_record/redshift_control.json", CLEAN),
-        ("massive_record/index_moving_long_k3_away.json", NONE),
-        ("detector_law/two_slits.json", NONE),
+        ("massive_record/index_moving_long_k3_away.json", CLEAN),
+        ("detector_law/two_slits.json", CLEAN),
     ],
 )
 def test_g_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
@@ -214,8 +214,9 @@ def test_g_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, ve
     generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
     well and its rest world, the boxes, the light clock, the Sagnac blocks and their rest
     world, the redshift emitter and its control) and passes the check bit for bit, a pushed
-    body's ramp at or above ten relaxation times; the index's silent body and the two slits'
-    mirror line of light's kind have no reading. Before this branch the seven worlds other
+    body's ramp at or above ten relaxation times; the index's and the two slits' emitter
+    bodies (BUILD.md section 26: a well of the source kind seeded on its mode) read clean too,
+    the two slits' mirror line of light's kind having no reading. Before this branch the seven worlds other
     than the layer pin's carried a flat seed and were refused (the world line of
     DECLARATIONS.md section 15, the body's seed on its mode)."""
     document = json.loads((WORLDS / name).read_text(encoding="utf-8"))

@@ -46,49 +46,7 @@
    }
   }
  ],
- "measured": [
-  {
-   "position": [
-    300,
-    0,
-    0
-   ],
-   "family": "light",
-   "amount": 1,
-   "phase": 0,
-   "momentum": [
-    0,
-    0,
-    0
-   ],
-   "fixed": true,
-   "directions": [
-    [
-     1,
-     0,
-     0
-    ]
-   ],
-   "lamp": {
-    "rate": [
-     1,
-     1
-    ],
-    "wheel": [
-     2531,
-     4096
-    ],
-    "directions": [
-     [
-      1,
-      0,
-      0
-     ]
-    ],
-    "train": 200
-   }
-  }
- ],
+ "measured": [],
  "detectors": [],
  "probes": [
   [

@@ -16,9 +16,10 @@ script writes `expectations.json` before each run.
 
 The form is the first build's ray-law world
 (`tests/test_detector_law.py::chain_world`: `clock_stamp` and `detector_law`
-true, a lamp with `rate`, `wheel`, `train` and `directions`, a receiver a
-fixed body of the family with one detector set on its Node, a screen one set
-per Node of its row) and, for the massive rows, the massive record series'
+true, an emitter body of a massive kind with its `emitter` on a wheel and its
+stock, seeded on its mode (BUILD.md section 26; the lamp is refused under the
+detector law), a receiver a fixed body of the family with one detector set on
+its Node, a screen one set per Node of its row) and, for the massive rows, the massive record series'
 form (`../massive_record/make_worlds.py`, whose `world` helper writes them;
 they live in that folder). Every light wall is the mirror line of section 15
 L-1 (the fourth commit): blocks of light's kind of side 1 per Node with the
@@ -34,10 +35,11 @@ silent block, seed 0 with no record of its own, so an absorbing take line of
 the matter kind at the kind's own pair is no longer refused as a mode that is
 not bound) every world loads and constructs at its RUN_LIST path, the pre-GO
 preflight tool (`tools/preflight_worlds.py`) and the runner sharing that
-construction; nothing is held. The
-emitter's take of its own remnant after its train (DECLARATIONS.md section 10
-item 10) is the rule of the law, not a world key (the model owner, 2026-09-24
-06:42Z; main 02f7388b), so no emitter carries a timing key.
+construction. Since the emitter as a clicking body (BUILD.md section 26) the
+four Bell worlds are held there until the crystal (the pair lamp's arms have
+no emitter form yet); the emitter's own take of its record, its grace and its
+exemption are retired (its cells are cells like every other), so no emitter
+carries a timing key.
 
 | Group | Files | Written from | The loader (main 1454030f, 2026-09-24) |
 | --- | --- | --- | --- |

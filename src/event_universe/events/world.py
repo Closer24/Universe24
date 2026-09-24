@@ -1608,7 +1608,7 @@ class NatureBeamWorld:
     probes: tuple[Address3, ...] = ()
     mode_axis: int | None = None
     # detector-law-v1: the world key `wheel`, the detector sets' rung W
-    # where no lamp declares a larger birth wheel; 1 by default.
+    # where no emitter body declares a larger wheel; 1 by default.
     wheel: int = 1
     # detector-law-v1: per axis, whether the face is declared "closed" (a
     # zero face for light with no take); never on a periodic axis.
@@ -3972,6 +3972,16 @@ def _measured(
                     "refused: its releases would create charge from nothing (a charged paid family "
                     "is born by a transformation or declared in transit; D-1, 2026-09-20)"
                 )
+            if detector_law:
+                # THE LAMP IS RETIRED under the detector law (ALGEBRA.md 9.17,
+                # the model owner's word of 2026-09-24, 22:30Z): a birth is the
+                # other side of a click that ends a record; a rate with no
+                # record behind it and a drive on the cells are refused
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.lamp is refused under {DETECTOR_LAW_RULE}: a birth has a "
+                    "clicking record behind it (ALGEBRA.md 9.17); the emitter is a body of a massive "
+                    "kind with its seed, its stock and the key `emitter` (BUILD.md section 26)"
+                )
             lamp = _lamp(
                 obj["lamp"],
                 f"{label}.lamp",
@@ -4001,6 +4011,20 @@ def _measured(
             shape,
             amplitude_bound,
         )
+        if (
+            detector_law
+            and block is not None
+            and (block.emits is not None or block.own_grace is not None)
+        ):
+            # the cycle emitter and the emitter's grace are retired under the
+            # detector law (ALGEBRA.md 9.17; BUILD.md section 26): a body emits
+            # by its excited records' clicks, the key `emitter`
+            key = "emits" if block.emits is not None else "own_grace"
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{key} is refused under {DETECTOR_LAW_RULE}: the emission by "
+                "the cycle's source term and the emitter's grace retired (ALGEBRA.md 9.17); a body "
+                "emits by its excited records' clicks, the key `emitter` (BUILD.md section 26)"
+            )
         found.append(
             MeasuredDefinition(
                 position,
@@ -5379,12 +5403,15 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)
-        if detectors and all(entry.lamp is None for entry in measured) and "wheel" not in obj:
+        emitters = [
+            entry for entry in measured if entry.block is not None and entry.block.emitter is not None
+        ]
+        if detectors and not emitters and "wheel" not in obj:
             # the Boss's line (5) of 06:50Z: no implicit default of the rung
             raise ValueError(
-                f"{BEAM_LAW}: a world under the local detector law with a detector set and no lamp "
-                "declares the world key `wheel` (the sets' rung W and the records' completion rung; "
-                "no implicit default)"
+                f"{BEAM_LAW}: a world under the local detector law with a detector set and no emitter "
+                "body declares the world key `wheel` (the sets' rung W and the records' completion "
+                "rung; no implicit default)"
             )
         for number, entry in enumerate(measured):
             # item 10: a lamp of a massive kind takes its record's remnant in
@@ -5405,6 +5432,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     if name not in set_names:
                         raise ValueError(
                             f"{BEAM_LAW}: measured[{number}].lamp.receiver names {name!r}, which no "
+                            "detector set declares (the record's ladder is made of declared sets; "
+                            "a face is never on it)"
+                        )
+            # the emitter body's ladder by name (ALGEBRA.md 9.17): every name a
+            # declared set's
+            if entry.block is not None and entry.block.emitter is not None:
+                for name in entry.block.emitter.receiver or ():
+                    if name not in set_names:
+                        raise ValueError(
+                            f"{BEAM_LAW}: measured[{number}].emitter.receiver names {name!r}, which no "
                             "detector set declares (the record's ladder is made of declared sets; "
                             "a face is never on it)"
                         )

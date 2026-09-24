@@ -68,6 +68,19 @@ diagnostics.
 
 ## The list
 
+SINCE BUILD.md SECTION 26 (2026-09-24, the emitter as a clicking body):
+every world below that carried a lamp is regenerated onto an emitter body
+of the kind [7, 8] with the well [8, 7] seeded on its mode (the light
+clock's, the Sagnac's and the redshift's bodies keep their own kind), the
+lamp being refused under the detector law; the four Bell worlds are held
+in `docs/designs/detector_law/held_worlds/` until the crystal; every
+DETECTOR reading below pinned on the lamp's train stands as written and
+is re-derived blind on the emitter before its run (the Boss's order of
+23:30Z), the one-cell birth's character (section 26 item 9) and the
+line's per-Link pair being the mathematician's gate. The rows' file and
+build columns describe the lamp's worlds as they were; the files on this
+head are the emitter's.
+
 | Row | World file | Reader of record | The pin (kind) | Build | State | HOST |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2a, the two slits | `examples/events/detector_law/two_slits.json`, THE SECOND DRAFT of DECLARATIONS.md section 15 L-3 through the World Generator (world-files, 2026-09-24: 160 x 256, x and y open, d = 26, L = 113, the openings of width 3, the lamp's wheel [1, 1024] at one per 4, the lamp's `receiver` the 201 screen sets so that the faces and the mirror line are sinks, the sets with the rung wheel 2^20, ticks 5500; loads and constructs); the first draft on main before it (128 x 128, y periodic, width-1 openings; its own map reads 0.81 and 0.39, SIZING.md) HISTORY | `screen_clicks`: the counts per Node; the counts' visibility, the mean count per pixel over the two-source cosine's bright and dark pixels of the window y in [40, 216] (DETECTOR; `two_slits_1024.out` lists the pixels) | 0.96 +- 0.02 (K, COMPUTATION on the world's own map, `two_slits_1024.py` on world-sizing, PR 1124, until its merge; the falsifier 0.93) | the lamp's ladder (the lamp record's ladder of screen sets only, the sinks outside it, the cell of u over the ladder's own sum; engine-features) | file owed; build owed | 94 minutes |

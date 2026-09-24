@@ -55,7 +55,7 @@
     0
    ],
    "family": "matter",
-   "amount": 1,
+   "amount": 64,
    "phase": 0,
    "momentum": [
     0,
@@ -3081,8 +3081,14 @@
     19,
     34
    ],
-   "emits": "light",
-   "own_grace": 3000,
+   "emitter": {
+    "family": "light",
+    "wheel": [
+     1,
+     64
+    ],
+    "residue_order": "ordinal"
+   },
    "receiver": "at_b",
    "margin": "pin"
   },
@@ -3093,7 +3099,7 @@
     0
    ],
    "family": "matter",
-   "amount": 1,
+   "amount": 64,
    "phase": 0,
    "momentum": [
     0,
@@ -6119,8 +6125,14 @@
     20,
     32
    ],
-   "emits": "light",
-   "own_grace": 3000,
+   "emitter": {
+    "family": "light",
+    "wheel": [
+     1,
+     64
+    ],
+    "residue_order": "ordinal"
+   },
    "receiver": "at_a",
    "margin": "pin"
   }

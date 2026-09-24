@@ -9,7 +9,7 @@
  "boundary": {
   "z": "periodic"
  },
- "ticks": 1200,
+ "ticks": 3200,
  "K": 1125899906842624,
  "N": 256,
  "release": [
@@ -26,26 +26,38 @@
     0,
     0
    ],
-   "family": "light",
+   "family": "matter",
    "amount": 256,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
-   "lamp": {
-    "rate": [
-     1,
-     1
-    ],
+   "side": 1,
+   "pair": [
+    8,
+    7
+   ],
+   "seed": [
+    100,
+    50,
+    26,
+    15,
+    12,
+    15,
+    26,
+    50
+   ],
+   "margin": "control",
+   "emitter": {
+    "family": "light",
     "wheel": [
      159,
      256
     ],
-    "directions": [
-     [
-      1,
-      0,
-      0
-     ]
-    ],
-    "train": 32
+    "residue_order": "ordinal"
    }
   },
   {
@@ -93,6 +105,16 @@
     1,
     1
    ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    7,
+    8
+   ]
   }
- ]
+ ],
+ "massive_record": true,
+ "amplitude_bound": 4294967296
 }
