@@ -58,3 +58,16 @@ the closed form independently from the declaration and the tables, in
 integers, and report CONFIRMED with the computation or the line where it
 differs; no run, no pin moved. The confirmation is one line on the closure
 page with its record.
+
+## The algebra and the timing first, computed blind (the owner, 2026-09-24, record 1824)
+
+The owner's word (translated): "Check also in the algebra and the mathematics
+that it is created with the right timing, so that the experiment only
+confirms what we already computed." For a new composition (the crystal the
+first), the mathematician computes its pin blind to the writer's design,
+from the owner's specification and the algebra on main: the state it
+produces, the counts, and the timing (each birth, each arm's pace along its
+integer vector, each arrival, each click), and the expected values of each
+block's unit tests. The writer's design and the mathematician's page must
+agree before the code is written; a difference goes to the physics-rule
+reviewer and to the owner.
