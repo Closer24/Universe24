@@ -17,6 +17,8 @@ the output.
 # The cut blocks: name -> (start marker, end marker). A block runs from its
 # start marker (inclusive) to its end marker (exclusive); both must occur
 # exactly once in the text, the end after the start.
+import massive
+
 BLOCKS = {
     "words": (
         "\\paragraph{The definitions, in order.}",
@@ -83,7 +85,7 @@ BLOCKS = {
         "\\paragraph{What the law names and has not computed.}",
     ),
     "dated": (
-        "\\paragraph{The transition from ordinary physics to modern algebra, dated.}",
+        "\\paragraph{The transition from ordinary physics to the algebra, dated.}",
         "\\section{The families in the algebra, and the check of the roads}\\label{app:families}",
     ),
     "families_table": (
@@ -300,6 +302,7 @@ def reorder(s: str) -> str:
         s,
         GEOMETRY_HEADING,
         algebra
+        + massive.SECTION  # the massive record kind (ALGEBRA.md chapter 8; the owner's "everything starts from the algebra")
         + click
         + physics
         + GEOMETRY_HEADING.replace("\\section", "\\subsection")

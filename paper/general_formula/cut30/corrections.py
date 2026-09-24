@@ -4838,6 +4838,31 @@ CORRECTIONS = [
         "\\begin{equation}\\label{eq:shell}\n\\langle a\\rangle(r) = \\frac{q\\,N_l\\,F}{\\mathcal N(r)} \\to \\frac{q\\,N_l\\,F}{2\\pi r} \\ \\text{on the plane},\\qquad \\frac{q\\,N_l\\,F}{4\\pi r^2}\\ \\text{in space},\\qquad F = \\langle S_1/|\\mathbf D|\\rangle_{\\mathrm{fan}},\n\\end{equation}",
         "\\begin{equation}\\label{eq:shell}\n\\boxed{\\,\\langle a\\rangle(r) = \\frac{q\\,N_l\\,F}{\\mathcal N(r)} \\to \\frac{q\\,N_l\\,F}{2\\pi r} \\ \\text{on the plane},\\qquad \\frac{q\\,N_l\\,F}{4\\pi r^2}\\ \\text{in space},\\qquad F = \\langle S_1/|\\mathbf D|\\rangle_{\\mathrm{fan}}\\,},\n\\end{equation}",
     ),
+    (
+        "commit 23, the storyline's opening (the Boss's PLAN section 8, item 2): the group found from the clicks and the law Inside",
+        "\\paragraph{The algebra first.}",
+        "\\paragraph{The group was found, not assumed.} The operations came first, as acts on the board: a row flies one Link per interval along its direction, rows meet at a Node, a body steps by an accumulator against a wall, a phase turns, identical rows merge, a detector clicks. The group is the answer to which maps preserve what the operations act on, a Node with six Ports and its Links and a causal cone of one Link per interval: the bijections of the six Ports that keep opposite Ports opposite are the $48$ signed permutations of the axes, and over the integers the only bijections that preserve the cone are these $48$, so no boost is among them and Lorentz's form is reached Outside from the clicks, not as a symmetry of the lattice. The $48$ first appeared in the code as the invariance of one operation, the collision table, before they were named a group; the $24$ came from the hand, a pseudoscalar that a reflection flips and a rotation keeps, which splits the $48$ into the $24$ rotations and the $24$ reflections. Every rule that reads only the local state must commute with the $48$, and that requirement selects the admissible forms: the only isotropic even reading of a momentum within the six operations is $c\\,\\mathbf p\\cdot\\mathbf p$, and the square $m^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ follows. The operations did not deduce a group; they were defined on a Node of six Ports, the $48$ are everything that preserves that Node and its cone, and once every rule is required to commute with them they choose the admissible forms, the group of order $24$ being the part under which the hand is kept as well \\cite[1.3]{algebra}.\n\n\\paragraph{The algebra first.}",
+    ),
+    (
+        "commit 23, the storyline: the group of order 24, never modern algebra (the introduction)",
+        "\\paragraph{Why physics behaves like modern algebra.}",
+        "\\paragraph{Why physics behaves like the algebra of the group of order $24$.}",
+    ),
+    (
+        "commit 23, the storyline: the group of order 24, never modern algebra (the law's section)",
+        "the passage from physics to modern algebra is the passage from messages with attributes to vectors with coordinates",
+        "the passage from physics to the algebra is the passage from messages with attributes to vectors with coordinates",
+    ),
+    (
+        "commit 23, the storyline: the group of order 24, never modern algebra (the dated transition)",
+        "\\paragraph{The transition from ordinary physics to modern algebra, dated.}",
+        "\\paragraph{The transition from ordinary physics to the algebra, dated.}",
+    ),
+    (
+        "commit 23, the massive record kind cited: the algebra document at chapter 8's merge, the design, the closure, the declarations, the dispersion",
+        "\\bibitem{algebra} The algebra of the law: the objects, the six operations as maps, the click-to-click algebra, the exact identities and what is reached under named hypotheses, \\texttt{docs/ALGEBRA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 863cf5fd (the merge of the branch \\texttt{algebra-one}). ",
+        "\\bibitem{algebra} The algebra of the law, in one place: the objects, the ring and the six operations, the click-to-click algebra, the exact identities, what is reached under named hypotheses, what each FAIL row lacks, how the group was reached, and the massive record kind (chapter 8), \\texttt{docs/ALGEBRA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 688b7174 (chapter 8's merge). \\bibitem{massiverecord} The massive record kind, the chief physicist's design: the pair per kind, the band, the block, the coupling, the click, the seed and the direction of time, \\texttt{docs/designs/detector\\_law/MASSIVE\\_RECORD.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 74e7a862. \\bibitem{closure} The algebraic closure of every experiment: the rows that close on a small board in minutes, the rows replaced and the rows dropped, \\texttt{docs/designs/detector\\_law/ALGEBRAIC\\_CLOSURE.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 53cec95d. \\bibitem{declarations} The declarations of the pinned worlds, every pin by kind before its run, \\texttt{docs/designs/detector\\_law/declarations/DECLARATIONS.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 53cec95d. \\bibitem{lightdispersion} Light against itself: the GameBoard's own dispersion of light, its anisotropy on the sky and the bound it puts on the one scale (row A2), \\texttt{docs/designs/detector\\_law/LIGHT\\_DISPERSION\\_BOUND.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 1410d113. ",
+    ),
 ]
 
 

@@ -6716,3 +6716,26 @@ the rewrite in the storyline's order (PLAN.md section 8 of the
 detector-law design) brings them in. 49 pages: the title's three
 lines and the boxes' height carried the appendices onto one more page;
 the rewrite restores 48.
+
+## Applied (2026-09-24, the storyline of PLAN.md section 8, items 2 and 3): commit 23 on paper-48, the opening and the algebra first
+
+The owner's words "everything starts from the algebra" and "the cubes
+on the GameBoard that represent external bodies must be clear in the
+right words", the Boss's storyline. The Introduction opens with "The
+group was found, not assumed", ALGEBRA.md 1.3 in the paper's voice. A
+new Section 3, "The massive record kind: the pair per kind, the band,
+the cone and the block" (cut30/massive.py, placed by the reorder after
+the algebra's section and before the click-to-click chain), states
+ALGEBRA.md chapter 8 as the algebra document states it, each sentence
+with the document's mark: the rule with a pair per kind, the band and
+the pitch (boxed), the two paces and the exact cone with the two
+gammas (boxed), light against itself (boxed, row A2), the block as the
+foreign object (the owner's cubes), the motion with its two limits,
+the coupling and its exact invariant, the click of a body, the
+direction of time, the (K) and (P) rows with the eight predictions
+named. No run enters; every number is a COMPUTATION declared before
+its run. "Modern algebra" leaves the paper's words (the introduction's
+paragraph heading, the law's section, the dated transition's heading,
+which is also a reorder marker); it remains only inside a cited
+document's own title. 52 pages: the section's three pages; the 48
+returns with the comparison rebuilt from the paper's list (commit 24).
