@@ -228,3 +228,28 @@ record at 4000, 6000, 8000 and 8450 (the Boss's reading (5) of 09:46Z).
   2426 from 784; Reviewer 3's line through the Boss, 10:09Z), so A's records
   complete about 1310 after the birth for the 700 Links to the -x face and
   B's about 4000 for the 2216 Links to the +x face.
+
+## 9. two_slits on ENGINE C (the board 128 x 128 x 1, ticks 17300)
+
+The World Generator's file examples/events/detector_law/two_slits.json at
+248235b (sha256 prefix eec84865be63): the lamp at [20, 64, 0] with rate 1/16,
+the wall of 252 blocks at x = 40 and 41 with the gaps at y = 48 and y = 80,
+121 screen sets at x = 104, wheel 64. Read in-process (the Boss's order of
+10:09Z); the preliminary reading of record for this file on 540456da, the
+World Generator's later run of the same file being its regression check.
+
+- HOST: 1609 seconds wall on one core, 645 intervals per minute cumulative,
+  the live records at a plateau of 49 to 50, resident 357 MB at tick 2000 and
+  931 MB at tick 8000; 4359600 block lines counted and dropped.
+- GAMEBOARD: 1024 births (one every 16 intervals from tick 16 to 16384, one
+  arm each, `u` the birth's index modulo 64), 1024 gathers, 0 click lines, 0
+  live at 17300; the books balanced: transit released 1024, absorbed 0,
+  escaped 1024.
+- MEASUREMENT: 0 clicks at every one of the 121 screen sets and at every wall
+  cell; every gather chooses the cell face:-x "0" (the open face behind the
+  lamp), 1024 of 1024, click_at rung, clock_source interval.
+- GAMEBOARD (the completion as built): age 791 on every record, 1024 of 1024,
+  the first gather at tick 807 and the last at 17175.
+- COMPUTATION (read, not compared): on this file and this engine bit no record
+  reaches the screen within its life; each record's light is booked at the -x
+  face and the gather closes it there at the same age.
