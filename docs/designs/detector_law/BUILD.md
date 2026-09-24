@@ -696,17 +696,15 @@ world is not written (the Boss's rule). No pin world was run.
   the RUN_LIST reads the k = 3 clicks "over the rest world's"); the seed
   profile and every other key byte for byte as before; `read_runs.py`
   reads the pair over that hold; `pins.py`'s `reads` lines name it.
-- (b) The two readers of clicks in `read_runs.py`, readers of clicks
-  only: `screen_clicks(run, prefix)` (the click count per detector set
-  whose name starts with the prefix, from the `gather` lines' chosen
-  cells; a screen of one set per Node reads per Node) and
-  `light_clicks(run, detector)` (the sorted click stamps at a set, the
-  `click` of each gather line, the first rung's interval), with
-  `mean_interval` over a window; the tracked copy
-  `examples/events/massive_record/EXPLORATORY_chain_screen/` (the first
-  build's chain world over 900 intervals, run headless) their test input,
-  `tests/test_read_runs_clicks.py` (the counts, the stamps, the empty
-  train). A reading these readers make on the engine's counting form: a
+- (b) The two readers of clicks: written here (4520641b) and DROPPED at
+  the merge of main 0a5ea8be (the Boss's 01:20Z: Builder 2's readers of
+  the same names, `clicks_of`, `screen_clicks`, `light_clicks` in
+  `read_runs.py`, reviewed and merged by PRs #1073 and #1076, stand; no
+  second reader of the same thing; this branch's tracked copy
+  `EXPLORATORY_chain_screen/` and `tests/test_read_runs_clicks.py` went
+  with them). The same merge keeps main's `layer_pin_rest_14.json` at
+  3500 intervals (this branch's 9302f513 had set 18500; the physicist
+  says which is declared). A reading made on the engine's counting form: a
   record clicks ONCE, at its completion, stamped with the first rung of
   its chosen cell; a detector's "train of clicks" is one click per
   record, and a screen's counts per Node need as many births as clicks.

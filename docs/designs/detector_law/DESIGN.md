@@ -1793,7 +1793,10 @@ order the engine takes them each interval, each with its gate:
    worlds (the script is the engine's oracle: the same integers).
 4. **The detectors.** Per detector set, the pointer accumulates the
    arriving offer `a_now^2` at its Nodes per record; the click by the
-   first rung at s_D = 1 / W (`amplitude.rungs`, `cell_of`); the
+   first rung at s_D = 1 / W (`amplitude.rungs`, `cell_of`); a set of
+   several Nodes is ONE cell and its click is unplaced, so a screen read
+   per Node declares one set per Node of its row, the same W (Builder 2's
+   finding, 2026-09-24, 00:40Z); the
    completion by exhaustion or the faces; the click line with
    `clock_stamp` and the birth stamp; the record's rows removed. Gate:
    one click per record; the books balanced at every completed tick;

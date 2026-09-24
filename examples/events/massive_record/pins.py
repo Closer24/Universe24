@@ -225,7 +225,7 @@ def main() -> None:
         world = load("layer_pin_k3_14")
         worlds["layer_pin_k3_14"] = {
             "kind": "PIN (layer)",
-            "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp 10000 (DECLARATIONS.md section 8: ten relaxation times of the well) against the rest world's over the same window, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+            "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp of 10000 (DECLARATIONS.md section 8) against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
             "pin": one_formula(world, 0, 3, "exact"),
             "controls": {
                 "second_order_c_m": one_formula(world, 0, 3, "second"),

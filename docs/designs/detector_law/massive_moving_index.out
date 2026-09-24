@@ -102,3 +102,11 @@ the receding case on a longer chain: n = 4000, the source at 300, the probe at 2
       (the energy account over the window: light's E drifts -6.467e-05 per interval beyond the reference train's own feed, the massive E +1.444e-08; the combination E_light + (G / g) E_m drifts -6.178e-05)
       (the phase in the window's two halves: +1.5235, +1.6483 rad: steady if equal)
   moving away from the source (from behind), G g x [K^2, K^2 - 3] (gamma_m^2): the lab phase delay +1.5861 rad (the block from 1500 to 2566; transmitted amplitude 1.296); the covariant expectation +0.2353 rad; the ratio read / expected = 6.740
+
+the receding case on the DECLARED geometry: n = 4000, the source at 800, the probe at 2400, the block from 1500 moving away from 3000; the window [3800, 5400]
+      (the energy account over the window: light's E drifts +1.592e-04 per interval beyond the reference train's own feed, the massive E +4.259e-09; the combination E_light + (G / g) E_m drifts +1.601e-04)
+      (the phase in the window's two halves: +0.1940, +0.1816 rad: steady if equal)
+  at rest, light at omega' away = 0.0181: n = 1.2519 (transmitted amplitude 1.109)
+      (the energy account over the window: light's E drifts -4.099e-04 per interval beyond the reference train's own feed, the massive E -9.322e-09; the combination E_light + (G / g) E_m drifts -4.118e-04)
+      (the phase in the window's two halves: +0.5539, +1.5234 rad: steady if equal)
+  moving away from the source (from behind), the motion pair [K^2, K^2 - 3] on G g: the lab phase delay +1.0144 rad over the window (the block from 1500 to 2303; transmitted amplitude 1.023); the covariant expectation +0.2323 rad; the ratio read / expected = 4.366; THE ROW'S NUMBERS the phase and the drift between the halves printed above

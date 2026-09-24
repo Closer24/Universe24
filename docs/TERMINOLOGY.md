@@ -1,5 +1,8 @@
 # Canonical simulation terminology
 
+The closed glossary of every term's one name is [docs/GLOSSARY.md](GLOSSARY.md);
+this page keeps the state vocabulary contract.
+
 The paper's glossary and its symbols table are taken from this file at one
 named commit: the paper cites the commit it copied, and a later edit here is
 a later commit the paper takes or not (the model owner, 2026-09-21: "make

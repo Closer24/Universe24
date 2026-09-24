@@ -53,7 +53,7 @@ from the script's own numbers by the wrapped wave and was not kept).
 | `index_moving_long_k3_away.json`, `index_moving_long_k4_away.json`, with their rest and reference worlds | the receding case on the longer chain of 4000, REGENERATED on the declared geometry of DECLARATIONS.md section 11 (2026-09-24): the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400] (the front at the probe at 2770, the reflection from x = 0 at 5543); the rest world at omega' away at x = 2100 (the first geometry, whose window sat inside the train's own arrival, withdrawn before any run) | PREDICTION (P) | the script's number on the same geometry (section 11): the lab phase delay +1.0144 rad over the window (the covariant expectation +0.2323, the ratio 4.37), the halves +0.5539 and +1.5234, the drift 1.2 x 10^-3 rad per interval; the bands +- 0.04 rad and +- 10 percent of the rate | the window's phase against the reference at omega and its drift rate (GAMEBOARD, the row's own reader), the pump beside |
 | `deep_well_rest_40.json`, `deep_well_k3_40.json` | the deep well in motion (RUN_LIST.md step 3, the cavity row's control): a periodic 128 x 128 x 1 layer, the kind `[800, 809]`, the block s = 40 at full depth `[800, 800]` (eps 0.87, the relaxation time 11 intervals), the flat seed 2^20, the block centred at (44, 44); at rest 3500 intervals, and pushed to k = 3 over the ramp 1500 and the hold 8000 with `mode_axis` x | CONTROL | the one formula at the exact cone on the layer's own mode: 0.7531 (`expectations.json`, the RUN_LIST's number by `massive_layer_pins.py` beside) | DETECTOR: the clicks' mean interval over the hold over the rest world's; GAMEBOARD: the peaks and the pump |
 
-| `layer_pin_rest_14.json` (i-L), `layer_pin_k3_14.json` (ii-L), the pinned files of row 4a | the layer pin world of MASSIVE_RECORD.md section 11 item 7: a periodic 200 x 200 x 1 layer, the kind `[3200, 3236]` (mu = 0.15), the block s = 14 at the well `[3200, 3227]` (g = mu^2 / 4), `margin` "pin" (s + 4 extents = 159 < 200); the `seed` the BOUND MODE'S INTEGER PROFILE at 2^20 over the whole layer (the generator's integers in the file, the same at both levels: the reader of record is the clicks, which a flat seed makes beat on this wide mode); at rest and pushed to k = 3 over the ramp 10000 (DECLARATIONS.md section 8: ten times the well's relaxation time 1027 intervals; the exploratory ramp 1500 made the clicks beat) and the hold 8000, the ticks 18500 in both files so that the same hold [10200, 18200] is read at rest and in motion, with `mode_axis` x on the moving world | PIN (layer) | the mode's period 42.33 at rest (omega_b 0.14844); in motion the one formula at the exact cone 0.8116 (the second order 0.8108 and light's 0.8132 the CONTROLS; the script's own layer reading 0.8113) | DETECTOR: the clicks over the hold, the reader of record; GAMEBOARD: the summed record's and the centre cell's peaks beside |
+| `layer_pin_rest_14.json` (i-L), `layer_pin_k3_14.json` (ii-L) | the layer pin world of MASSIVE_RECORD.md section 11 item 7: a periodic 200 x 200 x 1 layer, the kind `[3200, 3236]` (mu = 0.15), the block s = 14 at the well `[3200, 3227]` (g = mu^2 / 4), `margin` "pin" (s + 4 extents = 159 < 200); the `seed` the BOUND MODE'S INTEGER PROFILE at 2^20 over the whole layer (the generator's integers in the file, the same at both levels: the reader of record is the clicks, which a flat seed makes beat on this wide mode); at rest 3500 intervals, and pushed to k = 3 over the ramp 10000 (ten relaxation times of the well, DECLARATIONS.md section 8) and the hold 8000, the ticks 18500, with `mode_axis` x | PIN (layer) | the mode's period 42.33 at rest (omega_b 0.14844); in motion the one formula at the exact cone 0.8116 (the second order 0.8108 and light's 0.8132 the CONTROLS; the script's own layer reading 0.8113) | DETECTOR: the clicks over the hold, the reader of record; GAMEBOARD: the summed record's and the centre cell's peaks beside |
 
 The pins' gamma: `pins.py` takes the exact cone of the massive kind's band,
 c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2 (MASSIVE_RECORD.md section 8
@@ -66,19 +66,11 @@ The folders `EXPLORATORY_layer_rest_14/` and `EXPLORATORY_layer_k3_14/` hold
 copies of two exploratory runs (the events, the run's record without its audit,
 the world file; no per-Node state) for the visualizer; EXPLORATORY, not
 registered, their numbers in BUILD_READINGS.md's exploration log only (the
-runs of the ramp 1500, before section 8 declared the ramp 10000). The folder
-`EXPLORATORY_chain_screen/` holds the same copy of the first build's chain
-world (`tests/test_detector_law.py`, 80 Nodes, 900 intervals, the lamp at
-x = 2 and the screen at x = 70), the tracked input of the two readers of
-clicks (`tests/test_read_runs_clicks.py`).
+runs of the ramp 1500, before section 8 declared the ramp 10000).
 
-The readers of clicks of the launch list (RUN_LIST.md on `detector-law-design`),
-readers of clicks only, in `read_runs.py`: `screen_clicks(run, prefix)` (the ray
-law's screens: the click count per detector set named by the prefix, a screen of
-one set per Node read per Node) and `light_clicks(run, detector)` (a light
-detector's train: the sorted click stamps at the set, `mean_interval` over a
-window the received line's period), each on a run directory (`artifacts/...` or a
-tracked copy); an empty train reads zero clicks and no exception. The launch
+The readers of clicks of the launch list (RUN_LIST.md) are Builder 2's in
+`read_runs.py` (`clicks_of`, `screen_clicks`, `light_clicks`; PRs #1073 and
+#1076, `tests/test_detector_law_readers.py`). The launch
 list's worlds this series does NOT hold, each named in BUILD.md section 12: the
 emitters' worlds (4b's `redshift_k3` and `redshift_control`, the light clock)
 refused at load by MUST 3 with the declared g = [1, 50000]; the Sagnac, the

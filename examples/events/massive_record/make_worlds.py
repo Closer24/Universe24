@@ -60,12 +60,10 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   periodic 200 x 200 x 1 layer, `margin` "pin"), the seed the bound mode's integer
   profile at 2^20 over the whole layer (the generator's integers in the file, the
   same at both levels: the reader of record is the clicks, which a flat seed makes
-  beat on a wide mode); at rest and pushed to k = 3 over the ramp 10000 (ten times the
-  well's relaxation time 1 / (omega_0 - omega_b) = 1027 intervals, the physicist's
-  declaration DECLARATIONS.md section 8 after the exploratory reading of the ramp 1500,
-  whose clicks beat) and the hold 8000, the ticks 18500 in both files so that the hold
-  [10200, 18200] is read at rest and at k = 3 alike: PIN worlds (layer), the pin the
-  mode's period and the one formula at the exact cone.
+  beat on a wide mode); at rest and pushed to k = 3 over the ramp 10000 and the hold
+  8000 (the ticks 18500: the ramp declared by the well's relaxation time, ten times
+  1 / (omega_0 - omega_b) = 1027 intervals, DECLARATIONS.md section 8): PIN worlds
+  (layer), the pin the mode's period and the one formula at the exact cone.
 
 - The launch list's worlds (RUN_LIST.md on `detector-law-design`, the declarations
   DECLARATIONS.md sections 4, 10 and 11; the Boss's order of 2026-09-23 23:40Z item
@@ -80,7 +78,7 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   well in motion `deep_well_k3_40.json` and `deep_well_rest_40.json` (a 128^2 layer,
   s = 40 at full depth [800, 800] in [800, 809], the flat seed, the ramp 1500 and the
   hold 8000; the block centred, the rest world's 3500 intervals the series' rest
-  length); (v-m) the long chains REGENERATED on section 11's geometry (the chain of
+  length, as the layer pin's rest world keeps 3500 on main); (v-m) the long chains REGENERATED on section 11's geometry (the chain of
   4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away
   from interval 3000, the window [3800, 5400]); and `EXPLORATORY_light_clock_60.json`
   (NOT WRITTEN, refused by MUST 3 as 4b's; section 10 read by PROBES only: the chain of 673, A at [600, 612) at full depth,
@@ -108,6 +106,11 @@ FACES_OPEN = {"x": "open"}
 AGE_BOUND = 1 << 20
 MOMENTUM_K3 = 64
 MOMENTUM_K4 = 48
+# The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
+# the well (1027 intervals), the hold 8000 after it, the ticks 18500 (500 more, the hold
+# read over [10200, 18200] by RUN_LIST.md).
+LAYER_RAMP = 10000
+LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "coupling",
     "wheel",
@@ -418,10 +421,10 @@ def worlds() -> dict[str, dict]:
     # margin s + 4 extents = 159 < 200), the seed the BOUND MODE'S INTEGER PROFILE at 2^20 over
     # the whole layer (the generator computes the module's mode and writes the integers into
     # the world file; the engine reads integers; the load-time check prints the deviation): at
-    # rest and pushed to k = 3 over the ramp 10000 and the hold 8000 (DECLARATIONS.md section
-    # 8: the ramp ten relaxation times of the well; the ticks 18500 in both files).
+    # rest 3500 intervals, and pushed to k = 3 over the ramp 10000 (ten relaxation times of
+    # the well, DECLARATIONS.md section 8) and the hold 8000, the ticks 18500.
     block = {"position": [93, 93, 0], "side": 14, "pair": [3200, 3227], "margin": "pin"}
-    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 18500)
+    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 3500)
     profile = mode_profile(rest, 0)
     rest["measured"][0]["seed"] = profile
     out["layer_pin_rest_14"] = rest
@@ -431,8 +434,8 @@ def worlds() -> dict[str, dict]:
         [200, 200, 1],
         PERIODIC,
         [3200, 3236],
-        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=10000)],
-        18500,
+        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=LAYER_RAMP)],
+        LAYER_RAMP + LAYER_HOLD + 500,
         mode_axis="x",
     )
     moving["measured"][0]["seed"] = profile

@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 18500,
+ "ticks": 3500,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
