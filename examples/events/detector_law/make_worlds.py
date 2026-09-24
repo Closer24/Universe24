@@ -55,12 +55,12 @@ on the light clock.
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
 `redshift_control.json` (section 4 with item 7's CHECK on the loader's bound of 4096: the
-chain of 4096, A at 2994, the receiver's set at 4094 with wheel 64, A's `own_grace` 8000,
-15000 intervals), `sagnac_k3.json` and `sagnac_rest.json`
+chain of 4096, A at 2994, the receiver's set at 4094 with wheel 64, A's `own_grace` 3000
+and the world key `wheel` 64, 10000 intervals), `sagnac_k3.json` and `sagnac_rest.json`
 (section 13 on the chain of 3000 of 2026-09-24 07:58Z, the blocks their own receivers at
 W = 256 with `own_grace` 3000, the hold, 6400 and 8450 intervals),
 `light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
-its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
+its face with `own_grace` 70, the chain closed for light, 2600 intervals), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
 (M1-3), the receivers detector sets with their own wheel (M1-4: 4b's at its body's Node with
 wheel 64, R2's bound to the blocks by the key `block` with wheel 256, the light
@@ -157,7 +157,13 @@ R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for 
 # counts, so sagnac_k3 6400 and sagnac_rest 8450; the redshift pair 15000 (the last hold records,
 # born near 9500, complete near 14800).
 R2_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
-REDSHIFT_TICKS = 15000
+REDSHIFT_TICKS = 10000
+LIGHT_CLOCK_TICKS = 2600  # the physicist's 09:18Z: the -x half's round trip on the closed chain (2078) before item 10's take removes it; the first cycle's record closes between about 2150 and 2400
+# The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
+# on every emitting block naming the set that takes the block's clicks. PREPARED AND HELD:
+# it enters the files only on the owner's word and the builder's engine line (the Boss's
+# 09:40Z (4)); with the flag off the files carry no such key.
+RECEIVER_KEY = False
 
 
 def light_family(pair: list[int] | None) -> dict:
@@ -527,7 +533,12 @@ MATTER_TAKE_PAIRS = {
 }  # M1-6: the take's pair on the matter kind's take lines
 MATTER_TRAIN = 8  # periods (150 intervals), section 12 and M1-6
 OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
-REDSHIFT_GRACE = 8000  # section 4 item 2 (go-lines 795602cd): 4b's A, the hold
+# 4b's A: the physicist's line of 2026-09-24 09:33Z (through the Boss's 09:40Z): own_grace
+# 3000 = the hold H after the ramp of 1500 (the file's 8000 was the named defect: A off the
+# board at 9722), ticks 10000 for both redshift worlds, the world key `wheel` 64 (one
+# integer with the light_detector's and the block's).
+REDSHIFT_GRACE = 3000
+REDSHIFT_WORLD_WHEEL = 64
 R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
 R2_WHEEL = 256  # section 13 item 4 (main 25a7abf4): the declared wheel of R2's block sets
 LAMP_GRACE = 16700  # M1-6: the matter lamp's `own_grace`, the whole hold
@@ -572,6 +583,16 @@ def matter_world(
     return document
 
 
+def named_receiver(document: dict, receivers: dict[int, str]) -> None:
+    """The receiver by name (#1116): `receiver` on each emitting block, the set that takes
+    its clicks; written only when RECEIVER_KEY is on (held until the owner's word and the
+    builder's line)."""
+    if not RECEIVER_KEY:
+        return
+    for index, name in receivers.items():
+        document["measured"][index]["receiver"] = name
+
+
 def graced(document: dict, blocks: list[dict]) -> None:
     """The emitters' `own_grace` onto the world's block entries (the series' `world`
     helper copies its own block keys only)."""
@@ -600,14 +621,13 @@ def massive_worlds(massive) -> dict[str, dict]:
     light_11 = light_family([1, 1])
     # Row 4b (section 4 with section 15 M1-1 to M1-5 and item 7's CHECK on the loader's
     # bound, 2026-09-24 06:10Z): the chain of 4096 (every shape axis is capped at 4096), the
-    # emitter A of side 12 at the half-depth well at x = 2994 (its room 2994 Links against
-    # the 2917 the ramp and the hold need), receding on -x at k = 3 over the ramp 1500 with
-    # own_grace 8000 and the hold 8000; the receiver a body of one Node at 4094 (1100 Links,
+    # emitter A of side 12 at the half-depth well at x = 2994, receding on -x at k = 3 over
+    # the ramp 1500 with own_grace 3000 and the hold 3000 (the physicist's 09:33Z: at the
+    # hold's end A stands at 1744, inside the board; the earlier 8000 ran A off the board at
+    # 9722); the receiver a body of one Node at 4094 (1100 Links,
     # the transit 1905; the +x face at 4095 beyond it) with its set {positions [[4094, 0, 0]],
     # wheel 64}; the probe there; the control the same world without the momentum. The
-    # ticks: a record completes only when the -x face takes its -x half, 2994 sqrt 3 = 5186
-    # intervals after birth, ramp + hold + 5186 = 14686; the physicist's word of 08:06Z on
-    # Reviewer 3's margin line: 15000 in both worlds (the two readers' windows equal).
+    # ticks 10000 in both worlds (the physicist's 09:33Z; the two readers' windows equal).
     redshift_ticks = REDSHIFT_TICKS
     for name, motion in (
         ("redshift_k3", {"momentum": [-massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
@@ -626,8 +646,9 @@ def massive_worlds(massive) -> dict[str, dict]:
             probes=[[4094, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        bounded(document, R2_WORLD_WHEEL)
+        bounded(document, REDSHIFT_WORLD_WHEEL)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
+        named_receiver(document, {0: "light_detector"})
         document["measured"].append(body([4094, 0, 0], "light", [[-1, 0, 0]]))
         document["detectors"].append(
             {"name": "light_detector", "positions": [[4094, 0, 0]], "threshold": 1, "wheel": 64}
@@ -673,12 +694,15 @@ def massive_worlds(massive) -> dict[str, dict]:
         )
         receiver_set(document, "at_a", 0, R2_WHEEL)
         receiver_set(document, "at_b", 1, R2_WHEEL)
+        named_receiver(document, {0: "at_b", 1: "at_a"})
         out[name] = document
     # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
     # chain of 673 CLOSED for light at both ends (the loader's third face value, the
     # builder's line), the emitter A of side 12 at full depth at [600, 612) with own_grace
     # 70, the mirror the closed face at 672, the receiving set A's face cell x = 611 alone
-    # with its own wheel 64 (section 10 item 9), the hold 2000; the probe at the face.
+    # with its own wheel 64 (section 10 item 9), 2600 intervals (the physicist's 09:18Z: the
+    # -x half's round trip 2078 on the closed chain before the take removes it); the probe
+    # at the face.
     document = massive.world(
         "light-clock-60",
         "PIN",
@@ -686,7 +710,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         {"x": "closed", "y": "periodic", "z": "periodic"},
         KIND,
         [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)],
-        2000,
+        LIGHT_CLOCK_TICKS,
         light=light_11,
         probes=[[612, 0, 0]],
     )
@@ -699,6 +723,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     document["detectors"].append(
         {"name": "at_a", "block": 0, "positions": [[612, 0, 0]], "threshold": 1, "wheel": 64}
     )
+    named_receiver(document, {0: "at_a"})
     out["light_clock_60"] = document
     # Rows M1 and M2 (section 12 with section 15 M1-6): the 128 x 128 x 1 layer, y periodic,
     # x open for the matter kind, no light; the matter lamp at (20, 64) with its own clock,

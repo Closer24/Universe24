@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 15000,
+ "ticks": 10000,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -24,7 +24,7 @@
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 4294967296,
- "wheel": 256,
+ "wheel": 64,
  "directions": [],
  "families": [
   {
@@ -82,7 +82,7 @@
    "seed": 52428800,
    "ramp": 1500,
    "emits": "light",
-   "own_grace": 8000
+   "own_grace": 3000
   },
   {
    "position": [
