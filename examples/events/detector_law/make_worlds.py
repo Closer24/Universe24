@@ -265,7 +265,7 @@ def lamp(
     amount: int,
     rate: list[int],
     wheel: list[int],
-    directions: list[list[int]],
+    directions: list[list[int]] | None,
     train: int,
     family: str = "light",
     receiver: list[str] | None = None,
@@ -274,7 +274,11 @@ def lamp(
     `phase_per_link`, section 15 M1-6, not a lamp key); with `receiver`, the names of
     the sets that are its records' ladder (the lamp's ladder by name, SIZING.md; the
     engine's `receiver` on a lamp, BUILD.md section 20), written only under
-    RECEIVER_KEY."""
+    RECEIVER_KEY. With `directions` None the lamp declares NO HEADING (Reviewer 3's
+    second reading of 2026-09-24, 16:25Z, on the owner's standard: a heading should
+    arise; the loader's default is the six headings, an isotropic emitter; the beam's
+    shape is the mask's and the split's work), the form of the two slits and the pace
+    fans since the no-heading regeneration."""
     entry: dict = {
         "position": position,
         "family": family,
@@ -282,9 +286,12 @@ def lamp(
         "phase": 0,
         "momentum": [0, 0, 0],
         "fixed": True,
-        "directions": directions,
     }
-    inner: dict = {"rate": rate, "wheel": wheel, "directions": directions, "train": train}
+    inner: dict = {"rate": rate, "wheel": wheel}
+    if directions is not None:
+        entry["directions"] = directions
+        inner["directions"] = directions
+    inner["train"] = train
     if receiver is not None and RECEIVER_KEY:
         inner["receiver"] = list(receiver)
     entry["lamp"] = inner
@@ -330,7 +337,7 @@ def two_slits() -> dict:
             TWO_SLITS_STOCK,
             [1, 4],
             [1, TWO_SLITS_STOCK],
-            [[1, 0, 0]],
+            None,
             TRAIN_32,
             receiver=names,
         ),
@@ -378,8 +385,8 @@ def pace_fan(name: str, pair: list[int], wavelength: int) -> dict:
     document = ray_world(
         name, [128, 128, 1], {"x": "open", "y": "open", "z": "periodic"}, pair, FAN_TICKS[wavelength]
     )
-    headings = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]]
-    document["measured"].append(lamp([64, 64, 0], 1, [1, 1], [1, 64], headings, TRAIN_32))
+    # no heading (16:25Z): the six headings by the loader's default, one record
+    document["measured"].append(lamp([64, 64, 0], 1, [1, 1], [1, 64], None, TRAIN_32))
     document["probes"] = [list(position) for position in FAN_PROBES_40 + FAN_PROBES_36]
     return document
 
