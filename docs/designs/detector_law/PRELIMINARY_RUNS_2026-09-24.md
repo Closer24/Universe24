@@ -614,3 +614,160 @@ say it in full.
 | the deep well | deep_well_rest_40, deep_well_k3_40 | VALID | the block's own record | 30 and 63 clicks | `clock` reads both | not clean by the section's counts (29 against at least 30 at rest, 51 against at least 80 in motion; section 6) |
 | (v-m) k = 3 | index_moving_long_k3_away, _rest_k3_away, _reference_k3_away, _reference_omega | VALID | the source's train of 200 periods, the probe nonzero from 2745 / 2748 | no set declared: the probe's phase, GAMEBOARD by declaration | `index_reading` reads the away world against the reference at omega and the rest world against its reference at omega' | not clean by two letters: the block's own 24 click lines; the block's cells past the probe at 5630, after the window (section 7) |
 | k = 4 | index_moving_long_k4_away and its rest and reference | VALID | as k = 3 | as k = 3 | held (section 19) | held |
+
+## 21. EXPLORATORY: the three features' worlds on main 2e1d5610 (the Preliminary Runner, 13:35Z to 14:30Z)
+
+The Boss's orders of 14:35Z, 14:45Z and 14:55Z: the worlds freed by the three
+features, named as the owner named them (14:03Z), "the receiver by name"
+(light_clock_60, sagnac_rest, sagnac_k3, redshift_k3, redshift_control) and
+"the joint gather" (the Bell four); "the lamp's ladder" (two_slits,
+matter_waves_12) and Malus's four wait for their files and are skipped here,
+as ordered. Each run is EXPLORATORY, a diagnostic by kind, checked against
+its section of TEST_RUNS.md (on main at 2e1d5610, the same text as ae96dcf4).
+
+- ENGINE: main 2e1d56104560258abc47b3eac23634970167d07c (engine-features
+  merged at 3ce286dd), the source fingerprint `3cdd3b0de720`. Three worlds
+  had already started on engine-features b487b0b9 (the source fingerprint
+  `cbb58182eb8d`) when the merge was announced: redshift_k3, redshift_control
+  and sagnac_rest ran to their end there and are reported from those runs, as
+  the Boss allowed (the one commit between, 3ce286dd, renames `_polarisers`
+  to `_table_settings` in `src/event_universe/events/detector_law.py` and
+  touches nothing else in the law); the light clock, sagnac_k3 and the Bell
+  four ran on 2e1d5610.
+- THE RUN: the one command from a worktree of the commit, the engine on that
+  worktree's `src`; the load line first. THE READERS: `read_runs.light_clicks`
+  on the clicks of each receiver cell (`clicks_of` on the gather lines at the
+  rung), the gather lines grouped by the emitting block (the first rung's
+  interval from the birth stamp, the receiver's count, the sinks' take), and
+  the Bell reader `tools/click_readings/detector_law_bell.py`; every number
+  read, none compared.
+- HOST: the same four cores; four processes at once.
+
+The load line: all nine files VALID on both commits (the receiver keys on the
+five, the blobs 35a52bb8 sagnac_rest, 109866fa sagnac_k3, 704e2bbc
+light_clock_60, 0becffbc redshift_k3, 83d4c7a7 redshift_control; the Bell
+four a071e65a, 04a2d047, f841a75a, 297ec816, unchanged).
+
+## 22. EXPLORATORY: the light clock of two bodies (light_clock_60 at 704e2bbc, "the receiver by name", main 2e1d5610)
+
+The closed chain of 673, A at [600, 612), the set `at_a` the free Node 612
+with W = 64, `own_grace` 70, `receiver` "at_a", 2600 intervals.
+
+- HOST: wall 31.3 s, 83 MB; completed at 2600, the books balanced; the light
+  family's transit row `closed_after_click` 0 and `escaped` 0 at the end.
+- GAMEBOARD: A's clock 37 click lines and 37 births (one per cycle, the
+  first at tick 54 with `cycle` 1); 34 gather lines on 34 distinct records,
+  none with two, 3 births without a line at the end; every line `click_at`
+  "rung", `clock_source` "measured:0", `chosen` at_a, no face; A's corner
+  600 throughout; the sinks' take `escaped` 0 on every line.
+- DETECTOR (`light_clicks` at at_a from A's birth stamp): 34 clicks, the
+  first at 268, the last at 2593; the first click 214 intervals after its
+  record's birth stamp (54); the intervals of every click from its own
+  record's birth 214, 216, 216, 217, 217, 217, ... (214 to 219 over the 34,
+  the mean 216.9); the successive intervals 72, 70, 72, 70, 71, 69, ...; the
+  mean interval 775 / 11 = 70.4545 intervals (the line 2 pi over it 0.08918
+  rad per interval); the receiver's count at the lines 4, 5, 6, ...
+- Against TEST_RUNS.md (section 9): CLEAN. A's own record clicks; the first
+  light record is born at A's first cycle; its one gather line at at_a at the
+  rung with clock_source measured:0, its click 214 after its birth (after the
+  grace 70, before 400, not before the return's transit of 208); no second
+  line on any record, no line at a face, no `click_at` "completion"; the
+  reader prints its fields; HOST seconds.
+
+## 23. EXPLORATORY: the Sagnac pair (sagnac_rest at 35a52bb8 on b487b0b9, sagnac_k3 at 109866fa on main 2e1d5610; "the receiver by name")
+
+The chain of 3000, x open for light; A at [700, 712) with `receiver` "at_b"
+and B at [772, 784) with `receiver` "at_a" (the blocks' faces 60 Links
+apart), W = 256, `own_grace` 3000; 8450 intervals at rest, 6400 at k = 3.
+
+sagnac_rest:
+
+- HOST: wall 1684.9 s (on a shared core), 133 MB; completed at 8450, the
+  books balanced; the light transit row `closed_after_click` 147 at the end.
+- GAMEBOARD: 240 births (120 per block, the first at 54), 240 click lines
+  of the two clocks; 236 gather lines on 236 distinct records, none with
+  two, 4 births without a line; every line `click_at` "rung"; A's records
+  at at_b with `clock_source` "measured:1" (118) and B's at at_a with
+  "measured:0" (118), no line at a face or at a record's own set; the
+  sinks' take `escaped` 0 on every line; both corners fixed (700, 772).
+- DETECTOR: the first rung's interval from the emitter's birth stamp 107 to
+  108 on A's records and 107 to 109 on B's (the first six 108, 108, 107,
+  107, 107, 107 on both); `light_clicks` per set: 118 clicks each, the
+  first at 162, the last at 8397, the successive intervals 70, 70, 70, 70,
+  71, 70, ..., the mean interval 915 / 13 = 70.3846 intervals on both
+  (the line 2 pi over it 0.08927 rad per interval); the receiver's count
+  at the lines 2, 3, 4, ... on both.
+- COMPUTATION (read, not compared): the two directions' first-rung
+  intervals equal at rest to within one interval (107.07 in the mean on
+  both).
+- Against TEST_RUNS.md (section 10): CLEAN. Both clocks click, each record
+  has one line at the other block's set at the rung, the click 107 to 109
+  after the birth (more than 60, under 400), 118 lines per direction, no
+  face, no double line, no record of A at its own set; the reader prints
+  its fields; HOST under 200 MB (the wall over a minute on a shared core:
+  1685 s).
+
+sagnac_k3 (main 2e1d5610):
+
+- HOST: wall 1399.1 s (shared core), 122 MB; completed at 6400, the books
+  balanced; `closed_after_click` 36 at the end.
+- GAMEBOARD: 140 births (70 per block, the first at 54), 140 click lines;
+  136 gather lines on 136 distinct records, none with two, 4 births
+  without a line; every line at the rung, A's at at_b (67, clock_source
+  measured:1) and B's at at_a (69, measured:0), no face; the sinks' take 0
+  on every line; the two blocks step together, 1879 steps each, the
+  corners 946 and 1018 at 1500 and 2579 and 2651 at 6400 (on the board).
+- DETECTOR (the first rung's interval from the emitter's birth stamp): A's
+  records at at_b 111, 114, 119, 121, 125, 129, 135, 139, ... rising
+  through the ramp to 245 to 248 (the last four 246, 248, 246, 245); B's
+  at at_a 104, 101, 99, 97, 94, 92, 90, 89, ... falling to 70 to 71. Over
+  the hold (the records born at or after 1500): A's 48 records 245 to 248,
+  the mean 3943 / 16 = 246.44; B's 50 records 70 to 71, the mean 352 / 5 =
+  70.4. `light_clicks` per set: at_a 69 clicks, the mean interval 6203 / 68
+  = 91.22; at_b 67 clicks, 3088 / 33 = 93.58.
+- COMPUTATION (read, not compared): (t_+ - t_-) / (t_+ + t_-) with t_+ the
+  A-to-B hold mean and t_- the B-to-A hold mean, 14083 / 25347 = 0.5556.
+- Against TEST_RUNS.md (section 10): CLEAN. Both clocks click, one line per
+  record at the other block's set at the rung on both directions, the
+  click 70 to 248 after the birth (more than 60, under 400), 67 and 69
+  lines, no face, no double line, the blocks stepping together one Link per
+  3 intervals and on the board at 6400; the reader prints its fields; HOST
+  under 200 MB.
+
+## 24. EXPLORATORY: the redshift pair (redshift_k3 at 0becffbc, redshift_control at 83d4c7a7, on engine-features b487b0b9; "the receiver by name")
+
+The chain of 4096, x open for light; A at 2994 (pushed on -x from `start`
+in the k = 3 world, at rest in the control) with `receiver` "light_detector",
+the light body at 4094 with the set `light_detector`, W = 64, `own_grace`
+3000, 9600 intervals. Both ran on b487b0b9 (the source fingerprint
+cbb58182eb8d) as section 21 says.
+
+redshift_k3:
+
+- HOST: wall 1671.8 s (shared core), 144 MB; completed at 9600, the books
+  balanced; `closed_after_click` 12 at the end.
+- GAMEBOARD: 128 births (one per cycle of A, the first at 46), 128 click
+  lines of A's clock; 69 gather lines on 69 distinct records, none with
+  two, 59 births without a line at the end; every line at the rung at
+  light_detector with `clock_source` "interval" (the set's clock the
+  interval), no line at a face; the sinks' take 0 on every line; A's
+  corner from 2994 to 40 at 9600 with 2954 steps (one Link per 3 intervals
+  after the ramp; on the board at the end).
+- DETECTOR (`light_clicks` at light_detector): 69 clicks, the first at 1939
+  (1893 intervals after its record's birth stamp 46), the last at 9492; the
+  interval of each click from its own record's birth 1893, 1891, 1895,
+  1900, 1907, 1916, ... to 4404 (the mean 2942.8); the successive intervals
+  61, 66, 67, 69, 72, 71, ... to 123, 123; the mean interval 7553 / 68 =
+  111.07.
+- DETECTOR and COMPUTATION (section 11's reader): f_B per consecutive pair
+  of lines, the birth ordinals' difference over the set's count difference,
+  1 / 61, 1 / 66, 1 / 67, 1 / 69, 1 / 72, 1 / 71, ... to 1 / 121, 1 / 123,
+  1 / 123 (the born differences all 1; the count differences 61 to 125);
+  over the train 68 / 7553 = 0.0090030 cycles per interval. The ladder
+  holds the one cell light_detector (its weight 64), the faces sinks.
+- Against TEST_RUNS.md (section 11): CLEAN. A's records born per cycle,
+  one line each at light_detector at the rung, the first about 1900 after
+  its birth, 69 lines (at least 10), no line at the -x face, A on the
+  board at 9600, one Link per 3 intervals; the reader prints its fields;
+  HOST under 200 MB (the wall 28 minutes on a shared core, against the
+  section's "about a minute").
