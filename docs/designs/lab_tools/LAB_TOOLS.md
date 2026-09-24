@@ -301,6 +301,40 @@ questions of 18:50Z).**
   closed and reflect (A.9), so the two slits' layer gains no bodies; its
   regeneration follows B's margin.
 
+**A.12 THE UNIFICATION, PROPOSED (ALGEBRA.md 9.18; it holds on the
+owner's word).** The nine tools of A.10 are ONE OBJECT: a body, a cube of
+a massive family whose cells carry optional integers. The emitter, the
+receiver and the clock of the definitions' four building blocks become
+options and readings of that one body.
+
+| The body carries | It is |
+| --- | --- |
+| nothing more | the well |
+| a light pair | the mirror, the splitter, an index slab |
+| an axis (a, b) | the polariser |
+| a coupling (g, G) | the index rows' medium |
+| a birth triggered by its own excited record, and a stock M | the emitter |
+| a birth triggered by a named arriving record | the crystal |
+| its name in ladders, and a wheel W | the receiver |
+| a light pair and a momentum | the transponder |
+
+- A body is BOUND (its own record: it carries momentum, and its seed is
+  the composed mode) or SILENT (no record: it acts, but momentum leaves
+  the board at it). The owner's choice of 9.15 is bound or silent tool
+  bodies.
+- The faces are not a body.
+- THE FAMILIES OF A WORLD: light [1, 1]; the experiment's matter, where
+  it has matter; and, with bound tools, ONE HOLDER FAMILY for the tools'
+  bodies. The holder must differ from every family a tool acts on or
+  reads, because a Node carries one pair per family (ALGEBRA.md 9.18 (2)).
+  At most three families, with no duplicate.
+- THE GENERIC PRIMITIVES: the rule, the coupling, the label matrix, the
+  click, the click's action, the birth, the push, a count on a record's
+  own age, and the loader's checks (ALGEBRA.md 9.18 (4)).
+- THE LAW USES NO TABLE, NO ROOT AND NO FLOAT once the retirements of
+  9.18 (5) are made. The tables stay only in the readers and in the
+  generator.
+
 ## B. THE FIFTEEN EXPERIMENTS AS PLACED TOOLS (cubes on a torus; RUN_LIST.md's rows; the pins blind, written before any run)
 
 THE TIMING'S FORM, in every row: nothing reaches a receiver at Manhattan

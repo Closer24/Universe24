@@ -4330,3 +4330,210 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    - The content moved from the stock.
    THE GATE (9.5) stays on the whole line, the retirements and the
    regenerated worlds included.
+
+### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke")
+
+THE QUESTION. The owner's questions that led here: is every tool a
+body of a massive kind; is there any duplication; is a massive family
+matter. This section answers them as one statement and marks what the
+algebra carries and what it does not. It PROPOSES the unification. It
+becomes the definitions' form (SIMULATOR_DEFINITIONS.md, "The four
+building blocks") only on the owner's word.
+
+**(1) THE ONE OBJECT: THE BODY (DERIVED HERE, from 8.1, 8.3, 9.1, 9.15
+and 9.17).**
+- A tool acts by the law's own advance on its material, plus at most a
+  click whose other side may be a birth (9.17 (1)).
+- A tool's material is integers on a set of cells whose stabiliser fixes
+  its shape (9.1, 9.6), which is exactly 8.3's body: a G_48-set of
+  Nodes with a pair per family on its cells.
+- Light cannot be a body (8.3, PROVED: the norm bound). So a body's own
+  family is always a MASSIVE family.
+- So the nine tools of the specification's A.10 are ONE OBJECT, the
+  body, carrying optional integers. THERE IS NO DUPLICATION: the well
+  and the transponder are the same object, the emitter is a well with a
+  stock, and the crystal is a body whose birth is triggered by an
+  arriving record instead of its own.
+
+| What the body carries on its cells, beyond its own pair | The tool it is |
+| --- | --- |
+| nothing | the well (a clock) |
+| a light pair (a gap [1, 2], a layer [91, 107], an index) | the mirror, the splitter, an index slab |
+| an axis (a, b) on the label rows | the polariser |
+| a coupling (g, G) between two families (8.5) | the medium of the index rows |
+| a BIRTH (a born profile and branches) triggered by its own excited record's click, with a stock M | the emitter |
+| a BIRTH triggered by the click of an arriving record whose ladder names the body | the crystal |
+| its name in records' ladders and a wheel W | the receiver |
+| a light pair and a momentum | the transponder |
+
+- THE FACES ARE NOT A BODY: they are the board's border, the row beyond
+  read as 0 (1.6).
+- A BODY IS BOUND OR SILENT. A BOUND body carries its own record, its
+  seed, the mode of the composed world (9.9), and a momentum the push
+  moves (9.15). A SILENT body carries no record: its integers act, but
+  it cannot carry momentum. Main already has the silent body: the
+  receding index's medium, "the silent body's exception" in the body's
+  conditions. So the owner's open choice of 9.15 (momentum kept on the
+  board, or leaving it at a held tool) is a choice between bound and
+  silent tool bodies. The unification is the same either way.
+
+**(2) THE FAMILIES (DERIVED HERE).** A family is its vacuum pair and its
+quantum, nothing else. Its clock (`phase_per_link`) is read by the
+generator for the born profiles and the seeds (9.17 (5), 8.7), not by the
+law.
+- LIGHT: the pair [1, 1], with no rest frequency (at **k** = 0, omega =
+  0). It is never a body.
+- A MASSIVE FAMILY: the pair [num, den] with num < den, whose rest
+  frequency omega_0 has cos omega_0 = num / den (8.1). This is MATTER in
+  the dictionary: one kind of quantum with one rest mass. The experiment
+  declares one where it has matter (the clocks, Sagnac, the redshift,
+  the index rows, M1, M2).
+- THE HOLDER FAMILY FOR THE TOOLS' BODIES, needed only where the tools'
+  bodies are bound. Its necessity is DERIVED: a Node carries ONE pair per
+  family (8.1), so a body whose own family is F cannot carry on the same
+  cells a tool pair for F, because its F-pair is its well. So a tool's
+  body must be of a family OTHER THAN EVERY FAMILY THE TOOL ACTS ON OR
+  READS.
+  - M1's barrier (the gap [1, 2] for matter) and its screen cannot be
+    bodies of the matter waves' own family.
+  - A receiver of a family's records cannot be a well of that family,
+    because its well would change the field it reads through.
+  - So a world has at most THREE families: light, the experiment's
+    matter, and the holder. It has fewer where one is absent: Bell,
+    Malus, the two slits and the pace fans have light and, with bound
+    tools, the holder.
+  - This is not a duplication: the holder is the same KIND as matter
+    with its own pair, and it is required by one pair per family per
+    Node.
+- WHAT RETIRES: `counter` (the table bodies' family); the cart world's
+  `post`, `source`, `cart` and `mass` (the table form); the families'
+  `take` pairs (9.12).
+- OPEN FOR THE OWNER: the faces per family (on main a family may declare
+  its own, for example the light clock's chain periodic for matter and
+  closed for light). The algebra has one board (1.6). Faces per family
+  are data, not a branch, but they make two boards.
+
+**(3) THE ONE RECORD.** A record is its family; its rows per label value
+per arm at two levels with the remainders; its residue u; its norm T; its
+content in quanta; its ladder (the cells it names); its branches (the
+labels); and its age. A body's own record is a record like any other,
+with its offer booked through its own cells. NOTHING ELSE is kept:
+- no clock on the record (the law does not read one);
+- no take and no grace;
+- no driven mask;
+- no completion (it ends at its click or at its close, 9.12).
+
+**(4) WHAT IS GENERIC WITH US: the primitives, each a composition of the
+six verbs of chapter 2 on data alone, with no family name, no tool name
+and no kind.**
+1. THE RULE (8.1): every record of family F at every Node, with that
+   Node's F-pair. It is (B) the pair on the six reads, (T) the levels'
+   shift and (D) the one division with the remainder kept (8.10). It is the same rule for
+   light and for matter: light is the pair with num = den, and no branch
+   on the kind exists.
+2. THE COUPLING (8.5): (B) between two records' rows at a body's cells,
+   with the body's (g, G). It is the law's advance.
+3. THE LABEL MATRIX (9.16 (2)): (B) with the body's axis on a record's
+   label rows.
+4. THE CLICK (3.1, 8.6, 9.12): (E) the record's offer at the cells its
+   ladder names, read through (the motion booked at their Ports), then
+   (D) the rung 2 T u + T <= 2 W C. For a record of rank 2 the joint
+   weights are R = J^2 (3.6).
+5. THE CLICK'S ACTION (8.8): the record ends with all its rows, the one
+   deletion. Its content and its push are handed to the clicking body.
+6. THE BIRTH (9.13, 9.17): the body's born profile written once, at both
+   levels, at a click's interval. The click is either the body's own
+   excited record's (and the next excitation follows while the stock
+   lasts) or a named arriving record's.
+7. THE PUSH (8.11): (G) the stress, at the body's outer Ports, of the
+   records of the families the body declares as pushing it; then (D)
+   into the body's vector **p** (the momentum, bold for a vector) with
+   the remainder kept; then (T) the step when the accumulator reaches
+   its wall. Which families push a body is its declared data, not a
+   branch.
+8. A COUNT ON A RECORD'S OWN AGE (9.5): the close of a screen's ladder
+   (9.12 item 2).
+9. THE LOADER'S CHECKS (9.5), never the law's:
+   - the body whole on the board, and the bodies' cells disjoint;
+   - the composed seed bit for bit, and the hybrids' share within the
+     band (9.9);
+   - the excited record's norm per period, and the born profile's band
+     check (9.17 (5));
+   - the wheel a permutation, and the axis with gcd(a, b) = 1;
+   - the tool bodies' drift: SUM over the run of abs(p_i) below the
+     step's wall 3 Q S M x 56 d (8.11), so that no tool hops. Here Q is
+     the label's scale, S the width, M the body's content and 56 d the
+     take's pair scale.
+
+**(5) WHAT RETIRES FROM MAIN'S ENGINE (read on main 5b0e8a77,
+`detector_law.py` and `world.py`), each replaced by (4):**
+- THE LAMP: `_drive`, the rate, the train, and the norm taken from the
+  cosine table.
+- THE BLOCK AS AN EMITTER: its cycle births and `_source` as the
+  emitter's source. The coupling itself stays, as law.
+- THE EMITTER'S KNOT: `own_grace`, `_exempt`, `_own_take`, `_in_grace`
+  and the driven masks.
+- THE TAKE: the take masks, the take pairs, `taken_by_emitter` and
+  `escaped`.
+- `_complete`.
+- THE TABLE FORMS: `TableBody`, `_split_table_offers`, `read_pair`,
+  `half_angle`, the `Splitter` with its linear form, and `world.py`'s
+  check of S[k] for it.
+- THE KIND BRANCHES on `massive_kind` in the law's path of main's
+  `detector_law.py`: `_advance` (line 1691), `_complete` (2081) and
+  `step` (2435, 2479, 2511 and 2524). The branch in `read_pair` (1910)
+  goes with the table form. The reader `read_phase` (2550) keeps its
+  own, because a reading writes nothing.
+
+With these go ALL RUN-TIME TABLES. The cosine and sine tables remain only
+in the GAMEBOARD readers (`read_phase`, a reading that writes nothing)
+and in the generator (the seeds and the born profiles, written into the
+world file as integers). THE LAW THEN USES NO TABLE, NO ROOT AND NO FLOAT,
+and none of 2.7's exceptions.
+
+**(6) DOES THE ALGEBRA CARRY IT AT ONCE? Item by item.**
+
+| Piece | Status |
+| --- | --- |
+| the body as the one object, every tool its integers | IN (8.3, 9.1); the nine tools as this object DERIVED HERE |
+| light is never a body | PROVED (8.3) |
+| one rule for every family, light the pair num = den | IN (8.1) |
+| the holder family's necessity | DERIVED HERE (one pair per family per Node) |
+| the coupling | its form CARRIED (8.5); its scheme and its invariant J PROVED (8.5) |
+| the label matrix | DERIVED (9.16 (2)) |
+| the click, its action, the rung | IN (3.1, 8.6, 8.8) |
+| the birth at a click | DERIVED (9.13, 9.17) |
+| the composed seed and the hybrid condition | DERIVED (9.9): a condition checked per world, not a theorem that it holds |
+| the push, and momentum conserved on the board | CARRIED (8.11): the stress as the momentum flux, and the one vector per body (the declared tie), are declarations of the design, not of the law |
+| the excited record's norm per period; before = -now; the born profile as material | DECIDED (9.17 (5)), fixed only up to a convention |
+| the tool bodies' binding, their mass and the hybrid share | SIZING integers the generator chooses and the loader checks, not values the algebra fixes |
+| the material integers, the placement, the cone | declarations of the world by their nature (9.8; 9.16 (6)) |
+| the faces per family | OPEN for the owner (one board, 1.6) |
+
+THE VERDICT: YES IN ITS OBJECTS AND OPERATIONS, NOT IN EVERYTHING.
+- THE ALGEBRA CARRIES THE UNIFICATION AT ONCE WHERE IT MATTERS: one
+  object (the body), one record, one rule, the six verbs. Every tool is
+  data on that object. No new verb, no new group, no table and no root.
+- IT DOES NOT CARRY AT ONCE:
+  - (a) momentum's conservation with free bodies, because the push is
+    carried (MISSING: a proof on the board that the stress at the Ports
+    is the flux);
+  - (b) the tool bodies' sizing (binding, mass, hybrid share), which
+    consists of conditions and chosen integers;
+  - (c) the decided conventions of 9.17 (5).
+- THE COUNTS OF THE FIFTEEN DO NOT DEPEND ON THE UNIFICATION:
+  - Bell and Malus read computed weights.
+  - The first-rung rows read the front.
+  - A tool drifting less than one Link moves no cell.
+  - The steady-field rows are re-derived blind on their born profiles
+    (9.17 (4)).
+
+**(7) WHAT IT ASKS OF THE ENGINE (the physicist's), in addition to what
+is owed already (12.1, 12.2, the emitter's line, the crystal's
+rework):**
+- A body carrying a pair for each of two families on the same cells.
+- The birth as a body option, with its two triggers.
+- The push generic over the families the body declares.
+- The seeds computed on the composed operator.
+- The retirements of (5).
+The gate (9.5) reads each against this section.
