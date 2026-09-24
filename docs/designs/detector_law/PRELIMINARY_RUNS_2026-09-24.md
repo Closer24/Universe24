@@ -551,3 +551,56 @@ are not those of section 10 by the pairing alone.
   mean, the largest 6.61 x 10^10; the mode k = 2 pi / 3 content 1.94 x 10^11
   in the mean, 4.80 x 10^11 at the largest. The rest world: `form` 5.56 x
   10^12 to 7.50 x 10^12, the drift 1.21 x 10^9 in the mean, no mode line.
+- HOST (the moving worlds): moving_20 wall 2871.1 s (the engine's 2866.0),
+  peak resident 216 MB; moving_28 wall 2673.5 s (2668.3), 217 MB; both
+  completed at 9500, the books balanced, no escape; the margin module's
+  omega_b on the 64^3 files 0.11065 (the extent 5.74) and 0.13170 (8.18), so
+  the two boxes' rest modes differ by 1.0017 and 1.0090 (COMPUTATION of the
+  margin lines, the periodic image).
+- DETECTOR (the moving blocks' clicks): moving_20 135 clicks in 9500, the
+  first at 42, 99, 157, 213, 270, the last at 9495; over the ramp [200, 1500]
+  21 clicks, their mean interval 61.3000; over the hold [1500, 9500] 111
+  clicks, their mean interval 72.5818 intervals (2 pi over it 0.08657).
+  moving_28 165 clicks, the first at 35, 82, 132, 179, 227, the last at 9468;
+  over the ramp 25 clicks, their mean interval 51.0833; over the hold 136
+  clicks, their mean interval 58.9185 intervals (2 pi over it 0.10664).
+- GAMEBOARD (the moving worlds): the corners from [22, 22, 22] to [54, 22, 22]
+  and from [18, 18, 18] to [50, 18, 18], 2912 steps each in 9500 (246 by 1500,
+  one Link per 3 intervals over the hold; the periodic box crossed); the
+  summed record's spectral peaks over the hold 0.08649 and 0.10593, the
+  centre cells' the same; the rates by count 0.013875 and 0.017000 per
+  interval; the pump 0 identically on both (no light declared).
+- COMPUTATION (read, not compared; the 48^3 rest box against the 64^3 moving
+  box, the boxes' ratio above not applied): the rest clicks' mean interval
+  over the hold clicks' mean interval 0.78389 (s = 20) and 0.81707 (s = 28)
+  (DETECTOR over DETECTOR); the rate ratios 0.79286 and 0.82069, the spectral
+  peak ratios 0.78463 and 0.81274 (GAMEBOARD).
+
+## 19. EXPLORATORY: the receding index at k = 4: RUN LAST, THE READINGS HELD
+
+index_moving_long_k4_away (28d38c4e), index_moving_long_rest_k4_away
+(cbf52785) and index_moving_long_reference_k4_away (271db477) loaded VALID and
+ran after every other world (HOST: wall 27.5, 25.0 and 13.9 s, 87 to 88 MB,
+all completed at 6000, the books balanced). Their readings are HELD in
+`artifacts/index_k4/HELD.md` on the Runner's container and are not on this
+page, on the Boss's precision of 12:45Z (the pin at k = 4 computed blind by
+Nature24 first), until the Boss says the pin has landed on main.
+
+## 20. The one list's preliminary column, and the test-run lines (the Boss's order of 13:22Z)
+
+Whether each world "works" in the sense of RUN_LIST.md's preliminary column
+(it loads, the emitter emits, the clicks arrive at the declared detector
+within the declared count, the reader reads), one line per world; and the
+line against Nature24's TEST_RUNS.md, which is not on one-list (2bcadd7) at
+this writing, so every world reads "readings recorded, no test-run line yet".
+
+| Row | World | Loads | Emits | The clicks at the declared set | The reader reads | Against TEST_RUNS.md |
+| --- | --- | --- | --- | --- | --- | --- |
+| 5a | pace_fan_12, _16, _24 | VALID | one record on four headings, the train 665 / 887 / 1330 | no set declared (L-6): no click; the record's one gather at the open face | the probes' phase per ray per period, 28 periods, the spread 2.5 to 6.5 percent; the series does not settle in the window | readings recorded, no test-run line yet |
+| 4a | layer_pin_rest_14, layer_pin_k3_14 | VALID | the block's own record | 82 and 387 clicks on the block's own record, 67 over the rest window and 154 over the hold | `clock` reads both | readings recorded, no test-run line yet |
+| 4c | cart_k3 | VALID | the lamp's rows and the cart's pulses | 227 clicks of the lamp's rows and 121 returns on the cart's own record | the one command's record is refused as trimmed (`omit_row_clicks`); read on the run with `--keep-row-clicks` in `--capability` mode | readings recorded, no test-run line yet |
+| M2 | matter_front_12 | REFUSED: the matter lamp needs the kind's take pair (section 15) | no run | no run | no run | readings recorded, no test-run line yet |
+| the boxes | rest_20, rest_28, moving_20, moving_28 | VALID | the block's own record | 52, 62, 135 and 165 clicks | `clock` reads all four | readings recorded, no test-run line yet |
+| the deep well | deep_well_rest_40, deep_well_k3_40 | VALID | the block's own record | 30 and 63 clicks | `clock` reads both | readings recorded, no test-run line yet |
+| (v-m) k = 3 | index_moving_long_k3_away, _rest_k3_away, _reference_k3_away, _reference_omega | VALID | the source's train of 200 periods, the probe nonzero from 2745 / 2748 | no set declared: the probe's phase, GAMEBOARD by declaration | `index_reading` reads the away world against the reference at omega and the rest world against its reference at omega' | readings recorded, no test-run line yet |
+| k = 4 | index_moving_long_k4_away and its rest and reference | VALID | as k = 3 | as k = 3 | held (section 19) | held |
