@@ -859,6 +859,10 @@ BLOCK_KEYS = {
     "start",
     "margin",
     "emits",
+    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
+    # 7): an emitting block names the detector set whose one cell is its
+    # record's ladder; admitted on an emitting block alone
+    "receiver",
 }
 # The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
 # Reviewer 3's two lines): a pin world's cells two extents from a
@@ -1328,6 +1332,13 @@ class BlockDefinition:
     # record it emitted (the grace = the train + own_grace; DECLARATIONS.md
     # section 10 item 1); declared on every emitter, no default.
     own_grace: int | None = None
+    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
+    # 7, the click line): the name of the detector set whose one cell is the
+    # ladder of every record this block emits (the click line at that cell's
+    # first rung after the record's train; the faces and every other set
+    # sinks for it); None where the world names none, the ladder then every
+    # cell and the line at the close, as before the key.
+    receiver: str | None = None
 
 
 @dataclass(frozen=True)
@@ -3492,6 +3503,21 @@ def _block(
             "its own set takes nothing of its own record (N_s, DECLARATIONS.md section 10 item "
             "1; no default)"
         )
+    receiver: str | None = None
+    if "receiver" in obj:
+        if emits is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.receiver is refused on a block that emits nothing (the "
+                "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
+                "section 13 item 7)"
+            )
+        value = obj["receiver"]
+        if not isinstance(value, str) or not value:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.receiver must be the name of a declared detector set (a "
+                "nonempty string)"
+            )
+        receiver = value
     return BlockDefinition(
         side,
         pair,
@@ -3508,6 +3534,7 @@ def _block(
         emits=emits,
         own_grace=own_grace,
         take=take,
+        receiver=receiver,
     )
 
 
@@ -5146,6 +5173,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                         f"{families[entry.family].name!r} needs the kind's take pair (the family key "
                         "`take` [n, d], the Ports' follow at its own remnant take; DECLARATIONS.md "
                         "section 10 item 10)"
+                    )
+            # the receiver by name (DECLARATIONS.md section 13 item 7): the
+            # set named must be declared; the names are listed in the refusal
+            if entry.block is not None and entry.block.receiver is not None:
+                names_declared = [detector.name for detector in detectors]
+                if entry.block.receiver not in names_declared:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}].receiver {entry.block.receiver!r} names no "
+                        f"declared detector set (the sets declared: {names_declared}); the receiver "
+                        "by name is a set's name (DECLARATIONS.md section 13 item 7)"
                     )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)

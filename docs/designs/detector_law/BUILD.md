@@ -1268,3 +1268,64 @@ on the light clock's chain.
 - THE THREE TESTS: generic (the take primitive as built, no family
   name), vector (the receiver form's verbs, no root, no float), local
   (the emitter's own Nodes, its own record).
+
+## 19. The receiver by name and the click line at the rung (DECLARATIONS.md section 13 item 7, the owner's word of 2026-09-24, 09:50Z; section 10 item 9's receiver form; the former build-4 of record 1800, never pushed; the Engine Fixer's line 1 on `engine-fix-1`, 2026-09-24)
+
+- THE LINE (`world.py`: `BlockDefinition.receiver`, the block key
+  `receiver`; `detector_law.py`: `receiver_cell`, `_receiver_of`,
+  `_line_at_rung`, `_gather_line`, `_release`, `_click`,
+  `_close_clicked`): an emitting block's `receiver` names a declared
+  detector set (refused on a block that emits nothing; refused naming no
+  declared set, the names listed; a set bound to the block itself
+  admitted), and that set's one cell is the LADDER of every record the
+  block emits. The faces and every other set are SINKS for such a record:
+  what they take enters `absorbed` (the completion's measure, energy x W
+  below it) and no pointer, in the offer loop of `_advance`, at the hop's
+  entered content in `_move_block` and at a clock body's response in
+  `_book_response` alike. The gather line is written by `_line_at_rung`
+  at the first interval after the record's train (not sourcing, age at
+  or above the train, item 10's own condition) at which the receiver's
+  first rung is stamped: `click` the rung's interval, `tick` the line's
+  (equal to `click`; the birth plus the train where the rung fell inside
+  the train, Reviewer 3's precondition of record 1800), `click_at`
+  "rung", `clock` the receiving block's count as the interval began. The
+  content moves with the line to the receiver's body (`held`,
+  `held_measured`, `transit_absorbed`; 0 for a block's record, born at
+  content 0), the record's content is 0 from then and it lives on (field
+  energy the sinks absorb) to close by `_complete` as before with NO
+  second line: `_close_clicked` releases its rows and counts it on the
+  ledger's HOST row `closed_after_click` (`transit.closed_after_click`
+  in the books; the records reading's `clicked`), both written on a
+  world with a receiver alone. A record whose receiver crosses no rung
+  within the ticks completes with no click (`_click` chooses no cell
+  under the key: `chosen` null, click_at "completion", the content to
+  the escaped row or to `taken_by_emitter`, both 0 for a block's record).
+  The emitter's own cells take on no pointer at every age (section 18,
+  PR 1115: nothing to build), so a block naming the set at its own cells
+  never clicks (test (c)).
+- WHAT DOES NOT CHANGE: a block WITHOUT the key keeps the ladder of every
+  cell and the line at the close (`cell_of` over the pointers with the
+  birth's u), a lamp's record likewise; no registered world carries the
+  key, so every registered world reads byte for byte (test (p)'s three
+  digests unmoved; the four detector-law suites, 51 tests, pass
+  unchanged). The declaration's "required on every emitting block,
+  refused at load without it" is NOT enforced: the registered emitting
+  worlds (sagnac_k3, sagnac_rest, light_clock_60, redshift_k3,
+  redshift_control) carry no key and the World Generator writes it; the
+  refusal is one loader line for the Boss's word once the files carry it.
+- THE READINGS (EXPLORATORY, no pin run; `tests/test_receiver_by_name.py`
+  reads the form, not the numbers): sagnac_rest keyed in memory (A at_b,
+  B at_a) reads every hold record's line at the other's set 108 intervals
+  after its birth at rest, both directions alike (DETECTOR); the light
+  clock's chain of 173 closed with A naming `A_face` reads the first
+  record's line 214 after the birth (DETECTOR; the T = 0 preliminary's
+  number of record 1800), no rung during the grace of 140; two blocks one
+  Link apart cross the rung inside the train on some records, the line
+  then at the birth plus the train. HOST: the keyed sagnac_rest 420
+  intervals in 1.4 s, the light clock 600 in 0.4 s (this machine).
+- THE THREE TESTS: generic (one sentence, the ladder's size the only
+  case; the receiver's name a world declaration as a set's position is;
+  no kind, no family name, no branch on a physical name), vector (the
+  rung (E) on the pointer, verb T on `absorbed`; integers only, no root,
+  no float), local (the cell's own pointer on the record; nothing kept at
+  a Node; the sinks' take a per-record integer).
