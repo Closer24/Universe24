@@ -3179,3 +3179,13 @@ c^2 = 1 / 3 as the design states, 3 omega_1 omega_2 - k_1 k_2 = 0). A
 consequence of the algebra written before any board run; the board's
 two-block world reads it; the force is the push of light at the Ports
 and nothing beside it (no 1 / r form: 8.9's rows not reached).
+
+---
+
+## 9. The lab tools
+
+Every lab tool (the crystal, the polariser, the material mirror, the well
+body, the receiver, the emitter with no heading, the splitter) is
+specified in one file, [the lab tools' specification](designs/lab_tools/LAB_TOOLS.md):
+its algebra, its timing, its cost, its engine lines and its unit tests'
+expected values (the model owner's word of 2026-09-24, record 1832).
