@@ -1,0 +1,178 @@
+# The order channel's solution under attack: every objection, its answer, its status (the chief physicist, 2026-09-24, 04:15Z; docs only, no run, no pin moved)
+
+The model owner's order (04:08Z, on the three declaration lines of
+DECLARATIONS.md section 2 item 8, which he left to the Boss to declare):
+"make sure it cannot be attacked in any form, any way, because they keep
+attacking the same thing." This page lists every objection a referee can
+raise against the solution of row 1c (the birth residue Inside: the
+births in a seed-set order, the click stamped without the residue), the
+answer, and the status of each: CLOSED (by derivation or by the engine as
+built), CLOSED BY DECLARATION (a line the Boss declares on the owner's
+word; the six lines are listed at the end), STATED (an honest limit the
+paper says), FUTURE (a declared later test), CHECK (a check of a world
+file, the World Generator's). The computations are
+`order_channel_pins.py` and `order_channel_hidden_pins.py` (their `.out`
+files); the engine lines are readings of `src/event_universe/events/detector_law.py`
+at the GO's head, not runs.
+
+**What the solution claims.** A deterministic integer model on the
+GameBoard, nonlocal in ONE declared step (the pair's gather, POSTULATES.md
+section 10; ALGEBRA.md 3.1 and 3.6), reproduces the CHSH counts exactly
+(S = 181 / 64 at N = 2048, Theorem 5's marginals N / 2 of N at every
+setting) with NO signalling Outside: none in the counts (exact, at every
+N) and none in the order of the outcomes (for a reader without the seed,
+exact for a uniformly random order). **What it does not claim.** That the
+model is local Inside (Bell's theorem forbids it for S > 2), or that the
+residue is unknowable in principle (it is Inside by the postulate P11, as
+Bohm's configuration is under quantum equilibrium).
+
+## The objections
+
+1. **"A local deterministic model cannot exceed S = 2 (Bell)."** The
+   model is not local Inside: the pair's outcome is assigned by the one
+   gather from both settings, the record's one non-local step. The claim
+   is exactly this, a deterministic integer model nonlocal in one
+   declared step; the paper says it. STATED.
+2. **"Then it signals."** In the counts, no: N / 2 of N at every setting,
+   exact (Theorem 5; `order_channel_pins.py`). In the order, as first
+   declared, yes: under the counter family [1, 1] the birth order is the
+   residue order and B reads A's setting from his own list with certainty
+   (the + fraction of his first N / 4 births 0.293 at a = 0 against 1.000
+   at a = N / 4; four runs). Under the seed-set order, no: B's list at
+   fixed b is a balanced multiset (N / 2 pluses for either a) in a
+   uniformly random order, whose distribution is the uniform distribution
+   over balanced strings for a and for a' alike, so no decoder fixed
+   before the run, without the seed, does better than 1 / 2 (the theorem;
+   `order_channel_hidden_pins.py` (b)). CLOSED BY DECLARATION (lines 1 to
+   3).
+3. **"The host knows the seed, so the model signals to the host."** The
+   seed is Inside by P11 (Outside reads clicks only): what is accessible
+   Outside is defined by the postulate, as in every theory (in quantum
+   mechanics the Born statistics, in Bohm's theory the configuration
+   under quantum equilibrium). The model's ontology is nonlocal and
+   deterministic; its operational content is no-signalling. STATED.
+4. **"A reader without the seed can search the seed space."** The
+   statement is closure to a reader without the seed (Reviewer 3's word,
+   03:44Z): exact for a uniformly random order; for the integer form,
+   closure at the reader's means, the seed's width a declared integer (64
+   bits in the script; any width the world declares). STATED.
+5. **"The hash has structure (a linear congruential generator's low bits
+   cycle); some statistic tells the two lists apart."** The script's
+   generator is a mixing hash of SplitMix64's form (every output bit
+   depends on every state bit), plain integers; a battery of five
+   decoders fixed before the run (the first-quarter fraction, its
+   threshold, the run count, the lag-one sameness, the halves' drift)
+   over 200 seeds reads 0.47 to 0.535 right at N = 64, 256 and 2048
+   (the binomial error 0.025 on 400 trials). The engine's form is the
+   builder's under the requirement: a keyed permutation indistinguishable
+   from uniform without its key. CLOSED BY DECLARATION (line 1, with the
+   requirement) and shown.
+6. **"The birth-interval stamp reveals the ordinal; if u were a known
+   function of the ordinal, B decodes."** u is the seed's permutation of
+   the ordinal; without the seed the ordinal says nothing of u; the
+   lamp's cadence of births is fixed and independent of the residues, so
+   the birth-interval stamp carries nothing of u. CLOSED BY DECLARATION
+   (line 5).
+7. **"B's click TIME might depend on A's setting: the rotation at A's bar
+   scales the record's norm by n_a / 65536."** CLOSED BY CONSTRUCTION,
+   read in the engine and the algebra: nothing of one arm is written on
+   the other (ALGEBRA.md 3.6, B1); the rotation at A's bar acts on A's
+   arm's rows only and scales A's arm's offer, not B's; the record's norm
+   is the birth's (set once at the release in the engine, `live.norm`,
+   never by a table); B's first rung is B's own pointer against that
+   norm; and the engine stamps a click with the chosen cell's own first
+   rung (`_click`: the click's time is `live.first_rung[chosen]`), never
+   with the completion tick. Line 6 declares what the engine does.
+8. **"The completion tick, a host event, moves with A's setting."** The
+   record completes when the motion left on the board is below a rung of
+   what was absorbed, which A's rotation does change; but the completion
+   tick is a HOST field of the gather line, not a reading; the DETECTOR
+   reading is the cell's first rung. CLOSED BY DECLARATION (line 6).
+9. **"The gather line prints the residue."** The engine's gather line as
+   built carries `u` (the record's residue) beside the HOST fields `tick`
+   and `arrived`: it is the books' record, Inside. The reader of record
+   of the Bell rows reads the click lists per set (the cell, the count,
+   the birth interval), never the gather's `u`; the gather line is
+   labelled HOST wherever it appears. CLOSED BY DECLARATION (line 2, on
+   the reader).
+10. **"At a coarse grain the model exceeds Tsirelson (S = 3 at N = 16 and
+    32)."** At every N the counts are no-signalling exact (Theorem 5), so
+    at a coarse grain the model is a no-signalling box above the quantum
+    bound, as a PR box is, without signalling; the declared world is N =
+    2048 with S = 181 / 64 below 2 sqrt 2 (1.05 standard errors from Poh
+    2015); nature's grain is bounded by row A2. The paper's S(N) sits on
+    both sides of Tsirelson's bound and says so. STATED.
+11. **"The uniform u is quantum equilibrium assumed, not derived."** Yes,
+    a declared input of kind 1, said so; and stronger than typicality:
+    the enumeration is exhaustive, one birth per residue, so the counts
+    are exact rather than typical; only the ORDER is randomized. STATED.
+12. **"Memory loophole: sequential dependence of outcomes."** The outcome
+    of birth i is a function of (u_i, a, b) alone, with no dependence on
+    earlier outcomes or settings. CLOSED.
+13. **"Freedom of choice: the seed could correlate with the settings
+    (superdeterminism)."** The seed is drawn independently of the
+    settings (line 4). A world with the settings switched per birth by a
+    second, independent seed is FUTURE: its counts are unchanged by
+    derivation (each birth's cell depends on (u_i, a_i, b_i) only) and
+    the order is closed identically (B's list mixes births of both a's
+    without the residues). CLOSED BY DECLARATION (line 4) and FUTURE.
+14. **"The four settings pairs are four worlds sharing one enumeration:
+    a counterfactual definiteness no experiment has."** The counts per
+    settings pair are the ladder's fractions over all residues, the same
+    in any order and in any mixture of settings; the comparison with
+    nature is of the counts, which the per-trial world of item 13
+    reproduces by the same derivation. STATED.
+15. **"Detection loophole."** Every record clicks exactly once (the ladder
+    chooses one cell and deletes the offers, ALGEBRA.md 4.12); every
+    birth is counted; the efficiency is 1. CLOSED.
+16. **"The order channel's width equals the Bell excess (E_N = S_N / 4):
+    the violation is signalling in disguise."** Signalling needs one
+    party's list alone; the Bell excess needs both lists paired by the
+    birth stamp. With the residue Inside the one-party lists carry
+    nothing of the far setting, and the paired lists carry E_N, the
+    standard Bell statistic. A reader with both lists and not the seed
+    still cannot infer the residues or the counterfactual list. CLOSED.
+17. **"Valentini: signal locality is contingent; a preparation of the
+    hidden order would signal."** The model's own prediction, stated: a
+    preparation that fixed the residues' order in a known way would open
+    the channel, as nonequilibrium would in Bohm's theory; no such
+    preparation is known in nature, and the model predicts none exists
+    for a source at equilibrium (the seed drawn once, uniform). STATED.
+18. **"The gather needs both settings at one step: superluminal."** The
+    one non-local step is declared (POSTULATES.md section 10), the
+    host's, and carries no signal; nothing Outside is superluminal; the
+    same standing as the projection postulate. STATED.
+19. **"Determinism, no-signalling and S > 2 contradict a theorem."** No:
+    Bell's theorem excludes LOCAL determinism; nonlocal deterministic
+    no-signalling models exist (Bohm's), and this is one, with bounded
+    integers. CLOSED.
+20. **"The exact counts need N births per world."** The pins are at N =
+    2048 births per world; a shorter run reads a prefix, approximate.
+    The Bell worlds must carry N births within their ticks (the lamp's
+    rate against `ticks`): CHECK, the World Generator's, before the
+    preliminary run.
+
+## The six lines for the declaration (the Boss's, on the owner's word)
+
+1. THE RESIDUES' ORDER: the births of the pair record take the residues
+   of Z_N (one per u) in an order set by the world's seed through a
+   declared integer hash (a keyed permutation indistinguishable from
+   uniform without its key; the script's form a Fisher-Yates shuffle
+   driven by a mixing hash), in place of the counter family's [1, 1].
+2. THE STAMP AND THE READER: the click is stamped with the detector's
+   count and the birth interval, never with the residue; the reader of
+   record reads the click lists per set, and the gather line is HOST.
+3. THE SEED: an input of kind 1, drawn once per world, never read
+   Outside (P11, clicks only); its width a declared integer.
+4. THE SEED AND THE SETTINGS are drawn independently (no
+   superdeterminism).
+5. THE LAMP'S CADENCE of births is fixed and independent of the residues
+   (the birth-interval stamp carries nothing of u).
+6. THE CLICK'S STAMP is the cell's own first rung, never the gather's
+   completion tick (as the engine's `_click` already does).
+
+With the six lines declared, row 1c reads PASS in form Outside; the
+Inside dependence E_N (`order_channel_pins.py`) is a GAMEBOARD
+diagnostic and the model's declared nonlocality, said in the paper as
+such; the counts and S_N are untouched; the falsifiable content of the
+Bell rows is S_N against 2 sqrt 2 at the declared grain (row 1a).

@@ -209,10 +209,23 @@ and the ray law's series exists.
    closure to a reader without the seed, the same kind of statement as
    quantum equilibrium (the paper's own positioning beside Bohm); a draw
    at the click would only move the same randomness from the birth to
-   the click and break the counter form of the click. Until the owner's
-   word row 1c keeps his word of 03:05Z (FAIL by derivation under the
-   current law); on his word this item becomes a declaration, row 1c
-   reads PASS in form Outside, and the paper's row 1c and #1081's
+   the click and break the counter form of the click. THREE MORE LINES
+   beside (i) to (iii), on the owner's order of 04:08Z ("make sure it
+   cannot be attacked in any form"), the objections and their answers on
+   ORDER_CHANNEL_ATTACKS.md: (iv) the seed is drawn independently of the
+   settings (no superdeterminism); (v) the lamp's cadence of births is
+   fixed and independent of the residues (the birth-interval stamp
+   carries nothing of u); (vi) the click's stamp is the cell's own first
+   rung, never the gather's completion tick (as the engine's `_click`
+   already does), and the reader of record reads the click lists per
+   set, the gather line with its `u` being HOST. The hash's form in the
+   script is a mixing hash (SplitMix64's form), the requirement on the
+   engine's form a keyed permutation indistinguishable from uniform
+   without its key; five decoders fixed before the run read 1 / 2 over
+   200 seeds. Until the owner's word row 1c keeps his word of 03:05Z
+   (FAIL by derivation under the current law); on his word (the six
+   lines, the Boss's declaration) this item becomes a declaration, row
+   1c reads PASS in form Outside, and the paper's row 1c and #1081's
    sentence change with it.
 
 The descent, HOST and the day: as section 1 (the same four runs read
