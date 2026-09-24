@@ -537,13 +537,14 @@ roles, as they run today, one writer per document:
 
 The order and the report (the owner's rules of the day, in one place):
 
-1. Every assignment is one bounded order sent by Routine into the role's own
-   session: the question, the pins written BEFORE any number, the deliverable's
-   file, the bound in time, the verdict as one of three (reached or derived;
-   a hypothesis under its own identity naming what must be added; refuted or
-   not reachable, with why). The report is one paragraph with the head SHA;
-   the Boss opens the pull request when the writer's tool refuses, and merges
-   on green. Nothing enters the law by an order alone.
+1. Every assignment is one bounded order sent as a direct message into the
+   role's own session (the rule of messaging below): the question, the pins
+   written BEFORE any number, the deliverable's file, the bound in time, the
+   verdict as one of three (reached or derived; a hypothesis under its own
+   identity naming what must be added; refuted or not reachable, with why).
+   The report is one paragraph with the head SHA; the Boss opens the pull
+   request when the writer's tool refuses, and merges on green. Nothing enters
+   the law by an order alone.
 2. No experiment for nothing: a run is ordered only with its expected number
    written first (record 205); a differing run refutes and never moves the
    number without its cause; every reported number is a detector reading or
@@ -574,6 +575,18 @@ The order and the report (the owner's rules of the day, in one place):
    formula and status); its findings are applied in the manuscript or sent
    through the Boss to the file's writer as one bounded fix; the paper never
    changes the tree, and the tree's writers never write the paper.
+8. Messaging between sessions (the model owner, 2026-09-24: "put it in your
+   skills and the other agents' skills: always use SendMessage"): every
+   order, report, question and answer between the Boss and a role's session,
+   and between two sessions, is sent as a direct message with the SendMessage
+   tool; the sender first lists its reachable agents (ListAgents) and checks
+   that the receiver is on the list; the receiver replies by SendMessage to
+   the sender's listed name. A Routine (create_trigger, send_later) is used
+   only for what must happen at a later time (a check-in at an hour, a
+   re-read after a run's expected end), never as a way to talk; a direct
+   message creates no scheduled task. When the receiver is not on the list
+   (its session stopped or unreachable), the sender says so in its report
+   and does not fall back to a Routine as a message; the Boss decides.
 
 ## Tools and authority
 
@@ -595,3 +608,136 @@ unless the user authorized that communication.
 The PR owner records the tested head, current base and relevant results. The
 coordinator is the final merge owner for a coordinated task. Skills do not claim
 that GitHub enforces a branch protection rule unless it was actually verified.
+
+## The shortened process for the engine's features (the owner, 2026-09-24, records 1812 and 1813)
+
+The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
+stabilisation of the engine and the freeze:
+
+1. **One list, fifteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md));
+   the seven others are OUT, not deferred ("there is no after the paper").
+2. **One agent writes all the engine code, the worlds and the test-run lines**
+   (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
+   code, the worlds and the test world: for us Nature24"): the
+   three features are one job, making the four building blocks (the emitter,
+   the body, the receiver, the clock) one code for every body on the board;
+   the experiments are compositions declared in the world file and defined
+   in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md); the engine
+   knows no lamp, polariser or light clock by name. No builders, no World
+   Generator, no world file before its row's feature is on `main`.
+3. **Features are named, never numbered:** the receiver by name, the joint
+   gather, the lamp's ladder.
+4. **One branch, one merge** for the three features; a feature is pushed
+   when its unit test (on a world that is none of the fifteen) passes; before
+   a push only the docs gates and the changed modules' tests; the full gate
+   once, at the freeze; the docs after the code; the reviewer reads once
+   after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
+5. **Every world has its test-run line, written by the world's writer before
+   the run** (`docs/designs/detector_law/TEST_RUNS.md`, written by Nature24):
+   what a clean preliminary run must show, with no pin and no target number;
+   the Preliminary Runner runs each feature's experiments on the writer's
+   branch as soon as it is pushed and reports clean or what broke; a defect in
+   `src/` goes to the writer through the Boss.
+6. **The Boss's status, three columns per experiment**
+   ([ENGINE_STATUS.md](../docs/designs/detector_law/ENGINE_STATUS.md)): the
+   engine features it needs and whether they are on `main`; its world file
+   on `main`; its test run without a pin clean or not; a cell rewritten only
+   on a merged record. The freeze is every row "yes" on one commit; then the
+   owner's GO and every pin run in one go.
+7. **Every block and every composition is tested alone before it is
+   composed** (the owner, 2026-09-24, record 1823): the emitter, the body,
+   the receiver, the clock, and each named composition (the polariser, the
+   splitter, the mirror, the crystal) has its own unit tests on a small
+   world that is none of the list, on every kind of input it can receive
+   (every label, a superposition, an input from each Port). Only then is it
+   composed into an experiment's world, which tests the composition. A
+   block tested on one kind of input alone is a gap: the polariser's bug
+   lived because it was tested on label 0 alone.
+8. **Three levels: the building blocks, the lab tools, the experiments**
+   (the owner, 2026-09-24, record 1825). The engine knows the emitter, the
+   body, the receiver, the clock and the six verbs. A lab tool (the
+   polariser, the splitter, the mirror, the crystal, the well body) is a
+   named composition defined once in the tool library
+   (`examples/events/entities/apparatus.json`), with its own section of
+   algebra and a unit test that checks that algebra exactly. An experiment
+   is a world file that places tools by name at positions on the board,
+   and its pin is computed from the tools' algebra. All the tools are specified in one
+   file, `docs/designs/lab_tools/LAB_TOOLS.md` (one section per tool: its
+   specification, algebra, timing, cost, engine lines and test values;
+   existing design files cited, never copied), linked from ALGEBRA.md. The
+   mathematician writes it; Nature24 checks every section and talks with the
+   mathematician directly by Routine; a disagreement goes to the Boss for
+   the owner. Nature24 writes each tool's code once its section is agreed
+   (records 1830 to 1832). No Node carries a table: a tool is a body of
+   material whose Nodes carry only material integers, and its action arises
+   from the one rule (record 1838).
+10. **The algebra, then the code, then the mathematician confirms** (the
+   owner, 2026-09-24, record 1843). A tool is taken from the algebra, never
+   invented: its section in ALGEBRA.md names its group element (of G_48, of
+   the rotations G_24 = S4, or a rotation of the label module) and says
+   whether it has a direction at all. Nature24 writes its code from that
+   section; the code merges only after the mathematician confirms, line by
+   line, that it performs exactly that group operation. Every operation in
+   the cells is an operation of the group: a per-cell branch that is not one
+   is forbidden. A tool
+   declares its own orientation and never the directions of what leaves it.
+   The specification goes into the tool file (LAB_TOOLS.md) from the
+   algebra alone, the code is built from that file, and the experiments
+   run only after every tool's algebra is closed and every tool merged; a
+   well's seed is the bound mode of the composed world and never collides
+   with another tool (the owner, 2026-09-25, record 1855).
+   No tool acts on cells but through the law's advance and the click; momentum
+   is conserved on the board's own values. Nature24 merges each tool to main
+   on green CI with the mathematician's line-by-line confirmation, and tells
+   the Boss for the record (the owner, 2026-09-25, record 1856).
+9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
+   record 1826): before the owner's GO, an independent physicist session,
+   never the worlds' writer, writes one report on the list. For each
+   experiment it states nature's experiment and what it tests, the tools
+   the world places, the mechanism the world exercises, every declared
+   input and why nature gives it, the pin and its provenance, and a
+   verdict. The writer answers its questions through the Boss.
+
+Unchanged, the law: one unit test per feature; no pin moved after a reading;
+no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
+
+## The experimenter places the body exactly (the owner, 2026-09-24, record 1815)
+
+The owner's word of 2026-09-24, 16:35Z: "in the code the experimenter must be
+able to put the cube exactly where he wants it." A body is declared in the
+world file by its place and its side (its corner and its edge, the cube's
+vertices), a cube on a board, a square on a layer, a segment on a chain
+(ALGEBRA.md 8.3); the loader places it exactly there and refuses a body that
+does not fit the board rather than cutting it to fit; a refusal is a
+declaration error, never a silent change of shape. Where the loader today
+cuts a side to the board, that is a defect against this word, listed among the
+body's conditions in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md)
+and fixed on the owner's word as an engine line with its test.
+
+## Plain names, never codes alone (the owner, 2026-09-24, 16:55Z, record 1815)
+
+The owner's word: "L and M are not clear; use only clear names." Every
+experiment, world line, feature and file is called by its plain name first:
+"the two slits, the second draft", "de Broglie's fringes", "the energy of a
+moving mass", "the muon's form", "Sagnac", "the moving lamp's redshift", "the
+receiver by name". A code (a row number such as 4a or R2, a line label such
+as L-3, a family letter such as M1) may follow the name in parentheses as an
+index into a table, never stand alone in a message, a heading, a report or a
+commit; a new label is not coined. In any message the owner may read,
+including an agent's replies in its own session, no code appears at all,
+not even in parentheses: say what the thing is ("the declaration of the
+muon's ramp", not "M1-8"; "the list of the world lines in the
+declarations", not "section 15") (the owner, 2026-09-24, record 1828,
+"still using unclear names").
+No wave on the board: a record holds one integer amplitude per Node and
+the one local rule is the split; "wave", "wavelength" and "phase
+matching" name only the Outside reading of that rule and are said as such
+(the owner, 2026-09-24, record 1833; docs/TERMINOLOGY.md). The features' rule of 14:00Z is the same
+rule.
+
+Our names, never the laboratory's, for a block (the owner, 2026-09-24,
+record 1820): "use only our names; there is no pump, there is an emitter."
+A block is called by what it is on the GameBoard: an emitter, a body, a
+receiver, a clock, or a named composition of them (a crystal, a polariser, a
+mirror). The laboratory's word for the same thing (a pump, a laser, a beam
+splitter) may be said once to explain what it models, never as its name.
