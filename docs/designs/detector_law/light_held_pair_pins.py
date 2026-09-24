@@ -13,8 +13,20 @@ the pair's OWN count over the rest count, (t_+ + t_-) / (gamma_m N_0). In the co
 constant, gamma_m = gamma) the member gives L / L_0 = 1 / gamma and five's ratio 1 exactly
 (PUSH_BALANCE.md section 4, the wave equation's covariance), printed as the check; on the band the
 forward wave is Doppler-compressed into the lattice's dispersive range (5.8 Links at lambda_0 =
-12 and k = 3), and five's ratio reads 1 + O((a / lambda)^2 beta^2), the lattice's own term,
-tending to 1 as the wavelength grows or the speed falls. The rigid pair's ratio (the declared
+12 and k = 3), and five's ratio exceeds 1 by the lattice's own term, TENDING TO (a / lambda)^2
+beta^2 (the exponents are printed: the excess falls as lambda^-2.6 between 12 and 24 Links and
+lambda^-2.0 above 48 at k = 3, and as beta^3.5 between k = 3 and 4, beta^2.1 between k = 12 and
+16), 1 as the wavelength grows or the speed falls. Each row is marked against 8c's floor, the
+wave ON THE BOARD at least 12 Links, read on the pair's forward wave (the band's lambda_1; in the
+continuum the dilated closed form lambda_0 sqrt((1 - beta_c) / (1 + beta_c)), beta_c = sqrt 3 /
+k): lambda_0 = 12 and 16 at k = 3 and 12 and 16 at k = 4 are under it and are not admissible
+worlds; lambda_0 = 24 at k = 3 is AT the floor (12.25 Links on the band, 12.42 in the continuum),
+admissible and marginal (Reviewer 3's line, 2026-09-24, 03:00Z). MUST I's host-count form
+lambda_0 (1 - beta_c) >= 12 (DESIGN.md 1.2 (b)), printed beside, is written for an emitter whose
+period is the host's count and is conservative for this emitter, whose period the law dilates by
+gamma_m (member (iii)): it drops that factor and reads 10.1 at lambda_0 = 24, k = 3. The declared
+world of sections 4 and 13 (lambda_0 = 32.1 Links, k = 3) is printed for both massive pairs,
+[800, 809] and [156, 157]. The rigid pair's ratio (the declared
 separation, section 10 item 7) is printed beside. gamma_m by the one formula, the same expression
 as coupled_mode_pins.py (c).
 
@@ -96,6 +108,21 @@ def member_iii(lam0, k_step, num=800, den=809, continuum=False):
     )
 
 
+def floor_mark(lam0, k_step, lam1):
+    """8c's floor, the wave on the board at least 12 Links, read on the forward wave lam1 (the
+    band's, or the continuum's dilated form); MUST I's host-count form lambda_0 (1 - beta_c),
+    beta_c = v / c = sqrt 3 / k, printed beside as the conservative check of DESIGN.md 1.2 (b)."""
+    beta_c = math.sqrt(3) / k_step
+    host_form = lam0 * (1 - beta_c)
+    if lam1 < 12:
+        word = "UNDER 8c's floor, not an admissible world"
+    elif lam1 < 13:
+        word = "AT the floor, admissible (marginal)"
+    else:
+        word = "admissible"
+    return host_form, word
+
+
 if __name__ == "__main__":
     for cont in (True, False):
         print(
@@ -104,11 +131,47 @@ if __name__ == "__main__":
             else "THE CHAIN'S BAND, the massive kind [800, 809]"
         )
         for k_step in (3, 4):
-            for lam0 in (12, 16, 24):
+            for lam0 in (12, 16, 24, 32, 48):
                 r = member_iii(lam0, k_step, continuum=cont)
+                host_form, word = floor_mark(lam0, k_step, r["lam1"])
                 print(
                     f"  k = {k_step}, lambda_0 = {lam0}: omega_0 {r['om0']:.5f}, gamma {r['gamma']:.5f}, gamma_m {r['gamma_m']:.5f};"
                     f" the two waves omega_1 {r['om1']:.4f} (lambda {r['lam1']:.2f}), omega_2 {r['om2']:.4f} (lambda {r['lam2']:.2f});"
                     f" L_along / L_0 = {r['L_ratio']:.4f} against 1 / gamma = {r['inv_gamma']:.4f};"
-                    f" five's along ratio {r['five_along']:.4f} (the rigid pair's {r['rigid_along']:.4f})"
+                    f" five's along ratio {r['five_along']:.4f} (the rigid pair's {r['rigid_along']:.4f});"
+                    f" the forward wave {r['lam1']:.2f} Links: {word}"
+                    f" (MUST I's host-count form lambda_0 (1 - beta_c) = {host_form:.1f})"
                 )
+    print("THE DECLARED WORLD (sections 4 and 13: lambda_0 = 32.1 Links, k = 3), both massive pairs")
+    for num, den in ((800, 809), (156, 157)):
+        r = member_iii(32, 3, num=num, den=den)
+        print(
+            f"  [{num}, {den}]: gamma_m {r['gamma_m']:.5f}; L_along / L_0 = {r['L_ratio']:.4f} against 1 / gamma = {r['inv_gamma']:.4f};"
+            f" five's along ratio {r['five_along']:.4f} (the rigid pair's {r['rigid_along']:.4f});"
+            f" the forward wave {r['lam1']:.2f} Links, the backward {r['lam2']:.2f}"
+        )
+    print("THE EXCESS five - 1 ON THE BAND, tending to (a / lambda)^2 beta^2 (the local exponents)")
+    steps = (3, 4, 6, 8, 12, 16)
+    lams = (12, 24, 48, 96, 192)
+    excess = {(k, lam): member_iii(lam, k)["five_along"] - 1 for k in steps for lam in lams}
+    for k_step in steps:
+        cells = ", ".join(f"{lam}: {excess[(k_step, lam)]:.2e}" for lam in lams)
+        exps = ", ".join(
+            f"{a}->{b}: {math.log(excess[(k_step, a)] / excess[(k_step, b)]) / math.log(b / a):.2f}"
+            for a, b in zip(lams[:-1], lams[1:], strict=True)
+        )
+        print(
+            f"  k = {k_step} (beta {math.sqrt(3) / k_step:.4f}): the excess at lambda_0 {cells}; lambda exponent {exps}"
+        )
+    for lam0 in (48, 192):
+        exps = ", ".join(
+            f"{a}->{b}: {math.log(excess[(a, lam0)] / excess[(b, lam0)]) / math.log(b / a):.2f}"
+            for a, b in zip(steps[:-1], steps[1:], strict=True)
+        )
+        print(f"  lambda_0 = {lam0}: beta exponent between k = {exps}")
+    k_step, lam0 = 16, 192
+    coef = excess[(k_step, lam0)] / ((1 / lam0) ** 2 * (math.sqrt(3) / k_step) ** 2)
+    print(
+        f"  the coefficient at the smallest speed and longest wave (k = {k_step}, lambda_0 = {lam0}):"
+        f" five - 1 = {coef:.1f} (a / lambda_0)^2 beta^2"
+    )
