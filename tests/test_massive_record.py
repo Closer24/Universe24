@@ -10,11 +10,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from fractions import Fraction
 
 import numpy as np
 import pytest
 
+from event_universe.core.phase import phase_cosines
 from event_universe.diagnostics.massive_record_margin import (
     block_margin,
     bound_mode,
@@ -251,13 +253,15 @@ def run_chain_digests() -> dict[str, str]:
 def test_p_the_light_record_is_byte_identical_without_the_key():
     """BUILD.md (p): the first build's chain world over 600 intervals gives the digests read at
     the head f4a3971a before any line of the build was written: the state and the audit
-    unchanged; the events' digest moved ONCE, at the GO's fold (BUILD.md section 13), by the
-    two fields added to every gather line (`click_at`, `clock_source`; Reviewer 3's line 2 and
-    key (i)), the rows and every other field byte for byte (the state digest the witness)."""
+    the witness that the rows are byte for byte; the events' digest moved ONCE, at the GO's
+    fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`,
+    `clock_source`; Reviewer 3's line 2 and key (i)), and the audit's digest once, by issue
+    #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
+    the scope of `balanced` named), every other field byte for byte."""
     assert run_chain_digests() == {
         "events": "9e29e924a2f7ba63d34d9fb1bdaa30123006a554e42781ecf29804664c3832b3",
         "state": "9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962",
-        "audit": "1000ac3f0b5d84f26958d70cc75e9c2484ff697e45418a7a83720689fe48535a",
+        "audit": "5cd95d38d58d8ccb1da6808b9da635fdc905786722f5bf9a05f0d7f2036374e1",
     }
 
 
@@ -1611,3 +1615,95 @@ def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
         bad["measured"][2][key] = value
         with pytest.raises(ValueError, match="refused on a block of light's kind"):
             parse_nature_beam_world(bad)
+
+
+def test_ae_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
+    """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries
+    `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one block
+    pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that
+    they are not accounted, and `balanced_scope` naming content alone; the run's record
+    carries the same scope line."""
+    world = parse_nature_beam_world(
+        block_world(
+            [24, 24, 24],
+            PERIODIC,
+            [800, 809],
+            [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0]}],
+        )
+        | {"age_bound": 100}
+    )
+    simulation = DetectorLawSimulation(world)
+    simulation.step()
+    books = simulation.books()
+    assert books["momentum"]["held"] == [64, 0, 0]
+    assert books["momentum"]["transit"] is None and books["momentum"]["escaped"] is None
+    assert "not accounted" in books["momentum"]["note"]
+    assert books["balanced_scope"].startswith("content alone")
+    rest = DetectorLawSimulation(parse_nature_beam_world(massive_world([4, 4, 4], "open", [2, 3])))
+    rest.step()
+    assert rest.books()["momentum"]["held"] == [0, 0, 0]
+
+
+def test_af_the_tables_rotation_reads_the_pair_by_the_linear_form():
+    """DECLARATIONS.md section 15 T-1 (the fourth component's reading): a record of declared A
+    and phi at a bar Node reads A cos(phi + t) for t in {0, N / 8, N / 4, 3 N / 8} by
+    `read_pair` (the linear form on the pair, section 14 item 1), within the coefficients'
+    rounding (the tables' 1 / 256 and by_clock's step: A / 64 at N = 64 with the clock
+    [77, 25]), at every phi of the circle; a block's massive record reads 0; a clock whose
+    step has a sine of 0 raises naming the step."""
+    world = parse_nature_beam_world(matter_lamp_world(False, [77, 25]))
+    simulation = DetectorLawSimulation(world)
+    steps = world.phase_steps
+    cosines = phase_cosines(steps)
+    unit_per_cell = UNIT // 256
+    k = 3  # by_clock(0, 77, 25)
+    for phi in range(steps):
+        live = LiveRecord(
+            phi + 1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            77,
+            25,
+            200,
+            21,
+            np.zeros(simulation.shape, dtype=np.int64),
+            np.zeros(simulation.shape, dtype=np.int64),
+            np.zeros(simulation.shape, dtype=np.int64),
+            pointers=[0] * len(simulation.cell_names),
+            first_rung=[None] * len(simulation.cell_names),
+            ports=[np.zeros(simulation.shape, dtype=np.int64) for _ in simulation.take_masks],
+            age=1,
+        )
+        live.now[50, 0, 0] = cosines[phi] * unit_per_cell
+        live.before[50, 0, 0] = cosines[(phi - k) % steps] * unit_per_cell
+        for turn in (0, steps // 8, steps // 4, 3 * steps // 8):
+            reading = simulation.read_pair(live, (50, 0, 0), turn)
+            closed = UNIT * math.cos(2 * math.pi * (phi + turn) / steps)
+            assert abs(reading - closed) <= UNIT // 64, (phi, turn, reading, closed)
+    block_record = simulation._massive_record(7, 0, 1)
+    assert simulation.read_pair(block_record, (50, 0, 0), 8) == 0
+    zero_step = LiveRecord(
+        99,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        32,
+        1,
+        200,
+        2,
+        np.zeros(simulation.shape, dtype=np.int64),
+        np.zeros(simulation.shape, dtype=np.int64),
+        np.zeros(simulation.shape, dtype=np.int64),
+        pointers=[0] * len(simulation.cell_names),
+        first_rung=[None] * len(simulation.cell_names),
+        age=1,
+    )
+    with pytest.raises(ValueError, match="has a sine of 0"):
+        simulation.read_pair(zero_step, (50, 0, 0), 0)

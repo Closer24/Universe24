@@ -947,6 +947,23 @@ Each a generic line under the contract, one test each in
   raised pair on a block of the matter kind is admitted (no own record,
   its seed and clock keys refused, the margin rule skipping it); the
   kind's own pair without `cavity` stays refused.
+- THE TABLE'S READING (test (af); section 15 T-1, the fourth component's
+  first line): `read_pair(record, node, turn)`, the polariser's rotation
+  on the record's two columns by the linear form of section 14 item 1,
+  the level A cos(phi + t) at the turn t from the pair at the Node (one
+  division by S[k], k the interval's own step); a record of declared A
+  and phi reads A cos(phi + t) at t in {0, N / 8, N / 4, 3 N / 8} within
+  UNIT / 64 at every phi. NOT wired: the click's channels (+ and -, the
+  weights of ALGEBRA.md 4.12) are the amplitude law's cells, which the
+  detector-law engine's cells (bodies, sets, faces) do not carry; the
+  Bell and Malus rows read no channel here until that line is declared
+  for this engine (the physicist's, after the GO).
+- ISSUE #1086 (test (ae)): the books' `momentum` carries `held` as the
+  sum of the blocks' declared momentum vectors, `transit` and `escaped`
+  null with the note that they are not accounted (the massive kind's
+  momentum books are ALGEBRA.md 8.11's, the physicist's), and
+  `balanced_scope` names content alone, in the books and in run.json;
+  the audit's digest of test (p) moved once by it.
 - NOT changed: `emits` still births from the block's `held` stock (the
   Boss's item 7: the physicist declares `held`; no reason the engine must
   emit without a stock). The matter lamp's clock stays the family's

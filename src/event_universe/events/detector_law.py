@@ -1227,6 +1227,31 @@ class DetectorLawSimulation:
         self._drive(live)
         self._split(live)
 
+    def read_pair(self, live: LiveRecord, node: tuple[int, int, int], turn: int) -> int:
+        """The table's action on a record's pair at a Node by the linear form
+        of DECLARATIONS.md section 14 item 1 (the polariser's rotation U_s
+        on the record's two columns, section 15 T-1): the level A cos(phi + t)
+        = (a_now S[k + t] - a_before S[t]) / S[k] at the turn t, S the sine
+        table and k the interval's own whole step of the record's clock
+        (`by_clock`), one division, the remainder dropped (a reading, not a
+        row); the click's weights of ALGEBRA.md 4.12 are the table's own and
+        unchanged. A record of a massive kind born of no lamp has no clock
+        and reads 0."""
+        if self.families[live.family].massive_kind and live.driven is None:
+            return 0
+        steps = self.world.phase_steps
+        sines = self._sine_table(steps)
+        k = by_clock(max(live.age - 1, 0), live.period_numerator, live.period_denominator)
+        s_k = int(sines[k % steps])
+        if s_k == 0:
+            raise ValueError(
+                f"{BEAM_LAW}: the record's clock step {k} of {steps} has a sine of 0; the linear "
+                "form divides by S[k] (DECLARATIONS.md section 14)"
+            )
+        now = int(live.now[node])
+        before = int(live.before[node])
+        return (now * int(sines[(k + turn) % steps]) - before * int(sines[turn % steps])) // s_k
+
     def _in_grace(self, live: LiveRecord) -> bool:
         """The record's grace: its train and two periods after it (a lamp's
         record); for a block's emitted record the cycle it is sourced in and
@@ -1650,9 +1675,22 @@ class DetectorLawSimulation:
         return {
             "tick": self.tick,
             "families": families,
-            "momentum": {"held": [0, 0, 0], "transit": [0, 0, 0], "escaped": [0, 0, 0]},
+            # Issue #1086 (the Boss's 02:00Z): the momentum books are a GAMEBOARD
+            # diagnostic, no law and no pin: `held` the sum of the blocks'
+            # declared momentum vectors (the momentum on the board's bodies);
+            # `transit` and `escaped` are not accounted until the massive
+            # kind's momentum books are designed (ALGEBRA.md 8.11, the
+            # physicist's), and `balanced` counts content alone.
+            "momentum": {
+                "held": [sum(int(block.momentum[axis]) for block in self.blocks) for axis in range(3)],
+                "transit": None,
+                "escaped": None,
+                "note": "transit and escaped not accounted (the massive kind's momentum books "
+                "are not designed, ALGEBRA.md 8.11); balanced counts content alone",
+            },
             "records": len(self.records),
             "balanced": balanced,
+            "balanced_scope": "content alone (the momentum books are not accounted)",
         }
 
     def contents(self) -> list[dict[str, object]]:

@@ -2018,7 +2018,7 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
         f"{BEAM_LAW}: the GameBoard is open (its edge is infinity) unless an axis is declared "
         'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic", or '
         '"closed" per axis under detector_law: a zero face without the take); '
-        "a closed GameBoard (the string) is refused"
+        "a closed GameBoard is refused (the string, and any other word)"
     )
 
 
@@ -4736,8 +4736,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         )
     if any(closed) and not detector_law:
         raise ValueError(
-            f"{BEAM_LAW}: a face declared {CLOSED_FACE!r} is refused without `detector_law` (a "
-            "zero face without the take is the local detector law's; the ray law has no rows)"
+            f"{BEAM_LAW}: a face declared {CLOSED_FACE!r}: a closed GameBoard is refused without "
+            "`detector_law` (a zero face without the take is the local detector law's; the ray law "
+            "has no rows)"
         )
     # massive-record-v1: the amplitude bound A, declared per massive world
     amplitude_bound = AMPLITUDE_BOUND
