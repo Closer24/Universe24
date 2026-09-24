@@ -1,0 +1,8 @@
+(a) EXACT, b = 3 N / 8, the pair (a, a') = (0, N / 4): m = |S_a and S_a'|, the flips,
+    E, P(B_t = B_t+1) held, switched, the difference E / (W - 1), pairs for one sigma
+    W =    64: m =   10, flips =   44, E = 0.6875, held 0.492063, switched 0.502976, difference 1.091e-02 = E / (W - 1), pairs 1 / (4 d^2) = 2.10e+03
+    W =   256: m =   38, flips =  180, E = 0.7031, held 0.498039, switched 0.500797, difference 2.757e-03 = E / (W - 1), pairs 1 / (4 d^2) = 3.29e+04
+    W =  2048: m =  300, flips = 1448, E = 0.7070, held 0.499756, switched 0.500101, difference 3.454e-04 = E / (W - 1), pairs 1 / (4 d^2) = 2.10e+06
+(b) MONTE CARLO at W = 64 over 400 seeds, A switching every 8 births:
+    held 0.49134 over 22400 pairs (exact 0.49206); switched 0.50107 over 2800 pairs (exact 0.50298)
+(c) at b = N / 8 the pair has no flips (E = 0): no difference, no signature.
