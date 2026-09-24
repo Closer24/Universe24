@@ -6233,6 +6233,51 @@ CORRECTIONS = [
         "local Inside, one non-local deletion at the click.\n\\end{theorem}",
         "local Inside, one non-local deletion at the click. Transport on the GameBoard is local, one Node per interval on every Link, and the information a click yields Outside is the information at its one cell, its interval and its count; which cell clicks is decided at the completion, a gather over the record's offers, the one non-local step (P6, Definition~\\ref{def:click}). The theorem bounds the information a click carries, not the choice of its cell.\n\\end{theorem}",
     ),
+    (
+        "commit 61 (i), the Boss's word of 08:40Z: the register's branch head b12dd253 is on main (PR 860)",
+        "(its head b12dd253, pending merge)",
+        "(its head b12dd253, on \\texttt{main} by PR 860)",
+    ),
+    (
+        "commit 61 (ii): the author's name in Herrmann et al. 2009",
+        'K. M\\"ockel',
+        'K. M\\"ohle',
+    ),
+    (
+        "commit 61 (iv): Theorem 8 names the label assignment, the one quadruple of the four labels giving 181/64",
+        "so at the labels $(0, \\Nphi/8, \\Nphi/4, 3\\Nphi/8)$, $|S(\\Nphi) - 2\\sqrt2| \\le 8/\\Nphi + 0.0444$.",
+        "so at the labels $(a, b, a', b') = (0, \\Nphi/8, \\Nphi/4, 3\\Nphi/8)$ (this assignment and its reverse the one quadruple of the four labels that gives $181/64$; $S = E(a, b) - E(a, b') + E(a', b) + E(a', b')$), $|S(\\Nphi) - 2\\sqrt2| \\le 8/\\Nphi + 0.0444$.",
+    ),
+    (
+        "commit 61 (v): the unit on row 7",
+        "the lines at the modes' own frequencies, $0.0995$ and $0.1432$ &",
+        "the lines at the modes' own frequencies, $0.0995$ and $0.1432$ radians per interval &",
+    ),
+    (
+        "commit 61 (v): the unit on row ii",
+        "$0.7814$ and $0.8032$, the controls beside &",
+        "$0.7814$ and $0.8032$ (clock ratios, dimensionless), the controls beside &",
+    ),
+    (
+        "commit 61, Issue #1113 (the owner's tool, 07:55Z): the abstract's clause qualified to fixed settings; the switching statistic's prediction stands in Section 2 (the physicist's row-1c sentence)",
+        "passes in form under the declared seed-set order.",
+        "passes in form for fixed settings under the declared seed-set order.",
+    ),
+    (
+        "commit 61, the abstract within 250 words, the writer's own clauses: the object sentence",
+        "six integer operations at local events.",
+        "six local integer operations.",
+    ),
+    (
+        "commit 61, the abstract within 250 words: the Outside sentence",
+        "a record ends at the click, the one non-local step.",
+        "a record ends at the click, the non-local step.",
+    ),
+    (
+        "commit 61, the abstract within 250 words: the pins sentence",
+        "no reading pinned yet;",
+        "none pinned yet;",
+    ),
 ]
 
 

@@ -7238,3 +7238,12 @@ The Locality Outside theorem's statement carries the physicist's clause
 click yields Outside at its one cell, the choice of the cell the
 completion's gather (P6, Definition 3); the theorem bounds the
 information a click carries, not the choice of its cell. 48 pages.
+
+## Applied (2026-09-24, the Boss's word of 08:40Z): commit 61 on paper-48
+
+Editorial facts from the second referee report's verified list: the
+register's head on main (PR 860); Mohle; Theorem 8's label assignment
+and S's form; units on rows 7 and ii. Issue #1113: the abstract's
+"passes in form" clause qualified to fixed settings, the switching
+statistic's prediction standing in Section 2's one page. The abstract
+249 words. 48 pages.
