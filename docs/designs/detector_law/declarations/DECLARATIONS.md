@@ -946,7 +946,8 @@ nature.
    named a Node outside A: dropped), each block's own `wheel` 64 the
    receiver. THE RECEIVERS ARE
    THE BLOCKS THEMSELVES under the cycle sentence (section 10 item 1):
-   each block's cells are a detector set with W = 64; a block's own
+   each block's cells are a detector set with W = 256 (item 4: the wheel
+   at which the pin is robust to the hop rule's booking); a block's own
    records are excluded at its own cells for the WHOLE HOLD (the key
    `own_grace` 3000, the hold, as the matter lamp's is its hold: a block
    of this row is not a receiver of its own records; corrected
@@ -959,14 +960,16 @@ nature.
    single Node: at the free Node adjacent to the block's face toward the
    emitter the map (f) reads 108, 248 and 91 at W = 64 (the meeting
    click's rise +25 at one Node), so the cells' set is kept, its pins
-   RE-DERIVED in the receiver form (item 4: 110, 247 and 74 at W = 64);
+   RE-DERIVED in the receiver form with the hop rule (item 4: 108, 247
+   and 72 at W = 256, the declared wheel of R2's sets);
    the set is a receiver of the other's record in the form of DESIGN.md
    section 5 (the one-way take at its Ports every interval from the
    wave's arrival, `absorbed` moved, the click at its first rung; section
    10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
-2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 64, each
-   block's key `own_grace` 3000 (the hold; item 1); the momentum [Q S M,
+2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 256 on
+   the sets (item 4), each block's key `own_grace` 3000 (the hold; item
+   1); the momentum [Q S M,
    0, 0] on +x for both, `ramp` 1500, the hold 3000.
 3. The verbs: the massive rule with the coupling in the one division; the
    source term with the birth stamp; the push; the pointer and the click
@@ -989,13 +992,34 @@ nature.
    to k = 3 on +x, the emitter ramped 1500 intervals then emitting one
    cycle, the receiver's twelve cells a TAKING set for the other's
    record, their rows held at 0, the near face's Port following the wave
-   one way with light's take pair [-15, 56] and its ghost carried with
-   the face on a hop, the click the first rung of that Port's motion
-   squared, COMPUTATION) gives, at W = 64: A's record chasing B, the
-   click 247 intervals from the birth against the transit 245.9, the
-   rise +1.1; B's record meeting A, the click 74 against 65.9, the rise
-   +8.1; at rest (the CONTROL world, either direction) the click 110
-   against 103.9, the rise +6.1. The free-cell reading of the map (f)
+   one way with light's take pair [-15, 56], and THE HOP RULE OF THE
+   MOVING TAKE (Reviewer 3's line of 04:09Z, DECLARED 04:20Z: at a hop
+   the face's Port is a NEW Port, its ghost starting at the entered
+   Node's own level, no jump booked; the content of the Node the set
+   steps into is taken that interval and booked to the set's pointer and
+   to `absorbed` in the ledger's unit, its motion squared, before its row
+   is held at 0; no stale ghost is carried across a hop), the click the
+   first rung of that Port's motion squared, COMPUTATION) gives, AT W =
+   256, THE DECLARED WHEEL OF R2's SETS: A's record chasing B, the click
+   247 intervals from the birth against the transit 245.9, the rise
+   +1.1; B's record meeting A, the click 72 against 65.9, the rise +6.1;
+   at rest (the CONTROL world, either direction) the click 108 against
+   103.9, the rise +4.1. WHY W = 256 AND NOT 64 (my reason, as the
+   Boss's order allows): at W = 64 the meeting click depends on the unit
+   in which the stepped-into content is booked (71 as the level squared,
+   Reviewer 3's closed form; 74 as the energy with the strain; 90 as the
+   motion squared), while the rest and chasing clicks read 110 and 253
+   in every form; at W = 256 the three bookings agree within one
+   interval (71 to 72) and the ghost's initialisation (the entered Node's
+   level or the free neighbour's) makes no difference at any wheel, so
+   the pin is robust to the booking's convention at W = 256 alone; the
+   map prints the whole table (part (h)). The ledger's unit is the
+   motion squared (DESIGN.md section 5: with a^2 no completion, with the
+   motion the books balanced; the engine's `_complete` sums the squared
+   steps), so the declared booking is the motion squared and the
+   level-squared form is not taken. The fifth draft's take numbers at W
+   = 64 (110, 247, 74: the ghost carried across a hop, the entered
+   content dropped) are HISTORY. The free-cell reading of the map (f)
    (250, 74 and 109: the other's wave passing through twelve FREE cells,
    its motion squared summed; the third draft's numbers) is HISTORY: a
    taking set holds its rows at 0 and the record never enters the bulk,
@@ -1003,25 +1027,25 @@ nature.
    draft's 113 was the map without the ramp, HISTORY. THE READER
    OF RECORD: each block's click interval from the other's birth stamp
    (DETECTOR, per direction) LESS THAT DIRECTION'S OWN RISE from the map
-   (COMPUTATION, +1.1 and +8.1 at W = 64); the ratio of the two results
+   (COMPUTATION, +1.1 and +6.1 at W = 256); the ratio of the two results
    is the map's 0.5774 by construction. THE DETECTOR READINGS the band is on (Reviewer 3's
-   token, 01:15Z): the chasing click 247 +- 2 and the meeting click 74 +-
-   2 at W = 64, as the rest world's 110 +- 2; one interval on the meeting
+   token, 01:15Z): the chasing click 247 +- 2 and the meeting click 72 +-
+   2 at W = 256, as the rest world's 108 +- 2; one interval on the meeting
    side is 0.005 on the ratio, two reach the band; a reading of 0.5774 is
    the engine's clicks matching the map, not a corrected number. Read
-   from the clicks alone the ratio is 0.5389 (173 / 321: the map's own
+   from the clicks alone the ratio is 0.5486 (175 / 319: the map's own
    prediction of the raw ratio the engine reads, its grain about 0.006
    per interval on a side), and with the rest rise subtracted from both
-   0.5602: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
+   0.5630: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
    side moves the ratio by at most 0.0062; the control world's click
-   110 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
+   108 +- 2 at W = 256 checks the map's rise at rest. Nature's coefficient
    0.975 +- 0.021 (derived from the source's fringe shift 0.230 +- 0.005
    against its computed 0.236, SOURCES_VERIFIED.md rows R2; Michelson,
    Gale and Pearson 1925) matched in the Sagnac FORM, the ratio linear in
    v / c, not in the number. THE KIND (Reviewer 3's word, 02:42Z through
    the Boss, agreeing with the issue triage reader's identity): the
    corrected ratio is the map's transit by construction, so THE PINS ARE
-   THE THREE CLICKS, 110 at rest and 247 and 74 at k = 3, at W = 64, each
+   THE THREE CLICKS, 108 at rest and 247 and 72 at k = 3, at W = 256, each
    +- 2, DERIVED_BLIND in their inputs (the two blocks' push, the chain's
    light, the coupling; no target); the run is the engine against the
    map on those three DETECTOR readings; the ratio 0.5774 is a
@@ -1307,7 +1331,7 @@ waves).**
   receive g' (l_now - l_before) = 50 g (l_now - l_before) and the source
   G' (m'_next - m'_now) = G (m_next - m_now) are the old terms exactly,
   so the light is identical row for row and every pin (4b's 1.9889, the
-  light clock's 218, R2's 247 and 74, the damping 3.3 g G) is unchanged;
+  light clock's 218, R2's 247 and 72, the damping 3.3 g G) is unchanged;
   the product g G = 2 x 10^-5 is the one number the physics reads. The
   load bound (BUILD.md section 3, MUST 3, num x 6 x A + 3 x den x (A +
   1) with g_d folded, A = 2^40): at g_d = 1000, [800, 800] gives 7.9 x
@@ -1341,8 +1365,14 @@ waves).**
   residual, which would trip the rung at the grace's end; section 10
   item 9); R2's blocks receive only the OTHER's records, so their sets
   stay their twelve cells, taking the other's record, with own_grace =
-  the hold (section 13 item 1; the pins re-derived in the receiver form,
-  item 4); for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
+  the hold and W = 256 (section 13 items 1 and 4; the pins re-derived in
+  the receiver form with the hop rule). THE HOP RULE OF THE MOVING TAKE,
+  for the builder's line (f) (`_move_block` for a taking set): at a hop
+  the face's Port is a NEW Port whose ghost starts at the entered Node's
+  own level (no jump booked), and the content of the Node the set steps
+  into is taken that interval, its motion squared booked to the set's
+  pointer and to `absorbed` (the ledger closed) before its row is held
+  at 0; a Port's stale ghost is never carried across a hop; for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
   light record's offer at those Nodes (DESIGN.md section 5 item 4; the
   maps' form, Reviewer 3's line A), not the block's own record's motion,
   whose drive through g is at the integer grain. This needs the
