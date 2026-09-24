@@ -66,7 +66,7 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import by_clock, by_drive, integer_root
+from event_universe.core.integer import by_clock, by_drive, integer_root, keyed_permutation, mix64
 from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines, phase_sines
 from event_universe.events.amplitude import cell_of, rungs
 from event_universe.events.world import (
@@ -295,6 +295,18 @@ class DetectorLawSimulation:
         self.lamp_nodes: dict[int, list[tuple[int, int, int]]] = {}
         self.lamp_accumulator: dict[int, int] = {}
         self.lamp_births: dict[int, int] = {}
+        # The order channel's key (i) (DECLARATIONS.md section 2 item 8):
+        # under `order_seed`, each lamp's births take the residues of its
+        # wheel's Z_W in the order of a keyed permutation, formed once here
+        # from the seed and the lamp's number (the seed an input of kind 1,
+        # never written to a line); None under the counter's stride.
+        self.birth_orders: dict[int, list[int]] | None = None
+        if world.order_seed is not None:
+            self.birth_orders = {}
+            for number, entry in enumerate(world.measured):
+                if entry.lamp is not None:
+                    _, key = mix64(world.order_seed ^ (number * 0x9E3779B97F4A7C15))
+                    self.birth_orders[number] = keyed_permutation(entry.lamp.wheel[1], key)
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
             if entry.lamp is not None:
@@ -885,7 +897,7 @@ class DetectorLawSimulation:
                         "measured": block.number,
                         "family": definition.name,
                         "record": identity,
-                        "u": 0,
+                        **({} if world.residue_inside else {"u": 0}),
                         "labels": [[0, 1]],
                         "arms": 1,
                         "units": 1,
@@ -1011,6 +1023,10 @@ class DetectorLawSimulation:
                 ordinal = self.lamp_births[number] + 1
                 self.lamp_births[number] = ordinal
                 u = (ordinal - 1) * lamp.wheel[0] % lamp.wheel[1]
+                if self.birth_orders is not None:
+                    # the order channel's key (i): the residues of Z_W taken
+                    # in the keyed permutation's order, one per birth
+                    u = self.birth_orders[number][u]
                 identity = number * (1 << 32) + ordinal
                 pair = definition.phase_per_age
                 if pair is None:
@@ -1112,7 +1128,7 @@ class DetectorLawSimulation:
                             "measured": number,
                             "family": definition.name,
                             "record": identity,
-                            "u": u,
+                            **({} if world.residue_inside else {"u": u}),
                             "labels": [list(branch) for branch in lamp.branches],
                             "arms": lamp.arms,
                             **({"arm_records": identities} if lamp.arms > 1 else {}),
@@ -1558,7 +1574,8 @@ class DetectorLawSimulation:
             "arrived": self.tick,
             "family": self.families[family].name,
             "record": live.identity,
-            "u": live.u,
+            # the order channel's key (ii): no residue on the click's stamp
+            **({} if self.world.residue_inside else {"u": live.u}),
             "born": live.born,
             "chosen": [[name, 0, "0"]] if name is not None else None,
             "node": [],
@@ -1891,7 +1908,7 @@ class DetectorLawSimulation:
                     "record": live.identity,
                     "lamp": live.lamp,
                     "family": self.families[live.family].name,
-                    "u": live.u,
+                    **({} if self.world.residue_inside else {"u": live.u}),
                     "born": live.born,
                     "birth": live.birth_tick,
                     "age": live.age,

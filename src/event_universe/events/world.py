@@ -440,6 +440,19 @@ WORLD_KEYS = {
     # records a block emits; RUN_LIST.md's light detectors at W = 64), an
     # integer from 1, 1 by default, admitted under `detector_law` alone.
     "wheel",
+    # detector-law-v1, the order channel's two keys (DECLARATIONS.md
+    # section 2 item 8, the model owner's declaration of 2026-09-24):
+    # `order_seed`, an integer from 0, the key of the permutation in whose
+    # order every lamp's births take the residues of its wheel's Z_W (one
+    # per u; a Fisher-Yates shuffle driven by the SplitMix64 mixing hash on
+    # the seed and the lamp's number, `core.integer.keyed_permutation`), in
+    # place of the counter's stride; an input of kind 1, drawn once, never
+    # written to a line; and `residue_inside`, a boolean, false by default:
+    # no line carries the residue u (the click's stamp is the detector's
+    # count and the birth interval). Both admitted under `detector_law`
+    # alone.
+    "order_seed",
+    "residue_inside",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -1530,6 +1543,12 @@ class NatureBeamWorld:
     # every row stays below (declared on a massive world; the constant
     # 2^40 on a world without the kind, where no row is bounded so).
     amplitude_bound: int = AMPLITUDE_BOUND
+    # detector-law-v1, the order channel's keys (DECLARATIONS.md section 2
+    # item 8): `order_seed`, the key of the births' order over each lamp's
+    # Z_W (None: the counter's stride), and `residue_inside`, no line
+    # carrying u.
+    order_seed: int | None = None
+    residue_inside: bool = False
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -4843,6 +4862,23 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 "the detector sets under the local detector law)"
             )
         wheel = _integer(obj["wheel"], "wheel", 1, MAX_VALUE)
+    order_seed: int | None = None
+    if "order_seed" in obj:
+        if not detector_law:
+            raise ValueError(
+                f"{BEAM_LAW}: the world key `order_seed` is refused without `detector_law` (the key "
+                "of the births' order over each lamp's wheel, DECLARATIONS.md section 2 item 8)"
+            )
+        order_seed = _integer(obj["order_seed"], "order_seed", 0, (1 << 64) - 1)
+    residue_inside = obj.get("residue_inside", False)
+    if type(residue_inside) is not bool:
+        raise ValueError(f"{BEAM_LAW}: residue_inside must be true or false (false by default)")
+    if residue_inside and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: the world key `residue_inside` is refused without `detector_law` (no line "
+            "carries the birth residue u; the click's stamp is the detector's count and the birth "
+            "interval, DECLARATIONS.md section 2 item 8)"
+        )
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -5016,6 +5052,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         wheel=wheel,
         closed=closed,
         amplitude_bound=amplitude_bound,
+        order_seed=order_seed,
+        residue_inside=residue_inside,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

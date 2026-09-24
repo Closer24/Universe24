@@ -1037,3 +1037,40 @@ Each a generic line under the contract, one test each in
   `phase_per_link` in the pair form (item 0). The stepping detector as a
   body, the mirror form as a key, the gather line's Nodes: NOT FOR THE
   GO (the Boss's 01:55Z item 7).
+
+## 15. Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8, the model owner's declaration of 2026-09-24; the Boss's 04:14Z and 04:30Z; `detector-law-build-2`)
+
+Two world keys under `detector_law`, one test (`tests/test_detector_law.py`
+(d)); no run of any world (the owner's rule: nothing runs before it is
+checked and approved; no Bell run before the attacks page's read).
+
+- KEY (i), `order_seed` (an integer from 0 to 2^64 - 1): the births of
+  every lamp take the residues of its wheel's Z_W one per u, in the order
+  of a keyed permutation, formed once at the engine's construction from
+  the seed and the lamp's number: `core.integer.keyed_permutation`, a
+  Fisher-Yates shuffle driven by `mix64`, the SplitMix64 mixing hash on
+  plain 64-bit integers (the golden-ratio step, two shift-xor-multiply
+  rounds; no float, every intermediate below 2^64), "a keyed permutation
+  indistinguishable from uniform without its key", never an affine stride
+  (which a reader searches in N^2 trials). The counter's stride r stays
+  the index into the order (u = order[(k - 1) r mod W] at the k-th
+  birth), so S_N and every count stay exact (each residue once per W
+  births). The seed is an input of kind 1, drawn once and written to no
+  line; the world file carries it as it carries every declaration.
+- KEY (ii), `residue_inside` (a boolean, false by default): no birth,
+  gather or records line carries `u`; the click's stamp is the detector's
+  count (`clock` under `clock_stamp`) and the birth interval (`birth`).
+  The record's own u stays Inside: the click's cell is chosen by it as
+  before (`cell_of`), and a reader without the seed sees a balanced list
+  in an order it cannot predict (the theorem of item 8).
+- The test: `keyed_permutation` a bijection on Z_N at N = 16, 256 and
+  2048 (the same key the same order, two keys two orders, no key the
+  counter's order); on the chain world with the wheel [1, 64] the first
+  64 births' residues Z_64 exactly in the lamp's keyed order, the
+  counter's order without the key, two seeds two orders, every record
+  clicking once at the screen under either order (the counts unchanged);
+  under `residue_inside` no line carrying u, the stamps' counts and births
+  those of the keyed world; the refusals (the keys without `detector_law`,
+  a negative or non-integer seed, a non-boolean flag). The ray law's Bell
+  worlds (`examples/events/bell/`, the rays engine) declare neither key
+  and read as before (their four counts the register's).

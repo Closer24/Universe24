@@ -10,6 +10,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from event_universe.core.integer import keyed_permutation
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 
@@ -122,3 +123,87 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
             assert 104 <= flight <= 132, flight
     books = simulation.books()["families"]["light"]
     assert books["measured"]["measured"] + books["transit"]["escaped"] == len(gathers)
+
+
+def test_the_order_channels_keys_take_the_residues_in_a_keyed_order_and_stamp_no_residue():
+    """Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8, the model
+    owner's declaration; the Boss's 04:14Z and 04:30Z): `keyed_permutation` is a bijection on
+    Z_N at N = 16, 256 and 2048 for several keys, the same key giving the same order, two keys
+    different orders and no key the counter's order; on the chain world with the wheel [1, 64]
+    under `order_seed`, the first 64 births' residues are Z_64 exactly (one per u) in the keyed
+    order of the lamp, the counter's order without the key, two seeds two orders; under
+    `residue_inside` no birth, gather or records line carries `u` while the clicks' stamps
+    carry the detector's count and the birth interval, the click cells and the counts
+    unchanged by the keys (the order channel closes Outside, the counts stay); the refusals:
+    `order_seed` and `residue_inside` without `detector_law`, a negative or non-integer seed,
+    a non-boolean flag."""
+    for count in (16, 256, 2048):
+        for key in (0, 1, 50 << 20, (1 << 64) - 1):
+            order = keyed_permutation(count, key)
+            assert sorted(order) == list(range(count))
+            assert order == keyed_permutation(count, key)
+        assert keyed_permutation(count, 1) != keyed_permutation(count, 2)
+        assert keyed_permutation(count, 7) != list(range(count))
+    with pytest.raises(ValueError, match="positive count"):
+        keyed_permutation(0, 1)
+
+    def births_of(document: dict) -> tuple[list[dict], list[dict], dict]:
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        for _ in range(document["ticks"]):
+            simulation.step()
+        births = [line for line in lines if line["event"] == "birth"]
+        gathers = [line for line in lines if line["event"] == "gather"]
+        records = dict(simulation.snapshot_stream())
+        return births, gathers, records
+
+    def keyed_world(seed: int | None, inside: bool) -> dict:
+        document = chain_world()
+        document["ticks"] = 64 * 40 + 600
+        document["measured"][0]["amount"] = 64
+        document["measured"][0]["lamp"]["wheel"] = [1, 64]
+        if seed is not None:
+            document["order_seed"] = seed
+        if inside:
+            document["residue_inside"] = True
+        return document
+
+    counter_births, counter_gathers, _ = births_of(keyed_world(None, False))
+    assert [line["u"] for line in counter_births] == list(range(64))
+    keyed_births, keyed_gathers, keyed_records = births_of(keyed_world(50 << 20, False))
+    residues = [line["u"] for line in keyed_births]
+    assert sorted(residues) == list(range(64)) and residues != list(range(64))
+    simulation = DetectorLawSimulation(parse_nature_beam_world(keyed_world(50 << 20, False)))
+    assert simulation.birth_orders is not None and residues == simulation.birth_orders[0]
+    other_births, _, _ = births_of(keyed_world(7, False))
+    assert [line["u"] for line in other_births] != residues
+    # the counts do not move with the order: each record clicks once, and the
+    # click cells over the 64 records are the same multiset under either order
+    # (the sponge face's share of the chain's records included)
+    assert len(keyed_gathers) == len(counter_gathers) == 64
+    assert sorted(g["chosen"][0][0] for g in keyed_gathers) == sorted(
+        g["chosen"][0][0] for g in counter_gathers
+    )
+    assert sorted(g["u"] for g in keyed_gathers) == list(range(64))
+    # key (ii): no residue on any line, the stamp the count and the birth
+    inside_births, inside_gathers, inside_records = births_of(keyed_world(50 << 20, True))
+    assert inside_births and all("u" not in line for line in inside_births)
+    assert len(inside_gathers) == 64 and all("u" not in line for line in inside_gathers)
+    assert all("clock" in line and "birth" in line for line in inside_gathers)
+    assert [g["clock"] for g in inside_gathers] == [g["clock"] for g in keyed_gathers]
+    assert [g["birth"] for g in inside_gathers] == [g["birth"] for g in keyed_gathers]
+    assert all("u" not in record for record in inside_records.get("records", []))
+    assert all("u" in record for record in keyed_records.get("records", []))
+    # the refusals
+    for bad, message in (
+        ({"order_seed": 5, "detector_law": False}, "refused without `detector_law`"),
+        ({"residue_inside": True, "detector_law": False}, "refused without `detector_law`"),
+        ({"order_seed": -1}, "order_seed"),
+        ({"order_seed": 1.5}, "order_seed"),
+        ({"residue_inside": 1}, "residue_inside must be true or false"),
+    ):
+        document = chain_world()
+        document.update(bad)
+        with pytest.raises(ValueError, match=message):
+            parse_nature_beam_world(document)
