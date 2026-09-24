@@ -5324,14 +5324,23 @@ and nothing else:
   which carry an axis (a, b); every such region a cube by its vertex and
   edge, the bodies of the tools among them.
 - THE OCCUPATION: which bound bodies hold quanta, how many, at which
-  amplitude, and with which momentum; which bodies carry a stock of
+  amplitude; which packets of a family are on the board, how many quanta,
+  at which amplitude and width, where; which bodies carry a stock of
   excitations and birth which family with which clock and which born
   profile; which body births a pair (the crystal's branches and clocks).
+- THE MOMENTUM: every entry carries its total momentum as one of its
+  integers, the wave vector **K** of its character, 0 at rest (DECIDED,
+  the model owner, record 1885, 2026-09-25 on the Israel clock); a packet
+  moves by **K** under the law (9.24 (2)); a region of material has
+  **K** = 0 in the one algebra (9.24 (3)). There is no acceleration: a
+  moving entry is written moving at interval 0 and its energy of motion
+  is part of the initial state, conserved; no ramp (DECIDED, record 1884;
+  the ramp of DECLARATIONS.md section 8 retires).
 - THE NAMES: the receivers' sets, and the ladder of each birth (the sets
   its records name, the face receiver last).
 NOT PART OF IT (refused at load): a residue, a wheel, a seed written by
 hand, a rate, a train, a heading, a take, a grace, a table, a per-family
-border.
+border, a ramp.
 
 **(3) THE INITIAL STATE AS A FUNCTION OF (2) (DERIVED HERE from 8.7, 9.9
 and 9.19).** The initial element is
@@ -5341,14 +5350,13 @@ and 9.19).** The initial element is
 where the modes are the eigenvectors of the COMPOSED operator of the
 body's family (every region of that family in place, 9.9), one summand
 per occupied body, each the body's first excitation where the body births
-(9.17 (4)). A moving body's summand is its rest mode carried by the
-character of its momentum (8.4's one statement: the profile times the
-character exp(i **k** . **x**) at the two levels, integers after
-rounding); where the exact mode of the stepped well differs from that
-product, the difference is the relaxation the ramp of DECLARATIONS.md
-section 8 absorbs, OPEN (8.4 is CARRIED on the GameBoard). Nothing else is
-on the board at interval 0: no light record, no response record, no
-remainder (9.9).
+(9.17 (4)), plus one summand per PACKET: its profile times the character
+of its momentum **K** at the two levels, integers after rounding, an
+exact solution of the homogeneous law from interval 0 with no ramp (9.24
+(2), DERIVED; the model owner's record 1884). A region of material does
+not move (9.24 (3)); the stepped well of 8.4 and its ramp are history.
+Nothing else is on the board at interval 0: no light record, no response
+record, no remainder (9.9).
 - EXACT INTEGERS: the summands as written (the levels and the zero
   remainders), the amplitude, the quanta, the material map; the operator
   itself (integer pairs); the born profiles' integers.
@@ -5489,6 +5497,42 @@ summand (8.4's product, OPEN, the generator's recomputation printed).
 Recomputation at load stays a DIAGNOSTIC (the largest deviation
 printed), never the check. IN ONE LINE: store once, check exactly in
 integers; recompute only to print.
+
+**(8) THE SIXTEEN, EACH REPRESENTED ALGEBRAICALLY? (the model owner's
+question, 2026-09-25 on the Israel clock, through the Boss; the sixteenth
+is 9.23's computer, record 1883).** For each row: (a) what is on the
+board, and whether that is complete with nothing else declared; (b) its
+outcome, a closed form outside the board or a number the board alone
+computes, with its blind pin; (c) what in it is only CARRIED or OPEN.
+"Packet" is 9.24 (2), "moving name" 9.24 (4), "frame form" 9.24 (3d).
+
+| Row | (a) On the board; complete? | (b) The outcome and its blind pin | (c) CARRIED or OPEN |
+| --- | --- | --- | --- |
+| 1 Bell | the layer 30 x 33; light and a holder family; the emitter body (a stock of 100 per setting), the crystal (the branches), two polarisers with axes, four receivers; COMPLETE | CLOSED FORM: S = 14 / 5 on the weights; the pin S = 2.80 +- 0.14 at n = 100 | none |
+| 2 Malus | the bar of 8; light and a holder; the emitter body (256), the polariser (an axis), its receiver; COMPLETE | CLOSED FORM: the share a^2 / (a^2 + b^2); the pins 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 | none |
+| 3 The two slits | the layer (grown, the margin); light and a holder; the emitter body (1024), the gap wall, 201 receivers, the faces; COMPLETE | BOARD-COMPUTED: the visibility 0.96 +- 0.02, re-derived on the grown board (owed) | none in the law; the margin a load condition |
+| 4 The pace fans | the layer 128^2; light and a holder; two line emitters; COMPLETE, but its reading is a GAMEBOARD probe, a diagnostic and not a result (9.21 (4)) | CLOSED FORM: k(axis) - k(diagonal) = k^2 / 48 from the band (PROVED); no click pin | none; a diagnostic row |
+| 5 The muon's form (4a) | at rest: the layer 200^2, matter [3200, 3236], the well [3200, 3227] of side 14, one quantum; COMPLETE. In motion: a PACKET of the matter family with **K** = 0.18556 (v = 1 / 3); complete as data; its tick read by clicks needs a moving name | at rest BOARD-COMPUTED: the mode's period 42.33; in motion CLOSED FORM from the dispersion: the tick 0.8146 of the rest tick at v = 1 / 3 (9.24 (2); the design's well form 0.8116 is CARRIED) | the moving name OPEN; 8.4's well form and the push CARRIED, retiring |
+| 6 The redshift (4b) | the chain 4096 with the faces; light [1, 1], matter [156, 157]; at rest the well [314, 315] with the coupling and a stock, the receiver at 4094; COMPLETE at rest. In motion: the emitter a packet with **K** and a moving name with a stock | CLOSED FORM in the frame form: 1 + z = (1 + v / c_l) / (the tick ratio) = 1.935 at v = 1 / 3 (9.24 (5); the design's 1.9889 on the pushed well is CARRIED) | the moving name OPEN; a packet's stock and birth OPEN with it; the push CARRIED |
+| 7 The round trip (4c) | the chain; light and a holder; the emitter body with its receiver; the transponder is a MIRROR, material, which does not move: in the frame form the mirror at rest and the emitter and receiver a moving name | CLOSED FORM: (1 + beta) / (1 - beta) = 3.7373 at beta = v / v_g(light) (the design's 3.7733 CARRIED) | the moving name OPEN; the moving mirror never on the board |
+| 8 Sagnac (R2) | the chain 3000 with the faces; light [1, 1], matter [800, 809]; two wells [800, 801] with couplings and stocks, the receivers at_a, at_b; COMPLETE at rest. Co-moving at k = 3: two packets with **K** and two moving names | BOARD-COMPUTED first rungs (108 at rest; 247 and 72 moving), OWED on the flux form; in motion CLOSED FORM beside: D / (c_l -+ v) with the emission's dilation | the moving names OPEN; the push CARRIED; the hybrid share a load check |
+| 9 de Broglie's fringes (M1) | the layer 128^2; matter and a holder; the matter emitter body (2048), the gap wall, 121 receivers, the faces; COMPLETE | BOARD-COMPUTED: the side lobe's centroid at 64 + 27.4, band one Node | none |
+| 10 The moving mass (M2) | the chain 200 with the faces; matter; the emitter body with a stock, the receiver at 104; COMPLETE: the moving mass is a free packet already | BOARD-COMPUTED: the first rung 169 +- 2 (owed on the flux form); its pace v_g(**K**) CLOSED FORM beside | none: 8.4 is DERIVED for a free packet (9.24 (2)) |
+| 11 The boxes (ii-a, ii-b) | the cubes 64^3 and 48^3; matter; the well [800, 801] of side 20 or 28 at rest; COMPLETE. ii-b in motion: a packet with **K** (v = 1 / 3); its tick by clicks needs a moving name | at rest BOARD-COMPUTED (omega_b); in motion CLOSED FORM: the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032, the well form with its residual, CARRIED) | the moving name OPEN; the push CARRIED |
+| 12 The deep well | the layer 128^2; matter; the well [800, 801] of side 40 at rest; COMPLETE; in motion (the control) as row 11 | at rest omega_b by the mode; in motion the design's 0.7531 CARRIED, the dispersion's 0.8146 beside | as row 11 |
+| 13 The light clock | the chain 674 with the faces; light [1, 1], matter [800, 809], a holder; the well A [800, 801] with the coupling and a stock, the mirror body [1, 2], the receiver at 612; COMPLETE at rest | CLOSED FORM at rest: 2 D / v_g + the mirror's delay = 212.1 (the pin 214 +- 1 with the rung's offset, owed on the flux form); in motion CLOSED FORM ONLY, gamma^2 (the longitudinal arm) and gamma (the transverse) from the dispersion (9.24 (6)), never run: a moving mirror is material | none at rest; the moving clock is not a run |
+| 14 The receding index, k = 3 | the chain 4000 with the faces; light [1, 1] with the born clock, matter [156, 157], a holder; the light emitter body (200), the medium body [314, 315] of side 24 with the coupling, BOUND, at rest; the probe a GAMEBOARD reading; the medium does not move: in the frame form the emitter and the probe are moving names | CLOSED FORM: n^2 = 1 + G g / (omega_0^2 - omega^2) (the design's) and the phase drift, re-derived blind on the bound medium (owed) | the bound medium's pin owed; the moving names OPEN; the push CARRIED |
+| 15 The receding index, k = 4 | as row 14 at k = 4 | as row 14 | as row 14 |
+| 16 The two-qubit computer | the layer; light and a holder; the emitter body, the crystal (the branches of the prepared state), ONE joint body (a 4 x 4 integer matrix), two readout polarisers whose axes carry the last gates, four receivers; COMPLETE, 100 records per setting | CLOSED FORM: Grover 0 / 0 / 0 / 100, Deutsch-Jozsa 100 / 0 per oracle, the band 0; Bell as row 1 | the joint body NEW for the engine (the crystal's form with a matrix, DERIVED); complex joint weights OPEN, not needed |
+
+IN ONE LINE: 7 of the 16 are fully algebraic now (Bell, Malus, the two
+slits, the pace fans as a diagnostic, M1, M2, the computer); 5 more are
+algebraic at rest with their moving half a closed form from the
+dispersion (the muon's form, Sagnac, the boxes, the deep well, the light
+clock, the last a closed form only); the remaining 4 (the redshift, the
+round trip, the index at k = 3 and 4) and every moving half that is to
+be RUN wait on one word of the owner, the MOVING NAME of 9.24 (4), and
+until then their moving forms are the push's, CARRIED.
 ### 9.23 A two-qubit quantum computer on the board (the model owner's word of 2026-09-24, 22:46Z (2026-09-25 on the Israel clock), through the Boss: "in our world the Outside sees only the click; lab equipment simulates on the board what we built from the algebra; check whether a quantum computer of two qubits can be simulated this way"), marked, before any code
 
 **(1) THE QUBIT (DERIVED HERE from 3.6, 9.16 (2) and 9.19 (1)).** A qubit
@@ -5521,8 +5565,13 @@ region of the operator with integers, each already in the tool table:
   the rotation by the angle with tangent b / a, integer, the scale a^2 +
   b^2 absorbed by the rung. The rational axes are dense in the circle
   (PROVED: tan of a dense set of angles is rational).
-- THE MIRROR X: a reflection exchanges the two hands (1.2, 9.2): the gate
-  X = [[0, 1], [1, 0]] is a mirror body (the gap [1, 2]) on the arm's path.
+- THE MIRROR: a mirror body (the gap [1, 2]) acts on the arm's label rows
+  as the reflection of the label plane its own plane induces (9.14 (b)'s
+  D_4): Z = diag(1, -1) for a mirror plane containing the H axis, X =
+  [[0, 1], [1, 0]] for one containing the diagonal (CORRECTED on
+  2026-09-25: the first draft wrote X for every mirror; in the hands
+  basis every reflection is the exchange, in the label rows it is Z or X
+  by the orientation).
 - THE RETARDER Z_s: the relative phase of the two hands, the wheel's
   translation x^s on one row (9.14 (a)): a chiral body with a pair PER
   LABEL (one label's rows paced differently from the other's over its L
@@ -5532,9 +5581,11 @@ region of the operator with integers, each already in the tool table:
   condition the generator solves for the world's clock); otherwise it is
   the phase to the clock's grain, COMPUTED per world. Z = Z_(N/2), S =
   Z_(N/4), T = Z_(N/8) on the wheel of N.
-THE HADAMARD: **H** = [[1, 1], [1, -1]] = **M**_(1, 1) applied after X (the
-matrix product **M**_(1, 1) X), its 1 / sqrt 2 absorbed by the rung: EXACT
-in integers (DERIVED). THE GATE SET {R_(a, b), X, Z_s}: for a fixed wheel N
+THE HADAMARD: **H** = [[1, 1], [1, -1]] = **M**_(1, 1) X = **M**_(1, -1) Z
+(the matrix products, up to the overall sign), its 1 / sqrt 2 absorbed by
+the rung: EXACT in integers (DERIVED); and X = **M**_(0, 1) Z up to the
+sign, so one mirror of either orientation with the quarter turn gives the
+other. THE GATE SET {R_(a, b), X, Z_s}: for a fixed wheel N
 it generates a FINITE group up to the rung's scale; as N grows and the
 axes range over the rationals it is DENSE in the one-qubit gates
 (rotations of every rational tangent times phases in steps of 2 pi / N):
@@ -5547,18 +5598,29 @@ controlled gate acts on the joint label module Z^2 (x) Z^2: CNOT is a
 permutation of the four joint labels (|a b> -> |a, b + a mod 2>), verb (P)
 of 2.4 on the joint state; CZ is the diagonal matrix (1, 1, 1, -1) on the
 joint weights, verb (B) with a declared matrix. Both are operations of
-the algebra as written. THEY ARE LOCAL ONLY WHERE BOTH ARMS' ROWS ARE AT
-THE SAME CELLS: a JOINT BODY, a region both arms cross together, carrying
-a declared 4 x 4 integer matrix (or permutation) on the joint module; it
-acts on the record's joint weights when both arms' rows are at its cells
-(the two arms brought to it by mirrors, at the same interval by the mirror
-theorem). It is chiral like the polariser (a reflection exchanges both
-hands and conjugates CZ). In nature it is a nonlinear medium; here it is
-a declared matrix, a material like the crystal's branches. Within the
-three tests: generic (one primitive, verb B or P, declared integers, no
-family name), vector (bilinear on the joint state, no root), local (the
-body's cells and the rows there). NOT ON MAIN: the engine has per-arm
-label matrices only (the polariser's channel weights). WHAT THE CRYSTAL'S
+the algebra as written. THE JOINT BODY IS THE CRYSTAL'S FORM WITH A
+MATRIX (DERIVED HERE, replacing the first draft's per-cell action and
+its equal-time condition, both withdrawn on 2026-09-25): the four joint
+weights are the record's own data, not a value at a cell, so no per-cell
+verb reaches them; the one act of the law on a record's own data is the
+click, and the one act that writes a record is the birth (9.17). So the
+joint body is a region named on the pair's ladder for BOTH arms: the pair
+clicks there at its rung (**E**, **D**, **X**, the pair's offer being its
+rows' flux into the body's cells) and the body BIRTHS a pair on its cells
+with the weights c' = **G** c, **G** its declared 4 x 4 integer matrix
+(verb B) or permutation (verb P) on Z^2 (x) Z^2, the residue the law's
+remainder at its centre cell (9.19 (4)), the born rows written once at
+both levels (9.17 (6)): exactly the crystal (9.7 (b), 9.13) with a
+matrix on the arriving weights in place of fixed branches. Nothing waits
+for the two arms to arrive together: the ladder sums both arms' offers
+and the rung fires once. The born pair spreads from the body's cells as
+the crystal's does, and the readouts are placed where it goes (9.6). In
+nature it is a nonlinear medium; here it is a declared matrix, a material
+like the crystal's branches. Within the three tests: generic (the
+crystal's primitives with declared integers, no family name), vector
+(**G** on the weights, no root), local (the body's cells). NOT ON MAIN:
+the engine's crystal births fixed branches, never a matrix applied to
+the arriving pair's weights. WHAT THE CRYSTAL'S
 BIRTH REPLACES: any entangling gate that comes first in a circuit is a
 prepared state, the crystal's declared branches (the four Bell states,
 the uniform superposition, any real tensor with integer weights); an
@@ -5606,8 +5668,31 @@ a share of 0 has the band 0 (one click there is a defect).
   R_(1, 1) on the query arm and its readout with the axis (1, 0): the
   query arm clicks + for a constant function and - for a balanced one,
   every record; n = 100: 100 / 0 with the band 0.
-- THE RECORDS EACH NEEDS: Bell 400 (the distributions); Grover and
-  Deutsch-Jozsa 100 each (deterministic outcomes, the band 0).
+- THE RECORDS EACH NEEDS: Bell 400 (the distributions); Grover 100 and
+  Deutsch-Jozsa 100 per oracle (deterministic outcomes, the band 0).
+- AS PLACED ON A LAYER (DERIVED HERE; the sixteenth row of the
+  specification's part B): a gate that stands between a birth and a
+  readout with nothing between is composed into them exactly, since the
+  algebra composes matrices (a one-qubit gate before the joint body into
+  the crystal's branches, one after it into the readout polariser's
+  axis); on a layer the rows spread from a birth in every direction and
+  a separate gate body would catch a part of an arm only, so the placed
+  form is: the crystal births the state the circuit has reached at its
+  first entangling gate; ONE joint body carries that gate; the readout
+  polarisers' axes carry the last one-qubit gates. Grover: the crystal
+  births (1, 1, 1, -1) (the uniform state after the oracle, the branches
+  [[0, 1], [1, 1], [2, 1], [3, -1]]); the joint body **G** = diag(1, -1,
+  -1, -1) gives (1, -1, -1, 1) = (1, -1) (x) (1, -1); both readout
+  polarisers with the axis (1, 1) (the Hadamard then the axis (1, 0)):
+  every record clicks (-, -), 0 / 0 / 0 / 100. Deutsch-Jozsa: the crystal
+  births |+> |-> = (1, 1, -1, -1) (the query arm 0, the label index a +
+  2 b); the joint body is the identity or -I (constant) or diag(1, -1, 1,
+  -1) or its negative (balanced); the query arm's polariser with the axis
+  (1, 1) clicks + for constant and - for balanced, 100 of 100; the
+  ancilla's polariser with the axis (1, 0) clicks - always (a check).
+  The gate bodies themselves (the rotator, the mirror, the retarder) are
+  tested on a bar with single records (the specification's A.5 and
+  A.13), not in the sixteenth's layer.
 
 **(6) THE VERDICT.**
 - THE BOARD CARRIES NOW (once 12.2's per-label rows and the crystal are
@@ -5627,3 +5712,212 @@ a share of 0 has the band 0 (one click there is a defect).
   machine would, with the tensor's 2^n integer weights for n qubits; the
   cost is exponential in the qubits, as for any board simulation of a
   quantum computer, and the Outside sees only the clicks.
+
+### 9.24 The moving body under the one operator (the model owner's question of 2026-09-25 on the Israel clock, through the Boss: "how is a moving body represented algebraically? that is the question"; his lead: "it is a large bound body with momentum"; his decisions of records 1884 and 1885: no acceleration, and the momentum an integer of every entry), marked, before any code
+
+**(1) THE THEOREM THAT DECIDES THE FORM (PROVED HERE).** The one
+operator is LINEAR in the state (8.1's rule, 8.5's coupling, 9.16 (2)'s
+label matrix, each a linear map of the element; the pairs, couplings and
+axes are data) and, away from the regions of material, it commutes with
+every translation (1.6). A linear translation-invariant map has the
+characters as its modes and nothing else that is stationary: a localised
+stationary state needs a region of material that breaks the translations
+(a well, 8.3). So there is NO SELF-BOUND LOCALISED BODY in the one algebra:
+a body's own quanta do not bind each other (that would be a term of degree
+two or more in one family's amplitude, which the three tests exclude,
+2.8), and a family's "binding" is only its rest frequency, the pair's
+omega_0 (8.1), which is the same at every Node. What a moving body can be
+is therefore one of two things, and no third: A PACKET of a family
+carried by the character of its momentum (item 2), or A REGION OF
+MATERIAL, which does not move (item 3). The owner's lead is read against
+this: "a large bound body with momentum" is a LARGE PACKET of the massive
+family, bound in the sense of its mass (its rest frequency, its internal
+clock), not by a potential, large so that it barely spreads.
+
+**(2) THE FREE MOVING QUANTUM, AND THE LARGE PACKET (PROVED and
+COMPUTED).**
+- EXACT SOLUTION (PROVED, 1.6 and 8.1): on a homogeneous board every
+  character exp(i(**k** . **x** - omega(**k**) t)) is a mode of the rule
+  with 3 cos omega = (numerator / denominator) SUM of cos k_i, and a
+  packet SUM over **k** of c_**k** times the character is an exact
+  solution, each mode advanced by its own clock; the written initial
+  state (the profile times the character of **K** at the two levels,
+  integers after rounding) is such a packet to the remainder's grain, and
+  it moves from interval 0 with no ramp: the model owner's record 1884 is
+  the algebra's own statement (DERIVED).
+- THE PACE AND THE ENERGY (PROVED): the group velocity per axis v_i =
+  (numerator / denominator) sin k_i / (3 sin omega), the energy the clock
+  omega(**K**) at one quantum of content. At small **K** and omega, omega^2
+  = omega_0^2 + k^2 / 3 with omega_0^2 = 2 (1 - numerator / denominator):
+  the relativistic band with c = 1 / sqrt 3 and the mass omega_0 (PROVED
+  by expanding 8.1). The effective mass 1 / omega'' at rest is 3 sin
+  omega_0 (denominator / numerator): 0.4513 for [800, 809] and [3200,
+  3236], 0.3402 for [156, 157], 0.2396 for [314, 315] (COMPUTED).
+- THE INTERNAL CLOCK OF A MOVING PACKET (PROVED from the dispersion): at
+  the packet's centre, which moves at v = v_g(**K**), the phase advances by
+  omega(**K**) - **K** . **v** per interval, so the packet's own tick is
+  slower than the rest tick by (omega(**K**) - **K** . **v**) / omega_0.
+  TIME DILATION ARISES FROM THE DISPERSION, from no rule, as the owner's
+  lead says: for the relativistic band that ratio is exactly 1 / gamma.
+  COMPUTED on the lattice band along an axis, for [800, 809] and [3200,
+  3236]: at v = 0.1 the tick ratio 0.98477 against 1 / gamma = 0.98489;
+  at v = 0.2 (**K** = 0.09637) 0.93757 against 0.93808; at v = 1 / 3, the
+  fifteen's k = 3 (**K** = 0.18556 per Link), 0.81457 against 0.81650;
+  for [156, 157] at v = 1 / 3 (**K** = 0.13946) 0.81540; for [314, 315]
+  (**K** = 0.09802) 0.81595. THE LATTICE'S ANISOTROPY: along the diagonal
+  at the same speed the ratio differs from the axis's by less than 0.1
+  percent up to v = 0.35 and by 0.2 percent at v = 0.43 (COMPUTED, 9.24's
+  script beside this chapter's prototypes).
+- THE SPREADING (PROVED and COMPUTED): a packet of width sigma spreads on
+  the time t_s = 2 sigma^2 / omega'' (the dispersion's curvature); for
+  [800, 809] t_s = 130 intervals at sigma = 12, 1444 at 40 and 9025 at
+  100 Links; for [314, 315] 69, 767 and 4792. So a moving CLOCK of the
+  fifteen's length (a hold of 8000 intervals) is a packet about 100 Links
+  wide, and a well of side 12 or 14 set free is not a clock: it spreads
+  in a hundred intervals. The muon's form, the boxes and the deep well
+  in motion are LARGE PACKETS, of the width their hold demands; on the
+  200 x 200 layer and the 64^3 cubes that width fits.
+- THE CONTRACTION: none on the board's own surface; the profile is as
+  written (8.4's "the characters themselves" is history, and its 0.1
+  percent carried value is replaced by the dispersion's exact one).
+- WHAT THIS SERVES AS IS: the moving mass (M2) is a free packet born by
+  its emitter body and read by a static receiver: DERIVED, nothing
+  changes. The packet as a CLOCK read by clicks needs item 4.
+
+**(3) THE REGION OF MATERIAL DOES NOT MOVE (PROVED), and the four forms
+weighed.**
+- (a) THE WELL'S MATERIAL CARRIED BY A RECORD OF THE HOLDER FAMILY:
+  REFUSED by the three tests (PROVED). A pair at a Node is data; for it to
+  follow a record, the pair for F at a Node would have to be a function
+  of the holder record's amplitude there, a term of degree two in the
+  holder's amplitude times F's amplitude (a cubic term, not bilinear), or
+  a threshold on the holder's amplitude (a read of a cell to decide, 9.7).
+  The bilinear coupling of 8.5 (F's row gains g times the holder's
+  difference) is linear in the holder and binds nothing.
+- (b) THE PUSH (8.11, 9.21 (7a)): moves the regions from outside the
+  operator by a declared rule; not in the one algebra; CARRIED on main
+  and RETIRING with the moving wells (item 5).
+- (c) THE REST MODE TIMES THE CHARACTER (8.4), dragged by the hops:
+  COMPUTED here on the chain of 1500, the well [800, 801] of side 12 on
+  [800, 809], the seed the rest mode times the character at **K** =
+  0.18556 (v = 1 / 3), the well hopping one Link every 3 intervals from
+  interval 0 with no ramp: the share of the form I within 10 Links of the
+  well falls to 0.869 at 300 intervals, 0.798 at 600 and 0.740 at 900
+  (the rest mode alone dragged: 0.603, 0.580, 0.606; at v = 0.1: 0.939,
+  0.889, 0.848; at rest: 0.996 constant). So the boosted rest mode is NOT
+  a mode of the hopping well: it sheds about 4 x 10^-4 of its norm per
+  interval at k = 3 into the vacuum's characters, which is the "relaxation
+  the ramp absorbs" of 8.4; the ramp only lets the record shed it before
+  the reading. CARRIED where the push stays; history where it goes.
+- (d) THE FRAME FORM: run the experiment with the material at rest and
+  read the Outside's clicks in the moving frame by the click theorem's
+  symmetry (Highlights 5.4; the dispersion's Lorentz form to the order of
+  item 2). ITS SCOPE (DERIVED): it removes the motion of ONE thing; an
+  experiment whose two sides both need material (a moving mirror and a
+  resting emitter, the transponder; the moving light clock, whose mirror
+  and receiver move together) cannot be run in any frame with the
+  material at rest on both sides; those are CLOSED FORMS (item 6), the
+  runs at rest confirming their ingredients by clicks.
+
+**(4) THE MOVING NAME (DERIVED HERE as lawful; OPEN for the owner's
+word).** The Boss's question: can a receiver or an emitter be named by
+the record rather than by fixed cells? A receiver is a name (9.19 (5)),
+no material: a set of cells that the click reads (the flux into it) and
+the birth writes on. A NAME MAY TRANSLATE: the set S(t) = S(0) + (the
+accumulator's steps), the accumulator advanced by the rate of **K**'s
+group velocity in integers (one Link per [intervals] with the remainder
+kept, verb T), the same stepping the push uses, applied to a NAME and
+not to material. Then: the operator is unchanged (no material moves), so
+equivariance, locality, conservation and reversibility hold as proved
+(9.20 (A)); the click reads the flux into S(t) and the birth writes on
+S(t), the crystal's and the emitter's forms unchanged; a packet with a
+co-moving name is the moving clock (its own record clicks at its rung on
+S(t) as the well's does at its block, the norm one period's one-way flux
+into the moving centre cell, 9.17 (5)), the moving emitter (a stock
+births at S(t) at the packet's own tick rate, which item 2 dilates), and
+the moving receiver. The three tests: generic (the name's rate is derived
+from **K** by the generator, an integer pair per axis, not a declared
+heading; verb T), vector (no root), local (the set's cells). WHAT IT IS
+NOT: a mirror, a well, a medium (material), which stay at rest. OPEN FOR
+THE OWNER: whether a name may move; the words of records 1872 and 1875
+refuse a declared rate and heading, and here the rate is **K**'s own.
+
+**(5) WHAT EACH MOVING ROW DECLARES NOW (DERIVED, on items 2 to 4), and
+the ramp.** THE RAMP IS NOT NEEDED (DECIDED, record 1884; DERIVED, item 2:
+a packet is born moving, the character times the profile is an exact
+solution); DECLARATIONS.md section 8 retires; no `ramp` key; a world
+with one is refused (9.22 (2)). 8.4 moves from CARRIED to DERIVED for a
+free packet (the dispersion's exact clock) and to HISTORY for a moving
+well. The rows:
+- THE MOVING MASS (M2): as is; a packet from the emitter body, the first
+  rung at the static receiver.
+- THE MUON'S FORM (4a), THE BOXES (ii-b), THE DEEP WELL IN MOTION: at
+  rest the well and its clicks as today; in motion a LARGE PACKET of the
+  matter family with **K** written at interval 0 (no well, no push), its
+  tick the closed form of item 2 (0.8146 of the rest tick at v = 1 / 3,
+  against the design's well form 0.8116, CARRIED); read by clicks only
+  with a moving name (item 4), else a closed form beside the rest run.
+- THE REDSHIFT (4b): the emitter a packet with **K** and a moving name
+  with its stock; its births come at the packet's own tick (dilated by
+  item 2) from positions that recede, so the receiver's click intervals
+  are stretched by 1 + v / c_l: 1 + z = (1 + v / c_l) / (the tick ratio)
+  = 1.935 at v = 1 / 3 with c_l = 0.57689 (the chain's light at k = 2 pi
+  / 64) and the tick ratio 0.8154 of [156, 157] (COMPUTED; the
+  relativistic (1 + beta) gamma gives 1.9332; the design's 1.9889 on the
+  pushed well with the coupling's emission is CARRIED and differs: the
+  emission mechanism of a packet, its stock at a moving name, is the
+  open point of item 4).
+- THE ROUND TRIP (4c): the mirror at rest (material), the emitter and
+  receiver one moving name on a holder packet: (1 + beta) / (1 - beta) =
+  3.7373 at beta = v / c_l = 0.5778 (the design's 3.7733 on the band at
+  [2464, 25], CARRIED; the continuum 3.732).
+- SAGNAC (R2) co-moving: two packets with **K**, two moving names with
+  stocks; the first rungs D / (c_l - v) and D / (c_l + v) plus the
+  emission's dilation, COMPUTATION owed on the flux form.
+- THE RECEDING INDEX (k = 3, 4): the medium at rest (material, bound, of
+  the holder family), the light emitter and the probe moving names; the
+  probe stays a GAMEBOARD reading; the pin re-derived blind on the bound
+  medium (owed).
+Every one of these needs item 4's word before it is run; until then its
+moving form is the push's, CARRIED and named so.
+
+**(6) THE MOMENTUM AS A TOOL'S INTEGER, AND THE LIGHT CLOCK IN CLOSED
+FORM (the model owner's record 1885).** Every entry of an experiment's
+list carries **K**, the integer wave vector of its character, 0 at rest
+(9.22 (2); the specification's part A, each card). THE LIGHT CLOCK
+(DERIVED HERE from the dispersion; the chain of 674, the receiver at 612,
+the mirror at [672, 674), D = 60 Links, the light of the chains at k = 2
+pi / 64, v_g = c_l = 0.57689):
+- AT REST: the tick is 2 D / c_l + the mirror's delay = 208.01 + 4.085 =
+  212.10 intervals, plus the rung's own offset (the design's blind pin
+  214 +- 1; OWED on the flux form and [800, 801]). The run at rest
+  confirms exactly these ingredients by clicks: c_l on the board's band
+  and the material mirror's delay.
+- MOVING WITH **K** ALONG ITS ARM (the longitudinal clock, mirror and
+  receiver together at v): the tick is D / (c_l - v) + D / (c_l + v) +
+  the delay = gamma^2 (2 D / c_l) + the delay with gamma = 1 / sqrt(1 -
+  v^2 / c_l^2): 218.54 at v = 0.1, 240.52 at v = 0.2, 316.36 at v = 1 /
+  3 (gamma = 1.2252).
+- MOVING ACROSS ITS ARM (the transverse clock): 2 D / sqrt(c_l^2 - v^2)
+  + the delay = gamma (2 D / c_l) + the delay: 215.30, 225.85, 258.95.
+- THE LATTICE'S ANISOTROPY enters through c_l alone, the light's group
+  velocity at its k along the arm's axis (0.57689 on an axis at k = 2 pi
+  / 64, 0.57735 in the limit); the mirror's delay is the material's.
+- THE PIN IS BLIND, and THE MOVING CLOCK IS NOT RUN: its mirror is
+  material and does not move (item 3), and no frame puts both its mirror
+  and its receiver at rest while the rest of the world moves. The
+  transverse form gamma is Lorentz's clock; the longitudinal form
+  gamma^2 is the board's own statement that its material does not
+  contract (8.4's "declared cells widen and never contract"), a
+  PREDICTION of the model against nature's gamma, to be stated as such
+  and not hidden. The run only confirms by clicks what the closed form
+  uses.
+
+**(7) WHAT STAYS OPEN FOR THE OWNER.** (i) The moving name (item 4): one
+word. (ii) With it, the emission of a moving packet (a stock at a moving
+name) as the redshift's and Sagnac's mechanism, and its blind pins
+re-derived. (iii) The longitudinal light clock's gamma^2 as the model's
+prediction. (iv) The rows whose material must move (the transponder's
+mirror, the index's medium) stay closed forms in the frame form; if the
+owner wants them RUN with moving material, that is the push, outside the
+one algebra, and is to be said so.

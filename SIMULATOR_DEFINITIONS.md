@@ -173,10 +173,20 @@ in the day's log; nothing of them is a name the engine branches on.
   (2)): the board's extents and per axis periodic or open; the families;
   the material map (the regions with their pairs, couplings and axes, as
   cubes by vertex and edge); the occupation (the quanta, amplitudes,
-  momenta, stocks, born clocks and profiles, the crystal's branches); the
-  names (the receivers' sets and the ladders). Refused: a residue, a
+  stocks, born clocks and profiles, the crystal's branches, the joint
+  body's matrix); the momentum of every entry, the integer wave vector
+  **K** of its character, 0 at rest (record 1885; a packet moves by it
+  from interval 0, a region of material has **K** = 0, ALGEBRA.md 9.24);
+  the names (the receivers' sets and the ladders). Refused: a residue, a
   wheel, a hand-written seed, a rate, a train, a heading, a take, a grace,
-  a table, a per-family border.
+  a table, a per-family border, a ramp (record 1884: no acceleration, a
+  moving entry is written moving at interval 0).
+- **The moving body** (ALGEBRA.md 9.24): a packet of a family carried by
+  the character of its **K**, an exact solution of the law, its own tick
+  slowed by the dispersion; a region of material does not move; the push
+  of a region is outside the one algebra and is carried, named so, until
+  it goes; a moving receiver or emitter as a NAME that translates with its
+  packet is derived as lawful and waits on the model owner's word.
 - **What is compared with nature.** The clicks alone: the counts and the
   first rungs on the receivers' names (the owner's word of 22:39Z, "check
   clicks only in the experiment"); every other property of the run is

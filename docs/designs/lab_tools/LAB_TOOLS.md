@@ -139,6 +139,10 @@ and no tool name.** Every tool is built from these alone.
   wheel and no residue order: u is the law's remainder at the centre cell
   (ALGEBRA.md 9.19 (4)), so the body's well pair is rich, 3 x denominator
   / gcd(numerator, 3) >= 500 ([800, 801], never [800, 800] or [8, 7]).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: its first excited record, the body's
   composed mode (9.17 (4), 9.22 (3)); the births come later.
 - Its load check: every birth has a clicking record behind it (9.17);
@@ -161,6 +165,10 @@ and no tool name.** Every tool is built from these alone.
 - Its material integers: its name in the ladders of the records it reads
   (the ladder by name). No take pair (9.12) and no wheel: the rung's wheel
   is the record's own (ALGEBRA.md 9.19 (4)).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing.
 - Its load check: every ladder names only declared receivers; the
   generator's timing condition that each record's click or close comes
@@ -180,6 +188,10 @@ and no tool name.** Every tool is built from these alone.
 - Its primitive: **R**, with the gap pair on its cells.
 - Its material integers: the gap pair [num, den] for light; the side
   (its depth).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing.
 - Its load check: every clock that reaches it lies below its gap; the
   transmitted share at its depth is below the declared bound.
@@ -198,6 +210,10 @@ and no tool name.** Every tool is built from these alone.
 - Its primitive: **R**, with the layer's pair.
 - Its material integers: the pair [91, 107] at [2464, 25], or [183, 199]
   at [1232, 25].
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing.
 - Its load check: the share computed from the pair at the declared
   clock, printed at load (GAMEBOARD).
@@ -215,6 +231,10 @@ and no tool name.** Every tool is built from these alone.
 - Its material integers: the axis [a, b], with a^2 + b^2 > 0 and gcd(a,
   b) = 1 (one form per axis), and its two receivers (+ along the axis, -
   across it).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing.
 - Its load check: the axis's conditions; the two receivers named.
 - Its unit tests:
@@ -236,6 +256,10 @@ and no tool name.** Every tool is built from these alone.
 - Its material integers: the born clocks p_1 + p_2 = p (one split, or the
   window of section 12.1); the branches [[1, 1], [2, 1]], which are a =
   b = 0 and c = 1 (9.16 (5)); `label_hands`; the born amplitude.
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing (no seed, 9.7).
 - Its load check: p_1 + p_2 = p exactly; the crystal is the arriving
   record's named receiver; the branches lie in a maximally entangled
@@ -256,6 +280,10 @@ and no tool name.** Every tool is built from these alone.
   the coupling, a stock where it births (9.17 (4)); the seed is the
   generator's, not a declaration (9.22 (3)); no wheel and no `emits`
   (9.19 (4), 9.17).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: its record, carrying its seed, the mode of
   the COMPOSED world (9.9).
 - Its load check: the body check (8.7), extended by 9.9: the bodies'
@@ -269,6 +297,10 @@ and no tool name.** Every tool is built from these alone.
 - A direction: its declared momentum.
 - Its primitive: **R**, with two families' pairs on the same cells.
 - Its material integers: the well's, plus the gap [1, 2] for light.
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: the well's seed.
 - Its load check: the well's and the mirror's.
 - Its unit tests: at rest, the reflected clock equals the sent one
@@ -283,11 +315,63 @@ and no tool name.** Every tool is built from these alone.
 - Its material integers: none. Each axis is periodic, or open with the
   face receiver `face` at its border on every ladder's end (Highlights'
   record 15, kept: what leaves clicks there; ALGEBRA.md 9.19 (3) (a)).
+- Its momentum: the integer wave vector **K** of its character, 0 at
+  rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
+  material carries **K** = 0 in the one algebra, a packet its **K**, written
+  moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: nothing.
 - Its load check: a periodic axis or a face receiver on every axis (a
   closed board is refused); the timing condition of A.2.
 - Its unit test: the closed face's reflection delay on the chain at
   [2464, 25] is 3.547 intervals.
+
+**A.13 The joint body (the two-qubit gate; the model owner's record 1883,
+2026-09-25 on the Israel clock: the sixteenth experiment).**
+- Its group element: the crystal's form with a matrix (ALGEBRA.md 9.23
+  (3)): **E**, **D**, **X** on the arriving PAIR (both arms named on its
+  ladder), then **E**^T with the four joint weights transformed, c' =
+  **G** c, **G** a declared 4 x 4 integer matrix (verb B) or a permutation
+  (verb P) on Z^2 (x) Z^2 (the label index a + 2 b, bit j the label on
+  arm j). Equivariant under all 48 on a cube (the labels are not spatial).
+- A direction: NONE of its own; the born pair spreads from its cells and
+  the readouts are placed where it goes (9.6).
+- Its primitive: the crystal's (A.6): the pair clicks at its rung on the
+  body's cells (the ladder sums both arms' offers; nothing waits for the
+  arms to arrive together, the first draft's equal-time condition and its
+  mirrors' routing are withdrawn), the body births a pair on its cells
+  with the weights **G** c, the residue the law's remainder at its centre
+  cell (9.19 (4)), the born rows written once at both levels (9.17 (6)).
+  Two quanta end, two are born.
+- Its material integers: the matrix **G** (16 integers, or a permutation
+  of four); its light pair, an index rich in remainders (A.11 (2)); its
+  body's (the holder family, bound). No arm is declared: the arms are the
+  labels' bits.
+- Its momentum: **K** = 0 (a region).
+- On the board at interval 0: its own bound record, as every tool body.
+- Its load check: **G** integer with **G**^T **G** = n **I** for some
+  integer n (orthogonal up to scale, so the total weight is preserved up
+  to the rung's scale; a permutation and the diagonals of signs pass);
+  the pair's ladder names it for both arms before the readouts; its
+  light pair rich.
+- Its unit tests (on the planted board of ALGEBRA.md 9.20 (B), 12^3, the
+  harness's residues; expected values):
+  - a pair born at (3, 4, 5) with the weights (1, 1, 1, -1) and the joint
+    body **G** = diag(1, -1, -1, -1) of side 2 at (8, 2, 7) named first:
+    the pair clicks there once (the content 2 quanta before and after),
+    and the born pair's weights are (1, -1, -1, 1) bit for bit;
+  - **G** = the identity: the readout counts equal the counts without the
+    joint body, 1000 of 1000 records (a transparent body);
+  - **G** = the permutation of CNOT (a + 2 b -> a + 2 (a + b mod 2)) on
+    (1, 0, 0, 0), (0, 1, 0, 0): the born weights (1, 0, 0, 0), (0, 0, 0,
+    1);
+  - the six tests of 9.20 (B) with the joint body in place: equivariance
+    under the 48 with **G** unchanged (48 of 48), translation (7 of 7),
+    the content exact, reversibility except the two clicks, locality,
+    residue-blind until the first click;
+  - Grover as placed (part B, row 16): 100 of 100 records at (-, -).
+- What is new for the engine: the birth's weights as a matrix applied to
+  the arriving pair's weights (the crystal births fixed branches today);
+  nothing else.
 
 **A.10 THE ONE TABLE (the owner's word of 22:30Z: every tool, click or
 no click, the rotation of its shape, its primitive, its material).**
@@ -309,6 +393,7 @@ it drifts less than one Link over the run.
 | Well | YES: its own record's clicks (its clock) | the bound mode, a character of the time translation at **k** = 0 | none at rest; its momentum in motion | **R** with the lowered pair; its own **E**, **D** | the pair, the side, the momentum and ramp, the coupling (no wheel; the seed is the generator's) |
 | Transponder | its own record's clicks; the reflection itself does not click | the well's, plus the mirror's reflection in its moving frame | its momentum | **R** with two families' pairs | the well's, plus the gap [1, 2] for light |
 | Faces | no | the segment's border, the row beyond read as 0 | the axis's normal | **R** | none (per axis periodic, or open with the receiver `face`; A.9) |
+| Joint body (A.13) | YES: the arriving pair clicks at it, and a pair is born with the weights **G** c | the crystal's, with the matrix **G** on the joint label module; all 48 on a cube | none; the readouts are placed where the born pair goes | **E**, **D**, **X** on the pair, then **E**^T with **G** c | the matrix **G** (or a permutation); its light pair; the branches are the arriving pair's |
 
 **A.11 The crystal's keys for its world file (the physicist's two
 questions of 18:50Z).**
@@ -344,6 +429,7 @@ options and readings of that one body.
 | a birth triggered by a named arriving record | the crystal |
 | its name in ladders | the receiver |
 | a light pair and a momentum | the transponder |
+| a birth triggered by a named arriving pair, with a 4 x 4 integer matrix on its weights | the joint body (A.13) |
 
 - A body is BOUND: its own record, of the holder family, its momentum by
   the push and its seed the composed mode (ADOPTED, record 1875); the
@@ -371,6 +457,11 @@ distance / v_g. For light at the born clocks [2464, 25] (N = 2048), [77,
 and the period is 110.9. For the index clocks, v_g = 0.5773 (COMPUTATION
 on the band 3 cos omega = cos k + 2).
 
+THE MOMENTUM: every row's entries carry **K** (record 1885); a packet
+moves by it from interval 0 with no ramp (record 1884); a region of
+material has **K** = 0; the moving rows are read in ALGEBRA.md 9.24 (5),
+their moving forms waiting on the moving name (9.24 (4)).
+
 THE FACE MARGIN: M is the distance from a reading's receiver to the
 nearest face behind it. The first reflection reaches the receiver 2 M /
 v_g after the front. A reading must end before that, or it must be one
@@ -393,6 +484,18 @@ where a shift common to every record cancels.
 | The light clock | chain 674 with the face receivers | a well A, side 12, pair [800, 801], at 600, with a stock (`emits` HISTORY), receiver at_a at 612; the mirror body, gap [1, 2], at [672, 674) | 214 +- 1 (K; OWED, re-derived blind on the flux form and [800, 801] before any run; the physicist's blind map with the material mirror [1, 2] at [672, 674) on the chain of 674; 213 on the closed face HISTORY) | the first cycle's first rung at 612 from its birth, after one reflection |
 | The receding index at k = 3 (v-m) | chain 4000 with the face receivers and the margin | an emitter at 800 (the clock [3565, 10000]); a moving well, side 24, pair [314, 315], at 1500; the rest and reference worlds beside | the lab phase +1.0144 rad +- 0.04; the drift 1.2 x 10^-3 rad per interval +- 10 percent (P; GAMEBOARD by declaration) | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
 | The receding index at k = 4 | as at k = 3 | as at k = 3, at k = 4 | +0.6103 rad +- 0.04; drift 4.3 x 10^-4 rad per interval +- 10 percent (P) | as at k = 3 |
+| The two-qubit computer (16; the model owner's record 1883; ALGEBRA.md 9.23) | a layer [40, 40, 1], periodic; light [1, 1] with its born clock, a holder family | the emitter body at (4, 19) with a stock of 100 per setting; the crystal, side 3, at vertex (18, 18) with its light index, births the pair in the state the circuit has reached at its entangling gate: GROVER the branches [[0, 1], [1, 1], [2, 1], [3, -1]] (the uniform state after the oracle marking |11>); DEUTSCH-JOZSA [[0, 1], [1, 1], [2, -1], [3, -1]] (|+> on the query arm 0, |-> on the ancilla arm 1; the label index a + 2 b); ONE joint body (A.13), side 3, at vertex (28, 18), named first on the pair's ladder for both arms: GROVER **G** = diag(1, -1, -1, -1) (the diffusion's centre); DEUTSCH-JOZSA the four oracles, **G** = I, -I (constant), diag(1, -1, 1, -1) and its negative (balanced); the readout polarisers at (34, 30) and (34, 6) with their receivers at (35, 31) and (35, 5), the axes carrying the last one-qubit gates: GROVER both (1, 1) (the Hadamard then the axis (1, 0)); DEUTSCH-JOZSA the query arm's (1, 1), the ancilla's (1, 0); the ladders arm 0 -> the first polariser's receivers, arm 1 -> the second's | GROVER: the born weights (1, -1, -1, 1) = (1, -1) (x) (1, -1), every record clicks (-, -): 0 / 0 / 0 / 100 at n = 100, the band 0 (K, DETECTOR; one click elsewhere is an engine defect). DEUTSCH-JOZSA: the query arm clicks + for a constant oracle and - for a balanced one, 100 / 0 and 0 / 100 per oracle at n = 100, the band 0; the ancilla clicks - always, 100 of 100 (a check). Bell as row 1. The records: Grover 100, Deutsch-Jozsa 4 x 100, Bell 400 | the light record's first rung at the crystal, the pair's first rung at the joint body, the born pair's first rungs at the two readouts, equal by the placement's mirror symmetry (the mirror theorem, 11.3); on the periodic layer every record clicks (no face), the counts are computed weights |
+
+THE SIXTEENTH ROW'S TOOLS: it REUSES the emitter (A.1), the crystal (A.6,
+its branches the prepared state), the polariser (A.5, its axis carrying
+the last gate) and the receiver (A.2), all as they stand; NEW is the
+joint body alone (A.13, the crystal's form with a matrix on the arriving
+pair's weights). The one-qubit gate bodies (the rotator, a polariser body
+without receivers; the mirror, whose reflection acts on the label rows
+as Z or X by its orientation, A.3 and ALGEBRA.md 9.23 (2); the retarder,
+a pair per label) are not placed in it: between a birth and a readout
+the algebra composes them into the branches and the axes exactly
+(ALGEBRA.md 9.23 (5)); their unit tests are on a bar with single records.
 
 THE CONSEQUENCE OF THE FACES (the face receivers of ALGEBRA.md 9.19 (3)
 (a) in place of the closed faces of 9.12 item 3; the zero row beyond the
