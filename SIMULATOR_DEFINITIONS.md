@@ -126,16 +126,16 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   DECLARATIONS.md section 10), and the grace acts on one thing only, the
   receiver SET bound to the emitting body (`_exempt`): for `own_grace`
   intervals after the train that set takes nothing of the body's own
-  record, so that the outgoing wave leaves without a click at its own
-  birth cells and the returning wave (the light clock's round trip, the
+  record, so that the record's outgoing amplitudes leave without a click
+  at its own birth cells and the returning amplitudes (the light clock's round trip, the
   Sagnac partner's arrival) clicks. The arising form: the receiver's take
   is already one-way per Port (a set takes at its Ports what arrives from
-  the free side), and the outgoing wave is the body's own source at its
+  the free side), and the outgoing amplitudes are the body's own source at its
   cells, not an arrival through a Port; so the rule "a set bound to a body
   takes at its Ports only what arrives from the free side" would replace
   the window with no declared integer, at no new cost (the Port masks
   exist, `_form_take_masks`). What could move: the light clock's first
-  rung, by the intervals in which the outgoing wave's back lobe re-enters
+  rung, by the intervals in which the outgoing amplitudes' back lobe re-enters
   through the Port before the round trip (re-derived blind by the same map
   before any run); the redshift's and Sagnac's first rungs the same way.
   No code until the owner's word.
