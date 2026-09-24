@@ -558,13 +558,22 @@ def receiver_set(document: dict, name: str, block: int, wheel: int) -> None:
 
 
 def matter_world(
-    massive, name: str, shape: list[int], boundary: dict, ticks: int, clock: list[int]
+    massive,
+    name: str,
+    shape: list[int],
+    boundary: dict,
+    ticks: int,
+    clock: list[int],
+    take: list[int],
 ) -> dict:
     """A world of the matter kind [800, 809] alone (no light), its faces open on x, the
-    lamp's frequency as the family's `phase_per_link` in the pair form (M1-6)."""
+    lamp's frequency as the family's `phase_per_link` in the pair form (M1-6) and the
+    family's `take` (the kind's own take at the lamp's cells after its train, item 10; the
+    loader requires it on a lamp of a massive kind; section 12, 14:50Z)."""
     document = massive.world(name, "PIN", shape, boundary, KIND, [], ticks, faces=massive.FACES_OPEN)
     document["families"] = [family for family in document["families"] if family["name"] != "light"]
     document["families"][0]["phase_per_link"] = list(clock)
+    document["families"][0]["take"] = list(take)
     bounded(document)
     return document
 
@@ -729,6 +738,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             {"x": "open", "y": "periodic", "z": "periodic"},
             16700,
             clock,
+            MATTER_TAKE_PAIRS[wavelength],
         )
         matter_lamp = lamp([20, 64, 0], 2048, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter")
         matter_lamp["own_grace"] = LAMP_GRACE
@@ -741,7 +751,9 @@ def massive_worlds(massive) -> dict[str, dict]:
         document["measured"].extend(wall_line([40, 41], range(128), {48, 80}, "matter"))
         screen(document, 104, range(4, 125), "matter")
         out[f"matter_waves_{wavelength}"] = document
-    document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
+    document = matter_world(
+        massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12], MATTER_TAKE_PAIRS[12]
+    )
     document["measured"].append(
         lamp([20, 0, 0], 1, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter")
     )

@@ -1287,6 +1287,21 @@ squared series reads 2 omega, a difference of the record's two columns a
 beat) before any word on the away phase, the halves' order and the drift,
 which stay GAMEBOARD readings of the file as it is; my explanation of e3's
 earlier gap waits on that series.
+THE PAIRING OF THE WORLDS (DECLARED 14:50Z, the Preliminary Runner's
+question of 13:40Z: his reader pairs the away world with the reference at
+omega; PRELIMINARY_RUNS_2026-09-24.md section 10 had paired it with the
+reference at omega' and read another number): the row's reading pairs
+EACH WORLD WITH THE REFERENCE AT ITS OWN SOURCE CLOCK, the script's form
+(`delay` reads the reference and the world at one omega): the away world
+(the source [3565, 10000] on N = 64, omega = 0.035) against
+`index_moving_long_reference_omega.json` (the same chain, the same source,
+no block), the phase and the drift over [3800, 5400] the row's two
+numbers; the rest world (the source [1846, 10000], omega' away = 0.0181)
+against `index_moving_long_reference_k3_away.json` (the same clock, no
+block), its delay giving the rest n at omega' by n = 1 + d / ((omega' /
+c) s); never a world against a reference of another clock. The same for
+k = 4 with its own clocks ([3565, 10000] against the reference at omega,
+[2243, 10000] against the reference at omega' of k = 4).
 THE K = 4 WORLDS' PIN (`index_moving_long_k4_away.json` with its rest and
 reference worlds; DECLARED BLIND 2026-09-24, 12:50Z, the Boss's order of
 12:45Z, before any reading of those worlds, the Preliminary Runner holding
@@ -1341,7 +1356,14 @@ the two pins, not a third pin.
    C: the first draft's 4096 records of 60 periods would cost about 8
    hours of HOST, this stock about 30 minutes, the builder's cost line to
    confirm); d = 32, L = 64; the hold 16700 (the stock's 16384 intervals,
-   the transit 167 and the last train 150); THE LAMP'S WHEEL [1, 2048]
+   the transit 167 and the last train 150); THE MATTER FAMILY'S `take` [-19,
+   86] on every world with a matter lamp (matter_waves_12, matter_front_12;
+   [-5, 27] on matter_waves_16), the kind's own take at the lamp's cells
+   after its train (item 10 of section 10; the loader requires it on a lamp
+   of a massive kind since PR 1115), the same pair as the take lines' (M1-6):
+   DECLARED 14:50Z on the Preliminary Runner's report that matter_front_12
+   is refused at load without it, the generator writing it into the family;
+   THE LAMP'S WHEEL [1, 2048]
    (one wheel, each u once; SIZING.md, 2026-09-24: the stock is one wheel of
    W and the counts are exact, the cadence one per 2 and the hold 4700 on
    that page); the take lines at x = 0 and 127 SINKS outside the ladder and
@@ -1990,24 +2012,26 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   the front's own chirp and the earliest reading stands alone, the row
   then reading "the axis against the diagonal within the reader's
   spread" and no more (the 10:15Z form, HISTORY from 12:15Z). THE READING
-  OF RECORD, THE SETTLING CRITERION (DECLARED 12:15Z, on SIZING.md's line
-  of 11:20Z and the Boss's item 2 of 11:36Z): the two probes' phase
-  difference per ray is read at every period after the front, from the
-  second period to the train's end, and printed as a series (GAMEBOARD);
-  the reading of record is THE SETTLED VALUE, the first period after which
-  the eight rays' values change by less than 0.05 percent between
-  consecutive periods (the 0.05 percent the child of the World Generator's
-  10:55Z reading, a tenth of its four-period spread of 0.32 percent, not a
-  number of the algebra; his rerun without rings, 10:55Z:
-  at two periods the eight rays spread 2.3 percent, the front's own
-  transient; at four periods 0.32 percent, the axes settled at 0.5268 and
-  the diagonals still moving at 0.5260; the criterion, not a chosen period,
-  is the declaration); IF THE CRITERION IS NOT MET by the train's end, the
-  reading of record is the last period's value with its change from the
-  period before printed beside it, and the row reads "the axis against the
-  diagonal within that change" and no more (no reading of record is
-  withheld); the `ticks` 1000 / 1400 / 1900 above run the window to the
-  train's end (830 / 1110 / 1500 the minimum, SIZING.md). With no set on the fan the record has no click
+  OF RECORD (DECLARED 14:50Z, on the Preliminary Runner's report of 13:40Z on
+  main 328b560f: the probes' phase series settles on none of the three
+  worlds within the window, the spread 2.5 to 6.5 percent per ray; the
+  settling criterion of 12:15Z, the first period after which the eight rays
+  change by less than 0.05 percent, is HISTORY, a number that was the child
+  of the World Generator's 10:55Z four-period reading and not of the
+  algebra): the two probes' phase difference per ray is read at every
+  period after the front, from the second period to the train's end, and
+  printed as a series (GAMEBOARD); the reading of record is THE MEAN of
+  that series over the window, per ray, with its SPREAD (the largest less
+  the smallest period value, as a fraction of the mean) printed beside it;
+  the row's statement is the axis against the diagonal within the reader's
+  spread, and where the spread exceeds the declared difference (k^2 / 48,
+  0.57 percent at 12 Links) the row reads "the axis's k above the
+  diagonal's, unresolved at this train's spread" and no more: a limit of
+  the reader on this world, named, never a miss and never a pin moved (the
+  spread is the front's chirp and the tail's, a longer train the remedy,
+  outside this row's declaration); the `ticks` 1000 / 1400 / 1900 above run
+  the window to the train's end (830 / 1110 / 1500 the minimum, SIZING.md).
+  With no set on the fan the record has no click
   and the earlier "first click at a ring" line of section 7 is
   withdrawn (a bound below its own grain, and its set a contaminant of
   the reader). HOST seconds.
