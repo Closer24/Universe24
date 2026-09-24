@@ -56,6 +56,11 @@ Printed, each with its kind:
       and with each direction's OWN rise subtracted (the reader of record), with the band
       from one interval of the click's grain on each side.
 
+  (g) THE DECLARED COUPLING WITHIN THE LOAD BOUND (DECLARATIONS.md section 15 M1-1): (e)'s
+      light clock and (f)'s four R2 cases re-run at G = [1, 50], g = [1, 1000] and the seed
+      50 x 2^20, the same world as G = [1, 1], g = [1, 50000], seed 2^20 by the exact
+      rescaling of the massive rows by 50; the clicks printed against (e)'s and (f)'s.
+
     PYTHONPATH=src python docs/designs/detector_law/coupled_mode_pins.py
 """
 
@@ -457,6 +462,7 @@ if __name__ == "__main__":
         "k = 3, B meets A": (772, 700, 3, gap / (c_pace + v_pace)),
     }
     rises = {}
+    r2_f = {}
     print(
         "(f) R2's rise per direction, the click's own form on the chain of 2200 (the blocks at [700, 712) and [772, 784),"
     )
@@ -469,6 +475,7 @@ if __name__ == "__main__":
         )
         clicks = {w: first_rung(offer_r2, norm_r2, w, birth) - birth for w in wheels}
         rises[name] = clicks[64] - transit
+        r2_f[name] = clicks
         print(
             f"    {name}: the clicks by W {clicks}; the front's transit {transit:.1f}; the rise at W = 64 {rises[name]:+.1f}"
             f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g})"
@@ -489,5 +496,25 @@ if __name__ == "__main__":
         f" subtracted {own:.4f} = v / c = {exact:.4f} exactly (the reader of record: the click per direction less"
         f" that direction's rise from this map, COMPUTATION); one interval of the click's grain on each side moves"
         f" the ratio by up to {grain:.4f}, so the band +- 0.01 holds"
+    )
+    # (g) the declared coupling within the load bound (DECLARATIONS.md section 15 M1-1)
+    g_d, big_d, amp_d = 1 / 1000, 1 / 50, 50 * 2**20
+    omega_g, norm_g, offer_g, _ = one_record(
+        673, 700, 600, 600, g=g_d, big_g=big_d, amp=amp_d, train=train
+    )
+    clicks_g = {w: first_rung(offer_g, norm_g, w, grace) for w in wheels}
+    r2_g = {}
+    for name, (e_lo, r_lo, k_step, _transit) in cases.items():
+        _, birth_g, norm_r, offer_r = one_record_moving(
+            2200, 1950, e_lo, r_lo, k=k_step, g=g_d, big_g=big_d, amp=amp_d, train=train
+        )
+        r2_g[name] = {w: first_rung(offer_r, norm_r, w, birth_g) - birth_g for w in wheels}
+    same = clicks_g == clicks_cells and r2_g == r2_f
+    print(
+        f"(g) the declared coupling G = [1, 50], g = [1, 1000], the seed 50 x 2^20 (the same world as G = [1, 1],"
+        f" g = [1, 50000], seed 2^20 by the exact rescaling of the massive rows by 50): the light clock's first"
+        f" rung by W {clicks_g} against (e)'s {clicks_cells}; R2's clicks by case "
+        + "; ".join(f"{k}: {v}" for k, v in r2_g.items())
+        + f" against (f)'s: {'IDENTICAL' if same else 'DIFFERENT'} (the light's norm {norm_g:.4g} against {norm:.4g})"
     )
     print(f"HOST {time.time() - t0:.0f} s")
