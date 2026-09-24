@@ -4820,3 +4820,39 @@ covariance (9.19 (6)) and its dependence on the seven inputs alone; 3 (a)
 and (b) from 8.6 and 8.2; 3 (c) from 1.6 on a homogeneous board; 4 from
 8.8; 5 from the six reads (8.1). A failure of any of them is an engine
 defect, never a change of the law.
+
+**THE PROTOTYPE'S READING (COMPUTATION, 2026-09-24, outside the engine:
+[docs/designs/lab_tools/board_algebra.py](designs/lab_tools/board_algebra.py),
+its record `board_algebra.out` beside it; the model owner's word: "try it in
+code and say whether it works").** The one element and the one operator of
+9.19 built from scratch on integers, 300 lines: a torus of 8 x 8 x 8, the
+rule with a pair per Node and the remainder, the flux reading, the rung,
+the deletion, the emitter as a clicking body (its seed the composed
+operator's bound mode, its norm one period's one-way flux into its centre)
+and the birth with before = -now; W = 8, the residues a declared
+permutation. Every expected value of the six tests met:
+- THE INITIAL STATE FROM THE OPERATOR: the well [800, 801] of side 2 on
+  [800, 809] has the largest eigenvalue 1.978065 (below 2: stable), the
+  mode's clock 0.14824 below the vacuum's 0.14930 (bound); seeded on that
+  mode, the record rotates (two sign changes per period at the centre) and
+  its form I changes by 2.4 x 10^-4 over a period at the amplitude 4096,
+  the remainder's grain.
+- THE EMITTER AND THE RECEIVER: three excitations click at the intervals
+  4, 43 and 72 for the residues 0, 6 and 4 (the expected waits 3, 34 and 24
+  of a period of 42); each photon clicks at the one-cell screen 11 Links
+  away when its offer C, the one-way inward flux, reaches (2 u + 1) / (2 W)
+  of its norm T: C / T = 0.445, 0.211 and 0.938 for u = 3, 1 and 7 against
+  the rungs 0.4375, 0.1875 and 0.9375.
+- (1) 48 of 48 transformed worlds identical bit for bit, remainders and
+  clicks included; (2) 7 of 7 shifts identical; (3a) the quanta constant at
+  every interval (photons alive, photons clicked, the stock); (3b) the
+  form I's drift 9.7 x 10^-4 at the amplitude 4096 and 4.2 x 10^-5 at
+  65536, falling with the grain; (3c) a plane wave's wave number constant
+  on the homogeneous board; (4) 40 steps and 40 of 8.8's inverse return the
+  element bit for bit, and only the clicked summands are not recoverable;
+  (5) a one-unit change stays inside the Manhattan ball of radius m at
+  interval m, m = 1 to 7; (6b) equal seven inputs give equal outputs, 1000
+  of 1000; (6c) two runs differing only in their residues are identical
+  until the first click.
+The engine's test of 9.20 runs the same six on the engine; this prototype
+is the algebra's own reading of them, not a run of the engine.
