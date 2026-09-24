@@ -645,3 +645,16 @@ stabilisation of the engine and the freeze:
 
 Unchanged, the law: one unit test per feature; no pin moved after a reading;
 no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
+
+## The experimenter places the body exactly (the owner, 2026-09-24, record 1815)
+
+The owner's word of 2026-09-24, 16:35Z: "in the code the experimenter must be
+able to put the cube exactly where he wants it." A body is declared in the
+world file by its place and its side (its corner and its edge, the cube's
+vertices), a cube on a board, a square on a layer, a segment on a chain
+(ALGEBRA.md 8.3); the loader places it exactly there and refuses a body that
+does not fit the board rather than cutting it to fit; a refusal is a
+declaration error, never a silent change of shape. Where the loader today
+cuts a side to the board, that is a defect against this word, listed among the
+body's conditions in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md)
+and fixed on the owner's word as an engine line with its test.

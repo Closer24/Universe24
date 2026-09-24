@@ -43,3 +43,18 @@ A rule enters the law only if it is generic (one primitive with declared integer
 ## The targets as the source of the expectations (the owner, 2026-09-21, record 205)
 
 Every series' expectation is derived before the run from the law's operations and registered with its section; a target not reached marks a quantity a run may only measure; skills/workflow.md, "The main course".
+
+## A closed-form pin is confirmed by the mathematician when needed (the owner, 2026-09-24, record 1815)
+
+The owner's word of 2026-09-24, 16:35Z: "for every such confirmation, call
+the mathematician to confirm, as needed." Where a pin is an exact closed form
+on the engine's own tables and rungs (the Bell counts 874, 150, 150, 874 and
+S = 181 / 64 on the wheel [1, 2048]; Malus's 128, 246, 199, 177; a light
+clock's first rung on the map), the physics-rule reviewer's closed form is
+the first check; when the Boss judges it needed (a pin the paper cites, a
+disagreement between two closed forms, a form with no proof on the closure
+page), the Boss opens one bounded order to a mathematician session: recompute
+the closed form independently from the declaration and the tables, in
+integers, and report CONFIRMED with the computation or the line where it
+differs; no run, no pin moved. The confirmation is one line on the closure
+page with its record.
