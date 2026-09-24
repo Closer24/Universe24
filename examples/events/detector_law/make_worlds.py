@@ -16,15 +16,15 @@ series' form byte for byte: `age_bound`, `K`, `N`, `release`, the blocks' keys).
 The light rows (group L, this folder; section 15 L-1 to L-6): `two_slits.json`
 (L-3: the 128 x 128 x 1 layer, y periodic, x open; the lamp at [20, 64, 0] with
 the stock 1024 at one record per 16 intervals, the wheel [1, 64], the train 32
-periods; the wall at x = 40 with the openings at y = 48 and 80; the screen at
-x = 104 over y in [4, 124], one detector set per Node; the take lines at x = 0
-and 127; 17300 intervals) and `pace_fan_<12,16,24>.json` (L-6: the lamp at the
+periods; the mirror line at x = 40, two Nodes deep, with the openings at y = 48
+and 80; the screen at x = 104 over y in [4, 124], one detector set per Node;
+the open faces the sponges; 17300 intervals) and `pace_fan_<12,16,24>.json` (L-6: the lamp at the
 centre with one record on the four headings, the probes and the ring sets at
 the eight Nodes of the axes and the diagonals, 800 intervals; the clocks
-[77, 25], [30, 13], [77, 50]). Every wall is ABSORBING (L-1): a block of light's
-kind of side 1 per Node with the pair [21, 22] and `absorbing` true, under the
-world key `massive_record`. Rows 2c, 10 (a), 10 (b) and 2b are not in the GO
-(L-4, L-5, T-2) and have no file.
+[77, 25], [30, 13], [77, 50]). Every light wall is a MIRROR LINE (L-1, the
+fourth commit): blocks of light's kind of side 1 per Node with the pair [1, 2],
+two Nodes deep, under the world key `massive_record`. Rows 2c, 10 (a), 10 (b)
+and 2b are not in the GO (L-4, L-5, T-2) and have no file.
 
 The table rows (group T, this folder; section 14 item 1 and section 15 T-1):
 `bell_<a><b>.json` (sections 1 and 2: the bar of 21, the pair lamp with `arms` 2
@@ -45,9 +45,16 @@ seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
 (M1-3); `matter_waves_12.json`, `matter_waves_16.json` and
 `matter_front_12.json` (M1-6: the matter lamp's own clock [1089, 320] or
 [11, 4] on N = 64, the wheel [1, 64], the stock 2048 at one per 8 intervals,
-the train 8 periods, the walls absorbing blocks of the matter kind, 16700 and
-600 intervals). The deep well worlds of group M2 are the massive record
-series' own (its generator writes them; RUN_LIST.md step 3).
+the train 8 periods, the wall a barrier line of matter-kind blocks with the
+raised pair [1, 2] two deep, the take lines at x = 0 and 127 absorbing blocks
+of the matter kind, 16700 and 600 intervals). The deep well worlds of group M2
+are the massive record series' own (its generator writes them; RUN_LIST.md
+step 3).
+
+The worlds whose lines the engine on main does not carry yet are written into
+`docs/designs/detector_law/held_worlds/` (HELD_NAMES below), outside the
+shipped set under `examples/events` that the gate loads; each moves back to
+its folder when its line lands.
 
 Run from the repository root:
 
@@ -65,7 +72,27 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EVENTS = HERE.parent
 MASSIVE = EVENTS / "massive_record"
-NEW_ROWS = HERE.parents[2] / "docs" / "designs" / "new_rows" / "worlds"
+DESIGNS = HERE.parents[2] / "docs" / "designs"
+NEW_ROWS = DESIGNS / "new_rows" / "worlds"
+# The worlds whose declared lines the engine on main does not carry yet (section 15: the
+# path for a block of light's kind, `emits` without held content, the receiver sets' own
+# wheel, the closed face, the matter lamp and its clock key, the raised pair and the take
+# on the massive kind, the amplitude bound key). They are written beside the declarations,
+# not under `examples/events` (the shipped set, which the gate loads), until their lines
+# land; then their names move back (the Boss's rule of 2026-09-24, 02:15Z: nothing shipped
+# that the gate loads and refuses).
+HELD = DESIGNS / "detector_law" / "held_worlds"
+HELD_NAMES = {
+    "two_slits",
+    "redshift_k3",
+    "redshift_control",
+    "sagnac_k3",
+    "sagnac_rest",
+    "light_clock_60",
+    "matter_waves_12",
+    "matter_waves_16",
+    "matter_front_12",
+}
 
 
 def load_massive_generator():
@@ -93,7 +120,7 @@ TEMPLATE_KEYS = {
     "directions": [],
 }
 CLOCKS = {12: [77, 25], 16: [30, 13], 24: [77, 50]}
-WALL_PAIR = [21, 22]  # the absorbing wall's block pair (section 15 L-1, immaterial under the take)
+WALL_PAIR = [1, 2]  # the mirror line's block pair, two Nodes deep (section 15 L-1, the fourth commit)
 TRAIN_32 = 32  # periods, section 15 L-3 and L-6
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 
@@ -132,22 +159,36 @@ def body(position: list[int], family: str = "light", directions: list[list[int]]
     return entry
 
 
-def wall_node(position: list[int], family: str = "light", pair: list[int] | None = WALL_PAIR) -> dict:
-    """One Node of an absorbing wall (section 15 L-1): a block of side 1, `absorbing`
-    true; on light's kind the pair [21, 22]; on the matter kind (M1-6) no pair is
-    declared, so the key is absent."""
+def wall_node(
+    position: list[int],
+    family: str = "light",
+    pair: list[int] | None = WALL_PAIR,
+    absorbing: bool = False,
+) -> dict:
+    """One Node of a wall: a block of side 1 with the pair [1, 2] (section 15 L-1 the
+    mirror line of light's kind; M1-6 the barrier line of the matter kind, its raised pair
+    the builder's line), or a take Node (`absorbing` true, the matter kind's take lines of
+    M1-6's correction; no pair is declared for them, so the key is absent)."""
     entry = body(position, family)
     entry["side"] = 1
     if pair is not None:
         entry["pair"] = list(pair)
-    entry["absorbing"] = True
+    if absorbing:
+        entry["absorbing"] = True
     return entry
 
 
 def wall_line(
-    x: int, ys: range, openings: set[int], family: str = "light", pair=WALL_PAIR
+    xs: list[int],
+    ys: range,
+    openings: set[int],
+    family: str = "light",
+    pair=WALL_PAIR,
+    absorbing: bool = False,
 ) -> list[dict]:
-    return [wall_node([x, y, 0], family, pair) for y in ys if y not in openings]
+    """A wall of the declared depth: one block per Node of the columns `xs`, the openings
+    free in every column."""
+    return [wall_node([x, y, 0], family, pair, absorbing) for x in xs for y in ys if y not in openings]
 
 
 def screen(document: dict, x: int, ys: range, family: str = "light") -> None:
@@ -169,8 +210,9 @@ def lamp(
     clock: list[int] | None = None,
 ) -> dict:
     """The lamp in the template's form. `clock` is section 15 M1-6's pair of steps per
-    interval of the MATTER lamp's own clock (the matter kind has no `phase_per_link`;
-    the key's name under the lamp is the builder's to confirm with the component)."""
+    interval of the MATTER lamp's own clock ([1089, 320] or [11, 4] on N = 64); its key
+    under the lamp is the builder's to name, so until then it is NOT written (a named
+    gap, the Boss's line of 02:20Z) and `clock` is kept only for the record."""
     entry: dict = {
         "position": position,
         "family": family,
@@ -181,8 +223,6 @@ def lamp(
         "directions": directions,
     }
     inner: dict = {"rate": rate, "wheel": wheel, "directions": directions, "train": train}
-    if clock is not None:
-        inner["phase_per_link"] = clock
     entry["lamp"] = inner
     return entry
 
@@ -191,14 +231,13 @@ def lamp(
 
 
 def two_slits() -> dict:
-    """Section 15 L-3 (row 2a)."""
+    """Section 15 L-3 (row 2a) with L-1's fourth commit: the mirror line at x = 40, two
+    Nodes deep, the openings free; the layer's open faces the sponges, no take lines."""
     document = ray_world(
         "two-slits", [128, 128, 1], {"x": "open", "y": "periodic", "z": "periodic"}, CLOCKS[12], 17300
     )
     document["measured"].append(lamp([20, 64, 0], 1024, [1, 16], [1, 64], [[1, 0, 0]], TRAIN_32))
-    document["measured"].extend(wall_line(0, range(128), set()))
-    document["measured"].extend(wall_line(40, range(128), {48, 80}))
-    document["measured"].extend(wall_line(127, range(128), set()))
+    document["measured"].extend(wall_line([40, 41], range(128), {48, 80}))
     screen(document, 104, range(4, 125))
     return document
 
@@ -473,8 +512,11 @@ def massive_worlds(massive) -> dict[str, dict]:
     # Rows M1 and M2 (section 12 with section 15 M1-6): the 128 x 128 x 1 layer, y periodic,
     # x open for the matter kind, no light; the matter lamp at (20, 64) with its own clock,
     # the wheel [1, 64], the stock 2048 at one record per 8 intervals, the train 8 periods;
-    # the wall at x = 40 with the openings at y = 48 and 80 and the take lines at x = 0 and
-    # 127 as absorbing blocks of the matter kind (their pair not declared); the screen at
+    # the wall at x = 40 a barrier line of matter-kind blocks with the raised pair [1, 2],
+    # two deep, the openings at y = 48 and 80 free (the fourth commit); the take lines at
+    # x = 0 and 127 absorbing blocks of the matter kind (the fifth commit's correction, the
+    # Boss's 02:20Z; their pair not declared); the amplitude bound A = 2^32 of M1-10 under
+    # the builder's key, not yet named (a named gap); the screen at
     # x = 104 over y in [4, 124], one set per Node; 16700 intervals. M2 on its own chain of
     # 200: the lamp at x = 20 with one record, the detector at x = 104, 600 intervals.
     for wavelength, clock in MATTER_CLOCKS.items():
@@ -488,9 +530,9 @@ def massive_worlds(massive) -> dict[str, dict]:
         document["measured"].append(
             lamp([20, 64, 0], 2048, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter", clock)
         )
-        document["measured"].extend(wall_line(0, range(128), set(), "matter", None))
-        document["measured"].extend(wall_line(40, range(128), {48, 80}, "matter", None))
-        document["measured"].extend(wall_line(127, range(128), set(), "matter", None))
+        document["measured"].extend(wall_line([0], range(128), set(), "matter", None, absorbing=True))
+        document["measured"].extend(wall_line([40, 41], range(128), {48, 80}, "matter"))
+        document["measured"].extend(wall_line([127], range(128), set(), "matter", None, absorbing=True))
         screen(document, 104, range(4, 125), "matter")
         out[f"matter_waves_{wavelength}"] = document
     document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600)
@@ -505,13 +547,14 @@ def massive_worlds(massive) -> dict[str, dict]:
 
 def main() -> None:
     massive = load_massive_generator()
+    HELD.mkdir(parents=True, exist_ok=True)
     for folder, worlds in (
         (HERE, light_worlds()),
         (HERE, table_worlds()),
         (MASSIVE, massive_worlds(massive)),
     ):
         for name, document in worlds.items():
-            path = folder / f"{name}.json"
+            path = (HELD if name in HELD_NAMES else folder) / f"{name}.json"
             path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
             print(path.relative_to(EVENTS.parent.parent))
 

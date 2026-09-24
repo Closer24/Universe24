@@ -20,15 +20,22 @@ true, a lamp with `rate`, `wheel`, `train` and `directions`, a receiver a
 fixed body of the family with one detector set on its Node, a screen one set
 per Node of its row) and, for the massive rows, the massive record series'
 form (`../massive_record/make_worlds.py`, whose `world` helper writes them;
-they live in that folder). Every wall is the absorbing form of section 15
-L-1: a block of side 1 per Node with `absorbing` true (on light's kind the
-pair [21, 22]), the openings left free.
+they live in that folder). Every light wall is the mirror line of section 15
+L-1 (the fourth commit): blocks of light's kind of side 1 per Node with the
+pair [1, 2], two Nodes deep, the openings left free; the matter wall a barrier
+line of matter-kind blocks with the raised pair [1, 2], two deep.
+
+A world whose declared lines the engine on main does not carry yet is written
+into `docs/designs/detector_law/held_worlds/`, outside the shipped set under
+`examples/events` that the gate loads (the Boss's rule of 2026-09-24: nothing
+shipped that the gate loads and refuses); it moves back to its folder when its
+line lands.
 
 | Group | Files | Written from | The loader on main (2026-09-24, after section 15) |
 | --- | --- | --- | --- |
-| L | `two_slits.json`; `pace_fan_{12,16,24}.json` | section 15 L-1 to L-3 and L-6 (row 2a: the lamp at [20, 64, 0], the stock 1024 at one per 16, the train 32 periods, the wall at x = 40, the screen at x = 104, the take lines, 17300 intervals; row 5a: one record on the four headings, the probes and ring sets at eight Nodes, 800 intervals; the clocks [77, 25], [30, 13], [77, 50]) | the four files load; rows 2c, 10 (a), 10 (b) are not in the GO (L-4, L-5) and have no file |
+| L | `pace_fan_{12,16,24}.json`; held: `two_slits.json` | section 15 L-1 to L-3 and L-6 (row 2a: the lamp at [20, 64, 0], the stock 1024 at one per 16, the train 32 periods, the mirror line at x = 40 two deep, the screen at x = 104, the open faces the sponges, 17300 intervals; row 5a: one record on the four headings, the probes and ring sets at eight Nodes, 800 intervals; the clocks [77, 25], [30, 13], [77, 50]) | the fan worlds load; two_slits loads but is held until the engine's path for a block of light's kind lands (L-1); rows 2c, 10 (a), 10 (b) are not in the GO (L-4, L-5) and have no file |
 | T | `bell_{a0b0,a0b1,a1b0,a1b1}.json`; `malus_{45,11.25,28.125,33.75}.json` | sections 1, 2, 5, 6 with section 14 item 1 and section 15 T-1 (the clocks [2464, 25] on N = 2048 and [308, 25] on N = 256 on the light family, [1, 1] on the counter family, the wheel [1, N]) | the eight files load; row 2b is not in the GO (T-2) and has no file |
-| M1 | in `../massive_record/`: `redshift_{k3,control}.json`; `sagnac_{k3,rest}.json`; `light_clock_60.json`; `matter_waves_{12,16}.json`; `matter_front_12.json` | sections 4, 13, 10, 12 with section 15 M1-1 to M1-6 (G = [1, 50], g = [1, 1000], the seed 50 x 2^20; no held content; light [1, 1]; the receivers detector sets at the receiving body's cells with their own wheel 64, M1-4; R2's faces open for both kinds, M1-7; the light clock's faces closed for light; the matter lamp's clock [1089, 320] or [11, 4], the wheel [1, 64], the stock 2048 at one per 8, the train 8 periods, the walls absorbing blocks of the matter kind) | refused, the builder's lines: `emits` without `held` (M1-2); a detector set's own `wheel` (M1-4, key (i)); the closed face for light (section 10); the lamp on the massive kind and its clock key (M1-6); the matter walls' block pair (not declared) |
+| M1 | held (for `../massive_record/`): `redshift_{k3,control}.json`; `sagnac_{k3,rest}.json`; `light_clock_60.json`; `matter_waves_{12,16}.json`; `matter_front_12.json` | sections 4, 13, 10, 12 with section 15 M1-1 to M1-6 (G = [1, 50], g = [1, 1000], the seed 50 x 2^20; no held content; light [1, 1]; the receivers detector sets at the receiving body's cells with their own wheel 64, M1-4; R2's faces open for both kinds, M1-7; the light clock's faces closed for light; the matter lamp's clock [1089, 320] or [11, 4], the wheel [1, 64], the stock 2048 at one per 8, the train 8 periods, the wall a barrier line of the raised pair [1, 2], the take lines absorbing blocks of the matter kind; the amplitude bound A = 2^32 of M1-10 and the lamp's clock key under the builder's names, not yet given) | refused, the builder's and the physicist's lines: `held` per emitter (the fifth commit); a detector set's own `wheel` (M1-4, key (i)); the closed face for light (section 10); the lamp on the massive kind and its clock key (M1-6); the take blocks' pair and the raised pair on a block (M1-6) |
 
 The deep well worlds of group M2 are the massive record series' own
 (`../massive_record/make_worlds.py`).
