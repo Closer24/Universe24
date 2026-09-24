@@ -1,0 +1,151 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-sagnac-k3-v1",
+ "shape": [
+  3000,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 6400,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "amplitude_bound": 4294967296,
+ "wheel": 256,
+ "directions": [],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    800,
+    809
+   ],
+   "faces": {
+    "x": "open"
+   }
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    700,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    64,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 12,
+   "pair": [
+    800,
+    800
+   ],
+   "coupling": {
+    "G": [
+     1,
+     50
+    ],
+    "g": [
+     1,
+     1000
+    ]
+   },
+   "wheel": 64,
+   "seed": 52428800,
+   "ramp": 1500,
+   "emits": "light",
+   "own_grace": 3000
+  },
+  {
+   "position": [
+    772,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    64,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 12,
+   "pair": [
+    800,
+    800
+   ],
+   "coupling": {
+    "G": [
+     1,
+     50
+    ],
+    "g": [
+     1,
+     1000
+    ]
+   },
+   "wheel": 64,
+   "seed": 52428800,
+   "ramp": 1500,
+   "emits": "light",
+   "own_grace": 3000
+  }
+ ],
+ "detectors": [
+  {
+   "name": "at_a",
+   "block": 0,
+   "threshold": 1,
+   "wheel": 256
+  },
+  {
+   "name": "at_b",
+   "block": 1,
+   "threshold": 1,
+   "wheel": 256
+  }
+ ],
+ "probes": [
+  [
+   712,
+   0,
+   0
+  ],
+  [
+   772,
+   0,
+   0
+  ]
+ ],
+ "mode_axis": "x"
+}

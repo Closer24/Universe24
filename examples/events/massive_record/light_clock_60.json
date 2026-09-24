@@ -1,0 +1,106 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-light-clock-60-v1",
+ "shape": [
+  673,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "closed",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 2600,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "amplitude_bound": 4294967296,
+ "wheel": 64,
+ "directions": [],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    800,
+    809
+   ]
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    600,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 12,
+   "pair": [
+    800,
+    800
+   ],
+   "coupling": {
+    "G": [
+     1,
+     50
+    ],
+    "g": [
+     1,
+     1000
+    ]
+   },
+   "wheel": 64,
+   "seed": 52428800,
+   "emits": "light",
+   "own_grace": 70
+  }
+ ],
+ "detectors": [
+  {
+   "name": "at_a",
+   "block": 0,
+   "positions": [
+    [
+     612,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1,
+   "wheel": 64
+  }
+ ],
+ "probes": [
+  [
+   612,
+   0,
+   0
+  ]
+ ]
+}

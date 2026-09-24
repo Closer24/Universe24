@@ -1,0 +1,124 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-matter-front-12-v1",
+ "shape": [
+  200,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 600,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "amplitude_bound": 4294967296,
+ "directions": [],
+ "families": [
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    800,
+    809
+   ],
+   "faces": {
+    "x": "open"
+   },
+   "phase_per_link": [
+    1089,
+    320
+   ]
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    20,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "lamp": {
+    "rate": [
+     1,
+     8
+    ],
+    "wheel": [
+     1,
+     64
+    ],
+    "directions": [
+     [
+      1,
+      0,
+      0
+     ]
+    ],
+    "train": 8
+   }
+  },
+  {
+   "position": [
+    104,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  }
+ ],
+ "detectors": [
+  {
+   "name": "front",
+   "positions": [
+    [
+     104,
+     0,
+     0
+    ]
+   ],
+   "threshold": 1
+  }
+ ]
+}
