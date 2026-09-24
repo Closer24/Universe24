@@ -219,6 +219,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [Physical features](PHYSICAL_FEATURES.md) | Contract and review procedure for a new physical hypothesis |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Cancelled branches](CANCELLED_BRANCHES.md) | The old branches marked cancelled on the model owner's word of 2026-09-25, each with its head commit for recovery; the kept branches named |
+| [Cancelled worlds](CANCELLED_WORLDS.md) | The world folders and files under examples/events outside the fifteen experiments, marked cancelled on the model owner's question of 2026-09-25; kept on disk as history, nothing deleted |
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized procedures without chat history |
 
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
