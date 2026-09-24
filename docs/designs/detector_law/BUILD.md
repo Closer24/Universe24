@@ -1373,7 +1373,10 @@ would have found no cell.
 3. THE RAMP (the same call): a body with a momentum declares `ramp` at
    least ten relaxation times 1 / (omega_0 - omega_b) of its own well
    (DECLARATIONS.md section 8), or is refused naming the ramp and the
-   relaxation time; the ramp's ratio is printed as COMPUTATION.
+   relaxation time; the ramp's ratio is printed as COMPUTATION. A silent
+   body (seed 0, no own record: the receding index's medium body with a
+   momentum and no ramp) has no reading and no ramp check, as the margin
+   module skips it (Reviewer 3's line F; test g on that world).
 4. The three tests hold: the check is host-side at load, outside the
    integer path; no rule of the law moves; nothing is kept at a Node.
    Conditions 2 (the lowered pair) and 6 (the amplitude bound) stay the

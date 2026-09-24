@@ -246,7 +246,22 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
      momentum whose `ramp` is below ten relaxation times is refused with
      the sentence "the ramp r is below 10 relaxation times of its own well
      (1 / (omega_0 - omega_b) = t intervals, 10 times 10 t)"; at or above
-     it the ramp's line is printed as COMPUTATION (test f).
+     it the ramp's line is printed as COMPUTATION (test f). THE SILENT
+     BODY'S EXCEPTION (Reviewer 3's line F, 14:45Z): a body with seed 0 and
+     no own record (the receding index's medium body, pushed at `start`
+     3000 with a momentum and no ramp) has no mode to lag, no margin
+     reading and no ramp check, as the margin module skips it; test g on
+     `index_moving_long_k3_away.json` loads it with no reading. ON THE
+     LANCZOS START (the Boss's question of 16:35Z): the margin module
+     starts its iteration from a fixed-seed numpy random vector (HOST,
+     outside the law); the converged mode is the operator's own (unique up
+     to sign and scale, fixed by the largest entry 1 and positive), so the
+     rounded profile does not depend on the start except at an entry
+     within the float tolerance of a half unit, where a different
+     numerical path could round the other way; the check compares the file
+     with the module on the same host, and a mismatch of one unit at such
+     an entry would name that Node, to be settled by regenerating the file
+     on that host (a HOST matter, never a change of the law).
   Conditions 3 and 4 stay the margin module's at the runner's start (the
   same call, before the first interval); the owner's word of 16:48Z
   answered conditions 1, 5 and 7 and they are built on body-check, read by
