@@ -5813,6 +5813,21 @@ CORRECTIONS = [
         "\\begin{document}",
         "\\makeatletter\\renewcommand\\paragraph{\\@startsection{paragraph}{4}{\\z@}{1.75ex \\@plus1ex \\@minus.2ex}{-1em}{\\normalfont\\normalsize\\bfseries}}\\makeatother\n\\begin{document}",
     ),
+    (
+        "commit 51, gap 2 (I) on the owner's word (05:55Z, record 1679): item (5) of the one page, the rung's pointer the record's motion squared, the ladder's ev(f) the click's weight",
+        "The click: $\\mathrm{ev}(f)$ with its norm $|\\mathrm{ev}(f)|^2$ at a detector, the one read-out (Definition~\\ref{def:click});",
+        "The click: at a detector set, the rung on the pointer, the record's motion squared across the cells, against the record's norm, the one read-out (Definition~\\ref{def:click}); the ladder's pointer $\\mathrm{ev}(f)$ with its norm $|\\mathrm{ev}(f)|^2$ is the click's weight, the cell's, on the rows;",
+    ),
+    (
+        "commit 51, the attacks page on main (PR 1106, d2d1d2fb): cited at the declared form",
+        "The declared form (2026-09-24, \\cite[record 1647]{log}):",
+        "The declared form (2026-09-24, \\cite[record 1647]{log}; the four attacks on it answered \\cite{attacks}):",
+    ),
+    (
+        "commit 51, the attacks page's bibitem",
+        "\\bibitem{glossary}",
+        "\\bibitem{attacks} The order channel's attacks page, the four attacks answered and the guard, \\texttt{docs/designs/detector\\_law/ORDER\\_CHANNEL\\_ATTACKS.md}, with \\texttt{ONE\\_ACCOUNT.md} (one account in four layers) and DECLARATIONS.md section 2, item 8 (the two keys), of the archived code \\cite{zenodo}, on \\texttt{main} at d2d1d2fb. \\bibitem{glossary}",
+    ),
 ]
 
 

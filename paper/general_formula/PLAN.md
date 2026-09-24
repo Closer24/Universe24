@@ -7150,3 +7150,14 @@ the paper; nothing changed on them. Gap 5 waits for the owner. For the
 page: the gate-scripts paragraph of Section 6 and the beam law's
 weight rule for rows 13 and 14 are in records.tex with pointers, and
 the space before a run-in heading is smaller. 48 pages.
+
+## Applied (2026-09-24, the Boss's order (A) of 06:10Z): commit 51 on paper-48
+
+Gaps 2 and 5 decided by the owner (05:55Z, record 1679): the rung's
+pointer is the record's motion squared and the ladder's evaluation with
+its norm is the click's weight (item (5), Definition 3); the click is
+stamped with the detector's own count, its record's cycles across its
+cells, and a body writes two click lines (Definition 3, the read-out's
+gloss). The attacks page is cited at the declared form. All five gaps
+now have their paper sentences; the four-layer check on main remains
+the task's close. 48 pages.
