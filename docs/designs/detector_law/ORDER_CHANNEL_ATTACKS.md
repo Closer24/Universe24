@@ -7,8 +7,9 @@ attacking the same thing." This page lists every objection a referee can
 raise against the solution of row 1c (the birth residue Inside: the
 births in a seed-set order, the click stamped without the residue), the
 answer, and the status of each: CLOSED (by derivation or by the engine as
-built), CLOSED BY DECLARATION (a line the Boss declares on the owner's
-word; the six lines are listed at the end), STATED (an honest limit the
+built), CLOSED BY DECLARATION (a line the Boss DECLARED at 04:14Z on the
+owner's word of 04:12Z, record 1647; the six lines are listed at the
+end), STATED (an honest limit the
 paper says), FUTURE (a declared later test), CHECK (a check of a world
 file, the World Generator's). The computations are
 `order_channel_pins.py` and `order_channel_hidden_pins.py` (their `.out`
@@ -152,7 +153,7 @@ Bohm's configuration is under quantum equilibrium).
     rate against `ticks`): CHECK, the World Generator's, before the
     preliminary run.
 
-## The six lines for the declaration (the Boss's, on the owner's word)
+## The six lines, DECLARED (the Boss, 2026-09-24 04:14Z, on the owner's word of 04:12Z, record 1647)
 
 1. THE RESIDUES' ORDER: the births of the pair record take the residues
    of Z_N (one per u) in an order set by the world's seed through a
@@ -176,3 +177,11 @@ Inside dependence E_N (`order_channel_pins.py`) is a GAMEBOARD
 diagnostic and the model's declared nonlocality, said in the paper as
 such; the counts and S_N are untouched; the falsifiable content of the
 Bell rows is S_N against 2 sqrt 2 at the declared grain (row 1a).
+
+THE GUARD (the Boss, 04:14Z): no run of any Bell world before this page
+is on main under Reviewer 3's read with every objection in one of the
+five statuses above and none OPEN; an objection Reviewer 3 marks OPEN
+returns DECLARATIONS.md section 2 item 8 to PREPARED until it is closed
+or stated. The loader keys' names and forms for the builder
+(`residue_order`, `residue_seed`, the stamp's fields) stand in item 8,
+in one place; this page does not repeat them.

@@ -102,7 +102,9 @@ declared phi read back as phi at every u of the wheel.
 
 The descent: `shape` [21, 1, 1], `boundary` {x open, y and z periodic},
 `N`, `families` [light with `phase_per_link` [2464, 25]], the lamp's
-`arms` 2 and `branches`, `train` 128, the two polarisers' `table` with
+`arms` 2 and `branches`, `train` 128, `residue_order` "seed" and
+`residue_seed` (one 64-bit draw per world; section 2 item 8), the two
+polarisers' `table` with
 `phase_window` s (the TABLE form's key of the first build, `read` and
 `sum` as the amplitude series names them), `detectors` Alice and Bob
 reading the joint gather, `clock_stamp` true, `detector_law` true,
@@ -155,17 +157,26 @@ and the ray law's series exists.
    sequence over u that depended on each party's own setting alone would
    be a local deterministic assignment of outcomes to u, whose S is at
    most 2; at S = 181 / 64 some party's sequence must move with the
-   other's setting. THE ROW'S WORD: FAIL by derivation for no-signalling
-   in the order (the paper's row 1c says so), PASS exact for
-   no-signalling in the counts (row 1d); the run confirms the numbers
-   above (DETECTOR: the two click lists in birth order at the four
-   settings pairs, the flips counted); no pin moves.
-8. THE TEST OF THE HIDDEN RESIDUE, PREPARED, NOT DECLARED (the model
-   owner's word of 2026-09-24, 03:14Z, "make preparations for the above
-   test", on my answer to his question "the algebra does not solve it;
-   what does?"; his word on the declaration pending, for the 09:00 page;
-   nothing here enters a GO world; `order_channel_hidden_pins.py`,
-   COMPUTATION, no run, no pin moved). THE FINDING (item 7 and the
+   other's setting. THE ROW'S WORD under the counter form [1, 1]
+   (HISTORY since item 8's declaration, 04:14Z): FAIL by derivation for
+   no-signalling in the order, PASS exact for no-signalling in the
+   counts (row 1d). Under item 8 (the residues in the seed-set order)
+   the row reads PASS in form Outside: DETECTOR the four click lists in
+   birth order and the decoders fixed before the run (item 8), each at
+   1 / 2 within the binomial band; GAMEBOARD the flips above, read with
+   the residues from the gather lines' `u` (HOST), the diagnostic E_N;
+   no pin moves.
+8. THE TEST OF THE HIDDEN RESIDUE, DECLARED (the Boss, 2026-09-24
+   04:14Z, on the owner's word of 04:12Z (record 1647): "I left it to
+   the Boss to declare; just make sure it cannot be attacked in any
+   form, any way"; the six lines (i) to (vi) below, the same six on
+   ORDER_CHANNEL_ATTACKS.md; prepared on the owner's word of 03:14Z,
+   "make preparations for the above test", on my answer to his question
+   "the algebra does not solve it; what does?"; the keys enter the four
+   Bell worlds of sections 1 and 2 by the World Generator's
+   regeneration, the runs under THE GUARD at the end of this item;
+   `order_channel_hidden_pins.py`, COMPUTATION, no run, no pin moved).
+   THE FINDING (item 7 and the
    script's (a)): the channel is open by Bell's theorem for any
    deterministic wheel, and AS DECLARED it is readable Outside without
    any stamp: the counter family [1, 1] makes the birth residue u the
@@ -222,11 +233,52 @@ and the ray law's series exists.
    script is a mixing hash (SplitMix64's form), the requirement on the
    engine's form a keyed permutation indistinguishable from uniform
    without its key; five decoders fixed before the run read 1 / 2 over
-   200 seeds. Until the owner's word row 1c keeps his word of 03:05Z
-   (FAIL by derivation under the current law); on his word (the six
-   lines, the Boss's declaration) this item becomes a declaration, row
-   1c reads PASS in form Outside, and the paper's row 1c and #1081's
-   sentence change with it.
+   200 seeds. ON THE DECLARATION row 1c reads PASS in form Outside (the
+   owner's word of 03:05Z, FAIL by derivation under the counter form, is
+   HISTORY of that form; the Inside dependence E_N stays a GAMEBOARD
+   diagnostic, the model's declared nonlocality); the paper's row 1c and
+   #1081's sentence change with it on the merge SHA. THE GUARD (the
+   Boss, 04:14Z): no run of any Bell world before ORDER_CHANNEL_ATTACKS.md
+   is on main under Reviewer 3's read with every objection CLOSED,
+   CLOSED BY DECLARATION, STATED, FUTURE or CHECK and none OPEN; an
+   objection Reviewer 3 marks OPEN returns this item to PREPARED until
+   it is closed or stated; the owner's rule of 03:29Z holds beside (no
+   pin run without its approved preliminary, RUN_LIST.md). THE LOADER
+   KEYS (the builder's, on this declaration; the names and forms written
+   so that nothing is asked), on the pair lamp's entry (LAMP_KEYS of
+   `world.py`, beside `rate` and `wheel`): (1) `residue_order`, a
+   string, `"ordinal"` (today's form, the default when the key is
+   absent: u = (ordinal - 1) x r mod W from `wheel` [r, W], the engine's
+   line as built) or `"seed"` (the seed-set order: u = order[(ordinal -
+   1) mod W], where order = permutation(W, residue_seed) is the
+   Fisher-Yates shuffle of range(W) driven by the SplitMix64 mixing hash,
+   copied from the script's `mix64` and `permutation` verbatim, the
+   constants 0x9E3779B97F4A7C15, 0xBF58476D1CE4E5B9 and
+   0x94D049BB133111EB and the shifts 30, 27 and 31 included, plain
+   integers masked to 64 bits, the same order on every host; the stride
+   r must be 1 under `"seed"`, refused otherwise, so that W births take
+   every residue once); (2) `residue_seed`, an integer in [0, 2^64) (an
+   input of kind 1, the width 64 declared), required under `"seed"` and
+   refused under `"ordinal"` (a key that does nothing is refused, the
+   loader's habit); the World Generator draws one per world from the
+   host's entropy (`secrets.randbits(64)` or any host source; the
+   requirement is the draw's independence of the settings), four seeds
+   for the four worlds of a Bell row, written into the world file and
+   never into `expectations.json` or the paper; no reading's form
+   depends on its value (the counts and S exact for every seed, one
+   birth per residue). The light family's `phase_per_link` [1, 1] and
+   the lamp's `wheel` [1, 2048] stay as declared (the modulus and the
+   ladder's read of u in `cell_of` unchanged); the lamp's `rate` is the
+   cadence of line (v), fixed per world. THE STAMP'S FIELDS, none new:
+   the gather line's `click` (the interval of the chosen cell's first
+   rung, the detector's count in its own clock), `birth` (the record's
+   birth interval) and `chosen` (the cell's name); the reader of record
+   (the four click lists per set in birth order, the decoders fixed
+   before the run) reads these three and nothing else; the gather
+   line's `u` and the `records` reading's `u` stay as HOST, the input of
+   the diagnostic E_N, never a reader-of-record field. The engine's
+   change is the two keys and the one line of u; the stamp, the ladder,
+   the tables and the pins do not move.
 
 The descent, HOST and the day: as section 1 (the same four runs read
 twice; no world of its own).
