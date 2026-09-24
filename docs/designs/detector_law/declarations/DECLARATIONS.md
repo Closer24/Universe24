@@ -1684,7 +1684,7 @@ waves).**
   of 06:42Z, record 1694: every emitter takes its own record's remnant after its
   train, no key; a per-record taking mask of the emitter's cells at age
   > train + T, T = ceil(extent / v_g) + 2 computed at load (24 for a
-  block of side 12, 4 for a one-Node lamp; the group pace at load is the band's closed form v_g = sin k / (3 sin omega) with cos omega = (2 + cos k) / 3, the six-neighbour rule's band of ALGEBRA.md 8.1 along the emission's axis, at the kind's declared clock (k = 2 pi / lambda, lambda the declared Links per period), host arithmetic once at load, no table entry read; the loader writes T per emitter into the run's metadata (COMPUTATION at load); no Node holds it (Reviewer 3's line (b) of 07:55Z on e6b4ec3d)), in the record's kind's pair,
+  block of side 12, 4 for a one-Node lamp; the group pace at load is the band's closed form along the emission's axis, v_g = sin k_x / (3 sin omega) with cos omega = (cos k_x + cos k_y + cos k_z) / 3, the three-dimensional six-neighbour band of ALGEBRA.md 8.1 for the pair [1, 1], at the transverse components k_y = k_z = 0 (so cos omega = (2 + cos k_x) / 3 on the axis) and the kind's declared clock (k_x = 2 pi / lambda, lambda the declared Links per period), host arithmetic once at load, no table entry read (Reviewer 3's axis form, 07:12Z); the loader writes T per emitter into the run's metadata (COMPUTATION at load); no Node holds it (Reviewer 3's line (b) of 07:55Z on e6b4ec3d)), in the record's kind's pair,
   its bookings
   excluded from the ladder and the content booked to the HOST row
   `taken_by_emitter`, the builder's line before the light clock's
