@@ -3679,9 +3679,102 @@ that condition, which each world's generator checks. The books: the
 Inside's content is conserved exactly until the clicks (8.8's bijection);
 "absorbed" is the clicked content alone; "escaped" retires, replaced by
 "ended unread" for a record that closes with no offer. The one input the
-algebra did not produce (the take, 9.13 item 3) is thereby removed.
+algebra did not produce (the take, 9.16 item 3) is thereby removed.
 
-### 9.13 What is missing, for the owner
+### 9.13 The emitter as the transpose of the click (the owner's word of 21:40Z: "perhaps the emitter is the reverse: a click produces the emitter")
+
+**DERIVED HERE.** The click's evaluation on the tables is the linear map
+**E**: Z[Z_N] -> Z^2, f -> (SUM over p of f_p C[p], SUM over p of f_p S[p])
+(2.5). Its transpose for the inner product in which the [p] are
+orthonormal is **E**^T: Z^2 -> Z[Z_N], (X, Y) -> SUM over p of (X C[p] + Y
+S[p]) [p]: from a number back to a record, the real part of a character
+on the phase circle. A lamp's drive is exactly this, sampled by its own
+clock: a_now(t) = A C[phase(t)] at its Node is **E**^T applied to (A, 0)
+and read at the clock's phase (1.7); spread by the split to the six
+neighbours, the birth is invariant under the Node's stabiliser G_48, the
+projector onto the trivial representation (9.4). And **E** **E**^T =
+[[SUM C^2, SUM C S], [SUM C S, SUM S^2]] = (N / 2) 256^2 **I** up to the
+tables' rounding (the characters' orthogonality on Z_N): THE EMITTER IS
+THE RECEIVER'S TRANSPOSE, its right inverse up to the scale (N / 2) 256^2
+and the rounding. ITS TRIGGER IS A CLICK OF ITS OWN RECORD: an emitting
+block births one record per cycle of its own mode, the cycle counted by
+its own clock, the evaluation of its own record at its rung (8.6, the
+block's clock): exactly "a click produces the emitter". A lamp is the
+degenerate case: its own clock is its rate's accumulator (verb T) with no
+record behind it; a lamp that must be read so is a block emitter. So THE
+RECEIVER IS **E**, THE EMITTER IS **E**^T, AND THE CRYSTAL IS **E**
+(the arriving record's click at its cells) THEN m^T (the arriving clock
+split into the two born clocks, 9.2) THEN **E**^T (the pair's birth): EXACT
+as the path of the data a click lets through, namely the clock (the
+energy, through m^T) and the residue u (9.7 (b)); the arriving record's
+amplitude and phase are not passed (no read), the born amplitude is the
+crystal's own declared number and its phase starts at the born clock's
+zero. What it changes in the code: nothing for a block emitter (its
+births per cycle of its own clock are this); for a lamp, only the naming
+(its rate's count is its clock); for the crystal, its births fired by the
+arriving record's click, not by its own clock (9.7 (b)); the train, the
+wheel and the residue are unchanged.
+
+### 9.14 The polariser's angle: how much the general angle is needed (the owner's word of 21:40Z)
+
+**The group's own angles give no Bell violation (PROVED HERE).** On the
+label module the cells' group gives only the identity and the exchange
+(9.4): polariser angles 0 and 90 degrees (s = 0 and s = N / 2). With
+those, every correlation E(a, b) = cos 2 (theta_a - theta_b) is +1 or -1
+(COMPUTATION on the tables: 1, -1, -1, 1), both settings commute, and S
+<= 2 (the four E's of +-1 satisfy abs(S) <= 2 by the CHSH identity's
+case count). So S above 2 NEEDS angles outside the group.
+
+**The angles the fifteen experiments use.** Bell's settings s = 0, 256,
+512, 768 on the half-angle tables of 2N at N = 2048 are 0, 22.5, 45 and
+67.5 degrees; Malus's s = 64, 16, 40, 48 at N = 256 are 45, 11.25, 28.125
+and 33.75 degrees. None but 0 is in the group; they are the declared
+rounding of the tables (kind 1).
+
+**THE LATTICE'S OWN ANGLES, WITH NO ROUNDING (DERIVED HERE).** Read the
+label pair as the plane across the record's path (linear polarisation)
+and let a polariser declare its AXIS AS AN INTEGER VECTOR **u** of that
+plane (its orientation, 9.6; a translation vector's direction, not a
+rotation of the group). Then for the state HH + VV the joint weights are
+EXACT INTEGERS with no table: R(+, +) = R(-, -) = (**u**_A . **u**_B)^2 and
+R(+, -) = R(-, +) = (**u**_A x **u**_B)^2, their sum abs(**u**_A)^2
+abs(**u**_B)^2, and E = cos 2 (theta_A - theta_B) = (2 (**u**_A .
+**u**_B)^2 - abs(**u**_A)^2 abs(**u**_B)^2) / (abs(**u**_A)^2
+abs(**u**_B)^2), RATIONAL. With the axes (1, 0) and (1, 1) for Alice and
+(2, 1) and (1, 3) for Bob: E = 3 / 5, -4 / 5, 4 / 5, 3 / 5 and S = 3 / 5 + 4
+/ 5 + 4 / 5 + 3 / 5 = 14 / 5 = 2.8 EXACTLY (Tsirelson's 2 sqrt 2 =
+2.828). The counts (COMPUTATION on main's rung): at W = 2048, 819, 205,
+205, 819 at the pairs E = 3 / 5 and 102, 922, 922, 102 and 922, 102, 102,
+922 at E = -4 / 5 and 4 / 5, S = 717 / 256 = 2.80078; at a wheel that is a
+multiple of 20 (the shares 2 / 5, 1 / 10, 9 / 20, 1 / 20), for example W =
+2560, S = 14 / 5 exactly. So THE GENERAL ANGLE IS NOT NEEDED FOR A BELL
+VIOLATION: the lattice's rational directions give S = 14 / 5 with no
+declared rounding at all; the general angle (the tables) is needed only
+to reach the settings of nature's optimal 22.5 degrees and Malus's
+chosen angles. This moves Bell's pin (181 / 64 on the tables against 14 /
+5 on the lattice's axes): A POINT FOR THE OWNER, with the derivation.
+
+### 9.15 Momentum: a photon that changes direction (the owner's word of 21:40Z)
+
+**DERIVED HERE.** The law commutes with the translations (1.6), so its
+conserved momentum is the TOTAL over every record and every FREE body
+(the characters' law, 9.2). A tool is a body at rest by declaration (9.1:
+a fixed point of the time translation, its momentum held at 0): it is a
+held body, and a held body is where momentum leaves the ledger of the
+free things, as a mirror bolted to the table takes the recoil of a
+reflected photon. So: at the crystal the arriving record's momentum (its
+flow booked at the crystal's Ports, the push of 2.2 and 8.11) is HANDED
+TO THE CRYSTAL at its click; the pair is born by **E**^T from the crystal's
+cells with no heading and no phase gradient (9.7 (b)), its momenta not
+tied to the arriving one; LIGHT'S MOMENTUM ALONE IS NOT CONSERVED, and the
+total with the crystal's book is. The crystal stays at rest because it is
+declared at rest; its book records the recoil. The same holds for the
+mirror (k_perp -> -k_perp, the reflection, 9.2: twice the normal momentum
+to the mirror's book) and for every tool. The owner's reading, "a photon
+that changes direction", is this: the direction changes at a held body,
+and the held body takes the difference.
+
+### 9.16 What is missing, for the owner
 
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
