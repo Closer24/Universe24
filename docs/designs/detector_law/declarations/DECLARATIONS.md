@@ -203,10 +203,9 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    light (the source term of section 7, a birth at the start of each
    cycle of its own clock; the block holds no light content, the source
    term consumes nothing held), coupling G = [1, 50], g = [1, 1000]
-   (section 15 item M1-1: the same world as G = [1, 1], g = [1, 50000],
-   seed 2^20 by the exact rescaling of the massive rows by 50, within the
-   load bound of BUILD.md MUST 3; the light identical, every pin
-   unchanged; the first draft's g = [1, 50000] is refused by the bound);
+   (section 15 item M1-1, the one statement of the same world in the
+   closed form; the first draft's g = [1, 50000] is refused by the load
+   bound);
    the product g G = 2 x 10^-5 keeps A's own clock: the emitter's radiative
    damping on a chain is 3.3 g G per interval, `coupled_mode_pins.py` (b),
    so 6.7 x 10^-5 per interval, the amplitude 0.59 after the hold of 8000,
@@ -460,9 +459,9 @@ omega_b) of its own well, printed by the pins script before the run.
    "closed", the zero beyond the face without the layer's take, the
    builder's one generic line); the massive kind [800, 809]; the EMITTER A of
    side 12 at full depth ([800, 800]) at the cells [600, 612), `emits`,
-   G = [1, 50], g = [1, 1000], the seed 50 x 2^20 (section 15 item M1-1;
-   the same world as G = [1, 1], g = [1, 50000], seed 2^20 by the exact
-   rescaling; no light content held), light the kind [1, 1] with
+   G = [1, 50], g = [1, 1000], the seed 50 x 2^20 (section 15 item M1-1,
+   the same world in the closed form; `held` 64 light, M1-2), light the
+   kind [1, 1] with
    `phase_per_link` [1, 1] for the loader (the kind's rows carry no
    phase label, ALGEBRA.md 1.7); no face detector: A's own `wheel` 64 is
    the receiver; the MIRROR B is the chain's
@@ -652,8 +651,8 @@ nature.
    intervals at eps 0.64; section 8), both `emits` (the source term, a
    birth at the start of each cycle of the block's own clock, the record
    stamped with its birth), G = [1, 50], g = [1, 1000], the seed 50 x
-   2^20 (section 15 item M1-1; the same world as G = [1, 1], g = [1,
-   50000], seed 2^20 by the exact rescaling; no light content held);
+   2^20 (section 15 item M1-1, the same world in the closed form; `held`
+   64 light each, M1-2);
    light the kind [1, 1] with `phase_per_link` [1, 1] for the loader; NO
    detector set beside the blocks (the Generator's `at_a` at [712, 0, 0]
    named a Node outside A: dropped), each block's own `wheel` 64 the
@@ -801,23 +800,30 @@ nothing is chosen by the Generator. The engine's keys are BUILD.md's and
 `momentum`; the world's `ticks`; `probes` for a GAMEBOARD amplitude).
 
 **L, the light rows (the family `light`, quantum 1, its clock
-`phase_per_link` on N = 64: [77, 25] for 12 Links, [30, 13] for 16.01
-Links, [77, 50] for 23.99 Links; the first draft's [51, 25] = 18.1 Links
-withdrawn).**
+`phase_per_link` on N = 64: [77, 25] for lambda_0 = 12 Links, [30, 13]
+for lambda_0 = 16.01 Links, [77, 50] for lambda_0 = 23.99 Links; the
+first draft's [51, 25] = 18.1 Links withdrawn). THE LABEL, named once
+(Reviewer 3's read of 5df35388): lambda_0 is the light's wavelength at
+rest in Links, the one label for a wavelength on every page and script
+of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
+12); the matter rows' lambda_dB is the matter wave's, section 12.**
 
 - L-1, THE WALL of every light row (the fourth commit, 02:20Z, on the
   builder's finding that the engine has no path for a block of light's
   kind and that a detector set clicks at the lamps' wheel): a MIRROR LINE
   of blocks of light's kind with the pair [1, 2] (the gap 60 degrees
-  against light's omega 0.3023, the decay 1.25 per Link), TWO Nodes deep
-  (0.7 percent of the amplitude transmitted), the openings left free;
+  against light's omega 0.300 at lambda_0 = 12, the decay 1.99 per Link:
+  inside a block of pair r a wave of frequency omega has cosh kappa = 3
+  cos omega / r - 2, Reviewer 3's token of 02:20Z), TWO Nodes deep (1.9
+  percent of the amplitude and 0.035 percent of the offer transmitted;
+  one Node deep 13.7 percent), the openings left free;
   the reflected train is absorbed at the layer's OPEN FACE behind the
   lamp (an open face is light's sponge), so there is no second pass and
   no take line is needed (the first draft's absorbing lines at x = 0 and
   127 are dropped). Not a detector set: a set takes the record's click
   at the lamps' wheel, and a wall that receives most of the wave would
   click before the screen for almost every record. The [21, 22] pair of
-  the first draft is no mirror (the gap 0.3028, the decay 0.014 per
+  the first draft is no mirror (the gap 0.3028, the decay 0.070 per
   Link: it transmits) and is withdrawn. DESIGN.md 6.0 computed the pins
   with a reflecting wall, so the two-source sum stands. THIS NEEDS the
   builder's path for a block of light's kind in the blocks' loop (his
@@ -946,12 +952,17 @@ waves).**
   interval, a random walk of 0.15 percent over a train, below one
   interval of the clicks. No engine change. The alternative (a lower A
   in MUST 3) is not needed.
-- M1-2, THE EMITTER'S HELD LIGHT CONTENT: 0. The emission is the
-  coupling's source term (MASSIVE_RECORD.md section 7; ALGEBRA.md 8.5),
-  a birth at the start of each cycle of the block's own clock, consuming
-  nothing held; the `emits` key names light's family and no amount. If
-  the engine's `emits` releases held content as a lamp does, that is not
-  this emission: the builder's line.
+- M1-2, THE EMITTER'S `held` (the fifth commit, on the Generator's
+  refusal "emits light but the block holds none of it: a birth pays the
+  family's quantum"): declared per emitter as the number of births the
+  run may hold, the engine's book of the births and not a stock the
+  emission consumes (the emission is the coupling's source term,
+  MASSIVE_RECORD.md section 7, ALGEBRA.md 8.5, a birth at the start of
+  each cycle of the block's own clock): row 4b's A `held` 400 light (the
+  hold 18500 over a cycle of about 63 intervals, about 300 births), the
+  light clock's A 64 (ticks 2000, about 32 births), R2's A and B 64 each
+  (the hold 3000, about 48 births); `ticks` is then an inert bound. No
+  engine change.
 - M1-3, LIGHT'S CLOCK PAIR in sections 10 and 13: `phase_per_link` [1, 1]
   as in sections 4 and 9, the loader's requirement; the kind's rows are
   pairs of levels and carry no phase label (ALGEBRA.md 1.7).
@@ -990,16 +1001,22 @@ waves).**
   rung); `amount` 2048, `rate` [1, 8], `train` 8 periods (150 intervals);
   the wall at x = 40 is a BARRIER LINE of blocks of the matter kind with
   the pair [1, 2] (the gap 60 degrees above the lamp's omega 0.334, the
-  decay 1.25 per Link), two Nodes deep, the openings free (the fourth
-  commit: the matter kind has no take, so no absorbing line exists for
-  it; the first draft's take lines at x = 0 and 127 are dropped, the
-  zero faces are the matter kind's mirrors); the loader must admit a
-  RAISED pair on a block (a barrier, num' / den' below the kind's), else
-  the builder's one line. THE SECOND PASS, real in this form: the wall
-  reflects the train back to the zero face at x = 0, which returns it
-  through the openings 80 Links later, coherent at the same k, so the
-  maxima and the centroid do not move and the first click at the centre
-  is the direct front's. THE LAMP'S OWN BODY IS NOT A RECEIVER of its own
+  decay 1.97 per Link by cosh kappa = 3 cos omega / r - 2, two Nodes
+  deep transmitting 1.9 percent of the amplitude), the openings free; the
+  loader must admit a RAISED pair on a block (a barrier, num' / den'
+  below the kind's), else the builder's one line; and TWO TAKE LINES at
+  x = 0 and x = 127 as ABSORBING blocks of the matter kind (side 1 per
+  Node, `absorbing` true; the take on the massive kind is the builder's
+  one generic line, in his queue): Reviewer 3's blocking line of 02:20Z
+  on the fourth commit, which had dropped them: through two width-1
+  openings a record leaks about one percent per pass and completes by
+  exhaustion only after some hundred passes, beyond the hold, so without
+  a take no record completes, no gather line, no click; with the take
+  lines the wall's reflection is taken behind the lamp, THE SECOND PASS
+  IS DEAD, and every record completes with one click as section 12
+  declares. Until the take on the massive kind lands, M1 is EXPLORATORY
+  (M2 on the chain is unaffected: its one absorbing set exhausts the
+  record). THE LAMP'S OWN BODY IS NOT A RECEIVER of its own
   records at any time (the cycle sentence with N_s the whole hold, no
   rung on its own family at its Node: the builder's test aa); the
   screen's sets are the only receivers, and the part of a matter train
