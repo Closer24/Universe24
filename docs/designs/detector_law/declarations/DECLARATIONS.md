@@ -4,7 +4,8 @@ THE FOUR BUILDING BLOCKS (the model owner, 2026-09-24, 13:36Z and 13:43Z): every
 object a section below declares is a composition of the emitter, the body,
 the receiver and the clock, and the engine branches on no name of it; the
 definitions are in [SIMULATOR_DEFINITIONS.md](../../../../SIMULATOR_DEFINITIONS.md),
-"The four building blocks", and every feature (F1, F2, F3) names its blocks there.
+"The four building blocks", and every feature (the receiver by name, the joint gather, the lamp's ladder)
+names its blocks there.
 
 The Boss's order of 2026-09-23, about 17:12Z, on the owner's word of 16:55Z
 (everything anew on the new engine): the six PIN rows of `../SCHEDULE.md`
@@ -84,7 +85,11 @@ declared phi read back as phi at every u of the wheel.
    from both settings at the completion interval, the joint pointer
    J(o_A, o_B) = SUM over the labels l of U_a[o_A][l] U_b[o_B][l], the
    cell's weight R = J^2, the birth wheel's u selecting one of the four
-   cells through the rung (E, D; B3, P6).
+   cells through the rung (E, D; B3, P6). A completed arm is held still
+   until the other arm completes (`arm_done`), a HOST hold of its rows and
+   not a physical step, and the scan of the live records for a pair's
+   arms at each interval is HOST, fixed per pair (Reviewer 3's notes of
+   13:42Z on main 2e1d5610).
 4. The pins (COMPUTATION, before the run, from ALGEBRA.md 4.9 and 4.10):
    the correlation E(a, b) at each settings pair the finite-N Bell value
    of the tables; S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = 181 / 64
@@ -560,7 +565,10 @@ Boss's word).
    files at 88b3752, the 7-Node bar's exit off the board and the loader's
    refusal under the joint-gather build; the 7-Node line HISTORY; every
    other position unchanged), y and z periodic of one
-   layer, x open. Z_256. The family `light`, h = 1, the lamp on the wheel
+   layer, x open. On the bar of 8 no free Node lies beyond the exit cell,
+   so no face is on the lamp's ladder (Reviewer 3's note of 13:42Z); a
+   longer bar would need the lamp's `receiver` naming the polariser's set
+   (section 13 item 7). Z_256. The family `light`, h = 1, the lamp on the wheel
    [159, 256] releasing one row per self-creation on +x, born on label 0
    (`malus_22_5.json`'s form, new_rows PINS.md section 3). The which-path
    `read` at x = 4 with no rotation (the whole beam on label 0, one cell)
@@ -1604,7 +1612,14 @@ earlier gap waits on that series.
    escaped; the World Generator adds the key to every emitting block
    of the GO and held files as he enumerates them: sagnac_k3,
    sagnac_rest, light_clock_60, redshift_k3, redshift_control, and 4b's
-   world where it emits.
+   world where it emits. THE LAMP'S `receiver` (DECLARED 15:20Z on Reviewer
+   3's must-fix of 13:42Z, before two_slits or M1 is regenerated; the
+   lamp's ladder, BUILD.md section 20 and SIMULATOR_DEFINITIONS.md "The
+   four building blocks"): a lamp record's ladder is the sets its
+   `receiver` names (a set's name or a list of names), the faces and every
+   unnamed set sinks for it, the cell of u taken over the ladder's own sum;
+   absent the key the ladder is every cell as built (the table rows' lamp
+   worlds, untouched); a face is never on a named ladder.
 
 ## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
 
@@ -1775,10 +1790,10 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   click before the screen for almost every record. The [21, 22] pair of
   the first draft is no mirror (the gap 0.3028, the decay 0.070 per
   Link: it transmits) and is withdrawn. DESIGN.md 6.0 computed the pins
-  with a reflecting wall, so the two-source sum stands. THIS NEEDS the
-  builder's path for a block of light's kind in the blocks' loop (his
-  minutes); if it does not land tonight, 2a runs as EXPLORATORY only and
-  its pin waits.
+  with a reflecting wall, so the two-source sum stands. The builder's path
+  for a block of light's kind is on main and the loader admits the mirror
+  line (CLOSED 15:20Z on Reviewer 3's note; the first draft's "if it does
+  not land tonight, 2a runs as EXPLORATORY only" HISTORY).
 - L-2, THE LAMP is one body at one Node behind the wall on the axis of
   symmetry (the engine's lamp is a body at a Node; DESIGN.md 6.0's "line
   of Nodes driven" is the openings seen from the far side): its wave
