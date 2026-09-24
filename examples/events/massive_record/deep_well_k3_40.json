@@ -1,17 +1,17 @@
 {
  "law": "beam",
- "model_id": "beam-massive-record-index-moving-long-reference-k3-away-v1",
+ "model_id": "beam-massive-record-deep-well-k3-40-v1",
  "shape": [
-  4000,
-  1,
+  128,
+  128,
   1
  ],
  "boundary": {
-  "x": "open",
+  "x": "periodic",
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 6000,
+ "ticks": 9500,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -29,71 +29,45 @@
    "name": "light",
    "quantum": 1,
    "phase_per_link": [
-    1846,
-    10000
+    77,
+    25
    ]
   },
   {
    "name": "matter",
    "quantum": 1,
    "pair": [
-    156,
-    157
-   ],
-   "faces": {
-    "x": "open"
-   }
+    800,
+    809
+   ]
   }
  ],
  "measured": [
   {
    "position": [
-    800,
-    0,
+    44,
+    44,
     0
    ],
-   "family": "light",
+   "family": "matter",
    "amount": 1,
    "phase": 0,
    "momentum": [
-    0,
+    64,
     0,
     0
    ],
    "fixed": true,
-   "directions": [
-    [
-     1,
-     0,
-     0
-    ]
+   "side": 40,
+   "pair": [
+    800,
+    800
    ],
-   "lamp": {
-    "rate": [
-     1,
-     1
-    ],
-    "wheel": [
-     2531,
-     4096
-    ],
-    "directions": [
-     [
-      1,
-      0,
-      0
-     ]
-    ],
-    "train": 200
-   }
+   "seed": 1048576,
+   "ramp": 1500,
+   "margin": "control"
   }
  ],
  "detectors": [],
- "probes": [
-  [
-   2400,
-   0,
-   0
-  ]
- ]
+ "mode_axis": "x"
 }

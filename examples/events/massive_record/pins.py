@@ -208,7 +208,7 @@ def main() -> None:
         reading = block_margin(world, 0)
         worlds["layer_pin_rest_14"] = {
             "kind": "PIN (layer)",
-            "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over [200, 3500] against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
+            "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [10200, 18200] (the same window as the k = 3 world's, DECLARATIONS.md section 8) against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
             "pin": {
                 "omega_b": reading.omega_b,
                 "period_intervals": 2.0 * math.pi / reading.omega_b,
@@ -225,7 +225,7 @@ def main() -> None:
         world = load("layer_pin_k3_14")
         worlds["layer_pin_k3_14"] = {
             "kind": "PIN (layer)",
-            "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [1500, 9500] against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
+            "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp 10000 (DECLARATIONS.md section 8: ten relaxation times of the well) against the rest world's over the same window, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
             "pin": one_formula(world, 0, 3, "exact"),
             "controls": {
                 "second_order_c_m": one_formula(world, 0, 3, "second"),
@@ -335,9 +335,9 @@ def main() -> None:
         omega_away = gamma * clock_omega((3565, 10000)) * (1.0 - beta)
         long_entry: dict[str, object] = {
             "kind": "PREDICTION",
-            "reads": "the receding case on the longer chain (n = 4000, the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]): the ratio of the delay to the covariant expectation with n(omega') from index_moving_long_rest_k"
+            "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from index_moving_long_rest_k"
             + str(k)
-            + "_away against its reference; the pump's signature over the window",
+            + "_away against its reference beside; the pump's signature over the window",
             "pin": {
                 "k": k,
                 "beta_c": beta,
@@ -348,15 +348,105 @@ def main() -> None:
             },
         }
         if k == 3:
-            long_entry["pin"]["ratio_read_over_expected"] = 6.740  # type: ignore[index]
+            # DECLARATIONS.md section 11 (2026-09-24, 00:30Z): the script's number on the
+            # declared geometry (the same-Node scheme with G g times gamma_m^2), the row's
+            # reader of record BOTH the window's phase and its drift rate (P)
+            long_entry["pin"]["lab_phase_delay_rad"] = 1.0144  # type: ignore[index]
+            long_entry["pin"]["covariant_expectation_rad"] = 0.2323  # type: ignore[index]
+            long_entry["pin"]["ratio_read_over_expected"] = 4.37  # type: ignore[index]
+            long_entry["pin"]["halves_rad"] = [0.5539, 1.5234]  # type: ignore[index]
+            long_entry["pin"]["drift_rad_per_interval"] = 1.2e-3  # type: ignore[index]
+            long_entry["pin"]["band_rad"] = 0.04  # type: ignore[index]
+            long_entry["pin"]["band_drift_fraction"] = 0.10  # type: ignore[index]
             long_entry["design"] = {
-                "ratio_drive_pair": 6.740,
-                "ratio_G_g_unchanged": 4.277,
-                "source": "massive_moving_index.out at the design's head, the receding case on the longer chain (the same-Node form; the Boss's 16:13Z: 4.3 and 6.8 from behind); the engine carries the drive's pair, so the pin is 6.74",
+                "n_rest_at_omega_prime_away": 1.2519,
+                "first_geometry_retired": "the source at 300, the probe at 2500, the window [5000, 6000] (the ratios 6.740 and 4.277 of massive_moving_index.out at the design's head) sat inside the train's own arrival and was withdrawn before any run (section 11)",
+                "source": "DECLARATIONS.md section 11 (massive_moving_index.py's next record prints the numbers; the scratch of 00:20Z)",
             }
         else:
             long_entry["design"] = {"source": "no number declared at K = 4 (read beside K = 3)"}
         worlds[f"index_moving_long_k{k}_away"] = long_entry
+    # The launch list's worlds (RUN_LIST.md; DECLARATIONS.md sections 4 and 10; the Boss's
+    # 23:40Z item (c)), each pin the declaration's number written before any run.
+    if (HERE / "redshift_k3.json").exists():
+        world = load("redshift_k3")
+        formula = one_formula(world, 0, 3, "exact")
+        omega_0 = block_margin(world, 0).omega_0
+        _, gamma3 = gamma_of(3, omega_0, "exact")
+        beta = 1.0 / math.sqrt(3.0)
+        worlds["redshift_k3"] = {
+            "kind": "PIN",
+            "reads": "THE CLICKS of the light detector B at x = 1900 (DETECTOR, `light_clicks`): the mean interval between clicks over the hold [1500, 9500] in the receding world over the same in the control world is 1 + z; GAMEBOARD the light amplitude's spectral peak at the probe (x = 1899, the free Node B faces), A's count per interval, the energy account and the form J",
+            "pin": {
+                "k": 3,
+                "beta_c": beta,
+                "gamma_m": gamma3,
+                "f_over_f0_one_formula": formula["pin_f_over_f0"],
+                "one_plus_z": (1.0 + beta) / formula["pin_f_over_f0"],
+                "band": 0.003,
+                "free_emitter_limit": gamma3 * (1.0 + beta),
+                "controls": {
+                    "second_order_c_m": gamma_of(3, omega_0, "second")[1] * (1.0 + beta),
+                    "light_c": gamma_of(3, omega_0, "light")[1] * (1.0 + beta),
+                },
+            },
+            "design": {
+                "one_plus_z": 1.9889,
+                "f_over_f0": 0.7931,
+                "gamma_m_exact_cone": 1.22606,
+                "free_limit": 1.9339,
+                "controls": {"second_order_c_m": 1.9350, "light_c": 1.9319},
+                "retired": "the first draft's 1.9355 (mu = 0.15's gamma_m on this mu = 0.113 medium), a correction before any run",
+                "source": "DECLARATIONS.md section 4 (the second draft, 2026-09-24 00:30Z) and coupled_mode_pins.py (c)",
+            },
+        }
+        worlds["redshift_control"] = {
+            "kind": "CONTROL",
+            "reads": "A at rest at x = 1300: B's clicks over the hold, the received line at rest (the denominator of 1 + z)",
+            "pin": {
+                "omega_b_rest": formula["omega_b_rest"],
+                "period_intervals": 2.0 * math.pi / formula["omega_b_rest"],
+            },
+            "design": {
+                "omega_b": 0.10175,
+                "source": "DECLARATIONS.md section 4: the well's mode 0.10175 (eps 0.188)",
+            },
+        }
+    if (HERE / "deep_well_k3_40.json").exists():
+        world = load("deep_well_k3_40")
+        formula = one_formula(world, 0, 3, "exact")
+        worlds["deep_well_rest_40"] = {
+            "kind": "CONTROL",
+            "reads": "the deep well at rest: the clicks over [200, 3000] against the mode (DETECTOR); the peaks GAMEBOARD",
+            "pin": {
+                "omega_b": formula["omega_b_rest"],
+                "period_intervals": 2.0 * math.pi / formula["omega_b_rest"],
+                "eps": formula["eps"],
+                "extent": formula["extent"],
+            },
+        }
+        worlds["deep_well_k3_40"] = {
+            "kind": "CONTROL (the cavity row's)",
+            "reads": "the deep well pushed to k = 3: the clicks' mean interval over the hold [1500, 9500] over the rest world's (DETECTOR, read_runs.py), f / f_0 against the one formula at the exact cone",
+            "pin": formula,
+            "controls": {
+                "second_order_c_m": one_formula(world, 0, 3, "second"),
+                "light_c": one_formula(world, 0, 3, "light"),
+            },
+            "design": {
+                "f_over_f0": 0.7531,
+                "source": "RUN_LIST.md step 3 (massive_layer_pins.py, the layer's own)",
+            },
+        }
+    if (HERE / "EXPLORATORY_light_clock_60.json").exists():
+        worlds["EXPLORATORY_light_clock_60"] = {
+            "kind": "EXPLORATORY",
+            "reads": "the light clock of two bodies read by PROBES (GAMEBOARD): the light amplitude at x = 612 and 613 over the window [0, 2000]; the return's front against 2 L / c = 207.85 intervals after the emission's front (the declared pin's form, DECLARATIONS.md section 10, the band +- 2 to 3 intervals at the declared rung W = 10000, which no lamp-less world can declare: named in BUILD.md); A's own clicks beside",
+            "pin": {"two_L_over_c": 2.0 * 60.0 * math.sqrt(3.0), "L": 60, "band_intervals": 3},
+            "design": {
+                "source": "DECLARATIONS.md section 10; coupled_mode_pins.py's next record (the linear coupled map on the open chain of 673)"
+            },
+        }
     (HERE / "expectations.json").write_text(json.dumps(pins, indent=1) + "\n", encoding="utf-8")
     for name, entry in worlds.items():
         print(name, entry["kind"], json.dumps(entry["pin"])[:160])
