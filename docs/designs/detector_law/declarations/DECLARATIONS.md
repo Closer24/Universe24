@@ -592,7 +592,13 @@ omega_b) of its own well, printed by the pins script before the run.
    there (the Port's motion squared) accumulated after the grace of 140;
    the first rung, pointer x W >= norm: at W = 64, 218 intervals from the
    record's birth (216 at W = 256, 214 at 1024, 212 at 4096; the same at
-   the face cell alone within one interval): THE PIN 218 +- 2 at the
+   the free Node adjacent to the face within one interval; RE-DERIVED IN
+   THE RECEIVER FORM, the map (h): the set at x = 612 free during the
+   grace and a take Node after it reads the first rung at 218 at W = 64
+   and 214 at 256, while at W >= 1024 the residual's offer trips the
+   rung at once, so the declared wheel is 64; the residual's pointer
+   from the grace's end to 200 is 0.085 of the rung at W = 64, the
+   take's few percent): THE PIN 218 +- 2 at the
    declared W = 64, with 2 L / c = 207.85 beside as the (K) form and the
    rung's rise of about ten intervals above it the click's own, printed;
    A's own clock over the window (the clicks on A's record) within 0.3
@@ -752,16 +758,43 @@ omega_b) of its own well, printed by the pins script before the run.
    GAMEBOARD reading, not a click; a click is the law's action on the
    state (POSTULATES.md section 10), the record ending at the detector,
    its content entering the detector's own record. So the receiving set
-   bound to A is a detector set in the full sense of DESIGN.md section
-   5: at its first rung it TAKES the returning record (the record ends
-   there, its content entering the set's own record; `absorbed` moves at
-   the set's click), one click per record, the click stamped with the
-   set's count and the record's birth. The block's own response through
+   bound to A is a RECEIVER in the form of DESIGN.md section 5: the
+   one-way take at its Ports every interval from the wave's arrival (the
+   Port's ghost with light's pair [-15, 56], the row held at 0),
+   `absorbed` moved, the click at the first rung, the record ending when
+   what is left on the board is below a rung; one click per record, the
+   click stamped with the set's count and the record's birth (Reviewer
+   3's wording, 03:56Z). The block's own response through
    the coupling (`_book_response`, the block's `wheel` on its own record)
    is NOT this row's reader: it is A's own clock, the control, and the
    return's drive through g G = 2 x 10^-5 is of order 10^-6 of A's own
    motion at the seed, unreadable at any rung of A's own norm (M1-4's
-   reason for the set on the light record). The same for R2's sets at
+   reason for the set on the light record); stronger than that (Reviewer
+   3): the engine makes NO response record of a block to its own emitted
+   light (`step` skips a record whose emitter is the block), so A's
+   coupling cannot read its own return at any wheel, and for R2 the
+   response's pointer is g^2 of light's, about 10^-6 of the norm. THE
+   PER-RECORD TRANSPARENCY (Reviewer 3's line 2 of 03:56Z; DECLARED
+   04:05Z): in the engine a positioned set's Node holds its row at 0 for
+   every record and takes by its Ports, so a taking Node at x = 612
+   between A's face and the mirror would be a WALL to A's own emission
+   (the outgoing train would meet a zero row and reflect into A, nothing
+   reaching the mirror, and the set would click at once on the outgoing
+   wave; the grace's exclusion as built covers only the emitter's own
+   cells). The set at 612 is consistent with 218 +- 2 only if it is
+   transparent to A's own record during that record's grace and a
+   receiver after, the map's own assumption. DECLARED: for the emitting
+   block's OWN record the set's Nodes stay FREE (the row evolving, no
+   take) for the record's whole grace (own_grace; the hold for R2's
+   blocks) and become take Nodes for that record after it; the masks per
+   record by the record's emitter and age, values of the record (no
+   name, no kind; local: the Node's own state per record); for a stepping
+   block the masks re-form at each step and the Port's ghost is carried
+   with the block's face; the loader admits `block` with one declared
+   position for the light clock's set, or the Node named relative to the
+   block's face; the same would hold at 611. The map (h) reads the light
+   clock in this form, the take at 612 switching on at the grace's end:
+   218 at W = 64 (item 4). The same for R2's sets at
    the blocks' cells: the take at the first rung of the other's record is
    the click, the block's wheel its own clock beside. Whether the
    residual falls below the rung before the return is the preliminary
@@ -925,9 +958,12 @@ nature.
    its pointer there. The set stays the block's twelve cells, not a
    single Node: at the free Node adjacent to the block's face toward the
    emitter the map (f) reads 108, 248 and 91 at W = 64 (the meeting
-   click's rise +25 at one Node), so the cells' set and its pins stand;
-   the set TAKES the other's record at its first rung (the click of the
-   law, section 10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
+   click's rise +25 at one Node), so the cells' set is kept, its pins
+   RE-DERIVED in the receiver form (item 4: 110, 247 and 74 at W = 64);
+   the set is a receiver of the other's record in the form of DESIGN.md
+   section 5 (the one-way take at its Ports every interval from the
+   wave's arrival, `absorbed` moved, the click at its first rung; section
+   10 item 9), the block's own wheel its own clock beside. No separate face detectors (Reviewer 3's line
    B). A CONTROL world with both blocks at rest.
 2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 64, each
    block's key `own_grace` 3000 (the hold; item 1); the momentum [Q S M,
@@ -947,42 +983,53 @@ nature.
    rise differs by direction (Reviewer 3's line, record 1543: the chasing
    front and the meeting front reach the receiver with different
    profiles), so the second draft's one rest rise subtracted from both
-   directions is WITHDRAWN. THE MAP (`coupled_mode_pins.py` (f),
-   `one_record_moving`: both blocks stepping to k = 3 on +x, the emitter
-   ramped 1500 intervals then emitting one cycle, the click the first
-   rung of the pointer at the receiver's moving cells, COMPUTATION) gives,
-   at W = 64: A's record chasing B, the click 250 intervals from the
-   birth against the transit 245.9, the rise +4.1; B's record meeting A,
-   the click 74 against 65.9, the rise +8.1; at rest (the CONTROL world,
-   either direction) the click 109 against 103.9, the rise +5.1 (the
-   second draft's 113 was the map without the ramp, HISTORY). THE READER
+   directions is WITHDRAWN. THE MAP (`coupled_mode_pins.py` (h),
+   `one_record_moving` with the take, RE-DERIVED IN THE RECEIVER FORM
+   before any run on Reviewer 3's line 3 of 03:56Z: both blocks stepping
+   to k = 3 on +x, the emitter ramped 1500 intervals then emitting one
+   cycle, the receiver's twelve cells a TAKING set for the other's
+   record, their rows held at 0, the near face's Port following the wave
+   one way with light's take pair [-15, 56] and its ghost carried with
+   the face on a hop, the click the first rung of that Port's motion
+   squared, COMPUTATION) gives, at W = 64: A's record chasing B, the
+   click 247 intervals from the birth against the transit 245.9, the
+   rise +1.1; B's record meeting A, the click 74 against 65.9, the rise
+   +8.1; at rest (the CONTROL world, either direction) the click 110
+   against 103.9, the rise +6.1. The free-cell reading of the map (f)
+   (250, 74 and 109: the other's wave passing through twelve FREE cells,
+   its motion squared summed; the third draft's numbers) is HISTORY: a
+   taking set holds its rows at 0 and the record never enters the bulk,
+   the pointer is one Port's motion (Reviewer 3's line 3); the second
+   draft's 113 was the map without the ramp, HISTORY. THE READER
    OF RECORD: each block's click interval from the other's birth stamp
    (DETECTOR, per direction) LESS THAT DIRECTION'S OWN RISE from the map
-   (COMPUTATION, +4.1 and +8.1 at W = 64); the ratio of the two results
+   (COMPUTATION, +1.1 and +8.1 at W = 64); the ratio of the two results
    is the map's 0.5774 by construction. THE DETECTOR READINGS the band is on (Reviewer 3's
-   token, 01:15Z): the chasing click 250 +- 2 and the meeting click 74 +-
-   2 at W = 64, as the rest world's 109 +- 2; one interval on the meeting
+   token, 01:15Z): the chasing click 247 +- 2 and the meeting click 74 +-
+   2 at W = 64, as the rest world's 110 +- 2; one interval on the meeting
    side is 0.005 on the ratio, two reach the band; a reading of 0.5774 is
    the engine's clicks matching the map, not a corrected number. Read
-   from the clicks alone the ratio is 0.5432 (176 / 324: the map's own
+   from the clicks alone the ratio is 0.5389 (173 / 321: the map's own
    prediction of the raw ratio the engine reads, its grain about 0.006
    per interval on a side), and with the rest rise subtracted from both
-   0.5608: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
+   0.5602: neither is the reader. THE BAND +- 0.01: one interval of the click's grain on either
    side moves the ratio by at most 0.0062; the control world's click
-   109 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
+   110 +- 2 at W = 64 checks the map's rise at rest. Nature's coefficient
    0.975 +- 0.021 (derived from the source's fringe shift 0.230 +- 0.005
    against its computed 0.236, SOURCES_VERIFIED.md rows R2; Michelson,
    Gale and Pearson 1925) matched in the Sagnac FORM, the ratio linear in
    v / c, not in the number. THE KIND (Reviewer 3's word, 02:42Z through
    the Boss, agreeing with the issue triage reader's identity): the
    corrected ratio is the map's transit by construction, so THE PINS ARE
-   THE THREE CLICKS, 109 at rest and 250 and 74 at k = 3, at W = 64, each
+   THE THREE CLICKS, 110 at rest and 247 and 74 at k = 3, at W = 64, each
    +- 2, DERIVED_BLIND in their inputs (the two blocks' push, the chain's
    light, the coupling; no target); the run is the engine against the
    map on those three DETECTOR readings; the ratio 0.5774 is a
    COMPUTATION of the map's kinematics printed beside them, and k = 4 (v
-   / c = 0.4330) is the falsifier of the form. No number moves; the
-   change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
+   / c = 0.4330) is the falsifier of the form. The three clicks are
+   re-derived in the receiver form before any run (record 1518: declared
+   before the run, never moved after), the ratio's identity untouched;
+   the change of kind goes to the model owner at 09:00. PINS_R2.md's 55 /
    (32 k) is the old engine's number at its c, HISTORY.
 5. The readings: DETECTOR the two blocks' clicks on the other's records
    (the click interval per direction from the birth stamp) and the
@@ -1260,7 +1307,7 @@ waves).**
   receive g' (l_now - l_before) = 50 g (l_now - l_before) and the source
   G' (m'_next - m'_now) = G (m_next - m_now) are the old terms exactly,
   so the light is identical row for row and every pin (4b's 1.9889, the
-  light clock's 218, R2's 250 and 74, the damping 3.3 g G) is unchanged;
+  light clock's 218, R2's 247 and 74, the damping 3.3 g G) is unchanged;
   the product g G = 2 x 10^-5 is the one number the physics reads. The
   load bound (BUILD.md section 3, MUST 3, num x 6 x A + 3 x den x (A +
   1) with g_d folded, A = 2^40): at g_d = 1000, [800, 800] gives 7.9 x
@@ -1289,10 +1336,13 @@ waves).**
   receiving body's cells, corrected per row on the builder's reading
   (a): the light clock's A receives its OWN record's return, so its set
   is the free Node adjacent to its face toward the mirror, x = 612, alone,
-  taking at its click (the bulk cells hold the record's residual, which
-  would trip the rung at the grace's end; section 10 item 9); R2's blocks receive only the OTHER's records, so
-  their sets stay their twelve cells with own_grace = the hold (section
-  13 item 1); for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
+  a receiver in the form of DESIGN.md section 5, free for A's own record
+  during its grace and taking after it (the bulk cells hold the record's
+  residual, which would trip the rung at the grace's end; section 10
+  item 9); R2's blocks receive only the OTHER's records, so their sets
+  stay their twelve cells, taking the other's record, with own_grace =
+  the hold (section 13 item 1; the pins re-derived in the receiver form,
+  item 4); for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
   light record's offer at those Nodes (DESIGN.md section 5 item 4; the
   maps' form, Reviewer 3's line A), not the block's own record's motion,
   whose drive through g is at the integer grain. This needs the

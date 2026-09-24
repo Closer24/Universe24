@@ -153,12 +153,32 @@ def open_chain_reads(n):
     return (sp.diags([o, o], [-1, 1], shape=(n, n)) + 4 * sp.identity(n)).tocsr()
 
 
-def one_record(n, steps, emitter_lo, receiver_lo, s=12, g=1 / 50000, big_g=1.0, amp=2**20, train=70):
+TAKE_K = -15 / 56  # light's take pair [-15, 56], the one-way Port (DESIGN.md section 5)
+
+
+def one_record(
+    n,
+    steps,
+    emitter_lo,
+    receiver_lo,
+    s=12,
+    g=1 / 50000,
+    big_g=1.0,
+    amp=2**20,
+    train=70,
+    take_node=None,
+    take_on=0,
+):
     """One light record on an open chain of n: the block at emitter_lo (side s, seeded in its
     mode at amplitude amp) drives light through the source term during the train only;
     then light runs free. Returns the record's norm (the inserted squared motion), the
     per-interval offer at the receiver block's cells (the light's motion squared summed
-    over its s cells) and at the receiver's face cell alone."""
+    over its s cells) and at the receiver's face cell alone. With take_node set, that Node is
+    FREE (its row evolving) before the interval take_on and a TAKE Node after it (DECLARATIONS.md
+    section 10 item 9, the per-record transparency): its row held at 0, one ghost per Port facing
+    a free Node following the wave one way, g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with k =
+    [-15, 56], the free neighbour reading the ghost on that Link, the offer the Ports' motions
+    squared (the engine's receiver form); the fifth output is that offer."""
     reads = open_chain_reads(n)
     idx = np.arange(n)
     cells_e = ((idx >= emitter_lo) & (idx < emitter_lo + s)).astype(float)
@@ -176,10 +196,17 @@ def one_record(n, steps, emitter_lo, receiver_lo, s=12, g=1 / 50000, big_g=1.0, 
     offer_cells = np.empty(steps)
     offer_face = np.empty(steps)
     face = receiver_lo + s if receiver_lo < emitter_lo or receiver_lo == emitter_lo else receiver_lo
+    offer_take = np.zeros(steps)
+    ghost = {-1: 0.0, +1: 0.0}  # the take Node's two Ports, facing x - 1 and x + 1
     for t in range(steps):
+        taking = take_node is not None and t >= take_on
         m_next = inv_d * (reads @ m_now) / 3 - m_bef + g * cells_e * (l_now - l_bef)
         source = big_g * cells_e * (m_next - m_now) if t < train else 0.0
         l_next = (reads @ l_now) / 3 - l_bef - source
+        if taking:
+            # the free neighbours read the ghosts on their Links, not the held row
+            for side in (-1, +1):
+                l_next[take_node + side] += (ghost[side] - l_now[take_node]) / 3
         l_next[0] = 0.0
         l_next[-1] = 0.0
         if t < train:
@@ -187,9 +214,18 @@ def one_record(n, steps, emitter_lo, receiver_lo, s=12, g=1 / 50000, big_g=1.0, 
         motion = l_next - l_now
         offer_cells[t] = float(np.sum(motion[cells_r] ** 2))
         offer_face[t] = float(motion[face] ** 2)
+        if taking:
+            l_next[take_node] = 0.0
+            total = 0.0
+            for side in (-1, +1):
+                free_now, free_next = l_now[take_node + side], l_next[take_node + side]
+                new = free_now + TAKE_K * (free_next - ghost[side])
+                total += (new - ghost[side]) ** 2
+                ghost[side] = new
+            offer_take[t] = total
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
-    return omega_b, norm, offer_cells, offer_face
+    return omega_b, norm, offer_cells, offer_face, offer_take
 
 
 def sagnac_ratio(t_plus, t_minus):
@@ -209,7 +245,18 @@ def first_rung(offer, norm, wheel, start):
 
 
 def one_record_moving(
-    n, steps, emitter_lo, receiver_lo, s=12, k=3, ramp=1500, g=1 / 50000, big_g=1.0, amp=2**20, train=70
+    n,
+    steps,
+    emitter_lo,
+    receiver_lo,
+    s=12,
+    k=3,
+    ramp=1500,
+    g=1 / 50000,
+    big_g=1.0,
+    amp=2**20,
+    train=70,
+    take=False,
 ):
     """R2's map (Reviewer 3's line B of 00:45Z): the one record of `one_record` with BOTH blocks
     stepping one Link every k intervals on +x from t = 0 (the cells and their wells move, the
@@ -220,7 +267,10 @@ def one_record_moving(
     the offer at the free Node adjacent to the receiver's face toward the emitter (as (e); printed beside: the light
     clock's receiving set is A's face cell, DECLARATIONS.md section 10 item 9; R2's sets stay the
     blocks' cells with own_grace the hold, section 13 item 1), so that the first rung from the
-    birth is the click of that direction."""
+    birth is the click of that direction. With take, the receiver's cells are a TAKING set for
+    this record (their rows held at 0), the near face's Port following the wave one way with
+    light's take pair [-15, 56], the ghost carried with the face on a hop; the sixth output is
+    that Port's motion squared, the receiver form's offer (DECLARATIONS.md section 13 item 4)."""
     reads = open_chain_reads(n)
     idx = np.arange(n)
     lo_e, lo_r = emitter_lo, receiver_lo
@@ -238,6 +288,8 @@ def one_record_moving(
     norm = 0.0
     offer = np.empty(steps)
     offer_face = np.empty(steps)
+    offer_take = np.zeros(steps)
+    ghost = 0.0  # the near face's Port (facing the emitter), carried with the face on a hop
     acc = 0
     for t in range(steps):
         hop_now = False
@@ -250,25 +302,35 @@ def one_record_moving(
             hop_now = True
         hop_next = acc == k - 1
         ce = cells(lo_e).astype(float)
+        cr = cells(lo_r)
+        near = lo_r + s - 1 if lo_r < lo_e else lo_r  # the receiver's face cell toward the emitter
+        free = near + 1 if lo_r < lo_e else near - 1  # its free neighbour
         l_prev = np.roll(l_bef, 1) if hop_now else l_bef
         m_next = (reads @ m_now) / d_node / 3 - m_bef + g * ce * (l_now - l_prev)
         m_fwd = np.roll(m_next, -1) if hop_next else m_next
         in_train = ramp <= t < ramp + train
         source = big_g * ce * (m_fwd - m_now) if in_train else 0.0
         l_next = (reads @ l_now) / 3 - l_bef - source
+        if take:
+            l_next[free] += (ghost - l_now[near]) / 3  # the free neighbour reads the ghost
         l_next[0] = 0.0
         l_next[-1] = 0.0
         if in_train:
             norm += float(np.sum(source**2))
         motion = l_next - l_now
-        offer[t] = float(np.sum(motion[cells(lo_r)] ** 2))
+        offer[t] = float(np.sum(motion[cr] ** 2))
         face = (
             lo_r + s if lo_r < lo_e else lo_r - 1
         )  # the free Node adjacent to the receiver's face, as (e)
         offer_face[t] = float(motion[face] ** 2)
+        if take:
+            l_next[cr] = 0.0  # the taking set's rows held at 0 (the other's record)
+            new = l_now[free] + TAKE_K * (l_next[free] - ghost)
+            offer_take[t] = (new - ghost) ** 2
+            ghost = new
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
-    return omega_b, ramp, norm, offer, offer_face
+    return omega_b, ramp, norm, offer, offer_face, offer_take
 
 
 def block_record(reads, d_node, cells, g, big_g, steps):
@@ -442,7 +504,7 @@ if __name__ == "__main__":
         )
     # (e) the light clock's return, and R2's receive at rest, in the click's own form
     train, n_s = 70, 70
-    omega_a, norm, offer_cells, offer_face = one_record(673, 700, 600, 600, train=train)
+    omega_a, norm, offer_cells, offer_face, _ = one_record(673, 700, 600, 600, train=train)
     grace = train + n_s
     clicks_cells = {w: first_rung(offer_cells, norm, w, grace) for w in (64, 256, 1024, 4096)}
     clicks_face = {w: first_rung(offer_face, norm, w, grace) for w in (64, 256, 1024, 4096)}
@@ -453,7 +515,7 @@ if __name__ == "__main__":
         f" THE PIN at W = 64 on A's cells: {clicks_cells[64]} intervals from the record's birth, the band +- 2 (the rung's"
         f" rise between W = 64 and 4096: {clicks_cells[4096]} to {clicks_cells[64]})"
     )
-    omega_b2, norm2, offer_a, _ = one_record(2200, 500, 772, 700, train=train)
+    omega_b2, norm2, offer_a, _, _ = one_record(2200, 500, 772, 700, train=train)
     clicks_r2 = {w: first_rung(offer_a, norm2, w, 0) for w in (64, 256, 1024, 4096)}
     print(
         f"    R2 at rest (B at [772, 784) emits one cycle, A's cells at [700, 712) the receiver, L = 60): the first rung by W:"
@@ -479,7 +541,7 @@ if __name__ == "__main__":
         "    L = 60, W the wheel; a click is the first rung from the record's birth after a ramp of 1500):"
     )
     for name, (e_lo, r_lo, k_step, transit) in cases.items():
-        omega_r2, birth, norm_r2, offer_r2, face_r2 = one_record_moving(
+        omega_r2, birth, norm_r2, offer_r2, face_r2, _ = one_record_moving(
             2200, 1950, e_lo, r_lo, k=k_step, train=train
         )
         clicks = {w: first_rung(offer_r2, norm_r2, w, birth) - birth for w in wheels}
@@ -512,13 +574,13 @@ if __name__ == "__main__":
     )
     # (g) the declared coupling within the load bound (DECLARATIONS.md section 15 M1-1)
     g_d, big_d, amp_d = 1 / 1000, 1 / 50, 50 * 2**20
-    omega_g, norm_g, offer_g, _ = one_record(
+    omega_g, norm_g, offer_g, _, _ = one_record(
         673, 700, 600, 600, g=g_d, big_g=big_d, amp=amp_d, train=train
     )
     clicks_g = {w: first_rung(offer_g, norm_g, w, grace) for w in wheels}
     r2_g = {}
     for name, (e_lo, r_lo, k_step, _transit) in cases.items():
-        _, birth_g, norm_r, offer_r, _face_g = one_record_moving(
+        _, birth_g, norm_r, offer_r, _face_g, _ = one_record_moving(
             2200, 1950, e_lo, r_lo, k=k_step, g=g_d, big_g=big_d, amp=amp_d, train=train
         )
         r2_g[name] = {w: first_rung(offer_r, norm_r, w, birth_g) - birth_g for w in wheels}
@@ -529,5 +591,38 @@ if __name__ == "__main__":
         f" rung by W {clicks_g} against (e)'s {clicks_cells}; R2's clicks by case "
         + "; ".join(f"{k}: {v}" for k, v in r2_g.items())
         + f" against (f)'s: {'IDENTICAL' if same else 'DIFFERENT'} (the light's norm {norm_g:.4g} against {norm:.4g})"
+    )
+    # (h) THE RECEIVER FORM (DECLARATIONS.md section 10 item 9 and section 13 item 4; Reviewer 3's
+    # line 3 of 03:56Z): the light clock's set at x = 612 FREE during the record's grace and a take
+    # Node after it; R2's receiving sets the blocks' cells, taking the other's record at the near
+    # face's Port; the numbers that come out are the declared pins, re-derived before any run.
+    _, norm_h, _, _, take_h = one_record(673, 700, 600, 600, train=train, take_node=612, take_on=grace)
+    clicks_h = {w: first_rung(take_h, norm_h, w, grace) for w in wheels}
+    residual = float(np.sum(take_h[grace:200]) / (norm_h / 64))
+    print(
+        f"(h) THE RECEIVER FORM, the light clock: the set at x = 612 free during the grace {grace} and a take"
+        f" Node after it (the Port's one-way ghost with the pair [-15, 56], the row held at 0): the first rung"
+        f" by W {clicks_h} (2 L / c = 207.85); the residual's pointer from the grace's end to 200 is"
+        f" {residual:.3f} of the rung at W = 64 (at W >= 1024 it trips the rung at once, so the declared wheel"
+        f" is 64); THE PIN at W = 64: {clicks_h[64]} +- 2, re-derived with the take before any run"
+    )
+    r2_h, rises_h = {}, {}
+    for name, (e_lo, r_lo, k_step, transit) in cases.items():
+        _, birth_h, norm_rh, _, _, take_rh = one_record_moving(
+            2200, 1950, e_lo, r_lo, k=k_step, train=train, take=True
+        )
+        r2_h[name] = {w: first_rung(take_rh, norm_rh, w, birth_h) - birth_h for w in wheels}
+        rises_h[name] = r2_h[name][64] - transit
+        print(
+            f"    R2 in the receiver form, {name}: the clicks by W {r2_h[name]}; the transit {transit:.1f};"
+            f" the rise at W = 64 {rises_h[name]:+.1f}"
+        )
+    tp_h, tm_h = r2_h["k = 3, A chases B"][64], r2_h["k = 3, B meets A"][64]
+    own_h = sagnac_ratio(tp_h - rises_h["k = 3, A chases B"], tm_h - rises_h["k = 3, B meets A"])
+    print(
+        f"    THE DECLARED PINS OF R2 (re-derived with the take before any run): the rest click"
+        f" {r2_h['rest, B to A'][64]}, the chasing {tp_h}, the meeting {tm_h}, each +- 2 at W = 64; the raw"
+        f" ratio {sagnac_ratio(tp_h, tm_h):.4f} ({tp_h - tm_h} / {tp_h + tm_h}); with each direction's own rise"
+        f" subtracted {own_h:.4f} = v / c, the map's identity"
     )
     print(f"HOST {time.time() - t0:.0f} s")
