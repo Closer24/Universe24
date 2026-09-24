@@ -23,6 +23,7 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "amplitude_bound": 4294967296,
  "directions": [],
  "families": [
   {

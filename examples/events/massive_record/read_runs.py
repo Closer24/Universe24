@@ -58,9 +58,13 @@ C = 1.0 / math.sqrt(3.0)
 N_PHASE = 64
 REST_WINDOW = (200, 3000)
 HOLD = (1500, 9500)
+# the layer pin world of 4a pushed to k = 3: the hold after the ramp 10000 (DECLARATIONS.md
+# section 8); the rest world (3500 intervals) is read over REST_WINDOW
+LAYER_HOLD = (10200, 18200)
 INDEX_WINDOW = (1000, 1800)
 MOVING_WINDOW = (3400, 4300)
-LONG_WINDOW = (5000, 6000)
+# the long chains regenerated on DECLARATIONS.md section 11's geometry: the window [3800, 5400]
+LONG_WINDOW = (3800, 5400)
 INDEX_CELLS = 12
 MOVING_CELLS = 24
 
@@ -441,6 +445,61 @@ def main() -> None:
             reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
             reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
             readings[name] = reading
+    # (i-L), (ii-L) the layer pin worlds of row 4a: the clicks' mean interval over the hold
+    # [10200, 18200] at k = 3 over the rest world's over [200, 3000] (DETECTOR), the peaks
+    # GAMEBOARD beside
+    layer_hold = clock("layer_pin_k3_14", LAYER_HOLD)
+    layer_rest = clock("layer_pin_rest_14", REST_WINDOW)
+    if layer_rest:
+        pin = pins["layer_pin_rest_14"]["pin"]
+        layer_rest["pin_omega_b"] = pin["omega_b"]
+        layer_rest["peak_over_pin"] = layer_rest["spectral_peak_omega"] / pin["omega_b"]
+        layer_rest["rate_over_pin"] = layer_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
+        readings["layer_pin_rest_14"] = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            **layer_rest,
+        }
+    if layer_hold and layer_rest:
+        pin = pins["layer_pin_k3_14"]["pin"]
+        expected = pin.get("pin_f_over_f0", pin.get("f_over_f0"))
+        reading = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            "hold": layer_hold,
+            "rest": layer_rest,
+            "f_over_f0_by_rate": layer_hold["rate_per_interval"] / layer_rest["rate_per_interval"],
+            "f_over_f0_by_peak": layer_hold["spectral_peak_omega"] / layer_rest["spectral_peak_omega"],
+            "pin_f_over_f0": expected,
+            "pump": pump("layer_pin_k3_14", LAYER_HOLD),
+        }
+        reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
+        reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
+        readings["layer_pin_k3_14"] = reading
+    # the deep well in motion (the cavity row's CONTROL, RUN_LIST.md step 3): the clicks'
+    # mean interval over the hold at k = 3 over the rest world's (DETECTOR)
+    deep_hold = clock("deep_well_k3_40", HOLD)
+    deep_rest = clock("deep_well_rest_40", REST_WINDOW)
+    if deep_rest:
+        pin = pins["deep_well_rest_40"]["pin"]
+        deep_rest["pin_omega_b"] = pin["omega_b"]
+        deep_rest["rate_over_pin"] = deep_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
+        readings["deep_well_rest_40"] = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            **deep_rest,
+        }
+    if deep_hold and deep_rest:
+        expected = pins["deep_well_k3_40"]["pin"]["pin_f_over_f0"]
+        reading = {
+            "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
+            "hold": deep_hold,
+            "rest": deep_rest,
+            "f_over_f0_by_rate": deep_hold["rate_per_interval"] / deep_rest["rate_per_interval"],
+            "f_over_f0_by_peak": deep_hold["spectral_peak_omega"] / deep_rest["spectral_peak_omega"],
+            "pin_f_over_f0": expected,
+            "pump": pump("deep_well_k3_40", HOLD),
+        }
+        reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
+        reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
+        readings["deep_well_k3_40"] = reading
     # (v) the index at rest
     for name in ("index_50", "index_20", "index_10"):
         pin = pins[name]["pin"]

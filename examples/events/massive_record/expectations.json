@@ -175,7 +175,7 @@
   },
   "layer_pin_rest_14": {
    "kind": "PIN (layer)",
-   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over [200, 3500] against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
+   "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [10200, 18200] (the same window as the k = 3 world's, DECLARATIONS.md section 8) against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
    "pin": {
     "omega_b": 0.14844325144589593,
     "period_intervals": 42.32718729870761,
@@ -356,7 +356,7 @@
   },
   "index_moving_long_k3_away": {
    "kind": "PREDICTION",
-   "reads": "the receding case on the longer chain (n = 4000, the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]): the ratio of the delay to the covariant expectation with n(omega') from index_moving_long_rest_k3_away against its reference; the pump's signature over the window",
+   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from index_moving_long_rest_k3_away against its reference beside; the pump's signature over the window",
    "pin": {
     "k": 3,
     "beta_c": 0.5773502691896256,
@@ -367,12 +367,21 @@
      9,
      6
     ],
-    "ratio_read_over_expected": 6.74
+    "lab_phase_delay_rad": 1.0144,
+    "covariant_expectation_rad": 0.2323,
+    "ratio_read_over_expected": 4.37,
+    "halves_rad": [
+     0.5539,
+     1.5234
+    ],
+    "drift_rad_per_interval": 0.0012,
+    "band_rad": 0.04,
+    "band_drift_fraction": 0.1
    },
    "design": {
-    "ratio_drive_pair": 6.74,
-    "ratio_G_g_unchanged": 4.277,
-    "source": "massive_moving_index.out at the design's head, the receding case on the longer chain (the same-Node form; the Boss's 16:13Z: 4.3 and 6.8 from behind); the engine carries the drive's pair, so the pin is 6.74"
+    "n_rest_at_omega_prime_away": 1.2519,
+    "first_geometry_retired": "the source at 300, the probe at 2500, the window [5000, 6000] (the ratios 6.740 and 4.277 of massive_moving_index.out at the design's head) sat inside the train's own arrival and was withdrawn before any run (section 11)",
+    "source": "DECLARATIONS.md section 11 (massive_moving_index.py's next record prints the numbers; the scratch of 00:20Z)"
    }
   },
   "index_moving_k4_toward": {
@@ -413,7 +422,7 @@
   },
   "index_moving_long_k4_away": {
    "kind": "PREDICTION",
-   "reads": "the receding case on the longer chain (n = 4000, the source at 300, the probe at 2500, the block from x = 1500 from interval 2600, the window [5000, 6000]): the ratio of the delay to the covariant expectation with n(omega') from index_moving_long_rest_k4_away against its reference; the pump's signature over the window",
+   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from index_moving_long_rest_k4_away against its reference beside; the pump's signature over the window",
    "pin": {
     "k": 4,
     "beta_c": 0.43301270189221924,
@@ -427,6 +436,65 @@
    },
    "design": {
     "source": "no number declared at K = 4 (read beside K = 3)"
+   }
+  },
+  "deep_well_rest_40": {
+   "kind": "CONTROL",
+   "reads": "the deep well at rest: the clicks over [200, 3000] against the mode (DETECTOR); the peaks GAMEBOARD",
+   "pin": {
+    "omega_b": 0.053574174962428986,
+    "period_intervals": 117.28011325579757,
+    "eps": 0.8712402545958806,
+    "extent": 4.134179988261121
+   }
+  },
+  "deep_well_k3_40": {
+   "kind": "CONTROL (the cavity row's)",
+   "reads": "the deep well pushed to k = 3: the clicks' mean interval over the hold [1500, 9500] over the rest world's (DETECTOR, read_runs.py), f / f_0 against the one formula at the exact cone",
+   "pin": {
+    "cone": "exact",
+    "omega_b_rest": 0.053574174962428986,
+    "eps": 0.8712402545958806,
+    "extent": 4.134179988261121,
+    "gamma_m": 1.2270468882341616,
+    "width": 49.081875529366464,
+    "omega_b_low": 0.049533828351647664,
+    "omega_b_high": 0.04918174006186047,
+    "omega_b_wide": 0.049505000936537605,
+    "pin_f_over_f0": 0.7530649297648614,
+    "first_order": 0.6354535226900342
+   },
+   "controls": {
+    "second_order_c_m": {
+     "cone": "second",
+     "omega_b_rest": 0.053574174962428986,
+     "eps": 0.8712402545958806,
+     "extent": 4.134179988261121,
+     "gamma_m": 1.2282040666825125,
+     "width": 49.1281626673005,
+     "omega_b_low": 0.049533828351647664,
+     "omega_b_high": 0.04918174006186047,
+     "omega_b_wide": 0.049488703777303265,
+     "pin_f_over_f0": 0.7521077365891844,
+     "first_order": 0.6338471112017192
+    },
+    "light_c": {
+     "cone": "light",
+     "omega_b_rest": 0.053574174962428986,
+     "eps": 0.8712402545958806,
+     "extent": 4.134179988261121,
+     "gamma_m": 1.224744871391589,
+     "width": 48.98979485566356,
+     "omega_b_low": 0.04990220997254136,
+     "omega_b_high": 0.049533828351647664,
+     "omega_b_wide": 0.04953758773925977,
+     "pin_f_over_f0": 0.7549770210157805,
+     "first_order": 0.6386554086666917
+    }
+   },
+   "design": {
+    "f_over_f0": 0.7531,
+    "source": "RUN_LIST.md step 3 (massive_layer_pins.py, the layer's own)"
    }
   }
  }

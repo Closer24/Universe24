@@ -65,6 +65,28 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   1 / (omega_0 - omega_b) = 1027 intervals, DECLARATIONS.md section 8): PIN worlds
   (layer), the pin the mode's period and the one formula at the exact cone.
 
+- The launch list's worlds (RUN_LIST.md on `detector-law-design`, the declarations
+  DECLARATIONS.md sections 4, 10 and 11; the Boss's order of 2026-09-23 23:40Z item
+  (c): every world generated from its declaration, no number of the builder's own):
+  (4b) `redshift_k3.json` and `redshift_control.json` (NOT WRITTEN: refused at load by
+  MUST 3 with the declared g = [1, 50000], see `launch_list_worlds`; section 4, the second draft:
+  the chain of 2200, the emitter A of side 12, the well [314, 315] in [156, 157],
+  the flat seed 2^20, `emits` light with G [1, 1] and g [1, 50000], W = 64, A at
+  x = 700 pushed to k = 3 on -x over the ramp 1500, the control A at rest at x = 1300;
+  the light detector B a receiver body at x = 1900, 9500 intervals; the stock A holds
+  of light one unit per interval of the run, an inert bound on the births); the deep
+  well in motion `deep_well_k3_40.json` and `deep_well_rest_40.json` (a 128^2 layer,
+  s = 40 at full depth [800, 800] in [800, 809], the flat seed, the ramp 1500 and the
+  hold 8000; the block centred, the rest world's 3500 intervals the series' rest
+  length, as the layer pin's rest world keeps 3500 on main); (v-m) the long chains REGENERATED on section 11's geometry (the chain of
+  4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away
+  from interval 3000, the window [3800, 5400]); and `EXPLORATORY_light_clock_60.json`
+  (NOT WRITTEN, refused by MUST 3 as 4b's; section 10 read by PROBES only: the chain of 673, A at [600, 612) at full depth,
+  g [1, 50000], the open face at 672 the mirror, the probes at x = 612 and 613 and
+  2000 intervals; the pinned file `light_clock_60.json` waits on the physicist's
+  line for the face detector, since a receiver body at x = 612 on a chain takes the
+  whole line and nothing returns from the mirror through it).
+
 Run from the repository root:
 
     PYTHONPATH=src python examples/events/massive_record/make_worlds.py
@@ -82,6 +104,7 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 FACES_OPEN = {"x": "open"}
 AGE_BOUND = 1 << 20
+AMPLITUDE_BOUND = 1 << 32
 MOMENTUM_K3 = 64
 MOMENTUM_K4 = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -155,6 +178,10 @@ def world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
+        # the amplitude bound A every row stays below (DECLARATIONS.md section
+        # 15 M1-10: 2^32 in every massive world; MUST 3 at that A, the rows
+        # asserted below it at run time)
+        "amplitude_bound": AMPLITUDE_BOUND,
         "directions": [],
         "families": [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
         "measured": measured,
@@ -350,11 +377,13 @@ def worlds() -> dict[str, dict]:
                 probes=[[1500, 0, 0]],
                 mode_axis="x",
             )
-    # (v-m, the longer chain) the receding case the design's pin from behind is read on
-    # (`massive_moving_index.out`, "the receding case on a longer chain"): n = 4000, the
-    # source at 300, the probe at 2500, the block from x = 1500 moving away from interval
-    # 2600, the window [5000, 6000]; the rest world at omega' away at x = 2100 and the
-    # references at omega and at omega' away on the same chain.
+    # (v-m, the longer chain) the receding case the design's pin from behind is read on,
+    # REGENERATED on the declared geometry of DECLARATIONS.md section 11 (2026-09-24,
+    # 00:30Z; the first window sat inside the train's own arrival and was withdrawn):
+    # n = 4000, the source at 800, the probe at 2400, the block from x = 1500 moving away
+    # from interval 3000, the window [3800, 5400] (the front at the probe at 2770, the
+    # reflection from x = 0 at 5543); the rest world at omega' away at x = 2100 and the
+    # references at omega and at omega' away on the same chain, as before.
     for label in ("omega", "k3_away", "k4_away"):
         light_clock = {"name": "light", "quantum": 1, "phase_per_link": MOVING_CLOCKS[label]}
         for name, blocks in (
@@ -373,8 +402,8 @@ def worlds() -> dict[str, dict]:
                 6000,
                 light=light_clock,
                 faces=FACES_OPEN,
-                lamp=lamp_at(300, 200),
-                probes=[[2500, 0, 0]],
+                lamp=lamp_at(800, 200),
+                probes=[[2400, 0, 0]],
             )
     for k, momentum in ((3, MOMENTUM_K3), (4, MOMENTUM_K4)):
         name = f"index_moving_long_k{k}_away"
@@ -384,12 +413,12 @@ def worlds() -> dict[str, dict]:
             [4000, 1, 1],
             CHAIN,
             [156, 157],
-            [moving_block(1500, [momentum, 0, 0], start=2600)],
+            [moving_block(1500, [momentum, 0, 0], start=3000)],
             6000,
             light={"name": "light", "quantum": 1, "phase_per_link": MOVING_CLOCKS["omega"]},
             faces=FACES_OPEN,
-            lamp=lamp_at(300, 200),
-            probes=[[2500, 0, 0]],
+            lamp=lamp_at(800, 200),
+            probes=[[2400, 0, 0]],
             mode_axis="x",
         )
     # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4:
@@ -416,6 +445,127 @@ def worlds() -> dict[str, dict]:
     )
     moving["measured"][0]["seed"] = profile
     out["layer_pin_k3_14"] = moving
+    out.update(launch_list_worlds())
+    return out
+
+
+def receiver_at(x: int, name: str) -> tuple[dict, dict]:
+    """A DETECTOR of the ray law on the light record at a Node of the chain: the receiver
+    body (the Port's take, DESIGN.md section 5) and its detector set of one Node; the
+    click at the world's wheel (a lamp-less world has no key for W, named in the plan)."""
+    body = {
+        "position": [x, 0, 0],
+        "family": "light",
+        "amount": 1,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[-1, 0, 0]],
+    }
+    return body, {"name": name, "positions": [[x, 0, 0]]}
+
+
+def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra: object) -> dict:
+    """An EMITTER block of the launch list (DECLARATIONS.md sections 4 and 10): the well at
+    the cells, the seed 50 x 2^20, `emits` light with G [1, 50] and g [1, 1000] (section
+    15 M1-1: the same world as G [1, 1], g [1, 50000], seed 2^20 inside MUST 3's bound;
+    the emitter's radiative damping 6.7 x 10^-5 per interval), W = 64, `own_grace` 70
+    (N_s, section 10 item 1); the emission consumes no stock (M1-2, no `held`). `ticks`
+    is the world's."""
+    _ = ticks
+    block: dict = {
+        "position": position,
+        "side": side,
+        "pair": pair,
+        "seed": 50 << 20,
+        "coupling": {"G": [1, 50], "g": [1, 1000]},
+        "wheel": 64,
+        "emits": "light",
+        "own_grace": 70,
+        "margin": "pin",
+    }
+    block.update(extra)
+    return block
+
+
+def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
+    """The launch list's worlds (RUN_LIST.md; DECLARATIONS.md sections 4, 10 and 11).
+    The emitters' worlds (4b and the light clock) are written only with
+    `include_refused`: their declared coupling g = [1, 50000] is REFUSED at load by
+    Reviewer 3's MUST 3 (the load bound of the pair with its g_d at the amplitude bound
+    A = 2^40: num x 6 x A x g_d + 3 x den x g_d x (A + 1) below 2^63 admits g_d up to
+    about 4450 on [314, 315] and 1750 on [800, 800]); a world that does not load is not
+    an example (the gate parses every example), so the conflict of the declaration with
+    the bound is the physicist's and Reviewer 3's to settle (BUILD.md section 12)."""
+    out: dict[str, dict] = {}
+    # (4b) the redshift of the moving lamp, section 4 (the second draft): the chain of 2200,
+    # light's faces open, the massive kind's faces open on x; A at x = 700 pushed to k = 3 on
+    # -x (receding from B) over the ramp 1500, the hold 8000; the control A at rest at x = 1300;
+    # B the light detector at x = 1900, a probe at the free Node it faces (GAMEBOARD).
+    emitters: list[tuple[str, int, dict]] = (
+        [
+            ("redshift_k3", 700, {"momentum": [-MOMENTUM_K3, 0, 0], "ramp": 1500}),
+            ("redshift_control", 1300, {}),
+        ]
+        if include_refused
+        else []
+    )
+    for name, x, extra in emitters:
+        body, detector = receiver_at(1900, "B")
+        document = world(
+            name.replace("_", "-"),
+            "PIN" if extra else "CONTROL",
+            [2200, 1, 1],
+            CHAIN,
+            [156, 157],
+            [emitter([x, 0, 0], 12, [314, 315], 9500, **extra)],
+            9500,
+            faces=FACES_OPEN,
+            probes=[[1899, 0, 0]],
+        )
+        document["measured"].append(body)
+        document["detectors"] = [detector]
+        out[name] = document
+    # the deep well in motion (the cavity row's CONTROL): a 128^2 layer, s = 40 at full depth
+    # in the kind [800, 809], the flat seed, the block centred; pushed to k = 3 over the ramp
+    # 1500 and the hold 8000, and at rest.
+    deep = {
+        "position": [44, 44, 0],
+        "side": 40,
+        "pair": [800, 800],
+        "seed": 1 << 20,
+        "margin": "control",
+    }
+    out["deep_well_rest_40"] = world(
+        "deep-well-rest-40", "CONTROL", [128, 128, 1], PERIODIC, [800, 809], [deep], 3500
+    )
+    out["deep_well_k3_40"] = world(
+        "deep-well-k3-40",
+        "CONTROL",
+        [128, 128, 1],
+        PERIODIC,
+        [800, 809],
+        [dict(deep, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
+        9500,
+        mode_axis="x",
+    )
+    # the light clock of two bodies, section 10, as an EXPLORATORY world read by probes: the
+    # chain of 673 with light's faces open (the zero face at x = 672 the mirror B, sixty
+    # Links from A's face at 612), A the emitter of side 12 at [600, 612) at full depth, the
+    # probes at x = 612 (A's face, the declared detector's Node) and 613; 2000 intervals (the
+    # window before the far end's return). The pinned file waits on the physicist's line
+    # for the face detector (a receiver body on a chain takes the whole line).
+    if include_refused:
+        out["EXPLORATORY_light_clock_60"] = world(
+            "exploratory-light-clock-60",
+            "EXPLORATORY",
+            [673, 1, 1],
+            CHAIN,
+            [800, 809],
+            [emitter([600, 0, 0], 12, [800, 800], 2000)],
+            2000,
+            probes=[[612, 0, 0], [613, 0, 0]],
+        )
     return out
 
 
