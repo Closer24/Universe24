@@ -7068,3 +7068,25 @@ the second). The merge of PR 1097 brings the two gammas' gap at c_eff
 (/6), the lattice sentence as chapter 7 says it, the light-held pair's
 numbers beside the rigid pair's, and Poh's value verified. The abstract
 says the six operations act at the applicable local events. 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 03:46Z): commit 44 on paper-48
+
+Part A carries the chief physicist's answers to the physics audit
+(S1, S2, S6, S7, S8, S9, S11, S13, S14, S15, S16, S19; D, F, L, M, N,
+O; the verifier's row v; R2's two inputs) verbatim through the Boss:
+one law named (the massive record kind with the local detector law),
+the beam law's flight table dated as history with the pace
+proposition's proof and ground in records.tex (rec:oldflight), the
+P-rule a requirement beyond locality with the square assembled from
+three separately derived parts, c Outside a bound, the commutator as
+where the law goes, light clicking only at a detector set, the
+completion sentence, and the table rows' readers and kinds. P4's
+wording is a proposal for the owner at 09:00 Israel; the P9 sentence
+was already in the text (commit 39). Part B answers issue 1099 (the
+pair's amplitude unit and rounding, the clock clause with record 1543,
+the version line of the table, Appendix B's tag sentence, Figure 1's
+caption, row ii's class); the title's framing and "brought in nothing
+external" wait on the owner. Part C applies the glossary lines of
+03:21Z (three world files; lattice only mathematical; every cell
+qualified). The three beam-law rows stay out of the text (the owner's
+word). 48 pages.

@@ -61,6 +61,29 @@ INTERFERENCE_START = "\\paragraph{Interference, by the formulas alone.}"
 # records file; cut30/click.py (one click, the detector law's form) in its place.
 OLDCLICK_START = "\\begin{definition}[The click]\\label{def:click}"
 OLDCLICK_END = "\\end{lemma}\n"
+# the beam law's flight table (S1 of the physicist's answers, 2026-09-24): the proof of
+# the pace proposition and its ground go to the records file as history.
+FLIGHT_PROOF_START = "\\begin{proof}\n$S_1^2 = (|D_x| + |D_y| + |D_z|)^2"
+FLIGHT_PROOF_END = "\\end{proof}\n"
+FLIGHT_GROUND_START = "The number is the bound of the Courant condition for the wave equation"
+FLIGHT_GROUND_END = "and claims no novelty for the number. "
+FLIGHT_POINTER = (
+    "The proof (Cauchy--Schwarz against $(1, 1, 1)$), the Courant and lattice Boltzmann "
+    "comparisons and the ground of the bound are in the records file \\cite{records}, history.\n"
+)
+
+
+def cut_flight(s: str) -> tuple[str, str]:
+    """The flight table's proof and its ground out of the paper, kept whole."""
+    i = _once(s, FLIGHT_PROOF_START, "the flight proof")
+    j = s.index(FLIGHT_PROOF_END, i) + len(FLIGHT_PROOF_END)
+    proof, s = s[i:j], s[:i] + FLIGHT_POINTER + s[j:]
+    i = _once(s, FLIGHT_GROUND_START, "the flight ground")
+    j = s.index(FLIGHT_GROUND_END, i) + len(FLIGHT_GROUND_END)
+    ground, s = s[i:j], s[:i] + s[j:]
+    return s, proof + "\n\n" + ground + "\n"
+
+
 # The three rows of the earlier beam law (the perihelion, the supernova diagram, the
 # atom): out of the text entirely, whole in the records file (the owner's word of
 # 2026-09-24, 03:30Z, through the Boss); the families' pointer sentence stays.
@@ -251,6 +274,7 @@ def cut(s: str) -> tuple[str, str]:
     j = s.index(OLDCLICK_END, i) + len(OLDCLICK_END)
     oldclick, s = s[i:j], s[:i] + click.DEFINITION + s[j:]
     s, fail_rows = cut_fail_rows(s)
+    s, flight = cut_flight(s)
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
@@ -288,6 +312,8 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
         + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
         + oldclick
+        + "\n\\section{The beam law's flight table: the proof of the pace proposition and its ground, history}\\label{rec:oldflight}\n\n"
+        + flight
         + "\n\\section{The three FAIL rows in full: the perihelion, the supernova diagram and the atom, history}\\label{rec:failrows}\n\n"
         + "\n\n".join(fail_rows)
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
@@ -330,6 +356,8 @@ def strip_block(body: str) -> str:
         return ""
     if FAIL_CUTS[0][0] in body:  # the three FAIL rows, one sentence each
         body, _ = cut_fail_rows(body)
+    if FLIGHT_PROOF_START in body:  # the flight table's proof and ground, likewise
+        body, _ = cut_flight(body)
     if OLDCLICK_START in body:  # the beam law's click, whole in the records file
         i = body.index(OLDCLICK_START)
         j = body.index(OLDCLICK_END, i) + len(OLDCLICK_END)

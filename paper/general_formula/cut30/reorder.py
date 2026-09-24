@@ -22,7 +22,7 @@ import massive
 BLOCKS = {
     "words": (
         "\\paragraph{The definitions, in order.}",
-        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.55\\linewidth]{figures/lattice.pdf}",
+        "\\begin{figure}[!tb]\\centering\\includegraphics[width=0.42\\linewidth]{figures/lattice.pdf}",
     ),
     "simulator_led": (
         "\\paragraph{From the physics to the mathematics: the postulates and what each forces.}",
@@ -175,8 +175,8 @@ REFS = [
         "$W$ is shown to second order (the step above, this section)",
     ),
     (
-        "the lattice's corrections from the fourth (Section~\\ref{sec:discussion})",
-        "the lattice's corrections from the fourth (Section~\\ref{sec:click})",
+        "the GameBoard's corrections from the fourth (Section~\\ref{sec:discussion})",
+        "the GameBoard's corrections from the fourth (Section~\\ref{sec:click})",
     ),
     (
         "are not derived here (Section~\\ref{sec:discussion})",

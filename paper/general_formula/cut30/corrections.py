@@ -5333,6 +5333,251 @@ CORRECTIONS = [
         "\\bibitem{glossary}",
         "\\bibitem{lightheld} The light-held pair on the band, the declared world and its along ratio, \\texttt{docs/designs/detector\\_law/light\\_held\\_pair\\_pins.py} with its output and DECLARATIONS.md's clause of the archived code \\cite{zenodo}, on \\texttt{main} at a867ab22. \\bibitem{glossary}",
     ),
+    (
+        "commit 44, S15 and issue 1099 (3), Section 1: the P-rule a requirement beyond locality; the three parts of the square derived separately",
+        "must commute with the $48$, and that requirement selects the admissible forms: the only isotropic quadratic reading of a momentum within the six operations is $c\\,\\mathbf p\\cdot\\mathbf p$, and the square $m^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ follows.",
+        "is required to commute with the $48$ (the P-rule), a requirement beyond locality, and that requirement selects the admissible forms: the $48$ force the form's isotropy, every quadratic invariant a multiple of $\\mathbf p\\cdot\\mathbf p$; the $3$ is the chain's $1/c^2 = 3$ and $E_0'^2$ is the band's bottom, each derived separately, and the square $m^2 + 3\\,\\mathbf p\\cdot\\mathbf p$ is assembled from the three.",
+    ),
+    (
+        "commit 44, S15 and issue 1099 (3), Section 7: the same three parts at the group paragraph",
+        "a rule that reads only the local state must commute with the $48$, and the symmetric integer matrices",
+        "a rule that reads only the local state is required to commute with the $48$ (the P-rule, a requirement beyond locality), and the symmetric integer matrices",
+    ),
+    (
+        "commit 44, S15, Section 7: the square assembled, not following",
+        "and the square $W$ of Eq.~\\eqref{eq:square} follows;",
+        "and the square $W$ of Eq.~\\eqref{eq:square} is assembled from three things derived separately, the $48$ forcing the form's isotropy (every quadratic invariant a multiple of $\\mathbf p\\cdot\\mathbf p$), the $3$ the chain's $1/c^2 = 3$ and $E_0'^2$ the band's bottom;",
+    ),
+    (
+        "commit 44, S16: c Outside a bound in the discreteness theorem",
+        "and $c$ Outside is one Link per the least count, the bound at $k = 1$.",
+        "and $c$ Outside is a BOUND, at most one Link per interval on every digital line and $1/\\sqrt3$ on the fan; Outside reads it as Nodes apart over counts apart with $r_D = 1$.",
+    ),
+    (
+        "commit 44, S13 and (O): the commutator as where the law goes, hbar = h_q Nphi / 2 pi = h / 2 pi, Kennard in the limit",
+        "from which $[x, p] = i\\hbar$ follows as $\\Nphi \\to \\infty$ with $\\hbar = h\\Nphi/2\\pi$, Kennard's $\\Delta x\\,\\Delta p \\ge \\hbar/2$ as that limit",
+        "which is where the law goes: $[x, p] = i\\hbar$ as $\\Nphi \\to \\infty$ with $\\hbar = h_q\\Nphi/2\\pi = h/2\\pi$, Kennard's $\\Delta x\\,\\Delta p \\ge \\hbar/2$ in that limit and nothing of the law at finite grain",
+    ),
+    (
+        "commit 44, S19: the positioning paragraph, the flight table's transport free of dispersion, the record kind's not",
+        "free of dispersion where the lattice automata of\n\\cite{bialynicki1994,meyer1996,arrighi2019} disperse;",
+        "the flight table's transport free of dispersion where the lattice automata of\n\\cite{bialynicki1994,meyer1996,arrighi2019} disperse, the record kind's not, its $k^2$ dispersion the prediction of row A2;",
+    ),
+    (
+        "commit 44, S2: r = 1 and nothing contracts restricted to the beam law's bodies that hop",
+        "the rows that hop had $r = 1$ at every speed and nothing contracted, history;",
+        "the beam law's bodies that hop had $r = 1$ at every speed and nothing contracted, no relativistic dynamics on them, history;",
+    ),
+    (
+        "commit 44, (N): Theorem 6 (vi), two inputs recombining at one split",
+        "(vi) The conservation at a general split and at a label\nrotation follows from homogeneity, (a) and the cancellation of the\ncross terms between the two outputs.",
+        "(vi) The conservation at a general split and at a label\nrotation follows from homogeneity, (a) and the cancellation of the\ncross terms between the two outputs; for two inputs recombining at one split it needs $\\mathbf B^{\\mathsf H}\\mathbf B = A\\,\\mathbf I$ per character, which the balanced table meets, the declared splitter being that case.",
+    ),
+    (
+        "commit 44, S6: nS/d a DECLARATION, an input of kind 2",
+        "$\\delta k = (nS/d)\\,(gY/c^2)$",
+        "$\\delta k = (nS/d)\\,(gY/c^2)$, $nS/d = 16$ a DECLARATION (an input of kind 2)",
+    ),
+    (
+        "commit 44, S1: Appendix B, one law named, the beam law's runtime history",
+        "The paper's law is the runtime before the generic entry of the bending: the runs' own commits named above, on the first-parent line of \\texttt{main} up to 3a9a7109, the last commit before the entry's merge 5b855791; the generic entry is a later rule of the law (Section~\\ref{sec:law}, P9), and",
+        "The paper's law is the massive record kind with the local detector law, on \\texttt{main} at a867ab22 \\cite{algebra}; the beam law's runtime before the generic entry of the bending (the runs' own commits named above, on the first-parent line of \\texttt{main} up to 3a9a7109, the last commit before the entry's merge 5b855791) is history, its flight table and its readings in the records file \\cite{records}; the generic entry is a later rule of that runtime (Section~\\ref{sec:law}, P9), and",
+    ),
+    (
+        "commit 44, S1: the flight table's paragraph and Proposition 1 dated as history",
+        "\\paragraph{The pace of the rows, and the octahedron.} Two rules are the whole kinematics of a row:",
+        "\\paragraph{History: the beam law's flight table, the runtime before 3a9a7109.} This paragraph and Proposition~\\ref{prop:pace} are the beam law's, its flight table, the runtime before 3a9a7109, kept as history: under the law as it stands light is the record kind $[1, 1]$ whose band disperses at $k^2$ (row A2), and $c$ Outside is a bound (Theorem~\\ref{th:discreteness}). Two rules were the whole kinematics of a row:",
+    ),
+    (
+        "commit 44, S1: the flight's wall in Section 2 marked history",
+        "The same six Ports bound the pace (Proposition~\\ref{prop:pace} below); that the rows' pace $c$ sits at that bound and not below is the flight's declared wall $T_D$, a rule chosen among few (P9),",
+        "The same six Ports bound the pace (Proposition~\\ref{prop:pace} below, the beam law's flight table, history); that the rows' pace $c$ sat at that bound and not below was the flight's declared wall $T_D$, a rule chosen among few (P9),",
+    ),
+    (
+        "commit 44, S1: Definition 2's flight the beam law's",
+        "Applied in this order to every row.",
+        "Applied in this order to every row of the beam law; item F is its flight table, the runtime before 3a9a7109, history, and under the record kind the flight is Eq.~\\eqref{eq:massive}'s own.",
+    ),
+    (
+        "commit 44, (F): row 4b, 1.9355 named only with its pair",
+        "the free limit $1.9339$ beside",
+        "the free limit $1.9339$ beside, $1.9355$ with the pair $[800, 809]$",
+    ),
+    (
+        "commit 44, (L): row 4a, the well's mode period",
+        "at rest: the period $42.364$ against $42.36$, no beat",
+        "at rest: the well's mode period $42.364$ against $42.36$, no beat",
+    ),
+    (
+        "commit 44, (M) and S6: row 5a, the phase pace by direction, GAMEBOARD, a PARAMETER BOUND",
+        "5a & The anisotropy of $c$ by direction & K & the pace by direction within $0.8$, $0.4$, $0.2$ percent of $c$ at $12$, $16$, $24$ Links, falling as the inverse square of the wavelength; a parameter bound, not an agreement:",
+        "5a & The anisotropy of $c$ by direction & K & the phase pace by direction ($k^2/36$, Eq.~\\eqref{eq:dispersion}) within $0.8$, $0.4$, $0.2$ percent of $c$ at $12$, $16$, $24$ Links, falling as the inverse square of the wavelength, GAMEBOARD; a PARAMETER BOUND, not an agreement:",
+    ),
+    (
+        "commit 44, S6: row 7's second line GAMEBOARD",
+        "exploratory: the coupled mode $0.09948$ within $0.3$ percent",
+        "exploratory, GAMEBOARD: the coupled mode $0.09948$ within $0.3$ percent",
+    ),
+    (
+        "commit 44, S6: row v-m's reader GAMEBOARD",
+        "partial: head-on $0.498$ beside",
+        "partial, GAMEBOARD: head-on $0.498$ beside",
+    ),
+    (
+        "commit 44, S14 and issue 1099's row v: the 4 percent ours, n - 1 at 0.87 of the closed form, a GAMEBOARD probe",
+        "the $4$ percent between them open in size & exploratory at rest: $0.01$ to $0.03$ percent from the closed form",
+        "the $4$ percent between them ours, the cavity's mode sum against the closed form, open in size & exploratory at rest: $n - 1$ read at $0.87$ of the closed form at all three couplings, a GAMEBOARD probe \\cite[the index block's row]{exploration}",
+    ),
+    (
+        "commit 44, (18) and issue 1099's row R2: the two inputs, the ratio ours",
+        "nature's coefficient $0.975 \\pm 0.021$ (Michelson, Gale and Pearson 1925, to verify)",
+        "nature's fringe shift $0.230 \\pm 0.005$ against the computed $0.236$ (Michelson, Gale and Pearson 1925, to verify), the ratio $0.975 \\pm 0.021$ ours, a CONVERSION",
+    ),
+    (
+        "commit 44, S11: row 1d, N/2 of N, 1024 of 2048 on the declared world",
+        "each party's $+$ fraction $32$ of $64$ at every setting",
+        "each party's $+$ fraction $N/2$ of $N$ at every setting, $1024$ of $2048$ on the declared world",
+    ),
+    (
+        "commit 44, S11 and issue 1099's row 2a: no nature number",
+        "; nature $0.94$ \\cite{jacques2005}",
+        "; no nature number, NOT COMPARED",
+    ),
+    (
+        "commit 44, S14: row 10's two numbers COMPUTATION, the closure page and its script",
+        "(a) $0.842$ at $w = 2\\lambda$, $F = 0.16$, the Rayleigh--Sommerfeld sum on the board; (b) $0.886$ in the far field",
+        "(a) $0.842$ at $w = 2\\lambda$, $F = 0.16$, the Rayleigh--Sommerfeld sum on the board; (b) $0.886$ in the far field; both COMPUTATION \\cite[row 10 and its script]{closure}",
+    ),
+    (
+        "commit 44, S14: row A's coefficient cited (Altschul 2006, to verify)",
+        "with the electron's $c$ coefficient $2 \\times 10^{-14}$",
+        "with the electron's $c$ coefficient $2 \\times 10^{-14}$ \\cite{altschul2006}",
+    ),
+    (
+        "commit 44, S8: row LC, one emitting block and a mirror",
+        "LC & The light clock of two bodies & K, P & $N_0 = 218 \\pm 2$ in A's clicks at $W = 64$, $2L/c = 207.85$ beside as the (K) form, (P) in the two ring-ups &",
+        "LC & The light clock: one emitting block A and a mirror & K, P & the chain's closed face at $x = 672$ sixty Links from A's face; $N_0 = 218 \\pm 2$ in A's own clicks at $W = 64$ on its returned record (the declarations' section 10, item 9 \\cite{declarations}), $2L/c = 207.85$ beside as the (K) form, the rung's rise of about ten intervals the click's own; in motion (P) as declared, $\\gamma^2/\\gamma_m = 1.2224$ along and $\\gamma/\\gamma_m = 0.9981$ across (item 7), the light-held pair $1.0136$ (item 8); ``two bodies'' and ``two ring-ups'' history &",
+    ),
+    (
+        "commit 44, issue 1099: row ii's class DERIVED_BLIND (P) per the Boss",
+        "the three gammas indistinguishable at this board & \\underline{\\hspace{0.45in}} & \\underline{\\hspace{0.3in}} \\\\",
+        "the three gammas indistinguishable at this board & \\underline{\\hspace{0.45in}} & DERIVED\\_BLIND \\\\",
+    ),
+    (
+        "commit 44, issue 1099 (1): the pair at the declared amplitude unit, the levels rounded",
+        "matter $[800, 809]$. The pair fixes the rate at rest",
+        "matter $[800, 809]$, at the declared amplitude unit, the levels rounded to it. The pair fixes the rate at rest",
+    ),
+    (
+        "commit 44, issue 1099 (1): the turn formula's clock clause, record 1543",
+        "no nearest entry, no phase label, no register \\cite[section 14]{declarations}.",
+        "no nearest entry, no phase label, no register \\cite[section 14]{declarations}; $k$ chosen so that $S[k]$ is large, the clock clause (Bell's rows $[2464, 25]$ on $\\Nphi = 2048$, Malus $[308, 25]$ on $\\Nphi = 256$; \\cite[record 1543]{log}).",
+    ),
+    (
+        "commit 44, issue 1099 (4): the table's version line, one law, the earlier runtime never carried in",
+        "blank until the closure page fixes it; only a DERIVED\\_BLIND row is offered as a prediction.}",
+        "blank until the closure page fixes it; only a DERIVED\\_BLIND row is offered as a prediction. Version: every row's algebra number is the law of 2026-09-23, the massive record kind with the local detector law (on \\texttt{main} at a867ab22 \\cite{algebra}); no reading of the earlier runtime, the beam law before 3a9a7109, is carried into this table, and wherever the text cites one it is marked history.}",
+    ),
+    (
+        "commit 44, issue 1099 (3 of the framing list): Appendix B's tag sentence restored, the AI sentence after it",
+        "The archived version cited at submission is the tag The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration at the end of the paper states; every decision is the author's. Every theorem, identity and number of the paper was re-derived and recomputed independently, one line per statement \\cite{mathread}. \\texttt{paper-2026-09-22} on the merge commit of the pull request that carries this cut, one tree whose history holds the trees named above and the log records this paper cites; it replaces the concept DOI below.",
+        "The archived version cited at submission is the tag \\texttt{paper-2026-09-22} on the merge commit of the pull request that carries this cut, one tree whose history holds the trees named above and the log records this paper cites; it replaces the concept DOI below. The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration at the end of the paper states; every decision is the author's. Every theorem, identity and number of the paper was re-derived and recomputed independently, one line per statement \\cite{mathread}.",
+    ),
+    (
+        "commit 44, issue 1099 (4 of the framing list): Figure 1's caption shortened",
+        "From the groups to the click. Left: the six Ports as the face centres of a cube, the symmetry group of the cube ($48$, its rotations the group of order $24$), and the octahedron they span, the causal front of one interval. Second: the same six Ports along a body diagonal, a hexagon, the cubic pattern of the dispersion. Third: the GameBoard with the block inside it, the block itself the detector, its cells the detector set with the rung $W$; the phase circle $\\Z_{\\Nphi}$ on it, the record's clock, tied to the record's pair by the kind's declared clock (light's phase per Link $[n, d]$, the massive kind's $\\cos\\omega_0 = \\mathrm{num}/\\mathrm{den}$); the light record running on the free Nodes and through the block; the take a declaration of the world file. Right: the click, the quadratic form of the record's values in the cells crossing the rung, one per record, the only thing that leaves the board; every other number of the paper is a GAMEBOARD reading of the host. Drawn from the definitions by \\texttt{groups\\_figure.py}; no run.}",
+        "From the groups to the click. Left: the six Ports as the face centres of a cube, the symmetry group of the cube ($48$, its rotations the group of order $24$), and the octahedron they span, one interval's causal front. Second: the six Ports along a body diagonal, a hexagon, the dispersion's cubic pattern. Third: the GameBoard with the block inside it, the block itself the detector, its cells the detector set with the rung $W$, the phase circle $\\Z_{\\Nphi}$ its clock, a light record running through it. Right: the click, the record's quadratic form crossing the rung, the only thing that leaves the board. Drawn from the definitions by \\texttt{groups\\_figure.py}; no run.}",
+    ),
+    (
+        "commit 44, glossary: three world files",
+        "series K's $0.000$ pixel and $0.00$ interval (three worlds, DETECTOR)",
+        "series K's $0.000$ pixel and $0.00$ interval (three world files, DETECTOR)",
+    ),
+    (
+        "commit 44, glossary: lattice only mathematical (1)",
+        "no lattice able to hold the atom's scale being run",
+        "no GameBoard able to hold the atom's scale being run",
+    ),
+    (
+        "commit 44, glossary: lattice only mathematical (2)",
+        "The paper's centre is the step beneath the lattice",
+        "The paper's centre is the step beneath, on the GameBoard",
+    ),
+    (
+        "commit 44, glossary: lattice only mathematical (3)",
+        "the lattice's corrections from the fourth",
+        "the GameBoard's corrections from the fourth",
+    ),
+    (
+        "commit 44, glossary: lattice only mathematical (4)",
+        "the lattice's band $0.01$",
+        "the band $0.01$",
+    ),
+    (
+        "commit 44, glossary: cell qualified (93)",
+        "Written down, the rules put into the cells are",
+        "Written down, the rules put into every Node are",
+    ),
+    (
+        "commit 44, glossary: cell qualified (120)",
+        "the cell the phase falls in is the outcome",
+        "the ladder's cell the phase falls in is the outcome",
+    ),
+    (
+        "commit 44, glossary: cell qualified (180)",
+        "the cell's weight reduced by its greatest common",
+        "each ladder cell's weight reduced by its greatest common",
+    ),
+    (
+        "commit 44, glossary: cell qualified (356a)",
+        "the click reads one cell of one record and ends it",
+        "the click reads one record into one cell of the ladder and ends it",
+    ),
+    (
+        "commit 44, glossary: cell qualified (356b)",
+        "the cell's weight $J^2$",
+        "the ladder cell's weight $J^2$",
+    ),
+    (
+        "commit 44, glossary: cell qualified (358a)",
+        "the cell's offer $R = J^2$",
+        "the ladder cell's offer $R = J^2$",
+    ),
+    (
+        "commit 44, glossary: cell qualified (358b)",
+        "the rung over the four cells",
+        "the rung over the ladder's four cells",
+    ),
+    (
+        "commit 44, glossary: cell qualified (618)",
+        "the cells give $B = A$ at $a = b$",
+        "the ladder's cells give $B = A$ at $a = b$",
+    ),
+    (
+        "commit 44, glossary: cell qualified (659)",
+        "the first cell's counts",
+        "the ladder's first cell's counts",
+    ),
+    (
+        "commit 44, glossary: cell qualified (742)",
+        "a referee's test that every cell must pass",
+        "a referee's test that every cell of the table must pass",
+    ),
+    (
+        "commit 44, the two bibitems (the exploration page; Altschul 2006, to verify)",
+        "\\bibitem{glossary}",
+        "\\bibitem{exploration} The detector law's exploratory readings, GAMEBOARD probes without pins, \\texttt{docs/designs/detector\\_law/EXPLORATION.md} of the archived code \\cite{zenodo}, on \\texttt{main} at a5e80449. \\bibitem{altschul2006} B. Altschul, Phys. Rev. Lett. 96, 201101 (2006); Phys. Rev. D 74, 083003 (2006); the coefficient's value and its page to verify. \\bibitem{glossary}",
+    ),
+    (
+        "commit 44, the page count: the octahedron figure narrower",
+        "width=0.3\\textwidth]{figures/octahedron.pdf}",
+        "width=0.22\\textwidth]{figures/octahedron.pdf}",
+    ),
+    (
+        "commit 44, the page count: the lattice figure narrower",
+        "width=0.55\\linewidth]{figures/lattice.pdf}",
+        "width=0.42\\linewidth]{figures/lattice.pdf}",
+    ),
 ]
 
 
