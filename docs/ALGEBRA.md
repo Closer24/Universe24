@@ -4118,6 +4118,13 @@ and main's `rungs`):
   engine defect. At W = 2048 the same weights give 717 / 256 (the rung's
   rounding), which is why the wheel moves to 2560. Nature's optimum, 2
   sqrt 2 = 2.828, is not a pin.
+  THE HOST'S FORM (the physicist's cost of 19:00Z: about 1.7 ms per
+  record-interval on the Bell layer, about 6 hours at 2048 records): the
+  counts are deterministic over the wheel, so the smallest exact wheel,
+  W = 20, gives the SAME S = 14 / 5 with 20 pair records per setting.
+  The counts are 8, 2, 2, 8; 1, 9, 9, 1; 9, 1, 1, 9; 8, 2, 2, 8, with
+  marginals exactly 10 (COMPUTATION, main's `rungs`), in about 1 / 100 of
+  the host time. Any multiple of 20 is the same pin scaled.
 - MALUS. H arrives; the + cell is along the axis, with the share a^2 /
   (a^2 + b^2). The axes, chosen as the integer vectors nearest the four
   settings of the list:
