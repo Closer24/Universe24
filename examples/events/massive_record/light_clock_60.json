@@ -78,7 +78,8 @@
    "wheel": 64,
    "seed": 52428800,
    "emits": "light",
-   "own_grace": 70
+   "own_grace": 70,
+   "receiver": "at_a"
   }
  ],
  "detectors": [

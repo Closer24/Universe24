@@ -1348,3 +1348,85 @@ would have found no cell.
   every tick; without the key the same world clicks at face:-x (the
   control); the string form names one set; the four refusals.
 
+## 21. The receiver by name and the click line at the rung (DECLARATIONS.md section 13 item 7, the owner's word of 2026-09-24, 09:50Z; section 10 items 9 and 10; Nature24's eight decisions of 12:40Z through the Boss, the declaration built to; the former build-4 of record 1800, never pushed; the Engine Fixer's line 1 on `engine-fix-1`, 2026-09-24)
+
+- THE LINE (`world.py`: `BlockDefinition.receiver`, the block key
+  `receiver`; `detector_law.py`: `receiver_cell`, `_receiver_of`,
+  `_line_at_rung`, `_gather_line`, `_release`, `_click`, `_close_clicked`,
+  `_close_without_click`): every emitting block declares `receiver`, the
+  name of a declared detector set (REQUIRED, refused absent with no
+  default; refused on a block that emits nothing; refused naming no
+  declared set, the names listed; a set bound to the block itself
+  admitted), and that set's one cell is the LADDER of every record the
+  block emits, one cell whatever the set's Node count, its rung the set's
+  own `wheel` (pointer x wheel at or above the record's norm, the rung as
+  today), the record's u 0 choosing nothing. The faces and every other
+  set are SINKS for such a record: what they take enters `absorbed` (the
+  completion's measure) and the record's HOST `escaped` (the pointer's
+  unit) and no pointer, in the offer loop of `_advance`, at the hop's
+  entered content in `_move_block` and at a clock body's response in
+  `_book_response` alike. The gather line is written by `_line_at_rung`
+  at the first interval after the record's train (not sourcing, age at
+  or above the train, item 10's own condition) at which the receiver's
+  first rung is stamped: `click` the rung's interval, `tick` the line's
+  (equal to `click`; the birth plus the train where the rung fell inside
+  the train, Reviewer 3's precondition of record 1800), `click_at`
+  "rung", `clock` the receiving block's count as the interval began,
+  `escaped` the sinks' take by the line. The content moves with the line
+  to the receiver's body (`held`, `held_measured`, `transit_absorbed`; 0
+  for a block's record, born at content 0), the record's content is 0
+  from then and it lives on (field energy the sinks absorb) to close by
+  `_complete` as before with NO second line: `_close_clicked` books its
+  content (0) to the escaped row, releases its rows and counts it on the
+  ledger's HOST row `closed_after_click` (`transit.closed_after_click` in
+  the books; the records reading's `clicked` and `escaped`), written on
+  a world with a receiver alone. A record whose receiver crosses no rung
+  within the ticks writes NO line (`_close_without_click`): its content
+  goes to the row of the take that ended it, `taken_by_emitter` where its
+  own emitter took it and the escaped row where a face or a set did (0
+  for a block's record), or it stays open at the run's end. The emitter's
+  own cells take on no pointer at every age (section 18, PR 1115 as
+  merged: `_move_block` holds the entered Node at 0 for the block's own
+  record from the train's end and books nothing, the row evolving during
+  the train, line B; nothing added), so a block naming the set at its own
+  cells never clicks (test (b)). A lamp's record keeps the close and the
+  cell by u (line (iii), the lamp's ladder by name, is a later order).
+- THE FIVE REGISTERED FILES (the Boss's addition): `sagnac_k3.json` and
+  `sagnac_rest.json` (block 0 `receiver` "at_b", block 1 "at_a"),
+  `light_clock_60.json` (A "at_a"), `redshift_k3.json` and
+  `redshift_control.json` (A "light_detector") receive the key by the
+  minimal edit of that one key after `own_grace` (their last commits
+  are hand edits, no generator in tools/ names them; the files' own form
+  `json.dumps(indent=1)` kept, nothing else in the file moved). The test
+  worlds of `tests/test_massive_record.py` with an emitting block name a
+  receiver ((h) a body at x = 230 read as `screen`; (ac) `A_face`; (ai)
+  and (ak) `at_a`), and (ac)'s far body is read as a sink (no rung, its
+  take on `escaped`).
+- WHERE THE ENGINE FIXER'S READING AND THE SPECIFICATION DIFFER, said
+  here as ordered: (1) "the sinks book to the HOST row `escaped`": the
+  ledger's escaped row counts CONTENT and balances the books in content,
+  and a block's record carries 0, so the sinks' take (motion, the
+  pointer's unit) is booked to the record's HOST `escaped` (the gather
+  line and the records reading) and the content, 0, to the escaped row at
+  the close; (2) "the hop take's fix: the exemption becomes `emitter ==
+  block`": PR 1115 as merged already books nothing of the block's own
+  record at any age; its form holds the entered Node at 0 after the
+  train (the own take's own state) instead of leaving it to evolve, and
+  is kept, Reviewer 3 having CONFIRMED it (record 1800); the behaviour
+  named, nothing on the own pointer at any age, is pinned by test (b).
+- THE READINGS (EXPLORATORY, no pin run; `tests/test_receiver_by_name.py`
+  reads the form, not the numbers): sagnac_rest as registered reads every
+  hold record's line at the other's set 108 intervals after its birth at
+  rest, both directions alike (DETECTOR); the light clock's chain of 173
+  closed with A naming `A_face` reads the first record's line 214 after
+  the birth (DETECTOR; the T = 0 preliminary's number of record 1800), no
+  rung during the grace of 140; two blocks one Link apart cross the rung
+  inside the train on some records, the line then at the birth plus the
+  train. HOST: sagnac_rest 420 intervals in 1.4 s, the light clock 600 in
+  0.4 s (this machine).
+- THE THREE TESTS: generic (one sentence, the ladder's size the only
+  case; the receiver's name a world declaration as a set's position is;
+  no kind, no family name, no branch on a physical name), vector (the
+  rung (E) on the pointer, verb T on `absorbed` and `escaped`; integers
+  only, no root, no float), local (the cell's own pointer on the record;
+  nothing kept at a Node; the sinks' take a per-record integer).
