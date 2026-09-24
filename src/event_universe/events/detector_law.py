@@ -1094,6 +1094,10 @@ class DetectorLawSimulation:
             live.before = live.now
             live.now = nxt
             live.age += 1
+            # A matter lamp's record is driven at the lamp's Nodes for its
+            # train as light's (the same verb at the family's clock; a
+            # block's record has no train and is driven by nothing here).
+            self._drive(live)
             return
         nxt[self.absorbing] = 0
         if live.mask is not None:
@@ -1356,6 +1360,14 @@ class DetectorLawSimulation:
         for identity in list(self.records):
             live = self.records[identity]
             if self.families[live.family].massive_kind:
+                # A block's massive record is advanced with its block above;
+                # a matter lamp's record (a massive kind with a declared
+                # clock, born of a lamp) is advanced by the rule with the
+                # family's pair alone: taken by nothing (MUST 2), coupled to
+                # no block (the coupling is declared on light's row,
+                # MASSIVE_RECORD.md section 7), its faces the kind's.
+                if live.driven is not None:
+                    self._advance(live)
                 continue
             sources: np.ndarray | None = None
             if self.blocks:
@@ -1431,9 +1443,10 @@ class DetectorLawSimulation:
         UNIT: exact on a bar, where the train keeps its amplitude), or the
         amplitude the reader declares (a table Node's peak register on a
         board where the wave spreads); None where the record has no level
-        at the Node. A massive record has no clock on the circle and is not
-        read."""
-        if self.families[live.family].massive_kind:
+        at the Node. A block's massive record has no clock on the circle and
+        is not read; a matter lamp's record is read at the family's clock as
+        light's."""
+        if self.families[live.family].massive_kind and live.driven is None:
             return None
         return nearest_phase(
             int(live.before[node]),

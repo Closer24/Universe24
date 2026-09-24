@@ -2062,9 +2062,10 @@ def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tupl
     """The family key `pair` (`massive-record-v1`): [num, den], two integers
     from 1 with den >= num (den > num a massive kind, den = num light's
     kind written out); refused without the world key `massive_record`, and
-    with `phase_per_link` on a massive kind (its clock is its gap, not a
-    declared rate) or with the massive rows' flag `massive` (one massive
-    form per family)."""
+    with the integer `phase_per_link` on a massive kind (its phase per Link
+    is its band's at its clock, never a declared turn; the pair form, the
+    clock a matter lamp drives, is admitted) or with the massive rows' flag
+    `massive` (one massive form per family)."""
     if "pair" not in obj:
         return LIGHT_PAIR
     if not massive_record:
@@ -2084,10 +2085,14 @@ def _kind_pair(obj: dict[str, object], label: str, massive_record: bool) -> tupl
             "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
         )
     if denominator > numerator:
-        if "phase_per_link" in obj:
+        if "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
+            # The pair form is the family's clock (a matter lamp's train
+            # carries the band, its phase per Link the rule's at that clock,
+            # cos k = 3 den cos omega / num - 2 on a chain); the integer
+            # form declares a turn per Link, no massive kind's to declare.
             raise ValueError(
-                f"{BEAM_LAW}: {label}.pair with phase_per_link: a massive kind's clock is its gap "
-                "(cos omega_0 = num / den), never a declared rate"
+                f"{BEAM_LAW}: {label}.pair with the integer phase_per_link: a massive kind's phase "
+                "per Link is its band's at its clock (the pair form), never a declared turn"
             )
         if obj.get("massive"):
             raise ValueError(
@@ -3767,19 +3772,25 @@ def _detector_law_load_checks(
                 "no fan; a splitter declares its inputs)"
             )
     for index, family in enumerate(families):
-        # A massive kind (massive-record-v1) has no declared clock: its
-        # clock is its gap; every other paid family declares the pair form.
+        # A massive kind (massive-record-v1) needs no declared clock (a
+        # block's kind: its clock is its gap; a matter lamp's kind declares
+        # one, checked below); every other paid family declares the pair form.
         if family.quantum != FREE_QUANTUM and family.phase_per_age is None and not family.massive_kind:
             raise ValueError(
                 f"{BEAM_LAW}: families[{index}] needs the pair form of phase_per_link under "
                 f"{DETECTOR_LAW_RULE} (the family's clock)"
             )
     for number, entry in enumerate(measured):
-        if entry.lamp is not None and families[entry.family].massive_kind:
+        # A matter lamp (a lamp on a massive kind): the lamp verb is the same
+        # verb, the family's clock the pair form; a massive kind without a
+        # clock is a block's kind (its record a block's own or a block's
+        # response) and a lamp on it has no clock to drive.
+        family = families[entry.family]
+        if entry.lamp is not None and family.massive_kind and family.phase_per_age is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}].lamp on the massive kind "
-                f"{families[entry.family].name!r} is refused under {MASSIVE_RECORD_RULE}: a massive "
-                "record is a block's own record or a block's response, born of no lamp"
+                f"{BEAM_LAW}: measured[{number}].lamp on the massive kind {family.name!r} needs the "
+                f"pair form of phase_per_link on the family under {MASSIVE_RECORD_RULE} (the clock "
+                "the lamp drives; the train carries the kind's band at it)"
             )
 
 

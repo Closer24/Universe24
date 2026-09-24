@@ -139,7 +139,9 @@ FINDING (the last rows), reported and not written as a component.
   massive kind and needs no `phase_per_link` (its clock is its gap; the
   first build's check "every paid family needs the pair form of its clock"
   reads "every paid family without a massive pair", section 10 (f)); a
-  family with `pair` and a `lamp` refused (a massive record is born of no
+  family with `pair` and a `lamp` was refused at step 2 and is admitted
+  since build 2 with the pair form of its clock, the matter lamp of
+  section 11 (a massive record was born of no
   lamp: it is a block's own record or a block's response).
 - A family's `faces`: `x`, `y`, `z` each `"periodic"` or `"open"`, periodic
   by default; on a family without a massive pair refused.
@@ -635,3 +637,48 @@ wheel [1, N]: its clock's pair must give the reading a step of at least
 immutable 1 / 256 (a declaration outside this build), or the rotation
 reads the phase only where the levels are away from the extrema; the
 physicist's line, not the builder's.
+
+### 11.1 The matter lamp (the Boss's 23:32Z: the lamp verb on a massive kind)
+
+The check: does the lamp verb accept a family whose pair is not light's
+[1, 1], with no branch on a physical name? The verb itself did (`_births`
+and `_drive` read the family's clock `phase_per_age` and the lamp's
+Nodes, nothing of the pair), and the rule already ran with the family's
+pair; but the kind (den > num, `massive_kind`) was light-only by four
+lines, each a branch on the kind, not on a name: the loader refused any
+`phase_per_link` on a massive kind ("its clock is its gap") and a lamp on
+it ("born of no lamp"); the engine's interval skipped every massive record
+in the records' loop (a block's records are advanced with their block)
+and returned from the rule before the drive on a record the take does not
+read; `read_phase` read no massive record. The one generic line, BUILT:
+
+- The loader admits the pair form of `phase_per_link` on a massive kind
+  (the family's clock; the integer form, a turn per Link, stays refused:
+  a massive kind's phase per Link is its band's at its clock) and a lamp
+  on a massive kind that declares its clock (a lamp on one without it is
+  refused naming the pair form).
+- The engine advances a lamp's record of a massive kind (the record has
+  `driven`, a block's has not) by the rule with the family's pair alone,
+  its faces the kind's, taken by nothing (MUST 2), coupled to no block
+  (the coupling is declared on light's row, MASSIVE_RECORD.md section 7;
+  a default, named), never completing (MUST 2; its content stays in
+  transit, the books balanced); the drive at the lamp's Nodes for the
+  train is the same verb as light's (a block's record has no train and is
+  not driven); `read_phase` reads it at the family's clock.
+- Light's [1, 1] unchanged: a block's records take the same path as
+  before (no `driven`), and the light record's rows are identical beside
+  a matter lamp (test (z)); the first build's digests stand (test (p)).
+- Test (z), `tests/test_massive_record.py`: the kind [156, 157] at the
+  clock [77, 25] on N = 64 (omega = 0.302 above the gap omega_0 = 0.113),
+  one lamp on a chain of 200; the band on a chain from the rule's plane
+  wave, cos k = 3 den cos omega / num - 2, k = 4.99 steps of 64; the
+  record's phase at the interval 100 read at each Node's peak register
+  over 4 Links on both sides of the lamp: 21 steps on each side beside
+  4 k = 19.97 (the reading's grain of section 11's FINDING and the
+  train's dispersive front; the test's bound 2 steps); the books
+  balanced at every interval; light's rows identical with and without
+  the matter lamp; the lamp without the clock refused.
+- Not in this line: the probes and the `mode` line sum light's rows
+  only, as before (a matter lamp's train is not probed); a splitter's
+  table reads light's records only. Both are the physicist's to ask
+  for, not the builder's to widen.

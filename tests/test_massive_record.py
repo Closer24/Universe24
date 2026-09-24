@@ -276,10 +276,14 @@ def test_q_the_loaders_refusals_name_the_key():
     bad_face["families"][1]["faces"] = {"x": "closed"}
     with pytest.raises(ValueError, match="faces must be an object"):
         parse_nature_beam_world(bad_face)
+    turned = json.loads(json.dumps(base))
+    turned["families"][1]["phase_per_link"] = 5
+    with pytest.raises(ValueError, match="never a declared turn"):
+        parse_nature_beam_world(turned)
+    # the pair form is the family's clock, admitted (test (z): a matter lamp)
     clocked = json.loads(json.dumps(base))
     clocked["families"][1]["phase_per_link"] = [1, 2]
-    with pytest.raises(ValueError, match="clock is its gap"):
-        parse_nature_beam_world(clocked)
+    assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False
     with pytest.raises(ValueError, match="massive_record needs detector_law"):
@@ -1154,3 +1158,91 @@ def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         refused["measured"] = [entry]
         with pytest.raises(ValueError, match=match):
             parse_nature_beam_world(refused)
+
+
+def matter_lamp_world(matter_lamp: bool, clock: list[int] | None = None) -> dict:
+    """A chain of 200 Nodes (x open; y and z periodic of one layer): light's lamp of the first
+    build at x = 2 (chain_world) beside the massive kind `matter`, pair [156, 157], the SAME
+    clock [77, 25] on N = 64 declared as its `phase_per_link` (the pair form), and, when asked,
+    a lamp of that kind at x = 100 (one birth, a train of 6 periods); no detector; `clock` None declares no clock on the kind (the refusal's edge case)."""
+    document = chain_world()
+    document["shape"] = [200, 1, 1]
+    document["ticks"] = 160
+    document["massive_record"] = True
+    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157]}
+    if clock is not None:
+        matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
+    document["families"].append(matter)
+    document["measured"] = document["measured"][:1]
+    if matter_lamp:
+        document["measured"].append(
+            {
+                "position": [100, 0, 0],
+                "family": "matter",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "directions": [[1, 0, 0]],
+                "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 6},
+            }
+        )
+    document["detectors"] = []
+    return document
+
+
+def test_z_a_matter_lamps_train_carries_the_kinds_band():
+    """The lamp verb on a massive kind (the Boss's 23:32Z): a lamp of the kind [156, 157] at the
+    declared clock [77, 25] on N = 64 (omega = 2 pi x 77 / (25 x 64), above the gap cos omega_0 =
+    156 / 157) births a record driven at its Node for its train and advanced by the rule with the
+    kind's pair; the train's one-Link phase is the band's at that clock, on a chain cos k =
+    3 den cos omega / num - 2 (the rule's plane wave a_next + a_before = (num / 3 den) S_6 with
+    S_6 = 2 cos k + 4 on a chain): k = 4.99 steps of 64. Read: the record's phase at the Nodes
+    x = 106 and x = 110 (and x = 94, x = 90 on the other side) at the interval 100 by `read_phase`
+    at each Node's peak register, the span over 4 Links within 2 steps of 4 k on either side (the
+    reading's grain, BUILD.md section 11); the record never completes (MUST 2) and the books
+    balance at every interval. The edge cases: a lamp on a massive kind WITHOUT the clock is
+    refused at load naming the pair form; light's [1, 1] unchanged: light's record's rows at
+    every interval are identical with and without the matter lamp beside it (and the first
+    build's chain digests stand, test (p))."""
+    import math
+
+    num, den = 156, 157
+    steps = 64
+    omega = 2 * math.pi * 77 / (25 * steps)
+    assert math.cos(omega) < num / den, "the clock above the gap"
+    k_steps = math.acos(3 * den * math.cos(omega) / num - 2) * steps / (2 * math.pi)
+    assert abs(k_steps - 4.99) < 0.01
+
+    world = parse_nature_beam_world(matter_lamp_world(True, [77, 25]))
+    beside = parse_nature_beam_world(matter_lamp_world(False, [77, 25]))
+    simulation = DetectorLawSimulation(world)
+    other = DetectorLawSimulation(beside)
+    identity = 1 * (1 << 32) + 1
+    nodes = [(x, 0, 0) for x in (90, 94, 106, 110)]
+    peaks = dict.fromkeys(nodes, 0)
+    for tick in range(1, 101):
+        simulation.step()
+        other.step()
+        assert simulation.books()["balanced"], tick
+        live = simulation.records.get(identity)
+        assert live is not None, "the matter lamp's record never completes (MUST 2)"
+        for node in nodes:
+            peaks[node] = max(peaks[node], abs(int(live.now[node])))
+        # light's rows unchanged beside the matter lamp
+        for light_identity, light in other.records.items():
+            assert np.array_equal(simulation.records[light_identity].now, light.now), tick
+    live = simulation.records[identity]
+    assert world.families[1].massive_kind and live.driven is not None
+    phase = {}
+    for node in nodes:
+        reading = simulation.read_phase(live, node, peaks[node])
+        assert reading is not None, node
+        phase[node] = reading[0]
+    # the wave leaves the lamp both ways: the phase lags by k per Link away from it
+    right = (phase[(106, 0, 0)] - phase[(110, 0, 0)]) % steps
+    left = (phase[(94, 0, 0)] - phase[(90, 0, 0)]) % steps
+    assert abs(right - 4 * k_steps) < 2, (right, 4 * k_steps)
+    assert abs(left - 4 * k_steps) < 2, (left, 4 * k_steps)
+    with pytest.raises(ValueError, match="needs the pair form of phase_per_link on the family"):
+        parse_nature_beam_world(matter_lamp_world(True))
