@@ -163,3 +163,27 @@ An experiment's review checks the derived expectation and its section first, the
 ## The observed value is the reading (the owner, 2026-09-21, record 210)
 
 A claim that a run reproduces a value of nature is checked through the transformation that produced it (HIGHLIGHTS 5.7's dictionary): a Link count compared with a distance, or an interval count with a time, without the reading between them, is a finding.
+
+## The one read after the merge, and what a test run cannot show (the owner, 2026-09-24, records 1812 and 1813)
+
+The owner's words of 2026-09-24 (13:53Z, "shorten my rules"; 14:12Z, "do we
+need the reviewer's read at all? the test runs will find the problems, no?")
+and the Boss's answer he accepted on Reviewer 3's read of 13:20Z: a
+preliminary run shows what breaks (no click, a refusal, an overflow, a reader
+that cannot read); it does not show what this review checks: that the code is
+generic (no branch on an experiment, a family or a world key beyond the
+declared one), local and integer-only, that every feature is a composition of
+the four building blocks (the emitter, the body, the receiver, the clock;
+[SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
+moved. The case of the day: one-list at 2bcadd7f re-printed the Bell pin as a
+weight ratio; the counts on the wheel give 181 / 64 exactly; a run would have
+counted right against a wrong pin.
+
+The form since 13:55Z: the reviewer does not gate a merge. The writer of the
+engine (one agent, Nature24) pushes each feature when its unit test passes,
+and the Boss merges the one branch; the reviewer then reads the merged head on
+`main` once, all features together, against the three tests, the four
+building blocks and the declarations, and reports CONFIRMED / lines / NOT
+CONFIRMED; a defect found is fixed on `main` as a bug with a test. Docs
+branches (a list, a declaration) are read once before their merge as before.
+One read per bundle; nothing waits on the reviewer.

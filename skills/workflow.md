@@ -608,3 +608,40 @@ unless the user authorized that communication.
 The PR owner records the tested head, current base and relevant results. The
 coordinator is the final merge owner for a coordinated task. Skills do not claim
 that GitHub enforces a branch protection rule unless it was actually verified.
+
+## The shortened process for the engine's features (the owner, 2026-09-24, records 1812 and 1813)
+
+The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
+stabilisation of the engine and the freeze:
+
+1. **One list, fifteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md));
+   the seven others are OUT, not deferred ("there is no after the paper").
+2. **One agent writes all the engine code** (Nature24, the physicist): the
+   three features are one job, making the four building blocks (the emitter,
+   the body, the receiver, the clock) one code for every body on the board;
+   the experiments are compositions declared in the world file and defined
+   in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md); the engine
+   knows no lamp, polariser or light clock by name. No builders, no World
+   Generator, no world file before its row's feature is on `main`.
+3. **Features are named, never numbered:** the receiver by name, the joint
+   gather, the lamp's ladder.
+4. **One branch, one merge** for the three features; a feature is pushed
+   when its unit test (on a world that is none of the fifteen) passes; before
+   a push only the docs gates and the changed modules' tests; the full gate
+   once, at the freeze; the docs after the code; the reviewer reads once
+   after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
+5. **Every world has its test-run line, written by the world's writer before
+   the run** (`docs/designs/detector_law/TEST_RUNS.md`, written by Nature24):
+   what a clean preliminary run must show, with no pin and no target number;
+   the Preliminary Runner runs each feature's experiments on the writer's
+   branch as soon as it is pushed and reports clean or what broke; a defect in
+   `src/` goes to the writer through the Boss.
+6. **The Boss's status, three columns per experiment**
+   ([ENGINE_STATUS.md](../docs/designs/detector_law/ENGINE_STATUS.md)): the
+   engine features it needs and whether they are on `main`; its world file
+   on `main`; its test run without a pin clean or not; a cell rewritten only
+   on a merged record. The freeze is every row "yes" on one commit; then the
+   owner's GO and every pin run in one go.
+
+Unchanged, the law: one unit test per feature; no pin moved after a reading;
+no world file by hand; LOCALITY-1, bounded integers, the measurement rule.

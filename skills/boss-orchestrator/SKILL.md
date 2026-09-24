@@ -32,6 +32,12 @@ question goes to a session as well; the Boss keeps to short answers from
 the two files of the owner's rule, `docs/ALGEBRA.md` and
 `docs/HIGHLIGHTS.md`, and to the coordination.
 
+The process in force for the engine's stabilisation and the freeze is
+[the shortened process](../workflow.md#the-shortened-process-for-the-engines-features-the-owner-2026-09-24-records-1812-and-1813)
+(one list of fifteen, one agent writes all the code, features by name, one
+branch and one merge, the reviewer's one read after the merge, a test-run line
+per world, the Boss's three-column status).
+
 **Read the messages first, answer first, record after (the model owner,
 2026-09-21, records 412 and 413).** On every wake and before every act, the
 Boss reads every queued notification (ReadNotifications until none remain):
