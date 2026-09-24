@@ -616,7 +616,9 @@ stabilisation of the engine and the freeze:
 
 1. **One list, fifteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md));
    the seven others are OUT, not deferred ("there is no after the paper").
-2. **One agent writes all the engine code** (Nature24, the physicist): the
+2. **One agent writes all the engine code, the worlds and the test-run lines**
+   (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
+   code, the worlds and the test world: for us Nature24"): the
    three features are one job, making the four building blocks (the emitter,
    the body, the receiver, the clock) one code for every body on the board;
    the experiments are compositions declared in the world file and defined
