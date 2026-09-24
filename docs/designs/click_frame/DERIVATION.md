@@ -1330,11 +1330,10 @@ the least separation of two places read is one Link; (ii) the least
 time a detector times by itself is a pulse to its neighbour and its
 return; (iii) the least step of a moving record is one Node per k
 counts, so the Outside velocities are the ratios `1 / k` (M3, over Q)
-for an elementary one-Link segment, a velocity read over dx Links and
-dn counts being the rational dx / dn (`1 / (k (k + 1))` is the gap
-between two consecutive reciprocals, not a universal quantum of
-velocity; issue #1012, 2026-09-24), and c Outside is one Link
-per the least count.
+and a velocity read across `dx` Links and `dn` counts is the rational
+`dx / dn`, of resolution `1 / n` at a fixed count `n` and dense as the
+counts grow (no velocity quantum; issue 1012), and c Outside is one Link
+per the least count, the bound at k = 1.
 
 *Proof.* (i) A click moves information one Node at most (A1), so two
 places that a chain of clicks tells apart are at least one Link apart;
@@ -1360,12 +1359,12 @@ to 4 intervals" described one row's Links and not the pulse's return. (iii) A mo
 interval (A1, the hop line of (I) with its cap 1), and between two hops
 its detector counts k intervals stretched by the crowd, so a velocity
 read by clicks is `1 / k` Nodes per count, a ratio of two integers (M3,
-in the mean over a hop pattern), never a real number; two neighbouring
-velocities differ by `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, finest near
-c and coarsest near rest (the gap between consecutive reciprocals, not a
-universal quantum: a velocity read over dx Links and dn counts is any
-rational dx / dn; issue #1012); and c Outside is one Link per the least
-count, the pace of a row (`1 / sqrt 3` Links per interval, `32 / 55` on a
+in the mean over a hop pattern), never a real number; a velocity read across
+`dx` Links and `dn` counts is the rational `dx / dn`, of resolution `1 /
+n` at a fixed count `n` and dense as the counts grow (the hop patterns'
+means fill Q; the earlier "velocity quantum 1 / (k (k + 1))" was the
+difference of two neighbouring patterns, not a quantum: issue 1012); and
+c Outside is one Link per the least count, the bound at k = 1, the pace of a row (`1 / sqrt 3` Links per interval, `32 / 55` on a
 heading), the same in every family by (A1). QED. *The Outside step
 formula in these quanta:* for the next click of the same record (a
 transponding record re-emitting at each arrival, section 2 (c)),

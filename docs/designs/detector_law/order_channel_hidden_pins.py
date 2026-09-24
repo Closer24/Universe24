@@ -14,7 +14,8 @@ linear congruential generator, plain integers, the engine's form the builder's o
 word): the same decoders read about 1 / 2 for either setting of A over many seeds; the lists
 still differ on E_N of the births for a reader who holds the residues (Inside, Bell's theorem),
 and the counts are N / 2 exactly either way.
-(c) THE THEOREM (exact over the ensemble of seeds, not typicality): B's list at fixed b is a
+(c) THE THEOREM (exact for a uniformly random order; the seed-set shuffle its integer form,
+closed to a reader without the seed): B's list at fixed b is a
 balanced multiset (N / 2 pluses for either a) in a uniformly random order, so its distribution is
 the uniform distribution over balanced strings for a and for a' alike; no decoder fixed before the
 run, without the seed, does better than 1 / 2. (b) checks it on two decoders.
@@ -103,6 +104,7 @@ if __name__ == "__main__":
         "(c) THE THEOREM: for a uniformly random permutation of the births, B's list at fixed b is"
         " a balanced multiset (N/2 pluses for either a) in uniformly random order, so its"
         " distribution is the uniform distribution over balanced strings for a and for a' alike;"
-        " no decoder fixed before the run, without the seed, does better than 1/2 (exact over the"
-        " ensemble of seeds). The Inside dependence (E_N of the residues) is Bell's theorem and stays."
+        " no decoder fixed before the run, without the seed, does better than 1/2: exact for a"
+        " uniformly random order; the seed-set shuffle is its integer form, closed to a reader without"
+        " the seed. The Inside dependence (E_N of the residues) is Bell's theorem and stays."
     )
