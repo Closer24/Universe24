@@ -662,6 +662,13 @@ stabilisation of the engine and the freeze:
    algebra and a unit test that checks that algebra exactly. An experiment
    is a world file that places tools by name at positions on the board,
    and its pin is computed from the tools' algebra.
+9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
+   record 1826): before the owner's GO, an independent physicist session,
+   never the worlds' writer, writes one report on the list. For each
+   experiment it states nature's experiment and what it tests, the tools
+   the world places, the mechanism the world exercises, every declared
+   input and why nature gives it, the pin and its provenance, and a
+   verdict. The writer answers its questions through the Boss.
 
 Unchanged, the law: one unit test per feature; no pin moved after a reading;
 no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
