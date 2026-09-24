@@ -447,6 +447,25 @@ DESIGN.md section 5's rule, not derived here. FOR THE OWNER.
 7. The identity: `detector-law-v1` with `massive-record-v1`; every key section 4's
    (`emits` consuming nothing held, M1-2); HOST five chains, seconds to a minute
    each. Not run by this page.
+8. The preliminary run's form (the owner's word of 03:29Z through the Boss: "without
+   a preliminary experiment we run nothing"; a pin run only after an exploratory,
+   unpinned run is approved; nothing here runs, not even that). What the
+   exploratory run of the K = 3 world and its control would have to show, read
+   against no pin: (a) clicks ARRIVE at the declared detector at x = 100 within the
+   declared count: the first record born at the first cycle of A's clock after the
+   seed's standing start, 13 Links of flight at c (23 intervals) plus the receiver's
+   ring-up, so a first click within the first 500 intervals of the run in both
+   worlds, and clicks throughout the hold; (b) the count over the hold of 8000 of
+   the order the rest clock gives, 8000 x 0.10175 / (2 pi) = 130 clicks in the
+   control (COMPUTATION on section 4's mode 0.10175) and fewer, not more, in the
+   receding world, with no number of either read against a pin; (c) the mean
+   interval between clicks steady over the hold, no beat (8.7's criterion; a beat
+   sends the world back for a longer ramp, never to a pin); (d) A stepping one Link
+   per 3 intervals by its `block` lines and its own clicks per cycle present
+   (GAMEBOARD and DETECTOR beside), the books' J identity holding, no stop on the
+   bound abs(**v**) < c; (e) every number of the run labelled EXPLORATORY, GAMEBOARD
+   or DETECTOR, and none carried into item 5. Only on that showing, and on the
+   owner's word, would the pin of item 5 be declared and the four worlds run.
 
 ### FOR THE OWNER (questions this page does not decide)
 

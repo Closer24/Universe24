@@ -14,3 +14,10 @@ pushed only after `python tools/check.py` passes. The page reported on is
 - The summary's line 7 and section 4's first bullet updated to match; the twelve lines otherwise verbatim as reported; the page 524 lines.
 - Checks: `python tools/check.py --base origin/main` under Python 3.14 in the scratchpad (the host's 3.11 cannot parse a pre-existing tool file): 28 passed (ruff format and check on the script; the hygiene, language and navigation gates).
 - Not reached, unchanged: the beaming count ratio between two receivers of one record; six DATA values RECALLED, NOT VERIFIED; the paper's own dark-sector text unread.
+
+## 2026-09-24, about 04:10Z: the owner's word of 03:29Z (dark matter not in the table; nothing runs without a preliminary experiment) and the one added line
+
+- The owner's word, as the Boss relayed it: dark matter will not be in the table; no pin runs without a preliminary experiment approved; "without a preliminary experiment we run nothing". The page stays a proposal on PR 1100: no row of it enters the paper's table, no world of it is generated, nothing of it runs, not even an exploratory run.
+- The one added line: COSMOLOGY_READ.md 2 (g) item 8, the preliminary run's form for the K = 3 world and its control, read against no pin: clicks arriving at the declared detector within the declared count (a first click within the first 500 intervals, clicks throughout the hold; the control's count of the order 8000 x 0.10175 / (2 pi) = 130 and the receding world's fewer, no number pinned), the mean interval steady with no beat (8.7), A stepping one Link per 3 intervals with its own clicks present, J's identity holding, no stop on the bound; every number EXPLORATORY and none carried into the pin. Written, not run.
+- The (1 + z)^-4 item (2 (c) 7) stands as asked; nothing else on the page moved; DECLARATIONS.md, the paper and the world files untouched.
+- Checks: `python tools/check.py --base origin/main` under Python 3.14: 28 passed (ruff on the script; the hygiene, language and navigation gates).
