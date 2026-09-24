@@ -130,7 +130,8 @@ class World:
         return total
 
     def flux_into(self, rec, mask):
-        """3 x the one-way inward flux into the set `mask` through its Ports this interval."""
+        """3 L x the one-way inward flux into the set `mask` through its Ports this interval, L the
+        family numerator (the units of `form_I`); the physicist found the factor of 3 (2026-09-24, 22:50Z)."""
         L = rec.family.num
         total = 0
         outside = ~mask
@@ -144,7 +145,9 @@ class World:
                     g = np.where(mask & nb_out, g, 0)
                     g = np.where(g > 0, g, 0)
                     total += int(np.sum(g))
-        return 3 * L * total
+        return (
+            L * total
+        )  # total is the sum of 3 G_ij, so this is 3 L x the one-way flux, the units of form_I (3 L I)
 
     # ---- births
     def written_pair(self, fam):

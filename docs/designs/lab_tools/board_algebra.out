@@ -1,8 +1,8 @@
 the board: 8^3 torus, N = 64 phase steps
-the well [800, 801] on [800, 809], side 2: largest eigenvalue 1.978065 (< 2: stable), omega_b 0.14824, the vacuum's omega_0 0.14930 (bound: omega_b < omega_0), period 42; the excited record's norm T (one period's one-way flux into the centre) = 892360800
+the well [800, 801] on [800, 809], side 2: largest eigenvalue 1.978065 (< 2: stable), omega_b 0.14824, the vacuum's omega_0 0.14930 (bound: omega_b < omega_0), period 42; the excited record's norm T (one period's one-way flux into the centre) = 297453600
 the seed alone over one period: I 430588257360 -> 430690453632 (relative change 2.37e-04); sign changes at the centre 2 (a rotation at omega_b gives 2)
 emitter clicks (interval, u): [(4, 0), (43, 6), (72, 4)]; the wait for u over W = 8: expected about (2u+1)/(2W) x period = [3, 34, 24]
-receiver clicks (interval, u, born, C, T): [(38, 3, 4, 3703089180, 8317440000), (65, 1, 43, 1758928518, 8317440000), (126, 7, 72, 7800284532, 8317440000)]; the Manhattan distance body->screen is 11 Links
+receiver clicks (interval, u, born, C, T): [(72, 3, 4, 3662689806, 8317440000), (81, 1, 43, 1757716376, 8317440000), (166, 7, 72, 8442939556, 8317440000)]; the Manhattan distance body->screen is 11 Links
 (1) equivariance under the 48 over 40 intervals: 48 of 48 identical bit for bit
 (2) translation on the torus, 7 shifts: 7 of 7 identical
 (3a) content: photons alive + photons clicked + the stock's excitations, constant at every interval: True (value 3, 6 clicks)

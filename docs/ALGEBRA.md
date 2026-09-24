@@ -4772,8 +4772,19 @@ denominator at that cell. Then the world declares no residue.
     sense ([800, 801] on light, 2403), never the vacuum's [1, 1] (3). The
     fifteen's wells [800, 800] (the deep well, the boxes, the light clock,
     Sagnac) become [800, 801]; [314, 315] (945) and [3200, 3227] stand;
-    [156, 157] (157) and the one-cell emitters' [8, 7] (21) are too poor
-    and change. The pair's richness is a load check beside the bound and
+    [156, 157] (157) is the vacuum pair of the redshift and the index rows
+    and no birth cell carries it (their births are the wells [314, 315],
+    945), so it stands (the physicist's question of 2026-09-24, 22:50Z,
+    answered; the earlier "changes" withdrawn); the one-cell emitters'
+    [8, 7] (21) is too poor and changes: [801, 700] on [7, 8] gives 700
+    values, and COMPUTED on the composed operator it is bound and stable
+    on a chain (1.90193 against the band top 1.75, the profile halving
+    per Link), bound weakly on the layer 30 x 33 (1.75218, the tail 0.30
+    five Links out), and on a cube one cell does not bind in the
+    large-board limit (1.7512, 1.7506, 1.7504 on 8, 10 and 12, falling to
+    1.75): a cube's emitter body is of side 3 (1.8609 on 14^3, the tail
+    below 0.13 three Links out), the load check's bound deciding (9.21
+    (8b)). The pair's richness is a load check beside the bound and
     the stability (9.19 (2)).
   - (4b) THE PINS AS DISTRIBUTIONS (the exact W = 20 pin RETIRES; every
     counting row reads a count against a binomial band; n the records per
@@ -4994,8 +5005,15 @@ permutation. Every expected value of the six tests met:
   4, 43 and 72 for the residues 0, 6 and 4 (the expected waits 3, 34 and 24
   of a period of 42); each photon clicks at the one-cell screen 11 Links
   away when its offer C, the one-way inward flux, reaches (2 u + 1) / (2 W)
-  of its norm T: C / T = 0.445, 0.211 and 0.938 for u = 3, 1 and 7 against
-  the rungs 0.4375, 0.1875 and 0.9375.
+  of its norm T: C / T = 0.440, 0.211 and 1.015 at the intervals 72, 81
+  and 166 for u = 3, 1 and 7 against the rungs 0.4375, 0.1875 and 0.9375
+  (the offer is read once per interval and crosses the rung by up to one
+  interval's flux). The physicist found a factor of 3 in the prototype's
+  flux (2026-09-24, 22:50Z, CONFIRMED): `flux_into` returned 3 L times
+  the sum of 3 G_ij and now returns L times that sum, the units of
+  `form_I`; before the correction the receiver clicked at 38, 65 and 126,
+  the emitter's clicks and the six tests unchanged (its norm and its offer
+  scale together).
 - (1) 48 of 48 transformed worlds identical bit for bit, remainders and
   clicks included; (2) 7 of 7 shifts identical; (3a) the quanta constant at
   every interval (photons alive, photons clicked, the stock); (3b) the
@@ -5099,6 +5117,79 @@ done before it.
    The one non-local act, the click's deletion of a summand across the
    board: not ruled out; it is the algebra's one deletion (8.8,
    POSTULATES.md section 10).
+8. LARGE BOARDS (the model owner's question of 2026-09-24, 23:10Z,
+   through the Boss: "large boards' scalability, in a few marked
+   lines"), each line marked.
+   - (a) THE STEP: per interval, per alive record, per family, at every
+     Node of the record's rows six reads, three multiplications and one
+     division with its remainder (8.1); the cost is Nodes x alive records
+     x labels per interval, LINEAR in the Nodes, with no global sum
+     (PROVED: 8.1 is local); the storage three integers per Node per row
+     (now, before, remainder), the same product. The alive records are
+     bounded by the world, not by the stock: a clicking body births in
+     turn (9.17), so at most (a record's lifetime on the board) / (the
+     birth's period) are alive at once (DERIVED: the two slits, 485
+     Links at a period of about 42, some 12 photons alive at once
+     whatever the stock of 1024, about 4.5 million integers); the run's
+     length is the stock times the period, LINEAR in the stock.
+   - (b) THE INITIAL STATE: the composed operator's bound mode at each
+     occupied body by the generator's Lanczos on the sparse operator
+     (seven entries per row), Nodes per iteration and tens of iterations
+     (the gap above the band's top sets the count): LINEAR (DERIVED); the
+     prototypes' dense eigen-decomposition (Nodes^3) is theirs, not the
+     generator's, and stops at some 10^4 Nodes. The bound mode's tail
+     falls exponentially away from its body (bound: above the band,
+     PROVED 8.3), so at the declared amplitude the integer profile is
+     zero beyond a radius the gap fixes: the summand is a window about
+     its body; the load check of the profile is the eigen-equation's
+     residual, one application of the operator, at most Nodes. The gap
+     is the body's, COMPUTED: on a chain every body binds ([801, 700] on
+     [7, 8]: 1.90193 against the top 1.75), on a layer weakly (1.75218),
+     on a cube a one-cell body does not bind in the large-board limit
+     (1.7512, 1.7506, 1.7504 on 8, 10 and 12) and a body of side 3 does
+     (1.8609): a cube's emitter body has the extent the load check's
+     bound decides, never one cell.
+   - (c) THE CLICK: the reading is the flux through the set's Ports, the
+     Ports' count per alive record per interval (a screen of 201 cells
+     on a layer, some 800 Ports); the ladder one integer per record per
+     set; the deletion drops the record's rows, at most its window, the
+     one non-local act, a host memory operation and never a computation
+     across the board (8.8): LINEAR and once per click (DERIVED).
+   - (d) THE INTEGERS: the norm T sums a record's squares over its rows,
+     amplitude^2 x support, and the rung's 2 W C reaches W x that: at
+     the amplitude 4096, 10^6 Nodes and W = 2403 about 2^56, at 65536
+     about 2^64 (COMPUTED): the ladder's integers are arbitrary-precision
+     or the amplitude is bounded at load, a LOAD CHECK, the one thing
+     that would fail silently otherwise.
+   - (e) WHAT DOES NOT SCALE: nothing in the law; in the host, (i) a
+     board-wide dense vector per record where the record is a window
+     (the prototypes' form; the window is exact by locality, 9.20 (5): a
+     record born at one cell is zero outside the Manhattan ball of its
+     age, and inside it any cut is an approximation the algebra does not
+     licence: a host matter, OPEN); (ii) the prototypes' dense
+     eigen-decomposition and 48-fold equivariance test, which run on
+     planted boards of 8^3 only (9.20 (B)), never on the fifteen's
+     boards; (iii) the tensor's 2^n joint weights of a record of n arms
+     (n = 2: four integers, 9.23); (iv) a declared rate of births,
+     retired (the emitter births in turn).
+9. WHAT IS DROPPED (the model owner's word of 23:10Z: "work only on the
+   adopted line; drop anything older not needed, and tell me what you
+   drop"). Dropped from the line, kept in this chapter as derivations
+   only: 9.14 (a), the angle as the wheel's translation (its one use is
+   the retarder's phase in 9.23 (2), as a pair per label, not a wheel);
+   the exact pins at W = 20 (Bell 181 of 64, Malus's exact counts), the
+   pins being distributions (9.19 (4b)); 9.10 item 1's owed computation
+   of the click's Gram matrix from the table, the flux reading the click
+   (9.19 (3)); 9.17 (2)'s emitter with a table, the born pair being two
+   integers (9.17 (6)); the specification's sections 0 to 12 and
+   CRYSTAL_ALGEBRA.md as history, parts A and B the live specification.
+   Not dropped, older and needed: chapter 8 (the rule), 9.1 to 9.13 (each
+   tool's operation), 9.14 (b), 9.15 to 9.17; the ramp of
+   DECLARATIONS.md section 8 until 8.4 is settled. One stand-in named:
+   the prototypes' residue is a declared permutation over W = 8, the
+   engine's is the law's remainder (9.19 (4)); the prototypes'
+   residue-blindness (6c) holds for either, and no prototype on the
+   remainder is owed, the engine's test of 9.20 being the test.
 
 ### 9.22 What defines a family and an experiment, and the initial state as a function of it (the model owner's word of 2026-09-24, 22:28Z, through the Boss: "you need to understand what really defines an experiment, and a family, in order to reach a correct algebraic initial state"; ADOPTED with the package of record 1875)
 
@@ -5209,3 +5300,141 @@ becomes a body with a stock; every sponge face becomes a face receiver;
 every well [800, 800] becomes [800, 801]. THE ONE THING IT OPENS: the
 index rows' medium, silent today, becomes bound; its pin moves with it and
 is re-derived blind before any run.
+### 9.23 A two-qubit quantum computer on the board (the model owner's word of 2026-09-24, 22:46Z, through the Boss: "in our world the Outside sees only the click; lab equipment simulates on the board what we built from the algebra; check whether a quantum computer of two qubits can be simulated this way"), marked, before any code
+
+**(1) THE QUBIT (DERIVED HERE from 3.6, 9.16 (2) and 9.19 (1)).** A qubit
+is the label module Z^2 of ONE ARM of a record, carried by that arm's two
+label rows (9.16 (2)): the two rows' amplitudes are the qubit's two
+weights and their relative phase is the qubit's phase (the rows share the
+clock; the phase is read between the two rows at the same Node). Its
+normalisation is never written: the rung divides by the record's own norm
+T, so the weights are integers up to a common scale. TWO QUBITS are one
+record of rank 2, the tensor Z^2 (x) Z^2 of the two arms' label modules
+(3.6), born together by the crystal (9.13) with its branches as the
+tensor's INTEGER coefficients and the per-arm phases on the rows. Two
+separately born records are two summands of the direct sum (9.19 (1));
+nothing in the six verbs joins two summands into one tensor (that would be
+an operation bilinear in two summands acting on a third, a cubic term the
+three tests exclude, 2.8), so THEY ARE NEVER ENTANGLED: a two-qubit
+register is one record of rank 2, DERIVED. What the tensor carries: real
+integer coefficients on the four joint labels plus one phase per arm, so
+every reachable two-qubit state has a phase matrix theta_ij = alpha_i +
+beta_j (no "phase interaction", theta_00 + theta_11 - theta_01 - theta_10
+= 0). Bell's states and every REAL circuit (Deutsch-Jozsa, Grover) lie in
+it; a state such as (|00> + |01> + i|10> + |11>) / 2 does not: OPEN (a
+second, quarter-turned row per joint label, the ring Z[i] on the tensor,
+would carry it; not needed below).
+
+**(2) THE ONE-QUBIT GATES AS TOOLS (DERIVED HERE).** Three bodies, each a
+region of the operator with integers, each already in the tool table:
+- THE ROTATOR R_(a, b): a body with an axis (a, b) and NO receivers, the
+  label matrix **M**_u = [[a, b], [-b, a]] on the arm's rows (9.16 (2)):
+  the rotation by the angle with tangent b / a, integer, the scale a^2 +
+  b^2 absorbed by the rung. The rational axes are dense in the circle
+  (PROVED: tan of a dense set of angles is rational).
+- THE MIRROR X: a reflection exchanges the two hands (1.2, 9.2): the gate
+  X = [[0, 1], [1, 0]] is a mirror body (the gap [1, 2]) on the arm's path.
+- THE RETARDER Z_s: the relative phase of the two hands, the wheel's
+  translation x^s on one row (9.14 (a)): a chiral body with a pair PER
+  LABEL (one label's rows paced differently from the other's over its L
+  cells, the crystal's own index-per-label form, the lab tools'
+  specification 1.9 test 1). It is EXACT when L times the two paces'
+  difference is a whole number of the clock's steps (a Diophantine
+  condition the generator solves for the world's clock); otherwise it is
+  the phase to the clock's grain, COMPUTED per world. Z = Z_(N/2), S =
+  Z_(N/4), T = Z_(N/8) on the wheel of N.
+THE HADAMARD: **H** = [[1, 1], [1, -1]] = **M**_(1, 1) applied after X (the
+matrix product **M**_(1, 1) X), its 1 / sqrt 2 absorbed by the rung: EXACT
+in integers (DERIVED). THE GATE SET {R_(a, b), X, Z_s}: for a fixed wheel N
+it generates a FINITE group up to the rung's scale; as N grows and the
+axes range over the rationals it is DENSE in the one-qubit gates
+(rotations of every rational tangent times phases in steps of 2 pi / N):
+DERIVED. The norm scale grows by a^2 + b^2 per rotator (by 2 per H); a
+circuit of depth d multiplies it by up to 2^d against the host's integer
+bound, a load check.
+
+**(3) THE TWO-QUBIT GATE (DERIVED HERE; NEW for the engine).** A
+controlled gate acts on the joint label module Z^2 (x) Z^2: CNOT is a
+permutation of the four joint labels (|a b> -> |a, b + a mod 2>), verb (P)
+of 2.4 on the joint state; CZ is the diagonal matrix (1, 1, 1, -1) on the
+joint weights, verb (B) with a declared matrix. Both are operations of
+the algebra as written. THEY ARE LOCAL ONLY WHERE BOTH ARMS' ROWS ARE AT
+THE SAME CELLS: a JOINT BODY, a region both arms cross together, carrying
+a declared 4 x 4 integer matrix (or permutation) on the joint module; it
+acts on the record's joint weights when both arms' rows are at its cells
+(the two arms brought to it by mirrors, at the same interval by the mirror
+theorem). It is chiral like the polariser (a reflection exchanges both
+hands and conjugates CZ). In nature it is a nonlinear medium; here it is
+a declared matrix, a material like the crystal's branches. Within the
+three tests: generic (one primitive, verb B or P, declared integers, no
+family name), vector (bilinear on the joint state, no root), local (the
+body's cells and the rows there). NOT ON MAIN: the engine has per-arm
+label matrices only (the polariser's channel weights). WHAT THE CRYSTAL'S
+BIRTH REPLACES: any entangling gate that comes first in a circuit is a
+prepared state, the crystal's declared branches (the four Bell states,
+the uniform superposition, any real tensor with integer weights); an
+entangling gate in the MIDDLE of a circuit needs the joint body.
+
+**(4) THE READOUT (DERIVED, 9.19 (3) and (4)).** Clicks only: each arm
+ends at a polariser body with the axis (1, 0) (the computational basis)
+and its two receivers; the pair clicks once, on the joint cells, with the
+weights R = J^2 of the joint state (3.6); the residue is the law's (the
+arriving record's remainder at the crystal's centre, 9.19 (4)); the
+counts are distributions, binomial about the joint weights' shares, and
+a share of 0 has the band 0 (one click there is a defect).
+
+**(5) ONE CONCRETE CIRCUIT, as placed tools (DERIVED HERE, blind).**
+- THE BELL STATE AND ITS FOUR MEASUREMENTS: the Bell row of the
+  specification's part B as it stands (the crystal's branches [[1, 1],
+  [2, 1]], Alice's rotators are her polarisers' axes (1, 0) and (1, 1),
+  Bob's (1, 2) and (3, 1)); 100 pair records per setting: 40 / 10 / 10 /
+  40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 with the bands of
+  9.19 (4b), S = 2.80 +- 0.14.
+- GROVER'S SEARCH ON FOUR ITEMS, the marked item |11>: (i) the crystal
+  births the uniform superposition, the branches [[0, 1], [1, 1], [2, 1],
+  [3, 1]] (H (x) H on |00> as a prepared state); (ii) the oracle: a joint
+  body with the diagonal (1, 1, 1, -1); (iii) the diffusion: on each arm
+  X then R_(1, 1) (the Hadamard), then a joint body with the diagonal
+  (1, -1, -1, -1) (2 |00><00| - I up to the overall sign), then X and
+  R_(1, 1) on each arm again; (iv) the readout with the axis (1, 0) on
+  both arms. THE ALGEBRA'S COUNT (PROVED, the standard one-iteration
+  Grover on 4 items; here on the integer weights: (1, 1, 1, 1) -> the
+  oracle (1, 1, 1, -1) -> H (x) H (2, 2, 2, -2) -> the joint (1, -1, -1,
+  -1) gives (2, -2, -2, 2) -> H (x) H (0, 0, 0, 8), the rung's scale
+  absorbing the 8): every record clicks at (-, -), the labels (1, 1); with n = 100
+  records the expected counts are 0, 0, 0, 100 with the band 0 on the
+  first three: a single click elsewhere is an engine defect. The joint
+  bodies need both arms at one region: the two arms are folded by two
+  mirrors onto one cell line at equal times (the mirror theorem, a
+  placement of the specification's 11.3 with the polarisers replaced by
+  the mirrors), then separated again to the two readout polarisers.
+- DEUTSCH-JOZSA ON TWO QUBITS (the query qubit and the ancilla): the
+  crystal births |+>|->, the branches [[0, 1], [1, -1], [2, 1], [3, -1]]
+  (negative integer weights allowed); the oracle of a constant function is
+  the identity (no body) or the joint (-1, -1, -1, -1) (a sign), of a
+  balanced one the joint (1, 1, -1, -1) or (-1, -1, 1, 1) (the phase
+  kick-back of f(x) = x or 1 - x on the ancilla |->); then X and
+  R_(1, 1) on the query arm and its readout with the axis (1, 0): the
+  query arm clicks + for a constant function and - for a balanced one,
+  every record; n = 100: 100 / 0 with the band 0.
+- THE RECORDS EACH NEEDS: Bell 400 (the distributions); Grover and
+  Deutsch-Jozsa 100 each (deterministic outcomes, the band 0).
+
+**(6) THE VERDICT.**
+- THE BOARD CARRIES NOW (once 12.2's per-label rows and the crystal are
+  built): one qubit per arm; the rotator, the mirror and the retarder as
+  one-qubit gates (the retarder exact under its Diophantine condition);
+  the Bell states and any real prepared two-qubit state from the crystal;
+  the readout by clicks with distributions. All DERIVED, within the three
+  tests.
+- IT WOULD NEED: the JOINT BODY (a declared integer matrix or permutation
+  on Z^2 (x) Z^2 at a region both arms cross), the one new engine form;
+  the routing of both arms to it by mirrors at equal times; and, for
+  states with a phase interaction, complex joint weights (OPEN, not
+  needed for Bell, Grover or Deutsch-Jozsa).
+- WITHIN THE THREE TESTS: yes for every piece above (verbs B and P with
+  declared integers, no root, local at the body's cells).
+- PLAINLY: the board simulates a two-qubit computer as a classical
+  machine would, with the tensor's 2^n integer weights for n qubits; the
+  cost is exponential in the qubits, as for any board simulation of a
+  quantum computer, and the Outside sees only the clicks.
