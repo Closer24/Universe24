@@ -10,7 +10,9 @@ with the runner's own loader (`world_loading.load_world`), runs the massive worl
 margin rule as the runner does before its first interval (`check_margins`,
 `profile_check`, printed as GAMEBOARD computations) and constructs the world's engine
 (`DetectorLawSimulation` under `detector_law`, `NatureBeamSimulation` otherwise) with no
-interval stepped. It prints one line per world: LOADED (the engine, the shape, the
+interval stepped, and on a world with a pair lamp applies Reviewer 3's two CHECKs of
+DECLARATIONS.md section 2 item 8 (`residue_order` "seed", at least W births within the ticks
+and the stock). It prints one line per world: LOADED (the engine, the shape, the
 ticks, the families and the measured events), REFUSED (the loader's or the engine's
 message) or MISSING (a name the list carries and the tree does not: a world still to
 write), and exits 1 when any world is refused; a missing world is reported, not a
@@ -33,6 +35,7 @@ from pathlib import Path
 from event_universe.diagnostics.massive_record_margin import check_margins, profile_check
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.engine import NatureBeamSimulation
+from event_universe.events.world import NatureBeamWorld
 from event_universe.world_loading import load_world
 
 DEFAULT_LIST = Path("docs/designs/detector_law/RUN_LIST.md")
@@ -80,6 +83,32 @@ class Outcome:
     detail: str
 
 
+def pair_lamp_checks(world: NatureBeamWorld) -> None:
+    """Reviewer 3's CHECKs 1 and 2 on a world with a pair lamp (DECLARATIONS.md section 2
+    item 8): a Bell world runs under `residue_order` "seed" (the open channel's "ordinal" is a
+    diagnostic's form, refused at the GO), and counts exactly W births, so its ticks must
+    admit at least W births at the lamp's rate and its stock must hold them."""
+    for number, entry in enumerate(world.measured):
+        lamp = entry.lamp
+        if lamp is None or lamp.arms < 2:
+            continue
+        if lamp.residue_order != "seed":
+            raise ValueError(
+                f"measured[{number}]: a pair lamp under residue_order {lamp.residue_order!r} is "
+                'refused at the preflight (a Bell world runs under "seed"; CHECK 1)'
+            )
+        wheel = lamp.wheel[1]
+        numerator, denominator = lamp.rate
+        births = world.ticks * numerator // denominator
+        stock = entry.amount // world.families[entry.family].quantum
+        if min(births, stock) < wheel:
+            raise ValueError(
+                f"measured[{number}]: a pair lamp on the wheel [1, {wheel}] births {min(births, stock)} "
+                f"records within the ticks {world.ticks} at the rate {list(lamp.rate)} and the stock "
+                f"{entry.amount} (W = {wheel} births needed, one per residue; CHECK 2)"
+            )
+
+
 def load_one(path: Path) -> Outcome:
     """Load one world file and construct its engine without stepping it."""
     try:
@@ -98,6 +127,7 @@ def load_one(path: Path) -> Outcome:
         engine = "detector_law" if world.detector_law else "rays"
         if world.detector_law:
             DetectorLawSimulation(world)
+            pair_lamp_checks(world)
         else:
             NatureBeamSimulation(world)
     except Exception as error:  # noqa: BLE001 - every refusal is reported, none hidden

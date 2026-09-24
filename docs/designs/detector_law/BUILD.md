@@ -920,7 +920,8 @@ Each a generic line under the contract, one test each in
   record during that record's grace (the per-record exemption, by
   emitter and age: no take, no zero, the row evolving there; its Ports'
   ghosts follow the free neighbours' levels and book nothing, so the take
-  at the grace's end starts at those levels with no jump booked). A
+  at the grace's end starts at those levels with no jump booked; the set
+  Node's own content at the grace's end is booked as section 17 says). A
   stepping block's take masks are re-formed at each step, and (f) THE HOP
   RULE (section 13 item 4, declared at go-lines-2 0bc5cc0f): at a hop the
   face's Port is a NEW Port whose ghost starts at the entered Node's own
@@ -1038,39 +1039,88 @@ Each a generic line under the contract, one test each in
   body, the mirror form as a key, the gather line's Nodes: NOT FOR THE
   GO (the Boss's 01:55Z item 7).
 
-## 15. Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8, the model owner's declaration of 2026-09-24; the Boss's 04:14Z and 04:30Z; `detector-law-build-2`)
+## 15. Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8 as DECLARED on order-channel-attacks, PR 1106; Reviewer 3's line of 04:38Z, no default; the Boss's 04:55Z, 05:30Z and 05:45Z; `detector-law-build-2`)
 
-Two world keys under `detector_law`, one test (`tests/test_detector_law.py`
-(d)); no run of any world (the owner's rule: nothing runs before it is
-checked and approved; no Bell run before the attacks page's read).
+Two keys on a PAIR lamp's entry (a lamp with `arms` above 1) under
+`detector_law`, one test (`tests/test_detector_law.py` (d)); no run of
+any world (the owner's rule; no Bell run before the attacks page is on
+main under Reviewer 3's read and the seed-set order is built).
 
-- KEY (i), `order_seed` (an integer from 0 to 2^64 - 1): the births of
-  every lamp take the residues of its wheel's Z_W one per u, in the order
-  of a keyed permutation, formed once at the engine's construction from
-  the seed and the lamp's number: `core.integer.keyed_permutation`, a
-  Fisher-Yates shuffle driven by `mix64`, the SplitMix64 mixing hash on
-  plain 64-bit integers (the golden-ratio step, two shift-xor-multiply
-  rounds; no float, every intermediate below 2^64), "a keyed permutation
-  indistinguishable from uniform without its key", never an affine stride
-  (which a reader searches in N^2 trials). The counter's stride r stays
-  the index into the order (u = order[(k - 1) r mod W] at the k-th
-  birth), so S_N and every count stay exact (each residue once per W
-  births). The seed is an input of kind 1, drawn once and written to no
-  line; the world file carries it as it carries every declaration.
-- KEY (ii), `residue_inside` (a boolean, false by default): no birth,
-  gather or records line carries `u`; the click's stamp is the detector's
-  count (`clock` under `clock_stamp`) and the birth interval (`birth`).
-  The record's own u stays Inside: the click's cell is chosen by it as
-  before (`cell_of`), and a reader without the seed sees a balanced list
-  in an order it cannot predict (the theorem of item 8).
-- The test: `keyed_permutation` a bijection on Z_N at N = 16, 256 and
-  2048 (the same key the same order, two keys two orders, no key the
-  counter's order); on the chain world with the wheel [1, 64] the first
-  64 births' residues Z_64 exactly in the lamp's keyed order, the
-  counter's order without the key, two seeds two orders, every record
-  clicking once at the screen under either order (the counts unchanged);
-  under `residue_inside` no line carrying u, the stamps' counts and births
-  those of the keyed world; the refusals (the keys without `detector_law`,
-  a negative or non-integer seed, a non-boolean flag). The ray law's Bell
-  worlds (`examples/events/bell/`, the rays engine) declare neither key
-  and read as before (their four counts the register's).
+- `residue_order`, a string, REQUIRED on a pair lamp with NO DEFAULT
+  (absent there the loader refuses it naming the key: an implicit
+  default to the open-channel form is against AGENTS.md); not admitted
+  on a lamp without arms or outside the local detector law. "ordinal" is
+  the counter form as built, u = (ordinal - 1) r mod W from `wheel`
+  [r, W] (declared where a diagnostic wants the open channel); "seed" is
+  the seed-set order declared wherever the Bell rows run, u =
+  order[(ordinal - 1) mod W], where order = `core.integer.keyed_permutation`
+  (W, residue_seed) is the Fisher-Yates shuffle of range(W) driven by
+  `core.integer.mix64`, the SplitMix64 mixing hash copied from
+  `docs/designs/detector_law/order_channel_hidden_pins.py`'s `mix64` and
+  `permutation` verbatim (the constants 0x9E3779B97F4A7C15,
+  0xBF58476D1CE4E5B9 and 0x94D049BB133111EB, the shifts 30, 27 and 31,
+  plain integers masked to 64 bits, the same order on every host; the
+  lamp's number is NOT mixed in: the seed is per world and one lamp
+  births the pairs). The stride r must be 1 under "seed" (refused
+  otherwise), so W births take every residue once; the order repeats
+  from the first residue beyond W births, so a Bell world counts exactly
+  W births.
+- `residue_seed`, an integer in [0, 2^64) (an input of kind 1, the width
+  declared), required under "seed" and refused under "ordinal" (a key
+  that does nothing is refused); the World Generator draws one per world
+  from the host's entropy, independent per world and never written into
+  `expectations.json` or the paper; the engine forms the order once at
+  its construction and writes the seed to no line.
+- THE STAMP'S FIELDS, none new: the gather line's `click` (the chosen
+  cell's first rung, the detector's count in its own clock), `birth` (the
+  record's birth interval) and `chosen` are the reader of record's three;
+  the gather line's `u` and the `records` reading's `u` are HOST, the
+  input of the diagnostic E_N, never a reader-of-record field (ENGINE.md
+  says so). The ladder, `cell_of`, the tables and the pins do not move.
+- THE PREFLIGHT (Reviewer 3's CHECKs 1 and 2): `tools/preflight_worlds.py`
+  refuses a world with a pair lamp under "ordinal" and one short of W
+  births within its ticks at the lamp's rate or within its stock (the
+  shipped Bell worlds' ticks 300 give about 300 births and not 2048; the
+  World Generator regenerates them).
+- The test: `keyed_permutation` a bijection on Z_W at W = 16, 256 and
+  2048 for four keys, the same key the same order, two keys two orders,
+  no key the counter's order; a pair lamp without the key refused; on a
+  chain of 80 with a two-arm lamp at x = 40 (the wheel [1, 64], 64 births
+  held, receivers at x = 60 and 20) "ordinal" gives today's u, 0 to 63 in
+  order, and "seed" every residue once in the permutation's order (the
+  engine's `birth_orders`), two seeds two orders, the same seed the same
+  order; the 128 arm records click once each and the four cells' counts
+  (the two receivers, the two sponge faces) are the same under either
+  order (the derivation's claim; a GAMEBOARD reading, no pin); the gather
+  line keeps `u`; the refusals (the stride 2 under "seed", the seed absent
+  under "seed" or present under "ordinal", a value that is neither, either
+  key on a lamp without arms or outside the local detector law). The
+  bar world of `tests/test_detector_law_tables.py` declares "ordinal" and
+  reads as before.
+
+## 16. Reviewer 3's two lines on item 6b (the Boss's 04:55Z)
+
+- LINE 1 (built, test (ag) and the coupled chain of (k)): `take` is
+  REQUIRED on an absorbing block of a massive kind, refused absent
+  naming it: light's pair [-15, 56] on a massive kind's take line would be
+  an implicit default of a physical rate; light's kind alone keeps the
+  law's [-15, 56] (a light-kind mirror line has no take).
+- LINE 2 (NAMED for 09:00, not built; on the Boss's word): the take's
+  pair is declared per KIND (the family's table, kind 2) while the build
+  keeps it per NODE (`take_num`, `take_den` written at the block's cells
+  and moved with it), so in a mixed world a LIGHT record crossing a
+  matter take line is taken with the matter pair; the pair belongs to
+  the record's family. The line: the take arrays per family (one pair
+  per kind per Node), the ghost's pair read by the record's family; a
+  world of one taking kind per line reads the same.
+
+## 17. The grace's end at a set bound to its emitter (Reviewer 3's nit on 906d3635)
+
+At the grace's end the set Node's own row, which evolved freely during
+the record's grace, is taken as the hop rule takes an entered Node's
+content: the interval's motion there (the rule's next level less the
+current) squared is booked to the set's pointer and to `absorbed` before
+the row is held at 0 (`LiveRecord.was_exempt`, `_advance`); the ledger
+stays balanced (test (ac)'s assertion at every interval) and the
+booking is one Node's content, below the ringing's per-interval booking
+on the light clock's chain.

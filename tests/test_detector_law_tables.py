@@ -107,7 +107,17 @@ def bar_world(arms: int, directions: list[list[int]], branches: list[list[int]] 
     """The bar of DECLARATIONS.md row 1a (21 x 1 x 1, y and z periodic of one layer, x open),
     the light family's clock [77, 25] on N = 64, one lamp at x = 10 with the arms and the
     directions given (the joint labels `branches`), a train of 2 periods, 20 births held."""
-    lamp: dict = {"rate": [1, 1], "wheel": [1, 64], "directions": directions, "train": 2, "arms": arms}
+    lamp: dict = {
+        "rate": [1, 1],
+        "wheel": [1, 64],
+        "directions": directions,
+        "train": 2,
+        "arms": arms,
+    }
+    if arms > 1:
+        # the order channel's key on a pair lamp, no default (line 8): the
+        # counter form as built, u = (ordinal - 1) mod 64
+        lamp["residue_order"] = "ordinal"
     if branches is not None:
         lamp["branches"] = branches
     document = chain_world()

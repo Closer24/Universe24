@@ -67,6 +67,21 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     assert PREFLIGHT.main(["--list", str(only_missing), "--root", str(root), "--strict"]) == 1
     printed = capsys.readouterr().out
     assert "no world run" in printed and "REFUSED" in printed
+    # Reviewer 3's CHECKs 1 and 2 on a pair lamp (a Bell world): "ordinal"
+    # refused, fewer than W births within the ticks or the stock refused,
+    # "seed" with W births admitted
+    from tests.test_detector_law import pair_world
+
+    for document, message in (
+        (pair_world("ordinal", None, 64), "CHECK 1"),
+        (pair_world("seed", 9, 32), "CHECK 2"),
+        (dict(pair_world("seed", 9, 64), ticks=40), "CHECK 2"),
+    ):
+        (root / "bell/pair.json").write_text(json.dumps(document), encoding="utf-8")
+        outcome = PREFLIGHT.load_one(root / "bell/pair.json")
+        assert outcome.status == "REFUSED" and message in outcome.detail, outcome
+    (root / "bell/pair.json").write_text(json.dumps(pair_world("seed", 9, 64)), encoding="utf-8")
+    assert PREFLIGHT.load_one(root / "bell/pair.json").status == "LOADED"
     # the real list: every registered world loads, none is refused
     real = PREFLIGHT.preflight(
         PREFLIGHT.listed((ROOT / PREFLIGHT.DEFAULT_LIST).read_text(encoding="utf-8")),

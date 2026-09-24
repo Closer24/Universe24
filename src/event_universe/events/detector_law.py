@@ -66,7 +66,7 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import by_clock, by_drive, integer_root, keyed_permutation, mix64
+from event_universe.core.integer import by_clock, by_drive, integer_root, keyed_permutation
 from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines, phase_sines
 from event_universe.events.amplitude import cell_of, rungs
 from event_universe.events.world import (
@@ -123,6 +123,9 @@ class LiveRecord:
     first_rung: list[int | None] = field(default_factory=list)
     ports: list[np.ndarray] = field(default_factory=list)
     driven: np.ndarray | None = None
+    # line 7: whether the record's last interval was exempt at the sets bound
+    # to its emitter (the grace's end books the set Nodes' own content once)
+    was_exempt: bool = False
     # massive-record-v1: the emitter's number for a record a block emitted
     # (None for a lamp's record), whether the block is still sourcing it
     # (the current cycle's record), and the coupling's denominator folded
@@ -295,18 +298,19 @@ class DetectorLawSimulation:
         self.lamp_nodes: dict[int, list[tuple[int, int, int]]] = {}
         self.lamp_accumulator: dict[int, int] = {}
         self.lamp_births: dict[int, int] = {}
-        # The order channel's key (i) (DECLARATIONS.md section 2 item 8):
-        # under `order_seed`, each lamp's births take the residues of its
-        # wheel's Z_W in the order of a keyed permutation, formed once here
-        # from the seed and the lamp's number (the seed an input of kind 1,
-        # never written to a line); None under the counter's stride.
-        self.birth_orders: dict[int, list[int]] | None = None
-        if world.order_seed is not None:
-            self.birth_orders = {}
-            for number, entry in enumerate(world.measured):
-                if entry.lamp is not None:
-                    _, key = mix64(world.order_seed ^ (number * 0x9E3779B97F4A7C15))
-                    self.birth_orders[number] = keyed_permutation(entry.lamp.wheel[1], key)
+        # The order channel's key (DECLARATIONS.md section 2 item 8): a pair
+        # lamp under `residue_order` "seed" births the residues of its wheel's
+        # Z_W in the order of a keyed permutation, formed once here from its
+        # `residue_seed` (an input of kind 1, written to no line; the hash the
+        # declaration's, verbatim); a lamp under "ordinal" keeps the counter.
+        self.birth_orders: dict[int, list[int]] = {}
+        for number, entry in enumerate(world.measured):
+            lamp_definition = entry.lamp
+            if lamp_definition is not None and lamp_definition.residue_order == "seed":
+                assert lamp_definition.residue_seed is not None
+                self.birth_orders[number] = keyed_permutation(
+                    lamp_definition.wheel[1], lamp_definition.residue_seed
+                )
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
             if entry.lamp is not None:
@@ -897,7 +901,7 @@ class DetectorLawSimulation:
                         "measured": block.number,
                         "family": definition.name,
                         "record": identity,
-                        **({} if world.residue_inside else {"u": 0}),
+                        "u": 0,
                         "labels": [[0, 1]],
                         "arms": 1,
                         "units": 1,
@@ -1023,10 +1027,10 @@ class DetectorLawSimulation:
                 ordinal = self.lamp_births[number] + 1
                 self.lamp_births[number] = ordinal
                 u = (ordinal - 1) * lamp.wheel[0] % lamp.wheel[1]
-                if self.birth_orders is not None:
-                    # the order channel's key (i): the residues of Z_W taken
-                    # in the keyed permutation's order, one per birth
-                    u = self.birth_orders[number][u]
+                if number in self.birth_orders:
+                    # the seed-set order: u = order[(ordinal - 1) mod W], one
+                    # residue per birth over W births (the stride 1 at load)
+                    u = self.birth_orders[number][(ordinal - 1) % lamp.wheel[1]]
                 identity = number * (1 << 32) + ordinal
                 pair = definition.phase_per_age
                 if pair is None:
@@ -1128,7 +1132,7 @@ class DetectorLawSimulation:
                             "measured": number,
                             "family": definition.name,
                             "record": identity,
-                            **({} if world.residue_inside else {"u": u}),
+                            "u": u,
                             "labels": [list(branch) for branch in lamp.branches],
                             "arms": lamp.arms,
                             **({"arm_records": identities} if lamp.arms > 1 else {}),
@@ -1297,9 +1301,23 @@ class DetectorLawSimulation:
             # block's record has no train and is driven by nothing here).
             self._drive(live)
             return
+        ended: list[tuple[int, int]] = []
         if exempt is None:
+            if live.was_exempt:
+                # The grace's end (Reviewer 3's line on 906d3635): the set
+                # Nodes' own row, which evolved freely, is taken now as the
+                # hop rule takes an entered Node's content: this interval's
+                # motion there squared, booked to the set's pointer and to
+                # `absorbed` below, before the row is held at 0.
+                freed = self._exempt(live)
+                if freed is not None:
+                    motion = np.where(freed, nxt - live.now, 0).astype(object)
+                    for node in zip(*np.nonzero(freed), strict=True):
+                        ended.append((int(self.cell_index[node]), int(motion[node]) ** 2))
+                live.was_exempt = False
             nxt[self.absorbing] = 0
         else:
+            live.was_exempt = True
             nxt[self.absorbing & ~exempt] = 0
         if live.mask is not None:
             # the arm's row lives on its own side of the lamp (component 2)
@@ -1356,7 +1374,7 @@ class DetectorLawSimulation:
             offer = offer[keep]
             cells = cells[keep]
         squares = offer.astype(object)
-        for cell, value in zip(cells.tolist(), squares.tolist(), strict=True):
+        for cell, value in list(zip(cells.tolist(), squares.tolist(), strict=True)) + ended:
             if value:
                 live.pointers[cell] += int(value)
                 live.absorbed += int(value)
@@ -1574,8 +1592,10 @@ class DetectorLawSimulation:
             "arrived": self.tick,
             "family": self.families[family].name,
             "record": live.identity,
-            # the order channel's key (ii): no residue on the click's stamp
-            **({} if self.world.residue_inside else {"u": live.u}),
+            # HOST: the birth residue, the input of the diagnostic E_N and never
+            # a reader-of-record field (the reader reads `click`, `birth` and
+            # `chosen`; DECLARATIONS.md section 2 item 8)
+            "u": live.u,
             "born": live.born,
             "chosen": [[name, 0, "0"]] if name is not None else None,
             "node": [],
@@ -1908,7 +1928,7 @@ class DetectorLawSimulation:
                     "record": live.identity,
                     "lamp": live.lamp,
                     "family": self.families[live.family].name,
-                    **({} if self.world.residue_inside else {"u": live.u}),
+                    "u": live.u,
                     "born": live.born,
                     "birth": live.birth_tick,
                     "age": live.age,

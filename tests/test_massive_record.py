@@ -382,6 +382,7 @@ def block_world(
             "emits",
             "held",
             "own_grace",
+            "take",
         ):
             if key in block:
                 entry[key] = block[key]
@@ -544,6 +545,10 @@ def coupled_chain(
         "seed": seed,
         "absorbing": absorbing,
     }
+    if absorbing:
+        # the take's pair is required on an absorbing block of a massive kind
+        # (Reviewer 3's line 1 on item 6b): light's pair, declared
+        block["take"] = [-15, 56]
     if wheel is not None:
         block["wheel"] = wheel
     return block_world(
@@ -858,6 +863,7 @@ def test_k_the_take_only_for_an_absorbing_block():
                         "side": 12,
                         "pair": [314, 315],
                         "absorbing": True,
+                        "take": [-15, 56],
                         "emits": "light",
                         "own_grace": 70,
                     }
@@ -1533,6 +1539,8 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
         count_then: int | None = None
         held_after = False
         previous_now: np.ndarray | None = None
+        previous_before = previous_remainder = np.zeros(1, dtype=np.int64)
+        previous_scale = 1
         first_booking: int | None = None
         expected_booking: int | None = None
         pointer_at: dict[int, int] = {}
@@ -1553,9 +1561,17 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 assert live.pointers[a_face] == 0 and live.first_rung[a_face] is None
                 passed_freely = passed_freely or int(live.now[112, 0, 0]) != 0
                 previous_now = live.now.copy()
+                previous_before = live.before.copy()
+                previous_remainder = live.remainder.copy()
+                previous_scale = live.scale
             elif first_booking is None and previous_now is not None:
                 # the first taken interval: the Ports' motion from the free
-                # neighbours' levels as the grace ended, no jump booked
+                # neighbours' levels as the grace ended (no jump booked), plus
+                # the set Node's own content taken as the hop rule takes an
+                # entered Node's (BUILD.md section 17): the rule's next level
+                # there (light's pair [1, 1] on the chain: S_6 = 4 a + the two
+                # x neighbours, the wall 3 x the coupling's scale, the remainder
+                # carried) less the current, squared
                 first_booking = live.pointers[a_face]
                 expected_booking = sum(
                     (
@@ -1566,6 +1582,18 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                     for index, (axis, sign, mask) in enumerate(simulation.take_masks)
                     if bool(mask[112, 0, 0])
                 )
+                six = (
+                    4 * int(previous_now[112, 0, 0])
+                    + int(previous_now[111, 0, 0])
+                    + int(previous_now[113, 0, 0])
+                )
+                wall = 3 * previous_scale
+                own_next = (
+                    previous_scale * six
+                    - wall * int(previous_before[112, 0, 0])
+                    + int(previous_remainder[112, 0, 0])
+                ) // wall
+                expected_booking += (own_next - int(previous_now[112, 0, 0])) ** 2
             if mirror_seen is None and abs(int(live.now[171, 0, 0])) > 0:
                 mirror_seen = simulation.tick
             if rung is None and live.first_rung[a_face] is not None:
@@ -1854,10 +1882,11 @@ def test_ag_an_absorbing_block_of_the_matter_kind_takes_with_its_declared_pair()
     [-33, 100] below light's, 5.73 x 10^12; the largest level left between the lamp and the
     screen (x in [150, 182]) with the declared pair below light's (945542 against 951825).
     The loader: `take` on a block that is not absorbing refused; a pair outside (-1, 0]
-    refused; a pair with n > 0 refused."""
+    refused; a pair with n > 0 refused; `take` absent on an absorbing block of a massive kind
+    refused (Reviewer 3's line 1 on item 6b: no implicit default of a physical rate)."""
     taken: dict[str, int] = {}
     left: dict[str, int] = {}
-    for label, take in (("light", None), ("declared", [-19, 86]), ("group", [-33, 100])):
+    for label, take in (("light", [-15, 56]), ("declared", [-19, 86]), ("group", [-33, 100])):
         document = matter_lamp_world(True, [77, 25])
         document["ticks"] = 3000
         block: dict = {
@@ -1871,15 +1900,13 @@ def test_ag_an_absorbing_block_of_the_matter_kind_takes_with_its_declared_pair()
             "pair": [156, 157],
             "absorbing": True,
         }
-        if take is not None:
-            block["take"] = take
+        block["take"] = take
         document["measured"] = [block, dict(document["measured"][1], amount=1)]
         document["detectors"] = [{"name": "screen", "positions": [[184, 0, 0]], "threshold": 1}]
         world = parse_nature_beam_world(document)
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
-        expected = tuple(take) if take else (-15, 56)
-        assert (int(simulation.take_num[184, 0, 0]), int(simulation.take_den[184, 0, 0])) == expected
+        assert (int(simulation.take_num[184, 0, 0]), int(simulation.take_den[184, 0, 0])) == tuple(take)
         assert (int(simulation.take_num[100, 0, 0]), int(simulation.take_den[100, 0, 0])) == (-15, 56)
         identity = 1 * (1 << 32) + 1
         screen = simulation.cell_names.index("screen")
@@ -1913,6 +1940,13 @@ def test_ag_an_absorbing_block_of_the_matter_kind_takes_with_its_declared_pair()
     )
     with pytest.raises(ValueError, match="take is refused on a block that is not absorbing"):
         parse_nature_beam_world(bad)
+    # Reviewer 3's line 1 on item 6b: no implicit default of the take's pair
+    # on a massive kind's take line
+    silent = json.loads(json.dumps(bad))
+    silent["measured"][-1]["absorbing"] = True
+    del silent["measured"][-1]["take"]
+    with pytest.raises(ValueError, match="take is required on an absorbing block of a massive kind"):
+        parse_nature_beam_world(silent)
     for pair, message in (([-90, 86], r"lies in \(-1, 0\]"), ([19, 86], "take numerator")):
         wrong = json.loads(json.dumps(bad))
         wrong["measured"][-1]["absorbing"] = True

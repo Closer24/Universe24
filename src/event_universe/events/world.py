@@ -440,19 +440,6 @@ WORLD_KEYS = {
     # records a block emits; RUN_LIST.md's light detectors at W = 64), an
     # integer from 1, 1 by default, admitted under `detector_law` alone.
     "wheel",
-    # detector-law-v1, the order channel's two keys (DECLARATIONS.md
-    # section 2 item 8, the model owner's declaration of 2026-09-24):
-    # `order_seed`, an integer from 0, the key of the permutation in whose
-    # order every lamp's births take the residues of its wheel's Z_W (one
-    # per u; a Fisher-Yates shuffle driven by the SplitMix64 mixing hash on
-    # the seed and the lamp's number, `core.integer.keyed_permutation`), in
-    # place of the counter's stride; an input of kind 1, drawn once, never
-    # written to a line; and `residue_inside`, a boolean, false by default:
-    # no line carries the residue u (the click's stamp is the detector's
-    # count and the birth interval). Both admitted under `detector_law`
-    # alone.
-    "order_seed",
-    "residue_inside",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -916,6 +903,19 @@ LAMP_KEYS = {
     # DECLARATIONS.md section 15 M1-6: the matter lamp 16700, the hold);
     # without it a lamp's grace is the engine's constant two periods
     "own_grace",
+    # detector-law-v1, the order channel's two keys (DECLARATIONS.md section
+    # 2 item 8, the model owner's declaration of 2026-09-24; Reviewer 3's
+    # line: no default): on a PAIR lamp (a lamp with `arms` above 1) under
+    # `detector_law`, `residue_order` is REQUIRED, "ordinal" (the counter
+    # form as built, u = (ordinal - 1) r mod W) or "seed" (the seed-set
+    # order, u = order[(ordinal - 1) mod W], the order a Fisher-Yates
+    # permutation of Z_W driven by the SplitMix64 mixing hash from
+    # `residue_seed`, `core.integer.keyed_permutation`; the stride r must be
+    # 1); `residue_seed`, an integer in [0, 2^64), an input of kind 1,
+    # required under "seed" and refused under "ordinal". Neither key is
+    # admitted on a lamp without arms or outside `detector_law`.
+    "residue_order",
+    "residue_seed",
     # detector-law-v1: the record's train in periods of its clock (the
     # record's coherence), a declaration of the lamp, absent by default.
     "train",
@@ -1215,6 +1215,11 @@ class LampDefinition:
     # arms, in order).
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     arms: int = 1
+    # detector-law-v1, the order channel's keys on a pair lamp (DECLARATIONS.md
+    # section 2 item 8): "ordinal" or "seed", None on a lamp without arms;
+    # the seed of the seed-set order, None under "ordinal".
+    residue_order: str | None = None
+    residue_seed: int | None = None
     # The hand of the lamp's rows (`hand-v1`): a circularly polarised lamp
     # of a family without a hand, -1 or +1; a lamp of a chiral family may
     # repeat the family's value only; 0 means the family's (none, or its
@@ -1543,12 +1548,6 @@ class NatureBeamWorld:
     # every row stays below (declared on a massive world; the constant
     # 2^40 on a world without the kind, where no row is bounded so).
     amplitude_bound: int = AMPLITUDE_BOUND
-    # detector-law-v1, the order channel's keys (DECLARATIONS.md section 2
-    # item 8): `order_seed`, the key of the births' order over each lamp's
-    # Z_W (None: the counter's stride), and `residue_inside`, no line
-    # carrying u.
-    order_seed: int | None = None
-    residue_inside: bool = False
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2548,6 +2547,7 @@ def _lamp(
     turn_rate: tuple[int, int],
     family_hand: int = NO_HAND,
     massive: bool = False,
+    detector_law: bool = False,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate", "wheel"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -2583,6 +2583,51 @@ def _lamp(
                 f"{BEAM_LAW}: {label}.arms {arms} does not divide the {len(directions)} directions "
                 "(every arm takes the same number of directions, in order)"
             )
+    # The order channel's two keys (DECLARATIONS.md section 2 item 8): on a
+    # pair lamp under the local detector law `residue_order` is required
+    # with no default (an implicit default to the open-channel form is
+    # against AGENTS.md); on any other lamp the keys are not admitted.
+    residue_order: str | None = None
+    residue_seed: int | None = None
+    if detector_law and arms > 1:
+        if "residue_order" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.residue_order is required on a pair lamp (a lamp with arms) "
+                'under the local detector law, "ordinal" or "seed", with no default '
+                "(DECLARATIONS.md section 2 item 8)"
+            )
+        declared = obj["residue_order"]
+        if declared not in ("ordinal", "seed"):
+            raise ValueError(
+                f'{BEAM_LAW}: {label}.residue_order must be "ordinal" (the counter form, u = '
+                '(ordinal - 1) r mod W) or "seed" (the seed-set order of the residues)'
+            )
+        residue_order = str(declared)
+        if residue_order == "seed":
+            if "residue_seed" not in obj:
+                raise ValueError(
+                    f'{BEAM_LAW}: {label}.residue_seed is required under residue_order "seed" '
+                    "(an integer in [0, 2^64), the key of the births' order, drawn once per world)"
+                )
+            residue_seed = _integer(obj["residue_seed"], f"{label}.residue_seed", 0, (1 << 64) - 1)
+            if wheel[0] != 1:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.wheel [{wheel[0]}, {wheel[1]}]: the stride r must be 1 "
+                    'under residue_order "seed" (W births take every residue once by the order)'
+                )
+        elif "residue_seed" in obj:
+            raise ValueError(
+                f'{BEAM_LAW}: {label}.residue_seed is refused under residue_order "ordinal" '
+                "(a key that does nothing is refused)"
+            )
+    else:
+        for key in ("residue_order", "residue_seed"):
+            if key in obj:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.{key} is not admitted on a lamp without arms"
+                    + ("" if detector_law else " or outside the local detector law")
+                    + " (the birth wheel's form as built, no far setting to hide)"
+                )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
     if "branches" in obj:
@@ -2649,6 +2694,8 @@ def _lamp(
         turns,
         branches,
         arms,
+        residue_order=residue_order,
+        residue_seed=residue_seed,
         hand=hand,
         label_hands=label_hands,
         momentum_magnitude=momentum_magnitude,
@@ -3370,6 +3417,15 @@ def _block(
                 "lies in (-1, 0] (the Port follows the wave one way; light's [-15, 56])"
             )
         take = (numerator, denominator)
+    if absorbing and take is None and family.massive_kind and "emits" not in obj:
+        # Reviewer 3's line 1 on item 6b: light's pair on a massive kind's take
+        # line would be an implicit default of a physical rate; light's kind
+        # keeps the law's [-15, 56].
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.take is required on an absorbing block of a massive kind (the "
+            "take's pair k = n / d is a declaration of the kind; light's kind alone takes with the "
+            "law's [-15, 56])"
+        )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     margin = obj.get("margin", MARGIN_KINDS[0])
@@ -3452,6 +3508,7 @@ def _measured(
     massive_record: bool = False,
     width: int = 1,
     amplitude_bound: int = AMPLITUDE_BOUND,
+    detector_law: bool = False,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -3701,6 +3758,7 @@ def _measured(
                 turn_rate,
                 family_hand=families[family].hand,
                 massive=families[family].massive,
+                detector_law=detector_law,
             )
         block = _block(
             obj,
@@ -4862,23 +4920,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 "the detector sets under the local detector law)"
             )
         wheel = _integer(obj["wheel"], "wheel", 1, MAX_VALUE)
-    order_seed: int | None = None
-    if "order_seed" in obj:
-        if not detector_law:
-            raise ValueError(
-                f"{BEAM_LAW}: the world key `order_seed` is refused without `detector_law` (the key "
-                "of the births' order over each lamp's wheel, DECLARATIONS.md section 2 item 8)"
-            )
-        order_seed = _integer(obj["order_seed"], "order_seed", 0, (1 << 64) - 1)
-    residue_inside = obj.get("residue_inside", False)
-    if type(residue_inside) is not bool:
-        raise ValueError(f"{BEAM_LAW}: residue_inside must be true or false (false by default)")
-    if residue_inside and not detector_law:
-        raise ValueError(
-            f"{BEAM_LAW}: the world key `residue_inside` is refused without `detector_law` (no line "
-            "carries the birth residue u; the click's stamp is the detector's count and the birth "
-            "interval, DECLARATIONS.md section 2 item 8)"
-        )
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -4952,6 +4993,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         massive_record,
         width,
         amplitude_bound,
+        detector_law,
     )
     _column_budget(families, measured, release)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -5052,8 +5094,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         wheel=wheel,
         closed=closed,
         amplitude_bound=amplitude_bound,
-        order_seed=order_seed,
-        residue_inside=residue_inside,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)
