@@ -517,6 +517,79 @@ omega_b) of its own well, printed by the pins script before the run.
    e2 of PLAN.md 2.3 as an exploratory run first, then the pinned run; the
    builder confirms that the grace holds for a block's emitted records as
    for a lamp's.
+7. THE LIGHT CLOCK IN MOTION, the prediction as declared (2026-09-24,
+   01:45Z, on the referee's item (4); COMPUTATION,
+   `light_clock_motion_pins.py`; a derivation before any run, no pin
+   moved). Two blocks pushed together at k = 3 at a DECLARED separation
+   L (section 13's form, the receive the other block's click): the round
+   trip along the motion is L / (c - v) + L / (c + v) = 245.9 + 65.9 =
+   311.8 intervals = 2 L gamma^2 / c against N_0 = 2 L / c = 207.85 at
+   rest, and each block's clock runs at 1 / gamma_m (section 8's one
+   formula, the well limit), so THE MOVING CLOCK'S OWN COUNT of the round
+   trip over its rest count is gamma^2 / gamma_m = 1.2224 along the motion
+   and gamma / gamma_m = 0.9981 across it ([800, 809]; 1.2234 and 0.9989
+   for [156, 157]): Reviewer 3's algebra of Highlights 5.4's "five" (a
+   medium, gamma^2 along and gamma across in the lattice's intervals)
+   divided by the clock's gamma_m. Einstein's 1 and 1 needs the along
+   separation to contract by gamma, which a declared rigid separation
+   does not do; the design's route to it (the same line's section 8b: a
+   pair held by light alone, prediction 5 of ALGEBRA.md 8.9, its
+   separation contracting by the wave law) is not this world's. So AS
+   DECLARED the row is a (P) with the number 1.2224 at k = 3 and nature's
+   null (Michelson-Morley and Kennedy-Thorndike, Herrmann 2009 at 10^-17,
+   RECALLED) its falsifier: the law as declared does not meet "five" on a
+   pushed pair, and the paper's row (d) in motion must carry that number
+   and say so (the abstract's "meets (A1) only" is the same fact). What
+   would meet it, and only it, is a world of two bodies whose separation
+   is held by light and read after the push, to be declared and derived
+   (8b) before it is computed; the model owner's word. THE READER OF THE
+   ROW (Reviewer 3's line, 02:00Z): the row reads the moving clock's OWN
+   count, the block's own clock (its rung count on its own record, the
+   massive series' reader), so the receiving detector set of key (i) at
+   the block's cells must STAMP the block's count (the engine's clock
+   field from the block's rung count, which the gather line carries only
+   for a block's cell; key (ii)'s binding carries it with the stepping
+   block); the same world read in the LATTICE'S intervals gives the
+   medium's numbers, gamma^2 = 1.500 along and gamma = 1.225 across, not
+   1.2224 and 0.9981. THE ACROSS ARM IS A POSITIVE (his token): the
+   transverse clock's own count equals its rest count to 0.2 percent, the
+   kind's slowing 1 / gamma_m meeting the medium's gamma, the residue the
+   two-pace ratio c_eff / c = 0.99627, row A's number; so the row's (P)
+   carries two numbers with two words, MET in form across (0.9981) and a
+   predicted FAIL along (1.2224) as declared.
+8. THE LIGHT-HELD PAIR IN MOTION on the lattice's band (derivation (a),
+   2026-09-24, 02:35Z, on the Boss's YES of 02:00Z to the owner's
+   question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin).
+   Member (iii) of PUSH_BALANCE.md section 5, the covariant object, is
+   now the law's, since the massive kind's bound clock reads f = f_0 /
+   gamma_m from the rule (ALGEBRA.md 8.1, 8.4; Reviewer 3's line of
+   01:55Z): the standing condition of 8b (iv) at that frequency gives, IN
+   THE CONTINUUM, the separation L_0 / gamma along the motion and L_0
+   across, and five's ratio 1 and 1 exactly (the wave equation's
+   covariance, PUSH_BALANCE.md section 4; the script's check). ON THE
+   CHAIN'S OWN BAND the forward wave of the moving pair is
+   Doppler-compressed into the lattice's dispersive range (5.8 Links at
+   lambda_0 = 12, k = 3; the backward wave 23 Links), and the standing
+   condition with the band's k(omega) and group paces gives L_along /
+   L_0 = 0.771, 0.795, 0.808 at lambda_0 = 12, 16, 24 Links for k = 3
+   (against 1 / gamma = 0.8165) and 0.885, 0.893, 0.898 for k = 4
+   (against 0.9014), and FIVE'S ALONG RATIO in the pair's own count
+   1.158, 1.067, 1.025 at k = 3 and 1.045, 1.023, 1.009 at k = 4, the
+   rigid pair's 1.501, 1.343, 1.269 and 1.182, 1.145, 1.124 beside. So
+   the light-held pair reads five as 1 + O((a / lambda)^2 beta^2), the
+   lattice's own term (the same order as row A2's dispersion), tending to
+   1 as the wavelength grows or the speed falls, and 1 exactly in the
+   continuum; in nature's regime (a / lambda below 10^-20, beta below
+   10^-3) the term is below 10^-40, invisible to Michelson-Morley and
+   Kennedy-Thorndike, so the light-held pair matches the null in form.
+   The across arm is 1 in the continuum; its lattice term is the
+   anisotropy's order and is not computed here. What stays open (Reviewer
+   3): the settling of the pair at the pattern's nodes under the coupling
+   with the push of light at the blocks' outer Ports (ALGEBRA.md 8.11),
+   a COMPUTATION on the coupled map with the push, then a world; the
+   paper's row (d) in motion carries the rigid pair's 1.222 as the
+   law-as-declared number and the light-held pair's 1 + O(k^2 beta^2) as
+   the form five reaches, with the settling named as the open step.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
