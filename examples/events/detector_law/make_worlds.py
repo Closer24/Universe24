@@ -713,6 +713,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             faces=massive.FACES_OPEN,
             probes=[[4094, 0, 0]],
             mode_axis="x" if motion else None,
+            seed_profile=False,
         )
         bounded(document, REDSHIFT_WORLD_WHEEL)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
@@ -721,6 +722,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         document["detectors"].append(
             {"name": "light_detector", "positions": [[4094, 0, 0]], "threshold": 1, "wheel": 64}
         )
+        massive.seed_on_the_mode(document)
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 3000 (the physicist's 07:58Z: one chain for both worlds,
@@ -751,6 +753,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             faces=massive.FACES_OPEN,
             probes=[[712, 0, 0], [772, 0, 0]],
             mode_axis="x" if motion else None,
+            seed_profile=False,
         )
         bounded(document, R2_WORLD_WHEEL)
         graced(
@@ -763,6 +766,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         receiver_set(document, "at_a", 0, R2_WHEEL)
         receiver_set(document, "at_b", 1, R2_WHEEL)
         named_receiver(document, {0: "at_b", 1: "at_a"})
+        massive.seed_on_the_mode(document)
         out[name] = document
     # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
     # chain of 673 CLOSED for light at both ends (the loader's third face value, the
@@ -781,6 +785,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         LIGHT_CLOCK_TICKS,
         light=light_11,
         probes=[[612, 0, 0]],
+        seed_profile=False,
     )
     bounded(document, SET_WHEEL)
     graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
@@ -792,6 +797,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         {"name": "at_a", "block": 0, "positions": [[612, 0, 0]], "threshold": 1, "wheel": 64}
     )
     named_receiver(document, {0: "at_a"})
+    massive.seed_on_the_mode(document)
     out["light_clock_60"] = document
     # Rows M1 and M2 (section 12 with section 15 M1-6; THE SIZED FORM of SIZING.md, section
     # 12's line of 2026-09-24): the 128 x 128 x 1 layer, y periodic, x open for the matter
