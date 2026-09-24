@@ -514,6 +514,39 @@ omega_b) of its own well, printed by the pins script before the run.
    would meet it, and only it, is a world of two bodies whose separation
    is held by light and read after the push, to be declared and derived
    (8b) before it is computed; the model owner's word.
+8. THE LIGHT-HELD PAIR IN MOTION on the lattice's band (derivation (a),
+   2026-09-24, 02:35Z, on the Boss's YES of 02:00Z to the owner's
+   question; COMPUTATION, `light_held_pair_pins.py`; no run, no pin).
+   Member (iii) of PUSH_BALANCE.md section 5, the covariant object, is
+   now the law's, since the massive kind's bound clock reads f = f_0 /
+   gamma_m from the rule (ALGEBRA.md 8.1, 8.4; Reviewer 3's line of
+   01:55Z): the standing condition of 8b (iv) at that frequency gives, IN
+   THE CONTINUUM, the separation L_0 / gamma along the motion and L_0
+   across, and five's ratio 1 and 1 exactly (the wave equation's
+   covariance, PUSH_BALANCE.md section 4; the script's check). ON THE
+   CHAIN'S OWN BAND the forward wave of the moving pair is
+   Doppler-compressed into the lattice's dispersive range (5.8 Links at
+   lambda_0 = 12, k = 3; the backward wave 23 Links), and the standing
+   condition with the band's k(omega) and group paces gives L_along /
+   L_0 = 0.771, 0.795, 0.808 at lambda_0 = 12, 16, 24 Links for k = 3
+   (against 1 / gamma = 0.8165) and 0.885, 0.893, 0.898 for k = 4
+   (against 0.9014), and FIVE'S ALONG RATIO in the pair's own count
+   1.158, 1.067, 1.025 at k = 3 and 1.045, 1.023, 1.009 at k = 4, the
+   rigid pair's 1.501, 1.343, 1.269 and 1.182, 1.145, 1.124 beside. So
+   the light-held pair reads five as 1 + O((a / lambda)^2 beta^2), the
+   lattice's own term (the same order as row A2's dispersion), tending to
+   1 as the wavelength grows or the speed falls, and 1 exactly in the
+   continuum; in nature's regime (a / lambda below 10^-20, beta below
+   10^-3) the term is below 10^-40, invisible to Michelson-Morley and
+   Kennedy-Thorndike, so the light-held pair matches the null in form.
+   The across arm is 1 in the continuum; its lattice term is the
+   anisotropy's order and is not computed here. What stays open (Reviewer
+   3): the settling of the pair at the pattern's nodes under the coupling
+   with the push of light at the blocks' outer Ports (ALGEBRA.md 8.11),
+   a COMPUTATION on the coupled map with the push, then a world; the
+   paper's row (d) in motion carries the rigid pair's 1.222 as the
+   law-as-declared number and the light-held pair's 1 + O(k^2 beta^2) as
+   the form five reaches, with the settling named as the open step.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 

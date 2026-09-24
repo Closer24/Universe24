@@ -55,8 +55,13 @@ def member_iii(lam0, k_step, num=800, den=809, continuum=False):
     gamma_m = gamma if continuum else 1 / math.sqrt(1 - v * v / ceff2)
     om_obj = om0 / gamma_m
     if continuum:
-        kf = lambda om: om / c
-        vg = lambda om: c
+
+        def kf(om):
+            return om / c
+
+        def vg(om):
+            return c
+
     else:
         kf, vg = band_k, band_vg
     top = (math.pi - 1e-9) if continuum else (math.acos(1 / 3) - 1e-9)
