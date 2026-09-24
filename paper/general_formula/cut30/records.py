@@ -61,6 +61,38 @@ INTERFERENCE_START = "\\paragraph{Interference, by the formulas alone.}"
 # records file; cut30/click.py (one click, the detector law's form) in its place.
 OLDCLICK_START = "\\begin{definition}[The click]\\label{def:click}"
 OLDCLICK_END = "\\end{lemma}\n"
+# The three FAIL rows (the perihelion, the supernova diagram, the atom): one sentence
+# each in the text, the full statement to the records file (the Boss's word of 01:27Z).
+FAIL_CUTS = (
+    (
+        "(iii) The perihelion:",
+        " (iv) ",
+        "(iii) The perihelion: FAIL by the one law, pinned in order and symmetry: the drive's pace departs from $p/m_i$ at first order per axis, so a bound orbit's apsides move per revolution by an angle of order $\\beta$ with the lattice's symmetry, where Einstein has $6\\pi\\beta^2$ isotropic, about $330$ times nature's at Mercury's pace and of the wrong symmetry; the coefficient and the deciding reading NOT MADE; the full statement is history \\cite{records}.",
+    ),
+    (
+        "(vii) Dark energy's shape:",
+        " (viii) The atom.",
+        "(vii) Dark energy's shape: FAIL, stated as a failure and not a resolution: the redshift against flight time at a detector is Milne's coasting form, $q = 0$ exactly, times the emitters' clock stretch by their crowd, an apparent acceleration for every $g_1 > 0$ with nothing accelerating on the board; the size $g_1$ is an input, the crowd's own accumulation gives the wrong sign, and a standard lamp's brightness reads one factor of $1 + z$ short (rows 3 and 11a, not predicted); the model has no cosmological constant and needs none as a rule; the full statement is history \\cite{records}.",
+    ),
+    (
+        "(viii) The atom.",
+        "\\paragraph{",
+        "(viii) The atom: NOT YET and the law's own FAIL: the ladder $a_j/a_i = (j/i)^2$ with $E_j$ proportional to $1/j^2$ and Balmer's $27/20$ is conjectured from the algebra in the shell mean and not read, no lattice able to hold the atom's scale being run; the hydrogen loop at $r = 12$ escapes under the drive as built at $3407$ intervals (DETECTOR, history), and under the centred step, a hypothesis under its own name, it stays and tightens with no line read (row 6); the full statement is history \\cite{records}. The families of the register, each with its declared integers, its algebraic object and the click that reads it, are the families table \\cite{records}.\n\n",
+    ),
+)
+
+
+def cut_fail_rows(s: str) -> tuple[str, list[str]]:
+    """The three FAIL rows' full statements out, one sentence each in their place."""
+    spans = []
+    for start, end, line in FAIL_CUTS:
+        i = _once(s, start, start)
+        j = s.index(end, i) if end in s[i:] else len(s)  # a block may end before the marker
+        spans.append(s[i:j])
+        s = s[:i] + line + s[j:]
+    return s, spans
+
+
 LONGTABLE_END = "\\end{longtable}}"
 TABLE_START = "{\\scriptsize\\setlength{\\tabcolsep}{3pt}"
 CONVERSION_LABEL = "\\caption{\\label{tab:conversion}"
@@ -217,6 +249,7 @@ def cut(s: str) -> tuple[str, str]:
     i = _once(s, OLDCLICK_START, "the old click")
     j = s.index(OLDCLICK_END, i) + len(OLDCLICK_END)
     oldclick, s = s[i:j], s[:i] + click.DEFINITION + s[j:]
+    s, fail_rows = cut_fail_rows(s)
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
@@ -254,6 +287,8 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
         + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
         + oldclick
+        + "\n\\section{The three FAIL rows in full: the perihelion, the supernova diagram and the atom, history}\\label{rec:failrows}\n\n"
+        + "\n\n".join(fail_rows)
         + "\n\\section{A hand-worked update}\\label{rec:handworked}\n\n"
         + handworked
         + "\n\n\\section{The conversion, Inside formula to Outside formula}\\label{rec:conversion}\n\n"
@@ -292,6 +327,8 @@ def strip_block(body: str) -> str:
         body = body[:i] + body[j:]
     if body.lstrip().startswith(OLDROAD_START):  # the old dictionary, likewise
         return ""
+    if FAIL_CUTS[0][0] in body:  # the three FAIL rows, one sentence each
+        body, _ = cut_fail_rows(body)
     if OLDCLICK_START in body:  # the beam law's click, whole in the records file
         i = body.index(OLDCLICK_START)
         j = body.index(OLDCLICK_END, i) + len(OLDCLICK_END)

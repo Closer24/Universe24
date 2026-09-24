@@ -6957,3 +6957,19 @@ statement of the answer, as the strong abstracts of the field open
 the limits last); every claim, number and hedge of commit 29's abstract
 is kept word for word or shortened without loss, under 250 words. The
 title and the 1.05 sigma sentence untouched (the Boss's order).
+
+## Applied (2026-09-24, the Boss's word on the referee's proposals and issue 1077): commit 37 on paper-48
+
+The perihelion, the supernova diagram and the atom each keep their
+table row and one sentence in the text saying FAIL and why by the one
+law; their full statements are whole in records.tex. The roles' names
+leave the argument: a claim cites its record or page by number (the
+method's "one run on a recorded decision", decision B with record 1150,
+the design page, the audit's date, record 1244), never a person's role
+as evidence. The paper's list gains the evidence-class column with
+every cell blank, to be filled only from the physicist's closure page
+at its merge SHA, and the limitations paragraph says once that a row
+whose apparatus table is the declared law is checked as an
+implementation of that table and that only DERIVED_BLIND rows are
+offered as predictions. "Materials availability: not applicable" joins
+the declarations. 46 pages.
