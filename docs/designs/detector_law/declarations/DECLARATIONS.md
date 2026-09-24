@@ -1384,6 +1384,32 @@ nature.
 6. The identity: `detector-law-v1` with `massive-record-v1`. The world:
    to write, the builder, `sagnac_k3.json` and `sagnac_rest.json` by
    `make_worlds.py`; HOST a minute each.
+7. THE CELL OF A BLOCK RECORD'S CLICK, STATED AS THE ENGINE HAS IT (the
+   World Generator's gather reading of sagnac_k3 at 906d3635, 07:20Z,
+   EXPLORATORY; Reviewer 3's line C of 07:18Z; the Boss's order of
+   07:30Z; stated 2026-09-24, 07:40Z, before any pinned run of R2). A
+   block's emitted record has no birth draw: its birth residue is u = 0
+   (only a lamp draws u from its wheel). So its click's cell is not chosen
+   by a draw but is THE FIRST CELL IN THE WORLD'S LADDER ORDER WHOSE
+   CUMULATIVE SHARE OF THE LADDER'S TOTAL REACHES 1 / (2 W), W the
+   world's one wheel (the world key `wheel`, 256 on the four R2 worlds,
+   the same integer as the sets' rung; the ladder's W and the rung's W
+   are one), and the click is stamped at that cell's first rung. The
+   PREDICTION this states for sagnac_k3: every hold record of B lists
+   at_a (its share a quarter to a third of the total, the rest booked
+   escaped at the board's +x face) and at_a, first in the order, wins on
+   EVERY one of them; the meeting direction's click is at_a's first rung
+   on every B record, and the pin 72 +- 2 is read on all of them; the
+   chasing direction and the rest world have one cell each and are
+   untouched. The light clock's set (section 10 item 9) is chosen the
+   same way, first in its order. What this form hides is named: the
+   escaped share of a block's record never decides its cell, so a
+   count of clicks at a set is not a reading of the set's share; the
+   share is a GAMEBOARD reading of the gather line. A cell chosen by
+   weight for a block's record (the block's own count at the birth mod
+   W as its u, a stride wheel on the ordinal, not a draw) is a question
+   for the model owner after the paper, not a change today. No pin
+   moves under this statement: every pin is a first-rung time at a set.
 
 ## 14. The tables act on the pair: the linear form, the splitter's re-emission and its extent (Reviewer 3's read of the builder's three components, 00:20Z; my decisions, 2026-09-24, 00:05Z)
 
