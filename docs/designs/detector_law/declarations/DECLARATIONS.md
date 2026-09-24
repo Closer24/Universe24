@@ -1910,7 +1910,7 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   on the blind map of the world itself, `two_slits_1024.py` and `.out`
   beside SIZING.md; no screen reading exists, the Runner's 10:45Z run read
   the open face alone): the layer 160 x 256 x 1 (x AND y OPEN, the four
-  faces light's sponges, z the folded axis); the lamp at [20, 128]; the
+  faces light's sponges, z the folded axis); the lamp at [20, 128] with NO HEADING (regenerated 2026-09-24 on Reviewer 3's second reading, 16:25Z, under the owner's standard: a heading should arise; the loader's default the six headings, an isotropic emitter, the beam's shape the mask's and the split's work; the map that gives the pin drives one Node with no heading, so the pin does not move; the collimated form with `directions` [[1, 0, 0]] HISTORY); the
   mirror line at x = 40 (L-1) with two openings of WIDTH 3 centred at y =
   115 and y = 141 (d = 26); the screen at x = 153 (L = 113), one detector
   set per Node over y in [28, 228] (201 sets, the ladder); the lamp's
