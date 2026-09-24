@@ -160,6 +160,10 @@ class LiveRecord:
     # rung (the record lives on with content 0, field energy the sinks
     # absorb, and closes with no second line).
     clicked: bool = False
+    # The sinks' take of a record under the receiver by name (HOST, the
+    # pointer's unit): what the faces and every set but the receiver took,
+    # inside `absorbed` (the completion's measure) and on no pointer.
+    escaped: int = 0
 
 
 @dataclass
@@ -840,6 +844,8 @@ class DetectorLawSimulation:
                 receiver = self._receiver_of(live)
                 if value:
                     live.absorbed += value
+                    if receiver is not None and cell != receiver:
+                        live.escaped += value
                 if value and (receiver is None or cell == receiver):
                     # a cell of the record's ladder (every cell without the
                     # receiver by name; the receiver alone with it: another
@@ -1059,6 +1065,7 @@ class DetectorLawSimulation:
         receiver = self._receiver_of(light)
         if receiver is not None and cell != receiver:
             # a sink under the receiver by name: in `absorbed`, on no pointer
+            light.escaped += value
             return
         light.pointers[cell] += value
         wheel = block.definition.wheel if block.definition.wheel is not None else self.wheel
@@ -1526,6 +1533,7 @@ class DetectorLawSimulation:
                     # section 13 item 7): what a face or another set takes
                     # leaves the record's ladder, in `absorbed` (the
                     # completion's measure) and on no pointer
+                    live.escaped += int(value)
                     continue
                 live.pointers[cell] += int(value)
                 if (
@@ -1762,31 +1770,37 @@ class DetectorLawSimulation:
         return energy * self.wheel < live.absorbed
 
     def _click(self, live: LiveRecord) -> None:
-        """The close of a record without a line: the click's cell chosen by
-        `cell_of` over the pointers on the record's wheel (the ladder of
-        every cell, the counting form), its line written and its rows
-        released. Under the receiver by name a record whose receiver crossed
-        no rung within the ticks completes with NO click (DECLARATIONS.md
-        section 13 item 7): its line carries `chosen` null and its content
-        goes to the escaped row (or to `taken_by_emitter`, item 10), as an
-        escaped record's does."""
+        """The close of a record without a receiver (a lamp's record; a
+        block's without the key): the click's cell chosen by `cell_of` over
+        the pointers on the record's wheel (the ladder of every cell, the
+        counting form), its line written and its rows released."""
         weights = [(p, 1) for p in live.pointers]
-        chosen = (
-            cell_of(weights, self.wheel, live.u)
-            if live.absorbed and self._receiver_of(live) is None
-            else None
-        )
+        chosen = cell_of(weights, self.wheel, live.u) if live.absorbed else None
         self._gather_line(live, chosen)
         self._release(live)
 
     def _close_clicked(self, live: LiveRecord) -> None:
         """The close of a record whose line was written at its receiver's
-        rung: no second line (one click per record), its rows released, the
-        close counted on the ledger's HOST row `closed_after_click`; its
-        content is 0 (the content moved with the line), so the books move
-        by nothing."""
+        rung: no second line (one click per record), the field still moving
+        after the line absorbed by the sinks, its content (0: the content
+        moved with the line) to the escaped row, its rows released and the
+        close counted on the ledger's HOST row `closed_after_click`."""
+        self.ledger.transit_escaped[live.family] += live.content
         self._release(live)
         self.ledger.closed_after_click[live.family] += 1
+
+    def _close_without_click(self, live: LiveRecord) -> None:
+        """The close of a record with a receiver that crossed no rung within
+        the ticks (DECLARATIONS.md section 13 item 7; the declaration's
+        point 6): NO line is written; the content goes to the row of the
+        take that ended it, `taken_by_emitter` where its own emitter took it
+        (item 10) and the escaped row where a face or another set did (0
+        for a block's record, born at content 0); its rows released."""
+        if live.emitter_took:
+            self.ledger.taken_by_emitter[live.family] += live.content
+        else:
+            self.ledger.transit_escaped[live.family] += live.content
+        self._release(live)
 
     def _release(self, live: LiveRecord) -> None:
         """The record's rows leave the board: the splitters' remainders, the
@@ -1849,6 +1863,10 @@ class DetectorLawSimulation:
             # `taken_by_emitter` (its own emitter took it wholly; on no cell's
             # ladder), 0 where a cell was chosen
             "taken_by_emitter": live.content if chosen is None and live.emitter_took else 0,
+            # HOST (the receiver by name): the sinks' take of the record by
+            # this line, in the pointer's unit (the faces and every set but
+            # the receiver; on no pointer); on a record with a receiver alone
+            **({"escaped": live.escaped} if self._receiver_of(live) is not None else {}),
             "born": live.born,
             "chosen": [[name, 0, "0"]] if name is not None else None,
             "node": [],
@@ -1985,6 +2003,9 @@ class DetectorLawSimulation:
                     # the receiver by name: the line was written at the rung;
                     # the close writes none (one click per record)
                     self._close_clicked(live)
+                elif self._receiver_of(live) is not None:
+                    # the receiver crossed no rung: no click, no line
+                    self._close_without_click(live)
                 else:
                     self._click(live)
                 del self.records[identity]
@@ -2194,7 +2215,7 @@ class DetectorLawSimulation:
                     # HOST (the receiver by name): whether the record's line
                     # was written at its receiver's rung (it lives on with
                     # content 0); on a world with a receiver alone
-                    **({"clicked": live.clicked} if self.has_receiver else {}),
+                    **({"clicked": live.clicked, "escaped": live.escaped} if self.has_receiver else {}),
                     "born": live.born,
                     "birth": live.birth_tick,
                     "age": live.age,

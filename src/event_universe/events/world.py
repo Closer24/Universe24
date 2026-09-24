@@ -3518,6 +3518,12 @@ def _block(
                 "nonempty string)"
             )
         receiver = value
+    elif emits is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} emits {names_of_emits(emits, families)!r} and declares no "
+            "`receiver`: an emitting block names the detector set whose one cell is the ladder "
+            "of its records (the receiver by name, DECLARATIONS.md section 13 item 7; no default)"
+        )
     return BlockDefinition(
         side,
         pair,
