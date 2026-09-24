@@ -183,12 +183,17 @@ and the ray law's series exists.
    searches in N^2 trials), in place of the counter family's [1, 1];
    (ii) the click's stamp carries the detector's count and the birth
    interval, never the residue (P11, clicks only; the seed an input of
-   kind 1, drawn once, never read Outside). THE THEOREM (exact over the
-   ensemble of seeds, not typicality): B's list at fixed b is a balanced
-   multiset (N / 2 pluses for either a) in a uniformly random order, so
-   its distribution is the uniform distribution over balanced strings
-   for a and for a' alike; no decoder fixed before the run, without the
-   seed, does better than 1 / 2; the script's (b) checks it on the
+   kind 1, drawn once, never read Outside). THE THEOREM (exact for a
+   uniformly random order; the seed-set shuffle its integer form, closed
+   to a reader without the seed: Reviewer 3's word, 03:44Z): B's list at
+   fixed b is a balanced multiset (N / 2 pluses for either a) in a
+   uniformly random order, so its distribution is the uniform
+   distribution over balanced strings for a and for a' alike, and no
+   decoder fixed before the run, without the seed, does better than 1 /
+   2; the Fisher-Yates shuffle driven by the 64-bit generator is not
+   exactly uniform (a reader who knows the generator's form could in
+   principle search the 2^64 seeds), so for it the statement is closure
+   to a reader without the seed; the script's (b) checks it on the
    first-quarter and the threshold decoders over 200 seeds (about 1 /
    2), with the flips for a reader who holds the residues still E_N =
    181 / 256 (Inside, Bell's theorem) and the counts 1024 of 2048 either
@@ -706,7 +711,7 @@ omega_b) of its own well, printed by the pins script before the run.
    1.222 as the law-as-declared number and the light-held pair's 1.0136
    at the declared world, tending to (a / lambda)^2 beta^2, as the form
    five reaches, with the settling named as the open step.
-9. THE RECEIVING SET IS A's FACE CELL ALONE (the builder's reading (a),
+9. THE RECEIVING SET IS THE FREE NODE ADJACENT TO A's FACE, ALONE (the builder's reading (a),
    03:14Z through the Boss, named not judged; DECLARED 2026-09-24,
    03:35Z; the pin does not move, the reader's declaration does). His
    reading: with the set at all twelve of A's cells the pointer crosses
@@ -714,13 +719,25 @@ omega_b) of its own well, printed by the pins script before the run.
    A's bulk cells (a tenth of the emission's peak in amplitude, decaying
    slowly on the chain; GAMEBOARD), the face open and closed alike, so
    the first rung after the grace reads the residual, not the return.
-   At the FACE cell the residual is one percent of the peak in amplitude
-   (his probe at the face: 1.7e5 open against the return's 7.0e6 closed,
-   the peak 1.6e7; GAMEBOARD), so its offer is 10^-4 of the peak's per
-   interval against the return's 0.19 (0.44 squared): over the 68
-   intervals from the grace's end to the return the residual's pointer
-   is below one percent of the return's own passage, far under the rung
-   (COMPUTATION from his numbers). DECLARED: the receiving set bound to
+   REVIEWER 3's TWO LINES (03:44Z; the declaration admissible, the pin
+   unmoved): (i) the builder's probe (1.7e5 open against the return's
+   7.0e6 closed, the peak 1.6e7; GAMEBOARD) was NOT at A's face: in his
+   test (ac) A is at [100, 112) with its face at 111, the mirror at 172,
+   and the probe reads x = 160, a free Node 48 Links from A's face; the
+   residual at A's own face and at the adjacent Node is unmeasured. (ii)
+   The map (e) and the engine disagree on the residual: the map with the
+   receiver at all twelve cells gives the first rung at 218 and no rung
+   on the residual after the grace at 140, while reading (a) says the
+   twelve-cell set crosses at once at 140; in form they agree (the block
+   makes no response to its own emitted record, the map skips it as the
+   engine does), so the disagreement is unexplained: either the map
+   misses something or reading (a) was of another world. So whether the
+   engine's set reads the RETURN at 218 +- 2 with no earlier rung on the
+   residual is exactly what the PRELIMINARY RUN must show (EXPLORATORY,
+   the owner's rule of 03:29Z) before the pin runs: the world loads under
+   line B, the emission's first cycle, no rung at the set before the
+   return's transit (2 L / c = 207.85), the first rung within 218 +- 2 at
+   W = 64. DECLARED: the receiving set bound to
    A is the free Node adjacent to A's face toward the mirror, x = 612,
    alone (the map (e)'s face Node: `one_record` reads the offer at
    receiver_lo + s = 612, outside the block, so the coupling and the take
