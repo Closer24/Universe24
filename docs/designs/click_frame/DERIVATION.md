@@ -1330,7 +1330,10 @@ the least separation of two places read is one Link; (ii) the least
 time a detector times by itself is a pulse to its neighbour and its
 return; (iii) the least step of a moving record is one Node per k
 counts, so the Outside velocities are the ratios `1 / k` (M3, over Q)
-with the velocity quantum `1 / (k (k + 1))`, and c Outside is one Link
+for an elementary one-Link segment, a velocity read over dx Links and
+dn counts being the rational dx / dn (`1 / (k (k + 1))` is the gap
+between two consecutive reciprocals, not a universal quantum of
+velocity; issue #1012, 2026-09-24), and c Outside is one Link
 per the least count.
 
 *Proof.* (i) A click moves information one Node at most (A1), so two
@@ -1359,7 +1362,9 @@ its detector counts k intervals stretched by the crowd, so a velocity
 read by clicks is `1 / k` Nodes per count, a ratio of two integers (M3,
 in the mean over a hop pattern), never a real number; two neighbouring
 velocities differ by `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, finest near
-c and coarsest near rest; and c Outside is one Link per the least
+c and coarsest near rest (the gap between consecutive reciprocals, not a
+universal quantum: a velocity read over dx Links and dn counts is any
+rational dx / dn; issue #1012); and c Outside is one Link per the least
 count, the pace of a row (`1 / sqrt 3` Links per interval, `32 / 55` on a
 heading), the same in every family by (A1). QED. *The Outside step
 formula in these quanta:* for the next click of the same record (a
