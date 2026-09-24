@@ -6758,3 +6758,33 @@ count sentence in its four places and the abstract's sentence say the
 list's state. 51 pages, 87 references; the 48 returns with the
 rewrite of the old-law sections on the owner's word "rewrite
 everything algebra first".
+
+## Applied (2026-09-24, the owner's seven points and "rewrite everything algebra first"): commit 25 on paper-48, the whole move and the three worlds
+
+The owner's words: the whole move in the order it is really built, seven
+points (the GameBoard and its group; the records and the pair; the
+second group, the phase circle; the foreign object; the detector; what
+the clicks produce; the passage between the worlds), "verify it and
+give it expression in the paper, it is critical to understanding the
+algebra; show it as a diagram, a square within a square"; then "the
+foreign object is no element of Z_N: its place is in the first group,
+the shape on the board, its action in the second, on the phase, through
+its table, a shift t in the linear form, section 14"; and "rewrite
+everything to fit the way we work today, algebra first". Verified
+against main and the design branch: point 1 ALGEBRA.md 1.3 and 1.4 and
+the dispersion page; point 2 chapter 8.1 with the declared pairs [1, 1]
+and [800, 809]; point 3 and the clarification DECLARATIONS.md section
+14 (the tables act on the record's pair in the linear form, no phase
+reading, no register; record 1533); point 4 chapter 8.3 and 8.5; point
+5 chapter 8.6 with the one gather of 3.1, the light detector in the
+owner's words; point 6 the birth stamp (record 1271) and 3.2; point 7
+the approvals file. The seven points stand as a numbered paragraph of
+the Introduction with Figure 1, the three worlds as a square within a
+square and what they lead to (worlds_figure.py, from the definitions,
+no run). The old mechanism figure, the rows that hop and the birth
+phase against the rungs, is the engine before 2026-09-23 (ALGEBRA.md
+2.11) and leaves for the records file as history, its references to
+Figure 1; the old readings' figures left in commit 24. The rewrite of
+the old-law sections (2's click with the wheel, 4's theorems on hopping
+rows, 5's law and implementation, 6's route) follows, on the owner's
+word, section by section.

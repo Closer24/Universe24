@@ -36,7 +36,7 @@ FAMILIES_LABEL = "\\caption{\\label{tab:families}"
 SYMBOLS_START = "\\paragraph{The symbols.} {\\footnotesize"
 SUMMARY_LABEL = "\\caption{\\label{tab:summary}"
 KEPT_LABEL = "\\caption{\\label{tab:kept}"
-OLD_FIGURES = ("fig:interference", "fig:pair", "fig:sofn")
+OLD_FIGURES = ("fig:mechanism", "fig:interference", "fig:pair", "fig:sofn")
 FIGURE_START = "\\begin{figure}"
 FIGURE_END = "\\end{figure}"
 
@@ -97,6 +97,7 @@ REFERENCES = [
         "the symbol table is\nAppendix~\\ref{app:technical},",
         "the symbol table is\nin " + RECORDS + ",",
     ),
+    ("Figure~\\ref{fig:mechanism}", "Figure~\\ref{fig:worlds}"),
     ("Table~\\ref{tab:roads}", "the roads table \\cite{records}"),
     ("Appendix~\\ref{app:register}", RECORDS),
     ("Appendix~\\ref{app:families}", RECORDS),

@@ -122,6 +122,7 @@ def _check_reorder(module) -> None:
         "app:proofs",
         "tab:summary",
         "tab:kept",
+        "fig:mechanism",
         "fig:interference",
         "fig:pair",
         "fig:sofn",
