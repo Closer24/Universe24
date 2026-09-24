@@ -1786,10 +1786,26 @@ the two pins, not a third pin.
    on the record's two columns by the linear form of item 1, on every
    Node of the bar's line as item 4 says) and the EXIT cell is the next
    Node beyond it on the arm's line. The record's offer at the entry
-   cell's Ports (its motion squared, DESIGN.md section 5) is SPLIT by the
-   declared pair [C'[s]^2, S'[s]^2] over n_s = C'[s]^2 + S'[s]^2, one
-   division with the remainder kept (the splitter's own form, item 3):
-   the + share to the exit cell, the - share to the entry cell. Each
+   cell's Ports (its motion squared, DESIGN.md section 5) is SPLIT BY THE
+   RECORD'S OWN STATE (Reviewer 3's bug line of 2026-09-24, 15:15Z, fixed
+   on polariser-fix; the model owner's standing word that approved bug
+   fixes go in): the channel pointers J(o) = SUM over the record's labels l
+   of U_s[o][bit of l on the arm] x a_l (verb B on the record's label
+   weights, `joint_weights` with this one body), the weights J(+)^2 and
+   J(-)^2 over their sum, one division with the remainder kept (the
+   splitter's own form, item 3): the + share to the exit cell, the - share
+   to the entry cell. For a record on label 0 the weights are the declared
+   pair [C'[s]^2, S'[s]^2] over n_s = C'[s]^2 + S'[s]^2 (the counts of
+   sections 5 and 6 unchanged: 128, 246, 199, 177 of 256); on label 1 they
+   swap (0, 32, 64 of 64 in + at s = 0, N / 4, N / 2 on the test's full
+   wheel); on the equal superposition of the two labels they are (C' +
+   S')^2 and (C' - S')^2 (32, 64, 32 of 64 in +): the polariser acts on the
+   state and never assigns the outcome from the setting alone
+   (tests/test_detector_law_tables.py, tests d, d2 and d3; the expected
+   counts the algebra's, never read from a run). Before the fix the split
+   read the setting alone, and a record born on label 1 or on a
+   superposition was split as if on label 0; Malus's four worlds (every
+   record on label 0) were unaffected. Each
    cell is a detector set's Node with the record's pointer (one set per
    Node, DESIGN.md section 5 item 4); the click's interval is the first
    rung of the record's whole offer at the body (the two shares' sum)

@@ -214,9 +214,18 @@ class TableBody:
     exit_node: tuple[int, int, int]
     entry_cell: int
     exit_cell: int
+    # the label-0 weights C'[s]^2, S'[s]^2 and their sum (the declared
+    # integers of the setting; a record on label 0 is split by them)
     plus: int
     minus: int
     norm: int
+    # the half-angle pair (C'[s], S'[s]) itself: the record's own channel
+    # pointers J(o) are formed from it and the record's label weights
+    # (`joint_weights` with this one body), so that a record born on label 1
+    # or on a superposition is split by its state, not by the setting alone
+    # (Reviewer 3's bug line of 2026-09-24, 15:15Z)
+    cosine: int = 0
+    sine: int = 0
 
 
 @dataclass
@@ -819,26 +828,44 @@ class DetectorLawSimulation:
                 cosine * cosine,
                 sine * sine,
                 cosine * cosine + sine * sine,
+                cosine=cosine,
+                sine=sine,
             )
         )
 
     def _split_table_offers(self, live: LiveRecord) -> None:
         """The split of this interval's offer at each table body's entry cell
-        (DECLARATIONS.md section 14 item 6): the entry pointer's gain since
-        the last split, times C'[s]^2 over n_s with the remainder kept (one
-        division, verb D), moved to the + cell; the first rung of the
-        body's WHOLE offer (the two cells' sum) over the cell's wheel stamps
-        both cells' first rung. The pointers' sum, `absorbed`, the norm and
-        every other cell are untouched."""
+        (DECLARATIONS.md section 14 item 6) BY THE RECORD'S OWN STATE: the
+        channel pointers J(o) = SUM over the record's labels l of U_s[o][bit
+        of l on the body's arm] x a_l (`joint_weights` with this one body,
+        verb B on the record's label weights, then the square), the weights
+        J(+)^2 and J(-)^2; the entry pointer's gain since the last split,
+        times J(+)^2 over their sum with the remainder kept (one division,
+        verb D), moved to the + cell; the first rung of the body's WHOLE
+        offer (the two cells' sum) over the cell's wheel stamps both cells'
+        first rung. For a record on label 0 the weights are the setting's
+        C'[s]^2 and S'[s]^2 (the counts of DECLARATIONS.md sections 5 and 6
+        unchanged); on label 1 they swap; on a superposition they are the
+        state's (Reviewer 3's bug line of 2026-09-24, 15:15Z: the polariser
+        acts on the state, never assigns the outcome from the setting alone).
+        A record whose two pointers are both 0 (a state orthogonal to both
+        channels' rows cannot occur; J(+)^2 + J(-)^2 = n_s x the state's norm)
+        is left untouched. The pointers' sum, `absorbed`, the norm and every
+        other cell are untouched."""
         for index, body in enumerate(self.table_bodies):
             if body.family != live.family:
                 continue
             seen, remainder = live.table_shares.get(index, (0, 0))
             gain = live.pointers[body.entry_cell] - seen
             if gain:
-                plus, remainder = divmod(gain * body.plus + remainder, body.norm)
-                live.pointers[body.entry_cell] -= plus
-                live.pointers[body.exit_cell] += plus
+                (_, plus_weight), (_, minus_weight) = self.joint_weights(
+                    [(body.cosine, body.sine)], [body.arm], live.labels
+                )
+                norm = plus_weight + minus_weight
+                if norm:
+                    plus, remainder = divmod(gain * plus_weight + remainder, norm)
+                    live.pointers[body.entry_cell] -= plus
+                    live.pointers[body.exit_cell] += plus
             live.table_shares[index] = (live.pointers[body.entry_cell], remainder)
             whole = live.pointers[body.entry_cell] + live.pointers[body.exit_cell]
             if whole and whole * self.cell_wheel[body.entry_cell] >= live.norm:

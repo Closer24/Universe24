@@ -681,3 +681,78 @@ def test_h_the_reader_reads_the_joint_cells_the_correlations_and_s_from_the_gath
     single = reader.read_run(one)
     assert single.names == ["pol"] and single.marginal(0) == Fraction(1, 2) and single.total == 64
     assert any("the + share 1/2" in line for line in reader.report([single]))
+
+
+def relabelled_counts(setting: int, labels: tuple[tuple[int, int], ...]) -> tuple[int, int]:
+    """The polariser world at `setting` stepped 800 intervals with every record's label
+    state set to `labels` at its birth (the record's own state, the joint labels' form; a
+    one-arm lamp births on label 0 and no lamp key sets another, so the test sets the
+    state on the record as it is born, 34 Links before the polariser); the + and - counts
+    over the 64 births."""
+    world = parse_nature_beam_world(polariser_world(setting))
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    seen: set[int] = set()
+    for _ in range(800):
+        simulation.step()
+        for identity, live in simulation.records.items():
+            if identity not in seen:
+                seen.add(identity)
+                live.labels = labels
+        assert simulation.books()["balanced"], simulation.tick
+    chosen = [line["chosen"][0] for line in lines if line["event"] == "gather"]
+    assert len(chosen) == 64 and not simulation.records
+    return sum(1 for cell in chosen if cell[1] == 0), sum(1 for cell in chosen if cell[1] == 1)
+
+
+def test_d2_the_polariser_splits_by_the_records_own_state_not_the_setting_alone():
+    """(d2) Reviewer 3's bug line (2026-09-24, 15:15Z): the split took C'[s]^2 and S'[s]^2
+    from the setting alone and never read the record's label state, so a record born on
+    label 1 was split as if on label 0. Now the channel pointers are the record's own,
+    J(o) = SUM_l U_s[o][l] a_l (`joint_weights` with one body), the weights J^2. THE
+    ALGEBRA'S EXPECTED COUNTS over the full wheel of 64 (each u once, the rungs exact):
+    on LABEL 1 the counts SWAP, (0, 64) at s = 0, (32, 32) at s = N / 4 and (64, 0) at
+    s = N / 2 (J(+) = S', J(-) = C'); on the SUPERPOSITION of labels 0 and 1 with equal
+    weights, J(+) = C' + S' and J(-) = C' - S': (32, 32) at s = 0 (256 and 256), (64, 0)
+    at s = N / 4 (362 and 0: the state is the + channel's own at 45 degrees) and (32, 32)
+    at s = N / 2 (256 and -256); label 0 unchanged from (d). The edge case: the weights of
+    a record on label 0 are still the declared C'^2 and S'^2 (`body.plus`, `body.minus`)."""
+    assert {s: relabelled_counts(s, ((1, 1),)) for s in (0, 16, 32)} == {
+        0: (0, 64),
+        16: (32, 32),
+        32: (64, 0),
+    }
+    assert {s: relabelled_counts(s, ((0, 1), (1, 1))) for s in (0, 16, 32)} == {
+        0: (32, 32),
+        16: (64, 0),
+        32: (32, 32),
+    }
+    assert relabelled_counts(16, ((0, 1),)) == (32, 32)
+    world = parse_nature_beam_world(polariser_world(16))
+    body = DetectorLawSimulation(world).table_bodies[0]
+    assert (body.cosine, body.sine) == (181, 181)
+    assert DetectorLawSimulation.joint_weights([(body.cosine, body.sine)], [0], ((0, 1),)) == [
+        ((0,), body.plus),
+        ((1,), body.minus),
+    ]
+
+
+@pytest.mark.parametrize(
+    ("name", "expected"),
+    [("malus_45", 128), ("malus_11.25", 246), ("malus_28.125", 199), ("malus_33.75", 177)],
+)
+def test_d3_malus_four_worlds_keep_their_counts_under_the_split_by_state(name: str, expected: int):
+    """(d3) Malus's four worlds as declared (DECLARATIONS.md sections 5 and 6: every record
+    born on label 0) keep their + counts 128, 246, 199 and 177 of 256 under the split by
+    the record's own state: the state is label 0, whose channel pointers are the
+    setting's C'[s] and S'[s], the weights the declared C'^2 and S'^2, the counts the
+    tables' own on the wheel [159, 256] (each residue once)."""
+    document = json.loads((ROOT / "examples" / "events" / "detector_law" / f"{name}.json").read_text())
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    for _ in range(world.ticks):
+        simulation.step()
+    chosen = [line["chosen"][0] for line in lines if line["event"] == "gather"]
+    assert len(chosen) == 256
+    assert sum(1 for cell in chosen if cell[1] == 0) == expected
