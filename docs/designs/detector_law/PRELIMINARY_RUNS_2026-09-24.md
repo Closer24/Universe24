@@ -365,6 +365,15 @@ precision.
 | pace_fan_24, change | +0.0096 | +0.0095 | +0.0096 | +0.0095 | -0.0037 | -0.0035 | -0.0035 | -0.0035 |
 | pace_fan_24, spread | 0.2567 to 0.2710 (5.5) | 0.2556 to 0.2725 (6.5) | 0.2567 to 0.2710 (5.5) | 0.2556 to 0.2725 (6.5) | 0.2516 to 0.2595 (3.1) | 0.2582 to 0.2658 (2.9) | 0.2554 to 0.2625 (2.8) | 0.2554 to 0.2625 (2.8) |
 
+- GAMEBOARD (the MEAN of the per-period series over the window per ray, the
+  reading of record of TEST_RUNS.md section 1 as main 8b9a2897 words it,
+  14:50Z; the spread beside it is in the table above): pace_fan_12 0.5332,
+  0.5320, 0.5332, 0.5320 (the axes +x, -x, +y, -y) and 0.5238, 0.5167,
+  0.5220, 0.5220 (the diagonals +x+y, -x-y, +x-y, -x+y); pace_fan_16
+  0.3937, 0.4006, 0.3937, 0.4006 and 0.3991, 0.3986, 0.4004, 0.4004;
+  pace_fan_24 0.2617, 0.2609, 0.2617, 0.2609 and 0.2542, 0.2603, 0.2576,
+  0.2576 rad per Link; the axes' mean over the diagonals' mean 1.0209,
+  0.9931 and 1.0140 (COMPUTATION, read).
 - COMPUTATION (read, not compared): the last period's mean of the four axes
   over the four diagonals is 1.0425 at 12 Links, 0.9819 at 16 and 1.0421 at
   24 (the axis above the diagonal in k by 4.2 percent, below by 1.8 percent,
@@ -583,16 +592,43 @@ are not those of section 10 by the pairing alone.
   peak ratios 0.78463 and 0.81274 (GAMEBOARD).
 - Against TEST_RUNS.md ae96dcf4 (section 7): NOT CLEAN by two letters of the section, named for Nature24: (a) "no set, no click": the away world writes 24 `click` lines and the rest world 11, the block's own clock (its record's cycles, `measured` 1), none at a set; (b) "its cells short of the probe at 6000": the away block's cells reach the probe's Node at 5630 (the corner 2376) and its corner is at 2500 at 6000, after the window's end 5400 (the corner 2300 at 5400) and before 6000. The rest holds: one birth, the probe 0 until 2745 / 2748, the steps from 3002 one Link per 3 intervals, no gather line, the run to 6000, the reader's fields printed, HOST 29 s and 88 MB; the earlier 0.018 peak of section 10 is named above (the pairing with the reference at omega').
 
-## 19. EXPLORATORY: the receding index at k = 4: RUN LAST, THE READINGS HELD
+## 19. EXPLORATORY: the receding index at k = 4 (index_moving_long_k4_away at 28d38c4e, index_moving_long_rest_k4_away at cbf52785, index_moving_long_reference_k4_away at 271db477; run last, released)
 
-index_moving_long_k4_away (28d38c4e), index_moving_long_rest_k4_away
-(cbf52785) and index_moving_long_reference_k4_away (271db477) loaded VALID and
-ran after every other world (HOST: wall 27.5, 25.0 and 13.9 s, 87 to 88 MB,
-all completed at 6000, the books balanced). Their readings are HELD in
-`artifacts/index_k4/HELD.md` on the Runner's container and are not on this
-page, on the Boss's precision of 12:45Z (the pin at k = 4 computed blind by
-Nature24 first), until the Boss says the pin has landed on main.
-- Against TEST_RUNS.md ae96dcf4 (section 8): the line is held with the readings.
+The three files loaded VALID and ran after every other world of the eight
+rows on main 328b560f (HOST: wall 27.5, 25.0 and 13.9 s, 87 to 88 MB, all
+completed at 6000, the books balanced), the away world paired with the
+reference at omega (4ecbd591, the k = 3 row's run of the same file) and the
+rest world with its reference at omega' = 2 pi 2243 / (10000 x 64) =
+0.022021 rad per interval. The readings were HELD in
+`artifacts/index_k4/HELD.md` on the Runner's container on the Boss's
+precision of 12:45Z and are released here on his word of 16:20Z (the k = 4
+pin on main at 474df439); EXPLORATORY, GAMEBOARD by declaration, never
+compared with the pin.
+
+- GAMEBOARD (the board): the away block hops from [1500, 0, 0] to [2250, 0,
+  0], 750 steps in 6000 (one Link per 4 intervals from 3000; its cells at
+  most 2274, short of the probe at 6000); the rest block at [2100, 0, 0];
+  the probe's first nonzero value at 2745 (away) and 2747 (rest); 6000
+  probe lines each; the away world's `click` lines of the block's own
+  clock beside, as at k = 3.
+- GAMEBOARD (the away world against the reference at omega, the projection
+  form over [3800, 5400]): the delay +0.5822 rad (n as the reader forms it
+  1.4001), the amplitude ratio 0.9962; the halves +0.3845 and +0.7892 rad,
+  the drift between them +5.06 x 10^-4 rad per interval; at the reference
+  series' own frequency (0.0350) +0.5814, the halves +0.3843 and +0.7889.
+- GAMEBOARD (the rest world at omega' against its reference): the delay
+  +0.2268 rad, n 1.2477, the amplitude ratio 0.9663; the halves +0.2055 and
+  +0.2503 (the drift +5.6 x 10^-5 rad per interval); at the series' own
+  frequency 0.0221 the same to four places.
+- GAMEBOARD (the pump over the window, the away world): light's `form`
+  from 1.079 x 10^13 to 1.460 x 10^13, the drift 2.38 x 10^9 per interval
+  in the mean, the largest 6.81 x 10^10; the mode k = 2 pi / 3 content
+  1.99 x 10^11 in the mean, 5.55 x 10^11 at the largest.
+- Against TEST_RUNS.md ae96dcf4 (section 8, "as row 7"): as at k = 3, NOT
+  CLEAN by the letter "no click" (the block's own clock lines, none at a
+  set); the block's cells stay short of the probe at 6000 here (2274
+  against 2400), the probe 0 until 2745, one birth, no gather, the run to
+  6000, the reader's fields printed.
 
 ## 20. The one list's preliminary column, and the test-run lines (the Boss's order of 13:22Z)
 
@@ -602,7 +638,16 @@ within the declared count, the reader reads), one line per world; and the
 line against Nature24's TEST_RUNS.md, on branch building-blocks at ae96dcf4
 (the Boss's word of 14:45Z; its sections 1 to 8 name main af4c3b03, these runs
 are on 328b560f), one word per world with what broke, as the sections above
-say it in full.
+say it in full. Read again against TEST_RUNS.md as main 8b9a2897 carries it
+(docs-fixes ab4bf941, the Boss's word of 16:20Z): section 1's reading of
+record is now the series' mean with its spread (given in section 12; the
+spread above 0.57 percent "leaves the row unresolved, named, not a defect"),
+so row 5a stays clean; section 3 now names the run with `--keep-row-clicks`
+as the run, so row 4c's second run is the run and the row reads clean by
+that text; section 7 now pairs each world with the reference at its own
+source clock, as sections 18 and 19 do; sections 2, 4, 5, 6 and 8 are
+unchanged in what they ask, so those lines stand (row M2's regenerated file
+is on runner-lines, not on main 8b9a2897, whose file still lacks `take`).
 
 | Row | World | Loads | Emits | The clicks at the declared set | The reader reads | Against TEST_RUNS.md |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -623,7 +668,9 @@ features, named as the owner named them (14:03Z), "the receiver by name"
 "the joint gather" (the Bell four); "the lamp's ladder" (two_slits,
 matter_waves_12) and Malus's four wait for their files and are skipped here,
 as ordered. Each run is EXPLORATORY, a diagnostic by kind, checked against
-its section of TEST_RUNS.md (on main at 2e1d5610, the same text as ae96dcf4).
+its section of TEST_RUNS.md as main 8b9a2897 carries it (docs-fixes ab4bf941 on
+main, the features by name; sections 9 to 13 unchanged in what they ask from
+ae96dcf4).
 
 - ENGINE: main 2e1d56104560258abc47b3eac23634970167d07c (engine-features
   merged at 3ce286dd), the source fingerprint `3cdd3b0de720`. Three worlds
@@ -771,3 +818,29 @@ redshift_k3:
   board at 9600, one Link per 3 intervals; the reader prints its fields;
   HOST under 200 MB (the wall 28 minutes on a shared core, against the
   section's "about a minute").
+
+redshift_control:
+
+- HOST: wall 1929.8 s (shared core), 145 MB; completed at 9600, the books
+  balanced; `closed_after_click` 28 at the end.
+- GAMEBOARD: 155 births (the first at 46), 155 click lines of A's clock;
+  125 gather lines on 125 distinct records, none with two, 30 births
+  without a line at the end; every line at the rung at light_detector
+  (`clock_source` "interval"), no face; the sinks' take 0; A's corner 2994
+  throughout, 0 steps.
+- DETECTOR (`light_clicks` at light_detector): 125 clicks, the first at
+  1939 (1893 after its record's birth stamp 46), the last at 9591; the
+  interval of each click from its own record's birth 1893, 1890, 1889,
+  1889, 1888, 1889, ... (1888 to 1893 over the 125); the successive
+  intervals 60, 61, 62, 60, 63, 62, ...; the mean interval 1913 / 31 =
+  61.71.
+- DETECTOR and COMPUTATION (section 11's reader): f_B per consecutive pair
+  1 / 60, 1 / 61, 1 / 62, 1 / 60, 1 / 63, 1 / 62, ... (the count
+  differences 60 to 64); over the train 124 / 7652 = 0.0162049 cycles per
+  interval.
+- COMPUTATION (read, not compared): the control's train ratio over the
+  receding world's, 0.0162049 / 0.0090030 = 1.7999.
+- Against TEST_RUNS.md (section 11): CLEAN, as redshift_k3 (125 lines, the
+  first about 1900 after its birth, no face, one line per record, A at
+  rest; HOST 32 minutes wall on a shared core against "about a minute").
+
