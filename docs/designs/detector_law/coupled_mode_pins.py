@@ -216,8 +216,11 @@ def one_record_moving(
     rows stay, the coupling's operands taken along the path on a hop interval, the convention
     of massive_moving_index.py's adjoint_r3); the emitter seeded in its rest mode and ramped
     `ramp` intervals before its train (the record's birth at t = ramp). Returns the mode's
-    frequency, the birth, the norm and the per-interval offer at the receiver's CURRENT cells,
-    so that the first rung from the birth is the click of that direction."""
+    frequency, the birth, the norm, the per-interval offer at the receiver's CURRENT cells and
+    the offer at the receiver's face cell toward the emitter alone (printed beside: the light
+    clock's receiving set is A's face cell, DECLARATIONS.md section 10 item 9; R2's sets stay the
+    blocks' cells with own_grace the hold, section 13 item 1), so that the first rung from the
+    birth is the click of that direction."""
     reads = open_chain_reads(n)
     idx = np.arange(n)
     lo_e, lo_r = emitter_lo, receiver_lo
@@ -234,6 +237,7 @@ def one_record_moving(
     l_now, l_bef = np.zeros(n), np.zeros(n)
     norm = 0.0
     offer = np.empty(steps)
+    offer_face = np.empty(steps)
     acc = 0
     for t in range(steps):
         hop_now = False
@@ -258,9 +262,11 @@ def one_record_moving(
             norm += float(np.sum(source**2))
         motion = l_next - l_now
         offer[t] = float(np.sum(motion[cells(lo_r)] ** 2))
+        face = lo_r + s - 1 if lo_r < lo_e else lo_r
+        offer_face[t] = float(motion[face] ** 2)
         m_bef, m_now = m_now, m_next
         l_bef, l_now = l_now, l_next
-    return omega_b, ramp, norm, offer
+    return omega_b, ramp, norm, offer, offer_face
 
 
 def block_record(reads, d_node, cells, g, big_g, steps):
@@ -463,6 +469,7 @@ if __name__ == "__main__":
     }
     rises = {}
     r2_f = {}
+    r2_face = {}
     print(
         "(f) R2's rise per direction, the click's own form on the chain of 2200 (the blocks at [700, 712) and [772, 784),"
     )
@@ -470,15 +477,19 @@ if __name__ == "__main__":
         "    L = 60, W the wheel; a click is the first rung from the record's birth after a ramp of 1500):"
     )
     for name, (e_lo, r_lo, k_step, transit) in cases.items():
-        omega_r2, birth, norm_r2, offer_r2 = one_record_moving(
+        omega_r2, birth, norm_r2, offer_r2, face_r2 = one_record_moving(
             2200, 1950, e_lo, r_lo, k=k_step, train=train
         )
         clicks = {w: first_rung(offer_r2, norm_r2, w, birth) - birth for w in wheels}
+        clicks_face = {w: first_rung(face_r2, norm_r2, w, birth) - birth for w in wheels}
         rises[name] = clicks[64] - transit
         r2_f[name] = clicks
+        r2_face[name] = clicks_face
         print(
             f"    {name}: the clicks by W {clicks}; the front's transit {transit:.1f}; the rise at W = 64 {rises[name]:+.1f}"
-            f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g})"
+            f" (omega_b {omega_r2:.5f}, the norm {norm_r2:.3g}); at the receiver's face cell toward the emitter alone,"
+            f" printed beside and NOT R2's declared set (section 13 item 1: the set stays the block's cells, its own"
+            f" records excluded by own_grace = the hold): {clicks_face}"
         )
     t_plus = cases["k = 3, A chases B"][3] + rises["k = 3, A chases B"]
     t_minus = cases["k = 3, B meets A"][3] + rises["k = 3, B meets A"]
@@ -505,7 +516,7 @@ if __name__ == "__main__":
     clicks_g = {w: first_rung(offer_g, norm_g, w, grace) for w in wheels}
     r2_g = {}
     for name, (e_lo, r_lo, k_step, _transit) in cases.items():
-        _, birth_g, norm_r, offer_r = one_record_moving(
+        _, birth_g, norm_r, offer_r, _face_g = one_record_moving(
             2200, 1950, e_lo, r_lo, k=k_step, g=g_d, big_g=big_d, amp=amp_d, train=train
         )
         r2_g[name] = {w: first_rung(offer_r, norm_r, w, birth_g) - birth_g for w in wheels}

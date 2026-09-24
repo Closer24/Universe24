@@ -494,13 +494,15 @@ omega_b) of its own well, printed by the pins script before the run.
    G = [1, 50], g = [1, 1000], the seed 50 x 2^20 (section 15 item M1-1,
    the same world in the closed form), light the kind [1, 1] with
    `phase_per_link` [1, 1] for the loader (the kind's rows carry no
-   phase label, ALGEBRA.md 1.7); no face detector: A's own `wheel` 64 is
-   the receiver; the MIRROR B is the chain's
+   phase label, ALGEBRA.md 1.7); no face detector: A's own receiving set
+   at W = 64 (its FACE CELL toward the mirror, x = 611, alone: item 9)
+   is the receiver; the MIRROR B is the chain's
    CLOSED face at x = 672, a mirror (the map (e) reflects at a zero face,
    so the pin 218 +- 2 does not move; the first draft's "open face" would
    absorb A's record there and read no return), sixty Links from A's face
    at x = 612 (no block, no (M) block needed). THE RECEIVER IS A ITSELF, under the cycle sentence
-   (DESIGN.md section 5, the owner's 10:12Z): A's own cells are the
+   (DESIGN.md section 5, the owner's 10:12Z): A's face cell toward the
+   mirror (x = 611, alone: item 9) is the
    detector set of its own emitted records; A's Ports take nothing of a
    record of its own during that record's train and for N_s intervals
    after, so its own emission is excluded, and the first rung of that
@@ -519,8 +521,8 @@ omega_b) of its own well, printed by the pins script before the run.
    record has one click, at the first rung of its chosen cell's pointer;
    a face detector passed by the outgoing record at emission would click
    the emission, never the return).
-2. The declared integers: the pairs, s = 12, G, g, W = 64 on A's cells,
-   L = 60 face to face, N_s = 70, the hold 2000.
+2. The declared integers: the pairs, s = 12, G, g, W = 64 on A's face
+   cell (x = 611), L = 60 face to face, N_s = 70, the hold 2000.
 3. The verbs: the massive rule with the coupling; the source term (a
    birth at the start of each cycle of A's own clock, one record per
    cycle); the zero face; the pointer and the click at W under the cycle
@@ -651,6 +653,31 @@ omega_b) of its own well, printed by the pins script before the run.
    1.222 as the law-as-declared number and the light-held pair's 1.0136
    at the declared world, tending to (a / lambda)^2 beta^2, as the form
    five reaches, with the settling named as the open step.
+9. THE RECEIVING SET IS A's FACE CELL ALONE (the builder's reading (a),
+   03:14Z through the Boss, named not judged; DECLARED 2026-09-24,
+   03:35Z; the pin does not move, the reader's declaration does). His
+   reading: with the set at all twelve of A's cells the pointer crosses
+   its rung AT THE GRACE'S END, at once, on the record's own RESIDUAL in
+   A's bulk cells (a tenth of the emission's peak in amplitude, decaying
+   slowly on the chain; GAMEBOARD), the face open and closed alike, so
+   the first rung after the grace reads the residual, not the return.
+   At the FACE cell the residual is one percent of the peak in amplitude
+   (his probe at the face: 1.7e5 open against the return's 7.0e6 closed,
+   the peak 1.6e7; GAMEBOARD), so its offer is 10^-4 of the peak's per
+   interval against the return's 0.19 (0.44 squared): over the 68
+   intervals from the grace's end to the return the residual's pointer
+   is below one percent of the return's own passage, far under the rung
+   (COMPUTATION from his numbers). DECLARED: the receiving set bound to
+   A is its face cell toward the mirror, x = 611, alone, W = 64,
+   `own_grace` 70 unchanged (the grace 140); the map (e) already prints
+   the click at the face cell alone, 218 at W = 64 (215, 213, 211 at 256,
+   1024, 4096), so THE PIN 218 +- 2 STANDS. A longer own_grace is not
+   taken: the bulk residual decays slowly and the return is at 208. The
+   same reading applies to R2's blocks, which need not receive their
+   own records: there the fix is own_grace = the hold (section 13 item
+   1), the sets at the blocks' cells and the pins unchanged; a receiver
+   that does not emit (4b's block, the one Node [1900, 0, 0]) has no own
+   residual and is unchanged.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
@@ -793,13 +820,22 @@ nature.
    receiver. THE RECEIVERS ARE
    THE BLOCKS THEMSELVES under the cycle sentence (section 10 item 1):
    each block's cells are a detector set with W = 64; a block's own
-   records are excluded at its own cells by the grace (the train plus N_s
-   = one period); the OTHER block's record clicks at the first rung of
-   its pointer there. No separate face detectors (Reviewer 3's line B).
-   A CONTROL world with both blocks at rest.
-2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 64, N_s =
-   one period as each block's key `own_grace` 70 (section 10 item 1); the momentum [Q S M, 0, 0] on +x for both, `ramp` 1500,
-   the hold 3000.
+   records are excluded at its own cells for the WHOLE HOLD (the key
+   `own_grace` 3000, the hold, as the matter lamp's is its hold: a block
+   of this row is not a receiver of its own records; corrected
+   2026-09-24, 03:40Z, on the builder's reading (a) of section 10 item 9:
+   with own_grace one period the block's own record's residual in its
+   bulk cells, a tenth of the peak, would trip the rung at the grace's
+   end and END that record everywhere, so the other block would never
+   receive it); the OTHER block's record clicks at the first rung of
+   its pointer there. The set stays the block's twelve cells, not the
+   face cell: at the face cell alone the map (f) reads 110, 252 and 92
+   at W = 64 (the meeting click's rise +26 at one cell), so the cells'
+   set and its pins stand. No separate face detectors (Reviewer 3's line
+   B). A CONTROL world with both blocks at rest.
+2. The declared integers: the pairs, s = 12, L = 60, G, g, W = 64, each
+   block's key `own_grace` 3000 (the hold; item 1); the momentum [Q S M,
+   0, 0] on +x for both, `ramp` 1500, the hold 3000.
 3. The verbs: the massive rule with the coupling in the one division; the
    source term with the birth stamp; the push; the pointer and the click
    at W under the cycle sentence, the click stamped with the record's
@@ -935,6 +971,42 @@ nature.
    phase reading of component 1 stays as a diagnostic (GAMEBOARD, the
    nearest angle) and is not the tables' input. The pins of sections 1, 3,
    5 and 6 are unchanged.
+6. THE POLARISER'S TWO CHANNELS AS CELLS OF THIS ENGINE (the builder's
+   keys report, 03:14Z through the Boss: the rotation by the linear form
+   is built and passes T-1's test; the click's channels + and - with the
+   weights of ALGEBRA.md 4.12 were the amplitude law's cells, and this
+   engine's cells are bodies, sets and faces; DECLARED 2026-09-24,
+   03:35Z, for rows 1a to 1d and 9; no pin moves). A polariser is a
+   TABLE BODY OF TWO CELLS on the arm's line (a foreign object, kind 3,
+   ALGEBRA.md 1.7): the ENTRY cell carries the table (the rotation U_s
+   on the record's two columns by the linear form of item 1, on every
+   Node of the bar's line as item 4 says) and the EXIT cell is the next
+   Node beyond it on the arm's line. The record's offer at the entry
+   cell's Ports (its motion squared, DESIGN.md section 5) is SPLIT by the
+   declared pair [C'[s]^2, S'[s]^2] over n_s = C'[s]^2 + S'[s]^2, one
+   division with the remainder kept (the splitter's own form, item 3):
+   the + share to the exit cell, the - share to the entry cell. Each
+   cell is a detector set's Node with the record's pointer (one set per
+   Node, DESIGN.md section 5 item 4); the click's interval is the first
+   rung of the record's whole offer at the body (the two shares' sum)
+   over W, and the click's CELL is chosen by the birth wheel's u on the
+   ladder of the two weights (rule (E), the rung; section 1 item 3, B3,
+   P6), one click per record (4.12); the counts per channel are the
+   clicks per cell. For the pair record the four cells of the joint
+   gather are the products of the two bodies' cells with the weights R =
+   J^2 as section 1 item 3 declares, unchanged; for Malus the two
+   weights are C'[s]^2 and S'[s]^2 over n_s, the counts of sections 5
+   and 6 unchanged (128 of 256 at 45 degrees). THE THREE TESTS: generic,
+   one primitive (the split of an offer by a declared pair over its sum,
+   the splitter's; the integers C'[s], S'[s] and n_s declared; no family
+   name, no kind); vector, verb (B) on the record's two columns, one
+   division (D) by n_s with the remainder kept, the rung (E) on the
+   pointer, no root, no float; local, the entry cell reads its own
+   record's pair and gives the exit cell its share through their Link as
+   an offer, one Link per interval, each cell's pointer at its own Node,
+   nothing kept at a Node beyond the record's pair and the set's own
+   count and pointer (the detector's declared exception, DESIGN.md
+   section 5). The builder builds on this line; Reviewer 3 gates.
 
 ## 15. The world lines the World Generator lacks, row by row (2026-09-24, 01:30Z, on the Boss's list of 01:00Z: 29 of 31 worlds refused at load, each on a line no section declared)
 
@@ -1059,7 +1131,11 @@ of this design ("12 Links" and "lambda = 12" elsewhere are lambda_0 =
   1a to 1d and 9 (the builder's (c)): the table's action by the linear
   form of section 14 item 1 on every Node of the bar's line (item 4), the
   rotation U_s on the record's two columns and the click's weights of
-  ALGEBRA.md 4.12 unchanged; no reading of a phase. NEEDED TONIGHT (the
+  ALGEBRA.md 4.12 unchanged; no reading of a phase. THE TWO CHANNELS AS
+  CELLS OF THIS ENGINE: section 14 item 6 (a table body of two cells,
+  the offer split by [C'[s]^2, S'[s]^2] over n_s, the click's cell by
+  the wheel on the ladder of the two weights; the builder's line of
+  03:14Z; no pin moves). NEEDED TONIGHT (the
   builder's item 4, 02:15Z): under the rule a light record is the pair of
   levels (DESIGN.md section 2) and carries no phase label, so the tables
   as built (the amplitude law's, on a label) cannot act on it; the test
@@ -1112,9 +1188,15 @@ waves).**
   as in sections 4 and 9, the loader's requirement; the kind's rows are
   pairs of levels and carry no phase label (ALGEBRA.md 1.7).
 - M1-4, THE RECEIVERS of R2, of the light clock and of 4b (corrected
-  at 01:40Z on the builder's report (b)): a DETECTOR SET at the receiving
-  body's own cells (its positions the cells; for 4b the one Node [1900,
-  0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
+  at 01:40Z on the builder's report (b); the placement corrected at
+  03:35Z on his reading (a), section 10 item 9): a DETECTOR SET at the
+  receiving body's cells, corrected per row on the builder's reading
+  (a): the light clock's A receives its OWN record's return, so its set
+  is its FACE CELL toward the mirror alone, x = 611 (the bulk cells hold
+  the record's residual, which would trip the rung at the grace's end;
+  section 10 item 9); R2's blocks receive only the OTHER's records, so
+  their sets stay their twelve cells with own_grace = the hold (section
+  13 item 1); for 4b the one Node [1900, 0, 0]) ON THE LIGHT RECORD with ITS OWN `wheel` W = 64, the pointer the
   light record's offer at those Nodes (DESIGN.md section 5 item 4; the
   maps' form, Reviewer 3's line A), not the block's own record's motion,
   whose drive through g is at the integer grain. This needs the
