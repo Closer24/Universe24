@@ -5758,6 +5758,11 @@ CORRECTIONS = [
         "the pair's construction models a Bell experiment in its counts only, not in its record of outcomes.",
         "the pair's construction models a Bell experiment in its counts only, not in its record of outcomes. The declared form (2026-09-24, \\cite[record 1647]{log}): the births of the pair record take the residues of $\\Z_{\\Nphi}$, one per $u$, in an order set by the world's seed through a declared integer hash (a Fisher--Yates permutation under a 64-bit SplitMix64 mixing hash) in place of the counter's $[1, 1]$; the click is stamped with the detector's count and the birth interval, never $u$; the seed is an input of kind 1 drawn once per world, never read Outside and independent of the settings; the lamp's cadence is fixed and independent of the residues; the click's stamp is the cell's own first rung, never the completion tick. Stated honestly: the nonlocality is Inside and declared, one gather; the model's standing is Bohm's under quantum equilibrium \\cite{bohm1952,dgz1992}; no reader Outside without the seed beats $1/2$. Row 1c's cell stands as derived under the counter until the declared form's runs are read.",
     ),
+    (
+        "commit 46, the physicist's answer to the Boss's item (C): row A2's class field, the form DERIVED_BLIND, the bound FALSIFIER_ONLY with its source verified; the 3/2 factor the paper's own reading",
+        "the published number verified against its source \\cite{sourcesverified}, its $3/2$ normalisation not found there \\cite{lightdispersion} & n/a & n/a, a form and a bound & \\underline{\\hspace{0.3in}} \\\\",
+        "the published number verified against its source \\cite{sourcesverified}, the factor $3/2$ the paper's own reading, the sensitivity $\\sqrt{2/3}$ beside \\cite{lightdispersion} & n/a & n/a, a form and a bound & DERIVED\\_BLIND (the form); FALSIFIER\\_ONLY (the bound, its source verified) \\\\",
+    ),
 ]
 
 

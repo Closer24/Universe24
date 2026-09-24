@@ -7107,3 +7107,11 @@ title's framing and "brought in nothing external", and whether the
 GitHub link joins the code availability statement. R2's moving clicks
 are not printed as pins until the declared hop rule of the moving take
 reaches the paper. 48 pages.
+
+## Applied (2026-09-24, the physicist's answer to the Boss's item (C)): commit 46 on paper-48
+
+Row A2's class field is filled in both its parts: the form
+DERIVED_BLIND, the bound FALSIFIER_ONLY with its source verified; the
+3/2 factor named as the paper's own reading with the sensitivity
+sqrt(2/3) beside. The blank class fields left: R2 (the owner at
+09:00). R2's moving clicks wait on the merge SHA. 48 pages.
