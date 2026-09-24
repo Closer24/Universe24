@@ -81,13 +81,24 @@ declared phi read back as phi at every u of the wheel.
    cells through the rung (E, D; B3, P6).
 4. The pins (COMPUTATION, before the run, from ALGEBRA.md 4.9 and 4.10):
    the correlation E(a, b) at each settings pair the finite-N Bell value
-   of the tables; S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = 181 / 64
-   = 2.828125 exactly at N = 2048 with the wheel [1, N] (the L3 series'
-   COMPUTATION; the registered 2.75 in the unit 64 is the N = 64 pilot's,
-   HISTORY); recomputed by the generator's `bell.py` under the linear form
-   with the declared clock pair before the run and written to `expectations.json`; the
-   run's falsifier |S - 181 / 64| beyond the counts' band (the exact
-   rational at N = 2048; 2.828125 is the pin, not a miss: Reviewer 3's
+   of the tables; S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = 186260 /
+   65773 = 2.83186 exactly at N = 2048 with the wheel [1, N], FROM THE
+   FORM'S OWN INTEGERS (re-printed BLIND 2026-09-24, 12:25Z, before any
+   Bell run, on Builder 3's computation and Reviewer 3's named defect of
+   the declaration through the Boss, 11:45Z): at each settings pair the
+   half-angle tables of 2N = 4096 hold (C', S') = (237, 98) at the pair's
+   angle of 22.5 degrees (256 cos 22.5 = 236.5, 256 sin 22.5 = 97.97; the
+   engine's `phase_cosines(4096)[256]` and `phase_sines(4096)[256]` read
+   237 and 98), E = (C'^2 - S'^2) / (C'^2 + S'^2) = 46565 / 65773 =
+   0.707965, and S = 4 E; the 181 / 64 = 2.828125 of the first drafts was
+   the cosine table's 256 cos 45 = 181 at N = 2048, a different rounding
+   of the same angle, HISTORY (the difference 0.0037 on S is the counts'
+   band 4 x 2 / 2048 = 0.0039); the registered 2.75 in the unit 64 the N =
+   64 pilot's, HISTORY; recomputed by the generator's `bell.py` under the
+   linear form with the declared clock pair before the run as R = J^2's
+   rational and written to `expectations.json`; the run's falsifier |S -
+   186260 / 65773| beyond the counts' band (the exact rational at N = 2048;
+   2.83186 is the pin, not a miss: Reviewer 3's
    wording, issue #1077; the first draft's "outside 2.42 +- 0.40 or above
    2.828" excluded its own pin), the comparison with nature in form, above
    Bell's 2 and at the quantum bound 2 sqrt 2 within the grain; the nature
@@ -1573,9 +1584,10 @@ nature.
    amplitude register, no reading at all; the click stays the rung on the
    table's weights (the quadratic form). The grain is the table's 1 / 256
    in the coefficients only. N = 2048 with the wheel [1, N] stands for the
-   Bell rows, and the pin 181 / 64 = 2.828125 stands: it is 4 x 181 / 256,
-   the table's own rounding of cos 45 degrees, which the linear form
-   carries unchanged. Options (i) N = 64 and (ii) a finer table are not
+   Bell rows, and the pin stands as the form's own rational 186260 / 65773
+   = 2.83186 (section 1 item 4, 12:25Z; the 181 / 64 = 4 x 181 / 256 of the
+   cosine table's rounding of cos 45 degrees HISTORY), which the linear
+   form carries unchanged. Options (i) N = 64 and (ii) a finer table are not
    taken (the first moves the pin, the second is law data).
    THE CLOCK'S STEP (Reviewer 3's line, 00:25Z): the linear form does not
    cure a small clock step, it only stops hiding it; the phase lives in
@@ -1594,8 +1606,8 @@ nature.
    percent, the pair's difference about 0.3 A; Malus (sections 5 and 6)
    carries [308, 25] on N = 256, the same clock (k = 12 or 13, S[12] = 74,
    S[13] = 80). The bar of 21 does not care about the wavelength and the
-   pins do not move; the generator's `bell.py` re-prints 181 / 64 under
-   the linear form with the declared clock before the run (section 1 item
+   pins do not move; the generator's `bell.py` re-prints the form's rational
+   186260 / 65773 under the linear form with the declared clock before the run (section 1 item
    4), and the World Generator writes the Bell worlds from this clause.
    THE STEP k IN THE IDENTITY (Reviewer 3's token 3) is the interval's
    own whole step: what the floor of age x n / d gains at that interval
