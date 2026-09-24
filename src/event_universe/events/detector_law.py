@@ -725,14 +725,12 @@ class DetectorLawSimulation:
             family = block.definition.emits
             if family is None or block.own is None:
                 continue
-            cost = self.families[family].quantum
-            if self.held[block.number][family] < cost:
-                continue
+            # The emission is the coupling's source term: the record is born
+            # at content 0 and consumes no stock (DECLARATIONS.md section 15
+            # M1-2; the books balance with 0 content as a response's do).
+            cost = 0
             block.births += 1
             identity = block.number * (1 << 32) + block.births
-            self.held[block.number][family] -= cost
-            self.ledger.held_spent[family] += cost
-            self.ledger.transit_released[family] += cost
             definition = self.families[family]
             assert definition.phase_per_age is not None
             numerator, denominator = definition.phase_per_age
@@ -1259,9 +1257,9 @@ class DetectorLawSimulation:
         if live.emitter is not None and live.sourcing:
             return True
         if live.emitter is not None:
-            declared = self.block_by_number[live.emitter].definition.grace
-            if declared is not None:
-                return live.age < live.train + declared
+            # the emitter's declared own_grace (N_s), required at load
+            declared = self.block_by_number[live.emitter].definition.own_grace
+            return live.age < live.train + (declared if declared is not None else 0)
         return live.age < live.train + 2 * live.period
 
     def _driven(self, live: LiveRecord) -> np.ndarray | None:
@@ -1490,6 +1488,8 @@ class DetectorLawSimulation:
                 else {}
             ),
         }
+        for splitter in self.splitters:
+            splitter.remainders.pop(live.identity, None)
         for block in self.blocks:
             block.responses.pop(live.identity, None)
             if live.identity in block.emitted:

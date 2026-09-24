@@ -467,19 +467,21 @@ def receiver_at(x: int, name: str) -> tuple[dict, dict]:
 
 def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra: object) -> dict:
     """An EMITTER block of the launch list (DECLARATIONS.md sections 4 and 10): the well at
-    the cells, the flat seed 2^20, `emits` light with G [1, 1] and g [1, 50000] (the
-    emitter's radiative damping 6.7 x 10^-5 per interval, `coupled_mode_pins.py` (b)),
-    W = 64; its stock of light one unit per interval of the run (an inert bound on the
-    births: a birth pays one unit, at most one birth per interval)."""
+    the cells, the seed 50 x 2^20, `emits` light with G [1, 50] and g [1, 1000] (section
+    15 M1-1: the same world as G [1, 1], g [1, 50000], seed 2^20 inside MUST 3's bound;
+    the emitter's radiative damping 6.7 x 10^-5 per interval), W = 64, `own_grace` 70
+    (N_s, section 10 item 1); the emission consumes no stock (M1-2, no `held`). `ticks`
+    is the world's."""
+    _ = ticks
     block: dict = {
         "position": position,
         "side": side,
         "pair": pair,
-        "seed": 1 << 20,
-        "coupling": {"G": [1, 1], "g": [1, 50000]},
+        "seed": 50 << 20,
+        "coupling": {"G": [1, 50], "g": [1, 1000]},
         "wheel": 64,
         "emits": "light",
-        "held": {"light": ticks},
+        "own_grace": 70,
         "margin": "pin",
     }
     block.update(extra)

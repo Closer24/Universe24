@@ -381,6 +381,7 @@ def block_world(
             "margin",
             "emits",
             "held",
+            "own_grace",
         ):
             if key in block:
                 entry[key] = block[key]
@@ -686,18 +687,19 @@ def test_g_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
 def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():
     """BUILD.md (h): a seeded block (the kind [156, 157], the well [314, 315], G [1, 1], g
     [1, 500]: at G g = 0.2 the emitted light's back-drive breaks the mode's cycles within one
-    period on the chain, so the weak coupling keeps them) that emits light holding 3 units of
-    it: three births, one at each of its first three cycles (its mode's period about 60
-    intervals: the clicks at 45, 107, 167, 227, 287), each paying 1, the books balanced at every
-    tick; the fourth and fifth cycles birth nothing. The edge case: `emits` without held content of that family is
-    refused at load."""
+    period on the chain, so the weak coupling keeps them) that emits light: one birth at each
+    of its cycles (its mode's period about 60 intervals: the clicks at 45, 107, 167, 227, 287),
+    the record born at content 0 and consuming no stock (DECLARATIONS.md section 15 M1-2: the
+    emission is the coupling's source term; no `held` on an emitter, a `held` book inert), the
+    books balanced at every tick. The edge cases: an emitter without `own_grace` (N_s) is
+    refused at load naming it; `own_grace` on a block that emits nothing is refused."""
     block = {
         "position": [100, 0, 0],
         "side": 12,
         "pair": [314, 315],
         "coupling": {"G": [1, 1], "g": [1, 500]},
         "emits": "light",
-        "held": {"light": 3},
+        "own_grace": 70,
     }
     world = parse_nature_beam_world(
         block_world([240, 1, 1], CHAIN, [156, 157], [block], ticks=300, faces={"x": "open"})
@@ -710,14 +712,18 @@ def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():
     births = [line for line in lines if line["event"] == "birth"]
     cycles = [line for line in lines if line["event"] == "click"]
     assert len(cycles) >= 4
-    assert len(births) == 3
-    assert [line["cycle"] for line in births] == [1, 2, 3]
-    assert simulation.held[0][0] == 0
-    assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
-    unheld = dict(block)
-    del unheld["held"]
-    with pytest.raises(ValueError, match="holds none of it"):
-        parse_nature_beam_world(block_world([240, 1, 1], CHAIN, [156, 157], [unheld]))
+    assert len(births) == len(cycles) - 1 or len(births) == len(cycles)
+    assert [line["cycle"] for line in births] == list(range(1, len(births) + 1))
+    assert all(line["content"] == 0 for line in births)
+    assert simulation.ledger.held_spent[0] == 0 and simulation.ledger.transit_released[0] == 0
+    ungraced = dict(block)
+    del ungraced["own_grace"]
+    with pytest.raises(ValueError, match="declares no `own_grace`"):
+        parse_nature_beam_world(block_world([240, 1, 1], CHAIN, [156, 157], [ungraced]))
+    silent = dict(block)
+    del silent["emits"]
+    with pytest.raises(ValueError, match="own_grace is refused on a block that emits nothing"):
+        parse_nature_beam_world(block_world([240, 1, 1], CHAIN, [156, 157], [silent]))
 
 
 def test_i_the_click_at_the_wheel_stamped_with_the_blocks_count():
@@ -853,7 +859,7 @@ def test_k_the_take_only_for_an_absorbing_block():
                         "pair": [314, 315],
                         "absorbing": True,
                         "emits": "light",
-                        "held": {"light": 3},
+                        "own_grace": 70,
                     }
                 ],
             )
@@ -1108,6 +1114,11 @@ def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     del unbounded["amplitude_bound"]
     with pytest.raises(ValueError, match="declares `amplitude_bound`"):
         parse_nature_beam_world(unbounded)
+    ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    ceiling["age_bound"] = 100
+    ceiling["amplitude_bound"] = 1 << 41
+    with pytest.raises(ValueError, match="above the ceiling 2\\^40"):
+        parse_nature_beam_world(ceiling)
     huge_seed = block_world(
         [24, 24, 24],
         PERIODIC,
@@ -1440,9 +1451,8 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "coupling": {"G": [1, 50], "g": [1, 1000]},
             "wheel": 64,
             "emits": "light",
-            "held": {"light": 100},
             "margin": "control",
-            "grace": 70,
+            "own_grace": 70,
         }
     ]
     document["detectors"] = [{"name": "A_face", "block": 0, "wheel": 64}]
@@ -1465,9 +1475,9 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
     """Line B (the block's grace), key (i) (a detector set bound to a block, its own wheel, the
     block's count on the stamp) and the closed face (Reviewer 3's blocking line), on the light
-    clock's chain (section 10 with section 15's lines; A's `grace` 70 = N_s). (1) With the
+    clock's chain (section 10 with section 15's lines; A's `own_grace` 70 = N_s). (1) With the
     faces OPEN and no body: A's first emitted record books nothing at `A_face` while A sources
-    it (its cycle, 70 intervals) and for the 70 intervals of the grace after (no pointer, no
+    it (its cycle, 70 intervals) and for the 70 intervals of `own_grace` after (no pointer, no
     rung); at the grace's end the set's rung is crossed AT ONCE by the record's own residual at
     the cells (a tenth of the emission's peak, decaying slowly; a READING for the physicist:
     the first rung after the grace is the residual's, in the open world and the closed alike,
@@ -1484,7 +1494,7 @@ def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
     1.6 x 10^7); the books balanced at every interval in both
     worlds; `click_at` on every gather line. The loader: `closed` without `detector_law`
     refused, a set with both `block` and `positions` refused, `block` naming no block refused,
-    `grace` on a block that emits nothing refused."""
+    `own_grace` on a block that emits nothing refused."""
     first = 1  # A's first emitted record: block 0, birth 1
     levels: dict[str, int] = {}
     peak = 0
@@ -1563,7 +1573,7 @@ def test_ac_the_blocks_grace_the_bound_set_and_the_closed_face():
     silent = light_clock_world("open", False)
     del silent["measured"][0]["emits"]
     silent["detectors"] = []
-    with pytest.raises(ValueError, match="grace is refused on a block that emits nothing"):
+    with pytest.raises(ValueError, match="own_grace is refused on a block that emits nothing"):
         parse_nature_beam_world(silent)
 
 

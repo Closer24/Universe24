@@ -851,10 +851,8 @@ world is not written (the Boss's rule). No pin world was run.
   (the same linear form with U_s) is NOT built: the tables of Bell and
   Malus are unchanged from the amplitude law in form (DESIGN.md's
   sentence); the fourth line the tables' rows need.
-  (8) The emitter's held light: EXISTS, the block key `held`
-  `{"light": n}`, a stock the births pay one unit each; the number the
-  physicist declares is the births the run may hold, at most one per
-  interval, so `ticks` is an inert bound.
+  (8) The emitter's held light: WITHDRAWN by the declarations' sixth
+  commit (section 14 below): the emission consumes no stock.
   (9) The screen as one detector set per Node: LOADS (121 one-Node sets
   with their 121 bodies on a 128^2 layer), and main's `screen_clicks`
   places them by the sets' Nodes; HOST on 128^2 with 19 records in
@@ -889,9 +887,10 @@ Each a generic line under the contract, one test each in
 
 - LINE B, the block's grace (test (ac)): a block's emitted record has the
   grace a lamp's record has: while the block sources it (its cycle) and
-  for the block's `grace` after the cycle's end (an integer of intervals
-  on an emitter block, section 10's N_s; without the key two of the
-  block's periods, the cycle's length as the block's clock counts it),
+  for the block's `own_grace` after the cycle's end (the declared N_s of
+  DECLARATIONS.md section 10 item 1, an integer of intervals REQUIRED on
+  every emitting body, refused absent naming it and refused on a body
+  that emits nothing; the grace = the train + own_grace; no default),
   its driven set is the block's CURRENT cells (a stepping block's follow
   it), the offer at the block's own cell is dropped, the block's own
   response to it books nothing, and a set bound to the block books
@@ -964,9 +963,18 @@ Each a generic line under the contract, one test each in
   momentum books are ALGEBRA.md 8.11's, the physicist's), and
   `balanced_scope` names content alone, in the books and in run.json;
   the audit's digest of test (p) moved once by it.
-- NOT changed: `emits` still births from the block's `held` stock (the
-  Boss's item 7: the physicist declares `held`; no reason the engine must
-  emit without a stock). The matter lamp's clock stays the family's
+- THE EMISSION WITHOUT A STOCK (M1-2, the sixth commit of the
+  declarations, Reviewer 3 confirmed; test (h)): `_block_births` births
+  the record at content 0 and consumes nothing; no `held` on an emitter
+  (the refusal "holds none of it" is gone; a `held` book stays inert and
+  undeclared). The amplitude bound's CEILING (the Boss's 02:33Z): a
+  declared `amplitude_bound` above 2^40 is refused at load, MUST 3's
+  proof standing at 2^40 (2^32 inside it). The splitter's remainders are
+  cleared at the record's completion (Reviewer 3's HOST token). The
+  registered worlds of `examples/events/massive_record/` (35 files and
+  the two tracked copies) gained the key `amplitude_bound` 2^32, which
+  the required key demands: named for the owner (Highlights 5.4 item
+  10). The matter lamp's clock stays the family's
   `phase_per_link` in the pair form (item 0). The stepping detector as a
   body, the mirror form as a key, the gather line's Nodes: NOT FOR THE
   GO (the Boss's 01:55Z item 7).

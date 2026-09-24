@@ -868,8 +868,11 @@ MEASURED_KEYS = {
     "family",
     "amount",
     "held",
-    # detector-law-v1, line B: an emitter block's `grace` (N_s), intervals
-    "grace",
+    # detector-law-v1, line B: an emitting body's `own_grace` (N_s, the
+    # intervals after its train during which its own set takes nothing of
+    # its own record; DECLARATIONS.md section 10 item 1), required on an
+    # emitter, refused elsewhere
+    "own_grace",
     "phase",
     "momentum",
     "fixed",
@@ -1278,11 +1281,11 @@ class BlockDefinition:
     start: int = 0
     margin: str = MARGIN_KINDS[0]
     emits: int | None = None
-    # detector-law-v1, line B: the emitter's grace after each cycle's end, in
-    # intervals (DECLARATIONS.md section 10's N_s), during which its own
-    # cells take nothing of the record it emitted; None: two of the block's
-    # periods (the lamp's grace in the block's clock).
-    grace: int | None = None
+    # detector-law-v1, line B: the emitter's `own_grace` (N_s), the intervals
+    # after each cycle's end during which its own cells take nothing of the
+    # record it emitted (the grace = the train + own_grace; DECLARATIONS.md
+    # section 10 item 1); declared on every emitter, no default.
+    own_grace: int | None = None
 
 
 @dataclass(frozen=True)
@@ -3159,6 +3162,11 @@ def _atom_levels(
     return tuple(found)
 
 
+def names_of_emits(emits: int, families: tuple[FamilyDefinition, ...]) -> str:
+    """The emitted family's name for a refusal's sentence."""
+    return families[emits].name
+
+
 def _block(
     obj: dict[str, object],
     label: str,
@@ -3321,11 +3329,9 @@ def _block(
                 f"{BEAM_LAW}: {label}.emits {name!r}: a block emits a paid family of light's kind "
                 "with the pair form of its clock"
             )
-        if held[emits] < emitted.quantum:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.emits {name!r} but the block holds none of it (`held`): a "
-                "birth pays the family's quantum"
-            )
+        # The emission is the coupling's source term, born at content 0 and
+        # consuming no stock (DECLARATIONS.md section 15 M1-2, the sixth
+        # commit: no `held` on an emitter; a `held` book stays inert).
         if absorbing:
             raise ValueError(
                 f"{BEAM_LAW}: {label}: an absorbing block emits nothing (its light rows are "
@@ -3337,11 +3343,18 @@ def _block(
             f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
             f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
         )
-    grace: int | None = None
-    if "grace" in obj:
+    own_grace: int | None = None
+    if "own_grace" in obj:
         if emits is None:
-            raise ValueError(f"{BEAM_LAW}: {label}.grace is refused on a block that emits nothing")
-        grace = _integer(obj["grace"], f"{label}.grace", 0)
+            raise ValueError(f"{BEAM_LAW}: {label}.own_grace is refused on a block that emits nothing")
+        own_grace = _integer(obj["own_grace"], f"{label}.own_grace", 0)
+    elif emits is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} emits {names_of_emits(emits, families)!r} and declares no "
+            "`own_grace`: an emitting body declares the intervals after its train during which "
+            "its own set takes nothing of its own record (N_s, DECLARATIONS.md section 10 item "
+            "1; no default)"
+        )
     return BlockDefinition(
         side,
         pair,
@@ -3356,7 +3369,7 @@ def _block(
         start=start,
         margin=str(margin),
         emits=emits,
-        grace=grace,
+        own_grace=own_grace,
     )
 
 
@@ -4751,6 +4764,12 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 "assertion use it; no default)"
             )
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
+        if amplitude_bound > AMPLITUDE_BOUND:
+            raise ValueError(
+                f"{BEAM_LAW}: amplitude_bound {amplitude_bound} is above the ceiling 2^40 = "
+                f"{AMPLITUDE_BOUND}, the A at which MUST 3's proof of the rule's int64 total "
+                "stands (issue #1085; DECLARATIONS.md section 15 M1-10 declares 2^32)"
+            )
     elif "amplitude_bound" in obj:
         raise ValueError(
             f"{BEAM_LAW}: amplitude_bound is refused without the world key `massive_record`"
