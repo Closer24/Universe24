@@ -644,6 +644,15 @@ stabilisation of the engine and the freeze:
    on `main`; its test run without a pin clean or not; a cell rewritten only
    on a merged record. The freeze is every row "yes" on one commit; then the
    owner's GO and every pin run in one go.
+7. **Every block and every composition is tested alone before it is
+   composed** (the owner, 2026-09-24, record 1823): the emitter, the body,
+   the receiver, the clock, and each named composition (the polariser, the
+   splitter, the mirror, the crystal) has its own unit tests on a small
+   world that is none of the list, on every kind of input it can receive
+   (every label, a superposition, an input from each Port). Only then is it
+   composed into an experiment's world, which tests the composition. A
+   block tested on one kind of input alone is a gap: the polariser's bug
+   lived because it was tested on label 0 alone.
 
 Unchanged, the law: one unit test per feature; no pin moved after a reading;
 no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
