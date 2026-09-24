@@ -668,7 +668,9 @@ stabilisation of the engine and the freeze:
    mathematician writes it; Nature24 checks every section and talks with the
    mathematician directly by Routine; a disagreement goes to the Boss for
    the owner. Nature24 writes each tool's code once its section is agreed
-   (records 1830 to 1832). A tool
+   (records 1830 to 1832). No Node carries a table: a tool is a body of
+   material whose Nodes carry only material integers, and its action arises
+   from the one rule (record 1838). A tool
    declares its own orientation and never the directions of what leaves it.
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,
