@@ -70,6 +70,80 @@ COUPLINGS.md (section 3) for that gate: the meeting's norm
 (`meeting.py:359-361`) and the pair of a pushed row
 (`nature_beam.py:3549`).
 
+### The four building blocks (2026-09-24)
+
+The model owner's rule (2026-09-24, 13:36Z and 13:43Z, through the Boss;
+Highlights 5.4): the engine knows the four building blocks and the six
+verbs only. A lamp, a polariser, a light clock, a mirror line or a
+receiver by name is a COMPOSITION declared in the world file and defined
+in this section, never a name the engine branches on; every feature of the
+local detector law (F1, F2, F3 below) is such a composition, and its line
+names the blocks it composes and nothing else. The engine as it stands on
+`main` (`src/event_universe/events/detector_law.py`, `world.py`) has these
+four and no fifth thing; the three tests of every rule (generic, vector,
+local; [skills/workflow.md](skills/workflow.md)) are read against them.
+
+- **The emitter.** A measured event that births records from its cells
+  from a declared interval: a lamp (a body at a Node that inserts its
+  family's train by the family's clock, one record per birth, the birth
+  wheel's u on the record; `_births`) or an emitting block (a block whose
+  own record's cycles source one light record per cycle at its cells,
+  `emits`; `_block_births`). Its declarations are the train, the rate, the
+  wheel, `own_grace` (the intervals after the train during which its own
+  cells take nothing of its own record) and, from F1 and F3, `receiver`.
+  From the first interval after the train its own cells take the record's
+  remnant and book it on no pointer (item 10 of DECLARATIONS.md section
+  10; `_own_take`).
+- **The body.** A block of cells with a pair on the six-neighbour term
+  (a well of a massive kind, a gap of light's kind) and a momentum: it
+  moves one Link at a time by the drive's accumulators (`_move_block`),
+  carries its own massive record on its cells (`seed`), takes what
+  reaches its cells where it is `absorbing` or bound to a receiver, and
+  is hit (its response records and its coupling `receive` and `source`).
+  A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
+  the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
+  zero face is the kind's own `faces` declaration, not a body. A
+  polariser is a body WITH A TABLE (a measured event whose table entry
+  carries an integer `phase_window`, the setting): under F2 it is a table
+  body of two cells, its own Node and the next Node on the arm's line.
+- **The receiver.** A set of cells with a wheel (`detectors`: named
+  positions, or `block` for the cells of a body): the record's offer at
+  its Ports is booked to the set's pointer, and when the pointer crosses
+  the rung (pointer x wheel at or above the record's norm, the counting
+  form) the set has clicked; the record's line names the cell the birth
+  wheel's u chooses on the record's ladder and the record ends there for
+  the ladder. A face of the GameBoard is a receiver that books to the
+  escaped row (light's sponge), and so is every set the record's ladder
+  does not name: a SINK takes and books, and is never chosen.
+- **The clock.** A body's own count (its record's cycles across its
+  cells, `_block_clock`; the stamp `clock` on its lines) or a detector
+  set's count (the interval of the first rung at the set): the click is
+  stamped with it (`click`, `clock_source`), and the clock's readings are
+  the only thing compared with nature (a DETECTOR reading; every reading
+  of the board is a GAMEBOARD diagnostic, ENGINE.md).
+
+The features, each a composition of the four and nothing else:
+
+- **F1, the receiver by name** (DECLARATIONS.md section 13 item 7; BUILD.md
+  section 21): an emitting body + one named receiver (its record's ladder
+  that one set, the line at the set's first rung; every other receiver a
+  sink) + the clock of the receiver (the stamp).
+- **F2, the joint gather** (section 1 item 3, section 14 item 6; BUILD.md
+  section 19): an emitter of two arms + two bodies with a table (each a
+  receiver of two cells) + one receiver of the pair on the four joint
+  cells (the rung on the joint weights R = J^2) + the bodies' clocks.
+- **F3, the lamp's ladder by name** (SIZING.md; BUILD.md section 20): a
+  lamp + the named receivers (the screen's sets, the record's ladder) +
+  the sinks outside the ladder (the faces, the mirror line's take) + the
+  sets' clocks.
+
+A fifth thing: none. The probes (`probes`, a list of Nodes whose light
+amplitude is written per interval) are a HOST reading of the board, not a
+block; they act on nothing and are compared with nothing but the
+declaration's own script (a GAMEBOARD diagnostic). The splitter of the
+TABLE form (a table entry with `inputs`) is a body with a table, as the
+polariser is.
+
 ## GameBoard topology (2026-09-19)
 
 The owner-approved run parameter selects open or periodic topology independently
