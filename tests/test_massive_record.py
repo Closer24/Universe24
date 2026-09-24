@@ -714,7 +714,7 @@ def test_h_a_seeded_block_emits_one_record_per_cycle_paying_the_quantum():
     assert len(cycles) >= 4
     assert len(births) == len(cycles) - 1 or len(births) == len(cycles)
     assert [line["cycle"] for line in births] == list(range(1, len(births) + 1))
-    assert all(line["content"] == 0 for line in births)
+    assert all(live.content == 0 for live in simulation.records.values() if live.emitter == 0)
     assert simulation.ledger.held_spent[0] == 0 and simulation.ledger.transit_released[0] == 0
     ungraced = dict(block)
     del ungraced["own_grace"]
