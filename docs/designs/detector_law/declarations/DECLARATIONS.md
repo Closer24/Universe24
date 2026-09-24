@@ -432,8 +432,10 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    order, the frequency B reads is f_B = (o_j - o_i) / (c_j - c_i), o
    the record's birth ordinal (A's own count at the birth, a birth per
    cycle of A's clock by the source term; the record identity's
-   ordinal; DETECTOR, A's own record) and c the set's count at the
-   first rung (the gather line's `click`), summed over the hold as
+   ordinal; DETECTOR, A's own record) and c the click's interval at the
+   first rung (the gather line's `click`; the set is bound to no block,
+   so its stamp is the interval, the engine's 1483 to 1499: cycles per
+   interval, both DETECTOR), summed over the hold as
    (o_last - o_first) / (c_last - c_first); 1 + z = f_B(control) /
    f_B(receding); the mean interval between clicks and the count ratio
    beside as diagnostics only (they carry the ladder's share of item 7,
@@ -475,8 +477,11 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    the face's share grows and the set's falls (COMPUTATION, a bound at
    equal amplitude: the forward and backward frequencies scale by 1 /
    (1 - beta_c) and 1 / (1 + beta_c), a ratio (1 + beta_c) / (1 -
-   beta_c) = 3.73 at beta_c = 1 / sqrt 3, their motions squared by its
-   square, 13.9; the shares are read, not derived here). A reading by
+   beta_c) = 3.73 at beta_c = 1 / sqrt 3; the Port books the
+   time-integrated motion squared (1205 to 1211), which over a train of
+   fixed cycles scales with that ratio, 3.73, the per-interval rate with
+   its square, 13.9 (Reviewer 3's correction); the shares are read, not
+   derived here). A reading by
    the mean interval between clicks or by the count would carry this
    share and miss the pin by it. THE DECLARATION, before any run (a
    declaration before a run is not a pin moved, record 1518): the
@@ -501,8 +506,22 @@ The earliest day: 2026-09-26, after the splitter's table under the rule
    length or A's start must be redeclared before any run: my
    recommendation a chain of 5000 (section 11's length) with A at 3500
    and the set at 4700 (the same 1200 Links, the same transit 2080),
-   A's room 3500 Links = 10500 intervals; Reviewer 3's read, then the
-   World Generator's file.
+   A's room 3500 Links = 10500 intervals. THE TICKS CONSEQUENCE
+   (Reviewer 3, 05:32Z): with A's room above 8000 / 3 = 2667 Links the
+   -x face is at least 2667 Links away, its transit at least 4620 >
+   2080, so a record completes only when the -x face takes its -x half,
+   3500 sqrt 3 = 6062 intervals after birth on the 5000 chain; the click
+   line is written at completion with the first-rung stamp (2080 after
+   birth), so the reading is unchanged, but `ticks` must be at least
+   ramp + hold + about 6100, about 15600 on the 5000 chain, or the
+   hold's last records never click. The per-record reading of item 5 is
+   CONFIRMED by Reviewer 3 as a declaration before any run. THE
+   EMITTER'S RINGING (section 10 item 10): A's alternating remnant after
+   each train does not reach the set at 1200 Links (it does not
+   propagate) and books nothing there; it delays the record's
+   completion until it decays or, under item 10's declaration, is taken
+   at A's cells; the stamp is unchanged and the ticks line above covers
+   it. Reviewer 3's read, then the World Generator's file on this line.
 
 The descent: `massive_record` true, the families with `pair` and `faces`,
 the block A with `side`, `pair`, `coupling`, `seed`, `emits`, `own_grace`
@@ -956,6 +975,76 @@ omega_b) of its own well, printed by the pins script before the run.
    1), the sets at the blocks' cells and the pins unchanged; a receiver
    that does not emit (4b's block, the one Node [1900, 0, 0]) has no own
    residual and is unchanged.
+10. THE EMITTER'S RINGING, the light clock's blocker, and its
+   declaration (the builder's test (ac) at 906d3635, his report of
+   05:17Z, EXPLORATORY; the Boss's order of 05:30Z; declared here before
+   the light clock's preliminary, a declaration before any run, record
+   1518; Reviewer 3's read). THE FINDING: on the chain of 173 with the
+   set at the free Node beside A's face, W = 64, own_grace 70 and the
+   faces closed, the record passes the set freely during its grace of
+   140 and the mirror's neighbour is reached before 208; but the set's
+   FIRST RUNG comes at 141, the grace's end, not near 218: it is booked
+   from the record's own RINGING inside A's twelve cells after the
+   train, the lattice's alternating mode (the sign flipping at
+   neighbouring Nodes; on this rule cos omega = 1 - 2 / 3, omega = 1.23
+   per interval, its group velocity zero, so it does not propagate;
+   COMPUTATION), at a level about 5 x 10^5 against the front's 10^7,
+   whose motion per interval is large, so the Port beside the face books
+   about 10^11 per interval against the rung's threshold norm / W = 6.7
+   x 10^10; the set's pointer reaches 2.1 x 10^12, half the norm 4.3 x
+   10^12, by 208 before the return arrives, and the return shows only as
+   the pointer's rise; with the faces open the same rung at 141 and no
+   rise. So under item 9's form the set clicks on the emitter's ringing,
+   not on the return, and no W helps. THE CAUSE: the driven cells are
+   released at the train's end with the alternating remnant of the
+   top-hat drive over twelve cells; it is the emitter's own, on its own
+   cells, and decays only slowly (10^6 at 100, 4 x 10^5 at 200). THE
+   DECLARATION (the receiver-inserter of DESIGN.md section 1; the
+   owner's line of 2026-09-22 in Highlights 5.4 that an emitter is also
+   a detector at its own Node): EVERY EMITTER TAKES ITS OWN RECORD'S
+   REMNANT AFTER ITS TRAIN. From the interval after its train ends (age
+   > train) the emitter's cells (an emitting block's cells; a lamp's
+   Nodes) are a taking set for THAT record alone, in the receiver form
+   of DESIGN.md section 5 (the row held at 0, one ghost per Port with k
+   = [-15, 56]); what they take is booked as escaped at the emitter
+   (HOST, the ledger's transit_escaped), never onto a pointer: the
+   emitter has no cell of its own on its own record's ladder and never
+   clicks on its own record (section 13 item 1's rule kept; own_grace
+   as declared for the sets); during the train the cells insert as
+   built; the block's own record is untouched (the take acts on the
+   emitted record's rows). The three tests: generic (the take primitive
+   as built, no family name); vector (the receiver form's verbs, no
+   root); local (the emitter's own cells, its own record). WHAT IT
+   CHANGES: the remnant is taken within a few intervals of the train's
+   end, so the set beside A's face books nothing of A's own record
+   between the grace's end and the return; the map (h) assumed a clean
+   tail at the set (the residual 0.085 of the rung), now true by
+   construction: THE PIN 218 +- 2 STANDS; a record's completion, held
+   up on every world by the remnant's motion (energy times W above the
+   absorbed until the remnant decays), comes at the take; the emitter's
+   radiative damping (section 4's g G line) is unchanged. THE CANDIDATES
+   NOT TAKEN: a longer own_grace (the remnant at 200 still books 10^11
+   per interval, and the grace cannot outlast the return at 208); a
+   softer turn-off of the drive (a change of the train, the norm and
+   the pins, for a remnant the spatial edges make anyway); a probe of
+   the level as the reader (a GAMEBOARD reading, not a click). THE
+   PRELIMINARY (EXPLORATORY, the builder's (ac) rerun on the
+   declaration): no rung at the set before the return's transit 207.85,
+   the first rung within 218 +- 2 at W = 64, the remnant's level at A's
+   cells read beside (GAMEBOARD). THE OTHER ROWS, one line each: R2
+   (section 13): the sets are the other block's cells, about 1000 Links
+   from the emitter's remnant, which does not propagate, so the stamps
+   are untouched; each record's completion waited on the remnant's
+   decay and now comes at its take; the pins 108 / 247 / 72 stand. 4b
+   (section 4 item 7): the set at 1200 Links from A is untouched; the
+   completion likewise; the ticks line of item 7 covers it. The Bell
+   and Malus lamps: the lamp's Node takes its own remnant after the
+   train; the cells 7 and 10 Links away are untouched. THE BUILDER'S
+   LINE (section 15 M1-4): a per-record taking mask of the emitter's
+   cells switched on at age > train, its bookings excluded from the
+   ladder as the grace's exclusion is (`keep`), the take booked to
+   transit_escaped; one test, the light clock's chain of (ac): the first
+   rung after 208 and none at 141.
 
 ## 11. The receding index (e3, the (v-m) prediction row): the declared geometry and the script's number
 
@@ -1507,7 +1596,12 @@ waves).**
   pairs of levels and carry no phase label (ALGEBRA.md 1.7).
 - M1-4, THE RECEIVERS of R2, of the light clock and of 4b (corrected
   at 01:40Z on the builder's report (b); the placement corrected at
-  03:35Z on his reading (a), section 10 item 9): a DETECTOR SET at the
+  03:35Z on his reading (a), section 10 item 9; THE EMITTER'S TAKE added
+  05:40Z on the builder's finding (ac), section 10 item 10: every emitter
+  takes its own record's remnant after its train, a per-record taking
+  mask of its cells at age > train, its bookings excluded from the ladder
+  and booked to transit_escaped, the builder's line before the light
+  clock's preliminary): a DETECTOR SET at the
   receiving body's cells, corrected per row on the builder's reading
   (a): the light clock's A receives its OWN record's return, so its set
   is the free Node adjacent to its face toward the mirror, x = 612, alone,
