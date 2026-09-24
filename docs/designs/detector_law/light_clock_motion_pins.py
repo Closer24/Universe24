@@ -13,7 +13,8 @@ rest. Einstein's 1 and 1 (Highlights 5.4, the owner's "five") needs the along
 separation to contract by gamma, which a declared rigid separation does not do
 (Reviewer 3's algebra in the same line: a medium, gamma^2 along and gamma across,
 in the lattice's intervals). Printed: gamma, gamma_m per pair, the two ratios, the
-round trip against R2's transits.
+round trip against R2's transits. gamma_m is the one formula's, the same expression as
+coupled_mode_pins.py (c) for row 4b and as row 4a's, so the three rows carry one gamma_m.
 
     PYTHONPATH=src python docs/designs/detector_law/light_clock_motion_pins.py
 """
@@ -26,7 +27,10 @@ GAP = 60
 
 
 def gammas(num, den):
-    """gamma at light's cone and gamma_m at the massive kind's exact cone for the pair."""
+    """gamma at light's cone and gamma_m at the massive kind's exact cone for the pair: the
+    SAME one formula as `coupled_mode_pins.py` (c) (row 4b's pin) and the muon's row 4a,
+    c_eff^2 = (num / den) (omega_0 / sin omega_0) c^2 and gamma_m = 1 / sqrt(1 - v^2 / c_eff^2),
+    so the three rows carry one gamma_m (Reviewer 3's line, 01:55Z)."""
     omega_0 = math.acos(num / den)
     c_eff2 = math.cos(omega_0) * (omega_0 / math.sin(omega_0)) * C_PACE**2
     gamma = 1 / math.sqrt(1 - V_PACE**2 / C_PACE**2)
