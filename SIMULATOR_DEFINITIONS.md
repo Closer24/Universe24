@@ -77,7 +77,8 @@ Highlights 5.4): the engine knows the four building blocks and the six
 verbs only. A lamp, a polariser, a light clock, a mirror line or a
 receiver by name is a COMPOSITION declared in the world file and defined
 in this section, never a name the engine branches on; every feature of the
-local detector law (F1, F2, F3 below) is such a composition, and its line
+local detector law (the receiver by name, the joint gather and the lamp's
+ladder below) is such a composition, and its line
 names the blocks it composes and nothing else. The engine as it stands on
 `main` (`src/event_universe/events/detector_law.py`, `world.py`) has these
 four and no fifth thing; the three tests of every rule (generic, vector,
@@ -90,7 +91,8 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   own record's cycles source one light record per cycle at its cells,
   `emits`; `_block_births`). Its declarations are the train, the rate, the
   wheel, `own_grace` (the intervals after the train during which its own
-  cells take nothing of its own record) and, from F1 and F3, `receiver`.
+  cells take nothing of its own record) and, from the receiver by name and the lamp's ladder,
+  `receiver`.
   From the first interval after the train its own cells take the record's
   remnant and book it on no pointer (item 10 of DECLARATIONS.md section
   10; `_own_take`).
@@ -104,7 +106,7 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A
   polariser is a body WITH A TABLE (a measured event whose table entry
-  carries an integer `phase_window`, the setting): under F2 it is a table
+  carries an integer `phase_window`, the setting): under the joint gather it is a table
   body of two cells, its own Node and the next Node on the arm's line.
 - **The receiver.** A set of cells with a wheel (`detectors`: named
   positions, or `block` for the cells of a body): the record's offer at
@@ -124,18 +126,35 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
 
 The features, each a composition of the four and nothing else:
 
-- **F1, the receiver by name** (DECLARATIONS.md section 13 item 7; BUILD.md
+- **The receiver by name** (DECLARATIONS.md section 13 item 7; BUILD.md
   section 21): an emitting body + one named receiver (its record's ladder
   that one set, the line at the set's first rung; every other receiver a
   sink) + the clock of the receiver (the stamp).
-- **F2, the joint gather** (section 1 item 3, section 14 item 6; BUILD.md
+- **The joint gather** (section 1 item 3, section 14 item 6; BUILD.md
   section 19): an emitter of two arms + two bodies with a table (each a
   receiver of two cells) + one receiver of the pair on the four joint
   cells (the rung on the joint weights R = J^2) + the bodies' clocks.
-- **F3, the lamp's ladder by name** (SIZING.md; BUILD.md section 20): a
+- **The lamp's ladder** (SIZING.md; BUILD.md section 20): a
   lamp + the named receivers (the screen's sets, the record's ladder) +
   the sinks outside the ladder (the faces, the mirror line's take) + the
   sets' clocks.
+
+WHERE THE CODE BRANCHED PER BODY BEFORE, AND WHERE IT IS ONE NOW (the
+owner's framing, 14:00Z: the three features are one job, the four blocks
+the same code for every body on the board): before, a block's record and
+a lamp's record clicked by the same rule, every cell on the ladder and the
+line at the close, so an emitting block's receiver was whichever cell held
+the most; the emitter's own take of its record was limited to a grace (an
+age branch per record); a polariser acted on a label (the amplitude law's
+per-label table) and the pair's arms clicked one by one. Now, one rule
+each for every body: a record's ladder is what the world names (a named
+set for a block's record, the named sets for a lamp's, every cell where
+none is named) and every other cell a sink; the line at the rung where the
+ladder holds one cell, at the close where several; the emitter's own cells
+take its record on no pointer at every age after the train; a table entry
+with an integer setting on an arm forms a table body of two cells for any
+family; a record of several arms gathers once on the joint cells. No
+branch on a family's or an experiment's name remains in `src/`.
 
 A fifth thing: none. The probes (`probes`, a list of Nodes whose light
 amplitude is written per interval) are a HOST reading of the board, not a

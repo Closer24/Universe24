@@ -4,7 +4,8 @@ THE FOUR BUILDING BLOCKS (the model owner, 2026-09-24, 13:36Z and 13:43Z): every
 object a section below declares is a composition of the emitter, the body,
 the receiver and the clock, and the engine branches on no name of it; the
 definitions are in [SIMULATOR_DEFINITIONS.md](../../../../SIMULATOR_DEFINITIONS.md),
-"The four building blocks", and every feature (F1, F2, F3) names its blocks there.
+"The four building blocks", and every feature (the receiver by name, the joint gather, the lamp's ladder)
+names its blocks there.
 
 The Boss's order of 2026-09-23, about 17:12Z, on the owner's word of 16:55Z
 (everything anew on the new engine): the six PIN rows of `../SCHEDULE.md`

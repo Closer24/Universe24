@@ -3,8 +3,8 @@
 THE RULE (the owner, 13:18Z, in substance): whoever writes the world also
 writes, for each one, what a test run must show. Each section below says
 (1) the world file(s) by path and the engine commit they load on, or the
-feature they wait on (F1 the receiver by name, F2 the joint gather, F3 the
-lamp's ladder by name; the four building blocks and the features are
+feature they wait on (the receiver by name, the joint gather, the lamp's
+ladder; the four building blocks and the features are
 defined in [SIMULATOR_DEFINITIONS.md](../../../SIMULATOR_DEFINITIONS.md)); (2)
 what a CLEAN run must show, in words and counts, with no pin and no target
 number: the load line VALID, the emitter emitting (which record, from which
@@ -180,12 +180,12 @@ train's length, the hold), not pins.
    block-frame clock of the rest world ([2243, 10000] on N = 64).
 3. Not clean: as row 7.
 
-## 9. The light clock of two bodies (waits on F1)
+## 9. The light clock of two bodies (waits on the receiver by name)
 
 1. `examples/events/massive_record/light_clock_60.json` keyed with
    `receiver` "at_a" on engine-features b487b0b9 (the chain of 673 closed
    at both ends, A at [600, 612), the set `at_a` the free Node 612, W = 64,
-   `own_grace` 70, 2600 ticks); F1.
+   `own_grace` 70, 2600 ticks); the receiver by name.
 2. Clean: A's own record seeded, its clock's `click` lines; A's first light
    record born at A's first cycle (a `birth` line naming measured 0 with
    `cycle`); its ONE `gather` line with `chosen` "at_a", `click_at` "rung",
@@ -199,12 +199,12 @@ train's length, the hold), not pins.
    from the record's birth) on the first record; two `gather` lines for one
    record; a line with `click_at` "completion".
 
-## 10. The Sagnac ratio, row R2 (two worlds, wait on F1)
+## 10. The Sagnac ratio, row R2 (two worlds, wait on the receiver by name)
 
 1. `examples/events/massive_record/sagnac_rest.json` and `sagnac_k3.json`
    keyed (block 0 `receiver` "at_b", block 1 "at_a") on engine-features
    b487b0b9 (the chain of 3000, the blocks at 700 and 772 with their faces
-   60 Links apart, W = 256, `own_grace` 3000; 8450 and 6400 ticks); F1.
+   60 Links apart, W = 256, `own_grace` 3000; 8450 and 6400 ticks); the receiver by name.
 2. Clean: both blocks' own clocks clicking; each block's light records
    born per cycle; every record of A that completes within the ticks with
    ONE `gather` line at `at_b` (`click_at` "rung", `clock_source`
@@ -220,13 +220,13 @@ train's length, the hold), not pins.
    record with two lines; the blocks stepping off the board; the k = 3
    world's lines not arriving on both directions.
 
-## 11. The redshift of the moving lamp, row 4b (two worlds, wait on F1)
+## 11. The redshift of the moving lamp, row 4b (two worlds, wait on the receiver by name)
 
 1. `examples/events/massive_record/redshift_k3.json` and
    `redshift_control.json` keyed (A `receiver` "light_detector") on
    engine-features b487b0b9 (the chain of 4096, A at 2994 pushed on -x
    from `start`, the light body at 4094 with the set `light_detector`, W =
-   64, `own_grace` 3000, 9600 ticks); F1.
+   64, `own_grace` 3000, 9600 ticks); the receiver by name.
 2. Clean: A's records born per cycle; each record's ONE `gather` line at
    `light_detector` (`click_at` "rung"), the first arriving about 1900
    intervals after its birth (1100 Links at c) and the later ones
@@ -240,14 +240,14 @@ train's length, the hold), not pins.
 3. Not clean: a line at the -x face; fewer than 10 lines; the block off
    the board before the ticks' end (a refusal).
 
-## 12. Malus, row 9 and the three settings (four worlds, wait on F2 and the regeneration)
+## 12. Malus, row 9 and the three settings (four worlds, wait on the joint gather and the regeneration)
 
 1. `examples/events/detector_law/malus_45.json`, `malus_11.25.json`,
    `malus_28.125.json`, `malus_33.75.json`: on main at 88b3752 they carry
-   the bar of 7 and the read body at x = 4, which F2's loader refuses (the
+   the bar of 7 and the read body at x = 4, which the joint gather's loader refuses (the
    exit cell off the board); FILES OWED by regeneration from section 5's
    two lines (the bar 8, no read body, the set on the polariser's Node);
-   F2 on engine-features b487b0b9.
+   the joint gather on engine-features b487b0b9.
 2. Clean: 256 `birth` lines at one per interval (the wheel [159, 256], u
    every residue once); 256 `gather` lines, each with `chosen` naming the
    polariser's set with the channel 0 or 1 (the + or - cell), `click_at`
@@ -260,13 +260,13 @@ train's length, the hold), not pins.
    256 lines; a `click_at` "completion"; the loader refusing the
    regenerated file.
 
-## 13. Bell's four settings, rows 1a to 1d (four worlds, wait on F2)
+## 13. Bell's four settings, rows 1a to 1d (four worlds, wait on the joint gather)
 
 1. `examples/events/detector_law/bell_a0b0.json`, `bell_a0b1.json`,
    `bell_a1b0.json`, `bell_a1b1.json` on engine-features b487b0b9 (the bar
    of 21, the pair lamp at the centre with two arms, the polarisers alice
    at x = 7 and bob at x = 17 as table bodies of two cells, N = 2048, the
-   wheel [1, 2048], the train 128 periods, 5500 ticks); F2. THE GUARD
+   wheel [1, 2048], the train 128 periods, 5500 ticks); the joint gather. THE GUARD
    (section 2 item 8): no Bell run before ORDER_CHANNEL_ATTACKS.md is on
    main under Reviewer 3's read with none open; a preliminary is a run.
 2. Clean: 2048 births (two arm records per birth stamp, `arm_records` on
@@ -283,14 +283,14 @@ train's length, the hold), not pins.
    lines for one birth; a line at a face; fewer than 2048 lines within
    5500 ticks.
 
-## 14. The two slits, row 2a (waits on F3 and the second-draft file)
+## 14. The two slits, row 2a (waits on the lamp's ladder and the second-draft file)
 
 1. `examples/events/detector_law/two_slits.json` on main is the first draft
    (128 x 128, y periodic, width-1 openings, the screen's 121 sets without
    `receiver`); FILE OWED: the second draft of section 15 L-3 (160 x 256,
    x and y open, d = 26, L = 113, the openings of width 3, the lamp with
    `receiver` naming the 201 screen sets, each set with `wheel` 2^20, the
-   lamp's `wheel` [1, 1024], `rate` [1, 4], `train` 32, 5500 ticks); F3 on
+   lamp's `wheel` [1, 1024], `rate` [1, 4], `train` 32, 5500 ticks); the lamp's ladder on
    engine-features b487b0b9.
 2. Clean: 1024 `birth` lines at one per 4 intervals; 1024 `gather` lines,
    EVERY one with `chosen` naming a screen set (`screen_<y>`), `ladder` the
@@ -305,14 +305,14 @@ train's length, the hold), not pins.
    finding); `chosen` None on a record whose `T` is nonzero; fewer than
    1024 lines; a count centroid outside the screen.
 
-## 15. De Broglie's fringes, row M1 (waits on F3 and the sized form)
+## 15. De Broglie's fringes, row M1 (waits on the lamp's ladder and the sized form)
 
 1. `examples/events/massive_record/matter_waves_12.json` on main (the
    first form: 128 x 128 y periodic, the screen's 121 sets, the take key
    [-19, 86]); FILE OWED: the sized form of section 12 and SIZING.md (the
    lamp's `wheel` [1, 2048], `rate` [1, 2], `receiver` naming the 121
    screen sets, each with `wheel` 65536, the take lines as sinks, 4700
-   ticks); F3 on engine-features b487b0b9.
+   ticks); the lamp's ladder on engine-features b487b0b9.
 2. Clean: 2048 `birth` lines at one per 2 intervals; 2048 `gather` lines,
    every one with `chosen` a screen set, `ladder` the 121 names, `sunk`
    below `T`; the `click` between 120 and 500 intervals after the birth
