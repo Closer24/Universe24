@@ -5128,6 +5128,36 @@ CORRECTIONS = [
         "\\paragraph{Code availability.}",
         "\\paragraph{Materials availability.} Not applicable: no physical materials.\n\\paragraph{Code availability.}",
     ),
+    (
+        "commit 38, the mathematician's audit (J): the cone's bijections are the Z-linear ones, Section 1",
+        "and over the integers the only bijections that preserve the cone are these $48$, so no boost is among them",
+        "and the only $\\Z$-linear bijections that preserve the cone are these $48$, so no boost is among them",
+    ),
+    (
+        "commit 38, the mathematician's audit (K): the isotropic reading is quadratic, Section 1",
+        "the only isotropic even reading of a momentum within the six operations is $c\\,\\mathbf p\\cdot\\mathbf p$",
+        "the only isotropic quadratic reading of a momentum within the six operations is $c\\,\\mathbf p\\cdot\\mathbf p$",
+    ),
+    (
+        "commit 38, the mathematician's audit (J) and (K) in the road from the operations to the group",
+        "and over the integers they are the only bijections that preserve the cone, a boost being not $\\Z$-linear",
+        "and they are the only $\\Z$-linear bijections that preserve the cone, a boost being not $\\Z$-linear",
+    ),
+    (
+        "commit 38, the mathematician's audit (K) in the road from the operations to the group",
+        "so the only isotropic even reading of a body's momentum within the six operations is",
+        "so the only isotropic quadratic reading of a body's momentum within the six operations is",
+    ),
+    (
+        "commit 38, the mathematician's audit (I): ev's kernel is the cancel's ideal for N a power of two",
+        "whose kernel is the ideal $(x^{\\Nphi/2} + 1)$, the cancel of (G)",
+        "whose kernel, for $\\Nphi$ a power of two, is the ideal $(x^{\\Nphi/2} + 1)$, the cancel of (G)",
+    ),
+    (
+        "commit 38, the mathematician's audit (G): the support bound's equality cases are more than the three listed",
+        "(its equality cases at $\\Nphi = 64$, by enumeration:",
+        "(among its equality cases at $\\Nphi = 64$, by enumeration:",
+    ),
 ]
 
 

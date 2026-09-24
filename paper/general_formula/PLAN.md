@@ -6973,3 +6973,20 @@ whose apparatus table is the declared law is checked as an
 implementation of that table and that only DERIVED_BLIND rows are
 offered as predictions. "Materials availability: not applicable" joins
 the declarations. 46 pages.
+
+## Applied (2026-09-24, the owner's order: a mathematician and a physicist over the paper): commit 38 on paper-48
+
+Two reviewers read the paper at 63bebcb3, one line per statement,
+CONFIRMED or NOT CONFIRMED with the reason (their reports in the
+writer's files, given to the owner). The mathematician recomputed every
+number from the paper's definitions and reproduced all of them; the
+wording his audit settles is applied here (the holohedries, the
+Z-linear bijections, the quadratic reading, the kernel's condition,
+the equality cases, the block as a set the 48 act on, the floor
+division of the massive rule). His and the physicist's physics items
+(the two gammas' /6, rows 4a, 4b, 5a, Theorem 5's quotient, Theorem 6
+(vi), which law the paper is about, "no relativistic dynamics", the
+light detectors, the light clock's draft, the kinds of rows 5a, 7 and
+v-m, the block's table, hbar, the unsourced numbers) went to the Boss
+as proposals for the physicist and Reviewer 3; nothing changed on their
+say alone.
