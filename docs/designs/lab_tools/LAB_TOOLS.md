@@ -124,11 +124,14 @@ and no tool name.** Every tool is built from these alone.
   wavelengths long.
 - Its material integers: its body's (a block of a massive kind with its
   own record, 8.3); the born family and its clock [p, q]; the amplitude
-  A; the line's length in wavelengths; the wheel [step, W]; the residue
-  order; the label state (branches).
+  A; the line's length in wavelengths; the label state (branches). No
+  wheel and no residue order: u is the law's remainder at the centre cell
+  (ALGEBRA.md 9.19 (4)), so the body's well pair is rich, 3 x denominator
+  / gcd(numerator, 3) >= 500 ([800, 801], never [800, 800] or [8, 7]).
 - On the board at interval 0: nothing (births come later).
 - Its load check: every birth has a clicking record behind it (9.17);
-  `arms` is refused; the wheel's step is coprime to W (a permutation).
+  `arms` is refused; a declared wheel or residue is refused; the centre
+  cell's pair is rich (9.19 (4a)).
 - Its unit tests (COMPUTATION on main's `_births` and `_phase`):
   - At [2464, 25] and 128 periods the train lasts 3200 intervals (154
     periods of [2464, 25]; 77 of [1232, 25]).
@@ -291,12 +294,13 @@ questions of 18:50Z).**
   crystal's cells are the arriving record's NAMED RECEIVER, and its
   material is its light pair (the vacuum's [1, 1] unless an index is
   declared) and its massive body's pair.
-- (2) The pair's wheel is the crystal's own `wheel` key: W = 20, the
-  pinned wheel of the Bell row of B.
-- (3) THE PAIR CARRIES THE ARRIVING RECORD'S RESIDUE u (one quantum, one
-  residue, ALGEBRA.md 9.7 (b)). The residue order and the seed are
-  therefore the EMITTER's, on the arriving train, and the crystal has no
-  `residue_seed`.
+- (2) THERE IS NO WHEEL KEY (ALGEBRA.md 9.19 (4), ADOPTED): the pair's
+  residue u is the arriving record's remainder at the crystal's centre
+  cell at its click, and its wheel is 3 x denominator / gcd(numerator, 3)
+  of the crystal's LIGHT pair there; so the crystal declares on its cells
+  a light pair rich enough, an index such as [800, 801] (2403 values),
+  never the vacuum's [1, 1] (3 values).
+- (3) No residue order and no seed anywhere: the loader refuses them.
 - (4) THE SHELL OF RECEIVER CUBES RETIRES with the take. The faces are
   closed and reflect (A.9), so the two slits' layer gains no bodies; its
   regeneration follows B's margin.
@@ -352,8 +356,8 @@ where a shift common to every record cancels.
 
 | Row | The board and its faces | The placed tools (vertex, side, material) | The pin (kind) | When the clicks come |
 | --- | --- | --- | --- | --- |
-| Bell, four settings (1a to 1d) | a layer [30, 33, 1], periodic (11.3); its shell of receiver cubes retires with the take (9.12) | an emitter at (2, 16); the crystal, side 3, at vertex (13, 15), clocks p_1 + p_2 = p, branches [[1, 1], [2, 1]]; Alice's polariser at (26, 28) with its receivers at (27, 29), axes (1, 0) or (1, 1); Bob's polariser at (26, 4) with (27, 3), axes (1, 2) or (3, 1); THE PINNED WHEEL [1, 20] (the Boss's adoption of 00:05Z; [1, 2560] the same pin scaled) | 8/2/2/8, 1/9/9/1, 9/1/1/9, 8/2/2/8; S = 14 / 5 exactly; marginals exactly 10 (K, DETECTOR, no band; ALGEBRA.md 9.16 (4)); at W = 2560 the same pin scaled by 128 | birth at t_e + 11 or later; each arm's first rung at the birth + 22 or later; the two arms equal exactly (11.3); the first rung is the direct front's, before any wrapped field returns (ALGEBRA.md 9.12), and the counts are computed weights |
-| Malus, four settings (9) | the bar of 8 (a chain), closed faces | an emitter at x = 0 (H, the wheel [159, 256], a train of 32); the polariser at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2), its + receiver at x = 7 | 128, 246, 199, 177 of 256 on the + cell (K, DETECTOR; 9.16 (4)) | the front at 6 / 0.5729 = 10.5 intervals from each birth; the reading is the computed weights, which a face does not move (9.12) |
+| Bell, four settings (1a to 1d) | a layer [30, 33, 1], periodic (11.3); its shell of receiver cubes retires with the take (9.12) | an emitter at (2, 16); the crystal, side 3, at vertex (13, 15), clocks p_1 + p_2 = p, branches [[1, 1], [2, 1]]; Alice's polariser at (26, 28) with its receivers at (27, 29), axes (1, 0) or (1, 1); Bob's polariser at (26, 4) with (27, 3), axes (1, 2) or (3, 1); no wheel: the residues are the law's remainders (ALGEBRA.md 9.19 (4), ADOPTED; the exact W = 20 pin HISTORY) | n = 100 pair records per setting: the expected counts 40/10/10/40, 5/45/45/5, 45/5/5/45, 40/10/10/40 with the standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2; S = 2.80, standard deviation 0.141, the pin S in [2.38, 3.22], the falsifier S <= 2 (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | birth at t_e + 11 or later; each arm's first rung at the birth + 22 or later; the two arms equal exactly (11.3); the first rung is the direct front's, before any wrapped field returns (ALGEBRA.md 9.12), and the counts are computed weights |
+| Malus, four settings (9) | the bar of 8 (a chain), closed faces | an emitter at x = 0 (H, the wheel [159, 256], a train of 32); the polariser at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2), its + receiver at x = 7 | at 256 records on the + cell: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2) (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | the front at 6 / 0.5729 = 10.5 intervals from each birth; the reading is the computed weights, which a face does not move (9.12) |
 | The two slits (2a) | 160 x 256 layer; closed faces | an emitter at (20, 128) (no heading, on regeneration); a wall of mirror cubes, side 1, gap [1, 2], at x = 40 with two openings of width 3 at d = 26; the screen of 201 receivers at x = 153, y 28 to 228, wheel 2^20 | visibility 0.96 +- 0.02 (K, `two_slits_1024.py`) | the front at the screen 133 / 0.5729 = 232 intervals after a birth. FACE MARGIN 6 Links (x) and 27 (y): the reflection comes 21 intervals after the front, while the train (32 periods, 1155 intervals, 661 Links) needs a margin of at least 331 Links. THE BOARD MUST GROW to x >= 485 with the y faces 331 Links beyond every path, or the train must shorten. The generator's map re-derives the pin on the grown board (OWED, blind) |
 | The pace fans (5a) | 128 x 128 layer; closed faces | an emitter at (64, 64); probes at 40 and 36 Links on each ray | the axis's k above the diagonal's by k^2 / 48 (K; GAMEBOARD by declaration) | the front at 40 / 0.5729 = 70 intervals; FACE MARGIN 23 Links, a reflection 80 intervals after the front, so the settled reading must end before it or the board grows (OWED on regeneration) |
 | The muon's form (4a) | 200 x 200 layer, periodic | one well, side 14, pair [3200, 3227], at (93, 93), at rest and at k = 3 (ramp 12000) | f / f_0 = 0.8116, band 0.3 percent (K) | its own record's clicks over the hold after the ramp; no face |

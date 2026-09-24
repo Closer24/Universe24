@@ -4669,6 +4669,36 @@ HERE:
   flux form before any run; Bell and Malus read computed weights and do
   not move.
 
+THE PHYSICIST'S THREE QUESTIONS OF 22:17Z, ANSWERED (DERIVED HERE):
+- (a) THE FACES: every board is CLOSED, a torus or a box of zero rows;
+  the open face as a sponge is a take and retires; `escaped` retires with
+  it. A record's energy stays on the board, and on a closed board the
+  one-way inward flux at any set on its ladder keeps accumulating as the
+  field passes it again, so EVERY RECORD CLICKS (its rung is at most T);
+  the close on a record's own age (9.12 item 2) RETIRES too: the click is
+  the record's one end, and a record alive at the run's last interval is
+  reported alive, a host reading. The chains (the index rows, the
+  redshift, the light clock) and the two slits' layer take the margin
+  rule of the specification's part B (half the train behind every
+  receiver) at their regeneration.
+- (b) THE CLICK'S ACT: the record is deleted WHOLE at the rung, its rows
+  everywhere (8.8's one deletion), at that interval; a set's offer is
+  read through its Ports only (a Link from a Node outside the set into a
+  Node inside it), the Ports of a set at a body's cells included. WITH
+  SEVERAL SETS ON ONE LADDER (a screen), the ladder is cumulative in its
+  declared order, L_k = C_1 + ... + C_k at every interval, and the click
+  fires at the FIRST interval at which some L_k reaches (2 u + 1) T / (2
+  W), at the first such k: the cell of u on the cumulative ladder (main's
+  `cell_of`) read at every interval instead of at a close. For one set
+  this is the rung above; for a screen whose offers arrive in fixed
+  proportions it is main's cell at the close (DERIVED: the crossing cell
+  is then the final ladder's); where they do not, the generator's map on
+  the two slits re-derives the visibility pin blind.
+- (c) THE EXCITED RECORD'S SET: one cell always, the body's centre cell
+  at the lower vertex plus side // 2 on each axis; its Ports the cell's
+  six Links; T = the one-way inward flux into it over one period of the
+  mode, the generator's integer. For a one-cell body the set is the cell.
+
 **(4) THE RESIDUE: WHAT IT IS, AND HOW TO STOP DECLARING IT (the owner's
 question; DERIVED HERE, with COMPUTATION).** Two things are called a
 remainder. THE RULE'S REMAINDER r (verb D, 8.1) is kept per Node per
@@ -4700,9 +4730,68 @@ denominator at that cell. Then the world declares no residue.
   law's remainder the residues are equidistributed but not a permutation,
   and the counts are binomial about the weights, as nature's are: every
   pin gains its binomial band. The run stays deterministic and
-  reproducible either way. OPEN FOR THE OWNER: the declared permutation
-  (exact pins, the hidden variable declared) or the law's remainder (no
-  declared residue, statistical pins).
+  reproducible either way.
+- ADOPTED (the model owner, 2026-09-24, through the Boss at 22:18Z: "in
+  my opinion, without declarations"): THE RESIDUE IS THE LAW'S OWN
+  REMAINDER. A record's u is the rule's remainder r at its birth cell at
+  the interval of the click that births it (the excited record's
+  remainder at the emitter's centre cell; the arriving record's at the
+  crystal's centre cell), and its wheel is W = 3 x denominator /
+  gcd(numerator, 3) of that cell's pair for the clicking record's family,
+  in lowest terms. No `residue_order`, no `residue_seed`, no declared
+  wheel anywhere; the loader refuses them. The first excitation of a
+  body, on the board at interval 0 with every remainder 0 (9.9), has u =
+  0 and clicks at its earliest rung. What follows, DERIVED HERE, blind:
+  - (4a) THE RICHNESS OF THE BIRTH CELL. The granularity of Born's rule
+    on a wheel of W values biases each cell's share by at most 1 / (2 W).
+    For that bias to stay below a tenth of the smallest binomial band the
+    fifteen read (Bell's 0.011 on a share of 0.4 at 100 records), W >=
+    500. So EVERY TOOL THAT BIRTHS DECLARES, ON ITS BIRTH CELL, A PAIR FOR
+    THE CLICKING RECORD'S FAMILY WITH 3 x denominator / gcd(numerator, 3)
+    >= 500, checked at load: an emitter's well [800, 801] (2403) or
+    [3200, 3227] (9681), never [800, 800] or [8, 7] (3 and 21); a
+    crystal's cells carry a LIGHT pair, an index, rich in the same
+    sense ([800, 801] on light, 2403), never the vacuum's [1, 1] (3). The
+    fifteen's wells [800, 800] (the deep well, the boxes, the light clock,
+    Sagnac) become [800, 801]; [314, 315] (945) and [3200, 3227] stand;
+    [156, 157] (157) and the one-cell emitters' [8, 7] (21) are too poor
+    and change. The pair's richness is a load check beside the bound and
+    the stability (9.19 (2)).
+  - (4b) THE PINS AS DISTRIBUTIONS (the exact W = 20 pin RETIRES; every
+    counting row reads a count against a binomial band; n the records per
+    setting; the band 3 standard deviations). BELL, HV + VH with Alice's
+    axes (1, 0), (1, 1) and Bob's (1, 2), (3, 1): the shares (++, +-, -+,
+    --) are (2 / 5, 1 / 10, 1 / 10, 2 / 5) at E = 3 / 5, (1 / 20, 9 / 20,
+    9 / 20, 1 / 20) at E = -4 / 5, (9 / 20, 1 / 20, 1 / 20, 9 / 20) at E =
+    4 / 5; S = 14 / 5 with the variance SUM over the four pairs of (1 -
+    E^2) / n = 2.28 / n. At n = 100 per setting (400 pair records): the
+    expected counts 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0,
+    4.9), 5 / 45 / 45 / 5 (2.2, 5.0, 5.0, 2.2), 45 / 5 / 5 / 45 (5.0, 2.2,
+    2.2, 5.0), 40 / 10 / 10 / 40; S = 2.80 with the standard deviation
+    0.141, so S above 2 by 5.7 standard deviations. THE VERDICT "S above 2
+    at 5 standard deviations" needs n >= 90 per setting (360 pair
+    records); at 3 standard deviations n >= 33 (132). THE PIN: n = 100
+    per setting, S in [2.38, 3.22] (3 standard deviations), the falsifier S
+    <= 2. MALUS at 256 records, H arriving, the + cell: 128 +- 24 at (1,
+    1), 246 +- 9 at (5, 1), 199 +- 20 at (15, 8), 177 +- 22 at (3, 2) (3
+    standard deviations of sqrt(n p (1 - p))); the expected values are
+    the shares' 128.0, 246.2, 199.3, 177.2. THE OTHER COUNTING ROWS: the
+    two slits' visibility and M1's centroid already carry bands (0.96 +-
+    0.02; one Node) that the binomial spread at their records (1024 and
+    2048 over 201 and 121 pixels) lies inside; the generator's map prints
+    the binomial band beside each on regeneration.
+  - (4c) THE FIRST-RUNG ROWS (M2, Sagnac, the light clock, the redshift)
+    DO NOT CHANGE: a first rung is the interval at which 2 W C first
+    reaches T, the u = 0 rung, and reads no residue. They move only with
+    the flux form of (3), already ordered.
+  - (4d) WHAT THE PHYSICIST CHANGES: the birth reads the clicking record's
+    remainder at the birth's centre cell and sets u and W from it; the
+    loader refuses `residue_order`, `residue_seed` and a declared `wheel`,
+    and refuses a birthing cell whose pair is poorer than 500; the wells
+    of (4a) regenerated to rich pairs and the crystal's light index
+    declared; the Bell worlds at n = 100 per setting, Malus at 256, their
+    registers carrying the expected counts and the 3-standard-deviation
+    bands of (4b); the readers report a count against its band.
 
 **(5) WHAT IS LEFT OF THE PARTS (DERIVED HERE).**
 
@@ -4745,7 +4834,8 @@ is the statement the property test of 9.20 checks.
 - COMPUTATION: the flux check; the remainder's equidistribution.
 - CARRIED: the push (8.11): the regions' step and its stress as the flux
   of momentum. With it, momentum between clicks is carried, not proved.
-- OPEN: the residue's source (4); the tool bodies bound or silent (9.15);
+- ADOPTED: the residue from the law (4).
+- OPEN: the tool bodies bound or silent (9.15);
   the holder family (9.18 (2)); one border for all families.
 - WHAT CHANGES FOR THE ENGINE (the physicist), beyond 9.18 (7): E as the
   one-way flux at every set, and T as the record's I (the take, the grace,
