@@ -1040,7 +1040,7 @@ omega_b) of its own well, printed by the pins script before the run.
    the last inserted intervals are still inside the cells, propagating
    out. THE TAKE BEGINS AT THE FIRST INTERVAL AFTER THE TRAIN, age >
    train, NO TIMING INTEGER (the model owner's word of 2026-09-24,
-   07:42Z, "go with it", on the physicist's and Reviewer 3's
+   07:42Z, "go with it", record 1711, on the physicist's and Reviewer 3's
    recommendation after the builder's seven ages on the (ac) chain,
    07:09Z, GAMEBOARD: the remnant's zero-group-pace mode leaks onto the
    free Nodes beside the face, where item 9's set sits, during any
@@ -1107,7 +1107,7 @@ omega_b) of its own well, printed by the pins script before the run.
    remnant_take 4; the cells 7 and 10 Links away are untouched. THE
    BUILDER'S LINE (section 15 M1-4): the rule for every emitter, no key;
    no timing integer, nothing computed at load and no metadata row for
-   it (the owner's word of 07:42Z); a per-record taking mask of the emitter's cells
+   it (the owner's word of 07:42Z, record 1711); a per-record taking mask of the emitter's cells
    switched on at age > train, the first interval after the train, in the record's kind's pair, its
    bookings excluded from the ladder as the
    grace's exclusion is (`keep`), the content taken booked to the HOST
@@ -1688,7 +1688,7 @@ waves).**
   Reviewer 3's three lines of 06:20Z, and THE RULE on the owner's word
   of 06:42Z, record 1694: every emitter takes its own record's remnant after its
   train, no key; a per-record taking mask of the emitter's cells at age
-  > train, the first interval after the train, no timing integer (the model owner's word of 07:42Z, "go with it"; the delay T = ceil(extent / v_g) + 2 of the first text, 24 for a
+  > train, the first interval after the train, no timing integer (the model owner's word of 07:42Z, "go with it", record 1711; the delay T = ceil(extent / v_g) + 2 of the first text, 24 for a
   block of side 12, 4 for a one-Node lamp, is withdrawn, section 10 item 10; the record of how it was computed: the group pace at load was the band's closed form along the emission's axis, v_g = sin k_x / (3 sin omega) with cos omega = (cos k_x + cos k_y + cos k_z) / 3, the three-dimensional six-neighbour band of ALGEBRA.md 8.1 for the pair [1, 1], at the transverse components k_y = k_z = 0 (so cos omega = (2 + cos k_x) / 3 on the axis) and the kind's declared clock (k_x = 2 pi / lambda, lambda the declared Links per period), host arithmetic once at load, no table entry read (Reviewer 3's axis form, 07:12Z), a load-time host number the rule no longer has), in the record's kind's pair,
   its bookings
   excluded from the ladder and the content booked to the HOST row
