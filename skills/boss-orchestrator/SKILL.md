@@ -404,3 +404,55 @@ No run is ordered without its derived expectation and the named vector it will r
 ### Modern algebra and limits first, a run only after, if needed (the owner, 2026-09-22, record 799)
 
 Everything that can be shown in formulas in modern algebra is shown in modern algebra, with its limits; a run is ordered only for what the algebra cannot give, and after the algebra (skills/workflow.md, the refinement of record 762). A run Outside is the same kind of run as any other: the engine runs with its declared conditions (the emitters and detectors placed) and the reading is the clicks alone. The Boss states, in every derivation order, the assumption of the Outside's locality: velocity Outside is a click carrying information to the neighbouring Node and the packet received there; a packet passes from place to place and never jumps; every passage goes Outside to Inside, moves there, and comes out again, so the Outside inherits the Inside's locality through the conversion.
+
+### The night of the pins: the working method (the owner, 2026-09-23 to 24, records 1518 to 1532)
+
+The owner's words of the night, kept as the Boss's method for every run-and-paper
+day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
+
+1. **Three tiers, in order.** The algebra first (every number from the one law
+   before any run; a row not closed in the algebra is not done and is replaced
+   by something simple); then runs without pins (the engine read beside the
+   algebra's number, labelled EXPLORATORY, never a result); the pins last (the
+   pin written before the run, one run, the clicks the only reading, the kind K
+   or P, a miss written as a miss). Nothing whose board is too small or that
+   takes hours; the layer instead of the box wherever the layer lemma proves the
+   reading identical, declared before the run.
+2. **One file with three checks.** `docs/designs/detector_law/APPROVALS.md`,
+   the Boss's file: one row per experiment, a check written only on a merged
+   record with its link (the algebra; the GameBoard without pins; the pins);
+   the paper exists when every row carries its three checks; the truth of the
+   moment, "partial" and "not yet" the other two words.
+3. **No pinned run without an exploratory pass of the same file first.** The
+   pinned run is the same world file and the same engine as the exploratory
+   run; what reads wrong in the pass is redeclared BEFORE the pin, never after.
+   This is why a missed pin is rare, and why a miss, when it comes, is written.
+4. **One read per bundle.** The reviewer reads a branch once when its bundle
+   lands (a build's components together; a physicist's commit with its
+   declarations; a group's pinned readings together), not each commit; the
+   reviewer of the declarations stays one (the gate on the GO).
+5. **Parallelise what has no shared interface; never the rest.** Parallelised:
+   the runs (one session per world at the GO; the 3-D controls on their own
+   machines, never a gate), the reviewers of the morning's readings (one per
+   group), a source verifier (docs only), a world-file generator (files apart
+   from the engine), a second builder only on separate modules. Not
+   parallelised, and why: the writer (one document, one storyline; the owner's
+   word), the declarations (one writer per interface; a pin must leave one hand
+   before the run), the log and Highlights (the Boss alone; one record, one
+   numbering), the GO (the owner's word), the gate of the declarations (one
+   standard). The Boss's own cost, more sessions to coordinate, is met by
+   batching the records about once an hour.
+6. **One writer, the storyline from a file.** The writer takes the title, the
+   opening, the order and the limits from `PLAN.md` section 8, not from a
+   conversation; every number a visible blank until its click is read and
+   merged; the bounds rows and the derivations final before any run.
+7. **The answer before the record; waits of at most two minutes.** When the
+   owner writes, the Boss answers first (three to six short lines, the picture
+   first) and records after; no blocking wait on CI longer than two minutes,
+   so a new message is seen; every answer based on `docs/ALGEBRA.md` and
+   `docs/HIGHLIGHTS.md` (the owner's two-file rule).
+8. **A closed glossary; boxed formulas; the three worlds.** One name per term
+   in `docs/GLOSSARY.md` (the group of order 48 and the group of order 24 each
+   one entry); the key algebraic formulas boxed in the paper; the GameBoard,
+   the clicks and nature named as the three worlds with the passage between
+   them; "matches nature", never "is nature".
