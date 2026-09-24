@@ -2,7 +2,7 @@
  "law": "beam",
  "model_id": "beam-massive-record-sagnac-k3-v1",
  "shape": [
-  2200,
+  3000,
   1,
   1
  ],
@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 4500,
+ "ticks": 5700,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -24,7 +24,7 @@
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 4294967296,
- "wheel": 64,
+ "wheel": 256,
  "directions": [],
  "families": [
   {

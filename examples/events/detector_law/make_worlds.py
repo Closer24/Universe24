@@ -45,16 +45,19 @@ The emitter's take of its own record's remnant after its train (section 10
 item 10) is THE RULE of the law, not a world key (the model owner, 2026-09-24
 06:42Z; main 02f7388b): no emitter carries a timing key, the engine computes
 it at load. A world with a detector set and no lamp carries the world key
-`wheel` 64, the rung W of the ladder that chooses a record's cell (Reviewer 3's
-line, the Boss's 06:50Z: 4b, R2 and the light clock; without it the loader's
-default is 1 and a set holding a quarter of a record's offer crosses no rung).
+`wheel`, the rung W of the ladder that chooses a record's cell (Reviewer 3's
+line, the Boss's 06:50Z; without it the loader's default is 1 and a set holding
+a quarter of a record's offer crosses no rung): 256 on the four R2 files (the
+physicist's 07:37Z, one integer with the sets' rung of section 13 item 4), 64
+on the light clock.
 
 The massive rows (group M1, written into `../massive_record/`, the folder of
 their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
 `redshift_control.json` (section 4 with item 7's CHECK on the loader's bound of 4096: the
 chain of 4096, A at 2994, the receiver's set at 4094 with wheel 64, A's `own_grace` 8000,
 14686 intervals), `sagnac_k3.json` and `sagnac_rest.json`
-(section 13, the blocks their own receivers at W = 256 with `own_grace` 3000, the hold),
+(section 13 on the chain of 3000 of 2026-09-24 07:58Z, the blocks their own receivers at
+W = 256 with `own_grace` 3000, the hold, 5700 and 7800 intervals),
 `light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
 its face with `own_grace` 70, the chain closed for light), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
@@ -147,6 +150,12 @@ WALL_PAIR = [1, 2]  # the mirror line's block pair, two Nodes deep (section 15 L
 TRAIN_32 = 32  # periods, section 15 L-3 and L-6
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 SET_WHEEL = 64  # the world key `wheel` of a world with a set and no lamp (the Boss's 06:50Z (a))
+R2_WORLD_WHEEL = 256  # the physicist's word of 07:37Z: R2's ladder W is 256, one integer with the sets' rung (section 13 item 4), on the four R2 files; the light clock keeps 64
+R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
+R2_TICKS = {
+    "sagnac_k3": 5700,
+    "sagnac_rest": 7800,
+}  # 07:58Z: every hold record completes (the forward half reaches the +x face at 2999)
 
 
 def light_family(pair: list[int] | None) -> dict:
@@ -581,7 +590,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             probes=[[4094, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        bounded(document, SET_WHEEL)
+        bounded(document, R2_WORLD_WHEEL)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
         document["measured"].append(body([4094, 0, 0], "light", [[-1, 0, 0]]))
         document["detectors"].append(
@@ -589,11 +598,15 @@ def massive_worlds(massive) -> dict[str, dict]:
         )
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
-    # [772, 784) on the chain of 2200, both pushed to k = 3 on +x over the ramp 1500 and the
-    # hold 3000, both emitting with own_grace 3000 (the hold, section 13 item 1), x open
-    # for the massive kind too (M1-7); each block's cells a detector set on the light
-    # record bound by `block` with its own wheel 256 (M1-4, section 13 item 4); the control
-    # with both at rest; the probes at the facing cells.
+    # [772, 784) on the chain of 3000 (the physicist's 07:58Z: one chain for both worlds,
+    # the blocks and the gap of 60 unchanged, so that every hold record's forward half
+    # reaches the +x face at 2999 and completes within the ticks: 5700 for k3, 7800 at
+    # rest), both pushed to k = 3 on +x over the ramp 1500 and the hold 3000, both emitting
+    # with own_grace 3000 (the hold, section 13 item 1), x open for the massive kind too
+    # (M1-7); each block's cells a detector set on the light record bound by `block` with
+    # its own wheel 256 (M1-4, section 13 item 4), the world key `wheel` 256 the ladder's W
+    # (the physicist's 07:37Z, one integer with the sets' rung); the control with both at
+    # rest; the probes at the facing cells.
     for name, motion in (
         ("sagnac_k3", {"momentum": [massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
         ("sagnac_rest", {}),
@@ -601,20 +614,20 @@ def massive_worlds(massive) -> dict[str, dict]:
         document = massive.world(
             name.replace("_", "-"),
             "PIN",
-            [2200, 1, 1],
+            [R2_CHAIN, 1, 1],
             chain,
             KIND,
             [
                 emitter([700, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
                 emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
             ],
-            4500,
+            R2_TICKS[name],
             light=light_11,
             faces=massive.FACES_OPEN,
             probes=[[712, 0, 0], [772, 0, 0]],
             mode_axis="x" if motion else None,
         )
-        bounded(document, SET_WHEEL)
+        bounded(document, R2_WORLD_WHEEL)
         graced(
             document,
             [

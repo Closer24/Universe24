@@ -24,7 +24,7 @@
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 4294967296,
- "wheel": 64,
+ "wheel": 256,
  "directions": [],
  "families": [
   {
