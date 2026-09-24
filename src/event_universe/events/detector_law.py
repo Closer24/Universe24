@@ -124,6 +124,9 @@ class LiveRecord:
     first_rung: list[int | None] = field(default_factory=list)
     ports: list[np.ndarray] = field(default_factory=list)
     driven: np.ndarray | None = None
+    # the level before `before` (the two levels that entered the last
+    # advance, kept for the flux reading of the interval, 9.19 (3))
+    earlier: np.ndarray | None = None
     # massive-record-v1: the emitter's number for a record a body emitted
     # (None for a planted record), and the coupling's denominator folded
     # into the row's wall (MASSIVE_RECORD.md section 7, MUST A: one D per
@@ -1221,45 +1224,68 @@ class DetectorLawSimulation:
         return (ordinal - 1) * stride % width
 
     def _excite(self, block: Block, own_record: LiveRecord) -> None:
-        """The excited record's residue and norm (ALGEBRA.md 9.17 (4) item 1):
-        the next excitation's residue on the wheel, the norm T the seed's
-        squares over the body's cells (the record as written at both levels;
-        its motion is booked against it), the offer C from 0."""
+        """The excited record's residue and norm (ALGEBRA.md 9.17 (4) item 1,
+        (5) item 1 and 9.19 (3)): the next excitation's residue on the wheel,
+        the norm T the one-way flux into the body's centre cell its own mode
+        books over one period of its clock (the emitter's declared integer
+        `norm`, the generator's, recomputed at load), the offer C from 0."""
+        emitter = block.definition.emitter
+        assert emitter is not None
+        if emitter.norm is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: the one-way flux "
+                "into the body's centre cell over one period of its clock, the generator's integer "
+                "(ALGEBRA.md 9.17 (5) item 1, 9.19 (3); `excite_on_the_mode` of the massive record "
+                "generator)"
+            )
         block.excitations += 1
         own_record.u = self._excitation_residue(block, block.excitations)
-        levels = own_record.now[block.mask].astype(object)
-        own_record.norm = int(np.sum(levels * levels))
+        own_record.norm = emitter.norm
         block.offer = 0
         block.emit_now = False
 
+    def centre_mask(self, block: Block) -> np.ndarray:
+        """The excited record's named set (ALGEBRA.md 9.19 (3)): the body's
+        centre cell, the lower corner plus side // 2 on each axis, one Node
+        (the cell itself for a body of side 1); it follows the body's steps."""
+        return self._cube(
+            [int(block.corner[axis]) + block.definition.side // 2 for axis in range(3)],
+            1,
+            block.family,
+        )
+
     def _excitation_rung(self, block: Block) -> None:
-        """E then D on the excited record at its own cells (ALGEBRA.md 9.17 (4)
-        item 1): its own motion this interval, (now - before)^2 summed over
-        its cells, booked to its offer C (read-through, no take), and the
-        rung 2 T u + T <= 2 W C on the emitter's wheel W fires the click
-        (the birth follows once the interval's records are advanced)."""
+        """E then D on the excited record (ALGEBRA.md 9.17 (4) item 1 and 9.19
+        (3)): the one-way inward flux into its centre cell this interval,
+        booked to its offer C (read-through, nothing taken), and the rung
+        2 T u + T <= 2 W C on the emitter's wheel W fires the click (the
+        birth follows once the interval's records are advanced). The flux
+        is read from the two levels that entered the interval's advance."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
-        motion = (own.now - own.before).astype(object)
-        block.offer += int(np.sum(np.where(block.mask, motion * motion, 0)))
+        block.offer += self.inward_flux(own, self.centre_mask(block), before_advance=True)
         width = emitter.wheel[1]
         if 2 * own.norm * own.u + own.norm <= 2 * width * block.offer:
             block.emit_now = True
 
     def _emit(self, block: Block) -> None:
         """The click of the excited record and the birth (ALGEBRA.md 9.17 (4)
-        items 1 to 3; 9.13: E, then X, then E^T): X ends the excited record;
-        E^T writes the born record ONCE on the body's cells at both levels,
-        now = A C[phase(0)] and before = A C[phase(-1)] on every cell (the
-        broadband birth of one cell or of cells in phase; the line's
-        travelling character owed), A the lamp's unit; the norm T the motion
-        the write inserts,
-        the residue the excitation's, the content one quantum moved from the
-        body's stock; then, while the stock lasts, the next excited record
-        (the seed again, the next residue). Nothing drives the born record
-        afterwards: the law advances it."""
+        items 1 to 3, (5) items 2 to 4 and (6); 9.13: E, then X, then E^T): X
+        ends the excited record; E^T writes the born record ONCE at both
+        levels: the declared `born` profile copied (material, a line's
+        travelling character), or on every cell of the body the pair now =
+        A C_2N[3 N / 2 + s] on the circle of 2 N steps with s = floor(n / d)
+        the born clock's step and before = -now (the character half a step
+        either side of its zero, no static part), A the amplitude unit; the
+        norm T the motion the write inserts (the record's conserved form
+        once the flux reading books, 9.19 (3)), the residue the
+        excitation's, the content one quantum moved from the body's stock;
+        the record's `driven` mask empty as every born record's (taken by
+        the sets, no branch on the kind); then, while the stock lasts, the
+        next excited record (the seed again, the next residue). Nothing
+        drives the born record afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
         own = block.own
@@ -1305,17 +1331,20 @@ class DetectorLawSimulation:
         # both levels, every cell at the vertex's phase (the one-cell broadband
         # birth; a line's travelling character, the per-Link pair of ALGEBRA.md
         # 9.17 (4) item 2, is owed until that pair is declared)
-        table = self._cosine_table(steps)
-        level_now = int(table[self._phase(0, numerator, denominator, steps)])
-        level_before = int(table[self._phase(-1, numerator, denominator, steps)])
-        live.now[block.mask] = level_now
-        live.before[block.mask] = level_before
+        if emitter.born is not None:
+            live.now = np.array(emitter.born[0], dtype=np.int64).reshape(self.shape)
+            live.before = np.array(emitter.born[1], dtype=np.int64).reshape(self.shape)
+        else:
+            table = self._cosine_table(2 * steps)
+            step = numerator // denominator
+            level = int(table[(3 * steps // 2 + step) % (2 * steps)])
+            live.now[block.mask] = level
+            live.before[block.mask] = -level
         motion = (live.now - live.before).astype(object)
         live.norm = int(np.sum(motion * motion))
-        if self.families[family].massive_kind:
-            # a born record of a massive kind (the matter emitter's): advanced
-            # by the rule with its family's pair, taken by the sets as light's
-            live.driven = np.zeros(self.shape, dtype=bool)
+        # every born record is advanced by the rule with its family's pair and
+        # read by the sets (its `driven` set empty: the record's own datum)
+        live.driven = np.zeros(self.shape, dtype=bool)
         if emitter.receiver is not None:
             live.ladder = [cell for cell, name in enumerate(self.cell_set) if name in emitter.receiver]
         self.held[number][block.family] -= 1
@@ -1536,6 +1565,112 @@ class DetectorLawSimulation:
                 total += self._shift(source, axis, sign, wrap=wrap)
         return total
 
+    # The flux reading (ALGEBRA.md 9.19 (3), the mathematician's derivation
+    # of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a
+    # Node i from a read j of it, 3 G_ij = A_ij (now_i before_j - before_i
+    # now_j), a bilinear form of the record's own two levels at the two ends
+    # of a Link, pair-free and antisymmetric; a receiver's offer the one-way
+    # inward flux through its Ports, summed over intervals; the record's
+    # norm its conserved form I. Both in the integers 3 G x wall and 3 I x
+    # wall, wall the family's common wall (the least common multiple of its
+    # pairs' numerators over the board).
+
+    def kind_wall(self, family: int) -> int:
+        """The family's common wall: the least common multiple of the
+        numerators of its pair over the board (the vacuum's and every body's),
+        so that wall x den_i / num_i is an integer at every Node."""
+        wall = 1
+        for value in np.unique(self.kind_num[family]).tolist():
+            value = int(value)
+            wall = wall * value // gcd(wall, value)
+        return wall
+
+    def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
+        """The Ports of every cell for the flux reading: per axis of extent
+        above 1 and per side s, the Nodes of a cell whose neighbour on that
+        side (the read across the Link, on the family's faces) is a Node of
+        no cell or of another cell. A self-read of a folded axis carries no
+        flux; beyond an open face there is no Node and no Link."""
+        wrap = self.kind_wrap[family]
+        ports: list[tuple[int, int, np.ndarray]] = []
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            for side in (1, -1):
+                neighbour = self._shift(self.cell_index, axis, -side, fill=-2, wrap=wrap)
+                mask = (self.cell_index >= 0) & (neighbour != -2) & (neighbour != self.cell_index)
+                ports.append((axis, side, mask))
+        return ports
+
+    def flux_offer(self, live: LiveRecord) -> dict[int, int]:
+        """The one-way inward flux into every cell this interval (9.19 (3)):
+        over the cell's Ports, 3 G_ij = now_i before_j - before_i now_j where
+        positive, times the family's wall, from the two levels that enter the
+        step (`now`, `before` before the advance); by the cell's index."""
+        wrap = self.kind_wrap[live.family]
+        wall = self.kind_wall(live.family)
+        now = live.now.astype(object)
+        before = live.before.astype(object)
+        inward = np.zeros(self.shape, dtype=object)
+        for axis, side, mask in self._flux_ports(live.family):
+            now_j = self._shift(live.now, axis, -side, wrap=wrap).astype(object)
+            before_j = self._shift(live.before, axis, -side, wrap=wrap).astype(object)
+            flux = now * before_j - before * now_j
+            inward = inward + np.where(mask & (flux > 0), flux, 0)
+        offers: dict[int, int] = {}
+        for node in zip(*np.nonzero(inward), strict=True):
+            cell = int(self.cell_index[node])
+            offers[cell] = offers.get(cell, 0) + int(inward[node]) * wall
+        return offers
+
+    def inward_flux(self, live: LiveRecord, mask: np.ndarray, before_advance: bool = False) -> int:
+        """The one-way inward flux into the Nodes of `mask` through the Links
+        from Nodes outside it (9.19 (3)): 3 G_ij = now_i before_j - before_i
+        now_j where positive, times the family's wall, from the record's two
+        levels (`now`, `before`; with `before_advance`, the two levels that
+        entered this interval's advance: the record's `before` and the level
+        before it, kept as `earlier`)."""
+        wrap = self.kind_wrap[live.family]
+        wall = self.kind_wall(live.family)
+        if before_advance:
+            if live.earlier is None:
+                return 0
+            level_now, level_before = live.before, live.earlier
+        else:
+            level_now, level_before = live.now, live.before
+        now = level_now.astype(object)
+        before = level_before.astype(object)
+        total = 0
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            for side in (1, -1):
+                outside = ~self._shift(mask, axis, -side, fill=False, wrap=wrap)
+                present = self._shift(
+                    np.ones(self.shape, dtype=bool), axis, -side, fill=False, wrap=wrap
+                )
+                port = mask & outside & present
+                if not port.any():
+                    continue
+                now_j = self._shift(level_now, axis, -side, wrap=wrap).astype(object)
+                before_j = self._shift(level_before, axis, -side, wrap=wrap).astype(object)
+                flux = now * before_j - before * now_j
+                total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
+        return total * wall
+
+    def conserved_form(self, live: LiveRecord) -> int:
+        """The record's conserved form I (ALGEBRA.md 8.2) in the flux's units,
+        3 I x wall: over the Nodes 3 wall (den_i / num_i) (now_i^2 +
+        before_i^2) - wall now_i (A before)_i, A the read matrix with the
+        family's faces (the six reads, the folded axes' self-reads)."""
+        family = live.family
+        wall = self.kind_wall(family)
+        weight = (3 * wall * self.kind_den[family] // self.kind_num[family]).astype(object)
+        now = live.now.astype(object)
+        before = live.before.astype(object)
+        read = self._neighbours(live.before, None, None, self.kind_wrap[family]).astype(object)
+        return int(np.sum(weight * (now * now + before * before) - wall * now * read))
+
     def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
         """The Nodes on the arm's side of the lamp: (node - origin) . vector at
         least 0 on the board's raw coordinates (the arm's own half-space, the
@@ -1598,6 +1733,7 @@ class DetectorLawSimulation:
                 "holds only below A): the run is refused"
             )
         if not taken:
+            live.earlier = live.before
             live.before = live.now
             live.now = nxt
             live.age += 1
@@ -1648,6 +1784,7 @@ class DetectorLawSimulation:
             if port_motion is not None:
                 port_motion += motion
         live.port_motion = port_motion
+        live.earlier = live.before
         live.before = live.now
         # a splitter's Node takes and books nothing (component 3)
         offer[self.splitter_mask] = 0

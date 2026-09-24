@@ -1313,16 +1313,24 @@ class EmitterDefinition:
     with "residue_seed", "branches": the born record's labels (optional,
     [[0, 1]] by the lamp's form), "receiver": the born records' ladder by
     name (optional, a list of set names; the block's own `receiver`, one
-    name, is the line at the rung)}; every cell of the body is written at
-    the vertex's phase (the one-cell broadband birth; a line's travelling
-    character, ALGEBRA.md 9.17 (4) item 2, is owed until its per-Link pair
-    is declared). Excited record k
-    clicks at its own rung on its own cells (E its own motion booked
-    through its cells, D the rung 2 T u_k + T <= 2 W C with T its norm, the
-    seed's squares over its cells); at that click X ends it and E^T births
-    the photon (content one quantum, its residue the excitation's) and,
-    while the stock lasts, excited record k + 1. No rate, no train, no
-    drive, no source term, no grace."""
+    name, is the line at the rung), "period": P, the nearest integer to
+    2 pi / omega_b of the body's mode (the generator's integer), "norm":
+    T, the one-way inward flux into the body's centre cell that its own
+    mode books over P intervals advanced alone (the generator's integer,
+    recomputed at load and a mismatch refused; ALGEBRA.md 9.17 (5) item 1
+    in the flux's units of 9.19 (3)), "born": the born record's two levels
+    over the whole board as material (optional; {"now": [...], "before":
+    [...]}, x-major, one per Node; the engine copies them at the click;
+    9.17 (5) item 3)}. Without `born` the born record is the pair on every
+    cell of the body: now = A C_2N[3 N / 2 + s] on the circle of 2 N steps
+    with s = floor(n / d) the born clock's step and before = -now (the
+    character half a step either side of its zero, no static part; 9.17
+    (6)); an odd s where 2 N exceeds the tables' bound is refused. Excited
+    record k clicks at its own rung (E the one-way flux into its centre
+    cell, D the rung 2 T u_k + T <= 2 W C with T its norm); at that click
+    X ends it and E^T births the photon (content one quantum, its residue
+    the excitation's) and, while the stock lasts, excited record k + 1. No
+    rate, no train, no drive, no source term, no grace."""
 
     family: int
     wheel: tuple[int, int]
@@ -1331,6 +1339,9 @@ class EmitterDefinition:
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
+    period: int | None = None
+    norm: int | None = None
+    born: tuple[tuple[int, ...], tuple[int, ...]] | None = None
 
 
 @dataclass(frozen=True)
@@ -3375,6 +3386,7 @@ def _block(
     span: tuple[int, int, int],
     shape: Address3,
     amplitude_bound: int = AMPLITUDE_BOUND,
+    phase_steps: int = 64,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -3631,7 +3643,9 @@ def _block(
                 )
         if absorbing:
             raise ValueError(f"{BEAM_LAW}: {label}: an absorbing block emits nothing")
-        emitter = _emitter(obj["emitter"], f"{label}.emitter", family, families, names)
+        emitter = _emitter(
+            obj["emitter"], f"{label}.emitter", family, families, names, shape, phase_steps
+        )
         if receiver is not None and emitter.receiver is not None:
             raise ValueError(
                 f"{BEAM_LAW}: {label}: one ladder for the born records: the block's `receiver` "
@@ -3665,31 +3679,51 @@ def _emitter(
     family: FamilyDefinition,
     families: Sequence[FamilyDefinition],
     names: dict[str, int],
+    shape: Address3,
+    phase_steps: int,
 ) -> EmitterDefinition:
-    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4)): the born
-    family a paid family with the pair form of its clock (not the body's
-    own), the wheel [step, W] of the excitations' residues (the step coprime
-    to W: a permutation), the residue order with its seed as the lamp's
-    keys had them, the born labels, the ladder by name, the line's axis."""
+    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6)):
+    the born family a paid family with the pair form of its clock (not the
+    body's own), the wheel [step, W] of the excitations' residues (the step
+    coprime to W: a permutation), the residue order with its seed as the
+    lamp's keys had them, the born labels, the ladder by name, the period
+    and the norm (the generator's integers), the born profile (material)."""
     obj = _object(
         value,
         label,
-        {"family", "wheel", "residue_order", "residue_seed", "branches", "receiver"},
+        {
+            "family",
+            "wheel",
+            "residue_order",
+            "residue_seed",
+            "branches",
+            "receiver",
+            "period",
+            "norm",
+            "born",
+        },
         {"family", "wheel", "residue_order"},
     )
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
-    born = families[names[name]]
-    if born is family:
+    born_family = families[names[name]]
+    if born_family is family:
         raise ValueError(
             f"{BEAM_LAW}: {label}.family is the body's own family (the born record is of another "
             "family, the photon of the excited body)"
         )
-    if born.free or born.phase_per_age is None:
+    if born_family.free or born_family.phase_per_age is None:
         raise ValueError(
             f"{BEAM_LAW}: {label}.family {name!r}: the born family is a paid family with the pair "
             "form of its clock (light's kind, or a massive kind with a declared clock)"
+        )
+    step = born_family.phase_per_age[0] // born_family.phase_per_age[1]
+    if step % 2 == 1 and 2 * phase_steps > MAX_PHASE_STEPS:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.family {name!r}: the born clock's step floor(n / d) = {step} is "
+            f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the tables' bound "
+            f"{MAX_PHASE_STEPS} (ALGEBRA.md 9.17 (6)); declare an even step or a smaller N"
         )
     if not isinstance(obj["wheel"], list):
         raise ValueError(f"{BEAM_LAW}: {label}.wheel must be [step, W], the excitations' residue wheel")
@@ -3716,7 +3750,36 @@ def _emitter(
     if "branches" in obj:
         branches, label_hands = _branches(obj["branches"], f"{label}.branches", 1)
     receiver = _receiver_names(obj, label, True)
-    return EmitterDefinition(names[name], wheel, str(order), seed, branches, label_hands, receiver)
+    period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
+    norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1)
+    born: tuple[tuple[int, ...], tuple[int, ...]] | None = None
+    if "born" in obj:
+        # the born record's two levels as material (ALGEBRA.md 9.17 (5) item
+        # 3): the generator's integers over the whole board, copied at the
+        # click; a line's travelling character is written here
+        levels = _object(obj["born"], f"{label}.born", {"now", "before"}, {"now", "before"})
+        count = int(shape[0]) * int(shape[1]) * int(shape[2])
+        rows = []
+        for level_name in ("now", "before"):
+            values = levels[level_name]
+            if (
+                not isinstance(values, list)
+                or len(values) != count
+                or any(type(value) is not int for value in values)
+            ):
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.born.{level_name} must be {count} integers, one per Node "
+                    "of the board in x-major order (the born record's level as material)"
+                )
+            rows.append(tuple(int(value) for value in values))
+        if not any(a != b for a, b in zip(rows[0], rows[1], strict=True)):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.born writes no motion (the two levels equal on every Node)"
+            )
+        born = (rows[0], rows[1])
+    return EmitterDefinition(
+        names[name], wheel, str(order), seed, branches, label_hands, receiver, period, norm, born
+    )
 
 
 def _measured(
@@ -4010,6 +4073,7 @@ def _measured(
             span,
             shape,
             amplitude_bound,
+            phase_steps,
         )
         if (
             detector_law

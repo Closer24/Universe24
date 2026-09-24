@@ -35,6 +35,7 @@ shifts omega_b, so the world's own number is the pin's).
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
 from typing import Any
@@ -413,6 +414,77 @@ def relaxation_time(reading: MarginReading) -> float:
     return 1.0 / (reading.omega_0 - reading.omega_b)
 
 
+def period_of(reading: MarginReading) -> int:
+    """The period P of the body's mode in intervals, the nearest integer to
+    2 pi / omega_b (ALGEBRA.md 9.17 (5) item 1; COMPUTATION from the
+    module's own omega_b); at least 1."""
+    if reading.omega_b <= 0.0:
+        return 1
+    return max(1, int(round(2.0 * math.pi / reading.omega_b)))
+
+
+def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
+    """The excited record's norm T (ALGEBRA.md 9.17 (5) item 1 in the flux's
+    units of 9.19 (3)): the one-way inward flux into the body's centre cell
+    that its own mode books over `period` intervals, advanced ALONE (the
+    body on its board with no other measured event, no set and no emitter,
+    the rule exact on integers), the same sum `_excitation_rung` books to
+    the offer. The generator writes it as the emitter's `norm`; the loader
+    recomputes it here and refuses a mismatch (a load check, not the law)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+    alone = dataclasses.replace(
+        world,
+        measured=(
+            dataclasses.replace(
+                entry, block=dataclasses.replace(definition, emitter=None, receiver=None)
+            ),
+        ),
+        detectors=(),
+    )
+    simulation = DetectorLawSimulation(alone)
+    block = simulation.blocks[0]
+    total = 0
+    for _ in range(period):
+        simulation.step()
+        own = block.own
+        assert own is not None
+        total += simulation.inward_flux(own, simulation.centre_mask(block), before_advance=True)
+    return total
+
+
+def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
+    """The largest eigenvalue of the COMPOSED operator of each massive family
+    (ALGEBRA.md 9.19 (2)): every body's well of the family in one read
+    matrix on the family's faces; the stability condition is read on it,
+    below 2, refused at or above (a runaway mode of the whole board)."""
+    found: dict[int, float] = {}
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    for index, family in enumerate(world.families):
+        if not family.massive_kind:
+            continue
+        ratio = np.full(shape, family.pair[1] / family.pair[0])
+        seed = 1e-3 * np.random.default_rng(0).standard_normal(shape)
+        bodies = False
+        for entry in world.measured:
+            definition = entry.block
+            if definition is None or entry.family != index or definition.seed == 0:
+                continue
+            corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+            cells = block_cells(shape, corner, definition.side, world.kind_periodic(index))
+            ratio = np.where(cells, definition.pair[1] / definition.pair[0], ratio)
+            seed = seed + np.where(cells, 1.0, 0.0)
+            bodies = True
+        if not bodies:
+            continue
+        found[index], _ = largest_eigenvalue(ratio, world.kind_periodic(index), seed)
+    return found
+
+
 def check_body_conditions(
     world: NatureBeamWorld, simulation: Any, readings: list[MarginReading]
 ) -> list[str]:
@@ -437,6 +509,18 @@ def check_body_conditions(
     COMPUTATION."""
     lines: list[str] = []
     blocks = simulation.block_by_number
+    for index, largest in composed_largest_eigenvalues(world).items():
+        if largest >= 2.0:
+            raise ValueError(
+                f"{BEAM_LAW}: the family {world.families[index].name!r}: the composed operator's "
+                f"largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md 9.19 (2): a mode of "
+                "the whole board grows without bound; the bodies' wells together are too deep for "
+                "the board)"
+            )
+        lines.append(
+            f"operator (COMPUTATION): the family {world.families[index].name!r}: the composed "
+            f"operator's largest eigenvalue 2 cos omega = {largest:.6f}, below 2"
+        )
     for reading in readings:
         number = reading.number
         entry = world.measured[number]
@@ -468,6 +552,44 @@ def check_body_conditions(
             f"profile at the amplitude {amplitude} at both levels, bit for bit "
             f"({int(np.count_nonzero(expected))} Nodes nonzero)"
         )
+        emitter = definition.emitter
+        if emitter is not None:
+            # (c) THE EXCITED RECORD'S NORM (ALGEBRA.md 9.17 (5) item 1, 9.19
+            # (3)): the emitter's `period` and `norm` are the generator's
+            # integers; the norm is recomputed here by advancing the seed
+            # alone and a mismatch refuses the world; the period is printed
+            # against the module's 2 pi / omega_b (COMPUTATION)
+            if emitter.period is None or emitter.norm is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter declares no `period` and `norm`: the "
+                    "excited record's period P (the nearest integer to 2 pi / omega_b) and the "
+                    "one-way flux into the body's centre cell over P intervals, the generator's "
+                    "integers (ALGEBRA.md 9.17 (5) item 1; `excite_on_the_mode` of the massive "
+                    "record generator)"
+                )
+            recomputed = excitation_norm(world, number, emitter.period)
+            if recomputed != emitter.norm:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter.norm {emitter.norm} is not the one-way "
+                    f"flux into the body's centre cell over its period {emitter.period} advanced "
+                    f"alone, {recomputed} (ALGEBRA.md 9.17 (5) item 1: the generator's integer, "
+                    "recomputed at load)"
+                )
+            lines.append(
+                f"norm (COMPUTATION): block {number}: the excited record's norm {emitter.norm} is the "
+                f"one-way flux into its centre cell over the period {emitter.period} advanced alone, "
+                "bit for bit; 2 pi / omega_b = "
+                f"{2.0 * math.pi / reading.omega_b if reading.omega_b > 0 else math.inf:.2f} intervals"
+            )
+            if emitter.born is not None:
+                now = np.array(emitter.born[0], dtype=np.int64)
+                before = np.array(emitter.born[1], dtype=np.int64)
+                motion = (now - before).astype(object)
+                lines.append(
+                    f"born (COMPUTATION): block {number}: the born profile on "
+                    f"{int(np.count_nonzero(now | before))} Nodes, the motion it inserts "
+                    f"{int(np.sum(motion * motion))}"
+                )
         relaxation = relaxation_time(reading)
         if any(int(component) != 0 for component in entry.momentum):
             need = RELAXATION_TIMES * relaxation

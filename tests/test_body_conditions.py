@@ -76,16 +76,18 @@ def checked(document: dict) -> list[str]:
 
 def test_a_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
     """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment
-    of side 8 on a chain of 64, each on its own board's mode: one COMPUTATION line each,
-    the initial state the profile at both levels bit for bit."""
+    of side 8 on a chain of 64, each on its own board's mode: two COMPUTATION lines each
+    (the family's composed operator below 2, ALGEBRA.md 9.19 (2); the initial state the
+    profile at both levels bit for bit)."""
     for shape, corner, side in (
         ([48, 48, 48], [14, 14, 14], 20),
         ([32, 32, 1], [12, 12, 0], 8),
         ([64, 1, 1], [28, 0, 0], 8),
     ):
         lines = checked(seeded(shape, corner, side))
-        assert len(lines) == 1 and "bit for bit" in lines[0], (shape, lines)
-        assert f"amplitude {AMPLITUDE}" in lines[0]
+        assert len(lines) == 2 and "bit for bit" in lines[1], (shape, lines)
+        assert lines[0].startswith("operator (COMPUTATION): the family 'matter'")
+        assert f"amplitude {AMPLITUDE}" in lines[1]
 
 
 def test_b_a_body_that_does_not_fit_is_refused_at_load_never_cut():
@@ -184,7 +186,7 @@ def test_f_the_ramp_against_ten_relaxation_times():
     with pytest.raises(ValueError, match=r"the ramp 100 is below 10 relaxation times"):
         checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=100))
     lines = checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=300))
-    assert len(lines) == 2 and lines[1].startswith("ramp (COMPUTATION): block 0: the ramp 300")
+    assert len(lines) == 3 and lines[2].startswith("ramp (COMPUTATION): block 0: the ramp 300")
 
 
 CLEAN = "bit for bit"

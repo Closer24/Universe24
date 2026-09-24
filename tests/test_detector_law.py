@@ -38,7 +38,8 @@ def emitter_body(
     its mode at 100 by the generator), its stock `stock`, its `emitter` the family given on
     the wheel with its residue order and, with `receiver`, the born records' ladder by name.
     The cadence (COMPUTATION, BUILD.md section 26): the u-th residue clicks about (2 u + 1) /
-    (W omega_b^2) intervals after its excitation, 10 (2 u + 1) / W on this well; a well too
+    (2 W) x P intervals after its excitation, P the mode's period (20 on this well; ALGEBRA.md
+    9.17 (5) item 1 on the flux norm of 9.19 (3)); a well too
     deep for its board is a runaway and refused at the margin rule."""
     emitter: dict = {"family": family, "wheel": list(wheel), "residue_order": order}
     if seed is not None:

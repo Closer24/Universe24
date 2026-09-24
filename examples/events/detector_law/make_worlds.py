@@ -153,13 +153,14 @@ TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, ret
 # of side 1, seeded on its bound mode by the massive generator's `seed_on_the_mode`, with a
 # stock of excitations and a wheel; each excitation clicks at its own rung and writes its
 # photon once. THE WELL'S MODE SETS THE CADENCE (COMPUTATION, BUILD.md section 26): the u-th
-# residue clicks about (2 u + 1) / (W omega_b^2) intervals after its excitation, the whole
-# wheel of W in about W / omega_b^2; a well too deep for its board is a RUNAWAY (the
+# residue clicks about (2 u + 1) P / (2 W) intervals after its excitation, P the mode's
+# period (ALGEBRA.md 9.17 (5) item 1 on the flux norm of 9.19 (3)), the whole wheel of W
+# in about W P / 2; a well too deep for its board is a RUNAWAY (the
 # largest eigenvalue at or above 2, no oscillation; the deep wells [800, 700], [800, 500]
 # and [800, 400] of the first smoke runs were such on a chain and their cadences the
 # runaway's, withdrawn) and the margin rule refuses it. The one-cell well EMITTER_WELL on
 # the kind EMITTER_KIND (the index worlds' kind, omega_0 = 0.505) is bound on a chain
-# (omega_b = 0.32, 1 / omega_b^2 = 10 intervals) and on a layer (omega_b = 0.50, 4
+# (omega_b = 0.32, P = 20 intervals) and on a layer (omega_b = 0.50, P = 12
 # intervals). A world of W births declares the stock M = W (LAB_TOOLS.md A.1).
 EMITTER_KIND = [7, 8]
 EMITTER_WELL = [8, 7]
@@ -486,7 +487,7 @@ BELL_SETTINGS = {"a0": 0, "a1": BELL_N // 4, "b0": BELL_N // 8, "b1": 3 * BELL_N
 # at c = 1 / sqrt 3: 2048 + 3204 + 13 = 5265; written 5500, the margin 235 intervals.
 BELL_TICKS = 5500
 MALUS_TRAIN = 32  # periods (665 intervals on [308, 25]), section 5 item 2, 2026-09-24 06:05Z
-MALUS_TICKS = 3200  # 256 excitations on the well [8, 7] (the wheel in about W / omega_b^2 = 2611 intervals, COMPUTATION) + the transit 6 + the completion
+MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P / 2 = 2560 intervals (ALGEBRA.md 9.17 (5) item 1); the engine reads 239 births within 3200 on the flux norm of 9.19 (3), COMPUTATION; the transit 6 and the completion beside
 # Section 5 item 2, "the count of 256 births stands": the lamp's stock of records is its
 # `amount` (a birth spends one quantum of it, the engine's `_births`; two_slits's stock 1024
 # the same key), so the registered 2^50 would birth one record per interval to the end of
@@ -916,7 +917,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         # the matter emitter body (ALGEBRA.md 9.17): a well of the source family
         # (the kind EMITTER_KIND, no clock) of side 1, the well EMITTER_WELL, the
         # stock 2048 = W, the born family `matter` with its clock (the cadence
-        # of the wheel W / omega_b^2 intervals, COMPUTATION: the world's ticks
+        # of the wheel W P / 2 intervals, COMPUTATION: the world's ticks
         # give a part of the wheel; the regeneration of the fifteen reads it)
         document["families"].append(emitter_kind_family(SOURCE_FAMILY))
         document["measured"].insert(

@@ -46,7 +46,7 @@ detector law and every world below is regenerated onto an emitter body
 (the kind [7, 8], the well [8, 7], seeded on its mode; the Malus bar's
 ticks 3200 for its wheel of 256); a section's "births from tick n at one
 per m intervals" reads on the emitter as the u-th residue's click about
-(2 u + 1) / (W omega_b^2) intervals after its excitation (section 26 item
+(2 u + 1) P / (2 W) intervals after its excitation, P the mode's period (section 26 item
 8); its "clean" lines on the lamp's train stand as written until the
 preliminary on the emitter, which this file records before the run.
 

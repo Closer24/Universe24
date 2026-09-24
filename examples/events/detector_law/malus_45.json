@@ -9,7 +9,7 @@
  "boundary": {
   "z": "periodic"
  },
- "ticks": 3200,
+ "ticks": 3800,
  "K": 1125899906842624,
  "N": 256,
  "release": [
@@ -57,7 +57,9 @@
      159,
      256
     ],
-    "residue_order": "ordinal"
+    "residue_order": "ordinal",
+    "period": 20,
+    "norm": 53760
    }
   },
   {

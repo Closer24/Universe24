@@ -757,7 +757,9 @@
      1,
      64
     ],
-    "residue_order": "ordinal"
+    "residue_order": "ordinal",
+    "period": 70,
+    "norm": 107683074387200
    },
    "receiver": "at_a",
    "margin": "pin"

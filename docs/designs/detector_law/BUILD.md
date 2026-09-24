@@ -1465,16 +1465,17 @@ would have found no cell.
    unbound mode. THE ONE WELL for every one-cell emitter body of both
    generators and the tests: [8, 7] on the kind [7, 8] (the index worlds'
    kind, omega_0 = 0.505): bound on a chain (2 cos omega_b = 1.90, omega_b
-   = 0.32, the extent 1.4 Links, 1 / omega_b^2 = 10 intervals) and on a
-   layer (1.75, 0.50, the extent 15 Links, 4 intervals); the massive
-   worlds carry it as the family `source` beside their matter kind. THE
-   CADENCE (COMPUTATION, the rung of item 1 on a bound mode of frequency
-   omega_b): the u-th residue clicks about (2 u + 1) / (W omega_b^2)
-   intervals after its excitation, the whole wheel of W in about W /
-   omega_b^2 (the Malus bar's 256 in 2611 intervals, MALUS_TICKS 3200;
-   the light clock's A of side 12 at [800, 800], omega_b = 0.089, 125
-   intervals per unit); a world whose ticks hold a part of its wheel
-   births that part, the regeneration of the fifteen reads it. The
+   = 0.32, the extent 1.4 Links, the period P = 20 intervals) and on a
+   layer (1.75, 0.50, the extent 15 Links, P = 12); the massive worlds
+   carry it as the family `source` beside their matter kind. THE CADENCE
+   (the rung of item 1 with the norm of item 13, the mathematician's 9.17
+   (5) item 1: the seed's squares made the wait scale as 1 / omega_b^2, a
+   unit accident, withdrawn): the u-th residue clicks about (2 u + 1) P /
+   (2 W) intervals after its excitation, the whole wheel of W in about W
+   P / 2 whatever the well's depth (the Malus bar's 256 in about 2560,
+   the engine reading 239 births within 3200, MALUS_TICKS 3800,
+   COMPUTATION); a world whose ticks hold a part of its wheel births that
+   part, the regeneration of the fifteen reads it. The
    margin rule skips an axis the body spans (`shape[axis] <= side`, an
    emitter of side 1 on a chain or a layer).
 9. THE ONE-CELL BIRTH'S CHARACTER (COMPUTATION, on the write of item 2):
@@ -1548,6 +1549,71 @@ would have found no cell.
    click at a receiver of wheel 1, `sagnac_rest.json` loaded and stepped
    with no line under item 10). Every number in them is the engine's
    reading on this head, COMPUTATION; no pin.
+13. THE MATHEMATICIAN'S FIRST HEAD READ AND THE FLUX (ALGEBRA.md 9.17 (5)
+   and (6), 9.19 (2) and (3), his heads 5028b92f and d58ab749; the owner's
+   "plant board values and check everything works as expected"; the
+   Boss's GO of 22:22Z), the third push of this branch:
+   (a) THE EXCITED RECORD'S NORM T is the offer its own mode books over
+   ONE PERIOD P of its clock (P the nearest integer to 2 pi / omega_b),
+   in the flux's units of 9.19 (3): the one-way inward flux into the
+   body's CENTRE CELL (the lower corner plus side // 2 on each axis, one
+   Node; the cell itself for a body of side 1) summed over P intervals
+   of the body advanced ALONE. The generator writes it as the emitter's
+   integers `period` and `norm` (`excite_on_the_mode`); the loader
+   recomputes it by the same advance and refuses a mismatch (a load
+   check in `check_body_conditions`, not the law); the rung 2 T u + T <=
+   2 W C unchanged, C the one-way flux into the centre cell interval by
+   interval (`_excitation_rung`). Read on the board (tests/test_emitter.py
+   (a)): the body alone, the flux into x = 11 over P = 70, bit for bit
+   the declared norm.
+   (b) THE WRITE ON THE CIRCLE OF 2 N (9.17 (6)): now = A C_2N[3 N / 2 +
+   s] with s = floor(n / d) the born clock's step and before = -now
+   exactly (the character half a step either side of its zero, no static
+   part; for even s the pair C_N[3 N / 4 + s / 2] of 9.17 (5) item 2); on
+   [77, 25] at N = 64 the entry 99 of the 128-step table, 38 of 256, the
+   level 155648; an odd s where 2 N exceeds the tables' bound (65536) is
+   refused at load, none of the fifteen has one; the light clock's [1, 1]
+   writes 13 of 256, never 0. The static level of item 9 is gone from the
+   write.
+   (c) THE BORN PROFILE `born` (9.17 (5) item 3): the born record's two
+   levels over the whole board as material ({"now", "before"}, one
+   integer per Node), copied at the click; the loader refuses a wrong
+   count or a profile that writes no motion; the line's travelling
+   character is written this way when a world declares it (none yet).
+   (d) THE DRIVEN MASK (9.17 (5) item 4): every born record's `driven`
+   set is empty, its own datum, no branch on the family's kind.
+   (e) THE COMPOSED OPERATOR (9.19 (2)): the stability condition read on
+   the whole board, every body's well of a family in one read matrix,
+   the largest eigenvalue below 2 or the world refused naming the family
+   and the value (`composed_largest_eigenvalues`, printed as COMPUTATION
+   with the body conditions); the per-body reading of item 8 stays for
+   the margin.
+   (f) THE FLUX READING BUILT AS THE ENGINE'S INTEGERS AND CHECKED ON THE
+   BOARD (9.19 (3); tests/test_flux_reading.py): the local identity
+   e_i(t) - e_i(t - 1) = SUM_j G_ij with G_ij = (1 / 3) A_ij (now_i
+   before_j - before_i now_j) holds on the rule's integers EXACTLY up to
+   the per-Node remainder term of 8.2, (a_next,i - a_before,i) (r_i -
+   r'_i) / (3 num_i), on random rows for light and the matter kind (a
+   periodic chain of 60, five intervals); a Gaussian packet of 40 Links
+   at k = 0.3024 gives a one-way inward flux into one cell of 0.9865 of
+   its I over its passage (the backward part of the planted packet the
+   rest), the signed sum 7 x 10^4 against 6 x 10^11; `inward_flux` (the
+   one-way flux into a mask through its outer Links), `flux_offer` (per
+   cell) and `conserved_form` (3 I x the family's wall, wall the least
+   common multiple of the pairs' numerators; the [8, 7] well on [7, 8]
+   gives 56) are the engine's, exact against the Fraction forms on
+   planted rows. The engine's open face is a take (the sponge), not the
+   rule: on an open chain the identity breaks at the face cells only.
+   (g) OWED IN THIS LINE, on the mathematician's answers to the three
+   questions of 22:17Z (the open face under the flux; the deletion of
+   the whole record at the rung and the ladder; the centre cell): the
+   receivers' reading E as the one-way flux through their Ports with T
+   the record's I, the take retired from the engine (the rows no longer
+   held at 0 at a set, the sponge per his answer), the worlds and tests
+   re-read, the first-rung pins of M2, Sagnac and the light clock
+   re-derived blind; and the owner's decision of 22:20Z, the residue from
+   the law's remainder at the birth cell (no declared residue or wheel),
+   as he specifies it.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

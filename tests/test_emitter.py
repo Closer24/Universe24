@@ -28,6 +28,7 @@ take. BUILD.md section 26.
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -35,6 +36,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.integer import keyed_permutation
+from event_universe.core.phase import phase_cosines
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import parse_nature_beam_world
 
@@ -159,9 +161,30 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert ticks == sorted(ticks) and ticks[0] > 1 and ticks[-1] < document["ticks"]
     norm = births[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
-    # the seed's squares over the body's cells (the record as written at both levels)
-    seed = np.array(document["measured"][0]["seed"], dtype=np.int64).reshape(80, 1, 1)
-    assert norm == int(np.sum(seed[5:17] * seed[5:17]))
+    # the norm T: the one-way flux into the body's centre cell over one period
+    # of its mode advanced alone (ALGEBRA.md 9.17 (5) item 1, 9.19 (3)), the
+    # generator's integers `period` and `norm`, recomputed at load and read
+    # on the board here: the body alone (the same world, its emitter and its
+    # screen removed), the flux into the Node x = 11 (the corner 5 plus 12 //
+    # 2) summed over `period` intervals, bit for bit; the period the nearest
+    # integer to 2 pi / omega_b (about 70 on this well)
+    emitter = document["measured"][0]["emitter"]
+    assert emitter["norm"] == norm and 60 <= emitter["period"] <= 80
+    alone = json.loads(json.dumps(document))
+    del alone["measured"][0]["emitter"]
+    alone["measured"] = alone["measured"][:1]
+    alone["detectors"] = []
+    solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
+    body = solitary.block_by_number[0]
+    centre = np.zeros(solitary.shape, dtype=bool)
+    centre[11, 0, 0] = True
+    assert np.array_equal(solitary.centre_mask(body), centre)
+    flux = 0
+    for _ in range(emitter["period"]):
+        solitary.step()
+        assert body.own is not None
+        flux += solitary.inward_flux(body.own, centre, before_advance=True)
+    assert flux == norm
     by_tick = {entry["tick"]: entry for entry in trace}
     for line in births:
         u = line["u"]
@@ -218,11 +241,15 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
             (born,) = light
             birth = next(line for line in lines if line["event"] == "birth")
             assert birth["tick"] == simulation.tick and born.age == 0 and born.train == 0
+            # the write on the circle of 2 N (ALGEBRA.md 9.17 (6)): now = A
+            # C_2N[3 N / 2 + s] with s = floor(77 / 25) = 3 on N = 64, the
+            # entry 99 of the 128-step table (cos 278.4 degrees, 38 of 256 on
+            # the amplitude unit: 155648), before = -now exactly
             steps = 64
-            table = simulation._cosine_table(steps)
-            now = int(table[simulation._phase(0, 77, 25, steps)])
-            before = int(table[simulation._phase(-1, 77, 25, steps)])
-            assert now == 0 and before != 0
+            table = simulation._cosine_table(2 * steps)
+            now = int(table[(3 * steps // 2 + 3) % (2 * steps)])
+            before = -now
+            assert now == 155648 and phase_cosines(2 * steps)[99] == 38
             assert np.all(born.now[block.mask] == now) and np.all(born.before[block.mask] == before)
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
             assert born.norm == birth["norm"] == 12 * (now - before) ** 2
@@ -293,6 +320,19 @@ def test_c_the_loaders_refusals_name_their_keys():
         document["measured"][0]["amount"] = 0
 
     refused(no_stock, "amount")
+
+    # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
+    # emitter does not declare refuses the simulation at its first
+    # excitation; a `born` profile of the wrong count, or one that writes no
+    # motion, refuses the loader (9.17 (5) item 3)
+    def no_norm(document):
+        document["measured"][0]["emitter"]["period"] = 70
+        document["measured"][0]["emitter"]["norm"] = 1000
+        del document["measured"][0]["emitter"]["norm"]
+
+    refused(no_norm, "declares no `norm`")
+    refused(emitter("born", {"now": [1, 2], "before": [3, 4]}), "must be 80 integers")
+    refused(emitter("born", {"now": [0] * 80, "before": [0] * 80}), "writes no motion")
 
     for key, value, message in (
         ("emits", "light", "emits"),

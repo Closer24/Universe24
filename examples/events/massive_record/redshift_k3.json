@@ -4184,7 +4184,9 @@
      1,
      64
     ],
-    "residue_order": "ordinal"
+    "residue_order": "ordinal",
+    "period": 62,
+    "norm": 28880132781691308
    },
    "receiver": "light_detector",
    "margin": "pin"

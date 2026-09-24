@@ -268,11 +268,14 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     record alive at 600 carrying its pointers; BUILD.md section 18); then all three once more
     by the emitter as a clicking body (BUILD.md section 26: the chain world's lamp an emitter
     body of the kind [7, 8] on the well [8, 7], six births at their rungs, the grace and the
-    own take retired), the digests read at that head."""
+    own take retired), then once more by the write on the circle of 2 N with before = -now
+    and the excited record's norm as the one-way flux into its centre cell over one period
+    (ALGEBRA.md 9.17 (5) and (6), 9.19 (3); BUILD.md section 26 item 13), the digests read at
+    that head."""
     assert run_chain_digests() == {
-        "events": "7a57f4b233edd23fbb35ccbd8e9e85f5344383dca0569301c0357ff0267d365b",
-        "state": "8582cd1045e7184dd6349803339b06778fc8d06e5246e083d5bf20ffe9905aee",
-        "audit": "1f1df6267017c3b7c064b4d9ac6e783db2101ff073beb5ac4cc77a73fea7bfb8",
+        "events": "82a30e438ee1ede815aa788593a68f012ea10c607ae536b78450f4c7ad7a01e3",
+        "state": "f86caeba512b2c2f91a239ce42d4ba59a9b9babcbbb1eb83c3d14d664d4862f6",
+        "audit": "c5c44060cc094596b2dd74fe71758755731748fa26f78427fa2514b31ef899df",
     }
 
 
@@ -440,7 +443,10 @@ def seed_source(document: dict, number: int) -> None:
     declared), its `margin` made explicit."""
     entry = document["measured"][number]
     entry.setdefault("margin", "control")
-    entry["seed"] = massive_generator().mode_profile(document, number, amplitude=entry["seed"])
+    generator = massive_generator()
+    entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
+    if "emitter" in entry:
+        generator.excite_on_the_mode(document, number)
 
 
 def with_screen(document: dict, x: int) -> dict:
@@ -486,7 +492,8 @@ def emitter_at(
     (its profile on the mode by `seed_source`), `stock` excitations on the wheel, the born
     family `family`; with `receiver`, the born records' ladder by name. The cadence of the
     excitations (COMPUTATION, BUILD.md section 26): the u-th residue clicks about
-    (2 u + 1) / (W omega_b^2) intervals after its excitation, 10 (2 u + 1) / W on this well."""
+    (2 u + 1) P / (2 W) intervals after its excitation, P the mode's period (20 on this well;
+    ALGEBRA.md 9.17 (5) item 1 on the flux norm of 9.19 (3))."""
     entry = emitter_body([x, 0, 0], stock, tuple(wheel), receiver=receiver, family=family)
     entry["family"] = own
     entry["pair"] = list(pair or SOURCE_WELL)
@@ -1470,7 +1477,7 @@ def test_aa_a_matter_emitters_record_is_taken_and_clicks_once_at_the_rung():
     `click` stamp the first interval its pointer at the screen reached 1 / W of the norm (the
     emitter names the screen: the line at the rung), after the front's flight (84 Links at the
     band's group pace 0.5: between 100 and 250 intervals after the birth; the engine reads 158,
-    COMPUTATION); the screen's pointer passes half of each record's norm by the interval 1000
+    COMPUTATION); the screen's pointer passes two fifths of each record's norm by the interval 1000 (48 percent on the write of ALGEBRA.md 9.17 (6), COMPUTATION)
     (the emitter's cell is a cell like every other, BUILD.md section 26: nothing else takes on a
     periodic chain); two gather lines in all, the books balanced at every interval. The record
     born on ONE cell of a massive kind has a standing part (the components at the gap's
@@ -1530,7 +1537,7 @@ def test_aa_a_matter_emitters_record_is_taken_and_clicks_once_at_the_rung():
         assert simulation.books()["balanced"], simulation.tick
     for identity in identities:
         live = simulation.records[identity]
-        assert live.clicked and live.pointers[screen] * 2 > live.norm, (
+        assert live.clicked and live.pointers[screen] * 5 > live.norm * 2, (
             identity,
             live.pointers[screen],
             live.norm,
@@ -1630,11 +1637,12 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
     `clock_source`; the row held at 0 there after). THE SET'S NODE ON A CHAIN TAKES THE WHOLE
     +x HALF (a take Node holds its row at 0: nothing passes it): the mirror's neighbour
     x = 171 stays 0 through 600 intervals with the faces closed and open alike, the set's
-    pointer about half the norm by 200 after the birth (between two fifths and three fifths)
-    and equal in the two worlds (the -x half reaches the face at 0 by 173 and is absorbed with
-    the faces open, `escaped` above 0 by 200 and the record closed after its click by 215, or
-    reflected with them closed, `escaped` 0 at every interval, its return at A's cells due
-    after 2 x 100 / c = 346, the record closed after its click at 415). The light clock's
+    pointer about half the norm by 160 after the birth (45 percent, between two fifths and
+    three fifths) and equal in the two worlds (the -x half reaches the face at 0 by 173 and
+    is absorbed with the faces open, `escaped` above 0 and the record closed after its click
+    at 202, or reflected with them closed, `escaped` 0 at every interval, its return at A's
+    cells due after 2 x 100 / c = 346, the record closed after its click at 410; the write of
+    ALGEBRA.md 9.17 (6), COMPUTATION). The light clock's
     geometry, with the set between the emitter and the mirror on a chain, gave the return's
     reading under the exemption of old; it is re-derived in the mirror item (the Boss's order
     of 2026-09-24, 23:30Z) before any run, the RUN_LIST row held until then. A receiver body
@@ -1686,7 +1694,7 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 rung = live.first_rung[a_face]
                 stamp = simulation.rung_counts[(first, a_face)]
                 count_then = count_before
-            if age in (140, 200):
+            if age in (100, 160):
                 pointer_at[age] = live.pointers[a_face]
         assert birth is not None and held
         assert rung is not None and 0 <= rung - birth <= 10, (rung, birth)
@@ -1696,14 +1704,14 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
         assert gathers[0]["click"] == rung and gathers[0]["clock_source"] == "measured:0"
         assert gathers[0]["clock"] == stamp
         assert mirror_seen is None, (mirror_seen, birth)
-        assert set(pointer_at) == {140, 200}, pointer_at
-        assert 2 * norm < 5 * pointer_at[200] < 3 * norm, (pointer_at, norm)
+        assert set(pointer_at) == {100, 160}, pointer_at
+        assert 2 * norm < 5 * pointer_at[160] < 3 * norm, (pointer_at, norm)
         if faces == "closed":
             assert escaped == 0
         else:
             assert escaped > 0
         readings[faces] = {"rung": rung - birth, "escaped": escaped, **pointer_at}
-    assert readings["closed"][200] == readings["open"][200]
+    assert readings["closed"][160] == readings["open"][160]
     # a body beyond is a SINK under the receiver by name (A names A_face): it
     # takes the record (its take on the record's HOST `escaped`) and books no
     # pointer, so it crosses no rung

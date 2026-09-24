@@ -233,6 +233,33 @@ def seed_on_the_mode(document: dict) -> None:
             continue
         entry.setdefault("margin", "pin")
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
+    for number, entry in enumerate(document["measured"]):
+        if "emitter" in entry:
+            excite_on_the_mode(document, number)
+
+
+def excite_on_the_mode(document: dict, number: int) -> None:
+    """The emitter body `number`'s integers of ALGEBRA.md 9.17 (5) item 1 in the flux's
+    units of 9.19 (3), written into the world file by the generator (a HOST computation; the
+    loader recomputes and refuses a mismatch): `period` P, the nearest integer to 2 pi /
+    omega_b of the body's mode (the margin module's own omega_b), and `norm` T, the one-way
+    inward flux into the body's centre cell that the seeded mode books over P intervals
+    advanced alone by the engine (exact integers)."""
+    from event_universe.diagnostics.massive_record_margin import (
+        block_margin,
+        excitation_norm,
+        period_of,
+    )
+    from event_universe.events.world import parse_nature_beam_world
+
+    entry = document["measured"][number]
+    emitter = entry["emitter"]
+    emitter.pop("period", None)
+    emitter.pop("norm", None)
+    world = parse_nature_beam_world(document)
+    period = period_of(block_margin(world, number))
+    emitter["period"] = period
+    emitter["norm"] = excitation_norm(world, number, period)
 
 
 SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505; no clock)
@@ -249,8 +276,8 @@ def emitter_at(
     birth is broadband; the line emitter's travelling character is owed, LAB_TOOLS.md A.1).
     The body is of the family `source` (the kind SOURCE_KIND, added to the world by
     `world`), its well SOURCE_WELL unless given; the wheel's cadence (COMPUTATION, BUILD.md
-    section 26) about (2 u + 1) / (W omega_b^2) intervals for the u-th residue, 10 (2 u + 1)
-    / W on this well; a well too deep for its board is a runaway, refused at the margin
+    section 26) about (2 u + 1) P / (2 W) intervals for the u-th residue, P the mode's period
+    (20 on this well; ALGEBRA.md 9.17 (5) item 1 on the flux norm of 9.19 (3)); a well too deep for its board is a runaway, refused at the margin
     rule."""
     return {
         "position": [x, 0, 0],

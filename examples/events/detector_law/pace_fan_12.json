@@ -16456,7 +16456,9 @@
      1,
      64
     ],
-    "residue_order": "ordinal"
+    "residue_order": "ordinal",
+    "period": 12,
+    "norm": 81760
    }
   }
  ],
