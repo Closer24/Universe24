@@ -6947,3 +6947,13 @@ Port" in the seven points and the massive section. The seven points
 carry 1.7's words (the input kinds numbered as Highlights item 5; a
 record two samples of the real part of one character, not a character).
 47 pages.
+
+## Applied (2026-09-24, the owner's word on the abstract): commit 36 on paper-48
+
+"Make the abstract more interesting, as successful papers do." The
+abstract now opens with the question the paper answers and a one-line
+statement of the answer, as the strong abstracts of the field open
+(a question or a claim first, the method second, the numbers third,
+the limits last); every claim, number and hedge of commit 29's abstract
+is kept word for word or shortened without loss, under 250 words. The
+title and the 1.05 sigma sentence untouched (the Boss's order).
