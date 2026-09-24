@@ -7230,3 +7230,11 @@ detector law's launch list (RUN_LIST.md, DECLARATIONS.md, the GO of
 2026-09-24), "the GO" kept afterwards; the Boss's editorial expansion.
 The lists' spacing tightened (enumitem, nosep), formatting only, for the
 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 07:55Z on the physicist's yes of 07:58Z): commit 60 on paper-48
+
+The Locality Outside theorem's statement carries the physicist's clause
+(the triage reader's #1080 point 4): transport local, the information a
+click yields Outside at its one cell, the choice of the cell the
+completion's gather (P6, Definition 3); the theorem bounds the
+information a click carries, not the choice of its cell. 48 pages.

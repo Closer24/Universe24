@@ -6228,6 +6228,11 @@ CORRECTIONS = [
         "\\usepackage{float}\n\\usepackage{longtable}",
         "\\usepackage{float}\n\\usepackage{enumitem}\\setlist{nosep}\n\\usepackage{longtable}",
     ),
+    (
+        "commit 60, the physicist's words of 07:58Z on the Locality Outside theorem (the triage reader's #1080 point 4, the Boss's 07:55Z)",
+        "local Inside, one non-local deletion at the click.\n\\end{theorem}",
+        "local Inside, one non-local deletion at the click. Transport on the GameBoard is local, one Node per interval on every Link, and the information a click yields Outside is the information at its one cell, its interval and its count; which cell clicks is decided at the completion, a gather over the record's offers, the one non-local step (P6, Definition~\\ref{def:click}). The theorem bounds the information a click carries, not the choice of its cell.\n\\end{theorem}",
+    ),
 ]
 
 
