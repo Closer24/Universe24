@@ -5798,6 +5798,21 @@ CORRECTIONS = [
         "Right: the click, the record's quadratic form crossing the rung, the only thing that leaves the board.",
         "Right: the click, the record's motion, squared and summed over its cells, crossing the rung, the only thing that leaves the board.",
     ),
+    (
+        "commit 50, the owner's yes (05:54Z) on the gravity sentences, the physicist's text verbatim through the Boss: gravity is not in this paper; the hypothesis pair-field-v1 beside the law",
+        "or any comparison with nature beyond the rows of Table~\\ref{tab:nature}, each read by kind.",
+        "or any comparison with nature beyond the rows of Table~\\ref{tab:nature}, each read by kind. Gravity is not in this paper: the law has no field, a body reads only the crowd of rows at its Node, and no gravitational row is claimed or compared with nature. The model's gravitational hypothesis, \\texttt{pair-field-v1}, is stated beside the law under its own identity \\cite{pairfield}: a massive record's pair read as a field gives the lattice Green's function $1/(4\\pi r)$ within $0.5$ percent from $r = 6$ Links and a computed clock-shift ratio $2.00$ between $r$ and $2r$, not yet run; its second step, the field's gradient as a push, is not derived, the perihelion's precession does not come out of it, and the Shapiro-delay row would be calibrated from its target; so the hypothesis makes no claim here and its first test, the clock-shift ratio, is future work (\\cite[rows 12 to 14 and section 2]{closure}, \\cite[section 2]{approvals}, on \\texttt{main} at d2d1d2fb).",
+    ),
+    (
+        "commit 50, the pair-field page's bibitem",
+        "\\bibitem{glossary}",
+        "\\bibitem{pairfield} The pair as a field: the hypothesis \\texttt{pair-field-v1} stated beside the law under its own identity, \\texttt{docs/designs/detector\\_law/PAIR\\_FIELD.md} with its computation \\texttt{pair\\_field\\_pins.py} ((a) the lattice Green's function on $120^3$, (b) the clock in the field) and its printed output, of the archived code \\cite{zenodo}, on \\texttt{main} at d2d1d2fb. \\bibitem{glossary}",
+    ),
+    (
+        "commit 50, the page count: the space before a run-in paragraph heading 1.75ex instead of 3.25ex (about eighty headings; no wording changes)",
+        "\\begin{document}",
+        "\\makeatletter\\renewcommand\\paragraph{\\@startsection{paragraph}{4}{\\z@}{1.75ex \\@plus1ex \\@minus.2ex}{-1em}{\\normalfont\\normalsize\\bfseries}}\\makeatother\n\\begin{document}",
+    ),
 ]
 
 

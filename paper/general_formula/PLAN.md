@@ -7139,3 +7139,14 @@ in the text each carry a theorem, a reading or a history label and
 stay; the engine's default is decided with the Boss under the
 repository's "no implicit default" rule. Gaps 1, 3 and 5 wait for the
 Boss's one order. 48 pages.
+
+## Applied (2026-09-24, the Boss's one order of 05:58Z): commit 50 on paper-48
+
+Gravity's two sentences, the owner's yes through the physicist,
+verbatim in the claims paragraph with their citations (PAIR_FIELD.md,
+the closure page's rows 12 to 14 and section 2, APPROVALS.md section
+2, at main d2d1d2fb). ONE_ACCOUNT.md's rows 1 and 3 assign nothing to
+the paper; nothing changed on them. Gap 5 waits for the owner. For the
+page: the gate-scripts paragraph of Section 6 and the beam law's
+weight rule for rows 13 and 14 are in records.tex with pointers, and
+the space before a run-in heading is smaller. 48 pages.

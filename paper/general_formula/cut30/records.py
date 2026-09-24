@@ -67,6 +67,25 @@ FLIGHT_PROOF_START = "\\begin{proof}\n$S_1^2 = (|D_x| + |D_y| + |D_z|)^2"
 FLIGHT_PROOF_END = "\\end{proof}\n"
 FLIGHT_GROUND_START = "The number is the bound of the Courant condition for the wave equation"
 FLIGHT_GROUND_END = "and claims no novelty for the number. "
+# the design's gate scripts (Section 6, "The code as the law's runtime"): to the records
+# file with a one-sentence pointer (commit 50, the page count, the pointer rule).
+CODE_RUNTIME_START = "\\paragraph{The code as the law's runtime.}"
+CODE_RUNTIME_END = "\\paragraph{The ledger.}"
+CODE_RUNTIME_POINTER = (
+    "\\paragraph{The code as the law's runtime.} Every registered world is run from its world "
+    "file with its pin written before the run and its source fingerprint "
+    "(Appendix~\\ref{app:reproduction}); the books balance at every interval in every run; the "
+    "design's scripts that gate the code, each printing its record beside the design and none an "
+    "engine run, are listed in the records file \\cite{records}.\n\n"
+)
+# the beam law's weight rule of its rows 13 and 14 (the limitations paragraph): to the
+# records file with a pointer (commit 50, the page count; the rows are not in the table).
+WEIGHT_START = "The weight rule, stated once:"
+WEIGHT_END = "is the declared input and not a result. "
+WEIGHT_POINTER = (
+    "The beam law's weight rule for its rows 13 and 14 ($\\gamma_{\\mathrm{PPN}}$, the declared "
+    "space-curvature coefficient) is in the records file \\cite{records}, history. "
+)
 FLIGHT_POINTER = (
     "The proof (Cauchy--Schwarz against $(1, 1, 1)$), the Courant and lattice Boltzmann "
     "comparisons and the ground of the bound are in the records file \\cite{records}, history.\n"
@@ -275,6 +294,12 @@ def cut(s: str) -> tuple[str, str]:
     oldclick, s = s[i:j], s[:i] + click.DEFINITION + s[j:]
     s, fail_rows = cut_fail_rows(s)
     s, flight = cut_flight(s)
+    i = _once(s, CODE_RUNTIME_START, "the code's gates")
+    j = s.index(CODE_RUNTIME_END, i)
+    coderuntime, s = s[i:j], s[:i] + CODE_RUNTIME_POINTER + s[j:]
+    i = _once(s, WEIGHT_START, "the weight rule")
+    j = s.index(WEIGHT_END, i) + len(WEIGHT_END)
+    weightrule, s = s[i:j], s[:i] + WEIGHT_POINTER + s[j:]
     i = _once(s, SYMBOLS_START, "the symbols")
     j = s.index(LONGTABLE_END, i) + len(LONGTABLE_END)
     symbols, s = s[i:j], s[:i] + POINTERS["symbols"] + s[j:]
@@ -312,6 +337,10 @@ def cut(s: str) -> tuple[str, str]:
         + "\n\\section{The click as the beam law defined it: the layer, the ladder and the lemma, history}\\label{rec:oldclick}\n\n"
         + "The Definition of the click and the lemma of one click per record as the paper carried them until the detector law's click took their place (the chief physicist's line of 2026-09-24, 01:08Z; the Boss's order of 02:00Z): the layer's X and Y per Node, the offer of a set, the ladder of rungs over the birth phase, the pair's joint weights and the deferred offer.\n\n"
         + oldclick
+        + "\n\\section{The beam law's weight rule for its rows 13 and 14, history}\\label{rec:weightrule}\n\n"
+        + weightrule
+        + "\n\n\\section{The design's scripts that gate the code, as Section 6 listed them}\\label{rec:coderuntime}\n\n"
+        + coderuntime
         + "\n\\section{The beam law's flight table: the proof of the pace proposition and its ground, history}\\label{rec:oldflight}\n\n"
         + flight
         + "\n\\section{The three FAIL rows in full: the perihelion, the supernova diagram and the atom, history}\\label{rec:failrows}\n\n"
@@ -356,6 +385,14 @@ def strip_block(body: str) -> str:
         return ""
     if FAIL_CUTS[0][0] in body:  # the three FAIL rows, one sentence each
         body, _ = cut_fail_rows(body)
+    if WEIGHT_START in body and WEIGHT_END in body:  # the weight rule, likewise
+        i = body.index(WEIGHT_START)
+        j = body.index(WEIGHT_END, i) + len(WEIGHT_END)
+        body = body[:i] + WEIGHT_POINTER + body[j:]
+    if CODE_RUNTIME_START in body and CODE_RUNTIME_END in body:  # the code's gates, likewise
+        i = body.index(CODE_RUNTIME_START)
+        j = body.index(CODE_RUNTIME_END, i)
+        body = body[:i] + CODE_RUNTIME_POINTER + body[j:]
     if FLIGHT_PROOF_START in body:  # the flight table's proof and ground, likewise
         body, _ = cut_flight(body)
     if OLDCLICK_START in body:  # the beam law's click, whole in the records file

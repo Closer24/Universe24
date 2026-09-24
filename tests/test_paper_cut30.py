@@ -144,6 +144,8 @@ def _check_reorder(module) -> None:
     assert recs.count("\\label{rec:oldclick}") == 1 and "\\label{eq:click}" in main
     assert recs.count("\\label{rec:failrows}") == 1 and "& Class \\\\" in main
     assert recs.count("\\label{rec:oldflight}") == 1 and "\\label{prop:pace}" in main
+    assert recs.count("\\label{rec:coderuntime}") == 1 and "are listed in the records file" in main
+    assert recs.count("\\label{rec:weightrule}") == 1 and "weight rule for its rows 13 and 14" in main
     labels = re.findall(r"\\label\{([^}]*)\}", main)
     assert len(labels) == len(set(labels)), "a label is defined twice"
     refs = set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", main))
