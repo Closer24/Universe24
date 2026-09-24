@@ -18,6 +18,20 @@ edits to a specialist instead of doing the long task on the primary agent. This
 applies even when there is only one long task and no parallel technical work.
 Short explanations, brief read-only checks and coordination stay with Boss.
 
+**The Boss writes no code; it activates the agents and synchronises them
+(the model owner, 2026-09-24, 12:40Z: "so that the conversation with me is
+continuous, you always activate agents; I want to always be able to talk
+to you; you only synchronise the agents; do not write code yourself, only
+activate others and synchronise the code").** Every change under `src/`,
+`tests/`, `tools/` and the world files is made by a session the Boss opens
+or messages, with one bounded order and one report; the Boss reads the
+report and the diff, opens the pull request and merges on green. The Boss
+itself writes only the day's log, Highlights 5.4, the Skills, the status
+page and its messages to the owner. A long read, a run or a research
+question goes to a session as well; the Boss keeps to short answers from
+the two files of the owner's rule, `docs/ALGEBRA.md` and
+`docs/HIGHLIGHTS.md`, and to the coordination.
+
 **Read the messages first, answer first, record after (the model owner,
 2026-09-21, records 412 and 413).** On every wake and before every act, the
 Boss reads every queued notification (ReadNotifications until none remain):
