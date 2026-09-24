@@ -128,10 +128,15 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
 def pair_world(residue_order: str | None, residue_seed: int | None, births: int) -> dict:
     """A pair lamp on the chain of 80 (x open, the sponge faces): the lamp at x = 40 with two
     arms on +x and -x, the wheel [1, 64], one birth per interval, `births` held, a train of 2
-    periods; a receiver body at x = 60 read as the set `right` and one at x = 20 as `left`;
+    periods; a polariser of the counter family (a table body of two cells, section 14 item
+    6) at x = 60 read as the set `right` and one at x = 20 as `left`, both at the setting 16;
     the order channel's keys as given (None: the key absent)."""
     document = chain_world()
     document["ticks"] = births + 400
+    document["families"] = [
+        {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+        {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
+    ]
     lamp: dict = {
         "rate": [1, 1],
         "wheel": [1, 64],
@@ -156,26 +161,26 @@ def pair_world(residue_order: str | None, residue_seed: int | None, births: int)
         },
         {
             "position": [60, 0, 0],
-            "family": "light",
+            "family": "counter",
             "amount": 1,
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,
-            "directions": [[-1, 0, 0]],
+            "table": {"light": {"phase_window": 16}},
         },
         {
             "position": [20, 0, 0],
-            "family": "light",
+            "family": "counter",
             "amount": 1,
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,
-            "directions": [[1, 0, 0]],
+            "table": {"light": {"phase_window": 16}},
         },
     ]
     document["detectors"] = [
-        {"name": "right", "positions": [[60, 0, 0]], "threshold": 1},
-        {"name": "left", "positions": [[20, 0, 0]], "threshold": 1},
+        {"name": "right", "positions": [[60, 0, 0]], "threshold": 1, "reading": "sum"},
+        {"name": "left", "positions": [[20, 0, 0]], "threshold": 1, "reading": "sum"},
     ]
     return document
 
@@ -190,9 +195,10 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
     refused naming the key; under "ordinal" the births' residues are today's, u = (ordinal - 1)
     mod 64 over 64 births; under "seed" the 64 births take every residue of Z_64 once, in the
     permutation's order (the engine's `birth_orders`), two seeds two orders, the same seed the
-    same order; the four cells' counts of the world's clicks (the two receivers, the two sponge
-    faces) over exactly W = 64 births are the same under "ordinal" and "seed" (the derivation's
-    claim; a GAMEBOARD reading, no pin); the gather line keeps `u` (HOST); the refusals: the
+    same order; the four joint cells' counts of the world's pair gathers (the two polarisers'
+    channels, section 1 item 3) over exactly W = 64 births are the same under "ordinal" and
+    "seed" (the derivation's claim; a GAMEBOARD reading, no pin); the gather line keeps `u`
+    (HOST); the refusals: the
     stride r = 2 under "seed", the seed absent under "seed", the seed present under "ordinal",
     a value that is neither, either key on a lamp without arms and either key on a pair lamp
     outside the local detector law."""
@@ -230,20 +236,21 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
     assert [line["u"] for line in other_births] != residues
     again_births, _, _ = run(pair_world("seed", 50 << 20, 64))
     assert [line["u"] for line in again_births] == residues
-    # the counts do not move with the order: one record per arm per birth,
-    # each clicking once; the four cells' counts the same multiset
-    assert len(ordinal_gathers) == len(seed_gathers) == 128
+    # the counts do not move with the order: one gather per pair birth (the
+    # joint ladder); the four joint cells' counts the same multiset
+    assert len(ordinal_gathers) == len(seed_gathers) == 64
 
     def counts(gathers: list[dict]) -> dict[str, int]:
         found: dict[str, int] = {}
         for gather in gathers:
-            found[gather["chosen"][0][0]] = found.get(gather["chosen"][0][0], 0) + 1
+            key = " ".join(f"{cell[0]}{cell[1]}" for cell in gather["chosen"])
+            found[key] = found.get(key, 0) + 1
         return found
 
     assert counts(ordinal_gathers) == counts(seed_gathers)
-    assert sum(counts(seed_gathers).values()) == 128 and len(counts(seed_gathers)) >= 2
+    assert sum(counts(seed_gathers).values()) == 64 and len(counts(seed_gathers)) >= 2
     assert all("u" in gather and "birth" in gather and "click" in gather for gather in seed_gathers)
-    assert sorted(gather["u"] for gather in seed_gathers) == sorted(list(range(64)) * 2)
+    assert sorted(gather["u"] for gather in seed_gathers) == list(range(64))
     # the refusals
     for order, seed, message in (
         ("seed", None, "residue_seed is required under residue_order"),
@@ -271,4 +278,199 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
         if not entry["lamp"]:
             del entry["lamp"]
     with pytest.raises(ValueError, match="outside the local detector law"):
+        parse_nature_beam_world(outside)
+
+
+def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_train():
+    """Item 10 THE RULE (DECLARATIONS.md section 10 item 10; the model owner's words of 06:42Z,
+    record 1694, and 07:27Z, record 1711: the timing integer withdrawn): from the first interval
+    after its train every emitter's own Nodes take its record's remnant in the record's kind's
+    pair, booked onto no pointer and not into `absorbed`; no key and no load-time integer. On
+    the chain world: the lamp's Node holds the record's row at 0 from age train + 1 on (the
+    drive's last write at age train - 1, its value standing at age train; the take acts in the
+    interval that starts at age train, the first after the train) and `emitter_taking` is read
+    on the records reading; a
+    `remnant_take` key written into a world is refused as unknown; a detector-law world with a
+    set and no lamp declares the world key `wheel` (refused absent, no implicit default); a
+    massive kind's `take` is refused on light's kind; the ledger carries the HOST row
+    `taken_by_emitter`, 0 on the chain world whose record ends at the screen, the books
+    balanced. THE GUARD (Reviewer 3, 07:43Z): an absorbing Node without a cell refuses the
+    interval naming the Node, never booking to the last cell by the list's wrap."""
+    world = parse_nature_beam_world(chain_world())
+    simulation = DetectorLawSimulation(world)
+    train = None
+    for _ in range(450):
+        simulation.step()
+        live = simulation.records.get(1)
+        if live is None:
+            continue
+        train = live.train
+        at_lamp = int(live.now[2, 0, 0])
+        if live.age <= train:
+            assert not live.emitter_took
+        else:
+            # the take acts in the interval that starts at age train, the
+            # first after the train: the row is 0 from age train + 1 on
+            assert at_lamp == 0 and live.emitter_took
+    assert train is not None
+    readings = dict(simulation.snapshot_stream())
+    assert all("emitter_taking" in record for record in readings.get("records", []))
+    books = simulation.books()
+    assert books["balanced"]
+    light = books["families"]["light"]["transit"]
+    assert light["taken_by_emitter"] == 0 and light["absorbed"] >= 1
+    keyed = chain_world()
+    keyed["measured"][0]["lamp"]["remnant_take"] = 4
+    with pytest.raises(ValueError, match="remnant_take"):
+        parse_nature_beam_world(keyed)
+    no_wheel = chain_world()
+    no_wheel["measured"][0] = {
+        "position": [2, 0, 0],
+        "family": "light",
+        "amount": 1,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[1, 0, 0]],
+    }
+    with pytest.raises(ValueError, match="declares the world key `wheel`"):
+        parse_nature_beam_world(no_wheel)
+    no_wheel["wheel"] = 64
+    parse_nature_beam_world(no_wheel)
+    on_light = chain_world()
+    on_light["massive_record"] = True
+    on_light["families"][0]["take"] = [-15, 56]
+    with pytest.raises(ValueError, match="admitted on a massive kind alone"):
+        parse_nature_beam_world(on_light)
+    # the guard: an absorbing Node whose cell is the sentinel refuses the interval
+    guarded = DetectorLawSimulation(parse_nature_beam_world(chain_world()))
+    for _ in range(3):
+        guarded.step()
+    guarded.cell_index[70, 0, 0] = -1
+    with pytest.raises(RuntimeError, match=r"absorbing Node without a cell .*\(70, 0, 0\)"):
+        for _ in range(200):
+            guarded.step()
+
+
+def layer_world(receiver: object = None) -> dict:
+    """A layer of 24 x 7 x 1 (x open at both faces, light's sponges; y and z
+    periodic): the lamp's body at [2, 3, 0] emitting toward +x, three
+    receiver bodies at x = 18 on the rows y = 2, 3, 4 read as the sets s0,
+    s1, s2 (one Node each, the screen), the faces 2 and 5 Links from the
+    lamp and the screen. With `receiver`, the lamp's records' ladder is the
+    named sets and the faces are sinks."""
+    lamp: dict = {
+        "rate": [1, 30],
+        "wheel": [1, 8],
+        "directions": [[1, 0, 0]],
+        "train": 2,
+    }
+    if receiver is not None:
+        lamp["receiver"] = receiver
+    measured = [
+        {
+            "position": [2, 3, 0],
+            "family": "light",
+            "amount": 8,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0]],
+            "lamp": lamp,
+        }
+    ]
+    detectors = []
+    for index, y in enumerate((2, 3, 4)):
+        measured.append(
+            {
+                "position": [18, y, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "directions": [[-1, 0, 0]],
+            }
+        )
+        detectors.append({"name": f"s{index}", "positions": [[18, y, 0]], "threshold": 1})
+    return {
+        "law": "beam",
+        "model_id": "beam-detector-law-layer-v1",
+        "shape": [24, 7, 1],
+        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+        "ticks": 400,
+        "K": 1073741824,
+        "N": 64,
+        "release": [1, 128],
+        "suspension": 0,
+        "clock_stamp": True,
+        "detector_law": True,
+        "directions": [],
+        "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}],
+        "measured": measured,
+        "detectors": detectors,
+    }
+
+
+def run_layer(document: dict, ticks: int = 420) -> tuple[list[dict], DetectorLawSimulation]:
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    for _ in range(ticks):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+    return [line for line in lines if line["event"] == "gather"], simulation
+
+
+def test_the_lamps_ladder_by_name_keeps_the_faces_out_of_it():
+    """(f) The lamp record's ladder by name (SIZING.md; DECLARATIONS.md section 13
+    item 7, the receiver by name): with `receiver` [s0, s1, s2] every click of
+    the layer world's lamp is at one of the three sets, never at a face,
+    the cell of u taken over the ladder's own sum (the first named cell whose
+    rung exceeds u on the gather's own rungs), the sinks' shares booked and
+    printed (`sunk`), the books balanced; without the key the same world
+    clicks at the open face behind the lamp (the control); the loader
+    refuses a name no set declares, a repeated name, an empty list and the
+    key outside the local detector law; the string form names one set."""
+    gathers, simulation = run_layer(layer_world(["s0", "s1", "s2"]))
+    assert len(gathers) == 8 and not simulation.records
+    assert sorted(gather["u"] for gather in gathers) == list(range(8))
+    for gather in gathers:
+        assert gather["ladder"] == ["s0", "s1", "s2"]
+        assert gather["sunk"] > 0 and gather["T"] > gather["sunk"]
+        assert gather["chosen"] is not None and gather["chosen"][0][0] in {"s0", "s1", "s2"}
+        # the cumulative rule on the engine's own shares: the first named cell,
+        # in the world's order, whose rung exceeds u
+        named = [
+            (cell[0][0], rung) for cell, rung in gather["cells"] if cell[0][0] in {"s0", "s1", "s2"}
+        ]
+        first = next(name for name, rung in named if gather["u"] < rung)
+        assert gather["chosen"][0][0] == first
+        # the ladder's total is the named cells' sum: the last named rung is the wheel
+        assert named[-1][1] == simulation.wheel
+    # the counts over one wheel are the rungs' differences (every u once; the
+    # records are identical, so one gather's rungs are every gather's)
+    counts = {name: sum(1 for g in gathers if g["chosen"][0][0] == name) for name in ("s0", "s1", "s2")}
+    rung_of = {cell[0][0]: rung for cell, rung in gathers[0]["cells"]}
+    assert counts == {
+        "s0": rung_of["s0"],
+        "s1": rung_of["s1"] - rung_of["s0"],
+        "s2": rung_of["s2"] - rung_of["s1"],
+    }
+    control, _ = run_layer(layer_world())
+    assert all("ladder" not in gather and "sunk" not in gather for gather in control)
+    assert any(
+        gather["chosen"] is not None and gather["chosen"][0][0] == "face:-x" for gather in control
+    )
+    one, _ = run_layer(layer_world("s1"))
+    assert all(gather["chosen"] is not None and gather["chosen"][0][0] == "s1" for gather in one)
+    with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
+        parse_nature_beam_world(layer_world(["s0", "screen"]))
+    with pytest.raises(ValueError, match="names a set twice"):
+        parse_nature_beam_world(layer_world(["s0", "s0"]))
+    with pytest.raises(ValueError, match="nonempty list of names"):
+        parse_nature_beam_world(layer_world([]))
+    outside = layer_world(["s0"])
+    outside["detector_law"] = False
+    with pytest.raises(ValueError, match="admitted under detector-law-v1 alone"):
         parse_nature_beam_world(outside)

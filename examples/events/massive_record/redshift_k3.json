@@ -82,7 +82,8 @@
    "seed": 52428800,
    "ramp": 1500,
    "emits": "light",
-   "own_grace": 3000
+   "own_grace": 3000,
+   "receiver": "light_detector"
   },
   {
    "position": [
