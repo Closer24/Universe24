@@ -1717,3 +1717,84 @@ def test_af_the_tables_rotation_reads_the_pair_by_the_linear_form():
     )
     with pytest.raises(ValueError, match="has a sine of 0"):
         simulation.read_pair(zero_step, (50, 0, 0), 0)
+
+
+def test_ag_an_absorbing_block_of_the_matter_kind_takes_with_its_declared_pair():
+    """DECLARATIONS.md section 15 M1-6 and the Boss's item 6b (the take on the massive kind;
+    the take's pair per kind a declaration of kind 2): on the chain of test (aa) the receiver
+    at x = 184 is an ABSORBING block of the matter kind (side 1, the kind's own pair
+    [156, 157], admitted on an absorbing block: a take line, not a well and not a barrier)
+    with its declared take [-19, 86] (the phase pace at lambda_dB = 12), read as the set
+    `screen`: the matter lamp's record is taken there and completes with ONE click, the books
+    balanced at every interval; the take arrays carry [-19, 86] at the block's cell and
+    light's [-15, 56] elsewhere. The pair that leaves least (the test the declaration asks
+    for), read at the interval 300 of each world: the screen's pointer (the offer taken) with
+    the declared pair 7.08 x 10^12 above light's 6.48 x 10^12, and the group-pace pair
+    [-33, 100] below light's, 5.73 x 10^12; the largest level left between the lamp and the
+    screen (x in [150, 182]) with the declared pair below light's (945542 against 951825).
+    The loader: `take` on a block that is not absorbing refused; a pair outside (-1, 0]
+    refused; a pair with n > 0 refused."""
+    taken: dict[str, int] = {}
+    left: dict[str, int] = {}
+    for label, take in (("light", None), ("declared", [-19, 86]), ("group", [-33, 100])):
+        document = matter_lamp_world(True, [77, 25])
+        document["ticks"] = 3000
+        block: dict = {
+            "position": [184, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "side": 1,
+            "pair": [156, 157],
+            "absorbing": True,
+        }
+        if take is not None:
+            block["take"] = take
+        document["measured"] = [block, dict(document["measured"][1], amount=1)]
+        document["detectors"] = [{"name": "screen", "positions": [[184, 0, 0]], "threshold": 1}]
+        world = parse_nature_beam_world(document)
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        expected = tuple(take) if take else (-15, 56)
+        assert (int(simulation.take_num[184, 0, 0]), int(simulation.take_den[184, 0, 0])) == expected
+        assert (int(simulation.take_num[100, 0, 0]), int(simulation.take_den[100, 0, 0])) == (-15, 56)
+        identity = 1 * (1 << 32) + 1
+        screen = simulation.cell_names.index("screen")
+        for _ in range(3000):
+            simulation.step()
+            assert simulation.books()["balanced"], simulation.tick
+            live = simulation.records.get(identity)
+            if live is not None and simulation.tick == 300:
+                taken[label] = live.pointers[screen]
+                left[label] = int(np.max(np.abs(live.now[150:183, 0, 0])))
+            if any(line["event"] == "gather" for line in lines):
+                break
+        gathers = [line for line in lines if line["event"] == "gather"]
+        assert len(gathers) == 1 and gathers[0]["record"] == identity
+        assert identity not in simulation.records
+    assert taken["declared"] > taken["light"] > taken["group"], taken
+    assert left["declared"] < left["light"], left
+    bad = matter_lamp_world(True, [77, 25])
+    bad["measured"].append(
+        {
+            "position": [184, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "side": 1,
+            "pair": [314, 315],
+            "take": [-19, 86],
+        }
+    )
+    with pytest.raises(ValueError, match="take is refused on a block that is not absorbing"):
+        parse_nature_beam_world(bad)
+    for pair, message in (([-90, 86], r"lies in \(-1, 0\]"), ([19, 86], "take numerator")):
+        wrong = json.loads(json.dumps(bad))
+        wrong["measured"][-1]["absorbing"] = True
+        wrong["measured"][-1]["take"] = pair
+        with pytest.raises(ValueError, match=message):
+            parse_nature_beam_world(wrong)

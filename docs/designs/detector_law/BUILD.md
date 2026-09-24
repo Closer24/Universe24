@@ -957,6 +957,21 @@ Each a generic line under the contract, one test each in
   detector-law engine's cells (bodies, sets, faces) do not carry; the
   Bell and Malus rows read no channel here until that line is declared
   for this engine (the physicist's, after the GO).
+- THE TAKE ON THE MASSIVE KIND (the Boss's item 6b; section 15 M1-6; test
+  (ag)): an absorbing block of the matter kind is a take line (the kind's
+  own pair admitted on an absorbing block; a well's or a barrier's pair
+  as before), its Ports taking a matter lamp's record as light's, the
+  record completing with one click; the take's pair is a DECLARATION of
+  kind 2 per block, the key `take` [n, d] on an absorbing block (light's
+  [-15, 56] where none is declared; k = n / d in (-1, 0]; refused on a
+  block that is not absorbing), kept per Node in the take arrays and
+  moved with the block. Read on the chain of test (aa) at the interval
+  300: the declared [-19, 86] takes 7.08 x 10^12 of the record's offer
+  against light's 6.48 x 10^12 and the group-pace pair's [-33, 100]
+  5.73 x 10^12, and leaves the smallest level between the lamp and the
+  screen (945542 against light's 951825): the phase-pace pair leaves
+  least, as the declaration expected; [-5, 27] (lambda_dB = 16's pair)
+  takes 7.54 x 10^12 on this world, for the physicist.
 - ISSUE #1086 (test (ae)): the books' `momentum` carries `held` as the
   sum of the blocks' declared momentum vectors, `transit` and `escaped`
   null with the note that they are not accounted (the massive kind's

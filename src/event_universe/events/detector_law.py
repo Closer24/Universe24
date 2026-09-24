@@ -431,6 +431,11 @@ class DetectorLawSimulation:
         self.take_count = np.zeros(self.shape, dtype=np.int64)
         for _, _, mask in self.take_masks:
             self.take_count += mask
+        # The take's pair per Node (DECLARATIONS.md section 15, a declaration
+        # of kind 2): light's [-15, 56] everywhere, an absorbing block's own
+        # `take` at its cells (written with its pair, moved with it).
+        self.take_num = np.full(self.shape, TAKE_NUMERATOR, dtype=np.int64)
+        self.take_den = np.full(self.shape, TAKE_DENOMINATOR, dtype=np.int64)
         # The blocks (massive-record-v1): every measured event with a block,
         # its cells written into its kind's pair arrays, its own record
         # seeded on its cells, its momentum and the drive's wall 3 Q S M.
@@ -544,7 +549,17 @@ class DetectorLawSimulation:
 
     def _write_pair(self, block: Block) -> None:
         """The block's pair written on its cells into its kind's arrays; the
-        kind's own pair elsewhere on the Nodes the block left."""
+        kind's own pair elsewhere on the Nodes the block left; an absorbing
+        block's own take pair on its cells, light's where it left."""
+        if block.definition.take is not None:
+            self.take_num[~block.mask] = TAKE_NUMERATOR
+            self.take_den[~block.mask] = TAKE_DENOMINATOR
+            for other in self.blocks:
+                if other is not block and other.definition.take is not None:
+                    self.take_num[other.mask & ~block.mask] = other.definition.take[0]
+                    self.take_den[other.mask & ~block.mask] = other.definition.take[1]
+            self.take_num[block.mask] = block.definition.take[0]
+            self.take_den[block.mask] = block.definition.take[1]
         family = self.families[block.family]
         num = self.kind_num[block.family]
         num[~block.mask] = family.pair[0]
@@ -1183,8 +1198,8 @@ class DetectorLawSimulation:
             free_now = self._shift(live.now, axis, sign)
             free_next = self._shift(nxt, axis, sign)
             ghost = np.floor_divide(
-                TAKE_DENOMINATOR * free_now + TAKE_NUMERATOR * (free_next - live.ports[index]),
-                TAKE_DENOMINATOR,
+                self.take_den * free_now + self.take_num * (free_next - live.ports[index]),
+                self.take_den,
             )
             ghost = np.where(mask if driven is None else (mask & ~driven), ghost, 0)
             # The offer arriving by the Port is the Port's motion, (g(t + 1) -

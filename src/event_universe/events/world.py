@@ -868,6 +868,10 @@ MEASURED_KEYS = {
     "family",
     "amount",
     "held",
+    # detector-law-v1 (DECLARATIONS.md section 15, the take's pair per kind,
+    # a declaration of kind 2): an absorbing block's `take` [n, d], the pair
+    # of its Ports' take (light's [-15, 56] where none is declared)
+    "take",
     # detector-law-v1, line B: an emitting body's `own_grace` (N_s, the
     # intervals after its train during which its own set takes nothing of
     # its own record; DECLARATIONS.md section 10 item 1), required on an
@@ -1276,6 +1280,10 @@ class BlockDefinition:
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
     absorbing: bool = False
+    # detector-law-v1: an absorbing block's own take pair [n, d] (the
+    # Port's one-way follow, k = n / d; light's [-15, 56] where none is
+    # declared: the physicist's declaration per kind, section 15)
+    take: tuple[int, int] | None = None
     cavity: bool = False
     ramp: int = 0
     start: int = 0
@@ -3228,11 +3236,12 @@ def _block(
         # BARRIER raises it (num' / den' below the kind's: the matter wall
         # of DECLARATIONS.md section 15 M1-6, the mirror line of the matter
         # kind), a block with no bound mode, no seed and no clock.
-        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity:
+        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity and not obj.get("absorbing"):
             raise ValueError(
                 f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
                 f"[{kind[0]}, {kind[1]}] and no cavity: a block lowers the pair at its cells (a "
-                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
+                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6); an "
+                "ABSORBING block may carry the kind's own pair (a take line, M1-6)"
             )
         if pair[0] * kind[1] < pair[1] * kind[0]:
             clock_keys = [
@@ -3312,6 +3321,24 @@ def _block(
     absorbing = obj.get("absorbing", False)
     if type(absorbing) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
+    take: tuple[int, int] | None = None
+    if "take" in obj:
+        if not absorbing:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.take is refused on a block that is not absorbing (the take's "
+                "pair is its Ports' follow; a clock body has no Port)"
+            )
+        value = obj["take"]
+        if not isinstance(value, list) or len(value) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}.take must be [n, d], the take's pair")
+        numerator = _integer(value[0], f"{label}.take numerator", -MAX_VALUE, 0)
+        denominator = _integer(value[1], f"{label}.take denominator", 1, MAX_VALUE)
+        if -numerator >= denominator:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.take [{numerator}, {denominator}]: the take's pair k = n / d "
+                "lies in (-1, 0] (the Port follows the wave one way; light's [-15, 56])"
+            )
+        take = (numerator, denominator)
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     margin = obj.get("margin", MARGIN_KINDS[0])
@@ -3370,6 +3397,7 @@ def _block(
         margin=str(margin),
         emits=emits,
         own_grace=own_grace,
+        take=take,
     )
 
 
