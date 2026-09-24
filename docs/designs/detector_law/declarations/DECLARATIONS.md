@@ -196,7 +196,7 @@ and the ray law's series exists.
    searches in N^2 trials), in place of the counter family's [1, 1];
    (ii) the click's stamp carries the detector's count and the birth
    interval, never the residue (P11, clicks only; the seed an input of
-   kind 1, drawn once, never read Outside). THE THEOREM (exact for a
+   kind 1, drawn once and independently per world, never read Outside). THE THEOREM (exact for a
    uniformly random order; the seed-set shuffle its integer form, closed
    to a reader without the seed: Reviewer 3's word, 03:44Z): B's list at
    fixed b is a balanced multiset (N / 2 pluses for either a) in a
@@ -249,9 +249,16 @@ and the ray law's series exists.
    KEYS (the builder's, on this declaration; the names and forms written
    so that nothing is asked), on the pair lamp's entry (LAMP_KEYS of
    `world.py`, beside `rate` and `wheel`): (1) `residue_order`, a
-   string, `"ordinal"` (today's form, the default when the key is
-   absent: u = (ordinal - 1) x r mod W from `wheel` [r, W], the engine's
-   line as built) or `"seed"` (the seed-set order: u = order[(ordinal -
+   string, REQUIRED on a pair lamp (a lamp with `arms`) with NO DEFAULT:
+   absent there it is refused (Reviewer 3, 04:38Z: an implicit default
+   to the open-channel form is against AGENTS.md; his CHECK 1, the seed
+   form not yet built, becomes this load-time refusal once the builder
+   lands the keys); on a lamp without arms the key is not admitted (the
+   birth wheel's form as built, no far setting to hide); the values
+   `"ordinal"` (the counter form, u = (ordinal - 1) x r mod W from
+   `wheel` [r, W], the engine's line as built, declared where a
+   diagnostic wants the open channel) or `"seed"` (the seed-set order,
+   declared wherever the Bell rows run: u = order[(ordinal -
    1) mod W], where order = permutation(W, residue_seed) is the
    Fisher-Yates shuffle of range(W) driven by the SplitMix64 mixing hash,
    copied from the script's `mix64` and `permutation` verbatim, the
@@ -259,13 +266,20 @@ and the ray law's series exists.
    0x94D049BB133111EB and the shifts 30, 27 and 31 included, plain
    integers masked to 64 bits, the same order on every host; the stride
    r must be 1 under `"seed"`, refused otherwise, so that W births take
-   every residue once); (2) `residue_seed`, an integer in [0, 2^64) (an
+   every residue once; with more than W births the order repeats from
+   the first residue, so a Bell world counts exactly W births, its
+   `ticks` at least W + the arm's transit + the completion: the shipped
+   bell worlds' `ticks` 300 at the rate [1, 1] give about 300 births and
+   not 2048, the World Generator regenerates them, Reviewer 3's CHECK
+   2); (2) `residue_seed`, an integer in [0, 2^64) (an
    input of kind 1, the width 64 declared), required under `"seed"` and
    refused under `"ordinal"` (a key that does nothing is refused, the
    loader's habit); the World Generator draws one per world from the
    host's entropy (`secrets.randbits(64)` or any host source; the
    requirement is the draw's independence of the settings), four seeds
-   for the four worlds of a Bell row, written into the world file and
+   for the four worlds of a Bell row, independent per world (a seed
+   shared across a and a' would align B's lists across the settings,
+   Reviewer 3's strongest attack), written into the world file and
    never into `expectations.json` or the paper; no reading's form
    depends on its value (the counts and S exact for every seed, one
    birth per residue). The light family's `phase_per_link` [1, 1] and

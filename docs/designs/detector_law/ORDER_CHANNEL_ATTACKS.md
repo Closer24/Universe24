@@ -66,8 +66,13 @@ Bohm's configuration is under quantum equilibrium).
    over 200 seeds reads 0.47 to 0.535 right at N = 64, 256 and 2048
    (the binomial error 0.025 on 400 trials). The engine's form is the
    builder's under the requirement: a keyed permutation indistinguishable
-   from uniform without its key. CLOSED BY DECLARATION (line 1, with the
-   requirement) and shown.
+   from uniform without its key. STATED (Reviewer 3, 04:38Z), not closed
+   by declaration: a 64-bit keyed shuffle is closure to a reader with
+   bounded means (2^64 keys against N! orders; the list of 2048 bits
+   determines the seed information-theoretically), so the requirement is
+   computational; SplitMix64's form is a mixing hash and not a
+   cryptographic one; the battery is evidence for the requirement and not
+   a proof; the same honest label as objection 4.
 6. **"The birth-interval stamp reveals the ordinal; if u were a known
    function of the ordinal, B decodes."** u is the seed's permutation of
    the ordinal; without the seed the ordinal says nothing of u; the
@@ -132,7 +137,9 @@ Bohm's configuration is under quantum equilibrium).
     birth stamp. With the residue Inside the one-party lists carry
     nothing of the far setting, and the paired lists carry E_N, the
     standard Bell statistic. A reader with both lists and not the seed
-    still cannot infer the residues or the counterfactual list. CLOSED.
+    learns nothing beyond the two outcome bits per birth (u < N / 2 from
+    A's outcome, the window from B's; Reviewer 3's word), neither the
+    residues nor the counterfactual list. CLOSED.
 17. **"Valentini: signal locality is contingent; a preparation of the
     hidden order would signal."** The model's own prediction, stated: a
     preparation that fixed the residues' order in a known way would open
@@ -150,8 +157,17 @@ Bohm's configuration is under quantum equilibrium).
 20. **"The exact counts need N births per world."** The pins are at N =
     2048 births per world; a shorter run reads a prefix, approximate.
     The Bell worlds must carry N births within their ticks (the lamp's
-    rate against `ticks`): CHECK, the World Generator's, before the
-    preliminary run.
+    rate against `ticks`): CHECK 2, the World Generator's, before the
+    preliminary run: the shipped bell worlds carry `ticks` 300 at the
+    rate [1, 1], about 300 births and not 2048; the regenerated worlds
+    need `ticks` at least 2048 + the arm's transit + the completion; and
+    since with more than W births the order repeats from the first
+    residue (u = order[(ordinal - 1) mod W]), the preflight counts
+    exactly W births per world (Reviewer 3's nit). His CHECK 1 (the seed
+    form not built on main; the shipped bell worlds under the counter
+    form) becomes a load-time refusal once the builder lands the keys:
+    `residue_order` absent on a pair lamp is refused (DECLARATIONS.md
+    section 2 item 8).
 
 ## The six lines, DECLARED (the owner, 2026-09-24 04:18Z, record 1648; the Boss, 04:14Z on his word of 04:12Z, record 1647)
 
@@ -163,8 +179,11 @@ Bohm's configuration is under quantum equilibrium).
 2. THE STAMP AND THE READER: the click is stamped with the detector's
    count and the birth interval, never with the residue; the reader of
    record reads the click lists per set, and the gather line is HOST.
-3. THE SEED: an input of kind 1, drawn once per world, never read
-   Outside (P11, clicks only); its width a declared integer.
+3. THE SEED: an input of kind 1, drawn once per world and INDEPENDENT
+   PER WORLD (one draw per settings world, four seeds for rows 1a to 1d;
+   a seed shared across a and a' would align B's lists across the
+   settings, Reviewer 3's strongest attack), never read Outside (P11,
+   clicks only); its width a declared integer.
 4. THE SEED AND THE SETTINGS are drawn independently (no
    superdeterminism).
 5. THE LAMP'S CADENCE of births is fixed and independent of the residues
