@@ -156,10 +156,12 @@ R2_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
 REDSHIFT_TICKS = 9600  # the physicist's line of 10:15Z (10000 runs A off the board at 9732)
 LIGHT_CLOCK_TICKS = 2600  # the physicist's 09:18Z: the -x half's round trip on the closed chain (2078) before item 10's take removes it; the first cycle's record closes between about 2150 and 2400
 # The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
-# on every emitting block naming the set that takes the block's clicks. PREPARED AND HELD:
-# it enters the files only on the owner's word and the builder's engine line (the Boss's
-# 09:40Z (4)); with the flag off the files carry no such key.
-RECEIVER_KEY = False
+# on every emitting block naming the set that takes the block's clicks. ON since the
+# builder's engine line is on main (the receiver by name, DECLARATIONS.md section 13 item
+# 7; the loader requires the key on an emitting block) and the owner's word of 2026-09-24
+# (the Engine Fixer's line 6: the generator's emitter writes `receiver`); the flag is kept
+# as the record of the held form.
+RECEIVER_KEY = True
 
 
 def light_family(pair: list[int] | None) -> dict:
@@ -239,12 +241,23 @@ def wall_line(
     ]
 
 
-def screen(document: dict, x: int, ys: range, family: str = "light") -> None:
+def screen(
+    document: dict, x: int, ys: range, family: str = "light", wheel: int | None = None
+) -> list[str]:
     """A screen of one-Node detectors `screen_<y>` on receiver bodies at x: one set per
-    Node of the row, each with its own click (section 12; Builder 2's finding)."""
+    Node of the row, each with its own click (section 12; Builder 2's finding) and, when
+    `wheel` is given, its own rung wheel (SIZING.md: the screen's sets are the lamp
+    record's ladder; the wheel must exceed the inverse of the dimmest cell's share). The
+    sets' names are returned, the lamp's `receiver` list."""
+    names: list[str] = []
     for y in ys:
         document["measured"].append(body([x, y, 0], family, [[-1, 0, 0]]))
-        document["detectors"].append({"name": f"screen_{y}", "positions": [[x, y, 0]], "threshold": 1})
+        detector: dict = {"name": f"screen_{y}", "positions": [[x, y, 0]], "threshold": 1}
+        if wheel is not None:
+            detector["wheel"] = wheel
+        document["detectors"].append(detector)
+        names.append(detector["name"])
+    return names
 
 
 def lamp(
@@ -255,9 +268,13 @@ def lamp(
     directions: list[list[int]],
     train: int,
     family: str = "light",
+    receiver: list[str] | None = None,
 ) -> dict:
     """The lamp in the template's form (the matter lamp's frequency is its family's
-    `phase_per_link`, section 15 M1-6, not a lamp key)."""
+    `phase_per_link`, section 15 M1-6, not a lamp key); with `receiver`, the names of
+    the sets that are its records' ladder (the lamp's ladder by name, SIZING.md; the
+    engine's `receiver` on a lamp, BUILD.md section 20), written only under
+    RECEIVER_KEY."""
     entry: dict = {
         "position": position,
         "family": family,
@@ -268,6 +285,8 @@ def lamp(
         "directions": directions,
     }
     inner: dict = {"rate": rate, "wheel": wheel, "directions": directions, "train": train}
+    if receiver is not None and RECEIVER_KEY:
+        inner["receiver"] = list(receiver)
     entry["lamp"] = inner
     return entry
 
@@ -275,15 +294,47 @@ def lamp(
 # Group L: the light rows.
 
 
+TWO_SLITS_SHAPE = [160, 256, 1]  # L-3's second draft (2026-09-24, 12:10Z): x AND y open
+TWO_SLITS_OPENINGS = {114, 115, 116, 140, 141, 142}  # width 3, centred at y = 115 and 141 (d = 26)
+TWO_SLITS_SCREEN_X = 153  # L = 113 from the mirror line at x = 40
+TWO_SLITS_SCREEN_YS = range(28, 229)  # 201 sets, the ladder
+TWO_SLITS_STOCK = 1024  # one wheel [1, 1024], each u once (SIZING.md)
+TWO_SLITS_SET_WHEEL = 1 << 20  # the screen sets' own rung wheel (SIZING.md, Reviewer 3's line (c))
+TWO_SLITS_TICKS = 5500  # 1024 births at one per 4, the train 665, the transit 231, the close, the margin
+
+
 def two_slits() -> dict:
-    """Section 15 L-3 (row 2a) with L-1's fourth commit: the mirror line at x = 40, two
-    Nodes deep, the openings free; the layer's open faces the sponges, no take lines."""
+    """Section 15 L-3 (row 2a), THE SECOND DRAFT (2026-09-24, 12:10Z, on the blind map
+    `two_slits_1024.py` beside SIZING.md): 6.2's own geometry on the 160 x 256 layer with
+    x and y open (the four faces light's sponges); the lamp at [20, 128] with the stock
+    1024 at one per 4 on the wheel [1, 1024], the train 32 periods; the mirror line at
+    x = 40 two deep (L-1) with two openings of width 3 centred at y = 115 and 141; the
+    screen at x = 153, one set per Node over y in [28, 228] with the rung wheel 2^20; the
+    lamp's `receiver` the 201 screen sets (its records' ladder; the faces and the mirror
+    line sinks outside it); 5500 intervals. The first draft (128 x 128, y periodic, the
+    openings of width 1 at y = 48 and 80, the screen at x = 104, 17300 intervals) is
+    HISTORY in L-3."""
     document = ray_world(
-        "two-slits", [128, 128, 1], {"x": "open", "y": "periodic", "z": "periodic"}, CLOCKS[12], 17300
+        "two-slits",
+        TWO_SLITS_SHAPE,
+        {"x": "open", "y": "open", "z": "periodic"},
+        CLOCKS[12],
+        TWO_SLITS_TICKS,
     )
-    document["measured"].append(lamp([20, 64, 0], 1024, [1, 16], [1, 64], [[1, 0, 0]], TRAIN_32))
-    document["measured"].extend(wall_line([40, 41], range(128), {48, 80}))
-    screen(document, 104, range(4, 125))
+    document["measured"].extend(wall_line([40, 41], range(TWO_SLITS_SHAPE[1]), TWO_SLITS_OPENINGS))
+    names = screen(document, TWO_SLITS_SCREEN_X, TWO_SLITS_SCREEN_YS, wheel=TWO_SLITS_SET_WHEEL)
+    document["measured"].insert(
+        0,
+        lamp(
+            [20, 128, 0],
+            TWO_SLITS_STOCK,
+            [1, 4],
+            [1, TWO_SLITS_STOCK],
+            [[1, 0, 0]],
+            TRAIN_32,
+            receiver=names,
+        ),
+    )
     return document
 
 
@@ -373,6 +424,9 @@ MALUS_TICKS = 1200  # section 5 item 2: at least 256 births + 665 + the transit 
 # the same key), so the registered 2^50 would birth one record per interval to the end of
 # the 1200 (the preview on 299b6bb2: 1200 births); the declared count is written as the stock.
 MALUS_BIRTHS = 256
+MALUS_SHAPE = [8, 1, 1]  # section 5 item 1 (12:15Z): the exit cell at x = 7 on the board
+MALUS_READ_NODE = [4, 0, 0]  # the registered which-path read body, dropped with its set
+MALUS_READ_SET = "first"
 
 
 def residue_seed(name: str) -> int:
@@ -458,7 +512,12 @@ def bell(a: str, b: str) -> dict:
 def malus(name: str, source: Path, setting: int) -> dict:
     """DECLARATIONS.md sections 5 and 6: the registered form of the source world with
     `detector_law` true, `clock_stamp` true, the table's `phase_window` at the declared
-    setting, the clock [308, 25] on N = 256 (section 14 item 1) on the light family and
+    setting, ON THE BAR OF 8 (section 5 item 1, 12:15Z, Reviewer 3's read of the 7-Node
+    files: the polariser's exit cell, the Node beyond its entry at x = 6, on the board at
+    x = 7) WITHOUT the which-path `read` body at x = 4 and its set `first` (dropped there:
+    under detector-law-v1 a set's Node is a take Node, so that set took the record before
+    the polariser), the polariser's set alone on its entry Node (the table body of two
+    cells, section 14 item 6), the clock [308, 25] on N = 256 (section 14 item 1) on the light family and
     [1, 1] on the counter family (section 5 item 3 and section 15 T-1), written in the
     file (the registered entity references carry no clock); the lamp's train 32 periods
     and `ticks` 1200 (section 5 item 2, 2026-09-24: the registered 300 intervals gave 300
@@ -470,6 +529,9 @@ def malus(name: str, source: Path, setting: int) -> dict:
     for key, value in document.items():
         if key in ("law", "model_id", "entity_definitions", "entities", "families"):
             continue
+        if key == "shape":
+            assert value == [7, 1, 1], value
+            value = list(MALUS_SHAPE)
         rebuilt[key] = MALUS_TICKS if key == "ticks" else value
         if key == "suspension":
             rebuilt["clock_stamp"] = True
@@ -478,6 +540,13 @@ def malus(name: str, source: Path, setting: int) -> dict:
         light_family(MALUS_CLOCK),
         {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
     ]
+    rebuilt["measured"] = [
+        entry for entry in rebuilt["measured"] if entry["position"] != MALUS_READ_NODE
+    ]
+    rebuilt["detectors"] = [
+        detector for detector in rebuilt["detectors"] if detector["name"] != MALUS_READ_SET
+    ]
+    assert len(rebuilt["measured"]) == 2 and len(rebuilt["detectors"]) == 1, name
     for entry in rebuilt["measured"]:
         table = entry.get("table", {}).get("light")
         if isinstance(table, dict) and "phase_window" in table:
@@ -517,6 +586,10 @@ MATTER_TAKE_PAIRS = {
     16: [-5, 27],
 }  # M1-6: the take's pair on the matter kind's take lines
 MATTER_TRAIN = 8  # periods (150 intervals), section 12 and M1-6
+MATTER_STOCK = 2048  # section 12: one wheel [1, 2048], each u once (SIZING.md)
+MATTER_RATE = [1, 2]  # the cadence one per 2 (SIZING.md, section 12)
+MATTER_SET_WHEEL = 65536  # the screen sets' own rung wheel (section 12, SIZING.md)
+MATTER_TICKS = 4700  # 2048 births at one per 2, the train 150, the transit 167, the margin (SIZING.md)
 OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
 # 4b's A: the physicist's line of 2026-09-24 09:33Z (through the Boss's 09:40Z): own_grace
 # 3000 = the hold H after the ramp of 1500 (the file's 8000 was the named defect: A off the
@@ -527,7 +600,7 @@ REDSHIFT_GRACE = 3000
 REDSHIFT_WORLD_WHEEL = 64
 R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
 R2_WHEEL = 256  # section 13 item 4 (main 25a7abf4): the declared wheel of R2's block sets
-LAMP_GRACE = 16700  # M1-6: the matter lamp's `own_grace`, the whole hold
+LAMP_GRACE = MATTER_TICKS  # M1-6: the matter lamp's `own_grace`, the whole hold (the sized form)
 
 
 def emitter(position: list[int], side: int, pair: list[int], grace: int | None, **extra: object) -> dict:
@@ -720,36 +793,48 @@ def massive_worlds(massive) -> dict[str, dict]:
     )
     named_receiver(document, {0: "at_a"})
     out["light_clock_60"] = document
-    # Rows M1 and M2 (section 12 with section 15 M1-6): the 128 x 128 x 1 layer, y periodic,
-    # x open for the matter kind, no light; the matter lamp at (20, 64) with its own clock,
-    # the wheel [1, 64], the stock 2048 at one record per 8 intervals, the train 8 periods;
+    # Rows M1 and M2 (section 12 with section 15 M1-6; THE SIZED FORM of SIZING.md, section
+    # 12's line of 2026-09-24): the 128 x 128 x 1 layer, y periodic, x open for the matter
+    # kind, no light; the matter lamp at (20, 64) with its own clock, the wheel [1, 2048]
+    # (one wheel, each u once), the stock 2048 at one record per 2 intervals, the train 8
+    # periods, its `receiver` the screen's 121 sets (the ladder; the take lines sinks
+    # outside it), the sets with their own rung wheel 65536; 4700 intervals;
     # the wall at x = 40 a barrier line of matter-kind blocks with the raised pair [1, 2],
     # two deep, the openings at y = 48 and 80 free (the fourth commit); the take lines at
     # x = 0 and 127 absorbing blocks of the matter kind (the fifth commit's correction, the
     # Boss's 02:20Z) with the kind's own pair and the take's pair under the builder's key
     # `take` (BUILD.md item 6b); the amplitude bound A = 2^32 of M1-10; the screen at
-    # x = 104 over y in [4, 124], one set per Node; 16700 intervals. M2 on its own chain of
-    # 200: the lamp at x = 20 with one record, the detector at x = 104, 600 intervals.
+    # x = 104 over y in [4, 124], one set per Node. M2 on its own chain of 200: the lamp
+    # at x = 20 with one record, the detector at x = 104, 600 intervals.
     for wavelength, clock in MATTER_CLOCKS.items():
         document = matter_world(
             massive,
             f"matter-waves-{wavelength}",
             [128, 128, 1],
             {"x": "open", "y": "periodic", "z": "periodic"},
-            16700,
+            MATTER_TICKS,
             clock,
             MATTER_TAKE_PAIRS[wavelength],
         )
-        matter_lamp = lamp([20, 64, 0], 2048, [1, 8], [1, 64], [[1, 0, 0]], MATTER_TRAIN, "matter")
-        matter_lamp["own_grace"] = LAMP_GRACE
-        document["measured"].append(matter_lamp)
         take_pair = MATTER_TAKE_PAIRS[wavelength]
         for column in ([0], [127]):
             document["measured"].extend(
                 wall_line(column, range(128), set(), "matter", KIND, absorbing=True, take=take_pair)
             )
         document["measured"].extend(wall_line([40, 41], range(128), {48, 80}, "matter"))
-        screen(document, 104, range(4, 125), "matter")
+        names = screen(document, 104, range(4, 125), "matter", wheel=MATTER_SET_WHEEL)
+        matter_lamp = lamp(
+            [20, 64, 0],
+            MATTER_STOCK,
+            MATTER_RATE,
+            [1, MATTER_STOCK],
+            [[1, 0, 0]],
+            MATTER_TRAIN,
+            "matter",
+            receiver=names,
+        )
+        matter_lamp["own_grace"] = LAMP_GRACE
+        document["measured"].insert(0, matter_lamp)
         out[f"matter_waves_{wavelength}"] = document
     document = matter_world(
         massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12], MATTER_TAKE_PAIRS[12]

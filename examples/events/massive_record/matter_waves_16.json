@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 16700,
+ "ticks": 4700,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -72,11 +72,11 @@
    "lamp": {
     "rate": [
      1,
-     8
+     2
     ],
     "wheel": [
      1,
-     64
+     2048
     ],
     "directions": [
      [
@@ -85,9 +85,132 @@
       0
      ]
     ],
-    "train": 8
+    "train": 8,
+    "receiver": [
+     "screen_4",
+     "screen_5",
+     "screen_6",
+     "screen_7",
+     "screen_8",
+     "screen_9",
+     "screen_10",
+     "screen_11",
+     "screen_12",
+     "screen_13",
+     "screen_14",
+     "screen_15",
+     "screen_16",
+     "screen_17",
+     "screen_18",
+     "screen_19",
+     "screen_20",
+     "screen_21",
+     "screen_22",
+     "screen_23",
+     "screen_24",
+     "screen_25",
+     "screen_26",
+     "screen_27",
+     "screen_28",
+     "screen_29",
+     "screen_30",
+     "screen_31",
+     "screen_32",
+     "screen_33",
+     "screen_34",
+     "screen_35",
+     "screen_36",
+     "screen_37",
+     "screen_38",
+     "screen_39",
+     "screen_40",
+     "screen_41",
+     "screen_42",
+     "screen_43",
+     "screen_44",
+     "screen_45",
+     "screen_46",
+     "screen_47",
+     "screen_48",
+     "screen_49",
+     "screen_50",
+     "screen_51",
+     "screen_52",
+     "screen_53",
+     "screen_54",
+     "screen_55",
+     "screen_56",
+     "screen_57",
+     "screen_58",
+     "screen_59",
+     "screen_60",
+     "screen_61",
+     "screen_62",
+     "screen_63",
+     "screen_64",
+     "screen_65",
+     "screen_66",
+     "screen_67",
+     "screen_68",
+     "screen_69",
+     "screen_70",
+     "screen_71",
+     "screen_72",
+     "screen_73",
+     "screen_74",
+     "screen_75",
+     "screen_76",
+     "screen_77",
+     "screen_78",
+     "screen_79",
+     "screen_80",
+     "screen_81",
+     "screen_82",
+     "screen_83",
+     "screen_84",
+     "screen_85",
+     "screen_86",
+     "screen_87",
+     "screen_88",
+     "screen_89",
+     "screen_90",
+     "screen_91",
+     "screen_92",
+     "screen_93",
+     "screen_94",
+     "screen_95",
+     "screen_96",
+     "screen_97",
+     "screen_98",
+     "screen_99",
+     "screen_100",
+     "screen_101",
+     "screen_102",
+     "screen_103",
+     "screen_104",
+     "screen_105",
+     "screen_106",
+     "screen_107",
+     "screen_108",
+     "screen_109",
+     "screen_110",
+     "screen_111",
+     "screen_112",
+     "screen_113",
+     "screen_114",
+     "screen_115",
+     "screen_116",
+     "screen_117",
+     "screen_118",
+     "screen_119",
+     "screen_120",
+     "screen_121",
+     "screen_122",
+     "screen_123",
+     "screen_124"
+    ]
    },
-   "own_grace": 16700
+   "own_grace": 4700
   },
   {
    "position": [
@@ -15087,7 +15210,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_5",
@@ -15098,7 +15222,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_6",
@@ -15109,7 +15234,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_7",
@@ -15120,7 +15246,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_8",
@@ -15131,7 +15258,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_9",
@@ -15142,7 +15270,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_10",
@@ -15153,7 +15282,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_11",
@@ -15164,7 +15294,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_12",
@@ -15175,7 +15306,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_13",
@@ -15186,7 +15318,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_14",
@@ -15197,7 +15330,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_15",
@@ -15208,7 +15342,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_16",
@@ -15219,7 +15354,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_17",
@@ -15230,7 +15366,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_18",
@@ -15241,7 +15378,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_19",
@@ -15252,7 +15390,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_20",
@@ -15263,7 +15402,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_21",
@@ -15274,7 +15414,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_22",
@@ -15285,7 +15426,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_23",
@@ -15296,7 +15438,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_24",
@@ -15307,7 +15450,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_25",
@@ -15318,7 +15462,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_26",
@@ -15329,7 +15474,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_27",
@@ -15340,7 +15486,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_28",
@@ -15351,7 +15498,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_29",
@@ -15362,7 +15510,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_30",
@@ -15373,7 +15522,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_31",
@@ -15384,7 +15534,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_32",
@@ -15395,7 +15546,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_33",
@@ -15406,7 +15558,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_34",
@@ -15417,7 +15570,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_35",
@@ -15428,7 +15582,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_36",
@@ -15439,7 +15594,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_37",
@@ -15450,7 +15606,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_38",
@@ -15461,7 +15618,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_39",
@@ -15472,7 +15630,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_40",
@@ -15483,7 +15642,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_41",
@@ -15494,7 +15654,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_42",
@@ -15505,7 +15666,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_43",
@@ -15516,7 +15678,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_44",
@@ -15527,7 +15690,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_45",
@@ -15538,7 +15702,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_46",
@@ -15549,7 +15714,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_47",
@@ -15560,7 +15726,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_48",
@@ -15571,7 +15738,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_49",
@@ -15582,7 +15750,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_50",
@@ -15593,7 +15762,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_51",
@@ -15604,7 +15774,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_52",
@@ -15615,7 +15786,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_53",
@@ -15626,7 +15798,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_54",
@@ -15637,7 +15810,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_55",
@@ -15648,7 +15822,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_56",
@@ -15659,7 +15834,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_57",
@@ -15670,7 +15846,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_58",
@@ -15681,7 +15858,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_59",
@@ -15692,7 +15870,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_60",
@@ -15703,7 +15882,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_61",
@@ -15714,7 +15894,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_62",
@@ -15725,7 +15906,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_63",
@@ -15736,7 +15918,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_64",
@@ -15747,7 +15930,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_65",
@@ -15758,7 +15942,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_66",
@@ -15769,7 +15954,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_67",
@@ -15780,7 +15966,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_68",
@@ -15791,7 +15978,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_69",
@@ -15802,7 +15990,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_70",
@@ -15813,7 +16002,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_71",
@@ -15824,7 +16014,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_72",
@@ -15835,7 +16026,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_73",
@@ -15846,7 +16038,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_74",
@@ -15857,7 +16050,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_75",
@@ -15868,7 +16062,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_76",
@@ -15879,7 +16074,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_77",
@@ -15890,7 +16086,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_78",
@@ -15901,7 +16098,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_79",
@@ -15912,7 +16110,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_80",
@@ -15923,7 +16122,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_81",
@@ -15934,7 +16134,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_82",
@@ -15945,7 +16146,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_83",
@@ -15956,7 +16158,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_84",
@@ -15967,7 +16170,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_85",
@@ -15978,7 +16182,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_86",
@@ -15989,7 +16194,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_87",
@@ -16000,7 +16206,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_88",
@@ -16011,7 +16218,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_89",
@@ -16022,7 +16230,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_90",
@@ -16033,7 +16242,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_91",
@@ -16044,7 +16254,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_92",
@@ -16055,7 +16266,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_93",
@@ -16066,7 +16278,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_94",
@@ -16077,7 +16290,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_95",
@@ -16088,7 +16302,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_96",
@@ -16099,7 +16314,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_97",
@@ -16110,7 +16326,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_98",
@@ -16121,7 +16338,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_99",
@@ -16132,7 +16350,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_100",
@@ -16143,7 +16362,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_101",
@@ -16154,7 +16374,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_102",
@@ -16165,7 +16386,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_103",
@@ -16176,7 +16398,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_104",
@@ -16187,7 +16410,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_105",
@@ -16198,7 +16422,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_106",
@@ -16209,7 +16434,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_107",
@@ -16220,7 +16446,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_108",
@@ -16231,7 +16458,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_109",
@@ -16242,7 +16470,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_110",
@@ -16253,7 +16482,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_111",
@@ -16264,7 +16494,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_112",
@@ -16275,7 +16506,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_113",
@@ -16286,7 +16518,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_114",
@@ -16297,7 +16530,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_115",
@@ -16308,7 +16542,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_116",
@@ -16319,7 +16554,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_117",
@@ -16330,7 +16566,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_118",
@@ -16341,7 +16578,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_119",
@@ -16352,7 +16590,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_120",
@@ -16363,7 +16602,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_121",
@@ -16374,7 +16614,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_122",
@@ -16385,7 +16626,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_123",
@@ -16396,7 +16638,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   },
   {
    "name": "screen_124",
@@ -16407,7 +16650,8 @@
      0
     ]
    ],
-   "threshold": 1
+   "threshold": 1,
+   "wheel": 65536
   }
  ]
 }
