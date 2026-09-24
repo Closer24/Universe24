@@ -826,6 +826,11 @@ FAMILY_KEYS = {
     # admitted under the world key `massive_record` alone.
     "pair",
     "faces",
+    # item 10 and Reviewer 3's line 2 on item 6b: the kind's take pair [n, d]
+    # (the Ports' follow of a record of the kind at its emitter's own take),
+    # admitted on a massive kind alone; light's kind keeps the law's
+    # [-15, 56]; required where a lamp of the kind emits.
+    "take",
 }
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
@@ -854,6 +859,10 @@ BLOCK_KEYS = {
     "start",
     "margin",
     "emits",
+    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
+    # 7): an emitting block names the detector set whose one cell is its
+    # record's ladder; admitted on an emitting block alone
+    "receiver",
 }
 # The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
 # Reviewer 3's two lines): a pin world's cells two extents from a
@@ -919,6 +928,14 @@ LAMP_KEYS = {
     # detector-law-v1: the record's train in periods of its clock (the
     # record's coherence), a declaration of the lamp, absent by default.
     "train",
+    # detector-law-v1: the lamp record's LADDER BY NAME (SIZING.md, the click
+    # line and the receiver by name, DECLARATIONS.md section 13 item 7): the
+    # detector sets, by name, among which the birth wheel's u chooses the
+    # record's cell; every other set and every face is a SINK for the lamp's
+    # records (what it takes is booked to the escaped row, never chosen).
+    # Absent, the ladder is every cell as built. A string or a list of
+    # strings; refused outside `detector_law` and on a name no set declares.
+    "receiver",
     "directions",
     "phase_window",
     "phase_width",
@@ -1088,6 +1105,8 @@ class FamilyDefinition:
     # deviation: a zero face for the massive record, MASSIVE_RECORD.md
     # section 11 item 4).
     faces: tuple[bool, bool, bool] | None = None
+    # item 10: the kind's take pair (None: light's kind, the law's [-15, 56])
+    take: tuple[int, int] | None = None
 
     @property
     def massive_kind(self) -> bool:
@@ -1242,6 +1261,10 @@ class LampDefinition:
     # intervals after its train during which its own body takes nothing of
     # its own record; None: two periods of its clock (the engine's constant).
     own_grace: int | None = None
+    # detector-law-v1: the record's ladder by name (`receiver`), the detector
+    # sets among which u chooses the cell, in the world's order; None: every
+    # cell as built (the lamp worlds of the tables, untouched).
+    receiver: tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -1321,6 +1344,13 @@ class BlockDefinition:
     # record it emitted (the grace = the train + own_grace; DECLARATIONS.md
     # section 10 item 1); declared on every emitter, no default.
     own_grace: int | None = None
+    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
+    # 7, the click line): the name of the detector set whose one cell is the
+    # ladder of every record this block emits (the click line at that cell's
+    # first rung after the record's train; the faces and every other set
+    # sinks for it); None where the world names none, the ladder then every
+    # cell and the line at the close, as before the key.
+    receiver: str | None = None
 
 
 @dataclass(frozen=True)
@@ -2309,6 +2339,14 @@ def _families(
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
         faces = _kind_faces(obj, f"families[{index}]", pair)
+        take: tuple[int, int] | None = None
+        if "take" in obj:
+            if pair is None or pair[1] <= pair[0]:
+                raise ValueError(
+                    f"{BEAM_LAW}: families[{index}].take is admitted on a massive kind alone (light's "
+                    "kind takes with the law's [-15, 56])"
+                )
+            take = _take_pair(obj["take"], f"families[{index}].take")
         found.append(
             FamilyDefinition(
                 name,
@@ -2322,6 +2360,7 @@ def _families(
                 massive=massive,
                 pair=pair,
                 faces=faces,
+                take=take,
             )
         )
         declared.append(columns)
@@ -2352,6 +2391,7 @@ def _families(
             family.massive,
             pair=family.pair,
             faces=family.faces,
+            take=family.take,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -2703,7 +2743,35 @@ def _lamp(
         own_grace=None
         if "own_grace" not in obj
         else _integer(obj["own_grace"], f"{label}.own_grace", 0),
+        receiver=_receiver_names(obj, label, detector_law),
     )
+
+
+def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> tuple[str, ...] | None:
+    """The lamp's `receiver`, its records' ladder by name: a set's name or a
+    list of distinct names; None without the key. Refused outside the local
+    detector law (the ladder is that law's form)."""
+    if "receiver" not in obj:
+        return None
+    if not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.receiver is admitted under {DETECTOR_LAW_RULE} alone (the "
+            "record's ladder by name is the local detector law's form)"
+        )
+    value = obj["receiver"]
+    names = [value] if isinstance(value, str) else value
+    if (
+        not isinstance(names, list)
+        or not names
+        or any(not isinstance(name, str) or not name for name in names)
+    ):
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.receiver must be a detector set's name or a nonempty list of "
+            "names (the lamp record's ladder, SIZING.md)"
+        )
+    if len(set(names)) != len(names):
+        raise ValueError(f"{BEAM_LAW}: {label}.receiver names a set twice")
+    return tuple(names)
 
 
 def _branches(
@@ -3475,6 +3543,27 @@ def _block(
             "its own set takes nothing of its own record (N_s, DECLARATIONS.md section 10 item "
             "1; no default)"
         )
+    receiver: str | None = None
+    if "receiver" in obj:
+        if emits is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.receiver is refused on a block that emits nothing (the "
+                "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
+                "section 13 item 7)"
+            )
+        value = obj["receiver"]
+        if not isinstance(value, str) or not value:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.receiver must be the name of a declared detector set (a "
+                "nonempty string)"
+            )
+        receiver = value
+    elif emits is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} emits {names_of_emits(emits, families)!r} and declares no "
+            "`receiver`: an emitting block names the detector set whose one cell is the ladder "
+            "of its records (the receiver by name, DECLARATIONS.md section 13 item 7; no default)"
+        )
     return BlockDefinition(
         side,
         pair,
@@ -3491,6 +3580,7 @@ def _block(
         emits=emits,
         own_grace=own_grace,
         take=take,
+        receiver=receiver,
     )
 
 
@@ -3960,6 +4050,21 @@ def covariant_square(
                 f"grain {grain} (a larger grain)"
             )
     return square
+
+
+def _take_pair(value: object, label: str) -> tuple[int, int]:
+    """A take pair [n, d]: the Ports' one-way follow k = n / d in (-1, 0]
+    (light's [-15, 56]); a declaration of kind 2 per kind or per block."""
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{BEAM_LAW}: {label} must be [n, d], the take's pair")
+    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, 0)
+    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
+    if -numerator >= denominator:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} [{numerator}, {denominator}]: the take's pair k = n / d lies in "
+            "(-1, 0] (the Port follows the wave one way; light's [-15, 56])"
+        )
+    return (numerator, denominator)
 
 
 def _detector_law_load_checks(
@@ -4767,6 +4872,48 @@ def _optical(
     return value
 
 
+def _body_fit_check(world: NatureBeamWorld) -> None:
+    """A body's cube whole on the board, never cut (the model owner's word of
+    2026-09-24, 16:35Z and 16:48Z, through the Boss: the experimenter places
+    the body exactly where he wants it; SIMULATOR_DEFINITIONS.md, the four
+    building blocks, the body's condition 1): the cells [x0, x0 + s) on each
+    axis from the lower vertex `position` with the edge `side` lie on the
+    board on every axis the body's kind does not fold. On an open or closed
+    axis the far vertex is on the board; on a periodic axis the extent is at
+    least the edge (a cube across the seam is whole, a cube wrapped onto
+    itself is not); the folded axis of extent 1 (a layer, a chain) is the
+    one exception, the stabiliser's square or segment (ALGEBRA.md 8.2 and
+    8.3). Refused naming the body, the axis and the extent; the engine's
+    `_cube` and the margin module's `block_cells` then never cut."""
+    shape = world.shape
+    for number, entry in enumerate(world.measured):
+        block = entry.block
+        if block is None:
+            continue
+        wrap = world.kind_periodic(entry.family)
+        for axis, name in enumerate(AXES):
+            extent = int(shape[axis])
+            corner = int(entry.position[axis])
+            if extent == 1:
+                continue
+            if wrap[axis]:
+                if extent < block.side:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} wraps onto "
+                        f"itself on the periodic axis {name} of extent {extent} (a body is a whole "
+                        "cube, square or segment on the board, never cut or folded but on an axis "
+                        "of extent 1; the model owner's word of 2026-09-24, 16:35Z)"
+                    )
+            elif corner < 0 or corner + block.side > extent:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} at {corner} on "
+                    f"the axis {name} reaches {corner + block.side - 1} beyond the face at "
+                    f"{extent - 1}: a body lies whole on the board, exactly where it is declared, "
+                    "never cut to fit (the model owner's word of 2026-09-24, 16:35Z; move the "
+                    "vertex or the edge, or open the axis as periodic)"
+                )
+
+
 def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     """Reject anything but a lawful world of the Beam Law."""
     if not isinstance(document, dict):
@@ -5097,8 +5244,48 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)
+        if detectors and all(entry.lamp is None for entry in measured) and "wheel" not in obj:
+            # the Boss's line (5) of 06:50Z: no implicit default of the rung
+            raise ValueError(
+                f"{BEAM_LAW}: a world under the local detector law with a detector set and no lamp "
+                "declares the world key `wheel` (the sets' rung W and the records' completion rung; "
+                "no implicit default)"
+            )
+        for number, entry in enumerate(measured):
+            # item 10: a lamp of a massive kind takes its record's remnant in
+            # the kind's own pair, which the family must declare (no default)
+            if entry.lamp is not None and families[entry.family].massive_kind:
+                if families[entry.family].take is None:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}]: a lamp of the massive kind "
+                        f"{families[entry.family].name!r} needs the kind's take pair (the family key "
+                        "`take` [n, d], the Ports' follow at its own remnant take; DECLARATIONS.md "
+                        "section 10 item 10)"
+                    )
+        set_names = {detector.name for detector in detectors}
+        for number, entry in enumerate(measured):
+            # the lamp record's ladder by name: every name a declared set's
+            if entry.lamp is not None and entry.lamp.receiver is not None:
+                for name in entry.lamp.receiver:
+                    if name not in set_names:
+                        raise ValueError(
+                            f"{BEAM_LAW}: measured[{number}].lamp.receiver names {name!r}, which no "
+                            "detector set declares (the record's ladder is made of declared sets; "
+                            "a face is never on it)"
+                        )
+            # the receiver by name (DECLARATIONS.md section 13 item 7): the
+            # set named must be declared; the names are listed in the refusal
+            if entry.block is not None and entry.block.receiver is not None:
+                names_declared = [detector.name for detector in detectors]
+                if entry.block.receiver not in names_declared:
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{number}].receiver {entry.block.receiver!r} names no "
+                        f"declared detector set (the sets declared: {names_declared}); the receiver "
+                        "by name is a set's name (DECLARATIONS.md section 13 item 7)"
+                    )
     _record_load_checks(measured, detectors, families, phase_steps)
     _aperture_load_check(measured, families, detectors, table, shape, periodic)
+    _body_fit_check(world)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
     # tested where Lambda_c is formed (`column_scales`): a world whose column
     # scales leave the register is refused here, at load, not at its first

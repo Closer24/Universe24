@@ -21,6 +21,7 @@ script with `PYTHONPATH=src python tools/click_readings/<module>.py ...`
 | --- | --- | --- |
 | `bell.py` | A2, the Bell run (the CHSH reading) | `tests/test_nature_beam_worlds.py` |
 | `bell_choosers.py` | A2 with the choosers on the GameBoard | `tests/test_bell_choosers.py` |
+| `detector_law_bell.py` | The Bell rows 1a to 1d and Malus's row 9 under the local detector law (the joint gather's four cells, E, the marginals, S; the + share) | `tests/test_detector_law_tables.py` (h) |
 | `bohr.py` | H, Bohr's lines behind the detector | `tests/test_bohr_readings.py` |
 | `c_measured.py` | Q, c measured behind a detector | `tests/test_c_measured.py` |
 | `coupling.py` | C, the couplings on the plane | `tests/test_coupling_readings.py` |

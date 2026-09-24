@@ -1124,3 +1124,390 @@ the row is held at 0 (`LiveRecord.was_exempt`, `_advance`); the ledger
 stays balanced (test (ac)'s assertion at every interval) and the
 booking is one Node's content, below the ringing's per-interval booking
 on the light clock's chain.
+
+## 18. Item 10, THE RULE: every emitter takes its own record's remnant from the first interval after its train (DECLARATIONS.md section 10 item 10 and section 15 M1-4 at remnant-rule e6b4ec3d; the model owner's word of 06:42Z, record 1694, and his word of 07:27Z, record 1711, the timing integer withdrawn; Reviewer 3 and the physicist's recommendation T = 0 of 07:18Z and 07:22Z; the Boss's 07:45Z; `detector-law-build-3`)
+
+- THE LINE (`_own_take`, `_advance`, `_form_take_masks`): from the first
+  interval after its train (a lamp's record at age > train; an emitting
+  block's after its sourcing cycle) the record's own emitter's Nodes (a
+  lamp's Nodes; the block's CURRENT cells) are a taking set for THAT
+  record alone in the receiver form: the row held at 0 there, one ghost
+  per Port in the record's OWN KIND'S pair (the family key `take` [n, d]
+  on a MASSIVE kind, refused on light's kind, required where a lamp of
+  the kind exists, Reviewer 3's line 2 on item 6b; light's kind the
+  law's [-15, 56]), the Ports of the record's taking set (the receivers
+  and its emitter together) formed per record with one slot per (axis,
+  sign) so a record's Port arrays keep their index, a Port new this
+  interval (the first, a hop) starting at its free neighbour's level
+  with no jump booked. The tail of the train still inside the cells at
+  the train's end (at most 12 percent of the record's motion on the
+  light clock's chain, the reading below) is taken with the remnant.
+  What the emitter takes is booked NOWHERE as motion (the ledger books
+  content): onto no pointer and not into the record's `absorbed`, so
+  the ladder never sees it (the grace's `keep` exclusion made permanent)
+  and the record's completion comes from what the sets and faces took;
+  a record its emitter took wholly has energy 0 and completes with no
+  cell chosen, its content booked to the ledger's HOST row
+  `taken_by_emitter` (not to `escaped`: the remnant never left the board
+  and is not received back), the books balanced with the new row
+  (`transit.taken_by_emitter` in the books and run.json); the gather
+  line carries `taken_by_emitter` (the content so booked, 0 where a cell
+  was chosen) and the records reading `emitter_taking` (whether the
+  emitter's take has acted), both HOST. The emitter never clicks on its
+  own record; the block's own massive record is untouched; during the
+  train the cells insert as built; the sets' `own_grace` stands. NO KEY
+  and no load-time integer: the earlier forms (a per-world key
+  `remnant_take`; T = ceil(extent / v_g) + 2 computed at load in the
+  tables' fixed point, 24 for a side-12 block at the 12-Link clock, 4
+  for a one-Node lamp, 23 for the light clock's A at its clock [1, 1])
+  are HISTORY of 2026-09-24's morning, withdrawn by record 1711; a
+  `remnant_take` key written into a world is refused as unknown. THE
+  WORLD KEY `wheel` (the Boss's line (5)): a detector-law world with a
+  set, no lamp and no `wheel` is refused at load naming the key (the
+  guard that would have caught the sagnac files' ladder at W = 1).
+- THE TAKE'S START: the interval whose start is the record's age `train`
+  is the first after the train (a lamp's drive writes last at the age
+  train - 1; a block's record is sourced last in the interval before the
+  next record's birth, its `train` that age), so the take acts from
+  `age >= train` and the row is 0 from the age train + 1 on (test (e);
+  the light clock's cells the drive's at 69, 0 from 70, test (ac)).
+- THE SET THAT IS THE EMITTER'S CELLS (the form without positions, R2's
+  and the sagnac worlds', `block` alone): line 7's exemption (the set
+  free for the block's own record during train + own_grace) and item
+  10's take name the same Nodes there; the take wins at the emitter's
+  own cells from the train's end and the exemption keeps only a set's
+  Nodes beyond them (the positions form's free Node). Before this line
+  a cell both exempt and taking was neither held at 0 nor free (the
+  row evolving while the rule read the Ports' ghosts as its neighbours),
+  stable at rest and growing without bound on a stepping block: the
+  World Generator's sagnac_k3 (k = 3, own_grace 3000) was refused by the
+  amplitude bound at interval 1357, its records' levels tripling every
+  50 intervals at A's trailing cells from about 1100 (EXPLORATORY, on
+  this branch before the line; at 36fd5235 the same intervals read
+  levels of 1.2 x 10^7, stable). Test (ai) pins the form at rest and at
+  k = 3: the own record's row 0 at the current cells from the first
+  interval after its train at every interval, the set booking nothing
+  of it, the books balanced, every level below four times the seed.
+- THE HOP'S TAKE OF THE BLOCK'S OWN RECORD AT EVERY AGE (the physicist's
+  finding on the Preliminary Runner's sagnac_k3 at 540456da, 09:12Z; the
+  Boss's 09:30Z): `_move_block`'s hop rule exempted the block's own
+  emitted records only during the hold of train + own_grace, so once the
+  hold had ended a step onto an own record's remnant booked that Node's
+  content onto the block's own pointer (at_a's pointers on 37 of A's 69
+  open records, first rungs on 16 of them at about 3500 after the birth,
+  a self-click one record away at 0.14 percent of the absorbed against
+  the click's 1 / (2 W) = 0.195). Item 10 has the emitter's take of its
+  own record on no pointer and not into `absorbed` at ANY age, so the
+  hop now holds the entered Node at 0 for the block's own record and
+  books nothing, from the first interval after the train on (during the
+  train the row evolves, line B); a foreign record's entered content
+  books as before. Test (ak) pins it on a stepping block with own_grace
+  70 and a lamp behind it.
+- A BLOCK THAT STEPS OFF THE BOARD REFUSES THE INTERVAL (Reviewer 3's
+  line from the Preliminary Runner's redshift dry run, the Boss's 09:45Z:
+  the receding block ran off the board at tick 9722, its sum 0 from
+  9756, the run going on to 14686 with the books balanced): at a hop
+  whose cube is cut by a zero face (`_cube` on a non-periodic axis, the
+  count of cells below the count before the hop) `_move_block` raises,
+  naming the block, the interval, the corner and the cells left; a
+  periodic axis wraps as before. The margin rule refuses such a block
+  at load; this is the run's own check (the cheaper of Reviewer 3's two
+  forms, the margin's distance the load-time rule's). Test (al): a
+  block pushed toward the open face refuses at the interval its cells
+  would leave, having stepped before; on a periodic chain it wraps on.
+- THE GUARD (Reviewer 3, 07:43Z, on the sagnac_k3 phantom): before the
+  booking loop an absorbing Node whose cell is the sentinel refuses the
+  interval naming the Node (a Python list's index -1 would otherwise
+  book it to the last cell, the +x face); test (e) trips it by hand.
+- WHAT MOVED: every lamp's record is taken at its lamp's Nodes from the
+  train's end (before: after the grace of two periods, onto the lamp's
+  own cell, the first build's afterglow, which could win the ladder), so
+  test (p)'s three digests moved once more (the state digest by the
+  take's start at the age `train`, the record alive at 600 carrying
+  its pointers); an absorbing block's own cell now stamps its first rung
+  with the block's count in the generic offer loop (key (i); before,
+  only the clock body's path stamped it, a gap the afterglow had
+  hidden); no world file changes.
+- READINGS (EXPLORATORY, before the GO, none pinned; test (ac) on the
+  light clock's chain of 173, the world's `wheel` 64, the set at x =
+  112, own_grace 70, W = 64): the level at A's cells is the drive's
+  millions at 69 and 0 from 70 (GAMEBOARD); the set books less than one
+  rung of A's own record between the grace's end and the return (5.4 x
+  10^10 at 208 against the rung 6.7 x 10^10); the set's first rung reads
+  214 after the birth on this chain (the declaration's pin run reads it
+  beside 218 +- 2; the map's transit 207.85), the return's rise 2.7 x
+  10^12 from 208 to 240. THE SWEEP over a delay after the train, the
+  reading that withdrew the timing integer (the first rung; the pointer
+  at 208): 0: 214 (5.4 x 10^10); 4: 174 (8.5 x 10^10); 8: 157 (1.2 x
+  10^11); 12: 152 (1.4 x 10^11); 16: 151 (1.5 x 10^11); 24: 147 (2.1 x
+  10^11): every interval of delay lets the remnant's alternating mode
+  (the band's edge, group pace 0) spill onto the free Nodes beside the
+  face, which the emitter's cells do not take. THE CELLS' SHARE of the
+  record's motion energy with no take (the Boss's line (6)): 12.3
+  percent at 70, 6.2 at 80, 16.3 at 90, 20.5 at 94, 21.5 at 100, 19.2 at
+  110, 13.7 at 120 (the largest level inside 5.6 x 10^6, 2.0 x 10^6, 1.4
+  x 10^6, 4.2 x 10^5, 1.2 x 10^6 at 70 to 100; the twelve free Nodes
+  beside the face 27, 25, 21, 23, 17, 18 and 22 percent): the tail has
+  left by about 94 while the remnant's motion share rises, its level
+  about 10^6 alternating each interval. Test (k)'s clock-body case: the
+  record's click went to the lamp's own cell at 981 (the afterglow);
+  under the rule the lamp takes it and the record lives on past 1200
+  with the clock body radiating into it (pinned as a reading; it
+  completes at the clock body's cell at 2437, EXPLORATORY).
+- THE COMPLETION AT W = 1 (Reviewer 3's second point, 07:43Z): the
+  record completes when the motion left on the board is below one rung
+  (norm / W) of what the receivers hold, so at W = 1 a record closes as
+  soon as the board's motion is below the whole of the absorbed; the
+  sagnac runs of 906d3635 ran on files without a world `wheel` (W = 1),
+  so their completions are that file's, not the law's; the `wheel`
+  refusal above stops such a file at load.
+- THE PREFLIGHT (Reviewer 3's nit): CHECK 2 prints the interval of the
+  W-th birth and the margin the ticks leave for the arm's transit and
+  the completion, which the tool does not check (the world's geometry,
+  the World Generator's line).
+- THE THREE TESTS: generic (the take primitive as built, no family
+  name), vector (the receiver form's verbs, no root, no float), local
+  (the emitter's own Nodes, its own record).
+
+## 19. The joint gather: the polariser's two cells and the pair's one ladder (DECLARATIONS.md section 1 item 3, section 14 item 6, section 15 T-1; the model owner's word of 2026-09-24, about 09:48Z, "go with the recommendations", the Boss's order of 10:00Z; `detector-law-joint-gather` off `detector-law-build-3` at 1529d20)
+
+The finding it answers (the Preliminary Runner, records 1770 to 1779): on
+every engine every gather's ladder held one cell, the arm's own table's
+cell "0", no joint cell and no channel; the Bell and Malus pins were
+unbuilt. Three commits, one per component; the first builder's take and
+click lines untouched (the ladder's head of `_click`, the completion loop
+of `step` and one call after the booking loop of `_advance` are this
+build's, as named to the Boss at 10:32Z).
+
+| Component | The declaration | The code | The test |
+| --- | --- | --- | --- |
+| 1. The table body of two cells | Section 14 item 6: a polariser is a TABLE BODY of two cells on the arm's line; the entry cell its Node, the exit cell the next Node beyond it; the record's offer at the entry's Ports split by [C'[s]^2, S'[s]^2] over n_s with the remainder kept, the + share to the exit, the - share to the entry; the click's interval the first rung of the whole offer at the body over W, its cell by u on the ladder of the two weights; the three tests held (one primitive, verbs B, D and E, the entry's own record and its one Link to the exit) | `TableBody`, `_polarisers` (a measured event whose table entry carries an integer `phase_window` on a family; its arm the one of the family's ONE lamp whose direction points from the lamp to the body, the exit Node body + direction, on the board and free; a reading of the window's centre, a body on no arm, two lamps, an exit off the board or taken, or no set of one Node naming the body: refused at construction), `_table_body` (the cells `<set>+` at the exit and `<set>-` at the entry, in that order on the ladder, both take Nodes booking to the body, on the set's wheel; the pair from `amplitude.half_angle`, the amplitude law's own integers), `_split_table_offers` (called once per interval after the booking loop: the entry pointer's gain since the last split times C'^2 over n_s, the remainder per record, moved to the + cell; the whole offer's rung stamped on both cells; `absorbed`, the norm and every other cell untouched), the gather's cell triples [set, channel, label] from `cell_set` and `cell_channel` (every cell as built [name, 0, "0"], so the lamp worlds' lines are byte for byte: test (p)'s digests unchanged). The rotation U_s enters through the split's weights and the joint weights; the rows are taken at the entry. THE READING NOT TAKEN: the `directions` of a measured event default to the six headings and cannot name the arm; the arm is the lamp's | `tests/test_detector_law_tables.py` (d): two cells, the shares within a unit of the declared share, one rung for both cells, the gather's triples, 64 / 32 / 0 of 64 at s = 0, N / 4 and N / 2 over the full wheel (the pin's form, 128 of 256 at 45 degrees), the books balanced; the four refusals |
+| 2. The pair's one gather | Section 1 item 3: the pair's record gathers ONCE, its ladder the four joint cells (++, +-, -+, --) with the weights R = J^2, J(o_A, o_B) = SUM over the labels l of U_a[o_A][l] U_b[o_B][l] over both arms' tables (the declared integer pairs, no root, no float), the birth's one u choosing one cell, each arm's table counting its own channel of it; an arm's own two-cell ladder is NOT the Bell reading (Reviewer 3's withdrawn line); Malus the one-table case of the same ladder | `joint_weights` (per body its half-angle pair and its arm; U_s the row the channel, the column the label's bit on the body's arm, as `amplitude.rotation`; J over the birth's joint labels with their weights; R = J^2; the cells in the lexicographic order of the bodies' channels; one primitive for two bodies or one), `pair_bodies` (a lamp of several arms needs ONE table body of its family on each arm, in the sets' order; refused otherwise), `LiveRecord.arm_done` and the completion loop of `step` (an arm that completes waits, its rows still; the pair gathers when every arm has), `_click_pair` (the ladder over the four weights where every arm's offer reached its body, else no cell; the content, the arms' contents summed, one quantum, handed once to the body on the arm it was born on, arm 0; `chosen` the joint cell, one triple per body; `arm_records`; `arm_offers` HOST; `click` the later of the arms' first rungs at their bodies, `click_at` "rung" where both have one, the stamp the interval) | (e): 64 gathers of 64 births, the four cells' order, the counts 16 each at (0, N / 4), 32 and 32 on ++ and -- at (0, 0), on +- and -+ at (0, N / 2), u once each, the content one; (f): Alice's marginal exactly 32 of 64 at four settings pairs, Bob's within one (his cells not adjacent on the ladder); (g): the declared J^2 integers from planted tables, E = 46565 / 65773 at (256, 0) against (237, 98) (COMPUTATION, the form's own number for the generator's `bell.py`), the singlet's zero cells, the one-table case; (b) with the two table bodies and the refusal of a pair lamp without them; the order channel's test on 64 pair gathers |
+| 3. The reader | RUN_LIST.md rows 1a to 1d and 9: the four cells' counts per setting, S from the four correlations, the marginals per side; Malus the + channel's share; read from the gather lines, never a pin moved | `tools/click_readings/detector_law_bell.py` (`read_run`, `counts_of`, `chsh`, `report`; integers and Fractions, no float in a number) | (h): the reader on a run folder written by the runner from the bar worlds |
+
+THE BOOKS LINE, named (the Boss's item (1), the preliminary's Alice [0, 1]
+against Bob [2048, 1]): in the engine as built the pair's one quantum rode
+arm 0, the lamp's first direction (+x, Bob's arm on the GO bar), and Alice's
+arm carried 0 (`_births`: "the pair's one quantum on arm 0, a default,
+named"), so the asymmetry was the arm-per-record form's, not a physical
+reading. Under the one gather the quantum lands once, at the joint click,
+on the body of the arm it was born on (arm 0, the lamp's first direction:
+bob on the GO bar), the first builder's word of 10:57Z: the quantum lands
+where it is born and closes in the joint gather; the gather names the
+joint cell, both channels.
+
+THE WORLD FILES (a finding for the World Generator, not this build's):
+`malus_45.json` and its three settings at `detector-law-worlds` 0fd1156 put
+the polariser at x = 6 on a chain of 7, so its exit cell x = 7 is off the
+board and the world is refused at construction naming it; the chain of 8
+(or the polariser at x = 5) admits it. Their `read` counter at x = 4 stays
+Reviewer 3's named defect of 08:52Z. The Bell four load unchanged (alice at
+x = 7 with the exit x = 6 on the -x arm, bob at x = 17 with the exit x = 18).
+
+## 20. The lamp record's ladder by name and the cell over the ladder's own sum (SIZING.md, 2026-09-24; DECLARATIONS.md section 13 item 7, the click line and the receiver by name; the model owner's word of 12:57Z; `engine-fix-3`)
+
+The finding it answers (the Preliminary Runner's two_slits run of 10:45Z):
+every one of 1024 clicks at the open face behind the lamp and none on the
+screen, because the faces were cells on the record's ladder and held 97
+percent of every record, and because the cell of u was taken over the
+record's whole `absorbed`, so that with the faces sunk every u above 0.03 W
+would have found no cell.
+
+- THE KEY (`world.py`, `LAMP_KEYS`, `LampDefinition.receiver`,
+  `_receiver_names`): `receiver` on a LAMP, a detector set's name or a list
+  of distinct names, the record's LADDER BY NAME; refused outside the local
+  detector law, on an empty list, on a repeated name and on a name no set
+  declares (a face is never on it). Absent, the ladder is every cell as
+  built: the table rows' lamp worlds are untouched and their gather lines
+  byte for byte (the two HOST fields `ladder` and `sunk` appear on a lamp
+  with the key alone; the chain world's digests of test (p) unmoved). The
+  same word as the block's `receiver` of line (1): a record's ladder is what
+  the world names, one set for a block's record, the named sets for a
+  lamp's.
+- THE LINE (`detector_law.py`, `LiveRecord.ladder`, `_births`, `_click`):
+  at birth the record's ladder is the named sets' cells; at the click the
+  ladder's weights are the named cells' pointers with every other cell at
+  0, so `cell_of` and `rungs` take the cell of u over the LADDER'S OWN SUM
+  (the cumulative rule, the first named cell whose rung exceeds u), and a
+  sink (a face, an unnamed set) is never chosen. A sink takes and books as
+  every cell does (the pointer, `absorbed`, its rung): the record's
+  completion (`_complete`, the motion left against `absorbed` over the
+  world's wheel) and the record's norm are untouched; the click's time
+  stays the chosen cell's first rung against the norm on the set's own
+  `wheel`. The gather line carries `ladder` (the named sets) and `sunk`
+  (HOST: the pointers' sum at the sinks). The content goes with the chosen
+  cell as before; a record whose named cells hold nothing escapes.
+- THE THREE TESTS: generic (one primitive, the ladder's weights, no kind,
+  no family name); vector (the rung on the pointer, integers, no root, no
+  float); local (the record's own pointers, nothing kept at a Node).
+- THE TEST (`tests/test_detector_law.py` (f)): the layer of 24 x 7 with the
+  lamp two Links from the -x face and three one-Node sets at x = 18:
+  under `receiver` [s0, s1, s2] every one of 8 clicks at a named set, the
+  chosen cell the first named cell whose rung exceeds u on the gather's own
+  rungs, the counts over the wheel of 8 the rungs' differences (3, 2, 3),
+  the sinks' share printed and below the whole, the books balanced at
+  every tick; without the key the same world clicks at face:-x (the
+  control); the string form names one set; the four refusals.
+
+## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
+
+1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
+   from the setting alone and never read the record's label state, so a
+   record born on label 1, or on a superposition through joint labels, was
+   split as if on label 0: the polariser assigned the outcome instead of
+   acting on the state. It lived because the polariser's one test (d)
+   drove label 0 alone.
+2. THE FIX, with the primitive already on main: the table body keeps its
+   half-angle pair (C'[s], S'[s]); per record the channel pointers J(o) =
+   SUM over the labels l of U_s[o][bit of l on the arm] x a_l are formed by
+   `joint_weights` with this one body (verb B on the record's label
+   weights, then the square), the split by [J(+)^2, J(-)^2] over their sum
+   with the remainder kept; the label-0 weights `plus`, `minus`, `norm`
+   stay on the body as the declared integers. THE GATE (the mathematician's
+   line-by-line read, ALGEBRA.md 9.11, 2026-09-24): (a) the bodies acting
+   on a record's family are read as the material's own declaration
+   (`table_bodies_by_family`), no branch on a family; (b) the weights' sum
+   is n_s times the state's norm and never 0, so no guard; (d) for an arm
+   of a rank-2 record the weights are the partial trace over the other
+   arm's bit (`channel_weights`: the labels grouped by the other arm's bit,
+   the pointer coherent within a group, the weight the sum of the groups'
+   squares), an arm of HV + VH half on each channel at every setting; the
+   joint counts unchanged (test d4).
+3. THE TESTS (tests/test_detector_law_tables.py): (d) label 0 unchanged
+   (64, 32, 0 of 64 in + at s = 0, N / 4, N / 2); (d2) label 1 swaps (0,
+   32, 64) and the equal superposition gives (32, 64, 32) with J(+) = C' +
+   S' and J(-) = C' - S', the expected counts the algebra's; (d3) Malus's
+   four worlds keep 128, 246, 199 and 177 of 256. The three tests hold: one
+   primitive on declared integers, no family name; verb B and one
+   division, no root, no float; the entry cell reads its own record's
+   labels and pair.
+
+## 22. The body's conditions exact in the initial state, checked at load (SIMULATOR_DEFINITIONS.md, the four building blocks, the body's conditions 1, 5 and 7; the model owner's words of 2026-09-24, 16:35Z and 16:48Z, through the Boss; `body-check`)
+
+1. THE SHAPE WHOLE ON THE BOARD (`_body_fit_check`, world.py, the loader's
+   last check): a body's cube from its lower vertex `position` with the
+   edge `side` lies whole on the board on every axis its kind does not
+   fold; an open or closed face it would pass, or a periodic axis shorter
+   than its edge, refuses the world naming the body, the axis and the
+   vertex; the folded axis of extent 1 (a layer, a chain) is the one
+   exception; a cube across a periodic seam is whole. Before this line the
+   engine's `_cube` and the margin module's `block_cells` cut the cube to
+   the board silently (the defect under the owner's word of 16:35Z, "the
+   experimenter must be able to put the cube exactly where he wants it").
+2. THE SEED ON THE MODE (`check_body_conditions`, the margin module,
+   called by run.py and `tools/preflight_worlds.py` after `check_margins`
+   on the engine as constructed, before the first interval): for every
+   bound body the module's own mode (`bound_mode`, the Lanczos vector)
+   rounded at the seed's largest magnitude is the expected initial state
+   over the whole board; the body's own record at both levels, `now` and
+   `before`, must equal it bit for bit; the first Node that differs refuses
+   the world, named with both values. A flat seed (the first builds' form,
+   the value on the cells) is refused by it.
+3. THE RAMP (the same call): a body with a momentum declares `ramp` at
+   least ten relaxation times 1 / (omega_0 - omega_b) of its own well
+   (DECLARATIONS.md section 8), or is refused naming the ramp and the
+   relaxation time; the ramp's ratio is printed as COMPUTATION. A silent
+   body (seed 0, no own record: the receding index's medium body with a
+   momentum and no ramp) has no reading and no ramp check, as the margin
+   module skips it (Reviewer 3's line F; test g on that world).
+4. The three tests hold: the check is host-side at load, outside the
+   integer path; no rule of the law moves; nothing is kept at a Node.
+   Conditions 2 (the lowered pair) and 6 (the amplitude bound) stay the
+   loader's own refusals; 3 and 4 (the bound mode, the margin) stay
+   `check_margins`.
+5. THE RUN LIST'S WORLDS UNDER IT (tests/test_body_conditions.py, test g):
+   as the files stood, the muon's layer pin world alone passed (its seed
+   the generator's `mode_profile`); the deep well (and its rest world),
+   the boxes, the light clock, sagnac (two) and redshift (two) carried a
+   flat seed and were refused. THE WORLD LINE (DECLARATIONS.md section 15
+   M1-11, on the owner's word): the massive generator's `seed_on_the_mode`
+   seeds every bound body on its mode at the declared amplitude (the
+   detector-law generator calls it once its emitter documents are
+   complete, `seed_profile=False` on its `world` calls); the layer pin
+   worlds' ramp 12000 and ticks 20500 (section 8: ten relaxation times by
+   the module's own 1164.6 intervals); every listed massive world loads
+   clean under the check; the index's silent body and the light-kind walls
+   have no reading. The preliminaries of the regenerated worlds re-run.
+
+## 21. The receiver by name and the click line at the rung (DECLARATIONS.md section 13 item 7, the owner's word of 2026-09-24, 09:50Z; section 10 items 9 and 10; Nature24's eight decisions of 12:40Z through the Boss, the declaration built to; the former build-4 of record 1800, never pushed; the Engine Fixer's line 1 on `engine-fix-1`, 2026-09-24)
+
+- THE LINE (`world.py`: `BlockDefinition.receiver`, the block key
+  `receiver`; `detector_law.py`: `receiver_cell`, `_receiver_of`,
+  `_line_at_rung`, `_gather_line`, `_release`, `_click`, `_close_clicked`,
+  `_close_without_click`): every emitting block declares `receiver`, the
+  name of a declared detector set (REQUIRED, refused absent with no
+  default; refused on a block that emits nothing; refused naming no
+  declared set, the names listed; a set bound to the block itself
+  admitted), and that set's one cell is the LADDER of every record the
+  block emits, one cell whatever the set's Node count, its rung the set's
+  own `wheel` (pointer x wheel at or above the record's norm, the rung as
+  today), the record's u 0 choosing nothing. The faces and every other
+  set are SINKS for such a record: what they take enters `absorbed` (the
+  completion's measure) and the record's HOST `escaped` (the pointer's
+  unit) and no pointer, in the offer loop of `_advance`, at the hop's
+  entered content in `_move_block` and at a clock body's response in
+  `_book_response` alike. The gather line is written by `_line_at_rung`
+  at the first interval after the record's train (not sourcing, age at
+  or above the train, item 10's own condition) at which the receiver's
+  first rung is stamped: `click` the rung's interval, `tick` the line's
+  (equal to `click`; the birth plus the train where the rung fell inside
+  the train, Reviewer 3's precondition of record 1800), `click_at`
+  "rung", `clock` the receiving block's count as the interval began,
+  `escaped` the sinks' take by the line. The content moves with the line
+  to the receiver's body (`held`, `held_measured`, `transit_absorbed`; 0
+  for a block's record, born at content 0), the record's content is 0
+  from then and it lives on (field energy the sinks absorb) to close by
+  `_complete` as before with NO second line: `_close_clicked` books its
+  content (0) to the escaped row, releases its rows and counts it on the
+  ledger's HOST row `closed_after_click` (`transit.closed_after_click` in
+  the books; the records reading's `clicked` and `escaped`), written on
+  a world with a receiver alone. A record whose receiver crosses no rung
+  within the ticks writes NO line (`_close_without_click`): its content
+  goes to the row of the take that ended it, `taken_by_emitter` where its
+  own emitter took it and the escaped row where a face or a set did (0
+  for a block's record), or it stays open at the run's end. The emitter's
+  own cells take on no pointer at every age (section 18, PR 1115 as
+  merged: `_move_block` holds the entered Node at 0 for the block's own
+  record from the train's end and books nothing, the row evolving during
+  the train, line B; nothing added), so a block naming the set at its own
+  cells never clicks (test (b)). A lamp's record keeps the close and the
+  cell by u (line (iii), the lamp's ladder by name, is a later order).
+- THE FIVE REGISTERED FILES (the Boss's addition): `sagnac_k3.json` and
+  `sagnac_rest.json` (block 0 `receiver` "at_b", block 1 "at_a"),
+  `light_clock_60.json` (A "at_a"), `redshift_k3.json` and
+  `redshift_control.json` (A "light_detector") receive the key by the
+  minimal edit of that one key after `own_grace` (their last commits
+  are hand edits, no generator in tools/ names them; the files' own form
+  `json.dumps(indent=1)` kept, nothing else in the file moved). The test
+  worlds of `tests/test_massive_record.py` with an emitting block name a
+  receiver ((h) a body at x = 230 read as `screen`; (ac) `A_face`; (ai)
+  and (ak) `at_a`), and (ac)'s far body is read as a sink (no rung, its
+  take on `escaped`).
+- WHERE THE ENGINE FIXER'S READING AND THE SPECIFICATION DIFFER, said
+  here as ordered: (1) "the sinks book to the HOST row `escaped`": the
+  ledger's escaped row counts CONTENT and balances the books in content,
+  and a block's record carries 0, so the sinks' take (motion, the
+  pointer's unit) is booked to the record's HOST `escaped` (the gather
+  line and the records reading) and the content, 0, to the escaped row at
+  the close; (2) "the hop take's fix: the exemption becomes `emitter ==
+  block`": PR 1115 as merged already books nothing of the block's own
+  record at any age; its form holds the entered Node at 0 after the
+  train (the own take's own state) instead of leaving it to evolve, and
+  is kept, Reviewer 3 having CONFIRMED it (record 1800); the behaviour
+  named, nothing on the own pointer at any age, is pinned by test (b).
+- THE READINGS (EXPLORATORY, no pin run; `tests/test_receiver_by_name.py`
+  reads the form, not the numbers): sagnac_rest as registered reads every
+  hold record's line at the other's set 108 intervals after its birth at
+  rest, both directions alike (DETECTOR); the light clock's chain of 173
+  closed with A naming `A_face` reads the first record's line 214 after
+  the birth (DETECTOR; the T = 0 preliminary's number of record 1800), no
+  rung during the grace of 140; two blocks one Link apart cross the rung
+  inside the train on some records, the line then at the birth plus the
+  train. HOST: sagnac_rest 420 intervals in 1.4 s, the light clock 600 in
+  0.4 s (this machine).
+- THE THREE TESTS: generic (one sentence, the ladder's size the only
+  case; the receiver's name a world declaration as a set's position is;
+  no kind, no family name, no branch on a physical name), vector (the
+  rung (E) on the pointer, verb T on `absorbed` and `escaped`; integers
+  only, no root, no float), local (the cell's own pointer on the record;
+  nothing kept at a Node; the sinks' take a per-record integer).
