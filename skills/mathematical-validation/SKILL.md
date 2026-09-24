@@ -84,3 +84,17 @@ engine lines it needs with their three tests, and its unit tests' exact
 values. Nature24, the physicist and the only writer of code, checks each
 section and talks with the mathematician directly by Routine; what they
 agree enters the file, and a disagreement goes to the Boss for the owner.
+
+## The tools derived in the algebra as operations of the group (the owner, 2026-09-24, records 1840 and 1841)
+
+The owner's word (translated): "Derive everything that happens in the body
+through the group and its operations; put them in the algebra; each does
+something different, polar or not polar; it must come from the group."
+Every lab tool is derived in docs/ALGEBRA.md as a body at rest, a fixed
+point of the translation group's action whose shape its stabilizer in
+G_48 fixes, performing one group action on the records that pass its
+cells. The integers written on the board are computed from the algebra,
+as a body's seed is, and checked at load. A consequence (a state, a
+cause, a length, a form) is derived with its proof and never put to the
+owner as a choice. LAB_TOOLS.md cites the section for the engine lines and
+the tests.
