@@ -247,6 +247,34 @@ sections 2 to 5; ALGEBRA.md 5.7, the apparent acceleration):
    (the crowd's age moment declared to grow outward from the detector). Its brightness
    still reads q_eff = 2 / (1 + g_1) > 0 by item 4: it can match the diagram's shape
    and never the supernova brightness. The paper should not carry it.
+7. The receding emitter's field on the lattice itself, no continuum (the Boss's
+   item 1 of 03:26Z). Three statements, each with its kind.
+   - DERIVATION (exact on the lattice): the frequency behind. On a chain the rule at
+     [1, 1] reads 3 (a_next + a_before) = a_E + a_W + 4 a_now before the remainder,
+     whose characters obey cos omega = (cos k + 2) / 3 (8.1's band with two folded
+     axes). A block stepping one Link per K intervals sources light at its own
+     clock's angle omega_s per interval (omega_0 f / f_0, the one formula's) along
+     its path, so the character behind it is the one whose phase advances omega_s
+     per interval on that path: omega + k / K = omega_s with omega on the band.
+     That is one equation in the integers of the world and the band, no continuum;
+     the receiver's 1 + z is omega_0 over its root omega. At K = 3 on row 4b's
+     world it gives 1.98904 against the continuum form's 1.98884, the band's
+     dispersion 1.0 x 10^-4, inside the 0.3 percent band (cosmology_read.out 8,
+     COMPUTATION of the root; the equation the DERIVATION).
+   - COMPUTATION, no closed form (the amplitude behind). The field's level behind a
+     hopping source is the sum of the chain's discrete retarded responses over the
+     source's path, which the exact recurrence computes interval by interval (the
+     Inside a bijection, 8.8) and no elementary closed form gives, the band being
+     dispersive away from its bottom; its energy balance is exact, the source's
+     work per interval entering J's identity (8.5). At the band's bottom (rung 2,
+     lambda much longer than a Link) the sum is the continuum's, D on the first
+     difference on a chain and D^2 in three dimensions, item 5. Nothing of the law
+     is missing here: the amplitude is a number the recurrence gives, not a rule.
+   - What a reading needs, and its identity. To pin the field's (1 + z)^-4 a click
+     must read a FLUX: a detector whose click carries the received norm's size and
+     not only its first rung (8.6's rung is scale-free). That is a declaration of
+     the detector (kind 3), not a rule; if the owner admits it beside the law it is
+     `flux-rung-hypothesis`, and until then the field's exponent stays GAMEBOARD.
 
 ### 2 (d). Dark matter
 
@@ -370,6 +398,75 @@ on a chain is ((1 - beta) / (1 + beta))^2 = 7 - 4 sqrt 3 = 0.0718 at K = 3
 is one power, 2 - sqrt 3 = 0.268; what two receivers' clicks read of one record is
 DESIGN.md section 5's rule, not derived here. FOR THE OWNER.
 
+### 2 (g). A Hubble diagram of receding lamps read at one detector in its own count, in form (a proposal; the Boss's item 2 of 03:26Z; nothing declared in DECLARATIONS.md)
+
+1. The objects. Four chain worlds of DECLARATIONS.md section 4's form, 2200 x 1 x
+   1, x open for light (sponge faces), the massive kind's faces open on x; Z_N;
+   `light` [1, 1] and the massive kind [156, 157]; in each world ONE emitter block
+   A (side 12, the well [314, 315], `emits`, G = [1, 50], g = [1, 1000], the mode
+   seed) starting at x = 113, pushed toward +x to K = 3, 4, 5 or 6 over the ramp
+   and held at that momentum; ONE light detector of the ray law at x = 100, W = 64,
+   `clock_stamp`, at rest in no crowd (r_B = 1); a fifth world the control, A at
+   rest at x = 113. Why not one world with four lamps: the receiver's record is
+   driven by the total field, so one detector reads the SUM of four lines and no
+   click of it is one lamp's; a detector set reading one side only would need a
+   key the engine lacks (a directional blind on a set), named and not proposed.
+2. The declared integers: the pairs above; s = 12; G, g, W; the momenta [Q S M / K,
+   0, 0] for K = 3, 4, 5, 6 (beta_c = sqrt 3 / K: 0.577, 0.433, 0.346, 0.289); the
+   ramp 1500; the hold 8000; t_0 = 9500 the reading's count; nothing chosen from
+   nature's numbers (DERIVED_BLIND: the pairs and the well are row 4b's, declared
+   before this row; nature's q_0 nowhere in the inputs).
+3. The verbs: 8.1 (the rule), 8.5 (the coupling and the emission), 8.11 (the step
+   by the declared momentum), 8.6 (the click at W stamped with the detector's own
+   count and the record's birth stamp). No new verb; the three tests inherited.
+4. The readings, DETECTOR: per world the mean count between clicks over the hold
+   against the control's, 1 + z_K; the flight age tau_K of the clicks, the click's
+   count less the record's birth stamp; the diagram the four pairs (tau_K / t_0,
+   z_K). GAMEBOARD beside: A's Node per interval, the probes' amplitude.
+5. The pin in form, before any run (COMPUTATION from the DERIVATION; proposed, FOR
+   THE OWNER to declare): (a) each 1 + z_K = (1 + beta_c) / (f / f_0)(K) by the
+   one formula on this well at that K, the band 0.3 percent (the free emitter's
+   limit (1 + beta_c) gamma_m: 1.934, 1.591, 1.436, 1.346 at K = 3, 4, 5, 6,
+   cosmology_read.out 9); (b) each x_K = tau_K / t_0 = beta_c / (1 + beta_c) to the
+   start's 13 Links over v t_0 (0.366, 0.302, 0.257, 0.224); (c) the curve through
+   them, 1 + z = (1 + beta) gamma_m(beta) with beta = x / (1 - x), whose second
+   order reads q_eff = c^2 / c_eff^2 = 1 + omega_0^2 / 3 + O(omega_0^4) = 1.0043 at
+   omega_0 = 0.1129 (DERIVATION of the form, COMPUTATION of the number; the bound
+   block's f / f_0 per K a per-point correction computed before its run); (d) the
+   falsifier: any lamp's 1 + z off its pin beyond the band, or the four points'
+   fitted second-order coefficient reading q_eff below 0, which no coasting throw
+   of the law can give.
+6. What separates. In the same variables (z against the light's flight age) the
+   standard cosmology at Planck's q_0 = -0.53 has the second-order coefficient 1 +
+   q_0 / 2 = 0.735, the far points BELOW the near slope's line, with no motion of
+   any emitter; the law's throw has 3 / 2 (+ omega_0^2 / 6), the far points ABOVE
+   it, every emitter a body in motion, and the offset from Milne's 1 (q = 0) the
+   two-pace world's mark. The flight age is not one of nature's observables, so the
+   row compares the diagram's FORM and says so; a run confirms the engine against
+   the algebra (a (K) row in the number, the +omega_0^2 / 3 a (P) beside it).
+7. The identity: `detector-law-v1` with `massive-record-v1`; every key section 4's
+   (`emits` consuming nothing held, M1-2); HOST five chains, seconds to a minute
+   each. Not run by this page.
+8. The preliminary run's form (the owner's word of 03:29Z through the Boss: "without
+   a preliminary experiment we run nothing"; a pin run only after an exploratory,
+   unpinned run is approved; nothing here runs, not even that). What the
+   exploratory run of the K = 3 world and its control would have to show, read
+   against no pin: (a) clicks ARRIVE at the declared detector at x = 100 within the
+   declared count: the first record born at the first cycle of A's clock after the
+   seed's standing start, 13 Links of flight at c (23 intervals) plus the receiver's
+   ring-up, so a first click within the first 500 intervals of the run in both
+   worlds, and clicks throughout the hold; (b) the count over the hold of 8000 of
+   the order the rest clock gives, 8000 x 0.10175 / (2 pi) = 130 clicks in the
+   control (COMPUTATION on section 4's mode 0.10175) and fewer, not more, in the
+   receding world, with no number of either read against a pin; (c) the mean
+   interval between clicks steady over the hold, no beat (8.7's criterion; a beat
+   sends the world back for a longer ramp, never to a pin); (d) A stepping one Link
+   per 3 intervals by its `block` lines and its own clicks per cycle present
+   (GAMEBOARD and DETECTOR beside), the books' J identity holding, no stop on the
+   bound abs(**v**) < c; (e) every number of the run labelled EXPLORATORY, GAMEBOARD
+   or DETECTOR, and none carried into item 5. Only on that showing, and on the
+   owner's word, would the pin of item 5 be declared and the four worlds run.
+
 ### FOR THE OWNER (questions this page does not decide)
 
 1. Whether a click that reads a FLUX is to be declared under the new law (a receiver
@@ -405,10 +502,11 @@ DESIGN.md section 5's rule, not derived here. FOR THE OWNER.
    brightness the ray law reads q_eff = +1 or +2 against -0.53, the paper's
    supernova FAIL (DERIVATION); today's DESI numbers move nature's q_0 toward -0.36
    and change nothing of that.
-7. Chapter 8's field carries (1 + z)^-4 behind a receding emitter, Tolman's exponent
-   in the field (COMPUTATION on the continuum, GAMEBOARD); its click reads a
-   frequency and no flux, so under the new law the brightness is NOT DECIDABLE BY
-   THE ALGEBRA until a flux click is declared.
+7. Chapter 8's receding emitter reads, exact on the lattice, the frequency behind it
+   by one character equation on the band (DERIVATION, 1.98904 at K = 3 against the
+   form's 1.98884); its field carries (1 + z)^-4, Tolman's exponent (COMPUTATION,
+   rung 2, GAMEBOARD); its click reads no flux, so the brightness is NOT DECIDABLE
+   BY THE ALGEBRA until a flux click is declared.
 8. On the ray law every push reads rows a body of content released: no gravity
    without content (DERIVATION); under the new law there is no gravity at all yet,
    `gravity-index-hypothesis` named with no number (DERIVATION).
@@ -429,10 +527,11 @@ DESIGN.md section 5's rule, not derived here. FOR THE OWNER.
 
 ## 4. What this page did not reach
 
-- The (1 + z)^-4 of 2 (c) 5 is the continuum's retarded solution, not a proof on the
-  GameBoard of chapter 8's scheme and not a run; the beaming count ratio of 2 (f)'s
-  second reading is named and not computed (the click's rule between two receivers
-  of one record not derived here).
+- The (1 + z)^-4 of 2 (c) 5 is the continuum's retarded solution; on the lattice
+  the frequency is exact (2 (c) 7) and the amplitude a computation by the recurrence
+  with no closed form, not run; the beaming count ratio of 2 (f)'s second reading is
+  named and not computed (the click's rule between two receivers of one record not
+  derived here).
 - The DESI w_0 w_a central values, Planck's A_L, its age, its lensing-only Omega_K
   and Cornish's 24 Gpc were not seen in an excerpt today and stand RECALLED, NOT
   VERIFIED; every other number of section 1 was read in a search excerpt of the

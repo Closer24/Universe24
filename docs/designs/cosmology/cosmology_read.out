@@ -31,3 +31,26 @@
 7. Seeliger's history, the law's own crowd (DARK_ENERGY.md section 3 (b)): q_eff = 2 k_0 (3 - k_0) / (1 - k_0)^2
   at k_0 = 1/100: 0.0610
   at k_0 = 1/10: 0.7160
+8. The receding emitter on the chain's own band (the Boss's item 1, 03:26Z): the character matching
+  the bound block of row 4b's world, f / f_0 = 0.7931, K = 3: the wave number behind: 0.098340
+    the received frequency angle per interval: 0.056761
+    1 + z on the lattice, omega_0 over the received angle: 1.98904
+    1 + z of the continuum form, (1 + beta_c) / (f / f_0): 1.98884
+    the lattice over the continuum, the band's dispersion: 1.000098
+  the free emitter, f / f_0 = 1 / gamma_m = 1 / 1.22606, K = 3: the wave number behind: 0.101133
+    the received frequency angle per interval: 0.058373
+    1 + z on the lattice, omega_0 over the received angle: 1.93413
+    1 + z of the continuum form, (1 + beta_c) / (f / f_0): 1.93393
+    the lattice over the continuum, the band's dispersion: 1.000104
+9. The coasting throw's diagram against the flight age, the free emitter: q_eff = c^2 / c_eff^2
+  c_eff^2 / c^2 = cos omega_0 (omega_0 / sin omega_0) at omega_0 = 0.1129: 0.995748
+  q_eff = c^2 / c_eff^2: 1.004271
+  1 + omega_0^2 / 3, the second order: 1.004249
+  K = 3: x = tau / t_0: 0.36603
+    1 + z of the free emitter at the kind's cone: 1.93392
+  K = 4: x = tau / t_0: 0.30217
+    1 + z of the free emitter at the kind's cone: 1.59057
+  K = 5: x = tau / t_0: 0.25728
+    1 + z of the free emitter at the kind's cone: 1.43570
+  K = 6: x = tau / t_0: 0.22401
+    1 + z of the free emitter at the kind's cone: 1.34624

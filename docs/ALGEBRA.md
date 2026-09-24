@@ -270,7 +270,9 @@ every symmetry of the neighbourhood it reads.
    within the six operations is a bilinear form **p**^T **M** **p** with
    **M** commuting with all 48; the symmetric integer matrices fixed by
    the 48 are the multiples of the identity, so the only such reading is
-   c **p** . **p**, and the square m^2 + 3 **p** . **p** follows. "Generic"
+   c **p** . **p**: the 48 force the form's isotropy, while the 3 and
+   E_0'^2 of the square E_0'^2 + 3 **p** . **p** are the band's (4.2 and
+   8.1), not the 48's. "Generic"
    in the three tests of every rule (generic, vector, local) means
    exactly this: commuting with the 48, made of the six operations,
    reading the neighbourhood alone.
@@ -2058,7 +2060,9 @@ not chosen but the norm of the flight operator, 1 / sqrt 3, from
 locality and straightness); and the group does back to the physics
 what the physics gave it: it forces forms (the only isotropic even
 reading of a body's momentum within the six operations is c **p** .
-**p**, so the square m^2 + 3 **p** . **p** follows). In one sentence: the
+**p**: the 48 force the form's isotropy, while the 3 and E_0'^2 of the
+square E_0'^2 + 3 **p** . **p** are the band's, 4.2 and 8.1, not the
+48's). In one sentence: the
 operations did not deduce a group; defined on a Node of six Ports, the
 48 are everything that preserves that Node and its cone, and once every
 rule is required to commute with them they choose the admissible forms,
