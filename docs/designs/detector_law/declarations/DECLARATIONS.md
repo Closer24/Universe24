@@ -611,16 +611,29 @@ omega_b) of its own well, printed by the pins script before the run.
    [156, 157]) and FIVE'S ALONG RATIO in the pair's own count 1.0136
    (both pairs; the rigid pair's 1.247 beside), INSIDE the band 1 +- 0.03
    of Highlights 5.4's "five"; at lambda_0 = 48, k = 3 it reads 1.0058,
-   and at lambda_0 = 32, k = 4 1.0050. THE ROWS UNDER THE FLOOR: the
-   first draft's rows lambda_0 = 12, 16, 24 at k = 3 (five 1.158, 1.067,
-   1.025) and 12, 16 at k = 4 (1.045, 1.023) are under MUST I's floor
-   lambda_0 (1 - beta_c) >= 12 (DESIGN.md 1.2 (b); the values 5.1, 6.8,
-   10.1 and 6.8, 9.1 Links; the band's forward waves 5.8, 8.0, 12.3 and
-   7.3, 9.9 Links) and are not admissible worlds; the script marks every
-   row. Reviewer 3's token named 12 and 16 at k = 3; lambda_0 = 24 at k =
-   3 is under the floor by MUST I's own form as well (10.1 < 12) though
-   its band forward wave is 12.3, so it is marked too (the re-check). THE
-   FORM OF THE EXCESS: five - 1 is the lattice's own term TENDING TO (a /
+   and at lambda_0 = 32, k = 4 1.0050. THE ROWS UNDER THE FLOOR
+   (Reviewer 3's line of 03:00Z on my re-check): the floor is 8c's, the
+   wave ON THE BOARD at least 12 Links, read on the pair's forward wave;
+   the first draft's rows lambda_0 = 12 and 16 at k = 3 (five 1.158,
+   1.067; the forward waves 5.8, 8.0 Links) and 12 and 16 at k = 4 (1.045,
+   1.023; 7.3, 9.9 Links) are under it and are not admissible worlds;
+   lambda_0 = 24 at k = 3 (five 1.025) is AT the floor, the forward wave
+   12.25 Links on the band (12.42 in the continuum, lambda_0 sqrt((1 -
+   beta_c) / (1 + beta_c))), admissible and marginal; at k = 4 lambda_0 =
+   24 reads 15.0 Links, admissible. MUST I's form lambda_0 (1 - beta_c)
+   >= 12 (DESIGN.md 1.2 (b)) is that floor written on declared integers
+   for an emitter whose period is the HOST'S count (the ray law's lamp
+   moved at cadence k); the light-held pair's emitter is not that
+   emitter: by member (iii), now the law's, its period is dilated by
+   gamma_m, so the host-count form drops that factor and reads 10.1 at
+   lambda_0 = 24, k = 3, conservative for a law-dilated emitter; the
+   script marks every row on the forward wave and prints the host-count
+   form beside. For the loader, not now: MUST I's check at the initial P
+   and every change stays the refusal (it refuses at 24 / k = 3 a world
+   the physics admits and admits nothing wrong) until the model owner
+   declares the dilated form for emitters whose count the law dilates, a
+   line for DESIGN.md 1.2 (b) when the light clock in motion's world is
+   declared (the owner's 09:00 page). THE FORM OF THE EXCESS: five - 1 is the lattice's own term TENDING TO (a /
    lambda)^2 beta^2, not written as "1 + O(...)": the script prints the
    local exponents, the excess falling as lambda^-2.6 between 12 and 24
    Links and lambda^-2.1 between 24 and 48 at k = 3, lambda^-2.00 above

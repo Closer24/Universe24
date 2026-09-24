@@ -16,11 +16,17 @@ forward wave is Doppler-compressed into the lattice's dispersive range (5.8 Link
 12 and k = 3), and five's ratio exceeds 1 by the lattice's own term, TENDING TO (a / lambda)^2
 beta^2 (the exponents are printed: the excess falls as lambda^-2.6 between 12 and 24 Links and
 lambda^-2.0 above 48 at k = 3, and as beta^3.5 between k = 3 and 4, beta^2.1 between k = 12 and
-16), 1 as the wavelength grows or the speed falls. Each row is marked against MUST I's floor
-lambda_0 (1 - beta_c) >= 12 (DESIGN.md 1.2 (b), beta_c = sqrt 3 / k): lambda_0 = 12, 16 and 24
-at k = 3 and 12, 16 at k = 4 are under it and are not admissible worlds (the band's forward
-wavelength beside); the declared world of sections 4 and 13 (lambda_0 = 32.1 Links, k = 3) is
-printed for both massive pairs, [800, 809] and [156, 157]. The rigid pair's ratio (the declared
+16), 1 as the wavelength grows or the speed falls. Each row is marked against 8c's floor, the
+wave ON THE BOARD at least 12 Links, read on the pair's forward wave (the band's lambda_1; in the
+continuum the dilated closed form lambda_0 sqrt((1 - beta_c) / (1 + beta_c)), beta_c = sqrt 3 /
+k): lambda_0 = 12 and 16 at k = 3 and 12 and 16 at k = 4 are under it and are not admissible
+worlds; lambda_0 = 24 at k = 3 is AT the floor (12.25 Links on the band, 12.42 in the continuum),
+admissible and marginal (Reviewer 3's line, 2026-09-24, 03:00Z). MUST I's host-count form
+lambda_0 (1 - beta_c) >= 12 (DESIGN.md 1.2 (b)), printed beside, is written for an emitter whose
+period is the host's count and is conservative for this emitter, whose period the law dilates by
+gamma_m (member (iii)): it drops that factor and reads 10.1 at lambda_0 = 24, k = 3. The declared
+world of sections 4 and 13 (lambda_0 = 32.1 Links, k = 3) is printed for both massive pairs,
+[800, 809] and [156, 157]. The rigid pair's ratio (the declared
 separation, section 10 item 7) is printed beside. gamma_m by the one formula, the same expression
 as coupled_mode_pins.py (c).
 
@@ -102,12 +108,19 @@ def member_iii(lam0, k_step, num=800, den=809, continuum=False):
     )
 
 
-def floor_mark(lam0, k_step):
-    """MUST I's floor lambda_0 (1 - beta_c) >= 12 Links, beta_c = v / c = sqrt 3 / k."""
+def floor_mark(lam0, k_step, lam1):
+    """8c's floor, the wave on the board at least 12 Links, read on the forward wave lam1 (the
+    band's, or the continuum's dilated form); MUST I's host-count form lambda_0 (1 - beta_c),
+    beta_c = v / c = sqrt 3 / k, printed beside as the conservative check of DESIGN.md 1.2 (b)."""
     beta_c = math.sqrt(3) / k_step
-    value = lam0 * (1 - beta_c)
-    word = "admissible" if value >= 12 else "UNDER MUST I's floor, not an admissible world"
-    return value, word
+    host_form = lam0 * (1 - beta_c)
+    if lam1 < 12:
+        word = "UNDER 8c's floor, not an admissible world"
+    elif lam1 < 13:
+        word = "AT the floor, admissible (marginal)"
+    else:
+        word = "admissible"
+    return host_form, word
 
 
 if __name__ == "__main__":
@@ -120,13 +133,14 @@ if __name__ == "__main__":
         for k_step in (3, 4):
             for lam0 in (12, 16, 24, 32, 48):
                 r = member_iii(lam0, k_step, continuum=cont)
-                value, word = floor_mark(lam0, k_step)
+                host_form, word = floor_mark(lam0, k_step, r["lam1"])
                 print(
                     f"  k = {k_step}, lambda_0 = {lam0}: omega_0 {r['om0']:.5f}, gamma {r['gamma']:.5f}, gamma_m {r['gamma_m']:.5f};"
                     f" the two waves omega_1 {r['om1']:.4f} (lambda {r['lam1']:.2f}), omega_2 {r['om2']:.4f} (lambda {r['lam2']:.2f});"
                     f" L_along / L_0 = {r['L_ratio']:.4f} against 1 / gamma = {r['inv_gamma']:.4f};"
                     f" five's along ratio {r['five_along']:.4f} (the rigid pair's {r['rigid_along']:.4f});"
-                    f" lambda_0 (1 - beta_c) = {value:.1f}: {word}"
+                    f" the forward wave {r['lam1']:.2f} Links: {word}"
+                    f" (MUST I's host-count form lambda_0 (1 - beta_c) = {host_form:.1f})"
                 )
     print("THE DECLARED WORLD (sections 4 and 13: lambda_0 = 32.1 Links, k = 3), both massive pairs")
     for num, den in ((800, 809), (156, 157)):

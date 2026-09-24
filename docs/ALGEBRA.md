@@ -2677,6 +2677,17 @@ not Fizeau's drag. Gravity as an index of the crowd's massive records
 is a hypothesis outside the law under its own name,
 `gravity-index-hypothesis`, with no number (section 7's last line).
 
+**The one pair the engine forms in motion (Reviewer 3's classification of
+the engine audit, 2026-09-24, row (b)-7; a declared rule, not a hidden
+formula).** The coupling's second pair in motion, [W_d^2, W_d^2 - 3 **P** .
+**P**] from the drive's count W_d and the declared momentum **P** (the same
+pair as [K^2, K^2 - 3] at the cadence K; MASSIVE_RECORD.md section 7), is
+a rule of this design that the engine forms each interval from declared
+integers, with no float and no root, on one Node's own record: the same
+standing as the leapfrog's S_6, a formula of the law and not a formula
+hidden in the engine. It is the ONE pair the engine forms in motion; every
+other pair is read from the table of families (kind 2).
+
 ### 8.6 The click of a body at W, and the take
 
 **The click (CARRIED: MASSIVE_RECORD.md section 6; the owner's word of
