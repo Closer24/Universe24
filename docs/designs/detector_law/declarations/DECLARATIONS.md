@@ -1076,7 +1076,8 @@ omega_b) of its own well, printed by the pins script before the run.
    receiver form of DESIGN.md section 5 (the row held at 0, one ghost
    per Port), the take in the record's OWN KIND'S pair as the take key
    declares per kind (light [-15, 56]; a matter lamp's record, M1 and
-   M2, in the matter kind's pair; no family name). THE BOOKS: what the
+   M2, in the matter kind's pair, the family key `take` of section 15
+   M1-6, [-19, 86] at lambda_dB = 12 and [-5, 27] at 16; no family name). THE BOOKS: what the
    cells take is booked as CONTENT (the ledger books content, not
    motion) on a HOST row of its own, `taken_by_emitter`, at the record's
    end and only where no cell was chosen (the emitter took the record
@@ -1831,7 +1832,20 @@ waves).**
   [-5, 27] (-0.1852, v_p = 0.6875) for lambda_dB = 16; the group-pace
   values [-33, 100] and [-34, 95] beside, for the builder's test (aa) to
   compare the reflected fraction and keep the pair that leaves least;
-  not blocking (M1 completes within the hold either way). THE LAMP'S OWN BODY IS NOT A RECEIVER of its own
+  not blocking (M1 completes within the hold either way). THE FAMILY KEY
+  `take` (DECLARED 2026-09-24, 11:05Z, on the Preliminary Runner's load
+  refusal of matter_waves_12 at 0de9580 on 540456da: "a lamp of the
+  massive kind 'matter' needs the kind's take pair", section 10 item 10,
+  the emitter's own remnant take in the record's own kind's pair): the
+  matter family's entry carries `take` [-19, 86] on matter_waves_12 and
+  matter_front_12 (lambda_dB = 12) and [-5, 27] on matter_waves_16
+  (lambda_dB = 16), THE SAME PAIR AS THE ABSORBING LINES' above, because
+  the lamp's own remnant after its train is the same wave at the same k
+  as the record the lines take, and one kind has one one-way Port per
+  world (a second integer would be a second take law); the loader's
+  requirement is right, not a defect; the absorbing blocks' own `take`
+  stays equal to the family's; matter_front_12, with no take lines,
+  carries the key for the lamp's own take alone. THE LAMP'S OWN BODY IS NOT A RECEIVER of its own
   records at any time (the cycle sentence with N_s the whole hold: the
   lamp's key `own_grace` 16700, section 10 item 1's key; no
   rung on its own family at its Node: the builder's test aa); the
