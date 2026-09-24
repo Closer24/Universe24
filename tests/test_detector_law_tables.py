@@ -337,3 +337,119 @@ def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
         zero_step["families"][0]["phase_per_link"] = clock
         with pytest.raises(ValueError, match="has a sine of 0"):
             parse_nature_beam_world(zero_step)
+
+
+def polariser_world(setting: int, position: int = 36, faces: str = "closed") -> dict:
+    """A chain of 40 (x closed at both ends: no sponge, the lamp's own take the
+    only other sink), the light family's clock [77, 25] on N = 64, one lamp at x = 2
+    with the wheel [1, 64] (a full wheel: u = 0 .. 63 once each over 64 births, one per
+    interval), a train of 2 periods, and one polariser of the counter family at
+    `position` with the setting `phase_window` (DECLARATIONS.md section 14 item 6), named
+    by the set `pol` of one Node."""
+    document = chain_world()
+    document["shape"] = [40, 1, 1]
+    document["boundary"] = {"x": faces, "y": "periodic", "z": "periodic"}
+    document["ticks"] = 800
+    document["families"] = [
+        {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+        {"name": "counter", "quantum": 1, "phase_per_link": [1, 1]},
+    ]
+    document["measured"] = [
+        {
+            "position": [2, 0, 0],
+            "family": "light",
+            "amount": 64,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[1, 0, 0]],
+            "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 2},
+        },
+        {
+            "position": [position, 0, 0],
+            "family": "counter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "table": {"light": {"phase_window": setting}},
+        },
+    ]
+    document["detectors"] = [{"name": "pol", "positions": [[position, 0, 0]], "reading": "sum"}]
+    return document
+
+
+def test_d_a_polariser_is_a_table_body_of_two_cells_splitting_the_offer():
+    """(d) DECLARATIONS.md section 14 item 6 (the polariser's two channels as cells of this
+    engine): the polariser at x = 36 is a TABLE BODY of two cells, `pol+` at the exit Node
+    x = 37 and `pol-` at the entry Node x = 36, both take Nodes booking to the body, the +
+    cell before the - cell on the ladder; each interval's offer at the entry is split by
+    [C'[s]^2, S'[s]^2] over n_s with the remainder kept (the shares' sum the whole offer, the
+    entry's pointer within one unit of the declared share of the sum), the first rung of the
+    whole offer stamped on both cells at one interval; the gather's cells are [pol, 0, "0"]
+    and [pol, 1, "0"]; over the full wheel of 64 births the + channel counts 64 of 64 at s =
+    0, 32 of 64 at s = N / 4 (the half angle 45 degrees, C' = S' = 181) and 0 of 64 at s =
+    N / 2 (the pin's form: 128 of 256 at 45 degrees); the books balanced at every interval.
+    The edge cases at load: the exit Node off the board (the body at the last Node), the body
+    off the lamp's arm (behind the lamp), no set naming the body, two lamps of the family."""
+    counts: dict[int, tuple[int, int]] = {}
+    for setting in (0, 16, 32):
+        world = parse_nature_beam_world(polariser_world(setting))
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(world, observer=lines.append)
+        plus = simulation.cell_names.index("pol+")
+        minus = simulation.cell_names.index("pol-")
+        assert plus < minus and simulation.cell_set[plus] == simulation.cell_set[minus] == "pol"
+        assert simulation.cell_channel[plus] == 0 and simulation.cell_channel[minus] == 1
+        assert simulation.cell_measured[plus] == simulation.cell_measured[minus] == 1
+        assert (
+            int(simulation.cell_index[37, 0, 0]) == plus
+            and int(simulation.cell_index[36, 0, 0]) == minus
+        )
+        assert bool(simulation.absorbing[37, 0, 0]) and bool(simulation.absorbing[36, 0, 0])
+        body = simulation.table_bodies[0]
+        expected = {0: (65536, 0), 16: (181 * 181, 181 * 181), 32: (0, 65536)}[setting]
+        assert (body.plus, body.minus) == expected and body.norm == sum(expected)
+        checked = 0
+        for _ in range(800):
+            simulation.step()
+            assert simulation.books()["balanced"], simulation.tick
+            for live in simulation.records.values():
+                whole = live.pointers[plus] + live.pointers[minus]
+                if whole:
+                    # the entry keeps the - share, the split's remainder below n_s
+                    share = whole * body.minus // body.norm
+                    assert abs(live.pointers[minus] - share) <= 1 + whole // body.norm, (
+                        live.pointers[minus],
+                        share,
+                    )
+                    assert live.first_rung[plus] == live.first_rung[minus]
+                    checked += 1
+        assert checked > 0
+        gathers = [line for line in lines if line["event"] == "gather"]
+        births = [line for line in lines if line["event"] == "birth"]
+        assert len(births) == 64 and len(gathers) == 64 and not simulation.records
+        chosen = [gather["chosen"][0] for gather in gathers]
+        assert all(cell[0] == "pol" and cell[2] == "0" and cell[1] in (0, 1) for cell in chosen)
+        for gather in gathers:
+            assert gather["click_at"] == "rung"
+            triples = {tuple(cell[0][0]) for cell in gather["cells"]}
+            assert triples <= {("pol", 0, "0"), ("pol", 1, "0")}
+        counts[setting] = (
+            sum(1 for cell in chosen if cell[1] == 0),
+            sum(1 for cell in chosen if cell[1] == 1),
+        )
+    assert counts == {0: (64, 0), 16: (32, 32), 32: (0, 64)}
+    # the loader's refusals (the engine's construction, as the splitter's)
+    with pytest.raises(ValueError, match="off the board"):
+        DetectorLawSimulation(parse_nature_beam_world(polariser_world(16, position=39)))
+    with pytest.raises(ValueError, match="no arm's line"):
+        DetectorLawSimulation(parse_nature_beam_world(polariser_world(16, position=1)))
+    unnamed = polariser_world(16)
+    unnamed["detectors"] = []
+    with pytest.raises(ValueError, match="no detector set of one Node names its Node"):
+        DetectorLawSimulation(parse_nature_beam_world(unnamed))
+    two_lamps = polariser_world(16)
+    two_lamps["measured"].append(dict(two_lamps["measured"][0], position=[10, 0, 0]))
+    with pytest.raises(ValueError, match="ONE lamp"):
+        DetectorLawSimulation(parse_nature_beam_world(two_lamps))

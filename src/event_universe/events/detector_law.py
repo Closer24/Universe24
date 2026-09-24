@@ -68,12 +68,13 @@ import numpy as np
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_clock, by_drive, integer_root, keyed_permutation
 from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines, phase_sines
-from event_universe.events.amplitude import cell_of, rungs
+from event_universe.events.amplitude import cell_of, half_angle, rungs
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
     LABEL_SCALE,
     BlockDefinition,
+    DetectorDefinition,
     NatureBeamWorld,
     Vector,
 )
@@ -155,6 +156,45 @@ class LiveRecord:
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
+    # The table bodies' shares (DECLARATIONS.md section 14 item 6): per body
+    # (its index in `table_bodies`) the entry cell's pointer as the last
+    # split left it and the split's remainder, so that each interval's
+    # offer at the entry is split once, the remainder kept.
+    table_shares: dict[int, tuple[int, int]] = field(default_factory=dict)
+
+
+@dataclass
+class TableBody:
+    """A polariser as a TABLE BODY OF TWO CELLS (DECLARATIONS.md section 14
+    item 6; section 15 T-1): a measured event whose table entry for a family
+    carries a `phase_window` s, the setting, on the arm's line of the
+    family's lamp. The ENTRY cell is its Node, a take Node (the receiver
+    form, the row held at 0), the EXIT cell the next Node beyond it on the
+    arm's line, a take Node too. The record's offer at the entry cell's
+    Ports is SPLIT by the declared pair [C'[s]^2, S'[s]^2] over n_s = C'^2
+    + S'^2 (the half-angle tables of 2N, `amplitude.half_angle`, the same
+    integers the amplitude law's rotation U_s reads), one division per
+    interval with the remainder kept per record: the + share to the exit
+    cell, the - share to the entry cell. The click's interval is the first
+    rung of the record's whole offer at the body (the two shares' sum) over
+    W, and the click's cell is chosen by the birth wheel's u on the ladder
+    of the two weights, the + cell before the - cell. The rotation's action
+    on the record's two columns enters through these weights (and, for a
+    pair, through the joint weights R = J^2); the rows are taken at the
+    entry. No family name, no kind: one primitive, the split of an offer by
+    a declared pair over its sum."""
+
+    measured: int
+    family: int
+    setting: int
+    arm: int
+    entry_node: tuple[int, int, int]
+    exit_node: tuple[int, int, int]
+    entry_cell: int
+    exit_cell: int
+    plus: int
+    minus: int
+    norm: int
 
 
 @dataclass
@@ -309,6 +349,12 @@ class DetectorLawSimulation:
         self.cell_names: list[str] = []
         self.cell_measured: list[int | None] = []
         self.cell_face: list[bool] = []
+        # The gather's cell triple [set, channel, label]: a cell's set name
+        # (its own name but for a table body's two cells, which carry their
+        # set's name) and its channel (0, the + channel; 1 the - channel of
+        # a table body); every cell as built is [name, 0, "0"].
+        self.cell_set: list[str] = []
+        self.cell_channel: list[int] = []
         self.cell_index = np.full(self.shape, -1, dtype=np.int64)
         self.absorbing = np.zeros(self.shape, dtype=bool)
         self.lamp_nodes: dict[int, list[tuple[int, int, int]]] = {}
@@ -355,8 +401,18 @@ class DetectorLawSimulation:
         # set's declared Nodes' mask, None where the Nodes are the block's.
         self.set_block: dict[int, int] = {}
         self.set_nodes: dict[int, np.ndarray | None] = {}
+        # The table bodies (DECLARATIONS.md section 14 item 6): a polariser's
+        # two cells, formed where a detector set names its Node.
+        self.table_bodies: list[TableBody] = []
+        polarisers = self._polarisers()
         for detector in world.detectors:
             set_cell: int | None = None
+            if detector.block is None and len(detector.positions) == 1:
+                first = detector.positions[0]
+                named = (int(first[0]), int(first[1]), int(first[2]))
+                if named in polarisers:
+                    self._table_body(detector, polarisers[named])
+                    continue
             if detector.block is not None:
                 set_cell = self._cell(detector.name, detector.block, False)
                 self.set_block[set_cell] = detector.block
@@ -385,6 +441,15 @@ class DetectorLawSimulation:
                 self.absorbing[node] = True
             if set_cell is not None and detector.wheel is not None:
                 self.cell_wheel[set_cell] = detector.wheel
+        formed = {body.entry_node for body in self.table_bodies}
+        for node, (number, family, _, _, _) in polarisers.items():
+            if node not in formed:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].table.{self.families[family].name} carries a "
+                    "phase_window (a polariser, a table body of two cells under "
+                    f"{DETECTOR_LAW_RULE}) but no detector set of one Node names its Node "
+                    f"{node} (DECLARATIONS.md section 14 item 6: each cell a detector set's Node)"
+                )
         # The faces: an open face's layer is a cell that takes (light's
         # sponge); a periodic axis has none; a CLOSED face (detector-law-v1,
         # DECLARATIONS.md section 10's mirror B) is a zero face with no cell
@@ -555,6 +620,150 @@ class DetectorLawSimulation:
             for _, _, mask in self.take_masks:
                 self.take_count += mask
 
+    def _polarisers(self) -> dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]]:
+        """The polarisers of the world (DECLARATIONS.md section 14 item 6): a
+        measured event whose table entry for a family carries a
+        `phase_window` s, the setting (an integer; a reading of the window's
+        centre is refused under the rule). Each lies on ONE arm's line of the
+        family's one lamp (the body's Node less the lamp's a positive
+        multiple of one of the arm's directions), and its EXIT Node is the
+        next Node beyond it along that direction, on the board and free.
+        Returns per entry Node (the measured event's number, the family, the
+        setting, the arm, the exit Node)."""
+        world = self.world
+        found: dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]] = {}
+        for number, entry in enumerate(world.measured):
+            for family, window in enumerate(entry.windows):
+                if window is None:
+                    continue
+                label = f"measured[{number}].table.{self.families[family].name}"
+                if not isinstance(window, int):
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}.phase_window must be an integer setting under "
+                        f"{DETECTOR_LAW_RULE} (a table body's setting is a declared integer, not a reading)"
+                    )
+                lamps = [
+                    (lamp_number, lamp_entry)
+                    for lamp_number, lamp_entry in enumerate(world.measured)
+                    if lamp_entry.lamp is not None and lamp_entry.family == family
+                ]
+                if len(lamps) != 1:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}: a table body lies on the arm's line of the family's ONE "
+                        f"lamp; the family {self.families[family].name!r} has {len(lamps)}"
+                    )
+                lamp_number, lamp_entry = lamps[0]
+                lamp = lamp_entry.lamp
+                assert lamp is not None
+                node = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+                delta = tuple(node[axis] - int(lamp_entry.position[axis]) for axis in range(3))
+                per_arm = len(lamp.directions) // lamp.arms
+                arm_found: int | None = None
+                vector: tuple[int, int, int] | None = None
+                for index, direction in enumerate(lamp.directions):
+                    v = tuple(int(c) for c in world.directions[direction])
+                    steps: set[int] = set()
+                    aligned = True
+                    for axis in range(3):
+                        if v[axis] == 0:
+                            aligned = aligned and delta[axis] == 0
+                        elif delta[axis] % v[axis]:
+                            aligned = False
+                        else:
+                            steps.add(delta[axis] // v[axis])
+                    if aligned and len(steps) == 1 and next(iter(steps)) > 0:
+                        arm_found = index // per_arm if per_arm else 0
+                        vector = (v[0], v[1], v[2])
+                        break
+                if arm_found is None or vector is None:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}: the body at {node} lies on no arm's line of the lamp "
+                        f"measured[{lamp_number}] at {tuple(int(c) for c in lamp_entry.position)} "
+                        "(a table body's exit cell is the next Node beyond it on the arm's line)"
+                    )
+                exit_node = [node[axis] + vector[axis] for axis in range(3)]
+                for axis in range(3):
+                    if world.periodic[axis]:
+                        exit_node[axis] %= self.shape[axis]
+                    elif not 0 <= exit_node[axis] < self.shape[axis]:
+                        raise ValueError(
+                            f"{BEAM_LAW}: {label}: the exit cell {tuple(exit_node)} beyond the body at "
+                            f"{node} is off the board of {list(self.shape)} (the table body of two "
+                            "cells needs its exit Node on the board)"
+                        )
+                exit_address = (exit_node[0], exit_node[1], exit_node[2])
+                if int(self.cell_index[exit_address]) >= 0 or exit_address in found:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}: the exit cell {exit_address} beyond the body at {node} "
+                        "is not a free Node (a measured event or another set holds it)"
+                    )
+                found[node] = (number, family, window, arm_found, exit_address)
+        return found
+
+    def _table_body(
+        self,
+        detector: DetectorDefinition,
+        polariser: tuple[int, int, int, int, tuple[int, int, int]],
+    ) -> None:
+        """The two cells of a table body named by a detector set of one Node:
+        the + cell (the exit Node) before the - cell (the entry Node) on
+        the ladder, both take Nodes booking to the body (its content at a
+        click), both on the set's wheel; the split's pair from the
+        half-angle tables at the setting."""
+        number, family, setting, arm, exit_node = polariser
+        entry_node = (
+            int(detector.positions[0][0]),
+            int(detector.positions[0][1]),
+            int(detector.positions[0][2]),
+        )
+        cosine, sine = half_angle(setting, self.world.phase_steps)
+        plus_cell = self._cell(f"{detector.name}+", number, False, detector.name, 0)
+        minus_cell = self._cell(f"{detector.name}-", number, False, detector.name, 1)
+        for node, cell in ((exit_node, plus_cell), (entry_node, minus_cell)):
+            self.cell_index[node] = cell
+            self.absorbing[node] = True
+            if detector.wheel is not None:
+                self.cell_wheel[cell] = detector.wheel
+        self.table_bodies.append(
+            TableBody(
+                number,
+                family,
+                setting,
+                arm,
+                entry_node,
+                exit_node,
+                minus_cell,
+                plus_cell,
+                cosine * cosine,
+                sine * sine,
+                cosine * cosine + sine * sine,
+            )
+        )
+
+    def _split_table_offers(self, live: LiveRecord) -> None:
+        """The split of this interval's offer at each table body's entry cell
+        (DECLARATIONS.md section 14 item 6): the entry pointer's gain since
+        the last split, times C'[s]^2 over n_s with the remainder kept (one
+        division, verb D), moved to the + cell; the first rung of the
+        body's WHOLE offer (the two cells' sum) over the cell's wheel stamps
+        both cells' first rung. The pointers' sum, `absorbed`, the norm and
+        every other cell are untouched."""
+        for index, body in enumerate(self.table_bodies):
+            if body.family != live.family:
+                continue
+            seen, remainder = live.table_shares.get(index, (0, 0))
+            gain = live.pointers[body.entry_cell] - seen
+            if gain:
+                plus, remainder = divmod(gain * body.plus + remainder, body.norm)
+                live.pointers[body.entry_cell] -= plus
+                live.pointers[body.exit_cell] += plus
+            live.table_shares[index] = (live.pointers[body.entry_cell], remainder)
+            whole = live.pointers[body.entry_cell] + live.pointers[body.exit_cell]
+            if whole and whole * self.cell_wheel[body.entry_cell] >= live.norm:
+                for cell in (body.exit_cell, body.entry_cell):
+                    if live.first_rung[cell] is None:
+                        live.first_rung[cell] = self.tick
+
     def _form_take_masks(self, taking: np.ndarray) -> list[tuple[int, int, np.ndarray]]:
         """The Ports of a taking set: per slot (each axis of extent above 1,
         each sign) the taking Nodes whose neighbour on that side is free of
@@ -570,10 +779,14 @@ class DetectorLawSimulation:
                 masks.append((axis, sign, taking & self._shift(free, axis, sign, fill=False)))
         return masks
 
-    def _cell(self, name: str, measured: int | None, face: bool) -> int:
+    def _cell(
+        self, name: str, measured: int | None, face: bool, set_name: str | None = None, channel: int = 0
+    ) -> int:
         self.cell_names.append(name)
         self.cell_measured.append(measured)
         self.cell_face.append(face)
+        self.cell_set.append(name if set_name is None else set_name)
+        self.cell_channel.append(channel)
         return len(self.cell_names) - 1
 
     def _span_nodes(
@@ -1477,6 +1690,8 @@ class DetectorLawSimulation:
                         for block in self.blocks:
                             if block.cell == cell:
                                 self.rung_counts[(live.identity, cell)] = block.count
+        if self.table_bodies:
+            self._split_table_offers(live)
         live.now = nxt
         self._drive(live)
         self._split(live)
@@ -1683,9 +1898,7 @@ class DetectorLawSimulation:
             else:
                 self.ledger.transit_escaped[family] += live.content
             self.ledger.held_escaped[family] += 0
-            name = None
         else:
-            name = self.cell_names[chosen]
             measured = self.cell_measured[chosen]
             if measured is not None and not self.cell_face[chosen]:
                 self.held[measured][family] += live.content
@@ -1709,7 +1922,9 @@ class DetectorLawSimulation:
             # ladder), 0 where a cell was chosen
             "taken_by_emitter": live.content if chosen is None and live.emitter_took else 0,
             "born": live.born,
-            "chosen": [[name, 0, "0"]] if name is not None else None,
+            "chosen": (
+                [[self.cell_set[chosen], self.cell_channel[chosen], "0"]] if chosen is not None else None
+            ),
             "node": [],
             "windows": [],
             "content": live.content,
@@ -1721,8 +1936,10 @@ class DetectorLawSimulation:
             "before": sum(1 for p in live.pointers if p),
             "after": 1 if chosen is not None else 0,
             "cells": [
-                [[[cell_name, 0, "0"]], rung]
-                for cell_name, rung, pointer in zip(self.cell_names, ladder, live.pointers, strict=True)
+                [[[set_name, channel, "0"]], rung]
+                for set_name, channel, rung, pointer in zip(
+                    self.cell_set, self.cell_channel, ladder, live.pointers, strict=True
+                )
                 if pointer
             ],
             "birth": live.birth_tick,
