@@ -1338,7 +1338,14 @@ Reviewer 3's sections 10, 11 and 12 where they exceed this document):
   mirror and an absorbing detector), not two bodies'.
 - The light clock in motion: section 8's one formula, the well regime: 1
   and 1 in the objects' own counts to the second term, gamma_m N_0 in the
-  lattice's intervals.
+  lattice's intervals, ONLY for a pair whose separation is held by light
+  and contracts by the wave law (Highlights 5.4's "five", section 8b of
+  that line; prediction 5 of ALGEBRA.md 8.9). For two blocks pushed at a
+  DECLARED separation (DECLARATIONS.md section 13's form) the round trip
+  is 2 L gamma^2 / c in the lattice's intervals (R2's two transits
+  summed) and N_0 gamma^2 / gamma_m in the bodies' own count, 1.2224 at
+  k = 3, not 1 (the chief physicist, 2026-09-24, 01:45Z;
+  `light_clock_motion_pins.py`; DECLARATIONS.md section 10 item 7).
 - The polariser and the tables: OUTSIDE THIS DESIGN. A scalar record has
   no polarisation; a polariser needs a Vector record or two records, which
   this design does not have; Malus and Bell stay under DESIGN.md's declared
