@@ -99,6 +99,8 @@ from pathlib import Path
 
 import numpy as np
 
+from event_universe.events.world import BLOCK_SEED
+
 HERE = Path(__file__).resolve().parent
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
@@ -110,7 +112,7 @@ MOMENTUM_K4 = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
 # the well (1027 intervals), the hold 8000 after it, the ticks 18500 (500 more, the hold
 # read over [10200, 18200] by RUN_LIST.md).
-LAYER_RAMP = 10000
+LAYER_RAMP = 12000  # ten relaxation times of the well by the margin module's own omega_b on the 200^2 layer (1164.6 intervals; the design script's 1027 the estimate), the model owner's word of 2026-09-24, 16:48Z: the body's conditions checked at load
 LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "coupling",
@@ -139,10 +141,13 @@ def world(
     lamp: dict | None = None,
     probes: list[list[int]] | None = None,
     mode_axis: str | None = None,
+    seed_profile: bool = True,
 ) -> dict:
     """One world file: light's family with its clock, the massive kind `matter` with
     its pair (and its faces where the chain's are open), the blocks as measured
-    events with `side`, the lamp and the probes of the index worlds."""
+    events with `side`, the lamp and the probes of the index worlds; every bound body's
+    seed on its mode (`seed_on_the_mode`) unless `seed_profile` is off, for a caller that
+    completes the document first (the detector-law generator's emitters) and calls it then."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
     if faces is not None:
         matter["faces"] = faces
@@ -191,7 +196,33 @@ def world(
         document["probes"] = probes
     if mode_axis is not None:
         document["mode_axis"] = mode_axis
+    if seed_profile:
+        seed_on_the_mode(document)
     return document
+
+
+def seed_on_the_mode(document: dict) -> None:
+    """Every bound body's seed as the bound mode's integer profile over the whole board at
+    the declared amplitude (the model owner's word of 2026-09-24, 16:48Z, through the Boss:
+    the body's algebraic conditions exact in the initial state, the whole board carrying the
+    mode's values; the engine's `check_body_conditions` refuses a body whose initial state
+    differs from it on any Node): a block of the massive kind with a lowered pair (a well),
+    a nonzero scalar seed (the loader's default 2^20 where none is declared) and no cavity
+    gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
+    (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
+    silent block (seed 0), a barrier (a raised pair) and a cavity keep their keys."""
+    kind = next(family["pair"] for family in document["families"] if family["name"] == "matter")
+    for number, entry in enumerate(document["measured"]):
+        if "side" not in entry or entry.get("family") != "matter" or entry.get("cavity"):
+            continue
+        pair = entry["pair"]
+        if pair[0] * kind[1] <= pair[1] * kind[0]:
+            continue
+        scalar = entry.get("seed", BLOCK_SEED)
+        if not isinstance(scalar, int) or scalar == 0:
+            continue
+        entry.setdefault("margin", "pin")
+        entry["seed"] = mode_profile(document, number, amplitude=scalar)
 
 
 def lamp_at(x: int, train: int) -> dict:
@@ -426,12 +457,19 @@ def worlds() -> dict[str, dict]:
     # margin s + 4 extents = 159 < 200), the seed the BOUND MODE'S INTEGER PROFILE at 2^20 over
     # the whole layer (the generator computes the module's mode and writes the integers into
     # the world file; the engine reads integers; the load-time check prints the deviation): at
-    # rest 3500 intervals, and pushed to k = 3 over the ramp 10000 (ten relaxation times of
-    # the well, DECLARATIONS.md section 8) and the hold 8000, the ticks 18500.
+    # rest and pushed to k = 3 over the ramp 12000 (ten relaxation times of the well by the
+    # margin module's own number, DECLARATIONS.md section 8) and the hold 8000, the ticks
+    # 20500 in both (M1-8: the same hold window); the seed on the mode by `seed_on_the_mode`.
     block = {"position": [93, 93, 0], "side": 14, "pair": [3200, 3227], "margin": "pin"}
-    rest = world("layer-pin-rest-14", "PIN", [200, 200, 1], PERIODIC, [3200, 3236], [block], 3500)
-    profile = mode_profile(rest, 0)
-    rest["measured"][0]["seed"] = profile
+    rest = world(
+        "layer-pin-rest-14",
+        "PIN",
+        [200, 200, 1],
+        PERIODIC,
+        [3200, 3236],
+        [block],
+        LAYER_RAMP + LAYER_HOLD + 500,
+    )
     out["layer_pin_rest_14"] = rest
     moving = world(
         "layer-pin-k3-14",
@@ -443,7 +481,6 @@ def worlds() -> dict[str, dict]:
         LAYER_RAMP + LAYER_HOLD + 500,
         mode_axis="x",
     )
-    moving["measured"][0]["seed"] = profile
     out["layer_pin_k3_14"] = moving
     out.update(launch_list_worlds())
     return out

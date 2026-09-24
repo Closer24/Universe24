@@ -263,14 +263,16 @@ local; [skills/workflow.md](skills/workflow.md)) are read against them.
   Malus's four, the pace fans and the cart: no body (the polarisers bodies
   of one Node with a table, the receivers bodies of one Node). SO: seven
   files (the deep well and its rest world, the boxes' two, the light
-  clock, sagnac's two, redshift's two) carry a flat seed and ARE REFUSED by
-  the seed check of body-check at the runner's start and by the preflight
-  tool (test g of tests/test_body_conditions.py names them): a world line
-  owed (their seeds as the module's integer profiles at the declared
-  amplitude through the generator's `mode_profile`, a change of the
-  declared worlds that takes the owner's word, since the record's norm at
-  interval 0 changes from the flat value on the cells to the mode's
-  integral), not a change of the check.
+  clock, sagnac's two, redshift's two) carried a FLAT seed and were refused
+  by the seed check of body-check; on the owner's word of 16:48Z (the whole
+  board carries the mode's values) they are REGENERATED with the seed on
+  the mode (DECLARATIONS.md section 15 M1-11, the generators'
+  `seed_on_the_mode`), and the muon's pushed layer pin world, whose ramp of
+  10000 is 8.6 relaxation times by the module's own number, is regenerated
+  with the ramp 12000 (section 8); every listed massive world now loads
+  clean under the check (test g of tests/test_body_conditions.py). The
+  readings declared on the flat-seeded worlds are re-derived blind before
+  their preliminaries (M1-11).
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
   the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. A

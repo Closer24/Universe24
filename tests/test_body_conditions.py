@@ -7,9 +7,9 @@ at load, named with the axis, never cut; (c) a profile with one Node off is refu
 the Node; (d) a flat seed is refused (the initial state is not the mode); (e) a pair not
 lowered is the loader's own refusal; (f) a pushed body's ramp below ten relaxation times of
 its own well is refused, at or above it admitted; (g) the run list's massive worlds under
-the check as their files stand: the muon's layer pin world passes, the seven flat-seeded
-worlds are refused with the seed sentence (a world line owed, not a change of the check),
-the silent bodies and the light-kind walls have no reading. Every number here is a
+the check: every bound body seeded on its own mode by the generators passes bit for bit,
+the pushed ones with their ramp at or above ten relaxation times; the silent bodies and
+the light-kind walls have no reading. Every number here is a
 COMPUTATION of the declaration; nothing of the check is read by the state."""
 
 from __future__ import annotations
@@ -188,7 +188,6 @@ def test_f_the_ramp_against_ten_relaxation_times():
 
 
 CLEAN = "bit for bit"
-FLAT = "is not the bound mode's integer profile"
 NONE = "no reading"
 
 
@@ -196,31 +195,37 @@ NONE = "no reading"
     ("name", "verdict"),
     [
         ("massive_record/layer_pin_rest_14.json", CLEAN),
-        ("massive_record/deep_well_k3_40.json", FLAT),
-        ("massive_record/moving_20.json", FLAT),
-        ("massive_record/light_clock_60.json", FLAT),
-        ("massive_record/sagnac_k3.json", FLAT),
-        ("massive_record/redshift_k3.json", FLAT),
+        ("massive_record/layer_pin_k3_14.json", CLEAN),
+        ("massive_record/deep_well_k3_40.json", CLEAN),
+        ("massive_record/deep_well_rest_40.json", CLEAN),
+        ("massive_record/moving_20.json", CLEAN),
+        ("massive_record/rest_20.json", CLEAN),
+        ("massive_record/light_clock_60.json", CLEAN),
+        ("massive_record/sagnac_k3.json", CLEAN),
+        ("massive_record/sagnac_rest.json", CLEAN),
+        ("massive_record/redshift_k3.json", CLEAN),
+        ("massive_record/redshift_control.json", CLEAN),
         ("massive_record/index_moving_long_k3_away.json", NONE),
         ("detector_law/two_slits.json", NONE),
     ],
 )
-def test_g_the_run_lists_massive_worlds_under_the_check_as_their_files_stand(name: str, verdict: str):
-    """The muon's layer pin world (`layer_pin_rest_14.json`, its seed the generator's
-    `mode_profile`) passes bit for bit; the deep well, the boxes, the light clock, the
-    Sagnac blocks and the redshift emitter carry a flat seed and are REFUSED (their seeds on
-    the mode are a world line owed, DECLARATIONS.md, not a change of the check); the index's
-    silent body and the two slits' mirror line of light's kind have no reading."""
+def test_g_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
+    """Every bound body of the run list's massive worlds is seeded on its own mode by the
+    generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
+    well and its rest world, the boxes, the light clock, the Sagnac blocks and their rest
+    world, the redshift emitter and its control) and passes the check bit for bit, a pushed
+    body's ramp at or above ten relaxation times; the index's silent body and the two slits'
+    mirror line of light's kind have no reading. Before this branch the seven worlds other
+    than the layer pin's carried a flat seed and were refused (the world line of
+    DECLARATIONS.md section 15, the body's seed on its mode)."""
     document = json.loads((WORLDS / name).read_text(encoding="utf-8"))
     world = parse_nature_beam_world(document)
     readings = check_margins(world)
+    lines = check_body_conditions(world, DetectorLawSimulation(world), readings)
     if verdict == NONE:
-        assert readings == []
-        assert check_body_conditions(world, DetectorLawSimulation(world), readings) == []
+        assert readings == [] and lines == []
         return
-    if verdict == CLEAN:
-        lines = check_body_conditions(world, DetectorLawSimulation(world), readings)
-        assert lines and all(CLEAN in line for line in lines if line.startswith("seed"))
-        return
-    with pytest.raises(ValueError, match=FLAT):
-        check_body_conditions(world, DetectorLawSimulation(world), readings)
+    assert readings and lines
+    assert all(CLEAN in line for line in lines if line.startswith("seed"))
+    if any(int(component) != 0 for component in world.measured[readings[0].number].momentum):
+        assert any(line.startswith("ramp (COMPUTATION)") for line in lines)

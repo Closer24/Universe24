@@ -1380,13 +1380,18 @@ would have found no cell.
    loader's own refusals; 3 and 4 (the bound mode, the margin) stay
    `check_margins`.
 5. THE RUN LIST'S WORLDS UNDER IT (tests/test_body_conditions.py, test g):
-   the muon's layer pin world passes bit for bit (its seed the generator's
-   `mode_profile`); the deep well (and its rest world), the boxes (two),
-   the light clock, sagnac (two) and redshift (two) carry a flat seed and
-   are refused: their seeds on the mode at the declared amplitude through
-   `mode_profile` are a world line owed on the owner's word (the record's
-   norm at interval 0 changes), not a change of the check; the index's
-   silent body and the light-kind walls have no reading.
+   as the files stood, the muon's layer pin world alone passed (its seed
+   the generator's `mode_profile`); the deep well (and its rest world),
+   the boxes, the light clock, sagnac (two) and redshift (two) carried a
+   flat seed and were refused. THE WORLD LINE (DECLARATIONS.md section 15
+   M1-11, on the owner's word): the massive generator's `seed_on_the_mode`
+   seeds every bound body on its mode at the declared amplitude (the
+   detector-law generator calls it once its emitter documents are
+   complete, `seed_profile=False` on its `world` calls); the layer pin
+   worlds' ramp 12000 and ticks 20500 (section 8: ten relaxation times by
+   the module's own 1164.6 intervals); every listed massive world loads
+   clean under the check; the index's silent body and the light-kind walls
+   have no reading. The preliminaries of the regenerated worlds re-run.
 
 ## 21. The receiver by name and the click line at the rung (DECLARATIONS.md section 13 item 7, the owner's word of 2026-09-24, 09:50Z; section 10 items 9 and 10; Nature24's eight decisions of 12:40Z through the Boss, the declaration built to; the former build-4 of record 1800, never pushed; the Engine Fixer's line 1 on `engine-fix-1`, 2026-09-24)
 
