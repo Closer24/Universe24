@@ -139,18 +139,6 @@ def load_one(path: Path) -> Outcome:
         if world.detector_law:
             DetectorLawSimulation(world)
             pair_lamp_checks(world)
-            for number, entry in enumerate(world.measured):
-                # item 10 the rule: the emitter's own take's timing, computed
-                # at load (COMPUTATION), printed so no reader meets a constant
-                timing = (
-                    entry.lamp.remnant_take
-                    if entry.lamp is not None
-                    else entry.block.remnant_take
-                    if entry.block is not None
-                    else None
-                )
-                if timing is not None:
-                    notes.append(f"remnant take (COMPUTATION): measured {number}: T = {timing}")
         else:
             NatureBeamSimulation(world)
     except Exception as error:  # noqa: BLE001 - every refusal is reported, none hidden

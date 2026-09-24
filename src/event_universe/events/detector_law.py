@@ -127,7 +127,7 @@ class LiveRecord:
     # to its emitter (the grace's end books the set Nodes' own content once)
     was_exempt: bool = False
     # item 10 (DECLARATIONS.md section 10 item 10): whether the record's own
-    # emitter's Nodes have taken it (from age > train + remnant_take; HOST:
+    # emitter's Nodes have taken it (from the first interval after its train; HOST:
     # the content booked to the ledger's row `taken_by_emitter` at its end,
     # never to a pointer nor to `absorbed`), and the emitter's Nodes at the
     # last interval (a new Port at a hop)
@@ -1255,10 +1255,10 @@ class DetectorLawSimulation:
         exempt = self._exempt(live) if in_grace else None
         if exempt is not None:
             driven = exempt if driven is None else (driven | exempt)
-        # Item 10 (DECLARATIONS.md section 10 item 10, the emitter's ringing):
-        # from age > train + remnant_take (the emitter's declared key) the
-        # record's own emitter's Nodes (a lamp's Nodes; an emitting block's
-        # current cells) are a taking set for THIS record alone in the
+        # Item 10 (DECLARATIONS.md section 10 item 10, the emitter's ringing,
+        # the rule at T = 0, record 1711): from the first interval after its
+        # train the record's own emitter's Nodes (a lamp's Nodes; an emitting
+        # block's current cells) are a taking set for THIS record alone in the
         # receiver form (the row held at 0, one ghost per Port in the record's
         # own KIND'S pair), booking nothing onto a pointer nor `absorbed` (the
         # ledger books the content to the HOST row `taken_by_emitter` at the
@@ -1408,6 +1408,14 @@ class DetectorLawSimulation:
         live.own_previous = own
         offer = offer[self.absorbing]
         cells = self.cell_index[self.absorbing]
+        if (cells < 0).any():
+            # Reviewer 3's guard (07:43Z): an absorbing Node without a cell
+            # would book to the last cell by the list's wrap; refuse, naming it
+            missing = np.argwhere(self.absorbing & (self.cell_index < 0))
+            raise RuntimeError(
+                f"{BEAM_LAW}: an absorbing Node without a cell at interval {self.tick}: "
+                f"{[tuple(int(v) for v in node) for node in missing[:4]]} (the take books to no cell)"
+            )
         if in_grace:
             own = (
                 np.array(
@@ -1489,24 +1497,16 @@ class DetectorLawSimulation:
         return live.age < live.train + 2 * live.period
 
     def _own_take(self, live: LiveRecord) -> np.ndarray | None:
-        """The record's own emitter's Nodes as a taking set for it (item 10):
-        from age > train + remnant_take (the emitter's declared key, the
-        intervals the last inserted rows need to leave the cells), an
-        emitting block's current cells or the lamp's Nodes; None before that
-        and for a record with no emitter's Nodes (a block's own massive
-        record, a planted record)."""
-        if live.sourcing:
+        """The record's own emitter's Nodes as a taking set for it (item 10,
+        the rule with its timing integer withdrawn, the model owner's word,
+        record 1711): from the first interval after its train, an emitting
+        block's current cells or the lamp's Nodes; None during the train and
+        for a record with no emitter's Nodes (a block's own massive record, a
+        planted record)."""
+        if live.sourcing or live.age <= live.train:
             return None
         if live.emitter is not None:
-            block = self.block_by_number[live.emitter]
-            delay = block.definition.remnant_take
-            if delay is None or live.age <= live.train + delay:
-                return None
-            return block.mask
-        measured = self.world.measured
-        lamp = measured[live.lamp].lamp if 0 <= live.lamp < len(measured) else None
-        if lamp is None or lamp.remnant_take is None or live.age <= live.train + lamp.remnant_take:
-            return None
+            return self.block_by_number[live.emitter].mask
         return live.driven
 
     def _exempt(self, live: LiveRecord) -> np.ndarray | None:
@@ -2018,7 +2018,7 @@ class DetectorLawSimulation:
                     "family": self.families[live.family].name,
                     "u": live.u,
                     # HOST (item 10): whether the record's own emitter's Nodes
-                    # have taken it (from age > train + remnant_take)
+                    # have taken it (from the first interval after its train)
                     "emitter_taking": live.emitter_took,
                     "born": live.born,
                     "birth": live.birth_tick,

@@ -260,9 +260,9 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
     the scope of `balanced` named), every other field byte for byte."""
     assert run_chain_digests() == {
-        "events": "c89bd703a4ddc65f2c67527c73e62c5dd5ff1d3970c2cb114468a318f6222033",
+        "events": "e7e5ba579f1fb00dac169d030126ed08e1b57324bc66242fe10d3cf86b275512",
         "state": "9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962",
-        "audit": "c822d12b00282f936df445b50c79698716056758b5895e332abc8b2ab0293904",
+        "audit": "55b3e67f98f036c16be35154b7a55115d30e0df6fd4da431a874e16596d2587a",
     }
 
 
@@ -823,8 +823,10 @@ def test_k_the_take_only_for_an_absorbing_block():
     """BUILD.md (k): the coupled chain with the block declared absorbing: light's row at every
     cell is 0 after every step, the Ports book an offer into the block's cell and the record
     clicks at the block with `clock` the block's count; with the block a clock body light's
-    row at the cells is nonzero after the front and the record's far face reads it. The edge
-    case: `absorbing` with `emits` is refused at load."""
+    row at the cells is nonzero after the front and the record's far face reads it (the record
+    alive past 1200 under item 10, the clock body radiating into it; before, the lamp's own
+    cell took it after its grace and it completed there). The edge case: `absorbing` with
+    `emits` is refused at load."""
     for absorbing in (True, False):
         world = parse_nature_beam_world(coupled_chain([1, 10], absorbing=absorbing, seed=UNIT))
         lines: list[dict] = []
@@ -845,20 +847,25 @@ def test_k_the_take_only_for_an_absorbing_block():
         gathers = [
             line for line in lines if line["event"] == "gather" and line["record"] == record.identity
         ]
-        assert len(gathers) == 1
-        chosen = gathers[0]["chosen"]
         face = simulation.cell_names.index("face:+x")
         if absorbing:
             # the block took the train: nothing reached the far face; its Ports
-            # booked the offer; a click at the block carries the block's count
-            # (on a chain the lamp's own cell may win the ladder, the afterglow
-            # of one dimension, the first build's)
+            # booked the offer; the click at the block carries the block's count
+            # (item 10: the lamp's own Nodes take the record's remnant from the
+            # train's end to no pointer, so the lamp's cell never wins the ladder)
+            assert len(gathers) == 1
+            chosen = gathers[0]["chosen"]
             assert record.pointers[block.cell] > 0 and record.pointers[face] == 0
-            if chosen is not None and chosen[0][0] == "measured:1":
-                assert gathers[0]["clock"] <= block.count
+            assert record.pointers[0] == 0
+            assert chosen is not None and chosen[0][0] == "measured:1"
+            assert gathers[0]["clock"] <= block.count
         else:
+            # the clock body radiates into the record: it is alive past 1200
+            # under item 10 (before, the lamp's own cell took it after its
+            # grace and it completed there); the far face reads it
             assert seen_at_cells
-            assert record.pointers[face] > 0
+            assert not gathers and record.identity in simulation.records
+            assert record.pointers[face] > 0 and record.pointers[0] == 0
     with pytest.raises(ValueError, match="absorbing block emits nothing"):
         parse_nature_beam_world(
             block_world(
@@ -1518,39 +1525,33 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 
 def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_closed_face():
     """Line B, line 7 (the receiving set at ONE free Node), item 10 THE RULE (the emitter's own
-    take of its record's remnant at age > train + T, T = ceil(extent / v_g) + 2 computed at load,
-    DECLARATIONS.md section 10 item 10 at remnant-rule e6b4ec3d) and the closed face on the light
-    clock's chain of 173 (L = 60 from A's face at 111 to the mirror at 172; own_grace 70; W = 64;
-    the world's `wheel` 64; A's T = 23 at the chain's declared clock [1, 1], 24 at 12 Links per
-    period). With the faces CLOSED: A's first emitted record passes the set's Node x = 112 freely
-    during its grace of 140 (the row there nonzero, no pointer, no rung); from age 94 A's twelve
-    cells take the record in light's pair, their rows held at 0 (the remnant's level at A's cells
-    read beside, GAMEBOARD: above 10^5 at 90, 0 from 95), nothing booked onto any pointer nor
-    into `absorbed`, the ledger balanced with the row `taken_by_emitter`; the set's Ports begin
-    their take at the grace's end at the free neighbour's level (the first booking the Port's
-    motion plus the set Node's own term, no jump); the mirror's neighbour x = 171 rises before the
-    return's transit 2 L / c = 208. THE ENGINE'S READING (EXPLORATORY; the declaration's
-    preliminary expects no rung before 207.85 and the first after it): THE FIRST RUNG AT 147
-    after the birth, booked from the remnant's alternating mode on the free Nodes beside A's face
-    (x = 113 onward, which A's cells do not take) that the delay lets spill out of the cells (the
-    sweep of BUILD.md section 18 over the delay: 214 at 0, 174 at 4, 157 at 8, 152 at 12, 147 at
-    24; the pointer at 208 against the rung 6.7 x 10^10: 5.4 x 10^10 at 0, 2.1 x 10^11 at 24);
-    the return shows as the pointer's rise after 208 (2.8 x 10^12 from 208 to 240 against 2.0 x
-    10^11 from 140 to 208); the click stamped with A's count as the interval begins and named by
-    `clock_source`; the row held at 0 after the grace. With the faces OPEN the same rung and no
-    rise. A receiver body at
-    x = 160 beside crosses its rung after the grace. The loader: `block` with a position on a
-    measured Node refused, with two positions refused, `block` naming a body refused naming the
-    positions form, `closed` without `detector_law` refused, `own_grace` on a silent block
-    refused, `held` on an emitter refused."""
+    take of its record's remnant from the first interval after its train, the model owner's
+    words of records 1694 and 1711, the timing integer withdrawn) and the closed face on the
+    light clock's chain of 173 (L = 60 from A's face at 111 to the mirror at 172; own_grace 70;
+    W = 64; the world's `wheel` 64). With the faces CLOSED: A's first emitted record passes the
+    set's Node x = 112 freely during its grace of 140 (the row there nonzero, no pointer, no
+    rung); from age 71 A's twelve cells take the record in light's pair, their rows held at 0
+    (the level at A's cells read beside, GAMEBOARD: the drive's millions at 70, 0 from 71),
+    nothing booked onto any pointer nor into `absorbed`, the ledger balanced with the row
+    `taken_by_emitter`; the set's Ports begin their take at the grace's end at the free
+    neighbour's level (the first booking the Port's motion plus the set Node's own term, no jump);
+    the set books less than one rung of A's own record between the grace's end and the return's
+    transit 2 L / c = 208; the mirror's neighbour x = 171 rises before 208; the first rung comes
+    after the grace's end (its interval an EXPLORATORY reading before the GO, not pinned: the
+    declaration's preliminary reads it beside 218 +- 2) and the return shows as the pointer's
+    rise after 208, larger than the rise from 140 to 208; the click stamped with A's count as
+    the interval begins and named by `clock_source`; the row held at 0 after the grace. With the
+    faces OPEN no rung within the return's window and no rise. A receiver body at x = 160 beside
+    crosses its rung after the grace. The loader: `block` with a position on a measured Node
+    refused, with two positions refused, `block` naming a body refused naming the positions
+    form, `closed` without `detector_law` refused, `own_grace` on a silent block refused, `held`
+    on an emitter refused."""
     first = 1  # A's first emitted record: block 0, birth 1
     readings: dict[str, dict[str, int]] = {}
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, False))
         if faces == "closed":
             assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
-        # the rule's T at load: ceil(12 / v_g) + 2 = 23 at the clock [1, 1] (24 at 12 Links per period)
-        assert world.measured[0].block is not None and world.measured[0].block.remnant_take == 23
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
         if faces == "closed":
@@ -1590,9 +1591,10 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
             norm = live.norm
             # item 10: nothing of A's own take reaches a pointer or `absorbed`
             assert live.pointers[block.cell] == 0
-            if age in (90, 95, 100, 140, 208):
+            if age in (70, 71, 100, 140, 208):
                 remnant_level[age] = int(np.max(np.abs(live.now[100:112, 0, 0])))
-            if age > 95:
+            if age > 70:
+                # the rule: A's cells take from the first interval after the train
                 assert not np.any(live.now[100:112, 0, 0]) and live.emitter_took
             if grace_before:
                 assert live.pointers[a_face] == 0 and live.first_rung[a_face] is None
@@ -1645,18 +1647,21 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 pointer_at[age] = live.pointers[a_face]
         assert birth is not None and passed_freely
         assert first_booking is not None and first_booking == expected_booking and first_booking > 0
-        assert remnant_level[90] > 100000 and remnant_level[95] == 0 and remnant_level[140] == 0
-        assert rung is not None and rung - birth == 147, (rung, birth)
-        assert stamp == count_then and stamp is not None and stamp >= 1
-        assert held_after
-        assert norm // 64 < pointer_at[208] - pointer_at[140] < 4 * (norm // 64), pointer_at
+        assert remnant_level[70] > 1000000 and remnant_level[71] == 0 and remnant_level[140] == 0
+        # the set books less than one rung of A's own record before the return
+        assert 0 <= pointer_at[208] - pointer_at[140] < norm // 64, pointer_at
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert all(g["taken_by_emitter"] == 0 for g in gathers)
         if faces == "closed":
             assert mirror_seen is not None and mirror_seen - birth < 208, (mirror_seen, birth)
+            assert rung is not None and rung - birth > 140, (rung, birth)
+            assert stamp == count_then and stamp is not None and stamp >= 1
+            assert held_after
             assert pointer_at[240] - pointer_at[208] > 10 * (pointer_at[208] - pointer_at[140])
-        readings[faces] = {"rung": rung - birth, **pointer_at}
-    assert readings["closed"]["rung"] == readings["open"]["rung"] == 147
+        else:
+            assert rung is None or rung - birth > 250, (rung, birth)
+        readings[faces] = {"rung": None if rung is None else rung - birth, **pointer_at}
+    assert readings["closed"][140] == readings["open"][140]
     # a receiver beyond the grace clicks
     beside = DetectorLawSimulation(parse_nature_beam_world(light_clock_world("open", True)))
     far = beside.cell_names.index("far")

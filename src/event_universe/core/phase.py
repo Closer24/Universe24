@@ -15,7 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import lru_cache
 
-from event_universe.core.integer import checked_work, integer_root
+from event_universe.core.integer import checked_work
 
 MAX_PHASE_STEPS = 65536
 PHASE_COSINE_SCALE = 256
@@ -199,36 +199,3 @@ def nearest_phase(
             if best is None or residual < best[1]:
                 best = (phi, residual)
     return best
-
-
-def remnant_intervals(
-    extent: int, pair: tuple[int, int], clock: tuple[int, int], phase_steps: int
-) -> int:
-    """The intervals after its train before an emitter takes its own record's
-    remnant (DECLARATIONS.md section 10 item 10, the rule): T = ceil(extent /
-    v_g) + 2, the extent the emitter's span along its emission in Links and
-    v_g the record's kind's band group pace at its declared clock. The band
-    of the six-neighbour rule with the kind's pair [num, den] along an axis,
-    cos omega = (num / den) (cos k + 2) / 3, gives v_g = d omega / d k =
-    (num / den) sin k / (3 sin omega), so extent / v_g = 3 extent sin omega
-    den / (num sin k). Computed once at load in the tables' fixed point (the
-    series above, the integer root; no float), a declared rounding like the
-    tables': 24 for a block of side 12 emitting light at the clock [77, 25]
-    on N = 64, 4 for a one-Node lamp. A clock outside the kind's band, or
-    beyond a quarter turn per interval, is refused."""
-    num, den = pair
-    clock_numerator, clock_denominator = clock
-    if extent < 1 or num < 1 or den < 1 or clock_numerator < 1 or clock_denominator < 1:
-        raise ValueError("remnant intervals need a positive extent, pair and clock")
-    angle = checked_work(2 * _PI_FIXED * clock_numerator) // (clock_denominator * phase_steps)
-    if not 0 < angle <= _PI_FIXED // 2:
-        raise ValueError("the clock's step per interval lies outside (0, pi / 2]")
-    cosine = _fixed_cosine(angle)
-    sine = _fixed_sine(angle)
-    band_cosine = checked_work(3 * den * cosine) // num - 2 * _FIXED
-    if not -_FIXED < band_cosine < _FIXED:
-        raise ValueError("the clock lies outside the kind's band (no group pace)")
-    band_sine = integer_root(checked_work(_FIXED * _FIXED - band_cosine * band_cosine))
-    numerator = checked_work(3 * extent * sine * den)
-    denominator = checked_work(num * band_sine)
-    return (numerator + denominator - 1) // denominator + 2

@@ -11,7 +11,6 @@ import numpy as np
 import pytest
 
 from event_universe.core.integer import keyed_permutation
-from event_universe.core.phase import remnant_intervals
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 
@@ -275,29 +274,41 @@ def test_the_order_channels_keys_on_a_pair_lamp_have_no_default_and_seed_the_res
         parse_nature_beam_world(outside)
 
 
-def test_the_emitters_own_take_is_the_rule_with_its_timing_computed_at_load():
-    """Item 10 THE RULE (DECLARATIONS.md section 10 item 10 at remnant-rule e6b4ec3d, the model
-    owner's word of 06:42Z): no key; the intervals after its train before an emitter's own Nodes
-    take its record's remnant are T = ceil(extent / v_g) + 2 computed at load in the tables'
-    fixed point (`core.phase.remnant_intervals`): 24 for a block of side 12 emitting light at
-    the clock [77, 25] on N = 64 (v_g = 0.564 Links per interval at 12 Links per period), 4 for
-    a one-Node lamp at that clock, 23 for the side-12 block at the clock [1, 1], 4 for a one-Node
-    lamp of the matter kind [156, 157]; a clock outside the band or beyond a quarter turn per
-    interval refused; the chain world's lamp reads T = 4 and a key `remnant_take` written into a
-    world is refused as unknown; a detector-law world with a set and no lamp declares the world
-    key `wheel` (refused absent, no implicit default); a massive kind's `take` is refused on
-    light's kind; the ledger carries the HOST row `taken_by_emitter`, 0 on the chain world whose
-    record ends at the screen, the books balanced."""
-    assert remnant_intervals(12, (1, 1), (77, 25), 64) == 24
-    assert remnant_intervals(1, (1, 1), (77, 25), 64) == 4
-    assert remnant_intervals(12, (1, 1), (1, 1), 64) == 23
-    assert remnant_intervals(1, (156, 157), (77, 25), 64) == 4
-    with pytest.raises(ValueError, match="outside the kind's band"):
-        remnant_intervals(1, (1, 2), (77, 25), 64)
-    with pytest.raises(ValueError, match=r"outside \(0, pi / 2\]"):
-        remnant_intervals(1, (1, 1), (17, 1), 64)
+def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_train():
+    """Item 10 THE RULE (DECLARATIONS.md section 10 item 10; the model owner's words of 06:42Z,
+    record 1694, and 07:27Z, record 1711: the timing integer withdrawn): from the first interval
+    after its train every emitter's own Nodes take its record's remnant in the record's kind's
+    pair, booked onto no pointer and not into `absorbed`; no key and no load-time integer. On
+    the chain world: the lamp's Node holds the record's row at 0 from age train + 1 on (the
+    drive's value there at age train) and `emitter_taking` is read on the records reading; a
+    `remnant_take` key written into a world is refused as unknown; a detector-law world with a
+    set and no lamp declares the world key `wheel` (refused absent, no implicit default); a
+    massive kind's `take` is refused on light's kind; the ledger carries the HOST row
+    `taken_by_emitter`, 0 on the chain world whose record ends at the screen, the books
+    balanced. THE GUARD (Reviewer 3, 07:43Z): an absorbing Node without a cell refuses the
+    interval naming the Node, never booking to the last cell by the list's wrap."""
     world = parse_nature_beam_world(chain_world())
-    assert world.measured[0].lamp is not None and world.measured[0].lamp.remnant_take == 4
+    simulation = DetectorLawSimulation(world)
+    train = None
+    for _ in range(400):
+        simulation.step()
+        live = simulation.records.get(1)
+        if live is None:
+            continue
+        train = live.train
+        at_lamp = int(live.now[2, 0, 0])
+        if live.age <= train:
+            assert not live.emitter_took
+        elif live.age > train + 1:
+            # the take acts in the step that starts at age train + 1
+            assert at_lamp == 0 and live.emitter_took
+    assert train is not None
+    readings = dict(simulation.snapshot_stream())
+    assert all("emitter_taking" in record for record in readings.get("records", []))
+    books = simulation.books()
+    assert books["balanced"]
+    light = books["families"]["light"]["transit"]
+    assert light["taken_by_emitter"] == 0 and light["absorbed"] >= 1
     keyed = chain_world()
     keyed["measured"][0]["lamp"]["remnant_take"] = 4
     with pytest.raises(ValueError, match="remnant_take"):
@@ -321,10 +332,11 @@ def test_the_emitters_own_take_is_the_rule_with_its_timing_computed_at_load():
     on_light["families"][0]["take"] = [-15, 56]
     with pytest.raises(ValueError, match="admitted on a massive kind alone"):
         parse_nature_beam_world(on_light)
-    simulation = DetectorLawSimulation(world)
-    for _ in range(400):
-        simulation.step()
-    books = simulation.books()
-    assert books["balanced"]
-    light = books["families"]["light"]["transit"]
-    assert light["taken_by_emitter"] == 0 and light["absorbed"] >= 1
+    # the guard: an absorbing Node whose cell is the sentinel refuses the interval
+    guarded = DetectorLawSimulation(parse_nature_beam_world(chain_world()))
+    for _ in range(3):
+        guarded.step()
+    guarded.cell_index[70, 0, 0] = -1
+    with pytest.raises(RuntimeError, match=r"absorbing Node without a cell .*\(70, 0, 0\)"):
+        for _ in range(200):
+            guarded.step()
