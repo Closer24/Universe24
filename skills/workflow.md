@@ -614,7 +614,7 @@ that GitHub enforces a branch protection rule unless it was actually verified.
 The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
 stabilisation of the engine and the freeze:
 
-1. **One list, fifteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md));
+1. **One list, sixteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883);
    the seven others are OUT, not deferred ("there is no after the paper").
 2. **One agent writes all the engine code, the worlds and the test-run lines**
    (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
