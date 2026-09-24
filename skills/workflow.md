@@ -708,7 +708,11 @@ including an agent's replies in its own session, no code appears at all,
 not even in parentheses: say what the thing is ("the declaration of the
 muon's ramp", not "M1-8"; "the list of the world lines in the
 declarations", not "section 15") (the owner, 2026-09-24, record 1828,
-"still using unclear names"). The features' rule of 14:00Z is the same
+"still using unclear names").
+No wave on the board: a record holds one integer amplitude per Node and
+the one local rule is the split; "wave", "wavelength" and "phase
+matching" name only the Outside reading of that rule and are said as such
+(the owner, 2026-09-24, record 1833; docs/TERMINOLOGY.md). The features' rule of 14:00Z is the same
 rule.
 
 Our names, never the laboratory's, for a block (the owner, 2026-09-24,
