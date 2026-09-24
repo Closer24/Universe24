@@ -322,7 +322,7 @@ The load line on the nineteen files (every world of the eight rows and the
 receding index's shared reference at omega): eighteen VALID; ONE refusal,
 `matter_front_12.json` (section 15).
 
-## 12. EXPLORATORY: row 5a, the pace fans (pace_fan_12, _16, _24 at 88b3752)
+## 12. EXPLORATORY: the anisotropy of c, the pace fans (`pace_fan_12.json`, `pace_fan_16.json`, `pace_fan_24.json` at 88b3752; row 5a)
 
 The files at their blobs f17bf031 (12), and the 16 and 24 files of the same
 generator commit: the layer 128 x 128 x 1, x and y open, the lamp at [64, 64]
@@ -390,7 +390,7 @@ precision.
   integer ticks) and the board this is, is unread here.
 - Against TEST_RUNS.md ae96dcf4 (section 1; the section names main af4c3b03, these runs are on 328b560f): CLEAN. One birth at tick 1, one gather at a face and no other, no click line, the outer probes' first nonzero value at 59 to 64 (after 55, before 120), the runs 335 to 570 intervals past the train's end, HOST seconds under 100 MB; no period settles to 0.05 percent, so the last period's value is read with its change, as the section says.
 
-## 13. EXPLORATORY: row 4a, the layer pin worlds (layer_pin_rest_14 at 7e9b0002, layer_pin_k3_14 at aee58cd3)
+## 13. EXPLORATORY: the muon's form, the layer pin worlds at rest and at k = 3 (`layer_pin_rest_14.json` at 7e9b0002, `layer_pin_k3_14.json` at aee58cd3; row 4a)
 
 The periodic 200 x 200 x 1 layer, the kind [3200, 3236], the block s = 14 at
 the well [3200, 3227], the seed the bound mode's integer profile, `margin`
@@ -421,7 +421,7 @@ at rest, [10200, 18200] in motion (`read_runs.LAYER_HOLD`).
   0.80448 and the spectral peak ratio 0.81172 (GAMEBOARD).
 - Against TEST_RUNS.md ae96dcf4 (section 2): NOT CLEAN by "the click intervals of the moving world not steady within the hold": two consecutive click intervals of 28 at the ticks 12058, 12086, 12114 (the block's corner at x = 19, 29, 38, its clock 262 to 264; the summed record at 12086 reads 318990 against about 3 x 10^6 to 8 x 10^6 at its neighbours), three clicks where the cycle of about 52 gives one; the other 151 intervals of the hold lie in 50 to 56 (the histogram 50: 3, 51: 46, 52: 51, 53: 35, 54: 13, 55: 2, 56: 2). Everything else of the section holds: a block line every interval, 67 clicks over the rest window, 154 over the hold with the longer interval, one Link per 3 intervals, the wrap on the periodic axis, the books balanced, HOST 522 s and 193 MB. A bug to route (the block's own clock, a double zero crossing of the summed record).
 
-## 14. EXPLORATORY: row 4c, the cart with a click (cart_k3 at 07c96fb7)
+## 14. EXPLORATORY: the round trip off a receding transponder, the cart with a click (`cart_k3.json` at 07c96fb7; row 4c)
 
 The bar 240 x 3 x 3, open; the post R fixed at x = 1 (the transponder), the
 lamp A at x = 3, the cart D from x = 20 at one Link per 3 counts; `clock_stamp`
@@ -457,7 +457,7 @@ true; 600 intervals; the model beam-moving-detector-cart-k3-v1.
   final age 600 against 600 intervals.
 - Against TEST_RUNS.md ae96dcf4 (section 3): NOT CLEAN by "the reader on the run folder": `tools/moving_detector_readings.py` refuses the one command's record as trimmed (`omit_row_clicks` true, the runner's default) and reads only a second run made with `--keep-row-clicks`; the run itself loads, runs 600 ticks, the lamp emits and the cart clicks (227 clicks of the lamp's rows, 121 returns), and on that second run the reader prints its lines. A bug of the runner's default against the reader (tools/), or of the reader's refusal.
 
-## 15. EXPLORATORY: row M2, the energy of a moving mass (matter_front_12 at 43311da1): REFUSED AT LOAD
+## 15. EXPLORATORY: the energy of a moving mass, the matter front (`matter_front_12.json` at 43311da1; row M2): REFUSED AT LOAD
 
 The load line refuses the file on main 328b560f, and the one command refuses
 it the same way (`Run failed`, exit 1, no run directory):
@@ -472,7 +472,7 @@ loader's line of PR 1115 (item 10's take at T = 0); the file predates it
 the Boss with the refusal line. No reading.
 - Against TEST_RUNS.md ae96dcf4 (section 4): NOT CLEAN: the loader refuses the file (the matter lamp with no `take` pair, the loader's line since PR 1115); no birth, no gather, no reading. A bug of the world file (the key owed) by the section's own rule (a refusal of a world of the fifteen is a bug of the code or of the world file).
 
-## 16. EXPLORATORY: the deep well in motion (deep_well_rest_40 at f1e94f5c, deep_well_k3_40 at 42ffca6f)
+## 16. EXPLORATORY: the deep well in motion, the cavity control at rest and at k = 3 (`deep_well_rest_40.json` at f1e94f5c, `deep_well_k3_40.json` at 42ffca6f)
 
 The periodic 128 x 128 x 1 layer, the kind [800, 809], the block s = 40 at
 full depth [800, 800], the flat seed 2^20, the block at (44, 44); at rest 3500
@@ -500,7 +500,7 @@ both files). The windows [200, 3000] at rest and [1500, 9500] in motion
   0.74375 and the spectral peak ratio 0.75302 (GAMEBOARD).
 - Against TEST_RUNS.md ae96dcf4 (section 6): NOT CLEAN by the section's counts: the rest world reads 29 clicks over [200, 3500] against "at least 30" (its own cycle of 117.3 intervals admits 28 in 3300), and the moving world 51 over [1500, 9500] against "at least 80" (the rest cycle alone admits 68 in 8000, and the hold's interval is 155.5); the click intervals in the hold steady in 151 to 161, one Link per 3 intervals, the block lines, the books balanced, HOST 45 and 143 s. What broke is the section's count against the world's own clock, not a line of the run; for Nature24 to say which.
 
-## 17. EXPLORATORY: the boxes (ii-a) and (ii-b) (rest_20 at 97e12136, rest_28 at 20f5bf72, moving_20 at 70cd3b21, moving_28 at 4a78b736)
+## 17. EXPLORATORY: the bound clock's second term, the boxes at rest and at k = 3 (`rest_20.json` at 97e12136, `rest_28.json` at 20f5bf72, `moving_20.json` at 70cd3b21, `moving_28.json` at 4a78b736; rows (ii-a) and (ii-b))
 
 The rest worlds on the periodic 48^3 board, 3000 intervals (s = 20 at full
 depth [800, 800] on the kind [800, 809]; s = 28 at half depth [1600, 1609] on
@@ -523,7 +523,7 @@ rest files. The windows [200, 3000] and [1500, 9500].
   0.020714 per interval; the pump 0.
 - Against TEST_RUNS.md ae96dcf4 (section 5): rest_20, rest_28 and moving_20 CLEAN (the block line every interval, 49 and 58 clicks over the rest window, 111 over the hold with the intervals 71 to 74, one Link per 3 intervals, the mode lines present, the books balanced, HOST 320, 317 and 2871 s under 1 GB). moving_28 NOT CLEAN by "the click intervals not steady within the hold": two short intervals, 36 and 30, at the ticks 2166, 2202, 2232 (the corner at x = 38, 50, 60 on the 64 box, its clock 41 to 43), the other 133 intervals in 56 to 67; a bug to route with layer_pin_k3_14's (section 13).
 
-## 18. EXPLORATORY: the receding index at k = 3 (index_moving_long_k3_away at 653a5456, index_moving_long_rest_k3_away at a23edda0, index_moving_long_reference_k3_away at eb4b0f52, index_moving_long_reference_omega at 4ecbd591)
+## 18. EXPLORATORY: the receding index at k = 3, the moving dielectric block (`index_moving_long_k3_away.json` at 653a5456, `index_moving_long_rest_k3_away.json` at a23edda0, `index_moving_long_reference_k3_away.json` at eb4b0f52, `index_moving_long_reference_omega.json` at 4ecbd591; row (v-m))
 
 The chain of 4000, x open for light; the source at 800 (a train of 200
 periods), the probe at 2400; the block of side 24 (the well [314, 315] on the
@@ -592,7 +592,7 @@ are not those of section 10 by the pairing alone.
   peak ratios 0.78463 and 0.81274 (GAMEBOARD).
 - Against TEST_RUNS.md ae96dcf4 (section 7): NOT CLEAN by two letters of the section, named for Nature24: (a) "no set, no click": the away world writes 24 `click` lines and the rest world 11, the block's own clock (its record's cycles, `measured` 1), none at a set; (b) "its cells short of the probe at 6000": the away block's cells reach the probe's Node at 5630 (the corner 2376) and its corner is at 2500 at 6000, after the window's end 5400 (the corner 2300 at 5400) and before 6000. The rest holds: one birth, the probe 0 until 2745 / 2748, the steps from 3002 one Link per 3 intervals, no gather line, the run to 6000, the reader's fields printed, HOST 29 s and 88 MB; the earlier 0.018 peak of section 10 is named above (the pairing with the reference at omega').
 
-## 19. EXPLORATORY: the receding index at k = 4 (index_moving_long_k4_away at 28d38c4e, index_moving_long_rest_k4_away at cbf52785, index_moving_long_reference_k4_away at 271db477; run last, released)
+## 19. EXPLORATORY: the receding index at k = 4, the moving dielectric block (`index_moving_long_k4_away.json` at 28d38c4e, `index_moving_long_rest_k4_away.json` at cbf52785, `index_moving_long_reference_k4_away.json` at 271db477; run last, released)
 
 The three files loaded VALID and ran after every other world of the eight
 rows on main 328b560f (HOST: wall 27.5, 25.0 and 13.9 s, 87 to 88 MB, all
@@ -695,7 +695,7 @@ five, the blobs 35a52bb8 sagnac_rest, 109866fa sagnac_k3, 704e2bbc
 light_clock_60, 0becffbc redshift_k3, 83d4c7a7 redshift_control; the Bell
 four a071e65a, 04a2d047, f841a75a, 297ec816, unchanged).
 
-## 22. EXPLORATORY: the light clock of two bodies (light_clock_60 at 704e2bbc, "the receiver by name", main 2e1d5610)
+## 22. EXPLORATORY: the light clock of two bodies (`light_clock_60.json` at 704e2bbc; "the receiver by name"; main 2e1d5610)
 
 The closed chain of 673, A at [600, 612), the set `at_a` the free Node 612
 with W = 64, `own_grace` 70, `receiver` "at_a", 2600 intervals.
@@ -721,13 +721,13 @@ with W = 64, `own_grace` 70, `receiver` "at_a", 2600 intervals.
   line on any record, no line at a face, no `click_at` "completion"; the
   reader prints its fields; HOST seconds.
 
-## 23. EXPLORATORY: the Sagnac pair (sagnac_rest at 35a52bb8 on b487b0b9, sagnac_k3 at 109866fa on main 2e1d5610; "the receiver by name")
+## 23. EXPLORATORY: Sagnac at rest and Sagnac at k = 3 (`sagnac_rest.json` at 35a52bb8 on b487b0b9, `sagnac_k3.json` at 109866fa on main 2e1d5610; "the receiver by name"; row R2)
 
 The chain of 3000, x open for light; A at [700, 712) with `receiver` "at_b"
 and B at [772, 784) with `receiver` "at_a" (the blocks' faces 60 Links
 apart), W = 256, `own_grace` 3000; 8450 intervals at rest, 6400 at k = 3.
 
-sagnac_rest:
+Sagnac at rest (`sagnac_rest.json`):
 
 - HOST: wall 1684.9 s (on a shared core), 133 MB; completed at 8450, the
   books balanced; the light transit row `closed_after_click` 147 at the end.
@@ -754,7 +754,7 @@ sagnac_rest:
   its fields; HOST under 200 MB (the wall over a minute on a shared core:
   1685 s).
 
-sagnac_k3 (main 2e1d5610):
+Sagnac at k = 3 (`sagnac_k3.json`, main 2e1d5610):
 
 - HOST: wall 1399.1 s (shared core), 122 MB; completed at 6400, the books
   balanced; `closed_after_click` 36 at the end.
@@ -781,7 +781,7 @@ sagnac_k3 (main 2e1d5610):
   3 intervals and on the board at 6400; the reader prints its fields; HOST
   under 200 MB.
 
-## 24. EXPLORATORY: the redshift pair (redshift_k3 at 0becffbc, redshift_control at 83d4c7a7, on engine-features b487b0b9; "the receiver by name")
+## 24. EXPLORATORY: the moving lamp's redshift and its control (`redshift_k3.json` at 0becffbc, `redshift_control.json` at 83d4c7a7, on engine-features b487b0b9; "the receiver by name"; row 4b)
 
 The chain of 4096, x open for light; A at 2994 (pushed on -x from `start`
 in the k = 3 world, at rest in the control) with `receiver` "light_detector",
@@ -789,7 +789,7 @@ the light body at 4094 with the set `light_detector`, W = 64, `own_grace`
 3000, 9600 intervals. Both ran on b487b0b9 (the source fingerprint
 cbb58182eb8d) as section 21 says.
 
-redshift_k3:
+The moving lamp's redshift (`redshift_k3.json`):
 
 - HOST: wall 1671.8 s (shared core), 144 MB; completed at 9600, the books
   balanced; `closed_after_click` 12 at the end.
@@ -819,7 +819,7 @@ redshift_k3:
   HOST under 200 MB (the wall 28 minutes on a shared core, against the
   section's "about a minute").
 
-redshift_control:
+The control at rest (`redshift_control.json`):
 
 - HOST: wall 1929.8 s (shared core), 145 MB; completed at 9600, the books
   balanced; `closed_after_click` 28 at the end.
