@@ -244,7 +244,11 @@ and the ray law's series exists.
    is on main under Reviewer 3's read with every objection CLOSED,
    CLOSED BY DECLARATION, STATED, FUTURE or CHECK and none OPEN; an
    objection Reviewer 3 marks OPEN returns this item to PREPARED until
-   it is closed or stated; the owner's rule of 03:29Z holds beside (no
+   it is closed or stated (item 21 of the attacks page, the sequential
+   statistic of per-trial settings at order 1 / W, is STATED with its
+   prediction declared and has the standing of item 5: the run
+   proceeds on it, the GO's four worlds holding their settings fixed);
+   the owner's rule of 03:29Z holds beside (no
    pin run without its approved preliminary, RUN_LIST.md). THE LOADER
    KEYS (the builder's, on this declaration; the names and forms written
    so that nothing is asked), on the pair lamp's entry (LAMP_KEYS of

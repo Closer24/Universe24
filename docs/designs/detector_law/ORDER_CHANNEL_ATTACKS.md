@@ -168,6 +168,56 @@ Bohm's configuration is under quantum equilibrium).
     form) becomes a load-time refusal once the builder lands the keys:
     `residue_order` absent on a pair lamp is refused (DECLARATIONS.md
     section 2 item 8).
+21. **"Settings that vary within one world's wheel cycle: the counts are
+    no-signalling only for settings fixed over a cycle, and for varying
+    settings the model signals" (the Opus referee's finding 4; Reviewer
+    3's line of 06:50Z; `order_channel_sequential_pins.py`).** None of
+    the twenty items above treats settings that vary within a cycle;
+    this one does, in two statistics. (a) THE MARGINAL: for per-trial
+    settings under the seed-set order, B's count among the births at a
+    given first-party setting a is hypergeometric (W, W / 2, n) with
+    mean n / 2, THE SAME DISTRIBUTION FOR EVERY a; a count that is "not
+    32 of 64 with probability 0.80" is the finite-sample fluctuation of
+    any random no-signalling box, not a marginal that depends on a; the
+    referee's sentence "for varying settings the model signals" is
+    false as a marginal claim, and the seed-set order is what makes the
+    varying-settings marginal no-signalling in distribution (under the
+    counter order a periodic switching of a could correlate with the
+    residues, the channel of item 7 of DECLARATIONS.md section 2). (b)
+    THE SEQUENTIAL STATISTIC (Reviewer 3's computation, confirmed with
+    the exact overlap): two consecutive births carry two DISTINCT
+    residues (a permutation, without replacement), so at a HELD setting
+    a the probability that B's consecutive outcomes agree is (W / 2 - 1)
+    / (W - 1), below 1 / 2, while across a SWITCH of a to a' it is (W /
+    2 - 2 m / W) / (W - 1) with m = |S_a and S_a'|, so the difference is
+    E / (W - 1), E the flip fraction of the pair (a, a') at that b (the
+    finite-N correlation of item 7): 0.6875 / 63 = 1.09 x 10^-2 at W =
+    64, 2.76 x 10^-3 at W = 256, 3.45 x 10^-4 at W = 2048 for the pair
+    (0, N / 4) at b = 3 N / 8, zero at b = N / 8 (no flips); a Monte
+    Carlo over 400 seeds at W = 64 reads 0.491 held against 0.501
+    switched (exact 0.492 and 0.503). So B's sequential statistic
+    carries A's SWITCHING PATTERN, not a's value, at order 1 / W: about
+    1 / (4 d^2) = 2 x 10^6 consecutive pairs for one standard deviation
+    at W = 2048, about 10^7 for a clear reading. THE MODEL'S OWN
+    PREDICTION, declared as a falsifiable row for the confrontation
+    register: in nature P(B_t = B_t+1) does not depend on whether A
+    switched; in the model it does, by E / (W - 1); a measurement of
+    the sequential agreement rate at that precision bounds the grain W
+    from below, and item 17's concession is made explicit here: signal
+    locality holds in the model exactly in the counts, in distribution
+    for the marginal, and in the order of outcomes only to order 1 / W,
+    the finite grain's own residue. (c) THE ALTERNATIVE that removes the
+    signature: the residues drawn WITH replacement, one draw per birth;
+    a draw, which P4 forbids, and it loses the exactness of S_N (the
+    pins become statistical); THE OWNER'S CHOICE, a change of the
+    declared form if taken, not the physicist's. (d) Both statements are
+    true at once: the marginal blind to a; the order of B's outcomes not
+    blind to whether A switched, at order 1 / W. STATED, with the
+    prediction declared (Reviewer 3's word: an item STATED with its
+    prediction declared has the standing of item 5, and the Bell run
+    proceeds on it; every Bell world of the GO holds its settings fixed,
+    four worlds, four seeds, where the theorem of item 8 is exact; S,
+    the flips and the marginals stand; no pin moves).
 
 ## The six lines, DECLARED (the owner, 2026-09-24 04:18Z, record 1648; the Boss, 04:14Z on his word of 04:12Z, record 1647)
 
@@ -201,6 +251,8 @@ THE GUARD (the Boss, 04:14Z): no run of any Bell world before this page
 is on main under Reviewer 3's read with every objection in one of the
 five statuses above and none OPEN; an objection Reviewer 3 marks OPEN
 returns DECLARATIONS.md section 2 item 8 to PREPARED until it is closed
-or stated. The loader keys' names and forms for the builder
+or stated; an item STATED with its prediction declared (item 21) has the
+standing of item 5 and the run proceeds on it. The loader keys' names and
+forms for the builder
 (`residue_order`, `residue_seed`, the stamp's fields) stand in item 8,
 in one place; this page does not repeat them.
