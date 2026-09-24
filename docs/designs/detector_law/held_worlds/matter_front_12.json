@@ -23,6 +23,7 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "amplitude_bound": 4294967296,
  "directions": [],
  "families": [
   {
@@ -34,7 +35,11 @@
    ],
    "faces": {
     "x": "open"
-   }
+   },
+   "phase_per_link": [
+    1089,
+    320
+   ]
   }
  ],
  "measured": [

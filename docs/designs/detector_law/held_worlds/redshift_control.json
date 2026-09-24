@@ -23,6 +23,7 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "amplitude_bound": 4294967296,
  "directions": [],
  "families": [
   {
@@ -107,13 +108,7 @@
  "detectors": [
   {
    "name": "light_detector",
-   "positions": [
-    [
-     1900,
-     0,
-     0
-    ]
-   ],
+   "block": 1,
    "threshold": 1,
    "wheel": 64
   }
