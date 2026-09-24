@@ -3358,7 +3358,65 @@ L), which the counts do not read. DERIVED: the Bell experiment needs L =
 
 **The splitter's form.** A thin material layer (9.2), its share computed.
 
-### 9.4 What is missing, for the owner
+### 9.4 The group element of each tool, and whether it has a direction at all (the owner's word of 19:50Z: "this is rotation X of the group, this is rotation Y"; "think whether they have a direction at all; maybe they have none")
+
+**Two facts of the group used below (IN THE ALGEBRA, 1.1; DERIVED HERE in
+one line each).** (i) G_48 = G_24 x {I, -I}: the inversion -I commutes with
+everything and has det = -1, so EVERY REFLECTION IS THE INVERSION TIMES A
+ROTATION of G_24 = S_4: the reflection through a coordinate plane is -I
+times the half-turn about that plane's normal, one of the three
+double transpositions of S_4 (the Klein four-group V_4, the half-turns
+about the three axes); the reflection through a diagonal plane is -I
+times a half-turn about a face diagonal, a transposition of S_4. (ii) The
+hand is invariant under G_24 and exchanged by the other coset (h ->
+det(g) h, 1.2): S_4 acts TRIVIALLY on the hands.
+
+**A tool has a direction exactly when its stabiliser H is smaller than
+G_48 in the part that moves directions (DERIVED HERE).** A direction (an
+axis, a plane's normal) is fixed by H only if H is not transitive on the
+six Ports; a body whose shape is a CUBE and whose written integers are
+invariant under the 48 has H = G_48, which is transitive on the Ports
+(1.1), so it has NO DIRECTION. A direction enters only through a body's
+shape (a slab, a line) or through the record that arrives (its
+character). The table:
+
+| Tool | Its operation, as a group element | Its stabiliser on a cube body | A direction? |
+| --- | --- | --- | --- |
+| The emitter | the orbit sum of a Port, the projector onto the trivial representation of G_48 ((1 / 48) SUM over g of g applied to one Port) | G_48 | NONE: isotropic; a beam's axis only from a line of cells (stabiliser the line's, D_4h, of order 16) |
+| The receiver | the evaluation (E) then the rung: a scalar, the trivial representation (the click does not move under any g) | G_48 | NONE |
+| The mirror | the reflection through the face the record meets: -I times the half-turn of V_4 in S_4 about that face's normal, acting on the arriving character (k_perp -> -k_perp) | G_48 (a cube of gap): the face is chosen by the record, not by the mirror | NONE of its own on a cube; on a slab its normal (stabiliser D_4h), an unoriented axis |
+| The splitter | the same reflection weighted by r, the identity weighted by t (9.2) | D_4h for a one-Node layer | its normal only (a layer is a slab) |
+| The polariser | the rotation U_s of the label module, in SO(2) of the label plane, NOT an element of G_48 (except s = 0 and s = N / 2, the identity and the quarter turn); it commutes with S_4, which acts trivially on the hands, and a reflection turns it into U_(-s) (9.2) | EXACTLY G_24 = S_4 for s not 0 or N / 2 | NO SPATIAL DIRECTION, but CHIRAL: it tells the two cosets apart (a reflection turns the polariser at s into the one at -s) |
+| The crystal | the transpose m^T of the ring's product on the characters (9.2), equivariant under all of G_48 acting on the characters and the hands | G_48 for a crystal of one cell (a cube) | NONE of its own: the cone's axis is the arriving record's character; the mirrors that fix that axis (the layer's and the transverse one) give HV + VH (9.3) |
+| The well body | the bound mode of a lowered pair on a G_48-set (8.3), a character of the time translation at **k** = 0 | G_48 (a cube) | NONE at rest; its motion's direction is its momentum, a declared **p** (8.3 (v)), not a tool's |
+
+So THE OWNER'S GUESS IS RIGHT, derived: no tool on a cube body has a
+direction of its own. The mirror and the splitter act by a reflection =
+the inversion times a rotation of S_4 (the half-turn about the normal of
+the face met); the polariser acts by a rotation of the label module that
+S_4 leaves alone and the inversion reverses; the emitter, the receiver,
+the crystal and the well body are invariant under all 48. Where a
+direction appears in an experiment it comes from the SHAPE of a body (a
+slab, a line of cells) or from the ARRIVING record, never from a
+declaration.
+
+### 9.5 The code is the algebra: the confirmation that gates every tool's merge (the owner's word of 19:50Z)
+
+For every tool, after the physicist writes its code, the mathematician
+reads the code against this chapter and confirms, line by line, that
+each operation on a cell is one of the six verbs (2.1 to 2.6) applied
+with the tool's written integers and performs exactly the group
+operation of 9.5, and nothing else. THE RULE OF THE READING: a
+conditional on a cell is lawful ONLY when it is the comparison of verb D
+named in this chapter (the rung of 8.6 and 9.2, the rising zero of the
+crystal's start, the clock's quarter at a train's end, the gap's load
+check); any other branch on a cell, on a family's name or on a tool's
+name is a DEFECT (the owner: "every operation in the cells is always an
+operation of the group, exactly the one"). The confirmation is written
+per tool as CONFIRMED (the code is the algebra) or the defect line with
+its file and line; it is the gate for the tool's merge.
+
+### 9.6 What is missing, for the owner
 
 (1) A record carrying the whole sum m^T (all the splits); main carries
 one clock per family. (2) One amplitude per hand on every record (the
