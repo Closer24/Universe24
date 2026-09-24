@@ -85,6 +85,17 @@ correlation and S the CHSH sum.
 
 ## 0. Each tool from the algebra: the operation, the body that carries it, what is written on the board, the load-time check (the owner's words of 2026-09-24, 19:10Z and 19:25Z, through the Boss)
 
+THE DERIVATION NOW LIVES IN [ALGEBRA.md chapter 9](../../ALGEBRA.md) ("The
+tools as operations of the group", the owner's word of 19:35Z): a tool is a
+body at rest whose action is the equivariant map its stabiliser allows;
+polar or not polar by its action on the hands; and what follows there,
+not chosen: the crystal's mixed channels HV + VH with equal weights and
+phase 0 (a theorem of the crystal's mirror), the hands' indices equal (no
+birefringence: the cone from the families' dispersion), the Bell
+experiment needing a crystal of one cell, the splitter a material layer.
+This section is the summary table beside it; where they differ, chapter 9
+holds.
+
 THE OWNER'S WORDS (translated): "all of it must follow from the algebra.
 Do not assume from physics ... We have a receiver, an emitter, a
 crystal, nothing else ... check whether it is a group or a subgroup,

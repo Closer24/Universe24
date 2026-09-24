@@ -3182,10 +3182,188 @@ and nothing beside it (no 1 / r form: 8.9's rows not reached).
 
 ---
 
-## 9. The lab tools
+## 9. The tools as operations of the group: a body at rest that does one thing (the mathematician, 2026-09-24, on the model owner's words of 19:10Z to 19:35Z through the Boss)
 
-Every lab tool (the crystal, the polariser, the material mirror, the well
-body, the receiver, the emitter with no heading, the splitter) is
-specified in one file, [the lab tools' specification](designs/lab_tools/LAB_TOOLS.md):
-its algebra, its timing, its cost, its engine lines and its unit tests'
-expected values (the model owner's word of 2026-09-24, record 1832).
+THE OWNER'S WORD (translated): "derive everything that happens in the
+body through the group and its operations ... the body does not move but
+does something, and each does something different, polar or not polar.
+It must come from the group." This chapter derives every lab tool from
+chapters 1 to 8 alone. Each statement is marked IN THE ALGEBRA (its
+section), DERIVED HERE (the proof is here) or MISSING (what the algebra
+lacks). The engine lines, the numbers and the unit tests of each tool are
+[the lab tools' specification](designs/lab_tools/LAB_TOOLS.md), which
+cites this chapter and copies none of it.
+
+### 9.1 The notion: a tool is a body at rest, and what it does is an equivariant map
+
+**The object (IN THE ALGEBRA, 8.3 and 1.7).** A tool is a finite set R of
+Nodes, a G_48-set, with integers written on its cells (a pair, a take, a
+seed), declared world data of kind 3. AT REST: its cells do not move and
+its integers do not change with the interval, so the tool is a fixed
+point of the time translation's action on the apparatus (its momentum 0,
+8.3 (v)). Its SHAPE is fixed by its STABILISER H, the subgroup of G_48
+(with the translations along any axis on which R is unbounded) that maps
+R to itself and its integers to themselves.
+
+**The theorem (DERIVED HERE).** Every operation of the law commutes with
+every g of G_48 (1.1, the law's claim) and with the translations (1.6).
+The tool's integers are invariant under H by the definition of H. So the
+one rule on the board with the tool written on it commutes with every h
+in H: THE TOOL'S ACTION A ON THE RECORDS THAT PASS IT IS AN H-EQUIVARIANT
+MAP, A(h . s) = h . A(s). Proof: for h in H the board with the tool is
+carried to itself by h, and the rule commutes with h, so the map from a
+record's state before the tool to after it commutes with h. Consequence
+(Schur's lemma on each isotypic part of H's representation): on each
+irreducible part the action is fixed up to one number per multiplicity,
+and a map between parts of different irreducible types is 0. So what a
+tool CAN do is the space of H-equivariant maps, and what is written on
+its cells chooses one of them; nothing about its action outside that
+space can be declared.
+
+**Polar or not polar (DERIVED HERE, the owner's distinction).** H acts on
+the label module (the hand, a pseudoscalar, h -> det(g) h, IN THE
+ALGEBRA, 1.2's dictionary: "spin, polarisation: the hand"). A tool is NOT
+POLAR when its action is the identity on the label module (it acts on
+the places and the characters only): the mirror, the splitter, the
+receiver, the emitter, the well body. It is POLAR when its action on the
+label module is not the identity: the polariser (a rotation of the label
+pair) and the crystal (a map from the arriving label into the pair's
+label module).
+
+### 9.2 The operations, tool by tool
+
+**The emitter: the orbit of a Port (DERIVED HERE).** A birth at one
+Node with nothing declared about a direction is invariant under the
+Node's stabiliser, all of G_48; G_48 acts transitively on the six Ports
+(1.1), so the only invariant set of headings containing one Port is all
+six: the emitter is isotropic, the orbit sum of a Port. A direction can
+come only from the SHAPE of its cells (a line of cells driven in phase,
+its stabiliser the line's), never from a declared heading. Written on
+the board: the clock pair (a character of the time translation), the
+amplitude, the train, the label state (IN THE ALGEBRA, 1.7 and 4.11).
+Load check: the train ends at the clock's zero, exact. Not polar.
+
+**The receiver: the click (IN THE ALGEBRA, 2.5 and 8.6).** The evaluation
+of the record on the body's cells (E), the norm (a bilinear form, B), the
+rung (D): THE RECEIVER IS WHERE THE CLICK IS. Its TAKE is a declaration of
+the world, not an operation of the law (8.6 says so): MISSING as an
+operation, IN THE ALGEBRA as a declaration. Written: the take pair and
+the wheel W. Load check: W >= 1, the take [n, d] with 0 <= n <= d. Not
+polar (it books the sum over the labels).
+
+**The mirror: a reflection (DERIVED HERE).** A slab of cells whose pair
+opens a gap (8.1's band, cos omega = (num / den) cos omega_l(k), IN THE
+ALGEBRA): its stabiliser contains the translations along its plane and
+the time translation. So the incoming character's component along the
+plane and its clock are kept (the action is equivariant under both);
+no clock with cos omega > num / den propagates inside (8.1), so the
+outgoing character has the same clock, the same tangential part, and
+the other root of the band: k_perp -> -k_perp, THE REFLECTION of the det
+= -1 coset through the plane (1.1). The reflection is not written on the
+board: it is the only equivariant outcome of a gap. Written: the gap pair
+and the depth. Load check: every family clock that reaches it lies below
+the gap, C[k] > 256 num / den on the tables (an integer comparison).
+Not polar.
+
+**The splitter: a mirror of finite depth (DERIVED HERE).** The same
+operation weighted by the layer's reflection r and transmission t; its
+stabiliser contains the reflection through its own mid-plane, which
+exchanges its two sides, so its scattering matrix on the two paths is
+symmetric, [[t, r], [r, t]], and the conserved form I (8.2) makes it
+norm-preserving: abs(t)^2 + abs(r)^2 = 1 and t r* + r t* = 0, the
+reflected and the transmitted parts a quarter turn apart. So THE
+SPLITTER'S FORM FOLLOWS: a thin material layer; a table with declared
+outputs cannot be H-equivariant (its outputs are directions it declares,
+which its stabiliser does not fix). Written: the layer's pair (its share
+computed from the band). Not polar.
+
+**The polariser: a rotation of the label pair (IN THE ALGEBRA, 3.6).**
+The rotation **U**_s on the label module with **U**_s^T **U**_s = n_s
+**I** exactly, then the receiver's take on one component. It is a
+receiver acting in the rotated label basis, not a separate operation
+(DERIVED HERE). Its equivariance: a reflection exchanges the two hands,
+and exchanging the rows and columns of **U**_s gives **U**_(-s), so the
+mirror image of a polariser at s is the polariser at -s (DERIVED HERE, a
+one-line check). MISSING: at a general s the rotation is not an element
+of the cells' group (the 48 give no rotation of the label pair but the
+exchange); its angle is a declared rounding (kind 1, 3.6's tables).
+Polar.
+
+**The well body (IN THE ALGEBRA, 8.3).** A G_48-set with a lowered pair,
+its clock the bound mode, its seed computed and checked at load (8.7).
+Not polar.
+
+**The crystal: the transpose of the product (DERIVED HERE).** A record is
+two samples of one character of the phase circle, the time translation
+and the translations (1.7, 8.1); the characters form a group under the
+pointwise product, so energy adding and momentum adding are the dual
+group's law ([p] [q] = [p + q] on Z_N, 1.1 and 1.5). The transpose of the
+product, m^T([p]) = SUM over a + b = p of [a] (x) [b], is a linear map
+with the group's own 0 / 1 table (verb B) whose image lies exactly on the
+pairs whose product is the arriving character: CONSERVATION IS ITS
+SUPPORT, not a check. On the translations the transpose is the drive at
+every cell with the arriving character's phase there (the born
+amplitudes of all the cells adding where the characters multiply to the
+arriving one). The degenerate split [p / 2] (x) [p / 2] is exact on the
+circle of 2N (3.6's tables). IT TAKES WITHOUT A CLICK: what it takes is
+the born record's (m^T conserves the quantum), so it has no rung and
+books on no pointer. MISSING: a record on main carries one clock per
+family, so the born family's clock is one split of m^T declared as the
+crystal's material; the whole sum (all the splits) in one record is not
+on main. Polar.
+
+### 9.3 What follows, not chosen (DERIVED HERE)
+
+**The crystal's state.** Let the crystal's stabiliser contain the
+reflection sigma_y through the plane of the arriving axis normal to the
+layer's in-plane transverse axis (a crystal symmetric about the arriving
+axis); sigma_y exchanges the two arms' headings (+theta and -theta) and,
+being a reflection, exchanges the two hands (1.2, h -> det(g) h). Write
+the crystal's action on an arriving hand H as T(H) = a HH + b VV + c HV +
+d VH in the pair's label module (the first letter the arm at +theta).
+The layer's own reflection sigma_z (every body on a layer has it)
+exchanges the hands and keeps the arms: T(V) = a VV + b HH + c VH + d HV.
+sigma_y exchanges the hands AND the arms: HV -> HV, VH -> VH, HH <-> VV;
+equivariance gives T(V) = sigma_y T(H) = a VV + b HH + c HV + d VH.
+Comparing the two, c = d: THE TWO MIXED CHANNELS CARRY EQUAL WEIGHTS AND
+THE SAME PHASE, HV + VH, the owner's channels of record 1821, now a
+theorem of the crystal's symmetry and not a declaration. The weights a
+and b of the same-hand channels are not fixed by the symmetry: whether
+the crystal also converts into HH and VV is its material (a declared
+integer, MISSING a derivation). A crystal with c = d and a = b = 0 gives
+HV + VH; its Bell counts follow from ALGEBRA 3.6 and 4.10 and the
+tables: at the settings (0, 256), (0, 768), (512, 256), (512, 768), the
+counts 150, 874, 874, 150 and 874, 150, 150, 874 thrice, S = 181 / 64
+with Bob's two settings exchanged (the mirror image of Bob's polariser,
+the exchange of the rows of **U**_b, 9.2), 0 in the cancelled roles.
+
+**The cone: dispersion, never birefringence.** A pace per hand inside the
+crystal would have to be invariant under the stabiliser; sigma_z
+exchanges the hands, so the two hands' indices are EQUAL in every body on
+a layer (DERIVED HERE): birefringence between the hands is forbidden by
+the crystal's own symmetry. The cone therefore comes from the difference
+between the arriving family's pace and the born family's (the index form
+D_i >= 1 of 8.3, one per family): sin theta_out = sqrt(n_b^2 - n_a^2), and
+for the heading (a, b, 0) the exact pair D = [a^2 + 2 b^2] / [a^2 + b^2]
+at n_a = 1 (the lab tools' specification, 1.1a).
+
+**The length the experiment needs.** The joint gather reads the pair's
+label state and the two receivers' rotations (3.6); the arms' headings
+enter only the share of the conversions that reaches the receivers, never
+the counts. A crystal of ONE cell (m^T at one point, every heading alike)
+performs the whole operation; a length L only narrows the headings (the
+sum over L cells, its width about the born family's period in Links over
+L), which the counts do not read. DERIVED: the Bell experiment needs L =
+1; a formed cone is a separate test.
+
+**The splitter's form.** A thin material layer (9.2), its share computed.
+
+### 9.4 What is missing, for the owner
+
+(1) A record carrying the whole sum m^T (all the splits); main carries
+one clock per family. (2) One amplitude per hand on every record (the
+label module carried by the amplitudes, not only as weights): needed by
+every polar tool acting on the board. (3) The take, a declaration and not
+an operation. (4) The polariser's general angle, a declared rotation
+outside the cells' group. (5) The same-hand channels' weights a and b of
+the crystal (9.3), a material integer the symmetry leaves free.
