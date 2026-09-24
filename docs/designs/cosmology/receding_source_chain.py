@@ -1,4 +1,8 @@
-"""PRIVATE host computation (CLOSER24, 2026-09-24): the rule of ALGEBRA.md 8.1 at
+"""EXPLORATORY, GAMEBOARD: a private host computation of the rule, no engine, no
+world file, no pin, nothing registered (CLOSER24, 2026-09-24; kept beside the page
+on the Boss's word of 04:50Z, item (c), as coupled_mode_pins.py is kept).
+
+The rule of ALGEBRA.md 8.1 at
 light's pair [1, 1] on a chain, integers with the remainder kept, driven by a
 source that hops one Link per K intervals and oscillates at its own angle.
 Read: the frequency and the amplitude of the level's first difference (the
@@ -85,6 +89,9 @@ def measure(series, t0, t1):
     return best[1], best[0], amp_at(math.pi / 3)
 
 
+print(
+    "EXPLORATORY, GAMEBOARD: a private host computation of the rule; no engine, no pin, nothing registered"
+)
 sb, sa, x_end = run(K)
 w0, w1 = T - 1300, T - 100
 amp_b, om_b, pump_b = measure(sb, w0, w1)
