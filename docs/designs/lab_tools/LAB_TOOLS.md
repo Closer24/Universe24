@@ -83,6 +83,109 @@ correlation and S the CHSH sum.
 
 ---
 
+## 0. Each tool from the algebra: the operation, the body that carries it, what is written on the board, the load-time check (the owner's words of 2026-09-24, 19:10Z and 19:25Z, through the Boss)
+
+THE OWNER'S WORDS (translated): "all of it must follow from the algebra.
+Do not assume from physics ... We have a receiver, an emitter, a
+crystal, nothing else ... check whether it is a group or a subgroup,
+like the body, or perhaps an action of the group"; "we reached the body
+too through the algebra, how it must be written on the board ... the
+algebra already derives what must be put there for the polariser, the
+mirror, all these things; you can take them out". This section derives
+every tool from [ALGEBRA.md](../../ALGEBRA.md) alone, in the body's own
+form (8.3 and 8.7: a G_48-set of Nodes, the integers on it computed from
+the algebra and checked at load). Each line is marked IN THE ALGEBRA
+(with its section), DERIVED HERE (with the derivation) or MISSING (what
+the algebra lacks). No physical assumption enters.
+
+**0.1 The two conservation laws are the group law (DERIVED HERE from 1.1,
+1.5, 1.6, 1.7 and 8.1).** A record is two samples of the real part of
+one character of Z_N x (the time translation) x (the torus's
+translations) (1.7; 8.1's plane waves): its CLOCK is the character of
+the time translation (the energy, E = h s of 4.11) and its WAVE VECTOR
+the character of the translations (the momentum, the label of 1.2's
+dictionary). The characters of an abelian group form a group under the
+pointwise product, chi_omega chi_omega' = chi_(omega + omega') and
+chi_k chi_k' = chi_(k + k'): ENERGY ADDING AND MOMENTUM ADDING ARE THE
+GROUP LAW OF THE DUAL GROUP, and on the phase circle the product of the
+group ring, [p] [q] = [p + q] (1.1, 1.5), is the same law on Z_N. So a
+map that sends one character to pairs of characters conserves energy
+and momentum exactly when it lands on pairs whose product is the
+arriving character; nothing physical is assumed.
+
+**0.2 The one operation behind the crystal: the transpose of the ring's
+product (DERIVED HERE).** The product m: Z[Z_N] (x) Z[Z_N] -> Z[Z_N],
+[a] (x) [b] -> [a + b] (1.1), has the transpose m^T([p]) = SUM over a + b
+= p of [a] (x) [b] for the inner product in which the [p] are
+orthonormal. m^T is linear with a 0 / 1 integer matrix, the group's own
+table read backwards (verb B, its matrix not declared but the group's),
+and its image lies exactly on the pairs whose product is [p]: energy
+conservation is m^T's support, not a check. The same transpose on the
+translations' characters gives momentum. The consequences:
+- m^T of one arriving clock is the sum of ALL its splits (a, p - a),
+  equally weighted. A record on main carries ONE clock per family, so
+  the born record takes one split: the born family's clock is the
+  crystal's material, a declaration (MISSING: a record carrying the whole
+  sum of splits; nature's broad spectrum of the pair is that sum).
+- The degenerate split [p / 2] (x) [p / 2] exists on Z_N only for p even;
+  on the circle of 2N it exists for every p (the doubling Z_N -> Z_2N, p
+  -> 2 p; the half-angle tables of 2N, 3.6): EXACT (IN THE ALGEBRA, 3.6's
+  tables).
+- On the translations the transpose is realised by the drive: the born
+  amplitudes at every crystal Node carry the arriving character's own
+  phase there, halved (1.1a item 2), so the sum over the crystal's Nodes
+  is m^T's momentum part; the arms' headings follow with nothing
+  declared, given the born family's pace (1.1a item 3; DERIVED there).
+- The pace per family is IN THE ALGEBRA: the index form for light, the
+  pair on light's record at the cells with D_i >= 1 (8.3, "light cannot
+  be a body"), D = n^2; the crystal carries no bound mode (PROVED in 8.3:
+  the norm bound).
+- The halving's start at each Node is an event of that Node's cell (the
+  first rising zero after its first rung), no count kept: DERIVED HERE
+  from 1.7's pair (the zero of a_now with a_before below it is a
+  comparison, verb D).
+
+**0.3 The table of the tools.**
+
+| Tool | (1) The operation | (2) The body that carries it | (3) What is written on the board | (4) The load-time check |
+| --- | --- | --- | --- | --- |
+| The body | a G_48-set of Nodes with a lowered pair, its clock the bound mode (IN, 8.3) | a cube by its vertices, its stabiliser the cube's (IN, 8.3) | the pair and the seed, the bound mode's integer profile computed by the generator (IN, 8.7) | the body check: whole on the board, the profile bit for bit, the ramp at ten relaxation times (IN, 8.7; record 1817) |
+| The emitter | a birth whose headings are the G_48-orbit of one Port: the 48 act transitively on the six Ports (1.1), so the orbit is all six and the source is isotropic; a direction can only come from the body's shape, a set of cells with a smaller stabiliser driven in phase (DERIVED HERE) | a cube by its vertices (isotropic); a beam is a line of cells, its stabiliser the line's | the clock pair (the time character), the amplitude, the train, the label state (IN, 1.7 and 4.11) | the train ends at the clock's zero (the quarter rule), exact; `arms` refused |
+| The receiver | the evaluation of the record on its cells (E), the norm (B), the rung (D): the click (IN, 2.5 and 8.6); the TAKE is a declaration of the world, not an operation of the law (IN as a declaration, 8.6) | a cube by its vertices, no orientation | the take pair and the wheel W | W >= 1; the take pair [n, d] with 0 <= n <= d |
+| The crystal | the transpose m^T of the ring's product on the clocks and on the translations (DERIVED, 0.2); in the blocks, a receiver and an emitter at the same Nodes (1.1a) | a cube (a square on a layer) by its vertices; its stabiliser about the arriving axis fixes the cone's symmetry | the born family's clock (one split of m^T), the born family's index pair D = [a^2 + 2 b^2] / [a^2 + b^2] for the cone's heading (a, b, 0) (DERIVED, 1.1a item 3), the coupling pair (the share taken), a Pythagorean pair | the born clocks' product equal to the arriving clock (the group law, an integer identity); the index's D - 1 equal to b^2 / (a^2 + b^2) exactly; the coupling pair Pythagorean |
+| The mirror | a reflection of the det = -1 coset of G_48 (IN, 1.1) acting on the characters, k_perp -> -k_perp; REALISED by a gap: the band cos omega = (num / den) cos omega_l(k) (IN, 8.1) carries no clock with cos omega > num / den, so below the gap the amplitude decays inside and the reflection arises with the tangential character kept (DERIVED, 3.3) | a slab of cubes whose plane is the reflection's fixed set; its stabiliser the plane's | the gap pair [num, den], the depth D | every family clock that reaches it below its gap, C[k] > 256 num / den on the tables (an integer comparison); the depth such that the transmitted share is below the declared bound (computed, 3.3) |
+| The splitter | the mirror's operation at a finite depth: the reflection sigma weighted by the layer's r and the identity by t; NOT a separate operation (DERIVED HERE: the same band, a thinner layer) | a one-Node layer of cubes; its plane | the gap pair of the share (computed, 7.2) | the share computed from the pair at the declared clock (7.2), printed at load as GAMEBOARD |
+| The polariser | the rotation U_s on the label module Z^2 (IN, 3.6), then the receiver's take on one component: a receiver acting in the rotated label basis, NOT a separate operation (DERIVED HERE); U_s at a general s lies outside G_48 (the 48 give only quarter turns of the label plane about an axis): its angle is a declared rounding of a rotation (the half-angle tables, IN as a declaration of kind 1, 3.6) | a cube or a slab of cubes; the label plane is not a spatial direction, so the body's shape is free (its through-line the arriving path's) | the angle s and the take pairs, [1, 1] across the axis and [0, 1] along it | U_s^T U_s = n_s I exactly (IN, 3.6), true of the tables at every s |
+
+**0.4 What the owner's three blocks cover (DERIVED HERE).** The owner
+names a receiver, an emitter and a crystal. With the body (8.3) as the
+carrier of every material: the MIRROR and the SPLITTER are bodies whose
+pair makes a gap (no new operation: the reflection arises); the
+POLARISER is a receiver acting in the rotated label basis; the CRYSTAL is
+a receiver and an emitter at the same Nodes joined by m^T; the
+TRANSPONDER is a body carrying a mirror's gap on a moving body. So every
+tool is a body carrying integers on which the law's four groups act (the
+48, the phase circle, the translations, the time translation) through
+the six verbs; NONE IS A NEW GROUP, a subgroup appears only as a body's
+stabiliser (its shape), and the tools' operations are: the group law of
+the dual group (the crystal), an element of the det = -1 coset (the
+mirror, realised by a gap), the orbit of a Port (the emitter), the
+evaluation (the receiver) and a declared rotation of the label module
+(the polariser's angle, the one tool quantity outside the cells'
+group).
+
+**0.5 What is MISSING in the algebra, for the owner.** (1) A record
+carrying the whole sum m^T([p]) (all the splits; one clock per family on
+main). (2) The label module per amplitude: 3.6 carries the labels as
+weights on the record, not as one amplitude per label value (the head's
+enabling line). (3) The take is a declaration of the world, not an
+operation (8.6 says so); the receiver's loss is therefore the one input
+of the tools that the algebra does not produce. (4) The polariser's angle
+at a general s is a declared rotation, not an element of the cells'
+group.
+
+---
+
 ## 1. The crystal (it folds in the blind page docs/designs/detector_law/CRYSTAL_ALGEBRA.md, branch crystal-algebra at 238c7281, Reviewer 3's read CONFIRMED WITH LINES, record 1829)
 
 **1.1 What it is and what nature gives it.** In the laboratory a
