@@ -280,7 +280,9 @@ def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_tra
     after its train every emitter's own Nodes take its record's remnant in the record's kind's
     pair, booked onto no pointer and not into `absorbed`; no key and no load-time integer. On
     the chain world: the lamp's Node holds the record's row at 0 from age train + 1 on (the
-    drive's value there at age train) and `emitter_taking` is read on the records reading; a
+    drive's last write at age train - 1, its value standing at age train; the take acts in the
+    interval that starts at age train, the first after the train) and `emitter_taking` is read
+    on the records reading; a
     `remnant_take` key written into a world is refused as unknown; a detector-law world with a
     set and no lamp declares the world key `wheel` (refused absent, no implicit default); a
     massive kind's `take` is refused on light's kind; the ledger carries the HOST row
@@ -290,7 +292,7 @@ def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_tra
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     train = None
-    for _ in range(400):
+    for _ in range(450):
         simulation.step()
         live = simulation.records.get(1)
         if live is None:
@@ -299,8 +301,9 @@ def test_the_emitters_own_take_is_the_rule_from_the_first_interval_after_the_tra
         at_lamp = int(live.now[2, 0, 0])
         if live.age <= train:
             assert not live.emitter_took
-        elif live.age > train + 1:
-            # the take acts in the step that starts at age train + 1
+        else:
+            # the take acts in the interval that starts at age train, the
+            # first after the train: the row is 0 from age train + 1 on
             assert at_lamp == 0 and live.emitter_took
     assert train is not None
     readings = dict(simulation.snapshot_stream())

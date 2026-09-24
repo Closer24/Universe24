@@ -1165,6 +1165,29 @@ on the light clock's chain.
   WORLD KEY `wheel` (the Boss's line (5)): a detector-law world with a
   set, no lamp and no `wheel` is refused at load naming the key (the
   guard that would have caught the sagnac files' ladder at W = 1).
+- THE TAKE'S START: the interval whose start is the record's age `train`
+  is the first after the train (a lamp's drive writes last at the age
+  train - 1; a block's record is sourced last in the interval before the
+  next record's birth, its `train` that age), so the take acts from
+  `age >= train` and the row is 0 from the age train + 1 on (test (e);
+  the light clock's cells the drive's at 69, 0 from 70, test (ac)).
+- THE SET THAT IS THE EMITTER'S CELLS (the form without positions, R2's
+  and the sagnac worlds', `block` alone): line 7's exemption (the set
+  free for the block's own record during train + own_grace) and item
+  10's take name the same Nodes there; the take wins at the emitter's
+  own cells from the train's end and the exemption keeps only a set's
+  Nodes beyond them (the positions form's free Node). Before this line
+  a cell both exempt and taking was neither held at 0 nor free (the
+  row evolving while the rule read the Ports' ghosts as its neighbours),
+  stable at rest and growing without bound on a stepping block: the
+  World Generator's sagnac_k3 (k = 3, own_grace 3000) was refused by the
+  amplitude bound at interval 1357, its records' levels tripling every
+  50 intervals at A's trailing cells from about 1100 (EXPLORATORY, on
+  this branch before the line; at 36fd5235 the same intervals read
+  levels of 1.2 x 10^7, stable). Test (ai) pins the form at rest and at
+  k = 3: the own record's row 0 at the current cells from the first
+  interval after its train at every interval, the set booking nothing
+  of it, the books balanced, every level below four times the seed.
 - THE GUARD (Reviewer 3, 07:43Z, on the sagnac_k3 phantom): before the
   booking loop an absorbing Node whose cell is the sentinel refuses the
   interval naming the Node (a Python list's index -1 would otherwise
@@ -1172,15 +1195,16 @@ on the light clock's chain.
 - WHAT MOVED: every lamp's record is taken at its lamp's Nodes from the
   train's end (before: after the grace of two periods, onto the lamp's
   own cell, the first build's afterglow, which could win the ladder), so
-  test (p)'s events and audit digests moved once more (the state digest
-  unchanged); an absorbing block's own cell now stamps its first rung
+  test (p)'s three digests moved once more (the state digest by the
+  take's start at the age `train`, the record alive at 600 carrying
+  its pointers); an absorbing block's own cell now stamps its first rung
   with the block's count in the generic offer loop (key (i); before,
   only the clock body's path stamped it, a gap the afterglow had
   hidden); no world file changes.
 - READINGS (EXPLORATORY, before the GO, none pinned; test (ac) on the
   light clock's chain of 173, the world's `wheel` 64, the set at x =
   112, own_grace 70, W = 64): the level at A's cells is the drive's
-  millions at 70 and 0 from 71 (GAMEBOARD); the set books less than one
+  millions at 69 and 0 from 70 (GAMEBOARD); the set books less than one
   rung of A's own record between the grace's end and the return (5.4 x
   10^10 at 208 against the rung 6.7 x 10^10); the set's first rung reads
   214 after the birth on this chain (the declaration's pin run reads it

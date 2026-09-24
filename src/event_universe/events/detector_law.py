@@ -1271,6 +1271,17 @@ class DetectorLawSimulation:
         if own is not None:
             if driven is not None:
                 driven = driven & ~own
+            if exempt is not None:
+                # A set that IS the emitting block's cells (the form without
+                # positions, R2's and the sagnac worlds'): item 10's take wins
+                # at the emitter's own cells from the train's end, so the
+                # set's exemption keeps only its Nodes beyond them (the
+                # positions form's free Node); a Node both exempt and taking
+                # would be neither held at 0 nor free, a half-state that
+                # grows without bound on a stepping block.
+                exempt = exempt & ~own
+                if not exempt.any():
+                    exempt = None
             masks = self._form_take_masks(self.absorbing | own)
             fresh = own if live.own_previous is None else (own & ~live.own_previous)
         # The take (the receivers' Ports, the faces' sponge) reads every
@@ -1336,6 +1347,9 @@ class DetectorLawSimulation:
                 # motion there squared, booked to the set's pointer and to
                 # `absorbed` below, before the row is held at 0.
                 freed = self._exempt(live)
+                if freed is not None and own is not None:
+                    # the emitter's own cells were never free (item 10)
+                    freed = freed & ~own
                 if freed is not None:
                     motion = np.where(freed, nxt - live.now, 0).astype(object)
                     for node in zip(*np.nonzero(freed), strict=True):
@@ -1502,8 +1516,10 @@ class DetectorLawSimulation:
         record 1711): from the first interval after its train, an emitting
         block's current cells or the lamp's Nodes; None during the train and
         for a record with no emitter's Nodes (a block's own massive record, a
-        planted record)."""
-        if live.sourcing or live.age <= live.train:
+        planted record). The interval whose start is the record's age `train`
+        is the first after the train (the drive's last write is at the age
+        train - 1), so the take acts from `age >= train`."""
+        if live.sourcing or live.age < live.train:
             return None
         if live.emitter is not None:
             return self.block_by_number[live.emitter].mask

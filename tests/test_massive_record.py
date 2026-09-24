@@ -258,11 +258,13 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`,
     `clock_source`; Reviewer 3's line 2 and key (i)), and the audit's digest once, by issue
     #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
-    the scope of `balanced` named), every other field byte for byte."""
+    the scope of `balanced` named), every other field byte for byte; then all three once more
+    by item 10 (the lamp's own take of its record from the first interval after the train, the
+    record alive at 600 carrying its pointers; BUILD.md section 18)."""
     assert run_chain_digests() == {
-        "events": "e7e5ba579f1fb00dac169d030126ed08e1b57324bc66242fe10d3cf86b275512",
-        "state": "9787e732df52846928e55c7466f979bfbf119b40f5e1f62db0b1269f24f7e962",
-        "audit": "55b3e67f98f036c16be35154b7a55115d30e0df6fd4da431a874e16596d2587a",
+        "events": "e339840c251321cfde0ee03f3b408949b1b667616db0a7c5bb20865d1a0d7c8b",
+        "state": "0835008519e32cc7c75e1df3f169153214cdb514f71cc99b38c04ec53032d0bb",
+        "audit": "042efcd4ace91f5177da34cc81d3f8a814b49145b0c3d0c4070badcfe172b0a0",
     }
 
 
@@ -1531,7 +1533,7 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
     W = 64; the world's `wheel` 64). With the faces CLOSED: A's first emitted record passes the
     set's Node x = 112 freely during its grace of 140 (the row there nonzero, no pointer, no
     rung); from age 71 A's twelve cells take the record in light's pair, their rows held at 0
-    (the level at A's cells read beside, GAMEBOARD: the drive's millions at 70, 0 from 71),
+    (the level at A's cells read beside, GAMEBOARD: the drive's millions at 69, 0 from 70),
     nothing booked onto any pointer nor into `absorbed`, the ledger balanced with the row
     `taken_by_emitter`; the set's Ports begin their take at the grace's end at the free
     neighbour's level (the first booking the Port's motion plus the set Node's own term, no jump);
@@ -1591,10 +1593,11 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
             norm = live.norm
             # item 10: nothing of A's own take reaches a pointer or `absorbed`
             assert live.pointers[block.cell] == 0
-            if age in (70, 71, 100, 140, 208):
+            if age in (69, 70, 100, 140, 208):
                 remnant_level[age] = int(np.max(np.abs(live.now[100:112, 0, 0])))
-            if age > 70:
+            if age > 69:
                 # the rule: A's cells take from the first interval after the train
+                # (the cycle's last sourced interval ends at age 69)
                 assert not np.any(live.now[100:112, 0, 0]) and live.emitter_took
             if grace_before:
                 assert live.pointers[a_face] == 0 and live.first_rung[a_face] is None
@@ -1647,7 +1650,7 @@ def test_ac_the_receiving_set_beside_the_emitter_reads_the_return_through_the_cl
                 pointer_at[age] = live.pointers[a_face]
         assert birth is not None and passed_freely
         assert first_booking is not None and first_booking == expected_booking and first_booking > 0
-        assert remnant_level[70] > 1000000 and remnant_level[71] == 0 and remnant_level[140] == 0
+        assert remnant_level[69] > 1000000 and remnant_level[70] == 0 and remnant_level[140] == 0
         # the set books less than one rung of A's own record before the return
         assert 0 <= pointer_at[208] - pointer_at[140] < norm // 64, pointer_at
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
@@ -1763,6 +1766,62 @@ def test_ah_a_set_at_a_blocks_cells_takes_and_steps_with_the_hop_rule():
     bad["detectors"] = [{"name": "B_cells", "block": 1, "wheel": 0}]
     with pytest.raises(ValueError, match="wheel"):
         parse_nature_beam_world(bad)
+
+
+def test_ai_the_emitters_own_take_wins_over_its_sets_exemption_at_its_cells():
+    """BUILD.md section 18 (item 10 on the form without positions, R2's and the sagnac worlds'):
+    an emitting block whose set IS its cells (`block` alone, own_grace 3000) on a chain of 600,
+    W 64, the set's wheel 256, at rest and pushed at k = 3 ([64, 0, 0]): from the first interval
+    after each own record's train its row at the block's current cells is 0 at every interval
+    (the take, not the exemption), the set books nothing of it, the books balance and the
+    largest level of every light record over 700 intervals stays below four times the seed. The
+    edge case: pushed, a cell both exempt and taking grew without bound before this line (the
+    amplitude bound refused sagnac_k3 at interval 1357)."""
+    for momentum in ([0, 0, 0], [64, 0, 0]):
+        document = massive_world([600, 1, 1], CHAIN, [800, 809], faces={"x": "open"})
+        document["ticks"] = 700
+        document["age_bound"] = 1 << 20
+        document["clock_stamp"] = True
+        document["wheel"] = 64
+        document["measured"] = [
+            {
+                "position": [200, 0, 0],
+                "family": "matter",
+                "amount": 1,
+                "phase": 0,
+                "momentum": momentum,
+                "fixed": True,
+                "side": 12,
+                "pair": [800, 800],
+                "seed": 50 << 20,
+                "coupling": {"G": [1, 50], "g": [1, 1000]},
+                "wheel": 64,
+                "emits": "light",
+                "own_grace": 3000,
+                "margin": "control",
+            }
+        ]
+        document["detectors"] = [{"name": "at_a", "block": 0, "wheel": 256}]
+        world = parse_nature_beam_world(document)
+        simulation = DetectorLawSimulation(world)
+        block = simulation.blocks[0]
+        cell = simulation.cell_names.index("at_a")
+        largest = 0
+        taken_intervals = 0
+        for _ in range(700):
+            simulation.step()
+            assert simulation.books()["balanced"], simulation.tick
+            for live in simulation.records.values():
+                if live.family != 0 or live.emitter != block.number:
+                    continue
+                largest = max(largest, int(np.max(np.abs(live.now))))
+                if not live.sourcing and live.age > live.train:
+                    taken_intervals += 1
+                    assert not np.any(live.now[block.mask]), (simulation.tick, live.identity)
+                    assert live.emitter_took and live.pointers[cell] == 0
+        assert taken_intervals > 300
+        assert largest < 4 * (50 << 20), largest
+        assert block.stepped > 0 if momentum[0] else block.stepped == 0
 
 
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
