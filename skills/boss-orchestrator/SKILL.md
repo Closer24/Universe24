@@ -232,10 +232,10 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 | The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
-| A design, a hypothesis or a verdict on physics (item by item) | the physicist's session, by Routine; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
-| A derivation, the map's status, order and error term | the derivation mathematician's session, by Routine ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
-| The law's text, the genericity probe, a host-only unification | the architect's session, by Routine |
-| A gallery page | the Visualiser's session, by Routine |
+| A design, a hypothesis or a verdict on physics (item by item) | Nature24's session (the physicist), by direct message; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
+| A derivation, the map's status, order and error term | the derivation mathematician's session, by direct message ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
+| The law's text, the genericity probe, a host-only unification | the architect's session, by direct message |
+| A gallery page | the Visualiser's session, by direct message |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
@@ -251,6 +251,14 @@ One agent may use several skills. Exploration normally uses one owner unless par
 7. Apply the PR skill only to integration, or when the user explicitly requests a PR for a candidate.
 
 ## The order by Routine (the owner, 2026-09-21, record 309)
+
+**Sent by direct message, never by a Routine (the owner, 2026-09-24: "always
+use SendMessage").** The Boss talks to every session with the SendMessage
+tool, after ListAgents shows the receiver as reachable; a Routine is created
+only for what must happen at a later time (a check-in, a re-read after a
+run's expected end); the rule is [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309),
+item 8, and binds every role. The name "the order by Routine" below is the
+order's form, kept from record 309; its channel is the direct message.
 
 Every assignment to a role's own session is one bounded order: the question,
 the pins before any number, the deliverable's file, the bound in time, the
@@ -365,8 +373,8 @@ approval, while bugs, labels and small corrections need none. Two more
 closes it and reports done, none is left open, the Boss archives the
 session at its merge and re-asks any report overdue by its own stated time;
 and every session the Boss opens is named in two words (Paper Writer,
-Physics Reviewer, Newton Runner), never a sentence, while a Routine carries
-a short name with the order in its prompt. The law's
+Physics Reviewer, Newton Runner), never a sentence, while a Routine (for a
+later time only) carries a short name with the order in its prompt. The law's
 rules do not move under this word:
 LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
 the pins declared before the run, `python tools/check.py` before the push.

@@ -537,13 +537,14 @@ roles, as they run today, one writer per document:
 
 The order and the report (the owner's rules of the day, in one place):
 
-1. Every assignment is one bounded order sent by Routine into the role's own
-   session: the question, the pins written BEFORE any number, the deliverable's
-   file, the bound in time, the verdict as one of three (reached or derived;
-   a hypothesis under its own identity naming what must be added; refuted or
-   not reachable, with why). The report is one paragraph with the head SHA;
-   the Boss opens the pull request when the writer's tool refuses, and merges
-   on green. Nothing enters the law by an order alone.
+1. Every assignment is one bounded order sent as a direct message into the
+   role's own session (the rule of messaging below): the question, the pins
+   written BEFORE any number, the deliverable's file, the bound in time, the
+   verdict as one of three (reached or derived; a hypothesis under its own
+   identity naming what must be added; refuted or not reachable, with why).
+   The report is one paragraph with the head SHA; the Boss opens the pull
+   request when the writer's tool refuses, and merges on green. Nothing enters
+   the law by an order alone.
 2. No experiment for nothing: a run is ordered only with its expected number
    written first (record 205); a differing run refutes and never moves the
    number without its cause; every reported number is a detector reading or
@@ -574,6 +575,18 @@ The order and the report (the owner's rules of the day, in one place):
    formula and status); its findings are applied in the manuscript or sent
    through the Boss to the file's writer as one bounded fix; the paper never
    changes the tree, and the tree's writers never write the paper.
+8. Messaging between sessions (the model owner, 2026-09-24: "put it in your
+   skills and the other agents' skills: always use SendMessage"): every
+   order, report, question and answer between the Boss and a role's session,
+   and between two sessions, is sent as a direct message with the SendMessage
+   tool; the sender first lists its reachable agents (ListAgents) and checks
+   that the receiver is on the list; the receiver replies by SendMessage to
+   the sender's listed name. A Routine (create_trigger, send_later) is used
+   only for what must happen at a later time (a check-in at an hour, a
+   re-read after a run's expected end), never as a way to talk; a direct
+   message creates no scheduled task. When the receiver is not on the list
+   (its session stopped or unreachable), the sender says so in its report
+   and does not fall back to a Routine as a message; the Boss decides.
 
 ## Tools and authority
 

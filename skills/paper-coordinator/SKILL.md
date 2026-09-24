@@ -43,7 +43,7 @@ paper.
 
 ## Reporting
 
-One line to the Boss by Routine at every push: the head SHA, main merged at
+One line to the Boss by direct message (SendMessage; [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309), item 8) at every push: the head SHA, main merged at
 which commit, what the round added, the referee's findings with the one that
 is the tree's, and what the paper waits on (a pull request, a SHA, a record).
 The method section says what record 305 says: the infinite limit derives the
