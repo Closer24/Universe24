@@ -193,7 +193,12 @@ Bohm's configuration is under quantum equilibrium).
     E / (W - 1), E the flip fraction of the pair (a, a') at that b (the
     finite-N correlation of item 7): 0.6875 / 63 = 1.09 x 10^-2 at W =
     64, 2.76 x 10^-3 at W = 256, 3.45 x 10^-4 at W = 2048 for the pair
-    (0, N / 4) at b = 3 N / 8, zero at b = N / 8 (no flips); a Monte
+    (0, N / 4) at b = 3 N / 8, zero at b = N / 8 (no flips); THE WORST
+    CASE, the bound a reader checks without the table (Reviewer 3's
+    line): E = 1 (disjoint sets, m = 0) gives 1 / (W - 1), 1.59 x 10^-2,
+    3.92 x 10^-3 and 4.89 x 10^-4 at W = 64, 256 and 2048, and E = 1 / 2
+    (m = W / 4, the 45-degree switch) gives 1 / (2 (W - 1)), 1 / 126 at
+    W = 64; a Monte
     Carlo over 400 seeds at W = 64 reads 0.491 held against 0.501
     switched (exact 0.492 and 0.503). So B's sequential statistic
     carries A's SWITCHING PATTERN, not a's value, at order 1 / W: about
