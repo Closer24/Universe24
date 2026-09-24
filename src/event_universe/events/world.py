@@ -2736,7 +2736,7 @@ def _lamp(
     )
 
 
-def _receiver_names(obj: dict, label: str, detector_law: bool) -> tuple[str, ...] | None:
+def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> tuple[str, ...] | None:
     """The lamp's `receiver`, its records' ladder by name: a set's name or a
     list of distinct names; None without the key. Refused outside the local
     detector law (the ladder is that law's form)."""
