@@ -169,3 +169,41 @@ bell_a0b1 (sha256 prefix 796d3d582c6b; residue_seed 7815816498507250857):
   files differ in the seed order and in nothing this run reads.
 
 bell_a1b0 and bell_a1b1: pending at this commit; appended when read.
+
+## 8. sagnac_rest on ENGINE C (the open chain of 3000, both blocks at rest, ticks 8450)
+
+The World Generator's file at 90c687a4 (the same content as at 0fd1156, sha256
+prefix 53f1f254df2f): A fixed at [700, 712) and B at [772, 784), own_grace
+3000, wheel 256, the x faces open. Read in-process with the blocks' corners at
+every interval and the x-profile of the squared steps of every open light
+record at 4000, 6000, 8000 and 8450 (the Boss's reading (5) of 09:46Z).
+
+- HOST: 258 seconds, one core; 240 births (120 per block), 147 gathers, 240
+  click lines, 93 light records open at the end; the books balanced.
+- GAMEBOARD (the blocks): A's corner 700 and B's corner 772 at every one of the
+  8450 intervals, 0 hops; neither resting block hops under the other's light.
+  The emitter's own set books no rung on any of the 240 light records; the two
+  blocks' own massive records hold absorbed 0 and no pointer at 8450.
+- MEASUREMENT: at_b 100 clicks (all of A's completed records) and at_a 47 (all
+  of B's); no click at a face or a measured cell; `u` 0 on every gather.
+- COMPUTATION (the completion as built): A's records complete at ages 1309 to
+  1336 on 97 of 100 (the three earliest at 8116, 2936 and 1487); B's at 3996 to
+  5054, the first at tick 4402, 4007 to 4060 on the births up to about 2500 and
+  rising after (5054 on B born 3362). The chosen cell at the first 64 crossing
+  with u = 0 equals the built cell on all 147.
+- GAMEBOARD (the late B records): B born 3433 at 8000 (age 4567, completed at
+  4888): energy 1.51e11 against absorbed 2.363e13, 99.8 percent ahead of B,
+  0.2 percent in the gap, none behind A or on a block's cells; the 90 percent
+  range 1464 to 2922, the peak 2841; the pointers at_a 1.192e13 and face:+x
+  1.171e13. B born 3574 at 8450 (age 4876, open): energy 1.047e11 against
+  2.377e13 (energy x 256 / absorbed 1.13), 99.6 percent ahead of B, 0.4 in the
+  gap, the range 2130 to 2982, the peak 2928; at 6000 the same record was a
+  packet 35 Links wide (2140 to 2175) with energy 6.84e12.
+- GAMEBOARD (the gap's share on the oldest records): A born 54: 0.011, 0.027,
+  0.013, 0.010 at the four samples, the rest behind A; B born 54: 0.007, 0.011,
+  0.004, 0.003, the rest ahead of B. At most 0.045 on any record read (A born
+  3785 at age 215, its +x half crossing the gap).
+- COMPUTATION (read, not compared): each record's light leaves as two packets
+  about 30 to 35 Links wide at one Link per interval, one to the other block
+  and one to the open face, with about equal pointers at the two; a record
+  completes 60 to 100 intervals after its face half is absorbed.
