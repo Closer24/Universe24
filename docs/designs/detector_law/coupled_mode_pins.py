@@ -27,7 +27,14 @@ Printed, each with its kind:
       omega_0 - delta(x) (the mass m(x) = 3 tan(omega_0 - delta(x)) is the local
       pitch's, not a constant): the fall times from rest at r = 10 and 20 to four
       Links inward and the accelerations at the start, at kappa = 1.0 and 0.277; the
-      form's number, a PREDICTION, not a pin (the spread is not in it).
+      form's number, a PREDICTION, not a pin (the spread is not in it);
+  (e) THE LIGHT CLOCK'S RETURN (DECLARATIONS.md section 10): the same map on an OPEN chain
+      of 673 (zero faces; the block A at [600, 612) seeded in its mode at the engine's
+      amplitude 2^20, G = [1, 1], g = [1, 50000], the face at 672 the mirror) against a
+      chain of 3000 with no return in the window: the light at the detector cell 612, the
+      returned wave as the difference, and the first interval at which it exceeds a rung
+      W (64, 10^3, 10^4, 10^5) against 2 L / c = 207.85: the precursor of the stencil at a
+      low rung, the wave's front at a high one.
 
     PYTHONPATH=src python docs/designs/detector_law/coupled_mode_pins.py
 """
@@ -95,6 +102,58 @@ def eigenvalues_near(t_map, omega, k=8):
     return sig + 1 / v
 
 
+def block_mode_near(t_map, omega, cells, k=12):
+    """The map's eigenvalue nearest exp(i omega) whose eigenvector has the largest massive
+    weight on the block's cells: the block's own coupled mode among light's modes."""
+    n = t_map.shape[0]
+    sig = np.exp(1j * omega)
+    lu = splu((t_map - sig * sp.identity(n)).tocsc().astype(complex))
+    op = LinearOperator((n, n), matvec=lu.solve, dtype=complex)
+    v, vecs = eigs(op, k=k, which="LM")
+    lam = sig + 1 / v
+    m = n // 4
+    best, best_w = None, -1.0
+    for j in range(len(lam)):
+        vec = vecs[:, j]
+        w = np.sum(np.abs(vec[:m][cells > 0]) ** 2) / (np.sum(np.abs(vec) ** 2) + 1e-30)
+        if np.angle(lam[j]) > 0 and w > best_w:
+            best, best_w = lam[j], w
+    return best, best_w
+
+
+def open_chain_reads(n):
+    """The six reads on an open n x 1 x 1 chain: the two neighbours (none past the ends)
+    and four self-reads; the ends are zero faces, kept at zero by the caller."""
+    o = np.ones(n - 1)
+    return (sp.diags([o, o], [-1, 1], shape=(n, n)) + 4 * sp.identity(n)).tocsr()
+
+
+def light_at_face(n, steps, lo=600, s=12, g=1 / 50000, big_g=1.0, amp=2**20, face=612):
+    """The light record at `face` over `steps` intervals on an open chain of n with the
+    block A at [lo, lo + s) seeded in its bare mode at amplitude `amp`."""
+    reads = open_chain_reads(n)
+    idx = np.arange(n)
+    cells = ((idx >= lo) & (idx < lo + s)).astype(float)
+    d_node = well_d(cells > 0, 800, 809, 800, 800)
+    omega_b, prof = bare_mode(reads, d_node)
+    prof = prof / np.abs(prof).max() * amp
+    if prof[lo + s // 2] < 0:  # the eigenvector's sign is arbitrary; the same seed on both chains
+        prof = -prof
+    m_now, m_bef = prof.copy(), prof * math.cos(omega_b)
+    l_now, l_bef = np.zeros(n), np.zeros(n)
+    inv_d = 1 / d_node
+    out = np.empty(steps)
+    for t in range(steps):
+        m_next = inv_d * (reads @ m_now) / 3 - m_bef + g * cells * (l_now - l_bef)
+        l_next = (reads @ l_now) / 3 - l_bef - big_g * cells * (m_next - m_now)
+        l_next[0] = 0.0
+        l_next[-1] = 0.0
+        m_bef, m_now = m_now, m_next
+        l_bef, l_now = l_now, l_next
+        out[t] = l_now[face]
+    return omega_b, out
+
+
 def block_record(reads, d_node, cells, g, big_g, steps):
     """The block seeded in its bare mode (a standing start), the map iterated, the
     block's summed massive record over the cells at each interval."""
@@ -141,14 +200,21 @@ if __name__ == "__main__":
     d_node = well_d(inside, 800, 809, 800, 800)
     omega_b, sums = block_record(reads, d_node, inside.astype(float), 1 / 200, 1.0, 6000)
     peak, rate = peak_and_decay(sums, omega_b)
-    near = eigenvalues_near(coupled_map(reads, d_node, inside.astype(float), 1 / 200, 1.0), omega_b)
+    t_map = coupled_map(reads, d_node, inside.astype(float), 1 / 200, 1.0)
+    near = eigenvalues_near(t_map, omega_b)
     nearest = near[np.argmin(np.abs(np.angle(near) - omega_b))]
+    second, second_w = block_mode_near(t_map, 0.1380, inside.astype(float))
     print(
         f"(a) the atom's lines: the 64^2 layer, side {s} at full depth, G = [1, 1], g = [1, 200]:"
         f" the bare mode {omega_b:.5f}; the coupled map's eigenvalue nearest it {np.angle(nearest):.5f}"
         f" (|lambda| {abs(nearest):.6f}); the block's summed record's peak {peak:.5f} ({peak / omega_b:.4f} of the bare);"
         f" the envelope's decay {rate:.2e} per interval. The PIN of the atom's world: its lines at the COUPLED"
         f" modes; the bare 0.09097 is not the line."
+    )
+    print(
+        f"    the SECOND coupled mode (the bare pair at 0.1380 of massive_layer_pins.py): the map's eigenvalue nearest it"
+        f" with the largest block weight {np.angle(second):.5f} (the weight {second_w:.4f}; the pair's line, none at the"
+        f" difference {np.angle(second) - np.angle(nearest):.4f} in the probe's amplitude by the rule)"
     )
     # (b) the emitter's radiative damping on the chain of 1400
     n, s = 1400, 12
@@ -257,4 +323,18 @@ if __name__ == "__main__":
             f" the fall times to four Links inward {t10:.1f} and {t20:.1f} intervals ((t20 / t10)^2 = {(t20 / t10) ** 2:.3f});"
             f" a PREDICTION of the form, not a pin (the spread and the floor are not in it)"
         )
+    # (e) the light clock's return on the open chain
+    steps = 600
+    omega_a, short = light_at_face(673, steps)
+    _, long = light_at_face(3000, steps)
+    ret = short - long
+    t_out = int(np.argmax(np.abs(short) > 64))
+    crossings = {w: int(np.argmax(np.abs(ret) > w)) for w in (64, 1000, 10000, 100000)}
+    print(
+        f"(e) the light clock's return on the open chain of 673 (A at [600, 612), the face at 672, L = 60): A's mode"
+        f" {omega_a:.5f}; the outgoing light at the face exceeds 64 at t = {t_out}; the returned wave exceeds the rung W at"
+        f" t = {crossings} (2 L / c = {120 * math.sqrt(3):.2f}); the outgoing amplitude at the face at t = 300:"
+        f" {abs(short[300]):.3g}: THE PIN 207.85 +- 2 at W = 10000; at W = 64 the stencil's precursor (one Link per"
+        f" interval at 10^-5 of the wave) clicks {int(120 * math.sqrt(3)) - crossings[64]} intervals early, a (P) beside"
+    )
     print(f"HOST {time.time() - t0:.0f} s")
