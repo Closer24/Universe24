@@ -4331,6 +4331,17 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    THE GATE (9.5) stays on the whole line, the retirements and the
    regenerated worlds included.
 
+**(6) The write for an odd clock step (the physicist's question (2) of
+22:00Z; DECIDED HERE).** The born pair is the character sampled half a
+step either side of its zero, on the circle of 2 N steps: now = A x
+C_2N[3 N / 2 + s] and before = -now exactly, with C_2N the cosine table
+of 2 N steps (`core.phase`, load-time data, lawful under 2.7) and s =
+floor(n / d) the clock's step per interval. For s even this is C_N[3 N /
+4 + s / 2], item (5) 2 as written; for s = 1 on N = 64 it is 256 sin(pi /
+64), 13 after rounding, never 0. No emitter is refused for s = 1; where 2
+N exceeds the tables' bound (N = 65536) an odd s is refused, and no world
+of the fifteen has one.
+
 ### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke")
 
 THE QUESTION. The owner's questions that led here: is every tool a
@@ -4537,3 +4548,275 @@ rework):**
 - The seeds computed on the composed operator.
 - The retirements of (5).
 The gate (9.5) reads each against this section.
+
+### 9.19 The whole board is algebra: one element, one operator, one click (the model owner's words of 2026-09-24, 22:00Z, through the Boss: "the whole board is algebra ... there are no parts"; his questions to the mathematician on the residues and on what the algebra carries)
+
+THE CLAIM. The state of the whole board, every Node, every family and
+every label together, is ONE ELEMENT of one module. The law is ONE MAP of
+that element, equivariant under the four group objects. The click is the
+one act that is not invertible. Everything the specification calls a
+body, a tool, a family, a record or a face is a region or a summand of
+that one element, or a name the host uses to read it. This section
+derives it from chapters 1, 2 and 8, marks each piece, and draws what it
+changes.
+
+**(1) THE ONE ELEMENT (DERIVED HERE from 1.1, 1.5, 1.6, 3.6 and 8.1).**
+Let R be the group ring of the torus's translations extended by the 48
+(the translations act on positions, the 48 on positions and, by the
+hand's sign, on the label pair). Let L be the label module (Z^2 per arm;
+its tensor powers for a record of rank 2, 3.6). The state space is
+
+    V = SUM over the quanta q of V_q,   V_q = (Z^Nodes (x) L_q)^2 (x) (the remainders),
+
+one summand per quantum: a record is a summand of V, its two levels (now,
+before) over the Nodes and its labels, with the remainder of verb (D) per
+Node. The state of the world at an interval is one element v of V. Its
+family is an index of the summand (the pair the operator uses on it), not
+a second object. So THE OWNER'S WORD HOLDS AS WRITTEN: there are no parts,
+there is one element with summands and regions.
+
+**(2) THE ONE OPERATOR (IN THE ALGEBRA, 8.2; stated here for the whole
+board).** The world declares, once, THE OPERATOR: for each family F a pair
+[numerator, denominator] at every Node (the vacuum's pair everywhere, a
+body's pair on its cells, the zero row at a closed face), the couplings
+(g, G) between families on declared cells (8.5) and the axes (a, b) on
+declared cells (9.16 (2)). Write **M**_F = **D**_F^-1 **A** / 3 for 8.2's
+matrix of the family F (**A** the read matrix, **D**_F the diagonal of the
+pairs). The step S of the law is:
+
+    S: v -> v'  with, per summand of family F,  a_next = M_F a_now - a_before  (with the remainder, 8.1),
+                 plus the coupling's bilinear term between summands of coupled families (8.5),
+                 plus the label matrix on the axis's cells (9.16 (2)),
+                 plus the push of the operator's regions (8.11: a body's cells step by its vector).
+
+The whole board is one bound system (PROVED HERE, from 8.2): S restricted
+to one family is a second-order linear recurrence with the symmetric
+operator **D**^1/2 **M** **D**^-1/2 = **D**^-1/2 (**A** / 3) **D**^-1/2,
+whose eigenvectors are THE MODES of the board and whose eigenvalues are 2
+cos omega, omega the mode's clock. On a torus the spectrum is finite, one
+mode per Node. A mode is BOUND when its 2 cos omega lies above the vacuum
+band's top (omega below the rest frequency omega_0, 8.3), FREE when it
+lies inside the band. Each mode is rotated by S at its own clock, with the
+conserved form I (8.2) as its norm. THE STABILITY CONDITION (PROVED HERE):
+the form I is positive definite, and every mode a rotation, exactly when
+the largest eigenvalue is below 2; a mode with 2 cos omega >= 2 grows
+without bound (the physicist's "runaway well" of 2026-09-24, 22:00Z:
+[800, 700] on [800, 809] gives 2.03 on a chain). A pair with numerator at
+most denominator at every Node is SUFFICIENT (then abs(2 cos omega) <= 2
+by 8.1's band), not necessary (the one-cell well [8, 7] on [7, 8] has
+1.90 on a chain, 1.75 on a layer). THE LOADER'S CHECK is the spectral one:
+the composed operator's largest eigenvalue below 2, refused otherwise (the
+physicist's refusal CONFIRMED).
+
+EXACTNESS. The rotation of the modes is exact in the real reading
+(Outside, 3.4). On the board the levels are integers and the step keeps
+the remainder: the step is a bijection (8.8) and I obeys 8.2's exact
+remainder identity. The modes mix by at most one unit per step, and that
+unit is the remainder.
+
+**(3) THE ONE READING: THE FLUX (DERIVED HERE from 8.2; the physicist's
+question of 22:00Z on the content found on a take Node, and 9.10 item 1
+and 9.12 closed by it).** Let e_i be the Node's share of the conserved
+form, e_i = D_i (a_next,i^2 + a_now,i^2) - (1 / 3) a_next,i (**A**
+a_now)_i, so that I = SUM over i of e_i. Then, PROVED HERE in one line
+(substitute the rule D_i (a_next,i + a_before,i) = (**A** a_now)_i / 3
+into the difference of e_i between two intervals):
+
+    e_i(t) - e_i(t - 1) = SUM over the reads j of i of G_ij,
+    G_ij = (1 / 3) A_ij (now_i x before_j - before_i x now_j),   G_ij = -G_ji.
+
+G_ij is THE FLUX INTO i FROM j: a bilinear form (verb B) of the record's
+own two levels at the two ends of a Link, PAIR-FREE (the pairs cancel in
+the derivation), antisymmetric, local. For a character moving from j to
+i it equals sin omega sin k times the squared amplitude, positive.
+COMPUTATION (a chain, light's pair, a packet of 40 Links at k = 0.3024):
+the local identity holds to 10^-15; the ONE-WAY inward flux into one
+cell, SUM over intervals and Ports of max(G, 0), over the packet's
+passage equals the packet's I to six digits (2.135254 both), and the
+signed sum is 0.
+
+THE READING E OF EVERY RECEIVER IS THIS: the record's offer C at a set of
+cells is the one-way inward flux into the set through its Ports, summed
+over intervals; the record's norm T is its conserved form I. The rung 2 T
+u + T <= 2 W C then reads "the share of the record's energy that has
+entered the set reached (2 u + 1) / (2 W)", and C reaches T exactly as the
+record passes, at a set of ONE cell as at a screen. The rectification
+max(G, 0) is the click's own comparison (verb D at the click, 9.7): a
+record's energy is counted when it enters. Consequences, each DERIVED
+HERE:
+- THE TAKE, THE GRACE, THE EXEMPTION, THE OWN TAKE AND THE DRIVEN MASK
+  RETIRE TOGETHER (9.12, 9.17): an outgoing front gives no inward flux at
+  its own body's Ports, so a record never clicks on the way out; it
+  clicks where its energy enters, and on its own emitter only when it
+  returns (the light clock, Sagnac). 9.10 item 1's owed self-click share
+  is the returning share, a placement's number, and the computation owed
+  there retires.
+- A SET AT ITS EMITTER'S CELLS (the physicist's finding (3)): the write is
+  on the cells, not through a Port; it books nothing; the record's
+  energy is its I from the birth; nothing vanishes and nothing is booked
+  unread.
+- THE EXCITED RECORD (9.17 (4)): its named set is a declared sub-cube of
+  its body (its centre cell); its offer the one-way flux into that set,
+  which the mode's sloshing feeds every half period; its norm T the flux
+  of one period, the generator's integer (9.17 (5) item 1, now in the
+  flux's units). The cadence stays half a period per birth.
+- THE MIRROR'S AND THE SPLITTER'S SHARES are the one-way flux through a
+  Port behind the body over the record's I, the form the physicist
+  measured (his window reading of 18:50Z).
+- THE NUMBERS: T and C are integers once scaled by 3 (the flux) and by the
+  pairs' common wall (I); the first-rung pins of the fifteen (M2, Sagnac,
+  the light clock) are re-derived blind by the generator's map on the
+  flux form before any run; Bell and Malus read computed weights and do
+  not move.
+
+**(4) THE RESIDUE: WHAT IT IS, AND HOW TO STOP DECLARING IT (the owner's
+question; DERIVED HERE, with COMPUTATION).** Two things are called a
+remainder. THE RULE'S REMAINDER r (verb D, 8.1) is kept per Node per
+record and is the law's own. THE WHEEL'S RESIDUE u is one integer per
+record on Z_W, read once, at the rung; with the ladder it chooses the
+cell in the weights' proportion, which is Born's rule (4.8, c_1 = 1). It
+is the model's hidden variable: local (born with the record),
+deterministic (no draw, 2.7), and DECLARED (a permutation of Z_W in the
+world file, `residue_order` and `residue_seed`). IT CANNOT BE REMOVED:
+without it every record clicks at the same cell and there is no
+distribution. ITS SOURCE CAN CHANGE: u may be read from the law itself,
+as the rule's remainder r at the birth cell at the interval of the click
+that births the record (the excited record's remainder at its click; the
+arriving record's at the crystal's), with the wheel W = 3 x the pair's
+denominator at that cell. Then the world declares no residue.
+- THE RANGE OF THE REMAINDER (PROVED HERE, one line): with the pair in
+  lowest terms, r moves on the multiples of gcd(numerator, 3 x
+  denominator), so it takes 3 x denominator / gcd(numerator, 3) values.
+  COMPUTATION on a chain: the vacuum [800, 809] gives 2427 values,
+  equidistributed over 18000 intervals (chi-square 21 on 19 degrees of
+  freedom, the 95 percent bound 30) and equidistributed over 160 births
+  read one per birth (11 on 9, the bound 17); [3200, 3227] gives 9681;
+  light [77, 25] gives 75; A WELL [800, 800] = [1, 1] AND LIGHT [1, 1]
+  GIVE THREE. So the residue is read where the pair is rich: a well
+  declared [800, 801] (2403 values) rather than [800, 800]; Bell's light
+  [2464, 25] gives 75.
+- THE COST: with a declared permutation W records cover the wheel exactly
+  once and the pins are exact (8/2/2/8 at W = 20, no band); with the
+  law's remainder the residues are equidistributed but not a permutation,
+  and the counts are binomial about the weights, as nature's are: every
+  pin gains its binomial band. The run stays deterministic and
+  reproducible either way. OPEN FOR THE OWNER: the declared permutation
+  (exact pins, the hidden variable declared) or the law's remainder (no
+  declared residue, statistical pins).
+
+**(5) WHAT IS LEFT OF THE PARTS (DERIVED HERE).**
+
+| The word | What it is in the one element | Declared by the world? |
+| --- | --- | --- |
+| a family | an index of the summands, and the operator's pair for them | its vacuum pair and quantum: yes |
+| a record | a summand of v, one quantum | the seeds at interval 0 and the born profiles: yes; the rest is born by clicks |
+| a body | a region of the operator where a family's pair differs from the vacuum's | yes (a cube, a pair) |
+| a tool | a region of the operator with its integers, and at most a birth and a name | yes |
+| a face | the operator's zero row beyond the border | the board's extents: yes |
+| a receiver | a NAME the host gives a set of cells, on records' ladders, with W | yes (a name and W) |
+| the emitter's stock, the born profile, the crystal's branches | the birth's data | yes |
+| the residues | one integer per summand | yes, or the rule's own remainder (4) |
+| the click, the birth, the push | the map S and its one deletion | no: the law |
+| a lamp, a table, a take, a grace, a completion | nothing: names of retired forms | no |
+
+So THE WORLD FILE DECLARES: the board's extents; the families (a pair and
+a quantum each); THE OPERATOR (every region where a pair, a coupling or an
+axis differs from the vacuum, as cubes); THE INITIAL ELEMENT (the seeds, one
+per bound body, the composed modes of 9.9); THE BIRTHS (a body's stock and
+born profile, a crystal's branches and clocks); THE NAMES (the receivers,
+each set with its W, and the ladders that name them); and, unless (4)'s
+option is taken, THE RESIDUES. Nothing else. THE GENERIC ENGINE IS: one
+step of S on the one element, then the click (E the flux, D the rung, X
+the deletion, E^T the birth) on the summands whose ladders name a set.
+
+**(6) EQUIVARIANCE, STATED ONCE (IN THE ALGEBRA, 1.1 and 1.6; the form
+here DERIVED).** The map S is a function of the world's declared data w
+(the operator, the names) and the state v. For every g in the 48 and every
+translation of the torus, S(g . w, g . v) = g . S(w, v): the law is
+covariant; a world breaks the symmetry only through w. The click commutes
+with g in the same sense (the ladder's cells move with the world). This
+is the statement the property test of 9.20 checks.
+
+**(7) MARKS.**
+- PROVED: the one operator and its modes (8.2); the stability condition;
+  the flux identity; the remainder's range.
+- DERIVED: the one element; the flux as the one reading and what it
+  retires; the parts as regions, summands and names; equivariance's form.
+- COMPUTATION: the flux check; the remainder's equidistribution.
+- CARRIED: the push (8.11): the regions' step and its stress as the flux
+  of momentum. With it, momentum between clicks is carried, not proved.
+- OPEN: the residue's source (4); the tool bodies bound or silent (9.15);
+  the holder family (9.18 (2)); one border for all families.
+- WHAT CHANGES FOR THE ENGINE (the physicist), beyond 9.18 (7): E as the
+  one-way flux at every set, and T as the record's I (the take, the grace,
+  the own take, the exemption and the driven mask retire with them); the
+  spectral load check; the write with the table of 2N (9.17 (6)); the
+  residue's source if the owner takes (4).
+
+### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z, for the owner's next step)
+
+Six properties of the one map S of 9.19, each a test on a small world
+that is none of the fifteen, each with its expected value. Every test
+runs headless, on integers, and compares arrays bit for bit unless the
+expected value says otherwise. The small world: a cube of 12 x 12 x 12
+(periodic on every axis), light's family [77, 25] and a massive family
+[800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
+[800, 801] seeded on its composed mode; one light record born at (8, 2,
+7) on one cell with the branches [[0, 1], [1, 1]] (both labels), the
+wheel [1, 8]; one receiver of one cell at (9, 9, 2) named on the
+record's ladder, W = 8; 60 intervals.
+
+1. EQUIVARIANCE UNDER THE 48. For each of the 48 elements g: apply g to
+   the world (every cube's vertex and orientation, every axis (a, b)
+   with the hand's sign, the receiver's cell) and to the initial element
+   (every seed's array, the label rows exchanged where det g = -1), run
+   60 intervals, and compare with g applied to the reference run's
+   state. EXPECTED: identical arrays at every interval, remainders
+   included, and the same click at the same interval (48 of 48). The
+   rule's remainder is per Node and moves with the Node, so equality is
+   exact.
+2. TRANSLATION ON THE TORUS. For each of 6 shifts (one Link along each
+   axis in each sign) and one diagonal shift (3, 5, 7): shift the world
+   and the initial element, run, compare with the shifted reference.
+   EXPECTED: identical, bit for bit, 7 of 7.
+3. CONSERVATION BETWEEN CLICKS. (a) CONTENT: the sum of the quanta over
+   the summands per family is constant at every interval before the
+   click, and drops by exactly one quantum of the light family at the
+   click. EXPECTED: exact. (b) THE FORM I: per record, I(t) plus 8.2's
+   remainder term is the same integer at every interval. EXPECTED: exact
+   (the remainder identity). (c) MOMENTUM: on the homogeneous part of the
+   run (the well removed, one plane-wave record along x with the phase
+   per Link [77, 25]), the record's phase per Link along x, read as the
+   character's index by the reader of 4.11, is the same integer at every
+   interval. EXPECTED: exact. With the well in place the record's
+   momentum changes at the well and the well's vector gains the push:
+   the total is CARRIED (8.11), and the test prints both as GAMEBOARD
+   with no expected value.
+4. REVERSIBILITY EXCEPT THE CLICK. Run 60 intervals with the receiver's
+   name removed from the ladder (no click); then run 8.8's inverse map 60
+   intervals. EXPECTED: the initial element returns bit for bit,
+   remainders included. With the receiver named: the record clicks at
+   some interval t_c; the inverse run from 60 returns the state at t_c
+   without the deleted summand, and the difference from the forward
+   state at t_c is exactly that summand's rows. EXPECTED: exact.
+5. LOCALITY. Two runs from initial elements that differ at ONE Node of
+   one record by one unit of `now`. EXPECTED: at every interval m the
+   difference of the two states is supported inside the Manhattan ball
+   of radius m about that Node (a difference outside it is a defect),
+   and the difference is nonzero somewhere at every m <= 12.
+6. ONLY THE CLICK READS. (a) STATIC: the code gate of 9.5, read by the
+   mathematician: the only comparison on a value of the state is the
+   rung, the only branch on a name none. (b) DYNAMIC: for 1000 random
+   integer states on the small world, evaluate the step at two Nodes
+   whose seven inputs (the Node's pair, its record's row and remainder,
+   the six neighbours' rows) are equal by construction. EXPECTED: equal
+   outputs, 1000 of 1000. (c) THE CLICK'S BLINDNESS: two runs whose
+   records differ only in their residues u give identical states until
+   the first click. EXPECTED: identical, bit for bit, at every interval
+   before the earlier of the two clicks.
+
+Each expected value is DERIVED from 9.19: 1, 2 and 6 from the map's
+covariance (9.19 (6)) and its dependence on the seven inputs alone; 3 (a)
+and (b) from 8.6 and 8.2; 3 (c) from 1.6 on a homogeneous board; 4 from
+8.8; 5 from the six reads (8.1). A failure of any of them is an engine
+defect, never a change of the law.
