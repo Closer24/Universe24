@@ -7279,3 +7279,11 @@ Commit 63 narrowed to PR 1122's two lines: the Bell and Malus rows' NOT
 RUN cells and the Bell section's joint-gather sentence withdrawn (the
 reading cells back to "not yet"), waiting for the owner's choice on the
 Bell rows. The two pointer moves kept for the 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 11:30Z on the owner's yes): commit 65 on paper-48
+
+The opening paragraph "Physics as the passage of information" replaces
+"Where the object came from" (its pointer sentence kept): what is born,
+what moves, what leaves, and where the one non-local step is, in the
+paper's terms and the owner's, no new claim, no new citation. The
+declarations bibitem's SHA moved to the merged main ecebf895. 48 pages.

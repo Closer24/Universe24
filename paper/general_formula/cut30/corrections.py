@@ -6328,6 +6328,11 @@ CORRECTIONS = [
         "$N_0 = 218 \\pm 2$ in A's own clicks at $W = 64$ on its returned record, the receiving set at $x = 612$ (the declarations' section 10, item 9, on \\texttt{main} at 25a7abf4 \\cite{declarations})",
         "$N_0 = 213 \\pm 1$ in A's own clicks at $W = 64$ on its returned record at the receiving set bound to A by name, the free Node at $x = 612$ (the set's first rung at age $213$ by the derivation under the click line and the receiver by name, the geometry alone, the declarations' section 10, item 9, merged at ecebf895 \\cite{declarations}; the earlier form's $218 \\pm 2$, derived for the set at A's twelve cells, no longer in the world, kept as history), a pin declared before any pin run",
     ),
+    (
+        "commit 65, the Boss's word of 11:30Z (4): the declarations bibitem cites the merged main ecebf895 (PR 1122)",
+        "on \\texttt{main} at 96fdfd7a",
+        "on \\texttt{main} at ecebf895",
+    ),
 ]
 
 
