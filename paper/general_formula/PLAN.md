@@ -7222,3 +7222,11 @@ seed-set order's PASS in form, the residual the model's own prediction,
 not yet run), one account with row 1c and the Bell section; the
 abstract kept within 250 words by shortening the writer's own clauses
 only (the object, Outside, amplitude and pins sentences). 48 pages.
+
+## Applied (2026-09-24, the Boss's order of 07:55Z, item (4)): commit 59 on paper-48
+
+"The GO" expanded at its first use (Section 4's item (4)) as the
+detector law's launch list (RUN_LIST.md, DECLARATIONS.md, the GO of
+2026-09-24), "the GO" kept afterwards; the Boss's editorial expansion.
+The lists' spacing tightened (enumitem, nosep), formatting only, for the
+48 pages.

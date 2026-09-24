@@ -6218,6 +6218,16 @@ CORRECTIONS = [
         "Only clicks are compared with nature, every number computed before its run; no pinned reading is in the table yet. The bending's $2(1 + \\gamma)$ and the atom's ladder are conjectures.",
         "Every number is computed before its run, no reading pinned yet; the bending's $2(1 + \\gamma)$ and the atom's ladder are conjectures.",
     ),
+    (
+        "commit 59, the Boss's 07:55Z item (4): 'the GO' expanded at its first use, an editorial expansion",
+        "declared true in every world of the GO. The key is outside",
+        "declared true in every world of the detector law's launch list (\\texttt{RUN\\_LIST.md} and the declarations of \\texttt{DECLARATIONS.md}, the GO of 2026-09-24). The key is outside",
+    ),
+    (
+        "commit 59, formatting only for the 48 pages: the lists' spacing (enumitem, no extra space between items)",
+        "\\usepackage{float}\n\\usepackage{longtable}",
+        "\\usepackage{float}\n\\usepackage{enumitem}\\setlist{nosep}\n\\usepackage{longtable}",
+    ),
 ]
 
 
