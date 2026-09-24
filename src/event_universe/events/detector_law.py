@@ -432,14 +432,14 @@ class DetectorLawSimulation:
         # The table bodies (DECLARATIONS.md section 14 item 6): a polariser's
         # two cells, formed where a detector set names its Node.
         self.table_bodies: list[TableBody] = []
-        polarisers = self._polarisers()
+        settings = self._table_settings()
         for detector in world.detectors:
             set_cell: int | None = None
             if detector.block is None and len(detector.positions) == 1:
                 first = detector.positions[0]
                 named = (int(first[0]), int(first[1]), int(first[2]))
-                if named in polarisers:
-                    self._table_body(detector, polarisers[named])
+                if named in settings:
+                    self._table_body(detector, settings[named])
                     continue
             if detector.block is not None:
                 set_cell = self._cell(detector.name, detector.block, False)
@@ -470,7 +470,7 @@ class DetectorLawSimulation:
             if set_cell is not None and detector.wheel is not None:
                 self.cell_wheel[set_cell] = detector.wheel
         formed = {body.entry_node for body in self.table_bodies}
-        for node, (number, family, _, _, _) in polarisers.items():
+        for node, (number, family, _, _, _) in settings.items():
             if node not in formed:
                 raise ValueError(
                     f"{BEAM_LAW}: measured[{number}].table.{self.families[family].name} carries a "
@@ -698,8 +698,12 @@ class DetectorLawSimulation:
             return None
         return self.receiver_cell.get(live.emitter)
 
-    def _polarisers(self) -> dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]]:
-        """The polarisers of the world (DECLARATIONS.md section 14 item 6): a
+    def _table_settings(
+        self,
+    ) -> dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]]:
+        """The table entries with an integer setting on a family's arm (the
+        composition the declarations call a polariser, DECLARATIONS.md section
+        14 item 6; the engine knows the entry, its setting and its arm): a
         measured event whose table entry for a family carries a
         `phase_window` s, the setting (an integer; a reading of the window's
         centre is refused under the rule). Each lies on ONE arm's line of the
@@ -781,14 +785,14 @@ class DetectorLawSimulation:
     def _table_body(
         self,
         detector: DetectorDefinition,
-        polariser: tuple[int, int, int, int, tuple[int, int, int]],
+        setting_entry: tuple[int, int, int, int, tuple[int, int, int]],
     ) -> None:
         """The two cells of a table body named by a detector set of one Node:
         the + cell (the exit Node) before the - cell (the entry Node) on
         the ladder, both take Nodes booking to the body (its content at a
         click), both on the set's wheel; the split's pair from the
         half-angle tables at the setting."""
-        number, family, setting, arm, exit_node = polariser
+        number, family, setting, arm, exit_node = setting_entry
         entry_node = (
             int(detector.positions[0][0]),
             int(detector.positions[0][1]),
