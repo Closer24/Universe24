@@ -157,8 +157,11 @@ def clock_world(
         for entry in document["measured"]:
             # one Link every hop_every intervals for every block of the clock:
             # the momentum one hop_every-th of the block's own drive wall
-            wall = drive_wall(int(entry["amount"]))
-            assert wall % hop_every == 0, (entry["amount"], wall, hop_every)
+            # the wall on the body's whole content, its own quanta and the stock it
+            # holds (ALGEBRA.md 9.51 (8); BUILD.md section 26 item 47)
+            content = int(entry["amount"]) + sum(int(value) for value in entry.get("held", {}).values())
+            wall = drive_wall(content)
+            assert wall % hop_every == 0, (content, wall, hop_every)
             entry["momentum"] = [wall // hop_every, 0, 0]
     detector.receiver_set(document, "at_well", 0)
     detector.named_receiver(document, {0: "at_well"})

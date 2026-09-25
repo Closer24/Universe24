@@ -204,7 +204,10 @@ def emitter_body(
     return {
         "position": position,
         "family": own,
-        "amount": stock,
+        "amount": 1,
+        # the stock as the given family's content held at the body (ALGEBRA.md
+        # 9.51 (8); BUILD.md section 26 item 47)
+        "held": {family: stock},
         "phase": 0,
         "momentum": [0, 0, 0],
         "fixed": True,
@@ -554,7 +557,10 @@ def emitter(
         "extents": extents,
         "pair": pair,
         "seed": EMITTER_SEED,
-        "amount": EMITTER_STOCK,
+        "amount": 1,
+        # the stock as the given family's content held at the body (ALGEBRA.md
+        # 9.51 (8); BUILD.md section 26 item 47)
+        "held": {"light": EMITTER_STOCK},
         "emitter": {"family": "light", "train": {"direction": direction, "periods": TRAIN_PERIODS}},
     }
     block.update(extra)

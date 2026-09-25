@@ -70,7 +70,8 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
     assert bending["model_id"] == "beam-toward-nature-bending-v1"
-    assert emitter["extents"] == [32, 20, 1] and emitter["amount"] == generator.BENDING_STOCK == 100
+    assert emitter["extents"] == [32, 20, 1] and emitter["amount"] == 1
+    assert emitter["held"] == {"light": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
     assert (
         body["family"] == "dark"
         and body["amount"] == generator.BENDING_BODY_CONTENT
@@ -94,7 +95,9 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     rest, moving = document("lorentz_rest"), document("lorentz_moving")
     assert all(m["momentum"] == [0, 0, 0] for m in rest["measured"])
     for entry in moving["measured"]:
-        wall = generator.drive_wall(int(entry["amount"]))
+        # the wall on the whole content, the own quanta and the stock held (item 47)
+        content = int(entry["amount"]) + sum(int(v) for v in entry.get("held", {}).values())
+        wall = generator.drive_wall(content)
         assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
 
 
@@ -109,7 +112,8 @@ def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_togethe
     assert (
         int(level[arm_start, 1, 1]) == 2000 and int(level[generator.REDSHIFT_MIRROR_X - 1, 1, 1]) == 2000
     )
-    assert int(level[generator.REDSHIFT_EMITTER_X + 10, 1, 1]) == 64  # the emitter's stock at its Nodes
+    # the emitter's one own quantum beside its stock of 64 at its Nodes (item 47)
+    assert int(level[generator.REDSHIFT_EMITTER_X + 10, 1, 1]) == 65
     assert int(level[generator.REDSHIFT_MIRROR_X + 10, 1, 1]) == 0  # beyond the mirror, free
     moving = DetectorLawSimulation(
         parse_nature_beam_world(document("lorentz_moving")), observer=lines.append

@@ -346,11 +346,13 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-    assert simulation.node_clock_pair(centre, 1) == (NODE_CLOCK - 64, NODE_CLOCK)
+    # A's level 65: its one own quantum beside its stock of 64 light quanta (item 47)
+    assert simulation.node_clock_pair(centre, 1) == (NODE_CLOCK - 65, NODE_CLOCK)
     assert simulation.node_clock_pair((100, 0, 0), 1) == (NODE_CLOCK, NODE_CLOCK)
-    # the wheel from the weak-field rule's integers (item 44): (g, W) = (1536, 312890625) at the
-    # emitter's content 64, the kind's own in the vacuum
-    assert simulation.wheel_at(1, centre) == (1536, 312890625)
+    # the wheel from the weak-field rule's integers (item 44): (g, W) = (50, 9612000000) at the
+    # emitter's level 65 (its one own quantum beside the stock of 64, item 47; (1536,
+    # 312890625) at 64), the kind's own in the vacuum
+    assert simulation.wheel_at(1, centre) == (50, 9612000000)
     assert simulation.wheel_at(1, (100, 0, 0)) == VACUUM_WHEEL
 
 
@@ -369,7 +371,8 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    assert int(simulation.node_content[21, 0, 0]) == 4 and int(simulation.node_content[70, 0, 0]) == 1
+    # the emitter's level 5: one own quantum and the stock of 4 held light quanta (item 47)
+    assert int(simulation.node_content[21, 0, 0]) == 5 and int(simulation.node_content[70, 0, 0]) == 1
     assert int(simulation.node_content[71, 0, 0]) == 1 and not simulation.node_content[40:70].any()
     givings_seen = 0
     clicks_seen = 0
@@ -384,7 +387,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         # interval began from the events before it, and again at a giving within it
         # (the given record's norm under the content the giving leaves), so a click's
         # quantum enters the array at the next interval unless a giving follows it
-        assert int(simulation.node_content[21, 0, 0]) == 4 - givings_seen
+        assert int(simulation.node_content[21, 0, 0]) == 5 - givings_seen
         # the family of clicks steps last in the interval and is then held at the content
         # the interval's clicks and givings left, so a click's quantum is on the screen's
         # body as the interval ends (ALGEBRA.md 9.45 (2))
@@ -397,12 +400,12 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         del before_clicks
         for line in lines[len(lines) - (givings_seen - before_givings) :]:
             if line["event"] == "giving":
-                assert line["content"] == 4 - before_givings
+                assert line["content"] == 5 - before_givings
                 assert line["node_clock"] == [NODE_CLOCK - line["content"], NODE_CLOCK]
                 assert lawful_wheel(simulation.world, line)
     assert givings_seen == 4 and clicks_seen >= 1
     assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
-    assert int(simulation.node_content[21, 0, 0]) == 0
+    assert int(simulation.node_content[21, 0, 0]) == 1  # the one own quantum stays (item 47)
 
 
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():

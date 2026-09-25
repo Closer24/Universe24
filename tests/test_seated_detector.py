@@ -36,7 +36,8 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
     """The layer world with the emitter's stock `stock` and its three places as seats (one
     receiver body of light at (71, row) read as the set) or as the cubes of the layer test."""
     document = layer_world(receiver=[name for _, name in PLACES])
-    document["measured"][0]["amount"] = stock
+    # the stock as the given family's content held at the body (ALGEBRA.md 9.51 (8); item 47)
+    document["measured"][0]["held"] = {"light": stock}
     document["ticks"] = stock * 60 + 300
     if seats:
         document["measured"] = [document["measured"][0]]

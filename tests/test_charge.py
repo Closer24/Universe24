@@ -143,14 +143,16 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
 
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     """(ii) THE HOLD AT Q (ALGEBRA.md 9.48 (1) and (2)): on the emitter world with light and the
-    matter kind both of charge -1 (the stock 4 of matter at [5, 37), the screen's three light
+    matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4
+    light quanta held at [5, 37) (ALGEBRA.md 9.51 (8); item 47), the screen's three light
     bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is
-    -4 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in
+    -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in
     the vacuum; the
-    emitter's Q rises by one at each giving (the quantum spent, its label in flight on the
-    given record) and the giving line carries it, the screen's first body's Q falls by one at
+    emitter's Q rises by one at each giving (a held light quantum given, its label in flight on
+    the given record; the body's own quantum and its own charge stay) and the giving line
+    carries it, the screen's first body's Q falls by one at
     each click there (the label held); the whole charge of the bodies and of the records in
-    flight is -7 at every interval; the books balanced. The edge case: a light body of charge
+    flight is -8 at every interval; the books balanced. The edge case: a light body of charge
     0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
     document["families"][LIGHT]["charge"] = -1
@@ -160,7 +162,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     charge = simulation.charge_record
     assert simulation.family_charge == [-1, -1, 0, 0]
-    assert np.all(charge.now[5:37] == -4) and np.all(charge.before[5:37] == -4)
+    assert np.all(charge.now[5:37] == -5) and np.all(charge.before[5:37] == -5)
     assert np.all(charge.now[70:73] == -1) and not charge.now[37:70].any()
     assert simulation.node_charge is charge.now and not charge.remainder.any()
     givings = 0
@@ -170,7 +172,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         assert simulation.books()["balanced"], simulation.tick
         givings = sum(1 for line in lines if line["event"] == "giving")
         clicks = sum(1 for line in lines if line["event"] == "gather")
-        assert int(simulation.node_charge[21, 0, 0]) == -4 + givings
+        assert int(simulation.node_charge[21, 0, 0]) == -5 + givings
         assert int(simulation.node_charge[70, 0, 0]) == -1 - clicks
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))
         flight = sum(simulation.family_charge[live.family] for live in simulation.records.values())
@@ -179,7 +181,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
             for block in simulation.blocks
             if block.own is not None and block.own.identity in simulation.records
         )
-        assert bodies + flight == -7, simulation.tick
+        assert bodies + flight == -8, simulation.tick
     assert givings == 4 and clicks >= 1
     for line in lines:
         if line["event"] == "giving":

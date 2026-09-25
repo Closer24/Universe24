@@ -184,7 +184,8 @@ def emitter_world(
             {
                 "position": [5, 0, 0],
                 "family": "matter",
-                "amount": stock,
+                "amount": 1,
+                "held": {"light": stock},
                 "phase": 0,
                 "momentum": [0, 0, 0],
                 "fixed": True,
@@ -243,9 +244,11 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # 801] in the vacuum; here the stock 4, 3, 2, 1 at the four givings), read
     # from the rule (`lawful_wheel`); read on the board below
     assert all(lawful_wheel(simulation.world, line) for line in givings)
-    assert [line["content"] for line in givings] == [4, 3, 2, 1]
+    # the level at the body: its one own quantum beside the stock held, 5, 4, 3, 2 (the
+    # stock as the given family's content, ALGEBRA.md 9.51 (8); item 47)
+    assert [line["content"] for line in givings] == [5, 4, 3, 2]
     assert [line["node_clock"] for line in givings] == [
-        [NODE_CLOCK - m, NODE_CLOCK] for m in (4, 3, 2, 1)
+        [NODE_CLOCK - m, NODE_CLOCK] for m in (5, 4, 3, 2)
     ]
     assert [line["excitation"] for line in givings] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in givings]
@@ -293,7 +296,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
     num, den = body.definition.pair
     read_coefficient = rule_coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace, True)[0]
-    assert pace == NODE_CLOCK - 4 and action.numerator == norm
+    assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
     assert read_coefficient % action.denominator == 0
     # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
     # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
@@ -329,9 +332,11 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         after = by_tick.get(line["tick"] + 1)
         assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
     assert simulation.block_by_number[0].own is not None  # the standing record continues
-    assert simulation.held[0] == [0, 0, 0, 0]  # light, matter, the clicks and the charge
+    # light spent, the one own quantum of matter kept (item 47), the clicks and the charge
+    assert simulation.held[0] == [0, 1, 0, 0]
     books = simulation.books()["families"]
-    assert books["matter"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
+    # the spent quanta on the given family's row, light (item 47)
+    assert books["light"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
     assert set(simulation.records) == {0}  # the body's own standing record alone remains
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
@@ -392,7 +397,8 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        if simulation.held[0][block.family] == 0:
+        assert block.definition.emitter is not None
+        if simulation.held[0][block.definition.emitter.family] == 0:  # the stock (item 47)
             spent.append(own.now[block.mask].copy())
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 4 and block.own is own and 0 in simulation.records
@@ -441,13 +447,17 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
             # pace in lowest terms (the Node's terms weighted by 1 / p, p the pace at the
             # body's Nodes as the giving leaves them, Gamma - content after the giving; p
             # times the form whole, the pair reducing from (p x form, p)), read again here
-            assert giving["given_norm"] == train["norm"] > 0 and giving["content"] == 1
+            assert giving["given_norm"] == train["norm"] > 0 and giving["content"] == 2
             pace = NODE_CLOCK - (giving["content"] - 1)
-            assert given.pace == giving["pace"] and pace % given.pace == 0
+            # SINCE item 44 the form's denominator divides the rule's read coefficient at
+            # the body's pace, R = 2 p^2 num (the Node terms over R), not the pace itself
+            num_c, den_c = (int(value) for value in block.definition.pair)
+            read_coefficient = rule_coefficients(num_c, den_c, NODE_CLOCK, NODE_CLOCK - pace, True)[0]
+            assert given.pace == giving["pace"] and read_coefficient % given.pace == 0
             form = Fraction(given.norm, given.pace)
             assert form == simulation.conserved_form(given) > 0 and given.norm == giving["norm"]
             assert form == wall_form(simulation, 0, given.now, given.before)
-            assert (form * pace).denominator == 1
+            assert (form * read_coefficient).denominator == 1
             assert giving["nodes"] == 32 and giving["excitation"] == 1 and giving["train"] == 0
             assert given.u == giving["u"] and given.wheel == giving["W"]
             assert lawful_wheel(simulation.world, giving)
@@ -509,6 +519,7 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["family"] = "light"
         document["measured"][0]["pair"] = [1, 2]
         document["measured"][0]["emitter"]["family"] = "matter"
+        document["measured"][0]["held"] = {"matter": 2}
         del document["measured"][0]["seed"]
 
     refused(on_light, "light's kind")
@@ -522,6 +533,11 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["amount"] = 0
 
     refused(no_stock, "amount")
+
+    def no_held_stock(document):
+        del document["measured"][0]["held"]  # the stock as the given family's content (item 47)
+
+    refused(no_held_stock, "needs its stock as the given family's content held at the body")
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first

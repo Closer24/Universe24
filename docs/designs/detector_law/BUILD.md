@@ -3795,6 +3795,49 @@ would have found no cell.
    the dilation in its rows by the rule; the seat carries it in its declared
    pair, the seam of the host form under its own identity (9.46).
 
+47. THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8), the second move
+   of 8e8ef04e the mathematician's gate of 9.68 (3) and (4) asked for, on
+   Nature24's finding B: the engine spent a quantum of the body's OWN family
+   per giving click, so a charged body would lose charge by giving light;
+   9.40 T3's "stock and M - 1"; 9.48 (1)). THE RULE: a body holds quanta
+   per family, its own (`amount`, its matter, with its charge) and what it
+   was loaded with or took (`held`, the light it holds: its stock); a
+   giving click lowers the GIVEN family's content held at the body by one
+   and leaves the body's own quanta and its charge; the family of clicks'
+   level at the body is the sum over families as before (`_hold_clock`),
+   the charge the signed sum. THE ENGINE: the rung fires while the given
+   family's held content lasts, the giving lowers it and books the spent
+   quantum to the given family's row of the ledger (`held_spent`), the next
+   excitation while it lasts; nothing else moves. THE LOADER: an emitting
+   block declares its stock as `held` naming the given family, from 1
+   (refused absent, naming the family); its `amount` is its own quanta,
+   from 1. THE WORLDS: every emitting world regenerated with `amount` 1 and
+   `held` {given family: the old stock}, so the count of givings is the
+   count of before (the click line's counts unchanged, the gate) and the
+   level at the emitter's Nodes is one more than before (the one own
+   quantum beside the stock: the light clock's A at 65, its self-level
+   1.00325 in place of 1.0032, no reading moved outside its band, 9.63
+   (4)); the ledger balances per family. THE GATE: tests/test_emitter.py
+   (the givings' contents 5, 4, 3, 2 on the stock 4, the quanta conserved
+   per family), the emitter-related suites, the light clock's digests
+   re-read. THE CHECK-MODE READINGS ON THIS HEAD (DETECTOR, no pin): the light
+   clock 301.9 +- 1.9 over 85 clicks (expected 301); the redshift long wave 1.201
+   +- 0.010 (62 and 72 clicks). THE FINDING, a consequence of the two rules as
+   written (the taking raises the taker's held content of the taken family,
+   the rung gives while the given family's content lasts): an emitter whose own
+   set takes its light back holds it again and gives it again while the run
+   lasts (85 givings on a stock of 64 in the light clock's 4800 intervals; 64
+   before this item, the stock spent once); the reading per record unchanged
+   in kind; for the mathematician's line (the rows toward nature and the
+   light clock have the emitter as its own receiver). The bright body of the
+   dark body row keeps its level 4812 as its field, its stock 128 of light
+   declared beside 4684 own quanta (the givings the run allows, 83 read, with
+   room). The drive's wall 3 Q S M is read on the body's whole content (its
+   own quanta and what it holds; the moving emitter of row 2 keeps its hop
+   every 4 intervals, its momentum 3120 against 12480). The held worlds of the
+   detector-law design keep the stock as `amount` until their rows return. The
+   stock as `amount` HISTORY.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

@@ -76,7 +76,7 @@
     0
    ],
    "family": "matter",
-   "amount": 30,
+   "amount": 1,
    "phase": 0,
    "momentum": [
     0,
@@ -80150,7 +80150,7 @@
      "periods": 8
     },
     "period": 46,
-    "norm": 143431786830132649550,
+    "norm": 4780893457763751970885,
     "given": {
      "now": [
       60,
@@ -80479,6 +80479,9 @@
      "norm": 323059463943
     }
    },
+   "held": {
+    "light": 30
+   },
    "clock": [
     2077285,
     1048576
@@ -80491,7 +80494,7 @@
     0
    ],
    "family": "matter",
-   "amount": 4812,
+   "amount": 4684,
    "phase": 0,
    "momentum": [
     0,
@@ -160893,6 +160896,9 @@
      "norm": 323059463943
     }
    },
+   "held": {
+    "light": 128
+   },
    "clock": [
     2077478,
     1048576
@@ -171228,6 +171234,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "5a5e73dfe97679b44aea274efc3cb55a66583ffe128367b878813e8a34357c5f"
+  "hash": "eba3dd942f75625e88bc298ff337cf1844c30d7fe624802454f6b971f2d89bea"
  }
 }

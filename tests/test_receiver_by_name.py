@@ -50,7 +50,8 @@ def emitter(
     block = {
         "position": [position, 0, 0],
         "family": "matter",
-        "amount": stock,
+        "amount": 1,
+        "held": {"light": stock},
         "phase": 0,
         "momentum": [momentum, 0, 0],
         "fixed": True,

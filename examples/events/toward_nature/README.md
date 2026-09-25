@@ -29,8 +29,9 @@ A's own Nodes): `redshift_top.json` with the arm at the level 0 and
 `redshift_bottom.json` with the arm's free Nodes [132, 690) held at the uniform
 level c_1 = 2000 by a holder body of a fifth family (`well`, the matter kind's
 pair; the hold of 9.45 (2): the level at a body's Nodes is its content), so
-U_1 = c_1 / (2 Gamma) = 0.1. The emitter's own Nodes read its stock and the
-mirror's its content in both worlds alike. 6000 intervals each.
+U_1 = c_1 / (2 Gamma) = 0.1. The emitter's own Nodes read its one own quantum
+plus its stock (the given family's content held at the body, BUILD.md section 26
+item 47) and the mirror's its content in both worlds alike. 6000 intervals each.
 
 The reading is the wait from a record's giving click to its click at `at_well`
 (the light clock's tick, 9.24 (6)), run 2026-09-25:
@@ -87,6 +88,23 @@ verdict; DETECTOR unless marked):
 | The redshift, long wave, the ratio bottom over top of the mean waits | a light clock with a declared arm reads 1 / (1 - 2 U_1) = 1.250 on the arm's share of the tick (9.62 (2); 1.258 at k = 0.302); the arm's share here 1120 of 1283 intervals (COMPUTATION: 2 x 322 / 0.575), so 1.218 to 1.225 on the whole tick; a clock body would read 1.104; today's law 1.118 on the share, 1.103 on the tick | 1.205 +- 0.011 (64 and 64 clicks; the top 1283.2 +- 6.8, the bottom 1546.6 +- 10.7) | holds: the well slows the clock by the coordinate speed of light's factor, not the redshift's; 1.2 to 1.8 standard errors below the Einstein form's line, 9 above today's law's |
 
 The host: 8, 26 and 32 seconds for the three runs with the support-only step.
+
+THE SAME TWO ROWS ON THE HEAD OF ITEM 47 (the stock as the given family's content held at
+the body, ALGEBRA.md 9.51 (8); the emitter's level 65, its one own quantum beside the
+stock; DETECTOR; no pin):
+
+| Row | Expected | Read | Direction |
+| --- | --- | --- | --- |
+| The light clock, the mean wait giving to click | 300 +- 9 times 1 + 65 / (2 Gamma) = 1.00325: 301 | 301.9, rms 17.8, standard error 1.9, 85 clicks | holds |
+| The redshift, long wave, the ratio bottom over top | 1.218 to 1.225 (the Einstein form on the arm's share); 1.104 a clock body; 1.103 today's law | 1.201 +- 0.010 (62 and 72 clicks; the top 1294.0 +- 7.2, the bottom 1553.8 +- 10.1) | holds as before |
+
+THE FINDING OF THIS HEAD (a consequence of the two rules as written, for the
+mathematician's line): the emitter's own set takes its light back (`at_well` is bound to
+the emitter's Nodes), the taken quantum is held light again, and the rung gives it again
+while the run lasts: 85 givings on a stock of 64 in 4800 intervals, 62 and 72 on 64 in
+6000 (before item 47 the stock was spent once, 64 givings). The reading per record, the
+wait from the giving to the click, is unchanged in kind; the clocks run while the run
+lasts, as an atom re-emits the light it absorbs.
 
 ## Row (2): Lorentz
 

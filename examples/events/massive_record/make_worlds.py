@@ -120,6 +120,9 @@ LAYER_RAMP = 12000  # ten relaxation times of the well by the margin module's ow
 LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "seed",
+    # the stock as the given family's content held at the body (ALGEBRA.md
+    # 9.51 (8); item 47)
+    "held",
     "ramp",
     "start",
     "margin",
@@ -816,7 +819,9 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
         )
     two_cos_rest, quotient = mode_dispersion(document, number, axes[0])
     a, b = (int(value) for value in entry["clock"])
-    wall = 3 * LABEL_SCALE * int(document.get("width", 1)) * int(entry.get("amount", 1))
+    # the drive's wall on the body's whole content, its own quanta and what it holds
+    content = int(entry.get("amount", 1)) + sum(int(value) for value in entry.get("held", {}).values())
+    wall = 3 * LABEL_SCALE * int(document.get("width", 1)) * content
     table = [[a, b]]
     for whole in range(1, abs(momentum[axes[0]]) + 1):
         _, rotation = moving_rotation(float(two_cos_rest), float(quotient), whole / wall)

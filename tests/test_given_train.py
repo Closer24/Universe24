@@ -217,7 +217,8 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     assert document["N"] == 1024 and document["families"][0]["phase_per_link"] == [512, 1]
     a = document["measured"][0]
     assert a["extents"] == [32, 3, 3] and a["position"] == [600, 0, 0] and a["pair"] == [800, 801]
-    assert a["amount"] == 64 and a["receiver"] == "at_well"
+    # the stock as the given family's content held at the body (item 47): one own quantum
+    assert a["amount"] == 1 and a["held"] == {"light": 64} and a["receiver"] == "at_well"
     assert a["emitter"]["train"] == {"direction": [1, 0, 0], "periods": 8}
     train = profile_of(document)
     assert len(train["now"]) == 288 and all(

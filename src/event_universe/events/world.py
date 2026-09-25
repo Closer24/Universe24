@@ -1341,7 +1341,10 @@ class EmitterDefinition:
     """The emitter as a clicking body (ALGEBRA.md 9.17 (4), the mathematician's
     integers of 2026-09-24; LAB_TOOLS.md A.1): on a body of a massive kind
     with its seed (the excited record: the body's seed at both levels) and
-    its stock `amount` = M (the number of its excitations), the key
+    its stock THE GIVEN FAMILY'S CONTENT HELD AT THE BODY, `held` naming the
+    given family (ALGEBRA.md 9.51 (8); BUILD.md section 26 item 47: a giving
+    lowers the given family's content by one; the body's own quanta `amount`
+    and its charge stay; the stock as `amount` HISTORY), the key
     `emitter`: {"family": the given family's name (a paid family with the
     pair form of its clock), "branches": the given record's labels (optional,
     [[0, 1]] by the lamp's form), "receiver": the given records' ladder by
@@ -3935,7 +3938,9 @@ def _block(
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
-    wall = 3 * LABEL_SCALE * width * amount
+    # the drive's wall on the body's whole content, its own quanta and what it holds
+    # (the stock is content, ALGEBRA.md 9.51 (8); item 47)
+    wall = 3 * LABEL_SCALE * width * sum(held)
     if 3 * sum(component * component for component in momentum) >= wall * wall:
         raise ValueError(
             f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
@@ -3973,8 +3978,8 @@ def _block(
             )
         if amount < 1:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
-                "body's excitations, M; a world that needs W givings declares M = W)"
+                f"{BEAM_LAW}: {label}.emitter needs `amount` from 1, the body's own quanta (its "
+                "stock is the given family's content under `held`, ALGEBRA.md 9.51 (8))"
             )
         # THE RESIDUES OF AN EMITTING BODY spread from the remainder kept at
         # its Nodes (the model owner's decisions (1) and (2) of record 1962;
@@ -3990,6 +3995,18 @@ def _block(
             extents=extents,
             periodic=periodic,
         )
+        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); BUILD.md
+        # section 26 item 47): the quanta a body gives are the given family's,
+        # held at the body under `held`; a giving lowers them and leaves the
+        # body's own quanta and its charge (a body spending its own quantum
+        # per giving would lose charge by giving light: refused)
+        if held[emitter.family] < 1:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emitter needs its stock as the given family's content held "
+                f"at the body: `held` naming {families[emitter.family].name!r} from 1 (a world that "
+                "needs W givings holds W; ALGEBRA.md 9.51 (8): a giving lowers the given family's "
+                "content, the body's own quanta `amount` and its charge stay)"
+            )
         # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md 9.22 (4); BUILD.md section
         # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
         # values on the pair at the body's centre Node (its own pair), at

@@ -19,7 +19,7 @@ family of clicks and the family of charge; every family's charge 0.
 
 - **The emitter**: a body of the matter kind in the well [800, 801], the
   train's 32 Nodes along x and 5 across at [5, 37) x [98, 103), seeded on its
-  mode at 2^18, the stock 30; its emitter gives light along +x with a train
+  mode at 2^18, the stock 30 held as light beside its one own quantum (BUILD.md section 26 item 47); its emitter gives light along +x with a train
   of 8 periods; its records' ladder the screen's cubes (the bright world's
   body first).
 - **The body**: 32 x 5 Nodes at [184, 216) x [143, 148), its centre (200, 145),

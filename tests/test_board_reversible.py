@@ -307,7 +307,9 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     charge = simulation.family_charge
     total_quanta = sum(sum(h) for h in simulation.held)
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
-    assert total_charge == -STOCK - 3 + 1
+    # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the
+    # screen's three light bodies and the positive body (ALGEBRA.md 9.51 (8); item 47)
+    assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
     previous_residue = None
     read_at = 0
@@ -328,7 +330,9 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
         for line in [line for line in lines if line["tick"] == simulation.tick]:
             if line["event"] == "giving":
                 giver = line["measured"]
-                assert simulation.held[giver][block.family] == held_before[giver][block.family] - 1
+                # the giving lowers the given family's content held at the body (item 47)
+                given_family = block.definition.emitter.family if block.definition.emitter else -1
+                assert simulation.held[giver][given_family] == held_before[giver][given_family] - 1
                 assert simulation.records[line["record"]].content == 1
                 assert 0 <= line["u"] < line["W"] and line["read_node"] == [5, 0, 0]
                 if previous_residue is not None:

@@ -376,12 +376,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE SEAT (ALGEBRA.md 9.60; item 42) the state digest moved once more (the block
     entry's `seat` for `rotation`, None under the lattice body; the events and the audit
     unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44) all three moved (the rule, Gamma 10^4,
-    the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); read again at
-    this head."""
+    the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE
+    STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47) all three moved (the emitter's
+    level one more, its one own quantum beside the held stock: every pace at its Nodes, the
+    giving lines' content and the books per family); read again at this head."""
     assert run_chain_digests() == {
-        "events": "0dc28538213dec70fbc3f1c1e4943ee680fbe8358930d87f5b5947fd9e3984bb",
-        "state": "551c008af4696a9323aa58407e3420820538195440c7ea9a11697b8c03a1cf3d",
-        "audit": "d93b68ecc55be283532110e1d5e0f2a49addd394b4403659ec05db9d7477fb99",
+        "events": "b8d7eae3058a1fb39c8ab4a75df408e1258a6cc4997e45f7f3451c18bb8d2833",
+        "state": "184343ea739fa1538f9d27798212b3b1f54e68ee40435283c7a85b83f2f7c316",
+        "audit": "372e68dbe0e0ef831d7115456de3de6b97ec09277db5db3d980eda236ad50b78",
     }
 
 
@@ -768,9 +770,10 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
-    assert [line["content"] for line in givings] == [3, 2, 1]
+    assert [line["content"] for line in givings] == [4, 3, 2]  # one own quantum beside the stock
     assert len({line["u"] for line in givings}) > 1
-    assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
+    # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
+    assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
     assert own is not None and own.identity == 0  # the standing record continues (9.43 (3))
     assert all(
@@ -788,6 +791,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     on_light["measured"][0]["family"] = "light"
     on_light["measured"][0]["seed"] = 100
     on_light["measured"][0]["pair"] = [1, 2]
+    on_light["measured"][0]["held"] = {"matter": 1}  # the stock, not the own family (item 47)
     with pytest.raises(ValueError, match="of light's kind"):
         parse_nature_beam_world(on_light)
     empty = json.loads(json.dumps(base))
@@ -1453,6 +1457,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "position": [100, 0, 0],
             "family": "matter",
             "amount": 1,
+            "held": {"light": 1},
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,

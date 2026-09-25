@@ -76,7 +76,7 @@
     0
    ],
    "family": "matter",
-   "amount": 64,
+   "amount": 1,
    "phase": 0,
    "momentum": [
     0,
@@ -6935,6 +6935,9 @@
     0,
     0
    ],
+   "held": {
+    "light": 64
+   },
    "emitter": {
     "family": "light",
     "train": {
@@ -6946,7 +6949,7 @@
      "periods": 8
     },
     "period": 123,
-    "norm": 4174512166367874997,
+    "norm": 128227347732269216852,
     "given": {
      "now": [
       23,
@@ -16894,6 +16897,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "d5fe60d9d44e2e5c0412f5ad6f1dcb0e07beef4fa97b4099eaf3583a8f959217"
+  "hash": "a2a7abadfd297536e0a53c06bc9f22c096ee5b2c522acfa0472fdff983bd19ad"
  }
 }

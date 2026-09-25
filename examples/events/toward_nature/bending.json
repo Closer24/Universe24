@@ -76,7 +76,7 @@
     0
    ],
    "family": "matter",
-   "amount": 100,
+   "amount": 1,
    "phase": 0,
    "momentum": [
     0,
@@ -80149,7 +80149,7 @@
      "periods": 8
     },
     "period": 68,
-    "norm": 317119223020805671,
+    "norm": 9512557034516516220714,
     "given": {
      "now": [
       4,
@@ -81437,6 +81437,9 @@
      ],
      "norm": 1188836430216
     }
+   },
+   "held": {
+    "light": 100
    },
    "clock": [
     2088164,
@@ -171800,6 +171803,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "7ba30a17ce9d8f25ce4a5b4d0d8dfa5e84407f02d28ed13681478dce35bb86d4"
+  "hash": "57c99d295c4e6fc65d6e1f40d7a02be2c758bd38a266cd366b0a981c6144054c"
  }
 }

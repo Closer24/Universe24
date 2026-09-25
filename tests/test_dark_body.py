@@ -64,7 +64,11 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     for document in (dark, bright):
         body = document["measured"][DARK_NUMBER]
         assert body["position"] == [184, 143, 0] and body["extents"] == [32, 5, 1]
-        assert body["amount"] == 4812
+    # the level 4812 at both bodies' Nodes; the bright body's split into its own quanta and
+    # its stock of light held (item 47)
+    assert dark["measured"][DARK_NUMBER]["amount"] == 4812
+    assert bright["measured"][DARK_NUMBER]["amount"] == 4812 - 128
+    assert bright["measured"][DARK_NUMBER]["held"] == {"light": 128}
     assert dark["measured"][DARK_NUMBER]["family"] == "dark"
     assert "emitter" not in dark["measured"][DARK_NUMBER]
     assert all("block" not in detector for detector in dark["detectors"])

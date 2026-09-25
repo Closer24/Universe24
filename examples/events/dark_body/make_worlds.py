@@ -53,6 +53,10 @@ BODY_CONTENT = 4812  # M, the quanta held at every Node of the body: below Gamma
 EMITTER_CORNER = [5, 98, 0]  # the train's 32 Nodes along x, 5 wide across the beam
 EMITTER_EXTENTS = [32, 5, 1]
 STOCK = 30  # the emitter's given records, one per giving click
+# the bright body's stock of light beside its own content (ALGEBRA.md 9.51 (8); BUILD.md
+# section 26 item 47): the givings the run's ticks allow (83 read on the control) with room;
+# its own quanta BODY_CONTENT - BRIGHT_STOCK, so the level at its Nodes stays BODY_CONTENT
+BRIGHT_STOCK = 128
 SCREEN_X = 380  # the screen's column, cubes of side 3 from y = 40 to 160
 SCREEN_YS = range(40, 160)
 TICKS = 2400  # the last giving near 30 x P / 2 intervals, the flight 340 Links at 0.447
@@ -102,6 +106,7 @@ def block(
     amount: int,
     emitter: dict | None,
     well: list[int] = WELL,
+    stock: int | None = None,
 ) -> dict:
     entry: dict = {
         "position": list(corner),
@@ -116,7 +121,14 @@ def block(
         "margin": "control",
     }
     if emitter is not None:
+        # the stock as the given family's content held at the body (ALGEBRA.md
+        # 9.51 (8); BUILD.md section 26 item 47): without `stock`, one own quantum
+        # and `amount` givings; with it, `stock` givings beside amount - stock own
+        # quanta (the level at the Nodes `amount`, the bright body's field)
         entry["emitter"] = emitter
+        entry["amount"] = 1 if stock is None else amount - stock
+        entry["held"] = {emitter["family"]: amount if stock is None else stock}
+        assert entry["amount"] >= 1
     return entry
 
 
@@ -184,6 +196,7 @@ def world(dark: bool) -> dict:
                     "train": {"direction": [1, 0, 0], "periods": 8},
                 },
                 BODY_WELL,
+                stock=BRIGHT_STOCK,
             )
         )
         document["detectors"].append({"name": "at_body", "block": 1, "threshold": 1})

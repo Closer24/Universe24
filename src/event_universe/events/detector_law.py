@@ -553,7 +553,9 @@ class DetectorLawSimulation:
             definition = entry.block
             corner = [int(entry.position[axis]) for axis in range(3)]
             mask = self._box(corner, definition.extents, entry.family)
-            wall = 3 * LABEL_SCALE * world.width * entry.amount
+            # the drive's wall 3 Q S M on the body's whole content at the load, its own
+            # quanta and what it holds (the stock is content, ALGEBRA.md 9.51 (8); item 47)
+            wall = 3 * LABEL_SCALE * world.width * sum(entry.held)
             block = Block(
                 number,
                 entry.family,
@@ -1200,7 +1202,9 @@ class DetectorLawSimulation:
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
-        if self.held[block.number][block.family] <= 0:
+        # the stock is the given family's content held at the body (ALGEBRA.md
+        # 9.51 (8); item 47): nothing fires once it is spent
+        if self.held[block.number][emitter.family] <= 0:
             return
         if block.residue_pending:
             own.u, own.wheel = self.residue_of(own, block)
@@ -1229,8 +1233,10 @@ class DetectorLawSimulation:
         wheel from the law (9.22 (4), 9.44 (5) (c): the body's own remainder
         at the first shell Node in the declared order, read at the click,
         the given record's residue and the next excitation's alike: every
-        Node of the body holds (M, u)), the content one quantum moved from
-        the body's stock; the count of intervals to the next click starts
+        Node of the body holds (M, u)), the content one quantum OF THE GIVEN
+        FAMILY moved from the body's held stock (ALGEBRA.md 9.51 (8); item
+        47: the body's own quanta and its charge stay; the own family's
+        quantum spent per giving HISTORY); the count of intervals to the next click starts
         here (`_excitation_rung`). Nothing drives the given record
         afterwards: the law advances it."""
         world = self.world
@@ -1326,8 +1332,11 @@ class DetectorLawSimulation:
                 for detector, set_name in enumerate(self.detector_set)
                 if set_name == name
             ]
-        self.held[number][block.family] -= 1
-        self.ledger.held_spent[block.family] += 1
+        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47): the
+        # giving lowers the given family's content held at the body by one,
+        # the body's own quanta and its charge untouched
+        self.held[number][family] -= 1
+        self.ledger.held_spent[family] += 1
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
         # 36; ALGEBRA.md 9.50 (13)): the given record's T is p times its
         # conserved form as written on the board, the engine's own integer
@@ -1394,7 +1403,7 @@ class DetectorLawSimulation:
         block.emit_now = False
         block.wait = 0
         own.u, own.wheel = residue, wheel
-        if self.held[number][block.family] > 0:
+        if self.held[number][family] > 0:
             block.excitations += 1
 
     def _block_clock(self, block: Block) -> None:
