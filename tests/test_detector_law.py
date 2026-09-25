@@ -12,6 +12,8 @@ the emitter's own take are retired (its cells are cells like every other)."""
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import pytest
 
@@ -389,7 +391,7 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
     simulation = DetectorLawSimulation(world, observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    level = int(simulation._cosine_table(128)[(96 + 77 // 25) % 128])
+    level = round(UNIT * math.sin(math.pi * 77 / (25 * 64)))
     ladder = [simulation.cell_names.index(name) for name in order]
     for u in range(RESIDUES):
         now = np.zeros(simulation.shape, dtype=np.int64)

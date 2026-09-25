@@ -95,6 +95,7 @@ Run from the repository root:
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -239,24 +240,40 @@ def excite_on_the_mode(document: dict, number: int) -> None:
     """The emitter body `number`'s integers of ALGEBRA.md 9.17 (5) item 1 in the flux's
     units of 9.19 (3), written into the world file by the generator (a HOST computation; the
     loader recomputes and refuses a mismatch): `period` P, the nearest integer to 2 pi /
-    omega_b of the body's mode (the margin module's own omega_b), and `norm` T, the one-way
+    omega_b of the body's mode (the margin module's own omega_b), `norm` T, the one-way
     inward flux into the body's centre cell that the seeded mode books over P intervals
-    advanced alone by the engine (exact integers)."""
+    advanced alone by the engine (exact integers), and `born` [now, before], the born
+    pair's two integers on every cell (9.17 (6); the table is the generator's, not the
+    engine's)."""
     from event_universe.diagnostics.massive_record_margin import (
         block_margin,
         excitation_norm,
         period_of,
     )
+    from event_universe.events.detector_law import UNIT
     from event_universe.events.world import parse_nature_beam_world
 
     entry = document["measured"][number]
     emitter = entry["emitter"]
     emitter.pop("period", None)
     emitter.pop("norm", None)
+    emitter.pop("born", None)
     world = parse_nature_beam_world(document)
     period = period_of(block_margin(world, number))
     emitter["period"] = period
     emitter["norm"] = excitation_norm(world, number, period)
+    # the born pair (ALGEBRA.md 9.17 (6); no table in the engine): the
+    # character half a step either side of its zero, the step the born
+    # clock's advance n / d of the circle's N per interval: now = round(A sin(pi
+    # n / (d N))), before = -now, A the amplitude unit (a HOST computation
+    # written into the file; 9.17 (6)'s whole step floor(n / d) is 0 for a
+    # clock below one step per interval, the index rows' [3565, 10000], and
+    # wrote no motion: the finding of BUILD.md section 26 item 17)
+    born_family = next(f for f in document["families"] if f["name"] == emitter["family"])
+    numerator, denominator = born_family["phase_per_link"]
+    steps = int(document.get("N", 64))
+    level = int(round(UNIT * math.sin(math.pi * numerator / (denominator * steps))))
+    emitter["born"] = [level, -level]
 
 
 SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505; no clock)

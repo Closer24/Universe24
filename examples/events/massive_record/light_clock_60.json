@@ -752,7 +752,11 @@
    "emitter": {
     "family": "light",
     "period": 63,
-    "norm": 103100941635200
+    "norm": 103100941635200,
+    "born": [
+     51451,
+     -51451
+    ]
    },
    "receiver": "at_a",
    "margin": "pin"

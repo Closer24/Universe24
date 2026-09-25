@@ -4179,7 +4179,11 @@
    "emitter": {
     "family": "light",
     "period": 62,
-    "norm": 29332315881528348
+    "norm": 29332315881528348,
+    "born": [
+     51451,
+     -51451
+    ]
    },
    "receiver": "light_detector",
    "margin": "pin"

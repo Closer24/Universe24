@@ -3083,7 +3083,11 @@
    "emitter": {
     "family": "light",
     "period": 63,
-    "norm": 414791624689600
+    "norm": 414791624689600,
+    "born": [
+     51451,
+     -51451
+    ]
    },
    "receiver": "at_b",
    "margin": "pin"
@@ -6124,7 +6128,11 @@
    "emitter": {
     "family": "light",
     "period": 63,
-    "norm": 413761612148000
+    "norm": 413761612148000,
+    "born": [
+     51451,
+     -51451
+    ]
    },
    "receiver": "at_a",
    "margin": "pin"

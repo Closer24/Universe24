@@ -1843,6 +1843,43 @@ would have found no cell.
    branch on the kind, `live.mask`, `arm_done`, the cavity's zeroing, the
    tables) are the later steps'.
 
+17. NO TABLE IN THE ENGINE AND THE TABLES RETIRED (the cleanup order's
+   step 2, second push, and step 3; ALGEBRA.md 9.17 (6), 9.21, 9.22 (2);
+   the property test green, 10 of 10). THE BORN PAIR: the emitter's
+   `born` is the world's two integers [now, before] on every cell of the
+   body, the generator's (now = A C_2N[3 N / 2 + s] on the host's table
+   cos x 256, s the born clock's step, before = -now), checked at load in
+   integers (two integers, before = -now, a motion) and required at the
+   engine's construction where a body births; `_emit` writes them, no
+   cosine or sine table in the engine (`_cosine_table`, `_sine_table` and
+   the phase imports gone), the loader's S[k] check gone with the
+   splitter. THE TABLES RETIRED: `TableBody`, `Splitter`,
+   `_table_settings`, `_table_body`, `channel_weights`,
+   `_split_table_offers`, `read_pair`, `_split`, `joint_weights`, the pair
+   bodies, the splitter mask and the record's table shares removed; a
+   measured event with a table entry (a polariser's window, a splitter's
+   rows) is refused at the engine's construction naming the successor (a
+   polariser is a body with an axis and two receivers named, a splitter a
+   region of the one operator; the loader still parses the ray law's
+   tables). THE PHASE READING is a host reader (core.phase.nearest_phase;
+   the engine's `read_phase` gone), its test in tests/test_detector_law_tables.py
+   alone: the splitter's (c), the joint weights' (g, d4) and the tables'
+   rotation (test_massive_record.py af) retired with the code. The worlds
+   regenerated with `born`. THE FINDING ON THE WRITE (for the
+   mathematician): 9.17 (6)'s whole step s = floor(n / d) is 0 for a born
+   clock below one step per interval (the index rows' light [3565, 10000],
+   [1846, 10000], [2243, 10000] on N = 64), so the write's pair was A
+   C_2N[3 N / 2] = 0 at both levels and those worlds' births wrote NO
+   MOTION since item 13 (the loader's new check exposed it: "born writes
+   no motion"); the generator now writes the character half a step either
+   side of its zero on the clock's own advance, now = round(A sin(pi n /
+   (d N))), before = -now (157930 on [77, 25] at N = 64 against the
+   table's 155648 of the whole step 3; a HOST computation, the integer in
+   the file the input), and the engine reads the integers alone; his
+   word on the form is owed, the file's integer carries it either way.
+   The Malus and Bell worlds stay held (the polariser body and the
+   crystal, and the excited record's residue).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

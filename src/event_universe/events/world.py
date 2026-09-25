@@ -314,7 +314,7 @@ from event_universe.core.integer import (
     integer_root,
     rational_sum,
 )
-from event_universe.core.phase import MAX_PHASE_STEPS, phase_sines
+from event_universe.core.phase import MAX_PHASE_STEPS
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -1312,7 +1312,7 @@ class EmitterDefinition:
     receiver: tuple[str, ...] | None
     period: int | None = None
     norm: int | None = None
-    born: tuple[tuple[int, ...], tuple[int, ...]] | None = None
+    born: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True)
@@ -3614,31 +3614,28 @@ def _emitter(
     receiver = _receiver_names(obj, label, True)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1)
-    born: tuple[tuple[int, ...], tuple[int, ...]] | None = None
+    born: tuple[int, int] | None = None
     if "born" in obj:
-        # the born record's two levels as material (ALGEBRA.md 9.17 (5) item
-        # 3): the generator's integers over the whole board, copied at the
-        # click; a line's travelling character is written here
-        levels = _object(obj["born"], f"{label}.born", {"now", "before"}, {"now", "before"})
-        count = int(shape[0]) * int(shape[1]) * int(shape[2])
-        rows = []
-        for level_name in ("now", "before"):
-            values = levels[level_name]
-            if (
-                not isinstance(values, list)
-                or len(values) != count
-                or any(type(value) is not int for value in values)
-            ):
-                raise ValueError(
-                    f"{BEAM_LAW}: {label}.born.{level_name} must be {count} integers, one per Node "
-                    "of the board in x-major order (the born record's level as material)"
-                )
-            rows.append(tuple(int(value) for value in values))
-        if not any(a != b for a, b in zip(rows[0], rows[1], strict=True)):
+        # NO TABLE IN THE ENGINE (ALGEBRA.md 9.17 (6), 9.22 (2)): the born
+        # record's pair on every cell of the body as the world's two integers
+        # [now, before], the generator's (now = A C_2N[3 N / 2 + s], before =
+        # -now), checked here in integers: two integers, before = -now, a
+        # motion (now nonzero)
+        value = obj["born"]
+        if not isinstance(value, list) or len(value) != 2 or any(type(v) is not int for v in value):
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born writes no motion (the two levels equal on every Node)"
+                f"{BEAM_LAW}: {label}.born must be [now, before], the born pair's two integers on "
+                "every cell of the body (the generator's, ALGEBRA.md 9.17 (6))"
             )
-        born = (rows[0], rows[1])
+        now, before = int(value[0]), int(value[1])
+        if now == 0:
+            raise ValueError(f"{BEAM_LAW}: {label}.born writes no motion (now is 0)")
+        if before != -now:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.born [{now}, {before}]: the born pair has before = -now (the "
+                "character half a step either side of its zero, no static part; ALGEBRA.md 9.17 (6))"
+            )
+        born = (now, before)
     return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, born)
 
 
@@ -4150,27 +4147,6 @@ def _detector_law_load_checks(
                 f"no inputs), refused under {DETECTOR_LAW_RULE} (an opening is free Nodes; there is "
                 "no fan; a splitter declares its inputs)"
             )
-        # The splitter's linear form divides by S[k], the sine of the clock's
-        # step of the interval (DECLARATIONS.md section 14): a family whose
-        # clock gives a step with S[k] = 0 (a step of 0, or of N / 2) on some
-        # interval has no pair to act on there, refused at load.
-        sines = phase_sines(phase_steps)
-        for family_index, split in enumerate(entry.splits):
-            if split is None or split.inputs is None:
-                continue
-            clock = families[family_index].phase_per_age
-            if clock is None:
-                continue
-            steps = {clock[0] // clock[1], clock[0] // clock[1] + (1 if clock[0] % clock[1] else 0)}
-            for step in steps:
-                if sines[step % phase_steps] == 0:
-                    raise ValueError(
-                        f"{BEAM_LAW}: measured[{number}].table on the family "
-                        f"{families[family_index].name!r} with the clock {list(clock)}: the clock's step "
-                        f"{step} of {phase_steps} has a sine of 0, and the splitter's linear form "
-                        "divides by S[k] (DECLARATIONS.md section 14); declare a clock whose every "
-                        "step has a nonzero sine"
-                    )
         # An arm's half-space is the sign of (node - origin) . vector on the
         # board's raw coordinates: on a periodic axis there is no half-space,
         # so arms whose first direction has a component on a periodic axis

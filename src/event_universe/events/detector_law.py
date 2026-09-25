@@ -66,15 +66,13 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import by_clock, by_drive, integer_root
-from event_universe.core.phase import PHASE_COSINE_SCALE, nearest_phase, phase_cosines, phase_sines
-from event_universe.events.amplitude import half_angle, rungs
+from event_universe.core.integer import by_drive
+from event_universe.events.amplitude import rungs
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
     LABEL_SCALE,
     BlockDefinition,
-    DetectorDefinition,
     NatureBeamWorld,
     Vector,
 )
@@ -144,11 +142,6 @@ class LiveRecord:
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
-    # The table bodies' shares (DECLARATIONS.md section 14 item 6): per body
-    # (its index in `table_bodies`) the entry cell's pointer as the last
-    # split left it and the split's remainder, so that each interval's
-    # offer at the entry is split once, the remainder kept.
-    table_shares: dict[int, tuple[int, int]] = field(default_factory=dict)
     # The joint gather (DECLARATIONS.md section 1 item 3): an arm of a pair
     # that has completed waits, its rows still, for the other arms; the pair
     # gathers once when every arm has completed.
@@ -176,82 +169,6 @@ class LiveRecord:
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
     escaped: int = 0
-
-
-@dataclass
-class TableBody:
-    """A polariser as a TABLE BODY OF TWO CELLS (DECLARATIONS.md section 14
-    item 6; section 15 T-1): a measured event whose table entry for a family
-    carries a `phase_window` s, the setting, on the arm's line of the
-    family's lamp. The ENTRY cell is its Node, a take Node (the receiver
-    form, the row held at 0), the EXIT cell the next Node beyond it on the
-    arm's line, a take Node too. The record's offer at the entry cell's
-    Ports is SPLIT by the declared pair [C'[s]^2, S'[s]^2] over n_s = C'^2
-    + S'^2 (the half-angle tables of 2N, `amplitude.half_angle`, the same
-    integers the amplitude law's rotation U_s reads), one division per
-    interval with the remainder kept per record: the + share to the exit
-    cell, the - share to the entry cell. The click's interval is the first
-    rung of the record's whole offer at the body (the two shares' sum) over
-    W, and the click's cell is chosen by the birth wheel's u on the ladder
-    of the two weights, the + cell before the - cell. The rotation's action
-    on the record's two columns enters through these weights (and, for a
-    pair, through the joint weights R = J^2); the rows are taken at the
-    entry. No family name, no kind: one primitive, the split of an offer by
-    a declared pair over its sum."""
-
-    measured: int
-    family: int
-    setting: int
-    arm: int
-    entry_node: tuple[int, int, int]
-    exit_node: tuple[int, int, int]
-    entry_cell: int
-    exit_cell: int
-    # the label-0 weights C'[s]^2, S'[s]^2 and their sum (the declared
-    # integers of the setting; a record on label 0 is split by them)
-    plus: int
-    minus: int
-    norm: int
-    # the half-angle pair (C'[s], S'[s]) itself: the record's own channel
-    # pointers J(o) are formed from it and the record's label weights
-    # (`joint_weights` with this one body), so that a record born on label 1
-    # or on a superposition is split by its state, not by the setting alone
-    # (Reviewer 3's bug line of 2026-09-24, 15:15Z)
-    cosine: int = 0
-    sine: int = 0
-
-
-@dataclass
-class Splitter:
-    """A splitter of the TABLE form (detector-law-v1, build 2, component 3;
-    DECLARATIONS.md row 2b, ALGEBRA.md 4.6): a measured event whose `table`
-    declares a `rerelease` split with `inputs`, one weights row and one
-    turns row per input direction, its `directions` the outputs; one
-    table Node per Node of the line across a corridor (DECLARATIONS.md
-    section 14 item 4, a list of splitters). Its Node is held at 0 and
-    takes the arriving wave (a receiver that books no offer); per
-    interval, per light record, the table acts on the record's PAIR
-    (a_before, a_now) at each input Node (the Node the input direction
-    arrives from) by the LINEAR FORM of section 14, A cos(phi + t) =
-    (a_now S[k + t] - a_before S[t]) / S[k] (S the sine table, cos x 256's
-    companion; k the interval's own whole step of the clock, `by_clock`),
-    and each output's term SUM_i w_ij (a_now,i S[k + t_ij] - a_before,i
-    S[t_ij]) / (S[k] R_i), R_i the root of the row's norm (exact, checked
-    at load: the split an isometry, 21^2 + 20^2 = 29^2), is ADDED to what
-    the rule gave the output Node (a partial re-emission with a phase, the
-    mirror its model; never a hard level): verbs B (the matrix on the two
-    columns), D (one division per output per interval by the wall S[k] x
-    L, L the least common multiple of the rows' roots, the remainder
-    carried per output as the rule's) and G (the term added). No reading,
-    no register: the record's own levels and the division's remainder,
-    nothing else."""
-
-    number: int
-    family: int
-    node: tuple[int, int, int]
-    inputs: list[tuple[tuple[int, int, int], tuple[int, ...], tuple[int, ...], int]]
-    outputs: list[tuple[int, int, int]]
-    remainders: dict[int, list[int]] = field(default_factory=dict)
 
 
 @dataclass
@@ -404,23 +321,24 @@ class DetectorLawSimulation:
         # record that names no receiver (ALGEBRA.md 9.19 (3) (b))
         self.set_cells: list[int] = []
         self.set_nodes: dict[int, np.ndarray | None] = {}
-        # The table bodies (DECLARATIONS.md section 14 item 6): a polariser's
-        # two cells, formed where a detector set names its Node.
-        self.table_bodies: list[TableBody] = []
-        # the table bodies that act on each family, by the family's index: the
-        # material's own declaration (a body's table names the family it acts
-        # on), read as data at the split, never a branch on a family (the
-        # mathematician's gate, ALGEBRA.md 9.11, defect (a))
-        self.table_bodies_by_family: list[list[tuple[int, TableBody]]] = [[] for _ in world.families]
-        settings = self._table_settings()
+        # THE TABLES ARE RETIRED (the cleanup order's step 3; ALGEBRA.md 9.21):
+        # a measured event with a table entry (a polariser's window, a
+        # splitter's rows) is refused here; the polariser returns as a body
+        # with an axis and two receivers named, a splitter as a region of the
+        # one operator
+        for number, entry in enumerate(world.measured):
+            if any(window is not None for window in entry.windows) or any(
+                split is not None for split in entry.splits
+            ):
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].table is refused under {DETECTOR_LAW_RULE}: the "
+                    "tables (the polariser's two cells at one Node, the splitter's linear form) "
+                    "retired with the flux reading (BUILD.md section 26 item 17); a polariser is "
+                    "a body with an axis and two receivers named, a splitter a region of the one "
+                    "operator (ALGEBRA.md 9.21)"
+                )
         for detector in world.detectors:
             set_cell: int | None = None
-            if detector.block is None and len(detector.positions) == 1:
-                first = detector.positions[0]
-                named = (int(first[0]), int(first[1]), int(first[2]))
-                if named in settings:
-                    self._table_body(detector, settings[named])
-                    continue
             if detector.block is not None:
                 set_cell = self._cell(detector.name, detector.block, False)
                 self.set_block[set_cell] = detector.block
@@ -445,15 +363,6 @@ class DetectorLawSimulation:
                 elif measured is not None and self.cell_measured[set_cell] is None:
                     self.cell_measured[set_cell] = measured
                 self.cell_index[node] = set_cell
-        formed = {body.entry_node for body in self.table_bodies}
-        for node, (number, family, _, _, _) in settings.items():
-            if node not in formed:
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].table.{self.families[family].name} carries a "
-                    "phase_window (a polariser, a table body of two cells under "
-                    f"{DETECTOR_LAW_RULE}) but no detector set of one Node names its Node "
-                    f"{node} (DECLARATIONS.md section 14 item 6: each cell a detector set's Node)"
-                )
         # THE FACE RECEIVER (ALGEBRA.md 9.19 (3) (a); Highlights' record 15
         # kept): an open axis carries the receiver `face` at its border, last
         # on every ladder, so that what leaves the board clicks there; a
@@ -470,72 +379,11 @@ class DetectorLawSimulation:
                 view = np.moveaxis(self.cell_index, axis, 0)[index]
                 free = view < 0
                 view[free] = self.face_cell
-        # The pair lamps' table bodies (DECLARATIONS.md section 1 item 3; the
-        # joint gather): a lamp of several arms needs ONE table body of its
-        # family on each arm's line; the bodies in the sets' order (the cells'
-        # order), the joint cells' order the product of their channels.
-        self.pair_bodies: dict[int, list[TableBody]] = {}
-        for number, entry in enumerate(world.measured):
-            lamp_definition = entry.lamp
-            if lamp_definition is None or lamp_definition.arms < 2:
-                continue
-            bodies = sorted(
-                (body for body in self.table_bodies if body.family == entry.family),
-                key=lambda body: body.entry_cell,
-            )
-            arms_covered = sorted(body.arm for body in bodies)
-            if arms_covered != list(range(lamp_definition.arms)):
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].lamp has {lamp_definition.arms} arms but the family "
-                    f"{self.families[entry.family].name!r} has table bodies on the arms {arms_covered} "
-                    "(a pair lamp needs ONE table body of two cells on each arm's line: the joint "
-                    "gather's cells, DECLARATIONS.md section 1 item 3 and section 14 item 6)"
-                )
-            self.pair_bodies[number] = bodies
         self.records: dict[int, LiveRecord] = {}
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
         self.blocks: list[Block] = []
         self.block_by_number: dict[int, Block] = {}
-        # The splitters of the TABLE form (build 2, component 3): their Nodes
-        # take and book nothing; their outputs are driven from the read phase.
-        self.splitters: list[Splitter] = []
-        self.splitter_mask = np.zeros(self.shape, dtype=bool)
-        for number, entry in enumerate(world.measured):
-            for family, split in enumerate(entry.splits):
-                if split is None or split.inputs is None:
-                    continue
-                node = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-                inputs = []
-                for k, direction in enumerate(split.inputs):
-                    vector = world.directions[direction]
-                    weights, turns = split.weights[k], split.turns[k]
-                    norm = sum(w * w for w in weights)
-                    root = integer_root(norm)
-                    if root * root != norm:
-                        raise ValueError(
-                            f"{BEAM_LAW}: measured[{number}].table: the split's row {list(weights)} has the "
-                            f"norm {norm}, no square: under {DETECTOR_LAW_RULE} the splitter's isometry "
-                            "divides by the root of the norm exactly (21, 20 against 29)"
-                        )
-                    source = (
-                        (node[0] - int(vector[0])) % self.shape[0],
-                        (node[1] - int(vector[1])) % self.shape[1],
-                        (node[2] - int(vector[2])) % self.shape[2],
-                    )
-                    inputs.append((source, weights, turns, root))
-                outputs: list[tuple[int, int, int]] = []
-                for direction in entry.directions:
-                    vector = world.directions[direction]
-                    outputs.append(
-                        (
-                            (node[0] + int(vector[0])) % self.shape[0],
-                            (node[1] + int(vector[1])) % self.shape[1],
-                            (node[2] + int(vector[2])) % self.shape[2],
-                        )
-                    )
-                self.splitters.append(Splitter(number, family, node, inputs, outputs))
-                self.splitter_mask[node] = True
         # The block's count at a light record's first rung at its cell
         # (the click's `clock`, the body's event in the body's own clock).
         self.rung_counts: dict[tuple[int, int], int] = {}
@@ -554,8 +402,6 @@ class DetectorLawSimulation:
         self.kind_wrap: list[tuple[bool, bool, bool]] = [
             world.kind_periodic(index) for index in range(len(world.families))
         ]
-        self.cosine: dict[int, np.ndarray] = {}
-        self.sine: dict[int, np.ndarray] = {}
         # The blocks (massive-record-v1): every measured event with a block,
         # its cells written into its kind's pair arrays, its own record
         # seeded on its cells, its momentum and the drive's wall 3 Q S M.
@@ -650,193 +496,6 @@ class DetectorLawSimulation:
         if live.emitter is None:
             return None
         return self.receiver_cell.get(live.emitter)
-
-    def _table_settings(
-        self,
-    ) -> dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]]:
-        """The table entries with an integer setting on a family's arm (the
-        composition the declarations call a polariser, DECLARATIONS.md section
-        14 item 6; the engine knows the entry, its setting and its arm): a
-        measured event whose table entry for a family carries a
-        `phase_window` s, the setting (an integer; a reading of the window's
-        centre is refused under the rule). Each reads the records of the
-        family's ONE emitter body (ALGEBRA.md 9.17: no heading), and its EXIT
-        Node is the next Node beyond it away from that body's centre (per
-        axis the sign of the offset), on the board and free.
-        Returns per entry Node (the measured event's number, the family, the
-        setting, the arm, the exit Node)."""
-        world = self.world
-        found: dict[tuple[int, int, int], tuple[int, int, int, int, tuple[int, int, int]]] = {}
-        for number, entry in enumerate(world.measured):
-            for family, window in enumerate(entry.windows):
-                if window is None:
-                    continue
-                label = f"measured[{number}].table.{self.families[family].name}"
-                if not isinstance(window, int):
-                    raise ValueError(
-                        f"{BEAM_LAW}: {label}.phase_window must be an integer setting under "
-                        f"{DETECTOR_LAW_RULE} (a table body's setting is a declared integer, not a reading)"
-                    )
-                sources = [
-                    (source_number, source_entry)
-                    for source_number, source_entry in enumerate(world.measured)
-                    if source_entry.block is not None
-                    and source_entry.block.emitter is not None
-                    and source_entry.block.emitter.family == family
-                ]
-                if len(sources) != 1:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {label}: a table body reads the records of the family's ONE "
-                        f"emitter body; the family {self.families[family].name!r} has {len(sources)}"
-                    )
-                source_number, source_entry = sources[0]
-                block_definition = source_entry.block
-                assert block_definition is not None
-                node = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-                # the exit cell: the next Node beyond the body away from the
-                # emitter body's centre (per axis the sign of the body's offset
-                # from the centre, in doubled coordinates; nothing declared:
-                # the emitter has no heading, ALGEBRA.md 9.17); one arm
-                centre = tuple(
-                    2 * int(source_entry.position[axis]) + block_definition.side - 1 for axis in range(3)
-                )
-                vector = tuple(
-                    (1 if 2 * node[axis] > centre[axis] else -1 if 2 * node[axis] < centre[axis] else 0)
-                    for axis in range(3)
-                )
-                if not any(vector):
-                    raise ValueError(
-                        f"{BEAM_LAW}: {label}: the body at {node} sits at the centre of the emitter "
-                        f"body measured[{source_number}] (a table body's exit cell is the next Node "
-                        "beyond it away from the emitter)"
-                    )
-                arm_found = 0
-                exit_node = [node[axis] + vector[axis] for axis in range(3)]
-                for axis in range(3):
-                    if world.periodic[axis]:
-                        exit_node[axis] %= self.shape[axis]
-                    elif not 0 <= exit_node[axis] < self.shape[axis]:
-                        raise ValueError(
-                            f"{BEAM_LAW}: {label}: the exit cell {tuple(exit_node)} beyond the body at "
-                            f"{node} is off the board of {list(self.shape)} (the table body of two "
-                            "cells needs its exit Node on the board)"
-                        )
-                exit_address = (exit_node[0], exit_node[1], exit_node[2])
-                if int(self.cell_index[exit_address]) >= 0 or exit_address in found:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {label}: the exit cell {exit_address} beyond the body at {node} "
-                        "is not a free Node (a measured event or another set holds it)"
-                    )
-                found[node] = (number, family, window, arm_found, exit_address)
-        return found
-
-    def _table_body(
-        self,
-        detector: DetectorDefinition,
-        setting_entry: tuple[int, int, int, int, tuple[int, int, int]],
-    ) -> None:
-        """The two cells of a table body named by a detector set of one Node:
-        the + cell (the exit Node) before the - cell (the entry Node) on
-        the ladder, both take Nodes booking to the body (its content at a
-        click), both on the set's wheel; the split's pair from the
-        half-angle tables at the setting."""
-        number, family, setting, arm, exit_node = setting_entry
-        entry_node = (
-            int(detector.positions[0][0]),
-            int(detector.positions[0][1]),
-            int(detector.positions[0][2]),
-        )
-        cosine, sine = half_angle(setting, self.world.phase_steps)
-        plus_cell = self._cell(f"{detector.name}+", number, False, detector.name, 0)
-        minus_cell = self._cell(f"{detector.name}-", number, False, detector.name, 1)
-        for node, cell in ((exit_node, plus_cell), (entry_node, minus_cell)):
-            self.cell_index[node] = cell
-            # the two cells on the default ladder in the set's place (the +
-            # cell before the - cell); nothing takes (ALGEBRA.md 9.19 (3))
-            self.set_cells.append(cell)
-        self.table_bodies.append(
-            TableBody(
-                number,
-                family,
-                setting,
-                arm,
-                entry_node,
-                exit_node,
-                minus_cell,
-                plus_cell,
-                cosine * cosine,
-                sine * sine,
-                cosine * cosine + sine * sine,
-                cosine=cosine,
-                sine=sine,
-            )
-        )
-        self.table_bodies_by_family[family].append((len(self.table_bodies) - 1, self.table_bodies[-1]))
-
-    @staticmethod
-    def channel_weights(
-        cosine: int, sine: int, arm: int, labels: tuple[tuple[int, int], ...]
-    ) -> tuple[int, int]:
-        """A body's two channel weights on a record's own label state, the
-        PARTIAL TRACE over the other arms (the mathematician's gate, ALGEBRA.md
-        9.11, defect (d)): the labels are grouped by their bits on the other
-        arms (one group for a one-arm record); within a group the channel
-        pointer is coherent, J(o) = SUM over the group's labels l of w_l x
-        U_s[o][bit of l on this arm] (verb B on the integer weights); the
-        weight R(o) is the SUM over the groups of J(o)^2. For a one-arm record
-        this is `joint_weights` with one body; for an arm of a rank-2 record
-        it is the reduced state's weight (an arm of HV + VH books half on each
-        channel at every setting, where the coherent sum over both labels
-        would book the whole offer on one). Integers throughout, no root."""
-        rows = ((cosine, sine), (-sine, cosine))
-        groups: dict[int, list[int]] = {}
-        for label, weight in labels:
-            pointers = groups.setdefault(label & ~(1 << arm), [0, 0])
-            bit = (label >> arm) & 1
-            pointers[0] += weight * rows[0][bit]
-            pointers[1] += weight * rows[1][bit]
-        return (
-            sum(pointers[0] * pointers[0] for pointers in groups.values()),
-            sum(pointers[1] * pointers[1] for pointers in groups.values()),
-        )
-
-    def _split_table_offers(self, live: LiveRecord) -> None:
-        """The split of this interval's offer at each table body's entry cell
-        (DECLARATIONS.md section 14 item 6) BY THE RECORD'S OWN STATE: the
-        channel weights R(+) and R(-) of `channel_weights` (the partial trace
-        over the other arms; for a one-arm record the channel pointers J(o) =
-        SUM over the labels l of U_s[o][bit of l on the body's arm] x a_l,
-        verb B on the record's label weights, then the square), the weights
-        J(+)^2 and J(-)^2; the entry pointer's gain since the last split,
-        times J(+)^2 over their sum with the remainder kept (one division,
-        verb D), moved to the + cell; the first rung of the body's WHOLE
-        offer (the two cells' sum) over the cell's wheel stamps both cells'
-        first rung. For a record on label 0 the weights are the setting's
-        C'[s]^2 and S'[s]^2 (the counts of DECLARATIONS.md sections 5 and 6
-        unchanged); on label 1 they swap; on a superposition they are the
-        state's (Reviewer 3's bug line of 2026-09-24, 15:15Z: the polariser
-        acts on the state, never assigns the outcome from the setting alone).
-        The weights' sum is n_s times the state's norm, never 0 (the gate's
-        defect (b): no guard). The bodies acting on the record's family are
-        read as the material's own declaration (`table_bodies_by_family`, no
-        branch on a family, defect (a)). The pointers' sum, `absorbed`, the
-        norm and every other cell are untouched."""
-        for index, body in self.table_bodies_by_family[live.family]:
-            seen, remainder = live.table_shares.get(index, (0, 0))
-            gain = live.pointers[body.entry_cell] - seen
-            if gain:
-                plus_weight, minus_weight = self.channel_weights(
-                    body.cosine, body.sine, body.arm, live.labels
-                )
-                plus, remainder = divmod(gain * plus_weight + remainder, plus_weight + minus_weight)
-                live.pointers[body.entry_cell] -= plus
-                live.pointers[body.exit_cell] += plus
-            live.table_shares[index] = (live.pointers[body.entry_cell], remainder)
-            whole = live.pointers[body.entry_cell] + live.pointers[body.exit_cell]
-            if whole and whole * live.wheel >= live.norm:
-                for cell in (body.exit_cell, body.entry_cell):
-                    if live.first_rung[cell] is None:
-                        live.first_rung[cell] = self.tick
 
     def _cell(
         self, name: str, measured: int | None, face: bool, set_name: str | None = None, channel: int = 0
@@ -1088,6 +747,13 @@ class DetectorLawSimulation:
                 "`seed_on_the_mode`; a flat scalar seed is no mode and births nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
             )
+        if emitter.born is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `born`: the born pair's "
+                "two integers [now, before] on every cell of the body, the generator's (ALGEBRA.md "
+                "9.17 (6); `excite_on_the_mode` of the massive record generator; no table in the "
+                "engine)"
+            )
         if emitter.norm is None:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: the one-way flux "
@@ -1131,11 +797,11 @@ class DetectorLawSimulation:
         """The click of the excited record and the birth (ALGEBRA.md 9.17 (4)
         items 1 to 3, (5) items 2 to 4 and (6); 9.13: E, then X, then E^T): X
         ends the excited record; E^T writes the born record ONCE at both
-        levels: the declared `born` profile copied (material, a line's
-        travelling character), or on every cell of the body the pair now =
-        A C_2N[3 N / 2 + s] on the circle of 2 N steps with s = floor(n / d)
-        the born clock's step and before = -now (the character half a step
-        either side of its zero, no static part), A the amplitude unit; the
+        levels: the world's two integers `born` [now, before] on every cell
+        of the body (the generator's now = A C_2N[3 N / 2 + s] on the circle
+        of 2 N steps with s = floor(n / d) the born clock's step and before =
+        -now, the character half a step either side of its zero, no static
+        part, A the amplitude unit; no table in the engine); the
         norm T the record's conserved form (9.19 (3)), its residue and
         wheel from the law (9.22 (4): the clicking record's remainder at the
         centre cell, read at the click), the content one quantum moved from
@@ -1190,15 +856,13 @@ class DetectorLawSimulation:
         # both levels, every cell at the vertex's phase (the one-cell broadband
         # birth; a line's travelling character, the per-Link pair of ALGEBRA.md
         # 9.17 (4) item 2, is owed until that pair is declared)
-        if emitter.born is not None:
-            live.now = np.array(emitter.born[0], dtype=np.int64).reshape(self.shape)
-            live.before = np.array(emitter.born[1], dtype=np.int64).reshape(self.shape)
-        else:
-            table = self._cosine_table(2 * steps)
-            step = numerator // denominator
-            level = int(table[(3 * steps // 2 + step) % (2 * steps)])
-            live.now[block.mask] = level
-            live.before[block.mask] = -level
+        # NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md 9.17
+        # (6), 9.22 (2)): the born pair is the world's two integers `born:
+        # [now, before]`, the generator's, checked at load (before = -now),
+        # written on every cell of the body
+        assert emitter.born is not None
+        live.now[block.mask] = emitter.born[0]
+        live.before[block.mask] = emitter.born[1]
         # the norm T the record's conserved form I in the flux's units (9.19 (3))
         live.norm = self.conserved_form(live)
         if emitter.receiver is not None:
@@ -1314,25 +978,6 @@ class DetectorLawSimulation:
                     "steps": block.stepped,
                 }
             )
-
-    def _sine_table(self, steps: int) -> np.ndarray:
-        """The sine table of the circle (`core.phase.phase_sines`, sin x 256,
-        immutable law data) as an integer array, formed once: the linear
-        form's coefficients (DECLARATIONS.md section 14)."""
-        if steps not in self.sine:
-            self.sine[steps] = np.array(phase_sines(steps), dtype=np.int64)
-        table: np.ndarray = self.sine[steps]
-        return table
-
-    def _cosine_table(self, steps: int) -> np.ndarray:
-        """The clock's cosine on the amplitude unit: the phase circle's integer
-        table (`core.phase.phase_cosines`, cos x 256, immutable law data)
-        scaled to UNIT, formed once."""
-        if steps not in self.cosine:
-            factor = UNIT // PHASE_COSINE_SCALE
-            self.cosine[steps] = np.array([c * factor for c in phase_cosines(steps)], dtype=np.int64)
-        table: np.ndarray = self.cosine[steps]
-        return table
 
     @staticmethod
     def _phase(age: int, numerator: int, denominator: int, steps: int) -> int:
@@ -1638,12 +1283,9 @@ class DetectorLawSimulation:
         for cell, value in self.flux_offer(live).items():
             live.pointers[cell] += value
             live.absorbed += value
-        if self.table_bodies:
-            self._split_table_offers(live)
-        # this interval's increment per cell (the split's shares included)
+        # this interval's increment per cell
         increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
         self._ladder_click(live, increments)
-        self._split(live)
 
     def _ladder_of(self, live: LiveRecord) -> list[int]:
         """The record's ladder in its declared order (ALGEBRA.md 9.19 (3)
@@ -1696,72 +1338,6 @@ class DetectorLawSimulation:
                 self.dead.append(live.identity)
                 return
 
-    def read_pair(self, live: LiveRecord, node: tuple[int, int, int], turn: int) -> int:
-        """The table's action on a record's pair at a Node by the linear form
-        of DECLARATIONS.md section 14 item 1 (the polariser's rotation U_s
-        on the record's two columns, section 15 T-1): the level A cos(phi + t)
-        = (a_now S[k + t] - a_before S[t]) / S[k] at the turn t, S the sine
-        table and k the interval's own whole step of the record's clock
-        (`by_clock`), one division, the remainder dropped (a reading, not a
-        row); the click's weights of ALGEBRA.md 4.12 are the table's own and
-        unchanged. A record of a massive kind born of no lamp has no clock
-        and reads 0."""
-        if self.families[live.family].massive_kind and live.emitter is None:
-            return 0
-        steps = self.world.phase_steps
-        sines = self._sine_table(steps)
-        k = by_clock(max(live.age - 1, 0), live.period_numerator, live.period_denominator)
-        s_k = int(sines[k % steps])
-        if s_k == 0:
-            raise ValueError(
-                f"{BEAM_LAW}: the record's clock step {k} of {steps} has a sine of 0; the linear "
-                "form divides by S[k] (DECLARATIONS.md section 14)"
-            )
-        now = int(live.now[node])
-        before = int(live.before[node])
-        return (now * int(sines[(k + turn) % steps]) - before * int(sines[turn % steps])) // s_k
-
-    def _split(self, live: LiveRecord) -> None:
-        """The splitters' action on a light record after its step (component
-        3; DECLARATIONS.md section 14): the linear form on the record's pair
-        at each input Node, the outputs' terms added to the rule's values
-        with the remainder carried (the `Splitter` docstring)."""
-        if self.splitters:
-            steps = self.world.phase_steps
-            sines = self._sine_table(steps)
-            # The pair at a Node after the step is (the level at age - 1, the
-            # level at age): the clock's step between them is what the floor
-            # of age x n / d gained at the interval that took the age from
-            # age - 1 to age (`by_clock`; at the first interval the pair is
-            # (0, the first level) and the step is the first interval's).
-            k = by_clock(max(live.age - 1, 0), live.period_numerator, live.period_denominator)
-            s_k = int(sines[k % steps])
-            for splitter in self.splitters:
-                if splitter.family != live.family or s_k == 0:
-                    continue
-                common = 1
-                for _, _, _, root in splitter.inputs:
-                    common = common * root // gcd(common, root)
-                wall = s_k * common
-                remainders = splitter.remainders.setdefault(live.identity, [0] * len(splitter.outputs))
-                totals = [0] * len(splitter.outputs)
-                for source, weights, turns, root in splitter.inputs:
-                    now = int(live.now[source])
-                    before = int(live.before[source])
-                    if now == 0 and before == 0:
-                        continue
-                    factor = common // root
-                    for j, (weight, turn) in enumerate(zip(weights, turns, strict=True)):
-                        totals[j] += (
-                            weight
-                            * factor
-                            * (now * int(sines[(k + turn) % steps]) - before * int(sines[turn % steps]))
-                        )
-                for j, output in enumerate(splitter.outputs):
-                    quotient, remainders[j] = divmod(totals[j] + remainders[j], wall)
-                    live.now[output] += quotient
-        live.age += 1
-
     def record_form(self, live: LiveRecord) -> int:
         """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
         GAMEBOARD diagnostic read by the books): the invariant of the rule
@@ -1812,11 +1388,9 @@ class DetectorLawSimulation:
         return squares - links
 
     def _release(self, live: LiveRecord) -> None:
-        """The record's rows leave the board: the splitters' remainders, the
+        """The record's rows leave the board: the
         blocks' responses, the emitters' lists and the rung counts of the
         record are dropped."""
-        for splitter in self.splitters:
-            splitter.remainders.pop(live.identity, None)
         for block in self.blocks:
             block.responses.pop(live.identity, None)
             if live.identity in block.emitted:
@@ -1950,36 +1524,6 @@ class DetectorLawSimulation:
         if self.record is not None:
             self.record(gather)
 
-    @staticmethod
-    def joint_weights(
-        tables: list[tuple[int, int]], arms: list[int], labels: tuple[tuple[int, int], ...]
-    ) -> list[tuple[tuple[int, ...], int]]:
-        """The joint cells of a pair's gather and their weights (DECLARATIONS.md
-        section 1 item 3, ALGEBRA.md 3.6): per body its half-angle pair
-        (C'[s], S'[s]) and the arm it reads; the rotation U_s = [[C', S'],
-        [-S', C']] (the row the channel o, + then -; the column the label's
-        bit on that arm, the amplitude law's `rotation`); the joint pointer
-        J(o_1, .., o_n) = SUM over the joint labels l (weight w) of w x
-        PRODUCT over the bodies of U_s[o][bit of l on the body's arm]; the
-        cell's weight R = J^2. The cells in the lexicographic order of the
-        bodies' channels (++, +-, -+, -- for two). Integers throughout, no
-        root, no float; the record's flight enters nowhere here (it sets the
-        click's interval, section 14 item 6)."""
-        cells: list[tuple[tuple[int, ...], int]] = []
-        count = len(tables)
-        for index in range(1 << count):
-            channels = tuple((index >> (count - 1 - k)) & 1 for k in range(count))
-            pointer = 0
-            for label, weight in labels:
-                term = weight
-                for k, ((cosine, sine), arm) in enumerate(zip(tables, arms, strict=True)):
-                    bit = (label >> arm) & 1
-                    row = ((cosine, sine), (-sine, cosine))[channels[k]]
-                    term *= row[bit]
-                pointer += term
-            cells.append((channels, pointer * pointer))
-        return cells
-
     def step(self) -> None:
         self.tick += 1
         for block in self.blocks:
@@ -2080,31 +1624,6 @@ class DetectorLawSimulation:
             self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     # The readings
-
-    def read_phase(
-        self, live: LiveRecord, node: tuple[int, int, int], amplitude: int | None = None
-    ) -> tuple[int, int] | None:
-        """The phase reading of a record at a Node (the TABLE form's input,
-        DECLARATIONS.md's head): the angle on the world's circle nearest
-        to the pair (a_before, a_now) at the Node at the record's clock and
-        amplitude, with the reading's residual (`core.phase.nearest_phase`);
-        the amplitude the lamp's unit by default (the level the clock drives,
-        UNIT: exact on a bar, where the train keeps its amplitude), or the
-        amplitude the reader declares (a table Node's peak register on a
-        board where the wave spreads); None where the record has no level
-        at the Node. A block's massive record has no clock on the circle and
-        is not read; a matter lamp's record is read at the family's clock as
-        light's (a GAMEBOARD diagnostic: the tables act on the pair by the
-        linear form, DECLARATIONS.md section 14, not on this reading)."""
-        if self.families[live.family].massive_kind and live.emitter is None:
-            return None
-        return nearest_phase(
-            int(live.before[node]),
-            int(live.now[node]),
-            UNIT if amplitude is None else amplitude,
-            (live.period_numerator, live.period_denominator),
-            self.world.phase_steps,
-        )
 
     def books(self, recount: bool = False) -> dict[str, object]:
         families: dict[str, object] = {}

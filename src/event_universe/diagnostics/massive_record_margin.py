@@ -582,13 +582,10 @@ def check_body_conditions(
                 f"{2.0 * math.pi / reading.omega_b if reading.omega_b > 0 else math.inf:.2f} intervals"
             )
             if emitter.born is not None:
-                now = np.array(emitter.born[0], dtype=np.int64)
-                before = np.array(emitter.born[1], dtype=np.int64)
-                motion = (now - before).astype(object)
                 lines.append(
-                    f"born (COMPUTATION): block {number}: the born profile on "
-                    f"{int(np.count_nonzero(now | before))} Nodes, the motion it inserts "
-                    f"{int(np.sum(motion * motion))}"
+                    f"born (COMPUTATION): block {number}: the born pair [{emitter.born[0]}, "
+                    f"{emitter.born[1]}] on every cell of the body (the generator's integers, no "
+                    "table in the engine)"
                 )
         relaxation = relaxation_time(reading)
         if any(int(component) != 0 for component in entry.momentum):

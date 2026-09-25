@@ -17,6 +17,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import math
 import multiprocessing
 from fractions import Fraction
 
@@ -94,10 +95,12 @@ def small_world(
 
 
 def born_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
-    """The birth's pair on the circle of 2 N (9.17 (6)) for light's clock [77, 25] on N = 64."""
+    """The birth's pair on the circle of 2 N (9.17 (6)) for light's clock [77, 25] on N = 64:
+    the generator's integer (a host computation; no table in the engine), now = round(A sin(pi
+    n / (d N))), the character half a step either side of its zero, before = -now."""
+    _ = simulation
     steps = 64
-    table = simulation._cosine_table(2 * steps)
-    now = int(table[(3 * steps // 2 + 77 // 25) % (2 * steps)])
+    now = round(UNIT * math.sin(math.pi * 77 / (25 * steps)))
     return now, -now
 
 

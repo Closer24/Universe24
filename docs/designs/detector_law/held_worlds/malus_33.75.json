@@ -54,7 +54,11 @@
    "emitter": {
     "family": "light",
     "period": 20,
-    "norm": 7266672
+    "norm": 7266672,
+    "born": [
+     157930,
+     -157930
+    ]
    }
   },
   {

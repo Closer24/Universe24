@@ -14,13 +14,11 @@ from __future__ import annotations
 
 import hashlib
 import json
-import math
 from fractions import Fraction
 
 import numpy as np
 import pytest
 
-from event_universe.core.phase import phase_cosines
 from event_universe.diagnostics.massive_record_margin import (
     block_margin,
     bound_mode,
@@ -271,12 +269,13 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     (ALGEBRA.md 9.17 (5) and (6), 9.19 (3); BUILD.md section 26 item 13), then once more by
     the flux reading at every cell with the cumulative ladder and the deletion at the click,
     on the chain world's faces closed (item 14), then once more by the residue from the law
-    on the rich well [801, 700] with the take's data gone (item 15), the digests read at
+    on the rich well [801, 700] with the take's data gone (item 15), then the events and the
+    audit once more by the born pair on the clock's half step (item 17), the digests read at
     that head."""
     assert run_chain_digests() == {
-        "events": "2322e1f6adfc975c27f015ddfd31645948be76a25b299518e9c2d5dd4d69c4c6",
+        "events": "b8442ecfed1675d1649142e26532c308f492856858b06e4179395225689e4ffe",
         "state": "d67c9eb9f0392759598c7479900b3a5015b4a9d6076c27bd17d6902b55e3334a",
-        "audit": "a69f0145570bce15b2b8e9996e0116004b55fee850040efd65d3ee9a6e487276",
+        "audit": "c0dd40515116f2866c4901347be2f28130bd1bd012110fb5681b4f6d9c11082f",
     }
 
 
@@ -1689,67 +1688,3 @@ def test_ae_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else()
     rest = DetectorLawSimulation(parse_nature_beam_world(massive_world([4, 4, 4], "open", [2, 3])))
     rest.step()
     assert rest.books()["momentum"]["held"] == [0, 0, 0]
-
-
-def test_af_the_tables_rotation_reads_the_pair_by_the_linear_form():
-    """DECLARATIONS.md section 15 T-1 (the fourth component's reading): a record of declared A
-    and phi at a bar Node reads A cos(phi + t) for t in {0, N / 8, N / 4, 3 N / 8} by
-    `read_pair` (the linear form on the pair, section 14 item 1), within the coefficients'
-    rounding (the tables' 1 / 256 and by_clock's step: A / 64 at N = 64 with the clock
-    [77, 25]), at every phi of the circle; a block's massive record reads 0; a clock whose
-    step has a sine of 0 raises naming the step."""
-    world = parse_nature_beam_world(matter_emitter_world(False, [77, 25]))
-    simulation = DetectorLawSimulation(world)
-    steps = world.phase_steps
-    cosines = phase_cosines(steps)
-    unit_per_cell = UNIT // 256
-    k = 3  # by_clock(0, 77, 25)
-    for phi in range(steps):
-        live = LiveRecord(
-            phi + 1,
-            0,
-            0,
-            0,
-            1,
-            0,
-            1,
-            77,
-            25,
-            200,
-            21,
-            np.zeros(simulation.shape, dtype=np.int64),
-            np.zeros(simulation.shape, dtype=np.int64),
-            np.zeros(simulation.shape, dtype=np.int64),
-            pointers=[0] * len(simulation.cell_names),
-            first_rung=[None] * len(simulation.cell_names),
-            age=1,
-        )
-        live.now[50, 0, 0] = cosines[phi] * unit_per_cell
-        live.before[50, 0, 0] = cosines[(phi - k) % steps] * unit_per_cell
-        for turn in (0, steps // 8, steps // 4, 3 * steps // 8):
-            reading = simulation.read_pair(live, (50, 0, 0), turn)
-            closed = UNIT * math.cos(2 * math.pi * (phi + turn) / steps)
-            assert abs(reading - closed) <= UNIT // 64, (phi, turn, reading, closed)
-    block_record = simulation._massive_record(7, 0, 1)
-    assert simulation.read_pair(block_record, (50, 0, 0), 8) == 0
-    zero_step = LiveRecord(
-        99,
-        0,
-        0,
-        0,
-        1,
-        0,
-        1,
-        32,
-        1,
-        200,
-        2,
-        np.zeros(simulation.shape, dtype=np.int64),
-        np.zeros(simulation.shape, dtype=np.int64),
-        np.zeros(simulation.shape, dtype=np.int64),
-        pointers=[0] * len(simulation.cell_names),
-        first_rung=[None] * len(simulation.cell_names),
-        age=1,
-    )
-    with pytest.raises(ValueError, match="has a sine of 0"):
-        simulation.read_pair(zero_step, (50, 0, 0), 0)

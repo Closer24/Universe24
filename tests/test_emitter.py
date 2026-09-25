@@ -38,14 +38,14 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import math
 import sys
 from pathlib import Path
 
 import numpy as np
 import pytest
 
-from event_universe.core.phase import phase_cosines
-from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -260,11 +260,12 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
             # C_2N[3 N / 2 + s] with s = floor(77 / 25) = 3 on N = 64, the
             # entry 99 of the 128-step table (cos 278.4 degrees, 38 of 256 on
             # the amplitude unit: 155648), before = -now exactly
-            steps = 64
-            table = simulation._cosine_table(2 * steps)
-            now = int(table[(3 * steps // 2 + 3) % (2 * steps)])
-            before = -now
-            assert now == 155648 and phase_cosines(2 * steps)[99] == 38
+            # no table in the engine (9.22 (2)): the pair is the world's two
+            # integers `born`, the generator's: round(A sin(pi n / (d N))) on
+            # the clock [77, 25] at N = 64 (the half step of 3.08 steps)
+            now, before = document["measured"][0]["emitter"]["born"]
+            assert now == 157930 == round(UNIT * math.sin(math.pi * 77 / (25 * 64)))
+            assert before == -now
             assert np.all(born.now[block.mask] == now) and np.all(born.before[block.mask] == before)
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
             # the norm T the record's conserved form I in the flux's units
@@ -348,8 +349,14 @@ def test_c_the_loaders_refusals_name_their_keys():
     # the mathematician's gate item 8: a body that births declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    refused(emitter("born", {"now": [1, 2], "before": [3, 4]}), "must be 80 integers")
-    refused(emitter("born", {"now": [0] * 80, "before": [0] * 80}), "writes no motion")
+    refused(emitter("born", {"now": [1, 2], "before": [3, 4]}), r"must be \[now, before\]")
+    refused(emitter("born", [0, 0]), "writes no motion")
+    refused(emitter("born", [5, 4]), "before = -now")
+    refused(
+        lambda document: document["measured"][0]["emitter"].pop("born"),
+        "declares no `born`",
+        on_mode=True,
+    )
 
     for key, value, message in (
         ("emits", "light", "emits is refused"),
