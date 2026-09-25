@@ -9494,3 +9494,27 @@ its one integer named as a family; 9.32's five lines, 9.34's decisions,
 retired reseed and 9.44's local reading are this one law, and the
 owner's constant is four families: light, the matter families, and the
 family of clicks.
+
+**(5) THE EXCHANGE WITH A MOVING CLOCK, WRITTEN (the owed line of (3),
+on the owner's word of 2026-09-25 in the mathematician's session).**
+Let the clock at Node i change from f to f' (c to c') between one
+interval and the next, by the family of clicks' own step or by a click.
+The share of a record there, E_i of (3), changes by 3 den (f' - f)
+(now^2 + before^2) - 6 den (c' - c) now before beyond the currents
+through its Links: the clock's change works on the record. THERE IS NO
+CONSERVED TOTAL OF THE FAMILIES TOGETHER BETWEEN CLICKS, and that is
+the law's own choice, not an omission: the family of clicks reads no
+other family (its source is the content, whole, at clicks; 9.34 (B)), so
+it acts on every record's rotation and is acted upon by nothing but the
+click; between clicks the exchange runs one way, from the clock to the
+records, like a parametric drive whose own energy is not booked. What
+IS conserved: each family's whole where the clock is static (9.35 (2),
+exact to 10^-15); the count of quanta, the content, at every click; and
+the family of clicks' own form under its own step away from the held
+Nodes. The size: for a change of one unit of the clock at a Node the
+record's share there moves by 1 / (Gamma + c) of itself, 10^-6 at Gamma
+= 10^6, below every pin of the eighteen; a static field moves nothing.
+A law in which the records' energy sources the clock (gravity by energy
+and not by counted quanta alone) would need the field to read the
+families, a coupling beyond the click, and stands outside the adopted
+law under its own identity if ever wanted.
