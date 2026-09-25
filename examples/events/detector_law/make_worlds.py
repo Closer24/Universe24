@@ -180,7 +180,9 @@ EMITTER_WELL = [
     801,
     700,
 ]  # the rich well (700 remainder values, ALGEBRA.md 9.19 (4a), 9.22 (4)) bound on a chain and a layer
-EMITTER_SEED_AMPLITUDE = 100
+EMITTER_SEED_AMPLITUDE = (
+    1 << 20
+)  # at 100 the born light's back-action swamps the excited record (ALGEBRA.md 9.17 (7) (c))
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
 # The physicist's word of 08:06Z on Reviewer 3's arithmetic (a k3 record born at t completes near

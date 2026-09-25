@@ -620,7 +620,9 @@ step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
 naming MIGRATION): every lamp births records (under the detector law, since
 BUILD.md section 26, the lamp is refused and an emitter body of a massive
-kind births them, its excited record clicking at its own rung); every row of a record
+kind births them, its excited record clicking at its own rung on the running total of its
+centre cell's share of its conserved form, the click rule of ALGEBRA.md 9.17 (7) (f), BUILD.md
+section 26 item 24); every row of a record
 carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record

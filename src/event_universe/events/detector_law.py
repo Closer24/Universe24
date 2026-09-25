@@ -743,10 +743,11 @@ class DetectorLawSimulation:
 
     def _excite(self, block: Block, own_record: LiveRecord) -> None:
         """The excited record's norm and the residue owed (ALGEBRA.md 9.17
-        (4) item 1, (5) item 1, 9.19 (3), 9.19 (4e) and 9.22 (4)): the norm
-        T the one-way flux into the body's centre cell its own mode books
-        over one period of its clock (the emitter's declared integer `norm`,
-        the generator's, recomputed at load); its residue and wheel from the
+        (7) (e) and (f), 9.19 (3), 9.19 (4e) and 9.22 (4)): the norm T one
+        period's action of its own mode, the share e_c of its conserved form
+        at the body's centre cell summed over one period P advanced alone
+        (the emitter's declared integer `norm`, the generator's, under the
+        input stamp); its residue and wheel from the
         law (`residue_of`) are read at the first rung AFTER ITS FIRST ADVANCE
         (the seed's remainders are 0 at the write; the mathematician's word
         on item 15's finding), the offer C counting from that interval."""
@@ -773,10 +774,10 @@ class DetectorLawSimulation:
             )
         if emitter.norm is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: the one-way flux "
-                "into the body's centre cell over one period of its clock, the generator's integer "
-                "(ALGEBRA.md 9.17 (5) item 1, 9.19 (3); `excite_on_the_mode` of the massive record "
-                "generator)"
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: one period's "
+                "action of the body's mode, its conserved form's share at the centre cell summed "
+                "over the period, the generator's integer (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 "
+                "(3); `excite_on_the_mode` of the massive record generator)"
             )
         block.excitations += 1
         block.residue_pending = True
@@ -796,16 +797,20 @@ class DetectorLawSimulation:
         )
 
     def _excitation_rung(self, block: Block) -> None:
-        """E then D on the excited record (ALGEBRA.md 9.17 (4) item 1 and 9.19
-        (3)): the one-way inward flux into its centre cell this interval,
-        booked to its offer C (read-through, nothing taken), and the rung
-        2 T u + T <= 2 W C on the record's own wheel W fires the click (the
-        birth follows once the interval's records are advanced). The flux
-        is read from the two levels AFTER the interval's advance (the block's
-        record is advanced before this is called). At the first call after
-        a (re)seed the record's residue u and wheel W are read from its own
-        remainder at the centre cell, now nonzero after its first advance
-        (9.19 (4e)), and C counts from this interval."""
+        """E then D on the excited record under THE CLICK RULE OF ALGEBRA.md
+        9.17 (7) (f) (the model owner's word, record 1918): the record's
+        running total C accrues each interval the share e_c of its conserved
+        form at its centre cell, the set's own cell where the record stands
+        (its own tick, the mode's rotation read on the board; a bound mode
+        has no flux to read, 9.17 (7) (a)), and the rung 2 T u + T <= 2 W C
+        on the record's own wheel W fires the click (the birth follows once
+        the interval's records are advanced); T is one period's action, P
+        e_c, the emitter's `norm`. The share is read from the two levels
+        AFTER the interval's advance (the block's record is advanced before
+        this is called). At the first call after a (re)seed the record's
+        residue u and wheel W are read from its own remainder at the centre
+        cell, now nonzero after its first advance (9.19 (4e)), and C counts
+        from this interval."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
@@ -814,7 +819,7 @@ class DetectorLawSimulation:
             own.u, own.wheel = self.residue_of(own, block)
             block.residue_pending = False
             block.offer = 0
-        block.offer += self.inward_flux(own, self.centre_mask(block))
+        block.offer += self.form_share(own, self.centre_mask(block))
         if 2 * own.norm * own.u + own.norm <= 2 * own.wheel * block.offer:
             block.emit_now = True
 
@@ -1226,14 +1231,26 @@ class DetectorLawSimulation:
         """The record's conserved form I (ALGEBRA.md 8.2) in the flux's units,
         3 I x wall: over the Nodes 3 wall (den_i / num_i) (now_i^2 +
         before_i^2) - wall now_i (A before)_i, A the read matrix with the
-        family's faces (the six reads, the folded axes' self-reads)."""
+        family's faces (the six reads, the folded axes' self-reads); the sum
+        of every Node's share (`form_share`)."""
+        return self.form_share(live, np.ones(self.shape, dtype=bool))
+
+    def form_share(self, live: LiveRecord, mask: np.ndarray) -> int:
+        """The Nodes' share e of the record's conserved form (ALGEBRA.md 9.17
+        (7) (e), 9.19 (3)) on the Nodes of `mask`, in the flux's units: e_i =
+        3 wall (den_i / num_i) (now_i^2 + before_i^2) - wall now_i (A
+        before)_i, a bilinear form of the record's two levels at the Node and
+        its six reads (verb B, local); its change over an interval is the sum
+        of the fluxes G_ij through the Node's Links, so a bound mode's share
+        is constant where nothing flows (the excited record's own tick)."""
         family = live.family
         wall = self.kind_wall(family)
         weight = (3 * wall * self.kind_den[family] // self.kind_num[family]).astype(object)
         now = live.now.astype(object)
         before = live.before.astype(object)
         read = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
-        return int(np.sum(weight * (now * now + before * before) - wall * now * read))
+        share = weight * (now * now + before * before) - wall * now * read
+        return int(np.sum(share[mask]))
 
     def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
         """The Nodes on the arm's side of the lamp: (node - origin) . vector at

@@ -69,8 +69,9 @@ def emitter_world(
 ) -> dict:
     """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the
     matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values, ALGEBRA.md
-    9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 100 (the
-    generator's `seed_on_the_mode`, the body's conditions of the load check), its stock
+    9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 2^20 (the
+    generator's `seed_on_the_mode`, the body's conditions of the load check; at 100 the born
+    light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its stock
     `amount` = `stock`, its `emitter` the light family [77, 25] with its ladder the set
     `screen`, its coupling G [1, 50], g [1, 1000] to light (required, ALGEBRA.md 9.19 (4e));
     the receiver the cube of side 3 of light bodies at [70, 72] read as `screen` (record
@@ -110,7 +111,7 @@ def emitter_world(
                 "side": side,
                 "pair": [800, 801],
                 "coupling": {"G": [1, 50], "g": [1, 1000]},
-                "seed": 100,
+                "seed": 1 << 20,
                 "margin": "control",
                 "emitter": emitter,
             },
@@ -163,14 +164,17 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = births[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
-    # the norm T: the one-way flux into the body's centre cell over one period
-    # of its mode advanced alone (ALGEBRA.md 9.17 (5) item 1, 9.19 (3)), the
-    # generator's integers `period` and `norm`, recomputed at load and read
-    # on the board here: the body alone (the same world, its emitter and its
-    # screen removed), the flux into the Node x = 11 (the corner 5 plus 12 //
-    # 2) from the two levels after each interval's step, summed over
-    # `period` intervals, bit for bit; the period the nearest integer to
-    # 2 pi / omega_b (about 70 on this well)
+    # the norm T: one period's action P e_c, the share of the record's
+    # conserved form at the body's centre cell summed over one period of its
+    # mode advanced alone (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 (3)), the
+    # generator's integers `period` and `norm`, read on the board here: the
+    # body alone (the same world, its emitter and its screen removed), the
+    # share at the Node x = 11 (the corner 5 plus 12 // 2) from the two
+    # levels after each interval's step, summed over `period` intervals, bit
+    # for bit; the period the nearest integer to 2 pi / omega_b (63 on this
+    # well); the share the mode's own tick, constant within the seed's
+    # rounding wobble (below one part in a thousand at 2^20), and the whole
+    # board's shares sum to the conserved form
     emitter = document["measured"][0]["emitter"]
     assert emitter["norm"] == norm and emitter["period"] > 0
     alone = json.loads(json.dumps(document))
@@ -183,13 +187,31 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     centre = np.zeros(solitary.shape, dtype=bool)
     centre[11, 0, 0] = True
     assert np.array_equal(solitary.centre_mask(body), centre)
-    flux = 0
+    action = 0
+    shares = []
     for _ in range(emitter["period"]):
         solitary.step()
         assert body.own is not None
-        flux += solitary.inward_flux(body.own, centre)
-    assert flux == norm
+        share = solitary.form_share(body.own, centre)
+        shares.append(share)
+        action += share
+        whole = solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool))
+        assert whole == solitary.conserved_form(body.own)
+    assert action == norm
+    assert 1000 * (max(shares) - min(shares)) < action // emitter["period"]
     by_tick = {entry["tick"]: entry for entry in trace}
+    # THE CADENCE UNDER THE CLICK RULE (9.17 (7) (b) and (f)): with the share
+    # constant, C = (t - t_0) e_c and T = P e_c, so the residue u clicks
+    # (2 u + 1) P / (2 W) intervals after its read (a uniform waiting time in
+    # [0, P) set by the residue, one birth per half period on average),
+    # within two intervals here (the wobble, the read's own interval)
+    read_at = 2
+    for line in births:
+        excited_u = by_tick[line["tick"]]["excited_before"][1]
+        waited = line["tick"] - read_at
+        expected = (2 * excited_u + 1) * emitter["period"] / (2 * 2403)
+        assert abs(waited - expected) <= 2, (line["tick"], excited_u, waited, expected)
+        read_at = line["tick"] + 1
     for line in births:
         # the excited record's own rung on its residue read after its first
         # advance (the trace reads u before the interval: 0 in the interval

@@ -253,12 +253,12 @@ def stamped(document: dict) -> dict:
 
 
 def excite_on_the_mode(document: dict, number: int) -> None:
-    """The emitter body `number`'s integers of ALGEBRA.md 9.17 (5) item 1 in the flux's
-    units of 9.19 (3), written into the world file by the generator (a HOST computation; the
-    loader recomputes and refuses a mismatch): `period` P, the nearest integer to 2 pi /
-    omega_b of the body's mode (the margin module's own omega_b), `norm` T, the one-way
-    inward flux into the body's centre cell that the seeded mode books over P intervals
-    advanced alone by the engine (exact integers), and `born` [now, before], the born
+    """The emitter body `number`'s integers of ALGEBRA.md 9.17 (7) (e) and (f) in the
+    flux's units of 9.19 (3), written into the world file by the generator (a HOST
+    computation under the input stamp): `period` P, the nearest integer to 2 pi / omega_b
+    of the body's mode (the margin module's own omega_b), `norm` T, one period's action,
+    the share of the seeded mode's conserved form at the body's centre cell summed over P
+    intervals advanced alone by the engine (exact integers), and `born` [now, before], the born
     pair's two integers on every cell (9.17 (6); the table is the generator's, not the
     engine's)."""
     from event_universe.diagnostics.massive_record_margin import (
@@ -308,8 +308,10 @@ def emitter_at(x: int, stock: int = 1, pair: list[int] | None = None) -> dict:
     kind SOURCE_KIND, added to the world by `world`), its well SOURCE_WELL unless given; the
     residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the remainder at the birth
     cell, W = 700 on SOURCE_WELL, read after the excited record's first advance, 9.19
-    (4e)), the cadence a few intervals after the read (the flux after the standing start is
-    front-loaded; COMPUTATION, BUILD.md section 26 item 19); a well too deep for its board is a runaway,
+    (4e)), the cadence (2 u + 1) / (2 W) x P intervals after the read under the click rule
+    of ALGEBRA.md 9.17 (7) (f) (BUILD.md section 26 item 24), the seed at the amplitude
+    2^20 (at 100 the born light's back-action swamps the excited record, 9.17 (7) (c)); a
+    well too deep for its board is a runaway,
     refused at the margin rule; its coupling G [1, 50], g [1, 1000] to the family it
     births (required, 9.19 (4e): the born records act back on the excited record's rows
     and spread its residues)."""
@@ -319,7 +321,7 @@ def emitter_at(x: int, stock: int = 1, pair: list[int] | None = None) -> dict:
         "side": 1,
         "pair": list(pair or SOURCE_WELL),
         "coupling": {"G": [1, 50], "g": [1, 1000]},
-        "seed": 100,
+        "seed": 1 << 20,
         "amount": stock,
         "margin": "control",
         "emitter": {"family": "light"},

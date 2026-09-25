@@ -498,13 +498,15 @@ def period_of(reading: MarginReading) -> int:
 
 
 def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
-    """The excited record's norm T (ALGEBRA.md 9.17 (5) item 1 in the flux's
-    units of 9.19 (3)): the one-way inward flux into the body's centre cell
-    that its own mode books over `period` intervals, advanced ALONE (the
-    body on its board with no other measured event, no set and no emitter,
-    the rule exact on integers), the same sum `_excitation_rung` books to
-    the offer. The generator writes it as the emitter's `norm`; the loader
-    recomputes it here and refuses a mismatch (a load check, not the law)."""
+    """The excited record's norm T, one period's action P e_c (ALGEBRA.md
+    9.17 (7) (e) and (f) in the flux's units of 9.19 (3)): the share e_c of
+    the record's conserved form at the body's centre cell, summed over
+    `period` intervals of its own mode advanced ALONE (the body on its board
+    with no other measured event, no set and no emitter, the rule exact on
+    integers; constant for the exact mode, wobbling with the seed's
+    rounding transient), the same sum `_excitation_rung` accrues to the
+    running total. The generator writes it as the emitter's `norm`, under
+    the input stamp (a HOST computation, not the law)."""
     from event_universe.events.detector_law import DetectorLawSimulation
 
     entry = world.measured[number]
@@ -527,7 +529,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
         simulation.step()
         own = block.own
         assert own is not None
-        total += simulation.inward_flux(own, simulation.centre_mask(block))
+        total += simulation.form_share(own, simulation.centre_mask(block))
     return total
 
 

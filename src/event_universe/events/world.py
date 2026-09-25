@@ -351,6 +351,12 @@ Q = 64
 # The bound of an amount, a content, a clock and a momentum component of this
 # law: the 64-bit work register with a bit to spare for one more sum.
 AMOUNT_BOUND = (1 << 62) - 1
+# The emitter's norm T, one period's action P e_c in the flux's units (ALGEBRA.md
+# 9.17 (7) (e) and (f), 9.19 (3)), is quadratic in the record's levels times the
+# family's wall: at the registered amplitude 50 x 2^20 it passes 2^62. It is
+# admitted up to this bound; the engine's form and running total are exact
+# Python integers (the object arrays of `form_share`).
+NORM_BOUND = (1 << 126) - 1
 MOMENTUM_BOUND = (1 << 62) - 1
 # The momentum label's scale is the same Q: the label of a unit is the
 # integer vector nearest Q D / |D| (`nature_beam.unit_label`, exactly Q e_d
@@ -1311,10 +1317,10 @@ class EmitterDefinition:
     name (optional, a list of set names; the block's own `receiver`, one
     name, is the line at the rung), "period": P, the nearest integer to
     2 pi / omega_b of the body's mode (the generator's integer), "norm":
-    T, the one-way inward flux into the body's centre cell that its own
-    mode books over P intervals advanced alone (the generator's integer,
-    recomputed at load and a mismatch refused; ALGEBRA.md 9.17 (5) item 1
-    in the flux's units of 9.19 (3)), "born": the born record's two levels
+    T, one period's action P e_c: the share of the body's conserved form
+    at its centre cell summed over P intervals advanced alone (the
+    generator's integer under the input stamp; ALGEBRA.md 9.17 (7) (e) and
+    (f) in the flux's units of 9.19 (3)), "born": the born record's two levels
     over the whole board as material (optional; {"now": [...], "before":
     [...]}, x-major, one per Node; the engine copies them at the click;
     9.17 (5) item 3)}. Without `born` the born record is the pair on every
@@ -3726,7 +3732,7 @@ def _emitter(
         branches, label_hands = _branches(obj["branches"], f"{label}.branches", 1)
     receiver = _receiver_names(obj, label, True)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
-    norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1)
+    norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     born: tuple[int, int] | None = None
     if "born" in obj:
         # NO TABLE IN THE ENGINE (ALGEBRA.md 9.17 (6), 9.22 (2)): the born

@@ -2196,6 +2196,62 @@ would have found no cell.
    than 0.5 into a face one Node deep (the rest reflected). No world
    changed; F1, the born profile, waits for the mathematician's form.
 
+24. THE CLICK RULE OF ALGEBRA.md 9.17 (7) (f) IN THE ENGINE (the model
+   owner's word, record 1918, through the Boss's closing list of 03:38Z,
+   step 2). ONE FORM, ONE RUNG, TWO READINGS: every record clicks once,
+   at the first interval at which its running total C reaches (2 u + 1)
+   T / (2 W), and C accrues each interval the share of the record's
+   conserved form its named set acquires: through the set's Ports from
+   outside where the record moves (the one-way flux, the detector's pace,
+   unchanged), and at the set's own cell where the record stands (its
+   share e_c, the record's own tick, the emitter's pace). THE ENGINE:
+   `form_share(live, mask)` the Nodes' share e_i = 3 wall (den_i / num_i)
+   (now_i^2 + before_i^2) - wall now_i (A before)_i in the flux's units
+   (`conserved_form` its sum over the board); `_excitation_rung` accrues
+   the share at the body's centre cell in place of the one-way flux there
+   (a bound mode has no flux to read, 9.17 (7) (a)); the rung, the
+   residue's read point after the first advance and the coupling of 9.19
+   (4e) unchanged. THE NORM T is one period's action P e_c: the emitter's
+   `norm`, the generator's integer (`excitation_norm`: the share at the
+   centre cell summed over `period` intervals of the mode advanced alone),
+   under the input stamp; quadratic in the levels times the wall, it
+   passes 2^62 at 50 x 2^20, so the loader admits it up to 2^126
+   (`NORM_BOUND`; the engine's form and running total are exact Python
+   integers). THE SEEDS: the born light's back-action at g = 1 / 1000 on
+   the amplitude unit 2^20 swamps an excited record seeded at 100 (9.17
+   (7) (c): 158 per cell per interval against 100; the seed-100 test
+   bodies and the generators' emitter bodies of the index rows, the pace
+   fans, the two slits and the matter rows), so every emitter body is
+   seeded at 2^20 (the light clock, Sagnac and the redshift stay at 50 x
+   2^20); the load condition of 9.17 (7) (c) is NOT a refusal here (the
+   owner's word adopted (f); (c) stays derived). THE READINGS
+   (COMPUTATION, on the emitter world of test_emitter at 2^20, the well
+   [800, 801], P = 63, W = 2403): the share at the centre cell of the
+   mode alone is constant within 4 x 10^-4 (26508721610111 to
+   26519140807927 over a period), one period's sum the next period's
+   within 7 x 10^-6; the six births' waits after their reads 22, 15, 29,
+   10, 29, 21 intervals against (2 u + 1) P / (2 W) = 23.95, 15.11,
+   29.74, 10.08, 29.04, 22.11 (the residues 913, 576, 1134, 384, 1107,
+   843): the uniform waiting time in [0, P) of 9.17 (7) (b), within two
+   intervals; at the seed 100 the same world births at 6, 7, 8, 9, 10, 11
+   with the share wobbling from -18961 to 555039 (the rounding of a
+   profile of 100 against a share of 3 percent of its square) and the
+   offers growing a hundredfold at every reseed (the swamping). THE TESTS:
+   test_emitter (a) reads the norm as the share's sum bit for bit, the
+   board's shares summing to the conserved form, the share's wobble below
+   one part in a thousand, and every birth's wait within two intervals of
+   (2 u + 1) P / (2 W); test_massive_record (aa) admits the two matter
+   records' clicks in either order (the second born (2 u + 1) P / (2 W)
+   after the first's click); the chain digests' events and audit moved
+   once (the state at 600 unchanged). THE LIGHT CLOCK by the one command
+   on this head (DETECTOR, examples/events/massive_record/light_clock_60
+   .json against pins.json): LAWFUL, 64 clicks at `at_a` over 2600
+   intervals, the first at 51 against the pin 214 +- 1: MISS, a fault to
+   find, the pin unmoved (the born pulse is still the one-cell broadband
+   birth of item 17; F1, the travelling born profile, is the remedy in
+   the build order). Every world with an emitter regenerated (the norm
+   and the seeds); the Malus four held as written.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

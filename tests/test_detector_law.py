@@ -36,15 +36,16 @@ def emitter_body(
     family: str = "light",
 ) -> dict:
     """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR, seeded on
-    its mode at 100 by the generator), its stock `stock`, its `emitter` the family given and,
+    its mode at 2^20 by the generator; at 100 the born light's back-action swamps the excited
+    record, ALGEBRA.md 9.17 (7) (c)), its stock `stock`, its `emitter` the family given and,
     with `receiver`, the born records' ladder by name. The residue and the wheel are the
     law's (ALGEBRA.md 9.22 (4): the clicking record's remainder at the birth cell, W = 700 on
     EMITTER_PAIR, read after the excited record's first advance, 9.19 (4e)); its coupling
     (g, G) to the born family, the registered form, required (9.19 (4e): the born records act
-    back on the excited record's rows and spread its residues). The cadence (COMPUTATION,
-    BUILD.md section 26 item 19): the flux after the standing start is front-loaded, so the
-    residue u clicks within a few intervals of its read, not (2 u + 1) / (2 W) x P; a well too
-    deep for its board is a runaway and refused at the margin rule."""
+    back on the excited record's rows and spread its residues). The cadence under the click
+    rule of ALGEBRA.md 9.17 (7) (f) (BUILD.md section 26 item 24): the residue u clicks
+    (2 u + 1) / (2 W) x P intervals after its read, within the seed's rounding wobble; a well
+    too deep for its board is a runaway and refused at the margin rule."""
     emitter: dict = {"family": family}
     if receiver is not None:
         emitter["receiver"] = receiver
@@ -58,7 +59,7 @@ def emitter_body(
         "side": side,
         "pair": list(EMITTER_PAIR),
         "coupling": {"G": [1, 50], "g": [1, 1000]},
-        "seed": 100,
+        "seed": 1 << 20,
         "margin": "control",
         "emitter": emitter,
     }

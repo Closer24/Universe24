@@ -287,11 +287,15 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     clicks at the same intervals), then all three by the emitter's coupling to the light it
     births and the residue read after the excited record's first advance (item 19), the
     digests read at that head; then the state once more by the `extents` of every block
-    written beside its `side` on the snapshot (item 23; the events and the audit unchanged)."""
+    written beside its `side` on the snapshot (item 23; the events and the audit unchanged),
+    then the events and the audit by the click rule of ALGEBRA.md 9.17 (7) (f) (the model
+    owner's word, record 1918; item 24: the excited record's running total accruing its
+    centre cell's share of its conserved form, the emitter's seed raised to 2^20, the six
+    births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged)."""
     assert run_chain_digests() == {
-        "events": "16b65b8101cb9e4755d5510d65c810a44aadf8b9a4c17da1c77893627fe10ace",
+        "events": "90f2583b0b69233b444134793a3bcaff6e02dbd8d3eff7df12a22a08718cc290",
         "state": "79ebdb9711a964cb0b2e2211250487365b13fa6186e32cb3db49a6f2ffb4fce9",
-        "audit": "2f9cd60f50bafeeeba6b945c1592dfa67141bec4724ff7207abfa6afad099b55",
+        "audit": "52205723a5be90d98a4b59694de1282da0995318c9594b47f885911ef00a0094",
     }
 
 
@@ -491,12 +495,13 @@ def emitter_at(
     receiver: object = None,
 ) -> dict:
     """An emitter body at a Node of a chain (ALGEBRA.md 9.17 (4)): a one-cell well of the
-    massive family `own` (the well `pair`, SOURCE_WELL by default) with the scalar seed 100
-    (its profile on the mode by `seed_source`), `stock` excitations, the born family
+    massive family `own` (the well `pair`, SOURCE_WELL by default) with the scalar seed 2^20
+    (its profile on the mode by `seed_source`; at 100 the born light's back-action swamps
+    the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the born family
     `family`; with `receiver`, the born records' ladder by name. The residue and the wheel
-    are the law's (9.22 (4): W = 700 on SOURCE_WELL); the cadence of the excitations
-    (COMPUTATION, BUILD.md section 26): the residue u clicks about (2 u + 1) P / (2 W)
-    intervals after its excitation, P the mode's period."""
+    are the law's (9.22 (4): W = 700 on SOURCE_WELL); the cadence of the excitations under
+    the click rule of 9.17 (7) (f) (BUILD.md section 26 item 24): the residue u clicks
+    (2 u + 1) P / (2 W) intervals after its read, P the mode's period."""
     entry = emitter_body([x, 0, 0], stock, receiver=receiver, family=family)
     entry["family"] = own
     entry["pair"] = list(pair or SOURCE_WELL)
@@ -1338,7 +1343,11 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
         if len([line for line in lines if line["event"] == "gather"]) == 2:
             break
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert [gather["record"] for gather in gathers] == identities
+    # both records click, each once, in either order (under the click rule of
+    # 9.17 (7) (f) the second is born (2 u + 1) P / (2 W) after the first's
+    # click and may reach its rung at the screen first when its residue is
+    # the smaller)
+    assert sorted(gather["record"] for gather in gathers) == identities
     for gather in gathers:
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
