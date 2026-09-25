@@ -8644,3 +8644,65 @@ numbers between them, and the Node clock is how what is at a cell slows
 what passes through it. 9.32's five lines, 9.34's three decisions and
 9.35's Node clock are this one circle; nothing is kept at a cell beyond
 the law's own numbers.
+
+### 9.37 One gives the click, one receives it: the birth is the click read at its giving end, and no wave is written (the model owner's words of 2026-09-25 through the Boss: record 1963, "we do not write a wave; everything happens by itself in the Nodes; the opposite of a click is an emitter"; record 1964, "a click is a kind of emission, and a birth is what receives the click; one gives the click and one receives the click"; the Boss's five questions; PROVED)
+
+**(1) A CHANGE OF THE BODY'S INTEGERS ALONE SHEDS NOTHING OF THE BORN
+FAMILY (PROVED, one line).** The step is linear and separate per family
+(9.36: no term couples one family's rows to another's). The born family's
+rows at an emitter's cells are 0 before its click; a change of the body's
+content M, of its Node clock (Gamma, Gamma + M) or of its pair changes
+the OPERATOR at those cells, and the operator maps zero rows to zero
+rows. So light does not leave a body by the step alone: no light exists
+to leave. What such a change does shed is of the BODY'S OWN family: its
+standing mode is no longer an exact mode of the changed operator and
+sheds the difference as a travelling record of the massive family, in
+every direction, of the order of the change squared: for M -> M - 1 at
+Gamma = 10^6 about 10^-12 of the body's form, nothing; for a pair moved
+by one unit of its denominator about (the mode's overlap defect)^2, small
+and of the wrong family. The three tests do not help here: the obstacle
+is linearity, which the owner's own law keeps.
+
+**(2) ONE QUANTUM PER CLICK: THE GIVING END SETS THE BORN FAMILY'S LEVELS
+ON THE BODY'S CELLS, AT THE CLICK, AND THAT IS NOT A WRITTEN WAVE.** The
+click at the receiving end deletes a record's two levels on all its cells
+at once and raises the detector's count (record 1888, 9.32 (4)); its
+mirror at the giving end SETS a record's two levels on the body's cells
+at once, the body's own mode of the born family times the character of
+its momentum (9.35 (10)), and lowers the stock. Nothing is written but
+the state of the body's own Nodes at the instant of its click, exactly
+as the deletion changes nothing but the state of the record's Nodes;
+the WAVE is not written: from that instant the record moves by the step
+alone, Node to Node, one Link per interval, as the owner says. One
+click, one quantum out; the record ends at one detector's click and at
+no other (9.25 (12)): one detector click at most, the quantum counted
+once. The owner's two words are one statement: the click is one rule
+read at its two ends, the levels set and the stock down at the giver,
+the levels cleared and the count up at the taker, the sign of the
+body's change the only difference, and between the two the Nodes carry
+the quantum by the step alone, two events at two times. "BIRTH" LEAVES
+THE LAW'S VOCABULARY AS A SEPARATE ACT: it is the click at its giving
+end (9.13, the emitter as the transpose of the click, was this sentence
+before its time).
+
+**(3) THE THREE TESTS:** generic (one rule, the click, read at two ends;
+the born family's mode on the body's cells with no family name); vector
+(the deletion and the setting of two levels on a declared set of cells,
+the same verb as the load's write, no root, no float); local (the body's
+own cells at the giving end, the record's own cells at the taking end;
+the one non-local act per record, its cells at once, as before).
+
+**(4) THE EMITTING ROWS AND THEIR PINS:** unchanged. The birth of record
+1962 (the body's own mode times the character, set on the body's cells
+at its click) is this giving end already; the pins of 9.22 (8) stand as
+recomputed on the mode envelope.
+
+**(5) IF NOTHING MAY BE SET AT THE GIVING END:** there is no smaller change
+that lets the Nodes emit light by themselves. The only way the step alone
+makes rows of one family from another's is a source term between them,
+which is the retired coupling of 8.5 (record 1962): it emits
+continuously and unquantised at the body's own rotation, one quantum per
+click lost. So the law keeps the click's two ends and drops the word
+"birth"; the light on the board is never written as a wave, only set on
+a body's cells as the state of its Nodes at its click, and then left to
+the step.
