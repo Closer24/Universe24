@@ -12375,3 +12375,90 @@ each, after the check-mode runs and the charge rows. THE ORDER when
 the owner wants them: the vector family first, since it closes
 magnetism and the dragging together, and the Kepler pair already
 exists to source the tensor waves after it.
+
+### 9.68 The register before the Go (the Boss's record 2050 of 2026-09-25, the model owner: "everything should be built and tested before there is a Go"): every experiment with its blind expectation on the law as built, the gate on every head Nature24 landed, the gaps
+
+**(1) THE LAW AS BUILT, for every row below.** The one rule of 9.50 (13)
+at the Node's own pace (head 1eba3860), the Einstein form 9.57 (1) when
+it lands, on Gamma = 10^4 with A = 2^19 or 2^20 (9.61 (3)); the family
+of clicks and the family of charge (1b3c7b0f, 8e8ef04e); the body at
+its seat (b189ab5d, 9.60) with the proper pair for a moving body (9.63
+(3), to land); the given clock at k = 0.302 or longer (9.62 (1)); the
+support-only step (b7d6f082) as a host shortcut, bit for bit. No pin
+compared, no merge, until the owner's Go.
+
+**(2) EVERY EXPERIMENT AND ITS BLIND EXPECTATION.**
+
+| The experiment | Its world as built | The blind expectation | Status |
+| --- | --- | --- | --- |
+| The eighteen of 9.22 (8) (Bell, Malus, the two slits and their control, the pace fans, the muon's clock, the moving emitter's redshift, the round trip, Sagnac, de Broglie, the moving mass, the boxed clocks, the deep well, the light clock, the index at one third and one quarter, the computer, Mach-Zehnder and its control, Sorkin, the index at rest) | the shipped files, cubes and seats | 9.46 (10) per kind, unchanged by the change (9.61 (1) (a)); the self-level at Gamma = 10^4 (9.61 (1) (b), the numbers 9.63 (4): no shipped row moves); the seat's wheel the body record's own (9.63 (1)) | expectations complete for the shipped rows; the held rows (Bell, Malus, the two slits, Sagnac, the redshift, de Broglie, the moving mass) get their self-level numbers when their files return |
+| The seat against the cube, at rest | the eight shipped worlds | bit-equal in the count and the cycle (read: yes, 9.63 (2)) | read, pre-change control |
+| The seat against the cube, in motion | the four moving worlds | 9.63 (3): the seat's cycles equal the cube's within the draw (63 +- 8, 135 +- 12, 164 +- 13, 430 +- 21) once the proper pair lands | expectation written; awaits the proper pair |
+| Row 1, the redshift | the toward_nature world at k = 0.302 (9.62 (1)) | today's law 1.121 on the arm's share form (1.083 as built with the rung outside the well); the Einstein form: the light clock with the declared arm 1.258, the clock body 1.104 (9.62 (2)) | k = pi / 2 read as expected (1.283 against 1.291); the rerun at k = 0.302 awaits |
+| Row 2, Lorentz | the transverse clock (to build) and the longitudinal one | 180 +- 1 against 200 transverse (gamma = 1.109 at v = 1 / 4), 162 +- 1 longitudinal (gamma^2, the seam); the taking at a hop first (9.62 (3)) | awaits the hop's booking and the transverse world |
+| Row 3, the bending | the layer with the beam 40 wide, 400 records, b = 60 (9.65 (4)) | the ray integral at k = 0.302 on the board's own settled field, averaged over the beam; the Einstein form twice less the second order | the sixth of 9.65 to be read (the field at the passage, the screen's reach) before the rerun |
+| Row 4, Shapiro and the bending whole | after the Einstein form | 18 today, 37 on the Einstein form; 40 against 20 (9.59 (4)) | awaits the Einstein form |
+| Row 5, the fall and Kepler | after 9.52 (4) | 25 and 100 Nodes; the periods 1460 and 4130 at r = 30, 60, T^2 / r^3 = 79 (9.59 (5), 9.61 (5)) | awaits the fall |
+| The dark body | b0ae2518, the two worlds | 9.54 (4) as declared: 30 at the screen, none at the body, no light from it; the bright control's shadow; the bend the same in both worlds within one cube; the bend's number re-read per 9.65 before any run against it | built, not run |
+| Coulomb | to build, 9.64 (1) | 16 Nodes toward for unlike signs, 16 away for like, the five pins | expectation written |
+| The atom | to build, 9.64 (2) | no face click over 10^4 intervals when bound; the control clicks; the mass defect 1.155; the crossing row 43 intervals earlier | expectation written |
+| The contraction from the law | to build, 9.67 (1) | the field's contours 1 / gamma along the motion: 0.90 at v = 1 / 4, 0.82 at v = 1 / 3; round at rest | expectation written |
+| The polariser, the crystal, the joint body (record 2048) | Nature24 builds them on the new law | Malus's and Bell's rows of 9.22 (8) and 9.46 (10) (a), the counts through the polarisers' sets, the visibility 0.95, Bell's S; the joint body's pair given with the weights of A.13 | expectations stand from the rows; the tools' load-time checks per LAB_TOOLS.md part A |
+
+**(3) THE GATE ON EVERY HEAD NATURE24 LANDED, one line each (emitter-click).**
+3715fcb0 the reseed retired, the residue at the first shell Node, the
+tick a count: CONFIRMED. 1d73c754 the fixed wall, form (B): CONFIRMED,
+moved to form (A) by 1eba3860. 8e8ef04e the family of charge:
+CONFIRMED with two moves (the Node's own pace, the stock as given-family
+content), the second still to land. 1eba3860 the Node's own pace, form
+(A): CONFIRMED; the 582 record's flux gap between its two passes still
+owed as the check of 9.55 (7). 1627bb21 the body record (item 37):
+CONFIRMED, now HISTORY under b189ab5d. 7dd8588a and 9a03eb37 the names
+of record 2016 and the digest: CONFIRMED, names only. 6567ae43 the
+board reversible in time: CONFIRMED (the click's writes enter at the
+next interval). b0ae2518 the dark body row: CONFIRMED as built and not
+run; one line: the bend pin (13.7 Links) is the ray on the settled
+field, and 9.65's two readings (the field at the passage, the screen's
+reach) come before any run against it. 3d60c891 the seated detector:
+CONFIRMED as the form; one line: the seat-against-cube runs of
+detectors need the TAKING EXTENT declared as the cube's shell (9.46
+(8), (10) (a)), which this head does not yet carry; without it a seat
+run is a diagnostic and not the equivalence's. b189ab5d the body's
+record at its seat: CONFIRMED line by line (the one rule factored bit
+for bit, S_6 = 6 a, the pair [num_c, 2 den_c], the seat's own effective
+content, the wall 6 den_c Gamma, the coefficient 6 K, the wheel and
+residue the body record's own, the inverse with 6 b, the profile read
+at the giving click alone, the digests unchanged); one line: a moving
+body's seat keeps the rest pair, so the moving rows wait on the proper
+pair of 9.63 (3). b7d6f082 the support-only step: CONFIRMED on its
+three tests (the chain 600 intervals with and without the boxes, the
+wrap on every periodic axis forward and back, the growth and the stop
+at an open face); ONE CHECK BEFORE THE MERGE: a window edge INSIDE the
+board on a CLOSED axis must read zero beyond it, not the closed face's
+reflection; the tests cover open and periodic faces and not a closed
+axis (the dark body's x); one test, a box short of a closed face
+bit-equal against the whole-board step, closes it.
+
+**(4) THE ITEMS TO LAND, each with its gate in one line.** The proper
+pair of a moving seat (9.63 (3)): the seat's cycles equal the cube's
+within the draw in the four moving worlds. The taking at a hop (9.62
+(3)): the moving detector of row 2 takes on the first pass, the resting
+world bit for bit unchanged. The Einstein form (9.57 (1)): at c = 0 bit
+for bit the vacuum, the inverse exact, the light clock's 300 +- 9 and
+the eighteen's counts unchanged at level 0, the integers under 2^63 at
+the muon's pair. The transverse Lorentz world: 180 +- 1 against 200.
+The rerun of rows 1 and 3 at k = 0.302: 9.62 (1) and 9.65 (4). The
+charge worlds: 9.64's pins at load (f > 0), the sign's reversal. The
+contraction world: 9.67 (1). The polariser, the crystal, the joint
+body: LAB_TOOLS.md part A's load-time checks and the rows' pins of
+9.22 (8), read in check mode. The second move of 8e8ef04e (the stock
+as given-family content, 9.51 (3)): the click line's counts unchanged.
+Then the stack merges on the owner's Go, PR #1150 (the algebra,
+9.17 to 9.68) with it, the rule of three kept.
+
+**(5) THE GAPS OF RECORD 2048: answered in 9.67.** The contraction (in the
+law for what the law binds, absent for what is declared; the check of
+9.67 (1)); the grain (every row toward nature at k = 0.302 or longer,
+the pace fans the grain's own row); the dragging of frames and the
+tensor waves (the vector and tensor families under their own identity,
+not now).
