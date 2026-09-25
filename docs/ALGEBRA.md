@@ -7427,3 +7427,166 @@ no family name), vector (the translation verb on the accumulator, 1.5),
 local (at the click's body alone); what it adds beyond the law is a
 second act at the click besides the deletion, which is why it stands
 outside the law under its own name until the owner's gate.
+
+### 9.28 The central theorem closed with the model owner on 2026-09-25, and the theorems around it, gathered for the record (the Boss's request of 05:52Z: "get from the mathematician all the theorems and the central theorem we closed"; the model owner's words in the mathematician's session, 2026-09-25, 05:30Z to 05:50Z on the Israel clock: "that is the theorem we were missing, check it"; "a click is made when there is no remainder, no?"; "everything is Rubik's cubes, connect it all into one simple thing"; "we are closed, pass it on")
+
+This section adds no statement to 9.25, 9.26 and 9.27; it gathers, one
+place and one line each, what the model owner closed with the
+mathematician in that exchange, so that the log and Highlights 5.4 can
+cite it. Each line points to where it is proved or computed.
+
+**(1) THE CENTRAL THEOREM: THE EXACT-RETURN THEOREM (PROVED and
+COMPUTED, 9.26 (4a); the model owner's word, 2026-09-25: "that is the
+theorem we were missing").** THE SETTING. The law's step at a Node is 3
+den a_next + r' = num S_6(a) - 3 den a_before + r with 0 <= r' < 3 den
+(8.1): num and den the clock pair of the family, S_6 the six-neighbour
+sum, r the rule's own remainder kept per Node per record. A shape p is
+an eigenvector of the six-neighbour sum on the GameBoard with the
+eigenvalue lambda; its multiplier is m = 2 cos omega = num lambda / (3
+den), omega its rotation per interval. THE HYPOTHESES. One record of one
+shape p with integer levels; the board's rule as above; nothing else
+(no family name, no click, no boundary: the theorem is about the Inside's
+rotation). THE ROLE OF THE REMAINDER. On the shape p the step reads 3 den
+a_next + r' = 3 den m a_now - 3 den a_before + r, so the remainder is 0
+at every interval IF AND ONLY IF m is an integer (then the total is an
+exact multiple of 3 den and the step is a_next = m a_now - a_before
+exactly, with no rounding for ever); for every other multiplier the
+remainder is nonzero somewhere and the rotation is dense on the circle,
+never returning to the bit (Niven's theorem, 9.26 (4) (a)). THE
+CONCLUSION. A record of one shape returns to the bit after its own
+period if and only if its multiplier m = 2 cos omega is an integer with
+|m| <= 1 and its profile an integer eigenvector (the level one step back
+an integer); then the remainder is 0 at every interval and the period
+is 3 (m = -1, omega = 2 pi / 3), 4 (m = 0, omega = pi / 2) or 6 (m = 1,
+omega = pi / 3); m = +-2 carry zero form ((1a) (a) of 9.26). THE PROOF'S
+LINE. If the two levels return exactly after P intervals then P omega
+lies in 2 pi Z, so omega is a rational multiple of pi and by Niven 2 cos
+omega lies in {0, +-1, +-2}; +-2 carry no form; for m in {-1, 0, 1} the
+recurrence a_next = m a - a_before on integers has the period 3, 4 or 6
+with no rounding, since num S_6 p = 3 den m p exactly; conversely such a
+shape returns by that recurrence. Several such shapes return after the
+least common multiple of their periods (1, 2, 3, 4, 6 or 12). THE
+COMPUTATION (9.26 (4a)): on light's tori with even eigenvector seeds the
+three-cube carries all three exact returns (the periods 6, 4 and 3 at
+lambda = 3, 0, -3, the remainder 0, the forms nonzero), the four-cube the
+period 4 alone, the six-cube all three again; so the three-cube is the
+smallest universe that turns exactly in every way the law allows, and
+its side is the detector's least side (9.25 (10)) for the one reason
+that three Nodes on an axis are the least at which a Node's two
+neighbours are distinct from it and from each other. WHAT THE THEOREM IS
+NOT ABOUT: it does not say that a click happens when the remainder is 0
+(the model owner's question, answered in (2) (e) below), and it does not
+change what is local and what is not in a click ((3) (a) below).
+
+**(2) THE OTHER THEOREMS AND FINDINGS OF THE SAME EXCHANGE, one line
+each.**
+- (a) THE SAME THEOREM IN SPACE (PROVED, 9.26 (4a); the owner's
+  "everything is Rubik's cubes"): the cube group's elements have the
+  orders 1, 2, 3, 4, 6 and no other, by the crystallographic restriction
+  (a turn keeping the integer lattice has an integer 2 cos theta); the
+  exact-return theorem is the same argument read on the intervals instead
+  of the axes; on the one integer lattice of the GameBoard the turns that
+  return exactly in space and in time have the same orders for the same
+  reason.
+- (b) THE RECURRENCE OF THE WHOLE (PROVED with one condition, 9.26 (4)
+  (b)): the Inside step is a bijection of the integer states, so on a
+  bounded orbit every state recurs exactly through the same process, with
+  a period at most (2 A + 1)^(2 N); that the orbit stays bounded for
+  ever is OPEN as a proof and COMPUTED as far as the runs go; the engine
+  bounds the integers by refusal, never by overflow.
+- (c) THE INSIDE IS EXACTLY REVERSIBLE (PROVED, 9.26 (3) (a)): a_before
+  = ceil(M / (3 den)) with M = num S_6(a_now) - 3 den a_next - r', so the
+  law runs in both directions up to the side of its rounding.
+- (d) THE CLICK LOSES THE SHAPE (PROVED, 9.26 (3) (b)): the click keeps
+  the count and the residue and nothing of the record's two levels, so
+  the board with its detectors is not a bijection; with the click
+  irreversible the whole has no period and no frequency of its own,
+  while every body keeps its clock and every record its rotation; a
+  reversible click would restore the whole's period, a decision of the
+  owner and not a theorem (9.26 (3) (c)).
+- (e) THE REMAINDER IS WHERE CHANCE LIVES (DERIVED, from 9.19 (4)
+  ADOPTED and (1) above; the owner's "a click is made when there is no
+  remainder?" answered the other way round): a record's residue u is the
+  rule's remainder at its birth cell at the interval of the click that
+  births it, and u fixes where within the acquisition the click falls,
+  the drawn share (2 u + 1) / (2 W); in the exact worlds of (1) the
+  remainder is 0 at every cell and interval, so every record is born with
+  u = 0 and every click falls at the first rung, the same for all: a
+  world without a remainder is a world without chance, every click
+  predictable, and Born's rule needs the remainder's spread (9.25 (3)); so
+  the click is not made by the absence of a remainder; the remainder
+  gives the click its place.
+- (f) THE PROPAGATION AND THE CLICK ARE TWO WORDS (DERIVED, the owner's
+  "a Node clicks to its neighbours and they to theirs"): what passes from
+  a Node to its six neighbours every interval is the wave under the one
+  operator, local and reversible; the click is the record's end, at once,
+  the one act that is not local (record 1888); the conversation between
+  two bodies is a birth, a passage and a click, and calling every local
+  step a click would erase the owner's own distinction.
+- (g) THE UNIVERSE WITHOUT A BOUNDARY CANNOT CLICK BY CROSSING (DERIVED,
+  9.25 (12) (f), 9.26 (4a) (i)): it has no Port; a standing record named
+  on the whole of it clicks once by its own turn and leaves it empty.
+- (h) WHAT A CLICK IS, AND THE TOOL (PROVED, 9.25 (12), the answers to
+  records 1933 and 1934, pushed at d2f6e0cc): a click is an event of one
+  record and one object; the tally is the positive part of the flux per
+  Port, a boundary reading, exactly what has crossed in for a passage,
+  the object's own held share for a standing record; the tool is three
+  steps per interval at the cost of the Ports the record touches; any
+  declared order serves Born's rule, the sum across objects cannot be
+  replaced.
+- (i) NO FORCE IN THE LAW (DERIVED, 9.27 (C), 9.22 (8a)): the law is
+  linear, no record acts on a record, a body is bound to a declared well;
+  there is no gravity in the algebra, and "gravity as computation" means
+  only that the paper states what would be required and that it is
+  outside the law.
+- (j) THE EXCHANGE HYPOTHESIS (OPEN, under its own identity, 9.27 (D)):
+  at a click the record's momentum integer passes to the receiving body's
+  accumulator, at a birth it leaves the emitter's; it gives pressure and
+  recoil, the model's first force, not attraction; one test world with a
+  blind expectation; nothing of the twenty-four touched.
+- (k) THE TWO LEVELS (a reading, not a theorem; the owner's word): the
+  algebra is the level that produces clicks, bodies placed on the
+  GameBoard and their clicks counted, and there Born, Bell, interference
+  and the clocks are theorems; the theory of clicks, bodies as sources
+  and sinks of clicks that push, attract or bind, is one level above,
+  derivable in principle from ours, and it begins only over the one
+  bridge of (j).
+
+**(3) HOW IT SITS WITH WHAT IS WRITTEN.** (a) THE CLICK THE ONE
+NON-LOCAL ACT (record 1888): untouched. The theorem is about the Inside's
+rotation and its remainder; a click in an exact world is still a
+deletion at once (and the addition across objects, 9.25 (12) (e)); the
+owner's words to the Boss, "in the systems we build the click is really
+non-local, with a theorem and the remainder", are to be recorded as: the
+click's deletion is the one non-local act by his decision of record
+1888; the theorem is the exact-return theorem, which says where the
+remainder vanishes and hence where chance is absent; the theorem neither
+adds to nor removes from the click's non-locality. (b) NO SIGNALLING
+(9.25 (6)): untouched; it is a statement about the joint ladder of a
+pair and holds for every residue, so also at u = 0. (c) THE INCREMENT
+LADDER AND BORN'S RULE (9.25 (2), (3)): Born's rule is proved for u
+spread evenly over the wheel; in an exact world u is 0 for every record
+and the ladder has one rung, so THE EXACT WORLDS ARE PROPERTY TESTS OF
+THE ENGINE AND NOT EXPERIMENTS: a Born row (the two slits, Bell) cannot
+be run on them, and the measured experiments live on clocks with a
+remainder, where the theorem says the record never returns to the bit.
+(d) THE CLICK'S REVERSIBILITY AS A DECISION (9.26 (3) (c)): untouched;
+the theorem's periodicity is the Inside's, and (2) (d) says what each
+decision gives. (e) THE OWNER'S "what is a click" AND "the click as a
+tool" (records 1933 and 1934): answered in 9.25 (12), the wording in (2)
+(h); nothing of them is owed.
+
+**(4) WHAT THE MODEL OWNER MUST DECIDE (nothing else in this section
+waits on him).** (a) Whether the exact-return theorem enters Highlights
+5.4 as adopted, with its consequence for the engine: the exact worlds
+(the three-cube at lambda = 3, 0, -3 with even eigenvector seeds, the
+four-cube at lambda = 0) as property tests that the engine must return
+to the bit with the remainder 0, before any experiment (sent to Nature24
+as an order to build after his current line). (b) The gate of the
+exchange hypothesis (2) (j), once its test world has numbers. (c) The
+click's reversibility (9.26 (3) (c)), which decides whether the whole
+has a frequency. (d) The born train in place of the born pair (9.17
+(6a); the coherence table's first difference, 9.27 (A)), and the five
+other differences of that table. (e) The wording of his own summary to
+the Boss, per (3) (a): "the click's deletion is non-local by decision;
+the theorem is about the remainder and exact return".
