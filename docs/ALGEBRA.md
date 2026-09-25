@@ -13113,3 +13113,121 @@ c_l)^5 per orbit, 1.5 percent per orbit at v / c_l = 0.19, readable in
 a few orbits; the declared well of row 5 cannot radiate and is not
 that row. Nothing in the twenty-four or the five needs the addition
 to stand; the additions stand on their own rows, after the Go.
+
+### 9.77 The vector and tensor families before the Go (the model owner's word of 2026-09-25 in the mathematician's session: "I do not want to add this after the Go, I want to add it before the Go"; the build's reference, the one obstruction stated, and the blind rows)
+
+**(1) THE WORD, AND ITS READING.** The owner orders the missing parts
+of 9.67 (3) and 9.76 built before the Go: the vector part (the field of
+a mass current, the dragging of frames; the field of a charge current,
+magnetism) and the tensor part (the waves). This section is the build's
+reference; the rule of three holds (the algebra here, the code gated,
+the Boss's record, the owner told). Each is a FAMILY on the scaffold
+of the family of clicks (9.45, 9.48): levels per Node, a held source
+at bodies, the plain step elsewhere, a reading; each under its own
+world key, off by default.
+
+**(2) THE TWO VECTOR FAMILIES.** (a) THE FAMILY OF THE MASS CURRENT:
+three levels per Node (two levels and a remainder each), A = (A_x,
+A_y, A_z), held at a moving body's Nodes at A_i = 4 s n_i with s the
+body's energy count (the content, 9.51 (3)) and n_i its momentum's
+whole part along the axis (the accumulator of 9.52 (4), or the declared
+momentum), the hop's wall 2 Gamma L absorbed into the reading; each
+component steps by the plain rule elsewhere (a vector's components
+each obey the wave equation, and the group's rotations permute them:
+the vector representation, 9.58 (2) (e)); the factor 4 is nature's
+(the metric's g_0i = -4 U v_i) and enters the reading's scale once.
+(b) THE FAMILY OF THE CHARGE CURRENT: the same three levels held at Q
+n_i (the body's charge times its momentum), Lambda the strength as for
+the charge (9.48). Cost: three integers per Node per family, one plain
+step each.
+
+**(3) THE READING: ON BODIES, at their seats.** A body's hop rule (the
+accumulator, 9.52 (4)) gains two terms read at its own Nodes: (i) THE
+MAGNETIC TERM, s (v x B)_i for the mass current's field and q Lambda
+(v x B_q)_i for the charge current's, with v the body's own momentum
+per the wall and B = curl A read from the six neighbours' levels (B_z
+= (A_y,+x - A_y,-x) - (A_x,+y - A_x,-y), the differences on the four
+Links of the plane, integers), the products taken and the wall
+divided once, the remainder kept; (ii) THE INDUCTION TERM, -q Lambda
+(A_q,now - A_q,before)_i, the change of the charge current's field at
+the seat over the interval (Faraday), and its mass twin. THE THREE
+TESTS: generic (one primitive, a vector level with a held source, a
+plain step and a hop rule reading its own velocity and the curl at
+its Nodes; no family name); vector (products, differences, one
+division with the remainder kept); local (the seat's own state and
+its six neighbours' levels). The backward run: the hop's accumulator
+is undone by subtraction as the fall's is (9.52 (4)); the field
+families' plain steps invert as now.
+
+**(4) THE ONE OBSTRUCTION, stated plainly: THE COUPLING TO RECORDS IS
+NOT IN THIS STEP.** Light past a moving mass and a matter wave in a
+magnetic field need the vector field in the ONE RULE for records. The
+coupling is odd under the reversal of a direction (a first-order
+term), and in a real two-level record the only conservative odd term
+is the twisted read: the neighbour's pair (a_now, a_before) rotated by
+the Link's phase before the sum (the Peierls phase). That read takes
+the neighbours' SECOND level, and then the exact inverse of 9.50 (8)
+is no longer Node by Node: recovering a_before at a Node needs the
+neighbours' a_before, a coupled system with the remainders' floors
+inside it. Two ways exist, neither for the days before the Go: (A) the
+backward run of such a world as one exact solve over the board (the
+forward rule local, the inverse global), whose exactness with the
+floors is not shown; (B) a staggered lattice in time (the even Nodes
+at whole intervals, the odd at half), which keeps the per-Node inverse
+with the twist but is a new grain, and the eighteen's bit-for-bit
+would be re-read. A first-order odd term without the neighbours'
+phase (an asymmetric read, a real drift) is not conservative and is
+refused. So: the vector families act on bodies before the Go (the
+dragging on orbits, Ampere's and Lorentz's forces on charged bodies,
+Faraday's induction), and the coupling to records (the moving lens,
+the electron's orbit in a magnetic field, the fine structure) stands
+under its own identity for (A) or (B) after. Nothing in the
+twenty-four or the five reads the latter (9.76).
+
+**(5) THE TENSOR FAMILY.** Six levels per Node, the symmetric part h_ij,
+held at a body's Nodes at s n_i n_j (the content's current pair, the
+wall squared absorbed into the reading), the plain step elsewhere (the
+tensor representation, each component a wave); the reading on bodies:
+the tidal term, a seat pair's relative accumulator changed by the
+field's second difference in time at their Nodes times their
+separation (the geodesic deviation), integers and differences. THE
+WAVES are then the plain step's own retarded solution of a moving
+source pair; they need no radiation rule. What the scalar family
+already does, said now so it is not read as a defect: the family of
+clicks radiates its own quadrupole waves from an orbiting pair
+(monopole and dipole vanish with the energy count's and the momentum's
+conservation), with a coefficient of its own; the tensor family adds
+the two polarisations and nature's coefficient. Cost: six integers
+per Node.
+
+**(6) THE BLIND ROWS, before any run.** (a) AMPERE AND LORENTZ: two
+charged seats hopping in the same direction at v = 1 / 4, one passing
+the other at 20 Links: the magnetic term reduces the electric
+deflection by 1 - (v / c_l)^2 = 0.81 against the same pass with the
+source at rest (9.64 (1)'s 16 Nodes read as 13); opposite directions
+1.19 (19 Nodes); a neutral pair unchanged; light unchanged. (b) THE
+DRAGGING (Lense and Thirring): a ring of seats of total content s
+hopping around a centre at radius R = 10 with the hop speed v = 1 / 4,
+its potential at r = 30 declared U = 0.02 (G M = U r = 0.6 Links, G J =
+G M R^2 v / R = 1.5); a test seat on a circle at r = 30 (the orbit's
+speed 0.141, the period 1340 intervals): the orbit's node precesses
+2 G J / r^3 = 1.1 x 10^-4 per interval, 0.15 radians per orbit, the
+node 4.5 Nodes along the orbit per orbit, in the sense of the ring's
+rotation; the same ring at rest: no precession. (c) THE WAVES: two
+seats of equal content orbiting by the law's own fall at v / c_l =
+0.19; a far pair of seats across the board reads a relative
+accumulator oscillating at TWICE the orbital frequency, the tidal
+signal, with the tensor family; with the scalar family alone the
+family of clicks' own quadrupole at the same frequency and its own
+size (a diagnostic of the scalar law beside the tensor's); the
+period's drift, (192 pi / 5)(1 / 2)(v / c_l)^5 = 1.5 percent per orbit
+in nature's coefficient, read over five orbits as the second reading.
+Each row a direction, no pin, the same rule of reading as 9.59 (6).
+
+**(7) THE ORDER AND THE COST.** The family of the charge current first
+(one family, Ampere's row, the simplest source: a charged seat
+hopping), then the mass current (the ring), then the tensor (the
+waves); three plus three plus six integers per Node, one plain step
+each, the hop rule's two terms; the worlds on layers, minutes each.
+The coupling to records waits under its own identity with (A) or (B)
+named (9.77 (4)).
