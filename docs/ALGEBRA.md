@@ -5811,10 +5811,7 @@ GENERATOR'S MODE: the three-term Lanczos without reorthogonalisation
 gave the vector to 3 x 10^-4 and the stored profiles failed the bound by
 6 to 860 times (COMPUTED by him); the accurate float mode (ARPACK's
 implicitly restarted Lanczos at the machine's tolerance, scipy in the
-generator and the diagnostics, never in the engine) passes the bound
-with margin (the worst residual 0.18 to 0.53 of it), and the integer
-power iteration of record 1898 is the reproducible form; the float is
-the host's shortcut and the integer residual the gate, as (7) says. A
+generator and the diagnostics, never in the engine) passes the bound with margin (the worst residual 0.18 to 0.53 of it), and the integer power iteration of record 1898 is the reproducible form and THE GENERATOR ITSELF (below); the float eigensolver is a diagnostic beside it and the integer residual the gate, as (7) says. A
 one-unit change at one Node stays within the bound and is admitted (it
 changes the output, 9.20 test 8); a profile off the mode by the
 amplitude's order is refused. THE INTEGER ITERATION'S FLOOR (his
@@ -5825,9 +5822,7 @@ from 4000 to 16000 iterations: each step's rounding, about half a unit
 per Node, feeds the next mode and is damped only by gap / (lambda + 2)
 per step, so the iterate carries an admixture of the next mode of about
 1 / gap units, its residual 0.43 of the bound against the float mode's
-0.15, both admitted. DECIDED: the generator writes the accurate float
-mode and the integer iteration is the reproducible CHECK of the same
-law, not the writer; the stored integers with their stamp (9.22 (7) (i),
+0.15, both admitted. DECIDED BY THE MODEL OWNER (2026-09-25, 04:10Z in Nature24's session, closing record 1898: "the iterated operator must become the generator itself, with the stop"; this paragraph's earlier line, the float mode as the writer and the iteration as the check, is withdrawn at his word): THE GENERATOR IS THE OPERATOR ITERATED WITH ITS STOP, from the cells' indicator, the clock the operator's quotient over the board in exact integers, the stop the residual bound of (7) (ii), the working amplitude at least 2^20 (built at a9ab486f, `iterated_mode`, read line by line and confirmed by the mathematician at 05:50Z); the float eigensolver is a diagnostic and never the writer; the stored integers with their stamp (9.22 (7) (i),
 built at de363acb: the law identifier and the SHA-256 of the shape and
 every seeded body's profile, clock and born pair, refused missing, of
 another law or mismatched) are the world, and a regeneration that
@@ -5896,7 +5891,7 @@ superposition of two rates, has no one clock a / b, and the clock check
 of (7) refuses it. "Two bodies, two records" is lawful exactly when each
 body's own mode is a mode of the composed board within the rounding,
 which is the loader's residual check outside the other bodies' cells
-((7a) (i)): the tail of one at the other's cells below one unit. The tail
+((7a) (i)): the tail of one at the other's cells below one unit (on the stored integers: the profile 0 at every Node of every other body of its family, a load check that names the two bodies, the Node and the value when it refuses). The tail
 scales with the amplitude and the bound does not, so the check reads the
 seed: Sagnac's wells at the gap 60 carry A's tail at B's centre at 1.7 x
 10^-6 of the peak, 1.8 units at 2^20 and 91 units at 50 x 2^20 (the three
