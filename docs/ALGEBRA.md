@@ -13231,3 +13231,404 @@ waves); three plus three plus six integers per Node, one plain step
 each, the hop rule's two terms; the worlds on layers, minutes each.
 The coupling to records waits under its own identity with (A) or (B)
 named (9.77 (4)).
+
+### 9.78 The complete engine: one generic field family, then the engine frozen (the Boss's records 2062, 2063 and 2064 of 2026-09-25, the model owner: "the full plan now, and everything; the engine must be perfect and then frozen, to support gravitational waves, everything needed, to close the physics for good"; the mathematician's plan in the form the owner set: one generic field, its hold, its action through the pace, gravity and the charge as instances, the three tests once, no build order; Nature24 builds it in one stroke)
+
+**(0) THE WORD, AND WHAT THIS SECTION IS.** The owner orders the whole
+of what the engine still lacks, written now as one plan, built by
+Nature24 in one stroke, and then the engine FROZEN: after this head no
+rule is added, and every later physical thing is a DECLARATION in a
+world file (an instance of the one family, its numbers) and never a
+line of the law. This section is that plan and the build's reference.
+The rule of three holds (9.40 record 1940): the algebra here, the head
+gated line by line, the Boss's record, the owner told; no pin
+compared and no merge before the Go. 9.77 is superseded where it named
+an order and where it stated the tensor's reading on a seat pair at
+rest ((5) there; (4) here); its blind rows stand and are joined by
+four more in (9).
+
+**(1) THE ONE GENERIC FIELD FAMILY, DECLARED BY ITS NUMBERS.** A field
+family is declared by: its REPRESENTATION of G_48, the group of the
+cube (section 1.1): the scalar (the trivial representation, one
+component), the vector (the signed permutations of the three axes,
+three components) or the tensor (the symmetric pairs of axes, six
+components: three on the diagonal, three off it, the group acting by
+g h g^T); its NUMBER OF COMPONENTS, fixed by the representation (1, 3
+or 6); its PAIR [num, den], the light pair [1, 1] for a force of
+unbounded range and a lowered pair for a force of finite range (the
+plain step of a lowered pair falls as exp(-r / range), Yukawa's form:
+the same declaration, no rule); its STRENGTH Lambda (the charge's
+Lambda of 9.48; 1 for gravity, whose strength is the clock's own
+unit); its SELF-UNIT P_2 (the field's own energy as its source, (3));
+its SIGNS (one sign for gravity, every record reads it alike; two for
+the charge, q in {-1, 0, +1}; three or more for a charge with more
+signs, (6)); and its HOLDS, the numbers of a body's record that source
+it ((2)). Each component at a Node is two levels and a remainder, and
+it is STEPPED BY THE ONE RULE 9.57 (1) AT THE NODE'S OWN PACE: the
+pace p_0 = Gamma - c at the Node (c the gravity scalar's level there;
+a field reads no charge, its sign is in its source), the wall 6 den
+Gamma^2, the same integers, the same remainder, the same exact
+per-Node inverse by the ceiling (9.50 (8)), since the pace is read
+from the levels at the interval's start. At c = 0 the field's step is
+the plain step of 9.45 (6) (D) bit for bit, the remainders 2 Gamma^2
+times the plain rule's (9.56 (7)); in a well a field moves at the
+pace, so a wave of any instance is delayed by the well as light is
+(Shapiro's delay of a gravitational wave, its speed light's, nature's
+reading of 2017). The family of clicks and the family of charge as
+built are the scalar instances of this family (9.45, 9.48); their
+declaration changes by one line, the step at the pace in place of the
+step at pace 1, which is bit for bit where c = 0 and below every band
+where it is not (the field's own propagation slowed by 2U in a well;
+no shipped row reads a field's propagation).
+
+**(2) THE HOLD: THE SOURCE OF EVERY INSTANCE IS THE BODY'S RECORD, READ
+IN THE INSTANCE'S REPRESENTATION.** A body's record at its seat (9.60)
+carries the numbers of 9.69 (6) and, from this section, its SPIN: the
+integer vector S = (S_x, S_y, S_z), the body's own angular momentum in
+whole quanta of action (an axial vector, the antisymmetric pair of
+axes), declared in the world file, held between clicks, and stepped
+by (5). The hold of an instance at every Node of the body is the
+record's own number in the instance's representation, times the
+record's count under the instance (the energy count s of 9.51 (3) for
+gravity, the charge Q for the charge, the colour count for a charge
+with more signs), with the momentum's whole part n_i (the accumulator
+of 9.52 (4)) on the wall W = 2 Gamma L:
+
+  the scalar:  s  (the content, as built; a level over Gamma is a
+               metric component: c / Gamma = 2U, the clock
+               1 - 2U + 2U^2, 9.57 (1));
+  the vector:  4 s n_i div W  (the mass current; A / Gamma = 8 U v);
+  the tensor:  2 s n_i n_j div W^2  (the content's current pair;
+               h / Gamma = 4 U v v, the transverse part of nature's
+               ruler);
+  the charge:  Q and Q n_i div W  (the charge's two parts, the same
+               factor for both, Maxwell's),
+
+the remainders of the two divisions kept on the body's record as s's
+own is (9.51 (3)), the factors 4 and 2 nature's once (the linear
+Einstein equations, the trace-reversed potentials 4 T / r for every
+index, the scalar's half from the trace, the vector's second 2 from
+the cross term of the metric's form; the rows of (9) (b), (d) and (g)
+read them). THE HOLD IS THE BODY'S STRESS-ENERGY AT ITS SEAT, its
+three parts in the three representations: the time index the scalar,
+the space index the vector, the pair of space indices the tensor; for
+the charge, the current's two parts. THE SPIN'S HOLD: a spinning body's current is a
+dipole and needs two Nodes, the owner's "doubled if it must" (9.69):
+the seat writes, on each of its six neighbour Nodes at seat + sigma
+e_j (sigma = +1 or -1, j the axis), the vector instance's component i
+at sigma (S x e_j)_i for gravity's vector (the mass current of a
+spinning body, the current hold's 4 on the half of the dipole's
+difference) and at sigma (mu x e_j)_i div 2 for the charge's vector,
+with mu the body's declared integer MOMENT (the magnetic moment;
+nature's g-factor times Q S over 2 s, which the law does not derive:
+g is Dirac's, not this law's, so mu is declared per body); the sense
+of sigma is fixed once by the row (9) (h), a spinning seat against a
+ring of the same angular momentum. The dipole's six writes move with
+the seat at a hop as the seat's own writes do (the permutation of 9.52
+(4) (i)) and are undone by the seat's inverse. Every hold is the one verb of the load, written
+whole at each interval at the body's Nodes as today (9.45 (2)); the
+field's integers a hop covers move to the vacated Nodes (9.52 (4) (i)).
+
+**(3) THE FIELD'S OWN ENERGY AS ITS SOURCE.** At every Node the family's
+step gains one term on its right side, the same for every component of
+every instance: minus the wall times the field's own energy there,
+read from the levels at the interval's start:
+
+  Sigma_i = (SUM over the six Links of (a_j - a_i)^2, summed over the
+             instance's components) div P_2,
+
+P_2 the declared self-unit (the field's energy per unit of its own
+level; P_2 = 0 means the term is off), the sum over the components the
+representation's invariant norm (the same under every element of
+G_48, so the term is generic and equivariant), the six differences the
+Node's own Links. The term reads levels of the interval's start only,
+so the per-Node inverse stays exact (a_before by the ceiling of the
+whole right side, the term included). Bounds: the six squares at most
+6 (2 A)^2 = 2^45 at A = 2^20, the quotient held below A by the loader's
+bound P_2 >= 24 A, the term's product with the wall 6 x 10^14 within
+the room of 9.57 (2). WHAT NATURE SAYS OF ITS VALUE: the scalar's
+nonlinearity that nature shows is the second order of the clock, 1 -
+2U + 2 beta U^2 with beta = 1, and 9.57 (1) already gives beta = 1 by
+the pace entering twice (the clock body 1 / sqrt(1 - 2U + 2U^2), 9.62
+(2)); so the scalar instance of gravity declares P_2 = 0, since any
+other value moves beta off nature's 1 in the perihelion's row. The
+tensor's own energy (the waves' energy gravitating) is at the order
+h^2, 10^-20 of nature's waves, unreadable by any row; declared 0. The
+charge declares 0 (Maxwell's equations are linear). A NONZERO P_2 is
+the place of a self-coupled force in this engine ((6)); it is in the
+family as a declared number and costs nothing while 0.
+
+**(4) THE ACTION BACK, THROUGH THE SAME PACE: ONE READING FOR EVERY
+RECORD.** The one rule reads at a Node FOUR PACES, the time's and the
+three axes':
+
+  p_0 = Gamma - <the record's charges, the scalar instances' levels>,
+  p_a = p_0 - <the record's charges, the tensor instances' diagonal
+        components h_aa div 2>,  a = x, y, z,
+
+(the half because the scalar's level already enters the ruler for
+both the time's and the axes' parts of the metric, 1 - 4U, and the
+tensor's transverse part enters the axes' alone: the ruler along a
+reads 1 - 4U - h_aa, nature's coordinate speed of light),
+
+with the rule 9.57 (1) written with the ruler per axis:
+
+  6 den Gamma^2 a_next + r' = 2 num SUM_a p_a^2 (a_{+a} + a_{-a})
+  + [12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num)
+     - 4 num SUM_a p_a^2] a_now - 6 den Gamma^2 a_before + r,
+
+which at p_a = p_0 = p is 9.57 (1) term for term, bit for bit (4 x 3
+p^2 = 12 p^2; the read 2 p^2 num S_6). Every family steps by it, the
+field instances included (their charges: 1 under gravity, 0 under the
+charge). The charges: under gravity every record 1 (the equivalence,
+9.52 (2)); under the charge q Lambda per quantum; the wheel and the
+guard as in 9.57 (1), p_a > 0 everywhere. THAT IS THE WHOLE READING
+OF A FREE RECORD (light and a matter wave on the GameBoard): the
+scalar instances through p_0 and p_a, as today, and the tensor's
+diagonal through the ruler per axis: a wave of + polarisation along
+the axes (h_xx = -h_yy) slows the light of one arm and quickens the
+other's, which is the interferometer's reading, (9) (d). THE READING
+OF A BODY'S RECORD (the seat, 9.60) is the same four paces with the
+record's own numbers contracted in each instance's representation,
+whole numbers at one Node:
+
+  p_0 at the seat = Gamma - SUM over instances of q_inst x
+      [ scalar level - (n_i A_i) div W + (n_i n_j h_ij) div W^2 ],
+
+q_inst the record's charge under the instance (1 under gravity for
+every record; -q Lambda under the charge, so that the scalar part is
+the + q Lambda d of 9.57 (1), like signs a hill), the minus on the
+vector part nature's (the energy q (phi - v . A) of a charge, and its
+gravitational twin -m U + 4 m U v_source . v: co-moving currents of
+mass attract less, of charge repel less); the contraction of every
+instance's components with the record's representation vector (1,
+n / W, n n / W^2), the remainders kept on the record; the potential
+energy per unit of the record's mass is minus this contraction over
+2 Gamma, -U + 4 U v_s . v - 2 U (v_s . v)^2 for gravity, the weak
+field's geodesic Lagrangian to this order; the seat's hop rule (9.52)
+unchanged in form: THE FEED is the difference of this pace across the
+two faces of each axis (the
+gradient of the contraction, the electric and Newtonian terms, the
+magnetic term v x curl A and the tidal term at once, since the feed
+of n_j A_j along axis i is n_j (A_j at +i - A_j at -i)); THE INDUCTION
+is minus the change of the contraction's momentum part at the record's
+Node over the interval, the seat's hop included (Faraday's term
+-(A_now - A_before) and its mass twin, and the convective part when
+the seat moves), added to the accumulator on its scale. Together the
+two are the equation of motion of a body in every instance's field at
+every order the hold carries: d/dt (n + q A + q h n) = the gradient of
+the contraction (the geodesic equation and the Lorentz force in one
+line). The backward run: the accumulator's change is a function of
+levels at the interval's start and of the field's own before level at
+the seat, which the field's inverse gives first; so the inverse is
+exact per Node in the order fields, then seats (9.52 (4) (v)).
+
+WHAT THE PACE CANNOT CARRY FOR A FREE RECORD, STATED ONCE AND FOR
+GOOD (9.77 (4) resolved by a dividing line). The pace is the
+coefficient of a quadratic form at the Node: the time's square (p_0)
+and each axis's square (p_a), the metric's g_00 and its diagonal g_aa.
+The vector's coupling (g_0a) and the tensor's off-diagonal (g_ab, a
+different from b) are CROSS TERMS, a product of two directions at
+once: the first needs the neighbour's pair (the twist, the odd term)
+and breaks the per-Node inverse (9.77 (4)); the second needs the
+second neighbours (the mixed second difference a_{+a+b} - a_{+a-b} -
+a_{-a+b} + a_{-a-b}) and breaks LOCALITY-1's six. The one form that
+keeps the inverse with the twist, a two-component record whose
+neighbour's pair is rotated by the Link's angle on the wheel (the
+rotation verb, levels of the interval's start only), multiplies the
+wall by the angle's denominator, and the room at Gamma = 10^4 with A
+= 2^20 is 1.5 (9.57 (2)): refused by the integers, not by the law.
+THE RULING: a free record reads the even parts (the scalars and the
+tensor's diagonal) through the four paces; a body's record reads
+every part through the contraction at its seat. What this leaves
+outside the frozen engine, named: light past a moving mass at the
+order v / c beyond the scalar's retardation (the moving lens), a
+free charged wave in a magnetic field (the phase of Aharonov and
+Bohm, Landau's levels of a wave), light in a wave of x polarisation
+along the axes; none read by the twenty-four or the five (9.76). A
+charged BODY in a magnetic field (the cyclotron orbit, Larmor's
+precession) and a body in every gravitational part are inside.
+
+**(5) THE SPIN'S STEP AT THE SEAT, ONE MORE READING OF THE SAME
+FIELDS.** The record's spin S turns by the fields at its Node, whole
+numbers, levels of the interval's start:
+
+  S_next = S_now + [ (Omega x S_now) + mu x B_q ] div W_S,
+  Omega  = (1 / 4) curl A (gravity's vector instance, read from the
+           six neighbours' components as 9.77 (3) reads B)
+         + (3 / 4) (grad c x n) div W (the scalar's six differences
+           crossed with the momentum),
+  B_q    = curl A_q (the charge's vector instance),
+
+W_S the accumulator's wall times Gamma (the levels are metric
+components over Gamma), the remainder kept on the record; the
+coefficients 1 / 4 and 3 / 4 are Schiff's 1 / 2 and 3 / 2 in the
+levels' unit (A / Gamma = 8 U v_s and c / Gamma = 2U), nature's once;
+the torque mu x B_q is Larmor's. Local (the seat's own S and n, the six
+neighbours' levels), the vector verb (a cross product, one division),
+generic (a rotation of the record's own vector by the fields' curl and
+gradient, no family name), exactly invertible (S_now = S_next - the
+same term, since the term reads S_now: solve by the ceiling as the
+rule does, or, simpler and exact, book the term from S_now into a
+second integer and swap, the leapfrog of the seat's own two numbers;
+Nature24 picks the one that is bit-exact and says which). What it
+gives: a gyroscope in orbit precesses by (3 / 2) G M / (c^2 r) per
+radian of orbit (the geodetic term, 6.6 arcseconds per year at Gravity
+Probe B's orbit) and by the ring's dragging (39 milliarcseconds per
+year there), and a spinning charge precesses at Larmor's frequency mu
+B / S.
+
+**(6) THE INSTANCES OF THE FROZEN ENGINE, and every missing piece
+answered in one line each.** (a) GRAVITY: three instances of the one
+family with pair [1, 1], strength 1, one sign, P_2 = 0: the scalar
+(one component, the family of clicks as built, its hold s), the vector
+(three components, its hold 4 s n / W and the spin's dipole 4 S), the
+tensor (six components, its hold 2 s n n / W^2); every record reads
+all three with charge 1. (b) THE CHARGE: two instances with pair [1,
+1], strength Lambda, two signs, P_2 = 0: the scalar (the family of
+charge as built, its hold Q) and the vector (three components, its
+hold Q n / W and the moment's dipole mu); a record reads them with
+-q Lambda. (c) LIGHT: the law's one line, asked by the owner. The charge's
+vector instance steps by the plain wave rule with pair [1, 1] and is
+sourced by moving charges: its free waves ARE Maxwell's, and a vector
+family with clicks (a hold and a click in one family, which the
+generic form allows) would be light with its two polarisations as the
+two transverse components (the longitudinal one sourced only by the
+gradient part of the current, a pure gauge, and acting on nothing:
+gauge invariance is the twist's loop form). The engine as built has
+light as its own scalar family with the wheel's angle for the
+polarisation (Malus, Bell: 9.14, 9.22 (8)). Both are one family of
+this section; the difference is the declaration. THE MATHEMATICIAN'S
+LINE: freeze the engine with light as the scalar family beside the
+charge's vector instance, since the eighteen's polarisation rows
+stand bit for bit on the wheel and no row of the twenty-four reads a
+polarisation of the charge's own wave; the unification is a reading
+(the same pair, the same plain step, the same speed) and not a change
+any row needs; the owner's word decides ((10) (vii)). (d) SPIN: in the
+engine, (2) and (5). (e) THE MAGNETIC MOMENT: declared per body, since
+the g-factor is not derived here ((2)). (f) BINDING: the law's own,
+no piece: a bound pair is the bound mode with its longer period, and
+its energy count is lower by the binding (9.42; 9.46 (7); 9.51 (3)
+(iv), the mass defect's row). (g) LIFETIMES: the giving period of a
+body with a stock is its lifetime (the muon's row reads it in
+motion, 9.22 (8)); the exponential law is an ensemble's reading of
+one body's residue at the giving end (Born's rule there); a decay
+with more than one daughter is not in the engine, since a click gives
+one record to one family (9.40 D5), and it is stated here as outside,
+under its own identity if a row ever needs it. (h) A FORCE OF FINITE
+RANGE (the weak force): a declaration, the lowered pair of (1); no
+rule. (i) A SELF-COUPLED FORCE (the strong force): a declaration,
+three signs and P_2 > 0 in (1) and (3); the law does not derive
+confinement from a scalar self-coupling and no row reads it: outside,
+declared, not built into any row (the owner's quark question answered
+as before: not now). (j) A CONSERVED TOTAL ACROSS FAMILIES between
+clicks: not in the law by the law's own choice (9.45 (5)); unchanged.
+(k) The point emitter (9.71 (1)), the re-giving (9.66), the boosted
+norm (9.75) and the booking in the body's frame (9.72): as written,
+part of the one stroke, no new line here.
+
+**(7) THE THREE TESTS, ONCE, FOR THE GENERIC FIELD.** GENERIC: one
+primitive, a family of declared representation, components, pair,
+strength, self-unit, signs and holds, stepped by the one rule at the
+four paces, sourced by the load of a record's own numbers in the
+family's representation, read by every record through the same four
+paces (a free record's) or the same contraction (a seat's); no family
+name and no kind anywhere in the step, the hold or the reading:
+gravity and the charge differ in numbers only. VECTOR: products, sums
+and differences of integers, cross products for the curl and the
+spin, one division per term with the remainder kept, the rotation
+verb nowhere (refused with the twist in (4)); no root, no float. LOCAL:
+a Node's own levels, its six neighbours' levels of the interval's
+start, the seat's own record; the dipole's six writes the seat's own
+writes on its six; nothing kept at a Node beyond the events there;
+fixed work and storage per Node for a fixed declaration (14
+components x 3 integers for the five instances of (6)); the exact
+per-Node inverse for every part (the rule by the ceiling, the fields
+before the seats, the spin by its own two numbers).
+
+**(8) BIT FOR BIT WHERE THE NEW PARTS ARE ZERO, AND THE INTEGERS.** A
+component whose levels and remainder are 0 at every Node stays 0
+under the rule (the rule at 0 gives 0 with r' = 0) and the
+support-only step of b7d6f082 skips it (no support); a body at rest
+without spin holds 0 in every vector and tensor component; so every
+shipped world (the eighteen, the five, the seats, the check-mode
+worlds of 9.61 to 9.75) steps 9.57 (1) bit for bit, p_a = p_0 = p, and
+every pin and every blind expectation of 9.68 stands. THE INTEGERS at
+Gamma = 10^4 and A = 2^20: every hold at most 4 s <= 4 Gamma << A; the
+per-axis rule's total the same as 9.57 (2)'s, 6.1 x 10^18 at the
+muon's pair, since SUM_a p_a^2 <= 3 Gamma^2 as before; the contraction
+at the seat n_i A_i <= (W / 4) x 4 Gamma, whole after one division by
+W; the curl and the gradient six differences of levels; the spin's
+term S x Omega <= A x 2 A; all within int64 with no wider integer.
+THE COST: 14 components in place of 2 field families today, each
+stepped where its support is (the static parts within s R Links of a
+body, 9.45 (2); the waves' support the ball they have reached); at
+the measured 2.6 x 10^6 Node-steps per second (9.62 (5)) a GameBoard
+of 2 x 10^5 Nodes with every instance live costs about 1 second per
+interval, the waves' row of five orbits of 1340 intervals about two
+hours, the shipped rows unchanged (their new components skipped).
+
+**(9) THE CHECK-MODE ROWS THAT READ EACH PIECE, blind, each a direction
+and no pin (9.59 (6)).** (a) AMPERE AND LORENTZ, (b) THE DRAGGING on
+the ring, (c) THE WAVES from the orbiting pair: as 9.77 (6), with (c)
+read now by (d) and by a moving seat, not by a seat pair at rest,
+which the wave does not move on the GameBoard ((4): the wave is in the
+ruler). (d) THE INTERFEROMETER: a light clock with two arms of 300
+Links along x and y, its body at 40 Links from the orbiting pair of
+(c) with the pair's plane the x y plane; the + polarisation along the
+axes, h / Gamma about 4 U v^2 = 3 x 10^-3 at U = 0.02 and v / c_l =
+0.19, moves each arm's light by h / 2, the two arms apart by about half a
+tick of 300 at the peak, oscillating at twice the orbital frequency:
+at the band's edge for one period, so the arms are 600 Links (one
+tick apart) and the reading is the difference of the two arms'
+running counts over ten periods; the same clock with the pair at
+rest, no oscillation. (e) THE
+GYROSCOPE: a seat with spin S along x on the orbit of 9.77 (6) (b)
+around a resting mass: S turns in the orbit's plane by (3 / 2) x 0.02
+x 2 pi = 0.19 radians per orbit, geodetic; the same around the
+rotating ring, the added turn of the dragging (of order 10^-3 per
+orbit there, readable over a hundred orbits); Larmor: a seat with
+charge and moment beside a resting spinning charge, the moment's turn
+at mu B / S. (f) FARADAY: a charged seat at rest at 20 Links from a
+charged seat that starts to hop at the tenth interval; the induction
+moves the resting seat's accumulator by minus the change of A there
+over the hop's first intervals, against the same world with the
+mover neutral: no move. (g) THE MOVING MASS'S FIELD AT EVERY ORDER, a
+GameBoard reading labeled diagnostic: the four paces beside a mass
+hopping at v = 1 / 4, ahead and behind and abeam, against the boosted
+static field's three parts (the scalar gamma (1 + v^2) U in the
+clock, the vector 4 gamma U v, the tensor 4 gamma U v v) within the
+rounding's walk (9.52 (4) (ii)). (h) THE DIPOLE'S SENSE AND FACTOR, a
+GameBoard reading labeled diagnostic: a resting seat with spin S
+against the ring of 9.77 (6) (b) with the same angular momentum G J,
+their vector levels at r = 30 equal within the rounding, and the
+test seat's precession the same in size and sense; this fixes sigma's
+sense in (2) once.
+
+**(10) THE OWNER'S DECISIONS, ONE LINE EACH.** (i) One generic field
+family, declared by representation, components, pair, strength,
+self-unit, signs and holds; stepped by the one rule at the Node's own
+pace; the engine frozen after it. (ii) The hold is the body's record
+read in the instance's representation (the count, the count times
+the momentum, the count times the momentum pair, nature's factors 4
+and 2 once; the spin's dipole on the six), the body's stress-energy
+at its seat. (iii) The field's
+own energy as source is the declared self-unit of (3); gravity and
+the charge declare it 0 because the form already carries beta = 1.
+(iv) Every record reads every instance through the same four paces
+(the time's and the three axes'); a seat reads every part by the
+contraction with its own whole numbers; a free record reads the even
+parts, and the odd parts on a free record are outside the frozen
+engine by the exact inverse, the six and the wall's room, named in
+(4). (v) Gravity is three instances (scalar, vector, tensor), the
+charge two (scalar, vector), as (6). (vi) Spin is a body's number,
+sourced and stepped by (2) and (5); the magnetic moment is declared.
+(vii) Light stays the scalar family with the wheel's polarisation;
+the charge's own wave is the same family by declaration, a reading
+and not a change (the mathematician's line; the owner's word
+decides). (viii) Lifetimes, binding, a finite-range force and a
+self-coupled force are declarations or the law's own, as (6) (f) to
+(i); a decay with several daughters is outside. (ix) No build order:
+Nature24 builds (1) to (6) in one stroke, names the ALGEBRA section
+in the commit, and the gate reads it line by line; the rows of (9)
+run in check mode after the shipped worlds are read bit for bit (8).
