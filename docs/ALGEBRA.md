@@ -9009,3 +9009,122 @@ order of the content under its own identity, is the content as its own
 well and is refused by the clock rows as they stand. The owner's
 sentence holds for everything that takes and for the height; for what
 gives, the well is the one declaration left.
+
+### 9.40 The body, the click and a mere number of Nodes, in algebraic sentences alone (the model owner's word of 2026-09-25 in the mathematician's session: "check it purely algebraically; a body is not just a number of Nodes, a body for us is a number of Nodes that click together; derive from there the big law on a body that keeps it a body with the remainders; what is a click, what is a body, what is a mere number of Nodes; put the Node's remainder and the click's action on the clock into the algebra and then derive"; DEFINITIONS AND THEOREMS, no run on the board)
+
+**D1 (the state).** The GameBoard is a finite set of Nodes with six
+Links each. A record of a family is a triple (a, b, r) of integer
+vectors over the Nodes: the level now a, the level before b, the
+remainder r with 0 <= r_i < wall_i, wall_i = 3 den_i, [num_i, den_i] the
+family's pair at Node i. A Node also carries an integer content M_i >= 0
+and from it its clock (e_i, f_i) = (Gamma, Gamma + M_i), Gamma an
+integer of the world, the same for every family.
+
+**D2 (the step).** One interval maps every record (a, b, r) to (a', a,
+r') by, at every Node, 3 den_i f_i a'_i + r'_i = e_i num_i (S_6 a)_i + 6
+den_i (f_i - e_i) a_i - 3 den_i f_i b_i + r_i, with 0 <= r'_i < wall_i
+f_i, S_6 the sum over the six neighbours. The step is linear in (a, b)
+apart from the floor, is a bijection of (a, b, r) (9.26 (3) (a)), acts
+separately on every family (no cross term, 9.34 (B)) and touches M and
+Gamma not at all.
+
+**D3 (the share, the current, a number of Nodes).** For a record, the
+share at Node i is E_i = 3 den_i f_i (a_i^2 + b_i^2) - num_i Gamma a_i
+(S_6 b)_i - 6 den_i M_i a_i b_i and the current from j to i is J_ij =
+num Gamma (a_i b_j - b_i a_j) (9.35 (2)). For ANY set S of Nodes, its
+Ports are the Links (i, j) with i in S and j not in S, its share is E_S
+= the sum of E_i over S, and its whole is I = E over all Nodes.
+THEOREM T1 (Gauss on any set): E_S after the step minus E_S before the
+step equals the sum of J_ij over the Ports of S, exactly in the real
+law and up to the remainders' rounding in the integer law; the sum over
+all Nodes is invariant. Proof: the identity at one Node (9.19 (3), 9.35
+(2)) summed over S; J_ij = - J_ji cancels every Link inside S. So a mere
+number of Nodes has Ports, a share of every record and a Gauss law, and
+nothing else.
+
+**D4 (a standing record; a body).** A record is STANDING on the set S
+if (a, b) = (phi cos(omega t), phi cos(omega (t - 1))) for an integer
+profile phi supported on S and a rotation omega: an eigenvector of the
+family's operator on the board, phi's support S. A BODY is the support
+of a standing record. THEOREM T2 (what makes a body a body): for a
+standing record every current J_ij is 0 (a_i b_j - b_i a_j = phi_i phi_j
+[cos(omega t) cos(omega (t - 1)) - cos(omega (t - 1)) cos(omega t)] =
+0), hence by T1 the share E_i is constant in time at EVERY Node of S,
+and the gather of the record over any subset of S is t times a constant
+against P times the same constant: the ratio t / P is the same at one
+Node, at the shell, at all of S. THAT IS THE ALGEBRAIC SENTENCE "THE
+NODES OF A BODY CLICK TOGETHER": they carry one eigenvector, so they
+carry one time. A set that carries no eigenvector has no constant share
+and no common time: it is a mere number of Nodes; it can take (its
+Ports gather a passing record) and cannot give. THEOREM T3 (a body
+needs a well): the operator with one pair everywhere has no eigenvector
+of finite support (every eigenvector is a plane wave); an eigenvector
+of finite support exists iff the pair is lowered on a region deep
+enough (9.39 (3), the thresholds), and the clock (Gamma, Gamma + M)
+lowers nothing for light and 10^-8 to 10^-4 for matter at Gamma = 10^6.
+So a body is the eigenvector of a declared well, and "a body is
+something special in the algebra of the big cube" is this: it is an
+eigenvector, a mere number of Nodes is not.
+
+**D5 (the click, as an operator on the state).** Let a record have the
+residue u on the wheel W (D6) and the threshold theta = (2 u + 1) T / (2
+W), T its whole gathered per acquisition. The TAKING END at the set S:
+at the first interval at which the running sum of the positive Port
+currents of S reaches theta, the map X_S: (a, b, r, M) -> (a with the
+record's rows set to 0 on its support, b likewise, r UNCHANGED, M_i + 1
+for every i in S). The GIVING END at a body S with a standing record
+(phi, omega) and a stock: at the first interval at which t E_S reaches
+theta with T = P E_S (equivalently t >= (2 u + 1) P / (2 W)), the map
+X_S^T: (a, b, r, M, stock) -> (the born family's rows set to psi_S chi_K
+on S, psi_S the born family's eigenvector on S with the zero row beyond,
+chi_K the character of the declared momentum; the own record's rows
+rewritten as (phi, phi cos omega); r UNCHANGED; M_i - 1 for every i in S
+by the stock's quantum leaving; stock - 1). A CLICK IS ONE OF THESE TWO
+MAPS, applied once, at one interval, on all the Nodes of one set at
+once, and nothing else is a click. THEOREM T4 (the clock under a
+click): X_S and X_S^T change no r, no pair and no Gamma; they change M
+on S by +-1, hence the clock at every Node of S from (Gamma, Gamma + M)
+to (Gamma, Gamma + M +- 1). For every family at those Nodes the
+rotation goes from omega to omega' with 1 - cos omega' = (Gamma / (Gamma
++ M)) (1 - cos omega) (9.35 (2)); so one taken quantum slows every clock
+on S by (1 - cos omega') / (1 - cos omega) = (Gamma + M) / (Gamma + M +
+1), a period longer by 1 / (2 (Gamma + M)) for small omega, and one
+given quantum hastens it by the same; a standing record's next tick
+(2 u + 1) P' / (2 W) is longer by that factor, and every record passing
+S is bent toward it by the same clock (9.35 (5)). THIS IS THE WHOLE
+ACTION OF A CLICK ON A CLOCK: through M and through nothing else. A
+click also sheds nothing: X_S^T sets the born rows, and the step alone
+carries them out (9.37).
+
+**D6 (the remainder, and the law that keeps a body a body).** The
+remainder r_i belongs to the Node: D2 moves it, D5 leaves it. THEOREM
+T5 (a body is periodic in its levels and remembers in its remainders):
+after X_S^T the own record's levels are (phi, phi cos omega) exactly as
+at the last reseed, so the body is the same eigenvector on the same
+Nodes, bit for bit in its levels; its remainders are those the last
+cycle left, so the next cycle's remainders are r_i(t) = (c_i(t) + r_i(0)
++ the carries) mod wall_i with c_i(t) the fixed sequence the profile
+gives at Node i; hence the next residue is a fixed function of the last
+(a deterministic map on the wheel), and the body's REMAINDER is the sum
+of its Nodes' remainders on its wheel, u = (sum over S of r_i mod wall)
+/ g, g = gcd(num, wall), W = wall / g (9.38 (9)). The law that keeps a
+body a body across its clicks is therefore: THE CLICK REWRITES THE
+LEVELS AS THE EIGENVECTOR AND LEAVES THE REMAINDERS; the eigenvector
+makes the Nodes one body (T2), the remainders make its next click's
+place (D5), and the content it gave or took sets its clock (T4). Nothing
+is kept at a Node beyond a, b, r and M. THEOREM T6 (the remainder
+rule): a record with r = 0 at every Node for ever (an exact one, 2 cos
+omega in {-1, 0, 1}, 9.26 (4a)) has no residue to read and is never
+gathered: it crosses every set's Ports and no X_S applies; every other
+record has a residue and clicks once, at the first set whose gather
+reaches its threshold (9.25 (2), one quantum one click).
+
+**THE SENTENCES, GATHERED.** A click is X_S or X_S^T at one interval on
+one set. A body is the support of an eigenvector of the operator with
+its declared well; its Nodes share one time, so they click together,
+and their remainders' sum is its residue. A mere number of Nodes has
+Ports and a Gauss law, takes and never gives. The remainder is the
+Node's, moved by the step and left by the click. A click acts on the
+clock through the content alone, by (Gamma + M) / (Gamma + M +- 1). No
+run on the board is needed for any line above; the runs of 9.38 and
+9.39 are illustrations of T2, T5 and T3 and add no rule.
