@@ -199,7 +199,7 @@ in the day's log; nothing of them is a name the engine branches on.
   of a region is outside the one algebra and is carried, named so, until
   it goes; a moving receiver or emitter as a NAME that translates with its
   packet is derived as lawful and ADOPTED (record 1889, 2026-09-25): a set
-  translating at v_g(**K**), the verb T on a name (9.24 (4)).
+  translating at v_g(**K**), the translation (verb T) on a name (9.24 (4)).
 - **What is compared with nature.** The clicks alone: the counts and the
   first rungs on the receivers' names (the owner's word of 22:39Z, "check
   clicks only in the experiment"); every other property of the run is
@@ -207,7 +207,7 @@ in the day's log; nothing of them is a name the engine branches on.
   (9.20 (C)) and checked at load (9.22 (3)); a GameBoard reading is a
   diagnostic and never a result.
 - **The property test** of the one operator (ALGEBRA.md 9.20): equivariance
-  under the 48, translation on the torus, conservation of the content and
+    under the cube group, translation on the torus, conservation of the content and
   of the form I (J for the families together) between clicks, reversibility
   except the click, locality, only the click reads; verified in the algebra
   first, met on the planted boards of `docs/designs/lab_tools/`, and built
@@ -217,7 +217,7 @@ THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
 checks (its "takes what reaches its cells" and the table body are history;
 the cells of every two bodies are disjoint, the seed is the COMPOSED
 operator's mode, the composed operator's largest eigenvalue is below 2,
-and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
+and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
 - **The body.** A block of cells with a pair on the six-neighbour term
   (a well of a massive kind, a gap of light's kind) and a momentum: it
   moves one Link at a time by the drive's accumulators (`_move_block`),
@@ -241,17 +241,18 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   the layer's one z, a square and not a cube put on one z; ON A CHAIN it is
   the segment [x0, x0 + s) (the light clock's A at [600, 612), sagnac's
   blocks at 700 and 772 of side 12, the index's block of side 24). THE
-  FIFTEEN WORLDS' BODIES of that day (SEVENTEEN since 2026-09-25, with
-  the two-qubit computer and Mach-Zehnder, LAB_TOOLS.md part B rows 16
-  and 17), checked against this (15:20Z): 4a's block of side
+  MEASURED EXPERIMENTS' BODIES of that day (eighteen since 2026-09-25,
+  with the two-qubit computer, Mach-Zehnder and Sorkin's three openings,
+  the placed experiments of LAB_TOOLS.md), checked against this (15:20Z):
+  the muon's moving clock's block of side
   14 at [93, 93] on the 200 x 200 layer and the deep well's of side 40 at
   [44, 44] on 128 x 128, squares; the boxes' blocks of side 20 and 28 in
   64^3 and 48^3, cubes; the light clock's, sagnac's, redshift's and the
   index's blocks on chains, segments of 12 and 24; the mirror line's and
-  the take lines' blocks of side 1 on the two_slits and M1 layers, single
+  the take lines' blocks of side 1 on the two slits' and de Broglie's fringes' layers, single
   cells; Bell's and Malus's polarisers, bodies of one Node with a table
   (HISTORY: no table, record 1878; a polariser is a body with an axis and
-  two receiver cubes, ALGEBRA.md 9.18); the fans, M2 and the cart have no
+  two receiver cubes, ALGEBRA.md 9.18); the pace fans, the moving mass's energy and the cart have no
   block (a lamp and receiver bodies of one Node: HISTORY, a detector is a
   cube of side 3 or more, record 1899): every file declares its body by
   the lower vertex and the edge
@@ -262,7 +263,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   lowered pair on its cells (ALGEBRA.md 8.3: the well); nothing else is
   kept at them and no rule branches on them.
   THE CONDITIONS A BODY MUST SATISFY TO BE A BODY, and where each is
-  checked as the code stands on `main` (Reviewer 3's preview of 16:15Z,
+  checked as the code stands on `main` (the gate reviewer's preview of 16:15Z,
   read against world.py, detector_law.py and the margin module
   `src/event_universe/diagnostics/massive_record_margin.py`; the owner's
   word of 16:35Z, "the experimenter must be able to put the cube exactly
@@ -335,7 +336,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
      the sentence "the ramp r is below 10 relaxation times of its own well
      (1 / (omega_0 - omega_b) = t intervals, 10 times 10 t)"; at or above
      it the ramp's line is printed as COMPUTATION (test f). THE SILENT
-     BODY'S EXCEPTION (Reviewer 3's line F, 14:45Z): a body with seed 0 and
+     BODY'S EXCEPTION (the gate reviewer's line on the seed-0 body, 14:45Z): a body with seed 0 and
      no own record (the receding index's medium body, pushed at `start`
      3000 with a momentum and no ramp) has no mode to lag, no margin
      reading and no ramp check, as the margin module skips it; test g on
@@ -353,10 +354,10 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   Conditions 3 and 4 stay the margin module's at the runner's start (the
   same call, before the first interval); the owner's word of 16:48Z
   answered conditions 1, 5 and 7 and they are built on body-check, read by
-  Reviewer 3 on main.
-  THE FIFTEEN WORLDS' BODIES OF 2026-09-24 AGAINST THE LIST (the scan of
-  that day, HISTORY since the unification and the seventeen of
-  2026-09-25; read from the files on `main` 8b9a2897 through the loader;
+    the gate reviewer on main.
+  THE MEASURED EXPERIMENTS' BODIES OF 2026-09-24 AGAINST THE LIST (the scan
+  of that day, HISTORY since the unification and the eighteen measured
+  experiments of 2026-09-25; read from the files on `main` 8b9a2897 through the loader;
   with the vertex check of 15:20Z above):
   the muon's form, the layer pin world at rest (`layer_pin_rest_14.json`):
   the square of edge 14 at [93, 93] on the 200 x 200 periodic layer, whole;
@@ -422,15 +423,15 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   own number); on the owner's word "regenerate" (records 1817 and 1818;
   16:48Z: the whole board carries the mode's values) the eleven are
   REGENERATED with the seed on the mode (the declaration of the body's
-  seed on its mode, DECLARATIONS.md section 15 M1-11; the generators'
+  seed on its mode, the seed-on-the-mode declaration (DECLARATIONS.md section 15, item M1-11); the generators'
   `seed_on_the_mode`) and the muon's form in motion with the ramp 12000
   (the ramp's declaration, section 8; HISTORY, the ramp retired by record
   1884); every listed massive world now
   loads clean under the check (test g of tests/test_body_conditions.py).
   The readings declared on the flat-seeded worlds are re-derived blind
-  before their preliminaries (M1-11).
+  before their preliminaries (the seed-on-the-mode declaration).
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
-  the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
+  the gap pair [1, 2] (the gap pair's declaration, DECLARATIONS.md section 15, item L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. HISTORY
   (no table in the engine, ALGEBRA.md 9.14 (b) and 9.17 (6)): a
   polariser WAS a body WITH A TABLE (a measured event whose table entry
