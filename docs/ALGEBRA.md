@@ -8133,3 +8133,35 @@ and 9.27 (A)'s stop were corrected at 9ffc0fb2 (9.30 (1)). **THE GATE:**
 2c9690cb through 952f745a CONFIRMED (sent at 05:50Z and 06:45Z on the
 mathematician's clock); the norm's bound 2^126 the host's guard, the units
 the flux's (3 G times the wall); the stop the loader's residual bound.
+
+**(14) THE MODEL OWNER'S WORD ON THE ENGINE, 2026-09-25 in the
+mathematician's session (translated: "there are bugs in the engine today,
+they must be cleaned; on the board of Nodes there is no ray; an event
+duplicates and splits at the Node, and when it does there is a clock
+shift, because it is a mass: a mass is coupled to a clock, and light too
+is coupled to a clock on the board; check it with the Boss"), CHECKED
+AGAINST THE ALGEBRA: his picture is the rule of 8.1 exactly, and nothing
+beside it. (a) NO RAY: a record is two levels at every Node it touches,
+and every interval the Node's level goes to its six neighbours with the
+weight num / (3 den) and turns against its own past, 3 den a_next + r' =
+num S_6 - 3 den a_before + r; the "event that duplicates" is this split,
+the ray law's walk on a line (beam-v1) is retired (record 1875; 9.30 (2)
+(a)). (b) THE CLOCK IS THE SPLIT: the one pair [num, den] sets both the
+split's weight and the rotation per interval, cos omega = (num / den)
+(cos K_x + cos K_y + cos K_z) / 3; a mass is a pair with num < den, whose
+rest rotation cos omega_0 = num / den is its clock (8.1, 9.26 (1)); light
+is the pair [1, 1], whose rotation is set by its born **K** alone (cos
+omega = 2 / 3 at [512, 1]): mass and light are coupled to the clock by
+the same rule, one with a rest clock and one without; a declared well
+shifts that clock and bends the family's records toward it (9.29). (c)
+THE BUGS ARE THE MECHANISMS BESIDE THE RULE, named in the correspondence
+audit (record 1942) and in 9.30 (2): the ray-law path still the engine's
+default (a world without the key runs on rays); the `massive_kind`
+branches in the law's path; the cavity's per-interval zeroing; moving
+material with a ramp and the remainder rescaled under it; faces per
+family and closed boards admitted; the block clock's sign-crossing count
+named "click"; the mode part's back-action from its own born light alone;
+the born pair in place of the train (9.17 (6a)); the placement rule and
+the tail check not yet refused at load. Each is a code matter of
+Nature24's under the cleanup order of 9.21 (3), gated line by line, and
+none is a law change: the law is (a) and (b) and the click.
