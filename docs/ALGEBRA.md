@@ -11295,3 +11295,110 @@ by the clock's second order, exact to second order in U and a row of
 its own beyond. THE ROWS: (6), read with beta = gamma = 1 expected. THE
 KEY: `weak_field` on, off by default; off, the first-order rule of
 9.50 (13) as today.
+
+### 9.57 The law's rule with Einstein's weak field, in one section (the model owner's decision of 2026-09-25 through the Boss, record 2024: "switch"; the form of 9.56 (7), the Node's own pace entering twice, which keeps his word "only from the current Node"; the wheel, the guard, the conserved form, the flux booking and Born's rule; the integers; what moves; the rows with their nature pins, blind)
+
+**(1) THE RULE AT A NODE.** Every family, at every Node, with p = Gamma
+- c + q Lambda d the Node's own pace (c the family of clicks' level, d
+the family of charge's, q the record's charge, 9.48 (3), 9.51 (2)), the
+wall the constant 6 den Gamma^2:
+
+  6 den Gamma^2 a_next + r' = 2 p^2 num S_6(a_now)
+  + [12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num p^2] a_now
+  - 6 den Gamma^2 a_before + r,  0 <= r' < 6 den Gamma^2.
+
+The two field families step plain, pace 1 and the wall 3 den, as
+before (9.45 (6) (D)). At c = 0 and d = 0 the rule is the vacuum's term
+for term, the levels bit for bit, the remainders 2 Gamma^2 times the
+plain rule's (9.56 (7), COMPUTED). The first-order rule of 9.50 (13)
+is this rule's limit at first order in c / Gamma, HISTORY as the law
+from this record, kept as the control of the rows in (5) and as the
+digests' record. THE INVERSE: the same integers, the ceiling and the
+difference, exact at every Node for every clock history (the wall
+constant, 9.50 (8); COMPUTED). THE WHEEL at a Node: 6 den Gamma^2 over
+the gcd of 2 p^2 num, the self coefficient and the wall, read from the
+rule, never declared (9.22 (4)). THE GUARD: p > 0 at every Node for
+every declared sign; the pace at or below 0 refused by name. THE
+CONSERVED FORM: the read matrix 2 p_i^2 num is not symmetric, so the
+form carries the weight 1 / p_i^2 on the Node terms and the plain
+current on the Links: E = SUM_i [6 den Gamma^2 (now_i^2 + before_i^2)
+- B_i now_i before_i] / p_i^2 - 2 num SUM_i now_i S_6(before)_i, B_i
+the self coefficient; exact where the field stands, the work term
+where it moves (9.50 (5), (9)); a GameBoard reading. THE FLUX BOOKING
+at a detector's Ports: the plain current num (now_i before_j -
+before_i now_j) one way inward, as today (9.50 (13) (iv)); BORN'S RULE
+at the taking end unchanged: the shares among the Nodes of one
+detector at one level are the plain flux's, and the click's count is
+whole (9.25 (2), (3)). THE CLICK unchanged in every part (9.53 (1),
+SIMULATOR_DEFINITIONS.md "A click"). THE TWO WEIGHTS: the clock's
+second-order weight 1 and the ruler's weight 1, exactly, 9.56 (7).
+
+**(2) THE INTEGERS, DECIDED (with Nature24 before the build).** The
+rule's total at a Node under the amplitude bound A is at most 2 Gamma^2
+num 6 A + |B| A + 6 den Gamma^2 (A + 1), with |B| at most 12 den Gamma^2
++ 12 num Gamma^2; it must sit below 2^63. At Gamma = 10^6 and A = 2^28
+it is near 10^24: refused. THE PICK: Gamma = 10^4 and A = 2^20 as the
+world's declared integers under the law (the total near 3 x 10^18,
+one third of the room), int64 kept, no wider integers: wider integers
+cost the engine ten to fifty times its speed for nothing a row needs;
+no row of the eighteen needs Gamma above 10^4 (the deepest content 64
+at one Node, c / Gamma = 6 x 10^-3, far from the horizon). WHAT IT DOES:
+the clock's unit is 10^-4, a hundred times coarser than the eighteen's
+10^-6, so a body of content 64 slows its own clock by 0.6 percent in
+the rotation and 0.3 percent in the tick; the light clock's 300 moves
+by about 1 within its band of 9; the amplitude 2^20 leaves the rounding
+walk 256 times larger relative to the rows than 2^28 did, at most 10^-4
+of a phase over 10^4 intervals, below the bands; every pin is
+recomputed blind under the law (9.49 (6)), the old pins kept as the
+first-order control. A world that declares Gamma and A outside the
+bound is refused by the loader naming the total.
+
+**(3) WHAT MOVES.** 9.50 (13): the first-order rule marked HISTORY as
+the law, kept as the control; its (i) to (vi) hold for this rule with
+p^2 for p where the reads are named. 9.46 (2), the body record: a
+mode's rotation splits in two parts, the mass part 1 - num / den of its
+family and the Link part (1 - cos omega_c) - (1 - num / den) from its
+clock pair, and the step scales the first by the time factor (p^2 +
+Gamma^2) / (2 Gamma^2) and the second by (p / Gamma)^2, so the record
+carries its family's pair beside its clock pair and its wall is 2
+Gamma^2 den den_c; the gate (9.46 (4)) unchanged. 9.52: the potential
+is -c / (2 Gamma) at first order as before (the time factor's linear
+term), the feed and the hop unchanged, Kepler's constant unchanged at
+first order. 9.51 (9), the flux pin: unchanged. 9.56 (3) and (4): the
+product form and the Link are not needed; (7) is the law. The
+definitions: SIMULATOR_DEFINITIONS.md "The operator" and "A body" read
+the rule of (1) with the pace entering twice; the run display shows
+the pace at a Node as its two weights beside the level (a diagnostic);
+docs/TERMINOLOGY.md carries "the pace" and "the weak field". The
+engine: one rule in place of one rule, the same shape; the keys
+`node_clock` and `charge_strength` as before; no key for the law
+itself, the law is the law.
+
+**(4) THE ROWS OF 9.56 (6) WITH THEIR NATURE PINS, BLIND (each a
+detector's click; the control the same world under the first-order
+rule).** In each, U_b = c_b / (2 Gamma) with c_b the level at the point
+named, the field of a body of energy count s being s times the
+reference flux over the distance in Links (9.45 (2), 9.51 (9)); the
+bands are the rounding's, one Node of centroid or one interval, and
+the draw's where counts are read. (a) THE REDSHIFT: two light clocks
+of one family, one at the well's bottom (level c_1) and one at its top
+(c_2); the ratio of their tick intervals sqrt of the time factors,
+(1 - 2 U_1 + 2 U_1^2) / (1 - 2 U_2 + 2 U_2^2) under the root, 1 - (U_1 -
+U_2) to first order; nature: the Pound and Rebka ratio, the clock on
+the mountain; the control the same ratio to first order. (b) THE
+BENDING: the beam past the body at closest distance b, the centroid at
+a receiver L Links beyond shifted by 4 U_b L toward the body (the
+first-order rule: 2 U_b L); nature: 1.75 seconds of arc at the Sun's
+limb; the blind pin: twice the control's shift within one Node. (c)
+THE SHAPIRO DELAY: the round trip past the body, the click delayed by 4
+U_b times the path's length within the well's reach over the control's
+2 U_b; nature: 200 microseconds past the Sun; the blind pin: twice the
+control's delay within one interval. (d) MERCURY: the orbiting emitter
+of 9.52 (4) (vi) at semi-axis a and eccentricity e, the perihelion
+advancing 6 pi U_p per orbit with U_p the potential at a (1 - e^2), read
+from the clicks' delays over many orbits; nature: 43 seconds of arc a
+century; the control two thirds of it; the blind pin: three halves of
+the control's advance within the rounding. (e) THE EQUIVALENCE AND
+NEWTON: 9.52 (3), unchanged, the same interval for two families within
+one hop. A row outside its band comes to the mathematician before any
+pin moves.
