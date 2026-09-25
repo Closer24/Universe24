@@ -11117,22 +11117,45 @@ AND NOT BEYOND; the owner's sentence holds for the redshift, the
 equivalence and Newton, and fails by one half for light and by one
 third for Mercury.
 
-**(3) THE FIRST ADDITION, gamma = 1: THE PACE ON THE LINKS.** Nature's
-factor 2 in light's bending is the ruler's, the space between the
-Nodes: light is slowed once by the clock at the Node and once more by
-the space it crosses. On the GameBoard the space between two Nodes is
-the Link, so gamma = 1 needs the pace on the Link as well as at the
-Node: the Node's step at p_i and the six reads each carried at the
-Link's pace, (p_i + p_j) / 2 with the wall doubled, or p_j (the sender's
-form of 9.50 (12), which the owner refused as strange). Light's index
-is then Gamma / p to first order, 1 + 2 U, the bending and the Shapiro
-delay whole; a slow body's fall is unchanged (the ruler enters its
-motion at order v^2 U). Generic, vector, local (one Link) and exact
-backward (the wall constant) as 9.50 (12) showed; and it READS THE
-NEIGHBOUR'S LEVEL THROUGH THE LINK, which is exactly what the owner's
-word "only from the current Node" excludes. THE DECISION IS HIS: the
-Node alone gives Newton's half of light's bending; Einstein's whole
-needs the Link.
+**(3) THE FIRST ADDITION, gamma = 1: THE PACE ON THE LINKS AS WELL AS
+AT THE NODE, THE PRODUCT (corrected on the owner's question of
+2026-09-25, "did we not meet a problem when it was built that way?").**
+Nature's factor 2 in light's bending is the ruler's, the space between
+the Nodes: light is slowed once by the clock at the Node and once more
+by the space it crosses. On the GameBoard the space between two Nodes
+is the Link. THE SENDER'S FORM OF 9.50 (12), built by Nature24 as item
+34 and gated exact, met no problem on the engine; it was set aside for
+the owner's reading of the clock as the Node's own; and IT DID NOT GIVE
+EINSTEIN'S BENDING EITHER: it put the pace on the reads in place of
+the Node's own factor, and at a uniform level it is the Node's form
+term for term, the same index sqrt(Gamma / p), the same half. The form
+that gives gamma = 1 is the PRODUCT: the Node's pace on its whole step
+and the Link's pace on each read besides,
+
+  3 den Gamma^2 a_next + r' = p_i num SUM_j p_j a_j
+  + [6 den Gamma^2 - 6 Gamma p_i (den - num) - 6 num p_i^2] a_i
+  - 3 den Gamma^2 a_before + r,  0 <= r' < 3 den Gamma^2,
+
+so that a mode's mass term is scaled once by p / Gamma (the clock, the
+redshift as before) and its Link term twice (the clock and the ruler):
+1 - cos omega' = (p / Gamma)(1 - num / den) + (p / Gamma)^2 num (6 -
+sigma) / (6 den); light's index is then Gamma / p to first order, 1 +
+2 U, the bending and the Shapiro delay whole; a slow body's fall is
+unchanged (the ruler enters its motion at order v^2 U). Its marks: at c
+= 0 the self term is 0 and the rule is the vacuum's term for term (the
+remainder scaled by Gamma^2); the wall is constant, so the inverse is
+exact (9.50 (8)); the read matrix p_i p_j num is symmetric, so its
+conserved form is UNWEIGHTED and whole, better than the Node form's 1
+/ p; generic, vector, local (one Link). Its cost: the wall carries
+Gamma^2, and the rows' int64 has no room at Gamma = 10^6 with the
+amplitude 2^28 (9.35 (2)); the row runs at Gamma near 10^4 with the
+amplitude near 2^20, or with wider integers, a host matter, the same
+cost as (4)'s. And it READS THE NEIGHBOUR'S LEVEL THROUGH THE LINK,
+which is exactly what the owner's word "only from the current Node"
+excludes. THE DECISION IS HIS: the Node alone gives Newton's half of
+light's bending; Einstein's whole needs the Link. One caution for the
+decision: gamma = 1 alone makes Mercury (2 + 2 - 0) / 3 = 4 / 3 of
+nature's, worse than today's 2 / 3; Einstein needs (3) and (4) together.
 
 **(4) THE SECOND ADDITION, beta = 1: THE CLOCK'S SECOND ORDER.** The
 clock factor must be 1 - 2 U + 2 U^2 to second order, which in the
