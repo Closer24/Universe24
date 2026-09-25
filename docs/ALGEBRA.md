@@ -10404,3 +10404,53 @@ clock (9.45 (5)); the clocked period exceeds the plain mode's by about
 M / (2 Gamma) intervals, below one interval at every content of the
 eighteen, so the integer is the same; when it is not, the generator's
 integer under the clock is the one declared.
+
+**(12) THE CLOCK ON THE LINK'S TWO ENDS: NATURE24'S FORM (B) RULED THE
+LAW'S FORM (the model owner's word in Nature24's session, 2026-09-25:
+"excellent, go for it", on the fixed wall; Nature24's refinement;
+PROVED and COMPUTED, the scratch script `link_clock.py`).** Two forms
+with the constant wall, both one to one, both the rotation of (8) at a
+uniform level. (A) The clock on the Node's own neighbour sum, the form
+of (8): (Gamma - c_i) num S_6(a)_i. (B) The clock on each Link's far
+end: num SUM_j (Gamma - c_j) a_j over the six neighbours j, the rest
+as in (8):
+
+  3 den Gamma a'_i + r' = num SUM_j (Gamma - c_j) a_j + 6 den c_i a_i
+  - 3 den Gamma b_i + r,  0 <= r' < 3 den Gamma.
+
+THE RULING: (B) IS THE LAW'S FORM. The reasons, one each. (i) Its
+conserved form has INTEGER weights: the operator is symmetric under
+D_i = Gamma - c_i, so E = SUM_i (Gamma - c_i) [3 den Gamma (a_i^2 +
+b_i^2) - 6 den c_i a_i b_i] - num SUM_i (Gamma - c_i) SUM_j (Gamma -
+c_j) a_i b_j is an integer, exactly invariant where the field is static
+(COMPUTED in exact rationals on the ring at a level walking by Node:
+invariant, integer), and changes by the weights' change where it moves
+(9.45 (5)); under (A) the weight is 1 / (Gamma - c_i), a rational per
+Node ((9)). (ii) The Link current is antisymmetric with the clock at
+both ends, J_ij = (Gamma - c_i)(Gamma - c_j)(a_i b_j - b_i a_j): T1
+holds with integers. (iii) It is nature's form: the wave equation in a
+static metric is the divergence form, the derivative of the metric's
+weight times the derivative, a self-adjoint operator, and (B) is that
+operator on the GameBoard; (A) is the non-divergence form. (iv) At a
+uniform level (A) and (B) are one sum term for term (COMPUTED); their
+difference at a Node is the gradient term num SUM_j (c_j - c_i) a_j,
+zero where the level is flat, and of the order of the level's slope
+over Gamma elsewhere: it moves the amplitude's transport, not the
+rays, and no pin of the eighteen reads it. (v) The three tests: generic
+(the one primitive; the read of a neighbour carries the neighbour's
+clock level, one product of two levels across one Link); vector (the
+six verbs, one division); local (the six neighbours' levels are one
+Link away, read as S_6 reads their rows). THE FLUX BOOKING at a
+detector's Ports carries the weight (Gamma - c_i)(Gamma - c_j), about 1
+- 2 M / Gamma of the vacuum's at a body of content M: the shares among
+the Nodes of one detector at one level are unchanged, so Born's rule
+at the taking end is unchanged; the count taken is the click's, whole.
+THE WHEEL at a Node: 3 den Gamma over the gcd of the total's
+coefficients, num (Gamma - c_j) over the six j, 6 den c_i, 3 den Gamma.
+THE GUARD: Gamma - c > 0 at every Node (c below Gamma; a negative c,
+the charge's hill, raises the numerator above the vacuum's, and the
+load bound reads |c| at most the world's content twice). THE INVERSE
+exact under (B) with the level walking (COMPUTED: 0 of 300 backward
+steps wrong). (8)'s pointers read (B) where they read (A): the body
+record at one level is (8)'s (the same at a uniform level); the charge
+reads (Gamma - c_j + q Lambda d_j) at each far end.
