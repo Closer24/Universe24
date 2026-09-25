@@ -9911,3 +9911,82 @@ needed only where a record of the body's OWN family must pass through
 it (lensed, transparent); the eighteen's passing records are of other
 families, so a seated body carries no pair region there. Under these
 two caveats it works, and (4)'s equivalence test decides the numbers.
+
+### 9.48 The charge: a sign on the quantum and a signed field, so that bodies repel as well as attract (the model owner's decision of 2026-09-25 in the mathematician's session: "I want to add this feature; it seems important to me"; DERIVED from 9.45 by one sign; the three tests; the numbers; supersedes the "no charge" line of 9.46 (6) and 9.47 (10); for the Boss's record and Nature24's build after the family of clicks and the body record)
+
+**(1) THE SIGN ON THE QUANTUM.** Every family declares a charge q in {-1,
+0, +1} per quantum: light 0, each matter family its own (an electron
+family -1, a proton family +1, a neutral family 0). The label passes in
+the click, whole, as every label does (9.36, 9.40 D5): at a taking the
+taker's charge Q rises by the quantum's q, at a giving the giver's Q
+falls by the born family's q (a body giving light, q = 0, keeps its Q).
+A body's charge Q is the sum of the signs of the quanta it holds, an
+integer of either sign, held at its Nodes as its content M is.
+
+**(2) THE FAMILY OF CHARGE.** A fifth family, the family of charge: pair
+[1, 1]; two levels and a remainder per Node; its level d_i held at a
+body's Nodes at Q (signed) and moved elsewhere by the plain step with
+the world's one border; its own step plain (e = f for itself); no
+residue, no ladder, no click and no quantum of its own; its unit the
+charge quantum; its transients unbooked, reflecting and dying in the
+rounding; its static part around a held Q the discrete Coulomb potential
+Q R / r (9.41 (3)), of either sign. Everything of 9.45 (1) and (2) with
+Q for M, and one thing more, the strength: a declared integer Lambda of
+the world, the charge's weight in the clock, below.
+
+**(3) THE READING, ONE SIGN.** The clock a record of charge q reads at a
+Node is (e_i, f_i) = (Gamma, Gamma + c_i - q Lambda d_i): the family of
+clicks' level as before, and the family of charge's level times the
+strength, WITH THE SIGN OPPOSITE TO THE READER'S OWN. Then: a record
+near a body of its own sign sees q Lambda d > 0, f below Gamma + c, a
+FASTER clock, a hill, and is bent away (9.29: a hill repels, +13.1
+Nodes computed); a record near a body of the opposite sign sees a
+slower clock, a well, and is bent toward it (9.29: a well attracts,
+-14.8 Nodes); light, q = 0, reads no charge at all and is bent by the
+content alone, as in nature. The step at the Node is D2 with this f,
+one more product of integers in the self term; the share, the current
+and Gauss (T1) hold with this f as with any clock field; the wheel at
+the Node is the rule's with this f. The three tests: generic (one
+primitive, a signed label and a field, no family name in the rule);
+vector (a product q Lambda d_i a_i at the Node, the share's own verb;
+sums; one division with the remainder kept); local (d_i at the Node).
+The loader's bound: f_i > 0 everywhere, so Lambda |d_i| < Gamma + c_i:
+the charge's hill can hasten a clock at most to the vacuum's, never
+stop it.
+
+**(4) WHAT IT GIVES, AND THE NUMBERS.** Coulomb's form: the field Q R /
+r, the bending as its gradient, the force falling as 1 / r^2, like signs
+repelling and unlike attracting, light untouched: DERIVED from (2) and
+(3) by the same steps as Newton's potential in the clock (9.41 (4)).
+THE STRENGTH AGAINST GRAVITY: per quantum, Lambda times the content's
+effect; with Gamma = 10^6 and f > 0, Lambda at most about 10^6 / |d| at
+the body's Nodes, so the ratio of the charge's pull to the content's is
+at most of the order of 10^5 to 10^6 on the eighteen's integers, not
+nature's 10^40; a larger ratio needs a larger Gamma and a smaller
+amplitude under int64 (the wall 3 den (Gamma + c) times the amplitude
+below 2^63), a declared trade, and no pin of the eighteen asks for it.
+THE WELL FROM THE LAW, for the first time: a charge of the opposite
+sign makes a well of relative depth about (1 - p) Lambda |d| / (p
+(Gamma + c)) for a matter record (9.39 (3), 9.41 (4) (b)); against the
+computed thresholds (side 32: 0.002 to 0.003; side 8: 0.010 to 0.020;
+side 3: 0.10 to 0.15) a body of side 32 is bound by an opposite charge
+at Lambda |d| about 0.25 Gamma, a body of side 8 at about 1.5 Gamma,
+which the bound f > 0 forbids, and a body of side 3 never; so under
+this law an electron-like record binds to a proton-like body as a mode
+of the charge's own well of side 32 or more, and the declared well of
+[800, 801] in [800, 809], depth 0.010, is matched by Lambda |d| about
+0.9 Gamma: a computed row, the atom, once the family is built; the
+declared wells of the eighteen stand as they are.
+
+**(5) THE PINS AND THE ENGINE.** Every family of the eighteen declares q
+= 0, so the family of charge is 0 everywhere and the engine is bit for
+bit as without it: no pin moves. The cost: two levels and a remainder
+per Node more, one product more in every record's self term. In the
+engine: the charge label per family; Q per body, moved at clicks with
+the label; the fifth family on the scaffold of the family of clicks
+with Q for M and the sign in the reading; Lambda a world key; the f > 0
+bound at load; a seated body record in motion needs one rule more, its
+pace changed by the field's gradient at its seat (9.29's ray equation
+as a line; a record on the lattice needs none, the step refracts it).
+The owner's constant of four families becomes five. What stays open:
+the atom as a computed row; the strength's scale as a declared trade.
