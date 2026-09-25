@@ -12984,3 +12984,70 @@ alone). The transverse clock: gamma times the whole, 331, the ratio
 keeps its late clicks and reads above 1.4, as the 1.74 +- 0.06 of
 this head; with it, 1.20 +- 0.02. The receding mirror's reflected
 norm 0.392 of the incident, a GameBoard reading beside the clicks.
+
+### 9.75 Doppler built (Nature24's head 4c89a4b2, item 49): the gate with one line owed (the boosted norm), the transverse train by aberration, the blind ticks of the long-wave Lorentz pair on the file's own geometry, and the point emitter's first row
+
+**(1) THE GATE ON 4c89a4b2: CONFIRMED on the wave number, ONE LINE OWED
+ON THE NORM.** The moving emitter's train at k gamma (1 + v / c_l)
+forward and k gamma (1 - v / c_l) backward with c_l the given family's
+group pace at k, declared as the train's own clock with a whole
+wavelength and the body's extent n of them, refused on a body at rest:
+9.62 (4) and 9.74 (4) as written (the wavelengths 13 and 34 at the
+long wave, [4096, 13] and [2048, 17]). THE NORM (9.74 (3)): the boosted
+train must carry gamma (1 + beta) T_rest forward and gamma (1 - beta)
+T_rest backward, the quantum's energy in the board's frame; a train
+shortened to 104 Nodes at the rest amplitude carries 0.62 T_rest, the
+wrong way. The Lorentz transform of a light train is exact and simple:
+the length by 1 / D and the amplitude by D forward (D = sqrt((1 + beta)
+/ (1 - beta)) = 1.596), so the norm, amplitude squared times length, is
+D T_rest; backward the length by D and the amplitude by 1 / D, the norm
+T_rest / D. Nature24 reads the given norms of the moving and the
+resting trains as built; if their ratio is not 1.596 forward, the
+amplitude carries the factor D and the head is complete.
+
+**(2) THE TRANSVERSE TRAIN: the aberration.** A train given across the
+motion is the rest train boosted, and the boost tilts it: in the
+board's frame its wave vector is (gamma beta k_0 along the motion, k_0
+across), its frequency gamma omega_0, its norm gamma T_rest; the
+wavelength along the motion 2 pi / (gamma beta k_0) = 43 Links at k_0
+= 0.299 and v = 1 / 4, the whole-wavelength rule on both axes (the
+emitter's extent along the motion at least 43). Without the tilt the
+light goes straight across in the board's frame and misses a mirror
+carried with the body (52 Links away after the round trip at L = 60).
+This is 9.62 (4) in its general form: the given rows are the rest
+rows' wave four-vector boosted, the Doppler factor along the motion
+and the aberration across it.
+
+**(3) THE BLIND TICKS OF THE LONG-WAVE LORENTZ PAIR, on the file's own
+geometry (the arm 90, the train 168, the click within the returning
+train's passage into its own body).** The rest tick 2 x 90 / 0.573 =
+314 plus the passage's half 146: 460 (read 459.0 +- 8.1). The moving
+tick: the flight gamma^2 times, 388; the returning train's passage
+into the approaching body DILATED ONCE: its proper length is 168 (the
+body's frame, where the mirror stands still), its board length after
+the reflection 168 D = 268, the closing speed c_l + v = 0.823, the
+passage 326 board intervals, gamma times the rest's 293, the click at
+its half, 163: the tick 551, the ratio 1.198 +- 0.02 (COMPUTED). The
+reading 569.6 +- 8.3 sits on gamma^2 times the whole (568) and 2.2
+standard errors above 551. TWO GAMEBOARD READINGS DECIDE, before any
+word: the returning train's length in Links on the board (268 by the
+Lorentz reflection) and the mean fraction of its passage at which the
+click comes (0.5). A given norm of 0.62 T_rest in place of 1.596
+T_rest (the line of (1)) reaches the rungs later in the passage and
+lifts the mean toward 568, so the norm's line is read first. Not a
+pin; the direction holds either way (1.24 against 1.0).
+
+**(4) THE POINT EMITTER'S FIRST ROW: the seat at the rows' light.** The
+seat's frequency for the first row is the given light of the rows,
+[4096, 21] at k = 0.299, omega = 0.172: a body whose mode rotates there
+(Nature24's [800, 813]), so that the point emitter's light is the rows'
+light and the 9.71 (1) readings stand (the wavelength 21 on the chain).
+The light clock's A rotates at 0.065 and would give light at k = 0.116,
+the wavelength 54: a second row, the atom's line depending on the
+atom, after the first. His build as drafted (9.71 (1)): the order per
+interval (the given family's step, the outward flux booked and summed,
+then the write), the close at the first interval the sum reaches the
+emitter's declared norm, the record's norm at the close its form as it
+stands, the stock down by one, the inverse subtracting each write
+before the record's own inverse step: CONFIRMED as the build's
+reference.
