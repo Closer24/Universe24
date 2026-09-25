@@ -14645,3 +14645,99 @@ about forty minutes; thirty orbits for (c) in two hours: one world
 suffices; if the host is slower, the second world is (c) alone with
 the charges 0 (the dragging needs the orbits, not the charges), and
 that is the only split.
+
+### 9.88 The strong and the weak forces on the generic engine: the primitives that must be in the freeze, none of them named (the Boss's record 2087 of 2026-09-25, the model owner: "the strong and the weak nuclear forces should work on the generic engine, without it knowing them; just make sure it is possible"; the Boss's six readings confirmed or corrected, one each)
+
+**(1) INTERNAL COMPONENTS OF ANY COUNT: CONFIRMED, as the general form of
+the phase pair.** The phase attribute (9.81 (4)) is the internal
+representation of U(1): two real components turned by the Link's
+rotation. THE GENERAL ATTRIBUTE: a family declares its INTERNAL
+REPRESENTATION by its count of components n and its list of
+GENERATORS, each with its own table of exact integer rotations (the
+triples of 9.81 (2) (b) for a rotation in a plane; the Pythagorean
+quadruples a^2 + b^2 + c^2 + d^2 = e^2, the unit quaternions, for a
+rotation of a pair of complex components, which is weak isospin's
+SU(2); the rotations in the planes of three complex components, whose
+products fill colour's SU(3)). THE TRANSPORT on a Link composes the
+one-parameter rotations of the generators in sequence, each an exact
+integer element of its table applied with its own division and
+running remainder (9.81 (2) (c)), so no denominator grows: the
+transport is exact, local, and of integers, and the Link's field
+value is a vector of integers, one per generator (the "angle" per
+generator k_port of 9.81 (2) (a)). Vectors from the start (record
+2084). The spatial representation (1, 3, 6) and the internal one are
+independent attributes; a gluon field is spatial vector times
+internal 8, a quark record spatial scalar times internal 3 complex.
+
+**(2) THE RECORD-RECORD COUPLING: CORRECTED, it is the self-source with
+a structure table, not a read of the pace.** The one rule is linear
+in the record, and a record acts on no record (9.27 (C)); the
+non-abelian field acts on ITSELF, and that is the self-source of 9.78
+(3) in its general form: a family's step adds a declared INTEGER
+POLYNOMIAL of its own now-levels and its six differences, of degree
+at most three, with the family's STRUCTURE TABLE (the integer
+structure constants f_abc of the Chevalley basis: no root) and its
+self-unit P_2. For U(1) the table is zero and the term is the norm of
+9.78 (3); for a non-abelian family the degree-two term is f_abc times
+a component times a difference and the degree-three term f f A A A,
+the Yang-Mills form. It reads now-levels only, so the per-Node inverse
+stays exact (any F of the interval's start, 9.80 (4)); it reads the
+own Node and the six, so it is local; the products are bounded by the
+loader (A^3 within int64 with P_2 scaling them). ONE PRIMITIVE, and
+it is enough: every self-interaction of a field in nature is a
+polynomial of this form. The pace reading a family's own levels
+(9.78 (1)) is a different thing and already in.
+
+**(3) MASS GIVES SHORT RANGE: CONFIRMED, nothing new.** A lowered pair
+[num, den] on a field family is the Yukawa fall-off (9.78 (1)); a
+massive vector family (the W and Z) is three components each with the
+lowered pair.
+
+**(4) A CLICK WITH SEVERAL PRODUCTS: CONFIRMED as a declaration, with
+one primitive to add.** The clicks attribute takes a LIST of given
+families with their counts (one taking, several givings), the loader
+checking the declared signs (charge, colour, the conserved integers)
+between the taken and the given; the click operation loops over the
+list. THE ONE PRIMITIVE: the taken four-momentum is shared among the
+products, and conservation alone does not fix the share; the engine
+draws it from the residue on the wheel (the same draw as Born's rule
+at the taking end, 9.25 (3)) over the products' momenta, whole, the
+sum kept exactly. Without this line a decay with several daughters
+stays outside (9.78 (6) (g)); with it, inside.
+
+**(5) HANDEDNESS: CONFIRMED FOR BODIES, NOT FOR WAVES.** A body carries
+its spin S_i and its momentum n_i, both integer vectors, and its
+helicity is the sign of S . n, an integer; a click may declare the
+helicity it takes or gives, and the loader checks it: generic, one
+sign read. A wave record carries no spin in this engine (no spinor:
+the representations are scalar, vector, tensor and internal), so a
+wave has no handedness; the weak force's hand acts on bodies here.
+That is the honest limit of the representations, said once.
+
+**(6) THE HONEST LIMIT: AGREED, with the three rows that are possible.**
+The nucleus is out of reach in size (the atom already is, 9.64 (2));
+what the engine can read qualitatively: (a) A SHORT RANGE: two charged
+seats under a massive vector family, the force falling as exp(-r /
+range) against the Coulomb row's 1 / r^2, the range the pair's; (b) A
+DECAY COUNT: a body giving into several families at its period, the
+counts in the declared ratio, the signs kept; (c) A STRING: two colour
+sources under a self-coupled family at a large self-unit, the field's
+energy between them growing with their separation (Wilson's area law
+at strong coupling), read as the pull on the sources against
+distance; the blind coefficient is not the mathematician's to give
+before the row, and the row is a direction, not a pin.
+
+**(7) WHAT MUST BE IN THE FREEZE, so nothing is added after.** Four
+primitives, none naming a force: (i) the internal representation
+attribute with generators and their exact tables, the transport
+composing them (1); (ii) the self-source as a declared integer
+polynomial with a structure table (2); (iii) the clicks list with
+several givings and the draw of the momenta's share (4); (iv) the
+helicity sign at a click (5). The short range needs nothing (3). With
+these four the strong and the weak forces are declarations: a family
+with internal 3 or 8 and a structure table, a massive vector family,
+a click list with its signs and hand. Nature24's cost: (i) 2 n
+integers per component per Node where the family is nonzero, nothing
+elsewhere; (ii) the polynomial's products per Node where the family
+is nonzero, about a hundred operations for eight components, nothing
+elsewhere.
