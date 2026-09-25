@@ -70,12 +70,12 @@ COUPLINGS.md (section 3) for that gate: the meeting's norm
 (`meeting.py:359-361`) and the pair of a pushed row
 (`nature_beam.py:3549`).
 
-### The one operator, the click and the birth (2026-09-24, adopted; the four building blocks of 13:36Z are history)
+### The one operator, the click and the giving click (2026-09-24, adopted; the four building blocks of 13:36Z are history)
 
 THE MODEL OWNER'S RULE (2026-09-24, 22:39Z, through the Boss, record 1875;
 Highlights 5.4: "adopt; everything is algebra"): the whole board is ONE
 ELEMENT of one module and the law is ONE MAP of it; the engine knows that
-map, the click and the birth, and nothing else ([ALGEBRA.md](docs/ALGEBRA.md)
+map, the click and the giving click, and nothing else ([ALGEBRA.md](docs/ALGEBRA.md)
 9.18 to 9.22, the derivation and the marks; [the lab tools'
 specification](docs/designs/lab_tools/LAB_TOOLS.md) part A, the tools as
 integers on the one object). The four building blocks of the owner's rule
@@ -125,26 +125,26 @@ in the day's log; nothing of them is a name the engine branches on.
   the count, the residue, the Node and the interval, and no rule undoes
   a click; between clicks the board runs backward exactly (ALGEBRA.md
   9.55 (1), (6), (7)).
-- **The birth.** The other side of a click: a body's own excited record
+- **The giving click.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
-  Node, and the born record is written ONCE on the body's Nodes at both
-  levels as THE BODY'S OWN MODE times the character of one **K**: the generator's integer profile of the born family's lowest mode on the body's Nodes with the zero row beyond, as long as the body's extent along **K** (ALGEBRA.md 9.35 (10), the model owner's record 1962; the train under a window of 9.17 (6a) HISTORY; the
+  Node, and the given record is written ONCE on the body's Nodes at both
+  levels as THE BODY'S OWN MODE times the character of one **K**: the generator's integer profile of the given family's lowest mode on the body's Nodes with the zero row beyond, as long as the body's extent along **K** (ALGEBRA.md 9.35 (10), the model owner's record 1962; the train under a window of 9.17 (6a) HISTORY; the
   two-integer pair `born: [now, -now]`, a flat pulse, is refused: its
   standing components make the one-way flux exceed the norm, 9.25 (11));
   the next excitation follows while the stock lasts (ALGEBRA.md 9.17 (4)
   to (7)).
-  A crystal births a record of rank 2 at an arriving record's click on
-  its Nodes (9.7 (b), 9.13). Nothing drives a record after its birth.
+  A crystal giving clicks a record of rank 2 at an arriving record's click on
+  its Nodes (9.7 (b), 9.13). Nothing drives a record after its giving click.
 - **No table in the engine** (the model owner, 2026-09-24, 23:00Z: "if
   it is not used, throw it out; no formulas on the board"): the reading
-  is the flux, the axes are integers, the born pairs and profiles and the
+  is the flux, the axes are integers, the given pairs and profiles and the
   seeds are the world's integers written by the generator; `core.phase`
   is read by the generator and by the host's phase readers only, never
   by the engine's step or click.
-- **The residue.** A record's u is the rule's remainder at its birth's
-  centre Node at the birthing click, and its wheel is 3 x denominator /
+- **The residue.** A record's u is the rule's remainder at its giving click's
+  centre Node at the giving click, and its wheel is 3 x denominator /
   gcd(numerator, 3) of that Node's pair; no residue, wheel or seed is
-  declared, and a birth Node's pair gives at least 500 remainder values
+  declared, and a giving Node's pair gives at least 500 remainder values
   (ALGEBRA.md 9.19 (4), adopted).
 - **The families.** At most three per world: light [1, 1], the
   experiment's matter, and the HOLDER family of the tools' bodies, which
@@ -172,21 +172,21 @@ in the day's log; nothing of them is a name the engine branches on.
   tensor is the pair, a record of fixed rank 2 in Z^2 (x) Z^2, four
   integer weights on the joint labels, each arm's rows over the Nodes as
   any record's; it is required only where entanglement is measured
-  (Bell: a product state gives S at most 2); it is born only by the
+  (Bell: a product state gives S at most 2); it is given only by the
   crystal during the run, never written at interval 0, and two
-  separately born records are never joined. So the board generator
+  separately given records are never joined. So the board generator
   writes only vectors (each occupied mode's integer profile with its
-  labels, the born pairs and profiles) and no tensor; the tensor's
-  operations (the crystal's birth writing the four weights, a body's
+  labels, the given pairs and profiles) and no tensor; the tensor's
+  operations (the crystal's giving click writing the four weights, a body's
   label matrix on one arm, the partial trace at one arm's click, the
-  joint weights at the pair's click) live in the birth and the click,
+  joint weights at the pair's click) live in the giving click and the click,
   under the declared contract of docs/ARCHITECTURE.md (fixed rank and
   dimensions, integer components) (ALGEBRA.md 9.22 (6)).
 - **What an experiment declares, and nothing else** (ALGEBRA.md 9.22
   (2)): the board's extents and per axis periodic or open; the families;
   the material map (the regions with their pairs, couplings and axes, as
   cubes by vertex and edge); the occupation (the quanta, amplitudes,
-  stocks, born clocks and profiles, the crystal's branches, the joint
+  stocks, given clocks and profiles, the crystal's branches, the joint
   body's matrix, which is OPTIONAL: the generator folds a circuit into
   the crystal's branches, record 1890); the momentum of every entry, the integer wave vector
   **K** of its character, 0 at rest (record 1885; a packet moves by it
@@ -235,8 +235,8 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
   Q, held there and free elsewhere (9.51 (1)). The click is the one act at
   the body's scale and the one write on it: the taking end gathers the flux
   through the body's Ports and sets the taken rows to 0 with M_k + 1, Q + q
-  and s recomputed; the giving end sets the born family's rows on S with
-  M_k - 1 of the born family, u read at the first shell Node, s recomputed;
+  and s recomputed; the giving end sets the given family's rows on S with
+  M_k - 1 of the given family, u read at the first shell Node, s recomputed;
   the body's own levels, phase and remainders are left as they are (9.40
   T3, 9.43 (3), 9.44 (5) (c), 9.51 (8)). A click goes only forward in
   time: it is what happened in the world, the one irreversible act, and
@@ -250,16 +250,16 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
 - **Practically, for us.** Today a world declares a body by a region of
   Nodes (the cube by its lower vertex and its edge, below), a declared well
   (the material pair on those Nodes, which binds the mode), a stock (the
-  born family's quanta it holds), a content per family, a charge per
+  given family's quanta it holds), a content per family, a charge per
   family's quantum, a `period` P (the generator's integer, the mode's
   turn at the body's Nodes) and, for a moving body, a momentum. A body on
   ONE NODE is the body record (ALGEBRA.md 9.46): its parameters (the family,
   the pair, S with the stored profile, the clock pair, P, T, the stock, M_k,
   Q, u, s) and one rotation (a, b, r) at one seat; it holds, it takes
   through its six Ports, it falls by its accumulators (9.52), and it gives
-  only with a declared birth extent (9.46 (8)); it is a host form, valid
+  only with a declared giving extent (9.46 (8)); it is a host form, valid
   only by its equivalence gate against the lattice body (9.46 (4): the
-  ticks in distribution, the rotation bit for bit, the born rows bit-equal,
+  ticks in distribution, the rotation bit for bit, the given rows bit-equal,
   the taking and the field identical), under the world key `body_record`,
   off by default. A body's faces are its Nodes with a Port, a Link to a Node
   outside it (the shell, 9.38 (2)); the first shell Node in the engine's
@@ -287,13 +287,13 @@ of a click"; his rulings of records 1139, 1967 and 2011; ALGEBRA.md 9.40 T3,
   recomputed (9.40 T3, 9.51 (8)). THE GIVING END: the body's own record's
   fraction becomes whole, the count of intervals since the residue's read
   reaching ceil((2 u + 1) P / (2 W)) (record 1967; 9.43 (4), 9.44 (5) (c));
-  then X_S^T sets the born family's rows on the body's Nodes, the
+  then X_S^T sets the given family's rows on the body's Nodes, the
   eigenvector times the character, and the body's record moves: M_k - 1 of
-  the born family, the stock down one, u read anew at the first shell Node,
+  the given family, the stock down one, u read anew at the first shell Node,
   s recomputed; the body's own levels, phase and remainders are left as
   they are (9.43 (3)). THE LINE the click leaves is four integers and the
   record's data: the count, the residue u, the Node, the interval (with the
-  born record's norm, wheel and clock pair as GameBoard readings). THE
+  given record's norm, wheel and clock pair as GameBoard readings). THE
   CLICK GOES ONLY FORWARD IN TIME (record 2011): it is what happened in the
   world; the taken record's rows are the one thing lost; the line is its
   whole trace; no rule undoes a click, the inverse map fires no rung and
@@ -304,7 +304,7 @@ of a click"; his rulings of records 1139, 1967 and 2011; ALGEBRA.md 9.40 T3,
   else, fixed by the deterministic law; the past is the lines and the
   state back to the last taking.
 - **Practically, for us.** A click is read on the engine as a line in the
-  run's record (the birth line, the click line), never as a level: the
+  run's record (the giving click's line, the click line), never as a level: the
   taking end at the Node the increment ladder names in the ladder's
   declared order (9.25 (2)), the giving end at the body's first shell Node
   in x-major order; a click passes one whole quantum with its family and
@@ -322,7 +322,7 @@ THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
 checks (its "takes what reaches its Nodes" and the table body are history;
 the Nodes of every two bodies are disjoint, the seed is the COMPOSED
 operator's mode, the composed operator's largest eigenvalue is below 2,
-and a birth Node's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
+and a giving Node's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
 - **The body.** A block of Nodes with a pair on the six-neighbour term
   (a well of a massive kind, a gap of light's kind) and a momentum: it
   moves one Link at a time by the drive's accumulators (`_move_block`),

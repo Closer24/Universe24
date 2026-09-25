@@ -1,5 +1,14 @@
 # The algebra of the law, in one place: the objects, the ring and the six operations, the click-to-click algebra, the exact identities, what is reached under named hypotheses, what each FAIL row lacks, and how the group was reached (the canonical statement; the Algebra Unifier, 2026-09-23)
 
+NAMES (the model owner, 2026-09-25, record 2016): every click has two
+ends; the taking click takes one whole quantum and the giving click gives
+one; what the giving click writes is the given record, of the given
+family, the given rows. The words birth, born and birthing are retired
+throughout this document and the three that follow the law (LAB_TOOLS.md,
+SIMULATOR_DEFINITIONS.md, POSTULATES.md); Born's rule keeps its name;
+engine keys in backticks keep theirs until the engine renames them.
+
+
 The model owner's word of 2026-09-23 ([record 1128](LOG_2026-09-20.md),
 the Boss's translation: "It is simply all the algebra; let us unify it
 into one place; no need for several files there, if it works out") and
@@ -67,7 +76,7 @@ the crowd's stretch of a count (the FAIL rows file writes it k; here k
 is the hop's whole number, so the crowd's stretch carries its
 subscript); gamma_PPN the world key `optical`'s declared strength;
 c_f = 1 + gamma_PPN the flight's coefficient in the age wall's set; u
-the birth wheel's value written on a record; (A1), (A2), (A3) the
+the giving wheel's value written on a record; (A1), (A2), (A3) the
 hypotheses of chapter 5, defined at its head. Two letters are reused
 and named at each use: lambda (the boost's dilation in 5.1, the radar's
 scale in 5.2, the wavelength in 5.7) and K (the kernel K(Delta) of
@@ -451,7 +460,7 @@ counted in walls (capped at a = 1 for the drive; uncapped elsewhere,
 a with no bound and e the whole part floor(abs(s) / d) with the sign,
 which the primitive encodes as `at_most = 0`), and reduced by
 the walls it holds; every wall counted is an event (a Link crossed, a
-phase step taken, a count completed, a birth, a push) and nothing else
+phase step taken, a count completed, a giving click, a push) and nothing else
 happens. The one declared variant of the count is `centred`
 (centred-step-v1, the world key `centred_step`, which chapter 6's row 6
 cites): the count is the nearest whole number the accumulator holds,
@@ -472,7 +481,7 @@ means both in one sentence. Where the rate is a constant of the world
 (the linear block: the flight, the phase, the age, the merge, the
 split, the rotation, the evaluation) every component has the closed
 form s(t) = floor(s_0 + r t), r the rate as a fraction of the wall, so a
-row's state at any time is a formula of its birth and its age; where
+row's state at any time is a formula of its giving click and its age; where
 the rate is a function of what arrives (the feedback block: the push,
 the owed count, the turn, the release, the drive) the map is iterated
 and its continuum limit is the differential equation ds / dt = r(s)
@@ -670,7 +679,7 @@ Every rule the atom worlds and the light worlds run is one of the six
 verbs on bounded integers or a stated composition of them, with the two
 run-time roots of 2.7 as the exceptions: one row per coupling, 31 rows
 (the clock's turn T then D; the owed count; the drive T then D with the
-cap then P; the turn by momentum; the release; the lamp's birth; the
+cap then P; the turn by momentum; the release; the lamp's giving click; the
 flight; the one reading B then G; the crossing a comparison; the push
 B, T, D, G; the threshold and the window; the click; the face click;
 the split P, B, D, T; the collision P; the merge G; the record's gather
@@ -801,7 +810,7 @@ and one count, the accumulator's carry never accumulating),
 
 and their ratio k_BA / k_AB = (1 - v^2) / r^2. ([Light Outside](designs/light_outside/DERIVATION.md)
 section 0 defines k_AB the same way, the count B reads between two
-arrivals over the count A read between the two births, and writes both
+arrivals over the count A read between the two giving clicks, and writes both
 cases under the one letter, A moving away, (r_B / r_A) (1 + v), or B
 moving away, (r_B / r_A) / (1 - v); the plan's K7 is no conflict.) The general form, Theorem 1 of
 [Einstein Outside](designs/einstein_outside/DERIVATION.md) (the
@@ -923,7 +932,7 @@ exactly, n_s = C'[s]^2 + S'[s]^2 (B2, rule R, verb (B)). The click of a
 pair is one gather of the one record from both settings at the
 completion interval (P6): the joint pointer J(o_A, o_B) = sum over the
 labels l of U_a[o_A][l] U_b[o_B][l], the Node's weight R = J^2, the
-birth wheel's u selecting one of the four Nodes through the rung (B3);
+giving wheel's u selecting one of the four Nodes through the rung (B3);
 assumed of the world and not supplied by the law: the settings chosen
 freely of the record, and the reading the click with c_1 = 1 (B4, P10);
 no Hilbert space is assumed. The non-locality sits in one object, the
@@ -1082,7 +1091,7 @@ every direction).
   10 (2), lines 1741-1807; DERIVATIONS_BEAM 6.5's cited rows; the FAIL
   rows file, row 1b.
 - **4.11 E = h f as an identity of the release; the cost; the entropy
-  and the support bound.** A release costs the emitter h s per unit born,
+  and the support bound.** A release costs the emitter h s per unit given,
   s its turn on the K pair, so the content of one click is E = h s = (h
   N) f, an identity of the release (declared at the release, recovered
   at the click as the content carried whole; E = h f_flight would need
@@ -1344,7 +1353,7 @@ bound, the drive's coefficient; p = M_A sum V exactly) and the drive dividing by
 with M_A, so the same whole parts and remainders at every abs(p), not
 only at abs(p) << Q S_w M_A): the equivalence principle is rung 1 for
 bodies (SHOWN; MET: series D3, the held mass four times at r = 24, 138
-of 139 common birth ticks at the same Node, DETECTOR); it holds for
+of 139 common giving click ticks at the same Node, DETECTOR); it holds for
 bodies and not for rows (the flight blind on main, 5.9); for a bound
 body it is a hypothesis with pins (DERIVATIONS_BEAM 21.2 row 44). **The
 accelerated detector's count ratio** (Einstein Outside II.9; from
@@ -1432,7 +1441,7 @@ the Node after the count, x_L(n + 1) - x_L(n) = the whole part gained by
 the drive (0 or 1 per axis); the momentum's change p_a(n + 1) - p_a(n) =
 -M <V_a>; the pace <dx / dn> = abs(p_a) / (Q S_w M + abs(p_a)) per axis
 in the mean; the clock, the count between self-creations 1 + a_tau n /
-d in the mean; each DETECTOR (the births' Nodes and the counts between
+d in the mean; each DETECTOR (the giving clicks' Nodes and the counts between
 them) and each the Inside line read through Theorem 1 at r_L = 1 (rung
 1 within one Node and one count). Nothing of Einstein's is put in: only
 the Inside step and the map; the geodesic's terms follow at Newton's
@@ -1557,7 +1566,7 @@ the click frame :1163; after it 1.677 and 1.512, chapter 6 row 14; the
 ratio on the line's tick GAMEBOARD, mode A; its click reading the recurrence of the
 arrival Nodes on the ORDINALS of the orbiting lamp, NOT READ); in space
 T^2 proportional to r^3, the exponent NOT READ. **(f) The third law at
-rest.** For a paid message the label leaves its emitter at birth (the
+rest.** For a paid message the label leaves its emitter at giving click (the
 recoil) and enters its reader at the click, so the third law holds
 message by message (rung 1); for a free message the release costs no
 recoil and the third law is a symmetry between two readers, M_A **a**_B
@@ -1590,7 +1599,7 @@ click frame section 8; DERIVATIONS_BEAM 3.3, 9.1 (I5), 17.2.
 own. The pace of light: chapter 4.2 (SHOWN; MET, series Q and T; FAIL
 against nature's isotropy bound at the grain, row 5a, a BOUND on Q).
 E = h f at a click: the content of one click E_B = h_q s = h f_A (h_q
-the family's quantum, the action per unit born; s the lamp's turn),
+the family's quantum, the action per unit given; s the lamp's turn),
 DECLARED at the release and RECOVERED at the click as the content
 carried whole (rung 1); the frequency B counts f_B = f_A k_AB; lambda_B
 = c_D N d / n = h / p FOLLOWS under the calibration h_A = h_q N, read
@@ -1608,7 +1617,7 @@ differ at second order by 1 - v^2 where nature has one form, FAIL on
 the law, row 4b). The aberration of a moving detector tan alpha = v /
 c_D (alpha here the aberration angle) by the passage of clicks, 0 by the click's face (SHOWN at first
 order; NOT READ). The two-slit fringes: the count at the pixel y over
-W births,
+W giving clicks,
 
     C(y) / W = (2 + 2 cos(2 pi (L_1(y) - L_2(y)) / lambda)) / Z + O(1 / (2 N)) + O(1 / W),   lambda = c N d / n Links,
 
@@ -1657,9 +1666,9 @@ push of the charge column, the drive, the turn by momentum under the
 world key `action`); the shell mean (M) for the ladder; the
 inverse-square limit for the reach theorem. **The closure, exact, no
 grain.** The engine keeps one action row per axis, A_a the exact sum of
-abs(p_a) N over the Links counted on that axis since the birth, the
+abs(p_a) N over the Links counted on that axis since the giving click, the
 phase the sum of the three per-axis whole parts floor(A_a / h) mod N
-plus the birth phase; over one return (the body's arrival at a Node it
+plus the giving click phase; over one return (the body's arrival at a Node it
 left one loop earlier with the same momentum vector) the action row of
 the axis a gains Delta A_a = N x (the sum over the Links stepped on the
 axis a of abs(p_a)) (an integer per axis, GAMEBOARD), and the loop
@@ -1778,7 +1787,7 @@ with the crowd from the same flight rule, A(r) = scale x sum over the
 lines D through r of the sum of the ages present and **a**(r) = scale x
 sum of **u**_D (the weighted **f**_D under flow-link-v1, the integer
 vector nearest Q D / S_1), constant in time once the oldest row that
-reaches r has been born; the engine walks it as the algebra does, every
+reaches r has been given; the engine walks it as the algebra does, every
 shift within 0.03 pixel of the register (the grain 0.2) and every delay
 within 0.2 interval (the step algebra's calibration, section 5). **Two verbs apart:**
 the bending is the push's alone, the delay the wall's alone plus the
@@ -1937,7 +1946,7 @@ push takes, and the body a detector with mass. **C**, one record with
 two rates (the drive's 1 - v and the clock's 1 / (1 + k_crowd); the
 click theorem's missing line, r = 1 as the mover's own count); the fix
 the one rate shown or refuted by clicks on the k-ladder, the pace a
-ratio of counts. **D**, the click reads the row's birth content and not
+ratio of counts. **D**, the click reads the row's given content and not
 the row's rate at the arrival (E = h f absent at the click: the content
 per click fixed in flight); the fix the row's phase turning per Link
 (massive-rows-v1's turn, abs(p_a) N / h steps over the action h) and
@@ -1967,9 +1976,9 @@ grain or a theorem is what nature refutes.
 | 6 the atom's loop opening | the electron escapes at 3407 intervals (DETECTOR, series H); under `centred_step` the loop stays, C1 PASS, C2 and C3 FAIL as declared (DETECTOR); no line read; nature Balmer's 27 / 20 | SHOWN: a closed loop is an integer congruence of the action row; the one-click reach 2 i^2 >= j^2 and that a release unbinds (chapter 5.8); SHOWN IN FORM: the ladder (j / i)^2 and (j / i)^3 in the shell mean, 27 / 20 under the virial form in the limit; NOT SHOWN: the transition, any rule that selects the row | RULE: atom-give-v1 / atom-level-v1, the give at the closure with its amount read off the action rows, under its own identity; generic, vector and local PASS in the mathematician's judgement, the reviewer's read decides; no lattice we can run holds the scale, so the row stays FAIL by any run and the ladder a conjecture | F and E; YES in part (the loop's radius and period off the body's own record; the escape and the quarter crossings clicks) |
 | 7b the strong ratio | 2.0, the border's four clicks against two (DETECTOR, series N); nature 12.72 | SHOWN: the give once per body, held // h units at a contact, so the alpha gives 8 against the deuteron's 4 whatever the partners; the ratio a constant of the rule, blind to the give's value | RULE: a give that grows with the bonds a body makes; a bilinear form on the partners' rows passes the three tests in form; per partner 6, per partner squared 18 (COMPUTATION); nature's 12.72 the partners' count to the power 1.68, reachable only by a declared integer per shape, a fit | E; NO (the border clicks; the books a check) |
 | 8a the neutron's step | every neutron at its key on its own clock, the width 0 (DETECTOR, 64 clicks of content 3); in the lattice's clock 0.036 registered, 0.08 to 0.13 at head (GAMEBOARD); nature's exponential, width over median ln 9 / ln 2 = 3.17 | SHOWN: the `become` at a declared count is a step in each body's own clock at any count; the spread in the tick is the crowd's spread of 1 + k_crowd over the 64 Nodes, bounded by the crowd's range | RULE: decay-by-crowd-v1, the `become` fired by a met row of a declared family instead of by a count, so the waiting time is the arrivals' inter-arrival distribution, exponential only where the declared bath's arrivals approach a Poisson comb (COMPUTATION from the declaration); generic, vector ((E) and (D)) and local in form; a re-run reads the crowd's spread alone and cannot reach 3.17 | E, audited A; YES for the paper's number (the width over the median in the lattice's clock) |
-| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty; the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with 8c); content 0, no turn: 0 behind, as read; content 1 under massive-rows-v1 (the row turning its phase per Link by abs(p_a) N / h steps over the action h): each reader admits a class shifted by the turn per Link and the window empties a class, 16 rows per class over 1024 births, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION), the far detector 1024 less 16 per class covered; 0 behind again when the shift per Link is 0 mod N (p = 2^12 with h a power of two dividing p) | D; NO (the readers' own records) |
+| 8b the neutrino's passage | 16 of 1024 at the first reader, 0 behind, the far detector 699 of 711 (DETECTOR, series J2, met bit for bit); nature about 1 | SHOWN: a window admits w / N of a stride coprime to N, 1 / 64 exactly, and a reader behind reads the same residue class, empty; the ray's own phase constant in flight in the registered world | DECLARATION: the `nu` family's content and the key `massive_rows` (with 8c); content 0, no turn: 0 behind, as read; content 1 under massive-rows-v1 (the row turning its phase per Link by abs(p_a) N / h steps over the action h): each reader admits a class shifted by the turn per Link and the window empties a class, 16 rows per class over 1024 giving clicks, the first reader 16, a second reader at a fresh class 16, the ratio 1.000 exactly (COMPUTATION), the far detector 1024 less 16 per class covered; 0 behind again when the shift per Link is 0 mod N (p = 2^12 with h a power of two dividing p) | D; NO (the readers' own records) |
 | 8c the massless neutrino | the `nu` family with no content, an input; nature's heaviest state above 9.8 x 10^-8 of the electron's | SHOWN: a family's content is a declared integer of the family table | DECLARATION: the `nu` family's quantum 1 under `massive_rows`; 0 refuted; 1 puts the electron's declared content at 1.02 x 10^7 units or more (COMPUTATION on the comparison side), inside the working bound at S_w = 1 | D; NO (an input) |
-| 11a the far lamp's brightness | the pin q_eff = +1 (COMPUTATION; the run not made, expansion-v1 not built); nature -0.53 | SHOWN IN FORM: the click count falls as 1 / (1 + z) and the content per click stays the birth's, one factor where nature's flux has two (chapter 5.7) | RULE: a click whose read energy follows the row's frequency in flight ("not one of the six"); in form the massive row's phase turn per Link read as h f at the detector (a key and a reading), which gives q_eff = 0, Milne's, and then row 3's RULE remains | D and A; YES (no click made; the chain's inverse square the shell mean) |
+| 11a the far lamp's brightness | the pin q_eff = +1 (COMPUTATION; the run not made, expansion-v1 not built); nature -0.53 | SHOWN IN FORM: the click count falls as 1 / (1 + z) and the content per click stays the giving click's, one factor where nature's flux has two (chapter 5.7) | RULE: a click whose read energy follows the row's frequency in flight ("not one of the six"); in form the massive row's phase turn per Link read as h f at the detector (a key and a reading), which gives q_eff = 0, Milne's, and then row 3's RULE remains | D and A; YES (no click made; the chain's inverse square the shell mean) |
 | 11c Tolman's test | the pin n = 1 in (1 + z)^-n (COMPUTATION); nature 4 | SHOWN IN FORM: the Nodes and the fan's lines fixed under the wall, a ruler of l Nodes at d subtends l / d; the flux one power of 1 + z | RULE: the same as 11a for one power (n = 2 at most), and for the other two an angular size that grows with the redshift, a board whose Links stretch, no verb on the state vector: it fails the vector test and the local test; not reachable inside the six verbs | D and A; YES (the ruler's size the board's Nodes) |
 | 13 light bending | the law as built 0.000 pixel (DETECTOR, series K); under `flow_link` at gamma_PPN = 1 the ring's mean radial shift 0.731 against 0.731 +- 0.025 (DETECTOR); C_ring = 3.652, 3.821, 3.918 at b = 6, 3, 8 (COMPUTATION), the continuum's 4 within 2.4, 1.0, 1.4 grains; nature 1.75 arcseconds, 1 + gamma = 2 | SHOWN: the walk of a light row past a held mass by the law's integer steps, the engine walking it as the algebra does to 0.01; the M / b form; SHOWN IN FORM: 2 c_f (n S_w / d) G M / (c^2 b) in the straight-path limit (chapter 5.9); NOT SHOWN: the 2 of c_f and the value of n S_w / d | DECLARATION: gamma_PPN = 1 (the key `optical`), c_f = 2 with it, and n S_w = d; gamma_PPN = 0 the time part alone, 0.87 arcseconds; gamma_PPN = 1 gives 1.75 in the limit of large b and L, the finite ring's 2.4 grains the lattice's own; the hypothesis that would derive the 2 must add a space part no verb reads: it stays a declaration | A in part; YES in one input (k_a(b) = 0.0445 from the board's age moment, not read by a lamp at b; the ring's click outside) |
 | 14 Newton's periods | T(24) / T(12) = 1.677 under the one constant, 1.512 under the line drive (COMPUTATION from two means of unclosed loops, DETECTOR clicks; the escapes face clicks at 1208 and 2452); the pin 2.00 +- 0.18; nature's inverse square 2^(3/2) in space, not compared | SHOWN: the push (1 + u / c) A / r from the click count, the circle unstable at 0.34 c; Newton's form in the algebra of the clicks with Einstein's step between (chapter 5.6); SHOWN IN FORM: the 1 / r and 1 / r^2 in the shell mean, NOT FROM THE CLICKS until read at two distances; NOT SHOWN: nature's velocity-free gravity, the value of G | READING: the moving detector's arrival click (a massive row released past a held mass, its Node against a control), the deciding pin -4.63 pixels under the arrivals count against -5.47 under the crossing count, the bracket 0.5; and the three readings of records 1098 and 1100 (the count ratio at two distances on one crowd, the second difference of arrival Nodes over ordinals at two distances, the recurrence on the ordinals) with the one word, whether a read at a body is a click (chapter 3.2) | A, B and C; YES, three times (the period on the host's tick, the probe's own record, the contacts) |
@@ -2767,7 +2776,7 @@ a_before)^2 per Node per interval, never the levels' squares, in one
 currency with the ladder's weights of 2.6: the owner's word of
 2026-09-24, record 1679, and 2.5's closing paragraph on the two words);
 the click line carries the block's own count (its
-mode's cycles, 8.3) and the light record's birth stamp. The
+mode's cycles, 8.3) and the light record's giving stamp. The
 receiver-inserter's second face (the model owner's word of 2026-09-24,
 06:42Z, record 1694; DECLARATIONS.md section 10 item 10): an emitter takes its own
 record's remnant after its train, from the first interval after it (the
@@ -2905,7 +2914,7 @@ f* f o ev, the evaluation ev of 2.5 on the body's element of Z[Z_N]
 followed by the quadratic weight and the rung; ev is a ring
 homomorphism with a kernel (the cancel), the weight is quadratic and the
 rung a threshold, so the transform is many-to-one at every step and has
-no inverse, while every Inside step has one. THE ARROW OF TIME IS BORN
+no inverse, while every Inside step has one. THE ARROW OF TIME IS GIVEN
 AT THE CLICK (and at a declared take) and nowhere in the rule: a bijection
 on the Inside, ev and the rung on the way out (MASSIVE_RECORD.md section
 14 (d); prediction 7 of 8.9). The world that shows it is a CHECK and
@@ -3268,18 +3277,18 @@ label module).
 
 ### 9.2 The operations, tool by tool
 
-**The emitter: the orbit of a Port (DERIVED HERE).** A birth at one
+**The emitter: the orbit of a Port (DERIVED HERE).** A giving click at one
 Node with nothing declared about a direction is invariant under the
 Node's stabiliser, all of G_48; G_48 acts transitively on the six Ports
 (1.1), so the only invariant set of headings containing one Port is all
 six: the emitter is isotropic, the orbit sum of a Port. A direction can
-come only from the SHAPE of its Nodes (a line of Nodes born in phase,
+come only from the SHAPE of its Nodes (a line of Nodes given in phase,
 its stabiliser the line's), never from a declared heading. Written on
 the board: the clock pair (a character of the time translation), the
 amplitude, the train, the label state (IN THE ALGEBRA, 1.7 and 4.11).
 Load check: the train ends at the clock's zero, exact. Not polar.
 SUPERSEDED by 9.17: the emitter is a clicking body with a stock of
-excitations; the drive and the train retire, the born profile of 9.17
+excitations; the drive and the train retire, the given profile of 9.17
 (4) in the train's place.
 
 **The receiver: the click (IN THE ALGEBRA, 2.5 and 8.6).** The evaluation
@@ -3290,7 +3299,7 @@ operation, IN THE ALGEBRA as a declaration. Written: the take pair and
 the wheel W. Load check: W >= 1, the take [n, d] with 0 <= n <= d. Not
 polar (it books the sum over the labels). SUPERSEDED: a receiver is its
 name on the records' ladders, with no take (9.12) and no wheel (the
-rung's wheel is the record's own, from its birth Node's pair, 9.19 (4)).
+rung's wheel is the record's own, from its giving Node's pair, 9.19 (4)).
 
 **The mirror: a reflection (DERIVED HERE).** A slab of Nodes whose pair
 opens a gap (8.1's band, cos omega = (num / den) cos omega_l(k), IN THE
@@ -3348,16 +3357,16 @@ with the group's own 0 / 1 table (the bilinear form) whose image lies exactly on
 pairs whose product is the arriving character: CONSERVATION IS ITS
 SUPPORT, not a check. On the translations the transpose would be the drive at
 every Node with the arriving character's phase there; under the rule of
-reading (9.7) that phase is not read, the pair is born by the crystal's
+reading (9.7) that phase is not read, the pair is given by the crystal's
 click with its own clocks, and the arriving record's momentum is carried
 by the board's own values, the crystal's Nodes taking their share as the
 law advances them (9.15; record 1856: the first reading's "handed to the
 crystal at its click, the receiver's take" is SUPERSEDED), the pair's
-birth spreading from the crystal's Nodes with no phase gradient. The degenerate split [p / 2] (x) [p / 2] is exact on the
+giving click spreading from the crystal's Nodes with no phase gradient. The degenerate split [p / 2] (x) [p / 2] is exact on the
 circle of 2N (3.6's tables). IT TAKES WITHOUT A CLICK: what it takes is
-the born record's (m^T conserves the quantum), so it has no rung and
+the given record's (m^T conserves the quantum), so it has no rung and
 books on no pointer. MISSING: a record on main carries one clock per
-family, so the born family's clock is one split of m^T declared as the
+family, so the given family's clock is one split of m^T declared as the
 crystal's material; the whole sum (all the splits) in one record is not
 on main. Polar.
 
@@ -3394,7 +3403,7 @@ crystal would have to be invariant under the stabiliser; sigma_z
 exchanges the hands, so the two hands' indices are EQUAL in every body on
 a layer (DERIVED HERE): birefringence between the hands is forbidden by
 the crystal's own symmetry. Under the crystal of 9.7 (the click, then a
-birth) the pair is born in phase over the crystal's Nodes and no cone
+giving click) the pair is given in phase over the crystal's Nodes and no cone
 forms; a cone would need the pair's phase to carry the arriving record's
 local phase, which needs a read (9.7): the cone is NOT DERIVABLE under
 the rule of reading, and an experiment's headings are its placement's
@@ -3402,7 +3411,7 @@ the rule of reading, and an experiment's headings are its placement's
 5.4's line of record 1829, "The crystal is birefringent; its directions
 arise by phase matching". RESOLVED by the model owner (record 1879,
 2026-09-25 on the Israel clock): the crystal of 9.7 (b) is APPROVED, a
-click then the birth of an entangled pair, not birefringent, its
+click then the giving click of an entangled pair, not birefringent, its
 directions from the receivers' placement; the line of record 1829 is
 marked superseded in Highlights.
 
@@ -3411,7 +3420,7 @@ label state and the two receivers' rotations (3.6); the arms' headings
 enter only the share of the conversions that reaches the receivers, never
 the counts. A crystal of ONE Node (m^T at one point, every heading alike)
 performs the whole operation; a length L only narrows the headings (the
-sum over L Nodes, its width about the born family's period in Links over
+sum over L Nodes, its width about the given family's period in Links over
 L), which the counts do not read. DERIVED: the Bell experiment needs L =
 1; a formed cone is a separate test.
 
@@ -3509,7 +3518,7 @@ row of such cubes side by side, a RELATIVE PLACEMENT (i), not a new
 shape. The splitter: a row of cubes of side 1 (its plane the row's, a
 placement). The polariser, the receiver, the emitter, the crystal and the
 well body: one cube each (a beam from an emitter is a row of emitter
-cubes born in phase, a placement). So AN EXPERIMENT IS CUBES ON A
+cubes given in phase, a placement). So AN EXPERIMENT IS CUBES ON A
 BOARD, and every direction it has is a placement of cubes or the
 arriving record's.
 
@@ -3531,12 +3540,12 @@ replacements.**
    after that Node's first rung" (the lab tools' clause on the first rung, LAB_TOOLS.md)
    READS A NODE TO DECIDE: WITHDRAWN. Two replacements were weighed:
    (a) THE BILINEAR COUPLING g a_arriving a_born (the bilinear form, no read): the
-   halving would arise by resonance, BUT from a born amplitude of 0 the
-   product is 0 (PROVED HERE), so it needs a SEED of the born family at
-   interval 0; a seed on the board is a record with no birth, which
+   halving would arise by resonance, BUT from a given amplitude of 0 the
+   product is 0 (PROVED HERE), so it needs a SEED of the given family at
+   interval 0; a seed on the board is a record with no giving click, which
    spreads by the split before any arrival and could be booked and click
    with no quantum behind it: it breaks one quantum, one click (8.6) and
-   the initial state (9.9). REJECTED. (b) THE CLICK, THEN A BIRTH (the
+   the initial state (9.9). REJECTED. (b) THE CLICK, THEN A GIVING CLICK (the
    Boss's "or the click itself"; the owner's "the receiver gives a
    click"; the physicist's form of 18:05Z): the crystal's Nodes are the
    arriving record's NAMED RECEIVER (its ladder by name, SIMULATOR_DEFINITIONS.md,
@@ -3545,16 +3554,16 @@ replacements.**
    the line at the rung where the ladder holds one Node) and ends there
    (ONE QUANTUM, ONE CLICK; its remaining field is energy the sinks
    absorb, content 0, as main's receiver by name does); at that interval
-   the crystal, as an EMITTER, BIRTHS the pair's record on its Nodes by
-   its own clocks (the born clocks summing to the arriving one: m^T, 9.2),
+   the crystal, as an EMITTER, GIVING CLICKS the pair's record on its Nodes by
+   its own clocks (the given clocks summing to the arriving one: m^T, 9.2),
    the pair carrying the arriving record's residue u (one quantum, one
    residue). ADOPTED (DERIVED HERE: it reads nothing but the rung and
    keeps one quantum, one click). Consequences, DERIVED HERE: the pair's
    phase cannot inherit the arriving record's local phase (that would be
-   a read), so the pair is born in phase over the crystal's Nodes and NO
+   a read), so the pair is given in phase over the crystal's Nodes and NO
    CONE forms (the headings come from the placement, 9.6); every arriving
    record that reaches the crystal's rung gives one pair, so W arriving
-   births over the wheel give W pairs and the pairs' counts are exact
+   giving clicks over the wheel give W pairs and the pairs' counts are exact
    (874, 150, 150, 874 up to the settings' order); the "fraction
    converted" becomes the share of the arriving norm the crystal's Nodes
    book, which decides only whether the rung is reached (it must be at
@@ -3611,7 +3620,7 @@ tail is not cut at the cube, so "zero outside the bodies" would be wrong
 for a well); no other record exists but the emitter bodies' own excited
 records (a crystal carries no seed, 9.7; an emitter body's record at
 interval 0 is its first excitation, 9.17 (4) item 1 and 9.22 (3), and
-its births come later); every remainder is 0. THE LOAD-TIME CONDITION: the board's state at interval 0 equals that
+its giving clicks come later); every remainder is 0. THE LOAD-TIME CONDITION: the board's state at interval 0 equals that
 sum Node by Node, exactly (integers), each well's profile equal bit for
 bit to the generator's (the body check, 8.7), and no Node carries any
 other nonzero amplitude; refused at load otherwise.
@@ -3877,30 +3886,30 @@ S[p]) [p]: from a number back to a record, the real part of a character
 on the phase circle. A lamp's drive is exactly this, sampled by its own
 clock: a_now(t) = A C[phase(t)] at its Node is **E**^T applied to (A, 0)
 and read at the clock's phase (1.7); spread by the split to the six
-neighbours, the birth is invariant under the Node's stabiliser G_48, the
+neighbours, the giving click is invariant under the Node's stabiliser G_48, the
 projector onto the trivial representation (9.4). And **E** **E**^T =
 [[SUM C^2, SUM C S], [SUM C S, SUM S^2]] = (N / 2) 256^2 **I** up to the
 tables' rounding (the characters' orthogonality on Z_N): THE EMITTER IS
 THE RECEIVER'S TRANSPOSE, its right inverse up to the scale (N / 2) 256^2
 and the rounding. ITS TRIGGER IS A CLICK OF ITS OWN RECORD: an emitting
-block births one record per cycle of its own mode, the cycle counted by
+block giving clicks one record per cycle of its own mode, the cycle counted by
 its own clock, the evaluation of its own record at its rung (8.6, the
 block's clock): exactly "a click produces the emitter". A lamp is the
 degenerate case: its own clock is its rate's accumulator (the translation) with no
 record behind it; a lamp that must be read so is a block emitter. So THE
 RECEIVER IS **E**, THE EMITTER IS **E**^T, AND THE CRYSTAL IS **E**
 (the arriving record's click at its Nodes) THEN m^T (the arriving clock
-split into the two born clocks, 9.2) THEN **E**^T (the pair's birth): EXACT
+split into the two given clocks, 9.2) THEN **E**^T (the pair's giving click): EXACT
 as the path of the data a click lets through, namely the clock (the
 energy, through m^T) and the residue u (9.7 (b)); the arriving record's
-amplitude and phase are not passed (no read), the born amplitude is the
-crystal's own declared number and its phase starts at the born clock's
+amplitude and phase are not passed (no read), the given amplitude is the
+crystal's own declared number and its phase starts at the given clock's
 zero. What it changes in the code: nothing for a block emitter (its
-births per cycle of its own clock are this); for a lamp, only the naming
-(its rate's count is its clock); for the crystal, its births fired by the
+giving clicks per cycle of its own clock are this); for a lamp, only the naming
+(its rate's count is its clock); for the crystal, its giving clicks fired by the
 arriving record's click, not by its own clock (9.7 (b)); the train, the
 wheel and the residue were unchanged in this reading. SUPERSEDED: the
-train by the born profile (9.17 (4)), the wheel and the residue by the
+train by the given profile (9.17 (4)), the wheel and the residue by the
 law's own remainder (9.19 (4)).
 
 ### 9.14 The polariser's angle: an element of the wheel's group, with no table (the owner's word of 21:40Z, and of 2026-09-24 17:27Z through the Boss: "about the general angle of the polariser, perhaps we do not need it at all")
@@ -4065,7 +4074,7 @@ none of the measured experiments needs one.
   and `cmul`, the detector law's cosine and sine arrays, `world.py`'s
   sine table). SUPERSEDED (the owner's word of 23:00Z, "if it is not used,
   throw it out; no formulas on the board"): with the flux as the reading
-  (9.19 (3)), the axes as integers and the born pair as the world's
+  (9.19 (3)), the axes as integers and the given pair as the world's
   integers (9.17 (6)), THE ENGINE OF THE FIFTEEN CARRIES NO TABLE; the
   readers that turned levels into phases (`read_phase`, `nearest_phase`)
   are host tools outside the engine, and `core.phase` stays only for them
@@ -4124,8 +4133,8 @@ NO BOOK. "The crystal's Nodes change" is this: the body's record moves
 by the push it received.
 - At the crystal: before the click the arriving record's stress at the
   crystal's outer Ports enters the crystal's vector. At the click the
-  arriving record ends. The pair is born by **E**^T with no heading, and
-  the birth's own push on the crystal is 0 on the average, because the
+  arriving record ends. The pair is given by **E**^T with no heading, and
+  the giving click's own push on the crystal is 0 on the average, because the
   six Port vectors of the orbit sum add to 0 (PROVED HERE: SUM over the
   six Ports of the unit vectors is 0). So the board's total before is the
   crystal's vector plus the arriving record's, and after it is the
@@ -4279,7 +4288,7 @@ goes (LAB_TOOLS.md 11.3).
 Inside is a bijection and the click is its one deletion (8.8). So a
 tool's action is the law's own advance (the rule **R**, with the tool's
 material, and the push of 9.15) PLUS AT MOST A CLICK. The click may have
-a birth as its other side (9.13): **E**^T writes the born record's two
+a giving click as its other side (9.13): **E**^T writes the given record's two
 levels once, at the click's interval, and from then on only the law
 advances it. Read against that form:
 - THE RECEIVER: a click. FORM MET.
@@ -4290,11 +4299,11 @@ advances it. Read against that form:
   rows are built. The table form (the split of booked offers with a kept
   remainder) is an operation on the books and not the law's advance: it
   RETIRES (9.11 (e)).
-- THE CRYSTAL: the arriving record's click, then a birth. FORM MET.
+- THE CRYSTAL: the arriving record's click, then a giving click. FORM MET.
 - THE WELL AND THE TRANSPONDER: the law's advance, and its own record's
   clicks. FORM MET.
 - THE EMITTER, as main has it: NOT MET, twice over. First, the lamp's
-  births come from a rate accumulator with no record behind them, so a
+  giving clicks come from a rate accumulator with no record behind them, so a
   record begins where none ends. Second, `_drive` writes the cosine value
   at the emitter's Node every interval of the train (the translation on a Node
   that the law does not advance), and it overwrites what arrives there
@@ -4302,7 +4311,7 @@ advances it. Read against that form:
 
 **(2) The emitter must click (DERIVED HERE).** One quantum, one click
 (8.6) and the bijection (8.8) together say that the number of quanta
-changes only at a click. A birth adds one, so A BIRTH MUST BE THE OTHER
+changes only at a click. A giving click adds one, so A GIVING CLICK MUST BE THE OTHER
 SIDE OF A CLICK THAT ENDS ONE: the emitter's own excited record ends as
 the new record begins. This is the atom's transition: **E** on the
 emitter's own record, then **E**^T. Its own clock's rung alone is not
@@ -4310,34 +4319,34 @@ enough, because a count on a clock with no record behind it ends nothing
 (it is lawful as a count, 9.5, but it creates a quantum from nothing).
 The algebra's form is therefore THE BLOCK EMITTER: a body with its own
 record (a well of a massive kind, 8.3) whose record clicks at its own
-rung. That click ends the record, and the photon's record is born at the
+rung. That click ends the record, and the photon's record is given at the
 same interval on the emitter's Nodes.
-- THE BORN RECORD'S VALUES are written once, at the click, by **E**^T:
-  the born clock's character on the emitter's Nodes at both levels. They
+- THE GIVEN RECORD'S VALUES are written once, at the click, by **E**^T:
+  the given clock's character on the emitter's Nodes at both levels. They
   are never driven afterwards.
 - A NARROW TRAIN IS A LENGTH, NOT A DURATION: a record of n periods is
   written over n wavelengths of emitter Nodes in a line (its direction
-  the line's, a placement, 9.6). On a single Node the born record is
+  the line's, a placement, 9.6). On a single Node the given record is
   broadband.
 - The emitter's Nodes are Nodes like any other before and after the
-  birth, and an arriving amplitude passes them under the rule. This
+  giving click, and an arriving amplitude passes them under the rule. This
   answers 9.10 item 1 and the physicist's question: nothing is
   overwritten.
 
 **(3) What changes in the code.**
 - `_drive` retires. The lamp's rate accumulator retires as a source of
-  births. `train` becomes the born record's extent on a line of emitter
+  giving clicks. `train` becomes the given record's extent on a line of emitter
   Nodes.
-- A birth is fired only by a click: the emitter body's own record's rung,
+- A giving click is fired only by a click: the emitter body's own record's rung,
   or an arriving record's rung at a crystal.
-- The loader refuses a birth with no clicking record behind it.
+- The loader refuses a giving click with no clicking record behind it.
 - The light clock's A changes too (see (4): main's block does not delete
   its record at its count, and it drives its light record by the source
   term).
 - The consequences for the fifteen:
   - Bell and Malus read computed weights and are unchanged.
   - The rows reading a steady field (the two slits, the pace fans, de Broglie's fringes,
-    the index probes) take the born packet's spectrum, the extent of
+    the index probes) take the given packet's spectrum, the extent of
     their emitter line. Their pins are re-derived blind on the
     regenerated worlds.
   - The first-rung rows (the moving mass's energy, Sagnac) re-derive their first rung from the
@@ -4347,7 +4356,7 @@ same interval on the emitter's Nodes.
 DERIVED HERE).** First, a CORRECTION of (3): main's block emitter is not
 the form either. Its "click" is a count on the sum of its record (a
 crossing from at most 0 to above 0) that deletes nothing. Its light
-record is born at content 0 and filled at every interval of the cycle by
+record is given at content 0 and filled at every interval of the cycle by
 the coupling's source term (`_source`). So the light clock's A CHANGES
 too. The form, with its integers:
 1. THE EXCITED RECORDS, IN TURN. The emitter is a body of a massive kind
@@ -4359,15 +4368,15 @@ too. The form, with its integers:
    - Excited record k clicks at ITS OWN RUNG on its own Nodes: **E** is
      its own offer booked through its Nodes (read-through, no take), and
      **D** is 2 T u_k + T <= 2 W C with T its norm.
-   - At that click **X** ends it, and **E**^T births two records: the
+   - At that click **X** ends it, and **E**^T giving clicks two records: the
      photon (content one quantum) and, while the stock lasts, excited
      record k + 1 (the seed again, content one quantum, residue u_(k+1)).
    - So quanta are conserved at every click, M in all. The emission
      times are the rungs, spread by the residues over the wheel: the
      spontaneous emission of the algebra. THE RATE KEY RETIRES: the rate
      is the rungs'. There is no source term and no drive.
-2. THE BORN VALUES, written once at the click's interval t_0 on the
-   emitter's Nodes (N the wheel of phases, [p, q] the born family's
+2. THE GIVEN VALUES, written once at the click's interval t_0 on the
+   emitter's Nodes (N the wheel of phases, [p, q] the given family's
    phase per Link, n / d its clock per interval, phase(age) main's
    `_phase` = (3 N / 4 + floor(age n / d)) mod N):
    - On ONE NODE: now = A C[phase(0)] and before = A C[phase(-1)]. The
@@ -4376,21 +4385,21 @@ too. The form, with its integers:
      L - 1: now = A C[(phase(0) - floor(x p / q)) mod N] and before = A
      C[(phase(-1) - floor(x p / q)) mod N], a character travelling along
      +e. The line's order from its vertex is its placement (9.6), and its
-     heading is the born character's.
+     heading is the given character's.
    - A narrow packet of n wavelengths has L = round(n N q / p) Links, the
      nearest integer (the loader prints it).
-   - The residue u enters only the born record's rung, as today.
+   - The residue u enters only the given record's rung, as today.
 3. THE NORM: T = SUM over the emitter's Nodes of (now - before)^2 at the
-   birth, the motion the one write inserts. The rung's T is this.
+   giving click, the motion the one write inserts. The rung's T is this.
 4. THE WHEEL AND THE RATE: the wheel [step, W] and the residue order
    `seed` stayed on the emitter body in this reading; SUPERSEDED by 9.19
    (4), ADOPTED: no wheel and no residue order on any body, u the law's
    remainder and W from the centre Node's pair. The rate keys ([1, 1]
-   for Bell, [1, 4] for the two slits) retire: births come at the
-   excited records' rungs. A world that needs n births declares the
+   for Bell, [1, 4] for the two slits) retire: giving clicks come at the
+   excited records' rungs. A world that needs n giving clicks declares the
    stock M = n.
 5. THE STEADY-FIELD PINS are re-derived blind by the World Generator's
-   map (the physicist's tool) on the born packets. The mathematician
+   map (the physicist's tool) on the given packets. The mathematician
    checks each derivation. The pace fans need no single-Node source: two
    LINE emitters, one along the axis and one along the diagonal, each
    give a travelling character, and k(axis) - k(diagonal) = k^2 / 48 at
@@ -4409,7 +4418,7 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    - WHY: a bound record books without end, so its only finite measure is
      per cycle. With this T, the excitation of residue u clicks within its
      first period, at about (2 u + 1) / (2 W) of it. The mean wait is half
-     a period WHATEVER THE WELL'S DEPTH: W births take about W P / 2
+     a period WHATEVER THE WELL'S DEPTH: W giving clicks take about W P / 2
      intervals, and the cadence is not a sizing integer.
    - The seed's squares (the head's T) make the wait scale as 1 / omega^2,
      which is a unit accident.
@@ -4421,7 +4430,7 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    half a step either side of its zero crossing. The norm is then 4 now^2
    per Node.
 3. THE LINE'S TRAVELLING CHARACTER: no per-Link pair enters the engine.
-   The band's k at a rational omega is not rational, so the born profile
+   The band's k at a rational omega is not rational, so the given profile
    along a line is MATERIAL: the generator writes the two levels' integers
    over the body's Nodes (the key `born`, a profile at both levels, as the
    well's seed is, 8.7). The engine copies them at the click. The loader
@@ -4433,13 +4442,13 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
    massive_kind` to set the record's `driven` mask. That is a branch on a
    family's kind (9.10; the three tests: no family name or kind). The mask
    belongs to the record's own data, set from the emitter's declaration,
-   with no branch at the birth. SUPERSEDED by 9.18 (3): there is no
-   `driven` mask at all; nothing drives a record after its birth.
+   with no branch at the giving click. SUPERSEDED by 9.18 (3): there is no
+   `driven` mask at all; nothing drives a record after its giving click.
 5. CONFIRMED IN FORM on 7ce8d66a:
    - X is `del self.records[...]`, a deletion of the whole record.
    - The rung 2 T u + T <= 2 W C.
    - The offer read through the body's Nodes with no take.
-   - One write at the birth, with nothing driven afterwards.
+   - One write at the giving click, with nothing driven afterwards.
    - The next excitation, while the stock lasts.
    - The content moved from the stock.
    THE GATE (9.5) stays on the whole line, the retirements and the
@@ -4447,7 +4456,7 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
 
 **(6) The write for an odd clock step (the physicist's question (2) of
 22:00Z; DECIDED HERE; the table moved out of the engine on the owner's
-word of 23:00Z).** The born pair is the character sampled half a step
+word of 23:00Z).** The given pair is the character sampled half a step
 either side of its zero: now = round(A sin(pi n / (d N))) and before =
 -now exactly, n / d the clock's advance per interval in steps of the
 circle of N, taken EXACT as the rational, A the amplitude unit
@@ -4455,25 +4464,25 @@ circle of N, taken EXACT as the rational, A the amplitude unit
 whole step s = floor(n / d) is 0 for a clock below one step per
 interval, the index rows' [3565, 10000] on N = 64, and wrote no motion;
 the half of the exact advance is never 0: 157930 on [77, 25] at N = 64
-for A = 2^20, 18349 on [3565, 10000]). THE ENGINE HOLDS NO TABLE FOR IT: the born pair is TWO INTEGERS
-OF THE WORLD, `born: [now, before]` per birth, computed by the generator
+for A = 2^20, 18349 on [3565, 10000]). THE ENGINE HOLDS NO TABLE FOR IT: the given pair is TWO INTEGERS
+OF THE WORLD, `born: [now, before]` per giving click, computed by the generator
 (a host tool, as the seed's mode is) and checked at load against the
-generator's recompute; a line's born profile is the generator's integers
+generator's recompute; a line's given profile is the generator's integers
 in the same way. No emitter is refused for any s. THE TWO FORMS OF THE
 KEY, stated once (2026-09-25, on the physicist's reading of this
 paragraph as "two integers only"): `born` is EITHER two integers [now,
-before], the uniform birth on every Node of the body with before = -now
+before], the uniform giving click on every Node of the body with before = -now
 exactly, OR a profile, one integer per Node of the body at each of the
 two levels (item (5) 3; the packet's summand of 9.22 (3): a travelling
 character has before = the character one interval earlier, not -now),
 checked at load for its count and for a motion; both are the world's
 integers, the generator's, and neither is a table in the engine.
-(6a) THE BORN TRAIN (REVISED at the owner's word of record 1950, 9.35 (10): the envelope is the body's own mode, the window and the tapers below are HISTORY; the load checks stand), THE ONE FORM OF A BIRTH (the physicist's finding on
+(6a) THE GIVEN TRAIN (REVISED at the owner's word of record 1950, 9.35 (10): the envelope is the body's own mode, the window and the tapers below are HISTORY; the load checks stand), THE ONE FORM OF A GIVING CLICK (the physicist's finding on
 emitter-click f0d2d745, 2026-09-25: the light clock's file run by the one
 command, every record clicking on its outgoing pass, the one-way flux
 into the cube beside the emitter 4.65 times the record's norm within 400
 intervals and 4.23 at the emitter's own Node; DERIVED HERE, the first
-form of the key RETIRED). The uniform birth [now, -now] on every Node of
+form of the key RETIRED). The uniform giving click [now, -now] on every Node of
 a body is a flat pulse of the body's length: on twelve Nodes at the
 wavelength 20.78 it is 0.58 of a period, broadband, and its standing
 components (the band's edges, whose group velocity is about zero) carry
@@ -4481,7 +4490,7 @@ an alternating current at the body's Ports with no transport; the
 positive part of an alternating current grows without bound, so the
 one-way flux booked by any region beside the emitter exceeds the
 record's norm and the ladder is met by sloshing, not by a passage (9.25
-(11)). THE LOAD CONDITION (DERIVED): every birth is a TRAVELLING TRAIN,
+(11)). THE LOAD CONDITION (DERIVED): every giving click is a TRAVELLING TRAIN,
 the character of one **K** over n >= 8 periods under an envelope, written
 on the body's Nodes at both levels; `born` has this one form, the
 profile, and the two-integer form is refused with this reason. THE
@@ -4490,7 +4499,7 @@ before[x, y, z] = round(A e(x) h(y) h(z) cos(k (x - x0) + omega)), the
 character exp(i (k x - omega t)) at t = 0 and t = -1 along **K** = (k,
 0, 0), travelling from interval 0 with no ramp (9.24 (2)); 3 cos omega =
 (num / den) (cos k + 2) for a profile constant across (the reads on an
-axis of extent 1 are the Node itself); the born clock [p, q] gives k = 2
+axis of extent 1 are the Node itself); the given clock [p, q] gives k = 2
 pi p / (2 N q), and [512, 1] on N = 1024 (k = pi / 2, the wavelength 4;
 cos omega = 2 / 3 for light, 0.6593 for [800, 809]) is the one clock of
 every light emitter, since a longer wavelength fits no train on a body;
@@ -4502,7 +4511,7 @@ its ends); X = 32 Nodes, 8 periods (64 for Mach-Zehnder), and the
 emitting body's side along **K** is X; A = 2^16 (the rounding below 10^-5
 of the norm; the ladder's integers are Python integers in the engine's
 flux reading; the back-action 6 g x 1.41 A = 556 against the seed / 1000
-= 52429 under (7) (c)). THE NORM T of the born record is the conserved
+= 52429 under (7) (c)). THE NORM T of the given record is the conserved
 form of its two levels on the vacuum (9.19 (3)), computed by the
 generator in integers, written beside the profile and checked at load:
 it is the ladder's T. THE CHECKS: at load, in integers, the FORM (the two
@@ -4519,9 +4528,9 @@ still growing, refused). The excited record's rung is untouched here
 ((7) (f), for the owner's word).
 
 **(7) THE EXCITED RECORD'S RUNG, CORRECTED (the physicist's two readings
-on emitter-click fd1734c2, 2026-09-25: the births 1 to 10 intervals
+on emitter-click fd1734c2, 2026-09-25: the giving clicks 1 to 10 intervals
 apart with the flux into the centre Node front-loaded; the seed-100 test
-bodies swamped by the born light; DERIVED HERE, RECOMMENDED for the
+bodies swamped by the given light; DERIVED HERE, RECOMMENDED for the
 model owner's word, since (4) item 1 and (5) item 1 were adopted with
 9.17).** (a) THE FINDING'S CAUSE, PROVED: on the lattice the flux G_ij =
 (1 / 3) A_ij (now_i before_j - before_i now_j) (9.19 (3)) VANISHES
@@ -4547,27 +4556,27 @@ with t_0 the interval of its (re)seed and P its period, the generator's
 integer pair [p, q] from the composed operator's eigenvalue (2 pi /
 omega_b as a rational); the rung 2 T u + T <= 2 W C is then the INTEGER
 COMPARISON 2 W q (t - t_0) >= (2 u + 1) p, and T drops out of the
-emitter's rung (it stays the born record's, the conserved form). The
+emitter's rung (it stays the given record's, the conserved form). The
 click comes at the phase (2 u + 1) / (2 W) of the period: a uniform
-waiting time in [0, P) set by the residue, one birth per half period on
-average, the cadence (5) item 1 intended ("W births take about W P / 2
+waiting time in [0, P) set by the residue, one giving click per half period on
+average, the cadence (5) item 1 intended ("W giving clicks take about W P / 2
 intervals"), now independent of the seed's rounding and of the
 back-action, which move the remainder and hence the residues alone (the
 chi-square of 9.19 item (4e) stands: 6.20 and 11.20 on 9 degrees of freedom
-over 100 births, equidistributed). The three tests: generic (the
+over 100 giving clicks, equidistributed). The three tests: generic (the
 integers u, W, p, q and the record's own age), vector (one comparison),
 local (the record's own age and residue, its named set the centre Node
 where the remainder is read). What it is physically: the bound mode's
 own oscillation read at its centre, the emission at the phase the law's
 remainder sets; the light on the board neither hastens nor delays it
 (no stimulated emission in the law; a hypothesis, if ever wanted, under
-its own identity). (c) THE BORN AMPLITUDE (his question (ii)): the born
+its own identity). (c) THE GIVEN AMPLITUDE (his question (ii)): the given
 record's amplitude is the amplitude unit A of (6), a convention of the
-write, not the excited record's; no law ties the born record's norm to
+write, not the excited record's; no law ties the given record's norm to
 the excited record's (each record's I is its own conserved form, the
-birth is a write E^T and the quantum is counted, not weighed; a relation
+giving click is a write E^T and the quantum is counted, not weighed; a relation
 between them would be a new hypothesis). What is physical is the
-back-action's size against the body's own amplitude: g times the born
+back-action's size against the body's own amplitude: g times the given
 light's first differences at the body's Nodes must stay small against
 the excited record's amplitude, else the record leaves its mode (his
 seed-100 worlds, driven 158 per Node per interval against 100, are
@@ -4578,7 +4587,7 @@ seed of 100 do not and are raised to it (their assertions are on the
 form). (d) WHAT CHANGES IN THE ENGINE (for the physicist, after the
 owner's word): `_excitation_rung` compares the record's age with its
 residue on the mode's period instead of booking the flux into the centre
-Node; the emitter's `norm` is the born record's and its `period` the
+Node; the emitter's `norm` is the given record's and its `period` the
 mode's pair; the residue's read point and the coupling of 9.19 item (4e)
 stay. (e) THE INTERNAL CLOCK AND THE ONE FORM (the model owner's
 questions of 2026-09-25 through the Boss: "so it is a general law? the
@@ -4664,7 +4673,7 @@ form (the per-Node term of `conserved_form`, D_c (now^2 + before^2) -
 there; the emitter's `norm` is P e_c, the generator's integer from the
 mode's period [p, q] and its share, recomputed at load; the residue's
 read point and the coupling of 9.19 item (4e) stay; every detector's ladder
-is untouched. What it settles: the emitter's cadence is one birth per
+is untouched. What it settles: the emitter's cadence is one giving click per
 half period on average, fixed by the law's remainder, the same for a
 one-Node emitter and a slab, on a chain and on a layer.
 
@@ -4675,12 +4684,12 @@ body of a massive kind; is there any duplication; is a massive family
 matter. This section answers them as one statement and marks what the
 algebra carries and what it does not. ADOPTED (record 1875): it is the
 definitions' form (SIMULATOR_DEFINITIONS.md, "The one operator, the click
-and the birth").
+and the giving click").
 
 **(1) THE ONE OBJECT: THE BODY (DERIVED HERE, from 8.1, 8.3, 9.1, 9.15
 and 9.17).**
 - A tool acts by the law's own advance on its material, plus at most a
-  click whose other side may be a birth (9.17 (1)).
+  click whose other side may be a giving click (9.17 (1)).
 - A tool's material is integers on a set of Nodes whose stabiliser fixes
   its shape (9.1, 9.6), which is exactly 8.3's body: a G_48-set of
   Nodes with a pair per family on its Nodes.
@@ -4689,7 +4698,7 @@ and 9.17).**
 - So the nine tools of the specification's A.10 are ONE OBJECT, the
   body, carrying optional integers. THERE IS NO DUPLICATION: the well
   and the transponder are the same object, the emitter is a well with a
-  stock, and the crystal is a body whose birth is triggered by an
+  stock, and the crystal is a body whose giving click is triggered by an
   arriving record instead of its own.
 
 | What the body carries on its Nodes, beyond its own pair | The tool it is |
@@ -4698,8 +4707,8 @@ and 9.17).**
 | a light pair (a gap [1, 2], a layer [91, 107], an index) | the mirror, the splitter, an index slab |
 | an axis (a, b) on the label rows | the polariser |
 | a coupling (g, G) between two families (8.5) | the medium of the index rows |
-| a BIRTH (a born profile and branches) triggered by its own excited record's click, with a stock M | the emitter |
-| a BIRTH triggered by the click of an arriving record whose ladder names the body | the crystal |
+| a GIVING CLICK (a given profile and branches) triggered by its own excited record's click, with a stock M | the emitter |
+| a GIVING CLICK triggered by the click of an arriving record whose ladder names the body | the crystal |
 | its name in records' ladders and a wheel W | the receiver |
 | a light pair and a momentum | the transponder |
 
@@ -4717,8 +4726,8 @@ and 9.17).**
 **(2) THE FAMILIES (DERIVED HERE).** A family is its vacuum pair and its
 label module, nothing else; its quantum is the counting unit of its
 content, a convention of the reading (9.22 (1)). Its clock
-(`phase_per_link`) is a datum of the birth, read by the generator for the
-born profiles and the seeds (9.17 (5), 8.7), not by the law.
+(`phase_per_link`) is a datum of the giving click, read by the generator for the
+given profiles and the seeds (9.17 (5), 8.7), not by the law.
 - LIGHT: the pair [1, 1], with no rest frequency (at **k** = 0, omega =
   0). It is never a body.
 - A MASSIVE FAMILY: the pair [num, den] with num < den, whose rest
@@ -4778,7 +4787,7 @@ and no kind.**
    weights are R = J^2 (3.6).
 5. THE CLICK'S ACTION (8.8): the record ends with all its rows, the one
    deletion. Its content and its push are handed to the clicking body.
-6. THE BIRTH (9.13, 9.17): the body's born profile written once, at both
+6. THE GIVING CLICK (9.13, 9.17): the body's given profile written once, at both
    levels, at a click's interval. The click is either the body's own
    excited record's (and the next excitation follows while the stock
    lasts) or a named arriving record's.
@@ -4796,7 +4805,7 @@ and no kind.**
    - the body whole on the board, and the bodies' Nodes disjoint;
    - the composed seed bit for bit, and the hybrids' share within the
      band (9.9);
-   - the excited record's norm per period, and the born profile's band
+   - the excited record's norm per period, and the given profile's band
      check (9.17 (5));
    - the axis with gcd(a, b) = 1 (the wheel as a permutation REFUSED,
      9.19 (4): no wheel is declared);
@@ -4811,7 +4820,7 @@ and no kind.**
 `detector_law.py` and `world.py`), each replaced by (4):**
 - THE LAMP: `_drive`, the rate, the train, and the norm taken from the
   cosine table.
-- THE BLOCK AS AN EMITTER: its cycle births and `_source` as the
+- THE BLOCK AS AN EMITTER: its cycle giving clicks and `_source` as the
   emitter's source. The coupling itself stays, as law.
 - THE EMITTER'S KNOT: `own_grace`, `_exempt`, `_own_take`, `_in_grace`
   and the driven masks.
@@ -4829,7 +4838,7 @@ and no kind.**
 
 With these go ALL RUN-TIME TABLES. The cosine and sine tables remain only
 in the GAMEBOARD readers (`read_phase`, a reading that writes nothing)
-and in the generator (the seeds and the born profiles, written into the
+and in the generator (the seeds and the given profiles, written into the
 world file as integers). THE LAW THEN USES NO TABLE, NO ROOT AND NO FLOAT,
 and none of 2.7's exceptions.
 
@@ -4844,10 +4853,10 @@ and none of 2.7's exceptions.
 | the coupling | its form CARRIED (8.5); its scheme and its invariant J PROVED (8.5) |
 | the label matrix | DERIVED (9.16 (2)) |
 | the click, its action, the rung | IN (3.1, 8.6, 8.8) |
-| the birth at a click | DERIVED (9.13, 9.17) |
+| the giving click at a click | DERIVED (9.13, 9.17) |
 | the composed seed and the hybrid condition | DERIVED (9.9): a condition checked per world, not a theorem that it holds |
 | the push, and momentum conserved on the board | CARRIED (8.11): the stress as the momentum flux, and the one vector per body (the declared tie), are declarations of the design, not of the law |
-| the excited record's norm per period; before = -now; the born profile as material | DECIDED (9.17 (5)), fixed only up to a convention |
+| the excited record's norm per period; before = -now; the given profile as material | DECIDED (9.17 (5)), fixed only up to a convention |
 | the tool bodies' binding, their mass and the hybrid share | SIZING integers the generator chooses and the loader checks, not values the algebra fixes |
 | the material integers, the placement, the cone | declarations of the world by their nature (9.8; 9.16 (6)) |
 | the faces per family | DECIDED (record 1875): one border for every family |
@@ -4867,14 +4876,14 @@ THE VERDICT: YES IN ITS OBJECTS AND OPERATIONS, NOT IN EVERYTHING.
   - Bell and Malus read computed weights.
   - The first-rung rows read the front.
   - A tool drifting less than one Link moves no Node.
-  - The steady-field rows are re-derived blind on their born profiles
+  - The steady-field rows are re-derived blind on their given profiles
     (9.17 (4)).
 
 **(7) WHAT IT ASKS OF THE ENGINE (the physicist's), in addition to what
 is owed already (12.1, 12.2, the emitter's line, the crystal's
 rework):**
 - A body carrying a pair for each of two families on the same Nodes.
-- The birth as a body option, with its two triggers.
+- The giving click as a body option, with its two triggers.
 - The push generic over the families the body declares.
 - The seeds computed on the composed operator.
 - The retirements of (5).
@@ -4989,14 +4998,14 @@ HERE:
   there retires.
 - A SET AT ITS EMITTER'S NODES (the physicist's finding (3)): the write is
   on the Nodes, not through a Port; it books nothing; the record's
-  energy is its I from the birth; nothing vanishes and nothing is booked
+  energy is its I from the giving click; nothing vanishes and nothing is booked
   unread.
 - THE EXCITED RECORD: SUPERSEDED by 9.17 (7) (a) and (e) (the correspondence
   audit of record 1942): a standing mode's flux through every Port vanishes
   (the Wronskian), so its rung accrues the centre Node's own share e_c and
   its norm is T = P e_c, one period's sum; the earlier reading here (the
   one-way flux into the centre Node fed by the mode's sloshing) is HISTORY.
-  The cadence stays half a period per birth.
+  The cadence stays half a period per giving click.
 - THE MIRROR'S AND THE SPLITTER'S SHARES are the one-way flux through a
   Port behind the body over the record's I, the form the physicist
   measured (his window reading of 18:50Z).
@@ -5054,13 +5063,13 @@ remainder. THE RULE'S REMAINDER r (the division with the remainder kept, 8.1) is
 record and is the law's own. THE WHEEL'S RESIDUE u is one integer per
 record on Z_W, read once, at the rung; with the ladder it chooses the
 Node in the weights' proportion, which is Born's rule (4.8, c_1 = 1). It
-is the model's hidden variable: local (born with the record),
+is the model's hidden variable: local (given with the record),
 deterministic (no draw, 2.7), and DECLARED (a permutation of Z_W in the
 world file, `residue_order` and `residue_seed`). IT CANNOT BE REMOVED:
 without it every record clicks at the same Node and there is no
 distribution. ITS SOURCE CAN CHANGE: u may be read from the law itself,
-as the rule's remainder r at the birth Node at the interval of the click
-that births the record (the excited record's remainder at its click; the
+as the rule's remainder r at the giving Node at the interval of the click
+that giving clicks the record (the excited record's remainder at its click; the
 arriving record's at the crystal's), with the wheel W = 3 x the pair's
 denominator at that Node. Then the world declares no residue.
 - THE RANGE OF THE REMAINDER (PROVED HERE, one line): the rule gives r'
@@ -5071,11 +5080,11 @@ denominator at that Node. Then the world declares no residue.
   equidistributed, is COMPUTED, not proved: on a chain the vacuum [800,
   809] gives 2427 values,
   equidistributed over 18000 intervals (chi-square 21 on 19 degrees of
-  freedom, the 95 percent bound 30) and equidistributed over 160 births
-  read one per birth (11 on 9, the bound 17); [3200, 3227] gives 9681;
+  freedom, the 95 percent bound 30) and equidistributed over 160 giving clicks
+  read one per giving click (11 on 9, the bound 17); [3200, 3227] gives 9681;
   A WELL [800, 800] = [1, 1] AND LIGHT [1, 1] GIVE THREE. The lamps'
-  [77, 25] and [2464, 25] are BORN CLOCKS (the phase per Link, 9.17 (4)),
-  not pairs: light's pair is [1, 1], so a light birth Node needs an index
+  [77, 25] and [2464, 25] are GIVEN CLOCKS (the phase per Link, 9.17 (4)),
+  not pairs: light's pair is [1, 1], so a light giving Node needs an index
   pair (4a). So the residue is read where the pair is rich: a well
   declared [800, 801] (2403 values) rather than [800, 800].
 - THE COST: with a declared permutation W records cover the wheel exactly
@@ -5086,8 +5095,8 @@ denominator at that Node. Then the world declares no residue.
   reproducible either way.
 - ADOPTED (the model owner, 2026-09-24, through the Boss at 22:18Z: "in
   my opinion, without declarations"): THE RESIDUE IS THE LAW'S OWN
-  REMAINDER. A record's u is the rule's remainder r at its birth Node at
-  the interval of the click that births it (the excited record's
+  REMAINDER. A record's u is the rule's remainder r at its giving Node at
+  the interval of the click that giving clicks it (the excited record's
   remainder at the emitter's centre Node; the arriving record's at the
   crystal's centre Node), and its wheel is W = 3 x denominator /
   gcd(numerator, 3) of that Node's pair for the clicking record's family,
@@ -5096,17 +5105,17 @@ denominator at that Node. Then the world declares no residue.
   remainder read is the RECORD'S ROW'S (8.1: the remainder kept on the
   record's row), not the Node's, so record 155 ("a Node keeps no
   remainder and no draw") holds; and W, listed by record 189 among the
-  law's grain constants as the birth wheel, becomes a quantity of the
+  law's grain constants as the giving wheel, becomes a quantity of the
   world's pair (3 x denominator / gcd(numerator, 3)), no longer a constant
   of the law: a RECLASSIFICATION for the Boss's record, not a change of a
   rule. The first excitation of a
   body, on the board at interval 0 with every remainder 0 (9.9), has u =
   0 and clicks at its earliest rung. What follows, DERIVED HERE, blind:
-  - (4a) THE RICHNESS OF THE BIRTH NODE. The granularity of Born's rule
+  - (4a) THE RICHNESS OF THE GIVING NODE. The granularity of Born's rule
     on a wheel of W values biases each Node's share by at most 1 / (2 W).
     For that bias to stay below a tenth of the smallest binomial band the
     fifteen read (Bell's 0.011 on a share of 0.4 at 100 records), W >=
-    500. So EVERY TOOL THAT BIRTHS DECLARES, ON ITS BIRTH NODE, A PAIR FOR
+    500. So EVERY TOOL THAT GIVING CLICKS DECLARES, ON ITS GIVING NODE, A PAIR FOR
     THE CLICKING RECORD'S FAMILY WITH 3 x denominator / gcd(numerator, 3)
     >= 500, checked at load: an emitter's well [800, 801] (2403) or
     [3200, 3227] (9681), never [800, 800] or [8, 7] (3 and 21); a
@@ -5115,7 +5124,7 @@ denominator at that Node. Then the world declares no residue.
     fifteen's wells [800, 800] (the deep well, the boxes, the light clock,
     Sagnac) become [800, 801]; [314, 315] (945) and [3200, 3227] stand;
     [156, 157] (157) is the vacuum pair of the redshift and the index rows
-    and no birth Node carries it (their births are the wells [314, 315],
+    and no giving Node carries it (their giving clicks are the wells [314, 315],
     945), so it stands (the physicist's question of 2026-09-24, 22:50Z,
     answered; the earlier "changes" withdrawn); the one-Node emitters'
     [8, 7] (21) is too poor and changes: [801, 700] on [7, 8] gives 700
@@ -5158,40 +5167,40 @@ denominator at that Node. Then the world declares no residue.
     board, 2026-09-25, emitter-click 055de7be; DERIVED HERE). (i) A body
     whose excited record is reseeded identically after every click, with
     no coupling to the light on the board, repeats its remainder at the
-    centre Node and births ONE residue every time (his chain: 214, 214,
+    centre Node and giving clicks ONE residue every time (his chain: 214, 214,
     214 on W = 700): the algebra's own answer, a deterministic law with
     an identical start gives an identical cycle, a perfectly periodic
-    source. (REVISED at the model owner's word of record 1962: the residues spread by the remainder KEPT at the body's Nodes through its reseed, 9.34 (2), computed, with no coupling; the coupling of 8.5 is retired, 9.34 (B); the reading that follows is HISTORY.) THE RESIDUES SPREAD ONLY BY THE BOARD'S OWN BACK-ACTION: the emitting body's COUPLING (g, G) to the family it births (8.5), by
+    source. (REVISED at the model owner's word of record 1962: the residues spread by the remainder KEPT at the body's Nodes through its reseed, 9.34 (2), computed, with no coupling; the coupling of 8.5 is retired, 9.34 (B); the reading that follows is HISTORY.) THE RESIDUES SPREAD ONLY BY THE BOARD'S OWN BACK-ACTION: the emitting body's COUPLING (g, G) to the family it giving clicks (8.5), by
     which the photons already on the board act on the excited record's
     rows (a one-unit change of a row changes the next remainder by
     numerator mod 3 denominator, so any back-action spreads them), and
-    which an emitter carries because it radiates (a body that births
+    which an emitter carries because it radiates (a body that giving clicks
     light and is not coupled to light is a write and no source). So
-    EVERY EMITTING BODY DECLARES (g, G) FOR ITS BORN FAMILY on its Nodes,
+    EVERY EMITTING BODY DECLARES (g, G) FOR ITS GIVEN FAMILY on its Nodes,
     the one-Node emitters [801, 700] included; the equidistribution of
-    the residues so born is COMPUTED on the engine (owed: a chain of 100
-    births with the registered G [1, 50], g [1, 1000], the chi-square
+    the residues so given is COMPUTED on the engine (owed: a chain of 100
+    giving clicks with the registered G [1, 50], g [1, 1000], the chi-square
     against the wheel). WHAT THE BACK-ACTION CAN SPREAD (DERIVED HERE):
     only what the board holds at the reseed. The state at a reseed is the
-    seed, the record just born (the same profile at every birth) and
-    whatever earlier records are still on the board; a world whose born
+    seed, the record just given (the same profile at every giving click) and
+    whatever earlier records are still on the board; a world whose given
     records all leave (their click at a receiver or the face) before the
     next reseed has the SAME state at every reseed and repeats one
     residue exactly, coupling or not, by the determinism of 2.7. The
     residues spread only where records are still in flight at the
     reseed, and then as a deterministic walk on Z_W whose cycle the
     chi-square measures. So the chi-square is read PER WORLD (the Malus
-    bar's 256 births in 3800 ticks are about 15 apart against a transit
+    bar's 256 giving clicks in 3800 ticks are about 15 apart against a transit
     of 7 and more, so they overlap; the Bell layer's likewise), and a
     world whose residues cycle short is cured by memory (a longer board,
     a torus, a denser stock), never by a draw. (ii) The excited record's own residue read at its
     (re)seed is 0 (the seed's remainders are 0), so its rung is T / (2 W)
-    and it clicks at the first interval with any flux, one birth per
+    and it clicks at the first interval with any flux, one giving click per
     interval: WITHDRAWN as a reading point. The excited record's residue
     is read from its own remainder at the centre Node AFTER ITS FIRST
     ADVANCE (the seed's remainders are 0 at the write and nonzero after
     one step of the rule), and the rung compares from that interval on;
-    the born photon's residue is the excited record's remainder at the
+    the given photon's residue is the excited record's remainder at the
     click, as built. The first excitation of a run then has the residue
     the generator's seed gives after one step, the same in every run of
     that world (deterministic, 2.7), and every later one differs by the
@@ -5200,10 +5209,10 @@ denominator at that Node. Then the world declares no residue.
     DO NOT CHANGE: a first rung is the interval at which 2 W C first
     reaches T, the u = 0 rung, and reads no residue. They move only with
     the flux form of (3), already ordered.
-  - (4d) WHAT THE PHYSICIST CHANGES: the birth reads the clicking record's
-    remainder at the birth's centre Node and sets u and W from it; the
+  - (4d) WHAT THE PHYSICIST CHANGES: the giving click reads the clicking record's
+    remainder at the giving click's centre Node and sets u and W from it; the
     loader refuses `residue_order`, `residue_seed` and a declared `wheel`,
-    and refuses a birthing Node whose pair is poorer than 500; the wells
+    and refuses a giving Node whose pair is poorer than 500; the wells
     of (4a) regenerated to rich pairs and the crystal's light index
     declared; the Bell worlds at n = 100 per setting, Malus at 256, their
     registers carrying the expected counts and the 3-standard-deviation
@@ -5214,25 +5223,25 @@ denominator at that Node. Then the world declares no residue.
 | The word | What it is in the one element | Declared by the world? |
 | --- | --- | --- |
 | a family | an index of the summands, and the operator's pair for them | its vacuum pair and quantum: yes |
-| a record | a summand of v, one quantum | the seeds at interval 0 and the born profiles: yes; the rest is born by clicks |
+| a record | a summand of v, one quantum | the seeds at interval 0 and the given profiles: yes; the rest is given by clicks |
 | a body | a region of the operator where a family's pair differs from the vacuum's | yes (a cube, a pair) |
-| a tool | a region of the operator with its integers, and at most a birth and a name | yes |
+| a tool | a region of the operator with its integers, and at most a giving click and a name | yes |
 | a face | the operator's zero row beyond the border | the board's extents: yes |
-| a receiver | a NAME the host gives a set of Nodes, on records' ladders; the rung's wheel is the record's own, born with u (4), not the receiver's | yes (a name) |
-| the emitter's stock, the born profile, the crystal's branches | the birth's data | yes |
+| a receiver | a NAME the host gives a set of Nodes, on records' ladders; the rung's wheel is the record's own, given with u (4), not the receiver's | yes (a name) |
+| the emitter's stock, the given profile, the crystal's branches | the giving click's data | yes |
 | the residues | one integer per summand | yes, or the rule's own remainder (4) |
-| the click, the birth, the push | the map S and its one deletion | no: the law |
+| the click, the giving click, the push | the map S and its one deletion | no: the law |
 | a lamp, a table, a take, a grace, a completion | nothing: names of retired forms | no |
 
 So THE WORLD FILE DECLARES: the board's extents; the families (a pair and
 a quantum each); THE OPERATOR (every region where a pair, a coupling or an
 axis differs from the vacuum, as cubes); THE INITIAL ELEMENT (the seeds, one
-per bound body, the composed modes of 9.9); THE BIRTHS (a body's stock and
-born profile, a crystal's branches and clocks); THE NAMES (the
+per bound body, the composed modes of 9.9); THE GIVING CLICKS (a body's stock and
+given profile, a crystal's branches and clocks); THE NAMES (the
 receivers' sets and the ladders that name them; no wheel: the rung's
 wheel is the record's, (4)). Nothing else, the residues included (4). THE GENERIC ENGINE IS: one
 step of S on the one element, then the click (E the flux, D the rung, X
-the deletion, E^T the birth) on the summands whose ladders name a set.
+the deletion, E^T the giving click) on the summands whose ladders name a set.
 
 **(6) EQUIVARIANCE, STATED ONCE (IN THE ALGEBRA, 1.1 and 1.6; the form
 here DERIVED).** The map S is a function of the world's declared data w
@@ -5255,7 +5264,7 @@ is the statement the property test of 9.20 checks.
 - WHAT CHANGES FOR THE ENGINE (the physicist), beyond 9.18 (7): E as the
   one-way flux at every set, and T as the record's I (the take, the grace,
   the own take, the exemption and the driven mask retire with them); the
-  spectral load check; the born pair as the world's integers (9.17 (6)); the
+  spectral load check; the given pair as the world's integers (9.17 (6)); the
   residue's source if the owner takes (4).
 
 ### 9.20 The property test of the board, as the algebra gives it (the Boss's order of 2026-09-24, 22:00Z (2026-09-25 on the Israel clock); the owner's word of 22:10Z: "he only needs to verify it, because it is an algebraic test of the families he wants, before a code test"; ADOPTED, record 1875)
@@ -5279,7 +5288,7 @@ line of the algebra it follows from.
    reads are the same six offsets at every Node. PROVED per family and
    together.
 3. CONSERVATION BETWEEN CLICKS. (a) Content: nothing but a click or a
-   birth changes the summands (9.17): exact, DERIVED. (b) Per family the
+   giving click changes the summands (9.17): exact, DERIVED. (b) Per family the
    form I is conserved exactly before the remainders and obeys the exact
    remainder identity with them (8.2, PROVED); together, J = I_m + alpha
    I_l + the cross term is conserved exactly before the remainders (8.5,
@@ -5312,7 +5321,7 @@ runs headless, on integers, and compares arrays bit for bit unless the
 expected value says otherwise. The small world: a cube of 12 x 12 x 12
 (periodic on every axis), light's family [77, 25] and a massive family
 [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
-[800, 801] seeded on its composed mode; one light record born at (8, 2,
+[800, 801] seeded on its composed mode; one light record given at (8, 2,
 7) on one Node with the branches [[0, 1], [1, 1]] (both labels), its
 residues supplied by the TEST HARNESS (a permutation over W = 8, an
 input of the test and not a world key; the engine's u is the law's
@@ -5392,7 +5401,7 @@ code and say whether it works").** The one element and the one operator of
 rule with a pair per Node and the remainder, the flux reading, the rung,
 the deletion, the emitter as a clicking body (its seed the composed
 operator's bound mode, its norm one period's one-way flux into its centre)
-and the birth with before = -now; W = 8 and the residues a permutation
+and the giving click with before = -now; W = 8 and the residues a permutation
 supplied by the test harness (an input of the prototype, not a world
 key). Every expected value of the six tests met:
 - THE INITIAL STATE FROM THE OPERATOR: the well [800, 801] of side 2 on
@@ -5449,7 +5458,7 @@ done before it.
 
 1. THE WORLDS. A world is its initial element (integers at interval 0)
    PLUS its operator (the pairs, couplings and axes per region) PLUS the
-   births' data PLUS the receivers' names (no wheel): DERIVED (9.19 (5)). Not "the
+   giving clicks' data PLUS the receivers' names (no wheel): DERIVED (9.19 (5)). Not "the
    initial element alone": the operator is the world's second declaration,
    and it is data, not a rule. A world file may declare exactly those four
    and the board's extents; it may not declare a residue, a wheel, a take,
@@ -5458,10 +5467,10 @@ done before it.
    a small operator: DERIVED (9.20 (B)).
 2. THE FIFTEEN. Survive as declared inputs: the extents, the families'
    pairs and quanta, the bodies' cubes and pairs, the couplings, the axes,
-   the emitters' stocks and born profiles, the crystal's branches and
+   the emitters' stocks and given profiles, the crystal's branches and
    clocks, the receivers' names, the amplitudes. Become DERIVED: the
-   wheel (the birth Node's pair),
-   the seeds (the composed operator's modes, 9.9), the trains (a born
+   wheel (the giving Node's pair),
+   the seeds (the composed operator's modes, 9.9), the trains (a given
    profile's length), the residues (the law's remainders), the tools'
    shares (the operator's scattering), the first rungs (the flux), the
    counts' bands (binomial at the records). Retire: the tables, the takes,
@@ -5469,8 +5478,8 @@ done before it.
    sponge faces: DERIVED (9.18 (5), 9.19).
 3. THE ENGINE. One step of one operator on the one element (the rule per
    family with the coupling, the axes and the push) plus the click (the
-   flux, the rung, the deletion, the birth): DERIVED (9.19 (5)). No place
-   in it for: `_drive`, `_source` as a birth, `_block_births`, the grace,
+   flux, the rung, the deletion, the giving click): DERIVED (9.19 (5)). No place
+   in it for: `_drive`, `_source` as a giving click, `_block_births`, the grace,
    the exemption, the own take, the take masks, `_complete`, the close,
    `escaped`, `TableBody`, `read_pair`, `half_angle`, `Splitter`, the
    residue orders and seeds, the `massive_kind` branches in the law's
@@ -5511,7 +5520,7 @@ done before it.
    throw it out; no formulas on the board"; superseding his word of
    2026-09-21 that the table stays for the click's Gram matrix, which the
    flux reading has replaced): the engine carries NO TABLE; the generator
-   computes the born pairs and profiles and writes integers, and the
+   computes the given pairs and profiles and writes integers, and the
    phase readers are host tools outside the engine. (d) The float Lanczos of the
    generator: HOST, outside the law, its integers checked at load. (e)
    The one non-local act, the click's deletion of a summand across the
@@ -5526,9 +5535,9 @@ done before it.
      x labels per interval, LINEAR in the Nodes, with no global sum
      (PROVED: 8.1 is local); the storage three integers per Node per row
      (now, before, remainder), the same product. The alive records are
-     bounded by the world, not by the stock: a clicking body births in
+     bounded by the world, not by the stock: a clicking body giving clicks in
      turn (9.17), so at most (a record's lifetime on the board) / (the
-     birth's period) are alive at once (DERIVED: the two slits, 485
+     giving click's period) are alive at once (DERIVED: the two slits, 485
      Links at a period of about 42, some 12 photons alive at once
      whatever the stock of 1024, about 4.5 million integers); the run's
      length is the stock times the period, LINEAR in the stock.
@@ -5564,14 +5573,14 @@ done before it.
    - (e) WHAT DOES NOT SCALE: nothing in the law; in the host, (i) a
      board-wide dense vector per record where the record is a window
      (the prototypes' form; the window is exact by locality, 9.20 (5): a
-     record born at one Node is zero outside the Manhattan ball of its
+     record given at one Node is zero outside the Manhattan ball of its
      age, and inside it any cut is an approximation the algebra does not
      licence: a host matter, OPEN); (ii) the prototypes' dense
      eigen-decomposition and 48-fold equivariance test, which run on
      planted boards of 8^3 only (9.20 (B)), never on the measured experiments'
      boards; (iii) the tensor's 2^n joint weights of a record of n arms
-     (n = 2: four integers, 9.23); (iv) a declared rate of births,
-     retired (the emitter births in turn).
+     (n = 2: four integers, 9.23); (iv) a declared rate of giving clicks,
+     retired (the emitter giving clicks in turn).
 9. WHAT IS DROPPED (the model owner's word of 23:10Z: "work only on the
    adopted line; drop anything older not needed, and tell me what you
    drop"). Dropped from the line, kept in this chapter as derivations
@@ -5580,7 +5589,7 @@ done before it.
    the exact pins at W = 20 (Bell 181 of 64, Malus's exact counts), the
    pins being distributions (9.19 item (4b)); 9.10 item 1's owed computation
    of the click's Gram matrix from the table, the flux reading the click
-   (9.19 (3)); 9.17 (2)'s emitter with a table, the born pair being two
+   (9.19 (3)); 9.17 (2)'s emitter with a table, the given pair being two
    integers (9.17 (6)); the specification's sections 0 to 12 and
    CRYSTAL_ALGEBRA.md as history, parts A and B the live specification.
    Not dropped, older and needed: chapter 8 (the rule), 9.1 to 9.13 (each
@@ -5597,8 +5606,8 @@ done before it.
 VACUUM PAIR [numerator, denominator] and its LABEL MODULE (Z^2 per arm
 for the hand; Z for a family with no hand). Nothing else. Its quantum is
 the unit of its content (the counting unit, a convention of the reading,
-not a datum of the law); its clock (`phase_per_link`, the born
-character's frequency) is a datum of the BIRTH that makes its records,
+not a datum of the law); its clock (`phase_per_link`, the given
+character's frequency) is a datum of the GIVING CLICK that makes its records,
 not of the family. What follows from the pair alone:
 - its rest frequency, cos omega_0 = numerator / denominator (8.1): light
   has none ([1, 1]); a massive family has one, its mass;
@@ -5629,8 +5638,8 @@ and nothing else:
 - THE OCCUPATION: which bound bodies hold quanta, how many, at which
   amplitude; which packets of a family are on the board, how many quanta,
   at which amplitude and width, where; which bodies carry a stock of
-  excitations and birth which family with which clock and which born
-  profile; which body births a pair (the crystal's branches and clocks).
+  excitations and giving click which family with which clock and which given
+  profile; which body giving clicks a pair (the crystal's branches and clocks).
 - THE MOMENTUM: every entry carries its total momentum as one of its
   integers, the wave vector **K** of its character, 0 at rest (DECIDED,
   the model owner, record 1885, 2026-09-25 on the Israel clock); a packet
@@ -5639,7 +5648,7 @@ and nothing else:
   moving entry is written moving at interval 0 and its energy of motion
   is part of the initial state, conserved; no ramp (DECIDED, record 1884;
   the ramp of DECLARATIONS.md section 8 retires).
-- THE NAMES: the receivers' sets, and the ladder of each birth (the sets
+- THE NAMES: the receivers' sets, and the ladder of each giving click (the sets
   its records name, the face receiver last).
 NOT PART OF IT (refused at load): a residue, a wheel, a seed written by
 hand, a rate, a train, a heading, a take, a grace, a table, a per-family
@@ -5652,7 +5661,7 @@ and 9.19).** The initial element is
 
 where the modes are the eigenvectors of the COMPOSED operator of the
 body's family (every region of that family in place, 9.9), one summand
-per occupied body, each the body's first excitation where the body births
+per occupied body, each the body's first excitation where the body giving clicks
 (9.17 (4)), plus one summand per PACKET: its profile times the character
 of its momentum **K** at the two levels, integers after rounding, an
 exact solution of the homogeneous law from interval 0 with no ramp (9.24
@@ -5662,18 +5671,18 @@ Nothing else is on the board at interval 0: no light record, no response
 record, no remainder (9.9).
 - EXACT INTEGERS: the summands as written (the levels and the zero
   remainders), the amplitude, the quanta, the material map; the operator
-  itself (integer pairs); the born profiles' integers.
+  itself (integer pairs); the given profiles' integers.
 - A HOST COMPUTATION, ROUNDED: the mode's real profile (the generator's
   Lanczos vector, float, unique up to sign and scale), rounded to the
   nearest integer at the amplitude; the character's cosine at each Node
-  for a moving body, and the born pairs and profiles (the generator's
+  for a moving body, and the given pairs and profiles (the generator's
   own cosines). Their integers, once written, are the world's data; the
   float that produced them is never read by the law, and the engine
   carries no table (the owner's word of 23:00Z).
 - THE LOAD CHECK REFUSES: a body whose Nodes are cut or overlap another's
   (9.9 (4)); a composed operator with a mode at or above 2 (9.19 (2)); a
   body's summand that is not the composed mode's integer profile bit for
-  bit at both levels, or with a nonzero remainder (8.7, 9.9); a birth
+  bit at both levels, or with a nonzero remainder (8.7, 9.9); a giving click
   Node whose pair gives fewer than 500 remainder values (9.19 item (4a)); two
   near-degenerate wells whose hybrid share exceeds the reading's band
   (9.9 (3)); any key of the refused list of (2); a board with neither a
@@ -5687,25 +5696,25 @@ what (2) needs and the file has not. Every row's regeneration is the
 World Generator's, its pin re-derived blind (9.19 item (4b), 9.17 (5)).
 
 In the table a bracket pair is a PAIR [numerator, denominator] of a
-family or a body unless it is named a born clock, a wheel, a rate, a
+family or a body unless it is named a given clock, a wheel, a rate, a
 gap, a take or a momentum.
 
 | Row | Its defining data in the form of (2) | Today declares, not allowed | Lacks |
 | --- | --- | --- | --- |
-| Bell (4 files) | the layer [30, 33, 1], periodic; light [1, 1] with the born clock [2464, 25], a holder family; the emitter body at (2, 16) with a stock of 100 per setting; the crystal body at (13, 15) side 3 with its light index and branches [[1, 1], [2, 1]]; two polariser bodies with the axes (1, 0) or (1, 1) and (1, 2) or (3, 1); their receivers; the ladders | a chain of 21 with an open x face; a lamp with rate, wheel, train, directions, `arms` 2 and `branches`, a residue seed; two table bodies with `phase_window`; the family `counter` | the crystal, the polariser bodies with axes, the emitter body, the holder family, the layer |
-| Malus (4 files) | the bar of 8; light [1, 1] with the born clock [308, 25], a holder family; the emitter body at x = 0 with a stock of 256; the polariser body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2); its + receiver at x = 7 | a lamp with rate, wheel [159, 256], train 32, directions; a table body with `phase_window`; `counter` | the emitter body, the polariser body with its axis, the holder family |
-| The two slits | the layer 160 x 256 grown to x >= 485 (the margin rule); light [1, 1] with the born clock [77, 25], a holder family; the emitter body at (20, 128) with a stock of 1024; the wall of gap cubes [1, 2] with its two openings; the 201 screen receivers; the face receivers; the ladder naming the screen | a lamp with rate [1, 4], wheel [1, 1024], train 32; the screen sets with a wheel 2^20; open sponge faces | the emitter body, the face receivers, the grown board |
-| The pace fans | the layer 128 x 128; light [1, 1] with the born clock [77, 25], a holder family; two LINE emitter bodies (one along the axis, one along the diagonal) with born profiles of n wavelengths; the probes as a GAMEBOARD reading | a lamp with rate, wheel, train and four `directions`; open sponge faces | the two line emitters, the face receivers |
+| Bell (4 files) | the layer [30, 33, 1], periodic; light [1, 1] with the given clock [2464, 25], a holder family; the emitter body at (2, 16) with a stock of 100 per setting; the crystal body at (13, 15) side 3 with its light index and branches [[1, 1], [2, 1]]; two polariser bodies with the axes (1, 0) or (1, 1) and (1, 2) or (3, 1); their receivers; the ladders | a chain of 21 with an open x face; a lamp with rate, wheel, train, directions, `arms` 2 and `branches`, a residue seed; two table bodies with `phase_window`; the family `counter` | the crystal, the polariser bodies with axes, the emitter body, the holder family, the layer |
+| Malus (4 files) | the bar of 8; light [1, 1] with the given clock [308, 25], a holder family; the emitter body at x = 0 with a stock of 256; the polariser body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2); its + receiver at x = 7 | a lamp with rate, wheel [159, 256], train 32, directions; a table body with `phase_window`; `counter` | the emitter body, the polariser body with its axis, the holder family |
+| The two slits | the layer 160 x 256 grown to x >= 485 (the margin rule); light [1, 1] with the given clock [77, 25], a holder family; the emitter body at (20, 128) with a stock of 1024; the wall of gap cubes [1, 2] with its two openings; the 201 screen receivers; the face receivers; the ladder naming the screen | a lamp with rate [1, 4], wheel [1, 1024], train 32; the screen sets with a wheel 2^20; open sponge faces | the emitter body, the face receivers, the grown board |
+| The pace fans | the layer 128 x 128; light [1, 1] with the given clock [77, 25], a holder family; two LINE emitter bodies (one along the axis, one along the diagonal) with given profiles of n wavelengths; the probes as a GAMEBOARD reading | a lamp with rate, wheel, train and four `directions`; open sponge faces | the two line emitters, the face receivers |
 | The muon's moving clock | the layer 200 x 200, periodic; matter [3200, 3236]; the well [3200, 3227] of side 14 at (93, 93), one quantum, at rest and with the momentum [64, 0, 0] | nothing outside (2) (the `margin` key is the generator's label) | the moving summand as the boosted mode (the ramp stays until 8.4 is settled) |
-| The moving emitter's redshift | the chain 4096 with the face receivers; light [1, 1], matter [156, 157]; the well [314, 315] of side 12 at 2994 with the coupling, a stock, its light birth, the momentum; the receiver at 4094 | `own_grace`, a receiver `wheel` 64, a light lamp with `directions` in the control; open sponge faces; a flat seed (regenerated on the mode since body-check) | the face receivers, the stock in place of `emits` |
-| The round trip off a receding mirror | the chain; light [1, 1] with the born clock [2464, 25], a holder family; an emitter body with its receiver; the transponder body with the gap [1, 2] and the momentum k = 3 | the whole table form: the families post, source, cart and mass, `rerelease` and `pass` tables, a lamp with directions | everything: rebuilt as the transponder |
+| The moving emitter's redshift | the chain 4096 with the face receivers; light [1, 1], matter [156, 157]; the well [314, 315] of side 12 at 2994 with the coupling, a stock, its light giving click, the momentum; the receiver at 4094 | `own_grace`, a receiver `wheel` 64, a light lamp with `directions` in the control; open sponge faces; a flat seed (regenerated on the mode since body-check) | the face receivers, the stock in place of `emits` |
+| The round trip off a receding mirror | the chain; light [1, 1] with the given clock [2464, 25], a holder family; an emitter body with its receiver; the transponder body with the gap [1, 2] and the momentum k = 3 | the whole table form: the families post, source, cart and mass, `rerelease` and `pass` tables, a lamp with directions | everything: rebuilt as the transponder |
 | Sagnac's two-way light times | the chain 3000 with the face receivers; light [1, 1], matter [800, 809]; two wells [800, 801] of side 12 at 700 and 772 with the coupling, a stock each, momenta; the receivers at_a and at_b; the ladders A -> at_b, B -> at_a | wells [800, 800] (3 remainder values); `own_grace`, `wheel`; open sponge x face; seeds computed alone | rich pairs, composed seeds, the face receivers |
 | de Broglie's fringes | the layer 128 x 128; matter [800, 809] and a holder family; a matter emitter body with a stock of 2048; the barrier of gap cubes [1, 2] with its openings; the 121 screen receivers; the face receivers | a matter lamp with rate [1, 2], wheel [1, 2048], train 8; the family key `take` [-19, 86]; the take lines (252 cubes of the vacuum pair); the screen sets' wheel 65536; open sponge faces | the emitter body, the face receivers; the barrier and the screen as holder-family bodies, not matter bodies (9.18 (2)) |
 | The moving mass's energy | the chain 200 with the face receivers; matter [800, 809]; a matter emitter body with a stock; the receiver at 104 | a matter lamp with rate [1, 8], train 8, directions; the family `take`; open sponge faces | the emitter body, the face receivers |
 | The boxes (the boxed clocks) | the cubes 64^3 and 48^3, periodic; matter; one well [800, 801] of side 20 or 28, one quantum, at rest or with the momentum | the well [800, 800]; a flat seed (regenerated on the mode) | the rich pair |
 | The deep well | the layer 128 x 128, periodic; matter; one well [800, 801] of side 40 at (44, 44) | the well [800, 800]; a flat seed (regenerated) | the rich pair |
 | The light clock | the chain 674 with the face receivers; light [1, 1], matter [800, 809], a holder family; the well A [800, 801] of side 12 at 600 with the coupling and a stock; the mirror body [672, 674) with the gap [1, 2]; the receiver at_a at 612 | the well [800, 800]; `own_grace` 70, `wheel`; per-family faces (periodic for matter, closed for light); a flat seed (regenerated) | the rich pair, one border, the face receivers, the mirror as a holder-family body |
-| The receding index (k = 3, k = 4) | the chain 4000 with the face receivers; light [1, 1] with the born clock [3565, 10000] or [1846, 10000], matter [156, 157] and a holder family; a light emitter body at 800 with a stock of 200; the medium body [314, 315] of side 24 at 1500 with the coupling and the momentum; the probe as a GAMEBOARD reading | a lamp with rate, wheel [2531, 4096], train 200, directions; the medium a SILENT body (seed 0) with `start` 3000; open sponge faces | the emitter body; the medium as a BOUND body of the holder family with its own record (ADOPTED: tool bodies bound), the index pin re-derived blind on it (COMPUTATION owed) |
+| The receding index (k = 3, k = 4) | the chain 4000 with the face receivers; light [1, 1] with the given clock [3565, 10000] or [1846, 10000], matter [156, 157] and a holder family; a light emitter body at 800 with a stock of 200; the medium body [314, 315] of side 24 at 1500 with the coupling and the momentum; the probe as a GAMEBOARD reading | a lamp with rate, wheel [2531, 4096], train 200, directions; the medium a SILENT body (seed 0) with `start` 3000; open sponge faces | the emitter body; the medium as a BOUND body of the holder family with its own record (ADOPTED: tool bodies bound), the index pin re-derived blind on it (COMPUTATION owed) |
 
 THE THREE THINGS THIS TABLE SETTLES ONCE (DERIVED HERE): every lamp
 becomes a body with a stock; every sponge face becomes a face receiver;
@@ -5719,17 +5728,17 @@ where marked).** Three roles and no fourth. (i) THE BOARD GENERATOR is
 the only writer, and it writes at interval 0 only: it reads the short
 file of (2), composes the operator (the pairs, couplings and axes per
 region, 9.19 (2)) and computes the initial element of (3), the bound
-modes' integer profiles and the born pairs and profiles (9.17 (6));
+modes' integer profiles and the given pairs and profiles (9.17 (6));
 after interval 0 nothing writes but the law. (ii) THE LAW acts at every
 Node, at most one Link per interval: the rule per family with the
-coupling, the axis and the push, the click and the birth (9.19 (5));
+coupling, the axis and the push, the click and the giving click (9.19 (5));
 its locality is PROVED (9.20 (5)). (iii) THE CLICK READER is the only
 reader: the flux on the named sets, the rung, the deletion and the
 counts (9.19 (3)); a GameBoard reading is a diagnostic. THERE IS NO
 WORLD WRITER: an experiment is a SHORT FILE of what is on the board, (2)
 and nothing else: the extents and per axis periodic or open; the
 families (pair and label module); the tools placed with their integers
-(vertex, edge, pair, coupling, axis, stock, born clock and profile,
+(vertex, edge, pair, coupling, axis, stock, given clock and profile,
 branches); the occupation (quanta, amplitude, momentum); the receivers'
 names and the ladders. Everything the measured experiments' files declare beyond it
 (the "today declares" column of (4)) is the generator's to derive or the
@@ -5748,14 +5757,14 @@ exists, and a body's label matrix acts on one arm's two rows (9.16
 (2)). IT IS REQUIRED only where entanglement is measured: Bell (a
 product state gives S at most 2, PROVED: CHSH's bound holds for weights
 that factor) and the circuits of 9.23; no other row of the measured experiments has
-one. IT IS BORN only by the crystal, during the run, at an arriving
+one. IT IS GIVEN only by the crystal, during the run, at an arriving
 record's click (9.7 (b), 9.13); it is never written at interval 0, and
-two separately born records are never joined (9.23 (1)). SO THE BOARD
+two separately given records are never joined (9.23 (1)). SO THE BOARD
 GENERATOR WRITES ONLY VECTORS: each occupied mode's integer profile with
-its labels, and the born pairs and profiles; it writes no tensor and
+its labels, and the given pairs and profiles; it writes no tensor and
 computes none; the crystal's branches are four integers of the short
-file. THE TENSOR'S OPERATIONS live in the birth and in the pair's
-click: the crystal's birth writes the four weights (**E**^T with the
+file. THE TENSOR'S OPERATIONS live in the giving click and in the pair's
+click: the crystal's giving click writes the four weights (**E**^T with the
 branches); a body's label matrix acts on one arm (the bilinear form on that arm's
 rows); the click of ONE arm alone reads the weights summed over the
 other arm's labels, the partial trace (9.11 (d)), computed at that
@@ -5779,7 +5788,7 @@ half-integer at the amplitude rounds differently on another host, and on
 (COMPUTED: the window 2 x 4096 x 10^-8 per unit, times 10^5). Two hosts
 would then load two worlds, and their clicks would differ. SO THE FORM:
 the generator writes the initial element ONCE, as the world's integers
-beside the short file (the profiles at both levels, the born pairs and
+beside the short file (the profiles at both levels, the given pairs and
 profiles, and for each occupied mode its clock as a rational [a, b], the
 generator's rounding of 2 cos omega to a denominator b at least the
 amplitude), and the loader CHECKS IT EXACTLY, in integers and with no
@@ -5793,7 +5802,7 @@ entry off by at most 1 / 2, six neighbours, the clock off by at most
 amplitude's order), exact in integers and the same on every host; (iii)
 a / b above the band's top (bound) and below 2 (stable), rational
 comparisons; (iv) the remainders 0, the amplitude's bound, the disjoint
-Nodes, the rich birth Nodes, as in (3). What (ii) does not do: single
+Nodes, the rich giving Nodes, as in (3). What (ii) does not do: single
 out the mode among near-degenerate ones (9.9 (3)'s hybrid share stays
 the generator's, printed as GAMEBOARD), and check a moving body's
 summand (8.4's product, OPEN, the generator's recomputation printed).
@@ -5862,7 +5871,7 @@ per step, so the iterate carries an admixture of the next mode of about
 1 / gap units, its residual 0.43 of the bound against the float mode's
 0.15, both admitted. DECIDED BY THE MODEL OWNER (2026-09-25, 04:10Z in Nature24's session, closing record 1898: "the iterated operator must become the generator itself, with the stop"; this paragraph's earlier line, the float mode as the writer and the iteration as the check, is withdrawn at his word): THE GENERATOR IS THE OPERATOR ITERATED WITH ITS STOP, from the Nodes' indicator, the clock the operator's quotient over the board in exact integers, the stop the residual bound of (7) (ii), the working amplitude at least 2^20 (built at a9ab486f, `iterated_mode`, read line by line and confirmed by the mathematician at 05:50Z); the float eigensolver is a diagnostic and never the writer; the stored integers with their stamp (9.22 (7) (i),
 built at de363acb: the law identifier and the SHA-256 of the shape and
-every seeded body's profile, clock and born pair, refused missing, of
+every seeded body's profile, clock and given pair, refused missing, of
 another law or mismatched) are the world, and a regeneration that
 differs by units within the bound is another lawful world with another
 hash, never the same one silently. (iii) THE ONE-NODE EMITTER ON A LAYER (his
@@ -5875,9 +5884,9 @@ percent of its peak; W = 3 x 700 / gcd(1201, 2100) = 2100, above the 500
 of 9.19 item (4a); [1001, 700] binds at 1.7946 but has W = 300 and is
 refused); the chain rows keep [801, 700] (W = 700). The table of (8)
 carries it. (iv) TRANSPARENCY, a load condition (DERIVED with 9.25
-(11) (d)): every body whose Nodes a born record must ENTER to be read (an
+(11) (d)): every body whose Nodes a given record must ENTER to be read (an
 emitter whose light returns to it, the other well of Sagnac, a moving
-name's receiver, a medium) is transparent to that family at the born
+name's receiver, a medium) is transparent to that family at the given
 **K**: the generator runs a train through the body alone on the vacuum
 and reads its one-way flux 40 Links beyond against the norm, 0.99 or
 above, refused below. Below it the coupling's scale is wrong, not the
@@ -5954,23 +5963,23 @@ two columns).** One row per experiment, in the form of (2), so that the
 physicist writes its file through the generator without asking: the
 board; the families; the entries (the bodies by vertex and side with
 their pairs, the emitters with their coupling and stock, the momentum
-**K** of every entry); the births (the born clock and profile, the
+**K** of every entry); the giving clicks (the given clock and profile, the
 crystal's branches); the detectors as cubes of side 3 or more in the
 ladder's declared order, the face last where the board has one (9.25
 (10)); the neglected medium and its reason against the band (the
 specification's the placed experiments); the board size and its reason; the blind pin
 in clicks with its band; what is CARRIED or OPEN. Conventions (RESTATED 2026-09-25 on the physicist's finding at
-f0d2d745, 9.17 (6a) and 9.25 (11)): light's vacuum pair is [1, 1]; a born clock [p, q] is the phase advance per Link k = pi p / (N q) on the world's circle of N = 1024 (the same statement as 9.17 (6a)'s 2 pi p / (2 N q); [512, 1] is k = pi / 2, the wavelength 4; the earlier "p / q of the circle per Link" doubled it, corrected at Nature24's reading); EVERY BIRTH IS THE BODY'S OWN MODE TIMES THE CHARACTER OF ONE **K** (9.35 (10), the model owner's record 1962; the earlier train under the Hann window and the tapers HISTORY), its length the body's extent along **K** (32 Nodes, 64 for Mach-Zehnder), at the born clock [512, 1] (k = pi / 2, the wavelength 4, cos
+f0d2d745, 9.17 (6a) and 9.25 (11)): light's vacuum pair is [1, 1]; a given clock [p, q] is the phase advance per Link k = pi p / (N q) on the world's circle of N = 1024 (the same statement as 9.17 (6a)'s 2 pi p / (2 N q); [512, 1] is k = pi / 2, the wavelength 4; the earlier "p / q of the circle per Link" doubled it, corrected at Nature24's reading); EVERY GIVING CLICK IS THE BODY'S OWN MODE TIMES THE CHARACTER OF ONE **K** (9.35 (10), the model owner's record 1962; the earlier train under the Hann window and the tapers HISTORY), its length the body's extent along **K** (32 Nodes, 64 for Mach-Zehnder), at the given clock [512, 1] (k = pi / 2, the wavelength 4, cos
 omega = 2 / 3) for every light emitter, so light's pace on every row is
 v_g = 0.44721 Links per interval (the wavelength 20.78 of the earlier
 rows, [2464, 25], is HISTORY: it fits no train on a body, and a body's
-flat pulse is the broadband birth of 9.17 (6a)); every emitting body's
+flat pulse is the broadband giving click of 9.17 (6a)); every emitting body's
 extent along **K** is the train's 32 Nodes; the holder family's vacuum
 pair is [7, 8] and its emitting bodies are wells [801, 700] on a chain
 and [699, 700] on a layer, of side 32 along **K** ((7a) (iii)); matter's
 emitting bodies are [800, 801] on [800, 809] (the train at **K** = pi / 2
 in the matter family, cos omega = 0.6593, v_g = 0.4384) or [314, 315] on
-[156, 157]; every emitting body declares its coupling (g, G) to its born
+[156, 157]; every emitting body declares its coupling (g, G) to its given
 family (9.19 item (4e)) and is TRANSPARENT to it ((7a) (iv)); every face is a
 receiver slab as deep as the train, one train's length from every
 emitter and receiver, and a fringe row's transverse axis carries slabs,
@@ -5978,30 +5987,30 @@ not a period (9.25 (11)); where the light returns to its source the
 detector is the source's own Nodes; a pin on a passage is the MEAN click
 interval over the stock with its band 3 rms / sqrt(n) (9.25 (11) (d)).
 The rows' earlier placements and pins (the first draft's, at the
-wavelength 20.78 or with a one-Node birth) are HISTORY where a row says
+wavelength 20.78 or with a one-Node giving click) are HISTORY where a row says
 so.
 
-| The experiment | The board | The entries and the births | The detectors, in the ladder's order | The neglected medium | The blind pin in clicks, with its band | CARRIED or OPEN |
+| The experiment | The board | The entries and the giving clicks | The detectors, in the ladder's order | The neglected medium | The blind pin in clicks, with its band | CARRIED or OPEN |
 | --- | --- | --- | --- | --- | --- | --- |
-| Bell's four settings | the layer [96, 128, 1], periodic on both axes (no face: the record circulates until it is caught; RE-PLACED for the train, the 30 x 33 layer HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (8, 60, 0) with the extents 32 x 8 x 1, its train along +x (the pump), the coupling to light, a stock of 100 per setting. The crystal (A.11): a holder body 3 x 32 x 1 from (56, 48, 0) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p, the pair born as two trains on its Nodes, one with **K** = +y and one with **K** = -y (its long axis). Alice's polariser (A.5): a holder body of side 3 at (56, 100, 0) with the axis (1, 0) or (1, 1); Bob's at (56, 25, 0) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: Bell's no-signalling control, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); Bell's product-state control, the product state HV (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52; the pins are the projections' shares and do not move with the placement | the crystal's pair birth as two trains (the crystal's build) |
-| Malus's four axes | the chain [192, 1, 1] with the face slabs 32 deep at both ends (the bar of 11 HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder well [801, 700] of side 32 at [40, 72), its train along +x (the hand H), the coupling, a stock of 256. The polariser (A.5): a holder body of side 3 at [104, 107) with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [112, 115), then the faces (the far slab from 160) | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2; the projections' shares) | none |
-| The two slits | the layer [305, 320, 1], every face a receiver slab of depth 32, one train's length from the emitter and the screen (9.25 (11); the [241, 320] placement with the slab at the screen's back HISTORY: it halved the count) | light [1, 1], born clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab [699, 700] from (64, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 4096, its train along +x over 8 periods with the Hann window across y and the tapers of 8 (9.17 (6a)). The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 except the two openings of width 5 centred at y = 154 and y = 167 (d = 13), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin k) = 53.2 Nodes, 9.25 (10), not the continuum's 33.8); then the faces (the slabs x = 0 to 31, x = 273 to 304, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | COMPUTED by the generator's run of the placement: the screen's share 0.341 on the ladder, the visibility 0.945 at the lattice spacing 53.2 (read 52.5), the centroid 160.1, on the body's mode envelope (record 1962; the train under the window read 0.406 and 1662 +- 94, HISTORY, as the 1076 +- 84 of the slab at the screen's back); THE PIN at a stock of 4096: the screen 1396 +- 91, the visibility 0.95 +- 0.11 at 53.2, the spacing 53 +- 2, the centroid 160 +- 4; the control, the two slits with one opening closed: one opening closed (the opening at 167 filled by the wall's slab), no fringe, the component at 53.2 below 0.2 (computed 0.01, the best component 0.10) at 735 +- 74 screen clicks, the centroid 154 +- 4 (the 1052 +- 84 under the window HISTORY) | none |
-| The pace fans | the layer [256, 256, 1] with the face slabs 32 deep (RE-PLACED at the wavelength 4; the 128 layer at [77, 25] HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. ONE emitter: a holder slab [699, 700] from (64, 124, 0) with the extents 32 x 8 x 1, its train along +x with the Hann window of 8 across y (a narrow train diffracts into a fan of every direction at one omega), **K** = 0, the coupling, a stock of 1 | none: the fronts are read as a GAMEBOARD probe at 40 Links along the axis and along the diagonal from the emitter's head, a diagnostic and not a result (9.21 (4)) | none | at one omega = 0.8411 (k = pi / 2 on the axis) the diagonal's wave number is 1.4810 per Link (2 cos(k / sqrt 2) + 1 = 2) and its group velocity 0.5477 against the axis's 0.4472, the ratio sqrt(3 / 2) = 1.2247 (COMPUTED from the dispersion): the diagonal front at 40 Links 73 intervals, the axis's 89; the small-k forms (k^2 / 48 between the axis and the diagonal, k^2 / 36 against the continuum) are the same anisotropy at long wavelengths; no click pin | a diagnostic row |
-| The muon's moving clock | the layer [200, 200, 1], periodic | matter [3200, 3236]. At rest: the well [3200, 3227] of side 14 at the vertex (93, 93), a clock body: a stock of 64 at the amplitude 2^20 on its composed mode, the coupling to light, its born trains circulating on the periodic layer (their return spreads its residues), **K** = 0. In motion: a packet of the matter family about 100 Links wide with **K** = 0.18556 per Link (v = 1 / 3), written moving at interval 0 (no ramp, record 1884) | the well's own Nodes (side 14) at rest; in motion a co-moving name of side 3 or more translating with the packet (A.14); no face | nature's muons slow in air over the hold: the one declared idealisation (the row reads the tick at one fixed **K**) | at rest the mode's period 42.33 intervals (omega_b = 0.14845) read from its own clicks, each click's interval t since the reseed and its residue u giving P = 2 W t / (2 u + 1) within the interval's grain (9.31 (13)), averaged over the stock; in motion the tick ratio 0.8146 of the rest (1 / gamma = 0.8165), band 0.3 percent | the push CARRIED, retiring; 8.4's well form HISTORY |
-| The moving emitter's redshift | the chain [4096, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [156, 157]. At rest: the well [314, 315] of side 32 at [2944, 2976), the coupling (g, G) to light, a stock of 256, its train along +x written on its Nodes at each of its rungs (its cadence the internal clock, 9.17 (7)), **K** = 0. In motion: the emitter a packet of [156, 157] of side 32 with **K** = 0.13946 per Link (v = 1 / 3) receding from the receiver (moving -x), and a co-moving name with its stock | the receiver the cube [4000, 4003) (one train's length before the far slab), then the faces; the emitter's own Nodes for its births | none | 1 + z = (1 + v / c_l) / (the tick ratio) = (1 + 0.33333 / 0.44721) / 0.8154 = 2.141 at v = 1 / 3, band 0.3 percent, as the ratio of the receiver's click cadence to the emitter's birth cadence (the 1.935 at c_l = 0.57689 HISTORY); the control the rest world, the ratio 1 | the moving name ADOPTED (1889); the push CARRIED |
-| The round trip off a receding mirror | the chain [1600, 1, 1] with the face slabs 32 deep at both ends (the 1000 chain with the name receding toward x = 0 HISTORY: it left the board) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The mirror (A.3): the gap [1, 2] of depth 4 at [40, 44), at rest, at the low end. The emitter and its receiver ONE co-moving name: a holder well [801, 700] of side 32 on a holder packet with **K** for v = 1 / 3, from [300, 332) moving +x, receding from the mirror, its train along -x toward the mirror, the coupling, a stock of 32 | the receiver the name's own Nodes (the return enters them; 9.25 (11) (d)), then the faces | none | (1 + beta) / (1 - beta) = 6.856 at beta = v / c_l = 0.7454, band 0.3 percent, as the sent over the received click cadence at the moving name (the 3.7373 at c_l = 0.57689 HISTORY; the continuum's two-way Doppler is the same form at that beta) | the moving name ADOPTED; `cart_k3.json` REBUILT in this form |
-| Sagnac's two-way light times | the chain [3000, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 32 at [700, 732) (A) and [812, 844) (B), their faces 80 Links apart so that each is a mode of the composed board within the rounding at the seed 2^20 ((7a) (v)), each with the coupling and a stock of 64, A's train along +x and B's along -x, **K** = 0; co-moving at v = 1 / 3: two packets of [800, 809] of side 32 with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b the wells' own Nodes (A's train enters B's Nodes and B's enters A's; 9.25 (11) (d)); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the passage's mean click interval at the other well (80 + 16 + 2) / 0.44721 = 219 +- 6 at 64 records each way (the head's 80 Links from A's far face to B's near face; the rms 25), the same both ways; in motion the passages scaled by c_l / (c_l -+ v) = 3.927 with the motion and 0.573 against it (860 and 125), their ratio (c_l - v) / (c_l + v) = 0.146 +- 0.01 (the 108 +- 2 and 0.5774 at c_l = 0.57689 HISTORY) | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
-| De Broglie's fringes | the two slits' layer [305, 320, 1] with the face slabs 32 deep on both axes (the y-periodic layer of 128 HISTORY: the pattern wraps at 2.41 spacings and its visibility falls to 0.43, 9.25 (11) (c)) | matter [800, 809]; the holder [7, 8]. The emitter: a holder body [699, 700] on the holder's [7, 8] from (64, 128, 0) with the extents 32 x 64 x 1, coupled to the matter family (g, G) (a body births a family other than its own, 9.17 (4); the earlier "matter slab" corrected at Nature24's reading), its train the character of the matter family at **K** = pi / 2 over 8 periods with the Hann window across y and the tapers of 8 (cos omega = 0.6593, v_g = 0.4384), the coupling, a stock of 2048. The barrier: holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 116 to 119 for y = 32 to 287 except two openings of width 5 centred at y = 154 and y = 167 (d = 13, as the two slits) | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 Nodes); then the faces as the two slits | a vacuum chamber in nature: nothing | COMPUTED by the generator's run of the placement: the screen's share 0.337 on the ladder, the visibility 0.949 at 53.2 (read 52.5), the centroid 160.1, the lobes' centroids 159.9, 107.8 and 213.3, on the body's mode envelope (record 1962; the train under the window read 0.410 and 840 +- 67, HISTORY); THE PIN at a stock of 2048: the screen 690 +- 64, the visibility 0.95 +- 0.16 at 53.2, the centroid 160 +- 5, the lobes 160, 108 and 213 each +- 3 (the 515 +- 58 on the 128 layer HISTORY) | none |
-| The moving mass's energy | the chain [224, 1, 1] with the face slabs 32 deep at both ends | matter [800, 809]; the holder [7, 8]. The emitter: a holder body [699, 700] on the holder's [7, 8] of side 32 at [64, 96), coupled to the matter family (g, G), with a stock of 400 (9.17 (4); the earlier "matter well" corrected at Nature24's reading); its births trains of the matter family at **K** = pi / 2 (v_g = 0.4384, omega = 0.8503), written on its Nodes, travelling +x | the receiver the cube [136, 139), then the faces (the far slab from 192) | none | the passage's mean click interval (41 + 16 + 2) / 0.4384 = 135 +- 5 at 400 records (the head's 41 Links from the well's far face to the cube; the 169 +- 2 HISTORY); the pace v_g(**K**) and the energy omega(**K**) closed forms beside (8.4, 9.24 (2)) | none |
-| The boxed clocks, the box of side 20 and the box of side 28 | the cubes [64, 64, 64] and [48, 48, 48], periodic | matter [800, 809]; one well [800, 801] of side 20 or 28, a clock body with a stock of 64 at rest on its mode and the coupling to light, its born trains circulating on the periodic cube; the box of side 28 in motion a packet with **K** (v = 1 / 3) | the well's own Nodes; in motion a co-moving name | none | at rest omega_b from the clock body's own clicks, P = 2 W t / (2 u + 1) per click averaged over the stock (0.11929 and 0.09885, the periods 52.67 and 63.56 intervals); in motion the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032 HISTORY) | the push CARRIED |
+| Bell's four settings | the layer [96, 128, 1], periodic on both axes (no face: the record circulates until it is caught; RE-PLACED for the train, the 30 x 33 layer HISTORY) | light [1, 1], given clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (8, 60, 0) with the extents 32 x 8 x 1, its train along +x (the pump), the coupling to light, a stock of 100 per setting. The crystal (A.11): a holder body 3 x 32 x 1 from (56, 48, 0) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the given clocks p_1 + p_2 = p, the pair given as two trains on its Nodes, one with **K** = +y and one with **K** = -y (its long axis). Alice's polariser (A.5): a holder body of side 3 at (56, 100, 0) with the axis (1, 0) or (1, 1); Bob's at (56, 25, 0) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: Bell's no-signalling control, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); Bell's product-state control, the product state HV (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52; the pins are the projections' shares and do not move with the placement | the crystal's pair giving click as two trains (the crystal's build) |
+| Malus's four axes | the chain [192, 1, 1] with the face slabs 32 deep at both ends (the bar of 11 HISTORY) | light [1, 1], given clock [512, 1]; the holder [7, 8]. The emitter: a holder well [801, 700] of side 32 at [40, 72), its train along +x (the hand H), the coupling, a stock of 256. The polariser (A.5): a holder body of side 3 at [104, 107) with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [112, 115), then the faces (the far slab from 160) | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2; the projections' shares) | none |
+| The two slits | the layer [305, 320, 1], every face a receiver slab of depth 32, one train's length from the emitter and the screen (9.25 (11); the [241, 320] placement with the slab at the screen's back HISTORY: it halved the count) | light [1, 1], given clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab [699, 700] from (64, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 4096, its train along +x over 8 periods with the Hann window across y and the tapers of 8 (9.17 (6a)). The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 except the two openings of width 5 centred at y = 154 and y = 167 (d = 13), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin k) = 53.2 Nodes, 9.25 (10), not the continuum's 33.8); then the faces (the slabs x = 0 to 31, x = 273 to 304, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | COMPUTED by the generator's run of the placement: the screen's share 0.341 on the ladder, the visibility 0.945 at the lattice spacing 53.2 (read 52.5), the centroid 160.1, on the body's mode envelope (record 1962; the train under the window read 0.406 and 1662 +- 94, HISTORY, as the 1076 +- 84 of the slab at the screen's back); THE PIN at a stock of 4096: the screen 1396 +- 91, the visibility 0.95 +- 0.11 at 53.2, the spacing 53 +- 2, the centroid 160 +- 4; the control, the two slits with one opening closed: one opening closed (the opening at 167 filled by the wall's slab), no fringe, the component at 53.2 below 0.2 (computed 0.01, the best component 0.10) at 735 +- 74 screen clicks, the centroid 154 +- 4 (the 1052 +- 84 under the window HISTORY) | none |
+| The pace fans | the layer [256, 256, 1] with the face slabs 32 deep (RE-PLACED at the wavelength 4; the 128 layer at [77, 25] HISTORY) | light [1, 1], given clock [512, 1]; the holder [7, 8]. ONE emitter: a holder slab [699, 700] from (64, 124, 0) with the extents 32 x 8 x 1, its train along +x with the Hann window of 8 across y (a narrow train diffracts into a fan of every direction at one omega), **K** = 0, the coupling, a stock of 1 | none: the fronts are read as a GAMEBOARD probe at 40 Links along the axis and along the diagonal from the emitter's head, a diagnostic and not a result (9.21 (4)) | none | at one omega = 0.8411 (k = pi / 2 on the axis) the diagonal's wave number is 1.4810 per Link (2 cos(k / sqrt 2) + 1 = 2) and its group velocity 0.5477 against the axis's 0.4472, the ratio sqrt(3 / 2) = 1.2247 (COMPUTED from the dispersion): the diagonal front at 40 Links 73 intervals, the axis's 89; the small-k forms (k^2 / 48 between the axis and the diagonal, k^2 / 36 against the continuum) are the same anisotropy at long wavelengths; no click pin | a diagnostic row |
+| The muon's moving clock | the layer [200, 200, 1], periodic | matter [3200, 3236]. At rest: the well [3200, 3227] of side 14 at the vertex (93, 93), a clock body: a stock of 64 at the amplitude 2^20 on its composed mode, the coupling to light, its given trains circulating on the periodic layer (their return spreads its residues), **K** = 0. In motion: a packet of the matter family about 100 Links wide with **K** = 0.18556 per Link (v = 1 / 3), written moving at interval 0 (no ramp, record 1884) | the well's own Nodes (side 14) at rest; in motion a co-moving name of side 3 or more translating with the packet (A.14); no face | nature's muons slow in air over the hold: the one declared idealisation (the row reads the tick at one fixed **K**) | at rest the mode's period 42.33 intervals (omega_b = 0.14845) read from its own clicks, each click's interval t since the reseed and its residue u giving P = 2 W t / (2 u + 1) within the interval's grain (9.31 (13)), averaged over the stock; in motion the tick ratio 0.8146 of the rest (1 / gamma = 0.8165), band 0.3 percent | the push CARRIED, retiring; 8.4's well form HISTORY |
+| The moving emitter's redshift | the chain [4096, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], given clock [512, 1]; matter [156, 157]. At rest: the well [314, 315] of side 32 at [2944, 2976), the coupling (g, G) to light, a stock of 256, its train along +x written on its Nodes at each of its rungs (its cadence the internal clock, 9.17 (7)), **K** = 0. In motion: the emitter a packet of [156, 157] of side 32 with **K** = 0.13946 per Link (v = 1 / 3) receding from the receiver (moving -x), and a co-moving name with its stock | the receiver the cube [4000, 4003) (one train's length before the far slab), then the faces; the emitter's own Nodes for its giving clicks | none | 1 + z = (1 + v / c_l) / (the tick ratio) = (1 + 0.33333 / 0.44721) / 0.8154 = 2.141 at v = 1 / 3, band 0.3 percent, as the ratio of the receiver's click cadence to the emitter's giving cadence (the 1.935 at c_l = 0.57689 HISTORY); the control the rest world, the ratio 1 | the moving name ADOPTED (1889); the push CARRIED |
+| The round trip off a receding mirror | the chain [1600, 1, 1] with the face slabs 32 deep at both ends (the 1000 chain with the name receding toward x = 0 HISTORY: it left the board) | light [1, 1], given clock [512, 1]; the holder [7, 8]. The mirror (A.3): the gap [1, 2] of depth 4 at [40, 44), at rest, at the low end. The emitter and its receiver ONE co-moving name: a holder well [801, 700] of side 32 on a holder packet with **K** for v = 1 / 3, from [300, 332) moving +x, receding from the mirror, its train along -x toward the mirror, the coupling, a stock of 32 | the receiver the name's own Nodes (the return enters them; 9.25 (11) (d)), then the faces | none | (1 + beta) / (1 - beta) = 6.856 at beta = v / c_l = 0.7454, band 0.3 percent, as the sent over the received click cadence at the moving name (the 3.7373 at c_l = 0.57689 HISTORY; the continuum's two-way Doppler is the same form at that beta) | the moving name ADOPTED; `cart_k3.json` REBUILT in this form |
+| Sagnac's two-way light times | the chain [3000, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], given clock [512, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 32 at [700, 732) (A) and [812, 844) (B), their faces 80 Links apart so that each is a mode of the composed board within the rounding at the seed 2^20 ((7a) (v)), each with the coupling and a stock of 64, A's train along +x and B's along -x, **K** = 0; co-moving at v = 1 / 3: two packets of [800, 809] of side 32 with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b the wells' own Nodes (A's train enters B's Nodes and B's enters A's; 9.25 (11) (d)); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the passage's mean click interval at the other well (80 + 16 + 2) / 0.44721 = 219 +- 6 at 64 records each way (the head's 80 Links from A's far face to B's near face; the rms 25), the same both ways; in motion the passages scaled by c_l / (c_l -+ v) = 3.927 with the motion and 0.573 against it (860 and 125), their ratio (c_l - v) / (c_l + v) = 0.146 +- 0.01 (the 108 +- 2 and 0.5774 at c_l = 0.57689 HISTORY) | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
+| De Broglie's fringes | the two slits' layer [305, 320, 1] with the face slabs 32 deep on both axes (the y-periodic layer of 128 HISTORY: the pattern wraps at 2.41 spacings and its visibility falls to 0.43, 9.25 (11) (c)) | matter [800, 809]; the holder [7, 8]. The emitter: a holder body [699, 700] on the holder's [7, 8] from (64, 128, 0) with the extents 32 x 64 x 1, coupled to the matter family (g, G) (a body giving clicks a family other than its own, 9.17 (4); the earlier "matter slab" corrected at Nature24's reading), its train the character of the matter family at **K** = pi / 2 over 8 periods with the Hann window across y and the tapers of 8 (cos omega = 0.6593, v_g = 0.4384), the coupling, a stock of 2048. The barrier: holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 116 to 119 for y = 32 to 287 except two openings of width 5 centred at y = 154 and y = 167 (d = 13, as the two slits) | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 Nodes); then the faces as the two slits | a vacuum chamber in nature: nothing | COMPUTED by the generator's run of the placement: the screen's share 0.337 on the ladder, the visibility 0.949 at 53.2 (read 52.5), the centroid 160.1, the lobes' centroids 159.9, 107.8 and 213.3, on the body's mode envelope (record 1962; the train under the window read 0.410 and 840 +- 67, HISTORY); THE PIN at a stock of 2048: the screen 690 +- 64, the visibility 0.95 +- 0.16 at 53.2, the centroid 160 +- 5, the lobes 160, 108 and 213 each +- 3 (the 515 +- 58 on the 128 layer HISTORY) | none |
+| The moving mass's energy | the chain [224, 1, 1] with the face slabs 32 deep at both ends | matter [800, 809]; the holder [7, 8]. The emitter: a holder body [699, 700] on the holder's [7, 8] of side 32 at [64, 96), coupled to the matter family (g, G), with a stock of 400 (9.17 (4); the earlier "matter well" corrected at Nature24's reading); its giving clicks trains of the matter family at **K** = pi / 2 (v_g = 0.4384, omega = 0.8503), written on its Nodes, travelling +x | the receiver the cube [136, 139), then the faces (the far slab from 192) | none | the passage's mean click interval (41 + 16 + 2) / 0.4384 = 135 +- 5 at 400 records (the head's 41 Links from the well's far face to the cube; the 169 +- 2 HISTORY); the pace v_g(**K**) and the energy omega(**K**) closed forms beside (8.4, 9.24 (2)) | none |
+| The boxed clocks, the box of side 20 and the box of side 28 | the cubes [64, 64, 64] and [48, 48, 48], periodic | matter [800, 809]; one well [800, 801] of side 20 or 28, a clock body with a stock of 64 at rest on its mode and the coupling to light, its given trains circulating on the periodic cube; the box of side 28 in motion a packet with **K** (v = 1 / 3) | the well's own Nodes; in motion a co-moving name | none | at rest omega_b from the clock body's own clicks, P = 2 W t / (2 u + 1) per click averaged over the stock (0.11929 and 0.09885, the periods 52.67 and 63.56 intervals); in motion the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032 HISTORY) | the push CARRIED |
 | The deep well's clock | the layer [128, 128, 1], periodic | matter [800, 809]; the well [800, 801] of side 40 at (44, 44), a clock body with a stock of 64 at rest and the coupling to light; in motion (the control) a packet with **K** | the well's own Nodes; in motion a co-moving name | none | at rest omega_b = 0.07285 (the period 86.25 intervals) from the clock body's own clicks, P = 2 W t / (2 u + 1) per click over the stock; in motion the tick 0.8146 (the design's 0.7531 HISTORY) | as the boxed clocks |
-| The light clock | the chain [760, 1, 1] with the face slabs 32 deep at both ends (the chain of 674 with at_a the cube beside A HISTORY: a cube beside the emitter books the outgoing pass, the physicist's finding at f0d2d745) | light [1, 1], born clock [512, 1]; matter [800, 809]; the holder [7, 8]. The well A [800, 801] of side 32 at [600, 632) with the coupling and a stock of 64, its train along +x, **K** = 0; the mirror (A.3): the gap [1, 2] of depth 4 at [690, 694) | at_a IS A'S OWN NODES (the set bound to the block, 9.25 (10) and (11) (d)): the outgoing train leaves them through the Port (negative, not booked) and the return enters them (0.998 of T booked, COMPUTED); then the faces | none | at rest THE MEAN click interval after the birth 300 +- 9 at 64 records (the passage's mean 299.7 = (2 x 58 + 16 + 2) / 0.44721, its rms 24.8, COMPUTED by the generator's run of the placement; the first click of the stock 250 +- 8); the 214 +- 1 HISTORY; in motion a closed form only, never a run (the longitudinal gamma squared WITHDRAWN as a prediction, record 1895) | the transparency of A to its return, (7a) (iv) |
+| The light clock | the chain [760, 1, 1] with the face slabs 32 deep at both ends (the chain of 674 with at_a the cube beside A HISTORY: a cube beside the emitter books the outgoing pass, the physicist's finding at f0d2d745) | light [1, 1], given clock [512, 1]; matter [800, 809]; the holder [7, 8]. The well A [800, 801] of side 32 at [600, 632) with the coupling and a stock of 64, its train along +x, **K** = 0; the mirror (A.3): the gap [1, 2] of depth 4 at [690, 694) | at_a IS A'S OWN NODES (the set bound to the block, 9.25 (10) and (11) (d)): the outgoing train leaves them through the Port (negative, not booked) and the return enters them (0.998 of T booked, COMPUTED); then the faces | none | at rest THE MEAN click interval after the giving click 300 +- 9 at 64 records (the passage's mean 299.7 = (2 x 58 + 16 + 2) / 0.44721, its rms 24.8, COMPUTED by the generator's run of the placement; the first click of the stock 250 +- 8); the 214 +- 1 HISTORY; in motion a closed form only, never a run (the longitudinal gamma squared WITHDRAWN as a prediction, record 1895) | the transparency of A to its return, (7a) (iv) |
 | The receding index at one third of a Link per interval | the chain [4000, 1, 1] with the face slabs 32 deep | light [1, 1]; matter [156, 157]; the holder [7, 8]. The medium: a BOUND body [314, 315] of side 24 at 1500 with the coupling to light, at rest (material does not move); the emitter a holder well [801, 700] of side 32 and the receiver a holder body of side 32, ONE co-moving name on holder packets with **K** for v = 1 / 3 receding from the medium, the emitter's train through the medium toward the receiver | the receiver the name's own Nodes, then the faces | none | OPEN ON THE TRAIN'S WAVELENGTH: the index n = 1.2519 of the design was the bound medium's response BELOW its mode (omega_b = 0.092) at the light of omega' = 0.0181; at the train's omega = 0.841 (the wavelength 4, above every matter body's mode) the coupled index lies below 1 and its delay below the band of one interval (the resonance form n^2 - 1 = f / (omega_b^2 - omega^2)), and a train of 8 periods at the design's wavelength (200 Nodes a period) fits no body; the row is re-derived on a medium whose mode lies ABOVE the train's omega (the holder family's bodies, omega_b in 0.3 to 0.5, with a train at [2464, 25], the wavelength 20.78, 166 Nodes on a body of side 166; or a shorter train under the generator's check of 9.17 (6a)); the design's +1.0144 rad and 10.5 intervals HISTORY | the moving name ADOPTED; the push CARRIED; the medium's index at the train's omega OWED |
 | The receding index at one quarter of a Link per interval | as the receding index at one third | as the receding index at one third with **K** for v = 1 / 4 (beta = v / c_l = 0.559 at c_l = 0.44721) | as the receding index at one third | none | as the receding index at one third, OPEN with it (the design's omega' = 0.02202 and n = 1.2577 HISTORY) | as the receding index at one third |
 | The two-qubit computer | the layer [96, 128, 1], periodic, as Bell's four settings | as Bell's four settings: the emitter slab, the crystal with the branches of the prepared state (Grover: the uniform superposition [[0, 1], [1, 1], [2, 1], [3, 1]] with the circuit folded in by the generator; Deutsch-Jozsa: the state |+>|-> [[0, 1], [1, -1], [2, 1], [3, -1]] with the oracle folded in), two readout polarisers whose axes carry the last gates; the joint body OPTIONAL (record 1890) | per arm its + then its - cube, 3 x 3 | as Bell's four settings | Grover on four items: 0 / 0 / 0 / 100 at 100 records, the band 0 on the first three; Deutsch-Jozsa: 100 / 0 per oracle, the band 0; Bell as Bell's four settings | the joint body optional; complex joint weights OPEN, not needed |
-| Mach-Zehnder | the layer [576, 576, 1], every face a receiver slab of depth 64 (the train's 16 periods), the emitter 32 Links from the x = 0 slab and the far slabs 100 Links behind the receivers (9.25 (11) (b); the 416 layer with the emitter at the slab HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (96, 164, 0) with the extents 64 x 64 x 1, the coupling, a stock of 100, its train along +x over 16 periods with the Hann window across y and the tapers of 16; the splitters (A.4): light's pair [2, 3] on the line x = y from (158, 158) to (234, 234) and from (254, 254) to (330, 330); the mirrors (A.3): the gap [1, 2] of depth 4 on x - y = 96 to 99 for y = 158 to 234 and on x - y = -96 to -99 for x = 158 to 234 | the bright, from (412, 236, 0) with the extents 5 x 113 x 1; the dark, from (236, 412, 0) with the extents 81 x 5 x 1; then the faces | air or fibre common to both arms: cancels | at 100 records: the bright 97 +- 5 (share 0.973), the dark 0 or 1 (share 0.0079; two at the 20 percent level, three at the 5 percent level, four a defect), the faces 2 (0 to 6; share 0.019), COMPUTED by the generator's run of the placement on the body's mode envelope (record 1962; the window's shares 0.968 / 0.0054 / 0.027 HISTORY, the pins unchanged) (the placed experiments of LAB_TOOLS.md) | none |
+| Mach-Zehnder | the layer [576, 576, 1], every face a receiver slab of depth 64 (the train's 16 periods), the emitter 32 Links from the x = 0 slab and the far slabs 100 Links behind the receivers (9.25 (11) (b); the 416 layer with the emitter at the slab HISTORY) | light [1, 1], given clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (96, 164, 0) with the extents 64 x 64 x 1, the coupling, a stock of 100, its train along +x over 16 periods with the Hann window across y and the tapers of 16; the splitters (A.4): light's pair [2, 3] on the line x = y from (158, 158) to (234, 234) and from (254, 254) to (330, 330); the mirrors (A.3): the gap [1, 2] of depth 4 on x - y = 96 to 99 for y = 158 to 234 and on x - y = -96 to -99 for x = 158 to 234 | the bright, from (412, 236, 0) with the extents 5 x 113 x 1; the dark, from (236, 412, 0) with the extents 81 x 5 x 1; then the faces | air or fibre common to both arms: cancels | at 100 records: the bright 97 +- 5 (share 0.973), the dark 0 or 1 (share 0.0079; two at the 20 percent level, three at the 5 percent level, four a defect), the faces 2 (0 to 6; share 0.019), COMPUTED by the generator's run of the placement on the body's mode envelope (record 1962; the window's shares 0.968 / 0.0054 / 0.027 HISTORY, the pins unchanged) (the placed experiments of LAB_TOOLS.md) | none |
 | Mach-Zehnder with one arm blocked | as Mach-Zehnder | as Mach-Zehnder with a gap slab [1, 2] of depth 4 across the +y arm, its normal along y, at y = 244 to 247 for x = 158 to 234 (a receiver cannot block an arm: it books flux and leaves the amplitude; a mirror is the board's beam block) | as Mach-Zehnder | as Mach-Zehnder | at 100 records: the bright 25 +- 13 (share 0.248), the dark 22 +- 12 (0.219), the faces 53 +- 15 (0.534): the open arm's half splits at the second splitter and the blocked arm's half returns through the first splitter to the near slabs, COMPUTED as Mach-Zehnder's (the 47 / 39 / 14 of one-Node faces, which reflected the blocked arm back into the interferometer, HISTORY) | none |
-| Sorkin's three openings (the model owner's record 1911 of 2026-09-25: its seven worlds on the two slits' placement, nothing new in the engine) | the two slits' layer [305, 320, 1], every face a receiver slab of depth 32 | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (64, 96, 0) with the extents 32 x 128 x 1 (128 wide, centred on y = 160), **K** = 0, the coupling, a stock of 16384 per world, its train along +x over 8 periods with the Hann window across y. The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 with THREE openings of width 5 centred at y = 121, 160 and 199 (d = 39, 9.75 wavelengths), cut through its depth; SEVEN WORLDS by the openings left open, A, B, C, AB, AC, BC, ABC, the closed ones filled by the wall's slab | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y; then the faces | air: the index 2.7 x 10^-4 common to every path | THE SORKIN SUM OF THE SCREEN'S CLICK TOTALS S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C. COMPUTED by the generator's runs of the seven placements on the ladder's shares: A 0.0333, B 0.0957, C 0.0279, AB 0.1286, AC 0.0558, BC 0.1219, ABC 0.1527, on the body's mode envelope (record 1962; the window's shares HISTORY), the sum +0.0033 per record on the ladder's shares (+0.0041 on the flux), 0.02 of ABC's screen; ABC's visibility 0.59 at the spacing 17.7. THE PIN at 16384 records per world: S = 0 +- 284 (3 standard deviations of the seven binomial totals; the computed +55 inside it), and the seven screen counts A 545 +- 69, B 1568 +- 113, C 457 +- 63, AB 2107 +- 129, AC 914 +- 88, BC 1998 +- 126, ABC 2502 +- 138. THE CLICK'S OWN TERM (the rectification max(G, 0) of 9.19 (3), a positive grain term of the order (lambda / the fringe spacing)^2, 10^-6 in nature's regime; Sinha 2010: 0.006 +- 0.003 of the central count on a bound of 10^-2) reads +0.02 of ABC's screen on the mode envelope (the board's lambda over the spacing is 0.23 where nature's is 10^-3), inside the pin's band; the earlier +0.0049 per record was read on a flux that counted the slab's return (HISTORY) | none |
+| Sorkin's three openings (the model owner's record 1911 of 2026-09-25: its seven worlds on the two slits' placement, nothing new in the engine) | the two slits' layer [305, 320, 1], every face a receiver slab of depth 32 | light [1, 1], given clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [699, 700] from (64, 96, 0) with the extents 32 x 128 x 1 (128 wide, centred on y = 160), **K** = 0, the coupling, a stock of 16384 per world, its train along +x over 8 periods with the Hann window across y. The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 with THREE openings of width 5 centred at y = 121, 160 and 199 (d = 39, 9.75 wavelengths), cut through its depth; SEVEN WORLDS by the openings left open, A, B, C, AB, AC, BC, ABC, the closed ones filled by the wall's slab | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y; then the faces | air: the index 2.7 x 10^-4 common to every path | THE SORKIN SUM OF THE SCREEN'S CLICK TOTALS S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C. COMPUTED by the generator's runs of the seven placements on the ladder's shares: A 0.0333, B 0.0957, C 0.0279, AB 0.1286, AC 0.0558, BC 0.1219, ABC 0.1527, on the body's mode envelope (record 1962; the window's shares HISTORY), the sum +0.0033 per record on the ladder's shares (+0.0041 on the flux), 0.02 of ABC's screen; ABC's visibility 0.59 at the spacing 17.7. THE PIN at 16384 records per world: S = 0 +- 284 (3 standard deviations of the seven binomial totals; the computed +55 inside it), and the seven screen counts A 545 +- 69, B 1568 +- 113, C 457 +- 63, AB 2107 +- 129, AC 914 +- 88, BC 1998 +- 126, ABC 2502 +- 138. THE CLICK'S OWN TERM (the rectification max(G, 0) of 9.19 (3), a positive grain term of the order (lambda / the fringe spacing)^2, 10^-6 in nature's regime; Sinha 2010: 0.006 +- 0.003 of the central count on a bound of 10^-2) reads +0.02 of ABC's screen on the mode envelope (the board's lambda over the spacing is 0.23 where nature's is 10^-3), inside the pin's band; the earlier +0.0049 per record was read on a flux that counted the slab's return (HISTORY) | none |
 
 IN ONE LINE: every row is on the board with nothing outside (2) declared;
 the pins that are counts or shares are closed forms with their bands
@@ -6034,9 +6043,9 @@ THE PINS' FILE FORM (for the one command's `--pins`, 9.22 (7)): every
 reading is of clicks. {detector, count, band} the count of clicks;
 {detector, first_click, band} the interval of the detector's first
 click; {detector, mean_interval, band} the mean over the detector's
-clicks of the interval since the record's birth (the passage rows: 8,
+clicks of the interval since the record's giving click (the passage rows: 8,
 10, 13); {detector, cadence, band} the mean spacing of successive clicks
-at a detector, or of the births at an emitter (its own line); {ratio:
+at a detector, or of the giving clicks at an emitter (its own line); {ratio:
 [reading_a, reading_b], value, band} of two readings of these forms (6,
 7, 8); {sum: [{world, detector, weight}], value, band} (18; Bell's S from
 the sixteen counts of Bell's four settings); {fringe: {detectors: [...], spacing,
@@ -6115,11 +6124,11 @@ owner's declaration and no formula, 8.9).
 
 | The computation | Step by step | The model's number | Nature's number and its source | The verdict |
 | --- | --- | --- | --- | --- |
-| The atom's lines | (i) A well is a body whose pair raises 2 cos omega above the vacuum's band top 2 num / den; its bound modes are the eigenvectors of the composed operator above the top (9.22 (3)), one rotation each, omega_n = arccos(lambda_n / 2), all BELOW the rest frequency omega_0 = arccos(num / den). (ii) The emitter's excited record is seeded on the highest mode and rotates at omega_1, its internal clock (9.17 (7) (e)); its births come one per half period on average at the residue's phase. (iii) The born light's own clock is the world's declared born clock ((6a): [512, 1]); the law ties no frequency of the born light to the mode. (iv) Under the one identification the model could make, the born clock the mode's clock (the moving emitter's redshift's first design), the line sits at the mode's OWN frequency omega_1, and a second mode gives a second line at omega_2, never at the difference: the law is linear on one record and a record on one mode stays on it (no transition between modes is a term of the rule). COMPUTED on a chain of [800, 809], the well [800, 801] of side 32: omega_0 = 0.14930; the modes omega_1 = 0.06718, omega_2 = 0.10174, omega_3 = 0.13771 (the binding 0.08212, 0.04756, 0.01159 below the top); of side 12: one mode, 0.10022 | the lines at 0.06718 and 0.10174 per interval (the modes' own); the difference 0.03456 is no line; the ratio of a difference to an own frequency 0.514 | the lines are differences of two levels: hydrogen's Lyman-alpha 121.6 nm is (E_2 - E_1) / h = 2.47 x 10^15 Hz against the ground level's own E_1 / h = 3.29 x 10^15 Hz, the ratio 3 / 4 exactly (Bohr; Rydberg's constant) | DISAGREE, stated: the algebra's atom emits at its modes' own rotations, nature's at their differences; the paper says so, and how to compute the modes |
+| The atom's lines | (i) A well is a body whose pair raises 2 cos omega above the vacuum's band top 2 num / den; its bound modes are the eigenvectors of the composed operator above the top (9.22 (3)), one rotation each, omega_n = arccos(lambda_n / 2), all BELOW the rest frequency omega_0 = arccos(num / den). (ii) The emitter's excited record is seeded on the highest mode and rotates at omega_1, its internal clock (9.17 (7) (e)); its giving clicks come one per half period on average at the residue's phase. (iii) The given light's own clock is the world's declared given clock ((6a): [512, 1]); the law ties no frequency of the given light to the mode. (iv) Under the one identification the model could make, the given clock the mode's clock (the moving emitter's redshift's first design), the line sits at the mode's OWN frequency omega_1, and a second mode gives a second line at omega_2, never at the difference: the law is linear on one record and a record on one mode stays on it (no transition between modes is a term of the rule). COMPUTED on a chain of [800, 809], the well [800, 801] of side 32: omega_0 = 0.14930; the modes omega_1 = 0.06718, omega_2 = 0.10174, omega_3 = 0.13771 (the binding 0.08212, 0.04756, 0.01159 below the top); of side 12: one mode, 0.10022 | the lines at 0.06718 and 0.10174 per interval (the modes' own); the difference 0.03456 is no line; the ratio of a difference to an own frequency 0.514 | the lines are differences of two levels: hydrogen's Lyman-alpha 121.6 nm is (E_2 - E_1) / h = 2.47 x 10^15 Hz against the ground level's own E_1 / h = 3.29 x 10^15 Hz, the ratio 3 / 4 exactly (Bohr; Rydberg's constant) | DISAGREE, stated: the algebra's atom emits at its modes' own rotations, nature's at their differences; the paper says so, and how to compute the modes |
 | Light's dispersion by direction and wavelength | (i) Light's band cos omega = (cos k_x + cos k_y + cos k_z) / 3 (4.2, 8.1). (ii) With **k** = k **n**, expand: cos omega = 1 - k^2 / 6 + k^4 sum n_i^4 / 72 + O(k^6); with omega^2 = 2 (1 - cos omega) + (1 - cos omega)^2 / 3 + O(6), omega^2 = (k^2 / 3) (1 - (k^2 / 36) (3 sum n_i^4 - 1)) + O(k^6), so omega = (k / sqrt 3) (1 - (k^2 / 72) (3 sum n_i^4 - 1)) and the group pace d omega / dk = (1 / sqrt 3) (1 - (k^2 / 24) (3 sum n_i^4 - 1)). (iii) 3 sum n_i^4 - 1 is 2 along an axis, 1 / 2 along a face diagonal and 0 along the body diagonal (1, 1, 1) / sqrt 3: the pace falls with the wave number (subluminal), most along an axis and not at all along the body diagonal (COMPUTED against the exact band at k = 0.2: the form and the band agree to 2 x 10^-7). (iv) In nature k a = E a / (hbar c) for the Link a, so the pace deficit is (E a / hbar c)^2 (3 sum n^4 - 1) / 24, a quadratic term in the energy | the deficit of the group pace (k a)^2 / 12 along an axis, 0 along the body diagonal; between the axis and the body diagonal at one wave number (k a)^2 / 12 | the quadratic energy dependence of the photon's pace from the gamma-ray burst GRB 090510: E_QG,2 > 1.3 x 10^11 GeV (Vasileiou et al. 2013), so a < sqrt 12 hbar c / E_QG,2 = 5.3 x 10^-27 m for a burst along an axis (the Planck length 1.6 x 10^-35 m admitted eight orders below); the direction dependence of c at one wavelength below 10^-18 (Nagel et al. 2015), a < 2.8 x 10^-16 m at 500 nm, weaker | AGREE as a bound: no number of nature is contradicted; the Link a lies below 5 x 10^-27 m |
 | The bound on the interval's length, from the two paces | (i) A massive kind's band cos omega = (num / den) (sum cos K_i) / 3 has its bottom at omega_0 = arccos(num / den) (8.1). (ii) Its cone: omega^2 = omega_0^2 + c_eff^2 K^2 + O(K^4) with c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2 (8.1 (ii), PROVED), c = 1 / sqrt 3 Links per interval light's pace; c_eff = c (1 - omega_0^2 / 6 + O(omega_0^4)); the joint second-order form gives c_m = c sqrt(cos omega_0) = c (1 - omega_0^2 / 4) (8.1 (i)). (iii) So a massive record's limiting pace lies below light's by the deficit omega_0^2 / 6 (the exact cone) to omega_0^2 / 4, with omega_0 = m c^2 tau / hbar the rest rotation per interval of length tau. (iv) A bound on (c - v_max) / c for a massive kind bounds omega_0 and so tau; and a = sqrt 3 c tau | for the declared pair [800, 809], omega_0 = 0.1493: the deficit 0.37 percent (c_eff) to 0.56 percent (c_m), COMPUTED; on a nature number: tau below 3.6 x 10^-28 s (the deficit omega_0^2 / 4 below 2 x 10^-14 for the electron), a below 1.9 x 10^-19 m; with the Link a below 5.3 x 10^-27 m of light's dispersion above, tau below 1.0 x 10^-35 s | the electron's pace against light's within 2 x 10^-14 (the published bound cited in SCHEDULE.md row A); the Planck time 5.4 x 10^-44 s | AGREE as a bound: one interval at most 3.6 x 10^-28 s from the electron and at most 1.0 x 10^-35 s from the burst, the Planck time admitted below both; a massive front faster than c_eff on a world beyond the band would falsify the model, and a tighter electron bound tightens tau |
 | The bound clock's second term | (i) A moving bound record is a packet of its kind at **K** (9.24 (2)); its internal clock is the phase rate along its own centre, omega(**K**) - **K** . grad omega (the rotation seen where the packet is), and the tick ratio is that over omega_0. (ii) On the exact cone omega^2 = omega_0^2 + c_eff^2 K^2 this is omega_0^2 / omega = omega_0 / gamma_eff with gamma_eff = 1 / sqrt(1 - v^2 / c_eff^2): a bound clock dilates by Lorentz's gamma AT ITS OWN CONE c_eff, not at light's c (8.9, prediction 1's second face). (iii) The lattice's own term beyond the cone: the exact band against the cone, COMPUTED for [800, 809] at v = 1 / 3 along an axis (K = 0.18556): the tick ratio 0.81457 against 1 / gamma_eff = 0.81496, the ratio 1 - 0.41 K^4 (the same coefficient at K = 0.05, 0.1 and 0.2: a K^4 term, not K^2); for [156, 157] at v = 1 / 3 (K = 0.13946): 0.81541 against 0.81563, 1 - 0.72 K^4. (iv) Against light's gamma the clock is slower by about beta^2 gamma^2 omega_0^2 / 6 (0.19 percent at v = 1 / 3, omega_0 = 0.1493) | two terms beyond Lorentz's at light's c: the cone's, beta^2 gamma^2 omega_0^2 / 6, and the lattice's, 0.41 (K a)^4; in nature's regime for the electron with tau below 3.6 x 10^-28 s: omega_0 below 2.8 x 10^-7, the cone's term below 10^-14 at beta = 0.34, the lattice's term below 10^-40 | the time dilation of a bound clock (the Li+ ion's transition) at beta = 0.338 agrees with Lorentz's gamma to 2.3 x 10^-9 (Botermann et al. 2014); the muon's lifetime at gamma = 29.3 to 2 x 10^-3 (Bailey et al. 1977) | AGREE: both terms lie below nature's bands by five orders and more; the model's clock is Lorentz's at c_eff, and c_eff differs from c below the bands |
-| Born's exponent and Tsirelson's limit | (i) The rule conserves one bilinear form of a record's two levels, I = sum_i D_i (now_i^2 + before_i^2) - (1 / 3) now_i (**A** before)_i (9.19 (3)), quadratic in the levels; a detector's share is its region's part of I acquired through its Ports (9.25 (2), (3)), so the click's probability is a quadratic form of the amplitudes: the exponent is 2 because the conserved form is of degree 2, and no other degree is conserved by the rule (an identity of the law, not a postulate). (ii) A crystal births a record of two branches (A.11); a polariser's body with the axis (a, b) passes the component along the axis (A.5), its + cube's share cos^2 of the angle between the record's hand and the axis, Malus's law as the same quadratic form; for the pair with the branches [[1, 1], [2, 1]] the correlation of the two + cubes is E(alpha, beta) = cos 2 (alpha - beta) (the two branches' quadratic form). (iii) S = E(a, b) - E(a, b') + E(a', b) + E(a', b') is a sum of four cosines of the four differences of two pairs of axes; its maximum over all axes is 2 sqrt 2 at the differences 45 degrees apart, Tsirelson's bound, an identity of the cosine form (the four vectors' Gram determinant); with integer axes the angles are rational tangents, and the settings (1, 0), (1, 1) for Alice and (1, 2), (3, 1) for Bob give the differences of the 3-4-5 triangle, E = 0.6, -0.8, 0.8, 0.6 | the exponent 2 exactly; S = 2.80 at the integer settings of Bell's four settings, 2.83 the bound approached by rational axes nearer 22.5 degrees | Born's exponent: the three-slit sum within 10^-2 of 0 (Sinha et al. 2010); Bell: S = 2.697 +- 0.015 (Aspect et al. 1982), 2.73 +- 0.02 (Weihs et al. 1998), 2.42 +- 0.20 loophole-free (Hensen et al. 2015); the bound 2 sqrt 2 = 2.828 never exceeded | AGREE: the exponent and the bound are identities of the one quadratic form; the measured S of Bell's four settings (2.80 +- 0.14) is the same form's number at the row's axes |
+| Born's exponent and Tsirelson's limit | (i) The rule conserves one bilinear form of a record's two levels, I = sum_i D_i (now_i^2 + before_i^2) - (1 / 3) now_i (**A** before)_i (9.19 (3)), quadratic in the levels; a detector's share is its region's part of I acquired through its Ports (9.25 (2), (3)), so the click's probability is a quadratic form of the amplitudes: the exponent is 2 because the conserved form is of degree 2, and no other degree is conserved by the rule (an identity of the law, not a postulate). (ii) A crystal giving clicks a record of two branches (A.11); a polariser's body with the axis (a, b) passes the component along the axis (A.5), its + cube's share cos^2 of the angle between the record's hand and the axis, Malus's law as the same quadratic form; for the pair with the branches [[1, 1], [2, 1]] the correlation of the two + cubes is E(alpha, beta) = cos 2 (alpha - beta) (the two branches' quadratic form). (iii) S = E(a, b) - E(a, b') + E(a', b) + E(a', b') is a sum of four cosines of the four differences of two pairs of axes; its maximum over all axes is 2 sqrt 2 at the differences 45 degrees apart, Tsirelson's bound, an identity of the cosine form (the four vectors' Gram determinant); with integer axes the angles are rational tangents, and the settings (1, 0), (1, 1) for Alice and (1, 2), (3, 1) for Bob give the differences of the 3-4-5 triangle, E = 0.6, -0.8, 0.8, 0.6 | the exponent 2 exactly; S = 2.80 at the integer settings of Bell's four settings, 2.83 the bound approached by rational axes nearer 22.5 degrees | Born's exponent: the three-slit sum within 10^-2 of 0 (Sinha et al. 2010); Bell: S = 2.697 +- 0.015 (Aspect et al. 1982), 2.73 +- 0.02 (Weihs et al. 1998), 2.42 +- 0.20 loophole-free (Hensen et al. 2015); the bound 2 sqrt 2 = 2.828 never exceeded | AGREE: the exponent and the bound are identities of the one quadratic form; the measured S of Bell's four settings (2.80 +- 0.14) is the same form's number at the row's axes |
 | The universality of the tick (in gravity's place) | (i) By the bound clock's second term above, every bound clock of a kind dilates by gamma at its own cone c_eff(omega_0), and the kinds differ in omega_0: two clocks of different constitution at one pace v differ in their tick ratios by about beta^2 gamma^2 (omega_0a^2 - omega_0b^2) / 6, plus the lattice's K^4 terms. (ii) The same clock along an axis and along the body diagonal at one pace differs by the band's anisotropy (light's dispersion above, 3 sum n^4 - 1). COMPUTED: [800, 809] and [156, 157] at v = 1 / 3, the tick ratios 0.81457 and 0.81541 (the difference 8.4 x 10^-4 on the board); [800, 809] at v = 1 / 3 along the axis and along the body diagonal, 0.81457 and 0.81496 (3.9 x 10^-4) | a constitution term (omega_0a^2 - omega_0b^2) beta^2 gamma^2 / 6 and a direction term of order (K a)^4; in nature's regime (tau below 3.6 x 10^-28 s) the constitution term between an electron clock and a muon clock at gamma = 29.3 is below 5 x 10^-7 and the direction term below 10^-40 | the muon's dilation agrees with the atomic clocks' Lorentz factor to 2 x 10^-3 (Bailey et al. 1977 against Botermann et al. 2014); the direction dependence of a clock's rate below 10^-18 (the anisotropy tests of Nagel et al. 2015 and the Hughes-Drever type bounds far below) | AGREE: nature's clocks are universal to the bands, and the model's non-universality lies below them by three orders (the constitution) and twenty (the direction); a clock-comparison in motion at 10^-7 between a lepton's decay and an atomic transition would reach the model's constitution term |
 
 GRAVITY, for the record: the algebra has no gravitational field. A body's
@@ -6176,9 +6185,9 @@ clock; the phase is read between the two rows at the same Node). Its
 normalisation is never written: the rung divides by the record's own norm
 T, so the weights are integers up to a common scale. TWO QUBITS are one
 record of rank 2, the tensor Z^2 (x) Z^2 of the two arms' label modules
-(3.6), born together by the crystal (9.13) with its branches as the
+(3.6), given together by the crystal (9.13) with its branches as the
 tensor's INTEGER coefficients and the per-arm phases on the rows. Two
-separately born records are two summands of the direct sum (9.19 (1));
+separately given records are two summands of the direct sum (9.19 (1));
 nothing in the six verbs joins two summands into one tensor (that would be
 an operation bilinear in two summands acting on a third, a cubic term the
 three tests exclude, 2.8), so THEY ARE NEVER ENTANGLED: a two-qubit
@@ -6236,25 +6245,25 @@ MATRIX (DERIVED HERE, replacing the first draft's per-Node action and
 its equal-time condition, both withdrawn on 2026-09-25): the four joint
 weights are the record's own data, not a value at a Node, so no per-Node
 verb reaches them; the one act of the law on a record's own data is the
-click, and the one act that writes a record is the birth (9.17). So the
+click, and the one act that writes a record is the giving click (9.17). So the
 joint body is a region named on the pair's ladder for BOTH arms: the pair
 clicks there at its rung (**E**, **D**, **X**, the pair's offer being its
-rows' flux into the body's Nodes) and the body BIRTHS a pair on its Nodes
+rows' flux into the body's Nodes) and the body GIVING CLICKS a pair on its Nodes
 with the weights c' = **G** c, **G** its declared 4 x 4 integer matrix
 (the bilinear form) or permutation (the permutation) on Z^2 (x) Z^2, the residue the law's
-remainder at its centre Node (9.19 (4)), the born rows written once at
+remainder at its centre Node (9.19 (4)), the given rows written once at
 both levels (9.17 (6)): exactly the crystal (9.7 (b), 9.13) with a
 matrix on the arriving weights in place of fixed branches. Nothing waits
 for the two arms to arrive together: the ladder sums both arms' offers
-and the rung fires once. The born pair spreads from the body's Nodes as
+and the rung fires once. The given pair spreads from the body's Nodes as
 the crystal's does, and the readouts are placed where it goes (9.6). In
 nature it is a nonlinear medium; here it is a declared matrix, a material
 like the crystal's branches. Within the three tests: generic (the
 crystal's primitives with declared integers, no family name), vector
 (**G** on the weights, no root), local (the body's Nodes). NOT ON MAIN:
-the engine's crystal births fixed branches, never a matrix applied to
+the engine's crystal giving clicks fixed branches, never a matrix applied to
 the arriving pair's weights. WHAT THE CRYSTAL'S
-BIRTH REPLACES: any entangling gate that comes first in a circuit is a
+GIVING CLICK REPLACES: any entangling gate that comes first in a circuit is a
 prepared state, the crystal's declared branches (the four Bell states,
 the uniform superposition, any real tensor with integer weights); an
 entangling gate in the MIDDLE of a circuit needs the joint body.
@@ -6275,7 +6284,7 @@ a share of 0 has the band 0 (one click there is a defect).
   40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 with the bands of
   9.19 item (4b), S = 2.80 +- 0.14.
 - GROVER'S SEARCH ON FOUR ITEMS, the marked item |11>: (i) the crystal
-  births the uniform superposition, the branches [[0, 1], [1, 1], [2, 1],
+  giving clicks the uniform superposition, the branches [[0, 1], [1, 1], [2, 1],
   [3, 1]] (H (x) H on |00> as a prepared state); (ii) the oracle: a joint
   body with the diagonal (1, 1, 1, -1); (iii) the diffusion: on each arm
   X then R_(1, 1) (the Hadamard), then a joint body with the diagonal
@@ -6293,7 +6302,7 @@ a share of 0 has the band 0 (one click there is a defect).
   placement of the specification's 11.3 with the polarisers replaced by
   the mirrors), then separated again to the two readout polarisers.
 - DEUTSCH-JOZSA ON TWO QUBITS (the query qubit and the ancilla): the
-  crystal births |+>|->, the branches [[0, 1], [1, -1], [2, 1], [3, -1]]
+  crystal giving clicks |+>|->, the branches [[0, 1], [1, -1], [2, 1], [3, -1]]
   (negative integer weights allowed); the oracle of a constant function is
   the identity (no body) or the joint (-1, -1, -1, -1) (a sign), of a
   balanced one the joint (1, 1, -1, -1) or (-1, -1, 1, 1) (the phase
@@ -6304,21 +6313,21 @@ a share of 0 has the band 0 (one click there is a defect).
 - THE RECORDS EACH NEEDS: Bell 400 (the distributions); Grover 100 and
   Deutsch-Jozsa 100 per oracle (deterministic outcomes, the band 0).
 - AS PLACED ON A LAYER (DERIVED HERE; the sixteenth row of the
-  specification's the placed experiments): a gate that stands between a birth and a
+  specification's the placed experiments): a gate that stands between a giving click and a
   readout with nothing between is composed into them exactly, since the
   algebra composes matrices (a one-qubit gate before the joint body into
   the crystal's branches, one after it into the readout polariser's
-  axis); on a layer the rows spread from a birth in every direction and
+  axis); on a layer the rows spread from a giving click in every direction and
   a separate gate body would catch a part of an arm only, so the placed
-  form is: the crystal births the state the circuit has reached at its
+  form is: the crystal giving clicks the state the circuit has reached at its
   first entangling gate; ONE joint body carries that gate; the readout
   polarisers' axes carry the last one-qubit gates. Grover: the crystal
-  births (1, 1, 1, -1) (the uniform state after the oracle, the branches
+  giving clicks (1, 1, 1, -1) (the uniform state after the oracle, the branches
   [[0, 1], [1, 1], [2, 1], [3, -1]]); the joint body **G** = diag(1, -1,
   -1, -1) gives (1, -1, -1, 1) = (1, -1) (x) (1, -1); both readout
   polarisers with the axis (1, 1) (the Hadamard then the axis (1, 0)):
   every record clicks (-, -), 0 / 0 / 0 / 100. Deutsch-Jozsa: the crystal
-  births |+> |-> = (1, 1, -1, -1) (the query arm 0, the label index a +
+  giving clicks |+> |-> = (1, 1, -1, -1) (the query arm 0, the label index a +
   2 b); the joint body is the identity or -I (constant) or diag(1, -1, 1,
   -1) or its negative (balanced); the query arm's polariser with the axis
   (1, 1) clicks + for constant and - for balanced, 100 of 100; the
@@ -6355,13 +6364,13 @@ entanglement is the cost; the generator, if it works right, computes it
 in iterations"): CONFIRMED, and it sharpens (6).** THE BOARD COMPUTES
 NOTHING: the law spreads the rows locally (the split) and the click reads
 (9.19); no verb of the law reaches a record's joint weights but the click
-and the birth. So the whole unitary part of a circuit is a computation
+and the giving click. So the whole unitary part of a circuit is a computation
 OUTSIDE the law: the board generator iterates the circuit's gates on the
 weights (each gate one product of a 2^n x 2^n integer matrix with the
 weight vector, 2^n = 4 here) and writes the result as the crystal's
 branches, with the readout axes carrying the last one-qubit gates; THAT
 IS THE COST, exponential in the qubits, and it sits in the generator,
-not on the board. The joint body of (3) is the crystal's own act (a birth
+not on the board. The joint body of (3) is the crystal's own act (a giving click
 with a matrix on the weights) placed in the middle of the run: it
 computes nothing the generator could not have folded into the branches,
 so it is OPTIONAL, wanted only to test a gate as a body of the engine.
@@ -6444,7 +6453,7 @@ COMPUTED).**
 - THE CONTRACTION: none on the board's own surface; the profile is as
   written (8.4's "the characters themselves" is history, and its 0.1
   percent carried value is replaced by the dispersion's exact one).
-- WHAT THIS SERVES AS IS: the moving mass (the moving mass's energy) is a free packet born by
+- WHAT THIS SERVES AS IS: the moving mass (the moving mass's energy) is a free packet given by
   its emitter body and read by a static receiver: DERIVED, nothing
   changes. The packet as a CLOCK read by clicks needs item 4.
 
@@ -6488,18 +6497,18 @@ owner, record 1889, 2026-09-25 on the Israel clock: "yes, approve the
 moving name"; the specification's card A.14).** The Boss's question: can a receiver or an emitter be named by
 the record rather than by fixed Nodes? A receiver is a name (9.19 (5)),
 no material: a set of Nodes that the click reads (the flux into it) and
-the birth writes on. A NAME MAY TRANSLATE: the set S(t) = S(0) + (the
+the giving click writes on. A NAME MAY TRANSLATE: the set S(t) = S(0) + (the
 accumulator's steps), the accumulator advanced by the rate of **K**'s
 group velocity in integers (one Link per [intervals] with the remainder
 kept, the translation), the same stepping the push uses, applied to a NAME and
 not to material. Then: the operator is unchanged (no material moves), so
 equivariance, locality, conservation and reversibility hold as proved
-(9.20 (A)); the click reads the flux into S(t) and the birth writes on
+(9.20 (A)); the click reads the flux into S(t) and the giving click writes on
 S(t), the crystal's and the emitter's forms unchanged; a packet with a
 co-moving name is the moving clock (its own record clicks at its rung on
 S(t) as the well's does at its block, the norm one period's one-way flux
 into the moving centre Node, 9.17 (5)), the moving emitter (a stock
-births at S(t) at the packet's own tick rate, which item 2 dilates), and
+giving clicks at S(t) at the packet's own tick rate, which item 2 dilates), and
 the moving receiver. The three tests: generic (the name's rate is derived
 from **K** by the generator, an integer pair per axis, not a declared
 heading; the translation), vector (no root), local (the set's Nodes). WHAT IT IS
@@ -6509,7 +6518,7 @@ generator, and no rate or heading is declared beyond the body's **K**.
 
 **(5) WHAT EACH MOVING ROW DECLARES NOW (DERIVED, on items 2 to 4), and
 the ramp.** THE RAMP IS NOT NEEDED (DECIDED, record 1884; DERIVED, item 2:
-a packet is born moving, the character times the profile is an exact
+a packet is given moving, the character times the profile is an exact
 solution); DECLARATIONS.md section 8 retires; no `ramp` key; a world
 with one is refused (9.22 (2)). 8.4 moves from CARRIED to DERIVED for a
 free packet (the dispersion's exact clock) and to HISTORY for a moving
@@ -6523,7 +6532,7 @@ well. The rows:
   against the design's well form 0.8116, CARRIED); read by clicks only
   with a moving name (item 4), else a closed form beside the rest run.
 - THE REDSHIFT (4b): the emitter a packet with **K** and a moving name
-  with its stock; its births come at the packet's own tick (dilated by
+  with its stock; its giving clicks come at the packet's own tick (dilated by
   item 2) from positions that recede, so the receiver's click intervals
   are stretched by 1 + v / c_l: 1 + z = (1 + v / c_l) / (the tick ratio)
   = 1.935 at v = 1 / 3 with c_l = 0.57689 (the chain's light at k = 2 pi
@@ -6610,9 +6619,9 @@ right and its local-in-time form was not written. WITHDRAWN there; the
 rule below replaces it.
 
 **(2) THE RULE (DERIVED HERE): THE INCREMENT LADDER.** The data: the
-record's residue u (the law's remainder at its birth Node, 9.19 (4)), its
+record's residue u (the law's remainder at its giving Node, 9.19 (4)), its
 norm T, its wheel W, hence its threshold theta = (2 u + 1) T / (2 W),
-fixed at the birth; its ladder, the named DETECTORS in their declared
+fixed at the giving click; its ladder, the named DETECTORS in their declared
 order with the face last. A DETECTOR OF THE LADDER IS ONE DETECTOR, a cube
 of side 3 or more (the model owner's record 1899 of 2026-09-25, (10)
 below; the first draft's Nodes within a set are HISTORY). At every
@@ -6801,7 +6810,7 @@ sensitivity").** A Node is the grain and a detector's cube is the
 smallest thing a detector tells apart: a click names the detector, and
 nothing below a detector is observable or claimed. THE MAPPING TO NATURE
 (DERIVED): on the board a wavelength spans several Nodes and one or a
-few detector cubes (the born light's 20.78 Links at [2464, 25], 64 at
+few detector cubes (the given light's 20.78 Links at [2464, 25], 64 at
 the chains' [1, 1], 4 at the Mach-Zehnder's [512, 1]), while a real
 pixel is larger than a real wavelength; so an
 experiment is compared by the RATIOS it measures, and each pinned ratio
@@ -6892,7 +6901,7 @@ cross click later on REFLECTED light (on the two slits' first placement
 half of them, and the pattern read on the screen was the reflections'),
 and 9.19 (3)'s proof of one click per passage needs the face to book
 what reaches it. THE RULE: every open face is a receiver slab of depth
-at least the record's length at the face (the born packet's length, or
+at least the record's length at the face (the given packet's length, or
 the generator's map of a pulse's spread), so that a record's first
 passage over the detectors and the faces books its whole norm and every
 record clicks on the direct light; the box of side 3 is its lower bound
@@ -6912,7 +6921,7 @@ with nature by "spacing over wavelength" (9) carries the factor k / sin
 k, a grain term named beside the pace fans' and the moving rows'; the
 VISIBILITY and Born's rule are what the row compares.
 
-**(11) THE ONE-WAY FLUX READS A PASSAGE; THE BORN TRAIN AS THE LOAD
+**(11) THE ONE-WAY FLUX READS A PASSAGE; THE GIVEN TRAIN AS THE LOAD
 CONDITION; WHERE THE FACE SLAB STANDS (the physicist's finding on
 emitter-click f0d2d745, 2026-09-25: the light clock's file run by the
 one command, MISS, every record clicking on its outgoing pass; and the
@@ -6928,7 +6937,7 @@ A lawful state CAN make it exceed T: a record that STANDS at the Port.
 Its standing components (the band's edges, whose group velocity is
 about zero) carry an alternating current with no transport, and the
 positive part of an alternating current grows without bound: the
-uniform birth of 9.17 (6) on twelve Nodes (0.58 of a period at the
+uniform giving click of 9.17 (6) on twelve Nodes (0.58 of a period at the
 wavelength 20.78) booked 4.65 T into the cube beside its emitter within
 400 intervals and 4.23 T at the emitter's own Node, so every record
 clicked on its outgoing pass; a train of 3 periods books 1.0285 T at 40
@@ -6940,7 +6949,7 @@ emitter's face is both at once and is read wrongly by either). The
 SIGNED flux is not the reading: through a thin receiver the net during a
 passage is about zero (in at the front, out at the back), so it would not
 count what passes, and the ladder cannot carry a negative increment.
-THE LOAD CONDITION (DERIVED): every birth is a travelling train (9.17
+THE LOAD CONDITION (DERIVED): every giving click is a travelling train (9.17
 (6a)); the generator refuses a profile whose one-way flux through a plane
 40 Links ahead, run alone on the vacuum, is not T within 2 x 10^-3. (b)
 THE FACE SLAB RETURNS WHAT IT BOOKS: the reflection off the zero row
@@ -6965,7 +6974,7 @@ the body through its Ports (negative, not booked) and the return enters
 them (0.998 of T booked, COMPUTED on the light clock's chain); a cube
 beside the emitter books the outgoing pass (the physicist's finding:
 HISTORY for the light clock's [612, 614]); this asks that the body be
-transparent to its born family at the born **K** (9.22 (7a) (iv)). THE
+transparent to its given family at the given **K** (9.22 (7a) (iv)). THE
 PIN OF A PASSAGE: a record's click interval at a detector is spread over
 the passage (a train of 32 Nodes passes a Port in 72 intervals at v_g =
 0.44721; the rms of the click intervals 24.8), so the pin is the MEAN
@@ -6982,10 +6991,10 @@ without counting all the Nodes? if a click is a change, one turn, how do
 we reach the generic rule?"; "the generic rule to draw a detector's
 click, and make it a kind of local"; the Boss's reading PROVED and
 corrected in two places).** (a) A CLICK IS AN EVENT OF ONE RECORD AND ONE
-OBJECT: the record's one quantum, its norm T fixed at birth and conserved,
+OBJECT: the record's one quantum, its norm T fixed at giving click and conserved,
 handed over to an object; the click falls when the handed-over share
 reaches the record's drawn share (2 u + 1) / (2 W), the residue u the
-law's own remainder at the birth Node ((2), 9.19 (4)); no Node clicks,
+law's own remainder at the giving Node ((2), 9.19 (4)); no Node clicks,
 the object clicks as a whole (10). (b) WITHOUT COUNTING THE NODES, THE
 EXACT BOUNDARY STATEMENT. The form is conserved and moves only across
 Links: for any region R the change of its share over one interval is the
@@ -7058,7 +7067,7 @@ interval, so its solutions of one shape are the modes, each turning
 uniformly, 2 cos omega = a / b (1.1, 8.1, 9.22 (7)); a body's frequency
 is its bound mode's own rotation, set by the body's pair and extents
 and by nothing outside it, and seen from outside only as a rate of
-clicks (its births come at the residue's phase of that rotation, 9.17
+clicks (its giving clicks come at the residue's phase of that rotation, 9.17
 (7) (b) and (e)). MOMENTUM **K** is the advance of the phase per Link
 along the axes: the law is the same at every Node, so its solutions of
 one shape along space are the characters and the packets built of them
@@ -7113,11 +7122,11 @@ the frequency times the quanta. (b) A STANDING RECORD clicks by its own
 frequency EXACTLY: the excited record's running total accrues e_c per
 interval, the same every interval, and its rung fires at the phase (2 u
 + 1) / (2 W) of its own period, a uniform waiting time in [0, P), one
-birth per half period on average (9.17 (7) (b), (e) and (f); COMPUTED in
+giving click per half period on average (9.17 (7) (b), (e) and (f); COMPUTED in
 the engine at 294a7c80: the six waits within two intervals of (2 u + 1)
 P / (2 W)); so "every body has its own click by its frequency" is the
 emitter's rule of 9.17 (7) (f) at the set's own Node, word for word, the
-body's click being its birth. (c) A TRAVELLING RECORD clicks by the
+body's click being its giving click. (c) A TRAVELLING RECORD clicks by the
 ARRIVAL of its form at a detector, through the detector's Ports (9.25
 (2), (11)), and a detector has no frequency of its own (it is a set of
 Nodes, not a body): its pace is the record's group velocity, from the
@@ -7182,7 +7191,7 @@ to write it back. THE CLICK AS THE ONE EXCHANGE BETWEEN SYSTEMS, AND THE
 WHOLE'S FREQUENCY (the owner's line, "the click is a way for systems to
 communicate; when the click is not reversible, there is no frequency,
 really"; CONFIRMED with one precision): the click is the one exchange of
-the model, a record born at one body ending at another whose own record
+the model, a record given at one body ending at another whose own record
 changes, the exchange travelling between them locally as flux and the
 click itself carrying no signal (9.25 (6)); and with the click
 irreversible the whole, the board with its detectors, is no bijection,
@@ -7200,9 +7209,9 @@ proof (Born's rule, no signalling and one quantum one click are
 statements about the forward click and stand whatever the detector
 stores), and it contradicts the owner's decision that the deletion is
 at once and carries no information (record 1888) and that nothing is
-kept at a Node beyond the events there. The birth is the click's mirror
+kept at a Node beyond the events there. The giving click is the click's mirror
 in form (E^T against X, 9.13): the reversed film shows every click as a
-birth from the detector's stock and every birth as a click at the
+giving click from the detector's stock and every giving click as a click at the
 emitter, and it runs exactly where the content the click lost is
 supplied. So the GameBoard works in both directions as a LAW, and its
 one arrow is the click's deletion: a decision, not a theorem, and the
@@ -7321,7 +7330,7 @@ is where chance lives (the exact worlds have none). (iii)
 PERIODIC AND CLICKING AT ONCE: with the click irreversible one click ends
 the periodicity ((3) (b), (4) (c)); a universe cannot be both exactly
 periodic and clicking unless its click is made reversible, the owner's
-decision of (3) (c); with a finite stock the cycle of births and clicks
+decision of (3) (c); with a finite stock the cycle of giving clicks and clicks
 ends when the stock is spent.
 
 ### 9.27 The coherence of the model owner's decisions with the algebra; the generic way to build a board; the quarks (the model owner's order of 2026-09-25 through the Boss, record 1930: "take my decisions to the mathematician, so he sees that they really are laws that can be used ... see that all the laws are coherent"; "what is the generic way we build a board"; "how do the quarks connect here")
@@ -7336,19 +7345,19 @@ something other than his words.
 
 | The decision (the owner's words, short; the record) | The law as a usable statement | The verdict |
 | --- | --- | --- |
-| Momentum is conserved on the board; no operation on Nodes but the click; each tool the law's advance on its material plus at most a click (1856) | The rule conserves the board's total momentum and the record's form (8.1, 9.19 (3)); the only acts outside the advance are the click X and its other side the birth E^T (9.13); a tool is a region of pairs and does nothing else | CONSISTENT (the birth counted as the click's other side, as record 1879 says) |
+| Momentum is conserved on the board; no operation on Nodes but the click; each tool the law's advance on its material plus at most a click (1856) | The rule conserves the board's total momentum and the record's form (8.1, 9.19 (3)); the only acts outside the advance are the click X and its other side the giving click E^T (9.13); a tool is a region of pairs and does nothing else | CONSISTENT (the giving click counted as the click's other side, as record 1879 says) |
 | The residue from the law, never declared (1872) | The residue u = r / g and the wheel W = wall / g from the record's own remainder at the centre Node after its first advance (9.19 (4), (4e)); the loader refuses a declared residue | CONSISTENT |
 | An experiment is an algebraic experiment: the world says what is on the board, the engine does the algebra, the outcome derived before the run (1873) | The table of 9.22 (8): every row a list of regions and a blind pin computed from the algebra; the run checks in clicks | CONSISTENT |
-| The one algebra: one element, one operator, covariant under the cube group and the translations; the click deletes, the birth writes; at most three families; one border (1875) | 9.20 (the one operator), 9.21, 9.22 (2); the loader's three-family bound | CONSISTENT |
-| How an experiment is built: a list of what is on the board; never a residue, a wheel, a take, a grace, a TRAIN, a rate, a heading or a table (1875) | The list of 9.22 (2); the born profile of 9.17 (6a) is the GENERATOR'S integers on the emitting body's Nodes, its length the body's extent along its momentum, its wavelength the family's born clock: the experimenter declares the body and its clock, never a train | DIFFERS IN A WORD: "never a train" stands for the lamp's declared count of periods (retired); the birth's shape is a travelling train the generator writes from the body's extent. Proposed wording: "no train is declared; the born profile's length is the emitting body's extent along its momentum" |
-| What a lab tool is: a region of the operator, a cube of the holder family with its material integers, its momentum, at most a birth and a name (1875) | The tool cards of LAB_TOOLS.md; the bodies with extents per axis (a slab, a line, a cube) since 9.22 (8) | CONSISTENT (a cube become a box of extents, record 1929's bodies with extents) |
+| The one algebra: one element, one operator, covariant under the cube group and the translations; the click deletes, the giving click writes; at most three families; one border (1875) | 9.20 (the one operator), 9.21, 9.22 (2); the loader's three-family bound | CONSISTENT |
+| How an experiment is built: a list of what is on the board; never a residue, a wheel, a take, a grace, a TRAIN, a rate, a heading or a table (1875) | The list of 9.22 (2); the given profile of 9.17 (6a) is the GENERATOR'S integers on the emitting body's Nodes, its length the body's extent along its momentum, its wavelength the family's given clock: the experimenter declares the body and its clock, never a train | DIFFERS IN A WORD: "never a train" stands for the lamp's declared count of periods (retired); the giving click's shape is a travelling train the generator writes from the body's extent. Proposed wording: "no train is declared; the given profile's length is the emitting body's extent along its momentum" |
+| What a lab tool is: a region of the operator, a cube of the holder family with its material integers, its momentum, at most a giving click and a name (1875) | The tool cards of LAB_TOOLS.md; the bodies with extents per axis (a slab, a line, a cube) since 9.22 (8) | CONSISTENT (a cube become a box of extents, record 1929's bodies with extents) |
 | The initial state: the sum over the occupied modes of the composed operator of the quanta times the profile, the momentum's character for a moving body, every remainder 0, checked at load bit for bit (1875) | 9.22 (3) and (7); the remainders 0 at the write and nonzero after one step, where the residue is read | CONSISTENT |
 | An experiment checks only clicks (1875) | 9.21; the pins' file form of 9.22 (8): every reading a click's count, interval, cadence, ratio, sum, fringe or centroid | CONSISTENT |
-| No table and no formula on the GameBoard; a birth's born PAIR the world's integers (1878) | No table (9.17 (6)); the birth's integers are the born TRAIN, a profile at both levels on the body's Nodes (9.17 (6a)); the two-integer pair on every Node is a flat pulse, broadband, whose one-way flux exceeds the norm 4.65 times beside its emitter (the physicist's finding at f0d2d745) and it is refused | DIFFERS: the born pair of record 1878 is replaced by the born train, a derivation from the physicist's finding, NOT YET THE OWNER'S DECISION. Proposed wording for his yes: "the birth is a travelling train of the generator's integers on the body's Nodes, at least eight periods under an envelope; a flat pulse is refused" |
-| The crystal: the click of the arriving record then the birth of an entangled pair; the pair's directions set by where the receivers are placed (1879) | A.11; the pair's two records are two trains on the crystal's Nodes with their momenta along the crystal's long axis, toward the polarisers (9.22 (8), Bell's four settings) | CONSISTENT (the crystal a body of extents 3 x 32 so that each train fits) |
+| No table and no formula on the GameBoard; a giving click's given PAIR the world's integers (1878) | No table (9.17 (6)); the giving click's integers are the given TRAIN, a profile at both levels on the body's Nodes (9.17 (6a)); the two-integer pair on every Node is a flat pulse, broadband, whose one-way flux exceeds the norm 4.65 times beside its emitter (the physicist's finding at f0d2d745) and it is refused | DIFFERS: the given pair of record 1878 is replaced by the given train, a derivation from the physicist's finding, NOT YET THE OWNER'S DECISION. Proposed wording for his yes: "the giving click is a travelling train of the generator's integers on the body's Nodes, at least eight periods under an envelope; a flat pulse is refused" |
+| The crystal: the click of the arriving record then the giving click of an entangled pair; the pair's directions set by where the receivers are placed (1879) | A.11; the pair's two records are two trains on the crystal's Nodes with their momenta along the crystal's long axis, toward the polarisers (9.22 (8), Bell's four settings) | CONSISTENT (the crystal a body of extents 3 x 32 so that each train fits) |
 | Three roles on the board: the generator the only writer at interval 0, the law at every Node, the click reader the only reader; no world writer (1879) | 9.22 (7) with the stamp; the generator the operator iterated with its stop ((7a) (ii)) | CONSISTENT |
-| Where a tensor enters: the pair of rank 2 only, born by the crystal, never written at interval 0 (1880) | 9.23; the pair's clock the sum of its parts' (9.26 (2)) | CONSISTENT |
-| The input file and its check in integers; a failing file refused; recomputation at load a diagnostic (1886) | 9.22 (7); the born train's checks the form, the flux sign along the momentum and the hash (9.17 (6a)); the transparency condition (7a) (iv) | CONSISTENT, with two checks added for his yes (the train's, the transparency's) |
+| Where a tensor enters: the pair of rank 2 only, given by the crystal, never written at interval 0 (1880) | 9.23; the pair's clock the sum of its parts' (9.26 (2)) | CONSISTENT |
+| The input file and its check in integers; a failing file refused; recomputation at load a diagnostic (1886) | 9.22 (7); the given train's checks the form, the flux sign along the momentum and the hash (9.17 (6a)); the transparency condition (7a) (iv) | CONSISTENT, with two checks added for his yes (the train's, the transparency's) |
 | One command, one output file per experiment, in parallel (1887) | tools/run_inputs.py; the pins' readers of 9.22 (8) | CONSISTENT |
 | The click the one non-local act; no information through it; the click what the Outside sees (1888) | 9.25 (6) no signalling; 9.26 (3) (b): the click deletes the record's shape at once and keeps the line only | CONSISTENT |
 | Mach-Zehnder: the dark port has no inward flux and never clicks (1891) | The dark port's share is the splitters' imbalance over the train's band plus the lattice's diffracted wing, 0.0079 on the body's mode envelope at 16 periods (0.0054 under the window, HISTORY; 9.22 (8)): one dark click in 100 within the algebra, two at the 10 percent level, three a defect | DIFFERS IN THE NUMBER: not exactly zero on a lattice at one wavelength's band. Proposed wording: "the dark port's share is below one click in a hundred, the band's residual; the bright port takes the rest" |
@@ -7368,7 +7377,7 @@ something other than his words.
 | The click the systems' way of communicating; an irreversible click leaves no frequency of the whole (1927) | 9.26 (3) (b): the click the one exchange, carrying no signal; with the click irreversible the whole has no period and no frequency of its own, every body keeping its clock | CONSISTENT, with one precision: reversibility once the detectors' records are counted would need the detector to keep the record's whole shape, the register of record 1888's deletion; the line keeps the count, the interval and the residue only |
 
 TWO DECISIONS THAT PULL AGAINST EACH OTHER, for the owner: (i) "a
-birth's born pair" (1878) and "never a train" (1875) against the born
+giving click's given pair" (1878) and "never a train" (1875) against the given
 train of 9.17 (6a), which the physicist's run forced: his yes on the train
 retires the pair and reads "never a train" as "never a declared one".
 (ii) "The universe is cyclic" (1922) against "the click is the one
@@ -7391,7 +7400,7 @@ order, the same for a small world and a large one: (1) THE BOARD AND
 THE FAMILIES: the extents per axis, periodic or open per axis, the
 families (at most three: light, the experiment's matter, the holder of
 the tools' bodies) with their vacuum pairs and, for an emitting family,
-its born clock. (2) THE MATERIAL REGIONS, which carry no record: mirrors
+its given clock. (2) THE MATERIAL REGIONS, which carry no record: mirrors
 and walls (the gap [1, 2] of depth 4), splitters (the diagonal line of
 [2, 3]), polarisers (a holder body with its axis), a medium (a bound
 body with the coupling), each a box of extents per axis; they are placed
@@ -7414,7 +7423,7 @@ name (9.24). (5) THE DETECTORS AND THE FACES: every detector a cube of
 free Nodes of side 3 or more (or a body's own Nodes where the light
 returns to it), every open border a face slab as deep as the train, every
 detector and every emitter one train's length from every slab (9.25 (10)
-and (11)); the ladder's order declared. (6) THE BIRTHS: the born train on
+and (11)); the ladder's order declared. (6) THE GIVING CLICKS: the given train on
 each emitting body's Nodes along its momentum (9.17 (6a)), the emitter
 transparent to it ((7a) (iv)). (7) THE BOARD'S SIZE, checked last: every
 body a decay length from every face and from every other body, every
@@ -7476,9 +7485,9 @@ they implement it and write it"; STATED here, not adopted into the law
 until its gate).** THE STATEMENT: at a record's click at a body (a
 detector bound to the block, or any body the record ends at) the
 record's momentum integer is ADDED to the receiving body's momentum
-accumulator (the drive of the moving name, 9.24), and at a birth the born
+accumulator (the drive of the moving name, 9.24), and at a giving click the given
 record's momentum is SUBTRACTED from the emitting body's; nothing else in
-the law changes. WHAT IT IS: the exchange of quanta (birth, passage,
+the law changes. WHAT IT IS: the exchange of quanta (giving click, passage,
 click) made a transfer of momentum, which the owner's decision that
 momentum is conserved on the board (record 1856) demands once a record
 with momentum is deleted at a body: without it the board's total
@@ -7491,7 +7500,7 @@ IDENTITY: the world key `hypotheses: {"exchange": true}`, off by default,
 refused absent, named in the run's record; nothing of the twenty-four
 experiments touched, no pin moved. ITS TEST WORLD, `exchange_recoil`: a
 chain with the face slabs, an emitter of trains with momentum K along +x
-(the born clock [512, 1], the train 32 Nodes, a stock of 64) and a
+(the given clock [512, 1], the train 32 Nodes, a stock of 64) and a
 receiving body of the matter family whose own Nodes are the detector,
 both at rest at interval 0; THE BLIND EXPECTATION, a GameBoard diagnostic
 and no click count: after the 64 clicks the receiving body has hopped
@@ -7584,10 +7593,10 @@ each.**
 - (e) THE REMAINDER IS WHERE CHANCE LIVES (DERIVED, from 9.19 (4)
   ADOPTED and (1) above; the owner's "a click is made when there is no
   remainder?" answered the other way round): a record's residue u is the
-  rule's remainder at its birth Node at the interval of the click that
-  births it, and u fixes where within the acquisition the click falls,
+  rule's remainder at its giving Node at the interval of the click that
+  giving clicks it, and u fixes where within the acquisition the click falls,
   the drawn share (2 u + 1) / (2 W); in the exact worlds of (1) the
-  remainder is 0 at every Node and interval, so every record is born with
+  remainder is 0 at every Node and interval, so every record is given with
   u = 0 and every click falls at the first rung, the same for all: a
   world without a remainder is a world without chance, every click
   predictable, and Born's rule needs the remainder's spread (9.25 (3)); so
@@ -7598,7 +7607,7 @@ each.**
   a Node to its six neighbours every interval is the wave under the one
   operator, local and reversible; the click is the record's end, at once,
   the one act that is not local (record 1888); the conversation between
-  two bodies is a birth, a passage and a click, and calling every local
+  two bodies is a giving click, a passage and a click, and calling every local
   step a click would erase the owner's own distinction.
 - (g) THE UNIVERSE WITHOUT A BOUNDARY CANNOT CLICK BY CROSSING (DERIVED,
   9.25 (12) (f), 9.26 (4a) (i)): it has no Port; a standing record named
@@ -7618,7 +7627,7 @@ each.**
   outside the law.
 - (j) THE EXCHANGE HYPOTHESIS (OPEN, under its own identity, 9.27 (D)):
   at a click the record's momentum integer passes to the receiving body's
-  accumulator, at a birth it leaves the emitter's; it gives pressure and
+  accumulator, at a giving click it leaves the emitter's; it gives pressure and
   recoil, the model's first force, not attraction; one test world with a
   blind expectation; nothing of the twenty-four touched.
 - (k) THE TWO LEVELS (a reading, not a theorem; the owner's word): the
@@ -7662,7 +7671,7 @@ to the bit with the remainder 0, before any experiment (sent to Nature24
 as an order to build after his current line). (b) The gate of the
 exchange hypothesis (2) (j), once its test world has numbers. (c) The
 click's reversibility (9.26 (3) (c)), which decides whether the whole
-has a frequency. (d) The born train in place of the born pair (9.17
+has a frequency. (d) The given train in place of the given pair (9.17
 (6a); the coherence table's first difference, 9.27 (A)), and the five
 other differences of that table. (e) The wording of his own summary to
 the Boss, per (3) (a): "the click's deletion is non-local by decision;
@@ -7769,7 +7778,7 @@ ramp) retired the push, a ramp from outside the operator; the fall of
 well is a uniform block and every moving body of the rows moves in the
 vacuum, where p is constant and **K** is conserved; a graded well is a
 placement no row uses. Record 1885 (the momentum an integer of every
-entry) stands: **K** is written at birth and changes inside a material
+entry) stands: **K** is written at giving click and changes inside a material
 by the operator, as it does at every index boundary. The click's rules
 (9.25) are untouched: the fall is the Inside's. THE OWNER'S SENTENCE,
 made exact: "it is not gravity, it is the clock shift that makes
@@ -7802,7 +7811,7 @@ the built stop (the loader's residual bound), the one-unit stop withdrawn.
 OR RETIRED EXPLICITLY.** (a) THE RAY-LAW PATH (the flights, the digital
 line, the collision and meeting tables, the crowd, the drive, the pointers
 on the tables) and ITS AGE WALL: RETIRED. The one algebra has one path,
-the operator of 8.1 with the click of 9.17 (7) (f) and the birth of 9.17
+the operator of 8.1 with the click of 9.17 (7) (f) and the giving click of 9.17
 (6a); the ray law (beam-v1, record 15 of 2026-09-19) was replaced by the
 model owner's adoption of record 1875; the age wall's standing was NOT NOW
 by record 941 and is retired by 9.22 (8a) and 9.29 (4): no clock on the
@@ -7819,7 +7828,7 @@ declared (the source's own Nodes as a detector where the row says so, 9.25
 is a host row and no click. (d) THE BLOCK CLOCK's sign-crossing count named
 "click": RETIRED. The clock of a body is its own record's click at its rung
 (9.17 (7) (f), 9.26 (1a) (b)); a clock body is an emitting body with a
-stock, its ticks its births; a sign crossing is no event of the law, and a
+stock, its ticks its giving clicks; a sign crossing is no event of the law, and a
 line named "click" that deletes nothing must not stamp a set. (e) THE
 CAVITY's per-interval zeroing: RETIRED (9.10 item 4, 9.12): a projection is
 not the law; the cavity is a gap pair on declared Nodes. (f) FACES PER
@@ -7840,22 +7849,22 @@ holder body at the worlds' rebuild (the cleanup's step 6); no number moves.
 (b) A BODY'S RESPONSE SPLIT PER LIGHT RECORD: the split by origin is
 LAWFUL and is the algebra's own necessity, stated here: a body's massive
 record has a MODE PART (its excited profile, seeded from the stock, which
-sources no light, its emission being the birth, 9.17 (2) to (4)) and a
+sources no light, its emission being the giving click, 9.17 (2) to (4)) and a
 DRIVEN PART per light record at its Nodes (the dielectric response, which
 receives that record's difference with g and sources light with G, the
 Euler-Lagrange pair of 8.5 with its invariant J); the superposition
 principle lets the driven part be kept per light record, equal in total.
 WHERE THE CODE DIFFERS AND THE ALGEBRA IS RIGHT: the mode part's receive is
 the entry of 8.5 over EVERY light record's columns at its Nodes (the
-returning light, another body's light, its own born train), not its own
-born light alone; that is what spreads the residues (9.19 (4e) (i)). (c)
+returning light, another body's light, its own given train), not its own
+given light alone; that is what spreads the residues (9.19 (4e) (i)). (c)
 THE EMITTER'S BACK-ACTION THROUGH g ONLY, NO G TERM: the CODE IS RIGHT, and
 8.5's J is restated: the mode part sources no light (a G source on the
 excited mode would be a second, unquantised emission at the body's rest
-clock beside the births, which 9.17 forbids), so J holds for each driven
+clock beside the giving clicks, which 9.17 forbids), so J holds for each driven
 pair (the response record with its light record) and is not claimed for
-the mode part, whose form is reset at every birth; 9.19 (4e) (i)'s "(g, G)
-for its born family" reads: g on the mode part for the back-action, (g, G)
+the mode part, whose form is reset at every giving click; 9.19 (4e) (i)'s "(g, G)
+for its given family" reads: g on the mode part for the back-action, (g, G)
 on the driven part for the medium's index.
 
 **(4) MASS AND TIME, CONFIRMED EXACTLY.** In the one algebra a Node's pair
@@ -7894,8 +7903,8 @@ part receiving only ((3) (b), (c); 8.5); (iv) the border: the zero row
 beyond an open face, the wrap on a periodic axis, the face slab a receiver
 (1.6, 9.19 (3) (a), 9.25 (10)); (v) the flux per Port from the two levels at
 the Link's ends, and each object's gather of its positive part (9.19 (3),
-9.25 (12) (e)); (vi) the residue read from the remainder at the birth Node
-(9.19 (4)); (vii) the birth written on the body's Nodes as the train (9.17
+9.25 (12) (e)); (vi) the residue read from the remainder at the giving Node
+(9.19 (4)); (vii) the giving click written on the body's Nodes as the train (9.17
 (6a)); (viii) the click: the deletion of one record whole, the one non-local
 act (record 1888). EVERYTHING ELSE IS DERIVED: the band and the paces
 (8.1), gamma and the tick (9.24, 9.22 (8a)), the redshift and the fall in a
@@ -7934,11 +7943,11 @@ both of us.
 
 ### 9.31 The coherence agenda, closed item by item (the model owner's word through Nature24, 07:50Z on his clock: "you, the Boss and the mathematician decide among yourselves on the coherence of the laws, and then we go to the experiments"; Nature24's thirteen items, records 1946 and 1947; the Boss's positions; each item closes by the rule of three, record 1940)
 
-**(1) WHO BIRTHS WHAT: 9.17 (4) STANDS.** A body births a family other than
-its own (the born record's rows at the body's Nodes carry the born
+**(1) WHO GIVING CLICKS WHAT: 9.17 (4) STANDS.** A body giving clicks a family other than
+its own (the given record's rows at the body's Nodes carry the given
 family's pair, the vacuum's unless a material is declared; a body's own
 well is no vacuum for its own family, so a train of the body's own family
-born inside it would be no character). The emitter of a matter train is a
+given inside it would be no character). The emitter of a matter train is a
 HOLDER BODY coupled to the matter family, as the emitter of a light train
 is a body coupled to light: the two rows that said otherwise (de Broglie's
 fringes, the moving mass's energy) are corrected in 9.22 (8): a holder
@@ -7955,7 +7964,7 @@ Node of every other body of its family (an integer below one unit is 0),
 the loader refusing otherwise with the two bodies, the Node and the value;
 Sagnac's wells re-placed 80 Links apart at 2^20 (9.22 (7a) (v)). CLOSED.
 
-**(4) THE BORN CLOCK:** one statement, k = pi p / (N q) with N = 1024:
+**(4) THE GIVEN CLOCK:** one statement, k = pi p / (N q) with N = 1024:
 [512, 1] is k = pi / 2, the wavelength 4; the conventions line of 9.22 (8)
 that read "p / q of the circle per Link" (the wavelength 2) is corrected
 to it at this head. CLOSED.
@@ -7967,19 +7976,19 @@ REFUSED at the load and nowhere else (the Boss's position AGREED); the
 registered seeds at 2^20 meet it, a seed of 100 is refused. CLOSED.
 
 **(6) THE EXCITED RECORD'S RUNG, 9.17 (7) (f), UNDER THE TRAIN:** untouched
-by 9.17 (6a); the train is the born record's profile, the rung accrues
+by 9.17 (6a); the train is the given record's profile, the rung accrues
 e_c and T = P e_c. CONFIRMED as built. CLOSED.
 
 **(7) THE INTEGER FORMS, for the loader and the generator (the Boss's
 position (7)):**
 - (a) THE PACKET (a moving body, 9.24 (2)): the key `packet: {profile,
   momentum, amplitude}`; `profile` the body's rest profile p_i on its Nodes
-  (the generator's integers); `momentum` a born clock per axis [[p_x, q_x],
+  (the generator's integers); `momentum` a given clock per axis [[p_x, q_x],
   [p_y, q_y], [p_z, q_z]], K_i = pi p_i / (N q_i) on N = 1024; the seed
   now_i = round(A p_i cos(**K** . (**x**_i - **x**_c))), before_i = round(A
   p_i cos(**K** . (**x**_i - **x**_c) + omega(**K**))) with cos omega(**K**)
   = (num / den) (cos K_x + cos K_y + cos K_z) / 3 of the family's VACUUM (a
-  packet moves in the vacuum, no well): the same write as the born train
+  packet moves in the vacuum, no well): the same write as the given train
   of 9.17 (6a) with the profile in place of the window and the tapers; at
   load the conserved form, the flux sign along **K** and the hash, as for
   the train. When the packet is an emitter or a clock, it is the body's
@@ -8017,15 +8026,15 @@ position (7)):**
 - (d) THE CRYSTAL (9.13, 9.16 (5), 9.19 (4a), A.6, A.11): a holder body, a
   well of the holder family with a RICH light pair at its Nodes (9.19 (4a),
   at least 500 remainder values), with the key `crystal: {arms, labels,
-  amplitude, coupling}`: `arms` two entries, each {momentum (a born clock
-  per axis), Nodes (the arm's birth Nodes)}; `labels` the 2 x 2 integer
+  amplitude, coupling}`: `arms` two entries, each {momentum (a given clock
+  per axis), Nodes (the arm's giving Nodes)}; `labels` the 2 x 2 integer
   matrix (HV + VH: [[0, 1], [1, 0]]). An arriving pump record clicks at
   the crystal's Nodes (its receiver set; the one-way flux; the record's
   rung), the crystal's own record changes (the count), and the click
-  births ONE PAIR RECORD of rank 2 (E^T): arm 0 the train of 9.17 (6a) on
-  arm 0's Nodes with its **K** and arm 1 on arm 1's, in the born family's
+  giving clicks ONE PAIR RECORD of rank 2 (E^T): arm 0 the train of 9.17 (6a) on
+  arm 0's Nodes with its **K** and arm 1 on arm 1's, in the given family's
   rows, the labels the declared matrix, ONE residue u and wheel W read from
-  the crystal's remainder at the birth Node, the norm per arm T_a its
+  the crystal's remainder at the giving Node, the norm per arm T_a its
   train's conserved form. THE PAIR'S CLICK (9.25 (6)): each arm's TIME by
   its own ladder over its own rows, 2 T_a u + T_a <= 2 W C_a, its rows
   deleted at its own click; the OUTCOME for both arms fixed at the first
@@ -8072,12 +8081,12 @@ train alone against the body) whose number is stamped in the world and
 READ AT LOAD: a stamp below 0.99 or absent is refused (the Boss's split
 AGREED).
 
-**(10) THE COUPLING TO A MASSIVE BORN FAMILY:** the same form. A body's
+**(10) THE COUPLING TO A MASSIVE GIVEN FAMILY:** the same form. A body's
 `coupling` names the family it couples to; the step applies 8.5's bilinear
 form to every record of THAT family whatever its kind: the driven rows
 gain g times the record's first difference, the record's rows gain -G
 times the driven rows' forward difference, in the one division with the
-born family's own wall 3 den (the engine's light scale generalised to the
+given family's own wall 3 den (the engine's light scale generalised to the
 coupled family's denominators). No branch on the kind; the kind branches
 go (9.30 (2) (g)).
 
@@ -8115,10 +8124,10 @@ body (8.3: light cannot be a body).
 **(13) THE CLOCK BODY, AND HOW ITS TICK IS A MEASUREMENT:** the block
 clock's sign-crossing count is retired (9.30 (2) (d)); a non-emitting well
 has no click in the engine and none in the algebra. A CLOCK BODY IS AN
-EMITTING BODY: a stock (64 in the rows), the coupling to its born family,
-its born trains leaving to a face slab or circulating on a periodic board
+EMITTING BODY: a stock (64 in the rows), the coupling to its given family,
+its given trains leaving to a face slab or circulating on a periodic board
 (where their return spreads its residues); its ticks are the clicks of
-its own record at its rung on e_c (9.17 (7) (f)), one per birth. THE
+its own record at its rung on e_c (9.17 (7) (f)), one per giving click. THE
 PERIOD IS READ FROM EACH CLICK'S LINE, a measurement: for a standing mode
 e_c is constant, so the rung's running total is t e_c and the click falls
 at the first interval t since the reseed with 2 W t >= (2 u + 1) P; the
@@ -8155,7 +8164,7 @@ the ray law's walk on a line (beam-v1) is retired (record 1875; 9.30 (2)
 split's weight and the rotation per interval, cos omega = (num / den)
 (cos K_x + cos K_y + cos K_z) / 3; a mass is a pair with num < den, whose
 rest rotation cos omega_0 = num / den is its clock (8.1, 9.26 (1)); light
-is the pair [1, 1], whose rotation is set by its born **K** alone (cos
+is the pair [1, 1], whose rotation is set by its given **K** alone (cos
 omega = 2 / 3 at [512, 1]): mass and light are coupled to the clock by
 the same rule, one with a rest clock and one without; a declared well
 shifts that clock and bends the family's records toward it (9.29). (c)
@@ -8165,8 +8174,8 @@ default (a world without the key runs on rays); the `massive_kind`
 branches in the law's path; the cavity's per-interval zeroing; moving
 material with a ramp and the remainder rescaled under it; faces per
 family and closed boards admitted; the block clock's sign-crossing count
-named "click"; the mode part's back-action from its own born light alone;
-the born pair in place of the train (9.17 (6a)); the placement rule and
+named "click"; the mode part's back-action from its own given light alone;
+the given pair in place of the train (9.17 (6a)); the placement rule and
 the tail check not yet refused at load. Each is a code matter of
 Nature24's under the cleanup order of 9.21 (3), gated line by line, and
 none is a law change: the law is (a) and (b) and the click.
@@ -8199,9 +8208,9 @@ a record ends at every Node at once at the first interval at which the
 share of it gathered by one object reaches (2 u + 1) / (2 W) of its
 whole; the gather is the Node's own share where the record stands and
 the positive flux through the object's Ports where it passes (9.25 (12));
-u is the record's remainder at its birth Node on the wheel W = 3 den /
+u is the record's remainder at its giving Node on the wheel W = 3 den /
 gcd(num, 3 den) (9.19 (4)); the object's own record changes at the click
-(a count; a birth if it emits). (5) THE BIRTH: at a body's click the
+(a count; a giving click if it emits). (5) THE GIVING CLICK: at a body's click the
 train is written on its Nodes (9.17 (6a)). Nothing else is law; every
 detector, emitter, mirror, clock and body of the rows is Nodes under
 these five lines with the pairs declared per region, and Born's rule,
@@ -8238,7 +8247,7 @@ body: its share there is not constant, and its click is the gather at
 the object's boundary, (4). (d) THE REMAINDER: the one thing at a Node
 beyond the two levels; it carries the phase below one unit, is kept
 exactly (the step a bijection, 9.26 (3) (a)), makes the integer step
-exact, and at a birth Node gives the born record its residue u, the
+exact, and at a giving Node gives the given record its residue u, the
 place of its click within the acquisition; where the remainder is 0 for
 ever (the exact returns, 9.26 (4a)) every click falls at the first rung
 and there is no chance (9.28 (2) (e)): the remainder is where chance
@@ -8246,7 +8255,7 @@ lives, and it lives at the Node.
 
 **WHAT THE ONE LAW SOLVES, AND HOW IT SITS WITH WHAT IS WRITTEN.** The
 Inside (2), the click (4), the body (b), two bodies (c), chance (d) and
-the birth (5) are one statement at the Node; 9.18 ("one object, one
+the giving click (5) are one statement at the Node; 9.18 ("one object, one
 record, one rule") and 9.25 (12) (d) (the generic click in one line) are
 this statement read at the object; (b) adds the theorem that a body's
 click is the same at each of its Nodes, which is why the emitter's rung
@@ -8258,7 +8267,7 @@ lines. Proposed for Highlights 5.4, at the owner's word: "The law is five
 lines at a Node: two levels and a remainder; the split to the six
 neighbours and the turn against the past by the pair; the share, derived;
 the click, one record ending on all its Nodes at once at its drawn share,
-the residue from the remainder at its birth Node; the birth, the train on
+the residue from the remainder at its giving Node; the giving click, the train on
 the body's Nodes. A body is the Nodes of one standing record, which click
 together; two bodies share no Node; the remainder is where chance lives
 (2026-09-25)".
@@ -8266,20 +8275,20 @@ together; two bodies share no Node; the remainder is where chance lives
 ### 9.33 The remainder and the click: what nature keeps whole (the model owner's word, 2026-09-25, in the mathematician's session: "think: mass and light should perhaps be coupled to the click, and the click is a kind of remainder in the Node, so they are coupled to the remainder in the Node; nature does not want a remainder, nature wants a click; so it tends to things without a remainder, to periodic things, by coupling everything to the click; the click is the amplitude; nature does not want a remainder in charge, so it couples charge to the click; connect everything now"; CHECKED: three theorems of the law as written, and one decision)
 
 **(1) THE REMAINDER LIVES ONLY INSIDE A RECORD'S LIFE, AND LEAVES AS A CLICK
-(PROVED from the law as written).** A record is born with the remainder 0
+(PROVED from the law as written).** A record is given with the remainder 0
 at every Node (the seed's and the train's write, 9.17 (6a), 9.19 (4e));
-between its birth and its click its remainders move exactly with it (the
+between its giving click and its click its remainders move exactly with it (the
 step a bijection, 9.26 (3) (a)); at its click its rows AND its remainders
 are deleted at every Node at once (record 1888); and the one thing of them
-that survives is the remainder at the birth Node at that interval, which
-becomes the born record's residue u, the place of its click (9.19 (4)). So
+that survives is the remainder at the giving Node at that interval, which
+becomes the given record's residue u, the place of its click (9.19 (4)). So
 the board never keeps a remainder beyond the life of the record that made
 it: the remainder is turned into a click's place and erased. That is the
 owner's sentence, "nature does not want a remainder, nature wants a click",
 as the law stands; and mass and light are coupled to the click by the same
 rule, the standing record by its own tick and the passing one by its
 arrival (9.26 (1a), one law), each with its residue from the remainder at
-its birth Node: "coupled to the remainder in the Node".
+its giving Node: "coupled to the remainder in the Node".
 
 **(2) WHAT IS WHOLE MOVES ONLY AT THE CLICK; WHAT MOVES AT THE STEP CARRIES
 THE REMAINDER (PROVED).** The levels move every interval by the division
@@ -8312,7 +8321,7 @@ one integer, and no rule beside the five lines of 9.32.
 **(4) THE ONE DECISION, WHERE THE OWNER'S READING GOES BEYOND THE LAW: THE
 EXACT RECORD.** The law as written makes a record with the residue u = 0
 click at the FIRST rung, at once (9.28 (2) (e)): on an exact board (the
-remainder 0 for ever, the periods 3, 4, 6) every record is born with u =
+remainder 0 for ever, the periods 3, 4, 6) every record is given with u =
 0 and the three-cube universe clicks once and empties itself (9.26 (4a)
 (i)). The owner's reading, "nature tends to what has no remainder", would
 make the exact record the one that does NOT click: what has no remainder
@@ -8325,7 +8334,7 @@ record is no rung, and the record stands", the key `hypotheses:
 {"remainder_rule": true}`, off by default; its one test the three-cube
 universe, eternal under the rule and emptied at once without it; the
 three tests: generic (no family name), vector (a comparison on the
-residue, verb (D)), local (the birth Node's own remainder); no pin of the
+residue, verb (D)), local (the giving Node's own remainder); no pin of the
 eighteen moves either way.
 
 **(5) THE ONE SENTENCE.** The remainder is where chance lives and it lives
@@ -8347,9 +8356,9 @@ the Node, and by it the click is measured", once it is taken literally,
 below.
 
 **(2) THE REMAINDER IS THE NODE'S (COMPUTED; the correction of 9.33 (1) and
-(3)).** The law as written owns the remainder by the RECORD: born 0,
+(3)).** The law as written owns the remainder by the RECORD: given 0,
 deleted at the click, reset to 0 at an emitter's reseed. Taken so, an
-emitter reseeded identically with no coupling to light births ONE residue
+emitter reseeded identically with no coupling to light giving clicks ONE residue
 for ever (Nature24's finding, 9.19 (4e) (i)), and the spread of the
 residues, on which Born's rule rests (9.25 (3)), had to come from light's
 back-action on the body (the coupling g of record 1414). COMPUTED on the
@@ -8366,7 +8375,7 @@ says. So THE NODE'S REMAINDER ALONE SPREADS THE RESIDUES, deterministically
 and locally, with no coupling and no draw: the remainder is where chance
 lives, and it lives AT THE NODE, as the owner said, not in the record.
 THE FORM: at a body's reseed the levels are rewritten as the profile and
-the remainders at the body's Nodes are KEPT; a record born elsewhere is
+the remainders at the body's Nodes are KEPT; a record given elsewhere is
 still written with the remainder 0 and its remainders end with it (there
 they carry nothing across). The step stays the bijection of (levels,
 remainders) (9.26 (3) (a)); the click deletes the levels; the form's
@@ -8381,14 +8390,14 @@ The three tests: generic (one integer per Node, no family name), vector
 **(3) THE FAMILIES ARE COUPLED BY THE CLICK ALONE.** With (2) the bilinear
 coupling of 8.5 (record 1414, "a_m += g a_l") has no role left in the law:
 the index of a medium is the pair's (9.31 (8)); the residues' spread is
-the Node's remainder ((2)); the emitter's transparency to its born family
+the Node's remainder ((2)); the emitter's transparency to its given family
 is then exact (no coupling, no index at its Nodes, 9.22 (7a) (iv) empty);
 the load condition of 9.17 (7) (c) has nothing to bound; the response
 records, the invariant J and the kind branches of the coupling (9.30 (3))
 go with it. What couples mass and light is the CLICK, at a Node, and it
 hands over whole integers only: the quantum, the content, the labels, the
 residue (the place of the next click, read from the Node's remainder at
-the birth Node), and the momentum if the exchange hypothesis is adopted
+the giving Node), and the momentum if the exchange hypothesis is adopted
 (9.27 (D)); the click is measured by the Node's remainder, as the owner
 says. The Inside is then one operator per family with no cross term at
 all, and 9.32's five lines lose nothing.
@@ -8427,7 +8436,7 @@ happens with the probability (1 - 1 / W) / 2 per occupied Node per interval, W t
 is there; it is not a click in the sense of 9.17 (7) (f) and needs no
 name; the Inside stays exactly reversible with it. The link between the
 remainder and the click that the owner named is 9.32 to 9.34: the
-click's place is the remainder at the birth Node (the residue), the
+click's place is the remainder at the giving Node (the residue), the
 remainder kept at the Node spreads the residues with no coupling, the
 click carries whole numbers and leaves the remainder behind, and a body
 is the Nodes that click together.
@@ -8474,7 +8483,7 @@ M_i the content (the quanta: the stock and the held quanta) of the bodies
 whose Nodes include Node i, 0 in the vacuum, and Gamma one declared
 integer of the world (the old wall's gamma = 1 / Gamma; the law's one
 constant beside the pairs, required in every world file, refused absent).
-M_i changes only at births and clicks, the law's integer events, so
+M_i changes only at giving clicks and clicks, the law's integer events, so
 BETWEEN EVENTS THE STEP IS LINEAR, CONSERVATIVE AND REVERSIBLE EXACTLY,
 and at an event the clock changes with the content, where the click
 already breaks the bijection. AT A MASS: every clock at the mass's own
@@ -8510,7 +8519,7 @@ the register that his decision of record 1888 deletes; as the law
 stands no click is reversible, the line keeps the count, the interval
 and the residue, and the whole has no period (9.26 (3) (b), (c)). (ii)
 THE REMAINDER AND THE CLICK: the click's place is the remainder at the
-birth Node; the remainder kept at the Node spreads the residues with no
+giving Node; the remainder kept at the Node spreads the residues with no
 coupling (9.34, computed: 532 residues in 600 cycles); the click carries
 whole numbers and leaves the remainder behind (9.33); a body is the
 Nodes that click together (9.32).
@@ -8523,10 +8532,10 @@ held but REPLACED by (3).
 **(6) EVERY WRITE COMPLETE (record 1952).** Per Node per family: the
 value now, the value before, the pair (declared per region) and the
 division's remainder; per Node for all families: the clock pair (e, f)
-from the content; nothing else. At a born Node the born family's
+from the content; nothing else. At a given Node the given family's
 remainder is the Node's (kept, 9.34 (A)), or 0 where the family had no
-record there; either keeps the Inside reversible between clicks. A birth
-touches only the born family's levels at the body's Nodes and the body's
+record there; either keeps the Inside reversible between clicks. A giving click
+touches only the given family's levels at the body's Nodes and the body's
 content (M - 1, one count of the Node clock at its Nodes). AGENTS.md's
 "nothing kept at a Node beyond the events there (no register, remainder
 or draw)" and the one algebra read the same as: nothing at a Node beyond
@@ -8551,7 +8560,7 @@ standing on Nodes inside another body's Nodes: its clock slowed by the
 outer body's content through the Node clock ((3)), its coupling to the
 outer body the click alone (9.34): a clock in a mass, an atom in a
 lattice. THE EXPERIMENT: bodies placed in the GameBoard, the faces its
-border (9.27 (B)), every write at the load and at every birth writing
+border (9.27 (B)), every write at the load and at every giving click writing
 all families' values at the Nodes touched ((6)), every reading a click.
 Each rung is written by one act, content into Nodes, and read by one
 act, the click.
@@ -8564,7 +8573,7 @@ the exact modes (an integer eigenvector with the multiplier in {-1, 0,
 of exact bricks alone would put every click at the first rung and show
 no Born's rule, no fringe statistics and no Bell (9.28 (2) (e)). THE
 SMALLEST DEPARTURE THAT BRINGS CHANCE BACK IS ONE RICH NODE: the
-emitter's birth Node with a pair whose wheel carries at least 500
+emitter's giving Node with a pair whose wheel carries at least 500
 remainder values (9.19 (4a)), whose remainder draws every residue;
 everything else may be whole cubes. The eighteen, in one line each: the
 detectors are cubes of side 3 in every row; the emitters bodies of 32
@@ -8573,15 +8582,15 @@ Nodes along **K** (a train's length) with one rich Node; the wells sides
 media slabs of depth 1 to 4; the boards as 9.22 (8)'s table; no row is
 built of exact bricks, and the exact bricks are the property tests.
 
-**(10) THE BORN RECORD IS THE BODY'S OWN MODE (record 1950, the owner:
-"the born train is not generic enough; a world is content written into
-the Nodes at once"; the Boss's proposal CONFIRMED and adopted).** A birth
-writes, at both levels on the body's Nodes, the born family's LOWEST
+**(10) THE GIVEN RECORD IS THE BODY'S OWN MODE (record 1950, the owner:
+"the given train is not generic enough; a world is content written into
+the Nodes at once"; the Boss's proposal CONFIRMED and adopted).** A giving click
+writes, at both levels on the body's Nodes, the given family's LOWEST
 MODE ON THE BODY'S NODES WITH THE ZERO ROW BEYOND (the generator's
 iteration on those Nodes alone; a half sine along each extent; uniform
 across an extent the body spans on a periodic axis, Nature24's line)
 times the character of its momentum **K**: no Hann window, no tapers, no
-period count chosen for the birth; the length along **K** is the body's
+period count chosen for the giving click; the length along **K** is the body's
 extent. COMPUTED, the generator's flux check of 9.17 (6a) on the chain
 (light, K = pi / 2, 32 Nodes, the one-way flux 40 Links ahead over the
 passage against the norm): the body's mode 0.9997, the Hann window with
@@ -8590,7 +8599,7 @@ the tapers 0.9987, the flat pulse 0.9818: the body's own mode passes
 click interval, the head's path + X / 2 + 2) do not move; the fringe
 pins are recomputed by the generator on the mode envelope before their
 files (the band is narrower; the visibilities are expected within their
-bands). 9.17 (6a)'s window and tapers are HISTORY; its load checks (the form, the flux sign along **K**, the hash) and the born clock stand. TWO READINGS OF "THE BODY'S OWN MODE", ONE CHOSEN (Nature24's measurement on the engine, the light clock's A [800, 801] of [32, 3, 3] on [760, 3, 3]): the EMITTER'S OWN massive mode has tails beyond the body (11 percent of its magnitude outside A's Nodes at 2^20); clipped to the body it fails the check (1.0047, a hard edge), written over its tails (72 Nodes) it passes (1.00002), but then the birth writes outside the body's Nodes and the born record's shape depends on a foreign family's well. THE FORM ADOPTED IS THE OTHER: the BORN FAMILY'S lowest mode on the body's Nodes with the zero row beyond (the half sine of the flux check above, which vanishes at the body's edge), written on the body's Nodes alone, as long as the body's extent along **K**: the passage's mean click interval stays the head's path + X / 2 + 2 and its rms as before (9.25 (11) (d)).
+bands). 9.17 (6a)'s window and tapers are HISTORY; its load checks (the form, the flux sign along **K**, the hash) and the given clock stand. TWO READINGS OF "THE BODY'S OWN MODE", ONE CHOSEN (Nature24's measurement on the engine, the light clock's A [800, 801] of [32, 3, 3] on [760, 3, 3]): the EMITTER'S OWN massive mode has tails beyond the body (11 percent of its magnitude outside A's Nodes at 2^20); clipped to the body it fails the check (1.0047, a hard edge), written over its tails (72 Nodes) it passes (1.00002), but then the giving click writes outside the body's Nodes and the given record's shape depends on a foreign family's well. THE FORM ADOPTED IS THE OTHER: the GIVEN FAMILY'S lowest mode on the body's Nodes with the zero row beyond (the half sine of the flux check above, which vanishes at the body's edge), written on the body's Nodes alone, as long as the body's extent along **K**: the passage's mean click interval stays the head's path + X / 2 + 2 and its rms as before (9.25 (11) (d)).
 
 **(11) THE HOLDER EMITTERS' PAIR (Nature24's finding of 07:20Z on his
 clock, CONFIRMED by 9.29 (3) (b)):** a pair above 1 over 32 Nodes runs
@@ -8600,7 +8609,7 @@ bodies of side 32 are wells BELOW 1 and near it, [699, 700] on [7, 8]
 (2 cos omega = 1.994, above the band top 1.75, bound; W = 700, rich);
 the rows' [1201, 700] are corrected to [699, 700] at this head; the
 one-Node [801, 700] stays. With 9.34 (B) the holder emitter's
-transparency to its born family is exact.
+transparency to its given family is exact.
 
 **(12) THE THREE LEVELS IN ONE LINE EACH (record 1955 (3)).** The Node:
 its records' two levels and remainders, its families' pairs, its clock
@@ -8609,7 +8618,7 @@ share at it reaches the record's drawn share. The body: the Nodes of one
 standing record, which click together, its clock its rung slowed by the
 content at its Nodes, its coupling to everything the click. The whole:
 the GameBoard with its faces, exact and reversible between clicks,
-whose only events are the clicks and the births, and whose remainders
+whose only events are the clicks and the giving clicks, and whose remainders
 live at the Nodes.
 
 ### 9.36 The Node's law with its couplings, closed in one circle (the model owner's word, 2026-09-25, in the mathematician's session: "yes" to the remainder rule of 9.33 (4) and 9.34 (C), "a click when there is a remainder"; and "it has to enter the Node's law and the Node's couplings: how do we couple the mass and the click at the Node?")
@@ -8634,11 +8643,11 @@ record its own share at the Node (9.32 (4), 9.35 (2)).
 
 **THE CLICK, WHICH IS THE WHOLE COUPLING.** A record clicks when the
 share of it gathered by one object reaches (2 u + 1) / (2 W) of its
-whole, u the remainder at its birth Node; A RECORD WITH NO REMAINDER
+whole, u the remainder at its giving Node; A RECORD WITH NO REMAINDER
 NEVER CLICKS (the remainder rule, ADOPTED by the model owner,
 2026-09-25: it splits and turns at one Link per interval and stays). At
 the click, in whole numbers only: the record ends on all its Nodes (1888);
-THE RECEIVING BODY'S CONTENT M RISES BY ONE, and at a birth the emitter's
+THE RECEIVING BODY'S CONTENT M RISES BY ONE, and at a giving click the emitter's
 falls by one: THIS IS THE COUPLING OF MASS TO THE CLICK. The content
 changes the Node clock at the body's Nodes, which slows the rotation of
 its own mode and of every record passing through it; a quantum of light
@@ -8646,7 +8655,7 @@ becomes content, content becomes clock, clock becomes rotation. A body
 heavier at its Nodes turns slower and so CLICKS slower (its rung T = P
 e_c grows with its period). The labels, a charge and the momentum (if
 the exchange hypothesis is adopted, 9.27 (D)) pass in the same click,
-whole. The born record starts from the remainder at its birth Node,
+whole. The given record starts from the remainder at its giving Node,
 which sets the place of its own click.
 
 **THE CIRCLE AT THE NODE.** The remainder gives the click its place; the
@@ -8659,11 +8668,11 @@ what passes through it. 9.32's five lines, 9.34's three decisions and
 9.35's Node clock are this one circle; nothing is kept at a Node beyond
 the law's own numbers.
 
-### 9.37 One gives the click, one receives it: the birth is the click read at its giving end, and no wave is written (the model owner's words of 2026-09-25 through the Boss: record 1963, "we do not write a wave; everything happens by itself in the Nodes; the opposite of a click is an emitter"; record 1964, "a click is a kind of emission, and a birth is what receives the click; one gives the click and one receives the click"; the Boss's five questions; PROVED)
+### 9.37 One gives the click, one receives it: the giving click is the click read at its giving end, and no wave is written (the model owner's words of 2026-09-25 through the Boss: record 1963, "we do not write a wave; everything happens by itself in the Nodes; the opposite of a click is an emitter"; record 1964, "a click is a kind of emission, and a giving click is what receives the click; one gives the click and one receives the click"; the Boss's five questions; PROVED)
 
-**(1) A CHANGE OF THE BODY'S INTEGERS ALONE SHEDS NOTHING OF THE BORN
+**(1) A CHANGE OF THE BODY'S INTEGERS ALONE SHEDS NOTHING OF THE GIVEN
 FAMILY (PROVED, one line).** The step is linear and separate per family
-(9.36: no term couples one family's rows to another's). The born family's
+(9.36: no term couples one family's rows to another's). The given family's
 rows at an emitter's Nodes are 0 before its click; a change of the body's
 content M, of its Node clock (Gamma, Gamma + M) or of its pair changes
 the OPERATOR at those Nodes, and the operator maps zero rows to zero
@@ -8677,12 +8686,12 @@ by one unit of its denominator about (the mode's overlap defect)^2, small
 and of the wrong family. The three tests do not help here: the obstacle
 is linearity, which the owner's own law keeps.
 
-**(2) ONE QUANTUM PER CLICK: THE GIVING END SETS THE BORN FAMILY'S LEVELS
+**(2) ONE QUANTUM PER CLICK: THE GIVING END SETS THE GIVEN FAMILY'S LEVELS
 ON THE BODY'S NODES, AT THE CLICK, AND THAT IS NOT A WRITTEN WAVE.** The
 click at the receiving end deletes a record's two levels on all its Nodes
 at once and raises the detector's count (record 1888, 9.32 (4)); its
 mirror at the giving end SETS a record's two levels on the body's Nodes
-at once, the body's own mode of the born family times the character of
+at once, the body's own mode of the given family times the character of
 its momentum (9.35 (10)), and lowers the stock. Nothing is written but
 the state of the body's own Nodes at the instant of its click, exactly
 as the deletion changes nothing but the state of the record's Nodes;
@@ -8694,19 +8703,19 @@ once. The owner's two words are one statement: the click is one rule
 read at its two ends, the levels set and the stock down at the giver,
 the levels cleared and the count up at the taker, the sign of the
 body's change the only difference, and between the two the Nodes carry
-the quantum by the step alone, two events at two times. "BIRTH" LEAVES
+the quantum by the step alone, two events at two times. "GIVING CLICK" LEAVES
 THE LAW'S VOCABULARY AS A SEPARATE ACT: it is the click at its giving
 end (9.13, the emitter as the transpose of the click, was this sentence
 before its time).
 
 **(3) THE THREE TESTS:** generic (one rule, the click, read at two ends;
-the born family's mode on the body's Nodes with no family name); vector
+the given family's mode on the body's Nodes with no family name); vector
 (the deletion and the setting of two levels on a declared set of Nodes,
 the same verb as the load's write, no root, no float); local (the body's
 own Nodes at the giving end, the record's own Nodes at the taking end;
 the one non-local act per record, its Nodes at once, as before).
 
-**(4) THE EMITTING ROWS AND THEIR PINS:** unchanged. The birth of record
+**(4) THE EMITTING ROWS AND THEIR PINS:** unchanged. The giving click of record
 1962 (the body's own mode times the character, set on the body's Nodes
 at its click) is this giving end already; the pins of 9.22 (8) stand as
 recomputed on the mode envelope.
@@ -8717,11 +8726,11 @@ makes rows of one family from another's is a source term between them,
 which is the retired coupling of 8.5 (record 1962): it emits
 continuously and unquantised at the body's own rotation, one quantum per
 click lost. So the law keeps the click's two ends and drops the word
-"birth"; the light on the board is never written as a wave, only set on
+"giving click"; the light on the board is never written as a wave, only set on
 a body's Nodes as the state of its Nodes at its click, and then left to
 the step.
 
-### 9.38 The surface rule: every click is read at the body's outer shell, at both ends (the model owner's word of 2026-09-25 in the mathematician's session: "there are still bugs in the code, in the births; we need one generic thing that solves everything with the remainder and the click, when the remainder is and how the click is measured, with no remainder or with a remainder; connect it all into one generic law in the engine; maybe on the boundary of the body we are looking for something: the whole outer boundary of our body gives the click"; PROVED and COMPUTED)
+### 9.38 The surface rule: every click is read at the body's outer shell, at both ends (the model owner's word of 2026-09-25 in the mathematician's session: "there are still bugs in the code, in the giving clicks; we need one generic thing that solves everything with the remainder and the click, when the remainder is and how the click is measured, with no remainder or with a remainder; connect it all into one generic law in the engine; maybe on the boundary of the body we are looking for something: the whole outer boundary of our body gives the click"; PROVED and COMPUTED)
 
 **(1) THE SHELL.** A body is the Nodes of one standing record (9.32
 (b)). Its OUTER SHELL is the set of its Nodes that have a Port: a Link to
@@ -8747,12 +8756,12 @@ share (one period of its rotation). THE WALK over the shell Nodes in
 their declared order (the box's x-major order, the loader's one
 convention, 9.17 (6a)) lands the click at one shell Node, the Node whose
 segment of that interval's gather holds theta - C(t - 1); THE RESIDUE OF
-WHAT THE CLICK BIRTHS IS THE REMAINDER AT THAT NODE, on its wheel W
+WHAT THE CLICK GIVING CLICKS IS THE REMAINDER AT THAT NODE, on its wheel W
 (9.19 (4)); no centre Node, which a body of even side does not have. The
 two ends are this one landing read with the sign of the body's change
 (9.37 (2)): a passing record that lands is cleared on all its Nodes and
 the body's content rises by one; the body's own record that lands sets
-the born family's levels on the body's Nodes with the character of the
+the given family's levels on the body's Nodes with the character of the
 declared **K** and lowers the stock; the body's own levels, phase and
 remainders are LEFT AS THEY ARE (no reseed, 9.43; the rewrite as the
 profile is history). Nothing else is read
@@ -8782,7 +8791,7 @@ two outermost Nodes of the well) fires at the same interval as the tick
 read over all the Nodes in EVERY one of the 600 cycles; the centre
 Node's reading differs from all the Nodes' in 2 cycles by one interval
 (the rounding at one Node; the shell's share per interval varies by 3.8
-x 10^-4 of itself and the shell reads two Nodes); the born residue read
+x 10^-4 of itself and the shell reads two Nodes); the given residue read
 at the shell Node where the walk lands: 531 distinct residues in 600
 cycles, the chi-square over 20 bins of the wheel 15.6 (the centre
 Node's 26.1; the 95 percent bound 30.1); the mean cycle 46.8 = P / 2;
@@ -8806,7 +8815,7 @@ is the measure, and a record clicks when it has one.
 
 **(6) WHAT THE ENGINE CARRIES BESIDE THIS RULE (read at Nature24's head
 b8faee40 on emitter-click; the list for his order after the owner's
-word; the owner's "bugs in the births").** (a) Two click readings
+word; the owner's "bugs in the giving clicks").** (a) Two click readings
 instead of one: the emitter's tick at the CENTRE Node (`_excitation_rung`
 over `centre_mask` and `form_share`) and the detectors' ladder over the
 Ports (`_ladder_click`); under (2) one ladder over the shell at both
@@ -8815,11 +8824,11 @@ at the click's Node. (c) The coupling still in the step: `_receive`,
 `_source`, `_coupled_term`, the response records and the `extra` of the
 block's emitted light, retired by record 1962 (9.34 (B)). (d) The
 remainder reset at every reseed (a fresh record with zero remainders at
-each `_excite`) against 9.34 (A); with it the emitter births one residue
+each `_excite`) against 9.34 (A); with it the emitter giving clicks one residue
 for ever (9.34 (2)). (e) The cavity's zeroing of the levels and the
 remainders outside the body's mask, an act beside the law. (f) No Node
 clock: no Gamma and no content in the step (9.35 (3)). (a), (b), (d)
-and (e) are the births' bugs in the owner's sense: the emitter reads an
+and (e) are the giving clicks' bugs in the owner's sense: the emitter reads an
 interior Node the rule does not name, resets what the Node keeps, and
 zeroes what the step made; (c) and (f) are the two law changes of 1962
 not yet built.
@@ -8832,7 +8841,7 @@ remainder kept, no root, no float. Local: a shell Node reads its own
 Ports and its own share; the two record integers C and theta travel
 with the record (9.25 (2)). The rows and their pins: UNCHANGED (the
 tick's interval the same by (3) (a) and (4); the detectors' Nodes were
-already read at their Ports; the born residues' spread the same
+already read at their Ports; the given residues' spread the same
 statistics by (4)); the host cost of a click falls from the body's Nodes
 to its shell (side 32: 5768 Nodes of 32768).
 
@@ -8847,7 +8856,7 @@ shell is therefore not an outflow but the TICK, the share of its own
 standing record at the shell's Nodes gathered per interval ((2)); the
 one rule for both ends is the one gather on the shell, the passing
 record through the Ports and the own record at the Nodes, with one
-threshold. What leaves the body is the born record, set on the body's
+threshold. What leaves the body is the given record, set on the body's
 Nodes at the click (9.37 (2)) and carried out through the faces by the
 step alone afterwards; the quantum stays one per click (9.37 (2), 9.25
 (2)). (b) THE BOSS'S CURRENT, (1/2)[a_j(now)(a_i(next) - a_i(before)) -
@@ -8868,7 +8877,7 @@ share the remainder set by what enters through its faces, part after
 part. A giver completes it by its own rotation, gathered part after part
 at its shell's Nodes: one period is the whole, and the remainder set the
 fraction of it at which the gathering is complete. At that moment one
-whole quantum leaves: the born record, set on the body's Nodes at the
+whole quantum leaves: the given record, set on the body's Nodes at the
 click and carried out through the faces by the step alone; nothing is
 written, and the remainder stays behind at the Node.
 
@@ -8887,7 +8896,7 @@ the step at every Node; the gather, the inward current of a passing
 record through the Ports and the body's own share; the click at the
 threshold (2 u + 1) / (2 W) of the whole set by the remainder; at the
 click the whole out (a passing record cleared and the content up one;
-the own record's click the born family's levels set and the stock down
+the own record's click the given family's levels set and the stock down
 one), the remainders staying behind at the Nodes. No Node is chosen and
 no order is declared inside a body: the landing Node and the walk of
 (2) are needed only between bodies (the ladder of detectors, 9.25 (2),
@@ -8897,7 +8906,7 @@ the owner asked for.
 
 COMPUTED on the integer law with the remainders kept and no coupling
 (scratchpad sum_remainders.py, sum_remainders2.py, sum_remainders3.py;
-the well [800, 801] of side 32 on the chain, W = 2403): the born residue
+the well [800, 801] of side 32 on the chain, W = 2403): the given residue
 as the sum over all the body's Nodes: 4000 cycles, 1949 distinct values
 where a uniform draw expects 1948, the chi-square over 20 bins 30.3 on
 all 4000 (33.5 and 21.3 on the two halves; the 95 percent bound 30.1),
@@ -8932,9 +8941,9 @@ the two levels before the step; by the body's Gauss law (9.38 (3) (b))
 the net current through the faces is the change of the record's share
 inside, so the faces read the body's whole of the record and nothing
 twice. The record's running total C is compared with (2 u + 1) T / (2
-W): T its whole; u and W its residue and wheel, INHERITED AT ITS BIRTH
+W): T its whole; u and W its residue and wheel, INHERITED AT ITS GIVING CLICK
 from the body that gave the click (9.19 (4); a record of light [1, 1]
-born of a body [800, 801] carries W = 2403, not light's own wheel of 3,
+given of a body [800, 801] carries W = 2403, not light's own wheel of 3,
 which would quantise every share to sixths). The click at the first
 interval at which C reaches the threshold: the record is cleared on all
 its Nodes, the cube's content rises by one, its clock at its 27 Nodes
@@ -8942,7 +8951,7 @@ slows by 1 / (Gamma + M), and the remainders stay where they are. THE
 GIVING END, if the cube holds a standing record: its own share at its
 Nodes, gathered every interval (constant; the tick), against P times
 that share; the click at (2 u + 1) P / (2 W) with u the sum of the
-body's remainders on its wheel (9.38 (9)); the born family's levels set
+body's remainders on its wheel (9.38 (9)); the given family's levels set
 on the 27 Nodes with the character, the stock down one, the remainders
 kept. THE REMAINDER RULE: a record whose remainders are 0 for ever (an
 exact one, 9.26 (4a)) has no residue and never clicks; a residue that
@@ -8951,7 +8960,7 @@ the first place on the wheel, and clicks (9.33 (4) and 9.34 (4) agree on
 this: the rule is about the exact record, not about the digit 0). NO
 PART FAILS WITH THE OTHERS IN: the clock changes the operator at the
 body's Nodes at each click by 1 / (Gamma + M) and sheds nothing of the
-born family (9.37 (1)); the remainders kept through the click and the
+given family (9.37 (1)); the remainders kept through the click and the
 reseed spread the residues with no coupling (9.34 (2), 9.38 (9)); the
 click hands over whole numbers only; the faces are read on the levels
 before the step, which the Node has; the exact record passes the faces
@@ -8964,7 +8973,7 @@ body's Gauss law; and THE SUM OF THE CUBE'S REMAINDERS STAYS IN [0, 54]
 (27 Nodes on light's wall 3) AND DOES NOT FOLLOW THE PASSAGE, which is
 right: the remainder is not the measure of what passes, the faces are;
 the remainder is the measure of WHERE in the share the click falls, read
-once at a birth on the giving body's wheel. So the cube's click reads
+once at a giving click on the giving body's wheel. So the cube's click reads
 the faces, and the remainder sets its place: the Boss's sentence,
 derived.
 
@@ -9079,8 +9088,8 @@ record's rows set to 0 on its support, b likewise, r UNCHANGED, M_i + 1
 for every i in S). The GIVING END at a body S with a standing record
 (phi, omega) and a stock: at the first interval at which t E_S reaches
 theta with T = P E_S (equivalently t >= (2 u + 1) P / (2 W)), the map
-X_S^T: (a, b, r, M, stock) -> (the born family's rows set to psi_S chi_K
-on S, psi_S the born family's eigenvector on S with the zero row beyond,
+X_S^T: (a, b, r, M, stock) -> (the given family's rows set to psi_S chi_K
+on S, psi_S the given family's eigenvector on S with the zero row beyond,
 chi_K the character of the declared momentum; the own record's rows
 left as they are, with their phase (no reseed, 9.43); r UNCHANGED; M_i - 1 for every i in S
 by the stock's quantum leaving; stock - 1). A CLICK IS ONE OF THESE TWO
@@ -9097,7 +9106,7 @@ given quantum hastens it by the same; a standing record's next tick
 (2 u + 1) P' / (2 W) is longer by that factor, and every record passing
 S is bent toward it by the same clock (9.35 (5)). THIS IS THE WHOLE
 ACTION OF A CLICK ON A CLOCK: through M and through nothing else. A
-click also sheds nothing: X_S^T sets the born rows, and the step alone
+click also sheds nothing: X_S^T sets the given rows, and the step alone
 carries them out (9.37).
 
 **D6 (the remainder, and the law that keeps a body a body).** The
@@ -9146,7 +9155,7 @@ the step (D2). The clock term of the step at every other family, 6 den
 at one Node.
 
 **(2) THE THREE TESTS: IT PASSES, AS A MODULATION AND NOT AS A SOURCE.**
-Generic: one primitive, a family named by its role (as the born family
+Generic: one primitive, a family named by its role (as the given family
 is), with declared integers and no family name in the rule. Vector: the
 term c_i a_i is a product of two levels at one Node, the share's own
 verb (E_i has a_i b_i), no root, no float; it is NOT the retired
@@ -9167,11 +9176,11 @@ Laplace equation, whose solutions outside a source fall as 1 / r; with
 p < 1 every static solution is screened, falling as exp(- kappa r) / r
 with kappa^2 = 6 (1 / p - 1) (for [800, 809], kappa = 0.26 per Link, a
 range of four Links). So THE CLOCK FIELD IS MASSLESS, ITS PAIR [1, 1].
-Its source: a click alone, a pulse of c born whole and left to the step,
+Its source: a click alone, a pulse of c given whole and left to the step,
 spreads outward at one Link per interval and leaves no lasting field;
 the field lasts only if THE CONTENT IS HELD at the body's Nodes as a
 boundary value, c_i = M there, written whole at each click and kept,
-which is exactly 9.35 (3) as it stands (M changes only at births and
+which is exactly 9.35 (3) as it stands (M changes only at giving clicks and
 clicks). Around it the step's static part is the discrete Coulomb
 potential (COMPUTED, scratchpad side3_window.py (b): a content M held on
 a cube of side 3, the far border 0: the level times the distance is
@@ -9269,7 +9278,7 @@ NODE: the remainder moves on the multiples of gcd(e num, 6 den M, 3 den
 f) below the wall 3 den f, so W = 3 den f over that gcd; at M = 0 every
 coefficient carries Gamma and W is the pair's own 3 den / gcd(num, 3
 den), and at M > 0 it is finer (18,774,639 at M = 64 on the light
-clock's A against 2403). u and W are read together at the birth and
+clock's A against 2403). u and W are read together at the giving click and
 travel with the record as the fraction (2 u + 1) / (2 W) (9.25 (2)); all
 the Nodes of one body share M, so the sum of 9.38 (9) is on one wheel;
 the click's statistics are the same on a finer wheel. THE BOOKING: the
@@ -9282,16 +9291,16 @@ factor. The order (2) then (5) is right: without the coupling's scale
 the wall 3 den (Gamma + M) times the amplitude 2^28 is below 2^63 at the
 muon's pair (7.8 x 10^18).
 
-### 9.43 The countdown of the residues, and the reseed retired (Nature24's finding of 2026-09-25 on the tree with decisions (1) and (2): under the kept remainder and no coupling, the light clock's births came in runs of one per interval, twenty-six in a row; the mechanism on the engine's integers; CHECKED on the algebra; the ruling, for the model owner's word under record 1940)
+### 9.43 The countdown of the residues, and the reseed retired (Nature24's finding of 2026-09-25 on the tree with decisions (1) and (2): under the kept remainder and no coupling, the light clock's giving clicks came in runs of one per interval, twenty-six in a row; the mechanism on the engine's integers; CHECKED on the algebra; the ruling, for the model owner's word under record 1940)
 
 **(1) THE FINDING (Nature24, GAMEBOARD readings, no verdict).** With the
 remainder kept through the reseed and the coupling retired, the excited
-record reseeded at each birth as the profile at phase 0 reads, after its
-first advance, the residue u - 1 where u was the born record's: the
+record reseeded at each giving click as the profile at phase 0 reads, after its
+first advance, the residue u - 1 where u was the given record's: the
 profile's first-step rounding at the read Node is exactly one unit. A
 residue below W / P (25.6 on the light clock's body) crosses its rung in
 one interval, so the next is u - 1, and the countdown runs to 0: u + 1
-births at one per interval; thirty-two of the sixty-four births of the
+giving clicks at one per interval; thirty-two of the sixty-four giving clicks of the
 light clock came in two such runs, the mean click interval 270.5 against
 302.2 with the coupling.
 
@@ -9306,14 +9315,14 @@ float eigenvector rounded at 2^28 and +337 at 2^20 (scratchpad
 countdown2.py). At -1 the map counts down; at -1147 or +337 it does not
 run but turns the wheel by a constant, and the residues fall on a
 lattice (the chi-square 79 and 71 on 20 bins against the bound 30.1).
-Either way the birth statistics of a closed body would depend on the
+Either way the giving clicks' statistics of a closed body would depend on the
 profile's rounding, which the law forbids (9.39 (2): the height and the
 precision are not physics). The reseed is the cause: it resets the
-phase to 0 at every birth, so the rounding sequence is the same every
+phase to 0 at every giving click, so the rounding sequence is the same every
 cycle and the shift is a constant.
 
 **(3) THE RULING: THE RESEED IS RETIRED; A BODY'S OWN RECORD IS NEVER
-REWRITTEN.** The giving end of the click sets the born family's rows on
+REWRITTEN.** The giving end of the click sets the given family's rows on
 the body's Nodes, lowers the stock and the content, and LEAVES THE
 BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE; the step alone
 carries the standing record between its clicks. Then the rounding
@@ -9330,7 +9339,7 @@ and 24; WITHOUT the reseed the shift takes many values (11, 177, 214,
 of one-interval cycles is 1 or 2 as a fair draw gives, the mean cycle
 46.9 to 47.8 against P / 2 = 46.8, the chi-square 14 to 27 on 20 bins.
 The read point stays as built (the next tick's residue after the first
-advance; the born record's residue at the click), moving to the body's
+advance; the given record's residue at the click), moving to the body's
 sum on the owner's word (9.38 (9)). NEITHER (a) NOR (b) of Nature24's
 question: (a) would pin a host precision as physics; (b), a read after
 a full period, is the same constant map with S(P) in place of S(1).
@@ -9402,7 +9411,7 @@ residues under the one-Node read, and 9.43 has traced that lattice to
 the reseed, not to the read; with the reseed retired the one-Node read
 is fair and LOCAL, so I withdraw the sum in favour of (a): the body's
 residue is the remainder at its first shell Node, read after the first
-advance; the born record's residue the same Node's remainder at the
+advance; the given record's residue the same Node's remainder at the
 click. This is the owner's wish for a click known at a Node, met inside
 the law.
 
@@ -9545,7 +9554,7 @@ the click, on the body's wheel). Then every Node of the body holds (M,
 u), counts its own intervals against (2 u + 1) P / (2 W) with its own P,
 and all reach the rung at the same interval by construction; no sum, no
 tally, and no fraction moved (the remainders stay where they are; u is
-a reading of one of them, whole). The born record's residue is the same
+a reading of one of them, whole). The given record's residue is the same
 u. THE TAKING END CANNOT: the passing record's chance to click at this
 body is its share of the record's whole gathered through ALL the body's
 Ports (Born's rule, 9.25 (3)); a threshold at each shell Node on its own
@@ -9565,12 +9574,12 @@ the click, not after the first advance, and written with the content on
 the body's Nodes.
 Two readings of Nature24's build of the Node clock (head e84ddba4), for
 the record: (a) the declared norm T of a body's own record is one
-period's action at its initial content; after births at a lower content
+period's action at its initial content; after giving clicks at a lower content
 its share is smaller by about (M_0 - M) times the kinetic part over
 Gamma T, 10^-5 on the light clock, the rung's crossing moving by a
 hundredth of an interval at most; an exact T per excitation would be a
 register the law does not keep, so the declared T stands. (b) After a
-birth the wall at the body's Nodes falls from 3 den (Gamma + M) to 3 den
+giving click the wall at the body's Nodes falls from 3 den (Gamma + M) to 3 den
 (Gamma + M - 1), and a kept remainder at or above the new wall (the
 chance about 1 / Gamma per Node) is absorbed by the next division, the
 invariant restored after one advance: lawful, the remainder re-formed
@@ -9610,10 +9619,10 @@ a b in the rule's units, constant in time; its tick is the count t
 against T: the click at the first t with 2 W t e >= (2 u + 1) T, the
 same interval as the lattice body's at every Node (9.32 (b)). Its
 residue u is its own remainder r on its wheel, read at the click and
-carried (9.44 (5) (c)); the born record's residue the same u.
+carried (9.44 (5) (c)); the given record's residue the same u.
 
 **(3) ITS INTERFACES TO THE GameBoard, unchanged in form.** (a) THE GIVING
-END: at its tick the born family's eigenvector on S times the character
+END: at its tick the given family's eigenvector on S times the character
 is set on the GameBoard's Nodes of S (9.37 (2)), the stock and M fall by
 one; the body's own rotation continues (9.43, no reseed). (b) THE TAKING
 END: a passing record's inflow through the Ports of S is gathered on
@@ -9639,10 +9648,10 @@ statistical there (9.43), so the equivalence to require is: (i) THE
 TICKS: the distribution of the body's cycle lengths, the mean P / 2, no
 runs of one-interval cycles beyond a fair draw's, the residues spread on
 the wheel (the chi-square within its bound), read on both forms over the
-same number of births; (ii) THE ROTATION: 2 cos omega' equal as
-rationals at every content M, bit for bit; (iii) THE BORN RECORDS: the
+same number of giving clicks; (ii) THE ROTATION: 2 cos omega' equal as
+rationals at every content M, bit for bit; (iii) THE GIVEN RECORDS: the
 same rows set on S at each tick (the same eigenvector, the same
-character), so every pin of the eighteen that reads the born light
+character), so every pin of the eighteen that reads the given light
 (the light clock's 300 +- 9 and 250 +- 8 first) unchanged to its band;
 (iv) THE TAKING END identical by construction (the GameBoard's own
 gather); (v) THE FAMILY OF CLICKS' field identical (the same held M).
@@ -9666,7 +9675,7 @@ observation of 2026-09-25 in the mathematician's session: "our simulator
 declares that everything is bodies; there is no resistance between
 bodies").** Right, and it is the law's own content, not the body
 record's. Two bodies act on each other in four ways and no other: (a) BY
-CLICKS: a record born of one and taken by the other moves one quantum,
+CLICKS: a record given of one and taken by the other moves one quantum,
 whole, with its labels (9.37, 9.40 D5); this is the only collision the
 law has, an absorption, at the taker's share by Born's rule. (b) BY THE
 FAMILY OF CLICKS: each body's content slows every clock around it and
@@ -9718,7 +9727,7 @@ each interval its rotation steps by (2) and its accumulators by the pace;
 when an accumulator carries, S and its pair region hop one Link on that
 axis (the moving name), its held M with them (the family of clicks'
 source moves, and the field follows at one Link per interval, a retarded
-potential); its Ports are those of S where it stands, its born rows go
+potential); its Ports are those of S where it stands, its given rows go
 on S where it stands. Nothing else is declared: a composite is the same
 body record with the union's Nodes, the sum's content and one **K**; the
 tail rule and the two-bodies check hold on its profile as on any
@@ -9803,11 +9812,11 @@ DERIVED), so the equivalence is in distribution and not bit for bit,
 which is all the law claims (9.43 (2)). (iii) THE TAKING CLICK: gathered
 through the body's Ports on the GameBoard in every representation, the
 same integers (9.38 (2), 9.46 (3) (b): identical by construction). (iv)
-THE BORN ROWS: the born family's eigenvector on the body's Nodes times
+THE GIVEN ROWS: the given family's eigenvector on the body's Nodes times
 the character, set at the tick, the same in every representation (9.37
 (2), 9.46 (3) (a): identical by construction). Hence the same clicks:
 the same intervals for the same residues, the same residue statistics,
-the same takings and the same births. OPEN: the equivalence test of
+the same takings and the same giving clicks. OPEN: the equivalence test of
 9.46 (4) on the engine, body record against lattice body on one world,
 not yet run because the body record is not yet built; until it passes
 the body record is a host form under its key and the lattice body the
@@ -9815,13 +9824,13 @@ reference.
 
 **(6) THE TWO ENDS OF THE CLICK.** A click is X_S (the taking end: the
 record's rows to 0 on its support, M + 1 on S, r unchanged) or X_S^T
-(the giving end: the born family's eigenvector on S times the character
+(the giving end: the given family's eigenvector on S times the character
 set, the stock and M down one, the body's own levels, phase and
 remainders left as they are), applied once at one interval on all the
 Nodes of one set, and nothing else (D5: DEFINITION; ADOPTED, records
 1962 (4), 1963, 1964, 1982). A change of a body's integers alone sheds
-nothing of the born family (9.37 (1): PROVED), so the giving end must
-set the rows and no wave is written (9.37 (2): DERIVED; the born mode's
+nothing of the given family (9.37 (1): PROVED), so the giving end must
+set the rows and no wave is written (9.37 (2): DERIVED; the given mode's
 flux check 0.9997 on the algebra and 1.00023 on the engine: COMPUTED).
 The clock under a click changes through the content alone, by (Gamma +
 M) / (Gamma + M +- 1) (T4: PROVED). The giving trigger is local at
@@ -9857,7 +9866,7 @@ rule, on the new engine.
 **(9) THE RESEED RETIRED.** Under a reseed the residues' order is u -> u
 + S(t(u)) with S(1) the profile's first-step rounding at the read Node,
 a host constant (9.43 (2): DERIVED; -1 on the engine, -1147 and +337 in
-two roundings: COMPUTED), which would make a closed body's births depend
+two roundings: COMPUTED), which would make a closed body's giving clicks depend
 on the profile's precision; with the body's own record left as it is,
 the phase carries and no run forms (9.43 (3): COMPUTED; ADOPTED, record
 1982). The light clock's interval pins are expected unchanged: OPEN
@@ -9900,16 +9909,16 @@ and the rest go on to the slab; the PATTERN across a screen of seated
 pixels is unchanged (each pixel's share is the local intensity, the
 ratios between pixels the same), the COUNTS are rescaled, so the pins'
 counts are recomputed and their form is not. WORKS, with its pins
-recomputed. (d) AS A GIVER: the born record's band is set by the extent
+recomputed. (d) AS A GIVER: the given record's band is set by the extent
 it is written on, delta k about 2 pi / L (9.17 (6a), the train); a
-record born on one Node is broadband, every wavelength at once, which
-is the one-Node birth retired at 8f224288 and would move every pin that
+record given on one Node is broadband, every wavelength at once, which
+is the one-Node giving click retired at 8f224288 and would move every pin that
 reads a wavelength (the two slits' spacing, Mach-Zehnder's dark port,
-the light clock's interval). So a seated emitter WRITES ITS BORN ROWS ON
-A DECLARED EXTENT around its seat, the born family's eigenvector on
+the light clock's interval). So a seated emitter WRITES ITS GIVEN ROWS ON
+A DECLARED EXTENT around its seat, the given family's eigenvector on
 those Nodes times the character, as now; its own rotation sits at the
-seat and its births use the extent. That is the form: A SEAT AND A
-BIRTH EXTENT; a detector, a holder and a clock body need the seat alone,
+seat and its giving clicks use the extent. That is the form: A SEAT AND A
+GIVING EXTENT; a detector, a holder and a clock body need the seat alone,
 an emitter the seat and the extent. The pair region on the GameBoard is
 needed only where a record of the body's OWN family must pass through
 it (lensed, transparent); the eighteen's passing records are of other
@@ -9923,7 +9932,7 @@ two caveats it works, and (4)'s equivalence test decides the numbers.
 family -1, a proton family +1, a neutral family 0). The label passes in
 the click, whole, as every label does (9.36, 9.40 D5): at a taking the
 taker's charge Q rises by the quantum's q, at a giving the giver's Q
-falls by the born family's q (a body giving light, q = 0, keeps its Q).
+falls by the given family's q (a body giving light, q = 0, keeps its Q).
 A body's charge Q is the sum of the signs of the quanta it holds, an
 integer of either sign, held at its Nodes as its content M is.
 
@@ -10011,7 +10020,7 @@ and not in e, because a per-Node e makes the neighbour coupling
 asymmetric and the conserved form of T1 is lost, so the wall must move
 with the content; a clock read from a level that never falls (a running
 total of clicks, a monotone rule) would keep the giver's clock slow for
-ever after each birth, a physical change the owner has not made. The
+ever after each giving click, a physical change the owner has not made. The
 property (4) of 9.20 (B) is restated: the joint step inverts exactly
 wherever the clock has not fallen at a Node with a record, and loses at
 most one remainder's worth of state per unit of fall where it has; the
@@ -10036,10 +10045,10 @@ quanta resolves the 1 / r to 10^4 R Links), which is how the gravity
 row (9.22 (8a)) is to be read, and not from a finer unit, because a
 unit U per quantum multiplies the wall (Gamma U + c) against the
 amplitude under int64 (at 2^28 and Gamma = 10^6 there is no room for U
-above 3). (C) THE CLICKS REACH THE BIRTHS. A click's content spreads
+above 3). (C) THE CLICKS REACH THE GIVING CLICKS. A click's content spreads
 from the taker as the field, reaches an emitter's Nodes at one Link per
 interval, moves its rounding, and so moves the residues of its later
-births with where the click landed (COMPUTED by Nature24: the residues
+giving clicks with where the click landed (COMPUTED by Nature24: the residues
 agree bit for bit until the field arrives, and differ after). THE
 RULING: THIS IS THE LAW: the field is the memory of every click,
 causal, at light's pace, and it is the back-action of the board on a
@@ -10079,11 +10088,11 @@ already and its giving end at the seat equal to the shell's by T2.
 
 ### 9.49 The build, all together, and the test of each piece (the model owner's word of 2026-09-25 in the mathematician's session: "go for everything together, with tests that it works"; the order of records 1992 and 1985; each piece with the test that gates it; for Nature24's build and the Boss's record)
 
-**(1) THE RESEED RETIRED (9.43), on the lattice body.** Build: at a birth
+**(1) THE RESEED RETIRED (9.43), on the lattice body.** Build: at a giving click
 the body's own record is left as it is; the residue read at the click
 at the first shell Node in the declared order, written with the content
-on the body's Nodes; the born record's residue the same u. TEST: 3000
-births of the emitter chain, the cycle lengths in order: no run of
+on the body's Nodes; the given record's residue the same u. TEST: 3000
+giving clicks of the emitter chain, the cycle lengths in order: no run of
 one-interval cycles beyond a fair draw's (the longest at most 3), the
 mean cycle P / 2 within 3 percent, the residues' chi-square on 20 bins of
 the wheel below 30.1; the light clock without pins: the mean interval
@@ -10098,12 +10107,12 @@ declared T within 10^-5.
 
 **(3) THE BODY RECORD (9.46), under `body_record`.** Build: (1) to (3) of
 9.46 with the conventions of 9.46 (9). TEST, the equivalence of 9.46 (4)
-on three worlds: (i) the emitter chain, 3000 births on both forms, the
+on three worlds: (i) the emitter chain, 3000 giving clicks on both forms, the
 cycle lengths equal in distribution (the mean within 3 percent, the
 chi-square of the residues on both below 30.1, the longest run at most
 3 on both); (ii) the clocked rotation of the body record equal to the
 lattice body's read from its levels within the loader's bound at every
-content; (iii) the light clock, the same born rows on the body's Nodes
+content; (iii) the light clock, the same given rows on the body's Nodes
 at each tick bit for bit, 300 +- 9 and 250 +- 8 on both forms as
 readings; (iv) the boxed clock of side 20, the block's count over 3000
 intervals equal on both forms, the host time beside; (v) the family of
@@ -10112,7 +10121,7 @@ refused naming the test.
 
 **(4) THE DETECTORS AS SEATED BODIES (9.42, 9.46 (8)), the eighteen's
 files.** Build: every detector a seated body record with its six Ports
-and its held content; every emitter a seat with its declared birth
+and its held content; every emitter a seat with its declared giving click
 extent; the tests' wells 56 Links from a face. TEST: the pins recomputed
 blind on the new files by the generator's runs, then the eighteen run
 against them; the screens' patterns unchanged in form (the two slits'
@@ -10482,7 +10491,7 @@ argument does not apply. (iii) The conserved form of (9) with the
 weight 1 / p_i is that Killing energy, physics and not a defect: each
 Node's share is read in the world's time by dividing by its own pace;
 at a uniform level (a body, a record at one level) the form is whole
-in the body's own units, p times it an integer, and the born record's
+in the body's own units, p times it an integer, and the given record's
 norm T stays the integer of 9.46 (1) at the body's level; only a
 record lying across different levels has a rational world-energy, a
 GameBoard reading. (iv) The Link current is num (now_i before_j -
@@ -10665,11 +10674,11 @@ with P_k the period of family k's quantum at the body: the body's own
 mode's period for its own family (9.51 (3)), the family's rest period
 at the body's level for held quanta of another family (the generator's
 integer per family, under the input stamp). At q = 0 and P_0 = P_k for
-every family present, s = M, the count of today. THE STOCK IS BORN-
-FAMILY CONTENT: a birth lowers M_k of the born family by one (light, q
+every family present, s = M, the count of today. THE STOCK IS GIVEN-
+FAMILY CONTENT: a giving click lowers M_k of the given family by one (light, q
 = 0), so the body's own quanta and its Q stay, as 9.48 (1) says and
 9.40 T3 meant by "stock and M - 1"; the engine's spending of a quantum
-of the body's OWN family per birth (Nature24's finding B) is refused:
+of the body's OWN family per giving click (Nature24's finding B) is refused:
 with it a charged body would lose charge by giving light. THE WHOLE
 CHARGE of the bodies and the records in flight is then constant at
 every click, by construction, as his test reads. THE UNIT OF MASS: the
@@ -10841,13 +10850,13 @@ ARRIVAL (his D). A body's arrival is no click and bodies do not click
 on bodies (9.46 (6)); a body is read by the light it gives (9.54 (1)).
 So the falling body of (3) (a) is an emitter with a stock, giving light
 toward a receiver below it at its period P; the receiver's click times
-are the reading: the n-th birth arrives at n P + d(n P), d the distance
+are the reading: the n-th giving click arrives at n P + d(n P), d the distance
 shrinking as the body falls, so the arrival intervals compress by the
 free fall's closed form, d(t) = d_0 - M R t^2 / (4 Gamma r^2) at first
 order; the pin is the arrival times against that form within one
 interval. Equivalence, (3) (b): two such emitters of different families
 released together, the same compression. Kepler, (3) (c): an orbiting
-emitter's births reach the receiver with the orbit's period in their
+emitter's giving clicks reach the receiver with the orbit's period in their
 delays, read from the clicks. The seat's position stays a GameBoard
 reading beside them (9.51 (7)).
 
@@ -10861,7 +10870,7 @@ p_i = Gamma - c_i + q Lambda d_i, the two field families stepping plain
 rule (9.40 D1), and the levels of the two fields at a body's Nodes are
 the body's record, s and Q, part of the NodeState there (9.51 (1)).
 The click is the one write: the taking end's rows to 0 with M + 1, Q +
-q and s recomputed; the giving end's born rows on S with M - 1, u read
+q and s recomputed; the giving end's given rows on S with M - 1, u read
 at the first shell Node, s recomputed (9.40 T3, 9.44 (5), 9.51 (3)).
 Nothing else is law. Everything that moves between clicks moves by
 the first sentence; everything written is written by the third.
@@ -10919,7 +10928,7 @@ the form in which its clicks are seen, and nothing else of it is seen.
 
 **(2) A BODY WITHOUT CLICKS.** Nothing in the law forbids a body whose
 record is written once, at the load, and never at a click: a family
-with q = 0 (no charge, 9.48 (1)), no born family and no stock (it gives
+with q = 0 (no charge, 9.48 (1)), no given family and no stock (it gives
 nothing), and no declared family it receives (it takes nothing). Such a
 body still holds its content M and its energy count s = (M P_0) div P
 at its Nodes (9.51 (3)), so the family of clicks reads it and every
@@ -10936,7 +10945,7 @@ Newton's (9.45 (2)); it does not slow the fall at large distances, so
 the galaxies' extra pull is not a change of the law here but content,
 and content without clicks is the only content that is not already
 seen. The law does not say how much of it there is, nor whether it
-clicks among its own kind (a dark family with a dark born family is
+clicks among its own kind (a dark family with a dark given family is
 allowed and unseen by us all the same); those are the initial state's
 and a row's. A dark body's own rotation stays, and its P with it, so
 its energy count is the law's like any body's.
@@ -10948,7 +10957,7 @@ at the far receiver bent as by a bright body of the same s, within the
 rounding; ALL its records arrive, the count at the far receiver the
 emitter's stock, no shadow, no click at the dark body, no light from
 it; the control the same M in a bright body of the light clock's
-family: the same bend, a shadow's missing counts and its own births.
+family: the same bend, a shadow's missing counts and its own giving clicks.
 The GameBoard reading beside it: the family of clicks' level around
 the two bodies equal, the family of charge flat around the dark one.
 Both worlds read (9.51 (7)): the bend and the counts are clicks; the
@@ -10970,7 +10979,7 @@ from the state before it ONLY in the taken record's rows and remainders
 the body's record and the two fields' levels at its Nodes); every other
 record's levels and remainders, and the body's own levels, phase and
 remainders (9.43 (3)), are bit-equal. (c) The giving end is reversible
-given the line: the born record's rows are X_S^T of the body's data
+given the line: the given record's rows are X_S^T of the body's data
 (the eigenvector times the character on S, 9.40 T3), so removing them
 by X_S from the line's integers returns the board bit for bit; the
 taking end is not (that is the one deletion, (6)).
@@ -10982,7 +10991,7 @@ taking moves one from flight to a body, a giving the reverse (9.40 T3,
 9.51 (8)). (b) The whole quantum: M_k moves by exactly one per click,
 never a fraction (9.40 T3). (c) The total charge SUM q_k M_k over the
 bodies and the flights is constant (9.51 (8)). (d) The residue: u in
-[0, W) read at the first shell Node in x-major order, the born record's
+[0, W) read at the first shell Node in x-major order, the given record's
 and the body's next alike (9.44 (5) (c)). (e) The next click counted:
 the giving end's next click exactly ceil((2 u + 1) P / (2 W)) intervals
 after the read, at least one (9.43 (4), item 33's test). (f) The energy
@@ -11019,7 +11028,7 @@ The first click after the load (the residue read after the first
 advance). Two clicks in one interval at two bodies (disjoint Nodes,
 the order of the writes immaterial to the inverse). The seat's carry at
 the boundary (x_acc exactly at 2 Gamma L) and the hop across a periodic
-edge. The stock's last quantum (M_k of the born family to 0, no birth
+edge. The stock's last quantum (M_k of the given family to 0, no giving click
 after). A body of Q = 0 holding quanta of both signs (the pin 0, the
 records still read their q). The energy source on with P_0 = P (s = M,
 bit-identical) and with P_0 not P (the remainder kept and inverted).
@@ -11028,7 +11037,7 @@ Two families of different pairs in one world under one clock.
 **(5) THE ONE READING.** Every assertion above is on the board's
 integers and the click lines; none reads a float; the shares of (3)
 are read as exact rationals; the distributions of (2) (g) over N = 100
-or more births with the bound stated. A test that passes on the
+or more giving clicks with the bound stated. A test that passes on the
 levels and fails on a click line is a finding, not a pass (9.51 (7)).
 
 **(6) CAN THE CLICK ITSELF BE MADE REVERSIBLE (the Boss's question,
@@ -11057,7 +11066,7 @@ residues, which are the rounding's walk of the Nodes' own integers
 (b) BACKWARD, between clicks, the past is given back exactly, to the
 interval of the last click ((1) (a)). (c) BACKWARD THROUGH A CLICK, no
 click is made again and the information is lost, exactly this: the
-inverse map fires no rung, so a birth is undone (the born rows return
+inverse map fires no rung, so a giving click is undone (the given rows return
 into the body by X_S from the line) but a taking is not undone: the
 taken record's rows and remainders do not come back, since the line
 kept four integers of them and the law has no term that makes rows

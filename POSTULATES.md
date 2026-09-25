@@ -235,7 +235,7 @@ right, left, forward, backward, up and down. A connection reaches one nearest
 neighbor, or exits the simulated domain at an explicitly open boundary.
 
 An event is a wall crossed by an accumulator of the state vector at a Node: a Link
-crossed, a phase step taken, a count completed, a birth, a push, and the click that
+crossed, a phase step taken, a count completed, a giving click, a push, and the click that
 ends a record; nothing else happens (ALGEBRA.md chapter 2, the one central
 formula; 3.1). An event is a local change in a node at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt (history,
@@ -353,7 +353,7 @@ influence in the simulator.
 
 Adopted direction (model owner, 2026-09-17): the bound has no exception. The
 joint outcome of a pair travels on the returning ray itself, one Link per
-step, back to the birth event and on to the partner ray
+step, back to the giving click event and on to the partner ray
 ([section 23](#23-the-ray-event-model)) (history: the returning ray of
 2026-09-17; superseded on 2026-09-19 by the law of the ray; the pair's click is one
 gather, ALGEBRA.md 3.6). The registry exception described in
@@ -369,9 +369,9 @@ the same day, issue #164 buckets B.1 and B.5): the bound was split in two, as th
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
-of its birth through the GameBoard at link speed, and when either end is
+of its giving click through the GameBoard at link speed, and when either end is
 measured, the bond registry answers for both ends at once, at any distance (the
-bonded ray field). Its successor is the pair record of rank 2 born by the
+bonded ray field). Its successor is the pair record of rank 2 given by the
 crystal, whose one click carries the outcome to both arms (ALGEBRA.md 3.6, 9.25
 (6); the model owner's record 1888 of 2026-09-25).
 That answer carries no energy, no momentum and no message: each end alone sees
@@ -386,7 +386,7 @@ measured as an outcome that moves with the other end's setting at fixed
 hidden variable. It is a nonlocal resource, not a local explanation of the
 Bell value, and the unmoved plus rates are no-signalling, not locality. The
 registry keeps a bounded bank of
-open pairs, one identity per pair from its birth Node and tick, releases a
+open pairs, one identity per pair from its giving Node and tick, releases a
 pair at its second answer, and answers a repeated question the same way, so
 it is bounded and idempotent like every other owner. A world with no bonded
 field has no exception at all.
@@ -458,9 +458,9 @@ normalization, with one declared exception on main: the run-time roots under the
 keys `meeting` and `optical` (ALGEBRA.md 2.7, the seventh verb, not admitted to
 the law, each declared by its design); the cosine and sine tables at the scale
 256 of the first engine are HISTORY (no table in the engine, the model owner's
-record 1878 of 2026-09-25: the born train and every profile are the world's
+record 1878 of 2026-09-25: the given train and every profile are the world's
 integers, written by the generator on the host and read by the law as integers
-alone, ALGEBRA.md 9.17 (6) and (6a); every birth is the born family's own lowest mode on the body's Nodes with the zero row beyond, times the character of its momentum, at both levels, as long as the body's extent (ALGEBRA.md 9.35 (10), the model owner's record 1962; the earlier train under a window HISTORY), a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
+alone, ALGEBRA.md 9.17 (6) and (6a); every giving click is the given family's own lowest mode on the body's Nodes with the zero row beyond, times the character of its momentum, at both levels, as long as the body's extent (ALGEBRA.md 9.35 (10), the model owner's record 1962; the earlier train under a window HISTORY), a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
 an integer remainder carried into the next calculation.
 
 (History, marked 2026-09-23: the finite-attenuation candidate of the next
@@ -600,7 +600,7 @@ remain recorded in `SIMULATOR_DEFINITIONS.md`.
 
 ## 8. Momentum is exchanged at the event location
 
-For a paid family the label leaves the emitter at the birth (the recoil) and
+For a paid family the label leaves the emitter at the giving click (the recoil) and
 enters the reader at the click, so the third law holds message by message and
 the books balance at every tick; for a free family the release costs no recoil
 and the third law is a symmetry between two readers at rest, not shown in motion
@@ -774,7 +774,7 @@ A record lands whole at one detector: one click per record, the ladder choosing
 one Node and deleting the offers, the completion the host's one non-local step
 and no signal on the board (ALGEBRA.md 3.1, 4.12); the fringes follow the
 Euclidean path difference, C(y) / W as 5.7 gives it (C(y) the count at the
-pixel y over W births); a mirror's reflections are the cube group's, the signed
+pixel y over W giving clicks); a mirror's reflections are the cube group's, the signed
 permutations of the axes (1.1). (The next paragraph: history, the ray candidate
 of 2026-09-14 to 2026-09-17, superseded on 2026-09-23 by ALGEBRA.md 3.1, 4.12
 and 5.7.)
@@ -843,7 +843,7 @@ The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
 rule on this GameBoard can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
-the theorem says. The excess is reached by the pair record of rank 2, born by
+the theorem says. The excess is reached by the pair record of rank 2, given by
 the crystal, whose ONE CLICK carries the pair's one outcome to both arms at once
 (ALGEBRA.md 3.6, 9.25 (6); the model owner's record 1888 of 2026-09-25): no
 energy, momentum or message passes through it, by the no-signalling theorem,
@@ -1128,7 +1128,7 @@ one bit per arriving transfer, and the bit is all the Detector adds
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
-at the birth event to the partner ray's line, and the second Detector
+at the giving click event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it and draws its own bit on that
 arrival like on any other; a Detector sees nothing of the ray, only its
 own value, the received value is information on the ray, not an input to
@@ -1156,12 +1156,12 @@ arrival). The price of Highlights 5.4 is to be re-derived under this rule
 by the Bell prediction of the ray-event model (HYPOTHESES.md) and the Bell
 test with polarization settings (docs/EXPERIMENTS.md) before it is quoted again. With two
 Detectors, Alice's and Bob's, whichever returns first sends its value
-through the birth
+through the giving click
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
 at time zero, but nothing happened at time zero: the value was carried
-through the birth event in event spacetime, one Link per interval.
-For two Detectors at equal distance from the birth the CHSH value is at most 2,
+through the giving click event in event spacetime, one Link per interval.
+For two Detectors at equal distance from the giving click the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
 describes the historical candidates, including the shared registry, and their
@@ -1169,7 +1169,7 @@ measurements; the lottery capture, the bond registry, the Bell probes and the
 `historical-autonomous-v1` profile were deleted on 2026-09-17 (issue #164,
 bucket B.5), and the measurements stay in the validation log. Superseded on
 2026-09-18 by the law of the bit (section 25): nothing draws, what arrives
-at a mark is a thing or its shadow and that was decided at birth; a mark
+at a mark is a thing or its shadow and that was decided at giving click; a mark
 absorbs a thing and returns a shadow, and a shadow's return is a field, not
 a walk back by a step count. (And on 2026-09-19 by the law of the ray: no draw,
 ALGEBRA.md 2.7; the pair's click one gather, 3.6; the price of the round trip is
@@ -1192,7 +1192,7 @@ the same run drawn as clicks only is the physical picture.
 
 (History, marked 2026-09-23: the sequence of tickets of the next three
 paragraphs was deleted on 2026-09-17; the law has no draw, ALGEBRA.md 2.7; the
-one selector is the birth wheel, a counter on Z_W, 3.6 and 6.1.)
+one selector is the giving wheel, a counter on Z_W, 3.6 and 6.1.)
 
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's
@@ -1205,7 +1205,7 @@ the probabilities.
 
 A bonded pair is one interaction and draws one number, whichever end asks
 first, Alice's or Bob's. The number is a fixed function of the registry seed
-and the pair's birth code. Its upper half is the first end's even coin; its
+and the pair's giving click code. Its upper half is the first end's even coin; its
 lower half, read against the difference of the two settings, decides whether
 the second end agrees, with the singlet's probability
 `(1 - cos(difference)) / 2`. Neither end can read the number: each sees an even
@@ -1381,7 +1381,7 @@ metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
 source is a Detector: whatever emits a ray of a known family is a marked
 node, because knowing the family of what it emits is a measurement; the
-birth event of a pair therefore happens at a marked node, which draws on
+giving click event of a pair therefore happens at a marked node, which draws on
 every arrival like any other. A
 marked node does one very simple thing. What arrives is a wave ray carrying
 information; every ray is a wave ray, so the kind makes no difference. For
@@ -1407,11 +1407,11 @@ draw, a ray carrying 0 is a transmission and is never drawn.
 When it returned a ray with 0, that value travels with the ray, and the
 second Detector of the pair receives it on the ray that reaches it.
 A returning ray retraces its own trajectory by its step count, reaches its
-birth interaction with certainty and there performs the inverse split of its
+giving click interaction with certainty and there performs the inverse split of its
 share: it transmits what happened at the event, with its bit, to the same
 places the event sent to, the partner ray's line among them, so the
 partner's Detector is not missing it: it receives that value on the ray
-that reaches it. Pair identity is the trajectory, not the birth node and
+that reaches it. Pair identity is the trajectory, not the giving click node and
 tick. Superseded on 2026-09-18 (section 25): the mark has no seed and draws
 nothing; a thing that arrives is absorbed or passed by the mark's declared
 table, a shadow is returned as a field with no step count, and a returning
@@ -1419,7 +1419,7 @@ shadow performs no inverse split.
 
 A ray has a field: the field is the ray's own information spreading in ray
 form to the nodes around it, without an event; a field ray is not a second
-kind and is not born at an event. The field's presence at a node is an
+kind and is not given at an event. The field's presence at a node is an
 interaction that makes no event. A field never makes an event unless it
 meets something it changes; the first event a field is involved in is that
 meeting, and the returning ray that carries the recoil is split off from
@@ -1436,7 +1436,7 @@ and the release does not wait for the clock (model owner, 2026-09-17;
 Highlights 3.5, section 6): resident content releases every interval on all
 six headings, a traveling ray on the five headings other than its own, and
 the output clock delays only what leaves as matter, never the field.
-A ray traveling straight never meets its own field: the field is born where
+A ray traveling straight never meets its own field: the field is given where
 the ray is and leaves at the causal speed, ahead of the ray or away from it,
 and the ray is never faster than its field, at any output-clock delay; no
 exclusion rule is needed. Only after a change of trajectory can a ray cross
@@ -1722,7 +1722,7 @@ no mass and no clock, and returns as a field. "Thing" is the noun for a
 real ray, and the word register leaves the model with the stores it named
 (point 22).
 
-**Birth and motion (points 1, 2, 10, 21).** What is born from content is a
+**Giving click and motion (points 1, 2, 10, 21).** What is given from content is a
 thing; what is given as field is a shadow, and a shadow releases nothing.
 A thing moves whole on its line, one Link per interval, and turns by its
 momentum: every push adds to it, and when its component on an axis reaches
@@ -1767,12 +1767,12 @@ one step.
 **The mark (points 6, 8, 14, 20).** A thing that arrives at a marked node
 is absorbed into the mark's resident thing and counted, with its momentum,
 or passes if the mark's declared coupling for its family says pass, and a
-thing the mark misses is sent back on its steps to its birth event by the
+thing the mark misses is sent back on its steps to its giving click event by the
 mark's declared table (a thing has steps: it has one path and counts it,
 the real counts and the shadow does not; the model owner, 2026-09-18); a
 shadow is returned as at any thing and counted by nothing. There is no
 lottery: what a mark "draws" is whether a 0 or a 1 arrived, decided at the
-ray's birth and along its one path; an imperfect mark is a declared table,
+ray's giving click and along its one path; an imperfect mark is a declared table,
 and the seed is retired. A decay is a table on the group's own state, not a
 draw. The only thing not known at a node is whether a 0 or a 1 comes next.
 
