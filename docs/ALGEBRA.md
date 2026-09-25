@@ -14436,3 +14436,34 @@ declared receivers of every family, the fronts taken there).
 entries, the pairs on bodies and records. 9.79 (1)'s attribute "pair"
 moves from the family to the record and the body; the family keeps
 "representation, phase, reads, held, self_unit, clicks, booked".
+
+**(7) THE SOURCES' VOCABULARY OUT OF THE ENGINE (the Boss's record 2082
+of 2026-09-25, the model owner: "the body declares what it writes to
+each family; then there is no special code at the Node"; the
+mathematician's three lines).** (a) THE HOLD IS THE BODY'S DECLARATION,
+the algebra's own (9.45 (2), 9.48 (2), 9.78 (2), 9.80 (3) (a)): per
+family the body declares which of its own integers it writes (its
+quanta or its charge), with which whole factor and sign, into which
+family's record at its own Nodes; the engine writes the declared
+integers, both levels, the remainder 0. One line the loader derives
+and the body does not choose: the power of the momentum in the write
+is the family's representation's (1, n_i, n_i n_j for k = 0, 1, 2,
+Schur's only equivariant map), and a spin or a moment writes the
+dipole on the six; a declared write of anything else (a pair, a
+remainder) is refused, since no level of the law is sourced by it.
+(b) THE MECHANISMS ARE DECLARATIONS, the algebra's own: the seat is a
+body whose support is one Node (9.60, 9.69 (0)); THE GIVING IS ONE
+OPERATION, the window of 9.71 (1) on the body's declared giving Nodes
+(the seat's rotation written each interval at weight g until the
+outward norm reaches T), and the train (a packet written whole) is
+RETIRED: a shipped row that gave a train is re-declared with a window
+of the train's length and RE-READ, its digest moving by that alone
+(9.75's rows (i) to (iii) hold on the chain under the window; the
+eighteen's expectations of 9.68 stand, the numbers re-read within
+their bands). No key selects a mechanism. (c) A BODY'S OWN CLOCK IS
+ITS GIVING CLICKS: the giving at the rung of its own period puts its
+clock into the output as clicks (9.45 (5), 9.52 (4) (vi)), a
+measurement; the seat's rotation read on the GameBoard is a
+diagnostic beside it (9.21). The pair's property (den > num) in the
+two diagnostic reads is read from the declared pair and is not in the
+law.
