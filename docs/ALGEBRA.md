@@ -14771,3 +14771,56 @@ a colour-charged product alone is refused by the click list's signs,
 so a quark is never seen alone at a click, while a colour-neutral
 product is. What the engine cannot show as a particle: a hand on a
 wave (5), and a nucleus at its true size (6).
+
+**(9) FROM THE CLICKS TO THE REPRESENTATION (the Boss's records 2090 and
+2091 of 2026-09-25, the model owner: "the gluon acts on itself: are
+these really bodies and not ordinary Nodes, or does it get a
+representation as both? They were never seen at a Node, only in the
+world of clicks"; "researchers see clicks: what is the representation
+at the Node that gives what is seen in the click").** THE CLICK FACTS,
+what researchers record: (i) only colour-neutral things click (a
+proton, a neutron, a meson), never a quark or a gluon alone; (ii) the
+pull between the quarks inside does not fall with distance (a string
+of constant tension), while the residual pull between neutral bodies
+is short-ranged; (iii) a hadron's mass is far above its quarks' (most
+of it the field's energy); (iv) decays give fixed products with the
+charges kept; (v) one hand alone takes part in the weak decays; (vi)
+the weak carriers are massive, the range short; (vii) the pull
+between quarks weakens at very short distance (asymptotic freedom).
+THE REPRESENTATION AT THE NODE THAT YIELDS THEM, the smallest, each
+choice justified by its click: (i) needs the click's sum rule, (4)
+above: the internal charges of what a click takes or gives sum to
+neutral (the colour as an integer triple, neutral when its three
+counts are equal; an anticolour negative); this is (B) of record 2090
+and it is exact. (ii) needs the self-source with the structure table,
+(2) above, which is (A) of record 2090: a linear field's pull falls
+as 1 / r^2 by the plain step's own static solution, so no linear law
+and no click rule can hold two colour charges at constant force;
+(B) alone forbids the lone click and binds nothing: a colour charge
+would drift away unclicked, an invisible free quark, against (i)
+read together with (ii). So BOTH: (B) at the click and (A) at the
+Node, and (A) in its smallest form, the polynomial of degree two and
+three with integer structure constants; whether the integer engine
+then shows the string with nature's tension is the row's reading
+((6) (c)), not a theorem. (iii) follows with no new rule: a body's
+energy count is its bound mode's period (9.51 (3) (iv)), and the
+bound mode of quarks in a string potential is fast, so the hadron's s
+is far above its quarks': the mass defect reversed, as nature has it.
+(iv) is the click list with its conserved signs, (4). (v) is the
+helicity sign at the click, (5), on bodies. (vi) is a lowered pair on
+a vector family, (3). (vii) IS NOT GIVEN: the running of a coupling
+with distance is a quantum effect of the field's own fluctuations,
+beyond a law with one click; the engine's tension is a declared unit
+and does not run; said once. THE OWNER'S QUESTION, ANSWERED: the
+gluon is not a body; it is a family on the Nodes (eight internal
+components, the reversible world) acting on itself through its own
+self-source at the Node, as the scalar acts on itself through its
+pace (9.78 (1)); the hadron is a BODY, the colour-neutral bound mode
+of the quark and gluon families together, and it is the body that
+clicks; a colour-charged seat may be declared as a source and never
+as a clicker (the loader's sum rule). So it gets both: the family at
+the Node, the body at the click. THE METHOD (record 2091) is the
+engine's own: every attribute of 9.79 (1) and every primitive of (7)
+is there because a click needs it, and nothing at a Node that no
+click needs; WHAT ENTERS THE ONE STROKE: the four primitives of (7),
+unchanged.
