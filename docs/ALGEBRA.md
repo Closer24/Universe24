@@ -12462,3 +12462,117 @@ law for what the law binds, absent for what is declared; the check of
 the pace fans the grain's own row); the dragging of frames and the
 tensor waves (the vector and tensor families under their own identity,
 not now).
+
+### 9.69 Every body in one Node, doubled if it must (the Boss's record 2051 of 2026-09-25, the model owner: "think how everyone can fit in one Node, even if it must be doubled; and are a name, a mass and a charge defined for them?"; the mathematician's answer per item from the Node's law, the point emitter proposed under its own identity, and the full set of a body's numbers)
+
+**(0) THE TWO DOUBLINGS, named.** (a) THE NODE DOUBLED IN FAMILIES: two or
+more records at one Node, one per family; every Node already holds one
+record per declared family (the levels, the remainder), so a body at
+its seat holds its standing family, its content per family, its charge
+and its momentum at ONE Node with nothing added: this doubling is the
+Node's own structure and passes the three tests by construction. (b)
+THE NODE DOUBLED IN TIME: the Node's record over several intervals in
+place of several Nodes. It passes where the thing wanted is a
+duration (an emitter's train, a detector's running total) and fails
+where the thing wanted is an extent in space (a bound mode's size, a
+packet that never touches the Node): time cannot stand in for space
+under D2, since a record confined to one Node has every wave number
+at once.
+
+**(1) THE DETECTOR.** What it needs: the one-way inward flux through a
+set of Ports, summed over time in the ladder (9.25 (2)); its state is
+one Node's (the content, the running total, the residue). A bare seat
+books its own six Ports, one Node's cross-section, and a packet wider
+than a cube's shell gives it a ninth to a twenty-seventh of the
+shell's flux (9.46 (10) (a)). THE IDEA TO JUDGE, the six reads weighted
+by the shape's flux per unit level (9.51 (9)): FAILS the generic test
+and the local test: the weight stands in for a geometry (it equals the
+shell's booking only for a packet that covers the shell uniformly), and
+a packet that passes beside the seat without touching its Ports gives
+zero at every weight, which no local read can mend. THE ANSWER: one
+Node with a declared TAKING EXTENT of Ports (9.46 (8)), the fixed set
+of Links whose inward flux the seat books, as the six Ports are the
+bare Node's; the state stays at one Node, the reading reaches a fixed K
+of Ports: generic (declared like a pair), vector (sums), local (fixed
+work). The doubling in time is already the ladder's running total and
+adds nothing.
+
+**(2) THE EMITTER, and THE POINT EMITTER proposed.** Today the giving
+click writes the given rows on an extent, a train of Nodes whose shape
+is a declared table (9.60 (6)); one Node written once would give every
+wavelength at once (a point in space is every wave number). THE IDEA,
+the record written at the seat OVER TIME, PASSES, and is more generic
+than the train: THE POINT EMITTER: at its giving click the seat's own
+rotation (a, b) is coupled into the given family's row AT THE SEAT, one
+write per interval at a declared weight g (a_given(seat) += g x a_seat,
+a product and a sum, one Node), for the intervals until the norm that
+has left the seat through its six Ports reaches the quantum's T (the
+same outward booking as the taking's inward one); then the window
+closes and the stock falls by one. What comes out by the law: a train
+of length n c_l Links with the band 1 / n set by the duration, at the
+wave number light's dispersion gives to the seat's frequency (cos
+omega_0 = 1 - (1 - cos k) / 3 on a chain: omega_0 = 0.174 gives k =
+0.302, which is why the given clock [2464, 25] has that k), isotropic
+over the six Ports; no declared train shape at all, the wavelength from
+the frequency as an atom's line is in nature. The three tests: generic
+(one primitive, the seat's rotation copied at a declared weight, no
+family name), vector (a product, a sum), local (one Node, its six
+Ports). What changes in the law's reading: the giving is n additive
+writes, each undone exactly by the backward run (an addition inverts),
+so the giving is reversible and the taking, the deletion, stays the
+one irreversible act (9.55 (6), (7) sharpened). What it costs: a beam
+needs a direction, and a point radiates alike into its six Ports: the
+beam is then a tool of the vacuum (a line of seats in phase, a mirror,
+a lens; item (5)) or the given rows' momentum character (9.62 (4)) on
+one Node, which is a phase and no direction; the rows toward nature
+that need a beam keep the train on its extent until the tools exist.
+A HYPOTHESIS under its own identity until the owner's word (the rule
+of three); its first row: the light clock with a point emitter, the
+same 300 +- 9 at rest, the train's band 1 / n read at a grating.
+
+**(3) THE MOVING BODY.** One Node already: the seat hops by the
+accumulator (9.52 (4)), the field moves through it, and its clock is
+the proper pair (9.63 (3)), a declared pair per declared momentum; the
+character of the motion is carried by that pair, not by extra Nodes.
+Nothing to add; the build is what waits.
+
+**(4) THE ATOM.** Two atoms, both true. THE ATOM AS A DECLARED FAMILY: a
+seat of the atom's family with its own pair (its clock), its content
+(the proton's and the electron's quanta, s by 9.51 (3)), its charge 0:
+one Node, the owner's "the body is one Node", and it is the seam of
+9.53 (the pair declared, not derived). THE ATOM FROM THE LAW (9.53
+(4), 9.64 (2)): an electron record bound in the charge's well of a
+proton body: its bound mode has a size, about 1 / sqrt(2 m U_eff) Links
+(the side 32 of 9.48 (4)), and CANNOT sit in one Node by D2: a record
+at one Node has every wave number and no bound state; two records at
+one Node (the doubling in families) do not bind either, since the law
+is linear per family and the binding is the well's, which needs room.
+So the atom from the law needs its Nodes; what it derives, the atom's
+pair, is then declared on one seat for every later use. The row that
+does this is the one seam's closing.
+
+**(5) THE TOOLS THAT ARE REGIONS OF THE VACUUM.** The mirror, the
+splitter, the index, the openings, the faces are declared pairs on
+Nodes: each of their Nodes is one Node with a pair, doing the one rule;
+they are surfaces and blocks because a beam has a width and a Node
+acts on its six Links alone (locality): a one-Node mirror is a point
+scatterer, not a mirror. They cannot shrink below the beam's width;
+they are not bodies and carry no content, charge or clock; they are
+already "one Node each" in the only sense the law has.
+
+**(6) THE FULL SET OF A BODY'S NUMBERS (the second question).** A body
+at its seat is defined by: its NAME (the host's, in the world file;
+the algebra knows a body by the rest); its STANDING FAMILY and ITS PAIR
+(its clock, the inertial mass as the mode's frequency; the proper pair
+in motion); its CONTENT PER FAMILY M_k and the ENERGY COUNT s (9.51
+(3)), the gravitational mass, which equals the inertial one by
+construction since s counts the quanta's frequencies; its CHARGE Q;
+its MOMENTUM (the accumulator, a state at the seat, 9.52 (4)); its
+RESIDUE u (the seat's remainder, a state); its EXTENTS (giving and
+taking) and its SHAPE phi (declared constants, 9.60 (6)); its
+COUPLINGS (g, G) to the families it gives (9.19 (4e)). The Boss's
+three (name, mass, charge) are the constants; the pair, the momentum,
+the residue, the extents and the couplings complete the set. NOT
+DEFINED, and not in the scalar law: spin and any vector label (the
+vector family, 9.67 (3)), and a lifetime (a family change at a click,
+"become", 9.27: open).
