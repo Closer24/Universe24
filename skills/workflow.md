@@ -455,7 +455,7 @@ dimension and its declaration per world. A rule that has no such form is a
 world's declaration and not a law. The fan of directions is the case: three
 per-world lists (91, 5, 290) each hid an equal-weights choice that the vector
 form (the primitive directions within a width, each weighted by the measure
-of its cell on the sphere) shows to be wrong by up to 5.4 on the sphere.
+of its Node on the sphere) shows to be wrong by up to 5.4 on the sphere.
 
 ## Notation: every symbol named, its kind shown (the model owner, 2026-09-21, record 184)
 
@@ -644,7 +644,7 @@ stabilisation of the engine and the freeze:
 6. **The Boss's status, three columns per experiment**
    ([ENGINE_STATUS.md](../docs/designs/detector_law/ENGINE_STATUS.md)): the
    engine features it needs and whether they are on `main`; its world file
-   on `main`; its test run without a pin clean or not; a cell rewritten only
+   on `main`; its test run without a pin clean or not; a Node rewritten only
    on a merged record. The freeze is every row "yes" on one commit; then the
    owner's GO and every pin run in one go.
 7. **Every block and every composition is tested alone before it is
@@ -683,7 +683,7 @@ stabilisation of the engine and the freeze:
    whether it has a direction at all. Nature24 writes its code from that
    section; the code merges only after the mathematician confirms, line by
    line, that it performs exactly that group operation. Every operation in
-   the cells is an operation of the group: a per-cell branch that is not one
+   the Nodes is an operation of the group: a per-Node branch that is not one
    is forbidden. A tool
    declares its own orientation and never the directions of what leaves it.
    The specification goes into the tool file (LAB_TOOLS.md) from the
@@ -691,7 +691,7 @@ stabilisation of the engine and the freeze:
    run only after every tool's algebra is closed and every tool merged; a
    well's seed is the bound mode of the composed world and never collides
    with another tool (the owner, 2026-09-25, record 1855).
-   No tool acts on cells but through the law's advance and the click; momentum
+   No tool acts on Nodes but through the law's advance and the click; momentum
    is conserved on the board's own values. Nature24 merges each tool to main
    on green CI with the mathematician's line-by-line confirmation, and tells
    the Boss for the record (the owner, 2026-09-25, record 1856).

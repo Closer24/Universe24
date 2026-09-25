@@ -93,7 +93,7 @@ something different, polar or not polar; it must come from the group."
 Every lab tool is derived in docs/ALGEBRA.md as a body at rest, a fixed
 point of the translation group's action whose shape its stabilizer in
 G_48 fixes, performing one group action on the records that pass its
-cells. The integers written on the board are computed from the algebra,
+Nodes. The integers written on the board are computed from the algebra,
 as a body's seed is, and checked at load. A consequence (a state, a
 cause, a length, a form) is derived with its proof and never put to the
 owner as a choice. LAB_TOOLS.md cites the section for the engine lines and
