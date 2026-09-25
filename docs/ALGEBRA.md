@@ -8408,11 +8408,7 @@ click is a kind of remainder in the cell".
 record 1955 CONFIRMED, with its reason).** The remainder r at a Node is
 equidistributed on [0, wall) whatever the levels there (9.19 (4)'s
 computation), so a carry (the floor raised by the carried remainder)
-happens with the probability (1 - 1 / wall) / 2 per occupied Node per
-interval, independent of the content, the mass, the rotation, the
-momentum and the amplitude: the Boss's 0.329 for light (wall 3), 0.499
-for [800, 809] (wall 2427), 0.477 for the holder (wall 24) are this
-number. The carry is the rounding's own statistics, not a clock of what
+happens with the probability (1 - 1 / W) / 2 per occupied Node per interval, W the wheel (the residue classes, 3 den / gcd(num, 3 den); Nature24's correction of the Boss's wall, COMPUTED on the engine: 0.3229 inside a well [800, 800], whose wheel is 3, against 0.49 in its vacuum [800, 809], whose wheel is 2427), independent of the content, the mass, the rotation, the momentum and the amplitude: the Boss's 0.329 for light (W = 3), 0.499 for [800, 809] (W = 2427), 0.477 for the holder (W = 24) are this number. The carry is the rounding's own statistics, not a clock of what
 is there; it is not a click in the sense of 9.17 (7) (f) and needs no
 name; the Inside stays exactly reversible with it. The link between the
 remainder and the click that the owner named is 9.32 to 9.34: the
@@ -8579,8 +8575,7 @@ the tapers 0.9987, the flat pulse 0.9818: the body's own mode passes
 click interval, the head's path + X / 2 + 2) do not move; the fringe
 pins are recomputed by the generator on the mode envelope before their
 files (the band is narrower; the visibilities are expected within their
-bands). 9.17 (6a)'s window and tapers are HISTORY; its load checks (the
-form, the flux sign along **K**, the hash) and the born clock stand.
+bands). 9.17 (6a)'s window and tapers are HISTORY; its load checks (the form, the flux sign along **K**, the hash) and the born clock stand. TWO READINGS OF "THE BODY'S OWN MODE", ONE CHOSEN (Nature24's measurement on the engine, the light clock's A [800, 801] of [32, 3, 3] on [760, 3, 3]): the EMITTER'S OWN massive mode has tails beyond the body (11 percent of its magnitude outside A's cells at 2^20); clipped to the body it fails the check (1.0047, a hard edge), written over its tails (72 cells) it passes (1.00002), but then the birth writes outside the body's cells and the born record's shape depends on a foreign family's well. THE FORM ADOPTED IS THE OTHER: the BORN FAMILY'S lowest mode on the body's cells with the zero row beyond (the half sine of the flux check above, which vanishes at the body's edge), written on the body's cells alone, as long as the body's extent along **K**: the passage's mean click interval stays the head's path + X / 2 + 2 and its rms as before (9.25 (11) (d)).
 
 **(11) THE HOLDER EMITTERS' PAIR (Nature24's finding of 07:20Z on his
 clock, CONFIRMED by 9.29 (3) (b)):** a pair above 1 over 32 cells runs
